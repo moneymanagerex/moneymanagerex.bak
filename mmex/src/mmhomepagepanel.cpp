@@ -1,0 +1,271 @@
+/*******************************************************
+ Copyright (C) 2006 Madhan Kanagavel
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ /*******************************************************/
+
+#include "mmhomepagepanel.h"
+#include "mmex.h"
+#include "util.h"
+
+#include "transdialog.h"
+#include "newchkacctdialog.h"
+#include "htmlbuilder.h"
+#include "dbwrapper.h"
+
+BEGIN_EVENT_TABLE( mmHomePagePanel, wxPanel )
+END_EVENT_TABLE()
+
+BEGIN_EVENT_TABLE(mmHtmlWindow, wxHtmlWindow)
+END_EVENT_TABLE()
+
+mmHomePagePanel::mmHomePagePanel(  mmGUIFrame* frame, 
+            wxSQLite3Database* db, wxWindow *parent,
+            wxWindowID winid,
+            const wxPoint& pos,
+            const wxSize& size,
+            long style,
+            const wxString& name )
+{
+    db_ = db;
+    Create(parent, winid, pos, size, style, name);
+    frame_ = frame;
+}
+
+bool mmHomePagePanel::Create( wxWindow *parent,
+            wxWindowID winid,
+            const wxPoint& pos,
+            const wxSize& size,
+            long style,
+            const wxString& name  )
+{
+    SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
+    wxPanel::Create(parent, winid, pos, size, style, name);
+
+    CreateControls();
+    GetSizer()->Fit(this);
+    GetSizer()->SetSizeHints(this);
+
+    updateAccounts();
+
+    return TRUE;
+}
+
+void mmHomePagePanel::init(wxSQLite3Database* db)
+{
+    db_ = db;
+}
+
+void mmHomePagePanel::updateAccounts()
+{
+    if (!db_)
+        return;
+
+    mmHTMLBuilder hb;
+    hb.init();
+    wxDateTime today = wxDateTime::Now();
+    wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
+    wxDateTime dtBegin = prevMonthEnd;
+    wxDateTime dtEnd = wxDateTime::Now();
+
+    wxDateTime now = wxDateTime::Now();
+    wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
+    hb.addHeader(5, dt);
+    hb.addLineBreak();
+
+    hb.addHTML(wxT("<table border=\"0\"><tr><td VALIGN=\"top\">"));
+
+    std::vector<wxString> data;
+
+    wxString str1 = _("Account") + wxString(wxT("</b></th><th   width=\"100\" ><b>"));
+    wxString str2 = _("Summary") + wxString(wxT("</b></th></tr>"));
+    hb.addHTML(wxT("<table border=\"1\"><tr  bgcolor=\"#80B9E8\"><th   width=\"200\"><b>") +  str1 + str2 );
+
+    /////////////////   
+
+    int ct = 0;  
+    double tincome = 0.0;
+    double texpenses = 0.0;
+    double tBalance = 0.0;
+    mmBEGINSQL_LITE_EXCEPTION;
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
+    while (q1.NextRow())
+    {
+        std::vector<wxString> data1;
+        data1.push_back(q1.GetString(wxT("ACCOUNTNAME")));
+
+        double bal = mmDBWrapper::getTotalBalanceOnAccount(db_, q1.GetInt(wxT("ACCOUNTID")), true);
+
+        wxSQLite3StatementBuffer bufSQL;
+        bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", q1.GetInt(wxT("ACCOUNTID")));
+        wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL);
+        if (q2.NextRow())
+        {
+            int currencyID = q2.GetInt(wxT("CURRENCYID"));
+            mmDBWrapper::loadSettings(db_, currencyID);
+
+        }
+        q2.Finalize();
+
+        double rate = mmDBWrapper::getCurrencyBaseConvRate(db_, q1.GetInt(wxT("ACCOUNTID")));
+        bal = bal * rate;
+        tBalance += bal;
+        wxString balance;
+        mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
+        data1.push_back(balance);
+        
+         hb.addRow(data1);
+        double income = 0.0, expenses = 0.0;
+        mmDBWrapper::getExpensesIncome(db_, q1.GetInt(wxT("ACCOUNTID")), expenses, income, 
+            false,dtBegin, dtEnd);
+        tincome += income;
+        texpenses += expenses;
+        ct++;
+    }
+    mmENDSQL_LITE_EXCEPTION;
+
+
+    double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_);
+    wxString stockBalanceStr;
+    mmDBWrapper::loadBaseCurrencySettings(db_);
+    mmCurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
+
+    data.clear();
+    data.push_back(_("Stock Investments :"));
+    data.push_back(stockBalanceStr);
+    hb.addRow(data, wxT(" bgcolor=\"#D3EFF6\" "));
+
+    tBalance += stockBalance;
+    wxString tBalanceStr;
+    mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
+
+    hb.addHTML(wxT("<tr bgcolor=\"#DCEDD5\" ><td>") + wxString(_("Total of Accounts :")) + wxString(wxT("</td><td><b>")));
+    hb.addHTML(tBalanceStr);
+    hb.addHTML(wxT("</b></td></tr>"));
+    hb.endTable();
+
+    hb.addHTML(wxT("</td><td >&nbsp;</td><td width=\"200\" ALIGN=\"left\" VALIGN=\"top\">"));
+    hb.beginTable();
+
+    hb.beginTable();
+    wxString incStr, expStr;
+    mmCurrencyFormatter::formatDoubleToCurrency(tincome, incStr);
+    mmCurrencyFormatter::formatDoubleToCurrency(texpenses, expStr);
+
+    wxString baseInc = _("Income");
+    wxString baseExp = _("Expense");
+    wxString income = baseInc + incStr;
+    wxString expense = baseExp + expStr;
+
+    std::vector<wxString> data2;
+    data2.push_back(_("Income vs Expenses: Current Month"));
+    hb.addTableHeaderRow(data2, wxT(" BGCOLOR=\"#80B9E8\" "), wxT(" width=\"100\" COLSPAN=\"2\" "));
+    
+    data2.clear();
+    data2.push_back(baseInc);
+    data2.push_back(incStr);
+    hb.addRow(data2);
+
+    data2.clear();
+    data2.push_back(baseExp);
+    data2.push_back(expStr);
+    hb.addRow(data2);
+    hb.endTable();
+
+    hb.addHTML(wxT("<BR> <BR>"));
+    // bills & deposits
+    hb.beginTable();
+    std::vector<wxString> data3;
+    data3.push_back(_("Upcoming Bills & Deposits"));
+    hb.addTableHeaderRow(data3, wxT(" BGCOLOR=\"#80B9E8\" "), wxT(" width=\"100\" COLSPAN=\"2\" "));
+ 
+    wxSQLite3ResultSet q2 = db_->ExecuteQuery("select * from BILLSDEPOSITS_V1;");
+
+    while (q2.NextRow())
+    {
+        std::vector<wxString> data4;
+        wxDateTime nextOccurDate_  = mmGetStorageStringAsDate(q2.GetString(wxT("NEXTOCCURRENCEDATE")));
+        wxString nextOccurStr_   = mmGetDateForDisplay(db_, nextOccurDate_);
+
+        wxDateTime today = wxDateTime::Now();
+        wxTimeSpan ts = nextOccurDate_.Subtract(today);
+        int daysRemaining_ = ts.GetDays();
+      
+
+        int payeeID_        = q2.GetInt(wxT("PAYEEID"));
+        wxString transType_      = q2.GetString(wxT("TRANSCODE"));
+        int accountID_      = q2.GetInt(wxT("ACCOUNTID"));
+        int toAccountID_    = q2.GetInt(wxT("TOACCOUNTID"));
+
+        int cid = 0, sid = 0;
+        wxString payeeStr_ = mmDBWrapper::getPayee(db_, payeeID_, cid, sid);
+
+        if (transType_ == wxT("Transfer"))
+        {
+            wxString fromAccount = mmDBWrapper::getAccountName(db_,  accountID_);
+            wxString toAccount = mmDBWrapper::getAccountName(db_,  toAccountID_ );
+
+            payeeStr_ = toAccount;
+        }
+        
+        if (daysRemaining_ <= 14)
+        {
+            data4.push_back(payeeStr_);
+
+            wxString daysRemainingStr_;
+            wxString colorStr = wxT(" BGCOLOR=\"#FFFFCC\" ");
+            if (daysRemaining_ >= 0)
+            {
+                daysRemainingStr_ = wxString::Format(wxT("%d"), daysRemaining_) + 
+                    _(" days remaining");
+            }
+            else
+            {
+                daysRemainingStr_ = wxString::Format(wxT("%d"), abs(daysRemaining_)) + 
+                    _(" days overdue!");
+                colorStr = wxT(" BGCOLOR=\"#FF6600\" ");
+            }
+            data4.push_back(daysRemainingStr_);
+            hb.addRow(data4, wxT(""), wxT("WIDTH=\"130\"  ") + colorStr);
+        }
+    }
+    q2.Finalize();
+
+
+    hb.endTable();
+
+    hb.endTable();
+
+    hb.addHTML(wxT(" </td></tr></table>"));
+    
+    hb.end();
+
+    wxString htmlText = hb.getHTMLText();
+    htmlWindow_->SetPage(htmlText);
+}
+
+void mmHomePagePanel::CreateControls()
+{    
+    mmHomePagePanel* itemDialog1 = this;
+
+    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
+    itemDialog1->SetSizer(itemBoxSizer2);
+
+    htmlWindow_ = new mmHtmlWindow( itemDialog1, ID_PANEL_HOMEPAGE_HTMLWINDOW, 
+        wxDefaultPosition, wxDefaultSize, 
+        wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
+    itemBoxSizer2->Add(htmlWindow_, 1, wxGROW|wxALL, 0);
+}
+

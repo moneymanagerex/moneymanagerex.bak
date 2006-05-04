@@ -1,0 +1,108 @@
+Version History of Money Manager Ex
+
+0.5.2.1 (May 2nd, 2006)
+- Updated French Translation
+- Fix Locale issue that causes an SQLITE Error
+- Transaction amounts are automatically trimmed.
+
+0.5.2.0 (May 2nd, 2006)
+- Added credits for translators
+- AppStartDialog starts centered in screen
+- Added Italian, French translations
+- Added start location to be specified in installer shortcut
+- Improved entry of budget values for income/expenses.
+- Ensure all strings are added to translations
+- Fix Bug 1476967: Initial Balance was not being accounted for in the Bank Account Ledger
+- Fix Bug 1476987: where the application was unable to locate translation files if the start
+- Fix Bug 1480118: Income vs Expenses should not take transfers into account  
+- Fix Bug 1479518: Scheduled transaction is reflected in summary of accounts
+- Fixed Locale Init issue causing translated UTF-8 strings not to appear correctly
+
+0.5.1.0 (April 22th, 2006)
+- Add support for non-english languages
+- Fix Bug 1473991: SQLite error [1] submitting Transaction with New payee
+- Fix Bug 1471747: Crash when click on EnterTransaction
+- Fix Bug 1471743: mmBillsDepositsPanel
+- Fix Bug 1471740: Use $(ProjectDir) Macro
+- Fix Bug 1455810: Help HTML file doesnt display
+- Add Feature 1474172: Show reconciled balance
+- Add Feature 1472283: User settable CSV delimiter
+- Add Feature 1472279: Import should refresh account automatically
+- Add Feature 1472277: Insert space between currency symbol and amount
+- Add Feature 1455797: MMEX should allow import of CSV from MMEX.NET 	 
+
+0.5.0.0 (April 16th, 2006)
+- Remove add account dialog when one clicks "Bank Accounts" node 
+- Add Bills & Deposit Tracking
+- Add Stock Investments
+- Fix Bug 1455804: No option to set date format to 'yy/mm/dd'
+- Fix Bug 1470420: App Does not start id last used data file is not found.
+- Fix Bug 1455806: Korean Won Symbol not displaying correctly
+- Fix Bug 1455827: No Selection in AppStart Dialog causes problems
+- Fix Bug 1470420: App Does not start id last used data file is not found.
+
+0.4.0.0 (March,2006)
+- Budgeting is now functional
+- Budgeting 12 month performance report
+- Changed home page to using HTML view
+- Add last opened database name in app start dialog (KL Teh)
+- The CSV import now take the date format option. Import/Export expects date to be in that format.(KL Teh)
+- CSV import no longer reports missing lines as having no date (KL Teh)
+- Transaction Number not being displayed (ikkyu)
+- Unable to see help file (ikkyu)
+- Mark imported transactions as needing followup
+- Export bug that prevented transactions containing only category from working
+
+0.3.0.2 (Feb 26, 2006)
+- Update user manual
+- Remembers category for payee
+- Remembers column layout
+- All reports can be exported to HTML files
+- Configurable Transaction viewer based on transaction status
+- Delete transactions based on current view
+- Fix '&' problem with payee names
+- Add filter view transactions to certain date ranges
+- Payee, Income vs Expenses reports
+
+0.3.0.1 (Feb 20, 2006)
+- Options Dialog crashes when no db_ file is opened (Manav, alok.sathaye, Ikkyu)
+- New AppStart Dialog helping new users begin 
+- Creating new database prompts users to create new account.
+- Add Summary of Accounts Report
+- Add Printing Page Setup, Print Preview, Printing for reports
+- Disallow negative numbers in transaction amounts
+- About dialog displays version history
+- Reports for categories over time
+- Now compiles and runs under Linux
+- Import CSV shows more diagnostic messages
+
+0.3.0.0 (Feb 16, 2006)
+- Checking account list controls now are "virtual" with very good performance even with millions of records
+- Added "Flag for Followup" status
+- Now can set status in transaction dialog
+- Options Dialog now viewable
+- Ability to mark all transactions to a certain type
+- Add icons for telling transaction types apart easily
+- Void transactions are not considered when computing balance on accounts
+- While adding new transaction to account, use of aprostophe (') in some field causes SQL error (KL Teh)
+- Add ability to specify arbitrary transfer amounts for From and To accounts
+- Main summary correctly accounts for baseconvrate
+- Main summary uses base currency for database
+- Date Format can be changed via options
+- Nicer icons
+- Remove setting locale
+
+0.2.0.1 (Feb 11, 2006)
+- French locale chosen when "English" was chosen (bpuhanic@...)
+
+0.2.0.0 (Feb 10, 2006)
+- Clean up of database fields
+- Database import from old versions
+- Complete currency data management
+- several bug fixes
+- Import and Export to CSV
+- Language Support
+
+0.1.0.0 (Feb 5, 2006)
+- Checking Accounts with Withdrawal, Deposit and Transfer transactions functional
+- Saving, loading databases

@@ -1,0 +1,33 @@
+Building Money Manager Ex
+--------------------------
+
+=================
+Microsoft Windows
+=================
+
+1. Install Microsoft Visual Studio 2005 C++ Express, which is a free download
+2. Install the Platform SDK and make sure Visual Studio 2005 is correctly setup.
+3. Install wxWidgets 2.6.2 and above in a directory like c:\pgmming\wxwidgets2.6.2 and then create an environment variable WXWIN to point to this directory.
+Follow the instructions given by WxWidgets install on how to build it and build all build modes. 4 build modes are particulary important, Static Ansi Debug, Static Ansi Release, Static Unicode Debug, Static Unicode Release.
+4. Install WxSqlite3 to a directory like C:\pgmming\wxsqlite3\ and then create an environment variable WXSQLITE to point to this directory. Build WXSQLITE if necessary
+5. Open project under mmex directory and do a batch build of all modes neceesary
+6. Copy currency.db3 from runtime directory into the appropriate build directories. Now you can run the project to launch the exe.
+7. Static Ansi is used under Windows 95/98/Me
+8. Static Unicode is used under Windows 2000/Windows XP/Windows 2003.
+
+=================
+Building on Linux
+=================
+	  a) Easiest way to configure these is on a Debian based Linux (Ubuntu for example) with apt-get or synaptic
+	  b) Read the install directions in wxWidgets for how to do a build and then install the build on the machine. For eg wxWidgets has been built with - -with-gtk - -disable-shared
+	  c) After installation, wx-config will copied to the /usr/bin and can now correctly identify the command line params required.
+	  d) Bakefile is required to be installed for processing this file. After getting the debian package install it by  "sudo dpkg ???  .deb"
+	  e) Download SQLite3 source and build and then install it in the system. The file libsqlite3.a should be available in the standard lib path in the system. (for eg, /usr/lib)
+	  f) Download wxSQLite3 source and build and then do an install. The file libwxsqlite3.a should be available in the standard location.
+	  g) Run bakefile "bakefile -f gnu mmex.bkl"
+	  f) Run make by "make -f GNUMakefile". This should build all the targets.
+
+Installer
+--------
+MMEX uses innosetup to create installer packages.
+The script is checked into mmex\install directory

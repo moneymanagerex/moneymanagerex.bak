@@ -1,0 +1,31 @@
+/* XPM */
+static char *accountlist_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"    16    16        8            1",
+/* colors */
+"` c #050811",
+". c #75a0d6",
+"# c #c4d8f0",
+"a c #a2b5d4",
+"b c #edf4fa",
+"c c #38455e",
+"d c #5e6c84",
+"e c #2c364b",
+/* pixels */
+"``.aaaaaaaa.````",
+"``abbbbbbb..ceee",
+"``abbbbbbb...cee",
+"``abbbbbbbb##.e`",
+"``ab#b#aaaaa#ac`",
+"``aadaceceeca#c`",
+"``.b#b########c`",
+"``ab####a#aa##c`",
+"``.adaceeeeca#e`",
+"``a####aaaaa#ac`",
+"``.##########ac`",
+"``.adaceeeeea#c`",
+"``.#a#a.a...aac`",
+"``.##########ac`",
+"``daaaaaaa.a..e`",
+"``ecceceeeeeeee`"
+};

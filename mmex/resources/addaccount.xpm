@@ -1,0 +1,31 @@
+/* XPM */
+static char *addaccount_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"    16    16        8            1",
+/* colors */
+"` c None",
+". c #5c9adc",
+"# c #bcd6fa",
+"a c #e1eefc",
+"b c #8ca6d6",
+"c c #344a6c",
+"d c #1e2d4a",
+"e c #6c7aac",
+/* pixels */
+"``bbbbbbbbbb````",
+"``baaaaaaabbcddd",
+"``baaaaaaa...ddd",
+"``baaaaaaaa#bedd",
+"``baaaa``aaaa#dd",
+"``baaaa``aa#a#``",
+"``baaaa``#a###`d",
+"``ba````````##`d",
+"``ba````````##``",
+"``baa#a``#####d`",
+"``ea#a#``#####`d",
+"``eaa#a``####bd`",
+"``ea#a########`d",
+"``e#a########bd`",
+"``ebbbbbbbbbeb`d",
+"```dd`d`d``d``d`"
+};
