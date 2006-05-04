@@ -180,11 +180,11 @@ void mmBudgetEntryDialog::OnOk(wxCommandEvent& event)
     int periodSel = itemChoice_->GetSelection();
     wxString period;
     if (periodSel == DEF_FREQ_NONE)
-        period == wxT("None");
+        period = wxT("None");
     else if (periodSel == DEF_FREQ_MONTHLY)
-        period == wxT("Monthly");
+        period = wxT("Monthly");
     else if (periodSel == DEF_FREQ_YEARLY)
-        period == wxT("Yearly");
+        period = wxT("Yearly");
     else
         wxASSERT(false);
 
