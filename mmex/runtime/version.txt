@@ -1,5 +1,8 @@
 Version History of Money Manager Ex
 
+0.5.2.2 (May 9th, 2006)
+- Fix Bug 1482171 Frequency in Budget Entry is not being saved correctly
+
 0.5.2.1 (May 2nd, 2006)
 - Updated French Translation
 - Fix Locale issue that causes an SQLITE Error
