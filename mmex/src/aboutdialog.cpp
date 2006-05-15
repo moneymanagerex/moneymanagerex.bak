@@ -87,7 +87,7 @@ void mmAboutDialog::CreateControls()
 
     wxString trans = _("Translations by : ");
     wxStaticText* itemStaticText18 = new wxStaticText( itemDialog1, 
-        wxID_STATIC,  trans + wxT("Italian (Claudio), French (Berry As)"), 
+        wxID_STATIC,  trans + wxT("Italian (Claudio), French (Berry As), Greek (Panagiotis Pentzeridis)"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerN->Add(itemStaticText18, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
 

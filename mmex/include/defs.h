@@ -60,6 +60,7 @@
 #include <wx/listbook.h>
 #include "wx/imaglist.h"
 #include "wx/popupwin.h"
+#include <wx/dir.h>
 
 #include <vector>
 #include <string.h>

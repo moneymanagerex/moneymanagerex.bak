@@ -53,6 +53,7 @@ public:
     void OnCurrency(wxCommandEvent& event);
     void OnDateFormatChanged(wxCommandEvent& event);
     void OnViewAccountsChanged(wxCommandEvent& event);
+	void OnLanguageChanged(wxCommandEvent& event);
 
 private:
     wxImageList* m_imageList;

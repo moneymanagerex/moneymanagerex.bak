@@ -26,7 +26,7 @@ class mmGUIApp : public wxApp
 public:
     virtual bool OnInit();
 
-protected:
+public:
     wxLocale m_locale; // locale we'll be using
 };
 

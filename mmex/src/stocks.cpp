@@ -355,6 +355,9 @@ void stocksListCtrl::OnNewStocks(wxCommandEvent& event)
 
 void stocksListCtrl::OnDeleteStocks(wxCommandEvent& event)
 {
+	if (selectedIndex_ == -1)
+		return;
+
     wxMessageDialog msgDlg(this, _("Do you really want to delete the stock investment?"),
                                         _("Confirm Stock Investment Deletion"),
                                         wxYES_NO);
@@ -368,6 +371,8 @@ void stocksListCtrl::OnDeleteStocks(wxCommandEvent& event)
 
 void stocksListCtrl::OnEditStocks(wxCommandEvent& event)
 {
+	if (selectedIndex_ == -1)
+		return;
     mmStockDialog *dlg = new mmStockDialog(cp_->db_, 
         cp_->trans_[selectedIndex_].stockID_, true, this );
     if ( dlg->ShowModal() == wxID_OK )

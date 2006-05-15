@@ -31,6 +31,7 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_CURRENCY, mmOptionsDialog::OnCurrency)
     EVT_CHOICE(ID_DIALOG_OPTIONS_DATE_FORMAT, mmOptionsDialog::OnDateFormatChanged)  
     EVT_CHOICE(ID_DIALOG_OPTIONS_VIEW_ACCOUNTS, mmOptionsDialog::OnViewAccountsChanged)  
+	EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)  
 END_EVENT_TABLE()
 
 #include "../resources/htmbook.xpm"
@@ -199,6 +200,25 @@ void mmOptionsDialog::CreateControls()
         delimit, wxDefaultPosition, wxDefaultSize, 0 );
     textDelimiter->SetToolTip(_("Specify the delimiter to use when importing/exporting CSV files"));
     itemStaticBoxSizer18->Add(textDelimiter, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+	  // ------------------------------------------    
+    wxStaticBox* itemStaticBoxSizer1881Static = new wxStaticBox(itemPanelGeneral, wxID_ANY, 
+        _("Language"));
+    wxStaticBoxSizer* itemStaticBoxSizerLang = new wxStaticBoxSizer(itemStaticBoxSizer1881Static, 
+        wxHORIZONTAL);
+    itemBoxSizer20->Add(itemStaticBoxSizerLang, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
+    
+    wxStaticText* itemStaticText555 = new wxStaticText( itemPanelGeneral, wxID_STATIC, 
+        _("Language"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticBoxSizerLang->Add(itemStaticText555, 0, 
+        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+    wxString lang = mmDBWrapper::getINISettingValue(inidb_, 
+        wxT("LANGUAGE"), wxT(""));
+	wxButton* itemButtonLanguage = new wxButton( itemPanelGeneral, 
+        ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, lang, wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticBoxSizerLang->Add(itemButtonLanguage, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemButtonLanguage->SetToolTip(_("Specify the language to use"));
     
     // ------------------------------------------
     wxPanel* itemPanelViews = new wxPanel( newBook, ID_BOOK_PANELVIEWS, 
@@ -274,4 +294,13 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& event)
     }
 
     dlg->Destroy();
+}
+
+void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& event)
+{
+    mmSelectLanguage(inidb_, true);
+	wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
+	wxString lang = mmDBWrapper::getINISettingValue(inidb_, 
+        wxT("LANGUAGE"), wxT(""));
+	bn->SetLabel(lang);
 }

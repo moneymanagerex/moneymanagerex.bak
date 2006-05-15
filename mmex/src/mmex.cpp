@@ -101,23 +101,6 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_TREE_SEL_CHANGED(ID_NAVTREECTRL, mmGUIFrame::OnSelChanged)
 END_EVENT_TABLE()
 /*******************************************************/
-/* LANGUAGE SUPPORT  */
-static const wxLanguage langIds[] =
-    {
-        wxLANGUAGE_ENGLISH,
-        wxLANGUAGE_FRENCH,
-        wxLANGUAGE_ITALIAN,
-        wxLANGUAGE_GREEK,
-    };
-
-const wxString langNames[] =
-    {
-        wxT("english"),
-        wxT("french"),
-        wxT("italian"),
-        wxT("greek"),
-    };
-/*******************************************************/
 IMPLEMENT_APP(mmGUIApp)
 /*******************************************************/
 bool mmGUIApp::OnInit()
@@ -154,42 +137,11 @@ bool mmGUIApp::OnInit()
     valWStr.ToLong(&valw);
     valHStr.ToLong(&valh);
 
-#if 1
-    /* Select Language */
-    // TODO : Issue with wxWidgets 2.6.2 causes crash when trying to AddCatalog
-    // http://cvs.wxwidgets.org/viewcvs.cgi/wxWindows/src/common/intl.cpp.diff?r1=1.166&r2=1.166.2.1
-    /*******************************************************/
-    wxString langStr = mmDBWrapper::getINISettingValue(inidb, 
-        wxT("LANGUAGE"), wxT("")); 
+	/* Setting Locale causes unexpected problems, so default to English Locale */
+	m_locale.Init(wxLANGUAGE_ENGLISH);
 
-    if (langStr == wxT(""))
-    {
-        langStr = wxGetSingleChoice
-        (
-            wxT("Please choose language:"),
-            wxT("Language"),
-            WXSIZEOF(langNames),
-            langNames
-        );
-    }
-
-    // Setting locale produces unexpected problems
-    //if ( lng != -1 )
-      // m_locale.Init(langIds[lng]);
-    m_locale.Init(wxLANGUAGE_ENGLISH);
-
-    wxString langPath = fname.GetPath(wxPATH_GET_VOLUME)
-                + wxT("\\languages");
-    m_locale.AddCatalogLookupPathPrefix(langPath);
-
-    wxString language = langStr + wxT("-mmex");
-    m_locale.AddCatalog(language);
-    
-    /* Save Language Setting */
-    mmDBWrapper::setINISettingValue(inidb, wxT("LANGUAGE"), 
-        langStr);
-    /*******************************************************/
-#endif
+	/* Select language if necessary */
+    mmSelectLanguage(inidb);
 
     inidb->Close();
     delete inidb;
@@ -406,6 +358,10 @@ void mmGUIFrame::updateNavTreeControl()
     wxTreeItemId stocks = navTreeCtrl_->AppendItem(root, _("Stocks"), 6, 6);
     navTreeCtrl_->SetItemData(stocks, new mmTreeItemData(wxT("Stocks")));
     navTreeCtrl_->SetItemBold(stocks, true);
+
+    wxTreeItemId assets = navTreeCtrl_->AppendItem(root, _("Assets"), 6, 6);
+    navTreeCtrl_->SetItemData(assets, new mmTreeItemData(wxT("Assets")));
+    navTreeCtrl_->SetItemBold(assets, true);
 
     wxTreeItemId bills = navTreeCtrl_->AppendItem(root, _("Bills & Deposits"), 2, 2);
     navTreeCtrl_->SetItemData(bills, new mmTreeItemData(wxT("Bills & Deposits")));
@@ -1170,10 +1126,29 @@ void mmGUIFrame::createHelpPage()
 
 void mmGUIFrame::createMenu()
 {
+	wxBitmap toolBarBitmaps[8];
+    toolBarBitmaps[0] = wxBitmap(new_xpm);
+    toolBarBitmaps[1] = wxBitmap(open_xpm);
+    toolBarBitmaps[2] = wxBitmap(save_xpm);
+    toolBarBitmaps[3] = wxBitmap(newacct_xpm);
+    toolBarBitmaps[4] = wxBitmap(listview_xpm);
+
     wxMenu *menuFile = new wxMenu;
-    menuFile->Append(MENU_NEW, _("&New Database\tCtrl-N"), _("New Money Manager Database"));
-    menuFile->Append(MENU_OPEN, _("&Open Database\tCtrl-O"), _("Open Money Manager Database"));
-    menuFile->Append(MENU_SAVE, _("&Save Database\tCtrl-S"), _("Save Money Manager Database"));
+	wxMenuItem* menuItemNew = new wxMenuItem(menuFile, MENU_NEW, 
+		_("&New Database\tCtrl-N"), _("New Money Manager Database"));
+	menuItemNew->SetBitmaps(toolBarBitmaps[0]);
+
+	wxMenuItem* menuItemOpen = new wxMenuItem(menuFile, MENU_OPEN, 
+		_("&Open Database\tCtrl-O"), _("Open Money Manager Database"));
+	menuItemOpen->SetBitmaps(toolBarBitmaps[1]);
+
+	wxMenuItem* menuItemSave = new wxMenuItem(menuFile, MENU_SAVE, 
+		_("&Save Database\tCtrl-S"), _("Save Money Manager Database"));
+	menuItemSave->SetBitmaps(toolBarBitmaps[2]);
+	
+	menuFile->Append(menuItemNew);
+    menuFile->Append(menuItemOpen);
+	menuFile->Append(menuItemSave);
     menuFile->Append(MENU_SAVE_AS, _("Save &As"), _("Save Money Manager Database As"));
     menuFile->AppendSeparator();
     
@@ -1201,8 +1176,17 @@ void mmGUIFrame::createMenu()
     menuFile->Append(MENU_QUIT, _("E&xit\tAlt-X"), _("Quit this program"));
    
     wxMenu *menuAccounts = new wxMenu;
-    menuAccounts->Append(MENU_NEWACCT, _("New &Account"), _("New Money Manager Account"));
-    menuAccounts->Append(MENU_ACCTLIST, _("Account &List"), _("Show Account List"));
+
+	wxMenuItem* menuItemNewAcct = new wxMenuItem(menuAccounts, MENU_NEWACCT, 
+		_("New &Account"), _("New Money Manager Account"));
+	menuItemNewAcct->SetBitmaps(toolBarBitmaps[3]);
+
+	wxMenuItem* menuItemAcctList = new wxMenuItem(menuAccounts, MENU_ACCTLIST, 
+		_("Account &List"), _("Show Account List"));
+	menuItemAcctList->SetBitmaps(toolBarBitmaps[4]);
+
+    menuAccounts->Append(menuItemNewAcct); 
+    menuAccounts->Append(menuItemAcctList); 
 
     wxMenu *menuTools = new wxMenu;
     menuTools->Append(MENU_ORGCATEGS, _("Organize &Categories"), _("Organize Categories"));
@@ -1211,7 +1195,7 @@ void mmGUIFrame::createMenu()
     menuTools->Append(MENU_BUDGETSETUPDIALOG, _("Budget Setup"), _("Budget Setup"));
     menuTools->Append(MENU_BILLSDEPOSITS, _("Bills && Deposits"), _("Bills && Deposits"));
     menuTools->Append(MENU_STOCKS, _("Stock Investments"), _("Stock Investments"));
-     menuTools->AppendSeparator();
+    menuTools->AppendSeparator();
     menuTools->Append(MENU_OPTIONS, _("&Options"), _("Money Manager Options"));
 
     wxMenu *menuHelp = new wxMenu;

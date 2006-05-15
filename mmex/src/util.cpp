@@ -19,6 +19,61 @@
 #include "dbwrapper.h"
 #include "guiid.h"
 #include "fileviewerdialog.h"
+#include "mmex.h"
+
+void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
+{
+	wxFileName fname(wxTheApp->argv[0]);
+	mmGUIApp* mmApp = dynamic_cast<mmGUIApp*>(wxTheApp);
+	wxASSERT(mmApp);
+	/*******************************************************/
+	/* Select Language */
+    // TODO : Issue with wxWidgets 2.6.2 causes crash when trying to AddCatalog
+    // http://cvs.wxwidgets.org/viewcvs.cgi/wxWindows/src/common/intl.cpp.diff?r1=1.166&r2=1.166.2.1
+    /*******************************************************/
+	wxString langStr = mmDBWrapper::getINISettingValue(inidb, 
+		wxT("LANGUAGE"), wxT("")); 
+
+	wxString langPath = fname.GetPath(wxPATH_GET_VOLUME)
+		+ wxT("\\languages");
+
+	mmApp->m_locale.AddCatalogLookupPathPrefix(langPath);
+	if (langStr == wxT("") || showSelection)
+	{
+		wxArrayString langFileArray;
+		if (wxDir::Exists(langPath))
+		{
+			int num = wxDir::GetAllFiles(langPath, &langFileArray, wxT("*.mo"));
+			if (num > 0)
+			{
+				for (int ix = 0; ix < num; ix++)
+				{
+					wxFileName fname(langFileArray[ix]);
+					wxString name = fname.GetName();
+					langFileArray[ix] = name;
+				}
+
+				langStr = wxGetSingleChoice
+					(
+					wxT("Please choose language:"),
+					wxT("Language"),
+					langFileArray
+					);
+
+				mmApp->m_locale.AddCatalog(langStr);
+
+				/* Save Language Setting */
+				mmDBWrapper::setINISettingValue(inidb, wxT("LANGUAGE"), 
+					langStr);
+			}
+		}
+	}
+	else
+	{
+		/* Previous language found */
+		mmApp->m_locale.AddCatalog(langStr);
+	}
+}
 
 wxString mmCleanString(const wxString& orig)
 {

@@ -24,6 +24,8 @@
 void mmShowErrorMessageInvalid(wxWindow* parent, wxString message);
 void mmShowErrorMessage(wxWindow* parent,  wxString message, wxString messageheader);
 
+void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection=false);
+
 wxString mmGetDateForStorage(wxDateTime dt);
 wxDateTime mmGetStorageStringAsDate(const wxString& str);
 wxString mmGetDateForDisplay(wxSQLite3Database* db, wxDateTime dt);
