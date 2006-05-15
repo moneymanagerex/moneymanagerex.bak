@@ -107,6 +107,7 @@ static const wxLanguage langIds[] =
         wxLANGUAGE_ENGLISH,
         wxLANGUAGE_FRENCH,
         wxLANGUAGE_ITALIAN,
+        wxLANGUAGE_GREEK,
     };
 
 const wxString langNames[] =
@@ -114,6 +115,7 @@ const wxString langNames[] =
         wxT("english"),
         wxT("french"),
         wxT("italian"),
+        wxT("greek"),
     };
 /*******************************************************/
 IMPLEMENT_APP(mmGUIApp)
@@ -1517,17 +1519,17 @@ void mmGUIFrame::OnHelp(wxCommandEvent& event)
  
 void mmGUIFrame::OnCheckUpdate(wxCommandEvent& event)
 {
-    wxLaunchDefaultBrowser(wxT("http://sourceforge.net/project/showfiles.php?group_id=163169"));
+    wxLaunchDefaultBrowser(wxT("sourceforge.net/project/showfiles.php?group_id=163169"));
 }
 
 void mmGUIFrame::OnReportIssues(wxCommandEvent& event)
 {
-    wxLaunchDefaultBrowser(wxT("http://groups.google.com/group/zealsupport"));
+    wxLaunchDefaultBrowser(wxT("groups.google.com/group/zealsupport"));
 }
 
 void mmGUIFrame::OnBeNotified(wxCommandEvent& event)
 {
-    wxLaunchDefaultBrowser(wxT("http://groups.google.com/group/mmlist"));
+    wxLaunchDefaultBrowser(wxT("groups.google.com/group/mmlist"));
 }
     
 void mmGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
