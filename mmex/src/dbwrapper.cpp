@@ -1648,7 +1648,7 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db)
     mmBEGINSQL_LITE_EXCEPTION;
     wxString bufSQL = wxString::Format(wxT("select * from STOCK_V1;"));
     wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
-    if (q1.NextRow())
+    while (q1.NextRow())
     {
         double value = q1.GetDouble(wxT("VALUE"));
         balance += value;

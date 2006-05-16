@@ -28,6 +28,7 @@ BEGIN_EVENT_TABLE( mmStockDialog, wxDialog )
     EVT_BUTTON(ID_BUTTON_STOCK_OK, mmStockDialog::OnOk)
     EVT_BUTTON(ID_BUTTON_STOCK_CANCEL, mmStockDialog::OnCancel)
     EVT_BUTTON(ID_BUTTON_STOCKS_HELDAT, mmStockDialog::OnAccountButton)
+	EVT_BUTTON(ID_BUTTON_STOCK_WEBPRICE, mmStockDialog::OnStockPriceButton)
 END_EVENT_TABLE()
 
 mmStockDialog::mmStockDialog( )
@@ -84,13 +85,17 @@ void mmStockDialog::dataToControls()
         accountID_ = q1.GetInt(wxT("HELDAT"));
         stockName_->SetValue(q1.GetString(wxT("STOCKNAME")));
         stockSymbol_->SetValue(q1.GetString(wxT("SYMBOL")));
-        numShares_->SetValue(q1.GetString(wxT("NUMSHARES")));
         notes_->SetValue(q1.GetString(wxT("NOTES")));
 
         wxString dateString = q1.GetString(wxT("PURCHASEDATE"));
         wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
         wxString dt = mmGetDateForDisplay(db_, dtdt);
         dpc_->SetValue(dtdt);
+
+		wxString numShares;
+		mmCurrencyFormatter::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("NUMSHARES")), 
+            numShares);
+		numShares_->SetValue(numShares);
 
         wxString dispAmount;
         mmCurrencyFormatter::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUE")), 
@@ -255,11 +260,15 @@ void mmStockDialog::CreateControls()
 
     wxButton* itemButton29 = new wxButton( itemPanel27, ID_BUTTON_STOCK_OK, 
         _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer28->Add(itemButton29, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer28->Add(itemButton29, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
     wxButton* itemButton30 = new wxButton( itemPanel27, ID_BUTTON_STOCK_CANCEL, 
         _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer28->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer28->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+
+	 wxButton* itemButton31 = new wxButton( itemPanel27, ID_BUTTON_STOCK_WEBPRICE, 
+        _("Web Page"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer28->Add(itemButton31, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 }
 
 void mmStockDialog::OnAccountButton(wxCommandEvent& event)
@@ -291,6 +300,17 @@ void mmStockDialog::OnCancel(wxCommandEvent& event)
     Close(TRUE);
 }
 
+void mmStockDialog::OnStockPriceButton(wxCommandEvent& event)
+{
+	wxString stockSymbol = stockSymbol_->GetValue().Trim();
+	if (!stockSymbol.IsEmpty())
+	{
+		// Use Google for stock quotes
+		wxString httpString = wxString::Format(wxT("http://www.google.com/finance?q=%s"), stockSymbol);
+		wxLaunchDefaultBrowser(httpString);
+	}
+}
+
 void mmStockDialog::OnOk(wxCommandEvent& event)
 {
     mmBEGINSQL_LITE_EXCEPTION;
@@ -308,17 +328,18 @@ void mmStockDialog::OnOk(wxCommandEvent& event)
     wxString stockSymbol = stockSymbol_->GetValue();
     wxString notes       = notes_->GetValue();
 
-    wxString numSharesStr = numShares_->GetValue();
+    wxString numSharesStr = numShares_->GetValue().Trim();
     if (numSharesStr == wxT(""))
     {
         mmShowErrorMessageInvalid(this, _("Num Shares"));
         return;
     }
     
-    long numShares = 0;
-    if (!numSharesStr.ToLong(&numShares))
+     double numShares = 0;
+	 if (!mmCurrencyFormatter::formatCurrencyToDouble(numSharesStr, numShares) 
+        || (numShares < 0.0))
     {
-        mmShowErrorMessageInvalid(this, _("Num Shares"));
+        mmShowErrorMessage(this, _("Invalid number of shares entered "), _("Error"));
         return;
     }
 
@@ -362,9 +383,14 @@ void mmStockDialog::OnOk(wxCommandEvent& event)
         wxString bufSQL = wxString::Format(wxT("insert into STOCK_V1 (HELDAT, PURCHASEDATE, STOCKNAME, SYMBOL, \
                       NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE,                               \
                       VALUE, COMMISSION)\
-                      values (%d, '%s', '%s', '%s', %d, %f, '%s', %f, %f, %f);"),
-                      accountID_, pdate.c_str(), mmCleanString(stockName).c_str(), mmCleanString(stockSymbol).c_str(), numShares,
-                      pPrice, mmCleanString(notes.c_str()), cPrice, cValue, commission);  
+                      values (%d, '%s', '%s', '%s', %f, %f, '%s', %f, %f, %f);"),
+                      accountID_, pdate.c_str(), mmCleanString(stockName).c_str(), 
+					  mmCleanString(stockSymbol).c_str(), numShares,
+                      pPrice, 
+					  mmCleanString(notes.c_str()), 
+					  cPrice, 
+					  cValue, 
+					  commission);  
 
         int retVal = db_->ExecuteUpdate(bufSQL);
         
@@ -372,7 +398,7 @@ void mmStockDialog::OnOk(wxCommandEvent& event)
     else 
     {
         wxString bufSQL = wxString::Format(wxT("update STOCK_V1 SET HELDAT=%d, PURCHASEDATE='%s', STOCKNAME='%s', SYMBOL='%s', \
-                      NUMSHARES=%d, PURCHASEPRICE=%f, NOTES='%s', CURRENTPRICE=%f,                               \
+                      NUMSHARES=%f, PURCHASEPRICE=%f, NOTES='%s', CURRENTPRICE=%f,                               \
                       VALUE=%f, COMMISSION=%f WHERE STOCKID=%d;"),
                       accountID_, pdate.c_str(), mmCleanString(stockName).c_str(), mmCleanString(stockSymbol).c_str(), numShares,
                       pPrice, mmCleanString(notes.c_str()), cPrice, cValue, commission, stockID_);  

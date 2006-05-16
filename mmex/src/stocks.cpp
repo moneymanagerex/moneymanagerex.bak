@@ -123,7 +123,13 @@ void mmStocksPanel::CreateControls()
         _("Stock Investments"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, 
         wxT("")));
+
+	wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, 
+            ID_PANEL_CHECKING_STATIC_BALHEADER, 
+			_("Total:"), wxDefaultPosition, wxDefaultSize, 0 );
+
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
+	itemBoxSizerVHeader->Add(itemStaticText10, 0, wxALL, 1);
 
     /* ---------------------- */
 
@@ -145,12 +151,24 @@ void mmStocksPanel::CreateControls()
     listCtrlAccount_->InsertColumn(0, _("Held At"));
     wxListItem itemCol;
     itemCol.SetImage(-1);
-    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
+    //itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     itemCol.SetText(_("Share Name"));
     listCtrlAccount_->InsertColumn(1, itemCol);
-    listCtrlAccount_->InsertColumn(2, _("Number of Shares"));
-    listCtrlAccount_->InsertColumn(3, _("Gain/Loss"));
-    listCtrlAccount_->InsertColumn(4, _("Value"));
+	
+    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
+    itemCol.SetText(_("Number of Shares"));
+    
+    listCtrlAccount_->InsertColumn(2, itemCol);
+
+    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
+    itemCol.SetText(_("Gain/Loss"));
+
+    listCtrlAccount_->InsertColumn(3, itemCol);
+
+    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
+    itemCol.SetText(_("Value"));
+
+    listCtrlAccount_->InsertColumn(4, itemCol);
     
     /* See if we can get data from inidb */
      long col0, col1, col2, col3, col4;
@@ -212,6 +230,13 @@ void mmStocksPanel::initVirtualListControl()
     trans_.clear();
 
     mmBEGINSQL_LITE_EXCEPTION;
+
+	double total = mmDBWrapper::getStockInvestmentBalance(db_);
+    wxString balance;
+    mmCurrencyFormatter::formatDoubleToCurrency(total, balance);
+    wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
+    wxString lbl  = wxString::Format(_("Total: %s"), balance);
+    header->SetLabel(lbl);
 
     wxSQLite3StatementBuffer bufSQL;
     bufSQL.Format("select * from STOCK_V1;");

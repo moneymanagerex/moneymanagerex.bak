@@ -58,6 +58,7 @@ public:
     void OnOk(wxCommandEvent& event);
     void OnCancel(wxCommandEvent& event);
     void OnAccountButton(wxCommandEvent& event);
+	void OnStockPriceButton(wxCommandEvent& event);
     
     void fillControls();
     void dataToControls();

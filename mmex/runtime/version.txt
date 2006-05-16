@@ -6,6 +6,11 @@ Version History of Money Manager Ex
 - Disable Right click menu for budget years
 - Add wizard for adding new database
 - Add wizard for adding new account
+- Fix problem where stock investments summary only showed balance from first stock investment
+- Allow fractional number of shares for stocks
+- Change column alignment for stocks panel
+- Add total amount for stocks panel
+- Add ability to launch webpage (hard coded to Google's website for US stocks) for stock symbol
 
 0.5.2.2 (May 9th, 2006)
 - Fix Bug 1482171 Frequency in Budget Entry is not being saved correctly
