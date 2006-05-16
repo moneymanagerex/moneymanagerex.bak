@@ -59,6 +59,7 @@ public:
     static void createBudgetingV1Table(wxSQLite3Database* db);
     static void createBillsDepositsV1Table(wxSQLite3Database* db);
     static void createStockV1Table(wxSQLite3Database* db);
+	static void createAssetsV1Table(wxSQLite3Database* db);
     
     /* Upgrading to new DBs */
     static bool checkDBVersion(wxSQLite3Database* db);
@@ -166,6 +167,11 @@ public:
     /* Stocks API */
     static void deleteStockInvestment(wxSQLite3Database* db, int stockID);
     static double getStockInvestmentBalance(wxSQLite3Database* db);
+
+	/* Assets API */
+	static void deleteAsset(wxSQLite3Database* db, int assetID);
+    static double getAssetBalance(wxSQLite3Database* db);
+	static double getAssetValue(wxSQLite3Database* db, int assetID);
 };
 
 

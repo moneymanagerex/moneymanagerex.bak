@@ -1487,9 +1487,6 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
         _("Opening Database File && Verifying Integrity"), 100, this, 
         wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
     mmDBWrapper::initDB(db_, pgd, appPath);
-    wxThread::Sleep(10);
-    pgd->Update(90);
-    wxThread::Sleep(10);
     pgd->Update(100);
     pgd->Destroy();
 

@@ -130,6 +130,24 @@ void mmDBWrapper::createStockV1Table(wxSQLite3Database* db)
    mmENDSQL_LITE_EXCEPTION;
 }
 
+
+void mmDBWrapper::createAssetsV1Table(wxSQLite3Database* db)
+{
+    mmBEGINSQL_LITE_EXCEPTION;
+    bool valid = db->TableExists(wxT("ASSETS_V1"));
+    if (!valid)
+    {
+        db->ExecuteUpdate(wxT("create table ASSETS_V1(ASSETID integer primary key, \
+                             STARTDATE TEXT NOT NULL, ASSETNAME TEXT, \
+                             VALUE numeric, VALUECHANGE TEXT, NOTES TEXT, VALUECHANGERATE numeric,\
+                             ASSETTYPE TEXT);"));
+        valid = db->TableExists(wxT("ASSETS_V1"));
+        wxASSERT(valid);
+    }
+    
+   mmENDSQL_LITE_EXCEPTION;
+}
+
 void mmDBWrapper::createBillsDepositsV1Table(wxSQLite3Database* db)
 {
     mmBEGINSQL_LITE_EXCEPTION;
@@ -485,7 +503,7 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd, const wxS
 
     /* Create Budgeting_V1 Tables */
     mmDBWrapper::createBudgetingV1Table(db);
-    pgd->Update(70);
+    pgd->Update(75);
 
     /* Create Bills & Deposits V1 Table */
     mmDBWrapper::createBillsDepositsV1Table(db);
@@ -493,7 +511,11 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd, const wxS
 
     /* Create Stock V1 Table */
     mmDBWrapper::createStockV1Table(db);
-    pgd->Update(90);
+    pgd->Update(85);
+
+	/* Create Asset V1 Table */
+	mmDBWrapper::createAssetsV1Table(db);
+	pgd->Update(90);
 
     mmENDSQL_LITE_EXCEPTION;
 }
@@ -1634,4 +1656,85 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db)
     q1.Finalize();
     mmENDSQL_LITE_EXCEPTION;
     return balance;
+}
+
+void mmDBWrapper::deleteAsset(wxSQLite3Database* db, int assetID)
+{
+	mmBEGINSQL_LITE_EXCEPTION;
+	wxSQLite3StatementBuffer bufSQL;
+	bufSQL.Format("delete from ASSETS_V1 where ASSETID=%d;", assetID);
+	db->ExecuteUpdate(bufSQL);
+	mmENDSQL_LITE_EXCEPTION; 
+}
+
+double mmDBWrapper::getAssetBalance(wxSQLite3Database* db)
+{
+	double balance = 0.0;
+    mmBEGINSQL_LITE_EXCEPTION;
+    wxString bufSQL = wxString::Format(wxT("select * from ASSETS_V1;"));
+    wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
+    while (q1.NextRow())
+    {
+        int assetID = q1.GetDouble(wxT("ASSETID"));
+		balance += mmDBWrapper::getAssetValue(db, assetID);
+    }
+    q1.Finalize();
+    mmENDSQL_LITE_EXCEPTION;
+    return balance;
+}
+
+double mmDBWrapper::getAssetValue(wxSQLite3Database* db, int assetID)
+{
+	double assetValue = 0.0;
+    mmBEGINSQL_LITE_EXCEPTION;
+	wxSQLite3StatementBuffer bufSQL;
+    bufSQL.Format("select * from ASSETS_V1 where ASSETID=%d;", assetID);
+    wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
+    if (q1.NextRow())
+    {
+		wxString valChange = q1.GetString(wxT("VALUECHANGE"));
+		double value = q1.GetDouble(wxT("VALUE"));
+		double valueChangeRate = q1.GetDouble(wxT("VALUECHANGERATE"));
+        wxString startDateStr = q1.GetString(wxT("STARTDATE"));
+        wxDateTime startDate = mmGetStorageStringAsDate(startDateStr);
+		wxDateTime todayDate = wxDateTime::Now();
+
+		if (valChange == wxT("None"))
+			assetValue = value;
+		else if (valChange == wxT("Appreciates"))
+		{
+			if (todayDate > startDate)
+			{
+				int numYears = todayDate.GetYear() - startDate.GetYear();
+				if (numYears > 0)
+				{
+					double appreciation = numYears * valueChangeRate * value / 100;
+					assetValue = value + appreciation;
+				}
+			}
+			else
+				assetValue = value;
+		}
+		else if (valChange == wxT("Depreciates"))
+		{
+			if (todayDate > startDate)
+			{
+				int numYears = todayDate.GetYear() - startDate.GetYear();
+				if (numYears > 0)
+				{
+					double depreciation = numYears * valueChangeRate * value / 100;
+					assetValue = value - depreciation;
+				}
+			}
+			else
+				assetValue = value;
+		}
+		else
+		{
+			wxASSERT(false);
+		}
+    }
+    q1.Finalize();
+    mmENDSQL_LITE_EXCEPTION;
+    return assetValue;
 }
