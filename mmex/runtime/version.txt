@@ -3,6 +3,9 @@ Version History of Money Manager Ex
 0.5.5.0 (May ??, 2006)
 - Fix 1480735 : Add ability to change languages using the options dialog
 - Fix 1488715 : Crash when editing first stock investment using 'edit' button
+- Disable Right click menu for budget years
+- Add wizard for adding new database
+- Add wizard for adding new account
 
 0.5.2.2 (May 9th, 2006)
 - Fix Bug 1482171 Frequency in Budget Entry is not being saved correctly

@@ -412,8 +412,10 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& event)
                                                mmCleanString(acctName).c_str(), acctTypeStr.c_str(), 
                                                mmCleanString(textCtrlAcctNumber->GetValue()).c_str(),  
                                                acctStatusStr.c_str(), mmCleanString(textCtrlNotes->GetValue()).c_str(), 
-                                               mmCleanString(textCtrlHeldAt->GetValue()).c_str(), mmCleanString(textCtrlWebsite->GetValue()).c_str(),
-                                               mmCleanString(textCtrlContact->GetValue()).c_str(), mmCleanString(textCtrlAccess->GetValue()).c_str(),
+                                               mmCleanString(textCtrlHeldAt->GetValue()).c_str(), 
+                                               mmCleanString(textCtrlWebsite->GetValue()).c_str(),
+                                               mmCleanString(textCtrlContact->GetValue()).c_str(), 
+                                               mmCleanString(textCtrlAccess->GetValue()).c_str(),
                                                val, checkVal.c_str(), currencyID_);
 
         int retVal = db_->ExecuteUpdate(bufSQL);

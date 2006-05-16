@@ -179,7 +179,11 @@ void mmDBWrapper::loadCurrencies(wxSQLite3Database* db, const wxString& fpath)
     mmBEGINSQL_LITE_EXCEPTION;
 
     wxString fName = fpath + MMEX_CURRENCYDB_FNAME;
+    wxASSERT(wxFileName::FileExists(fName));
+    
     inidb->Open(fName);
+    bool valid = inidb->TableExists(wxT("CURRENCYFORMATS_V1"));
+    wxASSERT(valid);
 
     wxSQLite3StatementBuffer bufSQL;
     bufSQL.Format("select * from CURRENCYFORMATS_V1");

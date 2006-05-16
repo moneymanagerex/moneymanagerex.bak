@@ -60,10 +60,29 @@
 #include "../resources/accounttree.xpm"
 #include "../resources/help.xpm"
 #include "../resources/stock.xpm"
+#include "../resources/print.xpm"
+#include "../resources/printpreview.xpm"
+#include "../resources/printsetup.xpm"
+#include "../resources/saveas.xpm"
+#include "../resources/exit.xpm"
+#include "../resources/options.xpm"
+#include "../resources/about.xpm"
+#include "../resources/issues.xpm"
+#include "../resources/assets.xpm"
+#include "../resources/addacctwiz.xpm"
 /*******************************************************/
 #define MMEX_INIDB_FNAME wxT("/mmexini.db3")
 #define MMEX_SPLASH_FNAME wxT("/splash.png")
 /*******************************************************/
+
+BEGIN_EVENT_TABLE(mmNewDatabaseWizard, wxWizard)
+    EVT_WIZARD_CANCEL(wxID_ANY,   mmGUIFrame::OnWizardCancel)
+END_EVENT_TABLE()
+
+BEGIN_EVENT_TABLE(wxNewDatabaseWizardPage1, wxWizardPageSimple)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_CURRENCY, wxNewDatabaseWizardPage1::OnCurrency)
+END_EVENT_TABLE()
+
 BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_NEW, mmGUIFrame::OnNew)
     EVT_MENU(MENU_OPEN, mmGUIFrame::OnOpen)
@@ -99,6 +118,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
 
     EVT_TREE_ITEM_RIGHT_CLICK(ID_NAVTREECTRL, mmGUIFrame::OnItemRightClick)
     EVT_TREE_SEL_CHANGED(ID_NAVTREECTRL, mmGUIFrame::OnSelChanged)
+
 END_EVENT_TABLE()
 /*******************************************************/
 IMPLEMENT_APP(mmGUIApp)
@@ -160,6 +180,93 @@ bool mmGUIApp::OnInit()
     // application would exit immediately.
     return TRUE;
 }
+/*******************************************************/
+mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, wxSQLite3Database* db)
+         :wxWizard(frame,wxID_ANY,_("Add Account Wizard"),
+                   wxBitmap(addacctwiz_xpm),wxDefaultPosition,
+                   wxDEFAULT_DIALOG_STYLE), db_(db), acctID_(-1)
+{
+    // a wizard page may be either an object of predefined class
+    page1 = new wxWizardPageSimple(this);
+
+    /* wxStaticText *text = */ new wxStaticText(page1, wxID_ANY,
+             _("Money Manager models all transactions as belonging to accounts.\n\n The next pages will help you create a new account.\n\n\To help you get started, begin by making a list of all\nfinancial institutions where you hold an account.")
+        );
+
+    wxAddAccountPage1* page2 = new wxAddAccountPage1(this);
+    wxAddAccountPage2* page3 = new wxAddAccountPage2(this);
+
+    // set the page order using a convenience function - could also use
+    // SetNext/Prev directly as below
+    wxWizardPageSimple::Chain(page1, page2);
+
+     wxWizardPageSimple::Chain(page2, page3);
+
+    // allow the wizard to size itself around the pages
+    GetPageAreaSizer()->Add(page1);
+}
+
+void mmAddAccountWizard::RunIt(bool modal)
+{
+    if ( modal )
+    {
+        if ( RunWizard(page1) )
+        {
+            // Success
+        }
+
+        Destroy();
+    }
+    else
+    {
+        FinishLayout();
+        ShowPage(page1);
+        Show(true);
+    }
+}
+
+
+mmNewDatabaseWizard::mmNewDatabaseWizard(wxFrame *frame, wxSQLite3Database* db)
+         :wxWizard(frame,wxID_ANY,_("New Database Wizard"),
+                   wxBitmap(addacctwiz_xpm),wxDefaultPosition,
+                   wxDEFAULT_DIALOG_STYLE), db_(db)
+{
+    // a wizard page may be either an object of predefined class
+    page1 = new wxWizardPageSimple(this);
+
+    /* wxStaticText *text = */ new wxStaticText(page1, wxID_ANY,
+             _("The next pages will help you create a new database.\n\nYour money manager database file is stored with an extension \nof .mmb. Make sure to make backups of this \nfile and to store it carefully as it contains important \nfinancial information.")
+        );
+
+    wxNewDatabaseWizardPage1* page2 = new wxNewDatabaseWizardPage1(this);
+
+    // set the page order using a convenience function - could also use
+    // SetNext/Prev directly as below
+    wxWizardPageSimple::Chain(page1, page2);
+
+    // allow the wizard to size itself around the pages
+    GetPageAreaSizer()->Add(page1);
+}
+
+void mmNewDatabaseWizard::RunIt(bool modal)
+{
+    if ( modal )
+    {
+        if ( RunWizard(page1) )
+        {
+            // Success
+        }
+
+        Destroy();
+    }
+    else
+    {
+        FinishLayout();
+        ShowPage(page1);
+        Show(true);
+    }
+}
+
 /*******************************************************/
 mmGUIFrame::mmGUIFrame(const wxString& title, 
                        const wxPoint& pos, const wxSize& size)
@@ -331,6 +438,7 @@ void mmGUIFrame::createControls()
     imageList_->Add(wxBitmap(reporttree_xpm));
     imageList_->Add(wxBitmap(help_xpm));
     imageList_->Add(wxBitmap(stock_xpm));
+    imageList_->Add(wxBitmap(assets_xpm));
 
     navTreeCtrl_->AssignImageList(imageList_);
 
@@ -359,7 +467,7 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(stocks, new mmTreeItemData(wxT("Stocks")));
     navTreeCtrl_->SetItemBold(stocks, true);
 
-    wxTreeItemId assets = navTreeCtrl_->AppendItem(root, _("Assets"), 6, 6);
+    wxTreeItemId assets = navTreeCtrl_->AppendItem(root, _("Assets"), 7, 7);
     navTreeCtrl_->SetItemData(assets, new mmTreeItemData(wxT("Assets")));
     navTreeCtrl_->SetItemBold(assets, true);
 
@@ -1007,43 +1115,48 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
 {
     mmTreeItemData* iData = dynamic_cast<mmTreeItemData*>(navTreeCtrl_->GetItemData(id));
     selectedItemData_ = iData;
-    if (iData)
+
+    
+    if (!iData->isStringData())
     {
         int data = iData->getData();
-        mmBEGINSQL_LITE_EXCEPTION;
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
-        if (q1.NextRow())
+        if (!iData->isBudgetingNode())
         {
-            wxString acctType = q1.GetString(wxT("ACCOUNTTYPE"));
-            q1.Finalize();
-            if (acctType == wxT("Checking"))
+            mmBEGINSQL_LITE_EXCEPTION;
+            wxSQLite3StatementBuffer bufSQL;
+            bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
+            wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+            if (q1.NextRow())
             {
-                wxMenu menu;
-                menu.Append(MENU_TREEPOPUP_GOTO, _("&Go To.."));
-                menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
-                menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
-                menu.AppendSeparator();
-                menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
-                PopupMenu(&menu, pt);
+                wxString acctType = q1.GetString(wxT("ACCOUNTTYPE"));
+                q1.Finalize();
+                if (acctType == wxT("Checking"))
+                {
+                    wxMenu menu;
+                    menu.Append(MENU_TREEPOPUP_GOTO, _("&Go To.."));
+                    menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
+                    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
+                    menu.AppendSeparator();
+                    menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
+                    PopupMenu(&menu, pt);
+                }
+                else if (acctType == wxT("Investment"))
+                {
+                    wxMenu menu;
+                    menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
+                    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
+                    menu.AppendSeparator();
+                    menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
+                    PopupMenu(&menu, pt);
+                }
             }
-            else if (acctType == wxT("Investment"))
+            else
             {
-                wxMenu menu;
-                menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
-                menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
-                menu.AppendSeparator();
-                menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
-                PopupMenu(&menu, pt);
+                /* cannot find accountid */
+                wxASSERT(true);
             }
+            mmENDSQL_LITE_EXCEPTION;
         }
-        else
-        {
-            /* cannot find accountid */
-            wxASSERT(true);
-        }
-        mmENDSQL_LITE_EXCEPTION;
     }
 }
 
@@ -1126,12 +1239,16 @@ void mmGUIFrame::createHelpPage()
 
 void mmGUIFrame::createMenu()
 {
-	wxBitmap toolBarBitmaps[8];
+	wxBitmap toolBarBitmaps[11];
     toolBarBitmaps[0] = wxBitmap(new_xpm);
     toolBarBitmaps[1] = wxBitmap(open_xpm);
     toolBarBitmaps[2] = wxBitmap(save_xpm);
     toolBarBitmaps[3] = wxBitmap(newacct_xpm);
     toolBarBitmaps[4] = wxBitmap(listview_xpm);
+    toolBarBitmaps[5] = wxBitmap(print_xpm);
+    toolBarBitmaps[6] = wxBitmap(printpreview_xpm);
+    toolBarBitmaps[7] = wxBitmap(printsetup_xpm);
+    
 
     wxMenu *menuFile = new wxMenu;
 	wxMenuItem* menuItemNew = new wxMenuItem(menuFile, MENU_NEW, 
@@ -1149,7 +1266,12 @@ void mmGUIFrame::createMenu()
 	menuFile->Append(menuItemNew);
     menuFile->Append(menuItemOpen);
 	menuFile->Append(menuItemSave);
-    menuFile->Append(MENU_SAVE_AS, _("Save &As"), _("Save Money Manager Database As"));
+
+    wxMenuItem* menuItemSaveAs = new wxMenuItem(menuFile, MENU_SAVE_AS, 
+		 _("Save &As"), _("Save Money Manager Database As"));
+	menuItemSaveAs->SetBitmaps(wxBitmap(saveas_xpm));
+    menuFile->Append(menuItemSaveAs);
+
     menuFile->AppendSeparator();
     
     wxMenu* exportMenu = new wxMenu;
@@ -1163,17 +1285,32 @@ void mmGUIFrame::createMenu()
     menuFile->Append(MENU_IMPORT, _("Import"), importMenu);
 
     menuFile->AppendSeparator();
-    menuFile->Append(MENU_PRINT_PAGE_SETUP, _("Page Setup..."), _("Setup page printing options"));
+
+    
+	wxMenuItem* menuItemPrintSetup = new wxMenuItem(menuFile, MENU_PRINT_PAGE_SETUP, 
+	   _("Page Setup..."), _("Setup page printing options"));
+	menuItemPrintSetup->SetBitmaps(toolBarBitmaps[7]);
+    menuFile->Append(menuItemPrintSetup); 
+     
     wxMenu* printPreviewMenu = new wxMenu;
-    printPreviewMenu->Append(MENU_PRINT_PREVIEW_REPORT, _("Current View"), _("Preview current report"));
+    printPreviewMenu->Append(MENU_PRINT_PREVIEW_REPORT, 
+        _("Current View"), _("Preview current report"));
+
     menuFile->Append(MENU_PRINT_PREVIEW, _("Print Preview..."), printPreviewMenu);
 
     wxMenu* printMenu = new wxMenu;
-    printMenu->Append(MENU_PRINT_REPORT, _("Current View"), _("Print current report"));
-    menuFile->Append(MENU_PRINT, _("Print..."), printMenu);
+    wxMenuItem* menuItemPrintView = new wxMenuItem(printMenu, MENU_PRINT_REPORT, 
+		_("Current View"), _("Print current report"));
+    printMenu->Append(menuItemPrintView);
+
+    menuFile->Append( MENU_PRINT, _("Print..."),  printMenu);
 
     menuFile->AppendSeparator();
-    menuFile->Append(MENU_QUIT, _("E&xit\tAlt-X"), _("Quit this program"));
+
+    wxMenuItem* menuItemQuit = new wxMenuItem(menuFile, MENU_QUIT, 
+		_("E&xit\tAlt-X"), _("Quit this program"));
+	menuItemQuit->SetBitmaps(wxBitmap(exit_xpm));
+    menuFile->Append(menuItemQuit);
    
     wxMenu *menuAccounts = new wxMenu;
 
@@ -1189,23 +1326,58 @@ void mmGUIFrame::createMenu()
     menuAccounts->Append(menuItemAcctList); 
 
     wxMenu *menuTools = new wxMenu;
+
     menuTools->Append(MENU_ORGCATEGS, _("Organize &Categories"), _("Organize Categories"));
+
     menuTools->Append(MENU_ORGPAYEE, _("Organize &Payees"), _("Organize Payees"));
+
     menuTools->Append(MENU_CURRENCY, _("Organize Currency"), _("Organize Currency"));
-    menuTools->Append(MENU_BUDGETSETUPDIALOG, _("Budget Setup"), _("Budget Setup"));
-    menuTools->Append(MENU_BILLSDEPOSITS, _("Bills && Deposits"), _("Bills && Deposits"));
-    menuTools->Append(MENU_STOCKS, _("Stock Investments"), _("Stock Investments"));
+
+    wxMenuItem* menuItemBudgeting = new wxMenuItem(menuTools, MENU_BUDGETSETUPDIALOG, 
+		  _("Budget Setup"), _("Budget Setup"));
+	menuItemBudgeting->SetBitmaps(wxBitmap(budgeting_xpm));
+    menuTools->Append(menuItemBudgeting); 
+
+    wxMenuItem* menuItemBillsDeposits = new wxMenuItem(menuTools, MENU_BILLSDEPOSITS, 
+		 _("Bills && Deposits"), _("Bills && Deposits"));
+	menuItemBillsDeposits->SetBitmaps(wxBitmap(billsdeposits_xpm));
+    menuTools->Append(menuItemBillsDeposits); 
+
+    wxMenuItem* menuItemStocks = new wxMenuItem(menuTools, MENU_STOCKS, 
+		_("Stock Investments"), _("Stock Investments"));
+	menuItemStocks->SetBitmaps(wxBitmap(stock_xpm));
+    menuTools->Append(menuItemStocks);
+
     menuTools->AppendSeparator();
-    menuTools->Append(MENU_OPTIONS, _("&Options"), _("Money Manager Options"));
+
+    wxMenuItem* menuItemOptions = new wxMenuItem(menuTools, MENU_OPTIONS, 
+		  _("&Options"), _("Money Manager Options"));
+	menuItemOptions->SetBitmaps(wxBitmap(options_xpm));
+    menuTools->Append(menuItemOptions);
 
     wxMenu *menuHelp = new wxMenu;
-    menuHelp->Append(MENU_HELP, _("&Help\tCtrl-F1"), _("Money Manager Help"));
+
+    wxMenuItem* menuItemHelp = new wxMenuItem(menuTools, MENU_HELP, 
+		 _("&Help\tCtrl-F1"), _("Money Manager Help"));
+	menuItemHelp->SetBitmaps(wxBitmap(help_xpm));
+    menuHelp->Append(menuItemHelp);
+
     menuHelp->Append(MENU_SHOW_APPSTART, _("Show App Start Dialog"), _("App Start Dialog"));
     menuHelp->AppendSeparator();
     menuHelp->Append(MENU_CHECKUPDATE, _("Check for &Updates"), _("Check For Updates"));
-    menuHelp->Append(MENU_REPORTISSUES, _("Report Issues or Feedback"), _("Send email through the mailing list to report issues with the software."));
-    menuHelp->Append(MENU_ANNOUNCEMENTMAILING, _("Be notified of new releases"), _("Sign up for the announcement mailing list"));
-    menuHelp->Append(MENU_ABOUT, _("&About..."), _("Show about dialog"));
+
+    wxMenuItem* menuItemReportIssues = new wxMenuItem(menuTools, MENU_REPORTISSUES, 
+	    _("Report Issues or Feedback"), _("Send email through the mailing list to report issues with the software."));
+	menuItemReportIssues->SetBitmaps(wxBitmap(issues_xpm));
+    menuHelp->Append(menuItemReportIssues);
+
+    menuHelp->Append(MENU_ANNOUNCEMENTMAILING, 
+        _("Be notified of new releases"), _("Sign up for the announcement mailing list"));
+
+     wxMenuItem* menuItemAbout = new wxMenuItem(menuTools, MENU_ABOUT, 
+	   _("&About..."), _("Show about dialog"));
+	menuItemAbout->SetBitmaps(wxBitmap(about_xpm));
+    menuHelp->Append(menuItemAbout);
     
     menuBar_ = new wxMenuBar;
     menuBar_->Append(menuFile, _("&File"));
@@ -1276,19 +1448,13 @@ void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
         db_->Open(fileName);
 
         openDataBase(fileName);
-        
-        mmShowErrorMessage(this, 
-    _("You have created a new database.\nBegin by setting the base currency for the database"), 
-    _("Set Options"));
-        mmOptionsDialog *dlg = new mmOptionsDialog(db_, inidb_, this);
-        dlg->ShowModal();
-        dlg->Destroy();
+
+        mmNewDatabaseWizard* wizard = new mmNewDatabaseWizard(this, db_);
+        wizard->RunIt(true);
 
         mmDBWrapper::loadBaseCurrencySettings(db_);
 
         /* Jump to new account creation screen */
-        mmShowErrorMessage(this, _("There are no accounts.\nBegin by creating a new account"), 
-            _("Create New Account"));
         wxCommandEvent evt;
         OnNewAccount(evt);
         return;
@@ -1441,13 +1607,21 @@ void mmGUIFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
     
 void mmGUIFrame::OnNewAccount(wxCommandEvent& event)
 {
-    mmNewAcctDialog *dlg = new mmNewAcctDialog(db_, true, 0, this);
-    if ( dlg->ShowModal() == wxID_OK )
+    mmAddAccountWizard* wizard = new mmAddAccountWizard(this, db_);
+    wizard->RunIt(true);
+
+    if (wizard->acctID_ != -1)
     {
+        mmNewAcctDialog *dlg = new mmNewAcctDialog(db_, false, wizard->acctID_, this);
+        if ( dlg->ShowModal() == wxID_OK )
+        {
+            
+        }
         updateNavTreeControl();    
+        dlg->Destroy();
     }
     
-    dlg->Destroy();
+  
     /* Currency Options might have changed so refresh */
     createHomePage();
 }
@@ -1665,4 +1839,9 @@ void mmGUIFrame::OnCurrency(wxCommandEvent& event)
     {
     }
     dlg->Destroy();
+}
+
+void mmGUIFrame::OnWizardCancel(wxWizardEvent& event)
+{
+     event.Veto();
 }
