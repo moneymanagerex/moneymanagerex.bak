@@ -90,7 +90,9 @@ class mmStocksPanel : public mmPanelBase
     DECLARE_EVENT_TABLE()
 
 public:
-    mmStocksPanel( wxSQLite3Database* db, wxSQLite3Database* inidb, 
+    mmStocksPanel( wxSQLite3Database* db, 
+		    wxSQLite3Database* inidb, 
+			int accountID,
             wxWindow *parent,
             wxWindowID winid = wxID_ANY,
             const wxPoint& pos = wxDefaultPosition,
@@ -129,6 +131,7 @@ public:
     stocksListCtrl* listCtrlAccount_;
     wxSQLite3Database* inidb_;
     wxImageList* m_imageList;
+	int accountID_;
 };
 
 #endif

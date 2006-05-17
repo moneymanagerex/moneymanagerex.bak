@@ -48,10 +48,11 @@ BEGIN_EVENT_TABLE(stocksListCtrl, wxListCtrl)
 END_EVENT_TABLE()
 /*******************************************************/
 mmStocksPanel::mmStocksPanel(wxSQLite3Database* db, wxSQLite3Database* inidb,
+							 int accountID,
             wxWindow *parent,
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
             const wxString& name )
-            : db_(db), inidb_(inidb), m_imageList(0)
+            : db_(db), inidb_(inidb), m_imageList(0), accountID_(accountID)
 {
     
     Create(parent, winid, pos, size, style, name);
@@ -231,15 +232,30 @@ void mmStocksPanel::initVirtualListControl()
 
     mmBEGINSQL_LITE_EXCEPTION;
 
+	if (accountID_ != -1)
+	{
+		wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_BD_STATIC_HEADER);
+		wxString str = mmDBWrapper::getAccountName(db_, accountID_);
+		header->SetLabel(_("Stock Investments: ") + str);
+	}
+    
 	double total = mmDBWrapper::getStockInvestmentBalance(db_);
+	if (accountID_ != -1)
+	{
+		total = mmDBWrapper::getStockInvestmentBalance(db_, accountID_);
+	}
+
     wxString balance;
     mmCurrencyFormatter::formatDoubleToCurrency(total, balance);
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
     wxString lbl  = wxString::Format(_("Total: %s"), balance);
     header->SetLabel(lbl);
 
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from STOCK_V1;");
+	wxSQLite3StatementBuffer bufSQL;
+	if (accountID_ == -1)    
+		bufSQL.Format("select * from STOCK_V1;");
+	else
+		bufSQL.Format("select * from STOCK_V1 where HELDAT=%d;", accountID_);
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
 
     int ct = 0;

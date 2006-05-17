@@ -105,15 +105,11 @@ void mmNewAcctDialog::fillControlsWithData()
         textCtrl->SetValue(q1.GetString(wxT("NOTES")));
 
         wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
-        itemAcctType->Enable(false);
-#if 0   // disable changing account type    
-
-        wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
         if (q1.GetString(wxT("ACCOUNTTYPE")) == wxT("Checking"))
             itemAcctType->SetSelection(ACCT_TYPE_CHECKING);
         else
             itemAcctType->SetSelection(ACCT_TYPE_INVESTMENT);
-#endif
+		itemAcctType->Enable(false);
 
         wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTSTATUS);
         choice->SetSelection(ACCT_STATUS_OPEN);

@@ -1,5 +1,9 @@
 Version History of Money Manager Ex
 
+0.5.5.1 (May 17, 2006)
+- Fix add account, and then edit problem for stock accounts
+- Clicking stock account nodes shows only stocks from those stock accounts
+
 0.5.5.0 (May 16, 2006)
 - Add ability to store fixed assets that can depreciate or appreciate over time.
 - Fix 1480735 : Add ability to change languages using the options dialog

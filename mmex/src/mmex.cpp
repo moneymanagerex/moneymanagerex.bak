@@ -705,15 +705,20 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                 }
                 else
                 {
-#if 0
-                     mmNewAcctDialog *dlg = new mmNewAcctDialog(db_, false, data, this);
-                     if ( dlg->ShowModal() == wxID_OK )
-                     {
-                         createHomePage();
-                         updateNavTreeControl();      
-                     }
-#endif
-                }
+					 Freeze();
+					homePanel->DestroyChildren();
+					homePanel->SetSizer(NULL);
+
+					wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
+					homePanel->SetSizer(itemBoxSizer1);
+
+					panelCurrent_ = new mmStocksPanel(db_, inidb_, data, homePanel, ID_PANEL3, 
+						wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+					itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+
+					homePanel->Layout();
+					Thaw();
+				}
             }
             else
             {
@@ -1836,7 +1841,7 @@ void mmGUIFrame::OnStocks(wxCommandEvent& event)
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
     
-    panelCurrent_ = new mmStocksPanel(db_, inidb_, homePanel, ID_PANEL3, 
+    panelCurrent_ = new mmStocksPanel(db_, inidb_, -1, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 

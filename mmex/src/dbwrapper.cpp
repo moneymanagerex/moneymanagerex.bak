@@ -1658,6 +1658,25 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db)
     return balance;
 }
 
+double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int accountID)
+{
+	wxASSERT(accountID != -1);
+
+    double balance = 0.0;
+    mmBEGINSQL_LITE_EXCEPTION;
+	wxSQLite3StatementBuffer bufSQL;
+    bufSQL.Format("select * from STOCK_V1 where HELDAT=%d;", accountID);
+    wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
+    while (q1.NextRow())
+    {
+        double value = q1.GetDouble(wxT("VALUE"));
+        balance += value;
+    }
+    q1.Finalize();
+    mmENDSQL_LITE_EXCEPTION;
+    return balance;
+}
+
 void mmDBWrapper::deleteAsset(wxSQLite3Database* db, int assetID)
 {
 	mmBEGINSQL_LITE_EXCEPTION;
