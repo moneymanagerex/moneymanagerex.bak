@@ -372,6 +372,7 @@ public:
     void OnQuit(wxCommandEvent& event);
     void OnBillsDeposits(wxCommandEvent& event);
     void OnStocks(wxCommandEvent& event);
+    void OnAssets(wxCommandEvent& event);
 
     void OnNewAccount(wxCommandEvent& event);
     void OnAccountList(wxCommandEvent& event);

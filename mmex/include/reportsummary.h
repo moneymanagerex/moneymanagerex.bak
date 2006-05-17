@@ -88,6 +88,7 @@ public:
         hb.endTable();
         mmENDSQL_LITE_EXCEPTION
 
+        /* Stocks */
         double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_);
         wxString stockBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
@@ -98,7 +99,18 @@ public:
         hb.addHeader(7, dispStr);
         hb.addLineBreak();
 
+        /* Assets */
+        double assetBalance = mmDBWrapper::getAssetBalance(db_);
+        wxString assetBalanceStr;
+        mmDBWrapper::loadBaseCurrencySettings(db_);
+        mmCurrencyFormatter::formatDoubleToCurrency(assetBalance, assetBalanceStr);
+        dispStr = _("Assets :") + assetBalanceStr; 
+        hb.addHeader(7, dispStr);
+        hb.addLineBreak();
+
+
         tBalance += stockBalance;
+        tBalance += assetBalance;
         wxString tBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
         mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
