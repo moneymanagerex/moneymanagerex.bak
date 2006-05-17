@@ -375,6 +375,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\assetdialog.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\assets.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\bddialog.cpp"
 				>
 			</File>
@@ -481,6 +489,14 @@
 			</File>
 			<File
 				RelativePath=".\include\appstartdialog.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\assetdialog.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\assets.h"
 				>
 			</File>
 			<File
