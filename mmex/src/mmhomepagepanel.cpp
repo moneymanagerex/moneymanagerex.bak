@@ -137,6 +137,7 @@ void mmHomePagePanel::updateAccounts()
     mmENDSQL_LITE_EXCEPTION;
 
 
+    /* Stocks */
     double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_);
     wxString stockBalanceStr;
     mmDBWrapper::loadBaseCurrencySettings(db_);
@@ -148,8 +149,22 @@ void mmHomePagePanel::updateAccounts()
     hb.addRow(data, wxT(" bgcolor=\"#D3EFF6\" "));
 
     tBalance += stockBalance;
+
+    /* Assets */
+    double assetBalance = mmDBWrapper::getAssetBalance(db_);
+    wxString assetBalanceStr;
+    mmDBWrapper::loadBaseCurrencySettings(db_);
+    mmCurrencyFormatter::formatDoubleToCurrency(assetBalance, assetBalanceStr);
+
+    data.clear();
+    data.push_back(_("Assets :"));
+    data.push_back(assetBalanceStr);
+    hb.addRow(data, wxT(" bgcolor=\"#D3EFF4\" "));
+    tBalance += assetBalance;
+    
     wxString tBalanceStr;
     mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
+
 
     hb.addHTML(wxT("<tr bgcolor=\"#DCEDD5\" ><td>") + wxString(_("Total of Accounts :")) + wxString(wxT("</td><td><b>")));
     hb.addHTML(tBalanceStr);

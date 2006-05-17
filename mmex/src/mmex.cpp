@@ -25,6 +25,7 @@
 #include "mmreportspanel.h"
 #include "mmhelppanel.h"
 #include "stocks.h"
+#include "assets.h"
 
 #include "reportbase.h"
 #include "reportsummary.h"
@@ -110,6 +111,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_EXPORT_HTML, mmGUIFrame::OnExportToHtml)
     EVT_MENU(MENU_BILLSDEPOSITS, mmGUIFrame::OnBillsDeposits)
     EVT_MENU(MENU_STOCKS, mmGUIFrame::OnStocks)
+    EVT_MENU(MENU_ASSETS, mmGUIFrame::OnAssets)
     EVT_MENU(MENU_CURRENCY, mmGUIFrame::OnCurrency)
     EVT_MENU(MENU_TREEPOPUP_LAUNCHWEBSITE, mmGUIFrame::OnLaunchAccountWebsite)
 
@@ -190,7 +192,7 @@ mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, wxSQLite3Database* db)
     page1 = new wxWizardPageSimple(this);
 
     /* wxStaticText *text = */ new wxStaticText(page1, wxID_ANY,
-             _("Money Manager models all transactions as belonging to accounts.\n\n The next pages will help you create a new account.\n\n\To help you get started, begin by making a list of all\nfinancial institutions where you hold an account.")
+             _("Money Manager models all transactions as belonging to accounts.\n\n The next pages will help you create a new account.\n\nTo help you get started, begin by making a list of all\nfinancial institutions where you hold an account.")
         );
 
     wxAddAccountPage1* page2 = new wxAddAccountPage1(this);
@@ -979,6 +981,13 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
             AddPendingEvent(evt);
         }
+
+        if (iData->getString() == wxT("Assets"))
+        {
+            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
+            AddPendingEvent(evt);
+        }
+
     }
 }
 
@@ -1347,6 +1356,11 @@ void mmGUIFrame::createMenu()
 		_("Stock Investments"), _("Stock Investments"));
 	menuItemStocks->SetBitmaps(wxBitmap(stock_xpm));
     menuTools->Append(menuItemStocks);
+
+    wxMenuItem* menuItemAssets = new wxMenuItem(menuTools, MENU_ASSETS, 
+		_("Assets"), _("Assets"));
+	menuItemAssets->SetBitmaps(wxBitmap(assets_xpm));
+    menuTools->Append(menuItemAssets);
 
     menuTools->AppendSeparator();
 
@@ -1823,6 +1837,21 @@ void mmGUIFrame::OnStocks(wxCommandEvent& event)
     homePanel->SetSizer(itemBoxSizer1);
     
     panelCurrent_ = new mmStocksPanel(db_, inidb_, homePanel, ID_PANEL3, 
+        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+
+    homePanel->Layout();
+}
+
+void mmGUIFrame::OnAssets(wxCommandEvent& event)
+{
+    homePanel->DestroyChildren();
+    homePanel->SetSizer(NULL);
+
+    wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
+    homePanel->SetSizer(itemBoxSizer1);
+    
+    panelCurrent_ = new mmAssetsPanel(db_, inidb_, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
