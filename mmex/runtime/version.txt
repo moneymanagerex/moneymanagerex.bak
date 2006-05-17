@@ -1,6 +1,6 @@
 Version History of Money Manager Ex
 
-0.5.5.0 (May ??, 2006)
+0.5.5.0 (May 16, 2006)
 - Add ability to store fixed assets that can depreciate or appreciate over time.
 - Fix 1480735 : Add ability to change languages using the options dialog
 - Fix 1488715 : Crash when editing first stock investment using 'edit' button
