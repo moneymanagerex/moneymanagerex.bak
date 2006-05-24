@@ -147,7 +147,7 @@ void mmStocksPanel::CreateControls()
     listCtrlAccount_ = new stocksListCtrl( this, itemSplitterWindow10, 
         ID_PANEL_STOCKS_LISTCTRL, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    listCtrlAccount_->SetBackgroundColour(wxColour(247, 247, 239));
+    listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     listCtrlAccount_->InsertColumn(0, _("Held At"));
     wxListItem itemCol;
@@ -200,7 +200,7 @@ void mmStocksPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemPanel12->SetSizer(itemBoxSizer4);
-    itemPanel12->SetBackgroundColour(wxColour(232, 237, 230));
+    itemPanel12->SetBackgroundColour(mmColors::listDetailsPanelColor);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);

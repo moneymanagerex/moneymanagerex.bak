@@ -33,15 +33,19 @@ class mmHtmlWindow: public wxHtmlWindow
     DECLARE_EVENT_TABLE()
 
 public:
-    mmHtmlWindow(wxWindow *parent,
+    mmHtmlWindow(wxWindow *parent,  mmGUIFrame* frame,
         const wxWindowID id, const wxPoint& pos,
         const wxSize& size, long style)
-        : wxHtmlWindow(parent, id, pos, size, style)
+        : wxHtmlWindow(parent, id, pos, size, style),
+          frame_(frame)
     {}
 
 public:
     /* required overrides for virtual style list control */
-   // virtual void OnLinkClicked(const wxHtmlLinkInfo& link);
+   virtual void OnLinkClicked(const wxHtmlLinkInfo& link);
+
+private:
+     mmGUIFrame* frame_;
 };
 
 class mmHomePagePanel : public mmPanelBase

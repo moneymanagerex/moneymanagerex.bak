@@ -20,6 +20,7 @@
 
 #include "mmpanelbase.h"
 #include "guiid.h"
+#include "util.h"
 
 class wxListCtrl;
 class wxListEvent;
@@ -36,8 +37,8 @@ public:
         const wxWindowID id, const wxPoint& pos,
         const wxSize& size, long style)
         : wxListCtrl(parent, id, pos, size, style),
-        attr1_(*wxBLACK, *wxLIGHT_GREY, wxNullFont),
-        attr2_(*wxBLACK, *wxWHITE, wxNullFont),
+        attr1_(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont),
+        attr2_(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont),
         cp_(cp),
         selectedIndex_(-1)
     {}

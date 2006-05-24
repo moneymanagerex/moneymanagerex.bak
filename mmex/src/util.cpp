@@ -642,11 +642,91 @@ wxDateTime mmGetStorageStringAsDate(const wxString& str)
     return dt;
 }
 
+wxColour mmGetColourFromString(wxString& str)
+{
+    wxStringTokenizer tkz(str, wxT(","));
+    unsigned char red = 0xFF;
+    unsigned char blue = 0xFF;
+    unsigned char green = 0xFF;
+    if (tkz.HasMoreTokens())
+    {
+        long longVal;
+        tkz.GetNextToken().ToLong(&longVal);
+        red = longVal;
+        if (tkz.HasMoreTokens())
+        {
+            tkz.GetNextToken().ToLong(&longVal);
+            green = longVal;
+            if (tkz.HasMoreTokens())
+            {
+                tkz.GetNextToken().ToLong(&longVal);
+                blue = longVal;
+            }
+        }
+    }
+    return wxColour(red, green, blue);
+}
+
+wxString mmGetStringFromColour(wxColour color)
+{
+    wxString clr = wxString::Format(wxT("%d,%d,%d"), color.Red(), 
+                                            color.Green(), 
+                                            color.Blue());
+    return clr;
+}
+
+void mmLoadColorsFromDatabase(wxSQLite3Database* db_)
+{
+    mmColors::listAlternativeColor0 = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_, 
+                                                wxT("LISTALT0"), wxT("225,237,251")));
+    mmColors::listAlternativeColor1 = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_, 
+                                                wxT("LISTALT1"), wxT("255,255,255")));
+    mmColors::listBackColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_, 
+                                                wxT("LISTBACK"), wxT("255,255,255")));
+    mmColors::navTreeBkColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_, 
+                                                wxT("NAVTREE"), wxT("255,255,255")));
+    mmColors::listBorderColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_, 
+                                                wxT("LISTBORDER"), wxT("0,0,0")));
+    mmColors::listDetailsPanelColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_, 
+                                                wxT("LISTDETAILSPANEL"), wxT("244,247,251")));
+}
+
+void mmSaveColorsToDatabase(wxSQLite3Database* db_)
+{
+    mmDBWrapper::setINISettingValue(db_, wxT("LISTALT0"), 
+        mmGetStringFromColour(mmColors::listAlternativeColor0));
+    mmDBWrapper::setINISettingValue(db_, wxT("LISTALT1"), 
+        mmGetStringFromColour(mmColors::listAlternativeColor1));
+    mmDBWrapper::setINISettingValue(db_, wxT("LISTBACK"), 
+        mmGetStringFromColour(mmColors::listBackColor));
+    mmDBWrapper::setINISettingValue(db_, wxT("NAVTREE"), 
+        mmGetStringFromColour(mmColors::navTreeBkColor));
+    mmDBWrapper::setINISettingValue(db_, wxT("LISTBORDER"), 
+        mmGetStringFromColour(mmColors::listBorderColor));
+     mmDBWrapper::setINISettingValue(db_, wxT("LISTDETAILSPANEL"), 
+        mmGetStringFromColour(mmColors::listDetailsPanelColor));
+}
+
+void mmRestoreDefaultColors()
+{
+    mmColors::listAlternativeColor0 = wxColour(225, 237, 251);
+    mmColors::listAlternativeColor1 = wxColour(255, 255, 255);
+    mmColors::listBackColor = wxColour(255, 255, 255);
+    mmColors::navTreeBkColor = wxColour(255, 255, 255);
+    mmColors::listBorderColor = wxColour(0, 0, 0);
+    mmColors::listDetailsPanelColor = wxColour(244, 247, 251);
+}
+
+/* Set the default colors */
+wxColour mmColors::listAlternativeColor0 = wxColour(225, 237, 251);
+wxColour mmColors::listAlternativeColor1 = wxColour(255, 255, 255);
+wxColour mmColors::listBackColor = wxColour(255, 255, 255);
+wxColour mmColors::navTreeBkColor = wxColour(255, 255, 255);
+wxColour mmColors::listBorderColor = wxColour(0, 0, 0);
+wxColour mmColors::listDetailsPanelColor = wxColour(244, 247, 251);
 
 /* -------------------------------------------- */
 // setup the defaults for US Dollar
-
-
 wxString  mmCurrencyFormatter::pfx_symbol     = wxT("$");
 wxString  mmCurrencyFormatter::sfx_symbol      = wxT("");
 wxChar    mmCurrencyFormatter::decimal_point   = wxT('.');

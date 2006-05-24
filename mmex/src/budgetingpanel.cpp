@@ -209,14 +209,23 @@ void mmBudgetingPanel::CreateControls()
     listCtrlAccount_ = new budgetingListCtrl( this, itemDialog1, 
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    listCtrlAccount_->SetBackgroundColour(wxColour(247, 247, 239));
+    listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     listCtrlAccount_->InsertColumn(0, _("Category  "));
     listCtrlAccount_->InsertColumn(1, _("Sub Category"));
     listCtrlAccount_->InsertColumn(2, _("Frequency"));
-    listCtrlAccount_->InsertColumn(3, _("Amount"));
-    listCtrlAccount_->InsertColumn(4, _("Estimated"));
-    listCtrlAccount_->InsertColumn(5, _("Actual"));
+
+    wxListItem itemCol;
+    itemCol.SetImage(-1);
+    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
+    itemCol.SetText(_("Amount"));
+    listCtrlAccount_->InsertColumn(3, itemCol);
+
+    itemCol.SetText(_("Estimated"));
+    listCtrlAccount_->InsertColumn(4, itemCol);
+
+    itemCol.SetText(_("Actual"));
+    listCtrlAccount_->InsertColumn(5, itemCol);
 
     /* See if we can get data from inidb */
      long col0, col1, col2, col3, col4, col5;
@@ -287,6 +296,29 @@ void mmBudgetingPanel::initVirtualListControl()
         {
             th.estimated_ = th.amt_;
         }
+        else if (th.period_ == wxT("Weekly"))
+        {
+            th.estimated_ = th.amt_ * 52;
+        }
+        else if (th.period_ == wxT("Bi-Weekly"))
+        {
+            th.estimated_ = th.amt_ * 26;
+        }
+        else if (th.period_ == wxT("Bi-Monthly"))
+        {
+            th.estimated_ = th.amt_ * 6;
+        }
+         else if (th.period_ == wxT("Quarterly"))
+        {
+            th.estimated_ = th.amt_ * 4;
+        }
+           else if (th.period_ == wxT("Half-Yearly"))
+        {
+            th.estimated_ = th.amt_ * 2;
+        }
+        else
+            wxASSERT(true);
+
         if (th.estimated_ < 0)
             estExpenses += th.estimated_;
         else
@@ -346,6 +378,29 @@ void mmBudgetingPanel::initVirtualListControl()
             {
                 thsub.estimated_ = thsub.amt_;
             }
+            else if (thsub.period_ == wxT("Weekly"))
+            {
+                thsub.estimated_ = thsub.amt_ * 52;
+            }
+            else if (thsub.period_ == wxT("Bi-Weekly"))
+            {
+                thsub.estimated_ = thsub.amt_ * 26;
+            }
+            else if (thsub.period_ == wxT("Bi-Monthly"))
+            {
+                thsub.estimated_ = thsub.amt_ * 6;
+            }
+            else if (thsub.period_ == wxT("Quarterly"))
+            {
+                thsub.estimated_ = thsub.amt_ * 4;
+            }
+            else if (thsub.period_ == wxT("Half-Yearly"))
+            {
+                thsub.estimated_ = thsub.amt_ * 2;
+            }
+            else
+                wxASSERT(true);
+
             mmCurrencyFormatter::formatDoubleToCurrencyEdit(thsub.estimated_, thsub.estimatedStr_);
             if (thsub.estimated_ < 0)
                 estExpenses += thsub.estimated_;

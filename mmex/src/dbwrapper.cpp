@@ -1757,3 +1757,4 @@ double mmDBWrapper::getAssetValue(wxSQLite3Database* db, int assetID)
     mmENDSQL_LITE_EXCEPTION;
     return assetValue;
 }
+

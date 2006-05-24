@@ -20,6 +20,7 @@
 #include "defs.h"
 #include "currencydialog.h"
 #include "util.h"
+#include <wx/colordlg.h>
 
 #define VIEW_ALL       0
 #define VIEW_OPEN      1
@@ -31,7 +32,16 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_CURRENCY, mmOptionsDialog::OnCurrency)
     EVT_CHOICE(ID_DIALOG_OPTIONS_DATE_FORMAT, mmOptionsDialog::OnDateFormatChanged)  
     EVT_CHOICE(ID_DIALOG_OPTIONS_VIEW_ACCOUNTS, mmOptionsDialog::OnViewAccountsChanged)  
-	EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)  
+	EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE, mmOptionsDialog::OnNavTreeColorChanged)
+
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0, mmOptionsDialog::OnAlt0Changed)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT1, mmOptionsDialog::OnAlt1Changed)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBACK, mmOptionsDialog::OnListBackgroundChanged)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBORDER, mmOptionsDialog::OnListBorderChanged)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_RESTOREDEFAULT, mmOptionsDialog::OnRestoreDefaultColors)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS, mmOptionsDialog::OnListDetailsColors)
+    
 END_EVENT_TABLE()
 
 #include "../resources/htmbook.xpm"
@@ -261,9 +271,56 @@ void mmOptionsDialog::CreateControls()
     choiceVisible_->SetToolTip(_("Specify which accounts are visible"));
 
     // ------------------------------------------
-    wxPanel* itemPanelColors = new wxPanel( newBook, ID_BOOK_PANELCOLORS, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* itemPanelColors = new wxPanel( newBook, ID_BOOK_PANELCOLORS, wxDefaultPosition, 
+        wxDefaultSize, wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer8 = new wxBoxSizer(wxVERTICAL);
     itemPanelColors->SetSizer(itemBoxSizer8);
+
+    wxButton* itemButtonColorDefault = new wxButton( itemPanelColors, 
+        ID_DIALOG_OPTIONS_BUTTON_COLOR_RESTOREDEFAULT, _("Restore Defaults"), 
+        wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer8->Add(itemButtonColorDefault, 0, wxALIGN_LEFT|wxALL, 5);
+    itemButtonColorDefault->SetToolTip(_("Restore Default Colors"));
+
+    wxFlexGridSizer* itemGridSizer2 = new wxFlexGridSizer(2, 2, 0, 0);
+    itemBoxSizer8->Add(itemGridSizer2, 0, wxALL);
+
+    wxButton* itemButtonColorNavTreeCtrl = new wxButton( itemPanelColors, 
+        ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE, _("Nav Tree"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer2->Add(itemButtonColorNavTreeCtrl, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemButtonColorNavTreeCtrl->SetToolTip(_("Specify the color for the nav tree"));
+    itemButtonColorNavTreeCtrl->SetBackgroundColour(mmColors::navTreeBkColor);
+
+    wxButton* itemButtonColorListBackground = new wxButton( itemPanelColors, 
+        ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBACK, _("List Background"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer2->Add(itemButtonColorListBackground, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemButtonColorListBackground->SetToolTip(_("Specify the color for the list background"));
+    itemButtonColorListBackground->SetBackgroundColour(mmColors::listBackColor);
+
+    wxButton* itemButtonColorListAlt0 = new wxButton( itemPanelColors, 
+        ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0, _("List Row 0"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer2->Add(itemButtonColorListAlt0, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemButtonColorListAlt0->SetToolTip(_("Specify the color for the list row 0"));
+    itemButtonColorListAlt0->SetBackgroundColour(mmColors::listAlternativeColor0);
+
+    wxButton* itemButtonColorListAlt1 = new wxButton( itemPanelColors, 
+        ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT1, _("List Row 1"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer2->Add(itemButtonColorListAlt1, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemButtonColorListAlt1->SetToolTip(_("Specify the color for the list row 0"));
+    itemButtonColorListAlt1->SetBackgroundColour(mmColors::listAlternativeColor1);
+
+     wxButton* itemButtonColorListBorder = new wxButton( itemPanelColors, 
+        ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBORDER, _("List Border"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer2->Add(itemButtonColorListBorder, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemButtonColorListBorder->SetToolTip(_("Specify the color for the list Border"));
+    itemButtonColorListBorder->SetBackgroundColour(mmColors::listBorderColor);
+
+    wxButton* itemButtonColorListDetails = new wxButton( itemPanelColors, 
+        ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS, _("List Details"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer2->Add(itemButtonColorListDetails, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemButtonColorListDetails->SetToolTip(_("Specify the color for the list details"));
+    itemButtonColorListDetails->SetBackgroundColour(mmColors::listDetailsPanelColor);
+   
     // ------------------------------------------
 
     newBook->SetImageList(m_imageList);
@@ -303,4 +360,111 @@ void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& event)
 	wxString lang = mmDBWrapper::getINISettingValue(inidb_, 
         wxT("LANGUAGE"), wxT(""));
 	bn->SetLabel(lang);
+}
+
+void mmOptionsDialog::OnNavTreeColorChanged(wxCommandEvent& event)
+{
+    wxColourData data;
+    data.SetChooseFull(true);
+    data.SetColour(mmColors::navTreeBkColor);
+
+    wxColourDialog dialog(this);
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        wxColourData retData = dialog.GetColourData();
+        wxColour col = retData.GetColour();
+        mmColors::navTreeBkColor = col;
+        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE);
+        bn->SetBackgroundColour(col);
+    }
+}
+
+void mmOptionsDialog::OnAlt0Changed(wxCommandEvent& event)
+{
+    wxColourData data;
+    data.SetChooseFull(true);
+    data.SetColour(mmColors::listAlternativeColor0);
+
+    wxColourDialog dialog(this);
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        wxColourData retData = dialog.GetColourData();
+        wxColour col = retData.GetColour();
+        mmColors::listAlternativeColor0 = col;
+        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0);
+        bn->SetBackgroundColour(col);
+    }
+}
+
+void mmOptionsDialog::OnAlt1Changed(wxCommandEvent& event)
+{
+    wxColourData data;
+    data.SetChooseFull(true);
+    data.SetColour(mmColors::listAlternativeColor1);
+
+    wxColourDialog dialog(this);
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        wxColourData retData = dialog.GetColourData();
+        wxColour col = retData.GetColour();
+        mmColors::listAlternativeColor1 = col;
+        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT1);
+        bn->SetBackgroundColour(col);
+    }
+}
+
+void mmOptionsDialog::OnListBackgroundChanged(wxCommandEvent& event)
+{
+    wxColourData data;
+    data.SetChooseFull(true);
+    data.SetColour(mmColors::listBackColor);
+
+    wxColourDialog dialog(this);
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        wxColourData retData = dialog.GetColourData();
+        wxColour col = retData.GetColour();
+        mmColors::listBackColor = col;
+        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBACK);
+        bn->SetBackgroundColour(col);
+    }
+}
+
+void mmOptionsDialog::OnListBorderChanged(wxCommandEvent& event)
+{
+    wxColourData data;
+    data.SetChooseFull(true);
+    data.SetColour(mmColors::listBorderColor);
+
+    wxColourDialog dialog(this);
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        wxColourData retData = dialog.GetColourData();
+        wxColour col = retData.GetColour();
+        mmColors::listBorderColor = col;
+        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBORDER);
+        bn->SetBackgroundColour(col);
+    }
+}
+
+void  mmOptionsDialog::OnListDetailsColors(wxCommandEvent& event)
+{
+    wxColourData data;
+    data.SetChooseFull(true);
+    data.SetColour(mmColors::listDetailsPanelColor);
+
+    wxColourDialog dialog(this);
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        wxColourData retData = dialog.GetColourData();
+        wxColour col = retData.GetColour();
+        mmColors::listDetailsPanelColor = col;
+        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS);
+        bn->SetBackgroundColour(col);
+    }
+}
+
+void mmOptionsDialog::OnRestoreDefaultColors(wxCommandEvent& event)
+{
+    mmRestoreDefaultColors();
 }

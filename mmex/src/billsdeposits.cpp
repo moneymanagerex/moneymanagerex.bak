@@ -140,7 +140,7 @@ void mmBillsDepositsPanel::CreateControls()
     listCtrlAccount_ = new billsDepositsListCtrl( this, itemSplitterWindow10, 
         ID_PANEL_BD_LISTCTRL, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    listCtrlAccount_->SetBackgroundColour(wxColour(247, 247, 239));
+    listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     listCtrlAccount_->InsertColumn(0, _("Payee"));
     wxListItem itemCol;
@@ -181,7 +181,7 @@ void mmBillsDepositsPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemPanel12->SetSizer(itemBoxSizer4);
-    itemPanel12->SetBackgroundColour(wxColour(232, 237, 230));
+    itemPanel12->SetBackgroundColour(mmColors::listDetailsPanelColor);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
@@ -210,6 +210,12 @@ void mmBillsDepositsPanel::CreateControls()
         ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
     itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
 }
+
+bool sortTransactionsByRemainingDays( mmBDTransactionHolder elem1, mmBDTransactionHolder elem2 )
+{
+    return elem1.daysRemaining_ < elem2.daysRemaining_;
+}
+
 
 void mmBillsDepositsPanel::initVirtualListControl()
 {
@@ -310,6 +316,7 @@ void mmBillsDepositsPanel::initVirtualListControl()
         ct++;
     }
     q1.Finalize();
+    std::sort(trans_.begin(), trans_.end(), sortTransactionsByRemainingDays);
     listCtrlAccount_->SetItemCount(ct);
 
     mmENDSQL_LITE_EXCEPTION;

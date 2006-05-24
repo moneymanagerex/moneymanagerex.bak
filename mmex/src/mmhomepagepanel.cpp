@@ -40,8 +40,9 @@ mmHomePagePanel::mmHomePagePanel(  mmGUIFrame* frame,
             const wxString& name )
 {
     db_ = db;
-    Create(parent, winid, pos, size, style, name);
     frame_ = frame;
+    Create(parent, winid, pos, size, style, name);
+
 }
 
 bool mmHomePagePanel::Create( wxWindow *parent,
@@ -126,7 +127,7 @@ void mmHomePagePanel::updateAccounts()
         mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
         data1.push_back(balance);
         
-         hb.addRow(data1);
+         hb.addRow(data1, wxT("align=\"right\" "));
         double income = 0.0, expenses = 0.0;
         mmDBWrapper::getExpensesIncome(db_, q1.GetInt(wxT("ACCOUNTID")), expenses, income, 
             false,dtBegin, dtEnd);
@@ -200,11 +201,17 @@ void mmHomePagePanel::updateAccounts()
     hb.endTable();
 
     hb.addHTML(wxT("<BR> <BR>"));
+
     // bills & deposits
     hb.beginTable();
     std::vector<wxString> data3;
     data3.push_back(_("Upcoming Bills & Deposits"));
-    hb.addTableHeaderRow(data3, wxT(" BGCOLOR=\"#80B9E8\" "), wxT(" width=\"100\" COLSPAN=\"2\" "));
+
+    hb.addHTML(wxT("<tr BGCOLOR=\"#80B9E8\" > <th width=\"100\" COLSPAN=\"2\" > <b>"));
+    hb.addHTML(wxT("<a href=\"billsdeposits\" >"));
+    hb.addHTML(data3[0]);
+    hb.addHTML(wxT("</a></b></th></tr>"));
+    //hb.addTableHeaderRow(data3, wxT(" BGCOLOR=\"#80B9E8\" "), wxT(" width=\"100\" COLSPAN=\"2\" "));
  
     wxSQLite3ResultSet q2 = db_->ExecuteQuery("select * from BILLSDEPOSITS_V1;");
 
@@ -278,9 +285,19 @@ void mmHomePagePanel::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    htmlWindow_ = new mmHtmlWindow( itemDialog1, ID_PANEL_HOMEPAGE_HTMLWINDOW, 
+    htmlWindow_ = new mmHtmlWindow( itemDialog1, frame_, ID_PANEL_HOMEPAGE_HTMLWINDOW, 
         wxDefaultPosition, wxDefaultSize, 
         wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     itemBoxSizer2->Add(htmlWindow_, 1, wxGROW|wxALL, 0);
 }
 
+void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
+{
+    wxString href = link.GetHref();
+    if (href == wxT("billsdeposits"))
+    {
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BILLSDEPOSITS);
+        frame_->GetEventHandler()->AddPendingEvent(evt);
+        //frame_->GetEventHandler()->ProcessEvent(evt);
+    }
+}

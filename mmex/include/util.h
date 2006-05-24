@@ -41,6 +41,23 @@ wxString mmReadyDisplayString(const wxString& orig);
 int mmImportCSV(wxSQLite3Database* db);
 int mmImportCSVMMNET(wxSQLite3Database* db_);
 
+void mmLoadColorsFromDatabase(wxSQLite3Database* db_);
+wxColour mmGetColourFromString(wxString& str);
+void mmRestoreDefaultColors();
+void mmSaveColorsToDatabase(wxSQLite3Database* db_);
+
+
+class mmColors
+{
+public:
+    static wxColour listAlternativeColor0;
+    static wxColour listAlternativeColor1;
+    static wxColour listBorderColor;
+    static wxColour listBackColor;
+    static wxColour navTreeBkColor;
+    static wxColour listDetailsPanelColor;
+};
+
 class mmCurrencyFormatter
 {
     public: mmCurrencyFormatter() {}

@@ -52,8 +52,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,5,5,1
- PRODUCTVERSION 0,5,5,1
+ FILEVERSION 0,5,6,0
+ PRODUCTVERSION 0,5,6,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -70,12 +70,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "TheZeal Software"
             VALUE "FileDescription", "Money Management Software"
-            VALUE "FileVersion", "0, 5, 5, 1"
+            VALUE "FileVersion", "0, 5, 6, 0"
             VALUE "InternalName", "mmex"
 			VALUE "LegalCopyright", "Copyright (C) 2006 Madhan Kanagavel (http://www.thezeal.com/software)"
             VALUE "OriginalFilename", "mmex.rc"
             VALUE "ProductName", " mmex"
-            VALUE "ProductVersion", "0, 5, 5, 1"
+            VALUE "ProductVersion", "0, 5, 6, 0"
         END
     END
     BLOCK "VarFileInfo"

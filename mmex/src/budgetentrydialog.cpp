@@ -23,8 +23,13 @@
 #define DEF_TYPE_INCOME 1
 
 #define DEF_FREQ_NONE 0
-#define DEF_FREQ_MONTHLY 1
-#define DEF_FREQ_YEARLY 2
+#define DEF_FREQ_WEEKLY 1
+#define DEF_FREQ_BIWEEKLY 2
+#define DEF_FREQ_MONTHLY 3
+#define DEF_FREQ_BIMONTHLY 4
+#define DEF_FREQ_QUARTERLY 5
+#define DEF_FREQ_HALFYEARLY 6
+#define DEF_FREQ_YEARLY 7
 
 IMPLEMENT_DYNAMIC_CLASS( mmBudgetEntryDialog, wxDialog )
 
@@ -88,6 +93,16 @@ void mmBudgetEntryDialog::fillControls()
         itemChoice_->SetSelection(DEF_FREQ_MONTHLY);
     else if (period == wxT("Yearly"))
         itemChoice_->SetSelection(DEF_FREQ_YEARLY);
+    else if (period == wxT("Weekly"))
+        itemChoice_->SetSelection(DEF_FREQ_WEEKLY);
+    else if (period == wxT("Bi-Weekly"))
+        itemChoice_->SetSelection(DEF_FREQ_BIWEEKLY);
+    else if (period == wxT("Bi-Monthly"))
+        itemChoice_->SetSelection(DEF_FREQ_BIMONTHLY);
+    else if (period == wxT("Quarterly"))
+        itemChoice_->SetSelection(DEF_FREQ_QUARTERLY);
+    else if (period == wxT("Half-Yearly"))
+        itemChoice_->SetSelection(DEF_FREQ_HALFYEARLY);
     else
         wxASSERT(false);
 
@@ -140,11 +155,16 @@ void mmBudgetEntryDialog::CreateControls()
     wxString itemFrequencyTypeStrings[] =  
     {
         _("None"),
+        _("Weekly"),
+        _("Bi-Weekly"),
         _("Monthly"),
+        _("Bi-Monthly"),
+        _("Quarterly"),
+        _("Half-Yearly"),
         _("Yearly"),
     };
     itemChoice_ = new wxChoice( itemDialog1, ID_DIALOG_BUDGETENTRY_COMBO_FREQTYPE, 
-        wxDefaultPosition, wxDefaultSize, 3, itemFrequencyTypeStrings, 0 );
+        wxDefaultPosition, wxDefaultSize, 8, itemFrequencyTypeStrings, 0 );
     itemGridSizer2->Add(itemChoice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemChoice_->SetSelection(DEF_FREQ_MONTHLY);
     itemChoice_->SetToolTip(_("Specify the frequency of the expense or deposit"));
@@ -185,6 +205,16 @@ void mmBudgetEntryDialog::OnOk(wxCommandEvent& event)
         period = wxT("Monthly");
     else if (periodSel == DEF_FREQ_YEARLY)
         period = wxT("Yearly");
+    else if (periodSel == DEF_FREQ_WEEKLY)
+        period = wxT("Weekly");
+    else if (periodSel == DEF_FREQ_BIWEEKLY)
+        period = wxT("Bi-Weekly");
+    else if (periodSel == DEF_FREQ_BIMONTHLY)
+        period = wxT("Bi-Monthly");
+    else if (periodSel == DEF_FREQ_QUARTERLY)
+        period = wxT("Quarterly");
+    else if (periodSel == DEF_FREQ_HALFYEARLY)
+        period = wxT("Half-Yearly");
     else
         wxASSERT(false);
 

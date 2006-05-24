@@ -218,9 +218,6 @@ void mmCheckingPanel::CreateControls()
     wxSize imageSize(16, 16);
     m_imageList = new wxImageList( imageSize.GetWidth(), 
         imageSize.GetHeight() );
-    //m_imageList->Add(wxBitmap(addbookm_xpm));
-    //m_imageList->Add(wxBitmap(delbookm_xpm));
-    //m_imageList->Add(wxBitmap(tipicon_xpm));
     m_imageList->Add(wxBitmap(reconciled_xpm));
     m_imageList->Add(wxBitmap(void_xpm));
     m_imageList->Add(wxBitmap(flag_xpm));
@@ -232,19 +229,27 @@ void mmCheckingPanel::CreateControls()
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
-    listCtrlAccount_->SetBackgroundColour(wxColour(247, 247, 239));
-    listCtrlAccount_->InsertColumn(0, _("Date  "));
-    listCtrlAccount_->InsertColumn(1, _("Num  "));
-    listCtrlAccount_->InsertColumn(2, _("Payee"));
-    listCtrlAccount_->InsertColumn(3, _("C  "));
+    listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
+    
     wxListItem itemCol;
+    
+    listCtrlAccount_->InsertColumn(0, _("Date  "));
+    
     itemCol.SetImage(-1);
     itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
-    itemCol.SetText(_("Withdrawal       "));
+    itemCol.SetText(_("Number"));
+    listCtrlAccount_->InsertColumn(1, itemCol);
+
+    listCtrlAccount_->InsertColumn(2, _("Payee"));
+    listCtrlAccount_->InsertColumn(3, _("C  "));
+    
+    itemCol.SetImage(-1);
+    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
+    itemCol.SetText(_("Withdrawal"));
     listCtrlAccount_->InsertColumn(4, itemCol);
-    itemCol.SetText(_("Deposit          "));
+    itemCol.SetText(_("Deposit"));
     listCtrlAccount_->InsertColumn(5, itemCol);
-    itemCol.SetText(_("Balance          "));
+    itemCol.SetText(_("Balance"));
     listCtrlAccount_->InsertColumn(6, itemCol);
     
     /* See if we can get data from inidb */
@@ -283,7 +288,8 @@ void mmCheckingPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemPanel12->SetSizer(itemBoxSizer4);
-    itemPanel12->SetBackgroundColour(wxColour(232, 237, 230));
+    itemPanel12->SetBackgroundColour(mmColors::listDetailsPanelColor);
+   
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
@@ -865,7 +871,7 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
                 OnDeleteTransaction(evt);
             }
             break;
-#if 1
+#if 0
         case 'V':
             {
                 SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);

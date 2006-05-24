@@ -54,6 +54,14 @@ public:
     void OnDateFormatChanged(wxCommandEvent& event);
     void OnViewAccountsChanged(wxCommandEvent& event);
 	void OnLanguageChanged(wxCommandEvent& event);
+    void OnNavTreeColorChanged(wxCommandEvent& event);
+
+    void mmOptionsDialog::OnAlt0Changed(wxCommandEvent& event);
+    void mmOptionsDialog::OnAlt1Changed(wxCommandEvent& event);
+    void mmOptionsDialog::OnListBackgroundChanged(wxCommandEvent& event);
+    void mmOptionsDialog::OnListBorderChanged(wxCommandEvent& event);
+    void mmOptionsDialog::OnRestoreDefaultColors(wxCommandEvent& event);
+    void  mmOptionsDialog::OnListDetailsColors(wxCommandEvent& event);
 
 private:
     wxImageList* m_imageList;

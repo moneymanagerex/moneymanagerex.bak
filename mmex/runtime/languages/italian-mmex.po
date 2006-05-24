@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-05-18 18:35-0500\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2006-05-20 19:07+0100\n"
+"Last-Translator: Claudio <enjoy-vr@email.it>\n"
 "Language-Team: Claudio <enjoy-vr@email.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -88,20 +88,17 @@ msgid "Show this window next time Money Manager Ex starts"
 msgstr "Mostra questa finestra al prossimo avvio di Money Manager Ex"
 
 #: src/assetdialog.cpp:153
-#, fuzzy
 msgid "Asset Details"
-msgstr "Dettagli operazione"
+msgstr "Dettagli del bene"
 
 #: src/assetdialog.cpp:166
 #: src/assets.cpp:139
-#, fuzzy
 msgid "Name"
-msgstr "Nome unità"
+msgstr "Nome"
 
 #: src/assetdialog.cpp:172
-#, fuzzy
 msgid "Enter the name of the asset"
-msgstr "Inserire qui il nome di una categoria da aggiungere o modificare"
+msgstr "Inserire il nome del bene"
 
 #: src/assetdialog.cpp:176
 #: src/bddialog.cpp:366
@@ -111,43 +108,40 @@ msgid "Date"
 msgstr "Data"
 
 #: src/assetdialog.cpp:183
-#, fuzzy
 msgid "Specify the date of purchase of asset"
-msgstr "Selezionare la data dell'operazione"
+msgstr "Specificare la data di acquisto del bene"
 
 #: src/assetdialog.cpp:186
-#, fuzzy
 msgid "Asset Type"
-msgstr "Tipo di conto:"
+msgstr "Tipo di bene"
 
 #: src/assetdialog.cpp:192
 msgid "Property"
-msgstr ""
+msgstr "Proprietà"
 
 #: src/assetdialog.cpp:193
 msgid "Automobile"
-msgstr ""
+msgstr "Automobile"
 
 #: src/assetdialog.cpp:194
 msgid "Household Object"
-msgstr ""
+msgstr "Oggetti di famiglia"
 
 #: src/assetdialog.cpp:195
 msgid "Art"
-msgstr ""
+msgstr "Opere d'arte"
 
 #: src/assetdialog.cpp:196
 msgid "Jewellery"
-msgstr ""
+msgstr "Gioielli"
 
 #: src/assetdialog.cpp:197
 msgid "Other"
-msgstr ""
+msgstr "Altro"
 
 #: src/assetdialog.cpp:201
-#, fuzzy
 msgid "Select type of asset"
-msgstr "Seleziona il beneficiario"
+msgstr "Selezionare il tipo di bene"
 
 #: src/assetdialog.cpp:207
 #: src/assetdialog.cpp:292
@@ -159,11 +153,11 @@ msgstr "Valore"
 
 #: src/assetdialog.cpp:213
 msgid "Enter the current value of the asset"
-msgstr ""
+msgstr "Inserire il valore corrente del bene"
 
 #: src/assetdialog.cpp:219
 msgid "Change in Value"
-msgstr ""
+msgstr "Cambio valore"
 
 #: src/assetdialog.cpp:225
 #: src/bddialog.cpp:269
@@ -176,25 +170,23 @@ msgstr "Nessuna"
 
 #: src/assetdialog.cpp:226
 msgid "Appreciates"
-msgstr ""
+msgstr "Apprezzamento"
 
 #: src/assetdialog.cpp:227
-#, fuzzy
 msgid "Depreciates"
-msgstr "Frequenza"
+msgstr "Svalutazione"
 
 #: src/assetdialog.cpp:231
-#, fuzzy
 msgid "Specify if the value of the asset changes over time"
-msgstr "Selezionare la data dell'operazione"
+msgstr "Specificare se il valore del bene cambia nel tempo"
 
 #: src/assetdialog.cpp:236
 msgid "Rate of Change"
-msgstr ""
+msgstr "Tariffa di cambio"
 
 #: src/assetdialog.cpp:242
 msgid "Enter the rate at which the asset changes its value in %"
-msgstr ""
+msgstr "Inserire il tasso al quale il bene cambia il suo valore in %"
 
 #: src/assetdialog.cpp:249
 #: src/bddialog.cpp:405
@@ -204,9 +196,8 @@ msgid "Notes"
 msgstr "Note"
 
 #: src/assetdialog.cpp:255
-#, fuzzy
 msgid "Enter notes associated with this asset"
-msgstr "Inserire la nota da associare con l'investimento"
+msgstr "Inserire le note da associare con questo bene"
 
 #: src/assetdialog.cpp:267
 #: src/bddialog.cpp:432
@@ -231,7 +222,7 @@ msgstr "Annulla"
 #: src/assetdialog.cpp:299
 #: src/assetdialog.cpp:325
 msgid "Invalid Value "
-msgstr ""
+msgstr "Valore non valido"
 
 #: src/assetdialog.cpp:299
 #: src/assetdialog.cpp:325
@@ -265,23 +256,22 @@ msgstr "Errore!"
 
 #: src/assetdialog.cpp:318
 msgid "Rate of Change in Value"
-msgstr ""
+msgstr "Tariffa di cambio valore"
 
 #: src/assets.cpp:112
 #: src/mmex.cpp:472
 #: src/mmex.cpp:1366
 msgid "Assets"
-msgstr ""
+msgstr "Beni"
 
 #: src/assets.cpp:118
 #: src/stocks.cpp:130
 msgid "Total:"
-msgstr ""
+msgstr "Totale:"
 
 #: src/assets.cpp:143
-#, fuzzy
 msgid "Type"
-msgstr "Tipo:"
+msgstr "Tipo"
 
 #: src/assets.cpp:179
 #: src/mmcheckingpanel.cpp:291
@@ -292,7 +282,7 @@ msgstr "Nuova"
 
 #: src/assets.cpp:181
 msgid "New Asset"
-msgstr ""
+msgstr "Nuovo bene"
 
 #: src/assets.cpp:184
 #: src/categdialog.cpp:138
@@ -303,9 +293,8 @@ msgid "Edit"
 msgstr "Modifica"
 
 #: src/assets.cpp:186
-#, fuzzy
 msgid "Edit Asset"
-msgstr "&Modifica conto..."
+msgstr "Modifica bene"
 
 #: src/assets.cpp:189
 #: src/categdialog.cpp:143
@@ -316,39 +305,34 @@ msgid "Delete"
 msgstr "Elimina"
 
 #: src/assets.cpp:191
-#, fuzzy
 msgid "Delete Asset"
-msgstr "Elimina"
+msgstr "Elimina Bene"
 
 #: src/assets.cpp:210
 #: src/stocks.cpp:251
 #, c-format
 msgid "Total: %s"
-msgstr ""
+msgstr "Totale: %s"
 
 #: src/assets.cpp:261
 msgid "&New Asset"
-msgstr ""
+msgstr "&Nuovo bene"
 
 #: src/assets.cpp:263
-#, fuzzy
 msgid "&Edit Asset"
-msgstr "&Modifica conto..."
+msgstr "&Modifica Bene"
 
 #: src/assets.cpp:264
-#, fuzzy
 msgid "&Delete Asset"
-msgstr "&Elimina conto..."
+msgstr "&Elimina Bene..."
 
 #: src/assets.cpp:337
-#, fuzzy
 msgid "Do you really want to delete the Asset?"
-msgstr "Eliminare veramente in via definitiva la ricorrenza?"
+msgstr "Eliminare veramente il Bene?"
 
 #: src/assets.cpp:338
-#, fuzzy
 msgid "Confirm Asset Deletion"
-msgstr "Confermare l'eliminazione del conto"
+msgstr "Confermare l'eliminazione del Bene"
 
 #: src/bddialog.cpp:234
 msgid "Bills && Deposit Details"
@@ -400,7 +384,7 @@ msgstr "Bimestrale"
 #: src/bddialog.cpp:274
 #: src/billsdeposits.cpp:257
 msgid "Quarterly"
-msgstr "Quadrimenstrale"
+msgstr "Trimestrale"
 
 #: src/bddialog.cpp:275
 #: src/billsdeposits.cpp:261
@@ -1181,9 +1165,8 @@ msgid "Do you really want to delete the transaction?"
 msgstr "Eliminare veramente l'operazione?"
 
 #: src/mmex.cpp:187
-#, fuzzy
 msgid "Add Account Wizard"
-msgstr "A"
+msgstr "Inserimento conto guidato"
 
 #: src/mmex.cpp:195
 msgid ""
@@ -1194,11 +1177,16 @@ msgid ""
 "To help you get started, begin by making a list of all\n"
 "financial institutions where you hold an account."
 msgstr ""
+"Money Manager modella tutte le operazioni come facenti parte dei conti.\n"
+"\n"
+"La pagina successiva aiuterà a creare un nuovo conto.\n"
+"\n"
+"Per aiutarvi nella fase iniziale, cominciate con l'annotare l'elenco di tutti gli\n"
+"istituti finanziari presso i quali trattenete un conto."
 
 #: src/mmex.cpp:232
-#, fuzzy
 msgid "New Database Wizard"
-msgstr "&Nuovo Database...\tCtrl-N"
+msgstr "Nuovo Database guidato"
 
 #: src/mmex.cpp:240
 msgid ""
@@ -1209,6 +1197,12 @@ msgid ""
 "file and to store it carefully as it contains important \n"
 "financial information."
 msgstr ""
+"La pagina successiva aiuterà a creare un nuovo Database.\n"
+"\n"
+"Il Database di Money Manager è creato con estensione \n"
+".mmb. Saltuariariamente effettuare il backup di questo file \n"
+"e conservarlo con cura in quanto contiene importanti \n"
+"informazioni delle proprie finanze."
 
 #: src/mmex.cpp:460
 msgid "Home Page"
@@ -1288,7 +1282,7 @@ msgstr "Previsioni Budget"
 
 #: src/mmex.cpp:595
 msgid "Help"
-msgstr "Aiuto"
+msgstr "Giuda in linea"
 
 #: src/mmex.cpp:1072
 #: src/mmex.cpp:1094
@@ -1492,11 +1486,11 @@ msgstr "Opzioni di Money Manager"
 
 #: src/mmex.cpp:1380
 msgid "&Help\tCtrl-F1"
-msgstr "&Aiuto...\tCtrl-F1"
+msgstr "&Guida in linea...\tCtrl-F1"
 
 #: src/mmex.cpp:1380
 msgid "Money Manager Help"
-msgstr "Aiuto di Money Manager"
+msgstr "Guida in linea Money Manager"
 
 #: src/mmex.cpp:1384
 msgid "Show App Start Dialog"
@@ -1532,7 +1526,7 @@ msgstr "Sottoscrivi per l'annuncio nella mailing list"
 
 #: src/mmex.cpp:1397
 msgid "&About..."
-msgstr "&Informazioni su..."
+msgstr "&Informazioni su Money Manager Ex..."
 
 #: src/mmex.cpp:1397
 msgid "Show about dialog"
@@ -1552,7 +1546,7 @@ msgstr "&Strumenti"
 
 #: src/mmex.cpp:1405
 msgid "&Help"
-msgstr "&Aiuto"
+msgstr "&?"
 
 #: src/mmex.cpp:1421
 #: src/newchkacctdialog.cpp:255
@@ -1605,7 +1599,7 @@ msgstr "Apertura file Database e verifica integrità"
 
 #: src/mmhelppanel.cpp:78
 msgid "Money Manager Ex Help"
-msgstr "Aiuto di Money Manager Ex"
+msgstr "Guida in linea Money Manager Ex"
 
 #: src/mmhomepagepanel.cpp:84
 #: include/reportcategexp.h:48
@@ -1624,7 +1618,7 @@ msgstr "Azioni investite: "
 #: src/mmhomepagepanel.cpp:160
 #: include/reportsummary.h:107
 msgid "Assets :"
-msgstr ""
+msgstr "Beni: "
 
 #: src/mmhomepagepanel.cpp:169
 msgid "Total of Accounts :"
@@ -1815,14 +1809,12 @@ msgstr "Specificare il separatore di campo da utilizzare per Importa/esporta fil
 
 #: src/optionsdialog.cpp:206
 #: src/optionsdialog.cpp:212
-#, fuzzy
 msgid "Language"
-msgstr "Lingua in uso: "
+msgstr "Lingua"
 
 #: src/optionsdialog.cpp:221
-#, fuzzy
 msgid "Specify the language to use"
-msgstr "Selezionare il Conto verso il quale effettuare il trasferimento"
+msgstr "Selezionare la lingua da utilizzare"
 
 #: src/optionsdialog.cpp:230
 msgid "Account View Options"
@@ -1956,9 +1948,8 @@ msgid "Enter any commission paid"
 msgstr "Inserire l'eventuale spesa di commissione"
 
 #: src/stockdialog.cpp:270
-#, fuzzy
 msgid "Web Page"
-msgstr "Pagina iniziale"
+msgstr "Pagina Web"
 
 #: src/stockdialog.cpp:286
 msgid "Choose Investment Account"
@@ -1970,9 +1961,8 @@ msgid "Num Shares"
 msgstr "Numero Azioni"
 
 #: src/stockdialog.cpp:342
-#, fuzzy
 msgid "Invalid number of shares entered "
-msgstr "I dati inseriti in: \"Prezzo di acquisto\" sono errati!"
+msgstr "Numero delle azioni inserite errato"
 
 #: src/stockdialog.cpp:357
 msgid "Invalid purchase price entered "
@@ -2007,7 +1997,6 @@ msgid "Delete Stock Investment"
 msgstr "Elimina l'investimento titoli selezionato"
 
 #: src/stocks.cpp:239
-#, fuzzy
 msgid "Stock Investments: "
 msgstr "Azioni investite: "
 
@@ -2211,9 +2200,8 @@ msgid "Money Manager Ex Start Page"
 msgstr "Pagina iniziale di Money Manager Ex"
 
 #: include/assetdialog.h:21
-#, fuzzy
 msgid "New/Edit Asset"
-msgstr "Nuovo/Modifica operazione"
+msgstr "Nuovo/Modifica bene"
 
 #: include/bddialog.h:22
 msgid "New/Edit Bills & Deposit Series"
@@ -2240,9 +2228,8 @@ msgid "View File Contents"
 msgstr "Visualizza il contenuto del file"
 
 #: include/mmex.h:124
-#, fuzzy
 msgid "Base Currency for account"
-msgstr "Valuta corrente"
+msgstr "Valuta corrente del conto"
 
 #: include/mmex.h:139
 msgid ""
@@ -2251,16 +2238,18 @@ msgid ""
 "with the database. You can change the \n"
 "currency associated with each account if needed.\n"
 msgstr ""
+"\n"
+"Specificare la valuta base (o default) da utilizzare \n"
+"per il Database. Se necessario è possibile \n"
+"modificare il cambio associato a ciascun conto.\n"
 
 #: include/mmex.h:152
-#, fuzzy
 msgid "Base Currency Not Set"
-msgstr "Valuta corrente"
+msgstr "Valuta corrente non inserita"
 
 #: include/mmex.h:194
-#, fuzzy
 msgid "Name of the Account"
-msgstr "Conto preferito"
+msgstr "Nome del conto"
 
 #: include/mmex.h:209
 msgid ""
@@ -2269,20 +2258,22 @@ msgid ""
 "is the name of the financial institution where the account is held. \n"
 "For example 'ABC Bank'."
 msgstr ""
+"\n"
+"Specificare un nome per descrivere il conto. Questo molto comunemente \n"
+"è il nome dell'istituto finanziario dove si tiene il conto. \n"
+"Per esempio 'Banca ABC'."
 
 #: include/mmex.h:222
-#, fuzzy
 msgid "Account Name Invalid"
-msgstr "Nome Conto"
+msgstr "Nome Conto errato"
 
 #: include/mmex.h:244
 msgid "Checking/Savings/CreditCard"
-msgstr ""
+msgstr "Conto corrente/Risparmio/Carta di Credito"
 
 #: include/mmex.h:257
-#, fuzzy
 msgid "Type of Account"
-msgstr "A"
+msgstr "Tipo di conto"
 
 #: include/mmex.h:272
 msgid ""
@@ -2292,6 +2283,11 @@ msgid ""
 "General bank accounts cover a wide variety of account\n"
 " types like Checking, Savings and Credit card type accounts."
 msgstr ""
+"\n"
+"Selezionare il tipo di conto da creare:\n"
+"\n"
+"Generalmente i conti bancari coprono una larga varietà di tipi di conto\n"
+"come Conti correnti, Conti risparmio e conti per Carte di Credito."
 
 #: include/mmex.h:278
 msgid ""
@@ -2300,12 +2296,17 @@ msgid ""
 "have stock/mutual fund investments associated \n"
 "with them.\n"
 msgstr ""
+"\n"
+"I conti di investimento sono conti specializzati ai quali \n"
+"sono associate Azioni/Fondi comuni.\n"
 
 #: include/mmex.h:299
 msgid ""
 "Base Account Currency Not set.\n"
 "Set that first using tools->options menu and then add a new account"
 msgstr ""
+"La valuta corrente del conto non è stata selezionata.\n"
+"Per prima cosa scegliere la valuta attraverso il menu Strumenti->Opzioni e poi creare un nuovo conto"
 
 #: include/optionsdialog.h:25
 msgid "Options Dialog"

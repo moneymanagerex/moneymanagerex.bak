@@ -71,6 +71,12 @@
 #include "../resources/issues.xpm"
 #include "../resources/assets.xpm"
 #include "../resources/addacctwiz.xpm"
+#include "../resources/notify.xpm"
+#include "../resources/checkupdate.xpm"
+#include "../resources/categories.xpm"
+#include "../resources/payees.xpm"
+#include "../resources/currency.xpm"
+#include "../resources/appstart.xpm"
 /*******************************************************/
 #define MMEX_INIDB_FNAME wxT("/mmexini.db3")
 #define MMEX_SPLASH_FNAME wxT("/splash.png")
@@ -135,6 +141,9 @@ bool mmGUIApp::OnInit()
     inidb->Open(cfgPath);
     mmDBWrapper::verifyINIDB(inidb);
 
+    /* Load Colors from Database */
+    mmLoadColorsFromDatabase(inidb);
+
     /* Was App Maximized? */
     wxString isMaxStrDef = wxT("FALSE");
     wxString isMaxStr = mmDBWrapper::getINISettingValue(inidb, 
@@ -176,6 +185,10 @@ bool mmGUIApp::OnInit()
     frame->Show(TRUE);
     if (isMaxStr == wxT("TRUE"))
         frame->Maximize(true);
+
+    /* Initialize Image Handlers */
+    wxImage::AddHandler(new wxJPEGHandler());
+    wxImage::AddHandler(new wxPNGHandler());
 
     // success: wxApp::OnRun() will be called which will enter the main message
     // loop and the application will run. If we returned FALSE here, the
@@ -358,6 +371,8 @@ void mmGUIFrame::saveConfigFile()
     mmDBWrapper::setINISettingValue(inidb_, 
         wxT("LASTFILENAME"), fileName_);
 
+    mmSaveColorsToDatabase(inidb_);
+
     bool isMax = this->IsMaximized();
     wxString isMaxStr = wxT("FALSE");
     if (isMax)
@@ -428,7 +443,7 @@ void mmGUIFrame::createControls()
         ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxNO_BORDER );
     navTreeCtrl_ = new wxTreeCtrl( itemSplitterWindowFrame, ID_NAVTREECTRL, 
         wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_ROW_LINES );
-    navTreeCtrl_->SetBackgroundColour(wxColour(232, 237, 230));
+    navTreeCtrl_->SetBackgroundColour(mmColors::navTreeBkColor);
     
     wxSize imageSize(16, 16);
     wxImageList* imageList_ = new wxImageList( imageSize.GetWidth(), 
@@ -456,6 +471,7 @@ void mmGUIFrame::createControls()
 void mmGUIFrame::updateNavTreeControl()
 {
     navTreeCtrl_->DeleteAllItems();
+    navTreeCtrl_->SetBackgroundColour(mmColors::navTreeBkColor);
 
     wxTreeItemId root = navTreeCtrl_->AddRoot(_("Home Page"), 0, 0);
     navTreeCtrl_->SetItemData(root, new mmTreeItemData(wxT("Home Page")));
@@ -705,7 +721,8 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                 }
                 else
                 {
-					 Freeze();
+				    Freeze();
+                    navTreeCtrl_->Unselect();
 					homePanel->DestroyChildren();
 					homePanel->SetSizer(NULL);
 
@@ -1177,6 +1194,7 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
 
 void mmGUIFrame::createCheckingAccountPage(int accountID)
 {
+    navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -1192,6 +1210,7 @@ void mmGUIFrame::createCheckingAccountPage(int accountID)
 
 void mmGUIFrame::createBudgetingPage(int budgetYearID)
 {
+    navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -1207,6 +1226,7 @@ void mmGUIFrame::createBudgetingPage(int budgetYearID)
 
 void mmGUIFrame::createHomePage()
 {
+    navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -1222,6 +1242,7 @@ void mmGUIFrame::createHomePage()
 
 void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
 {
+    navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -1237,6 +1258,7 @@ void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
 
 void mmGUIFrame::createHelpPage()
 {
+    navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -1341,11 +1363,21 @@ void mmGUIFrame::createMenu()
 
     wxMenu *menuTools = new wxMenu;
 
-    menuTools->Append(MENU_ORGCATEGS, _("Organize &Categories"), _("Organize Categories"));
+    
+    wxMenuItem* menuItemCateg = new wxMenuItem(menuTools, MENU_ORGCATEGS, 
+		  _("Organize &Categories"), _("Organize Categories"));
+	menuItemCateg->SetBitmaps(wxBitmap(categories_xpm));
+    menuTools->Append(menuItemCateg);
 
-    menuTools->Append(MENU_ORGPAYEE, _("Organize &Payees"), _("Organize Payees"));
+    wxMenuItem* menuItemPayee = new wxMenuItem(menuTools, MENU_ORGPAYEE, 
+		  _("Organize &Payees"), _("Organize Payees"));
+	menuItemPayee->SetBitmaps(wxBitmap(payees_xpm));
+    menuTools->Append(menuItemPayee); 
 
-    menuTools->Append(MENU_CURRENCY, _("Organize Currency"), _("Organize Currency"));
+     wxMenuItem* menuItemCurrency = new wxMenuItem(menuTools, MENU_CURRENCY, 
+		 _("Organize Currency"), _("Organize Currency"));
+	menuItemCurrency->SetBitmaps(wxBitmap(currency_xpm));
+    menuTools->Append(menuItemCurrency);
 
     wxMenuItem* menuItemBudgeting = new wxMenuItem(menuTools, MENU_BUDGETSETUPDIALOG, 
 		  _("Budget Setup"), _("Budget Setup"));
@@ -1381,19 +1413,31 @@ void mmGUIFrame::createMenu()
 	menuItemHelp->SetBitmaps(wxBitmap(help_xpm));
     menuHelp->Append(menuItemHelp);
 
-    menuHelp->Append(MENU_SHOW_APPSTART, _("Show App Start Dialog"), _("App Start Dialog"));
+    wxMenuItem* menuItemAppStart = new wxMenuItem(menuTools, MENU_SHOW_APPSTART, 
+		 _("Show App Start Dialog"), _("App Start Dialog"));
+	menuItemAppStart->SetBitmaps(wxBitmap(appstart_xpm));
+    menuHelp->Append(menuItemAppStart);
+
     menuHelp->AppendSeparator();
-    menuHelp->Append(MENU_CHECKUPDATE, _("Check for &Updates"), _("Check For Updates"));
+
+
+    wxMenuItem* menuItemCheck = new wxMenuItem(menuTools, MENU_CHECKUPDATE, 
+		 _("Check for &Updates"), _("Check For Updates"));
+	menuItemCheck->SetBitmaps(wxBitmap(checkupdate_xpm));
+    menuHelp->Append(menuItemCheck);
 
     wxMenuItem* menuItemReportIssues = new wxMenuItem(menuTools, MENU_REPORTISSUES, 
 	    _("Report Issues or Feedback"), _("Send email through the mailing list to report issues with the software."));
 	menuItemReportIssues->SetBitmaps(wxBitmap(issues_xpm));
     menuHelp->Append(menuItemReportIssues);
 
-    menuHelp->Append(MENU_ANNOUNCEMENTMAILING, 
-        _("Be notified of new releases"), _("Sign up for the announcement mailing list"));
+    wxMenuItem* menuItemNotify = new wxMenuItem(menuTools, MENU_ANNOUNCEMENTMAILING, 
+		_("Be notified of new releases"), _("Sign up for the announcement mailing list"));
+	menuItemNotify->SetBitmaps(wxBitmap(notify_xpm));
+    menuHelp->Append(menuItemNotify); 
+        
 
-     wxMenuItem* menuItemAbout = new wxMenuItem(menuTools, MENU_ABOUT, 
+    wxMenuItem* menuItemAbout = new wxMenuItem(menuTools, MENU_ABOUT, 
 	   _("&About..."), _("Show about dialog"));
 	menuItemAbout->SetBitmaps(wxBitmap(about_xpm));
     menuHelp->Append(menuItemAbout);
@@ -1442,6 +1486,11 @@ void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
         && !fileName.IsEmpty() 
         && wxFileName::FileExists(fileName))
     {    
+        /* Do a backup before opening */
+        wxFileName fn(fileName);
+        wxString bkupName = fn.GetPath() + wxT("/") + fn.GetName() + wxT(".bak");
+        wxCopyFile(fileName, bkupName, true);
+
         db_ = new wxSQLite3Database();
         db_->Open(fileName);
 
@@ -1820,6 +1869,7 @@ void mmGUIFrame::OnExportToHtml(wxCommandEvent& event)
 
 void mmGUIFrame::OnBillsDeposits(wxCommandEvent& event)
 {
+    navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -1835,6 +1885,7 @@ void mmGUIFrame::OnBillsDeposits(wxCommandEvent& event)
 
 void mmGUIFrame::OnStocks(wxCommandEvent& event)
 {
+    navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -1850,6 +1901,7 @@ void mmGUIFrame::OnStocks(wxCommandEvent& event)
 
 void mmGUIFrame::OnAssets(wxCommandEvent& event)
 {
+    navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 

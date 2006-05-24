@@ -22,7 +22,7 @@ void mmHTMLBuilder::init()
     html_ += wxT("<html><head><meta http-equiv=\"content-type\" content=\"text/html; \
         charset=UTF-8\"><title>Money Manager Ex - Report</title>");
     html_ += wxT("</head>           \
-        <body bgcolor=#F7F7EF text=#000000 link=#0000cc \
+        <body bgcolor=#FFFFFF text=#000000 link=#0000cc \
         vlink=#551a8b alink=#ff0000>");
 }
 
