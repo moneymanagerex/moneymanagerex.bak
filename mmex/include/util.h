@@ -40,6 +40,7 @@ wxString mmReadyDisplayString(const wxString& orig);
 
 int mmImportCSV(wxSQLite3Database* db);
 int mmImportCSVMMNET(wxSQLite3Database* db_);
+int mmImportQIF(wxSQLite3Database* db_);
 
 void mmLoadColorsFromDatabase(wxSQLite3Database* db_);
 wxColour mmGetColourFromString(wxString& str);

@@ -105,7 +105,12 @@ void mmHomePagePanel::updateAccounts()
     while (q1.NextRow())
     {
         std::vector<wxString> data1;
-        data1.push_back(q1.GetString(wxT("ACCOUNTNAME")));
+        hb.addHTML(wxT("<tr> <td> <a href=\"ACCT: "));
+        hb.addHTML(q1.GetString(wxT("ACCOUNTID")));
+        hb.addHTML(wxT("\" >"));
+        hb.addHTML(q1.GetString(wxT("ACCOUNTNAME")));
+        hb.addHTML(wxT(" </a></td><td>"));
+        //data1.push_back(q1.GetString(wxT("ACCOUNTNAME")));
 
         double bal = mmDBWrapper::getTotalBalanceOnAccount(db_, q1.GetInt(wxT("ACCOUNTID")), true);
 
@@ -125,9 +130,11 @@ void mmHomePagePanel::updateAccounts()
         tBalance += bal;
         wxString balance;
         mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
-        data1.push_back(balance);
+        hb.addHTML(balance);
+        hb.addHTML(wxT(" </td></tr>"));
+        //data1.push_back(balance);
         
-         hb.addRow(data1, wxT("align=\"right\" "));
+        //hb.addRow(data1, wxT("align=\"left\" "));
         double income = 0.0, expenses = 0.0;
         mmDBWrapper::getExpensesIncome(db_, q1.GetInt(wxT("ACCOUNTID")), expenses, income, 
             false,dtBegin, dtEnd);
@@ -145,9 +152,11 @@ void mmHomePagePanel::updateAccounts()
     mmCurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
 
     data.clear();
-    data.push_back(_("Stock Investments :"));
-    data.push_back(stockBalanceStr);
-    hb.addRow(data, wxT(" bgcolor=\"#D3EFF6\" "));
+    hb.addHTML(wxT("<tr bgcolor=\"#D3EFF6\" ><td><a href=\"Stocks\">"));
+    hb.addHTML(_("Stock Investments"));
+    hb.addHTML(wxT("</a></td><td>"));
+    hb.addHTML(stockBalanceStr);
+    hb.addHTML(wxT("</td></tr>"));
 
     tBalance += stockBalance;
 
@@ -158,9 +167,15 @@ void mmHomePagePanel::updateAccounts()
     mmCurrencyFormatter::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
     data.clear();
-    data.push_back(_("Assets :"));
-    data.push_back(assetBalanceStr);
-    hb.addRow(data, wxT(" bgcolor=\"#D3EFF4\" "));
+    //data.push_back(_("Assets :"));
+    //data.push_back(assetBalanceStr);
+    //hb.addRow(data, wxT(" bgcolor=\"#D3EFF4\" "));
+    hb.addHTML(wxT("<tr bgcolor=\"#D3EFF4\" ><td><a href=\"Assets\">"));
+    hb.addHTML(_("Assets"));
+    hb.addHTML(wxT("</a></td><td>"));
+    hb.addHTML(assetBalanceStr);
+    hb.addHTML(wxT("</td></tr>"));
+
     tBalance += assetBalance;
     
     wxString tBalanceStr;
@@ -203,15 +218,8 @@ void mmHomePagePanel::updateAccounts()
     hb.addHTML(wxT("<BR> <BR>"));
 
     // bills & deposits
-    hb.beginTable();
-    std::vector<wxString> data3;
-    data3.push_back(_("Upcoming Bills & Deposits"));
+    bool isHeaderAdded = false;
 
-    hb.addHTML(wxT("<tr BGCOLOR=\"#80B9E8\" > <th width=\"100\" COLSPAN=\"2\" > <b>"));
-    hb.addHTML(wxT("<a href=\"billsdeposits\" >"));
-    hb.addHTML(data3[0]);
-    hb.addHTML(wxT("</a></b></th></tr>"));
-    //hb.addTableHeaderRow(data3, wxT(" BGCOLOR=\"#80B9E8\" "), wxT(" width=\"100\" COLSPAN=\"2\" "));
  
     wxSQLite3ResultSet q2 = db_->ExecuteQuery("select * from BILLSDEPOSITS_V1;");
 
@@ -244,6 +252,19 @@ void mmHomePagePanel::updateAccounts()
         
         if (daysRemaining_ <= 14)
         {
+            if (!isHeaderAdded)
+            {
+                hb.beginTable();
+                std::vector<wxString> data3;
+                data3.push_back(_("Upcoming Bills & Deposits"));
+
+                hb.addHTML(wxT("<tr BGCOLOR=\"#80B9E8\" > <th width=\"100\" COLSPAN=\"2\" > <b>"));
+                hb.addHTML(wxT("<a href=\"billsdeposits\" >"));
+                hb.addHTML(data3[0]);
+                hb.addHTML(wxT("</a></b></th></tr>"));
+                isHeaderAdded = true;
+            }
+
             data4.push_back(payeeStr_);
 
             wxString daysRemainingStr_;
@@ -265,8 +286,22 @@ void mmHomePagePanel::updateAccounts()
     }
     q2.Finalize();
 
+    if (isHeaderAdded)
+        hb.endTable();
 
-    hb.endTable();
+    
+    
+    q2 = db_->ExecuteQuery("select * from CHECKINGACCOUNT_V1 where STATUS='F';");
+    int countFollowUp = 0;
+    while (q2.NextRow())
+    {   
+        countFollowUp++;
+    }
+    if (countFollowUp > 0)
+    {
+        wxString str = wxString::Format(wxT("<br><i>Follow Up On <b>%d</b> Transactions</i>"), countFollowUp);
+        hb.addHTML(str);
+    }
 
     hb.endTable();
 
@@ -294,10 +329,29 @@ void mmHomePagePanel::CreateControls()
 void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
 {
     wxString href = link.GetHref();
+    wxString number;
+    bool isAcct = href.StartsWith(wxT("ACCT:"), &number);
     if (href == wxT("billsdeposits"))
     {
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BILLSDEPOSITS);
         frame_->GetEventHandler()->AddPendingEvent(evt);
-        //frame_->GetEventHandler()->ProcessEvent(evt);
+    }
+    else if (isAcct)
+    {
+        long id = -1;
+        number.ToLong(&id);
+        frame_->gotoAccountID_ = id;
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
+        frame_->GetEventHandler()->AddPendingEvent(evt);
+    }
+    else if (href == wxT("Assets"))
+    {
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
+        frame_->GetEventHandler()->AddPendingEvent(evt);
+    }
+    else if (href == wxT("Stocks"))
+    {
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
+        frame_->GetEventHandler()->AddPendingEvent(evt);
     }
 }

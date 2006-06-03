@@ -62,6 +62,7 @@ public:
     void mmOptionsDialog::OnListBorderChanged(wxCommandEvent& event);
     void mmOptionsDialog::OnRestoreDefaultColors(wxCommandEvent& event);
     void  mmOptionsDialog::OnListDetailsColors(wxCommandEvent& event);
+    void OnBackupDBChecked(wxCommandEvent& event);
 
 private:
     wxImageList* m_imageList;

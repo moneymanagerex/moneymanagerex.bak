@@ -1606,7 +1606,7 @@ double mmDBWrapper::getAmountForPayee(wxSQLite3Database* db, int payeeID,
         }
         else if (repeats == 5)
         {
-            updateOccur = dtno.Add(wxDateSpan::Months(4));
+            updateOccur = dtno.Add(wxDateSpan::Months(3));
         }
         else if (repeats == 6)
         {
@@ -1615,6 +1615,10 @@ double mmDBWrapper::getAmountForPayee(wxSQLite3Database* db, int payeeID,
         else if (repeats == 7)
         {
             updateOccur = dtno.Add(wxDateSpan::Year());
+        }
+        else if (repeats == 8)
+        {
+            updateOccur = dtno.Add(wxDateSpan::Months(4));
         }
      }
      q1.Finalize();

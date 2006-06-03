@@ -82,6 +82,8 @@ mmCheckingPanel::mmCheckingPanel(wxSQLite3Database* db, wxSQLite3Database* inidb
             const wxString& name )
             : db_(db), accountID_(accountID), m_imageList(0), inidb_(inidb)
 {
+    wxASSERT(db_);
+    wxASSERT(accountID < 10);
     currentView_ = wxT("View All Transactions");
     Create(parent, winid, pos, size, style, name);
 }
@@ -159,6 +161,7 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
             menu.Append(MENU_VIEW_DELETE_FLAGGED, _("Delete all flagged transactions"));
 
             PopupMenu(&menu, event.GetPosition());
+
             break;
         }
     }
@@ -365,11 +368,10 @@ void mmCheckingPanel::sortTable()
 
 void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
-    wxString trans =  _("Transaction #   : ") + trans_[selIndex].transAmtString_ + wxT("\n"); 
-    wxString cat   =  _("Category          : ") + trans_[selIndex].catStr_  +   wxT("\n"); 
+    wxString cat   =  _("Category         : ") + trans_[selIndex].catStr_  +   wxT("\n"); 
     wxString subcat = _("Sub Category  : ") + trans_[selIndex].subCatStr_ + wxT("\n");
-    wxString notes =  _("Notes                : ") + trans_[selIndex].notes_ + wxT("\n");
-    wxString text = trans + cat + subcat + notes;
+    wxString notes =  _("Notes               : ") + trans_[selIndex].notes_ + wxT("\n");
+    wxString text = cat + subcat + notes;
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
     st->SetLabel(text);
 }
@@ -420,7 +422,6 @@ void mmCheckingPanel::initVirtualListControl()
    setAccountSummary();
 
     wxString text;
-    text += _("Transaction #:  \n"); 
     text += _("Category: \n"); 
     text += _("Sub Category: \n"); 
     text += _("Notes: \n"); 

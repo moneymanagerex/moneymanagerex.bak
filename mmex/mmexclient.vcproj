@@ -238,7 +238,7 @@
 				AdditionalDependencies="wxzlibd.lib wxsqlite3ud.lib sqlite3.lib wxmsw26ud_core.lib wxbase26ud.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase26ud_net.lib wxmsw26ud_adv.lib wxpngd.lib  wxmsw26ud_html.lib wxjpegd.lib wxpngd.lib "
 				OutputFile="$(OutDir)/mmex.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib; $(WXSQLITE)\lib;"
+				AdditionalLibraryDirectories="C:\pgmming\wxsqlite3\lib;&quot;$(WXWIN)\lib\vc_lib&quot;;&quot;$(WXSQLITE)\lib&quot;"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/mmex.pdb"
 				SubSystem="2"
@@ -321,7 +321,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxsqlite3u.lib sqlite3.lib wxmsw26u_core.lib wxbase26u.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase26u_net.lib wxmsw26u_adv.lib  wxmsw26u_html.lib"
+				AdditionalDependencies="wxzlib.lib wxsqlite3u.lib sqlite3.lib wxmsw26u_core.lib wxbase26u.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase26u_net.lib wxmsw26u_adv.lib  wxmsw26u_html.lib wxjpeg.lib wxpng.lib"
 				OutputFile="$(OutDir)/mmex.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib; $(WXSQLITE)\lib;"
@@ -456,6 +456,10 @@
 			</File>
 			<File
 				RelativePath=".\src\payeedialog.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\qifimport.cpp"
 				>
 			</File>
 			<File

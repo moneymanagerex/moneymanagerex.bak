@@ -306,7 +306,12 @@ void mmStockDialog::OnStockPriceButton(wxCommandEvent& event)
 	if (!stockSymbol.IsEmpty())
 	{
 		// Use Google for stock quotes
-		wxString httpString = wxString::Format(wxT("http://www.google.com/finance?q=%s"), stockSymbol);
+        wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), DEFSTOCKURL);
+        //wxString paddedURL = wxT("\"") + stockURL + wxT("\"");
+		//wxString httpString = wxString::Format(paddedURL, stockSymbol);
+        //wxExecute(_T("explorer ") + httpString, wxEXEC_ASYNC, NULL ); 
+
+        wxString httpString = wxString::Format(stockURL, stockSymbol);
 		wxLaunchDefaultBrowser(httpString);
 	}
 }

@@ -270,6 +270,10 @@ void mmBillsDepositsPanel::initVirtualListControl()
         {
            th.repeatsStr_ = _("Yearly");
         }
+        else if (repeats == 8)
+        {
+           th.repeatsStr_ = _("Four Months");
+        }
 
         wxDateTime today = wxDateTime::Now();
         wxTimeSpan ts = th.nextOccurDate_.Subtract(today);

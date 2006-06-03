@@ -366,6 +366,7 @@ public:
     void OnExportToHtml(wxCommandEvent& event);
     void OnImportCSV(wxCommandEvent& event);
     void OnImportCSVMMNET(wxCommandEvent& event);
+    void OnImportQIF(wxCommandEvent& event);
     void OnPrintPageSetup(wxCommandEvent& WXUNUSED(event));
     void OnPrintPageReport(wxCommandEvent& WXUNUSED(event));
     void OnPrintPagePreview(wxCommandEvent& WXUNUSED(event));
@@ -373,6 +374,7 @@ public:
     void OnBillsDeposits(wxCommandEvent& event);
     void OnStocks(wxCommandEvent& event);
     void OnAssets(wxCommandEvent& event);
+    void OnGotoAccount(wxCommandEvent& WXUNUSED(event));
 
     void OnNewAccount(wxCommandEvent& event);
     void OnAccountList(wxCommandEvent& event);
@@ -402,6 +404,7 @@ public:
     //wxPanel* replace;
     wxPanel* homePanel;
     wxTreeCtrl* navTreeCtrl_;
+    int gotoAccountID_;
 
 private:
     /* handles to SQLite Database */

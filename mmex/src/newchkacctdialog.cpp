@@ -387,12 +387,13 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& event)
     if (!itemCheckBox->IsChecked())
         checkVal = wxT("FALSE");
 
+    mmDBWrapper::loadSettings(db_, currencyID_);
     wxTextCtrl* textCtrlInit = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE);
     wxString bal = textCtrlInit->GetValue().Trim();
     double val = 0.0;
     if (!bal.IsEmpty())
     {
-        if (!bal.ToDouble(&val))
+        if (!mmCurrencyFormatter::formatCurrencyToDouble(bal, val)  || (val < 0.0))
         {
             mmShowErrorMessageInvalid(this, _("Init Balance "));
             return;

@@ -98,6 +98,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_EXPORT_CSV, mmGUIFrame::OnExport)
     EVT_MENU(MENU_IMPORT_CSV, mmGUIFrame::OnImportCSV)
     EVT_MENU(MENU_IMPORT_MMNETCSV, mmGUIFrame::OnImportCSVMMNET)
+    EVT_MENU(MENU_IMPORT_QIF, mmGUIFrame::OnImportQIF)
     EVT_MENU(MENU_QUIT,  mmGUIFrame::OnQuit)
     EVT_MENU(MENU_NEWACCT,  mmGUIFrame::OnNewAccount)
     EVT_MENU(MENU_ACCTLIST,  mmGUIFrame::OnAccountList)
@@ -126,6 +127,8 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
 
     EVT_TREE_ITEM_RIGHT_CLICK(ID_NAVTREECTRL, mmGUIFrame::OnItemRightClick)
     EVT_TREE_SEL_CHANGED(ID_NAVTREECTRL, mmGUIFrame::OnSelChanged)
+
+    EVT_MENU(MENU_GOTOACCOUNT, mmGUIFrame::OnGotoAccount)
 
 END_EVENT_TABLE()
 /*******************************************************/
@@ -286,7 +289,7 @@ void mmNewDatabaseWizard::RunIt(bool modal)
 mmGUIFrame::mmGUIFrame(const wxString& title, 
                        const wxPoint& pos, const wxSize& size)
        : wxFrame((wxFrame*)NULL, -1, title, pos, size), 
-       db_(0), inidb_(0)
+       db_(0), inidb_(0),gotoAccountID_(-1)
 {
     selectedItemData_ = 0;
 
@@ -715,14 +718,15 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                 q1.Finalize();
                 if (acctType == wxT("Checking"))
                 {
-                    Freeze();
-                    createCheckingAccountPage(data);
-                    Thaw();
+                   // Freeze();
+                   gotoAccountID_ = data;
+                   wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
+                   GetEventHandler()->AddPendingEvent(evt);
+                    //Thaw();
                 }
                 else
                 {
 				    Freeze();
-                    navTreeCtrl_->Unselect();
 					homePanel->DestroyChildren();
 					homePanel->SetSizer(NULL);
 
@@ -748,7 +752,10 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
     else 
     {
         if (iData->getString() == wxT("Home Page"))
+        {
             createHomePage();
+            return;
+        }
 
         if (!db_)
             return;
@@ -1026,7 +1033,10 @@ void mmGUIFrame::OnLaunchAccountWebsite(wxCommandEvent& event)
         {
             wxString website = q1.GetString(wxT("WEBSITE"));
             if (!website.IsEmpty())
-                wxLaunchDefaultBrowser(website);
+            {
+                  //wxExecute(_T("explorer ") + website, wxEXEC_ASYNC, NULL ); 
+                  wxLaunchDefaultBrowser(website);  
+            }
             return;
         }
         else
@@ -1194,7 +1204,6 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
 
 void mmGUIFrame::createCheckingAccountPage(int accountID)
 {
-    navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -1208,9 +1217,17 @@ void mmGUIFrame::createCheckingAccountPage(int accountID)
     homePanel->Layout();
 }
 
+void mmGUIFrame::OnGotoAccount(wxCommandEvent& WXUNUSED(event))
+{
+    if (gotoAccountID_ != -1)    
+    {
+        createCheckingAccountPage(gotoAccountID_);
+        //navTreeCtrl_->Unselect();
+    }
+}
+
 void mmGUIFrame::createBudgetingPage(int budgetYearID)
 {
-    navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -1226,7 +1243,6 @@ void mmGUIFrame::createBudgetingPage(int budgetYearID)
 
 void mmGUIFrame::createHomePage()
 {
-    navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -1242,8 +1258,7 @@ void mmGUIFrame::createHomePage()
 
 void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
 {
-    navTreeCtrl_->Unselect();
-    homePanel->DestroyChildren();
+     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
@@ -1258,7 +1273,6 @@ void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
 
 void mmGUIFrame::createHelpPage()
 {
-    navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -1316,6 +1330,7 @@ void mmGUIFrame::createMenu()
     menuFile->Append(MENU_EXPORT, _("&Export"), exportMenu);
 
     wxMenu* importMenu = new wxMenu;
+    importMenu->Append(MENU_IMPORT_QIF, _("&QIF Files"), _("Import from QIF"));
     importMenu->Append(MENU_IMPORT_CSV, _("&CSV Files"), _("Import from CSV"));
     importMenu->Append(MENU_IMPORT_MMNETCSV, _("&MM.NET CSV Files"), _("Import from CSV"));
     menuFile->Append(MENU_IMPORT, _("Import"), importMenu);
@@ -1487,9 +1502,13 @@ void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
         && wxFileName::FileExists(fileName))
     {    
         /* Do a backup before opening */
-        wxFileName fn(fileName);
-        wxString bkupName = fn.GetPath() + wxT("/") + fn.GetName() + wxT(".bak");
-        wxCopyFile(fileName, bkupName, true);
+        wxString backupDBState =  mmDBWrapper::getINISettingValue(inidb_, wxT("BACKUPDB"), wxT("FALSE"));
+        if (backupDBState == wxT("TRUE"))
+        {
+            wxFileName fn(fileName);
+            wxString bkupName = fn.GetPath() + wxT("/") + fn.GetName() + wxT(".bak");
+            wxCopyFile(fileName, bkupName, true);
+        }
 
         db_ = new wxSQLite3Database();
         db_->Open(fileName);
@@ -1658,6 +1677,13 @@ void mmGUIFrame::OnImportCSV(wxCommandEvent& event)
         createCheckingAccountPage(accountID);
 }
 
+void mmGUIFrame::OnImportQIF(wxCommandEvent& event)
+{
+    int accountID = mmImportQIF(db_);
+    if (accountID != -1)
+        createCheckingAccountPage(accountID);
+}
+
 void mmGUIFrame::OnImportCSVMMNET(wxCommandEvent& event)
 {
     int accountID = mmImportCSVMMNET(db_);
@@ -1742,17 +1768,23 @@ void mmGUIFrame::OnHelp(wxCommandEvent& event)
  
 void mmGUIFrame::OnCheckUpdate(wxCommandEvent& event)
 {
-    wxLaunchDefaultBrowser(wxT("sourceforge.net/project/showfiles.php?group_id=163169"));
+    wxString url = wxT("http://sourceforge.net/project/showfiles.php?group_id=163169");
+    //wxExecute(_T("explorer ") + url, wxEXEC_ASYNC, NULL );
+    wxLaunchDefaultBrowser(url);
 }
 
 void mmGUIFrame::OnReportIssues(wxCommandEvent& event)
 {
-    wxLaunchDefaultBrowser(wxT("groups.google.com/group/zealsupport"));
+   wxString url = wxT("http://groups.google.com/group/zealsupport");
+   //wxExecute(_T("explorer ") + url, wxEXEC_ASYNC, NULL ); 
+   wxLaunchDefaultBrowser(url);
 }
 
 void mmGUIFrame::OnBeNotified(wxCommandEvent& event)
 {
-    wxLaunchDefaultBrowser(wxT("groups.google.com/group/mmlist"));
+    wxString url = wxT("http://groups.google.com/group/mmlist");
+    //wxExecute(_T("explorer ") + url, wxEXEC_ASYNC, NULL );
+    wxLaunchDefaultBrowser(url);
 }
     
 void mmGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
@@ -1869,7 +1901,7 @@ void mmGUIFrame::OnExportToHtml(wxCommandEvent& event)
 
 void mmGUIFrame::OnBillsDeposits(wxCommandEvent& event)
 {
-    navTreeCtrl_->Unselect();
+    //navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -1885,7 +1917,7 @@ void mmGUIFrame::OnBillsDeposits(wxCommandEvent& event)
 
 void mmGUIFrame::OnStocks(wxCommandEvent& event)
 {
-    navTreeCtrl_->Unselect();
+    //navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -1901,7 +1933,7 @@ void mmGUIFrame::OnStocks(wxCommandEvent& event)
 
 void mmGUIFrame::OnAssets(wxCommandEvent& event)
 {
-    navTreeCtrl_->Unselect();
+    //navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 

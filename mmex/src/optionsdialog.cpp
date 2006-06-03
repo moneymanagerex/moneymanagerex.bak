@@ -41,12 +41,15 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBORDER, mmOptionsDialog::OnListBorderChanged)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_RESTOREDEFAULT, mmOptionsDialog::OnRestoreDefaultColors)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS, mmOptionsDialog::OnListDetailsColors)
+
+    EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_BACKUP, mmOptionsDialog::OnBackupDBChecked)
     
 END_EVENT_TABLE()
 
 #include "../resources/htmbook.xpm"
 #include "../resources/pgmctrl.xpm"
 #include "../resources/exefile.xpm"
+#include "../resources/misc.xpm"
 
 mmOptionsDialog::mmOptionsDialog( )
 {
@@ -60,6 +63,11 @@ mmOptionsDialog::~mmOptionsDialog( )
     wxString delim = st->GetValue();
     if (!delim.IsEmpty())
         mmDBWrapper::setInfoSettingValue(db_, wxT("DELIMITER"), delim); 
+
+    wxTextCtrl* url = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL);
+    wxString stockURL = url->GetValue();
+    if (!stockURL.IsEmpty())
+        mmDBWrapper::setInfoSettingValue(db_, wxT("STOCKURL"), stockURL); 
 }
 
 mmOptionsDialog::mmOptionsDialog( wxSQLite3Database* db, wxSQLite3Database* inidb,
@@ -112,6 +120,7 @@ void mmOptionsDialog::CreateControls()
     m_imageList->Add(wxBitmap(htmbook_xpm));
     m_imageList->Add(wxBitmap(pgmctrl_xpm));
     m_imageList->Add(wxBitmap(exefile_xpm));
+    m_imageList->Add(wxBitmap(misc_xpm));
  
     mmOptionsDialog* itemDialog1 = this;
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
@@ -230,6 +239,7 @@ void mmOptionsDialog::CreateControls()
     itemStaticBoxSizerLang->Add(itemButtonLanguage, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
     itemButtonLanguage->SetToolTip(_("Specify the language to use"));
     
+    
     // ------------------------------------------
     wxPanel* itemPanelViews = new wxPanel( newBook, ID_BOOK_PANELVIEWS, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
@@ -323,11 +333,43 @@ void mmOptionsDialog::CreateControls()
    
     // ------------------------------------------
 
+    wxPanel* itemPanelMisc = new wxPanel( newBook, ID_BOOK_PANELMISC, wxDefaultPosition, 
+        wxDefaultSize, wxTAB_TRAVERSAL );
+    wxBoxSizer* itemBoxSizerMisc = new wxBoxSizer(wxVERTICAL);
+    itemPanelMisc->SetSizer(itemBoxSizerMisc);
+
+    wxString backupDBState =  mmDBWrapper::getINISettingValue(inidb_, wxT("BACKUPDB"), wxT("FALSE"));
+    wxCheckBox* itemCheckBoxBackup = new wxCheckBox( itemPanelMisc, 
+        ID_DIALOG_OPTIONS_CHK_BACKUP, _("Backup database before opening"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    itemCheckBoxBackup->SetValue(FALSE);
+    if (backupDBState == wxT("TRUE"))
+        itemCheckBoxBackup->SetValue(TRUE);
+    itemBoxSizerMisc->Add(itemCheckBoxBackup, 0, 
+        wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemCheckBoxBackup->SetToolTip(_("Select whether to create a .bak file when opening a the database file"));
+
+
+    wxBoxSizer* itemBoxSizerStockURL = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizerMisc->Add(itemBoxSizerStockURL, 0, wxALIGN_LEFT|wxALL, 5);
+
+    wxStaticText* itemStaticTextURL = new wxStaticText( itemPanelMisc, wxID_STATIC, 
+        _("Stock Quote Web Page"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizerStockURL->Add(itemStaticTextURL, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+
+    wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), DEFSTOCKURL);
+    wxTextCtrl* itemTextCtrURL = new wxTextCtrl( itemPanelMisc, 
+        ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL, stockURL, 
+        wxDefaultPosition, wxSize(150, -1), 0 );
+    itemBoxSizerStockURL->Add(itemTextCtrURL, 0, wxALIGN_TOP|wxALL, 5);
+
+    // -------------------------------------------
+
     newBook->SetImageList(m_imageList);
 
     newBook->InsertPage(0, itemPanelGeneral, _("General"), true, 2);
     newBook->InsertPage(1, itemPanelViews, _("View Options"), false, 0);
     newBook->InsertPage(2, itemPanelColors, _("Colors"), false, 1);
+    newBook->InsertPage(3, itemPanelMisc, _("Others"), false, 3);
 
     itemBoxSizer4->Add(newBook, 1, wxGROW|wxALL, 5);
     itemBoxSizer4->Layout();
@@ -467,4 +509,14 @@ void  mmOptionsDialog::OnListDetailsColors(wxCommandEvent& event)
 void mmOptionsDialog::OnRestoreDefaultColors(wxCommandEvent& event)
 {
     mmRestoreDefaultColors();
+}
+
+void mmOptionsDialog::OnBackupDBChecked(wxCommandEvent& event)
+{
+  wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_BACKUP);
+  bool state = itemCheckBox->GetValue();
+  if (state)
+     mmDBWrapper::setINISettingValue(inidb_, wxT("BACKUPDB"), wxT("TRUE"));
+  else
+    mmDBWrapper::setINISettingValue(inidb_, wxT("BACKUPDB"), wxT("FALSE"));
 }

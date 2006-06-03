@@ -274,9 +274,10 @@ void mmBDDialog::CreateControls()
         _("Quarterly"),
         _("Half-Yearly"),
         _("Yearly"),
+        _("Four Months"),
     };  
     itemRepeats_ = new wxChoice( itemDialog1, ID_DIALOG_BD_COMBOBOX_REPEATS, wxDefaultPosition, 
-        wxSize(100, -1), 8, itemComboBox11Strings, 0);
+        wxSize(100, -1), 9, itemComboBox11Strings, 0);
     itemFlexGridSizer5->Add(itemRepeats_, 0, 
         wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemRepeats_->SetSelection(0);

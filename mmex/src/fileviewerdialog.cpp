@@ -74,8 +74,8 @@ void fileviewer::CreateControls()
                 wxString line = text.ReadLine();
                 if (!line.IsEmpty())
                 {
-                    fileContents += wxT("\n");
                     fileContents += line;
+                    fileContents += wxT("\n");
                 }
                 else
                 {

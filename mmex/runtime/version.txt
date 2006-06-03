@@ -1,6 +1,7 @@
 Version History of Money Manager Ex
 
-0.5.6.0 (May ??, 2006)
+0.6 (June 3, 2006)
+- Added ability to import from QIF files (tested from MS Money)
 - Add icons for all menus
 - Sort Bills and Deposits by days remaining column
 - Add ability to display jpeg, png in user help
@@ -8,6 +9,15 @@ Version History of Money Manager Ex
 - Fix column alignment for several panels
 - Add Feature 1492006:Date fields in window for "New Series"
 - Add Feature 1482233:Add weekly and Bi weekly ....to Budget setup
+- Add Feature 1480766:Allow automatic backup of .mmb file
+- Add Feature 1493309:Add Linkable Accounts from main page
+- Add Feature 1491278:Add 4 Month frequency for Bills & Deposits
+- Fix bug in Quarterly bills and deposits calculation of next occurence date
+- Show upcoming bills and deposits in homepage only if not empty
+- Add Feature 1455825:Add Flag for follow up transactions display in main screen
+- Fix 1494231:Init Balance funky init balance entry
+- Fix 1482172:Launch website does not work in Win2K (I hope)
+- Added ability to change stock URL webpage
 
 0.5.5.1 (May 17, 2006)
 - Fix add account, and then edit problem for stock accounts
