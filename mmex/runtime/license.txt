@@ -4,8 +4,7 @@ Copyright (C) 2005-2006 Madhan Kanagavel
 http://www.thezeal.com/software
 
 ======================================
-Please note that this is alpha software and should be only used for
-testing purposes. If you find bugs/issues please use the mailing list
+If you find bugs/issues please use the mailing list
 located in the help menu to let us know.
 =======================================
 
