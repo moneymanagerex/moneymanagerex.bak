@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-06-02 19:59-0500\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2006-06-04 01:08+0100\n"
+"Last-Translator: Claudio <enjoy-vr@email.it>\n"
 "Language-Team: Claudio <enjoy-vr@email.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -53,7 +53,7 @@ msgstr "Apri il Database utilizzato precedentemente: "
 
 #: src/appstartdialog.cpp:117
 msgid "Create a New Money Manager File"
-msgstr "Crea un nuovo file Money Manager..."
+msgstr "Crea un nuovo Database Money Manager..."
 
 #: src/appstartdialog.cpp:118
 msgid "Create a new database file to get started"
@@ -61,7 +61,7 @@ msgstr "Crea un nuovo Database da aprire al riavvio..."
 
 #: src/appstartdialog.cpp:122
 msgid "Open Existing Money Manager File"
-msgstr "Apri un file Money Manager esistente..."
+msgstr "Apri un Database Money Manager esistente..."
 
 #: src/appstartdialog.cpp:123
 msgid "Open an already created Money Manager Ex database file with extension (*.mmb)"
@@ -406,9 +406,8 @@ msgstr "Annuale"
 
 #: src/bddialog.cpp:277
 #: src/billsdeposits.cpp:275
-#, fuzzy
 msgid "Four Months"
-msgstr "Mese in corso"
+msgstr "Quadrimestrale"
 
 #: src/bddialog.cpp:286
 msgid "Times Repeated"
@@ -1020,9 +1019,8 @@ msgid "C  "
 msgstr "C  "
 
 #: src/mmcheckingpanel.cpp:255
-#, fuzzy
 msgid "Balance"
-msgstr "Saldo       "
+msgstr "Saldo"
 
 #: src/mmcheckingpanel.cpp:302
 msgid "New Transaction"
@@ -1037,18 +1035,16 @@ msgid "Delete Transaction"
 msgstr "Elimina l'operazione selezionata"
 
 #: src/mmcheckingpanel.cpp:371
-#, fuzzy
 msgid "Category         : "
-msgstr "Categoria        : "
+msgstr "Categoria         : "
 
 #: src/mmcheckingpanel.cpp:372
 msgid "Sub Category  : "
 msgstr "Sottocategoria: "
 
 #: src/mmcheckingpanel.cpp:373
-#, fuzzy
 msgid "Notes               : "
-msgstr "Note                : "
+msgstr "Note                 : "
 
 #: src/mmcheckingpanel.cpp:391
 #, c-format
@@ -1372,14 +1368,12 @@ msgid "&Export"
 msgstr "&Esporta..."
 
 #: src/mmex.cpp:1333
-#, fuzzy
 msgid "&QIF Files"
-msgstr "File &CSV"
+msgstr "File &QIF"
 
 #: src/mmex.cpp:1333
-#, fuzzy
 msgid "Import from QIF"
-msgstr "Importazione da CSV"
+msgstr "Importazione da QIF"
 
 #: src/mmex.cpp:1334
 #: src/mmex.cpp:1335
@@ -1486,7 +1480,7 @@ msgstr "Pagamenti e &Depositi..."
 #: src/mmhomepagepanel.cpp:156
 #: src/stocks.cpp:124
 msgid "Stock Investments"
-msgstr "&Investimenti..."
+msgstr "Investimenti"
 
 #: src/mmex.cpp:1420
 msgid "&Options"
@@ -1624,7 +1618,7 @@ msgstr "Saldo"
 
 #: src/mmhomepagepanel.cpp:185
 msgid "Total of Accounts :"
-msgstr "Saldo odierno Conti:"
+msgstr "Saldo contabile:"
 
 #: src/mmhomepagepanel.cpp:204
 msgid "Income vs Expenses: Current Month"
@@ -1840,74 +1834,68 @@ msgstr "Specifica i Conti visualizzati"
 
 #: src/optionsdialog.cpp:290
 msgid "Restore Defaults"
-msgstr ""
+msgstr "Ripristina predefiniti"
 
 #: src/optionsdialog.cpp:293
 msgid "Restore Default Colors"
-msgstr ""
+msgstr "Ripristina i colori predefiniti"
 
 #: src/optionsdialog.cpp:299
 msgid "Nav Tree"
-msgstr ""
+msgstr "Finestra di navigazione"
 
 #: src/optionsdialog.cpp:301
-#, fuzzy
 msgid "Specify the color for the nav tree"
-msgstr "Selezionare la categoria dell'operazione"
+msgstr "Selezionare il colore per la finestra di navigazione"
 
 #: src/optionsdialog.cpp:305
 msgid "List Background"
-msgstr ""
+msgstr "Sfondo elenco"
 
 #: src/optionsdialog.cpp:307
-#, fuzzy
 msgid "Specify the color for the list background"
-msgstr "Selezionare la categoria dell'operazione"
+msgstr "Selezionare il colore per lo sfondo dell'elenco"
 
 #: src/optionsdialog.cpp:311
 msgid "List Row 0"
-msgstr ""
+msgstr "Riga 0 dell'elenco"
 
 #: src/optionsdialog.cpp:313
 #: src/optionsdialog.cpp:319
-#, fuzzy
 msgid "Specify the color for the list row 0"
-msgstr "Selezionare la categoria dell'operazione"
+msgstr "Selezionare il colore per la riga 0 dell'elenco"
 
 #: src/optionsdialog.cpp:317
 msgid "List Row 1"
-msgstr ""
+msgstr "Riga 1 dell'elenco"
 
 #: src/optionsdialog.cpp:323
 msgid "List Border"
-msgstr ""
+msgstr "Bordo elenco"
 
 #: src/optionsdialog.cpp:325
-#, fuzzy
 msgid "Specify the color for the list Border"
-msgstr "Selezionare la categoria dell'operazione"
+msgstr "Selezionare il colore per il bordo dell'elenco"
 
 #: src/optionsdialog.cpp:329
-#, fuzzy
 msgid "List Details"
-msgstr "Dettagli del bene"
+msgstr "Dettagli elenco"
 
 #: src/optionsdialog.cpp:331
-#, fuzzy
 msgid "Specify the color for the list details"
-msgstr "Selezionare la categoria dell'operazione"
+msgstr "Selezionare il colore per i dettagli dell'elenco"
 
 #: src/optionsdialog.cpp:343
 msgid "Backup database before opening"
-msgstr ""
+msgstr "Backup del database prima di aprirlo"
 
 #: src/optionsdialog.cpp:349
 msgid "Select whether to create a .bak file when opening a the database file"
-msgstr ""
+msgstr "Scegliere se creare un file .bak quando si apre un file database"
 
 #: src/optionsdialog.cpp:356
 msgid "Stock Quote Web Page"
-msgstr ""
+msgstr "Pagina Web delle quotazioni azionarie"
 
 #: src/optionsdialog.cpp:369
 msgid "General"
@@ -1922,7 +1910,6 @@ msgid "Colors"
 msgstr "Colori"
 
 #: src/optionsdialog.cpp:372
-#, fuzzy
 msgid "Others"
 msgstr "Altro"
 
@@ -1967,14 +1954,12 @@ msgid "Choose Account to import to:"
 msgstr "Selezionare il Conto nel quale importare"
 
 #: src/qifimport.cpp:370
-#, fuzzy
 msgid "QIF Import"
-msgstr "Im&porta..."
+msgstr "Importa QIF"
 
 #: src/qifimport.cpp:377
-#, fuzzy
 msgid "Choose QIF data file to import"
-msgstr "Scegli il file formato CSV da esportare"
+msgstr "Scegli il file formato QIF da esportare"
 
 #: src/qifimport.cpp:418
 #: src/qifimport.cpp:444
@@ -2001,30 +1986,27 @@ msgstr "Riga: "
 
 #: src/qifimport.cpp:419
 msgid " incorrect QIF line type"
-msgstr ""
+msgstr " tipo di riga QIF errata"
 
 #: src/qifimport.cpp:431
 msgid "Importing account type : "
-msgstr ""
+msgstr "Importazione del tipo di conto: "
 
 #: src/qifimport.cpp:444
-#, fuzzy
 msgid " : "
-msgstr " Al: "
+msgstr " : "
 
 #: src/qifimport.cpp:445
-#, fuzzy
 msgid " account name "
-msgstr "Nome Conto"
+msgstr " nome Conto"
 
 #: src/qifimport.cpp:483
 msgid " cannot process Account Types yet "
-msgstr ""
+msgstr " non si possono ancora trattare conti di questo tipo"
 
 #: src/qifimport.cpp:494
-#, fuzzy
 msgid "Adding payee "
-msgstr "Aggiungi il nome di un nuovo beneficiario"
+msgstr "Aggiungi beneficiario"
 
 #: src/qifimport.cpp:507
 #: src/util.cpp:338
@@ -2034,7 +2016,7 @@ msgstr " importo sbagliato. Operazione ignorta!"
 
 #: src/qifimport.cpp:534
 msgid "unable to parse date, using today's date..please verify and change "
-msgstr ""
+msgstr "non è possibile analizzare la data, usare la data odierna.. prego verificare e modificare "
 
 #: src/qifimport.cpp:593
 #: src/util.cpp:533
@@ -2043,7 +2025,7 @@ msgstr " Uno dei seguenti campi: data, beneficiario, tipo di operazione, importo
 
 #: src/qifimport.cpp:625
 msgid " transactions imported from QIF"
-msgstr ""
+msgstr " operazioni importate da QIF"
 
 #: src/stockdialog.cpp:137
 msgid "Stock Investment Details"
