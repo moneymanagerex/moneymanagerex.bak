@@ -24,7 +24,7 @@ public:
     {
         mmHTMLBuilder hb;
         hb.init();
-        hb.addHeader(3, wxT("Income vs Expenses"));
+        hb.addHeader(3, _("Income vs Expenses"));
 
         wxDateTime now = wxDateTime::Now();
         wxString dt = wxT("Today's Date: ") + mmGetNiceDateString(now);
@@ -34,8 +34,9 @@ public:
 
         if (!ignoreDate_)
         {
-            wxString dtRange = wxT("From: ") + mmGetNiceDateSimpleString(dtBegin_) + wxT(" To: ") +
-                mmGetNiceDateSimpleString(dtEnd_);
+            wxString dtRange = _("From: ") 
+                + mmGetNiceDateSimpleString(dtBegin_.Add(wxDateSpan::Day())) + _(" To: ") 
+                + mmGetNiceDateSimpleString(dtEnd_);
             hb.addHeader(7, dtRange);
             hb.addLineBreak();
         }

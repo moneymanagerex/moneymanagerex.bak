@@ -91,11 +91,15 @@ wxString mmReadyDisplayString(const wxString& orig)
 
 wxString mmGetNiceDateString(wxDateTime dt)
 {
+#if 0    
     wxString dts(wxDateTime::GetWeekDayName(dt.GetWeekDay()) + wxString(wxT(", ")));
     dts += wxDateTime::GetMonthName(dt.GetMonth()) + wxString(wxT(" "));
     dts += wxString::Format(wxT("%d"), dt.GetDay()) + wxT(", ") 
         + wxString::Format(wxT("%d"), dt.GetYear());
+        
     return dts;
+#endif
+    return dt.Format(wxT("%A, %B %d, %Y"));
 }
 
 wxString mmGetNiceDateSimpleString(wxDateTime dt)

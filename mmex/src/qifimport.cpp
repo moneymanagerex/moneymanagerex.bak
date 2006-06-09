@@ -586,11 +586,37 @@ int mmImportQIF(wxSQLite3Database* db_)
             {
                 wxString status = wxT("F");
 
-                if (dt.Trim().IsEmpty() || payee.Trim().IsEmpty() ||
-                    type.Trim().IsEmpty() || amount.Trim().IsEmpty() ||
-                     categ.Trim().IsEmpty())
+                if (dt.Trim().IsEmpty())
                 {
-                    log << _(" One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping") << endl;
+                    log << _("Date is empty, ") << endl; 
+                }
+                else if (payee.Trim().IsEmpty())
+                {
+                    log << _("Payee is empty") << endl;
+                }
+                else if (type.Trim().IsEmpty())
+                {
+                    log << _("Transaction Type is empty") << endl;
+                }
+                else if (amount.Trim().IsEmpty())
+                {
+                    log << _("Amount is empty") << endl;
+                }
+                else if (categ.Trim().IsEmpty())
+                {
+                    log << _("Category is empty, marking transaction as Unknown category") << endl;
+                    categID = mmDBWrapper::getCategoryID(db_, wxT("Unknown"));
+                    if (categID == -1)
+                    {
+                        mmDBWrapper::addCategory(db_, wxT("Unknown"));
+                        categID = mmDBWrapper::getCategoryID(db_, wxT("Unknown"));
+                    }
+                }
+
+                 if(dt.Trim().IsEmpty() || payee.Trim().IsEmpty() ||
+                    type.Trim().IsEmpty() || amount.Trim().IsEmpty())
+                {
+                    log << _("Skipping QIF transaction") << endl;
                     continue;
                 }
 
@@ -613,6 +639,7 @@ int mmImportQIF(wxSQLite3Database* db_)
                 categ = wxT("");
                 notes = wxT("");
                 subCategID = -1;
+                transNum = wxT("");
                 categID = -1;
                 val = 0.0;
                 convDate = wxDateTime::Now().FormatISODate();

@@ -24,7 +24,7 @@ public:
     {
         mmHTMLBuilder hb;
         hb.init();
-        hb.addHeader(3, wxT("To Whom the Money Goes"));
+        hb.addHeader(3, _("To Whom the Money Goes"));
 
         wxDateTime now = wxDateTime::Now();
         wxString dt = wxT("Today's Date: ") + mmGetNiceDateString(now);
@@ -34,7 +34,8 @@ public:
 
         if (!ignoreDate_)
         {
-            wxString dtRange = wxT("From: ") + mmGetNiceDateSimpleString(dtBegin_) + wxT(" To: ") +
+            wxString dtRange = wxT("From: ") 
+                + mmGetNiceDateSimpleString(dtBegin_.Add(wxDateSpan::Day())) + wxT(" To: ") +
                 mmGetNiceDateSimpleString(dtEnd_);
             hb.addHeader(7, dtRange);
             hb.addLineBreak();

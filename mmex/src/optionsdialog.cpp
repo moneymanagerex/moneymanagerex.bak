@@ -316,7 +316,7 @@ void mmOptionsDialog::CreateControls()
     wxButton* itemButtonColorListAlt1 = new wxButton( itemPanelColors, 
         ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT1, _("List Row 1"), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridSizer2->Add(itemButtonColorListAlt1, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
-    itemButtonColorListAlt1->SetToolTip(_("Specify the color for the list row 0"));
+    itemButtonColorListAlt1->SetToolTip(_("Specify the color for the list row 1"));
     itemButtonColorListAlt1->SetBackgroundColour(mmColors::listAlternativeColor1);
 
      wxButton* itemButtonColorListBorder = new wxButton( itemPanelColors, 
@@ -349,18 +349,18 @@ void mmOptionsDialog::CreateControls()
     itemCheckBoxBackup->SetToolTip(_("Select whether to create a .bak file when opening a the database file"));
 
 
-    wxBoxSizer* itemBoxSizerStockURL = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizerMisc->Add(itemBoxSizerStockURL, 0, wxALIGN_LEFT|wxALL, 5);
+    //wxBoxSizer* itemBoxSizerStockURL = new wxBoxSizer(wxHORIZONTAL);
+    //itemBoxSizerMisc->Add(itemBoxSizerStockURL, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxStaticText* itemStaticTextURL = new wxStaticText( itemPanelMisc, wxID_STATIC, 
         _("Stock Quote Web Page"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizerStockURL->Add(itemStaticTextURL, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizerMisc->Add(itemStaticTextURL, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
 
     wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), DEFSTOCKURL);
     wxTextCtrl* itemTextCtrURL = new wxTextCtrl( itemPanelMisc, 
         ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL, stockURL, 
-        wxDefaultPosition, wxSize(150, -1), 0 );
-    itemBoxSizerStockURL->Add(itemTextCtrURL, 0, wxALIGN_TOP|wxALL, 5);
+        wxDefaultPosition, wxSize(250, -1), 0 );
+    itemBoxSizerMisc->Add(itemTextCtrURL, 0, wxALIGN_TOP|wxALL, 5);
 
     // -------------------------------------------
 

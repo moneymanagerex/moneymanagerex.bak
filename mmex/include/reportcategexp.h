@@ -53,7 +53,7 @@ public:
         if (!ignoreDate_)
         {
             wxString dtRange = _("From: ") 
-                + mmGetNiceDateSimpleString(dtBegin_) 
+                + mmGetNiceDateSimpleString(dtBegin_.Add(wxDateSpan::Day())) 
                 + _(" To: ") 
                 + mmGetNiceDateSimpleString(dtEnd_);
             hb.addHeader(7, dtRange);

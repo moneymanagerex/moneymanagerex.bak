@@ -94,7 +94,7 @@ bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
 
 void mmTransDialog::dataToControls()
 {
-    choiceTrans_->Disable();
+    //choiceTrans_->Disable();
     mmBEGINSQL_LITE_EXCEPTION;
 
     wxSQLite3StatementBuffer bufSQL;
@@ -573,23 +573,29 @@ void mmTransDialog::updateControlsForTransType()
     
      if (choiceTrans_->GetSelection() == DEF_WITHDRAWAL)
      {
-        bPayee_->SetLabel(_("Select Payee"));
+        
         fillControls();
         st->Show(false);
         bTo_->Show(false);
         stp->SetLabel(_("Payee"));
+
+        bPayee_->SetLabel(_("Select Payee"));
         payeeID_ = -1;
         toID_    = -1;
+       
         bAdvanced_->Enable(false);
         bPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
      }
      else if (choiceTrans_->GetSelection() == DEF_DEPOSIT)
     {
-        bPayee_->SetLabel(_("Select Payee"));
+       
         fillControls();
         bTo_->Show(false);
         st->Show(false);    
+
         stp->SetLabel(_("From"));
+
+        bPayee_->SetLabel(_("Select Payee"));
         payeeID_ = -1;
         toID_    = -1;
         bAdvanced_->Enable(false);

@@ -23,7 +23,7 @@ public:
 
         mmHTMLBuilder hb;
         hb.init();
-        hb.addHeader(3, wxT("Budget Performance for Year : ") + yearStr );
+        hb.addHeader(3, _("Budget Performance for Year : ") + yearStr );
 
         wxDateTime now = wxDateTime::Now();
         wxString dt = wxT("Today's Date: ") + mmGetNiceDateString(now);
@@ -98,6 +98,34 @@ public:
                 th.estimated_ = th.amt_ / 12.0;
                 totalEstimated_ = th.amt_;
             }
+            else if (th.period_ == wxT("Weekly"))
+            {
+                th.estimated_ = th.amt_ * 4;
+                totalEstimated_ = th.amt_ * 52;
+            }
+            else if (th.period_ == wxT("Bi-Weekly"))
+            {
+                th.estimated_ = th.amt_ * 2;
+                totalEstimated_ = th.amt_ * 26;
+            }
+            else if (th.period_ == wxT("Bi-Monthly"))
+            {
+                th.estimated_ = th.amt_ / 2.0;
+                totalEstimated_ = th.amt_ * 6;
+            }
+            else if (th.period_ == wxT("Quarterly"))
+            {
+                th.estimated_ = th.amt_ / 4.0;
+                totalEstimated_ = th.amt_ * 4;
+            }
+            else if (th.period_ == wxT("Half-Yearly"))
+            {
+                th.estimated_ = th.amt_ / 6.0;
+                totalEstimated_ = th.amt_ * 2;
+            }
+            else
+                wxASSERT(true);
+
             if (totalEstimated_ < 0)
                 estExpenses += totalEstimated_;
             else
@@ -185,6 +213,34 @@ public:
                     thsub.estimated_ = thsub.amt_ / 12.0;
                     totalEstimated_  = thsub.amt_;
                 }
+                else if (thsub.period_ == wxT("Weekly"))
+                {
+                    thsub.estimated_ = thsub.amt_ * 4;
+                    totalEstimated_ = thsub.amt_ * 52;
+                }
+                else if (thsub.period_ == wxT("Bi-Weekly"))
+                {
+                    thsub.estimated_ = thsub.amt_ * 2;
+                    totalEstimated_ = thsub.amt_ * 26;
+                }
+                else if (thsub.period_ == wxT("Bi-Monthly"))
+                {
+                    thsub.estimated_ = thsub.amt_ / 2.0;
+                    totalEstimated_ = thsub.amt_ * 6;
+                }
+                else if (thsub.period_ == wxT("Quarterly"))
+                {
+                    thsub.estimated_ = thsub.amt_ / 4.0;
+                    totalEstimated_ = thsub.amt_ * 4;
+                }
+                else if (thsub.period_ == wxT("Half-Yearly"))
+                {
+                    thsub.estimated_ = thsub.amt_ / 6.0;
+                    totalEstimated_ = thsub.amt_ * 2;
+                }
+                else
+                    wxASSERT(true);
+
                 mmCurrencyFormatter::formatDoubleToCurrencyEdit(thsub.estimated_, thsub.estimatedStr_);
                 if (thsub.estimated_ < 0)
                     estExpenses += totalEstimated_;

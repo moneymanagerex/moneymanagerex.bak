@@ -1,5 +1,15 @@
 Version History of Money Manager Ex
 
+0.6.0.1 (June )
+- Fixed problem with QIF import when there were no categories
+- Fixed problem with QIF import and transaction numbers
+- Fix missing translations for several fields
+- Fix Budget Report - Missing Weekly Transactions
+- Improve reporting of Income vs Expenses so that it is easier to compare trends
+- Add Feature 1503265: Allow changing transaction type of existing transaction
+- Fix 1503266: Range days are one day off
+- Add Feature 1502894:Sort sub categs alphabetically
+
 0.6 (June 3, 2006)
 - Added ability to import from QIF files (tested from MS Money)
 - Add icons for all menus

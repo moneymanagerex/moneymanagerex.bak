@@ -33,6 +33,7 @@
 #include "reportpayee.h"
 #include "reportincexpenses.h"
 #include "reportbudgetingperf.h"
+#include "reportincexpesestime.h"
 
 #include "appstartdialog.h"
 #include "aboutdialog.h"
@@ -604,6 +605,13 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(incexpOverTimeCurrentYear, 
         new mmTreeItemData(wxT("Income vs Expenses - Current Year")));
 
+    wxTreeItemId incexpmonthly = navTreeCtrl_->AppendItem(incexpOverTime, 
+        _("Income vs Expenses - All Time"), 4, 4);
+    navTreeCtrl_->SetItemData(incexpmonthly, 
+        new mmTreeItemData(wxT("Income vs Expenses - All Time")));
+
+    //////////////////////////////////////////////////////////////////
+   
     ///////////////////////////////////////////////////////////////////
     wxTreeItemId budgetPerformance = navTreeCtrl_->AppendItem(reports, 
         _("Budget Performance"), 4, 4);
@@ -844,8 +852,9 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
         if (iData->getString() == wxT("Income vs Expenses"))
         {
-            mmPrintableBase* rs = new mmReportIncomeExpenses(db_, true, wxDateTime::Now(),
-                wxDateTime::Now());
+            wxDateTime today = wxDateTime::Now();
+            int year = today.GetYear();
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(db_, year);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -886,14 +895,8 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         if (iData->getString() == wxT("Income vs Expenses - Last Year"))
         {
             wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear() - 1;
-            wxDateTime prevYearEnd = wxDateTime(today);
-            prevYearEnd.SetYear(year);
-            prevYearEnd.SetMonth(wxDateTime::Dec);
-            prevYearEnd.SetDay(31);
-            wxDateTime dtEnd = prevYearEnd;
-            wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-            mmPrintableBase* rs = new mmReportIncomeExpenses(db_, false, dtBegin, dtEnd);
+            int year = today.GetYear()-1;
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(db_, year);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -901,14 +904,16 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         if (iData->getString() == wxT("Income vs Expenses - Current Year"))
         {
             wxDateTime today = wxDateTime::Now();
-            int year = today.GetYear() - 1;
-            wxDateTime yearBegin = wxDateTime(today);
-            yearBegin.SetYear(year);
-            yearBegin.SetMonth(wxDateTime::Dec);
-            yearBegin.SetDay(31);
-            wxDateTime dtEnd = today;
-            wxDateTime dtBegin = yearBegin;
-            mmPrintableBase* rs = new mmReportIncomeExpenses(db_, false, dtBegin, dtEnd);
+            int year = today.GetYear();
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(db_, year);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+
+        if (iData->getString() == wxT("Income vs Expenses - All Time"))
+        {
+            mmPrintableBase* rs = new mmReportIncomeExpenses(db_, true, wxDateTime::Now(),
+                wxDateTime::Now());
             menuPrintingEnable(true);
             createReportsPage(rs);
         }

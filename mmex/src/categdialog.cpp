@@ -99,12 +99,14 @@ void mmCategDialog::fillControls()
            treeCtrl_->SetItemData(subcat, new mmTreeItemCateg(categID, subcategID)); 
        }
        q2.Finalize();
+       treeCtrl_->SortChildren(maincat);
        treeCtrl_->Expand(maincat);
     }
     q1.Finalize();
 
     mmENDSQL_LITE_EXCEPTION;
     treeCtrl_->Expand(root_);
+    treeCtrl_->SortChildren(root_);
 }
 
 void mmCategDialog::CreateControls()

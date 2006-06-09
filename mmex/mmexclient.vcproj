@@ -596,11 +596,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\reportbudgetingperf.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\reportcategexp.h"
 				>
 			</File>
 			<File
 				RelativePath=".\include\reportincexpenses.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\reportpayee.h"
 				>
 			</File>
 			<File
