@@ -378,6 +378,9 @@ public:
 
     void OnNewAccount(wxCommandEvent& event);
     void OnAccountList(wxCommandEvent& event);
+    void OnEditAccount(wxCommandEvent& event);
+    void OnDeleteAccount(wxCommandEvent& event);
+    
 
     void OnOrgCategories(wxCommandEvent& event);
     void OnOrgPayees(wxCommandEvent& event);

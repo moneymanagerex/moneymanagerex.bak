@@ -89,7 +89,8 @@ void mmAboutDialog::CreateControls()
     wxStaticText* itemStaticText18 = new wxStaticText( itemDialog1, 
         wxID_STATIC,  trans 
         + wxT("Italian (Claudio), French (Berry As), \n \
-Greek (Panagiotis Pentzeridis), Czech (Josef Remes)"), 
+Greek (Panagiotis Pentzeridis), Czech (Josef Remes), \n \
+Traditional Chinese (Kysouke)"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerN->Add(itemStaticText18, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
 

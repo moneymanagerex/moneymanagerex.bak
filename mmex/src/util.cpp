@@ -823,6 +823,8 @@ bool mmCurrencyFormatter::formatDoubleToCurrencyEdit(double val, wxString& rdata
 //  Print cents portion
 //  -------------------
 
+  if (decimal_point != 0)
+  {
   data += decimal_point;
   if (cents < 10 )
   { 
@@ -833,6 +835,7 @@ bool mmCurrencyFormatter::formatDoubleToCurrencyEdit(double val, wxString& rdata
   newStr = wxString::Format(wxT("%d"), cents);                
   wxString testString = wxString::Format(wxT("%s%s"), data.c_str(), newStr.c_str());
   data = testString;
+  }
 
 
 //  Append any additional fractional digits
@@ -889,16 +892,19 @@ bool mmCurrencyFormatter::formatDoubleToCurrency(double val, wxString& rdata)
 //  Print cents portion
 //  -------------------
 
-  data += decimal_point;
-  if (cents < 10 )
-  { 
-    data +=wxT("0"); 
-  }
+  if (decimal_point != 0)
+  {
+      data += decimal_point;
+      if (cents < 10 )
+      { 
+          data +=wxT("0"); 
+      }
 
-  wxString newStr;
-  newStr = wxString::Format(wxT("%d"), cents);                
-  wxString testString = wxString::Format(wxT("%s%s"), data.c_str(), newStr.c_str());
-  data = testString;
+      wxString newStr;
+      newStr = wxString::Format(wxT("%d"), cents);                
+      wxString testString = wxString::Format(wxT("%s%s"), data.c_str(), newStr.c_str());
+      data = testString;
+  }
 
 
 //  Append any additional fractional digits

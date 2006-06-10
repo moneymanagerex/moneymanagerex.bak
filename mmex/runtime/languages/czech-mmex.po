@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-06-04 18:31+0100\n"
-"Last-Translator: Geralt <geraltcz@centrum.cz>\n"
+"PO-Revision-Date: 2006-06-09 10:51-0500\n"
+"Last-Translator: Madhan <madhan@yahoo.com>\n"
 "Language-Team: Geralt <geraltcz@centrum.cz>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -19,27 +19,27 @@ msgstr ""
 msgid "Translations by : "
 msgstr "Překlad : "
 
-#: src/aboutdialog.cpp:115
+#: src/aboutdialog.cpp:116
 msgid "  and contributers from around the world."
 msgstr "  and contributers from around the world."
 
-#: src/aboutdialog.cpp:120
+#: src/aboutdialog.cpp:121
 msgid "Released under the GNU GPL License"
 msgstr "Released under the GNU GPL License"
 
-#: src/aboutdialog.cpp:132
+#: src/aboutdialog.cpp:133
 msgid "Powered by wxWidgets (c) www.wxwidgets.org"
 msgstr "Powered by wxWidgets (c) www.wxwidgets.org"
 
-#: src/aboutdialog.cpp:136
+#: src/aboutdialog.cpp:137
 msgid "Powered by SQLite (c) www.sqlite.org"
 msgstr "Powered by SQLite (c) www.sqlite.org"
 
-#: src/aboutdialog.cpp:140
+#: src/aboutdialog.cpp:141
 msgid "Version History"
 msgstr "Historie programu"
 
-#: src/aboutdialog.cpp:148
+#: src/aboutdialog.cpp:149
 msgid "Using Language : "
 msgstr "Použitý jazyk : "
 
@@ -233,11 +233,13 @@ msgstr "Neplatná hodnota"
 #: src/budgetyearentrydialog.cpp:145
 #: src/budgetyearentrydialog.cpp:152
 #: src/budgetyearentrydialog.cpp:175
-#: src/categdialog.cpp:166
-#: src/categdialog.cpp:186
-#: src/categdialog.cpp:218
-#: src/categdialog.cpp:226
+#: src/categdialog.cpp:168
+#: src/categdialog.cpp:188
+#: src/categdialog.cpp:220
+#: src/categdialog.cpp:228
 #: src/currencydialog.cpp:308
+#: src/mmex.cpp:1990
+#: src/mmex.cpp:2031
 #: src/newchkacctdialog.cpp:357
 #: src/payeedialog.cpp:176
 #: src/payeedialog.cpp:188
@@ -247,10 +249,10 @@ msgstr "Neplatná hodnota"
 #: src/stockdialog.cpp:371
 #: src/stockdialog.cpp:380
 #: src/transdialog.cpp:490
-#: src/transdialog.cpp:669
-#: src/util.cpp:120
-#: src/util.cpp:201
-#: src/util.cpp:406
+#: src/transdialog.cpp:675
+#: src/util.cpp:124
+#: src/util.cpp:205
+#: src/util.cpp:410
 #: include/mmex.h:299
 msgid "Error"
 msgstr "Chyba"
@@ -260,8 +262,8 @@ msgid "Rate of Change in Value"
 msgstr "Sazba změny hodnoty"
 
 #: src/assets.cpp:112
-#: src/mmex.cpp:491
-#: src/mmex.cpp:1413
+#: src/mmex.cpp:496
+#: src/mmex.cpp:1434
 #: src/mmhomepagepanel.cpp:174
 msgid "Assets"
 msgstr "Majetek"
@@ -277,7 +279,7 @@ msgstr "Typ"
 
 #: src/assets.cpp:179
 #: src/mmcheckingpanel.cpp:300
-#: src/mmex.cpp:1479
+#: src/mmex.cpp:1500
 #: src/stocks.cpp:208
 msgid "New"
 msgstr "Nový"
@@ -287,7 +289,7 @@ msgid "New Asset"
 msgstr "Nový majetek"
 
 #: src/assets.cpp:184
-#: src/categdialog.cpp:138
+#: src/categdialog.cpp:140
 #: src/mmcheckingpanel.cpp:305
 #: src/payeedialog.cpp:148
 #: src/stocks.cpp:213
@@ -299,7 +301,7 @@ msgid "Edit Asset"
 msgstr "Upravit majetek"
 
 #: src/assets.cpp:189
-#: src/categdialog.cpp:143
+#: src/categdialog.cpp:145
 #: src/mmcheckingpanel.cpp:310
 #: src/payeedialog.cpp:153
 #: src/stocks.cpp:218
@@ -430,7 +432,7 @@ msgstr "Typ transakce"
 #: src/mmcheckingpanel.cpp:251
 #: src/qifimport.cpp:513
 #: src/transdialog.cpp:220
-#: src/util.cpp:523
+#: src/util.cpp:527
 msgid "Withdrawal"
 msgstr "Výběr"
 
@@ -438,7 +440,7 @@ msgstr "Výběr"
 #: src/mmcheckingpanel.cpp:253
 #: src/qifimport.cpp:515
 #: src/transdialog.cpp:221
-#: src/util.cpp:525
+#: src/util.cpp:529
 msgid "Deposit"
 msgstr "Vklad"
 
@@ -477,8 +479,8 @@ msgstr "Příjemce"
 #: src/bddialog.cpp:670
 #: src/bddialog.cpp:681
 #: src/transdialog.cpp:251
-#: src/transdialog.cpp:576
-#: src/transdialog.cpp:588
+#: src/transdialog.cpp:582
+#: src/transdialog.cpp:598
 msgid "Select Payee"
 msgstr "Vyberte příjemce"
 
@@ -600,8 +602,8 @@ msgstr "Zadána neplatná částka"
 
 #: src/bddialog.cpp:685
 #: src/bddialog.cpp:699
-#: src/transdialog.cpp:592
-#: src/transdialog.cpp:607
+#: src/transdialog.cpp:596
+#: src/transdialog.cpp:613
 msgid "From"
 msgstr "Od"
 
@@ -610,12 +612,12 @@ msgid "Select From"
 msgstr "Vyberte plátce"
 
 #: src/bddialog.cpp:720
-#: src/transdialog.cpp:630
+#: src/transdialog.cpp:636
 msgid "Payee "
 msgstr "Příjemce"
 
 #: src/bddialog.cpp:722
-#: src/transdialog.cpp:632
+#: src/transdialog.cpp:638
 msgid "From Account "
 msgstr "Z účtu"
 
@@ -625,7 +627,7 @@ msgid "Account"
 msgstr "Účet"
 
 #: src/bddialog.cpp:738
-#: src/transdialog.cpp:642
+#: src/transdialog.cpp:648
 msgid "To Account "
 msgstr "Na účet"
 
@@ -635,12 +637,12 @@ msgstr "Položka Od a Komu nemůže být stejná."
 
 #: src/bddialog.cpp:765
 #: src/budgetentrydialog.cpp:226
-#: src/transdialog.cpp:669
+#: src/transdialog.cpp:675
 msgid "Invalid Amount Entered "
 msgstr "Zadána neplatná částka"
 
 #: src/bddialog.cpp:778
-#: src/transdialog.cpp:682
+#: src/transdialog.cpp:688
 msgid "Category "
 msgstr "Kategorie"
 
@@ -734,6 +736,7 @@ msgstr "Výdaje"
 
 #: src/budgetentrydialog.cpp:142
 #: src/mmhomepagepanel.cpp:198
+#: include/reportincexpesestime.h:45
 msgid "Income"
 msgstr "Příjmy"
 
@@ -847,58 +850,58 @@ msgstr "Neplatný rok"
 msgid "Budget Year already exists"
 msgstr "Roční rozpočet již existuje"
 
-#: src/categdialog.cpp:130
+#: src/categdialog.cpp:132
 msgid "Enter the name of the category to add or edit here"
 msgstr "Zadejte název kategorie pro přidání nebo upravte název stávající"
 
-#: src/categdialog.cpp:133
+#: src/categdialog.cpp:135
 #: src/payeedialog.cpp:143
 msgid "Add"
 msgstr "Přidat"
 
-#: src/categdialog.cpp:135
+#: src/categdialog.cpp:137
 msgid "Add a new category"
 msgstr "Přidá novou kategorii"
 
-#: src/categdialog.cpp:140
+#: src/categdialog.cpp:142
 msgid "Edit the name of an existing category"
 msgstr "Upraví název existující kategorie"
 
-#: src/categdialog.cpp:145
+#: src/categdialog.cpp:147
 msgid "Delete an existing category. The category cannot be used by existing transactions."
 msgstr "Odstraní existující kategorii. Kategorii nebude možné použít v již existujícíh transakcích."
 
-#: src/categdialog.cpp:151
+#: src/categdialog.cpp:153
 #: src/currencydialog.cpp:280
 #: src/payeedialog.cpp:161
 msgid "Select"
 msgstr "Vybrat"
 
-#: src/categdialog.cpp:153
+#: src/categdialog.cpp:155
 msgid "Select the currently selected category as the selected category for the transaction"
 msgstr "Vybere označenou kategorii pro transakci"
 
-#: src/categdialog.cpp:166
+#: src/categdialog.cpp:168
 msgid "Category with same name exists"
 msgstr "Kategorie se stejným názvem již existuje"
 
-#: src/categdialog.cpp:186
+#: src/categdialog.cpp:188
 msgid "Sub Category with same name exists"
 msgstr "Podkategorie se stejným názvem již existuje"
 
-#: src/categdialog.cpp:198
+#: src/categdialog.cpp:200
 msgid "Invalid Parent Category. Choose Root or Main Category node."
 msgstr "Neplatná zdrojová kategorie. Vyberte kořenovou kategorii."
 
-#: src/categdialog.cpp:199
+#: src/categdialog.cpp:201
 msgid "Error adding Category"
 msgstr "Chyba při přidávání kategorie"
 
-#: src/categdialog.cpp:218
+#: src/categdialog.cpp:220
 msgid "Category is in use"
 msgstr "Kategorie je již použita"
 
-#: src/categdialog.cpp:226
+#: src/categdialog.cpp:228
 msgid "Sub-Category is in use"
 msgstr "Podkategorie je již použita"
 
@@ -1161,11 +1164,11 @@ msgstr "Označit všechny"
 msgid "Do you really want to delete the transaction?"
 msgstr "Opravdu si přejete odstranit tuto transakci?"
 
-#: src/mmex.cpp:203
+#: src/mmex.cpp:208
 msgid "Add Account Wizard"
 msgstr "Průvodce přidáním účtu"
 
-#: src/mmex.cpp:211
+#: src/mmex.cpp:216
 msgid ""
 "Money Manager models all transactions as belonging to accounts.\n"
 "\n"
@@ -1181,11 +1184,11 @@ msgstr ""
 "Pro začátek doporučujeme vytvořit seznam všech\n"
 "finančních institucí, kde máte vedeny účty."
 
-#: src/mmex.cpp:248
+#: src/mmex.cpp:253
 msgid "New Database Wizard"
 msgstr "Průvodce novou databází"
 
-#: src/mmex.cpp:256
+#: src/mmex.cpp:261
 msgid ""
 "The next pages will help you create a new database.\n"
 "\n"
@@ -1201,393 +1204,417 @@ msgstr ""
 "souboru a bezbečne jej uložili s vědomím, že obsahujedůležité \n"
 "informace o financích."
 
-#: src/mmex.cpp:479
+#: src/mmex.cpp:484
 msgid "Home Page"
 msgstr "Úvodní stránka"
 
-#: src/mmex.cpp:483
+#: src/mmex.cpp:488
 msgid "Bank Accounts"
 msgstr "Bankovní účty"
 
-#: src/mmex.cpp:487
+#: src/mmex.cpp:492
 msgid "Stocks"
 msgstr "Akcie"
 
-#: src/mmex.cpp:495
+#: src/mmex.cpp:500
 msgid "Bills & Deposits"
 msgstr "Účty & vklady"
 
-#: src/mmex.cpp:499
+#: src/mmex.cpp:504
 msgid "Budgeting"
 msgstr "Rozpočet"
 
-#: src/mmex.cpp:505
+#: src/mmex.cpp:510
 msgid "Reports"
 msgstr "Zprávy"
 
-#: src/mmex.cpp:509
+#: src/mmex.cpp:514
 #: include/reportsummary.h:36
 msgid "Summary of Accounts"
 msgstr "Přehled účtů"
 
-#: src/mmex.cpp:514
+#: src/mmex.cpp:519
 #: include/reportcategexp.h:45
 msgid "Where the Money Goes"
 msgstr "Kam peníze chodí"
 
-#: src/mmex.cpp:519
-#: src/mmex.cpp:551
-#: src/mmex.cpp:583
-msgid "Last Calendar Month"
-msgstr "Poslední kalendářní měsíc"
-
 #: src/mmex.cpp:524
 #: src/mmex.cpp:556
 #: src/mmex.cpp:588
-msgid "Current Month"
-msgstr "Aktuální měsíc"
+msgid "Last Calendar Month"
+msgstr "Poslední kalendářní měsíc"
 
 #: src/mmex.cpp:529
 #: src/mmex.cpp:561
 #: src/mmex.cpp:593
-msgid "Last 30 Days"
-msgstr "Posledních 30 dnů"
+msgid "Current Month"
+msgstr "Aktuální měsíc"
 
 #: src/mmex.cpp:534
 #: src/mmex.cpp:566
 #: src/mmex.cpp:598
-msgid "Last Year"
-msgstr "Poslední rok"
+msgid "Last 30 Days"
+msgstr "Posledních 30 dnů"
 
 #: src/mmex.cpp:539
 #: src/mmex.cpp:571
 #: src/mmex.cpp:603
+msgid "Last Year"
+msgstr "Poslední rok"
+
+#: src/mmex.cpp:544
+#: src/mmex.cpp:576
+#: src/mmex.cpp:608
 msgid "Current Year"
 msgstr "Aktuální rok"
 
-#: src/mmex.cpp:546
+#: src/mmex.cpp:551
+#: include/reportpayee.h:27
 msgid "To Whom the Money Goes"
 msgstr "Komu peníze chodí"
 
-#: src/mmex.cpp:578
+#: src/mmex.cpp:583
+#: include/reportincexpenses.h:27
 msgid "Income vs Expenses"
 msgstr "Příjmy a výdaje"
 
-#: src/mmex.cpp:609
+#: src/mmex.cpp:613
+#, fuzzy
+msgid "Income vs Expenses - All Time"
+msgstr "Příjmy a výdaje"
+
+#: src/mmex.cpp:621
 msgid "Budget Performance"
 msgstr "Roční rozpočet"
 
-#: src/mmex.cpp:614
+#: src/mmex.cpp:626
 msgid "Help"
 msgstr "Nápověda"
 
-#: src/mmex.cpp:1099
-#: src/mmex.cpp:1121
+#: src/mmex.cpp:1108
+#: src/mmex.cpp:1130
+#: src/mmex.cpp:2062
 msgid "Do you really want to delete the account?"
 msgstr "Opravdu si přejete odstranit tento účet?"
 
-#: src/mmex.cpp:1100
-#: src/mmex.cpp:1122
+#: src/mmex.cpp:1109
+#: src/mmex.cpp:1131
+#: src/mmex.cpp:2063
 msgid "Confirm Account Deletion"
 msgstr "Potvrzení odstranění účtu"
 
-#: src/mmex.cpp:1177
+#: src/mmex.cpp:1186
 msgid "&Go To.."
 msgstr "&Jít na.."
 
-#: src/mmex.cpp:1178
 #: src/mmex.cpp:1187
+#: src/mmex.cpp:1196
 msgid "&Edit Account"
 msgstr "&Upravit účet"
 
-#: src/mmex.cpp:1179
 #: src/mmex.cpp:1188
+#: src/mmex.cpp:1197
 msgid "&Delete Account"
 msgstr "O&dstranit účet"
 
-#: src/mmex.cpp:1181
 #: src/mmex.cpp:1190
+#: src/mmex.cpp:1199
 msgid "&Launch Account Website"
 msgstr "Jít na &stránku účtu"
 
-#: src/mmex.cpp:1305
+#: src/mmex.cpp:1316
 msgid "&New Database\tCtrl-N"
 msgstr "&Nová databáze\tCtrl-N"
 
-#: src/mmex.cpp:1305
-#: src/mmex.cpp:1479
+#: src/mmex.cpp:1316
+#: src/mmex.cpp:1500
 msgid "New Money Manager Database"
 msgstr "Vytvoří novou databázi programu Money Manager"
 
-#: src/mmex.cpp:1309
+#: src/mmex.cpp:1320
 msgid "&Open Database\tCtrl-O"
 msgstr "&Otevřít databázi\tCtrl-O"
 
-#: src/mmex.cpp:1309
-#: src/mmex.cpp:1480
+#: src/mmex.cpp:1320
+#: src/mmex.cpp:1501
 msgid "Open Money Manager Database"
 msgstr "Otevře databázi programu Money Manager"
 
-#: src/mmex.cpp:1313
+#: src/mmex.cpp:1324
 msgid "&Save Database\tCtrl-S"
 msgstr "&Uložit databázi\tCtrl-S"
 
-#: src/mmex.cpp:1313
-#: src/mmex.cpp:1481
+#: src/mmex.cpp:1324
+#: src/mmex.cpp:1502
 msgid "Save Money Manager Database"
 msgstr "Uloží databázi programu Money Manager"
 
-#: src/mmex.cpp:1321
+#: src/mmex.cpp:1332
 msgid "Save &As"
 msgstr "Uložit j&ako"
 
-#: src/mmex.cpp:1321
+#: src/mmex.cpp:1332
 msgid "Save Money Manager Database As"
 msgstr "Uloží databázi programu Money Manager pro novým názvem"
 
-#: src/mmex.cpp:1328
-#: src/mmex.cpp:1334
+#: src/mmex.cpp:1339
+#: src/mmex.cpp:1345
 msgid "&CSV Files"
 msgstr "&CSV soubory"
 
-#: src/mmex.cpp:1328
-#: src/util.cpp:187
+#: src/mmex.cpp:1339
+#: src/util.cpp:191
 msgid "Export to CSV"
 msgstr "Export do CSV"
 
-#: src/mmex.cpp:1329
+#: src/mmex.cpp:1340
 msgid "&Report to HTML"
 msgstr "HTML zp&ráva"
 
-#: src/mmex.cpp:1329
+#: src/mmex.cpp:1340
 msgid "Export to HTML"
 msgstr "Export do HTML"
 
-#: src/mmex.cpp:1330
+#: src/mmex.cpp:1341
 msgid "&Export"
 msgstr "&Export"
 
-#: src/mmex.cpp:1333
+#: src/mmex.cpp:1344
 msgid "&QIF Files"
 msgstr "&QIF soubory"
 
-#: src/mmex.cpp:1333
+#: src/mmex.cpp:1344
 msgid "Import from QIF"
 msgstr "Importuje z QIF"
 
-#: src/mmex.cpp:1334
-#: src/mmex.cpp:1335
-#: src/util.cpp:385
-#: src/util.cpp:401
-#: src/util.cpp:597
+#: src/mmex.cpp:1345
+#: src/mmex.cpp:1346
+#: src/util.cpp:389
+#: src/util.cpp:405
+#: src/util.cpp:601
 msgid "Import from CSV"
 msgstr "Importuje z CSV"
 
-#: src/mmex.cpp:1335
+#: src/mmex.cpp:1346
 msgid "&MM.NET CSV Files"
 msgstr "&MM.NET CSV soubory"
 
-#: src/mmex.cpp:1336
+#: src/mmex.cpp:1347
 msgid "Import"
 msgstr "Import"
 
-#: src/mmex.cpp:1342
+#: src/mmex.cpp:1353
 msgid "Page Setup..."
 msgstr "Vzhled stránky..."
 
-#: src/mmex.cpp:1342
+#: src/mmex.cpp:1353
 msgid "Setup page printing options"
 msgstr "Nastavení možností tisku pro stránku"
 
-#: src/mmex.cpp:1348
-#: src/mmex.cpp:1354
+#: src/mmex.cpp:1359
+#: src/mmex.cpp:1365
 msgid "Current View"
 msgstr "Aktuální zobrazení"
 
-#: src/mmex.cpp:1348
+#: src/mmex.cpp:1359
 msgid "Preview current report"
 msgstr "Náhled na aktuální zprávu"
 
-#: src/mmex.cpp:1350
+#: src/mmex.cpp:1361
 msgid "Print Preview..."
 msgstr "Náhled..."
 
-#: src/mmex.cpp:1354
+#: src/mmex.cpp:1365
 msgid "Print current report"
 msgstr "Vytiskne aktuální zprávu"
 
-#: src/mmex.cpp:1357
+#: src/mmex.cpp:1368
 msgid "Print..."
 msgstr "Tisk..."
 
-#: src/mmex.cpp:1362
+#: src/mmex.cpp:1373
 msgid "E&xit\tAlt-X"
 msgstr "&Ukončit\tAlt-X"
 
-#: src/mmex.cpp:1362
+#: src/mmex.cpp:1373
 msgid "Quit this program"
 msgstr "Ukončí program"
 
-#: src/mmex.cpp:1369
+#: src/mmex.cpp:1380
 msgid "New &Account"
 msgstr "Nový úč&et"
 
-#: src/mmex.cpp:1369
-#: src/mmex.cpp:1482
+#: src/mmex.cpp:1380
+#: src/mmex.cpp:1503
 msgid "New Money Manager Account"
 msgstr "Nový účet programu  Money Manager"
 
-#: src/mmex.cpp:1373
+#: src/mmex.cpp:1384
 msgid "Account &List"
 msgstr "&Přehled účtů"
 
-#: src/mmex.cpp:1373
-#: src/mmex.cpp:1483
+#: src/mmex.cpp:1384
+#: src/mmex.cpp:1504
 msgid "Show Account List"
 msgstr "Zobrazí přehled účtů"
 
-#: src/mmex.cpp:1383
+#: src/mmex.cpp:1388
+#, fuzzy
+msgid "Edit Account"
+msgstr "&Upravit účet"
+
+#: src/mmex.cpp:1392
+#, fuzzy
+msgid "Delete Account"
+msgstr "O&dstranit účet"
+
+#: src/mmex.cpp:1392
+#, fuzzy
+msgid "Delete Account from database"
+msgstr "O&dstranit účet"
+
+#: src/mmex.cpp:1404
 msgid "Organize &Categories"
 msgstr "Správce &kategorií"
 
-#: src/mmex.cpp:1383
+#: src/mmex.cpp:1404
 #: include/categdialog.h:23
 msgid "Organize Categories"
 msgstr "Správce kategorií"
 
-#: src/mmex.cpp:1388
+#: src/mmex.cpp:1409
 msgid "Organize &Payees"
 msgstr "Správce &příjemců"
 
-#: src/mmex.cpp:1388
+#: src/mmex.cpp:1409
 #: include/payeedialog.h:22
 msgid "Organize Payees"
 msgstr "Správce příjemců"
 
-#: src/mmex.cpp:1393
+#: src/mmex.cpp:1414
 msgid "Organize Currency"
 msgstr "Správce měny"
 
-#: src/mmex.cpp:1398
+#: src/mmex.cpp:1419
 msgid "Budget Setup"
 msgstr "Nastavení rozpočtu"
 
-#: src/mmex.cpp:1403
+#: src/mmex.cpp:1424
 msgid "Bills && Deposits"
 msgstr "Účty && vklady"
 
-#: src/mmex.cpp:1408
+#: src/mmex.cpp:1429
 #: src/mmhomepagepanel.cpp:156
 #: src/stocks.cpp:124
 msgid "Stock Investments"
 msgstr "Akcie"
 
-#: src/mmex.cpp:1420
+#: src/mmex.cpp:1441
 msgid "&Options"
 msgstr "&Nastavení"
 
-#: src/mmex.cpp:1420
+#: src/mmex.cpp:1441
 msgid "Money Manager Options"
 msgstr "Nastavení programu Money Manager"
 
-#: src/mmex.cpp:1427
+#: src/mmex.cpp:1448
 msgid "&Help\tCtrl-F1"
 msgstr "Nápo&věda\tCtrl-F1"
 
-#: src/mmex.cpp:1427
+#: src/mmex.cpp:1448
 msgid "Money Manager Help"
 msgstr "Nápověda programu Money Manager"
 
-#: src/mmex.cpp:1432
+#: src/mmex.cpp:1453
 msgid "Show App Start Dialog"
 msgstr "Zobrazit dialog po spuštění"
 
-#: src/mmex.cpp:1432
+#: src/mmex.cpp:1453
 msgid "App Start Dialog"
 msgstr "Zobrazí dialog po spuštění"
 
-#: src/mmex.cpp:1440
+#: src/mmex.cpp:1461
 msgid "Check for &Updates"
 msgstr "Ověřit akt&ualizace"
 
-#: src/mmex.cpp:1440
+#: src/mmex.cpp:1461
 msgid "Check For Updates"
 msgstr "Ověří aktualizace"
 
-#: src/mmex.cpp:1445
+#: src/mmex.cpp:1466
 msgid "Report Issues or Feedback"
 msgstr "Hlášení chyb a poděkování"
 
-#: src/mmex.cpp:1445
+#: src/mmex.cpp:1466
 msgid "Send email through the mailing list to report issues with the software."
 msgstr "Odešlete email pomocí mail listu pro nahlášení chyb a omezení tohoto programu."
 
-#: src/mmex.cpp:1450
+#: src/mmex.cpp:1471
 msgid "Be notified of new releases"
 msgstr "Upozornění na nové verze"
 
-#: src/mmex.cpp:1450
+#: src/mmex.cpp:1471
 msgid "Sign up for the announcement mailing list"
 msgstr "Přihlásit se do mail listu zasílající upozorněnní na novinky týkající se programu."
 
-#: src/mmex.cpp:1456
+#: src/mmex.cpp:1477
 msgid "&About..."
 msgstr "O progr&amu"
 
-#: src/mmex.cpp:1456
+#: src/mmex.cpp:1477
 msgid "Show about dialog"
 msgstr "Zobrazí dialog s informacemi o programu"
 
-#: src/mmex.cpp:1461
+#: src/mmex.cpp:1482
 msgid "&File"
 msgstr "&Soubor"
 
-#: src/mmex.cpp:1462
+#: src/mmex.cpp:1483
 msgid "&Accounts"
 msgstr "Účt&y"
 
-#: src/mmex.cpp:1463
+#: src/mmex.cpp:1484
 msgid "&Tools"
 msgstr "Nás&troje"
 
-#: src/mmex.cpp:1464
+#: src/mmex.cpp:1485
 msgid "&Help"
 msgstr "Nápo&věda"
 
-#: src/mmex.cpp:1480
+#: src/mmex.cpp:1501
 #: src/newchkacctdialog.cpp:255
 #: src/optionsdialog.cpp:263
 msgid "Open"
 msgstr "Otevřený"
 
-#: src/mmex.cpp:1481
+#: src/mmex.cpp:1502
 msgid "Save"
 msgstr "Uložit"
 
-#: src/mmex.cpp:1482
+#: src/mmex.cpp:1503
 #: include/newchkacctdialog.h:23
 msgid "New Account"
 msgstr "Nový účet"
 
-#: src/mmex.cpp:1483
+#: src/mmex.cpp:1504
 msgid "Account List"
 msgstr "Přehled účtů"
 
-#: src/mmex.cpp:1519
-#: src/mmex.cpp:1551
+#: src/mmex.cpp:1540
+#: src/mmex.cpp:1572
 msgid "Money Manager EX - No File opened "
 msgstr "Money Manager EX - Neotevřen žádný soubor"
 
-#: src/mmex.cpp:1521
+#: src/mmex.cpp:1542
 msgid "Sorry. The Database version is too old.                     Cannot open in this version of Money Manager Ex."
 msgstr "Omlouváme se, ale verze databáze je příliš stará.     A nelze ji otevřít v této verzi programu Money Manager Ex."
 
-#: src/mmex.cpp:1523
-#: src/mmex.cpp:1554
+#: src/mmex.cpp:1544
+#: src/mmex.cpp:1575
 msgid "Error opening database"
 msgstr "Chyba při otevírání databáze"
 
-#: src/mmex.cpp:1553
+#: src/mmex.cpp:1574
 msgid ""
 "Cannot locate previously opened .mmb database.\n"
 "Do you want to browse to locate the file?"
@@ -1595,13 +1622,31 @@ msgstr ""
 "Nelze nalézt naposled otevřenou .mmb databázi.\n"
 "Přejete si najít soubor databáze?"
 
-#: src/mmex.cpp:1573
+#: src/mmex.cpp:1594
 msgid "Please Wait"
 msgstr "Prosím čekejte"
 
-#: src/mmex.cpp:1574
+#: src/mmex.cpp:1595
 msgid "Opening Database File && Verifying Integrity"
 msgstr "Otevírám soubor databáze && ověřuji integritu"
+
+#: src/mmex.cpp:1990
+#: src/mmex.cpp:2031
+#, fuzzy
+msgid "No Account available!"
+msgstr "Není k dispozici žádný účet, proto nelze exportovat!"
+
+#: src/mmex.cpp:2010
+#: src/mmex.cpp:2053
+#, fuzzy
+msgid "Choose Account to Edit:"
+msgstr "Zvolte účet pro import:"
+
+#: src/mmex.cpp:2011
+#: src/mmex.cpp:2054
+#, fuzzy
+msgid "Accounts"
+msgstr "Účt&y"
 
 #: src/mmhelppanel.cpp:78
 msgid "Money Manager Ex Help"
@@ -1861,13 +1906,17 @@ msgid "List Row 0"
 msgstr "Řádek 0"
 
 #: src/optionsdialog.cpp:313
-#: src/optionsdialog.cpp:319
 msgid "Specify the color for the list row 0"
 msgstr "Vyberte barvu pro 0 řádek seznamu"
 
 #: src/optionsdialog.cpp:317
 msgid "List Row 1"
 msgstr "Řádek 1"
+
+#: src/optionsdialog.cpp:319
+#, fuzzy
+msgid "Specify the color for the list row 1"
+msgstr "Vyberte barvu pro 0 řádek seznamu"
 
 #: src/optionsdialog.cpp:323
 msgid "List Border"
@@ -1942,14 +1991,14 @@ msgid "Payee is in use"
 msgstr "Příjemce je již použit"
 
 #: src/qifimport.cpp:353
-#: src/util.cpp:200
-#: src/util.cpp:405
+#: src/util.cpp:204
+#: src/util.cpp:409
 msgid "No Account available! Cannot Import! Create a new account first!"
 msgstr "Není k dispozici žádný účet, proto nelze importovat! Vytvořte nejprve nový účet!"
 
 #: src/qifimport.cpp:369
-#: src/util.cpp:220
-#: src/util.cpp:423
+#: src/util.cpp:224
+#: src/util.cpp:427
 msgid "Choose Account to import to:"
 msgstr "Zvolte účet pro import:"
 
@@ -1964,23 +2013,23 @@ msgstr "Vyberte QIF datový soubor pro import"
 #: src/qifimport.cpp:418
 #: src/qifimport.cpp:444
 #: src/qifimport.cpp:506
-#: src/util.cpp:268
-#: src/util.cpp:277
-#: src/util.cpp:286
-#: src/util.cpp:295
-#: src/util.cpp:304
-#: src/util.cpp:322
-#: src/util.cpp:329
-#: src/util.cpp:337
-#: src/util.cpp:380
-#: src/util.cpp:471
-#: src/util.cpp:480
-#: src/util.cpp:489
-#: src/util.cpp:504
-#: src/util.cpp:516
-#: src/util.cpp:532
-#: src/util.cpp:541
-#: src/util.cpp:593
+#: src/util.cpp:272
+#: src/util.cpp:281
+#: src/util.cpp:290
+#: src/util.cpp:299
+#: src/util.cpp:308
+#: src/util.cpp:326
+#: src/util.cpp:333
+#: src/util.cpp:341
+#: src/util.cpp:384
+#: src/util.cpp:475
+#: src/util.cpp:484
+#: src/util.cpp:493
+#: src/util.cpp:508
+#: src/util.cpp:520
+#: src/util.cpp:536
+#: src/util.cpp:545
+#: src/util.cpp:597
 msgid "Line : "
 msgstr "Řádek : "
 
@@ -2009,8 +2058,8 @@ msgid "Adding payee "
 msgstr "Přidávám příjemce "
 
 #: src/qifimport.cpp:507
-#: src/util.cpp:338
-#: src/util.cpp:517
+#: src/util.cpp:342
+#: src/util.cpp:521
 msgid " invalid amount, skipping."
 msgstr " neplatná částka, přeskakuji."
 
@@ -2018,12 +2067,35 @@ msgstr " neplatná částka, přeskakuji."
 msgid "unable to parse date, using today's date..please verify and change "
 msgstr "nelze analyzovat datum, použito denšní datum..ověřte jej prosím apřípadně změnte"
 
-#: src/qifimport.cpp:593
-#: src/util.cpp:533
-msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
-msgstr " Jedno z následujích polí: datum, příjemce, typ transkace, částka nebo kategorie obsahuje prázdný řetězec, přeskočeno"
+#: src/qifimport.cpp:591
+msgid "Date is empty, "
+msgstr ""
 
-#: src/qifimport.cpp:625
+#: src/qifimport.cpp:595
+#, fuzzy
+msgid "Payee is empty"
+msgstr "Příjemce je již použit"
+
+#: src/qifimport.cpp:599
+#, fuzzy
+msgid "Transaction Type is empty"
+msgstr "Typ transakce"
+
+#: src/qifimport.cpp:603
+#, fuzzy
+msgid "Amount is empty"
+msgstr "Přehled účtů"
+
+#: src/qifimport.cpp:607
+msgid "Category is empty, marking transaction as Unknown category"
+msgstr ""
+
+#: src/qifimport.cpp:619
+#, fuzzy
+msgid "Skipping QIF transaction"
+msgstr "Zobrazeny všechny transakce"
+
+#: src/qifimport.cpp:652
 msgid " transactions imported from QIF"
 msgstr " transakcí importováno z QIF"
 
@@ -2172,82 +2244,82 @@ msgid "Confirm Stock Investment Deletion"
 msgstr "Potvrzení odstranění akcií"
 
 #: src/transdialog.cpp:253
-#: src/transdialog.cpp:584
-#: src/transdialog.cpp:596
+#: src/transdialog.cpp:587
+#: src/transdialog.cpp:602
 msgid "Specify to whom the transaction is going to or coming from "
 msgstr "Určete komu transakce chodí nebo do koho jdou"
 
-#: src/transdialog.cpp:600
+#: src/transdialog.cpp:606
 msgid "Select From Account"
 msgstr "Vybrat účet od"
 
-#: src/transdialog.cpp:601
+#: src/transdialog.cpp:607
 msgid "Select To Account"
 msgstr "Vybrat účet komu"
 
-#: src/transdialog.cpp:610
+#: src/transdialog.cpp:616
 msgid "Specify the account from which the transfer is occurring"
 msgstr "Určete účet odkud je prováděna transkace"
 
-#: src/util.cpp:120
+#: src/util.cpp:124
 msgid "No Account available! Cannot Export!"
 msgstr "Není k dispozici žádný účet, proto nelze exportovat!"
 
-#: src/util.cpp:137
+#: src/util.cpp:141
 msgid "Choose Account to Export from:"
 msgstr "Zvolte účet pro export:"
 
-#: src/util.cpp:138
+#: src/util.cpp:142
 msgid "CSV Export"
 msgstr "CSV export"
 
-#: src/util.cpp:144
+#: src/util.cpp:148
 msgid "Choose CSV data file to Export"
 msgstr "Vyberte datový soubor CSV pro export"
 
-#: src/util.cpp:221
-#: src/util.cpp:424
+#: src/util.cpp:225
+#: src/util.cpp:428
 msgid "CSV Import"
 msgstr "CSV import"
 
-#: src/util.cpp:269
-#: src/util.cpp:472
+#: src/util.cpp:273
+#: src/util.cpp:476
 msgid " missing date, skipping."
 msgstr " chybí datum, přeskočeno."
 
-#: src/util.cpp:278
-#: src/util.cpp:481
+#: src/util.cpp:282
+#: src/util.cpp:485
 msgid " missing payee, skipping."
 msgstr " chybí příjemce, přeskočeno."
 
-#: src/util.cpp:287
+#: src/util.cpp:291
 msgid " missing transaction type, skipping."
 msgstr " chybí typ transakce, přeskočeno."
 
-#: src/util.cpp:296
-#: src/util.cpp:490
+#: src/util.cpp:300
+#: src/util.cpp:494
 msgid " missing amount, skipping."
 msgstr " chybí částka, přeskočeno."
 
-#: src/util.cpp:305
-#: src/util.cpp:505
+#: src/util.cpp:309
+#: src/util.cpp:509
 msgid " missing category, skipping."
 msgstr " chybí kategorie, přeskočeno."
 
-#: src/util.cpp:323
+#: src/util.cpp:327
 msgid "one of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr "jedno z následujích polí: datum, příjemce, typ transkace, částka nebo kategorie obsahuje prázdný řetězec, přeskakočeno"
 
-#: src/util.cpp:330
+#: src/util.cpp:334
 msgid " unrecognized transaction type, skipping."
 msgstr " nerozpoznaný typ transakce, přeskočeno."
 
-#: src/util.cpp:380
-#: src/util.cpp:593
+#: src/util.cpp:384
+#: src/util.cpp:597
 msgid " imported OK."
 msgstr " importování dokončeno."
 
-#: src/util.cpp:383
+#: src/util.cpp:387
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -2262,19 +2334,23 @@ msgstr ""
 "\n"
 "Importovaným transkacím bude přidělen příznak pro případnou kontrolu."
 
-#: src/util.cpp:400
+#: src/util.cpp:404
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Ověřte prosím zda CSV soubor exportovaný z  MMEX.NET obsahuje pouze jeden účet!"
 
-#: src/util.cpp:430
+#: src/util.cpp:434
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Vyberte datový soubor MM.NET CSV pro import"
 
-#: src/util.cpp:542
+#: src/util.cpp:537
+msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
+msgstr " Jedno z následujích polí: datum, příjemce, typ transkace, částka nebo kategorie obsahuje prázdný řetězec, přeskočeno"
+
+#: src/util.cpp:546
 msgid " invalid date, skipping."
 msgstr " neplatné datum, přeskočeno."
 
-#: src/util.cpp:596
+#: src/util.cpp:600
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -2291,15 +2367,15 @@ msgstr ""
 "\n"
 "Importovaným transkacím bude přidělen příznak pro případnou kontrolu."
 
-#: src/util.cpp:612
+#: src/util.cpp:616
 msgid "Entry "
 msgstr "Záznam "
 
-#: src/util.cpp:612
+#: src/util.cpp:616
 msgid " is invalid."
 msgstr " je neplatný."
 
-#: src/util.cpp:614
+#: src/util.cpp:618
 msgid "Invalid Entry"
 msgstr "Neplatný záznam."
 
@@ -2425,17 +2501,44 @@ msgstr ""
 msgid "Options Dialog"
 msgstr "Nastavení programu"
 
+#: include/reportbudgetingperf.h:26
+#, fuzzy
+msgid "Budget Performance for Year : "
+msgstr "Roční rozpočet"
+
 #: include/reportcategexp.h:55
+#: include/reportincexpenses.h:37
 msgid "From: "
 msgstr "Od: "
 
 #: include/reportcategexp.h:57
+#: include/reportincexpenses.h:38
 msgid " To: "
 msgstr " Komu: "
 
 #: include/reportcategexp.h:68
 msgid "Amount   "
 msgstr "Částka"
+
+#: include/reportincexpesestime.h:28
+#, fuzzy
+msgid "Income vs Expenses for Year : "
+msgstr "Příjmy a výdaje"
+
+#: include/reportincexpesestime.h:44
+#, fuzzy
+msgid "Month"
+msgstr "Měsíc"
+
+#: include/reportincexpesestime.h:46
+#, fuzzy
+msgid "Expenses"
+msgstr "Výdaje"
+
+#: include/reportincexpesestime.h:93
+#, fuzzy
+msgid "Total"
+msgstr "Celkem:"
 
 #: include/reportsummary.h:58
 msgid "Account Name  "

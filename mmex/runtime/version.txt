@@ -9,6 +9,9 @@ Version History of Money Manager Ex
 - Add Feature 1503265: Allow changing transaction type of existing transaction
 - Fix 1503266: Range days are one day off
 - Add Feature 1502894:Sort sub categs alphabetically
+- Add Feature 1503503:Add menus for Edit and Delete Accounts
+- Added Czech Translation (Thanks Josef Remes!)
+- Added Chinese Translation (Thanks Kyosuke!)
 
 0.6 (June 3, 2006)
 - Added ability to import from QIF files (tested from MS Money)

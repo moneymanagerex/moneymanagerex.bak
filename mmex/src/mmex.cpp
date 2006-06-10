@@ -78,6 +78,8 @@
 #include "../resources/payees.xpm"
 #include "../resources/currency.xpm"
 #include "../resources/appstart.xpm"
+#include "../resources/edit_account.xpm"
+#include "../resources/delete_account.xpm"
 /*******************************************************/
 #define MMEX_INIDB_FNAME wxT("/mmexini.db3")
 #define MMEX_SPLASH_FNAME wxT("/splash.png")
@@ -103,6 +105,8 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_QUIT,  mmGUIFrame::OnQuit)
     EVT_MENU(MENU_NEWACCT,  mmGUIFrame::OnNewAccount)
     EVT_MENU(MENU_ACCTLIST,  mmGUIFrame::OnAccountList)
+    EVT_MENU(MENU_ACCTEDIT,  mmGUIFrame::OnEditAccount)
+    EVT_MENU(MENU_ACCTDELETE,  mmGUIFrame::OnDeleteAccount)
     EVT_MENU(MENU_ORGCATEGS,  mmGUIFrame::OnOrgCategories)
     EVT_MENU(MENU_ORGPAYEE,  mmGUIFrame::OnOrgPayees)
     EVT_MENU(MENU_OPTIONS,  mmGUIFrame::OnOptions)
@@ -1303,6 +1307,8 @@ void mmGUIFrame::createMenu()
     toolBarBitmaps[5] = wxBitmap(print_xpm);
     toolBarBitmaps[6] = wxBitmap(printpreview_xpm);
     toolBarBitmaps[7] = wxBitmap(printsetup_xpm);
+    toolBarBitmaps[8] = wxBitmap(edit_account_xpm);
+    toolBarBitmaps[9] = wxBitmap(delete_account_xpm);
     
 
     wxMenu *menuFile = new wxMenu;
@@ -1378,8 +1384,18 @@ void mmGUIFrame::createMenu()
 		_("Account &List"), _("Show Account List"));
 	menuItemAcctList->SetBitmaps(toolBarBitmaps[4]);
 
+    wxMenuItem* menuItemAcctEdit = new wxMenuItem(menuAccounts, MENU_ACCTEDIT, 
+		_("Edit Account"), _("Edit Account"));
+	menuItemAcctEdit->SetBitmaps(toolBarBitmaps[8]);
+
+    wxMenuItem* menuItemAcctDelete = new wxMenuItem(menuAccounts, MENU_ACCTDELETE, 
+		_("Delete Account"), _("Delete Account from database"));
+	menuItemAcctDelete->SetBitmaps(toolBarBitmaps[9]);
+
     menuAccounts->Append(menuItemNewAcct); 
     menuAccounts->Append(menuItemAcctList); 
+    menuAccounts->Append(menuItemAcctEdit); 
+    menuAccounts->Append(menuItemAcctDelete); 
 
     wxMenu *menuTools = new wxMenu;
 
@@ -1965,3 +1981,120 @@ void mmGUIFrame::OnWizardCancel(wxWizardEvent& event)
 {
      event.Veto();
 }
+
+void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
+{
+    wxUint32 num = mmDBWrapper::getNumAccounts(db_);
+    if (num == 0)
+    {
+        mmShowErrorMessage(0, _("No Account available!"), _("Error"));
+        return;
+    }
+    wxArrayString as;
+    int* arrAcctID = new int[num];
+    mmBEGINSQL_LITE_EXCEPTION;
+    wxSQLite3ResultSet q1 = 
+        db_->ExecuteQuery("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
+    int i = 0;
+    while (q1.NextRow())
+    {
+        as.Add(q1.GetString(wxT("ACCOUNTNAME")));
+        arrAcctID[i++] = q1.GetInt(wxT("ACCOUNTID"));
+    }
+
+    mmENDSQL_LITE_EXCEPTION;
+
+    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
+    
+    wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, 
+        _("Choose Account to Edit:"), 
+        _("Accounts"), as);
+    if (scd->ShowModal() == wxID_OK)
+    {
+        int choice = scd->GetSelection();
+        int acctID = arrAcctID[choice];
+        mmNewAcctDialog *dlg = new mmNewAcctDialog(db_, false, acctID, this);
+        if ( dlg->ShowModal() == wxID_OK )
+        {
+            createHomePage();
+            updateNavTreeControl();      
+        }
+    }
+    delete[] arrAcctID;
+}
+
+void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
+{
+    wxUint32 num = mmDBWrapper::getNumAccounts(db_);
+    if (num == 0)
+    {
+        mmShowErrorMessage(0, _("No Account available!"), _("Error"));
+        return;
+    }
+    wxArrayString as;
+    int* arrAcctID = new int[num];
+    mmBEGINSQL_LITE_EXCEPTION;
+    wxSQLite3ResultSet q1 = 
+        db_->ExecuteQuery("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
+    int i = 0;
+    while (q1.NextRow())
+    {
+        as.Add(q1.GetString(wxT("ACCOUNTNAME")));
+        arrAcctID[i++] = q1.GetInt(wxT("ACCOUNTID"));
+    }
+    
+    q1.Finalize();
+    mmENDSQL_LITE_EXCEPTION;
+  
+
+    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
+    
+    wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, 
+        _("Choose Account to Edit:"), 
+        _("Accounts"), as);
+    if (scd->ShowModal() == wxID_OK)
+    {
+        int choice = scd->GetSelection();
+        int acctID = arrAcctID[choice];
+        wxString acctType = mmDBWrapper::getAccountType(db_, acctID);
+
+        wxMessageDialog msgDlg(this, 
+            _("Do you really want to delete the account?"),
+            _("Confirm Account Deletion"),
+            wxYES_NO);
+        if (msgDlg.ShowModal() == wxID_YES)
+        {
+            if (acctType = wxT("Checking"))
+            {
+                wxSQLite3StatementBuffer bufSQL;
+                bufSQL.Format("delete from CHECKINGACCOUNT_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", acctID, acctID);
+                int nTransDeleted = db_->ExecuteUpdate(bufSQL);
+
+                bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", acctID);
+                int nRows = db_->ExecuteUpdate(bufSQL);
+                wxASSERT(nRows);
+
+                updateNavTreeControl();
+                createHomePage();
+            }
+            else if (acctType == wxT("Investment"))
+            {
+                wxSQLite3StatementBuffer bufSQL;
+                bufSQL.Format("delete from STOCK_V1 where HELDAT=%d;", acctID);
+                int nTransDeleted = db_->ExecuteUpdate(bufSQL);
+
+                bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", acctID);
+                int nRows = db_->ExecuteUpdate(bufSQL);
+                wxASSERT(nRows);
+
+                updateNavTreeControl();
+                createHomePage();
+            }
+
+        }
+         
+    }
+    delete[] arrAcctID;
+  
+}
+    

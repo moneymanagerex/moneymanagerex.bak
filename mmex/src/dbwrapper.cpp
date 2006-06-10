@@ -652,8 +652,19 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
         double scaleDl = q1.GetDouble(wxT("SCALE"));
         int currencyID = q1.GetInt(wxT("CURRENCYID"));
         double convRate = q1.GetDouble(wxT("BASECONVRATE"));
+        wxChar decChar = wxT('');
+        wxChar grpChar = wxT('');
+        if (!dec.IsEmpty())
+        {
+            decChar = dec.GetChar(0);
+        }
+
+        if (!grp.IsEmpty())
+        {
+            grpChar = grp.GetChar(0);
+        }
         mmCurrencyFormatter::loadSettings(pfxSymbol, sfxSymbol, 
-            dec.GetChar(0), grp.GetChar(0), unit, cent, scaleDl);
+            decChar, grpChar, unit, cent, scaleDl);
 
         q1.Finalize();
     }
@@ -1762,3 +1773,18 @@ double mmDBWrapper::getAssetValue(wxSQLite3Database* db, int assetID)
     return assetValue;
 }
 
+wxString mmDBWrapper::getAccountType(wxSQLite3Database* db_, int accountID)
+{
+    wxString acctType;
+    mmBEGINSQL_LITE_EXCEPTION;
+    wxSQLite3StatementBuffer bufSQL;
+    bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", accountID);
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+    if (q1.NextRow())
+    {
+        acctType = q1.GetString(wxT("ACCOUNTTYPE"));
+    }
+    q1.Finalize();
+    mmENDSQL_LITE_EXCEPTION;
+    return acctType;
+}

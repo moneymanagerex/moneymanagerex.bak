@@ -95,6 +95,7 @@ public:
     /* Account API */
     static wxUint32 getNumAccounts(wxSQLite3Database* db);
     static wxString getAccountName(wxSQLite3Database* db, int accountID);
+    static wxString getAccountType(wxSQLite3Database* db, int accountID);
     static int getAccountID(wxSQLite3Database* db, const wxString& accountName);
     static double getTotalBalanceOnAccount(wxSQLite3Database* db, int accountID, bool ignoreFuture=false);
     static double getReconciledBalanceOnAccount(wxSQLite3Database* db, int accountID);
