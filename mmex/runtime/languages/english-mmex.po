@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-06-09 10:51-0500\n"
+"PO-Revision-Date: 2006-06-19 06:55-0500\n"
 "Last-Translator: Madhan <madhan@yahoo.com>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -19,27 +19,27 @@ msgstr ""
 msgid "Translations by : "
 msgstr ""
 
-#: src/aboutdialog.cpp:116
+#: src/aboutdialog.cpp:117
 msgid "  and contributers from around the world."
 msgstr ""
 
-#: src/aboutdialog.cpp:121
+#: src/aboutdialog.cpp:122
 msgid "Released under the GNU GPL License"
 msgstr ""
 
-#: src/aboutdialog.cpp:133
+#: src/aboutdialog.cpp:134
 msgid "Powered by wxWidgets (c) www.wxwidgets.org"
 msgstr ""
 
-#: src/aboutdialog.cpp:137
+#: src/aboutdialog.cpp:138
 msgid "Powered by SQLite (c) www.sqlite.org"
 msgstr ""
 
-#: src/aboutdialog.cpp:141
+#: src/aboutdialog.cpp:142
 msgid "Version History"
 msgstr ""
 
-#: src/aboutdialog.cpp:149
+#: src/aboutdialog.cpp:150
 msgid "Using Language : "
 msgstr ""
 
@@ -101,9 +101,9 @@ msgid "Enter the name of the asset"
 msgstr ""
 
 #: src/assetdialog.cpp:176
-#: src/bddialog.cpp:367
+#: src/bddialog.cpp:368
 #: src/stockdialog.cpp:160
-#: src/transdialog.cpp:277
+#: src/transdialog.cpp:278
 msgid "Date"
 msgstr ""
 
@@ -160,11 +160,11 @@ msgid "Change in Value"
 msgstr ""
 
 #: src/assetdialog.cpp:225
-#: src/bddialog.cpp:269
-#: src/bddialog.cpp:395
+#: src/bddialog.cpp:270
+#: src/bddialog.cpp:396
 #: src/billsdeposits.cpp:243
 #: src/budgetentrydialog.cpp:157
-#: src/transdialog.cpp:305
+#: src/transdialog.cpp:306
 msgid "None"
 msgstr ""
 
@@ -189,9 +189,9 @@ msgid "Enter the rate at which the asset changes its value in %"
 msgstr ""
 
 #: src/assetdialog.cpp:249
-#: src/bddialog.cpp:408
+#: src/bddialog.cpp:409
 #: src/stockdialog.cpp:213
-#: src/transdialog.cpp:318
+#: src/transdialog.cpp:319
 msgid "Notes"
 msgstr ""
 
@@ -200,22 +200,22 @@ msgid "Enter notes associated with this asset"
 msgstr ""
 
 #: src/assetdialog.cpp:267
-#: src/bddialog.cpp:435
+#: src/bddialog.cpp:436
 #: src/budgetentrydialog.cpp:187
 #: src/budgetyearentrydialog.cpp:127
 #: src/newchkacctdialog.cpp:317
 #: src/stockdialog.cpp:262
-#: src/transdialog.cpp:345
+#: src/transdialog.cpp:346
 msgid "OK"
 msgstr ""
 
 #: src/assetdialog.cpp:271
-#: src/bddialog.cpp:439
+#: src/bddialog.cpp:440
 #: src/budgetentrydialog.cpp:191
 #: src/budgetyearentrydialog.cpp:132
 #: src/newchkacctdialog.cpp:321
 #: src/stockdialog.cpp:266
-#: src/transdialog.cpp:349
+#: src/transdialog.cpp:350
 msgid "Cancel"
 msgstr ""
 
@@ -226,9 +226,9 @@ msgstr ""
 
 #: src/assetdialog.cpp:299
 #: src/assetdialog.cpp:325
-#: src/bddialog.cpp:588
-#: src/bddialog.cpp:744
-#: src/bddialog.cpp:765
+#: src/bddialog.cpp:589
+#: src/bddialog.cpp:746
+#: src/bddialog.cpp:767
 #: src/budgetentrydialog.cpp:226
 #: src/budgetyearentrydialog.cpp:145
 #: src/budgetyearentrydialog.cpp:152
@@ -248,8 +248,8 @@ msgstr ""
 #: src/stockdialog.cpp:362
 #: src/stockdialog.cpp:371
 #: src/stockdialog.cpp:380
-#: src/transdialog.cpp:490
-#: src/transdialog.cpp:675
+#: src/transdialog.cpp:491
+#: src/transdialog.cpp:677
 #: src/util.cpp:124
 #: src/util.cpp:205
 #: src/util.cpp:410
@@ -338,311 +338,311 @@ msgstr ""
 msgid "Confirm Asset Deletion"
 msgstr ""
 
-#: src/bddialog.cpp:234
+#: src/bddialog.cpp:235
 msgid "Bills && Deposit Details"
 msgstr ""
 
-#: src/bddialog.cpp:243
+#: src/bddialog.cpp:244
 msgid "Account Name"
 msgstr ""
 
-#: src/bddialog.cpp:248
+#: src/bddialog.cpp:249
 #: src/stockdialog.cpp:154
 #: src/stockdialog.cpp:287
 msgid "Select Account"
 msgstr ""
 
-#: src/bddialog.cpp:253
+#: src/bddialog.cpp:254
 msgid "Next Occurence"
 msgstr ""
 
-#: src/bddialog.cpp:260
+#: src/bddialog.cpp:261
 msgid "Specify the date of the next bill or deposit"
 msgstr ""
 
-#: src/bddialog.cpp:263
+#: src/bddialog.cpp:264
 msgid "Repeats"
 msgstr ""
 
-#: src/bddialog.cpp:270
+#: src/bddialog.cpp:271
 #: src/billsdeposits.cpp:247
 #: src/budgetentrydialog.cpp:158
 msgid "Weekly"
 msgstr ""
 
-#: src/bddialog.cpp:271
+#: src/bddialog.cpp:272
 #: src/billsdeposits.cpp:251
 #: src/budgetentrydialog.cpp:159
 msgid "Bi-Weekly"
 msgstr ""
 
-#: src/bddialog.cpp:272
+#: src/bddialog.cpp:273
 #: src/billsdeposits.cpp:255
 #: src/budgetentrydialog.cpp:160
 msgid "Monthly"
 msgstr ""
 
-#: src/bddialog.cpp:273
+#: src/bddialog.cpp:274
 #: src/billsdeposits.cpp:259
 #: src/budgetentrydialog.cpp:161
 msgid "Bi-Monthly"
 msgstr ""
 
-#: src/bddialog.cpp:274
+#: src/bddialog.cpp:275
 #: src/billsdeposits.cpp:263
 #: src/budgetentrydialog.cpp:162
 msgid "Quarterly"
 msgstr ""
 
-#: src/bddialog.cpp:275
+#: src/bddialog.cpp:276
 #: src/billsdeposits.cpp:267
 #: src/budgetentrydialog.cpp:163
 msgid "Half-Yearly"
 msgstr ""
 
-#: src/bddialog.cpp:276
+#: src/bddialog.cpp:277
 #: src/billsdeposits.cpp:271
 #: src/budgetentrydialog.cpp:164
 msgid "Yearly"
 msgstr ""
 
-#: src/bddialog.cpp:277
+#: src/bddialog.cpp:278
 #: src/billsdeposits.cpp:275
 msgid "Four Months"
 msgstr ""
 
-#: src/bddialog.cpp:286
+#: src/bddialog.cpp:287
 msgid "Times Repeated"
 msgstr ""
 
-#: src/bddialog.cpp:293
+#: src/bddialog.cpp:294
 msgid "Specify the number of times this series repeats. Leave blank if this series continues forever."
 msgstr ""
 
-#: src/bddialog.cpp:297
+#: src/bddialog.cpp:298
 msgid "Transaction Details"
 msgstr ""
 
-#: src/bddialog.cpp:306
-#: src/transdialog.cpp:215
+#: src/bddialog.cpp:307
+#: src/transdialog.cpp:216
 msgid "Transaction Type"
 msgstr ""
 
-#: src/bddialog.cpp:311
+#: src/bddialog.cpp:312
 #: src/mmcheckingpanel.cpp:251
 #: src/qifimport.cpp:513
-#: src/transdialog.cpp:220
+#: src/transdialog.cpp:221
 #: src/util.cpp:527
 msgid "Withdrawal"
 msgstr ""
 
-#: src/bddialog.cpp:312
+#: src/bddialog.cpp:313
 #: src/mmcheckingpanel.cpp:253
 #: src/qifimport.cpp:515
-#: src/transdialog.cpp:221
+#: src/transdialog.cpp:222
 #: src/util.cpp:529
 msgid "Deposit"
 msgstr ""
 
-#: src/bddialog.cpp:313
-#: src/transdialog.cpp:222
+#: src/bddialog.cpp:314
+#: src/transdialog.cpp:223
 msgid "Transfer"
 msgstr ""
 
-#: src/bddialog.cpp:320
-#: src/transdialog.cpp:229
+#: src/bddialog.cpp:321
+#: src/transdialog.cpp:230
 msgid "Specify the type of transactions to be created."
 msgstr ""
 
-#: src/bddialog.cpp:322
-#: src/transdialog.cpp:231
+#: src/bddialog.cpp:323
+#: src/transdialog.cpp:232
 msgid "Advanced"
 msgstr ""
 
-#: src/bddialog.cpp:326
-#: src/transdialog.cpp:235
+#: src/bddialog.cpp:327
+#: src/transdialog.cpp:236
 msgid "Specify advanced settings for transaction"
 msgstr ""
 
-#: src/bddialog.cpp:336
-#: src/bddialog.cpp:674
+#: src/bddialog.cpp:337
+#: src/bddialog.cpp:676
 #: src/billsdeposits.cpp:145
 #: src/mmcheckingpanel.cpp:246
-#: src/transdialog.cpp:246
-#: src/transdialog.cpp:580
+#: src/transdialog.cpp:247
+#: src/transdialog.cpp:582
 msgid "Payee"
 msgstr ""
 
-#: src/bddialog.cpp:340
-#: src/bddialog.cpp:476
-#: src/bddialog.cpp:520
-#: src/bddialog.cpp:670
-#: src/bddialog.cpp:681
-#: src/transdialog.cpp:251
-#: src/transdialog.cpp:582
-#: src/transdialog.cpp:598
+#: src/bddialog.cpp:341
+#: src/bddialog.cpp:477
+#: src/bddialog.cpp:521
+#: src/bddialog.cpp:672
+#: src/bddialog.cpp:683
+#: src/transdialog.cpp:252
+#: src/transdialog.cpp:584
+#: src/transdialog.cpp:600
 msgid "Select Payee"
 msgstr ""
 
-#: src/bddialog.cpp:343
+#: src/bddialog.cpp:344
 msgid "Specify where the transaction is going to or coming from "
 msgstr ""
 
-#: src/bddialog.cpp:345
+#: src/bddialog.cpp:346
 #: src/mmcheckingpanel.cpp:243
-#: src/transdialog.cpp:256
+#: src/transdialog.cpp:257
 msgid "Number"
 msgstr ""
 
-#: src/bddialog.cpp:353
-#: src/transdialog.cpp:263
+#: src/bddialog.cpp:354
+#: src/transdialog.cpp:264
 msgid "Specify any associated check number or transaction number"
 msgstr ""
 
-#: src/bddialog.cpp:356
-#: src/transdialog.cpp:266
+#: src/bddialog.cpp:357
+#: src/transdialog.cpp:267
 msgid "To"
 msgstr ""
 
-#: src/bddialog.cpp:361
-#: src/transdialog.cpp:271
+#: src/bddialog.cpp:362
+#: src/transdialog.cpp:272
 msgid "Select To Acct"
 msgstr ""
 
-#: src/bddialog.cpp:365
-#: src/transdialog.cpp:275
+#: src/bddialog.cpp:366
+#: src/transdialog.cpp:276
 msgid "Specify the transfer account"
 msgstr ""
 
-#: src/bddialog.cpp:375
-#: src/transdialog.cpp:285
+#: src/bddialog.cpp:376
+#: src/transdialog.cpp:286
 msgid "Specify the date of the transaction"
 msgstr ""
 
-#: src/bddialog.cpp:380
-#: src/transdialog.cpp:288
+#: src/bddialog.cpp:381
+#: src/transdialog.cpp:289
 msgid "Category"
 msgstr ""
 
-#: src/bddialog.cpp:384
-#: src/bddialog.cpp:485
-#: src/bddialog.cpp:519
-#: src/bddialog.cpp:553
-#: src/bddialog.cpp:617
-#: src/transdialog.cpp:293
+#: src/bddialog.cpp:385
+#: src/bddialog.cpp:486
+#: src/bddialog.cpp:520
+#: src/bddialog.cpp:554
+#: src/bddialog.cpp:619
+#: src/transdialog.cpp:294
 msgid "Select Category"
 msgstr ""
 
-#: src/bddialog.cpp:387
-#: src/transdialog.cpp:296
+#: src/bddialog.cpp:388
+#: src/transdialog.cpp:297
 msgid "Specify the category for this transaction"
 msgstr ""
 
-#: src/bddialog.cpp:389
-#: src/transdialog.cpp:299
+#: src/bddialog.cpp:390
+#: src/transdialog.cpp:300
 msgid "Status"
-msgstr ""
-
-#: src/bddialog.cpp:396
-#: src/transdialog.cpp:306
-msgid "Reconciled"
 msgstr ""
 
 #: src/bddialog.cpp:397
 #: src/transdialog.cpp:307
-msgid "Void"
+msgid "Reconciled"
 msgstr ""
 
 #: src/bddialog.cpp:398
 #: src/transdialog.cpp:308
+msgid "Void"
+msgstr ""
+
+#: src/bddialog.cpp:399
+#: src/transdialog.cpp:309
 msgid "Follow up"
 msgstr ""
 
-#: src/bddialog.cpp:405
-#: src/transdialog.cpp:315
+#: src/bddialog.cpp:406
+#: src/transdialog.cpp:316
 msgid "Specify the status for the transaction"
 msgstr ""
 
-#: src/bddialog.cpp:415
-#: src/transdialog.cpp:324
+#: src/bddialog.cpp:416
+#: src/transdialog.cpp:325
 msgid "Specify any text notes you want to add to this transaction."
 msgstr ""
 
-#: src/bddialog.cpp:418
+#: src/bddialog.cpp:419
 #: src/billsdeposits.cpp:149
 #: src/budgetingpanel.cpp:221
-#: src/transdialog.cpp:327
+#: src/transdialog.cpp:328
 msgid "Amount"
 msgstr ""
 
-#: src/bddialog.cpp:425
-#: src/transdialog.cpp:335
+#: src/bddialog.cpp:426
+#: src/transdialog.cpp:336
 msgid "Specify the amount for this transaction"
 msgstr ""
 
-#: src/bddialog.cpp:554
-#: src/bddialog.cpp:693
+#: src/bddialog.cpp:555
+#: src/bddialog.cpp:695
 msgid "Select To"
-msgstr ""
-
-#: src/bddialog.cpp:577
-#: src/transdialog.cpp:479
-msgid "To Account Amount Entry"
 msgstr ""
 
 #: src/bddialog.cpp:578
 #: src/transdialog.cpp:480
+msgid "To Account Amount Entry"
+msgstr ""
+
+#: src/bddialog.cpp:579
+#: src/transdialog.cpp:481
 msgid "Amount to be recorded in To Account"
 msgstr ""
 
-#: src/bddialog.cpp:588
-#: src/transdialog.cpp:490
+#: src/bddialog.cpp:589
+#: src/transdialog.cpp:491
 msgid "Invalid To Amount Entered "
 msgstr ""
 
-#: src/bddialog.cpp:685
-#: src/bddialog.cpp:699
-#: src/transdialog.cpp:596
-#: src/transdialog.cpp:613
+#: src/bddialog.cpp:687
+#: src/bddialog.cpp:701
+#: src/transdialog.cpp:598
+#: src/transdialog.cpp:615
 msgid "From"
 msgstr ""
 
-#: src/bddialog.cpp:692
+#: src/bddialog.cpp:694
 msgid "Select From"
-msgstr ""
-
-#: src/bddialog.cpp:720
-#: src/transdialog.cpp:636
-msgid "Payee "
 msgstr ""
 
 #: src/bddialog.cpp:722
 #: src/transdialog.cpp:638
+msgid "Payee "
+msgstr ""
+
+#: src/bddialog.cpp:724
+#: src/transdialog.cpp:640
 msgid "From Account "
 msgstr ""
 
-#: src/bddialog.cpp:728
+#: src/bddialog.cpp:730
 #: src/mmhomepagepanel.cpp:93
 msgid "Account"
 msgstr ""
 
-#: src/bddialog.cpp:738
-#: src/transdialog.cpp:648
+#: src/bddialog.cpp:740
+#: src/transdialog.cpp:650
 msgid "To Account "
 msgstr ""
 
-#: src/bddialog.cpp:744
+#: src/bddialog.cpp:746
 msgid "From and To Account cannot be the same."
 msgstr ""
 
-#: src/bddialog.cpp:765
+#: src/bddialog.cpp:767
 #: src/budgetentrydialog.cpp:226
-#: src/transdialog.cpp:675
+#: src/transdialog.cpp:677
 msgid "Invalid Amount Entered "
 msgstr ""
 
-#: src/bddialog.cpp:778
-#: src/transdialog.cpp:688
+#: src/bddialog.cpp:780
+#: src/transdialog.cpp:690
 msgid "Category "
 msgstr ""
 
@@ -2217,21 +2217,21 @@ msgstr ""
 msgid "Confirm Stock Investment Deletion"
 msgstr ""
 
-#: src/transdialog.cpp:253
-#: src/transdialog.cpp:587
-#: src/transdialog.cpp:602
+#: src/transdialog.cpp:254
+#: src/transdialog.cpp:589
+#: src/transdialog.cpp:604
 msgid "Specify to whom the transaction is going to or coming from "
 msgstr ""
 
-#: src/transdialog.cpp:606
+#: src/transdialog.cpp:608
 msgid "Select From Account"
 msgstr ""
 
-#: src/transdialog.cpp:607
+#: src/transdialog.cpp:609
 msgid "Select To Account"
 msgstr ""
 
-#: src/transdialog.cpp:616
+#: src/transdialog.cpp:618
 msgid "Specify the account from which the transfer is occurring"
 msgstr ""
 
