@@ -12,6 +12,7 @@ Version History of Money Manager Ex
 - Add Feature 1503503:Add menus for Edit and Delete Accounts
 - Added Czech Translation (Thanks Josef Remes!)
 - Added Chinese Translation (Thanks Kyosuke!)
+- Fixed Bug 1504882:Amt deposited using Transfer Transaction doesn't update
 
 0.6 (June 3, 2006)
 - Added ability to import from QIF files (tested from MS Money)

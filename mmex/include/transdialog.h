@@ -94,6 +94,7 @@ private:
     int payeeID_;
     int toID_;
     double toTransAmount_;
+    bool advancedToTransAmountSet_;
 };
 
 #endif

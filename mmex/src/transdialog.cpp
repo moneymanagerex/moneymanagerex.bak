@@ -65,6 +65,7 @@ mmTransDialog::mmTransDialog(wxSQLite3Database* db, int accountID, int transID, 
     payeeID_ = -1;
     toID_ = -1;
     toTransAmount_ = -1;
+    advancedToTransAmountSet_ = false;
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -492,6 +493,7 @@ void mmTransDialog::OnAdvanced(wxCommandEvent& event)
             else
             {
                 toTransAmount_ = amount;
+                advancedToTransAmountSet_ = true;
             }
         }
     }
@@ -676,7 +678,7 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
         return;
     }
 
-    if (toTransAmount_ < 0)
+    if (toTransAmount_ < 0 || !advancedToTransAmountSet_)
     {
         // to trans amount not set
         toTransAmount_ = amount;

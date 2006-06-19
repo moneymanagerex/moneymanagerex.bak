@@ -125,18 +125,18 @@ void mmPayeeDialog::CreateControls()
     itemDialog1->SetSizer(itemBoxSizer2);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer3, 0, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
     listBox_ = new wxListBox( itemDialog1, ID_DIALOG_PAYEE_LISTBOX_PAYEES, 
         wxDefaultPosition, wxSize(100, 200));
     itemBoxSizer3->Add(listBox_, 1, wxGROW|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer5, 1, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
 
     wxTextCtrl* itemTextCtrl6 = new wxTextCtrl( itemDialog1, ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME, 
         wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer5->Add(itemTextCtrl6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemBoxSizer5->Add(itemTextCtrl6, 1, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemTextCtrl6->SetToolTip(_("Enter the payee name to be added or make edits to an existing payee name"));
 
     wxButton* itemButton7 = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_ADD, 
@@ -155,7 +155,7 @@ void mmPayeeDialog::CreateControls()
     itemButton8->SetToolTip(_("Delete the selected payee. The payee cannot be used by an existing transaction."));
 
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer9, 1, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 5);
 
     wxButton* itemButton11 = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_SELECT, 
         _("Select"), wxDefaultPosition, wxDefaultSize, 0 );

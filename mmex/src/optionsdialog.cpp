@@ -349,18 +349,18 @@ void mmOptionsDialog::CreateControls()
     itemCheckBoxBackup->SetToolTip(_("Select whether to create a .bak file when opening a the database file"));
 
 
-    //wxBoxSizer* itemBoxSizerStockURL = new wxBoxSizer(wxHORIZONTAL);
-    //itemBoxSizerMisc->Add(itemBoxSizerStockURL, 0, wxALIGN_LEFT|wxALL, 5);
+    wxBoxSizer* itemBoxSizerStockURL = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizerMisc->Add(itemBoxSizerStockURL, 0, wxGROW|wxALIGN_LEFT|wxALL, 5);
 
     wxStaticText* itemStaticTextURL = new wxStaticText( itemPanelMisc, wxID_STATIC, 
         _("Stock Quote Web Page"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizerMisc->Add(itemStaticTextURL, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizerStockURL->Add(itemStaticTextURL, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
 
     wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), DEFSTOCKURL);
     wxTextCtrl* itemTextCtrURL = new wxTextCtrl( itemPanelMisc, 
         ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL, stockURL, 
         wxDefaultPosition, wxSize(250, -1), 0 );
-    itemBoxSizerMisc->Add(itemTextCtrURL, 0, wxALIGN_TOP|wxALL, 5);
+    itemBoxSizerStockURL->Add(itemTextCtrURL, 1, wxGROW|wxALIGN_TOP|wxALL, 5);
 
     // -------------------------------------------
 

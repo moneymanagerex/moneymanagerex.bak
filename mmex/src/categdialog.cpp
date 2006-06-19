@@ -117,18 +117,18 @@ void mmCategDialog::CreateControls()
     itemDialog1->SetSizer(itemBoxSizer2);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer3, 0, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
     treeCtrl_ = new wxTreeCtrl( itemDialog1, ID_DIALOG_CATEG_TREECTRL_CATS, 
         wxDefaultPosition, wxSize(100, 200), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_ROW_LINES );
     itemBoxSizer3->Add(treeCtrl_, 1, wxGROW|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer5, 1, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
 
     wxTextCtrl* itemTextCtrl6 = new wxTextCtrl( itemDialog1, 
         ID_DIALOG_CATEG_TEXTCTRL_CATNAME, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer5->Add(itemTextCtrl6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemBoxSizer5->Add(itemTextCtrl6, 1, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 1);
      itemTextCtrl6->SetToolTip(_("Enter the name of the category to add or edit here"));
 
     wxButton* itemButton7 = new wxButton( itemDialog1, ID_DIALOG_CATEG_BUTTON_ADD, 
@@ -147,7 +147,7 @@ void mmCategDialog::CreateControls()
     itemButton8->SetToolTip(_("Delete an existing category. The category cannot be used by existing transactions."));
 
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer9, 1, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 5);
 
     wxButton* itemButton11 = new wxButton( itemDialog1, ID_DIALOG_CATEG_BUTTON_SELECT, 
         _("Select"), wxDefaultPosition, wxDefaultSize, 0 );
