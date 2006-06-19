@@ -1,6 +1,6 @@
 Version History of Money Manager Ex
 
-0.6.0.1 (June )
+0.6.0.1 (June 19, 2006)
 - Fixed problem with QIF import when there were no categories
 - Fixed problem with QIF import and transaction numbers
 - Fix missing translations for several fields
