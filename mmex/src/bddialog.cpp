@@ -67,6 +67,7 @@ mmBDDialog::mmBDDialog(wxSQLite3Database* db, int bdID, bool edit, bool enterOcc
     toID_ = -1;
     toTransAmount_ = -1;
     enterOccur_ = enterOccur;
+    advancedToTransAmountSet_ = false;
 
     Create(parent, id, caption, pos, size, style);
 }
@@ -590,6 +591,7 @@ void mmBDDialog::OnAdvanced(wxCommandEvent& event)
             else
             {
                 toTransAmount_ = amount;
+                advancedToTransAmountSet_ = true;
             }
         }
     }
@@ -766,7 +768,7 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
         return;
     }
 
-    if (toTransAmount_ < 0)
+    if (toTransAmount_ < 0 || !advancedToTransAmountSet_)
     {
         // to trans amount not set
         toTransAmount_ = amount;

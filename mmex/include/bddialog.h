@@ -104,6 +104,7 @@ private:
     int toID_;
     int bdID_;
     double toTransAmount_;
+    bool advancedToTransAmountSet_;
 };
 
 #endif
