@@ -652,8 +652,8 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
         double scaleDl = q1.GetDouble(wxT("SCALE"));
         int currencyID = q1.GetInt(wxT("CURRENCYID"));
         double convRate = q1.GetDouble(wxT("BASECONVRATE"));
-        wxChar decChar = wxT('');
-        wxChar grpChar = wxT('');
+        wxChar decChar = 0;
+        wxChar grpChar = 0;
         if (!dec.IsEmpty())
         {
             decChar = dec.GetChar(0);
