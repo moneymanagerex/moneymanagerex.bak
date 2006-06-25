@@ -114,7 +114,7 @@ void mmTransDialog::dataToControls()
 
         wxString transNumString = q1.GetString(wxT("TRANSACTIONNUMBER"));
         wxString statusString  = q1.GetString(wxT("STATUS"));
-        wxString notesString  = q1.GetString(wxT("NOTES"));
+        wxString notesString  = mmUnCleanString(q1.GetString(wxT("NOTES")));
         wxString transTypeString = q1.GetString(wxT("TRANSCODE"));
         double transAmount = q1.GetDouble(wxT("TRANSAMOUNT"));
         toTransAmount_ = q1.GetDouble(wxT("TOTRANSAMOUNT"));

@@ -20,6 +20,7 @@
 #include "guiid.h"
 #include "fileviewerdialog.h"
 #include "mmex.h"
+#include "univcsv.h"
 
 void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 {
@@ -79,6 +80,13 @@ wxString mmCleanString(const wxString& orig)
 {
     wxString toReturn = orig;
     toReturn.Replace(wxT("'"), wxT("''"));
+    return toReturn;
+}
+
+wxString mmUnCleanString(const wxString& orig)
+{
+    wxString toReturn = orig;
+    toReturn.Replace(wxT("''"), wxT("'"));
     return toReturn;
 }
 
@@ -178,7 +186,7 @@ void mmExportCSV(wxSQLite3Database* db_)
                 wxString subcateg = mmDBWrapper::getSubCategoryName(db_, 
                     q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
                 wxString transNum = q1.GetString(wxT("TRANSACTIONNUMBER"));
-                wxString notes = q1.GetString(wxT("NOTES"));
+                wxString notes = mmUnCleanString(q1.GetString(wxT("NOTES")));
 
                 text << dateString << delimit << payee << delimit << type << delimit << amount
                      << delimit << categ << delimit << subcateg << delimit << transNum 
@@ -275,7 +283,7 @@ int mmImportCSV(wxSQLite3Database* db_)
                 }
 
                 if (tkz.HasMoreTokens())
-                   payee = tkz.GetNextToken();
+                   payee = mmCleanString(tkz.GetNextToken());
                 else
                 {
                     log << _("Line : " ) << countNumTotal 
@@ -284,7 +292,7 @@ int mmImportCSV(wxSQLite3Database* db_)
                 }
 
                 if (tkz.HasMoreTokens())
-                    type = tkz.GetNextToken();
+                    type = mmCleanString(tkz.GetNextToken());
                 else
                 {
                     log << _("Line : " ) << countNumTotal 
@@ -293,7 +301,7 @@ int mmImportCSV(wxSQLite3Database* db_)
                 }
 
                 if (tkz.HasMoreTokens())
-                   amount = tkz.GetNextToken();
+                   amount = mmCleanString(tkz.GetNextToken());
                 else
                 {
                     log << _("Line : " ) << countNumTotal 
@@ -302,29 +310,22 @@ int mmImportCSV(wxSQLite3Database* db_)
                 }
 
                 if (tkz.HasMoreTokens())
-                   categ = tkz.GetNextToken();
-                else
-                {
-                    log << _("Line : " ) << countNumTotal 
-                        << _(" missing category, skipping.") << endl;
-                    continue;
-                }
-
+                   categ = mmCleanString(tkz.GetNextToken());
+              
                 if (tkz.HasMoreTokens())
-                   subcateg = tkz.GetNextToken();
+                   subcateg = mmCleanString(tkz.GetNextToken());
                 
                 if (tkz.HasMoreTokens())
-                   transNum = tkz.GetNextToken();
+                   transNum = mmCleanString(tkz.GetNextToken());
                 
                 if (tkz.HasMoreTokens())
-                   notes = tkz.GetNextToken();
+                   notes = mmCleanString(tkz.GetNextToken());
                 
                 if (dt.Trim().IsEmpty() || payee.Trim().IsEmpty() ||
-                    type.Trim().IsEmpty() || amount.Trim().IsEmpty() ||
-                     categ.Trim().IsEmpty())
+                    type.Trim().IsEmpty() || amount.Trim().IsEmpty())
                 {
                     log << _("Line : " ) << countNumTotal 
-                        << _("one of the following fields: date, payee, transaction type, amount, category strings is empty, skipping") << endl;
+                        << _("one of the following fields: date, payee, transaction type, amount strings is empty, skipping") << endl;
                     continue;
                 }
                 
@@ -347,25 +348,66 @@ int mmImportCSV(wxSQLite3Database* db_)
                wxDateTime dtdt = mmParseDisplayStringToDate(db_, dt);
                wxString convDate = dtdt.FormatISODate();
 
-               int payeeID, categID, subCategID;
+               int payeeID, categID , subCategID;
+               categID = -1;
+               subCategID = -1;
+
+               // if payee exists use the category associated with that payee
                if (!mmDBWrapper::getPayeeID(db_, payee, payeeID, categID, subCategID))
                {
+                   //payee does not exist
                    mmDBWrapper::addPayee(db_, payee, -1, -1);
                    mmDBWrapper::getPayeeID(db_, payee, payeeID, categID, subCategID);
-               }
-                
-               categID = mmDBWrapper::getCategoryID(db_, categ);
-               if (categID == -1)
-               {
-                  mmDBWrapper::addCategory(db_, categ);
-                  categID = mmDBWrapper::getCategoryID(db_, categ);
-               }
 
-               subCategID = mmDBWrapper::getSubCategoryID(db_, categID, subcateg);
-               if (subCategID == -1)
+                   if (categ.Trim().IsEmpty())
+                       categ = wxT("Unknown");
+
+                   categID = mmDBWrapper::getCategoryID(db_, categ);
+                   if (categID == -1)
+                   {
+                       mmDBWrapper::addCategory(db_, categ);
+                       categID = mmDBWrapper::getCategoryID(db_, categ);
+                   }
+               }
+               else
                {
-                   mmDBWrapper::addSubCategory(db_, categID, subcateg);
-                   subCategID = mmDBWrapper::getSubCategoryID(db_, categID, subcateg);
+                   // payee exists, use existing category
+                   if (categID == -1)
+                   {
+                       // missing category for exisitng payee
+                       if (categ.Trim().IsEmpty())
+                       {
+                           // empty category
+                           categ = wxT("Unknown");
+
+                           categID = mmDBWrapper::getCategoryID(db_, categ);
+                           if (categID == -1)
+                           {
+                               mmDBWrapper::addCategory(db_, categ);
+                               categID = mmDBWrapper::getCategoryID(db_, categ);
+                           }
+                       }
+                       else
+                       {
+                           // non-empty category
+                           categID = mmDBWrapper::getCategoryID(db_, categ);
+                           if (categID == -1)
+                           {
+                               mmDBWrapper::addCategory(db_, categ);
+                               categID = mmDBWrapper::getCategoryID(db_, categ);
+                           }
+
+                           if (!subcateg.Trim().IsEmpty())
+                           {
+                               subCategID = mmDBWrapper::getSubCategoryID(db_, categID, subcateg);
+                               if (subCategID == -1)
+                               {
+                                   mmDBWrapper::addSubCategory(db_, categID, subcateg);
+                                   subCategID = mmDBWrapper::getSubCategoryID(db_, categID, subcateg);
+                               }
+                           }
+                       }
+                   }
                }
 
                wxString status = wxT("F");
@@ -524,9 +566,9 @@ int mmImportCSVMMNET(wxSQLite3Database* db_)
                }
 
                if (val <= 0.0)
-                   type = _("Withdrawal");
+                   type = wxT("Withdrawal");
                else
-                   type = _("Deposit");
+                   type = wxT("Deposit");
                val = fabs(val);
 
                 if (dt.Trim().IsEmpty() || payee.Trim().IsEmpty() ||

@@ -604,12 +604,19 @@ int mmImportQIF(wxSQLite3Database* db_)
                 }
                 else if (categ.Trim().IsEmpty())
                 {
-                    log << _("Category is empty, marking transaction as Unknown category") << endl;
-                    categID = mmDBWrapper::getCategoryID(db_, wxT("Unknown"));
+                    // check if category exists for this payee.
+
+                    mmDBWrapper::getPayee(db_, payeeID, categID, subCategID);
+
                     if (categID == -1)
                     {
-                        mmDBWrapper::addCategory(db_, wxT("Unknown"));
+                        log << _("Category is empty, marking transaction as Unknown category") << endl;
                         categID = mmDBWrapper::getCategoryID(db_, wxT("Unknown"));
+                        if (categID == -1)
+                        {
+                            mmDBWrapper::addCategory(db_, wxT("Unknown"));
+                            categID = mmDBWrapper::getCategoryID(db_, wxT("Unknown"));
+                        }
                     }
                 }
 

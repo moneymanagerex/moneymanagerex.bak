@@ -26,6 +26,7 @@
 #include "mmhelppanel.h"
 #include "stocks.h"
 #include "assets.h"
+#include "univcsv.h"
 
 #include "reportbase.h"
 #include "reportsummary.h"
@@ -102,6 +103,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_IMPORT_CSV, mmGUIFrame::OnImportCSV)
     EVT_MENU(MENU_IMPORT_MMNETCSV, mmGUIFrame::OnImportCSVMMNET)
     EVT_MENU(MENU_IMPORT_QIF, mmGUIFrame::OnImportQIF)
+    EVT_MENU(MENU_IMPORT_UNIVCSV, mmGUIFrame::OnImportUniversalCSV)
     EVT_MENU(MENU_QUIT,  mmGUIFrame::OnQuit)
     EVT_MENU(MENU_NEWACCT,  mmGUIFrame::OnNewAccount)
     EVT_MENU(MENU_ACCTLIST,  mmGUIFrame::OnAccountList)
@@ -377,7 +379,7 @@ void mmGUIFrame::saveConfigFile()
 {
     /* Save our settings to ini db */
     mmDBWrapper::setINISettingValue(inidb_, 
-        wxT("LASTFILENAME"), fileName_);
+        wxT("LASTFILENAME"), mmCleanString(fileName_));
 
     mmSaveColorsToDatabase(inidb_);
 
@@ -565,7 +567,7 @@ void mmGUIFrame::updateNavTreeControl()
     wxTreeItemId payeesOverTimeLast30 = navTreeCtrl_->AppendItem(payeesOverTime, 
         _("Last 30 Days"), 4, 4);
     navTreeCtrl_->SetItemData(payeesOverTimeLast30, 
-        new mmTreeItemData(wxT("To Whom the Money Goes- 30 Days")));
+        new mmTreeItemData(wxT("To Whom the Money Goes - 30 Days")));
     
     wxTreeItemId payeesOverTimeLastYear = navTreeCtrl_->AppendItem(payeesOverTime, 
         _("Last Year"), 4, 4);
@@ -1342,8 +1344,9 @@ void mmGUIFrame::createMenu()
 
     wxMenu* importMenu = new wxMenu;
     importMenu->Append(MENU_IMPORT_QIF, _("&QIF Files"), _("Import from QIF"));
-    importMenu->Append(MENU_IMPORT_CSV, _("&CSV Files"), _("Import from CSV"));
-    importMenu->Append(MENU_IMPORT_MMNETCSV, _("&MM.NET CSV Files"), _("Import from CSV"));
+    importMenu->Append(MENU_IMPORT_UNIVCSV, _("&Universal CSV Files"), _("Import from any CSV file"));
+        importMenu->Append(MENU_IMPORT_CSV, _("&MMEX CSV Files"), _("Import from MMEX CSV"));
+    importMenu->Append(MENU_IMPORT_MMNETCSV, _("&MM.NET CSV Files"), _("Import from MM.NET CSV"));
     menuFile->Append(MENU_IMPORT, _("Import"), importMenu);
 
     menuFile->AppendSeparator();
@@ -1705,6 +1708,20 @@ void mmGUIFrame::OnImportQIF(wxCommandEvent& event)
         createCheckingAccountPage(accountID);
 }
 
+void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& event)
+{
+    if (mmDBWrapper::getNumAccounts(db_) == 0)
+    {
+        mmShowErrorMessage(0, _("No Account available! Cannot Import! Create a new account first!"), 
+            _("Error"));
+        return;
+    }
+
+    mmUnivCSVImportDialog *dlg = new mmUnivCSVImportDialog(db_, this);
+    dlg->ShowModal();
+    dlg->Destroy();
+}
+
 void mmGUIFrame::OnImportCSVMMNET(wxCommandEvent& event)
 {
     int accountID = mmImportCSVMMNET(db_);
@@ -2007,7 +2024,7 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
     
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, 
-        _("Choose Account to Edit:"), 
+        _("Choose Account to Edit"), 
         _("Accounts"), as);
     if (scd->ShowModal() == wxID_OK)
     {
@@ -2021,6 +2038,7 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
         }
     }
     delete[] arrAcctID;
+    scd->Destroy();
 }
 
 void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
@@ -2050,7 +2068,7 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
     
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, 
-        _("Choose Account to Edit:"), 
+        _("Choose Account to Delete"), 
         _("Accounts"), as);
     if (scd->ShowModal() == wxID_OK)
     {
@@ -2095,6 +2113,6 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
          
     }
     delete[] arrAcctID;
-  
-}
+    scd->Destroy();
+ }
     

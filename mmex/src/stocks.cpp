@@ -232,12 +232,23 @@ void mmStocksPanel::initVirtualListControl()
 
     mmBEGINSQL_LITE_EXCEPTION;
 
+
 	if (accountID_ != -1)
 	{
 		wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_BD_STATIC_HEADER);
 		wxString str = mmDBWrapper::getAccountName(db_, accountID_);
 		header->SetLabel(_("Stock Investments: ") + str);
 	}
+
+    wxSQLite3StatementBuffer bufSQL;
+    bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", accountID_);
+    wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL);
+    if (q2.NextRow())
+    {
+        int currencyID = q2.GetInt(wxT("CURRENCYID"));
+        mmDBWrapper::loadSettings(db_, currencyID);
+    }
+    q2.Finalize();
     
 	double total = mmDBWrapper::getStockInvestmentBalance(db_);
 	if (accountID_ != -1)
@@ -251,7 +262,6 @@ void mmStocksPanel::initVirtualListControl()
     wxString lbl  = wxString::Format(_("Total: %s"), balance);
     header->SetLabel(lbl);
 
-	wxSQLite3StatementBuffer bufSQL;
 	if (accountID_ == -1)    
 		bufSQL.Format("select * from STOCK_V1;");
 	else
@@ -268,10 +278,11 @@ void mmStocksPanel::initVirtualListControl()
         th.heldAt_            = mmDBWrapper::getAccountName(db_, accountID);
         th.shareName_         = q1.GetString(wxT("STOCKNAME"));
         th.numSharesStr_      = q1.GetString(wxT("NUMSHARES"));
-        th.numShares_         = q1.GetInt(wxT("NUMSHARES"));
+        th.numShares_         = q1.GetDouble(wxT("NUMSHARES"));
 
         th.currentPrice_      = q1.GetDouble(wxT("CURRENTPRICE"));
         th.purchasePrice_      = q1.GetDouble(wxT("PURCHASEPRICE"));
+        th.valueStr_          = q1.GetString(wxT("VALUE"));
         th.value_             = q1.GetDouble(wxT("VALUE"));
         double commission     = q1.GetDouble(wxT("COMMISSION"));
 
@@ -281,9 +292,7 @@ void mmStocksPanel::initVirtualListControl()
         if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.gainLoss_, tempString))
             th.gainLossStr_ = tempString;
 
-        if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, tempString))
-            th.valueStr_ = tempString;
-
+        
         trans_.push_back(th);
         ct++;
     }
