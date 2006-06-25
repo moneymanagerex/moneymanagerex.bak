@@ -105,7 +105,7 @@ public:
             }
             else if (th.period_ == wxT("Bi-Weekly"))
             {
-                th.estimated_ = th.amt_ * 2;
+                th.estimated_ = th.amt_ * 26/12;
                 totalEstimated_ = th.amt_ * 26;
             }
             else if (th.period_ == wxT("Bi-Monthly"))
@@ -220,7 +220,7 @@ public:
                 }
                 else if (thsub.period_ == wxT("Bi-Weekly"))
                 {
-                    thsub.estimated_ = thsub.amt_ * 2;
+                    thsub.estimated_ = thsub.amt_ * 26/12;
                     totalEstimated_ = thsub.amt_ * 26;
                 }
                 else if (thsub.period_ == wxT("Bi-Monthly"))
