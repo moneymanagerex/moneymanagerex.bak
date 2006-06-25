@@ -1,5 +1,15 @@
 Version History of Money Manager Ex
 
+0.6.1.0 (June 25, 2006)
+- Added Universal CSV importer that can handle different CSV order. Use File->Import->Universal CSV Files.
+- Fixed problem when saving .mmb file under a folder with a ' in the path.
+- Fixed problem with entering fractional number of shares
+- Fixed Bug 1510256: single quote becomes double quote in notes.
+- Fixed Bug 1510255: singe quote in CSV import field causes error
+- Fixed Bug 1455808: Currency with no cents like Korean Won arent correct
+- Fixed Bi-Weekly values in budget performance report
+- Fixed "To Whom The Money Goes - Last 30 Days"
+
 0.6.0.1 (June 19, 2006)
 - Fixed problem with QIF import when there were no categories
 - Fixed problem with QIF import and transaction numbers

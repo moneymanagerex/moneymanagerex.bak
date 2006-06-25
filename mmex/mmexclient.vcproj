@@ -475,6 +475,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\univcsv.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\util.cpp"
 				>
 			</File>
@@ -629,6 +633,10 @@
 			</File>
 			<File
 				RelativePath=".\include\transdialog.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\univcsv.h"
 				>
 			</File>
 			<File

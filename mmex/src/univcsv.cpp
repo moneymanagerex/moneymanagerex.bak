@@ -303,11 +303,13 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
                 subCategID_ = -1;
                 val_ = 0.0;
 
-                wxStringTokenizer tkz(line, delimit);   
-                if (tkz.CountTokens() < csvFieldOrder_.size())
+                wxStringTokenizer tkz(line, delimit);  
+                int numTokens = tkz.CountTokens();
+                if (numTokens < csvFieldOrder_.size())
                 {
                     log << _("Line : " ) << countNumTotal 
                         << _(" file contains insufficient number of tokens") << endl;
+                    continue;
                 }
                 
                 std::vector<wxString> tokens;
@@ -321,6 +323,8 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
 
                 for (int idx=0;idx<csvFieldOrder_.size(); idx++)
                 {
+                    if (tokens.size() < idx)
+                        continue;
                     parseToken(csvFieldOrder_[idx], tokens[idx]);
                 }
 
