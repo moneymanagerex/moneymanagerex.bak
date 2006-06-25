@@ -34,6 +34,7 @@ wxString mmGetNiceDateString(wxDateTime dt);
 wxString mmGetNiceDateSimpleString(wxDateTime dt);
 
 wxString mmCleanString(const wxString& orig);
+wxString mmUnCleanString(const wxString& orig);
 
 void mmExportCSV(wxSQLite3Database* db_);
 wxString mmReadyDisplayString(const wxString& orig);

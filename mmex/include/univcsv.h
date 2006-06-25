@@ -1,0 +1,122 @@
+/*******************************************************
+ Copyright (C) 2006 Madhan Kanagavel
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ /*******************************************************/
+
+#ifndef _MM_EX_UNIVCSVDIALOG_H_
+#define _MM_EX_UNIVCSVDIALOG_H_
+
+#include "guiid.h"
+#include "defs.h"
+#include "dbwrapper.h"
+
+#define ID_MYDIALOG8 10040
+#define SYMBOL_UNIVCSVDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
+#define SYMBOL_UNIVCSVDIALOG_TITLE _("Universal CSV Importer Dialog")
+#define SYMBOL_UNIVCSVDIALOG_IDNAME ID_MYDIALOG8
+#define SYMBOL_UNIVCSVDIALOG_SIZE wxSize(400, 300)
+#define SYMBOL_UNIVCSVDIALOG_POSITION wxDefaultPosition
+#define ID_LISTBOX 10090
+#define ID_PANEL10 10091
+#define ID_UNIVCSVBUTTON_ADD 10092
+#define ID_UNIVCSVBUTTON_REMOVE 10093
+#define ID_UNIVCSVBUTTON_IMPORT 10094
+////@end control identifiers
+
+/*!
+ * Compatibility
+ */
+
+#ifndef wxCLOSE_BOX
+#define wxCLOSE_BOX 0x1000
+#endif
+#ifndef wxFIXED_MINSIZE
+#define wxFIXED_MINSIZE 0
+#endif
+
+/*!
+ * MyDialog class declaration
+ */
+
+class mmCSVListBoxItem: public wxClientData
+{
+public:
+    mmCSVListBoxItem(int listIndex) 
+        : listIndex_(listIndex){}
+          
+    int getListIndex() { return listIndex_; }
+
+private:
+    int listIndex_;
+};
+
+class mmUnivCSVImportDialog: public wxDialog
+{    
+    DECLARE_DYNAMIC_CLASS( mmUnivCSVImportDialog )
+    DECLARE_EVENT_TABLE()
+
+public:
+    /// Constructors
+    mmUnivCSVImportDialog( );
+    mmUnivCSVImportDialog( wxSQLite3Database* db, wxWindow* parent, 
+        wxWindowID id = SYMBOL_UNIVCSVDIALOG_IDNAME, 
+        const wxString& caption = SYMBOL_UNIVCSVDIALOG_TITLE, 
+        const wxPoint& pos = SYMBOL_UNIVCSVDIALOG_POSITION, 
+        const wxSize& size = SYMBOL_UNIVCSVDIALOG_SIZE, 
+        long style = SYMBOL_UNIVCSVDIALOG_STYLE );
+
+    /// Creation
+    bool Create( wxWindow* parent, 
+        wxWindowID id = SYMBOL_UNIVCSVDIALOG_IDNAME, 
+        const wxString& caption = SYMBOL_UNIVCSVDIALOG_TITLE, 
+        const wxPoint& pos = SYMBOL_UNIVCSVDIALOG_POSITION, 
+        const wxSize& size = SYMBOL_UNIVCSVDIALOG_SIZE, 
+        long style = SYMBOL_UNIVCSVDIALOG_STYLE );
+
+    /// Creates the controls and sizers
+    void CreateControls();
+    void OnAdd(wxCommandEvent& event);
+    void OnImport(wxCommandEvent& event);
+    void OnRemove(wxCommandEvent& event);
+    bool mmUnivCSVImportDialog::isIndexPresent(int index);
+    void parseToken(int index,wxString& token);
+
+    wxBitmap GetBitmapResource( const wxString& name );
+
+    wxIcon GetIconResource( const wxString& name );
+    static bool ShowToolTips();
+
+private:
+    wxSQLite3Database* db_;
+    std::vector<int> csvFieldOrder_;
+    wxListBox* csvListBox_;
+
+    wxString dt_;
+    wxString payee_;
+    wxString type_;
+    wxString amount_;
+    wxString categ_;
+    wxString subcateg_;
+    wxString transNum_;
+    wxString notes_;
+    int payeeID_;
+    int categID_; 
+    int subCategID_;
+    double val_;
+
+};
+
+#endif

@@ -83,7 +83,7 @@ public:
     double purchasePrice_;
     double value_;
     double gainLoss_;
-    long numShares_;
+    double numShares_;
 };
 
 class mmStocksPanel : public mmPanelBase
