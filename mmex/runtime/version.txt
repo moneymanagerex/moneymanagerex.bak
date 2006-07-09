@@ -1,5 +1,8 @@
 Version History of Money Manager Ex
 
+0.6.2.0 (June ??, 2006)
+- Add Feature: 1503501 Add printable view for assets, stocks
+
 0.6.1.0 (June 25, 2006)
 - Added Universal CSV importer that can handle different CSV order. Use File->Import->Universal CSV Files.
 - Fixed problem when saving .mmb file under a folder with a ' in the path.
