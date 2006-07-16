@@ -688,7 +688,7 @@ wxDateTime mmGetStorageStringAsDate(const wxString& str)
     return dt;
 }
 
-wxColour mmGetColourFromString(wxString& str)
+wxColour mmGetColourFromString(const wxString& str)
 {
     wxStringTokenizer tkz(str, wxT(","));
     unsigned char red = 0xFF;

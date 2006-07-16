@@ -1449,7 +1449,7 @@ double mmDBWrapper::getAmountForPayee(wxSQLite3Database* db, int payeeID,
  {
      mmBEGINSQL_LITE_EXCEPTION;
      wxString bufSQL = wxString::Format(wxT("update BUDGETYEAR_V1 SET BUDGETYEARNAME='%s' WHERE BUDGETYEARID=%d;"), 
-         yearName, yearid);
+         yearName.c_str(), yearid);
      db->ExecuteUpdate(bufSQL);
      mmENDSQL_LITE_EXCEPTION;
  }
@@ -1709,7 +1709,7 @@ double mmDBWrapper::getAssetBalance(wxSQLite3Database* db)
     wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
     while (q1.NextRow())
     {
-        int assetID = q1.GetDouble(wxT("ASSETID"));
+        int assetID = (int)q1.GetDouble(wxT("ASSETID"));
 		balance += mmDBWrapper::getAssetValue(db, assetID);
     }
     q1.Finalize();

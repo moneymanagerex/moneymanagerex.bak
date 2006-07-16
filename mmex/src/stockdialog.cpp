@@ -311,7 +311,7 @@ void mmStockDialog::OnStockPriceButton(wxCommandEvent& event)
 		//wxString httpString = wxString::Format(paddedURL, stockSymbol);
         //wxExecute(_T("explorer ") + httpString, wxEXEC_ASYNC, NULL ); 
 
-        wxString httpString = wxString::Format(stockURL, stockSymbol);
+        wxString httpString = wxString::Format(stockURL.c_str(), stockSymbol.c_str());
 		wxLaunchDefaultBrowser(httpString);
 	}
 }
@@ -392,7 +392,7 @@ void mmStockDialog::OnOk(wxCommandEvent& event)
                       accountID_, pdate.c_str(), mmCleanString(stockName).c_str(), 
 					  mmCleanString(stockSymbol).c_str(), numShares,
                       pPrice, 
-					  mmCleanString(notes.c_str()), 
+					  mmCleanString(notes.c_str()).c_str(), 
 					  cPrice, 
 					  cValue, 
 					  commission);  
@@ -406,7 +406,7 @@ void mmStockDialog::OnOk(wxCommandEvent& event)
                       NUMSHARES=%f, PURCHASEPRICE=%f, NOTES='%s', CURRENTPRICE=%f,                               \
                       VALUE=%f, COMMISSION=%f WHERE STOCKID=%d;"),
                       accountID_, pdate.c_str(), mmCleanString(stockName).c_str(), mmCleanString(stockSymbol).c_str(), numShares,
-                      pPrice, mmCleanString(notes.c_str()), cPrice, cValue, commission, stockID_);  
+                      pPrice, mmCleanString(notes.c_str()).c_str(), cPrice, cValue, commission, stockID_);  
 
        int retVal = db_->ExecuteUpdate(bufSQL);
     }

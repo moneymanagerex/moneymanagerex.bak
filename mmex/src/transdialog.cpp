@@ -722,7 +722,7 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
                       CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT)                                              \
                       values (%d, %d, %d, '%s', %f, '%s', '%s', '%s', %d, %d, '%s', -1, %f);"),
                       fromAccountID, toAccountID, payeeID_, transCode.c_str(), amount,
-                      status.c_str(), transNum.c_str(), mmCleanString(notes.c_str()), categID_, subcategID_, 
+                      status.c_str(), transNum.c_str(), mmCleanString(notes.c_str()).c_str(), categID_, subcategID_, 
                       date1.c_str(), toTransAmount_ );  
 
         int retVal = db_->ExecuteUpdate(bufSQL);
@@ -734,7 +734,7 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
                       TRANSAMOUNT=%f, STATUS='%s', TRANSACTIONNUMBER='%s', NOTES='%s',                               \
                       CATEGID=%d, SUBCATEGID=%d, TRANSDATE='%s', TOTRANSAMOUNT=%f WHERE TRANSID=%d;"),
                       accountID_, toAccountID, payeeID_, transCode.c_str(), amount,
-                      status.c_str(), transNum.c_str(), mmCleanString(notes.c_str()),categID_, subcategID_, 
+                      status.c_str(), transNum.c_str(), mmCleanString(notes.c_str()).c_str(),categID_, subcategID_, 
 date1.c_str(), toTransAmount_, transID_);  
 
         int retVal = db_->ExecuteUpdate(bufSQL);

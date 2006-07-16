@@ -163,7 +163,7 @@ void mmBudgetingPanel::CreateControls()
 
     wxString yearStr = mmDBWrapper::getBudgetYearForID(db_, budgetYearID_);
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, ID_PANEL_REPORTS_STATIC_HEADER, 
-        wxT("Budget Setup for ") + yearStr, wxDefaultPosition, wxDefaultSize, 0 );
+        _("Budget Setup for ") + yearStr, wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, 
         wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
@@ -451,12 +451,12 @@ void mmBudgetingPanel::initVirtualListControl()
 
     wxStaticText* header = (wxStaticText*)FindWindow(ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME);
     wxString incStr = wxString::Format(_("Estimated Income: %s Actual Income:  %s"), 
-        estIncomeStr, actIncomeStr);
+        estIncomeStr.c_str(), actIncomeStr.c_str());
     header->SetLabel(incStr);
 
     header = (wxStaticText*)FindWindow(ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES);
     wxString expStr = wxString::Format(_("Estimated Expenses: %s Actual Expenses:  %s"), 
-        estExpensesStr, actExpensesStr);
+        estExpensesStr.c_str(), actExpensesStr.c_str());
     header->SetLabel(expStr);
 }
 

@@ -132,3 +132,4 @@ void mmHTMLBuilder::addHTML(const wxString& text)
 {
     html_ += text;
 }
+

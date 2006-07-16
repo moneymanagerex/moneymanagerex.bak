@@ -352,7 +352,6 @@ public:
     void menuPrintingEnable(bool enable);
     void updateNavTreeControl();
     void showTreePopupMenu(wxTreeItemId id, const wxPoint& pt);
-    void saveFile(void);
     void openFile(const wxString& fileName, bool openingNew);
     void showBeginAppDialog();
     void openDataBase(const wxString& fileName);
@@ -360,11 +359,11 @@ public:
 
     void OnNew(wxCommandEvent& event);
     void OnOpen(wxCommandEvent& event);
-    void OnSave(wxCommandEvent& event);
     void OnSaveAs(wxCommandEvent& event);
     void OnExport(wxCommandEvent& event);
     void OnExportToHtml(wxCommandEvent& event);
     void OnImportCSV(wxCommandEvent& event);
+    void OnImportQFX(wxCommandEvent& event);
     void OnImportUniversalCSV(wxCommandEvent& event);
     void OnImportCSVMMNET(wxCommandEvent& event);
     void OnImportQIF(wxCommandEvent& event);

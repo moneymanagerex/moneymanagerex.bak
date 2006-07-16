@@ -177,3 +177,4 @@ void mmAppStartDialog::OnButtonAppstartLastDatabaseClick( wxCommandEvent& event 
     retCode_ = 4;
     Close(TRUE);   
 }
+

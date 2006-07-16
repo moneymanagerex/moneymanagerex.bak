@@ -207,7 +207,7 @@ void mmAssetsPanel::initVirtualListControl()
     wxString balance;
     mmCurrencyFormatter::formatDoubleToCurrency(total, balance);
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
-    wxString lbl  = wxString::Format(_("Total: %s"), balance);
+    wxString lbl  = wxString::Format(_("Total: %s"), balance.c_str());
     header->SetLabel(lbl);
 
     wxSQLite3StatementBuffer bufSQL;

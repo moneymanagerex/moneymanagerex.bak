@@ -21,7 +21,7 @@
 #include "defs.h"
 
 #define EXC_GEN       42
-#define MMEXVERSION   wxT("0.6.1.0")
+#define MMEXVERSION   wxT("0.6.2.0")
 #define DEFDATEFORMAT wxT("%m/%d/%y")
 #define DEFDELIMTER   wxT(",")
 #define MM_MIN_DATAVERSION 2
@@ -49,6 +49,7 @@ enum
     MENU_HELP,
     MENU_CHECKUPDATE,
     MENU_IMPORT_CSV,
+    MENU_IMPORT_QFX,
     MENU_IMPORT,
     MENU_IMPORT_UNIVCSV,
     MENU_REPORTISSUES,

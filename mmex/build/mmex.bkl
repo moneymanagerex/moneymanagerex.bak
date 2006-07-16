@@ -42,24 +42,33 @@ Building on Linux
 	<cxxflags>$(WX_CXXFLAGS) $(ADDITIONAL_CPPFLAGS)</cxxflags>
         
         <sources>../src/aboutdialog.cpp</sources>
-        <sources>../src/advanceddialog.cpp</sources>
         <sources>../src/appstartdialog.cpp</sources>
-        <sources>../src/categdialog.cpp</sources>               
-	<sources>../src/currencydialog.cpp</sources>
+        <sources>../src/assetdialog.cpp</sources>
+        <sources>../src/assets.cpp</sources>
+        <sources>../src/bddialog.cpp</sources>
+        <sources>../src/billsdeposits.cpp</sources>
+        <sources>../src/budgetentrydialog.cpp</sources>
+        <sources>../src/budgetingpanel.cpp</sources>
+        <sources>../src/budgetyeardialog.cpp</sources>
+        <sources>../src/budgetyearentrydialog.cpp</sources>
+        <sources>../src/categdialog.cpp</sources>
+        <sources>../src/currencydialog.cpp</sources>
         <sources>../src/dbwrapper.cpp</sources>
         <sources>../src/fileviewerdialog.cpp</sources>
         <sources>../src/htmlbuilder.cpp</sources>
         <sources>../src/mmcheckingpanel.cpp</sources>
-        
         <sources>../src/mmex.cpp</sources>
+        <sources>../src/mmhelppanel.cpp</sources>
         <sources>../src/mmhomepagepanel.cpp</sources>
         <sources>../src/mmreportspanel.cpp</sources>
-        <sources>../src/optionsdialog.cpp</sources>
         <sources>../src/newchkacctdialog.cpp</sources>
+        <sources>../src/optionsdialog.cpp</sources>
         <sources>../src/payeedialog.cpp</sources>
+        <sources>../src/qifimport.cpp</sources>
+        <sources>../src/stockdialog.cpp</sources>
+        <sources>../src/stocks.cpp</sources>
         <sources>../src/transdialog.cpp</sources>
         <sources>../src/util.cpp</sources>
-        
        
         <wx-lib>core</wx-lib>
         <wx-lib>base</wx-lib>

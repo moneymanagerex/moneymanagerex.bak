@@ -487,7 +487,11 @@ int mmImportQIF(wxSQLite3Database* db_)
             if (lineType(readLine) == Payee)
             {
                 payee = getLineData(readLine);
-                
+                if (payee.Trim().IsEmpty())
+                {
+                    payee = wxT("Unknown");
+                }
+
                 if (!mmDBWrapper::getPayeeID(db_, payee, payeeID, categID, subCategID))
                 {
                     mmDBWrapper::addPayee(db_, payee, -1, -1);
@@ -590,10 +594,6 @@ int mmImportQIF(wxSQLite3Database* db_)
                 {
                     log << _("Date is empty, ") << endl; 
                 }
-                else if (payee.Trim().IsEmpty())
-                {
-                    log << _("Payee is empty") << endl;
-                }
                 else if (type.Trim().IsEmpty())
                 {
                     log << _("Transaction Type is empty") << endl;
@@ -670,3 +670,4 @@ int mmImportQIF(wxSQLite3Database* db_)
     scd->Destroy();
     return fromAccountID;
 }
+

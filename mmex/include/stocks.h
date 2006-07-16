@@ -78,6 +78,9 @@ public:
     wxString numSharesStr_;
     wxString gainLossStr_;
     wxString valueStr_;
+    wxString cPriceStr_;
+    wxString pPriceStr_;
+    wxString symbol_;
 
     double currentPrice_;
     double purchasePrice_;

@@ -471,6 +471,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\tinystr.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\tinyxml.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\tinyxmlerror.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\tinyxmlparser.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\transdialog.cpp"
 				>
 			</File>
@@ -480,6 +496,10 @@
 			</File>
 			<File
 				RelativePath=".\src\util.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\wxtinyxml.cpp"
 				>
 			</File>
 		</Filter>
@@ -620,6 +640,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\reportsummaryassets.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\reportsummarystocks.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\resource.h"
 				>
 			</File>
@@ -632,6 +660,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\tinystr.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\tinyxml.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\transdialog.h"
 				>
 			</File>
@@ -641,6 +677,10 @@
 			</File>
 			<File
 				RelativePath=".\include\util.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\wxtinyxml.h"
 				>
 			</File>
 		</Filter>

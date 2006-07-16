@@ -355,3 +355,4 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
         frame_->GetEventHandler()->AddPendingEvent(evt);
     }
 }
+

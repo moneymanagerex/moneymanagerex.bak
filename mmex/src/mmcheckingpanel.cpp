@@ -389,7 +389,7 @@ void mmCheckingPanel::setAccountSummary()
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
 
     wxString lbl  = wxString::Format(_("Account Balance : %s      Reconciled Balance : %s"), 
-        balance, recbalance);
+        balance.c_str(), recbalance.c_str());
     header->SetLabel(lbl);
 }
 

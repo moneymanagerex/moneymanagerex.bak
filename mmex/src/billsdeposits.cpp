@@ -121,7 +121,7 @@ void mmBillsDepositsPanel::CreateControls()
     headerPanel->SetSizer(itemBoxSizerVHeader);
 
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_BD_STATIC_HEADER, 
-        wxT("Bills && Deposits"), wxDefaultPosition, wxDefaultSize, 0 );
+        _("Bills && Deposits"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, 
         wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);

@@ -520,3 +520,4 @@ void mmOptionsDialog::OnBackupDBChecked(wxCommandEvent& event)
   else
     mmDBWrapper::setINISettingValue(inidb_, wxT("BACKUPDB"), wxT("FALSE"));
 }
+

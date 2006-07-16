@@ -44,7 +44,7 @@ int mmImportCSVMMNET(wxSQLite3Database* db_);
 int mmImportQIF(wxSQLite3Database* db_);
 
 void mmLoadColorsFromDatabase(wxSQLite3Database* db_);
-wxColour mmGetColourFromString(wxString& str);
+wxColour mmGetColourFromString(const wxString& str);
 void mmRestoreDefaultColors();
 void mmSaveColorsToDatabase(wxSQLite3Database* db_);
 

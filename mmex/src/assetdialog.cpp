@@ -352,7 +352,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& event)
                       VALUECHANGE, NOTES, VALUECHANGERATE, ASSETTYPE)\
                       values ('%s', '%s', %f, '%s', '%s', %f, '%s');"),
                       pdate.c_str(), mmCleanString(name).c_str(), 
-                      value, valueChangeTypeStr.c_str(), mmCleanString(notes.c_str()), 
+                      value, valueChangeTypeStr.c_str(), mmCleanString(notes.c_str()).c_str(), 
                       valueChangeRate, assetTypeStr.c_str());  
 
         int retVal = db_->ExecuteUpdate(bufSQL);
@@ -363,7 +363,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& event)
         wxString bufSQL = wxString::Format(wxT("update ASSETS_V1 SET STARTDATE='%s', ASSETNAME='%s', VALUE=%f, VALUECHANGE='%s', \
                       NOTES='%s', VALUECHANGERATE=%f, ASSETTYPE='%s' where ASSETID=%d;"),
                       pdate.c_str(), mmCleanString(name).c_str(), 
-                      value, valueChangeTypeStr.c_str(), mmCleanString(notes.c_str()), 
+                      value, valueChangeTypeStr.c_str(), mmCleanString(notes.c_str()).c_str(), 
                       valueChangeRate, assetTypeStr.c_str(), assetID_);  
 
        int retVal = db_->ExecuteUpdate(bufSQL);
