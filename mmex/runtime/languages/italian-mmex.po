@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-07-12 18:46-0500\n"
+"PO-Revision-Date: 2006-07-16 10:43-0500\n"
 "Last-Translator: Madhan <madhan@yahoo.com>\n"
 "Language-Team: Claudio <enjoy-vr@email.it>\n"
 "MIME-Version: 1.0\n"
@@ -992,7 +992,8 @@ msgid "Currency name already exists!"
 msgstr "Nome della valuta già inserita"
 
 #: src/currencydialog.cpp:343
-msgid "Base Conversion Rate should be between 0.0 to 1.0"
+#, fuzzy
+msgid "Base Conversion Rate should be greater than 0.0"
 msgstr "La base di conversione del tasso dovrebbe essere fra 0.0 e 1.0"
 
 #: src/mmcheckingpanel.cpp:151
@@ -1061,7 +1062,7 @@ msgstr "Elimina l'operazione selezionata"
 
 #: src/mmcheckingpanel.cpp:371
 msgid "Category         : "
-msgstr "Categoria         : "
+msgstr "Categoria        : "
 
 #: src/mmcheckingpanel.cpp:372
 msgid "Sub Category  : "
@@ -1069,7 +1070,7 @@ msgstr "Sottocategoria: "
 
 #: src/mmcheckingpanel.cpp:373
 msgid "Notes               : "
-msgstr "Note                 : "
+msgstr "Note                : "
 
 #: src/mmcheckingpanel.cpp:391
 #, c-format
@@ -1302,9 +1303,8 @@ msgid "Income vs Expenses"
 msgstr "Redditi e Spese"
 
 #: src/mmex.cpp:626
-#, fuzzy
 msgid "Income vs Expenses - All Time"
-msgstr "Redditi e Spese"
+msgstr "Redditi e Spese - Tutto il tempo"
 
 #: src/mmex.cpp:634
 msgid "Budget Performance"
@@ -1391,7 +1391,7 @@ msgstr "Esportazione in HTML"
 
 #: src/mmex.cpp:1363
 msgid "&Export"
-msgstr "&Esporta..."
+msgstr "&Esporta"
 
 #: src/mmex.cpp:1366
 msgid "&QIF Files"
@@ -1402,38 +1402,33 @@ msgid "Import from QIF"
 msgstr "Importazione da QIF"
 
 #: src/mmex.cpp:1367
-#, fuzzy
 msgid "&Universal CSV Files"
-msgstr "File &CSV"
+msgstr "File CSV generico"
 
 #: src/mmex.cpp:1367
-#, fuzzy
 msgid "Import from any CSV file"
-msgstr "Importazione da CSV"
+msgstr "Importazione da qualsiasi file CSV"
 
 #: src/mmex.cpp:1368
-#, fuzzy
 msgid "&MMEX CSV Files"
-msgstr "File &MM.NET CSV"
+msgstr "File &MMEX CSV"
 
 #: src/mmex.cpp:1368
-#, fuzzy
 msgid "Import from MMEX CSV"
-msgstr "Importazione da CSV"
+msgstr "Importazione da CSV MMEX"
 
 #: src/mmex.cpp:1369
 msgid "&MM.NET CSV Files"
 msgstr "File &MM.NET CSV"
 
 #: src/mmex.cpp:1369
-#, fuzzy
 msgid "Import from MM.NET CSV"
-msgstr "Importazione da CSV"
+msgstr "Importazione da CSV MM.NET"
 
 #: src/mmex.cpp:1371
 #: src/univcsv.cpp:113
 msgid "Import"
-msgstr "Im&porta..."
+msgstr "Im&porta"
 
 #: src/mmex.cpp:1377
 msgid "Page Setup..."
@@ -1491,19 +1486,16 @@ msgid "Show Account List"
 msgstr "Visualizza l'elenco dei Conti"
 
 #: src/mmex.cpp:1412
-#, fuzzy
 msgid "Edit Account"
-msgstr "&Modifica conto..."
+msgstr "Modifica conto"
 
 #: src/mmex.cpp:1416
-#, fuzzy
 msgid "Delete Account"
-msgstr "&Elimina conto..."
+msgstr "Elimina conto"
 
 #: src/mmex.cpp:1416
-#, fuzzy
 msgid "Delete Account from database"
-msgstr "&Elimina conto..."
+msgstr "Elimina conto da database"
 
 #: src/mmex.cpp:1428
 msgid "Organize &Categories"
@@ -1685,25 +1677,21 @@ msgstr "Importa QIF"
 
 #: src/mmex.cpp:2087
 #: src/mmex.cpp:2129
-#, fuzzy
 msgid "No Account available!"
-msgstr "Conto non disponibile! Impossibile esportarlo!"
+msgstr "Conto non disponibile!"
 
 #: src/mmex.cpp:2107
-#, fuzzy
 msgid "Choose Account to Edit"
-msgstr "Selezionare il Conto nel quale importare"
+msgstr "Selezionare il Conto da modificare"
 
 #: src/mmex.cpp:2108
 #: src/mmex.cpp:2152
-#, fuzzy
 msgid "Accounts"
-msgstr "&Conti"
+msgstr "Conti"
 
 #: src/mmex.cpp:2151
-#, fuzzy
 msgid "Choose Account to Delete"
-msgstr "Selezionare il Conto nel quale importare"
+msgstr "Selezionare il Conto da eliminare"
 
 #: src/mmhelppanel.cpp:78
 msgid "Money Manager Ex Help"
@@ -1971,9 +1959,8 @@ msgid "List Row 1"
 msgstr "Riga 1 dell'elenco"
 
 #: src/optionsdialog.cpp:319
-#, fuzzy
 msgid "Specify the color for the list row 1"
-msgstr "Selezionare il colore per la riga 0 dell'elenco"
+msgstr "Selezionare il colore per la riga 1 dell'elenco"
 
 #: src/optionsdialog.cpp:323
 msgid "List Border"
@@ -2116,26 +2103,23 @@ msgstr "non è possibile analizzare la data, usare la data odierna.. prego verif
 
 #: src/qifimport.cpp:595
 msgid "Date is empty, "
-msgstr ""
+msgstr "Manca la data, "
 
 #: src/qifimport.cpp:599
-#, fuzzy
 msgid "Transaction Type is empty"
-msgstr "Tipo di operazione"
+msgstr "Manca il Tipo di operazione"
 
 #: src/qifimport.cpp:603
-#, fuzzy
 msgid "Amount is empty"
-msgstr "Elenco conti"
+msgstr "Manca l'importo"
 
 #: src/qifimport.cpp:613
 msgid "Category is empty, marking transaction as Unknown category"
-msgstr ""
+msgstr "Manca la Categoria, l'operazione verrà contrassegnata come Non classificata"
 
 #: src/qifimport.cpp:626
-#, fuzzy
 msgid "Skipping QIF transaction"
-msgstr "Visualizzazione di tutte le operazioni"
+msgstr "Operazione QIF ignorata"
 
 #: src/qifimport.cpp:659
 msgid " transactions imported from QIF"
@@ -2304,55 +2288,50 @@ msgid "Specify the account from which the transfer is occurring"
 msgstr "Selezionare il Conto dal quale è partito il trasferimento"
 
 #: src/univcsv.cpp:87
-#, fuzzy
 msgid "Specify the order of fields in the CSV file"
-msgstr "Selezionare il colore per la finestra di navigazione"
+msgstr "Specificare l'ordine dei campi nel file CSV"
 
 #: src/univcsv.cpp:109
 msgid "Remove"
-msgstr ""
+msgstr "Elimina"
 
 #: src/univcsv.cpp:171
 #: src/univcsv.cpp:194
-#, fuzzy
 msgid "Amount(+/-)"
-msgstr "Importo"
+msgstr "Importo(+/-)"
 
 #: src/univcsv.cpp:175
 #: src/univcsv.cpp:196
-#, fuzzy
 msgid "SubCategory"
 msgstr "Sottocategoria"
 
 #: src/univcsv.cpp:179
 #: src/univcsv.cpp:198
-#, fuzzy
 msgid "Transaction Number"
-msgstr "Tipo di operazione"
+msgstr "Numero dell'operazione"
 
 #: src/univcsv.cpp:181
 #: src/univcsv.cpp:199
 msgid "Don't Care"
-msgstr ""
+msgstr "Nessuna importanza"
 
 #: src/univcsv.cpp:184
 #: src/univcsv.cpp:186
 msgid "Unknown"
-msgstr ""
+msgstr "Non classificata"
 
 #: src/univcsv.cpp:202
 msgid "Add CSV field"
-msgstr ""
+msgstr "Aggiungi il campo CSV"
 
 #: src/univcsv.cpp:203
-#, fuzzy
 msgid "CSV Field"
-msgstr "File &CSV"
+msgstr "Campo CSV"
 
 #: src/univcsv.cpp:229
 #: src/univcsv.cpp:240
 msgid "Incorrect fields specified for CSV import! Requires atleast date, amount and payee."
-msgstr ""
+msgstr "Nell'importare CSV sono stati specificati campi errati! Sono richiesti almeno data, importo e beneficiario."
 
 #: src/univcsv.cpp:260
 #: src/util.cpp:233
@@ -2367,12 +2346,11 @@ msgstr "Sceglere il file MM.NET in formato CSV da importare"
 
 #: src/univcsv.cpp:311
 msgid " file contains insufficient number of tokens"
-msgstr ""
+msgstr " il file contiene un numero insufficiente di valori"
 
 #: src/univcsv.cpp:335
-#, fuzzy
 msgid " One of the following fields: date, payee, amount, type is missing, skipping"
-msgstr " Uno dei seguenti campi: data, beneficiario, tipo di operazione, importo o categoria sono vuoti. Operazione ignorata!"
+msgstr " Uno dei seguenti campi: data, beneficiario, importo, tipo è mancante. Operazione ignorata!"
 
 #: src/univcsv.cpp:368
 #: src/util.cpp:426
@@ -2441,9 +2419,8 @@ msgid " missing amount, skipping."
 msgstr " importo mancante. Operazione ignorata!"
 
 #: src/util.cpp:328
-#, fuzzy
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
-msgstr "Uno dei seguenti campi: data, beneficiario, tipo di operazione, importo o categoria sono vuoti. Operazione ignorata!"
+msgstr "Uno dei seguenti campi: data, beneficiario, tipo di operazione, importo sono vuoti. Operazione ignorata!"
 
 #: src/util.cpp:335
 msgid " unrecognized transaction type, skipping."
@@ -2614,9 +2591,8 @@ msgid "Options Dialog"
 msgstr "Riquadro opzioni"
 
 #: include/reportbudgetingperf.h:26
-#, fuzzy
 msgid "Budget Performance for Year : "
-msgstr "Previsioni Budget"
+msgstr "Previsioni Budget dell'anno: "
 
 #: include/reportcategexp.h:55
 #: include/reportincexpenses.h:37
@@ -2633,24 +2609,20 @@ msgid "Amount   "
 msgstr "Importo   "
 
 #: include/reportincexpesestime.h:28
-#, fuzzy
 msgid "Income vs Expenses for Year : "
-msgstr "Redditi e Spese"
+msgstr "Redditi e Spese dell'anno: "
 
 #: include/reportincexpesestime.h:44
-#, fuzzy
 msgid "Month"
-msgstr "Mensile"
+msgstr "Mese"
 
 #: include/reportincexpesestime.h:46
-#, fuzzy
 msgid "Expenses"
 msgstr "Spese"
 
 #: include/reportincexpesestime.h:93
-#, fuzzy
 msgid "Total"
-msgstr "Totale:"
+msgstr "Totale"
 
 #: include/reportsummary.h:58
 msgid "Account Name  "
@@ -2757,5 +2729,5 @@ msgstr "Nuovo/Modifica operazione"
 
 #: include/univcsv.h:28
 msgid "Universal CSV Importer Dialog"
-msgstr ""
+msgstr "Dialogo per importare CSV generici"
 
