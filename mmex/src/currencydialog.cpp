@@ -338,9 +338,9 @@ void mmCurrencyDialog::OnEdit(wxCommandEvent& event)
 
     double convRate = 1.0;
     baseConvRate->GetValue().ToDouble(&convRate);
-    if (convRate > 1.0 || convRate < 0.0)
+    if (convRate <= 0.0)
     {
-        mmShowErrorMessageInvalid(this, _("Base Conversion Rate should be between 0.0 to 1.0"));
+        mmShowErrorMessageInvalid(this, _("Base Conversion Rate should be greater than 0.0"));
         return;
     }
 

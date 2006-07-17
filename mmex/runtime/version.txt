@@ -5,6 +5,10 @@ Version History of Money Manager Ex
 - Fix translation for some strings
 - Add Russian Translation (Thanks KarmaSV!)
 - Add Simple Chinese Translation (Thanks Extraf!)
+- Several small bug fixes
+- Remove row lines under Linux build
+- Allow bills and deposits Date to be modified when entering transaction.
+- Fix bug in reporting transactions that happened the first of the month
 
 0.6.1.0 (June 25, 2006)
 - Added Universal CSV importer that can handle different CSV order. Use File->Import->Universal CSV Files.

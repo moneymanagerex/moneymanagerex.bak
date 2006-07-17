@@ -18,6 +18,7 @@ public:
           dtBegin_(dtBegin),
           dtEnd_(dtEnd)
     {
+        wxASSERT(dtBegin_ == dtBegin);
     }
 
     virtual wxString getHTMLText()
@@ -32,10 +33,11 @@ public:
         hb.addLineBreak();
         hb.addLineBreak();
 
+        wxDateTime tBegin = dtBegin_;
         if (!ignoreDate_)
         {
             wxString dtRange = _("From: ") 
-                + mmGetNiceDateSimpleString(dtBegin_.Add(wxDateSpan::Day())) + _(" To: ") 
+                + mmGetNiceDateSimpleString(tBegin.Add(wxDateSpan::Day())) + _(" To: ") 
                 + mmGetNiceDateSimpleString(dtEnd_);
             hb.addHeader(7, dtRange);
             hb.addLineBreak();

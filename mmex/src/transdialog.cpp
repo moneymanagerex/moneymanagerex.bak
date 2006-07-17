@@ -380,7 +380,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& event)
             if (categID_ == -1)
             {
                 subcategID_ = -1;
-                bCategory_->SetLabel(wxT("Select Category"));
+                bCategory_->SetLabel(_("Select Category"));
                 return;
             }
 
@@ -417,8 +417,8 @@ void mmTransDialog::OnPayee(wxCommandEvent& event)
             payeeID_ = -1;
             categID_ = -1;
             subcategID_ = -1;
-            bCategory_->SetLabel(wxT("Select Category"));
-            bPayee_->SetLabel(wxT("Select Payee"));
+            bCategory_->SetLabel(_("Select Category"));
+            bPayee_->SetLabel(_("Select Payee"));
         }
         else
         {
@@ -453,8 +453,8 @@ void mmTransDialog::OnTo(wxCommandEvent& event)
         if (toName.IsEmpty())
         {
             toID_ = -1;
-            bCategory_->SetLabel(wxT("Select Category"));
-            bTo_->SetLabel(wxT("Select To"));
+            bCategory_->SetLabel(_("Select Category"));
+            bTo_->SetLabel(_("Select To"));
         }
         else
         {
@@ -518,7 +518,7 @@ void mmTransDialog::OnCategs(wxCommandEvent& event)
             // cannot find category
             categID_ = -1;
             subcategID_ = -1;
-            bCategory_->SetLabel(wxT("Select Category"));
+            bCategory_->SetLabel(_("Select Category"));
             return;
         }
 
@@ -653,7 +653,7 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
         
         if (payeeID_ == toID_)
         {
-            mmShowErrorMessage(this, wxT("From and To Account cannot be the same."), wxT("Error"));
+            mmShowErrorMessage(this, _("From and To Account cannot be the same."), _("Error"));
             return;
         }
 

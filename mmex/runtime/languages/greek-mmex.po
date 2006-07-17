@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-07-12 18:46-0500\n"
+"PO-Revision-Date: 2006-07-16 10:48-0500\n"
 "Last-Translator: Madhan <madhan@yahoo.com>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -264,6 +264,7 @@ msgstr ""
 #: src/stockdialog.cpp:371
 #: src/stockdialog.cpp:380
 #: src/transdialog.cpp:491
+#: src/transdialog.cpp:656
 #: src/transdialog.cpp:677
 #: src/univcsv.cpp:230
 #: src/univcsv.cpp:241
@@ -505,6 +506,7 @@ msgstr "Πληρωμή"
 #: src/bddialog.cpp:672
 #: src/bddialog.cpp:683
 #: src/transdialog.cpp:252
+#: src/transdialog.cpp:421
 #: src/transdialog.cpp:584
 #: src/transdialog.cpp:600
 msgid "Select Payee"
@@ -558,6 +560,10 @@ msgstr "Κατηγορία"
 #: src/bddialog.cpp:554
 #: src/bddialog.cpp:619
 #: src/transdialog.cpp:294
+#: src/transdialog.cpp:383
+#: src/transdialog.cpp:420
+#: src/transdialog.cpp:456
+#: src/transdialog.cpp:521
 msgid "Select Category"
 msgstr "Επιλέξτε Κατηγορία"
 
@@ -610,6 +616,7 @@ msgstr "Δηλώστε το ποσό της κίνησης"
 
 #: src/bddialog.cpp:555
 #: src/bddialog.cpp:695
+#: src/transdialog.cpp:457
 msgid "Select To"
 msgstr "Επιλέξτε Προς"
 
@@ -660,6 +667,7 @@ msgid "To Account "
 msgstr "Προς Λογαριασμό"
 
 #: src/bddialog.cpp:746
+#: src/transdialog.cpp:656
 msgid "From and To Account cannot be the same."
 msgstr "Οι λογαριασμοί Από - Προς δεν μπορούν να είναι ίδιοι"
 
@@ -1009,7 +1017,8 @@ msgid "Currency name already exists!"
 msgstr "Το νόμισμα ήδη υπάρχει"
 
 #: src/currencydialog.cpp:343
-msgid "Base Conversion Rate should be between 0.0 to 1.0"
+#, fuzzy
+msgid "Base Conversion Rate should be greater than 0.0"
 msgstr "Η αρχική τιμή μετατροπής πρέπει να έναι μεταξύ 0.0 και 1.0"
 
 #: src/mmcheckingpanel.cpp:151

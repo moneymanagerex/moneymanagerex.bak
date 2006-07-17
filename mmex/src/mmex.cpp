@@ -452,8 +452,15 @@ void mmGUIFrame::createControls()
 
     wxSplitterWindow* itemSplitterWindowFrame = new wxSplitterWindow( framePanel, 
         ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxNO_BORDER );
+#ifdef __WXGTK__
+    // Under GTK, row lines look ugly
+    navTreeCtrl_ = new wxTreeCtrl( itemSplitterWindowFrame, ID_NAVTREECTRL, 
+        wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS);
+#else
     navTreeCtrl_ = new wxTreeCtrl( itemSplitterWindowFrame, ID_NAVTREECTRL, 
         wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_ROW_LINES );
+#endif
+
     navTreeCtrl_->SetBackgroundColour(mmColors::navTreeBkColor);
     
     wxSize imageSize(16, 16);
@@ -822,6 +829,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Month());
+            dtBegin.Add(wxDateSpan::Day());
             mmPrintableBase* rs = new mmReportCategoryExpenses(db_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -896,6 +904,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Month());
+            dtBegin.Add(wxDateSpan::Day());
             mmPrintableBase* rs = new mmReportIncomeExpenses(db_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -965,6 +974,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Month());
+            dtBegin.Add(wxDateSpan::Day());
             mmPrintableBase* rs = new mmReportPayeeExpenses(db_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);

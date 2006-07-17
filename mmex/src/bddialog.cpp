@@ -374,7 +374,7 @@ void mmBDDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
     itemFlexGridSizer8->Add(dpc_, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
-    if (!edit_)
+    if (!edit_ && !enterOccur_)
         dpc_->Enable(false);
 
     wxStaticText* itemStaticText17 = new wxStaticText( itemPanel7, wxID_STATIC, 

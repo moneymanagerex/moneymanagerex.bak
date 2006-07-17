@@ -50,10 +50,11 @@ public:
         hb.addLineBreak();
         hb.addLineBreak();
 
+        wxDateTime tBegin = dtBegin_;
         if (!ignoreDate_)
         {
             wxString dtRange = _("From: ") 
-                + mmGetNiceDateSimpleString(dtBegin_.Add(wxDateSpan::Day())) 
+                + mmGetNiceDateSimpleString(tBegin.Add(wxDateSpan::Day())) 
                 + _(" To: ") 
                 + mmGetNiceDateSimpleString(dtEnd_);
             hb.addHeader(7, dtRange);

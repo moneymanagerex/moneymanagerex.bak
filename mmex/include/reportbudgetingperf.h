@@ -291,7 +291,7 @@ public:
 
                     data.push_back( thsub.actualStr_);
                     hb.addRow(data, wxT(" bgcolor=\"#DCEDD5\" "));
-                }
+                } 
 
             }
             q2.Finalize();
