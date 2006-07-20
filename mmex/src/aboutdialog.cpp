@@ -85,13 +85,19 @@ void mmAboutDialog::CreateControls()
         itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(235, 157), 0 );
     itemBoxSizerN->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
+    wxString port = _("Linux Port by : ");
+    wxStaticText* itemStaticText101 = new wxStaticText( itemDialog1, 
+        wxID_STATIC, port + wxT("Muguntharaj Subramanian, \nPushparajan V"), 
+        wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizerN->Add(itemStaticText101, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
+
     wxString trans = _("Translations by : ");
     wxStaticText* itemStaticText18 = new wxStaticText( itemDialog1, 
         wxID_STATIC,  trans 
         + wxT("Italian (Claudio), French (Berry As), \n \
 Greek (Panagiotis Pentzeridis), Czech (Josef Remes), \n \
 Traditional Chinese (Kysouke), Russian (KarmaSV), \n \
-Simple Chinese (extraf)"), 
+Simple Chinese (Liu Ming)"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerN->Add(itemStaticText18, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -119,7 +125,7 @@ Simple Chinese (extraf)"),
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer4->Add(itemStaticText91, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
-     wxStaticText* itemStaticText911 = new wxStaticText( itemDialog1, 
+    wxStaticText* itemStaticText911 = new wxStaticText( itemDialog1, 
         wxID_STATIC, _("Released under the GNU GPL License"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText911->SetFont(wxFont(9, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));

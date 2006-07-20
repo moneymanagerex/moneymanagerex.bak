@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-07-16 10:48-0500\n"
+"PO-Revision-Date: 2006-07-20 07:42-0500\n"
 "Last-Translator: Madhan <madhan@yahoo.com>\n"
 "Language-Team: TheZeal Software <Bergarath>\n"
 "MIME-Version: 1.0\n"
@@ -16,31 +16,35 @@ msgstr ""
 "X-Poedit-SearchPath-1: src\n"
 
 #: src/aboutdialog.cpp:88
+msgid "Linux Port by : "
+msgstr ""
+
+#: src/aboutdialog.cpp:94
 #, fuzzy
 msgid "Translations by : "
 msgstr "Opération #  : "
 
-#: src/aboutdialog.cpp:118
+#: src/aboutdialog.cpp:124
 msgid "  and contributers from around the world."
 msgstr ""
 
-#: src/aboutdialog.cpp:123
+#: src/aboutdialog.cpp:129
 msgid "Released under the GNU GPL License"
 msgstr ""
 
-#: src/aboutdialog.cpp:135
+#: src/aboutdialog.cpp:141
 msgid "Powered by wxWidgets (c) www.wxwidgets.org"
 msgstr ""
 
-#: src/aboutdialog.cpp:139
+#: src/aboutdialog.cpp:145
 msgid "Powered by SQLite (c) www.sqlite.org"
 msgstr ""
 
-#: src/aboutdialog.cpp:143
+#: src/aboutdialog.cpp:149
 msgid "Version History"
 msgstr "Historique des versions"
 
-#: src/aboutdialog.cpp:151
+#: src/aboutdialog.cpp:157
 msgid "Using Language : "
 msgstr "Langue"
 
@@ -252,10 +256,10 @@ msgstr ""
 #: src/categdialog.cpp:220
 #: src/categdialog.cpp:228
 #: src/currencydialog.cpp:308
-#: src/mmex.cpp:1720
-#: src/mmex.cpp:1796
-#: src/mmex.cpp:2087
-#: src/mmex.cpp:2129
+#: src/mmex.cpp:1730
+#: src/mmex.cpp:1806
+#: src/mmex.cpp:2097
+#: src/mmex.cpp:2139
 #: src/newchkacctdialog.cpp:357
 #: src/payeedialog.cpp:176
 #: src/payeedialog.cpp:188
@@ -281,9 +285,9 @@ msgid "Rate of Change in Value"
 msgstr ""
 
 #: src/assets.cpp:112
-#: src/mmex.cpp:499
-#: src/mmex.cpp:527
-#: src/mmex.cpp:1458
+#: src/mmex.cpp:506
+#: src/mmex.cpp:534
+#: src/mmex.cpp:1468
 #: src/mmhomepagepanel.cpp:174
 msgid "Assets"
 msgstr ""
@@ -299,7 +303,7 @@ msgstr ""
 
 #: src/assets.cpp:179
 #: src/mmcheckingpanel.cpp:300
-#: src/mmex.cpp:1524
+#: src/mmex.cpp:1534
 #: src/stocks.cpp:208
 msgid "New"
 msgstr "New"
@@ -685,7 +689,7 @@ msgid "Category "
 msgstr "Catégorie"
 
 #: src/billsdeposits.cpp:124
-#: src/mmex.cpp:1448
+#: src/mmex.cpp:1458
 msgid "Bills && Deposits"
 msgstr "Echéancier (Planification)"
 
@@ -832,7 +836,7 @@ msgid "Estimated Expenses: Actual Expenses: "
 msgstr ""
 
 #: src/budgetingpanel.cpp:214
-#: include/reportcategexp.h:67
+#: include/reportcategexp.h:68
 msgid "Category  "
 msgstr "Catégorie"
 
@@ -1260,469 +1264,469 @@ msgid ""
 "financial information."
 msgstr ""
 
-#: src/mmex.cpp:487
+#: src/mmex.cpp:494
 msgid "Home Page"
 msgstr "Accueil"
 
-#: src/mmex.cpp:491
+#: src/mmex.cpp:498
 #, fuzzy
 msgid "Bank Accounts"
 msgstr "&Comptes"
 
-#: src/mmex.cpp:495
-#: src/mmex.cpp:522
+#: src/mmex.cpp:502
+#: src/mmex.cpp:529
 #, fuzzy
 msgid "Stocks"
 msgstr "Nom de l'Action"
 
-#: src/mmex.cpp:503
+#: src/mmex.cpp:510
 #, fuzzy
 msgid "Bills & Deposits"
 msgstr "Echéancier (Planification)"
 
-#: src/mmex.cpp:507
+#: src/mmex.cpp:514
 msgid "Budgeting"
 msgstr "Budget"
 
-#: src/mmex.cpp:513
+#: src/mmex.cpp:520
 #, fuzzy
 msgid "Reports"
 msgstr "Fréquence"
 
-#: src/mmex.cpp:517
+#: src/mmex.cpp:524
 #: include/reportsummary.h:36
 #, fuzzy
 msgid "Summary of Accounts"
 msgstr "du Compte "
 
-#: src/mmex.cpp:532
+#: src/mmex.cpp:539
 #: include/reportcategexp.h:45
 msgid "Where the Money Goes"
 msgstr "Où va l'argent"
 
-#: src/mmex.cpp:537
-#: src/mmex.cpp:569
-#: src/mmex.cpp:601
+#: src/mmex.cpp:544
+#: src/mmex.cpp:576
+#: src/mmex.cpp:608
 msgid "Last Calendar Month"
 msgstr "Mois dernier"
 
-#: src/mmex.cpp:542
-#: src/mmex.cpp:574
-#: src/mmex.cpp:606
+#: src/mmex.cpp:549
+#: src/mmex.cpp:581
+#: src/mmex.cpp:613
 #, fuzzy
 msgid "Current Month"
 msgstr "Gestion des Devises"
 
-#: src/mmex.cpp:547
-#: src/mmex.cpp:579
-#: src/mmex.cpp:611
+#: src/mmex.cpp:554
+#: src/mmex.cpp:586
+#: src/mmex.cpp:618
 msgid "Last 30 Days"
 msgstr " 30 derniers jours"
 
-#: src/mmex.cpp:552
-#: src/mmex.cpp:584
-#: src/mmex.cpp:616
+#: src/mmex.cpp:559
+#: src/mmex.cpp:591
+#: src/mmex.cpp:623
 msgid "Last Year"
 msgstr "année dernière"
 
-#: src/mmex.cpp:557
-#: src/mmex.cpp:589
-#: src/mmex.cpp:621
+#: src/mmex.cpp:564
+#: src/mmex.cpp:596
+#: src/mmex.cpp:628
 #, fuzzy
 msgid "Current Year"
 msgstr "Valeur actuelle"
 
-#: src/mmex.cpp:564
+#: src/mmex.cpp:571
 #: include/reportpayee.h:27
 msgid "To Whom the Money Goes"
 msgstr " A Qui va l'argent"
 
-#: src/mmex.cpp:596
-#: include/reportincexpenses.h:27
+#: src/mmex.cpp:603
+#: include/reportincexpenses.h:28
 msgid "Income vs Expenses"
 msgstr "Revenus vs Dépenses"
 
-#: src/mmex.cpp:626
+#: src/mmex.cpp:633
 #, fuzzy
 msgid "Income vs Expenses - All Time"
 msgstr "Revenus vs Dépenses"
 
-#: src/mmex.cpp:634
+#: src/mmex.cpp:641
 #, fuzzy
 msgid "Budget Performance"
 msgstr "Editeur Budget Annuel"
 
-#: src/mmex.cpp:639
+#: src/mmex.cpp:646
 #, fuzzy
 msgid "Help"
 msgstr "&Aide"
 
-#: src/mmex.cpp:1135
-#: src/mmex.cpp:1157
-#: src/mmex.cpp:2160
+#: src/mmex.cpp:1145
+#: src/mmex.cpp:1167
+#: src/mmex.cpp:2170
 msgid "Do you really want to delete the account?"
 msgstr "Souhaitez vous réellement supprimer le Compte?"
 
-#: src/mmex.cpp:1136
-#: src/mmex.cpp:1158
-#: src/mmex.cpp:2161
+#: src/mmex.cpp:1146
+#: src/mmex.cpp:1168
+#: src/mmex.cpp:2171
 msgid "Confirm Account Deletion"
 msgstr "Confirmez la suppression du Compte"
 
-#: src/mmex.cpp:1213
+#: src/mmex.cpp:1223
 msgid "&Go To.."
 msgstr "& Aller à..."
 
-#: src/mmex.cpp:1214
-#: src/mmex.cpp:1223
+#: src/mmex.cpp:1224
+#: src/mmex.cpp:1233
 msgid "&Edit Account"
 msgstr "&Editer le Compte"
 
-#: src/mmex.cpp:1215
-#: src/mmex.cpp:1224
+#: src/mmex.cpp:1225
+#: src/mmex.cpp:1234
 msgid "&Delete Account"
 msgstr "&Supprimer le Compte"
 
-#: src/mmex.cpp:1217
-#: src/mmex.cpp:1226
+#: src/mmex.cpp:1227
+#: src/mmex.cpp:1236
 msgid "&Launch Account Website"
 msgstr "&Ouvrir le Site Web du Compte"
 
-#: src/mmex.cpp:1343
+#: src/mmex.cpp:1353
 msgid "&New Database\tCtrl-N"
 msgstr "&Nouveau Fichier\tCtrl-N"
 
-#: src/mmex.cpp:1343
-#: src/mmex.cpp:1524
+#: src/mmex.cpp:1353
+#: src/mmex.cpp:1534
 msgid "New Money Manager Database"
 msgstr "Nouveau Fichier Money Manager Ex"
 
-#: src/mmex.cpp:1347
+#: src/mmex.cpp:1357
 msgid "&Open Database\tCtrl-O"
 msgstr "&Ouvrir Fichier\tCtrl-O"
 
-#: src/mmex.cpp:1347
-#: src/mmex.cpp:1525
+#: src/mmex.cpp:1357
+#: src/mmex.cpp:1535
 msgid "Open Money Manager Database"
 msgstr "Ouvrir un Fichier Money Manager Ex"
 
-#: src/mmex.cpp:1354
+#: src/mmex.cpp:1364
 #, fuzzy
 msgid "Save Database &As"
 msgstr "&Enregistrer Fichier\tCtrl-S"
 
-#: src/mmex.cpp:1354
+#: src/mmex.cpp:1364
 msgid "Save Money Manager Database As"
 msgstr "Enregistrer le Fichier Money Manager Ex sous"
 
-#: src/mmex.cpp:1361
+#: src/mmex.cpp:1371
 #, fuzzy
 msgid "&CSV Files"
 msgstr "&Fichier"
 
-#: src/mmex.cpp:1361
+#: src/mmex.cpp:1371
 #: src/util.cpp:199
 msgid "Export to CSV"
 msgstr "Export to CSV"
 
-#: src/mmex.cpp:1362
+#: src/mmex.cpp:1372
 msgid "&Report to HTML"
 msgstr ""
 
-#: src/mmex.cpp:1362
+#: src/mmex.cpp:1372
 #, fuzzy
 msgid "Export to HTML"
 msgstr "Export to CSV"
 
-#: src/mmex.cpp:1363
+#: src/mmex.cpp:1373
 #, fuzzy
 msgid "&Export"
 msgstr "CSV Export"
 
-#: src/mmex.cpp:1366
+#: src/mmex.cpp:1376
 #, fuzzy
 msgid "&QIF Files"
 msgstr "&Fichier"
 
-#: src/mmex.cpp:1366
+#: src/mmex.cpp:1376
 #, fuzzy
 msgid "Import from QIF"
 msgstr "Import from CSV"
 
-#: src/mmex.cpp:1367
+#: src/mmex.cpp:1377
 #, fuzzy
 msgid "&Universal CSV Files"
 msgstr "&Fichier"
 
-#: src/mmex.cpp:1367
+#: src/mmex.cpp:1377
 #, fuzzy
 msgid "Import from any CSV file"
 msgstr "Import from CSV"
 
-#: src/mmex.cpp:1368
+#: src/mmex.cpp:1378
 #, fuzzy
 msgid "&MMEX CSV Files"
 msgstr "&Fichier"
 
-#: src/mmex.cpp:1368
+#: src/mmex.cpp:1378
 #, fuzzy
 msgid "Import from MMEX CSV"
 msgstr "Import from CSV"
 
-#: src/mmex.cpp:1369
+#: src/mmex.cpp:1379
 msgid "&MM.NET CSV Files"
 msgstr ""
 
-#: src/mmex.cpp:1369
+#: src/mmex.cpp:1379
 #, fuzzy
 msgid "Import from MM.NET CSV"
 msgstr "Import from CSV"
 
-#: src/mmex.cpp:1371
+#: src/mmex.cpp:1381
 #: src/univcsv.cpp:113
 #, fuzzy
 msgid "Import"
 msgstr "CSV Import"
 
-#: src/mmex.cpp:1377
+#: src/mmex.cpp:1387
 msgid "Page Setup..."
 msgstr "Paramètres de la Page"
 
-#: src/mmex.cpp:1377
+#: src/mmex.cpp:1387
 msgid "Setup page printing options"
 msgstr "Paramètres d'impression de la Page"
 
-#: src/mmex.cpp:1383
-#: src/mmex.cpp:1389
+#: src/mmex.cpp:1393
+#: src/mmex.cpp:1399
 #, fuzzy
 msgid "Current View"
 msgstr "Valeur actuelle"
 
-#: src/mmex.cpp:1383
+#: src/mmex.cpp:1393
 msgid "Preview current report"
 msgstr ""
 
-#: src/mmex.cpp:1385
+#: src/mmex.cpp:1395
 msgid "Print Preview..."
 msgstr ""
 
-#: src/mmex.cpp:1389
+#: src/mmex.cpp:1399
 msgid "Print current report"
 msgstr ""
 
-#: src/mmex.cpp:1392
+#: src/mmex.cpp:1402
 msgid "Print..."
 msgstr ""
 
-#: src/mmex.cpp:1397
+#: src/mmex.cpp:1407
 msgid "E&xit\tAlt-X"
 msgstr "E&xit\tAlt-X"
 
-#: src/mmex.cpp:1397
+#: src/mmex.cpp:1407
 msgid "Quit this program"
 msgstr "Quitter Money Manager Ex"
 
-#: src/mmex.cpp:1404
+#: src/mmex.cpp:1414
 msgid "New &Account"
 msgstr "Nouveau &Compte"
 
-#: src/mmex.cpp:1404
-#: src/mmex.cpp:1527
+#: src/mmex.cpp:1414
+#: src/mmex.cpp:1537
 msgid "New Money Manager Account"
 msgstr "Nouveau Compte Money Manager"
 
-#: src/mmex.cpp:1408
+#: src/mmex.cpp:1418
 msgid "Account &List"
 msgstr "Liste des &Comptes"
 
-#: src/mmex.cpp:1408
-#: src/mmex.cpp:1528
+#: src/mmex.cpp:1418
+#: src/mmex.cpp:1538
 msgid "Show Account List"
 msgstr "Afficher la liste des Comptes"
 
-#: src/mmex.cpp:1412
+#: src/mmex.cpp:1422
 #, fuzzy
 msgid "Edit Account"
 msgstr "&Editer le Compte"
 
-#: src/mmex.cpp:1416
+#: src/mmex.cpp:1426
 #, fuzzy
 msgid "Delete Account"
 msgstr "&Supprimer le Compte"
 
-#: src/mmex.cpp:1416
+#: src/mmex.cpp:1426
 #, fuzzy
 msgid "Delete Account from database"
 msgstr "&Supprimer le Compte"
 
-#: src/mmex.cpp:1428
+#: src/mmex.cpp:1438
 msgid "Organize &Categories"
 msgstr "&Catégories"
 
-#: src/mmex.cpp:1428
+#: src/mmex.cpp:1438
 #: include/categdialog.h:23
 msgid "Organize Categories"
 msgstr "Gestion des Catégories"
 
-#: src/mmex.cpp:1433
+#: src/mmex.cpp:1443
 msgid "Organize &Payees"
 msgstr "&Tiers"
 
-#: src/mmex.cpp:1433
+#: src/mmex.cpp:1443
 #: include/payeedialog.h:22
 msgid "Organize Payees"
 msgstr "Gestion des Tiers"
 
-#: src/mmex.cpp:1438
+#: src/mmex.cpp:1448
 msgid "Organize Currency"
 msgstr "Devises"
 
-#: src/mmex.cpp:1443
+#: src/mmex.cpp:1453
 msgid "Budget Setup"
 msgstr "Budget"
 
-#: src/mmex.cpp:1453
+#: src/mmex.cpp:1463
 #: src/mmhomepagepanel.cpp:156
 #: src/stocks.cpp:124
 msgid "Stock Investments"
 msgstr "Investissements"
 
-#: src/mmex.cpp:1465
+#: src/mmex.cpp:1475
 msgid "&Options"
 msgstr "&Options"
 
-#: src/mmex.cpp:1465
+#: src/mmex.cpp:1475
 msgid "Money Manager Options"
 msgstr "Money Manager Ex Options"
 
-#: src/mmex.cpp:1472
+#: src/mmex.cpp:1482
 msgid "&Help\tCtrl-F1"
 msgstr "&Aide\tCtrl-F1"
 
-#: src/mmex.cpp:1472
+#: src/mmex.cpp:1482
 msgid "Money Manager Help"
 msgstr "Money Manager Help"
 
-#: src/mmex.cpp:1477
+#: src/mmex.cpp:1487
 msgid "Show App Start Dialog"
 msgstr "Montrer le Menu d'Accueil"
 
-#: src/mmex.cpp:1477
+#: src/mmex.cpp:1487
 msgid "App Start Dialog"
 msgstr "Menu d'Accueil"
 
-#: src/mmex.cpp:1485
+#: src/mmex.cpp:1495
 msgid "Check for &Updates"
 msgstr "Vérifier les &Mises à Jour"
 
-#: src/mmex.cpp:1485
+#: src/mmex.cpp:1495
 msgid "Check For Updates"
 msgstr "Vérifier les Mises à jour"
 
-#: src/mmex.cpp:1490
+#: src/mmex.cpp:1500
 msgid "Report Issues or Feedback"
 msgstr "Donnez votre Avis / Feedback"
 
-#: src/mmex.cpp:1490
+#: src/mmex.cpp:1500
 msgid "Send email through the mailing list to report issues with the software."
 msgstr "Donnez votre avis via la mailing list à propos de ce programme"
 
-#: src/mmex.cpp:1495
+#: src/mmex.cpp:1505
 msgid "Be notified of new releases"
 msgstr "Soyez informé des nouvelles versions"
 
-#: src/mmex.cpp:1495
+#: src/mmex.cpp:1505
 msgid "Sign up for the announcement mailing list"
 msgstr "Inscrivez-vous à la mailing list d'information"
 
-#: src/mmex.cpp:1501
+#: src/mmex.cpp:1511
 msgid "&About..."
 msgstr "&About..."
 
-#: src/mmex.cpp:1501
+#: src/mmex.cpp:1511
 msgid "Show about dialog"
 msgstr "Montre le menu \"à propos\""
 
-#: src/mmex.cpp:1506
+#: src/mmex.cpp:1516
 msgid "&File"
 msgstr "&Fichier"
 
-#: src/mmex.cpp:1507
+#: src/mmex.cpp:1517
 msgid "&Accounts"
 msgstr "&Comptes"
 
-#: src/mmex.cpp:1508
+#: src/mmex.cpp:1518
 msgid "&Tools"
 msgstr "&Outils"
 
-#: src/mmex.cpp:1509
+#: src/mmex.cpp:1519
 msgid "&Help"
 msgstr "&Aide"
 
-#: src/mmex.cpp:1525
+#: src/mmex.cpp:1535
 #: src/newchkacctdialog.cpp:255
 #: src/optionsdialog.cpp:263
 msgid "Open"
 msgstr ""
 
-#: src/mmex.cpp:1526
+#: src/mmex.cpp:1536
 #, fuzzy
 msgid "Save"
 msgstr "Echelle"
 
-#: src/mmex.cpp:1526
+#: src/mmex.cpp:1536
 msgid "Save Money Manager Database"
 msgstr "Enregistrer un Fichier Money Manager Ex"
 
-#: src/mmex.cpp:1527
+#: src/mmex.cpp:1537
 #: include/newchkacctdialog.h:23
 msgid "New Account"
 msgstr "Nouveau Compte"
 
-#: src/mmex.cpp:1528
+#: src/mmex.cpp:1538
 #, fuzzy
 msgid "Account List"
 msgstr "Liste des &Comptes"
 
-#: src/mmex.cpp:1564
-#: src/mmex.cpp:1596
+#: src/mmex.cpp:1574
+#: src/mmex.cpp:1606
 #, fuzzy
 msgid "Money Manager EX - No File opened "
 msgstr "Money Manager Ex Options"
 
-#: src/mmex.cpp:1566
+#: src/mmex.cpp:1576
 msgid "Sorry. The Database version is too old.                     Cannot open in this version of Money Manager Ex."
 msgstr ""
 
-#: src/mmex.cpp:1568
-#: src/mmex.cpp:1599
+#: src/mmex.cpp:1578
+#: src/mmex.cpp:1609
 #, fuzzy
 msgid "Error opening database"
 msgstr "Erreur lors de l'ajout de la Catégorie"
 
-#: src/mmex.cpp:1598
+#: src/mmex.cpp:1608
 msgid ""
 "Cannot locate previously opened .mmb database.\n"
 "Do you want to browse to locate the file?"
 msgstr ""
 
-#: src/mmex.cpp:1618
+#: src/mmex.cpp:1628
 msgid "Please Wait"
 msgstr ""
 
-#: src/mmex.cpp:1619
+#: src/mmex.cpp:1629
 msgid "Opening Database File && Verifying Integrity"
 msgstr ""
 
-#: src/mmex.cpp:1719
-#: src/mmex.cpp:1795
+#: src/mmex.cpp:1729
+#: src/mmex.cpp:1805
 #: src/qifimport.cpp:353
 #: src/util.cpp:212
 #: src/util.cpp:451
 msgid "No Account available! Cannot Import! Create a new account first!"
 msgstr "Pas de Compte valable! Impossible d'Importer! Créez d'abord un nouveau Compte!"
 
-#: src/mmex.cpp:1738
+#: src/mmex.cpp:1748
 #: src/qifimport.cpp:369
 #: src/univcsv.cpp:259
 #: src/util.cpp:232
@@ -1730,29 +1734,29 @@ msgstr "Pas de Compte valable! Impossible d'Importer! Créez d'abord un nouveau 
 msgid "Choose Account to import to:"
 msgstr "Sélectionner le Compte destinataire: "
 
-#: src/mmex.cpp:1739
+#: src/mmex.cpp:1749
 #, fuzzy
 msgid "QFX Import"
 msgstr "CSV Import"
 
-#: src/mmex.cpp:2087
-#: src/mmex.cpp:2129
+#: src/mmex.cpp:2097
+#: src/mmex.cpp:2139
 #, fuzzy
 msgid "No Account available!"
 msgstr "Pas de Compte valable! Impossible d'Exporter!"
 
-#: src/mmex.cpp:2107
+#: src/mmex.cpp:2117
 #, fuzzy
 msgid "Choose Account to Edit"
 msgstr "Sélectionner le Compte destinataire: "
 
-#: src/mmex.cpp:2108
-#: src/mmex.cpp:2152
+#: src/mmex.cpp:2118
+#: src/mmex.cpp:2162
 #, fuzzy
 msgid "Accounts"
 msgstr "&Comptes"
 
-#: src/mmex.cpp:2151
+#: src/mmex.cpp:2161
 #, fuzzy
 msgid "Choose Account to Delete"
 msgstr "Sélectionner le Compte destinataire: "
@@ -1784,6 +1788,11 @@ msgstr ""
 #, fuzzy
 msgid "Upcoming Bills & Deposits"
 msgstr "Echéancier (Planification)"
+
+#: src/mmhomepagepanel.cpp:302
+#, fuzzy
+msgid "Follow Up On "
+msgstr "A Suivre"
 
 #: src/mmreportspanel.cpp:80
 msgid "REPORTS"
@@ -2678,18 +2687,18 @@ msgstr "Menu Options"
 msgid "Budget Performance for Year : "
 msgstr "Editeur Budget Annuel"
 
-#: include/reportcategexp.h:55
-#: include/reportincexpenses.h:37
+#: include/reportcategexp.h:56
+#: include/reportincexpenses.h:39
 #, fuzzy
 msgid "From: "
 msgstr "de"
 
-#: include/reportcategexp.h:57
-#: include/reportincexpenses.h:38
+#: include/reportcategexp.h:58
+#: include/reportincexpenses.h:40
 msgid " To: "
 msgstr ""
 
-#: include/reportcategexp.h:68
+#: include/reportcategexp.h:69
 #, fuzzy
 msgid "Amount   "
 msgstr "Montant"

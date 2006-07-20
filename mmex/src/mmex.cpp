@@ -455,7 +455,7 @@ void mmGUIFrame::createControls()
 #ifdef __WXGTK__
     // Under GTK, row lines look ugly
     navTreeCtrl_ = new wxTreeCtrl( itemSplitterWindowFrame, ID_NAVTREECTRL, 
-        wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS);
+        wxDefaultPosition, wxSize(100, 100));
 #else
     navTreeCtrl_ = new wxTreeCtrl( itemSplitterWindowFrame, ID_NAVTREECTRL, 
         wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_ROW_LINES );
@@ -1420,11 +1420,11 @@ void mmGUIFrame::createMenu()
 
     wxMenuItem* menuItemAcctEdit = new wxMenuItem(menuAccounts, MENU_ACCTEDIT, 
 		_("Edit Account"), _("Edit Account"));
-	menuItemAcctEdit->SetBitmaps(toolBarBitmaps[8]);
+	menuItemAcctEdit->SetBitmap(toolBarBitmaps[8]);
 
     wxMenuItem* menuItemAcctDelete = new wxMenuItem(menuAccounts, MENU_ACCTDELETE, 
 		_("Delete Account"), _("Delete Account from database"));
-	menuItemAcctDelete->SetBitmaps(toolBarBitmaps[9]);
+	menuItemAcctDelete->SetBitmap(toolBarBitmaps[9]);
 
     menuAccounts->Append(menuItemNewAcct); 
     menuAccounts->Append(menuItemAcctList); 
@@ -2205,4 +2205,5 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
     delete[] arrAcctID;
     scd->Destroy();
  }
-    
+
+

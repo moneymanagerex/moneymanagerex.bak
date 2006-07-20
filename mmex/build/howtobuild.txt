@@ -18,8 +18,12 @@ Follow the instructions given by WxWidgets install on how to build it and build 
 =================
 Building on Linux
 =================
-	  a) Easiest way to configure these is on a Debian based Linux (Ubuntu for example) with apt-get or synaptic
+	  a) Easiest way to configure these is on a Debian based Linux (Ubuntu for example) with apt-get or synaptic.
+1) On a fresh machine. First install Ubuntu.
+2) Install Dev Tools by the following: sudo apt-get install build-essential
+3) Download latest wxWidgets for wxGTK and download and install.
 	  b) Read the install directions in wxWidgets for how to do a build and then install the build on the machine. For eg wxWidgets has been built with - -with-gtk - -disable-shared
+4) You might need to install libgtk2.0-dev libs
 	  c) After installation, wx-config will copied to the /usr/bin and can now correctly identify the command line params required.
 	  d) Bakefile is required to be installed for processing this file. After getting the debian package install it by  "sudo dpkg ???  .deb"
 	  e) Download SQLite3 source and build and then install it in the system. The file libsqlite3.a should be available in the standard lib path in the system. (for eg, /usr/lib)

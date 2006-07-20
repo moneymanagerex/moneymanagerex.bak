@@ -36,9 +36,9 @@ void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 		wxT("LANGUAGE"), wxT("")); 
 
 	wxString langPath = fname.GetPath(wxPATH_GET_VOLUME)
-		+ wxT("\\languages");
+		+ wxT("//languages//");
 
-	mmApp->m_locale.AddCatalogLookupPathPrefix(langPath);
+    mmApp->m_locale.AddCatalogLookupPathPrefix(langPath);
 	if (langStr == wxT("") || showSelection)
 	{
 		wxArrayString langFileArray;

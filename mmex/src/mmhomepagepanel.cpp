@@ -299,7 +299,10 @@ void mmHomePagePanel::updateAccounts()
     }
     if (countFollowUp > 0)
     {
-        wxString str = wxString::Format(wxT("<br><i>Follow Up On <b>%d</b> Transactions</i>"), countFollowUp);
+        wxString fup = _("Follow Up On ");
+        wxString fullStr = wxT("<br><i>") + fup;
+        wxString str = wxString::Format(wxT("<b>%d</b> Transactions</i>"), countFollowUp);
+        str = fullStr + str;
         hb.addHTML(str);
     }
 
