@@ -393,7 +393,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& event)
     double val = 0.0;
     if (!bal.IsEmpty())
     {
-        if (!mmCurrencyFormatter::formatCurrencyToDouble(bal, val)  || (val < 0.0))
+        if (!mmCurrencyFormatter::formatCurrencyToDouble(bal, val))
         {
             mmShowErrorMessageInvalid(this, _("Init Balance "));
             return;

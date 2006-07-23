@@ -97,7 +97,7 @@ void mmAboutDialog::CreateControls()
         + wxT("Italian (Claudio), French (Berry As), \n \
 Greek (Panagiotis Pentzeridis), Czech (Josef Remes), \n \
 Traditional Chinese (Kysouke), Russian (KarmaSV), \n \
-Simple Chinese (Liu Ming)"), 
+Simple Chinese (Liu Ming), Brazilian (Jose Carlos), \n"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerN->Add(itemStaticText18, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
 

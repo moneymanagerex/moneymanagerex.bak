@@ -7,8 +7,10 @@ Version History of Money Manager Ex
 - Add Simple Chinese Translation (Thanks Extraf!)
 - Several small bug fixes
 - Remove row lines under Linux build
-- Allow bills and deposits Date to be modified when entering transaction.
+- Allow bills and deposits date to be modified when entering transaction.
 - Fix bug in reporting transactions that happened the first of the month
+- Allow negative initial balance
+- Fixed Bug 1521281: Allow QIF payees to be empty
 
 0.6.1.0 (June 25, 2006)
 - Added Universal CSV importer that can handle different CSV order. Use File->Import->Universal CSV Files.

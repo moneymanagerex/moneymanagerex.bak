@@ -1260,6 +1260,7 @@ void mmGUIFrame::createCheckingAccountPage(int accountID)
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
+
     homePanel->Layout();
 }
 

@@ -101,6 +101,7 @@ bool mmCheckingPanel::Create( wxWindow *parent,
     GetSizer()->SetSizeHints(this);
     
     initVirtualListControl();
+    
     if (trans_.size() > 1)
     {
         listCtrlAccount_->EnsureVisible(((int)trans_.size()) - 1);
@@ -395,6 +396,12 @@ void mmCheckingPanel::setAccountSummary()
 
 void mmCheckingPanel::initVirtualListControl()
 {
+    wxProgressDialog* pgd = new wxProgressDialog(_("Please Wait"), 
+        _("Accessing Database"), 100, this, 
+        wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
+
+    pgd->Update(10);
+
     // clear everything
     trans_.clear();
     double acctInitBalance = 0.0;
@@ -553,9 +560,13 @@ void mmCheckingPanel::initVirtualListControl()
     q1.Finalize();
     listCtrlAccount_->SetItemCount(ct);
 
+    pgd->Update(30);
+
     // sort trans_ by date
     double initBalance = acctInitBalance;
     std::sort(trans_.begin(), trans_.end(), sortTransactionsByDate);
+
+    pgd->Update(50);
 
     for (unsigned int index = 0; index < trans_.size(); index++)
     {
@@ -587,9 +598,14 @@ void mmCheckingPanel::initVirtualListControl()
         trans_[index].balanceStr_ = balanceStr;
     }
 
-     std::sort(trans_.begin(), trans_.end(), sortTransactions);
+    pgd->Update(70);
+    std::sort(trans_.begin(), trans_.end(), sortTransactions);
+    pgd->Update(90);
 
     mmENDSQL_LITE_EXCEPTION;
+
+    pgd->Update(100);
+    pgd->Destroy();
 }
 
 void mmCheckingPanel::OnDeleteTransaction(wxCommandEvent& event)

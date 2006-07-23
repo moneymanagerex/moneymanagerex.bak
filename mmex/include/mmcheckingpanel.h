@@ -124,7 +124,7 @@ class mmCheckingPanel : public mmPanelBase
     DECLARE_EVENT_TABLE()
 
 public:
-    mmCheckingPanel( wxSQLite3Database* db, 
+    mmCheckingPanel(wxSQLite3Database* db, 
         wxSQLite3Database* inidb, int accountID, wxWindow *parent,
         wxWindowID winid = wxID_ANY,
         const wxPoint& pos = wxDefaultPosition,
@@ -169,7 +169,6 @@ public:
     wxImageList* m_imageList;
     wxSQLite3Database* inidb_;
     wxString currentView_;
-    
 };
 
 #endif
