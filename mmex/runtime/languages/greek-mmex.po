@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-07-20 07:42-0500\n"
+"PO-Revision-Date: 2006-07-23 13:40-0500\n"
 "Last-Translator: Madhan <madhan@yahoo.com>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -255,10 +255,10 @@ msgstr ""
 #: src/categdialog.cpp:220
 #: src/categdialog.cpp:228
 #: src/currencydialog.cpp:308
-#: src/mmex.cpp:1730
-#: src/mmex.cpp:1806
-#: src/mmex.cpp:2097
-#: src/mmex.cpp:2139
+#: src/mmex.cpp:1731
+#: src/mmex.cpp:1807
+#: src/mmex.cpp:2098
+#: src/mmex.cpp:2140
 #: src/newchkacctdialog.cpp:357
 #: src/payeedialog.cpp:176
 #: src/payeedialog.cpp:188
@@ -286,7 +286,7 @@ msgstr ""
 #: src/assets.cpp:112
 #: src/mmex.cpp:506
 #: src/mmex.cpp:534
-#: src/mmex.cpp:1468
+#: src/mmex.cpp:1469
 #: src/mmhomepagepanel.cpp:174
 msgid "Assets"
 msgstr ""
@@ -302,8 +302,8 @@ msgid "Type"
 msgstr "Τύπος:"
 
 #: src/assets.cpp:179
-#: src/mmcheckingpanel.cpp:300
-#: src/mmex.cpp:1534
+#: src/mmcheckingpanel.cpp:301
+#: src/mmex.cpp:1535
 #: src/stocks.cpp:208
 msgid "New"
 msgstr "Νέος"
@@ -314,7 +314,7 @@ msgstr ""
 
 #: src/assets.cpp:184
 #: src/categdialog.cpp:140
-#: src/mmcheckingpanel.cpp:305
+#: src/mmcheckingpanel.cpp:306
 #: src/payeedialog.cpp:148
 #: src/stocks.cpp:213
 msgid "Edit"
@@ -327,7 +327,7 @@ msgstr "&Επεξεργασία Λογαριασμού"
 
 #: src/assets.cpp:189
 #: src/categdialog.cpp:145
-#: src/mmcheckingpanel.cpp:310
+#: src/mmcheckingpanel.cpp:311
 #: src/payeedialog.cpp:153
 #: src/stocks.cpp:218
 msgid "Delete"
@@ -460,14 +460,14 @@ msgid "Transaction Type"
 msgstr "Τύπος κίνησης"
 
 #: src/bddialog.cpp:312
-#: src/mmcheckingpanel.cpp:251
+#: src/mmcheckingpanel.cpp:252
 #: src/qifimport.cpp:517
 #: src/transdialog.cpp:221
 msgid "Withdrawal"
 msgstr "Ανάληψη"
 
 #: src/bddialog.cpp:313
-#: src/mmcheckingpanel.cpp:253
+#: src/mmcheckingpanel.cpp:254
 #: src/qifimport.cpp:519
 #: src/transdialog.cpp:222
 msgid "Deposit"
@@ -496,7 +496,7 @@ msgstr "Δηλώστε προωθημένες προδιαγραφές για τ
 #: src/bddialog.cpp:337
 #: src/bddialog.cpp:676
 #: src/billsdeposits.cpp:145
-#: src/mmcheckingpanel.cpp:246
+#: src/mmcheckingpanel.cpp:247
 #: src/transdialog.cpp:247
 #: src/transdialog.cpp:582
 #: src/univcsv.cpp:169
@@ -521,7 +521,7 @@ msgid "Specify where the transaction is going to or coming from "
 msgstr "Δηλώστε την Αποστολή ή Προέλευση της κίνησης"
 
 #: src/bddialog.cpp:346
-#: src/mmcheckingpanel.cpp:243
+#: src/mmcheckingpanel.cpp:244
 #: src/transdialog.cpp:257
 msgid "Number"
 msgstr "Αριθμός"
@@ -687,7 +687,7 @@ msgid "Category "
 msgstr "Κατηγορία"
 
 #: src/billsdeposits.cpp:124
-#: src/mmex.cpp:1458
+#: src/mmex.cpp:1459
 msgid "Bills && Deposits"
 msgstr "Λογαριασμοί && Καταθέσεις"
 
@@ -1025,197 +1025,206 @@ msgstr "Το νόμισμα ήδη υπάρχει"
 msgid "Base Conversion Rate should be greater than 0.0"
 msgstr "Η αρχική τιμή μετατροπής πρέπει να έναι μεταξύ 0.0 και 1.0"
 
-#: src/mmcheckingpanel.cpp:151
+#: src/mmcheckingpanel.cpp:152
 msgid "View All Transactions"
 msgstr "Δείτε όλες τις κινήσεις"
 
-#: src/mmcheckingpanel.cpp:152
+#: src/mmcheckingpanel.cpp:153
 msgid "View Reconciled Transactions"
 msgstr "Δείτε όλες τις διευθετημένες κινήσεις"
 
-#: src/mmcheckingpanel.cpp:153
+#: src/mmcheckingpanel.cpp:154
 msgid "View Un-Reconciled Transactions"
 msgstr "Δείτε τις μη διευθετημένες κινήσεις"
 
-#: src/mmcheckingpanel.cpp:154
+#: src/mmcheckingpanel.cpp:155
 msgid "View Void Transactions"
 msgstr "Δείτε τις άκυρες κινήσεις"
 
-#: src/mmcheckingpanel.cpp:155
+#: src/mmcheckingpanel.cpp:156
 msgid "View Flagged Transactions"
 msgstr "Δείτε τις μαρκαρισμένες κινήσεις"
 
-#: src/mmcheckingpanel.cpp:157
+#: src/mmcheckingpanel.cpp:158
 msgid "View Transactions from last 30 days"
 msgstr "Δείτε τις κινήσεις που έχουν γίνει τις 30 τελευταίες ημέρες"
 
-#: src/mmcheckingpanel.cpp:158
+#: src/mmcheckingpanel.cpp:159
 msgid "View Transactions from last 3 months"
 msgstr "Δείτε τις κινήσεις των τελευταίων 3 μηνών"
 
-#: src/mmcheckingpanel.cpp:160
+#: src/mmcheckingpanel.cpp:161
 msgid "Delete all transactions in current view"
 msgstr "Διαγράψτε όλες τις κινήσεις που εμφανίζονται τώρα"
 
-#: src/mmcheckingpanel.cpp:161
+#: src/mmcheckingpanel.cpp:162
 msgid "Delete all flagged transactions"
 msgstr "Διαγράψτε όλες τις μαρκαρισμένες κινήσεις"
 
-#: src/mmcheckingpanel.cpp:204
+#: src/mmcheckingpanel.cpp:205
 msgid "Viewing All Transactions"
 msgstr "Δείτε όλες τις κινήσεις"
 
-#: src/mmcheckingpanel.cpp:239
+#: src/mmcheckingpanel.cpp:240
 msgid "Date  "
 msgstr "Ημερομηνία"
 
-#: src/mmcheckingpanel.cpp:247
+#: src/mmcheckingpanel.cpp:248
 msgid "C  "
 msgstr "C  "
 
-#: src/mmcheckingpanel.cpp:255
+#: src/mmcheckingpanel.cpp:256
 #, fuzzy
 msgid "Balance"
 msgstr "Υπόλοιπο"
 
-#: src/mmcheckingpanel.cpp:302
+#: src/mmcheckingpanel.cpp:303
 msgid "New Transaction"
 msgstr "Νέα κίνηση"
 
-#: src/mmcheckingpanel.cpp:307
+#: src/mmcheckingpanel.cpp:308
 msgid "Edit Transaction"
 msgstr "Επεξεργασία κίνησης"
 
-#: src/mmcheckingpanel.cpp:312
+#: src/mmcheckingpanel.cpp:313
 msgid "Delete Transaction"
 msgstr "Διαγραφή κίνησης"
 
-#: src/mmcheckingpanel.cpp:371
+#: src/mmcheckingpanel.cpp:372
 #, fuzzy
 msgid "Category         : "
 msgstr "Κατηγορία          : "
 
-#: src/mmcheckingpanel.cpp:372
+#: src/mmcheckingpanel.cpp:373
 msgid "Sub Category  : "
 msgstr "Υποκατηγορία  : "
 
-#: src/mmcheckingpanel.cpp:373
+#: src/mmcheckingpanel.cpp:374
 #, fuzzy
 msgid "Notes               : "
 msgstr "Σημειώσεις        : "
 
-#: src/mmcheckingpanel.cpp:391
+#: src/mmcheckingpanel.cpp:392
 #, c-format
 msgid "Account Balance : %s      Reconciled Balance : %s"
 msgstr "Υπόλοιπο Λογαριασμού : %s     Τακτοποιημένο υπόλοιπο : %s"
 
-#: src/mmcheckingpanel.cpp:420
+#: src/mmcheckingpanel.cpp:399
+#: src/mmex.cpp:1629
+msgid "Please Wait"
+msgstr "Παρακαλώ περιμένετε"
+
+#: src/mmcheckingpanel.cpp:400
+msgid "Accessing Database"
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:427
 msgid "Account View : "
 msgstr "Εμφάνιση Λογαριασμού :"
 
-#: src/mmcheckingpanel.cpp:425
+#: src/mmcheckingpanel.cpp:432
 msgid "Category: \n"
 msgstr "Κατηγορία: \n"
 
-#: src/mmcheckingpanel.cpp:426
+#: src/mmcheckingpanel.cpp:433
 msgid "Sub Category: \n"
 msgstr "Υποκατηγορία: \n"
 
-#: src/mmcheckingpanel.cpp:427
+#: src/mmcheckingpanel.cpp:434
 msgid "Notes: \n"
 msgstr "Σημειώσεις: \n"
 
-#: src/mmcheckingpanel.cpp:616
+#: src/mmcheckingpanel.cpp:632
 msgid "Viewing all transactions"
 msgstr "Εμφάνιση όλων των κινήσεων"
 
-#: src/mmcheckingpanel.cpp:621
+#: src/mmcheckingpanel.cpp:637
 msgid "Viewing Reconciled transactions"
 msgstr "Εμφάνιση διευθετημένων κινήσεων"
 
-#: src/mmcheckingpanel.cpp:626
+#: src/mmcheckingpanel.cpp:642
 msgid "Viewing Void transactions"
 msgstr "Εμφάνιση ακύρων κινήσεων"
 
-#: src/mmcheckingpanel.cpp:631
+#: src/mmcheckingpanel.cpp:647
 msgid "Viewing Un-Reconciled transactions"
 msgstr "Εμφάνιση Μη διευθετημένων κινήσεων"
 
-#: src/mmcheckingpanel.cpp:636
+#: src/mmcheckingpanel.cpp:652
 msgid "Viewing Flagged transactions"
 msgstr "Εμφάνιση μαρκαρισμένων κινήσεων"
 
-#: src/mmcheckingpanel.cpp:641
+#: src/mmcheckingpanel.cpp:657
 msgid "Viewing transactions from last 30 days"
 msgstr "Εμφάνιση κινήσεων πραγματοποιημένων μέσα στις 30 τελευταίες ημέρες"
 
-#: src/mmcheckingpanel.cpp:646
+#: src/mmcheckingpanel.cpp:662
 msgid "Viewing transactions from last 3 months"
 msgstr "Εμφάνιση πραγματοπιημένων κινήσεων μέσα στους τελευταίους 3 μήνες"
 
-#: src/mmcheckingpanel.cpp:651
+#: src/mmcheckingpanel.cpp:667
 msgid "Do you really want to delete all the transactions shown?"
 msgstr "Θέτε πραγματικά να διαγράψετε όλες τις κινήσεις που έχουν εμφανισθεί;"
 
-#: src/mmcheckingpanel.cpp:652
-#: src/mmcheckingpanel.cpp:665
-#: src/mmcheckingpanel.cpp:938
+#: src/mmcheckingpanel.cpp:668
+#: src/mmcheckingpanel.cpp:681
+#: src/mmcheckingpanel.cpp:954
 msgid "Confirm Transaction Deletion"
 msgstr "Επικυρώστε την διαγραφή της κίνησης"
 
-#: src/mmcheckingpanel.cpp:664
+#: src/mmcheckingpanel.cpp:680
 msgid "Do you really want to delete all the flagged transactions?"
 msgstr "Θέλετε πραγραματικά να διαγράψετε όλες τις μαρκαρισμένες κινήσεις;"
 
-#: src/mmcheckingpanel.cpp:694
+#: src/mmcheckingpanel.cpp:710
 msgid "&New Transaction"
 msgstr "&Νέα κίνηση"
 
-#: src/mmcheckingpanel.cpp:696
+#: src/mmcheckingpanel.cpp:712
 msgid "&Edit Transaction"
 msgstr "&Επεξεργασία κίνησης"
 
-#: src/mmcheckingpanel.cpp:697
+#: src/mmcheckingpanel.cpp:713
 msgid "&Delete Transaction"
 msgstr "&Διαγραφή κίνησης"
 
-#: src/mmcheckingpanel.cpp:699
+#: src/mmcheckingpanel.cpp:715
 msgid "Mark As &Reconciled"
 msgstr "Μαρκαρισμένο ως &Εναρμονιζμένο"
 
-#: src/mmcheckingpanel.cpp:700
+#: src/mmcheckingpanel.cpp:716
 msgid "Mark As &Unreconciled"
 msgstr "Μαρκαρισμένο ως  &Μη Εναρμονισμένο"
 
-#: src/mmcheckingpanel.cpp:701
+#: src/mmcheckingpanel.cpp:717
 msgid "Mark As &Void"
 msgstr "Μαρκαρισμένο ως &Ακυρο"
 
-#: src/mmcheckingpanel.cpp:702
+#: src/mmcheckingpanel.cpp:718
 msgid "Mark For &Followup"
 msgstr "Μαρκάρισμα για &Παρακολούθηση"
 
-#: src/mmcheckingpanel.cpp:706
+#: src/mmcheckingpanel.cpp:722
 msgid "as Reconciled"
 msgstr "ως Εναρμονισμένο"
 
-#: src/mmcheckingpanel.cpp:707
+#: src/mmcheckingpanel.cpp:723
 msgid "as Unreconciled"
 msgstr "ως Μη Εναρμονισμένο"
 
-#: src/mmcheckingpanel.cpp:708
+#: src/mmcheckingpanel.cpp:724
 msgid "as Void"
 msgstr "ως Ακυρο"
 
-#: src/mmcheckingpanel.cpp:709
+#: src/mmcheckingpanel.cpp:725
 msgid "as needing Followup"
 msgstr "ως να χρειάζεται παρακολούθηση"
 
-#: src/mmcheckingpanel.cpp:710
+#: src/mmcheckingpanel.cpp:726
 msgid "Mark all "
 msgstr "Ολικό μαρκάρισμα"
 
-#: src/mmcheckingpanel.cpp:937
+#: src/mmcheckingpanel.cpp:953
 msgid "Do you really want to delete the transaction?"
 msgstr "Θέλετε πραγραματικά να διαγράψετε την κίνηση;"
 
@@ -1339,13 +1348,13 @@ msgstr "Βοήθεια"
 
 #: src/mmex.cpp:1145
 #: src/mmex.cpp:1167
-#: src/mmex.cpp:2170
+#: src/mmex.cpp:2171
 msgid "Do you really want to delete the account?"
 msgstr "Θέλετε να διαγράψετε τον Λογαριασμό;"
 
 #: src/mmex.cpp:1146
 #: src/mmex.cpp:1168
-#: src/mmex.cpp:2171
+#: src/mmex.cpp:2172
 msgid "Confirm Account Deletion"
 msgstr "Επιβεβαιώστε την Διαγραφή του Λογαριασμού"
 
@@ -1368,310 +1377,310 @@ msgstr "&Διαγραφή Λογαριασμού"
 msgid "&Launch Account Website"
 msgstr "&Προσεγγίστε τον Λογαριασμό στο Internet"
 
-#: src/mmex.cpp:1353
+#: src/mmex.cpp:1354
 msgid "&New Database\tCtrl-N"
 msgstr "&Νέα Βάση\tCtrl-N"
 
-#: src/mmex.cpp:1353
-#: src/mmex.cpp:1534
+#: src/mmex.cpp:1354
+#: src/mmex.cpp:1535
 msgid "New Money Manager Database"
 msgstr "Νέα βάση για το πρόγραμμα Money Manager "
 
-#: src/mmex.cpp:1357
+#: src/mmex.cpp:1358
 msgid "&Open Database\tCtrl-O"
 msgstr "&Ανοιγμα Βάσης\tCtrl-O"
 
-#: src/mmex.cpp:1357
-#: src/mmex.cpp:1535
+#: src/mmex.cpp:1358
+#: src/mmex.cpp:1536
 msgid "Open Money Manager Database"
 msgstr "Ανοιγμα βάσης Money Manager"
 
-#: src/mmex.cpp:1364
+#: src/mmex.cpp:1365
 #, fuzzy
 msgid "Save Database &As"
 msgstr "&Σώσιμο Βάσης\tCtrl-S"
 
-#: src/mmex.cpp:1364
+#: src/mmex.cpp:1365
 msgid "Save Money Manager Database As"
 msgstr "Σώστε την βάση του Money Manager ως"
 
-#: src/mmex.cpp:1371
+#: src/mmex.cpp:1372
 msgid "&CSV Files"
 msgstr "&CSV αρχεία"
 
-#: src/mmex.cpp:1371
+#: src/mmex.cpp:1372
 #: src/util.cpp:199
 msgid "Export to CSV"
 msgstr "Εξαγωγή σε CSV αρχείο"
 
-#: src/mmex.cpp:1372
+#: src/mmex.cpp:1373
 msgid "&Report to HTML"
 msgstr "&Εκτύπωση σε HTML"
 
-#: src/mmex.cpp:1372
+#: src/mmex.cpp:1373
 msgid "Export to HTML"
 msgstr "Εξαγωγή σε HTML αρχείο"
 
-#: src/mmex.cpp:1373
+#: src/mmex.cpp:1374
 msgid "&Export"
 msgstr "&Εξαγωγή"
 
-#: src/mmex.cpp:1376
+#: src/mmex.cpp:1377
 #, fuzzy
 msgid "&QIF Files"
 msgstr "&CSV αρχεία"
 
-#: src/mmex.cpp:1376
+#: src/mmex.cpp:1377
 #, fuzzy
 msgid "Import from QIF"
 msgstr "Εισαγωγή από αρχείο CSV"
 
-#: src/mmex.cpp:1377
+#: src/mmex.cpp:1378
 #, fuzzy
 msgid "&Universal CSV Files"
 msgstr "&CSV αρχεία"
 
-#: src/mmex.cpp:1377
+#: src/mmex.cpp:1378
 #, fuzzy
 msgid "Import from any CSV file"
 msgstr "Εισαγωγή από αρχείο CSV"
 
-#: src/mmex.cpp:1378
+#: src/mmex.cpp:1379
 #, fuzzy
 msgid "&MMEX CSV Files"
 msgstr "&MM.NET CSV αρχεία"
 
-#: src/mmex.cpp:1378
+#: src/mmex.cpp:1379
 #, fuzzy
 msgid "Import from MMEX CSV"
 msgstr "Εισαγωγή από αρχείο CSV"
 
-#: src/mmex.cpp:1379
+#: src/mmex.cpp:1380
 msgid "&MM.NET CSV Files"
 msgstr "&MM.NET CSV αρχεία"
 
-#: src/mmex.cpp:1379
+#: src/mmex.cpp:1380
 #, fuzzy
 msgid "Import from MM.NET CSV"
 msgstr "Εισαγωγή από αρχείο CSV"
 
-#: src/mmex.cpp:1381
+#: src/mmex.cpp:1382
 #: src/univcsv.cpp:113
 msgid "Import"
 msgstr "Εισαγωγή"
 
-#: src/mmex.cpp:1387
+#: src/mmex.cpp:1388
 msgid "Page Setup..."
 msgstr "Στήσιμο σελίδας...."
 
-#: src/mmex.cpp:1387
+#: src/mmex.cpp:1388
 msgid "Setup page printing options"
 msgstr "Σελίδα επιλογών εκτύπωσης"
 
-#: src/mmex.cpp:1393
-#: src/mmex.cpp:1399
+#: src/mmex.cpp:1394
+#: src/mmex.cpp:1400
 msgid "Current View"
 msgstr "Τρέχουσα εικόνα"
 
-#: src/mmex.cpp:1393
+#: src/mmex.cpp:1394
 msgid "Preview current report"
 msgstr "Προεπισκόπιση παρόντος εκτυπωτικού"
 
-#: src/mmex.cpp:1395
+#: src/mmex.cpp:1396
 msgid "Print Preview..."
 msgstr "Προεπισκόπιση εκτύπωσης..."
 
-#: src/mmex.cpp:1399
+#: src/mmex.cpp:1400
 msgid "Print current report"
 msgstr "Εκτύπωση παρόντος εκτυπωτικού"
 
-#: src/mmex.cpp:1402
+#: src/mmex.cpp:1403
 msgid "Print..."
 msgstr "Εκτύπωση..."
 
-#: src/mmex.cpp:1407
+#: src/mmex.cpp:1408
 msgid "E&xit\tAlt-X"
 msgstr "Ε&ξοδος\tAlt-X"
 
-#: src/mmex.cpp:1407
+#: src/mmex.cpp:1408
 msgid "Quit this program"
 msgstr "Διακόψτε αυτό το πρόγραμμα"
 
-#: src/mmex.cpp:1414
+#: src/mmex.cpp:1415
 msgid "New &Account"
 msgstr "Νέος &Λογαριασμός"
 
-#: src/mmex.cpp:1414
-#: src/mmex.cpp:1537
+#: src/mmex.cpp:1415
+#: src/mmex.cpp:1538
 msgid "New Money Manager Account"
 msgstr "Νέος Money Manager Λογαριασμός "
 
-#: src/mmex.cpp:1418
+#: src/mmex.cpp:1419
 msgid "Account &List"
 msgstr "&Λίστα Λογαριασμών "
 
-#: src/mmex.cpp:1418
-#: src/mmex.cpp:1538
+#: src/mmex.cpp:1419
+#: src/mmex.cpp:1539
 msgid "Show Account List"
 msgstr "Εμφάνισε την λίστα Λογαριασμών"
 
-#: src/mmex.cpp:1422
+#: src/mmex.cpp:1423
 #, fuzzy
 msgid "Edit Account"
 msgstr "&Επεξεργασία Λογαριασμού"
 
-#: src/mmex.cpp:1426
+#: src/mmex.cpp:1427
 #, fuzzy
 msgid "Delete Account"
 msgstr "&Διαγραφή Λογαριασμού"
 
-#: src/mmex.cpp:1426
+#: src/mmex.cpp:1427
 #, fuzzy
 msgid "Delete Account from database"
 msgstr "&Διαγραφή Λογαριασμού"
 
-#: src/mmex.cpp:1438
+#: src/mmex.cpp:1439
 msgid "Organize &Categories"
 msgstr "Οργάνωση &Κατηγοριών"
 
-#: src/mmex.cpp:1438
+#: src/mmex.cpp:1439
 #: include/categdialog.h:23
 msgid "Organize Categories"
 msgstr "Οργάνωση Κατηγοριών"
 
-#: src/mmex.cpp:1443
+#: src/mmex.cpp:1444
 msgid "Organize &Payees"
 msgstr "Οργάνωση &Πληρωμών"
 
-#: src/mmex.cpp:1443
+#: src/mmex.cpp:1444
 #: include/payeedialog.h:22
 msgid "Organize Payees"
 msgstr "Οργανώστε τις πληρωμές"
 
-#: src/mmex.cpp:1448
+#: src/mmex.cpp:1449
 msgid "Organize Currency"
 msgstr "Οργνώστε τα νομίσματα"
 
-#: src/mmex.cpp:1453
+#: src/mmex.cpp:1454
 msgid "Budget Setup"
 msgstr "Αρχικό στήσιμο προϋπολογισμού"
 
-#: src/mmex.cpp:1463
+#: src/mmex.cpp:1464
 #: src/mmhomepagepanel.cpp:156
 #: src/stocks.cpp:124
 msgid "Stock Investments"
 msgstr "Επένδυση από μετοχές"
 
-#: src/mmex.cpp:1475
+#: src/mmex.cpp:1476
 msgid "&Options"
 msgstr "&Επιλογές"
 
-#: src/mmex.cpp:1475
+#: src/mmex.cpp:1476
 msgid "Money Manager Options"
 msgstr "Επιλογές του Money Manager"
 
-#: src/mmex.cpp:1482
+#: src/mmex.cpp:1483
 msgid "&Help\tCtrl-F1"
 msgstr "&Help\tCtrl-F1"
 
-#: src/mmex.cpp:1482
+#: src/mmex.cpp:1483
 msgid "Money Manager Help"
 msgstr "Βοήθεια του Money Manager"
 
-#: src/mmex.cpp:1487
+#: src/mmex.cpp:1488
 msgid "Show App Start Dialog"
 msgstr "Εναρξη εφαρμογής"
 
-#: src/mmex.cpp:1487
+#: src/mmex.cpp:1488
 msgid "App Start Dialog"
 msgstr "Εναρξη εφαρμογής"
 
-#: src/mmex.cpp:1495
+#: src/mmex.cpp:1496
 msgid "Check for &Updates"
 msgstr "Να γίνει έλεγχος για &Διορθώσεις"
 
-#: src/mmex.cpp:1495
+#: src/mmex.cpp:1496
 msgid "Check For Updates"
 msgstr "Νά γίνει έλεγχος για διορθώσεις"
 
-#: src/mmex.cpp:1500
+#: src/mmex.cpp:1501
 msgid "Report Issues or Feedback"
 msgstr "Αναφορά θεμάτων"
 
-#: src/mmex.cpp:1500
+#: src/mmex.cpp:1501
 msgid "Send email through the mailing list to report issues with the software."
 msgstr "Στείλτε email διαμέσου της λίστας mailing για να αναφορά θεμάτων σχετικά με το πρόγραμμα"
 
-#: src/mmex.cpp:1505
+#: src/mmex.cpp:1506
 msgid "Be notified of new releases"
 msgstr "Παρακαλώ ενημερωθείτε για νέες εκδόσεις"
 
-#: src/mmex.cpp:1505
+#: src/mmex.cpp:1506
 msgid "Sign up for the announcement mailing list"
 msgstr "Υπογράψτε για mailing λίστα για ανακοινώσεις"
 
-#: src/mmex.cpp:1511
+#: src/mmex.cpp:1512
 msgid "&About..."
 msgstr "&Περί..."
 
-#: src/mmex.cpp:1511
+#: src/mmex.cpp:1512
 msgid "Show about dialog"
 msgstr "Προβολή Περί... "
 
-#: src/mmex.cpp:1516
+#: src/mmex.cpp:1517
 msgid "&File"
 msgstr "&Αρχείο"
 
-#: src/mmex.cpp:1517
+#: src/mmex.cpp:1518
 msgid "&Accounts"
 msgstr "&Λογαριασμοί"
 
-#: src/mmex.cpp:1518
+#: src/mmex.cpp:1519
 msgid "&Tools"
 msgstr "&Εργαλεία"
 
-#: src/mmex.cpp:1519
+#: src/mmex.cpp:1520
 msgid "&Help"
 msgstr "&Βοήθεια"
 
-#: src/mmex.cpp:1535
+#: src/mmex.cpp:1536
 #: src/newchkacctdialog.cpp:255
 #: src/optionsdialog.cpp:263
 msgid "Open"
 msgstr "Ανοικτός"
 
-#: src/mmex.cpp:1536
+#: src/mmex.cpp:1537
 msgid "Save"
 msgstr "Σώσιμο"
 
-#: src/mmex.cpp:1536
+#: src/mmex.cpp:1537
 msgid "Save Money Manager Database"
 msgstr "Σώστε την βάση του Money Manager"
 
-#: src/mmex.cpp:1537
+#: src/mmex.cpp:1538
 #: include/newchkacctdialog.h:23
 msgid "New Account"
 msgstr "Νέος Λογαριασμός"
 
-#: src/mmex.cpp:1538
+#: src/mmex.cpp:1539
 msgid "Account List"
 msgstr "Λίστα Λογαριασμών"
 
-#: src/mmex.cpp:1574
-#: src/mmex.cpp:1606
+#: src/mmex.cpp:1575
+#: src/mmex.cpp:1607
 msgid "Money Manager EX - No File opened "
 msgstr "Δεν υπάρχει ανοικτό αρχείο του Money Manager EX  "
 
-#: src/mmex.cpp:1576
+#: src/mmex.cpp:1577
 msgid "Sorry. The Database version is too old.                     Cannot open in this version of Money Manager Ex."
 msgstr "Συγνώμη. Η έκδοση της βάσης είναι πολύ παλιά.      Δεν μπορεί να ανοίξει σε αυτή την έκδοση του Money Manager Ex."
 
-#: src/mmex.cpp:1578
-#: src/mmex.cpp:1609
+#: src/mmex.cpp:1579
+#: src/mmex.cpp:1610
 msgid "Error opening database"
 msgstr "Λάθος κατά το άνοιγμα της βάσης δεδομένων"
 
-#: src/mmex.cpp:1608
+#: src/mmex.cpp:1609
 msgid ""
 "Cannot locate previously opened .mmb database.\n"
 "Do you want to browse to locate the file?"
@@ -1679,23 +1688,19 @@ msgstr ""
 "Δεν μπορεί να βρεθεί προηγούμενη ανοικτή .mmb βάση.\n"
 "Μήπως θέλετε να ψάξετε για πυθανή τοποθεσία της βάσης;"
 
-#: src/mmex.cpp:1628
-msgid "Please Wait"
-msgstr "Παρακαλώ περιμένετε"
-
-#: src/mmex.cpp:1629
+#: src/mmex.cpp:1630
 msgid "Opening Database File && Verifying Integrity"
 msgstr "Opening Database File && Verifying Integrity"
 
-#: src/mmex.cpp:1729
-#: src/mmex.cpp:1805
+#: src/mmex.cpp:1730
+#: src/mmex.cpp:1806
 #: src/qifimport.cpp:353
 #: src/util.cpp:212
 #: src/util.cpp:451
 msgid "No Account available! Cannot Import! Create a new account first!"
 msgstr "Δεν μπορεί να γίνει εισαγωγή λόγω Ανύπαρκτου Λογαριασμού. Δημιουργίστε ένα λογ. πρώτα"
 
-#: src/mmex.cpp:1748
+#: src/mmex.cpp:1749
 #: src/qifimport.cpp:369
 #: src/univcsv.cpp:259
 #: src/util.cpp:232
@@ -1703,29 +1708,29 @@ msgstr "Δεν μπορεί να γίνει εισαγωγή λόγω Ανύπα
 msgid "Choose Account to import to:"
 msgstr "Επέλεξε Λογαριασμό για εισαγωγή σε :"
 
-#: src/mmex.cpp:1749
+#: src/mmex.cpp:1750
 #, fuzzy
 msgid "QFX Import"
 msgstr "Εισαγωγή"
 
-#: src/mmex.cpp:2097
-#: src/mmex.cpp:2139
+#: src/mmex.cpp:2098
+#: src/mmex.cpp:2140
 #, fuzzy
 msgid "No Account available!"
 msgstr "Δεν υπάρχει διαθέσιμος Λογαριασμός. Δεν μπορεί να γίνει Εξαγωγή"
 
-#: src/mmex.cpp:2117
+#: src/mmex.cpp:2118
 #, fuzzy
 msgid "Choose Account to Edit"
 msgstr "Επέλεξε Λογαριασμό για εισαγωγή σε :"
 
-#: src/mmex.cpp:2118
-#: src/mmex.cpp:2162
+#: src/mmex.cpp:2119
+#: src/mmex.cpp:2163
 #, fuzzy
 msgid "Accounts"
 msgstr "&Λογαριασμοί"
 
-#: src/mmex.cpp:2161
+#: src/mmex.cpp:2162
 #, fuzzy
 msgid "Choose Account to Delete"
 msgstr "Επέλεξε Λογαριασμό για εισαγωγή σε :"

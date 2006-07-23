@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-07-20 07:41-0500\n"
+"PO-Revision-Date: 2006-07-23 13:40-0500\n"
 "Last-Translator: Madhan <madhan@yahoo.com>\n"
 "Language-Team: Portuguese/Brazil <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -252,10 +252,10 @@ msgstr "Valor Inválido"
 #: src/categdialog.cpp:220
 #: src/categdialog.cpp:228
 #: src/currencydialog.cpp:308
-#: src/mmex.cpp:1730
-#: src/mmex.cpp:1806
-#: src/mmex.cpp:2097
-#: src/mmex.cpp:2139
+#: src/mmex.cpp:1731
+#: src/mmex.cpp:1807
+#: src/mmex.cpp:2098
+#: src/mmex.cpp:2140
 #: src/newchkacctdialog.cpp:357
 #: src/payeedialog.cpp:176
 #: src/payeedialog.cpp:188
@@ -283,7 +283,7 @@ msgstr "% do Valor de Reposição"
 #: src/assets.cpp:112
 #: src/mmex.cpp:506
 #: src/mmex.cpp:534
-#: src/mmex.cpp:1468
+#: src/mmex.cpp:1469
 #: src/mmhomepagepanel.cpp:174
 msgid "Assets"
 msgstr "Bens"
@@ -298,8 +298,8 @@ msgid "Type"
 msgstr "Tipo"
 
 #: src/assets.cpp:179
-#: src/mmcheckingpanel.cpp:300
-#: src/mmex.cpp:1534
+#: src/mmcheckingpanel.cpp:301
+#: src/mmex.cpp:1535
 #: src/stocks.cpp:208
 msgid "New"
 msgstr "Novo"
@@ -310,7 +310,7 @@ msgstr "Novo Bem"
 
 #: src/assets.cpp:184
 #: src/categdialog.cpp:140
-#: src/mmcheckingpanel.cpp:305
+#: src/mmcheckingpanel.cpp:306
 #: src/payeedialog.cpp:148
 #: src/stocks.cpp:213
 msgid "Edit"
@@ -322,7 +322,7 @@ msgstr "Editar o Bem"
 
 #: src/assets.cpp:189
 #: src/categdialog.cpp:145
-#: src/mmcheckingpanel.cpp:310
+#: src/mmcheckingpanel.cpp:311
 #: src/payeedialog.cpp:153
 #: src/stocks.cpp:218
 msgid "Delete"
@@ -449,14 +449,14 @@ msgid "Transaction Type"
 msgstr "Tipo da Transação"
 
 #: src/bddialog.cpp:312
-#: src/mmcheckingpanel.cpp:251
+#: src/mmcheckingpanel.cpp:252
 #: src/qifimport.cpp:517
 #: src/transdialog.cpp:221
 msgid "Withdrawal"
 msgstr "Pagamento"
 
 #: src/bddialog.cpp:313
-#: src/mmcheckingpanel.cpp:253
+#: src/mmcheckingpanel.cpp:254
 #: src/qifimport.cpp:519
 #: src/transdialog.cpp:222
 msgid "Deposit"
@@ -485,7 +485,7 @@ msgstr "Opções Avançadas da Transação"
 #: src/bddialog.cpp:337
 #: src/bddialog.cpp:676
 #: src/billsdeposits.cpp:145
-#: src/mmcheckingpanel.cpp:246
+#: src/mmcheckingpanel.cpp:247
 #: src/transdialog.cpp:247
 #: src/transdialog.cpp:582
 #: src/univcsv.cpp:169
@@ -510,7 +510,7 @@ msgid "Specify where the transaction is going to or coming from "
 msgstr "Especifique a Conta que deseja para esta transação"
 
 #: src/bddialog.cpp:346
-#: src/mmcheckingpanel.cpp:243
+#: src/mmcheckingpanel.cpp:244
 #: src/transdialog.cpp:257
 msgid "Number"
 msgstr "Número"
@@ -676,7 +676,7 @@ msgid "Category "
 msgstr "Categoria "
 
 #: src/billsdeposits.cpp:124
-#: src/mmex.cpp:1458
+#: src/mmex.cpp:1459
 msgid "Bills && Deposits"
 msgstr "Contas && Depósitos"
 
@@ -1014,194 +1014,203 @@ msgstr "A moeda ja existe!"
 msgid "Base Conversion Rate should be greater than 0.0"
 msgstr "A Base de Conversão deve ser de 0.0 até 1.0"
 
-#: src/mmcheckingpanel.cpp:151
+#: src/mmcheckingpanel.cpp:152
 msgid "View All Transactions"
 msgstr "Visualizar Todas as Transações"
 
-#: src/mmcheckingpanel.cpp:152
+#: src/mmcheckingpanel.cpp:153
 msgid "View Reconciled Transactions"
 msgstr "Visualizar as Transações Reconciliadas"
 
-#: src/mmcheckingpanel.cpp:153
+#: src/mmcheckingpanel.cpp:154
 msgid "View Un-Reconciled Transactions"
 msgstr "Visualizar as Transações Não Reconciliadas"
 
-#: src/mmcheckingpanel.cpp:154
+#: src/mmcheckingpanel.cpp:155
 msgid "View Void Transactions"
 msgstr "Visualizar as Transações Nulas"
 
-#: src/mmcheckingpanel.cpp:155
+#: src/mmcheckingpanel.cpp:156
 msgid "View Flagged Transactions"
 msgstr "Visualizar as Transações Marcadas"
 
-#: src/mmcheckingpanel.cpp:157
+#: src/mmcheckingpanel.cpp:158
 msgid "View Transactions from last 30 days"
 msgstr "Visualizar as Transações dos Últimos 30 dias"
 
-#: src/mmcheckingpanel.cpp:158
+#: src/mmcheckingpanel.cpp:159
 msgid "View Transactions from last 3 months"
 msgstr "Visualizar as Transações dos Últimos 3 meses"
 
-#: src/mmcheckingpanel.cpp:160
+#: src/mmcheckingpanel.cpp:161
 msgid "Delete all transactions in current view"
 msgstr "Excluir todas as transações sendo visualizadas neste momento"
 
-#: src/mmcheckingpanel.cpp:161
+#: src/mmcheckingpanel.cpp:162
 msgid "Delete all flagged transactions"
 msgstr "Excluir todas as transações marcadas"
 
-#: src/mmcheckingpanel.cpp:204
+#: src/mmcheckingpanel.cpp:205
 msgid "Viewing All Transactions"
 msgstr "Visualizando Todas as Transações"
 
-#: src/mmcheckingpanel.cpp:239
+#: src/mmcheckingpanel.cpp:240
 msgid "Date  "
 msgstr "Data  "
 
-#: src/mmcheckingpanel.cpp:247
+#: src/mmcheckingpanel.cpp:248
 msgid "C  "
 msgstr "C  "
 
-#: src/mmcheckingpanel.cpp:255
+#: src/mmcheckingpanel.cpp:256
 msgid "Balance"
 msgstr "Saldo"
 
-#: src/mmcheckingpanel.cpp:302
+#: src/mmcheckingpanel.cpp:303
 msgid "New Transaction"
 msgstr "Adicionar uma nova Transação"
 
-#: src/mmcheckingpanel.cpp:307
+#: src/mmcheckingpanel.cpp:308
 msgid "Edit Transaction"
 msgstr "Editar a Transação"
 
-#: src/mmcheckingpanel.cpp:312
+#: src/mmcheckingpanel.cpp:313
 msgid "Delete Transaction"
 msgstr "Excluir a Transação"
 
-#: src/mmcheckingpanel.cpp:371
+#: src/mmcheckingpanel.cpp:372
 msgid "Category         : "
 msgstr "Categoria         : "
 
-#: src/mmcheckingpanel.cpp:372
+#: src/mmcheckingpanel.cpp:373
 msgid "Sub Category  : "
 msgstr "Subcategoria  : "
 
-#: src/mmcheckingpanel.cpp:373
+#: src/mmcheckingpanel.cpp:374
 msgid "Notes               : "
 msgstr "Obs               : "
 
-#: src/mmcheckingpanel.cpp:391
+#: src/mmcheckingpanel.cpp:392
 #, c-format
 msgid "Account Balance : %s      Reconciled Balance : %s"
 msgstr "Saldo da Conta : %s      Saldo Reconciliado : %s"
 
-#: src/mmcheckingpanel.cpp:420
+#: src/mmcheckingpanel.cpp:399
+#: src/mmex.cpp:1629
+msgid "Please Wait"
+msgstr "Aguarde..."
+
+#: src/mmcheckingpanel.cpp:400
+msgid "Accessing Database"
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:427
 msgid "Account View : "
 msgstr "Conta Visualizada : "
 
-#: src/mmcheckingpanel.cpp:425
+#: src/mmcheckingpanel.cpp:432
 msgid "Category: \n"
 msgstr "Categoria: \n"
 
-#: src/mmcheckingpanel.cpp:426
+#: src/mmcheckingpanel.cpp:433
 msgid "Sub Category: \n"
 msgstr "Subcategoria: \n"
 
-#: src/mmcheckingpanel.cpp:427
+#: src/mmcheckingpanel.cpp:434
 msgid "Notes: \n"
 msgstr "Obs: \n"
 
-#: src/mmcheckingpanel.cpp:616
+#: src/mmcheckingpanel.cpp:632
 msgid "Viewing all transactions"
 msgstr "Visualizando Todas as Transações"
 
-#: src/mmcheckingpanel.cpp:621
+#: src/mmcheckingpanel.cpp:637
 msgid "Viewing Reconciled transactions"
 msgstr "Visualizando as Transações Reconciliadas"
 
-#: src/mmcheckingpanel.cpp:626
+#: src/mmcheckingpanel.cpp:642
 msgid "Viewing Void transactions"
 msgstr "Visualizando as Transações Nulas"
 
-#: src/mmcheckingpanel.cpp:631
+#: src/mmcheckingpanel.cpp:647
 msgid "Viewing Un-Reconciled transactions"
 msgstr "Visualizando as Transações Não Reconciliadas"
 
-#: src/mmcheckingpanel.cpp:636
+#: src/mmcheckingpanel.cpp:652
 msgid "Viewing Flagged transactions"
 msgstr "Visualizando as Transações Marcadas"
 
-#: src/mmcheckingpanel.cpp:641
+#: src/mmcheckingpanel.cpp:657
 msgid "Viewing transactions from last 30 days"
 msgstr "Visualizando as Transações dos Últimos 30 dias"
 
-#: src/mmcheckingpanel.cpp:646
+#: src/mmcheckingpanel.cpp:662
 msgid "Viewing transactions from last 3 months"
 msgstr "Visualizando as Transações dos Últimos 3 meses"
 
-#: src/mmcheckingpanel.cpp:651
+#: src/mmcheckingpanel.cpp:667
 msgid "Do you really want to delete all the transactions shown?"
 msgstr "Tem certeza de que deseja apagar todas essas transações?"
 
-#: src/mmcheckingpanel.cpp:652
-#: src/mmcheckingpanel.cpp:665
-#: src/mmcheckingpanel.cpp:938
+#: src/mmcheckingpanel.cpp:668
+#: src/mmcheckingpanel.cpp:681
+#: src/mmcheckingpanel.cpp:954
 msgid "Confirm Transaction Deletion"
 msgstr "Confirmar a exclusão de Transação"
 
-#: src/mmcheckingpanel.cpp:664
+#: src/mmcheckingpanel.cpp:680
 msgid "Do you really want to delete all the flagged transactions?"
 msgstr "Tem certeza de que deseja apagar todas as transações marcadas?"
 
-#: src/mmcheckingpanel.cpp:694
+#: src/mmcheckingpanel.cpp:710
 msgid "&New Transaction"
 msgstr "&Nova"
 
-#: src/mmcheckingpanel.cpp:696
+#: src/mmcheckingpanel.cpp:712
 msgid "&Edit Transaction"
 msgstr "&Editar"
 
-#: src/mmcheckingpanel.cpp:697
+#: src/mmcheckingpanel.cpp:713
 msgid "&Delete Transaction"
 msgstr "E&xcluir"
 
-#: src/mmcheckingpanel.cpp:699
+#: src/mmcheckingpanel.cpp:715
 msgid "Mark As &Reconciled"
 msgstr "Marcar Como &Reconciliada"
 
-#: src/mmcheckingpanel.cpp:700
+#: src/mmcheckingpanel.cpp:716
 msgid "Mark As &Unreconciled"
 msgstr "Marcar Como Não Re&conciliada"
 
-#: src/mmcheckingpanel.cpp:701
+#: src/mmcheckingpanel.cpp:717
 msgid "Mark As &Void"
 msgstr "Marcar Como &Nula"
 
-#: src/mmcheckingpanel.cpp:702
+#: src/mmcheckingpanel.cpp:718
 msgid "Mark For &Followup"
 msgstr "Marcar para Ver &Depois"
 
-#: src/mmcheckingpanel.cpp:706
+#: src/mmcheckingpanel.cpp:722
 msgid "as Reconciled"
 msgstr "como Reconciliada"
 
-#: src/mmcheckingpanel.cpp:707
+#: src/mmcheckingpanel.cpp:723
 msgid "as Unreconciled"
 msgstr "como Não Reconciliada"
 
-#: src/mmcheckingpanel.cpp:708
+#: src/mmcheckingpanel.cpp:724
 msgid "as Void"
 msgstr "como Nula"
 
-#: src/mmcheckingpanel.cpp:709
+#: src/mmcheckingpanel.cpp:725
 msgid "as needing Followup"
 msgstr "como Ver Depois"
 
-#: src/mmcheckingpanel.cpp:710
+#: src/mmcheckingpanel.cpp:726
 msgid "Mark all "
 msgstr "Marcar tudo "
 
-#: src/mmcheckingpanel.cpp:937
+#: src/mmcheckingpanel.cpp:953
 msgid "Do you really want to delete the transaction?"
 msgstr "Tem certeza de que deseja apagar esta transação"
 
@@ -1334,13 +1343,13 @@ msgstr "Ajuda"
 
 #: src/mmex.cpp:1145
 #: src/mmex.cpp:1167
-#: src/mmex.cpp:2170
+#: src/mmex.cpp:2171
 msgid "Do you really want to delete the account?"
 msgstr "Tem certeza de que deseja apagar esta conta?"
 
 #: src/mmex.cpp:1146
 #: src/mmex.cpp:1168
-#: src/mmex.cpp:2171
+#: src/mmex.cpp:2172
 msgid "Confirm Account Deletion"
 msgstr "Confirmar a exclusão de Conta"
 
@@ -1363,300 +1372,300 @@ msgstr "E&xcluir"
 msgid "&Launch Account Website"
 msgstr "&Ir para o Site da Conta"
 
-#: src/mmex.cpp:1353
+#: src/mmex.cpp:1354
 msgid "&New Database\tCtrl-N"
 msgstr "&Novo Arquivo\tCtrl-N"
 
-#: src/mmex.cpp:1353
-#: src/mmex.cpp:1534
+#: src/mmex.cpp:1354
+#: src/mmex.cpp:1535
 msgid "New Money Manager Database"
 msgstr "Novo arquivo"
 
-#: src/mmex.cpp:1357
+#: src/mmex.cpp:1358
 msgid "&Open Database\tCtrl-O"
 msgstr "&Abrir\tCtrl-O"
 
-#: src/mmex.cpp:1357
-#: src/mmex.cpp:1535
+#: src/mmex.cpp:1358
+#: src/mmex.cpp:1536
 msgid "Open Money Manager Database"
 msgstr "Abrir um arquivo"
 
-#: src/mmex.cpp:1364
+#: src/mmex.cpp:1365
 #, fuzzy
 msgid "Save Database &As"
 msgstr "&Salvar\tCtrl-S"
 
-#: src/mmex.cpp:1364
+#: src/mmex.cpp:1365
 msgid "Save Money Manager Database As"
 msgstr "Salvar Como"
 
-#: src/mmex.cpp:1371
+#: src/mmex.cpp:1372
 msgid "&CSV Files"
 msgstr "Arquivos &CSV"
 
-#: src/mmex.cpp:1371
+#: src/mmex.cpp:1372
 #: src/util.cpp:199
 msgid "Export to CSV"
 msgstr "Exportar para CSV"
 
-#: src/mmex.cpp:1372
+#: src/mmex.cpp:1373
 msgid "&Report to HTML"
 msgstr "&Relatório em HTML"
 
-#: src/mmex.cpp:1372
+#: src/mmex.cpp:1373
 msgid "Export to HTML"
 msgstr "Exportar para HTML"
 
-#: src/mmex.cpp:1373
+#: src/mmex.cpp:1374
 msgid "&Export"
 msgstr "&Exportar"
 
-#: src/mmex.cpp:1376
+#: src/mmex.cpp:1377
 msgid "&QIF Files"
 msgstr "Arquivo &QIF"
 
-#: src/mmex.cpp:1376
+#: src/mmex.cpp:1377
 msgid "Import from QIF"
 msgstr "Importar de um arquivo QIF"
 
-#: src/mmex.cpp:1377
+#: src/mmex.cpp:1378
 msgid "&Universal CSV Files"
 msgstr "Arquivos CSV &Universal"
 
-#: src/mmex.cpp:1377
+#: src/mmex.cpp:1378
 msgid "Import from any CSV file"
 msgstr "Importar de um arquivo CSV"
 
-#: src/mmex.cpp:1378
+#: src/mmex.cpp:1379
 msgid "&MMEX CSV Files"
 msgstr "Arquivos &MMEX CSV"
 
-#: src/mmex.cpp:1378
+#: src/mmex.cpp:1379
 msgid "Import from MMEX CSV"
 msgstr "Importar de um arquivo MMEX CSV"
 
-#: src/mmex.cpp:1379
+#: src/mmex.cpp:1380
 msgid "&MM.NET CSV Files"
 msgstr "Arquivos &MM.NET CSV"
 
-#: src/mmex.cpp:1379
+#: src/mmex.cpp:1380
 msgid "Import from MM.NET CSV"
 msgstr "Importar de um arquivo MM.NET CSV"
 
-#: src/mmex.cpp:1381
+#: src/mmex.cpp:1382
 #: src/univcsv.cpp:113
 msgid "Import"
 msgstr "Importar"
 
-#: src/mmex.cpp:1387
+#: src/mmex.cpp:1388
 msgid "Page Setup..."
 msgstr "Configurar Página..."
 
-#: src/mmex.cpp:1387
+#: src/mmex.cpp:1388
 msgid "Setup page printing options"
 msgstr "Configurar opções de impressão"
 
-#: src/mmex.cpp:1393
-#: src/mmex.cpp:1399
+#: src/mmex.cpp:1394
+#: src/mmex.cpp:1400
 msgid "Current View"
 msgstr "Visualização Atual"
 
-#: src/mmex.cpp:1393
+#: src/mmex.cpp:1394
 msgid "Preview current report"
 msgstr "Visualização do Relatório Atual"
 
-#: src/mmex.cpp:1395
+#: src/mmex.cpp:1396
 msgid "Print Preview..."
 msgstr "Visualizar Impressão..."
 
-#: src/mmex.cpp:1399
+#: src/mmex.cpp:1400
 msgid "Print current report"
 msgstr "Imprimir o relatório atual"
 
-#: src/mmex.cpp:1402
+#: src/mmex.cpp:1403
 msgid "Print..."
 msgstr "Imprimir..."
 
-#: src/mmex.cpp:1407
+#: src/mmex.cpp:1408
 msgid "E&xit\tAlt-X"
 msgstr "Sai&r\tAlt-X"
 
-#: src/mmex.cpp:1407
+#: src/mmex.cpp:1408
 msgid "Quit this program"
 msgstr "Sair do programa"
 
-#: src/mmex.cpp:1414
+#: src/mmex.cpp:1415
 msgid "New &Account"
 msgstr "Nova Cont&a"
 
-#: src/mmex.cpp:1414
-#: src/mmex.cpp:1537
+#: src/mmex.cpp:1415
+#: src/mmex.cpp:1538
 msgid "New Money Manager Account"
 msgstr "Nova Conta"
 
-#: src/mmex.cpp:1418
+#: src/mmex.cpp:1419
 msgid "Account &List"
 msgstr "&Lista das Contas"
 
-#: src/mmex.cpp:1418
-#: src/mmex.cpp:1538
+#: src/mmex.cpp:1419
+#: src/mmex.cpp:1539
 msgid "Show Account List"
 msgstr "Mostra a Lista das Contas"
 
-#: src/mmex.cpp:1422
+#: src/mmex.cpp:1423
 msgid "Edit Account"
 msgstr "Editar"
 
-#: src/mmex.cpp:1426
+#: src/mmex.cpp:1427
 msgid "Delete Account"
 msgstr "Excluir"
 
-#: src/mmex.cpp:1426
+#: src/mmex.cpp:1427
 msgid "Delete Account from database"
 msgstr "Excluir a Conta"
 
-#: src/mmex.cpp:1438
+#: src/mmex.cpp:1439
 msgid "Organize &Categories"
 msgstr "&Categorias"
 
-#: src/mmex.cpp:1438
+#: src/mmex.cpp:1439
 #: include/categdialog.h:23
 msgid "Organize Categories"
 msgstr "Categorias"
 
-#: src/mmex.cpp:1443
+#: src/mmex.cpp:1444
 msgid "Organize &Payees"
 msgstr "&Favorecidos"
 
-#: src/mmex.cpp:1443
+#: src/mmex.cpp:1444
 #: include/payeedialog.h:22
 msgid "Organize Payees"
 msgstr "Favorecidos"
 
-#: src/mmex.cpp:1448
+#: src/mmex.cpp:1449
 msgid "Organize Currency"
 msgstr "Moedas"
 
-#: src/mmex.cpp:1453
+#: src/mmex.cpp:1454
 msgid "Budget Setup"
 msgstr "Configuração de Orçamento"
 
-#: src/mmex.cpp:1463
+#: src/mmex.cpp:1464
 #: src/mmhomepagepanel.cpp:156
 #: src/stocks.cpp:124
 msgid "Stock Investments"
 msgstr "Investimentos"
 
-#: src/mmex.cpp:1475
+#: src/mmex.cpp:1476
 msgid "&Options"
 msgstr "&Opções"
 
-#: src/mmex.cpp:1475
+#: src/mmex.cpp:1476
 msgid "Money Manager Options"
 msgstr "Opções do Money Manager"
 
-#: src/mmex.cpp:1482
+#: src/mmex.cpp:1483
 msgid "&Help\tCtrl-F1"
 msgstr "Aj&uda\tCtrl-F1"
 
-#: src/mmex.cpp:1482
+#: src/mmex.cpp:1483
 msgid "Money Manager Help"
 msgstr "Ajuda do Money Manager"
 
-#: src/mmex.cpp:1487
+#: src/mmex.cpp:1488
 msgid "Show App Start Dialog"
 msgstr "Mostra a Página de Inicialização"
 
-#: src/mmex.cpp:1487
+#: src/mmex.cpp:1488
 msgid "App Start Dialog"
 msgstr "Página de Inicialização"
 
-#: src/mmex.cpp:1495
+#: src/mmex.cpp:1496
 msgid "Check for &Updates"
 msgstr "Checar At&ualizações"
 
-#: src/mmex.cpp:1495
+#: src/mmex.cpp:1496
 msgid "Check For Updates"
 msgstr "Checar Atualizações"
 
-#: src/mmex.cpp:1500
+#: src/mmex.cpp:1501
 msgid "Report Issues or Feedback"
 msgstr "Reportar Bugs ou Sugestões"
 
-#: src/mmex.cpp:1500
+#: src/mmex.cpp:1501
 msgid "Send email through the mailing list to report issues with the software."
 msgstr "Envie um email através da Lista para reportar bugs neste programa."
 
-#: src/mmex.cpp:1505
+#: src/mmex.cpp:1506
 msgid "Be notified of new releases"
 msgstr "Seja notificado de novas versões"
 
-#: src/mmex.cpp:1505
+#: src/mmex.cpp:1506
 msgid "Sign up for the announcement mailing list"
 msgstr "Assinar a Lista de Email"
 
-#: src/mmex.cpp:1511
+#: src/mmex.cpp:1512
 msgid "&About..."
 msgstr "&Sobre..."
 
-#: src/mmex.cpp:1511
+#: src/mmex.cpp:1512
 msgid "Show about dialog"
 msgstr "Sobre..."
 
-#: src/mmex.cpp:1516
+#: src/mmex.cpp:1517
 msgid "&File"
 msgstr "&Arquivo"
 
-#: src/mmex.cpp:1517
+#: src/mmex.cpp:1518
 msgid "&Accounts"
 msgstr "&Contas"
 
-#: src/mmex.cpp:1518
+#: src/mmex.cpp:1519
 msgid "&Tools"
 msgstr "&Ferramentas"
 
-#: src/mmex.cpp:1519
+#: src/mmex.cpp:1520
 msgid "&Help"
 msgstr "Aj&uda"
 
-#: src/mmex.cpp:1535
+#: src/mmex.cpp:1536
 #: src/newchkacctdialog.cpp:255
 #: src/optionsdialog.cpp:263
 msgid "Open"
 msgstr "Abrir"
 
-#: src/mmex.cpp:1536
+#: src/mmex.cpp:1537
 msgid "Save"
 msgstr "Salvar"
 
-#: src/mmex.cpp:1536
+#: src/mmex.cpp:1537
 msgid "Save Money Manager Database"
 msgstr "Salvar o Arquivo"
 
-#: src/mmex.cpp:1537
+#: src/mmex.cpp:1538
 #: include/newchkacctdialog.h:23
 msgid "New Account"
 msgstr "Nova Conta"
 
-#: src/mmex.cpp:1538
+#: src/mmex.cpp:1539
 msgid "Account List"
 msgstr "Lista de Contas"
 
-#: src/mmex.cpp:1574
-#: src/mmex.cpp:1606
+#: src/mmex.cpp:1575
+#: src/mmex.cpp:1607
 msgid "Money Manager EX - No File opened "
 msgstr "Money Manager EX - Nenhum arquivo aberto "
 
-#: src/mmex.cpp:1576
+#: src/mmex.cpp:1577
 msgid "Sorry. The Database version is too old.                     Cannot open in this version of Money Manager Ex."
 msgstr "Desculpe mas a versão do arquivo é muito velha.                     Não pode ser aberto nesta versão do Money Manager Ex."
 
-#: src/mmex.cpp:1578
-#: src/mmex.cpp:1609
+#: src/mmex.cpp:1579
+#: src/mmex.cpp:1610
 msgid "Error opening database"
 msgstr "Erro abrindo o arquivo"
 
-#: src/mmex.cpp:1608
+#: src/mmex.cpp:1609
 msgid ""
 "Cannot locate previously opened .mmb database.\n"
 "Do you want to browse to locate the file?"
@@ -1664,23 +1673,19 @@ msgstr ""
 "Impossível localizar o arquivo .mmb préviamente.\n"
 "Você gostaria de procurar o arquivo?"
 
-#: src/mmex.cpp:1628
-msgid "Please Wait"
-msgstr "Aguarde..."
-
-#: src/mmex.cpp:1629
+#: src/mmex.cpp:1630
 msgid "Opening Database File && Verifying Integrity"
 msgstr "Abrindo o Arquivo e Verificando a Integridade"
 
-#: src/mmex.cpp:1729
-#: src/mmex.cpp:1805
+#: src/mmex.cpp:1730
+#: src/mmex.cpp:1806
 #: src/qifimport.cpp:353
 #: src/util.cpp:212
 #: src/util.cpp:451
 msgid "No Account available! Cannot Import! Create a new account first!"
 msgstr "Nenhuma conta disponível! Não Posso Importar! Antes crie uma nova conta!"
 
-#: src/mmex.cpp:1748
+#: src/mmex.cpp:1749
 #: src/qifimport.cpp:369
 #: src/univcsv.cpp:259
 #: src/util.cpp:232
@@ -1688,26 +1693,26 @@ msgstr "Nenhuma conta disponível! Não Posso Importar! Antes crie uma nova cont
 msgid "Choose Account to import to:"
 msgstr "Escolha uma Conta para a importação:"
 
-#: src/mmex.cpp:1749
+#: src/mmex.cpp:1750
 #, fuzzy
 msgid "QFX Import"
 msgstr "Importação QIF"
 
-#: src/mmex.cpp:2097
-#: src/mmex.cpp:2139
+#: src/mmex.cpp:2098
+#: src/mmex.cpp:2140
 msgid "No Account available!"
 msgstr "Nenhuma conta disponível!"
 
-#: src/mmex.cpp:2117
+#: src/mmex.cpp:2118
 msgid "Choose Account to Edit"
 msgstr "Escolha a Conta para Edição"
 
-#: src/mmex.cpp:2118
-#: src/mmex.cpp:2162
+#: src/mmex.cpp:2119
+#: src/mmex.cpp:2163
 msgid "Accounts"
 msgstr "Contas"
 
-#: src/mmex.cpp:2161
+#: src/mmex.cpp:2162
 msgid "Choose Account to Delete"
 msgstr "Escolha a Conta para Exclusão"
 
