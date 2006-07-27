@@ -673,6 +673,8 @@ wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* db, const wxString& dts
     wxString selection = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), DEFDATEFORMAT);
     wxDateTime dt;
     const wxChar* char1 = dt.ParseFormat(dtstr.GetData(), selection.GetData());
+	if (char1 == NULL)
+		return wxDateTime::Now();
     return dt;
 }
 

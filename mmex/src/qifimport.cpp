@@ -529,15 +529,9 @@ int mmImportQIF(wxSQLite3Database* db_)
             if (lineType(readLine) == Date)
             {
                 dt = getLineData(readLine);
-                wxDateTime dtdt;
-                const wxChar* ch = dtdt.ParseDate(dt.c_str());
-                if (ch != NULL)
-                    convDate = dtdt.FormatISODate();
-                else
-                {
-                    log << _("unable to parse date, using today's date..please verify and change ")
-                        << endl;    
-                }
+
+			    wxDateTime dtdt = mmParseDisplayStringToDate(db_, dt);
+                convDate = dtdt.FormatISODate();
                 continue;
             }
 
