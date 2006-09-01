@@ -564,6 +564,11 @@ void mmCheckingPanel::initVirtualListControl()
 
     // sort trans_ by date
     double initBalance = acctInitBalance;
+    if (currentView_ == wxT("View UnReconciled"))
+    {
+        initBalance = mmDBWrapper::getReconciledBalanceOnAccount(db_, accountID_);
+    }
+
     std::sort(trans_.begin(), trans_.end(), sortTransactionsByDate);
 
     pgd->Update(50);

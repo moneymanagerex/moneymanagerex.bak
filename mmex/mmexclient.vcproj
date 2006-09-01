@@ -235,10 +235,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxzlibd.lib wxsqlite3ud.lib sqlite3.lib wxmsw26ud_core.lib wxbase26ud.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase26ud_net.lib wxmsw26ud_adv.lib wxpngd.lib  wxmsw26ud_html.lib wxjpegd.lib wxpngd.lib "
+				AdditionalDependencies="wxzlibd.lib wxsqlite3ud.lib sqlite3.lib wxmsw26ud_core.lib wxbase26ud.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase26ud_net.lib wxmsw26ud_adv.lib wxpngd.lib wxmsw26ud_html.lib wxjpegd.lib"
 				OutputFile="$(OutDir)/mmex.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="C:\pgmming\wxsqlite3\lib;&quot;$(WXWIN)\lib\vc_lib&quot;;&quot;$(WXSQLITE)\lib&quot;"
+				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;;&quot;$(WXSQLITE)\lib&quot;"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/mmex.pdb"
 				SubSystem="2"
@@ -423,6 +423,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\filtertransdialog.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\htmlbuilder.cpp"
 				>
 			</File>
@@ -572,6 +576,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\filtertransdialog.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\guiid.h"
 				>
 			</File>
@@ -645,6 +653,10 @@
 			</File>
 			<File
 				RelativePath=".\include\reportsummarystocks.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\reporttransactions.h"
 				>
 			</File>
 			<File

@@ -69,13 +69,12 @@ public:
             if (q2.NextRow())
             {
                 int currencyID = q2.GetInt(wxT("CURRENCYID"));
-                //mmDBWrapper::loadSettings(db_, currencyID);
+                mmDBWrapper::loadSettings(db_, currencyID);
             }
             q2.Finalize();
 
             double rate = mmDBWrapper::getCurrencyBaseConvRate(db_, q1.GetInt(wxT("ACCOUNTID")));
-            bal = bal * rate;
-            tBalance += bal;
+            tBalance += bal * rate;;
 
             wxString balance;
             mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);

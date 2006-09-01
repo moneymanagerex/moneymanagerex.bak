@@ -23,6 +23,8 @@
 class mmPrintableBase 
 {
 public:
+    mmPrintableBase() {}
+    virtual ~mmPrintableBase() {}
     virtual wxString getHTMLText() = 0;
 };
 

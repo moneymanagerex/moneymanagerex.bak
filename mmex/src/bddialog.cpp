@@ -276,9 +276,10 @@ void mmBDDialog::CreateControls()
         _("Half-Yearly"),
         _("Yearly"),
         _("Four Months"),
+        _("Four Weeks"),
     };  
     itemRepeats_ = new wxChoice( itemDialog1, ID_DIALOG_BD_COMBOBOX_REPEATS, wxDefaultPosition, 
-        wxSize(100, -1), 9, itemComboBox11Strings, 0);
+        wxSize(100, -1), 10, itemComboBox11Strings, 0);
     itemFlexGridSizer5->Add(itemRepeats_, 0, 
         wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemRepeats_->SetSelection(0);
@@ -768,12 +769,26 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
         return;
     }
 
-    if (toTransAmount_ < 0 || !advancedToTransAmountSet_)
+    if (!advancedToTransAmountSet_ || toTransAmount_ < 0)
     {
-        // to trans amount not set
-        toTransAmount_ = amount;
-    }
+        // if we are adding a new record and the user did not touch advanced dialog
+        // we are going to use the transfer amount by calculating conversion rate.
+        // subsequent edits will not allow automatic update of the amount
+        if (!edit_)
+        {
+            double rateFrom = mmDBWrapper::getCurrencyBaseConvRate(db_, fromAccountID);
+            double rateTo = mmDBWrapper::getCurrencyBaseConvRate(db_, toAccountID);
 
+            double convToBaseFrom = rateFrom * amount;
+            toTransAmount_ = convToBaseFrom / rateTo;
+        }
+        else
+        {
+            // to trans amount not set
+            toTransAmount_ = amount;
+        }
+    }
+    
     
     if (categID_ == -1)
     {

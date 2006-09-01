@@ -55,18 +55,18 @@ bool mmUnivCSVImportDialog::Create(  wxWindow* parent, wxWindowID id,
                       const wxSize& size, 
                       long style )
 {
-////@begin MyDialog member initialisation
-////@end MyDialog member initialisation
-
-////@begin MyDialog creation
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
 
     CreateControls();
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
+
+     wxIcon icon(mainicon_xpm);
+    SetIcon(icon);
+
     Centre();
-////@end MyDialog creation
+
     return TRUE;
 }
 
@@ -144,10 +144,7 @@ wxBitmap mmUnivCSVImportDialog::GetBitmapResource( const wxString& name )
 
 wxIcon mmUnivCSVImportDialog::GetIconResource( const wxString& name )
 {
-    // Icon retrieval
-////@begin MyDialog icon retrieval
     return wxNullIcon;
-////@end MyDialog icon retrieval
 }
 
 #define UNIV_CSV_DATE     0
@@ -303,7 +300,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
                 subCategID_ = -1;
                 val_ = 0.0;
 
-                wxStringTokenizer tkz(line, delimit);  
+                wxStringTokenizer tkz(line, delimit, wxTOKEN_RET_EMPTY_ALL);  
                 int numTokens = tkz.CountTokens();
                 if (numTokens < csvFieldOrder_.size())
                 {

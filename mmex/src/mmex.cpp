@@ -39,6 +39,7 @@
 #include "reportincexpesestime.h"
 #include "reportsummarystocks.h"
 #include "reportsummaryassets.h"
+#include "reporttransactions.h"
 
 #include "appstartdialog.h"
 #include "aboutdialog.h"
@@ -48,6 +49,7 @@
 #include "budgetyeardialog.h"
 #include "optionsdialog.h"
 #include "currencydialog.h"
+#include "filtertransdialog.h"
 
 #include "util.h"
 #include "dbwrapper.h"
@@ -140,6 +142,8 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_TREE_SEL_CHANGED(ID_NAVTREECTRL, mmGUIFrame::OnSelChanged)
 
     EVT_MENU(MENU_GOTOACCOUNT, mmGUIFrame::OnGotoAccount)
+
+    EVT_MENU(MENU_TRANSACTIONREPORT, mmGUIFrame::OnTransactionReport)
 
 END_EVENT_TABLE()
 /*******************************************************/
@@ -342,7 +346,11 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
         if (!val.IsEmpty())
         {
             /* Try Opening the file */
-            openFile(val, false);
+            wxFileName fName(val);
+            wxFileName appPath(wxTheApp->argv[0]);
+            fName.Normalize( wxPATH_NORM_ALL, appPath.GetPath());
+            wxString absName = fName.GetFullPath();
+            openFile(absName, false);
         }
         else
         {
@@ -381,8 +389,13 @@ mmGUIFrame::~mmGUIFrame()
 void mmGUIFrame::saveConfigFile()
 {
     /* Save our settings to ini db */
+    wxFileName appPath(wxTheApp->argv[0]);
+    wxFileName fname(fileName_);
+
+    bool makeRelative = fname.MakeRelativeTo(appPath.GetPath());
+
     mmDBWrapper::setINISettingValue(inidb_, 
-        wxT("LASTFILENAME"), mmCleanString(fileName_));
+        wxT("LASTFILENAME"), mmCleanString(fname.GetFullPath()));
 
     mmSaveColorsToDatabase(inidb_);
 
@@ -430,6 +443,7 @@ void mmGUIFrame::menuEnableItems(bool enable)
     menuBar_->FindItem(MENU_STOCKS)->Enable(enable);
     menuBar_->FindItem(MENU_CURRENCY)->Enable(enable);
     menuBar_->FindItem(MENU_BUDGETSETUPDIALOG)->Enable(enable);
+    menuBar_->FindItem(MENU_TRANSACTIONREPORT)->Enable(enable);
     
     toolBar_->EnableTool(MENU_NEWACCT, enable);
     toolBar_->EnableTool(MENU_ACCTLIST, enable);
@@ -635,7 +649,10 @@ void mmGUIFrame::updateNavTreeControl()
         new mmTreeItemData(wxT("Income vs Expenses - All Time")));
 
     //////////////////////////////////////////////////////////////////
-   
+   wxTreeItemId transactionList = navTreeCtrl_->AppendItem(reports, 
+        _("Transaction Report"), 4, 4);
+    navTreeCtrl_->SetItemData(transactionList, 
+        new mmTreeItemData(wxT("Transaction Report")));
     ///////////////////////////////////////////////////////////////////
     wxTreeItemId budgetPerformance = navTreeCtrl_->AppendItem(reports, 
         _("Budget Performance"), 4, 4);
@@ -1039,6 +1056,15 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         Thaw();
 
+         ///////////////////////////////////////////////
+        if (iData->getString() == wxT("Transaction Report"))
+        {
+           wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TRANSACTIONREPORT);
+           AddPendingEvent(evt);
+        }
+
+        //////////////////////////////////////////////
+
         if (iData->getString() == wxT("Budgeting"))
         {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BUDGETSETUPDIALOG);
@@ -1305,7 +1331,7 @@ void mmGUIFrame::createHomePage()
 
 void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
 {
-     homePanel->DestroyChildren();
+    homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
@@ -1470,6 +1496,15 @@ void mmGUIFrame::createMenu()
 	menuItemAssets->SetBitmap(wxBitmap(assets_xpm));
     menuTools->Append(menuItemAssets);
 
+     menuTools->AppendSeparator();
+
+    wxMenuItem* menuItemTransactions = new wxMenuItem(menuTools, MENU_TRANSACTIONREPORT, 
+		_("Transaction Filter"), _("Transaction Filter"));
+	//menuItemTransactions->SetBitmap(wxBitmap(assets_xpm));
+    menuTools->Append(menuItemTransactions);
+
+
+
     menuTools->AppendSeparator();
 
     wxMenuItem* menuItemOptions = new wxMenuItem(menuTools, MENU_OPTIONS, 
@@ -1531,12 +1566,20 @@ void mmGUIFrame::createToolBar()
     toolBarBitmaps[2] = wxBitmap(save_xpm);
     toolBarBitmaps[3] = wxBitmap(newacct_xpm);
     toolBarBitmaps[4] = wxBitmap(listview_xpm);
+    toolBarBitmaps[5] = wxBitmap(categories_xpm);
+    toolBarBitmaps[6] = wxBitmap(payees_xpm);
+    toolBarBitmaps[7] = wxBitmap(currency_xpm);
 
     toolBar_->AddTool(MENU_NEW, _("New"), toolBarBitmaps[0], _("New Money Manager Database"));
     toolBar_->AddTool(MENU_OPEN, _("Open"), toolBarBitmaps[1], _("Open Money Manager Database"));
-    toolBar_->AddTool(MENU_SAVE, _("Save"), toolBarBitmaps[2], _("Save Money Manager Database"));
+    toolBar_->AddSeparator();
+    //toolBar_->AddTool(MENU_SAVE, _("Save"), toolBarBitmaps[2], _("Save Money Manager Database"));
     toolBar_->AddTool(MENU_NEWACCT, _("New Account"), toolBarBitmaps[3], _("New Money Manager Account"));
     toolBar_->AddTool(MENU_ACCTLIST, _("Account List"), toolBarBitmaps[4], _("Show Account List"));
+    toolBar_->AddSeparator();
+    toolBar_->AddTool(MENU_ORGCATEGS, _("Organize Categories"), toolBarBitmaps[5], _("Show Organize Categories Dialog"));
+    toolBar_->AddTool(MENU_ORGPAYEE, _("Organize Payees"), toolBarBitmaps[6], _("Show Organize Payees Dialog"));
+    toolBar_->AddTool(MENU_CURRENCY, _("Organize Currency"), toolBarBitmaps[7], _("Show Organize Currency Dialog"));
     
     // after adding the buttons to the toolbar, must call Realize() to reflect changes
     toolBar_->Realize();
@@ -1877,6 +1920,35 @@ void mmGUIFrame::OnBudgetSetupDialog(wxCommandEvent& event)
     dlg->Destroy();
 }
 
+void mmGUIFrame::OnTransactionReport(wxCommandEvent& event)
+{
+    if (!db_)
+       return;
+
+     if (mmDBWrapper::getNumAccounts(db_) == 0)
+         return;
+
+    std::vector<mmTransactionHolder*>* trans = new std::vector<mmTransactionHolder*>;;
+    mmFilterTransactionsDialog* dlg = new mmFilterTransactionsDialog(trans, db_,this);
+    if (dlg->ShowModal() == wxID_OK)
+    {
+        mmPrintableBase* rs = new mmReportTransactions(trans, db_);
+        menuPrintingEnable(true);
+        createReportsPage(rs);
+    }
+    else
+    {
+        std::vector<mmTransactionHolder*>& refTrans = *trans;
+        for (unsigned int index = 0; index < refTrans.size(); index++)
+        {
+            delete refTrans[index];
+        }
+
+        delete trans;
+    }
+    dlg->Destroy();
+}
+
 void mmGUIFrame::OnOptions(wxCommandEvent& event)
 {
     if (!db_ || !inidb_)
@@ -1995,7 +2067,12 @@ void mmGUIFrame::showBeginAppDialog()
         if (!val.IsEmpty())
         {
             /* Try Opening the file */
-            openFile(val, false);
+            wxFileName fName(val);
+            wxFileName appPath(wxTheApp->argv[0]);
+            fName.Normalize( wxPATH_NORM_ALL, appPath.GetPath());
+            wxString absName = fName.GetFullPath();
+            if (!absName.IsEmpty())
+                openFile(absName, false);
         }
     }
     else if (dlg->getReturnCode() == -1)

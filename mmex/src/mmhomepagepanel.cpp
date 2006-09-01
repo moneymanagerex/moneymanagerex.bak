@@ -96,6 +96,7 @@ void mmHomePagePanel::updateAccounts()
 
     /////////////////   
 
+    
     int ct = 0;  
     double tincome = 0.0;
     double texpenses = 0.0;
@@ -126,8 +127,8 @@ void mmHomePagePanel::updateAccounts()
         q2.Finalize();
 
         double rate = mmDBWrapper::getCurrencyBaseConvRate(db_, q1.GetInt(wxT("ACCOUNTID")));
-        bal = bal * rate;
-        tBalance += bal;
+        // show the actual amount in that account in the original rate
+        tBalance += bal * rate;
         wxString balance;
         mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
         hb.addHTML(balance);

@@ -111,6 +111,8 @@ public:
     
     int accountID_;
     int toAccountID_;
+
+    wxString fromAccountStr_;
     
     wxString withdrawalStr_;
     wxString depositStr_;

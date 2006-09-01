@@ -678,12 +678,27 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
         return;
     }
 
-    if (toTransAmount_ < 0 || !advancedToTransAmountSet_)
+    if (!advancedToTransAmountSet_ || toTransAmount_ < 0)
     {
-        // to trans amount not set
-        toTransAmount_ = amount;
-    }
+        // if we are adding a new record and the user did not touch advanced dialog
+        // we are going to use the transfer amount by calculating conversion rate.
+        // subsequent edits will not allow automatic update of the amount
+        if (!edit_)
+        {
+            double rateFrom = mmDBWrapper::getCurrencyBaseConvRate(db_, fromAccountID);
+            double rateTo = mmDBWrapper::getCurrencyBaseConvRate(db_, toAccountID);
 
+            double convToBaseFrom = rateFrom * amount;
+            toTransAmount_ = convToBaseFrom / rateTo;
+        }
+        else
+        {
+            // to trans amount not set
+            toTransAmount_ = amount;
+        }
+    }
+    
+    
     
     if (categID_ == -1)
     {
