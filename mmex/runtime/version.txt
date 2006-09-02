@@ -16,6 +16,7 @@ Version History of Money Manager Ex
 - Add Withdrawal, Deposit CSV fields for Universal CSV importer
 - Ignore 'U' linetype for QIF files when importing
 - Add Feature 1545449: List of transactions on the chosen category
+- Add some intelligence when checking for updates
 
 0.6.2.0 (June 23, 2006)
 - Add Feature: 1503501 Add printable view for assets, stocks

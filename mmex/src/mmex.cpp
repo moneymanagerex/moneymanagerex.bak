@@ -1969,9 +1969,79 @@ void mmGUIFrame::OnHelp(wxCommandEvent& event)
  
 void mmGUIFrame::OnCheckUpdate(wxCommandEvent& event)
 {
-    wxString url = wxT("http://sourceforge.net/project/showfiles.php?group_id=163169");
+    //wxString url = wxT("http://sourceforge.net/project/showfiles.php?group_id=163169");
     //wxExecute(_T("explorer ") + url, wxEXEC_ASYNC, NULL );
-    wxLaunchDefaultBrowser(url);
+    //wxLaunchDefaultBrowser(url);
+
+    wxString site = wxT("http://www.thezeal.com/software/managerex/version.html");
+    wxURL url(site);
+
+    unsigned char buf[1024];
+    wxInputStream *in_stream = url.GetInputStream();
+    in_stream->Read(buf, 1024);
+    size_t bytes_read=in_stream->LastRead();
+    delete in_stream;
+    buf[7] = '\0';
+
+    wxString page = wxString::FromAscii((const char *)buf);
+    wxStringTokenizer tkz(page, wxT('.'), wxTOKEN_RET_EMPTY_ALL);  
+    int numTokens = tkz.CountTokens();
+    if (numTokens != 4)
+    {
+        wxString url = wxT("http://sourceforge.net/project/showfiles.php?group_id=163169");
+        wxLaunchDefaultBrowser(url);
+        return;
+    }
+    
+    wxString maj = tkz.GetNextToken();
+    wxString min = tkz.GetNextToken();
+    wxString cust = tkz.GetNextToken();
+    wxString build = tkz.GetNextToken();
+
+    // get current version
+    wxString currentV = MMEXVERSION;
+    wxStringTokenizer tkz1(currentV, wxT('.'), wxTOKEN_RET_EMPTY_ALL);  
+    numTokens = tkz1.CountTokens();
+    
+    wxString majC = tkz1.GetNextToken();
+    wxString minC = tkz1.GetNextToken();
+    wxString custC = tkz1.GetNextToken();
+    wxString buildC = tkz1.GetNextToken();
+
+    bool isUpdateAvailable = false;
+    if (maj > majC)
+        isUpdateAvailable = true;
+    else if (maj == majC)
+    {
+        if (min > minC)
+        {
+            isUpdateAvailable = true;
+        }
+        else if (min == minC)
+        {
+            if (cust > custC)
+            {
+                isUpdateAvailable = true;
+            }
+            else if (cust == custC)
+            {
+                if (build > buildC)
+                    isUpdateAvailable = true;
+            }
+        }
+    }
+
+    if (isUpdateAvailable)
+    {
+        mmShowErrorMessage(this, _("New update available!"), _("Check Update"));
+        wxString url = wxT("http://sourceforge.net/project/showfiles.php?group_id=163169");
+        wxLaunchDefaultBrowser(url);
+    }
+    else
+    {
+        mmShowErrorMessage(this, _("You have the latest version installed!"), _("Check Update"));
+    }
+
 }
 
 void mmGUIFrame::OnReportIssues(wxCommandEvent& event)
