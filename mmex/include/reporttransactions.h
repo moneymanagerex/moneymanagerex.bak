@@ -83,13 +83,16 @@ public:
             data.push_back(refTrans[index]->transType_);
             data.push_back(refTrans[index]->status_);
             data.push_back(refTrans[index]->depositStr_);
+            double dbRate = mmDBWrapper::getCurrencyBaseConvRate(db_, refTrans[index]->accountID_);
+            double transAmount = refTrans[index]->amt_ * dbRate;
+
             if (refTrans[index]->transType_ == wxT("Deposit"))
             {
-                total += refTrans[index]->amt_;
+                total += transAmount;
             }
             else if (refTrans[index]->transType_ == wxT("Withdrawal"))
             {
-                total -= refTrans[index]->amt_;
+                total -= transAmount;
             }
             hb.addRow(data);
         }

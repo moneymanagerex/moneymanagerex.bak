@@ -131,6 +131,8 @@ mmCheckingPanel::~mmCheckingPanel()
     wxString col4Str = wxString::Format(wxT("%d"), col4);
     wxString col5Str = wxString::Format(wxT("%d"), col5);
     wxString col6Str = wxString::Format(wxT("%d"), col6);
+    wxString sortColStr = wxString::Format(wxT("%d"), sortcol);
+    wxString ascStr = wxString::Format(wxT("%d"), asc);
 
     mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL0_WIDTH"), col0Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL1_WIDTH"), col1Str); 
@@ -139,6 +141,8 @@ mmCheckingPanel::~mmCheckingPanel()
     mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL4_WIDTH"), col4Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL5_WIDTH"), col5Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL6_WIDTH"), col6Str); 
+    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_SORT_COL"), sortColStr); 
+    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_ASC"), ascStr); 
 }
 
 void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
@@ -234,6 +238,8 @@ void mmCheckingPanel::CreateControls()
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
+    listCtrlAccount_->asc_ = asc;
+    listCtrlAccount_->sortCol_ = sortcol;
     
     wxListItem itemCol;
     
@@ -269,9 +275,19 @@ void mmCheckingPanel::CreateControls()
      mmDBWrapper::getINISettingValue(inidb_, 
          wxT("CHECK_COL4_WIDTH"), wxT("-2")).ToLong(&col4); 
      mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("CHECK_COL5_WIDTH"), wxT("-2")).ToLong(&col5); 
+         wxT("CHECK_COL5_WIDTH"), wxT("-62")).ToLong(&col5); 
      mmDBWrapper::getINISettingValue(inidb_, 
          wxT("CHECK_COL6_WIDTH"), wxT("-2")).ToLong(&col6); 
+
+    long iniSortCol, iniSortAsc;
+    mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_SORT_COL"), wxT("0")).ToLong(&iniSortCol); 
+    mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_ASC"), wxT("1")).ToLong(&iniSortAsc); 
+    // load the global variables
+    sortcol = iniSortCol;
+    asc = (iniSortAsc) ? true: false;
+    listCtrlAccount_->sortCol_ = sortcol;
+    listCtrlAccount_->asc_ = asc;
+    
 
     listCtrlAccount_->SetColumnWidth(0, col0);
     listCtrlAccount_->SetColumnWidth(1, col1);
@@ -280,7 +296,7 @@ void mmCheckingPanel::CreateControls()
     listCtrlAccount_->SetColumnWidth(4, col4);
     listCtrlAccount_->SetColumnWidth(5, col5);
     listCtrlAccount_->SetColumnWidth(6, col6);
-    listCtrlAccount_->SetColumnImage(listCtrlAccount_->sortCol_, 4);
+    listCtrlAccount_->SetColumnImage(listCtrlAccount_->sortCol_, 5);
 
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, ID_PANEL1, 
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
@@ -343,6 +359,14 @@ bool sortTransactions( mmTransactionHolder elem1, mmTransactionHolder elem2 )
             return elem1.payeeStr_ < elem2.payeeStr_;
         else
             return elem1.payeeStr_ > elem2.payeeStr_;
+    }
+
+    if (sortcol== 3)
+    {
+        if (asc)
+            return elem1.status_ < elem2.status_;
+        else
+            return elem1.status_ > elem2.status_;
     }
 
     if ((sortcol == 4) || (sortcol == 5))
@@ -604,7 +628,14 @@ void mmCheckingPanel::initVirtualListControl()
     }
 
     pgd->Update(70);
-    std::sort(trans_.begin(), trans_.end(), sortTransactions);
+    //std::sort(trans_.begin(), trans_.end(), sortTransactions);
+
+    /* Setup the Sorting */
+    listCtrlAccount_->SetColumnImage(sortcol, asc ? 5 : 4); // decide whether top or down icon needs to be shown
+    sortTable();   // sort the table
+    //RefreshItems(0, ((int)cp_->trans_.size()) - 1); // refresh everything
+    /* ************ */
+
     pgd->Update(90);
 
     mmENDSQL_LITE_EXCEPTION;
@@ -804,7 +835,7 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
 void MyListCtrl::OnColClick(wxListEvent& event)
 {
     /* Figure out which column has to be sorted */
-    if ((event.GetColumn() == 3) || (event.GetColumn() == 6))
+    if (event.GetColumn() == 6)
         return;
 
     /* Clear previous column image */

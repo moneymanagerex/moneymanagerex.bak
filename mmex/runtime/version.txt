@@ -7,9 +7,15 @@ Version History of Money Manager Ex
 - Fixed Bug 1544586:Summary should show base currency symbol
 - Fixed Bug 1540582:Transfer transactions without considering the exchange rate
 - Fixed Bug 1543123:Incorrect Balance When Viewing Un-Reconciled Transactions
+- Fixed Bug 1550745:Sorting the browser descending is not done correctly
 - Add Feature 1543906: Four Week Frequency (Repeats)
 - Add Feature 1519713: Add more items to tool bar
+- Add Feature 1548136: allow sorting in account view for reconciled column
 - Always store relative paths to mmb files if possible to make using USB key based usage easier
+- Fix issues with Universal CSV importer
+- Add Withdrawal, Deposit CSV fields for Universal CSV importer
+- Ignore 'U' linetype for QIF files when importing
+- Add Feature 1545449: List of transactions on the chosen category
 
 0.6.2.0 (June 23, 2006)
 - Add Feature: 1503501 Add printable view for assets, stocks

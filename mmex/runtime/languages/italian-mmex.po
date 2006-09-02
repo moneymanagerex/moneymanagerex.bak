@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-07-23 13:40-0500\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2006-07-26 00:00+0100\n"
+"Last-Translator: Claudio <enjoy-vr@email.it>\n"
 "Language-Team: Claudio <enjoy-vr@email.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: src/aboutdialog.cpp:88
 msgid "Linux Port by : "
-msgstr ""
+msgstr "Porto Linux in: "
 
 #: src/aboutdialog.cpp:94
 msgid "Translations by : "
@@ -799,9 +799,8 @@ msgid "View Non-Zero Budget Categories"
 msgstr "Visualizza la pianificazione budget delle categorie con valore diverso da zero"
 
 #: src/budgetingpanel.cpp:166
-#, fuzzy
 msgid "Budget Setup for "
-msgstr "&Pianificazione..."
+msgstr "Pianificazione per l'anno "
 
 #: src/budgetingpanel.cpp:183
 msgid "Viewing All Budget Categories"
@@ -809,7 +808,7 @@ msgstr "Visualizzazione della pianificazione budget per tutte le categorie"
 
 #: src/budgetingpanel.cpp:188
 msgid "Estimated Income: Actual Income: "
-msgstr "Reddito stimato: Reddito attuale:"
+msgstr "Reddito stimato: Reddito attuale: "
 
 #: src/budgetingpanel.cpp:195
 msgid "Estimated Expenses: Actual Expenses: "
@@ -818,7 +817,7 @@ msgstr "Spese stimate: Spese attuali: "
 #: src/budgetingpanel.cpp:214
 #: include/reportcategexp.h:68
 msgid "Category  "
-msgstr "Categoria "
+msgstr "Categoria  "
 
 #: src/budgetingpanel.cpp:215
 msgid "Sub Category"
@@ -864,7 +863,7 @@ msgstr "Pianificazione budget per l'anno:"
 
 #: src/budgetyearentrydialog.cpp:89
 msgid "Enter the year in YYYY format to specify year"
-msgstr "Inserire l'anno in formato AAAA"
+msgstr "Inserire l'anno in formato AAAA per specificare l'anno"
 
 #: src/budgetyearentrydialog.cpp:92
 msgid "Base Budget On:"
@@ -895,7 +894,7 @@ msgstr "Aggiungi"
 
 #: src/categdialog.cpp:137
 msgid "Add a new category"
-msgstr "Aggiungi una nuova categoria/sottocategoria"
+msgstr "Aggiungi una nuova categoria"
 
 #: src/categdialog.cpp:142
 msgid "Edit the name of an existing category"
@@ -1004,9 +1003,8 @@ msgid "Currency name already exists!"
 msgstr "Nome della valuta già inserita"
 
 #: src/currencydialog.cpp:343
-#, fuzzy
 msgid "Base Conversion Rate should be greater than 0.0"
-msgstr "La base di conversione del tasso dovrebbe essere fra 0.0 e 1.0"
+msgstr "La base di conversione del tasso dovrebbe essere maggiore di 0.0"
 
 #: src/mmcheckingpanel.cpp:152
 msgid "View All Transactions"
@@ -1096,7 +1094,7 @@ msgstr "Prego attendere"
 
 #: src/mmcheckingpanel.cpp:400
 msgid "Accessing Database"
-msgstr ""
+msgstr "Accesso al Database in corso"
 
 #: src/mmcheckingpanel.cpp:427
 msgid "Account View : "
@@ -1385,9 +1383,8 @@ msgid "Open Money Manager Database"
 msgstr "Apri il Database di Money Manager"
 
 #: src/mmex.cpp:1365
-#, fuzzy
 msgid "Save Database &As"
-msgstr "&Salva il Database...\tCtrl-S"
+msgstr "Salva il Database &come"
 
 #: src/mmex.cpp:1365
 msgid "Save Money Manager Database As"
@@ -1424,7 +1421,7 @@ msgstr "Importazione da QIF"
 
 #: src/mmex.cpp:1378
 msgid "&Universal CSV Files"
-msgstr "File CSV generico"
+msgstr "File CSV &generico"
 
 #: src/mmex.cpp:1378
 msgid "Import from any CSV file"
@@ -1440,7 +1437,7 @@ msgstr "Importazione da CSV MMEX"
 
 #: src/mmex.cpp:1380
 msgid "&MM.NET CSV Files"
-msgstr "File &MM.NET CSV"
+msgstr "File MM.&NET CSV"
 
 #: src/mmex.cpp:1380
 msgid "Import from MM.NET CSV"
@@ -1626,7 +1623,7 @@ msgstr "&?"
 #: src/newchkacctdialog.cpp:255
 #: src/optionsdialog.cpp:263
 msgid "Open"
-msgstr "Aperto"
+msgstr "Aperti"
 
 #: src/mmex.cpp:1537
 msgid "Save"
@@ -1685,12 +1682,11 @@ msgstr "Conto non disponibile! Impossibile importarlo! Crea prima un nuovo conto
 #: src/util.cpp:232
 #: src/util.cpp:469
 msgid "Choose Account to import to:"
-msgstr "Selezionare il Conto nel quale importare"
+msgstr "Selezionare il Conto nel quale importare:"
 
 #: src/mmex.cpp:1750
-#, fuzzy
 msgid "QFX Import"
-msgstr "Importa QIF"
+msgstr "Importa QFX"
 
 #: src/mmex.cpp:2098
 #: src/mmex.cpp:2140
@@ -1725,20 +1721,19 @@ msgstr "Saldo"
 
 #: src/mmhomepagepanel.cpp:185
 msgid "Total of Accounts :"
-msgstr "Saldo contabile:"
+msgstr "Saldo contabile: "
 
 #: src/mmhomepagepanel.cpp:204
 msgid "Income vs Expenses: Current Month"
-msgstr "Redditi e Spese del mese in corso"
+msgstr "Redditi e Spese: Mese in corso"
 
 #: src/mmhomepagepanel.cpp:259
 msgid "Upcoming Bills & Deposits"
 msgstr "Pagamenti o Depositi imminenti"
 
 #: src/mmhomepagepanel.cpp:302
-#, fuzzy
 msgid "Follow Up On "
-msgstr "da Monitorare"
+msgstr "da Monitorare su "
 
 #: src/mmreportspanel.cpp:80
 msgid "REPORTS"
@@ -1934,7 +1929,7 @@ msgstr "Conti visualizzati"
 
 #: src/optionsdialog.cpp:262
 msgid "All"
-msgstr "Tutto"
+msgstr "Tutti"
 
 #: src/optionsdialog.cpp:264
 msgid "Favorites"
@@ -2667,79 +2662,65 @@ msgid "Total Balance on all Accounts :"
 msgstr "Saldo totale Conti: "
 
 #: include/reportsummaryassets.h:37
-#, fuzzy
 msgid "Summary of Assets"
-msgstr "Saldo odierno Conti"
+msgstr "Saldo odierno dei Beni"
 
 #: include/reportsummaryassets.h:64
-#, fuzzy
 msgid "Name "
-msgstr "Nome"
+msgstr "Nome "
 
 #: include/reportsummaryassets.h:65
-#, fuzzy
 msgid "Type   "
-msgstr "Tipo"
+msgstr "Tipo "
 
 #: include/reportsummaryassets.h:66
 #: include/reportsummarystocks.h:71
-#, fuzzy
 msgid "Value  "
-msgstr "Valore"
+msgstr "Valore "
 
 #: include/reportsummaryassets.h:104
-#, fuzzy
 msgid "Total Assets :"
-msgstr "Beni: "
+msgstr "Totale Beni: "
 
 #: include/reportsummarystocks.h:37
-#, fuzzy
 msgid "Summary of Stocks"
-msgstr "Saldo odierno Conti"
+msgstr "Saldo odierno Investimenti"
 
 #: include/reportsummarystocks.h:64
 msgid "Company  "
-msgstr ""
+msgstr "Società "
 
 #: include/reportsummarystocks.h:65
-#, fuzzy
 msgid "Symbol   "
-msgstr "Simbolo"
+msgstr "Simbolo   "
 
 #: include/reportsummarystocks.h:66
-#, fuzzy
 msgid "Number Shares  "
-msgstr "Numero delle azioni"
+msgstr "Numero delle azioni  "
 
 #: include/reportsummarystocks.h:67
-#, fuzzy
 msgid "Purchase Date "
-msgstr "Prezzo di acquisto"
+msgstr "Data dell'acquisto "
 
 #: include/reportsummarystocks.h:68
-#, fuzzy
 msgid "Purchase Price "
-msgstr "Prezzo di acquisto"
+msgstr "Prezzo di acquisto "
 
 #: include/reportsummarystocks.h:69
-#, fuzzy
 msgid "Current Price  "
-msgstr "Prezzo corrente"
+msgstr "Prezzo corrente  "
 
 #: include/reportsummarystocks.h:70
-#, fuzzy
 msgid "Commission  "
-msgstr "Commissione"
+msgstr "Commissione  "
 
 #: include/reportsummarystocks.h:72
-#, fuzzy
 msgid "Gain Loss  "
-msgstr "Guadagno/Perdita"
+msgstr "Guadagno Perdita  "
 
 #: include/reportsummarystocks.h:141
-#, fuzzy
 msgid "Total Stock Investments :"
-msgstr "Azioni investite: "
+msgstr "Totale Azioni investite: "
 
 #: include/stockdialog.h:23
 msgid "New/Edit Stock Investment"

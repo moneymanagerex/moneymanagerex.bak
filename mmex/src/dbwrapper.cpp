@@ -816,6 +816,10 @@ bool mmDBWrapper::getExpensesIncome(wxSQLite3Database* db, int accountID,
         wxString transStatus = q1.GetString(wxT("STATUS"));
         wxString dateString = q1.GetString(wxT("TRANSDATE"));
         wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
+        int accountID = q1.GetInt(wxT("ACCOUNTID"));
+        double dbRate = getCurrencyBaseConvRate(db, accountID);
+        transAmount = transAmount * dbRate;
+        
 
         if (transStatus == wxT("V"))
            continue; // skip
@@ -1338,6 +1342,9 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
         wxString transStatus = q1.GetString(wxT("STATUS"));
         wxString dateString = q1.GetString(wxT("TRANSDATE"));
         wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
+        int accountID = q1.GetInt(wxT("ACCOUNTID"));
+        double dbRate = getCurrencyBaseConvRate(db, accountID);
+        transAmount = transAmount * dbRate;
 
         if (transStatus == wxT("V"))
            continue; // skip
@@ -1378,6 +1385,10 @@ double mmDBWrapper::getAmountForPayee(wxSQLite3Database* db, int payeeID,
         wxString transStatus = q1.GetString(wxT("STATUS"));
         wxString dateString = q1.GetString(wxT("TRANSDATE"));
         wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
+        int accountID = q1.GetInt(wxT("ACCOUNTID"));
+        double dbRate = getCurrencyBaseConvRate(db, accountID);
+        transAmount = transAmount * dbRate;
+
 
         if (transStatus == wxT("V"))
            continue; // skip

@@ -87,7 +87,7 @@ void mmAboutDialog::CreateControls()
 
     wxString port = _("Linux Port by : ");
     wxStaticText* itemStaticText101 = new wxStaticText( itemDialog1, 
-        wxID_STATIC, port + wxT("Muguntharaj Subramanian, \nPushparajan V"), 
+        wxID_STATIC, port + wxT("Muguntharaj, Pushparajan"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerN->Add(itemStaticText101, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -97,7 +97,8 @@ void mmAboutDialog::CreateControls()
         + wxT("Italian (Claudio), French (Berry As), \n \
 Greek (Panagiotis Pentzeridis), Czech (Josef Remes), \n \
 Traditional Chinese (Kysouke), Russian (KarmaSV), \n \
-Simple Chinese (Liu Ming), Brazilian (Jose Carlos), \n"), 
+Simple Chinese (Liu Ming), Brazilian (Jose Carlos), \n \
+German (Schrempfi)"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerN->Add(itemStaticText18, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
 

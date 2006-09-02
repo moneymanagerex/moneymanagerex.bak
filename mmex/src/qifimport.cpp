@@ -334,7 +334,8 @@ bool isLineOK(const wxString& line)
         (fChar == 'S') ||
         (fChar == 'E') || 
         (fChar == '/') ||
-        (fChar == '$'))
+        (fChar == '$') ||
+        (fChar == 'U'))
         return true;
 
     return false;

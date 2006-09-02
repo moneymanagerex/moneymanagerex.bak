@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-07-23 13:40-0500\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2006-08-05 00:42+0100\n"
+"Last-Translator: Geralt <geraltcz@centrum.cz>\n"
 "Language-Team: Geralt <geraltcz@centrum.cz>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: src/aboutdialog.cpp:88
 msgid "Linux Port by : "
-msgstr ""
+msgstr "Linux Port : "
 
 #: src/aboutdialog.cpp:94
 msgid "Translations by : "
@@ -799,9 +799,8 @@ msgid "View Non-Zero Budget Categories"
 msgstr "Zobrazit nenulové kategorie rozpočtu"
 
 #: src/budgetingpanel.cpp:166
-#, fuzzy
 msgid "Budget Setup for "
-msgstr "Nastavení rozpočtu"
+msgstr "Nastavení rozpočtu pro "
 
 #: src/budgetingpanel.cpp:183
 msgid "Viewing All Budget Categories"
@@ -1004,9 +1003,8 @@ msgid "Currency name already exists!"
 msgstr "Název měny již existuje!"
 
 #: src/currencydialog.cpp:343
-#, fuzzy
 msgid "Base Conversion Rate should be greater than 0.0"
-msgstr "Kurze pro převod  by měl být v rozsahu 0.0 až 1.0."
+msgstr "Zakldaní kurz pro převod  by měl být větší než 0.0"
 
 #: src/mmcheckingpanel.cpp:152
 msgid "View All Transactions"
@@ -1096,7 +1094,7 @@ msgstr "Prosím čekejte"
 
 #: src/mmcheckingpanel.cpp:400
 msgid "Accessing Database"
-msgstr ""
+msgstr "Zpřístupňuji databázi"
 
 #: src/mmcheckingpanel.cpp:427
 msgid "Account View : "
@@ -1324,9 +1322,8 @@ msgid "Income vs Expenses"
 msgstr "Příjmy a výdaje"
 
 #: src/mmex.cpp:633
-#, fuzzy
 msgid "Income vs Expenses - All Time"
-msgstr "Příjmy a výdaje"
+msgstr "Příjmy a výdaje - Celkem"
 
 #: src/mmex.cpp:641
 msgid "Budget Performance"
@@ -1386,9 +1383,8 @@ msgid "Open Money Manager Database"
 msgstr "Otevře databázi programu Money Manager"
 
 #: src/mmex.cpp:1365
-#, fuzzy
 msgid "Save Database &As"
-msgstr "&Uložit databázi\tCtrl-S"
+msgstr "Uložit databázi j&ako"
 
 #: src/mmex.cpp:1365
 msgid "Save Money Manager Database As"
@@ -1424,33 +1420,28 @@ msgid "Import from QIF"
 msgstr "Importuje z QIF"
 
 #: src/mmex.cpp:1378
-#, fuzzy
 msgid "&Universal CSV Files"
-msgstr "&CSV soubory"
+msgstr "&Univerzální CSV soubory"
 
 #: src/mmex.cpp:1378
-#, fuzzy
 msgid "Import from any CSV file"
-msgstr "Importuje z CSV"
+msgstr "Importuje z libovolného CSV souboru"
 
 #: src/mmex.cpp:1379
-#, fuzzy
 msgid "&MMEX CSV Files"
-msgstr "&MM.NET CSV soubory"
+msgstr "&MMEX CSV soubory"
 
 #: src/mmex.cpp:1379
-#, fuzzy
 msgid "Import from MMEX CSV"
-msgstr "Importuje z CSV"
+msgstr "Importuje z MMEX CSV"
 
 #: src/mmex.cpp:1380
 msgid "&MM.NET CSV Files"
 msgstr "&MM.NET CSV soubory"
 
 #: src/mmex.cpp:1380
-#, fuzzy
 msgid "Import from MM.NET CSV"
-msgstr "Importuje z CSV"
+msgstr "Importuje z MM.NET CSV"
 
 #: src/mmex.cpp:1382
 #: src/univcsv.cpp:113
@@ -1513,19 +1504,16 @@ msgid "Show Account List"
 msgstr "Zobrazí přehled účtů"
 
 #: src/mmex.cpp:1423
-#, fuzzy
 msgid "Edit Account"
-msgstr "&Upravit účet"
+msgstr "Upravit účet"
 
 #: src/mmex.cpp:1427
-#, fuzzy
 msgid "Delete Account"
-msgstr "O&dstranit účet"
+msgstr "Odstranit účet"
 
 #: src/mmex.cpp:1427
-#, fuzzy
 msgid "Delete Account from database"
-msgstr "O&dstranit účet"
+msgstr "Odstranit účet z databáze"
 
 #: src/mmex.cpp:1439
 msgid "Organize &Categories"
@@ -1697,31 +1685,26 @@ msgid "Choose Account to import to:"
 msgstr "Zvolte účet pro import:"
 
 #: src/mmex.cpp:1750
-#, fuzzy
 msgid "QFX Import"
-msgstr "QIF import"
+msgstr "QFX import"
 
 #: src/mmex.cpp:2098
 #: src/mmex.cpp:2140
-#, fuzzy
 msgid "No Account available!"
-msgstr "Není k dispozici žádný účet, proto nelze exportovat!"
+msgstr "Není k dispozici žádný účet!"
 
 #: src/mmex.cpp:2118
-#, fuzzy
 msgid "Choose Account to Edit"
-msgstr "Zvolte účet pro import:"
+msgstr "Zvolte účet pro úpravu"
 
 #: src/mmex.cpp:2119
 #: src/mmex.cpp:2163
-#, fuzzy
 msgid "Accounts"
-msgstr "Účt&y"
+msgstr "Účty"
 
 #: src/mmex.cpp:2162
-#, fuzzy
 msgid "Choose Account to Delete"
-msgstr "Zvolte účet pro import:"
+msgstr "Zvolte účet pro odstranění"
 
 #: src/mmhelppanel.cpp:78
 msgid "Money Manager Ex Help"
@@ -1749,9 +1732,8 @@ msgid "Upcoming Bills & Deposits"
 msgstr "Příští účty & vklady"
 
 #: src/mmhomepagepanel.cpp:302
-#, fuzzy
 msgid "Follow Up On "
-msgstr "Sledovat (F)"
+msgstr "Sledovat (F) "
 
 #: src/mmreportspanel.cpp:80
 msgid "REPORTS"
@@ -1994,9 +1976,8 @@ msgid "List Row 1"
 msgstr "Řádek 1"
 
 #: src/optionsdialog.cpp:319
-#, fuzzy
 msgid "Specify the color for the list row 1"
-msgstr "Vyberte barvu pro 0 řádek seznamu"
+msgstr "Vyberte barvu pro 1 řádek seznamu"
 
 #: src/optionsdialog.cpp:323
 msgid "List Border"
@@ -2139,26 +2120,23 @@ msgstr "nelze analyzovat datum, použito denšní datum..ověřte jej prosím ap
 
 #: src/qifimport.cpp:595
 msgid "Date is empty, "
-msgstr ""
+msgstr "Nezadán datum, "
 
 #: src/qifimport.cpp:599
-#, fuzzy
 msgid "Transaction Type is empty"
-msgstr "Typ transakce"
+msgstr "Nezadaný typ transakce"
 
 #: src/qifimport.cpp:603
-#, fuzzy
 msgid "Amount is empty"
-msgstr "Přehled účtů"
+msgstr "Nezadaná částka"
 
 #: src/qifimport.cpp:613
 msgid "Category is empty, marking transaction as Unknown category"
-msgstr ""
+msgstr "Nezadána katagorie, transakce označena jako Neznámá"
 
 #: src/qifimport.cpp:626
-#, fuzzy
 msgid "Skipping QIF transaction"
-msgstr "Zobrazeny všechny transakce"
+msgstr "Přeskakuji QIF transakce"
 
 #: src/qifimport.cpp:659
 msgid " transactions imported from QIF"
@@ -2327,55 +2305,50 @@ msgid "Specify the account from which the transfer is occurring"
 msgstr "Určete účet odkud je prováděna transkace"
 
 #: src/univcsv.cpp:87
-#, fuzzy
 msgid "Specify the order of fields in the CSV file"
-msgstr "Vyberte barvu pro panel navigace"
+msgstr "Určete pořadí polí v CSV souboru"
 
 #: src/univcsv.cpp:109
 msgid "Remove"
-msgstr ""
+msgstr "Odstranit"
 
 #: src/univcsv.cpp:171
 #: src/univcsv.cpp:194
-#, fuzzy
 msgid "Amount(+/-)"
-msgstr "Částka"
+msgstr "Částka(+/-)"
 
 #: src/univcsv.cpp:175
 #: src/univcsv.cpp:196
-#, fuzzy
 msgid "SubCategory"
 msgstr "Podkategorie"
 
 #: src/univcsv.cpp:179
 #: src/univcsv.cpp:198
-#, fuzzy
 msgid "Transaction Number"
-msgstr "Typ transakce"
+msgstr "Číslo transakce"
 
 #: src/univcsv.cpp:181
 #: src/univcsv.cpp:199
 msgid "Don't Care"
-msgstr ""
+msgstr "Ostatní"
 
 #: src/univcsv.cpp:184
 #: src/univcsv.cpp:186
 msgid "Unknown"
-msgstr ""
+msgstr "Neznámá"
 
 #: src/univcsv.cpp:202
 msgid "Add CSV field"
-msgstr ""
+msgstr "Přidat CSV pole"
 
 #: src/univcsv.cpp:203
-#, fuzzy
 msgid "CSV Field"
-msgstr "&CSV soubory"
+msgstr "Pole CSV"
 
 #: src/univcsv.cpp:229
 #: src/univcsv.cpp:240
 msgid "Incorrect fields specified for CSV import! Requires atleast date, amount and payee."
-msgstr ""
+msgstr "Zadány neplatné pole pro import CSV! Je nutné zadat alespoň datum, částku a příjemce."
 
 #: src/univcsv.cpp:260
 #: src/util.cpp:233
@@ -2390,12 +2363,11 @@ msgstr "Vyberte datový soubor MM.NET CSV pro import"
 
 #: src/univcsv.cpp:311
 msgid " file contains insufficient number of tokens"
-msgstr ""
+msgstr " soubor obsahuje nedostatečný počet symbolů"
 
 #: src/univcsv.cpp:335
-#, fuzzy
 msgid " One of the following fields: date, payee, amount, type is missing, skipping"
-msgstr " Jedno z následujích polí: datum, příjemce, typ transkace, částka nebo kategorie obsahuje prázdný řetězec, přeskočeno"
+msgstr " Jedno z následujích polí: datum, příjemce, částka, typ transakce chybí, přeskočeno"
 
 #: src/univcsv.cpp:368
 #: src/util.cpp:426
@@ -2464,9 +2436,8 @@ msgid " missing amount, skipping."
 msgstr " chybí částka, přeskočeno."
 
 #: src/util.cpp:328
-#, fuzzy
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
-msgstr "jedno z následujích polí: datum, příjemce, typ transkace, částka nebo kategorie obsahuje prázdný řetězec, přeskakočeno"
+msgstr "jedno z následujích polí: datum, příjemce, typ transakce, částka obsahuje prázdný řetězec, přeskočeno"
 
 #: src/util.cpp:335
 msgid " unrecognized transaction type, skipping."
@@ -2638,9 +2609,8 @@ msgid "Options Dialog"
 msgstr "Nastavení programu"
 
 #: include/reportbudgetingperf.h:26
-#, fuzzy
 msgid "Budget Performance for Year : "
-msgstr "Roční rozpočet"
+msgstr "Roční rozpočet pro rok : "
 
 #: include/reportcategexp.h:56
 #: include/reportincexpenses.h:39
@@ -2657,24 +2627,20 @@ msgid "Amount   "
 msgstr "Částka"
 
 #: include/reportincexpesestime.h:28
-#, fuzzy
 msgid "Income vs Expenses for Year : "
-msgstr "Příjmy a výdaje"
+msgstr "Příjmy a výdaje pro rok : "
 
 #: include/reportincexpesestime.h:44
-#, fuzzy
 msgid "Month"
 msgstr "Měsíc"
 
 #: include/reportincexpesestime.h:46
-#, fuzzy
 msgid "Expenses"
 msgstr "Výdaje"
 
 #: include/reportincexpesestime.h:93
-#, fuzzy
 msgid "Total"
-msgstr "Celkem:"
+msgstr "Celkem"
 
 #: include/reportsummary.h:58
 msgid "Account Name  "
@@ -2697,79 +2663,65 @@ msgid "Total Balance on all Accounts :"
 msgstr "Celkový zůstatek na všech účtech :"
 
 #: include/reportsummaryassets.h:37
-#, fuzzy
 msgid "Summary of Assets"
 msgstr "Přehled účtů"
 
 #: include/reportsummaryassets.h:64
-#, fuzzy
 msgid "Name "
-msgstr "Název"
+msgstr "Název "
 
 #: include/reportsummaryassets.h:65
-#, fuzzy
 msgid "Type   "
-msgstr "Typ"
+msgstr "Typ   "
 
 #: include/reportsummaryassets.h:66
 #: include/reportsummarystocks.h:71
-#, fuzzy
 msgid "Value  "
-msgstr "Hodnota"
+msgstr "Hodnota  "
 
 #: include/reportsummaryassets.h:104
-#, fuzzy
 msgid "Total Assets :"
-msgstr "Majetek :"
+msgstr "Celkový majetek :"
 
 #: include/reportsummarystocks.h:37
-#, fuzzy
 msgid "Summary of Stocks"
 msgstr "Přehled účtů"
 
 #: include/reportsummarystocks.h:64
 msgid "Company  "
-msgstr ""
+msgstr "Společnost  "
 
 #: include/reportsummarystocks.h:65
-#, fuzzy
 msgid "Symbol   "
-msgstr "Symbol"
+msgstr "Symbol   "
 
 #: include/reportsummarystocks.h:66
-#, fuzzy
 msgid "Number Shares  "
-msgstr "Velikost podílu"
+msgstr "Velikost podílu  "
 
 #: include/reportsummarystocks.h:67
-#, fuzzy
 msgid "Purchase Date "
-msgstr "Nákupní cena"
+msgstr "Datum nákupu "
 
 #: include/reportsummarystocks.h:68
-#, fuzzy
 msgid "Purchase Price "
-msgstr "Nákupní cena"
+msgstr "Nákupní cena "
 
 #: include/reportsummarystocks.h:69
-#, fuzzy
 msgid "Current Price  "
-msgstr "Aktuální cena"
+msgstr "Aktuální cena  "
 
 #: include/reportsummarystocks.h:70
-#, fuzzy
 msgid "Commission  "
-msgstr "Provize"
+msgstr "Provize  "
 
 #: include/reportsummarystocks.h:72
-#, fuzzy
 msgid "Gain Loss  "
-msgstr "Zisk/Ztráta"
+msgstr "Zisk/Ztráta  "
 
 #: include/reportsummarystocks.h:141
-#, fuzzy
 msgid "Total Stock Investments :"
-msgstr "Akcie :"
+msgstr "Celkem investováno akcií :"
 
 #: include/stockdialog.h:23
 msgid "New/Edit Stock Investment"
@@ -2781,5 +2733,5 @@ msgstr "Nová/Upravit transakce"
 
 #: include/univcsv.h:28
 msgid "Universal CSV Importer Dialog"
-msgstr ""
+msgstr "Univerzální import CSV"
 

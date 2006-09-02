@@ -155,6 +155,8 @@ wxIcon mmUnivCSVImportDialog::GetIconResource( const wxString& name )
 #define UNIV_CSV_NOTES    5
 #define UNIV_CSV_TRANSNUM 6
 #define UNIV_CSV_DONTCARE 7
+#define UNIV_CSV_WITHDRAWAL  8
+#define UNIV_CSV_DEPOSIT  9
 
 wxString getCSVFieldName(int index)
 {
@@ -176,6 +178,11 @@ wxString getCSVFieldName(int index)
         return wxString(_("Transaction Number"));
     case UNIV_CSV_DONTCARE:
         return wxString(_("Don't Care"));
+    case UNIV_CSV_WITHDRAWAL:
+        return wxString(_("Withdrawal"));
+    case UNIV_CSV_DEPOSIT:
+        return wxString(_("Deposit"));
+
 
     default:
         return wxString(_("Unknown"));
@@ -194,6 +201,8 @@ void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& event)
     csvArray.Add(_("Notes"));
     csvArray.Add(_("Transaction Number"));
     csvArray.Add(_("Don't Care"));
+    csvArray.Add(_("Withdrawal"));
+    csvArray.Add(_("Deposit"));
 
     int index = wxGetSingleChoiceIndex(
                     _("Add CSV field"),
@@ -231,7 +240,8 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
     // date, amount, payee are required
     if (!isIndexPresent(UNIV_CSV_DATE) || 
         !isIndexPresent(UNIV_CSV_PAYEE) ||
-        !isIndexPresent(UNIV_CSV_AMOUNT))
+        (!isIndexPresent(UNIV_CSV_AMOUNT) && (!isIndexPresent(UNIV_CSV_WITHDRAWAL) || 
+        !isIndexPresent(UNIV_CSV_DEPOSIT))))
     {
          mmShowErrorMessage(0, 
             _("Incorrect fields specified for CSV import! Requires atleast date, amount and payee."),
@@ -313,8 +323,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
                 while ( tkz.HasMoreTokens() )
                 {
                     wxString token = tkz.GetNextToken();
-                    mmCleanString(token.Trim());
-                    tokens.push_back(token);
+                    tokens.push_back(mmCleanQuotes(token.Trim()));
                 }
 
 
@@ -502,10 +511,47 @@ void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
             // do nothing
             break;
         }
+    
+    case UNIV_CSV_DEPOSIT:
+        {
+            if (token.Trim().IsEmpty())
+                return;
+           
+            if (!token.ToDouble(&val_))
+            {
+                return;
+            }
+
+            if (val_ <= 0.0)
+                return;
+
+            type_ = wxT("Deposit");
+             amount_ = token;
+            break;
+        }
+
+    case UNIV_CSV_WITHDRAWAL:
+        {
+            if (token.Trim().IsEmpty())
+                return;
+           
+            if (!token.ToDouble(&val_))
+            {
+                return;
+            }
+
+            if (val_ <= 0.0)
+                return;
+
+            type_ = wxT("Withdrawal");
+            amount_ = token;
+            break;
+        }
+
 
     default:
         {
-
+            wxASSERT(true);
         }
     }
 }

@@ -44,7 +44,7 @@ void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 		wxArrayString langFileArray;
 		if (wxDir::Exists(langPath))
 		{
-			int num = wxDir::GetAllFiles(langPath, &langFileArray, wxT("*.mo"));
+			int num = (int)wxDir::GetAllFiles(langPath, &langFileArray, wxT("*.mo"));
 			if (num > 0)
 			{
 				for (int ix = 0; ix < num; ix++)
@@ -81,6 +81,15 @@ wxString mmCleanString(const wxString& orig)
     wxString toReturn = orig;
     toReturn.Replace(wxT("'"), wxT("''"));
     return toReturn;
+}
+
+wxString mmCleanQuotes(const wxString& orig)
+{
+    wxString toReturn = orig;
+    toReturn.Replace(wxT("'"), wxT("''"));
+    toReturn.Replace(wxT("\""), wxT(""));
+    toReturn.Trim();
+    return toReturn; 
 }
 
 wxString mmUnCleanString(const wxString& orig)
@@ -272,7 +281,7 @@ int mmImportCSV(wxSQLite3Database* db_)
                 wxString transNum = wxT("");
                 wxString notes = wxT("");
 
-                wxStringTokenizer tkz(line, delimit);
+                wxStringTokenizer tkz(line, delimit, wxTOKEN_RET_EMPTY_ALL);
                 if (tkz.HasMoreTokens())
                    dt = tkz.GetNextToken();
                 else
@@ -509,7 +518,7 @@ int mmImportCSVMMNET(wxSQLite3Database* db_)
                 wxString transNum = wxT("");
                 wxString notes = wxT("");
 
-                wxStringTokenizer tkz(line, delimit);
+                wxStringTokenizer tkz(line, delimit, wxTOKEN_RET_EMPTY_ALL);
                 if (tkz.HasMoreTokens())
                    dt = tkz.GetNextToken();
                 else
@@ -692,7 +701,7 @@ wxDateTime mmGetStorageStringAsDate(const wxString& str)
 
 wxColour mmGetColourFromString(const wxString& str)
 {
-    wxStringTokenizer tkz(str, wxT(","));
+    wxStringTokenizer tkz(str, wxT(","),wxTOKEN_RET_EMPTY_ALL);
     unsigned char red = 0xFF;
     unsigned char blue = 0xFF;
     unsigned char green = 0xFF;
