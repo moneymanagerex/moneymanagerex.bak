@@ -1,6 +1,6 @@
 Version History of Money Manager Ex
 
-0.6.3.0 
+0.7.0.0
 - Ability to create custom transaction reports that can be filtered by most fields
 - Make QIF import date format use the format specified in the Tools->Options (Ozgreg)
 - Add German Translation (Thanks Schrempfi!)
