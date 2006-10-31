@@ -433,6 +433,8 @@ void mmGUIFrame::menuEnableItems(bool enable)
     menuBar_->FindItem(MENU_EXPORT)->Enable(enable);
     menuBar_->FindItem(MENU_NEWACCT)->Enable(enable);
     menuBar_->FindItem(MENU_ACCTLIST)->Enable(enable);
+    menuBar_->FindItem(MENU_ACCTEDIT)->Enable(enable);
+    menuBar_->FindItem(MENU_ACCTDELETE)->Enable(enable);
     menuBar_->FindItem(MENU_ORGCATEGS)->Enable(enable);
     menuBar_->FindItem(MENU_ORGPAYEE)->Enable(enable);
     menuBar_->FindItem(MENU_IMPORT)->Enable(enable);
@@ -442,11 +444,15 @@ void mmGUIFrame::menuEnableItems(bool enable)
     menuBar_->FindItem(MENU_BILLSDEPOSITS)->Enable(enable);
     menuBar_->FindItem(MENU_STOCKS)->Enable(enable);
     menuBar_->FindItem(MENU_CURRENCY)->Enable(enable);
+    menuBar_->FindItem(MENU_ASSETS)->Enable(enable);
     menuBar_->FindItem(MENU_BUDGETSETUPDIALOG)->Enable(enable);
     menuBar_->FindItem(MENU_TRANSACTIONREPORT)->Enable(enable);
     
     toolBar_->EnableTool(MENU_NEWACCT, enable);
     toolBar_->EnableTool(MENU_ACCTLIST, enable);
+    toolBar_->EnableTool(MENU_ORGPAYEE, enable);
+    toolBar_->EnableTool(MENU_ORGCATEGS, enable);
+    toolBar_->EnableTool(MENU_CURRENCY, enable);
 }
 
 void mmGUIFrame::menuPrintingEnable(bool enable)
@@ -521,7 +527,7 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(assets, new mmTreeItemData(wxT("Assets")));
     navTreeCtrl_->SetItemBold(assets, true);
 
-    wxTreeItemId bills = navTreeCtrl_->AppendItem(root, _("Bills & Deposits"), 2, 2);
+    wxTreeItemId bills = navTreeCtrl_->AppendItem(root, _("Recurring Transactions"), 2, 2);
     navTreeCtrl_->SetItemData(bills, new mmTreeItemData(wxT("Bills & Deposits")));
     navTreeCtrl_->SetItemBold(bills, true);
 

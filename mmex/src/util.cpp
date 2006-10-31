@@ -801,7 +801,7 @@ double mmRound(const double x)
 short mmCents(double value) 
 {
     double dummy; 
-    return (short)( modf((value + (value < 0 ? -.5 :.5))/ mmCurrencyFormatter::scale, &dummy)* 100);
+    return (short)( modf((value + (value < 0 ? -.5 :.5))/ mmCurrencyFormatter::scale, &dummy)* mmCurrencyFormatter::scale);
 }
 
 double mmMoneyInt(double value) 
@@ -881,11 +881,17 @@ bool mmCurrencyFormatter::formatDoubleToCurrencyEdit(double val, wxString& rdata
   data += decimal_point;
   if (cents < 10 )
   { 
-    data +=wxT("0"); 
+    //data +=wxT("0"); 
   }
 
   wxString newStr;
-  newStr = wxString::Format(wxT("%d"), cents);                
+  if ((int)mmCurrencyFormatter::scale == 100)
+      newStr = wxString::Format(wxT("%02d"), cents);
+  else if ((int)mmCurrencyFormatter::scale == 1000)
+      newStr = wxString::Format(wxT("%03d"), cents);
+  else if ((int)mmCurrencyFormatter::scale == 10)
+      newStr = wxString::Format(wxT("%01d"), cents);
+
   wxString testString = wxString::Format(wxT("%s%s"), data.c_str(), newStr.c_str());
   data = testString;
   }
@@ -893,8 +899,8 @@ bool mmCurrencyFormatter::formatDoubleToCurrencyEdit(double val, wxString& rdata
 
 //  Append any additional fractional digits
 //  ---------------------------------------
-  for (int i = int(mmCurrencyFormatter::scale/100 -1); i&&(remdr>0); i--, remdr/=10)
-       data += wxString(wxT("%d"), mmCents((10 * remdr)));
+  //for (int i = int(mmCurrencyFormatter::scale/100 -1); i&&(remdr>0); i--, remdr/=10)
+       //data += wxString(wxT("%d"), mmCents((10 * remdr)));
   //data += sfx_symbol;             //    Insert trailing currency symbol
 
   rdata = data;
@@ -950,11 +956,17 @@ bool mmCurrencyFormatter::formatDoubleToCurrency(double val, wxString& rdata)
       data += decimal_point;
       if (cents < 10 )
       { 
-          data +=wxT("0"); 
+      //    data +=wxT("0"); 
       }
 
       wxString newStr;
-      newStr = wxString::Format(wxT("%d"), cents);                
+      if ((int)mmCurrencyFormatter::scale == 100)
+        newStr = wxString::Format(wxT("%02d"), cents);
+      else if ((int)mmCurrencyFormatter::scale == 1000)
+        newStr = wxString::Format(wxT("%03d"), cents);
+      else if ((int)mmCurrencyFormatter::scale == 10)
+        newStr = wxString::Format(wxT("%01d"), cents);
+
       wxString testString = wxString::Format(wxT("%s%s"), data.c_str(), newStr.c_str());
       data = testString;
   }
@@ -962,8 +974,8 @@ bool mmCurrencyFormatter::formatDoubleToCurrency(double val, wxString& rdata)
 
 //  Append any additional fractional digits
 //  ---------------------------------------
-  for (int i = int(mmCurrencyFormatter::scale/100 -1); i&&(remdr>0); i--, remdr/=10)
-       data += wxString(wxT("%d"), mmCents((10 * remdr)));
+  //for (int i = int(mmCurrencyFormatter::scale/100 -1); i&&(remdr>0); i--, remdr/=10)
+  //     data += wxString(wxT("%d"), mmCents((10 * remdr)));
   data += sfx_symbol;             //    Insert trailing currency symbol
 
   rdata = data;

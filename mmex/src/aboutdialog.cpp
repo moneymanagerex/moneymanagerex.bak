@@ -85,16 +85,18 @@ void mmAboutDialog::CreateControls()
         itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(235, 157), 0 );
     itemBoxSizerN->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
+#if 0
     wxString port = _("Linux Port by : ");
     wxStaticText* itemStaticText101 = new wxStaticText( itemDialog1, 
         wxID_STATIC, port + wxT("Muguntharaj, Pushparajan"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerN->Add(itemStaticText101, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
+#endif
 
     wxString trans = _("Translations by : ");
     wxStaticText* itemStaticText18 = new wxStaticText( itemDialog1, 
         wxID_STATIC,  trans 
-        + wxT("Italian (Claudio), French (Berry As), \n \
+        + wxT("Italian (Claudio), French (Berry As and Jean-Christophe), \n \
 Greek (Panagiotis Pentzeridis), Czech (Josef Remes), \n \
 Traditional Chinese (Kysouke), Russian (KarmaSV), \n \
 Simple Chinese (Liu Ming), Brazilian (Jose Carlos), \n \

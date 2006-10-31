@@ -408,12 +408,7 @@ void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
             if (token.Trim().IsEmpty())
                 return;
 
-            wxDateTime dtdt;
-            const wxChar* chr = dtdt.ParseDate(token.GetData());
-            if (chr == NULL)
-            {
-                return;
-            }
+            wxDateTime dtdt = mmParseDisplayStringToDate(db_, token);
             dt_ = dtdt.FormatISODate();
             break;
         }

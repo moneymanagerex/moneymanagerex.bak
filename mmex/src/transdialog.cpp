@@ -505,62 +505,58 @@ void mmTransDialog::OnCategs(wxCommandEvent& event)
     mmCategDialog *dlg = new mmCategDialog(db_, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
-       
-    }
-    dlg->Destroy();
-    
-    if (dlg->categID_ == -1)
-    {
-        // check if categ and subcateg are now invalid
-        wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
-        if (catName.IsEmpty())
+         if (dlg->categID_ == -1)
         {
-            // cannot find category
-            categID_ = -1;
-            subcategID_ = -1;
-            bCategory_->SetLabel(_("Select Category"));
+            // check if categ and subcateg are now invalid
+            wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
+            if ( catName.IsEmpty())
+            {
+                // cannot find category
+                categID_ = -1;
+                subcategID_ = -1;
+                bCategory_->SetLabel(_("Select Category"));
+                return;
+            }
+ 
+            if (dlg->subcategID_ != -1)
+            {
+                wxString subcatName = mmDBWrapper::getSubCategoryName(db_,
+                    categID_, subcategID_);
+                if (subcatName.IsEmpty())
+                {
+                    subcategID_ = -1;
+                    bCategory_->SetLabel(catName);
+                    return;
+                }
+            }
+            else
+            {
+                catName.Replace(wxT("&"), wxT("&&"));
+                bCategory_->SetLabel(catName);
+            }
+           
             return;
         }
+       
+        categID_ = dlg->categID_;
+        subcategID_ = dlg->subcategID_;
+ 
+       wxString catName = mmDBWrapper::getCategoryName(db_, dlg->categID_);
+       catName.Replace (wxT("&"), wxT("&&"));
+        wxString categString = catName;
 
         if (dlg->subcategID_ != -1)
         {
-            wxString subcatName = mmDBWrapper::getSubCategoryName(db_, 
-                categID_, subcategID_);
-            if (subcatName.IsEmpty())
-            {
-                subcategID_ = -1;
-                bCategory_->SetLabel(catName);
-                return;
-            }
+            wxString subcatName = mmDBWrapper::getSubCategoryName(db_,
+                dlg->categID_, dlg->subcategID_);
+            subcatName.Replace (wxT("&"), wxT("&&"));
+            categString += wxT(" : ");
+            categString += subcatName;
         }
-        else
-        {
-            catName.Replace(wxT("&"), wxT("&&"));
-            bCategory_->SetLabel(catName);
-        }
-        
-        return;
+       
+         bCategory_->SetLabel(categString);
     }
-    
-    categID_ = dlg->categID_;
-    subcategID_ = dlg->subcategID_;
-
-    wxString catName = mmDBWrapper::getCategoryName(db_, dlg->categID_);
-    catName.Replace(wxT("&"), wxT("&&"));
-    wxString categString = catName;
-
-    if (dlg->subcategID_ != -1)
-    {
-        wxString subcatName = mmDBWrapper::getSubCategoryName(db_,
-            dlg->categID_, dlg->subcategID_);
-        subcatName.Replace(wxT("&"), wxT("&&"));
-        categString += wxT(" : ");
-        categString += subcatName;
-    }
-    
-     bCategory_->SetLabel(categString);
-
-  
+    dlg->Destroy();
 }
 
 void mmTransDialog::OnTransTypeChanged(wxCommandEvent& event)

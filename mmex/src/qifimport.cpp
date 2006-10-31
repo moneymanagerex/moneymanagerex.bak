@@ -403,7 +403,7 @@ int mmImportQIF(wxSQLite3Database* db_)
         wxString transNum = wxT("");
         wxString notes = wxT("");
         wxString convDate = wxDateTime::Now().FormatISODate();
-        int payeeID, categID, subCategID;
+        int payeeID = -1, categID = -1, subCategID = -1;
         subCategID = -1;
         double val = 0.0;
         while(!input.Eof())
@@ -597,10 +597,26 @@ int mmImportQIF(wxSQLite3Database* db_)
                 {
                     log << _("Amount is empty") << endl;
                 }
-                else if (categ.Trim().IsEmpty())
+
+                if (payee.Trim().IsEmpty())
+                {
+                    if (payee.Trim().IsEmpty())
+                    {
+                        payee = wxT("Unknown");
+                    }
+
+                    if (!mmDBWrapper::getPayeeID(db_, payee, payeeID, categID, subCategID))
+                    {
+                        mmDBWrapper::addPayee(db_, payee, -1, -1);
+                        log << _("Adding payee ") << payee << endl;    
+                        mmDBWrapper::getPayeeID(db_, payee, payeeID, categID, subCategID);
+                    }
+                }
+                
+                
+                if (categ.Trim().IsEmpty())
                 {
                     // check if category exists for this payee.
-
                     mmDBWrapper::getPayee(db_, payeeID, categID, subCategID);
 
                     if (categID == -1)
@@ -614,11 +630,12 @@ int mmImportQIF(wxSQLite3Database* db_)
                         }
                     }
                 }
+                
+                
 
-                 if(dt.Trim().IsEmpty() || payee.Trim().IsEmpty() ||
-                    type.Trim().IsEmpty() || amount.Trim().IsEmpty())
+                if(dt.Trim().IsEmpty()  || type.Trim().IsEmpty() || amount.Trim().IsEmpty())
                 {
-                    log << _("Skipping QIF transaction") << endl;
+                    log << _("Skipping QIF transaction because date, type, amount is empty/invalid") << endl;
                     continue;
                 }
 

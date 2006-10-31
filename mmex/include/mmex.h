@@ -300,6 +300,7 @@ public:
             return false;
         }
 
+        mmBEGINSQL_LITE_EXCEPTION;
         wxString bufSQL = wxString::Format(wxT("insert into ACCOUNTLIST_V1 (ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, \
                                                STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO,                                 \
                                                INITIALBAL, FAVORITEACCT, CURRENCYID)                      \
@@ -317,6 +318,7 @@ public:
         int retVal = parent_->db_->ExecuteUpdate(bufSQL);
         parent_->acctID_ = mmDBWrapper::getAccountID(parent_->db_,parent_->accountName_);
 
+        mmENDSQL_LITE_EXCEPTION;
 
         return true;
     }
