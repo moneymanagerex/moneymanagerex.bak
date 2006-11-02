@@ -87,6 +87,7 @@
 #include "../resources/appstart.xpm"
 #include "../resources/edit_account.xpm"
 #include "../resources/delete_account.xpm"
+#include "../resources/filter.xpm"
 /*******************************************************/
 #define MMEX_INIDB_FNAME wxT("/mmexini.db3")
 #define MMEX_SPLASH_FNAME wxT("/splash.png")
@@ -1494,7 +1495,7 @@ void mmGUIFrame::createMenu()
     menuTools->Append(menuItemBudgeting); 
 
     wxMenuItem* menuItemBillsDeposits = new wxMenuItem(menuTools, MENU_BILLSDEPOSITS, 
-		 _("Bills && Deposits"), _("Bills && Deposits"));
+		 _("Repeating Transactions"), _("Bills && Deposits"));
 	menuItemBillsDeposits->SetBitmap(wxBitmap(billsdeposits_xpm));
     menuTools->Append(menuItemBillsDeposits); 
 
@@ -1512,10 +1513,8 @@ void mmGUIFrame::createMenu()
 
     wxMenuItem* menuItemTransactions = new wxMenuItem(menuTools, MENU_TRANSACTIONREPORT, 
 		_("Transaction Filter"), _("Transaction Filter"));
-	//menuItemTransactions->SetBitmap(wxBitmap(assets_xpm));
+	menuItemTransactions->SetBitmap(wxBitmap(filter_xpm));
     menuTools->Append(menuItemTransactions);
-
-
 
     menuTools->AppendSeparator();
 
