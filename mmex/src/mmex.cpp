@@ -154,6 +154,7 @@ bool mmGUIApp::OnInit()
 {
     /* Get INI DB for loading settings */
     wxSQLite3Database* inidb = new wxSQLite3Database();
+
     wxFileName fname(wxGetApp().argv[0]);
     wxString cfgPath = fname.GetPath(wxPATH_GET_VOLUME)
                 + MMEX_INIDB_FNAME;
@@ -348,9 +349,14 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
         {
             /* Try Opening the file */
             wxFileName fName(val);
+	    wxString absName;
+#ifdef __WXGTK__
+	    absName = fName.GetFullPath();		
+#else	
             wxFileName appPath(wxTheApp->argv[0]);
             fName.Normalize( wxPATH_NORM_ALL, appPath.GetPath());
-            wxString absName = fName.GetFullPath();
+            absName = fName.GetFullPath();
+#endif
             openFile(absName, false);
         }
         else
@@ -393,8 +399,12 @@ void mmGUIFrame::saveConfigFile()
     wxFileName appPath(wxTheApp->argv[0]);
     wxFileName fname(fileName_);
 
+#ifdef __WXGTK__
+
+#else
     bool makeRelative = fname.MakeRelativeTo(appPath.GetPath());
 
+#endif
     mmDBWrapper::setINISettingValue(inidb_, 
         wxT("LASTFILENAME"), mmCleanString(fname.GetFullPath()));
 
