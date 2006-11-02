@@ -342,7 +342,7 @@ public:
 
     void createHomePage();
     void createReportsPage(mmPrintableBase* rb);
-    void mmGUIFrame::createHelpPage();
+    void createHelpPage();
 
     void createDataStore(const wxString& fileName, bool openingNew = false);
     void createCheckingAccountPage(int accountID);

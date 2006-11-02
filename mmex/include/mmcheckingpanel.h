@@ -63,8 +63,8 @@ public:
     void OnMarkTransactionDB(const wxString& status);
  
     /* Sort Columns */
-    void MyListCtrl::OnColClick(wxListEvent& event);
-    void MyListCtrl::SetColumnImage(int col, int image);
+    void OnColClick(wxListEvent& event);
+    void SetColumnImage(int col, int image);
     
     void OnNewTransaction(wxCommandEvent& event);
     void OnDeleteTransaction(wxCommandEvent& event);

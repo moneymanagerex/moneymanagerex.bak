@@ -163,7 +163,7 @@ public:
     static void setINISettingValue(wxSQLite3Database* db, const wxString& settingName, 
         const wxString& settingValue);
     static bool doesINISettingNameExist(wxSQLite3Database* db, const wxString& settingName);
-    static void mmDBWrapper::verifyINIDB(wxSQLite3Database* inidb);
+    static void verifyINIDB(wxSQLite3Database* inidb);
 
     /* Stocks API */
     static void deleteStockInvestment(wxSQLite3Database* db, int stockID);

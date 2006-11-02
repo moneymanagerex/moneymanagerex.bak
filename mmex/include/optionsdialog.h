@@ -56,12 +56,12 @@ public:
 	void OnLanguageChanged(wxCommandEvent& event);
     void OnNavTreeColorChanged(wxCommandEvent& event);
 
-    void mmOptionsDialog::OnAlt0Changed(wxCommandEvent& event);
-    void mmOptionsDialog::OnAlt1Changed(wxCommandEvent& event);
-    void mmOptionsDialog::OnListBackgroundChanged(wxCommandEvent& event);
-    void mmOptionsDialog::OnListBorderChanged(wxCommandEvent& event);
-    void mmOptionsDialog::OnRestoreDefaultColors(wxCommandEvent& event);
-    void  mmOptionsDialog::OnListDetailsColors(wxCommandEvent& event);
+    void OnAlt0Changed(wxCommandEvent& event);
+    void OnAlt1Changed(wxCommandEvent& event);
+    void OnListBackgroundChanged(wxCommandEvent& event);
+    void OnListBorderChanged(wxCommandEvent& event);
+    void OnRestoreDefaultColors(wxCommandEvent& event);
+    void OnListDetailsColors(wxCommandEvent& event);
     void OnBackupDBChecked(wxCommandEvent& event);
 
 private:

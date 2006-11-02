@@ -66,7 +66,7 @@ public:
     void OnBSelect(wxCommandEvent& event);
     void OnEdit(wxCommandEvent& event);
     void OnCurrencyTypeChanged(wxCommandEvent& event);
-    void mmCurrencyDialog::updateControls();
+    void updateControls();
     
     void fillControls();
     void OnSelChanged(wxCommandEvent& event);

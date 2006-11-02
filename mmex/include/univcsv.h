@@ -91,7 +91,7 @@ public:
     void OnAdd(wxCommandEvent& event);
     void OnImport(wxCommandEvent& event);
     void OnRemove(wxCommandEvent& event);
-    bool mmUnivCSVImportDialog::isIndexPresent(int index);
+    bool isIndexPresent(int index);
     void parseToken(int index,wxString& token);
 
     wxBitmap GetBitmapResource( const wxString& name );

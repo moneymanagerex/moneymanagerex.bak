@@ -57,6 +57,7 @@ MMEX_OBJECTS =  \
 	mmex_currencydialog.o \
 	mmex_dbwrapper.o \
 	mmex_fileviewerdialog.o \
+	mmex_filtertransdialog.o \
 	mmex_htmlbuilder.o \
 	mmex_mmcheckingpanel.o \
 	mmex_mmex.o \
@@ -70,7 +71,13 @@ MMEX_OBJECTS =  \
 	mmex_stockdialog.o \
 	mmex_stocks.o \
 	mmex_transdialog.o \
-	mmex_util.o
+	mmex_tinystr.o \
+	mmex_tinyxml.o \
+	mmex_tinyxmlerror.o \
+	mmex_tinyxmlparser.o \
+	mmex_univcsv.o \
+	mmex_util.o \
+	mmex_wxtinyxml.o
 
 ### Conditionally set variables: ###
 
@@ -90,7 +97,7 @@ clean:
 	rm -f mmex
 
 mmex: $(MMEX_OBJECTS)
-	$(CXX) -o $@ $(MMEX_OBJECTS) $(LDFLAGS)  -g  $(WX_LIBS) -lsqlite3 -llibwxsqlite3
+	$(CXX) -o $@ $(MMEX_OBJECTS) $(LDFLAGS)  -g  $(WX_LIBS) -lsqlite3 -lwxsqlite3
 
 mmex_aboutdialog.o: ./../src/aboutdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
@@ -134,6 +141,9 @@ mmex_dbwrapper.o: ./../src/dbwrapper.cpp
 mmex_fileviewerdialog.o: ./../src/fileviewerdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
+mmex_filtertransdialog.o: ./../src/filtertransdialog.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
 mmex_htmlbuilder.o: ./../src/htmlbuilder.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
@@ -173,7 +183,25 @@ mmex_stocks.o: ./../src/stocks.cpp
 mmex_transdialog.o: ./../src/transdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
+mmex_tinystr.o: ./../src/tinystr.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
+mmex_tinyxml.o: ./../src/tinyxml.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
+mmex_tinyxmlerror.o: ./../src/tinyxmlerror.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
+mmex_tinyxmlparser.o: ./../src/tinyxmlparser.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
+mmex_univcsv.o: ./../src/univcsv.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
 mmex_util.o: ./../src/util.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
+mmex_wxtinyxml.o: ./../src/wxtinyxml.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean

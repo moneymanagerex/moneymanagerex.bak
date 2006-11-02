@@ -55,6 +55,7 @@ Building on Linux
         <sources>../src/currencydialog.cpp</sources>
         <sources>../src/dbwrapper.cpp</sources>
         <sources>../src/fileviewerdialog.cpp</sources>
+        <sources>../src/filtertransdialog.cpp</sources>
         <sources>../src/htmlbuilder.cpp</sources>
         <sources>../src/mmcheckingpanel.cpp</sources>
         <sources>../src/mmex.cpp</sources>
