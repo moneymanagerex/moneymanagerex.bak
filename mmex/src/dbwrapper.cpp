@@ -1760,6 +1760,8 @@ double mmDBWrapper::getAssetValue(wxSQLite3Database* db, int assetID)
 					double appreciation = numYears * valueChangeRate * value / 100;
 					assetValue = value + appreciation;
 				}
+                else
+                     assetValue = value;
 			}
 			else
 				assetValue = value;
@@ -1774,6 +1776,8 @@ double mmDBWrapper::getAssetValue(wxSQLite3Database* db, int assetID)
 					double depreciation = numYears * valueChangeRate * value / 100;
 					assetValue = value - depreciation;
 				}
+                else
+                    assetValue = value;
 			}
 			else
 				assetValue = value;

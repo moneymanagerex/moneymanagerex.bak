@@ -282,6 +282,17 @@ void mmBillsDepositsPanel::initVirtualListControl()
         wxDateTime today = wxDateTime::Now();
         wxTimeSpan ts = th.nextOccurDate_.Subtract(today);
         th.daysRemaining_ = ts.GetDays();
+        int hoursRemaining_ = ts.GetHours();
+
+        if ((th.daysRemaining_ == 0) && (hoursRemaining_ > 0))
+        {
+            th.daysRemaining_ = 1;
+        } 
+        else if ((th.daysRemaining_ == 0) && (hoursRemaining_ <= 0))
+        {
+            th.daysRemaining_ = 0;
+        }
+
         if (th.daysRemaining_ >= 0)
         {
             th.daysRemainingStr_ = wxString::Format(wxT("%d"), th.daysRemaining_) + 

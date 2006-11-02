@@ -1,10 +1,16 @@
 Version History of Money Manager Ex
 
-0.7.0.1 (October 22, 2006)
+0.7.0.1 (November , 2006)
 - Don't select category when category dialog is closed (Thanks Mark!)
 - Fixed Bug 1553574: Allow currencies with 3 significant decimals
 - Fixed some menu disable/enable logic when no database is loaded
 - Allow QIF import even when Payee field is not present
+- Fix Bug 1553157: Last Calendar Month calculation off by one bug
+- Fix Bug with reporting number of days remaining for Repeating transactions
+- Fix Bug 1560453 For asset having changing value purchased current year, value is zero
+- Fix Bug 1554818 Incorrect change when transaction type is changed to Transfer type
+- Fix Bug 1563345 QIF Import date format not functioning correctly
+- Added Hebrew Translation (Thanks Ykpui)
 
 0.7.0.0 (Sep 2, 2006)
 - Ability to create custom transaction reports that can be filtered by most fields

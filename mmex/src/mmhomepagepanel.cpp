@@ -110,7 +110,7 @@ void mmHomePagePanel::updateAccounts()
         hb.addHTML(q1.GetString(wxT("ACCOUNTID")));
         hb.addHTML(wxT("\" >"));
         hb.addHTML(q1.GetString(wxT("ACCOUNTNAME")));
-        hb.addHTML(wxT(" </a></td><td>"));
+        hb.addHTML(wxT(" </a></td><td align=\"right\">"));
         //data1.push_back(q1.GetString(wxT("ACCOUNTNAME")));
 
         double bal = mmDBWrapper::getTotalBalanceOnAccount(db_, q1.GetInt(wxT("ACCOUNTID")), true);
@@ -155,7 +155,7 @@ void mmHomePagePanel::updateAccounts()
     data.clear();
     hb.addHTML(wxT("<tr bgcolor=\"#D3EFF6\" ><td><a href=\"Stocks\">"));
     hb.addHTML(_("Stock Investments"));
-    hb.addHTML(wxT("</a></td><td>"));
+    hb.addHTML(wxT("</a></td><td align=\"right\">"));
     hb.addHTML(stockBalanceStr);
     hb.addHTML(wxT("</td></tr>"));
 
@@ -173,7 +173,7 @@ void mmHomePagePanel::updateAccounts()
     //hb.addRow(data, wxT(" bgcolor=\"#D3EFF4\" "));
     hb.addHTML(wxT("<tr bgcolor=\"#D3EFF4\" ><td><a href=\"Assets\">"));
     hb.addHTML(_("Assets"));
-    hb.addHTML(wxT("</a></td><td>"));
+    hb.addHTML(wxT("</a></td><td align=\"right\">"));
     hb.addHTML(assetBalanceStr);
     hb.addHTML(wxT("</td></tr>"));
 
@@ -183,7 +183,7 @@ void mmHomePagePanel::updateAccounts()
     mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
 
 
-    hb.addHTML(wxT("<tr bgcolor=\"#DCEDD5\" ><td>") + wxString(_("Total of Accounts :")) + wxString(wxT("</td><td><b>")));
+    hb.addHTML(wxT("<tr bgcolor=\"#DCEDD5\" ><td>") + wxString(_("Total of Accounts :")) + wxString(wxT("</td><td align=\"right\"><b>")));
     hb.addHTML(tBalanceStr);
     hb.addHTML(wxT("</b></td></tr>"));
     hb.endTable();
@@ -205,15 +205,14 @@ void mmHomePagePanel::updateAccounts()
     data2.push_back(_("Income vs Expenses: Current Month"));
     hb.addTableHeaderRow(data2, wxT(" BGCOLOR=\"#80B9E8\" "), wxT(" width=\"100\" COLSPAN=\"2\" "));
     
-    data2.clear();
-    data2.push_back(baseInc);
-    data2.push_back(incStr);
-    hb.addRow(data2);
-
-    data2.clear();
-    data2.push_back(baseExp);
-    data2.push_back(expStr);
-    hb.addRow(data2);
+    hb.addHTML(wxT("<tr><td>") + baseInc + wxString(wxT("</td><td align=\"right\">")));
+    hb.addHTML(incStr);
+    hb.addHTML(wxT("</td></tr>"));
+    
+    hb.addHTML(wxT("<tr><td>") + baseExp + wxString(wxT("</td><td align=\"right\">")));
+    hb.addHTML(expStr);
+    hb.addHTML(wxT("</td></tr>"));
+    
     hb.endTable();
 
     hb.addHTML(wxT("<BR> <BR>"));
@@ -232,6 +231,7 @@ void mmHomePagePanel::updateAccounts()
 
         wxDateTime today = wxDateTime::Now();
         wxTimeSpan ts = nextOccurDate_.Subtract(today);
+        int hoursRemaining_ = ts.GetHours();
         int daysRemaining_ = ts.GetDays();
       
 
@@ -270,17 +270,28 @@ void mmHomePagePanel::updateAccounts()
 
             wxString daysRemainingStr_;
             wxString colorStr = wxT(" BGCOLOR=\"#FFFFCC\" ");
-            if (daysRemaining_ >= 0)
+           
+            if ((daysRemaining_ == 0) && (hoursRemaining_ > 0))
+            {
+                daysRemaining_ = 1;
+            }
+            else if ((daysRemaining_ == 0) && (hoursRemaining_ <= 0))
+            {
+                daysRemaining_ = 0;
+            }
+
+            if (daysRemaining_ > 0)
             {
                 daysRemainingStr_ = wxString::Format(wxT("%d"), daysRemaining_) + 
                     _(" days remaining");
             }
-            else
+            else 
             {
                 daysRemainingStr_ = wxString::Format(wxT("%d"), abs(daysRemaining_)) + 
                     _(" days overdue!");
                 colorStr = wxT(" BGCOLOR=\"#FF6600\" ");
             }
+            
             data4.push_back(daysRemainingStr_);
             hb.addRow(data4, wxT(""), wxT("WIDTH=\"130\"  ") + colorStr);
         }

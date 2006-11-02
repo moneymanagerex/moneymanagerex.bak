@@ -744,7 +744,7 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
         wxString bufSQL = wxString::Format(wxT("update CHECKINGACCOUNT_V1 SET ACCOUNTID=%d, TOACCOUNTID=%d, PAYEEID=%d, TRANSCODE='%s', \
                       TRANSAMOUNT=%f, STATUS='%s', TRANSACTIONNUMBER='%s', NOTES='%s',                               \
                       CATEGID=%d, SUBCATEGID=%d, TRANSDATE='%s', TOTRANSAMOUNT=%f WHERE TRANSID=%d;"),
-                      accountID_, toAccountID, payeeID_, transCode.c_str(), amount,
+                      fromAccountID, toAccountID, payeeID_, transCode.c_str(), amount,
                       status.c_str(), transNum.c_str(), mmCleanString(notes.c_str()).c_str(),categID_, subcategID_, 
 date1.c_str(), toTransAmount_, transID_);  
 

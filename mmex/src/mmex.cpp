@@ -527,7 +527,7 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(assets, new mmTreeItemData(wxT("Assets")));
     navTreeCtrl_->SetItemBold(assets, true);
 
-    wxTreeItemId bills = navTreeCtrl_->AppendItem(root, _("Recurring Transactions"), 2, 2);
+    wxTreeItemId bills = navTreeCtrl_->AppendItem(root, _("Repeating Transactions"), 2, 2);
     navTreeCtrl_->SetItemData(bills, new mmTreeItemData(wxT("Bills & Deposits")));
     navTreeCtrl_->SetItemBold(bills, true);
 
@@ -849,10 +849,12 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         if (iData->getString() == wxT("Where the Money Goes - Month"))
         {
             wxDateTime today = wxDateTime::Now();
+            wxDateTime::Month cm = today.GetMonth();
+            int numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
-            wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Month());
-            dtBegin.Add(wxDateSpan::Day());
+            wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
+
             mmPrintableBase* rs = new mmReportCategoryExpenses(db_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -924,10 +926,12 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         if (iData->getString() == wxT("Income vs Expenses - Month"))
         {
             wxDateTime today = wxDateTime::Now();
+            wxDateTime::Month cm = today.GetMonth();
+            int numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
-            wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Month());
-            dtBegin.Add(wxDateSpan::Day());
+            wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
+
             mmPrintableBase* rs = new mmReportIncomeExpenses(db_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -994,10 +998,12 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         if (iData->getString() == wxT("To Whom the Money Goes - Month"))
         {
             wxDateTime today = wxDateTime::Now();
+            wxDateTime::Month cm = today.GetMonth();
+            int numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
-            wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Month());
-            dtBegin.Add(wxDateSpan::Day());
+            wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
+
             mmPrintableBase* rs = new mmReportPayeeExpenses(db_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-09-02 09:20-0500\n"
+"PO-Revision-Date: 2006-11-01 21:23-0600\n"
 "Last-Translator: Madhan <madhan@yahoo.com>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -15,35 +15,35 @@ msgstr ""
 "X-Poedit-SearchPath-0: include\n"
 "X-Poedit-SearchPath-1: src\n"
 
-#: src/aboutdialog.cpp:88
+#: src/aboutdialog.cpp:103
 msgid "Linux Port by : "
 msgstr ""
 
-#: src/aboutdialog.cpp:94
+#: src/aboutdialog.cpp:109
 msgid "Translations by : "
 msgstr ""
 
-#: src/aboutdialog.cpp:125
+#: src/aboutdialog.cpp:139
 msgid "  and contributers from around the world."
 msgstr ""
 
-#: src/aboutdialog.cpp:130
+#: src/aboutdialog.cpp:144
 msgid "Released under the GNU GPL License"
 msgstr ""
 
-#: src/aboutdialog.cpp:142
-msgid "Powered by wxWidgets (c) www.wxwidgets.org"
+#: src/aboutdialog.cpp:156
+msgid "Powered by wxWidgets and SQLite"
 msgstr ""
 
-#: src/aboutdialog.cpp:146
-msgid "Powered by SQLite (c) www.sqlite.org"
-msgstr ""
-
-#: src/aboutdialog.cpp:150
+#: src/aboutdialog.cpp:160
 msgid "Version History"
 msgstr ""
 
-#: src/aboutdialog.cpp:158
+#: src/aboutdialog.cpp:165
+msgid "Contributers"
+msgstr ""
+
+#: src/aboutdialog.cpp:173
 msgid "Using Language : "
 msgstr ""
 
@@ -251,10 +251,10 @@ msgstr ""
 #: src/currencydialog.cpp:308
 #: src/filtertransdialog.cpp:503
 #: src/filtertransdialog.cpp:517
-#: src/mmex.cpp:1774
-#: src/mmex.cpp:1850
-#: src/mmex.cpp:2175
-#: src/mmex.cpp:2217
+#: src/mmex.cpp:1786
+#: src/mmex.cpp:1862
+#: src/mmex.cpp:2257
+#: src/mmex.cpp:2299
 #: src/newchkacctdialog.cpp:357
 #: src/payeedialog.cpp:176
 #: src/payeedialog.cpp:188
@@ -264,8 +264,8 @@ msgstr ""
 #: src/stockdialog.cpp:371
 #: src/stockdialog.cpp:380
 #: src/transdialog.cpp:491
-#: src/transdialog.cpp:656
-#: src/transdialog.cpp:677
+#: src/transdialog.cpp:652
+#: src/transdialog.cpp:673
 #: src/univcsv.cpp:236
 #: src/univcsv.cpp:248
 #: src/util.cpp:141
@@ -280,9 +280,9 @@ msgid "Rate of Change in Value"
 msgstr ""
 
 #: src/assets.cpp:112
-#: src/mmex.cpp:520
-#: src/mmex.cpp:548
-#: src/mmex.cpp:1495
+#: src/mmex.cpp:526
+#: src/mmex.cpp:554
+#: src/mmex.cpp:1507
 #: src/mmhomepagepanel.cpp:175
 msgid "Assets"
 msgstr ""
@@ -298,7 +298,7 @@ msgstr ""
 
 #: src/assets.cpp:179
 #: src/mmcheckingpanel.cpp:317
-#: src/mmex.cpp:1573
+#: src/mmex.cpp:1585
 #: src/stocks.cpp:208
 msgid "New"
 msgstr ""
@@ -499,7 +499,7 @@ msgstr ""
 #: src/billsdeposits.cpp:145
 #: src/mmcheckingpanel.cpp:253
 #: src/transdialog.cpp:247
-#: src/transdialog.cpp:582
+#: src/transdialog.cpp:578
 #: src/univcsv.cpp:168
 #: src/univcsv.cpp:197
 msgid "Payee"
@@ -513,8 +513,8 @@ msgstr ""
 #: src/filtertransdialog.cpp:220
 #: src/transdialog.cpp:252
 #: src/transdialog.cpp:421
-#: src/transdialog.cpp:584
-#: src/transdialog.cpp:600
+#: src/transdialog.cpp:580
+#: src/transdialog.cpp:596
 msgid "Select Payee"
 msgstr ""
 
@@ -571,7 +571,7 @@ msgstr ""
 #: src/transdialog.cpp:383
 #: src/transdialog.cpp:420
 #: src/transdialog.cpp:456
-#: src/transdialog.cpp:521
+#: src/transdialog.cpp:517
 msgid "Select Category"
 msgstr ""
 
@@ -650,8 +650,8 @@ msgstr ""
 
 #: src/bddialog.cpp:688
 #: src/bddialog.cpp:702
-#: src/transdialog.cpp:598
-#: src/transdialog.cpp:615
+#: src/transdialog.cpp:594
+#: src/transdialog.cpp:611
 msgid "From"
 msgstr ""
 
@@ -660,12 +660,12 @@ msgid "Select From"
 msgstr ""
 
 #: src/bddialog.cpp:723
-#: src/transdialog.cpp:638
+#: src/transdialog.cpp:634
 msgid "Payee "
 msgstr ""
 
 #: src/bddialog.cpp:725
-#: src/transdialog.cpp:640
+#: src/transdialog.cpp:636
 msgid "From Account "
 msgstr ""
 
@@ -676,12 +676,12 @@ msgid "Account"
 msgstr ""
 
 #: src/bddialog.cpp:741
-#: src/transdialog.cpp:650
+#: src/transdialog.cpp:646
 msgid "To Account "
 msgstr ""
 
 #: src/bddialog.cpp:747
-#: src/transdialog.cpp:656
+#: src/transdialog.cpp:652
 msgid "From and To Account cannot be the same."
 msgstr ""
 
@@ -689,17 +689,17 @@ msgstr ""
 #: src/budgetentrydialog.cpp:226
 #: src/filtertransdialog.cpp:503
 #: src/filtertransdialog.cpp:517
-#: src/transdialog.cpp:677
+#: src/transdialog.cpp:673
 msgid "Invalid Amount Entered "
 msgstr ""
 
 #: src/bddialog.cpp:795
-#: src/transdialog.cpp:705
+#: src/transdialog.cpp:701
 msgid "Category "
 msgstr ""
 
 #: src/billsdeposits.cpp:124
-#: src/mmex.cpp:1485
+#: src/mmex.cpp:1497
 msgid "Bills && Deposits"
 msgstr ""
 
@@ -748,37 +748,37 @@ msgstr ""
 msgid "Enter Next Bills && Deposit Occurrence"
 msgstr ""
 
-#: src/billsdeposits.cpp:288
-#: src/mmhomepagepanel.cpp:276
+#: src/billsdeposits.cpp:299
+#: src/mmhomepagepanel.cpp:286
 msgid " days remaining"
 msgstr ""
 
-#: src/billsdeposits.cpp:293
-#: src/mmhomepagepanel.cpp:281
+#: src/billsdeposits.cpp:304
+#: src/mmhomepagepanel.cpp:291
 msgid " days overdue!"
 msgstr ""
 
-#: src/billsdeposits.cpp:360
+#: src/billsdeposits.cpp:371
 msgid "&New Bills && Deposit Series"
 msgstr ""
 
-#: src/billsdeposits.cpp:362
+#: src/billsdeposits.cpp:373
 msgid "&Edit Bills && Deposit Series"
 msgstr ""
 
-#: src/billsdeposits.cpp:363
+#: src/billsdeposits.cpp:374
 msgid "&Delete Bills && Deposit Series"
 msgstr ""
 
-#: src/billsdeposits.cpp:365
+#: src/billsdeposits.cpp:376
 msgid "Enter next Occurrence"
 msgstr ""
 
-#: src/billsdeposits.cpp:451
+#: src/billsdeposits.cpp:462
 msgid "Do you really want to delete the series?"
 msgstr ""
 
-#: src/billsdeposits.cpp:452
+#: src/billsdeposits.cpp:463
 msgid "Confirm Series Deletion"
 msgstr ""
 
@@ -1150,7 +1150,7 @@ msgid "Account Balance : %s      Reconciled Balance : %s"
 msgstr ""
 
 #: src/mmcheckingpanel.cpp:423
-#: src/mmex.cpp:1672
+#: src/mmex.cpp:1684
 msgid "Please Wait"
 msgstr ""
 
@@ -1296,450 +1296,450 @@ msgid ""
 "financial information."
 msgstr ""
 
-#: src/mmex.cpp:508
+#: src/mmex.cpp:514
 msgid "Home Page"
 msgstr ""
 
-#: src/mmex.cpp:512
+#: src/mmex.cpp:518
 msgid "Bank Accounts"
 msgstr ""
 
-#: src/mmex.cpp:516
-#: src/mmex.cpp:543
+#: src/mmex.cpp:522
+#: src/mmex.cpp:549
 msgid "Stocks"
 msgstr ""
 
-#: src/mmex.cpp:524
-msgid "Bills & Deposits"
-msgstr ""
-
-#: src/mmex.cpp:528
-msgid "Budgeting"
+#: src/mmex.cpp:530
+msgid "Repeating Transactions"
 msgstr ""
 
 #: src/mmex.cpp:534
+msgid "Budgeting"
+msgstr ""
+
+#: src/mmex.cpp:540
 msgid "Reports"
 msgstr ""
 
-#: src/mmex.cpp:538
+#: src/mmex.cpp:544
 #: include/reportsummary.h:36
 msgid "Summary of Accounts"
 msgstr ""
 
-#: src/mmex.cpp:553
+#: src/mmex.cpp:559
 #: include/reportcategexp.h:45
 msgid "Where the Money Goes"
 msgstr ""
 
-#: src/mmex.cpp:558
-#: src/mmex.cpp:590
-#: src/mmex.cpp:622
+#: src/mmex.cpp:564
+#: src/mmex.cpp:596
+#: src/mmex.cpp:628
 msgid "Last Calendar Month"
 msgstr ""
 
-#: src/mmex.cpp:563
-#: src/mmex.cpp:595
-#: src/mmex.cpp:627
+#: src/mmex.cpp:569
+#: src/mmex.cpp:601
+#: src/mmex.cpp:633
 msgid "Current Month"
 msgstr ""
 
-#: src/mmex.cpp:568
-#: src/mmex.cpp:600
-#: src/mmex.cpp:632
+#: src/mmex.cpp:574
+#: src/mmex.cpp:606
+#: src/mmex.cpp:638
 msgid "Last 30 Days"
 msgstr ""
 
-#: src/mmex.cpp:573
-#: src/mmex.cpp:605
-#: src/mmex.cpp:637
+#: src/mmex.cpp:579
+#: src/mmex.cpp:611
+#: src/mmex.cpp:643
 msgid "Last Year"
 msgstr ""
 
-#: src/mmex.cpp:578
-#: src/mmex.cpp:610
-#: src/mmex.cpp:642
+#: src/mmex.cpp:584
+#: src/mmex.cpp:616
+#: src/mmex.cpp:648
 msgid "Current Year"
 msgstr ""
 
-#: src/mmex.cpp:585
+#: src/mmex.cpp:591
 #: include/reportpayee.h:27
 msgid "To Whom the Money Goes"
 msgstr ""
 
-#: src/mmex.cpp:617
+#: src/mmex.cpp:623
 #: include/reportincexpenses.h:28
 msgid "Income vs Expenses"
 msgstr ""
 
-#: src/mmex.cpp:647
+#: src/mmex.cpp:653
 msgid "Income vs Expenses - All Time"
 msgstr ""
 
-#: src/mmex.cpp:653
+#: src/mmex.cpp:659
 msgid "Transaction Report"
 msgstr ""
 
-#: src/mmex.cpp:658
+#: src/mmex.cpp:664
 msgid "Budget Performance"
 msgstr ""
 
-#: src/mmex.cpp:663
+#: src/mmex.cpp:669
 msgid "Help"
 msgstr ""
 
-#: src/mmex.cpp:1171
-#: src/mmex.cpp:1193
-#: src/mmex.cpp:2248
+#: src/mmex.cpp:1183
+#: src/mmex.cpp:1205
+#: src/mmex.cpp:2330
 msgid "Do you really want to delete the account?"
 msgstr ""
 
-#: src/mmex.cpp:1172
-#: src/mmex.cpp:1194
-#: src/mmex.cpp:2249
+#: src/mmex.cpp:1184
+#: src/mmex.cpp:1206
+#: src/mmex.cpp:2331
 msgid "Confirm Account Deletion"
 msgstr ""
 
-#: src/mmex.cpp:1249
+#: src/mmex.cpp:1261
 msgid "&Go To.."
 msgstr ""
 
-#: src/mmex.cpp:1250
-#: src/mmex.cpp:1259
+#: src/mmex.cpp:1262
+#: src/mmex.cpp:1271
 msgid "&Edit Account"
 msgstr ""
 
-#: src/mmex.cpp:1251
-#: src/mmex.cpp:1260
+#: src/mmex.cpp:1263
+#: src/mmex.cpp:1272
 msgid "&Delete Account"
 msgstr ""
 
-#: src/mmex.cpp:1253
-#: src/mmex.cpp:1262
+#: src/mmex.cpp:1265
+#: src/mmex.cpp:1274
 msgid "&Launch Account Website"
 msgstr ""
 
-#: src/mmex.cpp:1380
+#: src/mmex.cpp:1392
 msgid "&New Database\tCtrl-N"
 msgstr ""
 
-#: src/mmex.cpp:1380
-#: src/mmex.cpp:1573
+#: src/mmex.cpp:1392
+#: src/mmex.cpp:1585
 msgid "New Money Manager Database"
 msgstr ""
 
-#: src/mmex.cpp:1384
+#: src/mmex.cpp:1396
 msgid "&Open Database\tCtrl-O"
 msgstr ""
 
-#: src/mmex.cpp:1384
-#: src/mmex.cpp:1574
+#: src/mmex.cpp:1396
+#: src/mmex.cpp:1586
 msgid "Open Money Manager Database"
 msgstr ""
 
-#: src/mmex.cpp:1391
+#: src/mmex.cpp:1403
 msgid "Save Database &As"
 msgstr ""
 
-#: src/mmex.cpp:1391
+#: src/mmex.cpp:1403
 msgid "Save Money Manager Database As"
 msgstr ""
 
-#: src/mmex.cpp:1398
+#: src/mmex.cpp:1410
 msgid "&CSV Files"
 msgstr ""
 
-#: src/mmex.cpp:1398
+#: src/mmex.cpp:1410
 #: src/util.cpp:208
 msgid "Export to CSV"
 msgstr ""
 
-#: src/mmex.cpp:1399
+#: src/mmex.cpp:1411
 msgid "&Report to HTML"
 msgstr ""
 
-#: src/mmex.cpp:1399
+#: src/mmex.cpp:1411
 msgid "Export to HTML"
 msgstr ""
 
-#: src/mmex.cpp:1400
+#: src/mmex.cpp:1412
 msgid "&Export"
 msgstr ""
 
-#: src/mmex.cpp:1403
+#: src/mmex.cpp:1415
 msgid "&QIF Files"
 msgstr ""
 
-#: src/mmex.cpp:1403
+#: src/mmex.cpp:1415
 msgid "Import from QIF"
 msgstr ""
 
-#: src/mmex.cpp:1404
+#: src/mmex.cpp:1416
 msgid "&Universal CSV Files"
 msgstr ""
 
-#: src/mmex.cpp:1404
+#: src/mmex.cpp:1416
 msgid "Import from any CSV file"
 msgstr ""
 
-#: src/mmex.cpp:1405
+#: src/mmex.cpp:1417
 msgid "&MMEX CSV Files"
 msgstr ""
 
-#: src/mmex.cpp:1405
+#: src/mmex.cpp:1417
 msgid "Import from MMEX CSV"
 msgstr ""
 
-#: src/mmex.cpp:1406
+#: src/mmex.cpp:1418
 msgid "&MM.NET CSV Files"
 msgstr ""
 
-#: src/mmex.cpp:1406
+#: src/mmex.cpp:1418
 msgid "Import from MM.NET CSV"
 msgstr ""
 
-#: src/mmex.cpp:1408
+#: src/mmex.cpp:1420
 #: src/univcsv.cpp:113
 msgid "Import"
 msgstr ""
 
-#: src/mmex.cpp:1414
+#: src/mmex.cpp:1426
 msgid "Page Setup..."
 msgstr ""
 
-#: src/mmex.cpp:1414
+#: src/mmex.cpp:1426
 msgid "Setup page printing options"
 msgstr ""
 
-#: src/mmex.cpp:1420
-#: src/mmex.cpp:1426
+#: src/mmex.cpp:1432
+#: src/mmex.cpp:1438
 msgid "Current View"
 msgstr ""
 
-#: src/mmex.cpp:1420
+#: src/mmex.cpp:1432
 msgid "Preview current report"
 msgstr ""
 
-#: src/mmex.cpp:1422
+#: src/mmex.cpp:1434
 msgid "Print Preview..."
 msgstr ""
 
-#: src/mmex.cpp:1426
+#: src/mmex.cpp:1438
 msgid "Print current report"
 msgstr ""
 
-#: src/mmex.cpp:1429
+#: src/mmex.cpp:1441
 msgid "Print..."
 msgstr ""
 
-#: src/mmex.cpp:1434
+#: src/mmex.cpp:1446
 msgid "E&xit\tAlt-X"
 msgstr ""
 
-#: src/mmex.cpp:1434
+#: src/mmex.cpp:1446
 msgid "Quit this program"
 msgstr ""
 
-#: src/mmex.cpp:1441
+#: src/mmex.cpp:1453
 msgid "New &Account"
 msgstr ""
 
-#: src/mmex.cpp:1441
-#: src/mmex.cpp:1577
+#: src/mmex.cpp:1453
+#: src/mmex.cpp:1589
 msgid "New Money Manager Account"
 msgstr ""
 
-#: src/mmex.cpp:1445
+#: src/mmex.cpp:1457
 msgid "Account &List"
 msgstr ""
 
-#: src/mmex.cpp:1445
-#: src/mmex.cpp:1578
+#: src/mmex.cpp:1457
+#: src/mmex.cpp:1590
 msgid "Show Account List"
 msgstr ""
 
-#: src/mmex.cpp:1449
+#: src/mmex.cpp:1461
 msgid "Edit Account"
 msgstr ""
 
-#: src/mmex.cpp:1453
+#: src/mmex.cpp:1465
 msgid "Delete Account"
 msgstr ""
 
-#: src/mmex.cpp:1453
+#: src/mmex.cpp:1465
 msgid "Delete Account from database"
 msgstr ""
 
-#: src/mmex.cpp:1465
+#: src/mmex.cpp:1477
 msgid "Organize &Categories"
 msgstr ""
 
-#: src/mmex.cpp:1465
-#: src/mmex.cpp:1580
+#: src/mmex.cpp:1477
+#: src/mmex.cpp:1592
 #: include/categdialog.h:23
 msgid "Organize Categories"
 msgstr ""
 
-#: src/mmex.cpp:1470
+#: src/mmex.cpp:1482
 msgid "Organize &Payees"
 msgstr ""
 
-#: src/mmex.cpp:1470
-#: src/mmex.cpp:1581
+#: src/mmex.cpp:1482
+#: src/mmex.cpp:1593
 #: include/payeedialog.h:22
 msgid "Organize Payees"
 msgstr ""
 
-#: src/mmex.cpp:1475
-#: src/mmex.cpp:1582
+#: src/mmex.cpp:1487
+#: src/mmex.cpp:1594
 msgid "Organize Currency"
 msgstr ""
 
-#: src/mmex.cpp:1480
+#: src/mmex.cpp:1492
 msgid "Budget Setup"
 msgstr ""
 
-#: src/mmex.cpp:1490
+#: src/mmex.cpp:1502
 #: src/mmhomepagepanel.cpp:157
 #: src/stocks.cpp:124
 msgid "Stock Investments"
 msgstr ""
 
-#: src/mmex.cpp:1502
+#: src/mmex.cpp:1514
 msgid "Transaction Filter"
 msgstr ""
 
-#: src/mmex.cpp:1511
+#: src/mmex.cpp:1523
 msgid "&Options"
 msgstr ""
 
-#: src/mmex.cpp:1511
+#: src/mmex.cpp:1523
 msgid "Money Manager Options"
 msgstr ""
 
-#: src/mmex.cpp:1518
+#: src/mmex.cpp:1530
 msgid "&Help\tCtrl-F1"
 msgstr ""
 
-#: src/mmex.cpp:1518
+#: src/mmex.cpp:1530
 msgid "Money Manager Help"
 msgstr ""
 
-#: src/mmex.cpp:1523
+#: src/mmex.cpp:1535
 msgid "Show App Start Dialog"
 msgstr ""
 
-#: src/mmex.cpp:1523
+#: src/mmex.cpp:1535
 msgid "App Start Dialog"
 msgstr ""
 
-#: src/mmex.cpp:1531
+#: src/mmex.cpp:1543
 msgid "Check for &Updates"
 msgstr ""
 
-#: src/mmex.cpp:1531
+#: src/mmex.cpp:1543
 msgid "Check For Updates"
 msgstr ""
 
-#: src/mmex.cpp:1536
+#: src/mmex.cpp:1548
 msgid "Report Issues or Feedback"
 msgstr ""
 
-#: src/mmex.cpp:1536
+#: src/mmex.cpp:1548
 msgid "Send email through the mailing list to report issues with the software."
 msgstr ""
 
-#: src/mmex.cpp:1541
+#: src/mmex.cpp:1553
 msgid "Be notified of new releases"
 msgstr ""
 
-#: src/mmex.cpp:1541
+#: src/mmex.cpp:1553
 msgid "Sign up for the announcement mailing list"
 msgstr ""
 
-#: src/mmex.cpp:1547
+#: src/mmex.cpp:1559
 msgid "&About..."
 msgstr ""
 
-#: src/mmex.cpp:1547
+#: src/mmex.cpp:1559
 msgid "Show about dialog"
 msgstr ""
 
-#: src/mmex.cpp:1552
+#: src/mmex.cpp:1564
 msgid "&File"
 msgstr ""
 
-#: src/mmex.cpp:1553
+#: src/mmex.cpp:1565
 msgid "&Accounts"
 msgstr ""
 
-#: src/mmex.cpp:1554
+#: src/mmex.cpp:1566
 msgid "&Tools"
 msgstr ""
 
-#: src/mmex.cpp:1555
+#: src/mmex.cpp:1567
 msgid "&Help"
 msgstr ""
 
-#: src/mmex.cpp:1574
+#: src/mmex.cpp:1586
 #: src/newchkacctdialog.cpp:255
 #: src/optionsdialog.cpp:263
 msgid "Open"
 msgstr ""
 
-#: src/mmex.cpp:1577
+#: src/mmex.cpp:1589
 #: include/newchkacctdialog.h:23
 msgid "New Account"
 msgstr ""
 
-#: src/mmex.cpp:1578
+#: src/mmex.cpp:1590
 msgid "Account List"
 msgstr ""
 
-#: src/mmex.cpp:1580
+#: src/mmex.cpp:1592
 msgid "Show Organize Categories Dialog"
 msgstr ""
 
-#: src/mmex.cpp:1581
+#: src/mmex.cpp:1593
 msgid "Show Organize Payees Dialog"
 msgstr ""
 
-#: src/mmex.cpp:1582
+#: src/mmex.cpp:1594
 msgid "Show Organize Currency Dialog"
 msgstr ""
 
-#: src/mmex.cpp:1618
-#: src/mmex.cpp:1650
+#: src/mmex.cpp:1630
+#: src/mmex.cpp:1662
 msgid "Money Manager EX - No File opened "
 msgstr ""
 
-#: src/mmex.cpp:1620
+#: src/mmex.cpp:1632
 msgid "Sorry. The Database version is too old.                     Cannot open in this version of Money Manager Ex."
 msgstr ""
 
-#: src/mmex.cpp:1622
-#: src/mmex.cpp:1653
+#: src/mmex.cpp:1634
+#: src/mmex.cpp:1665
 msgid "Error opening database"
 msgstr ""
 
-#: src/mmex.cpp:1652
+#: src/mmex.cpp:1664
 msgid ""
 "Cannot locate previously opened .mmb database.\n"
 "Do you want to browse to locate the file?"
 msgstr ""
 
-#: src/mmex.cpp:1673
+#: src/mmex.cpp:1685
 msgid "Opening Database File && Verifying Integrity"
 msgstr ""
 
-#: src/mmex.cpp:1773
-#: src/mmex.cpp:1849
+#: src/mmex.cpp:1785
+#: src/mmex.cpp:1861
 #: src/qifimport.cpp:354
 #: src/util.cpp:221
 #: src/util.cpp:460
 msgid "No Account available! Cannot Import! Create a new account first!"
 msgstr ""
 
-#: src/mmex.cpp:1792
+#: src/mmex.cpp:1804
 #: src/qifimport.cpp:370
 #: src/univcsv.cpp:266
 #: src/util.cpp:241
@@ -1747,25 +1747,38 @@ msgstr ""
 msgid "Choose Account to import to:"
 msgstr ""
 
-#: src/mmex.cpp:1793
+#: src/mmex.cpp:1805
 msgid "QFX Import"
 msgstr ""
 
-#: src/mmex.cpp:2175
-#: src/mmex.cpp:2217
+#: src/mmex.cpp:2048
+msgid "New update available!"
+msgstr ""
+
+#: src/mmex.cpp:2048
+#: src/mmex.cpp:2054
+msgid "Check Update"
+msgstr ""
+
+#: src/mmex.cpp:2054
+msgid "You have the latest version installed!"
+msgstr ""
+
+#: src/mmex.cpp:2257
+#: src/mmex.cpp:2299
 msgid "No Account available!"
 msgstr ""
 
-#: src/mmex.cpp:2195
+#: src/mmex.cpp:2277
 msgid "Choose Account to Edit"
 msgstr ""
 
-#: src/mmex.cpp:2196
-#: src/mmex.cpp:2240
+#: src/mmex.cpp:2278
+#: src/mmex.cpp:2322
 msgid "Accounts"
 msgstr ""
 
-#: src/mmex.cpp:2239
+#: src/mmex.cpp:2321
 msgid "Choose Account to Delete"
 msgstr ""
 
@@ -1795,7 +1808,7 @@ msgstr ""
 msgid "Upcoming Bills & Deposits"
 msgstr ""
 
-#: src/mmhomepagepanel.cpp:303
+#: src/mmhomepagepanel.cpp:314
 msgid "Follow Up On "
 msgstr ""
 
@@ -2169,6 +2182,7 @@ msgid " cannot process Account Types yet "
 msgstr ""
 
 #: src/qifimport.cpp:499
+#: src/qifimport.cpp:611
 msgid "Adding payee "
 msgstr ""
 
@@ -2190,15 +2204,15 @@ msgstr ""
 msgid "Amount is empty"
 msgstr ""
 
-#: src/qifimport.cpp:608
+#: src/qifimport.cpp:624
 msgid "Category is empty, marking transaction as Unknown category"
 msgstr ""
 
-#: src/qifimport.cpp:621
-msgid "Skipping QIF transaction"
+#: src/qifimport.cpp:638
+msgid "Skipping QIF transaction because date, type, amount is empty/invalid"
 msgstr ""
 
-#: src/qifimport.cpp:654
+#: src/qifimport.cpp:671
 msgid " transactions imported from QIF"
 msgstr ""
 
@@ -2347,20 +2361,20 @@ msgid "Confirm Stock Investment Deletion"
 msgstr ""
 
 #: src/transdialog.cpp:254
-#: src/transdialog.cpp:589
-#: src/transdialog.cpp:604
+#: src/transdialog.cpp:585
+#: src/transdialog.cpp:600
 msgid "Specify to whom the transaction is going to or coming from "
 msgstr ""
 
-#: src/transdialog.cpp:608
+#: src/transdialog.cpp:604
 msgid "Select From Account"
 msgstr ""
 
-#: src/transdialog.cpp:609
+#: src/transdialog.cpp:605
 msgid "Select To Account"
 msgstr ""
 
-#: src/transdialog.cpp:618
+#: src/transdialog.cpp:614
 msgid "Specify the account from which the transfer is occurring"
 msgstr ""
 

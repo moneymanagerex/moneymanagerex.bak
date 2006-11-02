@@ -1,0 +1,15 @@
+Translations
+============
+
+Italian 	-- Claudio
+French  	-- Berry As and Jean-Christophe
+Greek   	-- Panagiotis Pentzeridis
+Czech   	-- Josef Remes
+Russian 	-- KarmaSV
+Brazilian 	-- Jose Carlos
+German 		-- Schrempfi
+Simple Chinese 	-- Liu Ming
+Tr. Chinese 	-- Kysouke
+Hebrew          -- Ykpui
+
+

@@ -28,6 +28,7 @@ IMPLEMENT_DYNAMIC_CLASS( mmAboutDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmAboutDialog, wxDialog )
   EVT_BUTTON(ID_DIALOG_BUTTON_ABOUT_VERSION_HISTORY, mmAboutDialog::OnVersionHistory)
+  EVT_BUTTON(ID_DIALOG_BUTTON_ABOUT_CONTRIBUTERS, mmAboutDialog::OnContributerList)
 END_EVENT_TABLE()
 
 mmAboutDialog::mmAboutDialog()
@@ -70,6 +71,19 @@ void mmAboutDialog::OnVersionHistory(wxCommandEvent& event)
     dlg->Destroy();
 }
 
+void mmAboutDialog::OnContributerList(wxCommandEvent& event)
+{
+    wxFileName fname(wxTheApp->argv[0]);
+    wxString filePath = fname.GetPath(wxPATH_GET_VOLUME) + wxT("\\contrib.txt");
+    
+    fileviewer* dlg = new fileviewer(filePath, this);
+    if ( dlg->ShowModal() == wxID_OK )
+    {
+
+    }
+    dlg->Destroy();
+}
+
 void mmAboutDialog::CreateControls()
 {    
     mmAboutDialog* itemDialog1 = this;
@@ -91,7 +105,6 @@ void mmAboutDialog::CreateControls()
         wxID_STATIC, port + wxT("Muguntharaj, Pushparajan"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerN->Add(itemStaticText101, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
-#endif
 
     wxString trans = _("Translations by : ");
     wxStaticText* itemStaticText18 = new wxStaticText( itemDialog1, 
@@ -103,6 +116,7 @@ Simple Chinese (Liu Ming), Brazilian (Jose Carlos), \n \
 German (Schrempfi)"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerN->Add(itemStaticText18, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
+#endif
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer2->Add(itemBoxSizer4, 1, wxGROW|wxALL, 5);
@@ -115,8 +129,6 @@ German (Schrempfi)"),
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, 
         MMEXVERSION , wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer4->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
-
-    itemBoxSizer4->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
         wxID_STATIC, wxT("(c) 2005-2006 Madhan Kanagavel"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -141,17 +153,18 @@ German (Schrempfi)"),
     itemBoxSizer4->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxStaticText* itemStaticText12 = new wxStaticText( itemDialog1, 
-        wxID_STATIC, _("Powered by wxWidgets (c) www.wxwidgets.org"), wxDefaultPosition, wxDefaultSize, 0 );
+        wxID_STATIC, _("Powered by wxWidgets and SQLite"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer4->Add(itemStaticText12, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
-
-    wxStaticText* itemStaticText13 = new wxStaticText( itemDialog1, 
-        wxID_STATIC, _("Powered by SQLite (c) www.sqlite.org"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer4->Add(itemStaticText13, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
     wxButton* itemButton14 = new wxButton( itemDialog1, ID_DIALOG_BUTTON_ABOUT_VERSION_HISTORY, 
         _("Version History"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer4->Add(itemButton14, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxButton* itemButton18 = new wxButton( itemDialog1, ID_DIALOG_BUTTON_ABOUT_CONTRIBUTERS, 
+        _("Contributers"), 
+        wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer4->Add(itemButton18, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxString langStr = mmDBWrapper::getINISettingValue(inidb_, 
         wxT("LANGUAGE"), wxT("")); 
