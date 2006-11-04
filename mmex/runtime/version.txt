@@ -1,6 +1,6 @@
 Version History of Money Manager Ex
 
-0.7.0.1 (November , 2006)
+0.7.0.1 (November 4, 2006)
 - Don't select category when category dialog is closed (Thanks Mark!)
 - Fixed Bug 1553574: Allow currencies with 3 significant decimals
 - Fixed some menu disable/enable logic when no database is loaded
