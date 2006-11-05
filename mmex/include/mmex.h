@@ -25,6 +25,8 @@
 #include "util.h"
 #include "currencydialog.h"
 
+#include "mmcoredb.h"
+
 class mmGUIApp : public wxApp
 {
 public:

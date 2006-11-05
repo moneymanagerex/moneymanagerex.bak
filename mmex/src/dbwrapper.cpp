@@ -239,9 +239,11 @@ void mmDBWrapper::createAccountListV1Table(wxSQLite3Database* db)
     if (!exists)
     {
         db->ExecuteUpdate(wxT("create table ACCOUNTLIST_V1(ACCOUNTID integer primary key, \
-                              ACCOUNTNAME TEXT NOT NULL, ACCOUNTTYPE TEXT NOT NULL, ACCOUNTNUM TEXT, STATUS TEXT NOT NULL, \
+                              ACCOUNTNAME TEXT NOT NULL, ACCOUNTTYPE TEXT NOT NULL, ACCOUNTNUM TEXT, \
+                              STATUS TEXT NOT NULL, \
                               NOTES TEXT, HELDAT TEXT, WEBSITE TEXT, CONTACTINFO TEXT,       \
-                              ACCESSINFO TEXT, INITIALBAL numeric, FAVORITEACCT TEXT NOT NULL, CURRENCYID numeric NOT NULL);"));
+                              ACCESSINFO TEXT, INITIALBAL numeric, FAVORITEACCT TEXT NOT NULL, \
+                              CURRENCYID numeric NOT NULL);"));
         exists = db->TableExists(wxT("ACCOUNTLIST_V1"));
         wxASSERT(exists);
     }

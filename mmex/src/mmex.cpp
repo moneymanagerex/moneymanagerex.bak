@@ -546,7 +546,6 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(budgeting, new mmTreeItemData(wxT("Budgeting")));
     navTreeCtrl_->SetItemBold(budgeting, true);
 
-
     wxTreeItemId reports = navTreeCtrl_->AppendItem(root, 
         _("Reports"), 4, 4);
     navTreeCtrl_->SetItemBold(reports, true);
@@ -681,6 +680,7 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(help, new mmTreeItemData(wxT("Help")));
     navTreeCtrl_->SetItemBold(help, true);
 
+     /* Start Populating the dynamic data */
     navTreeCtrl_->Expand(root);
     navTreeCtrl_->Expand(reports);
 
@@ -2006,7 +2006,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& event)
 
     wxString page = wxString::FromAscii((const char *)buf);
     wxStringTokenizer tkz(page, wxT('.'), wxTOKEN_RET_EMPTY_ALL);  
-    int numTokens = tkz.CountTokens();
+    int numTokens = (int)tkz.CountTokens();
     if (numTokens != 4)
     {
         wxString url = wxT("http://sourceforge.net/project/showfiles.php?group_id=163169");
@@ -2022,7 +2022,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& event)
     // get current version
     wxString currentV = MMEXVERSION;
     wxStringTokenizer tkz1(currentV, wxT('.'), wxTOKEN_RET_EMPTY_ALL);  
-    numTokens = tkz1.CountTokens();
+    numTokens = (int)tkz1.CountTokens();
     
     wxString majC = tkz1.GetNextToken();
     wxString minC = tkz1.GetNextToken();

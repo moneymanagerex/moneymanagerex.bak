@@ -431,7 +431,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\mmaccount.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\mmcheckingpanel.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\mmcoredb.cpp"
 				>
 			</File>
 			<File
@@ -588,7 +596,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\mmaccount.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\mmcategory.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\mmcheckingpanel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\mmcoredb.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\mmcurrency.h"
 				>
 			</File>
 			<File
@@ -609,6 +633,10 @@
 			</File>
 			<File
 				RelativePath=".\include\mmreportspanel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\mmtransaction.h"
 				>
 			</File>
 			<File
