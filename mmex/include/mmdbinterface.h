@@ -15,31 +15,25 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  /*******************************************************/
-#ifndef _MM_EX_COREDB_H_
-#define _MM_EX_COREDB_H_
+#ifndef _MM_EX_MMDBINTERFACE_H_
+#define _MM_EX_MMDBINTERFACE_H_
 
-
-#include <vector>
-#include "boost/shared_ptr.hpp"
-#include "mmaccount.h"
-#include "mmpayee.h"
-#include "mmcategory.h"
 #include "dbwrapper.h"
+#include "boost/shared_ptr.hpp"
 
-class mmCoreDB
+class mmDBInterface
 {
-public: 
-   mmCoreDB(boost::shared_ptr<wxSQLite3Database>);
-   ~mmCoreDB();
-
-    /* Utility Functions */
-
 public:
-   mmPayeeList payeeList_;
-   mmCategoryList categoryList_;
-   std::vector< boost::shared_ptr<mmAccount> > accounts_;
-   
-   boost::shared_ptr<wxSQLite3Database> db_;
+    mmDBInterface(boost::shared_ptr<wxSQLite3Database>& db)
+        : db_(db) {}
+    virtual ~mmDBInterface() {}
+
+    virtual void addDBRecord() = 0;
+    //virtual void updateDBRecord();
+    //virtual void deleteDBRecord();
+    //virtual void loadDBRecord();
+protected:
+    boost::shared_ptr<wxSQLite3Database> db_;
 };
 
 #endif

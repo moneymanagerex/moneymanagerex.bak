@@ -16,51 +16,105 @@
 #ifndef _MM_EX_MMTRANSACTION_H_
 #define _MM_EX_MMTRANSACTION_H_
 
+#include "boost/shared_ptr.hpp"
+#include "dbwrapper.h"
+#include "mmcategory.h"
+
 class mmTransaction
 {
 public:
-   mmTransaction() {}
+    mmTransaction() {}
+    mmTransaction(int transactionID) : transactionID_(transactionID) {}
    virtual ~mmTransaction() {}
 
+   virtual int transactionID() { return transactionID_; }
+   virtual double value(int accountCtx) = 0;
+
+protected:
+    int transactionID_;
 };
 
 class mmBankTransaction : public mmTransaction
 {
 public: 
-   mmBankTransaction() {}
-   virtual ~mmBankTransaction() {}
-}
+    mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1);
+    virtual ~mmBankTransaction() {}
+
+    virtual double value(int accountCtx) = 0;
+
+    wxDateTime date_;
+    wxString dateStr_;
+
+    boost::weak_ptr<mmCategory> category_;
+    wxString catStr_;
+    wxString subCatStr_;
+
+    int payeeID_;
+    wxString payeeStr_;
+
+    wxString transNum_;
+    wxString status_;
+    wxString notes_;
+    wxString transType_;
+    
+    wxString transAmtString_;
+    double amt_;
+
+    wxString transToAmtString_;
+    double toAmt_;
+    
+    int accountID_;
+    int toAccountID_;
+
+    wxString fromAccountStr_;
+    
+    wxString withdrawalStr_;
+    wxString depositStr_;
+
+    double balance_;
+    wxString balanceStr_;
+};
 
 class mmDepositTransaction : public mmBankTransaction
 {
 public: 
-   mmDepositTransaction() {}
+   mmDepositTransaction(boost::shared_ptr<wxSQLite3Database> db, 
+       wxSQLite3ResultSet& q1) : mmBankTransaction(db,q1) {}
    virtual ~mmDepositTransaction() {}
+
+   virtual double value(int accountCtx) { return amt_; }
 
 };
 
 class mmWithdrawalTransaction : public mmBankTransaction
 {
 public: 
-   mmWithdrawalTransaction() {}
+   mmWithdrawalTransaction(boost::shared_ptr<wxSQLite3Database> db, 
+       wxSQLite3ResultSet& q1) : mmBankTransaction(db, q1)  {}
    virtual ~mmWithdrawalTransaction() {}
 
+   virtual double value(int accountCtx) { return -amt_; }
 };
 
 class mmTransferTransaction : public mmBankTransaction
 {
 public: 
-   mmTransferTransaction() {}
+   mmTransferTransaction(boost::shared_ptr<wxSQLite3Database> db, 
+                 wxSQLite3ResultSet& q1) : mmBankTransaction(db, q1) {}
    virtual ~mmTransferTransaction() {}
 
+   virtual double value(int accountCtx);
 };
 
 
-class mmAssetTransaction : public mmAssetTransaction
+class mmAssetTransaction : public mmTransaction
 {
 public:
-   mmAssetTransaction() {}
+   mmAssetTransaction(boost::shared_ptr<wxSQLite3Database> db, 
+                 wxSQLite3ResultSet& q1) : mmTransaction(q1.GetInt(wxT("TRANSID"))) {}
    virtual ~mmAssetTransaction() {}
+
+   virtual double value(int accountCtx) { return 0.0; }
 };
 
 

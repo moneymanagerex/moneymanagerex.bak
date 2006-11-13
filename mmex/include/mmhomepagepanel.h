@@ -22,6 +22,7 @@
 #include "mmpanelbase.h"
 #include "guiid.h"
 #include "defs.h"
+#include "mmcoredb.h"
 
 class wxListView;
 class mmGUIFrame;
@@ -54,7 +55,9 @@ class mmHomePagePanel : public mmPanelBase
 
 public:
     mmHomePagePanel( mmGUIFrame* frame, 
-        wxSQLite3Database* db_, wxWindow *parent,
+        wxSQLite3Database* db_, 
+        mmCoreDB* core_,
+        wxWindow *parent,
         wxWindowID winid = wxID_ANY,
         const wxPoint& pos = wxDefaultPosition,
         const wxSize& size = wxDefaultSize,
@@ -68,12 +71,12 @@ public:
                 const wxString& name = wxPanelNameStr);
       
     void CreateControls();
-
-    void init(wxSQLite3Database* cds);
+   
     void updateAccounts();
 
 private:
     wxSQLite3Database* db_;
+    mmCoreDB* core_;
     mmGUIFrame* frame_;
     mmHtmlWindow* htmlWindow_;
 };

@@ -27,6 +27,7 @@
 
 #include "guiid.h"
 #include "defs.h"
+#include "mmcoredb.h"
 
 class mmData;
 class wxDatePickerCtrl;
@@ -40,7 +41,9 @@ class mmTransDialog : public wxDialog
 
 public:
     mmTransDialog();
-    mmTransDialog(wxSQLite3Database* db, int accountID, int transID, 
+    mmTransDialog(wxSQLite3Database* db, 
+        mmCoreDB* core,
+        int accountID, int transID, 
         bool edit, wxWindow* parent, wxWindowID id = SYMBOL_TRANSDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_TRANSDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_TRANSDIALOG_POSITION, 
@@ -71,6 +74,7 @@ public:
 
 private:
     wxSQLite3Database* db_;
+    mmCoreDB* core_;
     int transID_;
     int accountID_;
     wxTextCtrl *textNumber_;

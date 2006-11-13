@@ -51,12 +51,15 @@ mmTransDialog::mmTransDialog( )
 {
 }
 
-mmTransDialog::mmTransDialog(wxSQLite3Database* db, int accountID, int transID, bool edit, 
+mmTransDialog::mmTransDialog(wxSQLite3Database* db, 
+                             mmCoreDB* core,
+                             int accountID, int transID, bool edit, 
                              wxWindow* parent, wxWindowID id, 
                              const wxString& caption, const wxPoint& pos, 
                              const wxSize& size, long style )
 {
     db_ = db;
+    core_ = core;
     transID_ = transID;
     accountID_ = accountID;
     edit_ = edit;
@@ -362,7 +365,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& event)
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
         selectPayees = false;
 
-    mmPayeeDialog *dlg = new mmPayeeDialog(db_, selectPayees, this);    
+    mmPayeeDialog *dlg = new mmPayeeDialog(core_, selectPayees, this);    
     if ( dlg->ShowModal() == wxID_OK )
     {
         if (selectPayees)
@@ -437,7 +440,7 @@ void mmTransDialog::OnTo(wxCommandEvent& event)
      if (choiceTrans_->GetSelection() == DEF_TRANSFER)
         selectPayees = false;
     
-    mmPayeeDialog *dlg = new mmPayeeDialog(db_, selectPayees, this);    
+    mmPayeeDialog *dlg = new mmPayeeDialog(core_, selectPayees, this);    
     if ( dlg->ShowModal() == wxID_OK )
     {
         if (dlg->payeeID_ == -1)
@@ -502,7 +505,7 @@ void mmTransDialog::OnAdvanced(wxCommandEvent& event)
 
 void mmTransDialog::OnCategs(wxCommandEvent& event)
 {
-    mmCategDialog *dlg = new mmCategDialog(db_, this);
+    mmCategDialog *dlg = new mmCategDialog(core_, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
          if (dlg->categID_ == -1)

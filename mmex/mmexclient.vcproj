@@ -435,6 +435,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\mmcategory.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\mmcheckingpanel.cpp"
 				>
 			</File>
@@ -455,7 +459,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\mmpayee.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\mmreportspanel.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\mmtransaction.cpp"
 				>
 			</File>
 			<File
@@ -616,6 +628,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\mmdbinterface.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\mmex.h"
 				>
 			</File>
@@ -629,6 +645,10 @@
 			</File>
 			<File
 				RelativePath=".\include\mmpanelbase.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\mmpayee.h"
 				>
 			</File>
 			<File

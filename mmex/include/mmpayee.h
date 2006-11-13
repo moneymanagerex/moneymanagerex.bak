@@ -1,6 +1,4 @@
 /*******************************************************
- Copyright (C) 2006 Madhan Kanagavel
-
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
@@ -15,31 +13,43 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  /*******************************************************/
-#ifndef _MM_EX_COREDB_H_
-#define _MM_EX_COREDB_H_
+#ifndef _MM_EX_MMPAYEE_H_
+#define _MM_EX_MMPAYEE_H_
 
-
-#include <vector>
-#include "boost/shared_ptr.hpp"
-#include "mmaccount.h"
-#include "mmpayee.h"
+#include "mmdbinterface.h"
 #include "mmcategory.h"
-#include "dbwrapper.h"
+#include "boost/shared_ptr.hpp"
 
-class mmCoreDB
+class mmPayee
 {
 public: 
-   mmCoreDB(boost::shared_ptr<wxSQLite3Database>);
-   ~mmCoreDB();
+   mmPayee() {}
+   mmPayee(int payeeID, const wxString& payeeName, boost::shared_ptr<mmCategory> category);
+   ~mmPayee() {}
 
-    /* Utility Functions */
+    int payeeID_;
+    wxString payeeName_;
+    boost::weak_ptr<mmCategory> category_;
+};
 
+class mmPayeeList
+{
 public:
-   mmPayeeList payeeList_;
-   mmCategoryList categoryList_;
-   std::vector< boost::shared_ptr<mmAccount> > accounts_;
-   
-   boost::shared_ptr<wxSQLite3Database> db_;
+    mmPayeeList(boost::shared_ptr<wxSQLite3Database> db)
+        : db_(db) {}
+    ~mmPayeeList() {}
+
+    /* Payee Functions */
+    void addPayee(const wxString& payeeName);
+    bool deletePayee(int payeeID);
+    void updatePayee(int payeeID, const wxString& payeeName);
+    bool payeeExists(const wxString& payeeName);
+    int getPayeeID(const wxString& payeeName);
+
+    std::vector< boost::shared_ptr<mmPayee> > payees_;
+    
+private:
+    boost::shared_ptr<wxSQLite3Database> db_;
 };
 
 #endif

@@ -20,30 +20,81 @@
 #include "mmcoredb.h"
 
 mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
-: db_ (db)
+: db_ (db),
+  payeeList_(db),
+  categoryList_(db)
 {
-   // Let's load the DB
-   wxString sqlString = wxT("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
-   
+    if (!db_)
+        throw wxString(wxT("Database Handle is invalid!"));
+
+    mmBEGINSQL_LITE_EXCEPTION;
+    /* Load the DB into memory */
+
+    /* Load the Accounts */
+    wxString sqlString = wxT("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sqlString);
     while (q1.NextRow())
     {
-       mmAccount* ptrBase;
-       if (q1.GetString(wxT("ACCOUNTTYPE")) == wxT("Checking"))
-         ptrBase = new mmCheckingAccount(q1);
-       else
-         ptrBase = new mmInvestmentAccount(q1);
+        mmAccount* ptrBase;
+        if (q1.GetString(wxT("ACCOUNTTYPE")) == wxT("Checking"))
+            ptrBase = new mmCheckingAccount(db_, q1);
+        else
+            ptrBase = new mmInvestmentAccount(db_, q1);
 
-      boost::shared_ptr<mmAccount> pAccount(ptrBase);
-       
-       accounts_.push_back(pAccount);
+        boost::shared_ptr<mmAccount> pAccount(ptrBase);
+        accounts_.push_back(pAccount);
     }
     q1.Finalize();
+
+     /* Load the Categories */
+    sqlString = wxT("select * from CATEGORY_V1 order by CATEGNAME;");
+    q1 = db_->ExecuteQuery(sqlString);
+    while (q1.NextRow())
+    {
+       int categID          = q1.GetInt(wxT("CATEGID"));
+       wxString categString = q1.GetString(wxT("CATEGNAME"));
+       boost::shared_ptr<mmCategory> pCategory(new mmCategory(categID, categString));
+    
+       wxSQLite3StatementBuffer bufSQL1;
+       bufSQL1.Format("select * from SUBCATEGORY_V1 where CATEGID=%d;", categID);
+       wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL1); 
+       while(q2.NextRow())
+       {
+           int subcategID          = q2.GetInt(wxT("SUBCATEGID"));
+           wxString subcategString    = q2.GetString(wxT("SUBCATEGNAME"));
+           boost::shared_ptr<mmCategory> pSubCategory(new mmCategory(subcategID, subcategString));
+           pSubCategory->parent_ = pCategory;
+
+           pCategory->children_.push_back(pSubCategory);
+       }
+       q2.Finalize();
+
+       categoryList_.categories_.push_back(pCategory);
+    }
+    q1.Finalize();
+
+    /* Load the Payees */
+    sqlString = wxT("select * from PAYEE_V1 order by PAYEENAME;");
+    q1 = db_->ExecuteQuery(sqlString);
+    while (q1.NextRow())
+    {
+        wxString payeeString = q1.GetString(wxT("PAYEENAME"));
+        int payeeID = q1.GetInt(wxT("PAYEEID"));
+        int categID = q1.GetInt(wxT("CATEGID"));
+        int subCategID = q1.GetInt(wxT("SUBCATEGID"));
+
+        boost::shared_ptr<mmPayee> pPayee(new mmPayee(payeeID, payeeString, categoryList_.getCategorySharedPtr(categID, subCategID)));
+        payeeList_.payees_.push_back(pPayee);
+    }
+    q1.Finalize();
+
+    mmENDSQL_LITE_EXCEPTION;
 }
 
 mmCoreDB::~mmCoreDB()
 {
 
 }
+
 
  

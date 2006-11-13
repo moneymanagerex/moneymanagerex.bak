@@ -385,7 +385,6 @@ public:
     void OnEditAccount(wxCommandEvent& event);
     void OnDeleteAccount(wxCommandEvent& event);
     
-
     void OnOrgCategories(wxCommandEvent& event);
     void OnOrgPayees(wxCommandEvent& event);
     void OnOptions(wxCommandEvent& event);
@@ -409,14 +408,16 @@ public:
 
 public:
     mmPanelBase* panelCurrent_;
-    //wxPanel* replace;
     wxPanel* homePanel;
     wxTreeCtrl* navTreeCtrl_;
     int gotoAccountID_;
 
 private:
+    /* handles to the DB Abstraction */
+    mmCoreDB* core_;
+
     /* handles to SQLite Database */
-    wxSQLite3Database* db_;
+    boost::shared_ptr<wxSQLite3Database> db_;
     wxSQLite3Database* inidb_;
 
     /* Currently open file name */

@@ -26,6 +26,7 @@
 
 #include "guiid.h"
 #include "dbwrapper.h"
+#include "mmcoredb.h"
 
 class mmPayeeListBoxItem: public wxClientData
 {
@@ -46,8 +47,12 @@ class mmPayeeDialog : public wxDialog
 
 public:
     mmPayeeDialog();
-    mmPayeeDialog(wxSQLite3Database* db, bool selectPayees, 
-        wxWindow* parent, wxWindowID id = SYMBOL_PAYEEDIALOG_IDNAME, 
+    mmPayeeDialog(
+        mmCoreDB* core,
+        bool selectPayees, 
+        wxWindow* parent, 
+        bool showSelectButton = true, 
+        wxWindowID id = SYMBOL_PAYEEDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_PAYEEDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_PAYEEDIALOG_POSITION, 
         const wxSize& size = SYMBOL_PAYEEDIALOG_SIZE, 
@@ -73,8 +78,9 @@ public:
     void OnDoubleClicked(wxCommandEvent& event);
 
 private:
-    wxSQLite3Database* db_;
+     mmCoreDB* core_;
     wxListBox* listBox_;
+    bool showSelectButton_;
   
 public:
     int payeeID_;

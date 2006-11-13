@@ -19,13 +19,14 @@
 #define _MM_EX_BDDIALOG_H_
 
 #define SYMBOL_BDDIALOG_STYLE wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_BDDIALOG_TITLE _("New/Edit Bills & Deposit Series")
+#define SYMBOL_BDDIALOG_TITLE _("New/Edit Repeating Transaction")
 #define SYMBOL_BDDIALOG_IDNAME ID_DIALOG_BD
 #define SYMBOL_BDDIALOG_SIZE wxSize(500, 300)
 #define SYMBOL_BDDIALOG_POSITION wxDefaultPosition
 
 #include "guiid.h"
 #include "defs.h"
+#include "mmcoredb.h"
 
 class mmData;
 class wxDatePickerCtrl;
@@ -40,6 +41,7 @@ class mmBDDialog : public wxDialog
 public:
     mmBDDialog();
     mmBDDialog(wxSQLite3Database* db, 
+        mmCoreDB* core,
         int bdD, bool edit, bool enterOccur, wxWindow* parent, 
         wxWindowID id = SYMBOL_BDDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_BDDIALOG_TITLE, 
@@ -74,6 +76,7 @@ public:
 
 private:
     wxSQLite3Database* db_;
+    mmCoreDB* core_;
     
     wxTextCtrl *textNumber_;
     wxTextCtrl *textAmount_;

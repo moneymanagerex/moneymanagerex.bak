@@ -49,10 +49,11 @@ BEGIN_EVENT_TABLE(billsDepositsListCtrl, wxListCtrl)
 END_EVENT_TABLE()
 /*******************************************************/
 mmBillsDepositsPanel::mmBillsDepositsPanel(wxSQLite3Database* db, wxSQLite3Database* inidb,
+            mmCoreDB* core,
             wxWindow *parent,
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
             const wxString& name )
-            : db_(db), inidb_(inidb), m_imageList(0)
+            : db_(db), inidb_(inidb), m_imageList(0), core_(core)
 {
     
     Create(parent, winid, pos, size, style, name);
@@ -121,7 +122,7 @@ void mmBillsDepositsPanel::CreateControls()
     headerPanel->SetSizer(itemBoxSizerVHeader);
 
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_BD_STATIC_HEADER, 
-        _("Bills && Deposits"), wxDefaultPosition, wxDefaultSize, 0 );
+        _("Repeating Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, 
         wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
@@ -442,7 +443,7 @@ void billsDepositsListCtrl::OnListKeyDown(wxListEvent& event)
 
 void billsDepositsListCtrl::OnNewBDSeries(wxCommandEvent& event)
 {
-    mmBDDialog *dlg = new mmBDDialog(cp_->db_, 0, false, false, this );
+    mmBDDialog *dlg = new mmBDDialog(cp_->db_, cp_->core_, 0, false, false, this );
     if ( dlg->ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
@@ -478,7 +479,7 @@ void billsDepositsListCtrl::OnEnterBDSeriesOccurrence(wxCommandEvent& event)
     if (!cp_->db_)
         return;
 
-    mmBDDialog *dlg = new mmBDDialog(cp_->db_, 
+    mmBDDialog *dlg = new mmBDDialog(cp_->db_, cp_->core_,
         cp_->trans_[selectedIndex_].bdID_, false, true, this );
     if ( dlg->ShowModal() == wxID_OK )
     {
@@ -496,7 +497,7 @@ void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& event)
     if (!cp_->db_)
         return;
 
-    mmBDDialog *dlg = new mmBDDialog(cp_->db_, 
+    mmBDDialog *dlg = new mmBDDialog(cp_->db_, cp_->core_,
         cp_->trans_[selectedIndex_].bdID_, true, false, this );
     if ( dlg->ShowModal() == wxID_OK )
     {
@@ -516,7 +517,7 @@ void billsDepositsListCtrl::OnListItemActivated(wxListEvent& event)
     if (!cp_->db_)
         return;
 
-    mmBDDialog *dlg = new mmBDDialog(cp_->db_, 
+    mmBDDialog *dlg = new mmBDDialog(cp_->db_, cp_->core_,
         cp_->trans_[selectedIndex_].bdID_, true, false, this );
     if ( dlg->ShowModal() == wxID_OK )
     {

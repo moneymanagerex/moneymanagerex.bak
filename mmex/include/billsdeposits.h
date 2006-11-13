@@ -23,6 +23,7 @@
 #include "defs.h"
 #include "wx/wxprec.h"
 #include "util.h"
+#include "mmcoredb.h"
 
 class wxListCtrl;
 class wxListEvent;
@@ -103,7 +104,9 @@ class mmBillsDepositsPanel : public mmPanelBase
     DECLARE_EVENT_TABLE()
 
 public:
-    mmBillsDepositsPanel( wxSQLite3Database* db, wxSQLite3Database* inidb, 
+    mmBillsDepositsPanel( wxSQLite3Database* db, 
+            wxSQLite3Database* inidb, 
+            mmCoreDB* db_,
             wxWindow *parent,
             wxWindowID winid = wxID_ANY,
             const wxPoint& pos = wxDefaultPosition,
@@ -140,6 +143,7 @@ public:
 
 public:
     wxSQLite3Database* db_;
+    mmCoreDB* core_;
     billsDepositsListCtrl* listCtrlAccount_;
     wxSQLite3Database* inidb_;
     wxImageList* m_imageList;

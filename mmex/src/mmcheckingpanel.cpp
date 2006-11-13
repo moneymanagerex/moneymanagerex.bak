@@ -76,11 +76,13 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
     EVT_LIST_KEY_DOWN(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListKeyDown)
 END_EVENT_TABLE()
 /*******************************************************/
-mmCheckingPanel::mmCheckingPanel(wxSQLite3Database* db, wxSQLite3Database* inidb,
+mmCheckingPanel::mmCheckingPanel(wxSQLite3Database* db, 
+                                 wxSQLite3Database* inidb,
+                                 mmCoreDB* core,
                                  int accountID, wxWindow *parent,
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
             const wxString& name )
-            : db_(db), accountID_(accountID), m_imageList(0), inidb_(inidb)
+            : db_(db), accountID_(accountID), m_imageList(0), inidb_(inidb), core_(core)
 {
     wxASSERT(db_);
     wxASSERT(accountID < 10);
@@ -972,7 +974,7 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
 
 void MyListCtrl::OnNewTransaction(wxCommandEvent& event)
 {
-    mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->accountID_, 0, false, this );
+    mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_, cp_->accountID_, 0, false, this );
     if ( dlg->ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
@@ -1001,7 +1003,7 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& event)
 {
     if (selectedIndex_ == -1)
         return;
-    mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->accountID_, 
+    mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_, cp_->accountID_, 
         cp_->trans_[selectedIndex_].transID_, true, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
@@ -1014,7 +1016,7 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& event)
 void MyListCtrl::OnListItemActivated(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
-    mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->accountID_, 
+    mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_,  cp_->accountID_, 
         cp_->trans_[selectedIndex_].transID_, true, this);
     if ( dlg->ShowModal() == wxID_OK )
     {

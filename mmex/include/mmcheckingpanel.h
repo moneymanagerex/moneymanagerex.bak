@@ -24,6 +24,7 @@
 #include "defs.h"
 #include "wx/wxprec.h"
 #include "util.h"
+#include "mmcoredb.h"
 
 class wxListCtrl;
 class wxListEvent;
@@ -127,7 +128,9 @@ class mmCheckingPanel : public mmPanelBase
 
 public:
     mmCheckingPanel(wxSQLite3Database* db, 
-        wxSQLite3Database* inidb, int accountID, wxWindow *parent,
+        wxSQLite3Database* inidb, 
+        mmCoreDB* core,
+        int accountID, wxWindow *parent,
         wxWindowID winid = wxID_ANY,
         const wxPoint& pos = wxDefaultPosition,
         const wxSize& size = wxDefaultSize,
@@ -167,6 +170,7 @@ public:
 public:
     int accountID_;
     wxSQLite3Database* db_;
+    mmCoreDB* core_;
     MyListCtrl* listCtrlAccount_;
     wxImageList* m_imageList;
     wxSQLite3Database* inidb_;

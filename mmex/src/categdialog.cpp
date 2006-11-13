@@ -35,16 +35,16 @@ mmCategDialog::mmCategDialog( )
 {
     categID_ = -1;
     subcategID_ = -1;
-    db_ = 0;
 }
 
-mmCategDialog::mmCategDialog( wxSQLite3Database* db, wxWindow* parent, 
+mmCategDialog::mmCategDialog(mmCoreDB* core,
+                             wxWindow* parent, 
                              wxWindowID id, const wxString& caption, 
                              const wxPoint& pos, const wxSize& size, long style )
 {
+    core_ = core;
     categID_ = -1;
     subcategID_ = -1;
-    db_ = db;
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -73,38 +73,28 @@ void mmCategDialog::fillControls()
     root_ = treeCtrl_->AddRoot(wxT("Categories"));
     treeCtrl_->SetItemBold(root_, true);
 
-    if (!db_)
-       return;
+    if (!core_)
+        return;
 
-    mmBEGINSQL_LITE_EXCEPTION;
-
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from CATEGORY_V1 order by CATEGNAME;");
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
-    while (q1.NextRow())
+    int numCategs = core_->categoryList_.categories_.size();
+    for (int idx = 0; idx < numCategs; idx++)
     {
-       int categID          = q1.GetInt(wxT("CATEGID"));
-       wxString categString = q1.GetString(wxT("CATEGNAME"));
-       wxTreeItemId maincat = treeCtrl_->AppendItem(root_, categString);
-       treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(categID, -1));  
+       wxTreeItemId maincat = treeCtrl_->AppendItem(root_, core_->categoryList_.categories_[idx]->categName_);
+       treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(core_->categoryList_.categories_[idx]->categID_, -1));  
 
-       wxSQLite3StatementBuffer bufSQL1;
-       bufSQL1.Format("select * from SUBCATEGORY_V1 where CATEGID=%d;", categID);
-       wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL1); 
-       while(q2.NextRow())
-       {
-           int subcategID          = q2.GetInt(wxT("SUBCATEGID"));
-           wxString subcategString    = q2.GetString(wxT("SUBCATEGNAME"));
-           wxTreeItemId subcat = treeCtrl_->AppendItem(maincat, subcategString);
-           treeCtrl_->SetItemData(subcat, new mmTreeItemCateg(categID, subcategID)); 
-       }
-       q2.Finalize();
-       treeCtrl_->SortChildren(maincat);
-       treeCtrl_->Expand(maincat);
+       int numSubCategs = core_->categoryList_.categories_[idx]->children_.size();
+        for (int cidx = 0; cidx < numSubCategs; cidx++)
+        {
+            wxTreeItemId subcat = treeCtrl_->AppendItem(maincat, 
+                core_->categoryList_.categories_[idx]->children_[cidx]->categName_);
+            treeCtrl_->SetItemData(subcat, new mmTreeItemCateg(core_->categoryList_.categories_[idx]->categID_, 
+                core_->categoryList_.categories_[idx]->children_[cidx]->categID_)); 
+        }
+
+        treeCtrl_->SortChildren(maincat);
+        treeCtrl_->Expand(maincat);
     }
-    q1.Finalize();
 
-    mmENDSQL_LITE_EXCEPTION;
     treeCtrl_->Expand(root_);
     treeCtrl_->SortChildren(root_);
 }
@@ -124,7 +114,9 @@ void mmCategDialog::CreateControls()
         wxDefaultPosition, wxSize(100, 200));
 #else
     treeCtrl_ = new wxTreeCtrl( itemDialog1, ID_DIALOG_CATEG_TREECTRL_CATS, 
-        wxDefaultPosition, wxSize(100, 200), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_ROW_LINES );
+        wxDefaultPosition, wxSize(100, 200), wxTR_SINGLE 
+        | wxTR_HAS_BUTTONS 
+        | wxTR_ROW_LINES );
 #endif
     itemBoxSizer3->Add(treeCtrl_, 1, wxGROW|wxALL, 1);
 
@@ -168,13 +160,12 @@ void mmCategDialog::OnAdd(wxCommandEvent& event)
 
     if (selectedItemId_ == root_)
     {
-        if (mmDBWrapper::getCategoryID(db_, text) != -1)
-        {   
+        if (core_->categoryList_.categoryExists(text))
+        {
             mmShowErrorMessage(this, _("Category with same name exists"), _("Error"));
             return;
         }
-        mmDBWrapper::addCategory(db_, text);
-        int categID = mmDBWrapper::getCategoryID(db_, text);
+        int categID = core_->categoryList_.addCategory(text);
 
         wxTreeItemId tid = treeCtrl_->AppendItem(selectedItemId_, text);
         treeCtrl_->SetItemData(tid, new mmTreeItemCateg( categID, -1));
@@ -188,13 +179,12 @@ void mmCategDialog::OnAdd(wxCommandEvent& event)
     int subcategID = iData->getSubCategID();
     if (subcategID == -1) // not subcateg
     {
-        if (mmDBWrapper::getSubCategoryID(db_, categID, text) != -1)
+        if (core_->categoryList_.getSubCategoryID(categID, text) != -1)
         {   
             mmShowErrorMessage(this, _("Sub Category with same name exists"), _("Error"));
             return;
         }
-        mmDBWrapper::addSubCategory(db_, categID, text);
-        int subcategID = mmDBWrapper::getSubCategoryID(db_, categID, text);
+        int subcategID = core_->categoryList_.addSubCategory(categID, text);
 
         wxTreeItemId tid = treeCtrl_->AppendItem(selectedItemId_, text);
         treeCtrl_->SetItemData(tid, new mmTreeItemCateg(categID, subcategID));
@@ -220,7 +210,7 @@ void mmCategDialog::OnDelete(wxCommandEvent& event)
 
     if (subcategID == -1)
     {
-        if (!mmDBWrapper::deleteCategoryWithConstraints(db_, categID))
+        if (!core_->categoryList_.deleteCategory(categID))
         {
             mmShowErrorMessage(this, _("Category is in use"), _("Error"));
             return;
@@ -228,7 +218,7 @@ void mmCategDialog::OnDelete(wxCommandEvent& event)
     }
     else
     {
-        if (!mmDBWrapper::deleteSubCategoryWithConstraints(db_, categID, subcategID))
+        if (!core_->categoryList_.deleteSubCategory(categID, subcategID))
         {
             mmShowErrorMessage(this, _("Sub-Category is in use"), _("Error"));
             return;
@@ -245,7 +235,8 @@ void mmCategDialog::OnBSelect(wxCommandEvent& event)
         return;
     }
 
-    mmTreeItemCateg* iData = dynamic_cast<mmTreeItemCateg*>(treeCtrl_->GetItemData(selectedItemId_));
+    mmTreeItemCateg* iData = dynamic_cast<mmTreeItemCateg*>
+        (treeCtrl_->GetItemData(selectedItemId_));
     categID_ = iData->getCategID();
     subcategID_ = iData->getSubCategID();
     EndModal(wxID_OK);
@@ -258,7 +249,8 @@ void mmCategDialog::OnDoubleClicked(wxTreeEvent& event)
         return;
     }
 
-    mmTreeItemCateg* iData = dynamic_cast<mmTreeItemCateg*>(treeCtrl_->GetItemData(selectedItemId_));
+    mmTreeItemCateg* iData = dynamic_cast<mmTreeItemCateg*>
+        (treeCtrl_->GetItemData(selectedItemId_));
     categID_ = iData->getCategID();
     subcategID_ = iData->getSubCategID();
     EndModal(wxID_OK);
@@ -278,7 +270,8 @@ void mmCategDialog::OnSelChanged(wxTreeEvent& event)
     wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_CATEG_TEXTCTRL_CATNAME);
     textCtrl->SetValue(treeCtrl_->GetItemText(selectedItemId_));
 
-    mmTreeItemCateg* iData = dynamic_cast<mmTreeItemCateg*>(treeCtrl_->GetItemData(selectedItemId_));
+    mmTreeItemCateg* iData = dynamic_cast<mmTreeItemCateg*>
+        (treeCtrl_->GetItemData(selectedItemId_));
     int categID = -1;
     int subcategID = -1;
     if (iData)
@@ -324,11 +317,16 @@ void mmCategDialog::OnEdit(wxCommandEvent& event)
         return;
     }
 
-    mmTreeItemCateg* iData = dynamic_cast<mmTreeItemCateg*>(treeCtrl_->GetItemData(selectedItemId_));
+    mmTreeItemCateg* iData = dynamic_cast<mmTreeItemCateg*>
+        (treeCtrl_->GetItemData(selectedItemId_));
     int categID = iData->getCategID();
     int subcategID = iData->getSubCategID();
     
-    mmDBWrapper::updateCategory(db_, categID, subcategID, text);
+    if (!core_->categoryList_.updateCategory(categID, subcategID, text))
+    {
+         mmShowErrorMessage(this, _("Update Failed"), _("Error"));
+         return;
+    }
     
     treeCtrl_->SetItemText(selectedItemId_, text);
 }

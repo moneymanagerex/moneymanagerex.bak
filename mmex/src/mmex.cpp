@@ -302,11 +302,13 @@ void mmNewDatabaseWizard::RunIt(bool modal)
     }
 }
 
-/*******************************************************/
+/******************************************************
+mmGUIFrame 
+********************************************************/
 mmGUIFrame::mmGUIFrame(const wxString& title, 
                        const wxPoint& pos, const wxSize& size)
        : wxFrame((wxFrame*)NULL, -1, title, pos, size), 
-       db_(0), inidb_(0),gotoAccountID_(-1)
+       core_(0), inidb_(0), gotoAccountID_(-1)
 {
     selectedItemData_ = 0;
 
@@ -349,14 +351,18 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
         {
             /* Try Opening the file */
             wxFileName fName(val);
-	    wxString absName;
+            wxString absName;
+
+            /* Relative paths don't work well in Linux, so using it only
+            for Windows */
 #ifdef __WXGTK__
-	    absName = fName.GetFullPath();		
+            absName = fName.GetFullPath();		
 #else	
             wxFileName appPath(wxTheApp->argv[0]);
             fName.Normalize( wxPATH_NORM_ALL, appPath.GetPath());
             absName = fName.GetFullPath();
 #endif
+
             openFile(absName, false);
         }
         else
@@ -380,10 +386,15 @@ mmGUIFrame::~mmGUIFrame()
     /* Delete the GUI */
     homePanel->DestroyChildren();
 
+    if (core_)
+    {
+        delete core_;
+        core_ = 0;
+    }
+
     if (db_)
     {
         db_->Close();
-        delete db_;
     }
 
     if (inidb_)
@@ -684,45 +695,40 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->Expand(root);
     navTreeCtrl_->Expand(reports);
 
-    if (!db_)
+    if (!db_.get())
        return;
 
     /* Load Nav Tree Control */
     mmBEGINSQL_LITE_EXCEPTION;
 
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
-    wxString sqlString = wxT("select * from ACCOUNTLIST_V1 WHERE \
-        ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
-    if (vAccts == wxT("Open"))
-        sqlString =  wxT("select * from ACCOUNTLIST_V1 WHERE \
-        ACCOUNTTYPE='Checking' AND STATUS='Open' order by ACCOUNTNAME;");
-    else if (vAccts == wxT("Favorites"))
-        sqlString =  wxT("select * from ACCOUNTLIST_V1 WHERE \
-        ACCOUNTTYPE='Checking' AND FAVORITEACCT='TRUE' order by ACCOUNTNAME;");
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sqlString);
-    while (q1.NextRow())
+    int numAccounts = (int) core_->accounts_.size();
+    for (int iAdx = 0; iAdx < numAccounts; iAdx++)
     {
-        wxTreeItemId tacct = navTreeCtrl_->AppendItem(accounts, q1.GetString(wxT("ACCOUNTNAME")), 1, 1);
-        navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(q1.GetInt(wxT("ACCOUNTID")), false));
+        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accounts_[iAdx].get());
+        if (pCA)
+        {
+            if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
+                (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
+                (vAccts == wxT("ALL")))
+            {
+                wxTreeItemId tacct = navTreeCtrl_->AppendItem(accounts, pCA->accountName_, 1, 1);
+                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pCA->accountID_, false));
+            }
+        }
+
+        mmInvestmentAccount* pIA = dynamic_cast<mmInvestmentAccount*>(core_->accounts_[iAdx].get());
+        if (pIA)
+        {
+            wxTreeItemId tacct = navTreeCtrl_->AppendItem(stocks, pIA->accountName_, 6, 6);
+            navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pIA->accountID_, false));
+        }
     }
-    q1.Finalize();
-
-     sqlString = wxT("select * from ACCOUNTLIST_V1 WHERE \
-        ACCOUNTTYPE='Investment' order by ACCOUNTNAME;");
-
-    wxSQLite3ResultSet q2 = db_->ExecuteQuery(sqlString);
-    while (q2.NextRow())
-    {
-        wxTreeItemId tacct = navTreeCtrl_->AppendItem(stocks, q2.GetString(wxT("ACCOUNTNAME")), 6, 6);
-        navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(q2.GetInt(wxT("ACCOUNTID")), false));
-    }
-    q2.Finalize();
-
 
     wxSQLite3StatementBuffer bufSQL;
     bufSQL.Format("select * from BUDGETYEAR_V1 order by BUDGETYEARNAME;");
-    q1 = db_->ExecuteQuery(bufSQL);
+    wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(bufSQL);
     int index = 0;
     while (q1.NextRow())
     {
@@ -764,7 +770,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             mmTreeItemData* iParentData = dynamic_cast<mmTreeItemData*>(navTreeCtrl_->GetItemData(idparent));
             if (iParentData->getString() == wxT("Budget Performance"))
             {
-                mmPrintableBase* rs = new mmReportBudgetingPerformance(db_, data);
+                mmPrintableBase* rs = new mmReportBudgetingPerformance(db_.get(), data);
                 menuPrintingEnable(true);
                 createReportsPage(rs);
             }
@@ -777,7 +783,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             mmBEGINSQL_LITE_EXCEPTION;
             wxSQLite3StatementBuffer bufSQL;
             bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-            wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+            wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(bufSQL);
             if (q1.NextRow())
             {
                 wxString acctType = q1.GetString(wxT("ACCOUNTTYPE"));
@@ -799,7 +805,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 					wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
 					homePanel->SetSizer(itemBoxSizer1);
 
-					panelCurrent_ = new mmStocksPanel(db_, inidb_, data, homePanel, ID_PANEL3, 
+					panelCurrent_ = new mmStocksPanel(db_.get(), inidb_, data, homePanel, ID_PANEL3, 
 						wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 					itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
@@ -830,28 +836,28 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
         if (iData->getString() == wxT("Summary of Accounts"))
         {
-            mmPrintableBase* rs = new mmReportSummary(db_);
+            mmPrintableBase* rs = new mmReportSummary(db_.get());
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
 
         if (iData->getString() == wxT("Summary of Stocks"))
         {
-            mmPrintableBase* rs = new mmReportSummaryStocks(db_);
+            mmPrintableBase* rs = new mmReportSummaryStocks(db_.get());
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
 
         if (iData->getString() == wxT("Summary of Assets"))
         {
-            mmPrintableBase* rs = new mmReportSummaryAssets(db_);
+            mmPrintableBase* rs = new mmReportSummaryAssets(db_.get());
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
 
         if (iData->getString() == wxT("Where the Money Goes"))
         {
-            mmPrintableBase* rs = new mmReportCategoryExpenses(db_, true, wxDateTime::Now(),
+            mmPrintableBase* rs = new mmReportCategoryExpenses(db_.get(), true, wxDateTime::Now(),
                 wxDateTime::Now());
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -866,7 +872,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
 
-            mmPrintableBase* rs = new mmReportCategoryExpenses(db_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportCategoryExpenses(db_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -877,7 +883,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today;
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            mmPrintableBase* rs = new mmReportCategoryExpenses(db_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportCategoryExpenses(db_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -888,7 +894,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
-            mmPrintableBase* rs = new mmReportCategoryExpenses(db_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportCategoryExpenses(db_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -903,7 +909,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             prevYearEnd.SetDay(31);
             wxDateTime dtEnd = prevYearEnd;
             wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-            mmPrintableBase* rs = new mmReportCategoryExpenses(db_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportCategoryExpenses(db_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -918,7 +924,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             yearBegin.SetDay(31);
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = yearBegin;
-            mmPrintableBase* rs = new mmReportCategoryExpenses(db_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportCategoryExpenses(db_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -929,7 +935,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear();
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(db_, year);
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(db_.get(), year);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -943,7 +949,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
 
-            mmPrintableBase* rs = new mmReportIncomeExpenses(db_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportIncomeExpenses(db_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -954,7 +960,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today;
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            mmPrintableBase* rs = new mmReportIncomeExpenses(db_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportIncomeExpenses(db_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -965,7 +971,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
-            mmPrintableBase* rs = new mmReportIncomeExpenses(db_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportIncomeExpenses(db_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -974,7 +980,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear()-1;
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(db_, year);
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(db_.get(), year);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -983,14 +989,14 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear();
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(db_, year);
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(db_.get(), year);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
 
         if (iData->getString() == wxT("Income vs Expenses - All Time"))
         {
-            mmPrintableBase* rs = new mmReportIncomeExpenses(db_, true, wxDateTime::Now(),
+            mmPrintableBase* rs = new mmReportIncomeExpenses(db_.get(), true, wxDateTime::Now(),
                 wxDateTime::Now());
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1000,7 +1006,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
         if (iData->getString() == wxT("To Whom the Money Goes"))
         {
-            mmPrintableBase* rs = new mmReportPayeeExpenses(db_, true, wxDateTime::Now(),
+            mmPrintableBase* rs = new mmReportPayeeExpenses(db_.get(), true, wxDateTime::Now(),
                 wxDateTime::Now());
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1015,7 +1021,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
 
-            mmPrintableBase* rs = new mmReportPayeeExpenses(db_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(db_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1026,7 +1032,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today;
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            mmPrintableBase* rs = new mmReportPayeeExpenses(db_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(db_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1037,7 +1043,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
-            mmPrintableBase* rs = new mmReportPayeeExpenses(db_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(db_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1052,7 +1058,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             prevYearEnd.SetDay(31);
             wxDateTime dtEnd = prevYearEnd;
             wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-            mmPrintableBase* rs = new mmReportPayeeExpenses(db_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(db_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1067,7 +1073,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             yearBegin.SetDay(31);
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = yearBegin;
-            mmPrintableBase* rs = new mmReportPayeeExpenses(db_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(db_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1123,7 +1129,7 @@ void mmGUIFrame::OnLaunchAccountWebsite(wxCommandEvent& event)
         mmBEGINSQL_LITE_EXCEPTION;
         wxSQLite3StatementBuffer bufSQL;
         bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+        wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(bufSQL);
         if (q1.NextRow())
         {
             wxString website = q1.GetString(wxT("WEBSITE"));
@@ -1151,14 +1157,14 @@ void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& event)
         mmBEGINSQL_LITE_EXCEPTION;
         wxSQLite3StatementBuffer bufSQL;
         bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+        wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(bufSQL);
         if (q1.NextRow())
         {
             wxString acctType = q1.GetString(wxT("ACCOUNTTYPE"));
             if (acctType == wxT("Checking") || acctType == wxT("Investment"))
             {
                 q1.Finalize();
-                mmNewAcctDialog *dlg = new mmNewAcctDialog(db_, false, data, this);
+                mmNewAcctDialog *dlg = new mmNewAcctDialog(db_.get(), false, data, this);
                 if ( dlg->ShowModal() == wxID_OK )
                 {
                     createHomePage();
@@ -1184,7 +1190,7 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& event)
         mmBEGINSQL_LITE_EXCEPTION;
         wxSQLite3StatementBuffer bufSQL;
         bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+        wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(bufSQL);
         if (q1.NextRow())
         {
             wxString acctType = q1.GetString(wxT("ACCOUNTTYPE"));
@@ -1200,10 +1206,10 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& event)
                     q1.Finalize();
 
                     bufSQL.Format("delete from CHECKINGACCOUNT_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", data, data);
-                    int nTransDeleted = db_->ExecuteUpdate(bufSQL);
+                    int nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
 
                     bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-                    int nRows = db_->ExecuteUpdate(bufSQL);
+                    int nRows = db_.get()->ExecuteUpdate(bufSQL);
                     wxASSERT(nRows);
 
                     updateNavTreeControl();
@@ -1222,10 +1228,10 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& event)
                     q1.Finalize();
 
                     bufSQL.Format("delete from STOCK_V1 where HELDAT=%d;", data);
-                    int nTransDeleted = db_->ExecuteUpdate(bufSQL);
+                    int nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
 
                     bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-                    int nRows = db_->ExecuteUpdate(bufSQL);
+                    int nRows = db_.get()->ExecuteUpdate(bufSQL);
                     wxASSERT(nRows);
 
                     updateNavTreeControl();
@@ -1261,7 +1267,7 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
             mmBEGINSQL_LITE_EXCEPTION;
             wxSQLite3StatementBuffer bufSQL;
             bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-            wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+            wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(bufSQL);
             if (q1.NextRow())
             {
                 wxString acctType = q1.GetString(wxT("ACCOUNTTYPE"));
@@ -1305,7 +1311,7 @@ void mmGUIFrame::createCheckingAccountPage(int accountID)
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
     
-    panelCurrent_ = new mmCheckingPanel(db_, inidb_, accountID, homePanel, ID_PANEL3, 
+    panelCurrent_ = new mmCheckingPanel(db_.get(), inidb_, core_, accountID, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
@@ -1330,7 +1336,7 @@ void mmGUIFrame::createBudgetingPage(int budgetYearID)
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
 
-    panelCurrent_ = new mmBudgetingPanel(db_, inidb_, budgetYearID, homePanel, ID_PANEL3, 
+    panelCurrent_ = new mmBudgetingPanel(db_.get(), inidb_, budgetYearID, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
@@ -1345,7 +1351,7 @@ void mmGUIFrame::createHomePage()
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
     
-    panelCurrent_ = new mmHomePagePanel(this, db_, homePanel, ID_PANEL3, 
+    panelCurrent_ = new mmHomePagePanel(this, db_.get(), core_, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
      
@@ -1360,7 +1366,7 @@ void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
        
-    panelCurrent_ = new mmReportsPanel(this, db_, rs, homePanel, ID_PANEL3, 
+    panelCurrent_ = new mmReportsPanel(this, db_.get(), rs, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
      
@@ -1375,7 +1381,7 @@ void mmGUIFrame::createHelpPage()
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
        
-    panelCurrent_ = new mmHelpPanel(this, db_, homePanel, ID_PANEL3, 
+    panelCurrent_ = new mmHelpPanel(this, db_.get(), homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
      
@@ -1609,11 +1615,16 @@ void mmGUIFrame::createToolBar()
 
 void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
 {
+    if (core_)
+    {
+        delete core_;
+        core_ = 0;
+    }
+
     if (db_)
     {
         db_->Close();
-        delete db_;
-        db_ = 0;
+        db_.reset();
     }
 
     // Existing Database
@@ -1630,11 +1641,12 @@ void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
             wxCopyFile(fileName, bkupName, true);
         }
 
-        db_ = new wxSQLite3Database();
+        boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
+        db_ = pDB;
         db_->Open(fileName);
 
         // we need to check the db whether it is the right version
-        if (!mmDBWrapper::checkDBVersion(db_))
+        if (!mmDBWrapper::checkDBVersion(db_.get()))
         {
             this->SetTitle(_("Money Manager EX - No File opened "));   
             mmShowErrorMessage(this, 
@@ -1643,23 +1655,26 @@ void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
                     _("Error opening database"));
 
             db_->Close();
-            delete db_;
-
-            db_ = 0;
+            db_.reset();
             return ;
         }
+
+        core_ = new mmCoreDB(db_);
     }
     else if (openingNew) // New Database
     {
-        db_ = new wxSQLite3Database();
+        boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
+        db_ = pDB;
         db_->Open(fileName);
 
         openDataBase(fileName);
 
-        mmNewDatabaseWizard* wizard = new mmNewDatabaseWizard(this, db_);
+        mmNewDatabaseWizard* wizard = new mmNewDatabaseWizard(this, db_.get());
         wizard->RunIt(true);
 
-        mmDBWrapper::loadBaseCurrencySettings(db_);
+        mmDBWrapper::loadBaseCurrencySettings(db_.get());
+
+        core_ = new mmCoreDB(db_);
 
         /* Jump to new account creation screen */
         wxCommandEvent evt;
@@ -1693,7 +1708,7 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
     wxProgressDialog* pgd = new wxProgressDialog(_("Please Wait"), 
         _("Opening Database File && Verifying Integrity"), 100, this, 
         wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
-    mmDBWrapper::initDB(db_, pgd, appPath);
+    mmDBWrapper::initDB(db_.get(), pgd, appPath);
     pgd->Update(100);
     pgd->Destroy();
 
@@ -1706,7 +1721,7 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
         + fileName;
     this->SetTitle(title);
 
-    if (db_)
+    if (db_.get())
         fileName_ = fileName;
     else
         fileName_ = wxT("");
@@ -1721,16 +1736,15 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew)
 {
     createDataStore(fileName, openingNew);
   
-    if (db_)
+    if (db_.get())
     {
         menuEnableItems(true);
         menuPrintingEnable(false);
     }
     createHomePage();
-    //panelCurrent_->init(db_);
     updateNavTreeControl();
 
-    if (!db_)
+    if (!db_.get())
     {
         mmDBWrapper::setINISettingValue(inidb_, 
             wxT("LASTFILENAME"), wxT(""));
@@ -1767,8 +1781,9 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
         if (db_)
         {
             db_->Close();
-            delete db_;
-            db_ = 0;
+            db_.reset();
+            //delete db_.get();
+            //db_.get() = 0;
         }
         wxCopyFile(fileName_, fileName, false);
         openFile(fileName, false);
@@ -1777,19 +1792,19 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
 
 void mmGUIFrame::OnExport(wxCommandEvent& event)
 {
-   mmExportCSV(db_);
+   mmExportCSV(db_.get());
 }
 
 void mmGUIFrame::OnImportCSV(wxCommandEvent& event)
 {
-    int accountID = mmImportCSV(db_);
+    int accountID = mmImportCSV(db_.get());
     if (accountID != -1)
         createCheckingAccountPage(accountID);
 }
 
 void mmGUIFrame::OnImportQFX(wxCommandEvent& event)
 {
-    if (mmDBWrapper::getNumAccounts(db_) == 0)
+    if (mmDBWrapper::getNumAccounts(db_.get()) == 0)
     {
         mmShowErrorMessage(0, _("No Account available! Cannot Import! Create a new account first!"), 
             _("Error"));
@@ -1801,7 +1816,7 @@ void mmGUIFrame::OnImportQFX(wxCommandEvent& event)
     
     mmBEGINSQL_LITE_EXCEPTION;
     wxSQLite3ResultSet q1 
-        = db_->ExecuteQuery("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
+        = db_.get()->ExecuteQuery("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
@@ -1815,7 +1830,7 @@ void mmGUIFrame::OnImportQFX(wxCommandEvent& event)
     if (scd->ShowModal() == wxID_OK)
     {
         wxString acctName = scd->GetStringSelection();
-        fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+        fromAccountID = mmDBWrapper::getAccountID(db_.get(), acctName);
      
         wxString fileName = wxFileSelector(wxT("Choose QFX data file to import"), 
                 wxT(""), wxT(""), wxT(""), wxT("*.qfx"), wxFILE_MUST_EXIST);
@@ -1858,28 +1873,28 @@ void mmGUIFrame::OnImportQFX(wxCommandEvent& event)
 
 void mmGUIFrame::OnImportQIF(wxCommandEvent& event)
 {
-    int accountID = mmImportQIF(db_);
+    int accountID = mmImportQIF(db_.get());
     if (accountID != -1)
         createCheckingAccountPage(accountID);
 }
 
 void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& event)
 {
-    if (mmDBWrapper::getNumAccounts(db_) == 0)
+    if (mmDBWrapper::getNumAccounts(db_.get()) == 0)
     {
         mmShowErrorMessage(0, _("No Account available! Cannot Import! Create a new account first!"), 
             _("Error"));
         return;
     }
 
-    mmUnivCSVImportDialog *dlg = new mmUnivCSVImportDialog(db_, this);
+    mmUnivCSVImportDialog *dlg = new mmUnivCSVImportDialog(db_.get(), this);
     dlg->ShowModal();
     dlg->Destroy();
 }
 
 void mmGUIFrame::OnImportCSVMMNET(wxCommandEvent& event)
 {
-    int accountID = mmImportCSVMMNET(db_);
+    int accountID = mmImportCSVMMNET(db_.get());
     if (accountID != -1)
         createCheckingAccountPage(accountID);
 }
@@ -1891,12 +1906,12 @@ void mmGUIFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
     
 void mmGUIFrame::OnNewAccount(wxCommandEvent& event)
 {
-    mmAddAccountWizard* wizard = new mmAddAccountWizard(this, db_);
+    mmAddAccountWizard* wizard = new mmAddAccountWizard(this, db_.get());
     wizard->RunIt(true);
 
     if (wizard->acctID_ != -1)
     {
-        mmNewAcctDialog *dlg = new mmNewAcctDialog(db_, false, wizard->acctID_, this);
+        mmNewAcctDialog *dlg = new mmNewAcctDialog(db_.get(), false, wizard->acctID_, this);
         if ( dlg->ShowModal() == wxID_OK )
         {
             
@@ -1917,24 +1932,24 @@ void mmGUIFrame::OnAccountList(wxCommandEvent& event)
 
 void mmGUIFrame::OnOrgCategories(wxCommandEvent& event)
 {
-    mmCategDialog *dlg = new mmCategDialog(db_, this);
+    mmCategDialog *dlg = new mmCategDialog(core_, this);
     dlg->ShowModal();
     dlg->Destroy();
 }
  
 void mmGUIFrame::OnOrgPayees(wxCommandEvent& event)
 {
-    mmPayeeDialog *dlg = new mmPayeeDialog(db_, true, this);
+    mmPayeeDialog *dlg = new mmPayeeDialog(core_, true, this, false);
     dlg->ShowModal();
     dlg->Destroy();
 }
 
 void mmGUIFrame::OnBudgetSetupDialog(wxCommandEvent& event)
 {
-     if (!db_)
+     if (!db_.get())
        return;
 
-    mmBudgetYearDialog *dlg = new mmBudgetYearDialog(db_, this);
+    mmBudgetYearDialog *dlg = new mmBudgetYearDialog(db_.get(), this);
     dlg->ShowModal();
     createHomePage();
     updateNavTreeControl();    
@@ -1943,17 +1958,17 @@ void mmGUIFrame::OnBudgetSetupDialog(wxCommandEvent& event)
 
 void mmGUIFrame::OnTransactionReport(wxCommandEvent& event)
 {
-    if (!db_)
+    if (!db_.get())
        return;
 
-     if (mmDBWrapper::getNumAccounts(db_) == 0)
+     if (mmDBWrapper::getNumAccounts(db_.get()) == 0)
          return;
 
     std::vector<mmTransactionHolder*>* trans = new std::vector<mmTransactionHolder*>;;
-    mmFilterTransactionsDialog* dlg = new mmFilterTransactionsDialog(trans, db_,this);
+    mmFilterTransactionsDialog* dlg = new mmFilterTransactionsDialog(trans, db_.get(), core_, this);
     if (dlg->ShowModal() == wxID_OK)
     {
-        mmPrintableBase* rs = new mmReportTransactions(trans, db_);
+        mmPrintableBase* rs = new mmReportTransactions(trans, db_.get());
         menuPrintingEnable(true);
         createReportsPage(rs);
     }
@@ -1972,10 +1987,10 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& event)
 
 void mmGUIFrame::OnOptions(wxCommandEvent& event)
 {
-    if (!db_ || !inidb_)
+    if (!db_.get() || !inidb_)
         return;
 
-    mmOptionsDialog *dlg = new mmOptionsDialog(db_, inidb_, this);
+    mmOptionsDialog *dlg = new mmOptionsDialog(db_.get(), inidb_, this);
     dlg->ShowModal();
     dlg->Destroy();
     createHomePage();
@@ -2205,7 +2220,7 @@ void mmGUIFrame::OnBillsDeposits(wxCommandEvent& event)
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
     
-    panelCurrent_ = new mmBillsDepositsPanel(db_, inidb_, homePanel, ID_PANEL3, 
+    panelCurrent_ = new mmBillsDepositsPanel(db_.get(), inidb_, core_, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
@@ -2221,7 +2236,7 @@ void mmGUIFrame::OnStocks(wxCommandEvent& event)
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
     
-    panelCurrent_ = new mmStocksPanel(db_, inidb_, -1, homePanel, ID_PANEL3, 
+    panelCurrent_ = new mmStocksPanel(db_.get(), inidb_, -1, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
@@ -2237,7 +2252,7 @@ void mmGUIFrame::OnAssets(wxCommandEvent& event)
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
     
-    panelCurrent_ = new mmAssetsPanel(db_, inidb_, homePanel, ID_PANEL3, 
+    panelCurrent_ = new mmAssetsPanel(db_.get(), inidb_, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
@@ -2246,7 +2261,7 @@ void mmGUIFrame::OnAssets(wxCommandEvent& event)
 
 void mmGUIFrame::OnCurrency(wxCommandEvent& event)
 {
-    mmCurrencyDialog *dlg = new mmCurrencyDialog(db_,this);
+    mmCurrencyDialog *dlg = new mmCurrencyDialog(db_.get(),this);
     if ( dlg->ShowModal() == wxID_OK )
     {
     }
@@ -2260,7 +2275,7 @@ void mmGUIFrame::OnWizardCancel(wxWizardEvent& event)
 
 void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
 {
-    wxUint32 num = mmDBWrapper::getNumAccounts(db_);
+    wxUint32 num = mmDBWrapper::getNumAccounts(db_.get());
     if (num == 0)
     {
         mmShowErrorMessage(0, _("No Account available!"), _("Error"));
@@ -2270,7 +2285,7 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
     int* arrAcctID = new int[num];
     mmBEGINSQL_LITE_EXCEPTION;
     wxSQLite3ResultSet q1 = 
-        db_->ExecuteQuery("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
+        db_.get()->ExecuteQuery("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
     int i = 0;
     while (q1.NextRow())
     {
@@ -2280,7 +2295,7 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
 
     mmENDSQL_LITE_EXCEPTION;
 
-    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
+    wxString delimit = mmDBWrapper::getInfoSettingValue(db_.get(), wxT("DELIMITER"), DEFDELIMTER);
     
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, 
         _("Choose Account to Edit"), 
@@ -2289,7 +2304,7 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
     {
         int choice = scd->GetSelection();
         int acctID = arrAcctID[choice];
-        mmNewAcctDialog *dlg = new mmNewAcctDialog(db_, false, acctID, this);
+        mmNewAcctDialog *dlg = new mmNewAcctDialog(db_.get(), false, acctID, this);
         if ( dlg->ShowModal() == wxID_OK )
         {
             createHomePage();
@@ -2302,7 +2317,7 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
 
 void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
 {
-    wxUint32 num = mmDBWrapper::getNumAccounts(db_);
+    wxUint32 num = mmDBWrapper::getNumAccounts(db_.get());
     if (num == 0)
     {
         mmShowErrorMessage(0, _("No Account available!"), _("Error"));
@@ -2312,7 +2327,7 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
     int* arrAcctID = new int[num];
     mmBEGINSQL_LITE_EXCEPTION;
     wxSQLite3ResultSet q1 = 
-        db_->ExecuteQuery("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
+        db_.get()->ExecuteQuery("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
     int i = 0;
     while (q1.NextRow())
     {
@@ -2324,7 +2339,7 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
     mmENDSQL_LITE_EXCEPTION;
   
 
-    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
+    wxString delimit = mmDBWrapper::getInfoSettingValue(db_.get(), wxT("DELIMITER"), DEFDELIMTER);
     
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, 
         _("Choose Account to Delete"), 
@@ -2333,7 +2348,7 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
     {
         int choice = scd->GetSelection();
         int acctID = arrAcctID[choice];
-        wxString acctType = mmDBWrapper::getAccountType(db_, acctID);
+        wxString acctType = mmDBWrapper::getAccountType(db_.get(), acctID);
 
         wxMessageDialog msgDlg(this, 
             _("Do you really want to delete the account?"),
@@ -2345,10 +2360,10 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
             {
                 wxSQLite3StatementBuffer bufSQL;
                 bufSQL.Format("delete from CHECKINGACCOUNT_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", acctID, acctID);
-                int nTransDeleted = db_->ExecuteUpdate(bufSQL);
+                int nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
 
                 bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", acctID);
-                int nRows = db_->ExecuteUpdate(bufSQL);
+                int nRows = db_.get()->ExecuteUpdate(bufSQL);
                 wxASSERT(nRows);
 
                 updateNavTreeControl();
@@ -2358,10 +2373,10 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
             {
                 wxSQLite3StatementBuffer bufSQL;
                 bufSQL.Format("delete from STOCK_V1 where HELDAT=%d;", acctID);
-                int nTransDeleted = db_->ExecuteUpdate(bufSQL);
+                int nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
 
                 bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", acctID);
-                int nRows = db_->ExecuteUpdate(bufSQL);
+                int nRows = db_.get()->ExecuteUpdate(bufSQL);
                 wxASSERT(nRows);
 
                 updateNavTreeControl();

@@ -53,11 +53,12 @@ mmBDDialog::mmBDDialog( )
 {
 }
 
-mmBDDialog::mmBDDialog(wxSQLite3Database* db, int bdID, bool edit, bool enterOccur,
+mmBDDialog::mmBDDialog(wxSQLite3Database* db, mmCoreDB* core, int bdID, bool edit, bool enterOccur,
                        wxWindow* parent, wxWindowID id, const wxString& caption, 
                        const wxPoint& pos, const wxSize& size, long style )
 {
     db_ = db;
+    core_ = core;
     bdID_ = bdID;
     edit_ = edit;
     categID_ = -1;
@@ -232,7 +233,7 @@ void mmBDDialog::CreateControls()
 
     /* Bills & Deposits Details */
     wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(itemDialog1, wxID_ANY, 
-         _("Bills && Deposit Details"));
+         _("Repeating Transaction Details"));
     wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, 
         wxHORIZONTAL);
     itemBoxSizer3->Add(itemStaticBoxSizer4, 0, wxALIGN_LEFT|wxALL, 5);
@@ -449,6 +450,9 @@ void mmBDDialog::OnCancel(wxCommandEvent& event)
 
 void mmBDDialog::OnAccountName(wxCommandEvent& event)
 {
+    wxASSERT(TRUE);
+    // TODO: ASSERT
+#if 0
     bool selectPayees = false;
     mmPayeeDialog *dlg = new mmPayeeDialog(db_, selectPayees, this);    
     if ( dlg->ShowModal() == wxID_OK )
@@ -459,6 +463,7 @@ void mmBDDialog::OnAccountName(wxCommandEvent& event)
         wxString acctName = mmDBWrapper::getAccountName(db_, accountID_);
         itemAccountName_->SetLabel(acctName);
     }
+#endif
 }
 
 void mmBDDialog::OnPayee(wxCommandEvent& event)
@@ -467,7 +472,7 @@ void mmBDDialog::OnPayee(wxCommandEvent& event)
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
         selectPayees = false;
 
-    mmPayeeDialog *dlg = new mmPayeeDialog(db_, selectPayees, this);    
+    mmPayeeDialog *dlg = new mmPayeeDialog(core_, selectPayees, this);    
     if ( dlg->ShowModal() == wxID_OK )
     {
         if (selectPayees)
@@ -536,7 +541,7 @@ void mmBDDialog::OnTo(wxCommandEvent& event)
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
         selectPayees = false;
 
-    mmPayeeDialog *dlg = new mmPayeeDialog(db_, selectPayees, this);    
+    mmPayeeDialog *dlg = new mmPayeeDialog(core_, selectPayees, this);    
     if ( dlg->ShowModal() == wxID_OK )
     {
         if (dlg->payeeID_ == -1)
@@ -601,7 +606,8 @@ void mmBDDialog::OnAdvanced(wxCommandEvent& event)
 
 void mmBDDialog::OnCategs(wxCommandEvent& event)
 {
-    mmCategDialog *dlg = new mmCategDialog(db_, this);
+    // TODO: ASSERT
+    mmCategDialog *dlg = new mmCategDialog(0, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
        

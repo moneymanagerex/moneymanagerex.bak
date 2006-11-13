@@ -26,6 +26,7 @@
 #include "wx/datectrl.h"
 #include "guiid.h"
 #include "mmcheckingpanel.h"
+#include "mmcoredb.h"
 ////@end includes
 
 /*!
@@ -93,7 +94,10 @@ class mmFilterTransactionsDialog: public wxDialog
 public:
     /// Constructors
     mmFilterTransactionsDialog( );
-    mmFilterTransactionsDialog(  std::vector<mmTransactionHolder*>* trans, wxSQLite3Database* db, wxWindow* parent, 
+    mmFilterTransactionsDialog(  std::vector<mmTransactionHolder*>* trans, 
+        wxSQLite3Database* db, 
+        mmCoreDB* core,
+        wxWindow* parent, 
         wxWindowID id = SYMBOL_MMFILTERTRANSACTIONSDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_MMFILTERTRANSACTIONSDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_MMFILTERTRANSACTIONSDIALOG_POSITION, 
@@ -166,6 +170,7 @@ public:
     wxTextCtrl* notesEdit;
     std::vector<mmTransactionHolder*>* trans_;
     wxSQLite3Database* db_;
+    mmCoreDB* core_;
 
      int categID_;
     int subcategID_;

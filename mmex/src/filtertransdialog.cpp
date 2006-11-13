@@ -109,6 +109,7 @@ mmFilterTransactionsDialog::mmFilterTransactionsDialog( )
 
 mmFilterTransactionsDialog::mmFilterTransactionsDialog( std::vector<mmTransactionHolder*>* trans,
                                                        wxSQLite3Database* db,
+                                                       mmCoreDB* core,
                                                        wxWindow* parent, wxWindowID id, 
                                                        const wxString& caption, 
                                                        const wxPoint& pos, const wxSize& size, 
@@ -116,6 +117,7 @@ mmFilterTransactionsDialog::mmFilterTransactionsDialog( std::vector<mmTransactio
 {
     trans_ = trans;
     db_ = db;
+    core_ = core;
     categID_ = -1;
     subcategID_ = -1;
     payeeID_ = -1;
@@ -550,7 +552,7 @@ void mmFilterTransactionsDialog::OnButtoncancelClick( wxCommandEvent& event )
 
 void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& event)
 {
-    mmCategDialog *dlg = new mmCategDialog(db_, this);
+    mmCategDialog *dlg = new mmCategDialog(0, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
        
@@ -611,7 +613,7 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& event)
 
 void mmFilterTransactionsDialog::OnPayee(wxCommandEvent& event)
 {
-    mmPayeeDialog* dlg = new mmPayeeDialog(db_, true, this);    
+    mmPayeeDialog* dlg = new mmPayeeDialog(core_, true, this);    
     if ( dlg->ShowModal() == wxID_OK )
     {
         payeeID_ = dlg->payeeID_;

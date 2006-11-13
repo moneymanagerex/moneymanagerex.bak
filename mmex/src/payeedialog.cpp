@@ -33,19 +33,22 @@ END_EVENT_TABLE()
 
 mmPayeeDialog::mmPayeeDialog( )
 {
-    db_ = 0;
     payeeID_ = -1;
     selectPayees_ = true;
 }
 
-mmPayeeDialog::mmPayeeDialog( wxSQLite3Database* db, bool selectPayees, 
-                             wxWindow* parent, wxWindowID id, 
+mmPayeeDialog::mmPayeeDialog(mmCoreDB* core,
+                             bool selectPayees, 
+                             wxWindow* parent, 
+                             bool showSelectButton, 
+                             wxWindowID id, 
                              const wxString& caption, const wxPoint& pos, 
                              const wxSize& size, long style )
 {
-    db_ = db;
+    core_ = core;
     payeeID_ = -1;
     selectPayees_ = selectPayees;
+    showSelectButton_ = showSelectButton;
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -71,6 +74,12 @@ bool mmPayeeDialog::Create( wxWindow* parent, wxWindowID id,
         deleteButton->Disable();
     }
 
+    if (!showSelectButton_)
+    {
+        wxButton* selectButton = (wxButton*)FindWindow(ID_DIALOG_PAYEE_BUTTON_SELECT);
+        selectButton->Disable();
+    }
+
     wxIcon icon(mainicon_xpm);
     SetIcon(icon);
     
@@ -82,39 +91,27 @@ bool mmPayeeDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmPayeeDialog::fillControls()
 {
-    if (!db_)
-       return;
-
-    mmBEGINSQL_LITE_EXCEPTION;
-
     if (selectPayees_)
     {
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("select * from PAYEE_V1 order by PAYEENAME;");
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
-        int index = 0;
-        while (q1.NextRow())
+        int numPayees = (int)core_->payeeList_.payees_.size();
+        for (int idx = 0; idx < numPayees; idx++)
         {
-            wxString payeeString = q1.GetString(wxT("PAYEENAME"));
-            int payeeID = q1.GetInt(wxT("PAYEEID"));
-            listBox_->Insert(payeeString, index++, new mmPayeeListBoxItem(payeeID));
+            listBox_->Insert(core_->payeeList_.payees_[idx]->payeeName_, idx, 
+                new mmPayeeListBoxItem(core_->payeeList_.payees_[idx]->payeeID_));
         }
-        q1.Finalize();
     }
     else
     {
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from ACCOUNTLIST_V1 WHERE ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
-        int index = 0;
-        while (q1.NextRow())
+        int numAccounts = (int) core_->accounts_.size();
+        for (int iAdx = 0; iAdx < numAccounts; iAdx++)
         {
-            wxString payeeString = q1.GetString(wxT("ACCOUNTNAME"));
-            int payeeID = q1.GetInt(wxT("ACCOUNTID"));
-            listBox_->Insert(payeeString, index++, new mmPayeeListBoxItem(payeeID));
+            mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accounts_[iAdx].get());
+            if (pCA)
+            {
+                listBox_->Insert(pCA->accountName_, iAdx, new mmPayeeListBoxItem(pCA->accountID_));
+            }
         }
-        q1.Finalize();
-
     }
-    mmENDSQL_LITE_EXCEPTION;
 }
 
 void mmPayeeDialog::CreateControls()
@@ -170,20 +167,27 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
     wxString text = textCtrl->GetValue();
     if (text.Trim().IsEmpty())
         return;
-    int payeeID, categID, subcategID;
-    if (mmDBWrapper::getPayeeID(db_, text, payeeID, categID, subcategID))
-    {   
+    if (core_->payeeList_.payeeExists(text))
+    {
         mmShowErrorMessage(this, _("Payee with same name exists"), _("Error"));
-        return;
     }
-    mmDBWrapper::addPayee(db_, text, -1, -1);
-    listBox_->Clear();
-    fillControls();
+    else
+    {
+        core_->payeeList_.addPayee(text);
+        listBox_->Clear();
+        fillControls();
+
+        listBox_->SetStringSelection(text);
+        wxString payeeString = listBox_->GetStringSelection();
+        payeeID_ = core_->payeeList_.getPayeeID(payeeString);
+        wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME);
+        textCtrl->SetValue(payeeString);
+    }
 }
  
 void mmPayeeDialog::OnDelete(wxCommandEvent& event)
 {
-    if (!mmDBWrapper::deletePayeeWithConstraints(db_, payeeID_))
+    if (!core_->payeeList_.deletePayee(payeeID_))
     {
         mmShowErrorMessage(this, _("Payee is in use"), _("Error"));
         return;
@@ -232,7 +236,7 @@ void mmPayeeDialog::OnEdit(wxCommandEvent& event)
 {
     wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME);
     wxString text = textCtrl->GetValue();
-    mmDBWrapper::updatePayee(db_, text, payeeID_, -1, -1);
+    core_->payeeList_.updatePayee(payeeID_, text);
     listBox_->Clear();
     fillControls();
 }

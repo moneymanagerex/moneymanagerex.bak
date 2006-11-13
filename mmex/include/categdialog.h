@@ -28,6 +28,7 @@
 #include "guiid.h"
 #include "defs.h"
 #include "dbwrapper.h"
+#include "mmcoredb.h"
 
 class mmTreeItemCateg : public wxTreeItemData
 {
@@ -50,7 +51,7 @@ class mmCategDialog : public wxDialog
 
 public:
     mmCategDialog();
-    mmCategDialog(wxSQLite3Database* db, wxWindow* parent, 
+    mmCategDialog(mmCoreDB* core, wxWindow* parent, 
         wxWindowID id = SYMBOL_CATEGDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_CATEGDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_CATEGDIALOG_POSITION, 
@@ -78,6 +79,7 @@ public:
 
 private:
     wxSQLite3Database* db_;
+    mmCoreDB* core_;
     wxTreeCtrl* treeCtrl_; 
     wxTreeItemId selectedItemId_;
     wxTreeItemId root_;

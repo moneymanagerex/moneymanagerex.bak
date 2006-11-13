@@ -31,8 +31,10 @@ END_EVENT_TABLE()
 BEGIN_EVENT_TABLE(mmHtmlWindow, wxHtmlWindow)
 END_EVENT_TABLE()
 
-mmHomePagePanel::mmHomePagePanel(  mmGUIFrame* frame, 
-            wxSQLite3Database* db, wxWindow *parent,
+mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame, 
+            wxSQLite3Database* db, 
+            mmCoreDB* core, 
+            wxWindow *parent,
             wxWindowID winid,
             const wxPoint& pos,
             const wxSize& size,
@@ -40,9 +42,9 @@ mmHomePagePanel::mmHomePagePanel(  mmGUIFrame* frame,
             const wxString& name )
 {
     db_ = db;
+    core_ = core;
     frame_ = frame;
     Create(parent, winid, pos, size, style, name);
-
 }
 
 bool mmHomePagePanel::Create( wxWindow *parent,
@@ -62,11 +64,6 @@ bool mmHomePagePanel::Create( wxWindow *parent,
     updateAccounts();
 
     return TRUE;
-}
-
-void mmHomePagePanel::init(wxSQLite3Database* db)
-{
-    db_ = db;
 }
 
 void mmHomePagePanel::updateAccounts()
@@ -92,31 +89,32 @@ void mmHomePagePanel::updateAccounts()
 
     wxString str1 = _("Account") + wxString(wxT("</b></th><th   width=\"100\" ><b>"));
     wxString str2 = _("Summary") + wxString(wxT("</b></th></tr>"));
-    hb.addHTML(wxT("<table border=\"1\"><tr  bgcolor=\"#80B9E8\"><th   width=\"200\"><b>") +  str1 + str2 );
+    hb.addHTML(wxT("<table border=\"1\"><tr  bgcolor=\"#80B9E8\"><th width=\"200\"><b>") 
+        +  str1 + str2 );
 
     /////////////////   
-
-    
+   
     int ct = 0;  
     double tincome = 0.0;
     double texpenses = 0.0;
     double tBalance = 0.0;
-    mmBEGINSQL_LITE_EXCEPTION;
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
-    while (q1.NextRow())
+
+    for (int iAdx = 0; iAdx < core_->accounts_.size(); iAdx++)
     {
+        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accounts_[iAdx].get());
+        if (pCA)
+        {
         std::vector<wxString> data1;
         hb.addHTML(wxT("<tr> <td> <a href=\"ACCT: "));
-        hb.addHTML(q1.GetString(wxT("ACCOUNTID")));
+        hb.addHTML(wxString::Format(wxT("%d"), pCA->accountID_));
         hb.addHTML(wxT("\" >"));
-        hb.addHTML(q1.GetString(wxT("ACCOUNTNAME")));
+        hb.addHTML(pCA->accountName_);
         hb.addHTML(wxT(" </a></td><td align=\"right\">"));
-        //data1.push_back(q1.GetString(wxT("ACCOUNTNAME")));
-
-        double bal = mmDBWrapper::getTotalBalanceOnAccount(db_, q1.GetInt(wxT("ACCOUNTID")), true);
+        
+        double bal = pCA->balance();
 
         wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", q1.GetInt(wxT("ACCOUNTID")));
+        bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", pCA->accountID_);
         wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL);
         if (q2.NextRow())
         {
@@ -126,7 +124,7 @@ void mmHomePagePanel::updateAccounts()
         }
         q2.Finalize();
 
-        double rate = mmDBWrapper::getCurrencyBaseConvRate(db_, q1.GetInt(wxT("ACCOUNTID")));
+        double rate = mmDBWrapper::getCurrencyBaseConvRate(db_,pCA->accountID_);
         // show the actual amount in that account in the original rate
         tBalance += bal * rate;
         wxString balance;
@@ -137,13 +135,15 @@ void mmHomePagePanel::updateAccounts()
         
         //hb.addRow(data1, wxT("align=\"left\" "));
         double income = 0.0, expenses = 0.0;
-        mmDBWrapper::getExpensesIncome(db_, q1.GetInt(wxT("ACCOUNTID")), expenses, income, 
+        mmDBWrapper::getExpensesIncome(db_, pCA->accountID_, expenses, income, 
             false,dtBegin, dtEnd);
         tincome += income;
         texpenses += expenses;
         ct++;
+            
+        }
     }
-    mmENDSQL_LITE_EXCEPTION;
+
 
 
     /* Stocks */
@@ -257,7 +257,7 @@ void mmHomePagePanel::updateAccounts()
             {
                 hb.beginTable();
                 std::vector<wxString> data3;
-                data3.push_back(_("Upcoming Bills & Deposits"));
+                data3.push_back(_("Upcoming Transactions"));
 
                 hb.addHTML(wxT("<tr BGCOLOR=\"#80B9E8\" > <th width=\"100\" COLSPAN=\"2\" > <b>"));
                 hb.addHTML(wxT("<a href=\"billsdeposits\" >"));
@@ -335,7 +335,8 @@ void mmHomePagePanel::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    htmlWindow_ = new mmHtmlWindow( itemDialog1, frame_, ID_PANEL_HOMEPAGE_HTMLWINDOW, 
+    htmlWindow_ = new mmHtmlWindow( itemDialog1, frame_, 
+        ID_PANEL_HOMEPAGE_HTMLWINDOW, 
         wxDefaultPosition, wxDefaultSize, 
         wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     itemBoxSizer2->Add(htmlWindow_, 1, wxGROW|wxALL, 0);

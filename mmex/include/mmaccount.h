@@ -1,4 +1,6 @@
 /*******************************************************
+ Copyright (C) 2006 Madhan Kanagavel
+
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
@@ -22,21 +24,29 @@
 #include "defs.h"
 #include "dbwrapper.h"
 #include "mmcurrency.h"
+#include "mmdbinterface.h"
+#include "mmtransaction.h"
 
-class mmAccount
+class mmAccount : public mmDBInterface
 {
 public: 
-   mmAccount(wxSQLite3ResultSet& q1);
+   mmAccount(boost::shared_ptr<wxSQLite3Database> db, 
+       wxSQLite3ResultSet& q1);
    virtual ~mmAccount() {}
 
+    virtual double balance() = 0;
+
+   /* Overrides of mmDBInterface */
+   virtual void addDBRecord();
+
+   /* Scoped Enums */
    enum AccountStatus
    {
       MMEX_Open,
       MMEX_Closed
    };
 
-
-private:
+public:
    int      accountID_;
    wxString accountName_;
    AccountStatus status_;
@@ -50,27 +60,46 @@ private:
    bool favoriteAcct_;
    double initialBalance_;
    boost::shared_ptr< mmCurrency*> currency_;
+
+   /* List of associated transactions */
+   std::vector<boost::weak_ptr<mmTransaction> > transactions_;
+
+   
 };
 
 class mmCheckingAccount : public mmAccount
 {
 public: 
-   mmCheckingAccount(wxSQLite3ResultSet& q1) : mmAccount(q1) {} 
-   virtual ~mmCheckingAccount() {}
+    mmCheckingAccount(boost::shared_ptr<wxSQLite3Database> db, 
+        wxSQLite3ResultSet& q1);
+    virtual ~mmCheckingAccount() {}
+
+public:
+    /* List of global transactions */
+    static std::vector<boost::shared_ptr<mmTransaction> > gTransactions_;
+    static boost::shared_ptr<mmTransaction> findTransaction(int transactionID);
+
+    double balance();
 };
 
 class mmAssetAccount : public mmAccount
 {
 public: 
-   mmAssetAccount(wxSQLite3ResultSet& q1) : mmAccount(q1) {}
+   mmAssetAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1) 
+       : mmAccount(db, q1) {}
    virtual ~mmAssetAccount() {}
+
+   double balance();
 };
 
 class mmInvestmentAccount : public mmAccount
 {
 public: 
-   mmInvestmentAccount(wxSQLite3ResultSet& q1) : mmAccount(q1) {}
+   mmInvestmentAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1)
+       : mmAccount(db, q1) {}
    virtual ~mmInvestmentAccount() {}
+
+   double balance();
 };
 
 #endif
