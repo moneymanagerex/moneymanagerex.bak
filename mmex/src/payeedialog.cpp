@@ -102,10 +102,10 @@ void mmPayeeDialog::fillControls()
     }
     else
     {
-        int numAccounts = (int) core_->accounts_.size();
+        int numAccounts = (int) core_->accountList_.accounts_.size();
         for (int iAdx = 0; iAdx < numAccounts; iAdx++)
         {
-            mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accounts_[iAdx].get());
+            mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
             if (pCA)
             {
                 listBox_->Insert(pCA->accountName_, iAdx, new mmPayeeListBoxItem(pCA->accountID_));

@@ -22,7 +22,8 @@
 mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
 : db_ (db),
   payeeList_(db),
-  categoryList_(db)
+  categoryList_(db),
+  accountList_(db)
 {
     if (!db_)
         throw wxString(wxT("Database Handle is invalid!"));
@@ -42,7 +43,7 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
             ptrBase = new mmInvestmentAccount(db_, q1);
 
         boost::shared_ptr<mmAccount> pAccount(ptrBase);
-        accounts_.push_back(pAccount);
+        accountList_.accounts_.push_back(pAccount);
     }
     q1.Finalize();
 

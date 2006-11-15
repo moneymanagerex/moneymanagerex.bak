@@ -35,9 +35,9 @@ public:
     /* Utility Functions */
 
 public:
+   mmAccountList accountList_;
    mmPayeeList payeeList_;
    mmCategoryList categoryList_;
-   std::vector< boost::shared_ptr<mmAccount> > accounts_;
    
    boost::shared_ptr<wxSQLite3Database> db_;
 };

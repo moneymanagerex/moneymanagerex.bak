@@ -99,9 +99,9 @@ void mmHomePagePanel::updateAccounts()
     double texpenses = 0.0;
     double tBalance = 0.0;
 
-    for (int iAdx = 0; iAdx < core_->accounts_.size(); iAdx++)
+    for (int iAdx = 0; iAdx < core_->accountList_.accounts_.size(); iAdx++)
     {
-        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accounts_[iAdx].get());
+        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pCA)
         {
         std::vector<wxString> data1;

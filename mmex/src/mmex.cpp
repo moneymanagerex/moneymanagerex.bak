@@ -703,10 +703,10 @@ void mmGUIFrame::updateNavTreeControl()
 
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
 
-    int numAccounts = (int) core_->accounts_.size();
+    int numAccounts = (int) core_->accountList_.accounts_.size();
     for (int iAdx = 0; iAdx < numAccounts; iAdx++)
     {
-        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accounts_[iAdx].get());
+        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pCA)
         {
             if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
@@ -718,7 +718,7 @@ void mmGUIFrame::updateNavTreeControl()
             }
         }
 
-        mmInvestmentAccount* pIA = dynamic_cast<mmInvestmentAccount*>(core_->accounts_[iAdx].get());
+        mmInvestmentAccount* pIA = dynamic_cast<mmInvestmentAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pIA)
         {
             wxTreeItemId tacct = navTreeCtrl_->AppendItem(stocks, pIA->accountName_, 6, 6);
@@ -2295,8 +2295,6 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
 
     mmENDSQL_LITE_EXCEPTION;
 
-    wxString delimit = mmDBWrapper::getInfoSettingValue(db_.get(), wxT("DELIMITER"), DEFDELIMTER);
-    
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, 
         _("Choose Account to Edit"), 
         _("Accounts"), as);
@@ -2317,30 +2315,21 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
 
 void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
 {
-    wxUint32 num = mmDBWrapper::getNumAccounts(db_.get());
-    if (num == 0)
+    if (core_->accountList_.accounts_.size() == 0)
     {
         mmShowErrorMessage(0, _("No Account available!"), _("Error"));
         return;
     }
-    wxArrayString as;
-    int* arrAcctID = new int[num];
-    mmBEGINSQL_LITE_EXCEPTION;
-    wxSQLite3ResultSet q1 = 
-        db_.get()->ExecuteQuery("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
-    int i = 0;
-    while (q1.NextRow())
-    {
-        as.Add(q1.GetString(wxT("ACCOUNTNAME")));
-        arrAcctID[i++] = q1.GetInt(wxT("ACCOUNTID"));
-    }
-    
-    q1.Finalize();
-    mmENDSQL_LITE_EXCEPTION;
-  
 
-    wxString delimit = mmDBWrapper::getInfoSettingValue(db_.get(), wxT("DELIMITER"), DEFDELIMTER);
-    
+    wxArrayString as;
+    int num = core_->accountList_.accounts_.size();
+    int* arrAcctID = new int[num];
+    for (int idx = 0; idx < (int)core_->accountList_.accounts_.size(); idx++)
+    {
+        as.Add(core_->accountList_.accounts_[idx]->accountName_);
+        arrAcctID[idx] = core_->accountList_.accounts_[idx]->accountID_;
+    }
+  
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, 
         _("Choose Account to Delete"), 
         _("Accounts"), as);
@@ -2348,7 +2337,6 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
     {
         int choice = scd->GetSelection();
         int acctID = arrAcctID[choice];
-        wxString acctType = mmDBWrapper::getAccountType(db_.get(), acctID);
 
         wxMessageDialog msgDlg(this, 
             _("Do you really want to delete the account?"),
@@ -2356,35 +2344,10 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
             wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
         {
-            if (acctType = wxT("Checking"))
-            {
-                wxSQLite3StatementBuffer bufSQL;
-                bufSQL.Format("delete from CHECKINGACCOUNT_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", acctID, acctID);
-                int nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
-
-                bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", acctID);
-                int nRows = db_.get()->ExecuteUpdate(bufSQL);
-                wxASSERT(nRows);
-
-                updateNavTreeControl();
-                createHomePage();
-            }
-            else if (acctType == wxT("Investment"))
-            {
-                wxSQLite3StatementBuffer bufSQL;
-                bufSQL.Format("delete from STOCK_V1 where HELDAT=%d;", acctID);
-                int nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
-
-                bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", acctID);
-                int nRows = db_.get()->ExecuteUpdate(bufSQL);
-                wxASSERT(nRows);
-
-                updateNavTreeControl();
-                createHomePage();
-            }
-
+            core_->accountList_.deleteAccount(acctID);
+            updateNavTreeControl();
+            createHomePage();
         }
-         
     }
     delete[] arrAcctID;
     scd->Destroy();

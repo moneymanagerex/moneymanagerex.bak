@@ -74,8 +74,12 @@ public:
         wxSQLite3ResultSet& q1);
     virtual ~mmCheckingAccount() {}
 
+    void deleteTransactions(int accountID);    
+
 public:
     /* List of global transactions */
+    static void deleteGlobalTransactions(int accountID);
+
     static std::vector<boost::shared_ptr<mmTransaction> > gTransactions_;
     static boost::shared_ptr<mmTransaction> findTransaction(int transactionID);
 
@@ -100,6 +104,28 @@ public:
    virtual ~mmInvestmentAccount() {}
 
    double balance();
+};
+
+
+class mmAccountList
+{
+public:
+    mmAccountList(boost::shared_ptr<wxSQLite3Database> db)
+        : db_(db) {}
+    ~mmAccountList() {}
+
+    /* Payee Functions */
+    void addAccount();
+    wxString getAccountType(int accountID);
+    bool deleteAccount(int accountID);
+    void updateAccount(int accountID);
+    bool accountExists(const wxString& accountName);
+
+    std::vector< boost::shared_ptr<mmAccount> > accounts_;
+    
+    
+private:
+    boost::shared_ptr<wxSQLite3Database> db_;
 };
 
 #endif

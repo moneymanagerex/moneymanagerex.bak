@@ -118,6 +118,54 @@ mmCheckingAccount::mmCheckingAccount(boost::shared_ptr<wxSQLite3Database> db,
     mmENDSQL_LITE_EXCEPTION;
 }
 
+void mmCheckingAccount::deleteTransactions(int accountID)
+{
+    std::vector<boost::weak_ptr<mmTransaction> >::iterator iter;
+
+    for (iter = transactions_.begin(); iter != transactions_.end(); )
+    {
+         boost::shared_ptr<mmTransaction> sptr = (*iter).lock();
+         if (!sptr)
+         {
+            // transaction has gone away, delete it
+             iter = transactions_.erase(iter);
+         }
+         else
+         {
+             mmBankTransaction* pBankTransaction = dynamic_cast<mmBankTransaction*>(sptr.get());
+             if (pBankTransaction)
+             {
+                 if ((pBankTransaction->accountID_ == accountID) ||
+                     (pBankTransaction->toAccountID_))
+                 {
+                     wxASSERT(false); // we should never have to be here
+                 }
+             }
+             ++iter;
+         }
+    }
+}
+
+void mmCheckingAccount::deleteGlobalTransactions(int accountID)
+{
+    std::vector< boost::shared_ptr<mmTransaction> >::iterator i;
+    for (i = gTransactions_.begin(); i!= gTransactions_.end(); )
+    {
+        boost::shared_ptr<mmTransaction> sptr = *i;
+        mmBankTransaction* pBankTransaction = dynamic_cast<mmBankTransaction*>(sptr.get());
+        if (pBankTransaction)
+        {
+            if ((pBankTransaction->accountID_ == accountID) ||
+                (pBankTransaction->toAccountID_))
+            {
+                i = gTransactions_.erase(i);
+            }
+            else
+                ++i;
+        }
+    }
+}
+
 double mmCheckingAccount::balance()
 {
     double balance = initialBalance_;
@@ -127,6 +175,8 @@ double mmCheckingAccount::balance()
         boost::shared_ptr<mmTransaction> sptr = transactions_[idx].lock();
         if (sptr)
             balance += sptr->value(accountID_);
+        else
+            wxASSERT(false);
     }
 
     return balance;
@@ -142,4 +192,83 @@ double mmAssetAccount::balance()
 double mmInvestmentAccount::balance()
 {
     return 0.0;
+}
+
+// --------------------------------------------------------
+
+bool mmAccountList::deleteAccount(int accountID)
+{
+    mmBEGINSQL_LITE_EXCEPTION;
+    wxString acctType = getAccountType(accountID);
+    if (acctType = wxT("Checking"))
+    {
+        mmCheckingAccount::deleteGlobalTransactions(accountID);
+        for (int i = 0; i < accounts_.size(); i++)
+        {
+            mmCheckingAccount* pChk = dynamic_cast<mmCheckingAccount*>(accounts_[i].get());
+            if (pChk)
+            {
+                pChk->deleteTransactions(accountID);
+            }
+        }
+
+        wxSQLite3StatementBuffer bufSQL;
+        bufSQL.Format("delete from CHECKINGACCOUNT_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", accountID, accountID);
+        int nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
+
+        bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", accountID);
+        int nRows = db_.get()->ExecuteUpdate(bufSQL);
+        wxASSERT(nRows);
+    }
+    else if (acctType == wxT("Investment"))
+    {
+        wxSQLite3StatementBuffer bufSQL;
+        bufSQL.Format("delete from STOCK_V1 where HELDAT=%d;", accountID);
+        int nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
+
+        bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", accountID);
+        int nRows = db_.get()->ExecuteUpdate(bufSQL);
+        wxASSERT(nRows);
+    }
+
+    std::vector<boost::shared_ptr<mmAccount> >::iterator iter;
+    for (iter = accounts_.begin(); iter != accounts_.end(); )
+    {
+        boost::shared_ptr<mmAccount> pAccount = (*iter);
+        if (pAccount->accountID_ == accountID)
+        {
+            iter = accounts_.erase(iter);
+            break;
+        }
+        else
+            ++iter;
+    }
+
+    mmENDSQL_LITE_EXCEPTION;
+
+
+
+    return true;
+}
+
+void mmAccountList::updateAccount(int accountID)
+{
+
+}
+
+bool mmAccountList::accountExists(const wxString& accountName)
+{
+    return true;
+}
+
+wxString mmAccountList::getAccountType(int accountID)
+{
+    int len = (int)accounts_.size();
+    for (int idx = 0; idx < len; idx++)
+    {
+        if (accounts_[idx]->accountID_ == accountID)
+            return accounts_[idx]->acctType_;
+    }
+    wxASSERT(false);
+    return wxT("");
 }
