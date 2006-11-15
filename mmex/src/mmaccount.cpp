@@ -258,7 +258,11 @@ void mmAccountList::updateAccount(int accountID)
 
 bool mmAccountList::accountExists(const wxString& accountName)
 {
-    return true;
+   int checkAcctID = mmDBWrapper::getAccountID(db_.get(), accountName);
+   if (checkAcctID != -1)
+      return true;
+
+    return false;
 }
 
 wxString mmAccountList::getAccountType(int accountID)
