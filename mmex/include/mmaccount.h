@@ -30,6 +30,8 @@
 class mmAccount : public mmDBInterface
 {
 public: 
+   mmAccount(boost::shared_ptr<wxSQLite3Database> db); 
+
    mmAccount(boost::shared_ptr<wxSQLite3Database> db, 
        wxSQLite3ResultSet& q1);
    virtual ~mmAccount() {}
@@ -59,12 +61,10 @@ public:
    wxString acctType_;
    bool favoriteAcct_;
    double initialBalance_;
-   boost::shared_ptr< mmCurrency*> currency_;
+   boost::weak_ptr<mmCurrency> currency_;
 
    /* List of associated transactions */
    std::vector<boost::weak_ptr<mmTransaction> > transactions_;
-
-   
 };
 
 class mmCheckingAccount : public mmAccount
@@ -72,6 +72,8 @@ class mmCheckingAccount : public mmAccount
 public: 
     mmCheckingAccount(boost::shared_ptr<wxSQLite3Database> db, 
         wxSQLite3ResultSet& q1);
+    mmCheckingAccount(boost::shared_ptr<wxSQLite3Database> db)  : mmAccount(db) { }
+    
     virtual ~mmCheckingAccount() {}
 
     void deleteTransactions(int accountID);    
@@ -91,6 +93,8 @@ class mmAssetAccount : public mmAccount
 public: 
    mmAssetAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1) 
        : mmAccount(db, q1) {}
+   mmAssetAccount(boost::shared_ptr<wxSQLite3Database> db)  : mmAccount(db) { }
+   
    virtual ~mmAssetAccount() {}
 
    double balance();
@@ -101,6 +105,7 @@ class mmInvestmentAccount : public mmAccount
 public: 
    mmInvestmentAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1)
        : mmAccount(db, q1) {}
+   mmInvestmentAccount(boost::shared_ptr<wxSQLite3Database> db)  : mmAccount(db) { }
    virtual ~mmInvestmentAccount() {}
 
    double balance();
@@ -114,11 +119,14 @@ public:
         : db_(db) {}
     ~mmAccountList() {}
 
-    /* Payee Functions */
-    void addAccount();
+    /* Account Functions */
+    boost::shared_ptr<mmAccount> getAccountSharedPtr(int accountID);
+    
+    void addAccount(boost::shared_ptr<mmAccount> pAccount);
     wxString getAccountType(int accountID);
+    int getAccountID(const wxString& accountName);
     bool deleteAccount(int accountID);
-    void updateAccount(int accountID);
+    void updateAccount(boost::shared_ptr<mmAccount> pAccount);
     bool accountExists(const wxString& accountName);
 
     std::vector< boost::shared_ptr<mmAccount> > accounts_;

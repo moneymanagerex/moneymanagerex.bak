@@ -447,6 +447,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\mmcurrency.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\mmex.cpp"
 				>
 			</File>

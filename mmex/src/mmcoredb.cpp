@@ -23,7 +23,8 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
 : db_ (db),
   payeeList_(db),
   categoryList_(db),
-  accountList_(db)
+  accountList_(db),
+  currencyList_(db)
 {
     if (!db_)
         throw wxString(wxT("Database Handle is invalid!"));
@@ -31,9 +32,19 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
     mmBEGINSQL_LITE_EXCEPTION;
     /* Load the DB into memory */
 
-    /* Load the Accounts */
-    wxString sqlString = wxT("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
+    /* Load the Currencies */
+    wxString sqlString =  wxT("select * from CURRENCYFORMATS_V1 order by CURRENCYNAME;");
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sqlString);
+    while (q1.NextRow())
+    {
+       boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency(db_, q1));
+       currencyList_.currencies_.push_back(pCurrency);
+    }
+    q1.Finalize();
+
+    /* Load the Accounts */
+    sqlString = wxT("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
+    q1 = db_->ExecuteQuery(sqlString);
     while (q1.NextRow())
     {
         mmAccount* ptrBase;
@@ -42,6 +53,8 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
         else
             ptrBase = new mmInvestmentAccount(db_, q1);
 
+        boost::weak_ptr<mmCurrency> pCurrency = currencyList_.getCurrencySharedPtr(q1.GetInt(wxT("CURRENCYID")));
+        ptrBase->currency_ = pCurrency;
         boost::shared_ptr<mmAccount> pAccount(ptrBase);
         accountList_.accounts_.push_back(pAccount);
     }

@@ -16,9 +16,51 @@
 #ifndef _MM_EX_MMCURRENCY_H_
 #define _MM_EX_MMCURRENCY_H_
 
+#include "mmdbinterface.h"
+#include "boost/shared_ptr.hpp"
+
 class mmCurrency
 {
+public: 
+   mmCurrency() {}
+   mmCurrency(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1);
+   ~mmCurrency() {}
 
+   int currencyID_; 
+   wxString currencyName_;
+   wxString pfxSymbol_;
+   wxString sfxSymbol_;
+   wxString dec_;
+   wxString grp_;
+   wxString unit_;
+   wxString cent_;
+   double scaleDl_;
+   double baseConv_;
+
+private:
+    boost::shared_ptr<wxSQLite3Database> db_;
 };
+
+class mmCurrencyList
+{
+public:
+    mmCurrencyList(boost::shared_ptr<wxSQLite3Database> db)
+        : db_(db) {}
+    ~mmCurrencyList() {}
+
+    /* Currency Functions */
+    void addCurrency(boost::shared_ptr<mmCurrency> pCurrency);
+    bool deleteCurrency(int currencyID);
+    void updateCurrency(int currencyID, boost::shared_ptr<mmCurrency> pCurrency);
+    bool currencyExists(const wxString& currencyName);
+    int getCurrencyID(const wxString& currencyName);
+    boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID);
+
+    std::vector< boost::shared_ptr<mmCurrency> > currencies_;
+    
+private:
+    boost::shared_ptr<wxSQLite3Database> db_;
+};
+
 
 #endif

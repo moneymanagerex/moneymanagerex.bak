@@ -18,12 +18,18 @@
 
 #include "mmaccount.h"
 
-mmAccount::mmAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1)
+mmAccount::mmAccount(boost::shared_ptr<wxSQLite3Database> db)
+: mmDBInterface(db)
+{
+
+}
+
+mmAccount::mmAccount(boost::shared_ptr<wxSQLite3Database> db, 
+                     wxSQLite3ResultSet& q1)
     : mmDBInterface(db)
 {
     bool favoriteAcct_;
-    boost::shared_ptr< mmCurrency*> currency_;
-
+   
     accountID_ = q1.GetInt(wxT("ACCOUNTID"));
     accountName_ = q1.GetString(wxT("ACCOUNTNAME"));
     accountNum_  = q1.GetString(wxT("ACCOUNTNUM"));
@@ -251,11 +257,59 @@ bool mmAccountList::deleteAccount(int accountID)
     return true;
 }
 
-void mmAccountList::updateAccount(int accountID)
+void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)
 {
+   mmBEGINSQL_LITE_EXCEPTION;
 
+   wxString statusStr = wxT("Open");
+   if (pAccount->status_ == mmAccount::MMEX_Closed)
+      statusStr = wxT("Closed");
+
+   wxString favStr = wxT("TRUE");
+   if (!pAccount->favoriteAcct_)
+      favStr = wxT("FALSE");
+
+   boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
+   wxASSERT(pCurrency);
+   int currencyID = pCurrency->currencyID_;
+
+
+   wxString bufSQL = wxString::Format(wxT("update ACCOUNTLIST_V1 SET ACCOUNTNAME='%s', ACCOUNTTYPE='%s', ACCOUNTNUM='%s', \
+                                          STATUS='%s', NOTES='%s', HELDAT='%s', WEBSITE='%s', CONTACTINFO='%s',  ACCESSINFO='%s',                               \
+                                          INITIALBAL=%f, FAVORITEACCT='%s', CURRENCYID=%d                     \
+                                          where ACCOUNTID=%d;"), 
+                                          pAccount->accountName_.c_str(), pAccount->acctType_.c_str(), 
+                                          pAccount->accountNum_.c_str(),  
+                                          statusStr, 
+                                          pAccount->notes_.c_str(), 
+                                          pAccount->heldAt_.c_str(), 
+                                          pAccount->website_.c_str(),
+                                          pAccount->contactInfo_.c_str(), 
+                                          pAccount->accessInfo_.c_str(),
+                                          pAccount->initialBalance_, 
+                                          favStr.c_str(), 
+                                          currencyID, 
+                                          pAccount->accountID_);
+
+   int retVal = db_->ExecuteUpdate(bufSQL);
+
+   mmENDSQL_LITE_EXCEPTION;
 }
 
+boost::shared_ptr<mmAccount> mmAccountList::getAccountSharedPtr(int accountID)
+{
+    std::vector<boost::shared_ptr<mmAccount> >::iterator iter;
+    for (iter = accounts_.begin(); iter != accounts_.end(); )
+    {
+        boost::shared_ptr<mmAccount> pAccount = (*iter);
+        if (pAccount->accountID_ == accountID)
+        {
+           return (*iter);
+        }
+    }
+    return boost::shared_ptr<mmAccount>();
+}
+    
 bool mmAccountList::accountExists(const wxString& accountName)
 {
    int checkAcctID = mmDBWrapper::getAccountID(db_.get(), accountName);
@@ -263,6 +317,11 @@ bool mmAccountList::accountExists(const wxString& accountName)
       return true;
 
     return false;
+}
+
+int mmAccountList::getAccountID(const wxString& accountName)
+{
+   return mmDBWrapper::getAccountID(db_.get(), accountName);
 }
 
 wxString mmAccountList::getAccountType(int accountID)
@@ -275,4 +334,47 @@ wxString mmAccountList::getAccountType(int accountID)
     }
     wxASSERT(false);
     return wxT("");
+}
+
+void mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
+{
+      mmBEGINSQL_LITE_EXCEPTION;
+    
+      wxString statusStr = wxT("Open");
+      if (pAccount->status_ == mmAccount::MMEX_Closed)
+         statusStr = wxT("Closed");
+
+      wxString favStr = wxT("TRUE");
+      if (!pAccount->favoriteAcct_)
+         favStr = wxT("FALSE");
+
+      boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
+      wxASSERT(pCurrency);
+      int currencyID = pCurrency->currencyID_;
+      
+      wxString bufSQL = wxString::Format(wxT("insert into ACCOUNTLIST_V1 (ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, \
+                                               STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO,                                 \
+                                               INITIALBAL, FAVORITEACCT, CURRENCYID)                      \
+                                               values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, '%s', %d );"), 
+                                               pAccount->accountName_.c_str(), pAccount->acctType_.c_str(), 
+                                               pAccount->accountNum_.c_str(),  
+                                               statusStr, 
+                                               pAccount->notes_.c_str(), 
+                                               pAccount->heldAt_.c_str(), 
+                                               pAccount->website_.c_str(),
+                                               pAccount->contactInfo_.c_str(), 
+                                               pAccount->accessInfo_.c_str(),
+                                               pAccount->initialBalance_, 
+                                               favStr.c_str(), 
+                                               currencyID
+                                               );
+
+        int retVal = db_->ExecuteUpdate(bufSQL);
+
+        pAccount->accountID_ = db_->GetLastRowId().ToLong();
+        accounts_.push_back(pAccount);
+
+        mmENDSQL_LITE_EXCEPTION;
+    
+
 }

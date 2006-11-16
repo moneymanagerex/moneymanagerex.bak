@@ -1164,7 +1164,7 @@ void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& event)
             if (acctType == wxT("Checking") || acctType == wxT("Investment"))
             {
                 q1.Finalize();
-                mmNewAcctDialog *dlg = new mmNewAcctDialog(db_.get(), false, data, this);
+                mmNewAcctDialog *dlg = new mmNewAcctDialog(core_, false, data, this);
                 if ( dlg->ShowModal() == wxID_OK )
                 {
                     createHomePage();
@@ -1911,7 +1911,7 @@ void mmGUIFrame::OnNewAccount(wxCommandEvent& event)
 
     if (wizard->acctID_ != -1)
     {
-        mmNewAcctDialog *dlg = new mmNewAcctDialog(db_.get(), false, wizard->acctID_, this);
+        mmNewAcctDialog *dlg = new mmNewAcctDialog(core_, false, wizard->acctID_, this);
         if ( dlg->ShowModal() == wxID_OK )
         {
             
@@ -2302,7 +2302,7 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
     {
         int choice = scd->GetSelection();
         int acctID = arrAcctID[choice];
-        mmNewAcctDialog *dlg = new mmNewAcctDialog(db_.get(), false, acctID, this);
+        mmNewAcctDialog *dlg = new mmNewAcctDialog(core_, false, acctID, this);
         if ( dlg->ShowModal() == wxID_OK )
         {
             createHomePage();

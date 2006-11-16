@@ -27,6 +27,7 @@
 
 #include "guiid.h"
 #include "defs.h"
+#include "mmcoredb.h"
 
 class mmNewAcctDialog : public wxDialog
 {    
@@ -35,7 +36,8 @@ class mmNewAcctDialog : public wxDialog
 
 public:
     mmNewAcctDialog();
-    mmNewAcctDialog(wxSQLite3Database* db_, bool newAcct,
+    mmNewAcctDialog(mmCoreDB* core, 
+        bool newAcct,
         int acctId,
         wxWindow* parent, wxWindowID id = SYMBOL_NEWCHKGACCTDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_NEWCHKGACCTDIALOG_TITLE, 
@@ -58,7 +60,7 @@ public:
     void fillControlsWithData(void);
 
 private:
-    wxSQLite3Database* db_;
+    mmCoreDB* core_;
     wxTextCtrl *textAccountName_;
     bool newAcct_;
     int accountID_;

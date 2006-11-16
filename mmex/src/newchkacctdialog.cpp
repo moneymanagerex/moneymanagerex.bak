@@ -40,11 +40,11 @@ mmNewAcctDialog::mmNewAcctDialog( )
 {
 }
 
-mmNewAcctDialog::mmNewAcctDialog( wxSQLite3Database* db, bool newAcct, int accountID, 
+mmNewAcctDialog::mmNewAcctDialog( mmCoreDB* core, bool newAcct, int accountID, 
                                  wxWindow* parent, wxWindowID id, const wxString& caption, 
                                  const wxPoint& pos, const wxSize& size, long style )
 {
-    db_ = db;
+    core_ = core;
     newAcct_ = newAcct;
     accountID_ = accountID;
     currencyID_ = -1;
@@ -77,85 +77,59 @@ bool mmNewAcctDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmNewAcctDialog::fillControlsWithData()
 {
-    mmBEGINSQL_LITE_EXCEPTION;
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", accountID_);
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
-    if (q1.NextRow())
-    {
-        textAccountName_->SetValue(q1.GetString(wxT("ACCOUNTNAME")));
+    boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(accountID_);
+    wxASSERT(pAccount);
 
-        wxTextCtrl* textCtrl;
-        textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER);
-        textCtrl->SetValue(q1.GetString(wxT("ACCOUNTNUM")));
+    textAccountName_->SetValue(pAccount->accountName_);
 
-        textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_HELDAT);
-        textCtrl->SetValue(q1.GetString(wxT("HELDAT")));
+    wxTextCtrl* textCtrl;
+    textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER);
+    textCtrl->SetValue(pAccount->accountNum_);
 
-        textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_WEBSITE);
-        textCtrl->SetValue(q1.GetString(wxT("WEBSITE")));
+    textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_HELDAT);
+    textCtrl->SetValue(pAccount->heldAt_);
 
-        textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_CONTACT);
-        textCtrl->SetValue(q1.GetString(wxT("CONTACTINFO")));
+    textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_WEBSITE);
+    textCtrl->SetValue(pAccount->website_);
 
-        textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO);
-        textCtrl->SetValue(q1.GetString(wxT("ACCESSINFO")));
+    textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_CONTACT);
+    textCtrl->SetValue(pAccount->contactInfo_);
 
-        textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_NOTES);
-        textCtrl->SetValue(q1.GetString(wxT("NOTES")));
+    textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO);
+    textCtrl->SetValue(pAccount->accessInfo_);
 
-        wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
-        if (q1.GetString(wxT("ACCOUNTTYPE")) == wxT("Checking"))
-            itemAcctType->SetSelection(ACCT_TYPE_CHECKING);
-        else
-            itemAcctType->SetSelection(ACCT_TYPE_INVESTMENT);
-		itemAcctType->Enable(false);
+    textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_NOTES);
+    textCtrl->SetValue(pAccount->notes_);
 
-        wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTSTATUS);
-        choice->SetSelection(ACCT_STATUS_OPEN);
-        if (q1.GetString(wxT("STATUS")) == wxT("Closed"))
-            choice->SetSelection(ACCT_STATUS_CLOSED);
-
-        wxString retVal = q1.GetString(wxT("FAVORITEACCT"));
-        wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT);
-        if (retVal == wxT("TRUE"))
-            itemCheckBox->SetValue(true);
-        else
-            itemCheckBox->SetValue(false);
-
-        textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE);
-        wxString initStr = q1.GetString(wxT("INITIALBAL"), wxT("0"));
-        double initBal = 0.0;
-        initStr.ToDouble(&initBal);
-        
-
-
-        wxSQLite3StatementBuffer bufSQL1;
-        bufSQL1.Format("select * from CURRENCYFORMATS_V1 where CURRENCYID=%d;", 
-            q1.GetInt(wxT("CURRENCYID")));
-        wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL1);
-        if (q2.NextRow())
-        {
-            wxString curName = q2.GetString(wxT("CURRENCYNAME"));
-            wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_NEWACCT_BUTTON_CURRENCY);
-            bn->SetLabel(curName);
-            currencyID_ = q1.GetInt(wxT("CURRENCYID"));
-
-            mmDBWrapper::loadSettings(db_, currencyID_);
-            wxString dispAmount;
-            mmCurrencyFormatter::formatDoubleToCurrencyEdit(initBal, dispAmount);
-            textCtrl->SetValue(dispAmount);
-        }
-        q2.Finalize();
-
-        q1.Finalize();
-    }
+    wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
+    if (pAccount->acctType_ == wxT("Checking"))
+       itemAcctType->SetSelection(ACCT_TYPE_CHECKING);
     else
-    {
-        /* cannot find accountid */
-        wxASSERT(true);
-    }
-    mmENDSQL_LITE_EXCEPTION;
+       itemAcctType->SetSelection(ACCT_TYPE_INVESTMENT);
+    itemAcctType->Enable(false);
+
+    wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTSTATUS);
+    choice->SetSelection(ACCT_STATUS_OPEN);
+    if (pAccount->status_ == mmAccount::MMEX_Closed)
+       choice->SetSelection(ACCT_STATUS_CLOSED);
+
+    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT);
+    itemCheckBox->SetValue(pAccount->favoriteAcct_);
+
+    textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE);
+    double initBal = pAccount->initialBalance_;
+
+    boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
+    wxASSERT(pCurrency);
+
+    wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_NEWACCT_BUTTON_CURRENCY);
+    bn->SetLabel(pCurrency->currencyName_);
+    currencyID_ = pCurrency->currencyID_;
+
+    mmDBWrapper::loadSettings(core_->db_.get(), currencyID_);
+    wxString dispAmount;
+    mmCurrencyFormatter::formatDoubleToCurrencyEdit(initBal, dispAmount);
+    textCtrl->SetValue(dispAmount);
 }
 
 void mmNewAcctDialog::CreateControls()
@@ -278,11 +252,11 @@ void mmNewAcctDialog::CreateControls()
     itemGridSizer2->Add(itemStaticText181, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    currencyID_ = mmDBWrapper::getBaseCurrencySettings(db_);
+    currencyID_ = mmDBWrapper::getBaseCurrencySettings(core_->db_.get());
     wxString currName = _("Select Currency");
     if (currencyID_ != -1)
     {
-        currName = mmDBWrapper::getCurrencyName(db_, currencyID_);
+       currName = mmDBWrapper::getCurrencyName(core_->db_.get(), currencyID_);
     }
 
     wxButton* itemButton71 = new wxButton( itemDialog1, 
@@ -329,11 +303,11 @@ void mmNewAcctDialog::OnCancel(wxCommandEvent& event)
 
 void mmNewAcctDialog::OnCurrency(wxCommandEvent& event)
 {
-    mmCurrencyDialog *dlg = new mmCurrencyDialog(db_, currencyID_, this);
+   mmCurrencyDialog *dlg = new mmCurrencyDialog(core_->db_.get(), currencyID_, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
         currencyID_ = dlg->currencyID_;
-        wxString currName = mmDBWrapper::getCurrencyName(db_, currencyID_);
+        wxString currName = mmDBWrapper::getCurrencyName(core_->db_.get(), currencyID_);
         wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_NEWACCT_BUTTON_CURRENCY);
         bn->SetLabel(currName);
     }
@@ -343,7 +317,6 @@ void mmNewAcctDialog::OnCurrency(wxCommandEvent& event)
 
 void mmNewAcctDialog::OnOk(wxCommandEvent& event)
 {
-    mmBEGINSQL_LITE_EXCEPTION;
     wxString acctName = textAccountName_->GetValue().Trim();
     if (acctName.IsEmpty())
     {
@@ -351,7 +324,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& event)
         return;
     }
     
-    int checkAcctID = mmDBWrapper::getAccountID(db_, acctName);
+    int checkAcctID = core_->accountList_.getAccountID(acctName);
     if ((checkAcctID != -1) && (checkAcctID != accountID_))
     {
         mmShowErrorMessage(this, _("Account Name already exists"), _("Error"));
@@ -364,6 +337,29 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& event)
         return;
     }
 
+    wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
+    int acctType = itemAcctType->GetSelection();
+   
+    boost::shared_ptr<mmAccount> pAccount;
+    if (newAcct_)
+    {
+        mmAccount* ptrBase;
+       if (acctType == ACCT_TYPE_CHECKING)
+           ptrBase = new mmCheckingAccount(core_->db_);
+       else
+          ptrBase = new mmInvestmentAccount(core_->db_);
+       boost::shared_ptr<mmAccount> tAccount(ptrBase);
+       pAccount = tAccount;
+    }
+    else
+    {
+       pAccount = core_->accountList_.getAccountSharedPtr(accountID_);
+    }
+
+    pAccount->acctType_ = wxT("Checking");
+    if (acctType == ACCT_TYPE_INVESTMENT)
+        pAccount->acctType_ = wxT("Investment");
+
     wxTextCtrl* textCtrlAcctNumber = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER);
     wxTextCtrl* textCtrlHeldAt = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_HELDAT);
     wxTextCtrl* textCtrlWebsite = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_WEBSITE);
@@ -372,70 +368,46 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& event)
     wxTextCtrl* textCtrlNotes = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_NOTES);
     wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTSTATUS);
     int acctStatus = choice->GetSelection();
-    wxString acctStatusStr = wxT("Open");
+    pAccount->status_ = mmAccount::MMEX_Open;
     if (acctStatus == ACCT_STATUS_CLOSED)
-        acctStatusStr = wxT("Closed");
-
-    wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
-    int acctType = itemAcctType->GetSelection();
-    wxString acctTypeStr = wxT("Checking");
-    if (acctType == ACCT_TYPE_INVESTMENT)
-        acctTypeStr = wxT("Investment");
+        pAccount->status_ = mmAccount::MMEX_Closed;
     
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT);
-    wxString checkVal(wxT("TRUE"));
-    if (!itemCheckBox->IsChecked())
-        checkVal = wxT("FALSE");
-
-    mmDBWrapper::loadSettings(db_, currencyID_);
+    if (itemCheckBox->IsChecked())
+       pAccount->favoriteAcct_ = true;
+    else
+       pAccount->favoriteAcct_ = false;  
+        
+    mmDBWrapper::loadSettings(core_->db_.get(), currencyID_);
     wxTextCtrl* textCtrlInit = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE);
     wxString bal = textCtrlInit->GetValue().Trim();
-    double val = 0.0;
     if (!bal.IsEmpty())
     {
-        if (!mmCurrencyFormatter::formatCurrencyToDouble(bal, val))
+        if (!mmCurrencyFormatter::formatCurrencyToDouble(bal, pAccount->initialBalance_))
         {
             mmShowErrorMessageInvalid(this, _("Init Balance "));
             return;
         }
     }
 
+    pAccount->accountName_ = acctName;
+    pAccount->accountNum_ = mmCleanString(textCtrlAcctNumber->GetValue());
+    pAccount->notes_ = mmCleanString(textCtrlNotes->GetValue());
+    pAccount->heldAt_ = mmCleanString(textCtrlHeldAt->GetValue());
+    pAccount->website_ = mmCleanString(textCtrlWebsite->GetValue());
+    pAccount->contactInfo_ = mmCleanString(textCtrlContact->GetValue());
+    pAccount->accessInfo_ = mmCleanString(textCtrlAccess->GetValue());
+    pAccount->currency_ = core_->currencyList_.getCurrencySharedPtr(currencyID_);
+
     if (newAcct_)
     {
-        wxString bufSQL = wxString::Format(wxT("insert into ACCOUNTLIST_V1 (ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, \
-                                               STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO,                                 \
-                                               INITIALBAL, FAVORITEACCT, CURRENCYID)                      \
-                                               values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, '%s', %d );"), 
-                                               mmCleanString(acctName).c_str(), acctTypeStr.c_str(), 
-                                               mmCleanString(textCtrlAcctNumber->GetValue()).c_str(),  
-                                               acctStatusStr.c_str(), mmCleanString(textCtrlNotes->GetValue()).c_str(), 
-                                               mmCleanString(textCtrlHeldAt->GetValue()).c_str(), 
-                                               mmCleanString(textCtrlWebsite->GetValue()).c_str(),
-                                               mmCleanString(textCtrlContact->GetValue()).c_str(), 
-                                               mmCleanString(textCtrlAccess->GetValue()).c_str(),
-                                               val, checkVal.c_str(), currencyID_);
-
-        int retVal = db_->ExecuteUpdate(bufSQL);
+        core_->accountList_.addAccount(pAccount);
     }
     else
     {
-        wxString bufSQL = wxString::Format(wxT("update ACCOUNTLIST_V1 SET ACCOUNTNAME='%s', ACCOUNTTYPE='%s', ACCOUNTNUM='%s', \
-                                               STATUS='%s', NOTES='%s', HELDAT='%s', WEBSITE='%s', CONTACTINFO='%s',  ACCESSINFO='%s',                               \
-                                               INITIALBAL=%f, FAVORITEACCT='%s', CURRENCYID=%d                     \
-                                               where ACCOUNTID=%d;"), 
-              mmCleanString(acctName).c_str(), acctTypeStr.c_str(), 
-              mmCleanString(textCtrlAcctNumber->GetValue()).c_str(),  
-              acctStatusStr.c_str(), mmCleanString(textCtrlNotes->GetValue()).c_str(), 
-              mmCleanString(textCtrlHeldAt->GetValue()).c_str(), 
-              mmCleanString(textCtrlWebsite->GetValue()).c_str(),
-              mmCleanString(textCtrlContact->GetValue()).c_str(), 
-	      mmCleanString(textCtrlAccess->GetValue()).c_str(),
-                                               val, checkVal.c_str(), currencyID_, accountID_);
-
-        int retVal = db_->ExecuteUpdate(bufSQL);
+        core_->accountList_.updateAccount(pAccount);
     }
 
-    mmENDSQL_LITE_EXCEPTION;
     EndModal(wxID_OK);
 }
 

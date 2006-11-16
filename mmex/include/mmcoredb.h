@@ -18,13 +18,18 @@
 #ifndef _MM_EX_COREDB_H_
 #define _MM_EX_COREDB_H_
 
-
 #include <vector>
 #include "boost/shared_ptr.hpp"
 #include "mmaccount.h"
 #include "mmpayee.h"
 #include "mmcategory.h"
 #include "dbwrapper.h"
+#include "mmcurrency.h"
+
+/** 
+   mmCoreDB encapsulates most of the work in translating between
+   the SQLite DB and the C++ datastructures used by MMEX
+*/
 
 class mmCoreDB
 {
@@ -38,6 +43,7 @@ public:
    mmAccountList accountList_;
    mmPayeeList payeeList_;
    mmCategoryList categoryList_;
+   mmCurrencyList currencyList_;
    
    boost::shared_ptr<wxSQLite3Database> db_;
 };
