@@ -29,6 +29,21 @@ mmCurrency::mmCurrency()
    baseConv_ = 1.0;
 }
 
+void mmCurrencyList::loadBaseCurrencySettings()
+{
+   mmDBWrapper::loadBaseCurrencySettings(db_.get());
+}
+
+int mmCurrencyList::getBaseCurrencySettings()
+{
+   return mmDBWrapper::getBaseCurrencySettings(db_.get());
+}
+
+void mmCurrencyList::setBaseCurrencySettings(int currencyID)
+{
+   mmDBWrapper::setBaseCurrencySettings(db_.get(), currencyID);
+}
+
 int mmCurrencyList::addCurrency(boost::shared_ptr<mmCurrency> pCurrency)
 {
     mmBEGINSQL_LITE_EXCEPTION;
@@ -92,7 +107,7 @@ int mmCurrencyList::getCurrencyID(const wxString& currencyName)
 
 boost::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(int currencyID)
 {
-   for (int idx = 0; idx < currencies_.size(); idx++)
+   for (int idx = 0; idx < (int)currencies_.size(); idx++)
    {
       if (currencies_[idx]->currencyID_ == currencyID)
       {
@@ -105,7 +120,7 @@ boost::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(int currencyI
 
 boost::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(const wxString& currencyName)
 {
-   for (int idx = 0; idx < currencies_.size(); idx++)
+   for (int idx = 0; idx < (int)currencies_.size(); idx++)
    {
       if (currencies_[idx]->currencyName_ == currencyName)
       {

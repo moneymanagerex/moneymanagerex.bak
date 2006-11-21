@@ -216,10 +216,10 @@ bool mmGUIApp::OnInit()
     return TRUE;
 }
 /*******************************************************/
-mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, wxSQLite3Database* db)
+mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, mmCoreDB* core)
          :wxWizard(frame,wxID_ANY,_("Add Account Wizard"),
                    wxBitmap(addacctwiz_xpm),wxDefaultPosition,
-                   wxDEFAULT_DIALOG_STYLE), db_(db), acctID_(-1)
+                   wxDEFAULT_DIALOG_STYLE), core_(core), acctID_(-1)
 {
     // a wizard page may be either an object of predefined class
     page1 = new wxWizardPageSimple(this);
@@ -414,7 +414,6 @@ void mmGUIFrame::saveConfigFile()
 
 #else
     bool makeRelative = fname.MakeRelativeTo(appPath.GetPath());
-
 #endif
     mmDBWrapper::setINISettingValue(inidb_, 
         wxT("LASTFILENAME"), mmCleanString(fname.GetFullPath()));
@@ -780,45 +779,38 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else
         {
-            mmBEGINSQL_LITE_EXCEPTION;
-            wxSQLite3StatementBuffer bufSQL;
-            bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-            wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(bufSQL);
-            if (q1.NextRow())
-            {
-                wxString acctType = q1.GetString(wxT("ACCOUNTTYPE"));
-                q1.Finalize();
-                if (acctType == wxT("Checking"))
-                {
-                   // Freeze();
-                   gotoAccountID_ = data;
-                   wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
-                   GetEventHandler()->AddPendingEvent(evt);
-                    //Thaw();
-                }
-                else
-                {
-				    Freeze();
-					homePanel->DestroyChildren();
-					homePanel->SetSizer(NULL);
+           boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(data); 
+           if (pAccount)
+           {
+              wxString acctType = pAccount->acctType_;
+              if (acctType == wxT("Checking"))
+              {
+                 gotoAccountID_ = data;
+                 wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
+                 GetEventHandler()->AddPendingEvent(evt);
+              }
+              else
+              {
+                 Freeze();
+                 homePanel->DestroyChildren();
+                 homePanel->SetSizer(NULL);
 
-					wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-					homePanel->SetSizer(itemBoxSizer1);
+                 wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
+                 homePanel->SetSizer(itemBoxSizer1);
 
-					panelCurrent_ = new mmStocksPanel(db_.get(), inidb_, data, homePanel, ID_PANEL3, 
-						wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-					itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+                 panelCurrent_ = new mmStocksPanel(db_.get(), inidb_, data, homePanel, ID_PANEL3, 
+                    wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+                 itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
-					homePanel->Layout();
-					Thaw();
-				}
+                 homePanel->Layout();
+                 Thaw();
+              }
             }
             else
             {
                 /* cannot find accountid */
                 wxASSERT(true);
             }
-            mmENDSQL_LITE_EXCEPTION;
         }
     }
     else 
@@ -829,7 +821,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             return;
         }
 
-        if (!db_)
+        if (!core_ || !db_)
             return;
 
         Freeze();
@@ -1124,29 +1116,24 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 void mmGUIFrame::OnLaunchAccountWebsite(wxCommandEvent& event)
 {
    if (selectedItemData_)
-    {
-        int data = selectedItemData_->getData();
-        mmBEGINSQL_LITE_EXCEPTION;
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-        wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(bufSQL);
-        if (q1.NextRow())
-        {
-            wxString website = q1.GetString(wxT("WEBSITE"));
-            if (!website.IsEmpty())
-            {
-                  //wxExecute(_T("explorer ") + website, wxEXEC_ASYNC, NULL ); 
-                  wxLaunchDefaultBrowser(website);  
-            }
-            return;
-        }
-        else
-        {
-            /* cannot find accountid */
-            wxASSERT(true);
-        }
-        mmENDSQL_LITE_EXCEPTION;
-    }
+   {
+      int data = selectedItemData_->getData(); 
+      boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(data); 
+      if (pAccount)
+      {
+         wxString website = pAccount->website_;
+         if (!website.IsEmpty())
+         {
+            wxLaunchDefaultBrowser(website);  
+         }
+         return;
+      }
+      else
+      {
+         /* cannot find accountid */
+         wxASSERT(true);
+      }
+   }
 }
 
 void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& event)
@@ -1154,31 +1141,26 @@ void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& event)
     if (selectedItemData_)
     {
         int data = selectedItemData_->getData();
-        mmBEGINSQL_LITE_EXCEPTION;
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-        wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(bufSQL);
-        if (q1.NextRow())
+        boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(data); 
+        if (pAccount)
         {
-            wxString acctType = q1.GetString(wxT("ACCOUNTTYPE"));
-            if (acctType == wxT("Checking") || acctType == wxT("Investment"))
-            {
-                q1.Finalize();
-                mmNewAcctDialog *dlg = new mmNewAcctDialog(core_, false, data, this);
-                if ( dlg->ShowModal() == wxID_OK )
-                {
-                    createHomePage();
-                    updateNavTreeControl();      
-                }
-                dlg->Destroy();
-            }
+           wxString acctType = pAccount->acctType_;
+           if (acctType == wxT("Checking") || acctType == wxT("Investment"))
+           {
+              mmNewAcctDialog *dlg = new mmNewAcctDialog(core_, false, data, this);
+              if ( dlg->ShowModal() == wxID_OK )
+              {
+                 createHomePage();
+                 updateNavTreeControl();      
+              }
+              dlg->Destroy();
+           }
         }
         else
         {
             /* cannot find accountid */
             wxASSERT(true);
         }
-        mmENDSQL_LITE_EXCEPTION;
     }
 }
 
@@ -1187,64 +1169,26 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& event)
     if (selectedItemData_)
     {
         int data = selectedItemData_->getData();
-        mmBEGINSQL_LITE_EXCEPTION;
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-        wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(bufSQL);
-        if (q1.NextRow())
+        boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(data); 
+        if (pAccount)
         {
-            wxString acctType = q1.GetString(wxT("ACCOUNTTYPE"));
-            if (acctType == wxT("Checking"))
-            {
-                wxMessageDialog msgDlg(this, 
-                    _("Do you really want to delete the account?"),
-                    _("Confirm Account Deletion"),
-                    wxYES_NO);
-                if (msgDlg.ShowModal() == wxID_YES)
-                {
-                    // delete the account
-                    q1.Finalize();
+           wxMessageDialog msgDlg(this, 
+              _("Do you really want to delete the account?"),
+              _("Confirm Account Deletion"),
+              wxYES_NO);
+           if (msgDlg.ShowModal() == wxID_YES)
+           {
+              core_->accountList_.deleteAccount(pAccount->accountID_);
 
-                    bufSQL.Format("delete from CHECKINGACCOUNT_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", data, data);
-                    int nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
-
-                    bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-                    int nRows = db_.get()->ExecuteUpdate(bufSQL);
-                    wxASSERT(nRows);
-
-                    updateNavTreeControl();
-                    createHomePage();
-                } 
-            }
-            else if (acctType == wxT("Investment"))
-            {
-                wxMessageDialog msgDlg(this, 
-                    _("Do you really want to delete the account?"),
-                    _("Confirm Account Deletion"),
-                    wxYES_NO);
-                if (msgDlg.ShowModal() == wxID_YES)
-                {
-                    // delete the account
-                    q1.Finalize();
-
-                    bufSQL.Format("delete from STOCK_V1 where HELDAT=%d;", data);
-                    int nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
-
-                    bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-                    int nRows = db_.get()->ExecuteUpdate(bufSQL);
-                    wxASSERT(nRows);
-
-                    updateNavTreeControl();
-                    createHomePage();
-                } 
-            }
+              updateNavTreeControl();
+              createHomePage();
+           } 
         }
         else
         {
             /* cannot find accountid */
             wxASSERT(true);
         }
-        mmENDSQL_LITE_EXCEPTION;
     }
 }
 
@@ -1257,47 +1201,41 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
 {
     mmTreeItemData* iData = dynamic_cast<mmTreeItemData*>(navTreeCtrl_->GetItemData(id));
     selectedItemData_ = iData;
-
     
     if (!iData->isStringData())
     {
         int data = iData->getData();
         if (!iData->isBudgetingNode())
         {
-            mmBEGINSQL_LITE_EXCEPTION;
-            wxSQLite3StatementBuffer bufSQL;
-            bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", data);
-            wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(bufSQL);
-            if (q1.NextRow())
-            {
-                wxString acctType = q1.GetString(wxT("ACCOUNTTYPE"));
-                q1.Finalize();
-                if (acctType == wxT("Checking"))
-                {
-                    wxMenu menu;
-                    menu.Append(MENU_TREEPOPUP_GOTO, _("&Go To.."));
-                    menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
-                    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
-                    menu.AppendSeparator();
-                    menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
-                    PopupMenu(&menu, pt);
-                }
-                else if (acctType == wxT("Investment"))
-                {
-                    wxMenu menu;
-                    menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
-                    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
-                    menu.AppendSeparator();
-                    menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
-                    PopupMenu(&menu, pt);
-                }
+           boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(data); 
+           if (pAccount)
+           {
+              wxString acctType = pAccount->acctType_;
+              if (acctType == wxT("Checking"))
+              {
+                 wxMenu menu;
+                 menu.Append(MENU_TREEPOPUP_GOTO, _("&Go To.."));
+                 menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
+                 menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
+                 menu.AppendSeparator();
+                 menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
+                 PopupMenu(&menu, pt);
+              }
+              else if (acctType == wxT("Investment"))
+              {
+                 wxMenu menu;
+                 menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
+                 menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
+                 menu.AppendSeparator();
+                 menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
+                 PopupMenu(&menu, pt);
+              }
             }
             else
             {
                 /* cannot find accountid */
                 wxASSERT(true);
             }
-            mmENDSQL_LITE_EXCEPTION;
         }
     }
 }
@@ -1325,7 +1263,6 @@ void mmGUIFrame::OnGotoAccount(wxCommandEvent& WXUNUSED(event))
     if (gotoAccountID_ != -1)    
     {
         createCheckingAccountPage(gotoAccountID_);
-        //navTreeCtrl_->Unselect();
     }
 }
 
@@ -1601,7 +1538,6 @@ void mmGUIFrame::createToolBar()
     toolBar_->AddTool(MENU_NEW, _("New"), toolBarBitmaps[0], _("New Money Manager Database"));
     toolBar_->AddTool(MENU_OPEN, _("Open"), toolBarBitmaps[1], _("Open Money Manager Database"));
     toolBar_->AddSeparator();
-    //toolBar_->AddTool(MENU_SAVE, _("Save"), toolBarBitmaps[2], _("Save Money Manager Database"));
     toolBar_->AddTool(MENU_NEWACCT, _("New Account"), toolBarBitmaps[3], _("New Money Manager Account"));
     toolBar_->AddTool(MENU_ACCTLIST, _("Account List"), toolBarBitmaps[4], _("Show Account List"));
     toolBar_->AddSeparator();
@@ -1670,12 +1606,12 @@ void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
 
         openDataBase(fileName);
 
+        core_ = new mmCoreDB(db_);
+
         mmNewDatabaseWizard* wizard = new mmNewDatabaseWizard(this, core_);
         wizard->RunIt(true);
 
         mmDBWrapper::loadBaseCurrencySettings(db_.get());
-
-        core_ = new mmCoreDB(db_);
 
         /* Jump to new account creation screen */
         wxCommandEvent evt;
@@ -1714,10 +1650,6 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
     pgd->Destroy();
 
     wxFileName fName(fileName);
-#if 0
-    wxString title = wxT("Money Manager EX : ") 
-        + fName.GetName() + wxT(".") + fName.GetExt();
-#endif
     wxString title = wxT("Money Manager EX : ") 
         + fileName;
     this->SetTitle(title);
@@ -1783,8 +1715,6 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
         {
             db_->Close();
             db_.reset();
-            //delete db_.get();
-            //db_.get() = 0;
         }
         wxCopyFile(fileName_, fileName, false);
         openFile(fileName, false);
@@ -1907,7 +1837,7 @@ void mmGUIFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
     
 void mmGUIFrame::OnNewAccount(wxCommandEvent& event)
 {
-    mmAddAccountWizard* wizard = new mmAddAccountWizard(this, db_.get());
+    mmAddAccountWizard* wizard = new mmAddAccountWizard(this, core_);
     wizard->RunIt(true);
 
     if (wizard->acctID_ != -1)
@@ -2006,10 +1936,6 @@ void mmGUIFrame::OnHelp(wxCommandEvent& event)
  
 void mmGUIFrame::OnCheckUpdate(wxCommandEvent& event)
 {
-    //wxString url = wxT("http://sourceforge.net/project/showfiles.php?group_id=163169");
-    //wxExecute(_T("explorer ") + url, wxEXEC_ASYNC, NULL );
-    //wxLaunchDefaultBrowser(url);
-
     wxString site = wxT("http://www.thezeal.com/software/managerex/version.html");
     wxURL url(site);
 
@@ -2084,14 +2010,12 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& event)
 void mmGUIFrame::OnReportIssues(wxCommandEvent& event)
 {
    wxString url = wxT("http://groups.google.com/group/zealsupport");
-   //wxExecute(_T("explorer ") + url, wxEXEC_ASYNC, NULL ); 
    wxLaunchDefaultBrowser(url);
 }
 
 void mmGUIFrame::OnBeNotified(wxCommandEvent& event)
 {
     wxString url = wxT("http://groups.google.com/group/mmlist");
-    //wxExecute(_T("explorer ") + url, wxEXEC_ASYNC, NULL );
     wxLaunchDefaultBrowser(url);
 }
     
@@ -2214,7 +2138,6 @@ void mmGUIFrame::OnExportToHtml(wxCommandEvent& event)
 
 void mmGUIFrame::OnBillsDeposits(wxCommandEvent& event)
 {
-    //navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -2230,7 +2153,6 @@ void mmGUIFrame::OnBillsDeposits(wxCommandEvent& event)
 
 void mmGUIFrame::OnStocks(wxCommandEvent& event)
 {
-    //navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -2246,7 +2168,6 @@ void mmGUIFrame::OnStocks(wxCommandEvent& event)
 
 void mmGUIFrame::OnAssets(wxCommandEvent& event)
 {
-    //navTreeCtrl_->Unselect();
     homePanel->DestroyChildren();
     homePanel->SetSizer(NULL);
 
@@ -2276,26 +2197,21 @@ void mmGUIFrame::OnWizardCancel(wxWizardEvent& event)
 
 void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
 {
-    wxUint32 num = mmDBWrapper::getNumAccounts(db_.get());
-    if (num == 0)
+    if (core_->accountList_.accounts_.size() == 0)
     {
         mmShowErrorMessage(0, _("No Account available!"), _("Error"));
         return;
     }
+  
     wxArrayString as;
+    int num = (int)core_->accountList_.accounts_.size();
     int* arrAcctID = new int[num];
-    mmBEGINSQL_LITE_EXCEPTION;
-    wxSQLite3ResultSet q1 = 
-        db_.get()->ExecuteQuery("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
-    int i = 0;
-    while (q1.NextRow())
+    for (int idx = 0; idx < (int)core_->accountList_.accounts_.size(); idx++)
     {
-        as.Add(q1.GetString(wxT("ACCOUNTNAME")));
-        arrAcctID[i++] = q1.GetInt(wxT("ACCOUNTID"));
+        as.Add(core_->accountList_.accounts_[idx]->accountName_);
+        arrAcctID[idx] = core_->accountList_.accounts_[idx]->accountID_;
     }
-
-    mmENDSQL_LITE_EXCEPTION;
-
+  
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, 
         _("Choose Account to Edit"), 
         _("Accounts"), as);
@@ -2323,7 +2239,7 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
     }
 
     wxArrayString as;
-    int num = core_->accountList_.accounts_.size();
+    int num = (int)core_->accountList_.accounts_.size();
     int* arrAcctID = new int[num];
     for (int idx = 0; idx < (int)core_->accountList_.accounts_.size(); idx++)
     {

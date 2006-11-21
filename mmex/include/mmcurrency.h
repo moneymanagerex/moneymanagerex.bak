@@ -57,6 +57,10 @@ public:
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID);
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName);
 
+    void loadBaseCurrencySettings();
+    int getBaseCurrencySettings();
+    void setBaseCurrencySettings(int currencyID);
+
     std::vector< boost::shared_ptr<mmCurrency> > currencies_;
     
 private:

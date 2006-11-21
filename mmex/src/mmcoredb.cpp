@@ -24,7 +24,8 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
   payeeList_(db),
   categoryList_(db),
   accountList_(db),
-  currencyList_(db)
+  currencyList_(db),
+  bTransactionList_(db)
 {
     if (!db_)
         throw wxString(wxT("Database Handle is invalid!"));
@@ -42,25 +43,7 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
     }
     q1.Finalize();
 
-    /* Load the Accounts */
-    sqlString = wxT("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
-    q1 = db_->ExecuteQuery(sqlString);
-    while (q1.NextRow())
-    {
-        mmAccount* ptrBase;
-        if (q1.GetString(wxT("ACCOUNTTYPE")) == wxT("Checking"))
-            ptrBase = new mmCheckingAccount(db_, q1);
-        else
-            ptrBase = new mmInvestmentAccount(db_, q1);
-
-        boost::weak_ptr<mmCurrency> pCurrency = currencyList_.getCurrencySharedPtr(q1.GetInt(wxT("CURRENCYID")));
-        ptrBase->currency_ = pCurrency;
-        boost::shared_ptr<mmAccount> pAccount(ptrBase);
-        accountList_.accounts_.push_back(pAccount);
-    }
-    q1.Finalize();
-
-     /* Load the Categories */
+   /* Load the Categories */
     sqlString = wxT("select * from CATEGORY_V1 order by CATEGNAME;");
     q1 = db_->ExecuteQuery(sqlString);
     while (q1.NextRow())
@@ -102,6 +85,34 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
     }
     q1.Finalize();
 
+    /* Load the Accounts */
+    sqlString = wxT("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
+    q1 = db_->ExecuteQuery(sqlString);
+    while (q1.NextRow())
+    {
+        mmAccount* ptrBase;
+        if (q1.GetString(wxT("ACCOUNTTYPE")) == wxT("Checking"))
+            ptrBase = new mmCheckingAccount(db_, q1);
+        else
+            ptrBase = new mmInvestmentAccount(db_, q1);
+
+        boost::weak_ptr<mmCurrency> pCurrency = currencyList_.getCurrencySharedPtr(q1.GetInt(wxT("CURRENCYID")));
+        ptrBase->currency_ = pCurrency;
+        boost::shared_ptr<mmAccount> pAccount(ptrBase);
+        accountList_.accounts_.push_back(pAccount);
+    }
+    q1.Finalize();
+
+    /* Load the Transactions */
+    sqlString = wxT("select * from CHECKINGACCOUNT_V1;");
+    q1 = db_->ExecuteQuery(sqlString);
+    while (q1.NextRow())
+    {
+       boost::shared_ptr<mmBankTransaction> ptrBase(new mmBankTransaction(this, q1));
+       bTransactionList_.transactions_.push_back(ptrBase);
+    }
+    q1.Finalize();
+     
     mmENDSQL_LITE_EXCEPTION;
 }
 

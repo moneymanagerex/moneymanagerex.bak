@@ -24,10 +24,11 @@
 #include "defs.h"
 #include "dbwrapper.h"
 #include "mmcurrency.h"
-#include "mmdbinterface.h"
 #include "mmtransaction.h"
 
-class mmAccount : public mmDBInterface
+class mmCoreDB;
+
+class mmAccount
 {
 public: 
    mmAccount(boost::shared_ptr<wxSQLite3Database> db); 
@@ -37,9 +38,6 @@ public:
    virtual ~mmAccount() {}
 
     virtual double balance() = 0;
-
-   /* Overrides of mmDBInterface */
-   virtual void addDBRecord();
 
    /* Scoped Enums */
    enum AccountStatus
@@ -63,8 +61,8 @@ public:
    double initialBalance_;
    boost::weak_ptr<mmCurrency> currency_;
 
-   /* List of associated transactions */
-   std::vector<boost::weak_ptr<mmTransaction> > transactions_;
+   /* pointer to core */
+   boost::shared_ptr<wxSQLite3Database> db_;
 };
 
 class mmCheckingAccount : public mmAccount
@@ -76,28 +74,9 @@ public:
     
     virtual ~mmCheckingAccount() {}
 
-    void deleteTransactions(int accountID);    
-
+    
 public:
-    /* List of global transactions */
-    static void deleteGlobalTransactions(int accountID);
-
-    static std::vector<boost::shared_ptr<mmTransaction> > gTransactions_;
-    static boost::shared_ptr<mmTransaction> findTransaction(int transactionID);
-
     double balance();
-};
-
-class mmAssetAccount : public mmAccount
-{
-public: 
-   mmAssetAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1) 
-       : mmAccount(db, q1) {}
-   mmAssetAccount(boost::shared_ptr<wxSQLite3Database> db)  : mmAccount(db) { }
-   
-   virtual ~mmAssetAccount() {}
-
-   double balance();
 };
 
 class mmInvestmentAccount : public mmAccount
@@ -115,14 +94,13 @@ public:
 class mmAccountList
 {
 public:
-    mmAccountList(boost::shared_ptr<wxSQLite3Database> db)
-        : db_(db) {}
+    mmAccountList(boost::shared_ptr<wxSQLite3Database> db);
     ~mmAccountList() {}
 
     /* Account Functions */
     boost::shared_ptr<mmAccount> getAccountSharedPtr(int accountID);
     
-    void addAccount(boost::shared_ptr<mmAccount> pAccount);
+    int addAccount(boost::shared_ptr<mmAccount> pAccount);
     wxString getAccountType(int accountID);
     int getAccountID(const wxString& accountName);
     bool deleteAccount(int accountID);

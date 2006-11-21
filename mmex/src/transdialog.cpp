@@ -620,12 +620,10 @@ void mmTransDialog::updateControlsForTransType()
 
 void mmTransDialog::OnOk(wxCommandEvent& event)
 {
-    mmBEGINSQL_LITE_EXCEPTION;
-    wxString transCode = wxT(""); 
-
+    wxString transCode = wxT("");
     int tCode = choiceTrans_->GetSelection();
     if (tCode == DEF_WITHDRAWAL)
-        transCode = wxT("Withdrawal");
+       transCode = wxT("Withdrawal");
     else if (tCode == DEF_DEPOSIT)
         transCode = wxT("Deposit");
     else if (tCode == DEF_TRANSFER)
@@ -667,6 +665,8 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
         mmDBWrapper::updatePayee(db_, 
             mmCleanString(payeeName), payeeID_, categID_, subcategID_);
     }
+
+
 
     wxString amountStr = textAmount_->GetValue().Trim();
     double amount;
@@ -729,32 +729,40 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
     
     wxString date1 = dpc_->GetValue().FormatISODate();
 
+    boost::shared_ptr<mmBankTransaction> pTransaction;
     if (!edit_)
     {
-        wxString bufSQL = wxString::Format(wxT("insert into CHECKINGACCOUNT_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, \
-                      TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES,                               \
-                      CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT)                                              \
-                      values (%d, %d, %d, '%s', %f, '%s', '%s', '%s', %d, %d, '%s', -1, %f);"),
-                      fromAccountID, toAccountID, payeeID_, transCode.c_str(), amount,
-                      status.c_str(), transNum.c_str(), mmCleanString(notes.c_str()).c_str(), categID_, subcategID_, 
-                      date1.c_str(), toTransAmount_ );  
-
-        int retVal = db_->ExecuteUpdate(bufSQL);
-        
+       boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(core_->db_));
+       pTransaction = pTemp;
     }
     else
     {
-        wxString bufSQL = wxString::Format(wxT("update CHECKINGACCOUNT_V1 SET ACCOUNTID=%d, TOACCOUNTID=%d, PAYEEID=%d, TRANSCODE='%s', \
-                      TRANSAMOUNT=%f, STATUS='%s', TRANSACTIONNUMBER='%s', NOTES='%s',                               \
-                      CATEGID=%d, SUBCATEGID=%d, TRANSDATE='%s', TOTRANSAMOUNT=%f WHERE TRANSID=%d;"),
-                      fromAccountID, toAccountID, payeeID_, transCode.c_str(), amount,
-                      status.c_str(), transNum.c_str(), mmCleanString(notes.c_str()).c_str(),categID_, subcategID_, 
-date1.c_str(), toTransAmount_, transID_);  
-
-        int retVal = db_->ExecuteUpdate(bufSQL);
-
+       pTransaction = core_->bTransactionList_.getBankTransactionPtr(accountID_, transID_);
     }
-    mmENDSQL_LITE_EXCEPTION;
+
+    pTransaction->accountID_ = accountID_;
+    pTransaction->toAccountID_ = toAccountID;
+    pTransaction->payee_ = core_->payeeList_.getPayeeSharedPtr(payeeID_);
+    pTransaction->transType_ = transCode;
+    pTransaction->amt_ = amount;
+    pTransaction->status_ = status;
+    pTransaction->transNum_ = transNum;
+    pTransaction->notes_ = mmCleanString(notes.c_str());
+    pTransaction->category_ = core_->categoryList_.getCategorySharedPtr(categID_, subcategID_);
+    pTransaction->date_ = dpc_->GetValue();
+    pTransaction->toAmt_ = toTransAmount_;
+    
+
+    pTransaction->updateAllData(core_);
+    if (!edit_)
+    {
+       core_->bTransactionList_.addTransaction(pTransaction);
+    }
+    else
+    {
+       core_->bTransactionList_.updateTransaction(pTransaction);
+    }
+    
     EndModal(wxID_OK);
 }
 

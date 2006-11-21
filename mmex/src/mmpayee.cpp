@@ -80,6 +80,19 @@ bool mmPayeeList::deletePayee(int payeeID)
     return false;
 }
 
+boost::shared_ptr<mmPayee> mmPayeeList::getPayeeSharedPtr(int payeeID)
+{
+    int numPayees = (int)payees_.size();
+    for (int idx = 0; idx < numPayees; idx++)
+    {
+        if (payees_[idx]->payeeID_ == payeeID)
+        {
+           return payees_[idx];
+        }
+    }
+    return boost::shared_ptr<mmPayee>();
+}
+
 void mmPayeeList::updatePayee(int payeeID, const wxString& payeeName)
 {
     int numPayees = (int)payees_.size();

@@ -17,16 +17,18 @@
  /*******************************************************/
 
 #include "mmaccount.h"
+#include "mmcoredb.h"
+#include "util.h"
 
 mmAccount::mmAccount(boost::shared_ptr<wxSQLite3Database> db)
-: mmDBInterface(db)
+:db_(db)
 {
 
 }
 
 mmAccount::mmAccount(boost::shared_ptr<wxSQLite3Database> db, 
                      wxSQLite3ResultSet& q1)
-    : mmDBInterface(db)
+    : db_(db)
 {
     bool favoriteAcct_;
    
@@ -53,14 +55,7 @@ mmAccount::mmAccount(boost::shared_ptr<wxSQLite3Database> db,
     initialBalance_ = q1.GetDouble(wxT("INITIALBAL"));
 }
 
-void mmAccount::addDBRecord()
-{
-
-
-}
-/* mmCheckingAccount */
-std::vector<boost::shared_ptr<mmTransaction> > mmCheckingAccount::gTransactions_;
-
+#if 0
 boost::shared_ptr<mmTransaction> mmCheckingAccount::findTransaction(int transactionID)
 {
     int len = (int)mmCheckingAccount::gTransactions_.size();
@@ -72,58 +67,16 @@ boost::shared_ptr<mmTransaction> mmCheckingAccount::findTransaction(int transact
     boost::shared_ptr<mmTransaction> ptr;    
     return ptr;
 }
+#endif
 
 mmCheckingAccount::mmCheckingAccount(boost::shared_ptr<wxSQLite3Database> db, 
                  wxSQLite3ResultSet& q1) 
                  : mmAccount(db, q1) 
 {
-    mmBEGINSQL_LITE_EXCEPTION;
-
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from CHECKINGACCOUNT_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", 
-        accountID_, accountID_);
-
-    wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL);
-    while (q2.NextRow())
-    {
-        bool addToGlobal = true;
-        mmTransaction* ptrBase;
-        if (q2.GetString(wxT("TRANSCODE")) == wxT("Withdrawal"))
-        {
-            ptrBase = new mmWithdrawalTransaction(db_, q2);
-            boost::shared_ptr<mmTransaction> pTransaction(ptrBase);
-            mmCheckingAccount::gTransactions_.push_back(pTransaction);
-            transactions_.push_back(boost::weak_ptr<mmTransaction>(pTransaction));
-        }
-        else if (q2.GetString(wxT("TRANSCODE")) == wxT("Deposit"))
-        {
-            ptrBase = new mmDepositTransaction(db_, q2);
-            boost::shared_ptr<mmTransaction> pTransaction(ptrBase);
-            transactions_.push_back(boost::weak_ptr<mmTransaction>(pTransaction));
-            mmCheckingAccount::gTransactions_.push_back(pTransaction);
-        }
-        else if (q2.GetString(wxT("TRANSCODE")) == wxT("Transfer"))
-        {
-           /* Check if transaction needs to tbe added to the global tranaction list */
-           boost::shared_ptr<mmTransaction> pTrans = mmCheckingAccount::findTransaction(q2.GetInt(wxT("TRANSID")));
-           if (pTrans)
-           {
-               transactions_.push_back(pTrans);
-           }
-           else
-           {
-               ptrBase = new mmTransferTransaction(db_, q2);
-               boost::shared_ptr<mmTransaction> pTransaction(ptrBase);
-               transactions_.push_back(boost::weak_ptr<mmTransaction>(pTransaction));
-               mmCheckingAccount::gTransactions_.push_back(pTransaction);
-           }
-        }
-    }
-    q2.Finalize();
-
-    mmENDSQL_LITE_EXCEPTION;
+    
 }
 
+#if 0
 void mmCheckingAccount::deleteTransactions(int accountID)
 {
     std::vector<boost::weak_ptr<mmTransaction> >::iterator iter;
@@ -152,46 +105,33 @@ void mmCheckingAccount::deleteTransactions(int accountID)
     }
 }
 
-void mmCheckingAccount::deleteGlobalTransactions(int accountID)
+void mmCheckingAccount::deleteTransaction(int transactionID)
 {
-    std::vector< boost::shared_ptr<mmTransaction> >::iterator i;
-    for (i = gTransactions_.begin(); i!= gTransactions_.end(); )
-    {
-        boost::shared_ptr<mmTransaction> sptr = *i;
-        mmBankTransaction* pBankTransaction = dynamic_cast<mmBankTransaction*>(sptr.get());
-        if (pBankTransaction)
-        {
-            if ((pBankTransaction->accountID_ == accountID) ||
-                (pBankTransaction->toAccountID_))
-            {
-                i = gTransactions_.erase(i);
-            }
-            else
-                ++i;
-        }
-    }
+   std::vector< boost::weak_ptr<mmTransaction> >::iterator i;
+   for (i = transactions_.begin(); i!= transactions_.end(); )
+   {
+      boost::shared_ptr<mmTransaction> sptr = (*i).lock();
+      wxASSERT(sptr);
+      mmBankTransaction* pBankTransaction = dynamic_cast<mmBankTransaction*>(sptr.get());
+      if (pBankTransaction)
+      {
+         if (pBankTransaction->transactionID() == transactionID)
+         {
+            i = transactions_.erase(i);
+            break;
+         }
+         else
+            ++i;
+      }
+   }
+   mmCheckingAccount::deleteGlobalTransaction(this->accountID_, transactionID);
+   mmDBWrapper::deleteTransaction(core_->db_.get(), transactionID);
 }
+#endif
 
 double mmCheckingAccount::balance()
 {
-    double balance = initialBalance_;
-    int len = (int)transactions_.size();
-    for (int idx = 0; idx < len; idx++)
-    {
-        boost::shared_ptr<mmTransaction> sptr = transactions_[idx].lock();
-        if (sptr)
-            balance += sptr->value(accountID_);
-        else
-            wxASSERT(false);
-    }
-
-    return balance;
-}
-
-/* mmAssetAccount */
-double mmAssetAccount::balance()
-{
-    return 0.0;
+   return mmDBWrapper::getTotalBalanceOnAccount(db_.get(), this->accountID_);
 }
 
 /* mmInvestmentAccount */
@@ -202,22 +142,15 @@ double mmInvestmentAccount::balance()
 
 // --------------------------------------------------------
 
+mmAccountList::mmAccountList(boost::shared_ptr<wxSQLite3Database> db)
+       :db_(db) {}
+
 bool mmAccountList::deleteAccount(int accountID)
 {
     mmBEGINSQL_LITE_EXCEPTION;
     wxString acctType = getAccountType(accountID);
-    if (acctType = wxT("Checking"))
+    if (acctType == wxT("Checking"))
     {
-        mmCheckingAccount::deleteGlobalTransactions(accountID);
-        for (int i = 0; i < accounts_.size(); i++)
-        {
-            mmCheckingAccount* pChk = dynamic_cast<mmCheckingAccount*>(accounts_[i].get());
-            if (pChk)
-            {
-                pChk->deleteTransactions(accountID);
-            }
-        }
-
         wxSQLite3StatementBuffer bufSQL;
         bufSQL.Format("delete from CHECKINGACCOUNT_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", accountID, accountID);
         int nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
@@ -251,9 +184,6 @@ bool mmAccountList::deleteAccount(int accountID)
     }
 
     mmENDSQL_LITE_EXCEPTION;
-
-
-
     return true;
 }
 
@@ -306,6 +236,8 @@ boost::shared_ptr<mmAccount> mmAccountList::getAccountSharedPtr(int accountID)
         {
            return (*iter);
         }
+        else
+           iter++;
     }
     return boost::shared_ptr<mmAccount>();
 }
@@ -336,7 +268,7 @@ wxString mmAccountList::getAccountType(int accountID)
     return wxT("");
 }
 
-void mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
+int mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
 {
       mmBEGINSQL_LITE_EXCEPTION;
     
@@ -377,5 +309,5 @@ void mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
 
         mmENDSQL_LITE_EXCEPTION;
     
-
+        return pAccount->accountID_;
 }

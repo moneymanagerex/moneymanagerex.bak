@@ -82,7 +82,7 @@ mmCheckingPanel::mmCheckingPanel(mmCoreDB* core,
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
             const wxString& name )
             : core_(core),
-            db_(core_->db_.get()), 
+            db_(core->db_.get()), 
             accountID_(accountID), 
             m_imageList(0), 
             inidb_(inidb) 
@@ -339,55 +339,55 @@ void mmCheckingPanel::CreateControls()
 }
 
 // Return whether first element is greater than the second
-bool sortTransactions( mmTransactionHolder elem1, mmTransactionHolder elem2 )
+bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
 {
     if (sortcol == 0)
     {
         if (asc)
-            return elem1.date_ < elem2.date_;
+            return elem1->date_ < elem2->date_;
         else
-            return elem1.date_ > elem2.date_;
+            return elem1->date_ > elem2->date_;
     }
 
     if (sortcol == 1)
     {
         if (asc)
-            return elem1.transNum_ < elem2.transNum_;
+            return elem1->transNum_ < elem2->transNum_;
         else
-            return elem1.transNum_ > elem2.transNum_;
+            return elem1->transNum_ > elem2->transNum_;
     }
 
     if (sortcol== 2)
     {
         if (asc)
-            return elem1.payeeStr_ < elem2.payeeStr_;
+            return elem1->payeeStr_ < elem2->payeeStr_;
         else
-            return elem1.payeeStr_ > elem2.payeeStr_;
+            return elem1->payeeStr_ > elem2->payeeStr_;
     }
 
     if (sortcol== 3)
     {
         if (asc)
-            return elem1.status_ < elem2.status_;
+            return elem1->status_ < elem2->status_;
         else
-            return elem1.status_ > elem2.status_;
+            return elem1->status_ > elem2->status_;
     }
 
     if ((sortcol == 4) || (sortcol == 5))
     {
         if (asc)
-            return elem1.amt_ < elem2.amt_;
+            return elem1->amt_ < elem2->amt_;
         else
-            return elem1.amt_ > elem2.amt_;
+            return elem1->amt_ > elem2->amt_;
     }
 
     wxASSERT(false);
     return true;
 }
 
-bool sortTransactionsByDate( mmTransactionHolder elem1, mmTransactionHolder elem2 )
+bool sortTransactionsByDate( mmBankTransaction* elem1, mmBankTransaction* elem2 )
 {
-   return elem1.date_ < elem2.date_;
+   return elem1->date_ < elem2->date_;
 }
 
 void mmCheckingPanel::sortTable()
@@ -407,7 +407,7 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 
 void mmCheckingPanel::setAccountSummary()
 {
-    double total = mmDBWrapper::getTotalBalanceOnAccount(db_, accountID_);
+    double total = core_->accountList_.getAccountSharedPtr(accountID_)->balance();
     wxString balance;
     mmCurrencyFormatter::formatDoubleToCurrency(total, balance);
 
@@ -451,11 +451,13 @@ void mmCheckingPanel::initVirtualListControl()
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
     st->SetLabel(text);
 
-    for (int idx = 0; idx < pAccount->transactions_.size(); idx++)
+    int numTransactions = 0;
+    for (int idx = 0; idx < core_->bTransactionList_.transactions_.size(); idx++)
     {
-        boost::shared_ptr<mmTransaction> pTransaction = pAccount->transactions_[idx].lock();
-        wxASSERT(pTransaction);
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = boost::dynamic_pointer_cast<boost::shared_ptr<mmBankTransaction> >(pTransaction);
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[idx];
+        if ((pBankTransaction->accountID_ != accountID_) && (pBankTransaction->toAccountID_ == accountID_))
+           continue;
+
         bool toAdd = true;
         if (currentView_ == wxT("View Reconciled"))
         {
@@ -499,56 +501,12 @@ void mmCheckingPanel::initVirtualListControl()
         }
 
         if (toAdd)
-            trans_.push_back(pBankTransaction);
+        {
+           trans_.push_back(pBankTransaction.get());
+            numTransactions++;
+        }
     }
-
-  
-  //////////////////////////
-        wxString displayTransAmtString;
-        if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayTransAmtString))
-            th.transAmtString_ = displayTransAmtString;
-
-        wxString displayToTransAmtString;
-        if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.toAmt_, displayToTransAmtString))
-            th.transToAmtString_ = displayToTransAmtString;
-
-        th.catStr_ = mmDBWrapper::getCategoryName(db_, th.catID_);
-        th.subCatStr_ = mmDBWrapper::getSubCategoryName(db_, th.catID_, th.subcategID_);
-        int cid = 0, sid = 0;
-        th.payeeStr_ = mmDBWrapper::getPayee(db_, th.payeeID_, cid, sid);
-
-        th.depositStr_ = wxT("");
-        th.withdrawalStr_ = wxT("");
-        if (th.transType_ == wxT("Deposit"))
-        {
-            th.depositStr_ = displayTransAmtString;
-        }
-        else if (th.transType_== wxT("Withdrawal"))
-        {
-            th.withdrawalStr_ = displayTransAmtString;
-        }
-        else if (th.transType_ == wxT("Transfer"))
-        {
-            wxString fromAccount = mmDBWrapper::getAccountName(db_,  th.accountID_);
-            wxString toAccount = mmDBWrapper::getAccountName(db_,  th.toAccountID_ );
-
-            if (th.accountID_ == accountID_)
-            {
-                th.withdrawalStr_ = displayTransAmtString;
-                th.payeeStr_ = toAccount;
-            }
-            else if (th.toAccountID_ == accountID_)
-            {
-                th.depositStr_ = displayToTransAmtString;
-                th.payeeStr_ = fromAccount;
-            }
-        }
-
-        trans_.push_back(th);
-        ct++;
-    }
-    q1.Finalize();
-    listCtrlAccount_->SetItemCount(ct);
+    listCtrlAccount_->SetItemCount(numTransactions);
 
     pgd->Update(30);
 
@@ -565,46 +523,39 @@ void mmCheckingPanel::initVirtualListControl()
 
     for (unsigned int index = 0; index < trans_.size(); index++)
     {
-        if (trans_[index].transType_ == wxT("Deposit"))
+        if (trans_[index]->transType_ == wxT("Deposit"))
         {
-            initBalance += trans_[index].amt_;
+            initBalance += trans_[index]->amt_;
         }
-        else if (trans_[index].transType_ == wxT("Withdrawal"))
+        else if (trans_[index]->transType_ == wxT("Withdrawal"))
         {
-            initBalance -= trans_[index].amt_;
+            initBalance -= trans_[index]->amt_;
         }
-        else if (trans_[index].transType_ == wxT("Transfer"))
+        else if (trans_[index]->transType_ == wxT("Transfer"))
         {
-            wxString fromAccount = mmDBWrapper::getAccountName(db_,  trans_[index].accountID_);
-            wxString toAccount = mmDBWrapper::getAccountName(db_,  trans_[index].toAccountID_ );
-
-            if (trans_[index].accountID_ == accountID_)
+            if (trans_[index]->accountID_ == accountID_)
             {
-               initBalance -= trans_[index].amt_;
+               initBalance -= trans_[index]->amt_;
             }
-            else if (trans_[index].toAccountID_== accountID_)
+            else if (trans_[index]->toAccountID_== accountID_)
             {
-                initBalance += trans_[index].toAmt_;
+                initBalance += trans_[index]->toAmt_;
             }
         }
-        trans_[index].balance_ = initBalance;
+        trans_[index]->balance_ = initBalance;
         wxString balanceStr;
         mmCurrencyFormatter::formatDoubleToCurrencyEdit(initBalance, balanceStr);
-        trans_[index].balanceStr_ = balanceStr;
+        trans_[index]->balanceStr_ = balanceStr;
     }
 
     pgd->Update(70);
-    //std::sort(trans_.begin(), trans_.end(), sortTransactions);
 
     /* Setup the Sorting */
-    listCtrlAccount_->SetColumnImage(sortcol, asc ? 5 : 4); // decide whether top or down icon needs to be shown
-    sortTable();   // sort the table
-    //RefreshItems(0, ((int)cp_->trans_.size()) - 1); // refresh everything
-    /* ************ */
-
-    pgd->Update(90);
-
-    mmENDSQL_LITE_EXCEPTION;
+     // decide whether top or down icon needs to be shown
+    listCtrlAccount_->SetColumnImage(sortcol, asc ? 5 : 4);
+    
+    // sort the table
+    sortTable(); 
 
     pgd->Update(100);
     pgd->Destroy();
@@ -673,7 +624,8 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         {
             for (unsigned long idx = 0; idx < trans_.size(); idx++)
             {
-                mmDBWrapper::deleteTransaction(db_, trans_[idx].transID_);
+               mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*> ( core_->accountList_.getAccountSharedPtr(accountID_).get());
+               core_->bTransactionList_.deleteTransaction(accountID_, trans_[idx]->transactionID());
             }
         }
     }
@@ -684,6 +636,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
             wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
         {
+            // TODO: MK FIX THIS
             mmDBWrapper::deleteFlaggedTransactions(db_, accountID_);
         }
     }
@@ -732,9 +685,9 @@ void MyListCtrl::OnItemRightClick(wxListEvent& event)
 
 void MyListCtrl::OnMarkTransactionDB(const wxString& status)
 {
-    int transID = cp_->trans_[selectedIndex_].transID_;
+   int transID = cp_->trans_[selectedIndex_]->transactionID();
     mmDBWrapper::updateTransactionWithStatus(cp_->db_, transID, status);
-    cp_->trans_[selectedIndex_].status_ = status;
+    cp_->trans_[selectedIndex_]->status_ = status;
 
     if (cp_->currentView_ != wxT("View All Transactions"))
     {
@@ -784,9 +737,9 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
          
      for (unsigned int idx = 0; idx < cp_->trans_.size(); idx++)
      {
-        int transID = cp_->trans_[idx].transID_;
+        int transID = cp_->trans_[idx]->transactionID();
         mmDBWrapper::updateTransactionWithStatus(cp_->db_, transID, status);
-        cp_->trans_[idx].status_ = status;
+        cp_->trans_[idx]->status_ = status;
      }
 
      if (cp_->currentView_ != wxT("View All Transactions"))
@@ -827,25 +780,25 @@ void MyListCtrl::SetColumnImage(int col, int image)
 wxString mmCheckingPanel::getItem(long item, long column)
 {
     if (column == 0)
-        return trans_[item].dateStr_;
+        return trans_[item]->dateStr_;
 
     if (column == 1)
-        return trans_[item].transNum_;
+       return trans_[item]->transNum_;
 
     if (column == 2)
-        return trans_[item].payeeStr_;
+        return trans_[item]->payeeStr_;
 
     if (column == 3)
-        return trans_[item].status_;
+        return trans_[item]->status_;
 
     if (column == 4)
-       return trans_[item].withdrawalStr_;
+       return trans_[item]->withdrawalStr_;
 
     if (column == 5)
-        return trans_[item].depositStr_; 
+        return trans_[item]->depositStr_; 
     
     if (column == 6)
-        return trans_[item].balanceStr_;
+        return trans_[item]->balanceStr_;
 
     return wxT("");
 }
@@ -957,7 +910,7 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& event)
                                         wxYES_NO);
     if (msgDlg.ShowModal() == wxID_YES)
     {
-        mmDBWrapper::deleteTransaction(cp_->db_, cp_->trans_[selectedIndex_].transID_);
+       mmDBWrapper::deleteTransaction(cp_->db_, cp_->trans_[selectedIndex_]->transactionID());
         DeleteItem(selectedIndex_);
         cp_->initVirtualListControl();
     }
@@ -968,7 +921,7 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& event)
     if (selectedIndex_ == -1)
         return;
     mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_, cp_->accountID_, 
-        cp_->trans_[selectedIndex_].transID_, true, this);
+       cp_->trans_[selectedIndex_]->transactionID(), true, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
@@ -981,7 +934,7 @@ void MyListCtrl::OnListItemActivated(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
     mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_,  cp_->accountID_, 
-        cp_->trans_[selectedIndex_].transID_, true, this);
+       cp_->trans_[selectedIndex_]->transactionID(), true, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();

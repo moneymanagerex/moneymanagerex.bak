@@ -99,47 +99,47 @@ void mmHomePagePanel::updateAccounts()
     double texpenses = 0.0;
     double tBalance = 0.0;
 
-    for (int iAdx = 0; iAdx < core_->accountList_.accounts_.size(); iAdx++)
+    for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
     {
         mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pCA)
         {
-        std::vector<wxString> data1;
-        hb.addHTML(wxT("<tr> <td> <a href=\"ACCT: "));
-        hb.addHTML(wxString::Format(wxT("%d"), pCA->accountID_));
-        hb.addHTML(wxT("\" >"));
-        hb.addHTML(pCA->accountName_);
-        hb.addHTML(wxT(" </a></td><td align=\"right\">"));
-        
-        double bal = pCA->balance();
+           std::vector<wxString> data1;
+           hb.addHTML(wxT("<tr> <td> <a href=\"ACCT: "));
+           hb.addHTML(wxString::Format(wxT("%d"), pCA->accountID_));
+           hb.addHTML(wxT("\" >"));
+           hb.addHTML(pCA->accountName_);
+           hb.addHTML(wxT(" </a></td><td align=\"right\">"));
 
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", pCA->accountID_);
-        wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL);
-        if (q2.NextRow())
-        {
-            int currencyID = q2.GetInt(wxT("CURRENCYID"));
-            mmDBWrapper::loadSettings(db_, currencyID);
+           double bal = pCA->balance();
 
-        }
-        q2.Finalize();
+           wxSQLite3StatementBuffer bufSQL;
+           bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", pCA->accountID_);
+           wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL);
+           if (q2.NextRow())
+           {
+              int currencyID = q2.GetInt(wxT("CURRENCYID"));
+              mmDBWrapper::loadSettings(db_, currencyID);
 
-        double rate = mmDBWrapper::getCurrencyBaseConvRate(db_,pCA->accountID_);
-        // show the actual amount in that account in the original rate
-        tBalance += bal * rate;
-        wxString balance;
-        mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
-        hb.addHTML(balance);
-        hb.addHTML(wxT(" </td></tr>"));
-        //data1.push_back(balance);
-        
-        //hb.addRow(data1, wxT("align=\"left\" "));
-        double income = 0.0, expenses = 0.0;
-        mmDBWrapper::getExpensesIncome(db_, pCA->accountID_, expenses, income, 
-            false,dtBegin, dtEnd);
-        tincome += income;
-        texpenses += expenses;
-        ct++;
+           }
+           q2.Finalize();
+
+           double rate = mmDBWrapper::getCurrencyBaseConvRate(db_,pCA->accountID_);
+           // show the actual amount in that account in the original rate
+           tBalance += bal * rate;
+           wxString balance;
+           mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
+           hb.addHTML(balance);
+           hb.addHTML(wxT(" </td></tr>"));
+           //data1.push_back(balance);
+
+           //hb.addRow(data1, wxT("align=\"left\" "));
+           double income = 0.0, expenses = 0.0;
+           mmDBWrapper::getExpensesIncome(db_, pCA->accountID_, expenses, income, 
+              false,dtBegin, dtEnd);
+           tincome += income;
+           texpenses += expenses;
+           ct++;
             
         }
     }

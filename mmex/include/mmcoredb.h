@@ -44,6 +44,7 @@ public:
    mmPayeeList payeeList_;
    mmCategoryList categoryList_;
    mmCurrencyList currencyList_;
+   mmBankTransactionList bTransactionList_;
    
    boost::shared_ptr<wxSQLite3Database> db_;
 };

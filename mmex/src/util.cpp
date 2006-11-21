@@ -227,6 +227,7 @@ int mmImportCSV(wxSQLite3Database* db_)
     int fromAccountID = -1;
     
     mmBEGINSQL_LITE_EXCEPTION;
+
     wxSQLite3ResultSet q1 
         = db_->ExecuteQuery("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
     while (q1.NextRow())

@@ -49,14 +49,20 @@ class mmData;
 class wxToolBar;
 class mmPrintableBase;
 
+/** 
+Class used to store item specific information in a tree node
+*/
 class mmTreeItemData : public wxTreeItemData
 {
 public:
-    mmTreeItemData(int id, bool isBudget) : id_(id), 
+    mmTreeItemData(int id, bool isBudget) 
+       :id_(id), 
         isString_(false), 
-        isBudgetingNode_(isBudget) { }
-    mmTreeItemData(const wxString& string) : stringData_(string), 
-        isString_(true), isBudgetingNode_(false) { }
+        isBudgetingNode_(isBudget) {}
+    mmTreeItemData(const wxString& string) 
+       :stringData_(string), 
+        isString_(true), 
+        isBudgetingNode_(false) {}
     int getData() { return id_; }
     wxString getString() { return stringData_; }
     bool isStringData() { return isString_; }
@@ -79,7 +85,7 @@ public:
 private:
     wxWizardPageSimple* page1;
 
-     DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 };
 
 class wxNewDatabaseWizardPage1 : public wxWizardPageSimple
@@ -87,7 +93,7 @@ class wxNewDatabaseWizardPage1 : public wxWizardPageSimple
 public:
     void OnCurrency(wxCommandEvent& event)
     {
-        currencyID_ = mmDBWrapper::getBaseCurrencySettings(parent_->core_->db_.get());
+       currencyID_ = parent_->core_->currencyList_.getBaseCurrencySettings();
 
         mmCurrencyDialog *dlg = new mmCurrencyDialog(parent_->core_, currencyID_, this);
         if ( dlg->ShowModal() == wxID_OK )
@@ -95,10 +101,10 @@ public:
             currencyID_ = dlg->currencyID_;
             if (currencyID_ != -1)
             {
-                wxString currName = mmDBWrapper::getCurrencyName(parent_->core_->db_.get(), currencyID_);
+                wxString currName = parent_->core_->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
                 wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_CURRENCY);
                 bn->SetLabel(currName);
-                mmDBWrapper::setBaseCurrencySettings(parent_->core_->db_.get(), currencyID_);
+                parent_->core_->currencyList_.setBaseCurrencySettings(currencyID_);
             }
         }
 
@@ -108,11 +114,11 @@ public:
     wxNewDatabaseWizardPage1(mmNewDatabaseWizard* parent) 
         : wxWizardPageSimple(parent), parent_(parent), currencyID_(-1)
     {
-        currencyID_ = mmDBWrapper::getBaseCurrencySettings(parent_->core_->db_.get());
+        currencyID_ = parent_->core_->currencyList_.getBaseCurrencySettings();
         wxString currName = _("Set Currency");
         if (currencyID_ != -1)
         {
-            currName = mmDBWrapper::getCurrencyName(parent_->core_->db_.get(), currencyID_);
+            currName = parent_->core_->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
         }
 
         itemButtonCurrency_ = new wxButton( this, 
@@ -137,7 +143,7 @@ public:
 
         mainSizer->Add(
             new wxStaticText(this, wxID_ANY,
-                             _("\nSpecify the base (or default) currency to be used \nwith the database. You can change the \ncurrency associated with each account if needed.\n")), 0,
+            _("\nSpecify the base (or default) currency to be used \nwith the database. You can change the \ncurrency associated with each account if needed.\n")), 0,
             wxALL,
             5);
 
@@ -169,11 +175,12 @@ private:
 class mmAddAccountWizard : public wxWizard
 {
 public:
-    mmAddAccountWizard(wxFrame *frame, wxSQLite3Database* db);
+    mmAddAccountWizard(wxFrame *frame, 
+       mmCoreDB* core);
     void RunIt(bool modal);
     wxString accountName_;
 
-    wxSQLite3Database* db_;
+    mmCoreDB* core_;
     int acctID_;
 private:
     wxWizardPageSimple* page1;
@@ -207,7 +214,7 @@ public:
 
         mainSizer->Add(
             new wxStaticText(this, wxID_ANY,
-                             _("\nSpecify a descriptive name of the account. This most commonly \nis the name of the financial institution where the account is held. \nFor example 'ABC Bank'.")), 0,
+            _("\nSpecify a descriptive name of the account. This most commonly \nis the name of the financial institution where the account is held. \nFor example 'ABC Bank'.")), 0,
             wxALL,
             5);
 
@@ -250,12 +257,11 @@ public:
         itemChoiceType_->SetSelection(0); // Checking
         itemChoiceType_->SetToolTip(_("Specify the type of account to be created."));
 
-
         wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
         
         mainSizer->Add(
             new wxStaticText(this, wxID_ANY,
-                             _("Type of Account")),
+            _("Type of Account")),
             0,
             wxALL,
             5
@@ -276,10 +282,9 @@ public:
 
         mainSizer->Add(
             new wxStaticText(this, wxID_ANY,
-                             _("\nInvestment accounts are specialized accounts that only \nhave stock/mutual fund investments associated \nwith them.\n")), 0,
+            _("\nInvestment accounts are specialized accounts that only \nhave stock/mutual fund investments associated \nwith them.\n")), 0,
             wxALL,
             5);
-
 
         SetSizer(mainSizer);
         mainSizer->Fit(this);
@@ -287,40 +292,34 @@ public:
 
     virtual bool TransferDataFromWindow()
     {
-        wxString acctStatusStr = wxT("Open");
-        wxString checkVal(wxT("TRUE"));
         int acctType = itemChoiceType_->GetSelection();
         wxString acctTypeStr = wxT("Checking");
         if (acctType == 1)
             acctTypeStr = wxT("Investment");
 
-        int currencyID_ = mmDBWrapper::getBaseCurrencySettings(parent_->db_);
-        if (currencyID_ == -1)
+        int currencyID = parent_->core_->currencyList_.getBaseCurrencySettings();
+        if (currencyID == -1)
         {
             mmShowErrorMessage(this, _("Base Account Currency Not set.\nSet that first using tools->options menu and then add a new account"), _("Error"));
             return false;
         }
-
-        mmBEGINSQL_LITE_EXCEPTION;
-        wxString bufSQL = wxString::Format(wxT("insert into ACCOUNTLIST_V1 (ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, \
-                                               STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO,                                 \
-                                               INITIALBAL, FAVORITEACCT, CURRENCYID)                      \
-                                               values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, '%s', %d );"), 
-                                               parent_->accountName_.c_str(), acctTypeStr.c_str(), 
-                                               wxT(""),  
-                                               acctStatusStr.c_str(), 
-                                               wxT(""), 
-                                               wxT(""), 
-                                               wxT(""),
-                                               wxT(""), 
-                                               wxT(""),
-                                               0.0, checkVal.c_str(), currencyID_);
-
-        int retVal = parent_->db_->ExecuteUpdate(bufSQL);
-        parent_->acctID_ = mmDBWrapper::getAccountID(parent_->db_,parent_->accountName_);
-
-        mmENDSQL_LITE_EXCEPTION;
-
+      
+        mmAccount* ptrBase;
+        if (acctTypeStr == wxT("Checking"))
+           ptrBase = new mmCheckingAccount(parent_->core_->db_);
+        else
+           ptrBase = new mmInvestmentAccount(parent_->core_->db_);
+        
+        boost::shared_ptr<mmAccount> pAccount(ptrBase);
+        
+        pAccount->favoriteAcct_ = true;
+        pAccount->status_ = mmAccount::MMEX_Open;
+        pAccount->acctType_ = acctTypeStr;
+        pAccount->accountName_ = parent_->accountName_;
+        pAccount->initialBalance_ = 0.0;
+        pAccount->currency_ = parent_->core_->currencyList_.getCurrencySharedPtr(currencyID);
+        parent_->acctID_ = parent_->core_->accountList_.addAccount(pAccount);
+        
         return true;
     }
 
@@ -333,17 +332,16 @@ class mmGUIFrame : public wxFrame
 {
 public:
     mmGUIFrame(const wxString& title, 
-        const wxPoint& pos, const wxSize& size);
+               const wxPoint& pos, 
+               const wxSize& size);
     ~mmGUIFrame();
 
-    // utility functions
     void createMenu();
     void createToolBar();
-    wxPanel* createMainFrame(wxPanel* mainpanel);
-
     void createHomePage();
     void createReportsPage(mmPrintableBase* rb);
     void createHelpPage();
+    wxPanel* createMainFrame(wxPanel* mainpanel);
 
     void createDataStore(const wxString& fileName, bool openingNew = false);
     void createCheckingAccountPage(int accountID);

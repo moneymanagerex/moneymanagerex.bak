@@ -163,7 +163,7 @@ public:
 
     /* Helper Functions/data */
     int accountID() { return accountID_; }
-    std::vector<boost::shared_ptr<mmBankTransaction> > trans_;
+    std::vector<mmBankTransaction* > trans_;
     void sortTable();
 
 public:

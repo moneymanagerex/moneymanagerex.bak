@@ -1,5 +1,10 @@
 Version History of Money Manager Ex
 
+0.7.0.1 Experimental 
+- Fixed Delete Button not working for assets
+- Added caching for transactions to make it load faster
+
+
 0.7.0.1 (November 4, 2006)
 - Don't select category when category dialog is closed (Thanks Mark!)
 - Fixed Bug 1553574: Allow currencies with 3 significant decimals
