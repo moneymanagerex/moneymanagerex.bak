@@ -15,9 +15,42 @@ mmCurrency::mmCurrency(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultS
    baseConv_ = q1.GetDouble(wxT("BASECONVRATE"), 1.0);
 }
 
-void mmCurrencyList::addCurrency(boost::shared_ptr<mmCurrency> pCurrency)
+mmCurrency::mmCurrency()
 {
+   currencyID_ = -1;
+   currencyName_ = wxT("US Dollar");
+   pfxSymbol_ = wxT("$");
+   sfxSymbol_ = wxT("");
+   dec_ = wxT(".");
+   grp_ = wxT(",");
+   unit_ = wxT("dollar");
+   cent_ = wxT("cent");
+   scaleDl_ = 100.0;
+   baseConv_ = 1.0;
+}
 
+int mmCurrencyList::addCurrency(boost::shared_ptr<mmCurrency> pCurrency)
+{
+    mmBEGINSQL_LITE_EXCEPTION;
+    wxString bufSQLStr = wxString::Format(wxT("insert into CURRENCYFORMATS_V1 (CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT,   \
+                                              GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, %f);"), 
+                                              pCurrency->currencyName_,
+                                              pCurrency->pfxSymbol_, 
+                                              pCurrency->sfxSymbol_, 
+                                              pCurrency->dec_, pCurrency->grp_, 
+                                              pCurrency->unit_, 
+                                              pCurrency->cent_, 
+                                              pCurrency->scaleDl_, 
+                                              pCurrency->baseConv_);
+                                              
+    int retVal = db_->ExecuteUpdate(bufSQLStr);
+
+    pCurrency->currencyID_ = db_->GetLastRowId().ToLong();
+    currencies_.push_back(pCurrency);
+
+    mmENDSQL_LITE_EXCEPTION;
+
+    return pCurrency->currencyID_;
 }
 
 bool mmCurrencyList::deleteCurrency(int currencyID)
@@ -28,7 +61,21 @@ bool mmCurrencyList::deleteCurrency(int currencyID)
 
 void mmCurrencyList::updateCurrency(int currencyID, boost::shared_ptr<mmCurrency> pCurrency)
 {
+    mmBEGINSQL_LITE_EXCEPTION;
+    wxString sqlStmt = wxString::Format(wxT("update CURRENCYFORMATS_V1 set PFX_SYMBOL='%s', SFX_SYMBOL='%s', DECIMAL_POINT='%s', \
+                                            GROUP_SEPARATOR='%s', UNIT_NAME='%s', CENT_NAME='%s', SCALE='%f', BASECONVRATE='%f' where CURRENCYNAME='%s';"),
+                                            pCurrency->pfxSymbol_, 
+                                            pCurrency->sfxSymbol_, 
+                                            pCurrency->dec_,
+                                            pCurrency->grp_, 
+                                            pCurrency->unit_,
+                                            pCurrency->cent_, 
+                                            pCurrency->scaleDl_, 
+                                            pCurrency->baseConv_,
+                                            pCurrency->currencyName_);
 
+    int retVal = db_->ExecuteUpdate(sqlStmt);
+    mmENDSQL_LITE_EXCEPTION;
 }
 
 bool mmCurrencyList::currencyExists(const wxString& currencyName)
@@ -55,4 +102,17 @@ boost::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(int currencyI
    wxASSERT(false);
    return boost::shared_ptr<mmCurrency>();
 }
-    
+
+boost::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(const wxString& currencyName)
+{
+   for (int idx = 0; idx < currencies_.size(); idx++)
+   {
+      if (currencies_[idx]->currencyName_ == currencyName)
+      {
+         return currencies_[idx];
+      }
+   }
+   wxASSERT(false);
+   return boost::shared_ptr<mmCurrency>();
+}
+  

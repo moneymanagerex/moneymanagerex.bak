@@ -261,10 +261,10 @@ void mmAddAccountWizard::RunIt(bool modal)
 }
 
 
-mmNewDatabaseWizard::mmNewDatabaseWizard(wxFrame *frame, wxSQLite3Database* db)
+mmNewDatabaseWizard::mmNewDatabaseWizard(wxFrame *frame, mmCoreDB* core)
          :wxWizard(frame,wxID_ANY,_("New Database Wizard"),
                    wxBitmap(addacctwiz_xpm),wxDefaultPosition,
-                   wxDEFAULT_DIALOG_STYLE), db_(db)
+                   wxDEFAULT_DIALOG_STYLE), core_(core)
 {
     // a wizard page may be either an object of predefined class
     page1 = new wxWizardPageSimple(this);
@@ -1669,7 +1669,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
 
         openDataBase(fileName);
 
-        mmNewDatabaseWizard* wizard = new mmNewDatabaseWizard(this, db_.get());
+        mmNewDatabaseWizard* wizard = new mmNewDatabaseWizard(this, core_);
         wizard->RunIt(true);
 
         mmDBWrapper::loadBaseCurrencySettings(db_.get());
@@ -1990,7 +1990,7 @@ void mmGUIFrame::OnOptions(wxCommandEvent& event)
     if (!db_.get() || !inidb_)
         return;
 
-    mmOptionsDialog *dlg = new mmOptionsDialog(db_.get(), inidb_, this);
+    mmOptionsDialog *dlg = new mmOptionsDialog(core_, inidb_, this);
     dlg->ShowModal();
     dlg->Destroy();
     createHomePage();
@@ -2261,7 +2261,7 @@ void mmGUIFrame::OnAssets(wxCommandEvent& event)
 
 void mmGUIFrame::OnCurrency(wxCommandEvent& event)
 {
-    mmCurrencyDialog *dlg = new mmCurrencyDialog(db_.get(),this);
+    mmCurrencyDialog *dlg = new mmCurrencyDialog(core_,this);
     if ( dlg->ShowModal() == wxID_OK )
     {
     }

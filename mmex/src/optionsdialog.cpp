@@ -70,11 +70,11 @@ mmOptionsDialog::~mmOptionsDialog( )
         mmDBWrapper::setInfoSettingValue(db_, wxT("STOCKURL"), stockURL); 
 }
 
-mmOptionsDialog::mmOptionsDialog( wxSQLite3Database* db, wxSQLite3Database* inidb,
+mmOptionsDialog::mmOptionsDialog( mmCoreDB* core, wxSQLite3Database* inidb,
                                  wxWindow* parent, wxWindowID id, 
                                  const wxString& caption, 
                                  const wxPoint& pos, const wxSize& size, long style )
-                                 : db_(db), inidb_(inidb)
+                                 : core_(core), inidb_(inidb), db_(core_->db_.get())
 {
     Create(parent, id, caption, pos, size, style);
 }
@@ -379,7 +379,7 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& event)
 {
     int currencyID = mmDBWrapper::getBaseCurrencySettings(db_);
      
-    mmCurrencyDialog *dlg = new mmCurrencyDialog(db_, currencyID, this);
+    mmCurrencyDialog *dlg = new mmCurrencyDialog(core_, currencyID, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
         currencyID = dlg->currencyID_;

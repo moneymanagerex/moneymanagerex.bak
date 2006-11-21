@@ -356,7 +356,8 @@ void mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
                                                STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO,                                 \
                                                INITIALBAL, FAVORITEACCT, CURRENCYID)                      \
                                                values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, '%s', %d );"), 
-                                               pAccount->accountName_.c_str(), pAccount->acctType_.c_str(), 
+                                               pAccount->accountName_.c_str(), 
+                                               pAccount->acctType_.c_str(), 
                                                pAccount->accountNum_.c_str(),  
                                                statusStr, 
                                                pAccount->notes_.c_str(), 

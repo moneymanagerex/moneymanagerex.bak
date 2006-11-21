@@ -29,7 +29,7 @@ END_EVENT_TABLE()
 
 mmCurrencyDialog::mmCurrencyDialog( )
 {
-    db_ = 0;
+    core_ = 0;    
     currencyID_ = -1;
 }
 
@@ -38,20 +38,20 @@ mmCurrencyDialog::~mmCurrencyDialog()
     currencyID_ = -1;     
 }
 
-mmCurrencyDialog::mmCurrencyDialog( wxSQLite3Database* db, wxWindow* parent, 
+mmCurrencyDialog::mmCurrencyDialog( mmCoreDB* core, wxWindow* parent, 
                                    wxWindowID id, const wxString& caption, 
                                    const wxPoint& pos, const wxSize& size, long style )
 {
-    db_ = db;
+    core_ = core;
     currencyID_ = -1;
     Create(parent, id, caption, pos, size, style);
 }
 
-mmCurrencyDialog::mmCurrencyDialog(wxSQLite3Database* db,  int currencyID, wxWindow* parent, 
+mmCurrencyDialog::mmCurrencyDialog(mmCoreDB* core,  int currencyID, wxWindow* parent, 
                                    wxWindowID id, const wxString& caption, 
                                    const wxPoint& pos, const wxSize& size, long style )
 {
-    db_ = db;
+    core_ = core;
     currencyID_ = currencyID;
     Create(parent, id, caption, pos, size, style);
 }
@@ -78,80 +78,58 @@ bool mmCurrencyDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmCurrencyDialog::fillControls()
 {
-    if (!db_)
+    if (!core_)
        return;
+
     currencyChoice_->Clear();
 
-    mmBEGINSQL_LITE_EXCEPTION;
-    wxString bufSQL = wxString::Format(wxT("select * from CURRENCYFORMATS_V1"));
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
-    while (q1.NextRow())
+    for (int idx = 0; idx < core_->currencyList_.currencies_.size(); idx++)
     {
-        wxString currencyString = q1.GetString(wxT("CURRENCYNAME"));
-        int currencyID         = q1.GetInt(wxT("CURRENCYID"));
-        currencyChoice_->Append(currencyString, (void*) currencyID);
+        int currencyID         = core_->currencyList_.currencies_[idx]->currencyID_;
+        currencyChoice_->Append( core_->currencyList_.currencies_[idx]->currencyName_, 
+            (void*) currencyID);
     }
-    q1.Finalize();
     
     if (currencyID_ != -1)
     {
-        wxString name = mmDBWrapper::getCurrencyName(db_, currencyID_);
+        wxString name = mmDBWrapper::getCurrencyName(core_->db_.get(), currencyID_);
         currencyChoice_->SetStringSelection(name);
     }
     else
         currencyChoice_->SetSelection(0);
-    updateControls();
 
-    mmENDSQL_LITE_EXCEPTION;
+    updateControls();
 }
 
 void mmCurrencyDialog::updateControls()
 {
     wxString currencyName = currencyChoice_->GetStringSelection();
-    mmBEGINSQL_LITE_EXCEPTION;
-    wxString bufSQL = wxString::Format(wxT("select * from CURRENCYFORMATS_V1 where CURRENCYNAME='%s';"), mmCleanString(currencyName).c_str());
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
-    if (q1.NextRow())
-    {
-        wxString pfxSymbol = q1.GetString(wxT("PFX_SYMBOL"));
-        wxString sfxSymbol = q1.GetString(wxT("SFX_SYMBOL"));
-        wxString dec = q1.GetString(wxT("DECIMAL_POINT"));
-        wxString grp = q1.GetString(wxT("GROUP_SEPARATOR"));
-        wxString unit = q1.GetString(wxT("UNIT_NAME"));
-        wxString cent = q1.GetString(wxT("CENT_NAME"));
-        wxString scale = q1.GetString(wxT("SCALE"));
-        int currencyID = q1.GetInt(wxT("CURRENCYID"));
-        wxString baseRate = q1.GetString(wxT("BASECONVRATE"));
+    boost::shared_ptr<mmCurrency > pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyName);
 
-        wxTextCtrl* pfxTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_PFX);
-        wxTextCtrl* sfxTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SFX);
-        wxTextCtrl* decTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_DECIMAL);
-        wxTextCtrl* grpTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_GROUP);
-        wxTextCtrl* unitTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_UNIT);
-        wxTextCtrl* centTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_CENTS);
-        wxTextCtrl* scaleTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SCALE);
-        wxStaticText* sample = (wxStaticText*)FindWindow(ID_DIALOG_CURRENCY_STATIC_SAMPLE);
-        wxTextCtrl* baseConvRate = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_BASECONVRATE);
+    wxTextCtrl* pfxTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_PFX);
+    wxTextCtrl* sfxTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SFX);
+    wxTextCtrl* decTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_DECIMAL);
+    wxTextCtrl* grpTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_GROUP);
+    wxTextCtrl* unitTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_UNIT);
+    wxTextCtrl* centTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_CENTS);
+    wxTextCtrl* scaleTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SCALE);
+    wxStaticText* sample = (wxStaticText*)FindWindow(ID_DIALOG_CURRENCY_STATIC_SAMPLE);
+    wxTextCtrl* baseConvRate = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_BASECONVRATE);
 
-        pfxTx->SetValue(pfxSymbol);
-        sfxTx->SetValue(sfxSymbol);
-        decTx->SetValue(dec);
-        grpTx->SetValue(grp);
-        unitTx->SetValue(unit);
-        centTx->SetValue(cent);
-        scaleTx->SetValue(scale);
-        baseConvRate->SetValue(baseRate);
-        
-        wxString dispAmount;
-        double amount = 123456.78;
-        mmDBWrapper::loadSettings(db_, currencyID);
-        mmCurrencyFormatter::formatDoubleToCurrency(amount, dispAmount);
-        sample->SetLabel(dispAmount);
+    pfxTx->SetValue(pCurrency->pfxSymbol_);
+    sfxTx->SetValue(pCurrency->sfxSymbol_);
+    decTx->SetValue(pCurrency->dec_);
+    grpTx->SetValue(pCurrency->grp_);
+    unitTx->SetValue(pCurrency->unit_);
+    centTx->SetValue(pCurrency->cent_);
+    scaleTx->SetValue(wxString::Format(wxT("%f"), pCurrency->scaleDl_));
+    baseConvRate->SetValue(wxString::Format(wxT("%f"), pCurrency->baseConv_));
 
-    }
-    q1.Finalize();
-    mmENDSQL_LITE_EXCEPTION;
-
+    wxString dispAmount;
+    double amount = 123456.78;
+    mmDBWrapper::loadSettings(core_->db_.get(), pCurrency->currencyID_);
+    mmCurrencyFormatter::formatDoubleToCurrency(amount, dispAmount);
+    sample->SetLabel(dispAmount);
 }
 
 void mmCurrencyDialog::OnCurrencyTypeChanged(wxCommandEvent& event)
@@ -290,16 +268,13 @@ void mmCurrencyDialog::OnAdd(wxCommandEvent& event)
         wxString currText = dlg->GetValue().Trim();
         if (!currText.IsEmpty())
         {
-            int currID = mmDBWrapper::getCurrencyID(db_, currText);
+            int currID = mmDBWrapper::getCurrencyID(core_->db_.get(), currText);
             if (currID == -1)
             {
-                mmBEGINSQL_LITE_EXCEPTION;
-                wxString bufSQLStr = wxString::Format(wxT("insert into CURRENCYFORMATS_V1 (CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT,   \
-                                                          GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE) values ('%s', '$', '', '.', ',', 'dollar', 'cents', 100, '1.0');"), mmCleanString(currText).c_str());
-                int retVal = db_->ExecuteUpdate(bufSQLStr);
-                mmENDSQL_LITE_EXCEPTION;
-                
-                currencyID_  = mmDBWrapper::getCurrencyID(db_, currText);
+             
+                boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency());
+                pCurrency->currencyName_ = currText;
+                currencyID_ = core_->currencyList_.addCurrency(pCurrency);
                 fillControls();
                 
             }
@@ -316,7 +291,7 @@ void mmCurrencyDialog::OnAdd(wxCommandEvent& event)
 void mmCurrencyDialog::OnBSelect(wxCommandEvent& event)
 {
     wxString currencyName = currencyChoice_->GetStringSelection();
-    currencyID_ = mmDBWrapper::getCurrencyID(db_, currencyName);
+    currencyID_ = mmDBWrapper::getCurrencyID(core_->db_.get(), currencyName);
     EndModal(wxID_OK);
 }
 
@@ -344,14 +319,16 @@ void mmCurrencyDialog::OnEdit(wxCommandEvent& event)
         return;
     }
 
-    mmBEGINSQL_LITE_EXCEPTION;
-    wxString sqlStmt = wxString::Format(wxT("update CURRENCYFORMATS_V1 set PFX_SYMBOL='%s', SFX_SYMBOL='%s', DECIMAL_POINT='%s', \
-                GROUP_SEPARATOR='%s', UNIT_NAME='%s', CENT_NAME='%s', SCALE='%f', BASECONVRATE='%f' where CURRENCYNAME='%s';"),
-                mmCleanString(pfxTx->GetValue()).c_str(), mmCleanString(sfxTx->GetValue()).c_str(), mmCleanString(decTx->GetValue()).c_str(),mmCleanString(grpTx->GetValue()).c_str(), mmCleanString(unitTx->GetValue()).c_str(),
-                mmCleanString(centTx->GetValue()).c_str(), scal, convRate, mmCleanString(currencyName).c_str());
-
-    int retVal = db_->ExecuteUpdate(sqlStmt);
-    mmENDSQL_LITE_EXCEPTION;
+    boost::shared_ptr<mmCurrency> pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyName);
+    
+    pCurrency->pfxSymbol_ = mmCleanString(pfxTx->GetValue()).c_str();
+    pCurrency->sfxSymbol_ = mmCleanString(sfxTx->GetValue()).c_str();
+    pCurrency->dec_ = mmCleanString(decTx->GetValue()).c_str();
+    pCurrency->grp_ =  mmCleanString(grpTx->GetValue()).c_str();
+    pCurrency->unit_ = mmCleanString(unitTx->GetValue()).c_str();
+    pCurrency->cent_ = mmCleanString(centTx->GetValue()).c_str();
+    pCurrency->scaleDl_ = scal;
+    pCurrency->baseConv_ = convRate;
 
     fillControls();
 }

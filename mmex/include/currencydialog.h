@@ -27,6 +27,7 @@
 
 #include "guiid.h"
 #include "defs.h"
+#include "mmcoredb.h"
 #include "dbwrapper.h"
 
 class mmCurrencyDialog : public wxDialog
@@ -37,14 +38,15 @@ class mmCurrencyDialog : public wxDialog
 public:
     mmCurrencyDialog();
     ~mmCurrencyDialog();
-    mmCurrencyDialog(wxSQLite3Database* db, int currencyID,
+    mmCurrencyDialog(mmCoreDB* core,
+        int currencyID,
         wxWindow* parent, 
         wxWindowID id = SYMBOL_CURRENCYDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_CURRENCYDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_CURRENCYDIALOG_POSITION, 
         const wxSize& size = SYMBOL_CURRENCYDIALOG_SIZE, 
         long style = SYMBOL_CURRENCYDIALOG_STYLE );
-    mmCurrencyDialog(wxSQLite3Database* db, wxWindow* parent, 
+    mmCurrencyDialog(mmCoreDB* core, wxWindow* parent, 
         wxWindowID id = SYMBOL_CURRENCYDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_CURRENCYDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_CURRENCYDIALOG_POSITION, 
@@ -72,7 +74,7 @@ public:
     void OnSelChanged(wxCommandEvent& event);
 
 private:
-    wxSQLite3Database* db_;
+    mmCoreDB* core_;
     wxChoice* currencyChoice_;
   
 public:

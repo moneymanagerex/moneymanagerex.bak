@@ -303,7 +303,7 @@ void mmNewAcctDialog::OnCancel(wxCommandEvent& event)
 
 void mmNewAcctDialog::OnCurrency(wxCommandEvent& event)
 {
-   mmCurrencyDialog *dlg = new mmCurrencyDialog(core_->db_.get(), currencyID_, this);
+   mmCurrencyDialog *dlg = new mmCurrencyDialog(core_, currencyID_, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
         currencyID_ = dlg->currencyID_;

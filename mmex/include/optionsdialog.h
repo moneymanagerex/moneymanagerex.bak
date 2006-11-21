@@ -20,6 +20,7 @@
 #define _MM_EX_OPTIONSDIALOG_H_
 
 #include "guiid.h"
+#include "mmcoredb.h"
 
 #define SYMBOL_MMOPTIONSDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
 #define SYMBOL_MMOPTIONSDIALOG_TITLE _("Options Dialog")
@@ -34,7 +35,7 @@ class mmOptionsDialog: public wxDialog
 
 public:
     mmOptionsDialog( );
-    mmOptionsDialog( wxSQLite3Database* db, wxSQLite3Database* inidb,
+    mmOptionsDialog( mmCoreDB* db, wxSQLite3Database* inidb,
         wxWindow* parent, wxWindowID id = SYMBOL_MMOPTIONSDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_MMOPTIONSDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_MMOPTIONSDIALOG_POSITION, 
@@ -68,6 +69,7 @@ private:
     wxImageList* m_imageList;
     wxChoice* choiceDateFormat_;
     wxChoice* choiceVisible_;
+    mmCoreDB* core_;
     wxSQLite3Database* db_;
     wxSQLite3Database* inidb_;
 };

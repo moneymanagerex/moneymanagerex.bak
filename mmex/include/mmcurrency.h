@@ -22,7 +22,7 @@
 class mmCurrency
 {
 public: 
-   mmCurrency() {}
+   mmCurrency();
    mmCurrency(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1);
    ~mmCurrency() {}
 
@@ -49,12 +49,13 @@ public:
     ~mmCurrencyList() {}
 
     /* Currency Functions */
-    void addCurrency(boost::shared_ptr<mmCurrency> pCurrency);
+    int addCurrency(boost::shared_ptr<mmCurrency> pCurrency);
     bool deleteCurrency(int currencyID);
     void updateCurrency(int currencyID, boost::shared_ptr<mmCurrency> pCurrency);
     bool currencyExists(const wxString& currencyName);
     int getCurrencyID(const wxString& currencyName);
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID);
+    boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName);
 
     std::vector< boost::shared_ptr<mmCurrency> > currencies_;
     

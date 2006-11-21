@@ -72,11 +72,10 @@ private:
 class mmNewDatabaseWizard : public wxWizard
 {
 public:
-    mmNewDatabaseWizard(wxFrame *frame, wxSQLite3Database* db);
+    mmNewDatabaseWizard(wxFrame *frame, mmCoreDB* core);
     void RunIt(bool modal);
     
-
-    wxSQLite3Database* db_;
+    mmCoreDB* core_;
 private:
     wxWizardPageSimple* page1;
 
@@ -88,18 +87,18 @@ class wxNewDatabaseWizardPage1 : public wxWizardPageSimple
 public:
     void OnCurrency(wxCommandEvent& event)
     {
-        currencyID_ = mmDBWrapper::getBaseCurrencySettings(parent_->db_);
+        currencyID_ = mmDBWrapper::getBaseCurrencySettings(parent_->core_->db_.get());
 
-        mmCurrencyDialog *dlg = new mmCurrencyDialog(parent_->db_, currencyID_, this);
+        mmCurrencyDialog *dlg = new mmCurrencyDialog(parent_->core_, currencyID_, this);
         if ( dlg->ShowModal() == wxID_OK )
         {
             currencyID_ = dlg->currencyID_;
             if (currencyID_ != -1)
             {
-                wxString currName = mmDBWrapper::getCurrencyName(parent_->db_, currencyID_);
+                wxString currName = mmDBWrapper::getCurrencyName(parent_->core_->db_.get(), currencyID_);
                 wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_CURRENCY);
                 bn->SetLabel(currName);
-                mmDBWrapper::setBaseCurrencySettings(parent_->db_, currencyID_);
+                mmDBWrapper::setBaseCurrencySettings(parent_->core_->db_.get(), currencyID_);
             }
         }
 
@@ -109,11 +108,11 @@ public:
     wxNewDatabaseWizardPage1(mmNewDatabaseWizard* parent) 
         : wxWizardPageSimple(parent), parent_(parent), currencyID_(-1)
     {
-        currencyID_ = mmDBWrapper::getBaseCurrencySettings(parent_->db_);
+        currencyID_ = mmDBWrapper::getBaseCurrencySettings(parent_->core_->db_.get());
         wxString currName = _("Set Currency");
         if (currencyID_ != -1)
         {
-            currName = mmDBWrapper::getCurrencyName(parent_->db_, currencyID_);
+            currName = mmDBWrapper::getCurrencyName(parent_->core_->db_.get(), currencyID_);
         }
 
         itemButtonCurrency_ = new wxButton( this, 
