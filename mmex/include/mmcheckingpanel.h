@@ -127,9 +127,8 @@ class mmCheckingPanel : public mmPanelBase
     DECLARE_EVENT_TABLE()
 
 public:
-    mmCheckingPanel(wxSQLite3Database* db, 
+    mmCheckingPanel( mmCoreDB* core,
         wxSQLite3Database* inidb, 
-        mmCoreDB* core,
         int accountID, wxWindow *parent,
         wxWindowID winid = wxID_ANY,
         const wxPoint& pos = wxDefaultPosition,
@@ -164,7 +163,7 @@ public:
 
     /* Helper Functions/data */
     int accountID() { return accountID_; }
-    std::vector<mmTransactionHolder> trans_;
+    std::vector<boost::shared_ptr<mmBankTransaction> > trans_;
     void sortTable();
 
 public:

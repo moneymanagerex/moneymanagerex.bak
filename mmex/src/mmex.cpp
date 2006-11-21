@@ -1311,7 +1311,8 @@ void mmGUIFrame::createCheckingAccountPage(int accountID)
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
     
-    panelCurrent_ = new mmCheckingPanel(db_.get(), inidb_, core_, accountID, homePanel, ID_PANEL3, 
+    panelCurrent_ = new mmCheckingPanel(core_, inidb_, 
+        accountID, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 

@@ -76,13 +76,16 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
     EVT_LIST_KEY_DOWN(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListKeyDown)
 END_EVENT_TABLE()
 /*******************************************************/
-mmCheckingPanel::mmCheckingPanel(wxSQLite3Database* db, 
+mmCheckingPanel::mmCheckingPanel(mmCoreDB* core,
                                  wxSQLite3Database* inidb,
-                                 mmCoreDB* core,
                                  int accountID, wxWindow *parent,
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
             const wxString& name )
-            : db_(db), accountID_(accountID), m_imageList(0), inidb_(inidb), core_(core)
+            : core_(core),
+            db_(core_->db_.get()), 
+            accountID_(accountID), 
+            m_imageList(0), 
+            inidb_(inidb) 
 {
     wxASSERT(db_);
     wxASSERT(accountID < 10);
@@ -290,7 +293,6 @@ void mmCheckingPanel::CreateControls()
     listCtrlAccount_->sortCol_ = sortcol;
     listCtrlAccount_->asc_ = asc;
     
-
     listCtrlAccount_->SetColumnWidth(0, col0);
     listCtrlAccount_->SetColumnWidth(1, col1);
     listCtrlAccount_->SetColumnWidth(2, col2);
@@ -395,9 +397,9 @@ void mmCheckingPanel::sortTable()
 
 void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
-    wxString cat   =  _("Category         : ") + trans_[selIndex].catStr_  +   wxT("\n"); 
-    wxString subcat = _("Sub Category  : ") + trans_[selIndex].subCatStr_ + wxT("\n");
-    wxString notes =  _("Notes               : ") + trans_[selIndex].notes_ + wxT("\n");
+    wxString cat   =  _("Category         : ") + trans_[selIndex]->catStr_  +   wxT("\n"); 
+    wxString subcat = _("Sub Category  : ") + trans_[selIndex]->subCatStr_ + wxT("\n");
+    wxString notes =  _("Notes               : ") + trans_[selIndex]->notes_ + wxT("\n");
     wxString text = cat + subcat + notes;
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
     st->SetLabel(text);
@@ -430,29 +432,17 @@ void mmCheckingPanel::initVirtualListControl()
 
     // clear everything
     trans_.clear();
-    double acctInitBalance = 0.0;
-
-    mmBEGINSQL_LITE_EXCEPTION;
-
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", accountID_);
-    wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL);
-    if (q2.NextRow())
-    {
-        int currencyID = q2.GetInt(wxT("CURRENCYID"));
-        mmDBWrapper::loadSettings(db_, currencyID);
-        acctInitBalance = q2.GetDouble(wxT("INITIALBAL"));
     
-    }
-    q2.Finalize();
+    boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(accountID_);
+    double acctInitBalance = pAccount->initialBalance_;
+    boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
+    wxASSERT(pCurrency);
+    mmDBWrapper::loadSettings(db_, pCurrency->currencyID_);
 
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_HEADER);
-    mmDBWrapper dbWrapper;
-    wxString str = dbWrapper.getAccountName(db_, accountID_);
+    header->SetLabel(_("Account View : ") + pAccount->accountName_);
 
-    header->SetLabel(_("Account View : ") + str);
-            
-   setAccountSummary();
+    setAccountSummary();
 
     wxString text;
     text += _("Category: \n"); 
@@ -461,57 +451,41 @@ void mmCheckingPanel::initVirtualListControl()
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
     st->SetLabel(text);
 
-    if (currentView_ == wxT("View All Transactions"))
+    for (int idx = 0; idx < pAccount->transactions_.size(); idx++)
     {
-        bufSQL.Format("select * from CHECKINGACCOUNT_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", 
-            accountID_, accountID_);
-    }
-    else if (currentView_ == wxT("View Reconciled"))
-    {
-          bufSQL.Format("select * from CHECKINGACCOUNT_V1 where \
-              (ACCOUNTID=%d OR TOACCOUNTID=%d) AND (STATUS='R');", 
-            accountID_, accountID_);
-    }
-    else if (currentView_ == wxT("View Void"))
-    {
-          bufSQL.Format("select * from CHECKINGACCOUNT_V1 where \
-              (ACCOUNTID=%d OR TOACCOUNTID=%d) AND (STATUS='V');", 
-            accountID_, accountID_);
-    }
-    else if (currentView_ == wxT("View Flagged"))
-    {
-          bufSQL.Format("select * from CHECKINGACCOUNT_V1 where \
-              (ACCOUNTID=%d OR TOACCOUNTID=%d) AND (STATUS='F');", 
-            accountID_, accountID_);
-    }
-    else if (currentView_ == wxT("View UnReconciled"))
-    {
-          bufSQL.Format("select * from CHECKINGACCOUNT_V1 where \
-              (ACCOUNTID=%d OR TOACCOUNTID=%d) AND (STATUS='');", 
-            accountID_, accountID_);
-    }
-    else
-    {
-          bufSQL.Format("select * from CHECKINGACCOUNT_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", 
-            accountID_, accountID_);
-    }
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
-    int ct = 0;
-    while (q1.NextRow())
-    {
-        mmTransactionHolder th;
-        wxString dateString = q1.GetString(wxT("TRANSDATE"));
-        wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
- 
-        if (currentView_ == wxT("View 30 days"))
+        boost::shared_ptr<mmTransaction> pTransaction = pAccount->transactions_[idx].lock();
+        wxASSERT(pTransaction);
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = boost::dynamic_pointer_cast<boost::shared_ptr<mmBankTransaction> >(pTransaction);
+        bool toAdd = true;
+        if (currentView_ == wxT("View Reconciled"))
+        {
+            if (pBankTransaction->status_ != wxT("R"))
+                toAdd = false;
+        }
+        else if (currentView_ == wxT("View Void"))
+        {
+             if (pBankTransaction->status_ != wxT("V"))
+                toAdd = false;
+        }
+        else if (currentView_ == wxT("View Flagged"))
+        {
+            if (pBankTransaction->status_ != wxT("F"))
+                toAdd = false;
+        }
+        else if (currentView_ == wxT("View UnReconciled"))
+        {
+            if (pBankTransaction->status_ != wxT(""))
+                toAdd = false;
+        }
+        else  if (currentView_ == wxT("View 30 days"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today;
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
 
-             if (!dtdt.IsBetween(dtBegin, dtEnd))
-                continue; //skip
+            if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                toAdd = false;
         }
         else if (currentView_ == wxT("View 90 days"))
         {
@@ -520,26 +494,16 @@ void mmCheckingPanel::initVirtualListControl()
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(90 * wxDateSpan::Day());
 
-             if (!dtdt.IsBetween(dtBegin, dtEnd))
-                continue; //skip
+             if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                 toAdd = false;
         }
 
-        th.dateStr_       = mmGetDateForDisplay(db_, dtdt);
-        th.transID_        = q1.GetInt(wxT("TRANSID"));
-        th.date_           = dtdt;
-        th.catID_          = q1.GetInt(wxT("CATEGID"));
-        th.subcategID_     = q1.GetInt(wxT("SUBCATEGID"));
-        th.payeeID_        = q1.GetInt(wxT("PAYEEID"));
-        th.transNum_    = q1.GetString(wxT("TRANSACTIONNUMBER"));
-        th.status_         = q1.GetString(wxT("STATUS"));
-        th.notes_          = q1.GetString(wxT("NOTES"));
-        th.transType_      = q1.GetString(wxT("TRANSCODE"));
-        th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
-        th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
+        if (toAdd)
+            trans_.push_back(pBankTransaction);
+    }
 
-        th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
-        th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
-
+  
+  //////////////////////////
         wxString displayTransAmtString;
         if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayTransAmtString))
             th.transAmtString_ = displayTransAmtString;
