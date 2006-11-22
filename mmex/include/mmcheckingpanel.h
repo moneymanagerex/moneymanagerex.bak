@@ -158,6 +158,7 @@ public:
     void OnEditTransaction(wxCommandEvent& event);
     void OnMouseLeftDown( wxMouseEvent& event );
     void OnViewPopupSelected(wxCommandEvent& event);
+    void initViewTransactionsHeader();
 
     void setAccountSummary();
 

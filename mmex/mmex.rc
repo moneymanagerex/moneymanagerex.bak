@@ -1,8 +1,16 @@
-#include "wx/msw/wx.rc"
-
 // Microsoft Visual C++ generated resource script.
 //
-//#include "resource.h"
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
 /////////////////////////////////////////////////////////////////////////////
 // English (U.S.) resources
 
@@ -14,12 +22,64 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// Menu
+//
+
+WXWINDOWMENU MENU 
+BEGIN
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Cascade",                    4002
+        MENUITEM "Tile &Horizontally",          4001
+        MENUITEM "Tile &Vertically",            4005
+        MENUITEM "",                            65535
+        MENUITEM "&Arrange Icons",              4003
+        MENUITEM "&Next",                       4004
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+WXCURSOR_HAND           CURSOR                  "wx/msw/hand.cur"
+WXCURSOR_BULLSEYE       CURSOR                  "wx/msw/bullseye.cur"
+WXCURSOR_PENCIL         CURSOR                  "wx/msw/pencil.cur"
+WXCURSOR_MAGNIFIER      CURSOR                  "wx/msw/magnif1.cur"
+WXCURSOR_ROLLER         CURSOR                  "wx/msw/roller.cur"
+WXCURSOR_PBRUSH         CURSOR                  "wx/msw/pbrush.cur"
+WXCURSOR_PLEFT          CURSOR                  "wx/msw/pntleft.cur"
+WXCURSOR_PRIGHT         CURSOR                  "wx/msw/pntright.cur"
+WXCURSOR_BLANK          CURSOR                  "wx/msw/blank.cur"
+WXCURSOR_RIGHT_ARROW    CURSOR                  "wx/msw/rightarr.cur"
+WXCURSOR_CROSS          CURSOR                  "wx/msw/cross.cur"
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // Icon
 //
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
+WXICON_SMALL_CLOSED_FOLDER ICON                    "wx/msw/folder1.ico"
+WXICON_SMALL_OPEN_FOLDER ICON                    "wx/msw/folder2.ico"
+WXICON_SMALL_FILE       ICON                    "wx/msw/file1.ico"
+WXICON_SMALL_COMPUTER   ICON                    "wx/msw/computer.ico"
+WXICON_SMALL_DRIVE      ICON                    "wx/msw/drive.ico"
+WXICON_SMALL_CDROM      ICON                    "wx/msw/cdrom.ico"
+WXICON_SMALL_FLOPPY     ICON                    "wx/msw/floppy.ico"
+WXICON_SMALL_REMOVEABLE ICON                    "wx/msw/removble.ico"
 MAINICON                ICON                    "resources/mainicon.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+CSQUERY                 BITMAP                  "wx/msw/csquery.bmp"
+WXBITMAP_STD_COLOURS    BITMAP                  "wx/msw/colours.bmp"
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -52,8 +112,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,7,0,1
- PRODUCTVERSION 0,7,0,1
+ FILEVERSION 0,7,0,2
+ PRODUCTVERSION 0,7,0,2
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -70,12 +130,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "TheZeal Software"
             VALUE "FileDescription", "Money Management Software"
-            VALUE "FileVersion", "0, 7, 0, 1"
+            VALUE "FileVersion", "0, 7, 0, 2"
             VALUE "InternalName", "mmex"
-			VALUE "LegalCopyright", "Copyright (C) 2006 Madhan Kanagavel (http://www.thezeal.com/software)"
+            VALUE "LegalCopyright", "Copyright (C) 2006 Madhan Kanagavel (http://www.thezeal.com/software)"
             VALUE "OriginalFilename", "mmex.rc"
             VALUE "ProductName", " mmex"
-            VALUE "ProductVersion", "0, 7, 0, 1"
+            VALUE "ProductVersion", "0, 7, 0, 2"
         END
     END
     BLOCK "VarFileInfo"
@@ -98,7 +158,4 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-
-
-
 

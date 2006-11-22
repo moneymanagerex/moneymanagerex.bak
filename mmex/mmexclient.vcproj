@@ -431,6 +431,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\maincurrencydialog.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\mmaccount.cpp"
 				>
 			</File>
@@ -612,6 +616,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\maincurrencydialog.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\mmaccount.h"
 				>
 			</File>
@@ -716,6 +724,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\resource.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\stockdialog.h"
 				>
 			</File>
@@ -753,6 +765,66 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 			>
 			<File
+				RelativePath=".\wx\msw\blank.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\bullseye.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\cdrom.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\colours.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\computer.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\cross.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\csquery.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\drive.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\file1.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\floppy.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\folder1.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\folder2.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\hand.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\magnif1.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\mainicon.ico"
+				>
+			</File>
+			<File
 				RelativePath="mmex.rc"
 				>
 				<FileConfiguration
@@ -779,6 +851,34 @@
 						PreprocessorDefinitions="_VC80_UPGRADE=0x0700; wxUSE_NO_MANIFEST"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\wx\msw\pbrush.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\pencil.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\pntleft.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\pntright.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\removble.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\rightarr.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\wx\msw\roller.cur"
+				>
 			</File>
 		</Filter>
 	</Files>

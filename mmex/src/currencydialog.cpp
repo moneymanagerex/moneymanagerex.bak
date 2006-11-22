@@ -21,8 +21,7 @@
 IMPLEMENT_DYNAMIC_CLASS( mmCurrencyDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmCurrencyDialog, wxDialog )
-    EVT_BUTTON(ID_DIALOG_CURRENCY_BUTTON_ADD, mmCurrencyDialog::OnAdd)
-    EVT_BUTTON(ID_DIALOG_CURRENCY_BUTTON_SELECT, mmCurrencyDialog::OnBSelect)
+    EVT_BUTTON(ID_DIALOG_CURRENCY_BUTTON_CANCEL, mmCurrencyDialog::OnCancel)
     EVT_BUTTON(ID_DIALOG_CURRENCY_BUTTON_UPDATE, mmCurrencyDialog::OnEdit)
     EVT_CHOICE(ID_DIALOG_CURRENCY_CHOICE, mmCurrencyDialog::OnCurrencyTypeChanged)  
 END_EVENT_TABLE()
@@ -38,7 +37,7 @@ mmCurrencyDialog::~mmCurrencyDialog()
     currencyID_ = -1;     
 }
 
-mmCurrencyDialog::mmCurrencyDialog( mmCoreDB* core, wxWindow* parent, 
+mmCurrencyDialog::mmCurrencyDialog( mmCoreDB* core, wxWindow* parent,
                                    wxWindowID id, const wxString& caption, 
                                    const wxPoint& pos, const wxSize& size, long style )
 {
@@ -80,23 +79,18 @@ void mmCurrencyDialog::fillControls()
 {
     if (!core_)
        return;
-
-    currencyChoice_->Clear();
-
-    for (int idx = 0; idx < (int)core_->currencyList_.currencies_.size(); idx++)
-    {
-        int currencyID         = core_->currencyList_.currencies_[idx]->currencyID_;
-        currencyChoice_->Append( core_->currencyList_.currencies_[idx]->currencyName_, 
-            (void*) currencyID);
-    }
     
     if (currencyID_ != -1)
     {
         wxString name = mmDBWrapper::getCurrencyName(core_->db_.get(), currencyID_);
+        currencyChoice_->Append(name, (void*) currencyID_);
         currencyChoice_->SetStringSelection(name);
     }
     else
-        currencyChoice_->SetSelection(0);
+    {
+       wxASSERT(false);
+       currencyChoice_->SetSelection(0);
+    }
 
     updateControls();
 }
@@ -157,6 +151,7 @@ void mmCurrencyDialog::CreateControls()
     currencyChoice_ = new wxChoice( itemDialog1, ID_DIALOG_CURRENCY_CHOICE, 
         wxDefaultPosition, wxDefaultSize, 0, itemChoice5Strings, 0 );
     itemFlexGridSizer3->Add(currencyChoice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    currencyChoice_->Enable(false);
 
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, 
         wxID_STATIC, _("Prefix Symbol"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -246,46 +241,18 @@ void mmCurrencyDialog::CreateControls()
     wxBoxSizer* itemBoxSizer22 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer22, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxButton* itemButton23 = new wxButton( itemDialog1, 
-        ID_DIALOG_CURRENCY_BUTTON_ADD, _("Add New"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer22->Add(itemButton23, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
-
     wxButton* itemButton24 = new wxButton( itemDialog1, 
         ID_DIALOG_CURRENCY_BUTTON_UPDATE, _("Update"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer22->Add(itemButton24, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxButton* itemButton25 = new wxButton( itemDialog1, 
-        ID_DIALOG_CURRENCY_BUTTON_SELECT, _("Select"), wxDefaultPosition, wxDefaultSize, 0 );
+        ID_DIALOG_CURRENCY_BUTTON_CANCEL, _("Close"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer22->Add(itemButton25, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 }
 
-void mmCurrencyDialog::OnAdd(wxCommandEvent& event)
+void mmCurrencyDialog::OnCancel(wxCommandEvent& event)
 {
-    wxTextEntryDialog* dlg = new wxTextEntryDialog(this, _("Name of Currency to Add"), 
-        _("Add Currency"));
-    if ( dlg->ShowModal() == wxID_OK )
-    {
-        wxString currText = dlg->GetValue().Trim();
-        if (!currText.IsEmpty())
-        {
-            int currID = mmDBWrapper::getCurrencyID(core_->db_.get(), currText);
-            if (currID == -1)
-            {
-             
-                boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency());
-                pCurrency->currencyName_ = currText;
-                currencyID_ = core_->currencyList_.addCurrency(pCurrency);
-                fillControls();
-                
-            }
-            else
-            {
-                mmShowErrorMessage(this, _("Currency name already exists!"), _("Error"));
-                
-            }
-        }
-    }
-    dlg->Destroy();
+   EndModal(wxID_OK);   
 }
 
 void mmCurrencyDialog::OnBSelect(wxCommandEvent& event)
@@ -329,6 +296,8 @@ void mmCurrencyDialog::OnEdit(wxCommandEvent& event)
     pCurrency->cent_ = mmCleanString(centTx->GetValue()).c_str();
     pCurrency->scaleDl_ = scal;
     pCurrency->baseConv_ = convRate;
+   
+    core_->currencyList_.updateCurrency(currencyID_, pCurrency);
 
     fillControls();
 }

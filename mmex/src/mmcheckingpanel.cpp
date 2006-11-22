@@ -89,7 +89,7 @@ mmCheckingPanel::mmCheckingPanel(mmCoreDB* core,
 {
     wxASSERT(db_);
     wxASSERT(accountID < 10);
-    currentView_ = wxT("View All Transactions");
+    
     Create(parent, winid, pos, size, style, name);
 }
 
@@ -213,6 +213,10 @@ void mmCheckingPanel::CreateControls()
             ID_PANEL_CHECKING_STATIC_PANELVIEW, 
             _("Viewing All Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerHHeader2->Add(itemStaticText18, 0, wxALL, 1);
+
+    currentView_ = mmDBWrapper::getINISettingValue(inidb_, 
+       wxT("VIEWTRANSACTIONS"), wxT("View All Transactions"));
+    initViewTransactionsHeader();
 
     wxBoxSizer* itemBoxSizerHHeader = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader, 0, wxALL, 1);
@@ -343,10 +347,28 @@ bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
 {
     if (sortcol == 0)
     {
-        if (asc)
-            return elem1->date_ < elem2->date_;
-        else
-            return elem1->date_ > elem2->date_;
+       if (elem1->date_ != elem2->date_)
+       {
+          if (asc)
+          {
+             return elem1->date_ < elem2->date_;
+          }
+          else
+          {
+             return elem1->date_ > elem2->date_;
+          }
+       }
+       else
+       {
+          if (asc)
+          {
+             return elem1->transactionID() < elem2->transactionID();
+          }
+          else
+          {
+             return elem1->transactionID() > elem2->transactionID();
+          }
+       }
     }
 
     if (sortcol == 1)
@@ -387,7 +409,14 @@ bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
 
 bool sortTransactionsByDate( mmBankTransaction* elem1, mmBankTransaction* elem2 )
 {
-   return elem1->date_ < elem2->date_;
+   if (elem1->date_ != elem2->date_)
+   {
+      return elem1->date_ < elem2->date_;
+   }
+   else
+   {
+      return elem1->transactionID() < elem2->transactionID();
+   }
 }
 
 void mmCheckingPanel::sortTable()
@@ -579,6 +608,31 @@ void mmCheckingPanel::OnNewTransaction(wxCommandEvent& event)
 void mmCheckingPanel::OnEditTransaction(wxCommandEvent& event)
 {
     listCtrlAccount_->OnEditTransaction(event);
+}
+
+void mmCheckingPanel::initViewTransactionsHeader()
+{
+    wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_PANELVIEW);
+    if (currentView_ == wxT("View All Transactions"))
+    {
+        header->SetLabel(_("Viewing all transactions"));
+    }
+    else if (currentView_ == wxT("View Reconciled"))
+    {
+        header->SetLabel(_("Viewing Reconciled transactions"));
+    }
+    else if (currentView_ == wxT("View UnReconciled"))
+    {
+        header->SetLabel(_("Viewing Un-Reconciled transactions"));
+    }
+    else if (currentView_ == wxT("View 30 days"))
+    {
+        header->SetLabel(_("Viewing transactions from last 30 days"));
+    }
+    else if (currentView_ == wxT("View 90 days"))
+    {
+        header->SetLabel(_("Viewing transactions from last 3 months"));
+    }
 }
 
 void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)

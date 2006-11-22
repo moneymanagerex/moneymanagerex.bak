@@ -6,6 +6,9 @@ Version History of Money Manager Ex
 - Fixed Bug 1591507: Repeating Entries order on home page
 - Fixed Bug 1595116: From field ignored on transfer transaction
 - Fixed Bug 1593422: Balance not considering void transactions
+- Ensure transactions with same date always are sorted correctly
+- Added option to specify default transaction view when viewing account transactions
+- Reworked the Currency Dialog screens to be more intuitive
 
 0.7.0.1 (November 4, 2006)
 - Don't select category when category dialog is closed (Thanks Mark!)

@@ -39,7 +39,7 @@ public:
     mmCurrencyDialog();
     ~mmCurrencyDialog();
     mmCurrencyDialog(mmCoreDB* core,
-        int currencyID,
+       int currencyID,
         wxWindow* parent, 
         wxWindowID id = SYMBOL_CURRENCYDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_CURRENCYDIALOG_TITLE, 
@@ -62,9 +62,7 @@ public:
     void CreateControls();
     
     // utility functions
-    //void OnOk(wxCommandEvent& event);
-    void OnAdd(wxCommandEvent& event);
-    //void OnDelete(wxCommandEvent& event);
+    void OnCancel(wxCommandEvent& event);
     void OnBSelect(wxCommandEvent& event);
     void OnEdit(wxCommandEvent& event);
     void OnCurrencyTypeChanged(wxCommandEvent& event);

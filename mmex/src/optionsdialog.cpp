@@ -26,13 +26,20 @@
 #define VIEW_OPEN      1
 #define VIEW_FAVORITES 2
 
+#define VIEW_TRANS_ALL 0
+#define VIEW_TRANS_REC 1
+#define VIEW_TRANS_UNREC 2
+#define VIEW_TRANS_30 3
+#define VIEW_TRANS_90 4
+
 IMPLEMENT_DYNAMIC_CLASS( mmOptionsDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_CURRENCY, mmOptionsDialog::OnCurrency)
     EVT_CHOICE(ID_DIALOG_OPTIONS_DATE_FORMAT, mmOptionsDialog::OnDateFormatChanged)  
     EVT_CHOICE(ID_DIALOG_OPTIONS_VIEW_ACCOUNTS, mmOptionsDialog::OnViewAccountsChanged)  
-	EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)
+    EVT_CHOICE(ID_DIALOG_OPTIONS_VIEW_TRANS, mmOptionsDialog::OnViewTransChanged)  
+  	 EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE, mmOptionsDialog::OnNavTreeColorChanged)
 
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0, mmOptionsDialog::OnAlt0Changed)
@@ -110,6 +117,23 @@ void mmOptionsDialog::OnViewAccountsChanged(wxCommandEvent& event)
        viewAcct = wxT("Favorites");
 
    mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWACCOUNTS"), viewAcct);
+}
+
+void mmOptionsDialog::OnViewTransChanged(wxCommandEvent& event)
+{
+   int selection = choiceTransVisible_->GetSelection();
+
+   wxString viewTrans = wxT("View All Transactions");
+   if (selection == VIEW_TRANS_REC)
+       viewTrans = wxT("View Reconciled");
+   else if (selection == VIEW_TRANS_UNREC)
+       viewTrans = wxT("View UnReconciled");
+   else if (selection == VIEW_TRANS_30)
+       viewTrans = wxT("View 30 days");
+   else if (selection == VIEW_TRANS_90)
+       viewTrans = wxT("View 90 days");
+
+   mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), viewTrans);
 }
 
 void mmOptionsDialog::CreateControls()
@@ -279,6 +303,49 @@ void mmOptionsDialog::CreateControls()
         choiceVisible_->SetSelection(VIEW_FAVORITES);
            
     choiceVisible_->SetToolTip(_("Specify which accounts are visible"));
+
+    // -----------------------------------------
+
+    wxStaticBox* itemStaticBoxSizerTransViewStatic = new wxStaticBox(itemPanelViews, 
+        wxID_ANY, _("Transaction View Options"));
+    wxStaticBoxSizer* itemStaticBoxSizerTransView = new wxStaticBoxSizer(itemStaticBoxSizerTransViewStatic,
+        wxHORIZONTAL);
+    itemBoxSizer7->Add(itemStaticBoxSizerTransView, 0, wxGROW|wxALL, 5);
+
+    wxStaticText* itemStaticTextTransText = new wxStaticText( itemPanelViews, 
+        wxID_STATIC, _("Transactions Visible"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticBoxSizerTransView->Add(itemStaticTextTransText, 0, 
+        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+    wxString itemChoiceViewTransStrings[] = 
+    {
+        _("View All Transactions"),
+        _("View Reconciled"),
+        _("View UnReconciled"),
+        _("View 30 days"),
+        _("View 90 days"),
+    };  
+    
+    choiceTransVisible_ = new wxChoice( itemPanelViews, 
+        ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, 
+        wxSize(100, -1), 5, itemChoiceViewTransStrings, 0 );
+    itemStaticBoxSizerTransView->Add(choiceTransVisible_, 0, 
+        wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxString vTrans = mmDBWrapper::getINISettingValue(inidb_, 
+        wxT("VIEWTRANSACTIONS"), wxT("View All Transactions"));
+    choiceTransVisible_->SetSelection(VIEW_TRANS_ALL);
+
+    if (vTrans == wxT("View Reconciled"))
+        choiceTransVisible_->SetSelection(VIEW_TRANS_REC);
+    else if (vTrans == wxT("View UnReconciled"))
+        choiceTransVisible_->SetSelection(VIEW_TRANS_UNREC);
+    else if (vTrans == wxT("View 30 days"))
+        choiceTransVisible_->SetSelection(VIEW_TRANS_30);
+    else if (vTrans == wxT("View 90 days"))
+        choiceTransVisible_->SetSelection(VIEW_TRANS_90);
+           
+    choiceTransVisible_->SetToolTip(_("Specify which transactions are visible by default"));
 
     // ------------------------------------------
     wxPanel* itemPanelColors = new wxPanel( newBook, ID_BOOK_PANELCOLORS, wxDefaultPosition, 

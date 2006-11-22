@@ -4,7 +4,7 @@
 
 mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
       : mmTransaction(q1.GetInt(wxT("TRANSID"))),
-      db_(core->db_)
+      db_(core->db_), isInited_(false)
  {
      wxString dateString = q1.GetString(wxT("TRANSDATE"));
      date_               = mmGetStorageStringAsDate(dateString);
@@ -27,6 +27,11 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
 
 void mmBankTransaction::updateAllData(mmCoreDB* core, int accountID)
 {
+    if ((isInited_) && (transType_ != wxT("Transfer")))
+    {
+       return;
+    }
+
      dateStr_            = mmGetDateForDisplay(db_.get(), date_);
 
      boost::shared_ptr<mmCategory> pCategory = category_.lock();
@@ -89,6 +94,8 @@ void mmBankTransaction::updateAllData(mmCoreDB* core, int accountID)
            payeeStr_ = fromAccount;
         }
      }
+
+     isInited_ = true;
 }
 
 double mmBankTransaction::value(int accountID)
@@ -184,8 +191,8 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPt
         boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
-            if ((pBankTransaction->accountID_ == accountID) ||
-               (pBankTransaction->toAccountID_) && pBankTransaction->transactionID() == transactionID)
+            if (((pBankTransaction->accountID_ == accountID) ||
+               (pBankTransaction->toAccountID_ == accountID)) && (pBankTransaction->transactionID() == transactionID))
             {
                 return pBankTransaction;
             }

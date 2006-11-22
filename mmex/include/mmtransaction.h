@@ -54,7 +54,6 @@ public:
     /* Core Data */
     wxDateTime date_;
     
-  
     boost::weak_ptr<mmCategory> category_;
     boost::weak_ptr<mmPayee> payee_;
 
@@ -84,6 +83,9 @@ public:
     int payeeID_;
     int categID_;
     int subcategID_;
+
+private:
+   bool isInited_;
 };
 
 class mmBankTransactionList

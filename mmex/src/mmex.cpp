@@ -49,6 +49,7 @@
 #include "budgetyeardialog.h"
 #include "optionsdialog.h"
 #include "currencydialog.h"
+#include "maincurrencydialog.h"
 #include "filtertransdialog.h"
 
 #include "util.h"
@@ -2185,7 +2186,7 @@ void mmGUIFrame::OnAssets(wxCommandEvent& event)
 
 void mmGUIFrame::OnCurrency(wxCommandEvent& event)
 {
-    mmCurrencyDialog *dlg = new mmCurrencyDialog(core_,this);
+    mmMainCurrencyDialog *dlg = new mmMainCurrencyDialog(core_,this);
     if ( dlg->ShowModal() == wxID_OK )
     {
     }
