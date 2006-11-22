@@ -500,6 +500,8 @@ int mmImportQIF(mmCoreDB* core)
                     log << _("Adding payee ") << payee << endl;   
                     payeeID = core->payeeList_.addPayee(payee);
                 }
+                else
+                    payeeID = core->payeeList_.getPayeeID(payee);
                 
                 continue;
             }
@@ -550,12 +552,13 @@ int mmImportQIF(mmCoreDB* core)
                 continue;
             }
 
+            wxString cat, subcat;
             if (lineType(readLine) == Category)
             {
                 categ = getLineData(readLine);
 
                 wxStringTokenizer cattkz(categ, wxT(":"));
-                wxString cat, subcat;
+                
                 subcat = wxT("");
                 if (cattkz.HasMoreTokens())
                     cat = cattkz.GetNextToken();
@@ -577,6 +580,8 @@ int mmImportQIF(mmCoreDB* core)
                         subCategID = core->categoryList_.addSubCategory(categID, subcat);
                     }
                 }
+                else
+                    subCategID = -1;
 
                 continue;
             }
@@ -635,6 +640,18 @@ int mmImportQIF(mmCoreDB* core)
                 if(dt.Trim().IsEmpty()  || type.Trim().IsEmpty() || amount.Trim().IsEmpty())
                 {
                     log << _("Skipping QIF transaction because date, type, amount is empty/invalid") << endl;
+
+                    payee = wxT("");
+                    type = wxT("");
+                    amount = wxT("");
+                    categ = wxT("");
+                    notes = wxT("");
+                    subCategID = -1;
+                    transNum = wxT("");
+                    categID = -1;
+                    val = 0.0;
+                    convDate = wxDateTime::Now().FormatISODate();
+
                     continue;
                 }
 
