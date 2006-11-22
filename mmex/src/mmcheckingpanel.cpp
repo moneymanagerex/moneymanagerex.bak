@@ -784,6 +784,11 @@ void MyListCtrl::SetColumnImage(int col, int image)
 
 wxString mmCheckingPanel::getItem(long item, long column)
 {
+    if (!trans_[item])
+    {
+        return wxT("");;
+    }
+
     if (column == 0)
         return trans_[item]->dateStr_;
 

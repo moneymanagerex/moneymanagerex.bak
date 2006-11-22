@@ -1667,6 +1667,8 @@ wxPanel* mmGUIFrame::createMainFrame(wxPanel* parent)
 
 void mmGUIFrame::openFile(const wxString& fileName, bool openingNew)
 {
+    // Before deleting, go to home page first
+    createHomePage();
     createDataStore(fileName, openingNew);
   
     if (db_.get())
