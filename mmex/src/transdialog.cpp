@@ -638,6 +638,21 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
         return;
     }
 
+    if (categID_ == -1)
+    {
+        mmShowErrorMessageInvalid(this, _("Category "));
+        return;
+    }
+
+    wxString amountStr = textAmount_->GetValue().Trim();
+    double amount;
+    if (!mmCurrencyFormatter::formatCurrencyToDouble(amountStr, amount) 
+        || (amount < 0.0))
+    {
+        mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
+        return;
+    }
+
     int toAccountID = -1;
     int fromAccountID = accountID_;
     if (transCode == wxT("Transfer"))
@@ -667,16 +682,6 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
     }
 
 
-
-    wxString amountStr = textAmount_->GetValue().Trim();
-    double amount;
-    if (!mmCurrencyFormatter::formatCurrencyToDouble(amountStr, amount) 
-        || (amount < 0.0))
-    {
-        mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
-        return;
-    }
-
     if (!advancedToTransAmountSet_ || toTransAmount_ < 0)
     {
         // if we are adding a new record and the user did not touch advanced dialog
@@ -697,14 +702,6 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
         }
     }
     
-    
-    
-    if (categID_ == -1)
-    {
-        mmShowErrorMessageInvalid(this, _("Category "));
-        return;
-    }
-
     wxString transNum = mmCleanString(textNumber_->GetValue());
     wxString notes = mmCleanString(textNotes_->GetValue());
     wxString status = wxT(""); // nothing yet
@@ -740,7 +737,7 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
        pTransaction = core_->bTransactionList_.getBankTransactionPtr(accountID_, transID_);
     }
 
-    pTransaction->accountID_ = accountID_;
+    pTransaction->accountID_ = fromAccountID;
     pTransaction->toAccountID_ = toAccountID;
     pTransaction->payee_ = core_->payeeList_.getPayeeSharedPtr(payeeID_);
     pTransaction->transType_ = transCode;
@@ -753,7 +750,7 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
     pTransaction->toAmt_ = toTransAmount_;
     
 
-    pTransaction->updateAllData(core_);
+    pTransaction->updateAllData(core_, fromAccountID);
     if (!edit_)
     {
        core_->bTransactionList_.addTransaction(pTransaction);

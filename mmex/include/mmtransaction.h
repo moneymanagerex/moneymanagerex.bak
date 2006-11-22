@@ -47,7 +47,7 @@ public:
     virtual ~mmBankTransaction() {}
 
     double value(int accountID);
-    void updateAllData(mmCoreDB* core);
+    void updateAllData(mmCoreDB* core, int accountID);
 
     boost::shared_ptr<wxSQLite3Database> db_;
 

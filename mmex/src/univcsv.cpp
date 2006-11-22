@@ -36,11 +36,12 @@ mmUnivCSVImportDialog::mmUnivCSVImportDialog( )
 {
 }
 
-mmUnivCSVImportDialog::mmUnivCSVImportDialog(wxSQLite3Database* db, wxWindow* parent, wxWindowID id, 
+mmUnivCSVImportDialog::mmUnivCSVImportDialog(mmCoreDB* core, 
+                   wxWindow* parent, wxWindowID id, 
                    const wxString& caption, 
                    const wxPoint& pos, 
                    const wxSize& size, 
-                   long style ) : db_ (db)
+                   long style ) : db_ (core->db_.get()), core_(core)
 {
     Create(parent, id, caption, pos, size, style);
 }
@@ -211,14 +212,14 @@ void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& event)
 
     if (index != -1)
     {
-        csvListBox_->Insert(getCSVFieldName(index), csvFieldOrder_.size(), new mmCSVListBoxItem(index));
+        csvListBox_->Insert(getCSVFieldName(index), (int)csvFieldOrder_.size(), new mmCSVListBoxItem(index));
         csvFieldOrder_.push_back(index);
     }
 }
 
 bool mmUnivCSVImportDialog::isIndexPresent(int index)
 {
-    for (int i = 0; i < csvFieldOrder_.size(); i++)
+    for (int i = 0; i < (int)csvFieldOrder_.size(); i++)
     {
         if (csvFieldOrder_[i] == index)
             return true;
@@ -311,8 +312,8 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
                 val_ = 0.0;
 
                 wxStringTokenizer tkz(line, delimit, wxTOKEN_RET_EMPTY_ALL);  
-                int numTokens = tkz.CountTokens();
-                if (numTokens < csvFieldOrder_.size())
+                int numTokens = (int)tkz.CountTokens();
+                if (numTokens < (int)csvFieldOrder_.size())
                 {
                     log << _("Line : " ) << countNumTotal 
                         << _(" file contains insufficient number of tokens") << endl;
@@ -327,7 +328,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
                 }
 
 
-                for (int idx=0;idx<csvFieldOrder_.size(); idx++)
+                for (int idx=0;idx < (int)csvFieldOrder_.size(); idx++)
                 {
                     if (tokens.size() < idx)
                         continue;
@@ -344,32 +345,53 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
 
                 if (categID_ == -1)
                 {
-                    // see if payee already has category associated with it
-                    mmDBWrapper::getPayee(db_, payeeID_, categID_, subCategID_);
+                   boost::shared_ptr<mmPayee> pPayee =  core_->payeeList_.getPayeeSharedPtr(payeeID_);
+                   boost::shared_ptr<mmCategory> pCategory = pPayee->category_.lock();
+                   if (!pCategory)
+                   {
+                       subCategID_ = -1;
+                       wxString categ = wxT("Unknown");
 
-                    if (categID_ == -1)
-                    {
-                        categID_ = mmDBWrapper::getCategoryID(db_, wxT("Unknown"));
-                        if (categID_ == -1)
-                        {
-                            mmDBWrapper::addCategory(db_, wxT("Unknown"));
-                            categID_ = mmDBWrapper::getCategoryID(db_, wxT("Unknown"));
-                        }
-                    }
+                       categID_ = core_->categoryList_.getCategoryID(categ);
+                       if (categID_ == -1)
+                       {
+                           categID_ =  core_->categoryList_.addCategory(categ);
+                       }
+                   }
+                   else
+                   {
+                       if (pCategory->parent_.lock())
+                       {
+                           categID_ = pCategory->parent_.lock()->categID_;
+                           subCategID_ = pCategory->categID_; 
+                       }
+                       else
+                       {
+                           categID_ = pCategory->categID_; 
+                           subCategID_ = -1;
+                       }
+                   }
                 }
 
                wxString status = wxT("F");
                int toAccountID = -1;
-               mmBEGINSQL_LITE_EXCEPTION;
-               wxString bufSQL = wxString::Format(wxT("insert into CHECKINGACCOUNT_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, \
-                    TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES,                               \
-                     CATEGID, SUBCATEGID, TRANSDATE)                                              \
-                     values (%d, %d, %d, '%s', '%f', '%s', '%s', '%s', %d, %d, '%s');"),
-                     fromAccountID, toAccountID, payeeID_, type_.c_str(), val_,
-                     status.c_str(), transNum_.c_str(), notes_.c_str(), categID_, subCategID_, dt_.c_str() );  
 
-               int retVal = db_->ExecuteUpdate(bufSQL);
-               mmENDSQL_LITE_EXCEPTION;
+               boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core_->db_));
+               pTransaction->accountID_ = fromAccountID;
+               pTransaction->toAccountID_ = toAccountID;
+               pTransaction->payee_ = core_->payeeList_.getPayeeSharedPtr(payeeID_);
+               pTransaction->transType_ = type_;
+               pTransaction->amt_ = val_;
+               pTransaction->status_ = status;
+               pTransaction->transNum_ = transNum_;
+               pTransaction->notes_ = mmCleanString(notes_.c_str());
+               pTransaction->category_ = core_->categoryList_.getCategorySharedPtr(categID_, subCategID_);
+               pTransaction->date_ = dtdt_;
+               pTransaction->toAmt_ = 0.0;
+               pTransaction->updateAllData(core_, fromAccountID);
+
+               core_->bTransactionList_.addTransaction(pTransaction);
+
                countImported++;
                log << _("Line : " ) << countNumTotal << _(" imported OK.") << endl;
             }
@@ -408,8 +430,8 @@ void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
             if (token.Trim().IsEmpty())
                 return;
 
-            wxDateTime dtdt = mmParseDisplayStringToDate(db_, token);
-            dt_ = dtdt.FormatISODate();
+            dtdt_ = mmParseDisplayStringToDate(db_, token);
+            dt_ = dtdt_.FormatISODate();
             break;
         }
 
@@ -418,10 +440,10 @@ void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
             if (token.Trim().IsEmpty())
                 return;
 
-            if (!mmDBWrapper::getPayeeID(db_, token, payeeID_, categID_, subCategID_))
+            if (!core_->payeeList_.payeeExists(token))
             {
-                mmDBWrapper::addPayee(db_, token, -1, -1);
-                mmDBWrapper::getPayeeID(db_, token, payeeID_, categID_, subCategID_);
+                payeeID_ = core_->payeeList_.addPayee(token);
+
             }
             break;
         }
@@ -454,12 +476,12 @@ void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
                  return;
                }
                 
-               categID_ = mmDBWrapper::getCategoryID(db_, token);
-               if (categID_ == -1)
-               {
-                  mmDBWrapper::addCategory(db_, token);
-                  categID_ = mmDBWrapper::getCategoryID(db_, token);
-               }
+                categID_ = core_->categoryList_.getCategoryID(token);
+                if (categID_ == -1)
+                {
+                    categID_ =  core_->categoryList_.addCategory(token);
+                }
+
                break;
         }
 
@@ -470,11 +492,10 @@ void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
                 return;
             }
     
-            subCategID_ = mmDBWrapper::getSubCategoryID(db_, categID_, token);
+            subCategID_ = core_->categoryList_.getSubCategoryID(categID_, token);
             if (subCategID_ == -1)
             {
-                mmDBWrapper::addSubCategory(db_, categID_, token);
-                subCategID_ = mmDBWrapper::getSubCategoryID(db_, categID_, token);
+                subCategID_ = core_->categoryList_.addSubCategory(categID_, token);
             }
             break;
         }

@@ -22,10 +22,10 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
      toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
      category_ = core->categoryList_.getCategorySharedPtr(q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
 
-     updateAllData(core);
+     updateAllData(core, accountID_);
  }
 
-void mmBankTransaction::updateAllData(mmCoreDB* core)
+void mmBankTransaction::updateAllData(mmCoreDB* core, int accountID)
 {
      dateStr_            = mmGetDateForDisplay(db_.get(), date_);
 
@@ -55,11 +55,13 @@ void mmBankTransaction::updateAllData(mmCoreDB* core)
      if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(toAmt_, displayToTransAmtString))
          transToAmtString_ = displayToTransAmtString;
     
-     
-     boost::shared_ptr<mmPayee> pPayee = payee_.lock();
-     wxASSERT(pPayee);
-     payeeStr_ = pPayee->payeeName_;
-     payeeID_ = pPayee->payeeID_;
+     if (transType_ != wxT("Transfer"))
+     {
+         boost::shared_ptr<mmPayee> pPayee = payee_.lock();
+         wxASSERT(pPayee);
+         payeeStr_ = pPayee->payeeName_;
+         payeeID_ = pPayee->payeeID_;
+     }
 
      depositStr_ = wxT("");
      withdrawalStr_ = wxT("");
@@ -76,12 +78,12 @@ void mmBankTransaction::updateAllData(mmCoreDB* core)
         wxString fromAccount = core->accountList_.getAccountSharedPtr(accountID_)->accountName_;
         wxString toAccount = core->accountList_.getAccountSharedPtr(toAccountID_)->accountName_;
 
-        if (accountID_ == accountID_)
+        if (accountID_ == accountID)
         {
            withdrawalStr_ = displayTransAmtString;
            payeeStr_ = toAccount;
         }
-        else if (toAccountID_ == accountID_)
+        else if (toAccountID_ == accountID)
         {
            depositStr_ = displayToTransAmtString;
            payeeStr_ = fromAccount;
@@ -209,6 +211,7 @@ void mmBankTransactionList::deleteTransaction(int accountID, int transactionID)
                (pBankTransaction->toAccountID_) && pBankTransaction->transactionID() == transactionID)
             {
                 i = transactions_.erase(i);
+                mmDBWrapper::deleteTransaction(db_.get(), transactionID);
                 return;
             }
             else

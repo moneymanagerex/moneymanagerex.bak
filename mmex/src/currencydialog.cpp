@@ -83,7 +83,7 @@ void mmCurrencyDialog::fillControls()
 
     currencyChoice_->Clear();
 
-    for (int idx = 0; idx < core_->currencyList_.currencies_.size(); idx++)
+    for (int idx = 0; idx < (int)core_->currencyList_.currencies_.size(); idx++)
     {
         int currencyID         = core_->currencyList_.currencies_[idx]->currencyID_;
         currencyChoice_->Append( core_->currencyList_.currencies_[idx]->currencyName_, 

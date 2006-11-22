@@ -35,6 +35,17 @@ bool mmCategoryList::categoryExists(const wxString& categoryName)
     return false;
 }
 
+int mmCategoryList::getCategoryID(const wxString& categoryName)
+{
+    int numCategs = (int)categories_.size();
+    for (int idx = 0; idx < numCategs; idx++)
+    {
+        if (categories_[idx]->categName_ == categoryName)
+            return categories_[idx]->categID_;
+    }
+    return -1;
+}
+
 int mmCategoryList::addCategory(const wxString& category)
 {
     int cID = -1;

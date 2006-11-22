@@ -450,11 +450,8 @@ void mmBDDialog::OnCancel(wxCommandEvent& event)
 
 void mmBDDialog::OnAccountName(wxCommandEvent& event)
 {
-    wxASSERT(TRUE);
-    // TODO: ASSERT
-#if 0
     bool selectPayees = false;
-    mmPayeeDialog *dlg = new mmPayeeDialog(db_, selectPayees, this);    
+    mmPayeeDialog *dlg = new mmPayeeDialog(core_, selectPayees, this);    
     if ( dlg->ShowModal() == wxID_OK )
     {
         if (dlg->payeeID_ == -1)
@@ -463,7 +460,6 @@ void mmBDDialog::OnAccountName(wxCommandEvent& event)
         wxString acctName = mmDBWrapper::getAccountName(db_, accountID_);
         itemAccountName_->SetLabel(acctName);
     }
-#endif
 }
 
 void mmBDDialog::OnPayee(wxCommandEvent& event)
@@ -606,8 +602,7 @@ void mmBDDialog::OnAdvanced(wxCommandEvent& event)
 
 void mmBDDialog::OnCategs(wxCommandEvent& event)
 {
-    // TODO: ASSERT
-    mmCategDialog *dlg = new mmCategDialog(0, this);
+    mmCategDialog *dlg = new mmCategDialog(core_, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
        
@@ -732,6 +727,21 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
         return;
     }
 
+    if (categID_ == -1)
+    {
+        mmShowErrorMessageInvalid(this, _("Category "));
+        return;
+    }
+
+    wxString amountStr = textAmount_->GetValue().Trim();
+    double amount;
+    if (!mmCurrencyFormatter::formatCurrencyToDouble(amountStr, amount) 
+        || (amount < 0.0))
+    {
+        mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
+        return;
+    }
+
     if ((transCode != wxT("Transfer")) && (accountID_ == -1))
     {
         mmShowErrorMessageInvalid(this, _("Account"));
@@ -766,15 +776,6 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
             payeeName, payeeID_, categID_, subcategID_);
     }
 
-    wxString amountStr = textAmount_->GetValue().Trim();
-    double amount;
-    if (!mmCurrencyFormatter::formatCurrencyToDouble(amountStr, amount) 
-        || (amount < 0.0))
-    {
-        mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
-        return;
-    }
-
     if (!advancedToTransAmountSet_ || toTransAmount_ < 0)
     {
         // if we are adding a new record and the user did not touch advanced dialog
@@ -796,11 +797,7 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
     }
     
     
-    if (categID_ == -1)
-    {
-        mmShowErrorMessageInvalid(this, _("Category "));
-        return;
-    }
+  
 
     wxString transNum = mmCleanString(textNumber_->GetValue());
     wxString notes = mmCleanString(textNotes_->GetValue());

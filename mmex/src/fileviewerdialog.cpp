@@ -59,7 +59,7 @@ void fileviewer::CreateControls()
         ID_TEXTCTRL_FILEVIEWER, wxT(""), 
         wxDefaultPosition, wxSize(400, 300), 
         wxTE_MULTILINE|wxTE_READONLY );
-    itemTextCtrl3->SetFont(wxFont(10, wxFONTFAMILY_TELETYPE, wxNORMAL, wxFONTFLAG_DEFAULT , FALSE, wxT("")));
+     
     itemBoxSizer2->Add(itemTextCtrl3, 1, 
         wxALIGN_CENTER_HORIZONTAL|wxALL|wxGROW, 10);
 

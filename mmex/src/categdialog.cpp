@@ -76,13 +76,13 @@ void mmCategDialog::fillControls()
     if (!core_)
         return;
 
-    int numCategs = core_->categoryList_.categories_.size();
+    int numCategs = (int)core_->categoryList_.categories_.size();
     for (int idx = 0; idx < numCategs; idx++)
     {
        wxTreeItemId maincat = treeCtrl_->AppendItem(root_, core_->categoryList_.categories_[idx]->categName_);
        treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(core_->categoryList_.categories_[idx]->categID_, -1));  
 
-       int numSubCategs = core_->categoryList_.categories_[idx]->children_.size();
+       int numSubCategs = (int)core_->categoryList_.categories_[idx]->children_.size();
         for (int cidx = 0; cidx < numSubCategs; cidx++)
         {
             wxTreeItemId subcat = treeCtrl_->AppendItem(maincat, 

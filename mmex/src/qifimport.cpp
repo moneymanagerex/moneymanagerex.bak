@@ -347,8 +347,9 @@ wxString getLineData(const wxString& line)
     return dataString;
 }
 
-int mmImportQIF(wxSQLite3Database* db_)
+int mmImportQIF(mmCoreDB* core)
 {
+    wxSQLite3Database* db_ = core->db_.get();
     if (mmDBWrapper::getNumAccounts(db_) == 0)
     {
         mmShowErrorMessage(0, _("No Account available! Cannot Import! Create a new account first!"), 
@@ -403,6 +404,7 @@ int mmImportQIF(wxSQLite3Database* db_)
         wxString transNum = wxT("");
         wxString notes = wxT("");
         wxString convDate = wxDateTime::Now().FormatISODate();
+        wxDateTime dtdt = wxDateTime::Now();
         int payeeID = -1, categID = -1, subCategID = -1;
         subCategID = -1;
         double val = 0.0;
@@ -493,12 +495,12 @@ int mmImportQIF(wxSQLite3Database* db_)
                     payee = wxT("Unknown");
                 }
 
-                if (!mmDBWrapper::getPayeeID(db_, payee, payeeID, categID, subCategID))
+                if (!core->payeeList_.payeeExists(payee))
                 {
-                    mmDBWrapper::addPayee(db_, payee, -1, -1);
-                    log << _("Adding payee ") << payee << endl;    
-                    mmDBWrapper::getPayeeID(db_, payee, payeeID, categID, subCategID);
+                    log << _("Adding payee ") << payee << endl;   
+                    payeeID = core->payeeList_.addPayee(payee);
                 }
+                
                 continue;
             }
 
@@ -531,7 +533,7 @@ int mmImportQIF(wxSQLite3Database* db_)
             {
                 dt = getLineData(readLine);
 
-			    wxDateTime dtdt = mmParseDisplayStringToDate(db_, dt);
+			    dtdt = mmParseDisplayStringToDate(db_, dt);
                 convDate = dtdt.FormatISODate();
                 continue;
             }
@@ -560,23 +562,21 @@ int mmImportQIF(wxSQLite3Database* db_)
                 if (cattkz.HasMoreTokens())
                     subcat = cattkz.GetNextToken();
 
-                categID = mmDBWrapper::getCategoryID(db_, cat);
+                categID = core->categoryList_.getCategoryID(cat);
                 if (categID == -1)
                 {
-                    mmDBWrapper::addCategory(db_, cat);
-                    categID = mmDBWrapper::getCategoryID(db_, cat);
+                    categID =  core->categoryList_.addCategory(cat);
                 }
+
 
                 if (!subcat.IsEmpty())
                 {
-                    subCategID = mmDBWrapper::getSubCategoryID(db_, categID, subcat);
+                    subCategID = core->categoryList_.getSubCategoryID(categID, subcat);
                     if (subCategID == -1)
                     {
-                        mmDBWrapper::addSubCategory(db_, categID, subcat);
-                        subCategID = mmDBWrapper::getSubCategoryID(db_, categID, subcat);
+                        subCategID = core->categoryList_.addSubCategory(categID, subcat);
                     }
                 }
-
 
                 continue;
             }
@@ -605,11 +605,10 @@ int mmImportQIF(wxSQLite3Database* db_)
                         payee = wxT("Unknown");
                     }
 
-                    if (!mmDBWrapper::getPayeeID(db_, payee, payeeID, categID, subCategID))
+                    if (!core->payeeList_.payeeExists(payee))
                     {
-                        mmDBWrapper::addPayee(db_, payee, -1, -1);
+                        payeeID = core->payeeList_.addPayee(payee);
                         log << _("Adding payee ") << payee << endl;    
-                        mmDBWrapper::getPayeeID(db_, payee, payeeID, categID, subCategID);
                     }
                 }
                 
@@ -622,11 +621,11 @@ int mmImportQIF(wxSQLite3Database* db_)
                     if (categID == -1)
                     {
                         log << _("Category is empty, marking transaction as Unknown category") << endl;
-                        categID = mmDBWrapper::getCategoryID(db_, wxT("Unknown"));
+
+                        categID = core->categoryList_.getCategoryID(wxT("Unknown"));
                         if (categID == -1)
                         {
-                            mmDBWrapper::addCategory(db_, wxT("Unknown"));
-                            categID = mmDBWrapper::getCategoryID(db_, wxT("Unknown"));
+                            categID =  core->categoryList_.addCategory(wxT("Unknown"));
                         }
                     }
                 }
@@ -640,17 +639,22 @@ int mmImportQIF(wxSQLite3Database* db_)
                 }
 
                 int toAccountID = -1;
-                mmBEGINSQL_LITE_EXCEPTION;
-                wxString bufSQL = wxString::Format(wxT("insert into CHECKINGACCOUNT_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, \
-                                                       TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES,                               \
-                                                       CATEGID, SUBCATEGID, TRANSDATE)                                              \
-                                                       values (%d, %d, %d, '%s', %f, '%s', '%s', '%s', %d, %d, '%s');"),
-                                                       fromAccountID, toAccountID, payeeID, type.c_str(), val,
-                                                       status.c_str(), transNum.c_str(), mmCleanString(notes).c_str(), categID, subCategID, convDate.c_str() );  
 
-               
-                int retVal = db_->ExecuteUpdate(bufSQL);
-                mmENDSQL_LITE_EXCEPTION;
+               boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core->db_));
+               pTransaction->accountID_ = fromAccountID;
+               pTransaction->toAccountID_ = toAccountID;
+               pTransaction->payee_ = core->payeeList_.getPayeeSharedPtr(payeeID);
+               pTransaction->transType_ = type;
+               pTransaction->amt_ = val;
+               pTransaction->status_ = status;
+               pTransaction->transNum_ = transNum;
+               pTransaction->notes_ = mmCleanString(notes.c_str());
+               pTransaction->category_ = core->categoryList_.getCategorySharedPtr(categID, subCategID);
+               pTransaction->date_ = dtdt;
+               pTransaction->toAmt_ = 0.0;
+               pTransaction->updateAllData(core, fromAccountID);
+
+               core->bTransactionList_.addTransaction(pTransaction);
 
                 payee = wxT("");
                 type = wxT("");

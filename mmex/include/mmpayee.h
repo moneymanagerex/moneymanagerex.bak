@@ -40,7 +40,7 @@ public:
     ~mmPayeeList() {}
 
     /* Payee Functions */
-    void addPayee(const wxString& payeeName);
+    int addPayee(const wxString& payeeName);
     bool deletePayee(int payeeID);
     void updatePayee(int payeeID, const wxString& payeeName);
     bool payeeExists(const wxString& payeeName);

@@ -21,6 +21,8 @@
 #include "wx/wxprec.h"
 #include "defs.h"
 
+class mmCoreDB;
+
 void mmShowErrorMessageInvalid(wxWindow* parent, wxString message);
 void mmShowErrorMessage(wxWindow* parent,  wxString message, wxString messageheader);
 
@@ -40,9 +42,9 @@ wxString mmUnCleanString(const wxString& orig);
 void mmExportCSV(wxSQLite3Database* db_);
 wxString mmReadyDisplayString(const wxString& orig);
 
-int mmImportCSV(wxSQLite3Database* db);
-int mmImportCSVMMNET(wxSQLite3Database* db_);
-int mmImportQIF(wxSQLite3Database* db_);
+int mmImportCSV(mmCoreDB* core);
+int mmImportCSVMMNET(mmCoreDB* core);
+int mmImportQIF(mmCoreDB* core);
 
 void mmLoadColorsFromDatabase(wxSQLite3Database* db_);
 wxColour mmGetColourFromString(const wxString& str);

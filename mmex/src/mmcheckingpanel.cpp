@@ -85,7 +85,7 @@ mmCheckingPanel::mmCheckingPanel(mmCoreDB* core,
             db_(core->db_.get()), 
             accountID_(accountID), 
             m_imageList(0), 
-            inidb_(inidb) 
+            inidb_(inidb)
 {
     wxASSERT(db_);
     wxASSERT(accountID < 10);
@@ -452,11 +452,13 @@ void mmCheckingPanel::initVirtualListControl()
     st->SetLabel(text);
 
     int numTransactions = 0;
-    for (int idx = 0; idx < core_->bTransactionList_.transactions_.size(); idx++)
+    for (int idx = 0; idx < (int)core_->bTransactionList_.transactions_.size(); idx++)
     {
         boost::shared_ptr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[idx];
-        if ((pBankTransaction->accountID_ != accountID_) && (pBankTransaction->toAccountID_ == accountID_))
+        if ((pBankTransaction->accountID_ != accountID_) && (pBankTransaction->toAccountID_ != accountID_))
            continue;
+
+        pBankTransaction->updateAllData(core_, accountID_);
 
         bool toAdd = true;
         if (currentView_ == wxT("View Reconciled"))
@@ -523,23 +525,26 @@ void mmCheckingPanel::initVirtualListControl()
 
     for (unsigned int index = 0; index < trans_.size(); index++)
     {
-        if (trans_[index]->transType_ == wxT("Deposit"))
+        if (trans_[index]->status_ != wxT("V"))
         {
-            initBalance += trans_[index]->amt_;
-        }
-        else if (trans_[index]->transType_ == wxT("Withdrawal"))
-        {
-            initBalance -= trans_[index]->amt_;
-        }
-        else if (trans_[index]->transType_ == wxT("Transfer"))
-        {
-            if (trans_[index]->accountID_ == accountID_)
+            if (trans_[index]->transType_ == wxT("Deposit"))
             {
-               initBalance -= trans_[index]->amt_;
+                initBalance += trans_[index]->amt_;
             }
-            else if (trans_[index]->toAccountID_== accountID_)
+            else if (trans_[index]->transType_ == wxT("Withdrawal"))
             {
-                initBalance += trans_[index]->toAmt_;
+                initBalance -= trans_[index]->amt_;
+            }
+            else if (trans_[index]->transType_ == wxT("Transfer"))
+            {
+                if (trans_[index]->accountID_ == accountID_)
+                {
+                    initBalance -= trans_[index]->amt_;
+                }
+                else if (trans_[index]->toAccountID_== accountID_)
+                {
+                    initBalance += trans_[index]->toAmt_;
+                }
             }
         }
         trans_[index]->balance_ = initBalance;
@@ -910,9 +915,12 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& event)
                                         wxYES_NO);
     if (msgDlg.ShowModal() == wxID_YES)
     {
-       mmDBWrapper::deleteTransaction(cp_->db_, cp_->trans_[selectedIndex_]->transactionID());
-        DeleteItem(selectedIndex_);
+        SetItemCount(0);
+        this->cp_->core_->bTransactionList_.deleteTransaction(this->cp_->accountID_, cp_->trans_[selectedIndex_]->transactionID());
+        //DeleteItem(selectedIndex_);
+        
         cp_->initVirtualListControl();
+ 
     }
 }
 

@@ -21,6 +21,7 @@
 #include "fileviewerdialog.h"
 #include "mmex.h"
 #include "univcsv.h"
+#include "mmcoredb.h"
 
 void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 {
@@ -214,8 +215,9 @@ void mmExportCSV(wxSQLite3Database* db_)
     scd->Destroy();
 }
 
-int mmImportCSV(wxSQLite3Database* db_)
+int mmImportCSV(mmCoreDB* core)
 {
+    wxSQLite3Database* db_ = core->db_.get();
     if (mmDBWrapper::getNumAccounts(db_) == 0)
     {
         mmShowErrorMessage(0, _("No Account available! Cannot Import! Create a new account first!"), 
@@ -362,76 +364,94 @@ int mmImportCSV(wxSQLite3Database* db_)
                categID = -1;
                subCategID = -1;
 
-               // if payee exists use the category associated with that payee
-               if (!mmDBWrapper::getPayeeID(db_, payee, payeeID, categID, subCategID))
+               if (!core->payeeList_.payeeExists(payee))
                {
                    //payee does not exist
-                   mmDBWrapper::addPayee(db_, payee, -1, -1);
-                   mmDBWrapper::getPayeeID(db_, payee, payeeID, categID, subCategID);
+                   payeeID = core->payeeList_.addPayee(payee);
 
                    if (categ.Trim().IsEmpty())
                        categ = wxT("Unknown");
 
-                   categID = mmDBWrapper::getCategoryID(db_, categ);
+                   categID = core->categoryList_.getCategoryID(categ);
                    if (categID == -1)
                    {
-                       mmDBWrapper::addCategory(db_, categ);
-                       categID = mmDBWrapper::getCategoryID(db_, categ);
+                       categID =  core->categoryList_.addCategory(categ);
                    }
                }
                else
                {
-                   // payee exists, use existing category
-                   if (categID == -1)
+                   payeeID = core->payeeList_.getPayeeID(payee);
+                   boost::shared_ptr<mmPayee> pPayee =  core->payeeList_.getPayeeSharedPtr(payeeID);
+                   boost::shared_ptr<mmCategory> pCategory = pPayee->category_.lock();
+                   if (!pCategory)
                    {
-                       // missing category for exisitng payee
+                        // missing category for exisitng payee
                        if (categ.Trim().IsEmpty())
                        {
                            // empty category
                            categ = wxT("Unknown");
 
-                           categID = mmDBWrapper::getCategoryID(db_, categ);
+                           categID = core->categoryList_.getCategoryID(categ);
                            if (categID == -1)
                            {
-                               mmDBWrapper::addCategory(db_, categ);
-                               categID = mmDBWrapper::getCategoryID(db_, categ);
+                               categID =  core->categoryList_.addCategory(categ);
                            }
                        }
                        else
                        {
                            // non-empty category
-                           categID = mmDBWrapper::getCategoryID(db_, categ);
-                           if (categID == -1)
+                           if (!core->categoryList_.categoryExists(categ))
                            {
-                               mmDBWrapper::addCategory(db_, categ);
-                               categID = mmDBWrapper::getCategoryID(db_, categ);
+                               categID = core->categoryList_.addCategory(categ);
                            }
+                           else
+                               categID = core->categoryList_.getCategoryID(categ);
 
                            if (!subcateg.Trim().IsEmpty())
                            {
-                               subCategID = mmDBWrapper::getSubCategoryID(db_, categID, subcateg);
+                               subCategID = core->categoryList_.getSubCategoryID(categID, subcateg);
                                if (subCategID == -1)
                                {
-                                   mmDBWrapper::addSubCategory(db_, categID, subcateg);
-                                   subCategID = mmDBWrapper::getSubCategoryID(db_, categID, subcateg);
+                                   subCategID = core->categoryList_.addSubCategory(categID, subcateg);
                                }
                            }
+                       } 
+                   }
+                   else
+                   {
+                       if (pCategory->parent_.lock())
+                       {
+                           categID = pCategory->parent_.lock()->categID_;
+                           subCategID = pCategory->categID_; 
+                       }
+                       else
+                       {
+                            categID = pCategory->categID_; 
+                            subCategID = -1;
                        }
                    }
+
                }
 
                wxString status = wxT("F");
                int toAccountID = -1;
-               mmBEGINSQL_LITE_EXCEPTION;
-               wxString bufSQL = wxString::Format(wxT("insert into CHECKINGACCOUNT_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, \
-                    TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES,                               \
-                     CATEGID, SUBCATEGID, TRANSDATE)                                              \
-                     values (%d, %d, %d, '%s', '%f', '%s', '%s', '%s', %d, %d, '%s');"),
-                     fromAccountID, toAccountID, payeeID, type.c_str(), val,
-                     status.c_str(), transNum.c_str(), notes.c_str(), categID, subCategID, convDate.c_str() );  
 
-               int retVal = db_->ExecuteUpdate(bufSQL);
-               mmENDSQL_LITE_EXCEPTION;
+               boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core->db_));
+               pTransaction->accountID_ = fromAccountID;
+               pTransaction->toAccountID_ = toAccountID;
+               pTransaction->payee_ = core->payeeList_.getPayeeSharedPtr(payeeID);
+               pTransaction->transType_ = type;
+               pTransaction->amt_ = val;
+               pTransaction->status_ = status;
+               pTransaction->transNum_ = transNum;
+               pTransaction->notes_ = mmCleanString(notes.c_str());
+               pTransaction->category_ = core->categoryList_.getCategorySharedPtr(categID, subCategID);
+               pTransaction->date_ = dtdt;
+               pTransaction->toAmt_ = 0.0;
+               pTransaction->updateAllData(core,fromAccountID );
+
+               core->bTransactionList_.addTransaction(pTransaction);
+               
                countImported++;
                log << _("Line : " ) << countNumTotal << _(" imported OK.") << endl;
             } // while EOF
@@ -450,8 +470,9 @@ int mmImportCSV(wxSQLite3Database* db_)
     return fromAccountID;
  }
 
-int mmImportCSVMMNET(wxSQLite3Database* db_)
+int mmImportCSVMMNET(mmCoreDB* core)
 {
+    wxSQLite3Database* db_ = core->db_.get();
     mmShowErrorMessage(0, 
         _("Please verify that the CSV file from MMEX.NET contains only one account!"),
         _("Import from CSV"));
@@ -601,10 +622,10 @@ int mmImportCSVMMNET(wxSQLite3Database* db_)
                wxString convDate = dtdt.FormatISODate();
 
                int payeeID, categID, subCategID;
-               if (!mmDBWrapper::getPayeeID(db_, payee, payeeID, categID, subCategID))
+               if (!core->payeeList_.payeeExists(payee))
                {
-                   mmDBWrapper::addPayee(db_, payee, -1, -1);
-                   mmDBWrapper::getPayeeID(db_, payee, payeeID, categID, subCategID);
+                   payeeID = core->payeeList_.addPayee(payee);
+
                }
                 
                // category contains ":" to separate categ:subcateg
@@ -616,35 +637,40 @@ int mmImportCSVMMNET(wxSQLite3Database* db_)
                 if (cattkz.HasMoreTokens())
                    subcat = cattkz.GetNextToken();
 
-               categID = mmDBWrapper::getCategoryID(db_, cat);
-               if (categID == -1)
-               {
-                  mmDBWrapper::addCategory(db_, cat);
-                  categID = mmDBWrapper::getCategoryID(db_, cat);
-               }
+                categID = core->categoryList_.getCategoryID(categ);
+                if (categID == -1)
+                {
+                    categID =  core->categoryList_.addCategory(categ);
+                }
 
                if (!subcat.IsEmpty())
                {
-                   subCategID = mmDBWrapper::getSubCategoryID(db_, categID, subcat);
+                   subCategID = core->categoryList_.getSubCategoryID(categID, subcateg);
                    if (subCategID == -1)
                    {
-                       mmDBWrapper::addSubCategory(db_, categID, subcat);
-                       subCategID = mmDBWrapper::getSubCategoryID(db_, categID, subcat);
+                       subCategID = core->categoryList_.addSubCategory(categID, subcateg);
                    }
                }
 
                wxString status = wxT("F");
                int toAccountID = -1;
-               mmBEGINSQL_LITE_EXCEPTION;
-               wxString bufSQL = wxString::Format(wxT("insert into CHECKINGACCOUNT_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, \
-                    TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES,                               \
-                     CATEGID, SUBCATEGID, TRANSDATE)                                              \
-                     values (%d, %d, %d, '%s', '%f', '%s', '%s', '%s', %d, %d, '%s');"),
-                     fromAccountID, toAccountID, payeeID, type.c_str(), val,
-                     status.c_str(), transNum.c_str(), notes.c_str(), categID, subCategID, convDate.c_str() );  
 
-               int retVal = db_->ExecuteUpdate(bufSQL);
-               mmENDSQL_LITE_EXCEPTION;
+               boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core->db_));
+               pTransaction->accountID_ = fromAccountID;
+               pTransaction->toAccountID_ = toAccountID;
+               pTransaction->payee_ = core->payeeList_.getPayeeSharedPtr(payeeID);
+               pTransaction->transType_ = type;
+               pTransaction->amt_ = val;
+               pTransaction->status_ = status;
+               pTransaction->transNum_ = transNum;
+               pTransaction->notes_ = mmCleanString(notes.c_str());
+               pTransaction->category_ = core->categoryList_.getCategorySharedPtr(categID, subCategID);
+               pTransaction->date_ = dtdt;
+               pTransaction->toAmt_ = 0.0;
+               pTransaction->updateAllData(core, fromAccountID);
+
+               core->bTransactionList_.addTransaction(pTransaction);
+
                countImported++;
                log << _("Line : " ) << countNumTotal << _(" imported OK.") << endl;
             } // while EOF

@@ -22,6 +22,7 @@
 #include "guiid.h"
 #include "defs.h"
 #include "dbwrapper.h"
+#include "mmcoredb.h"
 
 #define ID_MYDIALOG8 10040
 #define SYMBOL_UNIVCSVDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
@@ -71,7 +72,7 @@ class mmUnivCSVImportDialog: public wxDialog
 public:
     /// Constructors
     mmUnivCSVImportDialog( );
-    mmUnivCSVImportDialog( wxSQLite3Database* db, wxWindow* parent, 
+    mmUnivCSVImportDialog( mmCoreDB* core, wxWindow* parent, 
         wxWindowID id = SYMBOL_UNIVCSVDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_UNIVCSVDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_UNIVCSVDIALOG_POSITION, 
@@ -100,6 +101,7 @@ public:
     static bool ShowToolTips();
 
 private:
+    mmCoreDB* core_;
     wxSQLite3Database* db_;
     std::vector<int> csvFieldOrder_;
     wxListBox* csvListBox_;
@@ -116,6 +118,7 @@ private:
     int categID_; 
     int subCategID_;
     double val_;
+    wxDateTime dtdt_;
 
 };
 

@@ -24,6 +24,7 @@
 #include "newchkacctdialog.h"
 #include "htmlbuilder.h"
 #include "dbwrapper.h"
+#include "billsdeposits.h"
 
 BEGIN_EVENT_TABLE( mmHomePagePanel, wxPanel )
 END_EVENT_TABLE()
@@ -64,6 +65,11 @@ bool mmHomePagePanel::Create( wxWindow *parent,
     updateAccounts();
 
     return TRUE;
+}
+
+bool sortTransactionsByRemainingDaysHP( mmBDTransactionHolder elem1, mmBDTransactionHolder elem2 )
+{
+    return elem1.daysRemaining_ < elem2.daysRemaining_;
 }
 
 void mmHomePagePanel::updateAccounts()
@@ -220,38 +226,130 @@ void mmHomePagePanel::updateAccounts()
     // bills & deposits
     bool isHeaderAdded = false;
 
- 
-    wxSQLite3ResultSet q2 = db_->ExecuteQuery("select * from BILLSDEPOSITS_V1;");
+    /////////////////////////////////////
+    std::vector<mmBDTransactionHolder> trans_;
+    wxSQLite3StatementBuffer bufSQL;
+    bufSQL.Format("select * from BILLSDEPOSITS_V1;");
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
 
-    while (q2.NextRow())
+    ct = 0;
+    while (q1.NextRow())
     {
-        std::vector<wxString> data4;
-        wxDateTime nextOccurDate_  = mmGetStorageStringAsDate(q2.GetString(wxT("NEXTOCCURRENCEDATE")));
-        wxString nextOccurStr_   = mmGetDateForDisplay(db_, nextOccurDate_);
+        mmBDTransactionHolder th;
+
+        th.bdID_           = q1.GetInt(wxT("BDID"));
+        th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
+        th.nextOccurStr_   = mmGetDateForDisplay(db_, th.nextOccurDate_);
+        int repeats        = q1.GetInt(wxT("REPEATS"));
+
+        if (repeats == 0)
+        {
+            th.repeatsStr_ = _("None");
+        }
+        else if (repeats == 1)
+        {
+           th.repeatsStr_ = _("Weekly");
+        }
+        else if (repeats == 2)
+        {
+            th.repeatsStr_ = _("Bi-Weekly");
+        }
+        else if (repeats == 3)
+        {
+            th.repeatsStr_ = _("Monthly");
+        }
+        else if (repeats == 4)
+        {
+            th.repeatsStr_ = _("Bi-Monthly");
+        }
+        else if (repeats == 5)
+        {
+            th.repeatsStr_ = _("Quarterly");
+        }
+        else if (repeats == 6)
+        {
+             th.repeatsStr_ = _("Half-Yearly");
+        }
+        else if (repeats == 7)
+        {
+           th.repeatsStr_ = _("Yearly");
+        }
+        else if (repeats == 8)
+        {
+           th.repeatsStr_ = _("Four Months");
+        }
+        else if (repeats == 9)
+        {
+            th.repeatsStr_ = _("Four Weeks");
+        }
 
         wxDateTime today = wxDateTime::Now();
-        wxTimeSpan ts = nextOccurDate_.Subtract(today);
+        wxTimeSpan ts = th.nextOccurDate_.Subtract(today);
+        th.daysRemaining_ = ts.GetDays();
         int hoursRemaining_ = ts.GetHours();
-        int daysRemaining_ = ts.GetDays();
-      
 
-        int payeeID_        = q2.GetInt(wxT("PAYEEID"));
-        wxString transType_      = q2.GetString(wxT("TRANSCODE"));
-        int accountID_      = q2.GetInt(wxT("ACCOUNTID"));
-        int toAccountID_    = q2.GetInt(wxT("TOACCOUNTID"));
+        if ((th.daysRemaining_ == 0) && (hoursRemaining_ > 0))
+        {
+            th.daysRemaining_ = 1;
+        } 
+        else if ((th.daysRemaining_ == 0) && (hoursRemaining_ <= 0))
+        {
+            th.daysRemaining_ = 0;
+        }
+
+        if (th.daysRemaining_ >= 0)
+        {
+            th.daysRemainingStr_ = wxString::Format(wxT("%d"), th.daysRemaining_) + 
+            _(" days remaining");
+        }
+        else
+        {
+            th.daysRemainingStr_ = wxString::Format(wxT("%d"), abs(th.daysRemaining_)) + 
+            _(" days overdue!");
+        }
+
+        th.payeeID_        = q1.GetInt(wxT("PAYEEID"));
+        th.transType_      = q1.GetString(wxT("TRANSCODE"));
+        th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
+        th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
+
+        th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
+        th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
+
+        wxString displayTransAmtString;
+        if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayTransAmtString))
+            th.transAmtString_ = displayTransAmtString;
+
+        wxString displayToTransAmtString;
+        if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.toAmt_, displayToTransAmtString))
+            th.transToAmtString_ = displayToTransAmtString;
 
         int cid = 0, sid = 0;
-        wxString payeeStr_ = mmDBWrapper::getPayee(db_, payeeID_, cid, sid);
+        th.payeeStr_ = mmDBWrapper::getPayee(db_, th.payeeID_, cid, sid);
 
-        if (transType_ == wxT("Transfer"))
+        if (th.transType_ == wxT("Transfer"))
         {
-            wxString fromAccount = mmDBWrapper::getAccountName(db_,  accountID_);
-            wxString toAccount = mmDBWrapper::getAccountName(db_,  toAccountID_ );
+            wxString fromAccount = mmDBWrapper::getAccountName(db_,  th.accountID_);
+            wxString toAccount = mmDBWrapper::getAccountName(db_,  th.toAccountID_ );
 
-            payeeStr_ = toAccount;
+            th.payeeStr_ = toAccount;
         }
-        
-        if (daysRemaining_ <= 14)
+
+        trans_.push_back(th);
+        ct++;
+    }
+    q1.Finalize();
+    std::sort(trans_.begin(), trans_.end(), sortTransactionsByRemainingDaysHP);
+    ////////////////////////////////////
+    std::vector<wxString> data4;
+    for (int bdidx = 0; bdidx < trans_.size(); bdidx++)
+    {
+        data4.clear();
+        wxDateTime today = wxDateTime::Now();
+        wxTimeSpan ts = trans_[bdidx].nextOccurDate_.Subtract(today);
+        int hoursRemaining_ = ts.GetHours();
+
+        if (trans_[bdidx].daysRemaining_ <= 14)
         {
             if (!isHeaderAdded)
             {
@@ -266,28 +364,29 @@ void mmHomePagePanel::updateAccounts()
                 isHeaderAdded = true;
             }
 
-            data4.push_back(payeeStr_);
+            
+            data4.push_back(trans_[bdidx].payeeStr_);
 
             wxString daysRemainingStr_;
             wxString colorStr = wxT(" BGCOLOR=\"#FFFFCC\" ");
            
-            if ((daysRemaining_ == 0) && (hoursRemaining_ > 0))
+            if ((trans_[bdidx].daysRemaining_ == 0) && (hoursRemaining_ > 0))
             {
-                daysRemaining_ = 1;
+                trans_[bdidx].daysRemaining_ = 1;
             }
-            else if ((daysRemaining_ == 0) && (hoursRemaining_ <= 0))
+            else if ((trans_[bdidx].daysRemaining_ == 0) && (hoursRemaining_ <= 0))
             {
-                daysRemaining_ = 0;
+                trans_[bdidx].daysRemaining_ = 0;
             }
 
-            if (daysRemaining_ > 0)
+            if (trans_[bdidx].daysRemaining_ > 0)
             {
-                daysRemainingStr_ = wxString::Format(wxT("%d"), daysRemaining_) + 
+                daysRemainingStr_ = wxString::Format(wxT("%d"), trans_[bdidx].daysRemaining_) + 
                     _(" days remaining");
             }
             else 
             {
-                daysRemainingStr_ = wxString::Format(wxT("%d"), abs(daysRemaining_)) + 
+                daysRemainingStr_ = wxString::Format(wxT("%d"), abs(trans_[bdidx].daysRemaining_)) + 
                     _(" days overdue!");
                 colorStr = wxT(" BGCOLOR=\"#FF6600\" ");
             }
@@ -296,14 +395,12 @@ void mmHomePagePanel::updateAccounts()
             hb.addRow(data4, wxT(""), wxT("WIDTH=\"130\"  ") + colorStr);
         }
     }
-    q2.Finalize();
 
     if (isHeaderAdded)
         hb.endTable();
 
-    
-    
-    q2 = db_->ExecuteQuery("select * from CHECKINGACCOUNT_V1 where STATUS='F';");
+       
+    wxSQLite3ResultSet q2 = db_->ExecuteQuery("select * from CHECKINGACCOUNT_V1 where STATUS='F';");
     int countFollowUp = 0;
     while (q2.NextRow())
     {   

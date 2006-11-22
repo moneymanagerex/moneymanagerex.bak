@@ -1728,7 +1728,7 @@ void mmGUIFrame::OnExport(wxCommandEvent& event)
 
 void mmGUIFrame::OnImportCSV(wxCommandEvent& event)
 {
-    int accountID = mmImportCSV(db_.get());
+    int accountID = mmImportCSV(core_);
     if (accountID != -1)
         createCheckingAccountPage(accountID);
 }
@@ -1804,7 +1804,7 @@ void mmGUIFrame::OnImportQFX(wxCommandEvent& event)
 
 void mmGUIFrame::OnImportQIF(wxCommandEvent& event)
 {
-    int accountID = mmImportQIF(db_.get());
+    int accountID = mmImportQIF(core_);
     if (accountID != -1)
         createCheckingAccountPage(accountID);
 }
@@ -1818,14 +1818,14 @@ void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& event)
         return;
     }
 
-    mmUnivCSVImportDialog *dlg = new mmUnivCSVImportDialog(db_.get(), this);
+    mmUnivCSVImportDialog *dlg = new mmUnivCSVImportDialog(core_, this);
     dlg->ShowModal();
     dlg->Destroy();
 }
 
 void mmGUIFrame::OnImportCSVMMNET(wxCommandEvent& event)
 {
-    int accountID = mmImportCSVMMNET(db_.get());
+    int accountID = mmImportCSVMMNET(core_);
     if (accountID != -1)
         createCheckingAccountPage(accountID);
 }
@@ -2262,6 +2262,7 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
         if (msgDlg.ShowModal() == wxID_YES)
         {
             core_->accountList_.deleteAccount(acctID);
+            core_->bTransactionList_.deleteTransactions(acctID);
             updateNavTreeControl();
             createHomePage();
         }
