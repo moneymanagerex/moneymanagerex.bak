@@ -560,6 +560,8 @@ void mmGUIFrame::updateNavTreeControl()
     wxTreeItemId reports = navTreeCtrl_->AppendItem(root, 
         _("Reports"), 4, 4);
     navTreeCtrl_->SetItemBold(reports, true);
+    navTreeCtrl_->SetItemData(reports, 
+        new mmTreeItemData(wxT("Reports")));
 
     wxTreeItemId reportsSummary = navTreeCtrl_->AppendItem(reports, 
         _("Summary of Accounts"), 4, 4);

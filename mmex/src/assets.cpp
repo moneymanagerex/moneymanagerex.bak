@@ -222,7 +222,32 @@ void mmAssetsPanel::initVirtualListControl()
         th.assetID_           = q1.GetInt(wxT("ASSETID"));
         th.value_             = mmDBWrapper::getAssetValue(db_, th.assetID_);
         th.assetName_         = q1.GetString(wxT("ASSETNAME"));
-        th.assetType_         = q1.GetString(wxT("ASSETTYPE"));
+        
+
+        wxString itemAssetTypeStrings[] =  
+        {
+            _("Property"),
+            _("Automobile"),
+            _("Household Object"),
+            _("Art"),
+            _("Jewellery"),
+            _("Other"),
+        };
+
+        wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
+        if (assetTypeStr == wxT("Property"))
+            th.assetType_ =  _("Property");
+        else if (assetTypeStr == wxT("Automobile"))
+            th.assetType_ =  _("Automobile");
+        else if (assetTypeStr == wxT("Household Object"))
+            th.assetType_ =  _("Household Object");
+        else if (assetTypeStr == wxT("Art"))
+            th.assetType_ =  _("Art");
+        else if (assetTypeStr == wxT("Jewellery"))
+            th.assetType_ =  _("Jewellery");
+        else if (assetTypeStr == wxT("Other"))
+            th.assetType_ =  _("Other");
+                
         wxString tempString;
         if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, tempString))
             th.valueStr_   = tempString;

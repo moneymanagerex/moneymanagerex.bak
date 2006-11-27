@@ -27,7 +27,7 @@ public:
         hb.addHeader(3, _("To Whom the Money Goes"));
 
         wxDateTime now = wxDateTime::Now();
-        wxString dt = wxT("Today's Date: ") + mmGetNiceDateString(now);
+        wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
         hb.addHeader(7, dt);
         hb.addLineBreak();
         hb.addLineBreak();
@@ -35,7 +35,7 @@ public:
         wxDateTime tBegin = dtBegin_;
         if (!ignoreDate_)
         {
-            wxString dtRange = wxT("From: ") 
+            wxString dtRange = _("From: ") 
                 + mmGetNiceDateSimpleString(tBegin.Add(wxDateSpan::Day())) + wxT(" To: ") +
                 mmGetNiceDateSimpleString(dtEnd_);
             hb.addHeader(7, dtRange);
@@ -46,8 +46,8 @@ public:
 
         hb.beginTable();
         std::vector<wxString> headerR;
-        headerR.push_back(wxT("Payee    "));
-        headerR.push_back(wxT("Amount   "));
+        headerR.push_back(_("Payee    "));
+        headerR.push_back(_("Amount   "));
         hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
 
         mmDBWrapper::loadBaseCurrencySettings(db_);

@@ -28,7 +28,7 @@ public:
         hb.addHeader(3, _("Income vs Expenses"));
 
         wxDateTime now = wxDateTime::Now();
-        wxString dt = wxT("Today's Date: ") + mmGetNiceDateString(now);
+        wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
         hb.addHeader(7, dt);
         hb.addLineBreak();
         hb.addLineBreak();
@@ -47,8 +47,8 @@ public:
 
         hb.beginTable();
         std::vector<wxString> headerR;
-        headerR.push_back(wxT("Type  "));
-        headerR.push_back(wxT("Amount   "));
+        headerR.push_back(_("Type  "));
+        headerR.push_back(_("Amount   "));
         hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
 
         mmDBWrapper::loadBaseCurrencySettings(db_);
@@ -63,12 +63,12 @@ public:
         mmCurrencyFormatter::formatDoubleToCurrency(income, incString);
 
         std::vector<wxString> data;
-        data.push_back(_T("Income: "));
+        data.push_back(_("Income: "));
         data.push_back(incString);
         hb.addRow(data);
 
         std::vector<wxString> data1;
-        data1.push_back(_T("Expenses: "));
+        data1.push_back(_("Expenses: "));
         data1.push_back(expString);
         hb.addRow(data1);
 

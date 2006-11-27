@@ -26,7 +26,7 @@ public:
         hb.addHeader(3, _("Budget Performance for Year : ") + yearStr );
 
         wxDateTime now = wxDateTime::Now();
-        wxString dt = wxT("Today's Date: ") + mmGetNiceDateString(now);
+        wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
         hb.addHeader(7, dt);
         hb.addLineBreak();
         hb.addLineBreak();
@@ -46,21 +46,21 @@ public:
 
         hb.beginTable();
         std::vector<wxString> headerR;
-        headerR.push_back(wxT("Category"));
-        headerR.push_back(wxT("Type"));
-        headerR.push_back(wxT("Jan"));
-        headerR.push_back(wxT("Feb"));
-        headerR.push_back(wxT("March"));
-        headerR.push_back(wxT("April"));
-        headerR.push_back(wxT("May"));
-        headerR.push_back(wxT("June"));
-        headerR.push_back(wxT("July"));
-        headerR.push_back(wxT("Aug"));
-        headerR.push_back(wxT("Sep"));
-        headerR.push_back(wxT("Oct"));
-        headerR.push_back(wxT("Nov"));
-        headerR.push_back(wxT("Dec"));
-        headerR.push_back(wxT("Full Year"));
+        headerR.push_back(_("Category"));
+        headerR.push_back(_("Type"));
+        headerR.push_back(_("Jan"));
+        headerR.push_back(_("Feb"));
+        headerR.push_back(_("March"));
+        headerR.push_back(_("April"));
+        headerR.push_back(_("May"));
+        headerR.push_back(_("June"));
+        headerR.push_back(_("July"));
+        headerR.push_back(_("Aug"));
+        headerR.push_back(_("Sep"));
+        headerR.push_back(_("Oct"));
+        headerR.push_back(_("Nov"));
+        headerR.push_back(_("Dec"));
+        headerR.push_back(_("Full Year"));
         hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
 
         std::vector<wxString> data;
@@ -155,7 +155,7 @@ public:
             {
                 data.clear();
                 data.push_back(th.catStr_);
-                data.push_back(wxT("Estimated"));
+                data.push_back(_("Estimated"));
                 for (int yidx = 0; yidx < 12; yidx++)
                     data.push_back(th.estimatedStr_);
                 data.push_back(totalEstimatedStr_);
@@ -164,7 +164,7 @@ public:
                 // actual stuff
                 data.clear();
                 data.push_back(th.catStr_);
-                data.push_back(wxT("Actual"));
+                data.push_back(_("Actual"));
 
                 for (int yidx = 0; yidx < 12; yidx++)
                 {
@@ -264,7 +264,7 @@ public:
                     data.clear();
                     wxString cn = thsub.catStr_+ wxT(" : ") + thsub.subCatStr_;
                     data.push_back(cn);
-                    data.push_back(wxT("Estimated"));
+                    data.push_back(_("Estimated"));
                     for (int yidx = 0; yidx < 12; yidx++)
                         data.push_back(thsub.estimatedStr_);
 
@@ -275,7 +275,7 @@ public:
                     data.clear();
                     cn = thsub.catStr_+ wxT(" : ") + thsub.subCatStr_;
                     data.push_back(cn);
-                    data.push_back(wxT("Actual"));
+                    data.push_back(_("Actual"));
                     for (int yidx = 0; yidx < 12; yidx++)
                     {
                         wxDateTime dtBegin(1, (wxDateTime::Month)yidx, year);
