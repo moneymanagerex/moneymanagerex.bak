@@ -1,8 +1,11 @@
 Money Manager Ex (Beta) Setup License
-
+======================================
+WARNING: This software is under development.
+If upgrading from a previous verion, 
+backup your old data file first! 
+======================================
 Copyright (C) 2005-2006 Madhan Kanagavel
 http://www.thezeal.com/software
-
 ======================================
 If you find bugs/issues please use the mailing list
 located in the help menu to let us know.
