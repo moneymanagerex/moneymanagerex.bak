@@ -178,8 +178,8 @@ void mmExportCSV(wxSQLite3Database* db_)
             wxString bufSQL = wxString::Format(wxT("SELECT TRANSDATE, \
                 TRANSCODE, TRANSAMOUNT,  SUBCATEGID,         \
                 CATEGID, PAYEEID, \
-                TRANSACTIONNUMBER, NOTES FROM CHECKINGACCOUNT_V1 \
-                where ACCOUNTID = %d;"), fromAccountID );
+                TRANSACTIONNUMBER, NOTES, TOACCOUNTID, ACCOUNTID FROM CHECKINGACCOUNT_V1 \
+                where ACCOUNTID = %d OR TOACCOUNTID = %d;"), fromAccountID, fromAccountID );
             wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
             int numRecords = 0;
             while (q1.NextRow())
@@ -197,7 +197,26 @@ void mmExportCSV(wxSQLite3Database* db_)
                     q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
                 wxString transNum = q1.GetString(wxT("TRANSACTIONNUMBER"));
                 wxString notes = mmUnCleanString(q1.GetString(wxT("NOTES")));
+               
+                if (type == wxT("Transfer"))
+                {
+                   int tAccountID = q1.GetInt(wxT("TOACCOUNTID"));
+                   int fAccountID = q1.GetInt(wxT("ACCOUNTID"));
 
+                   wxString fromAccount = mmDBWrapper::getAccountName(db_,  fAccountID);
+                   wxString toAccount = mmDBWrapper::getAccountName(db_,  tAccountID );
+
+                   if (tAccountID == fromAccountID)
+                   {
+                      type = wxT("Deposit");
+                      payee = fromAccount;
+                   }
+                   else if (fAccountID == fromAccountID)
+                   {
+                      type = wxT("Withdrawal");
+                      payee = toAccount;
+                   }
+                }
                 text << dateString << delimit << payee << delimit << type << delimit << amount
                      << delimit << categ << delimit << subcateg << delimit << transNum 
                      << delimit << notes << endl;

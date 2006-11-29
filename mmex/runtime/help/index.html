@@ -27,6 +27,8 @@ Manager Ex User Manual</a></font></h2>
 
   <font face="Verdana"> <li><a href="#introduction">Introduction</a></li>
 
+  <li><a href="#recommendations">Recommendations</a></li>
+  
   <li><a href="#better">Working towards better
 Financial Health</a></li>
 
@@ -104,7 +106,7 @@ Investments</a></li>
     <li><a href="#print">Printing</a></li>
 
     <li><a href="#options">Money Manager Options</a></li>
-
+   
     </font>
   </ol>
 
@@ -144,6 +146,19 @@ information without making it complex like some of the popular personal
 finance
 software packages.
 </font></p>
+
+<h5><font face="Verdana"><a href="#top">Back
+to Top</a></font></h5>
+
+
+<h3><font face="Verdana"><a name="recommendations">Recommendations</a></font></h3>
+
+<p>
+<font face="Verdana">
+- Always backup your .mmb database file regularly<br />
+- If upgrading to a new version of MMEX, make sure you backup your .mmb database file before doing so
+</font>
+</p>
 
 <h5><font face="Verdana"><a href="#top">Back
 to Top</a></font></h5>
@@ -199,7 +214,7 @@ count.&nbsp;</font></p>
 <p><font face="Verdana">Read on how to work with
 Money Manager Ex.</font></p>
 
-<p><font face="Verdana">&nbsp;</font></p>
+<p><font face="Verdana">&nbsp;</font>&nbsp;</p>
 
 <h5><font face="Verdana"><a href="#top">Back
 to Top</a></font></h5>
@@ -613,6 +628,203 @@ this category and then you can delete the categories.</font></p>
 <h5><font face="Verdana"><a href="#top">Back
 to Top</a></font></h5>
 
+
+
+<h3><font face="Verdana"><a name="importCSV">Importing From CSV Files</a></font></h3>
+
+<p><font face="Verdana">MMEX can import from a wide variety of formats. One of them
+   is a fixed format CSV file. This file format exactly matches the CSV format that
+   MMEX can export. So it can be useful to move data from one .mmb database file to
+   another .mmb database file. To easily see the format of the CSV file, you can try
+   exporting an account to a CSV file and then analysing the format created.<br />
+   <br />
+   The general format is as follows:<br />
+   <b><i>Date</i></b> - Date of the transaction (Displayed in the format
+   specified in Options-&gt;DateFormat)<br />
+   <i><b>Payee</b></i> - To whom the transaction was made. In the case
+   of a transfer transaction, this indicates the name of the account from which the
+   transfer was made or to the account the transfer was made.<br />
+   <b><i>Transaction Type</i></b> - This can either be "<i>Withdrawal</i>"
+   or "<i>Deposit</i>"<br />
+   <b><i>Amount</i></b> - The transaction amount as a positive value<br />
+   <b><i>Category</i></b> - The category of the transaction<br />
+   <b><i>SubCategory</i></b> - The subcategory of the transaction if any
+   (otherwise blank)<br />
+   <b><i>Notes</i></b> - Transaction Notes<br />
+   <br />
+   Note that the transactions from a CSV file can only be imported into a single MMEX
+   account.<br />
+   <br />
+</font></p>
+
+<h5><font face="Verdana"><a href="#top">Back
+to Top</a></font></h5>
+
+
+<h3><font face="Verdana"><a name="importQIF">Importing From QIF Files</a></font></h3>
+
+<p><font face="Verdana">Quicken Interchange Format (QIF) is an open specification 
+for reading and writing financial data to media (i.e. files). 
+A QIF file typically has the following structure:<br />
+<br />
+!Type:type identifier string<br />
+[single character line code]Literal String Data<br />
+...<br />
+^<br />
+[single character line code]Literal String Data<br />
+...<br />
+^<br />
+<br />
+Each record ends with a ^ (caret). 
+   <br />
+   See example QIF transaction
+   <br />
+   <br />
+     !Type:Bank Header<br />
+      D6/ 1/94 Date <br />
+      T-1,000.00 Amount<br />
+      N1005 number<br />
+      PBank Of Mortgage Payee <br />
+      ^ End of transaction
+         <br />
+         <br />
+         QIF is older than Open Financial Exchange (OFX). 
+The inability to reconcile imported transactions against the current account 
+information is one of the primary shortcomings of QIF. It is commonly supported by 
+financial institutions to supply downloadable information to account holders. 
+         <br />
+         <br />
+
+MMEX can import transactions from specific types of QIF formats into an account.
+<br />
+         <br />
+The types are the following: (You can find the type of QIF by opening in a text editor) <br />
+!Type:Bank 	Bank account transactions <br />
+!Type:Cash 	Cash account transactions <br />
+!Type:CCard 	Credit card account transactions 
+   <br />
+   <br />
+
+<b>Important Note (1)</b>: The date format option has to match that of the date format in the QIF file, otherwise, 
+date parsing by MMEX will fail and will result in transactions having incorrect dates.
+   <br />
+   <br />
+
+<b>Important Note (2)</b>: After importing from QIF, all transactions will have a "Follow Flag" as it its status.
+You can mark all transactions with this flag using the bulk status setting commands using the right click menu in the account view.
+
+      </font>
+   </p>
+
+<h5><font face="Verdana"><a href="#top">Back
+to Top</a></font></h5>
+
+<h3><font face="Verdana"><a name="importMMNET">Importing From MM.NET CSV Files</a></font></h3>
+
+<p><font face="Verdana">MMEX can also import from CSV files that are exported from
+   the Money Manager.NET program. This is to primarily help users of that program migrate
+   to using MMEX.
+   <br />
+   <br />
+   The general format is as follows:<br />
+   <b><i>Date</i></b> - Date of the transaction (Displayed in the format
+   specified in Options-&gt;DateFormat)<br />
+   <i><b>Payee</b></i> - To whom the transaction was made. In the case
+   of a transfer transaction, this indicates the name of the account from which the
+   transfer was made or to the account the transfer was made.<br />
+</font><font face="Verdana"><strong><em>Amount</em></strong> - The transaction amount.
+   If it is positive, it is considered a deposit, if it is negative, it is a withdrawal.
+   <br />
+   <i><b>Number</b></i>  - Transaction Number<br />
+   <i><b>Status</b></i> - Transaction status<br />
+</font><font face="Verdana">
+   <b><i>Category</i></b> - The category of the transaction.
+   This is actually a compound string of the type "Category:SubCategory"<br />
+   <b><i>Notes</i></b> - Transaction Notes<br />
+   <br />
+   Note that the transactions from a CSV file can only be imported into a single MMEX
+   account.<br />
+   <br />
+</font>
+</p>
+
+<h5><font face="Verdana"><a href="#top">Back
+to Top</a></font></h5>
+
+<h3><font face="Verdana"><a name="importUnivCSV">Importing From Universal CSV Format</a></font></h3>
+
+<p><font face="Verdana">To alleviate the problem of users having to preformat their bank transaction CSV files into
+the fixed format MMEX requires, MMEX also allows users to import CSV files where the order of fields is
+completely freeform. To use this importer, select the account you want to import into and then select
+the order of fields in the CSV file by picking and choosing from the list of possible fields.
+MMEX will now import the CSV file using the format information specified by the user.
+
+MMEX can import from a wide variety of formats. One of them
+   is a fixed format CSV file. This file format exactly matches the CSV format that
+   MMEX can export. So it can be useful to move data from one .mmb database file to
+   another .mmb database file. To easily see the format of the CSV file, you can try
+   exporting an account to a CSV file and then analysing the format created.<br />
+   <br />
+   The CSV field options are as follows:<br />
+   <b><i>Date</i></b> - Date of the transaction (In the format
+   specified in Options-&gt;DateFormat)<br />
+   <i><b>Payee</b></i> - To whom the transaction was made. In the case
+   of a transfer transaction, this indicates the name of the account from which the
+   transfer was made or to the account the transfer was made.<br />
+   <b><i>Amount (+/-)</i></b> - The transaction amount. If it is a positive value it is a deposit, negative value is a withdrawal.<br />
+   <b><i>Category</i></b> - The category of the transaction<br />
+   <b><i>SubCategory</i></b> - The subcategory of the transaction <br />
+   <b><i>Notes</i></b> - Transaction Notes<br />
+   <b><i>Number</i></b> - Transaction Number<br />
+   <b><i>Withdrawal</i></b> - An +ive amount that is considered as a withdrawal. (Do not use if specifying Amount (+/-))<br />
+   <b><i>Deposit</i></b> - An +ive amount that is considered as a deposit. (Do not use if specifying Amount (+/-))<br />
+   <b><i>Don't Care</i></b> - Ignore this field<br />
+   <br />
+   Note that the transactions from a CSV file can only be imported into a single MMEX
+   account.<br />
+   <br />
+<b>Important Note (1)</b>: The date format option has to match that of the date format in the QIF file, otherwise, 
+date parsing by MMEX will fail and will result in transactions having incorrect dates.
+   <br />
+   <br />
+
+<b>Important Note (2)</b>: After importing from QIF, all transactions will have a "Follow Flag" as it its status.
+You can mark all transactions with this flag using the bulk status setting commands using the right click menu in the account view.
+</font></p>
+
+<h5><font face="Verdana"><a href="#top">Back
+to Top</a></font></h5>
+
+
+<h3><font face="Verdana"><a name="exportcsv">Exporting to CSV Files</a></font></h3>
+
+<p><font face="Verdana">MMEX can export to a fixed format CSV file.
+   This file format exactly matches the CSV format that
+   MMEX can import. So it can be useful to move data from one .mmb database file to
+   another .mmb database file. To easily see the format of the CSV file, you can try
+   exporting an account to a CSV file and then analysing the format created.<br />
+   <br />
+   The general format is as follows:<br />
+   <b><i>Date</i></b> - Date of the transaction (Displayed in the format
+   specified in Options-&gt;DateFormat)<br />
+   <i><b>Payee</b></i> - To whom the transaction was made. In the case
+   of a transfer transaction, this indicates the name of the account from which the
+   transfer was made or to the account the transfer was made.<br />
+   <b><i>Transaction Type</i></b> - This can either be "<i>Withdrawal</i>"
+   or "<i>Deposit</i>"<br />
+   <b><i>Amount</i></b> - The transaction amount as a positive value<br />
+   <b><i>Category</i></b> - The category of the transaction<br />
+   <b><i>SubCategory</i></b> - The subcategory of the transaction if any
+   (otherwise blank)<br />
+   <b><i>Notes</i></b> - Transaction Notes<br />
+   <br />
+   Note that the transactions from an account can be exported to a single CSV file.<br />
+   <br />
+</font></p>
+
+<h5><font face="Verdana"><a href="#top">Back
+to Top</a></font></h5>
+
 <font face="Verdana"><br>
 
 </font>
@@ -648,8 +860,7 @@ Transactions</a></font></h3>
 <p><font face="Verdana">MMEX allows you to put
 reminders for recurring transactions. Do this via the
 Repeating Transactions tree item. The upcoming reminders for bills or
-deposits in
-the upcoming 2 weeks is displayed in the home page. </font></p>
+deposits in the upcoming 2 weeks is displayed in the home page. </font></p>
 
 <h5><font face="Verdana"><a href="#top">Back
 to Top</a></font></h5>
@@ -689,13 +900,9 @@ to Top</a></font></h5>
 </font>
 <h3><font face="Verdana"><a name="budgeting">Budgeting</a></font></h3>
 
-<p><font face="Verdana">MMEX allows you to setup a
-budget for a year and compare how you did versus
-your budget. To setup a budget click on the 'Budgeting' tree node and
-add a
-budget year. Once the year has been added, select the year and edit the
-amounts
-for each category. This becomes the budget for the year.&nbsp;<br>
+<p><font face="Verdana">MMEX allows you to setup a budget for a year and compare how you did versus
+your budget. To setup a budget click on the 'Budgeting' tree node and add a budget year. Once the year has been added, select the year and edit the
+amounts for each category. This becomes the budget for the year.&nbsp;<br>
 
 <br>
 
@@ -713,10 +920,8 @@ to Top</a></font></h5>
 
 <p><font face="Verdana">MMEX allows a variety of
 reports. Select the appropriate report under the Reports node in the
-navigation tree.
-Some reports require some user input, some do not. Once you view a
-report, you can print the report using the print
-options in the menu. </font></p>
+navigation tree. Some reports require some user input, some do not. Once you view a
+report, you can print the report using the print options in the menu. </font></p>
 
 <h5><font face="Verdana"><a href="#top">Back
 to Top</a></font></h5>
@@ -740,21 +945,47 @@ to Top</a></font></h5>
 
 <p>
 <font face="Verdana">You can modify some runtime behavior
-of MMEX by changing the options in the Options Dialog. </font></p>
-
-<p>
-<font face="Verdana">The base currency setting is used to
+of MMEX by changing the options in the Options Dialog. 
+   <br />
+   <br />
+  
+  <b><i> General-&gtCurrency </i> </b> The base currency setting is used to
 display the total of all accounts.
-</font></p>
+<br />
+<b><i> General-&gtDate Format </i> </b> The date format setting is used to
+control how dates should be displayed and also how dates should be parsed when importing QIF, CSV files.
+<br />
+<b><i> General-&gtCSV Limiter </i> </b> This is used as the delimiting character when parsing CSV files. This is useful to modify 
+from the default ',' when dealing with currencies that use ',' to denote decimal points in amounts.
+<br />
+<b><i> General-&gtLanguage </i> </b> This is the language used by the MMEX GUI. MMEX might require a restart before
+all GUI elements have the new language.
+<br />
 
-<p>
-<font face="Verdana">The date format setting is used to
-control how dates should be displayed.
-</font></p>
+<b><i> 
+   <br />
+   View Options-&gt;Account Visible </i> </b> This determines which accounts are seen in the Navigation tree.
+<br />
 
-<p>
-<font face="Verdana">View Options-&gt;Account Visible
-determines which accounts are seen in the Navigation tree.
+<b><i> View Options-&gt;Transactions Visible </i> </b> This determines which transactions are seen in the Account View.
+<br />
+
+<b><i> 
+   <br />
+   Colors</i> </b> Allows the user to modify colors in MMEX to suit his/her style.
+<br />
+
+<b><i> 
+   <br />
+   Others-&gt Backup Database</i> </b> MMEX will make a backup of the file before opening it. There will be only one backup made and it will
+be overwritten next time MMEX is opened. So if you want to keep a certain backup permanently, you need to do a manual backup.
+<br />
+
+<b><i> Others-&gt Stock Quote Link</i> </b> For stock investments, given a URL, MMEX can show the page automatically when the webpage button is clicked.
+Specify the URL here. The default is for Google's finance.
+<br />
+
+   <br />
 </font></p>
 
 <h5><font face="Verdana"><a href="#top">Back
@@ -777,6 +1008,12 @@ in the name of the software?</a></li>
 
   <li><a href="#database"> Is the .mmb file format
 proprietary?</a></li>
+
+<li><a href="#usbkey"> Can MMEX run from a USB Key?</a></li>
+
+ <li><a href="#safety">How do I know MMEX is not trying to steal my sensitive financial information?</a></li>
+
+  
 
   </font>
 </ol>
@@ -804,7 +1041,8 @@ spread the word</a></font></li>
 you are a C++ expert, by helping extend MMEX developing code. </a></font></li>
 
   <li><font face="Verdana">If you are really very
-happy, you can donate to pay for some of the hosting and other expenses<br>
+happy because you saved a lot of money by using MMEX, 
+you can donate to the MMEX project. <br>
 
     </font></li>
 
@@ -840,7 +1078,8 @@ to Top</a></font></h5>
 my data safe? Is the .mmb format proprietary?<!--</a--></a></font></h3>
 
 <p>
-<font face="Verdana"><a name="database">No.
+<font face="Verdana"><a name="database">Yes, your data is completely safe.
+And, No, .mmb file is not proprietary. 
 MMEX uses SQLite databases to store user data. That means that
 the .mmb file is a regular SQLite database. SQLite is one of the
 smallest, free relational database systems
@@ -849,6 +1088,30 @@ SQLiteSpy and SQLite Browser
 are two such utilities. Once you open the database using these tools,
 you can do anything you want
 with the data. </a></font></p>
+
+<h5><font face="Verdana"><a href="#top">Back
+to Top</a></font></h5>
+
+
+<h3><font face="Verdana"><a name="usbkey">Can MMEX run from a USB Key?<!--</a--></a></font></h3>
+
+<p>
+<font face="Verdana"><a name="usbkey">Yes, MMEX has been carefully written to
+avoid dependencies in the Windows registry etc. MMEX is completely self contained and to make it
+operate from a USB key is as simple as dropping the MMEX install folder into a USB key drive and running the mmex executable. </a></font></p>
+
+<h5><font face="Verdana"><a href="#top">Back
+to Top</a></font></h5>
+
+<h3><font face="Verdana"><a name="safety">How do I know MMEX is not trying to steal my sensitive financial information?<!--</a--></a></font></h3>
+
+<p>
+<font face="Verdana"><a name="safety"> 
+Generally, with any closed source program, you have to depend upon the vendor's word regarding safety of the data.
+But with MMEX being open source, you can verify this claim yourself. Even if you are not a C++ expert, you can rest assured
+that anyone can access the source code at any time and verify the legitimacy of MMEX's intentions. 
+MMEX does not connect to the internet unless you explicitly asked it do so (like checking for an update etc).
+</a></font></p>
 
 <h5><font face="Verdana"><a href="#top">Back
 to Top</a></font></h5>
