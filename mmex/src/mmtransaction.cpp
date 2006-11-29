@@ -2,6 +2,12 @@
 #include "util.h"
 #include "mmcoredb.h"
 
+mmBankTransaction::mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db)
+: db_(db), isInited_(false)
+{
+
+}
+
 mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
       : mmTransaction(q1.GetInt(wxT("TRANSID"))),
       db_(core->db_), isInited_(false)
@@ -25,12 +31,15 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
      updateAllData(core, accountID_);
  }
 
-void mmBankTransaction::updateAllData(mmCoreDB* core, int accountID)
+void mmBankTransaction::updateAllData(mmCoreDB* core, int accountID, bool forceUpdate)
 {
-    if ((isInited_) && (transType_ != wxT("Transfer")))
+    if ((isInited_) && (transType_ != wxT("Transfer")) && !forceUpdate)
     {
        return;
     }
+
+    mmDBWrapper::loadSettings(accountID, db_.get());
+    
 
      dateStr_            = mmGetDateForDisplay(db_.get(), date_);
 

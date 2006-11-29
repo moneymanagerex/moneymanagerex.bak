@@ -23,7 +23,7 @@
 #include "wx/wizard.h"
 #include "dbwrapper.h"
 #include "util.h"
-#include "currencydialog.h"
+#include "maincurrencydialog.h"
 
 #include "mmcoredb.h"
 
@@ -95,7 +95,8 @@ public:
     {
        currencyID_ = parent_->core_->currencyList_.getBaseCurrencySettings();
 
-        mmCurrencyDialog *dlg = new mmCurrencyDialog(parent_->core_, currencyID_, this);
+         
+       mmMainCurrencyDialog *dlg = new mmMainCurrencyDialog(parent_->core_, this);
         if ( dlg->ShowModal() == wxID_OK )
         {
             currencyID_ = dlg->currencyID_;

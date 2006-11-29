@@ -43,11 +43,11 @@ class mmBankTransaction : public mmTransaction
 public: 
     mmBankTransaction(mmCoreDB* core, 
        wxSQLite3ResultSet& q1);
-    mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db) { db_ = db; }
+    mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db);
     virtual ~mmBankTransaction() {}
 
     double value(int accountID);
-    void updateAllData(mmCoreDB* core, int accountID);
+    void updateAllData(mmCoreDB* core, int accountID, bool forceUpdate=false);
 
     boost::shared_ptr<wxSQLite3Database> db_;
 
@@ -85,7 +85,7 @@ public:
     int subcategID_;
 
 private:
-   bool isInited_;
+    bool isInited_;
 };
 
 class mmBankTransactionList

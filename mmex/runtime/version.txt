@@ -1,6 +1,18 @@
 Version History of Money Manager Ex
 
-0.7.0.2 Experimental 
+0.7.0.5 (November 29, 2006) Development Release
+- Really fixed bug where editing transactions did not take effect (Thanks Fortuna)
+
+0.7.0.4 (November 29, 2006) Development Release
+- Fixed bug where editing transactions did not take effect (Thanks Fortuna)
+- Fixed bug where entering transactions in bills and deposits screen did not show up in account view (Thanks Bob!)
+- Fixed bug where currency setting was not being used when showing withdrawals and deposits (Thanks Hx)
+- Fixed bug where entering transaction caused no data to be entered (Thanks Hx)
+
+0.7.0.3 (November 29, 2006) Development Release
+- Fixed Bug 1604492: Crash on setting currency
+
+0.7.0.2 (November 28, 2006) Development Release
 - Added caching for transaction data to make it load faster
 - Fixed Delete Button not working for assets
 - Fixed Bug 1591507: Repeating Entries order on home page

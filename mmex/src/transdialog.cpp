@@ -748,9 +748,9 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
     pTransaction->category_ = core_->categoryList_.getCategorySharedPtr(categID_, subcategID_);
     pTransaction->date_ = dpc_->GetValue();
     pTransaction->toAmt_ = toTransAmount_;
-    
+        
 
-    pTransaction->updateAllData(core_, fromAccountID);
+    pTransaction->updateAllData(core_, fromAccountID, true);
     if (!edit_)
     {
        core_->bTransactionList_.addTransaction(pTransaction);

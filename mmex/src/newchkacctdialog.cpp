@@ -18,7 +18,7 @@
 
 #include "newchkacctdialog.h"
 #include "dbwrapper.h"
-#include "currencydialog.h"
+#include "maincurrencydialog.h"
 
 #include "util.h"
 
@@ -303,7 +303,7 @@ void mmNewAcctDialog::OnCancel(wxCommandEvent& event)
 
 void mmNewAcctDialog::OnCurrency(wxCommandEvent& event)
 {
-   mmCurrencyDialog *dlg = new mmCurrencyDialog(core_, currencyID_, this);
+   mmMainCurrencyDialog *dlg = new mmMainCurrencyDialog(core_, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
         currencyID_ = dlg->currencyID_;

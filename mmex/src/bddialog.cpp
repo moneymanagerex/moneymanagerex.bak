@@ -854,6 +854,27 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
     }
     else if (enterOccur_)
     {
+        boost::shared_ptr<mmBankTransaction> pTransaction;
+        boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(core_->db_));
+        pTransaction = pTemp;
+
+        pTransaction->accountID_ = fromAccountID;
+        pTransaction->toAccountID_ = toAccountID;
+        pTransaction->payee_ = core_->payeeList_.getPayeeSharedPtr(payeeID_);
+        pTransaction->transType_ = transCode;
+        pTransaction->amt_ = amount;
+        pTransaction->status_ = status;
+        pTransaction->transNum_ = transNum;
+        pTransaction->notes_ = mmCleanString(notes.c_str());
+        pTransaction->category_ = core_->categoryList_.getCategorySharedPtr(categID_, subcategID_);
+        pTransaction->date_ = dpc_->GetValue();
+        pTransaction->toAmt_ = toTransAmount_;
+
+
+        pTransaction->updateAllData(core_, fromAccountID);
+        core_->bTransactionList_.addTransaction(pTransaction);
+
+#if 0    
         wxString bufSQL = wxString::Format(wxT("insert into CHECKINGACCOUNT_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, \
                       TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES,                               \
                       CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT)                                              \
@@ -862,6 +883,7 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
                       status.c_str(), transNum.c_str(), notes.c_str(), categID_, subcategID_, date1.c_str(), toTransAmount_ );  
 
         int retVal = db_->ExecuteUpdate(bufSQL);
+#endif
         mmDBWrapper::completeBDInSeries(db_, bdID_);
 
     }

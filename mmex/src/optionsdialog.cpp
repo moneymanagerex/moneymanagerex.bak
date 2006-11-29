@@ -18,7 +18,7 @@
 
 #include "optionsdialog.h"
 #include "defs.h"
-#include "currencydialog.h"
+#include "maincurrencydialog.h"
 #include "util.h"
 #include <wx/colordlg.h>
 
@@ -446,7 +446,7 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& event)
 {
     int currencyID = mmDBWrapper::getBaseCurrencySettings(db_);
      
-    mmCurrencyDialog *dlg = new mmCurrencyDialog(core_, currencyID, this);
+    mmMainCurrencyDialog *dlg = new mmMainCurrencyDialog(core_, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
         currencyID = dlg->currencyID_;
