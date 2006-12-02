@@ -519,9 +519,9 @@ int mmImportQIF(mmCoreDB* core)
                 }
 
                 if (val <= 0.0)
-                    type = _("Withdrawal");
+                    type = wxT("Withdrawal");
                 else
-                    type = _("Deposit");
+                    type = wxT("Deposit");
                 val = fabs(val);
                 continue;
             }

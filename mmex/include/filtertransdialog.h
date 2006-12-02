@@ -69,6 +69,8 @@
 #define ID_PANEL12 10000
 #define ID_BUTTONOK 10099
 #define ID_BUTTONCANCEL 10100
+#define ID_CHECKBOXTRANSNUM 10301
+#define ID_TEXTTRANSNUM 10302
 ////@end control identifiers
 
 /*!
@@ -136,6 +138,9 @@ public:
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOXNOTES
     void OnCheckboxnotesClick( wxCommandEvent& event );
 
+     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOXNOTES
+    void OnCheckboxTransNumberClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTONOK
     void OnButtonokClick( wxCommandEvent& event );
 
@@ -168,6 +173,8 @@ public:
     wxTextCtrl* amountMaxEdit;
     wxCheckBox* notesCheckBox;
     wxTextCtrl* notesEdit;
+    wxCheckBox* transNumberCheckBox;
+    wxTextCtrl* transNumberEdit;
     std::vector<mmTransactionHolder*>* trans_;
     wxSQLite3Database* db_;
     mmCoreDB* core_;

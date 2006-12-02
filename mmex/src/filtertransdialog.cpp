@@ -95,6 +95,9 @@ BEGIN_EVENT_TABLE( mmFilterTransactionsDialog, wxDialog )
 
     EVT_BUTTON(ID_BUTTONCATEGORY, mmFilterTransactionsDialog::OnCategs)
 
+    EVT_CHECKBOX( ID_CHECKBOXTRANSNUM, mmFilterTransactionsDialog::OnCheckboxTransNumberClick )
+    
+
 ////@end mmFilterTransactionsDialog event table entries
 
 END_EVENT_TABLE()
@@ -265,7 +268,7 @@ void mmFilterTransactionsDialog::CreateControls()
     choiceType = new wxChoice( itemPanel3, ID_CHOICE8, wxDefaultPosition, wxDefaultSize, 3, choiceTypeStrings, 0 );
     itemFlexGridSizer4->Add(choiceType, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     choiceType->SetSelection(0);
-    choiceType->SetToolTip(_("Specify the type of transactions to be created."));
+    choiceType->SetToolTip(_("Specify the type of transaction."));
 
     itemFlexGridSizer4->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -278,6 +281,15 @@ void mmFilterTransactionsDialog::CreateControls()
 
     amountMaxEdit = new wxTextCtrl( itemPanel3, ID_TEXTCTRL14, _T(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer4->Add(amountMaxEdit, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    transNumberCheckBox = new wxCheckBox( itemPanel3, ID_CHECKBOXTRANSNUM, _("Specify Number"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    transNumberCheckBox->SetValue(FALSE);
+    itemFlexGridSizer4->Add(transNumberCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    transNumberEdit = new wxTextCtrl( itemPanel3, ID_TEXTTRANSNUM, _T(""), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer4->Add(transNumberEdit, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    itemFlexGridSizer4->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     notesCheckBox = new wxCheckBox( itemPanel3, ID_CHECKBOXNOTES, _("Specify Notes"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     notesCheckBox->SetValue(FALSE);
@@ -311,7 +323,8 @@ void mmFilterTransactionsDialog::CreateControls()
     amountMinEdit->Enable(false);
     amountMaxEdit->Enable(false);
     notesEdit->Enable(false);
-}
+    transNumberEdit->Enable(false);
+}   
 
 /*!
  * Should we show tooltips?
@@ -363,6 +376,11 @@ void mmFilterTransactionsDialog::OnCheckboxamountrangeClick( wxCommandEvent& eve
 void mmFilterTransactionsDialog::OnCheckboxnotesClick( wxCommandEvent& event )
 {
     notesEdit->Enable(notesCheckBox->GetValue());
+}
+
+void mmFilterTransactionsDialog::OnCheckboxTransNumberClick( wxCommandEvent& event )
+{
+    transNumberEdit->Enable(transNumberCheckBox->GetValue());
 }
 
 void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& event )
@@ -533,6 +551,14 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& event )
                 continue;
         }
         
+         if (transNumberCheckBox->GetValue())
+        {
+            wxString transNumber = transNumberEdit->GetValue().Trim().Lower();
+            wxString orig = th->transNum_.Lower();
+            if (!orig.Contains(transNumber))
+                continue;
+        }
+
         (*trans_).push_back(th);
     }
     q1.Finalize();
