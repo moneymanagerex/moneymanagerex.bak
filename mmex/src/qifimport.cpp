@@ -510,7 +510,7 @@ int mmImportQIF(mmCoreDB* core)
             {
                 amount = getLineData(readLine);
               
-                if (!amount.ToDouble(&val))
+                if (!mmCurrencyFormatter::formatCurrencyToDouble(amount, val))
                 {
                     log << _("Line : " ) << numLines 
                         << _(" invalid amount, skipping.") << endl;
@@ -639,7 +639,9 @@ int mmImportQIF(mmCoreDB* core)
 
                 if(dt.Trim().IsEmpty()  || type.Trim().IsEmpty() || amount.Trim().IsEmpty())
                 {
-                    log << _("Skipping QIF transaction because date, type, amount is empty/invalid") << endl;
+                    log << _("Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had ");
+                    log << _(" payee ") << payee << _(" type ") << type << _(" amount ") << amount << _(" date ") << convDate 
+                        << endl;
 
                     payee = wxT("");
                     type = wxT("");

@@ -719,7 +719,7 @@ void mmShowErrorMessageInvalid(wxWindow* parent, wxString message)
 /* -------------------------------------------- */
 wxString mmGetDateForDisplay(wxSQLite3Database* db, wxDateTime dt)
 {
-    wxString selection = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), DEFDATEFORMAT);
+    wxString selection = mmUnCleanString(mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), DEFDATEFORMAT));
     return dt.Format(selection);
 }
 

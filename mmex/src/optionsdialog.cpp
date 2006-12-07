@@ -206,13 +206,14 @@ void mmOptionsDialog::CreateControls()
         wxT("%d/%m/%Y"),
         wxT("%m/%d/%y"),
         wxT("%m/%d/%Y"),
+        wxT("%m/%d'%Y"),
         wxT("%y/%m/%d"),
         wxT("%Y/%m/%d"),
     };  
     
     choiceDateFormat_ = new wxChoice( itemPanelGeneral, 
         ID_DIALOG_OPTIONS_DATE_FORMAT, wxDefaultPosition, 
-        wxSize(100, -1), 6, itemChoice7Strings, 0 );
+        wxSize(100, -1), 7, itemChoice7Strings, 0 );
     itemStaticBoxSizer9->Add(choiceDateFormat_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     wxString selection = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), DEFDATEFORMAT);
     if (!choiceDateFormat_->SetStringSelection(selection))

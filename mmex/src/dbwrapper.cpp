@@ -1308,7 +1308,7 @@ void mmDBWrapper::setInfoSettingValue(wxSQLite3Database* db, const wxString& set
 
     mmBEGINSQL_LITE_EXCEPTION;
     wxString bufSQL = wxString::Format(wxT("update INFOTABLE_V1 set INFOVALUE='%s' where INFONAME='%s';"), 
-        settingValue.c_str(), settingName.c_str());
+        mmCleanString(settingValue.c_str()), settingName.c_str());
     int retVal = db->ExecuteUpdate(bufSQL);
     mmENDSQL_LITE_EXCEPTION;
 }

@@ -88,7 +88,6 @@ mmCheckingPanel::mmCheckingPanel(mmCoreDB* core,
             inidb_(inidb)
 {
     wxASSERT(db_);
-    wxASSERT(accountID < 10);
     
     Create(parent, winid, pos, size, style, name);
 }
