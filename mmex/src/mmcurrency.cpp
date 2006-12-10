@@ -49,12 +49,13 @@ int mmCurrencyList::addCurrency(boost::shared_ptr<mmCurrency> pCurrency)
     mmBEGINSQL_LITE_EXCEPTION;
     wxString bufSQLStr = wxString::Format(wxT("insert into CURRENCYFORMATS_V1 (CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT,   \
                                               GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, %f);"), 
-                                              pCurrency->currencyName_,
-                                              pCurrency->pfxSymbol_, 
-                                              pCurrency->sfxSymbol_, 
-                                              pCurrency->dec_, pCurrency->grp_, 
-                                              pCurrency->unit_, 
-                                              pCurrency->cent_, 
+                                              pCurrency->currencyName_.c_str(),
+                                              pCurrency->pfxSymbol_.c_str(), 
+                                              pCurrency->sfxSymbol_.c_str(), 
+                                              pCurrency->dec_.c_str(), 
+					      pCurrency->grp_.c_str(), 
+                                              pCurrency->unit_.c_str(), 
+                                              pCurrency->cent_.c_str(), 
                                               pCurrency->scaleDl_, 
                                               pCurrency->baseConv_);
                                               
@@ -79,15 +80,15 @@ void mmCurrencyList::updateCurrency(int currencyID, boost::shared_ptr<mmCurrency
     mmBEGINSQL_LITE_EXCEPTION;
     wxString sqlStmt = wxString::Format(wxT("update CURRENCYFORMATS_V1 set PFX_SYMBOL='%s', SFX_SYMBOL='%s', DECIMAL_POINT='%s', \
                                             GROUP_SEPARATOR='%s', UNIT_NAME='%s', CENT_NAME='%s', SCALE='%f', BASECONVRATE='%f' where CURRENCYNAME='%s';"),
-                                            pCurrency->pfxSymbol_, 
-                                            pCurrency->sfxSymbol_, 
-                                            pCurrency->dec_,
-                                            pCurrency->grp_, 
-                                            pCurrency->unit_,
-                                            pCurrency->cent_, 
+                                            pCurrency->pfxSymbol_.c_str(), 
+                                            pCurrency->sfxSymbol_.c_str(), 
+                                            pCurrency->dec_.c_str(),
+                                            pCurrency->grp_.c_str(), 
+                                            pCurrency->unit_.c_str(),
+                                            pCurrency->cent_.c_str(), 
                                             pCurrency->scaleDl_, 
                                             pCurrency->baseConv_,
-                                            pCurrency->currencyName_);
+                                            pCurrency->currencyName_.c_str());
 
     int retVal = db_->ExecuteUpdate(sqlStmt);
     mmENDSQL_LITE_EXCEPTION;
