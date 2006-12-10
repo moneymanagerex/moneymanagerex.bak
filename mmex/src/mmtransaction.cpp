@@ -8,7 +8,8 @@ mmBankTransaction::mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db)
 
 }
 
-mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
+mmBankTransaction::mmBankTransaction(mmCoreDB* core, 
+                                     wxSQLite3ResultSet& q1)
       : mmTransaction(q1.GetInt(wxT("TRANSID"))),
       db_(core->db_), isInited_(false)
  {
@@ -28,19 +29,26 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
      toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
      category_ = core->categoryList_.getCategorySharedPtr(q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
 
-     updateAllData(core, accountID_);
+     boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(accountID_).lock();
+     wxASSERT(pCurrencyPtr);
+             
+     updateAllData(core, accountID_, pCurrencyPtr);
  }
 
-void mmBankTransaction::updateAllData(mmCoreDB* core, int accountID, bool forceUpdate)
+void mmBankTransaction::updateAllData(mmCoreDB* core, 
+                                      int accountID, 
+                                      boost::shared_ptr<mmCurrency> currencyPtr,
+                                      bool forceUpdate
+                                      )
 {
     if ((isInited_) && (transType_ != wxT("Transfer")) && !forceUpdate)
     {
        return;
     }
 
-    mmDBWrapper::loadSettings(accountID, db_.get());
+     
+     mmDBWrapper::loadSettings(accountID, db_.get());
     
-
      dateStr_            = mmGetDateForDisplay(db_.get(), date_);
 
      boost::shared_ptr<mmCategory> pCategory = category_.lock();
@@ -214,24 +222,180 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPt
     return boost::shared_ptr<mmBankTransaction> ();
 }
 
+void mmBankTransactionList::getExpensesIncome(int accountID, double& expenses, double& income,  
+                           bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd)
+{
+    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    for (i = transactions_.begin(); i != transactions_.end(); i++ )
+    {
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        if (pBankTransaction)
+        {
+            if (accountID != -1)
+            {
+                if ((pBankTransaction->accountID_ == accountID) ||
+                    (pBankTransaction->toAccountID_ == accountID))
+                {
+
+                }
+                else
+                    continue; // skip
+            }
+
+            if (pBankTransaction->status_ == wxT("V"))
+                continue; // skip
+
+            if (!ignoreDate)
+            {
+                if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                    continue; //skip
+            }
+
+            if (pBankTransaction->transType_ == wxT("Deposit"))
+                income += pBankTransaction->amt_;
+            else if (pBankTransaction->transType_ == wxT("Withdrawal"))
+                expenses += pBankTransaction->amt_;
+            else if (pBankTransaction->transType_ == wxT("Transfer"))
+            {
+                // transfers are not considered in income/expenses calculations
+            }
+
+        }
+
+    }
+}
+
+double mmBankTransactionList::getBalance(int accountID, bool ignoreFuture)
+{
+    double balance = 0.0;
+    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    for (i = transactions_.begin(); i != transactions_.end(); i++ )
+    {
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        if (pBankTransaction)
+        {
+             if ((pBankTransaction->accountID_ == accountID) ||
+                 (pBankTransaction->toAccountID_ == accountID))
+                {
+
+                }
+                else
+                    continue; // skip
+            
+            if (pBankTransaction->status_ == wxT("V"))
+                continue; // skip
+
+            if (ignoreFuture)
+            {
+                if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()))
+                    continue; //skip future dated transactions
+            }
+
+            if (pBankTransaction->transType_ == wxT("Deposit"))
+                balance += pBankTransaction->amt_;
+            else if (pBankTransaction->transType_ == wxT("Withdrawal"))
+                balance -= pBankTransaction->amt_;
+            else if (pBankTransaction->transType_ == wxT("Transfer"))
+            {
+                if (pBankTransaction->accountID_ == accountID)
+                {
+                    balance -= pBankTransaction->amt_;
+                }
+                else if (pBankTransaction->toAccountID_ == accountID)
+                {
+                    balance += pBankTransaction->amt_;
+                }
+            }
+            else
+            {
+                wxASSERT(false);
+            }
+
+        }
+    }
+    return balance;
+}
+
+double mmBankTransactionList::getReconciledBalance(int accountID)
+{
+    double balance = 0.0;
+    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    for (i = transactions_.begin(); i != transactions_.end(); i++ )
+    {
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        if (pBankTransaction)
+        {
+             if ((pBankTransaction->accountID_ == accountID) ||
+                 (pBankTransaction->toAccountID_ == accountID))
+                {
+
+                }
+                else
+                    continue; // skip
+            
+            if (pBankTransaction->status_ != wxT("R"))
+                continue; // skip
+
+            if (pBankTransaction->transType_ == wxT("Deposit"))
+                balance += pBankTransaction->amt_;
+            else if (pBankTransaction->transType_ == wxT("Withdrawal"))
+                balance -= pBankTransaction->amt_;
+            else if (pBankTransaction->transType_ == wxT("Transfer"))
+            {
+                if (pBankTransaction->accountID_ == accountID)
+                {
+                    balance -= pBankTransaction->amt_;
+                }
+                else if (pBankTransaction->toAccountID_ == accountID)
+                {
+                    balance += pBankTransaction->amt_;
+                }
+            }
+            else
+            {
+                wxASSERT(false);
+            }
+
+        }
+    }
+    return balance;
+}
+
+int mmBankTransactionList::countFollowupTransactions()
+{
+    int numFollowup = 0;
+    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    for (i = transactions_.begin(); i != transactions_.end(); i++ )
+    {
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        if (pBankTransaction)
+        {
+            if (pBankTransaction->status_ != wxT("F"))
+                continue; // skip
+
+            numFollowup++;
+        }
+    }
+    return numFollowup;
+}
 
 void mmBankTransactionList::deleteTransaction(int accountID, int transactionID)
 {
     std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
-    for (i = transactions_.begin(); i!= transactions_.end(); )
+    for (i = transactions_.begin(); i!= transactions_.end(); ++i)
     {
-       boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
-            if ((pBankTransaction->accountID_ == accountID) ||
-               (pBankTransaction->toAccountID_) && pBankTransaction->transactionID() == transactionID)
+            if ((pBankTransaction->accountID_ == accountID) || (pBankTransaction->toAccountID_))
             {
-                i = transactions_.erase(i);
-                mmDBWrapper::deleteTransaction(db_.get(), transactionID);
-                return;
+                if (pBankTransaction->transactionID() == transactionID)
+                {
+                    i = transactions_.erase(i);
+                    mmDBWrapper::deleteTransaction(db_.get(), transactionID);
+                    return;
+                }
             }
-            else
-                ++i;
         }
     }
     // didn't find the transaction

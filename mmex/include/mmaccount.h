@@ -106,6 +106,7 @@ public:
     bool deleteAccount(int accountID);
     void updateAccount(boost::shared_ptr<mmAccount> pAccount);
     bool accountExists(const wxString& accountName);
+    boost::weak_ptr<mmCurrency> getCurrencyWeakPtr(int accountID);
 
     std::vector< boost::shared_ptr<mmAccount> > accounts_;
     

@@ -266,6 +266,8 @@ int mmImportCSV(mmCoreDB* core)
     {
         wxString acctName = scd->GetStringSelection();
         fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
+        wxASSERT(pCurrencyPtr);
      
         wxString fileName = wxFileSelector(wxT("Choose CSV data file to import"), 
                 wxT(""), wxT(""), wxT(""), wxT("*.csv"), wxFILE_MUST_EXIST);
@@ -467,7 +469,7 @@ int mmImportCSV(mmCoreDB* core)
                pTransaction->category_ = core->categoryList_.getCategorySharedPtr(categID, subCategID);
                pTransaction->date_ = dtdt;
                pTransaction->toAmt_ = 0.0;
-               pTransaction->updateAllData(core,fromAccountID );
+               pTransaction->updateAllData(core,fromAccountID,pCurrencyPtr );
 
                core->bTransactionList_.addTransaction(pTransaction);
                
@@ -522,6 +524,9 @@ int mmImportCSVMMNET(mmCoreDB* core)
     {
         wxString acctName = scd->GetStringSelection();
         fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+        
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
+        wxASSERT(pCurrencyPtr);
      
         wxString fileName = wxFileSelector(_("Choose MM.NET CSV data file to import"), 
                 wxT(""), wxT(""), wxT(""), wxT("*.csv"), wxFILE_MUST_EXIST);
@@ -686,7 +691,7 @@ int mmImportCSVMMNET(mmCoreDB* core)
                pTransaction->category_ = core->categoryList_.getCategorySharedPtr(categID, subCategID);
                pTransaction->date_ = dtdt;
                pTransaction->toAmt_ = 0.0;
-               pTransaction->updateAllData(core, fromAccountID);
+               pTransaction->updateAllData(core, fromAccountID, pCurrencyPtr);
 
                core->bTransactionList_.addTransaction(pTransaction);
 
@@ -865,6 +870,31 @@ void mmCurrencyFormatter::loadSettings(wxString pfx, wxString sfx, wxChar dec, w
     mmCurrencyFormatter::unit_name = unit;
     mmCurrencyFormatter::cent_name = cent;
     mmCurrencyFormatter::scale      = scale; 
+}
+
+void mmCurrencyFormatter::loadSettings(boost::shared_ptr<mmCurrency> pCurrencyPtr)
+{
+    mmCurrencyFormatter::pfx_symbol = pCurrencyPtr->pfxSymbol_;
+    mmCurrencyFormatter::sfx_symbol  = pCurrencyPtr->sfxSymbol_;
+
+    if (!pCurrencyPtr->dec_.IsEmpty())
+    {
+        mmCurrencyFormatter::decimal_point   = pCurrencyPtr->dec_.GetChar(0);
+    }
+    else
+        mmCurrencyFormatter::decimal_point = 0;
+    
+    if (!pCurrencyPtr->grp_.IsEmpty())
+    {
+        mmCurrencyFormatter::group_separator = pCurrencyPtr->grp_.GetChar(0);
+    }
+    else
+        mmCurrencyFormatter::group_separator = 0;
+
+        
+    mmCurrencyFormatter::unit_name = pCurrencyPtr->unit_;
+    mmCurrencyFormatter::cent_name = pCurrencyPtr->cent_;
+    mmCurrencyFormatter::scale      = pCurrencyPtr->scaleDl_;
 }
 
 void mmCurrencyFormatter::loadDefaultSettings()

@@ -20,6 +20,7 @@
 #include "dbwrapper.h"
 #include "mmcategory.h"
 #include "mmpayee.h"
+#include "mmcurrency.h"
 
 class mmCoreDB;
 
@@ -47,7 +48,8 @@ public:
     virtual ~mmBankTransaction() {}
 
     double value(int accountID);
-    void updateAllData(mmCoreDB* core, int accountID, bool forceUpdate=false);
+    void updateAllData(mmCoreDB* core, int accountID, boost::shared_ptr<mmCurrency> currencyPtr, 
+        bool forceUpdate=false);
 
     boost::shared_ptr<wxSQLite3Database> db_;
 
@@ -99,6 +101,13 @@ public:
     void updateTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     void deleteTransaction(int accountID, int transactionID);
     void deleteTransactions(int accountID);
+
+    void getExpensesIncome(int accountID, double& expenses, double& income,  
+                           bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd);
+
+    double getBalance(int accountID, bool ignoreFuture = false);
+    double getReconciledBalance(int accountID);
+    int countFollowupTransactions();
 
     /* Data */
     std::vector< boost::shared_ptr<mmBankTransaction> > transactions_;

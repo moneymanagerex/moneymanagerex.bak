@@ -737,6 +737,9 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
        pTransaction = core_->bTransactionList_.getBankTransactionPtr(accountID_, transID_);
     }
 
+    boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
+    wxASSERT(pCurrencyPtr);
+     
     pTransaction->accountID_ = fromAccountID;
     pTransaction->toAccountID_ = toAccountID;
     pTransaction->payee_ = core_->payeeList_.getPayeeSharedPtr(payeeID_);
@@ -750,7 +753,7 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
     pTransaction->toAmt_ = toTransAmount_;
         
 
-    pTransaction->updateAllData(core_, fromAccountID, true);
+    pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr, true);
     if (!edit_)
     {
        core_->bTransactionList_.addTransaction(pTransaction);

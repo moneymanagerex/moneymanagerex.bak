@@ -590,7 +590,6 @@ void mmDBWrapper::loadSettings(int accountID, wxSQLite3Database* db)
     mmENDSQL_LITE_EXCEPTION;
 }
 
-
 int mmDBWrapper::getBaseCurrencySettings(wxSQLite3Database* db)
 {
     int currencyID = -1;
@@ -792,9 +791,13 @@ double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountI
     return balance;
 }
 
-bool mmDBWrapper::getExpensesIncome(wxSQLite3Database* db, int accountID, 
-                                    double& expenses, double& income,  
-                                    bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd)
+bool mmDBWrapper::getExpensesIncome(wxSQLite3Database* db, 
+                                    int accountID, 
+                                    double& expenses, 
+                                    double& income,  
+                                    bool ignoreDate, 
+                                    wxDateTime dtBegin, 
+                                    wxDateTime dtEnd)
 {
     mmBEGINSQL_LITE_EXCEPTION;
 
@@ -821,7 +824,6 @@ bool mmDBWrapper::getExpensesIncome(wxSQLite3Database* db, int accountID,
         int accountID = q1.GetInt(wxT("ACCOUNTID"));
         double dbRate = getCurrencyBaseConvRate(db, accountID);
         transAmount = transAmount * dbRate;
-        
 
         if (transStatus == wxT("V"))
            continue; // skip
@@ -831,7 +833,6 @@ bool mmDBWrapper::getExpensesIncome(wxSQLite3Database* db, int accountID,
             if (!dtdt.IsBetween(dtBegin, dtEnd))
                 continue; //skip
         }
-
 
         if (transTypeString == wxT("Deposit"))
             income += transAmount;

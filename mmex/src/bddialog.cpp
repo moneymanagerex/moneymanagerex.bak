@@ -858,6 +858,9 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
         boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(core_->db_));
         pTransaction = pTemp;
 
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
+        wxASSERT(pCurrencyPtr);
+
         pTransaction->accountID_ = fromAccountID;
         pTransaction->toAccountID_ = toAccountID;
         pTransaction->payee_ = core_->payeeList_.getPayeeSharedPtr(payeeID_);
@@ -870,8 +873,7 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
         pTransaction->date_ = dpc_->GetValue();
         pTransaction->toAmt_ = toTransAmount_;
 
-
-        pTransaction->updateAllData(core_, fromAccountID);
+        pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr);
         core_->bTransactionList_.addTransaction(pTransaction);
 
 #if 0    

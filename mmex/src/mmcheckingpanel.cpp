@@ -486,7 +486,7 @@ void mmCheckingPanel::initVirtualListControl()
         if ((pBankTransaction->accountID_ != accountID_) && (pBankTransaction->toAccountID_ != accountID_))
            continue;
 
-        pBankTransaction->updateAllData(core_, accountID_);
+        pBankTransaction->updateAllData(core_, accountID_, pCurrency);
 
         bool toAdd = true;
         if (currentView_ == wxT("View Reconciled"))
@@ -544,7 +544,7 @@ void mmCheckingPanel::initVirtualListControl()
     double initBalance = acctInitBalance;
     if (currentView_ == wxT("View UnReconciled"))
     {
-        initBalance = mmDBWrapper::getReconciledBalanceOnAccount(db_, accountID_);
+        initBalance = core_->bTransactionList_.getReconciledBalance(accountID_);
     }
 
     std::sort(trans_.begin(), trans_.end(), sortTransactionsByDate);

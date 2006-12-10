@@ -268,6 +268,18 @@ wxString mmAccountList::getAccountType(int accountID)
     return wxT("");
 }
 
+boost::weak_ptr<mmCurrency> mmAccountList::getCurrencyWeakPtr(int accountID)
+{
+    int len = (int)accounts_.size();
+    for (int idx = 0; idx < len; idx++)
+    {
+        if (accounts_[idx]->accountID_ == accountID)
+            return accounts_[idx]->currency_;
+    }
+    wxASSERT(false);
+    return boost::weak_ptr<mmCurrency>();
+}
+
 int mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
 {
       mmBEGINSQL_LITE_EXCEPTION;

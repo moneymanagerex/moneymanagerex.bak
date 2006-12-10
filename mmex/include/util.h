@@ -19,7 +19,9 @@
 #define _MM_EX_UTIL_H_
 
 #include "wx/wxprec.h"
+#include "boost/shared_ptr.hpp"
 #include "defs.h"
+#include "mmcurrency.h"
 
 class mmCoreDB;
 
@@ -74,6 +76,7 @@ class mmCurrencyFormatter
     public: static bool formatDoubleToCurrency(double val, wxString& data);
     public: static bool formatCurrencyToDouble(const wxString& str, double& val);
     public: static bool formatDoubleToCurrencyEdit(double val, wxString& rdata);
+    public: static void loadSettings(boost::shared_ptr<mmCurrency> pCurrencyPtr);
 
     public:
     static wxString pfx_symbol;   // Leading currency symbol (U.S.: '$')

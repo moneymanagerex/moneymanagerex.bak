@@ -357,6 +357,16 @@ int mmImportQIF(mmCoreDB* core)
         return -1;
     }
 
+    wxMessageDialog msgDlg(NULL, 
+_("To import QIF files correctly, the date option set in MMEX \n must match the format of the date in the QIF file.\n\
+Are you are sure you want to proceed with the import?"),
+                                 _("Confirm QIF import"),
+                                        wxYES_NO);
+    if (msgDlg.ShowModal() != wxID_YES)
+    {
+        return -1;
+    }
+    
     wxArrayString as;
     int fromAccountID = -1;
 
@@ -375,6 +385,10 @@ int mmImportQIF(mmCoreDB* core)
 
     wxString acctName = scd->GetStringSelection();
     fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+
+    boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
+    wxASSERT(pCurrencyPtr);
+
 
     wxString fileName = wxFileSelector(_("Choose QIF data file to import"), 
         wxT(""), wxT(""), wxT(""), wxT("*.qif"), wxFILE_MUST_EXIST);
@@ -671,7 +685,7 @@ int mmImportQIF(mmCoreDB* core)
                pTransaction->category_ = core->categoryList_.getCategorySharedPtr(categID, subCategID);
                pTransaction->date_ = dtdt;
                pTransaction->toAmt_ = 0.0;
-               pTransaction->updateAllData(core, fromAccountID);
+               pTransaction->updateAllData(core, fromAccountID, pCurrencyPtr);
 
                core->bTransactionList_.addTransaction(pTransaction);
 

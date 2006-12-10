@@ -117,20 +117,12 @@ void mmHomePagePanel::updateAccounts()
            hb.addHTML(pCA->accountName_);
            hb.addHTML(wxT(" </a></td><td align=\"right\">"));
 
-           double bal = pCA->balance();
+           boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
+           wxASSERT(pCurrencyPtr);
+           mmCurrencyFormatter::loadSettings(pCurrencyPtr);
 
-           wxSQLite3StatementBuffer bufSQL;
-           bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", pCA->accountID_);
-           wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL);
-           if (q2.NextRow())
-           {
-              int currencyID = q2.GetInt(wxT("CURRENCYID"));
-              mmDBWrapper::loadSettings(db_, currencyID);
-
-           }
-           q2.Finalize();
-
-           double rate = mmDBWrapper::getCurrencyBaseConvRate(db_,pCA->accountID_);
+           double bal = core_->bTransactionList_.getBalance(pCA->accountID_);
+           double rate = pCurrencyPtr->baseConv_;
            // show the actual amount in that account in the original rate
            tBalance += bal * rate;
            wxString balance;
@@ -141,16 +133,14 @@ void mmHomePagePanel::updateAccounts()
 
            //hb.addRow(data1, wxT("align=\"left\" "));
            double income = 0.0, expenses = 0.0;
-           mmDBWrapper::getExpensesIncome(db_, pCA->accountID_, expenses, income, 
+           core_->bTransactionList_.getExpensesIncome(pCA->accountID_, expenses, income, 
               false,dtBegin, dtEnd);
+
            tincome += income;
            texpenses += expenses;
            ct++;
-            
         }
     }
-
-
 
     /* Stocks */
     double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_);
@@ -340,6 +330,7 @@ void mmHomePagePanel::updateAccounts()
     }
     q1.Finalize();
     std::sort(trans_.begin(), trans_.end(), sortTransactionsByRemainingDaysHP);
+
     ////////////////////////////////////
     std::vector<wxString> data4;
     for (int bdidx = 0; bdidx < trans_.size(); bdidx++)
@@ -399,13 +390,7 @@ void mmHomePagePanel::updateAccounts()
     if (isHeaderAdded)
         hb.endTable();
 
-       
-    wxSQLite3ResultSet q2 = db_->ExecuteQuery("select * from CHECKINGACCOUNT_V1 where STATUS='F';");
-    int countFollowUp = 0;
-    while (q2.NextRow())
-    {   
-        countFollowUp++;
-    }
+    int countFollowUp = core_->bTransactionList_.countFollowupTransactions();
     if (countFollowUp > 0)
     {
         wxString fup = _("Follow Up On ");
@@ -414,6 +399,13 @@ void mmHomePagePanel::updateAccounts()
         str = fullStr + str;
         hb.addHTML(str);
     }
+
+    wxString tup = _("Total Transactions");
+    wxString tullStr = tup + wxT("<i>");
+    wxString tstr = wxString::Format(wxT("<br><i><b>%d</b> "), 
+        core_->bTransactionList_.transactions_.size());
+    tstr = tstr + tullStr;
+    hb.addHTML(tstr);
 
     hb.endTable();
 

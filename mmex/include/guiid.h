@@ -29,6 +29,16 @@
 #define MMEX_CURRENCYDB_FNAME wxT("/currency.db3")
 #define DEFSTOCKURL  wxT("http://www.google.com/finance?q=%s")
 
+#ifdef __WXGTK__
+#define  LOG_INFO(x)
+#else
+#ifdef _DEBUG
+#define  LOG_INFO(x) OutputDebugString(x)
+#else
+#define LOG_INFO(x)
+#endif
+#endif
+
 enum
 {
     /* Main Menu  */

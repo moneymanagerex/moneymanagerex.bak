@@ -270,7 +270,10 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
     {
         wxString acctName = scd->GetStringSelection();
         fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
-        
+
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
+        wxASSERT(pCurrencyPtr);
+             
         wxString fileName = wxFileSelector(_("Choose MM.NET CSV data file to import"), 
                 wxT(""), wxT(""), wxT(""), wxT("*.csv"), wxFILE_MUST_EXIST);
         if ( !fileName.IsEmpty() )
@@ -388,7 +391,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
                pTransaction->category_ = core_->categoryList_.getCategorySharedPtr(categID_, subCategID_);
                pTransaction->date_ = dtdt_;
                pTransaction->toAmt_ = 0.0;
-               pTransaction->updateAllData(core_, fromAccountID);
+               pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr);
 
                core_->bTransactionList_.addTransaction(pTransaction);
 

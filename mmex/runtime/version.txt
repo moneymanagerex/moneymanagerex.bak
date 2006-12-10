@@ -4,6 +4,11 @@ Version History of Money Manager Ex
 - Add sections on importing into user manual
 - Fixed bug with importing from QIF when languages other than english are used (Thanks Jean!)
 - Added transaction number search ability in transaction filter report (1585949)
+- Fixed bug with deleting transactions introduced in a recent build (Thanks Joseph Schmigel!)
+- Fixed several build errors/coredump with Linux build
+- 4x Speed up loading of home page with database with lots of transactions
+  (More optimizations coming soon)
+- Added UK POUND to MMEX currency list
 
 0.7.0.5 (November 29, 2006) Development Release
 - Really fixed bug where editing transactions did not take effect (Thanks Fortuna)
