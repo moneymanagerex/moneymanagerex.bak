@@ -34,7 +34,7 @@ Building on Linux
         <runtime-libs>dynamic</runtime-libs>
 
 	<set var="ADDITIONAL_CPPFLAGS" prepend="1"> -I../include</set>
-	<set var="ADDITIONAL_CPPFLAGS" prepend="1"> -I../../../dev/wxsqlite3/include</set>
+	<set var="ADDITIONAL_CPPFLAGS" prepend="1"> -I../../../../thirdparty/wxsqlite3-1.5.3/include</set>
 
 	<sys-lib>sqlite3</sys-lib>
 	<sys-lib>wxsqlite3</sys-lib>
@@ -57,11 +57,18 @@ Building on Linux
         <sources>../src/fileviewerdialog.cpp</sources>
         <sources>../src/filtertransdialog.cpp</sources>
         <sources>../src/htmlbuilder.cpp</sources>
+        <sources>../src/maincurrencydialog.cpp</sources>
+        <sources>../src/mmaccount.cpp</sources>
+        <sources>../src/mmcategory.cpp</sources>
         <sources>../src/mmcheckingpanel.cpp</sources>
+        <sources>../src/mmcoredb.cpp</sources>
+        <sources>../src/mmcurrency.cpp</sources>
         <sources>../src/mmex.cpp</sources>
         <sources>../src/mmhelppanel.cpp</sources>
         <sources>../src/mmhomepagepanel.cpp</sources>
+        <sources>../src/mmpayee.cpp</sources>
         <sources>../src/mmreportspanel.cpp</sources>
+        <sources>../src/mmtransaction.cpp</sources>
         <sources>../src/newchkacctdialog.cpp</sources>
         <sources>../src/optionsdialog.cpp</sources>
         <sources>../src/payeedialog.cpp</sources>

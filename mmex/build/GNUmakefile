@@ -41,7 +41,8 @@ WX_LIBS = `$(WX_CONFIG) --libs`
 
 CPPDEPS = -MT$@ -MF`echo $@ | sed -e 's,\.o$$,.d,'` -MD
 MMEX_CXXFLAGS = -g $(WX_CXXFLAGS) $(WX_CXXFLAGS) \
-	-I../../../dev/wxsqlite3/include -I../include $(CPPFLAGS) $(CXXFLAGS)
+	-I../../../../thirdparty/wxsqlite3-1.5.3/include -I../include $(CPPFLAGS) \
+	$(CXXFLAGS)
 MMEX_OBJECTS =  \
 	mmex_aboutdialog.o \
 	mmex_appstartdialog.o \
@@ -59,11 +60,18 @@ MMEX_OBJECTS =  \
 	mmex_fileviewerdialog.o \
 	mmex_filtertransdialog.o \
 	mmex_htmlbuilder.o \
+	mmex_maincurrencydialog.o \
+	mmex_mmaccount.o \
+	mmex_mmcategory.o \
 	mmex_mmcheckingpanel.o \
+	mmex_mmcoredb.o \
+	mmex_mmcurrency.o \
 	mmex_mmex.o \
 	mmex_mmhelppanel.o \
 	mmex_mmhomepagepanel.o \
+	mmex_mmpayee.o \
 	mmex_mmreportspanel.o \
+	mmex_mmtransaction.o \
 	mmex_newchkacctdialog.o \
 	mmex_optionsdialog.o \
 	mmex_payeedialog.o \
@@ -147,7 +155,22 @@ mmex_filtertransdialog.o: ./../src/filtertransdialog.cpp
 mmex_htmlbuilder.o: ./../src/htmlbuilder.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
+mmex_maincurrencydialog.o: ./../src/maincurrencydialog.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
+mmex_mmaccount.o: ./../src/mmaccount.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
+mmex_mmcategory.o: ./../src/mmcategory.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
 mmex_mmcheckingpanel.o: ./../src/mmcheckingpanel.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
+mmex_mmcoredb.o: ./../src/mmcoredb.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
+mmex_mmcurrency.o: ./../src/mmcurrency.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
 mmex_mmex.o: ./../src/mmex.cpp
@@ -159,7 +182,13 @@ mmex_mmhelppanel.o: ./../src/mmhelppanel.cpp
 mmex_mmhomepagepanel.o: ./../src/mmhomepagepanel.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
+mmex_mmpayee.o: ./../src/mmpayee.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
 mmex_mmreportspanel.o: ./../src/mmreportspanel.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
+mmex_mmtransaction.o: ./../src/mmtransaction.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
 mmex_newchkacctdialog.o: ./../src/newchkacctdialog.cpp
