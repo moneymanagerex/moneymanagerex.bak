@@ -358,6 +358,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
             for Windows */
 #ifdef __WXGTK__
             absName = fName.GetFullPath();		
+	    printf("Opening...%s\n", absName.c_str());
 #else	
             wxFileName appPath(wxTheApp->argv[0]);
             fName.Normalize( wxPATH_NORM_ALL, appPath.GetPath());
