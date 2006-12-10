@@ -1,6 +1,6 @@
 Version History of Money Manager Ex
 
-0.7.0.6 (??)
+0.7.0.6 (December 10, 2006)
 - Add sections on importing into user manual
 - Fixed bug with importing from QIF when languages other than english are used (Thanks Jean!)
 - Added transaction number search ability in transaction filter report (1585949)
