@@ -121,7 +121,7 @@ void mmHomePagePanel::updateAccounts()
            wxASSERT(pCurrencyPtr);
            mmCurrencyFormatter::loadSettings(pCurrencyPtr);
 
-           double bal = core_->bTransactionList_.getBalance(pCA->accountID_);
+           double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_);
            double rate = pCurrencyPtr->baseConv_;
            // show the actual amount in that account in the original rate
            tBalance += bal * rate;
@@ -164,9 +164,6 @@ void mmHomePagePanel::updateAccounts()
     mmCurrencyFormatter::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
     data.clear();
-    //data.push_back(_("Assets :"));
-    //data.push_back(assetBalanceStr);
-    //hb.addRow(data, wxT(" bgcolor=\"#D3EFF4\" "));
     hb.addHTML(wxT("<tr bgcolor=\"#D3EFF4\" ><td><a href=\"Assets\">"));
     hb.addHTML(_("Assets"));
     hb.addHTML(wxT("</a></td><td align=\"right\">"));
