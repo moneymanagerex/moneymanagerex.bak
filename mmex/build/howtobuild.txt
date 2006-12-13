@@ -7,13 +7,12 @@ Microsoft Windows
 
 1. Install Microsoft Visual Studio 2005 C++ Express, which is a free download
 2. Install the Platform SDK and make sure Visual Studio 2005 is correctly setup.
-3. Install wxWidgets 2.6.2 and above in a directory like c:\pgmming\wxwidgets2.6.2 and then create an environment variable WXWIN to point to this directory.
+3. Install wxWidgets 2.6.3 and above in a directory like c:\pgmming\wxwidgets2.6.3 and then create an environment variable WXWIN to point to this directory.
 Follow the instructions given by WxWidgets install on how to build it and build all build modes. 4 build modes are particulary important, Static Ansi Debug, Static Ansi Release, Static Unicode Debug, Static Unicode Release.
-4. Install WxSqlite3 to a directory like C:\pgmming\wxsqlite3\ and then create an environment variable WXSQLITE to point to this directory. Build WXSQLITE if necessary
-5. Open project under mmex directory and do a batch build of all modes neceesary
-6. Copy currency.db3 from runtime directory into the appropriate build directories. Now you can run the project to launch the exe.
-7. Static Ansi is used under Windows 95/98/Me
-8. Static Unicode is used under Windows 2000/Windows XP/Windows 2003.
+4. Open project under mmex directory and do a batch build of all modes neceesary
+5. Copy currency.db3 from runtime directory into the appropriate build directories. Now you can run the project to launch the exe.
+6. Static Ansi is used under Windows 95/98/Me
+7. Static Unicode is used under Windows 2000/Windows XP/Windows 2003.
 
 =================
 Building on Linux
@@ -21,17 +20,39 @@ Building on Linux
 	  a) Easiest way to configure these is on a Debian based Linux (Ubuntu for example) with apt-get or synaptic.
 1) On a fresh machine. First install Ubuntu.
 2) Install Dev Tools by the following: sudo apt-get install build-essential
-3) Download latest wxWidgets for wxGTK and download and install.
-	  b) Read the install directions in wxWidgets for how to do a build and then install the build on the machine. For eg wxWidgets has been built with --with-gtk --disable-shared --enable-unicode
-4) You might need to install libgtk2.0-dev libs
-	  c) After installation, wx-config will copied to the /usr/bin and can now correctly identify the command line params required.
-	  d) Bakefile is required to be installed for processing this file. After getting the debian package install it by  "sudo dpkg ???  .deb"
-	  e) Download SQLite3 source and build and then install it in the system. The file libsqlite3.a should be available in the standard lib path in the system. (for eg, /usr/lib)
-	  f) Download wxSQLite3 source and build and then do an install. Use the same parameters used to build wxWidgets. The file libwxsqlite3.a should be available in the standard location.
-	  g) Run bakefile "bakefile -f gnu mmex.bkl"
-	  f) Run make by "make -f GNUMakefile". This should build all the targets.
 
-Installer
---------
+If you are building on Ubuntu 6.10 follow section (3a) below
+On other machines you might need to follow (3b)
+
+===================================
+UBUNTU 6.10 Instructions
+===================================
+3a) 1) Download the following packages
+		libwxgtk2.6-0, libwxgtk2.6-dev, libsqlite3-0, libsqlite3-dev
+	2) Get Bakefile debian package from the website and install it in the machine
+	3) Modify the mmex\build\presets\wx_unix.bkl file and change the 
+	    <default-value> /usr/lib/wx/config/gtk2-unicode-release-2.6</default-value>
+		value to where you installed the libwxgtk2.6 script
+	4) cd to the Build directory and 
+		 "bakefile -f gnu mmex.bkl"
+	5) "make -f GNUMakefile"
+	6) copy the build/mmex file to the /mmex/runtime/ directory and launch it. 
+
+===================================
+More General Instructions
+===================================
+3b) Download latest wxWidgets for wxGTK and download and install.
+	  1) Read the install directions in wxWidgets for how to do a build and then install the build on the machine. For eg wxWidgets has been built with --with-gtk --disable-shared --enable-unicode
+	  2) After installation, wx-config will copied to the /usr/bin and can now correctly identify the command line params required.
+	  3) Bakefile is required to be installed for processing this file. After getting the debian package install it by  "sudo dpkg ???  .deb"
+	  4) Download SQLite3 source and build and then install it in the system. The file libsqlite3.a should be available in the standard lib path in the system. (for eg, /usr/lib)
+	  5) Modify the mmex\build\presets\wx_unix.bkl file and change the 
+	  <default-value> /usr/lib/wx/config/gtk2-unicode-release-2.6</default-value>
+	  to the default setting for wxWidgets configuration, which is wx-config by default.
+	  6) Run bakefile "bakefile -f gnu mmex.bkl"
+	  7) Run make by "make -f GNUMakefile". This should build all the targets.
+
+Windows Installer Setup
+------------------------
 MMEX uses innosetup to create installer packages.
 The script is checked into mmex\install directory
