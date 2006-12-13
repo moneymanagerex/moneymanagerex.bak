@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXSQLITE)\include\,$(WXWIN)\lib\vc_lib\msw,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\"
 				PreprocessorDefinitions="WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH;_CRT_SECURE_NO_DEPRECATE; _CRT_NONSTDC_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -64,10 +64,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxsqlite3d.lib sqlite3.lib wxmsw26d_core.lib wxbase26d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase26d_net.lib wxmsw26d_adv.lib  wxmsw26d_html.lib"
+				AdditionalDependencies="sqlite3.lib wxmsw26d_core.lib wxbase26d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase26d_net.lib wxmsw26d_adv.lib  wxmsw26d_html.lib"
 				OutputFile="$(OutDir)/mmexa.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib; $(WXSQLITE)\lib;"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib; lib\;"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/mmex.pdb"
 				SubSystem="2"
@@ -127,7 +127,7 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="$(WXSQLITE)\include\,$(WXWIN)\lib\vc_lib\msw,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE; _CRT_NONSTDC_NO_DEPRECATE"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -150,10 +150,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxsqlite3.lib sqlite3.lib wxmsw26_core.lib wxbase26.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase26_net.lib wxmsw26_adv.lib  wxmsw26_html.lib"
+				AdditionalDependencies="sqlite3.lib wxmsw26_core.lib wxbase26.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase26_net.lib wxmsw26_adv.lib  wxmsw26_html.lib"
 				OutputFile="$(OutDir)/mmexa.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib; $(WXSQLITE)\lib;"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib; lib\;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -212,7 +212,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXSQLITE)\include\,$(WXWIN)\lib\vc_lib\mswud,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\"
 				PreprocessorDefinitions="WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH, _UNICODE; _CRT_SECURE_NO_DEPRECATE; _CRT_NONSTDC_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -235,10 +235,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxzlibd.lib wxsqlite3ud.lib sqlite3.lib wxmsw26ud_core.lib wxbase26ud.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase26ud_net.lib wxmsw26ud_adv.lib wxpngd.lib wxmsw26ud_html.lib wxjpegd.lib"
+				AdditionalDependencies="wxzlibd.lib sqlite3.lib wxmsw26ud_core.lib wxbase26ud.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase26ud_net.lib wxmsw26ud_adv.lib wxpngd.lib wxmsw26ud_html.lib wxjpegd.lib"
 				OutputFile="$(OutDir)/mmex.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;;&quot;$(WXSQLITE)\lib&quot;"
+				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;;lib\;"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/mmex.pdb"
 				SubSystem="2"
@@ -298,7 +298,7 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="$(WXSQLITE)\include\,$(WXWIN)\lib\vc_lib\mswu,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\"
 				PreprocessorDefinitions="UNICODE, _WINDOWS,WIN32;NDEBUG;__WXMSW__;_CONSOLE; _UNICODE;_CRT_SECURE_NO_DEPRECATE; _CRT_NONSTDC_NO_DEPRECATE"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -321,10 +321,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxzlib.lib wxsqlite3u.lib sqlite3.lib wxmsw26u_core.lib wxbase26u.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase26u_net.lib wxmsw26u_adv.lib  wxmsw26u_html.lib wxjpeg.lib wxpng.lib"
+				AdditionalDependencies="wxzlib.lib sqlite3.lib wxmsw26u_core.lib wxbase26u.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase26u_net.lib wxmsw26u_adv.lib  wxmsw26u_html.lib wxjpeg.lib wxpng.lib"
 				OutputFile="$(OutDir)/mmex.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib; $(WXSQLITE)\lib;"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib; lib\;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -531,6 +531,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\wxsqlite3.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\wxtinyxml.cpp"
 				>
 			</File>
@@ -720,11 +724,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\resource.h"
+				RelativePath=".\resource.h"
 				>
 			</File>
 			<File
-				RelativePath=".\resource.h"
+				RelativePath=".\include\resource.h"
 				>
 			</File>
 			<File
