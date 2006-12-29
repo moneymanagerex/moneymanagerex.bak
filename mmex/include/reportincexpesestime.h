@@ -83,6 +83,8 @@ public:
         prevYearEnd.SetDay(31);
         wxDateTime dtEnd = prevYearEnd;
         wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
+        expenses = 0.0;
+        income = 0.0;
         mmDBWrapper::getExpensesIncome(db_, -1, expenses, income,  false, dtBegin, dtEnd);
         wxString actualExpStr;
         mmCurrencyFormatter::formatDoubleToCurrencyEdit(expenses, actualExpStr);
