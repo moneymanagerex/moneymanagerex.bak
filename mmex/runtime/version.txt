@@ -1,5 +1,9 @@
 Version History of Money Manager Ex
 
+0.7.0.8 (??)
+- Fixed Income vs Expense Report error
+- Added Polish Translation (Thanks Andrzej)
+
 0.7.0.7 (December 11, 2006)
 - Home page summary not showing initial balance (Thanks Bob!)
 
