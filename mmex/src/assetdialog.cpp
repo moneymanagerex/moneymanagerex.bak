@@ -29,7 +29,8 @@
 #define DEF_ASSET_HOUSE 2
 #define DEF_ASSET_ART 3
 #define DEF_ASSET_JEWELLERY 4
-#define DEF_ASSET_OTHER 5
+#define DEF_ASSET_CASH 5
+#define DEF_ASSET_OTHER 6
  
 IMPLEMENT_DYNAMIC_CLASS( mmAssetDialog, wxDialog )
 
@@ -124,8 +125,10 @@ void mmAssetDialog::dataToControls()
             assetType_->SetSelection(DEF_ASSET_HOUSE);
          else if (assetTypeStr == wxT("Art"))
             assetType_->SetSelection(DEF_ASSET_ART);
-         else if (assetTypeStr == wxT("Jewellery"))
-            assetType_->SetSelection(DEF_ASSET_JEWELLERY);
+		 else if (assetTypeStr == wxT("Jewellery"))
+			 assetType_->SetSelection(DEF_ASSET_JEWELLERY);
+		 else if (assetTypeStr == wxT("Cash"))
+			 assetType_->SetSelection(DEF_ASSET_CASH);
          else if (assetTypeStr == wxT("Other"))
             assetType_->SetSelection(DEF_ASSET_OTHER);
 
@@ -193,11 +196,12 @@ void mmAssetDialog::CreateControls()
         _("Automobile"),
         _("Household Object"),
         _("Art"),
-        _("Jewellery"),
+		_("Jewellery"),
+		_("Cash"),
         _("Other"),
     };
     assetType_ = new wxChoice( itemPanel5, ID_DIALOG_ASSETDIALOG_COMBO_ASSETTYPE, 
-        wxDefaultPosition, wxDefaultSize, 6, itemAssetTypeStrings, 0 );
+        wxDefaultPosition, wxDefaultSize, 7, itemAssetTypeStrings, 0 );
     assetType_->SetToolTip(_("Select type of asset"));
     assetType_->SetSelection(DEF_ASSET_PROPERTY);
     itemFlexGridSizer6->Add(assetType_, 0, 
@@ -338,8 +342,10 @@ void mmAssetDialog::OnOk(wxCommandEvent& event)
         assetTypeStr = wxT("Household Object");
     else if (assetType == DEF_ASSET_ART)
         assetTypeStr = wxT("Art");
-    else if (assetType == DEF_ASSET_JEWELLERY)
-        assetTypeStr = wxT("Jewellery");
+	else if (assetType == DEF_ASSET_JEWELLERY)
+		assetTypeStr = wxT("Jewellery");
+	else if (assetType == DEF_ASSET_CASH)
+		assetTypeStr = wxT("Cash");
     else if (assetType == DEF_ASSET_OTHER)
         assetTypeStr = wxT("Other");
     else

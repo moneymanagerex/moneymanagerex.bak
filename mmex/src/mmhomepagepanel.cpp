@@ -115,7 +115,7 @@ void mmHomePagePanel::updateAccounts()
            hb.addHTML(wxString::Format(wxT("%d"), pCA->accountID_));
            hb.addHTML(wxT("\" >"));
            hb.addHTML(pCA->accountName_);
-           hb.addHTML(wxT(" </a></td><td align=\"right\">"));
+           hb.addHTML(wxT("</a></td><td align=\"right\">"));
 
            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
            wxASSERT(pCurrencyPtr);
@@ -330,7 +330,7 @@ void mmHomePagePanel::updateAccounts()
 
     ////////////////////////////////////
     std::vector<wxString> data4;
-    for (int bdidx = 0; bdidx < trans_.size(); bdidx++)
+    for (unsigned int bdidx = 0; bdidx < trans_.size(); bdidx++)
     {
         data4.clear();
         wxDateTime today = wxDateTime::Now();

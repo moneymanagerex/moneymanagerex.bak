@@ -136,6 +136,10 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_ASSETS, mmGUIFrame::OnAssets)
     EVT_MENU(MENU_CURRENCY, mmGUIFrame::OnCurrency)
     EVT_MENU(MENU_TREEPOPUP_LAUNCHWEBSITE, mmGUIFrame::OnLaunchAccountWebsite)
+	EVT_MENU(MENU_VIEW_TOOLBAR, mmGUIFrame::OnViewToolbar)
+	EVT_MENU(MENU_VIEW_LINKS, mmGUIFrame::OnViewLinks)
+	EVT_UPDATE_UI(MENU_VIEW_TOOLBAR, mmGUIFrame::OnViewToolbarUpdateUI)
+	EVT_UPDATE_UI(MENU_VIEW_LINKS, mmGUIFrame::OnViewLinksUpdateUI)
     
     EVT_MENU(MENU_TREEPOPUP_EDIT, mmGUIFrame::OnPopupEditAccount)
     EVT_MENU(MENU_TREEPOPUP_DELETE, mmGUIFrame::OnPopupDeleteAccount)
@@ -309,11 +313,12 @@ mmGUIFrame
 mmGUIFrame::mmGUIFrame(const wxString& title, 
                        const wxPoint& pos, const wxSize& size)
        : wxFrame((wxFrame*)NULL, -1, title, pos, size), 
-       core_(0), inidb_(0), gotoAccountID_(-1)
+       core_(0), inidb_(0), gotoAccountID_(-1), selectedItemData_(0)
 {
-    selectedItemData_ = 0;
+	// tell wxAuiManager to manage this frame
+	m_mgr.SetManagedWindow(this);
 
-    /* Set Icon for Frame */
+	/* Set Icon for Frame */
     wxIcon icon(mainicon_xpm);
     SetIcon(icon);
 
@@ -327,10 +332,30 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     createToolBar();
     createControls();
 
-    /* Load from Settings DB */
+	/* Load from Settings DB */
     loadConfigFile();
 
-    /* Decide if we need to show app start dialog */
+	// add the toolbars to the manager
+	m_mgr.AddPane(toolBar_, wxAuiPaneInfo().
+		Name(wxT("toolbar")).Caption(wxT("Toolbar")).ToolbarPane().Top().
+		LeftDockable(false).RightDockable(false));
+
+    // change look and feel of wxAuiManager
+    m_mgr.GetArtProvider()->SetMetric(16, 0);
+    m_mgr.GetArtProvider()->SetMetric(3, 1);
+
+	// Save default perspective
+	m_perspective = m_mgr.SavePerspective();
+	
+    wxString auiPerspective = mmDBWrapper::getINISettingValue(inidb_, 
+        wxT("AUIPERSPECTIVE"), m_perspective);
+
+    m_mgr.LoadPerspective(auiPerspective);
+
+	// "commit" all changes made to wxAuiManager
+	m_mgr.Update();
+
+	/* Decide if we need to show app start dialog */
     wxString showBeginApp = mmDBWrapper::getINISettingValue(inidb_, 
         wxT("SHOWBEGINAPP"), wxT("TRUE"));
     if (showBeginApp == wxT("TRUE"))
@@ -381,8 +406,10 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 
 mmGUIFrame::~mmGUIFrame()
 {
-    delete printer_;
+	delete printer_;
     saveConfigFile();
+
+    m_mgr.UnInit();
  
     /* Delete the GUI */
     homePanel->DestroyChildren();
@@ -425,6 +452,11 @@ void mmGUIFrame::saveConfigFile()
     wxString isMaxStr = wxT("FALSE");
     if (isMax)
         isMaxStr = wxT("TRUE");
+
+    /* Aui Settings */
+    m_perspective = m_mgr.SavePerspective();
+    mmDBWrapper::setINISettingValue(inidb_, 
+        wxT("AUIPERSPECTIVE"), m_perspective);
 
     int valx, valy, valw, valh;
     this->GetPosition(&valx, &valy);
@@ -486,20 +518,12 @@ void mmGUIFrame::menuPrintingEnable(bool enable)
 
 void mmGUIFrame::createControls()
 {
-    wxPanel* framePanel = new wxPanel( this, ID_FRAMEPANEL, 
-        wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
-
-    wxBoxSizer* itemBoxSizerFrame = new wxBoxSizer(wxVERTICAL);
-    framePanel->SetSizer(itemBoxSizerFrame);
-
-    wxSplitterWindow* itemSplitterWindowFrame = new wxSplitterWindow( framePanel, 
-        ID_SPLITTERWINDOW1, wxDefaultPosition, wxSize(100, 100), wxNO_BORDER );
 #ifdef __WXGTK__
     // Under GTK, row lines look ugly
-    navTreeCtrl_ = new wxTreeCtrl( itemSplitterWindowFrame, ID_NAVTREECTRL, 
+    navTreeCtrl_ = new wxTreeCtrl( this, ID_NAVTREECTRL, 
         wxDefaultPosition, wxSize(100, 100));
 #else
-    navTreeCtrl_ = new wxTreeCtrl( itemSplitterWindowFrame, ID_NAVTREECTRL, 
+    navTreeCtrl_ = new wxTreeCtrl( this, ID_NAVTREECTRL, 
         wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_ROW_LINES );
 #endif
 
@@ -519,13 +543,17 @@ void mmGUIFrame::createControls()
 
     navTreeCtrl_->AssignImageList(imageList_);
 
-    homePanel = new wxPanel( itemSplitterWindowFrame, ID_PANEL, 
-        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxTR_SINGLE);
-    
-    itemSplitterWindowFrame->SplitVertically(navTreeCtrl_, homePanel, 100);
-    itemSplitterWindowFrame->SetMinimumPaneSize(150);
-    itemSplitterWindowFrame->SetSashGravity(0.1);
-    itemBoxSizerFrame->Add(itemSplitterWindowFrame, 1, wxGROW|wxALL, 1);
+    homePanel = new wxPanel( this, ID_PANEL, 
+        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxTR_SINGLE | wxNO_BORDER);
+
+	m_mgr.AddPane(navTreeCtrl_, wxAuiPaneInfo().
+		Name(wxT("Navigation")).Caption(_("Navigation")).
+		BestSize(wxSize(200,100)).MinSize(wxSize(100,100)).
+		Left());
+
+	m_mgr.AddPane(homePanel, wxAuiPaneInfo().
+		Name(wxT("Home")).Caption(wxT("Home")).
+		CenterPane().PaneBorder(false));
 }
 
 void mmGUIFrame::updateNavTreeControl()
@@ -1405,7 +1433,17 @@ void mmGUIFrame::createMenu()
 	menuItemQuit->SetBitmap(wxBitmap(exit_xpm));
     menuFile->Append(menuItemQuit);
    
-    wxMenu *menuAccounts = new wxMenu;
+	wxMenu *menuView = new wxMenu;
+
+	wxMenuItem* menuItemToolbar = new wxMenuItem(menuView, MENU_VIEW_TOOLBAR, 
+		_("&Toolbar"), _("Show/Hide the toolbar"), wxITEM_CHECK);
+	wxMenuItem* menuItemLinks = new wxMenuItem(menuView, MENU_VIEW_LINKS, 
+		_("Navigation"), _("Show/Hide the Navigation tree control"), wxITEM_CHECK);
+
+	menuView->Append(menuItemToolbar);
+	menuView->Append(menuItemLinks);
+
+	wxMenu *menuAccounts = new wxMenu;
 
 	wxMenuItem* menuItemNewAcct = new wxMenuItem(menuAccounts, MENU_NEWACCT, 
 		_("New &Account"), _("New Money Manager Account"));
@@ -1518,8 +1556,9 @@ void mmGUIFrame::createMenu()
     
     menuBar_ = new wxMenuBar;
     menuBar_->Append(menuFile, _("&File"));
-    menuBar_->Append(menuAccounts, _("&Accounts"));
+	menuBar_->Append(menuAccounts, _("&Accounts"));
     menuBar_->Append(menuTools, _("&Tools"));
+    menuBar_->Append(menuView, _("&View"));
     menuBar_->Append(menuHelp, _("&Help"));
 
     SetMenuBar(menuBar_);
@@ -1527,7 +1566,8 @@ void mmGUIFrame::createMenu()
 
 void mmGUIFrame::createToolBar()
 {
-    toolBar_ = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, TOOLBAR_MAIN );
+	toolBar_ = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+		wxTB_FLAT | wxTB_NODIVIDER);
     wxBitmap toolBarBitmaps[8];
     toolBarBitmaps[0] = wxBitmap(new_xpm);
     toolBarBitmaps[1] = wxBitmap(open_xpm);
@@ -1550,7 +1590,6 @@ void mmGUIFrame::createToolBar()
     
     // after adding the buttons to the toolbar, must call Realize() to reflect changes
     toolBar_->Realize();
-    SetToolBar(toolBar_);
 }
 
 void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
@@ -2276,4 +2315,30 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
     scd->Destroy();
  }
 
+void mmGUIFrame::OnViewToolbar(wxCommandEvent &event)
+{
+	m_mgr.GetPane(wxT("toolbar")).Show(event.IsChecked());
+	m_mgr.Update();
+}
 
+void mmGUIFrame::OnViewLinks(wxCommandEvent &event)
+{
+	m_mgr.GetPane(wxT("Navigation")).Show(event.IsChecked());
+	m_mgr.Update();
+}
+
+void mmGUIFrame::OnViewToolbarUpdateUI(wxUpdateUIEvent &event)
+{
+	if(	m_mgr.GetPane(wxT("toolbar")).IsShown())
+		event.Check(true);
+	else
+		event.Check(false);
+}
+
+void mmGUIFrame::OnViewLinksUpdateUI(wxUpdateUIEvent &event)
+{
+	if(	m_mgr.GetPane(wxT("Navigation")).IsShown())
+		event.Check(true);
+	else
+		event.Check(false);
+}

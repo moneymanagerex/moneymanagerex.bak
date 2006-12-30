@@ -18,6 +18,10 @@
 #include "currencydialog.h"
 #include "util.h"
 
+#ifndef __VISUALC__
+#define INT_PTR int
+#endif
+
 IMPLEMENT_DYNAMIC_CLASS( mmCurrencyDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmCurrencyDialog, wxDialog )
@@ -83,7 +87,7 @@ void mmCurrencyDialog::fillControls()
     if (currencyID_ != -1)
     {
         wxString name = mmDBWrapper::getCurrencyName(core_->db_.get(), currencyID_);
-        currencyChoice_->Append(name, (void*) currencyID_);
+        currencyChoice_->Append(name, (void*)(INT_PTR)currencyID_);
         currencyChoice_->SetStringSelection(name);
     }
     else
@@ -128,7 +132,7 @@ void mmCurrencyDialog::updateControls()
 
 void mmCurrencyDialog::OnCurrencyTypeChanged(wxCommandEvent& event)
 {
-    int currencyID = (int)currencyChoice_->GetClientData();
+    INT_PTR currencyID = (INT_PTR)currencyChoice_->GetClientData();
     updateControls();
 }
 

@@ -21,6 +21,7 @@
 
 #include "defs.h"
 #include "wx/wizard.h"
+#include "wx/aui/aui.h"
 #include "dbwrapper.h"
 #include "util.h"
 #include "maincurrencydialog.h"
@@ -250,7 +251,7 @@ public:
     {
         wxString itemAcctTypeStrings[] =  
         {
-            _("Checking/Savings/CreditCard"),
+            _("Checking/Savings"),
             _("Investment"),
         };
         itemChoiceType_ = new wxChoice( this, wxID_ANY, 
@@ -377,6 +378,12 @@ public:
     void OnStocks(wxCommandEvent& event);
     void OnAssets(wxCommandEvent& event);
     void OnGotoAccount(wxCommandEvent& WXUNUSED(event));
+	void OnViewToolbar(wxCommandEvent &event);
+	void OnViewStatusbar(wxCommandEvent &event);
+	void OnViewLinks(wxCommandEvent &event);
+	void OnViewToolbarUpdateUI(wxUpdateUIEvent &event);
+	void OnViewStatusbarUpdateUI(wxUpdateUIEvent &event);
+	void OnViewLinksUpdateUI(wxUpdateUIEvent &event);
 
     void OnNewAccount(wxCommandEvent& event);
     void OnAccountList(wxCommandEvent& event);
@@ -428,6 +435,10 @@ private:
   
     /* printing */
     wxHtmlEasyPrinting* printer_;
+
+	/* wxAUI */
+	wxAuiManager m_mgr;
+    wxString m_perspective;
 
 private:
     // any class wishing to process wxWindows events must use this macro

@@ -171,7 +171,7 @@ bool mmCategoryList::updateCategory(int categID, int subCategID, const wxString&
         {
             // subcategory, check if siblings dont have this name already
             wxASSERT(parent);
-            for (int idx = 0; idx < parent->children_.size(); idx++)
+            for (unsigned int idx = 0; idx < parent->children_.size(); idx++)
             {
                 if (parent->children_[idx]->categName_ == text)
                     return false;

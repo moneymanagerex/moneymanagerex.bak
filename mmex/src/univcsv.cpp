@@ -331,7 +331,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
                 }
 
 
-                for (int idx=0;idx < (int)csvFieldOrder_.size(); idx++)
+                for (unsigned int idx=0;idx < (int)csvFieldOrder_.size(); idx++)
                 {
                     if (tokens.size() < idx)
                         continue;

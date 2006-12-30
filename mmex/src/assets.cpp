@@ -230,7 +230,8 @@ void mmAssetsPanel::initVirtualListControl()
             _("Automobile"),
             _("Household Object"),
             _("Art"),
-            _("Jewellery"),
+			_("Jewellery"),
+			_("Cash"),
             _("Other"),
         };
 
@@ -243,8 +244,10 @@ void mmAssetsPanel::initVirtualListControl()
             th.assetType_ =  _("Household Object");
         else if (assetTypeStr == wxT("Art"))
             th.assetType_ =  _("Art");
-        else if (assetTypeStr == wxT("Jewellery"))
-            th.assetType_ =  _("Jewellery");
+		else if (assetTypeStr == wxT("Jewellery"))
+			th.assetType_ =  _("Jewellery");
+		else if (assetTypeStr == wxT("Cash"))
+			th.assetType_ =  _("Cash");
         else if (assetTypeStr == wxT("Other"))
             th.assetType_ =  _("Other");
                 
