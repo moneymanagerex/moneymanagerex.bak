@@ -61,6 +61,7 @@ public:
     void OnMarkTransaction(wxCommandEvent& event);
     void OnMarkAllTransactions(wxCommandEvent& event);
     void OnListKeyDown(wxListEvent& event);
+    void OnChar(wxKeyEvent& event);
     void OnMarkTransactionDB(const wxString& status);
  
     /* Sort Columns */

@@ -74,6 +74,8 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
     
     EVT_LIST_COL_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnColClick)
     EVT_LIST_KEY_DOWN(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListKeyDown)
+
+     EVT_CHAR(MyListCtrl::OnChar)
 END_EVENT_TABLE()
 /*******************************************************/
 mmCheckingPanel::mmCheckingPanel(mmCoreDB* core,
@@ -896,6 +898,26 @@ wxListItemAttr* MyListCtrl::OnGetItemAttr(long item) const
     return item % 2 ? (wxListItemAttr *)&attr2_ : (wxListItemAttr *)&attr1_;
 }
 
+void MyListCtrl::OnChar(wxKeyEvent& event)
+{
+    switch ( event.GetKeyCode() )
+    {
+        case 'v':
+        case 'V':
+        case 'r':
+        case 'R':
+        case 'u':
+        case 'U':
+        case 'f':
+        case 'F':
+            // these are the keys we process ourselves
+            break;
+
+        default:
+            event.Skip();
+    }
+}
+
 void MyListCtrl::OnListKeyDown(wxListEvent& event)
 {
   switch ( event.GetKeyCode() )
@@ -907,42 +929,35 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
             }
             break;
 
+        case 'v':
         case 'V':
             {
-                //SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
                 wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKVOID);
                 OnMarkTransaction(evt);
-                //SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                //OnMarkTransactionDB(wxT("V"));
-                //event.Skip();
             }
             break;
 
+        case 'r':
         case 'R':
             {
                 wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKRECONCILED);
                 OnMarkTransaction(evt);
-                //OnMarkTransactionDB(wxT("R"));
-                //event.Skip();
-
             }
             break;
 
+        case 'u':
         case 'U':
             {
                  wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKUNRECONCILED);
                  OnMarkTransaction(evt);
-                //OnMarkTransactionDB(wxT(""));
-                //event.Skip();
             }
             break;
 
+        case 'f':
         case 'F':
             {
                  wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP);
                  OnMarkTransaction(evt);
-                //OnMarkTransactionDB(wxT("F"));
-                //event.Skip();
             }
             break;
 
