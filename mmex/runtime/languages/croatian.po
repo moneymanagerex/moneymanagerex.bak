@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-12-31 03:48-0600\n"
+"PO-Revision-Date: 2006-12-31 15:07-0600\n"
 "Last-Translator: Madhan <madhan@yahoo.com>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -200,7 +200,7 @@ msgstr "Promjena u vrijednosti"
 #: src/assetdialog.cpp:229
 #: src/bddialog.cpp:271
 #: src/bddialog.cpp:398
-#: src/billsdeposits.cpp:244
+#: src/billsdeposits.cpp:249
 #: src/budgetentrydialog.cpp:157
 #: src/filtertransdialog.cpp:245
 #: src/mmhomepagepanel.cpp:234
@@ -327,12 +327,13 @@ msgid "Total:"
 msgstr "Ukupno:"
 
 #: src/assets.cpp:143
+#: src/billsdeposits.cpp:148
 #: include/reportbudgetingperf.h:50
 msgid "Type"
 msgstr "Tip"
 
 #: src/assets.cpp:179
-#: src/mmcheckingpanel.cpp:324
+#: src/mmcheckingpanel.cpp:326
 #: src/mmex.cpp:1581
 #: src/stocks.cpp:208
 msgid "New"
@@ -345,7 +346,7 @@ msgstr "Nova imovina"
 #: src/assets.cpp:184
 #: src/categdialog.cpp:137
 #: src/maincurrencydialog.cpp:131
-#: src/mmcheckingpanel.cpp:329
+#: src/mmcheckingpanel.cpp:331
 #: src/payeedialog.cpp:147
 #: src/stocks.cpp:213
 msgid "Edit"
@@ -357,7 +358,7 @@ msgstr "Uredi imovinu"
 
 #: src/assets.cpp:189
 #: src/categdialog.cpp:142
-#: src/mmcheckingpanel.cpp:334
+#: src/mmcheckingpanel.cpp:336
 #: src/payeedialog.cpp:152
 #: src/stocks.cpp:218
 msgid "Delete"
@@ -421,62 +422,62 @@ msgid "Repeats"
 msgstr "Ponavlja se"
 
 #: src/bddialog.cpp:272
-#: src/billsdeposits.cpp:248
+#: src/billsdeposits.cpp:253
 #: src/budgetentrydialog.cpp:158
 #: src/mmhomepagepanel.cpp:238
 msgid "Weekly"
 msgstr "Tjedno"
 
 #: src/bddialog.cpp:273
-#: src/billsdeposits.cpp:252
+#: src/billsdeposits.cpp:257
 #: src/budgetentrydialog.cpp:159
 #: src/mmhomepagepanel.cpp:242
 msgid "Bi-Weekly"
 msgstr "Dvotjedno"
 
 #: src/bddialog.cpp:274
-#: src/billsdeposits.cpp:256
+#: src/billsdeposits.cpp:261
 #: src/budgetentrydialog.cpp:160
 #: src/mmhomepagepanel.cpp:246
 msgid "Monthly"
 msgstr "Mjesečno"
 
 #: src/bddialog.cpp:275
-#: src/billsdeposits.cpp:260
+#: src/billsdeposits.cpp:265
 #: src/budgetentrydialog.cpp:161
 #: src/mmhomepagepanel.cpp:250
 msgid "Bi-Monthly"
 msgstr "Dvomjesečno"
 
 #: src/bddialog.cpp:276
-#: src/billsdeposits.cpp:264
+#: src/billsdeposits.cpp:269
 #: src/budgetentrydialog.cpp:162
 #: src/mmhomepagepanel.cpp:254
 msgid "Quarterly"
 msgstr "Tromjesečno"
 
 #: src/bddialog.cpp:277
-#: src/billsdeposits.cpp:268
+#: src/billsdeposits.cpp:273
 #: src/budgetentrydialog.cpp:163
 #: src/mmhomepagepanel.cpp:258
 msgid "Half-Yearly"
 msgstr "Polugodišnje"
 
 #: src/bddialog.cpp:278
-#: src/billsdeposits.cpp:272
+#: src/billsdeposits.cpp:277
 #: src/budgetentrydialog.cpp:164
 #: src/mmhomepagepanel.cpp:262
 msgid "Yearly"
 msgstr "Godišnje"
 
 #: src/bddialog.cpp:279
-#: src/billsdeposits.cpp:276
+#: src/billsdeposits.cpp:281
 #: src/mmhomepagepanel.cpp:266
 msgid "Four Months"
 msgstr "Četiri mjeseca"
 
 #: src/bddialog.cpp:280
-#: src/billsdeposits.cpp:280
+#: src/billsdeposits.cpp:285
 #: src/mmhomepagepanel.cpp:270
 msgid "Four Weeks"
 msgstr "Četiri tjedna"
@@ -499,8 +500,9 @@ msgid "Transaction Type"
 msgstr "Tip transakcije"
 
 #: src/bddialog.cpp:314
+#: src/billsdeposits.cpp:395
 #: src/filtertransdialog.cpp:264
-#: src/mmcheckingpanel.cpp:266
+#: src/mmcheckingpanel.cpp:268
 #: src/transdialog.cpp:224
 #: src/univcsv.cpp:183
 #: src/univcsv.cpp:205
@@ -508,8 +510,9 @@ msgid "Withdrawal"
 msgstr "Isplata"
 
 #: src/bddialog.cpp:315
+#: src/billsdeposits.cpp:397
 #: src/filtertransdialog.cpp:265
-#: src/mmcheckingpanel.cpp:268
+#: src/mmcheckingpanel.cpp:270
 #: src/transdialog.cpp:225
 #: src/univcsv.cpp:185
 #: src/univcsv.cpp:206
@@ -517,6 +520,7 @@ msgid "Deposit"
 msgstr "Uplata"
 
 #: src/bddialog.cpp:316
+#: src/billsdeposits.cpp:399
 #: src/filtertransdialog.cpp:266
 #: src/transdialog.cpp:226
 msgid "Transfer"
@@ -539,8 +543,8 @@ msgstr "Odredite napredne postavke transakcije"
 
 #: src/bddialog.cpp:339
 #: src/bddialog.cpp:678
-#: src/billsdeposits.cpp:146
-#: src/mmcheckingpanel.cpp:261
+#: src/billsdeposits.cpp:147
+#: src/mmcheckingpanel.cpp:263
 #: src/transdialog.cpp:250
 #: src/transdialog.cpp:581
 #: src/univcsv.cpp:169
@@ -566,7 +570,7 @@ msgid "Specify where the transaction is going to or coming from "
 msgstr "Odredi gdje transakcija ide ili odakle dolazi"
 
 #: src/bddialog.cpp:348
-#: src/mmcheckingpanel.cpp:258
+#: src/mmcheckingpanel.cpp:260
 #: src/transdialog.cpp:260
 msgid "Number"
 msgstr "Broj"
@@ -660,7 +664,7 @@ msgid "Specify any text notes you want to add to this transaction."
 msgstr "Upiši bilješke koje želiš dodati uz ovu transakciju."
 
 #: src/bddialog.cpp:421
-#: src/billsdeposits.cpp:150
+#: src/billsdeposits.cpp:152
 #: src/budgetingpanel.cpp:221
 #: src/transdialog.cpp:331
 msgid "Amount"
@@ -742,90 +746,90 @@ msgstr "U korist račun"
 msgid "From and To Account cannot be the same."
 msgstr "U korist i Na teret računi ne mogu biti isti"
 
-#: src/billsdeposits.cpp:125
+#: src/billsdeposits.cpp:126
 #: src/mmex.cpp:580
 #: src/mmex.cpp:1493
 msgid "Repeating Transactions"
 msgstr "Ponavljajuće transakcije"
 
-#: src/billsdeposits.cpp:152
+#: src/billsdeposits.cpp:154
 msgid "Next Due Date"
 msgstr "Slijedeći rok plaćanja"
 
-#: src/billsdeposits.cpp:153
+#: src/billsdeposits.cpp:155
 #: src/budgetingpanel.cpp:216
 msgid "Frequency"
 msgstr "Učestalost"
 
-#: src/billsdeposits.cpp:154
+#: src/billsdeposits.cpp:156
 msgid "Remaining Days"
 msgstr "Ostalo dana"
 
-#: src/billsdeposits.cpp:190
+#: src/billsdeposits.cpp:195
 msgid "New Series"
 msgstr "Novo ponavljanje"
 
-#: src/billsdeposits.cpp:192
+#: src/billsdeposits.cpp:197
 msgid "New Bills && Deposit Series"
 msgstr "Novo ponavljanje Računi && Uplate"
 
-#: src/billsdeposits.cpp:195
+#: src/billsdeposits.cpp:200
 msgid "Edit Series"
 msgstr "Uredi ponavljanja"
 
-#: src/billsdeposits.cpp:197
+#: src/billsdeposits.cpp:202
 msgid "Edit Bills && Deposit Series"
 msgstr "Uredi ponavljanja Računa && Uplata"
 
-#: src/billsdeposits.cpp:200
+#: src/billsdeposits.cpp:205
 msgid "Delete Series"
 msgstr "Obriši ponavljanja"
 
-#: src/billsdeposits.cpp:202
+#: src/billsdeposits.cpp:207
 msgid "Delete Bills && Deposit Series"
 msgstr "Obriši ponavljanja Računa && Uplata"
 
-#: src/billsdeposits.cpp:205
+#: src/billsdeposits.cpp:210
 msgid "Enter Transaction"
 msgstr "Unesi transakciju"
 
-#: src/billsdeposits.cpp:207
+#: src/billsdeposits.cpp:212
 msgid "Enter Next Bills && Deposit Occurrence"
 msgstr "Unesi slijedeće ponavljanje Računa && Uplate"
 
-#: src/billsdeposits.cpp:300
+#: src/billsdeposits.cpp:305
 #: src/mmhomepagepanel.cpp:290
-#: src/mmhomepagepanel.cpp:373
+#: src/mmhomepagepanel.cpp:374
 msgid " days remaining"
 msgstr "ostalo dana"
 
-#: src/billsdeposits.cpp:305
+#: src/billsdeposits.cpp:310
 #: src/mmhomepagepanel.cpp:295
-#: src/mmhomepagepanel.cpp:378
+#: src/mmhomepagepanel.cpp:379
 msgid " days overdue!"
 msgstr "broj prekoračenih dana!"
 
-#: src/billsdeposits.cpp:372
+#: src/billsdeposits.cpp:377
 msgid "&New Bills && Deposit Series"
 msgstr "&Novi Račun && Uplata ponavljanje"
 
-#: src/billsdeposits.cpp:374
+#: src/billsdeposits.cpp:379
 msgid "&Edit Bills && Deposit Series"
 msgstr "&Uredi Račun && Uplatu ponavljanje"
 
-#: src/billsdeposits.cpp:375
+#: src/billsdeposits.cpp:380
 msgid "&Delete Bills && Deposit Series"
 msgstr "&Obriši Račun && Uplatu ponavljanja"
 
-#: src/billsdeposits.cpp:377
+#: src/billsdeposits.cpp:382
 msgid "Enter next Occurrence"
 msgstr "Unesite slijedeće ponavljanje"
 
-#: src/billsdeposits.cpp:463
+#: src/billsdeposits.cpp:478
 msgid "Do you really want to delete the series?"
 msgstr "Da li zaista želite obrisati ponavljanje?"
 
-#: src/billsdeposits.cpp:464
+#: src/billsdeposits.cpp:479
 msgid "Confirm Series Deletion"
 msgstr "Potvrdite brisanje ponavljanja"
 
@@ -1140,210 +1144,210 @@ msgstr "Dodaj valutu"
 msgid "Currency name already exists!"
 msgstr "Ime valute već postoji!"
 
-#: src/mmcheckingpanel.cpp:160
+#: src/mmcheckingpanel.cpp:162
 #: src/optionsdialog.cpp:323
 msgid "View All Transactions"
 msgstr "Prikaži sve transakcije"
 
-#: src/mmcheckingpanel.cpp:161
+#: src/mmcheckingpanel.cpp:163
 msgid "View Reconciled Transactions"
 msgstr "Prikaži sve usklađene transakcije"
 
-#: src/mmcheckingpanel.cpp:162
+#: src/mmcheckingpanel.cpp:164
 msgid "View Un-Reconciled Transactions"
 msgstr "Prikaži sve neusklađene kategorije"
 
-#: src/mmcheckingpanel.cpp:163
+#: src/mmcheckingpanel.cpp:165
 msgid "View Void Transactions"
 msgstr "Prikaži prazne transakcije"
 
-#: src/mmcheckingpanel.cpp:164
+#: src/mmcheckingpanel.cpp:166
 msgid "View Flagged Transactions"
 msgstr "Prikaži obilježene transakcije"
 
-#: src/mmcheckingpanel.cpp:166
+#: src/mmcheckingpanel.cpp:168
 msgid "View Transactions from last 30 days"
 msgstr "Prikaži transakcije zadnjih 30 dana"
 
-#: src/mmcheckingpanel.cpp:167
+#: src/mmcheckingpanel.cpp:169
 msgid "View Transactions from last 3 months"
 msgstr "Prikaži transakcije zadnjih 3 mjeseca"
 
-#: src/mmcheckingpanel.cpp:169
+#: src/mmcheckingpanel.cpp:171
 msgid "Delete all transactions in current view"
 msgstr "Obriši sve transakcije koje se trenutno gledaju."
 
-#: src/mmcheckingpanel.cpp:170
+#: src/mmcheckingpanel.cpp:172
 msgid "Delete all flagged transactions"
 msgstr "Obriši sve obilježene transakcije"
 
-#: src/mmcheckingpanel.cpp:213
+#: src/mmcheckingpanel.cpp:215
 msgid "Viewing All Transactions"
 msgstr "Prikaži sve transakcije"
 
-#: src/mmcheckingpanel.cpp:254
+#: src/mmcheckingpanel.cpp:256
 #: include/reporttransactions.h:66
 msgid "Date  "
 msgstr "Datum"
 
-#: src/mmcheckingpanel.cpp:262
+#: src/mmcheckingpanel.cpp:264
 msgid "C  "
 msgstr "C"
 
-#: src/mmcheckingpanel.cpp:270
+#: src/mmcheckingpanel.cpp:272
 msgid "Balance"
 msgstr "Bilanca"
 
-#: src/mmcheckingpanel.cpp:326
+#: src/mmcheckingpanel.cpp:328
 msgid "New Transaction"
 msgstr "Nova transakcija"
 
-#: src/mmcheckingpanel.cpp:331
+#: src/mmcheckingpanel.cpp:333
 msgid "Edit Transaction"
 msgstr "Uredi transakciju"
 
-#: src/mmcheckingpanel.cpp:336
+#: src/mmcheckingpanel.cpp:338
 msgid "Delete Transaction"
 msgstr "Obriši transakciju"
 
-#: src/mmcheckingpanel.cpp:428
+#: src/mmcheckingpanel.cpp:430
 msgid "Category         : "
 msgstr "Kategorija         :"
 
-#: src/mmcheckingpanel.cpp:429
+#: src/mmcheckingpanel.cpp:431
 msgid "Sub Category  : "
 msgstr "Podkategorija  :"
 
-#: src/mmcheckingpanel.cpp:430
+#: src/mmcheckingpanel.cpp:432
 msgid "Notes               : "
 msgstr "Bilješke               :"
 
-#: src/mmcheckingpanel.cpp:448
+#: src/mmcheckingpanel.cpp:450
 #, c-format
 msgid "Account Balance : %s      Reconciled Balance : %s"
 msgstr "Bilanca računa : %s      Usklađena bilanca : %s"
 
-#: src/mmcheckingpanel.cpp:455
+#: src/mmcheckingpanel.cpp:457
 #: src/mmex.cpp:1687
 msgid "Please Wait"
 msgstr "Molimo pričekajte"
 
-#: src/mmcheckingpanel.cpp:456
+#: src/mmcheckingpanel.cpp:458
 msgid "Accessing Database"
 msgstr "Pristupanje bazi podataka"
 
-#: src/mmcheckingpanel.cpp:471
+#: src/mmcheckingpanel.cpp:473
 msgid "Account View : "
 msgstr "Pregled računa"
 
-#: src/mmcheckingpanel.cpp:476
+#: src/mmcheckingpanel.cpp:478
 msgid "Category: \n"
 msgstr "Kategorija: \n"
 
-#: src/mmcheckingpanel.cpp:477
+#: src/mmcheckingpanel.cpp:479
 msgid "Sub Category: \n"
 msgstr "Podkategorija: \n"
 
-#: src/mmcheckingpanel.cpp:478
+#: src/mmcheckingpanel.cpp:480
 msgid "Notes: \n"
 msgstr "Bilješke: \n"
 
-#: src/mmcheckingpanel.cpp:617
-#: src/mmcheckingpanel.cpp:643
+#: src/mmcheckingpanel.cpp:619
+#: src/mmcheckingpanel.cpp:645
 msgid "Viewing all transactions"
 msgstr "Prikaz svih transakcija"
 
-#: src/mmcheckingpanel.cpp:621
-#: src/mmcheckingpanel.cpp:648
+#: src/mmcheckingpanel.cpp:623
+#: src/mmcheckingpanel.cpp:650
 msgid "Viewing Reconciled transactions"
 msgstr "Pregled usklađenih transakcija"
 
-#: src/mmcheckingpanel.cpp:625
-#: src/mmcheckingpanel.cpp:658
+#: src/mmcheckingpanel.cpp:627
+#: src/mmcheckingpanel.cpp:660
 msgid "Viewing Un-Reconciled transactions"
 msgstr "Pregled neusklađenih transakcija"
 
-#: src/mmcheckingpanel.cpp:629
-#: src/mmcheckingpanel.cpp:668
+#: src/mmcheckingpanel.cpp:631
+#: src/mmcheckingpanel.cpp:670
 msgid "Viewing transactions from last 30 days"
 msgstr "Pregled transakcija zadnjih 30 dana"
 
-#: src/mmcheckingpanel.cpp:633
-#: src/mmcheckingpanel.cpp:673
+#: src/mmcheckingpanel.cpp:635
+#: src/mmcheckingpanel.cpp:675
 msgid "Viewing transactions from last 3 months"
 msgstr "Pregled transakcija zadnja 3 mjeseca"
 
-#: src/mmcheckingpanel.cpp:653
+#: src/mmcheckingpanel.cpp:655
 msgid "Viewing Void transactions"
 msgstr "Pregled svih praznih transakcija"
 
-#: src/mmcheckingpanel.cpp:663
+#: src/mmcheckingpanel.cpp:665
 msgid "Viewing Flagged transactions"
 msgstr "Pregled obilježenih transakcija"
 
-#: src/mmcheckingpanel.cpp:678
+#: src/mmcheckingpanel.cpp:680
 msgid "Do you really want to delete all the transactions shown?"
 msgstr "Da li zaista želite obrisati sve prikazane transakcije?"
 
-#: src/mmcheckingpanel.cpp:679
-#: src/mmcheckingpanel.cpp:693
-#: src/mmcheckingpanel.cpp:971
+#: src/mmcheckingpanel.cpp:681
+#: src/mmcheckingpanel.cpp:695
+#: src/mmcheckingpanel.cpp:986
 msgid "Confirm Transaction Deletion"
 msgstr "Potvrdite brisanje transakcije"
 
-#: src/mmcheckingpanel.cpp:692
+#: src/mmcheckingpanel.cpp:694
 msgid "Do you really want to delete all the flagged transactions?"
 msgstr "Da li zaista želite obrisati sve obilježene transakcije?"
 
-#: src/mmcheckingpanel.cpp:723
+#: src/mmcheckingpanel.cpp:725
 msgid "&New Transaction"
 msgstr "&Nova transakcija"
 
-#: src/mmcheckingpanel.cpp:725
+#: src/mmcheckingpanel.cpp:727
 msgid "&Edit Transaction"
 msgstr "&Uredi transakciju"
 
-#: src/mmcheckingpanel.cpp:726
+#: src/mmcheckingpanel.cpp:728
 msgid "&Delete Transaction"
 msgstr "&Obriši transakciju"
 
-#: src/mmcheckingpanel.cpp:728
+#: src/mmcheckingpanel.cpp:730
 msgid "Mark As &Reconciled"
 msgstr "Označi kao &Usklađeno"
 
-#: src/mmcheckingpanel.cpp:729
+#: src/mmcheckingpanel.cpp:731
 msgid "Mark As &Unreconciled"
 msgstr "Označi kao &Neusklađeno"
 
-#: src/mmcheckingpanel.cpp:730
+#: src/mmcheckingpanel.cpp:732
 msgid "Mark As &Void"
 msgstr "Označi kao &Prazno"
 
-#: src/mmcheckingpanel.cpp:731
+#: src/mmcheckingpanel.cpp:733
 msgid "Mark For &Followup"
 msgstr "Označi kao &Prati"
 
-#: src/mmcheckingpanel.cpp:735
+#: src/mmcheckingpanel.cpp:737
 msgid "as Reconciled"
 msgstr "kao Usklađeno"
 
-#: src/mmcheckingpanel.cpp:736
+#: src/mmcheckingpanel.cpp:738
 msgid "as Unreconciled"
 msgstr "kao Neusklađeno"
 
-#: src/mmcheckingpanel.cpp:737
+#: src/mmcheckingpanel.cpp:739
 msgid "as Void"
 msgstr "kao Prazno"
 
-#: src/mmcheckingpanel.cpp:738
+#: src/mmcheckingpanel.cpp:740
 msgid "as needing Followup"
 msgstr "kao traži Praćenje"
 
-#: src/mmcheckingpanel.cpp:739
+#: src/mmcheckingpanel.cpp:741
 msgid "Mark all "
 msgstr "Označi sve"
 
-#: src/mmcheckingpanel.cpp:970
+#: src/mmcheckingpanel.cpp:985
 msgid "Do you really want to delete the transaction?"
 msgstr "Da li zaista želite obrisati transakciju?"
 
@@ -1920,16 +1924,16 @@ msgstr "Ukupno na računima:"
 msgid "Income vs Expenses: Current Month"
 msgstr "Prihod vs Rashod: Tekući mjesec"
 
-#: src/mmhomepagepanel.cpp:346
+#: src/mmhomepagepanel.cpp:347
 #, fuzzy
 msgid "Upcoming Transactions"
 msgstr "Ponavljajuće transakcije"
 
-#: src/mmhomepagepanel.cpp:393
+#: src/mmhomepagepanel.cpp:394
 msgid "Follow Up On "
 msgstr "Praćenje"
 
-#: src/mmhomepagepanel.cpp:400
+#: src/mmhomepagepanel.cpp:401
 #, fuzzy
 msgid "Total Transactions"
 msgstr "Uredi transakciju"

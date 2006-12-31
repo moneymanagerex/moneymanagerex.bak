@@ -1,6 +1,6 @@
 Version History of Money Manager Ex
 
-0.7.0.8 (??)
+0.8.0.0 (Dec 31, 2006)
 - Added shortcut keys to change transaction status in account view. (v for 'Void', r for 'Reconciled', u for 'Unreconciled', f for 'Followup')
 - Fixed Income vs Expense Report error
 - Upgraded to wxWidgets 2.8.0 
