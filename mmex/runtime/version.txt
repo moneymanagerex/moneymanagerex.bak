@@ -2,7 +2,11 @@ Version History of Money Manager Ex
 
 0.7.0.8 (??)
 - Fixed Income vs Expense Report error
+- Upgraded to wxWidgets 2.8.0 
+- wxAui Support for dockable window support (Thanks Priyank Bolia for the patch)
+- Fixed transaction filter not displaying categories
 - Added Polish Translation (Thanks Andrzej)
+- Added Croatian Translation (Thanks Goran Bobanovic)
 
 0.7.0.7 (December 11, 2006)
 - Home page summary not showing initial balance (Thanks Bob!)

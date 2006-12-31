@@ -110,7 +110,7 @@ mmFilterTransactionsDialog::mmFilterTransactionsDialog( )
 {
 }
 
-mmFilterTransactionsDialog::mmFilterTransactionsDialog( std::vector<mmTransactionHolder*>* trans,
+mmFilterTransactionsDialog::mmFilterTransactionsDialog(std::vector<mmTransactionHolder*>* trans,
                                                        wxSQLite3Database* db,
                                                        mmCoreDB* core,
                                                        wxWindow* parent, wxWindowID id, 
@@ -578,7 +578,7 @@ void mmFilterTransactionsDialog::OnButtoncancelClick( wxCommandEvent& event )
 
 void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& event)
 {
-    mmCategDialog *dlg = new mmCategDialog(0, this);
+    mmCategDialog *dlg = new mmCategDialog(core_, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
        

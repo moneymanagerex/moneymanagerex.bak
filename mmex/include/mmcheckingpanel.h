@@ -40,7 +40,7 @@ public:
     MyListCtrl(mmCheckingPanel* cp, wxWindow *parent,
         const wxWindowID id, const wxPoint& pos,
         const wxSize& size, long style)
-        : wxListCtrl(parent, id, pos, size, style),
+        : wxListCtrl(parent, id, pos, size, style | wxWANTS_CHARS),
         attr1_(*wxBLACK, mmColors::listAlternativeColor0, wxNullFont),
         attr2_(*wxBLACK, mmColors::listAlternativeColor1, wxNullFont),
         cp_(cp),

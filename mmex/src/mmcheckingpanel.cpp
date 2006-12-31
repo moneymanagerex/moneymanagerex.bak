@@ -223,7 +223,7 @@ void mmCheckingPanel::CreateControls()
     wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, 
             ID_PANEL_CHECKING_STATIC_BALHEADER, 
             wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizerHHeader->Add(itemStaticText10, 0, wxALL, 1);
+    itemBoxSizerHHeader->Add(itemStaticText10, 0, wxALL | wxEXPAND , 1);
 
     /* ---------------------- */
 
@@ -906,15 +906,15 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
                 OnDeleteTransaction(evt);
             }
             break;
-#if 0
+
         case 'V':
             {
-                SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                //SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
                 wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKVOID);
                 OnMarkTransaction(evt);
-                SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                //SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
                 //OnMarkTransactionDB(wxT("V"));
-                event.Skip();
+                //event.Skip();
             }
             break;
 
@@ -945,7 +945,6 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
                 //event.Skip();
             }
             break;
-#endif
 
         default:
             event.Skip();

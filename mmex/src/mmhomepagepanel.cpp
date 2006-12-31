@@ -95,7 +95,7 @@ void mmHomePagePanel::updateAccounts()
 
     wxString str1 = _("Account") + wxString(wxT("</b></th><th   width=\"100\" ><b>"));
     wxString str2 = _("Summary") + wxString(wxT("</b></th></tr>"));
-    hb.addHTML(wxT("<table border=\"1\"><tr  bgcolor=\"#80B9E8\"><th width=\"200\"><b>") 
+    hb.addHTML(wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\"><tr  bgcolor=\"#80B9E8\"><th width=\"200\"><b>") 
         +  str1 + str2 );
 
     /////////////////   
@@ -184,7 +184,7 @@ void mmHomePagePanel::updateAccounts()
     hb.addHTML(wxT("</td><td >&nbsp;</td><td width=\"200\" ALIGN=\"left\" VALIGN=\"top\">"));
     hb.beginTable();
 
-    hb.beginTable();
+    hb.addHTML(wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\">"));
     wxString incStr, expStr;
     mmCurrencyFormatter::formatDoubleToCurrency(tincome, incStr);
     mmCurrencyFormatter::formatDoubleToCurrency(texpenses, expStr);
@@ -196,7 +196,7 @@ void mmHomePagePanel::updateAccounts()
 
     std::vector<wxString> data2;
     data2.push_back(_("Income vs Expenses: Current Month"));
-    hb.addTableHeaderRow(data2, wxT(" BGCOLOR=\"#80B9E8\" "), wxT(" width=\"100\" COLSPAN=\"2\" "));
+    hb.addTableHeaderRow(data2, wxT(" BGCOLOR=\"#80B9E8\" "), wxT(" nowrap width=\"100\" COLSPAN=\"2\" "));
     
     hb.addHTML(wxT("<tr><td>") + baseInc + wxString(wxT("</td><td align=\"right\">")));
     hb.addHTML(incStr);
@@ -341,7 +341,8 @@ void mmHomePagePanel::updateAccounts()
         {
             if (!isHeaderAdded)
             {
-                hb.beginTable();
+                hb.addHTML(wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\">"));
+
                 std::vector<wxString> data3;
                 data3.push_back(_("Upcoming Transactions"));
 

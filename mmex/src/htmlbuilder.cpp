@@ -43,7 +43,7 @@ void mmHTMLBuilder::addHorizontalLine()
 
 void mmHTMLBuilder::beginTable(const wxString& options)
 {
-      html_ += wxT("<table border=\"1\">");
+      html_ += wxT("<table cellspacing=\"1\" cellpadding=\"3\" border=\"1\">");
 }
  
 void mmHTMLBuilder::endTable()
