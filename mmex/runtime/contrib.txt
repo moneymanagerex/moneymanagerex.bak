@@ -11,5 +11,7 @@ German 		-- Schrempfi
 Simple Chinese 	-- Liu Ming
 Tr. Chinese 	-- Kysouke
 Hebrew          -- Ykpui
-
+Tamil			-- Gopi Gopalakrishnan & Muguntharaj Subramanian
+Croatian 		-- Goran Bobanovic
+Polish 			-- Andrzej
 
