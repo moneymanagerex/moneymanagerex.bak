@@ -303,7 +303,7 @@ double mmBankTransactionList::getBalance(int accountID, bool ignoreFuture)
                 }
                 else if (pBankTransaction->toAccountID_ == accountID)
                 {
-                    balance += pBankTransaction->amt_;
+                    balance += pBankTransaction->toAmt_;
                 }
             }
             else
