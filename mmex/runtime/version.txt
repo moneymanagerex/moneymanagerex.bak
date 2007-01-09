@@ -3,6 +3,7 @@ Version History of Money Manager Ex
 0.8.0.2 (Jan ??, 2007)
 - Fixed SQLITE Error when creating accounts
 - Added Tamil Translation (Thanks Gopi and Muguntharaj)
+- Fixed Bug 1628265: Wrong dates for Last Month Reports
 
 0.8.0.1 (Jan 1, 2007)
 - Fixed translation files not being loaded

@@ -890,7 +890,11 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime::Month cm = today.GetMonth();
-            int numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
+            int numDays = 0;
+            if (cm == wxDateTime::Jan)
+                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(wxDateTime::Dec));
+            else
+                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
@@ -967,7 +971,11 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime::Month cm = today.GetMonth();
-            int numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
+            int numDays = 0;
+            if (cm == wxDateTime::Jan)
+                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(wxDateTime::Dec));
+            else
+                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
@@ -1039,7 +1047,12 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime::Month cm = today.GetMonth();
-            int numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
+            int numDays = 0;
+            if (cm == wxDateTime::Jan)
+                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(wxDateTime::Dec));
+            else
+                numDays = wxDateTime::GetNumberOfDays((wxDateTime::Month)(cm-1));
+            
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));

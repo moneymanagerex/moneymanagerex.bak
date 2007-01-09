@@ -393,8 +393,10 @@ void mmHomePagePanel::updateAccounts()
     {
         wxString fup = _("Follow Up On ");
         wxString fullStr = wxT("<br><i>") + fup;
-        wxString str = wxString::Format(wxT("<b>%d</b> Transactions</i>"), countFollowUp);
+        wxString str = wxString::Format(wxT("<b>%d</b> "), countFollowUp);
         str = fullStr + str;
+        str += _("Transactions");
+        str += wxT("</i>");
         hb.addHTML(str);
     }
 
