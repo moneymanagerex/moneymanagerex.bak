@@ -327,6 +327,8 @@ void mmCategDialog::OnEdit(wxCommandEvent& event)
          mmShowErrorMessage(this, _("Update Failed"), _("Error"));
          return;
     }
+
+    core_->bTransactionList_.updateAllTransactionsForCategory(core_, categID, subcategID);
     
     treeCtrl_->SetItemText(selectedItemId_, text);
 }

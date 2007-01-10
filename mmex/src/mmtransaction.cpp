@@ -3,7 +3,7 @@
 #include "mmcoredb.h"
 
 mmBankTransaction::mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db)
-: db_(db), isInited_(false)
+: db_(db), isInited_(false), updateRequired_(false)
 {
 
 }
@@ -11,7 +11,7 @@ mmBankTransaction::mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db)
 mmBankTransaction::mmBankTransaction(mmCoreDB* core, 
                                      wxSQLite3ResultSet& q1)
       : mmTransaction(q1.GetInt(wxT("TRANSID"))),
-      db_(core->db_), isInited_(false)
+      db_(core->db_), isInited_(false), updateRequired_(false)
  {
      wxString dateString = q1.GetString(wxT("TRANSDATE"));
      date_               = mmGetStorageStringAsDate(dateString);
@@ -28,7 +28,7 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core,
      amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
      toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
      category_ = core->categoryList_.getCategorySharedPtr(q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
-
+   
      boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(accountID_).lock();
      wxASSERT(pCurrencyPtr);
              
@@ -50,24 +50,6 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
      mmDBWrapper::loadSettings(accountID, db_.get());
     
      dateStr_            = mmGetDateForDisplay(db_.get(), date_);
-
-     boost::shared_ptr<mmCategory> pCategory = category_.lock();
-     wxASSERT(pCategory);
-     boost::shared_ptr<mmCategory> parent = pCategory->parent_.lock();
-     if (parent)
-     {
-        catStr_ = parent->categName_;
-        subCatStr_ = pCategory->categName_;
-        categID_ = parent->categID_;
-        subcategID_ = pCategory->categID_;
-     }
-     else
-     {
-        catStr_ = pCategory->categName_;
-        subCatStr_ = wxT("");
-        categID_ = pCategory->categID_;
-        subcategID_ = -1;
-     }
      
      wxString displayTransAmtString;
      if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(amt_, displayTransAmtString))
@@ -112,6 +94,39 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
         }
      }
 
+
+     boost::shared_ptr<mmCategory> pCategory = category_.lock();
+     if (!pCategory)
+     {
+        // If category is missing, we mark is as unknown
+        int categID = core->categoryList_.getCategoryID(wxT("Unknown"));
+        if (categID == -1)
+        {
+             categID =  core->categoryList_.addCategory(wxT("Unknown"));
+        }
+
+        category_ = core->categoryList_.getCategorySharedPtr(categID, -1);
+        pCategory = category_.lock();
+        wxASSERT(pCategory);
+        updateRequired_ = true;
+     }
+
+     boost::shared_ptr<mmCategory> parent = pCategory->parent_.lock();
+     if (parent)
+     {
+        catStr_ = parent->categName_;
+        subCatStr_ = pCategory->categName_;
+        categID_ = parent->categID_;
+        subcategID_ = pCategory->categID_;
+     }
+     else
+     {
+        catStr_ = pCategory->categName_;
+        subCatStr_ = wxT("");
+        categID_ = pCategory->categID_;
+        subcategID_ = -1;
+     }
+     
      isInited_ = true;
 }
 
@@ -220,6 +235,77 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPt
     // didn't find the transaction
     wxASSERT(false);
     return boost::shared_ptr<mmBankTransaction> ();
+}
+
+void mmBankTransactionList::updateAllTransactions()
+{
+    // We need to update all transactions incase of errors when loading
+    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    for (i = transactions_.begin(); i != transactions_.end(); i++ )
+    {
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        if (pBankTransaction && pBankTransaction->updateRequired_)
+        {
+           updateTransaction(pBankTransaction);
+           pBankTransaction->updateRequired_ = false;
+        }
+    }
+}
+
+void mmBankTransactionList::updateAllTransactionsForCategory(mmCoreDB* core, 
+                                                             int categID, 
+                                                             int subCategID)
+{
+    // We need to update all transactions incase of errors when loading
+    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    for (i = transactions_.begin(); i != transactions_.end(); i++ )
+    {
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        if (pBankTransaction && (pBankTransaction->categID_ == categID)
+            && (pBankTransaction->subcategID_ == subCategID))
+        {
+            pBankTransaction->category_ = core->categoryList_.getCategorySharedPtr(categID, subCategID);
+            boost::shared_ptr<mmCategory> pCategory = pBankTransaction->category_.lock();
+
+            boost::shared_ptr<mmCategory> parent = pCategory->parent_.lock();
+            if (parent)
+            {
+                pBankTransaction->catStr_ = parent->categName_;
+                pBankTransaction->subCatStr_ = pCategory->categName_;
+                pBankTransaction->categID_ = parent->categID_;
+                pBankTransaction->subcategID_ = pCategory->categID_;
+            }
+            else
+            {
+                pBankTransaction->catStr_ = pCategory->categName_;
+                pBankTransaction->subCatStr_ = wxT("");
+                pBankTransaction->categID_ = pCategory->categID_;
+                pBankTransaction->subcategID_ = -1;
+            }
+        }
+    }
+}
+
+void mmBankTransactionList::updateAllTransactionsForPayee(mmCoreDB* core, 
+                                                          int payeeID)
+{
+    // We need to update all transactions incase of errors when loading
+    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    for (i = transactions_.begin(); i != transactions_.end(); i++ )
+    {
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        if (pBankTransaction && (pBankTransaction->payeeID_ == payeeID))
+        {
+            pBankTransaction->payee_ = core->payeeList_.getPayeeSharedPtr(payeeID);
+            if (pBankTransaction->transType_ != wxT("Transfer"))
+            {
+                boost::shared_ptr<mmPayee> pPayee = pBankTransaction->payee_.lock();
+                wxASSERT(pPayee);
+                pBankTransaction->payeeStr_ = pPayee->payeeName_;
+                pBankTransaction->payeeID_ = pPayee->payeeID_;
+            }
+        }
+    }
 }
 
 void mmBankTransactionList::getExpensesIncome(int accountID, double& expenses, double& income,  

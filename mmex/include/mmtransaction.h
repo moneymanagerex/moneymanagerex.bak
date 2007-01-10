@@ -48,7 +48,9 @@ public:
     virtual ~mmBankTransaction() {}
 
     double value(int accountID);
-    void updateAllData(mmCoreDB* core, int accountID, boost::shared_ptr<mmCurrency> currencyPtr, 
+    void updateAllData(mmCoreDB* core, 
+        int accountID, 
+        boost::shared_ptr<mmCurrency> currencyPtr, 
         bool forceUpdate=false);
 
     boost::shared_ptr<wxSQLite3Database> db_;
@@ -86,6 +88,7 @@ public:
     int categID_;
     int subcategID_;
 
+    bool updateRequired_;
 private:
     bool isInited_;
 };
@@ -108,6 +111,12 @@ public:
     double getBalance(int accountID, bool ignoreFuture = false);
     double getReconciledBalance(int accountID);
     int countFollowupTransactions();
+
+    void updateAllTransactions();
+    void updateAllTransactionsForCategory(mmCoreDB* core, int categID, int subCategID);
+    void updateAllTransactionsForPayee(mmCoreDB* core, 
+                                                          int payeeID);
+
 
     /* Data */
     std::vector< boost::shared_ptr<mmBankTransaction> > transactions_;

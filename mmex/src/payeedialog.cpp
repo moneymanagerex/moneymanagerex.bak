@@ -239,6 +239,7 @@ void mmPayeeDialog::OnEdit(wxCommandEvent& event)
     wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME);
     wxString text = textCtrl->GetValue();
     core_->payeeList_.updatePayee(payeeID_, text);
+    core_->bTransactionList_.updateAllTransactionsForPayee(core_, payeeID_);
     listBox_->Clear();
     fillControls();
 }

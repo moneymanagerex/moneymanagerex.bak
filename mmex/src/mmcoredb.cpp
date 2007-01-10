@@ -114,6 +114,10 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
     q1.Finalize();
      
     mmENDSQL_LITE_EXCEPTION;
+
+    // Update All transactions in case of errors
+    bTransactionList_.updateAllTransactions();
+
 }
 
 mmCoreDB::~mmCoreDB()
