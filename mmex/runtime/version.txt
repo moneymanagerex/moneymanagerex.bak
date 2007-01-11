@@ -1,5 +1,9 @@
 Version History of Money Manager Ex
 
+0.8.0.3 (??)
+- Fixed univcsv import issue if payee already exists (thanks Ktmam)
+
+
 0.8.0.2 (Jan 09, 2007)
 - Fixed SQLITE Error when creating accounts
 - Added Tamil Translation (Thanks Gopi and Muguntharaj)

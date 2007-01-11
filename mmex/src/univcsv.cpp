@@ -448,6 +448,10 @@ void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
                 payeeID_ = core_->payeeList_.addPayee(token);
 
             }
+            else
+            {
+                payeeID_ = core_->payeeList_.getPayeeID(token);
+            }
             break;
         }
 
