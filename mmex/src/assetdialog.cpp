@@ -196,8 +196,8 @@ void mmAssetDialog::CreateControls()
         _("Automobile"),
         _("Household Object"),
         _("Art"),
-		_("Jewellery"),
-		_("Cash"),
+		  _("Jewellery"),
+		  _("Cash"),
         _("Other"),
     };
     assetType_ = new wxChoice( itemPanel5, ID_DIALOG_ASSETDIALOG_COMBO_ASSETTYPE, 
@@ -246,7 +246,6 @@ void mmAssetDialog::CreateControls()
     valueChangeRate_->SetToolTip(_("Enter the rate at which the asset changes its value in %"));
     itemFlexGridSizer6->Add(valueChangeRate_, 0, 
         wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
     
 
     wxStaticText* itemStaticText19 = new wxStaticText( itemPanel5, wxID_STATIC, 
@@ -323,14 +322,13 @@ void mmAssetDialog::OnOk(wxCommandEvent& event)
         return;
     }
     double valueChangeRate = 0;
-	if ((valueChangeType != DEF_CHANGE_NONE) && !mmCurrencyFormatter::formatCurrencyToDouble(valueChangeRateStr, valueChangeRate) 
+	if ((valueChangeType != DEF_CHANGE_NONE) && 
+      !mmCurrencyFormatter::formatCurrencyToDouble(valueChangeRateStr, valueChangeRate) 
         || (valueChangeRate < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid Value "), _("Error"));
         return;
     }
-
-    
 
     int assetType = assetType_->GetSelection();
     wxString assetTypeStr;
@@ -350,7 +348,6 @@ void mmAssetDialog::OnOk(wxCommandEvent& event)
         assetTypeStr = wxT("Other");
     else
         wxASSERT(false);
-
 
     if (!edit_)
     {

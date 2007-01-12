@@ -94,6 +94,8 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
         }
      }
 
+     fromAccountStr_ = core->accountList_.getAccountSharedPtr(accountID_)->accountName_;
+
 
      boost::shared_ptr<mmCategory> pCategory = category_.lock();
      if (!pCategory)
@@ -118,6 +120,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
         subCatStr_ = pCategory->categName_;
         categID_ = parent->categID_;
         subcategID_ = pCategory->categID_;
+        fullCatStr_ = catStr_ + wxT(":") +subCatStr_;
      }
      else
      {
@@ -125,6 +128,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
         subCatStr_ = wxT("");
         categID_ = pCategory->categID_;
         subcategID_ = -1;
+        fullCatStr_ = catStr_;
      }
      
      isInited_ = true;
@@ -188,7 +192,8 @@ int mmBankTransactionList::addTransaction(boost::shared_ptr<mmBankTransaction> p
    return pBankTransaction->transactionID();
 }
 
-void mmBankTransactionList::updateTransaction(boost::shared_ptr<mmBankTransaction> pBankTransaction)
+void mmBankTransactionList::updateTransaction(
+   boost::shared_ptr<mmBankTransaction> pBankTransaction)
 {
    mmBEGINSQL_LITE_EXCEPTION;
    
@@ -215,7 +220,8 @@ void mmBankTransactionList::updateTransaction(boost::shared_ptr<mmBankTransactio
 }
 
 
-boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPtr(int accountID, int transactionID)
+boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPtr
+(int accountID, int transactionID)
 {
     std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
     for (i = transactions_.begin(); i!= transactions_.end(); )
@@ -224,7 +230,8 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPt
         if (pBankTransaction)
         {
             if (((pBankTransaction->accountID_ == accountID) ||
-               (pBankTransaction->toAccountID_ == accountID)) && (pBankTransaction->transactionID() == transactionID))
+               (pBankTransaction->toAccountID_ == accountID)) 
+               && (pBankTransaction->transactionID() == transactionID))
             {
                 return pBankTransaction;
             }
@@ -349,6 +356,79 @@ void mmBankTransactionList::getExpensesIncome(int accountID, double& expenses, d
         }
 
     }
+}
+
+double mmBankTransactionList::getAmountForPayee(int payeeID, bool ignoreDate, 
+                                 wxDateTime dtBegin, wxDateTime dtEnd)
+{
+    double amt = 0.0;
+    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    for (i = transactions_.begin(); i != transactions_.end(); i++ )
+    {
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        if (pBankTransaction)
+        {
+           if (pBankTransaction->payeeID_ == payeeID)
+           {
+              if (pBankTransaction->status_ == wxT("V"))
+                 continue; // skip
+
+              if (!ignoreDate)
+              {
+                 if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                    continue; //skip
+              }
+
+              if (pBankTransaction->transType_ == wxT("Transfer"))
+                  continue;
+
+              if (pBankTransaction->transType_ == wxT("Withdrawal"))
+                 amt = amt - pBankTransaction->amt_;
+              else if (pBankTransaction->transType_ == wxT("Deposit"))
+                 amt = amt + pBankTransaction->amt_;
+           }
+        }
+    }
+    return amt;
+}
+
+double mmBankTransactionList::getAmountForCategory(
+                                         int categID, 
+                                         int subcategID,
+                                         bool ignoreDate,
+                                         wxDateTime dtBegin,
+                                         wxDateTime dtEnd)
+{
+    double amt = 0.0;
+    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    for (i = transactions_.begin(); i != transactions_.end(); i++ )
+    {
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        if (pBankTransaction)
+        {
+            if ((pBankTransaction->categID_ == categID) &&
+                (pBankTransaction->subcategID_ == subcategID))
+            {
+               if (pBankTransaction->status_ == wxT("V"))
+                  continue; // skip
+
+               if (!ignoreDate)
+               {
+                  if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                     continue; //skip
+               }
+
+               if (pBankTransaction->transType_ == wxT("Transfer"))
+                  continue;
+
+               if (pBankTransaction->transType_ == wxT("Withdrawal"))
+                  amt = amt - pBankTransaction->amt_;
+               else if (pBankTransaction->transType_ == wxT("Deposit"))
+                  amt = amt + pBankTransaction->amt_;
+            }
+        }
+    }
+    return amt;
 }
 
 double mmBankTransactionList::getBalance(int accountID, bool ignoreFuture)

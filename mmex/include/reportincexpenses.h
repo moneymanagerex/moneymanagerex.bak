@@ -10,10 +10,10 @@
 class mmReportIncomeExpenses : public mmPrintableBase 
 {
 public:
-    mmReportIncomeExpenses(wxSQLite3Database* db, bool ignoreDate, 
+    mmReportIncomeExpenses(mmCoreDB* core, bool ignoreDate, 
         wxDateTime dtBegin, 
         wxDateTime dtEnd) 
-        : db_(db),
+        : core_(core),
           ignoreDate_(ignoreDate),
           dtBegin_(dtBegin),
           dtEnd_(dtEnd)
@@ -50,12 +50,12 @@ public:
         headerR.push_back(_("Type  "));
         headerR.push_back(_("Amount   "));
         hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
-
-        mmDBWrapper::loadBaseCurrencySettings(db_);
+   
+        core_->currencyList_.loadBaseCurrencySettings();
 
         double expenses = 0.0;
         double income = 0.0;
-        mmDBWrapper::getExpensesIncome(db_, -1,expenses, income,  ignoreDate_, dtBegin_,dtEnd_);
+        core_->bTransactionList_.getExpensesIncome(-1,expenses, income,  ignoreDate_, dtBegin_,dtEnd_);
 
         wxString incString;
         wxString expString;
@@ -76,11 +76,10 @@ public:
 
         hb.end();
         return hb.getHTMLText();
-
     }
 
 private:
-    wxSQLite3Database* db_;
+    mmCoreDB* core_;
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;
     bool ignoreDate_;

@@ -69,7 +69,8 @@ boost::shared_ptr<mmTransaction> mmCheckingAccount::findTransaction(int transact
 }
 #endif
 
-mmCheckingAccount::mmCheckingAccount(boost::shared_ptr<wxSQLite3Database> db, 
+mmCheckingAccount::mmCheckingAccount(
+                 boost::shared_ptr<wxSQLite3Database> db, 
                  wxSQLite3ResultSet& q1) 
                  : mmAccount(db, q1) 
 {
@@ -185,6 +186,19 @@ bool mmAccountList::deleteAccount(int accountID)
 
     mmENDSQL_LITE_EXCEPTION;
     return true;
+}
+
+double mmAccountList::getAccountBaseCurrencyConvRate(int accountID)
+{
+   boost::weak_ptr<mmCurrency> wpCurrency = getCurrencyWeakPtr(accountID);
+   boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
+   wxASSERT(pCurrency);
+
+   if (pCurrency)
+      return pCurrency->baseConv_;
+
+
+   return 0.0;
 }
 
 void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)

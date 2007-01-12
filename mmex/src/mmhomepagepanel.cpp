@@ -67,7 +67,8 @@ bool mmHomePagePanel::Create( wxWindow *parent,
     return TRUE;
 }
 
-bool sortTransactionsByRemainingDaysHP( mmBDTransactionHolder elem1, mmBDTransactionHolder elem2 )
+bool sortTransactionsByRemainingDaysHP( mmBDTransactionHolder elem1, 
+                                       mmBDTransactionHolder elem2 )
 {
     return elem1.daysRemaining_ < elem2.daysRemaining_;
 }
@@ -107,7 +108,8 @@ void mmHomePagePanel::updateAccounts()
 
     for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
     {
-        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
+        mmCheckingAccount* pCA 
+           = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pCA)
         {
            std::vector<wxString> data1;
@@ -121,7 +123,8 @@ void mmHomePagePanel::updateAccounts()
            wxASSERT(pCurrencyPtr);
            mmCurrencyFormatter::loadSettings(pCurrencyPtr);
 
-           double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_);
+           double bal = pCA->initialBalance_ 
+              + core_->bTransactionList_.getBalance(pCA->accountID_);
            double rate = pCurrencyPtr->baseConv_;
            // show the actual amount in that account in the original rate
            tBalance += bal * rate;
@@ -176,7 +179,8 @@ void mmHomePagePanel::updateAccounts()
     mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
 
 
-    hb.addHTML(wxT("<tr bgcolor=\"#DCEDD5\" ><td>") + wxString(_("Total of Accounts :")) + wxString(wxT("</td><td align=\"right\"><b>")));
+    hb.addHTML(wxT("<tr bgcolor=\"#DCEDD5\" ><td>") + wxString(_("Total of Accounts :")) 
+       + wxString(wxT("</td><td align=\"right\"><b>")));
     hb.addHTML(tBalanceStr);
     hb.addHTML(wxT("</b></td></tr>"));
     hb.endTable();
@@ -196,7 +200,8 @@ void mmHomePagePanel::updateAccounts()
 
     std::vector<wxString> data2;
     data2.push_back(_("Income vs Expenses: Current Month"));
-    hb.addTableHeaderRow(data2, wxT(" BGCOLOR=\"#80B9E8\" "), wxT(" nowrap width=\"100\" COLSPAN=\"2\" "));
+    hb.addTableHeaderRow(data2, wxT(" BGCOLOR=\"#80B9E8\" "), 
+       wxT(" nowrap width=\"100\" COLSPAN=\"2\" "));
     
     hb.addHTML(wxT("<tr><td>") + baseInc + wxString(wxT("</td><td align=\"right\">")));
     hb.addHTML(incStr);

@@ -230,24 +230,24 @@ void mmAssetsPanel::initVirtualListControl()
             _("Automobile"),
             _("Household Object"),
             _("Art"),
-			_("Jewellery"),
-			_("Cash"),
+			   _("Jewellery"),
+			   _("Cash"),
             _("Other"),
         };
 
         wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
         if (assetTypeStr == wxT("Property"))
-            th.assetType_ =  _("Property");
+           th.assetType_ =  _("Property");
         else if (assetTypeStr == wxT("Automobile"))
-            th.assetType_ =  _("Automobile");
+           th.assetType_ =  _("Automobile");
         else if (assetTypeStr == wxT("Household Object"))
-            th.assetType_ =  _("Household Object");
+           th.assetType_ =  _("Household Object");
         else if (assetTypeStr == wxT("Art"))
-            th.assetType_ =  _("Art");
-		else if (assetTypeStr == wxT("Jewellery"))
-			th.assetType_ =  _("Jewellery");
-		else if (assetTypeStr == wxT("Cash"))
-			th.assetType_ =  _("Cash");
+           th.assetType_ =  _("Art");
+        else if (assetTypeStr == wxT("Jewellery"))
+           th.assetType_ =  _("Jewellery");
+        else if (assetTypeStr == wxT("Cash"))
+           th.assetType_ =  _("Cash");
         else if (assetTypeStr == wxT("Other"))
             th.assetType_ =  _("Other");
                 

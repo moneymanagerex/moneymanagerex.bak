@@ -107,6 +107,7 @@ public:
     void updateAccount(boost::shared_ptr<mmAccount> pAccount);
     bool accountExists(const wxString& accountName);
     boost::weak_ptr<mmCurrency> getCurrencyWeakPtr(int accountID);
+    double getAccountBaseCurrencyConvRate(int accountID);
 
     std::vector< boost::shared_ptr<mmAccount> > accounts_;
     

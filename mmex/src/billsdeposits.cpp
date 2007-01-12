@@ -246,7 +246,7 @@ void mmBillsDepositsPanel::initVirtualListControl()
 
         if (repeats == 0)
         {
-            th.repeatsStr_ = _("None");
+           th.repeatsStr_ = _("None");
         }
         else if (repeats == 1)
         {
@@ -254,23 +254,23 @@ void mmBillsDepositsPanel::initVirtualListControl()
         }
         else if (repeats == 2)
         {
-            th.repeatsStr_ = _("Bi-Weekly");
+           th.repeatsStr_ = _("Bi-Weekly");
         }
         else if (repeats == 3)
         {
-            th.repeatsStr_ = _("Monthly");
+           th.repeatsStr_ = _("Monthly");
         }
         else if (repeats == 4)
         {
-            th.repeatsStr_ = _("Bi-Monthly");
+           th.repeatsStr_ = _("Bi-Monthly");
         }
         else if (repeats == 5)
         {
-            th.repeatsStr_ = _("Quarterly");
+           th.repeatsStr_ = _("Quarterly");
         }
         else if (repeats == 6)
         {
-             th.repeatsStr_ = _("Half-Yearly");
+           th.repeatsStr_ = _("Half-Yearly");
         }
         else if (repeats == 7)
         {
@@ -282,7 +282,7 @@ void mmBillsDepositsPanel::initVirtualListControl()
         }
         else if (repeats == 9)
         {
-            th.repeatsStr_ = _("Four Weeks");
+           th.repeatsStr_ = _("Four Weeks");
         }
 
         wxDateTime today = wxDateTime::Now();

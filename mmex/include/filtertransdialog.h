@@ -96,8 +96,7 @@ class mmFilterTransactionsDialog: public wxDialog
 public:
     /// Constructors
     mmFilterTransactionsDialog( );
-    mmFilterTransactionsDialog(  std::vector<mmTransactionHolder*>* trans, 
-        wxSQLite3Database* db, 
+    mmFilterTransactionsDialog(  std::vector< boost::shared_ptr<mmBankTransaction> >* trans, 
         mmCoreDB* core,
         wxWindow* parent, 
         wxWindowID id = SYMBOL_MMFILTERTRANSACTIONSDIALOG_IDNAME, 
@@ -107,12 +106,17 @@ public:
         long style = SYMBOL_MMFILTERTRANSACTIONSDIALOG_STYLE );
 
     /// Creation
-    bool Create( wxWindow* parent, wxWindowID id = SYMBOL_MMFILTERTRANSACTIONSDIALOG_IDNAME, const wxString& caption = SYMBOL_MMFILTERTRANSACTIONSDIALOG_TITLE, const wxPoint& pos = SYMBOL_MMFILTERTRANSACTIONSDIALOG_POSITION, const wxSize& size = SYMBOL_MMFILTERTRANSACTIONSDIALOG_SIZE, long style = SYMBOL_MMFILTERTRANSACTIONSDIALOG_STYLE );
+    bool Create( wxWindow* parent, 
+       wxWindowID id = SYMBOL_MMFILTERTRANSACTIONSDIALOG_IDNAME, 
+       const wxString& caption = SYMBOL_MMFILTERTRANSACTIONSDIALOG_TITLE, 
+       const wxPoint& pos = SYMBOL_MMFILTERTRANSACTIONSDIALOG_POSITION, 
+       const wxSize& size = SYMBOL_MMFILTERTRANSACTIONSDIALOG_SIZE, 
+       long style = SYMBOL_MMFILTERTRANSACTIONSDIALOG_STYLE );
 
     /// Creates the controls and sizers
     void CreateControls();
 
-////@begin mmFilterTransactionsDialog event handler declarations
+   ////@begin mmFilterTransactionsDialog event handler declarations
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOXACCOUNT
     void OnCheckboxaccountClick( wxCommandEvent& event );
@@ -175,11 +179,11 @@ public:
     wxTextCtrl* notesEdit;
     wxCheckBox* transNumberCheckBox;
     wxTextCtrl* transNumberEdit;
-    std::vector<mmTransactionHolder*>* trans_;
+    std::vector< boost::shared_ptr<mmBankTransaction> >* trans_;
     wxSQLite3Database* db_;
     mmCoreDB* core_;
 
-     int categID_;
+    int categID_;
     int subcategID_;
     int payeeID_;
 ////@end mmFilterTransactionsDialog member variables

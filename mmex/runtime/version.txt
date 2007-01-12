@@ -2,7 +2,9 @@ Version History of Money Manager Ex
 
 0.8.0.3 (??)
 - Fixed univcsv import issue if payee already exists (thanks Ktmam)
-
+- Added Category column to Transaction list
+- Speeded up reporting performance
+- Added Cash Flow Forecast report
 
 0.8.0.2 (Jan 09, 2007)
 - Fixed SQLITE Error when creating accounts

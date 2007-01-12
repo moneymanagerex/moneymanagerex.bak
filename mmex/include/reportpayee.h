@@ -10,10 +10,10 @@
 class mmReportPayeeExpenses : public mmPrintableBase 
 {
 public:
-    mmReportPayeeExpenses(wxSQLite3Database* db, bool ignoreDate, 
+    mmReportPayeeExpenses(mmCoreDB* core, bool ignoreDate, 
         wxDateTime dtBegin, 
         wxDateTime dtEnd) 
-        : db_(db),
+        : core_(core),
           ignoreDate_(ignoreDate),
           dtBegin_(dtBegin),
           dtEnd_(dtEnd)
@@ -36,8 +36,9 @@ public:
         if (!ignoreDate_)
         {
             wxString dtRange = _("From: ") 
-                + mmGetNiceDateSimpleString(tBegin.Add(wxDateSpan::Day())) + _T(" To: ") +
-                mmGetNiceDateSimpleString(dtEnd_);
+                + mmGetNiceDateSimpleString(tBegin.Add(wxDateSpan::Day())) 
+                + _T(" To: ") 
+                + mmGetNiceDateSimpleString(dtEnd_);
             hb.addHeader(7, dtRange);
             hb.addLineBreak();
         }
@@ -50,42 +51,36 @@ public:
         headerR.push_back(_("Amount   "));
         hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
 
-        mmDBWrapper::loadBaseCurrencySettings(db_);
-        mmBEGINSQL_LITE_EXCEPTION;
+        core_->currencyList_.loadBaseCurrencySettings();
+        
 
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("select * from PAYEE_V1 order by PAYEENAME;");
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
-        while (q1.NextRow())
+        int numPayees = (int)core_->payeeList_.payees_.size();
+        for (int idx = 0; idx < numPayees; idx++)
         {
-            int payeeID          = q1.GetInt(wxT("PAYEEID"));
-            wxString payeeString = q1.GetString(wxT("PAYEENAME"));
             wxString balance;
-            double amt = mmDBWrapper::getAmountForPayee(db_, payeeID, ignoreDate_, 
+            double amt = core_->bTransactionList_.getAmountForPayee(
+               core_->payeeList_.payees_[idx]->payeeID_, ignoreDate_, 
                 dtBegin_, dtEnd_);
+
             mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
 
             if (amt != 0.0)
             {
                 std::vector<wxString> data;
-                data.push_back(payeeString);
+                data.push_back(core_->payeeList_.payees_[idx]->payeeName_);
               
                 data.push_back(balance);
                 hb.addRow(data);
             }
-            
         }
-        q1.Finalize();
-        mmENDSQL_LITE_EXCEPTION;
         hb.endTable();
 
         hb.end();
         return hb.getHTMLText();
-
     }
 
 private:
-    wxSQLite3Database* db_;
+    mmCoreDB* core_;
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;
     bool ignoreDate_;

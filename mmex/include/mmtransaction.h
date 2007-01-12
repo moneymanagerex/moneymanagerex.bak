@@ -82,6 +82,8 @@ public:
     wxString fromAccountStr_;
     wxString withdrawalStr_;
     wxString depositStr_;
+    wxString fullCatStr_;
+
     double balance_;
     wxString balanceStr_;
     int payeeID_;
@@ -105,13 +107,19 @@ public:
     void deleteTransaction(int accountID, int transactionID);
     void deleteTransactions(int accountID);
 
+    /* Query Functions */
     void getExpensesIncome(int accountID, double& expenses, double& income,  
                            bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd);
+    double getAmountForCategory(int categID, int subcategID, bool ignoreDate,
+                                 wxDateTime dtBegin, wxDateTime dtEnd);
+    double getAmountForPayee(int payeeID, bool ignoreDate, 
+                                 wxDateTime dtbegin, wxDateTime dtEnd);
 
     double getBalance(int accountID, bool ignoreFuture = false);
     double getReconciledBalance(int accountID);
-    int countFollowupTransactions();
+    int    countFollowupTransactions();
 
+    /* Update Transactions */
     void updateAllTransactions();
     void updateAllTransactionsForCategory(mmCoreDB* core, int categID, int subCategID);
     void updateAllTransactionsForPayee(mmCoreDB* core, 

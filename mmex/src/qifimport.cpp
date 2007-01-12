@@ -654,7 +654,8 @@ Are you are sure you want to proceed with the import?"),
                 if(dt.Trim().IsEmpty()  || type.Trim().IsEmpty() || amount.Trim().IsEmpty())
                 {
                     log << _("Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had ");
-                    log << _(" payee ") << payee << _(" type ") << type << _(" amount ") << amount << _(" date ") << convDate 
+                    log << _(" payee ") << payee << _(" type ") << type 
+                       << _(" amount ") << amount << _(" date ") << convDate 
                         << endl;
 
                     payee = wxT("");
@@ -712,9 +713,7 @@ Are you are sure you want to proceed with the import?"),
         fileviewer* dlg = new fileviewer(logFile, 0);
         dlg->ShowModal();
         dlg->Destroy();
-
     }
-
    
     scd->Destroy();
     return fromAccountID;

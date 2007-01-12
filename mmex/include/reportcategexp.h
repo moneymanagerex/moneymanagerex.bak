@@ -28,10 +28,11 @@
 class mmReportCategoryExpenses : public mmPrintableBase 
 {
 public:
-    mmReportCategoryExpenses(wxSQLite3Database* db, bool ignoreDate, 
+    mmReportCategoryExpenses(mmCoreDB* core, bool ignoreDate, 
         wxDateTime dtBegin, 
         wxDateTime dtEnd) 
-        : db_(db),
+        : core_(core),
+          db_(core_->db_.get()),
           ignoreDate_(ignoreDate),
           dtBegin_(dtBegin),
           dtEnd_(dtEnd)
@@ -69,9 +70,10 @@ public:
         headerR.push_back(_("Amount   "));
         hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
 
-        mmDBWrapper::loadBaseCurrencySettings(db_);
-        mmBEGINSQL_LITE_EXCEPTION;
+        core_->currencyList_.loadBaseCurrencySettings();
 
+        // Clean this up
+        mmBEGINSQL_LITE_EXCEPTION;
         wxSQLite3StatementBuffer bufSQL;
         bufSQL.Format("select * from CATEGORY_V1 order by CATEGNAME;");
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
@@ -80,7 +82,7 @@ public:
             int categID          = q1.GetInt(wxT("CATEGID"));
             wxString categString = q1.GetString(wxT("CATEGNAME"));
             wxString balance;
-            double amt = mmDBWrapper::getAmountForCategory(db_, categID, -1, ignoreDate_, 
+            double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignoreDate_, 
                 dtBegin_, dtEnd_);
             mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
 
@@ -101,7 +103,7 @@ public:
                 int subcategID          = q2.GetInt(wxT("SUBCATEGID"));
                 wxString subcategString    = q2.GetString(wxT("SUBCATEGNAME"));
 
-                amt = mmDBWrapper::getAmountForCategory(db_, categID, subcategID, 
+                amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, 
                     ignoreDate_,  dtBegin_, dtEnd_);
                 mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
 
@@ -126,6 +128,7 @@ public:
     }
 
 private:
+    mmCoreDB* core_;
     wxSQLite3Database* db_;
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;

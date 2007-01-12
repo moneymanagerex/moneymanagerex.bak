@@ -26,8 +26,6 @@
 #define SYMBOL_ABOUTDIALOG_SIZE     wxSize(500, 220)
 #define SYMBOL_ABOUTDIALOG_POSITION wxDefaultPosition
 
-#define ID_DIALOG_BUTTON_ABOUT_CONTRIBUTERS 5000
-
 class mmAboutDialog : public wxDialog
 {    
     DECLARE_DYNAMIC_CLASS( mmTransDialog )

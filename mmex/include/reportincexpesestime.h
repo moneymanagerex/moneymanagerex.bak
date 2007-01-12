@@ -11,15 +11,15 @@
 class mmReportIncExpensesOverTime : public mmPrintableBase 
 {
 public:
-    mmReportIncExpensesOverTime(wxSQLite3Database* db, int year) 
-        : db_(db),
+    mmReportIncExpensesOverTime(mmCoreDB* core, int year) 
+        : core_(core),
           year_(year)
     {
     }
 
     virtual wxString getHTMLText()
     {
-        mmDBWrapper::loadBaseCurrencySettings(db_);
+        core_->currencyList_.loadBaseCurrencySettings();
 
         wxString yearStr = wxString::Format(wxT("%d"), year_);
 
@@ -35,7 +35,6 @@ public:
 
         hb.addHTML(wxT("<font size=\"-2\">"));
 
-
         wxDateTime yearBegin(1, wxDateTime::Jan, year_);
         wxDateTime yearEnd(31, wxDateTime::Dec, year_);
 
@@ -45,6 +44,7 @@ public:
         headerR.push_back(_("Income"));
         headerR.push_back(_("Expenses"));
         hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
+
         double income = 0.0;
         double expenses = 0.0;
         
@@ -52,16 +52,17 @@ public:
         {
             wxString monName = wxDateTime::GetMonthName((wxDateTime::Month)yidx) + wxT(" ") + yearStr;
 
-
             wxDateTime dtBegin(1, (wxDateTime::Month)yidx, year_);
             wxDateTime dtEnd = dtBegin.GetLastMonthDay((wxDateTime::Month)yidx, year_);
             
             bool ignoreDate = false;
             income = 0.0;
             expenses = 0.0;
-            mmDBWrapper::getExpensesIncome(db_, -1, expenses, income,  ignoreDate, dtBegin, dtEnd);
+            core_->bTransactionList_.getExpensesIncome(-1, expenses, income,  ignoreDate, dtBegin, dtEnd);
+            
             wxString actualExpStr;
             mmCurrencyFormatter::formatDoubleToCurrencyEdit(expenses, actualExpStr);
+            
             wxString actualIncStr;
             mmCurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
 
@@ -81,13 +82,17 @@ public:
         prevYearEnd.SetYear(year_);
         prevYearEnd.SetMonth(wxDateTime::Dec);
         prevYearEnd.SetDay(31);
+        
         wxDateTime dtEnd = prevYearEnd;
         wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
+        
         expenses = 0.0;
         income = 0.0;
-        mmDBWrapper::getExpensesIncome(db_, -1, expenses, income,  false, dtBegin, dtEnd);
+        core_->bTransactionList_.getExpensesIncome(-1, expenses, income,  false, dtBegin, dtEnd);
+        
         wxString actualExpStr;
         mmCurrencyFormatter::formatDoubleToCurrencyEdit(expenses, actualExpStr);
+
         wxString actualIncStr;
         mmCurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
 
@@ -108,7 +113,7 @@ public:
     }
 
 private:
-    wxSQLite3Database* db_;
+    mmCoreDB* core_;
     int year_;
 };
 

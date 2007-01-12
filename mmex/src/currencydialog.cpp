@@ -102,7 +102,8 @@ void mmCurrencyDialog::fillControls()
 void mmCurrencyDialog::updateControls()
 {
     wxString currencyName = currencyChoice_->GetStringSelection();
-    boost::shared_ptr<mmCurrency > pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyName);
+    boost::shared_ptr<mmCurrency > pCurrency 
+       = core_->currencyList_.getCurrencySharedPtr(currencyName);
 
     wxTextCtrl* pfxTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_PFX);
     wxTextCtrl* sfxTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SFX);
@@ -168,9 +169,11 @@ void mmCurrencyDialog::CreateControls()
 
     wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
         wxID_STATIC, _("Suffix Symbol"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemStaticText8, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemFlexGridSizer3->Add(itemStaticText8, 0, 
+       wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxTextCtrl* itemTextCtrl9 = new wxTextCtrl( itemDialog1, ID_DIALOG_CURRENCY_TEXT_SFX, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+    wxTextCtrl* itemTextCtrl9 = new wxTextCtrl( itemDialog1, 
+       ID_DIALOG_CURRENCY_TEXT_SFX, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer3->Add(itemTextCtrl9, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 

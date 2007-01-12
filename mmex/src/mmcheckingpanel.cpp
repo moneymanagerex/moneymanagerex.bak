@@ -121,7 +121,7 @@ mmCheckingPanel::~mmCheckingPanel()
     if (m_imageList)
         delete m_imageList;
 
-    long col0, col1, col2, col3, col4, col5, col6;
+    long col0, col1, col2, col3, col4, col5, col6, col7;
     col0 = listCtrlAccount_->GetColumnWidth(0);
     col1 = listCtrlAccount_->GetColumnWidth(1);
     col2 = listCtrlAccount_->GetColumnWidth(2);
@@ -129,6 +129,7 @@ mmCheckingPanel::~mmCheckingPanel()
     col4 = listCtrlAccount_->GetColumnWidth(4);
     col5 = listCtrlAccount_->GetColumnWidth(5);
     col6 = listCtrlAccount_->GetColumnWidth(6);
+    col7 = listCtrlAccount_->GetColumnWidth(7);
 
     wxString col0Str = wxString::Format(wxT("%d"), col0);
     wxString col1Str = wxString::Format(wxT("%d"), col1);
@@ -137,6 +138,7 @@ mmCheckingPanel::~mmCheckingPanel()
     wxString col4Str = wxString::Format(wxT("%d"), col4);
     wxString col5Str = wxString::Format(wxT("%d"), col5);
     wxString col6Str = wxString::Format(wxT("%d"), col6);
+    wxString col7Str = wxString::Format(wxT("%d"), col7);
     wxString sortColStr = wxString::Format(wxT("%d"), sortcol);
     wxString ascStr = wxString::Format(wxT("%d"), asc);
 
@@ -147,6 +149,7 @@ mmCheckingPanel::~mmCheckingPanel()
     mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL4_WIDTH"), col4Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL5_WIDTH"), col5Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL6_WIDTH"), col6Str); 
+    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL7_WIDTH"), col7Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_SORT_COL"), sortColStr); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_ASC"), ascStr); 
 }
@@ -262,18 +265,19 @@ void mmCheckingPanel::CreateControls()
 
     listCtrlAccount_->InsertColumn(2, _("Payee"));
     listCtrlAccount_->InsertColumn(3, _("C  "));
+    listCtrlAccount_->InsertColumn(4, _("Category"));
     
     itemCol.SetImage(-1);
     itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
     itemCol.SetText(_("Withdrawal"));
-    listCtrlAccount_->InsertColumn(4, itemCol);
-    itemCol.SetText(_("Deposit"));
     listCtrlAccount_->InsertColumn(5, itemCol);
-    itemCol.SetText(_("Balance"));
+    itemCol.SetText(_("Deposit"));
     listCtrlAccount_->InsertColumn(6, itemCol);
+    itemCol.SetText(_("Balance"));
+    listCtrlAccount_->InsertColumn(7, itemCol);
     
     /* See if we can get data from inidb */
-     long col0, col1, col2, col3, col4, col5, col6;
+     long col0, col1, col2, col3, col4, col5, col6, col7;
      mmDBWrapper::getINISettingValue(inidb_, 
         wxT("CHECK_COL0_WIDTH"), wxT("80")).ToLong(&col0); 
      mmDBWrapper::getINISettingValue(inidb_, 
@@ -288,6 +292,8 @@ void mmCheckingPanel::CreateControls()
          wxT("CHECK_COL5_WIDTH"), wxT("-62")).ToLong(&col5); 
      mmDBWrapper::getINISettingValue(inidb_, 
          wxT("CHECK_COL6_WIDTH"), wxT("-2")).ToLong(&col6); 
+     mmDBWrapper::getINISettingValue(inidb_, 
+         wxT("CHECK_COL7_WIDTH"), wxT("-2")).ToLong(&col7); 
 
     long iniSortCol, iniSortAsc;
     mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_SORT_COL"), wxT("0")).ToLong(&iniSortCol); 
@@ -305,6 +311,7 @@ void mmCheckingPanel::CreateControls()
     listCtrlAccount_->SetColumnWidth(4, col4);
     listCtrlAccount_->SetColumnWidth(5, col5);
     listCtrlAccount_->SetColumnWidth(6, col6);
+    listCtrlAccount_->SetColumnWidth(7, col7);
     listCtrlAccount_->SetColumnImage(listCtrlAccount_->sortCol_, 5);
 
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, ID_PANEL1, 
@@ -396,7 +403,15 @@ bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
             return elem1->status_ > elem2->status_;
     }
 
-    if ((sortcol == 4) || (sortcol == 5))
+    if (sortcol== 4)
+    {
+        if (asc)
+           return elem1->fullCatStr_ < elem2->fullCatStr_;
+        else
+            return elem1->fullCatStr_ > elem2->fullCatStr_;
+    }
+
+    if ((sortcol == 5) || (sortcol == 6))
     {
         if (asc)
             return elem1->amt_ < elem2->amt_;
@@ -682,9 +697,10 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
             wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
         {
+           mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*> ( 
+              core_->accountList_.getAccountSharedPtr(accountID_).get());
             for (unsigned long idx = 0; idx < trans_.size(); idx++)
             {
-               mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*> ( core_->accountList_.getAccountSharedPtr(accountID_).get());
                core_->bTransactionList_.deleteTransaction(accountID_, trans_[idx]->transactionID());
             }
         }
@@ -696,8 +712,16 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
             wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
         {
-            // TODO: MK FIX THIS
-            mmDBWrapper::deleteFlaggedTransactions(db_, accountID_);
+           mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*> ( 
+              core_->accountList_.getAccountSharedPtr(accountID_).get());
+            for (unsigned long idx = 0; idx < trans_.size(); idx++)
+            {
+               if (trans_[idx]->status_ == wxT("F"))
+               {
+                  core_->bTransactionList_.deleteTransaction(accountID_, 
+                     trans_[idx]->transactionID());
+               }
+            }
         }
     }
     else
@@ -814,7 +838,7 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
 void MyListCtrl::OnColClick(wxListEvent& event)
 {
     /* Figure out which column has to be sorted */
-    if (event.GetColumn() == 6)
+    if (event.GetColumn() == 7)
         return;
 
     /* Clear previous column image */
@@ -857,12 +881,15 @@ wxString mmCheckingPanel::getItem(long item, long column)
         return trans_[item]->status_;
 
     if (column == 4)
-       return trans_[item]->withdrawalStr_;
+       return trans_[item]->fullCatStr_;
 
     if (column == 5)
+       return trans_[item]->withdrawalStr_;
+
+    if (column == 6)
         return trans_[item]->depositStr_; 
     
-    if (column == 6)
+    if (column == 7)
         return trans_[item]->balanceStr_;
 
     return wxT("");
@@ -988,11 +1015,9 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& event)
     if (msgDlg.ShowModal() == wxID_YES)
     {
         SetItemCount(0);
-        this->cp_->core_->bTransactionList_.deleteTransaction(this->cp_->accountID_, cp_->trans_[selectedIndex_]->transactionID());
-        //DeleteItem(selectedIndex_);
-        
+        this->cp_->core_->bTransactionList_.deleteTransaction(this->cp_->accountID_, 
+           cp_->trans_[selectedIndex_]->transactionID());
         cp_->initVirtualListControl();
- 
     }
 }
 

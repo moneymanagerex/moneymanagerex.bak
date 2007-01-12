@@ -28,24 +28,17 @@
 #include <algorithm>
 #include <vector>
 
-
-
 class mmReportTransactions : public mmPrintableBase 
 {
 public:
-    mmReportTransactions(std::vector<mmTransactionHolder*>* trans, wxSQLite3Database* db) 
-        : trans_(trans), db_(db)
+    mmReportTransactions(std::vector< boost::shared_ptr<mmBankTransaction> >* trans, mmCoreDB* core) 
+        : trans_(trans), core_(core)
     {
     }
 
     ~mmReportTransactions()
     {
-        std::vector<mmTransactionHolder*>& refTrans = *trans_;
-        for (unsigned int index = 0; index < refTrans.size(); index++)
-        {
-            delete refTrans[index];
-        }
-
+        std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = *trans_;
         delete trans_;
     }
 
@@ -75,15 +68,16 @@ public:
         for (unsigned int index = 0; index < trans_->size(); index++)
         {
             std::vector<wxString> data;
-            std::vector<mmTransactionHolder*>& refTrans = *trans_;
+            std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = *trans_;
 
             data.push_back(refTrans[index]->dateStr_);
             data.push_back(refTrans[index]->fromAccountStr_);
             data.push_back(refTrans[index]->payeeStr_);
             data.push_back(refTrans[index]->transType_);
             data.push_back(refTrans[index]->status_);
-            data.push_back(refTrans[index]->depositStr_);
-            double dbRate = mmDBWrapper::getCurrencyBaseConvRate(db_, refTrans[index]->accountID_);
+            data.push_back(refTrans[index]->transAmtString_);
+            
+            double dbRate = core_->accountList_.getAccountBaseCurrencyConvRate(refTrans[index]->accountID_);
             double transAmount = refTrans[index]->amt_ * dbRate;
 
             if (refTrans[index]->transType_ == wxT("Deposit"))
@@ -99,7 +93,7 @@ public:
         hb.endTable();
 
         wxString balanceStr;
-        mmDBWrapper::loadBaseCurrencySettings(db_);
+        core_->currencyList_.loadBaseCurrencySettings();
         mmCurrencyFormatter::formatDoubleToCurrency(total, balanceStr);
         dt = _("Total Amount: ") + balanceStr;
 
@@ -110,12 +104,11 @@ public:
 
         hb.end();
         return hb.getHTMLText();
-
     }
 
 private:
-    std::vector<mmTransactionHolder*>* trans_;
-     wxSQLite3Database* db_;
+    std::vector< boost::shared_ptr<mmBankTransaction> >* trans_;
+    mmCoreDB* core_;
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;
     bool ignoreDate_;

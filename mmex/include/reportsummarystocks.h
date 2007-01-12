@@ -90,7 +90,7 @@ public:
             th.valueStr_          = q1.GetString(wxT("VALUE"));
             th.value_             = q1.GetDouble(wxT("VALUE"));
             double commission     = q1.GetDouble(wxT("COMMISSION"));
-            wxString dateString = q1.GetString(wxT("PURCHASEDATE"));
+            wxString dateString   = q1.GetString(wxT("PURCHASEDATE"));
             wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
             wxString dt = mmGetDateForDisplay(db_, dtdt);
             

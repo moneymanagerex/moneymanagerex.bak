@@ -27,7 +27,7 @@
 class mmReportSummary : public mmPrintableBase 
 {
 public:
-    mmReportSummary(wxSQLite3Database* db) : db_(db) {}
+    mmReportSummary(mmCoreDB* core) : core_(core), db_(core_->db_.get()) {}
 
     virtual wxString getHTMLText()
     {
@@ -50,8 +50,7 @@ public:
         double tincome = 0.0;
         double texpenses = 0.0;
         double tBalance = 0.0;
-        mmBEGINSQL_LITE_EXCEPTION;
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
+
         hb.beginTable();
 
         std::vector<wxString> headerR;
@@ -59,33 +58,33 @@ public:
         headerR.push_back(_("Balance   "));
         hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
 
-        while (q1.NextRow())
+        for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
         {
-            double bal = mmDBWrapper::getTotalBalanceOnAccount(db_, q1.GetInt(wxT("ACCOUNTID")), true);
+           mmCheckingAccount* pCA 
+              = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
+           if (pCA)
+           {
+              double bal = pCA->initialBalance_ 
+                  + core_->bTransactionList_.getBalance(pCA->accountID_);
+              
+              boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
+              wxASSERT(pCurrencyPtr);
+              mmCurrencyFormatter::loadSettings(pCurrencyPtr);
+              double rate = pCurrencyPtr->baseConv_;
 
-            wxSQLite3StatementBuffer bufSQL;
-            bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", q1.GetInt(wxT("ACCOUNTID")));
-            wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL);
-            if (q2.NextRow())
-            {
-                int currencyID = q2.GetInt(wxT("CURRENCYID"));
-                mmDBWrapper::loadSettings(db_, currencyID);
-            }
-            q2.Finalize();
+              tBalance += bal * rate;;
 
-            double rate = mmDBWrapper::getCurrencyBaseConvRate(db_, q1.GetInt(wxT("ACCOUNTID")));
-            tBalance += bal * rate;;
+              wxString balance;
+              mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
 
-            wxString balance;
-            mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
-
-            std::vector<wxString> row;
-            row.push_back(q1.GetString(wxT("ACCOUNTNAME")));
-            row.push_back(balance);
-            hb.addRow(row);
+              std::vector<wxString> row;
+              row.push_back(pCA->accountName_);
+              row.push_back(balance);
+              hb.addRow(row);
+           }
         }
         hb.endTable();
-        mmENDSQL_LITE_EXCEPTION
+        
 
         /* Stocks */
         double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_);
@@ -122,9 +121,8 @@ public:
     }
 
 private:
+    mmCoreDB* core_;
     wxSQLite3Database* db_;
-
-
 };
 
 #endif

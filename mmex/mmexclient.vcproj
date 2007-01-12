@@ -696,11 +696,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\reportcashflow.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\reportcategexp.h"
 				>
 			</File>
 			<File
 				RelativePath=".\include\reportincexpenses.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\reportincexpesestime.h"
 				>
 			</File>
 			<File

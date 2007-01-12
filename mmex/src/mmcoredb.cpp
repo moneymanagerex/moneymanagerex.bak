@@ -80,7 +80,9 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
         int categID = q1.GetInt(wxT("CATEGID"));
         int subCategID = q1.GetInt(wxT("SUBCATEGID"));
 
-        boost::shared_ptr<mmPayee> pPayee(new mmPayee(payeeID, payeeString, categoryList_.getCategorySharedPtr(categID, subCategID)));
+        boost::shared_ptr<mmPayee> pPayee(
+           new mmPayee(payeeID, payeeString, 
+           categoryList_.getCategorySharedPtr(categID, subCategID)));
         payeeList_.payees_.push_back(pPayee);
     }
     q1.Finalize();
@@ -96,7 +98,8 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
         else
             ptrBase = new mmInvestmentAccount(db_, q1);
 
-        boost::weak_ptr<mmCurrency> pCurrency = currencyList_.getCurrencySharedPtr(q1.GetInt(wxT("CURRENCYID")));
+        boost::weak_ptr<mmCurrency> pCurrency
+           = currencyList_.getCurrencySharedPtr(q1.GetInt(wxT("CURRENCYID")));
         ptrBase->currency_ = pCurrency;
         boost::shared_ptr<mmAccount> pAccount(ptrBase);
         accountList_.accounts_.push_back(pAccount);

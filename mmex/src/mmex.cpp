@@ -40,6 +40,7 @@
 #include "reportsummarystocks.h"
 #include "reportsummaryassets.h"
 #include "reporttransactions.h"
+#include "reportcashflow.h"
 
 #include "appstartdialog.h"
 #include "aboutdialog.h"
@@ -716,6 +717,12 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(budgetPerformance, 
         new mmTreeItemData(wxT("Budget Performance")));
 
+     ///////////////////////////////////////////////////////////////////
+    wxTreeItemId cashFlow = navTreeCtrl_->AppendItem(reports, 
+        _("Cash Flow"), 4, 4);
+    navTreeCtrl_->SetItemData(cashFlow, 
+        new mmTreeItemData(wxT("Cash Flow")));
+
     ///////////////////////////////////////////////////////
     wxTreeItemId help = navTreeCtrl_->AppendItem(root, _("Help"), 5, 5);
     navTreeCtrl_->SetItemData(help, new mmTreeItemData(wxT("Help")));
@@ -800,7 +807,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             mmTreeItemData* iParentData = dynamic_cast<mmTreeItemData*>(navTreeCtrl_->GetItemData(idparent));
             if (iParentData->getString() == wxT("Budget Performance"))
             {
-                mmPrintableBase* rs = new mmReportBudgetingPerformance(db_.get(), data);
+                mmPrintableBase* rs = new mmReportBudgetingPerformance(core_, data);
                 menuPrintingEnable(true);
                 createReportsPage(rs);
             }
@@ -859,7 +866,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
         if (iData->getString() == wxT("Summary of Accounts"))
         {
-            mmPrintableBase* rs = new mmReportSummary(db_.get());
+            mmPrintableBase* rs = new mmReportSummary(core_);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -880,8 +887,8 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
         if (iData->getString() == wxT("Where the Money Goes"))
         {
-            mmPrintableBase* rs = new mmReportCategoryExpenses(db_.get(), true, wxDateTime::Now(),
-                wxDateTime::Now());
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, 
+               true, wxDateTime::Now(), wxDateTime::Now());
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -899,7 +906,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
 
-            mmPrintableBase* rs = new mmReportCategoryExpenses(db_.get(), false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -910,7 +917,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today;
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            mmPrintableBase* rs = new mmReportCategoryExpenses(db_.get(), false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -921,7 +928,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
-            mmPrintableBase* rs = new mmReportCategoryExpenses(db_.get(), false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -936,7 +943,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             prevYearEnd.SetDay(31);
             wxDateTime dtEnd = prevYearEnd;
             wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-            mmPrintableBase* rs = new mmReportCategoryExpenses(db_.get(), false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -951,7 +958,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             yearBegin.SetDay(31);
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = yearBegin;
-            mmPrintableBase* rs = new mmReportCategoryExpenses(db_.get(), false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -962,7 +969,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear();
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(db_.get(), year);
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(core_, year);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -980,7 +987,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
 
-            mmPrintableBase* rs = new mmReportIncomeExpenses(db_.get(), false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportIncomeExpenses(core_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -991,7 +998,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today;
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            mmPrintableBase* rs = new mmReportIncomeExpenses(db_.get(), false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportIncomeExpenses(core_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1002,7 +1009,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
-            mmPrintableBase* rs = new mmReportIncomeExpenses(db_.get(), false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportIncomeExpenses(core_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1011,7 +1018,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear()-1;
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(db_.get(), year);
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(core_, year);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1020,14 +1027,14 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear();
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(db_.get(), year);
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(core_, year);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
 
         if (iData->getString() == wxT("Income vs Expenses - All Time"))
         {
-            mmPrintableBase* rs = new mmReportIncomeExpenses(db_.get(), true, wxDateTime::Now(),
+            mmPrintableBase* rs = new mmReportIncomeExpenses(core_, true, wxDateTime::Now(),
                 wxDateTime::Now());
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1037,7 +1044,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
         if (iData->getString() == wxT("To Whom the Money Goes"))
         {
-            mmPrintableBase* rs = new mmReportPayeeExpenses(db_.get(), true, wxDateTime::Now(),
+            mmPrintableBase* rs = new mmReportPayeeExpenses(core_, true, wxDateTime::Now(),
                 wxDateTime::Now());
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1057,7 +1064,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
 
-            mmPrintableBase* rs = new mmReportPayeeExpenses(db_.get(), false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(core_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1068,7 +1075,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today;
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            mmPrintableBase* rs = new mmReportPayeeExpenses(db_.get(), false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(core_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1079,7 +1086,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
-            mmPrintableBase* rs = new mmReportPayeeExpenses(db_.get(), false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(core_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1094,7 +1101,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             prevYearEnd.SetDay(31);
             wxDateTime dtEnd = prevYearEnd;
             wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-            mmPrintableBase* rs = new mmReportPayeeExpenses(db_.get(), false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(core_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1109,7 +1116,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             yearBegin.SetDay(31);
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = yearBegin;
-            mmPrintableBase* rs = new mmReportPayeeExpenses(db_.get(), false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(core_, false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1119,6 +1126,14 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createHelpPage();
         }
+
+        if (iData->getString() == wxT("Cash Flow"))
+        {
+            mmPrintableBase* rs = new mmReportCashFlow(core_);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+        
         Thaw();
 
          ///////////////////////////////////////////////
@@ -1952,22 +1967,16 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& event)
      if (mmDBWrapper::getNumAccounts(db_.get()) == 0)
          return;
 
-    std::vector<mmTransactionHolder*>* trans = new std::vector<mmTransactionHolder*>;;
-    mmFilterTransactionsDialog* dlg = new mmFilterTransactionsDialog(trans, db_.get(), core_, this);
+    std::vector< boost::shared_ptr<mmBankTransaction> >* trans = new std::vector< boost::shared_ptr<mmBankTransaction> >;
+    mmFilterTransactionsDialog* dlg = new mmFilterTransactionsDialog(trans, core_, this);
     if (dlg->ShowModal() == wxID_OK)
     {
-        mmPrintableBase* rs = new mmReportTransactions(trans, db_.get());
+        mmPrintableBase* rs = new mmReportTransactions(trans, core_);
         menuPrintingEnable(true);
         createReportsPage(rs);
     }
     else
     {
-        std::vector<mmTransactionHolder*>& refTrans = *trans;
-        for (unsigned int index = 0; index < refTrans.size(); index++)
-        {
-            delete refTrans[index];
-        }
-
         delete trans;
     }
     dlg->Destroy();

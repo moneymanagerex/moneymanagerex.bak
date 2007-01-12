@@ -6,13 +6,13 @@
 #include "reportbase.h"
 #include "util.h"
 #include "dbwrapper.h"
-#include "budgetingpanel.h"
 
 class mmReportBudgetingPerformance : public mmPrintableBase 
 {
 public:
-    mmReportBudgetingPerformance(wxSQLite3Database* db, int year) 
-        : db_(db),
+    mmReportBudgetingPerformance(mmCoreDB* core, int year) 
+        : core_(core),
+          db_(core_->db_.get()),
           year_(year)
     {
     }
@@ -136,7 +136,7 @@ public:
             wxString totalEstimatedStr_;
             mmCurrencyFormatter::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
 
-            th.actual_ = mmDBWrapper::getAmountForCategory(db_, th.categID_, th.subcategID_, 
+            th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_, 
                 false,  yearBegin, yearEnd);
             mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
 
@@ -171,8 +171,8 @@ public:
                     wxDateTime dtBegin(1, (wxDateTime::Month)yidx, year);
                     wxDateTime dtEnd = dtBegin.GetLastMonthDay((wxDateTime::Month)yidx, year);
 
-                    double actualMonthVal = mmDBWrapper::getAmountForCategory(db_, th.categID_, th.subcategID_, 
-                        false,  dtBegin, dtEnd);
+                    double actualMonthVal = core_->bTransactionList_.getAmountForCategory(
+                                 th.categID_, th.subcategID_, false,  dtBegin, dtEnd);
                     wxString actualMonthValStr;
                     mmCurrencyFormatter::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
                     data.push_back(actualMonthValStr);
@@ -199,7 +199,8 @@ public:
                 thsub.estimated_ = 0.0;
                 thsub.actualStr_ = wxT("0.0");
                 thsub.actual_ = 0.0;
-                mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, 
+                mmDBWrapper::getBudgetEntry(db_, budgetYearID_, 
+                   thsub.categID_, thsub.subcategID_, thsub.period_, 
                     thsub.amt_);
 
                 totalEstimated_ = 0.0;
@@ -247,7 +248,7 @@ public:
                 else
                     estIncome += totalEstimated_;
 
-                thsub.actual_ = mmDBWrapper::getAmountForCategory(db_, thsub.categID_, thsub.subcategID_, 
+                thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, 
                     false,  yearBegin, yearEnd);
                 mmCurrencyFormatter::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
                 if (thsub.actual_ < 0)
@@ -281,7 +282,8 @@ public:
                         wxDateTime dtBegin(1, (wxDateTime::Month)yidx, year);
                         wxDateTime dtEnd = dtBegin.GetLastMonthDay((wxDateTime::Month)yidx, year);
 
-                        double actualMonthVal = mmDBWrapper::getAmountForCategory(db_, thsub.categID_, thsub.subcategID_, 
+                        double actualMonthVal 
+                           = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, 
                             false,  dtBegin, dtEnd);
                         wxString actualMonthValStr;
                         mmCurrencyFormatter::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
@@ -309,6 +311,7 @@ public:
     }
 
 private:
+    mmCoreDB* core_;
     wxSQLite3Database* db_;
     int year_;
 };
