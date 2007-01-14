@@ -81,6 +81,17 @@ bool mmPayeeList::deletePayee(int payeeID)
     return false;
 }
 
+bool sortPayees( boost::shared_ptr<mmPayee> elem1, boost::shared_ptr<mmPayee> elem2 )
+{
+    return elem1->payeeName_ < elem2->payeeName_;
+}
+
+void mmPayeeList::sortPayeeList(void)
+{
+    // sort the payee list alphabetically
+    std::sort(payees_.begin(), payees_.end(), sortPayees);
+}
+
 boost::shared_ptr<mmPayee> mmPayeeList::getPayeeSharedPtr(int payeeID)
 {
     int numPayees = (int)payees_.size();

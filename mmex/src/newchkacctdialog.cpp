@@ -271,7 +271,7 @@ void mmNewAcctDialog::CreateControls()
 
     wxTextCtrl* itemTextCtrl18 = new wxTextCtrl( itemDialog1, 
         ID_DIALOG_NEWACCT_TEXTCTRL_NOTES, 
-        wxT(""), wxDefaultPosition, wxSize(150, -1), wxTE_MULTILINE );
+        wxT(""), wxDefaultPosition, wxSize(150, 70), wxTE_MULTILINE );
     itemGridSizer2->Add(itemTextCtrl18, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
     itemTextCtrl18->SetToolTip(_("Enter user notes and details about this account."));
 

@@ -46,6 +46,8 @@ public:
     bool payeeExists(const wxString& payeeName);
     int getPayeeID(const wxString& payeeName);
     boost::shared_ptr<mmPayee> getPayeeSharedPtr(int payeeID);
+    void sortPayeeList(void);
+
 
     std::vector< boost::shared_ptr<mmPayee> > payees_;
     

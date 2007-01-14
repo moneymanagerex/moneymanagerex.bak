@@ -10,8 +10,8 @@
 class mmReportCashFlow : public mmPrintableBase 
 {
 public:
-    mmReportCashFlow(mmCoreDB* core) 
-        : core_(core)
+    mmReportCashFlow(mmCoreDB* core, const wxArrayString* accountArray = NULL) 
+        : core_(core), accountArray_(accountArray)
     {
     }
 
@@ -43,6 +43,22 @@ public:
               = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
            if (pCA)
            {
+              // Check if this account belongs in our list
+               if (accountArray_ != NULL)
+               {
+                   bool isFound = false;
+                   for (int arrIdx = 0; arrIdx < accountArray_->size(); arrIdx++)
+                   {
+                       if (pCA->accountName_ == accountArray_->Item(arrIdx))
+                       {
+                           isFound = true;
+                           break;
+                       }
+                   }
+                   if (!isFound)
+                       continue; // skip account
+               }
+
               double bal = pCA->initialBalance_ 
                   + core_->bTransactionList_.getBalance(pCA->accountID_);
               
@@ -92,6 +108,22 @@ public:
 
            if (transType == wxT("Transfer"))
               continue;
+
+           int accountID     = q1.GetInt(wxT("ACCOUNTID"));
+           if (accountArray_ != NULL)
+           {
+               bool isFound = false;
+               for (int arrIdx = 0; arrIdx < accountArray_->size(); arrIdx++)
+               {
+                   if (accountID == core_->accountList_.getAccountID(accountArray_->Item(arrIdx)))
+                   {
+                       isFound = true;
+                       break;
+                   }
+               }
+               if (!isFound)
+                   continue; // skip account
+           }
 
            // Process all possible repeating transactions for this BD
            while(1)
@@ -210,6 +242,7 @@ private:
    mmCoreDB* core_;
    typedef std::vector<mmRepeatForecast> forecastVec;
    std::vector< forecastVec > bdForecastVec;
+   const wxArrayString* accountArray_;
 };
 
 #endif

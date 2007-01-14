@@ -723,6 +723,11 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(cashFlow, 
         new mmTreeItemData(wxT("Cash Flow")));
 
+    wxTreeItemId cashflowSpecificAccounts = navTreeCtrl_->AppendItem(cashFlow, 
+        _("Cash Flow - Specific Accounts"), 4, 4);
+    navTreeCtrl_->SetItemData(cashflowSpecificAccounts, 
+        new mmTreeItemData(wxT("Cash Flow - Specific Accounts")));
+
     ///////////////////////////////////////////////////////
     wxTreeItemId help = navTreeCtrl_->AppendItem(root, _("Help"), 5, 5);
     navTreeCtrl_->SetItemData(help, new mmTreeItemData(wxT("Help")));
@@ -1135,6 +1140,11 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         
         Thaw();
+
+        if (iData->getString() == wxT("Cash Flow - Specific Accounts"))
+        {
+            OnCashFlowSpecificAccounts();
+        }
 
          ///////////////////////////////////////////////
         if (iData->getString() == wxT("Transaction Report"))
@@ -1980,6 +1990,44 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& event)
         delete trans;
     }
     dlg->Destroy();
+}
+
+void mmGUIFrame::OnCashFlowSpecificAccounts()
+{
+    if (!db_.get())
+       return;
+
+     if (mmDBWrapper::getNumAccounts(db_.get()) == 0)
+         return;
+
+     wxArrayString accountArray;
+     for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
+     {
+         mmCheckingAccount* pCA 
+             = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
+         if (pCA)
+         {
+             accountArray.Add(pCA->accountName_);
+         }
+     }
+    wxMultiChoiceDialog* mcd = new wxMultiChoiceDialog(this, _("Choose Accounts"), 
+        _("Cash Flow"),
+        accountArray);
+    if (mcd->ShowModal() == wxID_OK)
+    {
+        wxArrayInt arraySel = mcd->GetSelections();
+
+        wxArrayString selections;
+        for (int i = 0; i < arraySel.size(); i++)
+        {
+            selections.Add(accountArray.Item(arraySel[i]));
+        }
+
+        mmPrintableBase* rs = new mmReportCashFlow(core_, &selections);
+        menuPrintingEnable(true);
+        createReportsPage(rs);
+    }
+    mcd->Destroy();
 }
 
 void mmGUIFrame::OnOptions(wxCommandEvent& event)
