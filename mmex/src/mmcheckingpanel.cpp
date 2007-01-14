@@ -497,6 +497,7 @@ void mmCheckingPanel::initVirtualListControl()
     st->SetLabel(text);
 
     int numTransactions = 0;
+	double unseenBalance = 0.0;
     for (int idx = 0; idx < (int)core_->bTransactionList_.transactions_.size(); idx++)
     {
         boost::shared_ptr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[idx];
@@ -506,6 +507,7 @@ void mmCheckingPanel::initVirtualListControl()
         pBankTransaction->updateAllData(core_, accountID_, pCurrency);
 
         bool toAdd = true;
+		bool getBal = false;
         if (currentView_ == wxT("View Reconciled"))
         {
             if (pBankTransaction->status_ != wxT("R"))
@@ -535,6 +537,8 @@ void mmCheckingPanel::initVirtualListControl()
 
             if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
                 toAdd = false;
+
+			getBal = true;
         }
         else if (currentView_ == wxT("View 90 days"))
         {
@@ -545,12 +549,42 @@ void mmCheckingPanel::initVirtualListControl()
 
              if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
                  toAdd = false;
+
+			 getBal = true;
         }
 
         if (toAdd)
         {
            trans_.push_back(pBankTransaction.get());
-            numTransactions++;
+           numTransactions++;
+		}
+		else
+		{
+		   if (getBal)
+		   {
+			   if (pBankTransaction->status_ != wxT("V"))
+			   {
+				   if (pBankTransaction->transType_ == wxT("Deposit"))
+				   {
+					   unseenBalance += pBankTransaction->amt_;
+				   }
+				   else if (pBankTransaction->transType_ == wxT("Withdrawal"))
+				   {
+					   unseenBalance -= pBankTransaction->amt_;
+				   }
+				   else if (pBankTransaction->transType_ == wxT("Transfer"))
+				   {
+					   if (pBankTransaction->accountID_ == accountID_)
+					   {
+						   unseenBalance -= pBankTransaction->amt_;
+					   }
+					   else if (pBankTransaction->toAccountID_== accountID_)
+					   {
+						   unseenBalance += pBankTransaction->toAmt_;
+					   }
+				   }
+			   }
+		   }
         }
     }
     listCtrlAccount_->SetItemCount(numTransactions);
@@ -558,7 +592,7 @@ void mmCheckingPanel::initVirtualListControl()
     pgd->Update(30);
 
     // sort trans_ by date
-    double initBalance = acctInitBalance;
+    double initBalance = acctInitBalance + unseenBalance;
     if (currentView_ == wxT("View UnReconciled"))
     {
         initBalance = core_->bTransactionList_.getReconciledBalance(accountID_);
