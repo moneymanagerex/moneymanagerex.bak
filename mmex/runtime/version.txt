@@ -5,9 +5,13 @@ Version History of Money Manager Ex
 - Added Category column to Transaction list
 - Speeded up reporting performance
 - Added Cash Flow Forecast report
+- Fixed Bug 1483407: Date in home page not displayed in correct language
 - Fixed balances when viewing transactions from last 30 days/3 months
+- Fixed Bug 1636630: Program crashes when checking for updates
 - Fixed Bug 1633722: Long Account Notes Hides Buttons
+- Added Feature: 1634931: Account column in repeating transactions.
 - Fixed Bug 1634984: Payee List should be sorted
+- Added Feature: 1553039: Upcoming Bills & Deposits shows amount in homepage
 - Fixed Bug 1631030: Account Balance Issue when viewing 30 days/3 months
 
 0.8.0.2 (Jan 09, 2007)
