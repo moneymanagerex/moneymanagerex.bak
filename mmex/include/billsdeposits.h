@@ -96,6 +96,8 @@ public:
     
     int accountID_;
     int toAccountID_;
+
+	wxString accountStr_;
     
 };
 
