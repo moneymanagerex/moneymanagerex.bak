@@ -345,7 +345,8 @@ public:
     void createHelpPage();
     wxPanel* createMainFrame(wxPanel* mainpanel);
 
-    void createDataStore(const wxString& fileName, bool openingNew = false);
+    void createDataStore(const wxString& fileName,  
+						 bool openingNew = false);
     void createCheckingAccountPage(int accountID);
     void createBudgetingPage(int budgetYearID);
     void createControls();
@@ -428,6 +429,7 @@ private:
 
     /* Currently open file name */
     wxString fileName_;
+	wxString password_;
 
     /* controls */
     wxMenuBar *menuBar_;
