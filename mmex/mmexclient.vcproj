@@ -213,7 +213,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\"
-				PreprocessorDefinitions="WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH, _UNICODE; _CRT_SECURE_NO_DEPRECATE; _CRT_NONSTDC_NO_DEPRECATE"
+				PreprocessorDefinitions="WXSQLITE3_HAVE_CODEC"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
