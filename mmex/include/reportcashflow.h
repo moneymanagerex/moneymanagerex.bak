@@ -47,7 +47,7 @@ public:
                if (accountArray_ != NULL)
                {
                    bool isFound = false;
-                   for (int arrIdx = 0; arrIdx < accountArray_->size(); arrIdx++)
+                   for (int arrIdx = 0; arrIdx < (int)accountArray_->size(); arrIdx++)
                    {
                        if (pCA->accountName_ == accountArray_->Item(arrIdx))
                        {
@@ -113,7 +113,7 @@ public:
            if (accountArray_ != NULL)
            {
                bool isFound = false;
-               for (int arrIdx = 0; arrIdx < accountArray_->size(); arrIdx++)
+               for (int arrIdx = 0; arrIdx < (int)accountArray_->size(); arrIdx++)
                {
                    if (accountID == core_->accountList_.getAccountID(accountArray_->Item(arrIdx)))
                    {
@@ -201,7 +201,7 @@ public:
            wxDateTime dtEnd   = wxDateTime::Now().Add(wxDateSpan::Months(idx+1));
              
 
-           for (int fcIdx = 0; fcIdx < fvec.size(); fcIdx++)
+           for (int fcIdx = 0; fcIdx < (int)fvec.size(); fcIdx++)
            {
               if (!fvec[fcIdx].date.IsBetween(dtBegin, dtEnd))
                  continue;
@@ -209,7 +209,7 @@ public:
            }
         }
 
-        for (int idx = 0; idx < forecastOver12Months.size(); idx++)
+        for (int idx = 0; idx < (int)forecastOver12Months.size(); idx++)
         {
         
            wxDateTime dtEnd   = wxDateTime::Now().Add(wxDateSpan::Months(idx+1));

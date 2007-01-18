@@ -1667,8 +1667,8 @@ void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
 
         boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
         db_ = pDB;
-        db_->Open(fileName, password);
-
+        //db_->Open(fileName, password);
+        db_->Open(fileName);
 
         // we need to check the db whether it is the right version
         if (!mmDBWrapper::checkDBVersion(db_.get()))
@@ -1691,7 +1691,8 @@ Database password is incorrect"),
     {
         boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
         db_ = pDB;
-        db_->Open(fileName, password);
+        //db_->Open(fileName, password);
+        db_->Open(fileName);
 		password_ = password;
 
         openDataBase(fileName);
@@ -1843,6 +1844,7 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
 #ifdef __WXGTK__ 
 
 #else
+#if 0
           wxString password    = wxEmptyString;
           wxString oldpassword = password_;
           if (newFileName.GetExt() == wxT("emb"))
@@ -1855,7 +1857,8 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
           
           if (oldFileName.GetExt() == wxT("emb"))
           {
-            db_->Open(fileName, oldpassword);
+            //db_->Open(fileName, oldpassword);
+            db_->Open(fileName);
             db_->ReKey(wxEmptyString);
           }
           else
@@ -1868,6 +1871,7 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
           
           db_->Close();
           db_.reset();
+#endif
 #endif	
         }
         openFile(fileName, false);
@@ -2089,7 +2093,7 @@ void mmGUIFrame::OnCashFlowSpecificAccounts()
         wxArrayInt arraySel = mcd->GetSelections();
 
         wxArrayString selections;
-        for (int i = 0; i < arraySel.size(); i++)
+        for (int i = 0; i < (int)arraySel.size(); i++)
         {
             selections.Add(accountArray.Item(arraySel[i]));
         }
