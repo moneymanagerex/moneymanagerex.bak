@@ -121,19 +121,11 @@ wxString mmReadyDisplayString(const wxString& orig)
 
 wxString mmGetNiceDateString(wxDateTime dt)
 {
-#if 0    
-    wxString dts(wxDateTime::GetWeekDayName(dt.GetWeekDay()) + wxString(wxT(", ")));
-    dts += wxDateTime::GetMonthName(dt.GetMonth()) + wxString(wxT(" "));
-    dts += wxString::Format(wxT("%d"), dt.GetDay()) + wxT(", ") 
-        + wxString::Format(wxT("%d"), dt.GetYear());
-        
-    return dts;
-#endif
 #if 0
     return dt.Format(wxT("%A, %B %d, %Y"));
 #endif
 	
-	wxString dts(gDaysInWeek[dt.GetWeekDay()+1] + wxString(wxT(", ")));
+	wxString dts(gDaysInWeek[dt.GetWeekDay()] + wxString(wxT(", ")));
     dts += gMonthsInYear[dt.GetMonth()] + wxString(wxT(" "));
     dts += wxString::Format(wxT("%d"), dt.GetDay()) + wxT(", ") 
         + wxString::Format(wxT("%d"), dt.GetYear());
