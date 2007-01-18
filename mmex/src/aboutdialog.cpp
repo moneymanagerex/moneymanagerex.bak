@@ -62,7 +62,11 @@ void mmAboutDialog::OnVersionHistory(wxCommandEvent& event)
 {
     wxFileName fname(wxTheApp->argv[0]);
     wxString filePath = fname.GetPath(wxPATH_GET_VOLUME) + wxT("\\version.txt");
-    
+#ifdef __WXGTK__ 
+    filePath 
+      = fname.GetPath(wxPATH_GET_VOLUME) + wxT("//version.txt");
+#endif
+
     fileviewer* dlg = new fileviewer(filePath, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
@@ -75,7 +79,10 @@ void mmAboutDialog::OnContributerList(wxCommandEvent& event)
 {
     wxFileName fname(wxTheApp->argv[0]);
     wxString filePath = fname.GetPath(wxPATH_GET_VOLUME) + wxT("\\contrib.txt");
-    
+#ifdef __WXGTK__     
+    filePath 
+      = fname.GetPath(wxPATH_GET_VOLUME) + wxT("//contrib.txt");
+#endif
     fileviewer* dlg = new fileviewer(filePath, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
