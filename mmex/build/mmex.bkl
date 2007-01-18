@@ -60,7 +60,8 @@ Bakefile for generating makefiles in Linux.
         <sources>../src/tinyxmlerror.cpp</sources>
         <sources>../src/tinyxmlparser.cpp</sources>
         <sources>../src/univcsv.cpp</sources>
-        <sources>../src/util.cpp</sources>        <sources>../src/wxtinyxml.cpp</sources>
+        <sources>../src/util.cpp</sources>
+        <sources>../src/wxtinyxml.cpp</sources>
         <sources>../src/wxsqlite3.cpp</sources>
                 
         <wx-lib>core</wx-lib>
