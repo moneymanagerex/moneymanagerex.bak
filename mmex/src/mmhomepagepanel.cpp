@@ -472,5 +472,7 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
         frame_->GetEventHandler()->AddPendingEvent(evt);
     }
+    // Deselect any selections in the tree ctrl, so tree works
+    frame_->navTreeCtrl_->Unselect();
 }
 
