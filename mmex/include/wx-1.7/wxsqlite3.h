@@ -17,6 +17,7 @@
     #pragma interface "wxsqlite3.h"
 #endif
 
+#include <wx/buffer.h>
 #include <wx/datetime.h>
 
 #include "wx/wxsqlite3def.h"
@@ -28,6 +29,12 @@
 #define WXSQLITE_TEXT     3
 #define WXSQLITE_BLOB     4
 #define WXSQLITE_NULL     5
+
+#if defined(_MSC_VER) || defined(__BORLANDC__)
+  typedef __int64 wxsqlite_int64;
+#else
+  typedef long long int wxsqlite_int64;
+#endif
 
 enum wxSQLite3TransactionType
 {
@@ -51,10 +58,13 @@ public:
   virtual ~wxSQLite3Exception();
 
   /// Get error code associated with the exception
-  const int GetErrorCode() { return m_errorCode; }
+  int GetErrorCode() const { return (m_errorCode & 0xff); }
+
+  /// Get extended error code associated with the exception
+  int GetExtendedErrorCode() const { return m_errorCode; }
 
   /// Get error message associated with the exception
-  const wxString GetMessage() { return m_errorMessage; }
+  const wxString GetMessage() const { return m_errorMessage; }
 
   /// Convert error code to error message
   static const wxString ErrorCodeAsString(int errorCode);
@@ -187,36 +197,50 @@ public:
   */
   const unsigned char* GetBlob(int argIndex, int& len);
 
+  /// Get a function argument as a BLOB value
+  /**
+  * \param argIndex index of the function argument. Indices start with 0.
+  * \param[out] buffer to which the blob argument value is appended
+  * \return reference to argument value
+  */
+  wxMemoryBuffer& GetBlob(int argIndex, wxMemoryBuffer& buffer);
+
   /// Set the function result as an integer value
   /**
-  * \param function result value
+  * \param value function result value
   */
   void SetResult(int value);
 
   /// Set the function result as an 64-bit integer value
   /**
-  * \param function result value
+  * \param value function result value
   */
   void SetResult(wxLongLong value);
 
   /// Set the function result as a double value
   /**
-  * \param function result value
+  * \param value function result value
   */
   void SetResult(double value);
 
   /// Set the function result as a string value
   /**
-  * \param function result value
+  * \param value function result value
   */
   void SetResult(const wxString& value);
 
   /// Set the function result as a BLOB value
   /**
-  * \param function result value
-  * \param length of the result blob in bytes
+  * \param value function result value
+  * \param len length of the result blob in bytes
   */
   void SetResult(unsigned char* value, int len);
+
+  /// Set the function result as a BLOB value
+  /**
+  * \param buffer containing the function result value
+  */
+  void SetResult(const wxMemoryBuffer& buffer);
 
   /// Set the function result as a NULL value
   void SetResultNull();
@@ -266,6 +290,17 @@ public:
   static int  ExecAuthorizer(void*, int type,
                              const char* arg1, const char* arg2,
                              const char* arg3, const char* arg4);
+
+  /// Execute the user defined commit hook (internal use only)
+  static int ExecCommitHook(void* hook);
+
+  /// Execute the user defined rollback hook (internal use only)
+  static void ExecRollbackHook(void* hook);
+
+  /// Execute the user defined update hook (internal use only)
+  static void ExecUpdateHook(void* hook, int type, 
+                             const char* database, const char* table, 
+                             wxsqlite_int64 rowid);
 
 private:
   /// Constructor
@@ -333,6 +368,7 @@ public:
   /// Codes identifying the command for which authorization is requested
   enum wxAuthorizationCode
   {                                    // arg1 =          arg2 =
+    SQLITE_COPY                =  0,   // Table Name      File Name
     SQLITE_CREATE_INDEX        =  1,   // Index Name      Table Name
     SQLITE_CREATE_TABLE        =  2,   // Table Name      NULL
     SQLITE_CREATE_TEMP_INDEX   =  3,   // Index Name      Table Name
@@ -357,9 +393,17 @@ public:
     SQLITE_TRANSACTION         = 22,   // NULL            NULL
     SQLITE_UPDATE              = 23,   // Table Name      Column Name
     SQLITE_ATTACH              = 24,   // Filename        NULL
-    SQLITE_DETACH              = 25    // Database Name   NULL
+    SQLITE_DETACH              = 25,   // Database Name   NULL
+    SQLITE_ALTER_TABLE         = 26,   // Database Name   Table Name
+    SQLITE_REINDEX             = 27,   // Index Name      NULL
+    SQLITE_ANALYZE             = 28,   // Table Name      NULL
+    SQLITE_CREATE_VTABLE       = 29,   // Table Name      Module Name
+    SQLITE_DROP_VTABLE         = 30,   // Table Name      Module Name
+    SQLITE_FUNCTION            = 31,   // Function Name   NULL
+    SQLITE_MAX_CODE            = SQLITE_FUNCTION
   };
-  /// Return codes of the authorizer
+
+   /// Return codes of the authorizer
   enum wxAuthorizationResult
   {
     SQLITE_OK     = 0,   // Allow access
@@ -380,9 +424,78 @@ public:
   * \param arg4 fourth argument (name of trigger or view if applicable)
   * \return a wxAuthorizationResult, i.e. SQLITE_OK, SQLITE_DENY or SQLITE_IGNORE
   */
-  virtual int Authorize(int type, wxString& arg1, wxString& arg2, wxString& arg3, wxString& arg4) = 0;
+  virtual wxAuthorizationResult Authorize(wxAuthorizationCode type,
+                                          const wxString& arg1, const wxString& arg2,
+                                          const wxString& arg3, const wxString& arg4) = 0;
+  /// Convert authorization code to string
+  /**
+  * \param type wxAuthorizationCode. The value signifies what kind of operation is to be authorized.
+  */
+  static wxString AuthorizationCodeToString(wxSQLite3Authorizer::wxAuthorizationCode type);
 };
 
+/// Interface for a user defined hook function
+/**
+*/
+class WXDLLIMPEXP_SQLITE3 wxSQLite3Hook
+{
+public:
+  /// Codes identifying the command for which the hook is called
+  enum wxUpdateType
+  {
+    SQLITE_DELETE              =  9,
+    SQLITE_INSERT              = 18,
+    SQLITE_UPDATE              = 23
+  };
+  /// Virtual destructor
+  virtual ~wxSQLite3Hook() {}
+
+  /// Execute the commit hook callback function
+  /**
+  * Please refer to the SQLite documentation for further information.
+  * \return true to request rollback of the transaction, false to continue with commit
+  */
+  virtual bool CommitCallback() { return false; }
+
+  /// Execute the rollback hook callback function
+  /**
+  * Please refer to the SQLite documentation for further information.
+  */
+  virtual void RollbackCallback() {}
+
+  /// Execute the hook callback function
+  /**
+  * Please refer to the SQLite documentation for further information about the
+  * meaning of the parameters.
+  *
+  * \param type wxHookType. The value signifies what kind of operation is to be authorized.
+  * \param database Name of the database
+  * \param table Name of the table
+  * \param rowid The rowid of the affected row
+  */
+  virtual void UpdateCallback(wxUpdateType WXUNUSED(type),
+                              const wxString& WXUNUSED(database), const wxString& WXUNUSED(table),
+                              wxLongLong WXUNUSED(rowid)) {}
+};
+
+/// Interface for a user defined collation sequence
+/**
+*/
+class WXDLLIMPEXP_SQLITE3 wxSQLite3Collation
+{
+public:
+  /// Virtual destructor
+  virtual ~wxSQLite3Collation() {}
+
+  /// Execute a comparison using a user-defined collation sequence
+  /**
+  * Please refer to the SQLite documentation for further information.
+  * \param text1 first text string
+  * \param text2 second text string
+  * \return an integer < 0, = 0, or > 0 depending on whether text1 is less than, equal to, or greater than text2.
+  */
+  virtual int Compare(const wxString& text1, const wxString& text2) { return text1.Cmp(text2); }
+};
 
 /// Result set of a SQL query
 class WXDLLIMPEXP_SQLITE3 wxSQLite3ResultSet
@@ -439,6 +552,35 @@ public:
   * \return column type as one of the values WXSQLITE_INTEGER, WXSQLITE_FLOAT, WXSQLITE_TEXT, WXSQLITE_BLOB, or WXSQLITE_NULL
   */
   int GetColumnType(int columnIndex);
+
+#ifdef WXSQLITE3_HAVE_METADATA
+  /// Get the database name of a column
+  /**
+  * \param columnIndex index of the column. Indices start with 0.
+  * \return database name the column belongs to or empty string
+  *
+  * This method is only available if WXSQLITE3_HAVE_METADATA is defined and SQLite has been compiled with SQLITE_ENABLE_COLUMN_METADATA defined.
+  */
+  wxString GetDatabaseName(int columnIndex);
+
+  /// Get the table name of a column
+  /**
+  * \param columnIndex index of the column. Indices start with 0.
+  * \return table name the column belongs to or empty string
+  *
+  * This method is only available if WXSQLITE3_HAVE_METADATA is defined and SQLite has been compiled with SQLITE_ENABLE_COLUMN_METADATA defined.
+  */
+  wxString GetTableName(int columnIndex);
+
+  /// Get the origin name of a column
+  /**
+  * \param columnIndex index of the column. Indices start with 0.
+  * \return origin name the column belongs to or empty string
+  *
+  * This method is only available if WXSQLITE3_HAVE_METADATA is defined and SQLite has been compiled with SQLITE_ENABLE_COLUMN_METADATA defined.
+  */
+  wxString GetOriginName(int columnIndex);
+#endif
 
   /// Get a column as a string using the column index
   /**
@@ -534,6 +676,22 @@ public:
   */
   const unsigned char* GetBlob(const wxString& columnName, int& len);
 
+  /// Get a column as a BLOB using the column index and append to memory buffer
+  /**
+  * \param columnIndex index of the column. Indices start with 0.
+  * \param[out] buffer the memory buffer to which the BLOB value is appended
+  * \return reference to the memory buffer
+  */
+  wxMemoryBuffer& GetBlob(int columnIndex, wxMemoryBuffer& buffer);
+
+  /// Get a column as a BLOB using the column index and append to memory buffer
+  /**
+  * \param columnName name of the column
+  * \param[out] buffer the memory buffer to which the BLOB value is appended
+  * \return reference to the memory buffer
+  */
+  wxMemoryBuffer& GetBlob(const wxString& columnName, wxMemoryBuffer& buffer);
+
   /// Get a column as a date value using the column index
   /**
   * \param columnIndex index of the column. Indices start with 0.
@@ -618,7 +776,7 @@ public:
   */
   bool IsNull(const wxString& columnName);
 
-  /// Check whether the result set 
+  /// Check whether all rows of the result set have been processed
   /**
   * \return TRUE if all rows of the result have been processed, FALSE otherwise
   */
@@ -965,9 +1123,16 @@ public:
   /**
   * \param paramIndex index of the parameter. The first parameter has an index of 1.
   * \param blobValue value of the parameter
-  * \param nlobLen length of the blob in bytes
+  * \param blobLen length of the blob in bytes
   */
   void Bind(int paramIndex, const unsigned char* blobValue, int blobLen);
+
+  /// Bind parameter to a BLOB value
+  /**
+  * \param paramIndex index of the parameter. The first parameter has an index of 1.
+  * \param blobValue value of the parameter
+  */
+  void Bind(int paramIndex, const wxMemoryBuffer& blobValue);
 
   /// Bind parameter to a date value
   /**
@@ -1064,8 +1229,25 @@ public:
   * If the database could not be opened (or created) successfully, then an exception is thrown.
   * If the database file does not exist, then a new database will be created as needed.
   * \param[in] fileName Name of the database file.
+  * \param[in] key Database encryption key.
   */
-  void Open(const wxString& fileName);
+  void Open(const wxString& fileName, const wxString& key = wxEmptyString);
+
+  /// Open a SQLite3 database using a binary key
+  /**
+  * Opens the sqlite database file "filename". The "filename" is UTF-8 encoded.
+  * If the database could not be opened (or created) successfully, then an exception is thrown.
+  * If the database file does not exist, then a new database will be created as needed.
+  * \param[in] fileName Name of the database file.
+  * \param[in] key Database encryption key.
+  */
+  void Open(const wxString& fileName, const wxMemoryBuffer& key);
+
+  /// Check whether the database has been opened
+  /**
+  * \return TRUE if database has been opened, FALSE otherwise
+  */
+  bool IsOpen();
 
   /// Close a SQLite3 database
   /**
@@ -1316,11 +1498,134 @@ public:
   */
   bool SetAuthorizer(wxSQLite3Authorizer& authorizer);
 
+  /// Create a user-defined commit callback function
+  /**
+  * Registers a callback function object to be invoked whenever a new transaction is committed.
+  * If the callback function returns non-zero, then the commit is converted into a rollback.
+  * Registering a NULL function object disables the callback. Only a single commit hook callback
+  * can be registered at a time.
+  * \param commitHook address of an instance of a commit callback function
+  */
+  void SetCommitHook(wxSQLite3Hook* commitHook);
+  
+  /// Create a user-defined rollback callback function
+  /**
+  * Registers a callback function object to be invoked whenever a transaction is rolled back. 
+  * Registering a NULL function object disables the callback. Only a single rollback hook callback
+  * can be registered at a time.
+  *
+  * For the purposes of this API, a transaction is said to have been rolled back if an explicit
+  * "ROLLBACK" statement is executed, or an error or constraint causes an implicit rollback to occur.
+  * The callback is not invoked if a transaction is automatically rolled back because the database
+  * connection is closed.
+  * \param rollbackHook address of an instance of a rollback callback function
+  */
+  void SetRollbackHook(wxSQLite3Hook* rollbackHook);
+
+  /// Create a user-defined update callback function
+  /**
+  * Registers a callback function object to be invoked whenever a row is updated, inserted or deleted.
+  * Registering a NULL function object disables the callback. Only a single commit hook callback
+  * can be registered at a time.
+  * The update hook is not invoked when internal system tables are modified (i.e. sqlite_master and sqlite_sequence).
+  * \param updateHook address of an instance of an update callback function
+  */
+  void SetUpdateHook(wxSQLite3Hook* updateHook);
+
+  /// Create a user-defined collation sequence
+  /**
+  * Registers a callback function object to be invoked whenever this collation is needed
+  * in comparing strings.
+  * Registering a NULL function object disables the specified collation sequence.
+  * \param name name of a user-defined collation sequence
+  * \param collation address of an instance of a user-defined collation sequence
+  */
+  void SetCollation(const wxString& name, wxSQLite3Collation* collation);
+
+#ifdef WXSQLITE3_HAVE_METADATA
+  /// Return meta information about a specific column of a specific database table
+  /**
+  * \param dbName is either the name of the database (i.e. "main", "temp" or an attached database) or an empty string. If it is an empty string all attached databases are searched for the table.
+  * \param tableName name of the database table
+  * \param columnName name of the database column
+  * \param dataType declared data type of the column. Pass NULL if information not needed.
+  * \param collation name of the collation sequence. Pass NULL if information is not needed.
+  * \param notNull output flag whether the column has a not null constraint. Pass NULL if information not needed.
+  * \param primaryKey output flag whether the column is part of the primary key. Pass NULL if information not needed.
+  * \param autoIncrement output flag whether the column is an auto increment column. Pass NULL if information not needed.
+  *
+  * This method is only available if WXSQLITE3_HAVE_METADATA is defined and SQLite has been compiled with SQLITE_ENABLE_COLUMN_METADATA defined.
+  */
+  void GetMetaData(const wxString& dbName, const wxString& tableName, const wxString& columnName,
+                   wxString* dataType = NULL, wxString* collation = NULL,
+                   bool* notNull = NULL, bool* primaryKey = NULL, bool* autoIncrement = NULL);
+#endif
+
+  /// Load a database extension
+  /**
+  * \param fileName Name of the shared library containing extension.
+  * \param entryPoint Name of the entry point.
+  */
+  void LoadExtension(const wxString& fileName, const wxString& entryPoint = _T("sqlite3_extension_init"));
+
+  /// Enable or disable loading of database extensions
+  /**
+  * \param enable Flag whether to enable (TRUE) or disable (FALSE) loadable extensions
+  */
+  void EnableLoadExtension(bool enable);
+
+#ifdef WXSQLITE3_HAVE_CODEC
+  /// Change the encryption key of the database
+  /**
+  * If the database is currently not encrypted, this method will encrypt it.
+  * If an empty key (with key length == 0) is given, the database is decrypted.
+  *
+  * \param newKey The new encryption key (will be converted to UTF-8)
+  */
+  void ReKey(const wxString& newKey);
+
+  /// Change the encryption key of the database
+  /**
+  * If the database is currently not encrypted, this method will encrypt it.
+  * If an empty key (with key length == 0) is given, the database is decrypted.
+  *
+  * \param newKey The new encryption key
+  */
+  void ReKey(const wxMemoryBuffer& newKey);
+#endif
+
   /// Get the version of the underlying SQLite3 library
   /**
   * \return a string which contains the version number of the library
   */
   static wxString GetVersion();
+
+protected:
+  /// Access SQLite's internal database handle
+  void* GetDatabaseHandle() { return m_db; }
+
+  /// Activate the callback for needed collations for this database
+  /**
+  * To avoid having to register all collation sequences before a database can be used,
+  * a single callback function may be registered with the database handle to be called
+  * whenever an undefined collation sequence is required.
+  */
+  void SetCollationNeededCallback();
+
+  /// Request the instantiation of a user defined collation sequence
+  /**
+  * This method is called for every undefined collation sequence.
+  * In a derived database class this method should call SetCollation registering an 
+  * appropriate collation class instance.
+  * \param collationName name of the collation which is needed for string comparison
+  */
+  virtual void SetNeededCollation(const wxString& WXUNUSED(collationName)) {}
+
+  /// Execute a comparison using a user-defined collation
+  static int ExecComparisonWithCollation(void* collation, int len1, const void* txt1, int len2, const void* txt2);
+
+  /// Execute callback for needed collation sequences
+  static void ExecCollationNeeded(void* db, void* internalDb, int eTextRep, const char* name);
 
 private:
   /// Private copy constructor

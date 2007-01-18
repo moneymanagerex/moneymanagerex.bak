@@ -10,6 +10,16 @@
 //              2005-11-01  - Corrected wxSQLite3ResultSet::GetInt64.
 //                            Added wxSQLite3Table::GetInt64
 //              2005-11-09  - Optionally load SQLite library dynamically
+//              2006-02-01  - Upgrade to SQLite3 version 3.3.3
+//              2006-02-12  - Upgrade to SQLite3 version 3.3.4 (wxMSW only)
+//              2006-03-15  - Fixed a bug in wxSQLite3Database::Prepare
+//                            Added wxSQLite3Database::IsOpen for convenience
+//              2006-06-11  - Upgrade to SQLite3 version 3.3.6
+//                            Added support for optional SQLite meta data methods
+//              2007-01-11  - Upgrade to SQLite3 version 3.3.10
+//                            Added support for BLOBs as wxMemoryBuffer objects
+//                            Added support for loadable extensions
+//                            Optional support for key based database encryption
 // Copyright:   (c) Ulrich Telle
 // Licence:     wxWindows licence
 ///////////////////////////////////////////////////////////////////////////////
@@ -27,27 +37,61 @@
 
   - <a href="http://sourceforge.net/projects/wxsqlite">wxSQLite</a> :
     This is a wxWidgets wrapper for version 2.8.x of SQLite. 
-    Current version of SQLite is 3.2.7 having a lot more features - which are not supported by this wrapper.
+    SQLite version 3.x has a lot more features - which are not supported by this wrapper.
 
   - <a href="http://www.codeproject.com/database/CppSQLite.asp">CppSQLite</a> : 
     Not wxWidgets specific, but with (partial) support for the newer version 3.x of SQLite.
 
-  - <a href="http://wxcode.sf.net">databaselayer</a> :
-    This is a database abstraction and supports SQLite and Firebird databases. 
-    It's a wrapper around \b CppSQLite for SQLite resp. \b IBPP for Firebird.
+  - <a href="http://wxcode.sf.net">DatabaseLayer</a> :
+    This is a database abstraction providing a JDBC-like interface to database I/O.
+    In the current version SQLite3, PostgreSQL, MySQL, Firebird, and ODBC database backends
+    are supported.
 
   The component \b wxSQLite3 was inspired by all three mentioned SQLite wrappers.
   \b wxSQLite3 does not try to hide the underlying database, in contrary almost all special features
-  of the SQLite3 version 3.2.7 are supported, like for example the creation of user defined
+  of the SQLite3 version 3.x are supported, like for example the creation of user defined
   scalar or aggregate functions.
 
-  Since SQLite stores strings in UTF-8 encoding, the wxSQLite3 methods provide automatic conversion between
-  wxStrings and UTF-8 strings. This works best for the \b Unicode builds of \b wxWidgets.
-  The feature is not fully tested for \b ANSI builds.
+  Since SQLite stores strings in UTF-8 encoding, the wxSQLite3 methods provide automatic conversion
+  between wxStrings and UTF-8 strings. This works best for the \b Unicode builds of \b wxWidgets.
+  In \b ANSI builds the current locale conversion object \b wxConvCurrent is used for conversion
+  to/from UTF-8. Special care has to be taken if external administration tools are used to modify
+  the database contents, since not all of these tools operate in Unicode or UTF-8 mode.
 
 \section version Version history
 
 <dl>
+<dt><b>1.7.0</b> - <i>January 2007</i></dt>
+<dd>
+Upgrade to SQLite version 3.3.10<br>
+Added support for BLOBs as wxMemoryBuffer objects<br>
+Added support for loadable extensions<br>
+Optional support for key based database encryption
+</dd>
+<dt><b>1.6.0</b> - <i>July 2006</i></dt>
+<dd>
+Added support for user defined collation sequences
+</dd>
+<dt><b>1.5.3</b> - <i>June 2006</i></dt>
+<dd>
+Upgrade to SQLite version 3.3.6<br>
+Added support for optional SQLite meta data methods
+</dd>
+<dt><b>1.5.2</b> - <i>March 2006</i></dt>
+<dd>
+Fixed a bug in wxSQLite3Database::Prepare<br>
+Added wxSQLite3Database::IsOpen for convenience
+</dd>
+<dt><b>1.5.1</b> - <i>February 2006</i></dt>
+<dd>
+Upgrade to SQLite version 3.3.4 (wxMSW only)
+</dd>
+<dt><b>1.5</b> - <i>February 2006</i></dt>
+<dd>
+Upgrade to SQLite version 3.3.3<br>
+Added support for commit, rollback and update callbacks
+
+</dd>
 <dt><b>1.4.2</b> - <i>November 2005</i></dt>
 <dd>
 Optimized code for wxString arguments
@@ -106,16 +150,27 @@ First public release
 //! If this define is set to 1, then the SQLite library will be loaded dynamically
 //! otherwise a link library is required to build wxSQLite3.
 #ifndef wxUSE_DYNAMIC_SQLITE3_LOAD
-    #define wxUSE_DYNAMIC_SQLITE3_LOAD   0
+  #define wxUSE_DYNAMIC_SQLITE3_LOAD   0
 #endif
 
 #ifdef WXMAKINGDLL_WXSQLITE3
-    #define WXDLLIMPEXP_SQLITE3 WXEXPORT
+  #define WXDLLIMPEXP_SQLITE3 WXEXPORT
 #elif defined(WXUSINGDLL_WXSQLITE3)
-    #define WXDLLIMPEXP_SQLITE3 WXIMPORT
+  #define WXDLLIMPEXP_SQLITE3 WXIMPORT
 #else // not making nor using DLL
-    #define WXDLLIMPEXP_SQLITE3
+  #define WXDLLIMPEXP_SQLITE3
+#endif
+
+//! To enable SQLite's meta data methods define WXSQLITE3_HAVE_METADATA here.
+//! Attention: SQLite needs to be compiled with SQLITE_ENABLE_COLUMN_METADATA for this to work
+#if 0
+#define WXSQLITE3_HAVE_METADATA
+#endif
+
+//! To enable SQLite's database encryption support define WXSQLITE3_HAVE_CODEC here.
+//! Attention: SQLite needs to be compiled with SQLITE_HAS_CODEC for this to work
+#if 0
+#define WXSQLITE3_HAVE_CODEC
 #endif
 
 #endif // _WX_SQLITE3_DEF_H_
-
