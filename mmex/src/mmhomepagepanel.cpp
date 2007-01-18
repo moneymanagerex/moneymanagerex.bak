@@ -326,6 +326,12 @@ void mmHomePagePanel::updateAccounts()
 
             th.payeeStr_ = toAccount;
         }
+		wxString displayBDAmtString;
+		mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayBDAmtString);
+
+		th.payeeStr_ += wxT("[");
+		th.payeeStr_ += displayBDAmtString;
+		th.payeeStr_ += wxT("]");
 
         trans_.push_back(th);
         ct++;
@@ -373,14 +379,16 @@ void mmHomePagePanel::updateAccounts()
                 trans_[bdidx].daysRemaining_ = 0;
             }
 
+		
             if (trans_[bdidx].daysRemaining_ > 0)
             {
                 daysRemainingStr_ = wxString::Format(wxT("%d"), trans_[bdidx].daysRemaining_) + 
-                    _(" days remaining");
+					  _(" days remaining");
             }
             else 
             {
-                daysRemainingStr_ = wxString::Format(wxT("%d"), abs(trans_[bdidx].daysRemaining_)) + 
+                daysRemainingStr_ = wxString::Format(wxT("%d"), abs(trans_[bdidx].daysRemaining_)) +
+					
                     _(" days overdue!");
                 colorStr = wxT(" BGCOLOR=\"#FF6600\" ");
             }

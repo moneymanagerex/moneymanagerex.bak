@@ -1644,6 +1644,13 @@ void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
         db_.reset();
     }
 
+	wxFileName checkExt(fileName);
+	wxString password = wxEmptyString;
+	if (checkExt.GetExt() == wxT("emb"))
+	{
+		password = wxGetPasswordFromUser(wxT("Password For Database.."));
+	}
+
     // Existing Database
     if (!openingNew 
         && !fileName.IsEmpty() 
@@ -1660,21 +1667,23 @@ void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
 
         boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
         db_ = pDB;
-        db_->Open(fileName);
+        db_->Open(fileName, password);
+
 
         // we need to check the db whether it is the right version
         if (!mmDBWrapper::checkDBVersion(db_.get()))
         {
             this->SetTitle(_("Money Manager EX - No File opened "));   
             mmShowErrorMessage(this, 
-                    _("Sorry. The Database version is too old. \
-                    Cannot open in this version of Money Manager Ex."), 
+                    _("Sorry. The Database version is too old or \
+Database password is incorrect"), 
                     _("Error opening database"));
 
             db_->Close();
             db_.reset();
             return ;
         }
+		password_ = password;
 
         core_ = new mmCoreDB(db_);
     }
@@ -1682,7 +1691,8 @@ void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
     {
         boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
         db_ = pDB;
-        db_->Open(fileName);
+        db_->Open(fileName, password);
+		password_ = password;
 
         openDataBase(fileName);
 
@@ -1737,7 +1747,10 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
     if (db_.get())
         fileName_ = fileName;
     else
+	{
         fileName_ = wxT("");
+		password_ = wxEmptyString;
+	}
 }
 
 wxPanel* mmGUIFrame::createMainFrame(wxPanel* parent)
@@ -1769,18 +1782,28 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew)
 
 void mmGUIFrame::OnNew(wxCommandEvent& event)
 {
+	wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
+#ifdef __WXGTK__ 
+	// Don't support encrypted databases in Linux yet
+	extSupported = wxT("MMB Files(*.mmb)|*.mmb");
+#endif
     wxString fileName = wxFileSelector(wxT("Choose Money Manager Ex data file to create"), 
-                wxT(""), wxT(""), wxT(""), wxT("*.mmb"), wxSAVE | wxOVERWRITE_PROMPT);
+                wxT(""), wxT(""), wxT(""), extSupported, wxSAVE | wxOVERWRITE_PROMPT);
     if ( !fileName.empty() )
     {
-       openFile(fileName, true);
+	   openFile(fileName, true);
     }
 }
 
 void mmGUIFrame::OnOpen(wxCommandEvent& event)
 {
+	wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
+#ifdef __WXGTK__ 
+	// Don't support encrypted databases in Linux yet
+	extSupported = wxT("MMB Files(*.mmb)|*.mmb");
+#endif
     wxString fileName = wxFileSelector(wxT("Choose Money Manager Ex data file to open"), 
-                wxT(""), wxT(""), wxT(""), wxT("*.mmb"), wxFILE_MUST_EXIST);
+                wxT(""), wxT(""), wxT(""), extSupported, wxFILE_MUST_EXIST);
     if ( !fileName.empty() )
     {
         openFile(fileName, false);
@@ -1789,8 +1812,17 @@ void mmGUIFrame::OnOpen(wxCommandEvent& event)
 
 void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
 {
+	wxString wildCardStr = wxT("MMB Files(*.mmb)|*.mmb");
+	
+#ifdef __WXGTK__ 
+	
+#else
+	
+	wildCardStr = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
+#endif
+
     wxString fileName = wxFileSelector(wxT("Choose Money Manager Ex data file to Save As"), 
-                wxT(""), wxT(""), wxT(""), wxT("*.mmb"), wxSAVE | wxOVERWRITE_PROMPT);
+                wxT(""), wxT(""), wxT(""), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
     if ( !fileName.empty() )
     {
         if (db_)
@@ -1799,6 +1831,42 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
             db_.reset();
         }
         wxCopyFile(fileName_, fileName, false);
+		
+		wxFileName newFileName(fileName);
+		wxFileName oldFileName(fileName_);
+		if (newFileName.GetExt() == oldFileName.GetExt())
+		{
+			// do nothing
+		}
+		else
+		{
+			wxString password    = wxEmptyString;
+			wxString oldpassword = password_;
+			if (newFileName.GetExt() == wxT("emb"))
+			{
+				password = wxGetPasswordFromUser(wxT("Set Password For Database.."));
+			}
+
+			boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
+			db_ = pDB;
+
+			if (oldFileName.GetExt() == wxT("emb"))
+			{
+				db_->Open(fileName, oldpassword);
+				db_->ReKey(wxEmptyString);
+			}
+			else
+			{
+				// TODO: This is not working and it crashes
+				// because sqlite_rekey is crashing 
+				db_->Open(fileName);
+				db_->ReKey(password);
+			}
+
+			db_->Close();
+			db_.reset();
+		}
+				
         openFile(fileName, false);
     }
 }
@@ -2054,7 +2122,12 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& event)
     wxURL url(site);
 
     unsigned char buf[1024];
-    wxInputStream *in_stream = url.GetInputStream();
+    wxInputStream* in_stream = url.GetInputStream();
+	if (!in_stream)
+	{
+		mmShowErrorMessage(this, _("Unable to connect!"), _("Check Update"));
+		return;
+	}
     in_stream->Read(buf, 1024);
     size_t bytes_read=in_stream->LastRead();
     delete in_stream;

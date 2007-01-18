@@ -84,13 +84,14 @@ mmBillsDepositsPanel::~mmBillsDepositsPanel()
    if (m_imageList)
         delete m_imageList;
 
-    long col0, col1, col2, col3, col4, col5;
+    long col0, col1, col2, col3, col4, col5, col6;
     col0 = listCtrlAccount_->GetColumnWidth(0);
     col1 = listCtrlAccount_->GetColumnWidth(1);
     col2 = listCtrlAccount_->GetColumnWidth(2);
     col3 = listCtrlAccount_->GetColumnWidth(3);
     col4 = listCtrlAccount_->GetColumnWidth(4);
     col5 = listCtrlAccount_->GetColumnWidth(5);
+	col6 = listCtrlAccount_->GetColumnWidth(6);
 
     wxString col0Str = wxString::Format(wxT("%d"), col0);
     wxString col1Str = wxString::Format(wxT("%d"), col1);
@@ -98,6 +99,7 @@ mmBillsDepositsPanel::~mmBillsDepositsPanel()
     wxString col3Str = wxString::Format(wxT("%d"), col3);
     wxString col4Str = wxString::Format(wxT("%d"), col4);
     wxString col5Str = wxString::Format(wxT("%d"), col5);
+	wxString col6Str = wxString::Format(wxT("%d"), col6);
 
     mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL0_WIDTH"), col0Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL1_WIDTH"), col1Str); 
@@ -105,6 +107,7 @@ mmBillsDepositsPanel::~mmBillsDepositsPanel()
     mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL3_WIDTH"), col3Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL4_WIDTH"), col4Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL5_WIDTH"), col5Str); 
+	mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL6_WIDTH"), col6Str);
 }
 
 void mmBillsDepositsPanel::CreateControls()
@@ -145,18 +148,19 @@ void mmBillsDepositsPanel::CreateControls()
     listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     listCtrlAccount_->InsertColumn(0, _("Payee"));
-    listCtrlAccount_->InsertColumn(1, _("Type"));
+	listCtrlAccount_->InsertColumn(1, _("Account"));
+    listCtrlAccount_->InsertColumn(2, _("Type"));
     wxListItem itemCol;
     itemCol.SetImage(-1);
     itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
     itemCol.SetText(_("Amount"));
-    listCtrlAccount_->InsertColumn(2, itemCol);
-    listCtrlAccount_->InsertColumn(3, _("Next Due Date"));
-    listCtrlAccount_->InsertColumn(4, _("Frequency"));
-    listCtrlAccount_->InsertColumn(5, _("Remaining Days"));
+    listCtrlAccount_->InsertColumn(3, itemCol);
+    listCtrlAccount_->InsertColumn(4, _("Next Due Date"));
+    listCtrlAccount_->InsertColumn(5, _("Frequency"));
+    listCtrlAccount_->InsertColumn(6, _("Remaining Days"));
     
     /* See if we can get data from inidb */
-     long col0, col1, col2, col3, col4, col5;
+     long col0, col1, col2, col3, col4, col5, col6;
      mmDBWrapper::getINISettingValue(inidb_, 
         wxT("BD_COL0_WIDTH"), wxT("150")).ToLong(&col0); 
      mmDBWrapper::getINISettingValue(inidb_, 
@@ -169,6 +173,9 @@ void mmBillsDepositsPanel::CreateControls()
          wxT("BD_COL4_WIDTH"), wxT("-2")).ToLong(&col4); 
      mmDBWrapper::getINISettingValue(inidb_, 
          wxT("BD_COL5_WIDTH"), wxT("-2")).ToLong(&col5); 
+	 mmDBWrapper::getINISettingValue(inidb_, 
+         wxT("BD_COL6_WIDTH"), wxT("-2")).ToLong(&col6); 
+     
      
     listCtrlAccount_->SetColumnWidth(0, col0);
     listCtrlAccount_->SetColumnWidth(1, col1);
@@ -176,6 +183,7 @@ void mmBillsDepositsPanel::CreateControls()
     listCtrlAccount_->SetColumnWidth(3, col3);
     listCtrlAccount_->SetColumnWidth(4, col4);
     listCtrlAccount_->SetColumnWidth(5, col5);
+	listCtrlAccount_->SetColumnWidth(6, col6);
     
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, ID_PANEL1, 
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
@@ -314,6 +322,7 @@ void mmBillsDepositsPanel::initVirtualListControl()
         th.transType_      = q1.GetString(wxT("TRANSCODE"));
         th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
         th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
+		th.accountStr_     = mmDBWrapper::getAccountName(db_, th.accountID_);
 
         th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
         th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
@@ -389,7 +398,10 @@ wxString mmBillsDepositsPanel::getItem(long item, long column)
     if (column == 0)
         return trans_[item].payeeStr_;
 
-    if (column == 1)
+	if (column == 1)
+		return trans_[item].accountStr_;
+
+    if (column == 2)
     {
         if (trans_[item].transType_ == wxT("Withdrawal"))
             return _("Withdrawal");
@@ -399,16 +411,16 @@ wxString mmBillsDepositsPanel::getItem(long item, long column)
             return _("Transfer");
     }
 
-    if (column == 2)
+    if (column == 3)
         return trans_[item].transAmtString_;
 
-    if (column == 3)
+    if (column == 4)
         return trans_[item].nextOccurStr_;
 
-    if (column == 4)
+    if (column == 5)
         return trans_[item].repeatsStr_;
 
-    if (column == 5)
+    if (column == 6)
         return trans_[item].daysRemainingStr_;
 
     return wxT("");
