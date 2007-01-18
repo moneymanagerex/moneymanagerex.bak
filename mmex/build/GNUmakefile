@@ -23,7 +23,7 @@ CPPFLAGS =
 LDFLAGS = 
 
 # Location and arguments of wx-config script 
-WX_CONFIG = wx-config
+WX_CONFIG = /usr/lib/wx/config/gtk2-unicode-release-2.8
 
 # C++ flags to use with wxWidgets code 
 WX_CXXFLAGS = `$(WX_CONFIG) --cxxflags`
@@ -40,8 +40,7 @@ WX_LIBS = `$(WX_CONFIG) --libs`
 ### Variables: ###
 
 CPPDEPS = -MT$@ -MF`echo $@ | sed -e 's,\.o$$,.d,'` -MD
-MMEX_CXXFLAGS = -g $(WX_CXXFLAGS) $(WX_CXXFLAGS) \
-	-I../../../../thirdparty/wxsqlite3-1.5.3/include -I../include $(CPPFLAGS) \
+MMEX_CXXFLAGS = -g $(WX_CXXFLAGS) $(WX_CXXFLAGS) -I../include $(CPPFLAGS) \
 	$(CXXFLAGS)
 MMEX_OBJECTS =  \
 	mmex_aboutdialog.o \
@@ -85,7 +84,8 @@ MMEX_OBJECTS =  \
 	mmex_tinyxmlparser.o \
 	mmex_univcsv.o \
 	mmex_util.o \
-	mmex_wxtinyxml.o
+	mmex_wxtinyxml.o \
+	mmex_wxsqlite3.o
 
 ### Conditionally set variables: ###
 
@@ -105,7 +105,7 @@ clean:
 	rm -f mmex
 
 mmex: $(MMEX_OBJECTS)
-	$(CXX) -o $@ $(MMEX_OBJECTS) $(LDFLAGS)  -g  $(WX_LIBS) -lsqlite3 -lwxsqlite3
+	$(CXX) -o $@ $(MMEX_OBJECTS) $(LDFLAGS)  -g  $(WX_LIBS) -lsqlite3
 
 mmex_aboutdialog.o: ./../src/aboutdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
@@ -231,6 +231,9 @@ mmex_util.o: ./../src/util.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
 mmex_wxtinyxml.o: ./../src/wxtinyxml.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
+mmex_wxsqlite3.o: ./../src/wxsqlite3.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean

@@ -38,7 +38,7 @@ Format-specific notes:
 
     <if cond="FORMAT=='gnu'">
         <option name="WX_CONFIG">
-            <default-value> /usr/lib/wx/config/gtk2-unicode-release-2.6</default-value>
+            <default-value> /usr/lib/wx/config/gtk2-unicode-release-2.8</default-value>
             <description>Location and arguments of wx-config script</description>
         </option>
         <option name="WX_CFLAGS">

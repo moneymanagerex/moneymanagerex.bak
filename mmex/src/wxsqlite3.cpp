@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 // Name:        wxsqlite3.cpp
 // Purpose:     Implementation of wxSQLite3 classes
 // Author:      Ulrich Telle
@@ -1494,13 +1494,16 @@ void wxSQLite3Database::Open(const wxString& fileName, const wxMemoryBuffer& key
     const char* localError = sqlite3_errmsg((sqlite3*) m_db);
     throw wxSQLite3Exception(rc, UTF8toWxString(localError));
   }
+#ifdef __WXGTK__ 
 
+#else
   rc = sqlite3_extended_result_codes((sqlite3*) m_db, 1);
   if (rc != SQLITE_OK)
   {
     const char* localError = sqlite3_errmsg((sqlite3*) m_db);
     throw wxSQLite3Exception(rc, UTF8toWxString(localError));
   }
+#endif
 
 #if WXSQLITE3_HAVE_CODEC
   if (key.GetDataLen() > 0)
@@ -1871,6 +1874,9 @@ void* wxSQLite3Database::Prepare(const char* sql)
   const char* tail=0;
   sqlite3_stmt* stmt;
 
+#ifdef __WXGTK__ 
+
+#else
   int rc = sqlite3_prepare_v2((sqlite3*) m_db, sql, -1, &stmt, &tail);
 
   if (rc != SQLITE_OK)
@@ -1878,6 +1884,7 @@ void* wxSQLite3Database::Prepare(const char* sql)
     const char* localError = sqlite3_errmsg((sqlite3*) m_db);
     throw wxSQLite3Exception(rc, UTF8toWxString(localError));
   }
+#endif
 
   return stmt;
 }
@@ -1952,6 +1959,9 @@ void wxSQLite3Database::GetMetaData(const wxString& databaseName, const wxString
 
 void wxSQLite3Database::LoadExtension(const wxString& fileName, const wxString& entryPoint)
 {
+#ifdef __WXGTK__ 
+
+#else
   wxCharBuffer strFileName = wxConvUTF8.cWC2MB(fileName.wc_str(*wxConvCurrent));
   const char* localFileName = strFileName;
   wxCharBuffer strEntryPoint = wxConvUTF8.cWC2MB(entryPoint.wc_str(*wxConvCurrent));
@@ -1963,10 +1973,14 @@ void wxSQLite3Database::LoadExtension(const wxString& fileName, const wxString& 
     const char* localError = sqlite3_errmsg((sqlite3*) m_db);
     throw wxSQLite3Exception(rc, UTF8toWxString(localError));
   }
+#endif
 }
 
 void wxSQLite3Database::EnableLoadExtension(bool enable)
 {
+#ifdef __WXGTK__ 
+
+#else
   int onoff = (enable) ? 1 : 0;
   int rc = sqlite3_enable_load_extension((sqlite3 *) m_db, onoff);
   if (rc != SQLITE_OK)
@@ -1974,6 +1988,7 @@ void wxSQLite3Database::EnableLoadExtension(bool enable)
     const char* localError = sqlite3_errmsg((sqlite3*) m_db);
     throw wxSQLite3Exception(rc, UTF8toWxString(localError));
   }
+#endif
 }
 
 #ifdef WXSQLITE3_HAVE_CODEC

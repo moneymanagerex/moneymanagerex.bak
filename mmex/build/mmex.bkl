@@ -14,11 +14,11 @@ Bakefile for generating makefiles in Linux.
         <debug-info>on</debug-info>
         <runtime-libs>dynamic</runtime-libs>
 
-	<set var="ADDITIONAL_CPPFLAGS" prepend="1"> -I../include</set>
+        <set var="ADDITIONAL_CPPFLAGS" prepend="1"> -I../include</set>
 
-	<sys-lib>sqlite3</sys-lib>
+        <sys-lib>sqlite3</sys-lib>
 
-	<cxxflags>$(WX_CXXFLAGS) $(ADDITIONAL_CPPFLAGS)</cxxflags>
+        <cxxflags>$(WX_CXXFLAGS) $(ADDITIONAL_CPPFLAGS)</cxxflags>
         
         <sources>../src/aboutdialog.cpp</sources>
         <sources>../src/appstartdialog.cpp</sources>
@@ -35,13 +35,13 @@ Bakefile for generating makefiles in Linux.
         <sources>../src/dbwrapper.cpp</sources>
         <sources>../src/fileviewerdialog.cpp</sources>
         <sources>../src/filtertransdialog.cpp</sources>
-		<sources>../src/htmlbuilder.cpp</sources>
-     	<sources>../src/maincurrencydialog.cpp</sources>
+                <sources>../src/htmlbuilder.cpp</sources>
+        <sources>../src/maincurrencydialog.cpp</sources>
         <sources>../src/mmaccount.cpp</sources>
         <sources>../src/mmcategory.cpp</sources>
-       	<sources>../src/mmcheckingpanel.cpp</sources>
+        <sources>../src/mmcheckingpanel.cpp</sources>
         <sources>../src/mmcoredb.cpp</sources>
-       	<sources>../src/mmcurrency.cpp</sources>
+        <sources>../src/mmcurrency.cpp</sources>
         <sources>../src/mmex.cpp</sources>
         <sources>../src/mmhelppanel.cpp</sources>
         <sources>../src/mmhomepagepanel.cpp</sources>
@@ -62,7 +62,7 @@ Bakefile for generating makefiles in Linux.
         <sources>../src/univcsv.cpp</sources>
         <sources>../src/util.cpp</sources>        <sources>../src/wxtinyxml.cpp</sources>
         <sources>../src/wxsqlite3.cpp</sources>
-		
+                
         <wx-lib>core</wx-lib>
         <wx-lib>base</wx-lib>
 

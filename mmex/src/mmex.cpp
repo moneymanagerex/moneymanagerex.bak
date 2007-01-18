@@ -1832,41 +1832,44 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
         }
         wxCopyFile(fileName_, fileName, false);
 		
-		wxFileName newFileName(fileName);
-		wxFileName oldFileName(fileName_);
-		if (newFileName.GetExt() == oldFileName.GetExt())
-		{
-			// do nothing
-		}
-		else
-		{
-			wxString password    = wxEmptyString;
-			wxString oldpassword = password_;
-			if (newFileName.GetExt() == wxT("emb"))
-			{
-				password = wxGetPasswordFromUser(wxT("Set Password For Database.."));
-			}
+        wxFileName newFileName(fileName);
+        wxFileName oldFileName(fileName_);
+        if (newFileName.GetExt() == oldFileName.GetExt())
+        {
+          // do nothing
+        }
+        else
+        {
+#ifdef __WXGTK__ 
 
-			boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
-			db_ = pDB;
-
-			if (oldFileName.GetExt() == wxT("emb"))
-			{
-				db_->Open(fileName, oldpassword);
-				db_->ReKey(wxEmptyString);
-			}
-			else
-			{
-				// TODO: This is not working and it crashes
-				// because sqlite_rekey is crashing 
-				db_->Open(fileName);
-				db_->ReKey(password);
-			}
-
-			db_->Close();
-			db_.reset();
-		}
-				
+#else
+          wxString password    = wxEmptyString;
+          wxString oldpassword = password_;
+          if (newFileName.GetExt() == wxT("emb"))
+          {
+            password = wxGetPasswordFromUser(wxT("Set Password For Database.."));
+          }
+          
+          boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
+          db_ = pDB;
+          
+          if (oldFileName.GetExt() == wxT("emb"))
+          {
+            db_->Open(fileName, oldpassword);
+            db_->ReKey(wxEmptyString);
+          }
+          else
+          {
+            // TODO: This is not working and it crashes
+            // because sqlite_rekey is crashing 
+            db_->Open(fileName);
+            db_->ReKey(password);
+          }
+          
+          db_->Close();
+          db_.reset();
+#endif	
+        }
         openFile(fileName, false);
     }
 }
