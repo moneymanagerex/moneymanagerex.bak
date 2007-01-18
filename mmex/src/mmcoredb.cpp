@@ -128,6 +128,3 @@ mmCoreDB::~mmCoreDB()
 {
 
 }
-
-
- 

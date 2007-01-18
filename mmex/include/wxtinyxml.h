@@ -24,4 +24,4 @@ bool SaveFile( wxOutputStream &ostream );
 
 
 #endif
- 
+
