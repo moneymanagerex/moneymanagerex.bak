@@ -1,3 +1,4 @@
+--------------------------
 Money Manager Ex [MMEX]
 ------------------------
 Website:      
@@ -7,10 +8,104 @@ Author:
 Madhan Kanagavel [madhankk AT GMAIL . COM]
 
 Description:
- Money Manager Ex© is a free, open-source, cross-platform, easy-to-use personal finance software. It primarily helps organize one's finances and keeps track of where, when and how the money goes. It is also a great tool to get a bird's eye view of your financial worth.
+Money Manager Ex is a free, open-source, cross-platform, easy-to-use personal finance software. It primarily helps organize one's finances and keeps track of where, when and how the money goes. It is also a great tool to get a bird's eye view of your financial worth.
 
 Money Manager includes all the basic features that 90% of users would want to see in a personal finance application. The design goals are to concentrate on simplicity and user-friendliness - something one can use everyday.
 
-Installation
-------------
-For detailed instructions refer to /build/howtobuild.txt
+Requirements:
+
+Libraries
+- wxWidgets >= 2.8.0 (www.wxwidgets.org)
+- Sqlite3   >= 3.3.5
+
+--------------------------
+Building Money Manager Ex
+--------------------------
+
+=================
+Microsoft Windows
+=================
+
+1. Install Microsoft Visual Studio 2005 C++ Express, which is a free download
+2. Install the Platform SDK and make sure Visual Studio 2005 is correctly setup.
+3. Install wxWidgets 2.8.0 and above in a directory like c:\pgmming\wxwidgets2.8.0 and then create an environment variable WXWIN to point to this directory.
+4. Follow the instructions given by WxWidgets install on how to build it in 4 build modes. Static Ansi Debug, Static Ansi Release, Static Unicode Debug, Static Unicode Release.
+5. Open mmex.vcproj under mmex directory and do a batch build of all modes neceesary
+5. Copy currency.db3 from runtime directory into the appropriate build directories. Now you can run the project to launch the exe.
+6. Static Ansi is used under Windows 95/98/Me
+7. Static Unicode is used under Windows 2000/Windows XP/Windows 2003.
+
+Windows Installer Setup
+------------------------
+MMEX uses innosetup to create installer packages.
+The script is checked into mmex\install directory
+
+=================
+Building on Linux
+=================
+
+Pre-built Binaries
+------------------
+If you don't want to build MMEX, you can download prebuilt binary packages for UBUNTU and SUSE.
+
+Building from Source
+--------------------
+
+GENERIC INSTRUCTIONS
+
+1. Download latest wxWidgets for wxGTK and download and install.
+    
+  1) Read the install directions in wxWidgets for how to do a build and then install the build on the machine. For eg wxWidgets has been built with --with-gtk --disable-shared --enable-unicode
+  2) After installation, wx-config will copied to the /usr/bin and can now correctly identify the command line params required.
+
+2. Download SQLite3 source and build and then install it in the system. The file libsqlite3.a should be available in the standard lib path in the system. (for eg, /usr/lib)
+
+
+3. Navigate to /trunk/mmex/
+
+   Do 
+        >  mkdir buildgtk
+        >  cd buildgtk
+        >  ../configure --with-wx-config=[LOCATION of WX-CONFIG]
+        >  make
+        >  cp mmex ../runtime/.
+        
+   /trunk/runtime/mmex/mmex should run Money Manager Ex.
+
+UBUNTU SPECIFIC INSTRUCTIONS
+
+With apt-get support, it is a little easier to do this in Ubuntu.
+
+1. [Optional] Install Dev Tools by the following: sudo apt-get install build-essential
+
+2. Download and install the following packages
+	libwxgtk2.8-0, 
+        libwxgtk2.8-dev, 
+        libsqlite3-0, 
+        libsqlite3-dev
+
+3. Do 
+        >  mkdir buildgtk
+        >  cd buildgtk
+        >  ../configure --with-wx-config=/usr/lib/wx/config/gtk2-unicode-release-2.8
+        >  make
+        >  cp mmex ../runtime/.
+        
+   /trunk/runtime/mmex/mmex should run Money Manager Ex.
+
+REGENERATING AUTOMAKE FILES
+
+If for some reason, you need to regenerate AutoMake Makefile.in.
+This might be required if you are adding new source files to MMEX.
+
+1. Download and install Bakefile (>=0.2.1)
+
+2. Make sure mmex.bkl is updated if necessary
+
+2. Navigate to \trunk\mmex\build directory
+ 
+3. Do
+        > bakefile -f autoconf mmex.bkl -o ..\Makefile.in
+        > cd ..
+        > bakefilize --copy && aclocal -I . -I /usr/share/aclocal -I /usr/local/share/aclocal && autoconf
+
