@@ -35,7 +35,7 @@ Bakefile for generating makefiles in Linux.
         <sources>../src/dbwrapper.cpp</sources>
         <sources>../src/fileviewerdialog.cpp</sources>
         <sources>../src/filtertransdialog.cpp</sources>
-                <sources>../src/htmlbuilder.cpp</sources>
+        <sources>../src/htmlbuilder.cpp</sources>
         <sources>../src/maincurrencydialog.cpp</sources>
         <sources>../src/mmaccount.cpp</sources>
         <sources>../src/mmcategory.cpp</sources>
@@ -63,9 +63,13 @@ Bakefile for generating makefiles in Linux.
         <sources>../src/util.cpp</sources>
         <sources>../src/wxtinyxml.cpp</sources>
         <sources>../src/wxsqlite3.cpp</sources>
-                
+
+        <wx-lib>net</wx-lib>                
+        <wx-lib>html</wx-lib>                
+        <wx-lib>aui</wx-lib>        
         <wx-lib>core</wx-lib>
         <wx-lib>base</wx-lib>
+
 
     </exe>
 

@@ -28,9 +28,6 @@ WX_CONFIG = /usr/lib/wx/config/gtk2-unicode-release-2.8
 # C++ flags to use with wxWidgets code 
 WX_CXXFLAGS = `$(WX_CONFIG) --cxxflags`
 
-# wxWidgets libraries to link against 
-WX_LIBS = `$(WX_CONFIG) --libs`
-
 
 
 # -------------------------------------------------------------------------
@@ -105,7 +102,7 @@ clean:
 	rm -f mmex
 
 mmex: $(MMEX_OBJECTS)
-	$(CXX) -o $@ $(MMEX_OBJECTS) $(LDFLAGS)  -g  $(WX_LIBS) -lsqlite3
+	$(CXX) -o $@ $(MMEX_OBJECTS) $(LDFLAGS)  -g  -lsqlite3 `$(WX_CONFIG) --libs net,html,aui,core,base`
 
 mmex_aboutdialog.o: ./../src/aboutdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
