@@ -10,9 +10,12 @@ Bakefile for generating makefiles in Linux.
     <include file="presets/wx.bkl"/>
     
     <exe id="mmex" template="wx">
+
         <app-type>gui</app-type>
         <debug-info>on</debug-info>
         <runtime-libs>dynamic</runtime-libs>
+
+        <set var="BUILDDIR">gtkbuild</set>
 
         <set var="ADDITIONAL_CPPFLAGS" prepend="1"> -I../include</set>
 
@@ -20,49 +23,49 @@ Bakefile for generating makefiles in Linux.
 
         <cxxflags>$(WX_CXXFLAGS) $(ADDITIONAL_CPPFLAGS)</cxxflags>
         
-        <sources>../src/aboutdialog.cpp</sources>
-        <sources>../src/appstartdialog.cpp</sources>
-        <sources>../src/assetdialog.cpp</sources>
-        <sources>../src/assets.cpp</sources>
-        <sources>../src/bddialog.cpp</sources>
-        <sources>../src/billsdeposits.cpp</sources>
-        <sources>../src/budgetentrydialog.cpp</sources>
-        <sources>../src/budgetingpanel.cpp</sources>
-        <sources>../src/budgetyeardialog.cpp</sources>
-        <sources>../src/budgetyearentrydialog.cpp</sources>
-        <sources>../src/categdialog.cpp</sources>
-        <sources>../src/currencydialog.cpp</sources>
-        <sources>../src/dbwrapper.cpp</sources>
-        <sources>../src/fileviewerdialog.cpp</sources>
-        <sources>../src/filtertransdialog.cpp</sources>
-        <sources>../src/htmlbuilder.cpp</sources>
-        <sources>../src/maincurrencydialog.cpp</sources>
-        <sources>../src/mmaccount.cpp</sources>
-        <sources>../src/mmcategory.cpp</sources>
-        <sources>../src/mmcheckingpanel.cpp</sources>
-        <sources>../src/mmcoredb.cpp</sources>
-        <sources>../src/mmcurrency.cpp</sources>
-        <sources>../src/mmex.cpp</sources>
-        <sources>../src/mmhelppanel.cpp</sources>
-        <sources>../src/mmhomepagepanel.cpp</sources>
-        <sources>../src/mmpayee.cpp</sources>
-        <sources>../src/mmreportspanel.cpp</sources>
-        <sources>../src/mmtransaction.cpp</sources>
-        <sources>../src/newchkacctdialog.cpp</sources>
-        <sources>../src/optionsdialog.cpp</sources>
-        <sources>../src/payeedialog.cpp</sources>
-        <sources>../src/qifimport.cpp</sources>
-        <sources>../src/stockdialog.cpp</sources>
-        <sources>../src/stocks.cpp</sources>
-        <sources>../src/transdialog.cpp</sources>
-        <sources>../src/tinystr.cpp</sources>
-        <sources>../src/tinyxml.cpp</sources>
-        <sources>../src/tinyxmlerror.cpp</sources>
-        <sources>../src/tinyxmlparser.cpp</sources>
-        <sources>../src/univcsv.cpp</sources>
-        <sources>../src/util.cpp</sources>
-        <sources>../src/wxtinyxml.cpp</sources>
-        <sources>../src/wxsqlite3.cpp</sources>
+        <sources>src/aboutdialog.cpp</sources>
+        <sources>src/appstartdialog.cpp</sources>
+        <sources>src/assetdialog.cpp</sources>
+        <sources>src/assets.cpp</sources>
+        <sources>src/bddialog.cpp</sources>
+        <sources>src/billsdeposits.cpp</sources>
+        <sources>src/budgetentrydialog.cpp</sources>
+        <sources>src/budgetingpanel.cpp</sources>
+        <sources>src/budgetyeardialog.cpp</sources>
+        <sources>src/budgetyearentrydialog.cpp</sources>
+        <sources>src/categdialog.cpp</sources>
+        <sources>src/currencydialog.cpp</sources>
+        <sources>src/dbwrapper.cpp</sources>
+        <sources>src/fileviewerdialog.cpp</sources>
+        <sources>src/filtertransdialog.cpp</sources>
+        <sources>src/htmlbuilder.cpp</sources>
+        <sources>src/maincurrencydialog.cpp</sources>
+        <sources>src/mmaccount.cpp</sources>
+        <sources>src/mmcategory.cpp</sources>
+        <sources>src/mmcheckingpanel.cpp</sources>
+        <sources>src/mmcoredb.cpp</sources>
+        <sources>src/mmcurrency.cpp</sources>
+        <sources>src/mmex.cpp</sources>
+        <sources>src/mmhelppanel.cpp</sources>
+        <sources>src/mmhomepagepanel.cpp</sources>
+        <sources>src/mmpayee.cpp</sources>
+        <sources>src/mmreportspanel.cpp</sources>
+        <sources>src/mmtransaction.cpp</sources>
+        <sources>src/newchkacctdialog.cpp</sources>
+        <sources>src/optionsdialog.cpp</sources>
+        <sources>src/payeedialog.cpp</sources>
+        <sources>src/qifimport.cpp</sources>
+        <sources>src/stockdialog.cpp</sources>
+        <sources>src/stocks.cpp</sources>
+        <sources>src/transdialog.cpp</sources>
+        <sources>src/tinystr.cpp</sources>
+        <sources>src/tinyxml.cpp</sources>
+        <sources>src/tinyxmlerror.cpp</sources>
+        <sources>src/tinyxmlparser.cpp</sources>
+        <sources>src/univcsv.cpp</sources>
+        <sources>src/util.cpp</sources>
+        <sources>src/wxtinyxml.cpp</sources>
+        <sources>src/wxsqlite3.cpp</sources>
 
         <wx-lib>net</wx-lib>                
         <wx-lib>html</wx-lib>                
