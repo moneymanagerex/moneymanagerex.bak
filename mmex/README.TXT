@@ -14,9 +14,13 @@ Money Manager includes all the basic features that 90% of users would want to se
 
 Requirements:
 
-Libraries
+Required Libraries
 - wxWidgets >= 2.8.0 (www.wxwidgets.org)
 - Sqlite3   >= 3.3.5
+
+Prepackaged Libraries
+- wxSqlite3
+- TinyXML
 
 --------------------------
 Building Money Manager Ex
@@ -30,7 +34,7 @@ Microsoft Windows
 2. Install the Platform SDK and make sure Visual Studio 2005 is correctly setup.
 3. Install wxWidgets 2.8.0 and above in a directory like c:\pgmming\wxwidgets2.8.0 and then create an environment variable WXWIN to point to this directory.
 4. Follow the instructions given by WxWidgets install on how to build it in 4 build modes. Static Ansi Debug, Static Ansi Release, Static Unicode Debug, Static Unicode Release.
-5. Open mmex.vcproj under mmex\build directory and do a batch build of all modes neceesary
+5. Open mmex.vcproj under mmex directory and do a batch build of all modes neceesary
 5. Copy currency.db3 from runtime directory into the appropriate build directories. Now you can run the project to launch the exe.
 6. Static Ansi is used under Windows 95/98/Me
 7. Static Unicode is used under Windows 2000/Windows XP/Windows 2003.
@@ -38,7 +42,7 @@ Microsoft Windows
 Windows Installer Setup
 ------------------------
 MMEX uses innosetup to create installer packages.
-The script is checked into mmex\install directory
+The script is checked into mmex\setup directory
 
 =================
 Building on Linux
@@ -102,7 +106,7 @@ This might be required if you are adding new source files to MMEX.
 
 2. Make sure mmex.bkl is updated if necessary
 
-2. Navigate to \trunk\mmex\build directory
+2. Navigate to \trunk\mmex\bakefile directory
  
 3. Do
         > bakefile -f autoconf mmex.bkl -o ..\Makefile.in
