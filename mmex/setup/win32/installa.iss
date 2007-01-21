@@ -21,7 +21,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=..\runtime\license.txt
+LicenseFile=..\..\runtime\license.txt
 OutputBaseFilename=mmgrex_setup{#FileVersion}
 Compression=lzma
 SolidCompression=yes
@@ -35,8 +35,8 @@ Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription
 
 [Files]
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-Source: ..\runtime\*; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: ..\release\mmexa.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ..\..\runtime\*; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ..\..\release\mmexa.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [INI]
 
