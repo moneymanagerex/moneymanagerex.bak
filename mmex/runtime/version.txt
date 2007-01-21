@@ -15,6 +15,8 @@ Version History of Money Manager Ex
 - Added Feature: 1553039: Upcoming Bills & Deposits shows amount in homepage
 - Fixed Bug 1631030: Account Balance Issue when viewing 30 days/3 months
 - Fixed Bug 1582380: Clicking Home Page tree doesn't work after navigating using home page link
+- Added Norwegian translation (Thanks Fredrik Strand & Torbjørn Kvande)
+- Added configure/make support to make MMEX buildable in any Linux distro in a standard way
 
 0.8.0.2 (Jan 09, 2007)
 - Fixed SQLITE Error when creating accounts

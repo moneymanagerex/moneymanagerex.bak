@@ -31,4 +31,6 @@ Croatian
 -- Goran Bobanovic
 Polish
 -- Andrzej
+Norwegian
+-- Fredrik Strand & Torbjørn Kvande
 
