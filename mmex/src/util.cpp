@@ -23,17 +23,7 @@
 #include "univcsv.h"
 #include "mmcoredb.h"
 
-const wxChar* gMonthsInYear[12] =
-    {
-		_("January"), _("February"), _("March"), _("April"), _("May"), _("June"),
-		_("July"), _("August"), _("September"), _("October"), _("November"), _("December")
-	};
 
-const wxChar* gDaysInWeek[7] =
-	{
-		_("Sunday"), _("Monday"), _("Tuesday"), _("Wednesday"),
-		_("Thursday"), _("Friday"), _("Saturday")
-	};
 
 void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 {
@@ -124,6 +114,18 @@ wxString mmGetNiceDateString(wxDateTime dt)
 #if 0
     return dt.Format(wxT("%A, %B %d, %Y"));
 #endif
+
+    const wxChar* gMonthsInYear[12] =
+    {
+		_("January"), _("February"), _("March"), _("April"), _("May"), _("June"),
+		_("July"), _("August"), _("September"), _("October"), _("November"), _("December")
+	};
+
+    const wxChar* gDaysInWeek[7] =
+	{
+		_("Sunday"), _("Monday"), _("Tuesday"), _("Wednesday"),
+		_("Thursday"), _("Friday"), _("Saturday")
+	};
 	
 	wxString dts(gDaysInWeek[dt.GetWeekDay()] + wxString(wxT(", ")));
     dts += gMonthsInYear[dt.GetMonth()] + wxString(wxT(" "));

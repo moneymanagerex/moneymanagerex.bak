@@ -20,6 +20,7 @@
 #include "defs.h"
 #include "dbwrapper.h"
 #include <wx/app.h>
+
 /*******************************************************/
 /* Include XPM Support */
 #include "../resources/money.xpm"

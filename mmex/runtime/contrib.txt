@@ -33,4 +33,6 @@ Polish
 -- Andrzej
 Norwegian
 -- Fredrik Strand & Torbjørn Kvande
+Ukrainian
+Leonid Shturma
 
