@@ -115,13 +115,13 @@ wxString mmGetNiceDateString(wxDateTime dt)
     return dt.Format(wxT("%A, %B %d, %Y"));
 #endif
 
-    const wxChar* gMonthsInYear[12] =
+    const wxString gMonthsInYear[12] =
     {
 		_("January"), _("February"), _("March"), _("April"), _("May"), _("June"),
 		_("July"), _("August"), _("September"), _("October"), _("November"), _("December")
 	};
 
-    const wxChar* gDaysInWeek[7] =
+    const wxString gDaysInWeek[7] =
 	{
 		_("Sunday"), _("Monday"), _("Tuesday"), _("Wednesday"),
 		_("Thursday"), _("Friday"), _("Saturday")
