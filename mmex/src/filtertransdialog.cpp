@@ -441,7 +441,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& event )
 
         if (payeeCheckBox->GetValue() && (payeeID_ != -1))
         {
-            if (pBankTransaction->payeeID_ != pBankTransaction->payeeID_)
+            if (pBankTransaction->payeeID_ != payeeID_)
                 continue; // skip
         }
 

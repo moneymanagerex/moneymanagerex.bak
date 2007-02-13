@@ -629,6 +629,10 @@ Are you are sure you want to proceed with the import?"),
                         payeeID = core->payeeList_.addPayee(payee);
                         log << _("Adding payee ") << payee << endl;    
                     }
+                    else
+                    {
+                        payeeID = core->payeeList_.getPayeeID(payee);
+                    }
                 }
                 
                 

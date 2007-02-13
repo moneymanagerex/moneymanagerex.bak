@@ -1,5 +1,11 @@
 Version History of Money Manager Ex
 
+0.8.0.4 (??)
+- Fixed bug where a blank category can be entered
+- Fixed bug with QIF import when payee is missing(Thanks Mark)
+- Fix view sorting in account view
+- Fix payee filter not working in filter transactions(Thanks VM)
+
 0.8.0.3 (Jan 21, 2007)
 - Added Cash Flow Forecast report
 - Added Category column to Transaction list

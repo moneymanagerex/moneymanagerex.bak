@@ -157,6 +157,11 @@ void mmCategDialog::OnAdd(wxCommandEvent& event)
     wxTextCtrl* textCtrl;  
     textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_CATEG_TEXTCTRL_CATNAME);
     wxString text = textCtrl->GetValue();
+    if (text == wxT(""))
+    {
+        mmShowErrorMessage(this, _("Category cannot be empty"), _("Error"));
+        return;
+    }
 
     if (selectedItemId_ == root_)
     {

@@ -30,7 +30,7 @@
     }                               \
     catch (wxSQLite3Exception& e)   \
     {                               \
-        wxASSERT(true);             \
+        wxASSERT(false);            \
         wxLogError(e.GetMessage()); \
     }                               \
 

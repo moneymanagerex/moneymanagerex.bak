@@ -1783,7 +1783,8 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew)
 
 void mmGUIFrame::OnNew(wxCommandEvent& event)
 {
-	wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
+	//wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
+    wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb");
 #ifdef __WXGTK__ 
 	// Don't support encrypted databases in Linux yet
 	extSupported = wxT("MMB Files(*.mmb)|*.mmb");
@@ -1798,7 +1799,8 @@ void mmGUIFrame::OnNew(wxCommandEvent& event)
 
 void mmGUIFrame::OnOpen(wxCommandEvent& event)
 {
-	wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
+	//wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
+    wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb");
 #ifdef __WXGTK__ 
 	// Don't support encrypted databases in Linux yet
 	extSupported = wxT("MMB Files(*.mmb)|*.mmb");
@@ -1818,8 +1820,7 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
 #ifdef __WXGTK__ 
 	
 #else
-	
-	wildCardStr = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
+	//wildCardStr = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
 #endif
 
     wxString fileName = wxFileSelector(wxT("Choose Money Manager Ex data file to Save As"), 

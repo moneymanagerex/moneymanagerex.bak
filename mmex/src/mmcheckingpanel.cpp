@@ -108,10 +108,6 @@ bool mmCheckingPanel::Create( wxWindow *parent,
     
     initVirtualListControl();
     
-    if (trans_.size() > 1)
-    {
-        listCtrlAccount_->EnsureVisible(((int)trans_.size()) - 1);
-    }
     this->Thaw();
     return TRUE;
 }
@@ -640,6 +636,11 @@ void mmCheckingPanel::initVirtualListControl()
     
     // sort the table
     sortTable(); 
+
+    if (trans_.size() > 1)
+    {
+        listCtrlAccount_->EnsureVisible(((int)trans_.size()) - 1);
+    }
 
     pgd->Update(100);
     pgd->Destroy();

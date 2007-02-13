@@ -19,7 +19,7 @@
 #include "util.h"
 
 #ifndef __VISUALC__
-#define INT_PTR int
+#define INT_PTR intptr_t
 #endif
 
 IMPLEMENT_DYNAMIC_CLASS( mmCurrencyDialog, wxDialog )
