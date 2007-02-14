@@ -946,7 +946,8 @@ bool mmCurrencyFormatter::formatDoubleToCurrencyEdit(double val, wxString& rdata
   data += wxString::Format(wxT("%d"), grpVal);  // Print leftmost 3-digits (no leading 0's)
   while (grpNum != 0)          // For remaining 3-digit groups
    {
-    data += group_separator;                     // Print group separator
+      if (group_separator)
+        data += group_separator;                     // Print group separator
     whole -= grpVal * group_divisors[grpNum--];   // Compute new remainder
     grpVal  = int(whole / group_divisors[grpNum]);// Get next 3-digit value
        
@@ -1023,7 +1024,8 @@ bool mmCurrencyFormatter::formatDoubleToCurrency(double val, wxString& rdata)
   data += wxString::Format(wxT("%d"), grpVal);                // Print leftmost 3-digits (no leading 0's)
   while (grpNum != 0)          // For remaining 3-digit groups
    {
-    data += group_separator;                     // Print group separator
+       if (group_separator)
+          data += group_separator;                     // Print group separator
     whole -= grpVal * group_divisors[grpNum--];   // Compute new remainder
     grpVal  = int(whole / group_divisors[grpNum]);// Get next 3-digit value
        

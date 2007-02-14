@@ -5,6 +5,9 @@ Version History of Money Manager Ex
 - Fixed bug with QIF import when payee is missing(Thanks Mark)
 - Fix view sorting in account view
 - Fix payee filter not working in filter transactions(Thanks VM)
+- Fixed Bug 1658366: Account view drop digits now and then
+- Fixed Bug 1657456: Orphan Transactions when deleting account
+- Added Spanish Translation (Thanks Javier)
 
 0.8.0.3 (Jan 21, 2007)
 - Added Cash Flow Forecast report

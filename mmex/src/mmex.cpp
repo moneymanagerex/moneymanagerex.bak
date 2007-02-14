@@ -1248,7 +1248,7 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& event)
            if (msgDlg.ShowModal() == wxID_YES)
            {
               core_->accountList_.deleteAccount(pAccount->accountID_);
-
+              core_->bTransactionList_.deleteTransactions(pAccount->accountID_);  
               updateNavTreeControl();
               createHomePage();
            } 
