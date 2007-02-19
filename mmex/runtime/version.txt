@@ -8,6 +8,7 @@ Version History of Money Manager Ex
 - Fixed Bug 1658366: Account view drop digits now and then
 - Fixed Bug 1657456: Orphan Transactions when deleting account
 - Added Spanish Translation (Thanks Javier)
+- Added Dutch Translation (Thanks Theo Kamphuis)
 
 0.8.0.3 (Jan 21, 2007)
 - Added Cash Flow Forecast report
