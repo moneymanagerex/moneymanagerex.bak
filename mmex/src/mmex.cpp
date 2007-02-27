@@ -2047,25 +2047,26 @@ void mmGUIFrame::OnBudgetSetupDialog(wxCommandEvent& event)
 
 void mmGUIFrame::OnTransactionReport(wxCommandEvent& event)
 {
-    if (!db_.get())
-       return;
+   if (!db_.get())
+      return;
 
-     if (mmDBWrapper::getNumAccounts(db_.get()) == 0)
-         return;
+   if (mmDBWrapper::getNumAccounts(db_.get()) == 0)
+      return;
 
-    std::vector< boost::shared_ptr<mmBankTransaction> >* trans = new std::vector< boost::shared_ptr<mmBankTransaction> >;
-    mmFilterTransactionsDialog* dlg = new mmFilterTransactionsDialog(trans, core_, this);
-    if (dlg->ShowModal() == wxID_OK)
-    {
-        mmPrintableBase* rs = new mmReportTransactions(trans, core_);
-        menuPrintingEnable(true);
-        createReportsPage(rs);
-    }
-    else
-    {
-        delete trans;
-    }
-    dlg->Destroy();
+   std::vector< boost::shared_ptr<mmBankTransaction> >* trans 
+      = new std::vector< boost::shared_ptr<mmBankTransaction> >;
+   mmFilterTransactionsDialog* dlg = new mmFilterTransactionsDialog(trans, core_, this);
+   if (dlg->ShowModal() == wxID_OK)
+   {
+      mmPrintableBase* rs = new mmReportTransactions(trans, core_);
+      menuPrintingEnable(true);
+      createReportsPage(rs);
+   }
+   else
+   {
+      delete trans;
+   }
+   dlg->Destroy();
 }
 
 void mmGUIFrame::OnCashFlowSpecificAccounts()

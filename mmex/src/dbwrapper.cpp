@@ -1678,8 +1678,18 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db)
 {
     double balance = 0.0;
     mmBEGINSQL_LITE_EXCEPTION;
-    wxString bufSQL = wxString::Format(wxT("select * from STOCK_V1;"));
+
+    wxString bufSQL = wxString::Format(wxT("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Investment'"));
     wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
+    while (q1.NextRow())
+    {
+       double value = q1.GetDouble(wxT("INITIALBAL"));
+       balance += value;
+    }
+    q1.Finalize();
+
+    bufSQL = wxString::Format(wxT("select * from STOCK_V1;"));
+    q1 = db->ExecuteQuery(bufSQL);
     while (q1.NextRow())
     {
         double value = q1.GetDouble(wxT("VALUE"));
@@ -1692,21 +1702,28 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db)
 
 double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int accountID)
 {
-	wxASSERT(accountID != -1);
+   wxASSERT(accountID != -1);
 
-    double balance = 0.0;
-    mmBEGINSQL_LITE_EXCEPTION;
-	wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from STOCK_V1 where HELDAT=%d;", accountID);
-    wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
-    while (q1.NextRow())
-    {
-        double value = q1.GetDouble(wxT("VALUE"));
-        balance += value;
-    }
-    q1.Finalize();
-    mmENDSQL_LITE_EXCEPTION;
-    return balance;
+   double balance = 0.0;
+   mmBEGINSQL_LITE_EXCEPTION;
+
+   wxSQLite3StatementBuffer bufSQL;
+
+   bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", accountID);
+   wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
+   balance = q1.GetDouble(wxT("INITIALBAL"));
+   q1.Finalize();
+
+   bufSQL.Format("select * from STOCK_V1 where HELDAT=%d;", accountID);
+   q1 = db->ExecuteQuery(bufSQL);
+   while (q1.NextRow())
+   {
+      double value = q1.GetDouble(wxT("VALUE"));
+      balance += value;
+   }
+   q1.Finalize();
+   mmENDSQL_LITE_EXCEPTION;
+   return balance;
 }
 
 void mmDBWrapper::deleteAsset(wxSQLite3Database* db, int assetID)
