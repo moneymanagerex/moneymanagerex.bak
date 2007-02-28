@@ -41,6 +41,7 @@
 #include "reportsummaryassets.h"
 #include "reporttransactions.h"
 #include "reportcashflow.h"
+#include "reporttransstats.h"
 
 #include "appstartdialog.h"
 #include "aboutdialog.h"
@@ -729,6 +730,13 @@ void mmGUIFrame::updateNavTreeControl()
         new mmTreeItemData(wxT("Cash Flow - Specific Accounts")));
 
     ///////////////////////////////////////////////////////
+    wxTreeItemId transactionStats = navTreeCtrl_->AppendItem(reports, 
+        _("Transaction Statistics"), 4, 4);
+    navTreeCtrl_->SetItemData(transactionStats, 
+        new mmTreeItemData(wxT("Transaction Statistics")));
+
+     ///////////////////////////////////////////////////////////////////
+
     wxTreeItemId help = navTreeCtrl_->AppendItem(root, _("Help"), 5, 5);
     navTreeCtrl_->SetItemData(help, new mmTreeItemData(wxT("Help")));
     navTreeCtrl_->SetItemBold(help, true);
@@ -967,6 +975,18 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
+
+        /////////////////////////////////////////////////////////////////
+        
+        if (iData->getString() == wxT("Transaction Statistics"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            int year = today.GetYear()-1;
+            mmPrintableBase* rs = new mmReportTransactionStats(core_, year);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+        
 
         /////////////////////////////////////////////////////////////////
 

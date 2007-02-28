@@ -833,7 +833,7 @@ bool mmDBWrapper::getExpensesIncome(wxSQLite3Database* db,
             if (!dtdt.IsBetween(dtBegin, dtEnd))
                 continue; //skip
         }
-
+        
         if (transTypeString == wxT("Deposit"))
             income += transAmount;
         else if (transTypeString == wxT("Withdrawal"))
@@ -1723,7 +1723,9 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int account
    }
    q1.Finalize();
    mmENDSQL_LITE_EXCEPTION;
-   return balance;
+
+   double convRate = mmDBWrapper::getCurrencyBaseConvRate(db, accountID);
+   return balance * convRate;
 }
 
 void mmDBWrapper::deleteAsset(wxSQLite3Database* db, int assetID)

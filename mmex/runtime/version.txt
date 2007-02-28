@@ -1,6 +1,8 @@
 Version History of Money Manager Ex
 
 0.8.0.4 (??)
+- Add Copy/Paste transactions within same account
+- Added Transaction Statistics report to view number of transactions over time
 - Fixed bug where a blank category can be entered
 - Fixed bug with QIF import when payee is missing(Thanks Mark)
 - Fix view sorting in account view

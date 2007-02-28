@@ -46,8 +46,16 @@ public:
         cp_(cp),
         sortCol_(0),
         asc_(true),
-        selectedIndex_(-1)
-    {}
+        selectedIndex_(-1),
+        m_selectedForCopy_(-1)
+    {
+        /* Setup the Accelorator Table */
+        wxAcceleratorEntry entries[2];
+        entries[0].Set(wxACCEL_CTRL,  (int) 'C', MENU_ON_COPY_TRANSACTION);
+        entries[1].Set(wxACCEL_CTRL,  (int) 'V', MENU_ON_PASTE_TRANSACTION);
+        wxAcceleratorTable accel(2, entries);
+        this->SetAcceleratorTable(accel); 
+    }
 
 public:
     /* required overrides for virtual style list control */
@@ -63,7 +71,9 @@ public:
     void OnListKeyDown(wxListEvent& event);
     void OnChar(wxKeyEvent& event);
     void OnMarkTransactionDB(const wxString& status);
- 
+    void OnCopy(wxCommandEvent& WXUNUSED(event));
+    void OnPaste(wxCommandEvent& WXUNUSED(event));
+
     /* Sort Columns */
     void OnColClick(wxListEvent& event);
     void SetColumnImage(int col, int image);
@@ -77,6 +87,7 @@ private:
     wxListItemAttr attr2_; // style2
     mmCheckingPanel* cp_;
     long selectedIndex_;
+    long m_selectedForCopy_;
 
 public:
     long sortCol_;

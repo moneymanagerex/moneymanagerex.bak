@@ -102,7 +102,9 @@ public:
     ~mmBankTransactionList() {}
 
     boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int accountID, int transactionID);
+    boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int transactionID);
     int addTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
+    boost::shared_ptr<mmBankTransaction> copyTransaction(int transactionID);
     void updateTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     void deleteTransaction(int accountID, int transactionID);
     void deleteTransactions(int accountID);
@@ -114,6 +116,9 @@ public:
                                  wxDateTime dtBegin, wxDateTime dtEnd);
     double getAmountForPayee(int payeeID, bool ignoreDate, 
                                  wxDateTime dtbegin, wxDateTime dtEnd);
+    void getTransactionStats(int accountID, int& number,  
+                           bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd);
+
 
     double getBalance(int accountID, bool ignoreFuture = false);
     double getReconciledBalance(int accountID);

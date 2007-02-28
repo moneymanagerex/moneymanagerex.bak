@@ -75,7 +75,10 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
     EVT_LIST_COL_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnColClick)
     EVT_LIST_KEY_DOWN(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListKeyDown)
 
-     EVT_CHAR(MyListCtrl::OnChar)
+    EVT_MENU(MENU_ON_COPY_TRANSACTION, MyListCtrl::OnCopy) 
+    EVT_MENU(MENU_ON_PASTE_TRANSACTION, MyListCtrl::OnPaste) 
+
+    EVT_CHAR(MyListCtrl::OnChar)
 END_EVENT_TABLE()
 /*******************************************************/
 mmCheckingPanel::mmCheckingPanel(mmCoreDB* core,
@@ -785,6 +788,9 @@ void MyListCtrl::OnItemRightClick(wxListEvent& event)
     menu.AppendSeparator();
     menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Transaction"));
     menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Transaction"));
+    menu.Append(MENU_ON_COPY_TRANSACTION, _("&Copy Transaction"));
+    if (m_selectedForCopy_ != -1)
+        menu.Append(MENU_ON_PASTE_TRANSACTION, _("&Paste Transaction"));
     menu.AppendSeparator();
     menu.Append(MENU_TREEPOPUP_MARKRECONCILED, _("Mark As &Reconciled"));
     menu.Append(MENU_TREEPOPUP_MARKUNRECONCILED, _("Mark As &Unreconciled"));
@@ -980,6 +986,27 @@ void MyListCtrl::OnChar(wxKeyEvent& event)
     }
 }
 
+void MyListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
+{
+    if (selectedIndex_ == -1)
+        return;
+
+    m_selectedForCopy_ = cp_->trans_[selectedIndex_]->transactionID();
+}
+
+void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
+{
+    if (m_selectedForCopy_ != -1)
+    {
+        boost::shared_ptr<mmBankTransaction> pCopiedTrans = cp_->core_->bTransactionList_.copyTransaction(m_selectedForCopy_);
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = cp_->core_->accountList_.getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
+        pCopiedTrans->updateAllData(cp_->core_, pCopiedTrans->accountID_, pCurrencyPtr, true);
+        cp_->initVirtualListControl();
+        RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+    }
+}
+
+
 void MyListCtrl::OnListKeyDown(wxListEvent& event)
 {
   switch ( event.GetKeyCode() )
@@ -1022,7 +1049,8 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
                  OnMarkTransaction(evt);
             }
             break;
-
+        
+      
         default:
             event.Skip();
     }

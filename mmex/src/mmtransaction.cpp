@@ -192,6 +192,60 @@ int mmBankTransactionList::addTransaction(boost::shared_ptr<mmBankTransaction> p
    return pBankTransaction->transactionID();
 }
 
+boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int transactionID)
+{
+   boost::shared_ptr<mmBankTransaction> pBankTransaction = getBankTransactionPtr(transactionID);
+   if (!pBankTransaction)
+       return boost::shared_ptr<mmBankTransaction>();
+
+   boost::shared_ptr<mmBankTransaction> pCopyTransaction(new mmBankTransaction(db_));
+   mmBEGINSQL_LITE_EXCEPTION;
+   
+   pCopyTransaction->accountID_ = pBankTransaction->accountID_; 
+   pCopyTransaction->toAccountID_ = pBankTransaction->toAccountID_;
+   pCopyTransaction->payee_       = pBankTransaction->payee_;
+   pCopyTransaction->payeeID_=    pBankTransaction->payeeID_;
+   pCopyTransaction->transType_=    pBankTransaction->transType_;
+   pCopyTransaction->amt_ =   pBankTransaction->amt_;
+   pCopyTransaction->status_ =    pBankTransaction->status_;
+   pCopyTransaction->transNum_=   pBankTransaction->transNum_;
+   pCopyTransaction->notes_=   pBankTransaction->notes_;
+   pCopyTransaction->categID_  =   pBankTransaction->categID_;
+   pCopyTransaction->subcategID_ =   pBankTransaction->subcategID_;
+   pCopyTransaction->date_=    wxDateTime::Now(); // Use Today's Date
+   pCopyTransaction->toAmt_=   pBankTransaction->toAmt_;
+   pCopyTransaction->category_ = pBankTransaction->category_;
+
+   wxString bufSQL = wxString::Format(wxT("insert into CHECKINGACCOUNT_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, \
+                                          TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES,                               \
+                                          CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT)                                              \
+                                          values (%d, %d, %d, '%s', %f, '%s', '%s', '%s', %d, %d, '%s', -1, %f);"),
+                                          pBankTransaction->accountID_, 
+                                          pBankTransaction->toAccountID_, 
+                                          pBankTransaction->payeeID_, 
+                                          pBankTransaction->transType_.c_str(), 
+                                          pBankTransaction->amt_,
+                                          pBankTransaction->status_.c_str(), 
+                                          pBankTransaction->transNum_.c_str(), 
+                                          mmCleanString(pBankTransaction->notes_.c_str()).c_str(), 
+                                          pBankTransaction->categID_, 
+                                          pBankTransaction->subcategID_, 
+                                          pCopyTransaction->date_.FormatISODate().c_str(), 
+                                          pBankTransaction->toAmt_ );  
+
+   int retVal = db_->ExecuteUpdate(bufSQL);
+
+
+  
+
+   pCopyTransaction->transactionID(db_->GetLastRowId().ToLong());
+   transactions_.push_back(pCopyTransaction);
+
+   mmENDSQL_LITE_EXCEPTION;
+
+   return pCopyTransaction;
+}
+
 void mmBankTransactionList::updateTransaction(
    boost::shared_ptr<mmBankTransaction> pBankTransaction)
 {
@@ -232,6 +286,28 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPt
             if (((pBankTransaction->accountID_ == accountID) ||
                (pBankTransaction->toAccountID_ == accountID)) 
                && (pBankTransaction->transactionID() == transactionID))
+            {
+                return pBankTransaction;
+            }
+            else
+                ++i;
+        }
+    }
+    // didn't find the transaction
+    wxASSERT(false);
+    return boost::shared_ptr<mmBankTransaction> ();
+}
+
+boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPtr
+(int transactionID)
+{
+    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    for (i = transactions_.begin(); i!= transactions_.end(); )
+    {
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        if (pBankTransaction)
+        {
+            if (pBankTransaction->transactionID() == transactionID)
             {
                 return pBankTransaction;
             }
@@ -344,10 +420,13 @@ void mmBankTransactionList::getExpensesIncome(int accountID, double& expenses, d
                     continue; //skip
             }
 
+            // We got this far, get the currency conversion rate for this account
+            double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), pBankTransaction->accountID_);
+
             if (pBankTransaction->transType_ == wxT("Deposit"))
-                income += pBankTransaction->amt_;
+                income += pBankTransaction->amt_ * convRate;
             else if (pBankTransaction->transType_ == wxT("Withdrawal"))
-                expenses += pBankTransaction->amt_;
+                expenses += pBankTransaction->amt_ * convRate;
             else if (pBankTransaction->transType_ == wxT("Transfer"))
             {
                 // transfers are not considered in income/expenses calculations
@@ -355,6 +434,49 @@ void mmBankTransactionList::getExpensesIncome(int accountID, double& expenses, d
 
         }
 
+    }
+}
+
+
+void mmBankTransactionList::getTransactionStats(int accountID, int& number,  
+                           bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd)
+{
+    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    for (i = transactions_.begin(); i != transactions_.end(); i++ )
+    {
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        if (pBankTransaction)
+        {
+            if (accountID != -1)
+            {
+                if ((pBankTransaction->accountID_ == accountID) ||
+                    (pBankTransaction->toAccountID_ == accountID))
+                {
+
+                }
+                else
+                    continue; // skip
+            }
+
+            if (pBankTransaction->status_ == wxT("V"))
+                continue; // skip
+
+            if (!ignoreDate)
+            {
+                if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                    continue; //skip
+            }
+
+            if (pBankTransaction->transType_ == wxT("Deposit"))
+                number++;
+            else if (pBankTransaction->transType_ == wxT("Withdrawal"))
+                number++;
+            else if (pBankTransaction->transType_ == wxT("Transfer"))
+            {
+                number++;
+            }
+
+        }
     }
 }
 

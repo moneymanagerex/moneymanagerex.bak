@@ -125,6 +125,9 @@ public:
                    continue; // skip account
            }
 
+
+           double convRate = mmDBWrapper::getCurrencyBaseConvRate(core_->db_.get(), accountID);
+
            // Process all possible repeating transactions for this BD
            while(1)
            {
@@ -139,9 +142,9 @@ public:
                wxString dtStr = mmGetDateForDisplay(core_->db_.get(), nextOccurDate);
 
                if (transType == wxT("Withdrawal"))
-                  rf.amount = -amt;
+                  rf.amount = -amt * convRate;
                else
-                  rf.amount = +amt;
+                  rf.amount = +amt * convRate;
 
                fvec.push_back(rf);   
 
