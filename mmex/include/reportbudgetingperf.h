@@ -115,7 +115,7 @@ public:
             }
             else if (th.period_ == wxT("Quarterly"))
             {
-                th.estimated_ = th.amt_ / 4.0;
+                th.estimated_ = th.amt_ / 3.0;
                 totalEstimated_ = th.amt_ * 4;
             }
             else if (th.period_ == wxT("Half-Yearly"))
@@ -231,7 +231,7 @@ public:
                 }
                 else if (thsub.period_ == wxT("Quarterly"))
                 {
-                    thsub.estimated_ = thsub.amt_ / 4.0;
+                    thsub.estimated_ = thsub.amt_ / 3.0;
                     totalEstimated_ = thsub.amt_ * 4;
                 }
                 else if (thsub.period_ == wxT("Half-Yearly"))

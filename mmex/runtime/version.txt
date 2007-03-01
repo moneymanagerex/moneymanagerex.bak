@@ -1,5 +1,8 @@
 Version History of Money Manager Ex
 
+0.8.0.5 ()
+- Fix bug calculating Quarterly estimated amounts in Budget performance report
+
 0.8.0.4 (Feb 28, 2007)
 - Add Copy/Paste transactions within same account
 - Added Transaction Statistics report to view number of transactions over time
