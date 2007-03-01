@@ -1,0 +1,3316 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Money Manager Ex\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2007-01-21 10:06-0600\n"
+"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"Language-Team: TheZeal Software <Kyosuketam>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Chinese\n"
+"X-Poedit-Country: China\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: ..\\..\\\n"
+"X-Poedit-SearchPath-0: include\n"
+"X-Poedit-SearchPath-1: src\n"
+
+#: src/aboutdialog.cpp:127
+msgid "  and contributers from around the world."
+msgstr "  和来自全世界的贡献者。"
+
+#: src/aboutdialog.cpp:132
+msgid "Released under the GNU GPL License"
+msgstr "遵循GNU GPL 协议"
+
+#: src/aboutdialog.cpp:144
+#, fuzzy
+msgid "Powered by wxWidgets and SQLite"
+msgstr "Powered by wxWidgets (c) www.wxwidgets.org"
+
+#: src/aboutdialog.cpp:148
+msgid "Version History"
+msgstr "版本历史"
+
+#: src/aboutdialog.cpp:153
+msgid "Contributers"
+msgstr ""
+
+#: src/aboutdialog.cpp:161
+msgid "Using Language : "
+msgstr "使用语言 : "
+
+#: src/appstartdialog.cpp:97
+msgid "Open Last Opened Database"
+msgstr "打开上次打开的数据库"
+
+#: src/appstartdialog.cpp:110
+msgid "Open the previously opened database : "
+msgstr "打开先前打开的数据库"
+
+#: src/appstartdialog.cpp:117
+msgid "Create a New Money Manager File"
+msgstr "建立新 Money Manager 文件"
+
+#: src/appstartdialog.cpp:118
+msgid "Create a new database file to get started"
+msgstr "创建一个新的数据库并打开"
+
+#: src/appstartdialog.cpp:122
+msgid "Open Existing Money Manager File"
+msgstr "打开存在的Money Manager文件"
+
+#: src/appstartdialog.cpp:123
+msgid "Open an already created Money Manager Ex database file with extension (*.mmb)"
+msgstr "打开一个已建立的Money Manager Ex 数据库文件（*.mmb文件）"
+
+#: src/appstartdialog.cpp:127
+msgid "Read Documentation"
+msgstr "阅读文件"
+
+#: src/appstartdialog.cpp:128
+msgid "Read the user manual"
+msgstr "阅读用户手册"
+
+#: src/appstartdialog.cpp:132
+msgid "Visit Website for more information"
+msgstr "访问Web站点以寻找更多信息"
+
+#: src/appstartdialog.cpp:133
+msgid "Open the Money Manager Ex website for latest news, updates etc"
+msgstr "查看Money Manager Ex站点上的最新新闻、更新等"
+
+#: src/appstartdialog.cpp:140
+msgid "Show this window next time Money Manager Ex starts"
+msgstr "下次打开Money Manager Ex时显示该窗口"
+
+#: src/assetdialog.cpp:156
+msgid "Asset Details"
+msgstr "资产明细"
+
+#: src/assetdialog.cpp:169
+#: src/assets.cpp:139
+msgid "Name"
+msgstr "名称"
+
+#: src/assetdialog.cpp:175
+msgid "Enter the name of the asset"
+msgstr "请输入资产名称"
+
+#: src/assetdialog.cpp:179
+#: src/bddialog.cpp:370
+#: src/stockdialog.cpp:160
+#: src/transdialog.cpp:281
+#: src/univcsv.cpp:167
+#: src/univcsv.cpp:197
+#: include/reportcashflow.h:34
+msgid "Date"
+msgstr "日期"
+
+#: src/assetdialog.cpp:186
+msgid "Specify the date of purchase of asset"
+msgstr "资产具体购买日期"
+
+#: src/assetdialog.cpp:189
+msgid "Asset Type"
+msgstr "资产分类"
+
+#: src/assetdialog.cpp:195
+#: src/assets.cpp:229
+#: src/assets.cpp:240
+#: include/reportsummaryassets.h:79
+#: include/reportsummaryassets.h:90
+msgid "Property"
+msgstr "房地产"
+
+#: src/assetdialog.cpp:196
+#: src/assets.cpp:230
+#: src/assets.cpp:242
+#: include/reportsummaryassets.h:80
+#: include/reportsummaryassets.h:92
+msgid "Automobile"
+msgstr "汽车"
+
+#: src/assetdialog.cpp:197
+#: src/assets.cpp:231
+#: src/assets.cpp:244
+#: include/reportsummaryassets.h:81
+#: include/reportsummaryassets.h:94
+msgid "Household Object"
+msgstr "家庭用品"
+
+#: src/assetdialog.cpp:198
+#: src/assets.cpp:232
+#: src/assets.cpp:246
+#: include/reportsummaryassets.h:82
+#: include/reportsummaryassets.h:96
+msgid "Art"
+msgstr "艺术品"
+
+#: src/assetdialog.cpp:199
+#: src/assets.cpp:233
+#: src/assets.cpp:248
+#: include/reportsummaryassets.h:83
+#: include/reportsummaryassets.h:98
+msgid "Jewellery"
+msgstr "珠宝首饰"
+
+#: src/assetdialog.cpp:200
+#: src/assets.cpp:234
+#: src/assets.cpp:250
+#: include/reportsummaryassets.h:84
+#: include/reportsummaryassets.h:100
+msgid "Cash"
+msgstr ""
+
+#: src/assetdialog.cpp:201
+#: src/assets.cpp:235
+#: src/assets.cpp:252
+#: include/reportsummaryassets.h:85
+#: include/reportsummaryassets.h:102
+msgid "Other"
+msgstr "其他"
+
+#: src/assetdialog.cpp:205
+msgid "Select type of asset"
+msgstr "请选择资产分类"
+
+#: src/assetdialog.cpp:211
+#: src/assetdialog.cpp:295
+#: src/assets.cpp:147
+#: src/stockdialog.cpp:245
+#: src/stocks.cpp:170
+msgid "Value"
+msgstr "价格"
+
+#: src/assetdialog.cpp:217
+msgid "Enter the current value of the asset"
+msgstr "请输入资产当前的价格"
+
+#: src/assetdialog.cpp:223
+msgid "Change in Value"
+msgstr "价格变化"
+
+#: src/assetdialog.cpp:229
+#: src/bddialog.cpp:271
+#: src/bddialog.cpp:398
+#: src/billsdeposits.cpp:257
+#: src/budgetentrydialog.cpp:157
+#: src/filtertransdialog.cpp:257
+#: src/mmhomepagepanel.cpp:239
+#: src/transdialog.cpp:309
+msgid "None"
+msgstr "无"
+
+#: src/assetdialog.cpp:230
+msgid "Appreciates"
+msgstr "增值"
+
+#: src/assetdialog.cpp:231
+msgid "Depreciates"
+msgstr "贬值"
+
+#: src/assetdialog.cpp:235
+msgid "Specify if the value of the asset changes over time"
+msgstr "选中该项当资产价格随时间变化时"
+
+#: src/assetdialog.cpp:240
+msgid "Rate of Change"
+msgstr "变化率"
+
+#: src/assetdialog.cpp:246
+msgid "Enter the rate at which the asset changes its value in %"
+msgstr "以百分率（％）的形式输入资产变化的变化率"
+
+#: src/assetdialog.cpp:252
+#: src/bddialog.cpp:411
+#: src/stockdialog.cpp:213
+#: src/transdialog.cpp:322
+#: src/univcsv.cpp:177
+#: src/univcsv.cpp:202
+msgid "Notes"
+msgstr "备注："
+
+#: src/assetdialog.cpp:258
+msgid "Enter notes associated with this asset"
+msgstr "输入该资产相关的备注"
+
+#: src/assetdialog.cpp:270
+#: src/bddialog.cpp:438
+#: src/budgetentrydialog.cpp:187
+#: src/budgetyearentrydialog.cpp:127
+#: src/filtertransdialog.cpp:331
+#: src/newchkacctdialog.cpp:291
+#: src/stockdialog.cpp:262
+#: src/transdialog.cpp:349
+msgid "OK"
+msgstr "确认"
+
+#: src/assetdialog.cpp:274
+#: src/bddialog.cpp:442
+#: src/budgetentrydialog.cpp:191
+#: src/budgetyearentrydialog.cpp:132
+#: src/filtertransdialog.cpp:335
+#: src/newchkacctdialog.cpp:295
+#: src/stockdialog.cpp:266
+#: src/transdialog.cpp:353
+msgid "Cancel"
+msgstr "取消"
+
+#: src/assetdialog.cpp:302
+#: src/assetdialog.cpp:329
+msgid "Invalid Value "
+msgstr "无效值"
+
+#: src/assetdialog.cpp:302
+#: src/assetdialog.cpp:329
+#: src/bddialog.cpp:591
+#: src/bddialog.cpp:741
+#: src/bddialog.cpp:763
+#: src/budgetentrydialog.cpp:226
+#: src/budgetyearentrydialog.cpp:145
+#: src/budgetyearentrydialog.cpp:152
+#: src/budgetyearentrydialog.cpp:175
+#: src/categdialog.cpp:165
+#: src/categdialog.cpp:184
+#: src/categdialog.cpp:215
+#: src/categdialog.cpp:223
+#: src/categdialog.cpp:327
+#: src/filtertransdialog.cpp:508
+#: src/filtertransdialog.cpp:522
+#: src/maincurrencydialog.cpp:193
+#: src/mmex.cpp:1898
+#: src/mmex.cpp:1974
+#: src/mmex.cpp:2396
+#: src/mmex.cpp:2431
+#: src/newchkacctdialog.cpp:330
+#: src/payeedialog.cpp:174
+#: src/payeedialog.cpp:194
+#: src/qifimport.cpp:356
+#: src/stockdialog.cpp:347
+#: src/stockdialog.cpp:362
+#: src/stockdialog.cpp:371
+#: src/stockdialog.cpp:380
+#: src/transdialog.cpp:494
+#: src/transdialog.cpp:652
+#: src/transdialog.cpp:668
+#: src/univcsv.cpp:237
+#: src/univcsv.cpp:249
+#: src/util.cpp:154
+#: src/util.cpp:255
+#: src/util.cpp:516
+#: include/mmex.h:305
+msgid "Error"
+msgstr "错误"
+
+#: src/assetdialog.cpp:321
+msgid "Rate of Change in Value"
+msgstr "价格变化率"
+
+#: src/assets.cpp:112
+#: src/mmex.cpp:577
+#: src/mmex.cpp:606
+#: src/mmex.cpp:1541
+#: src/mmhomepagepanel.cpp:171
+msgid "Assets"
+msgstr "资产"
+
+#: src/assets.cpp:118
+#: src/stocks.cpp:130
+msgid "Total:"
+msgstr "总计:"
+
+#: src/assets.cpp:143
+#: src/billsdeposits.cpp:152
+#: include/reportbudgetingperf.h:50
+msgid "Type"
+msgstr "分类"
+
+#: src/assets.cpp:179
+#: src/mmcheckingpanel.cpp:333
+#: src/mmex.cpp:1619
+#: src/stocks.cpp:208
+msgid "New"
+msgstr "新增"
+
+#: src/assets.cpp:181
+msgid "New Asset"
+msgstr "新增资产"
+
+#: src/assets.cpp:184
+#: src/categdialog.cpp:137
+#: src/maincurrencydialog.cpp:131
+#: src/mmcheckingpanel.cpp:338
+#: src/payeedialog.cpp:147
+#: src/stocks.cpp:213
+msgid "Edit"
+msgstr "编辑"
+
+#: src/assets.cpp:186
+msgid "Edit Asset"
+msgstr "编辑资产"
+
+#: src/assets.cpp:189
+#: src/categdialog.cpp:142
+#: src/mmcheckingpanel.cpp:343
+#: src/payeedialog.cpp:152
+#: src/stocks.cpp:218
+msgid "Delete"
+msgstr "删除"
+
+#: src/assets.cpp:191
+msgid "Delete Asset"
+msgstr "删除资产"
+
+#: src/assets.cpp:210
+#: src/stocks.cpp:262
+#, c-format
+msgid "Total: %s"
+msgstr "总计: %s"
+
+#: src/assets.cpp:289
+msgid "&New Asset"
+msgstr "新增资产(&N)"
+
+#: src/assets.cpp:291
+msgid "&Edit Asset"
+msgstr "编辑资产(&E)"
+
+#: src/assets.cpp:292
+msgid "&Delete Asset"
+msgstr "删除资产(&D)"
+
+#: src/assets.cpp:365
+msgid "Do you really want to delete the Asset?"
+msgstr "你确认删除该资产吗？"
+
+#: src/assets.cpp:366
+msgid "Confirm Asset Deletion"
+msgstr "确认删除资产"
+
+#: src/bddialog.cpp:236
+#, fuzzy
+msgid "Repeating Transaction Details"
+msgstr "刪除交易"
+
+#: src/bddialog.cpp:245
+msgid "Account Name"
+msgstr "账户名称"
+
+#: src/bddialog.cpp:250
+#: src/stockdialog.cpp:154
+#: src/stockdialog.cpp:287
+msgid "Select Account"
+msgstr "选择账户"
+
+#: src/bddialog.cpp:255
+msgid "Next Occurence"
+msgstr "下一次到期"
+
+#: src/bddialog.cpp:262
+msgid "Specify the date of the next bill or deposit"
+msgstr "指定下一笔账单或存款的日期"
+
+#: src/bddialog.cpp:265
+msgid "Repeats"
+msgstr "重复"
+
+#: src/bddialog.cpp:272
+#: src/billsdeposits.cpp:261
+#: src/budgetentrydialog.cpp:158
+#: src/mmhomepagepanel.cpp:243
+msgid "Weekly"
+msgstr "每周"
+
+#: src/bddialog.cpp:273
+#: src/billsdeposits.cpp:265
+#: src/budgetentrydialog.cpp:159
+#: src/mmhomepagepanel.cpp:247
+msgid "Bi-Weekly"
+msgstr "每双周"
+
+#: src/bddialog.cpp:274
+#: src/billsdeposits.cpp:269
+#: src/budgetentrydialog.cpp:160
+#: src/mmhomepagepanel.cpp:251
+msgid "Monthly"
+msgstr "每月"
+
+#: src/bddialog.cpp:275
+#: src/billsdeposits.cpp:273
+#: src/budgetentrydialog.cpp:161
+#: src/mmhomepagepanel.cpp:255
+msgid "Bi-Monthly"
+msgstr "每双月"
+
+#: src/bddialog.cpp:276
+#: src/billsdeposits.cpp:277
+#: src/budgetentrydialog.cpp:162
+#: src/mmhomepagepanel.cpp:259
+msgid "Quarterly"
+msgstr "每季度"
+
+#: src/bddialog.cpp:277
+#: src/billsdeposits.cpp:281
+#: src/budgetentrydialog.cpp:163
+#: src/mmhomepagepanel.cpp:263
+msgid "Half-Yearly"
+msgstr "每半年"
+
+#: src/bddialog.cpp:278
+#: src/billsdeposits.cpp:285
+#: src/budgetentrydialog.cpp:164
+#: src/mmhomepagepanel.cpp:267
+msgid "Yearly"
+msgstr "每年"
+
+#: src/bddialog.cpp:279
+#: src/billsdeposits.cpp:289
+#: src/mmhomepagepanel.cpp:271
+msgid "Four Months"
+msgstr "每四个月"
+
+#: src/bddialog.cpp:280
+#: src/billsdeposits.cpp:293
+#: src/mmhomepagepanel.cpp:275
+msgid "Four Weeks"
+msgstr ""
+
+#: src/bddialog.cpp:289
+msgid "Times Repeated"
+msgstr "重复次数"
+
+#: src/bddialog.cpp:296
+msgid "Specify the number of times this series repeats. Leave blank if this series continues forever."
+msgstr "指定项目重复的时间。如果项目永远持续则保留空白"
+
+#: src/bddialog.cpp:300
+msgid "Transaction Details"
+msgstr "交易明细"
+
+#: src/bddialog.cpp:309
+#: src/transdialog.cpp:219
+msgid "Transaction Type"
+msgstr "交易类型"
+
+#: src/bddialog.cpp:314
+#: src/billsdeposits.cpp:407
+#: src/filtertransdialog.cpp:278
+#: src/mmcheckingpanel.cpp:272
+#: src/transdialog.cpp:224
+#: src/univcsv.cpp:183
+#: src/univcsv.cpp:205
+msgid "Withdrawal"
+msgstr "支出"
+
+#: src/bddialog.cpp:315
+#: src/billsdeposits.cpp:409
+#: src/filtertransdialog.cpp:279
+#: src/mmcheckingpanel.cpp:274
+#: src/transdialog.cpp:225
+#: src/univcsv.cpp:185
+#: src/univcsv.cpp:206
+msgid "Deposit"
+msgstr "收入"
+
+#: src/bddialog.cpp:316
+#: src/billsdeposits.cpp:411
+#: src/filtertransdialog.cpp:280
+#: src/transdialog.cpp:226
+msgid "Transfer"
+msgstr "转帐"
+
+#: src/bddialog.cpp:323
+#: src/transdialog.cpp:233
+msgid "Specify the type of transactions to be created."
+msgstr "指定要创建的交易的类型"
+
+#: src/bddialog.cpp:325
+#: src/transdialog.cpp:235
+msgid "Advanced"
+msgstr "高级"
+
+#: src/bddialog.cpp:329
+#: src/transdialog.cpp:239
+msgid "Specify advanced settings for transaction"
+msgstr "指定交易的高级设置"
+
+#: src/bddialog.cpp:339
+#: src/bddialog.cpp:678
+#: src/billsdeposits.cpp:150
+#: src/mmcheckingpanel.cpp:266
+#: src/transdialog.cpp:250
+#: src/transdialog.cpp:581
+#: src/univcsv.cpp:169
+#: src/univcsv.cpp:198
+msgid "Payee"
+msgstr "收款人"
+
+#: src/bddialog.cpp:343
+#: src/bddialog.cpp:479
+#: src/bddialog.cpp:523
+#: src/bddialog.cpp:674
+#: src/bddialog.cpp:685
+#: src/filtertransdialog.cpp:234
+#: src/transdialog.cpp:255
+#: src/transdialog.cpp:424
+#: src/transdialog.cpp:583
+#: src/transdialog.cpp:599
+msgid "Select Payee"
+msgstr "选择收款人"
+
+#: src/bddialog.cpp:346
+msgid "Specify where the transaction is going to or coming from "
+msgstr "指定交易的对象"
+
+#: src/bddialog.cpp:348
+#: src/mmcheckingpanel.cpp:263
+#: src/transdialog.cpp:260
+msgid "Number"
+msgstr "单据号码"
+
+#: src/bddialog.cpp:356
+#: src/transdialog.cpp:267
+msgid "Specify any associated check number or transaction number"
+msgstr "指定相关的查询号或交易号"
+
+#: src/bddialog.cpp:359
+#: src/transdialog.cpp:270
+msgid "To"
+msgstr "至"
+
+#: src/bddialog.cpp:364
+#: src/transdialog.cpp:275
+msgid "Select To Acct"
+msgstr "选择收款账户"
+
+#: src/bddialog.cpp:368
+#: src/transdialog.cpp:279
+msgid "Specify the transfer account"
+msgstr "指定转账账户"
+
+#: src/bddialog.cpp:378
+#: src/transdialog.cpp:289
+msgid "Specify the date of the transaction"
+msgstr "指定交易日期"
+
+#: src/bddialog.cpp:383
+#: src/mmcheckingpanel.cpp:268
+#: src/transdialog.cpp:292
+#: src/univcsv.cpp:173
+#: src/univcsv.cpp:200
+#: include/reportbudgetingperf.h:49
+msgid "Category"
+msgstr "种类"
+
+#: src/bddialog.cpp:387
+#: src/bddialog.cpp:488
+#: src/bddialog.cpp:522
+#: src/bddialog.cpp:556
+#: src/bddialog.cpp:621
+#: src/filtertransdialog.cpp:245
+#: src/filtertransdialog.cpp:579
+#: src/transdialog.cpp:297
+#: src/transdialog.cpp:386
+#: src/transdialog.cpp:423
+#: src/transdialog.cpp:459
+#: src/transdialog.cpp:520
+msgid "Select Category"
+msgstr "选择种类"
+
+#: src/bddialog.cpp:390
+#: src/transdialog.cpp:300
+msgid "Specify the category for this transaction"
+msgstr "指定交易种类"
+
+#: src/bddialog.cpp:392
+#: src/transdialog.cpp:303
+#: include/reporttransactions.h:63
+msgid "Status"
+msgstr "状态"
+
+#: src/bddialog.cpp:399
+#: src/filtertransdialog.cpp:258
+#: src/transdialog.cpp:310
+msgid "Reconciled"
+msgstr "已核实"
+
+#: src/bddialog.cpp:400
+#: src/filtertransdialog.cpp:259
+#: src/transdialog.cpp:311
+msgid "Void"
+msgstr "无效"
+
+#: src/bddialog.cpp:401
+#: src/filtertransdialog.cpp:260
+#: src/transdialog.cpp:312
+msgid "Follow up"
+msgstr "跟进"
+
+#: src/bddialog.cpp:408
+#: src/filtertransdialog.cpp:266
+#: src/transdialog.cpp:319
+msgid "Specify the status for the transaction"
+msgstr "指定交易状态"
+
+#: src/bddialog.cpp:418
+#: src/transdialog.cpp:328
+msgid "Specify any text notes you want to add to this transaction."
+msgstr "添加关于该交易的备注。"
+
+#: src/bddialog.cpp:421
+#: src/billsdeposits.cpp:156
+#: src/budgetingpanel.cpp:221
+#: src/transdialog.cpp:331
+msgid "Amount"
+msgstr "总额"
+
+#: src/bddialog.cpp:428
+#: src/transdialog.cpp:339
+msgid "Specify the amount for this transaction"
+msgstr "指定交易的金额"
+
+#: src/bddialog.cpp:557
+#: src/bddialog.cpp:697
+#: src/transdialog.cpp:460
+msgid "Select To"
+msgstr "选择收款账户"
+
+#: src/bddialog.cpp:580
+#: src/transdialog.cpp:483
+msgid "To Account Amount Entry"
+msgstr "收款账户输入框"
+
+#: src/bddialog.cpp:581
+#: src/transdialog.cpp:484
+msgid "Amount to be recorded in To Account"
+msgstr "记录到账户的条目数量"
+
+#: src/bddialog.cpp:591
+#: src/transdialog.cpp:494
+msgid "Invalid To Amount Entered "
+msgstr "错误输入的收款账户"
+
+#: src/bddialog.cpp:689
+#: src/bddialog.cpp:703
+#: src/transdialog.cpp:597
+#: src/transdialog.cpp:614
+msgid "From"
+msgstr "由"
+
+#: src/bddialog.cpp:696
+msgid "Select From"
+msgstr "选择发款账户"
+
+#: src/bddialog.cpp:724
+#: src/transdialog.cpp:635
+msgid "Payee "
+msgstr "收款人"
+
+#: src/bddialog.cpp:726
+#: src/transdialog.cpp:637
+msgid "From Account "
+msgstr "由账户"
+
+#: src/bddialog.cpp:732
+#: src/transdialog.cpp:643
+msgid "Category "
+msgstr "类型"
+
+#: src/bddialog.cpp:741
+#: src/budgetentrydialog.cpp:226
+#: src/filtertransdialog.cpp:508
+#: src/filtertransdialog.cpp:522
+#: src/transdialog.cpp:652
+msgid "Invalid Amount Entered "
+msgstr "错误输入的账户"
+
+#: src/bddialog.cpp:747
+#: src/billsdeposits.cpp:151
+#: src/mmhomepagepanel.cpp:97
+#: include/reporttransactions.h:60
+msgid "Account"
+msgstr "帐号"
+
+#: src/bddialog.cpp:757
+#: src/transdialog.cpp:662
+msgid "To Account "
+msgstr "至账户"
+
+#: src/bddialog.cpp:763
+#: src/transdialog.cpp:668
+msgid "From and To Account cannot be the same."
+msgstr "收款和发款账户不能相同"
+
+#: src/billsdeposits.cpp:129
+#: src/mmex.cpp:581
+#: src/mmex.cpp:1531
+#, fuzzy
+msgid "Repeating Transactions"
+msgstr "刪除交易"
+
+#: src/billsdeposits.cpp:158
+msgid "Next Due Date"
+msgstr "下一次到期日"
+
+#: src/billsdeposits.cpp:159
+#: src/budgetingpanel.cpp:216
+msgid "Frequency"
+msgstr "重复"
+
+#: src/billsdeposits.cpp:160
+msgid "Remaining Days"
+msgstr "剩余天数"
+
+#: src/billsdeposits.cpp:203
+msgid "New Series"
+msgstr "新增项目"
+
+#: src/billsdeposits.cpp:205
+msgid "New Bills && Deposit Series"
+msgstr "新建账单和存款项目"
+
+#: src/billsdeposits.cpp:208
+msgid "Edit Series"
+msgstr "编辑项目"
+
+#: src/billsdeposits.cpp:210
+msgid "Edit Bills && Deposit Series"
+msgstr "编辑账单和存款项目"
+
+#: src/billsdeposits.cpp:213
+msgid "Delete Series"
+msgstr "刪除项目"
+
+#: src/billsdeposits.cpp:215
+msgid "Delete Bills && Deposit Series"
+msgstr "刪除账单和存款项目"
+
+#: src/billsdeposits.cpp:218
+msgid "Enter Transaction"
+msgstr "输入交易"
+
+#: src/billsdeposits.cpp:220
+msgid "Enter Next Bills && Deposit Occurrence"
+msgstr "输入下一次账户&&存款到期时间"
+
+#: src/billsdeposits.cpp:313
+#: src/mmhomepagepanel.cpp:295
+#: src/mmhomepagepanel.cpp:386
+msgid " days remaining"
+msgstr "日 - 到期"
+
+#: src/billsdeposits.cpp:318
+#: src/mmhomepagepanel.cpp:300
+#: src/mmhomepagepanel.cpp:392
+msgid " days overdue!"
+msgstr "日 - 过期"
+
+#: src/billsdeposits.cpp:386
+msgid "&New Bills && Deposit Series"
+msgstr "新增账单和存款项目(&N)"
+
+#: src/billsdeposits.cpp:388
+msgid "&Edit Bills && Deposit Series"
+msgstr "编辑账单和存款项目(&E)"
+
+#: src/billsdeposits.cpp:389
+msgid "&Delete Bills && Deposit Series"
+msgstr "刪除账单和存款项目(&D)"
+
+#: src/billsdeposits.cpp:391
+msgid "Enter next Occurrence"
+msgstr "输入下一次到期时间"
+
+#: src/billsdeposits.cpp:490
+msgid "Do you really want to delete the series?"
+msgstr "确认要删除这些项目吗？"
+
+#: src/billsdeposits.cpp:491
+msgid "Confirm Series Deletion"
+msgstr "项目删除确认"
+
+#: src/budgetentrydialog.cpp:135
+msgid "Type:"
+msgstr "类别　　 :"
+
+#: src/budgetentrydialog.cpp:141
+#: src/mmhomepagepanel.cpp:197
+msgid "Expense"
+msgstr "支出"
+
+#: src/budgetentrydialog.cpp:142
+#: src/mmhomepagepanel.cpp:196
+#: include/reportincexpesestime.h:44
+msgid "Income"
+msgstr "收入"
+
+#: src/budgetentrydialog.cpp:148
+msgid "Specify whether this category is an income or an expense category"
+msgstr "指定该类型是收入还是支出类型"
+
+#: src/budgetentrydialog.cpp:151
+msgid "Frequency:"
+msgstr "预算周期 :"
+
+#: src/budgetentrydialog.cpp:170
+msgid "Specify the frequency of the expense or deposit"
+msgstr "指定支出的周期或存款的期限"
+
+#: src/budgetentrydialog.cpp:173
+msgid "Amount:"
+msgstr "总额　　 :"
+
+#: src/budgetentrydialog.cpp:181
+msgid "Enter the amount budgeted for this category."
+msgstr "输入这个种类预算的金额"
+
+#: src/budgetingpanel.cpp:113
+#: src/budgetingpanel.cpp:140
+msgid "View All Budget Categories"
+msgstr "查看所有预算种类"
+
+#: src/budgetingpanel.cpp:118
+#: src/budgetingpanel.cpp:141
+msgid "View Non-Zero Budget Categories"
+msgstr "查看非零预算种类"
+
+#: src/budgetingpanel.cpp:166
+#, fuzzy
+msgid "Budget Setup for "
+msgstr "预算管理"
+
+#: src/budgetingpanel.cpp:183
+msgid "Viewing All Budget Categories"
+msgstr "查看所有预算类型"
+
+#: src/budgetingpanel.cpp:188
+msgid "Estimated Income: Actual Income: "
+msgstr "估计收入 : 实际收入 : "
+
+#: src/budgetingpanel.cpp:195
+msgid "Estimated Expenses: Actual Expenses: "
+msgstr "估计支出 : 实际支出 : "
+
+#: src/budgetingpanel.cpp:214
+#: include/reportcategexp.h:69
+msgid "Category  "
+msgstr "类型"
+
+#: src/budgetingpanel.cpp:215
+msgid "Sub Category"
+msgstr "子类型"
+
+#: src/budgetingpanel.cpp:224
+#: include/reportbudgetingperf.h:158
+#: include/reportbudgetingperf.h:268
+msgid "Estimated"
+msgstr "估计"
+
+#: src/budgetingpanel.cpp:227
+#: include/reportbudgetingperf.h:167
+#: include/reportbudgetingperf.h:279
+msgid "Actual"
+msgstr "实际"
+
+#: src/budgetingpanel.cpp:453
+#, c-format
+msgid "Estimated Income: %s Actual Income:  %s"
+msgstr "估计收入 : %s   实际收入 : %s"
+
+#: src/budgetingpanel.cpp:458
+#, c-format
+msgid "Estimated Expenses: %s Actual Expenses:  %s"
+msgstr "估计支出 : %s   实际支出 : %s"
+
+#: src/budgetyeardialog.cpp:105
+msgid "Add Budget Year"
+msgstr "增加预算年"
+
+#: src/budgetyeardialog.cpp:108
+msgid "Add a new budget year"
+msgstr "新增预算年"
+
+#: src/budgetyeardialog.cpp:111
+msgid "Delete Budget Year"
+msgstr "刪除预算年"
+
+#: src/budgetyeardialog.cpp:113
+msgid "Delete existing budget year"
+msgstr "刪除已有的预算年"
+
+#: src/budgetyearentrydialog.cpp:82
+msgid "Budget Year:"
+msgstr "预算年:"
+
+#: src/budgetyearentrydialog.cpp:89
+msgid "Enter the year in YYYY format to specify year"
+msgstr "以YYYY格式输入具体年份"
+
+#: src/budgetyearentrydialog.cpp:92
+msgid "Base Budget On:"
+msgstr "预算基于:"
+
+#: src/budgetyearentrydialog.cpp:105
+msgid "Specify year to base budget on."
+msgstr "指定预算基于的年份"
+
+#: src/budgetyearentrydialog.cpp:145
+#: src/budgetyearentrydialog.cpp:175
+msgid "Year is not valid"
+msgstr "預算年不正确"
+
+#: src/budgetyearentrydialog.cpp:152
+msgid "Budget Year already exists"
+msgstr "预算年已存在"
+
+#: src/categdialog.cpp:129
+msgid "Enter the name of the category to add or edit here"
+msgstr "指定要增加或编辑的类型名称"
+
+#: src/categdialog.cpp:132
+#: src/maincurrencydialog.cpp:127
+#: src/payeedialog.cpp:142
+#: src/univcsv.cpp:106
+msgid "Add"
+msgstr "新增"
+
+#: src/categdialog.cpp:134
+msgid "Add a new category"
+msgstr "新建类型"
+
+#: src/categdialog.cpp:139
+msgid "Edit the name of an existing category"
+msgstr "编辑已存在的类型的名称"
+
+#: src/categdialog.cpp:144
+msgid "Delete an existing category. The category cannot be used by existing transactions."
+msgstr "删除已存在的类型。该类型可能被已存在的交易使用。"
+
+#: src/categdialog.cpp:150
+#: src/maincurrencydialog.cpp:135
+#: src/payeedialog.cpp:160
+msgid "Select"
+msgstr "选择"
+
+#: src/categdialog.cpp:152
+msgid "Select the currently selected category as the selected category for the transaction"
+msgstr "选择当前被选类型作为交易的类型"
+
+#: src/categdialog.cpp:165
+msgid "Category with same name exists"
+msgstr "类型名称已存在"
+
+#: src/categdialog.cpp:184
+msgid "Sub Category with same name exists"
+msgstr "子类型名称已存在"
+
+#: src/categdialog.cpp:195
+msgid "Invalid Parent Category. Choose Root or Main Category node."
+msgstr "错误的父类型。选择根类型或主类型节点。"
+
+#: src/categdialog.cpp:196
+msgid "Error adding Category"
+msgstr "增加类型出错"
+
+#: src/categdialog.cpp:215
+msgid "Category is in use"
+msgstr "类型正在使用"
+
+#: src/categdialog.cpp:223
+msgid "Sub-Category is in use"
+msgstr "子类型正在使用"
+
+#: src/categdialog.cpp:327
+#, fuzzy
+msgid "Update Failed"
+msgstr "更新"
+
+#: src/currencydialog.cpp:151
+msgid "Currency Name"
+msgstr "当前名字"
+
+#: src/currencydialog.cpp:162
+msgid "Prefix Symbol"
+msgstr "前缀"
+
+#: src/currencydialog.cpp:171
+msgid "Suffix Symbol"
+msgstr "后缀"
+
+#: src/currencydialog.cpp:180
+msgid "Decimal Char"
+msgstr "小数点"
+
+#: src/currencydialog.cpp:191
+msgid "Grouping Char"
+msgstr "货币千位分割符"
+
+#: src/currencydialog.cpp:200
+msgid "Unit Name"
+msgstr "单位名称"
+
+#: src/currencydialog.cpp:211
+msgid "Cents Name"
+msgstr "分币名称"
+
+#: src/currencydialog.cpp:220
+msgid "Conversion to Base Rate"
+msgstr "兑换成基本货币的汇率"
+
+#: src/currencydialog.cpp:229
+msgid "Scale"
+msgstr "精度"
+
+#: src/currencydialog.cpp:239
+msgid "Value of 123456.78 will be"
+msgstr "123456.78显示为"
+
+#: src/currencydialog.cpp:244
+msgid "1234567.89"
+msgstr "1234567.89"
+
+#: src/currencydialog.cpp:252
+msgid "Update"
+msgstr "更新"
+
+#: src/currencydialog.cpp:256
+#, fuzzy
+msgid "Close"
+msgstr "已关闭"
+
+#: src/currencydialog.cpp:292
+#, fuzzy
+msgid "Base Conversion Rate should be greater than 0.0"
+msgstr "基本利率应该大于0.0"
+
+#: src/filtertransdialog.cpp:193
+#, fuzzy
+msgid "Specify Account"
+msgstr "选择账户"
+
+#: src/filtertransdialog.cpp:214
+#, fuzzy
+msgid "Specify Date Range"
+msgstr "指定使用语言"
+
+#: src/filtertransdialog.cpp:229
+#, fuzzy
+msgid "Specify Payee"
+msgstr "选择收款人"
+
+#: src/filtertransdialog.cpp:240
+#, fuzzy
+msgid "Specify Category"
+msgstr "选择种类"
+
+#: src/filtertransdialog.cpp:251
+#, fuzzy
+msgid "Specify Status"
+msgstr "指定使用语言"
+
+#: src/filtertransdialog.cpp:271
+msgid "Specify Type"
+msgstr ""
+
+#: src/filtertransdialog.cpp:286
+#, fuzzy
+msgid "Specify the type of transaction."
+msgstr "指定交易日期"
+
+#: src/filtertransdialog.cpp:291
+msgid "Specify Amount Range"
+msgstr ""
+
+#: src/filtertransdialog.cpp:305
+#, fuzzy
+msgid "Specify Number"
+msgstr "选择收款人"
+
+#: src/filtertransdialog.cpp:316
+msgid "Specify Notes"
+msgstr ""
+
+#: src/maincurrencydialog.cpp:109
+#, fuzzy
+msgid "Currency List"
+msgstr "货币"
+
+#: src/maincurrencydialog.cpp:174
+msgid "Name of Currency to Add"
+msgstr "增加的货币的名称"
+
+#: src/maincurrencydialog.cpp:175
+msgid "Add Currency"
+msgstr "新建货币"
+
+#: src/maincurrencydialog.cpp:193
+msgid "Currency name already exists!"
+msgstr "货币名称已存在!"
+
+#: src/mmcheckingpanel.cpp:165
+#: src/optionsdialog.cpp:323
+msgid "View All Transactions"
+msgstr "查看所有交易"
+
+#: src/mmcheckingpanel.cpp:166
+msgid "View Reconciled Transactions"
+msgstr "查看已核实交易"
+
+#: src/mmcheckingpanel.cpp:167
+msgid "View Un-Reconciled Transactions"
+msgstr "查看未核实交易"
+
+#: src/mmcheckingpanel.cpp:168
+msgid "View Void Transactions"
+msgstr "查看无效交易"
+
+#: src/mmcheckingpanel.cpp:169
+msgid "View Flagged Transactions"
+msgstr "查看标记交易"
+
+#: src/mmcheckingpanel.cpp:171
+msgid "View Transactions from last 30 days"
+msgstr "查看最近30天交易"
+
+#: src/mmcheckingpanel.cpp:172
+msgid "View Transactions from last 3 months"
+msgstr "查看最近3個月交易"
+
+#: src/mmcheckingpanel.cpp:174
+msgid "Delete all transactions in current view"
+msgstr "刪除目前查看的所有交易"
+
+#: src/mmcheckingpanel.cpp:175
+msgid "Delete all flagged transactions"
+msgstr "删除已标记的交易"
+
+#: src/mmcheckingpanel.cpp:218
+msgid "Viewing All Transactions"
+msgstr "查看所有交易"
+
+#: src/mmcheckingpanel.cpp:259
+#: include/reporttransactions.h:59
+msgid "Date  "
+msgstr "日期  "
+
+#: src/mmcheckingpanel.cpp:267
+msgid "C  "
+msgstr "C  "
+
+#: src/mmcheckingpanel.cpp:276
+msgid "Balance"
+msgstr "结余"
+
+#: src/mmcheckingpanel.cpp:335
+msgid "New Transaction"
+msgstr "新增交易"
+
+#: src/mmcheckingpanel.cpp:340
+msgid "Edit Transaction"
+msgstr "编辑交易"
+
+#: src/mmcheckingpanel.cpp:345
+msgid "Delete Transaction"
+msgstr "刪除交易"
+
+#: src/mmcheckingpanel.cpp:445
+msgid "Category         : "
+msgstr "类型　 : "
+
+#: src/mmcheckingpanel.cpp:446
+msgid "Sub Category  : "
+msgstr "子类型 : "
+
+#: src/mmcheckingpanel.cpp:447
+msgid "Notes               : "
+msgstr "备注　 : "
+
+#: src/mmcheckingpanel.cpp:465
+#, c-format
+msgid "Account Balance : %s      Reconciled Balance : %s"
+msgstr "账户结余 : %s        核实结余 : %s"
+
+#: src/mmcheckingpanel.cpp:472
+#: src/mmex.cpp:1736
+msgid "Please Wait"
+msgstr "请稍候"
+
+#: src/mmcheckingpanel.cpp:473
+msgid "Accessing Database"
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:488
+msgid "Account View : "
+msgstr "查看账户 : "
+
+#: src/mmcheckingpanel.cpp:493
+msgid "Category: \n"
+msgstr "类型: \n"
+
+#: src/mmcheckingpanel.cpp:494
+msgid "Sub Category: \n"
+msgstr "子类型: \n"
+
+#: src/mmcheckingpanel.cpp:495
+msgid "Notes: \n"
+msgstr "备注: \n"
+
+#: src/mmcheckingpanel.cpp:668
+#: src/mmcheckingpanel.cpp:694
+msgid "Viewing all transactions"
+msgstr "查看所有交易"
+
+#: src/mmcheckingpanel.cpp:672
+#: src/mmcheckingpanel.cpp:699
+msgid "Viewing Reconciled transactions"
+msgstr "查看核实交易"
+
+#: src/mmcheckingpanel.cpp:676
+#: src/mmcheckingpanel.cpp:709
+msgid "Viewing Un-Reconciled transactions"
+msgstr "查看未核实交易"
+
+#: src/mmcheckingpanel.cpp:680
+#: src/mmcheckingpanel.cpp:719
+msgid "Viewing transactions from last 30 days"
+msgstr "查看最近30天交易"
+
+#: src/mmcheckingpanel.cpp:684
+#: src/mmcheckingpanel.cpp:724
+msgid "Viewing transactions from last 3 months"
+msgstr "查看最近3个月交易"
+
+#: src/mmcheckingpanel.cpp:704
+msgid "Viewing Void transactions"
+msgstr "查看无效交易"
+
+#: src/mmcheckingpanel.cpp:714
+msgid "Viewing Flagged transactions"
+msgstr "查看标记交易"
+
+#: src/mmcheckingpanel.cpp:729
+msgid "Do you really want to delete all the transactions shown?"
+msgstr "你是否确认刪除下列显示的所有交易?"
+
+#: src/mmcheckingpanel.cpp:730
+#: src/mmcheckingpanel.cpp:745
+#: src/mmcheckingpanel.cpp:1047
+msgid "Confirm Transaction Deletion"
+msgstr "确认刪除交易"
+
+#: src/mmcheckingpanel.cpp:744
+msgid "Do you really want to delete all the flagged transactions?"
+msgstr "你是否确认刪除下列已标记的所有交易?"
+
+#: src/mmcheckingpanel.cpp:783
+msgid "&New Transaction"
+msgstr "新增交易(&N)"
+
+#: src/mmcheckingpanel.cpp:785
+msgid "&Edit Transaction"
+msgstr "编辑交易(&E)"
+
+#: src/mmcheckingpanel.cpp:786
+msgid "&Delete Transaction"
+msgstr "刪除交易(&D)"
+
+#: src/mmcheckingpanel.cpp:788
+msgid "Mark As &Reconciled"
+msgstr "标记为已核实(&R)"
+
+#: src/mmcheckingpanel.cpp:789
+msgid "Mark As &Unreconciled"
+msgstr "标记为未核实(&U)"
+
+#: src/mmcheckingpanel.cpp:790
+msgid "Mark As &Void"
+msgstr "标记为无效(&V)"
+
+#: src/mmcheckingpanel.cpp:791
+msgid "Mark For &Followup"
+msgstr "标记为需要跟进(&F)"
+
+#: src/mmcheckingpanel.cpp:795
+msgid "as Reconciled"
+msgstr "已核实"
+
+#: src/mmcheckingpanel.cpp:796
+msgid "as Unreconciled"
+msgstr "未核实"
+
+#: src/mmcheckingpanel.cpp:797
+msgid "as Void"
+msgstr "无效"
+
+#: src/mmcheckingpanel.cpp:798
+msgid "as needing Followup"
+msgstr "需要跟进"
+
+#: src/mmcheckingpanel.cpp:799
+msgid "Mark all "
+msgstr "标记所有"
+
+#: src/mmcheckingpanel.cpp:1046
+msgid "Do you really want to delete the transaction?"
+msgstr "确认删除这笔交易？"
+
+#: src/mmex.cpp:226
+msgid "Add Account Wizard"
+msgstr "新建账户向导"
+
+#: src/mmex.cpp:234
+msgid ""
+"Money Manager models all transactions as belonging to accounts.\n"
+"\n"
+" The next pages will help you create a new account.\n"
+"\n"
+"To help you get started, begin by making a list of all\n"
+"financial institutions where you hold an account."
+msgstr ""
+"Money Manager认为所有的交易都隶属于特定的账户。\n"
+"\n"
+"下一个页面将帮助你建立一个新的账户。\n"
+"\n"
+"为了帮助你开始，可以首先建立一个所有\n"
+"你开户的金融机构的列表。"
+
+#: src/mmex.cpp:271
+msgid "New Database Wizard"
+msgstr "新建数据库向导"
+
+#: src/mmex.cpp:279
+msgid ""
+"The next pages will help you create a new database.\n"
+"\n"
+"Your money manager database file is stored with an extension \n"
+"of .mmb. Make sure to make backups of this \n"
+"file and to store it carefully as it contains important \n"
+"financial information."
+msgstr ""
+"下一个页面将帮助你建立一个新的数据库。\n"
+"\n"
+"你的money manager数据库被保存为.MMB后缀的文件。\n"
+"确保备份这个文件并妥善保存这个包含重要财政信息的文件。"
+
+#: src/mmex.cpp:551
+#: src/mmex.cpp:1479
+msgid "Navigation"
+msgstr ""
+
+#: src/mmex.cpp:565
+msgid "Home Page"
+msgstr "主页"
+
+#: src/mmex.cpp:569
+msgid "Bank Accounts"
+msgstr "银行账户"
+
+#: src/mmex.cpp:573
+#: src/mmex.cpp:601
+msgid "Stocks"
+msgstr "股票"
+
+#: src/mmex.cpp:585
+msgid "Budgeting"
+msgstr "预算"
+
+#: src/mmex.cpp:590
+msgid "Reports"
+msgstr "报表"
+
+#: src/mmex.cpp:596
+#: include/reportsummary.h:36
+msgid "Summary of Accounts"
+msgstr "所有账户总汇"
+
+#: src/mmex.cpp:611
+#: include/reportcategexp.h:46
+msgid "Where the Money Goes"
+msgstr "按类别查看资金走向"
+
+#: src/mmex.cpp:616
+#: src/mmex.cpp:648
+#: src/mmex.cpp:680
+msgid "Last Calendar Month"
+msgstr "上月"
+
+#: src/mmex.cpp:621
+#: src/mmex.cpp:653
+#: src/mmex.cpp:685
+msgid "Current Month"
+msgstr "本月"
+
+#: src/mmex.cpp:626
+#: src/mmex.cpp:658
+#: src/mmex.cpp:690
+msgid "Last 30 Days"
+msgstr "最近30天"
+
+#: src/mmex.cpp:631
+#: src/mmex.cpp:663
+#: src/mmex.cpp:695
+msgid "Last Year"
+msgstr "上年"
+
+#: src/mmex.cpp:636
+#: src/mmex.cpp:668
+#: src/mmex.cpp:700
+msgid "Current Year"
+msgstr "本年"
+
+#: src/mmex.cpp:643
+#: include/reportpayee.h:27
+msgid "To Whom the Money Goes"
+msgstr "按商户查看资金走向"
+
+#: src/mmex.cpp:675
+#: include/reportincexpenses.h:28
+msgid "Income vs Expenses"
+msgstr "收支情况"
+
+#: src/mmex.cpp:705
+msgid "Income vs Expenses - All Time"
+msgstr "收支－全部"
+
+#: src/mmex.cpp:711
+#, fuzzy
+msgid "Transaction Report"
+msgstr "交易号"
+
+#: src/mmex.cpp:716
+msgid "Budget Performance"
+msgstr "預算執行情況"
+
+#: src/mmex.cpp:722
+#: src/mmex.cpp:2089
+msgid "Cash Flow"
+msgstr ""
+
+#: src/mmex.cpp:727
+#, fuzzy
+msgid "Cash Flow - Specific Accounts"
+msgstr "选择账户"
+
+#: src/mmex.cpp:732
+msgid "Help"
+msgstr "帮助"
+
+#: src/mmex.cpp:1245
+#: src/mmex.cpp:2453
+msgid "Do you really want to delete the account?"
+msgstr "你是否确认刪除该账户?"
+
+#: src/mmex.cpp:1246
+#: src/mmex.cpp:2454
+msgid "Confirm Account Deletion"
+msgstr "确认删除账户"
+
+#: src/mmex.cpp:1286
+msgid "&Go To.."
+msgstr "跳至(&G)..."
+
+#: src/mmex.cpp:1287
+#: src/mmex.cpp:1296
+msgid "&Edit Account"
+msgstr "编辑账户(&E)"
+
+#: src/mmex.cpp:1288
+#: src/mmex.cpp:1297
+msgid "&Delete Account"
+msgstr "删除账户(&D)"
+
+#: src/mmex.cpp:1290
+#: src/mmex.cpp:1299
+msgid "&Launch Account Website"
+msgstr "打开账户网页(&L)"
+
+#: src/mmex.cpp:1416
+msgid "&New Database\tCtrl-N"
+msgstr "新建数据库(&N)\tCtrl-N"
+
+#: src/mmex.cpp:1416
+#: src/mmex.cpp:1619
+msgid "New Money Manager Database"
+msgstr "新建 Money Manager 数据库"
+
+#: src/mmex.cpp:1420
+msgid "&Open Database\tCtrl-O"
+msgstr "打开数据库(&O)\tCtrl-O"
+
+#: src/mmex.cpp:1420
+#: src/mmex.cpp:1620
+msgid "Open Money Manager Database"
+msgstr "打开 Money Manager 数据库"
+
+#: src/mmex.cpp:1427
+#, fuzzy
+msgid "Save Database &As"
+msgstr "保存数据库(&S)\tCtrl-S"
+
+#: src/mmex.cpp:1427
+msgid "Save Money Manager Database As"
+msgstr "另存新 Money Manager 数据库"
+
+#: src/mmex.cpp:1434
+msgid "&CSV Files"
+msgstr "&CSV文件"
+
+#: src/mmex.cpp:1434
+#: src/util.cpp:240
+msgid "Export to CSV"
+msgstr "导出CSV文件"
+
+#: src/mmex.cpp:1435
+msgid "&Report to HTML"
+msgstr "HTML报表(&R)"
+
+#: src/mmex.cpp:1435
+msgid "Export to HTML"
+msgstr "导出HTML文件"
+
+#: src/mmex.cpp:1436
+msgid "&Export"
+msgstr "导出(&E)"
+
+#: src/mmex.cpp:1439
+msgid "&QIF Files"
+msgstr "&QIF文件"
+
+#: src/mmex.cpp:1439
+msgid "Import from QIF"
+msgstr "导入QIF文件"
+
+#: src/mmex.cpp:1440
+msgid "&Universal CSV Files"
+msgstr "普通&CSV文件"
+
+#: src/mmex.cpp:1440
+msgid "Import from any CSV file"
+msgstr "导入CSV文件"
+
+#: src/mmex.cpp:1441
+msgid "&MMEX CSV Files"
+msgstr "&MMEX CSV 文件"
+
+#: src/mmex.cpp:1441
+msgid "Import from MMEX CSV"
+msgstr "导入CSV文件"
+
+#: src/mmex.cpp:1442
+msgid "&MM.NET CSV Files"
+msgstr "&MM.NET CSV 文件"
+
+#: src/mmex.cpp:1442
+msgid "Import from MM.NET CSV"
+msgstr "导入MM.NET CSV文件"
+
+#: src/mmex.cpp:1444
+#: src/univcsv.cpp:114
+msgid "Import"
+msgstr "导入"
+
+#: src/mmex.cpp:1450
+msgid "Page Setup..."
+msgstr "页面设置..."
+
+#: src/mmex.cpp:1450
+msgid "Setup page printing options"
+msgstr "打印选项"
+
+#: src/mmex.cpp:1456
+#: src/mmex.cpp:1462
+msgid "Current View"
+msgstr "当前查看的页面"
+
+#: src/mmex.cpp:1456
+msgid "Preview current report"
+msgstr "预览当前报告"
+
+#: src/mmex.cpp:1458
+msgid "Print Preview..."
+msgstr "打印预览..."
+
+#: src/mmex.cpp:1462
+msgid "Print current report"
+msgstr "打印当前报告"
+
+#: src/mmex.cpp:1465
+msgid "Print..."
+msgstr "打印..."
+
+#: src/mmex.cpp:1470
+msgid "E&xit\tAlt-X"
+msgstr "退出(&x)\tAlt-X"
+
+#: src/mmex.cpp:1470
+msgid "Quit this program"
+msgstr "退出"
+
+#: src/mmex.cpp:1477
+#, fuzzy
+msgid "&Toolbar"
+msgstr "工具(&T)"
+
+#: src/mmex.cpp:1477
+msgid "Show/Hide the toolbar"
+msgstr ""
+
+#: src/mmex.cpp:1479
+msgid "Show/Hide the Navigation tree control"
+msgstr ""
+
+#: src/mmex.cpp:1487
+msgid "New &Account"
+msgstr "新增账户(&A)"
+
+#: src/mmex.cpp:1487
+#: src/mmex.cpp:1622
+msgid "New Money Manager Account"
+msgstr "新增 Money Manager 账户"
+
+#: src/mmex.cpp:1491
+msgid "Account &List"
+msgstr "帐户表(&L)"
+
+#: src/mmex.cpp:1491
+#: src/mmex.cpp:1623
+msgid "Show Account List"
+msgstr "显示帐户表"
+
+#: src/mmex.cpp:1495
+msgid "Edit Account"
+msgstr "编辑账户(&E)"
+
+#: src/mmex.cpp:1499
+msgid "Delete Account"
+msgstr "删除账户(&D)"
+
+#: src/mmex.cpp:1499
+msgid "Delete Account from database"
+msgstr "从数据库中删除账户(&D)"
+
+#: src/mmex.cpp:1511
+msgid "Organize &Categories"
+msgstr "类型管理(&C)"
+
+#: src/mmex.cpp:1511
+#: src/mmex.cpp:1625
+#: include/categdialog.h:23
+msgid "Organize Categories"
+msgstr "类型管理"
+
+#: src/mmex.cpp:1516
+msgid "Organize &Payees"
+msgstr "收款人管理(&P)"
+
+#: src/mmex.cpp:1516
+#: src/mmex.cpp:1626
+#: include/payeedialog.h:22
+msgid "Organize Payees"
+msgstr "收款人管理"
+
+#: src/mmex.cpp:1521
+#: src/mmex.cpp:1627
+msgid "Organize Currency"
+msgstr "货币管理"
+
+#: src/mmex.cpp:1526
+msgid "Budget Setup"
+msgstr "预算管理"
+
+#: src/mmex.cpp:1531
+msgid "Bills && Deposits"
+msgstr "账单和存款"
+
+#: src/mmex.cpp:1536
+#: src/mmhomepagepanel.cpp:156
+#: src/stocks.cpp:124
+msgid "Stock Investments"
+msgstr "股票"
+
+#: src/mmex.cpp:1548
+#, fuzzy
+msgid "Transaction Filter"
+msgstr "交易号"
+
+#: src/mmex.cpp:1555
+msgid "&Options"
+msgstr "选项(&O)"
+
+#: src/mmex.cpp:1555
+msgid "Money Manager Options"
+msgstr "Money Manager 选项"
+
+#: src/mmex.cpp:1562
+msgid "&Help\tCtrl-F1"
+msgstr "帮助(&H)\tCtrl-F1"
+
+#: src/mmex.cpp:1562
+msgid "Money Manager Help"
+msgstr "Money Manager 帮助"
+
+#: src/mmex.cpp:1567
+msgid "Show App Start Dialog"
+msgstr "显示欢迎界面"
+
+#: src/mmex.cpp:1567
+msgid "App Start Dialog"
+msgstr "欢迎界面"
+
+#: src/mmex.cpp:1575
+msgid "Check for &Updates"
+msgstr "检查更新(&U)"
+
+#: src/mmex.cpp:1575
+msgid "Check For Updates"
+msgstr "检查更新"
+
+#: src/mmex.cpp:1580
+msgid "Report Issues or Feedback"
+msgstr "报告问题或反馈"
+
+#: src/mmex.cpp:1580
+msgid "Send email through the mailing list to report issues with the software."
+msgstr "向邮件列表发送邮件来报告软件的问题"
+
+#: src/mmex.cpp:1585
+msgid "Be notified of new releases"
+msgstr "订阅关于新发行版本的通知"
+
+#: src/mmex.cpp:1585
+msgid "Sign up for the announcement mailing list"
+msgstr "加入邮件列表"
+
+#: src/mmex.cpp:1591
+msgid "&About..."
+msgstr "关于(&A)..."
+
+#: src/mmex.cpp:1591
+msgid "Show about dialog"
+msgstr "显示”关于”"
+
+#: src/mmex.cpp:1596
+msgid "&File"
+msgstr "文件(&F)"
+
+#: src/mmex.cpp:1597
+msgid "&Accounts"
+msgstr "账户(&A)"
+
+#: src/mmex.cpp:1598
+msgid "&Tools"
+msgstr "工具(&T)"
+
+#: src/mmex.cpp:1599
+msgid "&View"
+msgstr ""
+
+#: src/mmex.cpp:1600
+msgid "&Help"
+msgstr "帮助(&H)"
+
+#: src/mmex.cpp:1620
+#: src/newchkacctdialog.cpp:229
+#: src/optionsdialog.cpp:288
+msgid "Open"
+msgstr "打开"
+
+#: src/mmex.cpp:1622
+#: include/newchkacctdialog.h:23
+msgid "New Account"
+msgstr "新建账户"
+
+#: src/mmex.cpp:1623
+msgid "Account List"
+msgstr "账户表"
+
+#: src/mmex.cpp:1625
+#, fuzzy
+msgid "Show Organize Categories Dialog"
+msgstr "类型管理"
+
+#: src/mmex.cpp:1626
+#, fuzzy
+msgid "Show Organize Payees Dialog"
+msgstr "收款人管理"
+
+#: src/mmex.cpp:1627
+#, fuzzy
+msgid "Show Organize Currency Dialog"
+msgstr "货币管理"
+
+#: src/mmex.cpp:1676
+#: src/mmex.cpp:1714
+msgid "Money Manager EX - No File opened "
+msgstr "Money Manager EX - 没有打开的文件"
+
+#: src/mmex.cpp:1678
+msgid "Sorry. The Database version is too old or Database password is incorrect"
+msgstr ""
+
+#: src/mmex.cpp:1680
+#: src/mmex.cpp:1717
+msgid "Error opening database"
+msgstr "打开数据库错误"
+
+#: src/mmex.cpp:1716
+msgid ""
+"Cannot locate previously opened .mmb database.\n"
+"Do you want to browse to locate the file?"
+msgstr ""
+"不能定位到先前打开的.mmb数据库。\n"
+"你想通过浏览来定位文件吗？"
+
+#: src/mmex.cpp:1737
+msgid "Opening Database File && Verifying Integrity"
+msgstr "打开数据库并检查完整性"
+
+#: src/mmex.cpp:1897
+#: src/mmex.cpp:1973
+#: src/qifimport.cpp:355
+#: src/util.cpp:254
+#: src/util.cpp:515
+msgid "No Account available! Cannot Import! Create a new account first!"
+msgstr "没有可用的账户，不能导入！请先创建一个新的账户！"
+
+#: src/mmex.cpp:1916
+#: src/qifimport.cpp:381
+#: src/univcsv.cpp:267
+#: src/util.cpp:275
+#: src/util.cpp:533
+msgid "Choose Account to import to:"
+msgstr "选择要导入的账户"
+
+#: src/mmex.cpp:1917
+#, fuzzy
+msgid "QFX Import"
+msgstr "导入QIF"
+
+#: src/mmex.cpp:2088
+#, fuzzy
+msgid "Choose Accounts"
+msgstr "选择要编辑的账户"
+
+#: src/mmex.cpp:2135
+msgid "Unable to connect!"
+msgstr ""
+
+#: src/mmex.cpp:2135
+#: src/mmex.cpp:2193
+#: src/mmex.cpp:2199
+#, fuzzy
+msgid "Check Update"
+msgstr "检查更新"
+
+#: src/mmex.cpp:2193
+#, fuzzy
+msgid "New update available!"
+msgstr "没有可用的账户"
+
+#: src/mmex.cpp:2199
+msgid "You have the latest version installed!"
+msgstr ""
+
+#: src/mmex.cpp:2396
+#: src/mmex.cpp:2431
+msgid "No Account available!"
+msgstr "没有可用的账户"
+
+#: src/mmex.cpp:2410
+msgid "Choose Account to Edit"
+msgstr "选择要编辑的账户"
+
+#: src/mmex.cpp:2411
+#: src/mmex.cpp:2446
+msgid "Accounts"
+msgstr "账户(&A)"
+
+#: src/mmex.cpp:2445
+msgid "Choose Account to Delete"
+msgstr "选择要删除的账户"
+
+#: src/mmhelppanel.cpp:78
+msgid "Money Manager Ex Help"
+msgstr "Money Manager Ex 帮助"
+
+#: src/mmhomepagepanel.cpp:89
+#: include/reportbudgetingperf.h:29
+#: include/reportcategexp.h:49
+#: include/reportincexpenses.h:31
+#: include/reportpayee.h:30
+#: include/reporttransactions.h:52
+msgid "Today's Date: "
+msgstr "今天的日期: "
+
+#: src/mmhomepagepanel.cpp:98
+msgid "Summary"
+msgstr "摘要"
+
+#: src/mmhomepagepanel.cpp:182
+msgid "Total of Accounts :"
+msgstr "全部账户总额 :"
+
+#: src/mmhomepagepanel.cpp:202
+msgid "Income vs Expenses: Current Month"
+msgstr "收支：本月"
+
+#: src/mmhomepagepanel.cpp:358
+#, fuzzy
+msgid "Upcoming Transactions"
+msgstr "刪除交易"
+
+#: src/mmhomepagepanel.cpp:407
+#, fuzzy
+msgid "Follow Up On "
+msgstr "跟进"
+
+#: src/mmhomepagepanel.cpp:411
+#, fuzzy
+msgid "Transactions"
+msgstr "交易明细"
+
+#: src/mmhomepagepanel.cpp:416
+#, fuzzy
+msgid "Total Transactions"
+msgstr "编辑交易"
+
+#: src/mmreportspanel.cpp:80
+msgid "REPORTS"
+msgstr "报表"
+
+#: src/newchkacctdialog.cpp:146
+msgid "Account Name:"
+msgstr "账户名称 :"
+
+#: src/newchkacctdialog.cpp:153
+msgid "Enter the Name of the Account. This name can be renamed at any time."
+msgstr "输入帐户名称，名称可随时更改。"
+
+#: src/newchkacctdialog.cpp:156
+msgid "Account Type:"
+msgstr "账户类型 :"
+
+#: src/newchkacctdialog.cpp:162
+msgid "Checking"
+msgstr "检查中......"
+
+#: src/newchkacctdialog.cpp:163
+#: include/mmex.h:255
+msgid "Investment"
+msgstr "投资"
+
+#: src/newchkacctdialog.cpp:169
+#: include/mmex.h:260
+msgid "Specify the type of account to be created."
+msgstr "指定要创建的账户的类型。"
+
+#: src/newchkacctdialog.cpp:171
+msgid "Account Number:"
+msgstr "账号 :"
+
+#: src/newchkacctdialog.cpp:180
+msgid "Enter the Account Number associated with this account."
+msgstr "输入账户账号。"
+
+#: src/newchkacctdialog.cpp:183
+msgid "Held At:"
+msgstr "金融机构 :"
+
+#: src/newchkacctdialog.cpp:191
+msgid "Enter the name of the financial institution in which the account is held."
+msgstr "输入该交易账户所属的金融机构名称。"
+
+#: src/newchkacctdialog.cpp:193
+msgid "Website:"
+msgstr "网站："
+
+#: src/newchkacctdialog.cpp:201
+msgid "Enter the URL of the website for the financial institution."
+msgstr "输入金融机构主页网址。"
+
+#: src/newchkacctdialog.cpp:204
+msgid "Contact:"
+msgstr "联系方式："
+
+#: src/newchkacctdialog.cpp:211
+msgid "Enter any contact information for the financial institution."
+msgstr "输入该金融机构的联系方式。"
+
+#: src/newchkacctdialog.cpp:214
+msgid "Access Info:"
+msgstr "登陆信息"
+
+#: src/newchkacctdialog.cpp:221
+msgid "Enter any login/access information for the financial institution. This is not secure as anyone with access to the mmb file can access it."
+msgstr "输出登陆信息。警告：任何可以打开该mmb文件的人都可访问该信息"
+
+#: src/newchkacctdialog.cpp:223
+msgid "Account Status:"
+msgstr "账户状态 :"
+
+#: src/newchkacctdialog.cpp:230
+msgid "Closed"
+msgstr "已关闭"
+
+#: src/newchkacctdialog.cpp:237
+msgid "Specify if this account has been closed. Closed accounts are inactive in most calculations, reporting etc."
+msgstr "选定该项当该账户已被关闭。关闭的账户在大多数计算和报表中不可用。"
+
+#: src/newchkacctdialog.cpp:240
+msgid "Initial Balance:"
+msgstr "初始金额 :"
+
+#: src/newchkacctdialog.cpp:248
+msgid "Enter the initial balance in this account."
+msgstr "输入账户初始金额。"
+
+#: src/newchkacctdialog.cpp:251
+msgid "Currency:"
+msgstr "货币 : "
+
+#: src/newchkacctdialog.cpp:256
+msgid "Select Currency"
+msgstr "选择货币"
+
+#: src/newchkacctdialog.cpp:266
+msgid "Specify the currency to be used by this account."
+msgstr "设定账目使用的货币。"
+
+#: src/newchkacctdialog.cpp:269
+msgid "Notes:"
+msgstr "备注 :"
+
+#: src/newchkacctdialog.cpp:276
+msgid "Enter user notes and details about this account."
+msgstr "输入有关该账户的备注和明细"
+
+#: src/newchkacctdialog.cpp:281
+msgid "Favorite Account"
+msgstr "常用账户"
+
+#: src/newchkacctdialog.cpp:285
+msgid "Select whether this is an account that is used often. This is used to filter accounts display view."
+msgstr "选择该项当该账户经常使用。该选项被用来在账户显示时排序。"
+
+#: src/newchkacctdialog.cpp:323
+msgid "Account Name "
+msgstr "帐户名称"
+
+#: src/newchkacctdialog.cpp:330
+msgid "Account Name already exists"
+msgstr "账户名称已存在"
+
+#: src/newchkacctdialog.cpp:336
+msgid "Currency"
+msgstr "货币"
+
+#: src/newchkacctdialog.cpp:388
+msgid "Init Balance "
+msgstr "初始金额"
+
+#: src/optionsdialog.cpp:171
+msgid "General Settings"
+msgstr "一般设置"
+
+#: src/optionsdialog.cpp:177
+msgid "Base Currency"
+msgstr "基本货币"
+
+#: src/optionsdialog.cpp:182
+#: include/mmex.h:120
+msgid "Set Currency"
+msgstr "货币设置"
+
+#: src/optionsdialog.cpp:193
+msgid "View Settings"
+msgstr "显示设置"
+
+#: src/optionsdialog.cpp:199
+msgid "Date Format"
+msgstr "日期格式"
+
+#: src/optionsdialog.cpp:221
+msgid "Specify the date format for display"
+msgstr "指定显示的时间格式"
+
+#: src/optionsdialog.cpp:224
+msgid "Sample Date"
+msgstr "日期示例"
+
+#: src/optionsdialog.cpp:232
+msgid "Import/Export Settings"
+msgstr "导入∕导出设定"
+
+#: src/optionsdialog.cpp:238
+msgid "CSV Delimiter"
+msgstr "CSV定位符"
+
+#: src/optionsdialog.cpp:245
+msgid "Specify the delimiter to use when importing/exporting CSV files"
+msgstr "指定当导入/导出CSV文件时的分隔符"
+
+#: src/optionsdialog.cpp:250
+#: src/optionsdialog.cpp:256
+msgid "Language"
+msgstr "语言"
+
+#: src/optionsdialog.cpp:265
+msgid "Specify the language to use"
+msgstr "指定使用语言"
+
+#: src/optionsdialog.cpp:275
+msgid "Account View Options"
+msgstr "账户显示选项"
+
+#: src/optionsdialog.cpp:281
+msgid "Accounts Visible"
+msgstr "账户可见"
+
+#: src/optionsdialog.cpp:287
+msgid "All"
+msgstr "全部"
+
+#: src/optionsdialog.cpp:289
+msgid "Favorites"
+msgstr "常用的"
+
+#: src/optionsdialog.cpp:306
+msgid "Specify which accounts are visible"
+msgstr "选定该项当账户可见时"
+
+#: src/optionsdialog.cpp:311
+#, fuzzy
+msgid "Transaction View Options"
+msgstr "交易明细"
+
+#: src/optionsdialog.cpp:317
+#, fuzzy
+msgid "Transactions Visible"
+msgstr "交易号"
+
+#: src/optionsdialog.cpp:324
+#, fuzzy
+msgid "View Reconciled"
+msgstr "已核实"
+
+#: src/optionsdialog.cpp:325
+#, fuzzy
+msgid "View UnReconciled"
+msgstr "未核实"
+
+#: src/optionsdialog.cpp:326
+msgid "View 30 days"
+msgstr ""
+
+#: src/optionsdialog.cpp:327
+msgid "View 90 days"
+msgstr ""
+
+#: src/optionsdialog.cpp:349
+#, fuzzy
+msgid "Specify which transactions are visible by default"
+msgstr "选定该项当账户可见时"
+
+#: src/optionsdialog.cpp:358
+msgid "Restore Defaults"
+msgstr "恢复默认"
+
+#: src/optionsdialog.cpp:361
+msgid "Restore Default Colors"
+msgstr "恢复默认颜色"
+
+#: src/optionsdialog.cpp:367
+msgid "Nav Tree"
+msgstr "导航树"
+
+#: src/optionsdialog.cpp:369
+msgid "Specify the color for the nav tree"
+msgstr "指定导航树的颜色"
+
+#: src/optionsdialog.cpp:373
+msgid "List Background"
+msgstr "表格背景色"
+
+#: src/optionsdialog.cpp:375
+msgid "Specify the color for the list background"
+msgstr "指定列表背景颜色"
+
+#: src/optionsdialog.cpp:379
+msgid "List Row 0"
+msgstr "首行"
+
+#: src/optionsdialog.cpp:381
+msgid "Specify the color for the list row 0"
+msgstr "输入列表首行的颜色"
+
+#: src/optionsdialog.cpp:385
+msgid "List Row 1"
+msgstr "数据行"
+
+#: src/optionsdialog.cpp:387
+msgid "Specify the color for the list row 1"
+msgstr "指定数据行的颜色"
+
+#: src/optionsdialog.cpp:391
+msgid "List Border"
+msgstr "列表边界"
+
+#: src/optionsdialog.cpp:393
+msgid "Specify the color for the list Border"
+msgstr "指定列表边界的颜色"
+
+#: src/optionsdialog.cpp:397
+msgid "List Details"
+msgstr "列表内容"
+
+#: src/optionsdialog.cpp:399
+msgid "Specify the color for the list details"
+msgstr "指定列表内容的颜色"
+
+#: src/optionsdialog.cpp:411
+msgid "Backup database before opening"
+msgstr "打开之间备份数据库"
+
+#: src/optionsdialog.cpp:417
+msgid "Select whether to create a .bak file when opening a the database file"
+msgstr "选择当打开数据库文件时的备份文件.bak的保存位置"
+
+#: src/optionsdialog.cpp:424
+msgid "Stock Quote Web Page"
+msgstr "股票报价网页"
+
+#: src/optionsdialog.cpp:437
+msgid "General"
+msgstr "一般"
+
+#: src/optionsdialog.cpp:438
+msgid "View Options"
+msgstr "显示设置"
+
+#: src/optionsdialog.cpp:439
+msgid "Colors"
+msgstr "色彩"
+
+#: src/optionsdialog.cpp:440
+msgid "Others"
+msgstr "其他"
+
+#: src/payeedialog.cpp:139
+msgid "Enter the payee name to be added or make edits to an existing payee name"
+msgstr "输入要增加的收款人的名字或编辑一个已有收款人的名字"
+
+#: src/payeedialog.cpp:144
+msgid "Add a new payee name"
+msgstr "新增收帐人名称"
+
+#: src/payeedialog.cpp:149
+msgid "Change the name of an existing payee"
+msgstr "更改一个存在的收款人的名称"
+
+#: src/payeedialog.cpp:154
+msgid "Delete the selected payee. The payee cannot be used by an existing transaction."
+msgstr "删除选中的收款人。该收款人不能在已有的交易中被使用。"
+
+#: src/payeedialog.cpp:162
+msgid "Select the currently selected payee as the selected payee for the transaction"
+msgstr "选择当前选中的收款人作为交易的收款人"
+
+#: src/payeedialog.cpp:174
+msgid "Payee with same name exists"
+msgstr "收帐人名称已存在"
+
+#: src/payeedialog.cpp:194
+msgid "Payee is in use"
+msgstr "收款人正在使用"
+
+#: src/qifimport.cpp:361
+msgid ""
+"To import QIF files correctly, the date option set in MMEX \n"
+" must match the format of the date in the QIF file.\n"
+"Are you are sure you want to proceed with the import?"
+msgstr ""
+
+#: src/qifimport.cpp:363
+#, fuzzy
+msgid "Confirm QIF import"
+msgstr "导入QIF"
+
+#: src/qifimport.cpp:382
+msgid "QIF Import"
+msgstr "导入QIF"
+
+#: src/qifimport.cpp:393
+msgid "Choose QIF data file to import"
+msgstr "选择要导入的QIF数据"
+
+#: src/qifimport.cpp:435
+#: src/qifimport.cpp:461
+#: src/qifimport.cpp:529
+#: src/univcsv.cpp:321
+#: src/univcsv.cpp:344
+#: src/univcsv.cpp:399
+#: src/util.cpp:325
+#: src/util.cpp:334
+#: src/util.cpp:343
+#: src/util.cpp:352
+#: src/util.cpp:372
+#: src/util.cpp:379
+#: src/util.cpp:387
+#: src/util.cpp:489
+#: src/util.cpp:584
+#: src/util.cpp:593
+#: src/util.cpp:602
+#: src/util.cpp:617
+#: src/util.cpp:629
+#: src/util.cpp:645
+#: src/util.cpp:654
+#: src/util.cpp:711
+msgid "Line : "
+msgstr "行："
+
+#: src/qifimport.cpp:436
+msgid " incorrect QIF line type"
+msgstr "错误的QIF行类型"
+
+#: src/qifimport.cpp:448
+msgid "Importing account type : "
+msgstr "导入的账户类型："
+
+#: src/qifimport.cpp:461
+msgid " : "
+msgstr " : "
+
+#: src/qifimport.cpp:462
+msgid " account name "
+msgstr "账户名称"
+
+#: src/qifimport.cpp:500
+msgid " cannot process Account Types yet "
+msgstr "不能处理QIF文件（没有账户类型信息）"
+
+#: src/qifimport.cpp:514
+#: src/qifimport.cpp:630
+msgid "Adding payee "
+msgstr "增加收款人"
+
+#: src/qifimport.cpp:530
+#: src/util.cpp:388
+#: src/util.cpp:630
+msgid " invalid amount, skipping."
+msgstr "错误的金额，跳过。"
+
+#: src/qifimport.cpp:609
+msgid "Date is empty, "
+msgstr "日期为空"
+
+#: src/qifimport.cpp:613
+msgid "Transaction Type is empty"
+msgstr "交易类型为空"
+
+#: src/qifimport.cpp:617
+msgid "Amount is empty"
+msgstr "总额为空"
+
+#: src/qifimport.cpp:642
+msgid "Category is empty, marking transaction as Unknown category"
+msgstr "种类为空，标记交易为未知种类"
+
+#: src/qifimport.cpp:656
+msgid "Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had "
+msgstr ""
+
+#: src/qifimport.cpp:657
+#, fuzzy
+msgid " payee "
+msgstr "收款人"
+
+#: src/qifimport.cpp:657
+#, fuzzy
+msgid " type "
+msgstr "分类"
+
+#: src/qifimport.cpp:658
+#, fuzzy
+msgid " amount "
+msgstr "总额"
+
+#: src/qifimport.cpp:658
+#, fuzzy
+msgid " date "
+msgstr "更新"
+
+#: src/qifimport.cpp:709
+msgid " transactions imported from QIF"
+msgstr "从QIF导入的交易"
+
+#: src/stockdialog.cpp:137
+msgid "Stock Investment Details"
+msgstr "股票明细"
+
+#: src/stockdialog.cpp:150
+#: src/stockdialog.cpp:327
+#: src/stocks.cpp:152
+msgid "Held At"
+msgstr "母账户"
+
+#: src/stockdialog.cpp:156
+msgid "Enter the name of the financial institution where the investment is held"
+msgstr "输入投资的金融机构的名称"
+
+#: src/stockdialog.cpp:167
+msgid "Specify the purchase date of the stock investment"
+msgstr "明確指定股票購買日期"
+
+#: src/stockdialog.cpp:170
+msgid "Stock Name"
+msgstr "股票名称"
+
+#: src/stockdialog.cpp:176
+msgid "Enter the stock company name"
+msgstr "输入股票公司名称"
+
+#: src/stockdialog.cpp:180
+msgid "Symbol"
+msgstr "股票代号"
+
+#: src/stockdialog.cpp:186
+msgid "Enter the stock symbol (optional)"
+msgstr "输入股票标记 (可选)"
+
+#: src/stockdialog.cpp:191
+#: src/stocks.cpp:160
+msgid "Number of Shares"
+msgstr "股票数量"
+
+#: src/stockdialog.cpp:197
+msgid "Enter number of shares held"
+msgstr "输入持有的股票数量"
+
+#: src/stockdialog.cpp:202
+msgid "Purchase Price"
+msgstr "买入价格"
+
+#: src/stockdialog.cpp:208
+msgid "Enter purchase price for each stock"
+msgstr "输入股票购价"
+
+#: src/stockdialog.cpp:219
+msgid "Enter notes associated with this investment"
+msgstr "输入投资相关的备注"
+
+#: src/stockdialog.cpp:223
+msgid "Current Price"
+msgstr "当前价格"
+
+#: src/stockdialog.cpp:229
+msgid "Enter current stock price"
+msgstr "输入当前股价"
+
+#: src/stockdialog.cpp:235
+msgid "Commission"
+msgstr "委托价"
+
+#: src/stockdialog.cpp:241
+msgid "Enter any commission paid"
+msgstr "输入委托价格"
+
+#: src/stockdialog.cpp:270
+msgid "Web Page"
+msgstr "网页"
+
+#: src/stockdialog.cpp:286
+msgid "Choose Investment Account"
+msgstr "输入投资账户"
+
+#: src/stockdialog.cpp:339
+#: src/stockdialog.cpp:353
+msgid "Num Shares"
+msgstr "股票数量"
+
+#: src/stockdialog.cpp:347
+msgid "Invalid number of shares entered "
+msgstr "输入股票数错误"
+
+#: src/stockdialog.cpp:362
+msgid "Invalid purchase price entered "
+msgstr "购买价格输入错误"
+
+#: src/stockdialog.cpp:371
+msgid "Invalid current price entered "
+msgstr "当前价格输入错误"
+
+#: src/stockdialog.cpp:380
+msgid "Invalid commission entered "
+msgstr "委托价输入错误"
+
+#: src/stocks.cpp:156
+msgid "Share Name"
+msgstr "股票名称"
+
+#: src/stocks.cpp:165
+msgid "Gain/Loss"
+msgstr "盈亏"
+
+#: src/stocks.cpp:210
+msgid "New Stock Investment"
+msgstr "新增股票"
+
+#: src/stocks.cpp:215
+msgid "Edit Stock Investment"
+msgstr "编辑股票"
+
+#: src/stocks.cpp:220
+msgid "Delete Stock Investment"
+msgstr "刪除股票"
+
+#: src/stocks.cpp:240
+msgid "Stock Investments: "
+msgstr "股票: "
+
+#: src/stocks.cpp:327
+msgid "&New Stock Investment"
+msgstr "新增股票(&N)"
+
+#: src/stocks.cpp:329
+msgid "&Edit Stock Investment"
+msgstr "编辑股票(&E)"
+
+#: src/stocks.cpp:330
+msgid "&Delete Stock Investment"
+msgstr "删除股票(&D)"
+
+#: src/stocks.cpp:411
+msgid "Do you really want to delete the stock investment?"
+msgstr "你是否确定要删除这支股票？"
+
+#: src/stocks.cpp:412
+msgid "Confirm Stock Investment Deletion"
+msgstr "确认删除股票投资"
+
+#: src/transdialog.cpp:257
+#: src/transdialog.cpp:588
+#: src/transdialog.cpp:603
+msgid "Specify to whom the transaction is going to or coming from "
+msgstr "指定交易对象"
+
+#: src/transdialog.cpp:607
+msgid "Select From Account"
+msgstr "选择支出账户"
+
+#: src/transdialog.cpp:608
+msgid "Select To Account"
+msgstr "选择存入账户"
+
+#: src/transdialog.cpp:617
+msgid "Specify the account from which the transfer is occurring"
+msgstr "指定发生转账的账户"
+
+#: src/univcsv.cpp:88
+msgid "Specify the order of fields in the CSV file"
+msgstr "指定CSV文件字段的顺序"
+
+#: src/univcsv.cpp:110
+msgid "Remove"
+msgstr "移除"
+
+#: src/univcsv.cpp:171
+#: src/univcsv.cpp:199
+msgid "Amount(+/-)"
+msgstr "总额(+/-)"
+
+#: src/univcsv.cpp:175
+#: src/univcsv.cpp:201
+msgid "SubCategory"
+msgstr "子类型"
+
+#: src/univcsv.cpp:179
+#: src/univcsv.cpp:203
+msgid "Transaction Number"
+msgstr "交易号"
+
+#: src/univcsv.cpp:181
+#: src/univcsv.cpp:204
+msgid "Don't Care"
+msgstr "不在乎"
+
+#: src/univcsv.cpp:189
+#: src/univcsv.cpp:191
+msgid "Unknown"
+msgstr "不清楚"
+
+#: src/univcsv.cpp:209
+msgid "Add CSV field"
+msgstr "增加CSV字段"
+
+#: src/univcsv.cpp:210
+msgid "CSV Field"
+msgstr "CSV 区域"
+
+#: src/univcsv.cpp:236
+#: src/univcsv.cpp:248
+msgid "Incorrect fields specified for CSV import! Requires atleast date, amount and payee."
+msgstr "不正确的CSV导入字段！至少需要date，amount，payee三个字段。"
+
+#: src/univcsv.cpp:268
+#: src/util.cpp:276
+#: src/util.cpp:534
+msgid "CSV Import"
+msgstr "由CSV导入"
+
+#: src/univcsv.cpp:277
+#: src/util.cpp:543
+msgid "Choose MM.NET CSV data file to import"
+msgstr "选择要导出的MM.NET CSV 文件"
+
+#: src/univcsv.cpp:322
+msgid " file contains insufficient number of tokens"
+msgstr "文件包含的信息(条目数)不足"
+
+#: src/univcsv.cpp:345
+msgid " One of the following fields: date, payee, amount, type is missing, skipping"
+msgstr "下列字段缺失并跳过：date，payee，amount，type"
+
+#: src/univcsv.cpp:399
+#: src/util.cpp:489
+#: src/util.cpp:711
+msgid " imported OK."
+msgstr "导入成功"
+
+#: src/univcsv.cpp:402
+#: src/util.cpp:714
+#, c-format
+msgid ""
+"Total Lines : %d \n"
+"Total Imported : %d\n"
+"\n"
+"Log file written to : %s.\n"
+"\n"
+"Imported transactions have been flagged so you can review them. "
+msgstr ""
+"总共：%d行\n"
+"共导入：%d\n"
+"\n"
+"日志文件写入：%s。\n"
+"\n"
+"导入的交易已被标记，以便你查看"
+
+#: src/univcsv.cpp:403
+#: src/util.cpp:494
+#: src/util.cpp:511
+#: src/util.cpp:715
+msgid "Import from CSV"
+msgstr "从CSV文件导入"
+
+#: src/util.cpp:28
+msgid "January"
+msgstr ""
+
+#: src/util.cpp:28
+msgid "February"
+msgstr ""
+
+#: src/util.cpp:28
+#: include/reportbudgetingperf.h:53
+msgid "March"
+msgstr ""
+
+#: src/util.cpp:28
+#: include/reportbudgetingperf.h:54
+msgid "April"
+msgstr ""
+
+#: src/util.cpp:28
+#: include/reportbudgetingperf.h:55
+msgid "May"
+msgstr ""
+
+#: src/util.cpp:28
+#: include/reportbudgetingperf.h:56
+msgid "June"
+msgstr ""
+
+#: src/util.cpp:29
+#: include/reportbudgetingperf.h:57
+msgid "July"
+msgstr ""
+
+#: src/util.cpp:29
+msgid "August"
+msgstr ""
+
+#: src/util.cpp:29
+#, fuzzy
+msgid "September"
+msgstr "选择收款人"
+
+#: src/util.cpp:29
+#, fuzzy
+msgid "October"
+msgstr "其他"
+
+#: src/util.cpp:29
+#, fuzzy
+msgid "November"
+msgstr "单据号码"
+
+#: src/util.cpp:29
+msgid "December"
+msgstr ""
+
+#: src/util.cpp:34
+#, fuzzy
+msgid "Sunday"
+msgstr "摘要"
+
+#: src/util.cpp:34
+#, fuzzy
+msgid "Monday"
+msgstr "每月"
+
+#: src/util.cpp:34
+msgid "Tuesday"
+msgstr ""
+
+#: src/util.cpp:34
+msgid "Wednesday"
+msgstr ""
+
+#: src/util.cpp:35
+msgid "Thursday"
+msgstr ""
+
+#: src/util.cpp:35
+msgid "Friday"
+msgstr ""
+
+#: src/util.cpp:35
+msgid "Saturday"
+msgstr ""
+
+#: src/util.cpp:154
+msgid "No Account available! Cannot Export!"
+msgstr "没有可用的账户！不能导出！"
+
+#: src/util.cpp:171
+msgid "Choose Account to Export from:"
+msgstr "选择要导出的账户："
+
+#: src/util.cpp:172
+msgid "CSV Export"
+msgstr "导出到CSV"
+
+#: src/util.cpp:178
+msgid "Choose CSV data file to Export"
+msgstr "选择要导出的CSV数据文件"
+
+#: src/util.cpp:326
+#: src/util.cpp:585
+msgid " missing date, skipping."
+msgstr "缺少date字段，跳过。"
+
+#: src/util.cpp:335
+#: src/util.cpp:594
+msgid " missing payee, skipping."
+msgstr "缺少payee字段，跳过。"
+
+#: src/util.cpp:344
+msgid " missing transaction type, skipping."
+msgstr "缺少transation type字段，跳过。"
+
+#: src/util.cpp:353
+#: src/util.cpp:603
+msgid " missing amount, skipping."
+msgstr "缺少amount字段，跳过。"
+
+#: src/util.cpp:373
+msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
+msgstr "下列字段为空并跳过：date，payee，amount，type"
+
+#: src/util.cpp:380
+msgid " unrecognized transaction type, skipping."
+msgstr "不能辨别的交易类型，跳过。"
+
+#: src/util.cpp:492
+#, c-format
+msgid ""
+"Total Lines : %d.\n"
+"Total Imported : %d\n"
+"Log file written to : %s.\n"
+"\n"
+"Imported transactions have been flagged so you can review them."
+msgstr ""
+"总共：%d行\n"
+"共导入：%d\n"
+"\n"
+"日志文件写入：%s。\n"
+"\n"
+"导入的交易已被标记，以便你查看"
+
+#: src/util.cpp:510
+msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
+msgstr "MMEX.NET上的CSV文件只有一个账户，请核查！"
+
+#: src/util.cpp:618
+msgid " missing category, skipping."
+msgstr "种类缺失，跳过"
+
+#: src/util.cpp:646
+msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
+msgstr "下列字段的某个为空：date, payee, transaction type, amount, category，跳过"
+
+#: src/util.cpp:655
+msgid " invalid date, skipping."
+msgstr "日期错误，跳过"
+
+#: src/util.cpp:730
+msgid "Entry "
+msgstr "输入"
+
+#: src/util.cpp:730
+msgid " is invalid."
+msgstr "是错误的。"
+
+#: src/util.cpp:732
+msgid "Invalid Entry"
+msgstr "输入无效"
+
+#: src/wxsqlite3.cpp:87
+#: src/wxsqlite3_1_7.cpp:94
+#, fuzzy
+msgid "No Database opened"
+msgstr "新建数据库向导"
+
+#: src/wxsqlite3.cpp:88
+#: src/wxsqlite3_1_7.cpp:95
+msgid "Statement not accessible"
+msgstr ""
+
+#: src/wxsqlite3.cpp:89
+#: src/wxsqlite3_1_7.cpp:96
+msgid "Out of memory"
+msgstr ""
+
+#: src/wxsqlite3.cpp:90
+#: src/wxsqlite3_1_7.cpp:97
+msgid "Cannot decode binary"
+msgstr ""
+
+#: src/wxsqlite3.cpp:91
+#: src/wxsqlite3_1_7.cpp:98
+#, fuzzy
+msgid "Invalid field index"
+msgstr "无效值"
+
+#: src/wxsqlite3.cpp:92
+#: src/wxsqlite3_1_7.cpp:99
+#, fuzzy
+msgid "Invalid field name"
+msgstr "无效值"
+
+#: src/wxsqlite3.cpp:93
+#: src/wxsqlite3_1_7.cpp:100
+msgid "Invalid row index"
+msgstr ""
+
+#: src/wxsqlite3.cpp:94
+#: src/wxsqlite3_1_7.cpp:101
+#, fuzzy
+msgid "Invalid scalar query"
+msgstr "无效值"
+
+#: src/wxsqlite3.cpp:96
+#: src/wxsqlite3_1_7.cpp:103
+msgid "Null Results pointer"
+msgstr ""
+
+#: src/wxsqlite3.cpp:97
+#: src/wxsqlite3_1_7.cpp:104
+msgid "Error binding string param"
+msgstr ""
+
+#: src/wxsqlite3.cpp:98
+#: src/wxsqlite3_1_7.cpp:105
+#, fuzzy
+msgid "Error binding int param"
+msgstr "打开数据库错误"
+
+#: src/wxsqlite3.cpp:99
+#: src/wxsqlite3_1_7.cpp:106
+msgid "Error binding int64 param"
+msgstr ""
+
+#: src/wxsqlite3.cpp:100
+#: src/wxsqlite3_1_7.cpp:107
+msgid "Error binding double param"
+msgstr ""
+
+#: src/wxsqlite3.cpp:101
+#: src/wxsqlite3_1_7.cpp:108
+msgid "Error binding blob param"
+msgstr ""
+
+#: src/wxsqlite3.cpp:102
+#: src/wxsqlite3_1_7.cpp:109
+#, fuzzy
+msgid "Error binding date/time param"
+msgstr "打开数据库错误"
+
+#: src/wxsqlite3.cpp:103
+#: src/wxsqlite3_1_7.cpp:110
+msgid "Error binding NULL param"
+msgstr ""
+
+#: src/wxsqlite3.cpp:104
+#: src/wxsqlite3_1_7.cpp:111
+msgid "Error clearing bindings"
+msgstr ""
+
+#: include/aboutdialog.h:24
+msgid "About Money Manager Ex"
+msgstr "关于 Money Manager Ex"
+
+#: include/appstartdialog.h:26
+msgid "Money Manager Ex Start Page"
+msgstr "Money Manager Ex 首页"
+
+#: include/assetdialog.h:21
+msgid "New/Edit Asset"
+msgstr "新增/编辑资产"
+
+#: include/bddialog.h:22
+#, fuzzy
+msgid "New/Edit Repeating Transaction"
+msgstr "刪除交易"
+
+#: include/budgetentrydialog.h:22
+msgid "Budget Entry Dialog"
+msgstr "编辑预算"
+
+#: include/budgetyeardialog.h:22
+msgid "Budget Year Editor"
+msgstr "預算年编辑器"
+
+#: include/budgetyearentrydialog.h:23
+msgid "Budget Year Entry"
+msgstr "输入预算年"
+
+#: include/currencydialog.h:23
+msgid "Currency Manager"
+msgstr "当前管理者"
+
+#: include/fileviewerdialog.h:24
+msgid "View File Contents"
+msgstr "查看文件内容"
+
+#: include/filtertransdialog.h:46
+#, fuzzy
+msgid "Filter Transactions"
+msgstr "输入交易"
+
+#: include/maincurrencydialog.h:29
+#, fuzzy
+msgid "Currency Dialog"
+msgstr "当前名字"
+
+#: include/mmex.h:133
+msgid "Base Currency for account"
+msgstr "账户的基本货币"
+
+#: include/mmex.h:148
+msgid ""
+"\n"
+"Specify the base (or default) currency to be used \n"
+"with the database. You can change the \n"
+"currency associated with each account if needed.\n"
+msgstr ""
+"\n"
+"指定数据库使用的基本货币（或使用默认）。 \n"
+"在需要时也可随时更改。 \n"
+
+#: include/mmex.h:161
+msgid "Base Currency Not Set"
+msgstr "基本货币没有设置"
+
+#: include/mmex.h:204
+msgid "Name of the Account"
+msgstr "账户名称"
+
+#: include/mmex.h:219
+msgid ""
+"\n"
+"Specify a descriptive name of the account. This most commonly \n"
+"is the name of the financial institution where the account is held. \n"
+"For example 'ABC Bank'."
+msgstr ""
+"\n"
+"指定该账目的名称. 通常使用对应的银行名称 \n"
+"例如：“招商银行”"
+
+#: include/mmex.h:232
+msgid "Account Name Invalid"
+msgstr "错误的账户名"
+
+#: include/mmex.h:254
+#, fuzzy
+msgid "Checking/Savings"
+msgstr "支票/存款/信用卡"
+
+#: include/mmex.h:266
+msgid "Type of Account"
+msgstr "账户种类"
+
+#: include/mmex.h:281
+msgid ""
+"\n"
+"Select the type of account you want to create:\n"
+"\n"
+"General bank accounts cover a wide variety of account\n"
+" types like Checking, Savings and Credit card type accounts."
+msgstr ""
+"\n"
+"选择你想创建的账户类型:\n"
+"\n"
+"通常的银行账户包含很多不用的种类\n"
+"例如支付卡，储蓄卡和信用卡."
+
+#: include/mmex.h:287
+msgid ""
+"\n"
+"Investment accounts are specialized accounts that only \n"
+"have stock/mutual fund investments associated \n"
+"with them.\n"
+msgstr ""
+"\n"
+"投资账户是用于证券或基金投资的专用账户。\n"
+
+#: include/mmex.h:305
+msgid ""
+"Base Account Currency Not set.\n"
+"Set that first using tools->options menu and then add a new account"
+msgstr ""
+"基本账户货币没有设置。\n"
+"首先通过”工具“->”选项“菜单设置，然后再新建账户"
+
+#: include/optionsdialog.h:26
+msgid "Options Dialog"
+msgstr "选项"
+
+#: include/reportbudgetingperf.h:26
+msgid "Budget Performance for Year : "
+msgstr "年度预算执行情况："
+
+#: include/reportbudgetingperf.h:51
+msgid "Jan"
+msgstr ""
+
+#: include/reportbudgetingperf.h:52
+msgid "Feb"
+msgstr ""
+
+#: include/reportbudgetingperf.h:58
+msgid "Aug"
+msgstr ""
+
+#: include/reportbudgetingperf.h:59
+msgid "Sep"
+msgstr ""
+
+#: include/reportbudgetingperf.h:60
+msgid "Oct"
+msgstr ""
+
+#: include/reportbudgetingperf.h:61
+msgid "Nov"
+msgstr ""
+
+#: include/reportbudgetingperf.h:62
+msgid "Dec"
+msgstr ""
+
+#: include/reportbudgetingperf.h:63
+msgid "Full Year"
+msgstr ""
+
+#: include/reportcashflow.h:24
+msgid "Cash Flow Forecast For All Accounts - A Year Ahead"
+msgstr ""
+
+#: include/reportcashflow.h:35
+#: include/reportincexpesestime.h:100
+msgid "Total"
+msgstr "总计:"
+
+#: include/reportcategexp.h:57
+#: include/reportincexpenses.h:39
+#: include/reportpayee.h:38
+msgid "From: "
+msgstr "由: "
+
+#: include/reportcategexp.h:59
+#: include/reportincexpenses.h:40
+msgid " To: "
+msgstr " 至: "
+
+#: include/reportcategexp.h:70
+#: include/reportincexpenses.h:51
+#: include/reportpayee.h:51
+#: include/reporttransactions.h:64
+msgid "Amount   "
+msgstr "账户   "
+
+#: include/reportincexpenses.h:50
+#, fuzzy
+msgid "Type  "
+msgstr "分类"
+
+#: include/reportincexpenses.h:66
+#, fuzzy
+msgid "Income: "
+msgstr "收入"
+
+#: include/reportincexpenses.h:71
+#, fuzzy
+msgid "Expenses: "
+msgstr "支出"
+
+#: include/reportincexpesestime.h:28
+msgid "Income vs Expenses for Year : "
+msgstr "年度收支情况："
+
+#: include/reportincexpesestime.h:43
+msgid "Month"
+msgstr "月份"
+
+#: include/reportincexpesestime.h:45
+msgid "Expenses"
+msgstr "支出"
+
+#: include/reportpayee.h:50
+#, fuzzy
+msgid "Payee    "
+msgstr "收款人"
+
+#: include/reportsummary.h:57
+msgid "Account Name  "
+msgstr "账户名称  "
+
+#: include/reportsummary.h:58
+msgid "Balance   "
+msgstr "结余"
+
+#: include/reportsummary.h:96
+msgid "Stock Investments :"
+msgstr "股票　　　　　　 : "
+
+#: include/reportsummary.h:105
+msgid "Assets :"
+msgstr "资产　　　　　　 : "
+
+#: include/reportsummary.h:115
+msgid "Total Balance on all Accounts :"
+msgstr "所有账户总结余："
+
+#: include/reportsummaryassets.h:37
+#, fuzzy
+msgid "Summary of Assets"
+msgstr "所有账户总汇"
+
+#: include/reportsummaryassets.h:64
+#, fuzzy
+msgid "Name "
+msgstr "名称"
+
+#: include/reportsummaryassets.h:65
+#: include/reporttransactions.h:62
+#, fuzzy
+msgid "Type   "
+msgstr "分类"
+
+#: include/reportsummaryassets.h:66
+#: include/reportsummarystocks.h:71
+#, fuzzy
+msgid "Value  "
+msgstr "价格"
+
+#: include/reportsummaryassets.h:130
+#, fuzzy
+msgid "Total Assets :"
+msgstr "资产　　　　　　 : "
+
+#: include/reportsummarystocks.h:37
+#, fuzzy
+msgid "Summary of Stocks"
+msgstr "所有账户总汇"
+
+#: include/reportsummarystocks.h:64
+msgid "Company  "
+msgstr ""
+
+#: include/reportsummarystocks.h:65
+#, fuzzy
+msgid "Symbol   "
+msgstr "股票代号"
+
+#: include/reportsummarystocks.h:66
+#, fuzzy
+msgid "Number Shares  "
+msgstr "股票数量"
+
+#: include/reportsummarystocks.h:67
+#, fuzzy
+msgid "Purchase Date "
+msgstr "买入价格"
+
+#: include/reportsummarystocks.h:68
+#, fuzzy
+msgid "Purchase Price "
+msgstr "买入价格"
+
+#: include/reportsummarystocks.h:69
+#, fuzzy
+msgid "Current Price  "
+msgstr "当前价格"
+
+#: include/reportsummarystocks.h:70
+#, fuzzy
+msgid "Commission  "
+msgstr "委托价"
+
+#: include/reportsummarystocks.h:72
+#, fuzzy
+msgid "Gain Loss  "
+msgstr "盈亏"
+
+#: include/reportsummarystocks.h:141
+#, fuzzy
+msgid "Total Stock Investments :"
+msgstr "股票　　　　　　 : "
+
+#: include/reporttransactions.h:49
+#, fuzzy
+msgid "Transaction List"
+msgstr "交易明细"
+
+#: include/reporttransactions.h:61
+#, fuzzy
+msgid "Payee  "
+msgstr "收款人"
+
+#: include/reporttransactions.h:98
+#, fuzzy
+msgid "Total Amount: "
+msgstr "全部账户总额 :"
+
+#: include/stockdialog.h:23
+msgid "New/Edit Stock Investment"
+msgstr "新增/编辑股票"
+
+#: include/transdialog.h:23
+msgid "New/Edit Transaction"
+msgstr "新增/编辑交易"
+
+#: include/univcsv.h:29
+msgid "Universal CSV Importer Dialog"
+msgstr "普通CSV文件导入对话框"
+
