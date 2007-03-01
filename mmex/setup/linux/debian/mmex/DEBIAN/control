@@ -1,9 +1,9 @@
 Package: mmex
-Version: 0.7.0.7
+Version: 0.8.0.4
 Section: misc
 Priority: optional
 Architecture: i386
-Depends: libc6 (>= 2.3.5-1), libsqlite3-0, libwxgtk2.6-0 (>=2.6.3.2.1.5)
+Depends: libc6 (>= 2.3.5-1), libsqlite3-0, libwxgtk2.8-0 (>=2.8.0.1-1)
 Recommends: 
 Installed-Size: 10856
 Maintainer: Madhan Kanagavel <madhan@yahoo.com>

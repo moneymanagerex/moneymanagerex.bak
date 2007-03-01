@@ -113,3 +113,8 @@ This might be required if you are adding new source files to MMEX.
         > cd ..
         > bakefilize --copy && aclocal -I . -I /usr/share/aclocal -I /usr/local/share/aclocal && autoconf
 
+CREATING A DEBIAN PACKAGE
+
+Once the source tree is setup correctly.
+Simply do a 
+	dpkg -b mmex mmex.deb
