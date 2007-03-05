@@ -504,10 +504,12 @@ double mmBankTransactionList::getAmountForPayee(int payeeID, bool ignoreDate,
               if (pBankTransaction->transType_ == wxT("Transfer"))
                   continue;
 
+              double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), pBankTransaction->accountID_);
+
               if (pBankTransaction->transType_ == wxT("Withdrawal"))
-                 amt = amt - pBankTransaction->amt_;
+                 amt -= pBankTransaction->amt_ * convRate;
               else if (pBankTransaction->transType_ == wxT("Deposit"))
-                 amt = amt + pBankTransaction->amt_;
+                 amt += pBankTransaction->amt_ * convRate;
            }
         }
     }
@@ -543,10 +545,12 @@ double mmBankTransactionList::getAmountForCategory(
                if (pBankTransaction->transType_ == wxT("Transfer"))
                   continue;
 
+              double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), pBankTransaction->accountID_);
+
                if (pBankTransaction->transType_ == wxT("Withdrawal"))
-                  amt = amt - pBankTransaction->amt_;
+                  amt -= pBankTransaction->amt_ * convRate;
                else if (pBankTransaction->transType_ == wxT("Deposit"))
-                  amt = amt + pBankTransaction->amt_;
+                  amt += pBankTransaction->amt_ * convRate;
             }
         }
     }

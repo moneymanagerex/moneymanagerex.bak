@@ -212,6 +212,8 @@ public:
            }
         }
 
+        core_->currencyList_.loadBaseCurrencySettings();
+
         for (int idx = 0; idx < (int)forecastOver12Months.size(); idx++)
         {
         

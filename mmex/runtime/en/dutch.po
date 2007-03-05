@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-02-28 19:24-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2007-03-02 10:26+0100\n"
+"Last-Translator: \n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -996,7 +996,7 @@ msgstr "Kies de huidige geselecteerde categorie als de geselecteerde categorie v
 
 #: src/categdialog.cpp:162
 msgid "Category cannot be empty"
-msgstr ""
+msgstr "Categorie verplicht invullen"
 
 #: src/categdialog.cpp:170
 msgid "Category with same name exists"
@@ -1306,14 +1306,12 @@ msgid "&Delete Transaction"
 msgstr "&Verwijder transactie"
 
 #: src/mmcheckingpanel.cpp:791
-#, fuzzy
 msgid "&Copy Transaction"
-msgstr "&Nieuwe trasactie"
+msgstr "&Nieuwe transactie"
 
 #: src/mmcheckingpanel.cpp:793
-#, fuzzy
 msgid "&Paste Transaction"
-msgstr "&Nieuwe trasactie"
+msgstr "&Nieuwe transactie"
 
 #: src/mmcheckingpanel.cpp:795
 msgid "Mark As &Reconciled"
@@ -1493,9 +1491,8 @@ msgid "Cash Flow - Specific Accounts"
 msgstr "Geldstromen - Specefieke rekeningen"
 
 #: src/mmex.cpp:734
-#, fuzzy
 msgid "Transaction Statistics"
-msgstr "Transactielijst"
+msgstr "Transactieoverzicht"
 
 #: src/mmex.cpp:740
 msgid "Help"
@@ -2991,6 +2988,10 @@ msgid ""
 "with the database. You can change the \n"
 "currency associated with each account if needed.\n"
 msgstr ""
+"\n"
+"Geef de basisvaluta aan die in de database gebruikt \n"
+"gaat worden. Indien nodig, kunt u de aan een rekening \n"
+"gekoppelde valuta  wijzigen.\n"
 
 #: include/mmex.h:161
 msgid "Base Currency Not Set"
@@ -3249,9 +3250,8 @@ msgid "Total Amount: "
 msgstr "Totaalbedrag:"
 
 #: include/reporttransstats.h:30
-#, fuzzy
 msgid "Transaction Statistics for "
-msgstr "Transactielijst"
+msgstr "Transactieoverzicht voor"
 
 #: include/stockdialog.h:23
 msgid "New/Edit Stock Investment"

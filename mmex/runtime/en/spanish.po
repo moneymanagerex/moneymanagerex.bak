@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-02-28 19:25-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2007-03-01 19:36+0100\n"
+"Last-Translator: Remialdo <remialdo@gmail.com>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -996,7 +996,7 @@ msgstr "Seleccionar la categoría actual como la categoría seleccionada para la
 
 #: src/categdialog.cpp:162
 msgid "Category cannot be empty"
-msgstr ""
+msgstr "La categoría no puede estar vacía"
 
 #: src/categdialog.cpp:170
 msgid "Category with same name exists"
@@ -1306,14 +1306,12 @@ msgid "&Delete Transaction"
 msgstr "&Borrar Transacción"
 
 #: src/mmcheckingpanel.cpp:791
-#, fuzzy
 msgid "&Copy Transaction"
-msgstr "&Nueva Transacción"
+msgstr "&Copiar Transacción"
 
 #: src/mmcheckingpanel.cpp:793
-#, fuzzy
 msgid "&Paste Transaction"
-msgstr "&Nueva Transacción"
+msgstr "&Pegar Transacción"
 
 #: src/mmcheckingpanel.cpp:795
 msgid "Mark As &Reconciled"
@@ -1485,19 +1483,16 @@ msgstr "Cumplimiento del Presupuesto"
 
 #: src/mmex.cpp:723
 #: src/mmex.cpp:2111
-#, fuzzy
 msgid "Cash Flow"
-msgstr "Efectivo"
+msgstr "Flujo de Caja"
 
 #: src/mmex.cpp:728
-#, fuzzy
 msgid "Cash Flow - Specific Accounts"
-msgstr "Especifique Cuenta"
+msgstr "Flujo de Caja - Especifique Cuentas"
 
 #: src/mmex.cpp:734
-#, fuzzy
 msgid "Transaction Statistics"
-msgstr "Lista de Transacciones"
+msgstr "Estadisticas de Transacciones"
 
 #: src/mmex.cpp:740
 msgid "Help"
@@ -1848,7 +1843,7 @@ msgstr "Money Manager EX -Ningún Archivo Abierto"
 
 #: src/mmex.cpp:1698
 msgid "Sorry. The Database version is too old or Database password is incorrect"
-msgstr ""
+msgstr "Perdón. La versión de la Base de datos es demasiado vieja o la contraseña es incorrecta"
 
 #: src/mmex.cpp:1700
 #: src/mmex.cpp:1737
@@ -1888,13 +1883,12 @@ msgid "QFX Import"
 msgstr "Importar QFX"
 
 #: src/mmex.cpp:2110
-#, fuzzy
 msgid "Choose Accounts"
-msgstr "Seleccione Cuenta a Editar"
+msgstr "Seleccione Cuenta"
 
 #: src/mmex.cpp:2157
 msgid "Unable to connect!"
-msgstr ""
+msgstr "¡Imposible conectar!"
 
 #: src/mmex.cpp:2157
 #: src/mmex.cpp:2215
@@ -1962,9 +1956,8 @@ msgid "Follow Up On "
 msgstr "Continuar"
 
 #: src/mmhomepagepanel.cpp:411
-#, fuzzy
 msgid "Transactions"
-msgstr "Lista de Transacciones"
+msgstr "Transacciones"
 
 #: src/mmhomepagepanel.cpp:416
 msgid "Total Transactions"
@@ -2692,11 +2685,11 @@ msgstr "Importar desde CSV"
 
 #: src/util.cpp:120
 msgid "January"
-msgstr ""
+msgstr "Enero"
 
 #: src/util.cpp:120
 msgid "February"
-msgstr ""
+msgstr "Febrero"
 
 #: src/util.cpp:120
 #: include/reportbudgetingperf.h:53
@@ -2724,58 +2717,52 @@ msgid "July"
 msgstr "Julio"
 
 #: src/util.cpp:121
-#, fuzzy
 msgid "August"
 msgstr "Agosto"
 
 #: src/util.cpp:121
-#, fuzzy
 msgid "September"
-msgstr "Especifique Número"
+msgstr "Septiembre"
 
 #: src/util.cpp:121
-#, fuzzy
 msgid "October"
-msgstr "Otros"
+msgstr "Octubre"
 
 #: src/util.cpp:121
-#, fuzzy
 msgid "November"
-msgstr "Número"
+msgstr "Noviembre"
 
 #: src/util.cpp:121
 msgid "December"
-msgstr ""
+msgstr "Diciembre"
 
 #: src/util.cpp:126
-#, fuzzy
 msgid "Sunday"
-msgstr "Resumen"
+msgstr "Domingo"
 
 #: src/util.cpp:126
-#, fuzzy
 msgid "Monday"
-msgstr "Mayo"
+msgstr "Lunes"
 
 #: src/util.cpp:126
 msgid "Tuesday"
-msgstr ""
+msgstr "Martes"
 
 #: src/util.cpp:126
 msgid "Wednesday"
-msgstr ""
+msgstr "Miércoles"
 
 #: src/util.cpp:127
 msgid "Thursday"
-msgstr ""
+msgstr "Jueves"
 
 #: src/util.cpp:127
 msgid "Friday"
-msgstr ""
+msgstr "Viernes"
 
 #: src/util.cpp:127
 msgid "Saturday"
-msgstr ""
+msgstr "Sábado"
 
 #: src/util.cpp:156
 msgid "No Account available! Cannot Export!"
@@ -3116,7 +3103,7 @@ msgstr "Todo el Año"
 
 #: include/reportcashflow.h:24
 msgid "Cash Flow Forecast For All Accounts - A Year Ahead"
-msgstr ""
+msgstr "Pronóstico de Flujo de Caja para todas las Cuentas - Un año por delante"
 
 #: include/reportcashflow.h:35
 #: include/reportincexpesestime.h:100
@@ -3266,9 +3253,8 @@ msgid "Total Amount: "
 msgstr "Cantidad Total:"
 
 #: include/reporttransstats.h:30
-#, fuzzy
 msgid "Transaction Statistics for "
-msgstr "Lista de Transacciones"
+msgstr "Estadisticas de Transacciones para"
 
 #: include/stockdialog.h:23
 msgid "New/Edit Stock Investment"
