@@ -77,6 +77,7 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
 
     EVT_MENU(MENU_ON_COPY_TRANSACTION, MyListCtrl::OnCopy) 
     EVT_MENU(MENU_ON_PASTE_TRANSACTION, MyListCtrl::OnPaste) 
+    EVT_MENU(MENU_ON_NEW_TRANSACTION, MyListCtrl::OnNewTransaction) 
 
     EVT_CHAR(MyListCtrl::OnChar)
 END_EVENT_TABLE()
@@ -110,6 +111,8 @@ bool mmCheckingPanel::Create( wxWindow *parent,
     GetSizer()->SetSizeHints(this);
     
     initVirtualListControl();
+
+    
     
     this->Thaw();
     return TRUE;
@@ -252,6 +255,7 @@ void mmCheckingPanel::CreateControls()
     listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
     listCtrlAccount_->asc_ = asc;
     listCtrlAccount_->sortCol_ = sortcol;
+    listCtrlAccount_->SetFocus();
     
     wxListItem itemCol;
     
@@ -1005,7 +1009,6 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
     }
 }
-
 
 void MyListCtrl::OnListKeyDown(wxListEvent& event)
 {

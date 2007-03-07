@@ -50,10 +50,12 @@ public:
         m_selectedForCopy_(-1)
     {
         /* Setup the Accelorator Table */
-        wxAcceleratorEntry entries[2];
+        wxAcceleratorEntry entries[3];
         entries[0].Set(wxACCEL_CTRL,  (int) 'C', MENU_ON_COPY_TRANSACTION);
         entries[1].Set(wxACCEL_CTRL,  (int) 'V', MENU_ON_PASTE_TRANSACTION);
-        wxAcceleratorTable accel(2, entries);
+        entries[2].Set(wxACCEL_ALT,  (int) 'N', MENU_ON_NEW_TRANSACTION);
+   
+        wxAcceleratorTable accel(3, entries);
         this->SetAcceleratorTable(accel); 
     }
 
