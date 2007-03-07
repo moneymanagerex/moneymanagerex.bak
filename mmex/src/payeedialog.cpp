@@ -18,6 +18,7 @@
 
 #include "payeedialog.h"
 #include "util.h"
+#include <wx/event.h>
 
 IMPLEMENT_DYNAMIC_CLASS( mmPayeeDialog, wxDialog )
 
@@ -29,12 +30,27 @@ BEGIN_EVENT_TABLE( mmPayeeDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_PAYEE_BUTTON_EDIT, mmPayeeDialog::OnEdit)
     EVT_LISTBOX(ID_DIALOG_PAYEE_LISTBOX_PAYEES, mmPayeeDialog::OnSelChanged)
     EVT_LISTBOX_DCLICK(ID_DIALOG_PAYEE_LISTBOX_PAYEES, mmPayeeDialog::OnDoubleClicked)
+    EVT_CHAR_HOOK(mmPayeeDialog::OnListKeyDown)
+
 END_EVENT_TABLE()
 
 mmPayeeDialog::mmPayeeDialog( )
 {
     payeeID_ = -1;
     selectPayees_ = true;
+}
+
+void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
+{
+   long keycode = event.GetKeyCode();
+
+   if(keycode == 13)
+   {
+      wxCommandEvent event;
+       OnBSelect(event);
+   }
+
+   event.Skip();
 }
 
 mmPayeeDialog::mmPayeeDialog(mmCoreDB* core,
@@ -45,11 +61,12 @@ mmPayeeDialog::mmPayeeDialog(mmCoreDB* core,
                              const wxString& caption, const wxPoint& pos, 
                              const wxSize& size, long style )
 {
+ 
     core_ = core;
     payeeID_ = -1;
     selectPayees_ = selectPayees;
     showSelectButton_ = showSelectButton;
-    Create(parent, id, caption, pos, size, style);
+    Create(parent, id, caption, pos, size, style | wxWANTS_CHARS);
 }
 
 bool mmPayeeDialog::Create( wxWindow* parent, wxWindowID id, 
@@ -99,6 +116,7 @@ void mmPayeeDialog::fillControls()
             listBox_->Insert(core_->payeeList_.payees_[idx]->payeeName_, idx, 
                 new mmPayeeListBoxItem(core_->payeeList_.payees_[idx]->payeeID_));
         }
+
     }
     else
     {
@@ -114,6 +132,12 @@ void mmPayeeDialog::fillControls()
             }
         }
     }
+
+    listBox_->SetFocus();
+    if (!listBox_->IsEmpty())
+    {
+      listBox_->SetSelection(0);
+    }
 }
 
 void mmPayeeDialog::CreateControls()
@@ -127,7 +151,7 @@ void mmPayeeDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
     listBox_ = new wxListBox( itemDialog1, ID_DIALOG_PAYEE_LISTBOX_PAYEES, 
-        wxDefaultPosition, wxSize(100, 200));
+        wxDefaultPosition, wxSize(100, 200), wxArrayString(), wxLB_SINGLE);
     itemBoxSizer3->Add(listBox_, 1, wxGROW|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);

@@ -38,7 +38,6 @@ IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTON_OK, mmTransDialog::OnOk)
-    EVT_BUTTON(ID_DIALOG_TRANS_BUTTON_CANCEL, mmTransDialog::OnCancel)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONCATEGS, mmTransDialog::OnCategs)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONPAYEE, mmTransDialog::OnPayee)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTO, mmTransDialog::OnTo)
@@ -350,7 +349,7 @@ void mmTransDialog::CreateControls()
     itemBoxSizer26->Add(itemButton27, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxButton* itemButton28 = new wxButton( itemPanel25, 
-        ID_DIALOG_TRANS_BUTTON_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+        wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer26->Add(itemButton28, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 }
 

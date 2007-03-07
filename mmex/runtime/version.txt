@@ -3,6 +3,7 @@ Version History of Money Manager Ex
 0.8.0.5 ()
 - Fix bug calculating Quarterly estimated amounts in Budget performance report
 - Fix more bugs with currency conversions with multiple currencies (Thanks George)
+- Improve keyboard handling with various dialogs
 
 0.8.0.4 (Feb 28, 2007)
 - Add Copy/Paste transactions within same account
