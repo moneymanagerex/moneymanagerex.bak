@@ -435,8 +435,15 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& event )
             wxDateTime dtBegin = fromDateCtrl->GetValue();
             wxDateTime dtEnd = toDateControl->GetValue();
 
-            if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
-               continue; // skip
+            if ((dtBegin == dtEnd) && (dtBegin.IsSameDate(pBankTransaction->date_)))
+            {
+
+            }
+            else
+            {
+                if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                    continue; // skip
+            }
          }
 
         if (payeeCheckBox->GetValue() && (payeeID_ != -1))

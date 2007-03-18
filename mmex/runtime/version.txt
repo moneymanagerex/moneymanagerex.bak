@@ -5,6 +5,8 @@ Version History of Money Manager Ex
 - Fix more bugs with currency conversions with multiple currencies (Thanks George)
 - Improve keyboard handling with various dialogs
 - Fix quote escaping in notes (Thanks Paddy)
+- Fix bug where transfer transactions would disappear temporarily when an account was deleted
+- Fix bug where MMEX would crash when no category was selected and you clicked "Select" (Thanks miszka) 
 
 0.8.0.4 (Feb 28, 2007)
 - Add Copy/Paste transactions within same account

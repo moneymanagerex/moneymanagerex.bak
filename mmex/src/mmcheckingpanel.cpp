@@ -1066,6 +1066,9 @@ void MyListCtrl::OnNewTransaction(wxCommandEvent& event)
     {
         cp_->initVirtualListControl();
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+        SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+        SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+        EnsureVisible(selectedIndex_);
     }
     dlg->Destroy();
 }
@@ -1097,6 +1100,9 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& event)
     {
         cp_->initVirtualListControl();
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+        SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+        SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+        EnsureVisible(selectedIndex_);
     }
     dlg->Destroy();
 }
@@ -1110,7 +1116,9 @@ void MyListCtrl::OnListItemActivated(wxListEvent& event)
     {
         cp_->initVirtualListControl();
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
-
+        SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+        SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+        EnsureVisible(selectedIndex_);
     }
     dlg->Destroy();
 }

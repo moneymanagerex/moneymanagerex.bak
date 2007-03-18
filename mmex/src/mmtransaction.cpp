@@ -679,7 +679,7 @@ void mmBankTransactionList::deleteTransaction(int accountID, int transactionID)
         boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
-            if ((pBankTransaction->accountID_ == accountID) || (pBankTransaction->toAccountID_))
+            if ((pBankTransaction->accountID_ == accountID) || (pBankTransaction->toAccountID_ == accountID))
             {
                 if (pBankTransaction->transactionID() == transactionID)
                 {
@@ -703,7 +703,7 @@ void mmBankTransactionList::deleteTransactions(int accountID)
         if (pBankTransaction)
         {
             if ((pBankTransaction->accountID_ == accountID) ||
-                (pBankTransaction->toAccountID_))
+                (pBankTransaction->toAccountID_ == accountID))
             {
                 i = transactions_.erase(i);
             }
