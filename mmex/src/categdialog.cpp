@@ -35,6 +35,7 @@ mmCategDialog::mmCategDialog( )
 {
     categID_ = -1;
     subcategID_ = -1;
+    selectedItemId_ = 0;
 }
 
 mmCategDialog::mmCategDialog(mmCoreDB* core,
@@ -45,6 +46,7 @@ mmCategDialog::mmCategDialog(mmCoreDB* core,
     core_ = core;
     categID_ = -1;
     subcategID_ = -1;
+    selectedItemId_ = 0;
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -97,6 +99,20 @@ void mmCategDialog::fillControls()
 
     treeCtrl_->Expand(root_);
     treeCtrl_->SortChildren(root_);
+
+    wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_CATEG_TEXTCTRL_CATNAME);
+    wxButton* addButton = (wxButton*)FindWindow(ID_DIALOG_CATEG_BUTTON_ADD);
+    wxButton* editButton = (wxButton*)FindWindow(ID_DIALOG_CATEG_BUTTON_EDIT);
+    wxButton* selectButton = (wxButton*)FindWindow(ID_DIALOG_CATEG_BUTTON_SELECT);
+    wxButton* deleteButton = (wxButton*)FindWindow(ID_DIALOG_CATEG_BUTTON_DELETE);
+
+    treeCtrl_->SelectItem(root_);
+    selectedItemId_ = root_;
+    textCtrl->SetValue(wxT(""));
+    selectButton->Disable();
+    deleteButton->Disable();
+    editButton->Disable();
+    addButton->Enable();
 }
 
 void mmCategDialog::CreateControls()
