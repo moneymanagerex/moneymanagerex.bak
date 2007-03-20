@@ -298,14 +298,8 @@ void mmBillsDepositsPanel::initVirtualListControl()
         th.daysRemaining_ = ts.GetDays();
         int hoursRemaining_ = ts.GetHours();
 
-        if ((th.daysRemaining_ == 0) && (hoursRemaining_ > 0))
-        {
-            th.daysRemaining_ = 1;
-        } 
-        else if ((th.daysRemaining_ == 0) && (hoursRemaining_ <= 0))
-        {
-            th.daysRemaining_ = 0;
-        }
+       if (hoursRemaining_ > 0)
+            th.daysRemaining_ += 1;
 
         if (th.daysRemaining_ >= 0)
         {

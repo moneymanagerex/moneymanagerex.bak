@@ -192,7 +192,7 @@ int mmBankTransactionList::addTransaction(boost::shared_ptr<mmBankTransaction> p
    return pBankTransaction->transactionID();
 }
 
-boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int transactionID)
+boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int transactionID, bool useOriginalDate)
 {
    boost::shared_ptr<mmBankTransaction> pBankTransaction = getBankTransactionPtr(transactionID);
    if (!pBankTransaction)
@@ -212,7 +212,7 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int 
    pCopyTransaction->notes_=   pBankTransaction->notes_;
    pCopyTransaction->categID_  =   pBankTransaction->categID_;
    pCopyTransaction->subcategID_ =   pBankTransaction->subcategID_;
-   pCopyTransaction->date_=    wxDateTime::Now(); // Use Today's Date
+   pCopyTransaction->date_=    (useOriginalDate ? pBankTransaction->date_ : wxDateTime::Now()); 
    pCopyTransaction->toAmt_=   pBankTransaction->toAmt_;
    pCopyTransaction->category_ = pBankTransaction->category_;
 

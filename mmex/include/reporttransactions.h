@@ -60,6 +60,7 @@ public:
         headerR.push_back(_("Account"));
         headerR.push_back(_("Payee  "));
         headerR.push_back(_("Type   "));
+        headerR.push_back(_("Category"));
         headerR.push_back(_("Status"));
         headerR.push_back(_("Amount   "));
         hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
@@ -74,6 +75,7 @@ public:
             data.push_back(refTrans[index]->fromAccountStr_);
             data.push_back(refTrans[index]->payeeStr_);
             data.push_back(refTrans[index]->transType_);
+            data.push_back(refTrans[index]->fullCatStr_);
             data.push_back(refTrans[index]->status_);
             data.push_back(refTrans[index]->transAmtString_);
             

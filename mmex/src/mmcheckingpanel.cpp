@@ -1002,7 +1002,11 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 {
     if (m_selectedForCopy_ != -1)
     {
-        boost::shared_ptr<mmBankTransaction> pCopiedTrans = cp_->core_->bTransactionList_.copyTransaction(m_selectedForCopy_);
+        wxString useOriginalDate =  mmDBWrapper::getINISettingValue(cp_->inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
+        bool useOriginal = false;
+        if (useOriginalDate == wxT("TRUE"))
+            useOriginal = true;
+        boost::shared_ptr<mmBankTransaction> pCopiedTrans = cp_->core_->bTransactionList_.copyTransaction(m_selectedForCopy_, useOriginal);
         boost::shared_ptr<mmCurrency> pCurrencyPtr = cp_->core_->accountList_.getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
         pCopiedTrans->updateAllData(cp_->core_, pCopiedTrans->accountID_, pCurrencyPtr, true);
         cp_->initVirtualListControl();

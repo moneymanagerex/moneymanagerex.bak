@@ -50,7 +50,7 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS, mmOptionsDialog::OnListDetailsColors)
 
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_BACKUP, mmOptionsDialog::OnBackupDBChecked)
-    
+    EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_ORIG_DATE, mmOptionsDialog::OnOriginalDateChecked)
 END_EVENT_TABLE()
 
 #include "../resources/htmbook.xpm"
@@ -430,6 +430,17 @@ void mmOptionsDialog::CreateControls()
         wxDefaultPosition, wxSize(250, -1), 0 );
     itemBoxSizerStockURL->Add(itemTextCtrURL, 1, wxGROW|wxALIGN_TOP|wxALL, 5);
 
+    wxString useOriginalDate =  mmDBWrapper::getINISettingValue(inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
+    wxCheckBox* itemCheckBoxOrigDate = new wxCheckBox( itemPanelMisc, 
+        ID_DIALOG_OPTIONS_CHK_ORIG_DATE, _("Use Original Date when Pasting Transactions"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    itemCheckBoxOrigDate->SetValue(FALSE);
+    if (useOriginalDate == wxT("TRUE"))
+        itemCheckBoxOrigDate->SetValue(TRUE);
+    itemBoxSizerMisc->Add(itemCheckBoxOrigDate, 0, 
+        wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemCheckBoxOrigDate->SetToolTip(_("Select whether to use the original transaction date or current date when copying/pasting transactions"));
+
+
     // -------------------------------------------
 
     newBook->SetImageList(m_imageList);
@@ -589,3 +600,12 @@ void mmOptionsDialog::OnBackupDBChecked(wxCommandEvent& event)
     mmDBWrapper::setINISettingValue(inidb_, wxT("BACKUPDB"), wxT("FALSE"));
 }
 
+void mmOptionsDialog::OnOriginalDateChecked(wxCommandEvent& event)
+{
+  wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_ORIG_DATE);
+  bool state = itemCheckBox->GetValue();
+  if (state)
+     mmDBWrapper::setINISettingValue(inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("TRUE"));
+  else
+    mmDBWrapper::setINISettingValue(inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
+}

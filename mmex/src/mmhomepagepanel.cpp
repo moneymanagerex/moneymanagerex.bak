@@ -280,14 +280,8 @@ void mmHomePagePanel::updateAccounts()
         th.daysRemaining_ = ts.GetDays();
         int hoursRemaining_ = ts.GetHours();
 
-        if ((th.daysRemaining_ == 0) && (hoursRemaining_ > 0))
-        {
-            th.daysRemaining_ = 1;
-        } 
-        else if ((th.daysRemaining_ == 0) && (hoursRemaining_ <= 0))
-        {
-            th.daysRemaining_ = 0;
-        }
+        if (hoursRemaining_ > 0)
+            th.daysRemaining_ += 1;
 
         if (th.daysRemaining_ >= 0)
         {
@@ -329,9 +323,9 @@ void mmHomePagePanel::updateAccounts()
 		wxString displayBDAmtString;
 		mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayBDAmtString);
 
-		th.payeeStr_ += wxT("[");
-		th.payeeStr_ += displayBDAmtString;
-		th.payeeStr_ += wxT("]");
+		//th.payeeStr_ += wxT("[");
+		//th.payeeStr_ += displayBDAmtString;
+		//th.payeeStr_ += wxT("]");
 
         trans_.push_back(th);
         ct++;
@@ -369,27 +363,13 @@ void mmHomePagePanel::updateAccounts()
 
             wxString daysRemainingStr_;
             wxString colorStr = wxT(" BGCOLOR=\"#FFFFCC\" ");
-           
-            if ((trans_[bdidx].daysRemaining_ == 0) && (hoursRemaining_ > 0))
-            {
-                trans_[bdidx].daysRemaining_ = 1;
-            }
-            else if ((trans_[bdidx].daysRemaining_ == 0) && (hoursRemaining_ <= 0))
-            {
-                trans_[bdidx].daysRemaining_ = 0;
-            }
-
-		
+           		
+            daysRemainingStr_ = trans_[bdidx].daysRemainingStr_;
             if (trans_[bdidx].daysRemaining_ > 0)
             {
-                daysRemainingStr_ = wxString::Format(wxT("%d"), trans_[bdidx].daysRemaining_) + 
-					  _(" days remaining");
             }
             else 
             {
-                daysRemainingStr_ = wxString::Format(wxT("%d"), abs(trans_[bdidx].daysRemaining_)) +
-					
-                    _(" days overdue!");
                 colorStr = wxT(" BGCOLOR=\"#FF6600\" ");
             }
             

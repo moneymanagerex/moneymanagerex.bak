@@ -104,7 +104,7 @@ public:
     boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int accountID, int transactionID);
     boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int transactionID);
     int addTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
-    boost::shared_ptr<mmBankTransaction> copyTransaction(int transactionID);
+    boost::shared_ptr<mmBankTransaction> copyTransaction(int transactionID, bool useOriginalDate);
     void updateTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     void deleteTransaction(int accountID, int transactionID);
     void deleteTransactions(int accountID);
