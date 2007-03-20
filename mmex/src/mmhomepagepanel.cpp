@@ -94,9 +94,9 @@ void mmHomePagePanel::updateAccounts()
 
     std::vector<wxString> data;
 
-    wxString str1 = _("Account") + wxString(wxT("</b></th><th   width=\"100\" ><b>"));
+    wxString str1 = _("Account") + wxString(wxT("</b></th><th align=\"right\" width=\"100\" ><b>"));
     wxString str2 = _("Summary") + wxString(wxT("</b></th></tr>"));
-    hb.addHTML(wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\"><tr  bgcolor=\"#80B9E8\"><th width=\"200\"><b>") 
+    hb.addHTML(wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\"><tr  bgcolor=\"#80B9E8\"><th align=\"left\" width=\"200\"><b>") 
         +  str1 + str2 );
 
     /////////////////   
@@ -119,7 +119,8 @@ void mmHomePagePanel::updateAccounts()
            hb.addHTML(pCA->accountName_);
            hb.addHTML(wxT("</a></td><td align=\"right\">"));
 
-           boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
+           boost::shared_ptr<mmCurrency> pCurrencyPtr 
+			   = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
            wxASSERT(pCurrencyPtr);
            mmCurrencyFormatter::loadSettings(pCurrencyPtr);
 
@@ -320,9 +321,7 @@ void mmHomePagePanel::updateAccounts()
 
             th.payeeStr_ = toAccount;
         }
-		wxString displayBDAmtString;
-		mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayBDAmtString);
-
+	
 		//th.payeeStr_ += wxT("[");
 		//th.payeeStr_ += displayBDAmtString;
 		//th.payeeStr_ += wxT("]");
@@ -351,7 +350,7 @@ void mmHomePagePanel::updateAccounts()
                 std::vector<wxString> data3;
                 data3.push_back(_("Upcoming Transactions"));
 
-                hb.addHTML(wxT("<tr BGCOLOR=\"#80B9E8\" > <th width=\"100\" COLSPAN=\"2\" > <b>"));
+                hb.addHTML(wxT("<tr BGCOLOR=\"#80B9E8\" > <th width=\"100\" COLSPAN=\"3\" > <b>"));
                 hb.addHTML(wxT("<a href=\"billsdeposits\" >"));
                 hb.addHTML(data3[0]);
                 hb.addHTML(wxT("</a></b></th></tr>"));
@@ -372,9 +371,14 @@ void mmHomePagePanel::updateAccounts()
             {
                 colorStr = wxT(" BGCOLOR=\"#FF6600\" ");
             }
+
+			wxString displayBDAmtString;
+			mmCurrencyFormatter::formatDoubleToCurrency(trans_[bdidx].amt_, displayBDAmtString);
+
             
+			data4.push_back(displayBDAmtString);
             data4.push_back(daysRemainingStr_);
-            hb.addRow(data4, wxT(""), wxT("WIDTH=\"130\"  ") + colorStr);
+            hb.addRow(data4, wxT(" "), wxT("WIDTH=\"130\"  ") + colorStr);
         }
     }
 
