@@ -35,6 +35,8 @@
 #define ID_UNIVCSVBUTTON_ADD 10092
 #define ID_UNIVCSVBUTTON_REMOVE 10093
 #define ID_UNIVCSVBUTTON_IMPORT 10094
+#define ID_UNIVCSVBUTTON_LOAD 10095
+#define ID_UNIVCSVBUTTON_SAVE 10096
 ////@end control identifiers
 
 /*!
@@ -94,6 +96,9 @@ public:
     void OnRemove(wxCommandEvent& event);
     bool isIndexPresent(int index);
     void parseToken(int index,wxString& token);
+    void OnLoad(wxCommandEvent& event);
+    void OnSave(wxCommandEvent& event);
+
 
     wxBitmap GetBitmapResource( const wxString& name );
 

@@ -23,7 +23,17 @@
 #include "univcsv.h"
 #include "mmcoredb.h"
 
-
+wxString mmGetBaseWorkingPath()
+{
+   if (wxTheApp->argc > 1)
+   {
+      wxString path = wxTheApp->argv[1];
+      if (wxFileName::DirExists(path))
+         return path;
+   }
+   wxFileName fname(wxTheApp->argv[0]);
+   return fname.GetPath(wxPATH_GET_VOLUME);
+}
 
 void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 {

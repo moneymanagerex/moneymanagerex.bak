@@ -29,6 +29,8 @@ BEGIN_EVENT_TABLE( mmUnivCSVImportDialog, wxDialog )
     EVT_BUTTON(ID_UNIVCSVBUTTON_ADD, mmUnivCSVImportDialog::OnAdd)
     EVT_BUTTON(ID_UNIVCSVBUTTON_IMPORT, mmUnivCSVImportDialog::OnImport)
     EVT_BUTTON(ID_UNIVCSVBUTTON_REMOVE, mmUnivCSVImportDialog::OnRemove)
+    EVT_BUTTON(ID_UNIVCSVBUTTON_LOAD, mmUnivCSVImportDialog::OnLoad)
+    EVT_BUTTON(ID_UNIVCSVBUTTON_SAVE, mmUnivCSVImportDialog::OnSave)
 END_EVENT_TABLE()
 
 
@@ -85,7 +87,8 @@ void mmUnivCSVImportDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, _("Specify the order of fields in the CSV file"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, 
+       _("Specify the order of fields in the CSV file"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemStaticText3, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
@@ -110,6 +113,15 @@ void mmUnivCSVImportDialog::CreateControls()
     wxButton* itemButton8 = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_REMOVE, _("Remove"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxButton* itemButton11 = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_LOAD, _("Load"), 
+        wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer6->Add(itemButton11, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxButton* itemButton10 = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_SAVE, _("Save"), 
+        wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer6->Add(itemButton10, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
 
     wxButton* itemButton9 = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_IMPORT, _("Import"), 
         wxDefaultPosition, wxDefaultSize, 0 );
@@ -184,7 +196,6 @@ wxString getCSVFieldName(int index)
     case UNIV_CSV_DEPOSIT:
         return wxString(_("Deposit"));
 
-
     default:
         return wxString(_("Unknown"));
     };
@@ -212,7 +223,9 @@ void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& event)
 
     if (index != -1)
     {
-        csvListBox_->Insert(getCSVFieldName(index), (int)csvFieldOrder_.size(), new mmCSVListBoxItem(index));
+        csvListBox_->Insert(getCSVFieldName(index), 
+           (int)csvFieldOrder_.size(), 
+           new mmCSVListBoxItem(index));
         csvFieldOrder_.push_back(index);
     }
 }
@@ -226,6 +239,66 @@ bool mmUnivCSVImportDialog::isIndexPresent(int index)
     }
 
     return false;
+}
+
+void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& event)
+{
+   wxString fileName = wxFileSelector(wxT("Choose Universal CSV format file to load"), 
+      wxT(""), wxT(""), wxT(""), wxT(""), wxFILE_MUST_EXIST);
+   if ( !fileName.empty() )
+   {
+      wxTextFile tFile(fileName);
+      if (!tFile.Open())
+      {
+         mmShowErrorMessage(0, 
+            _("Unable to open file."),
+            _("Error"));
+         return;
+      }
+      csvFieldOrder_.clear();
+      csvListBox_->Clear();
+
+      wxString str;
+      for ( str = tFile.GetFirstLine(); !tFile.Eof(); str = tFile.GetNextLine() )
+      {
+         long num = 0;
+         if (str.ToLong(&num))
+         {
+            csvListBox_->Insert(getCSVFieldName(num), 
+               (int)csvFieldOrder_.size(), 
+               new mmCSVListBoxItem(num));
+            csvFieldOrder_.push_back(num);
+         }
+      }
+
+      tFile.Write();
+      tFile.Close();
+   }
+}
+
+void mmUnivCSVImportDialog::OnSave(wxCommandEvent& event)
+{
+     wxString fileName = wxFileSelector(wxT("Choose Universal CSV format file to save"), 
+                wxT(""), wxT(""), wxT(""), wxT(""), wxSAVE);
+    if ( !fileName.empty() )
+    {
+         wxTextFile tFile(fileName);
+         if (!tFile.Create())
+         {
+            mmShowErrorMessage(0, 
+               _("Unable to write to file."),
+               _("Error"));
+            return;
+         }
+         for (int idx = 0; idx < (int) csvFieldOrder_.size(); idx++)
+         {
+           
+            wxString line = wxString::Format(wxT("%d"), csvFieldOrder_[idx]);
+            tFile.AddLine(line);
+         }
+         tFile.Write();
+         tFile.Close();
+    }
 }
 
 void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)

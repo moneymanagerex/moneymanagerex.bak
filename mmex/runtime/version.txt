@@ -13,6 +13,7 @@ Version History of Money Manager Ex
 - Show list of top expense categories in home page (refreshed only when file is opened)
 - Fix bug in budget performance report where certain subcategories werenot being displayed
 - Show category expenses over time in "Where the Money Goes" report
+- Add "Load/Save" buttons for the Universal CSV importer dialog to save often used CSV configurations
 
 0.8.0.4 (Feb 28, 2007)
 - Add Copy/Paste transactions within same account

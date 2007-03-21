@@ -25,6 +25,8 @@
 
 class mmCoreDB;
 
+wxString mmGetBaseWorkingPath();
+
 void mmShowErrorMessageInvalid(wxWindow* parent, wxString message);
 void mmShowErrorMessage(wxWindow* parent,  wxString message, wxString messageheader);
 

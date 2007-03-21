@@ -163,9 +163,7 @@ bool mmGUIApp::OnInit()
     /* Get INI DB for loading settings */
     wxSQLite3Database* inidb = new wxSQLite3Database();
 
-    wxFileName fname(wxGetApp().argv[0]);
-    wxString cfgPath = fname.GetPath(wxPATH_GET_VOLUME)
-                + MMEX_INIDB_FNAME;
+    wxString cfgPath = mmGetBaseWorkingPath() + MMEX_INIDB_FNAME;
     inidb->Open(cfgPath);
     mmDBWrapper::verifyINIDB(inidb);
 
@@ -484,8 +482,7 @@ void mmGUIFrame::saveConfigFile()
 void mmGUIFrame::loadConfigFile()
 {
     inidb_ = new wxSQLite3Database();
-    wxFileName fname(wxGetApp().argv[0]);
-    wxString iniDBPath = fname.GetPath(wxPATH_GET_VOLUME)
+    wxString iniDBPath = mmGetBaseWorkingPath()
         + MMEX_INIDB_FNAME;
     inidb_->Open(iniDBPath);
 }
