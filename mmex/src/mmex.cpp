@@ -42,6 +42,7 @@
 #include "reporttransactions.h"
 #include "reportcashflow.h"
 #include "reporttransstats.h"
+#include "reportcategovertimeperf.h"
 
 #include "appstartdialog.h"
 #include "aboutdialog.h"
@@ -312,10 +313,16 @@ void mmNewDatabaseWizard::RunIt(bool modal)
 /******************************************************
 mmGUIFrame 
 ********************************************************/
+bool sortCategs( mmGUIFrame::CategInfo elem1, mmGUIFrame::CategInfo elem2 )
+{
+   return elem1.amount < elem2.amount;
+}
+
 mmGUIFrame::mmGUIFrame(const wxString& title, 
                        const wxPoint& pos, const wxSize& size)
        : wxFrame((wxFrame*)NULL, -1, title, pos, size), 
-       core_(0), inidb_(0), gotoAccountID_(-1), selectedItemData_(0)
+       core_(0), inidb_(0), gotoAccountID_(-1), selectedItemData_(0),
+       m_topCategories(wxT(""))
 {
 	// tell wxAuiManager to manage this frame
 	m_mgr.SetManagedWindow(this);
@@ -611,7 +618,7 @@ void mmGUIFrame::updateNavTreeControl()
     wxTreeItemId categsOverTime = navTreeCtrl_->AppendItem(reports, 
         _("Where the Money Goes"), 4, 4);
     navTreeCtrl_->SetItemData(categsOverTime, 
-        new mmTreeItemData(wxT("Where the Money Goes")));
+        new mmTreeItemData(wxT("Where the Money Goes - Over Time")));
 
     wxTreeItemId categsOverTimeCalMonth = navTreeCtrl_->AppendItem(categsOverTime, 
         _("Last Calendar Month"), 4, 4);
@@ -797,6 +804,97 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->Expand(accounts);
 }
 
+wxString mmGUIFrame::createCategoryList()
+{
+    if (!db_)
+       return wxT("");
+
+   mmHTMLBuilder hb;
+
+   hb.addHTML(wxT("<br>"));
+	hb.addHTML(wxT("<br>"));
+
+   std::vector<CategInfo> categList;
+   hb.addHTML(wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\">"));
+	std::vector<wxString> headerR;
+	headerR.push_back(_("Top Categories Last 30 Days  "));
+
+	hb.addTableHeaderRow(headerR, wxT(" BGCOLOR=\"#80B9E8\" "), wxT(" width=\"130\" COLSPAN=\"2\" "));
+
+	core_->currencyList_.loadBaseCurrencySettings();
+
+	mmBEGINSQL_LITE_EXCEPTION;
+	wxSQLite3StatementBuffer bufSQL;
+	bufSQL.Format("select * from CATEGORY_V1 order by CATEGNAME;");
+	wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+	while (q1.NextRow())
+	{
+		wxDateTime today = wxDateTime::Now();
+		wxDateTime prevMonthEnd = today;
+		wxDateTime dtEnd = today;
+		wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
+
+		int categID          = q1.GetInt(wxT("CATEGID"));
+		wxString categString = q1.GetString(wxT("CATEGNAME"));
+		wxString balance;
+		double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, false, 
+			dtBegin, dtEnd);
+		mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
+
+		if (amt != 0.0)
+		{
+         CategInfo info;
+         info.categ = categString;
+         info.amountStr = balance;
+         info.amount = amt;
+         categList.push_back(info);
+		}
+
+		wxSQLite3StatementBuffer bufSQL1;
+		bufSQL1.Format("select * from SUBCATEGORY_V1 where CATEGID=%d;", categID);
+		wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL1); 
+		while(q2.NextRow())
+		{
+			int subcategID          = q2.GetInt(wxT("SUBCATEGID"));
+			wxString subcategString    = q2.GetString(wxT("SUBCATEGNAME"));
+
+			amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, 
+				false,  dtBegin, dtEnd);
+			mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
+
+			if (amt != 0.0)
+			{
+            CategInfo infoSC;
+            infoSC.categ = categString + wxT(" : ") + subcategString;
+            infoSC.amountStr = balance;
+            infoSC.amount = amt;
+            categList.push_back(infoSC);
+			}
+		}
+		q2.Finalize();
+
+	}
+	q1.Finalize();
+	mmENDSQL_LITE_EXCEPTION;
+
+   std::sort(categList.begin(), categList.end(), sortCategs);
+   for (int idx = 0; idx < (int)categList.size(); idx++)
+   {
+      if (idx > 5)
+         break;
+
+      hb.addHTML(wxT("<tr> <td width=\"130\"> "));
+      hb.addHTML(categList[idx].categ);
+      hb.addHTML(wxT("</td><td width=\"100\" align=\"right\">"));
+      hb.addHTML(categList[idx].amountStr);
+      hb.addHTML(wxT("</td>"));
+   }
+
+	hb.endTable();
+
+   return hb.getHTMLText();
+}
+
 void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 {
     menuPrintingEnable(false);
@@ -898,10 +996,9 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Where the Money Goes"))
+        if (iData->getString() == wxT("Where the Money Goes - Over Time"))
         {
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, 
-               true, wxDateTime::Now(), wxDateTime::Now());
+            mmPrintableBase* rs = new mmReportCategoryOverTimePerformance(core_);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1378,7 +1475,14 @@ void mmGUIFrame::createHomePage()
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
     
-    panelCurrent_ = new mmHomePagePanel(this, db_.get(), core_, homePanel, ID_PANEL3, 
+    if (m_topCategories == wxT(""))
+       m_topCategories = createCategoryList();
+
+    panelCurrent_ = new mmHomePagePanel(this, 
+        db_.get(), core_, 
+        m_topCategories,
+        homePanel, 
+        ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
      
@@ -1765,11 +1869,15 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
         + fileName;
     this->SetTitle(title);
 
+    m_topCategories = wxT("");
     if (db_.get())
+    {
         fileName_ = fileName;
+        
+    }
     else
 	{
-        fileName_ = wxT("");
+      fileName_ = wxT("");
 		password_ = wxEmptyString;
 	}
 }

@@ -32,9 +32,12 @@ END_EVENT_TABLE()
 BEGIN_EVENT_TABLE(mmHtmlWindow, wxHtmlWindow)
 END_EVENT_TABLE()
 
+
+
 mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame, 
             wxSQLite3Database* db, 
             mmCoreDB* core, 
+            const wxString& topCategories,
             wxWindow *parent,
             wxWindowID winid,
             const wxPoint& pos,
@@ -45,6 +48,7 @@ mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame,
     db_ = db;
     core_ = core;
     frame_ = frame;
+    topCategories_ = topCategories;
     Create(parent, winid, pos, size, style, name);
 }
 
@@ -187,7 +191,7 @@ void mmHomePagePanel::updateAccounts()
     hb.endTable();
 
     hb.addHTML(wxT("</td><td >&nbsp;</td><td width=\"200\" ALIGN=\"left\" VALIGN=\"top\">"));
-    hb.beginTable();
+    //hb.beginTable();
 
     hb.addHTML(wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\">"));
     wxString incStr, expStr;
@@ -396,73 +400,8 @@ void mmHomePagePanel::updateAccounts()
         hb.endTable();
 
 	//--------------------------------------------------------
-	hb.addHTML(wxT("<br>"));
-	hb.addHTML(wxT("<br>"));
 
-	hb.beginTable(wxT(" cellspacing=\"0\" cellpadding=\"1\" border=\"0\" " ));
-	std::vector<wxString> headerR;
-	headerR.push_back(_("Top 5 Categories Last 30 Days  "));
-
-	hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\" width=\"130\" COLSPAN=\"2\" "));
-
-	core_->currencyList_.loadBaseCurrencySettings();
-
-	// Clean this up
-	mmBEGINSQL_LITE_EXCEPTION;
-	wxSQLite3StatementBuffer bufSQL;
-	bufSQL.Format("select * from CATEGORY_V1 order by CATEGNAME;");
-	wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
-	while (q1.NextRow())
-	{
-		wxDateTime today = wxDateTime::Now();
-		wxDateTime prevMonthEnd = today;
-		wxDateTime dtEnd = today;
-		wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-
-		int categID          = q1.GetInt(wxT("CATEGID"));
-		wxString categString = q1.GetString(wxT("CATEGNAME"));
-		wxString balance;
-		double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, false, 
-			dtBegin, dtEnd);
-		mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
-
-		if (amt != 0.0)
-		{
-			std::vector<wxString> data;
-			data.push_back(categString);
-
-			data.push_back(balance);
-			hb.addRow(data);
-		}
-
-		wxSQLite3StatementBuffer bufSQL1;
-		bufSQL1.Format("select * from SUBCATEGORY_V1 where CATEGID=%d;", categID);
-		wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL1); 
-		while(q2.NextRow())
-		{
-			int subcategID          = q2.GetInt(wxT("SUBCATEGID"));
-			wxString subcategString    = q2.GetString(wxT("SUBCATEGNAME"));
-
-			amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, 
-				false,  dtBegin, dtEnd);
-			mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
-
-			if (amt != 0.0)
-			{
-				std::vector<wxString> wSub;
-				wSub.push_back(categString + wxT(" : ") + subcategString);
-				wSub.push_back(balance);
-				hb.addRow(wSub);
-			}
-		}
-		q2.Finalize();
-
-	}
-	q1.Finalize();
-	mmENDSQL_LITE_EXCEPTION;
-	hb.endTable();
-
-
+    hb.addHTML(topCategories_);
 
 	//--------------------------------------------------------
 	hb.addHTML(wxT("<br>"));

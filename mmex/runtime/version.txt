@@ -10,6 +10,9 @@ Version History of Money Manager Ex
 - Fix days remaining issue again! (Thanks Bob)
 - Add Feature 1678044 : option to use original date when copying/pasting transactions (Thanks ree321)
 - Add Feature 1633454 : Category column in transaction filter
+- Show list of top expense categories in home page (refreshed only when file is opened)
+- Fix bug in budget performance report where certain subcategories werenot being displayed
+- Show category expenses over time in "Where the Money Goes" report
 
 0.8.0.4 (Feb 28, 2007)
 - Add Copy/Paste transactions within same account

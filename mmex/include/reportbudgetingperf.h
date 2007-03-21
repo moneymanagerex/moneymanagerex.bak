@@ -260,7 +260,7 @@ public:
                 if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(thsub.amt_, displayAmtString))
                     thsub.amtString_ = displayAmtString;
 
-                if ((totalEstimated_ != 0.0) || (th.actual_ != 0.0))
+                if ((totalEstimated_ != 0.0) || (thsub.actual_ != 0.0))
                 {
                     data.clear();
                     wxString cn = thsub.catStr_+ wxT(" : ") + thsub.subCatStr_;

@@ -345,6 +345,7 @@ public:
     void createHelpPage();
     wxPanel* createMainFrame(wxPanel* mainpanel);
 
+    wxString createCategoryList();
     void createDataStore(const wxString& fileName,  
 						 bool openingNew = false);
     void createCheckingAccountPage(int accountID);
@@ -413,6 +414,13 @@ public:
 
     void OnWizardCancel(wxWizardEvent& event);
 
+    struct CategInfo
+    {
+       wxString categ;
+       wxString amountStr;
+       double   amount;
+    };
+
 public:
     mmPanelBase* panelCurrent_;
     wxPanel* homePanel;
@@ -441,7 +449,10 @@ private:
 
 	/* wxAUI */
 	wxAuiManager m_mgr;
-    wxString m_perspective;
+   wxString m_perspective;
+
+   /* Homepage panel logic */
+   wxString    m_topCategories;
 
 private:
     // any class wishing to process wxWindows events must use this macro

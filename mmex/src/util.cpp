@@ -112,17 +112,23 @@ wxString mmReadyDisplayString(const wxString& orig)
     return toReturn;
 }
 
+wxString mmGetNiceMonthName(int month)
+{
+    const wxString gMonthsInYear[12] =
+    {
+		_("January"), _("February"), _("March"), _("April"), _("May"), _("June"),
+		_("July"), _("August"), _("September"), _("October"), _("November"), _("December")
+	};
+
+    return gMonthsInYear[month];
+}
+
 wxString mmGetNiceDateString(wxDateTime dt)
 {
 #if 0
     return dt.Format(wxT("%A, %B %d, %Y"));
 #endif
 
-    const wxString gMonthsInYear[12] =
-    {
-		_("January"), _("February"), _("March"), _("April"), _("May"), _("June"),
-		_("July"), _("August"), _("September"), _("October"), _("November"), _("December")
-	};
 
     const wxString gDaysInWeek[7] =
 	{
@@ -131,7 +137,7 @@ wxString mmGetNiceDateString(wxDateTime dt)
 	};
 	
 	wxString dts(gDaysInWeek[dt.GetWeekDay()] + wxString(wxT(", ")));
-    dts += gMonthsInYear[dt.GetMonth()] + wxString(wxT(" "));
+    dts += mmGetNiceMonthName(dt.GetMonth()) + wxString(wxT(" "));
     dts += wxString::Format(wxT("%d"), dt.GetDay()) + wxT(", ") 
         + wxString::Format(wxT("%d"), dt.GetYear());
 	return dts;    

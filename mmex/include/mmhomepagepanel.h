@@ -57,6 +57,7 @@ public:
     mmHomePagePanel( mmGUIFrame* frame, 
         wxSQLite3Database* db_, 
         mmCoreDB* core_,
+        const wxString& topCategories,
         wxWindow *parent,
         wxWindowID winid = wxID_ANY,
         const wxPoint& pos = wxDefaultPosition,
@@ -79,6 +80,7 @@ private:
     mmCoreDB* core_;
     mmGUIFrame* frame_;
     mmHtmlWindow* htmlWindow_;
+    wxString topCategories_;
 };
 
 #endif
