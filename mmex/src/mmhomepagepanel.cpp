@@ -202,7 +202,7 @@ void mmHomePagePanel::updateAccounts()
     std::vector<wxString> data2;
     data2.push_back(_("Income vs Expenses: Current Month"));
     hb.addTableHeaderRow(data2, wxT(" BGCOLOR=\"#80B9E8\" "), 
-       wxT(" nowrap width=\"100\" COLSPAN=\"2\" "));
+       wxT(" nowrap width=\"130\" COLSPAN=\"2\" "));
     
     hb.addHTML(wxT("<tr><td>") + baseInc + wxString(wxT("</td><td align=\"right\">")));
     hb.addHTML(incStr);
@@ -350,7 +350,7 @@ void mmHomePagePanel::updateAccounts()
                 std::vector<wxString> data3;
                 data3.push_back(_("Upcoming Transactions"));
 
-                hb.addHTML(wxT("<tr BGCOLOR=\"#80B9E8\" > <th width=\"100\" COLSPAN=\"3\" > <b>"));
+                hb.addHTML(wxT("<tr BGCOLOR=\"#80B9E8\" > <th width=\"130\" COLSPAN=\"3\" > <b>"));
                 hb.addHTML(wxT("<a href=\"billsdeposits\" >"));
                 hb.addHTML(data3[0]);
                 hb.addHTML(wxT("</a></b></th></tr>"));
@@ -358,8 +358,7 @@ void mmHomePagePanel::updateAccounts()
             }
 
             
-            data4.push_back(trans_[bdidx].payeeStr_);
-
+            
             wxString daysRemainingStr_;
             wxString colorStr = wxT(" BGCOLOR=\"#FFFFCC\" ");
            		
@@ -376,20 +375,103 @@ void mmHomePagePanel::updateAccounts()
 			mmCurrencyFormatter::formatDoubleToCurrency(trans_[bdidx].amt_, displayBDAmtString);
 
             
-			data4.push_back(displayBDAmtString);
-            data4.push_back(daysRemainingStr_);
-            hb.addRow(data4, wxT(" "), wxT("WIDTH=\"130\"  ") + colorStr);
+	
+			hb.addHTML(wxT("<tr> <td width=\"50\"> "));
+			hb.addHTML(trans_[bdidx].payeeStr_);
+			hb.addHTML(wxT("</td><td width=\"60\" align=\"right\">"));
+			hb.addHTML(displayBDAmtString);
+			hb.addHTML(wxT("</td><td width=\"130\" align=\"right\" "));
+			hb.addHTML(colorStr);
+			hb.addHTML(wxT(" > "));
+			hb.addHTML(daysRemainingStr_);
+			hb.addHTML(wxT("</td>"));
+
+			hb.addHTML(wxT("</tr>"));
+
+            //hb.addRow(data4, wxT(" "), wxT("WIDTH=\"130\"  ") + colorStr);
         }
     }
 
     if (isHeaderAdded)
         hb.endTable();
 
+	//--------------------------------------------------------
+	hb.addHTML(wxT("<br>"));
+	hb.addHTML(wxT("<br>"));
+
+	hb.beginTable(wxT(" cellspacing=\"0\" cellpadding=\"1\" border=\"0\" " ));
+	std::vector<wxString> headerR;
+	headerR.push_back(_("Top 5 Categories Last 30 Days  "));
+
+	hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\" width=\"130\" COLSPAN=\"2\" "));
+
+	core_->currencyList_.loadBaseCurrencySettings();
+
+	// Clean this up
+	mmBEGINSQL_LITE_EXCEPTION;
+	wxSQLite3StatementBuffer bufSQL;
+	bufSQL.Format("select * from CATEGORY_V1 order by CATEGNAME;");
+	wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+	while (q1.NextRow())
+	{
+		wxDateTime today = wxDateTime::Now();
+		wxDateTime prevMonthEnd = today;
+		wxDateTime dtEnd = today;
+		wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
+
+		int categID          = q1.GetInt(wxT("CATEGID"));
+		wxString categString = q1.GetString(wxT("CATEGNAME"));
+		wxString balance;
+		double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, false, 
+			dtBegin, dtEnd);
+		mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
+
+		if (amt != 0.0)
+		{
+			std::vector<wxString> data;
+			data.push_back(categString);
+
+			data.push_back(balance);
+			hb.addRow(data);
+		}
+
+		wxSQLite3StatementBuffer bufSQL1;
+		bufSQL1.Format("select * from SUBCATEGORY_V1 where CATEGID=%d;", categID);
+		wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL1); 
+		while(q2.NextRow())
+		{
+			int subcategID          = q2.GetInt(wxT("SUBCATEGID"));
+			wxString subcategString    = q2.GetString(wxT("SUBCATEGNAME"));
+
+			amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, 
+				false,  dtBegin, dtEnd);
+			mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
+
+			if (amt != 0.0)
+			{
+				std::vector<wxString> wSub;
+				wSub.push_back(categString + wxT(" : ") + subcategString);
+				wSub.push_back(balance);
+				hb.addRow(wSub);
+			}
+		}
+		q2.Finalize();
+
+	}
+	q1.Finalize();
+	mmENDSQL_LITE_EXCEPTION;
+	hb.endTable();
+
+
+
+	//--------------------------------------------------------
+	hb.addHTML(wxT("<br>"));
+
     int countFollowUp = core_->bTransactionList_.countFollowupTransactions();
     if (countFollowUp > 0)
     {
         wxString fup = _("Follow Up On ");
-        wxString fullStr = wxT("<br><i>") + fup;
+        wxString fullStr = wxT("<i>") + fup;
         wxString str = wxString::Format(wxT("<b>%d</b> "), countFollowUp);
         str = fullStr + str;
         str += _("Transactions");
