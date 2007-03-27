@@ -165,6 +165,10 @@ int mmBankTransactionList::addTransaction(boost::shared_ptr<mmBankTransaction> p
 {
    mmBEGINSQL_LITE_EXCEPTION;
    
+   if (checkForExistingTransaction(pBankTransaction)){
+	   pBankTransaction->status_ = wxT("D");
+   }
+
    wxString bufSQL = wxString::Format(wxT("insert into CHECKINGACCOUNT_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, \
                                           TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES,                               \
                                           CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT)                                              \
@@ -190,6 +194,43 @@ int mmBankTransactionList::addTransaction(boost::shared_ptr<mmBankTransaction> p
    mmENDSQL_LITE_EXCEPTION;
 
    return pBankTransaction->transactionID();
+}
+
+bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBankTransaction> pBankTransaction)
+{
+   mmBEGINSQL_LITE_EXCEPTION;
+   
+   wxString bufSQL = wxString::Format(wxT("select TRANSID from CHECKINGACCOUNT_V1 where \
+											ACCOUNTID = %d and TOACCOUNTID = %d and PAYEEID = %d and TRANSCODE = '%s' and \
+											TRANSAMOUNT = %f and TRANSACTIONNUMBER = '%s' and NOTES = '%s' and \
+											CATEGID = %d and SUBCATEGID = %d and TRANSDATE = '%s' and TOTRANSAMOUNT = %f"),
+                                          pBankTransaction->accountID_, 
+                                          pBankTransaction->toAccountID_, 
+                                          pBankTransaction->payeeID_, 
+                                          pBankTransaction->transType_.c_str(), 
+                                          pBankTransaction->amt_,
+                                          pBankTransaction->transNum_.c_str(), 
+                                          pBankTransaction->notes_.c_str(), 
+                                          pBankTransaction->categID_, 
+                                          pBankTransaction->subcategID_, 
+                                          pBankTransaction->date_.FormatISODate().c_str(), 
+                                          pBankTransaction->toAmt_ );  
+
+   wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+
+	if (q1.NextRow())
+    {
+		if ( q1.GetString(wxT("TRANSID")).Cmp(wxT("0")) > 0){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	mmENDSQL_LITE_EXCEPTION;
+
+	return false;
 }
 
 boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int transactionID, bool useOriginalDate)

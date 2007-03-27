@@ -52,6 +52,7 @@
 #define DEF_STATUS_RECONCILED 1
 #define DEF_STATUS_VOID       2
 #define DEF_STATUS_FOLLOWUP   3
+#define DEF_STATUS_DUPLICATE  4
 
 bool sortTransactionsByDate1( boost::shared_ptr<mmBankTransaction> elem1, 
                              boost::shared_ptr<mmBankTransaction> elem2 )
@@ -257,10 +258,11 @@ void mmFilterTransactionsDialog::CreateControls()
         _("None"),
         _("Reconciled"),
         _("Void"),
-        _("Follow up")
+        _("Follow up"),
+        _("Duplicate")
     };  
     choiceStatus = new wxChoice( itemPanel3, ID_CHOICE7, wxDefaultPosition, 
-       wxDefaultSize, 4, choiceStatusStrings, 0 );
+       wxDefaultSize, 5, choiceStatusStrings, 0 );
     itemFlexGridSizer4->Add(choiceStatus, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     choiceStatus->SetSelection(0);
     choiceStatus->SetToolTip(_("Specify the status for the transaction"));
@@ -482,6 +484,10 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& event )
             else if (choiceStatus->GetSelection() == DEF_STATUS_FOLLOWUP)
             {
                 status = wxT("F"); 
+            }
+            else if (choiceStatus->GetSelection() == DEF_STATUS_DUPLICATE)
+            {
+                status = wxT("D"); 
             }
             if (status != pBankTransaction->status_)
                 continue; //skip

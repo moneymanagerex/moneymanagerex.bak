@@ -32,6 +32,7 @@
 #include "../resources/uparrow.xpm"
 #include "../resources/downarrow.xpm"
 #include "../resources/rightarrow.xpm"
+#include "../resources/duplicate.xpm"
 /*******************************************************/
 static int sortcol = 0;
 static bool asc = true;
@@ -49,6 +50,7 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_MENU(MENU_VIEW_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_LAST30, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_LAST3MONTHS, mmCheckingPanel::OnViewPopupSelected)
+	EVT_MENU(MENU_VIEW_DUPLICATE, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_DELETE_TRANS, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_DELETE_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
 END_EVENT_TABLE()
@@ -62,11 +64,13 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
     EVT_MENU(MENU_TREEPOPUP_MARKUNRECONCILED, MyListCtrl::OnMarkTransaction)
     EVT_MENU(MENU_TREEPOPUP_MARKVOID,         MyListCtrl::OnMarkTransaction)
     EVT_MENU(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP, MyListCtrl::OnMarkTransaction)
+	EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE,         MyListCtrl::OnMarkTransaction)
 
     EVT_MENU(MENU_TREEPOPUP_MARKRECONCILED_ALL,   MyListCtrl::OnMarkAllTransactions)
     EVT_MENU(MENU_TREEPOPUP_MARKUNRECONCILED_ALL, MyListCtrl::OnMarkAllTransactions)
     EVT_MENU(MENU_TREEPOPUP_MARKVOID_ALL,         MyListCtrl::OnMarkAllTransactions)
     EVT_MENU(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL, MyListCtrl::OnMarkAllTransactions)
+	EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE_ALL,         MyListCtrl::OnMarkAllTransactions)
 
     EVT_MENU(MENU_TREEPOPUP_NEW,              MyListCtrl::OnNewTransaction)
     EVT_MENU(MENU_TREEPOPUP_DELETE,           MyListCtrl::OnDeleteTransaction)
@@ -169,6 +173,7 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
             menu.Append(MENU_VIEW_UNRECONCILED, _("View Un-Reconciled Transactions"));
             menu.Append(MENU_VIEW_VOID, _("View Void Transactions"));
             menu.Append(MENU_VIEW_FLAGGED, _("View Flagged Transactions"));
+			menu.Append(MENU_VIEW_DUPLICATE, _("View Duplicate Transactions"));
             menu.AppendSeparator();
             menu.Append(MENU_VIEW_LAST30, _("View Transactions from last 30 days"));
             menu.Append(MENU_VIEW_LAST3MONTHS, _("View Transactions from last 3 months"));
@@ -247,6 +252,7 @@ void mmCheckingPanel::CreateControls()
     m_imageList->Add(wxBitmap(unreconciled_xpm));
     m_imageList->Add(wxBitmap(uparrow_xpm));
     m_imageList->Add(wxBitmap(downarrow_xpm));
+	m_imageList->Add(wxBitmap(duplicate_xpm));
 
     listCtrlAccount_ = new MyListCtrl( this, itemSplitterWindow10, 
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 
@@ -531,6 +537,11 @@ void mmCheckingPanel::initVirtualListControl()
             if (pBankTransaction->status_ != wxT(""))
                 toAdd = false;
         }
+		else if (currentView_ == wxT("View Duplicates"))
+        {
+            if (pBankTransaction->status_ != wxT("D"))
+                toAdd = false;
+        }
         else  if (currentView_ == wxT("View 30 days"))
         {
             wxDateTime today = wxDateTime::Now();
@@ -732,6 +743,11 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         header->SetLabel(_("Viewing transactions from last 3 months"));
         currentView_ = wxT("View 90 days");
     }
+	else if (evt == MENU_VIEW_DUPLICATE)
+    {
+        header->SetLabel(_("Viewing duplicate transactions"));
+        currentView_ = wxT("View Duplicates");
+    }
     else if (evt == MENU_VIEW_DELETE_TRANS)
     {
         wxMessageDialog msgDlg(this, _("Do you really want to delete all the transactions shown?"),
@@ -800,6 +816,7 @@ void MyListCtrl::OnItemRightClick(wxListEvent& event)
     menu.Append(MENU_TREEPOPUP_MARKUNRECONCILED, _("Mark As &Unreconciled"));
     menu.Append(MENU_TREEPOPUP_MARKVOID, _("Mark As &Void"));
     menu.Append(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP, _("Mark For &Followup"));
+	menu.Append(MENU_TREEPOPUP_MARKDUPLICATE, _("Mark As &Duplicate"));
     menu.AppendSeparator();
 
     wxMenu* subGlobalOpMenu = new wxMenu;
@@ -807,6 +824,7 @@ void MyListCtrl::OnItemRightClick(wxListEvent& event)
     subGlobalOpMenu->Append(MENU_TREEPOPUP_MARKUNRECONCILED_ALL, _("as Unreconciled"));
     subGlobalOpMenu->Append(MENU_TREEPOPUP_MARKVOID_ALL, _("as Void"));
     subGlobalOpMenu->Append(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL, _("as needing Followup"));
+	subGlobalOpMenu->Append(MENU_TREEPOPUP_MARKDUPLICATE_ALL, _("as Duplicate"));
     menu.Append(MENU_SUBMENU_MARK_ALL, _("Mark all "), subGlobalOpMenu);
 
     PopupMenu(&menu, event.GetPoint());
@@ -839,6 +857,8 @@ void MyListCtrl::OnMarkTransaction(wxCommandEvent& event)
          status = wxT("V");
      else if (evt == MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP)
          status = wxT("F");
+	 else if (evt == MENU_TREEPOPUP_MARKDUPLICATE)
+         status = wxT("D");
      else
      {
         wxASSERT(false);
@@ -859,6 +879,8 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
          status = wxT("V");
      else if (evt == MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL)
          status = wxT("F");
+	 else if (evt == MENU_TREEPOPUP_MARKDUPLICATE_ALL)
+         status = wxT("D");
      else
      {
         wxASSERT(false);
@@ -961,6 +983,10 @@ int MyListCtrl::OnGetItemImage(long item) const
    {
         return 1;
    }
+   else if (status == wxT("D"))
+   {
+        return 6;
+   }
    return 3;
 }
 
@@ -1053,6 +1079,13 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
         case 'F':
             {
                  wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP);
+                 OnMarkTransaction(evt);
+            }
+            break;
+		case 'd':
+        case 'D':
+            {
+                 wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKDUPLICATE);
                  OnMarkTransaction(evt);
             }
             break;

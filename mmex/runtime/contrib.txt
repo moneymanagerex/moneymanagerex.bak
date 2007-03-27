@@ -2,6 +2,7 @@ Code Fixes/Patches
 ==================
 Priyank Bolia
 jblough
+Stuart
 
 Translations
 ============
@@ -37,7 +38,8 @@ Ukrainian
 -- Leonid Shturma
 Spanish
 -- Javier
-
+Hungarian
+-- Csaba
 
 User Manual
 ===========
