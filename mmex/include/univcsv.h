@@ -37,6 +37,8 @@
 #define ID_UNIVCSVBUTTON_IMPORT 10094
 #define ID_UNIVCSVBUTTON_LOAD 10095
 #define ID_UNIVCSVBUTTON_SAVE 10096
+#define ID_UNIVCSVBUTTON_MOVEUP 10097
+#define ID_UNIVCSVBUTTON_MOVEDOWN 10098
 ////@end control identifiers
 
 /*!
@@ -98,6 +100,8 @@ public:
     void parseToken(int index,wxString& token);
     void OnLoad(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
+	void OnMoveUp(wxCommandEvent& event);
+	void OnMoveDown(wxCommandEvent& event);
 
 
     wxBitmap GetBitmapResource( const wxString& name );
