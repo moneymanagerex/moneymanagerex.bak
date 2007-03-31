@@ -34,6 +34,7 @@
 #define DEF_STATUS_RECONCILED 1
 #define DEF_STATUS_VOID       2
 #define DEF_STATUS_FOLLOWUP   3
+#define DEF_STATUS_DUPLICATE   4
 
 IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
 
@@ -139,6 +140,10 @@ void mmTransDialog::dataToControls()
         else if (statusString == wxT("F"))
         {
              choiceStatus_->SetSelection(DEF_STATUS_FOLLOWUP);
+        }
+		else if (statusString == wxT("D"))
+        {
+             choiceStatus_->SetSelection(DEF_STATUS_DUPLICATE);
         }
 
          if (transTypeString == wxT("Withdrawal"))
@@ -311,11 +316,12 @@ void mmTransDialog::CreateControls()
         _("None"),
         _("Reconciled"),
         _("Void"),
-        _("Follow up")
+        _("Follow up"),
+		_("Duplicate")
     };  
     
     choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, 
-        wxSize(100, -1), 4, itemChoice7Strings, 0 );
+        wxSize(100, -1), 5, itemChoice7Strings, 0 );
     itemFlexGridSizer8->Add(choiceStatus_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     choiceStatus_->SetSelection(0);
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
@@ -723,6 +729,10 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
     else if (choiceStatus_->GetSelection() == DEF_STATUS_FOLLOWUP)
     {
         status = wxT("F"); 
+    }
+	else if (choiceStatus_->GetSelection() == DEF_STATUS_DUPLICATE)
+    {
+        status = wxT("D"); 
     }
         
     

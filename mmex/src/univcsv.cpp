@@ -457,7 +457,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
                     amount_.Trim().IsEmpty() ||  type_.Trim().IsEmpty())
                 {
                     log << _("Line : " ) << countNumTotal 
-                        << _(" One of the following fields: date, payee, amount, type is missing, skipping") << endl;
+                        << _(" One of the following fields: Date, Payee, Amount, Type is missing, skipping") << endl;
                     continue;
                 }
 
@@ -529,6 +529,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
     Close();
 }
 
+//Removes an item from the field list box
 void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& event)
 {
     int selIndex = csvListBox_->GetSelection();
@@ -536,6 +537,21 @@ void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& event)
     {
         csvListBox_->Delete(selIndex);
         csvFieldOrder_.erase(csvFieldOrder_.begin() + selIndex);
+
+		//select the next item after the one that was deleted so a user 
+		// can quickly hit Remove to delete fields
+		//check if the selected index is the last item
+		if( selIndex == csvListBox_.end() - 1)
+		{
+			csvListBox_->SetSelection(csvListBox_.end(), true);
+		}
+		else
+		{
+			//if the selected item is the last one, then 
+			// just select the last item in the list
+			csvListBox_->SetSelection(selIndex, true);
+			
+		}
     }
 }
 
@@ -556,7 +572,7 @@ void mmUnivCSVImportDialog::OnMoveUp(wxCommandEvent& event)
 		csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex)), selIndex - 1, new mmCSVListBoxItem(csvFieldOrder_.at(selIndex)));
 
 		//reselect the source
-		csvListBox_->SetSelection(selIndex -1, true);
+		csvListBox_->SetSelection(selIndex - 1, true);
 
 		//reorder the attribute list in the vector
 		//get the source field number
