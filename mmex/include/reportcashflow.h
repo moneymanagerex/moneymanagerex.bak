@@ -24,7 +24,7 @@ public:
         hb.addHeader(3, _("Cash Flow Forecast For All Accounts - A Year Ahead"));
 
         wxDateTime now = wxDateTime::Now();
-        wxString dt = wxT("Today's Date: ") + mmGetNiceDateString(now);
+        wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
         hb.addHeader(7, dt);
         hb.addLineBreak();
         hb.addLineBreak();

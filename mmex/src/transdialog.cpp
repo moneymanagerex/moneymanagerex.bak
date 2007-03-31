@@ -23,6 +23,7 @@
 #include "util.h"
 #include "dbwrapper.h"
 
+
 // Defines for Transaction Type
 #define DEF_WITHDRAWAL 0
 #define DEF_DEPOSIT    1
@@ -53,6 +54,7 @@ mmTransDialog::mmTransDialog( )
 mmTransDialog::mmTransDialog(wxSQLite3Database* db, 
                              mmCoreDB* core,
                              int accountID, int transID, bool edit, 
+                             wxSQLite3Database* inidb,
                              wxWindow* parent, wxWindowID id, 
                              const wxString& caption, const wxPoint& pos, 
                              const wxSize& size, long style )
@@ -69,6 +71,7 @@ mmTransDialog::mmTransDialog(wxSQLite3Database* db,
     toTransAmount_ = -1;
     advancedToTransAmountSet_ = false;
     Create(parent, id, caption, pos, size, style);
+    inidb_ = inidb;
 }
 
 bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption, 
@@ -762,6 +765,7 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
        core_->bTransactionList_.updateTransaction(pTransaction);
     }
     
+    mmPlayTransactionSound(inidb_);
     EndModal(wxID_OK);
 }
 

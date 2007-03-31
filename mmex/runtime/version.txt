@@ -15,6 +15,9 @@ Version History of Money Manager Ex
 - Fix bug in budget performance report where certain subcategories werenot being displayed
 - Show category expenses over time in "Where the Money Goes" report
 - Add "Load/Save" buttons for the Universal CSV importer dialog to save often used CSV configurations
+- Improve Universal CSV importer dialog (Thanks to Patch submitted by Stuart)
+- Add Kaching sound when entering transactions (can be turned off)
+- Added Hungarian Translation (Thanks Tarjányi Csaba)
 
 0.8.0.4 (Feb 28, 2007)
 - Add Copy/Paste transactions within same account

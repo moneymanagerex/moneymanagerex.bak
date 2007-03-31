@@ -56,6 +56,7 @@ wxColour mmGetColourFromString(const wxString& str);
 void mmRestoreDefaultColors();
 void mmSaveColorsToDatabase(wxSQLite3Database* db_);
 
+void mmPlayTransactionSound(wxSQLite3Database* db_);
 
 class mmColors
 {

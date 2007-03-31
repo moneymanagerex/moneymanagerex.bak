@@ -1098,7 +1098,8 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
 
 void MyListCtrl::OnNewTransaction(wxCommandEvent& event)
 {
-    mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_, cp_->accountID_, 0, false, this );
+    mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_, cp_->accountID_, 
+        0, false, cp_->inidb_, this );
     if ( dlg->ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
@@ -1132,7 +1133,7 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& event)
     if (selectedIndex_ == -1)
         return;
     mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_, cp_->accountID_, 
-       cp_->trans_[selectedIndex_]->transactionID(), true, this);
+       cp_->trans_[selectedIndex_]->transactionID(), true, cp_->inidb_, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
@@ -1148,7 +1149,7 @@ void MyListCtrl::OnListItemActivated(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
     mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_,  cp_->accountID_, 
-       cp_->trans_[selectedIndex_]->transactionID(), true, this);
+        cp_->trans_[selectedIndex_]->transactionID(), true, cp_->inidb_, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();

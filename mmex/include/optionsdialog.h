@@ -66,6 +66,7 @@ public:
     void OnListDetailsColors(wxCommandEvent& event);
     void OnBackupDBChecked(wxCommandEvent& event);
     void OnOriginalDateChecked(wxCommandEvent& event);
+    void OnUseSoundChecked(wxCommandEvent& event);
 
 private:
     wxImageList* m_imageList;

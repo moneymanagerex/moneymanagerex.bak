@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-02-28 19:24-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2007-03-08 13:30+0100\n"
+"Last-Translator: Jean-Christophe Meylan <jc_meylan@hotmail.com>\n"
 "Language-Team: TheZeal Software <Bergarath>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -996,7 +996,7 @@ msgstr "Choisir la catégorie sélectionnée comme catégorie pour l'opération"
 
 #: src/categdialog.cpp:162
 msgid "Category cannot be empty"
-msgstr ""
+msgstr "Cette catégorie ne peut être supprimée"
 
 #: src/categdialog.cpp:170
 msgid "Category with same name exists"
@@ -1306,14 +1306,12 @@ msgid "&Delete Transaction"
 msgstr "&Supprimer l'opération"
 
 #: src/mmcheckingpanel.cpp:791
-#, fuzzy
 msgid "&Copy Transaction"
-msgstr "&Nouvelle opération"
+msgstr "Co&pier l'opération"
 
 #: src/mmcheckingpanel.cpp:793
-#, fuzzy
 msgid "&Paste Transaction"
-msgstr "&Nouvelle opération"
+msgstr "C&oller l'opération"
 
 #: src/mmcheckingpanel.cpp:795
 msgid "Mark As &Reconciled"
@@ -1493,9 +1491,8 @@ msgid "Cash Flow - Specific Accounts"
 msgstr "Trésorerie - Comptes spécifiques"
 
 #: src/mmex.cpp:734
-#, fuzzy
 msgid "Transaction Statistics"
-msgstr "Liste des opérations"
+msgstr "Statistiques des opérations"
 
 #: src/mmex.cpp:740
 msgid "Help"
@@ -3257,9 +3254,8 @@ msgid "Total Amount: "
 msgstr "Montant total:"
 
 #: include/reporttransstats.h:30
-#, fuzzy
 msgid "Transaction Statistics for "
-msgstr "Liste des opérations"
+msgstr "Statistiques des opérations pour "
 
 #: include/stockdialog.h:23
 msgid "New/Edit Stock Investment"

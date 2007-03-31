@@ -51,6 +51,8 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
 
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_BACKUP, mmOptionsDialog::OnBackupDBChecked)
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_ORIG_DATE, mmOptionsDialog::OnOriginalDateChecked)
+
+    EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_USE_SOUND, mmOptionsDialog::OnUseSoundChecked)
 END_EVENT_TABLE()
 
 #include "../resources/htmbook.xpm"
@@ -441,6 +443,16 @@ void mmOptionsDialog::CreateControls()
     itemCheckBoxOrigDate->SetToolTip(_("Select whether to use the original transaction date or current date when copying/pasting transactions"));
 
 
+    wxString useSound =  mmDBWrapper::getINISettingValue(inidb_, wxT("USETRANSSOUND"), wxT("TRUE"));
+    wxCheckBox* itemCheckBoxUseSound = new wxCheckBox( itemPanelMisc, 
+        ID_DIALOG_OPTIONS_CHK_USE_SOUND, _("Use Transaction Sound"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    itemCheckBoxUseSound->SetValue(FALSE);
+    if (useSound == wxT("TRUE"))
+        itemCheckBoxUseSound->SetValue(TRUE);
+    itemBoxSizerMisc->Add(itemCheckBoxUseSound, 0, 
+        wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemCheckBoxUseSound->SetToolTip(_("Select whether to use sounds when entering transactions"));
+
     // -------------------------------------------
 
     newBook->SetImageList(m_imageList);
@@ -608,4 +620,14 @@ void mmOptionsDialog::OnOriginalDateChecked(wxCommandEvent& event)
      mmDBWrapper::setINISettingValue(inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("TRUE"));
   else
     mmDBWrapper::setINISettingValue(inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
+}
+
+void mmOptionsDialog::OnUseSoundChecked(wxCommandEvent& event)
+{
+  wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_USE_SOUND);
+  bool state = itemCheckBox->GetValue();
+  if (state)
+     mmDBWrapper::setINISettingValue(inidb_, wxT("USETRANSSOUND"), wxT("TRUE"));
+  else
+    mmDBWrapper::setINISettingValue(inidb_, wxT("USETRANSSOUND"), wxT("FALSE"));
 }

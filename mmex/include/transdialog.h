@@ -44,7 +44,10 @@ public:
     mmTransDialog(wxSQLite3Database* db, 
         mmCoreDB* core,
         int accountID, int transID, 
-        bool edit, wxWindow* parent, wxWindowID id = SYMBOL_TRANSDIALOG_IDNAME, 
+        bool edit, 
+        wxSQLite3Database* iniDB, 
+        wxWindow* parent, 
+        wxWindowID id = SYMBOL_TRANSDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_TRANSDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_TRANSDIALOG_POSITION, 
         const wxSize& size = SYMBOL_TRANSDIALOG_SIZE, 
@@ -74,6 +77,7 @@ public:
 
 private:
     wxSQLite3Database* db_;
+    wxSQLite3Database* inidb_;
     mmCoreDB* core_;
     int transID_;
     int accountID_;
