@@ -72,7 +72,7 @@ public:
     void OnDelete(wxCommandEvent& event);
     void OnBSelect(wxCommandEvent& event);
     void OnEdit(wxCommandEvent& event);
-    void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event);
+    void OnListKeyDown(wxKeyEvent &event);
     
     void fillControls();
     void OnSelChanged(wxCommandEvent& event);
