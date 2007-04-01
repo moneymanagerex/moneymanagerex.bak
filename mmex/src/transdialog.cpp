@@ -769,13 +769,14 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
     if (!edit_)
     {
        core_->bTransactionList_.addTransaction(pTransaction);
+       mmPlayTransactionSound(inidb_);
     }
     else
     {
        core_->bTransactionList_.updateTransaction(pTransaction);
     }
     
-    mmPlayTransactionSound(inidb_);
+
     EndModal(wxID_OK);
 }
 

@@ -538,20 +538,23 @@ void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& event)
         csvListBox_->Delete(selIndex);
         csvFieldOrder_.erase(csvFieldOrder_.begin() + selIndex);
 
-		//select the next item after the one that was deleted so a user 
+        // select the next item after the one that was deleted so a user 
 		// can quickly hit Remove to delete fields
-		//check if the selected index is the last item
-		if( selIndex == csvListBox_.end() - 1)
-		{
-			csvListBox_->SetSelection(csvListBox_.end(), true);
-		}
-		else
-		{
-			//if the selected item is the last one, then 
-			// just select the last item in the list
-			csvListBox_->SetSelection(selIndex, true);
-			
-		}
+		// check if the selected index is the last item
+        if (csvFieldOrder_.size())
+        {
+            if( selIndex > csvFieldOrder_.size() - 1)
+            {
+                csvListBox_->SetSelection(csvFieldOrder_.size() - 1, true);
+            }
+            else
+            {
+                //if the selected item is the last one, then 
+                // just select the last item in the list
+                csvListBox_->SetSelection(selIndex, true);
+
+            }
+        }
     }
 }
 
