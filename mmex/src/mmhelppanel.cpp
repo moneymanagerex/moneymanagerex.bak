@@ -85,7 +85,7 @@ void mmHelpPanel::CreateControls()
         wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     itemBoxSizer2->Add(htmlWindow_, 1, wxGROW|wxALL, 1);
 
-    wxFileName fname(mmGetBaseWorkingPath(true));
+    wxFileName fname(wxTheApp->argv[0]);
     wxString helpPath = fname.GetPath(wxPATH_GET_VOLUME)
                 + wxT("\\help\\index.html");
     htmlWindow_ ->LoadPage(helpPath);
