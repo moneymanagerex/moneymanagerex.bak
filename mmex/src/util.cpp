@@ -215,10 +215,6 @@ void mmExportCSV(wxSQLite3Database* db_)
             wxFileOutputStream output( fileName );
             wxTextOutputStream text( output );
 
-            /* Create Log File */
-            wxFileName fname(mmGetBaseWorkingPath());
-            wxFileName csvName(fileName);
-
             mmBEGINSQL_LITE_EXCEPTION;
             wxString bufSQL = wxString::Format(wxT("SELECT TRANSDATE, \
                 TRANSCODE, TRANSAMOUNT,  SUBCATEGID,         \
@@ -322,9 +318,8 @@ int mmImportCSV(mmCoreDB* core)
             wxTextInputStream text( input );
 
             /* Create Log File */
-            wxFileName fname(mmGetBaseWorkingPath());
             wxFileName csvName(fileName);
-            wxString logFile = fname.GetPath(wxPATH_GET_VOLUME) + wxT("\\") 
+            wxString logFile = mmGetBaseWorkingPath() + wxT("\\") 
                 + csvName.GetName() + wxT(".txt");
             wxFileOutputStream outputLog( logFile );
             wxTextOutputStream log( outputLog );
@@ -581,9 +576,8 @@ int mmImportCSVMMNET(mmCoreDB* core)
             wxTextInputStream text( input );
 
             /* Create Log File */
-            wxFileName fname(mmGetBaseWorkingPath());
             wxFileName csvName(fileName);
-            wxString logFile = fname.GetPath(wxPATH_GET_VOLUME) + wxT("\\") 
+            wxString logFile = mmGetBaseWorkingPath() + wxT("\\") 
                 + csvName.GetName() + wxT(".txt");
             wxFileOutputStream outputLog( logFile );
             wxTextOutputStream log( outputLog );
