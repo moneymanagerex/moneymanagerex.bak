@@ -397,7 +397,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
             wxTextInputStream text( input );
 
             /* Create Log File */
-            wxFileName fname(wxTheApp->argv[0]);
+            wxFileName fname(mmGetBaseWorkingPath());
             wxFileName csvName(fileName);
             wxString logFile = fname.GetPath(wxPATH_GET_VOLUME) + wxT("\\") 
                 + csvName.GetName() + wxT(".txt");
@@ -543,9 +543,9 @@ void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& event)
 		// check if the selected index is the last item
         if (csvFieldOrder_.size())
         {
-            if( selIndex > csvFieldOrder_.size() - 1)
+            if( selIndex > (int)csvFieldOrder_.size() - 1)
             {
-                csvListBox_->SetSelection(csvFieldOrder_.size() - 1, true);
+                csvListBox_->SetSelection((int)csvFieldOrder_.size() - 1, true);
             }
             else
             {

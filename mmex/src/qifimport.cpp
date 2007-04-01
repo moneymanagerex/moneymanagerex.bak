@@ -398,7 +398,7 @@ Are you are sure you want to proceed with the import?"),
         wxTextInputStream text( input );
 
         /* Create Log File */
-        wxFileName fname(wxTheApp->argv[0]);
+        wxFileName fname(mmGetBaseWorkingPath());
         wxFileName csvName(fileName);
         wxString logFile = fname.GetPath(wxPATH_GET_VOLUME) + wxT("\\") 
             + csvName.GetName() + wxT(".txt");

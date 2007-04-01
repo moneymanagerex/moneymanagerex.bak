@@ -391,7 +391,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 #ifdef __WXGTK__
             absName = fName.GetFullPath();		
 #else	
-            wxFileName appPath(wxTheApp->argv[0]);
+            wxFileName appPath(mmGetBaseWorkingPath(true));
             fName.Normalize( wxPATH_NORM_ALL, appPath.GetPath());
             absName = fName.GetFullPath();
 #endif
@@ -442,7 +442,7 @@ mmGUIFrame::~mmGUIFrame()
 void mmGUIFrame::saveConfigFile()
 {
     /* Save our settings to ini db */
-    wxFileName appPath(wxTheApp->argv[0]);
+    wxFileName appPath(mmGetBaseWorkingPath(true));
     wxFileName fname(fileName_);
 
 #ifdef __WXGTK__
@@ -1851,8 +1851,7 @@ Database password is incorrect"),
 
 void mmGUIFrame::openDataBase(const wxString& fileName)
 {
-    wxFileName fname(wxGetApp().argv[0]);
-    wxString appPath = fname.GetPath(wxPATH_GET_VOLUME);
+    wxString appPath = mmGetBaseWorkingPath();
 
     wxProgressDialog* pgd = new wxProgressDialog(_("Please Wait"), 
         _("Opening Database File && Verifying Integrity"), 100, this, 
@@ -2420,7 +2419,7 @@ void mmGUIFrame::showBeginAppDialog()
         {
             /* Try Opening the file */
             wxFileName fName(val);
-            wxFileName appPath(wxTheApp->argv[0]);
+            wxFileName appPath(mmGetBaseWorkingPath(true));
             fName.Normalize( wxPATH_NORM_ALL, appPath.GetPath());
             wxString absName = fName.GetFullPath();
             if (!absName.IsEmpty())

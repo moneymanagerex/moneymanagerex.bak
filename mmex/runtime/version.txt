@@ -18,6 +18,8 @@ Version History of Money Manager Ex
 - Improve Universal CSV importer dialog (Thanks to Patch submitted by Stuart)
 - Add Kaching sound when entering transactions (can be turned off)
 - Added Hungarian Translation (Thanks Tarjányi Csaba)
+- Add Focused Item fix in account view screen when deleting items (Patch by Stuart)
+- Add optional argument to MMEX that specifies where it should find the data directory
 
 0.8.0.4 (Feb 28, 2007)
 - Add Copy/Paste transactions within same account

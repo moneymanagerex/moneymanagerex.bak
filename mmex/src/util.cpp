@@ -35,9 +35,9 @@ void mmPlayTransactionSound(wxSQLite3Database* db_)
         registerSound.Play(wxSOUND_ASYNC);
 }
 
-wxString mmGetBaseWorkingPath()
+wxString mmGetBaseWorkingPath(bool ignoreCommandLine)
 {
-   if (wxTheApp->argc > 1)
+   if (!ignoreCommandLine && (wxTheApp->argc > 1))
    {
       wxString path = wxTheApp->argv[1];
       if (wxFileName::DirExists(path))
@@ -216,7 +216,7 @@ void mmExportCSV(wxSQLite3Database* db_)
             wxTextOutputStream text( output );
 
             /* Create Log File */
-            wxFileName fname(wxTheApp->argv[0]);
+            wxFileName fname(mmGetBaseWorkingPath());
             wxFileName csvName(fileName);
 
             mmBEGINSQL_LITE_EXCEPTION;
@@ -322,7 +322,7 @@ int mmImportCSV(mmCoreDB* core)
             wxTextInputStream text( input );
 
             /* Create Log File */
-            wxFileName fname(wxTheApp->argv[0]);
+            wxFileName fname(mmGetBaseWorkingPath());
             wxFileName csvName(fileName);
             wxString logFile = fname.GetPath(wxPATH_GET_VOLUME) + wxT("\\") 
                 + csvName.GetName() + wxT(".txt");
@@ -581,7 +581,7 @@ int mmImportCSVMMNET(mmCoreDB* core)
             wxTextInputStream text( input );
 
             /* Create Log File */
-            wxFileName fname(wxTheApp->argv[0]);
+            wxFileName fname(mmGetBaseWorkingPath());
             wxFileName csvName(fileName);
             wxString logFile = fname.GetPath(wxPATH_GET_VOLUME) + wxT("\\") 
                 + csvName.GetName() + wxT(".txt");
