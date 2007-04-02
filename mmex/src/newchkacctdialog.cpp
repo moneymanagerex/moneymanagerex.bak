@@ -381,6 +381,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& event)
     mmDBWrapper::loadSettings(core_->db_.get(), currencyID_);
     wxTextCtrl* textCtrlInit = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE);
     wxString bal = textCtrlInit->GetValue().Trim();
+    pAccount->initialBalance_ = 0.0;
     if (!bal.IsEmpty())
     {
         if (!mmCurrencyFormatter::formatCurrencyToDouble(bal, pAccount->initialBalance_))

@@ -239,22 +239,23 @@ void mmStocksPanel::initVirtualListControl()
 		wxString str = mmDBWrapper::getAccountName(db_, accountID_);
 		header->SetLabel(_("Stock Investments: ") + str);
 	}
+   
+   mmDBWrapper::loadBaseCurrencySettings(db_);
+   double total = mmDBWrapper::getStockInvestmentBalance(db_);
+   wxSQLite3StatementBuffer bufSQL;
+   if (accountID_ != -1)
+   {
+      bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", accountID_);
+      wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL);
+      if (q2.NextRow())
+      {
+         int currencyID = q2.GetInt(wxT("CURRENCYID"));
+         mmDBWrapper::loadSettings(db_, currencyID);
+      }
+      q2.Finalize();
 
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", accountID_);
-    wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL);
-    if (q2.NextRow())
-    {
-        int currencyID = q2.GetInt(wxT("CURRENCYID"));
-        mmDBWrapper::loadSettings(db_, currencyID);
-    }
-    q2.Finalize();
-    
-	double total = mmDBWrapper::getStockInvestmentBalance(db_);
-	if (accountID_ != -1)
-	{
-		total = mmDBWrapper::getStockInvestmentBalance(db_, accountID_);
-	}
+      total = mmDBWrapper::getStockInvestmentBalance(db_, accountID_, false);
+   }
 
     wxString balance;
     mmCurrencyFormatter::formatDoubleToCurrency(total, balance);

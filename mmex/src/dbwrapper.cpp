@@ -1683,24 +1683,17 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db)
     wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
     while (q1.NextRow())
     {
+       
        double value = q1.GetDouble(wxT("INITIALBAL"));
-       balance += value;
-    }
-    q1.Finalize();
-
-    bufSQL = wxString::Format(wxT("select * from STOCK_V1;"));
-    q1 = db->ExecuteQuery(bufSQL);
-    while (q1.NextRow())
-    {
-        double value = q1.GetDouble(wxT("VALUE"));
-        balance += value;
+       balance += getStockInvestmentBalance(db, q1.GetInt(wxT("ACCOUNTID")), true);
     }
     q1.Finalize();
     mmENDSQL_LITE_EXCEPTION;
     return balance;
 }
 
-double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int accountID)
+double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int accountID, 
+                                              bool convertToBase)
 {
    wxASSERT(accountID != -1);
 
@@ -1724,7 +1717,9 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int account
    q1.Finalize();
    mmENDSQL_LITE_EXCEPTION;
 
-   double convRate = mmDBWrapper::getCurrencyBaseConvRate(db, accountID);
+   double convRate = 1.0;
+   if (convertToBase)
+       convRate = mmDBWrapper::getCurrencyBaseConvRate(db, accountID);
    return balance * convRate;
 }
 

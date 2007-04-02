@@ -168,7 +168,7 @@ public:
     /* Stocks API */
     static void deleteStockInvestment(wxSQLite3Database* db, int stockID);
     static double getStockInvestmentBalance(wxSQLite3Database* db);
-	static double getStockInvestmentBalance(wxSQLite3Database* db, int accountID);
+	static double getStockInvestmentBalance(wxSQLite3Database* db, int accountID, bool convertToBase);
 
 	/* Assets API */
 	static void deleteAsset(wxSQLite3Database* db, int assetID);
