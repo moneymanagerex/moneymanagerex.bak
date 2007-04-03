@@ -2,6 +2,9 @@ Version History of Money Manager Ex
 
 0.8.0.6 ()
 - Fix currency conversions for stock accounts (Thanks Jai)
+- Fix broken selection of items in Ubuntu when adding new transaction (Ikkyu)
+- Fix getting location of kaching.wav file (Ikkyu)
+- Fix crash when deleting last transaction in transaction view (Ikkyu)
 
 0.8.0.5 (April 1, 2007)
 - Fix bug calculating Quarterly estimated amounts in Budget performance report
