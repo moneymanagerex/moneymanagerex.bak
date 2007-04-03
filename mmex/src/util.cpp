@@ -27,10 +27,11 @@
 
 void mmPlayTransactionSound(wxSQLite3Database* db_)
 {
-    wxString useSound = mmDBWrapper::getINISettingValue(db_, wxT("USETRANSSOUND"), wxT("TRUE"));
+    wxString useSound = mmDBWrapper::getINISettingValue(db_, 
+       wxT("USETRANSSOUND"), wxT("TRUE"));
     if (useSound != wxT("TRUE"))
         return;
-    wxSound registerSound(wxT("kaching.wav"));
+    wxSound registerSound(mmGetBaseWorkingPath() + wxT("\\kaching.wav"));
     if (registerSound.IsOk())
         registerSound.Play(wxSOUND_ASYNC);
 }

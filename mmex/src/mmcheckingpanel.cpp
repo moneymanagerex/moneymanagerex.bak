@@ -478,15 +478,16 @@ void mmCheckingPanel::setAccountSummary()
 
 void mmCheckingPanel::initVirtualListControl()
 {
+    // clear everything
+    trans_.clear();
+
     wxProgressDialog* pgd = new wxProgressDialog(_("Please Wait"), 
         _("Accessing Database"), 100, this, 
         wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
 
     pgd->Update(10);
 
-    // clear everything
-    trans_.clear();
-    
+   
     boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(accountID_);
     double acctInitBalance = pAccount->initialBalance_;
     boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
@@ -601,7 +602,6 @@ void mmCheckingPanel::initVirtualListControl()
 		   }
         }
     }
-    listCtrlAccount_->SetItemCount(numTransactions);
 
     pgd->Update(30);
 
@@ -654,6 +654,8 @@ void mmCheckingPanel::initVirtualListControl()
     
     // sort the table
     sortTable(); 
+
+    listCtrlAccount_->SetItemCount(numTransactions);
 
     if (trans_.size() > 1)
     {
@@ -929,7 +931,10 @@ void MyListCtrl::SetColumnImage(int col, int image)
 }
 
 wxString mmCheckingPanel::getItem(long item, long column)
-{
+{  
+    if (!trans_.size())
+       return wxT("");
+
     if (!trans_[item])
     {
         return wxT("");;
@@ -1104,9 +1109,12 @@ void MyListCtrl::OnNewTransaction(wxCommandEvent& event)
     {
         cp_->initVirtualListControl();
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
-        SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-        SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-        EnsureVisible(selectedIndex_);
+        if (selectedIndex_ != -1)
+        {
+           SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+           SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+           EnsureVisible(selectedIndex_);
+        }
     }
     dlg->Destroy();
 }
@@ -1128,20 +1136,35 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& event)
 			//find the topmost visible item - this will be used to set 
 			// where to display the list again after refresh
 			long topItemIndex = GetTopItem();
+         
 			//remove the transaction
 			this->cp_->core_->bTransactionList_.deleteTransaction(this->cp_->accountID_, 
 			   cp_->trans_[selectedIndex_]->transactionID());
-			//initialize the transaction list to redo balances and images
+			
+
+         //initialize the transaction list to redo balances and images
 			cp_->initVirtualListControl();
-			//refresh the items showing from the point of the transaction delete down
-			//the transactions above the deleted transaction won't change so they 
-			// don't need to be refreshed
-			RefreshItems(selectedIndex_, ((int)cp_->trans_.size()) - 1);
-			//set the deleted transaction index to the new selection and focus on it
-			SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED);
-			//make sure the topmost item before transaction deletion is visible, otherwise 
-			// the control will go back to the very top or bottom when refreshed
-			EnsureVisible(topItemIndex);
+
+         if (cp_->trans_.size() > 0)
+         {
+            //refresh the items showing from the point of the transaction delete down
+            //the transactions above the deleted transaction won't change so they 
+            // don't need to be refreshed
+            RefreshItems(selectedIndex_, ((int)cp_->trans_.size()) - 1);
+
+            //set the deleted transaction index to the new selection and focus on it
+            SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, 
+               wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED);
+
+            //make sure the topmost item before transaction deletion is visible, otherwise 
+            // the control will go back to the very top or bottom when refreshed
+            EnsureVisible(topItemIndex);
+         }
+         else
+         {
+            SetItemCount(0);
+            DeleteAllItems();
+         }
 		}
 	}
 }
@@ -1174,9 +1197,12 @@ void MyListCtrl::OnListItemActivated(wxListEvent& event)
     {
         cp_->initVirtualListControl();
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
-        SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-        SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-        EnsureVisible(selectedIndex_);
+        if (selectedIndex_ != -1)
+        {
+           SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+           SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+           EnsureVisible(selectedIndex_);
+        }
     }
     dlg->Destroy();
 }
