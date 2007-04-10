@@ -478,26 +478,31 @@ void mmBDDialog::OnPayee(wxCommandEvent& event)
                 bPayee_->SetLabel(_("Select Payee"));
                 return;
             }
-            wxString payeeName = mmDBWrapper::getPayee(db_, payeeID_, categID_, subcategID_);
+
+            int tempCategID = -1;
+            int tempSubCategID = -1;
+            wxString payeeName = mmDBWrapper::getPayee(db_, 
+                payeeID_, tempCategID, tempSubCategID);
             bPayee_->SetLabel(mmReadyDisplayString(payeeName));
 
-            if (categID_ == -1)
+            if (tempCategID == -1)
             {
-                subcategID_ = -1;
-                bCategory_->SetLabel(_("Select Category"));
                 return;
             }
 
-            wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
+            wxString catName = mmDBWrapper::getCategoryName(db_, tempCategID);
             wxString categString = catName;
 
-            if (subcategID_ != -1)
+            if (tempSubCategID != -1)
             {
-                wxString subcatName = mmDBWrapper::getSubCategoryName(db_, categID_, subcategID_);
+                wxString subcatName = mmDBWrapper::getSubCategoryName(db_,
+                    tempCategID, tempSubCategID);
                 categString += wxT(" : ");
                 categString += subcatName;
             }
 
+            categID_ = tempCategID;
+            subcategID_ = tempSubCategID;
             bCategory_->SetLabel(categString);
         }
         else

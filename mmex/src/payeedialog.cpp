@@ -108,6 +108,7 @@ bool mmPayeeDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmPayeeDialog::fillControls()
 {
+    core_->payeeList_.sortPayeeList();
     if (selectPayees_)
     {
         int numPayees = (int)core_->payeeList_.payees_.size();

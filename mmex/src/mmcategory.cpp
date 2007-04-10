@@ -29,7 +29,7 @@ bool mmCategoryList::categoryExists(const wxString& categoryName)
     int numCategs = (int)categories_.size();
     for (int idx = 0; idx < numCategs; idx++)
     {
-        if (categories_[idx]->categName_ == categoryName)
+        if (!categories_[idx]->categName_.CmpNoCase(categoryName))
             return true;
     }
     return false;

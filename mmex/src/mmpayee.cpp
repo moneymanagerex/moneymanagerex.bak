@@ -30,7 +30,7 @@ bool mmPayeeList::payeeExists(const wxString& payeeName)
     int numPayees = (int)payees_.size();
     for (int idx = 0; idx < numPayees; idx++)
     {
-        if (payees_[idx]->payeeName_ == payeeName)
+        if (!payees_[idx]->payeeName_.CmpNoCase(payeeName))
             return true;
     }
     return false;

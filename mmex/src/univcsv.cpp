@@ -388,6 +388,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
 
         boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
         wxASSERT(pCurrencyPtr);
+        mmCurrencyFormatter::loadSettings(pCurrencyPtr);
              
         wxString fileName = wxFileSelector(_("Choose MM.NET CSV data file to import"), 
                 wxT(""), wxT(""), wxT(""), wxT("*.csv"), wxFILE_MUST_EXIST);
@@ -567,11 +568,13 @@ void mmUnivCSVImportDialog::OnMoveUp(wxCommandEvent& event)
 		//destination = the place in the list to be replaced (moved down)
 		//replace the source with destination
 		csvListBox_->Delete(selIndex);
-		csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex - 1)), selIndex, new mmCSVListBoxItem(csvFieldOrder_.at(selIndex - 1)));
+		csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex - 1)), selIndex, 
+            new mmCSVListBoxItem(csvFieldOrder_.at(selIndex - 1)));
 
 		//replace the destination with source
 		csvListBox_->Delete(selIndex - 1);
-		csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex)), selIndex - 1, new mmCSVListBoxItem(csvFieldOrder_.at(selIndex)));
+		csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex)), selIndex - 1, 
+            new mmCSVListBoxItem(csvFieldOrder_.at(selIndex)));
 
 		//reselect the source
 		csvListBox_->SetSelection(selIndex - 1, true);
@@ -596,11 +599,13 @@ void mmUnivCSVImportDialog::OnMoveDown(wxCommandEvent& event)
 		//destination = the place in the list to be replaced (moved down)
 		//replace the source with destination
 		csvListBox_->Delete(selIndex);
-		csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex + 1)), selIndex, new mmCSVListBoxItem(csvFieldOrder_.at(selIndex + 1)));
+		csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex + 1)), selIndex, 
+            new mmCSVListBoxItem(csvFieldOrder_.at(selIndex + 1)));
 
 		//replace the destination with source
 		csvListBox_->Delete(selIndex + 1);
-		csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex)), selIndex + 1, new mmCSVListBoxItem(csvFieldOrder_.at(selIndex)));
+		csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex)), selIndex + 1, 
+            new mmCSVListBoxItem(csvFieldOrder_.at(selIndex)));
 
 		//reselect the source
 		csvListBox_->SetSelection(selIndex + 1, true);
@@ -653,7 +658,8 @@ void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
             if (token.Trim().IsEmpty())
                 return;
            
-            if (!token.ToDouble(&val_))
+            
+            if (!mmCurrencyFormatter::formatCurrencyToDouble(token, val_))
             {
                 return;
             }
