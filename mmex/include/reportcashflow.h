@@ -224,11 +224,11 @@ public:
 
            wxString dtStr = mmGetDateForDisplay(core_->db_.get(), dtEnd);
 
-           std::vector<wxString> row;
-           row.push_back(dtStr);
-           row.push_back(balance);
-           hb.addRow(row);
-
+           hb.addHTML(wxT("<tr><td>")); 
+           hb.addHTML(dtStr);
+           hb.addHTML(wxT("</td><td align=\"right\">"));
+           hb.addHTML(balance);
+           hb.addHTML(wxT("</td></tr>"));
         }
 
 

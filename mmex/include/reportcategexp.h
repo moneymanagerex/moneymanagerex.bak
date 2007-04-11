@@ -88,11 +88,11 @@ public:
 
             if (amt != 0.0)
             {
-                std::vector<wxString> data;
-                data.push_back(categString);
-              
-                data.push_back(balance);
-                hb.addRow(data);
+                hb.addHTML(wxT("<tr><td>")); 
+                hb.addHTML(categString);
+                hb.addHTML(wxT("</td><td align=\"right\">"));
+                hb.addHTML(balance);
+                hb.addHTML(wxT("</td></tr>"));
             }
 
             wxSQLite3StatementBuffer bufSQL1;
@@ -109,10 +109,12 @@ public:
 
                 if (amt != 0.0)
                 {
-                    std::vector<wxString> wSub;
-                    wSub.push_back(categString + wxT(" : ") + subcategString);
-                    wSub.push_back(balance);
-                    hb.addRow(wSub);
+                    hb.addHTML(wxT("<tr><td>")); 
+                    hb.addHTML(categString + wxT(" : ") + subcategString);
+                    hb.addHTML(wxT("</td><td align=\"right\">"));
+                    hb.addHTML(balance);
+                    hb.addHTML(wxT("</td></tr>"));
+
                 }
             }
             q2.Finalize();

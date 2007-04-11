@@ -77,10 +77,11 @@ public:
               wxString balance;
               mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
 
-              std::vector<wxString> row;
-              row.push_back(pCA->accountName_);
-              row.push_back(balance);
-              hb.addRow(row);
+              hb.addHTML(wxT("<tr><td>")); 
+              hb.addHTML(pCA->accountName_);
+              hb.addHTML(wxT("</td><td align=\"right\">"));
+              hb.addHTML(balance);
+              hb.addHTML(wxT("</td></tr>"));
            }
         }
         hb.endTable();

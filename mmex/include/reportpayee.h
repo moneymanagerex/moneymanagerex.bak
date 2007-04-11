@@ -66,11 +66,11 @@ public:
 
             if (amt != 0.0)
             {
-                std::vector<wxString> data;
-                data.push_back(core_->payeeList_.payees_[idx]->payeeName_);
-              
-                data.push_back(balance);
-                hb.addRow(data);
+                hb.addHTML(wxT("<tr><td>")); 
+                hb.addHTML(core_->payeeList_.payees_[idx]->payeeName_);
+                hb.addHTML(wxT("</td><td align=\"right\">"));
+                hb.addHTML(balance);
+                hb.addHTML(wxT("</td></tr>"));
             }
         }
         hb.endTable();

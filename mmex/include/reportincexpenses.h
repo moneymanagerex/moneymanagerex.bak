@@ -62,15 +62,17 @@ public:
         mmCurrencyFormatter::formatDoubleToCurrency(expenses, expString);
         mmCurrencyFormatter::formatDoubleToCurrency(income, incString);
 
-        std::vector<wxString> data;
-        data.push_back(_("Income: "));
-        data.push_back(incString);
-        hb.addRow(data);
+        hb.addHTML(wxT("<tr><td>")); 
+        hb.addHTML(_("Income: "));
+        hb.addHTML(wxT("</td><td align=\"right\">"));
+        hb.addHTML(incString);
+        hb.addHTML(wxT("</td></tr>"));
 
-        std::vector<wxString> data1;
-        data1.push_back(_("Expenses: "));
-        data1.push_back(expString);
-        hb.addRow(data1);
+        hb.addHTML(wxT("<tr><td>")); 
+        hb.addHTML(_("Expenses: "));
+        hb.addHTML(wxT("</td><td align=\"right\">"));
+        hb.addHTML(expString);
+        hb.addHTML(wxT("</td></tr>"));
 
         hb.endTable();
 
