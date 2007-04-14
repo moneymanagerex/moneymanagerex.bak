@@ -40,6 +40,8 @@ BEGIN_EVENT_TABLE(mmBudgetingPanel, wxPanel)
 
     EVT_MENU(MENU_VIEW_ALLBUDGETENTRIES, mmBudgetingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_NONZEROBUDGETENTRIES, mmBudgetingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_INCOMEBUDGETENTRIES, mmBudgetingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_EXPENSEBUDGETENTRIES, mmBudgetingPanel::OnViewPopupSelected)
 END_EVENT_TABLE()
 /*******************************************************/
 BEGIN_EVENT_TABLE(budgetingListCtrl, wxListCtrl)
@@ -118,6 +120,16 @@ void mmBudgetingPanel::OnViewPopupSelected(wxCommandEvent& event)
         header->SetLabel(_("View Non-Zero Budget Categories"));
         currentView_ = wxT("View Non-Zero Budget Categories");
     }
+    else if (evt == MENU_VIEW_INCOMEBUDGETENTRIES)
+    {
+        header->SetLabel(_("View Income Budget Categories"));
+        currentView_ = wxT("View Income Budget Categories");
+    }
+    else if (evt == MENU_VIEW_EXPENSEBUDGETENTRIES)
+    {
+        header->SetLabel(_("View Expense Budget Categories"));
+        currentView_ = wxT("View Expense Budget Categories");
+    }
     else
     {
         wxASSERT(false);
@@ -139,7 +151,8 @@ void mmBudgetingPanel::OnMouseLeftDown( wxMouseEvent& event )
             wxMenu menu;
             menu.Append(MENU_VIEW_ALLBUDGETENTRIES, _("View All Budget Categories"));
             menu.Append(MENU_VIEW_NONZEROBUDGETENTRIES, _("View Non-Zero Budget Categories"));
-
+            menu.Append(MENU_VIEW_INCOMEBUDGETENTRIES, _("View Income Budget Categories"));
+            menu.Append(MENU_VIEW_EXPENSEBUDGETENTRIES, _("View Expense Budget Categories"));
             PopupMenu(&menu, event.GetPosition());
             break;
         }
@@ -347,6 +360,18 @@ void mmBudgetingPanel::initVirtualListControl()
             else
                 trans_.push_back(th);
         }
+        else if (currentView_ == wxT("View Income Budget Categories"))
+        {
+            if ((th.estimated_ > 0.0) || (th.actual_ > 0.0))
+            {
+                trans_.push_back(th);
+            }
+        }
+        else if (currentView_ == wxT("View Expense Budget Categories"))
+        {
+            if ((th.estimated_ < 0.0) || (th.actual_ < 0.0))
+                trans_.push_back(th);
+        }
         else
             trans_.push_back(th);
 
@@ -425,6 +450,18 @@ void mmBudgetingPanel::initVirtualListControl()
                 {
                 }
                 else
+                    trans_.push_back(thsub);
+            }
+            else if (currentView_ == wxT("View Income Budget Categories"))
+            {
+                if ((thsub.estimated_ > 0.0) || (thsub.actual_ > 0.0))
+                {
+                    trans_.push_back(thsub);
+                }
+            }
+            else if (currentView_ == wxT("View Expense Budget Categories"))
+            {
+                if ((thsub.estimated_ < 0.0) || (thsub.actual_ < 0.0))
                     trans_.push_back(thsub);
             }
             else

@@ -1,5 +1,12 @@
 Version History of Money Manager Ex
 
+0.8.0.7 ()
+- Fix Bug 1625307: Account Balances Length not showing full amount without refresh
+- Fix Bug 1695918: Language Selection Button shows blank text when canceled
+- Add Feature 1695853: Add Indicator that indicates Future Entries in the Register
+- Add Income/Expense views for Budgeting Panel
+- Add extension for Univ CSV template files
+
 0.8.0.6 (April 10, 2006)
 - Fix currency conversions for stock accounts (Thanks Jai)
 - Fix broken selection of items in Ubuntu when adding new transaction (Ikkyu)

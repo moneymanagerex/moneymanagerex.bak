@@ -88,18 +88,21 @@ void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 					langFileArray[ix] = name;
 				}
 
-				langStr = wxGetSingleChoice
+				wxString newLangStr = wxGetSingleChoice
 					(
 					wxT("Please choose language:"),
 					wxT("Language"),
 					langFileArray
 					);
 
-				mmApp->m_locale.AddCatalog(langStr);
+                if (newLangStr != wxT(""))
+                {
+                    mmApp->m_locale.AddCatalog(newLangStr);
 
-				/* Save Language Setting */
-				mmDBWrapper::setINISettingValue(inidb, wxT("LANGUAGE"), 
-					langStr);
+                    /* Save Language Setting */
+                    mmDBWrapper::setINISettingValue(inidb, wxT("LANGUAGE"), 
+                        newLangStr);
+                }
 			}
 		}
 	}

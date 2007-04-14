@@ -115,7 +115,7 @@ void mmAssetsPanel::CreateControls()
 
 	wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, 
             ID_PANEL_CHECKING_STATIC_BALHEADER, 
-			_("Total:"), wxDefaultPosition, wxDefaultSize, 0 );
+			_("Total:"), wxDefaultPosition, wxSize(500, 10), 0 );
 
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
 	itemBoxSizerVHeader->Add(itemStaticText10, 0, wxALL, 1);

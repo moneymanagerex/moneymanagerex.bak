@@ -117,7 +117,7 @@ void mmHomePagePanel::updateAccounts()
         if (pCA)
         {
            std::vector<wxString> data1;
-           hb.addHTML(wxT("<tr> <td> <a href=\"ACCT: "));
+           hb.addHTML(wxT("<tr><td><a href=\"ACCT: "));
            hb.addHTML(wxString::Format(wxT("%d"), pCA->accountID_));
            hb.addHTML(wxT("\" >"));
            hb.addHTML(pCA->accountName_);
@@ -136,7 +136,7 @@ void mmHomePagePanel::updateAccounts()
            wxString balance;
            mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
            hb.addHTML(balance);
-           hb.addHTML(wxT(" </td></tr>"));
+           hb.addHTML(wxT("</td></tr>"));
            //data1.push_back(balance);
 
            //hb.addRow(data1, wxT("align=\"left\" "));
@@ -364,7 +364,7 @@ void mmHomePagePanel::updateAccounts()
             
             
             wxString daysRemainingStr_;
-            wxString colorStr = wxT(" BGCOLOR=\"#FFFFCC\" ");
+            wxString colorStr = wxT("\"#FFFFCC\" ");
            		
             daysRemainingStr_ = trans_[bdidx].daysRemainingStr_;
             if (trans_[bdidx].daysRemaining_ > 0)
@@ -372,7 +372,7 @@ void mmHomePagePanel::updateAccounts()
             }
             else 
             {
-                colorStr = wxT(" BGCOLOR=\"#FF6600\" ");
+                colorStr = wxT("\"#FF6600\" ");
             }
 
 			wxString displayBDAmtString;
@@ -380,17 +380,19 @@ void mmHomePagePanel::updateAccounts()
 
             
 	
-			hb.addHTML(wxT("<tr> <td width=\"50\"> "));
+			hb.addHTML(wxT("<tr> <font size=\"-2\" ><td width=\"100\"> "));
 			hb.addHTML(trans_[bdidx].payeeStr_);
-			hb.addHTML(wxT("</td><td width=\"60\" align=\"right\">"));
+			hb.addHTML(wxT("</td><td width=\"50\" align=\"right\">"));
 			hb.addHTML(displayBDAmtString);
-			hb.addHTML(wxT("</td><td width=\"130\" align=\"right\" "));
+			hb.addHTML(wxT("</td><td width=\"100\" align=\"right\" >"));
+            hb.addHTML(wxT("<font color="));
 			hb.addHTML(colorStr);
 			hb.addHTML(wxT(" > "));
 			hb.addHTML(daysRemainingStr_);
+            hb.addHTML(wxT("</font>"));
 			hb.addHTML(wxT("</td>"));
 
-			hb.addHTML(wxT("</tr>"));
+			hb.addHTML(wxT("</font></tr>"));
 
             //hb.addRow(data4, wxT(" "), wxT("WIDTH=\"130\"  ") + colorStr);
         }
@@ -404,7 +406,7 @@ void mmHomePagePanel::updateAccounts()
     hb.addHTML(topCategories_);
 
 	//--------------------------------------------------------
-	hb.addHTML(wxT("<br>"));
+	hb.addHTML(wxT("<br><br>"));
 
     int countFollowUp = core_->bTransactionList_.countFollowupTransactions();
     if (countFollowUp > 0)

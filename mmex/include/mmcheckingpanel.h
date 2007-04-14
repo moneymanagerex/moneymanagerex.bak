@@ -43,6 +43,8 @@ public:
         : wxListCtrl(parent, id, pos, size, style | wxWANTS_CHARS),
         attr1_(*wxBLACK, mmColors::listAlternativeColor0, wxNullFont),
         attr2_(*wxBLACK, mmColors::listAlternativeColor1, wxNullFont),
+        attr3_(*wxLIGHT_GREY, mmColors::listAlternativeColor0, wxNullFont),
+        attr4_(*wxLIGHT_GREY, mmColors::listAlternativeColor1, wxNullFont),
         cp_(cp),
         sortCol_(0),
         asc_(true),
@@ -87,6 +89,8 @@ public:
 private:
     wxListItemAttr attr1_; // style1
     wxListItemAttr attr2_; // style2
+    wxListItemAttr attr3_; // style, for future dates
+    wxListItemAttr attr4_; // style, for future dates
     mmCheckingPanel* cp_;
     long selectedIndex_;
     long m_selectedForCopy_;

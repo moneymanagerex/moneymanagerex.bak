@@ -115,8 +115,6 @@ bool mmCheckingPanel::Create( wxWindow *parent,
     GetSizer()->SetSizeHints(this);
     
     initVirtualListControl();
-
-    
     
     this->Thaw();
     return TRUE;
@@ -234,7 +232,7 @@ void mmCheckingPanel::CreateControls()
 
     wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, 
             ID_PANEL_CHECKING_STATIC_BALHEADER, 
-            wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+            wxT(""), wxDefaultPosition, wxSize(500, 10), 0 );
     itemBoxSizerHHeader->Add(itemStaticText10, 0, wxALL | wxEXPAND , 1);
 
     /* ---------------------- */
@@ -334,7 +332,6 @@ void mmCheckingPanel::CreateControls()
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemPanel12->SetSizer(itemBoxSizer4);
     itemPanel12->SetBackgroundColour(mmColors::listDetailsPanelColor);
-   
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
@@ -998,7 +995,12 @@ int MyListCtrl::OnGetItemImage(long item) const
 wxListItemAttr* MyListCtrl::OnGetItemAttr(long item) const
 {
     /* Returns the alternating background pattern */
-    return item % 2 ? (wxListItemAttr *)&attr2_ : (wxListItemAttr *)&attr1_;
+    if (cp_->trans_[item]->date_ > wxDateTime::Now())
+    {
+        return item % 2 ? (wxListItemAttr *)&attr3_ : (wxListItemAttr *)&attr4_;
+    }
+    return item % 2 ? (wxListItemAttr *)&attr1_ : (wxListItemAttr *)&attr2_;
+
 }
 
 void MyListCtrl::OnChar(wxKeyEvent& event)

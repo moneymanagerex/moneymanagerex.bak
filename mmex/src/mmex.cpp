@@ -92,6 +92,19 @@
 #include "../resources/edit_account.xpm"
 #include "../resources/delete_account.xpm"
 #include "../resources/filter.xpm"
+
+// Icons from Silk Collection
+#include "../resources/house.xpm"
+#include "../resources/moneyaccount.xpm"
+#include "../resources/stock_curve.xpm"
+#include "../resources/chartpiereport.xpm"
+#include "../resources/car.xpm"
+#include "../resources/clock.xpm"
+#include "../resources/calendar.xpm"
+#include "../resources/categoryedit.xpm"
+#include "../resources/money_dollar.xpm"
+#include "../resources/user_edit.xpm"
+#include "../resources/wrench.xpm"
 /*******************************************************/
 #define MMEX_INIDB_FNAME wxT("/mmexini.db3")
 #define MMEX_SPLASH_FNAME wxT("/splash.png")
@@ -538,14 +551,14 @@ void mmGUIFrame::createControls()
     wxSize imageSize(16, 16);
     wxImageList* imageList_ = new wxImageList( imageSize.GetWidth(), 
         imageSize.GetHeight() );
-    imageList_->Add(wxBitmap(homepagetree_xpm));
-    imageList_->Add(wxBitmap(accounttree_xpm));
-    imageList_->Add(wxBitmap(billsdeposits_xpm));
-    imageList_->Add(wxBitmap(budgeting_xpm));
-    imageList_->Add(wxBitmap(reporttree_xpm));
+    imageList_->Add(wxBitmap(house_xpm));
+    imageList_->Add(wxBitmap(moneyaccount_xpm));
+    imageList_->Add(wxBitmap(clock_xpm));
+    imageList_->Add(wxBitmap(calendar_xpm));
+    imageList_->Add(wxBitmap(chartpiereport_xpm));
     imageList_->Add(wxBitmap(help_xpm));
-    imageList_->Add(wxBitmap(stock_xpm));
-    imageList_->Add(wxBitmap(assets_xpm));
+    imageList_->Add(wxBitmap(stock_curve_xpm));
+    imageList_->Add(wxBitmap(car_xpm));
 
     navTreeCtrl_->AssignImageList(imageList_);
 
@@ -1524,7 +1537,7 @@ void mmGUIFrame::createMenu()
     toolBarBitmaps[1] = wxBitmap(open_xpm);
     toolBarBitmaps[2] = wxBitmap(save_xpm);
     toolBarBitmaps[3] = wxBitmap(newacct_xpm);
-    toolBarBitmaps[4] = wxBitmap(listview_xpm);
+    toolBarBitmaps[4] = wxBitmap(house_xpm);
     toolBarBitmaps[5] = wxBitmap(print_xpm);
     toolBarBitmaps[6] = wxBitmap(printpreview_xpm);
     toolBarBitmaps[7] = wxBitmap(printsetup_xpm);
@@ -1630,37 +1643,37 @@ void mmGUIFrame::createMenu()
     
     wxMenuItem* menuItemCateg = new wxMenuItem(menuTools, MENU_ORGCATEGS, 
 		  _("Organize &Categories"), _("Organize Categories"));
-	menuItemCateg->SetBitmap(wxBitmap(categories_xpm));
+	menuItemCateg->SetBitmap(wxBitmap(categoryedit_xpm));
     menuTools->Append(menuItemCateg);
 
     wxMenuItem* menuItemPayee = new wxMenuItem(menuTools, MENU_ORGPAYEE, 
 		  _("Organize &Payees"), _("Organize Payees"));
-	menuItemPayee->SetBitmap(wxBitmap(payees_xpm));
+	menuItemPayee->SetBitmap(wxBitmap(user_edit_xpm));
     menuTools->Append(menuItemPayee); 
 
      wxMenuItem* menuItemCurrency = new wxMenuItem(menuTools, MENU_CURRENCY, 
 		 _("Organize Currency"), _("Organize Currency"));
-	menuItemCurrency->SetBitmap(wxBitmap(currency_xpm));
+	menuItemCurrency->SetBitmap(wxBitmap(money_dollar_xpm));
     menuTools->Append(menuItemCurrency);
 
     wxMenuItem* menuItemBudgeting = new wxMenuItem(menuTools, MENU_BUDGETSETUPDIALOG, 
 		  _("Budget Setup"), _("Budget Setup"));
-	menuItemBudgeting->SetBitmap(wxBitmap(budgeting_xpm));
+	menuItemBudgeting->SetBitmap(wxBitmap(calendar_xpm));
     menuTools->Append(menuItemBudgeting); 
 
     wxMenuItem* menuItemBillsDeposits = new wxMenuItem(menuTools, MENU_BILLSDEPOSITS, 
 		 _("Repeating Transactions"), _("Bills && Deposits"));
-	menuItemBillsDeposits->SetBitmap(wxBitmap(billsdeposits_xpm));
+	menuItemBillsDeposits->SetBitmap(wxBitmap(clock_xpm));
     menuTools->Append(menuItemBillsDeposits); 
 
     wxMenuItem* menuItemStocks = new wxMenuItem(menuTools, MENU_STOCKS, 
 		_("Stock Investments"), _("Stock Investments"));
-	menuItemStocks->SetBitmap(wxBitmap(stock_xpm));
+	menuItemStocks->SetBitmap(wxBitmap(stock_curve_xpm));
     menuTools->Append(menuItemStocks);
 
     wxMenuItem* menuItemAssets = new wxMenuItem(menuTools, MENU_ASSETS, 
 		_("Assets"), _("Assets"));
-	menuItemAssets->SetBitmap(wxBitmap(assets_xpm));
+	menuItemAssets->SetBitmap(wxBitmap(car_xpm));
     menuTools->Append(menuItemAssets);
 
      menuTools->AppendSeparator();
@@ -1674,7 +1687,7 @@ void mmGUIFrame::createMenu()
 
     wxMenuItem* menuItemOptions = new wxMenuItem(menuTools, MENU_OPTIONS, 
 		  _("&Options"), _("Money Manager Options"));
-	menuItemOptions->SetBitmap(wxBitmap(options_xpm));
+	menuItemOptions->SetBitmap(wxBitmap(wrench_xpm));
     menuTools->Append(menuItemOptions);
 
     wxMenu *menuHelp = new wxMenu;
@@ -1732,10 +1745,10 @@ void mmGUIFrame::createToolBar()
     toolBarBitmaps[1] = wxBitmap(open_xpm);
     toolBarBitmaps[2] = wxBitmap(save_xpm);
     toolBarBitmaps[3] = wxBitmap(newacct_xpm);
-    toolBarBitmaps[4] = wxBitmap(listview_xpm);
-    toolBarBitmaps[5] = wxBitmap(categories_xpm);
-    toolBarBitmaps[6] = wxBitmap(payees_xpm);
-    toolBarBitmaps[7] = wxBitmap(currency_xpm);
+    toolBarBitmaps[4] = wxBitmap(house_xpm);
+    toolBarBitmaps[5] = wxBitmap(categoryedit_xpm);
+    toolBarBitmaps[6] = wxBitmap(user_edit_xpm);
+    toolBarBitmaps[7] = wxBitmap(money_dollar_xpm);
 
     toolBar_->AddTool(MENU_NEW, _("New"), toolBarBitmaps[0], _("New Money Manager Database"));
     toolBar_->AddTool(MENU_OPEN, _("Open"), toolBarBitmaps[1], _("Open Money Manager Database"));

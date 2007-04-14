@@ -280,7 +280,7 @@ bool mmUnivCSVImportDialog::isIndexPresent(int index)
 void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& event)
 {
    wxString fileName = wxFileSelector(wxT("Choose Universal CSV format file to load"), 
-      wxT(""), wxT(""), wxT(""), wxT(""), wxFILE_MUST_EXIST);
+      wxT(""), wxT(""), wxT(""),  wxT("CSV Template(*.mcv)|*.mcv"), wxFILE_MUST_EXIST);
    if ( !fileName.empty() )
    {
       wxTextFile tFile(fileName);
@@ -316,7 +316,7 @@ void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& event)
 void mmUnivCSVImportDialog::OnSave(wxCommandEvent& event)
 {
      wxString fileName = wxFileSelector(wxT("Choose Universal CSV format file to save"), 
-                wxT(""), wxT(""), wxT(""), wxT(""), wxSAVE);
+                wxT(""), wxT(""), wxT(""), wxT("CSV Template(*.mcv)|*.mcv"), wxSAVE);
     if ( !fileName.empty() )
     {
          wxTextFile tFile(fileName);
