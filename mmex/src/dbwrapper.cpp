@@ -275,6 +275,20 @@ void mmDBWrapper::createCheckingAccountV1Table(wxSQLite3Database* db)
     mmENDSQL_LITE_EXCEPTION;
 }
 
+void mmDBWrapper::createSplitTransactionsV1Table(wxSQLite3Database* db)
+{
+    mmBEGINSQL_LITE_EXCEPTION;
+    bool exists = db->TableExists(wxT("SPLITTRANSACTIONS_V1"));
+    if (!exists)
+    {
+        db->ExecuteUpdate(wxT("create table SPLITTRANSACTIONS_V1(SPLITTRANSID integer primary key, \
+                              TRANSID numeric NOT NULL, CATEGID numeric, SUBCATEGID numeric, SPLITTRANSAMOUNT numeric);"));
+        exists = db->TableExists(wxT("SPLITTRANSACTIONS_V1"));
+        wxASSERT(exists);
+    }
+    mmENDSQL_LITE_EXCEPTION;
+}
+
 void mmDBWrapper::createPayeeV1Table(wxSQLite3Database* db)
 {
     mmBEGINSQL_LITE_EXCEPTION;
@@ -518,6 +532,10 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd, const wxS
 	/* Create Asset V1 Table */
 	mmDBWrapper::createAssetsV1Table(db);
 	pgd->Update(90);
+
+	/* Create SplitTransactions V1 Table */
+	mmDBWrapper::createSplitTransactionsV1Table(db);
+	pgd->Update(95);
 
     mmENDSQL_LITE_EXCEPTION;
 }

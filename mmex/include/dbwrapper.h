@@ -60,6 +60,7 @@ public:
     static void createBillsDepositsV1Table(wxSQLite3Database* db);
     static void createStockV1Table(wxSQLite3Database* db);
 	static void createAssetsV1Table(wxSQLite3Database* db);
+	static void createSplitTransactionsV1Table(wxSQLite3Database* db);
     
     /* Upgrading to new DBs */
     static bool checkDBVersion(wxSQLite3Database* db);

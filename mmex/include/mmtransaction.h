@@ -39,6 +39,30 @@ protected:
     int transactionID_;
 };
 
+class mmSplitTransactionEntry
+{
+public: 
+	mmSplitTransactionEntry() {}
+	~mmSplitTransactionEntry() {}
+
+	int splitEntryID_;
+	int categID_;
+	int subCategID_;
+
+	boost::weak_ptr<mmCategory> category_;
+	double splitAmount_;
+};
+
+class mmSplitTransactionEntries
+{
+public: 
+	mmSplitTransactionEntries() {}
+	~mmSplitTransactionEntries() {}
+	
+
+	std::vector<mmSplitTransactionEntry> entries_;
+};
+
 class mmBankTransaction : public mmTransaction
 {
 public: 
@@ -71,6 +95,8 @@ public:
     
     int accountID_;
     int toAccountID_;
+
+	mmSplitTransactionEntries splitEntries_;
 
     /* Derived Data */
     wxString dateStr_;
