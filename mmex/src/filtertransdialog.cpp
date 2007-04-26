@@ -456,6 +456,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& event )
 
         if (categoryCheckBox->GetValue() && (categID_ != -1))
         {
+#if 0
             if (categID_ != pBankTransaction->categID_)
                 continue; // skip
 
@@ -464,6 +465,9 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& event )
                 if (subcategID_ != pBankTransaction->subcategID_)
                     continue;
             }
+#endif
+            if (!pBankTransaction->containsCategory(categID_, subcategID_))
+                continue;
         }
 
         if (statusCheckBox->GetValue())

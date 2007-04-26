@@ -18,10 +18,59 @@
 #include "util.h"
 #include "mmcoredb.h"
 
+void mmSplitTransactionEntries::addSplit(boost::shared_ptr<mmSplitTransactionEntry>& split)
+{
+    total_ += split->splitAmount_;
+    entries_.push_back(split);
+}
+
+void mmSplitTransactionEntries::removeSplit(int splitID)
+{
+    for (size_t idx = 0; idx < entries_.size(); idx++)
+    {
+        if (entries_[idx]->splitEntryID_ == splitID)
+        {
+            entries_.erase(entries_.begin() + idx);
+            break;
+        }
+    }
+}
+
+void mmSplitTransactionEntries::removeSplitByIndex(int splitIndex)
+{
+    total_ -= entries_[splitIndex]->splitAmount_;
+    entries_.erase(entries_.begin() + splitIndex);
+}
+
+void mmSplitTransactionEntries::updateToDB(boost::shared_ptr<wxSQLite3Database>& db, 
+                                           int transID,
+                                           bool edit)
+{
+    mmBEGINSQL_LITE_EXCEPTION;
+
+    if (edit)
+    {
+        wxSQLite3StatementBuffer bufSQL;
+        bufSQL.Format("delete from SPLITTRANSACTIONS_V1 where TRANSID = %d;", transID);
+        db->ExecuteUpdate(bufSQL);
+    }
+
+    for (size_t idx = 0; idx < numEntries(); idx++)
+    {
+        wxString bufSQL = wxString::Format(wxT("insert into SPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) \
+                                               values (%d, %d, %d, %f);"), transID, entries_[idx]->categID_,
+                                               entries_[idx]->subCategID_,  entries_[idx]->splitAmount_);  
+        int retVal = db->ExecuteUpdate(bufSQL);
+        entries_[idx]->splitEntryID_ = db->GetLastRowId().ToLong();
+    }
+
+    mmENDSQL_LITE_EXCEPTION;
+}
+
 mmBankTransaction::mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db)
 : db_(db), isInited_(false), updateRequired_(false)
 {
-
+    splitEntries_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
 }
 
 mmBankTransaction::mmBankTransaction(mmCoreDB* core, 
@@ -47,7 +96,8 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core,
    
      boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(accountID_).lock();
      wxASSERT(pCurrencyPtr);
-             
+
+     splitEntries_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
      updateAllData(core, accountID_, pCurrencyPtr);
  }
 
@@ -112,9 +162,9 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
 
      fromAccountStr_ = core->accountList_.getAccountSharedPtr(accountID_)->accountName_;
 
-
      boost::shared_ptr<mmCategory> pCategory = category_.lock();
-     if (!pCategory)
+     getSplitTransactions(core, splitEntries_.get());
+     if (!pCategory && !splitEntries_->numEntries())
      {
         // If category is missing, we mark is as unknown
         int categID = core->categoryList_.getCategoryID(wxT("Unknown"));
@@ -129,23 +179,31 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
         updateRequired_ = true;
      }
 
-     boost::shared_ptr<mmCategory> parent = pCategory->parent_.lock();
-     if (parent)
+     if (pCategory)
      {
-        catStr_ = parent->categName_;
-        subCatStr_ = pCategory->categName_;
-        categID_ = parent->categID_;
-        subcategID_ = pCategory->categID_;
-        fullCatStr_ = catStr_ + wxT(":") +subCatStr_;
+         boost::shared_ptr<mmCategory> parent = pCategory->parent_.lock();
+         if (parent)
+         {
+             catStr_ = parent->categName_;
+             subCatStr_ = pCategory->categName_;
+             categID_ = parent->categID_;
+             subcategID_ = pCategory->categID_;
+             fullCatStr_ = catStr_ + wxT(":") +subCatStr_;
+         }
+         else
+         {
+             catStr_ = pCategory->categName_;
+             subCatStr_ = wxT("");
+             categID_ = pCategory->categID_;
+             subcategID_ = -1;
+             fullCatStr_ = catStr_;
+         }
      }
-     else
+     else if (splitEntries_->numEntries() > 0)
      {
-        catStr_ = pCategory->categName_;
-        subCatStr_ = wxT("");
-        categID_ = pCategory->categID_;
-        subcategID_ = -1;
-        fullCatStr_ = catStr_;
+        fullCatStr_ = _("Split Category");
      }
+
      
      isInited_ = true;
 }
@@ -176,6 +234,56 @@ double mmBankTransaction::value(int accountID)
    }
    return balance;
 }
+void mmBankTransaction::getSplitTransactions(mmCoreDB* core, mmSplitTransactionEntries* splits)
+{
+    mmBEGINSQL_LITE_EXCEPTION;
+
+    splits->entries_.clear();
+    splits->total_ = 0.0;
+
+    wxSQLite3StatementBuffer bufSQL;
+    bufSQL.Format("select * from SPLITTRANSACTIONS_V1 where TRANSID = %d;", transactionID());
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+    while (q1.NextRow())
+    {
+        boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry());
+        pSplitEntry->splitEntryID_ = q1.GetInt(wxT("SPLITTRANSID"));
+        pSplitEntry->splitAmount_  = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
+
+        pSplitEntry->categID_      = q1.GetInt(wxT("CATEGID"));
+        pSplitEntry->subCategID_   = q1.GetInt(wxT("SUBCATEGID"));
+        pSplitEntry->category_      = core->categoryList_.getCategorySharedPtr(q1.GetInt(wxT("CATEGID")), 
+                                                                               q1.GetInt(wxT("SUBCATEGID")));
+        wxASSERT(pSplitEntry->category_.lock());
+
+        splits->addSplit(pSplitEntry);
+    }
+    q1.Finalize();
+
+    mmENDSQL_LITE_EXCEPTION;
+}
+
+bool mmBankTransaction::containsCategory(int categID, int subcategID)
+{
+    if (splitEntries_->numEntries() > 0)
+    {
+        for(size_t idx = 0; idx < splitEntries_->numEntries(); idx++)
+        {
+            if ((splitEntries_->entries_[idx]->categID_ == categID) &&
+                (splitEntries_->entries_[idx]->subCategID_ == subcategID))
+            {
+                return true;
+            }
+        }
+    }
+    else if ((categID_ == categID) &&
+            (subcategID_ == subcategID))
+    {
+        return true;
+
+    }
+    return false;
+}
 
 int mmBankTransactionList::addTransaction(boost::shared_ptr<mmBankTransaction> pBankTransaction)
 {
@@ -205,6 +313,8 @@ int mmBankTransactionList::addTransaction(boost::shared_ptr<mmBankTransaction> p
    int retVal = db_->ExecuteUpdate(bufSQL);
 
    pBankTransaction->transactionID(db_->GetLastRowId().ToLong());
+   pBankTransaction->splitEntries_->updateToDB(db_, pBankTransaction->transactionID(), false);
+
    transactions_.push_back(pBankTransaction);
 
    mmENDSQL_LITE_EXCEPTION;
@@ -234,15 +344,18 @@ bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBank
 
    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
 
-	if (q1.NextRow())
-    {
-		if ( q1.GetString(wxT("TRANSID")).Cmp(wxT("0")) > 0){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
+   if (q1.NextRow())
+   {
+       if ( q1.GetString(wxT("TRANSID")).Cmp(wxT("0")) > 0)
+       {
+           // TODO: Need to check split entries
+           return true;
+       }
+       else
+       {
+           return false;
+       }
+   }
 	
 	mmENDSQL_LITE_EXCEPTION;
 
@@ -272,6 +385,7 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int 
    pCopyTransaction->date_=    (useOriginalDate ? pBankTransaction->date_ : wxDateTime::Now()); 
    pCopyTransaction->toAmt_=   pBankTransaction->toAmt_;
    pCopyTransaction->category_ = pBankTransaction->category_;
+   *pCopyTransaction->splitEntries_.get() = *pBankTransaction->splitEntries_.get();
 
    wxString bufSQL = wxString::Format(wxT("insert into CHECKINGACCOUNT_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, \
                                           TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES,                               \
@@ -292,10 +406,9 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int 
 
    int retVal = db_->ExecuteUpdate(bufSQL);
 
-
-  
-
    pCopyTransaction->transactionID(db_->GetLastRowId().ToLong());
+   pCopyTransaction->splitEntries_->updateToDB(db_, pCopyTransaction->transactionID(), false);
+
    transactions_.push_back(pCopyTransaction);
 
    mmENDSQL_LITE_EXCEPTION;
@@ -326,6 +439,7 @@ void mmBankTransactionList::updateTransaction(
                                           pBankTransaction->transactionID());  
 
    int retVal = db_->ExecuteUpdate(bufSQL);
+   pBankTransaction->splitEntries_->updateToDB(db_, pBankTransaction->transactionID(), true);
 
     mmENDSQL_LITE_EXCEPTION;
 }
@@ -587,8 +701,7 @@ double mmBankTransactionList::getAmountForCategory(
         boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
-            if ((pBankTransaction->categID_ == categID) &&
-                (pBankTransaction->subcategID_ == subcategID))
+            if (pBankTransaction->containsCategory(categID, subcategID))
             {
                if (pBankTransaction->status_ == wxT("V"))
                   continue; // skip
@@ -769,3 +882,4 @@ void mmBankTransactionList::deleteTransactions(int accountID)
         }
     }
 }
+

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-03-31 20:41-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2007-04-23 00:35+0100\n"
+"Last-Translator: Claudio <enjoy-vr@email.it>\n"
 "Language-Team: Claudio <enjoy@msmail.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -992,7 +992,7 @@ msgstr "Immetti la categoria selezionata nell'operazione"
 
 #: src/categdialog.cpp:178
 msgid "Category cannot be empty"
-msgstr ""
+msgstr "La Categoria non può essere vuota"
 
 #: src/categdialog.cpp:186
 msgid "Category with same name exists"
@@ -1100,9 +1100,8 @@ msgstr "Selezionare lo stato"
 
 #: src/filtertransdialog.cpp:262
 #: src/transdialog.cpp:320
-#, fuzzy
 msgid "Duplicate"
-msgstr "Data"
+msgstr "Duplicata"
 
 #: src/filtertransdialog.cpp:273
 msgid "Specify Type"
@@ -1162,9 +1161,8 @@ msgid "View Flagged Transactions"
 msgstr "Visualizza le operazioni \"da Monitorare\""
 
 #: src/mmcheckingpanel.cpp:176
-#, fuzzy
 msgid "View Duplicate Transactions"
-msgstr "Visualizza le operazioni \"da Monitorare\""
+msgstr "Visualizzazione delle operazioni \"Duplicate\""
 
 #: src/mmcheckingpanel.cpp:178
 msgid "View Transactions from last 30 days"
@@ -1287,9 +1285,8 @@ msgid "Viewing Flagged transactions"
 msgstr "Visualizzazione delle operazioni \"da Monitorare\""
 
 #: src/mmcheckingpanel.cpp:748
-#, fuzzy
 msgid "Viewing duplicate transactions"
-msgstr "Visualizzazione delle operazioni \"da Monitorare\""
+msgstr "Visualizzazione in corso delle operazioni Duplicate"
 
 #: src/mmcheckingpanel.cpp:753
 msgid "Do you really want to delete all the transactions shown?"
@@ -1318,14 +1315,12 @@ msgid "&Delete Transaction"
 msgstr "&Elimina l'operazione..."
 
 #: src/mmcheckingpanel.cpp:811
-#, fuzzy
 msgid "&Copy Transaction"
-msgstr "&Nuova operazione..."
+msgstr "&Copia Operazione"
 
 #: src/mmcheckingpanel.cpp:813
-#, fuzzy
 msgid "&Paste Transaction"
-msgstr "&Nuova operazione..."
+msgstr "&Incolla Operazione"
 
 #: src/mmcheckingpanel.cpp:815
 msgid "Mark As &Reconciled"
@@ -1344,9 +1339,8 @@ msgid "Mark For &Followup"
 msgstr "Contrassegna come \"&da Monitorare\""
 
 #: src/mmcheckingpanel.cpp:819
-#, fuzzy
 msgid "Mark As &Duplicate"
-msgstr "Contrassegna come \"N&ulla\""
+msgstr "Contrassegna come \"&Duplicata\""
 
 #: src/mmcheckingpanel.cpp:823
 msgid "as Reconciled"
@@ -1366,7 +1360,7 @@ msgstr "come \"&da Monitorare\""
 
 #: src/mmcheckingpanel.cpp:827
 msgid "as Duplicate"
-msgstr ""
+msgstr "come Duplicata"
 
 #: src/mmcheckingpanel.cpp:828
 msgid "Mark all "
@@ -1514,9 +1508,8 @@ msgid "Cash Flow - Specific Accounts"
 msgstr "Flusso di Denaro - Conti specifici"
 
 #: src/mmex.cpp:738
-#, fuzzy
 msgid "Transaction Statistics"
-msgstr "Elenco operazioni"
+msgstr "Statistiche operazioni"
 
 #: src/mmex.cpp:744
 msgid "Help"
@@ -1524,7 +1517,7 @@ msgstr "Guida in linea"
 
 #: src/mmex.cpp:817
 msgid "Top Categories Last 30 Days  "
-msgstr ""
+msgstr "Principali categorie degli ultimi 30 giorni"
 
 #: src/mmex.cpp:1359
 #: src/mmex.cpp:2579
@@ -2294,23 +2287,20 @@ msgid "Stock Quote Web Page"
 msgstr "Pagina Web delle quotazioni azionarie"
 
 #: src/optionsdialog.cpp:437
-#, fuzzy
 msgid "Use Original Date when Pasting Transactions"
-msgstr "Operazioni ripetitive"
+msgstr "Utilizza la data originale quando si incollano le operazioni"
 
 #: src/optionsdialog.cpp:443
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
-msgstr ""
+msgstr "Selezionare se utilizzare la data originale dell'operazione oppure la data attuale quando si copiano/incollano le operazioni"
 
 #: src/optionsdialog.cpp:448
-#, fuzzy
 msgid "Use Transaction Sound"
-msgstr "Aggiungi una nuova operazione"
+msgstr "Utilizza il suono per l'operazione"
 
 #: src/optionsdialog.cpp:454
-#, fuzzy
 msgid "Select whether to use sounds when entering transactions"
-msgstr "Selezionare lo stato dell'operazione"
+msgstr "Selezionare per sentire i suoni quando si inseriscono le operazioni"
 
 #: src/optionsdialog.cpp:460
 msgid "General"
@@ -2642,11 +2632,11 @@ msgstr "Specificare l'ordine dei campi nel file CSV"
 
 #: src/univcsv.cpp:108
 msgid "Move Up"
-msgstr ""
+msgstr "Sposta verso l'alto"
 
 #: src/univcsv.cpp:113
 msgid "Move Down"
-msgstr ""
+msgstr "Sposta verso il basso"
 
 #: src/univcsv.cpp:137
 msgid "Remove"
@@ -2654,16 +2644,15 @@ msgstr "Elimina"
 
 #: src/univcsv.cpp:149
 msgid "Load Template"
-msgstr ""
+msgstr "Carica Modello"
 
 #: src/univcsv.cpp:154
 msgid "Save As Template"
-msgstr ""
+msgstr "Salva come Modello"
 
 #: src/univcsv.cpp:159
-#, fuzzy
 msgid "Import File"
-msgstr "Im&porta"
+msgstr "Importa File"
 
 #: src/univcsv.cpp:216
 msgid "Amount(+/-)"
@@ -2695,19 +2684,17 @@ msgid "CSV Field"
 msgstr "Campo CSV"
 
 #: src/univcsv.cpp:290
-#, fuzzy
 msgid "Unable to open file."
-msgstr "Connessione non riuscita!"
+msgstr "Impossibile aprire il file."
 
 #: src/univcsv.cpp:328
 msgid "Unable to write to file."
-msgstr ""
+msgstr "Impossibile scrivere il file."
 
 #: src/univcsv.cpp:351
 #: src/univcsv.cpp:363
-#, fuzzy
 msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."
-msgstr "Nell'importare CSV sono stati specificati campi errati! Sono richiesti almeno data, importo e beneficiario."
+msgstr "Nell'importare da CSV sono stati riscontrati campi errati! Sono richiesti almeno data, importo e beneficiario."
 
 #: src/univcsv.cpp:383
 #: src/util.cpp:309
@@ -2725,7 +2712,6 @@ msgid " file contains insufficient number of tokens"
 msgstr " il file contiene un numero insufficiente di valori"
 
 #: src/univcsv.cpp:460
-#, fuzzy
 msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipping"
 msgstr " Uno dei seguenti campi: data, beneficiario, importo, tipo è mancante. Operazione ignorata!"
 
@@ -3098,7 +3084,7 @@ msgstr "Nome Conto errato"
 
 #: include/mmex.h:254
 msgid "Checking/Savings"
-msgstr "Controllo/Salvataggio in corso"
+msgstr "Conto corrente/Risparmio"
 
 #: include/mmex.h:266
 msgid "Type of Account"
@@ -3208,7 +3194,7 @@ msgstr "Importo   "
 
 #: include/reportcategovertimeperf.h:23
 msgid "Category Income/Expenses Over Last 12 Months "
-msgstr ""
+msgstr "Categoria Reddito/Spese oltre gli ultimi 12 mesi"
 
 #: include/reportincexpenses.h:50
 msgid "Type  "
@@ -3334,9 +3320,8 @@ msgid "Total Amount: "
 msgstr "Importo totale: "
 
 #: include/reporttransstats.h:30
-#, fuzzy
 msgid "Transaction Statistics for "
-msgstr "Elenco operazioni"
+msgstr "Statistiche operazioni per "
 
 #: include/stockdialog.h:23
 msgid "New/Edit Stock Investment"

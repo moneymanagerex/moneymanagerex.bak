@@ -175,6 +175,10 @@ public:
 	static void deleteAsset(wxSQLite3Database* db, int assetID);
     static double getAssetBalance(wxSQLite3Database* db);
 	static double getAssetValue(wxSQLite3Database* db, int assetID);
+
+    /* Split Transaction API */
+    static double getSplitTransactionValueForCategory(wxSQLite3Database* db, int transID, 
+                                                      int categID, int subcategID);
 };
 
 

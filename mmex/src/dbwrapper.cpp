@@ -911,6 +911,18 @@ bool mmDBWrapper::deleteCategoryWithConstraints(wxSQLite3Database* db, int categ
         return false;
     }
     q1.Finalize();
+
+    // Check Split Transaction Table
+    bufSQL.Format("select * from SPLITTRANSACTIONS_V1 where CATEGID=%d;",
+        categID);
+    q1 = db->ExecuteQuery(bufSQL);
+    if (q1.NextRow())
+    {
+        /* Records exist */
+        q1.Finalize();
+        return false;
+    }
+    q1.Finalize();
     
     wxSQLite3StatementBuffer bufSQL1;
     bufSQL1.Format("delete from SUBCATEGORY_V1 where CATEGID=%d;", categID);
@@ -932,10 +944,23 @@ bool mmDBWrapper::deleteCategoryWithConstraints(wxSQLite3Database* db, int categ
 bool mmDBWrapper::deleteSubCategoryWithConstraints(wxSQLite3Database* db, int categID, int subcategID)
 {
     mmBEGINSQL_LITE_EXCEPTION;
+   
     wxSQLite3StatementBuffer bufSQL;
     bufSQL.Format("select * from CHECKINGACCOUNT_V1 where CATEGID=%d and SUBCATEGID=%d;",
         categID, subcategID);
     wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
+    if (q1.NextRow())
+    {
+        /* Records exist */
+        q1.Finalize();
+        return false;
+    }
+    q1.Finalize();
+
+    // Check Split Transaction Table
+    bufSQL.Format("select * from SPLITTRANSACTIONS_V1 where CATEGID=%d and SUBCATEGID=%d;",
+        categID, subcategID);
+    q1 = db->ExecuteQuery(bufSQL);
     if (q1.NextRow())
     {
         /* Records exist */
@@ -1385,9 +1410,77 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
     }
     q1.Finalize();
 
+     // Check Split Transaction Table
+    bufSQL = wxString::Format(wxT("select * from SPLITTRANSACTIONS_V1 where CATEGID=%d and SUBCATEGID=%d;"),
+        categID, subcategID);
+    q1 = db->ExecuteQuery(bufSQL);
+    std::vector<int> transVector;
+    while (q1.NextRow())
+    {
+      // save transaction ids
+        transVector.push_back(q1.GetInt(wxT("TRANSID")));
+    }
+    q1.Finalize();
+
+    for(size_t idx = 0; idx < transVector.size(); idx++)
+    {
+        bufSQL = wxString::Format(wxT("select * from CHECKINGACCOUNT_V1 where TRANSID=%d;"), 
+            transVector[idx]);
+         q1 = db->ExecuteQuery(bufSQL);
+         while (q1.NextRow())
+         {
+             wxString code = q1.GetString(wxT("TRANSCODE"));
+             wxString transStatus = q1.GetString(wxT("STATUS"));
+             wxString dateString = q1.GetString(wxT("TRANSDATE"));
+             wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
+             int accountID = q1.GetInt(wxT("ACCOUNTID"));
+             double dbRate = getCurrencyBaseConvRate(db, accountID);
+
+             if (transStatus == wxT("V"))
+                 continue; // skip
+
+             if (!ignoreDate)
+             {
+                 if (!dtdt.IsBetween(dtBegin, dtEnd))
+                     continue; //skip
+             }
+
+             if (code == wxT("Transfer"))
+                 continue;
+
+             // This is a valid transaction get amount for
+             // this transaction
+             double val = getSplitTransactionValueForCategory(db, transVector[idx], categID, subcategID);
+             val = val * dbRate;
+             if (code == wxT("Withdrawal"))
+                 amt = amt - val;
+             else if (code == wxT("Deposit"))
+                 amt = amt + val;
+         }
+         q1.Finalize();
+    }
+
     mmENDSQL_LITE_EXCEPTION;
     return amt;
 }   
+
+double mmDBWrapper::getSplitTransactionValueForCategory(wxSQLite3Database* db, int transID, 
+                                                      int categID, int subcategID)
+{
+    double amt = 0.0;
+    mmBEGINSQL_LITE_EXCEPTION;
+    wxString bufSQL;
+    bufSQL = wxString::Format(wxT("select * from SPLITTRANSACTIONS_V1 where CATEGID=%d and SUBCATEGID=%d and TRANSID=%d;"),
+        categID, subcategID, transID);
+    wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
+    if (q1.NextRow())
+    {
+        amt = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
+    }
+
+    mmENDSQL_LITE_EXCEPTION;
+    return amt;
+}
 
 double mmDBWrapper::getAmountForPayee(wxSQLite3Database* db, int payeeID,
         bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd)

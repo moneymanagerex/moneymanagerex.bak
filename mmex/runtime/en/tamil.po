@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-03-31 20:41-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2007-04-22 22:52+0530\n"
+"Last-Translator: \n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -33,7 +33,7 @@ msgstr "வெளியீட்டு வரலாறு"
 
 #: src/aboutdialog.cpp:154
 msgid "Contributers"
-msgstr "பங்களிப்பு"
+msgstr "பங்களிப்போர்"
 
 #: src/aboutdialog.cpp:162
 msgid "Using Language : "
@@ -252,7 +252,7 @@ msgstr "சரி"
 #: src/stockdialog.cpp:266
 #: src/transdialog.cpp:361
 msgid "Cancel"
-msgstr "விடு"
+msgstr "தவிர்"
 
 #: src/assetdialog.cpp:302
 #: src/assetdialog.cpp:329
@@ -508,7 +508,7 @@ msgstr "பற்று"
 #: src/transdialog.cpp:232
 #: src/univcsv.cpp:230
 msgid "Deposit"
-msgstr "வைப்பு"
+msgstr "வரவு"
 
 #: src/bddialog.cpp:315
 #: src/billsdeposits.cpp:405
@@ -992,7 +992,7 @@ msgstr "தற்போதுள்ள வகை தெரிவை பரிம
 
 #: src/categdialog.cpp:178
 msgid "Category cannot be empty"
-msgstr ""
+msgstr "வகை செல்லாது"
 
 #: src/categdialog.cpp:186
 msgid "Category with same name exists"
@@ -1100,9 +1100,8 @@ msgstr "நிலையை குறிப்பிடு"
 
 #: src/filtertransdialog.cpp:262
 #: src/transdialog.cpp:320
-#, fuzzy
 msgid "Duplicate"
-msgstr "தேதி"
+msgstr "நகல்"
 
 #: src/filtertransdialog.cpp:273
 msgid "Specify Type"
@@ -1162,9 +1161,8 @@ msgid "View Flagged Transactions"
 msgstr "குறிக்கப்பட்ட பரிமாற்றங்களை பார்"
 
 #: src/mmcheckingpanel.cpp:176
-#, fuzzy
 msgid "View Duplicate Transactions"
-msgstr "குறிக்கப்பட்ட பரிமாற்றங்களை பார்"
+msgstr "நகல் பரிமாற்றங்களை பார்"
 
 #: src/mmcheckingpanel.cpp:178
 msgid "View Transactions from last 30 days"
@@ -1287,9 +1285,8 @@ msgid "Viewing Flagged transactions"
 msgstr "குறிக்கப்பட்ட பரிமாற்றங்கள் பார்வைக்கு"
 
 #: src/mmcheckingpanel.cpp:748
-#, fuzzy
 msgid "Viewing duplicate transactions"
-msgstr "குறிக்கப்பட்ட பரிமாற்றங்கள் பார்வைக்கு"
+msgstr "நகல் பரிமாற்றங்கள் பார்வைக்கு"
 
 #: src/mmcheckingpanel.cpp:753
 msgid "Do you really want to delete all the transactions shown?"
@@ -1318,14 +1315,12 @@ msgid "&Delete Transaction"
 msgstr "பரிமாற்றத்தை &அழி"
 
 #: src/mmcheckingpanel.cpp:811
-#, fuzzy
 msgid "&Copy Transaction"
-msgstr "&புது பரிமாற்றம்"
+msgstr "&நகல் பரிமாற்றம்"
 
 #: src/mmcheckingpanel.cpp:813
-#, fuzzy
 msgid "&Paste Transaction"
-msgstr "&புது பரிமாற்றம்"
+msgstr "&ஒட்டு பரிமாற்றம்"
 
 #: src/mmcheckingpanel.cpp:815
 msgid "Mark As &Reconciled"
@@ -1344,9 +1339,8 @@ msgid "Mark For &Followup"
 msgstr "&பின் தொடரக் குறி"
 
 #: src/mmcheckingpanel.cpp:819
-#, fuzzy
 msgid "Mark As &Duplicate"
-msgstr "&செல்லாதது என குறி"
+msgstr "&நகல் என குறி"
 
 #: src/mmcheckingpanel.cpp:823
 msgid "as Reconciled"
@@ -1366,7 +1360,7 @@ msgstr "பின் தொடர் என"
 
 #: src/mmcheckingpanel.cpp:827
 msgid "as Duplicate"
-msgstr ""
+msgstr "நகலாக"
 
 #: src/mmcheckingpanel.cpp:828
 msgid "Mark all "
@@ -1514,9 +1508,8 @@ msgid "Cash Flow - Specific Accounts"
 msgstr "காசு நடை - குறிப்பிட்ட கணக்குகளுக்கு"
 
 #: src/mmex.cpp:738
-#, fuzzy
 msgid "Transaction Statistics"
-msgstr "பரிமாற்றப் பட்டி"
+msgstr "பரிமாற்றப் புள்ளிவிவரம்"
 
 #: src/mmex.cpp:744
 msgid "Help"
@@ -1524,7 +1517,7 @@ msgstr "உதவி"
 
 #: src/mmex.cpp:817
 msgid "Top Categories Last 30 Days  "
-msgstr ""
+msgstr "கடந்த 30 நாட்களின் உச்ச வகைகள்  "
 
 #: src/mmex.cpp:1359
 #: src/mmex.cpp:2579
@@ -1929,7 +1922,7 @@ msgstr "புது வெளியீடு இல்லை!"
 
 #: src/mmex.cpp:2325
 msgid "You have the latest version installed!"
-msgstr "புதிய வெளியீட்டு நிறுவப்பட்டுள்ளது!"
+msgstr "புதிய வெளியீடு நிறுவப்பட்டுள்ளது!"
 
 #: src/mmex.cpp:2522
 #: src/mmex.cpp:2557
@@ -2294,23 +2287,20 @@ msgid "Stock Quote Web Page"
 msgstr "பங்கு விலை வலைப்பக்கம்"
 
 #: src/optionsdialog.cpp:437
-#, fuzzy
 msgid "Use Original Date when Pasting Transactions"
-msgstr "திட்டமிட்ட‌ பரிமாற்றங்கள்"
+msgstr "பரிமாற்றங்களை ஒட்டும் போது அசல் தேதியை பயன்படுத்து"
 
 #: src/optionsdialog.cpp:443
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
-msgstr ""
+msgstr "நகல்/ஒட்டும் போது பயன்படுத்த பரிமாற்ற தேதியா அல்லது இன்றைய தேதியா என தேர்ந்தெடு"
 
 #: src/optionsdialog.cpp:448
-#, fuzzy
 msgid "Use Transaction Sound"
-msgstr "புதிய பரிமாற்றம்"
+msgstr "பரிமாற்ற ஒலியைப் பயன்படுத்து"
 
 #: src/optionsdialog.cpp:454
-#, fuzzy
 msgid "Select whether to use sounds when entering transactions"
-msgstr "பரிமாற்ற நிலையை குறிப்பிடு"
+msgstr "பரிமாற்றங்களின் போது ஒலியை பயன்படுத்த வேண்டுமா  என குறிப்பிடு"
 
 #: src/optionsdialog.cpp:460
 msgid "General"
@@ -2642,11 +2632,11 @@ msgstr "CSV கோப்பில் தலைப்பு வரிசையை
 
 #: src/univcsv.cpp:108
 msgid "Move Up"
-msgstr ""
+msgstr "மேலே நகர்த்து"
 
 #: src/univcsv.cpp:113
 msgid "Move Down"
-msgstr ""
+msgstr "கீழே நகர்த்து"
 
 #: src/univcsv.cpp:137
 msgid "Remove"
@@ -2654,16 +2644,15 @@ msgstr "நீக்கு"
 
 #: src/univcsv.cpp:149
 msgid "Load Template"
-msgstr ""
+msgstr "வார்ப்புருவை ஏற்று"
 
 #: src/univcsv.cpp:154
 msgid "Save As Template"
-msgstr ""
+msgstr "வார்ப்புருவாக சேமி"
 
 #: src/univcsv.cpp:159
-#, fuzzy
 msgid "Import File"
-msgstr "இறக்கு"
+msgstr "இறக்கு கோப்பு"
 
 #: src/univcsv.cpp:216
 msgid "Amount(+/-)"
@@ -2695,17 +2684,15 @@ msgid "CSV Field"
 msgstr "CSV தலைப்பு"
 
 #: src/univcsv.cpp:290
-#, fuzzy
 msgid "Unable to open file."
-msgstr "இணைப்பை சரிபார்க்கவும்"
+msgstr "கோப்பை திறக்க முடியவில்லை."
 
 #: src/univcsv.cpp:328
 msgid "Unable to write to file."
-msgstr ""
+msgstr "கோப்பில் எழுத முடியவில்லை"
 
 #: src/univcsv.cpp:351
 #: src/univcsv.cpp:363
-#, fuzzy
 msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."
 msgstr "தவறான CSV தலைப்பு குறிப்பிடப்பட்டுள்ளது! தேதி,தொகை,பெறுநர் மட்டுமாவது தேவை. "
 
@@ -2725,7 +2712,6 @@ msgid " file contains insufficient number of tokens"
 msgstr "கோப்பில் தேவையான அளவு தகவல் இல்லை"
 
 #: src/univcsv.cpp:460
-#, fuzzy
 msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipping"
 msgstr "பின்வரும் தலைப்புகளுள் ஏதோ ஒன்று இல்லை: தேதி,பெறுநர்,தொகை,வகை - தவிர்க்கப்பட்டது."
 
@@ -3209,7 +3195,7 @@ msgstr "தொகை   "
 
 #: include/reportcategovertimeperf.h:23
 msgid "Category Income/Expenses Over Last 12 Months "
-msgstr ""
+msgstr "கடந்த 12 மாதங்களின் வரவு/செலவு வகைகள் "
 
 #: include/reportincexpenses.h:50
 msgid "Type  "
@@ -3335,9 +3321,8 @@ msgid "Total Amount: "
 msgstr "மொத்த தொகை: "
 
 #: include/reporttransstats.h:30
-#, fuzzy
 msgid "Transaction Statistics for "
-msgstr "பரிமாற்றப் பட்டி"
+msgstr "பரிமாற்றப் புள்ளிவிவரம்:"
 
 #: include/stockdialog.h:23
 msgid "New/Edit Stock Investment"

@@ -22,7 +22,7 @@
 #include "payeedialog.h"
 #include "util.h"
 #include "dbwrapper.h"
-
+#include "SplitTransactionDialog.h"
 
 // Defines for Transaction Type
 #define DEF_WITHDRAWAL 0
@@ -46,6 +46,7 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_CHOICE(ID_DIALOG_TRANS_TYPE, mmTransDialog::OnTransTypeChanged)  
     EVT_DATE_CHANGED(ID_DIALOG_TRANS_BUTTONDATE, mmTransDialog::OnDateChanged) 
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONADVANCED, mmTransDialog::OnAdvanced)
+    EVT_CHECKBOX(ID_DIALOG_TRANS_SPLITCHECKBOX, mmTransDialog::OnSplitChecked)
 END_EVENT_TABLE()
 
 mmTransDialog::mmTransDialog( )
@@ -90,11 +91,15 @@ bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
     
     fillControls();
 
+    boost::shared_ptr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
+    split_ = split;
+
     if (edit_)
     {
         dataToControls();
     }
-
+    
+   
     Centre();
     return TRUE;
 }
@@ -169,21 +174,36 @@ void mmTransDialog::dataToControls()
             q1.Finalize();
         }
 
-        wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
-        wxString categString = catName;
+        *split_.get() = *core_->bTransactionList_.getBankTransactionPtr(transID_)->splitEntries_.get();
 
-        if (subcategID_ != -1)
+        if (split_->numEntries() > 0)
         {
-            wxString subcatName = mmDBWrapper::getSubCategoryName(db_, categID_, subcategID_);
-            categString += wxT(" : ");
-            categString += subcatName;
+            bCategory_->SetLabel(_("Split Category"));
+            cSplit_->SetValue(true);
         }
+        else
+        {
+            wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
+            wxString categString = catName;
 
-        bCategory_->SetLabel(categString);
+            if (subcategID_ != -1)
+            {
+                wxString subcatName = mmDBWrapper::getSubCategoryName(db_, categID_, subcategID_);
+                categString += wxT(" : ");
+                categString += subcatName;
+            }
+            bCategory_->SetLabel(categString);
+        }
 
         textNotes_->SetValue(notesString);
         textNumber_->SetValue(transNumString);
 
+       
+        if (split_->numEntries() > 0)
+        {
+            transAmount = split_->getTotalSplits();
+            textAmount_->Enable(false);
+        }
         wxString dispAmount;
         mmCurrencyFormatter::formatDoubleToCurrencyEdit(transAmount, dispAmount);
         textAmount_->SetValue(dispAmount);
@@ -199,7 +219,6 @@ void mmTransDialog::dataToControls()
             bTo_->SetLabel(toAccount);
             payeeID_ = accountID_;
         }
-
     }
     mmENDSQL_LITE_EXCEPTION;
 
@@ -291,7 +310,7 @@ void mmTransDialog::CreateControls()
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime, 
-        wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
+        wxDefaultPosition, wxSize(100, -1), wxDP_DROPDOWN);
     itemFlexGridSizer8->Add(dpc_, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
 
@@ -300,11 +319,22 @@ void mmTransDialog::CreateControls()
     itemFlexGridSizer8->Add(itemStaticText17, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
+    // ******************************** //
+    wxBoxSizer* itemBoxSizer18 = new wxBoxSizer(wxHORIZONTAL);
+    itemFlexGridSizer8->Add(itemBoxSizer18, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    
     bCategory_ = new wxButton( itemPanel7, 
         ID_DIALOG_TRANS_BUTTONCATEGS, _("Select Category"), 
         wxDefaultPosition, wxSize(200, -1), 0 );
-    itemFlexGridSizer8->Add(bCategory_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer18->Add(bCategory_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     bCategory_->SetToolTip(_("Specify the category for this transaction"));
+
+    cSplit_ = new wxCheckBox( itemPanel7, 
+        ID_DIALOG_TRANS_SPLITCHECKBOX, _("Split"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cSplit_->SetValue(FALSE);
+    itemBoxSizer18->Add(cSplit_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    ////////////////////////////////////////////
 
     wxStaticText* itemStaticText51 = new wxStaticText( itemPanel7, wxID_STATIC, 
         _("Status"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -515,61 +545,75 @@ void mmTransDialog::OnAdvanced(wxCommandEvent& event)
 
 void mmTransDialog::OnCategs(wxCommandEvent& event)
 {
-    mmCategDialog *dlg = new mmCategDialog(core_, this);
-    if ( dlg->ShowModal() == wxID_OK )
+    if (cSplit_->GetValue())
     {
-         if (dlg->categID_ == -1)
+        SplitTransactionDialog* dlg = new SplitTransactionDialog(core_, split_.get(), this);
+        if (dlg->ShowModal() == wxID_OK)
         {
-            // check if categ and subcateg are now invalid
-            wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
-            if ( catName.IsEmpty())
+            wxString dispAmount;
+            mmCurrencyFormatter::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
+            textAmount_->SetValue(dispAmount);
+        }
+        dlg->Destroy();
+    }
+    else
+    {
+        mmCategDialog *dlg = new mmCategDialog(core_, this);
+        if ( dlg->ShowModal() == wxID_OK )
+        {
+            if (dlg->categID_ == -1)
             {
-                // cannot find category
-                categID_ = -1;
-                subcategID_ = -1;
-                bCategory_->SetLabel(_("Select Category"));
+                // check if categ and subcateg are now invalid
+                wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
+                if ( catName.IsEmpty())
+                {
+                    // cannot find category
+                    categID_ = -1;
+                    subcategID_ = -1;
+                    bCategory_->SetLabel(_("Select Category"));
+                    return;
+                }
+
+                if (dlg->subcategID_ != -1)
+                {
+                    wxString subcatName = mmDBWrapper::getSubCategoryName(db_,
+                        categID_, subcategID_);
+                    if (subcatName.IsEmpty())
+                    {
+                        subcategID_ = -1;
+                        bCategory_->SetLabel(catName);
+                        return;
+                    }
+                }
+                else
+                {
+                    catName.Replace(wxT("&"), wxT("&&"));
+                    bCategory_->SetLabel(catName);
+                }
+
                 return;
             }
- 
+
+            categID_ = dlg->categID_;
+            subcategID_ = dlg->subcategID_;
+
+            wxString catName = mmDBWrapper::getCategoryName(db_, dlg->categID_);
+            catName.Replace (wxT("&"), wxT("&&"));
+            wxString categString = catName;
+
             if (dlg->subcategID_ != -1)
             {
                 wxString subcatName = mmDBWrapper::getSubCategoryName(db_,
-                    categID_, subcategID_);
-                if (subcatName.IsEmpty())
-                {
-                    subcategID_ = -1;
-                    bCategory_->SetLabel(catName);
-                    return;
-                }
+                    dlg->categID_, dlg->subcategID_);
+                subcatName.Replace (wxT("&"), wxT("&&"));
+                categString += wxT(" : ");
+                categString += subcatName;
             }
-            else
-            {
-                catName.Replace(wxT("&"), wxT("&&"));
-                bCategory_->SetLabel(catName);
-            }
-           
-            return;
-        }
-       
-        categID_ = dlg->categID_;
-        subcategID_ = dlg->subcategID_;
- 
-       wxString catName = mmDBWrapper::getCategoryName(db_, dlg->categID_);
-       catName.Replace (wxT("&"), wxT("&&"));
-        wxString categString = catName;
 
-        if (dlg->subcategID_ != -1)
-        {
-            wxString subcatName = mmDBWrapper::getSubCategoryName(db_,
-                dlg->categID_, dlg->subcategID_);
-            subcatName.Replace (wxT("&"), wxT("&&"));
-            categString += wxT(" : ");
-            categString += subcatName;
+            bCategory_->SetLabel(categString);
         }
-       
-         bCategory_->SetLabel(categString);
+        dlg->Destroy();
     }
-    dlg->Destroy();
 }
 
 void mmTransDialog::OnTransTypeChanged(wxCommandEvent& event)
@@ -648,19 +692,42 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
         return;
     }
 
-    if (categID_ == -1)
+    if (cSplit_->GetValue())
     {
-        mmShowErrorMessageInvalid(this, _("Category "));
-        return;
+        if (split_->numEntries() == 0)
+        {
+            mmShowErrorMessageInvalid(this, _("Category "));
+            return;
+        }
+    }
+    else
+    {
+        if (categID_ == -1)
+        {
+            mmShowErrorMessageInvalid(this, _("Category "));
+            return;
+        }
     }
 
-    wxString amountStr = textAmount_->GetValue().Trim();
     double amount;
-    if (!mmCurrencyFormatter::formatCurrencyToDouble(amountStr, amount) 
-        || (amount < 0.0))
+    if (cSplit_->GetValue())
     {
-        mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
-        return;
+        amount = split_->getTotalSplits();
+        if (amount < 0.0)
+        {
+            mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
+            return;
+        }
+    }
+    else
+    {
+        wxString amountStr = textAmount_->GetValue().Trim();
+        if (!mmCurrencyFormatter::formatCurrencyToDouble(amountStr, amount) 
+            || (amount < 0.0))
+        {
+            mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
+            return;
+        }
     }
 
     int toAccountID = -1;
@@ -766,8 +833,9 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
     pTransaction->date_ = dpc_->GetValue();
     pTransaction->toAmt_ = toTransAmount_;
         
-
     pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr, true);
+
+    *pTransaction->splitEntries_.get() = *split_.get();
     if (!edit_)
     {
        core_->bTransactionList_.addTransaction(pTransaction);
@@ -782,3 +850,23 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
     EndModal(wxID_OK);
 }
 
+void mmTransDialog::OnSplitChecked(wxCommandEvent& event)
+{
+  bool state = cSplit_->GetValue();
+  if (state)
+  {
+    bCategory_->SetLabel(_("Split Category"));
+    textAmount_->Enable(false);
+    wxString dispAmount;
+    mmCurrencyFormatter::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
+    textAmount_->SetValue(dispAmount);
+  }
+  else
+  {
+    bCategory_->SetLabel(_("Select Category"));
+    textAmount_->Enable(true);
+    wxString dispAmount;
+    mmCurrencyFormatter::formatDoubleToCurrencyEdit(0.0, dispAmount);
+    textAmount_->SetValue(dispAmount);
+  }
+}

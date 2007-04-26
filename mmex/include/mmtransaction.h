@@ -42,9 +42,6 @@ protected:
 class mmSplitTransactionEntry
 {
 public: 
-	mmSplitTransactionEntry() {}
-	~mmSplitTransactionEntry() {}
-
 	int splitEntryID_;
 	int categID_;
 	int subCategID_;
@@ -56,11 +53,20 @@ public:
 class mmSplitTransactionEntries
 {
 public: 
-	mmSplitTransactionEntries() {}
-	~mmSplitTransactionEntries() {}
-	
+     mmSplitTransactionEntries():total_(0.0) {}
+    ~mmSplitTransactionEntries() {entries_.clear();}
+    
+    int numEntries() { return (int)entries_.size(); }
+    double getTotalSplits() { return total_; }
 
-	std::vector<mmSplitTransactionEntry> entries_;
+    void addSplit(boost::shared_ptr<mmSplitTransactionEntry>& split);
+    void removeSplit(int splitID);
+    void removeSplitByIndex(int splitIndex);
+
+    void updateToDB(boost::shared_ptr<wxSQLite3Database>& db, int transID, bool edit);
+
+    std::vector<boost::shared_ptr<mmSplitTransactionEntry>> entries_;
+    double total_;
 };
 
 class mmBankTransaction : public mmTransaction
@@ -71,11 +77,15 @@ public:
     mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db);
     virtual ~mmBankTransaction() {}
 
+    bool containsCategory(int categID, int subcategID);
+
     double value(int accountID);
     void updateAllData(mmCoreDB* core, 
         int accountID, 
         boost::shared_ptr<mmCurrency> currencyPtr, 
         bool forceUpdate=false);
+
+    void getSplitTransactions(mmCoreDB* core, mmSplitTransactionEntries* splits);
 
     boost::shared_ptr<wxSQLite3Database> db_;
 
@@ -96,7 +106,7 @@ public:
     int accountID_;
     int toAccountID_;
 
-	mmSplitTransactionEntries splitEntries_;
+    boost::shared_ptr<mmSplitTransactionEntries> splitEntries_;
 
     /* Derived Data */
     wxString dateStr_;
@@ -135,6 +145,8 @@ public:
     void updateTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     void deleteTransaction(int accountID, int transactionID);
     void deleteTransactions(int accountID);
+
+    
 
     /* Query Functions */
     void getExpensesIncome(int accountID, double& expenses, double& income,  

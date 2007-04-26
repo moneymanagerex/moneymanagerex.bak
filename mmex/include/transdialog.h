@@ -74,6 +74,7 @@ public:
     bool getPayeeID(wxString payee, int& payeeID, int& categID, int& subcategID );
     void addPayee(wxString payee, int categID, int subcategID );
     void OnAdvanced(wxCommandEvent& event);
+    void OnSplitChecked(wxCommandEvent& event);
 
 private:
     wxSQLite3Database* db_;
@@ -90,6 +91,7 @@ private:
     wxButton* bTo_;
     mmAdvancedPopup* m_simplePopup_;
     wxButton* bAdvanced_;
+    wxCheckBox* cSplit_;
 
     wxChoice* choiceStatus_;
     wxChoice* choiceTrans_;
@@ -103,6 +105,7 @@ private:
     int toID_;
     double toTransAmount_;
     bool advancedToTransAmountSet_;
+    boost::shared_ptr<mmSplitTransactionEntries> split_;
 };
 
 #endif
