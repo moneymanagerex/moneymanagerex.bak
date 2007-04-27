@@ -67,6 +67,36 @@ void mmSplitTransactionEntries::updateToDB(boost::shared_ptr<wxSQLite3Database>&
     mmENDSQL_LITE_EXCEPTION;
 }
 
+void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core,
+										    int bdID)
+{
+   mmBEGINSQL_LITE_EXCEPTION;
+
+    entries_.clear();
+    total_ = 0.0;
+
+    wxSQLite3StatementBuffer bufSQL;
+    bufSQL.Format("select * from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = %d;", bdID);
+	wxSQLite3ResultSet q1 = core->db_->ExecuteQuery(bufSQL);
+    while (q1.NextRow())
+    {
+        boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry());
+        pSplitEntry->splitEntryID_ = q1.GetInt(wxT("SPLITTRANSID"));
+        pSplitEntry->splitAmount_  = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
+
+        pSplitEntry->categID_      = q1.GetInt(wxT("CATEGID"));
+        pSplitEntry->subCategID_   = q1.GetInt(wxT("SUBCATEGID"));
+        pSplitEntry->category_      = core->categoryList_.getCategorySharedPtr(q1.GetInt(wxT("CATEGID")), 
+                                                                               q1.GetInt(wxT("SUBCATEGID")));
+        wxASSERT(pSplitEntry->category_.lock());
+
+        addSplit(pSplitEntry);
+    }
+    q1.Finalize();
+
+    mmENDSQL_LITE_EXCEPTION;
+}
+
 mmBankTransaction::mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db)
 : db_(db), isInited_(false), updateRequired_(false)
 {
@@ -98,7 +128,9 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core,
      wxASSERT(pCurrencyPtr);
 
      splitEntries_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
-     updateAllData(core, accountID_, pCurrencyPtr);
+ 	 getSplitTransactions(core, splitEntries_.get());
+
+	 updateAllData(core, accountID_, pCurrencyPtr);
  }
 
 void mmBankTransaction::updateAllData(mmCoreDB* core, 
@@ -163,7 +195,6 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
      fromAccountStr_ = core->accountList_.getAccountSharedPtr(accountID_)->accountName_;
 
      boost::shared_ptr<mmCategory> pCategory = category_.lock();
-     getSplitTransactions(core, splitEntries_.get());
      if (!pCategory && !splitEntries_->numEntries())
      {
         // If category is missing, we mark is as unknown

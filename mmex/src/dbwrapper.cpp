@@ -287,11 +287,11 @@ void mmDBWrapper::createSplitTransactionsV1Table(wxSQLite3Database* db)
         wxASSERT(exists);
     }
 
-    bool exists = db->TableExists(wxT("BUDGETSPLITTRANSACTIONS_V1"));
+    exists = db->TableExists(wxT("BUDGETSPLITTRANSACTIONS_V1"));
     if (!exists)
     {
         db->ExecuteUpdate(wxT("create table BUDGETSPLITTRANSACTIONS_V1(SPLITTRANSID integer primary key, \
-                              BDID numeric NOT NULL, CATEGID numeric, SUBCATEGID numeric, SPLITTRANSAMOUNT numeric);"));
+                              TRANSID numeric NOT NULL, CATEGID numeric, SUBCATEGID numeric, SPLITTRANSAMOUNT numeric);"));
         exists = db->TableExists(wxT("BUDGETSPLITTRANSACTIONS_V1"));
         wxASSERT(exists);
     }

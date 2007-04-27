@@ -64,6 +64,7 @@ public:
     void removeSplitByIndex(int splitIndex);
 
     void updateToDB(boost::shared_ptr<wxSQLite3Database>& db, int transID, bool edit);
+	void loadFromBDDB(mmCoreDB* core, int bdID);
 
     std::vector<boost::shared_ptr<mmSplitTransactionEntry>> entries_;
     double total_;

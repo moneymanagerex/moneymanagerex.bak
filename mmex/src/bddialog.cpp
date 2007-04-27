@@ -185,7 +185,7 @@ void mmBDDialog::dataToControls()
         }
 
       
-        *split_.get() = *core_->bTransactionList_.getBankTransactionPtr(transID_)->splitEntries_.get();
+		split_->loadFromBDDB(core_, bdID_);
 
         if (split_->numEntries() > 0)
         {
@@ -910,7 +910,16 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
                       date1.c_str(), toTransAmount_, repeats, nextOccurDate.c_str(), numRepeats);  
 
         int retVal = db_->ExecuteUpdate(bufSQL);
+		int transID = db_->GetLastRowId().ToLong();
         
+		for (size_t idx = 0; idx < split_->numEntries(); idx++)
+		{
+			wxString bufSQL = wxString::Format(wxT("insert into BUDGETSPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) \
+												   values (%d, %d, %d, %f);"), transID, split_->entries_[idx]->categID_,
+												   split_->entries_[idx]->subCategID_,  split_->entries_[idx]->splitAmount_);  
+			int retVal = db_->ExecuteUpdate(bufSQL);
+			split_->entries_[idx]->splitEntryID_ = db_->GetLastRowId().ToLong();
+		}
     }
     else if (edit_)
     {
@@ -922,6 +931,19 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
                       date1.c_str(), toTransAmount_, repeats, nextOccurDate.c_str(), numRepeats, bdID_);  
 
         int retVal = db_->ExecuteUpdate(bufSQL);
+
+			wxSQLite3StatementBuffer bufSQL1;
+			bufSQL1.Format("delete from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = %d;", bdID_);
+			db_->ExecuteUpdate(bufSQL1);
+
+		for (size_t idx = 0; idx < split_->numEntries(); idx++)
+		{
+			wxString bufSQL = wxString::Format(wxT("insert into BUDGETSPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) \
+												   values (%d, %d, %d, %f);"), bdID_, split_->entries_[idx]->categID_,
+												   split_->entries_[idx]->subCategID_,  split_->entries_[idx]->splitAmount_);  
+			int retVal = db_->ExecuteUpdate(bufSQL);
+			split_->entries_[idx]->splitEntryID_ = db_->GetLastRowId().ToLong();
+		}
     }
     else if (enterOccur_)
     {
@@ -944,6 +966,7 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
         pTransaction->date_ = dpc_->GetValue();
         pTransaction->toAmt_ = toTransAmount_;
 
+		*pTransaction->splitEntries_.get() = *split_.get();
         pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr);
         core_->bTransactionList_.addTransaction(pTransaction);
         mmDBWrapper::completeBDInSeries(db_, bdID_);
