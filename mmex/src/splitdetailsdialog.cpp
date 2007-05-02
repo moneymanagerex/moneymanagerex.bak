@@ -27,7 +27,7 @@
 #endif
 
 ////@begin includes
-#include "SplitDetailDialog.h"
+#include "splitdetailsdialog.h"
 #include "categdialog.h"
 #include "util.h"
 ////@end includes

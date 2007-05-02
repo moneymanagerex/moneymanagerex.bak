@@ -379,15 +379,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\assets.cpp"
+				RelativePath=".\src\assetspanel.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\bddialog.cpp"
+				RelativePath=".\src\billsdepositsdialog.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\billsdeposits.cpp"
+				RelativePath=".\src\billsdepositspanel.cpp"
 				>
 			</File>
 			<File
@@ -479,7 +479,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\newchkacctdialog.cpp"
+				RelativePath=".\src\newacctdialog.cpp"
 				>
 			</File>
 			<File
@@ -495,11 +495,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\SplitDetailDialog.cpp"
+				RelativePath=".\src\splitdetailsdialog.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\SplitTransactionDialog.cpp"
+				RelativePath=".\src\splittransactionsdialog.cpp"
 				>
 			</File>
 			<File
@@ -507,7 +507,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\stocks.cpp"
+				RelativePath=".\src\stockspanel.cpp"
 				>
 			</File>
 			<File
@@ -531,7 +531,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\univcsv.cpp"
+				RelativePath=".\src\univcsvdialog.cpp"
 				>
 			</File>
 			<File
@@ -568,15 +568,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\assets.h"
+				RelativePath=".\include\assetspanel.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\bddialog.h"
+				RelativePath=".\include\billsdepositsdialog.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\billsdeposits.h"
+				RelativePath=".\include\billsdepositspanel.h"
 				>
 			</File>
 			<File
@@ -688,11 +688,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\money.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\newchkacctdialog.h"
+				RelativePath=".\include\newacctdialog.h"
 				>
 			</File>
 			<File
@@ -752,11 +748,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\SplitDetailDialog.h"
+				RelativePath=".\include\splitdetailsdialog.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\SplitTransactionDialog.h"
+				RelativePath=".\include\splittransactionsdialog.h"
 				>
 			</File>
 			<File
@@ -768,7 +764,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\stocks.h"
+				RelativePath=".\include\stockspanel.h"
 				>
 			</File>
 			<File
@@ -784,7 +780,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\univcsv.h"
+				RelativePath=".\include\univcsvdialog.h"
 				>
 			</File>
 			<File

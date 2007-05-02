@@ -16,13 +16,13 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  /*******************************************************/
 
-#include "bddialog.h"
+#include "billsdepositsdialog.h"
 #include "wx/datectrl.h"
 #include "categdialog.h"
 #include "payeedialog.h"
 #include "util.h"
 #include "dbwrapper.h"
-#include "SplitTransactionDialog.h"
+#include "splittransactionsdialog.h"
 
 IMPLEMENT_DYNAMIC_CLASS( mmBDDialog, wxDialog )
 

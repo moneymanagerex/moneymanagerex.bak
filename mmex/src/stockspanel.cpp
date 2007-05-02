@@ -16,7 +16,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  /*******************************************************/
 
-#include "stocks.h"
+#include "stockspanel.h"
 #include "util.h"
 #include "dbwrapper.h"
 #include "stockdialog.h"

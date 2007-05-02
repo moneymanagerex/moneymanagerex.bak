@@ -15,8 +15,8 @@
 #pragma implementation ""
 #endif
 
-#include "SplitTransactionDialog.h"
-#include "SplitDetailDialog.h"
+#include "splittransactionsdialog.h"
+#include "splitdetailsdialog.h"
 #include "util.h"
 
 // For compilers that support precompilation, includes "wx/wx.h".
@@ -98,7 +98,7 @@ bool SplitTransactionDialog::Create( wxWindow* parent, wxWindowID id,
 void SplitTransactionDialog::DataToControls()
 {
     lcSplit_->DeleteAllItems();
-    for (size_t idx = 0; idx < (int)split_->numEntries(); idx++)
+    for (int idx = 0; idx < split_->numEntries(); idx++)
     {
         boost::shared_ptr<mmCategory> pSharedCategory = split_->entries_[idx]->category_.lock();
         wxASSERT(pSharedCategory);
