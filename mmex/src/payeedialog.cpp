@@ -31,7 +31,6 @@ BEGIN_EVENT_TABLE( mmPayeeDialog, wxDialog )
     EVT_LISTBOX(ID_DIALOG_PAYEE_LISTBOX_PAYEES, mmPayeeDialog::OnSelChanged)
     EVT_LISTBOX_DCLICK(ID_DIALOG_PAYEE_LISTBOX_PAYEES, mmPayeeDialog::OnDoubleClicked)
     EVT_CHAR_HOOK(mmPayeeDialog::OnListKeyDown)
-
 END_EVENT_TABLE()
 
 mmPayeeDialog::mmPayeeDialog( )
@@ -42,15 +41,15 @@ mmPayeeDialog::mmPayeeDialog( )
 
 void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
 {
-   long keycode = event.GetKeyCode();
+    long keycode = event.GetKeyCode();
 
-   if(keycode == 13)
-   {
-      wxCommandEvent event;
-       OnBSelect(event);
-   }
+    if(keycode == 13)
+    {
+        wxCommandEvent event;
+        OnBSelect(event);
+    }
 
-   event.Skip();
+    event.Skip();
 }
 
 mmPayeeDialog::mmPayeeDialog(mmCoreDB* core,
@@ -82,10 +81,6 @@ bool mmPayeeDialog::Create( wxWindow* parent, wxWindowID id,
 
     if (!selectPayees_)
     {
-        wxButton* addButton = (wxButton*)FindWindow(ID_DIALOG_PAYEE_BUTTON_ADD);
-        wxButton* editButton = (wxButton*)FindWindow(ID_DIALOG_PAYEE_BUTTON_EDIT);
-        wxButton* deleteButton = (wxButton*)FindWindow(ID_DIALOG_PAYEE_BUTTON_DELETE);
-
         addButton->Disable();
         editButton->Disable();
         deleteButton->Disable();
@@ -93,7 +88,6 @@ bool mmPayeeDialog::Create( wxWindow* parent, wxWindowID id,
 
     if (!showSelectButton_)
     {
-        wxButton* selectButton = (wxButton*)FindWindow(ID_DIALOG_PAYEE_BUTTON_SELECT);
         selectButton->Disable();
     }
 
@@ -117,7 +111,6 @@ void mmPayeeDialog::fillControls()
             listBox_->Insert(core_->payeeList_.payees_[idx]->payeeName_, idx, 
                 new mmPayeeListBoxItem(core_->payeeList_.payees_[idx]->payeeID_));
         }
-
     }
     else
     {
@@ -158,33 +151,33 @@ void mmPayeeDialog::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
 
-    wxTextCtrl* itemTextCtrl6 = new wxTextCtrl( itemDialog1, ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME, 
+    textCtrl = new wxTextCtrl( itemDialog1, ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME, 
         wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer5->Add(itemTextCtrl6, 1, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    itemTextCtrl6->SetToolTip(_("Enter the payee name to be added or make edits to an existing payee name"));
+    itemBoxSizer5->Add(textCtrl, 1, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    textCtrl->SetToolTip(_("Enter the payee name to be added or make edits to an existing payee name"));
 
-    wxButton* itemButton7 = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_ADD, 
+    addButton = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_ADD, 
         _("Add"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    itemButton7->SetToolTip(_("Add a new payee name"));
+    itemBoxSizer5->Add(addButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    addButton->SetToolTip(_("Add a new payee name"));
 
-    wxButton* itemButton71 = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_EDIT, 
+    editButton = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_EDIT, 
         _("Edit"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer5->Add(itemButton71, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    itemButton71->SetToolTip(_("Change the name of an existing payee"));
+    itemBoxSizer5->Add(editButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    editButton->SetToolTip(_("Change the name of an existing payee"));
     
-    wxButton* itemButton8 = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_DELETE, 
+    deleteButton = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_DELETE, 
         _("Delete"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    itemButton8->SetToolTip(_("Delete the selected payee. The payee cannot be used by an existing transaction."));
+    itemBoxSizer5->Add(deleteButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    deleteButton->SetToolTip(_("Delete the selected payee. The payee cannot be used by an existing transaction."));
 
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 5);
 
-    wxButton* itemButton11 = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_SELECT, 
+    selectButton = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_SELECT, 
         _("Select"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer9->Add(itemButton11, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    itemButton11->SetToolTip(_("Select the currently selected payee as the selected payee for the transaction"));
+    itemBoxSizer9->Add(selectButton, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    selectButton->SetToolTip(_("Select the currently selected payee as the selected payee for the transaction"));
 
 }
 
@@ -207,7 +200,6 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
         listBox_->SetStringSelection(text);
         wxString payeeString = listBox_->GetStringSelection();
         payeeID_ = core_->payeeList_.getPayeeID(payeeString);
-        wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME);
         textCtrl->SetValue(payeeString);
     }
 }
@@ -219,7 +211,6 @@ void mmPayeeDialog::OnDelete(wxCommandEvent& event)
         mmShowErrorMessage(this, _("Payee is in use"), _("Error"));
         return;
     }
-    wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME);
     textCtrl->Clear();
     listBox_->Clear();
     fillControls();
@@ -250,7 +241,6 @@ void mmPayeeDialog::OnSelChanged(wxCommandEvent& event)
         return;
     mmPayeeListBoxItem* lbitem = (mmPayeeListBoxItem*)listBox_->GetClientObject(selInd);
     payeeID_ = lbitem->getPayeeID();
-    wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME);
     textCtrl->SetValue(payeeString);
 }
 
@@ -261,7 +251,6 @@ void mmPayeeDialog::OnDoubleClicked(wxCommandEvent& event)
 
 void mmPayeeDialog::OnEdit(wxCommandEvent& event)
 {
-    wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME);
     wxString text = textCtrl->GetValue();
     core_->payeeList_.updatePayee(payeeID_, text);
     core_->bTransactionList_.updateAllTransactionsForPayee(core_, payeeID_);

@@ -19,10 +19,13 @@
 #include "mmpayee.h"
 #include "util.h"
 
-mmPayee::mmPayee(int payeeID, const wxString& payeeString, boost::shared_ptr<mmCategory> category)
-    : payeeID_(payeeID), payeeName_(payeeString), category_(category)
+mmPayee::mmPayee(int payeeID, 
+                 const wxString& payeeString, 
+                 boost::shared_ptr<mmCategory> category)
+    : payeeID_(payeeID), 
+      payeeName_(payeeString), 
+      category_(category)
 {
-
 }
 
 bool mmPayeeList::payeeExists(const wxString& payeeName)
@@ -56,12 +59,13 @@ int mmPayeeList::addPayee(const wxString &payeeName)
 
 int mmPayeeList::getPayeeID(const wxString& payeeName)
 {
-    int categID = -1;
-    int subcategID = -1;
-    int payeeID = -1;
-
-    mmDBWrapper::getPayeeID(db_.get(), payeeName, payeeID, categID, subcategID);
-    return payeeID;
+    int numPayees = (int)payees_.size();
+    for (int idx = 0; idx < numPayees; idx++)
+    {
+        if (!payees_[idx]->payeeName_.CmpNoCase(payeeName))
+            return payees_[idx]->payeeID_;
+    }
+    return -1;
 }
 
 bool mmPayeeList::deletePayee(int payeeID)
@@ -130,6 +134,7 @@ void mmPayeeList::updatePayee(int payeeID, const wxString& payeeName)
             }
             mmDBWrapper::updatePayee(db_.get(), payeeName, payeeID, categID, subcategID);
             payees_[idx]->payeeName_ = payeeName;
+            break;
         }
     }
 }

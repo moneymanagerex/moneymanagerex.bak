@@ -23,9 +23,10 @@
 class mmPayee
 {
 public: 
-   mmPayee() {}
-   mmPayee(int payeeID, const wxString& payeeName, boost::shared_ptr<mmCategory> category);
-   ~mmPayee() {}
+    mmPayee() {}
+    mmPayee(int payeeID, const wxString& payeeName, 
+        boost::shared_ptr<mmCategory> category);
+    ~mmPayee() {}
 
     int payeeID_;
     wxString payeeName_;
@@ -48,9 +49,8 @@ public:
     boost::shared_ptr<mmPayee> getPayeeSharedPtr(int payeeID);
     void sortPayeeList(void);
 
-
     std::vector< boost::shared_ptr<mmPayee> > payees_;
-    
+
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
 };

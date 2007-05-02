@@ -79,10 +79,15 @@ public:
     void OnDoubleClicked(wxCommandEvent& event);
 
 private:
-     mmCoreDB* core_;
+    mmCoreDB* core_;
     wxListBox* listBox_;
     bool showSelectButton_;
-  
+    wxButton* addButton;
+    wxButton* editButton;
+    wxButton* deleteButton;
+    wxButton* selectButton;
+    wxTextCtrl* textCtrl;
+
 public:
     int payeeID_;
     bool selectPayees_;
