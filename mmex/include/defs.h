@@ -61,6 +61,8 @@
 #include "wx/imaglist.h"
 #include "wx/popupwin.h"
 #include <wx/dir.h>
+#include <wx/stdpaths.h>
+#include <wx/app.h>
 
 #include <vector>
 #include <string.h>

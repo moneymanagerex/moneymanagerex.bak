@@ -37,13 +37,12 @@ public:
    mmCoreDB(boost::shared_ptr<wxSQLite3Database>);
    ~mmCoreDB();
 
-    /* Utility Functions */
-
 public:
-   mmAccountList accountList_;
-   mmPayeeList payeeList_;
-   mmCategoryList categoryList_;
-   mmCurrencyList currencyList_;
+   /* Data */
+   mmAccountList     accountList_;
+   mmPayeeList       payeeList_;
+   mmCategoryList    categoryList_;
+   mmCurrencyList    currencyList_;
    mmBankTransactionList bTransactionList_;
    
    boost::shared_ptr<wxSQLite3Database> db_;

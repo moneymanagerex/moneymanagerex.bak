@@ -15,9 +15,8 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  /*******************************************************/
-
-
 #include "mmcoredb.h"
+#include "util.h"
 
 mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
 : db_ (db),
@@ -31,7 +30,11 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
         throw wxString(wxT("Database Handle is invalid!"));
 
     mmBEGINSQL_LITE_EXCEPTION;
+    
     /* Load the DB into memory */
+
+    /* Load the Options */
+    mmOptions::loadOptions(db_.get());
 
     /* Load the Currencies */
     wxString sqlString =  wxT("select * from CURRENCYFORMATS_V1 order by CURRENCYNAME;");
@@ -43,29 +46,29 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
     }
     q1.Finalize();
 
-   /* Load the Categories */
+    /* Load the Categories */
     sqlString = wxT("select * from CATEGORY_V1 order by CATEGNAME;");
+    wxSQLite3StatementBuffer bufSQL1;
     q1 = db_->ExecuteQuery(sqlString);
     while (q1.NextRow())
     {
        int categID          = q1.GetInt(wxT("CATEGID"));
-       wxString categString = q1.GetString(wxT("CATEGNAME"));
-       boost::shared_ptr<mmCategory> pCategory(new mmCategory(categID, categString));
+       boost::shared_ptr<mmCategory> pCategory(
+          new mmCategory(categID, q1.GetString(wxT("CATEGNAME"))));
     
-       wxSQLite3StatementBuffer bufSQL1;
+       /* Load the SubCategories */
        bufSQL1.Format("select * from SUBCATEGORY_V1 where CATEGID=%d;", categID);
        wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL1); 
        while(q2.NextRow())
        {
-           int subcategID          = q2.GetInt(wxT("SUBCATEGID"));
-           wxString subcategString    = q2.GetString(wxT("SUBCATEGNAME"));
-           boost::shared_ptr<mmCategory> pSubCategory(new mmCategory(subcategID, subcategString));
+           int subcategID             = q2.GetInt(wxT("SUBCATEGID"));
+           boost::shared_ptr<mmCategory> pSubCategory(
+              new mmCategory(subcategID, q2.GetString(wxT("SUBCATEGNAME"))));
            pSubCategory->parent_ = pCategory;
 
            pCategory->children_.push_back(pSubCategory);
        }
        q2.Finalize();
-
        categoryList_.categories_.push_back(pCategory);
     }
     q1.Finalize();
@@ -75,13 +78,12 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
     q1 = db_->ExecuteQuery(sqlString);
     while (q1.NextRow())
     {
-        wxString payeeString = q1.GetString(wxT("PAYEENAME"));
         int payeeID = q1.GetInt(wxT("PAYEEID"));
         int categID = q1.GetInt(wxT("CATEGID"));
         int subCategID = q1.GetInt(wxT("SUBCATEGID"));
 
         boost::shared_ptr<mmPayee> pPayee(
-           new mmPayee(payeeID, payeeString, 
+           new mmPayee(payeeID, q1.GetString(wxT("PAYEENAME")), 
            categoryList_.getCategorySharedPtr(categID, subCategID)));
         payeeList_.payees_.push_back(pPayee);
     }
@@ -116,15 +118,12 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
        bTransactionList_.transactions_.push_back(ptrBase);
     }
     q1.Finalize();
-     
     mmENDSQL_LITE_EXCEPTION;
 
     // Update All transactions in case of errors
     bTransactionList_.updateAllTransactions();
-
 }
 
 mmCoreDB::~mmCoreDB()
 {
-
 }

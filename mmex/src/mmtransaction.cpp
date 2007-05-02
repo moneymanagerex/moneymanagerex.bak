@@ -55,7 +55,7 @@ void mmSplitTransactionEntries::updateToDB(boost::shared_ptr<wxSQLite3Database>&
         db->ExecuteUpdate(bufSQL);
     }
 
-    for (size_t idx = 0; idx < (int)numEntries(); idx++)
+    for (int idx = 0; idx < numEntries(); idx++)
     {
         wxString bufSQL = wxString::Format(wxT("insert into SPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) \
                                                values (%d, %d, %d, %f);"), transID, entries_[idx]->categID_,
@@ -72,54 +72,55 @@ void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core,
 {
    mmBEGINSQL_LITE_EXCEPTION;
 
-    entries_.clear();
-    total_ = 0.0;
+   entries_.clear();
+   total_ = 0.0;
 
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = %d;", bdID);
-	wxSQLite3ResultSet q1 = core->db_->ExecuteQuery(bufSQL);
-    while (q1.NextRow())
-    {
-        boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry());
-        pSplitEntry->splitEntryID_ = q1.GetInt(wxT("SPLITTRANSID"));
-        pSplitEntry->splitAmount_  = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
+   wxSQLite3StatementBuffer bufSQL;
+   bufSQL.Format("select * from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = %d;", bdID);
+   wxSQLite3ResultSet q1 = core->db_->ExecuteQuery(bufSQL);
+   while (q1.NextRow())
+   {
+      boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry());
+      pSplitEntry->splitEntryID_ = q1.GetInt(wxT("SPLITTRANSID"));
+      pSplitEntry->splitAmount_  = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
 
-        pSplitEntry->categID_      = q1.GetInt(wxT("CATEGID"));
-        pSplitEntry->subCategID_   = q1.GetInt(wxT("SUBCATEGID"));
-        pSplitEntry->category_      = core->categoryList_.getCategorySharedPtr(q1.GetInt(wxT("CATEGID")), 
-                                                                               q1.GetInt(wxT("SUBCATEGID")));
-        wxASSERT(pSplitEntry->category_.lock());
+      pSplitEntry->categID_      = q1.GetInt(wxT("CATEGID"));
+      pSplitEntry->subCategID_   = q1.GetInt(wxT("SUBCATEGID"));
+      pSplitEntry->category_      = core->categoryList_.getCategorySharedPtr(q1.GetInt(wxT("CATEGID")), 
+         q1.GetInt(wxT("SUBCATEGID")));
+      wxASSERT(pSplitEntry->category_.lock());
 
-        addSplit(pSplitEntry);
-    }
-    q1.Finalize();
+      addSplit(pSplitEntry);
+   }
+   q1.Finalize();
 
     mmENDSQL_LITE_EXCEPTION;
 }
-
+//-----------------------------------------------------------------------------//
 mmBankTransaction::mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db)
-: db_(db), isInited_(false), updateRequired_(false)
+: mmTransaction(-1),
+  db_(db), 
+  isInited_(false), 
+  updateRequired_(false)
 {
     splitEntries_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
 }
 
 mmBankTransaction::mmBankTransaction(mmCoreDB* core, 
                                      wxSQLite3ResultSet& q1)
-      : mmTransaction(q1.GetInt(wxT("TRANSID"))),
-      db_(core->db_), isInited_(false), updateRequired_(false)
+ : mmTransaction(q1.GetInt(wxT("TRANSID"))),
+                 db_(core->db_), 
+                 isInited_(false), 
+                 updateRequired_(false)
  {
-     wxString dateString = q1.GetString(wxT("TRANSDATE"));
-     date_               = mmGetStorageStringAsDate(dateString);
-     
+     date_           = mmGetStorageStringAsDate(q1.GetString(wxT("TRANSDATE")));
      transNum_       = q1.GetString(wxT("TRANSACTIONNUMBER"));
      status_         = q1.GetString(wxT("STATUS"));
      notes_          = q1.GetString(wxT("NOTES"));
      transType_      = q1.GetString(wxT("TRANSCODE"));
      accountID_      = q1.GetInt(wxT("ACCOUNTID"));
      toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
-
      payee_ = core->payeeList_.getPayeeSharedPtr(q1.GetInt(wxT("PAYEEID")));
-
      amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
      toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
      category_ = core->categoryList_.getCategorySharedPtr(q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
@@ -128,9 +129,9 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core,
      wxASSERT(pCurrencyPtr);
 
      splitEntries_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
- 	 getSplitTransactions(core, splitEntries_.get());
+ 	  getSplitTransactions(core, splitEntries_.get());
 
-	 updateAllData(core, accountID_, pCurrencyPtr);
+	  updateAllData(core, accountID_, pCurrencyPtr);
  }
 
 void mmBankTransaction::updateAllData(mmCoreDB* core, 
@@ -139,104 +140,102 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
                                       bool forceUpdate
                                       )
 {
-    if ((isInited_) && (transType_ != wxT("Transfer")) && !forceUpdate)
-    {
-       return;
-    }
+   if ((isInited_) && (transType_ != wxT("Transfer")) && !forceUpdate)
+   {
+      return;
+   }
 
-     
-     mmDBWrapper::loadSettings(accountID, db_.get());
-    
-     dateStr_            = mmGetDateForDisplay(db_.get(), date_);
-     
-     wxString displayTransAmtString;
-     if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(amt_, displayTransAmtString))
-         transAmtString_ = displayTransAmtString;
+   /* Load the Account Currency Settings for Formatting Strings */
+   currencyPtr->loadCurrencySettings();
 
-     wxString displayToTransAmtString;
-     if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(toAmt_, displayToTransAmtString))
-         transToAmtString_ = displayToTransAmtString;
-    
-     if (transType_ != wxT("Transfer"))
-     {
-         boost::shared_ptr<mmPayee> pPayee = payee_.lock();
-         wxASSERT(pPayee);
-         payeeStr_ = pPayee->payeeName_;
-         payeeID_ = pPayee->payeeID_;
-     }
+   dateStr_            = mmGetDateForDisplay(db_.get(), date_);
 
-     depositStr_ = wxT("");
-     withdrawalStr_ = wxT("");
-     if (transType_ == wxT("Deposit"))
-     {
-        depositStr_ = displayTransAmtString;
-     }
-     else if (transType_== wxT("Withdrawal"))
-     {
-        withdrawalStr_ = displayTransAmtString;
-     }
-     else if (transType_ == wxT("Transfer"))
-     {
-        wxString fromAccount = core->accountList_.getAccountSharedPtr(accountID_)->accountName_;
-        wxString toAccount = core->accountList_.getAccountSharedPtr(toAccountID_)->accountName_;
+   wxString displayTransAmtString;
+   if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(amt_, displayTransAmtString))
+      transAmtString_ = displayTransAmtString;
 
-        if (accountID_ == accountID)
-        {
-           withdrawalStr_ = displayTransAmtString;
-           payeeStr_ = toAccount;
-        }
-        else if (toAccountID_ == accountID)
-        {
-           depositStr_ = displayToTransAmtString;
-           payeeStr_ = fromAccount;
-        }
-     }
+   wxString displayToTransAmtString;
+   if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(toAmt_, displayToTransAmtString))
+      transToAmtString_ = displayToTransAmtString;
 
-     fromAccountStr_ = core->accountList_.getAccountSharedPtr(accountID_)->accountName_;
+   if (transType_ != wxT("Transfer"))
+   {
+      boost::shared_ptr<mmPayee> pPayee = payee_.lock();
+      wxASSERT(pPayee);
+      payeeStr_ = pPayee->payeeName_;
+      payeeID_ = pPayee->payeeID_;
+   }
 
-     boost::shared_ptr<mmCategory> pCategory = category_.lock();
-     if (!pCategory && !splitEntries_->numEntries())
-     {
-        // If category is missing, we mark is as unknown
-        int categID = core->categoryList_.getCategoryID(wxT("Unknown"));
-        if (categID == -1)
-        {
-             categID =  core->categoryList_.addCategory(wxT("Unknown"));
-        }
+   depositStr_ = wxT("");
+   withdrawalStr_ = wxT("");
+   if (transType_ == wxT("Deposit"))
+   {
+      depositStr_ = displayTransAmtString;
+   }
+   else if (transType_== wxT("Withdrawal"))
+   {
+      withdrawalStr_ = displayTransAmtString;
+   }
+   else if (transType_ == wxT("Transfer"))
+   {
+      wxString fromAccount = core->accountList_.getAccountSharedPtr(accountID_)->accountName_;
+      wxString toAccount = core->accountList_.getAccountSharedPtr(toAccountID_)->accountName_;
 
-        category_ = core->categoryList_.getCategorySharedPtr(categID, -1);
-        pCategory = category_.lock();
-        wxASSERT(pCategory);
-        updateRequired_ = true;
-     }
+      if (accountID_ == accountID)
+      {
+         withdrawalStr_ = displayTransAmtString;
+         payeeStr_      = toAccount;
+      }
+      else if (toAccountID_ == accountID)
+      {
+         depositStr_ = displayToTransAmtString;
+         payeeStr_   = fromAccount;
+      }
+   }
 
-     if (pCategory)
-     {
-         boost::shared_ptr<mmCategory> parent = pCategory->parent_.lock();
-         if (parent)
-         {
-             catStr_ = parent->categName_;
-             subCatStr_ = pCategory->categName_;
-             categID_ = parent->categID_;
-             subcategID_ = pCategory->categID_;
-             fullCatStr_ = catStr_ + wxT(":") +subCatStr_;
-         }
-         else
-         {
-             catStr_ = pCategory->categName_;
-             subCatStr_ = wxT("");
-             categID_ = pCategory->categID_;
-             subcategID_ = -1;
-             fullCatStr_ = catStr_;
-         }
-     }
-     else if (splitEntries_->numEntries() > 0)
-     {
-        fullCatStr_ = _("Split Category");
-     }
+   fromAccountStr_ = core->accountList_.getAccountSharedPtr(accountID_)->accountName_;
 
-     
-     isInited_ = true;
+   boost::shared_ptr<mmCategory> pCategory = category_.lock();
+   if (!pCategory && !splitEntries_->numEntries())
+   {
+      // If category is missing, we mark is as unknown
+      int categID = core->categoryList_.getCategoryID(wxT("Unknown"));
+      if (categID == -1)
+      {
+         categID =  core->categoryList_.addCategory(wxT("Unknown"));
+      }
+
+      category_ = core->categoryList_.getCategorySharedPtr(categID, -1);
+      pCategory = category_.lock();
+      wxASSERT(pCategory);
+      updateRequired_ = true;
+   }
+
+   if (pCategory)
+   {
+      boost::shared_ptr<mmCategory> parent = pCategory->parent_.lock();
+      if (parent)
+      {
+         catStr_ = parent->categName_;
+         subCatStr_ = pCategory->categName_;
+         categID_ = parent->categID_;
+         subcategID_ = pCategory->categID_;
+         fullCatStr_ = catStr_ + wxT(":") +subCatStr_;
+      }
+      else
+      {
+         catStr_ = pCategory->categName_;
+         subCatStr_ = wxT("");
+         categID_ = pCategory->categID_;
+         subcategID_ = -1;
+         fullCatStr_ = catStr_;
+      }
+   }
+   else if (splitEntries_->numEntries() > 0)
+   {
+      fullCatStr_ = _("Split Category");
+   }
+   isInited_ = true;
 }
 
 double mmBankTransaction::value(int accountID)
@@ -298,7 +297,7 @@ bool mmBankTransaction::containsCategory(int categID, int subcategID)
 {
     if (splitEntries_->numEntries() > 0)
     {
-        for(size_t idx = 0; idx < (int)splitEntries_->numEntries(); idx++)
+        for(int idx = 0; idx < splitEntries_->numEntries(); idx++)
         {
             if ((splitEntries_->entries_[idx]->categID_ == categID) &&
                 (splitEntries_->entries_[idx]->subCategID_ == subcategID))
@@ -314,6 +313,13 @@ bool mmBankTransaction::containsCategory(int categID, int subcategID)
 
     }
     return false;
+}
+//-----------------------------------------------------------------------------//
+mmBankTransactionList::mmBankTransactionList(boost::shared_ptr<wxSQLite3Database> db)
+: db_(db)
+{ 
+   /* Allocate some empty space so loading transactions is faster */
+   transactions_.reserve(5000);
 }
 
 int mmBankTransactionList::addTransaction(boost::shared_ptr<mmBankTransaction> pBankTransaction)

@@ -1,34 +1,77 @@
+/*******************************************************
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ /*******************************************************/
 #include "mmcurrency.h"
+#include "util.h"
 
-mmCurrency::mmCurrency(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1)
+mmCurrency::mmCurrency(boost::shared_ptr<wxSQLite3Database> db, 
+                       wxSQLite3ResultSet& q1)
 : db_ (db)
 {
-   currencyID_ = q1.GetInt(wxT("CURRENCYID"));
-   currencyName_ = q1.GetString(wxT("CURRENCYNAME"));
-   pfxSymbol_ = q1.GetString(wxT("PFX_SYMBOL"));
-   sfxSymbol_ = q1.GetString(wxT("SFX_SYMBOL"));
-   dec_ = q1.GetString(wxT("DECIMAL_POINT"));
-   grp_ = q1.GetString(wxT("GROUP_SEPARATOR"));
-   unit_ = q1.GetString(wxT("UNIT_NAME"));
-   cent_ = q1.GetString(wxT("CENT_NAME"));
-   scaleDl_ = q1.GetDouble(wxT("SCALE"));
-   baseConv_ = q1.GetDouble(wxT("BASECONVRATE"), 1.0);
+   currencyID_       = q1.GetInt(wxT("CURRENCYID"));
+   currencyName_     = q1.GetString(wxT("CURRENCYNAME"));
+   pfxSymbol_        = q1.GetString(wxT("PFX_SYMBOL"));
+   sfxSymbol_        = q1.GetString(wxT("SFX_SYMBOL"));
+   dec_              = q1.GetString(wxT("DECIMAL_POINT"));
+   grp_              = q1.GetString(wxT("GROUP_SEPARATOR"));
+   unit_             = q1.GetString(wxT("UNIT_NAME"));
+   cent_             = q1.GetString(wxT("CENT_NAME"));
+   scaleDl_          = q1.GetDouble(wxT("SCALE"));
+   baseConv_         = q1.GetDouble(wxT("BASECONVRATE"), 1.0);
+   decChar_ = 0;
+   grpChar_ = 0;
+   if (!dec_.IsEmpty())
+   {
+      decChar_ = dec_.GetChar(0);
+   }
+
+   if (!grp_.IsEmpty())
+   {
+      grpChar_ = grp_.GetChar(0);
+   }
 }
 
 mmCurrency::mmCurrency()
 {
-   currencyID_ = -1;
+   currencyID_   = -1;
    currencyName_ = wxT("US Dollar");
-   pfxSymbol_ = wxT("$");
-   sfxSymbol_ = wxT("");
-   dec_ = wxT(".");
-   grp_ = wxT(",");
-   unit_ = wxT("dollar");
-   cent_ = wxT("cent");
-   scaleDl_ = 100.0;
-   baseConv_ = 1.0;
+   pfxSymbol_    = wxT("$");
+   sfxSymbol_    = wxT("");
+   dec_          = wxT(".");
+   grp_          = wxT(",");
+   unit_         = wxT("dollar");
+   cent_         = wxT("cent");
+   scaleDl_      = 100.0;
+   baseConv_     = 1.0;
+   decChar_      = 0;
+   grpChar_      = 0;
 }
 
+void mmCurrency::loadCurrencySettings()
+{
+   mmCurrencyFormatter::loadSettings
+      (pfxSymbol_, 
+       sfxSymbol_, 
+       decChar_, 
+       grpChar_, 
+       unit_, 
+       cent_, 
+       scaleDl_);
+}
+
+//-----------------------------------------------------------------------------//
 void mmCurrencyList::loadBaseCurrencySettings()
 {
    mmDBWrapper::loadBaseCurrencySettings(db_.get());

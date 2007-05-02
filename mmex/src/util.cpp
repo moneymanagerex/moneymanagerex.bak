@@ -24,13 +24,16 @@
 #include "mmcoredb.h"
 #include <wx/sound.h>
 
-const wxString& mmGetFileSeparator()
+wxString mmOptions::dateFormat = DEFDATEFORMAT;
+
+void mmOptions::loadOptions(wxSQLite3Database* db)
 {
-#ifdef __WXMSW__
-    return wxT("\\");
-#else
-    return wxT("//");
-#endif
+   dateFormat = mmUnCleanString(mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), DEFDATEFORMAT));
+}
+
+void mmOptions::saveOptions(wxSQLite3Database* db)
+{
+   mmDBWrapper::setInfoSettingValue(db, wxT("DATEFORMAT"), dateFormat);
 }
 
 void mmPlayTransactionSound(wxSQLite3Database* db_)
@@ -845,8 +848,7 @@ void mmShowErrorMessageInvalid(wxWindow* parent, wxString message)
 /* -------------------------------------------- */
 wxString mmGetDateForDisplay(wxSQLite3Database* db, wxDateTime dt)
 {
-    wxString selection = mmUnCleanString(mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), DEFDATEFORMAT));
-    return dt.Format(selection);
+    return dt.Format(mmOptions::dateFormat);
 }
 
 wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* db, const wxString& dtstr)

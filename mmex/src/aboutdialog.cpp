@@ -20,7 +20,6 @@
 #include "defs.h"
 #include "dbwrapper.h"
 #include "util.h"
-#include <wx/app.h>
 
 /*******************************************************/
 /* Include XPM Support */
@@ -64,8 +63,8 @@ void mmAboutDialog::OnVersionHistory(wxCommandEvent& event)
 {
     wxFileName fname(wxTheApp->argv[0]);
     wxString filePath = fname.GetPath(wxPATH_GET_VOLUME) 
-        + mmGetFileSeparator()
-        + wxT("version.txt");
+                       + wxFileName::GetPathSeparator()
+                       + wxT("version.txt");
     fileviewer* dlg = new fileviewer(filePath, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
@@ -77,8 +76,8 @@ void mmAboutDialog::OnContributerList(wxCommandEvent& event)
 {
     wxFileName fname(wxTheApp->argv[0]);
     wxString filePath = fname.GetPath(wxPATH_GET_VOLUME) 
-        + mmGetFileSeparator()
-        + wxT("contrib.txt");
+                        + wxFileName::GetPathSeparator()
+                        + wxT("contrib.txt");
     fileviewer* dlg = new fileviewer(filePath, this);
     if ( dlg->ShowModal() == wxID_OK )
     {

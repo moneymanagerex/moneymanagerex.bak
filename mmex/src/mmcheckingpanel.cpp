@@ -466,7 +466,7 @@ void mmCheckingPanel::setAccountSummary()
     wxString balance;
     mmCurrencyFormatter::formatDoubleToCurrency(total, balance);
 
-    double reconciledBal = mmDBWrapper::getReconciledBalanceOnAccount(db_, accountID_);
+    double reconciledBal = core_->bTransactionList_.getReconciledBalance(accountID_);
     wxString recbalance;
     mmCurrencyFormatter::formatDoubleToCurrency(reconciledBal, recbalance);
 
@@ -493,7 +493,7 @@ void mmCheckingPanel::initVirtualListControl()
     double acctInitBalance = pAccount->initialBalance_;
     boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
     wxASSERT(pCurrency);
-    mmDBWrapper::loadSettings(db_, pCurrency->currencyID_);
+    pCurrency->loadCurrencySettings();
 
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_HEADER);
     header->SetLabel(_("Account View : ") + pAccount->accountName_);

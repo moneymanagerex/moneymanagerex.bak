@@ -27,8 +27,8 @@ class mmCoreDB;
 class mmTransaction
 {
 public:
-    mmTransaction() {}
-    mmTransaction(int transactionID) : transactionID_(transactionID) {}
+   mmTransaction() {}
+   mmTransaction(int transactionID) : transactionID_(transactionID) {}
    virtual ~mmTransaction() {}
 
    int transactionID() { return transactionID_; }
@@ -36,7 +36,7 @@ public:
    virtual double value(int accountCtx) = 0;
 
 protected:
-    int transactionID_;
+   int transactionID_;
 };
 
 class mmSplitTransactionEntry
@@ -53,21 +53,21 @@ public:
 class mmSplitTransactionEntries
 {
 public: 
-     mmSplitTransactionEntries():total_(0.0) {}
-    ~mmSplitTransactionEntries() {entries_.clear();}
-    
-    int numEntries() { return (int)entries_.size(); }
-    double getTotalSplits() { return total_; }
+   mmSplitTransactionEntries():total_(0.0) {}
+   ~mmSplitTransactionEntries() {entries_.clear();}
 
-    void addSplit(boost::shared_ptr<mmSplitTransactionEntry>& split);
-    void removeSplit(int splitID);
-    void removeSplitByIndex(int splitIndex);
+   int numEntries() { return (int)entries_.size(); }
+   double getTotalSplits() { return total_; }
 
-    void updateToDB(boost::shared_ptr<wxSQLite3Database>& db, int transID, bool edit);
-	void loadFromBDDB(mmCoreDB* core, int bdID);
+   void addSplit(boost::shared_ptr<mmSplitTransactionEntry>& split);
+   void removeSplit(int splitID);
+   void removeSplitByIndex(int splitIndex);
 
-    std::vector<boost::shared_ptr<mmSplitTransactionEntry>> entries_;
-    double total_;
+   void updateToDB(boost::shared_ptr<wxSQLite3Database>& db, int transID, bool edit);
+   void loadFromBDDB(mmCoreDB* core, int bdID);
+
+   std::vector<boost::shared_ptr<mmSplitTransactionEntry>> entries_;
+   double total_;
 };
 
 class mmBankTransaction : public mmTransaction
@@ -135,19 +135,17 @@ private:
 class mmBankTransactionList
 {
 public:
-   mmBankTransactionList(boost::shared_ptr<wxSQLite3Database> db) { db_ = db; }
+    mmBankTransactionList(boost::shared_ptr<wxSQLite3Database> db);
     ~mmBankTransactionList() {}
 
     boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int accountID, int transactionID);
     boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int transactionID);
     int addTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
-	bool checkForExistingTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
+	 bool checkForExistingTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     boost::shared_ptr<mmBankTransaction> copyTransaction(int transactionID, bool useOriginalDate);
     void updateTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     void deleteTransaction(int accountID, int transactionID);
     void deleteTransactions(int accountID);
-
-    
 
     /* Query Functions */
     void getExpensesIncome(int accountID, double& expenses, double& income,  
@@ -169,7 +167,6 @@ public:
     void updateAllTransactionsForCategory(mmCoreDB* core, int categID, int subCategID);
     void updateAllTransactionsForPayee(mmCoreDB* core, 
                                                           int payeeID);
-
 
     /* Data */
     std::vector< boost::shared_ptr<mmBankTransaction> > transactions_;

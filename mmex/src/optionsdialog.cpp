@@ -105,7 +105,8 @@ bool mmOptionsDialog::Create( wxWindow* parent, wxWindowID id,
 void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& event)
 {
    wxString format = choiceDateFormat_->GetStringSelection();
-   mmDBWrapper::setInfoSettingValue(db_, wxT("DATEFORMAT"), format);
+   mmOptions::dateFormat = format;
+   mmOptions::saveOptions(db_);
    wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE);
    st->SetLabel(mmGetDateForDisplay(db_, wxDateTime::Now()));
 }

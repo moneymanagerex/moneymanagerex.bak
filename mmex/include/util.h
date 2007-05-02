@@ -25,7 +25,6 @@
 
 class mmCoreDB;
 
-const wxString& mmGetFileSeparator();
 wxString mmGetBaseWorkingPath(bool ignoreCommandLine = false);
 
 void mmShowErrorMessageInvalid(wxWindow* parent, wxString message);
@@ -58,6 +57,20 @@ void mmRestoreDefaultColors();
 void mmSaveColorsToDatabase(wxSQLite3Database* db_);
 
 void mmPlayTransactionSound(wxSQLite3Database* db_);
+
+/* 
+   mmOptions caches the options for MMEX
+   so that we don't hit the DB that often 
+   for data. 
+*/
+class mmOptions
+{
+public:
+   static void loadOptions(wxSQLite3Database* db);
+   static void saveOptions(wxSQLite3Database* db);
+
+   static wxString dateFormat;
+};
 
 class mmColors
 {

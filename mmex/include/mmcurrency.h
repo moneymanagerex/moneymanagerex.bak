@@ -26,6 +26,9 @@ public:
    mmCurrency(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1);
    ~mmCurrency() {}
 
+   void loadCurrencySettings();
+
+   /* Data */
    int currencyID_; 
    wxString currencyName_;
    wxString pfxSymbol_;
@@ -36,6 +39,8 @@ public:
    wxString cent_;
    double scaleDl_;
    double baseConv_;
+   wxChar decChar_;
+   wxChar grpChar_;
 
 private:
     boost::shared_ptr<wxSQLite3Database> db_;

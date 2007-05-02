@@ -131,15 +131,14 @@ void mmHomePagePanel::updateAccounts()
            double bal = pCA->initialBalance_ 
               + core_->bTransactionList_.getBalance(pCA->accountID_);
            double rate = pCurrencyPtr->baseConv_;
+
            // show the actual amount in that account in the original rate
            tBalance += bal * rate;
            wxString balance;
            mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
            hb.addHTML(balance);
            hb.addHTML(wxT("</td></tr>"));
-           //data1.push_back(balance);
 
-           //hb.addRow(data1, wxT("align=\"left\" "));
            double income = 0.0, expenses = 0.0;
            core_->bTransactionList_.getExpensesIncome(pCA->accountID_, expenses, income, 
               false,dtBegin, dtEnd);
@@ -191,8 +190,7 @@ void mmHomePagePanel::updateAccounts()
     hb.endTable();
 
     hb.addHTML(wxT("</td><td >&nbsp;</td><td width=\"200\" ALIGN=\"left\" VALIGN=\"top\">"));
-    //hb.beginTable();
-
+    
     hb.addHTML(wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\">"));
     wxString incStr, expStr;
     mmCurrencyFormatter::formatDoubleToCurrency(tincome, incStr);
@@ -381,7 +379,7 @@ void mmHomePagePanel::updateAccounts()
             wxASSERT(pCurrency);
             if (pCurrency)
             {
-                 mmCurrencyFormatter::loadSettings(pCurrency);
+                 pCurrency->loadCurrencySettings();
             }
 
 			wxString displayBDAmtString;
@@ -401,8 +399,6 @@ void mmHomePagePanel::updateAccounts()
 			hb.addHTML(wxT("</td>"));
 
 			hb.addHTML(wxT("</font></tr>"));
-
-            //hb.addRow(data4, wxT(" "), wxT("WIDTH=\"130\"  ") + colorStr);
         }
     }
 
