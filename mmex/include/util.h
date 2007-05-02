@@ -25,6 +25,7 @@
 
 class mmCoreDB;
 
+const wxString& mmGetFileSeparator();
 wxString mmGetBaseWorkingPath(bool ignoreCommandLine = false);
 
 void mmShowErrorMessageInvalid(wxWindow* parent, wxString message);

@@ -21,10 +21,10 @@
 #include "util.h"
 
 #include "transdialog.h"
-#include "newchkacctdialog.h"
+#include "newacctdialog.h"
 #include "htmlbuilder.h"
 #include "dbwrapper.h"
-#include "billsdeposits.h"
+#include "billsdepositspanel.h"
 
 BEGIN_EVENT_TABLE( mmHomePagePanel, wxPanel )
 END_EVENT_TABLE()

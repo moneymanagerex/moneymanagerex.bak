@@ -23,7 +23,7 @@
 #include "reportbase.h"
 #include "util.h"
 #include "dbwrapper.h"
-#include "assets.h"
+#include "assetspanel.h"
 
 class mmReportSummaryAssets : public mmPrintableBase 
 {

@@ -22,7 +22,7 @@
 #include "payeedialog.h"
 #include "util.h"
 #include "dbwrapper.h"
-#include "SplitTransactionDialog.h"
+#include "splittransactionsdialog.h"
 
 // Defines for Transaction Type
 #define DEF_WITHDRAWAL 0

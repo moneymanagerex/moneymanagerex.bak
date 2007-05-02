@@ -20,10 +20,18 @@
 #include "guiid.h"
 #include "fileviewerdialog.h"
 #include "mmex.h"
-#include "univcsv.h"
+#include "univcsvdialog.h"
 #include "mmcoredb.h"
 #include <wx/sound.h>
 
+const wxString& mmGetFileSeparator()
+{
+#ifdef __WXMSW__
+    return wxT("\\");
+#else
+    return wxT("//");
+#endif
+}
 
 void mmPlayTransactionSound(wxSQLite3Database* db_)
 {
