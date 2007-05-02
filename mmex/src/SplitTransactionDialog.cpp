@@ -98,7 +98,7 @@ bool SplitTransactionDialog::Create( wxWindow* parent, wxWindowID id,
 void SplitTransactionDialog::DataToControls()
 {
     lcSplit_->DeleteAllItems();
-    for (size_t idx = 0; idx < split_->numEntries(); idx++)
+    for (size_t idx = 0; idx < (int)split_->numEntries(); idx++)
     {
         boost::shared_ptr<mmCategory> pSharedCategory = split_->entries_[idx]->category_.lock();
         wxASSERT(pSharedCategory);
@@ -113,12 +113,12 @@ void SplitTransactionDialog::DataToControls()
             fullCatStr = pSharedCategory->categName_;
         }
 
-        lcSplit_->InsertItem(idx,fullCatStr, -1);
+        lcSplit_->InsertItem((long)idx,fullCatStr, -1);
 
         wxString dispAmount;
         mmCurrencyFormatter::formatDoubleToCurrencyEdit(split_->entries_[idx]->splitAmount_, dispAmount);
 
-        lcSplit_->SetItem(idx, 1, dispAmount);
+        lcSplit_->SetItem((long)idx, 1, dispAmount);
     }
 }
 

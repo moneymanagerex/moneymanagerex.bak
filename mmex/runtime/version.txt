@@ -1,11 +1,20 @@
 Version History of Money Manager Ex
 
 0.8.0.7 ()
+- Add support for split categories in a single transaction
 - Fix Bug 1625307: Account Balances Length not showing full amount without refresh
 - Fix Bug 1695918: Language Selection Button shows blank text when canceled
 - Add Feature 1695853: Add Indicator that indicates Future Entries in the Register
 - Add Income/Expense views for Budgeting Panel
 - Add extension for Univ CSV template files
+- Fix Bug: Not show closed accounts in account summary and in report summary
+- Add view of transactions for current month and last month
+- Fix Multicurrency Bug in homepage (George)
+- Support exporting transfers to CSV files(Only from accounts will show it as transfer. Import
+  requires exact account names to be available for it to work)
+- Fixed Bug causing crash when account was deleted with pending bills and deposits  
+- Use new icons for MMEX
+
 
 0.8.0.6 (April 10, 2006)
 - Fix currency conversions for stock accounts (Thanks Jai)

@@ -912,7 +912,7 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
         int retVal = db_->ExecuteUpdate(bufSQL);
 		int transID = db_->GetLastRowId().ToLong();
         
-		for (size_t idx = 0; idx < split_->numEntries(); idx++)
+		for (size_t idx = 0; idx < (size_t)split_->numEntries(); idx++)
 		{
 			wxString bufSQL = wxString::Format(wxT("insert into BUDGETSPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) \
 												   values (%d, %d, %d, %f);"), transID, split_->entries_[idx]->categID_,
@@ -936,7 +936,7 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
 			bufSQL1.Format("delete from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = %d;", bdID_);
 			db_->ExecuteUpdate(bufSQL1);
 
-		for (size_t idx = 0; idx < split_->numEntries(); idx++)
+		for (size_t idx = 0; idx < (size_t)split_->numEntries(); idx++)
 		{
 			wxString bufSQL = wxString::Format(wxT("insert into BUDGETSPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) \
 												   values (%d, %d, %d, %f);"), bdID_, split_->entries_[idx]->categID_,

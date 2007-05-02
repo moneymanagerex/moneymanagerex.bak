@@ -31,6 +31,8 @@
 #define VIEW_TRANS_UNREC 2
 #define VIEW_TRANS_30 3
 #define VIEW_TRANS_90 4
+#define VIEW_TRANS_LASTMONTH 5
+#define VIEW_TRANS_CURRENTMONTH 6
 
 IMPLEMENT_DYNAMIC_CLASS( mmOptionsDialog, wxDialog )
 
@@ -134,6 +136,10 @@ void mmOptionsDialog::OnViewTransChanged(wxCommandEvent& event)
        viewTrans = wxT("View 30 days");
    else if (selection == VIEW_TRANS_90)
        viewTrans = wxT("View 90 days");
+   else if (selection == VIEW_TRANS_LASTMONTH)
+       viewTrans = wxT("View Last Month");
+   else if (selection == VIEW_TRANS_CURRENTMONTH)
+       viewTrans = wxT("View Current Month");
 
    mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), viewTrans);
 }
@@ -327,11 +333,13 @@ void mmOptionsDialog::CreateControls()
         _("View UnReconciled"),
         _("View 30 days"),
         _("View 90 days"),
+        _("View Last Month"),
+        _("View Current Month")
     };  
     
     choiceTransVisible_ = new wxChoice( itemPanelViews, 
         ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, 
-        wxSize(100, -1), 5, itemChoiceViewTransStrings, 0 );
+        wxSize(150, -1), 7, itemChoiceViewTransStrings, 0 );
     itemStaticBoxSizerTransView->Add(choiceTransVisible_, 0, 
         wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -347,6 +355,10 @@ void mmOptionsDialog::CreateControls()
         choiceTransVisible_->SetSelection(VIEW_TRANS_30);
     else if (vTrans == wxT("View 90 days"))
         choiceTransVisible_->SetSelection(VIEW_TRANS_90);
+    else if (vTrans == wxT("View Last Month"))
+         choiceTransVisible_->SetSelection(VIEW_TRANS_LASTMONTH);
+    else if (vTrans == wxT("View Current Month"))
+         choiceTransVisible_->SetSelection(VIEW_TRANS_CURRENTMONTH);
            
     choiceTransVisible_->SetToolTip(_("Specify which transactions are visible by default"));
 

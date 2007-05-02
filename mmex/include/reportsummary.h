@@ -62,7 +62,7 @@ public:
         {
            mmCheckingAccount* pCA 
               = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
-           if (pCA)
+           if (pCA && pCA->status_== mmAccount::MMEX_Open)
            {
               double bal = pCA->initialBalance_ 
                   + core_->bTransactionList_.getBalance(pCA->accountID_);

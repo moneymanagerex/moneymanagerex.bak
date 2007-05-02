@@ -30,8 +30,8 @@
     }                               \
     catch (wxSQLite3Exception& e)   \
     {                               \
-        wxASSERT(false);            \
         wxLogError(e.GetMessage()); \
+        wxASSERT(false);            \
     }                               \
 
 #define mmENDSQL_LITE_IGNOREEXCEPTION     \
@@ -103,6 +103,7 @@ public:
     static bool getExpensesIncome(wxSQLite3Database* db, int accountID, 
         double& expenses, double& income, bool ignoreDate, 
         wxDateTime dtbegin, wxDateTime dtEnd);
+    static void removeSplitsForAccount(wxSQLite3Database* db, int accountID);
     
     /* Payee Table API */
     static void addPayee(wxSQLite3Database* db, wxString payee, int categID, int subcategID);
@@ -179,6 +180,7 @@ public:
     /* Split Transaction API */
     static double getSplitTransactionValueForCategory(wxSQLite3Database* db, int transID, 
                                                       int categID, int subcategID);
+    
 };
 
 

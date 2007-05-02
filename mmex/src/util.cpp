@@ -247,7 +247,7 @@ void mmExportCSV(wxSQLite3Database* db_)
                     q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
                 wxString transNum = q1.GetString(wxT("TRANSACTIONNUMBER"));
                 wxString notes = mmUnCleanString(q1.GetString(wxT("NOTES")));
-               
+                wxString transfer = wxT("");
                 if (type == wxT("Transfer"))
                 {
                    int tAccountID = q1.GetInt(wxT("TOACCOUNTID"));
@@ -265,11 +265,12 @@ void mmExportCSV(wxSQLite3Database* db_)
                    {
                       type = wxT("Withdrawal");
                       payee = toAccount;
+                      transfer = wxT("T");
                    }
                 }
                 text << dateString << delimit << payee << delimit << type << delimit << amount
                      << delimit << categ << delimit << subcateg << delimit << transNum 
-                     << delimit << notes << endl;
+                     << delimit << notes << delimit << transfer << endl;
                 numRecords++;
             }
             q1.Finalize();
@@ -353,6 +354,7 @@ int mmImportCSV(mmCoreDB* core)
                 wxString subcateg = wxT("");
                 wxString transNum = wxT("");
                 wxString notes = wxT("");
+                wxString transfer = wxT("");
 
                 wxStringTokenizer tkz(line, delimit, wxTOKEN_RET_EMPTY_ALL);
                 if (tkz.HasMoreTokens())
@@ -402,6 +404,9 @@ int mmImportCSV(mmCoreDB* core)
                 
                 if (tkz.HasMoreTokens())
                    notes = mmCleanString(tkz.GetNextToken());
+
+                if (tkz.HasMoreTokens())
+                   transfer = mmCleanString(tkz.GetNextToken());
                 
                 if (dt.Trim().IsEmpty() || payee.Trim().IsEmpty() ||
                     type.Trim().IsEmpty() || amount.Trim().IsEmpty())
@@ -426,6 +431,25 @@ int mmImportCSV(mmCoreDB* core)
 
                    continue;
                }
+
+               bool isTransfer = false;
+               int toAccountID = -1;
+               if (transfer == wxT("T"))
+               {
+                  // Check if defined accounts exist
+                  if (core->accountList_.accountExists(payee))
+                  {
+                      toAccountID = core->accountList_.getAccountID(payee);
+                      isTransfer = true;
+                      type = wxT("Transfer");
+                  }
+                  else
+                  {
+                      log << _("Line : " ) << countNumTotal 
+                          << _(" transfer transaction not imported.") << endl;   
+                  }
+               }
+
         
                wxDateTime dtdt = mmParseDisplayStringToDate(db_, dt);
                wxString convDate = dtdt.FormatISODate();
@@ -433,83 +457,124 @@ int mmImportCSV(mmCoreDB* core)
                int payeeID, categID , subCategID;
                categID = -1;
                subCategID = -1;
-
-               if (!core->payeeList_.payeeExists(payee))
+                
+               if (!isTransfer)
                {
-                   //payee does not exist
-                   payeeID = core->payeeList_.addPayee(payee);
-
-                   if (categ.Trim().IsEmpty())
-                       categ = wxT("Unknown");
-
-                   categID = core->categoryList_.getCategoryID(categ);
-                   if (categID == -1)
+                   if (!core->payeeList_.payeeExists(payee))
                    {
-                       categID =  core->categoryList_.addCategory(categ);
-                   }
-               }
-               else
-               {
-                   payeeID = core->payeeList_.getPayeeID(payee);
-                   boost::shared_ptr<mmPayee> pPayee =  core->payeeList_.getPayeeSharedPtr(payeeID);
-                   boost::shared_ptr<mmCategory> pCategory = pPayee->category_.lock();
-                   if (!pCategory)
-                   {
-                        // missing category for exisitng payee
+                       //payee does not exist
+                       payeeID = core->payeeList_.addPayee(payee);
+
                        if (categ.Trim().IsEmpty())
-                       {
-                           // empty category
                            categ = wxT("Unknown");
 
-                           categID = core->categoryList_.getCategoryID(categ);
-                           if (categID == -1)
-                           {
-                               categID =  core->categoryList_.addCategory(categ);
-                           }
-                       }
-                       else
+                       categID = core->categoryList_.getCategoryID(categ);
+                       if (categID == -1)
                        {
-                           // non-empty category
-                           if (!core->categoryList_.categoryExists(categ))
-                           {
-                               categID = core->categoryList_.addCategory(categ);
-                           }
-                           else
-                               categID = core->categoryList_.getCategoryID(categ);
-
-                           if (!subcateg.Trim().IsEmpty())
-                           {
-                               subCategID = core->categoryList_.getSubCategoryID(categID, subcateg);
-                               if (subCategID == -1)
-                               {
-                                   subCategID = core->categoryList_.addSubCategory(categID, subcateg);
-                               }
-                           }
-                       } 
+                           categID =  core->categoryList_.addCategory(categ);
+                       }
                    }
                    else
                    {
-                       if (pCategory->parent_.lock())
+                       payeeID = core->payeeList_.getPayeeID(payee);
+                       boost::shared_ptr<mmPayee> pPayee =  core->payeeList_.getPayeeSharedPtr(payeeID);
+                       boost::shared_ptr<mmCategory> pCategory = pPayee->category_.lock();
+                       if (!pCategory)
                        {
-                           categID = pCategory->parent_.lock()->categID_;
-                           subCategID = pCategory->categID_; 
+                           // missing category for exisitng payee
+                           if (categ.Trim().IsEmpty())
+                           {
+                               // empty category
+                               categ = wxT("Unknown");
+
+                               categID = core->categoryList_.getCategoryID(categ);
+                               if (categID == -1)
+                               {
+                                   categID =  core->categoryList_.addCategory(categ);
+                               }
+                           }
+                           else
+                           {
+                               // non-empty category
+                               if (!core->categoryList_.categoryExists(categ))
+                               {
+                                   categID = core->categoryList_.addCategory(categ);
+                               }
+                               else
+                                   categID = core->categoryList_.getCategoryID(categ);
+
+                               if (!subcateg.Trim().IsEmpty())
+                               {
+                                   subCategID = core->categoryList_.getSubCategoryID(categID, subcateg);
+                                   if (subCategID == -1)
+                                   {
+                                       subCategID = core->categoryList_.addSubCategory(categID, subcateg);
+                                   }
+                               }
+                           } 
                        }
                        else
                        {
-                            categID = pCategory->categID_; 
-                            subCategID = -1;
+                           if (pCategory->parent_.lock())
+                           {
+                               categID = pCategory->parent_.lock()->categID_;
+                               subCategID = pCategory->categID_; 
+                           }
+                           else
+                           {
+                               categID = pCategory->categID_; 
+                               subCategID = -1;
+                           }
                        }
+
                    }
+               }
+               else // transfer
+               {
+                     if (categ.Trim().IsEmpty())
+                           {
+                               // empty category
+                               categ = wxT("Unknown");
+
+                               categID = core->categoryList_.getCategoryID(categ);
+                               if (categID == -1)
+                               {
+                                   categID =  core->categoryList_.addCategory(categ);
+                               }
+                           }
+                           else
+                           {
+                               // non-empty category
+                               if (!core->categoryList_.categoryExists(categ))
+                               {
+                                   categID = core->categoryList_.addCategory(categ);
+                               }
+                               else
+                                   categID = core->categoryList_.getCategoryID(categ);
+
+                               if (!subcateg.Trim().IsEmpty())
+                               {
+                                   subCategID = core->categoryList_.getSubCategoryID(categID, subcateg);
+                                   if (subCategID == -1)
+                                   {
+                                       subCategID = core->categoryList_.addSubCategory(categID, subcateg);
+                                   }
+                               }
+                           } 
 
                }
 
                wxString status = wxT("F");
-               int toAccountID = -1;
+               
+               
 
                boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core->db_));
                pTransaction->accountID_ = fromAccountID;
                pTransaction->toAccountID_ = toAccountID;
-               pTransaction->payee_ = core->payeeList_.getPayeeSharedPtr(payeeID);
+               if (!isTransfer)
+                pTransaction->payee_ = core->payeeList_.getPayeeSharedPtr(payeeID);
+               else
+                pTransaction->payee_ = boost::shared_ptr<mmPayee>();
                pTransaction->transType_ = type;
                pTransaction->amt_ = val;
                pTransaction->status_ = status;

@@ -55,7 +55,7 @@ void mmSplitTransactionEntries::updateToDB(boost::shared_ptr<wxSQLite3Database>&
         db->ExecuteUpdate(bufSQL);
     }
 
-    for (size_t idx = 0; idx < numEntries(); idx++)
+    for (size_t idx = 0; idx < (int)numEntries(); idx++)
     {
         wxString bufSQL = wxString::Format(wxT("insert into SPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) \
                                                values (%d, %d, %d, %f);"), transID, entries_[idx]->categID_,
@@ -298,7 +298,7 @@ bool mmBankTransaction::containsCategory(int categID, int subcategID)
 {
     if (splitEntries_->numEntries() > 0)
     {
-        for(size_t idx = 0; idx < splitEntries_->numEntries(); idx++)
+        for(size_t idx = 0; idx < (int)splitEntries_->numEntries(); idx++)
         {
             if ((splitEntries_->entries_[idx]->categID_ == categID) &&
                 (splitEntries_->entries_[idx]->subCategID_ == subcategID))

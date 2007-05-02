@@ -152,9 +152,14 @@ bool mmAccountList::deleteAccount(int accountID)
     wxString acctType = getAccountType(accountID);
     if (acctType == wxT("Checking"))
     {
+        mmDBWrapper::removeSplitsForAccount(db_.get(), accountID);
+
         wxSQLite3StatementBuffer bufSQL;
         bufSQL.Format("delete from CHECKINGACCOUNT_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", accountID, accountID);
         int nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
+
+        bufSQL.Format("delete from BILLSDEPOSITS_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", accountID, accountID);
+        nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
 
         bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", accountID);
         int nRows = db_.get()->ExecuteUpdate(bufSQL);

@@ -53,6 +53,8 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
 	EVT_MENU(MENU_VIEW_DUPLICATE, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_DELETE_TRANS, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_DELETE_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_CURRENTMONTH, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_LASTMONTH, mmCheckingPanel::OnViewPopupSelected)
 END_EVENT_TABLE()
 /*******************************************************/
 BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
@@ -174,6 +176,8 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
 			menu.Append(MENU_VIEW_DUPLICATE, _("View Duplicate Transactions"));
             menu.AppendSeparator();
             menu.Append(MENU_VIEW_LAST30, _("View Transactions from last 30 days"));
+            menu.Append(MENU_VIEW_CURRENTMONTH, _("View Transactions from current month"));
+            menu.Append(MENU_VIEW_LASTMONTH, _("View Transactions from last month"));
             menu.Append(MENU_VIEW_LAST3MONTHS, _("View Transactions from last 3 months"));
             menu.AppendSeparator();
             menu.Append(MENU_VIEW_DELETE_TRANS, _("Delete all transactions in current view"));
@@ -564,6 +568,32 @@ void mmCheckingPanel::initVirtualListControl()
 
 			 getBal = true;
         }
+        else if (currentView_ == wxT("View Current Month"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
+            wxDateTime dtBegin = prevMonthEnd;
+            wxDateTime dtEnd = wxDateTime::Now();
+
+            if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                 toAdd = false;
+
+			 getBal = true;
+        }
+        else if (currentView_ == wxT("View Last Month"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
+            wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Month());
+            today = wxDateTime::Now();
+            wxDateTime dtEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
+
+            if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                 toAdd = false;
+
+			 getBal = true;
+
+        }
 
         if (toAdd)
         {
@@ -701,6 +731,14 @@ void mmCheckingPanel::initViewTransactionsHeader()
     {
         header->SetLabel(_("Viewing transactions from last 3 months"));
     }
+    else if (currentView_ == wxT("View Current Month"))
+    {
+        header->SetLabel(_("Viewing transactions from current month"));
+    }
+    else if (currentView_ == wxT("View Last Month"))
+    {
+        header->SetLabel(_("Viewing transactions from last month"));
+    }
 }
 
 void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
@@ -741,6 +779,16 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     {
         header->SetLabel(_("Viewing transactions from last 3 months"));
         currentView_ = wxT("View 90 days");
+    }
+    else if (evt == MENU_VIEW_CURRENTMONTH)
+    {
+        header->SetLabel(_("Viewing transactions from current month"));
+        currentView_ = wxT("View Current Month");
+    }
+    else if (evt == MENU_VIEW_LASTMONTH)
+    {
+        header->SetLabel(_("Viewing transactions from last month"));
+        currentView_ = wxT("View Last Month");
     }
 	else if (evt == MENU_VIEW_DUPLICATE)
     {

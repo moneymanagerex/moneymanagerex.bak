@@ -21,7 +21,7 @@
 #include "defs.h"
 
 #define EXC_GEN       42
-#define MMEXVERSION   wxT("0.8.0.6")
+#define MMEXVERSION   wxT("0.8.0.7")
 #define DEFDATEFORMAT wxT("%m/%d/%y")
 #define DEFDELIMTER   wxT(",")
 #define MM_MIN_DATAVERSION 2
@@ -113,6 +113,8 @@ enum
     MENU_VIEW_LAST3MONTHS,
     MENU_VIEW_DELETE_TRANS,
     MENU_VIEW_DELETE_FLAGGED,
+    MENU_VIEW_CURRENTMONTH,
+    MENU_VIEW_LASTMONTH,
     
     MENU_ON_COPY_TRANSACTION,
     MENU_ON_PASTE_TRANSACTION,

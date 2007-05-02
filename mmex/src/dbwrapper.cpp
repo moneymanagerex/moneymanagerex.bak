@@ -1943,3 +1943,36 @@ wxString mmDBWrapper::getAccountType(wxSQLite3Database* db_, int accountID)
     mmENDSQL_LITE_EXCEPTION;
     return acctType;
 }
+
+void mmDBWrapper::removeSplitsForAccount(wxSQLite3Database* db, int accountID)
+{
+    mmBEGINSQL_LITE_EXCEPTION;
+    {
+        wxSQLite3StatementBuffer bufSQL;
+        bufSQL.Format("SELECT * from CHECKINGACCOUNT_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", accountID, accountID);
+        wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
+        while (q1.NextRow())
+        {
+            int transID = (int)q1.GetInt(wxT("TRANSID"));
+            wxSQLite3StatementBuffer bufSQL2;
+            bufSQL2.Format("delete from SPLITTRANSACTIONS_V1 where TRANSID = %d;", transID);
+            db->ExecuteUpdate(bufSQL2);
+        }
+        q1.Finalize();
+    }
+
+    {
+        wxSQLite3StatementBuffer bufSQL;
+        bufSQL.Format("SELECT * from BILLSDEPOSITS_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", accountID, accountID);
+        wxSQLite3ResultSet q2 = db->ExecuteQuery(bufSQL);
+        while (q2.NextRow())
+        {
+            int transID = q2.GetInt(wxT("BDID"));
+            wxSQLite3StatementBuffer bufSQL2;
+            bufSQL2.Format("delete from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = %d;", transID);
+            db->ExecuteUpdate(bufSQL2);
+        }
+        q2.Finalize();
+    }
+    mmENDSQL_LITE_EXCEPTION;
+}

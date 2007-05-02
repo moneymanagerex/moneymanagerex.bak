@@ -114,7 +114,7 @@ void mmHomePagePanel::updateAccounts()
     {
         mmCheckingAccount* pCA 
            = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
-        if (pCA)
+        if (pCA && pCA->status_== mmAccount::MMEX_Open)
         {
            std::vector<wxString> data1;
            hb.addHTML(wxT("<tr><td><a href=\"ACCT: "));
@@ -364,7 +364,7 @@ void mmHomePagePanel::updateAccounts()
             
             
             wxString daysRemainingStr_;
-            wxString colorStr = wxT("\"#FFFFCC\" ");
+            wxString colorStr = wxT("\"#9999FF\" ");
            		
             daysRemainingStr_ = trans_[bdidx].daysRemainingStr_;
             if (trans_[bdidx].daysRemaining_ > 0)
@@ -375,10 +375,18 @@ void mmHomePagePanel::updateAccounts()
                 colorStr = wxT("\"#FF6600\" ");
             }
 
+            // Load the currency for this BD
+            boost::weak_ptr<mmCurrency> wpCurrency = core_->accountList_.getCurrencyWeakPtr(trans_[bdidx].accountID_);
+            boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
+            wxASSERT(pCurrency);
+            if (pCurrency)
+            {
+                 mmCurrencyFormatter::loadSettings(pCurrency);
+            }
+
 			wxString displayBDAmtString;
 			mmCurrencyFormatter::formatDoubleToCurrency(trans_[bdidx].amt_, displayBDAmtString);
-
-            
+           
 	
 			hb.addHTML(wxT("<tr> <font size=\"-2\" ><td width=\"100\"> "));
 			hb.addHTML(trans_[bdidx].payeeStr_);
@@ -401,6 +409,7 @@ void mmHomePagePanel::updateAccounts()
     if (isHeaderAdded)
         hb.endTable();
 
+    mmCurrencyFormatter::loadDefaultSettings();
 	//--------------------------------------------------------
 
     hb.addHTML(topCategories_);
