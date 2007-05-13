@@ -314,6 +314,28 @@ bool mmBankTransaction::containsCategory(int categID, int subcategID)
     }
     return false;
 }
+
+double mmBankTransaction::getAmountForSplit(int categID, int subcategID)
+{
+    if (splitEntries_->numEntries() > 0)
+    {
+        for(int idx = 0; idx < splitEntries_->numEntries(); idx++)
+        {
+            if ((splitEntries_->entries_[idx]->categID_ == categID) &&
+                (splitEntries_->entries_[idx]->subCategID_ == subcategID))
+            {
+                return splitEntries_->entries_[idx]->splitAmount_;
+            }
+        }
+    }
+    else if ((categID_ == categID) &&
+            (subcategID_ == subcategID))
+    {
+        return amt_;
+    }
+    return 0.0;
+}
+
 //-----------------------------------------------------------------------------//
 mmBankTransactionList::mmBankTransactionList(boost::shared_ptr<wxSQLite3Database> db)
 : db_(db)
@@ -755,9 +777,9 @@ double mmBankTransactionList::getAmountForCategory(
               double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), pBankTransaction->accountID_);
 
                if (pBankTransaction->transType_ == wxT("Withdrawal"))
-                  amt -= pBankTransaction->amt_ * convRate;
+                  amt -= pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
                else if (pBankTransaction->transType_ == wxT("Deposit"))
-                  amt += pBankTransaction->amt_ * convRate;
+                  amt += pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
             }
         }
     }

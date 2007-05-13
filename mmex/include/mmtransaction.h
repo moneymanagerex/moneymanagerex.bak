@@ -79,6 +79,8 @@ public:
     virtual ~mmBankTransaction() {}
 
     bool containsCategory(int categID, int subcategID);
+    double getAmountForSplit(int categID, 
+        int subcategID);
 
     double value(int accountID);
     void updateAllData(mmCoreDB* core, 
@@ -86,7 +88,8 @@ public:
         boost::shared_ptr<mmCurrency> currencyPtr, 
         bool forceUpdate=false);
 
-    void getSplitTransactions(mmCoreDB* core, mmSplitTransactionEntries* splits);
+    void getSplitTransactions(mmCoreDB* core, 
+        mmSplitTransactionEntries* splits);
 
     boost::shared_ptr<wxSQLite3Database> db_;
 

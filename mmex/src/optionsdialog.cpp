@@ -21,6 +21,7 @@
 #include "maincurrencydialog.h"
 #include "util.h"
 #include <wx/colordlg.h>
+#include <wx/combobox.h>
 
 #define VIEW_ALL       0
 #define VIEW_OPEN      1
@@ -38,10 +39,11 @@ IMPLEMENT_DYNAMIC_CLASS( mmOptionsDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_CURRENCY, mmOptionsDialog::OnCurrency)
-    EVT_CHOICE(ID_DIALOG_OPTIONS_DATE_FORMAT, mmOptionsDialog::OnDateFormatChanged)  
+    EVT_COMBOBOX(ID_DIALOG_OPTIONS_DATE_FORMAT, mmOptionsDialog::OnDateFormatChanged)  
+    EVT_TEXT(ID_DIALOG_OPTIONS_DATE_FORMAT, mmOptionsDialog::OnDateFormatEdited) 
     EVT_CHOICE(ID_DIALOG_OPTIONS_VIEW_ACCOUNTS, mmOptionsDialog::OnViewAccountsChanged)  
     EVT_CHOICE(ID_DIALOG_OPTIONS_VIEW_TRANS, mmOptionsDialog::OnViewTransChanged)  
-  	 EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)
+  	EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE, mmOptionsDialog::OnNavTreeColorChanged)
 
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0, mmOptionsDialog::OnAlt0Changed)
@@ -55,6 +57,7 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_ORIG_DATE, mmOptionsDialog::OnOriginalDateChecked)
 
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_USE_SOUND, mmOptionsDialog::OnUseSoundChecked)
+    
 END_EVENT_TABLE()
 
 #include "../resources/htmbook.xpm"
@@ -104,7 +107,20 @@ bool mmOptionsDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& event)
 {
-   wxString format = choiceDateFormat_->GetStringSelection();
+   wxString format = choiceDateFormat_->GetValue();
+   if (format.Trim().IsEmpty())
+       return;
+   mmOptions::dateFormat = format;
+   mmOptions::saveOptions(db_);
+   wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE);
+   st->SetLabel(mmGetDateForDisplay(db_, wxDateTime::Now()));
+}
+
+void mmOptionsDialog::OnDateFormatEdited(wxCommandEvent& event)
+{
+   wxString format = choiceDateFormat_->GetValue();
+   if (format.Trim().IsEmpty())
+       return;
    mmOptions::dateFormat = format;
    mmOptions::saveOptions(db_);
    wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE);
@@ -215,18 +231,23 @@ void mmOptionsDialog::CreateControls()
         wxT("%d/%m/%Y"),
         wxT("%m/%d/%y"),
         wxT("%m/%d/%Y"),
+
         wxT("%m/%d'%Y"),
+        
         wxT("%y/%m/%d"),
         wxT("%Y/%m/%d"),
+
+        wxT("%d-%m-%y"),
+        wxT("%d-%m-%Y"),
+        wxT("%m-%d-%y"),
+        wxT("%m-%d-%Y"),
     };  
     
-    choiceDateFormat_ = new wxChoice( itemPanelGeneral, 
-        ID_DIALOG_OPTIONS_DATE_FORMAT, wxDefaultPosition, 
-        wxSize(100, -1), 7, itemChoice7Strings, 0 );
-    itemStaticBoxSizer9->Add(choiceDateFormat_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     wxString selection = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), DEFDATEFORMAT);
-    if (!choiceDateFormat_->SetStringSelection(selection))
-       choiceDateFormat_->SetSelection(0);
+    choiceDateFormat_ = new wxComboBox( itemPanelGeneral, 
+        ID_DIALOG_OPTIONS_DATE_FORMAT, selection, wxDefaultPosition, 
+        wxSize(100, -1), 11, itemChoice7Strings, 0 );
+    itemStaticBoxSizer9->Add(choiceDateFormat_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     choiceDateFormat_->SetToolTip(_("Specify the date format for display"));
 
     wxStaticText* itemStaticText411 = new wxStaticText( itemPanelGeneral, 

@@ -53,6 +53,7 @@ public:
 
     void OnCurrency(wxCommandEvent& event);
     void OnDateFormatChanged(wxCommandEvent& event);
+    void OnDateFormatEdited(wxCommandEvent& event);
     void OnViewAccountsChanged(wxCommandEvent& event);
     void OnViewTransChanged(wxCommandEvent& event);
 	void OnLanguageChanged(wxCommandEvent& event);
@@ -70,7 +71,7 @@ public:
 
 private:
     wxImageList* m_imageList;
-    wxChoice* choiceDateFormat_;
+    wxComboBox* choiceDateFormat_;
     wxChoice* choiceVisible_;
     wxChoice* choiceTransVisible_;
     mmCoreDB* core_;

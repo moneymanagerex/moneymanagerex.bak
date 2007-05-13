@@ -14,7 +14,8 @@ Version History of Money Manager Ex
   requires exact account names to be available for it to work)
 - Fixed Bug causing crash when account was deleted with pending bills and deposits  
 - Use new icons for MMEX
-
+- Fix bug in amount reported by split transaction in report (drazx, Fortuna)
+- Allow flexible date formats in Date options (Samer)
 
 0.8.0.6 (April 10, 2006)
 - Fix currency conversions for stock accounts (Thanks Jai)
