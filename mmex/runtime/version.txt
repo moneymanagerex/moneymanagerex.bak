@@ -16,6 +16,8 @@ Version History of Money Manager Ex
 - Use new icons for MMEX
 - Fix bug in amount reported by split transaction in report (drazx, Fortuna)
 - Allow flexible date formats in Date options (Samer)
+- Add automatic stock price download for various stock exchanges supported by Yahoo
+(Patch submitted by Greg Newton)
 
 0.8.0.6 (April 10, 2006)
 - Fix currency conversions for stock accounts (Thanks Jai)
