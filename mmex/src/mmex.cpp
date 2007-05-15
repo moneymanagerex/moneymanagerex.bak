@@ -230,6 +230,10 @@ bool mmGUIApp::OnInit()
     wxImage::AddHandler(new wxJPEGHandler());
     wxImage::AddHandler(new wxPNGHandler());
 
+    /* Initialize Sockets, so multithreading will work */
+    wxFileSystem::AddHandler(new wxInternetFSHandler); 
+    wxSocketBase::Initialize();
+
     // success: wxApp::OnRun() will be called which will enter the main message
     // loop and the application will run. If we returned FALSE here, the
     // application would exit immediately.
