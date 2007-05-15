@@ -1,4 +1,6 @@
+
 #include "wx/msw/wx.rc"
+
 // Microsoft Visual C++ generated resource script.
 //
 
@@ -9,7 +11,9 @@
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 #ifdef _WIN32
+#ifndef __GNUWIN32__  // Greg Newton
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#endif
 #pragma code_page(1252)
 #endif //_WIN32
 
@@ -22,17 +26,17 @@ MAINICON                ICON                    "../resources/mainicon.ico"
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
     "\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
     "\r\n"
     "\0"
