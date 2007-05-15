@@ -213,7 +213,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\samples;$(WXWIN)\include;$(WXWIN)\include\;include\"
 				PreprocessorDefinitions="WXSQLITE3_HAVE_CODEC;WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH, _UNICODE; _CRT_SECURE_NO_DEPRECATE; _CRT_NONSTDC_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -239,7 +239,7 @@
 				AdditionalDependencies="wxmsw28ud_aui.lib wxzlibd.lib sqlite3.lib wxmsw28ud_core.lib wxbase28ud.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28ud_net.lib wxmsw28ud_adv.lib wxpngd.lib wxmsw28ud_html.lib wxjpegd.lib"
 				OutputFile="$(OutDir)/mmex.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;;lib\;"
+				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;;lib\"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/mmex.pdb"
 				SubSystem="2"
@@ -432,6 +432,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\led.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\maincurrencydialog.cpp"
 				>
 			</File>
@@ -477,6 +481,10 @@
 			</File>
 			<File
 				RelativePath=".\src\mmtransaction.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\mmyahoo.cpp"
 				>
 			</File>
 			<File
@@ -545,6 +553,10 @@
 			</File>
 			<File
 				RelativePath=".\src\wxtinyxml.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\yahoosettingsdialog.cpp"
 				>
 			</File>
 		</Filter>
@@ -689,6 +701,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\mmyahoo.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\newacctdialog.h"
 				>
 			</File>
@@ -790,6 +806,10 @@
 			</File>
 			<File
 				RelativePath=".\include\wxtinyxml.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\yahoosettingsdialog.h"
 				>
 			</File>
 		</Filter>
