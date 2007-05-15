@@ -3,6 +3,7 @@ Code Fixes/Patches
 Priyank Bolia
 jblough
 Stuart
+Greg Newton
 
 Silk Icons
 ===========
