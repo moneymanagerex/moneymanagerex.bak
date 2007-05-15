@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -115,13 +115,13 @@ enum
     MENU_VIEW_DELETE_FLAGGED,
     MENU_VIEW_CURRENTMONTH,
     MENU_VIEW_LASTMONTH,
-    
+
     MENU_ON_COPY_TRANSACTION,
     MENU_ON_PASTE_TRANSACTION,
     MENU_ON_NEW_TRANSACTION,
 
     TOOLBAR_MAIN,
-    
+
     ID_FRAMEPANEL,
     ID_SPLITTERWINDOW1,
     ID_NAVTREECTRL,
@@ -141,7 +141,7 @@ enum
 
     ID_DIALOG_ABOUT,
     ID_DIALOG_APPSTART,
-    
+
     ID_PANEL_CHECKING_STATIC_HEADER,
     ID_PANEL_CHECKING_STATIC_BALHEADER,
     ID_PANEL_CHECKING_LISTCTRL_ACCT,
@@ -219,7 +219,7 @@ enum
     ID_DIALOG_BD_COMBOBOX_REPEATS,
     ID_DIALOG_BD_TEXTCTRL_NUM_TIMES,
 
-    
+
     ID_PANEL_REPORTS_HTMLWINDOW,
     ID_PANEL_REPORTS_HEADER_PANEL,
     ID_PANEL_REPORTS_STATIC_HEADER,
@@ -250,7 +250,7 @@ enum
     ID_DIALOG_BUDGETYEAR_BUTTON_ADD,
     ID_DIALOG_BUDGETYEAR_BUTTON_DELETE,
     ID_DIALOG_BUDGETYEAR_BUTTON_OK,
-    
+
     /* Budget Year Dialog */
     ID_DIALOG_BUDGETYEAR,
     ID_DIALOG_BUDGETYEARENTRY_TEXTCTRL_YEAR,
@@ -335,7 +335,17 @@ enum
     ID_BUTTON_STOCK_OK,
     ID_BUTTON_STOCK_CANCEL,
     ID_TEXTCTRL_STOCK_COMMISSION,
-	 ID_BUTTON_STOCK_WEBPRICE,
+	ID_BUTTON_STOCK_WEBPRICE,
+    ID_BUTTON_HTTP_SETTINGS,
+    ID_PANEL_STOCK_UPDATE_LED,
+    ID_WEBPROXY_RADIOBOX,
+    ID_WEBPROXY_SETTINGSBUTTON,
+    ID_BUTTON_REFRESH_STOCK,
+    ID_TIMER_REFRESH_STOCK,
+    ID_TIMER_SCHEDULE_STOCK,
+    ID_TIMER_DOWNLOAD_WATCHDOG,
+    ID_DOWNLOAD_THREAD_STOCKS,
+    ID_HTTP_DOWNLOAD_COMPLETE_STOCKS,
 
     ID_DIALOG_STOCKS,
     ID_BUTTON_NEW_STOCK,

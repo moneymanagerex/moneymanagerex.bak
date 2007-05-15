@@ -3,12 +3,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -41,7 +41,7 @@ protected:
 
 class mmSplitTransactionEntry
 {
-public: 
+public:
 	int splitEntryID_;
 	int categID_;
 	int subCategID_;
@@ -52,7 +52,7 @@ public:
 
 class mmSplitTransactionEntries
 {
-public: 
+public:
    mmSplitTransactionEntries():total_(0.0) {}
    ~mmSplitTransactionEntries() {entries_.clear();}
 
@@ -66,14 +66,14 @@ public:
    void updateToDB(boost::shared_ptr<wxSQLite3Database>& db, int transID, bool edit);
    void loadFromBDDB(mmCoreDB* core, int bdID);
 
-   std::vector<boost::shared_ptr<mmSplitTransactionEntry>> entries_;
+   std::vector<boost::shared_ptr<mmSplitTransactionEntry> > entries_;
    double total_;
 };
 
 class mmBankTransaction : public mmTransaction
 {
-public: 
-    mmBankTransaction(mmCoreDB* core, 
+public:
+    mmBankTransaction(mmCoreDB* core,
        wxSQLite3ResultSet& q1);
     mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db);
     virtual ~mmBankTransaction() {}
@@ -83,9 +83,9 @@ public:
         int subcategID);
 
     double value(int accountID);
-    void updateAllData(mmCoreDB* core, 
-        int accountID, 
-        boost::shared_ptr<mmCurrency> currencyPtr, 
+    void updateAllData(mmCoreDB* core,
+        int accountID,
+        boost::shared_ptr<mmCurrency> currencyPtr,
         bool forceUpdate=false);
 
     void getSplitTransactions(mmCoreDB* core, 
@@ -95,7 +95,7 @@ public:
 
     /* Core Data */
     wxDateTime date_;
-    
+
     boost::weak_ptr<mmCategory> category_;
     boost::weak_ptr<mmPayee> payee_;
 
@@ -103,10 +103,10 @@ public:
     wxString status_;
     wxString notes_;
     wxString transType_;
-    
+
     double amt_;
     double toAmt_;
-    
+
     int accountID_;
     int toAccountID_;
 
@@ -151,13 +151,13 @@ public:
     void deleteTransactions(int accountID);
 
     /* Query Functions */
-    void getExpensesIncome(int accountID, double& expenses, double& income,  
+    void getExpensesIncome(int accountID, double& expenses, double& income,
                            bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd);
     double getAmountForCategory(int categID, int subcategID, bool ignoreDate,
                                  wxDateTime dtBegin, wxDateTime dtEnd);
-    double getAmountForPayee(int payeeID, bool ignoreDate, 
+    double getAmountForPayee(int payeeID, bool ignoreDate,
                                  wxDateTime dtbegin, wxDateTime dtEnd);
-    void getTransactionStats(int accountID, int& number,  
+    void getTransactionStats(int accountID, int& number,
                            bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd);
 
 
@@ -168,12 +168,12 @@ public:
     /* Update Transactions */
     void updateAllTransactions();
     void updateAllTransactionsForCategory(mmCoreDB* core, int categID, int subCategID);
-    void updateAllTransactionsForPayee(mmCoreDB* core, 
+    void updateAllTransactionsForPayee(mmCoreDB* core,
                                                           int payeeID);
 
     /* Data */
     std::vector< boost::shared_ptr<mmBankTransaction> > transactions_;
-    
+
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
 };

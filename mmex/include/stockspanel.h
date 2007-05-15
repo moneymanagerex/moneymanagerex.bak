@@ -5,22 +5,25 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+  *******************************************************/
 #ifndef _MM_EX_STOCKSPANEL_H_
 #define _MM_EX_STOCKSPANEL_H_
 
 #include "mmpanelbase.h"
 #include "guiid.h"
 #include "util.h"
+#include <awx/led.h>
+#include <wx/tglbtn.h>
+#include "mmyahoo.h"
 
 class wxListCtrl;
 class wxListEvent;
@@ -94,8 +97,8 @@ class mmStocksPanel : public mmPanelBase
     DECLARE_EVENT_TABLE()
 
 public:
-    mmStocksPanel( wxSQLite3Database* db, 
-		    wxSQLite3Database* inidb, 
+    mmStocksPanel( wxSQLite3Database* db,
+		    wxSQLite3Database* inidb,
 			int accountID,
             wxWindow *parent,
             wxWindowID winid = wxID_ANY,
@@ -110,7 +113,7 @@ public:
                 const wxSize& size = wxDefaultSize,
                 long style = wxTAB_TRAVERSAL | wxNO_BORDER,
                 const wxString& name = wxPanelNameStr);
-      
+
     void CreateControls();
 
     /* updates the checking panel data */
@@ -118,11 +121,13 @@ public:
 
     /* Getter for Virtual List Control */
     wxString getItem(long item, long column);
-  
+
     /* Event handlers for Buttons */
     void OnNewStocks(wxCommandEvent& event);
     void OnDeleteStocks(wxCommandEvent& event);
     void OnEditStocks(wxCommandEvent& event);
+    void OnRefreshQuotes(wxCommandEvent& event);
+    void OnHTTPSettings(wxCommandEvent& event);
 
     void OnViewPopupSelected(wxCommandEvent& event);
 
@@ -130,13 +135,34 @@ public:
     std::vector<mmStockTransactionHolder> trans_;
     void sortTable();
 
+
 public:
     wxSQLite3Database* db_;
     stocksListCtrl* listCtrlAccount_;
     wxSQLite3Database* inidb_;
     wxImageList* m_imageList;
 	int accountID_;
+	/************************************************************/
+    // Greg Newton
+private:
+    mmYahoo* yahoo_;
+    awxLed* m_LED;
+    wxTimer* StatusRefreshTimer_;
+    wxTimer* DownloadScheduleTimer_;
+
+    // Timer to refresh the state of the LED & its tooltip
+    void OnRefreshTimer( wxTimerEvent& event );
+    // Timer to kick off download when required
+    void OnScheduleTimer( wxTimerEvent &event );
+    void OrderDownloadIfRequired(void);
+
+    bool DownloadIsRequired(void);
+    void OrderQuoteRefresh(void);
+
+    wxToggleButton* TempProxyButton;
+
 };
 
 #endif
+
 
