@@ -229,6 +229,7 @@ bool mmGUIApp::OnInit()
     /* Initialize Image Handlers */
     wxImage::AddHandler(new wxJPEGHandler());
     wxImage::AddHandler(new wxPNGHandler());
+	wxImage::AddHandler(new wxGIFHandler());
 
     /* Initialize Sockets, so multithreading will work */
     wxFileSystem::AddHandler(new wxInternetFSHandler); 

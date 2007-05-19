@@ -432,9 +432,9 @@ void mmHomePagePanel::updateAccounts()
     tstr = tstr + tullStr;
     hb.addHTML(tstr);
 
-    hb.endTable();
-
-    hb.addHTML(wxT(" </td></tr></table>"));
+    //hb.endTable();
+	hb.addHTML(wxT("</td><td VALIGN=\"top\"><img src=\"bar.gif\"></img></td>"));
+    hb.addHTML(wxT(" </tr></table>"));
     
     hb.end();
 
