@@ -2,6 +2,9 @@ Version History of Money Manager Ex
 
 0.8.0.7 ()
 - Add support for split categories in a single transaction
+- Add Income vs Expenses and Top Categories Graphical Reports
+- Add automatic stock price download for various stock exchanges supported by Yahoo
+(Patch submitted by Greg Newton)
 - Fix Bug 1625307: Account Balances Length not showing full amount without refresh
 - Fix Bug 1695918: Language Selection Button shows blank text when canceled
 - Add Feature 1695853: Add Indicator that indicates Future Entries in the Register
@@ -16,8 +19,6 @@ Version History of Money Manager Ex
 - Use new icons for MMEX
 - Fix bug in amount reported by split transaction in report (drazx, Fortuna)
 - Allow flexible date formats in Date options (Samer)
-- Add automatic stock price download for various stock exchanges supported by Yahoo
-(Patch submitted by Greg Newton)
 
 0.8.0.6 (April 10, 2006)
 - Fix currency conversions for stock accounts (Thanks Jai)

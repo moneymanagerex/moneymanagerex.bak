@@ -45,6 +45,8 @@ Spanish
 -- Javier
 Hungarian
 -- Csaba
+Slovak
+-- Abadyba
 
 User Manual
 ===========

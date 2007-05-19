@@ -1,0 +1,30 @@
+﻿// specify data using proc getdata
+#proc getdata
+data:
+	"Food : Dining out" 45
+"Automobile : Parking" 34
+"Bills : Cable TV" 699
+
+
+// set up plotting area using proc areadef
+#proc areadef
+  title: Top Categories
+  rectangle: 1 1 3 3.5
+  yrange: 0 7
+  xrange: 0 699
+
+// render bars using proc bars
+#proc bars
+  horizontalbars: yes
+  color: dullyellow
+  lenfield: 2
+  barwidth: 0.10
+  labeldetails: adjust=0,-0.03
+  showvalues: yes
+	
+// render yaxis last so it is not obliterated, using proc yaxis
+#proc yaxis:
+  stubs: datafields 1
+  tics: none
+  axisline: none
+  stubdetails: align=L  adjust=0.17,0.20

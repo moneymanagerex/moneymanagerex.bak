@@ -2,7 +2,7 @@
   title: Income Vs Expenses
   rectangle: 1 1 2.5 2
   xrange: 0 3
-  yrange: 0 889
+  yrange: 0 $MAX
   yaxis.tics: none
   yaxis.axisline: none
   xaxis.stubs: text
@@ -11,7 +11,7 @@
 
 #proc getdata
   rotate: yes
-  data:	 789.00 169.00
+  data:	 $INCOME $EXPENSES
  
 #proc bars
   lenfield: 1
@@ -19,6 +19,5 @@
   labelword: @@N
   crossover: 0
   barwidth: 0.40
-
 
 
