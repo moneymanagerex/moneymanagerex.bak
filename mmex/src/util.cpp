@@ -25,6 +25,7 @@
 #include <wx/sound.h>
 
 wxString mmOptions::dateFormat = DEFDATEFORMAT;
+wxString mmOptions::language = wxT("english");
 
 void mmOptions::loadOptions(wxSQLite3Database* db)
 {
@@ -113,6 +114,8 @@ void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
                     /* Save Language Setting */
                     mmDBWrapper::setINISettingValue(inidb, wxT("LANGUAGE"), 
                         newLangStr);
+
+                    mmOptions::language = newLangStr;
                 }
 			}
 		}
@@ -121,6 +124,7 @@ void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 	{
 		/* Previous language found */
 		mmApp->m_locale.AddCatalog(langStr);
+        mmOptions::language = langStr;
 	}
 }
 

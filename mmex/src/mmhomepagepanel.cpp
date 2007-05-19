@@ -25,6 +25,7 @@
 #include "htmlbuilder.h"
 #include "dbwrapper.h"
 #include "billsdepositspanel.h"
+#include "mmgraphincexpensesmonth.h"
 
 BEGIN_EVENT_TABLE( mmHomePagePanel, wxPanel )
 END_EVENT_TABLE()
@@ -201,6 +202,9 @@ void mmHomePagePanel::updateAccounts()
     wxString income = baseInc + incStr;
     wxString expense = baseExp + expStr;
 
+    mmGraphIncExpensesMonth gg(tincome, texpenses);
+    gg.generate();
+
     std::vector<wxString> data2;
     data2.push_back(_("Income vs Expenses: Current Month"));
     hb.addTableHeaderRow(data2, wxT(" BGCOLOR=\"#80B9E8\" "), 
@@ -215,8 +219,10 @@ void mmHomePagePanel::updateAccounts()
     hb.addHTML(wxT("</td></tr>"));
     
     hb.endTable();
-
-    hb.addHTML(wxT("<BR> <BR>"));
+    
+    // Add the graph
+    hb.addHTML(wxT("<img src=\"graphs\\") + gg.outputFile()+ wxT("\"></img>"));
+    //hb.addHTML(wxT("<BR> <BR>"));
 
     // bills & deposits
     bool isHeaderAdded = false;
@@ -409,9 +415,10 @@ void mmHomePagePanel::updateAccounts()
 	//--------------------------------------------------------
 
     hb.addHTML(topCategories_);
+    hb.addHTML(wxT("<img src=\"graphs\\top_categories.png\"></img>"));
 
 	//--------------------------------------------------------
-	hb.addHTML(wxT("<br><br>"));
+	hb.addHTML(wxT(""));
 
     int countFollowUp = core_->bTransactionList_.countFollowupTransactions();
     if (countFollowUp > 0)
@@ -432,9 +439,10 @@ void mmHomePagePanel::updateAccounts()
     tstr = tstr + tullStr;
     hb.addHTML(tstr);
 
+    
     //hb.endTable();
-	hb.addHTML(wxT("</td><td VALIGN=\"top\"><img src=\"bar.gif\"></img></td>"));
-    hb.addHTML(wxT(" </tr></table>"));
+	//hb.addHTML(wxT("</td><td VALIGN=\"top\"><img src=\"graphs\\") + gg.outputFile()+ wxT("\"></img>"));
+    hb.addHTML(wxT("</td></tr></table>"));
     
     hb.end();
 

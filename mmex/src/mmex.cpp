@@ -44,6 +44,8 @@
 #include "reporttransstats.h"
 #include "reportcategovertimeperf.h"
 
+#include "mmgraphtopcategories.h"
+
 #include "appstartdialog.h"
 #include "aboutdialog.h"
 #include "newacctdialog.h"
@@ -217,6 +219,11 @@ bool mmGUIApp::OnInit()
     inidb->Close();
     delete inidb;
 
+    /* Initialize Image Handlers */
+    wxImage::AddHandler(new wxJPEGHandler());
+    wxImage::AddHandler(new wxPNGHandler());
+	wxImage::AddHandler(new wxGIFHandler());
+
     /* Load GUI Frame */
     mmGUIFrame *frame = new mmGUIFrame(wxT("Money Manager EX"),
                                  wxPoint(valx, valy), 
@@ -226,14 +233,14 @@ bool mmGUIApp::OnInit()
     if (isMaxStr == wxT("TRUE"))
         frame->Maximize(true);
 
-    /* Initialize Image Handlers */
-    wxImage::AddHandler(new wxJPEGHandler());
-    wxImage::AddHandler(new wxPNGHandler());
-	wxImage::AddHandler(new wxGIFHandler());
+  
 
     /* Initialize Sockets, so multithreading will work */
     wxFileSystem::AddHandler(new wxInternetFSHandler); 
     wxSocketBase::Initialize();
+
+    /* Set Thirdparty required stuff */
+    mmGraphGenerator::setEnv();
 
     // success: wxApp::OnRun() will be called which will enter the main message
     // loop and the application will run. If we returned FALSE here, the
@@ -880,11 +887,11 @@ wxString mmGUIFrame::createCategoryList()
 
 			if (amt != 0.0)
 			{
-            CategInfo infoSC;
-            infoSC.categ = categString + wxT(" : ") + subcategString;
-            infoSC.amountStr = balance;
-            infoSC.amount = amt;
-            categList.push_back(infoSC);
+                CategInfo infoSC;
+                infoSC.categ = categString + wxT(" : ") + subcategString;
+                infoSC.amountStr = balance;
+                infoSC.amount = amt;
+                categList.push_back(infoSC);
 			}
 		}
 		q2.Finalize();
@@ -906,7 +913,10 @@ wxString mmGUIFrame::createCategoryList()
       hb.addHTML(wxT("</td>"));
    }
 
-	hb.endTable();
+   hb.endTable();
+
+   mmGraphTopCategories gtp(categList);
+   gtp.generate();
 
    return hb.getHTMLText();
 }
