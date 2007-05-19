@@ -70,6 +70,7 @@ public:
    static void saveOptions(wxSQLite3Database* db);
 
    static wxString dateFormat;
+   static wxString language;
 };
 
 class mmColors

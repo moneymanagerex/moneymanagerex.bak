@@ -416,9 +416,9 @@ public:
 
     struct CategInfo
     {
-       wxString categ;
-       wxString amountStr;
-       double   amount;
+        wxString categ;
+        wxString amountStr;
+        double   amount;
     };
 
 public:
