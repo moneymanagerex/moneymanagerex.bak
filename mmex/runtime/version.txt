@@ -1,6 +1,8 @@
 Version History of Money Manager Ex
 
 0.8.0.7 ()
+- Fix bug where favorite accounts were not being displayed correctly (Jota)
+- Reconciled balance should show initial balance correctly(Jota)
 - Add support for split categories in a single transaction
 - Add Income vs Expenses and Top Categories Graphical Reports
 - Add automatic stock price download for various stock exchanges supported by Yahoo

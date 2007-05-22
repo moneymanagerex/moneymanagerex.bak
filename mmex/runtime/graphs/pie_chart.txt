@@ -1,0 +1,29 @@
+//  set the background to gray using proc page
+#proc page
+ 
+//  specify data using proc getdata
+#proc getdata
+data:	
+    67
+90
+20
+78
+
+
+//  render the pie graph using proc pie
+#proc pie
+firstslice: 330
+datafield: 1
+labelmode: labelonly
+center: 4 3
+radius: 1
+colors: auto
+labelfarout: 1.3
+outlinedetails: color=white 
+pctformat: %.0f
+labels: 
+    "balli"\n(@@PCT%)
+"indiangroc"\n(@@PCT%)
+"netflix"\n(@@PCT%)
+"walmart"\n(@@PCT%)
+
