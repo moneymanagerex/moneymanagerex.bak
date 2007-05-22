@@ -464,6 +464,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\mmgraphgenerator.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\mmhelppanel.cpp"
 				>
 			</File>
@@ -674,6 +678,22 @@
 			</File>
 			<File
 				RelativePath=".\include\mmex.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\mmgraphgenerator.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\mmgraphincexpensesmonth.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\mmgraphpie.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\mmgraphtopcategories.h"
 				>
 			</File>
 			<File
