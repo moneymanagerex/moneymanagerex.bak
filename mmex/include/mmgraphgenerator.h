@@ -32,6 +32,7 @@ public:
     void generate();
     const wxString& outputFile() { return outFileName_; }
     static void setEnv();
+    static wxString envString_;
 
 protected:
     wxString scriptName_;

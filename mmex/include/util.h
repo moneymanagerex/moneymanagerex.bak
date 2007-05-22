@@ -25,6 +25,12 @@
 
 class mmCoreDB;
 
+struct ValuePair
+{
+    wxString label;
+    double   amount;
+};
+
 wxString mmGetBaseWorkingPath(bool ignoreCommandLine = false);
 
 void mmShowErrorMessageInvalid(wxWindow* parent, wxString message);
@@ -71,6 +77,17 @@ public:
 
    static wxString dateFormat;
    static wxString language;
+};
+
+class mmIniOptions
+{
+public:
+   static void loadOptions(wxSQLite3Database* db);
+   static void saveOptions(wxSQLite3Database* db);
+
+   static bool enableStocks_;
+   static bool enableAssets_;
+   static bool enableBudget_;
 };
 
 class mmColors

@@ -6,9 +6,13 @@
 class mmGraphIncExpensesMonth : public mmGraphGenerator
 {
 public:
-    mmGraphIncExpensesMonth(double income, double expenses)
+    mmGraphIncExpensesMonth()
         : mmGraphGenerator(wxT("inc_expenses_month"), 
                            wxT("inc_expenses_month.png"))
+    {
+    }
+
+    void init(double income, double expenses)
     {
         wxString fileContents = wxT("");  
         {
@@ -32,7 +36,7 @@ public:
         wxString displayIncString = wxString::Format(wxT("%.0f"), income);
         wxString displayExpString = wxString::Format(wxT("%.0f"), expenses);
 
-        int maxVal = (income > expenses)? (int)income + 100 : (int)expenses + 100;
+        int maxVal = (income > expenses)? (int)income + 200 : (int)expenses + 200;
         wxString displayMaxValString = wxString::Format(wxT("%d"), maxVal);
 
         fileContents.Replace(wxT("$INCOME"), displayIncString);

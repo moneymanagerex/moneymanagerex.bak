@@ -6,6 +6,7 @@
 #include "reportbase.h"
 #include "util.h"
 #include "dbwrapper.h"
+#include "mmgraphpie.h"
 
 class mmReportPayeeExpenses : public mmPrintableBase 
 {
@@ -45,6 +46,12 @@ public:
 
         hb.addLineBreak();
 
+        int numPayees = (int)core_->payeeList_.payees_.size();
+        // Add the graph
+        mmGraphPie gg;
+        if (numPayees)
+            hb.addHTML(wxT("<img src=\"graphs\\") + gg.outputFile()+ wxT("\"></img>"));
+
         hb.beginTable();
         std::vector<wxString> headerR;
         headerR.push_back(_("Payee    "));
@@ -53,8 +60,8 @@ public:
 
         core_->currencyList_.loadBaseCurrencySettings();
         
-
-        int numPayees = (int)core_->payeeList_.payees_.size();
+        
+        std::vector<ValuePair> valueList;
         for (int idx = 0; idx < numPayees; idx++)
         {
             wxString balance;
@@ -66,6 +73,11 @@ public:
 
             if (amt != 0.0)
             {
+                ValuePair vp;
+                vp.label = core_->payeeList_.payees_[idx]->payeeName_;
+                vp.amount = amt;
+                valueList.push_back(vp);
+
                 hb.addHTML(wxT("<tr><td>")); 
                 hb.addHTML(core_->payeeList_.payees_[idx]->payeeName_);
                 hb.addHTML(wxT("</td><td align=\"right\">"));
@@ -76,6 +88,10 @@ public:
         hb.endTable();
 
         hb.end();
+
+        gg.init(valueList);
+        gg.generate();
+
         return hb.getHTMLText();
     }
 
