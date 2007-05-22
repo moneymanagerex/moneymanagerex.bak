@@ -24,6 +24,7 @@
 #include "reportbase.h"
 #include "util.h"
 #include "dbwrapper.h"
+#include "mmgraphpie.h"
 
 class mmReportCategoryExpenses : public mmPrintableBase 
 {
@@ -62,7 +63,9 @@ public:
             hb.addLineBreak();
         }
 
-        hb.addLineBreak();
+        // Add the graph
+        mmGraphPie gg;
+        hb.addHTML(gg.getHTML());
 
         hb.beginTable();
         std::vector<wxString> headerR;
@@ -72,7 +75,7 @@ public:
 
         core_->currencyList_.loadBaseCurrencySettings();
 
-        // Clean this up
+        std::vector<ValuePair> valueList;
         mmBEGINSQL_LITE_EXCEPTION;
         wxSQLite3StatementBuffer bufSQL;
         bufSQL.Format("select * from CATEGORY_V1 order by CATEGNAME;");
@@ -88,6 +91,11 @@ public:
 
             if (amt != 0.0)
             {
+                ValuePair vp;
+                vp.label = categString;
+                vp.amount = amt;
+                valueList.push_back(vp);
+
                 hb.addHTML(wxT("<tr><td>")); 
                 hb.addHTML(categString);
                 hb.addHTML(wxT("</td><td align=\"right\">"));
@@ -109,6 +117,11 @@ public:
 
                 if (amt != 0.0)
                 {
+                   ValuePair vp;
+                   vp.label = categString + wxT(" : ") + subcategString;
+                   vp.amount = amt;
+                   valueList.push_back(vp);
+
                     hb.addHTML(wxT("<tr><td>")); 
                     hb.addHTML(categString + wxT(" : ") + subcategString);
                     hb.addHTML(wxT("</td><td align=\"right\">"));
@@ -125,6 +138,10 @@ public:
         hb.endTable();
 
         hb.end();
+
+        gg.init(valueList);
+        gg.generate();
+
         return hb.getHTMLText();
 
     }

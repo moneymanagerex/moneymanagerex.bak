@@ -50,7 +50,7 @@ public:
         // Add the graph
         mmGraphPie gg;
         if (numPayees)
-            hb.addHTML(wxT("<img src=\"graphs\\") + gg.outputFile()+ wxT("\"></img>"));
+           hb.addHTML(gg.getHTML());
 
         hb.beginTable();
         std::vector<wxString> headerR;

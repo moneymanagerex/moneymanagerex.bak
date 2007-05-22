@@ -12,8 +12,11 @@ public:
     {
     }
 
-    void init(double income, double expenses)
+    virtual void init(double income, double expenses)
     {
+       if (!isGraphEnabled())
+          return;
+
         wxString fileContents = wxT("");  
         {
             wxFileInputStream input( fullScriptTemplatePathRelative_ );

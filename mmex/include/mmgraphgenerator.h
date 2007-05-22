@@ -30,9 +30,11 @@ public:
 
 public: 
     void generate();
-    const wxString& outputFile() { return outFileName_; }
+    const wxString& outputFile();
+    wxString getHTML();
     static void setEnv();
     static wxString envString_;
+    bool isGraphEnabled();
 
 protected:
     wxString scriptName_;
@@ -42,6 +44,7 @@ protected:
     wxString fullscriptPath_; 
     wxString fulloutfileName_;
     wxString ploticusName_;  
+    wxString htmlString_;
 
 };
 

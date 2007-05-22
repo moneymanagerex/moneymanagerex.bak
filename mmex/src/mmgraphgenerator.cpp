@@ -36,27 +36,55 @@ mmGraphGenerator::mmGraphGenerator(const wxString& scriptName,
    
    fulloutfileName_ = wxT("\"") + basePath + outFileName_ + wxT("\"");
    ploticusName_  = wxT("\"") + basePath + wxT("pl.exe") + wxT("\"");
+
+   htmlString_ = wxT("<img src=\"graphs\\") + outFileName + wxT("\"></img>");
 }
+
 mmGraphGenerator::~mmGraphGenerator()
 {}
+
+const wxString& mmGraphGenerator::outputFile() 
+{ 
+   return outFileName_; 
+}
+
+bool mmGraphGenerator::isGraphEnabled()
+{
+   return mmIniOptions::enableGraphs_;
+}
+
+wxString mmGraphGenerator::getHTML()
+{
+   if (mmIniOptions::enableGraphs_)
+      return htmlString_;
+   else
+      return wxT("");
+}
 
 void mmGraphGenerator::setEnv()
 {
    mmGraphGenerator::envString_ = mmGetBaseWorkingPath() + wxT("\\graphs");
    bool returnVal = wxSetEnv(wxT("GDFONTPATH"), mmGraphGenerator::envString_);
 }
+
 void mmGraphGenerator::generate()
 {
-   wxString fullExecPath = ploticusName_ + wxT(" -png -o ") + fulloutfileName_ + wxT(" ")
+   if (!mmIniOptions::enableGraphs_)
+      return;
+
+   wxString fullExecPath = ploticusName_ 
+                            + wxT(" -png -o ") 
+                            + fulloutfileName_ + wxT(" ")
                             + fullscriptPath_;
    if (mmOptions::language.size() > 0 && mmOptions::language != wxT("english"))
         fullExecPath += wxT(" -font Cyberbit.ttf");
+
    wxArrayString output, errors;
    setEnv(); 
-   
+
    int code = wxExecute(fullExecPath, output, errors);
-   //if (code != 0)
+   if (code != 0)
    {
-    
+      mmShowErrorMessage(0, _("Failed to launch graphing system!"), _("Graph Error.."));
    }
 }

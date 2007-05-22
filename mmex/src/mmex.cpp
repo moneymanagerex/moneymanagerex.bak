@@ -935,7 +935,8 @@ wxString mmGUIFrame::createCategoryList()
 
     hb.endTable();
 
-    mmGraphTopCategories gtp(categList);
+    mmGraphTopCategories gtp;
+    gtp.init(categList);
     gtp.generate();
 
     return hb.getHTMLText();

@@ -753,6 +753,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\reportcategovertimeperf.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\reportincexpenses.h"
 				>
 			</File>

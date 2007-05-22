@@ -210,7 +210,7 @@ void mmCheckingPanel::CreateControls()
         wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, 
         wxT("")));
-    itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
+    itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 5);
 
      wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader2, 0, wxALL, 1);
@@ -237,8 +237,8 @@ void mmCheckingPanel::CreateControls()
     wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, 
             ID_PANEL_CHECKING_STATIC_BALHEADER, 
             wxT(""), wxDefaultPosition, wxSize(500, 10), 0 );
-    itemBoxSizerHHeader->Add(itemStaticText10, 0, wxALL | wxEXPAND , 1);
-
+    itemBoxSizerHHeader->Add(itemStaticText10, 0, wxALL | wxEXPAND , 5);
+    
     /* ---------------------- */
 
     wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( itemPanel8, 

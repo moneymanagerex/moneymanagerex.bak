@@ -6,6 +6,7 @@
 #include "reportbase.h"
 #include "util.h"
 #include "dbwrapper.h"
+#include "mmgraphincexpensesmonth.h"
 
 class mmReportIncomeExpenses : public mmPrintableBase 
 {
@@ -43,7 +44,18 @@ public:
             hb.addLineBreak();
         }
 
-        hb.addLineBreak();
+        //hb.addLineBreak();
+
+        core_->currencyList_.loadBaseCurrencySettings();
+
+        double expenses = 0.0;
+        double income = 0.0;
+        core_->bTransactionList_.getExpensesIncome(-1,expenses, income,  ignoreDate_, dtBegin_,dtEnd_);
+
+        mmGraphIncExpensesMonth gg;
+        gg.init(income, expenses);
+        gg.generate();
+        hb.addHTML(gg.getHTML());
 
         hb.beginTable();
         std::vector<wxString> headerR;
@@ -51,12 +63,6 @@ public:
         headerR.push_back(_("Amount   "));
         hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
    
-        core_->currencyList_.loadBaseCurrencySettings();
-
-        double expenses = 0.0;
-        double income = 0.0;
-        core_->bTransactionList_.getExpensesIncome(-1,expenses, income,  ignoreDate_, dtBegin_,dtEnd_);
-
         wxString incString;
         wxString expString;
         mmCurrencyFormatter::formatDoubleToCurrency(expenses, expString);

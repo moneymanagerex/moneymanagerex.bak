@@ -80,8 +80,11 @@ void mmYahoo::WriteSettings()
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_REFRESH_ENABLED"), wxString::Format(wxT("%d"),UpdatingEnabled_));
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_MARKET_OPEN_TIME"), OpenTimeStr_) ;
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_MARKET_CLOSE_TIME"), CloseTimeStr_) ;
-    mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_LAST_REFRESH_DATETIME"), wxString::Format(wxT("%s %s"),
+    if (LastRefreshDT_.IsValid() )
+    {
+      mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_LAST_REFRESH_DATETIME"), wxString::Format(wxT("%s %s"),
                                     LastRefreshDT_.FormatISODate().c_str(),LastRefreshDT_.FormatISOTime().c_str()));
+    }
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_REFRESH_MINUTES"),wxString::Format(wxT("%d"),UpdateIntervalMinutes_));
     // Server
     mmDBWrapper::setINISettingValue(inidb_,wxT("HTTP_YAHOO_SERVER"),Server_);

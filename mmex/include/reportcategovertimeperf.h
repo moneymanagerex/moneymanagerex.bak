@@ -89,7 +89,6 @@ public:
 
             if (th.actual_ != 0.0)
             {
-                // actual stuff
                 data.clear();
                 data.push_back(th.catStr_);
 

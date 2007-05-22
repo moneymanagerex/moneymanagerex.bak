@@ -7,10 +7,18 @@
 class mmGraphTopCategories : public mmGraphGenerator
 {
 public:
-    mmGraphTopCategories(std::vector<mmGUIFrame::CategInfo>& categList)
+    mmGraphTopCategories()
         : mmGraphGenerator(wxT("top_categories"), 
                            wxT("top_categories.png"))
     {
+
+    }
+
+    virtual void init(std::vector<mmGUIFrame::CategInfo>& categList)
+    {
+         if (!isGraphEnabled())
+            return;
+
         wxString fileContents = wxT("");  
         {
             wxFileInputStream input( fullScriptTemplatePathRelative_ );

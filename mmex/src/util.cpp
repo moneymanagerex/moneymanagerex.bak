@@ -40,6 +40,7 @@ void mmOptions::saveOptions(wxSQLite3Database* db)
 bool mmIniOptions::enableAssets_ = true;
 bool mmIniOptions::enableBudget_ = true;
 bool mmIniOptions::enableStocks_ = true;
+bool mmIniOptions::enableGraphs_ = true;
 
 void mmIniOptions::loadOptions(wxSQLite3Database* db)
 {
@@ -52,6 +53,8 @@ void mmIniOptions::loadOptions(wxSQLite3Database* db)
    if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEBUDGET"), wxT("TRUE")) != wxT("TRUE"))
        enableStocks_ = false;
 
+   if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEGRAPHS"), wxT("TRUE")) != wxT("TRUE"))
+      enableGraphs_ = false;
 }
 
 void mmIniOptions::saveOptions(wxSQLite3Database* db)

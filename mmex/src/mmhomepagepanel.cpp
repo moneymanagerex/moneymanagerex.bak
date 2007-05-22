@@ -26,6 +26,7 @@
 #include "dbwrapper.h"
 #include "billsdepositspanel.h"
 #include "mmgraphincexpensesmonth.h"
+#include "mmgraphtopcategories.h"
 
 BEGIN_EVENT_TABLE( mmHomePagePanel, wxPanel )
 END_EVENT_TABLE()
@@ -182,7 +183,6 @@ void mmHomePagePanel::updateAccounts()
     
     wxString tBalanceStr;
     mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
-#if 1
 
     hb.addHTML(wxT("<tr bgcolor=\"#DCEDD5\" ><td>") + wxString(_("Total of Accounts :")) 
        + wxString(wxT("</td><td align=\"right\"><b>")));
@@ -222,8 +222,7 @@ void mmHomePagePanel::updateAccounts()
     hb.endTable();
 
     // Add the graph
-   // hb.addHTML(wxT("<img src=\"graphs\\") + gg.outputFile()+ wxT("\"></img>"));
-    //hb.addHTML(wxT("<BR> <BR>"));
+    hb.addHTML(gg.getHTML());
 
     // bills & deposits
     bool isHeaderAdded = false;
@@ -414,8 +413,9 @@ void mmHomePagePanel::updateAccounts()
     mmCurrencyFormatter::loadDefaultSettings();
 	//--------------------------------------------------------
 
-    hb.addHTML(topCategories_);
-   // hb.addHTML(wxT("<img src=\"graphs\\top_categories.png\"></img>"));
+   hb.addHTML(topCategories_);
+   mmGraphTopCategories gtp;
+   hb.addHTML(gtp.getHTML());
 
 	//--------------------------------------------------------
 	hb.addHTML(wxT(""));
@@ -439,13 +439,9 @@ void mmHomePagePanel::updateAccounts()
     tstr = tstr + tullStr;
     hb.addHTML(tstr);
 
-    
-    //hb.endTable();
-	//hb.addHTML(wxT("</td><td VALIGN=\"top\"><img src=\"graphs\\") + gg.outputFile()+ wxT("\"></img>"));
     hb.addHTML(wxT("</td></tr></table>"));
     
     hb.end();
-#endif
 
     wxString htmlText = hb.getHTMLText();
     htmlWindow_->SetPage(htmlText);

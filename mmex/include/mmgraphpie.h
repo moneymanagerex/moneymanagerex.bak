@@ -14,8 +14,11 @@ public:
 
     }
 
-    void init(std::vector<ValuePair>& valueList)
+    virtual void init(std::vector<ValuePair>& valueList)
     {
+       if (!isGraphEnabled())
+          return;
+
         wxString fileContents = wxT("");  
         {
             wxFileInputStream input( fullScriptTemplatePathRelative_ );

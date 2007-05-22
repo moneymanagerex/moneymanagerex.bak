@@ -88,6 +88,7 @@ public:
    static bool enableStocks_;
    static bool enableAssets_;
    static bool enableBudget_;
+   static bool enableGraphs_;
 };
 
 class mmColors
