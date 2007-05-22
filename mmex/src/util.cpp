@@ -36,7 +36,30 @@ void mmOptions::saveOptions(wxSQLite3Database* db)
 {
    mmDBWrapper::setInfoSettingValue(db, wxT("DATEFORMAT"), dateFormat);
 }
+// --------------------------------------------------------------------------
+bool mmIniOptions::enableAssets_ = true;
+bool mmIniOptions::enableBudget_ = true;
+bool mmIniOptions::enableStocks_ = true;
 
+void mmIniOptions::loadOptions(wxSQLite3Database* db)
+{
+   if (mmDBWrapper::getINISettingValue(db, wxT("ENABLESTOCKS"), wxT("TRUE")) != wxT("TRUE"))
+       enableStocks_ = false;
+   
+   if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEASSETS"), wxT("TRUE")) != wxT("TRUE"))
+       enableStocks_ = false;
+   
+   if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEBUDGET"), wxT("TRUE")) != wxT("TRUE"))
+       enableStocks_ = false;
+
+}
+
+void mmIniOptions::saveOptions(wxSQLite3Database* db)
+{
+ 
+}
+
+// ---------------------------------------------------------------------------
 void mmPlayTransactionSound(wxSQLite3Database* db_)
 {
     wxString useSound = mmDBWrapper::getINISettingValue(db_, 

@@ -169,7 +169,6 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_GOTOACCOUNT, mmGUIFrame::OnGotoAccount)
 
     EVT_MENU(MENU_TRANSACTIONREPORT, mmGUIFrame::OnTransactionReport)
-
 END_EVENT_TABLE()
 /*******************************************************/
 IMPLEMENT_APP(mmGUIApp)
@@ -185,6 +184,9 @@ bool mmGUIApp::OnInit()
 
     /* Load Colors from Database */
     mmLoadColorsFromDatabase(inidb);
+
+    /* Load MMEX Custom Settings */
+    mmIniOptions::loadOptions(inidb);
 
     /* Was App Maximized? */
     wxString isMaxStrDef = wxT("FALSE");
@@ -222,7 +224,6 @@ bool mmGUIApp::OnInit()
     /* Initialize Image Handlers */
     wxImage::AddHandler(new wxJPEGHandler());
     wxImage::AddHandler(new wxPNGHandler());
-	wxImage::AddHandler(new wxGIFHandler());
 
     /* Load GUI Frame */
     mmGUIFrame *frame = new mmGUIFrame(wxT("Money Manager EX"),
@@ -233,14 +234,9 @@ bool mmGUIApp::OnInit()
     if (isMaxStr == wxT("TRUE"))
         frame->Maximize(true);
 
-  
-
     /* Initialize Sockets, so multithreading will work */
-    wxFileSystem::AddHandler(new wxInternetFSHandler); 
-    wxSocketBase::Initialize();
-
-    /* Set Thirdparty required stuff */
-    mmGraphGenerator::setEnv();
+   // wxFileSystem::AddHandler(new wxInternetFSHandler); 
+    //wxSocketBase::Initialize();
 
     // success: wxApp::OnRun() will be called which will enter the main message
     // loop and the application will run. If we returned FALSE here, the
@@ -298,11 +294,11 @@ mmNewDatabaseWizard::mmNewDatabaseWizard(wxFrame *frame, mmCoreDB* core)
                    wxBitmap(addacctwiz_xpm),wxDefaultPosition,
                    wxDEFAULT_DIALOG_STYLE), core_(core)
 {
-    // a wizard page may be either an object of predefined class
     page1 = new wxWizardPageSimple(this);
 
-    /* wxStaticText *text = */ new wxStaticText(page1, wxID_ANY,
-             _("The next pages will help you create a new database.\n\nYour money manager database file is stored with an extension \nof .mmb. Make sure to make backups of this \nfile and to store it carefully as it contains important \nfinancial information.")
+    new wxStaticText(page1, wxID_ANY,
+             _("The next pages will help you create a new database.\n\nYour money manager database file is stored with an extension \nof .mmb. Make sure to make backups of this \nfile and to store it carefully as it contains important \nfinancial information."
+             )
         );
 
     wxNewDatabaseWizardPage1* page2 = new wxNewDatabaseWizardPage1(this);
@@ -345,8 +341,12 @@ bool sortCategs( mmGUIFrame::CategInfo elem1, mmGUIFrame::CategInfo elem2 )
 mmGUIFrame::mmGUIFrame(const wxString& title, 
                        const wxPoint& pos, const wxSize& size)
        : wxFrame((wxFrame*)NULL, -1, title, pos, size), 
-       core_(0), inidb_(0), gotoAccountID_(-1), selectedItemData_(0),
-       m_topCategories(wxT(""))
+       core_(0), 
+       inidb_(0), 
+       gotoAccountID_(-1), 
+       selectedItemData_(0),
+       m_topCategories(wxT("")),
+       panelCurrent_(0)
 {
 	// tell wxAuiManager to manage this frame
 	m_mgr.SetManagedWindow(this);
@@ -601,21 +601,32 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(accounts, new mmTreeItemData(wxT("Bank Accounts")));
     navTreeCtrl_->SetItemBold(accounts, true);
 
-    wxTreeItemId stocks = navTreeCtrl_->AppendItem(root, _("Stocks"), 6, 6);
-    navTreeCtrl_->SetItemData(stocks, new mmTreeItemData(wxT("Stocks")));
-    navTreeCtrl_->SetItemBold(stocks, true);
+    wxTreeItemId stocks;
+    if (mmIniOptions::enableStocks_)
+    {
+        stocks = navTreeCtrl_->AppendItem(root, _("Stocks"), 6, 6);
+        navTreeCtrl_->SetItemData(stocks, new mmTreeItemData(wxT("Stocks")));
+        navTreeCtrl_->SetItemBold(stocks, true);
+    }
 
-    wxTreeItemId assets = navTreeCtrl_->AppendItem(root, _("Assets"), 7, 7);
-    navTreeCtrl_->SetItemData(assets, new mmTreeItemData(wxT("Assets")));
-    navTreeCtrl_->SetItemBold(assets, true);
+    if (mmIniOptions::enableAssets_)
+    {
+        wxTreeItemId assets = navTreeCtrl_->AppendItem(root, _("Assets"), 7, 7);
+        navTreeCtrl_->SetItemData(assets, new mmTreeItemData(wxT("Assets")));
+        navTreeCtrl_->SetItemBold(assets, true);
+    }
 
     wxTreeItemId bills = navTreeCtrl_->AppendItem(root, _("Repeating Transactions"), 2, 2);
     navTreeCtrl_->SetItemData(bills, new mmTreeItemData(wxT("Bills & Deposits")));
     navTreeCtrl_->SetItemBold(bills, true);
 
-    wxTreeItemId budgeting = navTreeCtrl_->AppendItem(root, _("Budgeting"), 3, 3);
-    navTreeCtrl_->SetItemData(budgeting, new mmTreeItemData(wxT("Budgeting")));
-    navTreeCtrl_->SetItemBold(budgeting, true);
+    wxTreeItemId budgeting;
+    if (mmIniOptions::enableBudget_)
+    {
+        budgeting = navTreeCtrl_->AppendItem(root, _("Budgeting"), 3, 3);
+        navTreeCtrl_->SetItemData(budgeting, new mmTreeItemData(wxT("Budgeting")));
+        navTreeCtrl_->SetItemBold(budgeting, true);
+    }
 
     wxTreeItemId reports = navTreeCtrl_->AppendItem(root, 
         _("Reports"), 4, 4);
@@ -633,10 +644,13 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(reportsStocks, 
         new mmTreeItemData(wxT("Summary of Stocks")));
 
-    wxTreeItemId reportsAssets = navTreeCtrl_->AppendItem(reportsSummary, 
-        _("Assets"), 4, 4);
-    navTreeCtrl_->SetItemData(reportsAssets, 
-        new mmTreeItemData(wxT("Summary of Assets")));
+    if (mmIniOptions::enableAssets_)
+    {
+        wxTreeItemId reportsAssets = navTreeCtrl_->AppendItem(reportsSummary, 
+            _("Assets"), 4, 4);
+        navTreeCtrl_->SetItemData(reportsAssets, 
+            new mmTreeItemData(wxT("Summary of Assets")));
+    }
 
     wxTreeItemId categsOverTime = navTreeCtrl_->AppendItem(reports, 
         _("Where the Money Goes"), 4, 4);
@@ -798,29 +812,35 @@ void mmGUIFrame::updateNavTreeControl()
             }
         }
 
-        mmInvestmentAccount* pIA = dynamic_cast<mmInvestmentAccount*>(core_->accountList_.accounts_[iAdx].get());
-        if (pIA)
+        if (mmIniOptions::enableStocks_)
         {
-            wxTreeItemId tacct = navTreeCtrl_->AppendItem(stocks, pIA->accountName_, 6, 6);
-            navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pIA->accountID_, false));
+            mmInvestmentAccount* pIA = dynamic_cast<mmInvestmentAccount*>(core_->accountList_.accounts_[iAdx].get());
+            if (pIA)
+            {
+                wxTreeItemId tacct = navTreeCtrl_->AppendItem(stocks, pIA->accountName_, 6, 6);
+                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pIA->accountID_, false));
+            }
         }
     }
 
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from BUDGETYEAR_V1 order by BUDGETYEARNAME;");
-    wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(bufSQL);
-    int index = 0;
-    while (q1.NextRow())
+    if (mmIniOptions::enableBudget_)
     {
-        wxTreeItemId bYear = navTreeCtrl_->AppendItem(budgeting, q1.GetString(wxT("BUDGETYEARNAME")), 3, 3);
-        navTreeCtrl_->SetItemData(bYear, new mmTreeItemData(q1.GetInt(wxT("BUDGETYEARID")), true));
+        wxSQLite3StatementBuffer bufSQL;
+        bufSQL.Format("select * from BUDGETYEAR_V1 order by BUDGETYEARNAME;");
+        wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(bufSQL);
+        int index = 0;
+        while (q1.NextRow())
+        {
+            wxTreeItemId bYear = navTreeCtrl_->AppendItem(budgeting, q1.GetString(wxT("BUDGETYEARNAME")), 3, 3);
+            navTreeCtrl_->SetItemData(bYear, new mmTreeItemData(q1.GetInt(wxT("BUDGETYEARID")), true));
 
-        wxTreeItemId bYearData = navTreeCtrl_->AppendItem(budgetPerformance, q1.GetString(wxT("BUDGETYEARNAME")), 4, 4);
-        navTreeCtrl_->SetItemData(bYearData, new mmTreeItemData(q1.GetInt(wxT("BUDGETYEARID")), true));
+            wxTreeItemId bYearData = navTreeCtrl_->AppendItem(budgetPerformance, q1.GetString(wxT("BUDGETYEARNAME")), 4, 4);
+            navTreeCtrl_->SetItemData(bYearData, new mmTreeItemData(q1.GetInt(wxT("BUDGETYEARID")), true));
+        }
+        q1.Finalize();
+
+        navTreeCtrl_->Expand(budgeting);
     }
-    q1.Finalize();
-
-    navTreeCtrl_->Expand(budgeting);
 
     mmENDSQL_LITE_EXCEPTION;
 
@@ -830,95 +850,95 @@ void mmGUIFrame::updateNavTreeControl()
 wxString mmGUIFrame::createCategoryList()
 {
     if (!db_)
-       return wxT("");
+        return wxT("");
 
-   mmHTMLBuilder hb;
+    mmHTMLBuilder hb;
 
-   hb.addHTML(wxT("<br>"));
-	hb.addHTML(wxT("<br>"));
+    hb.addHTML(wxT("<br>"));
+    hb.addHTML(wxT("<br>"));
 
-   std::vector<CategInfo> categList;
-   hb.addHTML(wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\">"));
-	std::vector<wxString> headerR;
-	headerR.push_back(_("Top Categories Last 30 Days  "));
+    std::vector<CategInfo> categList;
+    hb.addHTML(wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\">"));
+    std::vector<wxString> headerR;
+    headerR.push_back(_("Top Categories Last 30 Days  "));
 
-	hb.addTableHeaderRow(headerR, wxT(" BGCOLOR=\"#80B9E8\" "), wxT(" width=\"130\" COLSPAN=\"2\" "));
+    hb.addTableHeaderRow(headerR, wxT(" BGCOLOR=\"#80B9E8\" "), wxT(" width=\"130\" COLSPAN=\"2\" "));
 
-	core_->currencyList_.loadBaseCurrencySettings();
+    core_->currencyList_.loadBaseCurrencySettings();
 
-	mmBEGINSQL_LITE_EXCEPTION;
-	wxSQLite3StatementBuffer bufSQL;
-	bufSQL.Format("select * from CATEGORY_V1 order by CATEGNAME;");
-	wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
-	while (q1.NextRow())
-	{
-		wxDateTime today = wxDateTime::Now();
-		wxDateTime prevMonthEnd = today;
-		wxDateTime dtEnd = today;
-		wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
+    mmBEGINSQL_LITE_EXCEPTION;
+    wxSQLite3StatementBuffer bufSQL;
+    bufSQL.Format("select * from CATEGORY_V1 order by CATEGNAME;");
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+    while (q1.NextRow())
+    {
+        wxDateTime today = wxDateTime::Now();
+        wxDateTime prevMonthEnd = today;
+        wxDateTime dtEnd = today;
+        wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
 
-		int categID          = q1.GetInt(wxT("CATEGID"));
-		wxString categString = q1.GetString(wxT("CATEGNAME"));
-		wxString balance;
-		double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, false, 
-			dtBegin, dtEnd);
-		mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
+        int categID          = q1.GetInt(wxT("CATEGID"));
+        wxString categString = q1.GetString(wxT("CATEGNAME"));
+        wxString balance;
+        double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, false, 
+            dtBegin, dtEnd);
+        mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
 
-		if (amt != 0.0)
-		{
-         CategInfo info;
-         info.categ = categString;
-         info.amountStr = balance;
-         info.amount = amt;
-         categList.push_back(info);
-		}
+        if (amt != 0.0)
+        {
+            CategInfo info;
+            info.categ = categString;
+            info.amountStr = balance;
+            info.amount = amt;
+            categList.push_back(info);
+        }
 
-		wxSQLite3StatementBuffer bufSQL1;
-		bufSQL1.Format("select * from SUBCATEGORY_V1 where CATEGID=%d;", categID);
-		wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL1); 
-		while(q2.NextRow())
-		{
-			int subcategID          = q2.GetInt(wxT("SUBCATEGID"));
-			wxString subcategString    = q2.GetString(wxT("SUBCATEGNAME"));
+        wxSQLite3StatementBuffer bufSQL1;
+        bufSQL1.Format("select * from SUBCATEGORY_V1 where CATEGID=%d;", categID);
+        wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL1); 
+        while(q2.NextRow())
+        {
+            int subcategID          = q2.GetInt(wxT("SUBCATEGID"));
+            wxString subcategString    = q2.GetString(wxT("SUBCATEGNAME"));
 
-			amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, 
-				false,  dtBegin, dtEnd);
-			mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
+            amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, 
+                false,  dtBegin, dtEnd);
+            mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
 
-			if (amt != 0.0)
-			{
+            if (amt != 0.0)
+            {
                 CategInfo infoSC;
                 infoSC.categ = categString + wxT(" : ") + subcategString;
                 infoSC.amountStr = balance;
                 infoSC.amount = amt;
                 categList.push_back(infoSC);
-			}
-		}
-		q2.Finalize();
+            }
+        }
+        q2.Finalize();
 
-	}
-	q1.Finalize();
-	mmENDSQL_LITE_EXCEPTION;
+    }
+    q1.Finalize();
+    mmENDSQL_LITE_EXCEPTION;
 
-   std::sort(categList.begin(), categList.end(), sortCategs);
-   for (int idx = 0; idx < (int)categList.size(); idx++)
-   {
-      if (idx > 5)
-         break;
+    std::sort(categList.begin(), categList.end(), sortCategs);
+    for (int idx = 0; idx < (int)categList.size(); idx++)
+    {
+        if (idx > 5)
+            break;
 
-      hb.addHTML(wxT("<tr> <td width=\"130\"> "));
-      hb.addHTML(categList[idx].categ);
-      hb.addHTML(wxT("</td><td width=\"100\" align=\"right\">"));
-      hb.addHTML(categList[idx].amountStr);
-      hb.addHTML(wxT("</td>"));
-   }
+        hb.addHTML(wxT("<tr> <td width=\"130\"> "));
+        hb.addHTML(categList[idx].categ);
+        hb.addHTML(wxT("</td><td width=\"100\" align=\"right\">"));
+        hb.addHTML(categList[idx].amountStr);
+        hb.addHTML(wxT("</td>"));
+    }
 
-   hb.endTable();
+    hb.endTable();
 
-   mmGraphTopCategories gtp(categList);
-   gtp.generate();
+    mmGraphTopCategories gtp(categList);
+    gtp.generate();
 
-   return hb.getHTMLText();
+    return hb.getHTMLText();
 }
 
 void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
@@ -992,7 +1012,8 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
     {
         if (iData->getString() == wxT("Home Page"))
         {
-            createHomePage();
+            wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
+            GetEventHandler()->AddPendingEvent(ev); ;
             return;
         }
 
@@ -1393,7 +1414,8 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& event)
               core_->accountList_.deleteAccount(pAccount->accountID_);
               core_->bTransactionList_.deleteTransactions(pAccount->accountID_);  
               updateNavTreeControl();
-              createHomePage();
+              wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
+              GetEventHandler()->AddPendingEvent(ev); ;
            } 
         }
         else
@@ -1504,12 +1526,20 @@ void mmGUIFrame::createHomePage()
     if (m_topCategories == wxT(""))
        m_topCategories = createCategoryList();
 
+    if (panelCurrent_)
+    {
+        //panelCurrent_->DestroyChildren();
+        //panelCurrent_->SetSizer(NULL);
+        panelCurrent_  = 0;
+    }
     panelCurrent_ = new mmHomePagePanel(this, 
         db_.get(), core_, 
         m_topCategories,
         homePanel, 
         ID_PANEL3, 
-        wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
+        wxDefaultPosition, 
+        wxDefaultSize, 
+        wxNO_BORDER|wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
      
     homePanel->Layout();
@@ -1672,25 +1702,34 @@ void mmGUIFrame::createMenu()
 	menuItemCurrency->SetBitmap(wxBitmap(money_dollar_xpm));
     menuTools->Append(menuItemCurrency);
 
-    wxMenuItem* menuItemBudgeting = new wxMenuItem(menuTools, MENU_BUDGETSETUPDIALOG, 
-		  _("Budget Setup"), _("Budget Setup"));
-	menuItemBudgeting->SetBitmap(wxBitmap(calendar_xpm));
-    menuTools->Append(menuItemBudgeting); 
+    if (mmIniOptions::enableBudget_)
+    {
+        wxMenuItem* menuItemBudgeting = new wxMenuItem(menuTools, MENU_BUDGETSETUPDIALOG, 
+            _("Budget Setup"), _("Budget Setup"));
+        menuItemBudgeting->SetBitmap(wxBitmap(calendar_xpm));
+        menuTools->Append(menuItemBudgeting); 
+    }
 
     wxMenuItem* menuItemBillsDeposits = new wxMenuItem(menuTools, MENU_BILLSDEPOSITS, 
 		 _("Repeating Transactions"), _("Bills && Deposits"));
 	menuItemBillsDeposits->SetBitmap(wxBitmap(clock_xpm));
     menuTools->Append(menuItemBillsDeposits); 
 
-    wxMenuItem* menuItemStocks = new wxMenuItem(menuTools, MENU_STOCKS, 
-		_("Stock Investments"), _("Stock Investments"));
-	menuItemStocks->SetBitmap(wxBitmap(stock_curve_xpm));
-    menuTools->Append(menuItemStocks);
+    if (mmIniOptions::enableStocks_)
+    {
+        wxMenuItem* menuItemStocks = new wxMenuItem(menuTools, MENU_STOCKS, 
+            _("Stock Investments"), _("Stock Investments"));
+        menuItemStocks->SetBitmap(wxBitmap(stock_curve_xpm));
+        menuTools->Append(menuItemStocks);
+    }
 
-    wxMenuItem* menuItemAssets = new wxMenuItem(menuTools, MENU_ASSETS, 
-		_("Assets"), _("Assets"));
-	menuItemAssets->SetBitmap(wxBitmap(car_xpm));
-    menuTools->Append(menuItemAssets);
+    if (mmIniOptions::enableAssets_)
+    {
+        wxMenuItem* menuItemAssets = new wxMenuItem(menuTools, MENU_ASSETS, 
+            _("Assets"), _("Assets"));
+        menuItemAssets->SetBitmap(wxBitmap(car_xpm));
+        menuTools->Append(menuItemAssets);
+    }
 
      menuTools->AppendSeparator();
 
@@ -2164,7 +2203,8 @@ void mmGUIFrame::OnNewAccount(wxCommandEvent& event)
     
   
     /* Currency Options might have changed so refresh */
-    createHomePage();
+    wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
+    GetEventHandler()->AddPendingEvent(ev); 
 }
     
 void mmGUIFrame::OnAccountList(wxCommandEvent& event)
@@ -2571,8 +2611,10 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
         mmNewAcctDialog *dlg = new mmNewAcctDialog(core_, false, acctID, this);
         if ( dlg->ShowModal() == wxID_OK )
         {
-            createHomePage();
             updateNavTreeControl();      
+            wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
+            GetEventHandler()->AddPendingEvent(ev); ;
+            
         }
     }
     delete[] arrAcctID;
@@ -2612,8 +2654,10 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
         {
             core_->accountList_.deleteAccount(acctID);
             core_->bTransactionList_.deleteTransactions(acctID);
+
             updateNavTreeControl();
-            createHomePage();
+            wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
+            GetEventHandler()->AddPendingEvent(ev); 
         }
     }
     delete[] arrAcctID;

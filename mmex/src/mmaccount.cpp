@@ -30,8 +30,6 @@ mmAccount::mmAccount(boost::shared_ptr<wxSQLite3Database> db,
                      wxSQLite3ResultSet& q1)
     : db_(db)
 {
-    bool favoriteAcct_;
-   
     accountID_ = q1.GetInt(wxT("ACCOUNTID"));
     accountName_ = q1.GetString(wxT("ACCOUNTNAME"));
     accountNum_  = q1.GetString(wxT("ACCOUNTNUM"));

@@ -105,12 +105,12 @@ void mmHomePagePanel::updateAccounts()
         +  str1 + str2 );
 
     /////////////////   
-   
+
+
     int ct = 0;  
     double tincome = 0.0;
     double texpenses = 0.0;
     double tBalance = 0.0;
-
     for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
     {
         mmCheckingAccount* pCA 
@@ -182,7 +182,7 @@ void mmHomePagePanel::updateAccounts()
     
     wxString tBalanceStr;
     mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
-
+#if 1
 
     hb.addHTML(wxT("<tr bgcolor=\"#DCEDD5\" ><td>") + wxString(_("Total of Accounts :")) 
        + wxString(wxT("</td><td align=\"right\"><b>")));
@@ -202,7 +202,8 @@ void mmHomePagePanel::updateAccounts()
     wxString income = baseInc + incStr;
     wxString expense = baseExp + expStr;
 
-    mmGraphIncExpensesMonth gg(tincome, texpenses);
+    mmGraphIncExpensesMonth gg;
+    gg.init(tincome, texpenses);
     gg.generate();
 
     std::vector<wxString> data2;
@@ -219,9 +220,9 @@ void mmHomePagePanel::updateAccounts()
     hb.addHTML(wxT("</td></tr>"));
     
     hb.endTable();
-    
+
     // Add the graph
-    hb.addHTML(wxT("<img src=\"graphs\\") + gg.outputFile()+ wxT("\"></img>"));
+   // hb.addHTML(wxT("<img src=\"graphs\\") + gg.outputFile()+ wxT("\"></img>"));
     //hb.addHTML(wxT("<BR> <BR>"));
 
     // bills & deposits
@@ -229,9 +230,8 @@ void mmHomePagePanel::updateAccounts()
 
     /////////////////////////////////////
     std::vector<mmBDTransactionHolder> trans_;
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from BILLSDEPOSITS_V1;");
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+    wxString bufSQLStr = wxString::Format(wxT("select * from BILLSDEPOSITS_V1")); 
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQLStr);
 
     ct = 0;
     while (q1.NextRow())
@@ -415,7 +415,7 @@ void mmHomePagePanel::updateAccounts()
 	//--------------------------------------------------------
 
     hb.addHTML(topCategories_);
-    hb.addHTML(wxT("<img src=\"graphs\\top_categories.png\"></img>"));
+   // hb.addHTML(wxT("<img src=\"graphs\\top_categories.png\"></img>"));
 
 	//--------------------------------------------------------
 	hb.addHTML(wxT(""));
@@ -445,6 +445,7 @@ void mmHomePagePanel::updateAccounts()
     hb.addHTML(wxT("</td></tr></table>"));
     
     hb.end();
+#endif
 
     wxString htmlText = hb.getHTMLText();
     htmlWindow_->SetPage(htmlText);

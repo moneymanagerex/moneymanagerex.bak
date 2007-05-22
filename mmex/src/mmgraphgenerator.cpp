@@ -19,6 +19,8 @@
 #include "mmgraphgenerator.h"
 #include "util.h"
 
+wxString mmGraphGenerator::envString_ = wxT("sdfhsjdhfjhfdsjhfsd");
+
 mmGraphGenerator::mmGraphGenerator(const wxString& scriptName, 
                                    const wxString& outFileName)
      : scriptName_(scriptName),
@@ -40,8 +42,8 @@ mmGraphGenerator::~mmGraphGenerator()
 
 void mmGraphGenerator::setEnv()
 {
-   wxString basePath = mmGetBaseWorkingPath() + wxT("\\graphs");
-   bool returnVal = wxSetEnv(wxT("GDFONTPATH"), basePath);
+   mmGraphGenerator::envString_ = mmGetBaseWorkingPath() + wxT("\\graphs");
+   bool returnVal = wxSetEnv(wxT("GDFONTPATH"), mmGraphGenerator::envString_);
 }
 void mmGraphGenerator::generate()
 {
@@ -51,8 +53,9 @@ void mmGraphGenerator::generate()
         fullExecPath += wxT(" -font Cyberbit.ttf");
    wxArrayString output, errors;
    setEnv(); 
+   
    int code = wxExecute(fullExecPath, output, errors);
-   if (code != 0)
+   //if (code != 0)
    {
     
    }

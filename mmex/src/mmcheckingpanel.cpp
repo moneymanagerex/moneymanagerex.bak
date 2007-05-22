@@ -467,8 +467,10 @@ void mmCheckingPanel::setAccountSummary()
     mmCurrencyFormatter::formatDoubleToCurrency(total, balance);
 
     double reconciledBal = core_->bTransactionList_.getReconciledBalance(accountID_);
+    double acctInitBalance = core_->accountList_.getAccountSharedPtr(accountID_)->initialBalance_;
+    
     wxString recbalance;
-    mmCurrencyFormatter::formatDoubleToCurrency(reconciledBal, recbalance);
+    mmCurrencyFormatter::formatDoubleToCurrency(reconciledBal + acctInitBalance, recbalance);
 
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
 
