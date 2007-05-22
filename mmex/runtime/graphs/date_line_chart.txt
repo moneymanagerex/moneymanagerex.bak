@@ -1,0 +1,29 @@
+#proc getdata
+  data:
+	9807 	13000	
+	9808	14500	
+	9809	12400	
+	9810	13100	
+	9811	12700	
+	9812	11800
+
+#proc page
+  textsize: 9
+
+#proc areadef
+  title: Plot Over Time
+  rectangle: 1 1 4 2
+  xscaletype: date yymm
+  xrange: 9806 9901
+  yrange: 11000 15000
+  xaxis.stubformat: Mmm'yy
+  xaxis.stubs: inc 1 
+  xaxis.stubrange: 9807 9812
+  yaxis.stubs: incremental 1000
+
+#proc lineplot
+  xfield: 1
+  yfield: 2
+  linedetails: color=lavender
+  legendlabel: Actual
+
