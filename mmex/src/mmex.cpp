@@ -226,7 +226,7 @@ bool mmGUIApp::OnInit()
     wxImage::AddHandler(new wxPNGHandler());
 
     /* Load GUI Frame */
-    mmGUIFrame *frame = new mmGUIFrame(wxT("Money Manager EX"),
+    mmGUIFrame *frame = new mmGUIFrame(mmIniOptions::appName_,
                                  wxPoint(valx, valy), 
                                  wxSize(valw, valh));
 
@@ -252,8 +252,13 @@ mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, mmCoreDB* core)
     // a wizard page may be either an object of predefined class
     page1 = new wxWizardPageSimple(this);
 
-    /* wxStaticText *text = */ new wxStaticText(page1, wxID_ANY,
-             _("Money Manager models all transactions as belonging to accounts.\n\n The next pages will help you create a new account.\n\nTo help you get started, begin by making a list of all\nfinancial institutions where you hold an account.")
+    wxString noteString = mmIniOptions::appName_
+                          + 
+    _(" models all transactions as belonging to accounts.\n\n The next pages will help you create a new account.\n\nTo help you get started, begin by making a list of all\nfinancial institutions where you hold an account.");
+
+    new wxStaticText(page1, 
+       wxID_ANY,
+       noteString         
         );
 
     wxAddAccountPage1* page2 = new wxAddAccountPage1(this);
@@ -297,7 +302,7 @@ mmNewDatabaseWizard::mmNewDatabaseWizard(wxFrame *frame, mmCoreDB* core)
     page1 = new wxWizardPageSimple(this);
 
     new wxStaticText(page1, wxID_ANY,
-             _("The next pages will help you create a new database.\n\nYour money manager database file is stored with an extension \nof .mmb. Make sure to make backups of this \nfile and to store it carefully as it contains important \nfinancial information."
+             _("The next pages will help you create a new database.\n\nYour database file is stored with an extension \nof .mmb. Make sure to make backups of this \nfile and to store it carefully as it contains important \nfinancial information."
              )
         );
 
@@ -356,8 +361,8 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     SetIcon(icon);
 
     /* Setup Printer */
-    printer_ = new wxHtmlEasyPrinting(wxT("Money Manager Ex"), this);
-    wxString printHeaderBase = wxT("Money Manager Ex");
+    printer_ = new wxHtmlEasyPrinting(mmIniOptions::appName_, this);
+    wxString printHeaderBase = mmIniOptions::appName_;
     printer_-> SetHeader( printHeaderBase + wxT("(@PAGENUM@/@PAGESCNT@)<hr>"), wxPAGE_ALL);
 
     /* Create the Controls for the frame */
@@ -517,7 +522,8 @@ void mmGUIFrame::menuEnableItems(bool enable)
 {
     menuBar_->FindItem(MENU_SAVE_AS)->Enable(enable);
     menuBar_->FindItem(MENU_EXPORT)->Enable(enable);
-    menuBar_->FindItem(MENU_NEWACCT)->Enable(enable);
+    if (mmIniOptions::enableAddAccount_)
+      menuBar_->FindItem(MENU_NEWACCT)->Enable(enable);
     menuBar_->FindItem(MENU_ACCTLIST)->Enable(enable);
     menuBar_->FindItem(MENU_ACCTEDIT)->Enable(enable);
     menuBar_->FindItem(MENU_ACCTDELETE)->Enable(enable);
@@ -527,14 +533,19 @@ void mmGUIFrame::menuEnableItems(bool enable)
     menuBar_->FindItem(MENU_PRINT_PREVIEW)->Enable(enable);
     menuBar_->FindItem(MENU_PRINT)->Enable(enable);
     menuBar_->FindItem(MENU_OPTIONS)->Enable(enable);
-    menuBar_->FindItem(MENU_BILLSDEPOSITS)->Enable(enable);
-    menuBar_->FindItem(MENU_STOCKS)->Enable(enable);
+    if (mmIniOptions::enableRepeatingTransactions_)
+      menuBar_->FindItem(MENU_BILLSDEPOSITS)->Enable(enable);
+    if (mmIniOptions::enableStocks_)
+      menuBar_->FindItem(MENU_STOCKS)->Enable(enable);
     menuBar_->FindItem(MENU_CURRENCY)->Enable(enable);
-    menuBar_->FindItem(MENU_ASSETS)->Enable(enable);
-    menuBar_->FindItem(MENU_BUDGETSETUPDIALOG)->Enable(enable);
+    if (mmIniOptions::enableAssets_)
+      menuBar_->FindItem(MENU_ASSETS)->Enable(enable);
+    if (mmIniOptions::enableBudget_)
+      menuBar_->FindItem(MENU_BUDGETSETUPDIALOG)->Enable(enable);
     menuBar_->FindItem(MENU_TRANSACTIONREPORT)->Enable(enable);
     
-    toolBar_->EnableTool(MENU_NEWACCT, enable);
+    if (mmIniOptions::enableAddAccount_)
+      toolBar_->EnableTool(MENU_NEWACCT, enable);
     toolBar_->EnableTool(MENU_ACCTLIST, enable);
     toolBar_->EnableTool(MENU_ORGPAYEE, enable);
     toolBar_->EnableTool(MENU_ORGCATEGS, enable);
@@ -616,9 +627,12 @@ void mmGUIFrame::updateNavTreeControl()
         navTreeCtrl_->SetItemBold(assets, true);
     }
 
-    wxTreeItemId bills = navTreeCtrl_->AppendItem(root, _("Repeating Transactions"), 2, 2);
-    navTreeCtrl_->SetItemData(bills, new mmTreeItemData(wxT("Bills & Deposits")));
-    navTreeCtrl_->SetItemBold(bills, true);
+    if (mmIniOptions::enableRepeatingTransactions_)
+    {
+       wxTreeItemId bills = navTreeCtrl_->AppendItem(root, _("Repeating Transactions"), 2, 2);
+       navTreeCtrl_->SetItemData(bills, new mmTreeItemData(wxT("Bills & Deposits")));
+       navTreeCtrl_->SetItemBold(bills, true);
+    }
 
     wxTreeItemId budgeting;
     if (mmIniOptions::enableBudget_)
@@ -1579,52 +1593,56 @@ void mmGUIFrame::createHelpPage()
 
 void mmGUIFrame::createMenu()
 {
-	wxBitmap toolBarBitmaps[11];
-    toolBarBitmaps[0] = wxBitmap(new_xpm);
-    toolBarBitmaps[1] = wxBitmap(open_xpm);
-    toolBarBitmaps[2] = wxBitmap(save_xpm);
-    toolBarBitmaps[3] = wxBitmap(newacct_xpm);
-    toolBarBitmaps[4] = wxBitmap(house_xpm);
-    toolBarBitmaps[5] = wxBitmap(print_xpm);
-    toolBarBitmaps[6] = wxBitmap(printpreview_xpm);
-    toolBarBitmaps[7] = wxBitmap(printsetup_xpm);
-    toolBarBitmaps[8] = wxBitmap(edit_account_xpm);
-    toolBarBitmaps[9] = wxBitmap(delete_account_xpm);
-    
+   wxBitmap toolBarBitmaps[11];
+   toolBarBitmaps[0] = wxBitmap(new_xpm);
+   toolBarBitmaps[1] = wxBitmap(open_xpm);
+   toolBarBitmaps[2] = wxBitmap(save_xpm);
+   toolBarBitmaps[3] = wxBitmap(newacct_xpm);
+   toolBarBitmaps[4] = wxBitmap(house_xpm);
+   toolBarBitmaps[5] = wxBitmap(print_xpm);
+   toolBarBitmaps[6] = wxBitmap(printpreview_xpm);
+   toolBarBitmaps[7] = wxBitmap(printsetup_xpm);
+   toolBarBitmaps[8] = wxBitmap(edit_account_xpm);
+   toolBarBitmaps[9] = wxBitmap(delete_account_xpm);
 
-    wxMenu *menuFile = new wxMenu;
-	wxMenuItem* menuItemNew = new wxMenuItem(menuFile, MENU_NEW, 
-		_("&New Database\tCtrl-N"), _("New Money Manager Database"));
-	menuItemNew->SetBitmap(toolBarBitmaps[0]);
+   wxMenu *menuFile = new wxMenu;
+   wxMenuItem* menuItemNew = new wxMenuItem(menuFile, MENU_NEW, 
+      _("&New Database\tCtrl-N"), 
+      _("New Database"));
+   menuItemNew->SetBitmap(toolBarBitmaps[0]);
 
-	wxMenuItem* menuItemOpen = new wxMenuItem(menuFile, MENU_OPEN, 
-		_("&Open Database\tCtrl-O"), _("Open Money Manager Database"));
-	menuItemOpen->SetBitmap(toolBarBitmaps[1]);
+   wxMenuItem* menuItemOpen = new wxMenuItem(menuFile, MENU_OPEN, 
+      _("&Open Database\tCtrl-O"), 
+      _("Open Database"));
+   menuItemOpen->SetBitmap(toolBarBitmaps[1]);
 
-	menuFile->Append(menuItemNew);
-    menuFile->Append(menuItemOpen);
+   menuFile->Append(menuItemNew);
+   menuFile->Append(menuItemOpen);
 
-    wxMenuItem* menuItemSaveAs = new wxMenuItem(menuFile, MENU_SAVE_AS, 
-		 _("Save Database &As"), _("Save Money Manager Database As"));
-	menuItemSaveAs->SetBitmap(wxBitmap(saveas_xpm));
-    menuFile->Append(menuItemSaveAs);
+   wxMenuItem* menuItemSaveAs = new wxMenuItem(menuFile, MENU_SAVE_AS, 
+      _("Save Database &As"), 
+      _("Save Database As"));
+   menuItemSaveAs->SetBitmap(wxBitmap(saveas_xpm));
+   menuFile->Append(menuItemSaveAs);
 
-    menuFile->AppendSeparator();
-    
-    wxMenu* exportMenu = new wxMenu;
-    exportMenu->Append(MENU_EXPORT_CSV, _("&CSV Files"), _("Export to CSV"));
-    exportMenu->Append(MENU_EXPORT_HTML, _("&Report to HTML"), _("Export to HTML"));
-    menuFile->Append(MENU_EXPORT, _("&Export"), exportMenu);
+   menuFile->AppendSeparator();
 
-    wxMenu* importMenu = new wxMenu;
-    importMenu->Append(MENU_IMPORT_QIF, _("&QIF Files"), _("Import from QIF"));
-    importMenu->Append(MENU_IMPORT_UNIVCSV, _("&Universal CSV Files"), _("Import from any CSV file"));
-        importMenu->Append(MENU_IMPORT_CSV, _("&MMEX CSV Files"), _("Import from MMEX CSV"));
-    importMenu->Append(MENU_IMPORT_MMNETCSV, _("&MM.NET CSV Files"), _("Import from MM.NET CSV"));
-    //importMenu->Append(MENU_IMPORT_QFX, _("&QFX Files"), _("Import from QFX"));
-    menuFile->Append(MENU_IMPORT, _("Import"), importMenu);
+   wxMenu* exportMenu = new wxMenu;
+   exportMenu->Append(MENU_EXPORT_CSV, _("&CSV Files"), _("Export to CSV"));
+   exportMenu->Append(MENU_EXPORT_HTML, _("&Report to HTML"), _("Export to HTML"));
+   menuFile->Append(MENU_EXPORT, _("&Export"), exportMenu);
 
-    menuFile->AppendSeparator();
+   wxMenu* importMenu = new wxMenu;
+   importMenu->Append(MENU_IMPORT_QIF, _("&QIF Files"), _("Import from QIF"));
+   importMenu->Append(MENU_IMPORT_UNIVCSV, _("&Universal CSV Files"), _("Import from any CSV file"));
+   if (mmIniOptions::enableImportMMCSV_)
+      importMenu->Append(MENU_IMPORT_CSV, _("&MMEX CSV Files"), _("Import from MMEX CSV"));
+   if (mmIniOptions::enableImportMMNETCSV_)
+      importMenu->Append(MENU_IMPORT_MMNETCSV, _("&MM.NET CSV Files"), _("Import from MM.NET CSV"));
+   //importMenu->Append(MENU_IMPORT_QFX, _("&QFX Files"), _("Import from QFX"));
+   menuFile->Append(MENU_IMPORT, _("Import"), importMenu);
+
+   menuFile->AppendSeparator();
 
     
 	wxMenuItem* menuItemPrintSetup = new wxMenuItem(menuFile, MENU_PRINT_PAGE_SETUP, 
@@ -1664,9 +1682,13 @@ void mmGUIFrame::createMenu()
 
 	wxMenu *menuAccounts = new wxMenu;
 
-	wxMenuItem* menuItemNewAcct = new wxMenuItem(menuAccounts, MENU_NEWACCT, 
-		_("New &Account"), _("New Money Manager Account"));
-	menuItemNewAcct->SetBitmap(toolBarBitmaps[3]);
+   if (mmIniOptions::enableAddAccount_)
+   {
+      wxMenuItem* menuItemNewAcct = new wxMenuItem(menuAccounts, MENU_NEWACCT, 
+         _("New &Account"), _("New Account"));
+      menuItemNewAcct->SetBitmap(toolBarBitmaps[3]);
+      menuAccounts->Append(menuItemNewAcct); 
+   }
 
 	wxMenuItem* menuItemAcctList = new wxMenuItem(menuAccounts, MENU_ACCTLIST, 
 		_("Account &List"), _("Show Account List"));
@@ -1680,13 +1702,11 @@ void mmGUIFrame::createMenu()
 		_("Delete Account"), _("Delete Account from database"));
 	menuItemAcctDelete->SetBitmap(toolBarBitmaps[9]);
 
-    menuAccounts->Append(menuItemNewAcct); 
     menuAccounts->Append(menuItemAcctList); 
     menuAccounts->Append(menuItemAcctEdit); 
     menuAccounts->Append(menuItemAcctDelete); 
 
     wxMenu *menuTools = new wxMenu;
-
     
     wxMenuItem* menuItemCateg = new wxMenuItem(menuTools, MENU_ORGCATEGS, 
 		  _("Organize &Categories"), _("Organize Categories"));
@@ -1711,10 +1731,13 @@ void mmGUIFrame::createMenu()
         menuTools->Append(menuItemBudgeting); 
     }
 
-    wxMenuItem* menuItemBillsDeposits = new wxMenuItem(menuTools, MENU_BILLSDEPOSITS, 
-		 _("Repeating Transactions"), _("Bills && Deposits"));
-	menuItemBillsDeposits->SetBitmap(wxBitmap(clock_xpm));
-    menuTools->Append(menuItemBillsDeposits); 
+    if (mmIniOptions::enableRepeatingTransactions_)
+    {
+       wxMenuItem* menuItemBillsDeposits = new wxMenuItem(menuTools, MENU_BILLSDEPOSITS, 
+          _("Repeating Transactions"), _("Bills && Deposits"));
+       menuItemBillsDeposits->SetBitmap(wxBitmap(clock_xpm));
+       menuTools->Append(menuItemBillsDeposits); 
+    }
 
     if (mmIniOptions::enableStocks_)
     {
@@ -1742,14 +1765,14 @@ void mmGUIFrame::createMenu()
     menuTools->AppendSeparator();
 
     wxMenuItem* menuItemOptions = new wxMenuItem(menuTools, MENU_OPTIONS, 
-		  _("&Options"), _("Money Manager Options"));
+		  _("&Options"), _("Show the Options Dialog"));
 	menuItemOptions->SetBitmap(wxBitmap(wrench_xpm));
     menuTools->Append(menuItemOptions);
 
     wxMenu *menuHelp = new wxMenu;
 
     wxMenuItem* menuItemHelp = new wxMenuItem(menuTools, MENU_HELP, 
-		 _("&Help\tCtrl-F1"), _("Money Manager Help"));
+		 _("&Help\tCtrl-F1"), _("Show the Help file"));
 	menuItemHelp->SetBitmap(wxBitmap(help_xpm));
     menuHelp->Append(menuItemHelp);
 
@@ -1760,31 +1783,38 @@ void mmGUIFrame::createMenu()
 
     menuHelp->AppendSeparator();
 
+    if (mmIniOptions::enableCheckForUpdates_)
+    {
+       wxMenuItem* menuItemCheck = new wxMenuItem(menuTools, MENU_CHECKUPDATE, 
+          _("Check for &Updates"), _("Check For Updates"));
+       menuItemCheck->SetBitmap(wxBitmap(checkupdate_xpm));
+       menuHelp->Append(menuItemCheck);
+    }
 
-    wxMenuItem* menuItemCheck = new wxMenuItem(menuTools, MENU_CHECKUPDATE, 
-		 _("Check for &Updates"), _("Check For Updates"));
-	menuItemCheck->SetBitmap(wxBitmap(checkupdate_xpm));
-    menuHelp->Append(menuItemCheck);
+    if (mmIniOptions::enableReportIssues_)
+    {
+       wxMenuItem* menuItemReportIssues = new wxMenuItem(menuTools, MENU_REPORTISSUES, 
+          _("Report Issues or Feedback"), _("Send email through the mailing list to report issues with the software."));
+       menuItemReportIssues->SetBitmap(wxBitmap(issues_xpm));
+       menuHelp->Append(menuItemReportIssues);
+    }
 
-    wxMenuItem* menuItemReportIssues = new wxMenuItem(menuTools, MENU_REPORTISSUES, 
-	    _("Report Issues or Feedback"), _("Send email through the mailing list to report issues with the software."));
-	menuItemReportIssues->SetBitmap(wxBitmap(issues_xpm));
-    menuHelp->Append(menuItemReportIssues);
-
-    wxMenuItem* menuItemNotify = new wxMenuItem(menuTools, MENU_ANNOUNCEMENTMAILING, 
-		_("Be notified of new releases"), _("Sign up for the announcement mailing list"));
-	menuItemNotify->SetBitmap(wxBitmap(notify_xpm));
-    menuHelp->Append(menuItemNotify); 
+    if (mmIniOptions::enableBeNotifiedForNewReleases_)
+    {
+       wxMenuItem* menuItemNotify = new wxMenuItem(menuTools, MENU_ANNOUNCEMENTMAILING, 
+          _("Be notified of new releases"), _("Sign up for the announcement mailing list"));
+       menuItemNotify->SetBitmap(wxBitmap(notify_xpm));
+       menuHelp->Append(menuItemNotify); 
+    }
         
-
     wxMenuItem* menuItemAbout = new wxMenuItem(menuTools, MENU_ABOUT, 
-	   _("&About..."), _("Show about dialog"));
-	menuItemAbout->SetBitmap(wxBitmap(about_xpm));
+       _("&About..."), _("Show about dialog"));
+    menuItemAbout->SetBitmap(wxBitmap(about_xpm));
     menuHelp->Append(menuItemAbout);
-    
+
     menuBar_ = new wxMenuBar;
     menuBar_->Append(menuFile, _("&File"));
-	menuBar_->Append(menuAccounts, _("&Accounts"));
+    menuBar_->Append(menuAccounts, _("&Accounts"));
     menuBar_->Append(menuTools, _("&Tools"));
     menuBar_->Append(menuView, _("&View"));
     menuBar_->Append(menuHelp, _("&Help"));
@@ -1806,10 +1836,15 @@ void mmGUIFrame::createToolBar()
     toolBarBitmaps[6] = wxBitmap(user_edit_xpm);
     toolBarBitmaps[7] = wxBitmap(money_dollar_xpm);
 
-    toolBar_->AddTool(MENU_NEW, _("New"), toolBarBitmaps[0], _("New Money Manager Database"));
-    toolBar_->AddTool(MENU_OPEN, _("Open"), toolBarBitmaps[1], _("Open Money Manager Database"));
+    toolBar_->AddTool(MENU_NEW, _("New"), toolBarBitmaps[0], 
+       _("New Database"));
+    toolBar_->AddTool(MENU_OPEN, _("Open"), toolBarBitmaps[1], 
+       _("Open Database"));
     toolBar_->AddSeparator();
-    toolBar_->AddTool(MENU_NEWACCT, _("New Account"), toolBarBitmaps[3], _("New Money Manager Account"));
+    if (mmIniOptions::enableAddAccount_)
+    {
+      toolBar_->AddTool(MENU_NEWACCT, _("New Account"), toolBarBitmaps[3], _("New Account"));
+    }
     toolBar_->AddTool(MENU_ACCTLIST, _("Account List"), toolBarBitmaps[4], _("Show Account List"));
     toolBar_->AddSeparator();
     toolBar_->AddTool(MENU_ORGCATEGS, _("Organize Categories"), toolBarBitmaps[5], _("Show Organize Categories Dialog"));
@@ -1863,45 +1898,49 @@ void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
         // we need to check the db whether it is the right version
         if (!mmDBWrapper::checkDBVersion(db_.get()))
         {
-            this->SetTitle(_("Money Manager EX - No File opened "));   
-            mmShowErrorMessage(this, 
-                    _("Sorry. The Database version is too old or \
-Database password is incorrect"), 
-                    _("Error opening database"));
+           wxString note = mmIniOptions::appName_
+              + _(" - No File opened ");
+           this->SetTitle(note);   
+           mmShowErrorMessage(this, 
+              _("Sorry. The Database version is too old or \
+                Database password is incorrect"), 
+                _("Error opening database"));
 
-            db_->Close();
-            db_.reset();
-            return ;
+           db_->Close();
+           db_.reset();
+           return ;
         }
-		password_ = password;
+        password_ = password;
 
         core_ = new mmCoreDB(db_);
     }
     else if (openingNew) // New Database
     {
-        boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
-        db_ = pDB;
-        //db_->Open(fileName, password);
-        db_->Open(fileName);
-		password_ = password;
+       boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
+       db_ = pDB;
+       //db_->Open(fileName, password);
+       db_->Open(fileName);
+       password_ = password;
 
-        openDataBase(fileName);
+       openDataBase(fileName);
 
-        core_ = new mmCoreDB(db_);
+       core_ = new mmCoreDB(db_);
 
-        mmNewDatabaseWizard* wizard = new mmNewDatabaseWizard(this, core_);
-        wizard->RunIt(true);
+       mmNewDatabaseWizard* wizard = new mmNewDatabaseWizard(this, core_);
+       wizard->RunIt(true);
 
-        mmDBWrapper::loadBaseCurrencySettings(db_.get());
+       mmDBWrapper::loadBaseCurrencySettings(db_.get());
 
-        /* Jump to new account creation screen */
-        wxCommandEvent evt;
-        OnNewAccount(evt);
-        return;
+       /* Jump to new account creation screen */
+       wxCommandEvent evt;
+       OnNewAccount(evt);
+       return;
     }
     else // open of existing database failed
     {
-        this->SetTitle(_("Money Manager EX - No File opened "));   
+       wxString note = mmIniOptions::appName_ + 
+               _(" - No File opened ");
+        this->SetTitle(note);   
         
         wxMessageDialog msgDlg(this, _("Cannot locate previously opened .mmb database.\nDo you want to browse to locate the file?"), 
                                 _("Error opening database"), wxYES_NO);
@@ -1930,7 +1969,7 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
     pgd->Destroy();
 
     wxFileName fName(fileName);
-    wxString title = wxT("Money Manager EX : ") 
+    wxString title = mmIniOptions::appName_ + wxT(" : ") 
         + fileName;
     this->SetTitle(title);
 
@@ -1982,7 +2021,7 @@ void mmGUIFrame::OnNew(wxCommandEvent& event)
 	// Don't support encrypted databases in Linux yet
 	extSupported = wxT("MMB Files(*.mmb)|*.mmb");
 #endif
-    wxString fileName = wxFileSelector(wxT("Choose Money Manager Ex data file to create"), 
+    wxString fileName = wxFileSelector(wxT("Choose database file to create"), 
                 wxT(""), wxT(""), wxT(""), extSupported, wxSAVE | wxOVERWRITE_PROMPT);
     if ( !fileName.empty() )
     {
@@ -1998,7 +2037,7 @@ void mmGUIFrame::OnOpen(wxCommandEvent& event)
 	// Don't support encrypted databases in Linux yet
 	extSupported = wxT("MMB Files(*.mmb)|*.mmb");
 #endif
-    wxString fileName = wxFileSelector(wxT("Choose Money Manager Ex data file to open"), 
+    wxString fileName = wxFileSelector(wxT("Choose database file to open"), 
                 wxT(""), wxT(""), wxT(""), extSupported, wxFILE_MUST_EXIST);
     if ( !fileName.empty() )
     {
@@ -2016,7 +2055,7 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
 	//wildCardStr = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
 #endif
 
-    wxString fileName = wxFileSelector(wxT("Choose Money Manager Ex data file to Save As"), 
+    wxString fileName = wxFileSelector(wxT("Choose database file to Save As"), 
                 wxT(""), wxT(""), wxT(""), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
     if ( !fileName.empty() )
     {

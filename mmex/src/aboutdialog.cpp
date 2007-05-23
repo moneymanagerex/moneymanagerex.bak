@@ -104,56 +104,68 @@ void mmAboutDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer4, 1, wxGROW|wxALL, 5);
 
     wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, 
-        wxT("Money Manager Ex"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText5->SetFont(wxFont(16, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+        mmIniOptions::appName_, 
+        wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticText5->SetFont(wxFont(16, 
+       wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
     itemBoxSizer4->Add(itemStaticText5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, 
         MMEXVERSION , wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer4->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
-        wxID_STATIC, wxT("(c) 2005-2006 Madhan Kanagavel"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText8->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
-    itemBoxSizer4->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
-   
-    wxStaticText* itemStaticText91 = new wxStaticText( itemDialog1, 
-        wxID_STATIC, _("  and contributers from around the world."), 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer4->Add(itemStaticText91, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+    if (!mmIniOptions::enableCustomAboutDialog_)
+    {
+       wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
+          wxID_STATIC, wxT("(c) 2005-2006 Madhan Kanagavel"), wxDefaultPosition, wxDefaultSize, 0 );
+       itemStaticText8->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+       itemBoxSizer4->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxStaticText* itemStaticText911 = new wxStaticText( itemDialog1, 
-        wxID_STATIC, _("Released under the GNU GPL License"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText911->SetFont(wxFont(9, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
-    itemBoxSizer4->Add(itemStaticText911, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+       wxStaticText* itemStaticText91 = new wxStaticText( itemDialog1, 
+          wxID_STATIC, _("  and contributers from around the world."), 
+          wxDefaultPosition, wxDefaultSize, 0 );
+       itemBoxSizer4->Add(itemStaticText91, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxStaticText* itemStaticText10 = new wxStaticText( itemDialog1, 
-        wxID_STATIC, wxT("http://www.thezeal.com/software"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer4->Add(itemStaticText10, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+       wxStaticText* itemStaticText911 = new wxStaticText( itemDialog1, 
+          wxID_STATIC, _("Released under the GNU GPL License"), 
+          wxDefaultPosition, wxDefaultSize, 0 );
+       itemStaticText911->SetFont(wxFont(9, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+       itemBoxSizer4->Add(itemStaticText911, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    itemBoxSizer4->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+       wxStaticText* itemStaticText10 = new wxStaticText( itemDialog1, 
+          wxID_STATIC, wxT("http://www.thezeal.com/software"), wxDefaultPosition, wxDefaultSize, 0 );
+       itemBoxSizer4->Add(itemStaticText10, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxStaticText* itemStaticText12 = new wxStaticText( itemDialog1, 
-        wxID_STATIC, _("Powered by wxWidgets and SQLite"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer4->Add(itemStaticText12, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+       itemBoxSizer4->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxButton* itemButton14 = new wxButton( itemDialog1, ID_DIALOG_BUTTON_ABOUT_VERSION_HISTORY, 
-        _("Version History"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer4->Add(itemButton14, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+       wxStaticText* itemStaticText12 = new wxStaticText( itemDialog1, 
+          wxID_STATIC, _("Powered by wxWidgets and SQLite"), wxDefaultPosition, wxDefaultSize, 0 );
+       itemBoxSizer4->Add(itemStaticText12, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxButton* itemButton18 = new wxButton( itemDialog1, ID_DIALOG_BUTTON_ABOUT_CONTRIBUTERS, 
-        _("Contributers"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer4->Add(itemButton18, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+       wxButton* itemButton14 = new wxButton( itemDialog1, ID_DIALOG_BUTTON_ABOUT_VERSION_HISTORY, 
+          _("Version History"), 
+          wxDefaultPosition, wxDefaultSize, 0 );
+       itemBoxSizer4->Add(itemButton14, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxString langStr = mmDBWrapper::getINISettingValue(inidb_, 
-        wxT("LANGUAGE"), wxT("")); 
+       wxButton* itemButton18 = new wxButton( itemDialog1, ID_DIALOG_BUTTON_ABOUT_CONTRIBUTERS, 
+          _("Contributers"), 
+          wxDefaultPosition, wxDefaultSize, 0 );
+       itemBoxSizer4->Add(itemButton18, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxStaticText* itemStaticText15 = new wxStaticText( itemDialog1, 
-        wxID_STATIC, _("Using Language : ") + langStr, wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer4->Add(itemStaticText15, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+       wxString langStr = mmDBWrapper::getINISettingValue(inidb_, 
+          wxT("LANGUAGE"), wxT("")); 
+
+       wxStaticText* itemStaticText15 = new wxStaticText( itemDialog1, 
+          wxID_STATIC, _("Using Language : ") + langStr, wxDefaultPosition, wxDefaultSize, 0 );
+       itemBoxSizer4->Add(itemStaticText15, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+    }
+    else
+    {
+       wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
+          wxID_STATIC, mmIniOptions::customCompanyName_ , wxDefaultPosition, wxDefaultSize, 0 );
+       itemStaticText8->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+       itemBoxSizer4->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+    }
 }
 
 

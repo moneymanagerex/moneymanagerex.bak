@@ -37,10 +37,46 @@ void mmOptions::saveOptions(wxSQLite3Database* db)
    mmDBWrapper::setInfoSettingValue(db, wxT("DATEFORMAT"), dateFormat);
 }
 // --------------------------------------------------------------------------
-bool mmIniOptions::enableAssets_ = true;
-bool mmIniOptions::enableBudget_ = true;
-bool mmIniOptions::enableStocks_ = true;
-bool mmIniOptions::enableGraphs_ = true;
+#define MMEX_CUSTOM_BUILD 1
+
+#ifdef MMEX_CUSTOM_BUILD
+   bool mmIniOptions::enableAssets_ = false;
+   bool mmIniOptions::enableBudget_ = false;
+   bool mmIniOptions::enableStocks_ = false;
+   bool mmIniOptions::enableGraphs_ = false;
+   bool mmIniOptions::enableCustomLogo_ = true;
+   wxString mmIniOptions::logoName_ = wxT("");
+   bool mmIniOptions::enableAddAccount_ = false;
+   bool mmIniOptions::enableRepeatingTransactions_ = false;
+   wxString mmIniOptions::appName_ = wxT("Hotel Manager");
+   bool mmIniOptions::enableImportMMNETCSV_ = false;
+   bool mmIniOptions::enableImportMMCSV_ = false;
+   bool mmIniOptions::enableCheckForUpdates_ = false;
+   bool mmIniOptions::enableReportIssues_  = false;
+   bool mmIniOptions::enableBeNotifiedForNewReleases_ = false;
+   bool mmIniOptions::enableVisitWebsite_ = false;
+   bool mmIniOptions::enableCustomAboutDialog_ = true;
+   wxString mmIniOptions::customCompanyName_ = wxT("Blackpool Enterprises");
+#else
+   bool mmIniOptions::enableAssets_ = true;
+   bool mmIniOptions::enableBudget_ = true;
+   bool mmIniOptions::enableStocks_ = true;
+   bool mmIniOptions::enableGraphs_ = true;
+   bool mmIniOptions::enableCustomLogo_ = true;
+   wxString mmIniOptions::logoName_ = wxT("");
+   bool mmIniOptions::enableAddAccount_ = true;
+   bool mmIniOptions::enableRepeatingTransactions_ = true;
+   wxString mmIniOptions::appName_ = wxT("Money Manager Ex");
+   bool mmIniOptions::enableImportMMNETCSV_ = true;
+   bool mmIniOptions::enableImportMMCSV_ = true;
+   bool mmIniOptions::enableCheckForUpdates_ = true;
+   bool mmIniOptions::enableReportIssues_  = true;
+   bool mmIniOptions::enableBeNotifiedForNewReleases_ = true;
+   bool mmIniOptions::enableVisitWebsite_ = true;
+   bool mmIniOptions::enableCustomAboutDialog_ = false;
+   wxString mmIniOptions::customCompanyName_ = wxT("");
+#endif
+
 
 void mmIniOptions::loadOptions(wxSQLite3Database* db)
 {

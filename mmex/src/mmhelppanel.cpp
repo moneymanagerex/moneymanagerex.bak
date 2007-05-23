@@ -74,8 +74,9 @@ void mmHelpPanel::CreateControls()
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     itemPanel3->SetSizer(itemBoxSizerVHeader);
 
+    wxString helpHeader = mmIniOptions::appName_ + _(" Help");
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, ID_PANEL_REPORTS_STATIC_HEADER, 
-        _("Money Manager Ex Help"), wxDefaultPosition, wxDefaultSize, 0 );
+        helpHeader, wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, 
         wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);

@@ -89,6 +89,19 @@ public:
    static bool enableAssets_;
    static bool enableBudget_;
    static bool enableGraphs_;
+   static bool enableAddAccount_;
+   static bool enableRepeatingTransactions_;
+   static bool enableCustomLogo_;
+   static bool enableCheckForUpdates_;
+   static bool enableReportIssues_;
+   static bool enableBeNotifiedForNewReleases_;
+   static bool enableVisitWebsite_;
+   static wxString logoName_;
+   static wxString appName_;
+   static bool enableImportMMNETCSV_;
+   static bool enableImportMMCSV_;
+   static bool enableCustomAboutDialog_;
+   static wxString customCompanyName_;
 };
 
 class mmColors

@@ -21,9 +21,10 @@
 
 #include "defs.h"
 #include "guiid.h"
+#include "util.h"
 
 #define SYMBOL_MMAPPSTARTDIALOG_STYLE    wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_MMAPPSTARTDIALOG_TITLE    _("Money Manager Ex Start Page")
+#define SYMBOL_MMAPPSTARTDIALOG_TITLE    mmIniOptions::appName_ + _(" Start Page")
 #define SYMBOL_MMAPPSTARTDIALOG_IDNAME   ID_DIALOG_APPSTART
 #define SYMBOL_MMAPPSTARTDIALOG_SIZE     wxSize(400, 300)
 #define SYMBOL_MMAPPSTARTDIALOG_POSITION wxDefaultPosition

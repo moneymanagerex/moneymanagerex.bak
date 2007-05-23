@@ -19,7 +19,7 @@
 #include "appstartdialog.h"
 #include "guiid.h"
 #include "dbwrapper.h"
-#include "util.h"
+
 /*******************************************************/
 /* Include XPM Support */
 #include "../resources/money.xpm"
@@ -114,13 +114,13 @@ void mmAppStartDialog::CreateControls()
         itemButton61->Disable();
 
     wxButton* itemButton6 = new wxButton( itemDialog1, ID_BUTTON_APPSTART_NEW_DATABASE, 
-        _("Create a New Money Manager File"), wxDefaultPosition, wxDefaultSize, 0 );
+        _("Create a New Database"), wxDefaultPosition, wxDefaultSize, 0 );
     itemButton6->SetToolTip(_("Create a new database file to get started"));
     itemBoxSizer5->Add(itemButton6, 0, wxGROW|wxALL, 5);
 
     wxButton* itemButton7 = new wxButton( itemDialog1, ID_BUTTON_APPSTART_OPEN_DATABASE, 
-        _("Open Existing Money Manager File"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemButton7->SetToolTip(_("Open an already created Money Manager Ex database file with extension (*.mmb)"));
+        _("Open Existing Database"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemButton7->SetToolTip(_("Open an already created database file with extension (*.mmb)"));
     itemBoxSizer5->Add(itemButton7, 0, wxGROW|wxALL, 5);
 
     wxButton* itemButton8 = new wxButton( itemDialog1, ID_BUTTON_APPSTART_HELP, 
@@ -128,16 +128,22 @@ void mmAppStartDialog::CreateControls()
     itemButton8->SetToolTip(_("Read the user manual"));
     itemBoxSizer5->Add(itemButton8, 0, wxGROW|wxALL, 5);
 
-    wxButton* itemButton9 = new wxButton( itemDialog1, ID_BUTTON_APPSTART_WEBSITE, 
-        _("Visit Website for more information"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemButton9->SetToolTip(_("Open the Money Manager Ex website for latest news, updates etc"));
-    itemBoxSizer5->Add(itemButton9, 0, wxGROW|wxALL, 5);
+    if (mmIniOptions::enableVisitWebsite_)
+    {
+       wxButton* itemButton9 = new wxButton( itemDialog1, ID_BUTTON_APPSTART_WEBSITE, 
+          _("Visit Website for more information"), wxDefaultPosition, wxDefaultSize, 0 );
+       itemButton9->SetToolTip(_("Open the Money Manager Ex website for latest news, updates etc"));
+       itemBoxSizer5->Add(itemButton9, 0, wxGROW|wxALL, 5);
+    }
 
     wxBoxSizer* itemBoxSizer10 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer10, 0, wxALIGN_LEFT|wxALL, 5);
 
+    wxString showAppStartString = _("Show this window next time ") + 
+                                  mmIniOptions::appName_ + 
+                                  _(" starts");
     itemCheckBox = new wxCheckBox( itemDialog1, ID_CHECKBOX_APPSTART_SHOWAPPSTART, 
-        _("Show this window next time Money Manager Ex starts"), wxDefaultPosition, 
+        showAppStartString, wxDefaultPosition, 
         wxDefaultSize, wxCHK_2STATE );
     wxString showBeginApp = mmDBWrapper::getINISettingValue(inidb_, 
         wxT("SHOWBEGINAPP"), wxT(""));

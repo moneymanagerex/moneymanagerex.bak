@@ -158,7 +158,8 @@ public:
     {
         if ( currencyID_ == -1)
         {
-            wxMessageBox(_("Base Currency Not Set"), _T("Money Manager Ex Error"),
+            wxMessageBox(_("Base Currency Not Set"), 
+                         _("Error"),
                          wxICON_WARNING | wxOK, this);
 
             return false;
@@ -229,7 +230,8 @@ public:
     {
         if ( textAccountName_->GetValue() == wxT(""))
         {
-            wxMessageBox(_("Account Name Invalid"), _T("Money Manager Ex Error"),
+            wxMessageBox(_("Account Name Invalid"), 
+                         _("Error"),
                          wxICON_WARNING | wxOK, this);
 
             return false;

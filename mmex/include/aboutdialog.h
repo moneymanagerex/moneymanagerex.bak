@@ -19,9 +19,10 @@
 #define _MM_EX_ABOUTDIALOG_H_
 
 #include "guiid.h"
+#include "util.h"
 
 #define SYMBOL_ABOUTDIALOG_STYLE    wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX
-#define SYMBOL_ABOUTDIALOG_TITLE    _("About Money Manager Ex")
+#define SYMBOL_ABOUTDIALOG_TITLE    _("About ") + mmIniOptions::appName_
 #define SYMBOL_ABOUTDIALOG_IDNAME   ID_DIALOG_ABOUT
 #define SYMBOL_ABOUTDIALOG_SIZE     wxSize(500, 220)
 #define SYMBOL_ABOUTDIALOG_POSITION wxDefaultPosition
