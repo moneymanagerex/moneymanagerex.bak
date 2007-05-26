@@ -1043,9 +1043,8 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             if (!refreshRequested_)
             {
-                refreshRequested_ = true;
-                wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
-                GetEventHandler()->AddPendingEvent(ev); ;
+              refreshRequested_ = true;
+              createHomePage();
             }
             return;
         }

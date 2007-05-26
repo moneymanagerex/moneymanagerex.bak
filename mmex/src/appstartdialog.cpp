@@ -91,7 +91,7 @@ void mmAppStartDialog::CreateControls()
     wxBitmap itemStaticBitmap4Bitmap(money_xpm);
     
     wxStaticBitmap* itemStaticBitmap4;
-    if (mmIniOptions::enableCustomLogo_)
+    if (!mmIniOptions::enableCustomLogo_)
     {
         itemStaticBitmap4 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
             itemStaticBitmap4Bitmap, wxDefaultPosition, wxSize(181, 200), 0 );

@@ -26,9 +26,9 @@ Bakefile for generating makefiles in Linux.
         <sources>src/aboutdialog.cpp</sources>
         <sources>src/appstartdialog.cpp</sources>
         <sources>src/assetdialog.cpp</sources>
-        <sources>src/assets.cpp</sources>
-        <sources>src/bddialog.cpp</sources>
-        <sources>src/billsdeposits.cpp</sources>
+        <sources>src/assetspanel.cpp</sources>
+        <sources>src/billsdepositsdialog.cpp</sources>
+        <sources>src/billsdepositspanel.cpp</sources>
         <sources>src/budgetentrydialog.cpp</sources>
         <sources>src/budgetingpanel.cpp</sources>
         <sources>src/budgetyeardialog.cpp</sources>
@@ -39,6 +39,7 @@ Bakefile for generating makefiles in Linux.
         <sources>src/fileviewerdialog.cpp</sources>
         <sources>src/filtertransdialog.cpp</sources>
         <sources>src/htmlbuilder.cpp</sources>
+        <sources>src/led.cpp</sources>
         <sources>src/maincurrencydialog.cpp</sources>
         <sources>src/mmaccount.cpp</sources>
         <sources>src/mmcategory.cpp</sources>
@@ -46,26 +47,31 @@ Bakefile for generating makefiles in Linux.
         <sources>src/mmcoredb.cpp</sources>
         <sources>src/mmcurrency.cpp</sources>
         <sources>src/mmex.cpp</sources>
+        <sources>src/mmgraphgenerator.cpp</sources>
         <sources>src/mmhelppanel.cpp</sources>
         <sources>src/mmhomepagepanel.cpp</sources>
         <sources>src/mmpayee.cpp</sources>
         <sources>src/mmreportspanel.cpp</sources>
         <sources>src/mmtransaction.cpp</sources>
-        <sources>src/newchkacctdialog.cpp</sources>
+        <sources>src/mmyahoo.cpp</sources>
+        <sources>src/newacctdialog.cpp</sources>
         <sources>src/optionsdialog.cpp</sources>
         <sources>src/payeedialog.cpp</sources>
         <sources>src/qifimport.cpp</sources>
+        <sources>src/splitdetailsdialog.cpp</sources>
+        <sources>src/splittransactionsdialog.cpp</sources>
         <sources>src/stockdialog.cpp</sources>
-        <sources>src/stocks.cpp</sources>
-        <sources>src/transdialog.cpp</sources>
+        <sources>src/stockspanel.cpp</sources>
         <sources>src/tinystr.cpp</sources>
         <sources>src/tinyxml.cpp</sources>
         <sources>src/tinyxmlerror.cpp</sources>
         <sources>src/tinyxmlparser.cpp</sources>
-        <sources>src/univcsv.cpp</sources>
+        <sources>src/transdialog.cpp</sources>
+        <sources>src/univcsvdialog.cpp</sources>
         <sources>src/util.cpp</sources>
         <sources>src/wxtinyxml.cpp</sources>
         <sources>src/wxsqlite3.cpp</sources>
+        <sources>src/yahoosettingsdialog.cpp</sources>
 
         <wx-lib>net</wx-lib>                
         <wx-lib>html</wx-lib>                
