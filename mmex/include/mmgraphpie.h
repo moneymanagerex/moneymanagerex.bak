@@ -4,6 +4,11 @@
 #ifndef _MM_EX_GRAPHPIE_H_
 #define _MM_EX_GRAPHPIE_H_
 
+bool sortValueList( ValuePair& elem1, ValuePair& elem2 )
+{
+    return fabs(elem1.amount) > fabs(elem2.amount);
+}
+
 class mmGraphPie : public mmGraphGenerator
 {
 public:
@@ -52,15 +57,20 @@ public:
         }
         else
         {
+            std::sort(valueList.begin(), valueList.end(), sortValueList);
             for (int idx = 0; idx < (int)valueList.size(); idx++)
             {
-                labelStr += wxT("\"");     
-                labelStr += valueList[idx].label;
-                labelStr += wxT("\"\\n(@@PCT%)\n"); 
+                if (idx < 10)
+                {
+                    labelStr += wxT("\"");     
+                    labelStr += valueList[idx].label.Left(20);
+                    labelStr += wxT("\"(@@PCT%)\n"); 
+                }
 
                 dataStr += wxString::Format(wxT("%.0f"), fabs(valueList[idx].amount));
                 dataStr += wxT("\n");
             }
+            
         }
        
         fileContents.Replace(wxT("$LABELS"), labelStr);

@@ -1,6 +1,8 @@
 Version History of Money Manager Ex
 
 0.8.0.7 ()
+- Fix crash when pressing CTRL+R in account screen
+- Add pie charts for categories
 - Fix bug where favorite accounts were not being displayed correctly (Jota)
 - Reconciled balance should show initial balance correctly(Jota)
 - Add support for split categories in a single transaction
