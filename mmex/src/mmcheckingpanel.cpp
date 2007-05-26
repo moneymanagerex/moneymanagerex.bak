@@ -881,7 +881,9 @@ void MyListCtrl::OnItemRightClick(wxListEvent& event)
 
 void MyListCtrl::OnMarkTransactionDB(const wxString& status)
 {
-   int transID = cp_->trans_[selectedIndex_]->transactionID();
+    if (selectedIndex_ == -1)
+        return;
+    int transID = cp_->trans_[selectedIndex_]->transactionID();
     mmDBWrapper::updateTransactionWithStatus(cp_->db_, transID, status);
     cp_->trans_[selectedIndex_]->status_ = status;
 
@@ -890,8 +892,8 @@ void MyListCtrl::OnMarkTransactionDB(const wxString& status)
         DeleteAllItems();
         cp_->initVirtualListControl();
     }
-   RefreshItem(selectedIndex_);
-   cp_->setAccountSummary();
+    RefreshItem(selectedIndex_);
+    cp_->setAccountSummary();
 }
 
 void MyListCtrl::OnMarkTransaction(wxCommandEvent& event)

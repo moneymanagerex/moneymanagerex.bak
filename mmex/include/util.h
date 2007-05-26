@@ -83,6 +83,7 @@ class mmIniOptions
 {
 public:
    static void loadOptions(wxSQLite3Database* db);
+   static void loadInfoOptions(wxSQLite3Database* db);
    static void saveOptions(wxSQLite3Database* db);
 
    static bool enableStocks_;
@@ -90,6 +91,7 @@ public:
    static bool enableBudget_;
    static bool enableGraphs_;
    static bool enableAddAccount_;
+   static bool enableDeleteAccount_;
    static bool enableRepeatingTransactions_;
    static bool enableCustomLogo_;
    static bool enableCheckForUpdates_;
@@ -101,7 +103,11 @@ public:
    static bool enableImportMMNETCSV_;
    static bool enableImportMMCSV_;
    static bool enableCustomAboutDialog_;
-   static wxString customCompanyName_;
+   static wxString aboutCompanyName_;
+   static bool disableCategoryModify_;
+   static wxString userNameString_;
+   static bool enableCustomTemplateDB_;
+   static wxString customTemplateDB_;
 };
 
 class mmColors

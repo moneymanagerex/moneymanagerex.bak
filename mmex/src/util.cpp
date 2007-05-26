@@ -37,7 +37,7 @@ void mmOptions::saveOptions(wxSQLite3Database* db)
    mmDBWrapper::setInfoSettingValue(db, wxT("DATEFORMAT"), dateFormat);
 }
 // --------------------------------------------------------------------------
-#define MMEX_CUSTOM_BUILD 1
+//#define MMEX_CUSTOM_BUILD 1
 
 #ifdef MMEX_CUSTOM_BUILD
    bool mmIniOptions::enableAssets_ = false;
@@ -45,9 +45,9 @@ void mmOptions::saveOptions(wxSQLite3Database* db)
    bool mmIniOptions::enableStocks_ = false;
    bool mmIniOptions::enableGraphs_ = false;
    bool mmIniOptions::enableCustomLogo_ = true;
-   wxString mmIniOptions::logoName_ = wxT("");
+   wxString mmIniOptions::logoName_ = wxT("bma_small.jpg");
    bool mmIniOptions::enableAddAccount_ = false;
-   bool mmIniOptions::enableRepeatingTransactions_ = false;
+   bool mmIniOptions::enableRepeatingTransactions_ = true;
    wxString mmIniOptions::appName_ = wxT("Hotel Manager");
    bool mmIniOptions::enableImportMMNETCSV_ = false;
    bool mmIniOptions::enableImportMMCSV_ = false;
@@ -56,13 +56,18 @@ void mmOptions::saveOptions(wxSQLite3Database* db)
    bool mmIniOptions::enableBeNotifiedForNewReleases_ = false;
    bool mmIniOptions::enableVisitWebsite_ = false;
    bool mmIniOptions::enableCustomAboutDialog_ = true;
-   wxString mmIniOptions::customCompanyName_ = wxT("Blackpool Enterprises");
+   wxString mmIniOptions::aboutCompanyName_ = wxT("Blackpool Enterprises");
+   bool mmIniOptions::disableCategoryModify_ = true;
+   bool mmIniOptions::enableDeleteAccount_ = false;
+   wxString mmIniOptions::userNameString_ = wxT("");
+   bool mmIniOptions::enableCustomTemplateDB_ = true;
+   wxString mmIniOptions::customTemplateDB_ = wxT("hotel_bma_template.mmb");
 #else
    bool mmIniOptions::enableAssets_ = true;
    bool mmIniOptions::enableBudget_ = true;
    bool mmIniOptions::enableStocks_ = true;
    bool mmIniOptions::enableGraphs_ = true;
-   bool mmIniOptions::enableCustomLogo_ = true;
+   bool mmIniOptions::enableCustomLogo_ = false;
    wxString mmIniOptions::logoName_ = wxT("");
    bool mmIniOptions::enableAddAccount_ = true;
    bool mmIniOptions::enableRepeatingTransactions_ = true;
@@ -74,7 +79,12 @@ void mmOptions::saveOptions(wxSQLite3Database* db)
    bool mmIniOptions::enableBeNotifiedForNewReleases_ = true;
    bool mmIniOptions::enableVisitWebsite_ = true;
    bool mmIniOptions::enableCustomAboutDialog_ = false;
-   wxString mmIniOptions::customCompanyName_ = wxT("");
+   wxString mmIniOptions::aboutCompanyName_ = wxT("");
+   bool mmIniOptions::disableCategoryModify_ = false;
+   bool mmIniOptions::enableDeleteAccount_ = true;
+   wxString mmIniOptions::userNameString_ = wxT("");
+   bool mmIniOptions::enableCustomTemplateDB_ = false;
+   wxString mmIniOptions::customTemplateDB_ = wxT("");
 #endif
 
 
@@ -91,6 +101,11 @@ void mmIniOptions::loadOptions(wxSQLite3Database* db)
 
    if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEGRAPHS"), wxT("TRUE")) != wxT("TRUE"))
       enableGraphs_ = false;
+}
+
+void mmIniOptions::loadInfoOptions(wxSQLite3Database* db)
+{
+   mmIniOptions::userNameString_ = mmDBWrapper::getInfoSettingValue(db, wxT("USERNAME"), wxT(""));
 }
 
 void mmIniOptions::saveOptions(wxSQLite3Database* db)

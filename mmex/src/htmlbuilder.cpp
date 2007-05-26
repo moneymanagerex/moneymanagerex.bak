@@ -27,6 +27,15 @@ void mmHTMLBuilder::init()
     html_ += wxT("</head>           \
         <body bgcolor=#FFFFFF text=#000000 link=#0000cc \
         vlink=#551a8b alink=#ff0000>");
+
+   html_ += wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\">");
+   html_ += wxT("<tr><td>");
+   if (mmIniOptions::enableCustomLogo_)
+        html_ += wxT("<img src=\"")+ mmIniOptions::logoName_ + wxT("\"></img>");
+   html_ += wxT("</td><td width=\"300\">");
+   addHeader(5, mmIniOptions::userNameString_);
+   html_ += wxT("</td></tr></table>");
+
 }
 
 void mmHTMLBuilder::end()

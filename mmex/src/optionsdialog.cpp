@@ -22,6 +22,7 @@
 #include "util.h"
 #include <wx/colordlg.h>
 #include <wx/combobox.h>
+#include "mmgraphgenerator.h"
 
 #define VIEW_ALL       0
 #define VIEW_OPEN      1
@@ -77,6 +78,12 @@ mmOptionsDialog::~mmOptionsDialog( )
     wxString delim = st->GetValue();
     if (!delim.IsEmpty())
         mmDBWrapper::setInfoSettingValue(db_, wxT("DELIMITER"), delim); 
+
+    wxTextCtrl* stun = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME);
+    wxString username = stun->GetValue();
+    mmDBWrapper::setInfoSettingValue(db_, wxT("USERNAME"), username); 
+    mmIniOptions::userNameString_ = username;
+
 
     wxTextCtrl* url = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL);
     wxString stockURL = url->GetValue();
@@ -274,6 +281,24 @@ void mmOptionsDialog::CreateControls()
         delimit, wxDefaultPosition, wxDefaultSize, 0 );
     textDelimiter->SetToolTip(_("Specify the delimiter to use when importing/exporting CSV files"));
     itemStaticBoxSizer18->Add(textDelimiter, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+     // ------------------------------------------    
+    wxStaticBox* itemStaticBoxUN = new wxStaticBox(itemPanelGeneral, wxID_ANY, 
+        _("Display"));
+    wxStaticBoxSizer* itemStaticBoxSizerUN = new wxStaticBoxSizer(itemStaticBoxUN, 
+        wxHORIZONTAL);
+    itemBoxSizer20->Add(itemStaticBoxSizerUN, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
+    
+    wxStaticText* itemStaticTextUN = new wxStaticText( itemPanelGeneral, wxID_STATIC, 
+        _("User Name"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticBoxSizerUN->Add(itemStaticTextUN, 0, 
+        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+    wxString userName = mmDBWrapper::getInfoSettingValue(db_, wxT("USERNAME"), wxT(""));
+    wxTextCtrl* textUN = new wxTextCtrl( itemPanelGeneral, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME, 
+        userName, wxDefaultPosition, wxDefaultSize, 0 );
+    textUN->SetToolTip(_("Specify the User Name"));
+    itemStaticBoxSizerUN->Add(textUN, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
 	  // ------------------------------------------    
     wxStaticBox* itemStaticBoxSizer1881Static = new wxStaticBox(itemPanelGeneral, wxID_ANY, 
@@ -527,6 +552,9 @@ void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& event)
 	wxString lang = mmDBWrapper::getINISettingValue(inidb_, 
         wxT("LANGUAGE"), wxT(""));
 	bn->SetLabel(lang);
+
+    if (!mmGraphGenerator::checkGraphFiles())
+        mmIniOptions::enableGraphs_ = false;
 }
 
 void mmOptionsDialog::OnNavTreeColorChanged(wxCommandEvent& event)

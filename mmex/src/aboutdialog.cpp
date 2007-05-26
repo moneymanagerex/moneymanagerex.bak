@@ -24,6 +24,7 @@
 /*******************************************************/
 /* Include XPM Support */
 #include "../resources/money.xpm"
+#include "../resources/bma.xpm"
 /*******************************************************/
 IMPLEMENT_DYNAMIC_CLASS( mmAboutDialog, wxDialog )
 
@@ -96,8 +97,14 @@ void mmAboutDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizerN, 1, wxGROW|wxALL, 5);
 
     wxBitmap itemStaticBitmap3Bitmap(money_xpm);
-    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
-        itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(235, 157), 0 );
+    wxBitmap itemStaticCustomBitmap(bma_xpm);
+    wxStaticBitmap* itemStaticBitmap3;
+    if (!mmIniOptions::enableCustomLogo_)
+        itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
+            itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(235, 157), 0 );
+    else
+        itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
+            itemStaticCustomBitmap, wxDefaultPosition, wxSize(235, 157), 0 );
     itemBoxSizerN->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
@@ -162,7 +169,7 @@ void mmAboutDialog::CreateControls()
     else
     {
        wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
-          wxID_STATIC, mmIniOptions::customCompanyName_ , wxDefaultPosition, wxDefaultSize, 0 );
+          wxID_STATIC, mmIniOptions::aboutCompanyName_ , wxDefaultPosition, wxDefaultSize, 0 );
        itemStaticText8->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
        itemBoxSizer4->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
     }

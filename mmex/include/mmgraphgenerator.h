@@ -35,6 +35,7 @@ public:
     static void setEnv();
     static wxString envString_;
     bool isGraphEnabled();
+    static bool checkGraphFiles();
 
 protected:
     wxString scriptName_;

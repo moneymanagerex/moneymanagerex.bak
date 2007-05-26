@@ -151,35 +151,41 @@ void mmHomePagePanel::updateAccounts()
         }
     }
 
-    /* Stocks */
-    double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_);
-    wxString stockBalanceStr;
-    mmDBWrapper::loadBaseCurrencySettings(db_);
-    mmCurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
+    if (mmIniOptions::enableStocks_)
+    {
+        /* Stocks */
+        double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_);
+        wxString stockBalanceStr;
+        mmDBWrapper::loadBaseCurrencySettings(db_);
+        mmCurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
 
-    data.clear();
-    hb.addHTML(wxT("<tr bgcolor=\"#D3EFF6\" ><td><a href=\"Stocks\">"));
-    hb.addHTML(_("Stock Investments"));
-    hb.addHTML(wxT("</a></td><td align=\"right\">"));
-    hb.addHTML(stockBalanceStr);
-    hb.addHTML(wxT("</td></tr>"));
+        data.clear();
+        hb.addHTML(wxT("<tr bgcolor=\"#D3EFF6\" ><td><a href=\"Stocks\">"));
+        hb.addHTML(_("Stock Investments"));
+        hb.addHTML(wxT("</a></td><td align=\"right\">"));
+        hb.addHTML(stockBalanceStr);
+        hb.addHTML(wxT("</td></tr>"));
 
-    tBalance += stockBalance;
+        tBalance += stockBalance;
+    }
 
-    /* Assets */
-    double assetBalance = mmDBWrapper::getAssetBalance(db_);
-    wxString assetBalanceStr;
-    mmDBWrapper::loadBaseCurrencySettings(db_);
-    mmCurrencyFormatter::formatDoubleToCurrency(assetBalance, assetBalanceStr);
+    if (mmIniOptions::enableAssets_)
+    {
+        /* Assets */
+        double assetBalance = mmDBWrapper::getAssetBalance(db_);
+        wxString assetBalanceStr;
+        mmDBWrapper::loadBaseCurrencySettings(db_);
+        mmCurrencyFormatter::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
-    data.clear();
-    hb.addHTML(wxT("<tr bgcolor=\"#D3EFF4\" ><td><a href=\"Assets\">"));
-    hb.addHTML(_("Assets"));
-    hb.addHTML(wxT("</a></td><td align=\"right\">"));
-    hb.addHTML(assetBalanceStr);
-    hb.addHTML(wxT("</td></tr>"));
+        data.clear();
+        hb.addHTML(wxT("<tr bgcolor=\"#D3EFF4\" ><td><a href=\"Assets\">"));
+        hb.addHTML(_("Assets"));
+        hb.addHTML(wxT("</a></td><td align=\"right\">"));
+        hb.addHTML(assetBalanceStr);
+        hb.addHTML(wxT("</td></tr>"));
 
-    tBalance += assetBalance;
+        tBalance += assetBalance;
+    }
     
     wxString tBalanceStr;
     mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);

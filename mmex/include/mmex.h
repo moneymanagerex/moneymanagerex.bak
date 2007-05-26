@@ -126,6 +126,7 @@ public:
         itemButtonCurrency_ = new wxButton( this, 
             ID_DIALOG_OPTIONS_BUTTON_CURRENCY, currName, wxDefaultPosition, wxDefaultSize, 0 );
 
+
         wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
         
         mainSizer->Add(
@@ -150,6 +151,23 @@ public:
             5);
 
 
+        wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
+        mainSizer->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
+
+        wxStaticText* itemStaticText6 = new wxStaticText( this, wxID_STATIC, _("User Name"), 
+            wxDefaultPosition, wxDefaultSize, 0 );
+        itemBoxSizer5->Add(itemStaticText6, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+        itemUserName_ = new wxTextCtrl( this, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME, _T(""), 
+            wxDefaultPosition, wxDefaultSize, 0 );
+        itemBoxSizer5->Add(itemUserName_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+        mainSizer->Add(
+            new wxStaticText(this, wxID_ANY,
+            _("(Optional)Specify your name. Mainly used for reporting and in printing reports.\n")), 0,
+            wxALL,
+            5);
+
         SetSizer(mainSizer);
         mainSizer->Fit(this);
     }
@@ -164,13 +182,19 @@ public:
 
             return false;
         }
+        userName = mmCleanString(itemUserName_->GetValue().Trim());
+        mmDBWrapper::setInfoSettingValue(parent_->core_->db_.get(), wxT("USERNAME"), userName); 
+
         return true;
     }
 
 private:
     mmNewDatabaseWizard* parent_;
     wxButton* itemButtonCurrency_;
+    wxTextCtrl* itemUserName_;
     int currencyID_;
+
+    wxString userName;
 
     DECLARE_EVENT_TABLE()
 };
@@ -455,6 +479,9 @@ private:
 
    /* Homepage panel logic */
    wxString    m_topCategories;
+
+   /* Cannot process home page recursively */
+   bool refreshRequested_;
 
 private:
     // any class wishing to process wxWindows events must use this macro

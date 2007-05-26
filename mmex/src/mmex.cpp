@@ -221,6 +221,10 @@ bool mmGUIApp::OnInit()
     inidb->Close();
     delete inidb;
 
+    /* See if we need to load graphs */
+    if (!mmGraphGenerator::checkGraphFiles())
+        mmIniOptions::enableGraphs_ = false;
+
     /* Initialize Image Handlers */
     wxImage::AddHandler(new wxJPEGHandler());
     wxImage::AddHandler(new wxPNGHandler());
@@ -233,11 +237,7 @@ bool mmGUIApp::OnInit()
     frame->Show(TRUE);
     if (isMaxStr == wxT("TRUE"))
         frame->Maximize(true);
-
-    /* Initialize Sockets, so multithreading will work */
-   // wxFileSystem::AddHandler(new wxInternetFSHandler); 
-    //wxSocketBase::Initialize();
-
+  
     // success: wxApp::OnRun() will be called which will enter the main message
     // loop and the application will run. If we returned FALSE here, the
     // application would exit immediately.
@@ -351,7 +351,9 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
        gotoAccountID_(-1), 
        selectedItemData_(0),
        m_topCategories(wxT("")),
-       panelCurrent_(0)
+       panelCurrent_(0),
+       refreshRequested_(false)
+
 {
 	// tell wxAuiManager to manage this frame
 	m_mgr.SetManagedWindow(this);
@@ -526,7 +528,8 @@ void mmGUIFrame::menuEnableItems(bool enable)
       menuBar_->FindItem(MENU_NEWACCT)->Enable(enable);
     menuBar_->FindItem(MENU_ACCTLIST)->Enable(enable);
     menuBar_->FindItem(MENU_ACCTEDIT)->Enable(enable);
-    menuBar_->FindItem(MENU_ACCTDELETE)->Enable(enable);
+    if (mmIniOptions::enableDeleteAccount_)
+        menuBar_->FindItem(MENU_ACCTDELETE)->Enable(enable);
     menuBar_->FindItem(MENU_ORGCATEGS)->Enable(enable);
     menuBar_->FindItem(MENU_ORGPAYEE)->Enable(enable);
     menuBar_->FindItem(MENU_IMPORT)->Enable(enable);
@@ -653,10 +656,13 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(reportsSummary, 
         new mmTreeItemData(wxT("Summary of Accounts")));
 
-    wxTreeItemId reportsStocks = navTreeCtrl_->AppendItem(reportsSummary, 
-        _("Stocks"), 4, 4);
-    navTreeCtrl_->SetItemData(reportsStocks, 
-        new mmTreeItemData(wxT("Summary of Stocks")));
+    if (mmIniOptions::enableStocks_)
+    {
+        wxTreeItemId reportsStocks = navTreeCtrl_->AppendItem(reportsSummary, 
+            _("Stocks"), 4, 4);
+        navTreeCtrl_->SetItemData(reportsStocks, 
+            new mmTreeItemData(wxT("Summary of Stocks")));
+    }
 
     if (mmIniOptions::enableAssets_)
     {
@@ -771,10 +777,14 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(transactionList, 
         new mmTreeItemData(wxT("Transaction Report")));
     ///////////////////////////////////////////////////////////////////
-    wxTreeItemId budgetPerformance = navTreeCtrl_->AppendItem(reports, 
-        _("Budget Performance"), 4, 4);
-    navTreeCtrl_->SetItemData(budgetPerformance, 
-        new mmTreeItemData(wxT("Budget Performance")));
+    wxTreeItemId budgetPerformance;
+    if (mmIniOptions::enableBudget_)
+    {
+        budgetPerformance = navTreeCtrl_->AppendItem(reports, 
+            _("Budget Performance"), 4, 4);
+        navTreeCtrl_->SetItemData(budgetPerformance, 
+            new mmTreeItemData(wxT("Budget Performance")));
+    }
 
      ///////////////////////////////////////////////////////////////////
     wxTreeItemId cashFlow = navTreeCtrl_->AppendItem(reports, 
@@ -1027,15 +1037,19 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
     {
         if (iData->getString() == wxT("Home Page"))
         {
-            wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
-            GetEventHandler()->AddPendingEvent(ev); ;
+            if (!refreshRequested_)
+            {
+                refreshRequested_ = true;
+                wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
+                GetEventHandler()->AddPendingEvent(ev); ;
+            }
             return;
         }
 
         if (!core_ || !db_)
             return;
 
-        Freeze();
+        //Freeze();
 
         if (iData->getString() == wxT("Summary of Accounts"))
         {
@@ -1318,7 +1332,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
         
-        Thaw();
+       // Thaw();
 
         if (iData->getString() == wxT("Cash Flow - Specific Accounts"))
         {
@@ -1429,8 +1443,12 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& event)
               core_->accountList_.deleteAccount(pAccount->accountID_);
               core_->bTransactionList_.deleteTransactions(pAccount->accountID_);  
               updateNavTreeControl();
-              wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
-              GetEventHandler()->AddPendingEvent(ev); ;
+              if (!refreshRequested_)
+              {
+                  refreshRequested_ = true;
+                  wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
+                  GetEventHandler()->AddPendingEvent(ev); 
+              }
            } 
         }
         else
@@ -1558,6 +1576,7 @@ void mmGUIFrame::createHomePage()
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
      
     homePanel->Layout();
+    refreshRequested_ = false;
 }
 
 void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
@@ -1698,13 +1717,17 @@ void mmGUIFrame::createMenu()
 		_("Edit Account"), _("Edit Account"));
 	menuItemAcctEdit->SetBitmap(toolBarBitmaps[8]);
 
-    wxMenuItem* menuItemAcctDelete = new wxMenuItem(menuAccounts, MENU_ACCTDELETE, 
-		_("Delete Account"), _("Delete Account from database"));
-	menuItemAcctDelete->SetBitmap(toolBarBitmaps[9]);
+    if (mmIniOptions::enableDeleteAccount_)
+    {
+        wxMenuItem* menuItemAcctDelete = new wxMenuItem(menuAccounts, MENU_ACCTDELETE, 
+            _("Delete Account"), _("Delete Account from database"));
+        menuItemAcctDelete->SetBitmap(toolBarBitmaps[9]);
+        menuAccounts->Append(menuItemAcctDelete); 
+    }
 
     menuAccounts->Append(menuItemAcctList); 
     menuAccounts->Append(menuItemAcctEdit); 
-    menuAccounts->Append(menuItemAcctDelete); 
+    
 
     wxMenu *menuTools = new wxMenu;
     
@@ -1855,7 +1878,8 @@ void mmGUIFrame::createToolBar()
     toolBar_->Realize();
 }
 
-void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
+void mmGUIFrame::createDataStore(const wxString& fileName, 
+                                 bool openingNew)
 {
     if (core_)
     {
@@ -1916,25 +1940,38 @@ void mmGUIFrame::createDataStore(const wxString& fileName, bool openingNew)
     }
     else if (openingNew) // New Database
     {
-       boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
-       db_ = pDB;
-       //db_->Open(fileName, password);
-       db_->Open(fileName);
-       password_ = password;
+       if (mmIniOptions::enableCustomTemplateDB_
+           && wxFileName::FileExists(mmIniOptions::customTemplateDB_))
+       {
+           wxCopyFile(mmIniOptions::customTemplateDB_, fileName, true);
+           boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
+           db_ = pDB;
+           db_->Open(fileName);
+           password_ = password;
+           core_ = new mmCoreDB(db_);
+       }
+       else
+       {
+           boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
+           db_ = pDB;
+           //db_->Open(fileName, password);
+           db_->Open(fileName);
+           password_ = password;
 
-       openDataBase(fileName);
+           openDataBase(fileName);
 
-       core_ = new mmCoreDB(db_);
+           core_ = new mmCoreDB(db_);
 
-       mmNewDatabaseWizard* wizard = new mmNewDatabaseWizard(this, core_);
-       wizard->RunIt(true);
+           mmNewDatabaseWizard* wizard = new mmNewDatabaseWizard(this, core_);
+           wizard->RunIt(true);
 
-       mmDBWrapper::loadBaseCurrencySettings(db_.get());
+           mmDBWrapper::loadBaseCurrencySettings(db_.get());
 
-       /* Jump to new account creation screen */
-       wxCommandEvent evt;
-       OnNewAccount(evt);
-       return;
+           /* Jump to new account creation screen */
+           wxCommandEvent evt;
+           OnNewAccount(evt);
+           return;
+       }
     }
     else // open of existing database failed
     {
@@ -1974,6 +2011,8 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
     this->SetTitle(title);
 
     m_topCategories = wxT("");
+    mmIniOptions::loadInfoOptions(db_.get());
+
     if (db_.get())
     {
         fileName_ = fileName;
@@ -1982,7 +2021,7 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
     else
 	{
       fileName_ = wxT("");
-		password_ = wxEmptyString;
+      password_ = wxEmptyString;
 	}
 }
 
@@ -1994,7 +2033,7 @@ wxPanel* mmGUIFrame::createMainFrame(wxPanel* parent)
 void mmGUIFrame::openFile(const wxString& fileName, bool openingNew)
 {
     // Before deleting, go to home page first
-    createHomePage();
+    // createHomePage();
     createDataStore(fileName, openingNew);
   
     if (db_.get())
@@ -2002,8 +2041,15 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew)
         menuEnableItems(true);
         menuPrintingEnable(false);
     }
-    createHomePage();
+    
     updateNavTreeControl();
+    if (!refreshRequested_)
+    {
+        refreshRequested_ = true;
+        /* Currency Options might have changed so refresh */
+        wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
+        GetEventHandler()->AddPendingEvent(ev); 
+    }
 
     if (!db_.get())
     {
@@ -2241,10 +2287,13 @@ void mmGUIFrame::OnNewAccount(wxCommandEvent& event)
         dlg->Destroy();
     }
     
-  
-    /* Currency Options might have changed so refresh */
-    wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
-    GetEventHandler()->AddPendingEvent(ev); 
+    if (!refreshRequested_)
+    {
+        refreshRequested_ = true;
+        /* Currency Options might have changed so refresh */
+        wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
+        GetEventHandler()->AddPendingEvent(ev); 
+    }
 }
     
 void mmGUIFrame::OnAccountList(wxCommandEvent& event)
@@ -2652,8 +2701,12 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
         if ( dlg->ShowModal() == wxID_OK )
         {
             updateNavTreeControl();      
-            wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
-            GetEventHandler()->AddPendingEvent(ev); ;
+            if (!refreshRequested_)
+            {
+                refreshRequested_ = true;
+                wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
+                GetEventHandler()->AddPendingEvent(ev);
+            }
             
         }
     }
@@ -2696,8 +2749,12 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& event)
             core_->bTransactionList_.deleteTransactions(acctID);
 
             updateNavTreeControl();
-            wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
-            GetEventHandler()->AddPendingEvent(ev); 
+            if (!refreshRequested_)
+            {
+                refreshRequested_ = true;
+                wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
+                GetEventHandler()->AddPendingEvent(ev); 
+            }
         }
     }
     delete[] arrAcctID;

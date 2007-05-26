@@ -36,6 +36,7 @@ mmGraphGenerator::mmGraphGenerator(const wxString& scriptName,
    
    fulloutfileName_ = wxT("\"") + basePath + outFileName_ + wxT("\"");
    ploticusName_  = wxT("\"") + basePath + wxT("pl.exe") + wxT("\"");
+  
 
    htmlString_ = wxT("<img src=\"graphs\\") + outFileName + wxT("\"></img>");
 }
@@ -67,6 +68,18 @@ void mmGraphGenerator::setEnv()
    bool returnVal = wxSetEnv(wxT("GDFONTPATH"), mmGraphGenerator::envString_);
 }
 
+bool mmGraphGenerator::checkGraphFiles()
+{
+    if (mmOptions::language.size() > 0 && mmOptions::language != wxT("english"))
+    {
+       wxString fontPathName  = wxT("graphs\\Cyberbit.ttf"); 
+       if (!wxFileName::FileExists(fontPathName))
+            return false;
+    }
+
+    return true;
+}
+
 void mmGraphGenerator::generate()
 {
    if (!mmIniOptions::enableGraphs_)
@@ -77,7 +90,9 @@ void mmGraphGenerator::generate()
                             + fulloutfileName_ + wxT(" ")
                             + fullscriptPath_;
    if (mmOptions::language.size() > 0 && mmOptions::language != wxT("english"))
+   {
         fullExecPath += wxT(" -font Cyberbit.ttf");
+   }
 
    wxArrayString output, errors;
    setEnv(); 
