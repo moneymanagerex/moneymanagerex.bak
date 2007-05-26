@@ -24,7 +24,9 @@
 /*******************************************************/
 /* Include XPM Support */
 #include "../resources/money.xpm"
+#ifdef MMEX_CUSTOM_BUILD
 #include "../resources/bma.xpm"
+#endif
 /*******************************************************/
 IMPLEMENT_DYNAMIC_CLASS( mmAboutDialog, wxDialog )
 
@@ -97,14 +99,20 @@ void mmAboutDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizerN, 1, wxGROW|wxALL, 5);
 
     wxBitmap itemStaticBitmap3Bitmap(money_xpm);
-    wxBitmap itemStaticCustomBitmap(bma_xpm);
     wxStaticBitmap* itemStaticBitmap3;
-    if (!mmIniOptions::enableCustomLogo_)
+    if (mmIniOptions::enableCustomLogo_)
+    {
         itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
             itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(235, 157), 0 );
+    }
     else
-        itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
+    {
+#ifdef MMEX_CUSTOM_BUILD
+        wxBitmap itemStaticCustomBitmap(bma_xpm);
+         itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
             itemStaticCustomBitmap, wxDefaultPosition, wxSize(235, 157), 0 );
+#endif
+    }
     itemBoxSizerN->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
