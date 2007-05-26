@@ -28,14 +28,20 @@ void mmHTMLBuilder::init()
         <body bgcolor=#FFFFFF text=#000000 link=#0000cc \
         vlink=#551a8b alink=#ff0000>");
 
-   html_ += wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\">");
-   html_ += wxT("<tr><td>");
-   if (mmIniOptions::enableCustomLogo_)
-        html_ += wxT("<img src=\"")+ mmIniOptions::logoName_ + wxT("\"></img>");
-   html_ += wxT("</td><td width=\"300\">");
-   addHeader(5, mmIniOptions::userNameString_);
-   html_ += wxT("</td></tr></table>");
-
+    if (mmIniOptions::enableCustomLogo_)
+    {
+        html_ += wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\">");
+        html_ += wxT("<tr><td>");
+        if (mmIniOptions::enableCustomLogo_)
+            html_ += wxT("<img src=\"")+ mmIniOptions::logoName_ + wxT("\"></img>");
+        html_ += wxT("</td><td width=\"300\">");
+        addHeader(5, mmIniOptions::userNameString_);
+        html_ += wxT("</td></tr></table>");
+    }
+    else if ( mmIniOptions::userNameString_.size() > 0)
+    {
+        addHeader(4, mmIniOptions::userNameString_);
+    }
 }
 
 void mmHTMLBuilder::end()

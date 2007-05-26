@@ -222,8 +222,12 @@ bool mmGUIApp::OnInit()
     delete inidb;
 
     /* See if we need to load graphs */
+#ifdef __WXGTK__
+    mmIniOptions::enableGraphs_ = false;
+#else
     if (!mmGraphGenerator::checkGraphFiles())
         mmIniOptions::enableGraphs_ = false;
+#endif
 
     /* Initialize Image Handlers */
     wxImage::AddHandler(new wxJPEGHandler());
