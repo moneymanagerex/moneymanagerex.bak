@@ -47,6 +47,8 @@ Hungarian
 -- Csaba
 Slovak
 -- Abadyba
+Turkish
+-- Murat Bilgen
 
 User Manual
 ===========
