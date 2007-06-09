@@ -468,6 +468,14 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& event )
 #endif
             if (!pBankTransaction->containsCategory(categID_, subcategID_))
                 continue;
+
+            if (pBankTransaction->splitEntries_->numEntries() > 0)
+            {
+                pBankTransaction->reportCategAmount_ 
+                    =  fabs(pBankTransaction->getAmountForSplit(categID_, subcategID_));
+            }
+            else
+                pBankTransaction->reportCategAmount_ = -1;
         }
 
         if (statusCheckBox->GetValue())
