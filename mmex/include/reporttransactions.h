@@ -65,6 +65,8 @@ public:
         headerR.push_back(_("Amount   "));
         hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
 
+        core_->currencyList_.loadBaseCurrencySettings();
+
         double total = 0;
         for (unsigned int index = 0; index < trans_->size(); index++)
         {
@@ -77,10 +79,16 @@ public:
             data.push_back(refTrans[index]->transType_);
             data.push_back(refTrans[index]->fullCatStr_);
             data.push_back(refTrans[index]->status_);
-            data.push_back(refTrans[index]->transAmtString_);
             
             double dbRate = core_->accountList_.getAccountBaseCurrencyConvRate(refTrans[index]->accountID_);
-            double transAmount = refTrans[index]->amt_ * dbRate;
+            double amount = refTrans[index]->amt_;
+            if (refTrans[index]->reportCategAmount_ > 0)
+               amount = refTrans[index]->reportCategAmount_;
+            double transAmount = amount * dbRate;
+            
+            wxString transAmountStr;
+            mmCurrencyFormatter::formatDoubleToCurrency(transAmount, transAmountStr);
+            data.push_back(transAmountStr);
 
             if (refTrans[index]->transType_ == wxT("Deposit"))
             {
@@ -95,7 +103,7 @@ public:
         hb.endTable();
 
         wxString balanceStr;
-        core_->currencyList_.loadBaseCurrencySettings();
+        
         mmCurrencyFormatter::formatDoubleToCurrency(total, balanceStr);
         dt = _("Total Amount: ") + balanceStr;
 

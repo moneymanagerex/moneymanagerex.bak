@@ -131,6 +131,9 @@ public:
     int subcategID_;
 
     bool updateRequired_;
+
+    // used for transaction reports
+    double reportCategAmount_;
 private:
     bool isInited_;
 };
