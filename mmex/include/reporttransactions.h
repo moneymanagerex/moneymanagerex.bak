@@ -54,18 +54,19 @@ public:
         hb.addLineBreak();
         hb.addLineBreak();
      
-        hb.beginTable();
-        std::vector<wxString> headerR;
-        headerR.push_back(_("Date  "));
-        headerR.push_back(_("Account"));
-        headerR.push_back(_("Payee  "));
-        headerR.push_back(_("Type   "));
-        headerR.push_back(_("Category"));
-        headerR.push_back(_("Status"));
-        headerR.push_back(_("Amount   "));
-        hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
+		hb.startCenter();
 
-        core_->currencyList_.loadBaseCurrencySettings();
+        hb.startTable();
+
+		hb.startTableRow();
+		hb.addTableHeaderCell(_("Date"));
+		hb.addTableHeaderCell(_("Account"));
+		hb.addTableHeaderCell(_("Payee"));
+		hb.addTableHeaderCell(_("Type"));
+		hb.addTableHeaderCell(_("Category"));
+		hb.addTableHeaderCell(_("Status"));
+		hb.addTableHeaderCell(_("Amount"));
+		hb.endTableRow();
 
         double total = 0;
         for (unsigned int index = 0; index < trans_->size(); index++)
@@ -73,22 +74,18 @@ public:
             std::vector<wxString> data;
             std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = *trans_;
 
-            data.push_back(refTrans[index]->dateStr_);
-            data.push_back(refTrans[index]->fromAccountStr_);
-            data.push_back(refTrans[index]->payeeStr_);
-            data.push_back(refTrans[index]->transType_);
-            data.push_back(refTrans[index]->fullCatStr_);
-            data.push_back(refTrans[index]->status_);
-            
+			hb.startTableRow();
+			hb.addTableCell(refTrans[index]->dateStr_);
+			hb.addTableCell(refTrans[index]->fromAccountStr_);
+			hb.addTableCell(refTrans[index]->payeeStr_);
+			hb.addTableCell(refTrans[index]->transType_);
+			hb.addTableCell(refTrans[index]->fullCatStr_);
+			hb.addTableCell(refTrans[index]->status_);
+			hb.addTableCell(refTrans[index]->transAmtString_, true);
+			hb.endTableRow();
+
             double dbRate = core_->accountList_.getAccountBaseCurrencyConvRate(refTrans[index]->accountID_);
-            double amount = refTrans[index]->amt_;
-            if (refTrans[index]->reportCategAmount_ > 0)
-               amount = refTrans[index]->reportCategAmount_;
-            double transAmount = amount * dbRate;
-            
-            wxString transAmountStr;
-            mmCurrencyFormatter::formatDoubleToCurrency(transAmount, transAmountStr);
-            data.push_back(transAmountStr);
+            double transAmount = refTrans[index]->amt_ * dbRate;
 
             if (refTrans[index]->transType_ == wxT("Deposit"))
             {
@@ -98,21 +95,20 @@ public:
             {
                 total -= transAmount;
             }
-            hb.addRow(data);
         }
-        hb.endTable();
 
         wxString balanceStr;
-        
+        core_->currencyList_.loadBaseCurrencySettings();
         mmCurrencyFormatter::formatDoubleToCurrency(total, balanceStr);
-        dt = _("Total Amount: ") + balanceStr;
 
-        hb.addLineBreak();
-        hb.addLineBreak();
+		hb.addRowSeparator(7);
+		hb.addTotalRow(_("Total Amount: "), 7, balanceStr);
+        hb.endTable();
 
-        hb.addHeader(7, dt);
+		hb.endCenter();
 
         hb.end();
+
         return hb.getHTMLText();
     }
 

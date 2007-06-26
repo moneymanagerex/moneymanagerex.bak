@@ -45,6 +45,7 @@ wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* db, const wxString& dt)
 wxString mmGetNiceDateString(wxDateTime dt);
 wxString mmGetNiceDateSimpleString(wxDateTime dt);
 wxString mmGetNiceMonthName(int month);
+wxString mmGetNiceShortMonthName(int month);
 
 wxString mmCleanString(const wxString& orig);
 wxString mmCleanQuotes(const wxString& orig);

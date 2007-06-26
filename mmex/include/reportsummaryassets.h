@@ -45,8 +45,6 @@ public:
         hb.addLineBreak();
         hb.addLineBreak();
 
-        hb.addHTML(wxT("<font size=\"-2\">"));
-
         mmDBWrapper::loadBaseCurrencySettings(db_);
         int ct = 0;  
         double tincome = 0.0;
@@ -58,13 +56,14 @@ public:
         bufSQL.Format("select * from ASSETS_V1;");
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
 
-        hb.beginTable();
+        hb.startCenter();
 
-        std::vector<wxString> headerR;
-        headerR.push_back(_("Name "));
-        headerR.push_back(_("Type   "));
-        headerR.push_back(_("Value  "));
-        hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
+		hb.startTable(wxT("50%"));
+		hb.startTableRow();
+		hb.addTableHeaderCell(_("Name"));
+		hb.addTableHeaderCell(_("Type"));
+		hb.addTableHeaderCell(_("Value"));
+		hb.endTableRow();
 
         int ct = 0;
         while (q1.NextRow())
@@ -105,16 +104,14 @@ public:
             if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, tempString))
                 th.valueStr_   = tempString;
 
-            std::vector<wxString> data;
-            data.push_back(th.assetName_);
-            data.push_back(th.assetType_);
-            data.push_back(th.valueStr_);
-          
-            hb.addRow(data);
+			hb.startTableRow();
+			hb.addTableCell(th.assetName_, false, true);
+			hb.addTableCell(th.assetType_);
+			hb.addTableCell(th.valueStr_, true);
+			hb.endTableRow();
         }
         q1.Finalize();
         
-        hb.endTable();
         mmENDSQL_LITE_EXCEPTION
 
         /* Assets */
@@ -122,14 +119,12 @@ public:
         wxString assetBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
         mmCurrencyFormatter::formatDoubleToCurrency(assetBalance, assetBalanceStr);
+
+		hb.addRowSeparator(3);
+		hb.addTotalRow(_("Total Assets: "), 3, assetBalanceStr);
         hb.endTable();
-        hb.addHTML(wxT("</font>"));
-        hb.addLineBreak();
-        hb.addLineBreak();
-        
-        wxString dispStr = _("Total Assets :") + assetBalanceStr; 
-        hb.addHeader(7, dispStr);
-        
+
+		hb.endCenter();
 
         hb.end();
         return hb.getHTMLText();

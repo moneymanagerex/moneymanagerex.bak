@@ -29,11 +29,13 @@ public:
         hb.addLineBreak();
         hb.addLineBreak();
 
-        hb.beginTable();
-        std::vector<wxString> headerR;
-        headerR.push_back(_("Date"));
-        headerR.push_back(_("Total"));
-        hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
+		hb.startCenter();
+
+        hb.startTable(wxT("50%"));
+		hb.startTableRow();
+		hb.addTableHeaderCell(_("Date"));
+		hb.addTableHeaderCell(_("Total"));
+		hb.endTableRow();
 
         double tBalance = 0.0;
           
@@ -224,15 +226,23 @@ public:
 
            wxString dtStr = mmGetDateForDisplay(core_->db_.get(), dtEnd);
 
-           hb.addHTML(wxT("<tr><td>")); 
-           hb.addHTML(dtStr);
-           hb.addHTML(wxT("</td><td align=\"right\">"));
-           hb.addHTML(balance);
-           hb.addHTML(wxT("</td></tr>"));
+			hb.startTableRow();
+			hb.addTableCell(dtStr, false, true);
+			if(forecastOver12Months[idx] + tBalance < 0)
+			{
+				hb.addTableCell(balance, true, true, true, wxT("#ff0000"));
+			}
+			else
+			{
+				hb.addTableCell(balance, true, false, true);
+			}
+			hb.endTableRow();
         }
 
 
         hb.endTable();
+
+		hb.endCenter();
 
         hb.end();
         return hb.getHTMLText();

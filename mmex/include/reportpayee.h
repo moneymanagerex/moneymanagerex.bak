@@ -46,17 +46,19 @@ public:
 
         hb.addLineBreak();
 
+		hb.startCenter();
+
         int numPayees = (int)core_->payeeList_.payees_.size();
         // Add the graph
         mmGraphPie gg;
         if (numPayees)
-           hb.addHTML(gg.getHTML());
+           hb.addImage(gg.getImageSrc());
 
-        hb.beginTable();
-        std::vector<wxString> headerR;
-        headerR.push_back(_("Payee    "));
-        headerR.push_back(_("Amount   "));
-        hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
+		hb.startTable(wxT("50%"));
+		hb.startTableRow();
+		hb.addTableHeaderCell(_("Payee"));
+		hb.addTableHeaderCell(_("Amount"));
+		hb.endTableRow();
 
         core_->currencyList_.loadBaseCurrencySettings();
         
@@ -78,14 +80,14 @@ public:
                 vp.amount = amt;
                 valueList.push_back(vp);
 
-                hb.addHTML(wxT("<tr><td>")); 
-                hb.addHTML(core_->payeeList_.payees_[idx]->payeeName_);
-                hb.addHTML(wxT("</td><td align=\"right\">"));
-                hb.addHTML(balance);
-                hb.addHTML(wxT("</td></tr>"));
+				hb.startTableRow();
+				hb.addTableCell(core_->payeeList_.payees_[idx]->payeeName_, false, true);
+				hb.addTableCell(balance, true, false, true);
+				hb.endTableRow();
             }
         }
         hb.endTable();
+		hb.endCenter();
 
         hb.end();
 

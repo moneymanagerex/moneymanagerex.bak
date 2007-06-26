@@ -51,12 +51,13 @@ public:
         double texpenses = 0.0;
         double tBalance = 0.0;
 
-        hb.beginTable();
+		hb.startCenter();
 
-        std::vector<wxString> headerR;
-        headerR.push_back(_("Account Name  "));
-        headerR.push_back(_("Balance   "));
-        hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
+		hb.startTable(wxT("50%"));
+		hb.startTableRow();
+		hb.addTableHeaderCell(_("Account Name"));
+		hb.addTableHeaderCell(_("Balance"));
+		hb.endTableRow();
 
         for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
         {
@@ -77,48 +78,54 @@ public:
               wxString balance;
               mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
 
-              hb.addHTML(wxT("<tr><td>")); 
-              hb.addHTML(pCA->accountName_);
-              hb.addHTML(wxT("</td><td align=\"right\">"));
-              hb.addHTML(balance);
-              hb.addHTML(wxT("</td></tr>"));
+			  hb.startTableRow();
+			  hb.addTableCell(pCA->accountName_);
+			  hb.addTableCell(balance, true);
+			  hb.endTableRow();
            }
         }
-        hb.endTable();
-        
+
+		hb.addRowSeparator(2);
 
         /* Stocks */
         double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_);
         wxString stockBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
         mmCurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
-        hb.addLineBreak();
-        hb.addLineBreak();
-        wxString dispStr = _("Stock Investments :") + stockBalanceStr; 
-        hb.addHeader(7, dispStr);
-        hb.addLineBreak();
+        wxString dispStr =  + stockBalanceStr; 
+
+		hb.startTableRow();
+		hb.addTableCell(_("Stock Investments"));
+		hb.addTableCell(stockBalanceStr, true);
+		hb.endTableRow();
 
         /* Assets */
         double assetBalance = mmDBWrapper::getAssetBalance(db_);
         wxString assetBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
         mmCurrencyFormatter::formatDoubleToCurrency(assetBalance, assetBalanceStr);
-        dispStr = _("Assets :") + assetBalanceStr; 
-        hb.addHeader(7, dispStr);
-        hb.addLineBreak();
 
+		hb.startTableRow();
+		hb.addTableCell(_("Assets"));
+		hb.addTableCell(assetBalanceStr, true);
+		hb.endTableRow();
 
         tBalance += stockBalance;
         tBalance += assetBalance;
         wxString tBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
         mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
-        dispStr = _("Total Balance on all Accounts :") + tBalanceStr; 
-        hb.addHeader(7, dispStr);
+
+		hb.addRowSeparator(2);
+
+		hb.addTotalRow(_("Total Balance on all Accounts"), 2, tBalanceStr);
+		hb.endTable();
+
+		hb.endCenter();
 
         hb.end();
-        return hb.getHTMLText();
 
+        return hb.getHTMLText();
     }
 
 private:

@@ -28,8 +28,6 @@ public:
         hb.addLineBreak();
         hb.addLineBreak();
 
-        hb.addHTML(wxT("<font size=\"-2\">"));
-
         double actIncome   = 0.0;
         double actExpenses = 0.0;
 
@@ -39,22 +37,23 @@ public:
         wxDateTime yearBegin(1, prevYearBegin.GetMonth(), prevYearBegin.GetYear());
         wxDateTime yearEnd = now;
 
+		hb.startCenter();
+        hb.startTable();
 
-        hb.beginTable();
-        std::vector<wxString> headerR;
-        headerR.push_back(_("Category"));
+		hb.startTableRow();
+		hb.addTableHeaderCell(_("Category"));
+
         for (int yidx = 1; yidx <= 12; yidx++)
         {
            wxDateTime tempYearBegin = yearBegin;
            wxDateTime dtBegin = tempYearBegin.Add(wxDateSpan::Months(yidx));
            wxDateTime dtEnd = dtBegin.GetLastMonthDay((wxDateTime::Month) dtBegin.GetMonth(), dtBegin.GetYear());
            wxString yearStr = wxString::Format(wxT("%d"), dtBegin.GetYear());
-           headerR.push_back(mmGetNiceMonthName(dtBegin.GetMonth()) + wxT(" ") + yearStr);
+		   hb.addTableHeaderCell(mmGetNiceShortMonthName(dtBegin.GetMonth()) + wxT(" ") + yearStr);
         }
-        headerR.push_back(_("Full Year"));
-        hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
-
-        std::vector<wxString> data;
+		
+        hb.addTableHeaderCell(_("Overall"));
+		hb.endTableRow();
 
         mmBEGINSQL_LITE_EXCEPTION;
         mmDBWrapper::loadBaseCurrencySettings(db_);
@@ -62,6 +61,7 @@ public:
         wxSQLite3StatementBuffer bufSQL;
         bufSQL.Format("select * from CATEGORY_V1 order by CATEGNAME;");
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+
         while (q1.NextRow())
         {
             mmBudgetEntryHolder th;
@@ -89,8 +89,8 @@ public:
 
             if (th.actual_ != 0.0)
             {
-                data.clear();
-                data.push_back(th.catStr_);
+				hb.startTableRow();
+				hb.addTableCell(th.catStr_, false, true);
 
                 for (int yidx = 1; yidx <= 12; yidx++)
                 {
@@ -102,12 +102,12 @@ public:
                                  th.categID_, th.subcategID_, false,  dtBegin, dtEnd);
                     wxString actualMonthValStr;
                     mmCurrencyFormatter::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
-                    data.push_back(actualMonthValStr);
+					hb.addTableCell(actualMonthValStr, true);
                 }
              
                 // year end
-                data.push_back(th.actualStr_);
-                hb.addRow(data,  wxT(" bgcolor=\"#FFFFFF\" "));
+				hb.addTableCell(th.actualStr_, true);
+				hb.endTableRow();
             }
 
             wxSQLite3StatementBuffer bufSQL1;
@@ -138,10 +138,9 @@ public:
 
                 if (thsub.actual_ != 0.0)
                 {
-                    data.clear();
-                    wxString cn = thsub.catStr_+ wxT(" : ") + thsub.subCatStr_;
-                    data.push_back(cn);
-                  
+					hb.startTableRow();
+					hb.addTableCell(thsub.catStr_+ wxT(": ") + thsub.subCatStr_, false, true);
+
                     for (int yidx = 1; yidx <= 12; yidx++)
                     {
                        wxDateTime tempYearBegin = yearBegin;
@@ -153,12 +152,11 @@ public:
                             false,  dtBegin, dtEnd);
                         wxString actualMonthValStr;
                         mmCurrencyFormatter::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
-                        data.push_back(actualMonthValStr);
+						hb.addTableCell(actualMonthValStr, true);
                     }
 
-
-                    data.push_back( thsub.actualStr_);
-                    hb.addRow(data, wxT(" bgcolor=\"#FFFFFF\" "));
+					hb.addTableCell(thsub.actualStr_, true);
+                    hb.endTableRow();
                 } 
 
             }
@@ -169,8 +167,7 @@ public:
         mmENDSQL_LITE_EXCEPTION;
 
         hb.endTable();
-
-        hb.addHTML(wxT("</font>"));
+		hb.endCenter();
 
         hb.end();
         return hb.getHTMLText();

@@ -44,7 +44,9 @@ public:
             hb.addLineBreak();
         }
 
-        //hb.addLineBreak();
+        hb.addLineBreak();
+
+		hb.startCenter();
 
         core_->currencyList_.loadBaseCurrencySettings();
 
@@ -55,32 +57,43 @@ public:
         mmGraphIncExpensesMonth gg;
         gg.init(income, expenses);
         gg.generate();
-        hb.addHTML(gg.getHTML());
+        hb.addImage(gg.getImageSrc());
 
-        hb.beginTable();
-        std::vector<wxString> headerR;
-        headerR.push_back(_("Type  "));
-        headerR.push_back(_("Amount   "));
-        hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
-   
+		hb.startTable(wxT("50%"));
+		hb.startTableRow();
+		hb.addTableHeaderCell(_("Type"));
+		hb.addTableHeaderCell(_("Amount"));
+		hb.endTableRow();
+
         wxString incString;
         wxString expString;
+		wxString diffString;
         mmCurrencyFormatter::formatDoubleToCurrency(expenses, expString);
         mmCurrencyFormatter::formatDoubleToCurrency(income, incString);
+		mmCurrencyFormatter::formatDoubleToCurrency(income - expenses, diffString);
 
-        hb.addHTML(wxT("<tr><td>")); 
-        hb.addHTML(_("Income: "));
-        hb.addHTML(wxT("</td><td align=\"right\">"));
-        hb.addHTML(incString);
-        hb.addHTML(wxT("</td></tr>"));
+		hb.startTableRow();
+		hb.addTableCell(_("Income:"), false, true);
+		hb.addTableCell(incString, true, false, true);
+		hb.endTableRow();
 
-        hb.addHTML(wxT("<tr><td>")); 
-        hb.addHTML(_("Expenses: "));
-        hb.addHTML(wxT("</td><td align=\"right\">"));
-        hb.addHTML(expString);
-        hb.addHTML(wxT("</td></tr>"));
+		hb.startTableRow();
+		hb.addTableCell(_("Expenses:"), false, true);
+		if(expenses > income)
+		{
+			hb.addTableCell(expString, true, true, true, wxT("#ff0000"));
+		}
+		else
+		{
+			hb.addTableCell(expString, true, false, true);
+		}
+		hb.endTableRow();
+
+		hb.addRowSeparator(2);
+		hb.addTotalRow(_("Difference:"), 2, diffString);
 
         hb.endTable();
+		hb.endCenter();
 
         hb.end();
         return hb.getHTMLText();

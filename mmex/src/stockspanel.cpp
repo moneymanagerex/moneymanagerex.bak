@@ -699,7 +699,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         }
         q1.Finalize();
 
-        for (int idx = 0 ; idx < stockVec.size(); idx++)
+        for (unsigned int idx = 0 ; idx < stockVec.size(); idx++)
         {
             wxSQLite3StatementBuffer bufSQL2;
             bufSQL2.Format("update STOCK_V1 SET CURRENTPRICE=%f,VALUE=%f WHERE STOCKID=%d;",

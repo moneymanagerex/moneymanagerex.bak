@@ -63,15 +63,17 @@ public:
             hb.addLineBreak();
         }
 
+		hb.startCenter();
+
         // Add the graph
         mmGraphPie gg;
-        hb.addHTML(gg.getHTML());
+        hb.addImage(gg.getImageSrc());
 
-        hb.beginTable();
-        std::vector<wxString> headerR;
-        headerR.push_back(_("Category  "));
-        headerR.push_back(_("Amount   "));
-        hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
+		hb.startTable(wxT("50%"));
+		hb.startTableRow();
+		hb.addTableHeaderCell(_("Category"));
+		hb.addTableHeaderCell(_("Amount"));
+		hb.endTableRow();
 
         core_->currencyList_.loadBaseCurrencySettings();
 
@@ -80,6 +82,7 @@ public:
         wxSQLite3StatementBuffer bufSQL;
         bufSQL.Format("select * from CATEGORY_V1 order by CATEGNAME;");
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+
         while (q1.NextRow())
         {
             int categID          = q1.GetInt(wxT("CATEGID"));
@@ -96,11 +99,10 @@ public:
                 vp.amount = amt;
                 valueList.push_back(vp);
 
-                hb.addHTML(wxT("<tr><td>")); 
-                hb.addHTML(categString);
-                hb.addHTML(wxT("</td><td align=\"right\">"));
-                hb.addHTML(balance);
-                hb.addHTML(wxT("</td></tr>"));
+				hb.startTableRow();
+				hb.addTableCell(categString, false, true);
+				hb.addTableCell(balance, true, false, true);
+				hb.endTableRow();
             }
 
             wxSQLite3StatementBuffer bufSQL1;
@@ -122,12 +124,10 @@ public:
                    vp.amount = amt;
                    valueList.push_back(vp);
 
-                    hb.addHTML(wxT("<tr><td>")); 
-                    hb.addHTML(categString + wxT(" : ") + subcategString);
-                    hb.addHTML(wxT("</td><td align=\"right\">"));
-                    hb.addHTML(balance);
-                    hb.addHTML(wxT("</td></tr>"));
-
+					hb.startTableRow();
+					hb.addTableCell(categString + wxT(": ") + subcategString, false, true);
+					hb.addTableCell(balance, true, false, true);
+					hb.endTableRow();
                 }
             }
             q2.Finalize();
@@ -135,7 +135,9 @@ public:
         }
         q1.Finalize();
         mmENDSQL_LITE_EXCEPTION;
+
         hb.endTable();
+		hb.endCenter();
 
         hb.end();
 

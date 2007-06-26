@@ -25,7 +25,7 @@ public:
 
         mmHTMLBuilder hb;
         hb.init();
-        hb.addHeader(3, _("Income vs Expenses for Year : ") + yearStr );
+        hb.addHeader(3, _("Income vs Expenses for Year: ") + yearStr );
 
         wxDateTime now = wxDateTime::Now();
         wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
@@ -33,17 +33,17 @@ public:
         hb.addLineBreak();
         hb.addLineBreak();
 
-        hb.addHTML(wxT("<font size=\"-2\">"));
-
         wxDateTime yearBegin(1, wxDateTime::Jan, year_);
         wxDateTime yearEnd(31, wxDateTime::Dec, year_);
 
-        hb.beginTable();
-        std::vector<wxString> headerR;
-        headerR.push_back(_("Month"));
-        headerR.push_back(_("Income"));
-        headerR.push_back(_("Expenses"));
-        hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
+		hb.startCenter();
+
+        hb.startTable(wxT("50%"));
+		hb.startTableRow();
+		hb.addTableHeaderCell(_("Month"));
+		hb.addTableHeaderCell(_("Income"));
+		hb.addTableHeaderCell(_("Expenses"));
+		hb.endTableRow();
 
         double income = 0.0;
         double expenses = 0.0;
@@ -66,15 +66,19 @@ public:
             wxString actualIncStr;
             mmCurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
 
-            std::vector<wxString> data;
-            data.push_back(monName);
-            data.push_back(actualIncStr);
-            data.push_back(actualExpStr);
-            
-            if (expenses > income)
-                hb.addRow(data,  wxT(" bgcolor=\"#FDE4E4\" "));
-            else
-                hb.addRow(data,  wxT(" bgcolor=\"#FFFFFF\" "));
+            hb.startTableRow();
+			hb.addTableCell(monName, false, true);
+			if (expenses > income)
+			{
+				hb.addTableCell(actualIncStr, true, true, true);
+				hb.addTableCell(actualExpStr, true, true, true, wxT("#ff0000"));
+			}
+			else
+			{
+				hb.addTableCell(actualIncStr, true, false, true);
+				hb.addTableCell(actualExpStr, true, false, true);
+			}
+            hb.endTableRow();
         }
 
         wxDateTime today = wxDateTime::Now();
@@ -97,16 +101,15 @@ public:
         mmCurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
 
         std::vector<wxString> data;
-        data.push_back(_("Total"));
-
         data.push_back(actualIncStr);
         data.push_back(actualExpStr);
 
-        hb.addRow(data,  wxT(" bgcolor=\"#DCEDD5\" "));
+		hb.addRowSeparator(3);
+		hb.addTotalRow(_("Total"), 3, data);
           
         hb.endTable();
 
-        hb.addHTML(wxT("</font>"));
+		hb.endCenter();
 
         hb.end();
         return hb.getHTMLText();

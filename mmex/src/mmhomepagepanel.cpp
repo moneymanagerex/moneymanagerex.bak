@@ -96,17 +96,19 @@ void mmHomePagePanel::updateAccounts()
     hb.addHeader(5, dt);
     hb.addLineBreak();
 
-    hb.addHTML(wxT("<table border=\"0\"><tr><td VALIGN=\"top\">"));
+	hb.startCenter();
+	hb.startTable(wxT("75%"), wxT("top"));
+	hb.startTableRow();
+	hb.startTableCell();
 
-    std::vector<wxString> data;
+	hb.startTable(wxT("95%"));
 
-    wxString str1 = _("Account") + wxString(wxT("</b></th><th align=\"right\" width=\"100\" ><b>"));
-    wxString str2 = _("Summary") + wxString(wxT("</b></th></tr>"));
-    hb.addHTML(wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\"><tr  bgcolor=\"#80B9E8\"><th align=\"left\" width=\"200\"><b>") 
-        +  str1 + str2 );
+	hb.startTableRow();
+	hb.addTableHeaderCell(_("Account"));
+	hb.addTableHeaderCell(_("Summary"));
+	hb.endTableRow();
 
     /////////////////   
-
 
     int ct = 0;  
     double tincome = 0.0;
@@ -119,11 +121,8 @@ void mmHomePagePanel::updateAccounts()
         if (pCA && pCA->status_== mmAccount::MMEX_Open)
         {
            std::vector<wxString> data1;
-           hb.addHTML(wxT("<tr><td><a href=\"ACCT: "));
-           hb.addHTML(wxString::Format(wxT("%d"), pCA->accountID_));
-           hb.addHTML(wxT("\" >"));
-           hb.addHTML(pCA->accountName_);
-           hb.addHTML(wxT("</a></td><td align=\"right\">"));
+		   hb.startTableRow();
+		   hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->accountID_), pCA->accountName_, false, true);
 
            boost::shared_ptr<mmCurrency> pCurrencyPtr 
 			   = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
@@ -138,8 +137,8 @@ void mmHomePagePanel::updateAccounts()
            tBalance += bal * rate;
            wxString balance;
            mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
-           hb.addHTML(balance);
-           hb.addHTML(wxT("</td></tr>"));
+		   hb.addTableCell(balance, true);
+		   hb.endTableRow();
 
            double income = 0.0, expenses = 0.0;
            core_->bTransactionList_.getExpensesIncome(pCA->accountID_, expenses, income, 
@@ -159,12 +158,11 @@ void mmHomePagePanel::updateAccounts()
         mmDBWrapper::loadBaseCurrencySettings(db_);
         mmCurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
 
-        data.clear();
-        hb.addHTML(wxT("<tr bgcolor=\"#D3EFF6\" ><td><a href=\"Stocks\">"));
-        hb.addHTML(_("Stock Investments"));
-        hb.addHTML(wxT("</a></td><td align=\"right\">"));
-        hb.addHTML(stockBalanceStr);
-        hb.addHTML(wxT("</td></tr>"));
+		hb.addRowSeparator(2);
+		hb.startTableRow();
+		hb.addTableCellLink(wxT("Stocks"), _("Stock Investments"), false, true);
+		hb.addTableCell(stockBalanceStr, true);
+		hb.endTableRow();
 
         tBalance += stockBalance;
     }
@@ -177,12 +175,11 @@ void mmHomePagePanel::updateAccounts()
         mmDBWrapper::loadBaseCurrencySettings(db_);
         mmCurrencyFormatter::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
-        data.clear();
-        hb.addHTML(wxT("<tr bgcolor=\"#D3EFF4\" ><td><a href=\"Assets\">"));
-        hb.addHTML(_("Assets"));
-        hb.addHTML(wxT("</a></td><td align=\"right\">"));
-        hb.addHTML(assetBalanceStr);
-        hb.addHTML(wxT("</td></tr>"));
+		hb.addRowSeparator(2);
+		hb.startTableRow();
+		hb.addTableCellLink(wxT("Assets"), _("Assets"), false, true);
+		hb.addTableCell(assetBalanceStr, true);
+		hb.endTableRow();
 
         tBalance += assetBalance;
     }
@@ -190,15 +187,15 @@ void mmHomePagePanel::updateAccounts()
     wxString tBalanceStr;
     mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
 
-    hb.addHTML(wxT("<tr bgcolor=\"#DCEDD5\" ><td>") + wxString(_("Total of Accounts :")) 
-       + wxString(wxT("</td><td align=\"right\"><b>")));
-    hb.addHTML(tBalanceStr);
-    hb.addHTML(wxT("</b></td></tr>"));
+	hb.addRowSeparator(2);
+	hb.addTotalRow(_("Total of Accounts:"), 2, tBalanceStr);
     hb.endTable();
 
-    hb.addHTML(wxT("</td><td >&nbsp;</td><td width=\"200\" ALIGN=\"left\" VALIGN=\"top\">"));
-    
-    hb.addHTML(wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\">"));
+	hb.endTableCell();
+	hb.startTableCell();
+
+	hb.startTable(wxT("95%"));
+
     wxString incStr, expStr;
     mmCurrencyFormatter::formatDoubleToCurrency(tincome, incStr);
     mmCurrencyFormatter::formatDoubleToCurrency(texpenses, expStr);
@@ -212,23 +209,26 @@ void mmHomePagePanel::updateAccounts()
     gg.init(tincome, texpenses);
     gg.generate();
 
-    std::vector<wxString> data2;
-    data2.push_back(_("Income vs Expenses: Current Month"));
-    hb.addTableHeaderRow(data2, wxT(" BGCOLOR=\"#80B9E8\" "), 
-       wxT(" nowrap width=\"130\" COLSPAN=\"2\" "));
+	hb.addTableHeaderRow(_("Income vs Expenses: Current Month"), 2);
+	hb.startTableRow();
+	hb.addTableCell(baseInc, false, true);
+	hb.addTableCell(incStr, true);
+	hb.endTableRow();
     
-    hb.addHTML(wxT("<tr><td>") + baseInc + wxString(wxT("</td><td align=\"right\">")));
-    hb.addHTML(incStr);
-    hb.addHTML(wxT("</td></tr>"));
-    
-    hb.addHTML(wxT("<tr><td>") + baseExp + wxString(wxT("</td><td align=\"right\">")));
-    hb.addHTML(expStr);
-    hb.addHTML(wxT("</td></tr>"));
-    
+	hb.startTableRow();
+	hb.addTableCell(baseExp, false, true);
+	hb.addTableCell(expStr, true);
+	hb.endTableRow();
+
     hb.endTable();
 
     // Add the graph
-    hb.addHTML(gg.getHTML());
+    hb.addImage(gg.getImageSrc());
+
+	hb.endTableCell();
+	hb.endTableRow();
+	hb.startTableRow();
+	hb.startTableCell();
 
     // bills & deposits
     bool isHeaderAdded = false;
@@ -358,22 +358,15 @@ void mmHomePagePanel::updateAccounts()
         {
             if (!isHeaderAdded)
             {
-                hb.addHTML(wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\">"));
-
-                std::vector<wxString> data3;
-                data3.push_back(_("Upcoming Transactions"));
-
-                hb.addHTML(wxT("<tr BGCOLOR=\"#80B9E8\" > <th width=\"130\" COLSPAN=\"3\" > <b>"));
-                hb.addHTML(wxT("<a href=\"billsdeposits\" >"));
-                hb.addHTML(data3[0]);
-                hb.addHTML(wxT("</a></b></th></tr>"));
+				hb.startTable(wxT("95%"));
+				hb.addTableHeaderRowLink(wxT("billsdeposits"), _("Upcoming Transactions"), 3);
                 isHeaderAdded = true;
             }
 
             
             
             wxString daysRemainingStr_;
-            wxString colorStr = wxT("\"#9999FF\" ");
+            wxString colorStr = wxT("#9999FF");
            		
             daysRemainingStr_ = trans_[bdidx].daysRemainingStr_;
             if (trans_[bdidx].daysRemaining_ > 0)
@@ -381,7 +374,7 @@ void mmHomePagePanel::updateAccounts()
             }
             else 
             {
-                colorStr = wxT("\"#FF6600\" ");
+                colorStr = wxT("#FF6600");
             }
 
             // Load the currency for this BD
@@ -396,35 +389,28 @@ void mmHomePagePanel::updateAccounts()
 			wxString displayBDAmtString;
 			mmCurrencyFormatter::formatDoubleToCurrency(trans_[bdidx].amt_, displayBDAmtString);
            
-	
-			hb.addHTML(wxT("<tr> <font size=\"-2\" ><td width=\"100\"> "));
-			hb.addHTML(trans_[bdidx].payeeStr_);
-			hb.addHTML(wxT("</td><td width=\"50\" align=\"right\">"));
-			hb.addHTML(displayBDAmtString);
-			hb.addHTML(wxT("</td><td width=\"100\" align=\"right\" >"));
-            hb.addHTML(wxT("<font color="));
-			hb.addHTML(colorStr);
-			hb.addHTML(wxT(" > "));
-			hb.addHTML(daysRemainingStr_);
-            hb.addHTML(wxT("</font>"));
-			hb.addHTML(wxT("</td>"));
-
-			hb.addHTML(wxT("</font></tr>"));
+			hb.startTableRow();
+			hb.addTableCell(trans_[bdidx].payeeStr_, false, true);
+			hb.addTableCell(displayBDAmtString, true);
+			hb.addTableCell(wxT("&nbsp;&nbsp;&nbsp;&nbsp;") + daysRemainingStr_, false, false, false, colorStr);
+			hb.endTableRow();
         }
     }
 
     if (isHeaderAdded)
         hb.endTable();
 
+	hb.endTableCell();
+	hb.startTableCell();
+
     mmCurrencyFormatter::loadDefaultSettings();
 	//--------------------------------------------------------
 
    hb.addHTML(topCategories_);
    mmGraphTopCategories gtp;
-   hb.addHTML(gtp.getHTML());
+   hb.addImage(gtp.getImageSrc());
 
 	//--------------------------------------------------------
-	hb.addHTML(wxT(""));
 
     int countFollowUp = core_->bTransactionList_.countFollowupTransactions();
     if (countFollowUp > 0)
@@ -439,13 +425,15 @@ void mmHomePagePanel::updateAccounts()
     }
 
     wxString tup = _("Total Transactions");
-    wxString tullStr = tup + wxT("<i>");
+    wxString tullStr = tup + wxT("</i>");
     wxString tstr = wxString::Format(wxT("<br><i><b>%d</b> "), 
         core_->bTransactionList_.transactions_.size());
     tstr = tstr + tullStr;
     hb.addHTML(tstr);
 
-    hb.addHTML(wxT("</td></tr></table>"));
+	hb.endTableCell();
+	hb.endTableRow();
+	hb.endTable();
     
     hb.end();
 
@@ -498,4 +486,5 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
     // Deselect any selections in the tree ctrl, so tree works
     frame_->navTreeCtrl_->Unselect();
 }
+
 

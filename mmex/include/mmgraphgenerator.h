@@ -31,7 +31,7 @@ public:
 public: 
     void generate();
     const wxString& outputFile();
-    wxString getHTML();
+    wxString getImageSrc();
     static void setEnv();
     static wxString envString_;
     bool isGraphEnabled();

@@ -45,7 +45,7 @@ public:
         hb.addLineBreak();
         hb.addLineBreak();
 
-        hb.addHTML(wxT("<font size=\"-2\">"));
+        hb.startCenter();
 
         mmDBWrapper::loadBaseCurrencySettings(db_);
         int ct = 0;  
@@ -58,19 +58,19 @@ public:
         bufSQL.Format("select * from STOCK_V1;");
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
 
-        hb.beginTable();
+        hb.startTable();
+		hb.startTableRow();
+		hb.addTableHeaderCell(_("Company"));
+		hb.addTableHeaderCell(_("Symbol"));
+		hb.addTableHeaderCell(_("Number Shares"));
+		hb.addTableHeaderCell(_("Purchase Date"));
+		hb.addTableHeaderCell(_("Purchase Price"));
+		hb.addTableHeaderCell(_("Current Price"));
+		hb.addTableHeaderCell(_("Commission"));
+		hb.addTableHeaderCell(_("Value"));
+		hb.addTableHeaderCell(_("Gain Loss"));
 
-        std::vector<wxString> headerR;
-        headerR.push_back(_("Company  "));
-        headerR.push_back(_("Symbol   "));
-        headerR.push_back(_("Number Shares  "));
-        headerR.push_back(_("Purchase Date "));
-        headerR.push_back(_("Purchase Price "));
-        headerR.push_back(_("Current Price  "));
-        headerR.push_back(_("Commission  "));
-        headerR.push_back(_("Value  "));
-        headerR.push_back(_("Gain Loss  "));
-        hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
+		hb.endTableRow();
 
         int ct = 0;
         while (q1.NextRow())
@@ -111,21 +111,33 @@ public:
             if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(commission, tempString))
                 commString = tempString;
 
-            std::vector<wxString> data;
-            data.push_back(th.shareName_);
-            data.push_back(th.symbol_);
-            data.push_back(th.numSharesStr_);
-            data.push_back(dt);
-            data.push_back(th.pPriceStr_);
-            data.push_back(th.cPriceStr_);
-            data.push_back(commString);
-            data.push_back(th.valueStr_);
-            data.push_back(th.gainLossStr_);
-            hb.addRow(data);
+			hb.startTableRow();
+			hb.addTableCell(th.shareName_, false, true);
+			hb.addTableCell(th.symbol_);
+            hb.addTableCell(th.numSharesStr_, true);
+            hb.addTableCell(dt);
+            hb.addTableCell(th.pPriceStr_, true);
+            hb.addTableCell(th.cPriceStr_, true);
+            hb.addTableCell(commString, true);
+            hb.addTableCell(th.valueStr_, true);
+
+			if(th.gainLoss_ < 0)
+			{
+				hb.addTableCell(th.gainLossStr_, true, true, true, wxT("#ff0000"));
+			}
+			else if(th.gainLoss_ > 0)
+			{
+				hb.addTableCell(th.gainLossStr_, true, false, true);
+			}
+			else
+			{
+				hb.addTableCell(th.gainLossStr_, true, true);
+			}
+            
+            hb.endTableRow();
         }
         q1.Finalize();
         
-        hb.endTable();
         mmENDSQL_LITE_EXCEPTION
 
         /* Stocks */
@@ -133,14 +145,12 @@ public:
         wxString stockBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
         mmCurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
+
+		hb.addRowSeparator(9);
+		hb.addTotalRow(_("Total Stock Investments: "), 9, stockBalanceStr);
         hb.endTable();
-        hb.addHTML(wxT("</font>"));
-        hb.addLineBreak();
-        hb.addLineBreak();
-        
-        wxString dispStr = _("Total Stock Investments :") + stockBalanceStr; 
-        hb.addHeader(7, dispStr);
-        
+
+		hb.endCenter();
 
         hb.end();
         return hb.getHTMLText();

@@ -4,6 +4,7 @@ Priyank Bolia
 jblough
 Stuart
 Greg Newton
+Paulo Lopes
 
 Silk Icons
 ===========

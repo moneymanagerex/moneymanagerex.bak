@@ -31,7 +31,7 @@ public:
         hb.addLineBreak();
         hb.addLineBreak();
 
-        hb.addHTML(wxT("<font size=\"-2\">"));
+		hb.startCenter();
 
         int budgetYearID_ =  year_;
         long year;
@@ -44,26 +44,24 @@ public:
         wxDateTime yearBegin(1, wxDateTime::Jan, year);
         wxDateTime yearEnd(31, wxDateTime::Dec, year);
 
-        hb.beginTable();
-        std::vector<wxString> headerR;
-        headerR.push_back(_("Category"));
-        headerR.push_back(_("Type"));
-        headerR.push_back(_("Jan"));
-        headerR.push_back(_("Feb"));
-        headerR.push_back(_("March"));
-        headerR.push_back(_("April"));
-        headerR.push_back(_("May"));
-        headerR.push_back(_("June"));
-        headerR.push_back(_("July"));
-        headerR.push_back(_("Aug"));
-        headerR.push_back(_("Sep"));
-        headerR.push_back(_("Oct"));
-        headerR.push_back(_("Nov"));
-        headerR.push_back(_("Dec"));
-        headerR.push_back(_("Full Year"));
-        hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
-
-        std::vector<wxString> data;
+		hb.startTable();
+		hb.startTableRow();
+		hb.addTableHeaderCell(_("Category"));
+		hb.addTableHeaderCell(_("Type"));
+		hb.addTableHeaderCell(_("Jan"));
+		hb.addTableHeaderCell(_("Feb"));
+		hb.addTableHeaderCell(_("Mar"));
+		hb.addTableHeaderCell(_("Apr"));
+		hb.addTableHeaderCell(_("May"));
+		hb.addTableHeaderCell(_("Jun"));
+		hb.addTableHeaderCell(_("Jul"));
+		hb.addTableHeaderCell(_("Aug"));
+		hb.addTableHeaderCell(_("Sep"));
+		hb.addTableHeaderCell(_("Oct"));
+		hb.addTableHeaderCell(_("Nov"));
+		hb.addTableHeaderCell(_("Dec"));
+		hb.addTableHeaderCell(_("Overall"));
+		hb.endTableRow();
 
         mmBEGINSQL_LITE_EXCEPTION;
         mmDBWrapper::loadBaseCurrencySettings(db_);
@@ -153,18 +151,18 @@ public:
             // estimated stuff
             if ((totalEstimated_ != 0.0) || (th.actual_ != 0.0))
             {
-                data.clear();
-                data.push_back(th.catStr_);
-                data.push_back(_("Estimated"));
+                hb.startTableRow();
+				hb.addTableCell(th.catStr_, false, true);
+				hb.addTableCell(_("Estimated"));
                 for (int yidx = 0; yidx < 12; yidx++)
-                    data.push_back(th.estimatedStr_);
-                data.push_back(totalEstimatedStr_);
-                hb.addRow(data);
+					hb.addTableCell(th.estimatedStr_, true, true);
+				hb.addTableCell(totalEstimatedStr_, true, true, true);
+                hb.endTableRow();
 
                 // actual stuff
-                data.clear();
-                data.push_back(th.catStr_);
-                data.push_back(_("Actual"));
+                hb.startTableRow();
+				hb.addTableCell(th.catStr_, false, true);
+				hb.addTableCell(_("Actual"));
 
                 for (int yidx = 0; yidx < 12; yidx++)
                 {
@@ -175,11 +173,28 @@ public:
                                  th.categID_, th.subcategID_, false,  dtBegin, dtEnd);
                     wxString actualMonthValStr;
                     mmCurrencyFormatter::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
-                    data.push_back(actualMonthValStr);
+					if(actualMonthVal < th.estimated_)
+					{
+						hb.addTableCell(actualMonthValStr, true, true, true, wxT("#ff0000"));
+					}
+					else
+					{
+						hb.addTableCell(actualMonthValStr, true);
+					}
                 }
                 // year end
-                data.push_back(th.actualStr_);
-                hb.addRow(data,  wxT(" bgcolor=\"#DCEDD5\" "));
+				if(th.actual_ < totalEstimated_)
+				{
+					hb.addTableCell(th.actualStr_, true, true, true, wxT("#ff0000"));
+				}
+				else
+				{
+					hb.addTableCell(th.actualStr_, true, false, true);
+				}
+				
+                hb.endTableRow();
+
+				hb.addRowSeparator(15);
             }
 
             wxSQLite3StatementBuffer bufSQL1;
@@ -262,21 +277,19 @@ public:
 
                 if ((totalEstimated_ != 0.0) || (thsub.actual_ != 0.0))
                 {
-                    data.clear();
-                    wxString cn = thsub.catStr_+ wxT(" : ") + thsub.subCatStr_;
-                    data.push_back(cn);
-                    data.push_back(_("Estimated"));
-                    for (int yidx = 0; yidx < 12; yidx++)
-                        data.push_back(thsub.estimatedStr_);
-
+					hb.startTableRow();
+					hb.addTableCell(thsub.catStr_+ wxT(": ") + thsub.subCatStr_, false, true);
+					hb.addTableCell(_("Estimated"));
+					for (int yidx = 0; yidx < 12; yidx++)
+						hb.addTableCell(thsub.estimatedStr_, true, true);
                     mmCurrencyFormatter::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
-                    data.push_back(totalEstimatedStr_);
-                    hb.addRow(data);
+					hb.addTableCell(totalEstimatedStr_, true, true, true);
+					hb.endTableRow();
 
-                    data.clear();
-                    cn = thsub.catStr_+ wxT(" : ") + thsub.subCatStr_;
-                    data.push_back(cn);
-                    data.push_back(_("Actual"));
+					hb.startTableRow();
+					hb.addTableCell(thsub.catStr_+ wxT(": ") + thsub.subCatStr_, false, true);
+					hb.addTableCell(_("Actual"));
+
                     for (int yidx = 0; yidx < 12; yidx++)
                     {
                         wxDateTime dtBegin(1, (wxDateTime::Month)yidx, year);
@@ -286,13 +299,29 @@ public:
                            = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, 
                             false,  dtBegin, dtEnd);
                         wxString actualMonthValStr;
-                        mmCurrencyFormatter::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
-                        data.push_back(actualMonthValStr);
-                    }
 
+						mmCurrencyFormatter::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
+						if(actualMonthVal < thsub.estimated_)
+						{
+							hb.addTableCell(actualMonthValStr, true, true, true, wxT("#ff0000"));
+						}
+						else
+						{
+							hb.addTableCell(actualMonthValStr, true);
+						}
+					}
+					// year end
+					if(thsub.actual_ < totalEstimated_)
+					{
+						hb.addTableCell(thsub.actualStr_, true, true, true, wxT("#ff0000"));
+					}
+					else
+					{
+						hb.addTableCell(thsub.actualStr_, true, false, true);
+					}
+					hb.endTableRow();
 
-                    data.push_back( thsub.actualStr_);
-                    hb.addRow(data, wxT(" bgcolor=\"#DCEDD5\" "));
+					hb.addRowSeparator(15);
                 } 
 
             }
@@ -303,8 +332,7 @@ public:
         mmENDSQL_LITE_EXCEPTION;
 
         hb.endTable();
-
-        hb.addHTML(wxT("</font>"));
+		hb.endCenter();
 
         hb.end();
         return hb.getHTMLText();

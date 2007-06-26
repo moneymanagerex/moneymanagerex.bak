@@ -246,6 +246,17 @@ wxString mmGetNiceMonthName(int month)
     return gMonthsInYear[month];
 }
 
+wxString mmGetNiceShortMonthName(int month)
+{
+    const wxString gMonthsInYear[12] =
+    {
+		_("Jan"), _("Feb"), _("Mar"), _("Apr"), _("May"), _("Jun"),
+		_("Jul"), _("Aug"), _("Sep"), _("Oct"), _("Nov"), _("Dec")
+	};
+
+    return gMonthsInYear[month];
+}
+
 wxString mmGetNiceDateString(wxDateTime dt)
 {
 #if 0
@@ -1298,4 +1309,5 @@ bool mmCurrencyFormatter::formatCurrencyToDouble(const wxString& str, double& va
     
     return false;
 }
+
 

@@ -38,7 +38,7 @@ mmGraphGenerator::mmGraphGenerator(const wxString& scriptName,
    ploticusName_  = wxT("\"") + basePath + wxT("pl.exe") + wxT("\"");
   
 
-   htmlString_ = wxT("<img src=\"graphs\\") + outFileName + wxT("\"></img>");
+   htmlString_ = wxT("graphs\\") + outFileName;
 }
 
 mmGraphGenerator::~mmGraphGenerator()
@@ -54,7 +54,7 @@ bool mmGraphGenerator::isGraphEnabled()
    return mmIniOptions::enableGraphs_;
 }
 
-wxString mmGraphGenerator::getHTML()
+wxString mmGraphGenerator::getImageSrc()
 {
    if (mmIniOptions::enableGraphs_)
       return htmlString_;

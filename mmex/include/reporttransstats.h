@@ -35,17 +35,17 @@ public:
         hb.addLineBreak();
         hb.addLineBreak();
 
-        hb.addHTML(wxT("<font size=\"-2\">"));
-
         wxDateTime yearBegin(1, wxDateTime::Jan, year_);
         wxDateTime yearEnd(31, wxDateTime::Dec, year_);
 
-        hb.beginTable();
-        std::vector<wxString> headerR;
-        headerR.push_back(_("Month"));
-        headerR.push_back(lastYearStr);
-        headerR.push_back(thisYearStr);
-        hb.addTableHeaderRow(headerR, wxT(" bgcolor=\"#80B9E8\""));
+		hb.startCenter();
+        hb.startTable(wxT("50%"));
+
+		hb.startTableRow();
+		hb.addTableHeaderCell(_("Month"));
+		hb.addTableHeaderCell(lastYearStr);
+		hb.addTableHeaderCell(thisYearStr);
+		hb.endTableRow();
 
         double income = 0.0;
         double expenses = 0.0;
@@ -70,12 +70,11 @@ public:
             wxString numPrevStr = wxString::Format(wxT("%d"), numPrev);
             wxString numThisStr = wxString::Format(wxT("%d"), numThis);
 
-            std::vector<wxString> data;
-            data.push_back(monName);
-            data.push_back(numPrevStr);
-            data.push_back(numThisStr);
-            
-            hb.addRow(data,  wxT(" bgcolor=\"#FFFFFF\" "));
+			hb.startTableRow();
+			hb.addTableCell(monName, false, true);
+			hb.addTableCell(numPrevStr, true);
+			hb.addTableCell(numThisStr, true);
+			hb.endTableRow();
         }
 
         wxDateTime today = wxDateTime::Now();
@@ -91,7 +90,6 @@ public:
         core_->bTransactionList_.getTransactionStats(-1, numLastYear,  false, dtBegin, dtEnd);
         
         std::vector<wxString> data;
-        data.push_back(_("Total"));
 
         wxString numLastYearStr = wxString::Format(wxT("%d"), numLastYear);
         data.push_back(numLastYearStr);
@@ -109,12 +107,12 @@ public:
 
         wxString numThisYearStr = wxString::Format(wxT("%d"), numThisYear);
         data.push_back(numThisYearStr);
-
-        hb.addRow(data,  wxT(" bgcolor=\"#DCEDD5\" "));
+		
+		hb.addRowSeparator(3);
+		hb.addTotalRow(_("Total"), 3, data);
           
         hb.endTable();
-
-        hb.addHTML(wxT("</font>"));
+		hb.endCenter();
 
         hb.end();
         return hb.getHTMLText();

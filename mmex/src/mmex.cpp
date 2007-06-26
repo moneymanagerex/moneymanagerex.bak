@@ -882,15 +882,9 @@ wxString mmGUIFrame::createCategoryList()
 
     mmHTMLBuilder hb;
 
-    hb.addHTML(wxT("<br>"));
-    hb.addHTML(wxT("<br>"));
-
     std::vector<CategInfo> categList;
-    hb.addHTML(wxT("<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\">"));
-    std::vector<wxString> headerR;
-    headerR.push_back(_("Top Categories Last 30 Days  "));
-
-    hb.addTableHeaderRow(headerR, wxT(" BGCOLOR=\"#80B9E8\" "), wxT(" width=\"130\" COLSPAN=\"2\" "));
+	hb.startTable(wxT("95%"));
+	hb.addTableHeaderRow(_("Top Categories Last 30 Days"), 2);
 
     core_->currencyList_.loadBaseCurrencySettings();
 
@@ -953,12 +947,10 @@ wxString mmGUIFrame::createCategoryList()
     {
         if (idx > 5)
             break;
-
-        hb.addHTML(wxT("<tr> <td width=\"130\"> "));
-        hb.addHTML(categList[idx].categ);
-        hb.addHTML(wxT("</td><td width=\"100\" align=\"right\">"));
-        hb.addHTML(categList[idx].amountStr);
-        hb.addHTML(wxT("</td>"));
+		hb.startTableRow();
+		hb.addTableCell(categList[idx].categ);
+		hb.addTableCell(categList[idx].amountStr, true);
+		hb.endTableRow();
     }
 
     hb.endTable();

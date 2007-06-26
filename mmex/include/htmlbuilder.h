@@ -27,25 +27,86 @@ public:
     mmHTMLBuilder() {}
     ~mmHTMLBuilder() {}
 
-public: 
-    void init();
-    void end();
-    void clear() { html_ = wxT(""); }
+public:
+	/** Starts a new HMTL report */
+	void init();
+	
+	/** Closes the HMTL report */
+	void end();
+    
+	/** Clears the current HTML document */
+	void clear() { html = wxT(""); }
+	
+	/** Create an HTML header and returns as a wxString */
     void addHeader(int level, const wxString& header);
+	
+	/** Create an HTML paragrapth */
     void addParaText(const wxString& text);
+	
+	/** Create an HTML line break */
     void addLineBreak();
+	
+	/** Create an HTML HorizontalLine */
     void addHorizontalLine();
-    void beginTable(const wxString& options=wxT(""));
-    void endTable();
-    void addRow(std::vector<wxString>& data, const wxString& rowoptions=wxT(""), 
-        const wxString& tdoptions=wxT(""));
-    void addTableHeaderRow(std::vector<wxString>& data, 
-        const wxString& options=wxT(""),const wxString& tdoptions=wxT(""));
-    void addHTML(const wxString& text);
-    wxString getHTMLText() { return html_; }
+	
+	/** Create an HTML Image tag */
+	void addImage(const wxString& src);
+	
+	/** Centers the content from this point on */
+	void startCenter();
+	
+	/** Stops the centering of content */
+	void endCenter();
 
+	/** Start a table element */
+    void startTable(const wxString& width = wxT(""), const wxString& valign = wxT(""));
+	
+	/** Starts a table row */
+    void startTableRow();
+	
+	/** Starts a table cell (use only if want to nest other elements inside */
+	void startTableCell(const wxString& width = wxT(""));
+	
+	/** Add a special row that is a separator, cols is the number of columns the row has to spread along */
+    void addRowSeparator(int cols);
+	
+	/** Add a special row that will format total values */
+    void addTotalRow(const wxString& caption, int cols, const wxString& value);
+	
+	/** Add a special row that will format total values */
+    void addTotalRow(const wxString& caption, int cols, std::vector<wxString>& data);
+
+	/** Add a Table header cell */
+    void addTableHeaderCell(const wxString& value);
+	
+	/** Add a Table header cell link */
+    void addTableHeaderCellLink(const wxString& href, const wxString& value);
+
+	/** Add a Table header row */
+    void addTableHeaderRow(const wxString& value, int cols);
+
+	/** Add a Table header row with link */
+    void addTableHeaderRowLink(const wxString& href, const wxString& value, int cols);
+
+	/** Add a Cell value */
+    void addTableCell(const wxString& value, bool numeric = false, bool italic = false, bool bold = false, const wxString& fontColor = wxT(""));
+	
+	/** Add a Cell value */
+    void addTableCellLink(const wxString& href, const wxString& value, bool numeric = false, bool italic = false, bool bold = false, const wxString& fontColor = wxT(""));
+
+    void endTable();
+    void endTableRow();
+	void endTableCell();
+    
+	wxString getHTMLText() {
+		return html;
+	}
+
+	void addHTML(const wxString& raw) { html += raw; }
+    
 private:
-    wxString html_;
+    wxString html;
+	bool bgswitch;
 };
 
 #endif
