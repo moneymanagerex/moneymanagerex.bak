@@ -411,7 +411,7 @@ void mmHomePagePanel::updateAccounts()
    hb.addImage(gtp.getImageSrc());
 
 	//--------------------------------------------------------
-
+    hb.addLineBreak();
     int countFollowUp = core_->bTransactionList_.countFollowupTransactions();
     if (countFollowUp > 0)
     {
