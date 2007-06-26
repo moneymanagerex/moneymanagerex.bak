@@ -68,6 +68,7 @@ public:
     void OnBackupDBChecked(wxCommandEvent& event);
     void OnOriginalDateChecked(wxCommandEvent& event);
     void OnUseSoundChecked(wxCommandEvent& event);
+    void OnListFutureDates(wxCommandEvent& event);
 
 private:
     wxImageList* m_imageList;

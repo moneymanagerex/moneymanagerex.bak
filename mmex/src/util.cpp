@@ -1001,6 +1001,8 @@ void mmLoadColorsFromDatabase(wxSQLite3Database* db_)
                                                 wxT("LISTBORDER"), wxT("0,0,0")));
     mmColors::listDetailsPanelColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_, 
                                                 wxT("LISTDETAILSPANEL"), wxT("244,247,251")));
+    mmColors::listFutureDateColor = mmGetColourFromString(mmDBWrapper::getINISettingValue(db_, 
+                                                wxT("LISTFUTUREDATES"), wxT("116,134,168")));
 }
 
 void mmSaveColorsToDatabase(wxSQLite3Database* db_)
@@ -1017,6 +1019,8 @@ void mmSaveColorsToDatabase(wxSQLite3Database* db_)
         mmGetStringFromColour(mmColors::listBorderColor));
      mmDBWrapper::setINISettingValue(db_, wxT("LISTDETAILSPANEL"), 
         mmGetStringFromColour(mmColors::listDetailsPanelColor));
+    mmDBWrapper::setINISettingValue(db_, wxT("LISTFUTUREDATES"), 
+        mmGetStringFromColour(mmColors::listFutureDateColor));
 }
 
 void mmRestoreDefaultColors()
@@ -1027,6 +1031,7 @@ void mmRestoreDefaultColors()
     mmColors::navTreeBkColor = wxColour(255, 255, 255);
     mmColors::listBorderColor = wxColour(0, 0, 0);
     mmColors::listDetailsPanelColor = wxColour(244, 247, 251);
+    mmColors::listFutureDateColor = wxColour(116, 134, 168);
 }
 
 /* Set the default colors */
@@ -1036,6 +1041,7 @@ wxColour mmColors::listBackColor = wxColour(255, 255, 255);
 wxColour mmColors::navTreeBkColor = wxColour(255, 255, 255);
 wxColour mmColors::listBorderColor = wxColour(0, 0, 0);
 wxColour mmColors::listDetailsPanelColor = wxColour(244, 247, 251);
+wxColour mmColors::listFutureDateColor = wxColour(116, 134, 168);
 
 /* -------------------------------------------- */
 // setup the defaults for US Dollar

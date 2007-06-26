@@ -100,6 +100,7 @@ void mmGraphGenerator::generate()
    int code = wxExecute(fullExecPath, output, errors);
    if (code != 0)
    {
-      mmShowErrorMessage(0, _("Failed to launch graphing system!"), _("Graph Error.."));
+      mmShowErrorMessage(0, _("Failed to launch graphing system! Disabling graphs."), _("Graph Error.."));
+      mmIniOptions::enableGraphs_ = false;
    }
 }

@@ -53,6 +53,7 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBORDER, mmOptionsDialog::OnListBorderChanged)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_RESTOREDEFAULT, mmOptionsDialog::OnRestoreDefaultColors)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS, mmOptionsDialog::OnListDetailsColors)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES, mmOptionsDialog::OnListFutureDates)
 
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_BACKUP, mmOptionsDialog::OnBackupDBChecked)
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_ORIG_DATE, mmOptionsDialog::OnOriginalDateChecked)
@@ -459,6 +460,12 @@ void mmOptionsDialog::CreateControls()
     itemGridSizer2->Add(itemButtonColorListDetails, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
     itemButtonColorListDetails->SetToolTip(_("Specify the color for the list details"));
     itemButtonColorListDetails->SetBackgroundColour(mmColors::listDetailsPanelColor);
+
+     wxButton* itemButtonColorFutureDates = new wxButton( itemPanelColors, 
+        ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES, _("Future Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer2->Add(itemButtonColorFutureDates, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemButtonColorFutureDates->SetToolTip(_("Specify the color for future transactions"));
+    itemButtonColorFutureDates->SetBackgroundColour(mmColors::listFutureDateColor);
    
     // ------------------------------------------
 
@@ -658,6 +665,24 @@ void  mmOptionsDialog::OnListDetailsColors(wxCommandEvent& event)
         bn->SetBackgroundColour(col);
     }
 }
+
+void  mmOptionsDialog::OnListFutureDates(wxCommandEvent& event)
+{
+    wxColourData data;
+    data.SetChooseFull(true);
+    data.SetColour(mmColors::listFutureDateColor);
+
+    wxColourDialog dialog(this);
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        wxColourData retData = dialog.GetColourData();
+        wxColour col = retData.GetColour();
+        mmColors::listFutureDateColor = col;
+        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES);
+        bn->SetBackgroundColour(col);
+    }
+}
+
 
 void mmOptionsDialog::OnRestoreDefaultColors(wxCommandEvent& event)
 {

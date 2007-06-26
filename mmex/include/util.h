@@ -119,6 +119,7 @@ public:
     static wxColour listBackColor;
     static wxColour navTreeBkColor;
     static wxColour listDetailsPanelColor;
+    static wxColour listFutureDateColor;
 };
 
 class mmCurrencyFormatter
