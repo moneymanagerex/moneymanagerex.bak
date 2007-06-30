@@ -39,7 +39,7 @@ public:
         wxString displayIncString = wxString::Format(wxT("%.0f"), income);
         wxString displayExpString = wxString::Format(wxT("%.0f"), expenses);
 
-        int maxVal = (income > expenses)? (int)income + 200 : (int)expenses + 200;
+        int maxVal = (income > expenses)? (int)income + 1500 : (int)expenses + 1500;
         wxString displayMaxValString = wxString::Format(wxT("%d"), maxVal);
 
         fileContents.Replace(wxT("$INCOME"), displayIncString);

@@ -31,12 +31,16 @@ class mmReportCategoryExpenses : public mmPrintableBase
 public:
     mmReportCategoryExpenses(mmCoreDB* core, bool ignoreDate, 
         wxDateTime dtBegin, 
-        wxDateTime dtEnd) 
+        wxDateTime dtEnd,
+        const wxString& title,
+        int type) 
         : core_(core),
           db_(core_->db_.get()),
           ignoreDate_(ignoreDate),
           dtBegin_(dtBegin),
-          dtEnd_(dtEnd)
+          dtEnd_(dtEnd),
+          title_(title),
+          type_(type)
     {
     }
 
@@ -44,7 +48,7 @@ public:
     {
         mmHTMLBuilder hb;
         hb.init();
-        hb.addHeader(3, _("Where the Money Goes"));
+        hb.addHeader(3, title_);
 
         wxDateTime now = wxDateTime::Now();
         wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
@@ -92,7 +96,9 @@ public:
                 dtBegin_, dtEnd_);
             mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
 
-            if (amt != 0.0)
+            if ((type_ == 1 && amt < 0.0) &&
+                (type_ == 2 && amt > 0.0) &&
+                (amt != 0.0))
             {
                 ValuePair vp;
                 vp.label = categString;
@@ -116,6 +122,14 @@ public:
                 amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, 
                     ignoreDate_,  dtBegin_, dtEnd_);
                 mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
+
+                // if we want only income
+                if (type_ == 1 && amt < 0.0)
+                    continue;
+
+                // if we want only expenses
+                if (type_ == 2 && amt > 0.0)
+                    continue;
 
                 if (amt != 0.0)
                 {
@@ -154,6 +168,8 @@ private:
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;
     bool ignoreDate_;
+    const wxString& title_;
+    int type_;
 };
 
 #endif
