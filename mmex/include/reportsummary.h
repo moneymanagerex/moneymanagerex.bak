@@ -79,7 +79,7 @@ public:
               mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
 
 			  hb.startTableRow();
-			  hb.addTableCell(pCA->accountName_);
+			  hb.addTableCell(pCA->accountName_, false, true);
 			  hb.addTableCell(balance, true);
 			  hb.endTableRow();
            }

@@ -85,6 +85,7 @@ void mmOptions::saveOptions(wxSQLite3Database* db)
    wxString mmIniOptions::userNameString_ = wxT("");
    bool mmIniOptions::enableCustomTemplateDB_ = false;
    wxString mmIniOptions::customTemplateDB_ = wxT("");
+   wxString mmIniOptions::fontSize_ = wxT("0");
 #endif
 
 
@@ -101,6 +102,8 @@ void mmIniOptions::loadOptions(wxSQLite3Database* db)
 
    if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEGRAPHS"), wxT("TRUE")) != wxT("TRUE"))
       enableGraphs_ = false;
+
+   mmIniOptions::fontSize_ = mmDBWrapper::getINISettingValue(db, wxT("HTMLFONTSIZE"), wxT("0"));
 }
 
 void mmIniOptions::loadInfoOptions(wxSQLite3Database* db)
@@ -1309,5 +1312,6 @@ bool mmCurrencyFormatter::formatCurrencyToDouble(const wxString& str, double& va
     
     return false;
 }
+
 
 

@@ -36,6 +36,14 @@
 #define VIEW_TRANS_LASTMONTH 5
 #define VIEW_TRANS_CURRENTMONTH 6
 
+#define HTML_FONT_XSMALL 0
+#define HTML_FONT_SMALL 1
+#define HTML_FONT_NORMAL 2
+#define HTML_FONT_LARGE 3
+#define HTML_FONT_XLARGE 4
+#define HTML_FONT_XXLARGE 5
+#define HTML_FONT_HUGE 6
+
 IMPLEMENT_DYNAMIC_CLASS( mmOptionsDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
@@ -59,6 +67,7 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_ORIG_DATE, mmOptionsDialog::OnOriginalDateChecked)
 
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_USE_SOUND, mmOptionsDialog::OnUseSoundChecked)
+	EVT_CHOICE(ID_DIALOG_OPTIONS_FONT_SIZE, mmOptionsDialog::OnFontSizeChanged)  
     
 END_EVENT_TABLE()
 
@@ -519,6 +528,56 @@ void mmOptionsDialog::CreateControls()
         wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemCheckBoxUseSound->SetToolTip(_("Select whether to use sounds when entering transactions"));
 
+    wxStaticBox* itemStaticBoxSizerFontSizeStatic = new wxStaticBox(itemPanelMisc, 
+        wxID_ANY, _("Font Size Options"));
+    wxStaticBoxSizer* itemStaticBoxSizerFontSize = new wxStaticBoxSizer(itemStaticBoxSizerFontSizeStatic,
+        wxHORIZONTAL);
+    itemBoxSizer7->Add(itemStaticBoxSizerFontSize, 0, wxGROW|wxALL, 5);
+
+    wxStaticText* itemStaticTextHTMLFontSizeText = new wxStaticText( itemPanelMisc, 
+        wxID_STATIC, _("Report Font Size"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticBoxSizerFontSize->Add(itemStaticTextHTMLFontSizeText, 0, 
+        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+	wxString itemChoiceHTMLFontSize[] = 
+    {
+        wxT("XSmall"),
+		wxT("Small"),
+		wxT("Normal"),
+		wxT("Large"),
+		wxT("XLarge"),
+		wxT("XXLarge"),
+		wxT("Huge")
+    };  
+    
+    choiceFontSize_ = new wxChoice( itemPanelMisc, 
+        ID_DIALOG_OPTIONS_FONT_SIZE, wxDefaultPosition, 
+        wxSize(75, -1), 7, itemChoiceHTMLFontSize, 0 );
+
+    wxString vFontSize = mmDBWrapper::getINISettingValue(inidb_, 
+        wxT("HTMLFONTSIZE"), wxT("Font Size on the reports"));
+
+    choiceFontSize_->SetSelection(HTML_FONT_NORMAL);
+
+    if (vFontSize == wxT("1"))
+        choiceFontSize_->SetSelection(HTML_FONT_XSMALL);
+    else if (vFontSize == wxT("2"))
+        choiceFontSize_->SetSelection(HTML_FONT_SMALL);
+    else if (vFontSize == wxT("3"))
+        choiceFontSize_->SetSelection(HTML_FONT_NORMAL);
+    else if (vFontSize == wxT("4"))
+        choiceFontSize_->SetSelection(HTML_FONT_LARGE);
+    else if (vFontSize == wxT("5"))
+         choiceFontSize_->SetSelection(HTML_FONT_XLARGE);
+    else if (vFontSize == wxT("6"))
+         choiceFontSize_->SetSelection(HTML_FONT_XXLARGE);
+    else if (vFontSize == wxT("7"))
+         choiceFontSize_->SetSelection(HTML_FONT_HUGE);
+    
+    choiceFontSize_->SetToolTip(_("Specify which font size is used on the report tables"));
+	
+	itemStaticBoxSizerFontSize->Add(choiceFontSize_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
     // -------------------------------------------
 
     newBook->SetImageList(m_imageList);
@@ -717,4 +776,11 @@ void mmOptionsDialog::OnUseSoundChecked(wxCommandEvent& event)
      mmDBWrapper::setINISettingValue(inidb_, wxT("USETRANSSOUND"), wxT("TRUE"));
   else
     mmDBWrapper::setINISettingValue(inidb_, wxT("USETRANSSOUND"), wxT("FALSE"));
+}
+
+void mmOptionsDialog::OnFontSizeChanged(wxCommandEvent& event)
+{
+   int size = choiceFontSize_->GetCurrentSelection() + 1;
+   mmIniOptions::fontSize_ = wxString::Format(wxT("%d"), size);
+   mmDBWrapper::setINISettingValue(inidb_, wxT("HTMLFONTSIZE"), mmIniOptions::fontSize_);
 }

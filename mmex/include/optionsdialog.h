@@ -69,12 +69,14 @@ public:
     void OnOriginalDateChecked(wxCommandEvent& event);
     void OnUseSoundChecked(wxCommandEvent& event);
     void OnListFutureDates(wxCommandEvent& event);
+	void OnFontSizeChanged(wxCommandEvent& event);
 
 private:
     wxImageList* m_imageList;
     wxComboBox* choiceDateFormat_;
     wxChoice* choiceVisible_;
     wxChoice* choiceTransVisible_;
+	wxChoice* choiceFontSize_;
     mmCoreDB* core_;
     wxSQLite3Database* db_;
     wxSQLite3Database* inidb_;

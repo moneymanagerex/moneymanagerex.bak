@@ -24,7 +24,7 @@
 class mmHTMLBuilder
 {
 public:
-    mmHTMLBuilder() {}
+    mmHTMLBuilder();
     ~mmHTMLBuilder() {}
 
 public:
@@ -107,6 +107,8 @@ public:
 private:
     wxString html;
 	bool bgswitch;
+	wxString color0;
+	wxString color1;
 };
 
 #endif

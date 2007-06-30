@@ -18,6 +18,19 @@
 #include "htmlbuilder.h"
 #include "util.h"
 
+mmHTMLBuilder::mmHTMLBuilder() {
+	// init colors from config
+	color0 = wxT("#");
+	color0 += wxString::Format(wxT("%x"), (int) mmColors::listAlternativeColor0.Red());
+	color0 += wxString::Format(wxT("%x"), (int) mmColors::listAlternativeColor0.Green());
+	color0 += wxString::Format(wxT("%x"), (int) mmColors::listAlternativeColor0.Blue());
+
+	color1 = wxT("#");
+	color1 += wxString::Format(wxT("%x"), (int) mmColors::listAlternativeColor1.Red());
+	color1 += wxString::Format(wxT("%x"), (int) mmColors::listAlternativeColor1.Green());
+	color1 += wxString::Format(wxT("%x"), (int) mmColors::listAlternativeColor1.Blue());
+}
+
 void mmHTMLBuilder::init()
 {
     html += wxT("<html><head><meta http-equiv=\"content-type\" content=\"text/html;charset=UTF-8\"><title>");  
@@ -62,9 +75,11 @@ void mmHTMLBuilder::addHeader(int level, const wxString& header)
 
 void mmHTMLBuilder::addParaText(const wxString& text)
 {
-    html += wxT("<p>");
+    html += wxT("<p><font size=\"");
+	html += mmIniOptions::fontSize_;
+	html += wxT("\">");
     html += text;
-    html += wxT("</p>");
+    html += wxT("</font></p>");
 }
 
 void mmHTMLBuilder::addLineBreak()
@@ -79,9 +94,12 @@ void mmHTMLBuilder::addHorizontalLine()
 
 void mmHTMLBuilder::addImage(const wxString& src)
 {
-	html += wxT("<img src=\"");
-	html += src;
-	html += wxT("\" border=\"0\">");
+	if(!src.empty())
+	{
+		html += wxT("<img src=\"");
+		html += src;
+		html += wxT("\" border=\"0\">");
+	}
 }
 
 void mmHTMLBuilder::startCenter()
@@ -149,11 +167,15 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, const wxStrin
 		html += wxString::Format(wxT("%d"), cols - 1);
 		html += wxT("\"");
 	}
-	html += wxT("><b><i>&nbsp;&nbsp;");
+	html += wxT("><font size=\"");
+	html += mmIniOptions::fontSize_;
+	html += wxT("\"><b><i>&nbsp;&nbsp;");
 	html += caption;
-	html += wxT("</i></b></td><td align=\"right\"><b><i>");
+	html += wxT("</i></b></font></td><td align=\"right\"><font size=\"");
+	html += mmIniOptions::fontSize_;
+	html += wxT("\"><b><i>");
 	html += value;
-	html += wxT("</i></b></td></tr>");
+	html += wxT("</i></b></font></td></tr>");
 }
 
 void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, std::vector<wxString>& data) {
@@ -163,14 +185,21 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, std::vector<w
 		html += wxString::Format(wxT("%d"), cols - data.size());
 		html += wxT("\"");
 	}
-	html += wxT("><b><i>&nbsp;&nbsp;");
+	html += wxT("><font size=\"");
+	html += mmIniOptions::fontSize_;
+	html += wxT("\"><b><i>&nbsp;&nbsp;");
 	html += caption;
+	html += wxT("</i></b></font>");
+
 	for (unsigned long idx = 0; idx < data.size(); idx++)
 	{
-		html += wxT("</i></b></td><td align=\"right\"><b><i>");
+		html += wxT("</td><td align=\"right\"><font size=\"");
+		html += mmIniOptions::fontSize_;
+		html += wxT("\"><b><i>");
 		html += data[idx];
+		html += wxT("</i></b></font>");
 	}
-	html += wxT("</i></b></td></tr>");
+	html += wxT("</td></tr>");
 }
 
 void mmHTMLBuilder::addTableHeaderRow(const wxString& value, int cols) {
@@ -181,16 +210,20 @@ void mmHTMLBuilder::addTableHeaderRow(const wxString& value, int cols) {
 		html += wxString::Format(wxT("%d"), cols);
 		html += wxT("\"");
 	}
-	html += wxT("><b>&nbsp;");
+	html += wxT("><font size=\"");
+	html += mmIniOptions::fontSize_;
+	html += wxT("\"><b>&nbsp;");
     html += value;
-	html += wxT("</b></th></tr>");
+	html += wxT("</b></font></th></tr>");
 	bgswitch = true;
 }
 
 void mmHTMLBuilder::addTableHeaderCell(const wxString& value) {
-	html += wxT("<th align=\"left\" valign=\"center\" bgcolor=\"#d5d6de\"><b>&nbsp;");
+	html += wxT("<th align=\"left\" valign=\"center\" bgcolor=\"#d5d6de\"><font size=\"");
+	html += mmIniOptions::fontSize_;
+	html += wxT("\"><b>&nbsp;");
     html += value;
-	html += wxT("</b></th>");
+	html += wxT("</b></font></th>");
 	bgswitch = false;
 }
 
@@ -209,42 +242,48 @@ void mmHTMLBuilder::addTableCell(const wxString& value, bool numeric, bool itali
 	
 	if(bgswitch)
 	{
-		html += wxT("#ffffff");
+		html += color1;
 	}
 	else
 	{
-		html += wxT("#e1edfb");
+		html += color0;
 	}
     html += wxT("\">");
 
+	html += wxT("<font size=\"");
+	html += mmIniOptions::fontSize_;
+
 	if(!fontColor.empty())
 	{
-		html += wxT("<font color=\"");
+		html += wxT("\" color=\"");
 		html += fontColor;
-		html += wxT("\">");
 	}
-	
+
+	html += wxT("\">");	
+
 	if(bold)
 	{
 		html += wxT("<b>");
 	}
+
 	if(italic)
 	{
 		html += wxT("<i>");
 	}
+
 	html += value;
+
 	if(italic)
 	{
 		html += wxT("</i>");
 	}
+
 	if(bold)
 	{
 		html += wxT("</b>");
 	}
-	if(!fontColor.empty())
-	{
-		html += wxT("</font>");
-	}
+	html += wxT("</font>");
+
 	html += wxT("</td>");
 }
 

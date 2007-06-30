@@ -948,7 +948,7 @@ wxString mmGUIFrame::createCategoryList()
         if (idx > 5)
             break;
 		hb.startTableRow();
-		hb.addTableCell(categList[idx].categ);
+		hb.addTableCell(categList[idx].categ, false, true);
 		hb.addTableCell(categList[idx].amountStr, true);
 		hb.endTableRow();
     }

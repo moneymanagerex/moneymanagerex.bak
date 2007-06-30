@@ -101,6 +101,7 @@ public:
    static bool enableVisitWebsite_;
    static wxString logoName_;
    static wxString appName_;
+   static wxString fontSize_;
    static bool enableImportMMNETCSV_;
    static bool enableImportMMCSV_;
    static bool enableCustomAboutDialog_;
