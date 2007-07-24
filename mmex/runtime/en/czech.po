@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-03-31 20:42-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2007-07-06 11:38+0100\n"
+"Last-Translator: Geralt <geraltcz@centrum.cz>\n"
 "Language-Team: Geralt <geraltcz@centrum.cz>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -1100,9 +1100,8 @@ msgstr "Zvolte stav"
 
 #: src/filtertransdialog.cpp:262
 #: src/transdialog.cpp:320
-#, fuzzy
 msgid "Duplicate"
-msgstr "Datum"
+msgstr "Duplikovat"
 
 #: src/filtertransdialog.cpp:273
 msgid "Specify Type"
@@ -1162,9 +1161,8 @@ msgid "View Flagged Transactions"
 msgstr "Zobrazit transakce s příznakem"
 
 #: src/mmcheckingpanel.cpp:176
-#, fuzzy
 msgid "View Duplicate Transactions"
-msgstr "Zobrazit transakce s příznakem"
+msgstr "Zobrazit duplikované transakce"
 
 #: src/mmcheckingpanel.cpp:178
 msgid "View Transactions from last 30 days"
@@ -1180,7 +1178,7 @@ msgstr "Odstranit všechny transakce v aktuálním zobrazení"
 
 #: src/mmcheckingpanel.cpp:182
 msgid "Delete all flagged transactions"
-msgstr "Odstranit všechny transkace s příznakem"
+msgstr "Odstranit všechny transakce s příznakem"
 
 #: src/mmcheckingpanel.cpp:225
 msgid "Viewing All Transactions"
@@ -1287,9 +1285,8 @@ msgid "Viewing Flagged transactions"
 msgstr "Zobrazeny transakce s příznakem"
 
 #: src/mmcheckingpanel.cpp:748
-#, fuzzy
 msgid "Viewing duplicate transactions"
-msgstr "Zobrazeny transakce s příznakem"
+msgstr "Zobrazuji duplikované transakce"
 
 #: src/mmcheckingpanel.cpp:753
 msgid "Do you really want to delete all the transactions shown?"
@@ -1342,9 +1339,8 @@ msgid "Mark For &Followup"
 msgstr "Označit pro &sledování"
 
 #: src/mmcheckingpanel.cpp:819
-#, fuzzy
 msgid "Mark As &Duplicate"
-msgstr "Označit jako &neplatné"
+msgstr "Označit jako &duplikované"
 
 #: src/mmcheckingpanel.cpp:823
 msgid "as Reconciled"
@@ -1364,7 +1360,7 @@ msgstr "pro sledování"
 
 #: src/mmcheckingpanel.cpp:827
 msgid "as Duplicate"
-msgstr ""
+msgstr "jako duplikát"
 
 #: src/mmcheckingpanel.cpp:828
 msgid "Mark all "
@@ -1521,7 +1517,7 @@ msgstr "Nápověda"
 
 #: src/mmex.cpp:817
 msgid "Top Categories Last 30 Days  "
-msgstr ""
+msgstr "Výběr z kategorií za posledních 30 dnů  "
 
 #: src/mmex.cpp:1359
 #: src/mmex.cpp:2579
@@ -1666,7 +1662,7 @@ msgstr "Tisk..."
 
 #: src/mmex.cpp:1591
 msgid "E&xit\tAlt-X"
-msgstr "&Ukončit\tAlt-X"
+msgstr "&Konec\tAlt-X"
 
 #: src/mmex.cpp:1591
 msgid "Quit this program"
@@ -2220,7 +2216,7 @@ msgstr "Zobrazit 90 dnů"
 
 #: src/optionsdialog.cpp:351
 msgid "Specify which transactions are visible by default"
-msgstr "Zvolte, které transkace budou zobrazeny jako výchozí"
+msgstr "Zvolte, které transakce budou zobrazeny jako výchozí"
 
 #: src/optionsdialog.cpp:360
 msgid "Restore Defaults"
@@ -2291,23 +2287,20 @@ msgid "Stock Quote Web Page"
 msgstr "Stránky kurzu akcií"
 
 #: src/optionsdialog.cpp:437
-#, fuzzy
 msgid "Use Original Date when Pasting Transactions"
-msgstr "Trvalé příkazy"
+msgstr "Při vkládání transakcí použít původní datum"
 
 #: src/optionsdialog.cpp:443
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
-msgstr ""
+msgstr "Zvolte za se použije původní datum transakce nebo ajktuální datum při kopírování/vkládání transakcí"
 
 #: src/optionsdialog.cpp:448
-#, fuzzy
 msgid "Use Transaction Sound"
-msgstr "Nová transakce"
+msgstr "Přehrát zvuk při transakci"
 
 #: src/optionsdialog.cpp:454
-#, fuzzy
 msgid "Select whether to use sounds when entering transactions"
-msgstr "Zvolte stav transakce"
+msgstr "Zvolte zda se při zadání transakce přehraje zvuk"
 
 #: src/optionsdialog.cpp:460
 msgid "General"
@@ -2631,7 +2624,7 @@ msgstr "Vybrat účet komu"
 
 #: src/transdialog.cpp:625
 msgid "Specify the account from which the transfer is occurring"
-msgstr "Určete účet odkud je prováděna transkace"
+msgstr "Určete účet odkud je prováděna transakce"
 
 #: src/univcsv.cpp:93
 msgid "Specify the order of fields in the CSV file"
@@ -2639,11 +2632,11 @@ msgstr "Určete pořadí polí v CSV souboru"
 
 #: src/univcsv.cpp:108
 msgid "Move Up"
-msgstr ""
+msgstr "Nahoru"
 
 #: src/univcsv.cpp:113
 msgid "Move Down"
-msgstr ""
+msgstr "Dolů"
 
 #: src/univcsv.cpp:137
 msgid "Remove"
@@ -2651,16 +2644,15 @@ msgstr "Odstranit"
 
 #: src/univcsv.cpp:149
 msgid "Load Template"
-msgstr ""
+msgstr "Load Template"
 
 #: src/univcsv.cpp:154
 msgid "Save As Template"
-msgstr ""
+msgstr "Uložit jako šablonu"
 
 #: src/univcsv.cpp:159
-#, fuzzy
 msgid "Import File"
-msgstr "Import"
+msgstr "Importovta soubor"
 
 #: src/univcsv.cpp:216
 msgid "Amount(+/-)"
@@ -2692,17 +2684,15 @@ msgid "CSV Field"
 msgstr "Pole CSV"
 
 #: src/univcsv.cpp:290
-#, fuzzy
 msgid "Unable to open file."
-msgstr "Nelze se připojit!"
+msgstr "Nelze otevřít soubor."
 
 #: src/univcsv.cpp:328
 msgid "Unable to write to file."
-msgstr ""
+msgstr "Nelze zapisovat do souboru."
 
 #: src/univcsv.cpp:351
 #: src/univcsv.cpp:363
-#, fuzzy
 msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."
 msgstr "Zadány neplatné pole pro import CSV! Je nutné zadat alespoň datum, částku a příjemce."
 
@@ -2722,7 +2712,6 @@ msgid " file contains insufficient number of tokens"
 msgstr " soubor obsahuje nedostatečný počet symbolů"
 
 #: src/univcsv.cpp:460
-#, fuzzy
 msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipping"
 msgstr " Jedno z následujích polí: datum, příjemce, částka, typ transakce chybí, přeskočeno"
 
@@ -2906,7 +2895,7 @@ msgstr " chybí kategorie, přeskočeno."
 
 #: src/util.cpp:679
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
-msgstr " Jedno z následujích polí: datum, příjemce, typ transkace, částka nebo kategorie obsahuje prázdný řetězec, přeskočeno"
+msgstr " Jedno z následujích polí: datum, příjemce, typ transakce, částka nebo kategorie obsahuje prázdný řetězec, přeskočeno"
 
 #: src/util.cpp:688
 msgid " invalid date, skipping."
@@ -3206,7 +3195,7 @@ msgstr "Částka"
 
 #: include/reportcategovertimeperf.h:23
 msgid "Category Income/Expenses Over Last 12 Months "
-msgstr ""
+msgstr "Kategorie příchozích/odchozích za posledních 12 měsíců "
 
 #: include/reportincexpenses.h:50
 msgid "Type  "
