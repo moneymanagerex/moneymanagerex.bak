@@ -47,7 +47,7 @@ public:
     void addLineBreak();
 	
 	/** Create an HTML HorizontalLine */
-    void addHorizontalLine();
+    void addHorizontalLine(int size = 0);
 	
 	/** Create an HTML Image tag */
 	void addImage(const wxString& src);

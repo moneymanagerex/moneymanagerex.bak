@@ -24,29 +24,14 @@
 class mmGraphGenerator
 {
 public:
-    mmGraphGenerator(const wxString& scriptName, 
-                     const wxString& outFileName);
-    virtual ~mmGraphGenerator();
+    mmGraphGenerator(const wxString& outFileName);
 
-public: 
-    void generate();
-    const wxString& outputFile();
-    wxString getImageSrc();
-    static void setEnv();
-    static wxString envString_;
-    bool isGraphEnabled();
-    static bool checkGraphFiles();
+public:
+    const wxString& GetOutputFileName();
+	virtual bool Generate(const wxString& chartTitle) = 0;
 
-protected:
-    wxString scriptName_;
-    wxString outFileName_;
-    wxString fullScriptTemplatePathRelative_; 
-    wxString fullScriptPathRelative_;
-    wxString fullscriptPath_; 
-    wxString fulloutfileName_;
-    wxString ploticusName_;  
+private:
     wxString htmlString_;
-
 };
 
 #endif

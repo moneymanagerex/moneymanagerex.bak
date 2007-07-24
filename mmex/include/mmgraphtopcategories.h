@@ -1,5 +1,5 @@
 #include "mmgraphgenerator.h"
-#include "mmex.h"
+#include "chart.h"
 
 #ifndef _MM_EX_GRAPHTOPCATEGORIES_H_
 #define _MM_EX_GRAPHTOPCATEGORIES_H_
@@ -7,66 +7,37 @@
 class mmGraphTopCategories : public mmGraphGenerator
 {
 public:
-    mmGraphTopCategories()
-        : mmGraphGenerator(wxT("top_categories"), 
-                           wxT("top_categories.png"))
+    mmGraphTopCategories() : mmGraphGenerator(wxT("top_categories.png"))
     {
-
+		chart = new BarChart(320, 240);
     }
+
+    ~mmGraphTopCategories()
+    {
+		delete chart;
+    };
 
     virtual void init(std::vector<mmGUIFrame::CategInfo>& categList)
     {
-         if (!isGraphEnabled())
-            return;
+		std::vector<ChartData> barData;
 
-        wxString fileContents = wxT("");  
+        for (unsigned int i = 0; i < categList.size(); i++)
         {
-            wxFileInputStream input( fullScriptTemplatePathRelative_ );
-            wxTextInputStream text( input );
+			barData.push_back(ChartData(categList[i].categ, categList[i].amount));
+        }
 
-            while (!input.Eof() )
-            {
-                wxString line = text.ReadLine();
-                if (!line.IsEmpty())
-                {
-                    fileContents += line;
-                    fileContents += wxT("\n");
-                }
-                else
-                {
-                    fileContents += wxT("\n");
-                }
-            }
-        }
-       
-        wxString dataStr;
-        int maxVal = 0;
-        for (int idx = 0; idx < (int)categList.size(); idx++)
-        {
-            if (idx > 5)
-                break;
-            dataStr += wxT("\"");     
-            dataStr += categList[idx].categ;
-            dataStr += wxT("\" "); 
-            dataStr += wxString::Format(wxT("%.0f"), fabs(categList[idx].amount));
-            if (maxVal < fabs(categList[idx].amount))
-                maxVal = fabs(categList[idx].amount);
-            dataStr += wxT("\n");
-        }
-        
-        wxString maxStr = wxT("100");
-        if (categList.size() > 0)
-            maxStr = wxString::Format(wxT("%d"), maxVal);
-        
-        fileContents.Replace(wxT("$MAX"), maxStr);
-        fileContents.Replace(wxT("$DATA"), dataStr);
-
-        {
-            wxFileOutputStream output( fullScriptPathRelative_ );
-            wxTextOutputStream text( output );
-            text << fileContents;
-        }
+		chart->SetData(barData);
+		chart->Init(140, CHART_LEGEND_FIXED, BAR_CHART_SIMPLE);
     }
+
+	bool Generate(const wxString& chartTitle)
+	{
+		chart->Render(chartTitle);
+		return chart->Save(GetOutputFileName());
+	};
+
+private:
+	BarChart* chart;
 };
 
 #endif

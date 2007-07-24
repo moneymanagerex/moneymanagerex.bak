@@ -207,7 +207,7 @@ void mmHomePagePanel::updateAccounts()
 
     mmGraphIncExpensesMonth gg;
     gg.init(tincome, texpenses);
-    gg.generate();
+    gg.Generate(wxT(""));
 
 	hb.addTableHeaderRow(_("Income vs Expenses: Current Month"), 2);
 	hb.startTableRow();
@@ -223,7 +223,7 @@ void mmHomePagePanel::updateAccounts()
     hb.endTable();
 
     // Add the graph
-    hb.addImage(gg.getImageSrc());
+    hb.addImage(gg.GetOutputFileName());
 
 	hb.endTableCell();
 	hb.endTableRow();
@@ -408,7 +408,7 @@ void mmHomePagePanel::updateAccounts()
 
    hb.addHTML(topCategories_);
    mmGraphTopCategories gtp;
-   hb.addImage(gtp.getImageSrc());
+   hb.addImage(gtp.GetOutputFileName());
 
 	//--------------------------------------------------------
     hb.addLineBreak();
@@ -486,5 +486,6 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
     // Deselect any selections in the tree ctrl, so tree works
     frame_->navTreeCtrl_->Unselect();
 }
+
 
 

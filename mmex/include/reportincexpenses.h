@@ -56,8 +56,8 @@ public:
 
         mmGraphIncExpensesMonth gg;
         gg.init(income, expenses);
-        gg.generate();
-        hb.addImage(gg.getImageSrc());
+        gg.Generate(_("Income vs Expenses"));
+        hb.addImage(gg.GetOutputFileName());
 
 		hb.startTable(wxT("50%"));
 		hb.startTableRow();

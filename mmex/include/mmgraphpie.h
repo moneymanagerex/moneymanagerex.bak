@@ -1,10 +1,11 @@
 #include "mmgraphgenerator.h"
+#include "chart.h"
 #include "mmex.h"
 
 #ifndef _MM_EX_GRAPHPIE_H_
 #define _MM_EX_GRAPHPIE_H_
 
-bool sortValueList( ValuePair& elem1, ValuePair& elem2 )
+bool sortValueList(ValuePair& elem1, ValuePair& elem2)
 {
     return fabs(elem1.amount) > fabs(elem2.amount);
 }
@@ -12,76 +13,39 @@ bool sortValueList( ValuePair& elem1, ValuePair& elem2 )
 class mmGraphPie : public mmGraphGenerator
 {
 public:
-    mmGraphPie()
-        : mmGraphGenerator(wxT("pie_chart"), 
-                           wxT("pie_chart.png"))
+    mmGraphPie() : mmGraphGenerator(wxT("pie_chart.png"))
     {
+		chart = new PieChart(480, 320);
+    };
 
-    }
+    ~mmGraphPie()
+    {
+		delete chart;
+    };
 
     virtual void init(std::vector<ValuePair>& valueList)
     {
-       if (!isGraphEnabled())
-          return;
+		std::vector<ChartData> pieData;
+        std::sort(valueList.begin(), valueList.end(), sortValueList);
 
-        wxString fileContents = wxT("");  
-        {
-            wxFileInputStream input( fullScriptTemplatePathRelative_ );
-            wxTextInputStream text( input );
+		for(unsigned int i=0; i<valueList.size(); i++)
+		{
+            if (i < 15)
+			    pieData.push_back(ChartData(valueList[i].label, valueList[i].amount));
+		}
 
-            while (!input.Eof() )
-            {
-                wxString line = text.ReadLine();
-                if (!line.IsEmpty())
-                {
-                    fileContents += line;
-                    fileContents += wxT("\n");
-                }
-                else
-                {
-                    fileContents += wxT("\n");
-                }
-            }
-        }
-       
-        wxString dataStr;
-        wxString labelStr;
-        if (valueList.size() == 0)
-        {
-            labelStr += wxT("\"");     
-            labelStr += wxT("No Payees");
-            labelStr += wxT("\"\\n(@@PCT%)\n"); 
-
-            dataStr += wxString::Format(wxT("%d"), 100);
-            dataStr += wxT("\n");
-        }
-        else
-        {
-            std::sort(valueList.begin(), valueList.end(), sortValueList);
-            for (int idx = 0; idx < (int)valueList.size(); idx++)
-            {
-                if (idx < 10)
-                {
-                    labelStr += wxT("\"");     
-                    labelStr += valueList[idx].label.Left(20);
-                    labelStr += wxT("\"(@@PCT%)\n"); 
-                }
-
-                dataStr += wxString::Format(wxT("%.0f"), fabs(valueList[idx].amount));
-                dataStr += wxT("\n");
-            }
-            
-        }
-       
-        fileContents.Replace(wxT("$LABELS"), labelStr);
-        fileContents.Replace(wxT("$DATA"), dataStr);
-
-        {
-            wxFileOutputStream output( fullScriptPathRelative_ );
-            wxTextOutputStream text( output );
-            text << fileContents;
-        }
+		chart->SetData(pieData);
+		chart->Init(240, CHART_LEGEND_FIXED, PIE_CHART_ABSOLUT);
     }
+
+	bool Generate(const wxString& chartTitle)
+	{
+		chart->Render(chartTitle);
+		return chart->Save(GetOutputFileName());
+	};
+
+private:
+	PieChart* chart;
 };
 
 #endif

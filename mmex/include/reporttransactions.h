@@ -76,10 +76,10 @@ public:
 
 			hb.startTableRow();
 			hb.addTableCell(refTrans[index]->dateStr_);
-			hb.addTableCell(refTrans[index]->fromAccountStr_);
-			hb.addTableCell(refTrans[index]->payeeStr_);
+			hb.addTableCell(refTrans[index]->fromAccountStr_, false, true);
+			hb.addTableCell(refTrans[index]->payeeStr_, false, true);
 			hb.addTableCell(refTrans[index]->transType_);
-			hb.addTableCell(refTrans[index]->fullCatStr_);
+			hb.addTableCell(refTrans[index]->fullCatStr_, false, true);
 			hb.addTableCell(refTrans[index]->status_);
 			hb.addTableCell(refTrans[index]->transAmtString_, true);
 			hb.endTableRow();

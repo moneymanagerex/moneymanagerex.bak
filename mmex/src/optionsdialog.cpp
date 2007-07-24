@@ -619,8 +619,8 @@ void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& event)
         wxT("LANGUAGE"), wxT(""));
 	bn->SetLabel(lang);
 
-    if (!mmGraphGenerator::checkGraphFiles())
-        mmIniOptions::enableGraphs_ = false;
+//    if (!mmGraphGenerator::checkGraphFiles())
+//        mmIniOptions::enableGraphs_ = false;
 }
 
 void mmOptionsDialog::OnNavTreeColorChanged(wxCommandEvent& event)

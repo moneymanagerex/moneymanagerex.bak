@@ -19,88 +19,13 @@
 #include "mmgraphgenerator.h"
 #include "util.h"
 
-wxString mmGraphGenerator::envString_ = wxT("sdfhsjdhfjhfdsjhfsd");
-
-mmGraphGenerator::mmGraphGenerator(const wxString& scriptName, 
-                                   const wxString& outFileName)
-     : scriptName_(scriptName),
-       outFileName_(outFileName)
+mmGraphGenerator::mmGraphGenerator(const wxString& outFileName)
 {
-   wxString basePath = mmGetBaseWorkingPath() + wxT("\\graphs");
-   basePath += wxT("\\");
-
-   fullScriptTemplatePathRelative_  = wxT("graphs\\") + scriptName_ + wxT(".tmpl");
-   fullScriptPathRelative_  = wxT("graphs\\") + scriptName_ + wxT(".txt");
-
-   fullscriptPath_ = wxT("\"") + basePath + scriptName_ + wxT(".txt") + wxT("\"");
-   
-   fulloutfileName_ = wxT("\"") + basePath + outFileName_ + wxT("\"");
-   ploticusName_  = wxT("\"") + basePath + wxT("pl.exe") + wxT("\"");
-  
-
-   htmlString_ = wxT("graphs\\") + outFileName;
+	// for systems without the graphs directory this would assert an error!
+	htmlString_ = /* wxT("graphs\\") + */ outFileName;
 }
 
-mmGraphGenerator::~mmGraphGenerator()
-{}
-
-const wxString& mmGraphGenerator::outputFile() 
+const wxString& mmGraphGenerator::GetOutputFileName() 
 { 
-   return outFileName_; 
-}
-
-bool mmGraphGenerator::isGraphEnabled()
-{
-   return mmIniOptions::enableGraphs_;
-}
-
-wxString mmGraphGenerator::getImageSrc()
-{
-   if (mmIniOptions::enableGraphs_)
-      return htmlString_;
-   else
-      return wxT("");
-}
-
-void mmGraphGenerator::setEnv()
-{
-   mmGraphGenerator::envString_ = mmGetBaseWorkingPath() + wxT("\\graphs");
-   bool returnVal = wxSetEnv(wxT("GDFONTPATH"), mmGraphGenerator::envString_);
-}
-
-bool mmGraphGenerator::checkGraphFiles()
-{
-    if (mmOptions::language.size() > 0 && mmOptions::language != wxT("english"))
-    {
-       wxString fontPathName  = wxT("graphs\\Cyberbit.ttf"); 
-       if (!wxFileName::FileExists(fontPathName))
-            return false;
-    }
-
-    return true;
-}
-
-void mmGraphGenerator::generate()
-{
-   if (!mmIniOptions::enableGraphs_)
-      return;
-
-   wxString fullExecPath = ploticusName_ 
-                            + wxT(" -png -o ") 
-                            + fulloutfileName_ + wxT(" ")
-                            + fullscriptPath_;
-   if (mmOptions::language.size() > 0 && mmOptions::language != wxT("english"))
-   {
-        fullExecPath += wxT(" -font Cyberbit.ttf");
-   }
-
-   wxArrayString output, errors;
-   setEnv(); 
-
-   int code = wxExecute(fullExecPath, output, errors);
-   if (code != 0)
-   {
-      mmShowErrorMessage(0, _("Failed to launch graphing system! Disabling graphs."), _("Graph Error.."));
-      mmIniOptions::enableGraphs_ = false;
-   }
+   return htmlString_; 
 }

@@ -50,11 +50,11 @@ void mmHTMLBuilder::init()
 				cols++;
 			}
 			startTableCell();
-			addHeader(5, mmIniOptions::userNameString_);
+			addHeader(2, mmIniOptions::userNameString_);
 			endTableCell();
 		endTableRow();
-		addRowSeparator(cols);
 	endTable();
+	addHorizontalLine(2);
 }
 
 void mmHTMLBuilder::end()
@@ -87,9 +87,14 @@ void mmHTMLBuilder::addLineBreak()
     html += wxT("<br>");
 }
 
-void mmHTMLBuilder::addHorizontalLine()
+void mmHTMLBuilder::addHorizontalLine(int size)
 {
-    html += wxT("<hr size=\"2\" width=\"95%\" align=\"left\">");
+	html += wxT("<hr");
+	if(size > 0)
+	{
+		html += wxT(" size=\"") + wxString::Format(wxT("%d"), size) + wxT("\"");
+	}
+    html += wxT(">");
 }
 
 void mmHTMLBuilder::addImage(const wxString& src)
@@ -171,7 +176,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, const wxStrin
 	html += mmIniOptions::fontSize_;
 	html += wxT("\"><b><i>&nbsp;&nbsp;");
 	html += caption;
-	html += wxT("</i></b></font></td><td align=\"right\"><font size=\"");
+	html += wxT("</i></b></font></td><td nowrap align=\"right\"><font size=\"");
 	html += mmIniOptions::fontSize_;
 	html += wxT("\"><b><i>");
 	html += value;
@@ -193,7 +198,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, std::vector<w
 
 	for (unsigned long idx = 0; idx < data.size(); idx++)
 	{
-		html += wxT("</td><td align=\"right\"><font size=\"");
+		html += wxT("</td><td nowrap align=\"right\"><font size=\"");
 		html += mmIniOptions::fontSize_;
 		html += wxT("\"><b><i>");
 		html += data[idx];
@@ -219,7 +224,7 @@ void mmHTMLBuilder::addTableHeaderRow(const wxString& value, int cols) {
 }
 
 void mmHTMLBuilder::addTableHeaderCell(const wxString& value) {
-	html += wxT("<th align=\"left\" valign=\"center\" bgcolor=\"#d5d6de\"><font size=\"");
+	html += wxT("<th nowrap align=\"left\" valign=\"center\" bgcolor=\"#d5d6de\"><font size=\"");
 	html += mmIniOptions::fontSize_;
 	html += wxT("\"><b>&nbsp;");
     html += value;
@@ -229,14 +234,14 @@ void mmHTMLBuilder::addTableHeaderCell(const wxString& value) {
 
 void mmHTMLBuilder::addTableCell(const wxString& value, bool numeric, bool italic, bool bold, const wxString& fontColor) {
 
-	html += wxT("<td align=\"");
+	html += wxT("<td ");
 	if(numeric)
 	{
-		html += wxT("right");
+		html += wxT("nowrap align=\"right");
 	}
 	else
 	{
-		html += wxT("left");
+		html += wxT("align=\"left");
 	}
 	html += wxT("\" bgcolor=\"");
 	

@@ -52,7 +52,7 @@ public:
         // Add the graph
         mmGraphPie gg;
         if (numPayees)
-           hb.addImage(gg.getImageSrc());
+           hb.addImage(gg.GetOutputFileName());
 
 		hb.startTable(wxT("50%"));
 		hb.startTableRow();
@@ -92,7 +92,7 @@ public:
         hb.end();
 
         gg.init(valueList);
-        gg.generate();
+        gg.Generate(_("To Whom the Money Goes"));
 
         return hb.getHTMLText();
     }

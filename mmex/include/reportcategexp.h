@@ -71,7 +71,7 @@ public:
 
         // Add the graph
         mmGraphPie gg;
-        hb.addImage(gg.getImageSrc());
+        hb.addImage(gg.GetOutputFileName());
 
 		hb.startTable(wxT("50%"));
 		hb.startTableRow();
@@ -156,7 +156,7 @@ public:
         hb.end();
 
         gg.init(valueList);
-        gg.generate();
+        gg.Generate(title_);
 
         return hb.getHTMLText();
 

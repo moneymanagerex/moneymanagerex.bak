@@ -5,7 +5,7 @@
 #define __WXMSW__ 1
 
 #undef wxWindow
-
+/*
 #include "wx/wxsqlite3.h"
 #include "wx/confbase.h"
 #include "wx/config.h"
@@ -124,4 +124,6 @@
 #include "wx/msw/window.h"
 #include "wx/msw/winundef.h"
 #include "wx/sizer.h"
+
+*/
 

@@ -1,4 +1,6 @@
 #include "mmgraphgenerator.h"
+#include "chart.h"
+
 
 #ifndef _MM_EX_GRAPHINCEXPENSESMONTH_H_
 #define _MM_EX_GRAPHINCEXPENSESMONTH_H_
@@ -6,53 +8,35 @@
 class mmGraphIncExpensesMonth : public mmGraphGenerator
 {
 public:
-    mmGraphIncExpensesMonth()
-        : mmGraphGenerator(wxT("inc_expenses_month"), 
-                           wxT("inc_expenses_month.png"))
+    mmGraphIncExpensesMonth() : mmGraphGenerator(wxT("inc_expenses_month.png"))
     {
+		chart = new BarChart(200, 240);
+    }
+
+    ~mmGraphIncExpensesMonth()
+    {
+		delete chart;
     }
 
     virtual void init(double income, double expenses)
     {
-       if (!isGraphEnabled())
-          return;
+		std::vector<ChartData> barData;
 
-        wxString fileContents = wxT("");  
-        {
-            wxFileInputStream input( fullScriptTemplatePathRelative_ );
-            wxTextInputStream text( input );
+		barData.push_back(ChartData(_("Income"), income));
+		barData.push_back(ChartData(_("Expenses"), expenses));
 
-            while (!input.Eof() )
-            {
-                wxString line = text.ReadLine();
-                if (!line.IsEmpty())
-                {
-                    fileContents += line;
-                    fileContents += wxT("\n");
-                }
-                else
-                {
-                    fileContents += wxT("\n");
-                }
-            }
-        }
-        wxString displayIncString = wxString::Format(wxT("%.0f"), income);
-        wxString displayExpString = wxString::Format(wxT("%.0f"), expenses);
-
-        int maxVal = (income > expenses)? (int)income + 1500 : (int)expenses + 1500;
-        wxString displayMaxValString = wxString::Format(wxT("%d"), maxVal);
-
-        fileContents.Replace(wxT("$INCOME"), displayIncString);
-        fileContents.Replace(wxT("$EXPENSES"), displayExpString);
-        fileContents.Replace(wxT("$MAX"), displayMaxValString);
-        
-
-        {
-            wxFileOutputStream output( fullScriptPathRelative_ );
-            wxTextOutputStream text( output );
-            text << fileContents;
-        }
+		chart->SetData(barData);
+		chart->Init(140, CHART_LEGEND_FLOAT, BAR_CHART_SIMPLE);
     }
+
+	bool Generate(const wxString& chartTitle)
+	{
+		chart->Render(chartTitle);
+		return chart->Save(GetOutputFileName());
+	};
+
+private:
+	BarChart* chart;
 };
 
 #endif
