@@ -405,10 +405,12 @@ void mmHomePagePanel::updateAccounts()
 
     mmCurrencyFormatter::loadDefaultSettings();
 	//--------------------------------------------------------
-
    hb.addHTML(topCategories_);
+#if 0
+   // ... Doesn't work under negative values, currently
    mmGraphTopCategories gtp;
    hb.addImage(gtp.GetOutputFileName());
+#endif
 
 	//--------------------------------------------------------
     hb.addLineBreak();

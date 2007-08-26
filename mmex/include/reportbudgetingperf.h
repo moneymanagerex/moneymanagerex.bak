@@ -61,6 +61,7 @@ public:
 		hb.addTableHeaderCell(_("Nov"));
 		hb.addTableHeaderCell(_("Dec"));
 		hb.addTableHeaderCell(_("Overall"));
+        hb.addTableHeaderCell(_("%"));
 		hb.endTableRow();
 
         mmBEGINSQL_LITE_EXCEPTION;
@@ -157,6 +158,7 @@ public:
                 for (int yidx = 0; yidx < 12; yidx++)
 					hb.addTableCell(th.estimatedStr_, true, true);
 				hb.addTableCell(totalEstimatedStr_, true, true, true);
+                hb.addTableCell(wxT("-"));
                 hb.endTableRow();
 
                 // actual stuff
@@ -191,10 +193,21 @@ public:
 				{
 					hb.addTableCell(th.actualStr_, true, false, true);
 				}
+
+                if (((totalEstimated_ < 0) && (th.actual_ < 0)) ||
+                    ((totalEstimated_ > 0) && (th.actual_ > 0)))
+                {
+                    double percent = (fabs(th.actual_) / fabs(totalEstimated_)) * 100.0;
+                    hb.addTableCell(wxString::Format(wxT("%.0f"), percent));
+                }
+                else
+                {
+                    hb.addTableCell(wxT("-"));
+                }
 				
                 hb.endTableRow();
 
-				hb.addRowSeparator(15);
+				hb.addRowSeparator(16);
             }
 
             wxSQLite3StatementBuffer bufSQL1;
@@ -284,6 +297,7 @@ public:
 						hb.addTableCell(thsub.estimatedStr_, true, true);
                     mmCurrencyFormatter::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
 					hb.addTableCell(totalEstimatedStr_, true, true, true);
+                    hb.addTableCell(wxT("-"));
 					hb.endTableRow();
 
 					hb.startTableRow();
@@ -319,9 +333,21 @@ public:
 					{
 						hb.addTableCell(thsub.actualStr_, true, false, true);
 					}
+
+                    if (((totalEstimated_ < 0) && (thsub.actual_ < 0)) ||
+                        ((totalEstimated_ > 0) && (thsub.actual_ > 0)))
+                    {
+                       double percent = (fabs(thsub.actual_) / fabs(totalEstimated_)) * 100.0;
+                       hb.addTableCell(wxString::Format(wxT("%.0f"), percent));
+                    }
+                    else
+                    {
+                        hb.addTableCell(wxT("-"));
+                    }
+
 					hb.endTableRow();
 
-					hb.addRowSeparator(15);
+					hb.addRowSeparator(16);
                 } 
 
             }

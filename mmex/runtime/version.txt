@@ -1,6 +1,10 @@
 Version History of Money Manager Ex
 
-0.8.0.7 ()
+0.8.0.7 Prerelease 5
+- Add % to actual/estimated amounts in Budget report (Juraj)
+- Reconciled balance incorrect for cross currency transactions (Shippers)
+
+0.8.0.7
 - Fix crash when pressing CTRL+R in account screen
 - Add pie charts for categories
 - Fix bug where favorite accounts were not being displayed correctly (Jota)
@@ -27,6 +31,7 @@ Version History of Money Manager Ex
 - Cleaner HTML formatting for summary and all reports (Patch submitted by Paulo Lopes)
 - Add new reports for expenses/income/categories
 - Fix bug with graph formatting
+
 
 0.8.0.6 (April 10, 2006)
 - Fix currency conversions for stock accounts (Thanks Jai)

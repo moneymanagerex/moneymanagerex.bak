@@ -43,6 +43,7 @@
 #include "reportcashflow.h"
 #include "reporttransstats.h"
 #include "reportcategovertimeperf.h"
+#include "reportcustomsql.h"
 
 #include "mmgraphtopcategories.h"
 
@@ -868,6 +869,11 @@ void mmGUIFrame::updateNavTreeControl()
         new mmTreeItemData(wxT("Transaction Statistics")));
 
      ///////////////////////////////////////////////////////////////////
+    wxTreeItemId customReport = navTreeCtrl_->AppendItem(reports, 
+        _("Custom SQL Report"), 4, 4);
+    navTreeCtrl_->SetItemData(customReport, 
+        new mmTreeItemData(wxT("Custom SQL Report")));
+    ///////////////////////////////////////////////////////////////////
 
     wxTreeItemId help = navTreeCtrl_->AppendItem(root, _("Help"), 5, 5);
     navTreeCtrl_->SetItemData(help, new mmTreeItemData(wxT("Help")));
@@ -1570,6 +1576,21 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TRANSACTIONREPORT);
            AddPendingEvent(evt);
         }
+        
+         ///////////////////////////////////////////////
+        if (iData->getString() == wxT("Custom SQL Report"))
+        {
+            wxString sqlString = wxGetTextFromUser(_("Custom SQL Query.."),
+                                                   _("Query"));
+
+            if (sqlString != wxT(""))
+            {
+                mmPrintableBase* cs = new mmCustomSQLStats(core_, sqlString);
+                menuPrintingEnable(true);
+                createReportsPage(cs);
+            }
+        }
+      
 
         //////////////////////////////////////////////
 

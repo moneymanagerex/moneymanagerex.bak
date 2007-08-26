@@ -869,7 +869,7 @@ double mmBankTransactionList::getReconciledBalance(int accountID)
                 }
                 else if (pBankTransaction->toAccountID_ == accountID)
                 {
-                    balance += pBankTransaction->amt_;
+                    balance += pBankTransaction->toAmt_;
                 }
             }
             else
