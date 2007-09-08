@@ -109,7 +109,7 @@ This might be required if you are adding new source files to MMEX.
 2. Navigate to \trunk\mmex\bakefile directory
  
 3. Do
-        > bakefile -f autoconf mmex.bkl -o ..\Makefile.in
+        > bakefile -f autoconf mmex.bkl -o ../Makefile.in
         > cd ..
         > bakefilize --copy && aclocal -I . -I /usr/share/aclocal -I /usr/local/share/aclocal && autoconf
 
