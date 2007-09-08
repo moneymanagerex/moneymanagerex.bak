@@ -1,10 +1,14 @@
 Version History of Money Manager Ex
 
-0.8.0.7 Prerelease 5
+0.8.0.8 (Sep 7, 2007)
+- Custom SQL Query Tool to create custom reports
 - Add % to actual/estimated amounts in Budget report (Juraj)
 - Reconciled balance incorrect for cross currency transactions (Shippers)
-
-0.8.0.7
+- Fix transactions when viewed descending (Patch from Igor)
+- Add automatic Transaction Number (Patch from Igor)
+- Allow !Bank Qif import (Johnny Mac)
+- Fix funky DataFormat setup in Options dialog
+(Prerelease 1 through 4)
 - Fix crash when pressing CTRL+R in account screen
 - Add pie charts for categories
 - Fix bug where favorite accounts were not being displayed correctly (Jota)

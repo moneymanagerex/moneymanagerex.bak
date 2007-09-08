@@ -56,7 +56,13 @@ public:
         }
         
         q1.Finalize();
-        mmENDSQL_LITE_EXCEPTION;
+        }                                     
+        catch (wxSQLite3Exception& e)        
+        {    
+            mmShowErrorMessage(NULL, e.ErrorCodeAsString(e.GetErrorCode()), 
+                wxT("Error Executing SQL"));
+        }      
+        
 
         hb.endTable();
 		hb.endCenter();

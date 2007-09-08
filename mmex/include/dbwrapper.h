@@ -76,6 +76,7 @@ public:
     static void addBudgetYear(wxSQLite3Database* db, wxString year);
     static void copyBudgetYear(wxSQLite3Database* db, int newyear, int baseYear);
     static int getBudgetYearID(wxSQLite3Database* db, wxString year);
+    static int getTransIDByDate(wxSQLite3Database* db, wxString byDate, int accountID);
     static wxString getBudgetYearForID(wxSQLite3Database* db, int yearid);
     static void updateYearForID(wxSQLite3Database* db, const wxString& yearName, int yearid);
     static void deleteBudgetYear(wxSQLite3Database* db, const wxString& yearName);
@@ -169,8 +170,9 @@ public:
 
     /* Stocks API */
     static void deleteStockInvestment(wxSQLite3Database* db, int stockID);
-    static double getStockInvestmentBalance(wxSQLite3Database* db);
-	static double getStockInvestmentBalance(wxSQLite3Database* db, int accountID, bool convertToBase);
+    static double getStockInvestmentBalance(wxSQLite3Database* db, double& invested);
+	static double getStockInvestmentBalance(wxSQLite3Database* db, int accountID, 
+        bool convertToBase, double& originalVal);
 
 	/* Assets API */
 	static void deleteAsset(wxSQLite3Database* db, int assetID);

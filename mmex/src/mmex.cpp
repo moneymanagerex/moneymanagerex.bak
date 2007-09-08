@@ -58,6 +58,7 @@
 #include "maincurrencydialog.h"
 #include "filtertransdialog.h"
 #include "billsdepositsdialog.h"
+#include "customsqldialog.h"
 
 #include "util.h"
 #include "dbwrapper.h"
@@ -170,6 +171,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_GOTOACCOUNT, mmGUIFrame::OnGotoAccount)
 
     EVT_MENU(MENU_TRANSACTIONREPORT, mmGUIFrame::OnTransactionReport)
+    EVT_MENU(MENU_CUSTOMSQL, mmGUIFrame::OnCustomSQL)
 END_EVENT_TABLE()
 /*******************************************************/
 IMPLEMENT_APP(mmGUIApp)
@@ -1313,7 +1315,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
-            wxString title = _("Where the Money Comes From");
+            wxString title = _("Where the Money Goes");
             mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd, 
                 title, 2);
             menuPrintingEnable(true);
@@ -1580,17 +1582,9 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
          ///////////////////////////////////////////////
         if (iData->getString() == wxT("Custom SQL Report"))
         {
-            wxString sqlString = wxGetTextFromUser(_("Custom SQL Query.."),
-                                                   _("Query"));
-
-            if (sqlString != wxT(""))
-            {
-                mmPrintableBase* cs = new mmCustomSQLStats(core_, sqlString);
-                menuPrintingEnable(true);
-                createReportsPage(cs);
-            }
+           wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_CUSTOMSQL);
+           AddPendingEvent(evt);
         }
-      
 
         //////////////////////////////////////////////
 
@@ -2571,6 +2565,25 @@ void mmGUIFrame::OnBudgetSetupDialog(wxCommandEvent& event)
     createHomePage();
     updateNavTreeControl();    
     dlg->Destroy();
+}
+
+void mmGUIFrame::OnCustomSQL(wxCommandEvent& event)
+{
+  if (!db_.get())
+      return;
+
+   mmCustomSQLDialog* dlg = new mmCustomSQLDialog(core_, this);
+   if (dlg->ShowModal() == wxID_OK)
+   {
+       if (dlg->sqlQuery_ != wxT(""))
+       {
+           wxString sqlQuery = mmCleanQuotes(dlg->sqlQuery_);
+           mmPrintableBase* cs = new mmCustomSQLStats(core_, sqlQuery);
+           menuPrintingEnable(true);
+           createReportsPage(cs);
+       }
+   }
+   dlg->Destroy();
 }
 
 void mmGUIFrame::OnTransactionReport(wxCommandEvent& event)

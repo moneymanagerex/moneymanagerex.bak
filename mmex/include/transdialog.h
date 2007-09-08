@@ -66,6 +66,7 @@ public:
     void OnCategs(wxCommandEvent& event);
     void OnPayee(wxCommandEvent& event);
     void OnTo(wxCommandEvent& event);
+    void OnAutoTransNum(wxCommandEvent& event);
     void OnTransTypeChanged(wxCommandEvent& event);
     void OnDateChanged(wxDateEvent& event);
     void fillControls();
@@ -92,6 +93,7 @@ private:
     mmAdvancedPopup* m_simplePopup_;
     wxButton* bAdvanced_;
     wxCheckBox* cSplit_;
+    wxButton* bAuto_;
 
     wxChoice* choiceStatus_;
     wxChoice* choiceTrans_;

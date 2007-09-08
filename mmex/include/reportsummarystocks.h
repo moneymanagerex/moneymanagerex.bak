@@ -141,7 +141,8 @@ public:
         mmENDSQL_LITE_EXCEPTION
 
         /* Stocks */
-        double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_);
+        double invested;
+        double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);
         wxString stockBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
         mmCurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);

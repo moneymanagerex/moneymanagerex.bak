@@ -684,11 +684,18 @@ void mmCheckingPanel::initVirtualListControl()
     // sort the table
     sortTable(); 
 
-    listCtrlAccount_->SetItemCount(numTransactions);
+	listCtrlAccount_->SetItemCount(numTransactions);
 
     if (trans_.size() > 1)
     {
-        listCtrlAccount_->EnsureVisible(((int)trans_.size()) - 1);
+		if (asc)
+		{
+			listCtrlAccount_->EnsureVisible(((int)trans_.size()) - 1);
+		}
+		else
+		{
+			listCtrlAccount_->EnsureVisible(0);
+		}
     }
 
     pgd->Update(100);

@@ -48,8 +48,9 @@ IMPLEMENT_DYNAMIC_CLASS( mmOptionsDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_CURRENCY, mmOptionsDialog::OnCurrency)
-    EVT_COMBOBOX(ID_DIALOG_OPTIONS_DATE_FORMAT, mmOptionsDialog::OnDateFormatChanged)  
-    EVT_TEXT(ID_DIALOG_OPTIONS_DATE_FORMAT, mmOptionsDialog::OnDateFormatEdited) 
+
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_DATEFORMAT, mmOptionsDialog::OnDateFormatChanged)
+
     EVT_CHOICE(ID_DIALOG_OPTIONS_VIEW_ACCOUNTS, mmOptionsDialog::OnViewAccountsChanged)  
     EVT_CHOICE(ID_DIALOG_OPTIONS_VIEW_TRANS, mmOptionsDialog::OnViewTransChanged)  
   	EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)
@@ -68,6 +69,8 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
 
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_USE_SOUND, mmOptionsDialog::OnUseSoundChecked)
 	EVT_CHOICE(ID_DIALOG_OPTIONS_FONT_SIZE, mmOptionsDialog::OnFontSizeChanged)  
+
+    
     
 END_EVENT_TABLE()
 
@@ -127,17 +130,17 @@ void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& event)
    wxString format = choiceDateFormat_->GetValue();
    if (format.Trim().IsEmpty())
        return;
-   mmOptions::dateFormat = format;
-   mmOptions::saveOptions(db_);
-   wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE);
-   st->SetLabel(mmGetDateForDisplay(db_, wxDateTime::Now()));
-}
 
-void mmOptionsDialog::OnDateFormatEdited(wxCommandEvent& event)
-{
-   wxString format = choiceDateFormat_->GetValue();
-   if (format.Trim().IsEmpty())
+   try
+   {
+        mmGetDateForDisplay(db_, wxDateTime::Now());
+   }
+   catch(...)
+   {
+       choiceDateFormat_->SetValue(wxT("%m/%d/%y"));
        return;
+   }
+
    mmOptions::dateFormat = format;
    mmOptions::saveOptions(db_);
    wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE);
@@ -266,6 +269,11 @@ void mmOptionsDialog::CreateControls()
         wxSize(100, -1), 11, itemChoice7Strings, 0 );
     itemStaticBoxSizer9->Add(choiceDateFormat_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     choiceDateFormat_->SetToolTip(_("Specify the date format for display"));
+
+    
+    wxButton* itemButtonDF = new wxButton( itemPanelGeneral, 
+        ID_DIALOG_OPTIONS_BUTTON_DATEFORMAT, _("Set"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticBoxSizer9->Add(itemButtonDF, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxStaticText* itemStaticText411 = new wxStaticText( itemPanelGeneral, 
         ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE, _("Sample Date"), wxDefaultPosition, wxDefaultSize, 0 );

@@ -24,6 +24,8 @@
 #include "dbwrapper.h"
 #include "splittransactionsdialog.h"
 
+#include "sstream"
+
 // Defines for Transaction Type
 #define DEF_WITHDRAWAL 0
 #define DEF_DEPOSIT    1
@@ -47,6 +49,7 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_DATE_CHANGED(ID_DIALOG_TRANS_BUTTONDATE, mmTransDialog::OnDateChanged) 
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONADVANCED, mmTransDialog::OnAdvanced)
     EVT_CHECKBOX(ID_DIALOG_TRANS_SPLITCHECKBOX, mmTransDialog::OnSplitChecked)
+    EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTRANSNUM, mmTransDialog::OnAutoTransNum)
 END_EVENT_TABLE()
 
 mmTransDialog::mmTransDialog( )
@@ -221,12 +224,12 @@ void mmTransDialog::dataToControls()
         }
     }
     mmENDSQL_LITE_EXCEPTION;
-
 }
 
 void mmTransDialog::fillControls()
 {
- }
+	
+}
 
 void mmTransDialog::CreateControls()
 {    
@@ -287,11 +290,22 @@ void mmTransDialog::CreateControls()
     itemFlexGridSizer8->Add(itemStaticText11, 0,
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
+    //===========================================================
+     wxBoxSizer* itemBoxSizer550 = new wxBoxSizer(wxHORIZONTAL);
+    itemFlexGridSizer8->Add(itemBoxSizer550, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    
     textNumber_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTNUMBER, wxT(""), 
-        wxDefaultPosition, wxSize(100, -1), 0 );
-    itemFlexGridSizer8->Add(textNumber_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        wxDefaultPosition, wxSize(50, -1), 0 );
+    itemBoxSizer550->Add(textNumber_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     textNumber_->SetToolTip(_("Specify any associated check number or transaction number"));
 
+     bAuto_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONTRANSNUM, wxT(".."), 
+        wxDefaultPosition, wxSize(30, -1), 0 );
+    itemBoxSizer550->Add(bAuto_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    bAuto_->SetToolTip(_("Populate Transaction #"));
+
+    //===========================================================
+    
     wxStaticText* itemStaticText13 = new wxStaticText( itemPanel7,
         ID_DIALOG_TRANS_STATIC_FROM, _("To"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer8->Add(itemStaticText13, 0, 
@@ -472,7 +486,12 @@ void mmTransDialog::OnPayee(wxCommandEvent& event)
 
     dlg->Destroy();
 }
-
+void mmTransDialog::OnAutoTransNum(wxCommandEvent& event)
+{
+    int mID = mmDBWrapper::getTransIDByDate(db_, dpc_->GetValue().FormatISODate(), accountID_);
+    wxString wxIDstr = wxString::Format(wxT( "%d" ), (int) mID);
+    textNumber_->SetValue( wxIDstr );	
+}
 
 void mmTransDialog::OnTo(wxCommandEvent& event)
 {
@@ -510,7 +529,7 @@ void mmTransDialog::OnTo(wxCommandEvent& event)
 
 void mmTransDialog::OnDateChanged(wxDateEvent& event)
 {
-    
+	fillControls();
 }
 
 void mmTransDialog::OnAdvanced(wxCommandEvent& event)

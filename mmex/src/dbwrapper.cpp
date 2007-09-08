@@ -1561,6 +1561,22 @@ double mmDBWrapper::getAmountForPayee(wxSQLite3Database* db, int payeeID,
     return budgetYearID;
  }
 
+ int mmDBWrapper::getTransIDByDate(wxSQLite3Database* db, wxString byDate, int accountID)
+ {
+    int transID = 1;
+    mmBEGINSQL_LITE_EXCEPTION;
+    wxString bufSQL = wxString::Format(wxT("select max(TRANSACTIONNUMBER) as MaxTransID from CHECKINGACCOUNT_V1 where TRANSDATE='%s' and ACCOUNTID='%d';"), 
+        byDate.c_str(), accountID);
+    wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
+    if (q1.NextRow())
+    {
+		transID = q1.GetInt(wxT("MaxTransID")) + 1;
+    }
+    q1.Finalize();
+    mmENDSQL_LITE_EXCEPTION;
+	return transID;
+ }
+
  wxString mmDBWrapper::getBudgetYearForID(wxSQLite3Database* db, int yearid)
  {
      wxString budgetYear = wxT("");
@@ -1794,9 +1810,10 @@ void mmDBWrapper::deleteStockInvestment(wxSQLite3Database* db, int stockID)
     mmENDSQL_LITE_EXCEPTION; 
 }
 
-double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db)
+double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, double& invested)
 {
     double balance = 0.0;
+    invested = 0.0;
     mmBEGINSQL_LITE_EXCEPTION;
 
     wxString bufSQL = wxString::Format(wxT("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Investment'"));
@@ -1805,7 +1822,9 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db)
     {
        
        double value = q1.GetDouble(wxT("INITIALBAL"));
-       balance += getStockInvestmentBalance(db, q1.GetInt(wxT("ACCOUNTID")), true);
+       double originalVal; 
+       balance += getStockInvestmentBalance(db, q1.GetInt(wxT("ACCOUNTID")), true, originalVal);
+       invested += originalVal;
     }
     q1.Finalize();
     mmENDSQL_LITE_EXCEPTION;
@@ -1813,11 +1832,12 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db)
 }
 
 double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int accountID, 
-                                              bool convertToBase)
+                                              bool convertToBase, double& originalVal)
 {
    wxASSERT(accountID != -1);
 
    double balance = 0.0;
+   originalVal = 0.0;
    mmBEGINSQL_LITE_EXCEPTION;
 
    wxSQLite3StatementBuffer bufSQL;
@@ -1832,6 +1852,12 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int account
    while (q1.NextRow())
    {
       double value = q1.GetDouble(wxT("VALUE"));
+      double numShares = q1.GetDouble(wxT("NUMSHARES"));
+      double purchasePrice = q1.GetDouble(wxT("PURCHASEPRICE"));
+      double commission = q1.GetDouble(wxT("COMMISSION"));
+
+      double investedAmt = (numShares * purchasePrice) + commission;
+      originalVal += investedAmt;
       balance += value;
    }
    q1.Finalize();
@@ -1840,6 +1866,7 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int account
    double convRate = 1.0;
    if (convertToBase)
        convRate = mmDBWrapper::getCurrencyBaseConvRate(db, accountID);
+   originalVal = originalVal * convRate;
    return balance * convRate;
 }
 

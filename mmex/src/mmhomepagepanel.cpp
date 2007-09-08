@@ -153,7 +153,8 @@ void mmHomePagePanel::updateAccounts()
     if (mmIniOptions::enableStocks_)
     {
         /* Stocks */
-        double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_);
+        double invested;
+        double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);
         wxString stockBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
         mmCurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);

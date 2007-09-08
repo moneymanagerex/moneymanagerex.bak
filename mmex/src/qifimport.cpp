@@ -497,6 +497,8 @@ Are you are sure you want to proceed with the import?"),
 
                 // we do not know how to process this type yet
                 log << _(" cannot process Account Types yet ") << endl;    
+                mmShowErrorMessage(0, _("Cannot process these QIF Account Types yet"), 
+                    _("Error"));
                 return -1;
             }
 

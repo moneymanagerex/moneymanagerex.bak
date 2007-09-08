@@ -310,7 +310,9 @@ void mmStocksPanel::initVirtualListControl()
     }
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
-    double total = mmDBWrapper::getStockInvestmentBalance(db_);
+    double originalVal = 0.0;
+    double total = mmDBWrapper::getStockInvestmentBalance(db_, originalVal);
+
     wxSQLite3StatementBuffer bufSQL;
     if (accountID_ != -1)
     {
@@ -322,14 +324,17 @@ void mmStocksPanel::initVirtualListControl()
             mmDBWrapper::loadSettings(db_, currencyID);
         }
         q2.Finalize();
-
-        total = mmDBWrapper::getStockInvestmentBalance(db_, accountID_, false);
+        total = mmDBWrapper::getStockInvestmentBalance(db_, accountID_, false, originalVal);
     }
 
     wxString balance;
     mmCurrencyFormatter::formatDoubleToCurrency(total, balance);
+
+    wxString original;
+    mmCurrencyFormatter::formatDoubleToCurrency(originalVal, original);
+
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
-    wxString lbl  = wxString::Format(_("Total: %s"), balance.c_str());
+    wxString lbl  = wxString::Format(_("Total: %s Invested: %s "), balance.c_str(), original.c_str());
     header->SetLabel(lbl);
 
     if (accountID_ == -1)
@@ -352,8 +357,10 @@ void mmStocksPanel::initVirtualListControl()
 
         th.currentPrice_      = q1.GetDouble(wxT("CURRENTPRICE"));
         th.purchasePrice_      = q1.GetDouble(wxT("PURCHASEPRICE"));
-        th.valueStr_          = q1.GetString(wxT("VALUE"));
+
         th.value_             = q1.GetDouble(wxT("VALUE"));
+        th.valueStr_          = wxString::Format(wxT("%.2f"), th.value_);
+
         double commission     = q1.GetDouble(wxT("COMMISSION"));
 
         th.gainLoss_        = th.value_ - ((th.numShares_ * th.purchasePrice_) + commission);

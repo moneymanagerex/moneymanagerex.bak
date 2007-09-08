@@ -53,7 +53,6 @@ public:
 
     void OnCurrency(wxCommandEvent& event);
     void OnDateFormatChanged(wxCommandEvent& event);
-    void OnDateFormatEdited(wxCommandEvent& event);
     void OnViewAccountsChanged(wxCommandEvent& event);
     void OnViewTransChanged(wxCommandEvent& event);
 	void OnLanguageChanged(wxCommandEvent& event);
