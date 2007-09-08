@@ -5,7 +5,7 @@
 #ifndef _MM_EX_GRAPHPIE_H_
 #define _MM_EX_GRAPHPIE_H_
 
-bool sortValueList(ValuePair& elem1, ValuePair& elem2)
+bool sortValueList(const ValuePair& elem1, const ValuePair& elem2)
 {
     return fabs(elem1.amount) > fabs(elem2.amount);
 }

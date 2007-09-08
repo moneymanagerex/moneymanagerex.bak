@@ -35,6 +35,7 @@ Bakefile for generating makefiles in Linux.
         <sources>src/budgetyearentrydialog.cpp</sources>
         <sources>src/categdialog.cpp</sources>
         <sources>src/currencydialog.cpp</sources>
+        <sources>src/customsqldialog.cpp</sources>
         <sources>src/dbwrapper.cpp</sources>
         <sources>src/fileviewerdialog.cpp</sources>
         <sources>src/filtertransdialog.cpp</sources>
