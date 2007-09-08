@@ -1,6 +1,7 @@
 Version History of Money Manager Ex
 
 0.8.0.9 (Sep 8, 2007)
+(Reported by drazx)
 - Split transactions doesn't show up correctly in many reports and in transaction filter
 - Where the Money Goes and categories reports are not working correctly.
 
