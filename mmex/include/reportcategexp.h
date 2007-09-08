@@ -96,8 +96,8 @@ public:
                 dtBegin_, dtEnd_);
             mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
 
-            if ((type_ == 1 && amt < 0.0) &&
-                (type_ == 2 && amt > 0.0) &&
+            if (((type_ == 0) || ((type_ == 1 && amt > 0.0) ||
+                (type_ == 2 && amt < 0.0))) &&
                 (amt != 0.0))
             {
                 ValuePair vp;
@@ -124,11 +124,11 @@ public:
                 mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
 
                 // if we want only income
-                if (type_ == 1 && amt < 0.0)
+                if (type_ == 1 && amt > 0.0)
                     continue;
 
                 // if we want only expenses
-                if (type_ == 2 && amt > 0.0)
+                if (type_ == 2 && amt < 0.0)
                     continue;
 
                 if (amt != 0.0)

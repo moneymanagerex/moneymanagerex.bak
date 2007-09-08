@@ -1,5 +1,9 @@
 Version History of Money Manager Ex
 
+0.8.0.9 (Sep 8, 2007)
+- Split transactions doesn't show up correctly in many reports and in transaction filter
+- Where the Money Goes and categories reports are not working correctly.
+
 0.8.0.8 (Sep 7, 2007)
 - Custom SQL Query Tool to create custom reports
 - Add % to actual/estimated amounts in Budget report (Juraj)

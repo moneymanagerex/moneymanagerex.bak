@@ -467,15 +467,27 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& event )
             }
 #endif
             if (!pBankTransaction->containsCategory(categID_, subcategID_))
+            {
+                pBankTransaction->reportCategAmountStr_ = wxT("");
                 continue;
+            }
 
             if (pBankTransaction->splitEntries_->numEntries() > 0)
             {
                 pBankTransaction->reportCategAmount_ 
                     =  fabs(pBankTransaction->getAmountForSplit(categID_, subcategID_));
+
+                boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pBankTransaction->accountID_).lock();
+                wxASSERT(pCurrencyPtr);
+                wxString displayTransAmtString;
+                if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(pBankTransaction->reportCategAmount_, displayTransAmtString))
+                    pBankTransaction->reportCategAmountStr_ = displayTransAmtString;
             }
             else
+            {
                 pBankTransaction->reportCategAmount_ = -1;
+                pBankTransaction->reportCategAmountStr_ = wxT("");
+            }
         }
 
         if (statusCheckBox->GetValue())

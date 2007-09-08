@@ -81,11 +81,19 @@ public:
 			hb.addTableCell(refTrans[index]->transType_);
 			hb.addTableCell(refTrans[index]->fullCatStr_, false, true);
 			hb.addTableCell(refTrans[index]->status_);
-			hb.addTableCell(refTrans[index]->transAmtString_, true);
+
+            if (refTrans[index]->reportCategAmountStr_ == wxT(""))  
+    			hb.addTableCell(refTrans[index]->transAmtString_, true);
+            else
+            {
+                hb.addTableCell(refTrans[index]->reportCategAmountStr_, true);
+            }
 			hb.endTableRow();
 
             double dbRate = core_->accountList_.getAccountBaseCurrencyConvRate(refTrans[index]->accountID_);
             double transAmount = refTrans[index]->amt_ * dbRate;
+            if (refTrans[index]->reportCategAmountStr_ != wxT(""))
+                transAmount = refTrans[index]->reportCategAmount_ * dbRate;
 
             if (refTrans[index]->transType_ == wxT("Deposit"))
             {

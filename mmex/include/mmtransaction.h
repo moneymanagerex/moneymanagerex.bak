@@ -134,6 +134,7 @@ public:
 
     // used for transaction reports
     double reportCategAmount_;
+    wxString reportCategAmountStr_;
 private:
     bool isInited_;
 };
