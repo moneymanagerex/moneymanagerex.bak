@@ -978,6 +978,9 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
 
 void mmBDDialog::OnSplitChecked(wxCommandEvent& event)
 {
+  categID_ = -1;
+  subcategID_ = -1;
+  split_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
   bool state = cSplit_->GetValue();
   if (state)
   {

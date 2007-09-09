@@ -234,6 +234,10 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
    else if (splitEntries_->numEntries() > 0)
    {
       fullCatStr_ = _("Split Category");
+      categID_ = -1;
+      subcategID_ = -1;
+      catStr_= wxT("");
+      subCatStr_ = wxT("");
    }
    isInited_ = true;
 }

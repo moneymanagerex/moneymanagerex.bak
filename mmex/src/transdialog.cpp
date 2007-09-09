@@ -851,7 +851,7 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
     pTransaction->category_ = core_->categoryList_.getCategorySharedPtr(categID_, subcategID_);
     pTransaction->date_ = dpc_->GetValue();
     pTransaction->toAmt_ = toTransAmount_;
- 
+
     *pTransaction->splitEntries_.get() = *split_.get();
     pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr, true);
  
@@ -871,6 +871,11 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
 
 void mmTransDialog::OnSplitChecked(wxCommandEvent& event)
 {
+  /* Reset Category */
+  categID_ = -1;
+  subcategID_ = -1;
+  split_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
+
   bool state = cSplit_->GetValue();
   if (state)
   {

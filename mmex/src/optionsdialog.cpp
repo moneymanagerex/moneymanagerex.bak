@@ -144,7 +144,7 @@ void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& event)
    mmOptions::dateFormat = format;
    mmOptions::saveOptions(db_);
    wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE);
-   st->SetLabel(mmGetDateForDisplay(db_, wxDateTime::Now()));
+   st->SetLabel(mmGetDateForDisplay(db_, wxDateTime::Now()) + _(" : Restart"));
 }
 
 void mmOptionsDialog::OnViewAccountsChanged(wxCommandEvent& event)

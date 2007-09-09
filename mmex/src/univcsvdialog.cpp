@@ -241,7 +241,7 @@ void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& event)
     wxArrayString csvArray;
 	wxArrayInt csvArrayLocation;
 	int i = 0;
-	for(i=0;i<9;i++){
+	for(i=0;i<10;i++){
 		//check if the field is already selected unless it is "Don't Care"
 		//multiple fields of "Don't Care" may be necessary
 		//the code for "Don't Care" is 7

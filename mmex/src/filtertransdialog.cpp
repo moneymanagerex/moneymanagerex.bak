@@ -456,16 +456,6 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& event )
 
         if (categoryCheckBox->GetValue() && (categID_ != -1))
         {
-#if 0
-            if (categID_ != pBankTransaction->categID_)
-                continue; // skip
-
-            if (subcategID_ != -1)
-            {
-                if (subcategID_ != pBankTransaction->subcategID_)
-                    continue;
-            }
-#endif
             if (!pBankTransaction->containsCategory(categID_, subcategID_))
             {
                 pBankTransaction->reportCategAmountStr_ = wxT("");

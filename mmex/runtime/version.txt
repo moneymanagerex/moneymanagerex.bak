@@ -1,9 +1,10 @@
 Version History of Money Manager Ex
 
 0.8.0.9 (Sep 8, 2007)
-(Reported by drazx)
-- Split transactions doesn't show up correctly in many reports and in transaction filter
-- Where the Money Goes and categories reports are not working correctly.
+- Split transactions doesn't show up correctly in many reports and in transaction filter (Jose Carlos Ferreira)
+- Where the Money Goes and categories reports are not working correctly. (Jose Carlos Ferreira)
+- Fix problem when switching transaction from split to normal and vice versa (Jose Carlos Ferreira)
+- Deposit wasnt shown in the UnivCSV import (thanks VadaCurry)
 
 0.8.0.8 (Sep 7, 2007)
 - Custom SQL Query Tool to create custom reports
