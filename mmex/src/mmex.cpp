@@ -2158,7 +2158,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
         db_ = pDB;
         //db_->Open(fileName, password);
         db_->Open(fileName);
-
+#if 0
         // we need to check the db whether it is the right version
         if (!mmDBWrapper::checkDBVersion(db_.get()))
         {
@@ -2174,6 +2174,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
            db_.reset();
            return ;
         }
+#endif
         password_ = password;
 
         core_ = new mmCoreDB(db_);
@@ -2577,8 +2578,8 @@ void mmGUIFrame::OnCustomSQL(wxCommandEvent& event)
    {
        if (dlg->sqlQuery_ != wxT(""))
        {
-           wxString sqlQuery = mmCleanQuotes(dlg->sqlQuery_);
-           mmPrintableBase* cs = new mmCustomSQLStats(core_, sqlQuery);
+           //wxString sqlQuery = mmCleanQuotes(dlg->sqlQuery_);
+           mmPrintableBase* cs = new mmCustomSQLStats(core_, dlg->sqlQuery_);
            menuPrintingEnable(true);
            createReportsPage(cs);
        }

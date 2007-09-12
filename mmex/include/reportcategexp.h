@@ -96,19 +96,21 @@ public:
                 dtBegin_, dtEnd_);
             mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
 
-            if (((type_ == 0) || ((type_ == 1 && amt > 0.0) ||
-                (type_ == 2 && amt < 0.0))) &&
-                (amt != 0.0))
+            if ((type_ == 0) || ((type_ == 1 && amt > 0.0) ||
+                (type_ == 2 && amt < 0.0)))
             {
-                ValuePair vp;
-                vp.label = categString;
-                vp.amount = amt;
-                valueList.push_back(vp);
+                if (amt != 0.0)
+                {
+                    ValuePair vp;
+                    vp.label = categString;
+                    vp.amount = amt;
+                    valueList.push_back(vp);
 
-				hb.startTableRow();
-				hb.addTableCell(categString, false, true);
-				hb.addTableCell(balance, true, false, true);
-				hb.endTableRow();
+                    hb.startTableRow();
+                    hb.addTableCell(categString, false, true);
+                    hb.addTableCell(balance, true, false, true);
+                    hb.endTableRow();
+                }
             }
 
             wxSQLite3StatementBuffer bufSQL1;
@@ -124,11 +126,11 @@ public:
                 mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
 
                 // if we want only income
-                if (type_ == 1 && amt > 0.0)
+                if (type_ == 1 && amt < 0.0)
                     continue;
 
                 // if we want only expenses
-                if (type_ == 2 && amt < 0.0)
+                if (type_ == 2 && amt > 0.0)
                     continue;
 
                 if (amt != 0.0)
@@ -168,7 +170,7 @@ private:
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;
     bool ignoreDate_;
-    const wxString& title_;
+    wxString title_;
     int type_;
 };
 
