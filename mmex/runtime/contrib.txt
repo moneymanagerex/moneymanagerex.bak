@@ -6,6 +6,7 @@ Stuart
 Greg Newton
 Paulo Lopes
 Igor
+Bettega Stefano
 
 Silk Icons
 ===========
@@ -51,6 +52,8 @@ Slovak
 -- Abadyba
 Turkish
 -- Murat Bilgen
+Vietnamese
+- Nicky
 
 User Manual
 ===========

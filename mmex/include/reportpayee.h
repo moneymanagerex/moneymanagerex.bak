@@ -82,9 +82,14 @@ public:
 
 				hb.startTableRow();
 				hb.addTableCell(core_->payeeList_.payees_[idx]->payeeName_, false, true);
-				hb.addTableCell(balance, true, false, true);
+
+				if (amt < 0.0)
+					hb.addTableCell(balance, true, true, true, wxT("#ff0000"));
+				else
+					hb.addTableCell(balance, true, false, true);
+
 				hb.endTableRow();
-            }
+			}
         }
         hb.endTable();
 		hb.endCenter();

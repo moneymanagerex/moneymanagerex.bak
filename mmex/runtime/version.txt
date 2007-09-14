@@ -1,5 +1,10 @@
 Version History of Money Manager Ex
 
+0x.x.x
+- Add Vietnamese Translation (Nicky)
+- Add Difference col for Income Vs Expenses(Patch from Bettega)
+- Show Negative amounts in Red for Payee Report (Patch from Bettega)
+
 0.8.3.9 (Sep 11, 2007)
 - Fix problem with Where the Money Goes and Where the Money Comes From(MK, Juraj, Fortuna)
 - Fix crash when attempting to print or export (Fortuna)

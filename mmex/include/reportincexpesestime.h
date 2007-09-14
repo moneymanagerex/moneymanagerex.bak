@@ -43,10 +43,12 @@ public:
 		hb.addTableHeaderCell(_("Month"));
 		hb.addTableHeaderCell(_("Income"));
 		hb.addTableHeaderCell(_("Expenses"));
+		hb.addTableHeaderCell(_("Difference"));
 		hb.endTableRow();
 
         double income = 0.0;
         double expenses = 0.0;
+		double balance = 0.0;
         
         for (int yidx = 0; yidx < 12; yidx++)
         {
@@ -68,15 +70,22 @@ public:
 
             hb.startTableRow();
 			hb.addTableCell(monName, false, true);
-			if (expenses > income)
+			
+			balance = income - expenses;
+			wxString actualBalStr;
+			mmCurrencyFormatter::formatDoubleToCurrencyEdit(balance, actualBalStr);
+
+			if (balance < 0.0)
 			{
 				hb.addTableCell(actualIncStr, true, true, true);
 				hb.addTableCell(actualExpStr, true, true, true, wxT("#ff0000"));
+				hb.addTableCell(actualBalStr, true, true, true, wxT("#ff0000"));
 			}
 			else
 			{
 				hb.addTableCell(actualIncStr, true, false, true);
 				hb.addTableCell(actualExpStr, true, false, true);
+				hb.addTableCell(actualBalStr, true, false, true);
 			}
             hb.endTableRow();
         }
@@ -100,12 +109,17 @@ public:
         wxString actualIncStr;
         mmCurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
 
+		balance = income - expenses;
+        wxString actualBalStr;
+        mmCurrencyFormatter::formatDoubleToCurrencyEdit(balance, actualBalStr);
+
         std::vector<wxString> data;
         data.push_back(actualIncStr);
         data.push_back(actualExpStr);
+		data.push_back(actualBalStr);
 
-		hb.addRowSeparator(3);
-		hb.addTotalRow(_("Total"), 3, data);
+		hb.addRowSeparator(4);
+		hb.addTotalRow(_("Total"), 4, data);
           
         hb.endTable();
 
