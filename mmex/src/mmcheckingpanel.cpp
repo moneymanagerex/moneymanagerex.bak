@@ -236,7 +236,7 @@ void mmCheckingPanel::CreateControls()
 
     wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, 
             ID_PANEL_CHECKING_STATIC_BALHEADER, 
-            wxT(""), wxDefaultPosition, wxSize(500, 10), 0 );
+            wxT(""), wxDefaultPosition, wxSize(500, 20), 0 );
     itemBoxSizerHHeader->Add(itemStaticText10, 0, wxALL | wxEXPAND , 5);
     
     /* ---------------------- */

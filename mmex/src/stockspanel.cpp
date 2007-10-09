@@ -169,7 +169,7 @@ void mmStocksPanel::CreateControls()
 
     wxStaticText* itemStaticText10 = new wxStaticText( headerPanel,
                                      ID_PANEL_CHECKING_STATIC_BALHEADER,
-                                     _("Total:"), wxDefaultPosition, wxSize(500, 10), 0 );
+                                     _("Total:"), wxDefaultPosition, wxSize(500, 20), 0 );
 
     //m_LED = new awxLed( headerPanel, ID_PANEL_STOCK_UPDATE_LED, wxDefaultPosition, wxDefaultSize, awxLED_GREEN, 0 );
     m_LED = new awxLed( headerPanel, ID_PANEL_STOCK_UPDATE_LED, wxDefaultPosition, wxDefaultSize, awxLED_GREEN);

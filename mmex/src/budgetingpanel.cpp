@@ -198,14 +198,14 @@ void mmBudgetingPanel::CreateControls()
 
      wxStaticText* itemStaticText10 = new wxStaticText( itemPanel3, 
          ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME, 
-         _("Estimated Income: Actual Income: "), wxDefaultPosition, wxDefaultSize, 0 );
+         _("Estimated Income: Actual Income: "), wxDefaultPosition, wxSize(500, 20), 0 );
     itemStaticText10->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, 
         wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText10, 0, wxALL, 1);
 
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel3, 
         ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES, 
-        _("Estimated Expenses: Actual Expenses: "), wxDefaultPosition, wxDefaultSize, 0 );
+        _("Estimated Expenses: Actual Expenses: "), wxDefaultPosition, wxSize(500, 20), 0 );
     itemStaticText11->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, 
         wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText11, 0, wxALL, 1);
