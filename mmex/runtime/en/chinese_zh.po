@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-09-08 00:11-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2007-09-19 18:56+0800\n"
+"Last-Translator: Kyosuke <kyosuketam@gmail.com>\n"
 "Language-Team: TheZeal Software <Kyosuketam>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -48,21 +48,18 @@ msgid "Open the previously opened database : "
 msgstr "上次開啟的數據庫"
 
 #: src/appstartdialog.cpp:133
-#, fuzzy
 msgid "Create a New Database"
-msgstr "建立新 Money Manager 檔案"
+msgstr "建立新數據庫"
 
 #: src/appstartdialog.cpp:134
 msgid "Create a new database file to get started"
 msgstr "建立一個新的數據庫"
 
 #: src/appstartdialog.cpp:138
-#, fuzzy
 msgid "Open Existing Database"
-msgstr "開啟上次開啟的數據庫"
+msgstr "開啟數據庫"
 
 #: src/appstartdialog.cpp:139
-#, fuzzy
 msgid "Open an already created database file with extension (*.mmb)"
 msgstr "開啟一個已建立的 Money Manager Ex 數據庫 (*.mmb檔案)"
 
@@ -418,9 +415,8 @@ msgstr "確定刪除資產"
 #: src/mmtransaction.cpp:236
 #: src/transdialog.cpp:184
 #: src/transdialog.cpp:877
-#, fuzzy
 msgid "Split Category"
-msgstr "選擇類型"
+msgstr "拆分類型"
 
 #: src/billsdepositsdialog.cpp:255
 msgid "Repeating Transaction Details"
@@ -664,7 +660,7 @@ msgstr "選擇交易的類型"
 #: src/billsdepositsdialog.cpp:417
 #: src/transdialog.cpp:347
 msgid "Split"
-msgstr ""
+msgstr "拆分"
 
 #: src/billsdepositsdialog.cpp:423
 #: src/transdialog.cpp:354
@@ -784,7 +780,7 @@ msgstr ""
 #: src/mmhomepagepanel.cpp:107
 #: include/reporttransactions.h:63
 msgid "Account"
-msgstr "總額"
+msgstr "帳目"
 
 #: src/billsdepositsdialog.cpp:828
 #: src/transdialog.cpp:758
@@ -929,15 +925,13 @@ msgstr "檢視非零值預算"
 
 #: src/budgetingpanel.cpp:125
 #: src/budgetingpanel.cpp:154
-#, fuzzy
 msgid "View Income Budget Categories"
-msgstr "檢視所有類型預算"
+msgstr "檢視收入類型預算"
 
 #: src/budgetingpanel.cpp:130
 #: src/budgetingpanel.cpp:155
-#, fuzzy
 msgid "View Expense Budget Categories"
-msgstr "檢視所有類型預算"
+msgstr "檢視支出類型預算"
 
 #: src/budgetingpanel.cpp:179
 msgid "Budget Setup for "
@@ -1229,7 +1223,6 @@ msgid "Specify Notes"
 msgstr "選擇註釋"
 
 #: src/htmlbuilder.cpp:39
-#, fuzzy
 msgid "Report"
 msgstr "報表"
 
@@ -1279,14 +1272,12 @@ msgid "View Transactions from last 30 days"
 msgstr "檢視最近30天交易"
 
 #: src/mmcheckingpanel.cpp:179
-#, fuzzy
 msgid "View Transactions from current month"
-msgstr "檢視最近3個月交易"
+msgstr "檢視本月交易"
 
 #: src/mmcheckingpanel.cpp:180
-#, fuzzy
 msgid "View Transactions from last month"
-msgstr "檢視最近3個月交易"
+msgstr "檢視上月交易"
 
 #: src/mmcheckingpanel.cpp:181
 msgid "View Transactions from last 3 months"
@@ -1398,15 +1389,13 @@ msgstr "檢視最近3個月交易"
 
 #: src/mmcheckingpanel.cpp:745
 #: src/mmcheckingpanel.cpp:794
-#, fuzzy
 msgid "Viewing transactions from current month"
-msgstr "檢視最近3個月交易"
+msgstr "檢視本月交易"
 
 #: src/mmcheckingpanel.cpp:749
 #: src/mmcheckingpanel.cpp:799
-#, fuzzy
 msgid "Viewing transactions from last month"
-msgstr "檢視最近3個月交易"
+msgstr "檢視上月交易"
 
 #: src/mmcheckingpanel.cpp:769
 msgid "Viewing Void transactions"
@@ -1568,7 +1557,7 @@ msgstr "所有帳目總結"
 #: src/mmex.cpp:1361
 #: src/mmex.cpp:1378
 msgid "Where the Money Goes"
-msgstr "按類別查看資金走向"
+msgstr "按類別查看支出"
 
 #: src/mmex.cpp:687
 #: src/mmex.cpp:717
@@ -1616,9 +1605,8 @@ msgstr "本年"
 #: src/mmex.cpp:1264
 #: src/mmex.cpp:1281
 #: src/mmex.cpp:1298
-#, fuzzy
 msgid "Where the Money Comes From"
-msgstr "按類別查看資金走向"
+msgstr "按類別查看收入"
 
 #: src/mmex.cpp:744
 #: src/mmex.cpp:1157
@@ -1626,9 +1614,8 @@ msgstr "按類別查看資金走向"
 #: src/mmex.cpp:1183
 #: src/mmex.cpp:1200
 #: src/mmex.cpp:1217
-#, fuzzy
 msgid "Categories"
-msgstr "類型"
+msgstr "按類別查看資金走向"
 
 #: src/mmex.cpp:775
 #: include/reportpayee.h:28
@@ -1677,7 +1664,6 @@ msgstr "輔助說明"
 
 #: src/mmex.cpp:955
 #: src/mmex.cpp:1028
-#, fuzzy
 msgid "Top Categories Last 30 Days"
 msgstr "30天內支出最多的類型"
 
@@ -1716,9 +1702,8 @@ msgstr "新增資料庫(&N)\tCtrl-N"
 
 #: src/mmex.cpp:1870
 #: src/mmex.cpp:2103
-#, fuzzy
 msgid "New Database"
-msgstr "新增資料庫精靈"
+msgstr "新增資料庫"
 
 #: src/mmex.cpp:1874
 msgid "&Open Database\tCtrl-O"
@@ -1726,18 +1711,16 @@ msgstr "開啟資料庫(&O)\tCtrl-O"
 
 #: src/mmex.cpp:1875
 #: src/mmex.cpp:2105
-#, fuzzy
 msgid "Open Database"
-msgstr "開啟資料庫(&O)\tCtrl-O"
+msgstr "開啟資料庫"
 
 #: src/mmex.cpp:1882
 msgid "Save Database &As"
 msgstr "另存新資料庫 (&A)"
 
 #: src/mmex.cpp:1883
-#, fuzzy
 msgid "Save Database As"
-msgstr "另存新資料庫 (&A)"
+msgstr "另存新資料庫"
 
 #: src/mmex.cpp:1890
 msgid "&CSV Files"
@@ -2021,9 +2004,8 @@ msgstr "顯視貨幣管理對話框"
 
 #: src/mmex.cpp:2166
 #: src/mmex.cpp:2219
-#, fuzzy
 msgid " - No File opened "
-msgstr "Money Manager EX - 没有巳開啟的檔案 "
+msgstr " - 没有巳開啟的檔案 "
 
 #: src/mmex.cpp:2169
 msgid "Sorry. The Database version is too old or                 Database password is incorrect"
@@ -2108,9 +2090,8 @@ msgid "Choose Account to Delete"
 msgstr "顯視帳目表"
 
 #: src/mmhelppanel.cpp:77
-#, fuzzy
 msgid " Help"
-msgstr "輔助說明"
+msgstr " 輔助說明"
 
 #: src/mmhomepagepanel.cpp:95
 #: include/reportbudgetingperf.h:29
@@ -2129,7 +2110,6 @@ msgid "Summary"
 msgstr "摘要"
 
 #: src/mmhomepagepanel.cpp:192
-#, fuzzy
 msgid "Total of Accounts:"
 msgstr "全帳目總額 :"
 
@@ -2342,9 +2322,8 @@ msgstr ""
 
 #: src/optionsdialog.cpp:311
 #: include/mmex.h:157
-#, fuzzy
 msgid "User Name"
-msgstr "股票名稱"
+msgstr "用戶名稱"
 
 #: src/optionsdialog.cpp:318
 #, fuzzy
@@ -2409,9 +2388,8 @@ msgid "View Last Month"
 msgstr ""
 
 #: src/optionsdialog.cpp:402
-#, fuzzy
 msgid "View Current Month"
-msgstr "本月"
+msgstr "檢視本月"
 
 #: src/optionsdialog.cpp:428
 #, fuzzy
@@ -2803,7 +2781,7 @@ msgstr "佣金輸入不正確"
 
 #: src/stockspanel.cpp:177
 msgid "Idle"
-msgstr ""
+msgstr "閒置"
 
 #: src/stockspanel.cpp:208
 msgid "Share Name"
@@ -2814,7 +2792,6 @@ msgid "Gain/Loss"
 msgstr "盈 / 虧"
 
 #: src/stockspanel.cpp:227
-#, fuzzy
 msgid "Current"
 msgstr "貨幣"
 
@@ -2832,16 +2809,15 @@ msgstr "刪除股票"
 
 #: src/stockspanel.cpp:283
 msgid "Refresh"
-msgstr ""
+msgstr "更新"
 
 #: src/stockspanel.cpp:285
 msgid "Refresh Stock Prices from Yahoo"
 msgstr ""
 
 #: src/stockspanel.cpp:288
-#, fuzzy
 msgid "Settings"
-msgstr "顯示設定"
+msgstr "設定"
 
 #: src/stockspanel.cpp:290
 msgid "Change settings for automatic refresh"
@@ -3116,25 +3092,21 @@ msgstr "二冃"
 
 #: src/util.cpp:256
 #: include/reportbudgetingperf.h:53
-#, fuzzy
 msgid "Mar"
 msgstr "三月"
 
 #: src/util.cpp:256
 #: include/reportbudgetingperf.h:54
-#, fuzzy
 msgid "Apr"
 msgstr "四月"
 
 #: src/util.cpp:256
 #: include/reportbudgetingperf.h:56
-#, fuzzy
 msgid "Jun"
 msgstr "六月"
 
 #: src/util.cpp:257
 #: include/reportbudgetingperf.h:57
-#, fuzzy
 msgid "Jul"
 msgstr "七月"
 
@@ -3402,11 +3374,11 @@ msgstr ""
 #: src/yahoosettingsdialog.cpp:98
 #: src/yahoosettingsdialog.cpp:126
 msgid ":"
-msgstr ""
+msgstr ":"
 
 #: src/yahoosettingsdialog.cpp:110
 msgid "to"
-msgstr ""
+msgstr "至"
 
 #: src/yahoosettingsdialog.cpp:139
 msgid "Refresh prices every"
@@ -3417,9 +3389,8 @@ msgid "minutes while market is open"
 msgstr ""
 
 #: include/aboutdialog.h:25
-#, fuzzy
 msgid "About "
-msgstr "總額"
+msgstr "關於"
 
 #: include/appstartdialog.h:27
 msgid " Start Page"
@@ -3449,7 +3420,7 @@ msgstr "輸入預算年"
 #: include/chart.h:245
 #: include/chart.h:444
 msgid "Legend:"
-msgstr ""
+msgstr "圖例:"
 
 #: include/currencydialog.h:23
 msgid "Currency Manager"
@@ -3554,11 +3525,11 @@ msgstr "預算執行情況 - 年度 : "
 #: include/reportbudgetingperf.h:63
 #: include/reportcategovertimeperf.h:55
 msgid "Overall"
-msgstr ""
+msgstr "全部"
 
 #: include/reportbudgetingperf.h:64
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: include/reportcashflow.h:24
 msgid "Cash Flow Forecast For All Accounts - A Year Ahead"
@@ -3590,21 +3561,18 @@ msgid "Custom SQL Report "
 msgstr ""
 
 #: include/reportincexpenses.h:76
-#, fuzzy
 msgid "Income:"
-msgstr "收入: "
+msgstr "收入:"
 
 #: include/reportincexpenses.h:81
-#, fuzzy
 msgid "Expenses:"
-msgstr "支出: "
+msgstr "支出:"
 
 #: include/reportincexpenses.h:93
 msgid "Difference:"
-msgstr ""
+msgstr "差額:"
 
 #: include/reportincexpesestime.h:28
-#, fuzzy
 msgid "Income vs Expenses for Year: "
 msgstr "收入和支出 - 年度"
 
@@ -3614,16 +3582,14 @@ msgid "Month"
 msgstr "月"
 
 #: include/reportsummary.h:122
-#, fuzzy
 msgid "Total Balance on all Accounts"
-msgstr "總計所有帳目結餘 : "
+msgstr "總計所有帳目總結"
 
 #: include/reportsummaryassets.h:37
 msgid "Summary of Assets"
 msgstr "所有資產總結"
 
 #: include/reportsummaryassets.h:124
-#, fuzzy
 msgid "Total Assets: "
 msgstr "所有資產 : "
 
@@ -3632,27 +3598,22 @@ msgid "Summary of Stocks"
 msgstr "所有股票總結"
 
 #: include/reportsummarystocks.h:63
-#, fuzzy
 msgid "Company"
-msgstr "公司  "
+msgstr "公司"
 
 #: include/reportsummarystocks.h:65
-#, fuzzy
 msgid "Number Shares"
-msgstr "股份數量  "
+msgstr "股份數量"
 
 #: include/reportsummarystocks.h:66
-#, fuzzy
 msgid "Purchase Date"
-msgstr "購買日期  "
+msgstr "購買日期"
 
 #: include/reportsummarystocks.h:71
-#, fuzzy
 msgid "Gain Loss"
-msgstr "獲利 / 虧損  "
+msgstr "獲利 / 虧損"
 
 #: include/reportsummarystocks.h:151
-#, fuzzy
 msgid "Total Stock Investments: "
 msgstr "所有股票 : "
 
@@ -3669,14 +3630,12 @@ msgid "Transaction Statistics for "
 msgstr "交易量細明表 - 年度 : "
 
 #: include/splitdetailsdialog.h:39
-#, fuzzy
 msgid "Split Detail Dialog"
-msgstr "選項"
+msgstr "拆分細明表"
 
 #: include/splittransactionsdialog.h:50
-#, fuzzy
 msgid "Split Transaction Dialog"
-msgstr "編輯交易"
+msgstr "拆分交易表"
 
 #: include/stockdialog.h:23
 msgid "New/Edit Stock Investment"
@@ -3691,7 +3650,6 @@ msgid "Universal CSV Importer Dialog"
 msgstr ""
 
 #: include/yahoosettingsdialog.h:108
-#, fuzzy
 msgid "Options"
-msgstr "選項(&O)"
+msgstr "選項"
 

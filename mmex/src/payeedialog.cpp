@@ -186,7 +186,10 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
     wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME);
     wxString text = textCtrl->GetValue();
     if (text.Trim().IsEmpty())
+    {
+        mmShowErrorMessage(this, _("Type a Payee Name in the Text Box and then press Add."), _("Error"));
         return;
+    }
     if (core_->payeeList_.payeeExists(text))
     {
         mmShowErrorMessage(this, _("Payee with same name exists"), _("Error"));

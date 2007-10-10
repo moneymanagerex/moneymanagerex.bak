@@ -21,7 +21,7 @@
 #include "defs.h"
 
 #define EXC_GEN       42
-#define MMEXVERSION   wxT("0.8.3.9")
+#define MMEXVERSION   wxT("0.9.1.0")
 #define DEFDATEFORMAT wxT("%m/%d/%y")
 #define DEFDELIMTER   wxT(",")
 #define MM_MIN_DATAVERSION 2
@@ -107,6 +107,7 @@ enum
     MENU_VIEW_ALLTRANSACTIONS,
     MENU_VIEW_RECONCILED,
     MENU_VIEW_UNRECONCILED,
+    MENU_VIEW_NOTRECONCILED,
     MENU_VIEW_VOID,
     MENU_VIEW_FLAGGED,
 	MENU_VIEW_DUPLICATE,

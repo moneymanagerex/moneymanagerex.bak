@@ -46,6 +46,7 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_MENU(MENU_VIEW_ALLTRANSACTIONS, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_RECONCILED, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_UNRECONCILED, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_NOTRECONCILED, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_VOID, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_LAST30, mmCheckingPanel::OnViewPopupSelected)
@@ -171,6 +172,7 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
             menu.Append(MENU_VIEW_ALLTRANSACTIONS, _("View All Transactions"));
             menu.Append(MENU_VIEW_RECONCILED, _("View Reconciled Transactions"));
             menu.Append(MENU_VIEW_UNRECONCILED, _("View Un-Reconciled Transactions"));
+            menu.Append(MENU_VIEW_NOTRECONCILED, _("View All Except Reconciled Transactions"));
             menu.Append(MENU_VIEW_VOID, _("View Void Transactions"));
             menu.Append(MENU_VIEW_FLAGGED, _("View Flagged Transactions"));
 			menu.Append(MENU_VIEW_DUPLICATE, _("View Duplicate Transactions"));
@@ -541,6 +543,11 @@ void mmCheckingPanel::initVirtualListControl()
             if (pBankTransaction->status_ != wxT(""))
                 toAdd = false;
         }
+        else if (currentView_ == wxT("View Not-Reconciled"))
+        {
+            if (pBankTransaction->status_ == wxT("R"))
+                toAdd = false;
+        }
 		else if (currentView_ == wxT("View Duplicates"))
         {
             if (pBankTransaction->status_ != wxT("D"))
@@ -748,6 +755,10 @@ void mmCheckingPanel::initViewTransactionsHeader()
     {
         header->SetLabel(_("Viewing transactions from last month"));
     }
+    else if (currentView_ == wxT("View Not-Reconciled"))
+    {
+        header->SetLabel(_("Viewing All Except Reconciled Transactions"));
+    }
 }
 
 void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
@@ -803,6 +814,11 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     {
         header->SetLabel(_("Viewing duplicate transactions"));
         currentView_ = wxT("View Duplicates");
+    }
+    else if (evt == MENU_VIEW_NOTRECONCILED)
+    {
+        header->SetLabel(_("Viewing All except Reconciled Transactions"));
+        currentView_ = wxT("View Not-Reconciled");
     }
     else if (evt == MENU_VIEW_DELETE_TRANS)
     {
@@ -1225,6 +1241,7 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& event)
          {
             SetItemCount(0);
             DeleteAllItems();
+            selectedIndex_ = -1;
          }
 		}
 	}

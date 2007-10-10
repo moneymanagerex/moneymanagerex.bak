@@ -362,6 +362,9 @@ void assetsListCtrl::OnDeleteAsset(wxCommandEvent& event)
 	if (selectedIndex_ == -1)
 		return;
 
+    if (cp_->trans_.size() == 0)
+        return;
+
     wxMessageDialog msgDlg(this, _("Do you really want to delete the Asset?"),
                                         _("Confirm Asset Deletion"),
                                         wxYES_NO);
@@ -370,6 +373,10 @@ void assetsListCtrl::OnDeleteAsset(wxCommandEvent& event)
         mmDBWrapper::deleteAsset(cp_->db_, cp_->trans_[selectedIndex_].assetID_);
         DeleteItem(selectedIndex_);
         cp_->initVirtualListControl();
+        if (cp_->trans_.size() == 0)
+        {
+            selectedIndex_ = -1;
+        }
     }
 }
 

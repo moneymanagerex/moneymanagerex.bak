@@ -72,7 +72,7 @@ bool mmCategDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmCategDialog::fillControls()
 {
-    root_ = treeCtrl_->AddRoot(wxT("Categories"));
+    root_ = treeCtrl_->AddRoot(_("Categories"));
     treeCtrl_->SetItemBold(root_, true);
 
     if (!core_)

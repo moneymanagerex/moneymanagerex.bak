@@ -154,7 +154,7 @@ void mmAboutDialog::CreateControls()
        itemBoxSizer4->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
        wxStaticText* itemStaticText12 = new wxStaticText( itemDialog1, 
-          wxID_STATIC, _("Powered by wxWidgets and SQLite"), wxDefaultPosition, wxDefaultSize, 0 );
+          wxID_STATIC, _("Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"), wxDefaultPosition, wxDefaultSize, 0 );
        itemBoxSizer4->Add(itemStaticText12, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
        wxButton* itemButton14 = new wxButton( itemDialog1, ID_DIALOG_BUTTON_ABOUT_VERSION_HISTORY, 

@@ -481,6 +481,9 @@ void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& event)
     if (!cp_->db_)
         return;
 
+    if (cp_->trans_.size() == 0)
+        return;
+
     wxMessageDialog msgDlg(this, _("Do you really want to delete the series?"),
                                         _("Confirm Series Deletion"),
                                         wxYES_NO);
@@ -489,6 +492,10 @@ void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& event)
         mmDBWrapper::deleteBDSeries(cp_->db_, cp_->trans_[selectedIndex_].bdID_);
         DeleteItem(selectedIndex_);
         cp_->initVirtualListControl();
+        if (cp_->trans_.size() == 0)
+        {
+            selectedIndex_ = -1;
+        }
     }
 }
 

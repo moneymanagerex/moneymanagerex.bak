@@ -56,7 +56,7 @@ void mmYahoo::ReadSettings()
                                     wxT("30")).ToLong(&UpdateIntervalMinutes_);
 
     // Server
-    Server_ = mmDBWrapper::getINISettingValue(inidb_,wxT("HTTP_YAHOO_SERVER"),wxT("finance.yahoo.com"));
+    Server_ = mmDBWrapper::getINISettingValue(inidb_,wxT("HTTP_YAHOO_SERVER"),wxT("download.finance.yahoo.com"));
     Suffix_ = mmDBWrapper::getINISettingValue(inidb_,wxT("HTTP_YAHOO_SUFFIX"), wxT(""));
 
     //TODO:Store CSVColumns_ in config / INI item

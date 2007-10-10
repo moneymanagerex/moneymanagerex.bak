@@ -214,7 +214,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\samples;$(WXWIN)\include;$(WXWIN)\include\;include\"
-				PreprocessorDefinitions="WXSQLITE3_HAVE_CODEC;WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH, _UNICODE; _CRT_SECURE_NO_DEPRECATE; _CRT_NONSTDC_NO_DEPRECATE"
+				PreprocessorDefinitions="WXSQLITE3_HAVE_CODEC;WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH;_UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;SQLITE_CORE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -236,7 +236,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28ud_aui.lib wxzlibd.lib sqlite3.lib wxmsw28ud_core.lib wxbase28ud.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28ud_net.lib wxmsw28ud_adv.lib wxpngd.lib wxmsw28ud_html.lib wxjpegd.lib"
+				AdditionalDependencies="wxmsw28ud_aui.lib wxzlibd.lib wxmsw28ud_core.lib wxbase28ud.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28ud_net.lib wxmsw28ud_adv.lib wxpngd.lib wxmsw28ud_html.lib wxjpegd.lib"
 				OutputFile="$(OutDir)/mmex.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;;lib\"
@@ -300,7 +300,7 @@
 				InlineFunctionExpansion="1"
 				OmitFramePointers="true"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\"
-				PreprocessorDefinitions="UNICODE, _WINDOWS,WIN32;NDEBUG;__WXMSW__;_CONSOLE; _UNICODE;_CRT_SECURE_NO_DEPRECATE; _CRT_NONSTDC_NO_DEPRECATE;WXSQLITE3_HAVE_CODEC"
+				PreprocessorDefinitions="UNICODE;_WINDOWS;WIN32;NDEBUG;__WXMSW__;_CONSOLE;_UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;WXSQLITE3_HAVE_CODEC;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;SQLITE_CORE"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -322,7 +322,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28u_aui.lib wxzlib.lib sqlite3.lib wxmsw28u_core.lib wxbase28u.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28u_net.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxjpeg.lib wxpng.lib"
+				AdditionalDependencies="wxmsw28u_aui.lib wxzlib.lib wxmsw28u_core.lib wxbase28u.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28u_net.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxjpeg.lib wxpng.lib"
 				OutputFile="$(OutDir)/mmex.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;lib\;"
@@ -520,6 +520,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Stackwalker.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\stockdialog.cpp"
 				>
 			</File>
@@ -567,6 +571,318 @@
 				RelativePath=".\src\yahoosettingsdialog.cpp"
 				>
 			</File>
+			<Filter
+				Name="sqlite"
+				>
+				<File
+					RelativePath=".\src\sqlite\alter.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\analyze.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\attach.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\auth.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\btree.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\btree.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\btreeInt.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\build.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\callback.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\complete.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\date.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\delete.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\expr.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\func.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\hash.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\hash.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\icu.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\insert.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\keywordhash.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\legacy.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\loadext.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\main.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\malloc.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\opcodes.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\opcodes.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\os.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\os.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\os_common.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\os_os2.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\os_os2.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\os_unix.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\os_win.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\pager.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\pager.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\parse.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\parse.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\pragma.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\prepare.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\printf.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\random.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\select.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\sqlite3.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\sqlite3ext.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\sqliteInt.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\sqliteLimit.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\table.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\tokenize.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\trigger.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\update.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\utf.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\util.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="mmex_unicode_debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="mmex_unicode_release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\vacuum.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\vdbe.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\vdbe.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\vdbeapi.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\vdbeaux.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\vdbeblob.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\vdbefifo.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\vdbeInt.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\vdbemem.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\vtab.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\where.c"
+					>
+				</File>
+				<Filter
+					Name="codec"
+					>
+					<File
+						RelativePath=".\src\sqlite\codec\codec.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\src\sqlite\codec\codec.h"
+						>
+					</File>
+					<File
+						RelativePath=".\src\sqlite\codec\codecext.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\src\sqlite\codec\rijndael.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\src\sqlite\codec\rijndael.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"

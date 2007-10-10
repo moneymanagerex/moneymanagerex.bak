@@ -177,6 +177,12 @@ void SplitDetailDialog::OnButtonCategoryClick( wxCommandEvent& event )
 
 void SplitDetailDialog::OnButtonOKClick( wxCommandEvent& event )
 {
+    if (*m_categID_ == -1) 
+    {
+        mmShowErrorMessage(this, _("Invalid Category Entered "), _("Error"));
+        return;
+    }
+
     wxString amountStr = textAmount_->GetValue().Trim();
     double amount;
     if (!mmCurrencyFormatter::formatCurrencyToDouble(amountStr, amount) 

@@ -218,7 +218,7 @@ wxString mmCleanString(const wxString& orig)
 wxString mmCleanQuotes(const wxString& orig)
 {
     wxString toReturn = orig;
-    toReturn.Replace(wxT("'"), wxT("''"));
+    toReturn.Replace(wxT("'"), wxT("`"));
     toReturn.Replace(wxT("\""), wxT(""));
     toReturn.Trim();
     return toReturn; 

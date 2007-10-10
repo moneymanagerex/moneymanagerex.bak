@@ -49,7 +49,7 @@ Spanish
 Hungarian
 -- Csaba
 Slovak
--- Abadyba
+-- Abadyba & Misko B
 Turkish
 -- Murat Bilgen
 Vietnamese
@@ -58,3 +58,4 @@ Vietnamese
 User Manual
 ===========
 Tina P
+Terry Wick

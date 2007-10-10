@@ -110,6 +110,13 @@
 #include "../resources/money_dollar.xpm"
 #include "../resources/user_edit.xpm"
 #include "../resources/wrench.xpm"
+
+#ifdef WIN32
+#define _X86_
+#include "StackWalker.h"
+BOOT_ENABLE_STACKWALKER;
+#endif
+
 /*******************************************************/
 #define MMEX_INIDB_FNAME wxT("/mmexini.db3")
 #define MMEX_SPLASH_FNAME wxT("/splash.png")
@@ -681,8 +688,9 @@ void mmGUIFrame::updateNavTreeControl()
 
     wxTreeItemId categsOverTime = navTreeCtrl_->AppendItem(reports, 
         _("Where the Money Goes"), 4, 4);
+    navTreeCtrl_->SetItemData(categsOverTime, 
+        new mmTreeItemData(wxT("Where the Money Goes")));
     
-
     wxTreeItemId categsOverTimeCalMonth = navTreeCtrl_->AppendItem(categsOverTime, 
         _("Last Calendar Month"), 4, 4);
     navTreeCtrl_->SetItemData(categsOverTimeCalMonth, 
@@ -712,7 +720,9 @@ void mmGUIFrame::updateNavTreeControl()
 
     wxTreeItemId posCategs = navTreeCtrl_->AppendItem(reports, 
         _("Where the Money Comes From"), 4, 4);
-    
+    navTreeCtrl_->SetItemData(posCategs, 
+        new mmTreeItemData(wxT("Where the Money Comes From")));
+
     wxTreeItemId posCategsCalMonth = navTreeCtrl_->AppendItem(posCategs, 
         _("Last Calendar Month"), 4, 4);
     navTreeCtrl_->SetItemData(posCategsCalMonth, 
@@ -1222,6 +1232,17 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
 
         //////////////////////////////////////////////////
+        if (iData->getString() == wxT("Where the Money Comes From"))
+        {
+            wxDateTime dtEnd =  wxDateTime::Now();
+            wxDateTime dtBegin =  wxDateTime::Now();
+            wxString title = _("Where the Money Comes From");
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, true, dtBegin, dtEnd, 
+                title, 1);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+
 
         if (iData->getString() == wxT("Where the Money Comes From - Month"))
         {
@@ -1303,6 +1324,17 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
 
         //////////////////////////////////////////////////
+         if (iData->getString() == wxT("Where the Money Goes"))
+        {
+            wxDateTime dtEnd = wxDateTime::Now();
+            wxDateTime dtBegin = wxDateTime::Now();
+            wxString title = _("Where the Money Goes");
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, true, dtBegin, dtEnd, 
+                title, 2);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+
         if (iData->getString() == wxT("Where the Money Goes - Month"))
         {
             wxDateTime today = wxDateTime::Now();
@@ -2156,9 +2188,9 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
 
         boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
         db_ = pDB;
-        //db_->Open(fileName, password);
-        db_->Open(fileName);
-#if 0
+        db_->Open(fileName, password);
+     //   db_->Open(fileName);
+#if 1
         // we need to check the db whether it is the right version
         if (!mmDBWrapper::checkDBVersion(db_.get()))
         {
@@ -2302,8 +2334,8 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew)
 
 void mmGUIFrame::OnNew(wxCommandEvent& event)
 {
-	//wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
-    wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb");
+	wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
+    //wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb");
 #ifdef __WXGTK__ 
 	// Don't support encrypted databases in Linux yet
 	extSupported = wxT("MMB Files(*.mmb)|*.mmb");
@@ -2318,8 +2350,8 @@ void mmGUIFrame::OnNew(wxCommandEvent& event)
 
 void mmGUIFrame::OnOpen(wxCommandEvent& event)
 {
-	//wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
-    wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb");
+	wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
+    //wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb");
 #ifdef __WXGTK__ 
 	// Don't support encrypted databases in Linux yet
 	extSupported = wxT("MMB Files(*.mmb)|*.mmb");
@@ -2339,7 +2371,7 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
 #ifdef __WXGTK__ 
 	
 #else
-	//wildCardStr = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
+	wildCardStr = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
 #endif
 
     wxString fileName = wxFileSelector(wxT("Choose database file to Save As"), 
@@ -2364,7 +2396,7 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
 #ifdef __WXGTK__ 
 
 #else
-#if 0
+#if 1
           wxString password    = wxEmptyString;
           wxString oldpassword = password_;
           if (newFileName.GetExt() == wxT("emb"))
@@ -2377,8 +2409,8 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
           
           if (oldFileName.GetExt() == wxT("emb"))
           {
-            //db_->Open(fileName, oldpassword);
-            db_->Open(fileName);
+            db_->Open(fileName, oldpassword);
+            //db_->Open(fileName);
             db_->ReKey(wxEmptyString);
           }
           else

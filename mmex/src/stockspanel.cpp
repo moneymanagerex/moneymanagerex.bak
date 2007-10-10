@@ -820,6 +820,11 @@ void stocksListCtrl::OnDeleteStocks(wxCommandEvent& event)
     if (selectedIndex_ == -1)
         return;
 
+    if (cp_->trans_.size() == 0)
+    {
+        selectedIndex_ = -1;
+    }
+
     wxMessageDialog msgDlg(this, _("Do you really want to delete the stock investment?"),
                            _("Confirm Stock Investment Deletion"),
                            wxYES_NO);
@@ -828,6 +833,10 @@ void stocksListCtrl::OnDeleteStocks(wxCommandEvent& event)
         mmDBWrapper::deleteStockInvestment(cp_->db_, cp_->trans_[selectedIndex_].stockID_);
         DeleteItem(selectedIndex_);
         cp_->initVirtualListControl();
+        if (cp_->trans_.size() == 0)
+        {
+            selectedIndex_ = -1;
+        }
     }
 }
 

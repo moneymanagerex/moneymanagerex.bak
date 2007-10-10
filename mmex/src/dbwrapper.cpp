@@ -494,6 +494,25 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
     mmENDSQL_LITE_EXCEPTION;
 }
 
+void removeCruft(wxSQLite3Database* db)
+{
+    mmBEGINSQL_LITE_EXCEPTION;
+
+    {
+        wxSQLite3StatementBuffer bufSQL3;
+        bufSQL3.Format("DELETE FROM SPLITTRANSACTIONS_V1 WHERE SPLITTRANSACTIONS_V1.TRANSID NOT IN (SELECT TRANSID FROM CHECKINGACCOUNT_V1);");
+        db->ExecuteUpdate(bufSQL3);
+    }
+
+    {
+        wxSQLite3StatementBuffer bufSQL3;
+        bufSQL3.Format("DELETE FROM BUDGETSPLITTRANSACTIONS_V1 WHERE BUDGETSPLITTRANSACTIONS_V1.TRANSID NOT IN (SELECT BDID FROM BILLSDEPOSITS_V1);");
+        db->ExecuteUpdate(bufSQL3);
+    }
+
+    mmENDSQL_LITE_EXCEPTION;
+}
+
 /*
 This routine sets up a new DB as well as update an old one
 */
@@ -545,6 +564,9 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd, const wxS
 	/* Create SplitTransactions V1 Table */
 	mmDBWrapper::createSplitTransactionsV1Table(db);
 	pgd->Update(95);
+
+    /* Remove Any cruft */
+    removeCruft(db);
 
     mmENDSQL_LITE_EXCEPTION;
 }
@@ -932,6 +954,18 @@ bool mmDBWrapper::deleteCategoryWithConstraints(wxSQLite3Database* db, int categ
         return false;
     }
     q1.Finalize();
+
+    // Check Bills& Deposits Split Transaction Table
+    bufSQL.Format("select * from BUDGETSPLITTRANSACTIONS_V1 where CATEGID=%d;",
+        categID);
+    q1 = db->ExecuteQuery(bufSQL);
+    if (q1.NextRow())
+    {
+        /* Records exist */
+        q1.Finalize();
+        return false;
+    }
+    q1.Finalize();
     
     wxSQLite3StatementBuffer bufSQL1;
     bufSQL1.Format("delete from SUBCATEGORY_V1 where CATEGID=%d;", categID);
@@ -978,6 +1012,18 @@ bool mmDBWrapper::deleteSubCategoryWithConstraints(wxSQLite3Database* db, int ca
     }
     q1.Finalize();
     
+    bufSQL.Format("select * from BUDGETSPLITTRANSACTIONS_V1 where CATEGID=%d and SUBCATEGID=%d;",
+        categID, subcategID);
+    q1 = db->ExecuteQuery(bufSQL);
+    if (q1.NextRow())
+    {
+        /* Records exist */
+        q1.Finalize();
+        return false;
+    }
+    q1.Finalize();
+    
+
     wxSQLite3StatementBuffer bufSQL1;
     bufSQL1.Format("delete from SUBCATEGORY_V1 where CATEGID=%d and SUBCATEGID=%d;", 
         categID, subcategID);
@@ -1099,7 +1145,13 @@ bool mmDBWrapper::deleteTransaction(wxSQLite3Database* db, int transID)
     wxSQLite3StatementBuffer bufSQL;
     bufSQL.Format("delete from CHECKINGACCOUNT_V1 where TRANSID=%d;", transID);
     db->ExecuteUpdate(bufSQL);
+
+    wxSQLite3StatementBuffer bufSQL2;
+    bufSQL2.Format("delete from SPLITTRANSACTIONS_V1 where TRANSID = %d;", transID);
+    db->ExecuteUpdate(bufSQL2);
+
     mmENDSQL_LITE_EXCEPTION;
+
     return true;
 }
 
@@ -1375,7 +1427,7 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
     double amt = 0.0;
     mmBEGINSQL_LITE_EXCEPTION;
     wxString bufSQL;
-#if 0
+#if 1
     if (subcategID == -1)
     {
         bufSQL = wxString::Format(wxT("select * from CHECKINGACCOUNT_V1 where CATEGID=%d;"), 
@@ -1717,6 +1769,11 @@ double mmDBWrapper::getAmountForPayee(wxSQLite3Database* db, int payeeID,
      wxSQLite3StatementBuffer bufSQL;
      bufSQL.Format("delete from BILLSDEPOSITS_V1 where BDID=%d;", bdID);
      db->ExecuteUpdate(bufSQL);
+
+     wxSQLite3StatementBuffer bufSQL2;
+     bufSQL2.Format("delete from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = %d;", bdID);
+     db->ExecuteUpdate(bufSQL2);
+
      mmENDSQL_LITE_EXCEPTION;
  }
 
