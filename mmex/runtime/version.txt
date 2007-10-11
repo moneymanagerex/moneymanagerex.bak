@@ -3,6 +3,8 @@ Version History of Money Manager Ex
 0.9.1.0 (Oct 9, 2007)
 - Fix bug where split transaction entries were being orphaned in the DB either in the account view
 or via the Bills Deposits entries. This could cause wierd behavior. (Lucky Arthur)
+- Fixed issue where split transaction amounts weren't being reported correctly if transactions were repeated. (within the same transaction) (manuel)
+- Make stock symbol match case insensitive (geraldnz )
 - Fix text vertical spacing in several panels in Linux (Ikkyu)
 - Improved Help File (Terry Wick)
 - Added "Everything except Reconciled Transactions View" (Jim)

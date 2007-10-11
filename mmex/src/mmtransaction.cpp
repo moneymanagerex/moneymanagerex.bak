@@ -321,6 +321,7 @@ bool mmBankTransaction::containsCategory(int categID, int subcategID)
 
 double mmBankTransaction::getAmountForSplit(int categID, int subcategID)
 {
+    double splitAmount = 0.0;
     if (splitEntries_->numEntries() > 0)
     {
         for(int idx = 0; idx < splitEntries_->numEntries(); idx++)
@@ -328,16 +329,18 @@ double mmBankTransaction::getAmountForSplit(int categID, int subcategID)
             if ((splitEntries_->entries_[idx]->categID_ == categID) &&
                 (splitEntries_->entries_[idx]->subCategID_ == subcategID))
             {
-                return splitEntries_->entries_[idx]->splitAmount_;
+                splitAmount += splitEntries_->entries_[idx]->splitAmount_;
             }
         }
+
+        return splitAmount;
     }
     else if ((categID_ == categID) &&
             (subcategID_ == subcategID))
     {
         return amt_;
     }
-    return 0.0;
+    return splitAmount;
 }
 
 //-----------------------------------------------------------------------------//

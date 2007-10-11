@@ -690,7 +690,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
 
         wxSQLite3ResultSet q1;
         wxString bufSQL;
-        bufSQL.Printf(wxT("select * from STOCK_V1 where SYMBOL='%s';"), StockSymbolNoSuffix.c_str());
+        bufSQL.Printf(wxT("select * from STOCK_V1 where lower(SYMBOL) =lower('%s');"), StockSymbolNoSuffix.c_str());
         q1 = db_->ExecuteQuery(bufSQL);
 
         std::vector<mmStockTransactionHolder> stockVec;
