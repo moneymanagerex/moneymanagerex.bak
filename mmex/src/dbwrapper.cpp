@@ -1427,7 +1427,7 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
     double amt = 0.0;
     mmBEGINSQL_LITE_EXCEPTION;
     wxString bufSQL;
-#if 1
+#if 0
     if (subcategID == -1)
     {
         bufSQL = wxString::Format(wxT("select * from CHECKINGACCOUNT_V1 where CATEGID=%d;"), 
