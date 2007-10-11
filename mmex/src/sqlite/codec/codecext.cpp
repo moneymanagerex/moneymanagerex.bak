@@ -97,7 +97,7 @@ int sqlite3CodecAttach(sqlite3* db, int nDb, const void* zKey, int nKey)
       {
         codec->Copy(*mainCodec);
         codec->SetBtree(db->aDb[nDb].pBt);
-#if (SQLITE_VERSION_NUMBER >= 3003014).
+#if (SQLITE_VERSION_NUMBER >= 3003014)
         sqlite3PagerSetCodec(sqlite3BtreePager(db->aDb[nDb].pBt), sqlite3Codec, codec);
 #else
         sqlite3pager_set_codec(sqlite3BtreePager(db->aDb[nDb].pBt), sqlite3Codec, codec);
@@ -119,7 +119,7 @@ int sqlite3CodecAttach(sqlite3* db, int nDb, const void* zKey, int nKey)
     codec->GenerateReadKey((const char*) zKey, nKey);
     codec->CopyKey(true);
     codec->SetBtree(db->aDb[nDb].pBt);
-#if (SQLITE_VERSION_NUMBER >= 3003014).
+#if (SQLITE_VERSION_NUMBER >= 3003014)
     sqlite3PagerSetCodec(sqlite3BtreePager(db->aDb[nDb].pBt), sqlite3Codec, codec);
 #else
     sqlite3pager_set_codec(sqlite3BtreePager(db->aDb[nDb].pBt), sqlite3Codec, codec);
@@ -171,7 +171,7 @@ int sqlite3_rekey(sqlite3 *db, const void *zKey, int nKey)
     codec->SetHasWriteKey(true);
     codec->GenerateWriteKey((const char*) zKey, nKey);
     codec->SetBtree(pbt);
-#if (SQLITE_VERSION_NUMBER >= 3003014).
+#if (SQLITE_VERSION_NUMBER >= 3003014)
     sqlite3PagerSetCodec(pPager, sqlite3Codec, codec);
 #else
     sqlite3pager_set_codec(pPager, sqlite3Codec, codec);
@@ -198,14 +198,14 @@ int sqlite3_rekey(sqlite3 *db, const void *zKey, int nKey)
   if (!rc)
   {
     // Rewrite all pages using the new encryption key (if specified)
-#if (SQLITE_VERSION_NUMBER >= 3003014).
+#if (SQLITE_VERSION_NUMBER >= 3003014)
     Pgno nPage = sqlite3PagerPagecount(pPager);
 #else
     Pgno nPage = sqlite3pager_pagecount(pPager);
 #endif
     int pageSize = sqlite3BtreeGetPageSize(pbt);
     Pgno nSkip = PAGER_MJ_PGNO(pageSize);
-#if (SQLITE_VERSION_NUMBER >= 3003014).
+#if (SQLITE_VERSION_NUMBER >= 3003014)
     DbPage *pPage;
 #else
     void *pPage;
@@ -215,14 +215,14 @@ int sqlite3_rekey(sqlite3 *db, const void *zKey, int nKey)
     for (n = 1; rc == SQLITE_OK && n <= nPage; n++)
     {
       if (n == nSkip) continue;
-#if (SQLITE_VERSION_NUMBER >= 3003014).
+#if (SQLITE_VERSION_NUMBER >= 3003014)
       rc = sqlite3PagerGet(pPager, n, &pPage);
 #else
       rc = sqlite3pager_get(pPager, n, &pPage);
 #endif
       if (!rc)
       {
-#if (SQLITE_VERSION_NUMBER >= 3003014).
+#if (SQLITE_VERSION_NUMBER >= 3003014)
         rc = sqlite3PagerWrite(pPage);
         sqlite3PagerUnref(pPage);
 #else
@@ -273,7 +273,7 @@ int sqlite3_rekey(sqlite3 *db, const void *zKey, int nKey)
   if (!codec->IsEncrypted())
   {
     // Remove codec for unencrypted database
-#if (SQLITE_VERSION_NUMBER >= 3003014).
+#if (SQLITE_VERSION_NUMBER >= 3003014)
     sqlite3PagerSetCodec(pPager, NULL, NULL);
 #else
     sqlite3pager_set_codec(pPager, NULL, NULL);

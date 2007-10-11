@@ -17,18 +17,24 @@ BK_DEPS = @BK_DEPS@
 srcdir = @srcdir@
 LIBS = @LIBS@
 LDFLAGS_GUI = @LDFLAGS_GUI@
+CC = @CC@
 CXX = @CXX@
+CFLAGS = @CFLAGS@
 CXXFLAGS = @CXXFLAGS@
 CPPFLAGS = @CPPFLAGS@
 LDFLAGS = @LDFLAGS@
+WX_CFLAGS = @WX_CFLAGS@
 WX_CXXFLAGS = @WX_CXXFLAGS@
 WX_LIBS = @WX_LIBS@
 
 ### Variables: ###
 
 DESTDIR = 
-MMEX_CXXFLAGS = $(WX_CXXFLAGS) $(WX_CXXFLAGS) -I../include $(CPPFLAGS) \
-	$(CXXFLAGS)
+MMEX_CFLAGS = $(WX_CFLAGS) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
+	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
+MMEX_CXXFLAGS = $(WX_CXXFLAGS) $(WX_CXXFLAGS) -I../include -DSQLITE_CORE \
+	-DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA -DWXSQLITE3_HAVE_CODEC \
+	$(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
 	mmex_aboutdialog.o \
 	mmex_appstartdialog.o \
@@ -79,12 +85,61 @@ MMEX_OBJECTS =  \
 	mmex_util.o \
 	mmex_wxtinyxml.o \
 	mmex_wxsqlite3.o \
-	mmex_yahoosettingsdialog.o
+	mmex_yahoosettingsdialog.o \
+	mmex_alter.o \
+	mmex_analyze.o \
+	mmex_attach.o \
+	mmex_auth.o \
+	mmex_btree.o \
+	mmex_build.o \
+	mmex_callback.o \
+	mmex_complete.o \
+	mmex_date.o \
+	mmex_delete.o \
+	mmex_expr.o \
+	mmex_func.o \
+	mmex_hash.o \
+	mmex_icu.o \
+	mmex_insert.o \
+	mmex_legacy.o \
+	mmex_loadext.o \
+	mmex_main.o \
+	mmex_malloc.o \
+	mmex_opcodes.o \
+	mmex_os.o \
+	mmex_os_unix.o \
+	mmex_pager.o \
+	mmex_parse.o \
+	mmex_pragma.o \
+	mmex_prepare.o \
+	mmex_printf.o \
+	mmex_random.o \
+	mmex_select.o \
+	mmex_table.o \
+	mmex_tokenize.o \
+	mmex_trigger.o \
+	mmex_update.o \
+	mmex_utf.o \
+	mmex_vacuum.o \
+	mmex_vdbeapi.o \
+	mmex_vdbeaux.o \
+	mmex_vdbeblob.o \
+	mmex_vdbe.o \
+	mmex_vdbefifo.o \
+	mmex_vdbemem.o \
+	mmex_vtab.o \
+	mmex_where.o \
+	mmex_util1.o \
+	mmex_codec.o \
+	mmex_codecext.o \
+	mmex_rijndael.o
 
 ### Conditionally set variables: ###
 
-@COND_DEPS_TRACKING_1@CXXC = $(BK_DEPS) $(CXX)
+@COND_DEPS_TRACKING_0@CCC = $(CC)
+@COND_DEPS_TRACKING_1@CCC = $(BK_DEPS) $(CC)
 @COND_DEPS_TRACKING_0@CXXC = $(CXX)
+@COND_DEPS_TRACKING_1@CXXC = $(BK_DEPS) $(CXX)
 @COND_PLATFORM_MAC_1@__mmex___mac_setfilecmd = \
 @COND_PLATFORM_MAC_1@	$(SETFILE) -t APPL mmex$(EXEEXT)
 COND_PLATFORM_OS2_1___mmex___os2_emxbindcmd = $(NM) mmex$(EXEEXT) | if grep -q \
@@ -110,7 +165,7 @@ distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
 
 mmex$(EXEEXT): $(MMEX_OBJECTS)
-	$(CXX) -o $@ $(MMEX_OBJECTS) $(LDFLAGS) $(LDFLAGS_GUI)   $(LIBS) -lsqlite3 $(WX_LIBS)
+	$(CXX) -o $@ $(MMEX_OBJECTS) $(LDFLAGS) $(LDFLAGS_GUI)   $(LIBS) $(WX_LIBS)
 	
 	$(__mmex___mac_setfilecmd)
 	$(__mmex___os2_emxbindcmd)
@@ -264,6 +319,147 @@ mmex_wxsqlite3.o: $(srcdir)/src/wxsqlite3.cpp
 
 mmex_yahoosettingsdialog.o: $(srcdir)/src/yahoosettingsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/yahoosettingsdialog.cpp
+
+mmex_alter.o: $(srcdir)/src/sqlite/alter.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/alter.c
+
+mmex_analyze.o: $(srcdir)/src/sqlite/analyze.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/analyze.c
+
+mmex_attach.o: $(srcdir)/src/sqlite/attach.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/attach.c
+
+mmex_auth.o: $(srcdir)/src/sqlite/auth.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/auth.c
+
+mmex_btree.o: $(srcdir)/src/sqlite/btree.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/btree.c
+
+mmex_build.o: $(srcdir)/src/sqlite/build.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/build.c
+
+mmex_callback.o: $(srcdir)/src/sqlite/callback.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/callback.c
+
+mmex_complete.o: $(srcdir)/src/sqlite/complete.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/complete.c
+
+mmex_date.o: $(srcdir)/src/sqlite/date.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/date.c
+
+mmex_delete.o: $(srcdir)/src/sqlite/delete.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/delete.c
+
+mmex_expr.o: $(srcdir)/src/sqlite/expr.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/expr.c
+
+mmex_func.o: $(srcdir)/src/sqlite/func.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/func.c
+
+mmex_hash.o: $(srcdir)/src/sqlite/hash.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/hash.c
+
+mmex_icu.o: $(srcdir)/src/sqlite/icu.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/icu.c
+
+mmex_insert.o: $(srcdir)/src/sqlite/insert.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/insert.c
+
+mmex_legacy.o: $(srcdir)/src/sqlite/legacy.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/legacy.c
+
+mmex_loadext.o: $(srcdir)/src/sqlite/loadext.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/loadext.c
+
+mmex_main.o: $(srcdir)/src/sqlite/main.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/main.c
+
+mmex_malloc.o: $(srcdir)/src/sqlite/malloc.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/malloc.c
+
+mmex_opcodes.o: $(srcdir)/src/sqlite/opcodes.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/opcodes.c
+
+mmex_os.o: $(srcdir)/src/sqlite/os.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/os.c
+
+mmex_os_unix.o: $(srcdir)/src/sqlite/os_unix.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/os_unix.c
+
+mmex_pager.o: $(srcdir)/src/sqlite/pager.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/pager.c
+
+mmex_parse.o: $(srcdir)/src/sqlite/parse.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/parse.c
+
+mmex_pragma.o: $(srcdir)/src/sqlite/pragma.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/pragma.c
+
+mmex_prepare.o: $(srcdir)/src/sqlite/prepare.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/prepare.c
+
+mmex_printf.o: $(srcdir)/src/sqlite/printf.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/printf.c
+
+mmex_random.o: $(srcdir)/src/sqlite/random.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/random.c
+
+mmex_select.o: $(srcdir)/src/sqlite/select.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/select.c
+
+mmex_table.o: $(srcdir)/src/sqlite/table.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/table.c
+
+mmex_tokenize.o: $(srcdir)/src/sqlite/tokenize.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/tokenize.c
+
+mmex_trigger.o: $(srcdir)/src/sqlite/trigger.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/trigger.c
+
+mmex_update.o: $(srcdir)/src/sqlite/update.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/update.c
+
+mmex_utf.o: $(srcdir)/src/sqlite/utf.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/utf.c
+
+mmex_vacuum.o: $(srcdir)/src/sqlite/vacuum.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/vacuum.c
+
+mmex_vdbeapi.o: $(srcdir)/src/sqlite/vdbeapi.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/vdbeapi.c
+
+mmex_vdbeaux.o: $(srcdir)/src/sqlite/vdbeaux.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/vdbeaux.c
+
+mmex_vdbeblob.o: $(srcdir)/src/sqlite/vdbeblob.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/vdbeblob.c
+
+mmex_vdbe.o: $(srcdir)/src/sqlite/vdbe.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/vdbe.c
+
+mmex_vdbefifo.o: $(srcdir)/src/sqlite/vdbefifo.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/vdbefifo.c
+
+mmex_vdbemem.o: $(srcdir)/src/sqlite/vdbemem.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/vdbemem.c
+
+mmex_vtab.o: $(srcdir)/src/sqlite/vtab.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/vtab.c
+
+mmex_where.o: $(srcdir)/src/sqlite/where.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/where.c
+
+mmex_util1.o: $(srcdir)/src/sqlite/util1.c
+	$(CCC) -c -o $@ $(MMEX_CFLAGS) $(srcdir)/src/sqlite/util1.c
+
+mmex_codec.o: $(srcdir)/src/sqlite/codec/codec.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/sqlite/codec/codec.cpp
+
+mmex_codecext.o: $(srcdir)/src/sqlite/codec/codecext.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/sqlite/codec/codecext.cpp
+
+mmex_rijndael.o: $(srcdir)/src/sqlite/codec/rijndael.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/sqlite/codec/rijndael.cpp
 
 
 # Include dependency info, if present:

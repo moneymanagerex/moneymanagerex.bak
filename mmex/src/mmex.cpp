@@ -2334,57 +2334,40 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew)
 
 void mmGUIFrame::OnNew(wxCommandEvent& event)
 {
-	wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
-    //wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb");
-#ifdef __WXGTK__ 
-	// Don't support encrypted databases in Linux yet
-	extSupported = wxT("MMB Files(*.mmb)|*.mmb");
-#endif
-    wxString fileName = wxFileSelector(wxT("Choose database file to create"), 
-                wxT(""), wxT(""), wxT(""), extSupported, wxSAVE | wxOVERWRITE_PROMPT);
-    if ( !fileName.empty() )
-    {
-	   openFile(fileName, true);
-    }
+  wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
+  wxString fileName = wxFileSelector(wxT("Choose database file to create"), 
+                                     wxT(""), wxT(""), wxT(""), extSupported, wxSAVE | wxOVERWRITE_PROMPT);
+  if ( !fileName.empty() )
+  {
+    openFile(fileName, true);
+  }
 }
 
 void mmGUIFrame::OnOpen(wxCommandEvent& event)
 {
-	wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
-    //wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb");
-#ifdef __WXGTK__ 
-	// Don't support encrypted databases in Linux yet
-	extSupported = wxT("MMB Files(*.mmb)|*.mmb");
-#endif
-    wxString fileName = wxFileSelector(wxT("Choose database file to open"), 
-                wxT(""), wxT(""), wxT(""), extSupported, wxFILE_MUST_EXIST);
-    if ( !fileName.empty() )
-    {
-        openFile(fileName, false);
-    }
+  wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
+  wxString fileName = wxFileSelector(wxT("Choose database file to open"), 
+                                     wxT(""), wxT(""), wxT(""), extSupported, wxFILE_MUST_EXIST);
+  if ( !fileName.empty() )
+  {
+    openFile(fileName, false);
+  }
 }
 
 void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
 {
-	wxString wildCardStr = wxT("MMB Files(*.mmb)|*.mmb");
-	
-#ifdef __WXGTK__ 
-	
-#else
-	wildCardStr = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
-#endif
-
-    wxString fileName = wxFileSelector(wxT("Choose database file to Save As"), 
-                wxT(""), wxT(""), wxT(""), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
-    if ( !fileName.empty() )
+  wxString wildCardStr = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
+  wxString fileName = wxFileSelector(wxT("Choose database file to Save As"), 
+                                     wxT(""), wxT(""), wxT(""), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
+  if ( !fileName.empty() )
+  {
+    if (db_)
     {
-        if (db_)
-        {
-            db_->Close();
-            db_.reset();
-        }
-        wxCopyFile(fileName_, fileName, false);
-		
+      db_->Close();
+      db_.reset();
+    }
+    wxCopyFile(fileName_, fileName, false);
+    
         wxFileName newFileName(fileName);
         wxFileName oldFileName(fileName_);
         if (newFileName.GetExt() == oldFileName.GetExt())
@@ -2393,10 +2376,6 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
         }
         else
         {
-#ifdef __WXGTK__ 
-
-#else
-#if 1
           wxString password    = wxEmptyString;
           wxString oldpassword = password_;
           if (newFileName.GetExt() == wxT("emb"))
@@ -2423,8 +2402,6 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
           
           db_->Close();
           db_.reset();
-#endif
-#endif	
         }
         openFile(fileName, false);
     }

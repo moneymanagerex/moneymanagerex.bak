@@ -17,11 +17,11 @@ Bakefile for generating makefiles in Linux.
 
         <set var="BUILDDIR">gtkbuild</set>
 
-        <set var="ADDITIONAL_CPPFLAGS" prepend="1"> -I../include</set>
+        <set var="ADDITIONAL_CPPFLAGS1" prepend="1"> -I../include</set>
 
-        <sys-lib>sqlite3</sys-lib>
 
-        <cxxflags>$(WX_CXXFLAGS) $(ADDITIONAL_CPPFLAGS)</cxxflags>
+        <cxxflags>$(WX_CXXFLAGS) -I../include -DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA -DWXSQLITE3_HAVE_CODEC</cxxflags>
+        <cflags>-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA</cflags>
         
         <sources>src/aboutdialog.cpp</sources>
         <sources>src/appstartdialog.cpp</sources>
@@ -73,6 +73,58 @@ Bakefile for generating makefiles in Linux.
         <sources>src/wxtinyxml.cpp</sources>
         <sources>src/wxsqlite3.cpp</sources>
         <sources>src/yahoosettingsdialog.cpp</sources>
+        <sources>src/sqlite/alter.c</sources>
+
+        <sources>src/sqlite/analyze.c</sources>
+        <sources>src/sqlite/attach.c</sources>
+        <sources>src/sqlite/auth.c</sources>
+        <sources>src/sqlite/btree.c</sources>
+        <sources>src/sqlite/build.c</sources>
+        <sources>src/sqlite/callback.c</sources>
+        <sources>src/sqlite/complete.c</sources>
+        <sources>src/sqlite/date.c</sources>
+        <sources>src/sqlite/delete.c</sources>
+        <sources>src/sqlite/expr.c</sources>
+        <sources>src/sqlite/func.c</sources>
+        <sources>src/sqlite/hash.c</sources>
+        <sources>src/sqlite/icu.c</sources>
+        <sources>src/sqlite/insert.c</sources>
+        <sources>src/sqlite/legacy.c</sources>
+        <sources>src/sqlite/loadext.c</sources>
+        <sources>src/sqlite/main.c</sources>
+        <sources>src/sqlite/malloc.c</sources>
+        <sources>src/sqlite/opcodes.c</sources>
+        <sources>src/sqlite/os.c</sources>
+        <sources>src/sqlite/os_unix.c</sources>
+        <sources>src/sqlite/pager.c</sources>
+        <sources>src/sqlite/parse.c</sources>
+        <sources>src/sqlite/pragma.c</sources>
+        <sources>src/sqlite/prepare.c</sources>
+        <sources>src/sqlite/printf.c</sources>
+        <sources>src/sqlite/random.c</sources>
+        <sources>src/sqlite/select.c</sources>
+        <sources>src/sqlite/table.c</sources>
+        <sources>src/sqlite/tokenize.c</sources>
+        <sources>src/sqlite/trigger.c</sources>
+        <sources>src/sqlite/update.c</sources>
+        <sources>src/sqlite/utf.c</sources>
+        <sources>src/sqlite/vacuum.c</sources>
+        <sources>src/sqlite/vdbeapi.c</sources>
+        <sources>src/sqlite/vdbeaux.c</sources>
+        <sources>src/sqlite/vdbeblob.c</sources>
+        <sources>src/sqlite/vdbe.c</sources>
+        <sources>src/sqlite/vdbefifo.c</sources>
+        <sources>src/sqlite/vdbemem.c</sources>
+        <sources>src/sqlite/vtab.c</sources>
+        <sources>src/sqlite/where.c</sources>
+        <sources>src/sqlite/util1.c</sources>
+
+        <sources>src/sqlite/codec/codec.cpp</sources>
+        <sources>src/sqlite/codec/codecext.cpp</sources>
+        <sources>src/sqlite/codec/rijndael.cpp</sources>
+
+
+
 
         <wx-lib>net</wx-lib>                
         <wx-lib>html</wx-lib>                
