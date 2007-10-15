@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-10-10 21:36-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2007-10-15 00:43+0100\n"
+"Last-Translator: Claudio <enjoy@msmail.it>\n"
 "Language-Team: Claudio <enjoy@msmail.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -24,9 +24,8 @@ msgid "Released under the GNU GPL License"
 msgstr "Rilasciato sotto licenza GNU GPL"
 
 #: src/aboutdialog.cpp:157
-#, fuzzy
 msgid "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
-msgstr "Powered by wxWidgets and SQLite"
+msgstr "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
 
 #: src/aboutdialog.cpp:161
 msgid "Version History"
@@ -928,12 +927,12 @@ msgstr "Visualizza la pianificazione budget delle categorie con valore diverso d
 #: src/budgetingpanel.cpp:125
 #: src/budgetingpanel.cpp:154
 msgid "View Income Budget Categories"
-msgstr "Visualizza le categorie diel budget Reddito"
+msgstr "Visualizza le categorie del budget Reddito"
 
 #: src/budgetingpanel.cpp:130
 #: src/budgetingpanel.cpp:155
 msgid "View Expense Budget Categories"
-msgstr "Visualizza le categorie diel budget Spese"
+msgstr "Visualizza le categorie del budget Spese"
 
 #: src/budgetingpanel.cpp:179
 msgid "Budget Setup for "
@@ -1136,11 +1135,11 @@ msgstr "Scala"
 
 #: src/currencydialog.cpp:239
 msgid "Value of 123456.78 will be"
-msgstr "Valore di 123456.78 diventa"
+msgstr "Valore di 123456,78 diventa"
 
 #: src/currencydialog.cpp:244
 msgid "1234567.89"
-msgstr "1234567.89"
+msgstr "1234567,89"
 
 #: src/currencydialog.cpp:252
 msgid "Update"
@@ -1216,7 +1215,7 @@ msgstr "Duplicare"
 
 #: src/filtertransdialog.cpp:273
 msgid "Specify Type"
-msgstr "Specificare il tipo di operazione"
+msgstr "Specificare il tipo"
 
 #: src/filtertransdialog.cpp:288
 msgid "Specify the type of transaction."
@@ -1268,9 +1267,8 @@ msgid "View Un-Reconciled Transactions"
 msgstr "Visualizza le operazioni \"Non riconciliate\""
 
 #: src/mmcheckingpanel.cpp:175
-#, fuzzy
 msgid "View All Except Reconciled Transactions"
-msgstr "Visualizza le operazioni \"Riconciliate\""
+msgstr "Visualizza tutto escluse le operazioni \"Riconciliate\""
 
 #: src/mmcheckingpanel.cpp:176
 msgid "View Void Transactions"
@@ -1282,7 +1280,7 @@ msgstr "Visualizza le operazioni \"da Monitorare\""
 
 #: src/mmcheckingpanel.cpp:178
 msgid "View Duplicate Transactions"
-msgstr "Visualizzazione delle operazioni \"Duplicate\""
+msgstr "Visualizza le operazioni \"Duplicate\""
 
 #: src/mmcheckingpanel.cpp:180
 msgid "View Transactions from last 30 days"
@@ -1415,9 +1413,8 @@ msgid "Viewing transactions from last month"
 msgstr "Visualizzazione delle operazioni dell'ultimo mese"
 
 #: src/mmcheckingpanel.cpp:760
-#, fuzzy
 msgid "Viewing All Except Reconciled Transactions"
-msgstr "Visualizzazione delle operazioni \"Riconciliate\""
+msgstr "Visualizzazione di tutte le operazioni ad esclusione di quelle \"Riconciliate\""
 
 #: src/mmcheckingpanel.cpp:780
 msgid "Viewing Void transactions"
@@ -1429,12 +1426,11 @@ msgstr "Visualizzazione delle operazioni \"da Monitorare\""
 
 #: src/mmcheckingpanel.cpp:815
 msgid "Viewing duplicate transactions"
-msgstr "Visualizzazione in corso delle operazioni Duplicate"
+msgstr "Visualizzazione delle operazioni \"Duplicate\""
 
 #: src/mmcheckingpanel.cpp:820
-#, fuzzy
 msgid "Viewing All except Reconciled Transactions"
-msgstr "Visualizzazione delle operazioni \"Riconciliate\""
+msgstr "Visualizzazione di tutte le operazioni ad esclusione di quelle \"Riconciliate\""
 
 #: src/mmcheckingpanel.cpp:825
 msgid "Do you really want to delete all the transactions shown?"
@@ -2040,7 +2036,7 @@ msgstr " - Nessun file aperto "
 
 #: src/mmex.cpp:2201
 msgid "Sorry. The Database version is too old or                 Database password is incorrect"
-msgstr "Spiacente. La versione del Database è troppo vecchia                 La password del Database è errata"
+msgstr "Spiacente. La versione del Database è troppo vecchia oppure                 La password del Database è errata"
 
 #: src/mmex.cpp:2203
 #: src/mmex.cpp:2256
@@ -2300,9 +2296,8 @@ msgid "Init Balance "
 msgstr "Saldo iniziale"
 
 #: src/optionsdialog.cpp:147
-#, fuzzy
 msgid " : Restart"
-msgstr " "
+msgstr " : Reimposta"
 
 #: src/optionsdialog.cpp:216
 msgid "General Settings"
@@ -2569,7 +2564,7 @@ msgstr "Scegli il beneficiario corrente come il beneficiario selezionato per l'o
 
 #: src/payeedialog.cpp:190
 msgid "Type a Payee Name in the Text Box and then press Add."
-msgstr ""
+msgstr "Inserire un \"Nome Beneficiario\" nella casella di testo e poi premere Aggiungi."
 
 #: src/payeedialog.cpp:195
 msgid "Payee with same name exists"
@@ -2703,9 +2698,8 @@ msgid " transactions imported from QIF"
 msgstr " operazioni importate da QIF"
 
 #: src/splitdetailsdialog.cpp:182
-#, fuzzy
 msgid "Invalid Category Entered "
-msgstr "Importo inserito non valido!"
+msgstr "Categoria inserita non valida!"
 
 #: src/splittransactionsdialog.cpp:146
 #: src/univcsvdialog.cpp:137
@@ -2960,7 +2954,7 @@ msgstr "Selezionare a chi va o da chi viene l'operazione"
 
 #: src/transdialog.cpp:305
 msgid "Populate Transaction #"
-msgstr "Completare l'operazione #"
+msgstr "Numerazione progressiva dell'operazione #"
 
 #: src/transdialog.cpp:680
 msgid "Select From Account"
@@ -3636,9 +3630,8 @@ msgid "Month"
 msgstr "Mese"
 
 #: include/reportincexpesestime.h:46
-#, fuzzy
 msgid "Difference"
-msgstr "Differenza:"
+msgstr "Differenza"
 
 #: include/reportsummary.h:122
 msgid "Total Balance on all Accounts"
