@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-10-10 21:33-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2007-10-19 07:37+0800\n"
+"Last-Translator: Kyosuke <kyosuketam@gmail.com>\n"
 "Language-Team: TheZeal Software <Kyosuketam>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -24,9 +24,8 @@ msgid "Released under the GNU GPL License"
 msgstr "遵循 GNU GPL 協議"
 
 #: src/aboutdialog.cpp:157
-#, fuzzy
 msgid "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
-msgstr "Powered by wxWidgets and SQLite"
+msgstr "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
 
 #: src/aboutdialog.cpp:161
 msgid "Version History"
@@ -1269,9 +1268,8 @@ msgid "View Un-Reconciled Transactions"
 msgstr "檢視未核實交易"
 
 #: src/mmcheckingpanel.cpp:175
-#, fuzzy
 msgid "View All Except Reconciled Transactions"
-msgstr "檢視巳核實交易"
+msgstr "檢視所有核實以外的交易"
 
 #: src/mmcheckingpanel.cpp:176
 msgid "View Void Transactions"
@@ -1416,9 +1414,8 @@ msgid "Viewing transactions from last month"
 msgstr "檢視上月交易"
 
 #: src/mmcheckingpanel.cpp:760
-#, fuzzy
 msgid "Viewing All Except Reconciled Transactions"
-msgstr "檢視核實交易"
+msgstr "檢視所有核實以外的交易"
 
 #: src/mmcheckingpanel.cpp:780
 msgid "Viewing Void transactions"
@@ -1433,9 +1430,8 @@ msgid "Viewing duplicate transactions"
 msgstr "檢視重複交易"
 
 #: src/mmcheckingpanel.cpp:820
-#, fuzzy
 msgid "Viewing All except Reconciled Transactions"
-msgstr "檢視核實交易"
+msgstr "檢視所有核實以外的交易"
 
 #: src/mmcheckingpanel.cpp:825
 msgid "Do you really want to delete all the transactions shown?"
@@ -2128,7 +2124,7 @@ msgstr "今天的日期: "
 
 #: src/mmhomepagepanel.cpp:108
 msgid "Summary"
-msgstr "摘要"
+msgstr "結餘"
 
 #: src/mmhomepagepanel.cpp:192
 msgid "Total of Accounts:"
@@ -2322,9 +2318,8 @@ msgid "Specify the date format for display"
 msgstr ""
 
 #: src/optionsdialog.cpp:275
-#, fuzzy
 msgid "Set"
-msgstr "選取"
+msgstr "設定"
 
 #: src/optionsdialog.cpp:279
 msgid "Sample Date"
@@ -2344,7 +2339,7 @@ msgstr ""
 
 #: src/optionsdialog.cpp:305
 msgid "Display"
-msgstr ""
+msgstr "顯示"
 
 #: src/optionsdialog.cpp:311
 #: include/mmex.h:157
@@ -2352,9 +2347,8 @@ msgid "User Name"
 msgstr "用戶名稱"
 
 #: src/optionsdialog.cpp:318
-#, fuzzy
 msgid "Specify the User Name"
-msgstr "選擇轉帳至帳目"
+msgstr "設定用戶名稱"
 
 #: src/optionsdialog.cpp:323
 #: src/optionsdialog.cpp:329
@@ -2411,7 +2405,7 @@ msgstr "檢視90日"
 
 #: src/optionsdialog.cpp:401
 msgid "View Last Month"
-msgstr ""
+msgstr "檢視上月"
 
 #: src/optionsdialog.cpp:402
 msgid "View Current Month"
@@ -2479,9 +2473,8 @@ msgid "Specify the color for the list details"
 msgstr ""
 
 #: src/optionsdialog.cpp:482
-#, fuzzy
 msgid "Future Transactions"
-msgstr "過濾交易"
+msgstr "未來交易"
 
 #: src/optionsdialog.cpp:484
 #, fuzzy
@@ -2519,13 +2512,12 @@ msgid "Select whether to use sounds when entering transactions"
 msgstr "選擇交易的狀態"
 
 #: src/optionsdialog.cpp:540
-#, fuzzy
 msgid "Font Size Options"
-msgstr "顯視帳目選項"
+msgstr "字型大小選項"
 
 #: src/optionsdialog.cpp:546
 msgid "Report Font Size"
-msgstr ""
+msgstr "報表字型大小"
 
 #: src/optionsdialog.cpp:585
 msgid "Specify which font size is used on the report tables"
@@ -2828,7 +2820,7 @@ msgstr "盈 / 虧"
 
 #: src/stockspanel.cpp:227
 msgid "Current"
-msgstr "貨幣"
+msgstr "現時價格"
 
 #: src/stockspanel.cpp:270
 msgid "New Stock Investment"
@@ -2863,14 +2855,14 @@ msgid "Stock Investments: "
 msgstr "股票: "
 
 #: src/stockspanel.cpp:337
-#, fuzzy, c-format
+#, c-format
 msgid "Total: %s Invested: %s "
-msgstr "所有股票 : "
+msgstr "總市值 : %s      本金 : %s "
 
 #: src/stockspanel.cpp:433
 #, c-format
 msgid "%s on %s"
-msgstr ""
+msgstr "%s 在 %s"
 
 #: src/stockspanel.cpp:436
 msgid "never!"
@@ -3362,7 +3354,7 @@ msgstr ""
 
 #: src/yahoosettingsdialog.cpp:65
 msgid "finance.au.yahoo.com"
-msgstr ""
+msgstr "finance.au.yahoo.com"
 
 #: src/yahoosettingsdialog.cpp:66
 msgid "Do not enter anything except the server name (or IP address, if you're feeling lucky)"
@@ -3419,9 +3411,8 @@ msgid "New/Edit Asset"
 msgstr "新增/編輯資產"
 
 #: include/billsdepositsdialog.h:22
-#, fuzzy
 msgid "New/Edit Repeating Transaction"
-msgstr "循環交易項目"
+msgstr "新增/編輯循環交易項目"
 
 #: include/budgetentrydialog.h:22
 msgid "Budget Entry Dialog"
@@ -3442,7 +3433,7 @@ msgstr "圖例:"
 
 #: include/currencydialog.h:23
 msgid "Currency Manager"
-msgstr ""
+msgstr "貨幣管理員"
 
 #: include/customsqldialog.h:29
 msgid "Custom SQL Dialog"
@@ -3588,7 +3579,7 @@ msgstr "支出:"
 
 #: include/reportincexpenses.h:93
 msgid "Difference:"
-msgstr "差額:"
+msgstr "盈 / 虧:"
 
 #: include/reportincexpesestime.h:28
 msgid "Income vs Expenses for Year: "
@@ -3600,9 +3591,8 @@ msgid "Month"
 msgstr "月"
 
 #: include/reportincexpesestime.h:46
-#, fuzzy
 msgid "Difference"
-msgstr "差額:"
+msgstr "盈 / 虧"
 
 #: include/reportsummary.h:122
 msgid "Total Balance on all Accounts"
