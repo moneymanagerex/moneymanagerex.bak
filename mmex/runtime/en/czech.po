@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-10-10 21:33-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2007-10-18 00:41+0100\n"
+"Last-Translator: Geralt <geraltcz@centrum.cz>\n"
 "Language-Team: Geralt <geraltcz@centrum.cz>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -24,9 +24,8 @@ msgid "Released under the GNU GPL License"
 msgstr "Released under the GNU GPL License"
 
 #: src/aboutdialog.cpp:157
-#, fuzzy
 msgid "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
-msgstr "Powered by wxWidgets and SQLite"
+msgstr "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
 
 #: src/aboutdialog.cpp:161
 msgid "Version History"
@@ -1268,9 +1267,8 @@ msgid "View Un-Reconciled Transactions"
 msgstr "Zobrazit neověřené transakce"
 
 #: src/mmcheckingpanel.cpp:175
-#, fuzzy
 msgid "View All Except Reconciled Transactions"
-msgstr "Zobrazit ověřené transakce"
+msgstr "Zobrazit všechny transakce s výjimkou ověřených"
 
 #: src/mmcheckingpanel.cpp:176
 msgid "View Void Transactions"
@@ -1415,9 +1413,8 @@ msgid "Viewing transactions from last month"
 msgstr "Zobrazeny transakce za poslední měsíc"
 
 #: src/mmcheckingpanel.cpp:760
-#, fuzzy
 msgid "Viewing All Except Reconciled Transactions"
-msgstr "Zobrazeny ověřené transakce"
+msgstr "Zobrazeny všechny transakce s výjimkou ověřených"
 
 #: src/mmcheckingpanel.cpp:780
 msgid "Viewing Void transactions"
@@ -1432,9 +1429,8 @@ msgid "Viewing duplicate transactions"
 msgstr "Zobrazuji duplikované transakce"
 
 #: src/mmcheckingpanel.cpp:820
-#, fuzzy
 msgid "Viewing All except Reconciled Transactions"
-msgstr "Zobrazeny ověřené transakce"
+msgstr "Zobrazeny všechny transakce s výjimkou ověřených"
 
 #: src/mmcheckingpanel.cpp:825
 msgid "Do you really want to delete all the transactions shown?"
@@ -1597,7 +1593,7 @@ msgstr "Přehled účtů"
 #: src/mmex.cpp:1393
 #: src/mmex.cpp:1410
 msgid "Where the Money Goes"
-msgstr "Kam peníze chodí"
+msgstr "Peníze odchozí"
 
 #: src/mmex.cpp:695
 #: src/mmex.cpp:727
@@ -1647,7 +1643,7 @@ msgstr "Aktuální rok"
 #: src/mmex.cpp:1302
 #: src/mmex.cpp:1319
 msgid "Where the Money Comes From"
-msgstr "Peníze odchozí"
+msgstr "Peníze příchozí"
 
 #: src/mmex.cpp:785
 #: include/reportpayee.h:28
@@ -2151,7 +2147,7 @@ msgstr "Příjmy a výdaje: Aktuální měsíc"
 
 #: src/mmhomepagepanel.cpp:363
 msgid "Upcoming Transactions"
-msgstr "Příchozí transakce"
+msgstr "Očekávané transakce"
 
 #: src/mmhomepagepanel.cpp:421
 msgid "Follow Up On "
@@ -2300,9 +2296,8 @@ msgid "Init Balance "
 msgstr "Počáteční zůstatek"
 
 #: src/optionsdialog.cpp:147
-#, fuzzy
 msgid " : Restart"
-msgstr " spuštěno"
+msgstr " : Restart"
 
 #: src/optionsdialog.cpp:216
 msgid "General Settings"
@@ -2569,7 +2564,7 @@ msgstr "Vybere aktuálně označeného příjemce pro transakci."
 
 #: src/payeedialog.cpp:190
 msgid "Type a Payee Name in the Text Box and then press Add."
-msgstr ""
+msgstr "Zadejte příjemce do textového pole a stiskněte Přidat."
 
 #: src/payeedialog.cpp:195
 msgid "Payee with same name exists"
@@ -2703,9 +2698,8 @@ msgid " transactions imported from QIF"
 msgstr " transakcí importováno z QIF"
 
 #: src/splitdetailsdialog.cpp:182
-#, fuzzy
 msgid "Invalid Category Entered "
-msgstr "Zadána neplatná částka"
+msgstr "Zadána neplatná kategorie "
 
 #: src/splittransactionsdialog.cpp:146
 #: src/univcsvdialog.cpp:137
@@ -3637,9 +3631,8 @@ msgid "Month"
 msgstr "Měsíc"
 
 #: include/reportincexpesestime.h:46
-#, fuzzy
 msgid "Difference"
-msgstr "Rozdíly:"
+msgstr "Rozdíly"
 
 #: include/reportsummary.h:122
 msgid "Total Balance on all Accounts"
