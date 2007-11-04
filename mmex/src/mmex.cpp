@@ -2189,8 +2189,6 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
         boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
         db_ = pDB;
         db_->Open(fileName, password);
-     //   db_->Open(fileName);
-#if 1
         // we need to check the db whether it is the right version
         if (!mmDBWrapper::checkDBVersion(db_.get()))
         {
@@ -2206,7 +2204,6 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
            db_.reset();
            return ;
         }
-#endif
         password_ = password;
 
         core_ = new mmCoreDB(db_);
@@ -2227,12 +2224,10 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
        {
            boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
            db_ = pDB;
-           //db_->Open(fileName, password);
-           db_->Open(fileName);
+           db_->Open(fileName, password);
            password_ = password;
 
            openDataBase(fileName);
-
            core_ = new mmCoreDB(db_);
 
            mmNewDatabaseWizard* wizard = new mmNewDatabaseWizard(this, core_);
@@ -2389,13 +2384,10 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
           if (oldFileName.GetExt() == wxT("emb"))
           {
             db_->Open(fileName, oldpassword);
-            //db_->Open(fileName);
             db_->ReKey(wxEmptyString);
           }
           else
           {
-            // TODO: This is not working and it crashes
-            // because sqlite_rekey is crashing 
             db_->Open(fileName);
             db_->ReKey(password);
           }

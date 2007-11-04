@@ -7,6 +7,7 @@ Greg Newton
 Paulo Lopes
 Igor
 Bettega Stefano
+Vat
 
 Silk Icons
 ===========
@@ -59,3 +60,16 @@ User Manual
 ===========
 Tina P
 Terry Wick
+
+Sponsors
+========
+William Thompson
+Robert Gumpright
+Jason McWhorter
+Stephen Murray
+Peter Robinson
+Steve Light
+Andrew Ireland
+David Adams
+FusedNet(fusednetwork.com)
+

@@ -365,72 +365,81 @@ void mmCheckingPanel::CreateControls()
 // Return whether first element is greater than the second
 bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
 {
-    if (sortcol == 0)
-    {
-       if (elem1->date_ != elem2->date_)
-       {
-          if (asc)
-          {
-             return elem1->date_ < elem2->date_;
-          }
-          else
-          {
-             return elem1->date_ > elem2->date_;
-          }
-       }
-       else
-       {
-          if (asc)
-          {
-             return elem1->transactionID() < elem2->transactionID();
-          }
-          else
-          {
-             return elem1->transactionID() > elem2->transactionID();
-          }
-       }
-    }
-
-    if (sortcol == 1)
-    {
-        if (asc)
-            return elem1->transNum_ < elem2->transNum_;
-        else
-            return elem1->transNum_ > elem2->transNum_;
-    }
-
-    if (sortcol== 2)
-    {
+	const int COL_DATE_OR_TRANSACTION_ID = 0;
+	const int COL_TRANSACTION_NUMBER = 1;
+	const int COL_PAYEE_STR = 2;
+	const int COL_STATUS = 3;
+	const int COL_CATEGORY = 4;
+	const int COL_WITHDRAWAL = 5; 
+	const int COL_DEPOSIT = 6 ;
+	
+	long elem1Long=0, elem2Long=0;
+	switch( sortcol )
+		{
+		case COL_DATE_OR_TRANSACTION_ID:
+			if (elem1->date_ != elem2->date_)
+			{
+			  if (asc)
+			    return elem1->date_ < elem2->date_;
+			  else
+				return elem1->date_ > elem2->date_;
+			}
+			else
+			{
+				if (asc)
+					return elem1->transactionID() < elem2->transactionID();
+				else
+					return elem1->transactionID() > elem2->transactionID();
+			}
+        break;
+		case COL_TRANSACTION_NUMBER:
+            {
+                bool isOK1 = elem1->transNum_.ToLong(&elem1Long );
+                bool isOK2 = elem2->transNum_.ToLong(&elem2Long );
+                if (isOK1 && isOK2)
+                {
+                    if (asc)
+                        return elem1Long < elem2Long;
+                    else
+                        return elem1Long > elem2Long;
+                }
+                else
+                {
+                    if (asc)
+                        return elem1->transNum_ < elem2->transNum_;
+                    else
+                        return elem1->transNum_ > elem2->transNum_;
+                }
+            }
+		break;
+		case COL_PAYEE_STR:
         if (asc)
             return elem1->payeeStr_ < elem2->payeeStr_;
         else
             return elem1->payeeStr_ > elem2->payeeStr_;
-    }
-
-    if (sortcol== 3)
-    {
-        if (asc)
-            return elem1->status_ < elem2->status_;
-        else
-            return elem1->status_ > elem2->status_;
-    }
-
-    if (sortcol== 4)
-    {
-        if (asc)
-           return elem1->fullCatStr_ < elem2->fullCatStr_;
-        else
-            return elem1->fullCatStr_ > elem2->fullCatStr_;
-    }
-
-    if ((sortcol == 5) || (sortcol == 6))
-    {
-        if (asc)
-            return elem1->amt_ < elem2->amt_;
-        else
-            return elem1->amt_ > elem2->amt_;
-    }
-
+		break;
+		case COL_STATUS:
+			if (asc)
+				return elem1->status_ < elem2->status_;
+			else
+			    return elem1->status_ > elem2->status_;
+            
+		break;
+		case COL_CATEGORY:
+			if (asc)
+			   return elem1->fullCatStr_ < elem2->fullCatStr_;
+			else
+			   return elem1->fullCatStr_ > elem2->fullCatStr_;
+            
+		break;
+		case COL_WITHDRAWAL:
+		case COL_DEPOSIT:
+			if (asc)
+			   return elem1->amt_ < elem2->amt_;
+			else
+			  return elem1->amt_ > elem2->amt_;  		
+		break;
+		}
     wxASSERT(false);
     return true;
 }

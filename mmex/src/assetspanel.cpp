@@ -203,6 +203,8 @@ void mmAssetsPanel::initVirtualListControl()
 
     mmBEGINSQL_LITE_EXCEPTION;
 
+    mmDBWrapper::loadBaseCurrencySettings(db_);
+
     double total = mmDBWrapper::getAssetBalance(db_);
     wxString balance;
     mmCurrencyFormatter::formatDoubleToCurrency(total, balance);

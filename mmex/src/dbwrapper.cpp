@@ -510,6 +510,21 @@ void removeCruft(wxSQLite3Database* db)
         db->ExecuteUpdate(bufSQL3);
     }
 
+#if 0
+    {
+        wxSQLite3StatementBuffer bufSQL3;
+        bufSQL3.Format("UPDATE CHECKINGACCOUNT_V1 SET CATEGID = -1, SUBCATEGID=-1  WHERE CHECKINGACCOUNT_V1.TRANSID IN (SELECT SPLITTRANSACTIONS_V1.TRANSID FROM SPLITTRANSACTIONS_V1);");
+        db->ExecuteUpdate(bufSQL3);
+    }
+
+   {
+        wxSQLite3StatementBuffer bufSQL3;
+        bufSQL3.Format("UPDATE BUDGETSPLITTRANSACTIONS_V1 SET CATEGID = -1, SUBCATEGID=-1  WHERE BUDGETSPLITTRANSACTIONS_V1.TRANSID IN (SELECT BUDGETSPLITTRANSACTIONS_V1.TRANSID FROM BUDGETSPLITTRANSACTIONS_V1);");
+        db->ExecuteUpdate(bufSQL3);
+    }
+#endif
+
+
     mmENDSQL_LITE_EXCEPTION;
 }
 
@@ -979,6 +994,11 @@ bool mmDBWrapper::deleteCategoryWithConstraints(wxSQLite3Database* db, int categ
     bufSQL.Format("delete from BUDGETTABLE_V1 WHERE CATEGID=%d;", 
          categID);
     db->ExecuteUpdate(bufSQL3);
+
+    wxSQLite3StatementBuffer bufSQL4;
+    bufSQL.Format("update PAYEE_V1 set CATEGID=-1 WHERE CATEGID=%d;", 
+         categID);
+    db->ExecuteUpdate(bufSQL3);
     
     mmENDSQL_LITE_EXCEPTION;
     return true;
@@ -1032,6 +1052,11 @@ bool mmDBWrapper::deleteSubCategoryWithConstraints(wxSQLite3Database* db, int ca
     wxSQLite3StatementBuffer bufSQL3;
     bufSQL.Format("delete from BUDGETTABLE_V1 WHERE CATEGID=%d AND SUBCATEGID=%d;", 
         categID, subcategID);
+    db->ExecuteUpdate(bufSQL3);
+
+    wxSQLite3StatementBuffer bufSQL4;
+    bufSQL.Format("update PAYEE_V1 set CATEGID=-1, SUBCATEGID=-1 WHERE CATEGID=%d AND SUBCATEGID=%d;", 
+         categID);
     db->ExecuteUpdate(bufSQL3);
 
     mmENDSQL_LITE_EXCEPTION;

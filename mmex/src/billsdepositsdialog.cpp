@@ -511,6 +511,10 @@ void mmBDDialog::OnPayee(wxCommandEvent& event)
                 return;
             }
 
+             // ... If this is a Split Transaction, ignore the Payee change
+            if (split_->numEntries())
+                return;
+
             int tempCategID = -1;
             int tempSubCategID = -1;
             wxString payeeName = mmDBWrapper::getPayee(db_, 
