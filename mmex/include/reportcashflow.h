@@ -103,7 +103,10 @@ public:
               processNumRepeats = true;
 
            if (repeats == 0)
-              continue;
+           {
+              numRepeats = 1;
+              processNumRepeats = true;
+           }
 
            if (nextOccurDate > yearFromNow)
               continue;
