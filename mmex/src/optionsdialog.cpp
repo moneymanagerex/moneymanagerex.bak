@@ -265,10 +265,11 @@ void mmOptionsDialog::CreateControls()
     
     wxString selection = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), DEFDATEFORMAT);
     choiceDateFormat_ = new wxComboBox( itemPanelGeneral, 
-        ID_DIALOG_OPTIONS_DATE_FORMAT, selection, wxDefaultPosition, 
+        ID_DIALOG_OPTIONS_DATE_FORMAT, wxT(""), wxDefaultPosition, 
         wxSize(100, -1), 11, itemChoice7Strings, 0 );
     itemStaticBoxSizer9->Add(choiceDateFormat_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     choiceDateFormat_->SetToolTip(_("Specify the date format for display"));
+    choiceDateFormat_->SetValue(selection);
 
     
     wxButton* itemButtonDF = new wxButton( itemPanelGeneral, 

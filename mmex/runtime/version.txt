@@ -6,6 +6,10 @@ Version History of Money Manager Ex
 - Show correct currency in Bills and Deposits Panel (MK)
 - Fix bug encrypting MMEX DB (Lion)
 - Patch from Vat on sorting transaction# column headers 
+- Rename Brazilian language to be Portuguese (Users will need to reselect the correct language)
+- Fix bug when deleting last transaction and then deleting another transaction without focus
+- Don't clean split transactions unless table is present.
+- Add tools->Convert to Non Encrypted DB option to convert encrypted DB to non-encrypted DB
 
 0.9.1.0 (Oct 9, 2007)
 - Fix bug where split transaction entries were being orphaned in the DB either in the account view

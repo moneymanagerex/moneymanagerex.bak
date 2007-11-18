@@ -499,15 +499,21 @@ void removeCruft(wxSQLite3Database* db)
     mmBEGINSQL_LITE_EXCEPTION;
 
     {
-        wxSQLite3StatementBuffer bufSQL3;
-        bufSQL3.Format("DELETE FROM SPLITTRANSACTIONS_V1 WHERE SPLITTRANSACTIONS_V1.TRANSID NOT IN (SELECT TRANSID FROM CHECKINGACCOUNT_V1);");
-        db->ExecuteUpdate(bufSQL3);
+        if (db->TableExists(wxT("SPLITTRANSACTIONS_V1")))
+        {
+            wxSQLite3StatementBuffer bufSQL3;
+            bufSQL3.Format("DELETE FROM SPLITTRANSACTIONS_V1 WHERE SPLITTRANSACTIONS_V1.TRANSID NOT IN (SELECT TRANSID FROM CHECKINGACCOUNT_V1);");
+            db->ExecuteUpdate(bufSQL3);
+        }
     }
 
     {
-        wxSQLite3StatementBuffer bufSQL3;
-        bufSQL3.Format("DELETE FROM BUDGETSPLITTRANSACTIONS_V1 WHERE BUDGETSPLITTRANSACTIONS_V1.TRANSID NOT IN (SELECT BDID FROM BILLSDEPOSITS_V1);");
-        db->ExecuteUpdate(bufSQL3);
+        if (db->TableExists(wxT("BUDGETSPLITTRANSACTIONS_V1")))
+        {
+            wxSQLite3StatementBuffer bufSQL3;
+            bufSQL3.Format("DELETE FROM BUDGETSPLITTRANSACTIONS_V1 WHERE BUDGETSPLITTRANSACTIONS_V1.TRANSID NOT IN (SELECT BDID FROM BILLSDEPOSITS_V1);");
+            db->ExecuteUpdate(bufSQL3);
+        }
     }
 
 #if 0

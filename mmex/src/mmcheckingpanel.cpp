@@ -1239,7 +1239,7 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& event)
             RefreshItems(selectedIndex_, ((int)cp_->trans_.size()) - 1);
 
             //set the deleted transaction index to the new selection and focus on it
-            SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, 
+            SetItemState(selectedIndex_-1, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, 
                wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED);
 
             //make sure the topmost item before transaction deletion is visible, otherwise 

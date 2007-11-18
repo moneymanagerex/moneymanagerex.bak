@@ -134,6 +134,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_NEW, mmGUIFrame::OnNew)
     EVT_MENU(MENU_OPEN, mmGUIFrame::OnOpen)
     EVT_MENU(MENU_SAVE_AS, mmGUIFrame::OnSaveAs)
+    EVT_MENU(MENU_CONVERT_ENC_DB, mmGUIFrame::OnConvertEncryptedDB)
     EVT_MENU(MENU_EXPORT_CSV, mmGUIFrame::OnExport)
     EVT_MENU(MENU_IMPORT_CSV, mmGUIFrame::OnImportCSV)
     EVT_MENU(MENU_IMPORT_MMNETCSV, mmGUIFrame::OnImportCSVMMNET)
@@ -2076,6 +2077,13 @@ void mmGUIFrame::createMenu()
 	menuItemAppStart->SetBitmap(wxBitmap(appstart_xpm));
     menuHelp->Append(menuItemAppStart);
 
+   menuTools->AppendSeparator();
+
+    wxMenuItem* menuItemConvertDB = new wxMenuItem(menuTools, MENU_CONVERT_ENC_DB, 
+        _("Convert Encrypted DB"), 
+        _("Convert Encrypted DB to Non-Encrypted DB"));
+    menuTools->Append(menuItemConvertDB);
+
     menuHelp->AppendSeparator();
 
     if (mmIniOptions::enableCheckForUpdates_)
@@ -2347,6 +2355,45 @@ void mmGUIFrame::OnOpen(wxCommandEvent& event)
   {
     openFile(fileName, false);
   }
+}
+
+void mmGUIFrame::OnConvertEncryptedDB(wxCommandEvent& event)
+{
+    wxString extSupported = wxT("Encrypted MMB files (*.emb)|*.emb");
+    wxString encFileName = wxFileSelector(wxT("Choose Encrypted database file to open"), 
+        wxT(""), wxT(""), wxT(""), extSupported, wxFILE_MUST_EXIST);
+    if ( !encFileName.empty() )
+    {
+        wxString password = wxGetPasswordFromUser(wxT("Password For Database.."));
+        if (!password.IsEmpty())
+        {
+            wxString wildCardStr = wxT("MMB Files(*.mmb)|*.mmb");
+            wxString fileName = wxFileSelector(wxT("Choose database file to Save As"), 
+                wxT(""), wxT(""), wxT(""), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
+ 
+            if ( !fileName.empty() )
+            {
+                wxCopyFile(encFileName, fileName, false);
+
+                try
+                {
+                    boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
+                    pDB->Open(fileName, password);
+
+                    pDB->ReKey(wxEmptyString);
+                    pDB->Close();
+                    mmShowErrorMessage(0, _("Converted DB!"), 
+                        _("MMEX message"));
+
+                }
+                catch(...)
+                {
+                    mmShowErrorMessage(0, _("Unable to convert db successfully. Check Password!"), 
+                        _("Error"));
+                }
+            }
+        }
+    }
 }
 
 void mmGUIFrame::OnSaveAs(wxCommandEvent& event)

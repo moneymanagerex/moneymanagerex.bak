@@ -390,6 +390,7 @@ public:
 
     void OnNew(wxCommandEvent& event);
     void OnOpen(wxCommandEvent& event);
+    void OnConvertEncryptedDB(wxCommandEvent& event);
     void OnSaveAs(wxCommandEvent& event);
     void OnExport(wxCommandEvent& event);
     void OnExportToHtml(wxCommandEvent& event);

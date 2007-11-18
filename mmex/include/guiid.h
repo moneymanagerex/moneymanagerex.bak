@@ -85,6 +85,7 @@ enum
     MENU_CUSTOMSQL,
     MENU_VIEW_TOOLBAR,
     MENU_VIEW_LINKS,
+    MENU_CONVERT_ENC_DB,
 
     /* Checking Panel */
     MENU_TREEPOPUP_ENTEROCCUR,
