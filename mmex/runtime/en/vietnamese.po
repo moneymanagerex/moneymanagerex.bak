@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-10-10 21:37-0600\n"
+"PO-Revision-Date: 2007-12-04 22:21-0600\n"
 "Last-Translator: Madhan <madhan@yahoo.com>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -17,16 +17,15 @@ msgstr ""
 
 #: src/aboutdialog.cpp:140
 msgid "  and contributers from around the world."
-msgstr " và sự đóng góp của nhiều người đến từ khắp nơi trên thế giới"
+msgstr " và sự đóng góp của tất cả mọi người từ khắp nơi trên thế giới."
 
 #: src/aboutdialog.cpp:145
 msgid "Released under the GNU GPL License"
 msgstr "Được phát hành theo giấy phép GNU GPL"
 
 #: src/aboutdialog.cpp:157
-#, fuzzy
 msgid "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
-msgstr "Được vận hành bởi wxWidgets và SQLite"
+msgstr "Chạy trên nền tảng wxWidgets, SQLite, wxSQLite (viết bởi Ulrich Telle)"
 
 #: src/aboutdialog.cpp:161
 msgid "Version History"
@@ -38,55 +37,55 @@ msgstr "Những người đóng góp"
 
 #: src/aboutdialog.cpp:174
 msgid "Using Language : "
-msgstr "Sử dụng ngôn ngữ :"
+msgstr "Ngôn ngữ được sử dụng :"
 
 #: src/appstartdialog.cpp:113
 msgid "Open Last Opened Database"
-msgstr "Mở Cơ sở dữ liệu cuối cùng được sử dụng"
+msgstr "Mở CSDL được mở lần cuối"
 
 #: src/appstartdialog.cpp:126
 msgid "Open the previously opened database : "
-msgstr "Mở cơ sở dữ liệu vừa được dùng"
+msgstr "Mở CSDL được mở lần trước"
 
 #: src/appstartdialog.cpp:133
 msgid "Create a New Database"
-msgstr "Tạo cơ sở dữ liệu mới"
+msgstr "Tạo CSDL mới"
 
 #: src/appstartdialog.cpp:134
 msgid "Create a new database file to get started"
-msgstr "Tạo cơ sở dữ liệu mới để khởi động"
+msgstr "Tạo CSDL để làm việc"
 
 #: src/appstartdialog.cpp:138
 msgid "Open Existing Database"
-msgstr "Mở cơ sở dữ liệu đang tồn tại"
+msgstr "Mở CSDL hiện có"
 
 #: src/appstartdialog.cpp:139
 msgid "Open an already created database file with extension (*.mmb)"
-msgstr "Mở cơ sở dữ liệu đã được tạo với đuổi (*.mmb)"
+msgstr "Mở CSDL đã được tạo với đuôi (*.mmb)"
 
 #: src/appstartdialog.cpp:143
 msgid "Read Documentation"
-msgstr "Hãy đọc tài liệu"
+msgstr "Đọc tài liệu"
 
 #: src/appstartdialog.cpp:144
 msgid "Read the user manual"
-msgstr "Hãy đọc hướng dẫn sử dụng"
+msgstr "Đọc hướng dẫn sử dụng"
 
 #: src/appstartdialog.cpp:150
 msgid "Visit Website for more information"
-msgstr "Hãy vào trang Web để có thêm thông tin"
+msgstr "Ghé thăm trang Web để có thêm thông tin"
 
 #: src/appstartdialog.cpp:151
 msgid "Open the Money Manager Ex website for latest news, updates etc"
-msgstr "Mở trang Web của Money Manager Ex để có tin tức và cập nhật mới nhất "
+msgstr "Mở trang Web của Money Manager Ex để xem tin tức, các bản cập nhật v.v."
 
 #: src/appstartdialog.cpp:158
 msgid "Show this window next time "
-msgstr "Hãy hiển thị cửa sổ này lần sau"
+msgstr "Hiển thị cửa sổ này lần sau"
 
 #: src/appstartdialog.cpp:160
 msgid " starts"
-msgstr " khởi động"
+msgstr " bắt đầu"
 
 #: src/assetdialog.cpp:156
 msgid "Asset Details"
@@ -96,11 +95,11 @@ msgstr "Chi tiết tài sản"
 #: src/assetspanel.cpp:139
 #: include/reportsummaryassets.h:63
 msgid "Name"
-msgstr "Tên gọi"
+msgstr "Tên"
 
 #: src/assetdialog.cpp:175
 msgid "Enter the name of the asset"
-msgstr "Hãy điền tên gọi của tài sản"
+msgstr "Điiền tên tài sản"
 
 #: src/assetdialog.cpp:179
 #: src/billsdepositsdialog.cpp:389
@@ -114,63 +113,63 @@ msgstr "Ngày"
 
 #: src/assetdialog.cpp:186
 msgid "Specify the date of purchase of asset"
-msgstr "Hãy điền ngày mua tài sản"
+msgstr "Điền ngày mua tài sản"
 
 #: src/assetdialog.cpp:189
 msgid "Asset Type"
 msgstr "Loại tài sản"
 
 #: src/assetdialog.cpp:195
-#: src/assetspanel.cpp:229
-#: src/assetspanel.cpp:240
+#: src/assetspanel.cpp:231
+#: src/assetspanel.cpp:242
 #: include/reportsummaryassets.h:78
 #: include/reportsummaryassets.h:89
 msgid "Property"
 msgstr "Bất động sản"
 
 #: src/assetdialog.cpp:196
-#: src/assetspanel.cpp:230
-#: src/assetspanel.cpp:242
+#: src/assetspanel.cpp:232
+#: src/assetspanel.cpp:244
 #: include/reportsummaryassets.h:79
 #: include/reportsummaryassets.h:91
 msgid "Automobile"
 msgstr "Ô-tô"
 
 #: src/assetdialog.cpp:197
-#: src/assetspanel.cpp:231
-#: src/assetspanel.cpp:244
+#: src/assetspanel.cpp:233
+#: src/assetspanel.cpp:246
 #: include/reportsummaryassets.h:80
 #: include/reportsummaryassets.h:93
 msgid "Household Object"
-msgstr "Các vật dụng gia đình"
+msgstr "Đồ dùng gia đình"
 
 #: src/assetdialog.cpp:198
-#: src/assetspanel.cpp:232
-#: src/assetspanel.cpp:246
+#: src/assetspanel.cpp:234
+#: src/assetspanel.cpp:248
 #: include/reportsummaryassets.h:81
 #: include/reportsummaryassets.h:95
 msgid "Art"
 msgstr "Tác phẩm nghệ thuật"
 
 #: src/assetdialog.cpp:199
-#: src/assetspanel.cpp:233
-#: src/assetspanel.cpp:248
+#: src/assetspanel.cpp:235
+#: src/assetspanel.cpp:250
 #: include/reportsummaryassets.h:82
 #: include/reportsummaryassets.h:97
 msgid "Jewellery"
 msgstr "Vàng bạc đá quý"
 
 #: src/assetdialog.cpp:200
-#: src/assetspanel.cpp:234
-#: src/assetspanel.cpp:250
+#: src/assetspanel.cpp:236
+#: src/assetspanel.cpp:252
 #: include/reportsummaryassets.h:83
 #: include/reportsummaryassets.h:99
 msgid "Cash"
 msgstr "Tiền mặt"
 
 #: src/assetdialog.cpp:201
-#: src/assetspanel.cpp:235
-#: src/assetspanel.cpp:252
+#: src/assetspanel.cpp:237
+#: src/assetspanel.cpp:254
 #: include/reportsummaryassets.h:84
 #: include/reportsummaryassets.h:101
 msgid "Other"
@@ -178,7 +177,7 @@ msgstr "Loại khác"
 
 #: src/assetdialog.cpp:205
 msgid "Select type of asset"
-msgstr "Hãy chọn loại tài sản"
+msgstr "Xác định loại tài sản"
 
 #: src/assetdialog.cpp:211
 #: src/assetdialog.cpp:295
@@ -192,16 +191,16 @@ msgstr "Giá trị"
 
 #: src/assetdialog.cpp:217
 msgid "Enter the current value of the asset"
-msgstr "Hãy điền giá trị của tài sản"
+msgstr "Điền giá trị hiện tại của tài sản"
 
 #: src/assetdialog.cpp:223
 msgid "Change in Value"
-msgstr "Thay đổi về giá trị"
+msgstr "Giá trị thay đổi"
 
 #: src/assetdialog.cpp:229
 #: src/billsdepositsdialog.cpp:290
 #: src/billsdepositsdialog.cpp:429
-#: src/billsdepositspanel.cpp:257
+#: src/billsdepositspanel.cpp:260
 #: src/budgetentrydialog.cpp:157
 #: src/filtertransdialog.cpp:258
 #: src/mmhomepagepanel.cpp:254
@@ -211,23 +210,23 @@ msgstr "Không đổi"
 
 #: src/assetdialog.cpp:230
 msgid "Appreciates"
-msgstr "Có xu thế tăng giá"
+msgstr "Tăng lên"
 
 #: src/assetdialog.cpp:231
 msgid "Depreciates"
-msgstr "Có xu thế mất giá"
+msgstr "Giảm đi"
 
 #: src/assetdialog.cpp:235
 msgid "Specify if the value of the asset changes over time"
-msgstr "Hãy xác định giá trị thay đổi của tài sản theo thời gian"
+msgstr "Xác định giá trị thay đổi của tài sản theo thời gian"
 
 #: src/assetdialog.cpp:240
 msgid "Rate of Change"
-msgstr "Tỷ lệ thay đổi"
+msgstr "Mức độ thay đổi"
 
 #: src/assetdialog.cpp:246
 msgid "Enter the rate at which the asset changes its value in %"
-msgstr "Hãy điền mức độ thay đổi tính theo % đối với giá trị của tài sản"
+msgstr "Điền mức độ thay đổi tính theo % của giá trị tài sản"
 
 #: src/assetdialog.cpp:252
 #: src/billsdepositsdialog.cpp:442
@@ -239,7 +238,7 @@ msgstr "Ghi chú"
 
 #: src/assetdialog.cpp:258
 msgid "Enter notes associated with this asset"
-msgstr "Hãy điền ghi chú liên quan đến tài sản"
+msgstr "Điền ghi chú liên quan đến tài sản"
 
 #: src/assetdialog.cpp:270
 #: src/billsdepositsdialog.cpp:469
@@ -268,14 +267,14 @@ msgstr "Hủy"
 #: src/assetdialog.cpp:302
 #: src/assetdialog.cpp:329
 msgid "Invalid Value "
-msgstr "Giá trị không thích hợp"
+msgstr "Giá trị không hợp lệ"
 
 #: src/assetdialog.cpp:302
 #: src/assetdialog.cpp:329
-#: src/billsdepositsdialog.cpp:627
-#: src/billsdepositsdialog.cpp:801
-#: src/billsdepositsdialog.cpp:811
-#: src/billsdepositsdialog.cpp:834
+#: src/billsdepositsdialog.cpp:631
+#: src/billsdepositsdialog.cpp:805
+#: src/billsdepositsdialog.cpp:815
+#: src/billsdepositsdialog.cpp:838
 #: src/budgetentrydialog.cpp:226
 #: src/budgetyearentrydialog.cpp:145
 #: src/budgetyearentrydialog.cpp:152
@@ -291,10 +290,11 @@ msgstr "Giá trị không thích hợp"
 #: src/filtertransdialog.cpp:535
 #: src/filtertransdialog.cpp:549
 #: src/maincurrencydialog.cpp:193
-#: src/mmex.cpp:2450
-#: src/mmex.cpp:2526
-#: src/mmex.cpp:2972
-#: src/mmex.cpp:3013
+#: src/mmex.cpp:2392
+#: src/mmex.cpp:2466
+#: src/mmex.cpp:2542
+#: src/mmex.cpp:2988
+#: src/mmex.cpp:3029
 #: src/newacctdialog.cpp:330
 #: src/payeedialog.cpp:190
 #: src/payeedialog.cpp:195
@@ -307,10 +307,10 @@ msgstr "Giá trị không thích hợp"
 #: src/stockdialog.cpp:362
 #: src/stockdialog.cpp:371
 #: src/stockdialog.cpp:380
-#: src/transdialog.cpp:553
-#: src/transdialog.cpp:737
-#: src/transdialog.cpp:747
-#: src/transdialog.cpp:764
+#: src/transdialog.cpp:558
+#: src/transdialog.cpp:742
+#: src/transdialog.cpp:752
+#: src/transdialog.cpp:769
 #: src/univcsvdialog.cpp:291
 #: src/univcsvdialog.cpp:329
 #: src/univcsvdialog.cpp:352
@@ -322,16 +322,16 @@ msgstr "Giá trị không thích hợp"
 #: include/mmex.h:258
 #: include/mmex.h:331
 msgid "Error"
-msgstr "Có lỗi"
+msgstr "Lỗi"
 
 #: src/assetdialog.cpp:321
 msgid "Rate of Change in Value"
-msgstr "Mức độ thay đổi về giá trị"
+msgstr "Mức độ thay đổi giá trị"
 
 #: src/assetspanel.cpp:112
-#: src/mmex.cpp:642
-#: src/mmex.cpp:684
-#: src/mmex.cpp:2048
+#: src/mmex.cpp:643
+#: src/mmex.cpp:685
+#: src/mmex.cpp:2049
 #: src/mmhomepagepanel.cpp:181
 #: include/reportsummary.h:110
 msgid "Assets"
@@ -353,10 +353,10 @@ msgstr "Loại "
 
 #: src/assetspanel.cpp:179
 #: src/mmcheckingpanel.cpp:345
-#: src/mmex.cpp:2134
+#: src/mmex.cpp:2142
 #: src/stockspanel.cpp:268
 msgid "New"
-msgstr "Tạo mới"
+msgstr "Mới"
 
 #: src/assetspanel.cpp:181
 msgid "New Asset"
@@ -369,11 +369,11 @@ msgstr "Tài sản mới"
 #: src/payeedialog.cpp:165
 #: src/stockspanel.cpp:273
 msgid "Edit"
-msgstr "Sửa chữa"
+msgstr "Thay đổi"
 
 #: src/assetspanel.cpp:186
 msgid "Edit Asset"
-msgstr "Sữa chữa dữ liệu về tài sản"
+msgstr "Thay đổi tài sản"
 
 #: src/assetspanel.cpp:189
 #: src/categdialog.cpp:158
@@ -385,49 +385,49 @@ msgstr "Xóa"
 
 #: src/assetspanel.cpp:191
 msgid "Delete Asset"
-msgstr "Loại bỏ tài sản khỏi danh mục"
+msgstr "Xóa tài sản"
 
-#: src/assetspanel.cpp:210
+#: src/assetspanel.cpp:212
 #, c-format
 msgid "Total: %s"
 msgstr "Tổng cộng: %s"
 
-#: src/assetspanel.cpp:289
-msgid "&New Asset"
-msgstr "%N Ghi tài sản mới"
-
 #: src/assetspanel.cpp:291
+msgid "&New Asset"
+msgstr "Tài sản %mới"
+
+#: src/assetspanel.cpp:293
 msgid "&Edit Asset"
-msgstr "&E Sửa dữ liệu về tài sản"
+msgstr "&Thay đổi tài sản"
 
-#: src/assetspanel.cpp:292
+#: src/assetspanel.cpp:294
 msgid "&Delete Asset"
-msgstr "&D Xóa tài sản ra khỏi danh mục"
+msgstr "&Xóa tài sản"
 
-#: src/assetspanel.cpp:368
+#: src/assetspanel.cpp:370
 msgid "Do you really want to delete the Asset?"
-msgstr "Bạn thực sự muốn xóa tài sản này ra khỏi danh mục?"
+msgstr "Bạn thực sự muốn xóa tài sản?"
 
-#: src/assetspanel.cpp:369
+#: src/assetspanel.cpp:371
 msgid "Confirm Asset Deletion"
-msgstr "Xác nhận việc xóa tài sản khỏi danh mục"
+msgstr "Xác nhận xóa tài sản"
 
 #: src/billsdepositsdialog.cpp:192
-#: src/billsdepositsdialog.cpp:987
+#: src/billsdepositsdialog.cpp:991
 #: src/mmtransaction.cpp:236
 #: src/transdialog.cpp:184
-#: src/transdialog.cpp:882
+#: src/transdialog.cpp:887
 msgid "Split Category"
-msgstr "Đa phân loại"
+msgstr "Nhiều hạng mục"
 
 #: src/billsdepositsdialog.cpp:255
 msgid "Repeating Transaction Details"
-msgstr "Các chi tiết về các giao dịch định kỳ"
+msgstr "Chi tiết về giao dịch định kỳ"
 
 #: src/billsdepositsdialog.cpp:264
 #: include/reportsummary.h:58
 msgid "Account Name"
-msgstr "Tên gọi tài khoản"
+msgstr "Tên tài khoản"
 
 #: src/billsdepositsdialog.cpp:269
 #: src/stockdialog.cpp:154
@@ -437,73 +437,73 @@ msgstr "Chọn tài khoản"
 
 #: src/billsdepositsdialog.cpp:274
 msgid "Next Occurence"
-msgstr "Lần thực hiện tiếp theo"
+msgstr "Phát sinh lần tới"
 
 #: src/billsdepositsdialog.cpp:281
 msgid "Specify the date of the next bill or deposit"
-msgstr "Hãy điền ngày thực hiện giao dịch tiếp theo"
+msgstr "Điền ngày thực hiện giao dịch tiếp theo"
 
 #: src/billsdepositsdialog.cpp:284
 msgid "Repeats"
-msgstr "Số lần lặp lại"
+msgstr "Lặp lại"
 
 #: src/billsdepositsdialog.cpp:291
-#: src/billsdepositspanel.cpp:261
+#: src/billsdepositspanel.cpp:264
 #: src/budgetentrydialog.cpp:158
 #: src/mmhomepagepanel.cpp:258
 msgid "Weekly"
 msgstr "Hàng tuần"
 
 #: src/billsdepositsdialog.cpp:292
-#: src/billsdepositspanel.cpp:265
+#: src/billsdepositspanel.cpp:268
 #: src/budgetentrydialog.cpp:159
 #: src/mmhomepagepanel.cpp:262
 msgid "Bi-Weekly"
 msgstr "Hai tuần một lần"
 
 #: src/billsdepositsdialog.cpp:293
-#: src/billsdepositspanel.cpp:269
+#: src/billsdepositspanel.cpp:272
 #: src/budgetentrydialog.cpp:160
 #: src/mmhomepagepanel.cpp:266
 msgid "Monthly"
 msgstr "Hàng tháng"
 
 #: src/billsdepositsdialog.cpp:294
-#: src/billsdepositspanel.cpp:273
+#: src/billsdepositspanel.cpp:276
 #: src/budgetentrydialog.cpp:161
 #: src/mmhomepagepanel.cpp:270
 msgid "Bi-Monthly"
 msgstr "Hai tháng một lần"
 
 #: src/billsdepositsdialog.cpp:295
-#: src/billsdepositspanel.cpp:277
+#: src/billsdepositspanel.cpp:280
 #: src/budgetentrydialog.cpp:162
 #: src/mmhomepagepanel.cpp:274
 msgid "Quarterly"
 msgstr "Hàng quý"
 
 #: src/billsdepositsdialog.cpp:296
-#: src/billsdepositspanel.cpp:281
+#: src/billsdepositspanel.cpp:284
 #: src/budgetentrydialog.cpp:163
 #: src/mmhomepagepanel.cpp:278
 msgid "Half-Yearly"
 msgstr "Nửa năm một lần"
 
 #: src/billsdepositsdialog.cpp:297
-#: src/billsdepositspanel.cpp:285
+#: src/billsdepositspanel.cpp:288
 #: src/budgetentrydialog.cpp:164
 #: src/mmhomepagepanel.cpp:282
 msgid "Yearly"
 msgstr "Hàng năm"
 
 #: src/billsdepositsdialog.cpp:298
-#: src/billsdepositspanel.cpp:289
+#: src/billsdepositspanel.cpp:292
 #: src/mmhomepagepanel.cpp:286
 msgid "Four Months"
 msgstr "Bốn tháng một lần"
 
 #: src/billsdepositsdialog.cpp:299
-#: src/billsdepositspanel.cpp:293
+#: src/billsdepositspanel.cpp:296
 #: src/mmhomepagepanel.cpp:290
 msgid "Four Weeks"
 msgstr "Bốn tuần một lần"
@@ -514,12 +514,12 @@ msgstr "Số lần lặp lại"
 
 #: src/billsdepositsdialog.cpp:315
 msgid "Specify the number of times this series repeats. Leave blank if this series continues forever."
-msgstr "Hãy điền số lần mà loại giao dịch này sẽ lặp lại. Hãy để trống nếu loại giao dịch này sẽ kéo dài mãi."
+msgstr "Xác định số lần giao dịch này sẽ lặp lại. Bỏ trống nếu giao dịch này kéo dài mãi."
 
 #: src/billsdepositsdialog.cpp:319
 #: src/splittransactionsdialog.cpp:121
 msgid "Transaction Details"
-msgstr "Chi tiết về giao dịch"
+msgstr "Chi tiết giao dịch"
 
 #: src/billsdepositsdialog.cpp:328
 #: src/transdialog.cpp:248
@@ -527,7 +527,7 @@ msgid "Transaction Type"
 msgstr "Loại giao dịch"
 
 #: src/billsdepositsdialog.cpp:333
-#: src/billsdepositspanel.cpp:401
+#: src/billsdepositspanel.cpp:404
 #: src/filtertransdialog.cpp:280
 #: src/mmcheckingpanel.cpp:285
 #: src/transdialog.cpp:253
@@ -536,7 +536,7 @@ msgid "Withdrawal"
 msgstr "Xuất tiền"
 
 #: src/billsdepositsdialog.cpp:334
-#: src/billsdepositspanel.cpp:403
+#: src/billsdepositspanel.cpp:406
 #: src/filtertransdialog.cpp:281
 #: src/mmcheckingpanel.cpp:287
 #: src/transdialog.cpp:254
@@ -545,7 +545,7 @@ msgid "Deposit"
 msgstr "Nhập tiền"
 
 #: src/billsdepositsdialog.cpp:335
-#: src/billsdepositspanel.cpp:405
+#: src/billsdepositspanel.cpp:408
 #: src/filtertransdialog.cpp:282
 #: src/transdialog.cpp:255
 msgid "Transfer"
@@ -554,7 +554,7 @@ msgstr "Chuyển tiền"
 #: src/billsdepositsdialog.cpp:342
 #: src/transdialog.cpp:262
 msgid "Specify the type of transactions to be created."
-msgstr "Hãy xác định loại giao dịch sẽ được khởi tạo"
+msgstr "Xác định loại giao dịch"
 
 #: src/billsdepositsdialog.cpp:344
 #: src/transdialog.cpp:264
@@ -564,14 +564,14 @@ msgstr "Chi tiết"
 #: src/billsdepositsdialog.cpp:348
 #: src/transdialog.cpp:268
 msgid "Specify advanced settings for transaction"
-msgstr "Bổ sung thông tin cho giao dịch"
+msgstr "Bổ sung thông tin chi tiết về giao dịch"
 
 #: src/billsdepositsdialog.cpp:358
-#: src/billsdepositsdialog.cpp:726
+#: src/billsdepositsdialog.cpp:730
 #: src/billsdepositspanel.cpp:150
 #: src/mmcheckingpanel.cpp:279
 #: src/transdialog.cpp:279
-#: src/transdialog.cpp:654
+#: src/transdialog.cpp:659
 #: src/univcsvdialog.cpp:214
 #: include/reportpayee.h:59
 #: include/reporttransactions.h:64
@@ -580,20 +580,20 @@ msgstr "Người giao dịch"
 
 #: src/billsdepositsdialog.cpp:362
 #: src/billsdepositsdialog.cpp:510
-#: src/billsdepositsdialog.cpp:559
-#: src/billsdepositsdialog.cpp:722
-#: src/billsdepositsdialog.cpp:733
+#: src/billsdepositsdialog.cpp:563
+#: src/billsdepositsdialog.cpp:726
+#: src/billsdepositsdialog.cpp:737
 #: src/filtertransdialog.cpp:235
 #: src/transdialog.cpp:284
-#: src/transdialog.cpp:478
-#: src/transdialog.cpp:656
-#: src/transdialog.cpp:672
+#: src/transdialog.cpp:483
+#: src/transdialog.cpp:661
+#: src/transdialog.cpp:677
 msgid "Select Payee"
-msgstr "Hãy chọn người giao dịch"
+msgstr "Chọn người giao dịch"
 
 #: src/billsdepositsdialog.cpp:365
 msgid "Specify where the transaction is going to or coming from "
-msgstr "Hãy xác định giao dịch được thực hiện với ai"
+msgstr "Xác định giao dịch được thực hiện với ai"
 
 #: src/billsdepositsdialog.cpp:367
 #: src/mmcheckingpanel.cpp:276
@@ -604,7 +604,7 @@ msgstr "Số"
 #: src/billsdepositsdialog.cpp:375
 #: src/transdialog.cpp:300
 msgid "Specify any associated check number or transaction number"
-msgstr "Hãy điền một con số bất kỳ như số hóa đơn hay số giao dịch"
+msgstr "Có thể điền số hóa đơn liên quan hoặc số giao dịch"
 
 #: src/billsdepositsdialog.cpp:378
 #: src/transdialog.cpp:310
@@ -614,17 +614,17 @@ msgstr "Tới"
 #: src/billsdepositsdialog.cpp:383
 #: src/transdialog.cpp:315
 msgid "Select To Acct"
-msgstr "Hãy chọn tài khoản nhận tiền"
+msgstr "Chọn tài khoản nhận"
 
 #: src/billsdepositsdialog.cpp:387
 #: src/transdialog.cpp:319
 msgid "Specify the transfer account"
-msgstr "Hãy xác định tài khoản xuất tiền"
+msgstr "Xác định tài khoản xuất "
 
 #: src/billsdepositsdialog.cpp:397
 #: src/transdialog.cpp:329
 msgid "Specify the date of the transaction"
-msgstr "Hãy điền ngày thực hiện giao dịch"
+msgstr "Xác định ngày thực hiện giao dịch"
 
 #: src/billsdepositsdialog.cpp:402
 #: src/mmcheckingpanel.cpp:281
@@ -636,68 +636,68 @@ msgstr "Hãy điền ngày thực hiện giao dịch"
 #: include/reportcategovertimeperf.h:44
 #: include/reporttransactions.h:66
 msgid "Category"
-msgstr "Danh mục"
+msgstr "Hạng mục"
 
 #: src/billsdepositsdialog.cpp:411
-#: src/billsdepositsdialog.cpp:558
-#: src/billsdepositsdialog.cpp:592
-#: src/billsdepositsdialog.cpp:666
-#: src/billsdepositsdialog.cpp:995
+#: src/billsdepositsdialog.cpp:562
+#: src/billsdepositsdialog.cpp:596
+#: src/billsdepositsdialog.cpp:670
+#: src/billsdepositsdialog.cpp:999
 #: src/filtertransdialog.cpp:246
 #: src/filtertransdialog.cpp:606
 #: src/splittransactionsdialog.cpp:165
 #: src/transdialog.cpp:341
-#: src/transdialog.cpp:477
-#: src/transdialog.cpp:518
-#: src/transdialog.cpp:592
-#: src/transdialog.cpp:890
+#: src/transdialog.cpp:482
+#: src/transdialog.cpp:523
+#: src/transdialog.cpp:597
+#: src/transdialog.cpp:895
 msgid "Select Category"
-msgstr "Hãy chọn danh mục"
+msgstr "Chọn hạng mục"
 
 #: src/billsdepositsdialog.cpp:414
 #: src/transdialog.cpp:344
 msgid "Specify the category for this transaction"
-msgstr "Hãy chọn danh mục cho giao dịch này"
+msgstr "Chọn hạng mục cho giao dịch này"
 
 #: src/billsdepositsdialog.cpp:417
 #: src/transdialog.cpp:347
 msgid "Split"
-msgstr "Chia làm nhiều danh mục"
+msgstr "Tách hạng mục"
 
 #: src/billsdepositsdialog.cpp:423
 #: src/transdialog.cpp:354
 #: include/reporttransactions.h:67
 msgid "Status"
-msgstr "Tình trạng"
+msgstr "Trạng thái"
 
 #: src/billsdepositsdialog.cpp:430
 #: src/filtertransdialog.cpp:259
 #: src/transdialog.cpp:361
 msgid "Reconciled"
-msgstr "Đã được thực hiện"
+msgstr "Đã giải ngân"
 
 #: src/billsdepositsdialog.cpp:431
 #: src/filtertransdialog.cpp:260
 #: src/transdialog.cpp:362
 msgid "Void"
-msgstr "Đã hủy bỏ"
+msgstr "Đã hủy"
 
 #: src/billsdepositsdialog.cpp:432
 #: src/filtertransdialog.cpp:261
 #: src/transdialog.cpp:363
 msgid "Follow up"
-msgstr "Đang theo dõi"
+msgstr "Cần theo dõi"
 
 #: src/billsdepositsdialog.cpp:439
 #: src/filtertransdialog.cpp:268
 #: src/transdialog.cpp:371
 msgid "Specify the status for the transaction"
-msgstr "Hãy xác định tình trạng của giao dịch này"
+msgstr "Xác định trạng thái giao dịch này"
 
 #: src/billsdepositsdialog.cpp:449
 #: src/transdialog.cpp:380
 msgid "Specify any text notes you want to add to this transaction."
-msgstr "Hãy ghi chú thêm cho giao dịch này vào đây"
+msgstr "Điền ghi chú cho giao dịch này nếu cần thiết"
 
 #: src/billsdepositsdialog.cpp:452
 #: src/billsdepositspanel.cpp:156
@@ -715,94 +715,94 @@ msgstr "Số tiền"
 #: src/billsdepositsdialog.cpp:459
 #: src/transdialog.cpp:391
 msgid "Specify the amount for this transaction"
-msgstr "Hãy điền số tiền của giao dịch này"
+msgstr "Điền số tiền của giao dịch này"
 
-#: src/billsdepositsdialog.cpp:593
-#: src/billsdepositsdialog.cpp:745
-#: src/transdialog.cpp:519
+#: src/billsdepositsdialog.cpp:597
+#: src/billsdepositsdialog.cpp:749
+#: src/transdialog.cpp:524
 msgid "Select To"
-msgstr "Hãy chọn tài khoản tới"
+msgstr "Chọn tài khoản nhận"
 
-#: src/billsdepositsdialog.cpp:616
-#: src/transdialog.cpp:542
+#: src/billsdepositsdialog.cpp:620
+#: src/transdialog.cpp:547
 msgid "To Account Amount Entry"
 msgstr "Số tiền chuyển tới tài khỏan nhận"
 
-#: src/billsdepositsdialog.cpp:617
-#: src/transdialog.cpp:543
+#: src/billsdepositsdialog.cpp:621
+#: src/transdialog.cpp:548
 msgid "Amount to be recorded in To Account"
 msgstr "Số tiền được ghi cho tài khoản nhận"
 
-#: src/billsdepositsdialog.cpp:627
-#: src/transdialog.cpp:553
+#: src/billsdepositsdialog.cpp:631
+#: src/transdialog.cpp:558
 msgid "Invalid To Amount Entered "
-msgstr "Số tiền được điền vào không thích hợp"
+msgstr "Số tiền được điền vào không hợp lệ"
 
-#: src/billsdepositsdialog.cpp:737
-#: src/billsdepositsdialog.cpp:751
-#: src/transdialog.cpp:670
-#: src/transdialog.cpp:687
+#: src/billsdepositsdialog.cpp:741
+#: src/billsdepositsdialog.cpp:755
+#: src/transdialog.cpp:675
+#: src/transdialog.cpp:692
 msgid "From"
-msgstr "Từ tài khoản"
+msgstr "Từ"
 
-#: src/billsdepositsdialog.cpp:744
+#: src/billsdepositsdialog.cpp:748
 msgid "Select From"
-msgstr "Hãy chọn tài khoản xuất"
+msgstr "Chọn tài khoản xuất"
 
-#: src/billsdepositsdialog.cpp:772
-#: src/transdialog.cpp:708
+#: src/billsdepositsdialog.cpp:776
+#: src/transdialog.cpp:713
 msgid "Payee "
 msgstr "Người giao dịch"
 
-#: src/billsdepositsdialog.cpp:774
-#: src/transdialog.cpp:710
+#: src/billsdepositsdialog.cpp:778
+#: src/transdialog.cpp:715
 msgid "From Account "
 msgstr "Từ tài khoản"
 
-#: src/billsdepositsdialog.cpp:782
-#: src/billsdepositsdialog.cpp:790
-#: src/transdialog.cpp:718
-#: src/transdialog.cpp:726
+#: src/billsdepositsdialog.cpp:786
+#: src/billsdepositsdialog.cpp:794
+#: src/transdialog.cpp:723
+#: src/transdialog.cpp:731
 msgid "Category "
-msgstr "Danh mục"
+msgstr "Hạng mục"
 
-#: src/billsdepositsdialog.cpp:801
-#: src/billsdepositsdialog.cpp:811
+#: src/billsdepositsdialog.cpp:805
+#: src/billsdepositsdialog.cpp:815
 #: src/budgetentrydialog.cpp:226
 #: src/filtertransdialog.cpp:535
 #: src/filtertransdialog.cpp:549
 #: src/splitdetailsdialog.cpp:191
-#: src/transdialog.cpp:737
-#: src/transdialog.cpp:747
+#: src/transdialog.cpp:742
+#: src/transdialog.cpp:752
 msgid "Invalid Amount Entered "
 msgstr "Số tiền điền vào không hợp lệ"
 
-#: src/billsdepositsdialog.cpp:818
+#: src/billsdepositsdialog.cpp:822
 #: src/billsdepositspanel.cpp:151
 #: src/mmhomepagepanel.cpp:107
 #: include/reporttransactions.h:63
 msgid "Account"
 msgstr "Tài khoản"
 
-#: src/billsdepositsdialog.cpp:828
-#: src/transdialog.cpp:758
+#: src/billsdepositsdialog.cpp:832
+#: src/transdialog.cpp:763
 msgid "To Account "
-msgstr "Tới tài khoản"
+msgstr "Tài khoản nhận"
 
-#: src/billsdepositsdialog.cpp:834
-#: src/transdialog.cpp:764
+#: src/billsdepositsdialog.cpp:838
+#: src/transdialog.cpp:769
 msgid "From and To Account cannot be the same."
 msgstr "Tài khoản nhận và xuất không thể là một"
 
 #: src/billsdepositspanel.cpp:129
-#: src/mmex.cpp:649
-#: src/mmex.cpp:2032
+#: src/mmex.cpp:650
+#: src/mmex.cpp:2033
 msgid "Repeating Transactions"
 msgstr "Các giao dịch định kỳ"
 
 #: src/billsdepositspanel.cpp:158
 msgid "Next Due Date"
-msgstr "Ngày thực hiện tiếp theo"
+msgstr "Ngày đến hạn tiếp theo"
 
 #: src/billsdepositspanel.cpp:159
 #: src/budgetingpanel.cpp:229
@@ -815,73 +815,73 @@ msgstr "Số ngày còn lại"
 
 #: src/billsdepositspanel.cpp:203
 msgid "New Series"
-msgstr "Tạo serie giao dịch định kỳ mới"
+msgstr "Serie mới"
 
 #: src/billsdepositspanel.cpp:205
 msgid "New Bills && Deposit Series"
-msgstr "Tạo serie các hóa đơn thu và chi"
+msgstr "Serie thu && chi mới"
 
 #: src/billsdepositspanel.cpp:208
 msgid "Edit Series"
-msgstr "Sửa thông tin về serie giao dịch định kỳ"
+msgstr "Thay đổi serie"
 
 #: src/billsdepositspanel.cpp:210
 msgid "Edit Bills && Deposit Series"
-msgstr "Sửa chi tiết các hóa đơn thu và chi"
+msgstr "Thay đổi serie thu && chi"
 
 #: src/billsdepositspanel.cpp:213
 msgid "Delete Series"
-msgstr "Xóa serie giao dịch định kỳ"
+msgstr "Xóa serie"
 
 #: src/billsdepositspanel.cpp:215
 msgid "Delete Bills && Deposit Series"
-msgstr "Xóa serie hóa đơn thu chi"
+msgstr "Xóa serie thu && chi"
 
 #: src/billsdepositspanel.cpp:218
 msgid "Enter Transaction"
-msgstr "Tạo giao dịch"
+msgstr "Thực hiện giao dịch"
 
 #: src/billsdepositspanel.cpp:220
 msgid "Enter Next Bills && Deposit Occurrence"
-msgstr "Tạo một hóa đơn thu chi mới"
+msgstr "Điền thời gian thực hiện thu && chi lần tới"
 
-#: src/billsdepositspanel.cpp:307
+#: src/billsdepositspanel.cpp:310
 #: src/mmhomepagepanel.cpp:304
 msgid " days remaining"
 msgstr " ngày còn lại"
 
-#: src/billsdepositspanel.cpp:312
+#: src/billsdepositspanel.cpp:315
 #: src/mmhomepagepanel.cpp:309
 msgid " days overdue!"
 msgstr " ngày quá hạn!"
 
-#: src/billsdepositspanel.cpp:380
-msgid "&New Bills && Deposit Series"
-msgstr "&N Tạo serie hóa đơn thu chi mới"
-
-#: src/billsdepositspanel.cpp:382
-msgid "&Edit Bills && Deposit Series"
-msgstr "&E Sửa serie hóa đơn thu chi"
-
 #: src/billsdepositspanel.cpp:383
-msgid "&Delete Bills && Deposit Series"
-msgstr "&D Xóa serie hóa đơn thu chi"
+msgid "&New Bills && Deposit Series"
+msgstr "Serie thu && chi &mới"
 
 #: src/billsdepositspanel.cpp:385
-msgid "Enter next Occurrence"
-msgstr "Hãy điền lần thực hiện tiếp theo"
+msgid "&Edit Bills && Deposit Series"
+msgstr "&Thay đổi serie thu && chi"
 
-#: src/billsdepositspanel.cpp:487
+#: src/billsdepositspanel.cpp:386
+msgid "&Delete Bills && Deposit Series"
+msgstr "&Xóa serie thu && chi"
+
+#: src/billsdepositspanel.cpp:388
+msgid "Enter next Occurrence"
+msgstr "Điền thời gian thực hiện lần tới"
+
+#: src/billsdepositspanel.cpp:490
 msgid "Do you really want to delete the series?"
 msgstr "Bạn thực sự muốn xóa serie?"
 
-#: src/billsdepositspanel.cpp:488
+#: src/billsdepositspanel.cpp:491
 msgid "Confirm Series Deletion"
 msgstr "Xác nhận việc xóa serie"
 
 #: src/budgetentrydialog.cpp:135
 msgid "Type:"
-msgstr "Loại"
+msgstr "Loại:"
 
 #: src/budgetentrydialog.cpp:141
 #: src/mmhomepagepanel.cpp:205
@@ -897,7 +897,7 @@ msgstr "Thu nhập"
 
 #: src/budgetentrydialog.cpp:148
 msgid "Specify whether this category is an income or an expense category"
-msgstr "Hãy xác định đây là loại danh mục chi hay thu"
+msgstr "Xác định hạng mục này thuộc nhóm thu hay chi"
 
 #: src/budgetentrydialog.cpp:151
 msgid "Frequency:"
@@ -905,59 +905,59 @@ msgstr "Mức độ thường xuyên:"
 
 #: src/budgetentrydialog.cpp:170
 msgid "Specify the frequency of the expense or deposit"
-msgstr "Hãy xác định mức độ thường xuyên của chi tiêu hay thu nhập"
+msgstr "Xác định mức độ thường xuyên của khoản thu hay chi"
 
 #: src/budgetentrydialog.cpp:173
 msgid "Amount:"
-msgstr "Số tiền"
+msgstr "Số tiền:"
 
 #: src/budgetentrydialog.cpp:181
 msgid "Enter the amount budgeted for this category."
-msgstr "Hãy điền số tiền được dành cho danh mục này"
+msgstr "Điền số tiền ngân sách dành cho hạng mục này."
 
 #: src/budgetingpanel.cpp:115
 #: src/budgetingpanel.cpp:152
 msgid "View All Budget Categories"
-msgstr "Xem tất cả các danh mục có trong ngân sách"
+msgstr "Hiện thị tất cả các hạng mục có trong ngân sách"
 
 #: src/budgetingpanel.cpp:120
 #: src/budgetingpanel.cpp:153
 msgid "View Non-Zero Budget Categories"
-msgstr "Xem các danh mục có trong ngân sách"
+msgstr "Hiện thi các hạng mục không bỏ trống trong ngân sách "
 
 #: src/budgetingpanel.cpp:125
 #: src/budgetingpanel.cpp:154
 msgid "View Income Budget Categories"
-msgstr "Xem các danh mục thu nhập trong ngân sách"
+msgstr "Hiện thị các hạng mục thu trong ngân sách"
 
 #: src/budgetingpanel.cpp:130
 #: src/budgetingpanel.cpp:155
 msgid "View Expense Budget Categories"
-msgstr "Xem các danh mục chi tiêu trong ngân sách"
+msgstr "Hiện thị các hạng mục chi trong ngân sách"
 
 #: src/budgetingpanel.cpp:179
 msgid "Budget Setup for "
-msgstr "Ngân sách cho năm"
+msgstr "Thiết lập ngân sách cho năm"
 
 #: src/budgetingpanel.cpp:196
 msgid "Viewing All Budget Categories"
-msgstr "Xem tất cả các danh mục có trong ngân sách"
+msgstr "Hiện thị tất cả các hạng mục trong ngân sách"
 
 #: src/budgetingpanel.cpp:201
 msgid "Estimated Income: Actual Income: "
-msgstr "Thu nhập dự kiến: Thu nhập thực tế:"
+msgstr "Dự kiến thu: Thực tế thu:"
 
 #: src/budgetingpanel.cpp:208
 msgid "Estimated Expenses: Actual Expenses: "
-msgstr "Chi tiêu dự kiến: Chi tiêu thực tế:"
+msgstr "Dự kiến chi: Thực tế chi:"
 
 #: src/budgetingpanel.cpp:227
 msgid "Category  "
-msgstr "Danh mục"
+msgstr "Hạng mục"
 
 #: src/budgetingpanel.cpp:228
 msgid "Sub Category"
-msgstr "Danh mục phụ"
+msgstr "Hạng mục phụ"
 
 #: src/budgetingpanel.cpp:237
 #: include/reportbudgetingperf.h:157
@@ -974,12 +974,12 @@ msgstr "Thực tế"
 #: src/budgetingpanel.cpp:490
 #, c-format
 msgid "Estimated Income: %s Actual Income:  %s"
-msgstr "Thu nhập dự kiến: %s Thu nhập thực tế: %s"
+msgstr "Dự kiến thu: %s Thực tế thu: %s"
 
 #: src/budgetingpanel.cpp:495
 #, c-format
 msgid "Estimated Expenses: %s Actual Expenses:  %s"
-msgstr "Chi tiêu dự kiến: %s Chi tiêu thực tế: %s"
+msgstr "Dự kiến chi: %s Thực tế chi: %s"
 
 #: src/budgetyeardialog.cpp:105
 msgid "Add Budget Year"
@@ -995,7 +995,7 @@ msgstr "Xóa ngân sách năm"
 
 #: src/budgetyeardialog.cpp:113
 msgid "Delete existing budget year"
-msgstr "Xóa ngân sách năm đang có"
+msgstr "Xóa ngân sách năm hiện có"
 
 #: src/budgetyearentrydialog.cpp:82
 msgid "Budget Year:"
@@ -1003,38 +1003,38 @@ msgstr "Năm ngân sách:"
 
 #: src/budgetyearentrydialog.cpp:89
 msgid "Enter the year in YYYY format to specify year"
-msgstr "Hãy điền năm dưới dạng YYYY"
+msgstr "Điền năm dưới dạng YYYY"
 
 #: src/budgetyearentrydialog.cpp:92
 msgid "Base Budget On:"
-msgstr "Ngân sách được hình thành dựa trên ngân sách năm:"
+msgstr "Năm ngân sách lấy làm cơ sở:"
 
 #: src/budgetyearentrydialog.cpp:105
 msgid "Specify year to base budget on."
-msgstr "Hãy điền năm ngân sách được đối chiếu"
+msgstr "Xác định năm ngân sách lấy làm cơ sở."
 
 #: src/budgetyearentrydialog.cpp:145
 #: src/budgetyearentrydialog.cpp:175
 msgid "Year is not valid"
-msgstr "Năm đưa vào không phù hợp"
+msgstr "Năm không hợp lệ"
 
 #: src/budgetyearentrydialog.cpp:152
 msgid "Budget Year already exists"
-msgstr "Đã có ngân sách cho năm này"
+msgstr "Đã có năm ngân sách này"
 
 #: src/categdialog.cpp:75
-#: src/mmex.cpp:754
-#: src/mmex.cpp:1167
-#: src/mmex.cpp:1180
-#: src/mmex.cpp:1193
-#: src/mmex.cpp:1210
-#: src/mmex.cpp:1227
+#: src/mmex.cpp:755
+#: src/mmex.cpp:1168
+#: src/mmex.cpp:1181
+#: src/mmex.cpp:1194
+#: src/mmex.cpp:1211
+#: src/mmex.cpp:1228
 msgid "Categories"
-msgstr "Các danh mục"
+msgstr "Hạng mục"
 
 #: src/categdialog.cpp:145
 msgid "Enter the name of the category to add or edit here"
-msgstr "Hãy điền tên gọi của danh mục cần bổ sung hay sửa chữa tại đây"
+msgstr "Điền tên hạng mục cần bổ sung hay thay đổi"
 
 #: src/categdialog.cpp:148
 #: src/maincurrencydialog.cpp:127
@@ -1046,15 +1046,15 @@ msgstr "Bổ sung"
 
 #: src/categdialog.cpp:150
 msgid "Add a new category"
-msgstr "Bổ sung một danh mục"
+msgstr "Bổ sung hạng mục mới"
 
 #: src/categdialog.cpp:155
 msgid "Edit the name of an existing category"
-msgstr "Sửa tên gọi của một danh mục đang có"
+msgstr "Thay đổi tên hạng mục hiện có"
 
 #: src/categdialog.cpp:160
 msgid "Delete an existing category. The category cannot be used by existing transactions."
-msgstr "Xóa danh mục đang có với điều kiện danh mục này không được dùng cho các giao dịch đang có"
+msgstr "Xóa hạng mục hiện có (với điều kiện nó không được dùng cho bất kỳ giao dịch nào hiện có)."
 
 #: src/categdialog.cpp:166
 #: src/maincurrencydialog.cpp:135
@@ -1064,43 +1064,43 @@ msgstr "Chọn"
 
 #: src/categdialog.cpp:168
 msgid "Select the currently selected category as the selected category for the transaction"
-msgstr "Hãy chọn danh mục cho giao dịch này"
+msgstr "Gắn hạng mục được chọn cho giao dịch"
 
 #: src/categdialog.cpp:181
 msgid "Category cannot be empty"
-msgstr "Danh mục không thể bỏ trống"
+msgstr "Hạng mục không thể để trống"
 
 #: src/categdialog.cpp:189
 msgid "Category with same name exists"
-msgstr "Danh mục với tên gọi tương tự đã có"
+msgstr "Đã có hạng mục với tên gọi tương tự"
 
 #: src/categdialog.cpp:208
 msgid "Sub Category with same name exists"
-msgstr "Danh mục phụ với tên gọi tương tự đã có"
+msgstr "Đã có hạng mục phụ với tên gọi tương tự"
 
 #: src/categdialog.cpp:219
 msgid "Invalid Parent Category. Choose Root or Main Category node."
-msgstr "Danh mục mẹ không phù hợp. Hãy chọn gốc hay danh mục chính."
+msgstr "Hạng mục mẹ không hợp lệ. Hãy chọn nguồn hay hạng mục chính."
 
 #: src/categdialog.cpp:220
 msgid "Error adding Category"
-msgstr "Có lỗi trong việc bổ sung danh mục"
+msgstr "Lỗi bổ sung hạng mục"
 
 #: src/categdialog.cpp:242
 msgid "Category is in use"
-msgstr "Danh mục đang được sử dụng"
+msgstr "Hạng mục đang được sử dụng"
 
 #: src/categdialog.cpp:250
 msgid "Sub-Category is in use"
-msgstr "Danh mục phụ đang được sử dụng"
+msgstr "Hạng mục phụ đang được sử dụng"
 
 #: src/categdialog.cpp:357
 msgid "Update Failed"
-msgstr "Không thực hiện được việc cập nhật"
+msgstr "Không cập nhật được"
 
 #: src/currencydialog.cpp:151
 msgid "Currency Name"
-msgstr "Tên gọi ngoại tệ"
+msgstr "Tên gọi tiền tệ"
 
 #: src/currencydialog.cpp:162
 msgid "Prefix Symbol"
@@ -1120,15 +1120,15 @@ msgstr "Dấu nhóm"
 
 #: src/currencydialog.cpp:200
 msgid "Unit Name"
-msgstr "Tên gọi đơn vị tiền tệ"
+msgstr "Tên đơn vị"
 
 #: src/currencydialog.cpp:211
 msgid "Cents Name"
-msgstr "Tên gọi đồng xu"
+msgstr "Tên gọi tiền xu"
 
 #: src/currencydialog.cpp:220
 msgid "Conversion to Base Rate"
-msgstr "Tỷ giá chuyển đổi với đồng tiền chính"
+msgstr "Quy đổi về tỷ giá cơ sở"
 
 #: src/currencydialog.cpp:229
 msgid "Scale"
@@ -1153,7 +1153,7 @@ msgstr "Đóng lại"
 
 #: src/currencydialog.cpp:292
 msgid "Base Conversion Rate should be greater than 0.0"
-msgstr "Tỷ giá chuyển đổi với đồng tiền chính phải lớn hơn 0.0"
+msgstr "Mức quy đổi tỷ giá cơ sở cần lớn hơn 0.0"
 
 #: src/customsqldialog.cpp:88
 msgid "Custom SQL Query"
@@ -1174,12 +1174,12 @@ msgstr "Chạy lệnh"
 #: src/customsqldialog.cpp:172
 #: src/univcsvdialog.cpp:290
 msgid "Unable to open file."
-msgstr "Không thể mở file"
+msgstr "Không thể mở file."
 
 #: src/customsqldialog.cpp:201
 #: src/univcsvdialog.cpp:328
 msgid "Unable to write to file."
-msgstr "Không thể ghi vào file"
+msgstr "Không thể ghi vào file."
 
 #: src/customsqldialog.cpp:222
 msgid "SQL Query will modify your Data. Proceed??"
@@ -1191,48 +1191,48 @@ msgstr "Cảnh báo"
 
 #: src/filtertransdialog.cpp:194
 msgid "Specify Account"
-msgstr "Hãy xác định tài khoản"
+msgstr "Xác định tài khoản"
 
 #: src/filtertransdialog.cpp:215
 msgid "Specify Date Range"
-msgstr "Hãy xác định ngày"
+msgstr "Xác định khoảng thời gian"
 
 #: src/filtertransdialog.cpp:230
 msgid "Specify Payee"
-msgstr "Hãy xác định người giao dịch"
+msgstr "Xác định người giao dịch"
 
 #: src/filtertransdialog.cpp:241
 msgid "Specify Category"
-msgstr "Hãy xác định danh mục"
+msgstr "Xác định hạng mục"
 
 #: src/filtertransdialog.cpp:252
 msgid "Specify Status"
-msgstr "Hãy xác định tình trạng"
+msgstr "Xác định trạng thái"
 
 #: src/filtertransdialog.cpp:262
 #: src/transdialog.cpp:364
 msgid "Duplicate"
-msgstr "Trùng lặp"
+msgstr "Bản sao"
 
 #: src/filtertransdialog.cpp:273
 msgid "Specify Type"
-msgstr "Hãy xác định phân loại"
+msgstr "Xác định phân loại"
 
 #: src/filtertransdialog.cpp:288
 msgid "Specify the type of transaction."
-msgstr "Hãy xác định phân loại của giao dịch"
+msgstr "Xác định phân loại của giao dịch"
 
 #: src/filtertransdialog.cpp:293
 msgid "Specify Amount Range"
-msgstr "Hãy xác định số tiền"
+msgstr "Xác định số tiền"
 
 #: src/filtertransdialog.cpp:307
 msgid "Specify Number"
-msgstr "Hãy xác định số giao dịch"
+msgstr "Xác định số giao dịch"
 
 #: src/filtertransdialog.cpp:318
 msgid "Specify Notes"
-msgstr "Hãy ghi chú ở đây"
+msgstr "Điền ghi chú"
 
 #: src/htmlbuilder.cpp:39
 msgid "Report"
@@ -1240,77 +1240,76 @@ msgstr "Báo cáo"
 
 #: src/maincurrencydialog.cpp:109
 msgid "Currency List"
-msgstr "Danh sách các ngoại tệ"
+msgstr "Danh sách tiền tệ"
 
 #: src/maincurrencydialog.cpp:174
 msgid "Name of Currency to Add"
-msgstr "Tên gọi của ngoại tệ để bổ sung"
+msgstr "Tên tiền tệ bổ sung"
 
 #: src/maincurrencydialog.cpp:175
 msgid "Add Currency"
-msgstr "Bổ sung danh mục"
+msgstr "Bổ sung tiền tệ"
 
 #: src/maincurrencydialog.cpp:193
 msgid "Currency name already exists!"
-msgstr "Tên gọi ngoại tệ đã có!"
+msgstr "Đã có tên tiền tệ này!"
 
 #: src/mmcheckingpanel.cpp:172
-#: src/optionsdialog.cpp:396
+#: src/optionsdialog.cpp:397
 msgid "View All Transactions"
-msgstr "Xem tất cả các giao dịch"
+msgstr "Hiển thị tất cả các giao dịch"
 
 #: src/mmcheckingpanel.cpp:173
 msgid "View Reconciled Transactions"
-msgstr "Xem các giao dịch đã được thực hiện"
+msgstr "Hiển thị các giao dịch đã giải ngân"
 
 #: src/mmcheckingpanel.cpp:174
 msgid "View Un-Reconciled Transactions"
-msgstr "Xem các giao dịch chưa được thực hiện"
+msgstr "Hiển thị các giao dịch chưa giải ngân"
 
 #: src/mmcheckingpanel.cpp:175
-#, fuzzy
 msgid "View All Except Reconciled Transactions"
-msgstr "Xem các giao dịch đã được thực hiện"
+msgstr "Hiển thị các giao dịch trừ các khoản đã giải ngân"
 
 #: src/mmcheckingpanel.cpp:176
 msgid "View Void Transactions"
-msgstr "Xem các giao dịch đã bị hủy"
+msgstr "Hiển thị các giao dịch đã hủy"
 
 #: src/mmcheckingpanel.cpp:177
 msgid "View Flagged Transactions"
-msgstr "Xem các giao dịch được đánh dấu"
+msgstr "Hiển thị các giao dịch được đánh dấu"
 
 #: src/mmcheckingpanel.cpp:178
 msgid "View Duplicate Transactions"
-msgstr "Xem các giao dịch bị trùng lặp"
+msgstr "Hiển thị các giao dịch trùng lặp"
 
 #: src/mmcheckingpanel.cpp:180
 msgid "View Transactions from last 30 days"
-msgstr "Xem các giao dịch của 30 ngày gần nhất"
+msgstr "Hiển thị các giao dịch của 30 ngày gần nhất"
 
 #: src/mmcheckingpanel.cpp:181
 msgid "View Transactions from current month"
-msgstr "Xem các giao dịch của tháng này"
+msgstr "Hiển thị các giao dịch tháng này"
 
 #: src/mmcheckingpanel.cpp:182
 msgid "View Transactions from last month"
-msgstr "Xem các giao dịch của tháng trước"
+msgstr "Hiển thị các giao dịch tháng trước"
 
 #: src/mmcheckingpanel.cpp:183
 msgid "View Transactions from last 3 months"
-msgstr "Xem các giao dịch của 3 tháng gần nhất"
+msgstr "Hiển thị các giao dịch của 3 tháng gần đây"
 
 #: src/mmcheckingpanel.cpp:185
 msgid "Delete all transactions in current view"
-msgstr "Xóa tất cả các giao dịch được hiển thị"
+msgstr "Xoá tất cả các giao dịch đang hiển thị"
 
 #: src/mmcheckingpanel.cpp:186
 msgid "Delete all flagged transactions"
-msgstr "Xóa các giao dịch được đánh dấu"
+msgstr "Xóa tất cả các giao dịch được đánh dấu"
 
 #: src/mmcheckingpanel.cpp:229
 msgid "Viewing All Transactions"
-msgstr "Xem tất cả các giao dịch"
+msgstr "Hiển thị tất cả các giao dịch"
 
 #: src/mmcheckingpanel.cpp:272
 msgid "Date  "
@@ -1323,206 +1322,204 @@ msgstr "C"
 #: src/mmcheckingpanel.cpp:289
 #: include/reportsummary.h:59
 msgid "Balance"
-msgstr "Cán cân"
+msgstr "Số dư"
 
 #: src/mmcheckingpanel.cpp:347
 msgid "New Transaction"
-msgstr "Tạo giao dịch mới"
+msgstr "Giao dịch mới"
 
 #: src/mmcheckingpanel.cpp:352
 msgid "Edit Transaction"
-msgstr "Sửa giao dịch"
+msgstr "Thay đổi giao dịch"
 
 #: src/mmcheckingpanel.cpp:357
 msgid "Delete Transaction"
 msgstr "Xóa giao dịch"
 
-#: src/mmcheckingpanel.cpp:457
+#: src/mmcheckingpanel.cpp:466
 msgid "Category         : "
-msgstr "Danh mục         :"
+msgstr "Hạng mục         :"
 
-#: src/mmcheckingpanel.cpp:458
+#: src/mmcheckingpanel.cpp:467
 msgid "Sub Category  : "
-msgstr "Danh mục phụ  :"
+msgstr "Hạng mục phụ  :"
 
-#: src/mmcheckingpanel.cpp:459
+#: src/mmcheckingpanel.cpp:468
 msgid "Notes               : "
 msgstr "Ghi chú             :"
 
-#: src/mmcheckingpanel.cpp:479
+#: src/mmcheckingpanel.cpp:488
 #, c-format
 msgid "Account Balance : %s      Reconciled Balance : %s"
-msgstr "Cán cân tài khoản : %s   Cán cân thực hiện : %s"
+msgstr "Số dư tài khoản : %s   Số dư đã giải ngân : %s"
 
-#: src/mmcheckingpanel.cpp:489
-#: src/mmex.cpp:2274
+#: src/mmcheckingpanel.cpp:498
+#: src/mmex.cpp:2277
 msgid "Please Wait"
-msgstr "Làm ơn hãy đợi"
+msgstr "Làm ơn đợi"
 
-#: src/mmcheckingpanel.cpp:490
+#: src/mmcheckingpanel.cpp:499
 msgid "Accessing Database"
-msgstr "Đang truy cập cơ sở dữ liệu"
+msgstr "Đang truy cập CSDL"
 
-#: src/mmcheckingpanel.cpp:503
+#: src/mmcheckingpanel.cpp:512
 msgid "Account View : "
 msgstr "Hiển thị tài khoản :"
 
-#: src/mmcheckingpanel.cpp:508
+#: src/mmcheckingpanel.cpp:517
 msgid "Category: \n"
-msgstr "Danh mục: \n"
+msgstr "Hạng mục: \n"
 
-#: src/mmcheckingpanel.cpp:509
+#: src/mmcheckingpanel.cpp:518
 msgid "Sub Category: \n"
-msgstr "Danh mục con: \n"
+msgstr "Hạng mục phụ: \n"
 
-#: src/mmcheckingpanel.cpp:510
+#: src/mmcheckingpanel.cpp:519
 msgid "Notes: \n"
 msgstr "Ghi chú: \n"
 
-#: src/mmcheckingpanel.cpp:732
-#: src/mmcheckingpanel.cpp:770
+#: src/mmcheckingpanel.cpp:741
+#: src/mmcheckingpanel.cpp:779
 msgid "Viewing all transactions"
-msgstr "Xem tất cả các giao dịch"
+msgstr "Hiển thị tất cả các giao dịch"
 
-#: src/mmcheckingpanel.cpp:736
-#: src/mmcheckingpanel.cpp:775
+#: src/mmcheckingpanel.cpp:745
+#: src/mmcheckingpanel.cpp:784
 msgid "Viewing Reconciled transactions"
-msgstr "Xem tất cả các giao dịch đã thực hiện"
+msgstr "Hiển thị tất cả các giao dịch đã giải ngân"
 
-#: src/mmcheckingpanel.cpp:740
-#: src/mmcheckingpanel.cpp:785
+#: src/mmcheckingpanel.cpp:749
+#: src/mmcheckingpanel.cpp:794
 msgid "Viewing Un-Reconciled transactions"
-msgstr "Xem tất cả các giao dịch chưa thực hiện"
+msgstr "Hiển thị tất cả các giao dịch chưa giải ngân"
 
-#: src/mmcheckingpanel.cpp:744
-#: src/mmcheckingpanel.cpp:795
+#: src/mmcheckingpanel.cpp:753
+#: src/mmcheckingpanel.cpp:804
 msgid "Viewing transactions from last 30 days"
-msgstr "Xem các giao dịch của 30 ngày gần nhất"
+msgstr "Hiển thị các giao dịch 30 ngày gần nhất"
 
-#: src/mmcheckingpanel.cpp:748
-#: src/mmcheckingpanel.cpp:800
+#: src/mmcheckingpanel.cpp:757
+#: src/mmcheckingpanel.cpp:809
 msgid "Viewing transactions from last 3 months"
-msgstr "Xem các giao dịch của 3 tháng gần nhất"
+msgstr "Hiển thị các giao dịch 3 tháng gần nhất"
 
-#: src/mmcheckingpanel.cpp:752
-#: src/mmcheckingpanel.cpp:805
+#: src/mmcheckingpanel.cpp:761
+#: src/mmcheckingpanel.cpp:814
 msgid "Viewing transactions from current month"
-msgstr "Xem các giao dịch của tháng này"
+msgstr "Hiển thị các giao dịch của tháng này"
 
-#: src/mmcheckingpanel.cpp:756
-#: src/mmcheckingpanel.cpp:810
+#: src/mmcheckingpanel.cpp:765
+#: src/mmcheckingpanel.cpp:819
 msgid "Viewing transactions from last month"
-msgstr "Xem các giao dịch của tháng trước"
+msgstr "Hiển thị các giao dịch của tháng trước"
 
-#: src/mmcheckingpanel.cpp:760
-#, fuzzy
+#: src/mmcheckingpanel.cpp:769
 msgid "Viewing All Except Reconciled Transactions"
-msgstr "Xem tất cả các giao dịch đã thực hiện"
+msgstr "Hiển thị tất cả các giao dịch ngoại trừ những khoản đã giải ngân"
 
-#: src/mmcheckingpanel.cpp:780
+#: src/mmcheckingpanel.cpp:789
 msgid "Viewing Void transactions"
-msgstr "Xem các giao dịch bị hủy"
+msgstr "Hiển thị các giao dịch bị hủy"
 
-#: src/mmcheckingpanel.cpp:790
+#: src/mmcheckingpanel.cpp:799
 msgid "Viewing Flagged transactions"
-msgstr "Xem các giao dịch được đánh dấu"
+msgstr "Hiển thị các giao dịch được đánh dấu"
 
-#: src/mmcheckingpanel.cpp:815
+#: src/mmcheckingpanel.cpp:824
 msgid "Viewing duplicate transactions"
-msgstr "Xem các giao dịch trùng lặp"
+msgstr "Hiển thị các giao dịch trùng lặp"
 
-#: src/mmcheckingpanel.cpp:820
-#, fuzzy
+#: src/mmcheckingpanel.cpp:829
 msgid "Viewing All except Reconciled Transactions"
-msgstr "Xem tất cả các giao dịch đã thực hiện"
+msgstr "Hiển thị tất cả các giao dịch ngoại trừ những khoản đã giải ngân"
 
-#: src/mmcheckingpanel.cpp:825
+#: src/mmcheckingpanel.cpp:834
 msgid "Do you really want to delete all the transactions shown?"
 msgstr "Bạn thực sự xóa tất cả các giao dịch đang hiển thị?"
 
-#: src/mmcheckingpanel.cpp:826
-#: src/mmcheckingpanel.cpp:841
-#: src/mmcheckingpanel.cpp:1207
+#: src/mmcheckingpanel.cpp:835
+#: src/mmcheckingpanel.cpp:850
+#: src/mmcheckingpanel.cpp:1216
 msgid "Confirm Transaction Deletion"
 msgstr "Xác nhận việc xóa giao dịch"
 
-#: src/mmcheckingpanel.cpp:840
+#: src/mmcheckingpanel.cpp:849
 msgid "Do you really want to delete all the flagged transactions?"
 msgstr "Bạn thực sự muốn xóa tất cả các giao dịch được đánh dấu?"
 
-#: src/mmcheckingpanel.cpp:879
-msgid "&New Transaction"
-msgstr "&N Tạo giao dịch mới"
-
-#: src/mmcheckingpanel.cpp:881
-msgid "&Edit Transaction"
-msgstr "&E Sửa giao dịch"
-
-#: src/mmcheckingpanel.cpp:882
-msgid "&Delete Transaction"
-msgstr "&D Xóa giao dịch"
-
-#: src/mmcheckingpanel.cpp:883
-msgid "&Copy Transaction"
-msgstr "&C Sao giao dịch"
-
-#: src/mmcheckingpanel.cpp:885
-msgid "&Paste Transaction"
-msgstr "&P Điền giao dịch đã sao"
-
-#: src/mmcheckingpanel.cpp:887
-msgid "Mark As &Reconciled"
-msgstr "&R Đánh dấu là đã thực hiện"
-
 #: src/mmcheckingpanel.cpp:888
-msgid "Mark As &Unreconciled"
-msgstr "&U Đánh dấu là chưa thực hiện"
-
-#: src/mmcheckingpanel.cpp:889
-msgid "Mark As &Void"
-msgstr "&V Đánh dấu là đã hủy"
+msgid "&New Transaction"
+msgstr "Giao dịch &mới"
 
 #: src/mmcheckingpanel.cpp:890
-msgid "Mark For &Followup"
-msgstr "&F Đánh dấu cần theo dõi"
+msgid "&Edit Transaction"
+msgstr "&Thay đổi giao dịch"
 
 #: src/mmcheckingpanel.cpp:891
-msgid "Mark As &Duplicate"
-msgstr "&D Đánh dấu trùng lặp"
+msgid "&Delete Transaction"
+msgstr "&Xóa giao dịch"
 
-#: src/mmcheckingpanel.cpp:895
-msgid "as Reconciled"
-msgstr "như đã thực hiện"
+#: src/mmcheckingpanel.cpp:892
+msgid "&Copy Transaction"
+msgstr "&Sao giao dịch"
+
+#: src/mmcheckingpanel.cpp:894
+msgid "&Paste Transaction"
+msgstr "&Dán giao dịch"
 
 #: src/mmcheckingpanel.cpp:896
-msgid "as Unreconciled"
-msgstr "như chưa thực hiện"
+msgid "Mark As &Reconciled"
+msgstr "Đánh dấu đã &giải ngân"
 
 #: src/mmcheckingpanel.cpp:897
+msgid "Mark As &Unreconciled"
+msgstr "Đánh dấu &chưa giải ngân"
+
+#: src/mmcheckingpanel.cpp:898
+msgid "Mark As &Void"
+msgstr "Đánh dấu đã &hủy"
+
+#: src/mmcheckingpanel.cpp:899
+msgid "Mark For &Followup"
+msgstr "Đánh dấu &cần theo dõi"
+
+#: src/mmcheckingpanel.cpp:900
+msgid "Mark As &Duplicate"
+msgstr "Đánh dấu bản &sao"
+
+#: src/mmcheckingpanel.cpp:904
+msgid "as Reconciled"
+msgstr "như đã giải ngân"
+
+#: src/mmcheckingpanel.cpp:905
+msgid "as Unreconciled"
+msgstr "như chưa giải ngân"
+
+#: src/mmcheckingpanel.cpp:906
 msgid "as Void"
 msgstr "như đã hủy"
 
-#: src/mmcheckingpanel.cpp:898
+#: src/mmcheckingpanel.cpp:907
 msgid "as needing Followup"
-msgstr "như cần phải theo dõi"
+msgstr "như cần theo dõi"
 
-#: src/mmcheckingpanel.cpp:899
+#: src/mmcheckingpanel.cpp:908
 msgid "as Duplicate"
-msgstr "như trùng lặp"
+msgstr "như bản sao"
 
-#: src/mmcheckingpanel.cpp:900
+#: src/mmcheckingpanel.cpp:909
 msgid "Mark all "
 msgstr "Đánh dấu tất cả"
 
-#: src/mmcheckingpanel.cpp:1206
+#: src/mmcheckingpanel.cpp:1215
 msgid "Do you really want to delete the transaction?"
 msgstr "Bạn thực sự muốn xóa giao dịch?"
 
-#: src/mmex.cpp:262
+#: src/mmex.cpp:263
 msgid "Add Account Wizard"
-msgstr "Sử dụng trợ giúp để tạo tài khoản mới"
+msgstr "Hỗ trợ tạo tài khoản mới"
 
-#: src/mmex.cpp:271
+#: src/mmex.cpp:272
 msgid ""
 " models all transactions as belonging to accounts.\n"
 "\n"
@@ -1530,13 +1527,19 @@ msgid ""
 "\n"
 "To help you get started, begin by making a list of all\n"
 "financial institutions where you hold an account."
-msgstr " "
+msgstr ""
+" thiết kế tất cả các giao dịch thuộc về các tài khoản.\n"
+"\n"
+" Các trang tiếp theo sẽ giúp bạn tạo tài khoản mới.\n"
+"\n"
+"Để giúp bạn khởi động, hãy bắt đầu bằng việc tạo \n"
+"danh sách các tổ chức tài chính mà bạn có tài khoản."
 
-#: src/mmex.cpp:312
+#: src/mmex.cpp:313
 msgid "New Database Wizard"
-msgstr "Trợ giúp tạo cơ sở dữ liệu mới"
+msgstr "Hỗ trở tạo CSDL mới"
 
-#: src/mmex.cpp:319
+#: src/mmex.cpp:320
 msgid ""
 "The next pages will help you create a new database.\n"
 "\n"
@@ -1545,575 +1548,595 @@ msgid ""
 "file and to store it carefully as it contains important \n"
 "financial information."
 msgstr ""
-"Các trang tiếp theo sẽ hướng dân bạn tạo mới cơ sở dữ liệu.\n"
+"Các trang tiếp theo hướng dẫn bạn tạo CSDL mới.\n"
 "\n"
-"File cơ sở dữ liệu của bạn được lưu giữ với đuôi là \n"
-".mmb. Hãy cố gắng tạo một bản sao của file này và\n"
-"lưu giữ nó cẩn thận bởi nó chữa những thông tin \n"
+"File CSDL của bạn được lưu giữ với đuôi là .mmb \n"
+"Hãy cố gắng tạo một bản sao của file này và\n"
+"lưu giữ nó cẩn thận bởi nó chứa những thông tin \n"
 "tài chính quan trọng."
 
-#: src/mmex.cpp:610
-#: src/mmex.cpp:1969
+#: src/mmex.cpp:611
+#: src/mmex.cpp:1970
 msgid "Navigation"
-msgstr "Biểu đồ"
+msgstr "Định hướng"
 
-#: src/mmex.cpp:624
+#: src/mmex.cpp:625
 msgid "Home Page"
 msgstr "Trang nhà"
 
-#: src/mmex.cpp:628
+#: src/mmex.cpp:629
 msgid "Bank Accounts"
-msgstr "Các tài khoản ngân hàng"
+msgstr "Tài khoản ngân hàng"
 
-#: src/mmex.cpp:635
-#: src/mmex.cpp:676
+#: src/mmex.cpp:636
+#: src/mmex.cpp:677
 msgid "Stocks"
 msgstr "Chứng khoán"
 
-#: src/mmex.cpp:657
+#: src/mmex.cpp:658
 msgid "Budgeting"
 msgstr "Làm ngân sách"
 
-#: src/mmex.cpp:663
+#: src/mmex.cpp:664
 msgid "Reports"
-msgstr "Các báo cáo"
+msgstr "Báo cáo"
 
-#: src/mmex.cpp:669
+#: src/mmex.cpp:670
 #: include/reportsummary.h:36
 msgid "Summary of Accounts"
 msgstr "Tổng kết các tài khoản"
 
-#: src/mmex.cpp:690
-#: src/mmex.cpp:1331
-#: src/mmex.cpp:1350
-#: src/mmex.cpp:1363
-#: src/mmex.cpp:1376
-#: src/mmex.cpp:1393
-#: src/mmex.cpp:1410
+#: src/mmex.cpp:691
+#: src/mmex.cpp:1332
+#: src/mmex.cpp:1351
+#: src/mmex.cpp:1364
+#: src/mmex.cpp:1377
+#: src/mmex.cpp:1394
+#: src/mmex.cpp:1411
 msgid "Where the Money Goes"
-msgstr "Đồng tiền đi đâu"
+msgstr "Tiền đi đâu"
 
-#: src/mmex.cpp:695
-#: src/mmex.cpp:727
-#: src/mmex.cpp:759
-#: src/mmex.cpp:790
-#: src/mmex.cpp:822
+#: src/mmex.cpp:696
+#: src/mmex.cpp:728
+#: src/mmex.cpp:760
+#: src/mmex.cpp:791
+#: src/mmex.cpp:823
 msgid "Last Calendar Month"
 msgstr "Tháng trước"
 
-#: src/mmex.cpp:700
-#: src/mmex.cpp:732
-#: src/mmex.cpp:764
-#: src/mmex.cpp:795
-#: src/mmex.cpp:827
+#: src/mmex.cpp:701
+#: src/mmex.cpp:733
+#: src/mmex.cpp:765
+#: src/mmex.cpp:796
+#: src/mmex.cpp:828
 msgid "Current Month"
 msgstr "Tháng này"
 
-#: src/mmex.cpp:705
-#: src/mmex.cpp:737
-#: src/mmex.cpp:769
-#: src/mmex.cpp:800
-#: src/mmex.cpp:832
+#: src/mmex.cpp:706
+#: src/mmex.cpp:738
+#: src/mmex.cpp:770
+#: src/mmex.cpp:801
+#: src/mmex.cpp:833
 msgid "Last 30 Days"
 msgstr "30 ngày gần nhất"
 
-#: src/mmex.cpp:710
-#: src/mmex.cpp:742
-#: src/mmex.cpp:774
-#: src/mmex.cpp:805
-#: src/mmex.cpp:837
+#: src/mmex.cpp:711
+#: src/mmex.cpp:743
+#: src/mmex.cpp:775
+#: src/mmex.cpp:806
+#: src/mmex.cpp:838
 msgid "Last Year"
 msgstr "Năm trước"
 
-#: src/mmex.cpp:715
-#: src/mmex.cpp:747
-#: src/mmex.cpp:779
-#: src/mmex.cpp:810
-#: src/mmex.cpp:842
+#: src/mmex.cpp:716
+#: src/mmex.cpp:748
+#: src/mmex.cpp:780
+#: src/mmex.cpp:811
+#: src/mmex.cpp:843
 msgid "Current Year"
 msgstr "Năm nay"
 
-#: src/mmex.cpp:722
-#: src/mmex.cpp:1239
-#: src/mmex.cpp:1259
-#: src/mmex.cpp:1272
-#: src/mmex.cpp:1285
-#: src/mmex.cpp:1302
-#: src/mmex.cpp:1319
+#: src/mmex.cpp:723
+#: src/mmex.cpp:1240
+#: src/mmex.cpp:1260
+#: src/mmex.cpp:1273
+#: src/mmex.cpp:1286
+#: src/mmex.cpp:1303
+#: src/mmex.cpp:1320
 msgid "Where the Money Comes From"
-msgstr "Tiền từ đâu mà có"
+msgstr "Tiền từ đâu tới"
 
-#: src/mmex.cpp:785
+#: src/mmex.cpp:786
 #: include/reportpayee.h:28
 #: include/reportpayee.h:100
 msgid "To Whom the Money Goes"
-msgstr "Ai nhận tiền của bạn"
+msgstr "Tiền tới tay ai"
 
-#: src/mmex.cpp:817
+#: src/mmex.cpp:818
 #: include/reportincexpenses.h:29
 #: include/reportincexpenses.h:59
 msgid "Income vs Expenses"
 msgstr "Thu và Chi"
 
-#: src/mmex.cpp:847
+#: src/mmex.cpp:848
 msgid "Income vs Expenses - All Time"
 msgstr "Thu và Chi - từ trước đến giờ"
 
-#: src/mmex.cpp:853
+#: src/mmex.cpp:854
 msgid "Transaction Report"
 msgstr "Báo cáo giao dịch"
 
-#: src/mmex.cpp:861
+#: src/mmex.cpp:862
 msgid "Budget Performance"
-msgstr "Việc thực hiện ngân sách"
+msgstr "Thực hiện ngân sách"
 
-#: src/mmex.cpp:868
-#: src/mmex.cpp:2665
+#: src/mmex.cpp:869
+#: src/mmex.cpp:2681
 msgid "Cash Flow"
-msgstr "Chuyển động của tiền mặt"
+msgstr "Chuyển động tiền mặt"
 
-#: src/mmex.cpp:873
+#: src/mmex.cpp:874
 msgid "Cash Flow - Specific Accounts"
-msgstr "Chuyển động của tiền - theo tài khoản"
+msgstr "Chuyển động tiền - theo tài khoản"
 
-#: src/mmex.cpp:879
+#: src/mmex.cpp:880
 msgid "Transaction Statistics"
 msgstr "Thống kê giao dịch"
 
-#: src/mmex.cpp:885
+#: src/mmex.cpp:886
 msgid "Custom SQL Report"
 msgstr "Báo cáo SQL tự tạo"
 
-#: src/mmex.cpp:890
+#: src/mmex.cpp:891
 msgid "Help"
 msgstr "Trợ giúp"
 
-#: src/mmex.cpp:965
-#: src/mmex.cpp:1038
+#: src/mmex.cpp:966
+#: src/mmex.cpp:1039
 msgid "Top Categories Last 30 Days"
 msgstr "Những danh mục hàng đầu của 30 ngày gần nhất"
 
-#: src/mmex.cpp:1710
-#: src/mmex.cpp:3035
+#: src/mmex.cpp:1711
+#: src/mmex.cpp:3051
 msgid "Do you really want to delete the account?"
 msgstr "Bạn thực sự muốn xóa tài khoản?"
 
-#: src/mmex.cpp:1711
-#: src/mmex.cpp:3036
+#: src/mmex.cpp:1712
+#: src/mmex.cpp:3052
 msgid "Confirm Account Deletion"
-msgstr "Xác nhận việc xóa tài khoản"
-
-#: src/mmex.cpp:1756
-msgid "&Go To.."
-msgstr "&G Chuyển tới.."
+msgstr "Xác nhận xóa tài khoản"
 
 #: src/mmex.cpp:1757
-#: src/mmex.cpp:1766
-msgid "&Edit Account"
-msgstr "&E Sửa tài khoản"
+msgid "&Go To.."
+msgstr "&Chuyển tới.."
 
 #: src/mmex.cpp:1758
 #: src/mmex.cpp:1767
+msgid "&Edit Account"
+msgstr "&Thay đổi tài khoản"
+
+#: src/mmex.cpp:1759
+#: src/mmex.cpp:1768
 msgid "&Delete Account"
-msgstr "&D Xóa tài khoản"
+msgstr "&Xóa tài khoản"
 
-#: src/mmex.cpp:1760
-#: src/mmex.cpp:1769
+#: src/mmex.cpp:1761
+#: src/mmex.cpp:1770
 msgid "&Launch Account Website"
-msgstr "&L Vào trang web của tài khoản"
-
-#: src/mmex.cpp:1901
-msgid "&New Database\tCtrl-N"
-msgstr "&N Tạo cơ sở dữ liệu mới\tCtrl-N"
+msgstr "Vào trang &web của tài khoản"
 
 #: src/mmex.cpp:1902
-#: src/mmex.cpp:2135
-msgid "New Database"
-msgstr "Tạo cơ sở dữ liệu mới"
+msgid "&New Database\tCtrl-N"
+msgstr "CSDL &mới\tCtrl-N"
 
-#: src/mmex.cpp:1906
-msgid "&Open Database\tCtrl-O"
-msgstr "&O Mở cơ sở dữ liệu\tCtrl-O"
+#: src/mmex.cpp:1903
+#: src/mmex.cpp:2143
+msgid "New Database"
+msgstr "CSDL mới"
 
 #: src/mmex.cpp:1907
-#: src/mmex.cpp:2137
-msgid "Open Database"
-msgstr "Mở cơ sở dữ liệu"
+msgid "&Open Database\tCtrl-O"
+msgstr "Mở &CSDL\tCtrl-O"
 
-#: src/mmex.cpp:1914
-msgid "Save Database &As"
-msgstr "&A Ghi nhớ mới cơ sở dữ liệu"
+#: src/mmex.cpp:1908
+#: src/mmex.cpp:2145
+msgid "Open Database"
+msgstr "Mở CSDL"
 
 #: src/mmex.cpp:1915
-msgid "Save Database As"
-msgstr "Ghi nhớ mới cơ sở dữ liệu"
+msgid "Save Database &As"
+msgstr "&Ghi mới CSDL"
 
-#: src/mmex.cpp:1922
+#: src/mmex.cpp:1916
+msgid "Save Database As"
+msgstr "Ghi mới CSDL"
+
+#: src/mmex.cpp:1923
 msgid "&CSV Files"
 msgstr "&CSV Files"
 
-#: src/mmex.cpp:1922
+#: src/mmex.cpp:1923
 #: src/util.cpp:385
 msgid "Export to CSV"
 msgstr "Xuất ra định dạng CSV"
 
-#: src/mmex.cpp:1923
+#: src/mmex.cpp:1924
 msgid "&Report to HTML"
-msgstr "&R Tạo báo cáo ở định dạng HTML"
+msgstr "&Báo cáo ở định dạng HTML"
 
-#: src/mmex.cpp:1923
+#: src/mmex.cpp:1924
 msgid "Export to HTML"
 msgstr "Xuất ra định dạng HTML"
 
-#: src/mmex.cpp:1924
+#: src/mmex.cpp:1925
 msgid "&Export"
-msgstr "&E Xuất"
+msgstr "&Xuất"
 
-#: src/mmex.cpp:1927
+#: src/mmex.cpp:1928
 msgid "&QIF Files"
 msgstr "&QIF Files"
 
-#: src/mmex.cpp:1927
+#: src/mmex.cpp:1928
 msgid "Import from QIF"
 msgstr "Nhập từ định dạng QIF"
 
-#: src/mmex.cpp:1928
+#: src/mmex.cpp:1929
 msgid "&Universal CSV Files"
-msgstr "&U Các file định dạng phổ cập CSV"
+msgstr "File định dạng &phổ cập CSV"
 
-#: src/mmex.cpp:1928
+#: src/mmex.cpp:1929
 msgid "Import from any CSV file"
 msgstr "Nhập từ file định dạng CSV"
 
-#: src/mmex.cpp:1930
+#: src/mmex.cpp:1931
 msgid "&MMEX CSV Files"
 msgstr "&MMEX CSV Files"
 
-#: src/mmex.cpp:1930
+#: src/mmex.cpp:1931
 msgid "Import from MMEX CSV"
 msgstr "Nhập từ file định dạng CSV của MMEX"
 
-#: src/mmex.cpp:1932
+#: src/mmex.cpp:1933
 msgid "&MM.NET CSV Files"
 msgstr "&MM.NET CSV Files"
 
-#: src/mmex.cpp:1932
+#: src/mmex.cpp:1933
 msgid "Import from MM.NET CSV"
 msgstr "Nhập từ định dạng CSV của MM.NET"
 
-#: src/mmex.cpp:1934
+#: src/mmex.cpp:1935
 msgid "Import"
 msgstr "Nhập"
 
-#: src/mmex.cpp:1940
+#: src/mmex.cpp:1941
 msgid "Page Setup..."
-msgstr "Thông số của trang..."
+msgstr "Định dạng trang giấy..."
 
-#: src/mmex.cpp:1940
+#: src/mmex.cpp:1941
 msgid "Setup page printing options"
-msgstr "Điền các thông số của trang giấy để in"
+msgstr "Định dạng trang in"
 
-#: src/mmex.cpp:1946
-#: src/mmex.cpp:1952
+#: src/mmex.cpp:1947
+#: src/mmex.cpp:1953
 msgid "Current View"
-msgstr "Cái đang hiển thị"
+msgstr "Hiển thị hiện tại"
 
-#: src/mmex.cpp:1946
+#: src/mmex.cpp:1947
 msgid "Preview current report"
-msgstr "Xem báo cáo hiện tại"
+msgstr "Xem qua báo cáo hiện tại"
 
-#: src/mmex.cpp:1948
+#: src/mmex.cpp:1949
 msgid "Print Preview..."
-msgstr "Xem trước khi in..."
+msgstr "Xem qua trước khi in..."
 
-#: src/mmex.cpp:1952
+#: src/mmex.cpp:1953
 msgid "Print current report"
 msgstr "In báo cáo này"
 
-#: src/mmex.cpp:1955
+#: src/mmex.cpp:1956
 msgid "Print..."
 msgstr "In..."
 
-#: src/mmex.cpp:1960
+#: src/mmex.cpp:1961
 msgid "E&xit\tAlt-X"
-msgstr "&x Thoát\tAlt-X"
+msgstr "T&hoát\tAlt-H"
 
-#: src/mmex.cpp:1960
+#: src/mmex.cpp:1961
 msgid "Quit this program"
 msgstr "Ra khỏi chương trình này"
 
-#: src/mmex.cpp:1967
+#: src/mmex.cpp:1968
 msgid "&Toolbar"
 msgstr "&Thanh công cụ"
 
-#: src/mmex.cpp:1967
+#: src/mmex.cpp:1968
 msgid "Show/Hide the toolbar"
 msgstr "Hiển thị/Dấu thanh công cụ"
 
-#: src/mmex.cpp:1969
+#: src/mmex.cpp:1970
 msgid "Show/Hide the Navigation tree control"
 msgstr "Hiển thị/Dấu Biểu đồ hình cây"
 
-#: src/mmex.cpp:1979
+#: src/mmex.cpp:1980
 msgid "New &Account"
-msgstr "&A Tạo tài khoản mới"
+msgstr "Tài khoản &mới"
 
-#: src/mmex.cpp:1979
-#: src/mmex.cpp:2141
+#: src/mmex.cpp:1980
+#: src/mmex.cpp:2149
 #: include/newacctdialog.h:23
 msgid "New Account"
-msgstr "Tạo tài khỏan mới"
+msgstr "Tài khỏan mới"
 
-#: src/mmex.cpp:1985
+#: src/mmex.cpp:1986
 msgid "Account &List"
-msgstr "&L Danh sách tài khoản"
+msgstr "&Danh sách tài khoản"
 
-#: src/mmex.cpp:1985
-#: src/mmex.cpp:2143
+#: src/mmex.cpp:1986
+#: src/mmex.cpp:2151
 msgid "Show Account List"
-msgstr "Hiển thị danh sách các tài khoản"
+msgstr "Hiển thị danh sách tài khoản"
 
-#: src/mmex.cpp:1989
+#: src/mmex.cpp:1990
 msgid "Edit Account"
-msgstr "Sửa tài khoản"
+msgstr "Thay đổi tài khoản"
 
-#: src/mmex.cpp:1995
+#: src/mmex.cpp:1996
 msgid "Delete Account"
 msgstr "Xóa tài khoản"
 
-#: src/mmex.cpp:1995
+#: src/mmex.cpp:1996
 msgid "Delete Account from database"
-msgstr "Xóa tài khoản ra khỏi cơ sở dữ liệu"
+msgstr "Xóa tài khoản ra khỏi CSDL"
 
-#: src/mmex.cpp:2007
+#: src/mmex.cpp:2008
 msgid "Organize &Categories"
-msgstr "&C Tổ chức các danh mục thu chi"
+msgstr "Tổ chức các &hạng mục thu chi"
 
-#: src/mmex.cpp:2007
-#: src/mmex.cpp:2145
+#: src/mmex.cpp:2008
+#: src/mmex.cpp:2153
 #: include/categdialog.h:23
 msgid "Organize Categories"
-msgstr "Tổ chức các danh mục thu chi"
+msgstr "Tổ chức các hạng mục thu chi"
 
-#: src/mmex.cpp:2012
+#: src/mmex.cpp:2013
 msgid "Organize &Payees"
-msgstr "&P Tổ chức danh sách người giao dịch"
+msgstr "Tổ chức danh sách người &giao dịch"
 
-#: src/mmex.cpp:2012
-#: src/mmex.cpp:2146
+#: src/mmex.cpp:2013
+#: src/mmex.cpp:2154
 #: include/payeedialog.h:22
 msgid "Organize Payees"
 msgstr "Tổ chức danh sách người giao dịch"
 
-#: src/mmex.cpp:2017
-#: src/mmex.cpp:2147
+#: src/mmex.cpp:2018
+#: src/mmex.cpp:2155
 msgid "Organize Currency"
-msgstr "Tổ chức danh sách ngoại tệ"
+msgstr "Tổ chức danh sách tiền tệ"
 
-#: src/mmex.cpp:2024
+#: src/mmex.cpp:2025
 msgid "Budget Setup"
 msgstr "Xây dựng ngân sách"
 
-#: src/mmex.cpp:2032
+#: src/mmex.cpp:2033
 msgid "Bills && Deposits"
 msgstr "Hóa đơn thu && Chi"
 
-#: src/mmex.cpp:2040
+#: src/mmex.cpp:2041
 #: src/mmhomepagepanel.cpp:164
 #: src/stockspanel.cpp:166
 #: include/reportsummary.h:99
 msgid "Stock Investments"
 msgstr "Đầu tư chứng khoán"
 
-#: src/mmex.cpp:2056
+#: src/mmex.cpp:2057
 msgid "Transaction Filter"
-msgstr "Bộ lọc các giao dịch"
+msgstr "Bộ lọc giao dịch"
 
-#: src/mmex.cpp:2063
+#: src/mmex.cpp:2064
 msgid "&Options"
-msgstr "&O Lựa chọn"
+msgstr "&Lựa chọn"
 
-#: src/mmex.cpp:2063
+#: src/mmex.cpp:2064
 msgid "Show the Options Dialog"
 msgstr "Hiển thị bảng hội thoại lựa chọn"
 
-#: src/mmex.cpp:2070
+#: src/mmex.cpp:2071
 msgid "&Help\tCtrl-F1"
-msgstr "&H Trợ giúp\tCtrl-F1"
+msgstr "Trợ &giúp\tCtrl-F1"
 
-#: src/mmex.cpp:2070
+#: src/mmex.cpp:2071
 msgid "Show the Help file"
 msgstr "Hiển thị file trợ giúp"
 
-#: src/mmex.cpp:2075
+#: src/mmex.cpp:2076
 msgid "Show App Start Dialog"
 msgstr "Hiển thị bảng hội thoại khởi động chương trình"
 
-#: src/mmex.cpp:2075
+#: src/mmex.cpp:2076
 msgid "App Start Dialog"
 msgstr "Bảng hội thoại khởi động chương trình"
 
-#: src/mmex.cpp:2084
-msgid "Check for &Updates"
-msgstr "&U Kiểm tra cập nhật"
+#: src/mmex.cpp:2083
+msgid "Convert Encrypted DB"
+msgstr ""
 
 #: src/mmex.cpp:2084
+msgid "Convert Encrypted DB to Non-Encrypted DB"
+msgstr ""
+
+#: src/mmex.cpp:2092
+msgid "Check for &Updates"
+msgstr "Kiểm tra &cập nhật"
+
+#: src/mmex.cpp:2092
 msgid "Check For Updates"
 msgstr "Kiểm tra cập nhật"
 
-#: src/mmex.cpp:2092
+#: src/mmex.cpp:2100
 msgid "Report Issues or Feedback"
-msgstr "Thông báo các trục trặc hoặc góp ý"
-
-#: src/mmex.cpp:2092
-msgid "Send email through the mailing list to report issues with the software."
-msgstr "Gửi email qua mailing-list để thông báo các trục trặc của phần mềm"
+msgstr "Thông báo lỗi hoặc góp ý"
 
 #: src/mmex.cpp:2100
+msgid "Send email through the mailing list to report issues with the software."
+msgstr "Gửi email qua mailing-list để thông báo lỗi của phần mềm"
+
+#: src/mmex.cpp:2108
 msgid "Be notified of new releases"
 msgstr "Được thông báo về những ấn hành mới"
 
-#: src/mmex.cpp:2100
+#: src/mmex.cpp:2108
 msgid "Sign up for the announcement mailing list"
 msgstr "Đăng ký nhận thông báo qua mailing-list"
 
-#: src/mmex.cpp:2106
+#: src/mmex.cpp:2114
 msgid "&About..."
-msgstr "&A Thông tin về phần mềm"
+msgstr "&Thông tin về phần mềm"
 
-#: src/mmex.cpp:2106
+#: src/mmex.cpp:2114
 msgid "Show about dialog"
 msgstr "Hiển thị thông tin về phần mềm"
 
-#: src/mmex.cpp:2111
+#: src/mmex.cpp:2119
 msgid "&File"
 msgstr "&File"
 
-#: src/mmex.cpp:2112
+#: src/mmex.cpp:2120
 msgid "&Accounts"
-msgstr "&A Tài khoản"
+msgstr "Tài &khoản"
 
-#: src/mmex.cpp:2113
+#: src/mmex.cpp:2121
 msgid "&Tools"
-msgstr "&T Công cụ"
+msgstr "&Công cụ"
 
-#: src/mmex.cpp:2114
+#: src/mmex.cpp:2122
 msgid "&View"
-msgstr "&V Hiển thị"
+msgstr "&Hiển thị"
 
-#: src/mmex.cpp:2115
+#: src/mmex.cpp:2123
 msgid "&Help"
-msgstr "&H Trợ giúp"
+msgstr "Trợ &giúp"
 
-#: src/mmex.cpp:2136
+#: src/mmex.cpp:2144
 #: src/newacctdialog.cpp:229
-#: src/optionsdialog.cpp:361
+#: src/optionsdialog.cpp:362
 msgid "Open"
 msgstr "Mở"
 
-#: src/mmex.cpp:2143
+#: src/mmex.cpp:2151
 msgid "Account List"
 msgstr "Danh sách tài khoản"
 
-#: src/mmex.cpp:2145
+#: src/mmex.cpp:2153
 msgid "Show Organize Categories Dialog"
-msgstr "Hiển thị bảng hội thoại tổ chức các danh mục"
+msgstr "Hiển thị hội thoại tổ chức hạng mục"
 
-#: src/mmex.cpp:2146
+#: src/mmex.cpp:2154
 msgid "Show Organize Payees Dialog"
-msgstr "Hiển thị bảng hội thoại về tổ chức danh sách người giao dịch"
+msgstr "Hiển thị hội thoại tổ chức danh sách người giao dịch"
 
-#: src/mmex.cpp:2147
+#: src/mmex.cpp:2155
 msgid "Show Organize Currency Dialog"
-msgstr "Hiển thị bảng hội thoại danh sách ngoại tệ"
+msgstr "Hiển thị hội thoại tổ chức danh sách tiền tệ"
 
-#: src/mmex.cpp:2198
-#: src/mmex.cpp:2252
+#: src/mmex.cpp:2204
+#: src/mmex.cpp:2255
 msgid " - No File opened "
 msgstr " - Không có File nào được mở"
 
-#: src/mmex.cpp:2201
+#: src/mmex.cpp:2207
 msgid "Sorry. The Database version is too old or                 Database password is incorrect"
 msgstr "Xin lỗi. Cơ sở dữ liệu quá cũ hoặc                 Mật mã của cơ sở dữ liệu không đúng"
 
-#: src/mmex.cpp:2203
-#: src/mmex.cpp:2256
+#: src/mmex.cpp:2209
+#: src/mmex.cpp:2259
 msgid "Error opening database"
 msgstr "Có lỗi khi mở cơ sở dữ liệu"
 
-#: src/mmex.cpp:2255
+#: src/mmex.cpp:2258
 msgid ""
 "Cannot locate previously opened .mmb database.\n"
 "Do you want to browse to locate the file?"
 msgstr ""
-"Không thể tìm được nơi lưu giữ cơ sở dữ liệu .mmb được mở ra lần trước.\n"
-" Bạn có muốn tìm để xác định nơi cất giữ file?"
+"Không thể tìm được nơi lưu giữ CSDL .mmb được mở ra lần trước.\n"
+" Bạn có muốn tìm để xác định lại nơi lưu giữ file?"
 
-#: src/mmex.cpp:2275
+#: src/mmex.cpp:2278
 msgid "Opening Database File && Verifying Integrity"
-msgstr "Mở file cơ sở dữ liệu && Kiểm tra sự gắn kết của nó"
+msgstr "Mở file CSDL && Kiểm tra sự liên kết"
 
-#: src/mmex.cpp:2449
-#: src/mmex.cpp:2525
+#: src/mmex.cpp:2385
+msgid "Converted DB!"
+msgstr ""
+
+#: src/mmex.cpp:2386
+msgid "MMEX message"
+msgstr ""
+
+#: src/mmex.cpp:2391
+msgid "Unable to convert db successfully. Check Password!"
+msgstr ""
+
+#: src/mmex.cpp:2465
+#: src/mmex.cpp:2541
 #: src/qifimport.cpp:355
 #: src/util.cpp:399
 #: src/util.cpp:723
 msgid "No Account available! Cannot Import! Create a new account first!"
 msgstr "Không có tài khoản nào! Không thể nhập! Hãy tạo một tài khoản mới trước!"
 
-#: src/mmex.cpp:2468
+#: src/mmex.cpp:2484
 #: src/qifimport.cpp:381
 #: src/univcsvdialog.cpp:382
 #: src/util.cpp:420
 #: src/util.cpp:741
 msgid "Choose Account to import to:"
-msgstr "Hãy chọn tài khoản để nhập vào:"
+msgstr "Chọn tài khoản để nhập:"
 
-#: src/mmex.cpp:2469
+#: src/mmex.cpp:2485
 msgid "QFX Import"
 msgstr "Nhập từ định dạng QFX"
 
-#: src/mmex.cpp:2664
+#: src/mmex.cpp:2680
 msgid "Choose Accounts"
-msgstr "Hãy chọn tài khoản"
+msgstr "Chọn tài khoản"
 
-#: src/mmex.cpp:2711
+#: src/mmex.cpp:2727
 #: src/stockspanel.cpp:631
 #: src/stockspanel.cpp:639
 msgid "Unable to connect!"
 msgstr "Không thể kết nối!"
 
-#: src/mmex.cpp:2711
-#: src/mmex.cpp:2769
-#: src/mmex.cpp:2775
+#: src/mmex.cpp:2727
+#: src/mmex.cpp:2785
+#: src/mmex.cpp:2791
 msgid "Check Update"
 msgstr "Kiểm tra cập nhật"
 
-#: src/mmex.cpp:2769
+#: src/mmex.cpp:2785
 msgid "New update available!"
-msgstr "Có bản cập nhật mới!"
+msgstr "Có bản cập nhật!"
 
-#: src/mmex.cpp:2775
+#: src/mmex.cpp:2791
 msgid "You have the latest version installed!"
-msgstr "Bạn có phiên bản mới nhất được cài đặt!"
+msgstr "Phiên bản mới nhất đã được cài đặt trên máy bạn!"
 
-#: src/mmex.cpp:2972
-#: src/mmex.cpp:3013
+#: src/mmex.cpp:2988
+#: src/mmex.cpp:3029
 msgid "No Account available!"
 msgstr "Không có tài khoản nào!"
 
-#: src/mmex.cpp:2986
+#: src/mmex.cpp:3002
 msgid "Choose Account to Edit"
-msgstr "Hãy chọn tài khoản để sửa"
+msgstr "Chọn tài khoản để thay đổi"
 
-#: src/mmex.cpp:2987
-#: src/mmex.cpp:3028
+#: src/mmex.cpp:3003
+#: src/mmex.cpp:3044
 msgid "Accounts"
 msgstr "Tài khoản"
 
-#: src/mmex.cpp:3027
+#: src/mmex.cpp:3043
 msgid "Choose Account to Delete"
-msgstr "Hãy chọn tài khỏan để xóa"
+msgstr "Chọn tài khỏan để xóa"
 
 #: src/mmhelppanel.cpp:77
 msgid " Help"
@@ -2129,7 +2152,7 @@ msgstr "Trợ giúp"
 #: include/reportpayee.h:31
 #: include/reporttransactions.h:52
 msgid "Today's Date: "
-msgstr "Ngày hôm nay là:"
+msgstr "Ngày hôm nay:"
 
 #: src/mmhomepagepanel.cpp:108
 msgid "Summary"
@@ -2137,7 +2160,7 @@ msgstr "Tổng kết"
 
 #: src/mmhomepagepanel.cpp:192
 msgid "Total of Accounts:"
-msgstr "Tổng của các tài khoản:"
+msgstr "Tổng các tài khoản:"
 
 #: src/mmhomepagepanel.cpp:213
 msgid "Income vs Expenses: Current Month"
@@ -2149,11 +2172,11 @@ msgstr "Các giao dịch sắp tới"
 
 #: src/mmhomepagepanel.cpp:421
 msgid "Follow Up On "
-msgstr "Hãy theo dõi"
+msgstr "Theo dõi"
 
 #: src/mmhomepagepanel.cpp:425
 msgid "Transactions"
-msgstr "Các giao dịch"
+msgstr "Giao dịch"
 
 #: src/mmhomepagepanel.cpp:430
 msgid "Total Transactions"
@@ -2165,11 +2188,11 @@ msgstr "BÁO CÁO"
 
 #: src/newacctdialog.cpp:146
 msgid "Account Name:"
-msgstr "Tên gọi tài khoản:"
+msgstr "Tên tài khoản:"
 
 #: src/newacctdialog.cpp:153
 msgid "Enter the Name of the Account. This name can be renamed at any time."
-msgstr "Hãy điền tên gọi tài khoản. Tên gọi này bản có thể đổi bất cứ lúc nào"
+msgstr "Điền tên gọi tài khoản. Tên gọi này bạn có thể đổi bất cứ lúc nào"
 
 #: src/newacctdialog.cpp:156
 msgid "Account Type:"
@@ -2187,7 +2210,7 @@ msgstr "Đầu tư"
 #: src/newacctdialog.cpp:169
 #: include/mmex.h:286
 msgid "Specify the type of account to be created."
-msgstr "Hãy xác định loại tài khoản sắp được tạo"
+msgstr "Xác định loại tài khoản sắp được tạo"
 
 #: src/newacctdialog.cpp:171
 msgid "Account Number:"
@@ -2195,15 +2218,15 @@ msgstr "Số tài khoản:"
 
 #: src/newacctdialog.cpp:180
 msgid "Enter the Account Number associated with this account."
-msgstr "Hãy điền số tài khoản"
+msgstr "Điền số tài khoản liên quan đến tài khoản này"
 
 #: src/newacctdialog.cpp:183
 msgid "Held At:"
-msgstr "Được mở tại ngân hàng:"
+msgstr "Được mở tại:"
 
 #: src/newacctdialog.cpp:191
 msgid "Enter the name of the financial institution in which the account is held."
-msgstr "Hãy điền tên tổ chức tài chính mà tài khỏan này được mở"
+msgstr "Điền tên tổ chức tài chính nơi tài khỏan này được mở"
 
 #: src/newacctdialog.cpp:193
 msgid "Website:"
@@ -2211,15 +2234,15 @@ msgstr "Trang web:"
 
 #: src/newacctdialog.cpp:201
 msgid "Enter the URL of the website for the financial institution."
-msgstr "Hãy điền địa chỉ trang web của tổ chức tài chính"
+msgstr "Điền địa chỉ trang web của tổ chức tài chính"
 
 #: src/newacctdialog.cpp:204
 msgid "Contact:"
-msgstr "Địa chỉ liên lạc:"
+msgstr "Thông tin liên lạc:"
 
 #: src/newacctdialog.cpp:211
 msgid "Enter any contact information for the financial institution."
-msgstr "Hãy điền thông tin liên lạc của tổ chức tài chính"
+msgstr "Điền bất kỳ thông tin liên lạc nào của tổ chức tài chính"
 
 #: src/newacctdialog.cpp:214
 msgid "Access Info:"
@@ -2227,11 +2250,11 @@ msgstr "Thông tin truy cập:"
 
 #: src/newacctdialog.cpp:221
 msgid "Enter any login/access information for the financial institution. This is not secure as anyone with access to the mmb file can access it."
-msgstr "Hãy điền thông tin truy cập của tổ chức tín dụng."
+msgstr "Điền thông tin truy cập / đăng nhập đối với tổ chức tài chính. Lưu ý: thông tin này không được bảo mật, bởi bất cứ ai cũng có thể truy nhập vào file mmb này."
 
 #: src/newacctdialog.cpp:223
 msgid "Account Status:"
-msgstr "Tình trạng của tài khoản"
+msgstr "Tình trạng tài khoản"
 
 #: src/newacctdialog.cpp:230
 msgid "Closed"
@@ -2239,27 +2262,27 @@ msgstr "Đóng"
 
 #: src/newacctdialog.cpp:237
 msgid "Specify if this account has been closed. Closed accounts are inactive in most calculations, reporting etc."
-msgstr "Hãy xác định xem liệu tài khoản này đã bị đóng chưa. Các tài khoản bị đóng sẽ không được xét tới trong phần lớn các báo cáo, không đưa vào để tính toán v.v..."
+msgstr "Xác định liệu tài khoản này đã bị đóng chưa. Các tài khoản bị đóng sẽ không hoạt động trong phần lớn các tính toán, báo cáo v.v..."
 
 #: src/newacctdialog.cpp:240
 msgid "Initial Balance:"
-msgstr "Cán cân ban đầu:"
+msgstr "Số dư đầu:"
 
 #: src/newacctdialog.cpp:248
 msgid "Enter the initial balance in this account."
-msgstr "Hãy điền cán cân ban đầu của tài khoản này."
+msgstr "Điền số dư đầu của tài khoản này."
 
 #: src/newacctdialog.cpp:251
 msgid "Currency:"
-msgstr "Ngoại tê:"
+msgstr "Tiền tệ:"
 
 #: src/newacctdialog.cpp:256
 msgid "Select Currency"
-msgstr "Hãy chọn ngoại tệ"
+msgstr "Chọn tiền tệ"
 
 #: src/newacctdialog.cpp:266
 msgid "Specify the currency to be used by this account."
-msgstr "Hãy chọn ngoại tệ được dùng cho tài khoản này."
+msgstr "Chọn tiền tệ của tài khoản này."
 
 #: src/newacctdialog.cpp:269
 msgid "Notes:"
@@ -2267,36 +2290,35 @@ msgstr "Ghi chú:"
 
 #: src/newacctdialog.cpp:276
 msgid "Enter user notes and details about this account."
-msgstr "Hãy cho thêm thông tin chi tiết về tài khoản này"
+msgstr "Điền ghi chú của người dùng và chi tiết của tài khoản này"
 
 #: src/newacctdialog.cpp:281
 msgid "Favorite Account"
-msgstr "Tài khoản quan tâm"
+msgstr "Tài khoản ưu tiên"
 
 #: src/newacctdialog.cpp:285
 msgid "Select whether this is an account that is used often. This is used to filter accounts display view."
-msgstr "Hãy xác định liệu tài khoản này có được dùng thường xuyên không. Việc này nhằm mục đích lọc sự hiển thị các tài khoản"
+msgstr "Xác định tài khoản này có được sử dụng nhiều không. Việc này giúp lọc các tài khoản để hiển thị"
 
 #: src/newacctdialog.cpp:323
 msgid "Account Name "
-msgstr "Tên gọi tài khoản"
+msgstr "Tên tài khoản"
 
 #: src/newacctdialog.cpp:330
 msgid "Account Name already exists"
-msgstr "Tên gọi tài khoản như vậy đã có"
+msgstr "Đã có tên gọi tài khoản như vậy"
 
 #: src/newacctdialog.cpp:336
 msgid "Currency"
-msgstr "Ngoại tệ"
+msgstr "Tiền tệ"
 
 #: src/newacctdialog.cpp:389
 msgid "Init Balance "
-msgstr "Cán cân ban đầu"
+msgstr "Số dư đầu"
 
 #: src/optionsdialog.cpp:147
-#, fuzzy
 msgid " : Restart"
-msgstr " khởi động"
+msgstr " : Khởi động lại"
 
 #: src/optionsdialog.cpp:216
 msgid "General Settings"
@@ -2304,12 +2326,12 @@ msgstr "Cấu hình chung"
 
 #: src/optionsdialog.cpp:222
 msgid "Base Currency"
-msgstr "Ngoại tệ chính"
+msgstr "Tiền tệ cơ sở"
 
 #: src/optionsdialog.cpp:227
 #: include/mmex.h:120
 msgid "Set Currency"
-msgstr "Chọn ngoại tệ"
+msgstr "Xác lập tiền tệ"
 
 #: src/optionsdialog.cpp:238
 msgid "View Settings"
@@ -2321,229 +2343,229 @@ msgstr "Cấu trúc ngày"
 
 #: src/optionsdialog.cpp:271
 msgid "Specify the date format for display"
-msgstr "Hãy chọn cấu trúc hiển thị ngày"
+msgstr "Xác định cấu trúc hiển thị ngày"
 
-#: src/optionsdialog.cpp:275
+#: src/optionsdialog.cpp:276
 msgid "Set"
-msgstr "Chọn"
+msgstr "Xác lập"
 
-#: src/optionsdialog.cpp:279
+#: src/optionsdialog.cpp:280
 msgid "Sample Date"
 msgstr "Ví dụ hiển thị ngày"
 
-#: src/optionsdialog.cpp:287
+#: src/optionsdialog.cpp:288
 msgid "Import/Export Settings"
 msgstr "Cấu hình xuất/nhập"
 
-#: src/optionsdialog.cpp:293
+#: src/optionsdialog.cpp:294
 msgid "CSV Delimiter"
 msgstr "Dấu phân vùng trong CSV"
 
-#: src/optionsdialog.cpp:300
+#: src/optionsdialog.cpp:301
 msgid "Specify the delimiter to use when importing/exporting CSV files"
 msgstr "Xác định dấu chia vùng sử dụng cho việc xuất/nhập file CSV"
 
-#: src/optionsdialog.cpp:305
+#: src/optionsdialog.cpp:306
 msgid "Display"
 msgstr "Hiển thị"
 
-#: src/optionsdialog.cpp:311
+#: src/optionsdialog.cpp:312
 #: include/mmex.h:157
 msgid "User Name"
 msgstr "Tên người dùng"
 
-#: src/optionsdialog.cpp:318
+#: src/optionsdialog.cpp:319
 msgid "Specify the User Name"
-msgstr "Hãy xác định tên người dùng"
+msgstr "Xác định tên người dùng"
 
-#: src/optionsdialog.cpp:323
-#: src/optionsdialog.cpp:329
+#: src/optionsdialog.cpp:324
+#: src/optionsdialog.cpp:330
 msgid "Language"
 msgstr "Ngôn ngữ"
 
-#: src/optionsdialog.cpp:338
+#: src/optionsdialog.cpp:339
 msgid "Specify the language to use"
-msgstr "Hãy chọn ngôn ngữ sử dụng"
+msgstr "Xác định ngôn ngữ sử dụng"
 
-#: src/optionsdialog.cpp:348
+#: src/optionsdialog.cpp:349
 msgid "Account View Options"
-msgstr "Lựa chọn cách hiển thị tài khoản"
+msgstr "Lựa chọn hiển thị tài khoản"
 
-#: src/optionsdialog.cpp:354
+#: src/optionsdialog.cpp:355
 msgid "Accounts Visible"
-msgstr "Sự hiển thị của tài khoản"
+msgstr "Các tài khoản được hiển thị"
 
-#: src/optionsdialog.cpp:360
+#: src/optionsdialog.cpp:361
 msgid "All"
 msgstr "Tất cả"
 
-#: src/optionsdialog.cpp:362
+#: src/optionsdialog.cpp:363
 msgid "Favorites"
-msgstr "Những tài khoản được quan tâm"
+msgstr "Tài khoản ưu tiên"
 
-#: src/optionsdialog.cpp:379
+#: src/optionsdialog.cpp:380
 msgid "Specify which accounts are visible"
-msgstr "Hãy xác định xem những tài khoản nào sẽ hiển thị"
+msgstr "Xác định tài khoản nào được hiển thị"
 
-#: src/optionsdialog.cpp:384
+#: src/optionsdialog.cpp:385
 msgid "Transaction View Options"
 msgstr "Lựa chọn hiển thị giao dịch"
 
-#: src/optionsdialog.cpp:390
+#: src/optionsdialog.cpp:391
 msgid "Transactions Visible"
-msgstr "Sự hiển thị của các giao dịch"
-
-#: src/optionsdialog.cpp:397
-msgid "View Reconciled"
-msgstr "Hiển thị các giao dịch đã thực hiện"
+msgstr "Các giao dịch được hiển thị"
 
 #: src/optionsdialog.cpp:398
-msgid "View UnReconciled"
-msgstr "Hiển thị các giao dịch chưa thực hiện"
+msgid "View Reconciled"
+msgstr "Hiển thị các giao dịch đã giải ngân"
 
 #: src/optionsdialog.cpp:399
-msgid "View 30 days"
-msgstr "Hiển thị các giao dịch của 30 ngày gần nhất"
+msgid "View UnReconciled"
+msgstr "Hiển thị các giao dịch chưa giải ngân"
 
 #: src/optionsdialog.cpp:400
-msgid "View 90 days"
-msgstr "Hiển thị giao dịch của 90 ngày cuối"
+msgid "View 30 days"
+msgstr "Hiển thị các giao dịch 30 ngày gần nhất"
 
 #: src/optionsdialog.cpp:401
+msgid "View 90 days"
+msgstr "Hiển thị giao dịch 90 ngày gần nhất"
+
+#: src/optionsdialog.cpp:402
 msgid "View Last Month"
 msgstr "Hiển thị các giao dịch của tháng trước"
 
-#: src/optionsdialog.cpp:402
+#: src/optionsdialog.cpp:403
 msgid "View Current Month"
 msgstr "Hiển thị các giao dịch của tháng này"
 
-#: src/optionsdialog.cpp:428
+#: src/optionsdialog.cpp:429
 msgid "Specify which transactions are visible by default"
-msgstr "Hãy xác định những giao dịch nào hiển thị theo mặc định"
+msgstr "Xác định những giao dịch nào hiển thị theo mặc định"
 
-#: src/optionsdialog.cpp:437
+#: src/optionsdialog.cpp:438
 msgid "Restore Defaults"
 msgstr "Khôi phục theo mặc định"
 
-#: src/optionsdialog.cpp:440
+#: src/optionsdialog.cpp:441
 msgid "Restore Default Colors"
 msgstr "Khôi phục màu theo mặc định"
 
-#: src/optionsdialog.cpp:446
+#: src/optionsdialog.cpp:447
 msgid "Nav Tree"
 msgstr "Cây biểu đồ"
 
-#: src/optionsdialog.cpp:448
+#: src/optionsdialog.cpp:449
 msgid "Specify the color for the nav tree"
-msgstr "Hãy xác định màu cho cây biểu đồ"
+msgstr "Xác định màu cho cây biểu đồ"
 
-#: src/optionsdialog.cpp:452
+#: src/optionsdialog.cpp:453
 msgid "List Background"
 msgstr "Phần nền của danh sách"
 
-#: src/optionsdialog.cpp:454
+#: src/optionsdialog.cpp:455
 msgid "Specify the color for the list background"
-msgstr "Hãy xác định màu cho phần nền của danh sách"
+msgstr "Xác định màu cho phần nền của danh sách"
 
-#: src/optionsdialog.cpp:458
+#: src/optionsdialog.cpp:459
 msgid "List Row 0"
 msgstr "Dòng 0 của danh sách"
 
-#: src/optionsdialog.cpp:460
+#: src/optionsdialog.cpp:461
 msgid "Specify the color for the list row 0"
-msgstr "Hãy xác định màu cho dòng 0 của danh sách"
+msgstr "Xác định màu cho dòng 0 của danh sách"
 
-#: src/optionsdialog.cpp:464
+#: src/optionsdialog.cpp:465
 msgid "List Row 1"
 msgstr "Dòng 1 của danh sách"
 
-#: src/optionsdialog.cpp:466
+#: src/optionsdialog.cpp:467
 msgid "Specify the color for the list row 1"
-msgstr "Hãy xác định màu cho dòng 1 của danh sách"
+msgstr "Xác định màu cho dòng 1 của danh sách"
 
-#: src/optionsdialog.cpp:470
+#: src/optionsdialog.cpp:471
 msgid "List Border"
 msgstr "Viền của danh sách"
 
-#: src/optionsdialog.cpp:472
+#: src/optionsdialog.cpp:473
 msgid "Specify the color for the list Border"
-msgstr "Hãy xác định màu viền của danh sách"
+msgstr "Xác định màu viền của danh sách"
 
-#: src/optionsdialog.cpp:476
+#: src/optionsdialog.cpp:477
 msgid "List Details"
-msgstr "Chi tiết của danh sách"
+msgstr "Nội dung danh sách"
 
-#: src/optionsdialog.cpp:478
+#: src/optionsdialog.cpp:479
 msgid "Specify the color for the list details"
-msgstr "Hãy xác định màu của chi tiết của danh sách"
+msgstr "Xác định màu của nội dung danh sách"
 
-#: src/optionsdialog.cpp:482
+#: src/optionsdialog.cpp:483
 msgid "Future Transactions"
-msgstr "Các giao dịch trong tương lai"
+msgstr "Các giao dịch tương lai"
 
-#: src/optionsdialog.cpp:484
+#: src/optionsdialog.cpp:485
 msgid "Specify the color for future transactions"
-msgstr "Hãy xác định màu của các giao dịch trong tương lai"
+msgstr "Xác định màu của các giao dịch tương lai"
 
-#: src/optionsdialog.cpp:496
+#: src/optionsdialog.cpp:497
 msgid "Backup database before opening"
-msgstr "Sao lại cơ sở dữ liệu trước khi mở"
+msgstr "Sao lưu CSDL trước khi mở"
 
-#: src/optionsdialog.cpp:502
+#: src/optionsdialog.cpp:503
 msgid "Select whether to create a .bak file when opening a the database file"
-msgstr "Hãy chọn liệu có cần tạo file .bak khi mở file cơ sở dữ liệu"
+msgstr "Chọn liệu có cần tạo file .bak khi mở file CSDL"
 
-#: src/optionsdialog.cpp:509
+#: src/optionsdialog.cpp:510
 msgid "Stock Quote Web Page"
 msgstr "Trang web cung cấp giá chứng khoán"
 
-#: src/optionsdialog.cpp:520
+#: src/optionsdialog.cpp:521
 msgid "Use Original Date when Pasting Transactions"
 msgstr "Sử dụng ngày giao dịch gốc khi sao chép"
 
-#: src/optionsdialog.cpp:526
+#: src/optionsdialog.cpp:527
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
-msgstr "Hãy chọn xem có sử dụng ngày giao dịch gốc hay ngày hiện tại khi thực hiện sao chép"
+msgstr "Lựa chọn sử dụng ngày giao dịch gốc hay ngày hiện tại khi thực hiện sao chép các giao dịch"
 
-#: src/optionsdialog.cpp:531
+#: src/optionsdialog.cpp:532
 msgid "Use Transaction Sound"
 msgstr "Sử dụng âm thanh giao dịch"
 
-#: src/optionsdialog.cpp:537
+#: src/optionsdialog.cpp:538
 msgid "Select whether to use sounds when entering transactions"
-msgstr "Hãy xác định có cần sử dụng âm thanh khi điền giao dịch không"
+msgstr "Xác định có sử dụng âm thanh khi điền giao dịch không"
 
-#: src/optionsdialog.cpp:540
+#: src/optionsdialog.cpp:541
 msgid "Font Size Options"
 msgstr "Lựa chọn kích thước font chữ"
 
-#: src/optionsdialog.cpp:546
+#: src/optionsdialog.cpp:547
 msgid "Report Font Size"
 msgstr "Kích thước font-chữ trong báo cáo"
 
-#: src/optionsdialog.cpp:585
+#: src/optionsdialog.cpp:586
 msgid "Specify which font size is used on the report tables"
-msgstr "Hãy xác định kích thước font-chữ sử dụng trong các bảng báo cáo"
+msgstr "Xác định kích thước font-chữ sử dụng trong báo cáo"
 
-#: src/optionsdialog.cpp:593
+#: src/optionsdialog.cpp:594
 msgid "General"
 msgstr "Chung"
 
-#: src/optionsdialog.cpp:594
+#: src/optionsdialog.cpp:595
 msgid "View Options"
 msgstr "Lựa chọn hiển thị"
 
-#: src/optionsdialog.cpp:595
+#: src/optionsdialog.cpp:596
 msgid "Colors"
 msgstr "Màu"
 
-#: src/optionsdialog.cpp:596
+#: src/optionsdialog.cpp:597
 msgid "Others"
 msgstr "Các cái khác"
 
 #: src/payeedialog.cpp:157
 msgid "Enter the payee name to be added or make edits to an existing payee name"
-msgstr "Hãy điền tên người giao dịch để bổ sung hoặc sửa đổi tên người giao dịch đã có"
+msgstr "Điền tên người giao dịch để bổ sung hoặc thay đổi tên người giao dịch đã có"
 
 #: src/payeedialog.cpp:162
 msgid "Add a new payee name"
@@ -2555,23 +2577,23 @@ msgstr "Thay đổi tên người giao dịch hiện có"
 
 #: src/payeedialog.cpp:172
 msgid "Delete the selected payee. The payee cannot be used by an existing transaction."
-msgstr "Xóa người giao dịch được chọn. Người giao dịch này không được ghi trong bất kỳ giao dịch nào hiện có"
+msgstr "Xóa người giao dịch được chọn. Người giao dịch này không có tên trong bất kỳ giao dịch hiện có nào."
 
 #: src/payeedialog.cpp:180
 msgid "Select the currently selected payee as the selected payee for the transaction"
-msgstr "Chọn người giao dịch cho giao dịch này"
+msgstr "Xác lập người giao dịch được chọn là người giao dịch cho giao dịch này"
 
 #: src/payeedialog.cpp:190
 msgid "Type a Payee Name in the Text Box and then press Add."
-msgstr ""
+msgstr "Gõ tên người giao dịch vào ô chữ rồi ấn nút Bổ sung."
 
 #: src/payeedialog.cpp:195
 msgid "Payee with same name exists"
-msgstr "Người giao dịch có tên tương tự đã có"
+msgstr "Đã có người giao dịch với tên gọi như vậy"
 
 #: src/payeedialog.cpp:214
 msgid "Payee is in use"
-msgstr "Người giao dịch đang được sử dụng"
+msgstr "Người giao dịch có tên trong giao dịch"
 
 #: src/qifimport.cpp:361
 msgid ""
@@ -2623,11 +2645,11 @@ msgstr "Dòng :"
 
 #: src/qifimport.cpp:435
 msgid " incorrect QIF line type"
-msgstr " dòng loại trong QIF không chính xác"
+msgstr " loại dòng trong QIF không chính xác"
 
 #: src/qifimport.cpp:447
 msgid "Importing account type : "
-msgstr "Nhập phân loại tài khoản"
+msgstr "Nhập loại tài khoản:"
 
 #: src/qifimport.cpp:460
 msgid " : "
@@ -2635,15 +2657,15 @@ msgstr " :"
 
 #: src/qifimport.cpp:461
 msgid " account name "
-msgstr " tên gọi tài khoản"
+msgstr " tên tài khoản"
 
 #: src/qifimport.cpp:499
 msgid " cannot process Account Types yet "
-msgstr " không thể xử lý phân loại tài khoản"
+msgstr " không thể xử lý loại tài khoản"
 
 #: src/qifimport.cpp:500
 msgid "Cannot process these QIF Account Types yet"
-msgstr "Không thể xử lý các phân loại tài khoản của file QIF"
+msgstr "Không thể xử lý loại tài khoản của file QIF"
 
 #: src/qifimport.cpp:515
 #: src/qifimport.cpp:631
@@ -2670,7 +2692,7 @@ msgstr "Số tiền bỏ trống"
 
 #: src/qifimport.cpp:647
 msgid "Category is empty, marking transaction as Unknown category"
-msgstr "Danh mục bỏ trống, đánh dấu giao dịch thuộc danh mục không xác định"
+msgstr "Hạng mục bỏ trống, đánh dấu giao dịch thuộc danh mục không xác định"
 
 #: src/qifimport.cpp:661
 msgid "Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had "
@@ -2682,7 +2704,7 @@ msgstr " người giao dịch"
 
 #: src/qifimport.cpp:662
 msgid " type "
-msgstr " phân loại"
+msgstr " loại"
 
 #: src/qifimport.cpp:663
 msgid " amount "
@@ -2697,9 +2719,8 @@ msgid " transactions imported from QIF"
 msgstr " các giao dịch được nhập từ QIF"
 
 #: src/splitdetailsdialog.cpp:182
-#, fuzzy
 msgid "Invalid Category Entered "
-msgstr "Số tiền điền vào không hợp lệ"
+msgstr "Hạng mục điền vào không hợp lệ"
 
 #: src/splittransactionsdialog.cpp:146
 #: src/univcsvdialog.cpp:137
@@ -2708,7 +2729,7 @@ msgstr "Loại bỏ"
 
 #: src/stockdialog.cpp:137
 msgid "Stock Investment Details"
-msgstr "Các thông tin chi tiết về đầu tư chứng khoán"
+msgstr "Thông tin chi tiết về chứng khoán đầu tư"
 
 #: src/stockdialog.cpp:150
 #: src/stockdialog.cpp:327
@@ -2718,19 +2739,19 @@ msgstr "Được lưu ký tại"
 
 #: src/stockdialog.cpp:156
 msgid "Enter the name of the financial institution where the investment is held"
-msgstr "Hãy điền tên tổ chức tài chính mà đầu tư này được lưu ký"
+msgstr "Điền tên tổ chức tài chính mà đầu tư này được lưu ký"
 
 #: src/stockdialog.cpp:167
 msgid "Specify the purchase date of the stock investment"
-msgstr "Hãy xác định ngày mua chứng khoán"
+msgstr "Xác định ngày mua chứng khoán"
 
 #: src/stockdialog.cpp:170
 msgid "Stock Name"
-msgstr "Tên công ty chứng khoán"
+msgstr "Tên gọi chứng khoán"
 
 #: src/stockdialog.cpp:176
 msgid "Enter the stock company name"
-msgstr "Hãy điền tên công ty chứng khoán"
+msgstr "Điền tên gọi của công ty phát hành chứng khoán"
 
 #: src/stockdialog.cpp:180
 #: include/reportsummarystocks.h:64
@@ -2739,7 +2760,7 @@ msgstr "Ký hiệu"
 
 #: src/stockdialog.cpp:186
 msgid "Enter the stock symbol (optional)"
-msgstr "Hãy điền ký hiệp (tùy chọn)"
+msgstr "Điền ký hiệp chứng khoán (tùy chọn)"
 
 #: src/stockdialog.cpp:191
 #: src/stockspanel.cpp:212
@@ -2748,7 +2769,7 @@ msgstr "Số lượng cổ phiếu"
 
 #: src/stockdialog.cpp:197
 msgid "Enter number of shares held"
-msgstr "Hãy điền số lượng cổ phiếu được lưu ký"
+msgstr "Điền số lượng cổ phiếu được lưu ký"
 
 #: src/stockdialog.cpp:202
 #: include/reportsummarystocks.h:67
@@ -2757,11 +2778,11 @@ msgstr "Giá mua"
 
 #: src/stockdialog.cpp:208
 msgid "Enter purchase price for each stock"
-msgstr "Hãy điền giá mua cho mỗi cổ phiếu"
+msgstr "Điền giá mua cho mỗi cổ phiếu"
 
 #: src/stockdialog.cpp:219
 msgid "Enter notes associated with this investment"
-msgstr "Điền các thông tin bổ sung về khoản đầu tư này"
+msgstr "Điền thông tin liên quan đến đầu tư này"
 
 #: src/stockdialog.cpp:223
 #: include/reportsummarystocks.h:68
@@ -2770,7 +2791,7 @@ msgstr "Giá hiện tại"
 
 #: src/stockdialog.cpp:229
 msgid "Enter current stock price"
-msgstr "Hãy điện giá cổ phiếu hiện tại"
+msgstr "Điền giá cổ phiếu hiện tại"
 
 #: src/stockdialog.cpp:235
 #: include/reportsummarystocks.h:69
@@ -2779,7 +2800,7 @@ msgstr "Phí giao dịch"
 
 #: src/stockdialog.cpp:241
 msgid "Enter any commission paid"
-msgstr "Hãy điền số tiền phí đã trả"
+msgstr "Điền số tiền phí đã trả"
 
 #: src/stockdialog.cpp:270
 msgid "Web Page"
@@ -2787,12 +2808,12 @@ msgstr "Trang web"
 
 #: src/stockdialog.cpp:286
 msgid "Choose Investment Account"
-msgstr "Hãy chọn tài khoản đầu tư"
+msgstr "Chọn tài khoản đầu tư"
 
 #: src/stockdialog.cpp:339
 #: src/stockdialog.cpp:353
 msgid "Num Shares"
-msgstr "Số Cổ phiếu"
+msgstr "Số cổ phiếu"
 
 #: src/stockdialog.cpp:347
 msgid "Invalid number of shares entered "
@@ -2828,19 +2849,19 @@ msgstr "Hiện tại"
 
 #: src/stockspanel.cpp:270
 msgid "New Stock Investment"
-msgstr "Tạo đầu tư chứng khoán mới"
+msgstr "Chứng khoán mới"
 
 #: src/stockspanel.cpp:275
 msgid "Edit Stock Investment"
-msgstr "Sửa đầu tư chứng khoán"
+msgstr "Thay đổi chứng khoán"
 
 #: src/stockspanel.cpp:280
 msgid "Delete Stock Investment"
-msgstr "Xóa đầu tư chứng khoán"
+msgstr "Xóa chứng khoán"
 
 #: src/stockspanel.cpp:283
 msgid "Refresh"
-msgstr "Làm mới"
+msgstr "Làm tươi"
 
 #: src/stockspanel.cpp:285
 msgid "Refresh Stock Prices from Yahoo"
@@ -2856,7 +2877,7 @@ msgstr "Thay đổi cấu hình để cập nhật tự động"
 
 #: src/stockspanel.cpp:309
 msgid "Stock Investments: "
-msgstr "Đầu tư chứng khoán:"
+msgstr "Chứng khoán:"
 
 #: src/stockspanel.cpp:337
 #, c-format
@@ -2892,7 +2913,7 @@ msgstr ""
 
 #: src/stockspanel.cpp:453
 msgid "Automatic stock quote refresh in progress..."
-msgstr "Đang tự động cập nhật."
+msgstr "Đang tự động cập nhật..."
 
 #: src/stockspanel.cpp:459
 #, c-format
@@ -2918,7 +2939,7 @@ msgid ""
 "Automatic stock quote refresh not started. \n"
 "Last update: %s"
 msgstr ""
-"Tự động cập nhật ược kích hoạt. \n"
+"Tự động cập nhật chưa khởi động. \n"
 "Lần cập nhật cuối: %s"
 
 #: src/stockspanel.cpp:631
@@ -2928,45 +2949,45 @@ msgstr "Tải thông tin về chứng khoán"
 
 #: src/stockspanel.cpp:736
 msgid "&New Stock Investment"
-msgstr "&N Đầu tư chứng khoán mới"
+msgstr "Chứng khoán &mới"
 
 #: src/stockspanel.cpp:738
 msgid "&Edit Stock Investment"
-msgstr "&E Sửa giao dịch đầu tư chứng khoán"
+msgstr "&Thay đổi chứng khoán"
 
 #: src/stockspanel.cpp:739
 msgid "&Delete Stock Investment"
-msgstr "&D Xóa giao dịch đầu tư chứng khoán"
+msgstr "&Xóa chứng khoán"
 
 #: src/stockspanel.cpp:828
 msgid "Do you really want to delete the stock investment?"
-msgstr "Bạn có thực sự muốn xóa giao dịch đầu tư chứng khoán?"
+msgstr "Bạn có thực sự muốn xóa chứng khoán?"
 
 #: src/stockspanel.cpp:829
 msgid "Confirm Stock Investment Deletion"
-msgstr "Xác nhận việc xóa giao dịch chứng khoán"
+msgstr "Xác nhận việc xóa chứng khoán"
 
 #: src/transdialog.cpp:286
-#: src/transdialog.cpp:661
-#: src/transdialog.cpp:676
+#: src/transdialog.cpp:666
+#: src/transdialog.cpp:681
 msgid "Specify to whom the transaction is going to or coming from "
-msgstr "Xác định giao dịch này từ ai hay tới ai"
+msgstr "Xác định người thực hiện giao dịch này"
 
 #: src/transdialog.cpp:305
 msgid "Populate Transaction #"
-msgstr "Chọn số giao dịch #"
+msgstr "Tự động cấp số giao dịch #"
 
-#: src/transdialog.cpp:680
+#: src/transdialog.cpp:685
 msgid "Select From Account"
 msgstr "Chọn tài khoản xuất"
 
-#: src/transdialog.cpp:681
+#: src/transdialog.cpp:686
 msgid "Select To Account"
 msgstr "Chọn tài khoản nhập"
 
-#: src/transdialog.cpp:690
+#: src/transdialog.cpp:695
 msgid "Specify the account from which the transfer is occurring"
-msgstr "Hãy xác định tài khoản xuất mà việc chuyển tiền được thực hiện"
+msgstr "Xác định tài khoản xuất của giao dịch chuyển tiền"
 
 #: src/univcsvdialog.cpp:93
 msgid "Specify the order of fields in the CSV file"
@@ -2998,7 +3019,7 @@ msgstr "Số tiền(+/-)"
 
 #: src/univcsvdialog.cpp:220
 msgid "SubCategory"
-msgstr "Danh mục phụ"
+msgstr "Hạng mục phụ"
 
 #: src/univcsvdialog.cpp:224
 msgid "Transaction Number"
@@ -3006,7 +3027,7 @@ msgstr "Số giao dịch"
 
 #: src/univcsvdialog.cpp:226
 msgid "Don't Care"
-msgstr "Đừng quan tâm"
+msgstr "Không quan tâm"
 
 #: src/univcsvdialog.cpp:233
 #: src/univcsvdialog.cpp:235
@@ -3024,7 +3045,7 @@ msgstr "Vùng CSV"
 #: src/univcsvdialog.cpp:351
 #: src/univcsvdialog.cpp:363
 msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."
-msgstr "Các vùng được xác định cho việc nhập CSV không đúng! Cần có ít nhất ngày, số tiền và người giao dịch"
+msgstr "Vùng được xác định cho việc nhập CSV không chính xác! Cần có ít nhất ngày, số tiền và người giao dịch"
 
 #: src/univcsvdialog.cpp:383
 #: src/util.cpp:421
@@ -3043,7 +3064,7 @@ msgstr " không đủ số lượng token trong file"
 
 #: src/univcsvdialog.cpp:460
 msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipping"
-msgstr " Một trong các dữ liệu sau: Ngày, Người giao dịch, Số tiền, Loại không có, bỏ qua"
+msgstr " Bỏ qua vì thiếu một trong các dữ liệu sau: Ngày, Người giao dịch, Số tiền, Loại "
 
 #: src/univcsvdialog.cpp:514
 #: src/util.cpp:697
@@ -3215,7 +3236,7 @@ msgstr "Không có tài khoản nào! Không thể xuất!"
 
 #: src/util.cpp:319
 msgid "Choose Account to Export from:"
-msgstr "Hãy chọn tài khỏan để xuất từ:"
+msgstr "Chọn tài khỏan để xuất:"
 
 #: src/util.cpp:320
 msgid "CSV Export"
@@ -3223,7 +3244,7 @@ msgstr "Xuất CSV"
 
 #: src/util.cpp:326
 msgid "Choose CSV data file to Export"
-msgstr "Hãy chọn file dữ liệu CSV để xuất"
+msgstr "Chọn file dữ liệu CSV để xuất"
 
 #: src/util.cpp:471
 #: src/util.cpp:792
@@ -3273,7 +3294,7 @@ msgstr ""
 
 #: src/util.cpp:718
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
-msgstr "Hãy kiểm tra xem file CSV từ MMEX.NET chỉ chứa một tài khoản!"
+msgstr "Kiểm tra xem file CSV từ MMEX.NET chỉ chứa một tài khoản!"
 
 #: src/util.cpp:825
 msgid " missing category, skipping."
@@ -3301,7 +3322,7 @@ msgstr "Đầu vào không hợp lệ"
 
 #: src/wxsqlite3_1_7.cpp:94
 msgid "No Database opened"
-msgstr "Không có cơ sở dữ liệu nào được mở"
+msgstr "Không có CSDL nào được mở"
 
 #: src/wxsqlite3_1_7.cpp:95
 msgid "Statement not accessible"
@@ -3313,27 +3334,27 @@ msgstr "Không đủ bộ nhớ"
 
 #: src/wxsqlite3_1_7.cpp:97
 msgid "Cannot decode binary"
-msgstr "Không thể giải mã thư viện"
+msgstr "Không thể giải mã thông tin nhị phân"
 
 #: src/wxsqlite3_1_7.cpp:98
 msgid "Invalid field index"
-msgstr "Index vùng không phù hợp"
+msgstr "Index vùng không hợp lệ"
 
 #: src/wxsqlite3_1_7.cpp:99
 msgid "Invalid field name"
-msgstr "Tên vùng không phù hợp"
+msgstr "Tên vùng không hợp lệ"
 
 #: src/wxsqlite3_1_7.cpp:100
 msgid "Invalid row index"
-msgstr "Index dòng không phù hợp"
+msgstr "Index dòng không hợp lệ"
 
 #: src/wxsqlite3_1_7.cpp:101
 msgid "Invalid scalar query"
-msgstr "Lệnh scalar không phù hợp"
+msgstr "Lệnh scalar không hợp lệ"
 
 #: src/wxsqlite3_1_7.cpp:103
 msgid "Null Results pointer"
-msgstr ""
+msgstr "Kết quả bằng không"
 
 #: src/wxsqlite3_1_7.cpp:104
 msgid "Error binding string param"
@@ -3377,7 +3398,7 @@ msgstr "finance.au.yahoo.com"
 
 #: src/yahoosettingsdialog.cpp:66
 msgid "Do not enter anything except the server name (or IP address, if you're feeling lucky)"
-msgstr "Đừng điền bất cứ thứ gì ngoại trừ tên máy chủ (hoặc địa chỉ IP, nếu bạn cho rằng nó là chính xác)"
+msgstr "Không điền bất cứ thứ gì ngoại trừ tên máy chủ (hoặc địa chỉ IP, nếu bạn cho nó là chính xác)"
 
 #: src/yahoosettingsdialog.cpp:72
 msgid "Yahoo Suffix"
@@ -3388,7 +3409,7 @@ msgid ""
 "Enter the suffix used by Yahoo for the market of your stocks. \n"
 "If your stocks are in multiple markets, leave this blank and add  the suffix to each symbol in your portfolio."
 msgstr ""
-"Hãy điền đuôi mà Yahoo gắn cho thị trường có cổ phiếu của bạn. \n"
+"Điền đuôi mà Yahoo gắn cho thị trường có cổ phiếu của bạn. \n"
 "Nếu cổ phiếu của bạn có trên nhiều sàn giao dịch, hãy để trống và bổ sung đuôi vào từng mã trong danh mục đầu tư của bạn."
 
 #: src/yahoosettingsdialog.cpp:82
@@ -3400,7 +3421,7 @@ msgstr "Sàn giao dịch mở cửa từ"
 #: src/yahoosettingsdialog.cpp:119
 #: src/yahoosettingsdialog.cpp:130
 msgid "Allow for any delay in quotes"
-msgstr "Thời gian chậm đối với việc báo giá"
+msgstr "Thời gian trễ cho phép đối với việc báo giá"
 
 #: src/yahoosettingsdialog.cpp:98
 #: src/yahoosettingsdialog.cpp:126
@@ -3413,11 +3434,11 @@ msgstr "tới"
 
 #: src/yahoosettingsdialog.cpp:139
 msgid "Refresh prices every"
-msgstr "Cập nhật giá theo từng"
+msgstr "Cập nhật giá từng"
 
 #: src/yahoosettingsdialog.cpp:163
 msgid "minutes while market is open"
-msgstr "phút khi sàn giao dịch mở cửa"
+msgstr "phút trong thời gian sàn giao dịch mở cửa"
 
 #: include/aboutdialog.h:25
 msgid "About "
@@ -3425,27 +3446,27 @@ msgstr "Thông tin về phần mềm"
 
 #: include/appstartdialog.h:27
 msgid " Start Page"
-msgstr " Trang đầu"
+msgstr " Trang khởi động"
 
 #: include/assetdialog.h:21
 msgid "New/Edit Asset"
-msgstr "Tạo mới / sửa tài sản"
+msgstr "Tài sản Mới/Thay đổi"
 
 #: include/billsdepositsdialog.h:22
 msgid "New/Edit Repeating Transaction"
-msgstr "Tạo mới / sửa giao dịch định kỳ"
+msgstr "Giao dịch định kỳ Mới/Thay đổi"
 
 #: include/budgetentrydialog.h:22
 msgid "Budget Entry Dialog"
-msgstr "Bảng hội thoại về ngân sách"
+msgstr "Bảng hội thoại nhập thông tin ngân sách"
 
 #: include/budgetyeardialog.h:22
 msgid "Budget Year Editor"
-msgstr "Sửa năm ngân sách"
+msgstr "Thay đổi thông tin ngân sách của năm"
 
 #: include/budgetyearentrydialog.h:23
 msgid "Budget Year Entry"
-msgstr "Lập năm ngân sách"
+msgstr "Nhập thông tin ngân sách của năm"
 
 #: include/chart.h:245
 #: include/chart.h:444
@@ -3462,19 +3483,19 @@ msgstr "Bảng hội thoại SQL tự chọn"
 
 #: include/fileviewerdialog.h:24
 msgid "View File Contents"
-msgstr "Xem nội dung file"
+msgstr "Hiển thị nội dung file"
 
 #: include/filtertransdialog.h:46
 msgid "Filter Transactions"
-msgstr "Lọc các giao dịch"
+msgstr "Lọc giao dịch"
 
 #: include/maincurrencydialog.h:29
 msgid "Currency Dialog"
-msgstr "Bảng hội thoại về ngoại tệ"
+msgstr "Bảng hội thoại tiền tệ"
 
 #: include/mmex.h:134
 msgid "Base Currency for account"
-msgstr "Ngoại tệ cơ sở cho tài khoản"
+msgstr "Tiền tệ cơ sở cho tài khoản"
 
 #: include/mmex.h:149
 msgid ""
@@ -3484,8 +3505,8 @@ msgid ""
 "currency associated with each account if needed.\n"
 msgstr ""
 "\n"
-"Hãy xác định ngoại tệ gốc (hoặc mặc định) để sử dụng \n"
-"với cơ sở dữ liệu. Bạn có thể thay đổi ngoại tệ \n"
+"Xác định tiền tệ cơ sở (hoặc mặc định) để sử dụng \n"
+"với cơ sở dữ liệu. Bạn có thể thay đổi tiền tệ \n"
 "gắn với từng tài khoản nếu cần thiết. \n"
 
 #: include/mmex.h:167
@@ -3494,11 +3515,11 @@ msgstr "(tùy chọn)Điền tên của bạn. Chủ yếu dùng cho việc vi�
 
 #: include/mmex.h:179
 msgid "Base Currency Not Set"
-msgstr "Ngoại tệ cơ sở chưa được xác định"
+msgstr "Tiền tệ cơ sở chưa được xác định"
 
 #: include/mmex.h:229
 msgid "Name of the Account"
-msgstr "Tên gọi của tài khoản"
+msgstr "Tên gọi tài khoản"
 
 #: include/mmex.h:244
 msgid ""
@@ -3508,13 +3529,13 @@ msgid ""
 "For example 'ABC Bank'."
 msgstr ""
 "\n"
-"Xác định tên gọi vụ thể của tài khoản. Thường người ta \n"
+"Xác định tên gọi đầy đủ của tài khoản. Thường người ta \n"
 "dùng tên của tổ chức tài chính nơi tài khỏan được mở. \n"
 "Ví dụ 'Ngân hàng ABC'."
 
 #: include/mmex.h:257
 msgid "Account Name Invalid"
-msgstr "Tên tài khoản không phù hợp"
+msgstr "Tên tài khoản không hợp lệ"
 
 #: include/mmex.h:280
 msgid "Checking/Savings"
@@ -3533,9 +3554,9 @@ msgid ""
 " types like Checking, Savings and Credit card type accounts."
 msgstr ""
 "\n"
-"Hãy chọn loại tài khoản bạn muốn khởi tạo:\n"
+"Chọn loại tài khoản bạn muốn tạo lập:\n"
 "\n"
-"Các tài khoản ngân hàng thường có nhiều chức năng \n"
+"Các tài khoản ngân hàng thường có nhiều phân loại \n"
 "như thanh toán, tiết kiệm và thẻ tín dụng."
 
 #: include/mmex.h:313
@@ -3555,8 +3576,8 @@ msgid ""
 "Base Account Currency Not set.\n"
 "Set that first using tools->options menu and then add a new account"
 msgstr ""
-"Ngoại tệ cơ sở của tài khoản chưa được xác định.\n"
-"Hãy xác định nó bằng cách vào Công cụ -> lựa chọn và bổ sung một tài khoản mới"
+"Tiền tệ cơ sở của tài khoản chưa được xác định.\n"
+"Xác định nó bằng cách vào Công cụ -> Lựa chọn và bổ sung một tài khoản mới"
 
 #: include/mmgraphincexpensesmonth.h:26
 #: include/reportincexpesestime.h:45
@@ -3603,7 +3624,7 @@ msgstr " Tới:"
 
 #: include/reportcategovertimeperf.h:23
 msgid "Category Income/Expenses Over Last 12 Months "
-msgstr "Danh mục thu/chi của 12 tháng cuối"
+msgstr "Danh mục thu/chi của 12 tháng cuối cùng"
 
 #: include/reportcustomsql.h:24
 msgid "Custom SQL Report "
@@ -3619,7 +3640,7 @@ msgstr "Chi tiêu:"
 
 #: include/reportincexpenses.h:93
 msgid "Difference:"
-msgstr "Sự khác biệt:"
+msgstr "Chênh lệch:"
 
 #: include/reportincexpesestime.h:28
 msgid "Income vs Expenses for Year: "
@@ -3631,13 +3652,12 @@ msgid "Month"
 msgstr "Tháng"
 
 #: include/reportincexpesestime.h:46
-#, fuzzy
 msgid "Difference"
-msgstr "Sự khác biệt:"
+msgstr "Chênh lệch:"
 
 #: include/reportsummary.h:122
 msgid "Total Balance on all Accounts"
-msgstr "Cán cân chung cho tất cả các tài khoản"
+msgstr "Số dư chung cho tất cả các tài khoản"
 
 #: include/reportsummaryassets.h:37
 msgid "Summary of Assets"
@@ -3685,19 +3705,19 @@ msgstr "Thống kê giao dịch cho"
 
 #: include/splitdetailsdialog.h:39
 msgid "Split Detail Dialog"
-msgstr "Bảng hội thoại chi tiết đa danh mục"
+msgstr "Bảng hội thoại chi tiết nhiều hạng mục"
 
 #: include/splittransactionsdialog.h:50
 msgid "Split Transaction Dialog"
-msgstr "Bảng hội thoại giao dịch nhiều thành phần"
+msgstr "Bảng hội thoại giao dịch nhiều hạng mục"
 
 #: include/stockdialog.h:23
 msgid "New/Edit Stock Investment"
-msgstr "Tạo mới / Sửa đầu tư chứng khoán"
+msgstr "Chứng khoán Mới/Thay đổi"
 
 #: include/transdialog.h:23
 msgid "New/Edit Transaction"
-msgstr "Tạo mới / Sửa giao dịch"
+msgstr "Giao dịch Mới/Thay đổi"
 
 #: include/univcsvdialog.h:29
 msgid "Universal CSV Importer Dialog"
