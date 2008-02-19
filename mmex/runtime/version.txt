@@ -8,6 +8,10 @@ Version History of Money Manager Ex
 - Make "Income" and "Expenses" labels centered (George)
 - Fixed bug in getLatestTransactionNumber (Igor)
 - Added workaround for "uk.finance.yahoo.com" to convert downloaded stock value to pence (Gerald etc)
+- Added 'Daily' repeating transaction (aHfUi)
+- Fix double comparisons in Budget screens leading to wrong images being displayed when amounts are equal(luckyarthur)
+- Allow transaction report to specify only top category (which will sum all children category) (Ami, Sania)
+- Fixed minor issue where 'single quote' was being displayed as multiple quotes till DB was reopened (luckyarthur, paddy)
 
 0.9.2.0 (Nov 18, 2007)
 - Fix bug where changing payee for Split Transaction can lead to bad data in reports (Kyosuke)

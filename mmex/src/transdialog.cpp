@@ -852,7 +852,7 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
     pTransaction->amt_ = amount;
     pTransaction->status_ = status;
     pTransaction->transNum_ = transNum;
-    pTransaction->notes_ = mmCleanString(notes.c_str());
+    pTransaction->notes_ = notes.c_str();
     pTransaction->category_ = core_->categoryList_.getCategorySharedPtr(categID_, subcategID_);
     pTransaction->date_ = dpc_->GetValue();
     pTransaction->toAmt_ = toTransAmount_;

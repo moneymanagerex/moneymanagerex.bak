@@ -537,6 +537,9 @@ int budgetingListCtrl::OnGetItemImage(long item) const
    if (cp_->trans_[item].estimated_ < cp_->trans_[item].actual_)
        return 0;
 
+    if (fabs(cp_->trans_[item].estimated_ - cp_->trans_[item].actual_)  < 0.001)	
+        return 0;
+
    return 1;
 }
 

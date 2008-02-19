@@ -297,9 +297,10 @@ void mmBDDialog::CreateControls()
         _("Yearly"),
         _("Four Months"),
         _("Four Weeks"),
+        _("Daily"),
     };  
     itemRepeats_ = new wxChoice( itemDialog1, ID_DIALOG_BD_COMBOBOX_REPEATS, wxDefaultPosition, 
-        wxSize(100, -1), 10, itemComboBox11Strings, 0);
+        wxSize(100, -1), 11, itemComboBox11Strings, 0);
     itemFlexGridSizer5->Add(itemRepeats_, 0, 
         wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemRepeats_->SetSelection(0);
@@ -965,7 +966,7 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
         pTransaction->amt_ = amount;
         pTransaction->status_ = status;
         pTransaction->transNum_ = transNum;
-        pTransaction->notes_ = mmCleanString(notes.c_str());
+        pTransaction->notes_ = notes.c_str();
         pTransaction->category_ = core_->categoryList_.getCategorySharedPtr(categID_, subcategID_);
         pTransaction->date_ = dpc_->GetValue();
         pTransaction->toAmt_ = toTransAmount_;

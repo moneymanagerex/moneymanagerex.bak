@@ -297,7 +297,7 @@ void mmBankTransaction::getSplitTransactions(mmCoreDB* core, mmSplitTransactionE
     mmENDSQL_LITE_EXCEPTION;
 }
 
-bool mmBankTransaction::containsCategory(int categID, int subcategID)
+bool mmBankTransaction::containsCategory(int categID, int subcategID, bool ignoreSubCateg)
 {
     if (splitEntries_->numEntries() > 0)
     {
@@ -310,10 +310,15 @@ bool mmBankTransaction::containsCategory(int categID, int subcategID)
             }
         }
     }
-    else if ((categID_ == categID) &&
-            (subcategID_ == subcategID))
+    else if (categID_ == categID)
     {
-        return true;
+        if (ignoreSubCateg)
+            return true;
+       
+        if (subcategID_ == subcategID)
+        {
+            return true;
+        }
 
     }
     return false;

@@ -1872,6 +1872,10 @@ double mmDBWrapper::getAmountForPayee(wxSQLite3Database* db, int payeeID,
         {
             updateOccur = dtno.Add(wxDateSpan::Weeks(4));
         }
+        else if (repeats == 10)
+        {
+            updateOccur = dtno.Add(wxDateSpan::Days(1));
+        }
      }
      q1.Finalize();
      

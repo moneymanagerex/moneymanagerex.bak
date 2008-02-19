@@ -192,6 +192,10 @@ public:
                {
                   nextOccurDate = nextOccurDate.Add(wxDateSpan::Weeks(4));
                }
+               else if (repeats == 10)
+               {
+                   nextOccurDate = nextOccurDate.Add(wxDateSpan::Days(1));
+               }
 
               
            } // end while

@@ -78,7 +78,7 @@ public:
     mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db);
     virtual ~mmBankTransaction() {}
 
-    bool containsCategory(int categID, int subcategID);
+    bool containsCategory(int categID, int subcategID, bool ignoreSubCateg = false);
     double getAmountForSplit(int categID, 
         int subcategID);
 
