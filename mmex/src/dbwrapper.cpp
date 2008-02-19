@@ -1648,7 +1648,7 @@ double mmDBWrapper::getAmountForPayee(wxSQLite3Database* db, int payeeID,
  {
     int transID = 1;
     mmBEGINSQL_LITE_EXCEPTION;
-    wxString bufSQL = wxString::Format(wxT("select max(TRANSACTIONNUMBER) as MaxTransID from CHECKINGACCOUNT_V1 where TRANSDATE='%s' and ACCOUNTID='%d';"), 
+    wxString bufSQL = wxString::Format(wxT("select max(cast(TRANSACTIONNUMBER as integer)) as MaxTransID from CHECKINGACCOUNT_V1 where TRANSDATE='%s' and ACCOUNTID='%d';"), 
         byDate.c_str(), accountID);
     wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
     if (q1.NextRow())

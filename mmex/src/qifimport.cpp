@@ -439,11 +439,10 @@ Are you are sure you want to proceed with the import?"),
             if (lineType(readLine) == AcctType)
             {
                 wxString accountType = getLineData(readLine);
-                if ((accountType == wxT("Type:Bank")) ||
-                    (accountType == wxT("Type:Cash")) ||
-                    (accountType == wxT("Type:CCard")))
+                if ((!accountType.CmpNoCase(wxT("Type:Bank"))) ||
+                    (!accountType.CmpNoCase(wxT("Type:Cash"))) ||
+                    (!accountType.CmpNoCase(wxT("Type:CCard"))))
                 {
-                    // cannot handle these yet
                     log << _("Importing account type : ") << accountType << endl;      
                     continue;
                 }

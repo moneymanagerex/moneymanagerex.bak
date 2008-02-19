@@ -18,7 +18,7 @@ Translations
 Italian
 -- Claudio
 French
--- Berry As and Jean-Christophe
+-- Berry As, Jean-Christophe, bipop, drambeau
 Greek
 -- Panagiotis Pentzeridis
 Czech
@@ -28,7 +28,7 @@ Russian
 Brazilian
 -- Jose Carlos
 German
--- Schrempfi
+-- Schrempfi, goe
 Simple Chinese
 -- Liu Ming
 Tr. Chinese
@@ -72,4 +72,6 @@ Steve Light
 Andrew Ireland
 David Adams
 FusedNet(fusednetwork.com)
-
+William Metz
+Emmanuel Poirier
+Jamshed S

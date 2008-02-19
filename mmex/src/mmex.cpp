@@ -469,6 +469,17 @@ mmGUIFrame::~mmGUIFrame()
     /* Delete the GUI */
     homePanel->DestroyChildren();
 
+    /* Delete any temp *.png files left behind */
+    if (wxFile::Exists(wxT("inc_expenses_month.png")))
+        ::wxRemoveFile(wxT("inc_expenses_month.png"));
+
+    if (wxFile::Exists(wxT("pie_chart.png")))
+        ::wxRemoveFile(wxT("pie_chart.png"));
+
+    if (wxFile::Exists(wxT("top_categories.png")))
+        ::wxRemoveFile(wxT("top_categories.png"));
+
+
     if (core_)
     {
         delete core_;

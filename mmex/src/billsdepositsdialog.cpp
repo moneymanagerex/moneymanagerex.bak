@@ -271,7 +271,7 @@ void mmBDDialog::CreateControls()
         wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
-        wxID_STATIC, _("Next Occurence"), wxDefaultPosition, wxDefaultSize, 0 );
+        wxID_STATIC, _("Next Occurrence"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer5->Add(itemStaticText8, 0, 
         wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 

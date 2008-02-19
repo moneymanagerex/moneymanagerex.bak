@@ -95,10 +95,10 @@ void mmIniOptions::loadOptions(wxSQLite3Database* db)
        enableStocks_ = false;
    
    if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEASSETS"), wxT("TRUE")) != wxT("TRUE"))
-       enableStocks_ = false;
+       enableAssets_ = false;
    
    if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEBUDGET"), wxT("TRUE")) != wxT("TRUE"))
-       enableStocks_ = false;
+       enableBudget_ = false;
 
    if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEGRAPHS"), wxT("TRUE")) != wxT("TRUE"))
       enableGraphs_ = false;

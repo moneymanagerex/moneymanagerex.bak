@@ -545,6 +545,7 @@ public:
             if(mode == BAR_CHART_SIMPLE)
             {
                 int labelOffset = (barwidth + gap) / 2;
+                labelOffset -= 20;
                 for (unsigned int i = 0; i < data.size(); i++) {
                     wxString key = data[i].key /* + wxT(" (") + wxString::Format(wxT("%.2f"), data[i].aval) + wxT(")") */;
                     dc.DrawText(

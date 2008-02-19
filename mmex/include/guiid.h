@@ -21,7 +21,7 @@
 #include "defs.h"
 
 #define EXC_GEN       42
-#define MMEXVERSION   wxT("0.9.2.0")
+#define MMEXVERSION   wxT("0.9.3.0")
 #define DEFDATEFORMAT wxT("%m/%d/%y")
 #define DEFDELIMTER   wxT(",")
 #define MM_MIN_DATAVERSION 2

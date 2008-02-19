@@ -686,12 +686,20 @@ void mmStocksPanel::OrderQuoteRefresh(void)
             }
         }
 
+        //**** HACK HACK HACK
+        // UK finance apparently downloads values in pence
+        if (!yahoo_->Server_.CmpNoCase(wxT("uk.finance.yahoo.com")))
+            dPrice = dPrice / 100;
+
+        // ------------------
+
         mmBEGINSQL_LITE_EXCEPTION;
 
         wxSQLite3ResultSet q1;
         wxString bufSQL;
         bufSQL.Printf(wxT("select * from STOCK_V1 where lower(SYMBOL) =lower('%s');"), StockSymbolNoSuffix.c_str());
         q1 = db_->ExecuteQuery(bufSQL);
+
 
         std::vector<mmStockTransactionHolder> stockVec;
         while (q1.NextRow())
