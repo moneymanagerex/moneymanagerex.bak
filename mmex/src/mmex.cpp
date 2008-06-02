@@ -112,9 +112,7 @@
 #include "../resources/wrench.xpm"
 
 #ifdef WIN32
-#define _X86_
-#include "StackWalker.h"
-BOOT_ENABLE_STACKWALKER;
+#include "BugTrap.h"
 #endif
 
 /*******************************************************/
@@ -184,8 +182,37 @@ END_EVENT_TABLE()
 /*******************************************************/
 IMPLEMENT_APP(mmGUIApp)
 /*******************************************************/
+
+#ifdef WIN32
+void setupBugTrap()
+{
+    // ...Set the BugTrap Exception Handler
+    BT_InstallSehFilter();
+
+	BT_SetAppName(L"Money Manager Ex");
+
+	BT_SetAppVersion(L"0.9.3.0");
+
+    BT_SetDialogMessage(BTDM_INTRO1, L"Money Manager Ex has encountered an unrecoverable error and needs to close!");
+    BT_SetDialogMessage(BTDM_INTRO2, L"To help fix this issue, please save the information in this crash report and send it to us.");
+	BT_SetFlags(BTF_DETAILEDMODE);
+
+    BT_SetSupportURL(L"http://www.thezeal.com/software");
+   
+    BT_SetTerminate(); // set_terminate() must be called from every thread
+
+    DWORD dwMode = SetErrorMode(SEM_NOGPFAULTERRORBOX);
+    SetErrorMode(dwMode | SEM_NOGPFAULTERRORBOX);
+}
+#endif
+
 bool mmGUIApp::OnInit()
 {
+#ifdef WIN32
+    /* Setup BugTrap */
+    setupBugTrap();
+#endif
+
     /* Get INI DB for loading settings */
     wxSQLite3Database* inidb = new wxSQLite3Database();
 

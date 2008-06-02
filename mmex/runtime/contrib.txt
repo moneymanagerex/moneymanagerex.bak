@@ -18,7 +18,7 @@ Translations
 Italian
 -- Claudio
 French
--- Berry As, Jean-Christophe, bipop, drambeau
+-- Berry As, Jean-Christophe, bipop, drambeau, Ben
 Greek
 -- Panagiotis Pentzeridis
 Czech
@@ -42,7 +42,7 @@ Croatian
 Polish
 -- Andrzej
 Norwegian
--- Fredrik Strand & Torbjørn Kvande
+-- Fredrik Strand & Torbjorn Kvande
 Ukrainian
 -- Leonid Shturma
 Spanish
@@ -75,3 +75,7 @@ FusedNet(fusednetwork.com)
 William Metz
 Emmanuel Poirier
 Jamshed S
+Humberto Mendez Ocana
+Marco Berri
+Michelle Sarkis
+Gabriele Falistocco

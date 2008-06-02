@@ -1277,19 +1277,22 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& event)
 
 void MyListCtrl::OnListItemActivated(wxListEvent& event)
 {
-    selectedIndex_ = event.GetIndex();
-    mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_,  cp_->accountID_, 
-        cp_->trans_[selectedIndex_]->transactionID(), true, cp_->inidb_, this);
-    if ( dlg->ShowModal() == wxID_OK )
-    {
-        cp_->initVirtualListControl();
-        RefreshItems(0, ((int)cp_->trans_.size()) - 1);
-        if (selectedIndex_ != -1)
+    if (selectedIndex_ != -1)
+	{
+        //selectedIndex_ = event.GetIndex();
+        mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_,  cp_->accountID_, 
+            cp_->trans_[selectedIndex_]->transactionID(), true, cp_->inidb_, this);
+        if ( dlg->ShowModal() == wxID_OK )
         {
-           SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-           SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-           EnsureVisible(selectedIndex_);
+            cp_->initVirtualListControl();
+            RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+            if (selectedIndex_ != -1)
+            {
+                SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+                SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                EnsureVisible(selectedIndex_);
+            }
         }
+        dlg->Destroy();
     }
-    dlg->Destroy();
 }

@@ -213,7 +213,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\samples;$(WXWIN)\include;$(WXWIN)\include\;include\"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;bugtrap-1.2&quot;;&quot;$(WXWIN)\samples&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\include\&quot;;include\"
 				PreprocessorDefinitions="WXSQLITE3_HAVE_METADATA;WXSQLITE3_HAVE_CODEC;WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH;_UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;SQLITE_CORE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -236,10 +236,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28ud_aui.lib wxzlibd.lib wxmsw28ud_core.lib wxbase28ud.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28ud_net.lib wxmsw28ud_adv.lib wxpngd.lib wxmsw28ud_html.lib wxjpegd.lib"
+				AdditionalDependencies="wxmsw28ud_aui.lib wxzlibd.lib wxmsw28ud_core.lib wxbase28ud.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28ud_net.lib wxmsw28ud_adv.lib wxpngd.lib wxmsw28ud_html.lib wxjpegd.lib bugtrapu.lib"
 				OutputFile="$(OutDir)/mmex.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;;lib\"
+				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;;lib\;&quot;bugtrap-1.2&quot;"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/mmex.pdb"
 				SubSystem="2"
@@ -296,10 +296,10 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
-				InlineFunctionExpansion="1"
-				OmitFramePointers="true"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\"
+				Optimization="0"
+				InlineFunctionExpansion="0"
+				OmitFramePointers="false"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\;&quot;bugtrap-1.2&quot;"
 				PreprocessorDefinitions="UNICODE;_WINDOWS;WIN32;NDEBUG;__WXMSW__;_CONSOLE;_UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;SQLITE_CORE"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -308,7 +308,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="0"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -322,14 +322,14 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28u_aui.lib wxzlib.lib wxmsw28u_core.lib wxbase28u.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28u_net.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxjpeg.lib wxpng.lib"
+				AdditionalDependencies="wxmsw28u_aui.lib wxzlib.lib wxmsw28u_core.lib wxbase28u.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28u_net.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxjpeg.lib wxpng.lib bugtrapu.lib"
 				OutputFile="$(OutDir)/mmex.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;lib\;"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;lib\;&quot;bugtrap-1.2&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
+				OptimizeReferences="0"
+				EnableCOMDATFolding="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -517,10 +517,6 @@
 			</File>
 			<File
 				RelativePath=".\src\splittransactionsdialog.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Stackwalker.cpp"
 				>
 			</File>
 			<File

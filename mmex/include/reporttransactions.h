@@ -78,7 +78,12 @@ public:
 			hb.addTableCell(refTrans[index]->dateStr_);
 			hb.addTableCell(refTrans[index]->fromAccountStr_, false, true);
 			hb.addTableCell(refTrans[index]->payeeStr_, false, true);
-			hb.addTableCell(refTrans[index]->transType_);
+			if (refTrans[index]->transType_ == wxT("Deposit"))
+				hb.addTableCell(_("Deposit"));
+			else if (refTrans[index]->transType_ == wxT("Withdrawal"))
+				hb.addTableCell(_("Withdrawal"));
+			else if (refTrans[index]->transType_ == wxT("Transfer"))
+				hb.addTableCell(_("Transfer"));
 			hb.addTableCell(refTrans[index]->fullCatStr_, false, true);
 			hb.addTableCell(refTrans[index]->status_);
 
