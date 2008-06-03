@@ -30,7 +30,7 @@ public:
         hb.addHeader(3, _("Transaction Statistics for ") + yearStr );
 
         wxDateTime now = wxDateTime::Now();
-        wxString dt = wxT("Today's Date: ") + mmGetNiceDateString(now);
+        wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
         hb.addHeader(7, dt);
         hb.addLineBreak();
         hb.addLineBreak();
@@ -52,7 +52,7 @@ public:
         
         for (int yidx = 0; yidx < 12; yidx++)
         {
-            wxString monName = wxDateTime::GetMonthName((wxDateTime::Month)yidx);
+            wxString monName = mmGetNiceMonthName(yidx);
 
             wxDateTime dtPrevBegin(1, (wxDateTime::Month)yidx, year_);
             wxDateTime dtPrevEnd = dtPrevBegin.GetLastMonthDay((wxDateTime::Month)yidx, year_);

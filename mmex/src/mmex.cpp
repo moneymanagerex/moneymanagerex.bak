@@ -197,7 +197,7 @@ void setupBugTrap()
     BT_SetDialogMessage(BTDM_INTRO2, L"To help fix this issue, please save the information in this crash report and send it to us.");
 	BT_SetFlags(BTF_DETAILEDMODE);
 
-    BT_SetSupportURL(L"http://www.thezeal.com/software");
+    BT_SetSupportURL(L"http://www.codelathe.com/mmex");
    
     BT_SetTerminate(); // set_terminate() must be called from every thread
 
@@ -1877,7 +1877,9 @@ void mmGUIFrame::createHomePage()
         panelCurrent_  = 0;
     }
     panelCurrent_ = new mmHomePagePanel(this, 
-        db_.get(), core_, 
+        db_.get(), 
+        inidb_,
+        core_, 
         m_topCategories,
         homePanel, 
         ID_PANEL3, 
@@ -2755,7 +2757,7 @@ void mmGUIFrame::OnHelp(wxCommandEvent& event)
  
 void mmGUIFrame::OnCheckUpdate(wxCommandEvent& event)
 {
-    wxString site = wxT("http://www.thezeal.com/software/managerex/version.html");
+    wxString site = wxT("http://www.codelathe.com/mmex/version.html");
     wxURL url(site);
 
     unsigned char buf[1024];

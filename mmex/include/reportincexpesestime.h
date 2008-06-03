@@ -52,7 +52,7 @@ public:
         
         for (int yidx = 0; yidx < 12; yidx++)
         {
-            wxString monName = wxDateTime::GetMonthName((wxDateTime::Month)yidx) + wxT(" ") + yearStr;
+            wxString monName = mmGetNiceMonthName(yidx) + wxT(" ") + yearStr;
 
             wxDateTime dtBegin(1, (wxDateTime::Month)yidx, year_);
             wxDateTime dtEnd = dtBegin.GetLastMonthDay((wxDateTime::Month)yidx, year_);

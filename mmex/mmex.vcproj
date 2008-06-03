@@ -1073,6 +1073,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\reporttransstats.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\resource.h"
 				>
 			</File>

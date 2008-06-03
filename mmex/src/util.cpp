@@ -282,10 +282,10 @@ wxString mmGetNiceDateString(wxDateTime dt)
 
 wxString mmGetNiceDateSimpleString(wxDateTime dt)
 {
-    wxString dts = wxDateTime::GetMonthName(dt.GetMonth()) + wxString(wxT(" "));
+	wxString dts = mmGetNiceMonthName(dt.GetMonth()) + wxString(wxT(" "));
     dts += wxString::Format(wxT("%d"), dt.GetDay()) + wxT(", ") 
         + wxString::Format(wxT("%d"), dt.GetYear());
-    return dts;
+	return dts;    
 }
 
 void mmShowErrorMessage(wxWindow* parent, wxString message, wxString messageheader)

@@ -148,7 +148,7 @@ void mmAboutDialog::CreateControls()
        itemBoxSizer4->Add(itemStaticText911, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
        wxStaticText* itemStaticText10 = new wxStaticText( itemDialog1, 
-          wxID_STATIC, wxT("http://www.thezeal.com/software"), wxDefaultPosition, wxDefaultSize, 0 );
+          wxID_STATIC, wxT("http://www.codelathe.com"), wxDefaultPosition, wxDefaultSize, 0 );
        itemBoxSizer4->Add(itemStaticText10, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
        itemBoxSizer4->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);

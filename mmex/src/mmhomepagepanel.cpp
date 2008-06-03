@@ -38,6 +38,7 @@ END_EVENT_TABLE()
 
 mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame, 
             wxSQLite3Database* db, 
+            wxSQLite3Database* inidb, 
             mmCoreDB* core, 
             const wxString& topCategories,
             wxWindow *parent,
@@ -48,6 +49,7 @@ mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame,
             const wxString& name )
 {
     db_ = db;
+    inidb_ = inidb;
     core_ = core;
     frame_ = frame;
     topCategories_ = topCategories;
@@ -110,20 +112,18 @@ void mmHomePagePanel::updateAccounts()
 
     /////////////////   
 
-    int ct = 0;  
+    
     double tincome = 0.0;
     double texpenses = 0.0;
     double tBalance = 0.0;
+    wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
     for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
     {
         mmCheckingAccount* pCA 
            = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pCA && pCA->status_== mmAccount::MMEX_Open)
         {
-           std::vector<wxString> data1;
-		   hb.startTableRow();
-		   hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->accountID_), pCA->accountName_, false, true);
-
+          
            boost::shared_ptr<mmCurrency> pCurrencyPtr 
 			   = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
            wxASSERT(pCurrencyPtr);
@@ -137,16 +137,23 @@ void mmHomePagePanel::updateAccounts()
            tBalance += bal * rate;
            wxString balance;
            mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
-		   hb.addTableCell(balance, true);
-		   hb.endTableRow();
 
            double income = 0.0, expenses = 0.0;
            core_->bTransactionList_.getExpensesIncome(pCA->accountID_, expenses, income, 
               false,dtBegin, dtEnd);
 
+           if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
+               (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
+               (vAccts == wxT("ALL")))
+           {
+               hb.startTableRow();
+               hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->accountID_), pCA->accountName_, false, true);
+               hb.addTableCell(balance, true);
+               hb.endTableRow();
+           }
+
            tincome += income;
            texpenses += expenses;
-           ct++;
         }
     }
 
@@ -239,7 +246,7 @@ void mmHomePagePanel::updateAccounts()
     wxString bufSQLStr = wxString::Format(wxT("select * from BILLSDEPOSITS_V1")); 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQLStr);
 
-    ct = 0;
+    int ct = 0;
     while (q1.NextRow())
     {
         mmBDTransactionHolder th;

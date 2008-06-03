@@ -55,7 +55,8 @@ class mmHomePagePanel : public mmPanelBase
 
 public:
     mmHomePagePanel( mmGUIFrame* frame, 
-        wxSQLite3Database* db_, 
+        wxSQLite3Database* db_,
+        wxSQLite3Database* inidb_,
         mmCoreDB* core_,
         const wxString& topCategories,
         wxWindow *parent,
@@ -77,6 +78,7 @@ public:
 
 private:
     wxSQLite3Database* db_;
+    wxSQLite3Database* inidb_;
     mmCoreDB* core_;
     mmGUIFrame* frame_;
     mmHtmlWindow* htmlWindow_;

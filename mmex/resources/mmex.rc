@@ -67,11 +67,11 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "TheZeal Software"
+            VALUE "CompanyName", "CodeLathe LLC"
             VALUE "FileDescription", "Money Management Software"
             VALUE "FileVersion", "0, 9, 3, 0"
             VALUE "InternalName", "mmex"
-            VALUE "LegalCopyright", "Copyright (C) 2006-2008 Madhan Kanagavel (http://www.thezeal.com/software)"
+            VALUE "LegalCopyright", "Copyright (C) 2006-2008 CodeLathe LLC (http://www.codelathe.com/mmex)"
             VALUE "OriginalFilename", "mmex.rc"
             VALUE "ProductName", " mmex"
             VALUE "ProductVersion", "0, 9, 3, 0"

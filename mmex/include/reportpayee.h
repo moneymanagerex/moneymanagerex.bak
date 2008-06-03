@@ -38,7 +38,7 @@ public:
         {
             wxString dtRange = _("From: ") 
                 + mmGetNiceDateSimpleString(tBegin.Add(wxDateSpan::Day())) 
-                + _T(" To: ") 
+                + _(" To: ") 
                 + mmGetNiceDateSimpleString(dtEnd_);
             hb.addHeader(7, dtRange);
             hb.addLineBreak();

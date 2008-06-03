@@ -333,8 +333,21 @@ void mmStocksPanel::initVirtualListControl()
     wxString original;
     mmCurrencyFormatter::formatDoubleToCurrency(originalVal, original);
 
+    double diff = 0.0;
+    if (total > originalVal)
+        diff = total - originalVal;
+    else
+        diff = originalVal - total;
+
+    wxString diffStr;
+    mmCurrencyFormatter::formatDoubleToCurrency(diff, diffStr);
+
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
-    wxString lbl  = wxString::Format(_("Total: %s Invested: %s "), balance.c_str(), original.c_str());
+    wxString lbl;
+    if (total > originalVal)
+        lbl  = wxString::Format(_("Total: %s Invested: %s Gain: %s "), balance.c_str(), original.c_str(), diffStr.c_str());
+    else
+        lbl  = wxString::Format(_("Total: %s Invested: %s Loss: %s "), balance.c_str(), original.c_str(), diffStr.c_str());
     header->SetLabel(lbl);
 
     if (accountID_ == -1)

@@ -28,7 +28,7 @@ Russian
 Brazilian
 -- Jose Carlos
 German
--- Schrempfi, goe
+-- Schrempfi, goe, STiGMaTa_ch
 Simple Chinese
 -- Liu Ming
 Tr. Chinese
@@ -36,13 +36,11 @@ Tr. Chinese
 Hebrew
 -- Ykpui
 Tamil
--- Gopi Gopalakrishnan & Muguntharaj Subramanian
+-- Gopi Gopalakrishnan, Muguntharaj Subramanian
 Croatian
 -- Goran Bobanovic
 Polish
 -- Andrzej
-Norwegian
--- Fredrik Strand & Torbjorn Kvande
 Ukrainian
 -- Leonid Shturma
 Spanish
@@ -50,11 +48,13 @@ Spanish
 Hungarian
 -- Csaba
 Slovak
--- Abadyba & Misko B
+-- Abadyba, Misko B
 Turkish
 -- Murat Bilgen
 Vietnamese
 - Nicky
+Norwegian
+-- Fredrik Strand, Torbjorn Kvande
 
 User Manual
 ===========
@@ -79,3 +79,4 @@ Humberto Mendez Ocana
 Marco Berri
 Michelle Sarkis
 Gabriele Falistocco
+jchalmers

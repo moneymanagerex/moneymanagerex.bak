@@ -35,12 +35,9 @@ public:
         mmHTMLBuilder hb;
         hb.init();
         hb.addHeader(3, _("Summary of Assets"));
-
+        
         wxDateTime now = wxDateTime::Now();
-        wxString dt(wxDateTime::GetWeekDayName(now.GetWeekDay()) + wxString(wxT(", ")));
-        dt += wxDateTime::GetMonthName(now.GetMonth()) + wxString(wxT(" "));
-        dt += wxString::Format(wxT("%d"), now.GetDay()) + wxT(", ") 
-            + wxString::Format(wxT("%d"), now.GetYear());
+        wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
         hb.addHeader(7, dt);
         hb.addLineBreak();
         hb.addLineBreak();
