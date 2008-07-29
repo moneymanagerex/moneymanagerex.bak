@@ -4,8 +4,9 @@ WARNING: This software is under development.
 If upgrading from a previous version, 
 backup your old data file first! 
 ======================================
-Copyright (C) 2005-2007 Madhan Kanagavel
-http://www.thezeal.com/software
+Copyright (C) 2005-2009 Madhan Kanagavel
+CodeLathe, LLC
+http://www.codelathe.com
 ======================================
 If you find bugs/issues please use the mailing list
 located in the help menu to let us know.

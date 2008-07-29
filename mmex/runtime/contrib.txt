@@ -55,6 +55,14 @@ Vietnamese
 - Nicky
 Norwegian
 -- Fredrik Strand, Torbjorn Kvande
+Romanian
+-- Florin
+Indonesian Translation 
+-- Dindin
+Vietnamese
+-- Nicky, Luu Cong Thanh
+Swedish
+-- Tomplast
 
 User Manual
 ===========
