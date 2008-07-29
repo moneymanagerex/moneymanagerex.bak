@@ -184,6 +184,7 @@ IMPLEMENT_APP(mmGUIApp)
 /*******************************************************/
 
 #ifdef WIN32
+#ifdef _UNICODE
 void setupBugTrap()
 {
     // ...Set the BugTrap Exception Handler
@@ -205,12 +206,15 @@ void setupBugTrap()
     SetErrorMode(dwMode | SEM_NOGPFAULTERRORBOX);
 }
 #endif
+#endif
 
 bool mmGUIApp::OnInit()
 {
 #ifdef WIN32
+#ifdef _UNICODE
     /* Setup BugTrap */
     setupBugTrap();
+#endif
 #endif
 
     /* Get INI DB for loading settings */
