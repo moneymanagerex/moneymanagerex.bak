@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mmex", "mmex.vcproj", "{8096FE3F-A0A2-49C3-9BE6-F231B29207EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		mmex_unicode_debug|Win32 = mmex_unicode_debug|Win32
+		mmex_unicode_release|Win32 = mmex_unicode_release|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8096FE3F-A0A2-49C3-9BE6-F231B29207EF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8096FE3F-A0A2-49C3-9BE6-F231B29207EF}.Debug|Win32.Build.0 = Debug|Win32
+		{8096FE3F-A0A2-49C3-9BE6-F231B29207EF}.mmex_unicode_debug|Win32.ActiveCfg = mmex_unicode_debug|Win32
+		{8096FE3F-A0A2-49C3-9BE6-F231B29207EF}.mmex_unicode_debug|Win32.Build.0 = mmex_unicode_debug|Win32
+		{8096FE3F-A0A2-49C3-9BE6-F231B29207EF}.mmex_unicode_release|Win32.ActiveCfg = mmex_unicode_release|Win32
+		{8096FE3F-A0A2-49C3-9BE6-F231B29207EF}.mmex_unicode_release|Win32.Build.0 = mmex_unicode_release|Win32
+		{8096FE3F-A0A2-49C3-9BE6-F231B29207EF}.Release|Win32.ActiveCfg = Release|Win32
+		{8096FE3F-A0A2-49C3-9BE6-F231B29207EF}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

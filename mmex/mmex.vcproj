@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="mmex"
 	ProjectGUID="{8096FE3F-A0A2-49C3-9BE6-F231B29207EF}"
 	RootNamespace="mmex"
 	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -41,15 +42,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\"
-				PreprocessorDefinitions="WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH;_CRT_SECURE_NO_DEPRECATE; _CRT_NONSTDC_NO_DEPRECATE"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\msw&quot;;&quot;$(WXWIN)\samples&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\include\&quot;;include\;&quot;bugtrap-1.2&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;SQLITE_CORE;WXSQLITE3_HAVE_METADATA;WXSQLITE3_HAVE_CODEC"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -64,13 +64,15 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28d_aui.lib sqlite3.lib wxmsw28d_core.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28d_net.lib wxmsw28d_adv.lib wxmsw28d_html.lib"
+				AdditionalDependencies="wxmsw28d_aui.lib wxmsw28d_core.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28d_net.lib wxmsw28d_adv.lib wxmsw28d_html.lib"
 				OutputFile="$(OutDir)/mmexa.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;lib\;"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/mmex.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -91,9 +93,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -127,15 +126,14 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE; _CRT_NONSTDC_NO_DEPRECATE;WXSQLITE3_HAVE_CODEC;;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;SQLITE_CORE"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\msw&quot;;&quot;$(WXWIN)\samples&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\include\&quot;;include\;&quot;bugtrap-1.2&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;WXSQLITE3_HAVE_CODEC;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;SQLITE_CORE;WXSQLITE3_HAVE_METADATA"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -158,6 +156,8 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -178,9 +178,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -221,7 +218,6 @@
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -243,6 +239,8 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/mmex.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -263,9 +261,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -307,7 +302,6 @@
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -330,6 +324,8 @@
 				SubSystem="2"
 				OptimizeReferences="0"
 				EnableCOMDATFolding="0"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -351,9 +347,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -587,6 +580,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\sqlite\bitvec.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\btmutex.c"
+					>
+				</File>
+				<File
 					RelativePath=".\src\sqlite\btree.c"
 					>
 				</File>
@@ -623,7 +624,51 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\sqlite\fault.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\fts3.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\fts3.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\fts3_hash.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\fts3_hash.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\fts3_icu.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\fts3_porter.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\fts3_tokenizer.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\fts3_tokenizer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\fts3_tokenizer1.c"
+					>
+				</File>
+				<File
 					RelativePath=".\src\sqlite\func.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\global.c"
 					>
 				</File>
 				<File
@@ -635,11 +680,26 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\sqlite\icu.c"
+					RelativePath=".\src\sqlite\hwtime.h"
 					>
 				</File>
 				<File
+					RelativePath=".\src\sqlite\icu.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\src\sqlite\insert.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\journal.c"
 					>
 				</File>
 				<File
@@ -660,6 +720,46 @@
 				</File>
 				<File
 					RelativePath=".\src\sqlite\malloc.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\mem1.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\mem2.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\mem3.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\mem4.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\mem5.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\mutex.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\mutex.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\mutex_os2.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\mutex_unix.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\mutex_w32.c"
 					>
 				</File>
 				<File
@@ -699,11 +799,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\sqlite\pager.c"
+					RelativePath=".\src\sqlite\pager.h"
 					>
 				</File>
 				<File
-					RelativePath=".\src\sqlite\pager.h"
+					RelativePath=".\src\sqlite\pager_secure.c"
 					>
 				</File>
 				<File
@@ -731,6 +831,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\sqlite\rtree.c"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\rtree.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\sqlite\select.c"
 					>
 				</File>
@@ -748,6 +856,10 @@
 				</File>
 				<File
 					RelativePath=".\src\sqlite\sqliteLimit.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\sqlite\status.c"
 					>
 				</File>
 				<File
