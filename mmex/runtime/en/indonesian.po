@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-29 15:18-0600\n"
-"PO-Revision-Date: 2008-07-29 15:18-0600\n"
+"POT-Creation-Date: 2008-07-29 16:14-0600\n"
+"PO-Revision-Date: 2008-07-29 16:14-0600\n"
 "Last-Translator: Madhan <madhan@yahoo.com>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -3397,7 +3397,7 @@ msgstr "Total Investasi Saham :"
 msgid "Transaction List"
 msgstr "Daftar Transaksi"
 
-#: include/reporttransactions.h:118
+#: include/reporttransactions.h:120
 msgid "Total Amount: "
 msgstr "Total Keseluruhan :"
 
