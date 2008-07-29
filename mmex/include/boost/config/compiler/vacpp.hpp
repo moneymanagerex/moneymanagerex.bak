@@ -27,7 +27,6 @@
 
 #if (__IBMCPP__ <= 600) || !defined(BOOST_STRICT_CONFIG)
 #  define BOOST_NO_POINTER_TO_MEMBER_TEMPLATE_PARAMETERS
-#  define BOOST_MPL_CFG_ASSERT_USE_RELATION_NAMES 1
 #endif
 
 //
@@ -52,6 +51,9 @@
 #     error "Unknown compiler version - please run the configure tests and report the results"
 #  endif
 #endif
+
+// Some versions of the compiler have issues with default arguments on partial specializations
+#define BOOST_PARTIAL_SPECIALIZATION_EXPLICT_ARGS
 
 
 

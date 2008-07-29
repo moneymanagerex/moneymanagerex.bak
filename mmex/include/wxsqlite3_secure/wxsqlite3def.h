@@ -20,6 +20,21 @@
 //                            Added support for BLOBs as wxMemoryBuffer objects
 //                            Added support for loadable extensions
 //                            Optional support for key based database encryption
+//              2007-02-12  - Upgrade to SQLite3 version 3.3.12
+//              2007-05-01  - Upgrade to SQLite3 version 3.3.17
+//              2007-10-28  - Upgrade to SQLite3 version 3.5.2
+//              2007-11-17  - Fixed a bug in wxSQLite3Database::Close
+//                            Eliminated several compile time warnings
+//              2007-12-19  - Upgrade to SQLite3 version 3.5.4
+//                            Fixed a bug in wxSQLite3Database::Begin
+//              2008-01-05  - Added support for shared cache mode
+//                            Added support for access to original SQL statement
+//                            for prepared statements (requires SQLite 3.5.3 or above)
+//              2008-04-27  - Upgrade to SQLite3 version 3.5.8
+//                            Fixed several minor issues in the build files
+//              2008-06-28  - Upgrade to SQLite3 version 3.5.9
+//              2008-07-19  - Upgrade to SQLite3 version 3.6.0
+//                            
 // Copyright:   (c) Ulrich Telle
 // Licence:     wxWindows licence
 ///////////////////////////////////////////////////////////////////////////////
@@ -61,30 +76,122 @@
 \section version Version history
 
 <dl>
+<dt><b>1.9.0</b> - <i>July 2008</i></dt>
+<dd>
+Upgrade to SQLite version 3.6.0<br>
+The optional key based encryption support has been adapted to
+support SQLite version 3.6.0.<br>
+Added static methods to initialize and shutdown the SQLite library.<br>
+Changed build system to support static library build against shared
+wxWidgets build on Linux.<br>
+Changed behaviour of wxSQLite3Database::Close method to finalize
+all unfinalized prepared statements.
+
+</dd>
+<dt><b>1.8.5</b> - <i>June 2008</i></dt>
+<dd>
+Upgrade to SQLite version 3.5.9<br>
+Integration of the optional key based encryption support into SQLite
+has been made easier. Changes to original SQLite source files
+are no longer necessary.
+
+</dd>
+<dt><b>1.8.4</b> - <i>April 2008</i></dt>
+<dd>
+Upgrade to SQLite version 3.5.8<br>
+Added support for accessing database limits<br>
+Changed method TableExists to check a table name case insensitive<br>
+Fixed several minor issues in the build files.
+
+</dd>
+<dt><b>1.8.3</b> - <i>January 2008</i></dt>
+<dd>
+Added support for shared cache mode<br>
+Added support for access to original SQL statement
+for prepared statements (requires SQLite 3.5.3 or above)
+
+</dd>
+<dt><b>1.8.2</b> - <i>December 2007</i></dt>
+<dd>
+Upgrade to SQLite version 3.5.4<br>
+Fixed a bug in wxSQLite3Database::Begin (wrong transaction type)
+
+</dd>
+<dt><b>1.8.1</b> - <i>November 2007</i></dt>
+<dd>
+Fixed a bug in in wxSQLite3Database::Close (resetting flag m_isEncrypted)<br>
+Eliminated several compile time warnings (regarding unused parameters)<br>
+Fixed a compile time bug in wxSQLite3Database::GetBlob (missing explicit type cast)
+
+</dd>
+<dt><b>1.8.0</b> - <i>November 2007</i></dt>
+<dd>
+Upgrade to SQLite version 3.5.2<br>
+Support for SQLite incremental BLOBs<br>
+ Changed source code in the SQLite3 encryption extension to eliminate several warnings<br>
+Changed default wxWidgets version to 2.8.x<br>
+Adjusted sources for SQLite encryption support are included for all SQLite version from 3.3.1 up to 3.5.2<br>
+SQLite link libraries for MinGW on Windows are included<br>
+Added <code>WXMAKINGLIB_WXSQLITE3</code> compile time option
+to support building wxSQLite3 as a static library while
+using the shared libraries of wxWidgets.
+
+</dd>
+<dt><b>1.7.3</b> - <i>May 2007</i></dt>
+<dd>
+Upgrade to SQLite version 3.3.17<br>
+
+Fixed a bug in the SQLite3 encryption extension
+(MD5 algorithm was not aware of endianess on
+big-endian platforms, resulting in non-portable
+database files)
+
+</dd>
+<dt><b>1.7.2</b> - <i>February 2007</i></dt>
+<dd>
+Upgrade to SQLite version 3.3.12<br>
+Support for loadable extensions is now optional
+Check for optional wxSQLite3 features at runtime
+wxSQLite3 API independent of optional features
+
+</dd>
+<dt><b>1.7.1</b> - <i>January 2007</i></dt>
+<dd>
+Fixed a bug in the key based database encryption feature
+(The call to <b>sqlite3_rekey</b> in wxSQLite3Database::ReKey
+could cause a program crash, when used to encrypt a previously
+unencrypted database.)<br>
+
+</dd>
 <dt><b>1.7.0</b> - <i>January 2007</i></dt>
 <dd>
-Upgrade to SQLite version 3.3.10<br>
+Upgrade to SQLite version 3.3.10 (<b>Attention</b>: at least SQLite version 3.3.9 is required)<br>
 Added support for BLOBs as wxMemoryBuffer objects<br>
 Added support for loadable extensions<br>
 Optional support for key based database encryption
+
 </dd>
 <dt><b>1.6.0</b> - <i>July 2006</i></dt>
 <dd>
 Added support for user defined collation sequences
+
 </dd>
 <dt><b>1.5.3</b> - <i>June 2006</i></dt>
 <dd>
 Upgrade to SQLite version 3.3.6<br>
 Added support for optional SQLite meta data methods
+
 </dd>
 <dt><b>1.5.2</b> - <i>March 2006</i></dt>
 <dd>
 Fixed a bug in wxSQLite3Database::Prepare<br>
 Added wxSQLite3Database::IsOpen for convenience
+
 </dd>
 <dt><b>1.5.1</b> - <i>February 2006</i></dt>
 <dd>
 Upgrade to SQLite version 3.3.4 (wxMSW only)
+
 </dd>
 <dt><b>1.5</b> - <i>February 2006</i></dt>
 <dd>
@@ -144,33 +251,14 @@ First public release
 #ifndef _WX_SQLITE3_DEF_H_
 #define _WX_SQLITE3_DEF_H_
 
-// Conditional compilation
-// -----------------------
-
-//! If this define is set to 1, then the SQLite library will be loaded dynamically
-//! otherwise a link library is required to build wxSQLite3.
-#ifndef wxUSE_DYNAMIC_SQLITE3_LOAD
-  #define wxUSE_DYNAMIC_SQLITE3_LOAD   0
-#endif
-
-#ifdef WXMAKINGDLL_WXSQLITE3
+#if defined(WXMAKINGLIB_WXSQLITE3)
+  #define WXDLLIMPEXP_SQLITE3
+#elif defined(WXMAKINGDLL_WXSQLITE3)
   #define WXDLLIMPEXP_SQLITE3 WXEXPORT
 #elif defined(WXUSINGDLL_WXSQLITE3)
   #define WXDLLIMPEXP_SQLITE3 WXIMPORT
 #else // not making nor using DLL
   #define WXDLLIMPEXP_SQLITE3
-#endif
-
-//! To enable SQLite's meta data methods define WXSQLITE3_HAVE_METADATA here.
-//! Attention: SQLite needs to be compiled with SQLITE_ENABLE_COLUMN_METADATA for this to work
-#if 0
-#define WXSQLITE3_HAVE_METADATA
-#endif
-
-//! To enable SQLite's database encryption support define WXSQLITE3_HAVE_CODEC here.
-//! Attention: SQLite needs to be compiled with SQLITE_HAS_CODEC for this to work
-#if 0
-#define WXSQLITE3_HAVE_CODEC
 #endif
 
 #endif // _WX_SQLITE3_DEF_H_

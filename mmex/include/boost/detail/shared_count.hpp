@@ -29,10 +29,9 @@
 #include <boost/detail/sp_counted_base.hpp>
 #include <boost/detail/sp_counted_impl.hpp>
 
-#include <memory>           // std::auto_ptr, std::allocator
+#include <memory>           // std::auto_ptr
 #include <functional>       // std::less
 #include <new>              // std::bad_alloc
-#include <typeinfo>         // std::type_info in get_deleter
 
 namespace boost
 {
@@ -130,6 +129,52 @@ public:
 #endif
     }
 
+    template<class P, class D, class A> shared_count( P p, D d, A a ): pi_( 0 )
+#if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
+        , id_(shared_count_id)
+#endif
+    {
+        typedef sp_counted_impl_pda<P, D, A> impl_type;
+        typedef typename A::template rebind< impl_type >::other A2;
+
+        A2 a2( a );
+
+#ifndef BOOST_NO_EXCEPTIONS
+
+        try
+        {
+            pi_ = a2.allocate( 1, static_cast< impl_type* >( 0 ) );
+            new( static_cast< void* >( pi_ ) ) impl_type( p, d, a );
+        }
+        catch(...)
+        {
+            d( p );
+
+            if( pi_ != 0 )
+            {
+                a2.deallocate( static_cast< impl_type* >( pi_ ), 1 );
+            }
+
+            throw;
+        }
+
+#else
+
+        pi_ = a2.allocate( 1, static_cast< impl_type* >( 0 ) );
+
+        if( pi_ != 0 )
+        {
+            new( static_cast< void* >( pi_ ) ) impl_type( p, d, a );
+        }
+        else
+        {
+            d( p );
+            boost::throw_exception( std::bad_alloc() );
+        }
+
+#endif
+    }
+
 #ifndef BOOST_NO_AUTO_PTR
 
     // auto_ptr<Y> is special cased to provide the strong guarantee
@@ -213,7 +258,7 @@ public:
         return std::less<sp_counted_base *>()( a.pi_, b.pi_ );
     }
 
-    void * get_deleter(std::type_info const & ti) const
+    void * get_deleter( sp_typeinfo const & ti ) const
     {
         return pi_? pi_->get_deleter( ti ): 0;
     }
