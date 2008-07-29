@@ -64,6 +64,7 @@ public:
 		hb.addTableHeaderCell(_("Payee"));
 		hb.addTableHeaderCell(_("Type"));
 		hb.addTableHeaderCell(_("Category"));
+        hb.addTableHeaderCell(_("Notes"));
 		hb.addTableHeaderCell(_("Status"));
 		hb.addTableHeaderCell(_("Amount"));
 		hb.endTableRow();
@@ -85,6 +86,7 @@ public:
 			else if (refTrans[index]->transType_ == wxT("Transfer"))
 				hb.addTableCell(_("Transfer"));
 			hb.addTableCell(refTrans[index]->fullCatStr_, false, true);
+            hb.addTableCell(refTrans[index]->notes_, false, true);
 			hb.addTableCell(refTrans[index]->status_);
 
             if (refTrans[index]->reportCategAmountStr_ == wxT(""))  
@@ -114,8 +116,8 @@ public:
         core_->currencyList_.loadBaseCurrencySettings();
         mmCurrencyFormatter::formatDoubleToCurrency(total, balanceStr);
 
-		hb.addRowSeparator(7);
-		hb.addTotalRow(_("Total Amount: "), 7, balanceStr);
+		hb.addRowSeparator(8);
+		hb.addTotalRow(_("Total Amount: "), 8, balanceStr);
         hb.endTable();
 
 		hb.endCenter();
