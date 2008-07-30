@@ -16,10 +16,10 @@ Requirements:
 
 Required Libraries
 - wxWidgets >= 2.8.0 (www.wxwidgets.org)
-- Sqlite3   >= 3.3.5
 
 Prepackaged Libraries
 - wxSqlite3
+- sqlite
 - TinyXML
 
 --------------------------
@@ -30,8 +30,8 @@ Building Money Manager Ex
 Microsoft Windows
 =================
 
-1. Install Microsoft Visual Studio 2005 C++ Express, which is a free download
-2. Install the Platform SDK and make sure Visual Studio 2005 is correctly setup.
+1. Install Microsoft Visual Studio 2008 C++ Express, which is a free download
+2. Install the Platform SDK and make sure Visual Studio 2008 is correctly setup.
 3. Install wxWidgets 2.8.0 and above in a directory like c:\pgmming\wxwidgets2.8.0 and then create an environment variable WXWIN to point to this directory.
 4. Follow the instructions given by WxWidgets install on how to build it in 4 build modes. Static Ansi Debug, Static Ansi Release, Static Unicode Debug, Static Unicode Release.
 5. Open mmex.vcproj under mmex directory and do a batch build of all modes neceesary
@@ -62,9 +62,6 @@ GENERIC INSTRUCTIONS
   1) Read the install directions in wxWidgets for how to do a build and then install the build on the machine. For eg wxWidgets has been built with --with-gtk --disable-shared --enable-unicode
   2) After installation, wx-config will copied to the /usr/bin and can now correctly identify the command line params required.
 
-2. Download SQLite3 source and build and then install it in the system. The file libsqlite3.a should be available in the standard lib path in the system. (for eg, /usr/lib)
-
-
 3. Navigate to /trunk/mmex/
 
    Do 
@@ -84,9 +81,7 @@ With apt-get support, it is a little easier to do this in Ubuntu.
 
 2. Download and install the following packages
 	libwxgtk2.8-0, 
-        libwxgtk2.8-dev, 
-        libsqlite3-0, 
-        libsqlite3-dev
+    libwxgtk2.8-dev, 
 
 3. Do 
         >  mkdir buildgtk
