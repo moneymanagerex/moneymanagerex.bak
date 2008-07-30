@@ -222,10 +222,10 @@ void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)
 
 
    wxString bufSQL = wxString::Format(wxT("update ACCOUNTLIST_V1 SET ACCOUNTNAME='%s', ACCOUNTTYPE='%s', ACCOUNTNUM='%s', \
-                                          STATUS='%s', NOTES='%s', HELDAT='%s', WEBSITE='%s', CONTACTINFO='%s',  ACCESSINFO='%s',                               \
+       STATUS='%s', NOTES='%s', HELDAT='%s', WEBSITE='%s', CONTACTINFO='%s',  ACCESSINFO='%s',                               \
                                           INITIALBAL=%f, FAVORITEACCT='%s', CURRENCYID=%d                     \
                                           where ACCOUNTID=%d;"), 
-                                          mmCleanString(pAccount->accountName_.c_str()), 
+                                          mmCleanString(pAccount->accountName_.c_str()).c_str(), 
                                           pAccount->acctType_.c_str(), 
                                           pAccount->accountNum_.c_str(),  
                                           statusStr.c_str(), 
@@ -314,23 +314,24 @@ int mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
       wxASSERT(pCurrency);
       int currencyID = pCurrency->currencyID_;
       
-      wxString bufSQL = wxString::Format(wxT("insert into ACCOUNTLIST_V1 (ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, \
-                                               STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO,                                 \
-                                               INITIALBAL, FAVORITEACCT, CURRENCYID)                      \
-                                               values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, '%s', %d );"), 
-                                               mmCleanString(pAccount->accountName_.c_str()), 
-                                               pAccount->acctType_.ToAscii(), 
-                                               pAccount->accountNum_.c_str(),  
-                                               statusStr.c_str(), 
-                                               pAccount->notes_.c_str(), 
-                                               pAccount->heldAt_.c_str(), 
-                                               pAccount->website_.c_str(),
-                                               pAccount->contactInfo_.c_str(), 
-                                               pAccount->accessInfo_.c_str(),
-                                               pAccount->initialBalance_, 
-                                               favStr.c_str(), 
-                                               currencyID
-                                               );
+      wxString bufSQL 
+          = wxString::Format(wxT("insert into ACCOUNTLIST_V1 (ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, \
+             STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO,                                 \
+             INITIALBAL, FAVORITEACCT, CURRENCYID)                      \
+             values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, '%s', %d );"), 
+                             mmCleanString(pAccount->accountName_.c_str()).c_str(), 
+                             pAccount->acctType_.c_str(), 
+                             pAccount->accountNum_.c_str(),  
+                             statusStr.c_str(), 
+                             pAccount->notes_.c_str(), 
+                             pAccount->heldAt_.c_str(), 
+                             pAccount->website_.c_str(),
+                             pAccount->contactInfo_.c_str(), 
+                             pAccount->accessInfo_.c_str(),
+                             pAccount->initialBalance_, 
+                             favStr.c_str(), 
+                             currencyID
+                             );
 
         int retVal = db_->ExecuteUpdate(bufSQL);
 

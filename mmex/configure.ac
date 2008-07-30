@@ -1,4 +1,4 @@
-AC_INIT([Money Manager Ex], [0.8.0.3], [madhan@sourceforge.net])
+AC_INIT([Money Manager Ex], [0.9.3.0], [madhan@sourceforge.net])
 
 AC_PREREQ(2.53)
 
@@ -10,9 +10,6 @@ AC_CANONICAL_SYSTEM
 dnl Checks for programs
 AC_PROG_CXX
 AC_PROG_CXXCPP
-
-dnl Add sqlit3 Options to Configure
-AX_LIB_SQLITE3(3.3.5)
 
 dnl Add wxConfig Options to Configure
 AM_OPTIONS_WXCONFIG

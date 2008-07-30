@@ -73,36 +73,59 @@ Bakefile for generating makefiles in Linux.
         <sources>src/wxtinyxml.cpp</sources>
         <sources>src/wxsqlite3.cpp</sources>
         <sources>src/yahoosettingsdialog.cpp</sources>
-        <sources>src/sqlite/alter.c</sources>
 
+        <sources>src/sqlite/alter.c</sources>
         <sources>src/sqlite/analyze.c</sources>
         <sources>src/sqlite/attach.c</sources>
         <sources>src/sqlite/auth.c</sources>
         <sources>src/sqlite/btree.c</sources>
         <sources>src/sqlite/build.c</sources>
+        <sources>src/sqlite/bitvec.c</sources>
+        <sources>src/sqlite/btmutex.c</sources>
         <sources>src/sqlite/callback.c</sources>
         <sources>src/sqlite/complete.c</sources>
         <sources>src/sqlite/date.c</sources>
         <sources>src/sqlite/delete.c</sources>
         <sources>src/sqlite/expr.c</sources>
+        <sources>src/sqlite/fault.c</sources>
         <sources>src/sqlite/func.c</sources>
+        <sources>src/sqlite/fts3.c</sources>
+        <sources>src/sqlite/fts3_hash.c</sources>
+        <sources>src/sqlite/fts3_icu.c</sources>
+        <sources>src/sqlite/fts3_porter.c</sources>
+        <sources>src/sqlite/fts3_tokenizer1.c</sources>
+        <sources>src/sqlite/fts3_tokenizer.c</sources>
+        <sources>src/sqlite/global.c</sources>
         <sources>src/sqlite/hash.c</sources>
         <sources>src/sqlite/icu.c</sources>
         <sources>src/sqlite/insert.c</sources>
+        <sources>src/sqlite/journal.c</sources>
         <sources>src/sqlite/legacy.c</sources>
         <sources>src/sqlite/loadext.c</sources>
+        <sources>src/sqlite/mem1.c</sources>
+        <sources>src/sqlite/mem2.c</sources>
+        <sources>src/sqlite/mem3.c</sources>
+        <sources>src/sqlite/mem4.c</sources>
+        <sources>src/sqlite/mem5.c</sources>
+        <sources>src/sqlite/mutex.c</sources>
+        <sources>src/sqlite/mutex_os2.c</sources>
+        <sources>src/sqlite/mutex_unix.c</sources>
+        <sources>src/sqlite/mutex_w32.c</sources>
         <sources>src/sqlite/main.c</sources>
         <sources>src/sqlite/malloc.c</sources>
         <sources>src/sqlite/opcodes.c</sources>
         <sources>src/sqlite/os.c</sources>
         <sources>src/sqlite/os_unix.c</sources>
-        <sources>src/sqlite/pager.c</sources>
         <sources>src/sqlite/parse.c</sources>
         <sources>src/sqlite/pragma.c</sources>
         <sources>src/sqlite/prepare.c</sources>
         <sources>src/sqlite/printf.c</sources>
+        <sources>src/sqlite/pager_secure.c</sources>
+        <sources>src/sqlite/rtree.c</sources>
         <sources>src/sqlite/random.c</sources>
         <sources>src/sqlite/select.c</sources>
+        <sources>src/sqlite/status.c</sources>
+
         <sources>src/sqlite/table.c</sources>
         <sources>src/sqlite/tokenize.c</sources>
         <sources>src/sqlite/trigger.c</sources>
