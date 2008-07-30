@@ -25,7 +25,7 @@ Czech
 -- Josef Remes
 Russian
 -- KarmaSV
-Brazilian
+Brazilian Portuguese
 -- Jose Carlos
 German
 -- Schrempfi, goe, STiGMaTa_ch
@@ -52,15 +52,13 @@ Slovak
 Turkish
 -- Murat Bilgen
 Vietnamese
-- Nicky
+-- Nicky, Luu Cong Thanh
 Norwegian
 -- Fredrik Strand, Torbjorn Kvande
 Romanian
 -- Florin
 Indonesian Translation 
 -- Dindin
-Vietnamese
--- Nicky, Luu Cong Thanh
 Swedish
 -- Tomplast
 Dutch
