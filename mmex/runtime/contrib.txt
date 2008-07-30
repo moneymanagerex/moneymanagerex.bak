@@ -63,6 +63,8 @@ Vietnamese
 -- Nicky, Luu Cong Thanh
 Swedish
 -- Tomplast
+Dutch
+-- Theo Kamphuis
 
 User Manual
 ===========
