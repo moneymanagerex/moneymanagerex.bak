@@ -314,8 +314,6 @@ int mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
       wxASSERT(pCurrency);
       int currencyID = pCurrency->currencyID_;
       
-      std::wstring accountType = pAccount->acctType_.c_str();
-
       wxString bufSQL = wxString::Format(wxT("insert into ACCOUNTLIST_V1 (ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, \
                                                STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO,                                 \
                                                INITIALBAL, FAVORITEACCT, CURRENCYID)                      \

@@ -1,12 +1,15 @@
-Money Manager Ex (Beta) Setup License
-======================================
+Money Manager Ex Setup Notes
+============================
+
 WARNING: This software is under development.
 If upgrading from a previous version, 
 backup your old data file first! 
-======================================
-Copyright (C) 2005-2009 Madhan Kanagavel
+
 CodeLathe, LLC
+[CodeLathe is behind the next-generation distributed
+application platform called Tonido.]
 http://www.codelathe.com
+
 ======================================
 If you find bugs/issues please use the mailing list
 located in the help menu to let us know.
@@ -15,6 +18,8 @@ located in the help menu to let us know.
 ==========================
 GNU GENERAL PUBLIC LICENSE
 ==========================
+Copyright (C) 2005-2008 Madhan Kanagavel
+
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
