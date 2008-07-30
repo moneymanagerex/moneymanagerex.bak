@@ -68,7 +68,7 @@ bool mmAppStartDialog::Create( wxWindow* parent, wxWindowID id, const wxString& 
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
 
-    wxIcon icon(mainicon_xpm);
+    wxIcon icon(wxT("mmex.ico"), wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
 
     CreateControls();
@@ -88,13 +88,14 @@ void mmAppStartDialog::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxBitmap itemStaticBitmap4Bitmap(money_xpm);
+    wxBitmap itemStaticBitmap4Bitmap;
+    itemStaticBitmap4Bitmap.LoadFile(wxT("splash.png"), wxBITMAP_TYPE_PNG); 
     
     wxStaticBitmap* itemStaticBitmap4;
     if (!mmIniOptions::enableCustomLogo_)
     {
         itemStaticBitmap4 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
-            itemStaticBitmap4Bitmap, wxDefaultPosition, wxSize(181, 200), 0 );
+            itemStaticBitmap4Bitmap, wxDefaultPosition, wxSize(400, 209), 0 );
     }
     else
     {

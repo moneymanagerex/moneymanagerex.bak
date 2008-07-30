@@ -221,12 +221,12 @@ void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)
    int currencyID = pCurrency->currencyID_;
 
 
-   wxSQLite3StatementBuffer bufSQL;
-   bufSQL.Format("update ACCOUNTLIST_V1 SET ACCOUNTNAME='%q', ACCOUNTTYPE='%s', ACCOUNTNUM='%s', \
+   wxString bufSQL = wxString::Format(wxT("update ACCOUNTLIST_V1 SET ACCOUNTNAME='%s', ACCOUNTTYPE='%s', ACCOUNTNUM='%s', \
                                           STATUS='%s', NOTES='%s', HELDAT='%s', WEBSITE='%s', CONTACTINFO='%s',  ACCESSINFO='%s',                               \
                                           INITIALBAL=%f, FAVORITEACCT='%s', CURRENCYID=%d                     \
-                                          where ACCOUNTID=%d;", 
-                                          pAccount->accountName_.c_str(), pAccount->acctType_.c_str(), 
+                                          where ACCOUNTID=%d;"), 
+                                          mmCleanString(pAccount->accountName_.c_str()), 
+                                          pAccount->acctType_.c_str(), 
                                           pAccount->accountNum_.c_str(),  
                                           statusStr.c_str(), 
                                           pAccount->notes_.c_str(), 
@@ -314,13 +314,14 @@ int mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
       wxASSERT(pCurrency);
       int currencyID = pCurrency->currencyID_;
       
-      wxSQLite3StatementBuffer bufSQL;
-      bufSQL.Format("insert into ACCOUNTLIST_V1 (ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, \
+      std::wstring accountType = pAccount->acctType_.c_str();
+
+      wxString bufSQL = wxString::Format(wxT("insert into ACCOUNTLIST_V1 (ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, \
                                                STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO,                                 \
                                                INITIALBAL, FAVORITEACCT, CURRENCYID)                      \
-                                               values ('%q', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, '%s', %d );", 
+                                               values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, '%s', %d );"), 
                                                mmCleanString(pAccount->accountName_.c_str()), 
-                                               pAccount->acctType_.c_str(), 
+                                               pAccount->acctType_.ToAscii(), 
                                                pAccount->accountNum_.c_str(),  
                                                statusStr.c_str(), 
                                                pAccount->notes_.c_str(), 

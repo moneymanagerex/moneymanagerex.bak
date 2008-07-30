@@ -62,7 +62,7 @@ bool mmCustomSQLDialog::Create(  wxWindow* parent, wxWindowID id,
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(mainicon_xpm);
+    wxIcon icon(wxT("mmex.ico"), wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
 
     Centre();
@@ -178,7 +178,7 @@ void mmCustomSQLDialog::OnLoad(wxCommandEvent& event)
       wxString fullStr;
       for ( str = tFile.GetFirstLine(); !tFile.Eof(); str = tFile.GetNextLine() )
       {
-        fullStr += str;
+        fullStr += wxT(" ") + str;
       }
       queryBox_->SetValue(fullStr);
       tFile.Close();

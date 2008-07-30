@@ -71,7 +71,7 @@ void mmOptions::saveOptions(wxSQLite3Database* db)
    wxString mmIniOptions::logoName_ = wxT("");
    bool mmIniOptions::enableAddAccount_ = true;
    bool mmIniOptions::enableRepeatingTransactions_ = true;
-   wxString mmIniOptions::appName_ = wxT("Money Manager Ex");
+   wxString mmIniOptions::appName_ = wxT("Money Manager Ex - CodeLathe");
    bool mmIniOptions::enableImportMMNETCSV_ = true;
    bool mmIniOptions::enableImportMMCSV_ = true;
    bool mmIniOptions::enableCheckForUpdates_ = true;

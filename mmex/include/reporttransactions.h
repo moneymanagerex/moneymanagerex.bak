@@ -110,6 +110,21 @@ public:
             {
                 total -= transAmount;
             }
+            else if (refTrans[index]->transType_ == wxT("Transfer"))
+            {
+                total += transAmount;
+#if 0
+     
+                if (refTrans[index]->fr == refTrans[index]->accountID_)
+                {
+                    balance -= transAmount;
+                }
+                else if (transactionToID == refTrans[index]->accountID_)
+                {
+                    balance += toTransAmount;
+                }
+#endif
+            }
         }
 
         wxString balanceStr;

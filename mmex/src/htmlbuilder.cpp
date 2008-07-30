@@ -39,22 +39,22 @@ void mmHTMLBuilder::init()
 	html += _("Report");
 	html += wxT("</title></head><body bgcolor=\"#ffffff\" text=\"#000000\" link=\"#0000cc\" vlink=\"#551a8b\" alink=\"#ff0000\">");
 
-	int cols = 1;
-	startTable(wxT("100%"));
-		startTableRow();
-			if (mmIniOptions::enableCustomLogo_)
-			{
-				startTableCell();
-				addImage(mmIniOptions::logoName_);
-				endTableCell();
-				cols++;
-			}
-			startTableCell();
-			addHeader(2, mmIniOptions::userNameString_);
-			endTableCell();
-		endTableRow();
-	endTable();
-	addHorizontalLine(2);
+    int cols = 1;
+    startTable(wxT("100%"));
+    startTableRow();
+    if (mmIniOptions::enableCustomLogo_)
+    {
+        startTableCell();
+        addImage(mmIniOptions::logoName_);
+        endTableCell();
+        cols++;
+    }
+    startTableCell();
+    addHeader(2, mmIniOptions::userNameString_);
+    endTableCell();
+    endTableRow();
+    endTable();
+    addHorizontalLine(2);
 }
 
 void mmHTMLBuilder::end()

@@ -217,6 +217,11 @@ bool mmGUIApp::OnInit()
 #endif
 #endif
 
+    /* Initialize Image Handlers */
+    wxImage::AddHandler( new wxICOHandler ); 
+    wxImage::AddHandler(new wxJPEGHandler());
+    wxImage::AddHandler(new wxPNGHandler());
+
     /* Get INI DB for loading settings */
     wxSQLite3Database* inidb = new wxSQLite3Database();
 
@@ -271,16 +276,12 @@ bool mmGUIApp::OnInit()
 //        mmIniOptions::enableGraphs_ = false;
 //#endif
 
-    /* Initialize Image Handlers */
-    wxImage::AddHandler(new wxJPEGHandler());
-    wxImage::AddHandler(new wxPNGHandler());
-
     /* Load GUI Frame */
     mmGUIFrame *frame = new mmGUIFrame(mmIniOptions::appName_,
                                  wxPoint(valx, valy), 
                                  wxSize(valw, valh));
-
     frame->Show(TRUE);
+
     if (isMaxStr == wxT("TRUE"))
         frame->Maximize(true);
   
@@ -318,6 +319,7 @@ mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, mmCoreDB* core)
 
     // allow the wizard to size itself around the pages
     GetPageAreaSizer()->Add(page1);
+    this->CentreOnParent();
 }
 
 void mmAddAccountWizard::RunIt(bool modal)
@@ -348,7 +350,8 @@ mmNewDatabaseWizard::mmNewDatabaseWizard(wxFrame *frame, mmCoreDB* core)
     page1 = new wxWizardPageSimple(this);
 
     new wxStaticText(page1, wxID_ANY,
-             _("The next pages will help you create a new database.\n\nYour database file is stored with an extension \nof .mmb. Make sure to make backups of this \nfile and to store it carefully as it contains important \nfinancial information."
+             _("The next pages will help you create a new database.\n\nYour database file is stored with an extension \nof .mmb. \
+               Make sure to make backups of this \nfile and to store it carefully as it contains important \nfinancial information."
              )
         );
 
@@ -405,7 +408,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 	m_mgr.SetManagedWindow(this);
 
 	/* Set Icon for Frame */
-    wxIcon icon(mainicon_xpm);
+    wxIcon icon(wxT("mmex.ico"), wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
 
     /* Setup Printer */
@@ -2221,7 +2224,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
 	wxString password = wxEmptyString;
 	if (checkExt.GetExt() == wxT("emb"))
 	{
-		password = wxGetPasswordFromUser(wxT("Password For Database.."));
+        password = wxGetPasswordFromUser(_("Money Manager Ex: Enter Password For Database.."));
 	}
 
     // Existing Database
@@ -2283,9 +2286,13 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
            core_ = new mmCoreDB(db_);
 
            mmNewDatabaseWizard* wizard = new mmNewDatabaseWizard(this, core_);
+           wizard->CenterOnParent();
            wizard->RunIt(true);
 
            mmDBWrapper::loadBaseCurrencySettings(db_.get());
+
+           /* Load User Name and Other Settings */
+           mmIniOptions::loadInfoOptions(db_.get());
 
            /* Jump to new account creation screen */
            wxCommandEvent evt;
@@ -2404,11 +2411,11 @@ void mmGUIFrame::OnOpen(wxCommandEvent& event)
 void mmGUIFrame::OnConvertEncryptedDB(wxCommandEvent& event)
 {
     wxString extSupported = wxT("Encrypted MMB files (*.emb)|*.emb");
-    wxString encFileName = wxFileSelector(wxT("Choose Encrypted database file to open"), 
+    wxString encFileName = wxFileSelector(_("Choose Encrypted database file to open"), 
         wxT(""), wxT(""), wxT(""), extSupported, wxFILE_MUST_EXIST);
     if ( !encFileName.empty() )
     {
-        wxString password = wxGetPasswordFromUser(wxT("Password For Database.."));
+        wxString password = wxGetPasswordFromUser(_("Money Manager Ex: Enter Password For Database.."));
         if (!password.IsEmpty())
         {
             wxString wildCardStr = wxT("MMB Files(*.mmb)|*.mmb");
@@ -2466,7 +2473,7 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
           wxString oldpassword = password_;
           if (newFileName.GetExt() == wxT("emb"))
           {
-            password = wxGetPasswordFromUser(wxT("Set Password For Database.."));
+              password = wxGetPasswordFromUser(wxT("Money Manager Ex: Set Password For Database.."));
           }
           
           boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
@@ -2607,6 +2614,7 @@ void mmGUIFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 void mmGUIFrame::OnNewAccount(wxCommandEvent& event)
 {
     mmAddAccountWizard* wizard = new mmAddAccountWizard(this, core_);
+    wizard->CenterOnParent();
     wizard->RunIt(true);
 
     if (wizard->acctID_ != -1)
@@ -2839,7 +2847,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& event)
 
 void mmGUIFrame::OnReportIssues(wxCommandEvent& event)
 {
-   wxString url = wxT("http://groups.google.com/group/zealsupport");
+   wxString url = wxT("http://www.codelathe.com/mmex/");
    wxLaunchDefaultBrowser(url);
 }
 
@@ -2918,7 +2926,7 @@ void mmGUIFrame::showBeginAppDialog()
     }
     else if (dlg->getReturnCode() == 3)
     {
-        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_CHECKUPDATE);
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_REPORTISSUES);
         AddPendingEvent(evt);
     }
     else if (dlg->getReturnCode() == 4)

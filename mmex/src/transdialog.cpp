@@ -89,7 +89,7 @@ bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(mainicon_xpm);
+    wxIcon icon(wxT("mmex.ico"), wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
     
     fillControls();

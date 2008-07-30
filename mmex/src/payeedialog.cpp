@@ -91,7 +91,7 @@ bool mmPayeeDialog::Create( wxWindow* parent, wxWindowID id,
         selectButton->Disable();
     }
 
-    wxIcon icon(mainicon_xpm);
+    wxIcon icon(wxT("mmex.ico"), wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
     
     fillControls();

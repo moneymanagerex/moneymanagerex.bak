@@ -18,7 +18,7 @@ Translations
 Italian
 -- Claudio
 French
--- Berry As, Jean-Christophe, bipop, drambeau, Ben
+-- Berry As, Jean-Christophe, bipop, drambeau, Ben, Jsl1
 Greek
 -- Panagiotis Pentzeridis
 Czech
@@ -44,7 +44,7 @@ Polish
 Ukrainian
 -- Leonid Shturma
 Spanish
--- Javier
+-- Javier, Roberto
 Hungarian
 -- Csaba
 Slovak

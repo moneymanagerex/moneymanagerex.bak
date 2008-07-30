@@ -56,8 +56,9 @@ bool mmAboutDialog::Create( wxWindow* parent, wxWindowID id,
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(mainicon_xpm);
+    wxIcon icon(wxT("mmex.ico"), wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
+
     Centre();
     return TRUE;
 }
@@ -98,12 +99,14 @@ void mmAboutDialog::CreateControls()
     wxBoxSizer* itemBoxSizerN = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer2->Add(itemBoxSizerN, 1, wxGROW|wxALL, 5);
 
-    wxBitmap itemStaticBitmap3Bitmap(money_xpm);
+    wxBitmap itemStaticBitmap3Bitmap;
+    itemStaticBitmap3Bitmap.LoadFile(wxT("splash.png"), wxBITMAP_TYPE_PNG); 
+
     wxStaticBitmap* itemStaticBitmap3;
     if (!mmIniOptions::enableCustomLogo_)
     {
         itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
-            itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(235, 157), 0 );
+            itemStaticBitmap3Bitmap, wxDefaultPosition);
     }
     else
     {
@@ -118,21 +121,23 @@ void mmAboutDialog::CreateControls()
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer2->Add(itemBoxSizer4, 1, wxGROW|wxALL, 5);
 
+#if 0
     wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, 
         mmIniOptions::appName_, 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText5->SetFont(wxFont(16, 
        wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
     itemBoxSizer4->Add(itemStaticText5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+#endif
 
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, 
-        MMEXVERSION , wxDefaultPosition, wxDefaultSize, 0 );
+        wxString(_("Version: ")) + MMEXVERSION , wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer4->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
     if (!mmIniOptions::enableCustomAboutDialog_)
     {
        wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
-          wxID_STATIC, wxT("(c) 2005-2007 Madhan Kanagavel"), wxDefaultPosition, wxDefaultSize, 0 );
+          wxID_STATIC, wxT("(c) 2005-2008 Madhan Kanagavel"), wxDefaultPosition, wxDefaultSize, 0 );
        itemStaticText8->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
        itemBoxSizer4->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -144,7 +149,7 @@ void mmAboutDialog::CreateControls()
        wxStaticText* itemStaticText911 = new wxStaticText( itemDialog1, 
           wxID_STATIC, _("Released under the GNU GPL License"), 
           wxDefaultPosition, wxDefaultSize, 0 );
-       itemStaticText911->SetFont(wxFont(9, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+       itemStaticText911->SetFont(wxFont(8, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
        itemBoxSizer4->Add(itemStaticText911, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
        wxStaticText* itemStaticText10 = new wxStaticText( itemDialog1, 
