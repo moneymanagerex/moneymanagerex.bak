@@ -1,4 +1,4 @@
-Money Manager Ex Setup Notes
+Money Manager Ex License
 ============================
 
 WARNING: This software is under development.
