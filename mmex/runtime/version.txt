@@ -19,7 +19,7 @@ Version History of Money Manager Ex
 - Fixed several strings that were not translated (STiGMaTa_ch)
 - Added Gain/Loss in the Stocks View (Jason McWhorter)
 - Hide Non-Favorite accounts in HomeScreen depending upon view options(Jason McWhorter)
-- Added Romanian Translation (Florin)
+- Added Romanian Translation (Munteanu & Florin)
 - Added Indonesian Translation (Dindin)
 - Add Swedish Translation (Andreas & Tomplast)
 - Add Notes in transaction reports so they can be printed (Bava)

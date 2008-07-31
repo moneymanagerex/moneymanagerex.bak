@@ -56,7 +56,7 @@ Vietnamese
 Norwegian
 -- Fredrik Strand, Torbjorn Kvande
 Romanian
--- Florin
+-- Munteanu & Florin
 Indonesian Translation 
 -- Dindin
 Swedish
