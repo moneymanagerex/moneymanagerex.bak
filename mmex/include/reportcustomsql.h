@@ -33,8 +33,8 @@ public:
         hb.startTable(wxT("50%"));
 
         mmBEGINSQL_LITE_EXCEPTION;
-        wxString bufSQL = wxString::Format(sqlQuery);
-        wxSQLite3ResultSet q1 = core_->db_->ExecuteQuery(bufSQL);
+        
+        wxSQLite3ResultSet q1 = core_->db_->ExecuteQuery(sqlQuery.c_str());
 
         int numCols = q1.GetColumnCount();
         hb.startTableRow();
