@@ -2,6 +2,7 @@ Version History of Money Manager Ex
 
 0.9.4.0
 - Fix crash on custom reports (Jaffa)
+- Fix display problems with cents (Ho Yin Kwok)
 
 0.9.3.0 
 - Release under CodeLathe LLC
@@ -110,7 +111,7 @@ or via the Bills Deposits entries. This could cause wierd behavior. (Lucky Arthu
 - Fix bug with graph formatting
 
 
-0.8.0.6 (April 10, 2006)
+0.8.0.6 (April 10, 2007)
 - Fix currency conversions for stock accounts (Thanks Jai)
 - Fix broken selection of items in Ubuntu when adding new transaction (Ikkyu)
 - Fix getting location of kaching.wav file (Ikkyu)

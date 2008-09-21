@@ -1186,6 +1186,22 @@ bool mmCurrencyFormatter::formatDoubleToCurrencyEdit(double val, wxString& rdata
   }
 
   wxString newStr;
+  switch((int)mmCurrencyFormatter::scale) 
+  {
+     case 10:
+        newStr = wxString::Format(wxT("%01d"), cents);
+        break;
+ 
+    case 100:
+        newStr = wxString::Format(wxT("%02d"), cents);
+        break;
+
+    default:
+        newStr = wxString::Format(wxT("%03d"), cents);
+        break;
+  }
+
+  
   if ((int)mmCurrencyFormatter::scale == 100)
       newStr = wxString::Format(wxT("%02d"), cents);
   else if ((int)mmCurrencyFormatter::scale == 1000)
@@ -1262,12 +1278,20 @@ bool mmCurrencyFormatter::formatDoubleToCurrency(double val, wxString& rdata)
       }
 
       wxString newStr;
-      if ((int)mmCurrencyFormatter::scale == 100)
-        newStr = wxString::Format(wxT("%02d"), cents);
-      else if ((int)mmCurrencyFormatter::scale == 1000)
-        newStr = wxString::Format(wxT("%03d"), cents);
-      else if ((int)mmCurrencyFormatter::scale == 10)
-        newStr = wxString::Format(wxT("%01d"), cents);
+      switch((int)mmCurrencyFormatter::scale) 
+      {
+        case 10:
+            newStr = wxString::Format(wxT("%01d"), cents);
+            break;
+ 
+        case 100:
+            newStr = wxString::Format(wxT("%02d"), cents);
+            break;
+
+        default:
+            newStr = wxString::Format(wxT("%03d"), cents);
+            break;
+      }
 
       wxString testString = wxString::Format(wxT("%s%s"), data.c_str(), newStr.c_str());
       data = testString;
