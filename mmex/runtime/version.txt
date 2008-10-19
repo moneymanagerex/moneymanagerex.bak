@@ -3,6 +3,7 @@ Version History of Money Manager Ex
 0.9.4.0
 - Fix crash on custom reports (Jaffa)
 - Fix display problems with cents (Ho Yin Kwok)
+- Fix hang with large amounts for top categories graph
 
 0.9.3.0 
 - Release under CodeLathe LLC
