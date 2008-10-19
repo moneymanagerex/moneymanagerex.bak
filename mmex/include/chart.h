@@ -8,6 +8,7 @@
 #include <wx/pen.h>
 #include <wx/brush.h>
 #include <wx/colour.h>
+#include <limits>
 
 // General macros
 #define ABS(x)     ((x) <  0  ?-(x) : (x))
@@ -358,8 +359,8 @@ public:
 		if(data.size() == 0) return false;
 
 		// calculate min/max value (boundaries)
-		float min;
-		float max;
+		float min = 0;
+		float max = 0;
 
 		if(mode == BAR_CHART_SIMPLE)
 		{
@@ -389,11 +390,13 @@ public:
 			}
 		}
 
-		// avoid out of scale for empty data sets
+        // avoid out of scale for empty data sets
 		if(min == max) max = 1.0;
 
+
+
 		// get the freq
-		int freq = GetFrequency((int) ABS(min) + (int) ABS(max));
+		int freq = GetFrequency(ABS((int) ABS(min) + (int) ABS(max)));
 
 		if(title != wxT(""))
 		{
