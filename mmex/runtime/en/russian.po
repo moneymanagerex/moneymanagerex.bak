@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-29 16:15-0600\n"
-"PO-Revision-Date: 2008-07-29 16:15-0600\n"
+"POT-Creation-Date: 2008-10-30 08:51-0600\n"
+"PO-Revision-Date: 2008-10-30 08:51-0600\n"
 "Last-Translator: Madhan <madhan@yahoo.com>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -16,99 +16,95 @@ msgstr ""
 "X-Poedit-SearchPath-0: include\n"
 "X-Poedit-SearchPath-1: src\n"
 
-#: src/aboutdialog.cpp:140
+#: src/aboutdialog.cpp:134
+#, fuzzy
+msgid "Version: "
+msgstr "История версий"
+
+#: src/aboutdialog.cpp:145
 msgid "  and contributers from around the world."
 msgstr " и соратники :-) со всего мира"
 
-#: src/aboutdialog.cpp:145
+#: src/aboutdialog.cpp:150
 msgid "Released under the GNU GPL License"
 msgstr "Распостраняется на основании лицензии GNU GPL"
 
-#: src/aboutdialog.cpp:157
-#, fuzzy
+#: src/aboutdialog.cpp:162
 msgid "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
-msgstr "С использованием wxWidgets (c) www.wxwidgets.org"
+msgstr "С использованием wxWidgets (c) www.wxwidgets.org, SQLite, wxSQLite(by Ulrich Telle)"
 
-#: src/aboutdialog.cpp:161
+#: src/aboutdialog.cpp:166
 msgid "Version History"
 msgstr "История версий"
 
-#: src/aboutdialog.cpp:166
+#: src/aboutdialog.cpp:171
 msgid "Contributers"
-msgstr ""
+msgstr "Участники"
 
-#: src/aboutdialog.cpp:174
+#: src/aboutdialog.cpp:179
 msgid "Using Language : "
 msgstr "Текущий язык: "
 
-#: src/appstartdialog.cpp:113
-#, fuzzy
+#: src/appstartdialog.cpp:114
 msgid "Open Last Opened Database"
 msgstr "Открыть последнюю используемую базу данных"
 
-#: src/appstartdialog.cpp:126
+#: src/appstartdialog.cpp:127
 msgid "Open the previously opened database : "
-msgstr ""
-
-#: src/appstartdialog.cpp:133
-#, fuzzy
-msgid "Create a New Database"
-msgstr "Создать новый фал Money Manager"
+msgstr "Открыть ранее открытую базу данных:"
 
 #: src/appstartdialog.cpp:134
-msgid "Create a new database file to get started"
-msgstr ""
+msgid "Create a New Database"
+msgstr "Создать новую базу данных Money Manager"
 
-#: src/appstartdialog.cpp:138
-#, fuzzy
-msgid "Open Existing Database"
-msgstr "Открыть последнюю используемую базу данных"
+#: src/appstartdialog.cpp:135
+msgid "Create a new database file to get started"
+msgstr "Создать новый файл базы даных"
 
 #: src/appstartdialog.cpp:139
-#, fuzzy
+msgid "Open Existing Database"
+msgstr "Открыть имеющуюся базу данных"
+
+#: src/appstartdialog.cpp:140
 msgid "Open an already created database file with extension (*.mmb)"
 msgstr "Открыть уже созданную базу данных Money Manager Ex с расширением  (*.mmb)"
 
-#: src/appstartdialog.cpp:143
+#: src/appstartdialog.cpp:144
 msgid "Read Documentation"
 msgstr "Читать документацию"
 
-#: src/appstartdialog.cpp:144
+#: src/appstartdialog.cpp:145
 msgid "Read the user manual"
 msgstr "Читать руководство пользователя"
 
-#: src/appstartdialog.cpp:150
-#, fuzzy
+#: src/appstartdialog.cpp:151
 msgid "Visit Website for more information"
 msgstr "Посетить Вебсайт для большей информации"
 
-#: src/appstartdialog.cpp:151
+#: src/appstartdialog.cpp:152
 msgid "Open the Money Manager Ex website for latest news, updates etc"
-msgstr ""
+msgstr "Посетить сайт программы  Money Manager Ex. Новости, новые версии и т.п."
 
-#: src/appstartdialog.cpp:158
-#, fuzzy
+#: src/appstartdialog.cpp:159
 msgid "Show this window next time "
 msgstr "Показывать это окно при следующем запуске Money Manager Ex"
 
-#: src/appstartdialog.cpp:160
-#, fuzzy
+#: src/appstartdialog.cpp:161
 msgid " starts"
-msgstr "Статус"
+msgstr "начало"
 
 #: src/assetdialog.cpp:156
 msgid "Asset Details"
-msgstr "Подробности актива"
+msgstr "Детали актива"
 
 #: src/assetdialog.cpp:169
 #: src/assetspanel.cpp:139
 msgid "Name"
-msgstr "Имя"
+msgstr "Название"
 
 #: src/assetdialog.cpp:175
-#, fuzzy
 msgid "Enter the name of the asset"
-msgstr "Введите название имущества"
+msgstr "Введите название актива"
 
 #: src/assetdialog.cpp:179
 #: src/billsdepositsdialog.cpp:390
@@ -117,7 +113,7 @@ msgstr "Дата"
 
 #: src/assetdialog.cpp:186
 msgid "Specify the date of purchase of asset"
-msgstr "Укажите дату приобретения имущества"
+msgstr "Укажите дату приобретения актива"
 
 #: src/assetdialog.cpp:189
 msgid "Asset Type"
@@ -157,7 +153,7 @@ msgstr "Драгоценности"
 #: src/assetspanel.cpp:236
 #: src/assetspanel.cpp:252
 msgid "Cash"
-msgstr ""
+msgstr "Наличные"
 
 #: src/assetdialog.cpp:201
 #: src/assetspanel.cpp:237
@@ -166,19 +162,18 @@ msgid "Other"
 msgstr "Другие"
 
 #: src/assetdialog.cpp:205
-#, fuzzy
 msgid "Select type of asset"
-msgstr "Выберите тип имущества"
+msgstr "Выберите тип актива"
 
 #: src/assetdialog.cpp:211
 #: src/assetdialog.cpp:295
 #: src/assetspanel.cpp:147
 msgid "Value"
-msgstr "Значение"
+msgstr "Оценочная стоимость:"
 
 #: src/assetdialog.cpp:217
 msgid "Enter the current value of the asset"
-msgstr ""
+msgstr "Введите текущую стоимость актива"
 
 #: src/assetdialog.cpp:223
 msgid "Change in Value"
@@ -189,9 +184,8 @@ msgstr "Изменение стоимости"
 #: src/billsdepositsdialog.cpp:430
 #: src/billsdepositspanel.cpp:260
 #: src/budgetentrydialog.cpp:157
-#, fuzzy
 msgid "None"
-msgstr "нет"
+msgstr "Нет"
 
 #: src/assetdialog.cpp:230
 msgid "Appreciates"
@@ -203,11 +197,11 @@ msgstr "Удешевление"
 
 #: src/assetdialog.cpp:235
 msgid "Specify if the value of the asset changes over time"
-msgstr ""
+msgstr "Задайте значение изменения стоимости актива со временем"
 
 #: src/assetdialog.cpp:240
 msgid "Rate of Change"
-msgstr "Степень изменения"
+msgstr "Процент изменения стоимости"
 
 #: src/assetdialog.cpp:246
 msgid "Enter the rate at which the asset changes its value in %"
@@ -219,9 +213,8 @@ msgid "Notes"
 msgstr "Примечания"
 
 #: src/assetdialog.cpp:258
-#, fuzzy
 msgid "Enter notes associated with this asset"
-msgstr "Введите примечания ассоциированые со счетом"
+msgstr "Введите примечания для этого актива"
 
 #: src/assetdialog.cpp:270
 #: src/billsdepositsdialog.cpp:470
@@ -240,7 +233,7 @@ msgstr "Отмена"
 #: src/assetdialog.cpp:302
 #: src/assetdialog.cpp:329
 msgid "Invalid Value "
-msgstr "Невероное значение"
+msgstr "Неверное значение"
 
 #: src/assetdialog.cpp:302
 #: src/assetdialog.cpp:329
@@ -263,7 +256,7 @@ msgstr "Ошибка"
 
 #: src/assetdialog.cpp:321
 msgid "Rate of Change in Value"
-msgstr ""
+msgstr "Оценить изменения в стоимости"
 
 #: src/assetspanel.cpp:112
 msgid "Assets"
@@ -280,11 +273,11 @@ msgstr "Тип"
 
 #: src/assetspanel.cpp:179
 msgid "New"
-msgstr "Новый"
+msgstr "Создать"
 
 #: src/assetspanel.cpp:181
 msgid "New Asset"
-msgstr "Новый актив"
+msgstr "Создание нового актива"
 
 #: src/assetspanel.cpp:184
 #: src/categdialog.cpp:153
@@ -293,7 +286,7 @@ msgstr "Редактировать"
 
 #: src/assetspanel.cpp:186
 msgid "Edit Asset"
-msgstr "Редактировать актив"
+msgstr "Редактирование актива"
 
 #: src/assetspanel.cpp:189
 #: src/categdialog.cpp:158
@@ -302,12 +295,12 @@ msgstr "Удалить"
 
 #: src/assetspanel.cpp:191
 msgid "Delete Asset"
-msgstr "Удалить актив"
+msgstr "Удаление актива"
 
 #: src/assetspanel.cpp:212
 #, c-format
 msgid "Total: %s"
-msgstr "Всегоl: %s"
+msgstr "Всего: %s"
 
 #: src/assetspanel.cpp:291
 msgid "&New Asset"
@@ -326,20 +319,17 @@ msgid "Do you really want to delete the Asset?"
 msgstr "Вы действительно хотите удалить данный актив?"
 
 #: src/assetspanel.cpp:371
-#, fuzzy
 msgid "Confirm Asset Deletion"
-msgstr "Подтверждение удаления имущества"
+msgstr "Подтверждение удаления актива"
 
 #: src/billsdepositsdialog.cpp:192
 #: src/billsdepositsdialog.cpp:992
-#, fuzzy
 msgid "Split Category"
-msgstr "Выберите категорию"
+msgstr "Разделить категорию"
 
 #: src/billsdepositsdialog.cpp:255
-#, fuzzy
 msgid "Repeating Transaction Details"
-msgstr "Удалить транзакцию"
+msgstr "Заголовок периодической транзакции"
 
 #: src/billsdepositsdialog.cpp:264
 msgid "Account Name"
@@ -347,19 +337,17 @@ msgstr "Наименование счета"
 
 #: src/billsdepositsdialog.cpp:269
 msgid "Select Account"
-msgstr "Выберите счет"
+msgstr "Выберите счёт"
 
 #: src/billsdepositsdialog.cpp:274
-#, fuzzy
 msgid "Next Occurrence"
-msgstr "Установить валюту"
+msgstr "Следующее вхождение"
 
 #: src/billsdepositsdialog.cpp:281
 msgid "Specify the date of the next bill or deposit"
-msgstr ""
+msgstr "Определите дату следующего счёта илидепозита"
 
 #: src/billsdepositsdialog.cpp:284
-#, fuzzy
 msgid "Repeats"
 msgstr "Повторы"
 
@@ -408,24 +396,24 @@ msgstr "Ежегодно"
 #: src/billsdepositsdialog.cpp:298
 #: src/billsdepositspanel.cpp:292
 msgid "Four Months"
-msgstr ""
+msgstr "Четыре месяца"
 
 #: src/billsdepositsdialog.cpp:299
 #: src/billsdepositspanel.cpp:296
 msgid "Four Weeks"
-msgstr ""
+msgstr "Четыре недели"
 
 #: src/billsdepositsdialog.cpp:300
 msgid "Daily"
-msgstr ""
+msgstr "Ежедневно"
 
 #: src/billsdepositsdialog.cpp:309
 msgid "Times Repeated"
-msgstr ""
+msgstr "Количество повторов"
 
 #: src/billsdepositsdialog.cpp:316
 msgid "Specify the number of times this series repeats. Leave blank if this series continues forever."
-msgstr ""
+msgstr "Укажите сколько раз эта серия повторяется. Оставьте поле пустым, если безконечно."
 
 #: src/billsdepositsdialog.cpp:320
 msgid "Transaction Details"
@@ -438,12 +426,12 @@ msgstr "Тип транзакции"
 #: src/billsdepositsdialog.cpp:334
 #: src/billsdepositspanel.cpp:404
 msgid "Withdrawal"
-msgstr "Расход"
+msgstr "Снятие со счета"
 
 #: src/billsdepositsdialog.cpp:335
 #: src/billsdepositspanel.cpp:406
 msgid "Deposit"
-msgstr "Депозит"
+msgstr "Пополнение счета"
 
 #: src/billsdepositsdialog.cpp:336
 #: src/billsdepositspanel.cpp:408
@@ -451,7 +439,6 @@ msgid "Transfer"
 msgstr "Перевод"
 
 #: src/billsdepositsdialog.cpp:343
-#, fuzzy
 msgid "Specify the type of transactions to be created."
 msgstr "Укажите тип создаваемой транзакции"
 
@@ -460,7 +447,6 @@ msgid "Advanced"
 msgstr "Дополнительно"
 
 #: src/billsdepositsdialog.cpp:349
-#, fuzzy
 msgid "Specify advanced settings for transaction"
 msgstr "Укажите дополнительные параметры транзакции"
 
@@ -479,9 +465,8 @@ msgid "Select Payee"
 msgstr "Выберите получателя"
 
 #: src/billsdepositsdialog.cpp:366
-#, fuzzy
 msgid "Specify where the transaction is going to or coming from "
-msgstr "Укажите куда отправляется транзакция или же откуда она исходит"
+msgstr "Укажите получателя данной транзакции"
 
 #: src/billsdepositsdialog.cpp:368
 msgid "Number"
@@ -489,20 +474,19 @@ msgstr "Номер"
 
 #: src/billsdepositsdialog.cpp:376
 msgid "Specify any associated check number or transaction number"
-msgstr ""
+msgstr "Определите любой связанный номер чека или операционное число"
 
 #: src/billsdepositsdialog.cpp:379
 msgid "To"
-msgstr "К"
+msgstr "В"
 
 #: src/billsdepositsdialog.cpp:384
 msgid "Select To Acct"
-msgstr ""
+msgstr "Выберите счёт"
 
 #: src/billsdepositsdialog.cpp:388
-#, fuzzy
 msgid "Specify the transfer account"
-msgstr "Укажите счет перечисления"
+msgstr "Определите счёт передачи"
 
 #: src/billsdepositsdialog.cpp:398
 msgid "Specify the date of the transaction"
@@ -526,70 +510,65 @@ msgstr "Укажите категорию данной транзакции"
 
 #: src/billsdepositsdialog.cpp:418
 msgid "Split"
-msgstr ""
+msgstr "Разделить"
 
 #: src/billsdepositsdialog.cpp:424
 msgid "Status"
 msgstr "Статус"
 
 #: src/billsdepositsdialog.cpp:431
-#, fuzzy
 msgid "Reconciled"
-msgstr "Согласовано"
+msgstr "Выверено"
 
 #: src/billsdepositsdialog.cpp:432
-#, fuzzy
 msgid "Void"
-msgstr "Пусто"
+msgstr "Отмена"
 
 #: src/billsdepositsdialog.cpp:433
 msgid "Follow up"
-msgstr ""
+msgstr "Отслеживать"
 
 #: src/billsdepositsdialog.cpp:440
 msgid "Specify the status for the transaction"
 msgstr "Укажите статус транзакции"
 
 #: src/billsdepositsdialog.cpp:450
-#, fuzzy
 msgid "Specify any text notes you want to add to this transaction."
-msgstr "Укажите любые текстовые примечания, которые хотите добавить к этой транзакции"
+msgstr "Введите текстовые примечания  к этой транзакции"
 
 #: src/billsdepositsdialog.cpp:453
 #: src/billsdepositspanel.cpp:156
 #: src/budgetingpanel.cpp:234
 msgid "Amount"
-msgstr "Количество"
+msgstr "Сумма"
 
 #: src/billsdepositsdialog.cpp:460
 msgid "Specify the amount for this transaction"
-msgstr "Укажите количество для данной транзакции"
+msgstr "Укажите сумму для данной транзакции"
 
 #: src/billsdepositsdialog.cpp:598
 #: src/billsdepositsdialog.cpp:750
-#, fuzzy
 msgid "Select To"
 msgstr "Выберите куда"
 
 #: src/billsdepositsdialog.cpp:621
 msgid "To Account Amount Entry"
-msgstr ""
+msgstr "Ввод суммы в счёт"
 
 #: src/billsdepositsdialog.cpp:622
 msgid "Amount to be recorded in To Account"
-msgstr ""
+msgstr "Сумма, которая будет записана в графе \"На счёт\""
 
 #: src/billsdepositsdialog.cpp:632
 msgid "Invalid To Amount Entered "
-msgstr ""
+msgstr "Введена неправильная сумма"
 
 #: src/billsdepositsdialog.cpp:742
 #: src/billsdepositsdialog.cpp:756
 msgid "From"
-msgstr "От"
+msgstr "Из"
 
 #: src/billsdepositsdialog.cpp:749
-#, fuzzy
 msgid "Select From"
 msgstr "Выберите откуда"
 
@@ -599,7 +578,7 @@ msgstr "Получатель"
 
 #: src/billsdepositsdialog.cpp:779
 msgid "From Account "
-msgstr "Со счета"
+msgstr "Со счёта"
 
 #: src/billsdepositsdialog.cpp:787
 #: src/billsdepositsdialog.cpp:795
@@ -610,71 +589,69 @@ msgstr "Категория"
 #: src/billsdepositsdialog.cpp:816
 #: src/budgetentrydialog.cpp:226
 msgid "Invalid Amount Entered "
-msgstr "Введено неверное количество"
+msgstr "Введена неверная сумма"
 
 #: src/billsdepositsdialog.cpp:823
 #: src/billsdepositspanel.cpp:151
 msgid "Account"
-msgstr "Счет"
+msgstr "Счёт"
 
 #: src/billsdepositsdialog.cpp:833
 msgid "To Account "
-msgstr "На счет"
+msgstr "На счёт"
 
 #: src/billsdepositsdialog.cpp:839
 msgid "From and To Account cannot be the same."
 msgstr "Счета плательщика и получателя не могут совпадать"
 
 #: src/billsdepositspanel.cpp:129
-#, fuzzy
 msgid "Repeating Transactions"
-msgstr "Удалить транзакцию"
+msgstr "Периодические транзакции"
 
 #: src/billsdepositspanel.cpp:158
-#, fuzzy
 msgid "Next Due Date"
-msgstr "Следующая дата платежа"
+msgstr "Следующая дата "
 
 #: src/billsdepositspanel.cpp:159
 #: src/budgetingpanel.cpp:229
 msgid "Frequency"
-msgstr "Частота"
+msgstr "Период"
 
 #: src/billsdepositspanel.cpp:160
 msgid "Remaining Days"
-msgstr "Осталось дней"
+msgstr "До события"
 
 #: src/billsdepositspanel.cpp:203
 msgid "New Series"
-msgstr ""
+msgstr "Новая серия"
 
 #: src/billsdepositspanel.cpp:205
 msgid "New Bills && Deposit Series"
-msgstr ""
+msgstr "Создание новой периодической транзакции"
 
 #: src/billsdepositspanel.cpp:208
 msgid "Edit Series"
-msgstr ""
+msgstr "Редактировать серию"
 
 #: src/billsdepositspanel.cpp:210
 msgid "Edit Bills && Deposit Series"
-msgstr ""
+msgstr "Редактирование периодической транзакции"
 
 #: src/billsdepositspanel.cpp:213
 msgid "Delete Series"
-msgstr ""
+msgstr "Удалить серию"
 
 #: src/billsdepositspanel.cpp:215
 msgid "Delete Bills && Deposit Series"
-msgstr ""
+msgstr "Удаление периодической транзакции"
 
 #: src/billsdepositspanel.cpp:218
 msgid "Enter Transaction"
-msgstr ""
+msgstr "Начислить"
 
 #: src/billsdepositspanel.cpp:220
 msgid "Enter Next Bills && Deposit Occurrence"
-msgstr ""
+msgstr "Начисление предстоящей транзакции"
 
 #: src/billsdepositspanel.cpp:310
 msgid " days remaining"
@@ -682,31 +659,31 @@ msgstr " дней осталось"
 
 #: src/billsdepositspanel.cpp:315
 msgid " days overdue!"
-msgstr " дни закончились!"
+msgstr " время просрочено!"
 
 #: src/billsdepositspanel.cpp:383
 msgid "&New Bills && Deposit Series"
-msgstr ""
+msgstr "Новый счёт или депозитная серия"
 
 #: src/billsdepositspanel.cpp:385
 msgid "&Edit Bills && Deposit Series"
-msgstr ""
+msgstr "Редактирование периодической транзакции"
 
 #: src/billsdepositspanel.cpp:386
 msgid "&Delete Bills && Deposit Series"
-msgstr ""
+msgstr "Удаление периодической транзакции"
 
 #: src/billsdepositspanel.cpp:388
 msgid "Enter next Occurrence"
-msgstr ""
+msgstr "Выберите дату следующей проводки"
 
 #: src/billsdepositspanel.cpp:490
 msgid "Do you really want to delete the series?"
-msgstr ""
+msgstr "Вы действительно хотите удалить эту серию?"
 
 #: src/billsdepositspanel.cpp:491
 msgid "Confirm Series Deletion"
-msgstr ""
+msgstr "Подтвердите удаление серии"
 
 #: src/budgetentrydialog.cpp:135
 msgid "Type:"
@@ -722,7 +699,7 @@ msgstr "Доход"
 
 #: src/budgetentrydialog.cpp:148
 msgid "Specify whether this category is an income or an expense category"
-msgstr ""
+msgstr "Определите, является ли эта категория доходом или расходом"
 
 #: src/budgetentrydialog.cpp:151
 msgid "Frequency:"
@@ -730,51 +707,51 @@ msgstr "Частота:"
 
 #: src/budgetentrydialog.cpp:170
 msgid "Specify the frequency of the expense or deposit"
-msgstr ""
+msgstr "Определите частоту расхода или депозита"
 
 #: src/budgetentrydialog.cpp:173
 msgid "Amount:"
-msgstr "Количество:"
+msgstr "Сумма:"
 
 #: src/budgetentrydialog.cpp:181
 msgid "Enter the amount budgeted for this category."
-msgstr ""
+msgstr "Введите сумму бюджета для данной категории."
 
 #: src/budgetingpanel.cpp:115
 #: src/budgetingpanel.cpp:152
 msgid "View All Budget Categories"
-msgstr ""
+msgstr "Показать все категории бюджета"
 
 #: src/budgetingpanel.cpp:120
 #: src/budgetingpanel.cpp:153
 msgid "View Non-Zero Budget Categories"
-msgstr ""
+msgstr "Показать не нулевые категории бюджета"
 
 #: src/budgetingpanel.cpp:125
 #: src/budgetingpanel.cpp:154
 msgid "View Income Budget Categories"
-msgstr ""
+msgstr "Показать доходные категории бюджета"
 
 #: src/budgetingpanel.cpp:130
 #: src/budgetingpanel.cpp:155
 msgid "View Expense Budget Categories"
-msgstr ""
+msgstr "Показать расходные категории бюджета"
 
 #: src/budgetingpanel.cpp:179
 msgid "Budget Setup for "
-msgstr ""
+msgstr "Бюджет на "
 
 #: src/budgetingpanel.cpp:196
 msgid "Viewing All Budget Categories"
-msgstr ""
+msgstr "Показать все категории бюджета"
 
 #: src/budgetingpanel.cpp:201
 msgid "Estimated Income: Actual Income: "
-msgstr ""
+msgstr "Предполагаемый Доход: Фактический Доход:"
 
 #: src/budgetingpanel.cpp:208
 msgid "Estimated Expenses: Actual Expenses: "
-msgstr ""
+msgstr "Предполагаемые расходы: Фактические затраты:"
 
 #: src/budgetingpanel.cpp:227
 msgid "Category  "
@@ -786,53 +763,53 @@ msgstr "Подкатегория"
 
 #: src/budgetingpanel.cpp:237
 msgid "Estimated"
-msgstr "Расчетный"
+msgstr "Расчёт"
 
 #: src/budgetingpanel.cpp:240
 msgid "Actual"
-msgstr "Фактический"
+msgstr "Фактически"
 
 #: src/budgetingpanel.cpp:490
 #, c-format
 msgid "Estimated Income: %s Actual Income:  %s"
-msgstr "Расчетный доход: %s Фактический доход:  %s"
+msgstr "Расчётный доход: %s Фактический доход:  %s"
 
 #: src/budgetingpanel.cpp:495
 #, c-format
 msgid "Estimated Expenses: %s Actual Expenses:  %s"
-msgstr "Расчетные расходы: %s Фактические расходы:  %s"
+msgstr "Расчётные расходы: %s Фактические расходы:  %s"
 
 #: src/budgetyeardialog.cpp:105
 msgid "Add Budget Year"
-msgstr ""
+msgstr "Добавить год в бюджет"
 
 #: src/budgetyeardialog.cpp:108
 msgid "Add a new budget year"
-msgstr ""
+msgstr "Добавление нового бюджетного года"
 
 #: src/budgetyeardialog.cpp:111
 msgid "Delete Budget Year"
-msgstr ""
+msgstr "Удалить год из бюджета"
 
 #: src/budgetyeardialog.cpp:113
 msgid "Delete existing budget year"
-msgstr ""
+msgstr "Удаление существующего бюджетного года"
 
 #: src/budgetyearentrydialog.cpp:82
 msgid "Budget Year:"
-msgstr ""
+msgstr "Бюджетный год"
 
 #: src/budgetyearentrydialog.cpp:89
 msgid "Enter the year in YYYY format to specify year"
-msgstr ""
+msgstr "Укажите год в формате ГГГГ"
 
 #: src/budgetyearentrydialog.cpp:92
 msgid "Base Budget On:"
-msgstr ""
+msgstr "Основной бюджет на:"
 
 #: src/budgetyearentrydialog.cpp:105
 msgid "Specify year to base budget on."
-msgstr ""
+msgstr "Определите год для основного бюджета."
 
 #: src/budgetyearentrydialog.cpp:145
 #: src/budgetyearentrydialog.cpp:175
@@ -841,16 +818,15 @@ msgstr "Неверный год"
 
 #: src/budgetyearentrydialog.cpp:152
 msgid "Budget Year already exists"
-msgstr ""
+msgstr "Этот год в бюджете уже есть"
 
 #: src/categdialog.cpp:75
-#, fuzzy
 msgid "Categories"
-msgstr "Категория"
+msgstr "Категории"
 
 #: src/categdialog.cpp:145
 msgid "Enter the name of the category to add or edit here"
-msgstr ""
+msgstr "Здесь введите имя категории, чтобы добавить или редактировать"
 
 #: src/categdialog.cpp:148
 msgid "Add"
@@ -865,7 +841,6 @@ msgid "Edit the name of an existing category"
 msgstr "Редактировать название существующей категории"
 
 #: src/categdialog.cpp:160
-#, fuzzy
 msgid "Delete an existing category. The category cannot be used by existing transactions."
 msgstr "Удалить существующую категорию. Категория не должна использоваться существующими транзакциями."
 
@@ -875,11 +850,11 @@ msgstr "Выбрать"
 
 #: src/categdialog.cpp:168
 msgid "Select the currently selected category as the selected category for the transaction"
-msgstr ""
+msgstr "Укажите выбираемую категорию для этой транзакции"
 
 #: src/categdialog.cpp:181
 msgid "Category cannot be empty"
-msgstr ""
+msgstr "Категория не выбрана"
 
 #: src/categdialog.cpp:189
 msgid "Category with same name exists"
@@ -890,7 +865,6 @@ msgid "Sub Category with same name exists"
 msgstr "Подкатегория с таким названием существует"
 
 #: src/categdialog.cpp:219
-#, fuzzy
 msgid "Invalid Parent Category. Choose Root or Main Category node."
 msgstr "Неверная родительская категория. Выберите корневой или основной узел."
 
@@ -907,9 +881,8 @@ msgid "Sub-Category is in use"
 msgstr "Подкатегория используется"
 
 #: src/categdialog.cpp:357
-#, fuzzy
 msgid "Update Failed"
-msgstr "Обновить"
+msgstr "Обновить поле"
 
 #: src/currencydialog.cpp:151
 msgid "Currency Name"
@@ -932,18 +905,16 @@ msgid "Grouping Char"
 msgstr "Разделитель груп"
 
 #: src/currencydialog.cpp:200
-#, fuzzy
 msgid "Unit Name"
 msgstr "Наименование целых"
 
 #: src/currencydialog.cpp:211
-#, fuzzy
 msgid "Cents Name"
 msgstr "Наименование дробных"
 
 #: src/currencydialog.cpp:220
 msgid "Conversion to Base Rate"
-msgstr ""
+msgstr "Приведение к основному тарифу"
 
 #: src/currencydialog.cpp:229
 msgid "Scale"
@@ -951,121 +922,109 @@ msgstr "Соотношение"
 
 #: src/currencydialog.cpp:239
 msgid "Value of 123456.78 will be"
-msgstr ""
+msgstr "Значение 123456.78 будет выглядеть так: "
 
 #: src/currencydialog.cpp:244
 msgid "1234567.89"
-msgstr ""
+msgstr "1234567.89"
 
 #: src/currencydialog.cpp:252
 msgid "Update"
 msgstr "Обновить"
 
 #: src/currencydialog.cpp:256
-#, fuzzy
 msgid "Close"
-msgstr "Закрыт"
+msgstr "Закрыть"
 
 #: src/currencydialog.cpp:292
 msgid "Base Conversion Rate should be greater than 0.0"
-msgstr ""
+msgstr "Основной обменный курс должен быть больше чем 0.0"
 
 #: src/customsqldialog.cpp:88
 msgid "Custom SQL Query"
-msgstr ""
+msgstr "Пользовательский SQL запрос"
 
 #: src/customsqldialog.cpp:115
 msgid "Load SQL"
-msgstr ""
+msgstr "Загрузить SQL"
 
 #: src/customsqldialog.cpp:120
 msgid "Save SQL"
-msgstr ""
+msgstr "Сохранить SQL"
 
 #: src/customsqldialog.cpp:125
 msgid "Run Query"
-msgstr ""
+msgstr "Выполнить SQL"
 
 #: src/customsqldialog.cpp:172
 msgid "Unable to open file."
-msgstr ""
+msgstr "Не могу открыть файл."
 
 #: src/customsqldialog.cpp:201
 msgid "Unable to write to file."
-msgstr ""
+msgstr "Не могу писать в файл."
 
 #: src/customsqldialog.cpp:222
 msgid "SQL Query will modify your Data. Proceed??"
-msgstr ""
+msgstr "Запрос SQL изменит Ваши данные. Продолжить??"
 
 #: src/customsqldialog.cpp:223
 msgid "Warning"
-msgstr ""
+msgstr "Предупреждение"
 
 #: src/filtertransdialog.cpp:194
-#, fuzzy
 msgid "Specify Account"
-msgstr "Выберите счет"
+msgstr "Выберите счёт"
 
 #: src/filtertransdialog.cpp:215
-#, fuzzy
 msgid "Specify Date Range"
-msgstr "Укажите язык интерфейса"
+msgstr "Диапазон дат"
 
 #: src/filtertransdialog.cpp:230
-#, fuzzy
 msgid "Specify Payee"
-msgstr "Выберите получателя"
+msgstr "По получателю"
 
 #: src/filtertransdialog.cpp:241
-#, fuzzy
 msgid "Specify Category"
-msgstr "Выберите категорию"
+msgstr "По категории"
 
 #: src/filtertransdialog.cpp:252
-#, fuzzy
 msgid "Specify Status"
-msgstr "Укажите язык интерфейса"
+msgstr "По статусу"
 
 #: src/filtertransdialog.cpp:262
-#, fuzzy
 msgid "Duplicate"
-msgstr "Дата"
+msgstr "Повтор"
 
 #: src/filtertransdialog.cpp:273
 msgid "Specify Type"
-msgstr ""
+msgstr "По типу"
 
 #: src/filtertransdialog.cpp:288
-#, fuzzy
 msgid "Specify the type of transaction."
-msgstr "Укажите дату транзакции"
+msgstr "Укажите тип транзакции"
 
 #: src/filtertransdialog.cpp:293
 msgid "Specify Amount Range"
-msgstr ""
+msgstr "По диапазону цен"
 
 #: src/filtertransdialog.cpp:307
-#, fuzzy
 msgid "Specify Number"
-msgstr "Выберите получателя"
+msgstr "По номеру"
 
 #: src/filtertransdialog.cpp:318
 msgid "Specify Notes"
-msgstr ""
+msgstr "По заметке"
 
 #: src/htmlbuilder.cpp:39
-#, fuzzy
 msgid "Report"
-msgstr "Отчеты"
+msgstr "Отчёт"
 
 #: src/maincurrencydialog.cpp:109
-#, fuzzy
 msgid "Currency List"
-msgstr "Валюта"
+msgstr "Список валют"
 
 #: src/maincurrencydialog.cpp:174
-#, fuzzy
 msgid "Name of Currency to Add"
 msgstr "Название добавляемой валюты"
 
@@ -1082,19 +1041,16 @@ msgid "View All Transactions"
 msgstr "Смотреть все транзакции"
 
 #: src/mmcheckingpanel.cpp:173
-#, fuzzy
 msgid "View Reconciled Transactions"
-msgstr "Смотреть согласованные транзакции"
+msgstr "Смотреть выверенные транзакции"
 
 #: src/mmcheckingpanel.cpp:174
-#, fuzzy
 msgid "View Un-Reconciled Transactions"
-msgstr "Смотреть не согласованные транзакции"
+msgstr "Смотреть не выверенные транзакции"
 
 #: src/mmcheckingpanel.cpp:175
-#, fuzzy
 msgid "View All Except Reconciled Transactions"
-msgstr "Смотреть согласованные транзакции"
+msgstr "Смотреть все, кроме выверенных транзакций"
 
 #: src/mmcheckingpanel.cpp:176
 msgid "View Void Transactions"
@@ -1105,23 +1061,20 @@ msgid "View Flagged Transactions"
 msgstr "Смотреть отмеченные транзакции"
 
 #: src/mmcheckingpanel.cpp:178
-#, fuzzy
 msgid "View Duplicate Transactions"
-msgstr "Смотреть отмеченные транзакции"
+msgstr "Смотреть повторяющиеся транзакции"
 
 #: src/mmcheckingpanel.cpp:180
 msgid "View Transactions from last 30 days"
 msgstr "Смотреть транзакции за последние 30 дней"
 
 #: src/mmcheckingpanel.cpp:181
-#, fuzzy
 msgid "View Transactions from current month"
-msgstr "Смотреть транзакции за последние 3 месяца"
+msgstr "Смотреть транзакции за текущий месяц"
 
 #: src/mmcheckingpanel.cpp:182
-#, fuzzy
 msgid "View Transactions from last month"
-msgstr "Смотреть транзакции за последние 3 месяца"
+msgstr "Смотреть транзакции за предыдущий месяц"
 
 #: src/mmcheckingpanel.cpp:183
 msgid "View Transactions from last 3 months"
@@ -1129,7 +1082,7 @@ msgstr "Смотреть транзакции за последние 3 меся
 
 #: src/mmcheckingpanel.cpp:185
 msgid "Delete all transactions in current view"
-msgstr "Удалить все транзакции в текущем виде"
+msgstr "Удалить все транзакции в текущем окне"
 
 #: src/mmcheckingpanel.cpp:186
 msgid "Delete all flagged transactions"
@@ -1145,7 +1098,7 @@ msgstr "Дата"
 
 #: src/mmcheckingpanel.cpp:280
 msgid "C  "
-msgstr ""
+msgstr "Статус"
 
 #: src/mmcheckingpanel.cpp:289
 msgid "Balance"
@@ -1153,15 +1106,15 @@ msgstr "Баланс"
 
 #: src/mmcheckingpanel.cpp:347
 msgid "New Transaction"
-msgstr "Новая транзакция"
+msgstr "Создание новой транзакции"
 
 #: src/mmcheckingpanel.cpp:352
 msgid "Edit Transaction"
-msgstr "Редактировать транзакцию"
+msgstr "Редактирование транзакции"
 
 #: src/mmcheckingpanel.cpp:357
 msgid "Delete Transaction"
-msgstr "Удалить транзакцию"
+msgstr "Удаление транзакции"
 
 #: src/mmcheckingpanel.cpp:466
 msgid "Category         : "
@@ -1176,22 +1129,22 @@ msgid "Notes               : "
 msgstr "Примечания    :"
 
 #: src/mmcheckingpanel.cpp:488
-#, fuzzy, c-format
+#, c-format
 msgid "Account Balance : %s      Reconciled Balance : %s"
-msgstr "Баланс счета: %s      Согласованный баланс: %s"
+msgstr "Баланс счёта: %s      Выверенный баланс: %s"
 
 #: src/mmcheckingpanel.cpp:498
-#: src/mmex.cpp:2321
+#: src/mmex.cpp:2328
 msgid "Please Wait"
 msgstr "Ждите"
 
 #: src/mmcheckingpanel.cpp:499
 msgid "Accessing Database"
-msgstr ""
+msgstr "Обращение к Базе данных"
 
 #: src/mmcheckingpanel.cpp:512
 msgid "Account View : "
-msgstr "Просмотр счета:"
+msgstr "Просмотр счёта: "
 
 #: src/mmcheckingpanel.cpp:517
 msgid "Category: \n"
@@ -1232,20 +1185,17 @@ msgstr "Просмотр транзакций за последние 3 меся
 
 #: src/mmcheckingpanel.cpp:761
 #: src/mmcheckingpanel.cpp:814
-#, fuzzy
 msgid "Viewing transactions from current month"
-msgstr "Просмотр транзакций за последние 3 месяца"
+msgstr "Просмотр транзакций за текущий месяц"
 
 #: src/mmcheckingpanel.cpp:765
 #: src/mmcheckingpanel.cpp:819
-#, fuzzy
 msgid "Viewing transactions from last month"
-msgstr "Просмотр транзакций за последние 3 месяца"
+msgstr "Просмотр транзакций за прошлый месяц"
 
 #: src/mmcheckingpanel.cpp:769
-#, fuzzy
 msgid "Viewing All Except Reconciled Transactions"
-msgstr "Просмотр согласованных транзакций"
+msgstr "Просмотр всех, кроме согласованных транзакций"
 
 #: src/mmcheckingpanel.cpp:789
 msgid "Viewing Void transactions"
@@ -1256,14 +1206,12 @@ msgid "Viewing Flagged transactions"
 msgstr "Просмотр отмеченных транзакций"
 
 #: src/mmcheckingpanel.cpp:824
-#, fuzzy
 msgid "Viewing duplicate transactions"
-msgstr "Просмотр отмеченных транзакций"
+msgstr "Просмотр повторяющихся транзакций"
 
 #: src/mmcheckingpanel.cpp:829
-#, fuzzy
 msgid "Viewing All except Reconciled Transactions"
-msgstr "Просмотр согласованных транзакций"
+msgstr "Просмотр всех, кроме согласованных транзакций"
 
 #: src/mmcheckingpanel.cpp:834
 msgid "Do you really want to delete all the transactions shown?"
@@ -1292,69 +1240,66 @@ msgid "&Delete Transaction"
 msgstr "Удалить транзакцию"
 
 #: src/mmcheckingpanel.cpp:892
-#, fuzzy
 msgid "&Copy Transaction"
-msgstr "Новая транзакция"
+msgstr "Скопировать транзакцию"
 
 #: src/mmcheckingpanel.cpp:894
-#, fuzzy
 msgid "&Paste Transaction"
-msgstr "Новая транзакция"
+msgstr "Вставить транзакцию"
 
 #: src/mmcheckingpanel.cpp:896
 msgid "Mark As &Reconciled"
-msgstr ""
+msgstr "Отметить как Выверено"
 
 #: src/mmcheckingpanel.cpp:897
 msgid "Mark As &Unreconciled"
-msgstr ""
+msgstr "Отметить как Не выверено"
 
 #: src/mmcheckingpanel.cpp:898
 msgid "Mark As &Void"
-msgstr "Отметить как пустую"
+msgstr "Отметить как Отмена "
 
 #: src/mmcheckingpanel.cpp:899
 msgid "Mark For &Followup"
-msgstr ""
+msgstr "Отметить как Отслеживать"
 
 #: src/mmcheckingpanel.cpp:900
-#, fuzzy
 msgid "Mark As &Duplicate"
-msgstr "Отметить как пустую"
+msgstr "Отметить как Повтор"
 
 #: src/mmcheckingpanel.cpp:904
 msgid "as Reconciled"
-msgstr ""
+msgstr "Выверено"
 
 #: src/mmcheckingpanel.cpp:905
 msgid "as Unreconciled"
-msgstr ""
+msgstr "Не выверено"
 
 #: src/mmcheckingpanel.cpp:906
 msgid "as Void"
-msgstr "как Пустая"
+msgstr "Отмена"
 
 #: src/mmcheckingpanel.cpp:907
 msgid "as needing Followup"
-msgstr ""
+msgstr "Отслеживать"
 
 #: src/mmcheckingpanel.cpp:908
 msgid "as Duplicate"
-msgstr ""
+msgstr "Повтор"
 
 #: src/mmcheckingpanel.cpp:909
 msgid "Mark all "
-msgstr "Отметить все"
+msgstr "Отметить все как"
 
 #: src/mmcheckingpanel.cpp:1215
 msgid "Do you really want to delete the transaction?"
 msgstr "Вы действительно хотите удалить транзакцию?"
 
-#: src/mmex.cpp:294
+#: src/mmex.cpp:295
 msgid "Add Account Wizard"
-msgstr "Мастер добавления счета"
+msgstr "Мастер добавления счёта"
 
-#: src/mmex.cpp:303
+#: src/mmex.cpp:304
 msgid ""
 " models all transactions as belonging to accounts.\n"
 "\n"
@@ -1363,525 +1308,522 @@ msgid ""
 "To help you get started, begin by making a list of all\n"
 "financial institutions where you hold an account."
 msgstr ""
+" работает со счетами, содержащими сделки - финансовые транзакции.\n"
+"\n"
+"Последующая информация поможет Вам создать новый счёт.\n"
+"\n"
+"Для начала, придумайте название счёта."
 
-#: src/mmex.cpp:344
+#: src/mmex.cpp:346
 msgid "New Database Wizard"
 msgstr "Мастер создания базы данных"
 
-#: src/mmex.cpp:351
+#: src/mmex.cpp:353
+#, fuzzy
 msgid ""
 "The next pages will help you create a new database.\n"
 "\n"
 "Your database file is stored with an extension \n"
-"of .mmb. Make sure to make backups of this \n"
+"of .mmb.                Make sure to make backups of this \n"
 "file and to store it carefully as it contains important \n"
 "financial information."
 msgstr ""
+"Следующие страницы помогут Вам создать новую базу данных. \n"
+" \n"
+" Ваш файл базы данных хранится с расширением \n"
+".mmb. Удостоверьтесь, что сделана резервная копия этого \n"
+" файла и надёжно сохранена, поскольку этот файл содержит важную \n"
+" финансовую информацию."
 
-#: src/mmex.cpp:653
-#: src/mmex.cpp:2014
+#: src/mmex.cpp:656
+#: src/mmex.cpp:2017
 msgid "Navigation"
-msgstr ""
+msgstr "&Навигация"
 
-#: src/mmex.cpp:667
+#: src/mmex.cpp:670
 msgid "Home Page"
-msgstr "Домашняя страница"
+msgstr "Начало"
 
-#: src/mmex.cpp:671
+#: src/mmex.cpp:674
 msgid "Bank Accounts"
 msgstr "Банковские счета"
 
-#: src/mmex.cpp:678
-#: src/mmex.cpp:719
+#: src/mmex.cpp:681
+#: src/mmex.cpp:722
 msgid "Stocks"
 msgstr "Ценные бумаги"
 
-#: src/mmex.cpp:700
+#: src/mmex.cpp:703
 msgid "Budgeting"
-msgstr ""
+msgstr "Бюджетирование"
 
-#: src/mmex.cpp:706
+#: src/mmex.cpp:709
 msgid "Reports"
-msgstr "Отчеты"
+msgstr "Отчёты"
 
-#: src/mmex.cpp:712
+#: src/mmex.cpp:715
 msgid "Summary of Accounts"
 msgstr "Всего по счетам"
 
-#: src/mmex.cpp:733
-#: src/mmex.cpp:1374
-#: src/mmex.cpp:1393
-#: src/mmex.cpp:1406
-#: src/mmex.cpp:1419
-#: src/mmex.cpp:1436
-#: src/mmex.cpp:1453
+#: src/mmex.cpp:736
+#: src/mmex.cpp:1377
+#: src/mmex.cpp:1396
+#: src/mmex.cpp:1409
+#: src/mmex.cpp:1422
+#: src/mmex.cpp:1439
+#: src/mmex.cpp:1456
 msgid "Where the Money Goes"
 msgstr "Куда деваются деньги"
 
-#: src/mmex.cpp:738
-#: src/mmex.cpp:770
-#: src/mmex.cpp:802
-#: src/mmex.cpp:833
-#: src/mmex.cpp:865
+#: src/mmex.cpp:741
+#: src/mmex.cpp:773
+#: src/mmex.cpp:805
+#: src/mmex.cpp:836
+#: src/mmex.cpp:868
 msgid "Last Calendar Month"
-msgstr "Последний календарный месяц"
+msgstr "Прошлый месяц"
 
-#: src/mmex.cpp:743
-#: src/mmex.cpp:775
-#: src/mmex.cpp:807
-#: src/mmex.cpp:838
-#: src/mmex.cpp:870
+#: src/mmex.cpp:746
+#: src/mmex.cpp:778
+#: src/mmex.cpp:810
+#: src/mmex.cpp:841
+#: src/mmex.cpp:873
 msgid "Current Month"
 msgstr "Текущий месяц"
 
-#: src/mmex.cpp:748
-#: src/mmex.cpp:780
-#: src/mmex.cpp:812
-#: src/mmex.cpp:843
-#: src/mmex.cpp:875
+#: src/mmex.cpp:751
+#: src/mmex.cpp:783
+#: src/mmex.cpp:815
+#: src/mmex.cpp:846
+#: src/mmex.cpp:878
 msgid "Last 30 Days"
 msgstr "Последние 30 дней"
 
-#: src/mmex.cpp:753
-#: src/mmex.cpp:785
-#: src/mmex.cpp:817
-#: src/mmex.cpp:848
-#: src/mmex.cpp:880
+#: src/mmex.cpp:756
+#: src/mmex.cpp:788
+#: src/mmex.cpp:820
+#: src/mmex.cpp:851
+#: src/mmex.cpp:883
 msgid "Last Year"
-msgstr "Последний год"
+msgstr "Прошлый год"
 
-#: src/mmex.cpp:758
-#: src/mmex.cpp:790
-#: src/mmex.cpp:822
-#: src/mmex.cpp:853
-#: src/mmex.cpp:885
+#: src/mmex.cpp:761
+#: src/mmex.cpp:793
+#: src/mmex.cpp:825
+#: src/mmex.cpp:856
+#: src/mmex.cpp:888
 msgid "Current Year"
 msgstr "Текущий год"
 
-#: src/mmex.cpp:765
-#: src/mmex.cpp:1282
-#: src/mmex.cpp:1302
-#: src/mmex.cpp:1315
-#: src/mmex.cpp:1328
-#: src/mmex.cpp:1345
-#: src/mmex.cpp:1362
-#, fuzzy
+#: src/mmex.cpp:768
+#: src/mmex.cpp:1285
+#: src/mmex.cpp:1305
+#: src/mmex.cpp:1318
+#: src/mmex.cpp:1331
+#: src/mmex.cpp:1348
+#: src/mmex.cpp:1365
 msgid "Where the Money Comes From"
-msgstr "Куда деваются деньги"
+msgstr "Откуда берутся деньги"
 
-#: src/mmex.cpp:828
+#: src/mmex.cpp:831
 msgid "To Whom the Money Goes"
 msgstr "Кому достаются деньги"
 
-#: src/mmex.cpp:860
+#: src/mmex.cpp:863
 msgid "Income vs Expenses"
-msgstr "Доходы против Расходов"
+msgstr "Доходы/Расходы"
 
-#: src/mmex.cpp:890
+#: src/mmex.cpp:893
 msgid "Income vs Expenses - All Time"
-msgstr "Доходы против Расходов - За все время"
+msgstr "Доходы/Расходы - За всё время"
 
-#: src/mmex.cpp:896
-#, fuzzy
+#: src/mmex.cpp:899
 msgid "Transaction Report"
-msgstr "Номер транзакции"
+msgstr "Отчёт по транзакциям"
 
-#: src/mmex.cpp:904
+#: src/mmex.cpp:907
 msgid "Budget Performance"
-msgstr ""
+msgstr "Исполнение бюджета "
 
-#: src/mmex.cpp:911
-#: src/mmex.cpp:2725
+#: src/mmex.cpp:914
+#: src/mmex.cpp:2733
 msgid "Cash Flow"
-msgstr ""
+msgstr "Движение наличных средств"
 
-#: src/mmex.cpp:916
-#, fuzzy
+#: src/mmex.cpp:919
 msgid "Cash Flow - Specific Accounts"
-msgstr "Выберите счет"
+msgstr "Определённые Счета"
 
-#: src/mmex.cpp:922
-#, fuzzy
+#: src/mmex.cpp:925
 msgid "Transaction Statistics"
-msgstr "Детали транзакции"
+msgstr "Статистика"
 
-#: src/mmex.cpp:928
+#: src/mmex.cpp:931
 msgid "Custom SQL Report"
-msgstr ""
+msgstr "Пользовательский SQL запрос"
 
-#: src/mmex.cpp:933
+#: src/mmex.cpp:936
 msgid "Help"
 msgstr "Помощь"
 
-#: src/mmex.cpp:1008
-#: src/mmex.cpp:1081
-#, fuzzy
+#: src/mmex.cpp:1011
+#: src/mmex.cpp:1084
 msgid "Top Categories Last 30 Days"
-msgstr "Последние 30 дней"
+msgstr "Самые расходные категории за последние 30 дней"
 
-#: src/mmex.cpp:1753
-#: src/mmex.cpp:3095
+#: src/mmex.cpp:1756
+#: src/mmex.cpp:3103
 msgid "Do you really want to delete the account?"
-msgstr "Вы действительно хотите удалить счет?"
+msgstr "Вы действительно хотите удалить счёт?"
 
-#: src/mmex.cpp:1754
-#: src/mmex.cpp:3096
+#: src/mmex.cpp:1757
+#: src/mmex.cpp:3104
 msgid "Confirm Account Deletion"
 msgstr "Подтверждение удаления счета"
 
-#: src/mmex.cpp:1799
+#: src/mmex.cpp:1802
 msgid "&Go To.."
-msgstr "Идти к.."
-
-#: src/mmex.cpp:1800
-#: src/mmex.cpp:1809
-msgid "&Edit Account"
-msgstr "Редактировать счет"
-
-#: src/mmex.cpp:1801
-#: src/mmex.cpp:1810
-msgid "&Delete Account"
-msgstr "Удалить счет"
+msgstr "&Идти к.."
 
 #: src/mmex.cpp:1803
 #: src/mmex.cpp:1812
+msgid "&Edit Account"
+msgstr "&Редактировать счёт"
+
+#: src/mmex.cpp:1804
+#: src/mmex.cpp:1813
+msgid "&Delete Account"
+msgstr "&Удалить счёт"
+
+#: src/mmex.cpp:1806
+#: src/mmex.cpp:1815
 msgid "&Launch Account Website"
-msgstr "Запустить Вэбсайт счета"
+msgstr "&Вызвать вэбстраницу счёта"
 
-#: src/mmex.cpp:1946
+#: src/mmex.cpp:1949
 msgid "&New Database\tCtrl-N"
-msgstr "Новая база данных\tCtrl-N"
+msgstr "&Новая база данных\tCtrl-N"
 
-#: src/mmex.cpp:1947
-#: src/mmex.cpp:2187
-#, fuzzy
+#: src/mmex.cpp:1950
+#: src/mmex.cpp:2190
 msgid "New Database"
 msgstr "Мастер создания базы данных"
 
-#: src/mmex.cpp:1951
+#: src/mmex.cpp:1954
 msgid "&Open Database\tCtrl-O"
-msgstr "Открыть базу данных\tCtrl-O"
+msgstr "&Открыть базу данных\tCtrl-O"
 
-#: src/mmex.cpp:1952
-#: src/mmex.cpp:2189
-#, fuzzy
+#: src/mmex.cpp:1955
+#: src/mmex.cpp:2192
 msgid "Open Database"
-msgstr "Открыть базу данных\tCtrl-O"
+msgstr "Открыть базу данных"
 
-#: src/mmex.cpp:1959
-#, fuzzy
+#: src/mmex.cpp:1962
 msgid "Save Database &As"
-msgstr "Сохранть базу данных\tCtrl-S"
+msgstr "&Сохранить базу данных как"
 
-#: src/mmex.cpp:1960
-#, fuzzy
+#: src/mmex.cpp:1963
 msgid "Save Database As"
 msgstr "Сохранть базу данных\tCtrl-S"
 
-#: src/mmex.cpp:1967
+#: src/mmex.cpp:1970
 msgid "&CSV Files"
-msgstr "&CSV файлы"
+msgstr "CSV &файлы"
 
-#: src/mmex.cpp:1967
+#: src/mmex.cpp:1970
 msgid "Export to CSV"
 msgstr "Экспортировать в CSV"
 
-#: src/mmex.cpp:1968
+#: src/mmex.cpp:1971
 msgid "&Report to HTML"
-msgstr "Отчет в HTML"
+msgstr "О&тчёт в HTML"
 
-#: src/mmex.cpp:1968
+#: src/mmex.cpp:1971
 msgid "Export to HTML"
 msgstr "Экспортировать в HTML"
 
-#: src/mmex.cpp:1969
+#: src/mmex.cpp:1972
 msgid "&Export"
-msgstr "Экспорт"
+msgstr "&Экспорт"
 
-#: src/mmex.cpp:1972
+#: src/mmex.cpp:1975
 msgid "&QIF Files"
-msgstr "&QIF файлы"
+msgstr "QIF &ку-ай-эф файлы"
 
-#: src/mmex.cpp:1972
+#: src/mmex.cpp:1975
 msgid "Import from QIF"
 msgstr "Импорт из QIF"
 
-#: src/mmex.cpp:1973
-#, fuzzy
+#: src/mmex.cpp:1976
 msgid "&Universal CSV Files"
-msgstr "Универсальные CSV файлы"
+msgstr "&Универсальные CSV файлы"
 
-#: src/mmex.cpp:1973
+#: src/mmex.cpp:1976
 msgid "Import from any CSV file"
 msgstr "Импорт из любого CSV файла"
 
-#: src/mmex.cpp:1975
+#: src/mmex.cpp:1978
 msgid "&MMEX CSV Files"
-msgstr "&MMEX CSV файлы"
+msgstr "MMEX CSV &файлы"
 
-#: src/mmex.cpp:1975
+#: src/mmex.cpp:1978
 msgid "Import from MMEX CSV"
 msgstr "Импорт из MMEX CSV"
 
-#: src/mmex.cpp:1977
+#: src/mmex.cpp:1980
 msgid "&MM.NET CSV Files"
-msgstr "&MM.NET CSV файлы"
+msgstr "MM.NET CSV ф&айлы"
 
-#: src/mmex.cpp:1977
+#: src/mmex.cpp:1980
 msgid "Import from MM.NET CSV"
 msgstr "Импорт из MM.NET CSV"
 
-#: src/mmex.cpp:1979
+#: src/mmex.cpp:1982
 msgid "Import"
-msgstr "Импорт"
+msgstr "&Импорт"
 
-#: src/mmex.cpp:1985
-#, fuzzy
+#: src/mmex.cpp:1988
 msgid "Page Setup..."
-msgstr "Настройка печати.."
+msgstr "Настройка страницы.."
 
-#: src/mmex.cpp:1985
-#, fuzzy
+#: src/mmex.cpp:1988
 msgid "Setup page printing options"
 msgstr "Настройки области печати"
 
-#: src/mmex.cpp:1991
-#: src/mmex.cpp:1997
+#: src/mmex.cpp:1994
+#: src/mmex.cpp:2000
 msgid "Current View"
 msgstr "Текущий вид"
 
-#: src/mmex.cpp:1991
+#: src/mmex.cpp:1994
 msgid "Preview current report"
 msgstr "Предварительный просмотр текущего отчета"
 
-#: src/mmex.cpp:1993
-#, fuzzy
+#: src/mmex.cpp:1996
 msgid "Print Preview..."
 msgstr "Предварительный просмотр печати.."
 
-#: src/mmex.cpp:1997
+#: src/mmex.cpp:2000
 msgid "Print current report"
 msgstr "Печатать текущий отчет"
 
-#: src/mmex.cpp:2000
+#: src/mmex.cpp:2003
 msgid "Print..."
 msgstr "Печать.."
 
-#: src/mmex.cpp:2005
+#: src/mmex.cpp:2008
 msgid "E&xit\tAlt-X"
-msgstr "Выход\tAlt-X"
+msgstr "Вы&ход\tAlt-X"
 
-#: src/mmex.cpp:2005
+#: src/mmex.cpp:2008
 msgid "Quit this program"
 msgstr "Выйти из программы"
 
-#: src/mmex.cpp:2012
-#, fuzzy
+#: src/mmex.cpp:2015
 msgid "&Toolbar"
-msgstr "Инструменты"
+msgstr "Панель &инструментов"
 
-#: src/mmex.cpp:2012
+#: src/mmex.cpp:2015
 msgid "Show/Hide the toolbar"
-msgstr ""
+msgstr "Показать/Спрятать панель инструментов"
 
-#: src/mmex.cpp:2014
+#: src/mmex.cpp:2017
 msgid "Show/Hide the Navigation tree control"
-msgstr ""
+msgstr "Показать/Скрыть окно навигации"
 
-#: src/mmex.cpp:2024
+#: src/mmex.cpp:2027
 msgid "New &Account"
-msgstr "Новый счет"
+msgstr "&Новый счёт"
 
-#: src/mmex.cpp:2024
-#: src/mmex.cpp:2193
+#: src/mmex.cpp:2027
+#: src/mmex.cpp:2196
 msgid "New Account"
-msgstr "Новый счет"
+msgstr "Новый счёт"
 
-#: src/mmex.cpp:2030
+#: src/mmex.cpp:2033
 msgid "Account &List"
-msgstr "Список счетов"
+msgstr "&Список счетов"
 
-#: src/mmex.cpp:2030
-#: src/mmex.cpp:2195
+#: src/mmex.cpp:2033
+#: src/mmex.cpp:2198
 msgid "Show Account List"
 msgstr "Показать список счетов"
 
-#: src/mmex.cpp:2034
+#: src/mmex.cpp:2037
 msgid "Edit Account"
-msgstr "Редактировать счет"
+msgstr "&Редактировать счёт"
 
-#: src/mmex.cpp:2040
+#: src/mmex.cpp:2043
 msgid "Delete Account"
-msgstr "Удалить счет"
+msgstr "&Удалить счёт"
 
-#: src/mmex.cpp:2040
+#: src/mmex.cpp:2043
 msgid "Delete Account from database"
-msgstr "Удалить счет из базы данных"
+msgstr "Удалить счёт из базы данных"
 
-#: src/mmex.cpp:2052
+#: src/mmex.cpp:2055
 msgid "Organize &Categories"
-msgstr "Упорядочить категории"
+msgstr "&Категории"
 
-#: src/mmex.cpp:2052
-#: src/mmex.cpp:2197
+#: src/mmex.cpp:2055
+#: src/mmex.cpp:2200
 msgid "Organize Categories"
-msgstr "Упорядочить категории"
+msgstr "Список категорий"
 
-#: src/mmex.cpp:2057
+#: src/mmex.cpp:2060
 msgid "Organize &Payees"
-msgstr "Упорядочить получателей"
+msgstr "&Получатели"
 
-#: src/mmex.cpp:2057
-#: src/mmex.cpp:2198
+#: src/mmex.cpp:2060
+#: src/mmex.cpp:2201
 msgid "Organize Payees"
-msgstr "Упорядочить получателей"
+msgstr "Список получателей"
 
-#: src/mmex.cpp:2062
-#: src/mmex.cpp:2199
+#: src/mmex.cpp:2065
+#: src/mmex.cpp:2202
 msgid "Organize Currency"
-msgstr "Упорядочить валюты"
+msgstr "&Валюта"
 
-#: src/mmex.cpp:2069
+#: src/mmex.cpp:2072
 msgid "Budget Setup"
-msgstr ""
+msgstr "&Бюджетирование"
 
-#: src/mmex.cpp:2077
+#: src/mmex.cpp:2080
 msgid "Bills && Deposits"
-msgstr ""
+msgstr "Счета &и депозиты"
 
-#: src/mmex.cpp:2085
+#: src/mmex.cpp:2088
 msgid "Stock Investments"
-msgstr ""
+msgstr "Инвестиции"
 
-#: src/mmex.cpp:2101
-#, fuzzy
+#: src/mmex.cpp:2104
 msgid "Transaction Filter"
-msgstr "Номер транзакции"
+msgstr "&Фильтр транзакций"
 
-#: src/mmex.cpp:2108
+#: src/mmex.cpp:2111
 msgid "&Options"
-msgstr "Настройки программы"
+msgstr "&Настройки программы"
 
-#: src/mmex.cpp:2108
-#, fuzzy
+#: src/mmex.cpp:2111
 msgid "Show the Options Dialog"
 msgstr "Настройки"
 
-#: src/mmex.cpp:2115
+#: src/mmex.cpp:2118
 msgid "&Help\tCtrl-F1"
-msgstr "Помощь\tCtrl-F1"
+msgstr "&Помощь\tCtrl-F1"
 
-#: src/mmex.cpp:2115
+#: src/mmex.cpp:2118
 msgid "Show the Help file"
-msgstr ""
+msgstr "Показать файл помощи"
 
-#: src/mmex.cpp:2120
+#: src/mmex.cpp:2123
 msgid "Show App Start Dialog"
 msgstr "Показать стартовый диалог.."
 
-#: src/mmex.cpp:2120
+#: src/mmex.cpp:2123
 msgid "App Start Dialog"
 msgstr "Стартовый диалог"
 
-#: src/mmex.cpp:2127
+#: src/mmex.cpp:2130
 msgid "Convert Encrypted DB"
-msgstr ""
+msgstr "Преобразовать зашифрованную БД"
 
-#: src/mmex.cpp:2128
+#: src/mmex.cpp:2131
 msgid "Convert Encrypted DB to Non-Encrypted DB"
-msgstr ""
+msgstr "Преобразовать шифрованую базу данных в незашифрованную"
 
-#: src/mmex.cpp:2136
+#: src/mmex.cpp:2139
 msgid "Check for &Updates"
 msgstr "Проверить обновления"
 
-#: src/mmex.cpp:2136
+#: src/mmex.cpp:2139
 msgid "Check For Updates"
 msgstr "Проверить обновления"
 
-#: src/mmex.cpp:2144
+#: src/mmex.cpp:2147
 msgid "Report Issues or Feedback"
-msgstr ""
+msgstr "Сообщить об ошибке или обратная связь"
 
-#: src/mmex.cpp:2144
+#: src/mmex.cpp:2147
 msgid "Send email through the mailing list to report issues with the software."
-msgstr ""
+msgstr "Пошлите электронную почту через список адресатов, чтобы сообщить о проблемах с программным обеспечением."
 
-#: src/mmex.cpp:2152
+#: src/mmex.cpp:2155
 msgid "Be notified of new releases"
 msgstr "Знать о новых версиях ;-)"
 
-#: src/mmex.cpp:2152
+#: src/mmex.cpp:2155
 msgid "Sign up for the announcement mailing list"
 msgstr "Подписаться на рассылку уведомлений"
 
-#: src/mmex.cpp:2158
+#: src/mmex.cpp:2161
 msgid "&About..."
 msgstr "О программе.."
 
-#: src/mmex.cpp:2158
+#: src/mmex.cpp:2161
 msgid "Show about dialog"
 msgstr "Показать диалог О программе.."
 
-#: src/mmex.cpp:2163
-msgid "&File"
-msgstr "Файл"
-
-#: src/mmex.cpp:2164
-msgid "&Accounts"
-msgstr "Счета"
-
-#: src/mmex.cpp:2165
-msgid "&Tools"
-msgstr "Инструменты"
-
 #: src/mmex.cpp:2166
-msgid "&View"
-msgstr ""
+msgid "&File"
+msgstr "&Файл"
 
 #: src/mmex.cpp:2167
-msgid "&Help"
-msgstr "Помощь"
+msgid "&Accounts"
+msgstr "&Счета"
 
-#: src/mmex.cpp:2188
+#: src/mmex.cpp:2168
+msgid "&Tools"
+msgstr "&Инструменты"
+
+#: src/mmex.cpp:2169
+msgid "&View"
+msgstr "&Вид"
+
+#: src/mmex.cpp:2170
+msgid "&Help"
+msgstr "&Помощь"
+
+#: src/mmex.cpp:2191
 msgid "Open"
 msgstr "Открыт"
 
-#: src/mmex.cpp:2195
+#: src/mmex.cpp:2198
 msgid "Account List"
 msgstr "Список счетов"
 
-#: src/mmex.cpp:2197
-#, fuzzy
+#: src/mmex.cpp:2200
 msgid "Show Organize Categories Dialog"
-msgstr "Упорядочить категории"
+msgstr "Открыть диалог редактора категорий"
 
-#: src/mmex.cpp:2198
-#, fuzzy
+#: src/mmex.cpp:2201
 msgid "Show Organize Payees Dialog"
-msgstr "Упорядочить получателей"
+msgstr "Открыть диалог редактора получателей"
 
-#: src/mmex.cpp:2199
-#, fuzzy
+#: src/mmex.cpp:2202
 msgid "Show Organize Currency Dialog"
-msgstr "Упорядочить валюты"
+msgstr "Открыть диалог редактора валют"
 
-#: src/mmex.cpp:2248
-#: src/mmex.cpp:2299
-#, fuzzy
+#: src/mmex.cpp:2227
+#: src/mmex.cpp:2418
+msgid "Money Manager Ex: Enter Password For Database.."
+msgstr ""
+
+#: src/mmex.cpp:2251
+#: src/mmex.cpp:2306
 msgid " - No File opened "
 msgstr "Money Manager EX - Нет открытого файла"
 
-#: src/mmex.cpp:2251
+#: src/mmex.cpp:2254
 msgid "Sorry. The Database version is too old or                 Database password is incorrect"
-msgstr ""
+msgstr "Извините. Версия базы данных устаревшая или пароль нверен."
 
-#: src/mmex.cpp:2253
-#: src/mmex.cpp:2303
+#: src/mmex.cpp:2256
+#: src/mmex.cpp:2310
 msgid "Error opening database"
 msgstr "Ошибка открытия базы данных."
 
-#: src/mmex.cpp:2302
+#: src/mmex.cpp:2309
 msgid ""
 "Cannot locate previously opened .mmb database.\n"
 "Do you want to browse to locate the file?"
@@ -1889,82 +1831,83 @@ msgstr ""
 "Неверный путь к ранее открываемой базе данных .mmb.\n"
 "Хотите вручную указать путь?"
 
-#: src/mmex.cpp:2322
+#: src/mmex.cpp:2329
 msgid "Opening Database File && Verifying Integrity"
 msgstr "Открытие базы данных && и проверка целосности"
 
-#: src/mmex.cpp:2429
+#: src/mmex.cpp:2414
+#, fuzzy
+msgid "Choose Encrypted database file to open"
+msgstr "Choose QIF data file to import"
+
+#: src/mmex.cpp:2436
 msgid "Converted DB!"
-msgstr ""
+msgstr "Преобразованная БД!"
 
-#: src/mmex.cpp:2430
+#: src/mmex.cpp:2437
 msgid "MMEX message"
-msgstr ""
+msgstr "MMEX сообщение"
 
-#: src/mmex.cpp:2435
+#: src/mmex.cpp:2442
 msgid "Unable to convert db successfully. Check Password!"
-msgstr ""
+msgstr "Не могу соединиться с БД. Проверьте пароль!"
 
-#: src/mmex.cpp:2509
-#: src/mmex.cpp:2585
+#: src/mmex.cpp:2516
+#: src/mmex.cpp:2592
 msgid "No Account available! Cannot Import! Create a new account first!"
-msgstr ""
+msgstr "Не выбран счёт! не могу импортировать! Создайте новый счёт сначала!"
 
-#: src/mmex.cpp:2528
+#: src/mmex.cpp:2535
 msgid "Choose Account to import to:"
-msgstr "Выберите счет для импорта в:"
+msgstr "Выберите счёт для импорта в:"
 
-#: src/mmex.cpp:2529
-#, fuzzy
+#: src/mmex.cpp:2536
 msgid "QFX Import"
-msgstr "QIF импорт"
+msgstr "QFX импорт"
 
-#: src/mmex.cpp:2724
-#, fuzzy
+#: src/mmex.cpp:2732
 msgid "Choose Accounts"
-msgstr "Выберите счет для редактирования"
+msgstr "Выберите счёт"
 
-#: src/mmex.cpp:2771
+#: src/mmex.cpp:2779
 msgid "Unable to connect!"
-msgstr ""
+msgstr "Не могу исправить!"
 
-#: src/mmex.cpp:2771
-#: src/mmex.cpp:2829
-#: src/mmex.cpp:2835
-#, fuzzy
+#: src/mmex.cpp:2779
+#: src/mmex.cpp:2837
+#: src/mmex.cpp:2843
 msgid "Check Update"
 msgstr "Проверить обновления"
 
-#: src/mmex.cpp:2829
+#: src/mmex.cpp:2837
 msgid "New update available!"
-msgstr ""
+msgstr "Доступна новая версия!"
 
-#: src/mmex.cpp:2835
+#: src/mmex.cpp:2843
 msgid "You have the latest version installed!"
-msgstr ""
+msgstr "У вас установлена последняя версия!"
 
-#: src/mmex.cpp:3032
-#: src/mmex.cpp:3073
+#: src/mmex.cpp:3040
+#: src/mmex.cpp:3081
 msgid "No Account available!"
-msgstr ""
+msgstr "Нет доступного счёта!"
 
-#: src/mmex.cpp:3046
+#: src/mmex.cpp:3054
 msgid "Choose Account to Edit"
-msgstr "Выберите счет для редактирования"
+msgstr "Выберите счёт для редактирования"
 
-#: src/mmex.cpp:3047
-#: src/mmex.cpp:3088
+#: src/mmex.cpp:3055
+#: src/mmex.cpp:3096
 msgid "Accounts"
 msgstr "Счета"
 
-#: src/mmex.cpp:3087
+#: src/mmex.cpp:3095
 msgid "Choose Account to Delete"
-msgstr "Выберите счет для удаления"
+msgstr "Выберите счёт для удаления"
 
 #: src/mmhelppanel.cpp:77
-#, fuzzy
 msgid " Help"
-msgstr "Помощь"
+msgstr " Помощь"
 
 #: src/mmhomepagepanel.cpp:97
 msgid "Today's Date: "
@@ -1972,51 +1915,47 @@ msgstr "Сегодня: "
 
 #: src/mmhomepagepanel.cpp:110
 msgid "Summary"
-msgstr "Итого"
+msgstr "Сумма"
 
 #: src/mmhomepagepanel.cpp:199
-#, fuzzy
 msgid "Total of Accounts:"
-msgstr "На счет"
+msgstr "Итого:"
 
 #: src/mmhomepagepanel.cpp:220
 msgid "Income vs Expenses: Current Month"
-msgstr "Доходы против Расходов: Текущий месяц"
+msgstr "Доходы/Расходы: Текущий месяц"
 
 #: src/mmhomepagepanel.cpp:370
-#, fuzzy
 msgid "Upcoming Transactions"
-msgstr "Удалить транзакцию"
+msgstr "Предстоящие транзакции"
 
 #: src/mmhomepagepanel.cpp:428
 msgid "Follow Up On "
-msgstr ""
+msgstr "Отследить: "
 
 #: src/mmhomepagepanel.cpp:432
-#, fuzzy
 msgid "Transactions"
-msgstr "Детали транзакции"
+msgstr "транзакции"
 
 #: src/mmhomepagepanel.cpp:437
-#, fuzzy
 msgid "Total Transactions"
-msgstr "Редактировать транзакцию"
+msgstr "Транзакций всего"
 
 #: src/mmreportspanel.cpp:80
 msgid "REPORTS"
-msgstr "ОТЧЕТЫ"
+msgstr "ОТЧЁТЫ"
 
 #: src/newacctdialog.cpp:146
 msgid "Account Name:"
-msgstr "Название счета:"
+msgstr "Название счёта:"
 
 #: src/newacctdialog.cpp:153
 msgid "Enter the Name of the Account. This name can be renamed at any time."
-msgstr "Введите название счета. В дальнейшем оно может быть изменено."
+msgstr "Введите название счёта. В дальнейшем оно может быть изменено."
 
 #: src/newacctdialog.cpp:156
 msgid "Account Type:"
-msgstr "Тип счета:"
+msgstr "Тип счёта:"
 
 #: src/newacctdialog.cpp:162
 msgid "Checking"
@@ -2024,20 +1963,19 @@ msgstr "Проверка"
 
 #: src/newacctdialog.cpp:163
 msgid "Investment"
-msgstr ""
+msgstr "Инвестиция"
 
 #: src/newacctdialog.cpp:169
 msgid "Specify the type of account to be created."
-msgstr "Укажите тип создаваемого счета"
+msgstr "Укажите тип создаваемого счёта"
 
 #: src/newacctdialog.cpp:171
 msgid "Account Number:"
-msgstr "Номер счета:"
+msgstr "Номер счёта:"
 
 #: src/newacctdialog.cpp:180
-#, fuzzy
 msgid "Enter the Account Number associated with this account."
-msgstr "Выберите номер счета"
+msgstr "Введите номер счета"
 
 #: src/newacctdialog.cpp:183
 msgid "Held At:"
@@ -2045,7 +1983,7 @@ msgstr "Открыт в:"
 
 #: src/newacctdialog.cpp:191
 msgid "Enter the name of the financial institution in which the account is held."
-msgstr "Введите наименования организации, где открыт данный счет."
+msgstr "Введите наименования организации, где открыт данный счёт."
 
 #: src/newacctdialog.cpp:193
 msgid "Website:"
@@ -2069,11 +2007,11 @@ msgstr "Доступ к информации:"
 
 #: src/newacctdialog.cpp:221
 msgid "Enter any login/access information for the financial institution. This is not secure as anyone with access to the mmb file can access it."
-msgstr "Введите логин/пароль доступа к счету в организации. Данная информация будет храниться не защищенной!"
+msgstr "Введите логин/пароль доступа к счёту в организации. Данная информация будет храниться не защищенной!"
 
 #: src/newacctdialog.cpp:223
 msgid "Account Status:"
-msgstr "Состояние счета:"
+msgstr "Состояние счёта:"
 
 #: src/newacctdialog.cpp:230
 msgid "Closed"
@@ -2081,7 +2019,7 @@ msgstr "Закрыт"
 
 #: src/newacctdialog.cpp:237
 msgid "Specify if this account has been closed. Closed accounts are inactive in most calculations, reporting etc."
-msgstr "Укажите, если этот счет закрыт. Закрытые счета не участвуют в большинстве расчетов, отчетах и т.п."
+msgstr "Укажите, если этот счёт закрыт. Закрытые счёта не участвуют в большинстве расчётов, отчётах и т.п."
 
 #: src/newacctdialog.cpp:240
 msgid "Initial Balance:"
@@ -2089,7 +2027,7 @@ msgstr "Начальный баланс:"
 
 #: src/newacctdialog.cpp:248
 msgid "Enter the initial balance in this account."
-msgstr "Введите начальный баланс для данного счета."
+msgstr "Введите начальный баланс для данного счёта."
 
 #: src/newacctdialog.cpp:251
 msgid "Currency:"
@@ -2101,7 +2039,7 @@ msgstr "Выберите валюту"
 
 #: src/newacctdialog.cpp:266
 msgid "Specify the currency to be used by this account."
-msgstr "Укажите валюту, которая будет использоваться для этого счета."
+msgstr "Укажите валюту, которая будет использоваться для этого счёта."
 
 #: src/newacctdialog.cpp:269
 msgid "Notes:"
@@ -2109,24 +2047,23 @@ msgstr "Примечания:"
 
 #: src/newacctdialog.cpp:276
 msgid "Enter user notes and details about this account."
-msgstr "Введите примечания и любую другую информацию о данном счете."
+msgstr "Введите примечания и любую другую информацию о данном счёте."
 
 #: src/newacctdialog.cpp:281
 msgid "Favorite Account"
-msgstr "Избранный счет"
+msgstr "Избранный счёт"
 
 #: src/newacctdialog.cpp:285
-#, fuzzy
 msgid "Select whether this is an account that is used often. This is used to filter accounts display view."
-msgstr "Отметьте, если данный счет используется часто. Это нужно для упорядочивания отображения счетов."
+msgstr "Отметьте, если данный счёт используется часто. Это нужно для упорядочивания отображения счетов."
 
 #: src/newacctdialog.cpp:323
 msgid "Account Name "
-msgstr "Имя счета"
+msgstr "Имя счёта"
 
 #: src/newacctdialog.cpp:330
 msgid "Account Name already exists"
-msgstr "Название счета уже существует"
+msgstr "Название счёта уже существует"
 
 #: src/newacctdialog.cpp:336
 msgid "Currency"
@@ -2137,9 +2074,8 @@ msgid "Init Balance "
 msgstr "Начальный баланс"
 
 #: src/optionsdialog.cpp:147
-#, fuzzy
 msgid " : Restart"
-msgstr "Статус"
+msgstr ":Перегрузить"
 
 #: src/optionsdialog.cpp:216
 msgid "General Settings"
@@ -2166,13 +2102,12 @@ msgid "Specify the date format for display"
 msgstr "Укажите формат отображения даты"
 
 #: src/optionsdialog.cpp:276
-#, fuzzy
 msgid "Set"
-msgstr "Выбрать"
+msgstr "Укажите"
 
 #: src/optionsdialog.cpp:280
 msgid "Sample Date"
-msgstr "Пример"
+msgstr "Пример даты"
 
 #: src/optionsdialog.cpp:288
 msgid "Import/Export Settings"
@@ -2188,17 +2123,15 @@ msgstr "Укажите какой разделитель использоват�
 
 #: src/optionsdialog.cpp:306
 msgid "Display"
-msgstr ""
+msgstr "Показать"
 
 #: src/optionsdialog.cpp:312
-#, fuzzy
 msgid "User Name"
-msgstr "Наименование целых"
+msgstr "Имя пользователя"
 
 #: src/optionsdialog.cpp:319
-#, fuzzy
 msgid "Specify the User Name"
-msgstr "Укажите счет перечисления"
+msgstr "Укажите имя пользователя"
 
 #: src/optionsdialog.cpp:324
 #: src/optionsdialog.cpp:330
@@ -2226,51 +2159,44 @@ msgid "Favorites"
 msgstr "Избранные"
 
 #: src/optionsdialog.cpp:380
-#, fuzzy
 msgid "Specify which accounts are visible"
-msgstr "Указать какие счета будут выдны"
+msgstr "Указать какие счета будут видны"
 
 #: src/optionsdialog.cpp:385
-#, fuzzy
 msgid "Transaction View Options"
-msgstr "Детали транзакции"
+msgstr "Опции просмотра транзакций"
 
 #: src/optionsdialog.cpp:391
-#, fuzzy
 msgid "Transactions Visible"
-msgstr "Номер транзакции"
+msgstr "Транзакции видны"
 
 #: src/optionsdialog.cpp:398
-#, fuzzy
 msgid "View Reconciled"
-msgstr "Согласовано"
+msgstr "Показывать выверенные"
 
 #: src/optionsdialog.cpp:399
-#, fuzzy
 msgid "View UnReconciled"
-msgstr "Согласовано"
+msgstr "Не согласовано"
 
 #: src/optionsdialog.cpp:400
 msgid "View 30 days"
-msgstr ""
+msgstr "Показать 30 дней"
 
 #: src/optionsdialog.cpp:401
 msgid "View 90 days"
-msgstr ""
+msgstr "Показать 90 дней"
 
 #: src/optionsdialog.cpp:402
 msgid "View Last Month"
-msgstr ""
+msgstr "Показать прошлый месяц"
 
 #: src/optionsdialog.cpp:403
-#, fuzzy
 msgid "View Current Month"
-msgstr "Текущий месяц"
+msgstr "Показать текущий месяц"
 
 #: src/optionsdialog.cpp:429
-#, fuzzy
 msgid "Specify which transactions are visible by default"
-msgstr "Указать какие счета будут выдны"
+msgstr "Укажите, какие транзакции в счёте будут видны"
 
 #: src/optionsdialog.cpp:438
 msgid "Restore Defaults"
@@ -2282,19 +2208,19 @@ msgstr "Восстановить исходные цвета"
 
 #: src/optionsdialog.cpp:447
 msgid "Nav Tree"
-msgstr "Дерево"
+msgstr "Дерево навигации"
 
 #: src/optionsdialog.cpp:449
 msgid "Specify the color for the nav tree"
-msgstr "Укажите цвет навигационного дерева"
+msgstr "Укажите цвет окна навигации"
 
 #: src/optionsdialog.cpp:453
 msgid "List Background"
-msgstr "Фон списка"
+msgstr "Справочная информация"
 
 #: src/optionsdialog.cpp:455
 msgid "Specify the color for the list background"
-msgstr "Укажите цвет заднего фона для списка"
+msgstr "Укажите цвет фона окна справочной информации"
 
 #: src/optionsdialog.cpp:459
 msgid "List Row 0"
@@ -2321,24 +2247,20 @@ msgid "Specify the color for the list Border"
 msgstr "Укажите цвет границы списка"
 
 #: src/optionsdialog.cpp:477
-#, fuzzy
 msgid "List Details"
 msgstr "Детали списка"
 
 #: src/optionsdialog.cpp:479
-#, fuzzy
 msgid "Specify the color for the list details"
-msgstr "Укажите цвет деталей списка"
+msgstr "Выберите цвет деталей списка"
 
 #: src/optionsdialog.cpp:483
-#, fuzzy
 msgid "Future Transactions"
-msgstr "Удалить транзакцию"
+msgstr "Будующая транзакция"
 
 #: src/optionsdialog.cpp:485
-#, fuzzy
 msgid "Specify the color for future transactions"
-msgstr "Укажите категорию данной транзакции"
+msgstr "Укажите цвет для будующих транзакций"
 
 #: src/optionsdialog.cpp:497
 msgid "Backup database before opening"
@@ -2349,41 +2271,36 @@ msgid "Select whether to create a .bak file when opening a the database file"
 msgstr "Отметьте, если нужно создавать .bak файл при открытии базы данных."
 
 #: src/optionsdialog.cpp:510
-#, fuzzy
 msgid "Stock Quote Web Page"
 msgstr "Курсы"
 
 #: src/optionsdialog.cpp:521
-#, fuzzy
 msgid "Use Original Date when Pasting Transactions"
-msgstr "Удалить транзакцию"
+msgstr "Использовать текущую дату при вводе транзакции"
 
 #: src/optionsdialog.cpp:527
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
-msgstr ""
+msgstr "Выберите, использовать ли оригинальную дату транзакции или текущую дату когда они копируются или вставляются"
 
 #: src/optionsdialog.cpp:532
-#, fuzzy
 msgid "Use Transaction Sound"
-msgstr "Новая транзакция"
+msgstr "Озвучивать транзакции"
 
 #: src/optionsdialog.cpp:538
-#, fuzzy
 msgid "Select whether to use sounds when entering transactions"
-msgstr "Укажите статус транзакции"
+msgstr "Укажите, использовать ли звуки, входя транзакции"
 
 #: src/optionsdialog.cpp:541
-#, fuzzy
 msgid "Font Size Options"
-msgstr "Параметры отображения счетов"
+msgstr "Параметры размера шрифта"
 
 #: src/optionsdialog.cpp:547
 msgid "Report Font Size"
-msgstr ""
+msgstr "Размер шрифта отчёта"
 
 #: src/optionsdialog.cpp:586
 msgid "Specify which font size is used on the report tables"
-msgstr ""
+msgstr "Определите, какой размер шрифта использовать для сообщений"
 
 #: src/optionsdialog.cpp:594
 msgid "General"
@@ -2403,7 +2320,7 @@ msgstr "Другие"
 
 #: src/payeedialog.cpp:157
 msgid "Enter the payee name to be added or make edits to an existing payee name"
-msgstr ""
+msgstr "Введите имя получателя платежа, которое будет добавлено к существующему или будет изменено"
 
 #: src/payeedialog.cpp:162
 msgid "Add a new payee name"
@@ -2419,11 +2336,11 @@ msgstr "Удалить выбранного получателя. Получат
 
 #: src/payeedialog.cpp:180
 msgid "Select the currently selected payee as the selected payee for the transaction"
-msgstr ""
+msgstr "Выберите из списка получателя платежа для этой транзакции"
 
 #: src/payeedialog.cpp:190
 msgid "Type a Payee Name in the Text Box and then press Add."
-msgstr ""
+msgstr "Напишите название пая в текстовом поле, затем нажмите кнопку Добавить."
 
 #: src/payeedialog.cpp:195
 msgid "Payee with same name exists"
@@ -2431,7 +2348,7 @@ msgstr "Получатель с таким именем уже существу�
 
 #: src/payeedialog.cpp:214
 msgid "Payee is in use"
-msgstr "Получатель используется"
+msgstr "Получатель уже используется"
 
 #: src/qifimport.cpp:361
 msgid ""
@@ -2439,11 +2356,13 @@ msgid ""
 " must match the format of the date in the QIF file.\n"
 "Are you are sure you want to proceed with the import?"
 msgstr ""
+"Для корректного импорта файлов QIF, формат даты в MMEX \n"
+" должен соответствовать формату даты в QIF файле. \n"
+" Вы уверены, что хотите произвести импорт?"
 
 #: src/qifimport.cpp:363
-#, fuzzy
 msgid "Confirm QIF import"
-msgstr "QIF импорт"
+msgstr "Подтветдите QIF импорт"
 
 #: src/qifimport.cpp:382
 msgid "QIF Import"
@@ -2464,25 +2383,24 @@ msgid " incorrect QIF line type"
 msgstr " неверній тип QIF строки"
 
 #: src/qifimport.cpp:446
-#, fuzzy
 msgid "Importing account type : "
 msgstr "Импорт типа счета:"
 
 #: src/qifimport.cpp:459
 msgid " : "
-msgstr ""
+msgstr ":"
 
 #: src/qifimport.cpp:460
 msgid " account name "
-msgstr " название счета"
+msgstr " название счёта"
 
 #: src/qifimport.cpp:498
 msgid " cannot process Account Types yet "
-msgstr ""
+msgstr "Всё ещё невозможно обработать типы счетов"
 
 #: src/qifimport.cpp:499
 msgid "Cannot process these QIF Account Types yet"
-msgstr ""
+msgstr "Всё ещё невозможно обработать QIF типы счетов"
 
 #: src/qifimport.cpp:514
 #: src/qifimport.cpp:630
@@ -2511,83 +2429,78 @@ msgstr "Категория не выбрана, транзакция будет 
 
 #: src/qifimport.cpp:660
 msgid "Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had "
-msgstr ""
+msgstr "Пропуск QIF транзакции, поскольку дата, тип, сумма отсутствует или некорректны, транзакция была пропущена"
 
 #: src/qifimport.cpp:661
-#, fuzzy
 msgid " payee "
-msgstr "Получатель"
+msgstr "получатель"
 
 #: src/qifimport.cpp:661
-#, fuzzy
 msgid " type "
-msgstr "Тип"
+msgstr "тип"
 
 #: src/qifimport.cpp:662
-#, fuzzy
 msgid " amount "
-msgstr "Количество"
+msgstr " количество"
 
 #: src/qifimport.cpp:662
-#, fuzzy
 msgid " date "
-msgstr "Обновить"
+msgstr " дата"
 
 #: src/qifimport.cpp:713
 msgid " transactions imported from QIF"
 msgstr " транзакция импортированна из QIF"
 
 #: src/splitdetailsdialog.cpp:182
-#, fuzzy
 msgid "Invalid Category Entered "
-msgstr "Введено неверное количество"
+msgstr "Введена неверная категория"
 
 #: src/splittransactionsdialog.cpp:146
 msgid "Remove"
-msgstr ""
+msgstr "Удалить"
 
 #: src/stockdialog.cpp:137
 msgid "Stock Investment Details"
-msgstr ""
+msgstr "Детали по ценным бумагам"
 
 #: src/stockdialog.cpp:150
 #: src/stockdialog.cpp:327
 #: src/stockspanel.cpp:204
 msgid "Held At"
-msgstr "Размещен в"
+msgstr "Финансовый институт"
 
 #: src/stockdialog.cpp:156
 msgid "Enter the name of the financial institution where the investment is held"
-msgstr ""
+msgstr "Выберите название финансового учреждения, в котором будет размещён вклад"
 
 #: src/stockdialog.cpp:167
 msgid "Specify the purchase date of the stock investment"
-msgstr ""
+msgstr "Укажите дату покупки ценных бумаг"
 
 #: src/stockdialog.cpp:170
 msgid "Stock Name"
-msgstr ""
+msgstr "Название ценной бумаги"
 
 #: src/stockdialog.cpp:176
 msgid "Enter the stock company name"
-msgstr ""
+msgstr "Введите имя акционерной компании"
 
 #: src/stockdialog.cpp:180
 msgid "Symbol"
-msgstr ""
+msgstr "Символ"
 
 #: src/stockdialog.cpp:186
 msgid "Enter the stock symbol (optional)"
-msgstr ""
+msgstr "Введите символ ценной бумаги (опционально)"
 
 #: src/stockdialog.cpp:191
 #: src/stockspanel.cpp:212
 msgid "Number of Shares"
-msgstr ""
+msgstr "Число акций"
 
 #: src/stockdialog.cpp:197
 msgid "Enter number of shares held"
-msgstr ""
+msgstr "Введите число проведенных акций"
 
 #: src/stockdialog.cpp:202
 msgid "Purchase Price"
@@ -2595,11 +2508,11 @@ msgstr "Покупная цена"
 
 #: src/stockdialog.cpp:208
 msgid "Enter purchase price for each stock"
-msgstr ""
+msgstr "Введите покупную цену каждой ценной бумаги"
 
 #: src/stockdialog.cpp:219
 msgid "Enter notes associated with this investment"
-msgstr ""
+msgstr "Введите примечания, связанные с этими инвестициями"
 
 #: src/stockdialog.cpp:223
 msgid "Current Price"
@@ -2607,7 +2520,7 @@ msgstr "Текущая цена"
 
 #: src/stockdialog.cpp:229
 msgid "Enter current stock price"
-msgstr ""
+msgstr "Введите текущий курс акций"
 
 #: src/stockdialog.cpp:235
 msgid "Commission"
@@ -2615,7 +2528,7 @@ msgstr "Комиссия"
 
 #: src/stockdialog.cpp:241
 msgid "Enter any commission paid"
-msgstr ""
+msgstr "Введите любое выплаченное комиссионное вознаграждение"
 
 #: src/stockdialog.cpp:270
 msgid "Web Page"
@@ -2623,97 +2536,95 @@ msgstr "Web-страница"
 
 #: src/stockdialog.cpp:286
 msgid "Choose Investment Account"
-msgstr ""
+msgstr "Выберите инвестиционный счёт"
 
 #: src/stockdialog.cpp:339
 #: src/stockdialog.cpp:353
 msgid "Num Shares"
-msgstr ""
+msgstr "Количество акций"
 
 #: src/stockdialog.cpp:347
 msgid "Invalid number of shares entered "
-msgstr ""
+msgstr "Введено неправильное число акций"
 
 #: src/stockdialog.cpp:362
 msgid "Invalid purchase price entered "
-msgstr ""
+msgstr "Введена неправильная цена покупки акций"
 
 #: src/stockdialog.cpp:371
 msgid "Invalid current price entered "
-msgstr ""
+msgstr "Введена ошибочная цена"
 
 #: src/stockdialog.cpp:380
 msgid "Invalid commission entered "
-msgstr ""
+msgstr "Введена ошибочная комиссия"
 
 #: src/stockspanel.cpp:177
 msgid "Idle"
-msgstr ""
+msgstr "Свободный"
 
 #: src/stockspanel.cpp:208
 msgid "Share Name"
-msgstr ""
+msgstr "Название акции"
 
 #: src/stockspanel.cpp:217
 msgid "Gain/Loss"
-msgstr ""
+msgstr "Выгода/Потери"
 
 #: src/stockspanel.cpp:227
-#, fuzzy
 msgid "Current"
 msgstr "Валюта"
 
 #: src/stockspanel.cpp:270
 msgid "New Stock Investment"
-msgstr ""
+msgstr "Создание новой ценной бумаги"
 
 #: src/stockspanel.cpp:275
 msgid "Edit Stock Investment"
-msgstr ""
+msgstr "Изменение ценной бумаги"
 
 #: src/stockspanel.cpp:280
 msgid "Delete Stock Investment"
-msgstr ""
+msgstr "Удаление ценной бумаги"
 
 #: src/stockspanel.cpp:283
 msgid "Refresh"
-msgstr ""
+msgstr "Обновить"
 
 #: src/stockspanel.cpp:285
 msgid "Refresh Stock Prices from Yahoo"
-msgstr ""
+msgstr "Обновление котировок с Yahoo"
 
 #: src/stockspanel.cpp:288
-#, fuzzy
 msgid "Settings"
-msgstr "Параметры просмотра"
+msgstr "Настройки"
 
 #: src/stockspanel.cpp:290
 msgid "Change settings for automatic refresh"
-msgstr ""
+msgstr "Изменение настроек автоматического обновления"
 
 #: src/stockspanel.cpp:309
 msgid "Stock Investments: "
-msgstr ""
+msgstr "Вложения в ценные бумаги:"
 
 #: src/stockspanel.cpp:348
 #, c-format
 msgid "Total: %s Invested: %s Gain: %s "
-msgstr ""
+msgstr "Всего: %s Вложено: %s Прирост: %s "
 
 #: src/stockspanel.cpp:350
 #, c-format
 msgid "Total: %s Invested: %s Loss: %s "
-msgstr ""
+msgstr "Всего: %s Вложено: %s Убытки: %s "
 
 #: src/stockspanel.cpp:446
-#, c-format
+#, fuzzy, c-format
 msgid "%s on %s"
-msgstr ""
+msgstr "%s on %s"
 
 #: src/stockspanel.cpp:449
 msgid "never!"
-msgstr ""
+msgstr "никогда!"
 
 #: src/stockspanel.cpp:454
 #, c-format
@@ -2721,6 +2632,8 @@ msgid ""
 "Automatic stock quote refresh is disabled. \n"
 "Last update: %s"
 msgstr ""
+"Автоматическое обновление котировок отключено. \n"
+"Последнее обновление: %s"
 
 #: src/stockspanel.cpp:460
 #, c-format
@@ -2728,10 +2641,12 @@ msgid ""
 "Automatic stock quote refresh idle - Out of Hours. \n"
 "Last update: %s"
 msgstr ""
+"Автоматическое обновление котировок остановлено - нерабочее время. \n"
+"Последнее обновление: %s"
 
 #: src/stockspanel.cpp:466
 msgid "Automatic stock quote refresh in progress..."
-msgstr ""
+msgstr "Автоматическое обновление котировок в процессе...."
 
 #: src/stockspanel.cpp:472
 #, c-format
@@ -2739,6 +2654,8 @@ msgid ""
 "Automatic stock quote refresh successful. \n"
 "Last update: %s"
 msgstr ""
+"Автоматическое обнобновление котировок прошло успешно. \n"
+"Последнее обновление: %s"
 
 #: src/stockspanel.cpp:478
 #, c-format
@@ -2746,6 +2663,8 @@ msgid ""
 "Automatic stock quote refresh Failed. \n"
 "Last successful update: %s"
 msgstr ""
+"Автоматическое обновление котировок доло сбой. \n"
+"Последнее успешное обновление: %s"
 
 #: src/stockspanel.cpp:485
 #, c-format
@@ -2753,83 +2672,83 @@ msgid ""
 "Automatic stock quote refresh not started. \n"
 "Last update: %s"
 msgstr ""
+"Автоматическое обновление котировок не стартовало. \n"
+"Последнее обновление: %s"
 
 #: src/stockspanel.cpp:644
 #: src/stockspanel.cpp:652
 msgid "Stock Download"
-msgstr ""
+msgstr "Загрузка котировок"
 
 #: src/stockspanel.cpp:757
 msgid "&New Stock Investment"
-msgstr ""
+msgstr "Новая ценная бумага"
 
 #: src/stockspanel.cpp:759
 msgid "&Edit Stock Investment"
-msgstr ""
+msgstr "Редактировать "
 
 #: src/stockspanel.cpp:760
 msgid "&Delete Stock Investment"
-msgstr ""
+msgstr "&Удалить "
 
 #: src/stockspanel.cpp:849
 msgid "Do you really want to delete the stock investment?"
-msgstr ""
+msgstr "Вы действительно хотите удалить эту инвестицию в ценные бумаги?"
 
 #: src/stockspanel.cpp:850
 msgid "Confirm Stock Investment Deletion"
-msgstr ""
+msgstr "Подтвердите удаление инвестиции в ценные бумаги"
 
 #: src/transdialog.cpp:286
 #: src/transdialog.cpp:666
 #: src/transdialog.cpp:681
 msgid "Specify to whom the transaction is going to or coming from "
-msgstr ""
+msgstr "Укажите к кому или от кого исходит транзакция"
 
 #: src/transdialog.cpp:305
-#, fuzzy
 msgid "Populate Transaction #"
-msgstr "Новая транзакция"
+msgstr "Повторить транзакцию №"
 
 #: src/transdialog.cpp:685
 msgid "Select From Account"
-msgstr ""
+msgstr "Из счёта"
 
 #: src/transdialog.cpp:686
 msgid "Select To Account"
-msgstr ""
+msgstr "В счёт"
 
 #: src/transdialog.cpp:695
 msgid "Specify the account from which the transfer is occurring"
-msgstr ""
+msgstr "Укажите счёт из которого производится перевод"
 
 #: src/univcsvdialog.cpp:93
 msgid "Specify the order of fields in the CSV file"
-msgstr ""
+msgstr "Укажите порядок полей в CSV файле"
 
 #: src/univcsvdialog.cpp:108
 msgid "Move Up"
-msgstr ""
+msgstr "Вверх"
 
 #: src/univcsvdialog.cpp:113
 msgid "Move Down"
-msgstr ""
+msgstr "Вниз"
 
 #: src/univcsvdialog.cpp:149
 msgid "Load Template"
-msgstr ""
+msgstr "Загрузить шаблон"
 
 #: src/univcsvdialog.cpp:154
 msgid "Save As Template"
-msgstr ""
+msgstr "Сохранить как шаблон"
 
 #: src/univcsvdialog.cpp:159
-#, fuzzy
 msgid "Import File"
 msgstr "Импорт"
 
 #: src/univcsvdialog.cpp:216
 msgid "Amount(+/-)"
-msgstr ""
+msgstr "Значение (+/-)"
 
 #: src/univcsvdialog.cpp:220
 msgid "SubCategory"
@@ -2841,7 +2760,7 @@ msgstr "Номер транзакции"
 
 #: src/univcsvdialog.cpp:226
 msgid "Don't Care"
-msgstr ""
+msgstr "Без разницы"
 
 #: src/univcsvdialog.cpp:233
 #: src/univcsvdialog.cpp:235
@@ -2850,42 +2769,41 @@ msgstr "Неизвестно"
 
 #: src/univcsvdialog.cpp:256
 msgid "Add CSV field"
-msgstr ""
+msgstr "Добавить CSV поле"
 
 #: src/univcsvdialog.cpp:257
 msgid "CSV Field"
-msgstr ""
+msgstr "CSV поле"
 
 #: src/univcsvdialog.cpp:351
 #: src/univcsvdialog.cpp:363
 msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."
-msgstr ""
+msgstr "Неправильно заданы поля для CSV импорта! Требуется как минимум Дата, Стоимость и Получатель"
 
 #: src/univcsvdialog.cpp:383
 #: src/util.cpp:421
 #: src/util.cpp:742
 msgid "CSV Import"
-msgstr ""
+msgstr "CSV импорт"
 
 #: src/univcsvdialog.cpp:393
 #: src/util.cpp:751
 msgid "Choose MM.NET CSV data file to import"
-msgstr ""
+msgstr "Выберите MM.NET CSV файл данных для импорта"
 
 #: src/univcsvdialog.cpp:437
 msgid " file contains insufficient number of tokens"
-msgstr ""
+msgstr "файл содержит неправильное количество разделителей"
 
 #: src/univcsvdialog.cpp:460
-#, fuzzy
 msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipping"
-msgstr "одно из следующих полей: дата, получатель, тип транзакции, количество строк не заполнено, пропуск."
+msgstr "одно из полей (дата, получатель, тип транзакции, количество строк) не заполнено."
 
 #: src/univcsvdialog.cpp:514
 #: src/util.cpp:697
 #: src/util.cpp:918
 msgid " imported OK."
-msgstr ""
+msgstr "Импортировано успешно."
 
 #: src/univcsvdialog.cpp:517
 #: src/util.cpp:921
@@ -2904,142 +2822,136 @@ msgstr ""
 #: src/util.cpp:719
 #: src/util.cpp:922
 msgid "Import from CSV"
-msgstr ""
+msgstr "Импорт из CSV"
 
 #: src/util.cpp:245
 msgid "January"
-msgstr ""
+msgstr "Январь"
 
 #: src/util.cpp:245
 msgid "February"
-msgstr ""
+msgstr "Февраль"
 
 #: src/util.cpp:245
 msgid "March"
-msgstr ""
+msgstr "Март"
 
 #: src/util.cpp:245
 msgid "April"
-msgstr ""
+msgstr "Апрель"
 
 #: src/util.cpp:245
 #: src/util.cpp:256
 msgid "May"
-msgstr ""
+msgstr "Май"
 
 #: src/util.cpp:245
 msgid "June"
-msgstr ""
+msgstr "Июнь"
 
 #: src/util.cpp:246
 msgid "July"
-msgstr ""
+msgstr "Июль"
 
 #: src/util.cpp:246
 msgid "August"
-msgstr ""
+msgstr "Август"
 
 #: src/util.cpp:246
-#, fuzzy
 msgid "September"
-msgstr "Выберите получателя"
+msgstr "Сентябрь"
 
 #: src/util.cpp:246
-#, fuzzy
 msgid "October"
-msgstr "Другие"
+msgstr "Октябрь"
 
 #: src/util.cpp:246
-#, fuzzy
 msgid "November"
-msgstr "Номер"
+msgstr "Ноябрь"
 
 #: src/util.cpp:246
 msgid "December"
-msgstr ""
+msgstr "Декабрь"
 
 #: src/util.cpp:256
 msgid "Jan"
-msgstr ""
+msgstr "Янв"
 
 #: src/util.cpp:256
 msgid "Feb"
-msgstr ""
+msgstr "Фев"
 
 #: src/util.cpp:256
 msgid "Mar"
-msgstr ""
+msgstr "Мар"
 
 #: src/util.cpp:256
-#, fuzzy
 msgid "Apr"
-msgstr "Искусство"
+msgstr "Апр"
 
 #: src/util.cpp:256
 msgid "Jun"
-msgstr ""
+msgstr "Июн"
 
 #: src/util.cpp:257
 msgid "Jul"
-msgstr ""
+msgstr "Июл"
 
 #: src/util.cpp:257
 msgid "Aug"
-msgstr ""
+msgstr "Авг"
 
 #: src/util.cpp:257
 msgid "Sep"
-msgstr ""
+msgstr "Сен"
 
 #: src/util.cpp:257
 msgid "Oct"
-msgstr ""
+msgstr "Окт"
 
 #: src/util.cpp:257
 msgid "Nov"
-msgstr ""
+msgstr "Ноя"
 
 #: src/util.cpp:257
 msgid "Dec"
-msgstr ""
+msgstr "Дек"
 
 #: src/util.cpp:272
-#, fuzzy
 msgid "Sunday"
-msgstr "Итого"
+msgstr "Воскресенье"
 
 #: src/util.cpp:272
-#, fuzzy
 msgid "Monday"
-msgstr "Ежемесячно"
+msgstr "Понедельник"
 
 #: src/util.cpp:272
 msgid "Tuesday"
-msgstr ""
+msgstr "Вторник"
 
 #: src/util.cpp:272
 msgid "Wednesday"
-msgstr ""
+msgstr "Среда"
 
 #: src/util.cpp:273
 msgid "Thursday"
-msgstr ""
+msgstr "Четверг"
 
 #: src/util.cpp:273
 msgid "Friday"
-msgstr ""
+msgstr "Пятица"
 
 #: src/util.cpp:273
 msgid "Saturday"
-msgstr ""
+msgstr "Суббота"
 
 #: src/util.cpp:302
 msgid "No Account available! Cannot Export!"
-msgstr ""
+msgstr "Не выбран счёт. Нечего выгружать. "
 
 #: src/util.cpp:319
 msgid "Choose Account to Export from:"
-msgstr ""
+msgstr "Выберите счёт для экспорта из:"
 
 #: src/util.cpp:320
 msgid "CSV Export"
@@ -3077,9 +2989,8 @@ msgid " unrecognized transaction type, skipping."
 msgstr "непризнанный тип транзакций"
 
 #: src/util.cpp:555
-#, fuzzy
 msgid " transfer transaction not imported."
-msgstr " транзакция импортированна из QIF"
+msgstr "транзакция не импортированна"
 
 #: src/util.cpp:700
 #, c-format
@@ -3093,7 +3004,7 @@ msgstr ""
 
 #: src/util.cpp:718
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
-msgstr ""
+msgstr "Пожалуйста проверьте, что CSV файл из MMEX.NET содержит только один счёт!"
 
 #: src/util.cpp:825
 msgid " missing category, skipping."
@@ -3101,7 +3012,7 @@ msgstr " отсутствует категория, пропуск"
 
 #: src/util.cpp:853
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
-msgstr ""
+msgstr "Одно из следующих полей: дата, получатель, тип операции, сумма, категория отсутсвует"
 
 #: src/util.cpp:862
 msgid " invalid date, skipping."
@@ -3120,9 +3031,8 @@ msgid "Invalid Entry"
 msgstr "Неверная запись."
 
 #: src/wxsqlite3_1_7.cpp:94
-#, fuzzy
 msgid "No Database opened"
-msgstr "Мастер создания базы данных"
+msgstr "База данных не открыта"
 
 #: src/wxsqlite3_1_7.cpp:95
 msgid "Statement not accessible"
@@ -3130,30 +3040,27 @@ msgstr ""
 
 #: src/wxsqlite3_1_7.cpp:96
 msgid "Out of memory"
-msgstr ""
+msgstr "Недостаточно памяти"
 
 #: src/wxsqlite3_1_7.cpp:97
 msgid "Cannot decode binary"
 msgstr ""
 
 #: src/wxsqlite3_1_7.cpp:98
-#, fuzzy
 msgid "Invalid field index"
-msgstr "Невероное значение"
+msgstr "Невероный индекс"
 
 #: src/wxsqlite3_1_7.cpp:99
-#, fuzzy
 msgid "Invalid field name"
-msgstr "Невероное значение"
+msgstr "Невероное имя поля"
 
 #: src/wxsqlite3_1_7.cpp:100
 msgid "Invalid row index"
 msgstr ""
 
 #: src/wxsqlite3_1_7.cpp:101
-#, fuzzy
 msgid "Invalid scalar query"
-msgstr "Невероное значение"
+msgstr "Невероный запрос"
 
 #: src/wxsqlite3_1_7.cpp:103
 msgid "Null Results pointer"
@@ -3164,9 +3071,8 @@ msgid "Error binding string param"
 msgstr ""
 
 #: src/wxsqlite3_1_7.cpp:105
-#, fuzzy
 msgid "Error binding int param"
-msgstr "Ошибка открытия базы данных."
+msgstr "Ошибка параметров инициализации"
 
 #: src/wxsqlite3_1_7.cpp:106
 msgid "Error binding int64 param"
@@ -3181,9 +3087,8 @@ msgid "Error binding blob param"
 msgstr ""
 
 #: src/wxsqlite3_1_7.cpp:109
-#, fuzzy
 msgid "Error binding date/time param"
-msgstr "Ошибка открытия базы данных."
+msgstr "Ошибка формата даты/времени"
 
 #: src/wxsqlite3_1_7.cpp:110
 msgid "Error binding NULL param"
@@ -3195,7 +3100,7 @@ msgstr ""
 
 #: src/yahoosettingsdialog.cpp:61
 msgid "Yahoo Server"
-msgstr ""
+msgstr "Yahoo сервер"
 
 #: src/yahoosettingsdialog.cpp:65
 msgid "finance.au.yahoo.com"
@@ -3203,7 +3108,7 @@ msgstr ""
 
 #: src/yahoosettingsdialog.cpp:66
 msgid "Do not enter anything except the server name (or IP address, if you're feeling lucky)"
-msgstr ""
+msgstr "Не вводите ничего, кроме имени сервера (или ip адрес, если хотите)"
 
 #: src/yahoosettingsdialog.cpp:72
 msgid "Yahoo Suffix"
@@ -3214,70 +3119,69 @@ msgid ""
 "Enter the suffix used by Yahoo for the market of your stocks. \n"
 "If your stocks are in multiple markets, leave this blank and add  the suffix to each symbol in your portfolio."
 msgstr ""
+"Войдите суффикс, используемый Yahoo для рынка Ваших акций. \n"
+"Если Ваши акции находятся на многих рынках, оставте это поле пустым и добавте суффикс к каждой акции в Вашем портфеле."
 
 #: src/yahoosettingsdialog.cpp:82
 msgid "Market open from"
-msgstr ""
+msgstr "Рынок открыт с"
 
 #: src/yahoosettingsdialog.cpp:91
 #: src/yahoosettingsdialog.cpp:102
 #: src/yahoosettingsdialog.cpp:119
 #: src/yahoosettingsdialog.cpp:130
 msgid "Allow for any delay in quotes"
-msgstr ""
+msgstr "Допускать задержку в котировках"
 
 #: src/yahoosettingsdialog.cpp:98
 #: src/yahoosettingsdialog.cpp:126
 msgid ":"
-msgstr ""
+msgstr ":"
 
 #: src/yahoosettingsdialog.cpp:110
 msgid "to"
-msgstr ""
+msgstr "до"
 
 #: src/yahoosettingsdialog.cpp:139
 msgid "Refresh prices every"
-msgstr ""
+msgstr "Обновлять цену каждые"
 
 #: src/yahoosettingsdialog.cpp:163
 msgid "minutes while market is open"
-msgstr ""
+msgstr "минут, в то время когда торги открыты"
 
 #: include/aboutdialog.h:25
-#, fuzzy
 msgid "About "
-msgstr "Количество"
+msgstr "О программе"
 
 #: include/appstartdialog.h:27
-#, fuzzy
 msgid " Start Page"
-msgstr "Стартовый диалог"
+msgstr " Начальная страница"
 
 #: include/assetdialog.h:21
 msgid "New/Edit Asset"
-msgstr "Новый актив / Редактировать актив"
+msgstr "Добавить/изменить актив"
 
 #: include/billsdepositsdialog.h:22
-#, fuzzy
 msgid "New/Edit Repeating Transaction"
-msgstr "Удалить транзакцию"
+msgstr "Редактор периодической транзакции"
 
 #: include/budgetentrydialog.h:22
 msgid "Budget Entry Dialog"
-msgstr ""
+msgstr "Бюджет"
 
 #: include/budgetyeardialog.h:22
 msgid "Budget Year Editor"
-msgstr ""
+msgstr "Бюджетные годы"
 
 #: include/budgetyearentrydialog.h:23
 msgid "Budget Year Entry"
-msgstr ""
+msgstr "Запись Бюджетного года"
 
-#: include/chart.h:245
-#: include/chart.h:444
+#: include/chart.h:246
+#: include/chart.h:447
 msgid "Legend:"
-msgstr ""
+msgstr "     Пояснения:"
 
 #: include/currencydialog.h:23
 msgid "Currency Manager"
@@ -3285,25 +3189,23 @@ msgstr "Менеджер валют"
 
 #: include/customsqldialog.h:29
 msgid "Custom SQL Dialog"
-msgstr ""
+msgstr "Диалог пользовательского SQL запроса"
 
 #: include/fileviewerdialog.h:24
 msgid "View File Contents"
-msgstr ""
+msgstr "Показать содержимое файла"
 
 #: include/filtertransdialog.h:46
-#, fuzzy
 msgid "Filter Transactions"
-msgstr "Удалить транзакцию"
+msgstr "Фильтр транзакций"
 
 #: include/maincurrencydialog.h:29
-#, fuzzy
 msgid "Currency Dialog"
-msgstr "Название валюты"
+msgstr "Валюта"
 
 #: include/mmex.h:134
 msgid "Base Currency for account"
-msgstr "Основная валюта счета"
+msgstr "Основная валюта счёта"
 
 #: include/mmex.h:149
 msgid ""
@@ -3312,10 +3214,14 @@ msgid ""
 "with the database. You can change the \n"
 "currency associated with each account if needed.\n"
 msgstr ""
+"\n"
+"Укажите базовую (или по умолчанию) валюту, которая будет использоваться \n"
+"с базой данных. Вы можете изменять \n"
+"валюту, связанную с каждым счётом, если это будет необходимо. \n"
 
 #: include/mmex.h:167
 msgid "(Optional)Specify your name. Mainly used for reporting and in printing reports.\n"
-msgstr ""
+msgstr "(Необязательно) Укажите свое имя. В основном будет использоваться в отчетов. \n"
 
 #: include/mmex.h:179
 msgid "Base Currency Not Set"
@@ -3323,7 +3229,7 @@ msgstr "Основная валюта не установлена"
 
 #: include/mmex.h:229
 msgid "Name of the Account"
-msgstr "Имя счета"
+msgstr "Имя этого счёта"
 
 #: include/mmex.h:244
 msgid ""
@@ -3332,15 +3238,18 @@ msgid ""
 "is the name of the financial institution where the account is held. \n"
 "For example 'ABC Bank'."
 msgstr ""
+"\n"
+"Введите название счёта. Как правило это  \n"
+"название финансового учреждения, где находится счёт. \n"
+" Например, 'ABC Банк'."
 
 #: include/mmex.h:257
 msgid "Account Name Invalid"
 msgstr "Неверное имя счета"
 
 #: include/mmex.h:280
-#, fuzzy
 msgid "Checking/Savings"
-msgstr "Проверка"
+msgstr "Чеки/Накопления"
 
 #: include/mmex.h:292
 msgid "Type of Account"
@@ -3354,6 +3263,11 @@ msgid ""
 "General bank accounts cover a wide variety of account\n"
 " types like Checking, Savings and Credit card type accounts."
 msgstr ""
+"\n"
+"Выберите из списка тип создаваемого счёта.\n"
+"\n"
+"'Чеки/Накопления' для доходно-расходного счёта.  \n"
+"'Вложения' для счёта ценных бумаг. "
 
 #: include/mmex.h:313
 msgid ""
@@ -3362,82 +3276,82 @@ msgid ""
 "have stock/mutual fund investments associated \n"
 "with them.\n"
 msgstr ""
+"\n"
+"\n"
 
 #: include/mmex.h:331
 msgid ""
 "Base Account Currency Not set.\n"
 "Set that first using tools->options menu and then add a new account"
 msgstr ""
+"Базовая валюта счёта не выбрана. \n"
+"Установите его сначала в Инструменты -> Настройки программы -> Основные"
 
 #: include/mmgraphincexpensesmonth.h:26
 msgid "Expenses"
 msgstr "Расходы"
 
 #: include/optionsdialog.h:26
-#, fuzzy
 msgid "Options Dialog"
 msgstr "Настройки"
 
 #: include/reportbudgetingperf.h:26
 msgid "Budget Performance for Year : "
-msgstr ""
+msgstr "Исполнение бюджета за: "
 
 #: include/reportbudgetingperf.h:63
 #: include/reportcategovertimeperf.h:55
 msgid "Overall"
-msgstr ""
+msgstr "Суммарно"
 
 #: include/reportbudgetingperf.h:64
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: include/reportcashflow.h:24
 msgid "Cash Flow Forecast For All Accounts - A Year Ahead"
-msgstr ""
+msgstr "Прогноз движения денежной наличности для всех счетов на год вперёд"
 
 #: include/reportcashflow.h:37
 #: include/reportincexpesestime.h:122
 msgid "Total"
-msgstr "Всего"
+msgstr "Сумма"
 
 #: include/reportcategexp.h:62
 #: include/reportincexpenses.h:40
 #: include/reportpayee.h:39
 msgid "From: "
-msgstr "От:"
+msgstr "С:"
 
 #: include/reportcategexp.h:64
 #: include/reportincexpenses.h:41
 #: include/reportpayee.h:41
 msgid " To: "
-msgstr "К:"
+msgstr " по:"
 
 #: include/reportcategovertimeperf.h:23
 msgid "Category Income/Expenses Over Last 12 Months "
-msgstr ""
+msgstr "Доход/Расход по категориям за последние 12 месяцев"
 
 #: include/reportcustomsql.h:24
 msgid "Custom SQL Report "
-msgstr ""
+msgstr "Пользовательский SQL запрос"
 
 #: include/reportincexpenses.h:76
-#, fuzzy
 msgid "Income:"
-msgstr "Доход"
+msgstr "Доход:"
 
 #: include/reportincexpenses.h:81
-#, fuzzy
 msgid "Expenses:"
-msgstr "Расходы"
+msgstr "Расходы:"
 
 #: include/reportincexpenses.h:93
 msgid "Difference:"
-msgstr ""
+msgstr "Разница:"
 
 #: include/reportincexpesestime.h:28
-#, fuzzy
 msgid "Income vs Expenses for Year: "
-msgstr "Доходи против Расходов за год: "
+msgstr "Доходы/Расходы за год: "
 
 #: include/reportincexpesestime.h:43
 msgid "Month"
@@ -3445,89 +3359,77 @@ msgstr "Месяц"
 
 #: include/reportincexpesestime.h:46
 msgid "Difference"
-msgstr ""
+msgstr "Разница"
 
 #: include/reportsummary.h:119
-#, fuzzy
 msgid "Total Balance on all Accounts"
-msgstr "Общий баланс на всех счетах:"
+msgstr "Общий баланс по всем счетам:"
 
 #: include/reportsummaryassets.h:37
-#, fuzzy
 msgid "Summary of Assets"
-msgstr "Всего по счетам"
+msgstr "Резюме активов"
 
 #: include/reportsummaryassets.h:121
-#, fuzzy
 msgid "Total Assets: "
 msgstr "Активы: "
 
 #: include/reportsummarystocks.h:37
-#, fuzzy
 msgid "Summary of Stocks"
-msgstr "Всего по счетам"
+msgstr "Всего по активам"
 
 #: include/reportsummarystocks.h:60
 msgid "Company"
-msgstr ""
+msgstr "Компания"
 
 #: include/reportsummarystocks.h:62
-#, fuzzy
 msgid "Number Shares"
-msgstr "Номер"
+msgstr "Доли числа"
 
 #: include/reportsummarystocks.h:63
-#, fuzzy
 msgid "Purchase Date"
-msgstr "Покупная цена"
+msgstr "Дата покупки"
 
 #: include/reportsummarystocks.h:68
 msgid "Gain Loss"
-msgstr ""
+msgstr "Потеря выгоды"
 
 #: include/reportsummarystocks.h:148
 msgid "Total Stock Investments: "
-msgstr ""
+msgstr "Всего вложений в ценные бумаги:"
 
 #: include/reporttransactions.h:49
-#, fuzzy
 msgid "Transaction List"
-msgstr "Детали транзакции"
+msgstr "Список транзакций"
 
-#: include/reporttransactions.h:120
-#, fuzzy
+#: include/reporttransactions.h:135
 msgid "Total Amount: "
-msgstr "На счет"
+msgstr "Всего:"
 
 #: include/reporttransstats.h:30
-#, fuzzy
 msgid "Transaction Statistics for "
-msgstr "Детали транзакции"
+msgstr "Количество сделок по месяцам. Годы: "
 
 #: include/splitdetailsdialog.h:39
-#, fuzzy
 msgid "Split Detail Dialog"
-msgstr "Стартовый диалог"
+msgstr "Начальный диалог"
 
 #: include/splittransactionsdialog.h:50
-#, fuzzy
 msgid "Split Transaction Dialog"
-msgstr "Редактировать транзакцию"
+msgstr "Разделение транзакции"
 
 #: include/stockdialog.h:23
 msgid "New/Edit Stock Investment"
-msgstr ""
+msgstr "Редактор инвестиций"
 
 #: include/transdialog.h:23
 msgid "New/Edit Transaction"
-msgstr "Новая транзакция / Редактировать транзакцию"
+msgstr "Редактор транзакции"
 
 #: include/univcsvdialog.h:29
 msgid "Universal CSV Importer Dialog"
-msgstr "Universal CSV Importer Dialog"
+msgstr "Универсальный диалог CSV импорта"
 
 #: include/yahoosettingsdialog.h:108
-#, fuzzy
 msgid "Options"
-msgstr "Настройки программы"
+msgstr "Параметры"
 
