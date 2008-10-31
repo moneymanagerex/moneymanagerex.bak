@@ -392,6 +392,33 @@ void mmExportCSV(wxSQLite3Database* db_)
     scd->Destroy();
 }
 
+void mmSetCategory(mmCoreDB* core, wxString categ, wxString subcateg, int& categID, int& subCategID)
+{
+	bool isUnknown = false;
+	if (categ.Trim().IsEmpty())
+	{
+		categ = wxT("Unknown");
+		isUnknown = true;
+	}
+
+	// Create category (unknown or otherwise) if it doesn't already exist
+	categID = core->categoryList_.getCategoryID(categ);
+	if (categID == -1)
+	{
+	   categID =  core->categoryList_.addCategory(categ);
+	}
+
+	// Create sub category, provided it is not for the Unknown category
+	if (!isUnknown && !subcateg.Trim().IsEmpty())
+	{
+	   subCategID = core->categoryList_.getSubCategoryID(categID, subcateg);
+	   if (subCategID == -1)
+	   {
+		   subCategID = core->categoryList_.addSubCategory(categID, subcateg);
+	   }
+	}
+}
+
 int mmImportCSV(mmCoreDB* core)
 {
     wxSQLite3Database* db_ = core->db_.get();
@@ -556,7 +583,6 @@ int mmImportCSV(mmCoreDB* core)
                           << _(" transfer transaction not imported.") << endl;   
                   }
                }
-
         
                wxDateTime dtdt = mmParseDisplayStringToDate(db_, dt);
                wxString convDate = dtdt.FormatISODate();
@@ -571,104 +597,44 @@ int mmImportCSV(mmCoreDB* core)
                    {
                        //payee does not exist
                        payeeID = core->payeeList_.addPayee(payee);
-
-                       if (categ.Trim().IsEmpty())
-                           categ = wxT("Unknown");
-
-                       categID = core->categoryList_.getCategoryID(categ);
-                       if (categID == -1)
-                       {
-                           categID =  core->categoryList_.addCategory(categ);
-                       }
+					   mmSetCategory(core, categ, subcateg, categID, subCategID);
                    }
                    else
                    {
                        payeeID = core->payeeList_.getPayeeID(payee);
-                       boost::shared_ptr<mmPayee> pPayee =  core->payeeList_.getPayeeSharedPtr(payeeID);
-                       boost::shared_ptr<mmCategory> pCategory = pPayee->category_.lock();
-                       if (!pCategory)
-                       {
-                           // missing category for exisitng payee
-                           if (categ.Trim().IsEmpty())
-                           {
-                               // empty category
-                               categ = wxT("Unknown");
-
-                               categID = core->categoryList_.getCategoryID(categ);
-                               if (categID == -1)
-                               {
-                                   categID =  core->categoryList_.addCategory(categ);
-                               }
-                           }
-                           else
-                           {
-                               // non-empty category
-                               if (!core->categoryList_.categoryExists(categ))
-                               {
-                                   categID = core->categoryList_.addCategory(categ);
-                               }
-                               else
-                                   categID = core->categoryList_.getCategoryID(categ);
-
-                               if (!subcateg.Trim().IsEmpty())
-                               {
-                                   subCategID = core->categoryList_.getSubCategoryID(categID, subcateg);
-                                   if (subCategID == -1)
-                                   {
-                                       subCategID = core->categoryList_.addSubCategory(categID, subcateg);
-                                   }
-                               }
-                           } 
-                       }
-                       else
-                       {
-                           if (pCategory->parent_.lock())
-                           {
-                               categID = pCategory->parent_.lock()->categID_;
-                               subCategID = pCategory->categID_; 
-                           }
-                           else
-                           {
-                               categID = pCategory->categID_; 
-                               subCategID = -1;
-                           }
-                       }
-
+					   if (categ.Trim().IsEmpty())
+					   {
+						   // CSV category not specified, use last known for payee
+						   boost::shared_ptr<mmPayee> pPayee = core->payeeList_.getPayeeSharedPtr(payeeID);
+						   boost::shared_ptr<mmCategory> pCategory = pPayee->category_.lock();
+						   if (!pCategory)
+						   {
+							   // Last known not set - set to unknown
+							   mmSetCategory(core, categ, subcateg, categID, subCategID);
+						   }
+						   else
+						   {
+							   if (pCategory->parent_.lock())
+							   {
+								   categID = pCategory->parent_.lock()->categID_;
+								   subCategID = pCategory->categID_; 
+							   }
+							   else
+							   {
+								   categID = pCategory->categID_; 
+								   subCategID = -1;
+							   }
+						   }
+					   }
+					   else
+					   {
+						   mmSetCategory(core, categ, subcateg, categID, subCategID);
+					   }
                    }
                }
                else // transfer
                {
-                     if (categ.Trim().IsEmpty())
-                           {
-                               // empty category
-                               categ = wxT("Unknown");
-
-                               categID = core->categoryList_.getCategoryID(categ);
-                               if (categID == -1)
-                               {
-                                   categID =  core->categoryList_.addCategory(categ);
-                               }
-                           }
-                           else
-                           {
-                               // non-empty category
-                               if (!core->categoryList_.categoryExists(categ))
-                               {
-                                   categID = core->categoryList_.addCategory(categ);
-                               }
-                               else
-                                   categID = core->categoryList_.getCategoryID(categ);
-
-                               if (!subcateg.Trim().IsEmpty())
-                               {
-                                   subCategID = core->categoryList_.getSubCategoryID(categID, subcateg);
-                                   if (subCategID == -1)
-                                   {
-                                       subCategID = core->categoryList_.addSubCategory(categID, subcateg);
-                                   }
-                               }
-                           } 
-
+                     mmSetCategory(core, categ, subcateg, categID, subCategID);
                }
 
                wxString status = wxT("F");
