@@ -165,6 +165,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_TREEPOPUP_LAUNCHWEBSITE, mmGUIFrame::OnLaunchAccountWebsite)
 	EVT_MENU(MENU_VIEW_TOOLBAR, mmGUIFrame::OnViewToolbar)
 	EVT_MENU(MENU_VIEW_LINKS, mmGUIFrame::OnViewLinks)
+    EVT_MENU(MENU_ONLINE_UPD_CURRENCY_RATE, mmGUIFrame::OnOnlineUpdateCurRate)
 	EVT_UPDATE_UI(MENU_VIEW_TOOLBAR, mmGUIFrame::OnViewToolbarUpdateUI)
 	EVT_UPDATE_UI(MENU_VIEW_LINKS, mmGUIFrame::OnViewLinksUpdateUI)
     
@@ -444,6 +445,16 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 	// "commit" all changes made to wxAuiManager
 	m_mgr.Update();
 
+    // enable or disable online update currency rate
+    wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(inidb_, wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
+    wxMenuItem* menuItemOnlineUpdateCurRate = menuBar_->FindItem(menuBar_->FindMenuItem(_("&Tools"), _("Online Update Currency Rate")));
+
+    if(enableCurrencyUpd == wxT("TRUE")) {
+        menuItemOnlineUpdateCurRate->Enable();
+    } else {
+        menuItemOnlineUpdateCurRate->Enable(false);
+    }
+
 	/* Decide if we need to show app start dialog */
     wxString showBeginApp = mmDBWrapper::getINISettingValue(inidb_, 
         wxT("SHOWBEGINAPP"), wxT("TRUE"));
@@ -470,7 +481,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 
             /* Relative paths don't work well in Linux, so using it only
             for Windows */
-#ifdef __WXGTK__
+#if defined (__WXGTK__) || (__WXMAC__)
             absName = fName.GetFullPath();		
 #else	
             wxFileName appPath(mmGetBaseWorkingPath(true));
@@ -538,7 +549,7 @@ void mmGUIFrame::saveConfigFile()
     wxFileName appPath(mmGetBaseWorkingPath(true));
     wxFileName fname(fileName_);
 
-#ifdef __WXGTK__
+#if defined (__WXGTK__) || (__WXMAC__)
 
 #else
     bool makeRelative = fname.MakeRelativeTo(appPath.GetPath());
@@ -624,7 +635,7 @@ void mmGUIFrame::menuPrintingEnable(bool enable)
 
 void mmGUIFrame::createControls()
 {
-#ifdef __WXGTK__
+#if defined (__WXGTK__) || (__WXMAC__)
     // Under GTK, row lines look ugly
     navTreeCtrl_ = new wxTreeCtrl( this, ID_NAVTREECTRL, 
         wxDefaultPosition, wxSize(100, 100));
@@ -1165,6 +1176,13 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             return;
         }
 
+        if (iData->getString() == wxT("Help"))
+        {
+            menuPrintingEnable(true);
+            createHelpPage();
+            return;
+        }
+
         if (!core_ || !db_)
             return;
 
@@ -1177,28 +1195,28 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Summary of Stocks"))
+        else if (iData->getString() == wxT("Summary of Stocks"))
         {
             mmPrintableBase* rs = new mmReportSummaryStocks(db_.get());
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Summary of Assets"))
+        else if (iData->getString() == wxT("Summary of Assets"))
         {
             mmPrintableBase* rs = new mmReportSummaryAssets(db_.get());
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Categories - Over Time"))
+        else if (iData->getString() == wxT("Categories - Over Time"))
         {
             mmPrintableBase* rs = new mmReportCategoryOverTimePerformance(core_);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
         /////////////////////////////////////////////////////
-            if (iData->getString() == wxT("Categories - Month"))
+        else if (iData->getString() == wxT("Categories - Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime::Month cm = today.GetMonth();
@@ -1217,7 +1235,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Categories - 30 Days"))
+        else if (iData->getString() == wxT("Categories - 30 Days"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today;
@@ -1230,7 +1248,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Categories - Current Month"))
+        else if (iData->getString() == wxT("Categories - Current Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
@@ -1243,7 +1261,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Categories - Last Year"))
+        else if (iData->getString() == wxT("Categories - Last Year"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear() - 1;
@@ -1260,7 +1278,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Categories - Current Year"))
+        else if (iData->getString() == wxT("Categories - Current Year"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear() - 1;
@@ -1278,7 +1296,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
 
         //////////////////////////////////////////////////
-        if (iData->getString() == wxT("Where the Money Comes From"))
+        else if (iData->getString() == wxT("Where the Money Comes From"))
         {
             wxDateTime dtEnd =  wxDateTime::Now();
             wxDateTime dtBegin =  wxDateTime::Now();
@@ -1290,7 +1308,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
 
 
-        if (iData->getString() == wxT("Where the Money Comes From - Month"))
+        else if (iData->getString() == wxT("Where the Money Comes From - Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime::Month cm = today.GetMonth();
@@ -1309,7 +1327,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Where the Money Comes From - 30 Days"))
+        else if (iData->getString() == wxT("Where the Money Comes From - 30 Days"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today;
@@ -1322,7 +1340,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Where the Money Comes From - Current Month"))
+        else if (iData->getString() == wxT("Where the Money Comes From - Current Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
@@ -1335,7 +1353,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Where the Money Comes From - Last Year"))
+        else if (iData->getString() == wxT("Where the Money Comes From - Last Year"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear() - 1;
@@ -1352,7 +1370,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Where the Money Comes From - Current Year"))
+        else if (iData->getString() == wxT("Where the Money Comes From - Current Year"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear() - 1;
@@ -1370,7 +1388,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
 
         //////////////////////////////////////////////////
-         if (iData->getString() == wxT("Where the Money Goes"))
+        else if (iData->getString() == wxT("Where the Money Goes"))
         {
             wxDateTime dtEnd = wxDateTime::Now();
             wxDateTime dtBegin = wxDateTime::Now();
@@ -1381,7 +1399,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Where the Money Goes - Month"))
+        else if (iData->getString() == wxT("Where the Money Goes - Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime::Month cm = today.GetMonth();
@@ -1400,7 +1418,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Where the Money Goes - 30 Days"))
+        else if (iData->getString() == wxT("Where the Money Goes - 30 Days"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today;
@@ -1413,7 +1431,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Where the Money Goes - Current Month"))
+        else if (iData->getString() == wxT("Where the Money Goes - Current Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
@@ -1426,7 +1444,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Where the Money Goes - Last Year"))
+        else if (iData->getString() == wxT("Where the Money Goes - Last Year"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear() - 1;
@@ -1443,7 +1461,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Where the Money Goes - Current Year"))
+        else if (iData->getString() == wxT("Where the Money Goes - Current Year"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear() - 1;
@@ -1462,7 +1480,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
         /////////////////////////////////////////////////////////////////
         
-        if (iData->getString() == wxT("Transaction Statistics"))
+        else if (iData->getString() == wxT("Transaction Statistics"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear()-1;
@@ -1474,7 +1492,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
         /////////////////////////////////////////////////////////////////
 
-        if (iData->getString() == wxT("Income vs Expenses"))
+        else if (iData->getString() == wxT("Income vs Expenses"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear();
@@ -1483,7 +1501,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Income vs Expenses - Month"))
+        else if (iData->getString() == wxT("Income vs Expenses - Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime::Month cm = today.GetMonth();
@@ -1501,7 +1519,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Income vs Expenses - 30 Days"))
+        else if (iData->getString() == wxT("Income vs Expenses - 30 Days"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today;
@@ -1512,7 +1530,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Income vs Expenses - Current Month"))
+        else if (iData->getString() == wxT("Income vs Expenses - Current Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
@@ -1523,7 +1541,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Income vs Expenses - Last Year"))
+        else if (iData->getString() == wxT("Income vs Expenses - Last Year"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear()-1;
@@ -1532,7 +1550,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Income vs Expenses - Current Year"))
+        else if (iData->getString() == wxT("Income vs Expenses - Current Year"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear();
@@ -1541,7 +1559,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Income vs Expenses - All Time"))
+        else if (iData->getString() == wxT("Income vs Expenses - All Time"))
         {
             mmPrintableBase* rs = new mmReportIncomeExpenses(core_, true, wxDateTime::Now(),
                 wxDateTime::Now());
@@ -1551,7 +1569,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
         /////////////////////////////////////////////////////////////////
 
-        if (iData->getString() == wxT("To Whom the Money Goes"))
+        else if (iData->getString() == wxT("To Whom the Money Goes"))
         {
             mmPrintableBase* rs = new mmReportPayeeExpenses(core_, true, wxDateTime::Now(),
                 wxDateTime::Now());
@@ -1559,7 +1577,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("To Whom the Money Goes - Month"))
+        else if (iData->getString() == wxT("To Whom the Money Goes - Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime::Month cm = today.GetMonth();
@@ -1578,7 +1596,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("To Whom the Money Goes - 30 Days"))
+        else if (iData->getString() == wxT("To Whom the Money Goes - 30 Days"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today;
@@ -1589,7 +1607,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("To Whom the Money Goes - Current Month"))
+        else if (iData->getString() == wxT("To Whom the Money Goes - Current Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
@@ -1600,7 +1618,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("To Whom the Money Goes - Last Year"))
+        else if (iData->getString() == wxT("To Whom the Money Goes - Last Year"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear() - 1;
@@ -1615,7 +1633,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("To Whom the Money Goes - Current Year"))
+        else if (iData->getString() == wxT("To Whom the Money Goes - Current Year"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear() - 1;
@@ -1630,13 +1648,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        if (iData->getString() == wxT("Help"))
-        {
-            menuPrintingEnable(true);
-            createHelpPage();
-        }
-
-        if (iData->getString() == wxT("Cash Flow"))
+        else if (iData->getString() == wxT("Cash Flow"))
         {
             mmPrintableBase* rs = new mmReportCashFlow(core_);
             menuPrintingEnable(true);
@@ -1645,20 +1657,20 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         
        // Thaw();
 
-        if (iData->getString() == wxT("Cash Flow - Specific Accounts"))
+        else if (iData->getString() == wxT("Cash Flow - Specific Accounts"))
         {
             OnCashFlowSpecificAccounts();
         }
 
          ///////////////////////////////////////////////
-        if (iData->getString() == wxT("Transaction Report"))
+        else if (iData->getString() == wxT("Transaction Report"))
         {
            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TRANSACTIONREPORT);
            AddPendingEvent(evt);
         }
         
          ///////////////////////////////////////////////
-        if (iData->getString() == wxT("Custom SQL Report"))
+        else if (iData->getString() == wxT("Custom SQL Report"))
         {
            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_CUSTOMSQL);
            AddPendingEvent(evt);
@@ -1666,25 +1678,25 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
         //////////////////////////////////////////////
 
-        if (iData->getString() == wxT("Budgeting"))
+        else if (iData->getString() == wxT("Budgeting"))
         {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BUDGETSETUPDIALOG);
             AddPendingEvent(evt);
         }
             
-        if (iData->getString() == wxT("Bills & Deposits"))
+        else if (iData->getString() == wxT("Bills & Deposits"))
         {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BILLSDEPOSITS);
             AddPendingEvent(evt);
         }
 
-        if (iData->getString() == wxT("Stocks"))
+        else if (iData->getString() == wxT("Stocks"))
         {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
             AddPendingEvent(evt);
         }
 
-        if (iData->getString() == wxT("Assets"))
+        else if (iData->getString() == wxT("Assets"))
         {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
             AddPendingEvent(evt);
@@ -2061,7 +2073,7 @@ void mmGUIFrame::createMenu()
 	menuItemPayee->SetBitmap(wxBitmap(user_edit_xpm));
     menuTools->Append(menuItemPayee); 
 
-     wxMenuItem* menuItemCurrency = new wxMenuItem(menuTools, MENU_CURRENCY, 
+    wxMenuItem* menuItemCurrency = new wxMenuItem(menuTools, MENU_CURRENCY, 
 		 _("Organize Currency"), _("Organize Currency"));
 	menuItemCurrency->SetBitmap(wxBitmap(money_dollar_xpm));
     menuTools->Append(menuItemCurrency);
@@ -2098,7 +2110,7 @@ void mmGUIFrame::createMenu()
         menuTools->Append(menuItemAssets);
     }
 
-     menuTools->AppendSeparator();
+    menuTools->AppendSeparator();
 
     wxMenuItem* menuItemTransactions = new wxMenuItem(menuTools, MENU_TRANSACTIONREPORT, 
 		_("Transaction Filter"), _("Transaction Filter"));
@@ -2124,12 +2136,19 @@ void mmGUIFrame::createMenu()
 	menuItemAppStart->SetBitmap(wxBitmap(appstart_xpm));
     menuHelp->Append(menuItemAppStart);
 
-   menuTools->AppendSeparator();
+    menuTools->AppendSeparator();
 
     wxMenuItem* menuItemConvertDB = new wxMenuItem(menuTools, MENU_CONVERT_ENC_DB, 
         _("Convert Encrypted DB"), 
         _("Convert Encrypted DB to Non-Encrypted DB"));
     menuTools->Append(menuItemConvertDB);
+
+    menuTools->AppendSeparator();
+
+    wxMenuItem* menuItemOnlineUpdateCurRate = new wxMenuItem(menuTools, MENU_ONLINE_UPD_CURRENCY_RATE, 
+        _("Online Update Currency Rate"), 
+        _("Online update currency rate"));
+    menuTools->Append(menuItemOnlineUpdateCurRate);
 
     menuHelp->AppendSeparator();
 
@@ -2758,7 +2777,16 @@ void mmGUIFrame::OnOptions(wxCommandEvent& event)
     dlg->ShowModal();
     dlg->Destroy();
     createHomePage();
-    updateNavTreeControl();    
+    updateNavTreeControl();
+    // enable or disable online update currency rate
+    wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(inidb_, wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
+    wxMenuItem* menuItemOnlineUpdateCurRate = menuBar_->FindItem(menuBar_->FindMenuItem(_("&Tools"), _("Online Update Currency Rate")));
+
+    if(enableCurrencyUpd == wxT("TRUE")) {
+        menuItemOnlineUpdateCurRate->Enable();
+    } else {
+        menuItemOnlineUpdateCurRate->Enable(false);
+    }
 }
 
 void mmGUIFrame::OnHelp(wxCommandEvent& event)
@@ -2843,6 +2871,150 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& event)
         mmShowErrorMessage(this, _("You have the latest version installed!"), _("Check Update"));
     }
 
+}
+
+void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& event)
+{
+    wxArrayString   currency_name, currency_rate;
+    double          *rate_ptr, rate_value, base_rate;
+    int             i;
+    
+    // we will get latest currency rate data from European Central Bank
+    wxString site = wxT("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
+
+    if (!core_) {
+       mmShowErrorMessage(this, _("No database!"), _("Update Currency Rate"));
+       return;
+    }
+
+    wxURL url(site);
+
+    wxInputStream* in_stream = url.GetInputStream();
+
+    if (!in_stream) {
+        mmShowErrorMessage(this, _("Unable to connect!"), _("Update Currency Rate"));
+        return;
+    }
+    
+    wxXmlDocument doc;
+
+    if(!doc.Load(*in_stream)) {
+        mmShowErrorMessage(this, _("Cannot get data from WWW!"), _("Update Currency Rate"));
+        return;
+    }
+
+    // decode received XML data
+    if(doc.GetRoot()->GetName() != wxT("gesmes:Envelope")) {
+        mmShowErrorMessage(this, _("Incorrect XML data (#1)!"), _("Update Currency Rate"));
+        return;
+    }
+
+    wxXmlNode *root_child = doc.GetRoot()->GetChildren();
+
+    while(root_child) {
+        if(root_child->GetName() == wxT("gesmes:subject")) {
+            if(root_child->GetNodeContent() != wxT("Reference rates")) {
+                mmShowErrorMessage(this, _("Incorrect XML data (#2)!"), _("Update Currency Rate"));
+                return;
+            }
+        } else if (root_child->GetName() == wxT("gesmes:Sender")) {
+            wxXmlNode *sender_child = root_child->GetChildren();
+
+            if(!sender_child) {
+                mmShowErrorMessage(this, _("Incorrect XML data (#3)!"), _("Update Currency Rate"));
+                return;
+            }
+
+            if(sender_child->GetName() != wxT("gesmes:name")) {
+                mmShowErrorMessage(this, _("Incorrect XML data (#4)!"), _("Update Currency Rate"));
+                return;
+            }
+
+            if(sender_child->GetNodeContent() != wxT("European Central Bank")) {
+                mmShowErrorMessage(this, _("Incorrect XML data (#5)!"), _("Update Currency Rate"));
+                return;
+            }            
+        } else if (root_child->GetName() == wxT("Cube")) {
+            wxXmlNode *cube_lv1_child = root_child->GetChildren();
+
+            if(!cube_lv1_child) {
+                mmShowErrorMessage(this, _("Incorrect XML data (#6)!"), _("Update Currency Rate"));
+                return;
+            }
+
+            if(cube_lv1_child->GetName() != wxT("Cube")) {
+                mmShowErrorMessage(this, _("Incorrect XML data (#7)!"), _("Update Currency Rate"));
+                return;
+            }
+
+            wxXmlNode *cube_lv2_child = cube_lv1_child->GetChildren();
+
+            // set default base currency and its rate            
+            currency_name.Add(wxT("EUR"));
+            currency_rate.Add(wxT("1.0"));
+
+            while(cube_lv2_child) {
+                wxString name = cube_lv2_child->GetPropVal(wxT("currency"), wxT(""));
+                wxString rate = cube_lv2_child->GetPropVal(wxT("rate"), wxT("1"));
+
+                currency_name.Add(name);
+                currency_rate.Add(rate);
+                
+                cube_lv2_child = cube_lv2_child->GetNext();
+            }
+        }
+        root_child = root_child->GetNext();
+    }    
+
+    // Get base currency and the adjust currency rate for each currency
+    rate_ptr = new double[currency_rate.GetCount()];
+
+    int currencyID = mmDBWrapper::getBaseCurrencySettings(core_->db_.get());
+    wxString base_symbol = mmDBWrapper::getCurrencySymbol(core_->db_.get(), currencyID);
+    base_rate = 0;
+
+    for(i=0; i<(int)currency_rate.GetCount(); i++) {
+        if(currency_rate[i].ToDouble(&rate_value) == false) {
+            rate_ptr[i] = 1.0;
+        } else {
+            rate_ptr[i] = rate_value;
+
+            if(currency_name[i] == base_symbol) {
+                base_rate = rate_value;
+            }
+        }
+    }
+
+    if(base_rate == 0) {
+        mmShowErrorMessage(this, _("Could not find base currency symbol!"), _("Update Currency Rate"));
+        return;
+    }
+
+    // Note:
+    // Suppose currency Y / currency X = Y / X and currency Z / currency X = Z / X, then
+    // currency Z / currency Y = Z / Y
+    // Therefore, if currency X is EUR and currency Y is the base currency, 
+    // currency Y : currency Z = base_rate / rate of Z : 1
+    for(i=0; i<(int)currency_rate.GetCount(); i++) {
+        rate_ptr[i] = base_rate / rate_ptr[i];
+    }
+
+    // update currency rates
+
+    for (int idx = 0; idx < (int)core_->currencyList_.currencies_.size(); idx++) {
+        wxString currencySymbol  = core_->currencyList_.currencies_[idx]->currencySymbol_;
+        for(i=0; i<(int)currency_name.GetCount(); i++) {
+            if(currency_name[i] == currencySymbol) {
+                core_->currencyList_.currencies_[idx]->baseConv_ = rate_ptr[i];
+                core_->currencyList_.updateCurrency(core_->currencyList_.currencies_[idx]->currencyID_, core_->currencyList_.currencies_[idx]);
+            }
+        } // for i loop
+    }
+
+    delete[] rate_ptr;
+
+    wxMessageDialog msgDlg(this, _("Currency rate updated"), _("Update Currency Rate"));
+    msgDlg.ShowModal();
 }
 
 void mmGUIFrame::OnReportIssues(wxCommandEvent& event)

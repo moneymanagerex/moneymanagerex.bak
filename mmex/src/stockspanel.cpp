@@ -624,8 +624,12 @@ void mmStocksPanel::OrderQuoteRefresh(void)
 
     mmENDSQL_LITE_EXCEPTION;
 
+    if(symbolarray.GetCount() < 1) {
+        return;
+    }
+
     YSymbols = symbolarray.Item(0)+yahoo_->Suffix_;
-    for (size_t i = 1; i < symbolarray.Count(); i++ )
+    for (size_t i = 1; i < symbolarray.GetCount(); i++ )
     {
         YSymbols = YSymbols+wxT("+")+symbolarray.Item(i)+yahoo_->Suffix_;
     }

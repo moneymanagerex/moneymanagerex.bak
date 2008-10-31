@@ -28,6 +28,8 @@
 #define SYMBOL_MMOPTIONSDIALOG_SIZE wxSize(500, 400)
 #define SYMBOL_MMOPTIONSDIALOG_POSITION wxDefaultPosition
 
+#define TOTAL_DATEFORMAT    11
+
 class mmOptionsDialog: public wxDialog
 {    
     DECLARE_DYNAMIC_CLASS( mmOptionsDialog )
@@ -69,6 +71,10 @@ public:
     void OnUseSoundChecked(wxCommandEvent& event);
     void OnListFutureDates(wxCommandEvent& event);
 	void OnFontSizeChanged(wxCommandEvent& event);
+    void OnUpdCurrencyChecked(wxCommandEvent& event);
+
+    wxString DisplayDate2FormatDate(wxString strDate);
+    wxString FormatDate2DisplayDate(wxString strDate);
 
 private:
     wxImageList* m_imageList;

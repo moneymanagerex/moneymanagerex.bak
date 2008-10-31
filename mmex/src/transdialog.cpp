@@ -75,8 +75,9 @@ mmTransDialog::mmTransDialog(wxSQLite3Database* db,
     toID_ = -1;
     toTransAmount_ = -1;
     advancedToTransAmountSet_ = false;
+    edit_currency_rate = 1.0;
     Create(parent, id, caption, pos, size, style);
-    inidb_ = inidb;
+    inidb_ = inidb;    
 }
 
 bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption, 
@@ -132,6 +133,9 @@ void mmTransDialog::dataToControls()
         wxString transTypeString = q1.GetString(wxT("TRANSCODE"));
         double transAmount = q1.GetDouble(wxT("TRANSAMOUNT"));
         toTransAmount_ = q1.GetDouble(wxT("TOTRANSAMOUNT"));
+
+        // backup the original currency rate first
+        edit_currency_rate = toTransAmount_ / transAmount;
       
         if (statusString == wxT(""))
         {
@@ -375,7 +379,7 @@ void mmTransDialog::CreateControls()
     itemFlexGridSizer8->Add(itemStaticText21, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     textNotes_ = new wxTextCtrl( itemPanel7, 
-        ID_DIALOG_TRANS_TEXTNOTES, wxT(""), wxDefaultPosition, wxSize(200, -1), 0 );
+        ID_DIALOG_TRANS_TEXTNOTES, wxT(""), wxDefaultPosition, wxSize(200, -1), wxTE_MULTILINE );
     itemFlexGridSizer8->Add(textNotes_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     textNotes_->SetToolTip(_("Specify any text notes you want to add to this transaction."));
 
@@ -798,8 +802,10 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
         }
         else
         {
-            // to trans amount not set
-            toTransAmount_ = amount;
+            // Since to trans amount is not set, 
+            // we use the original currency rate to calculate
+            // toTransAmount
+            toTransAmount_ = edit_currency_rate * amount;            
         }
     }
     

@@ -262,7 +262,7 @@ void mmNewAcctDialog::CreateControls()
     wxButton* itemButton71 = new wxButton( itemDialog1, 
         ID_DIALOG_NEWACCT_BUTTON_CURRENCY, currName, wxDefaultPosition, wxDefaultSize, 0 );
     itemGridSizer2->Add(itemButton71, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);    
+        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE|wxEXPAND, 5);    
     itemButton71->SetToolTip(_("Specify the currency to be used by this account."));
 
     wxStaticText* itemStaticText17 = new wxStaticText( itemDialog1, 

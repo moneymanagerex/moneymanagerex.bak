@@ -148,13 +148,13 @@ void mmPayeeDialog::CreateControls()
         wxDefaultPosition, wxSize(100, 200), wxArrayString(), wxLB_SINGLE);
     itemBoxSizer3->Add(listBox_, 1, wxGROW|wxALL, 1);
 
-    wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
-
     textCtrl = new wxTextCtrl( itemDialog1, ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME, 
         wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer5->Add(textCtrl, 1, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemBoxSizer2->Add(textCtrl, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 1);
     textCtrl->SetToolTip(_("Enter the payee name to be added or make edits to an existing payee name"));
+
+    wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
 
     addButton = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_ADD, 
         _("Add"), wxDefaultPosition, wxDefaultSize, 0 );

@@ -146,15 +146,12 @@ Bakefile for generating makefiles in Linux.
         <sources>src/sqlite/codec/codecext.cpp</sources>
         <sources>src/sqlite/codec/rijndael.cpp</sources>
 
-
-
-
+        <wx-lib>core</wx-lib>
         <wx-lib>net</wx-lib>                
         <wx-lib>html</wx-lib>                
-        <wx-lib>aui</wx-lib>        
-        <wx-lib>core</wx-lib>
+        <wx-lib>xml</wx-lib>
+        <wx-lib>aui</wx-lib> 
         <wx-lib>base</wx-lib>
-
 
     </exe>
 

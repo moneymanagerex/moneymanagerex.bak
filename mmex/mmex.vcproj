@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28d_aui.lib wxmsw28d_core.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28d_net.lib wxmsw28d_adv.lib wxmsw28d_html.lib"
+				AdditionalDependencies="wxmsw28d_aui.lib wxmsw28d_core.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28d_net.lib wxmsw28d_adv.lib wxmsw28d_html.lib wxbase28d_xml.lib"
 				OutputFile="$(OutDir)/mmexa.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;lib\;"
@@ -148,7 +148,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28_aui.lib wxmsw28_core.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28_net.lib wxmsw28_adv.lib wxmsw28_html.lib"
+				AdditionalDependencies="wxmsw28_aui.lib wxmsw28_core.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28_net.lib wxmsw28_adv.lib wxmsw28_html.lib wxbase28_xml.lib"
 				OutputFile="$(OutDir)/mmexa.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;lib\;"
@@ -232,7 +232,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28ud_aui.lib wxzlibd.lib wxmsw28ud_core.lib wxbase28ud.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28ud_net.lib wxmsw28ud_adv.lib wxpngd.lib wxmsw28ud_html.lib wxjpegd.lib bugtrapu.lib"
+				AdditionalDependencies="wxmsw28ud_aui.lib wxzlibd.lib wxmsw28ud_core.lib wxbase28ud.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28ud_net.lib wxmsw28ud_adv.lib wxpngd.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxjpegd.lib bugtrapu.lib wxexpatd.lib"
 				OutputFile="$(OutDir)/mmex.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;;lib\;&quot;bugtrap-1.2&quot;"
@@ -316,7 +316,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28u_aui.lib wxzlib.lib wxmsw28u_core.lib wxbase28u.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28u_net.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxjpeg.lib wxpng.lib bugtrapu.lib"
+				AdditionalDependencies="wxmsw28u_aui.lib wxzlib.lib wxmsw28u_core.lib wxbase28u.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28u_net.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxbase28u_xml.lib wxjpeg.lib wxpng.lib bugtrapu.lib wxexpat.lib"
 				OutputFile="$(OutDir)/mmex.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;lib\;&quot;bugtrap-1.2&quot;"
@@ -686,13 +686,6 @@
 				<File
 					RelativePath=".\src\sqlite\icu.c"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\src\sqlite\insert.c"

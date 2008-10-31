@@ -21,7 +21,7 @@
 #include "defs.h"
 
 #define EXC_GEN       42
-#define MMEXVERSION   wxT("0.9.3.1")
+#define MMEXVERSION   wxT("0.9.4.0")
 #define DEFDATEFORMAT wxT("%m/%d/%y")
 #define DEFDELIMTER   wxT(",")
 #define MM_MIN_DATAVERSION 2
@@ -29,7 +29,7 @@
 #define MMEX_CURRENCYDB_FNAME wxT("/currency.db3")
 #define DEFSTOCKURL  wxT("http://www.google.com/finance?q=%s")
 
-#ifdef __WXGTK__
+#if defined (__WXGTK__) || (__WXMAC__)
 #define  LOG_INFO(x)
 #else
 #ifdef _DEBUG
@@ -86,6 +86,7 @@ enum
     MENU_VIEW_TOOLBAR,
     MENU_VIEW_LINKS,
     MENU_CONVERT_ENC_DB,
+    MENU_ONLINE_UPD_CURRENCY_RATE,
 
     /* Checking Panel */
     MENU_TREEPOPUP_ENTEROCCUR,
@@ -284,6 +285,7 @@ enum
     ID_DIALOG_CURRENCY_TEXT_SCALE,
     ID_DIALOG_CURRENCY_TEXT_BASECONVRATE,
     ID_DIALOG_CURRENCY_BUTTON_CANCEL,
+	ID_DIALOG_CURRENCY_TEXT_SYMBOL,
 
     /* Options Dialog */
     ID_BOOK_PANELGENERAL,
@@ -316,6 +318,7 @@ enum
     ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME,
     ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES,
     ID_DIALOG_OPTIONS_BUTTON_DATEFORMAT,
+    ID_DIALOG_OPTIONS_UPD_CURRENCY,
 
     /* About Dialog */
     ID_DIALOG_BUTTON_ABOUT_VERSION_HISTORY,

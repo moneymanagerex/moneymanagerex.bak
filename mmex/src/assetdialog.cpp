@@ -102,9 +102,8 @@ void mmAssetDialog::dataToControls()
 		value_->SetValue(value);
 
         wxString valueChangeRate;
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUECHANGERATE")), 
-            valueChangeRate);
-        valueChangeRate_->SetLabel(valueChangeRate);
+        valueChangeRate.Printf(wxT("%.3f"), q1.GetDouble(wxT("VALUECHANGERATE")));
+        valueChangeRate_->SetValue(valueChangeRate);
     
         wxString valueChangeTypeStr = q1.GetString(wxT("VALUECHANGE"));
         if (valueChangeTypeStr == wxT("None"))
@@ -181,7 +180,7 @@ void mmAssetDialog::CreateControls()
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
     
     dpc_ = new wxDatePickerCtrl( itemPanel5, ID_DPC_ASSET_PDATE, wxDefaultDateTime, 
-              wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
+              wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);    
     itemFlexGridSizer6->Add(dpc_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     dpc_->SetToolTip(_("Specify the date of purchase of asset"));
 
@@ -243,7 +242,7 @@ void mmAssetDialog::CreateControls()
 
     valueChangeRate_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSETDIALOG_CHANGERATE, wxT(""), 
         wxDefaultPosition, wxDefaultSize, 0 );
-    valueChangeRate_->SetToolTip(_("Enter the rate at which the asset changes its value in %"));
+    valueChangeRate_->SetToolTip(_("Enter the rate at which the asset changes its value in % per year"));
     itemFlexGridSizer6->Add(valueChangeRate_, 0, 
         wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     
@@ -254,7 +253,7 @@ void mmAssetDialog::CreateControls()
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     notes_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSET_NOTES, wxT(""), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+        wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
     notes_->SetToolTip(_("Enter notes associated with this asset"));
     itemFlexGridSizer6->Add(notes_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -322,9 +321,10 @@ void mmAssetDialog::OnOk(wxCommandEvent& event)
         return;
     }
     double valueChangeRate = 0;
-	if ((valueChangeType != DEF_CHANGE_NONE) && 
-      !mmCurrencyFormatter::formatCurrencyToDouble(valueChangeRateStr, valueChangeRate) 
-        || (valueChangeRate < 0.0))
+    if(valueChangeRateStr.ToDouble(&valueChangeRate) == false) {
+        valueChangeRate = -1.0;
+    }
+	if ((valueChangeType != DEF_CHANGE_NONE) && (valueChangeRate < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid Value "), _("Error"));
         return;

@@ -4,6 +4,36 @@ Version History of Money Manager Ex
 - Fix crash on custom reports (Jaffa)
 - Fix display problems with cents (Ho Yin Kwok)
 - Fix hang with large amounts for top categories graph
+========================
+Patch from (Ho Yin Kwok)
+========================
+- Add on-line currency rate update function:
+- Download latest currency rate data from European Central Bank
+- Based on the rate of the base currency, calculate the rates of other currencies and update them
+- Add a new column in the existing currency table
+Note: All supported currency symbols can be found from:
+http://www.ecb.europa.eu/stats/exchange/eurofxref/html/index.en.html
+- Add a new option to allow user to enable or disable online update currency rate function (default is disable).
+- In option dialog box, display more user friendly strings for data format
+- For "New/Edit Stock Investment" dialog box, if current price is empty, then current price is equal to purchase price.
+- Change "Notes" of the "New/Edit Asset" dialog box from single text control to multi-line text control
+- Change the description of the "Rate of Change"'s tooltip
+- Modify "New/Edit Stock Investment" dialog box
+- Modify "New/Edit Transaction" dialog box
+- Modify "Organize Payees" dialog box
+- Modify "Organize Categories" dialog box
+- Modify "New/Edit Repeating Transaction" dialog box
+- Help screen will not be shown when no database is opened
+- Remove unnecessary checking in mmGUIFrame::OnSelChanged() function
+- Currency dialog box will not resize its items so some texts are truncated.
+- Options dialog box will not resize its items so some texts are truncated.
+- Fix some "no new line" warnings
+- Do not display correct strings when "Language" is changed from "non-English" setting to "English" setting
+- Do not show "Rate of Change" value in "New/Edit Asset" dialog box
+- Fix generate incorrect "Rate of Change" value when currency' scale is wrong
+- Fix segmentation fault when "Refresh" button is pressed in "Stocks" panel and there is no stock in the list
+- Fix "To amount" is wrong when editing a transaction without click the "Advanced" button
+
 
 0.9.3.0 
 - Release under CodeLathe LLC

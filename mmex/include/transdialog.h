@@ -108,6 +108,9 @@ private:
     double toTransAmount_;
     bool advancedToTransAmountSet_;
     boost::shared_ptr<mmSplitTransactionEntries> split_;
+
+    // store the original currency rate for transaction editing
+    double  edit_currency_rate;
 };
 
 #endif

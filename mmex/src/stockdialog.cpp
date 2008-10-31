@@ -209,15 +209,15 @@ void mmStockDialog::CreateControls()
     itemFlexGridSizer6->Add(purchasePrice_, 0, 
         wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticText19 = new wxStaticText( itemPanel5, wxID_STATIC, 
-        _("Notes"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText19, 0, 
+    wxStaticText* itemStaticText211 = new wxStaticText( itemPanel5, wxID_STATIC, 
+        _("Commission"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(itemStaticText211, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    notes_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_NOTES, wxT(""), 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    notes_->SetToolTip(_("Enter notes associated with this investment"));
-    itemFlexGridSizer6->Add(notes_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    commission_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_COMMISSION, 
+        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+    commission_->SetToolTip(_("Enter any commission paid"));
+    itemFlexGridSizer6->Add(commission_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText21 = new wxStaticText( itemPanel5, 
         wxID_STATIC, _("Current Price"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -230,16 +230,15 @@ void mmStockDialog::CreateControls()
     itemFlexGridSizer6->Add(currentPrice_, 0, 
         wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-   
-    wxStaticText* itemStaticText211 = new wxStaticText( itemPanel5, wxID_STATIC, 
-        _("Commission"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText211, 0, 
+    wxStaticText* itemStaticText19 = new wxStaticText( itemPanel5, wxID_STATIC, 
+        _("Notes"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(itemStaticText19, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    commission_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_COMMISSION, 
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    commission_->SetToolTip(_("Enter any commission paid"));
-    itemFlexGridSizer6->Add(commission_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    notes_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_NOTES, wxT(""), 
+        wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+    notes_->SetToolTip(_("Enter notes associated with this investment"));
+    itemFlexGridSizer6->Add(notes_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText25 = new wxStaticText( itemPanel5, wxID_STATIC, 
         _("Value"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -267,7 +266,7 @@ void mmStockDialog::CreateControls()
     itemBoxSizer28->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 	 wxButton* itemButton31 = new wxButton( itemPanel27, ID_BUTTON_STOCK_WEBPRICE, 
-        _("Web Page"), wxDefaultPosition, wxDefaultSize, 0 );
+        _("Stock Price Web Page"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer28->Add(itemButton31, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 }
 
@@ -368,8 +367,10 @@ void mmStockDialog::OnOk(wxCommandEvent& event)
     if (!mmCurrencyFormatter::formatCurrencyToDouble(currentPriceStr, cPrice) 
         || (cPrice < 0.0))
     {
-        mmShowErrorMessage(this, _("Invalid current price entered "), _("Error"));
-        return;
+        //mmShowErrorMessage(this, _("Invalid current price entered "), _("Error"));        
+        //return;
+        // we assume current price = purchase price
+        cPrice = pPrice;
     }
     
     wxString commissionStr = commission_->GetValue().Trim();

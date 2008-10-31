@@ -62,13 +62,14 @@ void  mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
 void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db, const wxString& fpath)
 {
        mmBEGINSQL_LITE_EXCEPTION;
+       
        bool valid = db->TableExists(wxT("CURRENCYFORMATS_V1"));
        if (!valid)
-       {
+       { 
            db->ExecuteUpdate(wxT("create table CURRENCYFORMATS_V1(CURRENCYID integer primary key, \
                                 CURRENCYNAME TEXT NOT NULL, PFX_SYMBOL TEXT, SFX_SYMBOL TEXT,              \
                                 DECIMAL_POINT TEXT, GROUP_SEPARATOR TEXT,               \
-                                UNIT_NAME TEXT, CENT_NAME TEXT, SCALE numeric, BASECONVRATE numeric);"));
+                                UNIT_NAME TEXT, CENT_NAME TEXT, SCALE numeric, BASECONVRATE numeric, CURRENCY_SYMBOL TEXT);"));
            valid = db->TableExists(wxT("CURRENCYFORMATS_V1"));
            wxASSERT(valid);
 
@@ -76,12 +77,20 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db, const wxString& f
            wxSQLite3StatementBuffer bufSQL;
            bufSQL.Format("insert into CURRENCYFORMATS_V1 (CURRENCYNAME, PFX_SYMBOL,               \
                SFX_SYMBOL, DECIMAL_POINT,                                                         \
-               GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE) values                 \
-               ('US DOLLAR', '$', '', '.', ',', 'dollar', 'cents', 100, 1.0);");
+               GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL) values                 \
+               ('US DOLLAR', '$', '', '.', ',', 'dollar', 'cents', 100, 1.0, 'USD');");
            int retVal = db->ExecuteUpdate(bufSQL);
 
            /* Load Currencies from iniDB */
            mmDBWrapper::loadCurrencies(db, fpath);
+       } else {
+           /* Check whether the column "CURRENCY_SYMBOL" exists or not */
+           wxSQLite3ResultSet q1 = db->ExecuteQuery(wxT("select * from CURRENCYFORMATS_V1"));
+           
+           if(q1.GetColumnCount() < 11) {
+                /* not exist, create the column */
+                int retVal = db->ExecuteUpdate(wxT("alter table CURRENCYFORMATS_V1 add CURRENCY_SYMBOL TEXT;"));
+           }
        }
 
        mmENDSQL_LITE_EXCEPTION;
@@ -221,8 +230,8 @@ void mmDBWrapper::loadCurrencies(wxSQLite3Database* db, const wxString& fpath)
 
         wxString sqlStmt = wxString::Format(wxT("insert into CURRENCYFORMATS_V1 (CURRENCYNAME, PFX_SYMBOL, \
             SFX_SYMBOL, DECIMAL_POINT, GROUP_SEPARATOR, UNIT_NAME, CENT_NAME,  \
-            SCALE, BASECONVRATE) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%f');"),
-           currencyName.c_str(), pfxSymbol.c_str(), sfxSymbol.c_str(), dec.c_str(), grp.c_str(), unit.c_str(), cent.c_str(), scaleDl, baseConv);
+            SCALE, BASECONVRATE, CURRENCY_SYMBOL) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%f', '%s');"),
+           currencyName.c_str(), pfxSymbol.c_str(), sfxSymbol.c_str(), dec.c_str(), grp.c_str(), unit.c_str(), cent.c_str(), scaleDl, baseConv, _(""));
         int retVal = db->ExecuteUpdate(sqlStmt);
     }
     q1.Finalize();
@@ -723,6 +732,7 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
         double scaleDl = q1.GetDouble(wxT("SCALE"));
         int currencyID = q1.GetInt(wxT("CURRENCYID"));
         double convRate = q1.GetDouble(wxT("BASECONVRATE"));
+        wxString currencySymbol = q1.GetString(wxT("CURRENCY_SYMBOL"));
         wxChar decChar = 0;
         wxChar grpChar = 0;
         if (!dec.IsEmpty())
@@ -734,6 +744,11 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
         {
             grpChar = grp.GetChar(0);
         }
+
+        if(currencySymbol == wxEmptyString) {
+            currencySymbol = wxT("");
+        }
+
         mmCurrencyFormatter::loadSettings(pfxSymbol, sfxSymbol, 
             decChar, grpChar, unit, cent, scaleDl);
 
@@ -1272,6 +1287,21 @@ wxString mmDBWrapper::getCurrencyName(wxSQLite3Database* db, int currencyID)
     if (q1.NextRow())
     {
         return q1.GetString(wxT("CURRENCYNAME"));
+    }
+    q1.Finalize();
+    mmENDSQL_LITE_EXCEPTION;
+    return wxT("");
+}
+
+wxString mmDBWrapper::getCurrencySymbol(wxSQLite3Database* db, int currencyID)
+{
+    mmBEGINSQL_LITE_EXCEPTION;
+    wxString bufSQL = wxString::Format(wxT("select * from CURRENCYFORMATS_V1 where CURRENCYID='%d';"), 
+        currencyID);
+    wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
+    if (q1.NextRow())
+    {
+        return q1.GetString(wxT("CURRENCY_SYMBOL"));
     }
     q1.Finalize();
     mmENDSQL_LITE_EXCEPTION;

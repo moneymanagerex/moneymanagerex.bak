@@ -70,7 +70,7 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_USE_SOUND, mmOptionsDialog::OnUseSoundChecked)
 	EVT_CHOICE(ID_DIALOG_OPTIONS_FONT_SIZE, mmOptionsDialog::OnFontSizeChanged)  
 
-    
+    EVT_CHECKBOX(ID_DIALOG_OPTIONS_UPD_CURRENCY, mmOptionsDialog::OnUpdCurrencyChecked)
     
 END_EVENT_TABLE()
 
@@ -125,6 +125,100 @@ bool mmOptionsDialog::Create( wxWindow* parent, wxWindowID id,
     return TRUE;
 }
 
+wxString mmOptionsDialog::DisplayDate2FormatDate(wxString strDate)
+{
+    wxString DateFormat[TOTAL_DATEFORMAT] = 
+    {
+        wxT("%d/%m/%y"),
+        wxT("%d/%m/%Y"),
+        wxT("%m/%d/%y"),
+        wxT("%m/%d/%Y"),
+
+        wxT("%m/%d'%Y"),
+        
+        wxT("%y/%m/%d"),
+        wxT("%Y/%m/%d"),
+
+        wxT("%d-%m-%y"),
+        wxT("%d-%m-%Y"),
+        wxT("%m-%d-%y"),
+        wxT("%m-%d-%Y"),
+    };
+
+    wxString itemChoice7Strings[TOTAL_DATEFORMAT] = 
+    {
+        wxT("DD/MM/YY"),
+        wxT("DD/MM/YYYY"),
+        wxT("MM/DD/YY"),
+        wxT("MM/DD/YYYY"),
+
+        wxT("MM/DD'YYYY"),
+        
+        wxT("YY/MM/DD"),
+        wxT("YYYY/MM/DD"),
+
+        wxT("DD-MM-YY"),
+        wxT("DD-MM-YYYY"),
+        wxT("MM-DD-YY"),
+        wxT("MM-DD-YYYY"),
+    };
+
+    for(int i=0; i<TOTAL_DATEFORMAT; i++) {
+        if(strDate == itemChoice7Strings[i]) {
+            return DateFormat[i];
+        }
+    }
+
+    return wxT("");
+}
+
+wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
+{
+    wxString DateFormat[TOTAL_DATEFORMAT] = 
+    {
+        wxT("%d/%m/%y"),
+        wxT("%d/%m/%Y"),
+        wxT("%m/%d/%y"),
+        wxT("%m/%d/%Y"),
+
+        wxT("%m/%d'%Y"),
+        
+        wxT("%y/%m/%d"),
+        wxT("%Y/%m/%d"),
+
+        wxT("%d-%m-%y"),
+        wxT("%d-%m-%Y"),
+        wxT("%m-%d-%y"),
+        wxT("%m-%d-%Y"),
+    };
+
+    wxString itemChoice7Strings[TOTAL_DATEFORMAT] = 
+    {
+        wxT("DD/MM/YY"),
+        wxT("DD/MM/YYYY"),
+        wxT("MM/DD/YY"),
+        wxT("MM/DD/YYYY"),
+
+        wxT("MM/DD'YYYY"),
+        
+        wxT("YY/MM/DD"),
+        wxT("YYYY/MM/DD"),
+
+        wxT("DD-MM-YY"),
+        wxT("DD-MM-YYYY"),
+        wxT("MM-DD-YY"),
+        wxT("MM-DD-YYYY"),
+    };
+
+    for(int i=0; i<TOTAL_DATEFORMAT; i++) {
+        if(strDate == DateFormat[i]) {
+            return itemChoice7Strings[i];
+        }
+    }
+
+    return wxT("");
+}
+
 void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& event)
 {
    wxString format = choiceDateFormat_->GetValue();
@@ -137,14 +231,17 @@ void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& event)
    }
    catch(...)
    {
-       choiceDateFormat_->SetValue(wxT("%m/%d/%y"));
+       choiceDateFormat_->SetValue(FormatDate2DisplayDate(wxT("%m/%d/%y")));
        return;
    }
 
-   mmOptions::dateFormat = format;
+   mmOptions::dateFormat = DisplayDate2FormatDate(format);
    mmOptions::saveOptions(db_);
    wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE);
    st->SetLabel(mmGetDateForDisplay(db_, wxDateTime::Now()) + _(" : Restart"));
+
+   // resize dialog window
+   Fit();
 }
 
 void mmOptionsDialog::OnViewAccountsChanged(wxCommandEvent& event)
@@ -245,31 +342,31 @@ void mmOptionsDialog::CreateControls()
     itemStaticBoxSizer9->Add(itemStaticText41, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxString itemChoice7Strings[] = 
+    wxString itemChoice7Strings[TOTAL_DATEFORMAT] = 
     {
-        wxT("%d/%m/%y"),
-        wxT("%d/%m/%Y"),
-        wxT("%m/%d/%y"),
-        wxT("%m/%d/%Y"),
+        wxT("DD/MM/YY"),
+        wxT("DD/MM/YYYY"),
+        wxT("MM/DD/YY"),
+        wxT("MM/DD/YYYY"),
 
-        wxT("%m/%d'%Y"),
+        wxT("MM/DD'YYYY"),
         
-        wxT("%y/%m/%d"),
-        wxT("%Y/%m/%d"),
+        wxT("YY/MM/DD"),
+        wxT("YYYY/MM/DD"),
 
-        wxT("%d-%m-%y"),
-        wxT("%d-%m-%Y"),
-        wxT("%m-%d-%y"),
-        wxT("%m-%d-%Y"),
-    };  
-    
+        wxT("DD-MM-YY"),
+        wxT("DD-MM-YYYY"),
+        wxT("MM-DD-YY"),
+        wxT("MM-DD-YYYY"),
+    };
+
     wxString selection = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), DEFDATEFORMAT);
     choiceDateFormat_ = new wxComboBox( itemPanelGeneral, 
         ID_DIALOG_OPTIONS_DATE_FORMAT, wxT(""), wxDefaultPosition, 
-        wxSize(100, -1), 11, itemChoice7Strings, 0 );
+        wxSize(120, -1), TOTAL_DATEFORMAT, itemChoice7Strings, 0 );
     itemStaticBoxSizer9->Add(choiceDateFormat_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     choiceDateFormat_->SetToolTip(_("Specify the date format for display"));
-    choiceDateFormat_->SetValue(selection);
+    choiceDateFormat_->SetValue(FormatDate2DisplayDate(selection));
 
     
     wxButton* itemButtonDF = new wxButton( itemPanelGeneral, 
@@ -405,7 +502,7 @@ void mmOptionsDialog::CreateControls()
     
     choiceTransVisible_ = new wxChoice( itemPanelViews, 
         ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, 
-        wxSize(150, -1), 7, itemChoiceViewTransStrings, 0 );
+        wxSize(165, -1), 7, itemChoiceViewTransStrings, 0 );
     itemStaticBoxSizerTransView->Add(choiceTransVisible_, 0, 
         wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -427,6 +524,56 @@ void mmOptionsDialog::CreateControls()
          choiceTransVisible_->SetSelection(VIEW_TRANS_CURRENTMONTH);
            
     choiceTransVisible_->SetToolTip(_("Specify which transactions are visible by default"));
+
+    wxStaticBox* itemStaticBoxSizerFontSizeStatic = new wxStaticBox(itemPanelViews, 
+        wxID_ANY, _("Font Size Options"));
+    wxStaticBoxSizer* itemStaticBoxSizerFontSize = new wxStaticBoxSizer(itemStaticBoxSizerFontSizeStatic,
+        wxHORIZONTAL);
+    itemBoxSizer7->Add(itemStaticBoxSizerFontSize, 0, wxGROW|wxALL, 5);
+
+    wxStaticText* itemStaticTextHTMLFontSizeText = new wxStaticText( itemPanelViews, 
+        wxID_STATIC, _("Report Font Size"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticBoxSizerFontSize->Add(itemStaticTextHTMLFontSizeText, 0, 
+        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+	wxString itemChoiceHTMLFontSize[] = 
+    {
+        wxT("XSmall"),
+		wxT("Small"),
+		wxT("Normal"),
+		wxT("Large"),
+		wxT("XLarge"),
+		wxT("XXLarge"),
+		wxT("Huge")
+    };  
+    
+    choiceFontSize_ = new wxChoice( itemPanelViews, 
+        ID_DIALOG_OPTIONS_FONT_SIZE, wxDefaultPosition, 
+        wxSize(85, -1), 7, itemChoiceHTMLFontSize, 0 );
+
+    wxString vFontSize = mmDBWrapper::getINISettingValue(inidb_, 
+        wxT("HTMLFONTSIZE"), wxT("Font Size on the reports"));
+
+    choiceFontSize_->SetSelection(HTML_FONT_NORMAL);
+
+    if (vFontSize == wxT("1"))
+        choiceFontSize_->SetSelection(HTML_FONT_XSMALL);
+    else if (vFontSize == wxT("2"))
+        choiceFontSize_->SetSelection(HTML_FONT_SMALL);
+    else if (vFontSize == wxT("3"))
+        choiceFontSize_->SetSelection(HTML_FONT_NORMAL);
+    else if (vFontSize == wxT("4"))
+        choiceFontSize_->SetSelection(HTML_FONT_LARGE);
+    else if (vFontSize == wxT("5"))
+         choiceFontSize_->SetSelection(HTML_FONT_XLARGE);
+    else if (vFontSize == wxT("6"))
+         choiceFontSize_->SetSelection(HTML_FONT_XXLARGE);
+    else if (vFontSize == wxT("7"))
+         choiceFontSize_->SetSelection(HTML_FONT_HUGE);
+    
+    choiceFontSize_->SetToolTip(_("Specify which font size is used on the report tables"));
+    	
+	itemStaticBoxSizerFontSize->Add(choiceFontSize_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     // ------------------------------------------
     wxPanel* itemPanelColors = new wxPanel( newBook, ID_BOOK_PANELCOLORS, wxDefaultPosition, 
@@ -537,55 +684,16 @@ void mmOptionsDialog::CreateControls()
         wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemCheckBoxUseSound->SetToolTip(_("Select whether to use sounds when entering transactions"));
 
-    wxStaticBox* itemStaticBoxSizerFontSizeStatic = new wxStaticBox(itemPanelMisc, 
-        wxID_ANY, _("Font Size Options"));
-    wxStaticBoxSizer* itemStaticBoxSizerFontSize = new wxStaticBoxSizer(itemStaticBoxSizerFontSizeStatic,
-        wxHORIZONTAL);
-    itemBoxSizer7->Add(itemStaticBoxSizerFontSize, 0, wxGROW|wxALL, 5);
-
-    wxStaticText* itemStaticTextHTMLFontSizeText = new wxStaticText( itemPanelMisc, 
-        wxID_STATIC, _("Report Font Size"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticBoxSizerFontSize->Add(itemStaticTextHTMLFontSizeText, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-
-	wxString itemChoiceHTMLFontSize[] = 
-    {
-        wxT("XSmall"),
-		wxT("Small"),
-		wxT("Normal"),
-		wxT("Large"),
-		wxT("XLarge"),
-		wxT("XXLarge"),
-		wxT("Huge")
-    };  
-    
-    choiceFontSize_ = new wxChoice( itemPanelMisc, 
-        ID_DIALOG_OPTIONS_FONT_SIZE, wxDefaultPosition, 
-        wxSize(75, -1), 7, itemChoiceHTMLFontSize, 0 );
-
-    wxString vFontSize = mmDBWrapper::getINISettingValue(inidb_, 
-        wxT("HTMLFONTSIZE"), wxT("Font Size on the reports"));
-
-    choiceFontSize_->SetSelection(HTML_FONT_NORMAL);
-
-    if (vFontSize == wxT("1"))
-        choiceFontSize_->SetSelection(HTML_FONT_XSMALL);
-    else if (vFontSize == wxT("2"))
-        choiceFontSize_->SetSelection(HTML_FONT_SMALL);
-    else if (vFontSize == wxT("3"))
-        choiceFontSize_->SetSelection(HTML_FONT_NORMAL);
-    else if (vFontSize == wxT("4"))
-        choiceFontSize_->SetSelection(HTML_FONT_LARGE);
-    else if (vFontSize == wxT("5"))
-         choiceFontSize_->SetSelection(HTML_FONT_XLARGE);
-    else if (vFontSize == wxT("6"))
-         choiceFontSize_->SetSelection(HTML_FONT_XXLARGE);
-    else if (vFontSize == wxT("7"))
-         choiceFontSize_->SetSelection(HTML_FONT_HUGE);
-    
-    choiceFontSize_->SetToolTip(_("Specify which font size is used on the report tables"));
-	
-	itemStaticBoxSizerFontSize->Add(choiceFontSize_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(inidb_, wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
+    wxCheckBox* itemCheckBoxOnlineCurrencyUpd = new wxCheckBox( itemPanelMisc, 
+        ID_DIALOG_OPTIONS_UPD_CURRENCY, _("Enable online currency update (Get data from European Central Bank)"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    itemCheckBoxOnlineCurrencyUpd->SetValue(FALSE);
+    if(enableCurrencyUpd == wxT("TRUE")) {
+        itemCheckBoxOnlineCurrencyUpd->SetValue(TRUE);
+    }
+    itemBoxSizerMisc->Add(itemCheckBoxOnlineCurrencyUpd, 0, 
+        wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemCheckBoxBackup->SetToolTip(_("Enable or disable get data from European Central Bank to update currency rate"));
 
     // -------------------------------------------
 
@@ -598,6 +706,9 @@ void mmOptionsDialog::CreateControls()
 
     itemBoxSizer4->Add(newBook, 1, wxGROW|wxALL, 5);
     itemBoxSizer4->Layout();
+
+    // resize dialog window
+    Fit();
 }
 
 void mmOptionsDialog::OnCurrency(wxCommandEvent& event)
@@ -613,7 +724,7 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& event)
             wxString currName = mmDBWrapper::getCurrencyName(db_, currencyID);
             wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_CURRENCY);
             bn->SetLabel(currName);
-            mmDBWrapper::setBaseCurrencySettings(db_, currencyID);
+            mmDBWrapper::setBaseCurrencySettings(db_, currencyID);            
         }
     }
 
@@ -627,6 +738,9 @@ void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& event)
 	wxString lang = mmDBWrapper::getINISettingValue(inidb_, 
         wxT("LANGUAGE"), wxT(""));
 	bn->SetLabel(lang);
+
+    // resize dialog window            
+    Fit();
 
 //    if (!mmGraphGenerator::checkGraphFiles())
 //        mmIniOptions::enableGraphs_ = false;
@@ -787,9 +901,22 @@ void mmOptionsDialog::OnUseSoundChecked(wxCommandEvent& event)
     mmDBWrapper::setINISettingValue(inidb_, wxT("USETRANSSOUND"), wxT("FALSE"));
 }
 
+void mmOptionsDialog::OnUpdCurrencyChecked(wxCommandEvent& event)
+{
+  wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_UPD_CURRENCY);
+  bool state = itemCheckBox->GetValue();
+  if (state)
+     mmDBWrapper::setINISettingValue(inidb_, wxT("UPDATECURRENCYRATE"), wxT("TRUE"));
+  else
+     mmDBWrapper::setINISettingValue(inidb_, wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
+}
+
 void mmOptionsDialog::OnFontSizeChanged(wxCommandEvent& event)
 {
    int size = choiceFontSize_->GetCurrentSelection() + 1;
    mmIniOptions::fontSize_ = wxString::Format(wxT("%d"), size);
    mmDBWrapper::setINISettingValue(inidb_, wxT("HTMLFONTSIZE"), mmIniOptions::fontSize_);
+   // resize dialog window
+   Fit();
 }
+

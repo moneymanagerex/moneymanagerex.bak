@@ -124,7 +124,7 @@ void mmPlayTransactionSound(wxSQLite3Database* db_)
     if (useSound != wxT("TRUE"))
         return;
     wxString soundPath = mmGetBaseWorkingPath()+wxT("\\kaching.wav");
-#ifdef __WXGTK__ 
+#if defined (__WXGTK__) || (__WXMAC__)
     soundPath = mmGetBaseWorkingPath()+wxT("//kaching.wav");
 #endif
 
@@ -160,7 +160,7 @@ void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 
 	wxString langPath = fname.GetPath(wxPATH_GET_VOLUME)
 		+ wxT("//en//");
-#ifdef __WXGTK__
+#if defined (__WXGTK__) || (__WXMAC__)
     mmApp->m_locale.AddCatalogLookupPathPrefix(fname.GetPath(wxPATH_GET_VOLUME));
 #else
     mmApp->m_locale.AddCatalogLookupPathPrefix(langPath);
@@ -189,7 +189,9 @@ void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 
                 if (newLangStr != wxT(""))
                 {
-                    mmApp->m_locale.AddCatalog(newLangStr);
+                    if(mmApp->m_locale.AddCatalog(newLangStr) == false) {
+                        ::wxLogMessage(wxT("m_locate Error!"));
+                    }
 
                     /* Save Language Setting */
                     mmDBWrapper::setINISettingValue(inidb, wxT("LANGUAGE"), 
@@ -290,9 +292,8 @@ wxString mmGetNiceDateSimpleString(wxDateTime dt)
 
 void mmShowErrorMessage(wxWindow* parent, wxString message, wxString messageheader)
 {
-     wxMessageDialog msgDlg(parent, message,
-                                messageheader);
-      msgDlg.ShowModal();
+     wxMessageDialog msgDlg(parent, message, messageheader);
+     msgDlg.ShowModal();
 }
 
 void mmExportCSV(wxSQLite3Database* db_)
@@ -1118,7 +1119,7 @@ void mmCurrencyFormatter::loadSettings(boost::shared_ptr<mmCurrency> pCurrencyPt
         
     mmCurrencyFormatter::unit_name = pCurrencyPtr->unit_;
     mmCurrencyFormatter::cent_name = pCurrencyPtr->cent_;
-    mmCurrencyFormatter::scale      = pCurrencyPtr->scaleDl_;
+    mmCurrencyFormatter::scale     = pCurrencyPtr->scaleDl_;
 }
 
 void mmCurrencyFormatter::loadDefaultSettings()

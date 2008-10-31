@@ -8,6 +8,7 @@ Paulo Lopes
 Igor
 Bettega Stefano
 Vat
+hykwok
 
 Silk Icons
 ===========
@@ -24,7 +25,7 @@ Greek
 Czech
 -- Josef Remes
 Russian
--- KarmaSV
+-- KarmaSV and vomikan
 Brazilian Portuguese
 -- Jose Carlos
 German

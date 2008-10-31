@@ -125,7 +125,7 @@ void mmCategDialog::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
-#ifdef __WXGTK__
+#if defined (__WXGTK__) || (__WXMAC__)
     treeCtrl_ = new wxTreeCtrl( itemDialog1, ID_DIALOG_CATEG_TREECTRL_CATS, 
         wxDefaultPosition, wxSize(100, 200));
 #else
@@ -136,13 +136,13 @@ void mmCategDialog::CreateControls()
 #endif
     itemBoxSizer3->Add(treeCtrl_, 1, wxGROW|wxALL, 1);
 
-    wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
-
     wxTextCtrl* itemTextCtrl6 = new wxTextCtrl( itemDialog1, 
         ID_DIALOG_CATEG_TEXTCTRL_CATNAME, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer5->Add(itemTextCtrl6, 1, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 1);
-     itemTextCtrl6->SetToolTip(_("Enter the name of the category to add or edit here"));
+    itemBoxSizer2->Add(itemTextCtrl6, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemTextCtrl6->SetToolTip(_("Enter the name of the category to add or edit here"));
+
+    wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
 
     wxButton* itemButton7 = new wxButton( itemDialog1, ID_DIALOG_CATEG_BUTTON_ADD, 
         _("Add"), wxDefaultPosition, wxDefaultSize, 0 );

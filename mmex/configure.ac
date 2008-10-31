@@ -15,7 +15,7 @@ dnl Add wxConfig Options to Configure
 AM_OPTIONS_WXCONFIG
 AM_OPTIONS_WXPRESETS
 
-AM_WXPRESETS_FULL([2.8.0], [base, core, html, net, aui, adv])
+AM_WXPRESETS_FULL([2.8.0], [base, core, html, xml, net, aui, adv])
 
 dnl Process standard bakefile
 AC_BAKEFILE([m4_include(autoconf_inc.m4)])

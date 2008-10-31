@@ -22,6 +22,8 @@
 #include "defs.h"
 #include "wx/wizard.h"
 #include "wx/aui/aui.h"
+#include "wx/xml/xml.h"
+#include "wx/arrstr.h"
 #include "dbwrapper.h"
 #include "util.h"
 #include "maincurrencydialog.h"
@@ -413,6 +415,7 @@ public:
 	void OnViewToolbarUpdateUI(wxUpdateUIEvent &event);
 	void OnViewStatusbarUpdateUI(wxUpdateUIEvent &event);
 	void OnViewLinksUpdateUI(wxUpdateUIEvent &event);
+    void OnOnlineUpdateCurRate(wxCommandEvent& event);
 
     void OnNewAccount(wxCommandEvent& event);
     void OnAccountList(wxCommandEvent& event);

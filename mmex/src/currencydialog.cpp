@@ -114,6 +114,7 @@ void mmCurrencyDialog::updateControls()
     wxTextCtrl* scaleTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SCALE);
     wxStaticText* sample = (wxStaticText*)FindWindow(ID_DIALOG_CURRENCY_STATIC_SAMPLE);
     wxTextCtrl* baseConvRate = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_BASECONVRATE);
+    wxTextCtrl* currencySymbol = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SYMBOL);
 
     pfxTx->SetValue(pCurrency->pfxSymbol_);
     sfxTx->SetValue(pCurrency->sfxSymbol_);
@@ -123,12 +124,16 @@ void mmCurrencyDialog::updateControls()
     centTx->SetValue(pCurrency->cent_);
     scaleTx->SetValue(wxString::Format(wxT("%f"), pCurrency->scaleDl_));
     baseConvRate->SetValue(wxString::Format(wxT("%f"), pCurrency->baseConv_));
+	currencySymbol->SetValue(pCurrency->currencySymbol_);
 
     wxString dispAmount;
     double amount = 123456.78;
     mmDBWrapper::loadSettings(core_->db_.get(), pCurrency->currencyID_);
     mmCurrencyFormatter::formatDoubleToCurrency(amount, dispAmount);
     sample->SetLabel(dispAmount);
+
+    // resize the dialog window
+    Fit();    
 }
 
 void mmCurrencyDialog::OnCurrencyTypeChanged(wxCommandEvent& event)
@@ -145,6 +150,7 @@ void mmCurrencyDialog::CreateControls()
     itemDialog1->SetSizer(itemBoxSizer2);
 
     wxFlexGridSizer* itemFlexGridSizer3 = new wxFlexGridSizer(2, 2, 0, 0);
+    itemFlexGridSizer3->AddGrowableCol(1);
     itemBoxSizer2->Add(itemFlexGridSizer3, 0, wxALL, 5);
 
     wxStaticText* itemStaticText4 = new wxStaticText( itemDialog1, wxID_STATIC, 
@@ -157,6 +163,15 @@ void mmCurrencyDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, 0, itemChoice5Strings, 0 );
     itemFlexGridSizer3->Add(currencyChoice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     currencyChoice_->Enable(false);
+	
+	wxStaticText* itemStaticText26 = new wxStaticText( itemDialog1, 
+        wxID_STATIC, _("Currency Symbol"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer3->Add(itemStaticText26, 0, 
+        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+    wxTextCtrl* itemTextCtr27 = new wxTextCtrl( itemDialog1, 
+        ID_DIALOG_CURRENCY_TEXT_SYMBOL, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer3->Add(itemTextCtr27, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
 
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, 
         wxID_STATIC, _("Prefix Symbol"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -165,7 +180,7 @@ void mmCurrencyDialog::CreateControls()
 
     wxTextCtrl* itemTextCtrl7 = new wxTextCtrl( itemDialog1, 
         ID_DIALOG_CURRENCY_TEXT_PFX, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemTextCtrl7, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer3->Add(itemTextCtrl7, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
 
     wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
         wxID_STATIC, _("Suffix Symbol"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -175,7 +190,7 @@ void mmCurrencyDialog::CreateControls()
     wxTextCtrl* itemTextCtrl9 = new wxTextCtrl( itemDialog1, 
        ID_DIALOG_CURRENCY_TEXT_SFX, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer3->Add(itemTextCtrl9, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
 
     wxStaticText* itemStaticText10 = new wxStaticText( itemDialog1, wxID_STATIC, _("Decimal Char"), 
         wxDefaultPosition, wxDefaultSize, 0 );
@@ -185,7 +200,7 @@ void mmCurrencyDialog::CreateControls()
     wxTextCtrl* itemTextCtrl11 = new wxTextCtrl( itemDialog1, 
         ID_DIALOG_CURRENCY_TEXT_DECIMAL, wxT(""), 
         wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemTextCtrl11, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer3->Add(itemTextCtrl11, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
 
     wxStaticText* itemStaticText12 = new wxStaticText( itemDialog1, 
         wxID_STATIC, _("Grouping Char"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -194,7 +209,7 @@ void mmCurrencyDialog::CreateControls()
 
     wxTextCtrl* itemTextCtrl13 = new wxTextCtrl( itemDialog1, 
         ID_DIALOG_CURRENCY_TEXT_GROUP, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemTextCtrl13, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer3->Add(itemTextCtrl13, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
 
     wxStaticText* itemStaticText14 = new wxStaticText( itemDialog1, 
         wxID_STATIC, _("Unit Name"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -205,7 +220,7 @@ void mmCurrencyDialog::CreateControls()
         ID_DIALOG_CURRENCY_TEXT_UNIT, 
         wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer3->Add(itemTextCtrl15, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
 
     wxStaticText* itemStaticText16 = new wxStaticText( itemDialog1, wxID_STATIC, 
         _("Cents Name"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -214,7 +229,7 @@ void mmCurrencyDialog::CreateControls()
 
     wxTextCtrl* itemTextCtrl17 = new wxTextCtrl( itemDialog1, 
         ID_DIALOG_CURRENCY_TEXT_CENTS, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemTextCtrl17, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer3->Add(itemTextCtrl17, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
 
     wxStaticText* itemStaticText81 = new wxStaticText( itemDialog1, wxID_STATIC, 
         _("Conversion to Base Rate"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -223,7 +238,7 @@ void mmCurrencyDialog::CreateControls()
 
     wxTextCtrl* itemTextCtrl82 = new wxTextCtrl( itemDialog1, 
         ID_DIALOG_CURRENCY_TEXT_BASECONVRATE, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemTextCtrl82, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer3->Add(itemTextCtrl82, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
 
     wxStaticText* itemStaticText18 = new wxStaticText( itemDialog1, 
         wxID_STATIC, _("Scale"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -233,7 +248,7 @@ void mmCurrencyDialog::CreateControls()
     wxTextCtrl* itemTextCtrl19 = new wxTextCtrl( itemDialog1, 
         ID_DIALOG_CURRENCY_TEXT_SCALE, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer3->Add(itemTextCtrl19, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
     
     wxStaticText* itemStaticText20 = new wxStaticText( itemDialog1, 
         wxID_STATIC, _("Value of 123456.78 will be"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -281,6 +296,7 @@ void mmCurrencyDialog::OnEdit(wxCommandEvent& event)
     wxTextCtrl* centTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_CENTS);
     wxTextCtrl* scaleTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SCALE);
     wxTextCtrl* baseConvRate = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_BASECONVRATE);
+	wxTextCtrl* currencySymbol = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SYMBOL);
 
     double scal = 0.0;
     scaleTx->GetValue().ToDouble(&scal);
@@ -303,6 +319,7 @@ void mmCurrencyDialog::OnEdit(wxCommandEvent& event)
     pCurrency->cent_ = mmCleanString(centTx->GetValue()).c_str();
     pCurrency->scaleDl_ = scal;
     pCurrency->baseConv_ = convRate;
+	pCurrency->currencySymbol_ = mmCleanString(currencySymbol->GetValue()).c_str();
    
     core_->currencyList_.updateCurrency(currencyID_, pCurrency);
 

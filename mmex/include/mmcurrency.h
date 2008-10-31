@@ -41,6 +41,7 @@ public:
    double baseConv_;
    wxChar decChar_;
    wxChar grpChar_;
+   wxString currencySymbol_;
 
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
@@ -55,10 +56,10 @@ public:
 
     /* Currency Functions */
     int addCurrency(boost::shared_ptr<mmCurrency> pCurrency);
-    bool deleteCurrency(int currencyID);
+    //bool deleteCurrency(int currencyID);
     void updateCurrency(int currencyID, boost::shared_ptr<mmCurrency> pCurrency);
-    bool currencyExists(const wxString& currencyName);
-    int getCurrencyID(const wxString& currencyName);
+    //bool currencyExists(const wxString& currencyName);
+    //int getCurrencyID(const wxString& currencyName);
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID);
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName);
 
