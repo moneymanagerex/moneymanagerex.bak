@@ -1,6 +1,7 @@
 Version History of Money Manager Ex
 
 0.9.4.0
+- MMEX now installs in %APPDATA% directory instead of program files by default in Windows
 - Fix crash on custom reports (Jaffa)
 - Fix display problems with cents (Ho Yin Kwok)
 - Fix hang with large amounts for top categories graph
