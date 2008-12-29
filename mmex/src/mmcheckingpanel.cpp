@@ -494,13 +494,13 @@ void mmCheckingPanel::initVirtualListControl()
 {
     // clear everything
     trans_.clear();
-
+#if defined (__WXMSW__)
     wxProgressDialog* pgd = new wxProgressDialog(_("Please Wait"), 
         _("Accessing Database"), 100, this, 
         wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
 
     pgd->Update(10);
-
+#endif
    
     boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(accountID_);
     double acctInitBalance = pAccount->initialBalance_;
@@ -648,7 +648,9 @@ void mmCheckingPanel::initVirtualListControl()
         }
     }
 
+#if defined (__WXMSW__)
     pgd->Update(30);
+#endif
 
     // sort trans_ by date
     double initBalance = acctInitBalance + unseenBalance;
@@ -659,7 +661,9 @@ void mmCheckingPanel::initVirtualListControl()
 
     std::sort(trans_.begin(), trans_.end(), sortTransactionsByDate);
 
+#if defined (__WXMSW__)
     pgd->Update(50);
+#endif
 
     for (unsigned int index = 0; index < trans_.size(); index++)
     {
@@ -691,7 +695,9 @@ void mmCheckingPanel::initVirtualListControl()
         trans_[index]->balanceStr_ = balanceStr;
     }
 
+#if defined (__WXMSW__)
     pgd->Update(70);
+#endif
 
     /* Setup the Sorting */
      // decide whether top or down icon needs to be shown
@@ -714,8 +720,10 @@ void mmCheckingPanel::initVirtualListControl()
 		}
     }
 
+#if defined (__WXMSW__)
     pgd->Update(100);
     pgd->Destroy();
+#endif
 }
 
 void mmCheckingPanel::OnDeleteTransaction(wxCommandEvent& event)
