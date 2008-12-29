@@ -44,6 +44,7 @@
 #include "reporttransstats.h"
 #include "reportcategovertimeperf.h"
 #include "reportcustomsql.h"
+#include "reportbudgetsetup.h"
 
 #include "mmgraphtopcategories.h"
 
@@ -351,8 +352,7 @@ mmNewDatabaseWizard::mmNewDatabaseWizard(wxFrame *frame, mmCoreDB* core)
     page1 = new wxWizardPageSimple(this);
 
     new wxStaticText(page1, wxID_ANY,
-             _("The next pages will help you create a new database.\n\nYour database file is stored with an extension \nof .mmb. \
-               Make sure to make backups of this \nfile and to store it carefully as it contains important \nfinancial information."
+             _("The next pages will help you create a new database.\n\nYour database file is stored with an extension of .mmb.\n\nMake sure to make backups of this file \nand to store it carefully as it contains important \nfinancial information."
              )
         );
 
@@ -919,7 +919,15 @@ void mmGUIFrame::updateNavTreeControl()
         navTreeCtrl_->SetItemData(budgetPerformance, 
             new mmTreeItemData(wxT("Budget Performance")));
     }
-
+    ///////////////////////////////////////////////////////////////////
+    wxTreeItemId budgetSetupPerformance;
+    if (mmIniOptions::enableBudget_)
+    {
+        budgetSetupPerformance = navTreeCtrl_->AppendItem(reports, 
+            _("Budget Setup and Performance"), 4, 4);
+        navTreeCtrl_->SetItemData(budgetSetupPerformance, 
+            new mmTreeItemData(wxT("Budget Setup Performance")));
+    }
      ///////////////////////////////////////////////////////////////////
     wxTreeItemId cashFlow = navTreeCtrl_->AppendItem(reports, 
         _("Cash Flow"), 4, 4);
@@ -999,6 +1007,9 @@ void mmGUIFrame::updateNavTreeControl()
 
             wxTreeItemId bYearData = navTreeCtrl_->AppendItem(budgetPerformance, q1.GetString(wxT("BUDGETYEARNAME")), 4, 4);
             navTreeCtrl_->SetItemData(bYearData, new mmTreeItemData(q1.GetInt(wxT("BUDGETYEARID")), true));
+
+            wxTreeItemId bYearSetupData = navTreeCtrl_->AppendItem(budgetSetupPerformance, q1.GetString(wxT("BUDGETYEARNAME")), 4, 4);
+            navTreeCtrl_->SetItemData(bYearSetupData, new mmTreeItemData(q1.GetInt(wxT("BUDGETYEARID")), true));
         }
         q1.Finalize();
 
@@ -1124,8 +1135,15 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                 menuPrintingEnable(true);
                 createReportsPage(rs);
             }
+            else if (iParentData->getString() == wxT("Budget Setup Performance"))
+            {
+                mmPrintableBase* rs = new mmReportBudgetingSetup(core_, data);
+                menuPrintingEnable(true);
+                createReportsPage(rs);
+            }
             else
                 createBudgetingPage(data);
+
             Thaw();
         }
         else
@@ -2241,7 +2259,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
 
 	wxFileName checkExt(fileName);
 	wxString password = wxEmptyString;
-	if (checkExt.GetExt() == wxT("emb"))
+	if (checkExt.GetExt() == wxT("emb") && wxFileName::FileExists(fileName))
 	{
         password = wxGetPasswordFromUser(_("Money Manager Ex: Enter Password For Database.."));
 	}
@@ -2270,8 +2288,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
               + _(" - No File opened ");
            this->SetTitle(note);   
            mmShowErrorMessage(this, 
-              _("Sorry. The Database version is too old or \
-                Database password is incorrect"), 
+              _("Sorry. The Database version is too old or Database password is incorrect"), 
                 _("Error opening database"));
 
            db_->Close();
@@ -2325,7 +2342,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
                _(" - No File opened ");
         this->SetTitle(note);   
         
-        wxMessageDialog msgDlg(this, _("Cannot locate previously opened .mmb database.\nDo you want to browse to locate the file?"), 
+        wxMessageDialog msgDlg(this, _("Cannot locate previously opened database.\nDo you want to browse to locate the file?"), 
                                 _("Error opening database"), wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
         {
@@ -2407,12 +2424,13 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew)
 
 void mmGUIFrame::OnNew(wxCommandEvent& event)
 {
-  wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
-  wxString fileName = wxFileSelector(wxT("Choose database file to create"), 
-                                     wxT(""), wxT(""), wxT(""), extSupported, wxSAVE | wxOVERWRITE_PROMPT);
-  if ( !fileName.empty() )
-  {
-    openFile(fileName, true);
+  wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb");  
+  wxFileDialog dlg(this, wxT("Choose database file to create"), 
+                                     wxT(""), wxT(""), extSupported, wxSAVE | wxOVERWRITE_PROMPT);
+
+  if(dlg.ShowModal() == wxID_OK) {
+      wxString fileName = dlg.GetPath() + wxT(".mmb");
+      openFile(fileName, true);
   }
 }
 
@@ -2438,11 +2456,13 @@ void mmGUIFrame::OnConvertEncryptedDB(wxCommandEvent& event)
         if (!password.IsEmpty())
         {
             wxString wildCardStr = wxT("MMB Files(*.mmb)|*.mmb");
-            wxString fileName = wxFileSelector(wxT("Choose database file to Save As"), 
-                wxT(""), wxT(""), wxT(""), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
+            wxFileDialog dlg(this, wxT("Choose database file to Save As"), 
+                wxT(""), wxT(""), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
  
-            if ( !fileName.empty() )
+            if(dlg.ShowModal() == wxID_OK)
             {
+                wxString fileName = dlg.GetPath() + wxT(".mmb");
+
                 wxCopyFile(encFileName, fileName, false);
 
                 try
@@ -2469,10 +2489,17 @@ void mmGUIFrame::OnConvertEncryptedDB(wxCommandEvent& event)
 void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
 {
   wxString wildCardStr = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
-  wxString fileName = wxFileSelector(wxT("Choose database file to Save As"), 
-                                     wxT(""), wxT(""), wxT(""), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
-  if ( !fileName.empty() )
+  wxFileDialog dlg(this, wxT("Choose database file to Save As"), 
+                                     wxT(""), wxT(""), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
+  if(dlg.ShowModal() == wxID_OK)
   {
+    wxString fileName = dlg.GetPath();
+    if(dlg.GetFilterIndex() == 0) {
+      fileName += wxT(".mmb");
+    } else {
+      fileName += wxT(".emb");
+    }
+
     if (db_)
     {
       db_->Close();
@@ -2492,7 +2519,7 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
           wxString oldpassword = password_;
           if (newFileName.GetExt() == wxT("emb"))
           {
-              password = wxGetPasswordFromUser(wxT("Money Manager Ex: Set Password For Database.."));
+              password = wxGetPasswordFromUser(wxT("Money Manager Ex: Set Password For New Database.."));
           }
           
           boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());

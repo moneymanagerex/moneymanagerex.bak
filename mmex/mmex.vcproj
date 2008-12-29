@@ -1134,6 +1134,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\reportbudgetsetup.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\reportcashflow.h"
 				>
 			</File>

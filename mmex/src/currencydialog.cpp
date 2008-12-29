@@ -18,6 +18,8 @@
 #include "currencydialog.h"
 #include "util.h"
 
+#include <wx/combobox.h>
+
 #ifndef __VISUALC__
 #define INT_PTR intptr_t
 #endif
@@ -114,7 +116,7 @@ void mmCurrencyDialog::updateControls()
     wxTextCtrl* scaleTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SCALE);
     wxStaticText* sample = (wxStaticText*)FindWindow(ID_DIALOG_CURRENCY_STATIC_SAMPLE);
     wxTextCtrl* baseConvRate = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_BASECONVRATE);
-    wxTextCtrl* currencySymbol = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SYMBOL);
+    wxComboBox* currencySymbol = (wxComboBox*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SYMBOL);
 
     pfxTx->SetValue(pCurrency->pfxSymbol_);
     sfxTx->SetValue(pCurrency->sfxSymbol_);
@@ -169,9 +171,45 @@ void mmCurrencyDialog::CreateControls()
     itemFlexGridSizer3->Add(itemStaticText26, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxTextCtrl* itemTextCtr27 = new wxTextCtrl( itemDialog1, 
-        ID_DIALOG_CURRENCY_TEXT_SYMBOL, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer3->Add(itemTextCtr27, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    wxComboBox* itemComboBox27 = new wxComboBox( itemDialog1,
+          ID_DIALOG_CURRENCY_TEXT_SYMBOL, wxT(""), wxDefaultPosition, wxDefaultSize, 0, NULL, 0);
+    itemFlexGridSizer3->Add(itemComboBox27, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    // add existing currency symbols
+    itemComboBox27->Append(wxT("EUR"));
+    itemComboBox27->Append(wxT("USD"));
+    itemComboBox27->Append(wxT("JPY"));
+    itemComboBox27->Append(wxT("BGN"));
+    itemComboBox27->Append(wxT("CZK"));
+    itemComboBox27->Append(wxT("DKK"));
+    itemComboBox27->Append(wxT("EEK"));
+    itemComboBox27->Append(wxT("GBP"));
+    itemComboBox27->Append(wxT("HUF"));
+    itemComboBox27->Append(wxT("LTL"));
+    itemComboBox27->Append(wxT("LVL"));
+    itemComboBox27->Append(wxT("PLN"));
+    itemComboBox27->Append(wxT("RON"));
+    itemComboBox27->Append(wxT("SEK"));
+    itemComboBox27->Append(wxT("SKK"));
+    itemComboBox27->Append(wxT("CHF"));
+    itemComboBox27->Append(wxT("ISK"));
+    itemComboBox27->Append(wxT("NOK"));
+    itemComboBox27->Append(wxT("HRK"));
+    itemComboBox27->Append(wxT("RUB"));
+    itemComboBox27->Append(wxT("TRY"));
+    itemComboBox27->Append(wxT("AUD"));
+    itemComboBox27->Append(wxT("BRL"));
+    itemComboBox27->Append(wxT("CAD"));
+    itemComboBox27->Append(wxT("CNY"));
+    itemComboBox27->Append(wxT("HKD"));
+    itemComboBox27->Append(wxT("IDR"));
+    itemComboBox27->Append(wxT("KRW"));
+    itemComboBox27->Append(wxT("MXN"));
+    itemComboBox27->Append(wxT("MYR"));
+    itemComboBox27->Append(wxT("NZD"));
+    itemComboBox27->Append(wxT("PHP"));
+    itemComboBox27->Append(wxT("SGD"));
+    itemComboBox27->Append(wxT("THB"));
+    itemComboBox27->Append(wxT("ZAR"));
 
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, 
         wxID_STATIC, _("Prefix Symbol"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -296,7 +334,7 @@ void mmCurrencyDialog::OnEdit(wxCommandEvent& event)
     wxTextCtrl* centTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_CENTS);
     wxTextCtrl* scaleTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SCALE);
     wxTextCtrl* baseConvRate = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_BASECONVRATE);
-	wxTextCtrl* currencySymbol = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SYMBOL);
+	wxComboBox* currencySymbol = (wxComboBox*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SYMBOL);
 
     double scal = 0.0;
     scaleTx->GetValue().ToDouble(&scal);

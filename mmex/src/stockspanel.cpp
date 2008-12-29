@@ -641,7 +641,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
                    wxT("&f=")+
                    yahoo_->CSVColumns_+
                    wxT("&e=.csv");
-
+    
     wxURL url(site);
     if (url.GetError()!=wxURL_NOERR) 
     { 
@@ -717,13 +717,18 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         bufSQL.Printf(wxT("select * from STOCK_V1 where lower(SYMBOL) =lower('%s');"), StockSymbolNoSuffix.c_str());
         q1 = db_->ExecuteQuery(bufSQL);
 
-
         std::vector<mmStockTransactionHolder> stockVec;
         while (q1.NextRow())
         {
             mmStockTransactionHolder sh;
 
             sh.stockID_ = q1.GetInt(wxT("STOCKID"));
+            // If the stock's symbol is not found, Yahoo CSV will return 0 for the current price.
+            // Therefore, we assume the current price of all existing stock's symbols are greater
+            // than zero and we will not update any stock if its curreny price is zero.
+            if(dPrice == 0) {
+                dPrice = q1.GetDouble(wxT("CURRENTPRICE"));
+            }
             sh.currentPrice_ = dPrice;
             sh.numShares_ = q1.GetDouble(wxT("NUMSHARES"));
             sh.value_ = sh.numShares_ * dPrice;
