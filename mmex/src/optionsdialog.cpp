@@ -169,7 +169,7 @@ wxString mmOptionsDialog::DisplayDate2FormatDate(wxString strDate)
         }
     }
 
-    return wxT("");
+    return strDate;
 }
 
 wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
