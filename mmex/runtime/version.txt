@@ -5,8 +5,8 @@ Version History of Money Manager Ex
 - Fix display problems with cents (Ho Yin Kwok)
 - Fix hang with large amounts for top categories graph
 - Fix association of categories on CSV Import (Patch by Pieter)
-- Fix File Extension, Exchange Rates, Currency Symbols (Ho Yin Kwok)
 - Add New Budget Setup and Performance Report (Rohit Kumar)
+- Temporary workaround for Linux crash when clicking home page links
 ========================
 Patch from (Ho Yin Kwok)
 ========================
@@ -36,7 +36,14 @@ http://www.ecb.europa.eu/stats/exchange/eurofxref/html/index.en.html
 - Fix generate incorrect "Rate of Change" value when currency' scale is wrong
 - Fix segmentation fault when "Refresh" button is pressed in "Stocks" panel and there is no stock in the list
 - Fix "To amount" is wrong when editing a transaction without click the "Advanced" button
-
+- MMEX do not add file extension automatically when it creates a new database file
+- When previous opened "emb" database is deleted, the password dialog box is shown when MMEX starts.
+- Stock value to zero bug (Bug Request ID 2157523)
+- Modify some strings (we have to modify po files)
+- When MMEX creates a new datebase, only "mmb" type is available. If user wants to have a "emb" type database, he/she has to use
+"Save as" function.
+ - For Currency dialog box, currency symbol textbox is changed to ComboBox so users can select existing currency symbols or input a new
+one
 
 0.9.3.0 
 - Release under CodeLathe LLC

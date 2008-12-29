@@ -28,7 +28,7 @@ Greek
 Czech
 -- Josef Remes
 Russian
--- KarmaSV and vomikan
+-- KarmaSV, Vomikan, Nikolay Akimov, Churzzz
 Brazilian Portuguese
 -- Jose Carlos
 German

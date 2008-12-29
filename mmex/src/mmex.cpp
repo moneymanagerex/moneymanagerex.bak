@@ -2844,7 +2844,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& event)
     int numTokens = (int)tkz.CountTokens();
     if (numTokens != 4)
     {
-        wxString url = wxT("http://sourceforge.net/project/showfiles.php?group_id=163169");
+        wxString url = wxT("http://www.codelathe.com/mmex");
         wxLaunchDefaultBrowser(url);
         return;
     }
@@ -2890,7 +2890,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& event)
     if (isUpdateAvailable)
     {
         mmShowErrorMessage(this, _("New update available!"), _("Check Update"));
-        wxString url = wxT("http://sourceforge.net/project/showfiles.php?group_id=163169");
+        wxString url = wxT("http://www.codelathe.com/mmex");
         wxLaunchDefaultBrowser(url);
     }
     else

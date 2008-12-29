@@ -231,7 +231,7 @@ void mmDBWrapper::loadCurrencies(wxSQLite3Database* db, const wxString& fpath)
         wxString sqlStmt = wxString::Format(wxT("insert into CURRENCYFORMATS_V1 (CURRENCYNAME, PFX_SYMBOL, \
             SFX_SYMBOL, DECIMAL_POINT, GROUP_SEPARATOR, UNIT_NAME, CENT_NAME,  \
             SCALE, BASECONVRATE, CURRENCY_SYMBOL) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%f', '%s');"),
-           currencyName.c_str(), pfxSymbol.c_str(), sfxSymbol.c_str(), dec.c_str(), grp.c_str(), unit.c_str(), cent.c_str(), scaleDl, baseConv, _(""));
+           currencyName.c_str(), pfxSymbol.c_str(), sfxSymbol.c_str(), dec.c_str(), grp.c_str(), unit.c_str(), cent.c_str(), scaleDl, baseConv, wxT(""));
         int retVal = db->ExecuteUpdate(sqlStmt);
     }
     q1.Finalize();
