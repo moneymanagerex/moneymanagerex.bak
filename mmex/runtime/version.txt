@@ -1,5 +1,9 @@
 Version History of Money Manager Ex
 
+0.9.4.1 (Dec 30, 2008)
+- Fix additional extension in files saved as new database
+- Fix version in executable resource (LuckyArthur)
+
 0.9.4.0
 - MMEX now installs in %APPDATA% directory instead of program files by default in Windows
 - Fix crash on custom reports (Jaffa)

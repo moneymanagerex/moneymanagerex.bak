@@ -647,7 +647,7 @@ void mmOptionsDialog::CreateControls()
         itemCheckBoxBackup->SetValue(TRUE);
     itemBoxSizerMisc->Add(itemCheckBoxBackup, 0, 
         wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemCheckBoxBackup->SetToolTip(_("Select whether to create a .bak file when opening a the database file"));
+    itemCheckBoxBackup->SetToolTip(_("Select whether to create a .bak file when opening the database file"));
 
 
     wxBoxSizer* itemBoxSizerStockURL = new wxBoxSizer(wxHORIZONTAL);

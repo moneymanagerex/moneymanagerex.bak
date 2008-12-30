@@ -2429,7 +2429,9 @@ void mmGUIFrame::OnNew(wxCommandEvent& event)
                                      wxT(""), wxT(""), extSupported, wxSAVE | wxOVERWRITE_PROMPT);
 
   if(dlg.ShowModal() == wxID_OK) {
-      wxString fileName = dlg.GetPath() + wxT(".mmb");
+      wxString fileName = dlg.GetPath();
+      if (!dlg.GetPath().Contains(wxT(".mmb")))
+        fileName = dlg.GetPath() + wxT(".mmb");
       openFile(fileName, true);
   }
 }
@@ -2461,7 +2463,9 @@ void mmGUIFrame::OnConvertEncryptedDB(wxCommandEvent& event)
  
             if(dlg.ShowModal() == wxID_OK)
             {
-                wxString fileName = dlg.GetPath() + wxT(".mmb");
+                wxString fileName = dlg.GetPath();
+                if (!dlg.GetPath().Contains(wxT(".mmb")))
+                    fileName = dlg.GetPath() + wxT(".mmb");
 
                 wxCopyFile(encFileName, fileName, false);
 
@@ -2494,10 +2498,15 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& event)
   if(dlg.ShowModal() == wxID_OK)
   {
     wxString fileName = dlg.GetPath();
-    if(dlg.GetFilterIndex() == 0) {
-      fileName += wxT(".mmb");
-    } else {
-      fileName += wxT(".emb");
+    if(dlg.GetFilterIndex() == 0) 
+    {
+        if (!dlg.GetPath().Contains(wxT(".mmb")))
+            fileName = dlg.GetPath() + wxT(".mmb");
+    } 
+    else 
+    {
+        if (!dlg.GetPath().Contains(wxT(".emb")))
+            fileName = dlg.GetPath() + wxT(".emb");
     }
 
     if (db_)
