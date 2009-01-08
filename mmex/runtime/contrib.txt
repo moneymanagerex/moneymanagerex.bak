@@ -22,7 +22,7 @@ Translations
 Italian
 -- Claudio
 French
--- Berry As, Jean-Christophe, bipop, drambeau, Ben, Jsl1
+-- Berry As, Jean-Christophe, bipop, drambeau, Ben, Ghislain Baudichaud
 Greek
 -- Panagiotis Pentzeridis
 Czech
@@ -67,6 +67,8 @@ Swedish
 -- Tomplast
 Dutch
 -- Theo Kamphuis
+Bulgarian
+-- Ivan Gyokov
 
 User Manual
 ===========
