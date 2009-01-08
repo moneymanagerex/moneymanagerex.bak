@@ -1024,6 +1024,9 @@ wxString mmCheckingPanel::getItem(long item, long column)
     if (!trans_.size())
        return wxT("");
 
+    if (item >= trans_.size() )
+        return wxT("");
+
     if (!trans_[item])
     {
         return wxT("");;
