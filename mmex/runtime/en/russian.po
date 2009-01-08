@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-29 12:15-0600\n"
-"PO-Revision-Date: 2008-12-29 12:15-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2009-01-01 23:55+0300\n"
+"Last-Translator: Nikolay <vomikan@mail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,9 +17,8 @@ msgstr ""
 "X-Poedit-SearchPath-1: src\n"
 
 #: src/aboutdialog.cpp:134
-#, fuzzy
 msgid "Version: "
-msgstr "История версий"
+msgstr "Версия: "
 
 #: src/aboutdialog.cpp:145
 msgid "  and contributers from around the world."
@@ -51,7 +50,7 @@ msgstr "Открыть последнюю используемую базу да
 
 #: src/appstartdialog.cpp:127
 msgid "Open the previously opened database : "
-msgstr "Открыть ранее используемую базу данных:"
+msgstr "Открытие ранее используемой базы данных:"
 
 #: src/appstartdialog.cpp:134
 msgid "Create a New Database"
@@ -59,7 +58,7 @@ msgstr "Создать новую базу данных"
 
 #: src/appstartdialog.cpp:135
 msgid "Create a new database file to get started"
-msgstr "Создать новый файл базы даных"
+msgstr "Создание нового файла базы даных"
 
 #: src/appstartdialog.cpp:139
 msgid "Open Existing Database"
@@ -67,7 +66,7 @@ msgstr "Открыть имеющуюся базу данных"
 
 #: src/appstartdialog.cpp:140
 msgid "Open an already created database file with extension (*.mmb)"
-msgstr "Открыть уже созданную базу данных с расширением  (*.mmb)"
+msgstr "Открытие уже созданной базы данных с расширением  (*.mmb)"
 
 #: src/appstartdialog.cpp:144
 msgid "Read Documentation"
@@ -75,7 +74,7 @@ msgstr "Читать документацию"
 
 #: src/appstartdialog.cpp:145
 msgid "Read the user manual"
-msgstr "Читать руководство пользователя"
+msgstr "Открытие страницы с руководством пользователя"
 
 #: src/appstartdialog.cpp:151
 msgid "Visit Website for more information"
@@ -83,7 +82,7 @@ msgstr "Посетить Web-сайт"
 
 #: src/appstartdialog.cpp:152
 msgid "Open the Money Manager Ex website for latest news, updates etc"
-msgstr "Посетить сайт программы  Money Manager Ex. Новости, новые версии и т.п."
+msgstr "Открытие сайта программы  Money Manager Ex. Новости, новые версии и т.п."
 
 #: src/appstartdialog.cpp:159
 msgid "Show this window next time "
@@ -197,16 +196,15 @@ msgstr "Удешевление"
 
 #: src/assetdialog.cpp:234
 msgid "Specify if the value of the asset changes over time"
-msgstr "Выберите как происходит изменение стоимости актива со временем"
+msgstr "Выберите если происходит изменение стоимости актива со временем"
 
 #: src/assetdialog.cpp:239
 msgid "Rate of Change"
 msgstr "Процент изменения стоимости"
 
 #: src/assetdialog.cpp:245
-#, fuzzy, c-format
 msgid "Enter the rate at which the asset changes its value in % per year"
-msgstr "Введите значение на которое меняется стоимость актива в %"
+msgstr "Введите значение на которое меняется стоимость актива в % за год"
 
 #: src/assetdialog.cpp:251
 #: src/billsdepositsdialog.cpp:443
@@ -467,7 +465,7 @@ msgstr "Выберите получателя"
 
 #: src/billsdepositsdialog.cpp:366
 msgid "Specify where the transaction is going to or coming from "
-msgstr "Укажите получателя данной проводки"
+msgstr "Выберите получателя данной проводки"
 
 #: src/billsdepositsdialog.cpp:368
 msgid "Number"
@@ -835,15 +833,15 @@ msgstr "Добавить"
 
 #: src/categdialog.cpp:150
 msgid "Add a new category"
-msgstr "Добавить новую категорию"
+msgstr "Добавление новой категории"
 
 #: src/categdialog.cpp:155
 msgid "Edit the name of an existing category"
-msgstr "Редактировать название существующей категории"
+msgstr "Редактирование названия существующей категории"
 
 #: src/categdialog.cpp:160
 msgid "Delete an existing category. The category cannot be used by existing transactions."
-msgstr "Удалить существующую категорию. Категория не должна использоваться существующими проводками."
+msgstr "Удаление существующей категории. Категория не должна использоваться существующими проводками."
 
 #: src/categdialog.cpp:166
 msgid "Select"
@@ -851,7 +849,7 @@ msgstr "Выбрать"
 
 #: src/categdialog.cpp:168
 msgid "Select the currently selected category as the selected category for the transaction"
-msgstr "Выберите выделенную категорию как категорию для этой проводки."
+msgstr "Выбор выделенной категории для текущей проводки."
 
 #: src/categdialog.cpp:181
 msgid "Category cannot be empty"
@@ -890,9 +888,8 @@ msgid "Currency Name"
 msgstr "Название валюты"
 
 #: src/currencydialog.cpp:170
-#, fuzzy
 msgid "Currency Symbol"
-msgstr "Название валюты"
+msgstr "Обозначение валюты"
 
 #: src/currencydialog.cpp:215
 msgid "Prefix Symbol"
@@ -1044,7 +1041,7 @@ msgstr "Название валюты уже существует!"
 
 #: src/mmcheckingpanel.cpp:172
 msgid "View All Transactions"
-msgstr "Показывать все проводки"
+msgstr "Смотреть все проводки"
 
 #: src/mmcheckingpanel.cpp:173
 msgid "View Reconciled Transactions"
@@ -1325,7 +1322,6 @@ msgid "New Database Wizard"
 msgstr "Мастер создания базы данных"
 
 #: src/mmex.cpp:355
-#, fuzzy
 msgid ""
 "The next pages will help you create a new database.\n"
 "\n"
@@ -1337,8 +1333,8 @@ msgid ""
 msgstr ""
 "Следующие страницы помогут Вам создать новую базу данных.\n"
 "\n"
-"Ваш файл базы данных хранится с расширением \n"
-".mmb. Удостоверьтесь, что сделана резервная копия этого \n"
+"Ваш файл базы данных хранится с расширением .mmb.\n"
+"Удостоверьтесь, что сделана резервная копия этого \n"
 "файла и надёжно сохранена, поскольку этот файл содержит важную \n"
 "финансовую информацию."
 
@@ -1352,12 +1348,12 @@ msgstr "&Инструменты"
 #: src/mmex.cpp:2167
 #: src/mmex.cpp:2810
 msgid "Online Update Currency Rate"
-msgstr ""
+msgstr "Обновить курсы валют онлайн"
 
 #: src/mmex.cpp:667
 #: src/mmex.cpp:2047
 msgid "Navigation"
-msgstr "&Навигация"
+msgstr "Навигация"
 
 #: src/mmex.cpp:681
 msgid "Home Page"
@@ -1462,12 +1458,11 @@ msgstr "Отчёт по проводкам"
 
 #: src/mmex.cpp:918
 msgid "Budget Performance"
-msgstr "Исполнение бюджета "
+msgstr "Представление бюджета "
 
 #: src/mmex.cpp:927
-#, fuzzy
 msgid "Budget Setup and Performance"
-msgstr "Исполнение бюджета "
+msgstr "Исполнение бюджета"
 
 #: src/mmex.cpp:933
 #: src/mmex.cpp:2779
@@ -1484,7 +1479,7 @@ msgstr "Статистика"
 
 #: src/mmex.cpp:950
 msgid "Custom SQL Report"
-msgstr "Пользовательский SQL отчет"
+msgstr "Пользовательский SQL отчёт"
 
 #: src/mmex.cpp:955
 msgid "Help"
@@ -1621,7 +1616,7 @@ msgstr "Текущий вид"
 
 #: src/mmex.cpp:2024
 msgid "Preview current report"
-msgstr "Предварительный просмотр текущего отчета"
+msgstr "Предварительный просмотр текущего отчёта"
 
 #: src/mmex.cpp:2026
 msgid "Print Preview..."
@@ -1629,7 +1624,7 @@ msgstr "Предварительный просмотр печати.."
 
 #: src/mmex.cpp:2030
 msgid "Print current report"
-msgstr "Печатать текущий отчет"
+msgstr "Печатать текущий отчёт"
 
 #: src/mmex.cpp:2033
 msgid "Print..."
@@ -1692,7 +1687,7 @@ msgstr "&Категории"
 #: src/mmex.cpp:2085
 #: src/mmex.cpp:2237
 msgid "Organize Categories"
-msgstr "Список категорий"
+msgstr "Редактор категорий"
 
 #: src/mmex.cpp:2090
 msgid "Organize &Payees"
@@ -1758,7 +1753,7 @@ msgstr "Преобразовать шифрованую базу данных в
 
 #: src/mmex.cpp:2168
 msgid "Online update currency rate"
-msgstr ""
+msgstr "Онлайновое обновление курсов валют"
 
 #: src/mmex.cpp:2176
 msgid "Check for &Updates"
@@ -1774,7 +1769,7 @@ msgstr "&Сообщить об ошибке или обратная связь"
 
 #: src/mmex.cpp:2184
 msgid "Send email through the mailing list to report issues with the software."
-msgstr "Пошлите электронную почту через список адресатов, чтобы сообщить о проблемах с программным обеспечением."
+msgstr "Отправьте письмо через список адресатов, чтобы сообщить о проблемах с программой."
 
 #: src/mmex.cpp:2192
 msgid "Be notified of new releases"
@@ -1810,7 +1805,7 @@ msgstr "&Помощь"
 
 #: src/mmex.cpp:2228
 msgid "Open"
-msgstr "Открытые"
+msgstr "Открыт"
 
 #: src/mmex.cpp:2235
 msgid "Account List"
@@ -1831,7 +1826,7 @@ msgstr "Открыть диалог редактора валют"
 #: src/mmex.cpp:2264
 #: src/mmex.cpp:2455
 msgid "Money Manager Ex: Enter Password For Database.."
-msgstr ""
+msgstr "Money Manager Ex: Введите пароль для базы данных.."
 
 #: src/mmex.cpp:2288
 #: src/mmex.cpp:2342
@@ -1839,7 +1834,6 @@ msgid " - No File opened "
 msgstr "- Нет открытого файла"
 
 #: src/mmex.cpp:2291
-#, fuzzy
 msgid "Sorry. The Database version is too old or Database password is incorrect"
 msgstr "Извините. Версия базы данных устаревшая или пароль неверен."
 
@@ -1849,22 +1843,20 @@ msgid "Error opening database"
 msgstr "Ошибка открытия базы данных"
 
 #: src/mmex.cpp:2345
-#, fuzzy
 msgid ""
 "Cannot locate previously opened database.\n"
 "Do you want to browse to locate the file?"
 msgstr ""
 "Неверный путь к ранее открываемой базе данных .mmb.\n"
-"Хотите вручную указать путь?"
+"Хотите указать путь вручную?"
 
 #: src/mmex.cpp:2365
 msgid "Opening Database File && Verifying Integrity"
 msgstr "Открытие и проверка целосности базы данных "
 
 #: src/mmex.cpp:2451
-#, fuzzy
 msgid "Choose Encrypted database file to open"
-msgstr "Choose QIF data file to import"
+msgstr "Выберите зашифрованный файл базы данных"
 
 #: src/mmex.cpp:2475
 msgid "Converted DB!"
@@ -1915,9 +1907,8 @@ msgid "You have the latest version installed!"
 msgstr "У вас установлена последняя версия!"
 
 #: src/mmex.cpp:2913
-#, fuzzy
 msgid "No database!"
-msgstr "Вызов мастера создания базы данных"
+msgstr "Нет базы данных!"
 
 #: src/mmex.cpp:2913
 #: src/mmex.cpp:2922
@@ -1931,50 +1922,48 @@ msgstr "Вызов мастера создания базы данных"
 #: src/mmex.cpp:2973
 #: src/mmex.cpp:3016
 #: src/mmex.cpp:3043
-#, fuzzy
 msgid "Update Currency Rate"
-msgstr "Основная валюта не установлена"
+msgstr "Обновить курсы валют"
 
 #: src/mmex.cpp:2929
 msgid "Cannot get data from WWW!"
-msgstr ""
+msgstr "Не могу получить данные из сети!"
 
 #: src/mmex.cpp:2935
 msgid "Incorrect XML data (#1)!"
-msgstr ""
+msgstr "Неправильные XML данные (#1)!"
 
 #: src/mmex.cpp:2944
 msgid "Incorrect XML data (#2)!"
-msgstr ""
+msgstr "Неправильные XML данные (#2)!"
 
 #: src/mmex.cpp:2951
 msgid "Incorrect XML data (#3)!"
-msgstr ""
+msgstr "Неправильные XML данные (#3)!"
 
 #: src/mmex.cpp:2956
 msgid "Incorrect XML data (#4)!"
-msgstr ""
+msgstr "Неправильные XML данные (#4)!"
 
 #: src/mmex.cpp:2961
 msgid "Incorrect XML data (#5)!"
-msgstr ""
+msgstr "Неправильные XML данные (#5)!"
 
 #: src/mmex.cpp:2968
 msgid "Incorrect XML data (#6)!"
-msgstr ""
+msgstr "Неправильные XML данные (#6)!"
 
 #: src/mmex.cpp:2973
 msgid "Incorrect XML data (#7)!"
-msgstr ""
+msgstr "Неправильные XML данные (#7)!"
 
 #: src/mmex.cpp:3016
 msgid "Could not find base currency symbol!"
-msgstr ""
+msgstr "Не могу найти обозначение основной валюты"
 
 #: src/mmex.cpp:3043
-#, fuzzy
 msgid "Currency rate updated"
-msgstr "Менеджер валют"
+msgstr "Курсы валют обновлены"
 
 #: src/mmex.cpp:3239
 #: src/mmex.cpp:3280
@@ -2144,7 +2133,7 @@ msgstr "Избранный счёт"
 
 #: src/newacctdialog.cpp:285
 msgid "Select whether this is an account that is used often. This is used to filter accounts display view."
-msgstr "Отметьте, если данный счёт используется часто. Это нужно для упорядочивания отображения счетов."
+msgstr "Отметьте, если данный счёт используется часто. Это нужно для фильтрации отображения счетов."
 
 #: src/newacctdialog.cpp:323
 msgid "Account Name "
@@ -2393,11 +2382,11 @@ msgstr "Отметьте, использовать ли звуки, при вв�
 
 #: src/optionsdialog.cpp:689
 msgid "Enable online currency update (Get data from European Central Bank)"
-msgstr ""
+msgstr "Включить онлайновое обновление курсов валют (Получать данные из Европейского Центрального Банка)"
 
 #: src/optionsdialog.cpp:696
 msgid "Enable or disable get data from European Central Bank to update currency rate"
-msgstr ""
+msgstr "Включить или выключить обновление данных из Центрального Банка Европы по курсам валют"
 
 #: src/optionsdialog.cpp:702
 msgid "General"
@@ -2421,15 +2410,15 @@ msgstr "Введите имя получателя платежа, которо�
 
 #: src/payeedialog.cpp:162
 msgid "Add a new payee name"
-msgstr "Добавить получателя"
+msgstr "Добавление получателя"
 
 #: src/payeedialog.cpp:167
 msgid "Change the name of an existing payee"
-msgstr "Переименовать существующего получателя"
+msgstr "Изменение названия существующего получателя"
 
 #: src/payeedialog.cpp:172
 msgid "Delete the selected payee. The payee cannot be used by an existing transaction."
-msgstr "Удалить выбранного получателя. Получателю не должены принадлежать проводки."
+msgstr "Удаление выбранного получателя. Получателю не должены принадлежать проводки."
 
 #: src/payeedialog.cpp:180
 msgid "Select the currently selected payee as the selected payee for the transaction"
@@ -2628,7 +2617,6 @@ msgid "Enter notes associated with this investment"
 msgstr "Введите примечания, связанные с этими инвестициями"
 
 #: src/stockdialog.cpp:269
-#, fuzzy
 msgid "Stock Price Web Page"
 msgstr "Web-страница котировок"
 
@@ -2671,15 +2659,15 @@ msgstr "Котировка"
 
 #: src/stockspanel.cpp:270
 msgid "New Stock Investment"
-msgstr "Добавить инвестицию"
+msgstr "Добавление новой инвестиции"
 
 #: src/stockspanel.cpp:275
 msgid "Edit Stock Investment"
-msgstr "Редактировать инвестицию"
+msgstr "Редактирование инвестиции"
 
 #: src/stockspanel.cpp:280
 msgid "Delete Stock Investment"
-msgstr "Удалить инвестицию"
+msgstr "Удаление инвестиции"
 
 #: src/stockspanel.cpp:283
 msgid "Refresh"
@@ -3223,8 +3211,8 @@ msgid ""
 "Enter the suffix used by Yahoo for the market of your stocks. \n"
 "If your stocks are in multiple markets, leave this blank and add  the suffix to each symbol in your portfolio."
 msgstr ""
-"Войдите суффикс, используемый Yahoo для рынка Ваших акций. \n"
-"Если Ваши акции находятся на многих рынках, оставте это поле пустым и добавте суффикс к каждой акции в Вашем портфеле."
+"Введите суффикс, используемый Yahoo для рынка Ваших акций. \n"
+"Если Ваши акции находятся на многих рынках, оставте это поле пустым и добавьте суффикс к каждой акции в Вашем портфеле."
 
 #: src/yahoosettingsdialog.cpp:82
 msgid "Market open from"
@@ -3235,7 +3223,7 @@ msgstr "Рынок открыт с"
 #: src/yahoosettingsdialog.cpp:119
 #: src/yahoosettingsdialog.cpp:130
 msgid "Allow for any delay in quotes"
-msgstr "Разрешить задержку в котировках"
+msgstr "Допустимый диапазон времени для обновления котировок"
 
 #: src/yahoosettingsdialog.cpp:98
 #: src/yahoosettingsdialog.cpp:126
@@ -3248,7 +3236,7 @@ msgstr "до"
 
 #: src/yahoosettingsdialog.cpp:139
 msgid "Refresh prices every"
-msgstr "Обновлять цены каждые"
+msgstr "Обновлять каждые"
 
 #: src/yahoosettingsdialog.cpp:163
 msgid "minutes while market is open"
@@ -3264,7 +3252,7 @@ msgstr " Начальная страница"
 
 #: include/assetdialog.h:21
 msgid "New/Edit Asset"
-msgstr "Добавить/изменить актив"
+msgstr "Редактор актива"
 
 #: include/billsdepositsdialog.h:22
 msgid "New/Edit Repeating Transaction"
@@ -3297,7 +3285,7 @@ msgstr "Редактор SQL"
 
 #: include/fileviewerdialog.h:24
 msgid "View File Contents"
-msgstr "Показать содержимое файла"
+msgstr "Просмотр содержимого файла"
 
 #: include/filtertransdialog.h:46
 msgid "Filter Transactions"
@@ -3325,7 +3313,7 @@ msgstr ""
 
 #: include/mmex.h:169
 msgid "(Optional)Specify your name. Mainly used for reporting and in printing reports.\n"
-msgstr "(Необязательно) Укажите свое имя. В основном будет использоваться в отчетов. \n"
+msgstr "(Необязательно) Укажите свое имя. В основном будет использоваться в отчётов. \n"
 
 #: include/mmex.h:181
 msgid "Base Currency Not Set"
@@ -3343,7 +3331,7 @@ msgid ""
 "For example 'ABC Bank'."
 msgstr ""
 "\n"
-"Введите название счёта. Как правило это  \n"
+"Введите название счёта. Как правило, это  \n"
 "название финансового учреждения, где находится счёт. \n"
 " Например, 'ABC Банк'."
 
@@ -3389,7 +3377,7 @@ msgid ""
 "Set that first using tools->options menu and then add a new account"
 msgstr ""
 "Базовая валюта счёта не выбрана. \n"
-"Установите его сначала в Инструменты -> Настройки программы -> Основные"
+"Установите её сначала через меню Инструменты -> Настройки программы -> Основные"
 
 #: include/mmgraphincexpensesmonth.h:26
 msgid "Expenses"
@@ -3401,7 +3389,7 @@ msgstr "Настройки"
 
 #: include/reportbudgetingperf.h:26
 msgid "Budget Performance for Year : "
-msgstr "Исполнение бюджета за: "
+msgstr "Представление годового бюджета на : "
 
 #: include/reportbudgetingperf.h:63
 #: include/reportcategovertimeperf.h:55
@@ -3413,14 +3401,12 @@ msgid "%"
 msgstr "%"
 
 #: include/reportbudgetsetup.h:26
-#, fuzzy
 msgid "Budget setup for Year : "
-msgstr "Бюджет на "
+msgstr "Годовой бюджетный план на : "
 
 #: include/reportbudgetsetup.h:26
-#, fuzzy
 msgid " (Estimated Vs Actual)"
-msgstr "Предполагаемый Доход: Фактический Доход:"
+msgstr " (Оценочно/Фактически)"
 
 #: include/reportcashflow.h:24
 msgid "Cash Flow Forecast For All Accounts - A Year Ahead"
@@ -3449,7 +3435,7 @@ msgstr "Доход/Расход по категориям за последни�
 
 #: include/reportcustomsql.h:24
 msgid "Custom SQL Report "
-msgstr "SQL отчет"
+msgstr "SQL отчёт"
 
 #: include/reportincexpenses.h:76
 msgid "Income:"
