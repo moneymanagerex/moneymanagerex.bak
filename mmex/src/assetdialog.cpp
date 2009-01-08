@@ -195,8 +195,8 @@ void mmAssetDialog::CreateControls()
         _("Automobile"),
         _("Household Object"),
         _("Art"),
-		  _("Jewellery"),
-		  _("Cash"),
+		_("Jewellery"),
+		_("Cash"),
         _("Other"),
     };
     assetType_ = new wxChoice( itemPanel5, ID_DIALOG_ASSETDIALOG_COMBO_ASSETTYPE, 
