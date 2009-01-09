@@ -445,7 +445,7 @@ void mmBDDialog::CreateControls()
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     textNotes_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTNOTES, wxT(""), 
-        wxDefaultPosition, wxSize(200, -1), wxTE_MULTILINE );
+        wxDefaultPosition, wxSize(200, 75), wxTE_MULTILINE );
     itemFlexGridSizer8->Add(textNotes_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     textNotes_->SetToolTip(_("Specify any text notes you want to add to this transaction."));
 

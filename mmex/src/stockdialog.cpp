@@ -236,7 +236,7 @@ void mmStockDialog::CreateControls()
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     notes_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_NOTES, wxT(""), 
-        wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+        wxDefaultPosition, wxSize(200, 75), wxTE_MULTILINE );
     notes_->SetToolTip(_("Enter notes associated with this investment"));
     itemFlexGridSizer6->Add(notes_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
