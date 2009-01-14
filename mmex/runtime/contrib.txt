@@ -44,7 +44,7 @@ Tamil
 Croatian
 -- Goran Bobanovic
 Polish
--- Andrzej
+-- Andrzej, Damian_pl
 Ukrainian
 -- Leonid Shturma
 Spanish
