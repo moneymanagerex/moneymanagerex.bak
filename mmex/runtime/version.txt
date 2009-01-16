@@ -1,10 +1,11 @@
 Version History of Money Manager Ex
 
-0.9.5.0
+0.9.4.2
 - Fix potential crash in Account Transactions Screen
 - Added Bulgarian Translation (Ivan Gyokov)
 - Added Portuguese (Portugal) Translation (Fatela) 
 - Fixed problem with transactions with large notes not displaying buttons properly (bberry)
+- Easier selection of existing payees by typing a few words
 
 0.9.4.1 (Dec 30, 2008)
 - Fix additional extension in files saved as new database

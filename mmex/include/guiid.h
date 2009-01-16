@@ -21,7 +21,7 @@
 #include "defs.h"
 
 #define EXC_GEN       42
-#define MMEXVERSION   wxT("0.9.4.1")
+#define MMEXVERSION   wxT("0.9.4.2")
 #define DEFDATEFORMAT wxT("%m/%d/%y")
 #define DEFDELIMTER   wxT(",")
 #define MM_MIN_DATAVERSION 2
@@ -176,6 +176,7 @@ enum
     ID_DIALOG_TRANS_ADVANCED_TO,
     ID_DIALOG_TRANS_SPLITCHECKBOX,
     ID_DIALOG_TRANS_BUTTONTRANSNUM,
+    ID_DIALOG_TRANS_PAYEECOMBO,
 
     /* Budget Entry */
     ID_DIALOG_BUDGETENTRY_COMBO_FREQTYPE,

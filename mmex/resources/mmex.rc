@@ -51,8 +51,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,9,4,1
- PRODUCTVERSION 0,9,4,1
+ FILEVERSION 0,9,4,2
+ PRODUCTVERSION 0,9,4,2
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -69,12 +69,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "CodeLathe LLC"
             VALUE "FileDescription", "Money Management Software"
-            VALUE "FileVersion", "0, 9, 4, 1"
+            VALUE "FileVersion", "0, 9, 4, 2"
             VALUE "InternalName", "mmex"
             VALUE "LegalCopyright", "Copyright (C) 2006-2008 CodeLathe LLC (http://www.codelathe.com/mmex)"
             VALUE "OriginalFilename", "mmex.rc"
             VALUE "ProductName", " mmex"
-            VALUE "ProductVersion", "0, 9, 4, 1"
+            VALUE "ProductVersion", "0, 9, 4, 2"
         END
     END
     BLOCK "VarFileInfo"

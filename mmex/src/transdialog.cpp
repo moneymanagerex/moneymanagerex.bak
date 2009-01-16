@@ -279,15 +279,26 @@ void mmTransDialog::CreateControls()
     wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(4, 4, 0, 0);
     itemPanel7->SetSizer(itemFlexGridSizer8);
 
+    // -----------------------------------------------
+    
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel7, ID_DIALOG_TRANS_STATIC_PAYEE, 
         _("Payee"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer8->Add(itemStaticText9, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
+    //wxBoxSizer* itemBoxSizerPayee = new wxBoxSizer(wxHORIZONTAL);
+    //itemFlexGridSizer8->Add(itemBoxSizerPayee, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    //payeeComboBox_ = new wxAutoComboBox(itemPanel7,
+          //ID_DIALOG_TRANS_PAYEECOMBO, wxT(""), wxDefaultPosition, wxSize(100, -1));
+    //itemBoxSizerPayee->Add(payeeComboBox_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL);
+
     bPayee_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONPAYEE, 
-        _("Select Payee"), wxDefaultPosition, wxSize(200, -1), 0 );
+        _("add"), wxDefaultPosition, wxSize(200, -1), 0 );
     itemFlexGridSizer8->Add(bPayee_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     bPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
+
+    // -----------------------------------
     
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel7, wxID_STATIC, 
         _("Number"), wxDefaultPosition, wxDefaultSize, 0 );

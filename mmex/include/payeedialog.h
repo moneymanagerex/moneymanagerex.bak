@@ -27,6 +27,7 @@
 #include "guiid.h"
 #include "dbwrapper.h"
 #include "mmcoredb.h"
+#include "wxautocombobox.h"
 
 class mmPayeeListBoxItem: public wxClientData
 {
@@ -76,7 +77,10 @@ public:
     
     void fillControls();
     void OnSelChanged(wxCommandEvent& event);
+    void OnComboSelected(wxCommandEvent& event);
     void OnDoubleClicked(wxCommandEvent& event);
+    void OnFocus(wxFocusEvent& event);
+    void OnSetFocus(wxFocusEvent& event);
 
 private:
     mmCoreDB* core_;
@@ -87,6 +91,7 @@ private:
     wxButton* deleteButton;
     wxButton* selectButton;
     wxTextCtrl* textCtrl;
+    wxAutoComboBox* payeeComboBox_;
 
 public:
     int payeeID_;

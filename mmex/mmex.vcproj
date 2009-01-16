@@ -1234,6 +1234,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\wxautocombobox.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\wxtinyxml.h"
 				>
 			</File>
