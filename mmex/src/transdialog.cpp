@@ -135,7 +135,9 @@ void mmTransDialog::dataToControls()
         toTransAmount_ = q1.GetDouble(wxT("TOTRANSAMOUNT"));
 
         // backup the original currency rate first
-        edit_currency_rate = toTransAmount_ / transAmount;
+        if (transAmount > 0.0)
+            edit_currency_rate = toTransAmount_ / transAmount;
+        
       
         if (statusString == wxT(""))
         {
@@ -294,7 +296,7 @@ void mmTransDialog::CreateControls()
     //itemBoxSizerPayee->Add(payeeComboBox_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL);
 
     bPayee_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONPAYEE, 
-        _("add"), wxDefaultPosition, wxSize(200, -1), 0 );
+        _("Select Payee"), wxDefaultPosition, wxSize(200, -1), 0 );
     itemFlexGridSizer8->Add(bPayee_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     bPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
 
