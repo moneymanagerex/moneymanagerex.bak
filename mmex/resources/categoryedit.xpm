@@ -1,6 +1,6 @@
 /* XPM */
-static char *categoryedit_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *categoryedit_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 121 2",
 ";  c #CACACA",
 "Z  c #E8E8E8",

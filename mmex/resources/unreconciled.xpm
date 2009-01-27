@@ -1,6 +1,6 @@
 /* XPM */
-static char *unreconciled_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *unreconciled_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 156 2",
 "D. c #4C291B",
 "d. c #0A0803",

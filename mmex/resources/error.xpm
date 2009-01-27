@@ -1,6 +1,6 @@
 /* XPM */
-static char *error_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *error_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 103 2",
 "4  c Black",
 "X  c #D53718",

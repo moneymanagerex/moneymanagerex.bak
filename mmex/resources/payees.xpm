@@ -1,6 +1,6 @@
 /* XPM */
-static char *payees_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *payees_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 146 2",
 "`  c #C99C66",
 "{  c #6A6A2B",

@@ -1,6 +1,6 @@
 /* XPM */
-static char *mainicon_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *mainicon_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "32 32 159 2",
 "4  c #76BB2F",
 "c. c #71B730",

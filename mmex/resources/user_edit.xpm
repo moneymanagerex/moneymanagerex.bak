@@ -1,6 +1,6 @@
 /* XPM */
-static char *user_edit_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *user_edit_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 152 2",
 "B  c #F6CFA5",
 ":  c #8A4A0F",

@@ -1,6 +1,6 @@
 /* XPM */
-static char *house_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *house_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 132 2",
 "+. c #A4C1A2",
 "P  c #E3E1DF",

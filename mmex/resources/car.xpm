@@ -1,6 +1,6 @@
 /* XPM */
-static char *car_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *car_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 97 2",
 "|  c #282C31",
 "}  c #3C3C3C",

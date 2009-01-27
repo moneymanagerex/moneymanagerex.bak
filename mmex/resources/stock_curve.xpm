@@ -1,6 +1,6 @@
 /* XPM */
-static char *stock_curve_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *stock_curve_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 89 1",
 "1 c #1B76E1",
 "X c #4F92DD",

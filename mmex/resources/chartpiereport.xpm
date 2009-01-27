@@ -1,6 +1,6 @@
 /* XPM */
-static char *chartpiereport_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *const chartpiereport_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 149 2",
 "e. c #E6817B",
 "3  c #9EC2EB",

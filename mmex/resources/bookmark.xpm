@@ -1,6 +1,6 @@
 /* XPM */
-static char *bookmark_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *bookmark_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 27 1",
 ". c Black",
 "> c #F0DB91",

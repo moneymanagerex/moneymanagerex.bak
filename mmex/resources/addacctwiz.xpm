@@ -1,6 +1,6 @@
 /* XPM */
-static char *addacctwiz_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *addacctwiz_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "116 260 236 2",
 "rX c #D4BA7C",
 "{  c #084C4F",

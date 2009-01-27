@@ -1,6 +1,6 @@
 /* XPM */
-static char *appstart_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *appstart_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 134 2",
 "   c Black",
 "O. c #EAFFC8",

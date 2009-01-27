@@ -1,6 +1,6 @@
 /* XPM */
-static char *flag_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *flag_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 51 1",
 "7 c #C0BFBD",
 ". c Black",

@@ -1,6 +1,6 @@
 /* XPM */
-static char *checkupdate_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *checkupdate_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 94 2",
 "#  c #8FB0D3",
 "|  c #8AACD3",

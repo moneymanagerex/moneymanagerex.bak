@@ -1,6 +1,6 @@
 /* XPM */
-static char *billsdeposits_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *billsdeposits_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 198 2",
 "r  c #C4B3BF",
 "b  c #EEC4AE",

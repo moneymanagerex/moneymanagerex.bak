@@ -1,6 +1,6 @@
 /* XPM */
-static char *homepagetree_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *homepagetree_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 82 1",
 "G c #6E7681",
 "4 c #A79F9D",

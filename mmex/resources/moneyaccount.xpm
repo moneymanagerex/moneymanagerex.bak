@@ -1,6 +1,6 @@
 /* XPM */
-static char *moneyaccount_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *moneyaccount_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 113 2",
 "*  c #99CC94",
 "d  c #DDF3D9",

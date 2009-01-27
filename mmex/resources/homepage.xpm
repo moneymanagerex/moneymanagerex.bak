@@ -1,6 +1,6 @@
 /* XPM */
-static char *homepage_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *homepage_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 15 1",
 "O c Black",
 "& c #002020",

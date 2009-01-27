@@ -1,5 +1,5 @@
 /* XPM */
-static char * led_off_xpm[] = {
+static const char * led_off_xpm[] = {
 "16 16 53 1",
 " 	c None",
 ".	c #A4A5A4",
@@ -72,7 +72,7 @@ static char * led_off_xpm[] = {
 "     lm)en      "};
 
 /* XPM */
-static char * led_red_xpm[] = {
+static const char * led_red_xpm[] = {
 "16 16 65 1",
 " 	c None",
 ".	c #121212",
@@ -157,7 +157,7 @@ static char * led_red_xpm[] = {
 "                "};
 
 /* XPM */
-static char * led_green_xpm[] = {
+static const char * led_green_xpm[] = {
 "16 16 65 1",
 " 	c None",
 ".	c #0A0A02",
@@ -242,7 +242,7 @@ static char * led_green_xpm[] = {
 "     [yyyx      "};
 
 /* XPM */
-static char * led_yellow_xpm[] = {
+static const char * led_yellow_xpm[] = {
 "16 16 65 1",
 " 	c None",
 ".	c #351F1D",

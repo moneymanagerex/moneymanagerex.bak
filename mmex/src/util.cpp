@@ -23,7 +23,7 @@
 #include "univcsvdialog.h"
 #include "mmcoredb.h"
 #include <wx/sound.h>
-#include "wxAutoCombobox.h"
+#include "wxautocombobox.h"
 
 
 wxString mmOptions::dateFormat = DEFDATEFORMAT;

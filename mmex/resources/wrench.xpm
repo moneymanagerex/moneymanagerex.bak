@@ -1,6 +1,6 @@
 /* XPM */
-static char *wrench_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *wrench_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 101 2",
 "{  c #9BB8E7",
 "5  c #878787",

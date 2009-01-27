@@ -1,6 +1,6 @@
 /* XPM */
-static char *duplicate_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *duplicate_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 18 1",
 "  c Black",
 "= c #5A5A5A",

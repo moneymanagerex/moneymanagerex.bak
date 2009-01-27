@@ -1,6 +1,6 @@
 /* XPM */
-static char *edit_account_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *edit_account_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 50 1",
 ". c Black",
 "4 c #FCEB3D",

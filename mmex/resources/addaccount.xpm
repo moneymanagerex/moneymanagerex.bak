@@ -1,6 +1,6 @@
 /* XPM */
-static char *addaccount_xpm[] = {
-/* width height num_colors chars_per_pixel */
+static const char *addaccount_xpm[] = {
+/* width height num_colors const chars_per_pixel */
 "    16    16        8            1",
 /* colors */
 "` c None",

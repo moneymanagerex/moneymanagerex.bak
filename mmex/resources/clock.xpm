@@ -1,6 +1,6 @@
 /* XPM */
-static char *clock_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *clock_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 158 2",
 "G. c #D9D9D9",
 "q  c #96AED5",

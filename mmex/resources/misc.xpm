@@ -1,6 +1,6 @@
 /* XPM */
-static char *misc_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *misc_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 40 1",
 ". c Black",
 ", c #D5E5D5",

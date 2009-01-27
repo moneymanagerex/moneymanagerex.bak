@@ -1,6 +1,6 @@
 /* XPM */
-static char *exit_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *exit_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 63 1",
 ". c Black",
 "z c #B4B4B2",

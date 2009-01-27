@@ -1,6 +1,6 @@
 /* XPM */
-static char *newacct_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *newacct_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 15 29 1",
 "* c #97C4E7",
 "- c #72A8D2",

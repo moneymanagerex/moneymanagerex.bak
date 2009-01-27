@@ -1,6 +1,6 @@
 /* XPM */
-static char *delete_account_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *delete_account_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 46 1",
 ". c Black",
 "y c #E8E8E8",

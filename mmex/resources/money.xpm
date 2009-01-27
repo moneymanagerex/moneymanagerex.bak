@@ -1,6 +1,6 @@
 /* XPM */
-static char *money_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *money_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "400 209 250 2",
 "y  c Black",
 "lX c #B5CDBA",

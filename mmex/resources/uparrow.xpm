@@ -1,6 +1,6 @@
 /* XPM */
-static char *uparrow_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *uparrow_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 26 1",
 "X c Black",
 ". c #1C2D3D",

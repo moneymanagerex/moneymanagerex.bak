@@ -1,6 +1,6 @@
 /* XPM */
-static char *calendar_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *calendar_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 145 2",
 "y. c #EDF2F8",
 "S  c #F2F6FA",

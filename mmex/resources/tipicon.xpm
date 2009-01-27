@@ -1,6 +1,6 @@
 /* XPM */
-static char *tipicon_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *tipicon_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 31 1",
 "w c Black",
 "> c #FFFFFF",

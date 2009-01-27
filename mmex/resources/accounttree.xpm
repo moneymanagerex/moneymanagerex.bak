@@ -1,6 +1,6 @@
 /* XPM */
-static char *accounttree_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *accounttree_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 14 1",
 ". c Black",
 "+ c #7D7042",

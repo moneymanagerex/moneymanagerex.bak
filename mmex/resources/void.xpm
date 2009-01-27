@@ -1,6 +1,6 @@
 /* XPM */
-static char *void_xpm[] = {
-/* columns rows colors chars-per-pixel */
+static const char *void_xpm[] = {
+/* columns rows colors const chars-per-pixel */
 "16 16 102 2",
 "S  c #2C140F",
 "=  c #AD4632",
