@@ -356,12 +356,16 @@ mmBankTransactionList::mmBankTransactionList(boost::shared_ptr<wxSQLite3Database
    transactions_.reserve(5000);
 }
 
-int mmBankTransactionList::addTransaction(boost::shared_ptr<mmBankTransaction> pBankTransaction)
+int mmBankTransactionList::addTransaction(mmCoreDB* core, boost::shared_ptr<mmBankTransaction> pBankTransaction)
 {
    mmBEGINSQL_LITE_EXCEPTION;
    
    if (checkForExistingTransaction(pBankTransaction)){
 	   pBankTransaction->status_ = wxT("D");
+   }
+
+   if(core->payeeList_.payeeExists(pBankTransaction->payeeID_) == false) {
+       pBankTransaction->payeeID_ = -1;
    }
 
    wxString bufSQL = wxString::Format(wxT("insert into CHECKINGACCOUNT_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, \

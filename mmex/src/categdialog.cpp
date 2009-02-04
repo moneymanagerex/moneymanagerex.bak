@@ -39,7 +39,7 @@ mmCategDialog::mmCategDialog( )
 }
 
 mmCategDialog::mmCategDialog(mmCoreDB* core,
-                             wxWindow* parent, 
+                             wxWindow* parent, bool bEnableSelect, 
                              wxWindowID id, const wxString& caption, 
                              const wxPoint& pos, const wxSize& size, long style )
 {
@@ -47,6 +47,7 @@ mmCategDialog::mmCategDialog(mmCoreDB* core,
     categID_ = -1;
     subcategID_ = -1;
     selectedItemId_ = 0;
+    bEnableSelect_ = bEnableSelect;
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -321,7 +322,9 @@ void mmCategDialog::OnSelChanged(wxTreeEvent& event)
     }
     else
     {
-        selectButton->Enable();
+        if(bEnableSelect_ == true) {
+            selectButton->Enable();
+        }
         deleteButton->Enable();
         editButton->Enable();
         if (subcategID != -1)

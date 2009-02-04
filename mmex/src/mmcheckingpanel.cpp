@@ -1225,7 +1225,7 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& event)
 		//ask if they really want to delete
 		wxMessageDialog msgDlg(this, _("Do you really want to delete the transaction?"),
 											_("Confirm Transaction Deletion"),
-											wxYES_NO);
+											wxYES_NO|wxNO_DEFAULT);
 		//if yes the user wants to delete the transaction then delete and refresh the 
 		// transactions list
 		if (msgDlg.ShowModal() == wxID_YES)
@@ -1307,3 +1307,4 @@ void MyListCtrl::OnListItemActivated(wxListEvent& event)
         dlg->Destroy();
     }
 }
+

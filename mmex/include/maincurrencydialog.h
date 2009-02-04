@@ -73,6 +73,7 @@ public:
     /// Constructors
     mmMainCurrencyDialog( );
     mmMainCurrencyDialog( mmCoreDB* core, wxWindow* parent, 
+        bool bEnableSelect = true, 
         wxWindowID id = SYMBOL_MAINCURRENCYDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_MAINCURRENCYDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_MAINCURRENCYDIALOG_POSITION, 
@@ -105,6 +106,7 @@ private:
     mmCoreDB* core_;
     wxSQLite3Database* db_;
     wxListBox* currencyListBox_;
+    bool bEnableSelect_;
 };
 
 #endif

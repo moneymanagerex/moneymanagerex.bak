@@ -183,3 +183,4 @@ bool mmCategoryList::updateCategory(int categID, int subCategID, const wxString&
     categ->categName_ = text;
     return true;
 }
+

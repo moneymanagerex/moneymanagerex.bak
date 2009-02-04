@@ -9,6 +9,7 @@
 #include <wx/brush.h>
 #include <wx/colour.h>
 #include <limits>
+#include <math.h>
 
 // General macros
 #define ABS(x)     ((x) <  0  ?-(x) : (x))
@@ -393,8 +394,6 @@ public:
         // avoid out of scale for empty data sets
 		if(min == max) max = 1.0;
 
-
-
 		// get the freq
 		int freq = GetFrequency(ABS((int) ABS(min) + (int) ABS(max)));
 
@@ -407,9 +406,11 @@ public:
 			dc.DrawText(title, 10, 20 - dc.GetTextExtent(title).GetHeight());
 		}
 
-		// where to start drawing from
-		int originLeft = 30;
-
+		// where to start drawing from        
+		int originLeft = 1;
+        while(max > pow((float)10, originLeft++));
+        originLeft *= 7;
+        
 		int gap = 5;
 
 		int barwidth;

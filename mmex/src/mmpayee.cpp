@@ -39,6 +39,17 @@ bool mmPayeeList::payeeExists(const wxString& payeeName)
     return false;
 }
 
+bool mmPayeeList::payeeExists(const int payeeid)
+{
+    int numPayees = (int)payees_.size();
+    for (int idx = 0; idx < numPayees; idx++)
+    {
+        if (payees_[idx]->payeeID_ == payeeid)
+            return true;
+    }
+    return false;
+}
+
 int mmPayeeList::addPayee(const wxString &payeeName)
 {
     int payeeID = -1;
@@ -138,3 +149,4 @@ void mmPayeeList::updatePayee(int payeeID, const wxString& payeeName)
         }
     }
 }
+

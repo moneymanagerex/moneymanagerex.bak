@@ -51,7 +51,8 @@ class mmCategDialog : public wxDialog
 
 public:
     mmCategDialog();
-    mmCategDialog(mmCoreDB* core, wxWindow* parent, 
+    mmCategDialog(mmCoreDB* core, wxWindow* parent,
+        bool bEnableSelect = true, 
         wxWindowID id = SYMBOL_CATEGDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_CATEGDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_CATEGDIALOG_POSITION, 
@@ -83,6 +84,7 @@ private:
     wxTreeCtrl* treeCtrl_; 
     wxTreeItemId selectedItemId_;
     wxTreeItemId root_;
+    bool bEnableSelect_;
 
 public:
     int categID_;

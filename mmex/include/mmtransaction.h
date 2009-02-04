@@ -147,8 +147,8 @@ public:
 
     boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int accountID, int transactionID);
     boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int transactionID);
-    int addTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
-	 bool checkForExistingTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
+    int addTransaction(mmCoreDB* core, boost::shared_ptr<mmBankTransaction> pTransaction);
+	bool checkForExistingTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     boost::shared_ptr<mmBankTransaction> copyTransaction(int transactionID, bool useOriginalDate);
     void updateTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     void deleteTransaction(int accountID, int transactionID);
@@ -172,8 +172,7 @@ public:
     /* Update Transactions */
     void updateAllTransactions();
     void updateAllTransactionsForCategory(mmCoreDB* core, int categID, int subCategID);
-    void updateAllTransactionsForPayee(mmCoreDB* core,
-                                                          int payeeID);
+    void updateAllTransactionsForPayee(mmCoreDB* core, int payeeID);
 
     /* Data */
     std::vector< boost::shared_ptr<mmBankTransaction> > transactions_;

@@ -508,7 +508,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
                pTransaction->toAmt_ = 0.0;
                pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr);
 
-               core_->bTransactionList_.addTransaction(pTransaction);
+               core_->bTransactionList_.addTransaction(core_, pTransaction);
 
                countImported++;
                log << _("Line : " ) << countNumTotal << _(" imported OK.") << endl;

@@ -45,6 +45,7 @@ public:
     bool deletePayee(int payeeID);
     void updatePayee(int payeeID, const wxString& payeeName);
     bool payeeExists(const wxString& payeeName);
+    bool payeeExists(const int payeeid);
     int getPayeeID(const wxString& payeeName);
     boost::shared_ptr<mmPayee> getPayeeSharedPtr(int payeeID);
     void sortPayeeList(void);

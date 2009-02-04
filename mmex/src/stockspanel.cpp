@@ -704,11 +704,18 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         }
 
         //**** HACK HACK HACK
-        // UK finance apparently downloads values in pence
-        if (!yahoo_->Server_.CmpNoCase(wxT("uk.finance.yahoo.com")))
-            dPrice = dPrice / 100;
+        // Note:        
+        // 1. If the share is a UK share (e.g. HSBA.L), its downloaded value in pence
+        // 2. If the share is not a UK share (e.g. 0005.HK) while we are using UK Yahoo finance, we do not need
+        //    to modify the price
 
-        // ------------------
+        //// UK finance apparently downloads values in pence
+        //if (!yahoo_->Server_.CmpNoCase(wxT("uk.finance.yahoo.com")))
+        //    dPrice = dPrice / 100;
+        //// ------------------        
+        if(StockSymbolNoSuffix.Find(wxT(".L")) != wxNOT_FOUND) {
+            dPrice = dPrice / 100;
+        }
 
         mmBEGINSQL_LITE_EXCEPTION;
 

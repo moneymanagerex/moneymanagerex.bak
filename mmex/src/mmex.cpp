@@ -2699,7 +2699,7 @@ void mmGUIFrame::OnAccountList(wxCommandEvent& event)
 
 void mmGUIFrame::OnOrgCategories(wxCommandEvent& event)
 {
-    mmCategDialog *dlg = new mmCategDialog(core_, this);
+    mmCategDialog *dlg = new mmCategDialog(core_, this, false);
     dlg->ShowModal();
     dlg->Destroy();
 }
@@ -3051,6 +3051,9 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& event)
 
     wxMessageDialog msgDlg(this, _("Currency rate updated"), _("Update Currency Rate"));
     msgDlg.ShowModal();
+
+    createHomePage();
+    updateNavTreeControl();
 }
 
 void mmGUIFrame::OnReportIssues(wxCommandEvent& event)
@@ -3229,7 +3232,7 @@ void mmGUIFrame::OnAssets(wxCommandEvent& event)
 
 void mmGUIFrame::OnCurrency(wxCommandEvent& event)
 {
-    mmMainCurrencyDialog *dlg = new mmMainCurrencyDialog(core_,this);
+    mmMainCurrencyDialog *dlg = new mmMainCurrencyDialog(core_,this, false);
     if ( dlg->ShowModal() == wxID_OK )
     {
     }

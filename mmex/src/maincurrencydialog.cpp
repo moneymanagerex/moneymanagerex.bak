@@ -37,7 +37,7 @@ mmMainCurrencyDialog::mmMainCurrencyDialog( )
 }
 
 mmMainCurrencyDialog::mmMainCurrencyDialog(mmCoreDB* core, 
-                   wxWindow* parent, wxWindowID id, 
+                   wxWindow* parent, bool bEnableSelect, wxWindowID id, 
                    const wxString& caption, 
                    const wxPoint& pos, 
                    const wxSize& size, 
@@ -46,6 +46,7 @@ mmMainCurrencyDialog::mmMainCurrencyDialog(mmCoreDB* core,
                    core_(core),
                    currencyID_(-1)
 {
+    bEnableSelect_ = bEnableSelect;
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -135,6 +136,10 @@ void mmMainCurrencyDialog::CreateControls()
     wxButton* itemButton9 = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_SELECT, _("Select"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    if(bEnableSelect_ == false) {
+        itemButton9->Disable();
+    }
 
 ////@end MyDialog content construction
 }

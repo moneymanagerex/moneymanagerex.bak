@@ -8,6 +8,11 @@ Version History of Money Manager Ex
 - Easier selection of existing payees by typing a few words
 - Fixed issue when updating entry with 0.0 value (LuckyArthur)
 - Remove GCC warnings in 4.2.4 (Ho Yin Kwok)
+- Fix report update bugs after base currency is changed or currency rates are updated (Ho Yin Kwok)
+- Fix UK shares (Symbol = XXXX.L) price update bug(Ho Yin Kwok)
+- Fix PAYEEID is not equal to -1 and the values of TRANSAMOUNT and TOTRANSAMOUNT are not the same in the database for "Transfer" transaction(Ho Yin Kwok)
+- When user selects "Transfer" in the transaction dialog box, "From" account is set to the current account automatically(Ho Yin Kwok)
+- Other minor GUI bug fixes(Ho Yin Kwok)
 
 0.9.4.1 (Dec 30, 2008)
 - Fix additional extension in files saved as new database

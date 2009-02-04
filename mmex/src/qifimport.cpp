@@ -692,7 +692,7 @@ Are you are sure you want to proceed with the import?"),
                pTransaction->toAmt_ = 0.0;
                pTransaction->updateAllData(core, fromAccountID, pCurrencyPtr);
 
-               core->bTransactionList_.addTransaction(pTransaction);
+               core->bTransactionList_.addTransaction(core, pTransaction);
 
                 payee = wxT("");
                 type = wxT("");

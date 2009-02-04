@@ -127,3 +127,4 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
 mmCoreDB::~mmCoreDB()
 {
 }
+

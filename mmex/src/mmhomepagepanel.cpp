@@ -369,9 +369,7 @@ void mmHomePagePanel::updateAccounts()
 				hb.startTable(wxT("95%"));
 				hb.addTableHeaderRowLink(wxT("billsdeposits"), _("Upcoming Transactions"), 3);
                 isHeaderAdded = true;
-            }
-
-            
+            }            
             
             wxString daysRemainingStr_;
             wxString colorStr = wxT("#9999FF");
@@ -413,7 +411,9 @@ void mmHomePagePanel::updateAccounts()
 
     mmCurrencyFormatter::loadDefaultSettings();
 	//--------------------------------------------------------
-   hb.addHTML(topCategories_);
+    // update category List
+    topCategories_ = frame_->createCategoryList();
+    hb.addHTML(topCategories_);
 #if 0
    // ... Doesn't work under negative values, currently
    mmGraphTopCategories gtp;
@@ -423,6 +423,7 @@ void mmHomePagePanel::updateAccounts()
 	//--------------------------------------------------------
     hb.addLineBreak();
     int countFollowUp = core_->bTransactionList_.countFollowupTransactions();
+
     if (countFollowUp > 0)
     {
         wxString fup = _("Follow Up On ");

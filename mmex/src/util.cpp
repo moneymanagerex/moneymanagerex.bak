@@ -660,7 +660,7 @@ int mmImportCSV(mmCoreDB* core)
                pTransaction->toAmt_ = 0.0;
                pTransaction->updateAllData(core,fromAccountID,pCurrencyPtr );
 
-               core->bTransactionList_.addTransaction(pTransaction);
+               core->bTransactionList_.addTransaction(core, pTransaction);
                
                countImported++;
                log << _("Line : " ) << countNumTotal << _(" imported OK.") << endl;
@@ -881,7 +881,7 @@ int mmImportCSVMMNET(mmCoreDB* core)
                pTransaction->toAmt_ = 0.0;
                pTransaction->updateAllData(core, fromAccountID, pCurrencyPtr);
 
-               core->bTransactionList_.addTransaction(pTransaction);
+               core->bTransactionList_.addTransaction(core, pTransaction);
 
                countImported++;
                log << _("Line : " ) << countNumTotal << _(" imported OK.") << endl;

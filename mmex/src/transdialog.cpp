@@ -135,9 +135,9 @@ void mmTransDialog::dataToControls()
         toTransAmount_ = q1.GetDouble(wxT("TOTRANSAMOUNT"));
 
         // backup the original currency rate first
-        if (transAmount > 0.0)
+        if (transAmount > 0.0) {
             edit_currency_rate = toTransAmount_ / transAmount;
-        
+        }        
       
         if (statusString == wxT(""))
         {
@@ -226,7 +226,7 @@ void mmTransDialog::dataToControls()
 
             bPayee_->SetLabel(fromAccount);
             bTo_->SetLabel(toAccount);
-            payeeID_ = accountID_;
+            payeeID_ = accountID_;            
         }
     }
     mmENDSQL_LITE_EXCEPTION;
@@ -484,7 +484,6 @@ void mmTransDialog::OnPayee(wxCommandEvent& event)
             payeeID_ = dlg->payeeID_;
             wxString acctName = mmDBWrapper::getAccountName(db_, payeeID_);
             bPayee_->SetLabel(acctName);
-
         }
     }
     else
@@ -699,15 +698,17 @@ void mmTransDialog::updateControlsForTransType()
     }
     else if (choiceTrans_->GetSelection() == DEF_TRANSFER)
     {
-        bPayee_->SetLabel(_("Select From Account"));
         bTo_->SetLabel(_("Select To Account"));
-        payeeID_ = -1;
         toID_    = -1;
         
         bTo_->Show(true);
         st->Show(true);
         stp->SetLabel(_("From"));   
         bAdvanced_->Enable(true);
+
+        wxString acctName = mmDBWrapper::getAccountName(db_, accountID_);
+        bPayee_->SetLabel(acctName);
+        payeeID_ = accountID_;
 
         bPayee_->SetToolTip(_("Specify the account from which the transfer is occurring"));
     }
@@ -799,7 +800,6 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
             mmCleanString(payeeName), payeeID_, categID_, subcategID_);
     }
 
-
     if (!advancedToTransAmountSet_ || toTransAmount_ < 0)
     {
         // if we are adding a new record and the user did not touch advanced dialog
@@ -807,18 +807,22 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
         // subsequent edits will not allow automatic update of the amount
         if (!edit_)
         {
-            double rateFrom = mmDBWrapper::getCurrencyBaseConvRate(db_, fromAccountID);
-            double rateTo = mmDBWrapper::getCurrencyBaseConvRate(db_, toAccountID);
+            if(toAccountID != -1) {
+                double rateFrom = mmDBWrapper::getCurrencyBaseConvRate(db_, fromAccountID);
+                double rateTo = mmDBWrapper::getCurrencyBaseConvRate(db_, toAccountID);
 
-            double convToBaseFrom = rateFrom * amount;
-            toTransAmount_ = convToBaseFrom / rateTo;
+                double convToBaseFrom = rateFrom * amount;
+                toTransAmount_ = convToBaseFrom / rateTo;
+            } else {
+                toTransAmount_ = amount;
+            }
         }
         else
         {
             // Since to trans amount is not set, 
             // we use the original currency rate to calculate
             // toTransAmount
-            toTransAmount_ = edit_currency_rate * amount;            
+            toTransAmount_ = edit_currency_rate * amount;
         }
     }
     
@@ -847,7 +851,6 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
         status = wxT("D"); 
     }
         
-    
     wxString date1 = dpc_->GetValue().FormatISODate();
 
     boost::shared_ptr<mmBankTransaction> pTransaction;
@@ -881,7 +884,7 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
  
     if (!edit_)
     {
-       core_->bTransactionList_.addTransaction(pTransaction);
+       core_->bTransactionList_.addTransaction(core_, pTransaction);
        mmPlayTransactionSound(inidb_);
     }
     else
@@ -918,3 +921,4 @@ void mmTransDialog::OnSplitChecked(wxCommandEvent& event)
     textAmount_->SetValue(dispAmount);
   }
 }
+

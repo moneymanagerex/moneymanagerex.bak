@@ -724,7 +724,10 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& event)
             wxString currName = mmDBWrapper::getCurrencyName(db_, currencyID);
             wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_CURRENCY);
             bn->SetLabel(currName);
-            mmDBWrapper::setBaseCurrencySettings(db_, currencyID);            
+            mmDBWrapper::setBaseCurrencySettings(db_, currencyID);
+
+            wxMessageDialog msgDlg(this, _("Remember to update currency rate"), _("Important note"));
+            msgDlg.ShowModal();            
         }
     }
 
