@@ -155,7 +155,15 @@ void mmHomePagePanel::updateAccounts()
            tincome += income;
            texpenses += expenses;
         }
-    }
+
+	}
+
+    wxString tBalanceStr;
+	mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
+
+    hb.startTableRow();
+	hb.addTotalRow(_("Total:"), 2, tBalanceStr);
+    hb.endTableRow();
 
     if (mmIniOptions::enableStocks_)
     {
@@ -192,7 +200,6 @@ void mmHomePagePanel::updateAccounts()
         tBalance += assetBalance;
     }
     
-    wxString tBalanceStr;
     mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
 
 	hb.addRowSeparator(2);

@@ -82,6 +82,13 @@ public:
            }
         }
 
+		wxString tBalanceStr;
+		mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
+
+		hb.startTableRow();
+		hb.addTotalRow(_("Total:"), 2, tBalanceStr);
+		hb.endTableRow();
+
 		hb.addRowSeparator(2);
 
         /* Stocks */
@@ -110,7 +117,6 @@ public:
 
         tBalance += stockBalance;
         tBalance += assetBalance;
-        wxString tBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
         mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
 
