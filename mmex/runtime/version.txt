@@ -17,6 +17,7 @@ Version History of Money Manager Ex
 - Fix crash when changing language
 - Added Belgian Translation (DUTCH_BE) (Rol)
 - Added French User Manual (catacotox)
+- Added English UK Translation (mcrossley)
 
 0.9.4.1 (Dec 30, 2008)
 - Fix additional extension in files saved as new database

@@ -74,6 +74,8 @@ Portuguese (Portugal)
 -- Fatela
 Dutch (Belgian)
 -- Rol
+Englsh (UK)
+- mcrossley
 
 User Manual
 ===========
