@@ -1,0 +1,4967 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="ru-ru">
+<head>
+
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+  
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  
+  
+  <title>Руководство пользователя Money Manager Ex</title>
+</head>
+
+
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana">
+</font>
+<h2><font face="Verdana"><a name="top">
+Руководство пользователя Money Manager Ex </a></font></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+<ol>
+
+
+
+
+
+
+
+
+
+
+
+
+  <font face="Verdana"> <li><a href="#introduction">Введение</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="#recommendations">Рекомендации</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="#better">Достижение финансового благополучия</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="#concepts">Концепция Money Manager Ex </a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Использование Money Manager Ex</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  </font>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <ol type="a">
+
+
+
+
+
+
+
+
+
+
+
+
+    <font face="Verdana"> <li><a href="#database">Создание базы данных</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#accounts">Создание нового счёта</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#editaccounts">Редактирование счёта</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#trans">Создание новой проводки</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#edittrans">Редактирование и обновление проводок</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#rectrans">Reconciling Balancing Transactions</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#followup">Пометка проводки для отслеживания</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#payee">Работа с получателями платежа</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#categ">Работа с категориями</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li>Импорт</li>
+
+
+
+
+
+
+
+
+
+
+
+
+    </font>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <ul>
+
+
+
+
+
+
+
+
+
+
+
+
+      <font face="Verdana"> <li><a href="#importCSV">Из CSV файлов</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+      <li><a href="#importQIF">Из QIF файлов</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+      <li><a href="#importMMNET">Из Money Manager.NET CSV файлов</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+      <li><a href="#importUnivCSV">Из Freeform CSV файлов (Universal CSV Importer)</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+      <li><a href="#importcsvtips">Заметки по созданию CSV файлов</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+      </font>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+    <font face="Verdana"> <li>Экспорт</li>
+
+
+
+
+
+
+
+
+
+
+
+
+    </font>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <ul>
+
+
+
+
+
+
+
+
+
+
+
+
+      <font face="Verdana"> <li><a href="#exportcsv">В CSV файлы</a> </li>
+
+
+
+
+
+
+
+
+
+
+
+
+      </font>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+    <font face="Verdana"> <li><a href="#stock">Инвестиции</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#assets">Активы</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#bills">Планирование</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#budgeting">Бюджетирование</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#reports">Отчёты</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#transfilter">Фильтр проводок</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#print">Печать</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><a href="#options">Настройки Money Manager</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+    </font>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </ol>
+
+
+
+
+
+
+
+
+
+
+
+
+  <font face="Verdana"> <li><a href="#faq">Часто задаваемые вопросы</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  </font>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+<h3><font face="Verdana"><a name="introduction">Введение</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<font face="Verdana">Money Manager Ex бесплатная программа для учета
+личных финансов. Основная цель MMEX заключается в том, чтобы упростить
+процесс отслеживания финансовой информации без сложностей, присущих
+некоторым из популярных финансовых приложений.
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">Программа поддерживает работу с несколькими
+счетами, благодаря чему вы можете заносить в нее информацию о
+сбережениях, банковских счетах, кредитах, инвестициях и наличных
+средствах. При необходимости можно переводить деньги с одного счёта на
+другой, планировать финансовые операции, вести учет доходов и расходов
+по категориям, получать отчеты о потраченных и заработанных средствах.
+&nbsp;</font></p>
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<font face="Verdana">
+Money Manager EX (<b>MMEX</b>) поддерживает работу с несколькими валютами. Каждый счёт может вестись в любой валюте. 
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<font face="Verdana">Пограмма поможет Вам быть в курсе вашего финансового состояния.
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<!-- new section added by Terry Wick  9/16/2007 -->
+</p>
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<font face="Verdana">
+Цель этого руководства состоит в том, чтобы дать вам основные инструкции по использованию MMEX.
+
+С выходом новой версии MMEX, данное руководство тоже может обновиться. 
+
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end of new section added by Terry Wick 9/16/2007 -->
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3><font face="Verdana"><a name="recommendations">Рекомендации</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<font face="Verdana">- Регулярно сохраняйте копию файла базы данных .mmb<br>
+
+
+
+
+
+
+
+
+
+
+
+
+- Если Вы устанавливаете новую версию программы MMEX, сделайте перед этим резервную копию файла базы данных .mmb</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="better">Достижение финансового благополучия</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">
+Для достижения фиансового благополучия, понадобится некоторая дисциплина.
+
+Управление финансами затрудняет тот факт, что нет четкого понимания
+денежных потоков и наглядного представления доходов и расходов.
+
+Долги - вот результат того, что расходы превышают доходы.
+&nbsp;<br>
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+Первый шаг в достижении финансового благополучия - это ведение учёта.
+
+Только на повседневной основе учёта расходов, появится понимание того, как их сократить.
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">
+Допустим, в течении года Вы потратили на покупки DVD значительную  сумму.  
+Сколько раз вы смотрели их? И как бы вы распорядились этой суммой, если учесть, что вчера внезапно сломался автомобиль?&nbsp;</font></p>
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">Безусловно, нет верного или неверного ответа на то, как Вам тратить ваши деньги.&nbsp;<br>
+В конце концов, это Вы тот, кто имеет право распоряжатся собственными
+деньгами на своё усмотрение.&nbsp;Но Вы всегда можете заставить ваши
+деньги работать на вас.
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+Вашему вниманию представлена персональная финансовая программа Money Manager EX.
+<br>
+С её помощью, Вы сможете собрать воедино все финансовые данные, чтобы взять над ними контроль. 
+Она позволит поиграть с финансовыми данными и когда Вам станет понятнее происходящее, то счёт будет в вашу пользу.
+<br>
+Однако следует помнить, что успех учёта зависит от полноты данных.
+<br>
+<br>
+???1 Если вы пришли к пониманию того, что использование персональной
+финансовой программы в высшей степени целесообразно, то Вы на
+правильном пути. Отныне Вы будете управлять своими деньгами, а не они
+вами. <br>
+
+
+
+
+
+
+
+
+
+
+
+???2 Если Вы намерены целенаправленно начать использовать персональную финансовую программу, 
+то вы на верном пути к сбережению ваших средств.
+<br>
+И так, приспупим к изучению Money Manager Ex.
+Начинайте изучать то, как работать с Money Manager Ex.
+
+Read on how to work with Money Manager Ex.
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="concepts">Концепция Money Manager Ex</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">
+В Money Manager Ex финансовый мир представлен через концепцию проводок.&nbsp;</font></p>
+<p><font face="Verdana"><b><i>Проводка</i></b> это финансовое событие при котором происходит обмен денег на услуги или товары.</font></p>
+<p><font face="Verdana">
+Таким образом, проводками будут платежи по кредиту, покупка автомобиля, оплата питания в ресторане и так далее.&nbsp;</font></p>
+<p><font face="Verdana">Каждая проводка будет привязана к определённому <i>счёту</i> и <i>категории</i>.  
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+&nbsp;</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><img src="mmex_concept.png">
+</font>
+<p><font face="Verdana">
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Счёт</i></b> это совокупность проводок, по которой можно определить задолженность или  
+???<br>
+
+
+
+
+
+
+
+
+
+
+
+
+An <b><i>account</i></b> is a record of what you either own or owe.&nbsp;</font></p>
+<p><font face="Verdana">
+
+
+
+
+
+
+
+
+
+
+Например, Ваш чековый счёт отражает состояние денежных средств на
+депозите в банке и доступен для пополнения и снятия наличных и оплаты
+расходов при помощи пластиковой карты.</font></p>
+<p><font face="Verdana"> Кредитный счёт это запись о том сколько денег должны кредитной компании за использование денежных средств по кредитной карте</font>.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana">Любая из проводок будет либо уменьшать, либо увеличивать балланс на одном из счетов.&nbsp;</font></p>
+<p><font face="Verdana"><i style="font-weight: bold;">Категория</i><span style="font-weight: bold;"> </span> это параметр учёта, позволяющий определить куда деваются деньги или откуда приходят.
+<br>
+Например, ЗАРПЛАТА - это категория дохода для учёта средств, которые вы обменяли на свой труд.
+<br>
+ОБЕДЫ - это расходная категория которую можно использовать для учёта расходов на питание на работе. 
+<br>
+Категории позволят отследить откуда приходят деньги и куда они тратятся.&nbsp;</font></p>
+<p><font face="Verdana">Чтобы работа в MMEX была эффективной,
+необходимо заносить проводки в соответствующие счета. Даже если у вас
+нет привычки тщательно и своевременно&nbsp;заносить проводки, следует
+внести проводки перед тем как получите ежемесячную сводку по счетам из
+банка.</font></p>
+<p><font face="Verdana">После того, как информация заведена, MMEX сможет предоставить некоторую
+полезную информацию для вас. Например, какой текущий остаток на вашем
+счету. А также информацию о том сколько вы тратите против того сколько
+зарабатываете. Все эти даные помогут вам в принятии более осмысленных
+решений относительно трат.</font></p>
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">Чтобы начать работать с&nbsp;</font><font face="Verdana">Money Manager</font><font face="Verdana">, вы должны начать с создания нового файла базы данных. Все операции в MMEX </font><font face="Verdana">записываются и &nbsp;</font><font face="Verdana">хранятся в </font><font face="Verdana">файле </font><font face="Verdana">базы
+данных&nbsp; (файл с расширением. MMB) на жестком диске. Этот файл
+содержит все компоненты: счёта, категории и проводки, из которых и
+складывается ваш финансовый статус.</font></p>
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">Несмотря на то, что можно создать более одного MMEX файла данных, в
+этом, как правило, нет необходимости. Один файл может хранить все ваши
+операции и счета. Существует неограниченное число счетов, или операций,
+которые могут располагаться в вашем файле базы данных. Только из-за
+давности данных имеет смысл создавать более чем один файл базы данных,
+или если вы используете MMEX для организации ваших личных финансов и
+финансов малого бизнеса (фирмы), которая у вас есть. Или, если вы
+разделяете компьютер с кем-либо и ваши данные должны
+храниться&nbsp;отдельно.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana">
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="database">Создание базы данных</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">Для создания файла новой базы данных, выберите
+Через меню Файл -&gt; Новая база данных.
+При этом необходимо будет выбрать место расположения файла .mmb. После
+того как Вы выберите расположение файла новой базы данных, она будет
+создана. После чего Вы сможете видеть имя файла базы данных в заголовке
+окна программы, что поможет определиться, какой файл базы данных
+открыт.
+&nbsp;</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana"><span style="font-weight: bold;">Заметки:&nbsp;</span></font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana"><span style="font-weight: bold;"></span>1) Не забывайте делать резервную копию вашего .mmb файла.&nbsp;<br>
+
+
+
+
+
+
+
+
+
+
+
+
+2) Файл .mmb не зашифрован. 
+
+Это означает, что кто угодно, имеющий надлежащие знания, может открыть файл и прочитать его содержимое.
+Поэтому убедитесь в том, что вся Ваша личная финансовая информация защищена от доступа посторонних.
+&nbsp; ??? Шифрование есть!</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana">
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="accounts">Создание нового счёта</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">
+Сразу после создания нового файла базы данных, первым делом что следует сделать, это создать новый счёт.
+В настоящее время MMEX поддерживает два типа счетов.
+Первый тип поддерживает три типа проводок: снятие, пополнение и перевод.&nbsp;</font></p>
+<p><font face="Verdana">Этот тип счетов называется "<span style="font-style: italic;">Чековый</span>".&nbsp;Счета, такие как, общие банковские, чековые, сберегательные, наличные и кредитно-карточные подпадают под определение&nbsp;</font><font face="Verdana">"<span style="font-style: italic;">Чековый</span>".</font></p>
+<p><font face="Verdana">Другой тип счетов это "<span style="font-style: italic;">Инвестиционный</span>".&nbsp;Это тип счётов, которые позволяют отслеживать активы и прочие инвестиции, которыми вы владеете.</font></p>
+<p><font face="Verdana">Чтобы правильно настроить счета, вы должны иметь </font><font face="Verdana">информацию&nbsp;</font><font face="Verdana">о </font><font face="Verdana">балансе этих счетов, чтобы внести её&nbsp;в MMEX. Вы можете получить эту информацию из ваших банковских выписок.</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">Для создания нового счёта, в меню выберите
+Счета -&gt; Новый счёт. Это приведёт к появлению Мастера создания нового счёта.
+После заполнения соответствующих полей, новый счёт будет создан.</font></p>
+<p><font face="Verdana"> Обязательные для заполнения поля это название счёта и валюта,
+которую Вы хотите использовать. Рекомендуется, чтобы имя вашего счёта
+было уникальным и&nbsp;связано с реальным счётом. Например у вас есть
+счёт в Ситибанке, Вы могли бы назвать свой счёт "Ситибанк".</font></p>
+<p><font face="Verdana">???Единственный тип счетов, которые в настоящее время поддерживаются это "Чековые" .<br>
+
+
+
+
+
+
+
+
+
+
+
+
+The only type of account that is currently supported is checking
+accounts.</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">Чтобы указатьать дополнительную информацию об этом счёте, вы можете
+ввести данные, такие как номер счёта,
+держателя,&nbsp;веб-сайт, контактная информация и доступ к информации.
+Можно ввести дополнительные примечания об учетном счёте в поле
+примечания.</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">Большинство счетов изначально имеют некоторый баланс. Например, на счету кредитной карты&nbsp;текущий остаток&nbsp;
+2304,67 руб. Необходимо занести это&nbsp;значения в поле первоначального баланса.
+В дальнейшем Вы будете всего лишь добавлять проводки, и баланс будет актуальным.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+???Accounts have status associated with them which could "Open" or
+"Closed". Closed accounts are just that. They are no longer active.
+Setting this status is just a way to de clutter your view so that you
+do not have to see the closed accounts in your tree view navigation pane.<br>
+
+
+
+
+
+
+Счета могут иметь статус "Открыт" или "Закрыт". Закрытые счета
+закрытыми и являются. Они становятся не активными. Перевод счёта в этот
+статус это путь не заграмождать статистические данные информацией из
+них.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+Кроме того, Вы можете задать валюту, связанную с вашим счётом. В MMEX
+по умолчанию есть набор валют, что позволяет выбрать её в соответствии
+с внутренним рынком государства.</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">
+
+
+
+
+
+???Вы также можете пометить счёт как "Избранный счёт". Это применяется
+если счёт используется часто и влияет на порядок отображения счетов в
+панели навигации.</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">Другой тип счетов, которые поддерживает&nbsp;MMEX, это
+"инвестиционные". Это счета для хранения информации о финансовых
+учреждениях, где вы храните какие-либо типы акций / облигации / паевые
+инвестиционные фонды и другие инвестиции.<br>
+
+
+
+
+
+
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana">
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="editaccounts">Редактирование счёта</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">После того как вы создали счёт, вы можете
+изменить любое из его полей. Выберите имя счёта в навигационной панели и
+затем щёлкните правой кнопкой мыши, чтобы открыть контекстное меню. В
+контекстном меню выберите "Редактировать счёт". Измените желаемую
+информацию, а затем нажмите кнопку "OK" для сохранения.
+&nbsp;&nbsp;</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana">
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="trans">Создание новой проводки</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">После того как Вы создали новый счёт, можно начать ввод проводок.<br>
+Выберите счёт в который Вы хотите поместить проводку кликом левой
+кнопки мыши в панели навигации. При этом появятся проводки этого счёта.
+Для создания новой проводки, нажмите кнопку "Создать" и откроется
+"Редактор проводки". Введите соответствующие данные по этой
+проводке.&nbsp; Начните с выбора типа проводки: "Снятие со
+счёта","Пополнение счёта" или "Перевод". Затем выберите получателя,
+категорию, дату, номер чека, какие-либо заметки, а затем сумму сделки.
+Нажмите кнопку "OK", чтобы сохранить проводку.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+Некоторые заметки по "Редактору Проводки"<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--added consistancey to list terry wick 9/14/2007 -->
+<b><i>Типы проводок:</i></b>
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <font face="Verdana">	<li><i><b> Снятие со счёта:&nbsp;</b></i> это тип при котором происходит расход.</li>
+
+
+
+
+
+
+
+
+
+
+
+
+	<li><i><b>Пополнение счёта:</b></i>&nbsp;этот тип проводки при ктором происходит увеличение баланса счёта.</li>
+
+
+
+
+
+
+
+
+
+
+
+
+	<li><i><b>Перевод:</b></i> это
+тип проводки при котором происходит снятие некоторой суммы с одного счёта и
+сразу же пополнение на другой счёт.&nbsp;</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  </font>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><b><i>Получатель:</i></b> Получатель это тот от кого или к кому приходят деньги.
+</font>
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <font face="Verdana">	<li>Нажатие на кнопку "Получатель" вызывает Список получателей.
+Вы можете выбрать получателя из списка или создать нового.&nbsp;</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  </font>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><b><i>Категория:</i></b> Категория определяет вид расхода или дохода для данной проводки.&nbsp;
+</font>
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <font face="Verdana">	<li>Нажатие на кнопку "Категория" вызывает&nbsp;Редактор категорий.&nbsp;Вы можете выбрать категорию из списка или создать новую.</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  </font>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><b><i>Номер:</i></b> это поле для ввода любого номера ассоциированного с данной проводкой,</font><font face="Verdana"> например, </font><font face="Verdana">номер чека. <br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Статус:</i></b> Выберите из списка один
+изстатусов "Выверено", "Не учитывать", "Отслеживать" или "Повтор".&nbsp;Проводка примет
+соответствующий статус и будет отмечена соответствующим значком. ---&nbsp;</font>
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <font face="Verdana">	<li><i><b>Unreconciled:</b></i> When you enter a transaction, it initially is in the state of
+"Unreconciled". Which means the transaction has not been reconciled with your bank/credit card
+company's balance.</li>
+
+
+
+
+
+
+
+
+
+
+
+
+	<li><i><b>Reconciled:</b></i> Once the transaction is checked and verified with a credit card
+company's balance information, it can be marked as reconciled.</li>
+
+
+
+
+
+
+
+
+
+
+
+
+	<li><i><b>Void:</b></i> If you entered a transaction that later became invalid or you canceled
+the transaction, instead of deleting the transaction you can also mark it as void so you have a
+record of the transaction.</li>
+
+
+
+
+
+
+
+
+
+
+
+
+	<li><i><b>Flag For Followup:</b></i> This status marks transactions as needing more action.
+For example, you receive a balance statement from the financial institution and you notice that
+the transaction amount is different between what you recorded and what is in the statement.
+You can mark it as flag for follow up so that you can followup with the financial instituton.</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  </font>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<p></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end of format by terry wick 9/14/2007 -->
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="edittrans">Редактирование и обновление проводок</a></font></h3>
+<p><font face="Verdana">Чтобы изменить существующую проводку, просто выберите её, а затем нажмите кнопку&nbsp;"Редактировать".&nbsp;</font><font face="Verdana">
+Вы также можете сделать двойной клик мышкой по выбранной проводке.
+Другая альтернатива заключается в том, что можно выбрать проводку,
+кликнув по ней правой кнопкой мыши и из контекстного меню быбрать пункт
+"Редактировать".&nbsp;</font><font face="Verdana">Откроется диалоговое окно&nbsp;</font><font face="Verdana">"Редактор проводки".</font><font face="Verdana"> Внесите изменения и нажмите кнопку OK, чтобы сохранить их.<br>
+
+
+
+
+
+
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="rectrans">Reconciling
+and Balancing Transactions</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">---Transactions that are
+entered into MMEX are considered unreconciled. This means that they
+have not been verified with the statement from the financial
+institution. Once the statement comes or by viewing an online bank
+statement
+a transaction can be considered reconciled if the details of the
+transaction match that from the financial institution. Then the
+transaction can be marked as reconciled. By marking these transactions
+you can keep track whether the transactions you are entering match the
+actual transactions. In MMEX, reconciled and unreconciled transactions
+are shown by different icons.
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">
+<i>Tip:</i>To mark a transaction as reconciled, just select
+the transaction and hit the 'r' or 'R' key.
+To mark a transaction as unreconciled, just select the transaction and
+hit the 'u' or 'U' key.
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="followup">Пометка проводок для отслеживания</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">Для некоторых проводок могут быть причины для того,
+чтобы в дальнейшем их проверить. Пометьте &nbsp;такие проводки статусом
+"Отслеживать". Они будут отмечены значком в виде лампочки.
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">
+<i style="text-decoration: underline; font-weight: bold;">Заметка:</i></font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><font face="Verdana">Чтобы отметить проводку как "Отслеживать", просто выделите её и нажмите клавишу F.
+    </font></li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх &nbsp;</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="payee">Работа с получателями платежа</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">Получатели обозначают реально существующих лиц,
+на чьё имя&nbsp;производятся платежи или от чьего имени размещаются
+депозиты.&nbsp;Вы можете управлять получателями через меню Инструменты
+-&gt;
+Получатели. Когда откроется Список получателей, Вы можете
+добавлять новых получателей, набрав имя в текстовом поле и нажав кнопку
+"Добавить". <br>
+
+
+
+Вы также можете выбрать получателя из списка, отредактировать или
+удалить имя получателя. Имейте в виду, что вы не можете удалить
+получателей, которые используются в каких-либо проводках. Сперва
+удалите проводки, привязанные к получателю,&nbsp; затем вы сможете
+удалить получателя.<br>
+<br>
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="categ">Работа с категориями</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">Категории указывают откуда приходят или куда уходят деньги.
+Вы можете управлять категориями в &nbsp;MMEX через меню Инструменты -
+Категории.&nbsp;После того как откроется Редактор категорий, вы
+можете добавлять новые категории и подкатегории, набрав имя в текстовом
+поле и нажав кнопку "Добавить".&nbsp;</font></p>
+<p><font face="Verdana">
+
+
+
+Можно также выбрать категорию/подкатегорию из списка и изменить имя или
+удалить его. Имейте в виду, что вы не можете удалять категории, которые
+используются в каких-либо проводках. Для удаления категории, убедитесь
+что нет проводок принадлежащих этой категории. Только после этого можно
+удалить категорию.<br>
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3><font face="Verdana"><a name="importCSV">Импорт из CSV файлов</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">MMEX может импортировать данные из самых разнообразных форматов. Одним
+из них является формат CSV. Формат файла должен точно
+соответствовать
+CSV формату, который&nbsp;MMEX может экспортировать. Этот формат данных может быть
+полезен для перемещения данных из одной базы данных в другую. Чтобы
+увидеть структуру этого формата, вы можете экспортировать
+счёт в CSV файл, а затем проанализировать созданный </font><font face="Verdana">файл</font><font face="Verdana">.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+Формат данных должен быть таким:<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Дата</i></b> - Дата проводки (Отображается в формате заданном в основных настройках программы)&nbsp;</font><br>
+<font face="Verdana"><i><b>Получатель&nbsp;</b></i>
+- Тот от чьего имени сделана проводка. В случае перевода, это&nbsp;имя
+счёта из которого или в который был произведён перевод.&nbsp;<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Тип проводки</i></b> - Это может быть Пополнение или Снятие.&nbsp;<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Сумма</i></b>&nbsp; - Это положительное значение стоимости проводки.&nbsp;<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Категория</i></b> - Категория проводки<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Подкатегория</i></b> - Подкатегория проводки если есть (иначе пусто)<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Заметки</i></b>&nbsp;- Заметки по проводке Transaction Notes<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+Следует отметить, что проводки из CSV файла могут быть импортированы только в один счёт </font><font face="Verdana">за раз</font><font face="Verdana">.<br>
+</font></p>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><a href="#top">Наверх</a></font>
+<h3><font face="Verdana"><a name="importQIF">Импорт из QIF файлов</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">Quicken Interchange Format (QIF) является открытым форматом для
+чтения и записи финансовых данных (например, в файлы). QIF файл, как
+правило, имеет следующую структуру:<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+!Type:type identifier string<br>
+
+
+
+
+
+
+
+
+
+
+
+
+[single character line code]Literal String Data<br>
+
+
+
+
+
+
+
+
+
+
+
+
+...<br>
+
+
+
+
+
+
+
+
+
+
+
+
+^<br>
+
+
+
+
+
+
+
+
+
+
+
+
+[single character line code]Literal String Data<br>
+
+
+
+
+
+
+
+
+
+
+
+
+...<br>
+
+
+
+
+
+
+
+
+
+
+
+
+^<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+Each record ends with a ^ (caret). <br>
+
+
+
+
+
+
+
+
+
+
+
+
+See example QIF transaction <br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+!Type:Bank Header<br>
+
+
+
+
+
+
+
+
+
+
+
+
+D6/ 1/94 Date <br>
+
+
+
+
+
+
+
+
+
+
+
+
+T-1,000.00 Amount<br>
+
+
+
+
+
+
+
+
+
+
+
+
+N1005 number<br>
+
+
+
+
+
+
+
+
+
+
+
+
+PBank Of Mortgage Payee <br>
+
+
+
+
+
+
+
+
+
+
+
+
+^ End of transaction <br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+</font><font face="Verdana">
+
+
+
+
+
+
+
+
+
+
+QIF старше чем </font><font face="Verdana">Open Financial Exchange (OFX). </font><font face="Verdana">Одним из главных недостатков QIF</font><font face="Verdana">, является неспособность согласовать импортированные данные </font><font face="Verdana">с информацией </font><font face="Verdana">по
+текущему счёту. Тем не менее, этот формат
+широко поддерживается финансовыми учреждениями для&nbsp;предоставления
+информации по&nbsp;счетам клиентов.</font></p>
+<p><font face="Verdana"></font><font face="Verdana">MMEX может импортироать проводки&nbsp;</font><font face="Verdana">в счёт</font><font face="Verdana"> из&nbsp;</font><font face="Verdana">QIF файла</font><font face="Verdana"> определённого формата</font><font face="Verdana">.</font></p>
+<p><font face="Verdana">Формат следующий (Вы можете увидеть его,</font><font face="Verdana"> открыв файл&nbsp;в текстовом редакторе</font><font face="Verdana">):<br>
+!Type:Bank Bank account transactions <br>
+
+
+
+
+
+
+
+
+
+
+
+
+!Type:Cash Cash account transactions <br>
+
+
+
+
+
+
+
+
+
+
+
+
+!Type:CCard Credit card account transactions <br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b>---Important Note (1)</b>: The date format option has to
+match that of the date format in the QIF file, otherwise, date parsing
+by MMEX will fail and will result in transactions having incorrect
+dates. <br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b>Important Note (2)</b>: After importing from QIF, all
+transactions
+will have a "Follow Flag" as it its status.
+You can mark all transactions with this flag using the bulk status
+setting commands using the right click menu in the account view. </font>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3><font face="Verdana"><a name="importMMNET">Импорт из MM.NET CSV файлов</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">MMEX также может импортировать данные, которые были экспортированы из программы </font><font face="Verdana">Money Manager.NET. Это, в первую очередь, поможет пользователям, которые&nbsp;переходят на использование MMEX.</font></p>
+<p><font face="Verdana">Формат данных должен быть таким:</font><br>
+<font face="Verdana">
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Дата</i></b> - Дата проводки (Отображается в формате заданном в основных настройках программы)</font><br>
+<font face="Verdana"><i><b>Получатель&nbsp;</b></i>
+- Тот от чьего имени сделана проводка. В случае перевода, это&nbsp;имя
+счёта из которого или в который был произведён перевод.&nbsp;<br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font><font face="Verdana"><b><i>Сумма</i></b>&nbsp; - Это значение
+стоимости проводки. Если значение положительное, то это считается
+пополнением, а если отрицательное, то это расход.<br>
+</font><font face="Verdana"><i><b>Номер</b></i> - Номер проводки<br>
+</font><font face="Verdana"><i><b>Статус</b></i> - Статус проводки<br>
+</font><font face="Verdana"><b><i></i></b><b><i></i></b></font><font face="Verdana"><b><i>Категория</i></b>
+- Это категория проводки. На самом деле это соединение строку типа "Категория: Подкатегория" ???</font><font face="Verdana">This is actually a compound string
+of the type "Category:SubCategory"</font><br>
+<font face="Verdana">
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Заметки</i></b> - Заметки по проводке<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+</font><font face="Verdana">Следует отметить, что проводки из CSV файла могут быть импортированы только в один счёт </font><font face="Verdana">за раз</font><font face="Verdana">.</font><br>
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3><font face="Verdana"><a name="importUnivCSV">Импорт из Universal CSV Format</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">---To alleviate the problem of
+users having to preformat their bank transaction CSV files into
+the fixed format MMEX requires, MMEX also allows users to import CSV
+files where the order of fields is
+completely freeform. To use this importer, select the account you want
+to import into and then select
+the order of fields in the CSV file by picking and choosing from the
+list of possible fields.
+MMEX will now import the CSV file using the format information
+specified by the user.
+MMEX can import from a wide variety of formats. One of them is a fixed
+format CSV file. This file format exactly matches the CSV format that
+MMEX can export. So it can be useful to move data from one .mmb
+database file to another .mmb database file. To easily see the format
+of the CSV file, you can try exporting an account to a CSV file and
+then analysing the format created.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+The CSV field options are as follows:<br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font><font face="Verdana">
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Дата</i></b> - Дата проводки (Отображается в формате заданном в основных настройках программы)</font><br>
+<font face="Verdana"><i><b>Получатель&nbsp;</b></i>
+- Тот от чьего имени сделана проводка. В случае перевода, это&nbsp;имя
+счёта из которого или в который был произведён перевод.&nbsp;<br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font><font face="Verdana"><b><i>Сумма</i></b>&nbsp;</font><font face="Verdana"><b><i>(+/-)</i></b></font><font face="Verdana"> - Это значение стоимости
+проводки. Если значение положительное, то это считается пополнением, а
+если отрицательное, то это расход.<br>
+</font><font face="Verdana"><b><i>Категория</i></b> - Категория проводки<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Подкатегория</i></b> - Подкатегория проводки если есть (иначе пусто)<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Примечания</i></b> - Заметки по проводке Transaction Notes<br>
+</font><font face="Verdana"><i><b>Номер проводки</b></i> - Номер проводки ???<br>
+</font><font face="Verdana"><b><i>Снятие со счёта</i></b> - An +ive amount that
+is considered as a withdrawal. (Do not use if specifying Amount (+/-))<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-style: italic;"><span style="font-weight: bold;">Пополнение счёта</span></span> - An +ive amount that is
+considered as a deposit. (Do not use if specifying Amount (+/-))<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Не важно</i></b> - Игнорировать это поле<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+</font><font face="Verdana">Следует отметить, что проводки из CSV файла могут быть импортированы только в один счёт </font><font face="Verdana">за раз</font><font face="Verdana">.</font></p>
+<p><font face="Verdana"><b>Important Note (1)</b>: The date format option has to
+match that of the date format in the QIF file, otherwise, date parsing
+by MMEX will fail and will result in transactions having incorrect
+dates. <br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b>Important Note (2)</b>: After importing from QIF, all
+transactions
+will have a "Follow Flag" as it its status.
+You can mark all transactions with this flag using the bulk status
+setting commands using the right click menu in the account view.</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- creating csv tips added by terry wick 9/14/2007 -->
+<h3><font face="Verdana"><a name="importcsvtips">Заметки по созданию CSV файлов</a></font><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+	<li>При создании файла убедитесь, что суммы
+вкладов и снятий не содержат запятой в качестве разделителя. Это можно
+легко сделать с помощью таких программ как Excel или OpenOffice Calc.</li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+	<li>Или же вы можете изменить разделитель,
+который будет использоваться MMEX через меню Инструменты -&gt;
+Настройки программы, раздел "Основные", подраздел&nbsp;"Параметры
+импорта/экспорта".&nbsp;</li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+	<li>Вам не нужно включать балансы в CSV файл.</li>
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+     <li>Имейте в виду, <font face="Verdana">что проводки из CSV файла могут быть импортированы только в один счёт </font><font face="Verdana">за раз</font><font face="Verdana">.</font><br>
+
+
+
+
+
+
+
+
+
+
+
+  </li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end of tips addition from terry wick -->
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3><font face="Verdana"><a name="exportcsv">Экспорт в CSV файлы</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">MMEX может экспортировать данные в файл формата
+CSV. Формат такого файла точно соответствует CSV формату, который можно
+импортировать в MMEX. Это может быть полезно для перемещения данных из
+одного файла&nbsp;базы данных&nbsp;</font><font face="Verdana">.MMB</font><font face="Verdana">
+в другой. Проще всего&nbsp;увидеть структуру формата CSV файла, если
+экспортировать какой-либо счёт в CSV файл, а затем проанализировать
+полученные данные.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font><font face="Verdana">Формат данных должен быть таким:<br>
+</font><font face="Verdana"><b><i>Дата</i></b> - Дата проводки (Отображается в формате заданном в основных настройках программы)</font><br>
+<font face="Verdana"><i><b>Получатель&nbsp;</b></i>
+- Тот от чьего имени сделана проводка. В случае перевода, это&nbsp;имя
+счёта из которого или в который был произведён перевод.&nbsp;<br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font><font face="Verdana"><b><i>Тип проводки</i></b> - Это может быть Пополнение или Снятие.&nbsp;<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Сумма</i></b>&nbsp; - Это положительное значение стоимости проводки.&nbsp;<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Категория</i></b> - Категория проводки<br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font><font face="Verdana"><b><i>Подкатегория</i></b> - Подкатегория проводки если есть (иначе пусто)<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i>Заметки</i></b>&nbsp;- Заметки по проводке Transaction Notes<br>
+</font><font face="Verdana"><br>
+Следует отметить, что операции со счета, могут быть экспортированы в один </font><font face="Verdana">CSV </font><font face="Verdana">файл.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="stock">Инвестиции</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">Using MMEX it is possible to
+track stocks/mutual funds investments.&nbsp;<br>
+
+
+
+
+
+
+
+
+
+
+
+
+- First create a new Investment account. To do this, select the new
+account
+option and in the 'Account Type' select 'Investment'.&nbsp;<br>
+
+
+
+
+
+
+
+
+
+
+
+
+- Then select the stocks option in the Tree view and click the "New
+Stock
+Investment" button. Fill in the details to add a new stock investment. </font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">See more <a href="investment.html">details</a>.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+To update the price of your stock holding, edit the saved stock
+investment and
+change the current stock price.</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="bills">Планирование</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">MMEX позволяет поставить напоминание для
+повторяющихся операций. Сделайте это с помощью пункта "Планирование"
+дерева навигации. Напоминания по предстоящим операциям для счетов или
+вкладов на ближайшие 2 недели отображаются на начальной странице. </font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="assets">Активы</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">MMEX позволяет отслеживать основные средства
+такие, как автомобили, дома, землю и другие. Каждый актив может иметь
+свое значение цены приведённое к определенному курсу валюты с учётом
+обесценивания за год. В итоге все&nbsp;активы добавляются в ваш общий
+объем денежных средств.
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="transfilter">Фильтр проводок</a></font><br>
+</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">MMEX позволяет вести поиск по проводкам,
+которые соответствуют определенным критериям. Это можно сделать с
+помощью опций фильтра проводок. В результате перечень проводок,
+соответствующих заданным критериям,&nbsp;может быть распечан или
+сохранён в файл HTML.</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="budgeting">Бюджетирование</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">MMEX позволяет составить бюджет на год и
+контролировать его выполнение. Чтобы составить бюджет, щёлкните на
+"Бюджетирование" в панели навигации и добавьте бюджетный год. После
+того, как год был добавлен, выберите его и изменените суммы для каждой
+категории. Это и будет&nbsp;бюджетом на этот год.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+Используя отчёты из раздела по бюджету, можно увидеть, сколько денег Вы
+потратили в сравнении с планируемыми суммами по категориям. </font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="reports">Отчёты</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">MMEX позволяет создавать различные отчёты.
+Выберите соответствующий отчёт в панели навигации. Одни отчёты требуют
+вода данных, другие нет. После того, как Вы просмотрите отчёт, Вы
+можете напечатать его, через опции печати в меню Файл.<br>
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="print">Печать</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><font face="Verdana">MMEX поддерживает печать всех отчетов, которые могут быть просмотрены. Опции печати доступны через меню Файл-&gt; Печать.<br>
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<h3><font face="Verdana"><a name="options">Настройки программы</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<font face="Verdana">Вы можете изменить некоторые настройки поведения MMEX путем изменения параметров в окне Настройки.<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i> Основные-&gt;Основная Валюта&nbsp;</i> </b>Это основная валюта, которая будет использоваться для отображения итогов по всем счетам. <br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font><font face="Verdana"><b><i> Основные</i></b></font><font face="Verdana"><b><i>-&gt;Формат Даты </i> </b>Это
+параметр формата даты, который используется для контроля того, как дата
+должна отображаться, а также как&nbsp;дата должна отображаться при
+экспорте в&nbsp;</font><font face="Verdana">QIF и CSV файлы.</font><font face="Verdana">&nbsp;
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i> </i></b></font><font face="Verdana"><b><i> Основные</i></b></font><font face="Verdana"><b><i>-</i></b></font><font face="Verdana"><b><i>&gt;CSV Разделитель </i> </b>
+Эта информация используется в качестве определения разделителя данных в файле CSV. Это полезно, чтобы изменить&nbsp;</font><font face="Verdana">',' (запятую)</font><font face="Verdana"> по умолчанию,&nbsp; когда речь идет о валютах, которые используют ',' для обозначения десятичной точки в суммах.<br>
+</font><font face="Verdana"><b><i> Основные</i></b></font><font face="Verdana"><b><i>-</i></b></font><font face="Verdana"><b><i>&gt;Язык </i> </b>Это
+язык, используемый MMEX интерфейсом. MMEX может потребоваться
+перезагрузка прежде чем элементы интерфейса отобразятся другим языком.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i> <br>
+
+
+
+
+
+
+
+
+
+
+
+
+Вид-&gt;Показывать счета&nbsp;</i> </b> Этот параметр определяет то, какие счета будут видны в панели навигации. На выбор "Все", "Открытые" или "Избранные".<br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font><font face="Verdana"><b><i>
+
+
+
+
+
+
+
+
+
+
+
+Вид-&gt;Отображение проводок</i></b></font><font face="Verdana"><b><i> </i>
+</b></font><font face="Verdana"> Этот параметр определяет то, какие проводки будут отображаться при просмотре счёта.&nbsp;</font><font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i> <br>
+
+
+
+
+
+
+
+
+
+
+
+
+Цвета</i> </b> Позволяют пользователю изменять цвета в&nbsp;MMEX согласно своим предпочтениям.
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<b><i> <br>
+
+
+
+
+
+
+
+
+
+
+
+
+Прочее-&gt; Резервировать базу данных</i> </b>
+MMEX будет делать копию файла базы данных перед открытием. Будет
+создаваться только одна копия и при следующем запуске программы она
+будет перезаписана. Так что если вы хотите&nbsp;хранить промежуточные
+данные, Вам нужно&nbsp;делать резервные копии вручную.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font><font face="Verdana"><b><i>
+
+
+
+
+
+
+
+
+
+
+
+Прочее-&gt;</i></b></font><font face="Verdana"><b><i> Web-страница котировок</i> </b>Для фондовых инвестиций, с указанного адреса, MMEX может </font><font face="Verdana">автоматически </font><font face="Verdana">подгружать
+котировки, при нажатии кнопки "Обновить" в разделе инвестиций. По
+умолчанию используется&nbsp;финансовые данные компании Google.&nbsp;
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+<hr>
+<h3><font face="Verdana"><a name="faq">Часто задаваемые вопросы</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<ol>
+
+
+
+
+
+
+
+
+
+
+
+
+  <font face="Verdana"> <li><a href="#contribute">Как можно помочь проекту MMEX?</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="#nameex">Что означает EX в названии программы?</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="#database"> Является ли формат файла .mmb патентованым?</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="#usbkey"> Может ли MMEX работать со сменного носителя?</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="#safety">Как убедится в том, что MMEX не отсылает мою финансовую информацию куда-либо?</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="#statements">
+Как распечатать выписки со счёта с использованием MMEX?</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  </font>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3><font face="Verdana"><a name="contribute">Как можно помочь проекту MMEX?<!--</a--></a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<font face="Verdana"><a name="contribute">Вот те направления, по которым требуется содействие:
+</a></font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><font face="Verdana"><a name="contribute">Сообщения об ошибках</a></font></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><font face="Verdana"><a name="contribute">Перевод на ваш язык</a></font></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><font face="Verdana"><a name="contribute">Распространение программы</a></font></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><font face="Verdana"><a name="contribute">If you are a C++ expert, by helping extend MMEX developing code. </a></font></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><font face="Verdana">Если Вы счастливы в связи с тем, что с помощью MMEX съэкономили достаточно средств,
+то можете спонсировать некоторую сумму проекту MMEX. <br>
+
+
+
+
+
+
+
+
+
+
+
+
+    </font></li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Verdana"> </font>
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3><font face="Verdana"><a name="nameex">Что означает EX в названии программы?</a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<font face="Verdana">Originally I developed a personal finance software called Money Manager. It was written in .NET and more
+of a learning excercise than serious software development. It grew far
+beyond the original design.
+The software was frozen and work began on a new version which had a
+similar user interface and features, but written in C++.&nbsp; </font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<font face="Verdana">Usually Microsoft names their second
+version of their improved software APIs with an Ex extension as in
+doSomething() and doSomethingEx(). So I just followed the model and
+tacked on a 'Ex' to the end. </font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3><font face="Verdana"><a name="database">Is my data safe? Is the .mmb format proprietary?<!--</a--></a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<font face="Verdana"><a name="database">Yes, your data is completely safe.
+And, No, .mmb file is not proprietary. MMEX uses SQLite databases to
+store user data. That means that
+the .mmb file is a regular SQLite database. SQLite is one of the
+smallest, free relational database systems
+around and there are tons of tools to open and access sqlite databases.
+SQLiteSpy and SQLite Browser (http://sqlitebrowser.sourceforge.net/)
+are two such utilities. Once you open the database using these tools,
+you can do anything you want with the data. </a></font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3><font face="Verdana"><a name="usbkey">Может ли MMEX работать со сменного носителя?<!--</a--></a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<font face="Verdana"><a name="usbkey">Да, MMEX была написана таким образом, чтобы избежать зависимости от
+реестра Windows т.д. Программа полностью самодостаточна, что делает её
+способной работать с USB носителя. Просто скопируйте папку с программой
+MMEX на USB&nbsp;диск и запустите исполняемый файл mmex. </a></font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3><font face="Verdana"><a name="safety">Как убедится в том, что MMEX не шпионит
+за моими данными?<!--</a--></a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<font face="Verdana"><a name="safety">Обычно, при использовании
+программ с закрытым исходным кодом, вы верите на слово продавцу
+программы относительно безопасности данных.
+Но MMEX открыт и не отсылает какую либо информацию во вне, Вы можете
+сами в этом убедится.&nbsp;
+Даже если вы не C++ эксперт, вы можете быть уверены в том, что любой
+может получить доступ к исходному коду в любое время и проверить
+порядочность намерений MMEX.&nbsp;MMEX не подключаться к интернету,
+если вы прямо не попросили его это сделать (например, проверить на
+наличие обновлений и т.п.).&nbsp;
+</a></font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3><font face="Verdana"><a name="statements">
+Как распечатать выписки со счёта с использованием MMEX?<!--</a--></a></font></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<font face="Verdana"><a name="statements"> Чтобы распечатать выписку со счёта
+, постройте отчёт по проводкам, используя фильтр проводок. 
+Затем распечатайте его через меню Файл -&gt; Печать.
+</a></font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <font face="Verdana"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+  </font>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5><font face="Verdana">Madhan Kanagavel<br>
+
+
+
+
+
+
+
+
+
+
+
+
+Copyright Є 2005-2006&nbsp; TheZeal Software. All rights
+reserved.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+</font></h5>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
