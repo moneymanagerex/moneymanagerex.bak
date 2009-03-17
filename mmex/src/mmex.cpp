@@ -3058,7 +3058,7 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& event)
 
 void mmGUIFrame::OnReportIssues(wxCommandEvent& event)
 {
-   wxString url = wxT("http://www.codelathe.com/mmex/");
+   wxString url = wxT("http://www.codelathe.com/forum");
    wxLaunchDefaultBrowser(url);
 }
 
