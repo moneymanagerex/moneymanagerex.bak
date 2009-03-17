@@ -137,7 +137,7 @@ void mmAboutDialog::CreateControls()
     if (!mmIniOptions::enableCustomAboutDialog_)
     {
        wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
-          wxID_STATIC, wxT("(c) 2005-2008 Madhan Kanagavel"), wxDefaultPosition, wxDefaultSize, 0 );
+          wxID_STATIC, wxT("(c) 2005-2009 Madhan Kanagavel"), wxDefaultPosition, wxDefaultSize, 0 );
        itemStaticText8->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
        itemBoxSizer4->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 

@@ -1,14 +1,12 @@
 Money Manager Ex License
 ============================
-
-WARNING: This software is under development.
-If upgrading from a previous version, 
-backup your old data file first! 
+WARNING: This software is under development. 
+If upgrading from a previous version, backup your old data file first! 
 
 CodeLathe, LLC
-[CodeLathe is behind the next-generation distributed
-application platform called Tonido.]
-http://www.codelathe.com
+[CodeLathe is behind Tonido, a platform for privacy and online freedom.
+Tonido allows you to run your personal web applications from your desktop.
+Learn more at http://www.tonido.com]
 
 ======================================
 If you find bugs/issues please use the mailing list
