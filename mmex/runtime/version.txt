@@ -13,6 +13,7 @@ Version History of Money Manager Ex
 - Fix PAYEEID is not equal to -1 and the values of TRANSAMOUNT and TOTRANSAMOUNT are not the same in the database for "Transfer" transaction(Ho Yin Kwok)
 - When user selects "Transfer" in the transaction dialog box, "From" account is set to the current account automatically(Ho Yin Kwok)
 - Other minor GUI bug fixes(Ho Yin Kwok)
+- Add subtotal of accounts (Jeancf)
 
 0.9.4.1 (Dec 30, 2008)
 - Fix additional extension in files saved as new database
