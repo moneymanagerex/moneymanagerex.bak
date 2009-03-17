@@ -14,6 +14,8 @@ Version History of Money Manager Ex
 - When user selects "Transfer" in the transaction dialog box, "From" account is set to the current account automatically(Ho Yin Kwok)
 - Other minor GUI bug fixes(Ho Yin Kwok)
 - Add subtotal of accounts (Jeancf)
+- Fix crash when changing language
+- Added Belgian Translation (DUTCH_BE) (Rol)
 
 0.9.4.1 (Dec 30, 2008)
 - Fix additional extension in files saved as new database

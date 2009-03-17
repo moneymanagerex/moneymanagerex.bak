@@ -72,7 +72,8 @@ Bulgarian
 -- Ivan Gyokov
 Portuguese (Portugal)
 -- Fatela
-
+Dutch (Belgian)
+-- Rol
 
 User Manual
 ===========

@@ -488,6 +488,9 @@ private:
    /* Cannot process home page recursively */
    bool refreshRequested_;
 
+   /* Menu Item for Disabling Item */
+   wxMenuItem* menuItemOnlineUpdateCurRate_;
+
 private:
     // any class wishing to process wxWindows events must use this macro
     DECLARE_EVENT_TABLE()

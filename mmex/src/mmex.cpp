@@ -447,12 +447,15 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 
     // enable or disable online update currency rate
     wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(inidb_, wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
-    wxMenuItem* menuItemOnlineUpdateCurRate = menuBar_->FindItem(menuBar_->FindMenuItem(_("&Tools"), _("Online Update Currency Rate")));
-
-    if(enableCurrencyUpd == wxT("TRUE")) {
-        menuItemOnlineUpdateCurRate->Enable();
-    } else {
-        menuItemOnlineUpdateCurRate->Enable(false);
+    if(enableCurrencyUpd == wxT("TRUE")) 
+    {
+        if (menuItemOnlineUpdateCurRate_)
+            menuItemOnlineUpdateCurRate_->Enable(true);
+    } 
+    else 
+    {
+        if (menuItemOnlineUpdateCurRate_)
+            menuItemOnlineUpdateCurRate_->Enable(false);
     }
 
 	/* Decide if we need to show app start dialog */
@@ -2163,10 +2166,10 @@ void mmGUIFrame::createMenu()
 
     menuTools->AppendSeparator();
 
-    wxMenuItem* menuItemOnlineUpdateCurRate = new wxMenuItem(menuTools, MENU_ONLINE_UPD_CURRENCY_RATE, 
+    menuItemOnlineUpdateCurRate_ = new wxMenuItem(menuTools, MENU_ONLINE_UPD_CURRENCY_RATE, 
         _("Online Update Currency Rate"), 
         _("Online update currency rate"));
-    menuTools->Append(menuItemOnlineUpdateCurRate);
+    menuTools->Append(menuItemOnlineUpdateCurRate_);
 
     menuHelp->AppendSeparator();
 
@@ -2814,14 +2817,18 @@ void mmGUIFrame::OnOptions(wxCommandEvent& event)
     dlg->Destroy();
     createHomePage();
     updateNavTreeControl();
+
     // enable or disable online update currency rate
     wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(inidb_, wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
-    wxMenuItem* menuItemOnlineUpdateCurRate = menuBar_->FindItem(menuBar_->FindMenuItem(_("&Tools"), _("Online Update Currency Rate")));
-
-    if(enableCurrencyUpd == wxT("TRUE")) {
-        menuItemOnlineUpdateCurRate->Enable();
-    } else {
-        menuItemOnlineUpdateCurRate->Enable(false);
+    if(enableCurrencyUpd == wxT("TRUE")) 
+    {
+        if (menuItemOnlineUpdateCurRate_)
+            menuItemOnlineUpdateCurRate_->Enable(true);
+    } 
+    else 
+    {
+        if (menuItemOnlineUpdateCurRate_)
+            menuItemOnlineUpdateCurRate_->Enable(false);
     }
 }
 
