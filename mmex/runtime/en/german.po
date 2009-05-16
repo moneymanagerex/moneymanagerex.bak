@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-30 09:13-0600\n"
-"PO-Revision-Date: 2008-12-30 09:13-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"PO-Revision-Date: 2009-01-01 22:23+0100\n"
+"Last-Translator: Kai Kajus Noack <kajus@firstai.de>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,6 +16,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: include\n"
 "X-Poedit-SearchPath-1: src\n"
 
+# Translator's note: Please pay attention that the translation is not 1 to 1. The appearance and the use of the interface are within the main focus! Have a look into the software before you edit!
 #: src/aboutdialog.cpp:134
 msgid "Version: "
 msgstr "Version:"
@@ -463,7 +464,7 @@ msgstr "Zahlungsempfänger"
 #: src/billsdepositsdialog.cpp:727
 #: src/billsdepositsdialog.cpp:738
 msgid "Select Payee"
-msgstr "Empfänger wählen"
+msgstr "wählen"
 
 #: src/billsdepositsdialog.cpp:366
 msgid "Specify where the transaction is going to or coming from "
@@ -554,15 +555,15 @@ msgstr "Empfänger wählen"
 
 #: src/billsdepositsdialog.cpp:621
 msgid "To Account Amount Entry"
-msgstr "Übertragender Kontobetrag**"
+msgstr "Übertragender Kontobetrag"
 
 #: src/billsdepositsdialog.cpp:622
 msgid "Amount to be recorded in To Account"
-msgstr "Betrag welcher dem Empfängerkonto zugeschrieben werden soll**"
+msgstr "Betrag, der dem Empfängerkonto zugeschrieben werden soll"
 
 #: src/billsdepositsdialog.cpp:632
 msgid "Invalid To Amount Entered "
-msgstr "Falscher Empfängerbetrag eingegeben**"
+msgstr "Falscher Empfängerbetrag eingegeben"
 
 #: src/billsdepositsdialog.cpp:742
 #: src/billsdepositsdialog.cpp:756
@@ -979,23 +980,23 @@ msgstr "Warnung"
 
 #: src/filtertransdialog.cpp:194
 msgid "Specify Account"
-msgstr "Konto angeben"
+msgstr "Konto"
 
 #: src/filtertransdialog.cpp:215
 msgid "Specify Date Range"
-msgstr "Zeitraum angeben"
+msgstr "Zeitraum"
 
 #: src/filtertransdialog.cpp:230
 msgid "Specify Payee"
-msgstr "Empfänger angeben"
+msgstr "Empfänger"
 
 #: src/filtertransdialog.cpp:241
 msgid "Specify Category"
-msgstr "Kategorie angeben"
+msgstr "Kategorie"
 
 #: src/filtertransdialog.cpp:252
 msgid "Specify Status"
-msgstr "Status angeben"
+msgstr "Status"
 
 #: src/filtertransdialog.cpp:262
 msgid "Duplicate"
@@ -1003,7 +1004,7 @@ msgstr "Duplizieren"
 
 #: src/filtertransdialog.cpp:273
 msgid "Specify Type"
-msgstr "Typ angeben"
+msgstr "Typ"
 
 #: src/filtertransdialog.cpp:288
 msgid "Specify the type of transaction."
@@ -1011,15 +1012,15 @@ msgstr "Art der Buchung"
 
 #: src/filtertransdialog.cpp:293
 msgid "Specify Amount Range"
-msgstr "Betragsbereich angeben"
+msgstr "Betragsspanne"
 
 #: src/filtertransdialog.cpp:307
 msgid "Specify Number"
-msgstr "Nummer angeben"
+msgstr "Nummer"
 
 #: src/filtertransdialog.cpp:318
 msgid "Specify Notes"
-msgstr "Anmerkung angeben"
+msgstr "Anmerkung"
 
 #: src/htmlbuilder.cpp:39
 msgid "Report"
@@ -1317,7 +1318,7 @@ msgstr ""
 "\n"
 "Die nächsten Seiten unterstützen Sie bei der Erstellung eines neuen Kontos.\n"
 "\n"
-"Beginnen Sie damit, eine Liste aller Finanzinstitute zu erstellen,\n"
+"Beginnen Sie damit, eine Liste aller Banken zu erstellen,\n"
 "bei denen Sie ein Konto führen."
 
 #: src/mmex.cpp:348
@@ -1457,7 +1458,7 @@ msgstr "Einnahmen vs Ausgaben - Gesamter Zeitraum"
 
 #: src/mmex.cpp:910
 msgid "Transaction Report"
-msgstr "Buchungsbericht"
+msgstr "Buchungsbericht (gefiltert)"
 
 #: src/mmex.cpp:918
 msgid "Budget Performance"
@@ -2044,7 +2045,7 @@ msgstr "Bankkonto"
 
 #: src/newacctdialog.cpp:163
 msgid "Investment"
-msgstr "Kapitalanlage"
+msgstr "Geldanlage"
 
 #: src/newacctdialog.cpp:169
 msgid "Specify the type of account to be created."
@@ -2060,11 +2061,11 @@ msgstr "Nummer des Kontos"
 
 #: src/newacctdialog.cpp:183
 msgid "Held At:"
-msgstr "bei Finanzinstitut:"
+msgstr "bei Bank:"
 
 #: src/newacctdialog.cpp:191
 msgid "Enter the name of the financial institution in which the account is held."
-msgstr "Geben Sie den Namen des Finanzinstituts an, bei dem das Konto geführt wird."
+msgstr "Geben Sie den Namen der Bank an, bei der das Konto geführt wird."
 
 #: src/newacctdialog.cpp:193
 msgid "Website:"
@@ -2072,7 +2073,7 @@ msgstr "Webseite:"
 
 #: src/newacctdialog.cpp:201
 msgid "Enter the URL of the website for the financial institution."
-msgstr "Hier kann die Webseite des Finanzinstituts festgehalten werden."
+msgstr "Hier kann die Webseite der Bank festgehalten werden."
 
 #: src/newacctdialog.cpp:204
 msgid "Contact:"
@@ -2360,7 +2361,6 @@ msgid "Backup database before opening"
 msgstr "Datenbank vor dem Öffnen sichern"
 
 #: src/optionsdialog.cpp:650
-#, fuzzy
 msgid "Select whether to create a .bak file when opening the database file"
 msgstr "Wählen Sie, ob beim Öffnen einer Datenbank eine .bak-Datei erstellt werden soll"
 
@@ -2410,7 +2410,7 @@ msgstr "Sonstiges"
 
 #: src/payeedialog.cpp:154
 msgid "Enter the payee name to be added or make edits to an existing payee name"
-msgstr "Geben Sie den des Empfängers ein, der hinzugefügt werden soll, oder bearbeiten sie einen bestehenden Namen."
+msgstr "Geben Sie den Empfänger ein, der hinzugefügt werden soll, oder bearbeiten sie einen bestehenden Namen."
 
 #: src/payeedialog.cpp:162
 msgid "Add a new payee name"
@@ -2557,11 +2557,11 @@ msgstr "Details zu Wertpapieranlagen"
 #: src/stockdialog.cpp:326
 #: src/stockspanel.cpp:204
 msgid "Held At"
-msgstr "bei Finanzinstitut"
+msgstr "Geführt bei"
 
 #: src/stockdialog.cpp:156
 msgid "Enter the name of the financial institution where the investment is held"
-msgstr "Namen des Finanzinstituts, bei dem das Konto geführt wird."
+msgstr "Namen der Bank, bei der das Konto geführt wird."
 
 #: src/stockdialog.cpp:167
 msgid "Specify the purchase date of the stock investment"
@@ -2569,7 +2569,7 @@ msgstr "Kaufdatum der Wertpapieranlage"
 
 #: src/stockdialog.cpp:170
 msgid "Stock Name"
-msgstr "Name des Wertpapiers"
+msgstr "Wertpapier-Name"
 
 #: src/stockdialog.cpp:176
 msgid "Enter the stock company name"
@@ -2586,11 +2586,11 @@ msgstr "Kürzel der Wertpapieranlage angeben (z. B. CSCO oder GOOG)"
 #: src/stockdialog.cpp:191
 #: src/stockspanel.cpp:212
 msgid "Number of Shares"
-msgstr "Anzahl Aktien"
+msgstr "Anzahl"
 
 #: src/stockdialog.cpp:197
 msgid "Enter number of shares held"
-msgstr "Anzahl der Aktien"
+msgstr "Anzahl der Anteile bzw. Aktien"
 
 #: src/stockdialog.cpp:202
 msgid "Purchase Price"
@@ -2635,7 +2635,7 @@ msgstr "Anzahl der Aktien"
 
 #: src/stockdialog.cpp:346
 msgid "Invalid number of shares entered "
-msgstr "Ungültige Anzahl an Aktien eingegeben"
+msgstr "Ungültige Anzahl an Aktien/Anteilen eingegeben"
 
 #: src/stockdialog.cpp:361
 msgid "Invalid purchase price entered "
@@ -2651,7 +2651,7 @@ msgstr "Inaktiv"
 
 #: src/stockspanel.cpp:208
 msgid "Share Name"
-msgstr "Name der Aktie"
+msgstr "Wertpapier-Name"
 
 #: src/stockspanel.cpp:217
 msgid "Gain/Loss"
@@ -3295,7 +3295,7 @@ msgstr "Dateiinhalte ansehen"
 
 #: include/filtertransdialog.h:46
 msgid "Filter Transactions"
-msgstr "Buchungen filtern"
+msgstr "Buchungen filtern nach..."
 
 #: include/maincurrencydialog.h:29
 msgid "Currency Dialog"
@@ -3337,7 +3337,7 @@ msgid ""
 msgstr ""
 "\n"
 "Geben Sie Ihrem Konto einen aussagekräftigen Namen. Für gewöhnlich \n"
-"ist dies der Name des Finanzinstituts, das Ihr Konto verwaltet. \n"
+"ist dies der Name der Bank, die Ihr Konto verwaltet. \n"
 "Zum Beispiel 'ABC Bank'."
 
 #: include/mmex.h:259
@@ -3374,7 +3374,7 @@ msgid ""
 "with them.\n"
 msgstr ""
 "\n"
-"Geldkapitalanlage meint hingegen spezielle Konten, \n"
+"Geldanlage meint hingegen spezielle Konten, \n"
 "die Wertpapiere oder Investmentfonds beinhalten. \n"
 
 #: include/mmex.h:333
@@ -3408,7 +3408,7 @@ msgstr "%"
 
 #: include/reportbudgetsetup.h:26
 msgid "Budget setup for Year : "
-msgstr "Jahresbudget einrichten: "
+msgstr "Jahresbudget: "
 
 #: include/reportbudgetsetup.h:26
 msgid " (Estimated Vs Actual)"
@@ -3529,7 +3529,7 @@ msgstr "Wertpapiere neu/bearbeiten"
 
 #: include/transdialog.h:23
 msgid "New/Edit Transaction"
-msgstr "Buchungneu/bearbeiten"
+msgstr "Buchung neu/bearbeiten"
 
 #: include/univcsvdialog.h:29
 msgid "Universal CSV Importer Dialog"
