@@ -86,8 +86,15 @@ void mmHelpPanel::CreateControls()
         wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     itemBoxSizer2->Add(htmlWindow_, 1, wxGROW|wxALL, 1);
 
-    wxString helpPath = mmGetBaseWorkingPath(true)
+	// Added path for mac app bundles
+	#if defined (__WXMAC__) || defined(__WXOSX__)
+	wxString helpPath = wxT("MMEX.app/Contents/Resources/runtime_osx/help/index.html");
+		
+	#else 
+	wxString helpPath = mmGetBaseWorkingPath(true)
                 + wxT("\\help\\index.html");
-    htmlWindow_ ->LoadPage(helpPath);
+	#endif
+    
+	htmlWindow_ ->LoadPage(helpPath);
 }
 

@@ -49,6 +49,7 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_MENU(MENU_VIEW_NOTRECONCILED, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_VOID, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_TODAY, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_LAST30, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_LAST3MONTHS, mmCheckingPanel::OnViewPopupSelected)
 	EVT_MENU(MENU_VIEW_DUPLICATE, mmCheckingPanel::OnViewPopupSelected)
@@ -128,7 +129,7 @@ mmCheckingPanel::~mmCheckingPanel()
     if (m_imageList)
         delete m_imageList;
 
-    long col0, col1, col2, col3, col4, col5, col6, col7;
+    long col0, col1, col2, col3, col4, col5, col6, col7, col8;
     col0 = listCtrlAccount_->GetColumnWidth(0);
     col1 = listCtrlAccount_->GetColumnWidth(1);
     col2 = listCtrlAccount_->GetColumnWidth(2);
@@ -137,6 +138,7 @@ mmCheckingPanel::~mmCheckingPanel()
     col5 = listCtrlAccount_->GetColumnWidth(5);
     col6 = listCtrlAccount_->GetColumnWidth(6);
     col7 = listCtrlAccount_->GetColumnWidth(7);
+	col8 = listCtrlAccount_->GetColumnWidth(8);
 
     wxString col0Str = wxString::Format(wxT("%d"), col0);
     wxString col1Str = wxString::Format(wxT("%d"), col1);
@@ -146,6 +148,7 @@ mmCheckingPanel::~mmCheckingPanel()
     wxString col5Str = wxString::Format(wxT("%d"), col5);
     wxString col6Str = wxString::Format(wxT("%d"), col6);
     wxString col7Str = wxString::Format(wxT("%d"), col7);
+	wxString col8Str = wxString::Format(wxT("%d"), col8);
     wxString sortColStr = wxString::Format(wxT("%d"), sortcol);
     wxString ascStr = wxString::Format(wxT("%d"), asc);
 
@@ -177,6 +180,7 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
             menu.Append(MENU_VIEW_FLAGGED, _("View Flagged Transactions"));
 			menu.Append(MENU_VIEW_DUPLICATE, _("View Duplicate Transactions"));
             menu.AppendSeparator();
+            menu.Append(MENU_VIEW_TODAY, _("View Transactions from today"));
             menu.Append(MENU_VIEW_LAST30, _("View Transactions from last 30 days"));
             menu.Append(MENU_VIEW_CURRENTMONTH, _("View Transactions from current month"));
             menu.Append(MENU_VIEW_LASTMONTH, _("View Transactions from last month"));
@@ -288,9 +292,11 @@ void mmCheckingPanel::CreateControls()
     listCtrlAccount_->InsertColumn(6, itemCol);
     itemCol.SetText(_("Balance"));
     listCtrlAccount_->InsertColumn(7, itemCol);
+	itemCol.SetText(_("Notes"));
+	listCtrlAccount_->InsertColumn(8, itemCol);
     
     /* See if we can get data from inidb */
-     long col0, col1, col2, col3, col4, col5, col6, col7;
+     long col0, col1, col2, col3, col4, col5, col6, col7, col8;
      mmDBWrapper::getINISettingValue(inidb_, 
         wxT("CHECK_COL0_WIDTH"), wxT("80")).ToLong(&col0); 
      mmDBWrapper::getINISettingValue(inidb_, 
@@ -306,7 +312,9 @@ void mmCheckingPanel::CreateControls()
      mmDBWrapper::getINISettingValue(inidb_, 
          wxT("CHECK_COL6_WIDTH"), wxT("-2")).ToLong(&col6); 
      mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("CHECK_COL7_WIDTH"), wxT("-2")).ToLong(&col7); 
+         wxT("CHECK_COL7_WIDTH"), wxT("-2")).ToLong(&col7);
+	mmDBWrapper::getINISettingValue(inidb_, 
+         wxT("CHECK_COL8_WIDTH"), wxT("-2")).ToLong(&col8);
 
     long iniSortCol, iniSortAsc;
     mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_SORT_COL"), wxT("0")).ToLong(&iniSortCol); 
@@ -325,6 +333,7 @@ void mmCheckingPanel::CreateControls()
     listCtrlAccount_->SetColumnWidth(5, col5);
     listCtrlAccount_->SetColumnWidth(6, col6);
     listCtrlAccount_->SetColumnWidth(7, col7);
+	listCtrlAccount_->SetColumnWidth(8, col8);
     listCtrlAccount_->SetColumnImage(listCtrlAccount_->sortCol_, 5);
 
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, ID_PANEL1, 
@@ -562,6 +571,16 @@ void mmCheckingPanel::initVirtualListControl()
             if (pBankTransaction->status_ != wxT("D"))
                 toAdd = false;
         }
+        else  if (currentView_ == wxT("View Today"))
+	   {
+           wxDateTime dtBegin = wxDateTime::Now().GetDateOnly();
+           wxDateTime dtEnd = dtBegin + wxTimeSpan(23, 59, 59);
+
+           if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+               toAdd = false;
+
+           getBal = true;
+	    }
         else  if (currentView_ == wxT("View 30 days"))
         {
             wxDateTime today = wxDateTime::Now();
@@ -756,6 +775,10 @@ void mmCheckingPanel::initViewTransactionsHeader()
     {
         header->SetLabel(_("Viewing Un-Reconciled transactions"));
     }
+    else if (currentView_ == wxT("View Today"))
+    {
+       header->SetLabel(_("Viewing transactions from today"));
+    }
     else if (currentView_ == wxT("View 30 days"))
     {
         header->SetLabel(_("Viewing transactions from last 30 days"));
@@ -806,6 +829,11 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     {
         header->SetLabel(_("Viewing Flagged transactions"));
         currentView_ = wxT("View Flagged");
+    }
+    else if (evt == MENU_VIEW_TODAY)
+    {
+        header->SetLabel(_("Viewing transactions from today"));
+        currentView_ = wxT("View Today");
     }
     else if (evt == MENU_VIEW_LAST30)
     {
@@ -1056,6 +1084,9 @@ wxString mmCheckingPanel::getItem(long item, long column)
     if (column == 7)
         return trans_[item]->balanceStr_;
 
+	if (column == 8)
+        return trans_[item]->notes_;
+		
     return wxT("");
 }
 

@@ -1,6 +1,12 @@
 Version History of Money Manager Ex
 
-0.9.4.2
+0.9.5
+- Fix for Mac Paths (Wesley Ellis)
+- Add Notes in Transaction Lists (Wesley Ellis)
+- Better Currency Summary (Vadim)
+- Add "View Today's Transactions" (Vadim)
+
+0.9.4.2 (Mar 17, 2009)
 - Fix potential crash in Account Transactions Screen
 - Added Bulgarian Translation (Ivan Gyokov)
 - Added Portuguese (Portugal) Translation (Fatela) 

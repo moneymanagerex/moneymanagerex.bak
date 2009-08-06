@@ -98,6 +98,7 @@ public:
     int toAccountID_;
 
 	wxString accountStr_;
+	wxString notesStr_;
     
 };
 

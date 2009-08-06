@@ -20,12 +20,23 @@
 #include "defs.h"
 #include "dbwrapper.h"
 #include "util.h"
+#include "defs.h"
 
 /*******************************************************/
 /* Include XPM Support */
 #include "../resources/money.xpm"
 #ifdef MMEX_CUSTOM_BUILD
 #include "../resources/bma.xpm"
+#endif
+/*******************************************************/
+/* Indicate file path for OS X */
+#if defined (__WXMAC__)
+#define MMEX_INIDB_FNAME wxT("/mmexini.db3")
+#define MMEX_SPLASH_FNAME wxT("MMEX.app/Contents/Resources/runtime_osx/splash.png")
+
+#else
+#define MMEX_INIDB_FNAME wxT("/mmexini.db3")
+#define MMEX_SPLASH_FNAME wxT("splash.png")
 #endif
 /*******************************************************/
 IMPLEMENT_DYNAMIC_CLASS( mmAboutDialog, wxDialog )
@@ -56,7 +67,7 @@ bool mmAboutDialog::Create( wxWindow* parent, wxWindowID id,
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(wxT("mmex.ico"), wxBITMAP_TYPE_ICO, 32, 32);
+    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
 
     Centre();
@@ -69,6 +80,9 @@ void mmAboutDialog::OnVersionHistory(wxCommandEvent& event)
     wxString filePath = fname.GetPath(wxPATH_GET_VOLUME) 
                        + wxFileName::GetPathSeparator()
                        + wxT("version.txt");
+#if defined (__WXMAC__) || defined (__WXOSX__)
+	filePath = wxT("MMEX.app/Contents/Resources/runtime_osx/version.txt");
+#endif
     fileviewer* dlg = new fileviewer(filePath, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
@@ -82,6 +96,9 @@ void mmAboutDialog::OnContributerList(wxCommandEvent& event)
     wxString filePath = fname.GetPath(wxPATH_GET_VOLUME) 
                         + wxFileName::GetPathSeparator()
                         + wxT("contrib.txt");
+#if defined (__WXMAC__) || defined (__WXOSX__)
+	filePath = wxT("MMEX.app/Contents/Resources/runtime_osx/contrib.txt");
+#endif
     fileviewer* dlg = new fileviewer(filePath, this);
     if ( dlg->ShowModal() == wxID_OK )
     {
@@ -100,7 +117,7 @@ void mmAboutDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizerN, 1, wxGROW|wxALL, 5);
 
     wxBitmap itemStaticBitmap3Bitmap;
-    itemStaticBitmap3Bitmap.LoadFile(wxT("splash.png"), wxBITMAP_TYPE_PNG); 
+    itemStaticBitmap3Bitmap.LoadFile(MMEX_SPLASH_FNAME, wxBITMAP_TYPE_PNG); 
 
     wxStaticBitmap* itemStaticBitmap3;
     if (!mmIniOptions::enableCustomLogo_)

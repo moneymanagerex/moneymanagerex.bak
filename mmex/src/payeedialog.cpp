@@ -18,6 +18,7 @@
 
 #include "payeedialog.h"
 #include "util.h"
+#include "defs.h"
 #include <wx/event.h>
 
 IMPLEMENT_DYNAMIC_CLASS( mmPayeeDialog, wxDialog )
@@ -101,7 +102,7 @@ bool mmPayeeDialog::Create( wxWindow* parent, wxWindowID id,
         selectButton->Disable();
     }
 
-    wxIcon icon(wxT("mmex.ico"), wxBITMAP_TYPE_ICO, 32, 32);
+    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
     
     fillControls();

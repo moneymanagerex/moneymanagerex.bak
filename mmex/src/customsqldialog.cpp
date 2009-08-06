@@ -18,6 +18,7 @@
 
 #include "customsqldialog.h"
 #include "util.h"
+#include "defs.h"
 
 using namespace std;
 
@@ -62,7 +63,7 @@ bool mmCustomSQLDialog::Create(  wxWindow* parent, wxWindowID id,
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(wxT("mmex.ico"), wxBITMAP_TYPE_ICO, 32, 32);
+    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
 
     Centre();

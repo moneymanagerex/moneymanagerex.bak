@@ -14,6 +14,7 @@ Rohit Kumar
 Ho Yin Kwok
 Jeancf
 Wesley Ellis
+Vadim
 
 Silk Icons
 ===========
@@ -30,7 +31,7 @@ Greek
 Czech
 -- Josef Remes
 Russian
--- KarmaSV, Nikolay Akimov, Churzzz
+-- KarmaSV, Nikolay Akimov, Churzzz, Vadim
 Brazilian Portuguese
 -- Jose Carlos
 German

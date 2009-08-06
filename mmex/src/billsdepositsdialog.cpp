@@ -23,6 +23,7 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "splittransactionsdialog.h"
+#include "defs.h"
 
 IMPLEMENT_DYNAMIC_CLASS( mmBDDialog, wxDialog )
 
@@ -84,7 +85,7 @@ bool mmBDDialog::Create( wxWindow* parent, wxWindowID id, const wxString& captio
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(wxT("mmex.ico"), wxBITMAP_TYPE_ICO, 32, 32);
+    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
     
     fillControls();

@@ -35,6 +35,7 @@
 #define VIEW_TRANS_90 4
 #define VIEW_TRANS_LASTMONTH 5
 #define VIEW_TRANS_CURRENTMONTH 6
+#define VIEW_TRANS_TODAY 7
 
 #define HTML_FONT_XSMALL 0
 #define HTML_FONT_SMALL 1
@@ -266,6 +267,8 @@ void mmOptionsDialog::OnViewTransChanged(wxCommandEvent& event)
        viewTrans = wxT("View Reconciled");
    else if (selection == VIEW_TRANS_UNREC)
        viewTrans = wxT("View UnReconciled");
+   else if (selection == VIEW_TRANS_TODAY)
+       viewTrans = wxT("View Today");
    else if (selection == VIEW_TRANS_30)
        viewTrans = wxT("View 30 days");
    else if (selection == VIEW_TRANS_90)
@@ -497,12 +500,13 @@ void mmOptionsDialog::CreateControls()
         _("View 30 days"),
         _("View 90 days"),
         _("View Last Month"),
-        _("View Current Month")
+        _("View Current Month"),
+        _("View Today")
     };  
     
     choiceTransVisible_ = new wxChoice( itemPanelViews, 
         ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, 
-        wxSize(165, -1), 7, itemChoiceViewTransStrings, 0 );
+        wxSize(165, -1), sizeof(itemChoiceViewTransStrings)/sizeof(*itemChoiceViewTransStrings), itemChoiceViewTransStrings, 0 );
     itemStaticBoxSizerTransView->Add(choiceTransVisible_, 0, 
         wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -514,6 +518,8 @@ void mmOptionsDialog::CreateControls()
         choiceTransVisible_->SetSelection(VIEW_TRANS_REC);
     else if (vTrans == wxT("View UnReconciled"))
         choiceTransVisible_->SetSelection(VIEW_TRANS_UNREC);
+    else if (vTrans == wxT("View Today"))
+	    choiceTransVisible_->SetSelection(VIEW_TRANS_TODAY);
     else if (vTrans == wxT("View 30 days"))
         choiceTransVisible_->SetSelection(VIEW_TRANS_30);
     else if (vTrans == wxT("View 90 days"))

@@ -19,6 +19,7 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "currencydialog.h"
+#include "defs.h"
 
 #define DEF_CHANGE_NONE 0
 #define DEF_CHANGE_APPRECIATE 1
@@ -65,7 +66,7 @@ bool mmAssetDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(wxT("mmex.ico"), wxBITMAP_TYPE_ICO, 32, 32);
+    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
     
     fillControls();

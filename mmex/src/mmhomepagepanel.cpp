@@ -16,6 +16,8 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  /*******************************************************/
 
+#include <map>
+
 #include "mmhomepagepanel.h"
 #include "mmex.h"
 #include "util.h"
@@ -27,6 +29,19 @@
 #include "billsdepositspanel.h"
 #include "mmgraphincexpensesmonth.h"
 #include "mmgraphtopcategories.h"
+
+
+namespace
+{
+
+inline boost::shared_ptr<mmCurrency> getCurrency(mmCoreDB* core, int currencyID)
+{
+    wxASSERT(core);
+    return core->currencyList_.getCurrencySharedPtr(currencyID);
+}
+
+} // namespace
+
 
 BEGIN_EVENT_TABLE( mmHomePagePanel, wxPanel )
 END_EVENT_TABLE()
@@ -115,8 +130,12 @@ void mmHomePagePanel::updateAccounts()
     
     double tincome = 0.0;
     double texpenses = 0.0;
-    double tBalance = 0.0;
+
+    typedef std::map<boost::shared_ptr<mmCurrency>, double> balances_t;
+    balances_t tBalances;
+
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
+
     for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
     {
         mmCheckingAccount* pCA 
@@ -134,7 +153,7 @@ void mmHomePagePanel::updateAccounts()
            double rate = pCurrencyPtr->baseConv_;
 
            // show the actual amount in that account in the original rate
-           tBalance += bal * rate;
+           tBalances[pCurrencyPtr] += bal * rate;
            wxString balance;
            mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
 
@@ -158,13 +177,6 @@ void mmHomePagePanel::updateAccounts()
 
 	}
 
-    wxString tBalanceStr;
-	mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
-
-    hb.startTableRow();
-	hb.addTotalRow(_("Total:"), 2, tBalanceStr);
-    hb.endTableRow();
-
     if (mmIniOptions::enableStocks_)
     {
         /* Stocks */
@@ -180,7 +192,8 @@ void mmHomePagePanel::updateAccounts()
 		hb.addTableCell(stockBalanceStr, true);
 		hb.endTableRow();
 
-        tBalance += stockBalance;
+	int currencyID = mmDBWrapper::getBaseCurrencySettings(db_);
+	tBalances[getCurrency(core_, currencyID)] += stockBalance;
     }
 
     if (mmIniOptions::enableAssets_)
@@ -197,13 +210,44 @@ void mmHomePagePanel::updateAccounts()
 		hb.addTableCell(assetBalanceStr, true);
 		hb.endTableRow();
 
-        tBalance += assetBalance;
+	int currencyID = mmDBWrapper::getBaseCurrencySettings(db_);
+	tBalances[getCurrency(core_, currencyID)] += assetBalance;
     }
     
-    mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
+    hb.addRowSeparator(2);
 
-	hb.addRowSeparator(2);
+    if (tBalances.size() > 1) // print total balance for every currency
+    {
+	hb.startTableRow();
+	hb.addTableHeaderCell(_("Currency"));
+	hb.addTableHeaderCell(_("Summary"));
+	hb.endTableRow();
+		
+	for (balances_t::const_iterator i = tBalances.begin(); i != tBalances.end(); ++i)
+	{
+		wxString tBalanceStr;
+		mmCurrencyFormatter::loadSettings(i->first);
+		mmCurrencyFormatter::formatDoubleToCurrency(i->second, tBalanceStr);
+			
+		hb.startTableRow();
+		hb.addTableCell(i->first->currencyName_);
+		hb.addTableCell(tBalanceStr, true);
+		hb.endTableRow();
+	}
+    } 
+    else if (!tBalances.empty())
+    {
+	balances_t::const_iterator it = tBalances.begin();
+ 
+	wxString tBalanceStr;
+	mmCurrencyFormatter::loadSettings(it->first);
+	mmCurrencyFormatter::formatDoubleToCurrency(it->second, tBalanceStr);
+
 	hb.addTotalRow(_("Total of Accounts:"), 2, tBalanceStr);
+    }
+
+    tBalances.clear();
+
     hb.endTable();
 
 	hb.endTableCell();

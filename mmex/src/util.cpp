@@ -125,11 +125,15 @@ void mmPlayTransactionSound(wxSQLite3Database* db_)
        wxT("USETRANSSOUND"), wxT("TRUE"));
     if (useSound != wxT("TRUE"))
         return;
-    wxString soundPath = mmGetBaseWorkingPath()+wxT("\\kaching.wav");
-#if defined (__WXGTK__) || (__WXMAC__)
-    soundPath = mmGetBaseWorkingPath()+wxT("//kaching.wav");
+	wxString soundPath = mmGetBaseWorkingPath()+wxT("\\kaching.wav");
+	
+	// Added path for mac app bundles
+	#if defined (__WXMAC__) || defined(__WXOSX__)
+	soundPath = wxT("MMEX.app/Contents/Resources/runtime_osx/kaching.wav");
+	#else if defined (__WXGTK__)
+	soundPath = mmGetBaseWorkingPath()+wxT("//kaching.wav");
 #endif
-
+	
     wxSound registerSound(soundPath);
     if (registerSound.IsOk())
         registerSound.Play(wxSOUND_ASYNC);
@@ -162,7 +166,10 @@ void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 
 	wxString langPath = fname.GetPath(wxPATH_GET_VOLUME)
 		+ wxT("//en//");
-#if defined (__WXGTK__) || (__WXMAC__)
+#if defined (__WXMAC__) || defined (__WXOSX__)
+	langPath = wxT("MMEX.app/Contents/Resources/runtime_osx/en/");
+#endif
+#if defined (__WXGTK__)
     mmApp->m_locale.AddCatalogLookupPathPrefix(fname.GetPath(wxPATH_GET_VOLUME));
 #else
     mmApp->m_locale.AddCatalogLookupPathPrefix(langPath);
@@ -1338,7 +1345,7 @@ void wxAutoComboBox::OnKeyUp(wxKeyEvent &event)
                 wxString txtValue = GetValue();
 
                 long start=-1, end=-1;
-                GetSelection(&start, &end);
+                GetSelection()&start, &end;
 
                 wxString EnteredValue = txtValue.Left(start);
                 int Idx = -1;
