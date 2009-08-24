@@ -42,7 +42,6 @@ public:
         hb.addLineBreak();
         hb.addLineBreak();
 
-        mmDBWrapper::loadBaseCurrencySettings(db_);
         int ct = 0;  
         double tincome = 0.0;
         double texpenses = 0.0;
@@ -82,7 +81,10 @@ public:
            }
         }
 
-		wxString tBalanceStr;
+        // all sums below will be in base currency!
+        mmDBWrapper::loadBaseCurrencySettings(db_);
+
+                wxString tBalanceStr;
 		mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
 
 		hb.startTableRow();
@@ -95,7 +97,6 @@ public:
         double invested;
         double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);
         wxString stockBalanceStr;
-        mmDBWrapper::loadBaseCurrencySettings(db_);
         mmCurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
         wxString dispStr =  + stockBalanceStr; 
 
@@ -107,7 +108,6 @@ public:
         /* Assets */
         double assetBalance = mmDBWrapper::getAssetBalance(db_);
         wxString assetBalanceStr;
-        mmDBWrapper::loadBaseCurrencySettings(db_);
         mmCurrencyFormatter::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
 		hb.startTableRow();
@@ -117,7 +117,6 @@ public:
 
         tBalance += stockBalance;
         tBalance += assetBalance;
-        mmDBWrapper::loadBaseCurrencySettings(db_);
         mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
 
 		hb.addRowSeparator(2);

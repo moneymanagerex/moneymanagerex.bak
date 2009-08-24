@@ -30,25 +30,37 @@
 #include "mmgraphincexpensesmonth.h"
 #include "mmgraphtopcategories.h"
 
-
-namespace
-{
-
-inline boost::shared_ptr<mmCurrency> getCurrency(mmCoreDB* core, int currencyID)
-{
-    wxASSERT(core);
-    return core->currencyList_.getCurrencySharedPtr(currencyID);
-}
-
-} // namespace
-
-
 BEGIN_EVENT_TABLE( mmHomePagePanel, wxPanel )
 END_EVENT_TABLE()
 
 BEGIN_EVENT_TABLE(mmHtmlWindow, wxHtmlWindow)
 END_EVENT_TABLE()
 
+
+namespace
+{
+
+inline boost::shared_ptr<mmCurrency> getCurrency(mmCoreDB* core, int currencyID)
+{
+        wxASSERT(core);
+        return core->currencyList_.getCurrencySharedPtr(currencyID);
+}
+
+
+/*
+        Returns true if _Left precedes and is not equal to _Right in the sort order.
+*/
+struct CurrencyCompare : public std::binary_function<boost::shared_ptr<mmCurrency>, 
+                                                     boost::shared_ptr<mmCurrency>, bool> 
+{
+        bool operator() (boost::shared_ptr<mmCurrency> _Left, boost::shared_ptr<mmCurrency> _Right) const
+        {
+                return _Left->currencyName_ < _Right->currencyName_; // order by currency name
+        }
+};
+
+
+} // namespace
 
 
 mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame, 
@@ -130,12 +142,13 @@ void mmHomePagePanel::updateAccounts()
     
     double tincome = 0.0;
     double texpenses = 0.0;
+    double tBalance = 0.0;
 
-    typedef std::map<boost::shared_ptr<mmCurrency>, double> balances_t;
+    typedef std::map<boost::shared_ptr<mmCurrency>, double, CurrencyCompare> balances_t;
     balances_t tBalances;
+    bool print_bal4cur = false;
 
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
-
     for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
     {
         mmCheckingAccount* pCA 
@@ -152,8 +165,11 @@ void mmHomePagePanel::updateAccounts()
               + core_->bTransactionList_.getBalance(pCA->accountID_);
            double rate = pCurrencyPtr->baseConv_;
 
-           // show the actual amount in that account in the original rate
-           tBalances[pCurrencyPtr] += bal * rate;
+           tBalance += bal * rate; // actual amount in that account in the original rate
+
+           // show the actual amount in that account
+           print_bal4cur |= (bal != 0.0 && tBalances[pCurrencyPtr] != 0.0);
+           tBalances[pCurrencyPtr] += bal;
            wxString balance;
            mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
 
@@ -177,6 +193,17 @@ void mmHomePagePanel::updateAccounts()
 
 	}
 
+    mmDBWrapper::loadBaseCurrencySettings(db_);
+    wxString tBalanceStr;
+    mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
+
+    hb.startTableRow();
+	hb.addTotalRow(_("Total:"), 2, tBalanceStr);
+    hb.endTableRow();
+
+    const int BaseCurrencyID = mmDBWrapper::getBaseCurrencySettings(db_);
+    boost::shared_ptr<mmCurrency> BaseCurrency(BaseCurrencyID != -1 ? getCurrency(core_, BaseCurrencyID) : boost::shared_ptr<mmCurrency>());
+
     if (mmIniOptions::enableStocks_)
     {
         /* Stocks */
@@ -192,8 +219,13 @@ void mmHomePagePanel::updateAccounts()
 		hb.addTableCell(stockBalanceStr, true);
 		hb.endTableRow();
 
-	int currencyID = mmDBWrapper::getBaseCurrencySettings(db_);
-	tBalances[getCurrency(core_, currencyID)] += stockBalance;
+        tBalance += stockBalance;
+        
+        if (BaseCurrency)
+        {
+                print_bal4cur |= (stockBalance != 0.0 && tBalances[BaseCurrency] != 0.0);
+                tBalances[BaseCurrency] += stockBalance;
+        }
     }
 
     if (mmIniOptions::enableAssets_)
@@ -210,44 +242,44 @@ void mmHomePagePanel::updateAccounts()
 		hb.addTableCell(assetBalanceStr, true);
 		hb.endTableRow();
 
-	int currencyID = mmDBWrapper::getBaseCurrencySettings(db_);
-	tBalances[getCurrency(core_, currencyID)] += assetBalance;
+        tBalance += assetBalance;
+
+        if (BaseCurrency)
+        {
+                print_bal4cur |= (assetBalance != 0.0 && tBalances[BaseCurrency] != 0.0);
+                tBalances[BaseCurrency] += assetBalance;
+        }
     }
     
-    hb.addRowSeparator(2);
-
-    if (tBalances.size() > 1) // print total balance for every currency
+    if (print_bal4cur && tBalances.size() > 1) // print total balance for every currency
     {
-	hb.startTableRow();
-	hb.addTableHeaderCell(_("Currency"));
-	hb.addTableHeaderCell(_("Summary"));
-	hb.endTableRow();
-		
-	for (balances_t::const_iterator i = tBalances.begin(); i != tBalances.end(); ++i)
-	{
-		wxString tBalanceStr;
-		mmCurrencyFormatter::loadSettings(i->first);
-		mmCurrencyFormatter::formatDoubleToCurrency(i->second, tBalanceStr);
-			
-		hb.startTableRow();
-		hb.addTableCell(i->first->currencyName_);
-		hb.addTableCell(tBalanceStr, true);
-		hb.endTableRow();
-	}
+            hb.addRowSeparator(2);
+
+            hb.startTableRow();
+            hb.addTableHeaderCell(_("Currency"));
+            hb.addTableHeaderCell(_("Summary"));
+            hb.endTableRow();
+
+            for (balances_t::const_iterator i = tBalances.begin(); i != tBalances.end(); ++i)
+            {
+                    wxString tBalanceStr;
+                    mmCurrencyFormatter::loadSettings(i->first);
+                    mmCurrencyFormatter::formatDoubleToCurrency(i->second, tBalanceStr);
+
+                    hb.startTableRow();
+                    hb.addTableCell(i->first->currencyName_);
+                    hb.addTableCell(tBalanceStr, true);
+                    hb.endTableRow();
+            }
     } 
-    else if (!tBalances.empty())
-    {
-	balances_t::const_iterator it = tBalances.begin();
- 
-	wxString tBalanceStr;
-	mmCurrencyFormatter::loadSettings(it->first);
-	mmCurrencyFormatter::formatDoubleToCurrency(it->second, tBalanceStr);
-
-	hb.addTotalRow(_("Total of Accounts:"), 2, tBalanceStr);
-    }
 
     tBalances.clear();
 
+    mmDBWrapper::loadBaseCurrencySettings(db_);
+    mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
+
+	hb.addRowSeparator(2);
+	hb.addTotalRow(_("Total of Accounts:"), 2, tBalanceStr);
     hb.endTable();
 
 	hb.endTableCell();
@@ -256,7 +288,7 @@ void mmHomePagePanel::updateAccounts()
 	hb.startTable(wxT("95%"));
 
     wxString incStr, expStr;
-    mmCurrencyFormatter::formatDoubleToCurrency(tincome, incStr);
+    mmCurrencyFormatter::formatDoubleToCurrency(tincome, incStr); // must use loadBaseCurrencySettings (called above)
     mmCurrencyFormatter::formatDoubleToCurrency(texpenses, expStr);
 
     wxString baseInc = _("Income");
