@@ -91,7 +91,7 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
     payeeList_.sortPayeeList();
 
     /* Load the Accounts */
-    sqlString = wxT("select * from ACCOUNTLIST_V1 order by ACCOUNTNAME;");
+    sqlString = wxT("select * from ACCOUNTLIST_V1 order by STATUS desc, FAVORITEACCT desc, ACCOUNTNAME;");
     q1 = db_->ExecuteQuery(sqlString);
     while (q1.NextRow())
     {
