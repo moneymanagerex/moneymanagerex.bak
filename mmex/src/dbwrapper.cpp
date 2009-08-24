@@ -21,6 +21,40 @@
 #include "util.h"
 #include "guiid.h"
 
+
+namespace
+{
+
+void
+insertCategoryTree(wxSQLite3Database *db, 
+                   const wxString &categoryName,
+                   const wxChar* subcats[] // must be NULL or ends with NULL
+                  )
+{
+    wxASSERT(db);
+
+    wxString sql = wxString::Format(wxT("insert into CATEGORY_V1 (CATEGNAME) VALUES('%s')"), categoryName);
+    db->ExecuteUpdate(sql);
+
+    if (!subcats)
+        return;
+
+    int catId = mmDBWrapper::getCategoryID(db, categoryName);
+
+    for (size_t i = 0; subcats[i]; ++i)
+    {
+        sql = wxString::Format(wxT("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('%s', %d)"),
+                               subcats[i], catId
+                              );
+        
+        db->ExecuteUpdate(sql);
+        wxASSERT(i < 100); // subcats must ends with 0
+    }
+}
+
+} // namespace
+
+
 void  mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
 {
     mmBEGINSQL_LITE_EXCEPTION;
@@ -346,158 +380,143 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
 
     if (!existsCat)
     {
-        /* Update Category Tables with prebuilt categories */
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Bills')");
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Telephone', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Bills")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Electricity', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Bills")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Gas', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Bills")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Internet', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Bills")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Rent', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Bills")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Cable TV', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Bills")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Water', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Bills")));
-        db->ExecuteUpdate(bufSQL);
+        const wxChar* BillsCategories[] = {
+            _("Telephone"),
+            _("Electricity"),
+            _("Gas"),
+            _("Internet"),
+            _("Rent"),
+            _("Cable TV"),
+            _("Water"),
+            0
+        };
 
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Food')");
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Groceries', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Food")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Dining out', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Food")));
-        db->ExecuteUpdate(bufSQL);
+        insertCategoryTree(db, _("Bills"), BillsCategories);
 
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Leisure')");
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Movies', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Leisure")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Video Rental', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Leisure")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Magazines', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Leisure")));
-        db->ExecuteUpdate(bufSQL);
+        // --
 
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Automobile')");
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Maintenance', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Automobile")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Gas', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Automobile")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Parking', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Automobile")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Registration', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Automobile")));
-        db->ExecuteUpdate(bufSQL);
+        const wxChar* FoodCategories[] = {
+            _("Groceries"),
+            _("Dining out"),
+            0
+        };
 
-        db->ExecuteUpdate(wxT("insert into CATEGORY_V1 (CATEGNAME) VALUES('Education')"));
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Books', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Education")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Tuition', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Education")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Other', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Education")));
-        db->ExecuteUpdate(bufSQL);
+        insertCategoryTree(db, _("Food"), FoodCategories);
 
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Homeneeds')");
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Clothing', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Homeneeds")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Furnishing', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Homeneeds")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Other', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Homeneeds")));
-        db->ExecuteUpdate(bufSQL);
+        // --
 
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Healthcare')");
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Health', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Healthcare")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Dental', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Healthcare")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Eyecare', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Healthcare")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Physician', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Healthcare")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Prescriptions', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Healthcare")));
-        db->ExecuteUpdate(bufSQL);
+        const wxChar* LeisureCategories[] = {
+            _("Movies"),
+            _("Video Rental"),
+            _("Magazines"),
+            0
+        };
 
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Insurance')");
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Auto', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Insurance")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Life', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Insurance")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Home', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Insurance")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Health', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Insurance")));
-        db->ExecuteUpdate(bufSQL);
+        insertCategoryTree(db, _("Leisure"), LeisureCategories);
 
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Vacation')");
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Travel', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Vacation")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Lodging', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Vacation")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Sightseeing', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Vacation")));
-        db->ExecuteUpdate(bufSQL);
+        // --
 
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Taxes')");
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Income Tax', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Taxes")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('House Tax', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Taxes")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Water Tax', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Taxes")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Others', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Taxes")));
-        db->ExecuteUpdate(bufSQL);
+        const wxChar* AutomobileCategories[] = {
+            _("Maintenance"),
+            _("Gas"),
+            _("Parking"),
+            _("Registration"),
+            0
+        };
 
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Miscellaneous')");
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Gifts')");
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Income')");
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Salary', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Income")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Reimbursement/Refunds', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Income")));
-        db->ExecuteUpdate(bufSQL);
-        bufSQL.Format("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('Investment Income', %d);", 
-            mmDBWrapper::getCategoryID(db, wxT("Income")));
-        db->ExecuteUpdate(bufSQL);
+        insertCategoryTree(db, _("Automobile"), AutomobileCategories);
 
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Other Income')");
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Other Expenses')");
-        db->ExecuteUpdate("insert into CATEGORY_V1 (CATEGNAME) VALUES('Transfer')");
+        // --
+
+        const wxChar* EducationCategories[] = {
+            _("Books"),
+            _("Tuition"),
+            _("Others"),
+            0
+        };
+
+        insertCategoryTree(db, _("Education"), EducationCategories);
+
+        // --
+
+        const wxChar* HomeneedsCategories[] = {
+            _("Clothing"),
+            _("Furnishing"),
+            _("Others"),
+            0
+        };
+
+        insertCategoryTree(db, _("Homeneeds"), HomeneedsCategories);
+
+        // --
+
+        const wxChar* HealthcareCategories[] = {
+            _("Health"),
+            _("Dental"),
+            _("Eyecare"),
+            _("Physician"),
+            _("Prescriptions"),
+            0
+        };
+
+        insertCategoryTree(db, _("Healthcare"), HealthcareCategories);
+
+        // --
+
+        const wxChar* InsuranceCategories[] = {
+            _("Auto"),
+            _("Life"),
+            _("Home"),
+            _("Health"),
+            0
+        };
+
+        insertCategoryTree(db, _("Insurance"), InsuranceCategories);
+
+        // --
+
+        const wxChar* VacationCategories[] = {
+            _("Travel"),
+            _("Lodging"),
+            _("Sightseeing"),
+            0
+        };
+
+        insertCategoryTree(db, _("Vacation"), VacationCategories);
+
+        // --
+
+        const wxChar* TaxesCategories[] = {
+            _("Income Tax"),
+            _("House Tax"),
+            _("Water Tax"),
+            _("Others"),
+            0
+        };
+
+        insertCategoryTree(db, _("Taxes"), TaxesCategories);
+
+        // --
+
+        insertCategoryTree(db, _("Miscellaneous"), 0);
+        insertCategoryTree(db, _("Gifts"), 0);
+
+        // --
+
+        const wxChar* IncomeCategories[] = {
+            _("Salary"),
+            _("Reimbursement/Refunds"),
+            _("Investment Income"),
+            0
+        };
+
+        insertCategoryTree(db, _("Income"), IncomeCategories);
+
+        // --
+
+        insertCategoryTree(db, _("Other Income"), 0);
+        insertCategoryTree(db, _("Other Expenses"), 0);
+        insertCategoryTree(db, _("Transfer"), 0);
     }
 
     mmENDSQL_LITE_EXCEPTION;
