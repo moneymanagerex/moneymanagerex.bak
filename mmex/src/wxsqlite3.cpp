@@ -1976,7 +1976,15 @@ bool wxSQLite3Database::TableExists(const wxString& tableName)
   resultSet.GetAsString(0).ToLong(&value);
   return (value > 0);
 }
-
+bool wxSQLite3Database::ViewExists(const wxString& viewName)
+{
+  wxSQLite3Statement stmt = PrepareStatement("select count(*) from sqlite_master where type='view' and name like ?");
+  stmt.Bind(1, viewName);
+  wxSQLite3ResultSet resultSet = stmt.ExecuteQuery();
+  long value = 0;
+  resultSet.GetAsString(0).ToLong(&value);
+  return (value > 0);
+}
 bool wxSQLite3Database::CheckSyntax(const wxString& sql)
 {
   wxCharBuffer strSql = wxConvUTF8.cWC2MB(sql.wc_str(*wxConvCurrent));

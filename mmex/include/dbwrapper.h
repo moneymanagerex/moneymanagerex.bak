@@ -61,7 +61,8 @@ public:
     static void createStockV1Table(wxSQLite3Database* db);
 	static void createAssetsV1Table(wxSQLite3Database* db);
 	static void createSplitTransactionsV1Table(wxSQLite3Database* db);
-    static wxString getCurrencySymbol(wxSQLite3Database* db, int currencyID);
+    static void createAllDataView(wxSQLite3Database* db);
+	static wxString getCurrencySymbol(wxSQLite3Database* db, int currencyID);
     
     /* Upgrading to new DBs */
     static bool checkDBVersion(wxSQLite3Database* db);

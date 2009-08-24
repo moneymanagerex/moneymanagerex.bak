@@ -1487,6 +1487,13 @@ public:
   */
   bool TableExists(const wxString& tableName);
 
+ /// Check whether a view with the given name exists
+  /**
+  * \param viewName name of the view
+  * \return TRUE if the view exists, FALSE otherwise
+  */
+  bool ViewExists(const wxString& viewName);
+
   /// Check the syntax of an SQL statement given as a wxString
   /**
   * \param sql query string
