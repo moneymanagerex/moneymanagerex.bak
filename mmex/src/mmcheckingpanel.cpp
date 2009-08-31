@@ -1141,6 +1141,8 @@ void MyListCtrl::OnChar(wxKeyEvent& event)
         case 'U':
         case 'f':
         case 'F':
+        case 'd':
+        case 'D':
             // these are the keys we process ourselves
             break;
 
