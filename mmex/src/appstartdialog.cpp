@@ -27,6 +27,10 @@
 #include "../resources/bma.xpm"
 #endif
 /*******************************************************/
+#if defined (__WXMAC__) or defined (__WXOSX__)
+#define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
+#define MMEX_SPLASH_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/splash.png")
+#endif
 
 
 IMPLEMENT_DYNAMIC_CLASS( mmAppStartDialog, wxDialog )

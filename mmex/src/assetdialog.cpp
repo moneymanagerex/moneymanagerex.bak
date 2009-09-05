@@ -32,6 +32,11 @@
 #define DEF_ASSET_JEWELLERY 4
 #define DEF_ASSET_CASH 5
 #define DEF_ASSET_OTHER 6
+
+#if defined (__WXMAC__) or defined (__WXOSX__)
+#define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
+#endif
+
  
 IMPLEMENT_DYNAMIC_CLASS( mmAssetDialog, wxDialog )
 

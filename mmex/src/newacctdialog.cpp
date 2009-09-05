@@ -29,6 +29,10 @@
 #define ACCT_STATUS_OPEN 0
 #define ACCT_STATUS_CLOSED 1
 
+#if defined (__WXMAC__) or defined (__WXOSX__)
+#define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
+#endif
+
 IMPLEMENT_DYNAMIC_CLASS( mmNewAcctDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmNewAcctDialog, wxDialog )

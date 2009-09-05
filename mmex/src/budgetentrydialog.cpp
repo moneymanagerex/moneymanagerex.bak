@@ -32,6 +32,11 @@
 #define DEF_FREQ_HALFYEARLY 6
 #define DEF_FREQ_YEARLY 7
 
+#if defined (__WXMAC__) or defined (__WXOSX__)
+#define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
+#endif
+
+
 IMPLEMENT_DYNAMIC_CLASS( mmBudgetEntryDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmBudgetEntryDialog, wxDialog )

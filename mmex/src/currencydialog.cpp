@@ -25,6 +25,11 @@
 #define INT_PTR intptr_t
 #endif
 
+#if defined (__WXMAC__) or defined (__WXOSX__)
+#define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
+#endif
+
+
 IMPLEMENT_DYNAMIC_CLASS( mmCurrencyDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmCurrencyDialog, wxDialog )

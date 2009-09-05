@@ -129,7 +129,7 @@ void mmPlayTransactionSound(wxSQLite3Database* db_)
 	
 	// Added path for mac app bundles
 	#if defined (__WXMAC__) || defined(__WXOSX__)
-	soundPath = wxT("MMEX.app/Contents/Resources/runtime_osx/kaching.wav");
+	soundPath = wxT("MMEX.app/Contents/Resources/kaching.wav");
 	#else if defined (__WXGTK__)
 	soundPath = mmGetBaseWorkingPath()+wxT("//kaching.wav");
 #endif
@@ -141,6 +141,10 @@ void mmPlayTransactionSound(wxSQLite3Database* db_)
 
 wxString mmGetBaseWorkingPath(bool ignoreCommandLine)
 {
+#if defined (__WXMAC__)
+	wxString path = wxStandardPaths::Get().GetResourcesDir();
+	return path;
+#else
    if (!ignoreCommandLine && (wxTheApp->argc > 1))
    {
       wxString path = wxTheApp->argv[1];
@@ -149,6 +153,7 @@ wxString mmGetBaseWorkingPath(bool ignoreCommandLine)
    }
    wxFileName fname(wxTheApp->argv[0]);
    return fname.GetPath(wxPATH_GET_VOLUME);
+#endif
 }
 
 void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
@@ -167,7 +172,7 @@ void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 	wxString langPath = fname.GetPath(wxPATH_GET_VOLUME)
 		+ wxT("//en//");
 #if defined (__WXMAC__) || defined (__WXOSX__)
-	langPath = wxT("MMEX.app/Contents/Resources/runtime_osx/en/");
+	langPath = wxT("MMEX.app/Contents/Resources/en/");
 #endif
 #if defined (__WXGTK__)
     mmApp->m_locale.AddCatalogLookupPathPrefix(fname.GetPath(wxPATH_GET_VOLUME));
@@ -1345,7 +1350,7 @@ void wxAutoComboBox::OnKeyUp(wxKeyEvent &event)
                 wxString txtValue = GetValue();
 
                 long start=-1, end=-1;
-                GetSelection()&start, &end;
+                GetSelection(&start, &end);
 
                 wxString EnteredValue = txtValue.Left(start);
                 int Idx = -1;

@@ -24,35 +24,36 @@
 
 namespace
 {
-
-void
-insertCategoryTree(wxSQLite3Database *db, 
-                   const wxString &categoryName,
-                   const wxChar* subcats[] // must be NULL or ends with NULL
-                  )
-{
-    wxASSERT(db);
-
-    wxString sql = wxString::Format(wxT("insert into CATEGORY_V1 (CATEGNAME) VALUES('%s')"), categoryName);
-    db->ExecuteUpdate(sql);
-
-    if (!subcats)
-        return;
-
-    int catId = mmDBWrapper::getCategoryID(db, categoryName);
-
-    for (size_t i = 0; subcats[i]; ++i)
-    {
-        sql = wxString::Format(wxT("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('%s', %d)"),
-                               subcats[i], catId
-                              );
-        
-        db->ExecuteUpdate(sql);
-        wxASSERT(i < 100); // subcats must ends with 0
-    }
-}
-
+	
+	void
+	insertCategoryTree(wxSQLite3Database *db, 
+					   const wxString& categoryName,
+					   const wxChar* subcats[] // must be NULL or ends with NULL
+					   )
+	{
+		wxASSERT(db);
+		
+		wxString sql = wxString::Format(wxT("insert into CATEGORY_V1 (CATEGNAME) values ('%s');"), categoryName.c_str());
+		db->ExecuteUpdate(sql);
+		
+		if (!subcats)
+			return;
+		
+		int catId = mmDBWrapper::getCategoryID(db, categoryName);
+		
+		for (size_t i = 0; subcats[i]; ++i)
+		{
+			sql = wxString::Format(wxT("insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values ('%s', %d);"),
+								   subcats[i], catId
+								   );
+			
+			db->ExecuteUpdate(sql);
+			wxASSERT(i < 100); // subcats must ends with 0
+		}
+	}
+	
 } // namespace
+
 
 
 void  mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
@@ -129,7 +130,6 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db, const wxString& f
 
        mmENDSQL_LITE_EXCEPTION;
 }
-
 
 void mmDBWrapper::createBudgetingV1Table(wxSQLite3Database* db)
 {
@@ -377,6 +377,7 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
         existsSubCat = db->TableExists(wxT("SUBCATEGORY_V1"));
         wxASSERT(existsSubCat);
     }
+		
 
     if (!existsCat)
     {
@@ -391,7 +392,7 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
             0
         };
 
-        insertCategoryTree(db, _("Bills"), BillsCategories);
+		insertCategoryTree(db, _("Bills"), BillsCategories);
 
         // --
 
@@ -401,7 +402,7 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
             0
         };
 
-        insertCategoryTree(db, _("Food"), FoodCategories);
+		insertCategoryTree(db, _("Food"), FoodCategories);
 
         // --
 
@@ -412,7 +413,7 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
             0
         };
 
-        insertCategoryTree(db, _("Leisure"), LeisureCategories);
+		insertCategoryTree(db, _("Leisure"), LeisureCategories);
 
         // --
 
@@ -424,7 +425,7 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
             0
         };
 
-        insertCategoryTree(db, _("Automobile"), AutomobileCategories);
+		insertCategoryTree(db, _("Automobile"), AutomobileCategories);
 
         // --
 
@@ -435,7 +436,7 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
             0
         };
 
-        insertCategoryTree(db, _("Education"), EducationCategories);
+		insertCategoryTree(db, _("Education"), EducationCategories);
 
         // --
 
@@ -446,7 +447,7 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
             0
         };
 
-        insertCategoryTree(db, _("Homeneeds"), HomeneedsCategories);
+		insertCategoryTree(db, _("Homeneeds"), HomeneedsCategories);
 
         // --
 
@@ -459,7 +460,7 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
             0
         };
 
-        insertCategoryTree(db, _("Healthcare"), HealthcareCategories);
+		insertCategoryTree(db, _("Healthcare"), HealthcareCategories);
 
         // --
 
@@ -471,7 +472,7 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
             0
         };
 
-        insertCategoryTree(db, _("Insurance"), InsuranceCategories);
+		insertCategoryTree(db, _("Insurance"), InsuranceCategories);
 
         // --
 
@@ -482,7 +483,7 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
             0
         };
 
-        insertCategoryTree(db, _("Vacation"), VacationCategories);
+		insertCategoryTree(db, _("Vacation"), VacationCategories);
 
         // --
 
@@ -494,12 +495,12 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
             0
         };
 
-        insertCategoryTree(db, _("Taxes"), TaxesCategories);
+		insertCategoryTree(db, _("Taxes"), TaxesCategories);
 
         // --
 
-        insertCategoryTree(db, _("Miscellaneous"), 0);
-        insertCategoryTree(db, _("Gifts"), 0);
+		insertCategoryTree(db, _("Miscellaneous"), 0);
+		insertCategoryTree(db, _("Gifts"), 0);
 
         // --
 
@@ -510,13 +511,13 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
             0
         };
 
-        insertCategoryTree(db, _("Income"), IncomeCategories);
+		insertCategoryTree(db, _("Income"), IncomeCategories);
 
         // --
 
-        insertCategoryTree(db, _("Other Income"), 0);
-        insertCategoryTree(db, _("Other Expenses"), 0);
-        insertCategoryTree(db, _("Transfer"), 0);
+		insertCategoryTree(db, _("Other Income"), 0);
+		insertCategoryTree(db, _("Other Expenses"), 0);
+		insertCategoryTree(db, _("Transfer"), 0);
     }
 
     mmENDSQL_LITE_EXCEPTION;

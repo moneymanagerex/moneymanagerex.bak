@@ -119,6 +119,13 @@
 /*******************************************************/
 #define MMEX_INIDB_FNAME wxT("/mmexini.db3")
 #define MMEX_SPLASH_FNAME wxT("/splash.png")
+
+#if defined (__WXMAC__)
+#define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
+#else
+#define MMEX_ICON_FNAME wxT("mmex.ico")
+#endif
+
 /*******************************************************/
 
 BEGIN_EVENT_TABLE(mmNewDatabaseWizard, wxWizard)
@@ -243,8 +250,8 @@ bool mmGUIApp::OnInit()
         wxT("ISMAXIMIZED"), isMaxStrDef);
 
     /* Load Dimensions of Window */
-    wxString originX = wxT("0");
-    wxString originY = wxT("0");
+    wxString originX = wxT("50");
+    wxString originY = wxT("50");
     wxString sizeW = wxT("800");
     wxString sizeH = wxT("600");
     wxString valxStr = mmDBWrapper::getINISettingValue(inidb, 
@@ -277,6 +284,11 @@ bool mmGUIApp::OnInit()
 //    if (!mmGraphGenerator::checkGraphFiles())
 //        mmIniOptions::enableGraphs_ = false;
 //#endif
+#if defined (__WXMAC__) || defined (__WXOSX__)
+	wxApp::s_macAboutMenuItemId = MENU_ABOUT;
+	wxApp::s_macPreferencesMenuItemId = MENU_OPTIONS;
+	wxApp::s_macHelpMenuTitleName = "&Help";
+#endif
 
     /* Load GUI Frame */
     mmGUIFrame *frame = new mmGUIFrame(mmIniOptions::appName_,
@@ -409,7 +421,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 	m_mgr.SetManagedWindow(this);
 
 	/* Set Icon for Frame */
-    wxIcon icon(wxT("mmex.ico"), wxBITMAP_TYPE_ICO, 32, 32);
+    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
 
     /* Setup Printer */

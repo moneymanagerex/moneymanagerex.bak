@@ -23,6 +23,10 @@
 #include "currencydialog.h"
 #include "defs.h"
 
+#if defined (__WXMAC__) or defined (__WXOSX__)
+#define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
+#endif
+
 IMPLEMENT_DYNAMIC_CLASS( mmStockDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmStockDialog, wxDialog )

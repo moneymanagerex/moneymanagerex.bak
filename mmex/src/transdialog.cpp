@@ -39,6 +39,11 @@
 #define DEF_STATUS_FOLLOWUP   3
 #define DEF_STATUS_DUPLICATE   4
 
+#if defined (__WXMAC__) or defined (__WXOSX__)
+#define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
+#endif
+
+
 IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )

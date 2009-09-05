@@ -54,6 +54,11 @@
 #define DEF_STATUS_FOLLOWUP   3
 #define DEF_STATUS_DUPLICATE  4
 
+#if defined (__WXMAC__) || defined (__WXOSX__)
+#define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
+#endif
+
+
 bool sortTransactionsByDate1( boost::shared_ptr<mmBankTransaction> elem1, 
                              boost::shared_ptr<mmBankTransaction> elem2 )
 {

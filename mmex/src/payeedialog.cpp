@@ -21,6 +21,10 @@
 #include "defs.h"
 #include <wx/event.h>
 
+#if defined (__WXMAC__) or defined (__WXOSX__)
+#define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
+#endif
+
 IMPLEMENT_DYNAMIC_CLASS( mmPayeeDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmPayeeDialog, wxDialog )

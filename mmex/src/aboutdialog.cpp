@@ -31,8 +31,9 @@
 /*******************************************************/
 /* Indicate file path for OS X */
 #if defined (__WXMAC__)
-#define MMEX_INIDB_FNAME wxT("/mmexini.db3")
-#define MMEX_SPLASH_FNAME wxT("MMEX.app/Contents/Resources/runtime_osx/splash.png")
+#define MMEX_INIDB_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmexini.db3")
+#define MMEX_SPLASH_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/splash.png")
+#define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
 
 #else
 #define MMEX_INIDB_FNAME wxT("/mmexini.db3")
@@ -81,7 +82,7 @@ void mmAboutDialog::OnVersionHistory(wxCommandEvent& event)
                        + wxFileName::GetPathSeparator()
                        + wxT("version.txt");
 #if defined (__WXMAC__) || defined (__WXOSX__)
-	filePath = wxT("MMEX.app/Contents/Resources/runtime_osx/version.txt");
+	filePath = wxT("MMEX.app/Contents/Resources/version.txt");
 #endif
     fileviewer* dlg = new fileviewer(filePath, this);
     if ( dlg->ShowModal() == wxID_OK )
@@ -97,7 +98,7 @@ void mmAboutDialog::OnContributerList(wxCommandEvent& event)
                         + wxFileName::GetPathSeparator()
                         + wxT("contrib.txt");
 #if defined (__WXMAC__) || defined (__WXOSX__)
-	filePath = wxT("MMEX.app/Contents/Resources/runtime_osx/contrib.txt");
+	filePath = wxT("MMEX.app/Contents/Resources/contrib.txt");
 #endif
     fileviewer* dlg = new fileviewer(filePath, this);
     if ( dlg->ShowModal() == wxID_OK )

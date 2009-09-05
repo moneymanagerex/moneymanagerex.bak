@@ -99,6 +99,8 @@ public:
 
 	wxString accountStr_;
 	wxString notesStr_;
+	int categID;
+	wxString categoryStr_;
     
 };
 
