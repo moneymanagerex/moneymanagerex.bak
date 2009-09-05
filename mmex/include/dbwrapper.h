@@ -167,7 +167,6 @@ public:
         const wxString& defaultVal);
     static void setINISettingValue(wxSQLite3Database* db, const wxString& settingName, 
         const wxString& settingValue);
-    static bool doesINISettingNameExist(wxSQLite3Database* db, const wxString& settingName);
     static void verifyINIDB(wxSQLite3Database* inidb);
 
     /* Stocks API */

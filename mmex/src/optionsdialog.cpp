@@ -24,26 +24,39 @@
 #include <wx/combobox.h>
 #include "mmgraphgenerator.h"
 
-#define VIEW_ALL       0
-#define VIEW_OPEN      1
-#define VIEW_FAVORITES 2
+enum ViewEnum
+{
+  VIEW_ALL,
+  VIEW_OPEN,
+  VIEW_FAVORITES,
+  VIEW_MAX // number of elements, must be last
+};
 
-#define VIEW_TRANS_ALL 0
-#define VIEW_TRANS_REC 1
-#define VIEW_TRANS_UNREC 2
-#define VIEW_TRANS_30 3
-#define VIEW_TRANS_90 4
-#define VIEW_TRANS_LASTMONTH 5
-#define VIEW_TRANS_CURRENTMONTH 6
-#define VIEW_TRANS_TODAY 7
+enum ViewTransEnum
+{
+  VIEW_TRANS_ALL,
+  VIEW_TRANS_REC,
+  VIEW_TRANS_UNREC,
+  VIEW_TRANS_TODAY,
+  VIEW_TRANS_30,
+  VIEW_TRANS_90,
+  VIEW_TRANS_LASTMONTH,
+  VIEW_TRANS_CURRENTMONTH,
+  VIEW_TRANS_MAX // number of elements, must be last
+};
 
-#define HTML_FONT_XSMALL 0
-#define HTML_FONT_SMALL 1
-#define HTML_FONT_NORMAL 2
-#define HTML_FONT_LARGE 3
-#define HTML_FONT_XLARGE 4
-#define HTML_FONT_XXLARGE 5
-#define HTML_FONT_HUGE 6
+enum HtmlFontEnum
+{
+  HTML_FONT_XSMALL,
+  HTML_FONT_SMALL,
+  HTML_FONT_NORMAL,
+  HTML_FONT_LARGE,
+  HTML_FONT_XLARGE,
+  HTML_FONT_XXLARGE,
+  HTML_FONT_HUGE,
+  HTML_FONT_MAX // number of elements, must be last
+};
+
 
 IMPLEMENT_DYNAMIC_CLASS( mmOptionsDialog, wxDialog )
 
@@ -476,11 +489,11 @@ void mmOptionsDialog::CreateControls()
     itemStaticBoxSizer10->Add(itemStaticText45, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxString itemChoiceViewAccountStrings[] = 
+    const wxString itemChoiceViewAccountStrings[VIEW_MAX] = 
     {
         _("All"),
         _("Open"),
-        _("Favorites"),
+        _("Favorites")
     };  
     
     choiceVisible_ = new wxChoice( itemPanelViews, 
@@ -512,16 +525,16 @@ void mmOptionsDialog::CreateControls()
     itemStaticBoxSizerTransView->Add(itemStaticTextTransText, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxString itemChoiceViewTransStrings[] = 
+    const wxString itemChoiceViewTransStrings[VIEW_TRANS_MAX] = 
     {
         _("View All Transactions"),
         _("View Reconciled"),
         _("View UnReconciled"),
+        _("View Today"),
         _("View 30 days"),
         _("View 90 days"),
         _("View Last Month"),
-        _("View Current Month"),
-        _("View Today")
+        _("View Current Month")
     };  
     
     choiceTransVisible_ = new wxChoice( itemPanelViews, 
@@ -562,7 +575,7 @@ void mmOptionsDialog::CreateControls()
     itemStaticBoxSizerFontSize->Add(itemStaticTextHTMLFontSizeText, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-	wxString itemChoiceHTMLFontSize[] = 
+	const wxString itemChoiceHTMLFontSize[HTML_FONT_MAX] = 
     {
         wxT("XSmall"),
 		wxT("Small"),

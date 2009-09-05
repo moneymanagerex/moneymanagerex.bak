@@ -1442,7 +1442,7 @@ wxString mmDBWrapper::getINISettingValue(wxSQLite3Database* db, const wxString& 
 {
     wxString value = defaultVal;
     mmBEGINSQL_LITE_EXCEPTION;
-    wxString bufSQL = wxString::Format(wxT("select * from SETTING_V1 where SETTINGNAME='%s';"), settingName.c_str());
+    wxString bufSQL = wxString::Format(wxT("select SETTINGVALUE from SETTING_V1 where SETTINGNAME='%s'"), settingName.c_str());
     wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
     if (q1.NextRow())
     {
@@ -1453,36 +1453,25 @@ wxString mmDBWrapper::getINISettingValue(wxSQLite3Database* db, const wxString& 
     return value;
 }
 
-bool mmDBWrapper::doesINISettingNameExist(wxSQLite3Database* db, const wxString& settingName)
-{
-    mmBEGINSQL_LITE_EXCEPTION;
-    wxString bufSQL = wxString::Format(wxT("select * from SETTING_V1 where SETTINGNAME='%s';"), settingName.c_str());
-    wxSQLite3ResultSet q1 = db->ExecuteQuery(bufSQL);
-    if (q1.NextRow())
-    {
-        return true;
-    }
-    q1.Finalize();
-    mmENDSQL_LITE_EXCEPTION;
-    return false;
-}
-
 void mmDBWrapper::setINISettingValue(wxSQLite3Database* db, const wxString& settingName, 
                                      const wxString& settingValue)
 {
-    if (!doesINISettingNameExist(db, settingName))
-    {
-        mmBEGINSQL_LITE_EXCEPTION;
-        wxString bufSQL = wxString::Format(wxT("insert into SETTING_V1 (SETTINGNAME, SETTINGVALUE) values ('%s', '%s');"), settingName.c_str(), settingValue.c_str());
-        int retVal = db->ExecuteUpdate(bufSQL);
-        mmENDSQL_LITE_EXCEPTION;
-        return;
-    }
+    int rows_affected = 0;
 
     mmBEGINSQL_LITE_EXCEPTION;
     wxString bufSQL = wxString::Format(wxT("update SETTING_V1 set SETTINGVALUE='%s' where SETTINGNAME='%s';"), settingValue.c_str(), settingName.c_str());
-    int retVal = db->ExecuteUpdate(bufSQL);
+    rows_affected = db->ExecuteUpdate(bufSQL);
     mmENDSQL_LITE_EXCEPTION;
+
+    if (!rows_affected)
+    {
+        mmBEGINSQL_LITE_EXCEPTION;
+        wxString bufSQL = wxString::Format(wxT("insert into SETTING_V1 (SETTINGNAME, SETTINGVALUE) values ('%s', '%s');"), settingName.c_str(), settingValue.c_str());
+        rows_affected = db->ExecuteUpdate(bufSQL);
+        mmENDSQL_LITE_EXCEPTION;
+    }
+
+    wxASSERT(rows_affected == 1);
 }
 
 void mmDBWrapper::updateTransactionWithStatus(wxSQLite3Database* db, int transID, 

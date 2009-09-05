@@ -90,6 +90,67 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
     EVT_CHAR(MyListCtrl::OnChar)
 END_EVENT_TABLE()
 /*******************************************************/
+
+namespace
+{
+
+/*
+    Adds columns to list controls and setup their initial widths.
+*/
+void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
+{
+    wxASSERT(inidb_);
+
+    {
+        long i = 0;
+        lst.InsertColumn(i++, _("Date  "));
+        lst.InsertColumn(i++, _("Number"), wxLIST_FORMAT_RIGHT);
+        lst.InsertColumn(i++, _("Payee"));
+        lst.InsertColumn(i++, _("C  "));
+        lst.InsertColumn(i++, _("Category"));
+        lst.InsertColumn(i++, _("Withdrawal"), wxLIST_FORMAT_RIGHT);
+        lst.InsertColumn(i++, _("Deposit"), wxLIST_FORMAT_RIGHT);
+        lst.InsertColumn(i++, _("Balance"), wxLIST_FORMAT_RIGHT);
+        lst.InsertColumn(i++, _("Notes"));
+    }
+
+    // adjust columns' widths
+
+    const wxChar* def_widths[] = 
+    {
+        wxT("80"),  // date
+        wxT("-2"),  // number
+        wxT("150"), // payee
+        wxT("-2"),  // C
+        wxT("-2"),  // category
+        wxT("-2"),  // withdrawal
+        wxT("-2"),  // deposit
+        wxT("-2"),  // balance
+        wxT("200")  // notes
+    };
+
+    const int cnt = lst.GetColumnCount();
+    wxASSERT( cnt == sizeof(def_widths)/sizeof(*def_widths) );
+
+    for (int i = 0; i < cnt; ++i)
+    {
+        wxString name = wxString::Format(wxT("CHECK_COL%d_WIDTH"), i);
+        wxString val = mmDBWrapper::getINISettingValue(inidb_, name, def_widths[i]);
+        
+        long width = -1;
+        
+        if (val.ToLong(&width))
+        {
+            bool ok = lst.SetColumnWidth(i, width);    
+            wxASSERT(ok);
+        }
+    }
+}
+
+} // namespace
+
+/*******************************************************/
+
 mmCheckingPanel::mmCheckingPanel(mmCoreDB* core,
                                  wxSQLite3Database* inidb,
                                  int accountID, wxWindow *parent,
@@ -129,39 +190,25 @@ mmCheckingPanel::~mmCheckingPanel()
     if (m_imageList)
         delete m_imageList;
 
-    long col0, col1, col2, col3, col4, col5, col6, col7, col8;
-    col0 = listCtrlAccount_->GetColumnWidth(0);
-    col1 = listCtrlAccount_->GetColumnWidth(1);
-    col2 = listCtrlAccount_->GetColumnWidth(2);
-    col3 = listCtrlAccount_->GetColumnWidth(3);
-    col4 = listCtrlAccount_->GetColumnWidth(4);
-    col5 = listCtrlAccount_->GetColumnWidth(5);
-    col6 = listCtrlAccount_->GetColumnWidth(6);
-    col7 = listCtrlAccount_->GetColumnWidth(7);
-	col8 = listCtrlAccount_->GetColumnWidth(8);
+    // save widths of columns to ini database
+    
+    int cols = listCtrlAccount_->GetColumnCount();
 
-    wxString col0Str = wxString::Format(wxT("%d"), col0);
-    wxString col1Str = wxString::Format(wxT("%d"), col1);
-    wxString col2Str = wxString::Format(wxT("%d"), col2);
-    wxString col3Str = wxString::Format(wxT("%d"), col3);
-    wxString col4Str = wxString::Format(wxT("%d"), col4);
-    wxString col5Str = wxString::Format(wxT("%d"), col5);
-    wxString col6Str = wxString::Format(wxT("%d"), col6);
-    wxString col7Str = wxString::Format(wxT("%d"), col7);
-	wxString col8Str = wxString::Format(wxT("%d"), col8);
-    wxString sortColStr = wxString::Format(wxT("%d"), sortcol);
-    wxString ascStr = wxString::Format(wxT("%d"), asc);
+    for (int i = 0; i < cols; ++i)
+    {
+        wxString name = wxString::Format(wxT("CHECK_COL%d_WIDTH"), i);
 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL0_WIDTH"), col0Str); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL1_WIDTH"), col1Str); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL2_WIDTH"), col2Str); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL3_WIDTH"), col3Str); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL4_WIDTH"), col4Str); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL5_WIDTH"), col5Str); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL6_WIDTH"), col6Str); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_COL7_WIDTH"), col7Str); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_SORT_COL"), sortColStr); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_ASC"), ascStr); 
+        int width = listCtrlAccount_->GetColumnWidth(i);
+        wxString val = wxString::Format(wxT("%d"), width);
+
+        mmDBWrapper::setINISettingValue(inidb_, name, val); 
+    }
+
+    wxString val = wxString::Format(wxT("%d"), sortcol);
+    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_SORT_COL"), val); 
+
+    val = wxString::Format(wxT("%d"), asc);
+    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_ASC"), val); 
 }
 
 void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
@@ -271,70 +318,21 @@ void mmCheckingPanel::CreateControls()
     listCtrlAccount_->sortCol_ = sortcol;
     listCtrlAccount_->SetFocus();
     
-    wxListItem itemCol;
-    
-    listCtrlAccount_->InsertColumn(0, _("Date  "));
-    
-    itemCol.SetImage(-1);
-    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
-    itemCol.SetText(_("Number"));
-    listCtrlAccount_->InsertColumn(1, itemCol);
+    createColumns(inidb_, *listCtrlAccount_);
 
-    listCtrlAccount_->InsertColumn(2, _("Payee"));
-    listCtrlAccount_->InsertColumn(3, _("C  "));
-    listCtrlAccount_->InsertColumn(4, _("Category"));
-    
-    itemCol.SetImage(-1);
-    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
-    itemCol.SetText(_("Withdrawal"));
-    listCtrlAccount_->InsertColumn(5, itemCol);
-    itemCol.SetText(_("Deposit"));
-    listCtrlAccount_->InsertColumn(6, itemCol);
-    itemCol.SetText(_("Balance"));
-    listCtrlAccount_->InsertColumn(7, itemCol);
-	itemCol.SetText(_("Notes"));
-	listCtrlAccount_->InsertColumn(8, itemCol);
-    
-    /* See if we can get data from inidb */
-     long col0, col1, col2, col3, col4, col5, col6, col7, col8;
-     mmDBWrapper::getINISettingValue(inidb_, 
-        wxT("CHECK_COL0_WIDTH"), wxT("80")).ToLong(&col0); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("CHECK_COL1_WIDTH"), wxT("-2")).ToLong(&col1); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("CHECK_COL2_WIDTH"), wxT("150")).ToLong(&col2); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("CHECK_COL3_WIDTH"), wxT("-2")).ToLong(&col3); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("CHECK_COL4_WIDTH"), wxT("-2")).ToLong(&col4); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("CHECK_COL5_WIDTH"), wxT("-62")).ToLong(&col5); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("CHECK_COL6_WIDTH"), wxT("-2")).ToLong(&col6); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("CHECK_COL7_WIDTH"), wxT("-2")).ToLong(&col7);
-	mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("CHECK_COL8_WIDTH"), wxT("-2")).ToLong(&col8);
+    {   // load the global variables
+        long iniSortCol = 0;
+        mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_SORT_COL"), wxT("0")).ToLong(&iniSortCol);
+        sortcol = iniSortCol;
 
-    long iniSortCol, iniSortAsc;
-    mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_SORT_COL"), wxT("0")).ToLong(&iniSortCol); 
-    mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_ASC"), wxT("1")).ToLong(&iniSortAsc); 
-    // load the global variables
-    sortcol = iniSortCol;
-    asc = (iniSortAsc) ? true: false;
-    listCtrlAccount_->sortCol_ = sortcol;
-    listCtrlAccount_->asc_ = asc;
-    
-    listCtrlAccount_->SetColumnWidth(0, col0);
-    listCtrlAccount_->SetColumnWidth(1, col1);
-    listCtrlAccount_->SetColumnWidth(2, col2);
-    listCtrlAccount_->SetColumnWidth(3, col3);
-    listCtrlAccount_->SetColumnWidth(4, col4);
-    listCtrlAccount_->SetColumnWidth(5, col5);
-    listCtrlAccount_->SetColumnWidth(6, col6);
-    listCtrlAccount_->SetColumnWidth(7, col7);
-	listCtrlAccount_->SetColumnWidth(8, col8);
-    listCtrlAccount_->SetColumnImage(listCtrlAccount_->sortCol_, 5);
+        long iniSortAsc = 0;
+        mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_ASC"), wxT("1")).ToLong(&iniSortAsc); 
+        asc = iniSortAsc != 0;
+
+        listCtrlAccount_->sortCol_ = sortcol;
+        listCtrlAccount_->asc_ = asc;
+        listCtrlAccount_->SetColumnImage(listCtrlAccount_->sortCol_, 5); // asc\desc sort mark (arrow)
+    }
 
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, ID_PANEL1, 
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
@@ -1052,7 +1050,7 @@ wxString mmCheckingPanel::getItem(long item, long column)
     if (!trans_.size())
        return wxT("");
 
-    if (item >= trans_.size() )
+    if (item >= static_cast<long>(trans_.size()) )
         return wxT("");
 
     if (!trans_[item])
