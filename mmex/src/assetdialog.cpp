@@ -33,10 +33,12 @@
 #define DEF_ASSET_CASH 5
 #define DEF_ASSET_OTHER 6
 
-#if defined (__WXMAC__) or defined (__WXOSX__)
+#if defined (__WXMAC__)
 #define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
+#else
+#define MMEX_ICON_FNAME wxT("mmex.ico")
+#define MMEX_SPLASH_FNAME wxT("/splash.png")
 #endif
-
  
 IMPLEMENT_DYNAMIC_CLASS( mmAssetDialog, wxDialog )
 
