@@ -200,17 +200,17 @@ void mmPayeeDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
 
     addButton = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_ADD, 
-        _("Add"), wxDefaultPosition, wxDefaultSize, 0 );
+        _("&Add"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(addButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     addButton->SetToolTip(_("Add a new payee name"));
 
     editButton = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_EDIT, 
-        _("Edit"), wxDefaultPosition, wxDefaultSize, 0 );
+        _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(editButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     editButton->SetToolTip(_("Change the name of an existing payee"));
     
     deleteButton = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_DELETE, 
-        _("Delete"), wxDefaultPosition, wxDefaultSize, 0 );
+        _("&Delete"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(deleteButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     deleteButton->SetToolTip(_("Delete the selected payee. The payee cannot be used by an existing transaction."));
 
@@ -218,7 +218,7 @@ void mmPayeeDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 5);
 
     selectButton = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_SELECT, 
-        _("Select"), wxDefaultPosition, wxDefaultSize, 0 );
+        _("&Select"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer9->Add(selectButton, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     selectButton->SetToolTip(_("Select the currently selected payee as the selected payee for the transaction"));
 

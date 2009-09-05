@@ -140,13 +140,13 @@ void SplitTransactionDialog::CreateControls()
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxButton* itemButton7 = new wxButton( itemDialog1, ID_BUTTONADD, _("Add"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton7 = new wxButton( itemDialog1, ID_BUTTONADD, _("&Add"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton8 = new wxButton( itemDialog1, ID_BUTTONREMOVE, _("Remove"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton8 = new wxButton( itemDialog1, ID_BUTTONREMOVE, _("&Remove"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton9 = new wxButton( itemDialog1, ID_BUTTONCLOSE, _("Close"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton9 = new wxButton( itemDialog1, ID_BUTTONCLOSE, _("&Close"), wxDefaultPosition, wxDefaultSize, 0 );
     itemButton9->SetDefault();
     itemBoxSizer6->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -162,7 +162,7 @@ void SplitTransactionDialog::OnButtonAddClick( wxCommandEvent& event )
     int categID = -1;
     int subcategID = -1;
     double amount  = 0.0;
-    SplitDetailDialog* sdd = new SplitDetailDialog(core_, _("Select Category"), &categID, &subcategID, &amount, this);
+    SplitDetailDialog* sdd = new SplitDetailDialog(core_, _("&Select Category"), &categID, &subcategID, &amount, this);
     if (sdd->ShowModal() == wxID_OK)
     {
         int numToInsert = lcSplit_->GetItemCount();

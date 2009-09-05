@@ -136,7 +136,7 @@ m_yahoopointer(myp)
 	fgSizer_main->Add( fgSizer6, 1, wxEXPAND, 5 );
 
 	m_checkBoxRefreshPrices = new wxCheckBox( this, 
-        idCBDoRefresh, _("Refresh prices every"), wxDefaultPosition, wxDefaultSize, 0 );
+        idCBDoRefresh, _("&Refresh prices every"), wxDefaultPosition, wxDefaultSize, 0 );
     m_checkBoxRefreshPrices->SetValue(m_yahoopointer->UpdatingEnabled_ ? true : false);
 
 	fgSizer_main->Add( m_checkBoxRefreshPrices, 0, wxALIGN_RIGHT|wxALL, 5 );

@@ -113,17 +113,17 @@ void mmCustomSQLDialog::CreateControls()
     itemPanel5->SetSizer(itemBoxSizer6);
 
 	//Load Template button
-    wxButton* itemButton1_Load = new wxButton( itemPanel5, ID_CUSTOMSQLBUTTON_LOAD, _("Load SQL"), 
+    wxButton* itemButton1_Load = new wxButton( itemPanel5, ID_CUSTOMSQLBUTTON_LOAD, _("&Load SQL"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton1_Load, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	//Save As Template button
-    wxButton* itemButton_Save = new wxButton( itemPanel5, ID_CUSTOMSQLBUTTON_SAVE, _("Save SQL"), 
+    wxButton* itemButton_Save = new wxButton( itemPanel5, ID_CUSTOMSQLBUTTON_SAVE, _("&Save SQL"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton_Save, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	//Import File button
-    wxButton* itemButton_Import = new wxButton( itemPanel5, ID_CUSTOMSQLBUTTON_QUERY, _("Run Query"), 
+    wxButton* itemButton_Import = new wxButton( itemPanel5, ID_CUSTOMSQLBUTTON_QUERY, _("&Run Query"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton_Import, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 

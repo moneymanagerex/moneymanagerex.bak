@@ -176,17 +176,17 @@ void mmAssetsPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_NEW_ASSET, _("New"), 
+    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_NEW_ASSET, _("&New"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton6->SetToolTip(_("New Asset"));
     itemBoxSizer5->Add(itemButton6, 0, wxGROW|wxALL, 1);
 
-    wxButton* itemButton81 = new wxButton( itemPanel12, ID_BUTTON_EDIT_ASSET, _("Edit"), 
+    wxButton* itemButton81 = new wxButton( itemPanel12, ID_BUTTON_EDIT_ASSET, _("&Edit"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton81->SetToolTip(_("Edit Asset"));
     itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
-    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_DELETE_ASSET, _("Delete"), 
+    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_DELETE_ASSET, _("&Delete"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton7->SetToolTip(_("Delete Asset"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);

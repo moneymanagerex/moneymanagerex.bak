@@ -106,12 +106,12 @@ void mmUnivCSVImportDialog::CreateControls()
     itemPanel_Arranger->SetSizer(itemBoxSizer_Arranger);
 
 	//Move Up button
-    wxButton* itemButton_MoveUp = new wxButton( itemPanel_Arranger, ID_UNIVCSVBUTTON_MOVEUP, _("Move Up"), 
+    wxButton* itemButton_MoveUp = new wxButton( itemPanel_Arranger, ID_UNIVCSVBUTTON_MOVEUP, _("Move &Up"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer_Arranger->Add(itemButton_MoveUp, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	//Move down button
-    wxButton* itemButton_MoveDown = new wxButton( itemPanel_Arranger, ID_UNIVCSVBUTTON_MOVEDOWN, _("Move Down"), 
+    wxButton* itemButton_MoveDown = new wxButton( itemPanel_Arranger, ID_UNIVCSVBUTTON_MOVEDOWN, _("Move &Down"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer_Arranger->Add(itemButton_MoveDown, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -130,12 +130,12 @@ void mmUnivCSVImportDialog::CreateControls()
     itemPanel_AddRemove->SetSizer(itemBoxSizer_AddRemove);
 
 	//Add button
-    wxButton* itemButton_Add = new wxButton( itemPanel_AddRemove, ID_UNIVCSVBUTTON_ADD, _("Add"), 
+    wxButton* itemButton_Add = new wxButton( itemPanel_AddRemove, ID_UNIVCSVBUTTON_ADD, _("&Add"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer_AddRemove->Add(itemButton_Add, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	//Remove button
-    wxButton* itemButton_Remove = new wxButton( itemPanel_AddRemove, ID_UNIVCSVBUTTON_REMOVE, _("Remove"), 
+    wxButton* itemButton_Remove = new wxButton( itemPanel_AddRemove, ID_UNIVCSVBUTTON_REMOVE, _("&Remove"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer_AddRemove->Add(itemButton_Remove, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -147,17 +147,17 @@ void mmUnivCSVImportDialog::CreateControls()
     itemPanel5->SetSizer(itemBoxSizer6);
 
 	//Load Template button
-    wxButton* itemButton1_Load = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_LOAD, _("Load Template"), 
+    wxButton* itemButton1_Load = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_LOAD, _("&Load Template"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton1_Load, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	//Save As Template button
-    wxButton* itemButton_Save = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_SAVE, _("Save As Template"), 
+    wxButton* itemButton_Save = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_SAVE, _("Save &As Template"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton_Save, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	//Import File button
-    wxButton* itemButton_Import = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_IMPORT, _("Import File"), 
+    wxButton* itemButton_Import = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_IMPORT, _("&Import File"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton_Import, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 

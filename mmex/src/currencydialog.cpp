@@ -303,11 +303,11 @@ void mmCurrencyDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer22, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxButton* itemButton24 = new wxButton( itemDialog1, 
-        ID_DIALOG_CURRENCY_BUTTON_UPDATE, _("Update"), wxDefaultPosition, wxDefaultSize, 0 );
+        ID_DIALOG_CURRENCY_BUTTON_UPDATE, _("&Update"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer22->Add(itemButton24, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxButton* itemButton25 = new wxButton( itemDialog1, 
-        ID_DIALOG_CURRENCY_BUTTON_CANCEL, _("Close"), wxDefaultPosition, wxDefaultSize, 0 );
+        ID_DIALOG_CURRENCY_BUTTON_CANCEL, _("&Close"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer22->Add(itemButton25, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 }
 

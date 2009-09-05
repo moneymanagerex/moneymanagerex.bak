@@ -207,22 +207,22 @@ void mmBillsDepositsPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_NEW_BD, _("New Series"), 
+    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_NEW_BD, _("&New Series"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton6->SetToolTip(_("New Bills && Deposit Series"));
     itemBoxSizer5->Add(itemButton6, 0, wxGROW|wxALL, 1);
 
-    wxButton* itemButton81 = new wxButton( itemPanel12, ID_BUTTON_EDIT_BD, _("Edit Series"), 
+    wxButton* itemButton81 = new wxButton( itemPanel12, ID_BUTTON_EDIT_BD, _("&Edit Series"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton81->SetToolTip(_("Edit Bills && Deposit Series"));
     itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
-    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_DELETE_BD, _("Delete Series"), 
+    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_DELETE_BD, _("&Delete Series"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton7->SetToolTip(_("Delete Bills && Deposit Series"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
-    wxButton* itemButton8 = new wxButton( itemPanel12, ID_BUTTON_ENTEROCCUR_BD, _("Enter Transaction"), 
+    wxButton* itemButton8 = new wxButton( itemPanel12, ID_BUTTON_ENTEROCCUR_BD, _("Enter &Transaction"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton8->SetToolTip(_("Enter Next Bills && Deposit Occurrence"));
     itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);

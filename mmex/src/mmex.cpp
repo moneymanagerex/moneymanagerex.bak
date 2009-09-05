@@ -2010,30 +2010,30 @@ void mmGUIFrame::createMenu()
    if (mmIniOptions::enableImportMMCSV_)
       importMenu->Append(MENU_IMPORT_CSV, _("&MMEX CSV Files"), _("Import from MMEX CSV"));
    if (mmIniOptions::enableImportMMNETCSV_)
-      importMenu->Append(MENU_IMPORT_MMNETCSV, _("&MM.NET CSV Files"), _("Import from MM.NET CSV"));
+      importMenu->Append(MENU_IMPORT_MMNETCSV, _("MM.&NET CSV Files"), _("Import from MM.NET CSV"));
    //importMenu->Append(MENU_IMPORT_QFX, _("&QFX Files"), _("Import from QFX"));
-   menuFile->Append(MENU_IMPORT, _("Import"), importMenu);
+   menuFile->Append(MENU_IMPORT, _("&Import"), importMenu);
 
    menuFile->AppendSeparator();
 
     
 	wxMenuItem* menuItemPrintSetup = new wxMenuItem(menuFile, MENU_PRINT_PAGE_SETUP, 
-	   _("Page Setup..."), _("Setup page printing options"));
+	   _("Page Set&up..."), _("Setup page printing options"));
 	menuItemPrintSetup->SetBitmap(toolBarBitmaps[7]);
     menuFile->Append(menuItemPrintSetup); 
      
     wxMenu* printPreviewMenu = new wxMenu;
     printPreviewMenu->Append(MENU_PRINT_PREVIEW_REPORT, 
-        _("Current View"), _("Preview current report"));
+        _("Current &View"), _("Preview current report"));
 
-    menuFile->Append(MENU_PRINT_PREVIEW, _("Print Preview..."), printPreviewMenu);
+    menuFile->Append(MENU_PRINT_PREVIEW, _("Print Pre&view..."), printPreviewMenu);
 
     wxMenu* printMenu = new wxMenu;
     wxMenuItem* menuItemPrintView = new wxMenuItem(printMenu, MENU_PRINT_REPORT, 
-		_("Current View"), _("Print current report"));
+		_("Current &View"), _("Print current report"));
     printMenu->Append(menuItemPrintView);
 
-    menuFile->Append( MENU_PRINT, _("Print..."),  printMenu);
+    menuFile->Append( MENU_PRINT, _("&Print..."),  printMenu);
 
     menuFile->AppendSeparator();
 
@@ -2047,7 +2047,7 @@ void mmGUIFrame::createMenu()
 	wxMenuItem* menuItemToolbar = new wxMenuItem(menuView, MENU_VIEW_TOOLBAR, 
 		_("&Toolbar"), _("Show/Hide the toolbar"), wxITEM_CHECK);
 	wxMenuItem* menuItemLinks = new wxMenuItem(menuView, MENU_VIEW_LINKS, 
-		_("Navigation"), _("Show/Hide the Navigation tree control"), wxITEM_CHECK);
+		_("&Navigation"), _("Show/Hide the Navigation tree control"), wxITEM_CHECK);
 
 	menuView->Append(menuItemToolbar);
 	menuView->Append(menuItemLinks);
@@ -2067,13 +2067,13 @@ void mmGUIFrame::createMenu()
 	menuItemAcctList->SetBitmap(toolBarBitmaps[4]);
 
     wxMenuItem* menuItemAcctEdit = new wxMenuItem(menuAccounts, MENU_ACCTEDIT, 
-		_("Edit Account"), _("Edit Account"));
+		_("&Edit Account"), _("Edit Account"));
 	menuItemAcctEdit->SetBitmap(toolBarBitmaps[8]);
 
     if (mmIniOptions::enableDeleteAccount_)
     {
         wxMenuItem* menuItemAcctDelete = new wxMenuItem(menuAccounts, MENU_ACCTDELETE, 
-            _("Delete Account"), _("Delete Account from database"));
+            _("&Delete Account"), _("Delete Account from database"));
         menuItemAcctDelete->SetBitmap(toolBarBitmaps[9]);
         menuAccounts->Append(menuItemAcctDelete); 
     }
@@ -2095,14 +2095,14 @@ void mmGUIFrame::createMenu()
     menuTools->Append(menuItemPayee); 
 
     wxMenuItem* menuItemCurrency = new wxMenuItem(menuTools, MENU_CURRENCY, 
-		 _("Organize Currency"), _("Organize Currency"));
+		 _("Or&ganize Currency"), _("Organize Currency"));
 	menuItemCurrency->SetBitmap(wxBitmap(money_dollar_xpm));
     menuTools->Append(menuItemCurrency);
 
     if (mmIniOptions::enableBudget_)
     {
         wxMenuItem* menuItemBudgeting = new wxMenuItem(menuTools, MENU_BUDGETSETUPDIALOG, 
-            _("Budget Setup"), _("Budget Setup"));
+            _("&Budget Setup"), _("Budget Setup"));
         menuItemBudgeting->SetBitmap(wxBitmap(calendar_xpm));
         menuTools->Append(menuItemBudgeting); 
     }
@@ -2110,7 +2110,7 @@ void mmGUIFrame::createMenu()
     if (mmIniOptions::enableRepeatingTransactions_)
     {
        wxMenuItem* menuItemBillsDeposits = new wxMenuItem(menuTools, MENU_BILLSDEPOSITS, 
-          _("Repeating Transactions"), _("Bills && Deposits"));
+          _("&Repeating Transactions"), _("Bills && Deposits"));
        menuItemBillsDeposits->SetBitmap(wxBitmap(clock_xpm));
        menuTools->Append(menuItemBillsDeposits); 
     }
@@ -2118,7 +2118,7 @@ void mmGUIFrame::createMenu()
     if (mmIniOptions::enableStocks_)
     {
         wxMenuItem* menuItemStocks = new wxMenuItem(menuTools, MENU_STOCKS, 
-            _("Stock Investments"), _("Stock Investments"));
+            _("&Stock Investments"), _("Stock Investments"));
         menuItemStocks->SetBitmap(wxBitmap(stock_curve_xpm));
         menuTools->Append(menuItemStocks);
     }
@@ -2126,7 +2126,7 @@ void mmGUIFrame::createMenu()
     if (mmIniOptions::enableAssets_)
     {
         wxMenuItem* menuItemAssets = new wxMenuItem(menuTools, MENU_ASSETS, 
-            _("Assets"), _("Assets"));
+            _("&Assets"), _("Assets"));
         menuItemAssets->SetBitmap(wxBitmap(car_xpm));
         menuTools->Append(menuItemAssets);
     }
@@ -2134,7 +2134,7 @@ void mmGUIFrame::createMenu()
     menuTools->AppendSeparator();
 
     wxMenuItem* menuItemTransactions = new wxMenuItem(menuTools, MENU_TRANSACTIONREPORT, 
-		_("Transaction Filter"), _("Transaction Filter"));
+		_("&Transaction Filter"), _("Transaction Filter"));
 	menuItemTransactions->SetBitmap(wxBitmap(filter_xpm));
     menuTools->Append(menuItemTransactions);
 
@@ -2153,21 +2153,21 @@ void mmGUIFrame::createMenu()
     menuHelp->Append(menuItemHelp);
 
     wxMenuItem* menuItemAppStart = new wxMenuItem(menuTools, MENU_SHOW_APPSTART, 
-		 _("Show App Start Dialog"), _("App Start Dialog"));
+		 _("&Show App Start Dialog"), _("App Start Dialog"));
 	menuItemAppStart->SetBitmap(wxBitmap(appstart_xpm));
     menuHelp->Append(menuItemAppStart);
 
     menuTools->AppendSeparator();
 
     wxMenuItem* menuItemConvertDB = new wxMenuItem(menuTools, MENU_CONVERT_ENC_DB, 
-        _("Convert Encrypted DB"), 
+        _("Convert Encrypted &DB"), 
         _("Convert Encrypted DB to Non-Encrypted DB"));
     menuTools->Append(menuItemConvertDB);
 
     menuTools->AppendSeparator();
 
     menuItemOnlineUpdateCurRate_ = new wxMenuItem(menuTools, MENU_ONLINE_UPD_CURRENCY_RATE, 
-        _("Online Update Currency Rate"), 
+        _("Online &Update Currency Rate"), 
         _("Online update currency rate"));
     menuTools->Append(menuItemOnlineUpdateCurRate_);
 
@@ -2184,7 +2184,7 @@ void mmGUIFrame::createMenu()
     if (mmIniOptions::enableReportIssues_)
     {
        wxMenuItem* menuItemReportIssues = new wxMenuItem(menuTools, MENU_REPORTISSUES, 
-          _("Report Issues or Feedback"), _("Send email through the mailing list to report issues with the software."));
+          _("&Report Issues or Feedback"), _("Send email through the mailing list to report issues with the software."));
        menuItemReportIssues->SetBitmap(wxBitmap(issues_xpm));
        menuHelp->Append(menuItemReportIssues);
     }
@@ -2192,7 +2192,7 @@ void mmGUIFrame::createMenu()
     if (mmIniOptions::enableBeNotifiedForNewReleases_)
     {
        wxMenuItem* menuItemNotify = new wxMenuItem(menuTools, MENU_ANNOUNCEMENTMAILING, 
-          _("Be notified of new releases"), _("Sign up for the announcement mailing list"));
+          _("Be &notified of new releases"), _("Sign up for the announcement mailing list"));
        menuItemNotify->SetBitmap(wxBitmap(notify_xpm));
        menuHelp->Append(menuItemNotify); 
     }

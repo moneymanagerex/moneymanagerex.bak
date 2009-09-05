@@ -103,13 +103,13 @@ void mmBudgetYearDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer5, 1, wxGROW|wxALL, 5);
 
     wxButton* itemButton7 = new wxButton( itemDialog1, ID_DIALOG_BUDGETYEAR_BUTTON_ADD, 
-        _("Add Budget Year"), 
+        _("&Add Budget Year"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton7->SetToolTip(_("Add a new budget year"));
 
     wxButton* itemButton8 = new wxButton( itemDialog1, ID_DIALOG_BUDGETYEAR_BUTTON_DELETE, 
-        _("Delete Budget Year"), wxDefaultPosition, wxDefaultSize, 0 );
+        _("&Delete Budget Year"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton8->SetToolTip(_("Delete existing budget year"));
 }

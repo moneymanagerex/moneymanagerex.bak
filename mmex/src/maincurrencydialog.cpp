@@ -126,15 +126,15 @@ void mmMainCurrencyDialog::CreateControls()
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel5->SetSizer(itemBoxSizer6);
 
-    wxButton* itemButton7 = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_ADD, _("Add"), 
+    wxButton* itemButton7 = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_ADD, _("&Add"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton8 = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_EDIT, _("Edit"), 
+    wxButton* itemButton8 = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_EDIT, _("&Edit"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton9 = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_SELECT, _("Select"), 
+    wxButton* itemButton9 = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_SELECT, _("&Select"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 

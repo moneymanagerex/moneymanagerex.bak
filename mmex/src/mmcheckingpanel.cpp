@@ -351,17 +351,17 @@ void mmCheckingPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_NEW_TRANS, _("New"), 
+    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_NEW_TRANS, _("&New"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton6->SetToolTip(_("New Transaction"));
     itemBoxSizer5->Add(itemButton6, 0, wxGROW|wxALL, 1);
 
-    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_EDIT_TRANS, _("Edit"), 
+    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_EDIT_TRANS, _("&Edit"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton7->SetToolTip(_("Edit Transaction"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
-    wxButton* itemButton8 = new wxButton( itemPanel12, ID_BUTTON_DELETE_TRANS, _("Delete"), 
+    wxButton* itemButton8 = new wxButton( itemPanel12, ID_BUTTON_DELETE_TRANS, _("&Delete"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton8->SetToolTip(_("Delete Transaction"));
     itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
