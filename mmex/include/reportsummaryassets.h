@@ -42,27 +42,27 @@ public:
         hb.addLineBreak();
         hb.addLineBreak();
 
-        mmDBWrapper::loadBaseCurrencySettings(db_);
-        int ct = 0;  
-        double tincome = 0.0;
-        double texpenses = 0.0;
-        double tBalance = 0.0;
-        mmBEGINSQL_LITE_EXCEPTION;
-        
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("select * from ASSETS_V1;");
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
-
         hb.startCenter();
 
-		hb.startTable(wxT("50%"));
-		hb.startTableRow();
-		hb.addTableHeaderCell(_("Name"));
-		hb.addTableHeaderCell(_("Type"));
-		hb.addTableHeaderCell(_("Value"));
-		hb.endTableRow();
+        hb.startTable(wxT("50%"));
+        hb.startTableRow();
+        hb.addTableHeaderCell(_("Name"));
+        hb.addTableHeaderCell(_("Type"));
+        hb.addTableHeaderCell(_("Value"));
+        hb.endTableRow();
 
-        int ct = 0;
+        mmDBWrapper::loadBaseCurrencySettings(db_);
+        
+        static const char sql[] =
+        "select ASSETID, "
+               "ASSETNAME, "
+               "ASSETTYPE " 
+        "from ASSETS_V1";
+
+        mmBEGINSQL_LITE_EXCEPTION;
+        
+        wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+
         while (q1.NextRow())
         {
             mmAssetHolder th;
@@ -70,32 +70,9 @@ public:
             th.assetID_           = q1.GetInt(wxT("ASSETID"));
             th.value_             = mmDBWrapper::getAssetValue(db_, th.assetID_);
             th.assetName_         = q1.GetString(wxT("ASSETNAME"));
-            wxString itemAssetTypeStrings[] =  
-            {
-               _("Property"),
-               _("Automobile"),
-               _("Household Object"),
-               _("Art"),
-               _("Jewellery"),
-               _("Cash"),
-               _("Other"),
-            };
 
             wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
-            if (assetTypeStr == wxT("Property"))
-               th.assetType_ =  _("Property");
-            else if (assetTypeStr == wxT("Automobile"))
-               th.assetType_ =  _("Automobile");
-            else if (assetTypeStr == wxT("Household Object"))
-               th.assetType_ =  _("Household Object");
-            else if (assetTypeStr == wxT("Art"))
-               th.assetType_ =  _("Art");
-            else if (assetTypeStr == wxT("Jewellery"))
-               th.assetType_ =  _("Jewellery");
-            else if (assetTypeStr == wxT("Cash"))
-               th.assetType_ =  _("Cash");
-            else if (assetTypeStr == wxT("Other"))
-               th.assetType_ =  _("Other");
+            th.assetType_ = wxGetTranslation(assetTypeStr);
 
             wxString tempString;
             if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, tempString))

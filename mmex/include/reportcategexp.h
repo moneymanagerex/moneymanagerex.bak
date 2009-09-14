@@ -82,10 +82,21 @@ public:
         core_->currencyList_.loadBaseCurrencySettings();
 
         std::vector<ValuePair> valueList;
+        
+        static const char sql[] =
+        "select CATEGID, CATEGNAME "
+        "from CATEGORY_V1 "
+        "order by CATEGNAME";
+
+        static const char sql_sub[] = 
+        "select SUBCATEGID, SUBCATEGNAME "
+        "from SUBCATEGORY_V1 "
+        "where CATEGID = ?";
+
         mmBEGINSQL_LITE_EXCEPTION;
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("select * from CATEGORY_V1 order by CATEGNAME;");
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+
+        wxSQLite3Statement st = db_->PrepareStatement(sql_sub);
+        wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
 
         while (q1.NextRow())
         {
@@ -113,13 +124,13 @@ public:
                 }
             }
 
-            wxSQLite3StatementBuffer bufSQL1;
-            bufSQL1.Format("select * from SUBCATEGORY_V1 where CATEGID=%d;", categID);
-            wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL1); 
+            st.Bind(1, categID);
+            wxSQLite3ResultSet q2 = st.ExecuteQuery(); 
+           
             while(q2.NextRow())
             {
-                int subcategID          = q2.GetInt(wxT("SUBCATEGID"));
-                wxString subcategString    = q2.GetString(wxT("SUBCATEGNAME"));
+                int subcategID = q2.GetInt(wxT("SUBCATEGID"));
+                wxString subcategString = q2.GetString(wxT("SUBCATEGNAME"));
 
                 amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, 
                     ignoreDate_,  dtBegin_, dtEnd_);
@@ -146,10 +157,13 @@ public:
 					hb.endTableRow();
                 }
             }
-            q2.Finalize();
-           
+
+            st.Reset();
         }
+        
         q1.Finalize();
+        st.Finalize();
+
         mmENDSQL_LITE_EXCEPTION;
 
         hb.endTable();

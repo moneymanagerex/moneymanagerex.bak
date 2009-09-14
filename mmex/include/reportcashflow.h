@@ -78,17 +78,22 @@ public:
         // We now know the total balance on the account
         // Start by walking through the repeating transaction list
 
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("select * from BILLSDEPOSITS_V1;");
-        wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(bufSQL);
+        static const char sql[] = 
+        "select NEXTOCCURRENCEDATE, "
+               "REPEATS, "
+               "NUMOCCURRENCES, "
+               "TRANSCODE, "
+               "TRANSAMOUNT, "
+               "ACCOUNTID "
+        "from BILLSDEPOSITS_V1";
 
         wxDateTime yearFromNow = wxDateTime::Now().Add(wxDateSpan::Year());
-
         forecastVec fvec;
+
+        wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(sql);
+
         while (q1.NextRow())
         {
-           int bdID                = q1.GetInt(wxT("BDID"));
-        
            wxString nextOccurrString = q1.GetString(wxT("NEXTOCCURRENCEDATE"));
            wxDateTime nextOccurDate = mmGetStorageStringAsDate(nextOccurrString);
            
@@ -96,7 +101,6 @@ public:
            int numRepeats          = q1.GetInt(wxT("NUMOCCURRENCES"));
            wxString transType      = q1.GetString(wxT("TRANSCODE"));
            double amt              = q1.GetDouble(wxT("TRANSAMOUNT"));
-           double toAmt            = q1.GetDouble(wxT("TOTRANSAMOUNT"));
 
            bool processNumRepeats = false;
            if (numRepeats != -1)

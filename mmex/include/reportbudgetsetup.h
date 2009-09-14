@@ -59,9 +59,19 @@ public:
 		mmBEGINSQL_LITE_EXCEPTION;
 		mmDBWrapper::loadBaseCurrencySettings(db_);
 
-		wxSQLite3StatementBuffer bufSQL;
-		bufSQL.Format("select * from CATEGORY_V1 order by CATEGNAME;");
-		wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+		static const char sql[] = 
+		"select CATEGID, CATEGNAME "
+        "from CATEGORY_V1 "
+        "order by CATEGNAME";
+
+        static const char sql_sub[] = 
+        "select SUBCATEGID, SUBCATEGNAME "
+        "from SUBCATEGORY_V1 "
+        "where CATEGID = ?";
+
+        wxSQLite3Statement st = db_->PrepareStatement(sql_sub);
+
+        wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
 		while (q1.NextRow())
 		{
 			mmBudgetEntryHolder th;
@@ -141,15 +151,14 @@ public:
 			//END:CATEGORY ROW
 
 			//START: SUBCATEGORY ROW
-			wxSQLite3StatementBuffer bufSQL1;
-			bufSQL1.Format("select * from SUBCATEGORY_V1 where CATEGID=%d;", th.categID_);
-			wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL1); 
-			bool hasSubCateg = false;
-			while(q2.NextRow())
+            st.Bind(1, th.categID_);
+            wxSQLite3ResultSet q2 = st.ExecuteQuery(); 
+
+            while(q2.NextRow())
 			{
 				mmBudgetEntryHolder thsub;
-				thsub.categID_ = q1.GetInt(wxT("CATEGID"));
-				thsub.catStr_ = q1.GetString(wxT("CATEGNAME"));
+				thsub.categID_ = th.categID_;
+				thsub.catStr_ = th.catStr_;
 				thsub.subcategID_ = q2.GetInt(wxT("SUBCATEGID"));
 				thsub.subCatStr_   = q2.GetString(wxT("SUBCATEGNAME"));
 				thsub.amt_ = 0.0;
@@ -221,9 +230,10 @@ public:
 				hb.endTableRow(); 
 				//END: SUBCATEGORY ROW
 			}
-			q2.Finalize();
+			st.Reset();
 		}
 		q1.Finalize();
+        st.Finalize();
 
 		mmENDSQL_LITE_EXCEPTION;
         hb.endTable();

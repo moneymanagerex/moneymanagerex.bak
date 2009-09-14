@@ -45,15 +45,6 @@ public:
         hb.startCenter();
 
         mmDBWrapper::loadBaseCurrencySettings(db_);
-        int ct = 0;  
-        double tincome = 0.0;
-        double texpenses = 0.0;
-        double tBalance = 0.0;
-        mmBEGINSQL_LITE_EXCEPTION;
-        
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("select * from STOCK_V1;");
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
 
         hb.startTable();
 		hb.startTableRow();
@@ -66,10 +57,12 @@ public:
 		hb.addTableHeaderCell(_("Commission"));
 		hb.addTableHeaderCell(_("Value"));
 		hb.addTableHeaderCell(_("Gain Loss"));
-
 		hb.endTableRow();
 
-        int ct = 0;
+        mmBEGINSQL_LITE_EXCEPTION;
+
+        wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from STOCK_V1");
+
         while (q1.NextRow())
         {
             mmStockTransactionHolder th;
