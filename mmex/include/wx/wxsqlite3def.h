@@ -34,6 +34,16 @@
 //                            Fixed several minor issues in the build files
 //              2008-06-28  - Upgrade to SQLite3 version 3.5.9
 //              2008-07-19  - Upgrade to SQLite3 version 3.6.0
+//              2008-09-04  - Upgrade to SQLite3 version 3.6.2
+//              2008-11-22  - Upgrade to SQLite3 version 3.6.6
+//              2008-12-18  - Upgrade to SQLite3 version 3.6.7
+//                            Fixed a bug in method wxSQLite3Table::GetDouble
+//              2009-01-14  - Upgrade to SQLite3 version 3.6.10
+//                            Added savepoint support
+//                            Added IsOk methods to some classes
+//              2009-02-21  - Upgrade to SQLite3 version 3.6.11
+//                            Added user defined function class for REGEXP operator
+//                            Added support for SQLite backup/restore API
 //                            
 // Copyright:   (c) Ulrich Telle
 // Licence:     wxWindows licence
@@ -76,6 +86,46 @@
 \section version Version history
 
 <dl>
+
+<dt><b>1.9.5</b> - <i>February 2009</i></dt>
+<dd>
+Upgrade to SQLite version 3.6.11<br>
+Added user defined function class for REGEXP operator.<br>
+Added support for SQLite backup/restore API, introduced with SQLite 3.6.11<br>
+
+</dd>
+<dt><b>1.9.4</b> - <i>January 2009</i></dt>
+<dd>
+Upgrade to SQLite version 3.6.10<br>
+Added support for savepoints, introduced with SQLite 3.6.8<br>
+Added method IsOk to the classes wxSQLite3Statement, wxSQLite3Table and wxSQLite3ResultSet,
+thus instances of these classes can be checked whether the associated SQLite database or
+statement are valid without throwing an exception.<br>
+
+</dd>
+<dt><b>1.9.3</b> - <i>December 2008</i></dt>
+<dd>
+Upgrade to SQLite version 3.6.7<br>
+Fixed a bug in method wxSQLite3Table::GetDouble
+(conversion from string to double failed in non-US locales)<br>
+Build system upgraded using Bakefile 0.2.5<br>
+
+</dd>
+<dt><b>1.9.2</b> - <i>November 2008</i></dt>
+<dd>
+Upgrade to SQLite version 3.6.6<br>
+Added RAII transaction class (see docs for details)<br>
+
+</dd>
+<dt><b>1.9.1</b> - <i>September 2008</i></dt>
+<dd>
+Upgrade to SQLite version 3.6.2<br>
+Introduced own step counting for aggregate user functions
+since the sqlite3_aggregate_count function is now deprecated<br>
+Enhanced wxSQLite3Database::TableExists method to query an attached database
+for existence of a table or to query the main database and all attached databases<br>
+
+</dd>
 <dt><b>1.9.0</b> - <i>July 2008</i></dt>
 <dd>
 Upgrade to SQLite version 3.6.0<br>
@@ -245,6 +295,16 @@ First public release
 </dl>
 
 \author Ulrich Telle (<a href="&#109;&#97;&#105;&#108;&#116;&#111;:&#117;&#108;&#114;&#105;&#99;&#104;&#46;&#116;&#101;&#108;&#108;&#101;&#64;&#103;&#109;&#120;&#46;&#100;&#101;">ulrich DOT telle AT gmx DOT de</a>)
+
+\section ackn Acknowledgements
+
+The following people have contributed to wxSQLite3:
+
+<ul>
+<li>Francesco Montorsi (enhancement of the build system)</li>
+<li>Neville Dastur (enhancement of the method TableExists)</li>
+<li>Tobias Langner (RAII class for managing transactions)</li>
+</ul>
 
  */
 

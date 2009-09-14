@@ -19,32 +19,21 @@
 #ifndef _MM_EX_DBWRAPPER_H_
 #define _MM_EX_DBWRAPPER_H_
 
+//----------------------------------------------------------------------------
 #include "defs.h"
+//----------------------------------------------------------------------------
 
-#define mmBEGINSQL_LITE_EXCEPTION   \
-    try                             \
-    {                               \
+#define mmBEGINSQL_LITE_EXCEPTION   try { 
+#define mmENDSQL_LITE_EXCEPTION     } catch (wxSQLite3Exception& e) { mmDBWrapper::handleError(e); }
 
-
-#define mmENDSQL_LITE_EXCEPTION     \
-    }                               \
-    catch (wxSQLite3Exception& e)   \
-    {                               \
-        wxLogError(e.GetMessage()); \
-        wxASSERT(false);            \
-    }                               \
-
-#define mmENDSQL_LITE_IGNOREEXCEPTION     \
-    }                                     \
-    catch (wxSQLite3Exception& e)         \
-    {                                     \
-                                          \
-    }                                     \
-
+//----------------------------------------------------------------------------
 
 namespace mmDBWrapper
 {
 
+void handleError(const wxSQLite3Exception &e);
+bool ViewExists(wxSQLite3Database* db, const char *viewName);
+    
 /* Creating new DBs */
 void initDB(wxSQLite3Database* db, wxProgressDialog* pgd, const wxString& path);
 void loadCurrencies(wxSQLite3Database* db, const wxString& fpath);
@@ -66,12 +55,12 @@ wxString getCurrencySymbol(wxSQLite3Database* db, int currencyID);
 bool checkDBVersion(wxSQLite3Database* db);
 
 void addBudgetYear(wxSQLite3Database* db, const wxString &year);
-void copyBudgetYear(wxSQLite3Database* db, int newYear, int baseYear);
+bool copyBudgetYear(wxSQLite3Database* db, int newYear, int baseYear);
 int getBudgetYearID(wxSQLite3Database* db, const wxString &year);
 int getTransIDByDate(wxSQLite3Database* db, const wxString &byDate, int accountID);
 wxString getBudgetYearForID(wxSQLite3Database* db, int yearid);
 void updateYearForID(wxSQLite3Database* db, const wxString& yearName, int yearid);
-void deleteBudgetYear(wxSQLite3Database* db, const wxString& yearName);
+bool deleteBudgetYear(wxSQLite3Database* db, const wxString& yearName);
 
 /* Budgeting BUDGETTABLE_V1 API */
 void addBudgetEntry(wxSQLite3Database* db, int budgetYearID, 
@@ -87,7 +76,7 @@ bool getBudgetEntry(wxSQLite3Database* db, int budgetYearID,
     
 
 /* Account API */
-wxUint32 getNumAccounts(wxSQLite3Database* db);
+int getNumAccounts(wxSQLite3Database* db);
 wxString getAccountName(wxSQLite3Database* db, int accountID);
 wxString getAccountType(wxSQLite3Database* db, int accountID);
 int getAccountID(wxSQLite3Database* db, const wxString& accountName);
@@ -170,8 +159,11 @@ double getAssetValue(wxSQLite3Database* db, int assetID);
 /* Split Transaction API */
 double getSplitTransactionValueForCategory(wxSQLite3Database* db, int transID, 
                                                       int categID, int subcategID);
+
+//----------------------------------------------------------------------------
     
 } // namespace mmDBWrapper
 
-
+//----------------------------------------------------------------------------
 #endif // _MM_EX_DBWRAPPER_H_
+//----------------------------------------------------------------------------

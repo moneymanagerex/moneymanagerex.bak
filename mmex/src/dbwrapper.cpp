@@ -256,7 +256,14 @@ void createDefaultCategories(wxSQLite3Database* db)
 
 //----------------------------------------------------------------------------
 
-void  mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
+void mmDBWrapper::handleError(const wxSQLite3Exception &e)
+{
+    wxLogError(e.GetMessage());
+    wxASSERT(false);
+}
+//----------------------------------------------------------------------------
+
+void mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
 {
     mmBEGINSQL_LITE_EXCEPTION;
 
@@ -264,36 +271,55 @@ void  mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
     bool exists = db->TableExists(wxT("INFOTABLE_V1"));
     if (exists)
     {
-        setInfoSettingValue(db, wxT("MODIFIEDDATE"), 
-        wxDateTime::Now().FormatISODate());
+        setInfoSettingValue(db, wxT("MODIFIEDDATE"), wxDateTime::Now().FormatISODate());
         setInfoSettingValue(db, wxT("DATAVERSION"), MMDATAVERSION);
     }
     else
     {
-        /* Create INFOTABLE_V1 Table */
-        db->ExecuteUpdate(wxT("create table INFOTABLE_V1(INFOID integer primary key, \
-                            INFONAME TEXT NOT NULL, INFOVALUE TEXT);"));
-        bool valid = db->TableExists(wxT("INFOTABLE_V1"));
-        wxASSERT(valid);
+        static const char sql[] =
+        "create table INFOTABLE_V1 "
+        "( "
+         "INFOID integer not null primary key, "
+         "INFONAME TEXT NOT NULL, "
+         "INFOVALUE TEXT NOT NULL "
+        ")";
 
-         /* Set DATAVERSION */
-        setInfoSettingValue(db, wxT("DATAVERSION"), MMDATAVERSION);
+        db->ExecuteUpdate(sql);
+        bool ok = db->TableExists(wxT("INFOTABLE_V1"));
+        wxASSERT(ok);
 
+        // --    
+
+        struct Rec
         {
-            static const char sql[] = 
-            "insert into INFOTABLE_V1 (INFONAME, INFOVALUE) values ('MMEXVERSION', ?)";
+            const char *name;
+            wxString value;
+        };
 
-            wxSQLite3Statement st = db->PrepareStatement(sql);
-            st.Bind(1, MMEXVERSION);
+        const Rec data[] = 
+        {
+            { "MMEXVERSION", MMEXVERSION },
+            { "DATAVERSION", MMDATAVERSION },
+            { "CREATEDATE", wxDateTime::Now().FormatISODate() },
+            { "DATEFORMAT", DEFDATEFORMAT },
+            { 0, wxT("") }
+        };
+
+        static const char sql_ins[] = 
+        "insert into INFOTABLE_V1 (INFONAME, INFOVALUE) values (?, ?)";
+
+        wxSQLite3Statement st = db->PrepareStatement(sql_ins);
+
+        for (int i = 0; data[i].name; ++i)
+        {
+            st.Bind(1, data[i].name);
+            st.Bind(2, data[i].value);
+
             st.ExecuteUpdate();
-            st.Finalize();
+            st.Reset();
         }
 
-        /* Set Created Date */
-        setInfoSettingValue(db, wxT("CREATEDATE"), wxDateTime::Now().FormatISODate());
-
-        /* Set Default Date Format */
-        setInfoSettingValue(db, wxT("DATEFORMAT"), DEFDATEFORMAT);
+        st.Finalize();
     }
     
     mmENDSQL_LITE_EXCEPTION;
@@ -333,7 +359,7 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db, const wxString& f
            
            if(q1.GetColumnCount() < 11) {
                 /* not exist, create the column */
-                int retVal = db->ExecuteUpdate(wxT("alter table CURRENCYFORMATS_V1 add CURRENCY_SYMBOL TEXT;"));
+                db->ExecuteUpdate(wxT("alter table CURRENCYFORMATS_V1 add CURRENCY_SYMBOL TEXT;"));
            }
        }
 
@@ -616,47 +642,154 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
     mmENDSQL_LITE_EXCEPTION;
 }
 
+/*
+    wxSQLite3Database::ViewExists was removed.
+*/
+bool mmDBWrapper::ViewExists(wxSQLite3Database* db, const char *viewName)
+{
+    static const char sql[] = 
+    "select 1 "
+    "from sqlite_master "
+    "where type = 'view' and "
+          "name like ?";
+
+    wxASSERT(viewName);
+
+    bool exists = false;
+    mmBEGINSQL_LITE_EXCEPTION;
+    
+    wxSQLite3Statement st = db->PrepareStatement(sql);
+    st.Bind(1, viewName);
+
+    wxSQLite3ResultSet rs = st.ExecuteQuery();
+    exists = rs.NextRow();
+
+    st.Finalize();
+    
+    mmENDSQL_LITE_EXCEPTION;
+    return exists;
+}
+
 void mmDBWrapper::createAllDataView(wxSQLite3Database* db)
 {
-mmBEGINSQL_LITE_EXCEPTION;
-bool exists = db->ViewExists(wxT("ALLDATA"));   
-if (!exists)   
-{
-/* Create AllData View */   
-db->ExecuteUpdate(wxT("create view alldata as\
-    select CANS.TransID as ID, CANS.TransCode as TransactionType, CANS.TransDate as Date, round(strftime('%Y', CANS.TransDate)) as Year\
-   , round(strftime('%m', CANS.TransDate)) as Month, round(strftime('%d', CANS.TransDate)) as Day, CAT.CategName as Category, SUBCAT.SubCategName as Subcategory\
-   , ROUND(case CANS.TRANSCODE when 'Withdrawal' then -1*CANS.TRANSAMOUNT  else CANS.TRANSAMOUNT end,2) as Amount \
-   , (select cf.BaseConvRate from currencyformats_v1 cf where cf.currencyid=FROMACC.CURRENCYID) as BaseConvRate\
-   , FROMACC.CurrencyID as CurrencyID, FROMACC.AccountName as AccountName,  FROMACC.AccountID as AccountID, TOACC.AccountName as ToAccountName, TOACC.ACCOUNTId as ToAccountID, CANS.ToTransAmount ToTransAmount, TOACC.CURRENCYID as ToCurrencyID\
-   , 0 as Splitted , CAT.CategID as CategID, SUBCAT.SubCategID as SubCategID, PAYEE.PayeeName as Payee, PAYEE.PayeeID as PayeeID\
-   , CANS.TRANSACTIONNUMBER as TransactionNumber, CANS.Status as Status, CANS.NOTES as Notes \
-    from  CHECKINGACCOUNT_V1 CANS\
-    inner join CATEGORY_V1    CAT     on CAT.CATEGID      = CANS.CATEGID\
-    left  join SUBCATEGORY_V1 SUBCAT  on SUBCAT.SUBCATEGID= CANS.SUBCATEGID\
-    left  join PAYEE_V1       PAYEE   on PAYEE.PAYEEID    = CANS.PAYEEID\
-    left  join ACCOUNTLIST_V1 FROMACC on FROMACC.ACCOUNTID= CANS.ACCOUNTID\
-    left  join ACCOUNTLIST_V1 TOACC   on TOACC.ACCOUNTID  = CANS.TOACCOUNTID\
-   UNION ALL\
-    SELECT CASS.TRANSID, CASS.TRANSCODE, CASS.TransDate, round(strftime('%Y', CASS.TransDate)) as Year\
-   , round(strftime('%m', CASS.TransDate)) as Month, round(strftime('%d', CASS.TransDate)) as Day,CAT.CATEGNAME, SUBCAT.SUBCATEGNAME\
-   ,ROUND(SPLIT.SPLITTRANSAMOUNT, 2)*(case when CASS.TRANSCODE='Withdrawal' then -1 else 1 end) as Amount \
-   , (select cf.BaseConvRate from currencyformats_v1 cf where cf.currencyid=FROMACC.CURRENCYID) as BaseConvRate\
-   , FROMACC.CURRENCYID, FROMACC.ACCOUNTNAME, FROMACC.ACCOUNTId ,TOACC.ACCOUNTNAME, TOACC.ACCOUNTId, CASS.totransamount, TOACC.CURRENCYID \
-   , 1 as Splitted , CAT.CATEGId, SUBCAT.SUBCATEGId, PAYEE.PAYEENAME, PAYEE.PAYEEID\
-   , CASS.TRANSACTIONNUMBER, CASS.Status, CASS.NOTES \
-   from  CHECKINGACCOUNT_V1 CASS\
-    inner join SPLITTRANSACTIONS_V1 SPLIT   on SPLIT.TRANSID    = CASS.TRANSID\
-    inner join CATEGORY_V1          CAT     on CAT.CATEGID      = SPLIT.CATEGID\
-    left  join SUBCATEGORY_V1       SUBCAT  on SUBCAT.SUBCATEGID= SPLIT.SUBCATEGID\
-    left  join PAYEE_V1             PAYEE   on PAYEE.PAYEEID    = CASS.PAYEEID\
-    left  join ACCOUNTLIST_V1       FROMACC on FROMACC.ACCOUNTID= CASS.ACCOUNTID\
-    left  join ACCOUNTLIST_V1       TOACC   on TOACC.ACCOUNTID  = CASS.TOACCOUNTID\
-   order by CANS.transid;"));
-       exists = db->ViewExists(wxT("ALLDATA"));
-       wxASSERT(exists);   
-     }
-mmENDSQL_LITE_EXCEPTION;
+    static const char view_name[] = "ALLDATA";
+
+    static const char sql[] = 
+"create view alldata as "
+"select CANS.TransID as ID, "
+       "CANS.TransCode as TransactionType, "
+       "CANS.TransDate as Date, "
+       "round(strftime('%Y', CANS.TransDate)) as Year, "
+       "round(strftime('%m', CANS.TransDate)) as Month, "
+       "round(strftime('%d', CANS.TransDate)) as Day, "
+       "CAT.CategName as Category, "
+       "SUBCAT.SubCategName as Subcategory, "
+       "ROUND(case CANS.TRANSCODE when 'Withdrawal' then -1*CANS.TRANSAMOUNT  else CANS.TRANSAMOUNT end,2) as Amount, "
+
+       "( select cf.BaseConvRate "
+         "from currencyformats_v1 cf "
+         "where cf.currencyid=FROMACC.CURRENCYID "
+       ") as BaseConvRate, "
+
+    "FROMACC.CurrencyID as CurrencyID, "
+    "FROMACC.AccountName as AccountName,  "
+    "FROMACC.AccountID as AccountID, "
+    "TOACC.AccountName as ToAccountName, "
+    "TOACC.ACCOUNTId as ToAccountID, "
+    "CANS.ToTransAmount ToTransAmount, "
+    "TOACC.CURRENCYID as ToCurrencyID, "
+    "0 as Splitted, "
+    "CAT.CategID as CategID, "
+    "SUBCAT.SubCategID as SubCategID, "
+    "PAYEE.PayeeName as Payee, "
+    "PAYEE.PayeeID as PayeeID, "
+    "CANS.TRANSACTIONNUMBER as TransactionNumber, "
+    "CANS.Status as Status, "
+    "CANS.NOTES as Notes "
+
+"from  CHECKINGACCOUNT_V1 CANS "
+
+"join CATEGORY_V1 CAT "
+"on CAT.CATEGID = CANS.CATEGID "
+
+"left join SUBCATEGORY_V1 SUBCAT "
+"on SUBCAT.SUBCATEGID = CANS.SUBCATEGID "
+
+"left join PAYEE_V1 PAYEE "
+"on PAYEE.PAYEEID = CANS.PAYEEID "
+
+"left join ACCOUNTLIST_V1 FROMACC "
+"on FROMACC.ACCOUNTID = CANS.ACCOUNTID "
+
+"left join ACCOUNTLIST_V1 TOACC "
+"on TOACC.ACCOUNTID = CANS.TOACCOUNTID "
+
+"UNION ALL "
+
+"SELECT CASS.TRANSID, "
+       "CASS.TRANSCODE, "
+       "CASS.TransDate, "
+       "round(strftime('%Y', CASS.TransDate)) as Year, "
+       "round(strftime('%m', CASS.TransDate)) as Month, "
+       "round(strftime('%d', CASS.TransDate)) as Day,"
+       "CAT.CATEGNAME, "
+       "SUBCAT.SUBCATEGNAME,"
+       "ROUND(SPLIT.SPLITTRANSAMOUNT, 2)*(case when CASS.TRANSCODE='Withdrawal' then -1 else 1 end) as Amount, "
+
+       "( select cf.BaseConvRate "
+         "from currencyformats_v1 cf "
+         "where cf.currencyid = FROMACC.CURRENCYID "
+       ") as BaseConvRate, "
+
+       "FROMACC.CURRENCYID, "
+       "FROMACC.ACCOUNTNAME, "
+       "FROMACC.ACCOUNTId,"
+       "TOACC.ACCOUNTNAME, "
+       "TOACC.ACCOUNTId, "
+       "CASS.totransamount, "
+       "TOACC.CURRENCYID, "
+       "1 as Splitted, "
+       "CAT.CATEGId, "
+       "SUBCAT.SUBCATEGId, "
+       "PAYEE.PAYEENAME, "
+       "PAYEE.PAYEEID, "
+       "CASS.TRANSACTIONNUMBER, "
+       "CASS.Status, "
+       "CASS.NOTES "
+
+"from CHECKINGACCOUNT_V1 CASS "
+
+"join SPLITTRANSACTIONS_V1 SPLIT "
+"on SPLIT.TRANSID = CASS.TRANSID "
+
+"join CATEGORY_V1 CAT "
+"on CAT.CATEGID = SPLIT.CATEGID "
+
+"left join SUBCATEGORY_V1 SUBCAT "
+"on SUBCAT.SUBCATEGID = SPLIT.SUBCATEGID "
+
+"left join PAYEE_V1 PAYEE "
+"on PAYEE.PAYEEID = CASS.PAYEEID "
+
+"left join ACCOUNTLIST_V1 FROMACC "
+"on FROMACC.ACCOUNTID = CASS.ACCOUNTID "
+
+"left join ACCOUNTLIST_V1 TOACC "
+"on TOACC.ACCOUNTID = CASS.TOACCOUNTID "
+
+"order by CANS.transid";
+
+    mmBEGINSQL_LITE_EXCEPTION;
+
+    bool exists = ViewExists(db, view_name);
+    
+    if (!exists) {
+        db->ExecuteUpdate(sql);
+        exists = ViewExists(db, view_name);
+        wxASSERT(exists);   
+    }
+
+    mmENDSQL_LITE_EXCEPTION;
 }
 
 void removeCruft(wxSQLite3Database* db)
@@ -691,7 +824,6 @@ void removeCruft(wxSQLite3Database* db)
     }
 #endif
 
-
     mmENDSQL_LITE_EXCEPTION;
 }
 
@@ -705,51 +837,63 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd, const wxS
 
     /* Create INFOTABLE_V1 Tables */
     createInfoV1Table(db);
-    pgd->Update(10);
+    if (pgd)
+        pgd->Update(10);
 
     /* Create Currency Settings */
     createCurrencyV1Table(db, fpath);
-    pgd->Update(20);
+    if (pgd)
+        pgd->Update(20);
 
     /* Create ACCOUNTLIST_V1 Tables */
     createAccountListV1Table(db);
-    pgd->Update(30);
+    if (pgd)
+        pgd->Update(30);
 
     /* Create CHECKINGACCOUNT_V1 Tables */
     createCheckingAccountV1Table(db);
-    pgd->Update(40);
+    if (pgd)
+        pgd->Update(40);
 
     /* Create PAYEE_V1 Tables */
     createPayeeV1Table(db);
-    pgd->Update(50);
+    if (pgd)
+        pgd->Update(50);
   
     /* Create CATEGORY_V1 Tables */
     createCategoryV1Table(db);
-    pgd->Update(60);
+    if (pgd)
+        pgd->Update(60);
 
     /* Create Budgeting_V1 Tables */
     createBudgetingV1Table(db);
-    pgd->Update(75);
+    if (pgd)
+        pgd->Update(75);
 
     /* Create Bills & Deposits V1 Table */
     createBillsDepositsV1Table(db);
-    pgd->Update(80);
+    if (pgd)
+        pgd->Update(80);
 
     /* Create Stock V1 Table */
     createStockV1Table(db);
-    pgd->Update(85);
+    if (pgd)
+        pgd->Update(85);
 
 	/* Create Asset V1 Table */
 	createAssetsV1Table(db);
-	pgd->Update(90);
+    if (pgd)
+    	pgd->Update(90);
 
 	/* Create SplitTransactions V1 Table */
 	createSplitTransactionsV1Table(db);
-	pgd->Update(95);
+    if (pgd)
+    	pgd->Update(95);
 
 	/* Create AllData view */
    createAllDataView(db);
-   pgd->Update(99);
+   if (pgd)
+       pgd->Update(99);
 
     /* Remove Any cruft */
     removeCruft(db);
@@ -757,9 +901,9 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd, const wxS
     mmENDSQL_LITE_EXCEPTION;
 }
 
-wxUint32 mmDBWrapper::getNumAccounts(wxSQLite3Database* db)
+int mmDBWrapper::getNumAccounts(wxSQLite3Database* db)
 {
-    wxUint32 num = 0;
+    int num = 0;
 
     mmBEGINSQL_LITE_EXCEPTION;
     num = db->ExecuteScalar("select count(*) from ACCOUNTLIST_V1");
@@ -920,8 +1064,6 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
            "UNIT_NAME, "
            "CENT_NAME, "
            "SCALE, "
-           "CURRENCYID, "
-           "BASECONVRATE, "
            "CURRENCY_SYMBOL "
     "from CURRENCYFORMATS_V1 "
     "where CURRENCYID = ?";
@@ -942,8 +1084,6 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
         wxString unit = q1.GetString(wxT("UNIT_NAME"));
         wxString cent = q1.GetString(wxT("CENT_NAME"));
         double scaleDl = q1.GetDouble(wxT("SCALE"));
-        int currencyID = q1.GetInt(wxT("CURRENCYID"));
-        double convRate = q1.GetDouble(wxT("BASECONVRATE"));
         wxString currencySymbol = q1.GetString(wxT("CURRENCY_SYMBOL"));
         
         wxChar decChar = 0;
@@ -1146,8 +1286,6 @@ bool mmDBWrapper::getExpensesIncome(wxSQLite3Database* db,
 {
     static const std::string sql_base =
     "select ca.TRANSCODE, "
-           "ca.ACCOUNTID, "
-           "ca.TOACCOUNTID, "
            "ca.TRANSAMOUNT, "
            "ca.STATUS, "
            "ca.TRANSDATE, "
@@ -1176,8 +1314,6 @@ bool mmDBWrapper::getExpensesIncome(wxSQLite3Database* db,
     while (q1.NextRow())
     {
         wxString transTypeString = q1.GetString(wxT("TRANSCODE"));
-        int transactionFromID = q1.GetInt(wxT("ACCOUNTID"));
-        int transactionToID = q1.GetInt(wxT("TOACCOUNTID"));
         double transAmount = q1.GetDouble(wxT("TRANSAMOUNT"));
         wxString transStatus = q1.GetString(wxT("STATUS"));
         wxString dateString = q1.GetString(wxT("TRANSDATE"));
@@ -2261,10 +2397,10 @@ void mmDBWrapper::updateYearForID(wxSQLite3Database* db,
 	 st.Finalize();
 
 	 mmENDSQL_LITE_EXCEPTION;
- }
+}
 
- void mmDBWrapper::copyBudgetYear(wxSQLite3Database* db, int newYear, int baseYear)
- {
+bool mmDBWrapper::copyBudgetYear(wxSQLite3Database* db, int newYear, int baseYear)
+{
 	static const char sql[] = 
     "insert into BUDGETTABLE_V1 ( "
       "BUDGETYEARID, "
@@ -2282,7 +2418,7 @@ void mmDBWrapper::updateYearForID(wxSQLite3Database* db,
 	"WHERE BUDGETYEARID = ?";
 	 
      if (newYear == baseYear)
-         return;
+         return false;
     
      mmBEGINSQL_LITE_EXCEPTION;
 
@@ -2290,17 +2426,19 @@ void mmDBWrapper::updateYearForID(wxSQLite3Database* db,
      st.Bind(1, newYear);
 	 st.Bind(2, baseYear);
 
-     int rows_affected = st.ExecuteUpdate();
+     st.ExecuteUpdate();
      st.Finalize();
 
      mmENDSQL_LITE_EXCEPTION;
- }
 
- void mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearName)
+     return true;
+}
+
+bool mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearName)
  {
     int budgetYearID = getBudgetYearID(db, yearName);
     if (budgetYearID == -1)
-        return;
+        return false;
 
     static const char* sql[] = 
     {
@@ -2320,6 +2458,8 @@ void mmDBWrapper::updateYearForID(wxSQLite3Database* db,
     }
 
 	mmENDSQL_LITE_EXCEPTION;
+
+    return true;
  }
 
  void mmDBWrapper::addBudgetEntry(wxSQLite3Database* db, int budgetYearID, 
@@ -2391,7 +2531,7 @@ void mmDBWrapper::updateYearForID(wxSQLite3Database* db,
 	 st.Bind(2, categID);
 	 st.Bind(3, subCategID);
 
-     int rows_affected = st.ExecuteUpdate();
+     st.ExecuteUpdate();
      st.Finalize();
 
      mmENDSQL_LITE_EXCEPTION;
@@ -2574,8 +2714,7 @@ void mmDBWrapper::deleteStockInvestment(wxSQLite3Database* db, int stockID)
 double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, double& invested)
 {
     static const char sql[] = 
-    "select INITIALBAL, "
-           "ACCOUNTID "
+    "select ACCOUNTID "
     "from ACCOUNTLIST_V1 "
     "where ACCOUNTTYPE = 'Investment'";
 
@@ -2587,8 +2726,7 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, double& inv
     wxSQLite3ResultSet q1 = db->ExecuteQuery(sql);
     while (q1.NextRow())
     {
-       double value = q1.GetDouble(wxT("INITIALBAL"));
-       double originalVal; 
+       double originalVal = 0; 
        balance += getStockInvestmentBalance(db, q1.GetInt(wxT("ACCOUNTID")), true, originalVal);
        invested += originalVal;
     }

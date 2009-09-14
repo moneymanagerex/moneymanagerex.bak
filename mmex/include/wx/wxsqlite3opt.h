@@ -26,19 +26,19 @@
 //! To enable SQLite's meta data methods define WXSQLITE3_HAVE_METADATA as 1 here.
 //! Attention: SQLite needs to be compiled with SQLITE_ENABLE_COLUMN_METADATA for this to work
 #ifndef WXSQLITE3_HAVE_METADATA
-#define WXSQLITE3_HAVE_METADATA 1
+#define WXSQLITE3_HAVE_METADATA 0
 #endif
 
 //! To enable SQLite's database encryption support define WXSQLITE3_HAVE_CODEC as 1 here.
 //! Attention: SQLite needs to be compiled with SQLITE_HAS_CODEC for this to work
 #ifndef WXSQLITE3_HAVE_CODEC
-#define WXSQLITE3_HAVE_CODEC 1
+#define WXSQLITE3_HAVE_CODEC 0
 #endif
 
 //! To enable SQLite's loadable extension feature define WXSQLITE3_HAVE_LOAD_EXTENSION as 1 here.
 //! Attention: SQLite needs to be compiled without SQLITE_OMIT_LOAD_EXTENSION for this to work
 #ifndef WXSQLITE3_HAVE_LOAD_EXTENSION
-#define WXSQLITE3_HAVE_LOAD_EXTENSION 1
+#define WXSQLITE3_HAVE_LOAD_EXTENSION 0
 #endif
 
 #endif // _WX_SQLITE3_OPT_H_
