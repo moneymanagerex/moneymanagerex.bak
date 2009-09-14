@@ -181,8 +181,8 @@ public:
     void setAccountSummary();
 
     /* Helper Functions/data */
-    int accountID() { return accountID_; }
-    std::vector<mmBankTransaction* > trans_;
+    int accountID() const { return accountID_; }
+    std::vector<mmBankTransaction*> trans_;
     void sortTable();
 
 public:

@@ -529,9 +529,9 @@ void mmCheckingPanel::initVirtualListControl()
 
     int numTransactions = 0;
 	double unseenBalance = 0.0;
-    for (int idx = 0; idx < (int)core_->bTransactionList_.transactions_.size(); idx++)
+    for (size_t i = 0; i < core_->bTransactionList_.transactions_.size(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[idx];
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[i];
         if ((pBankTransaction->accountID_ != accountID_) && (pBankTransaction->toAccountID_ != accountID_))
            continue;
 
@@ -682,34 +682,44 @@ void mmCheckingPanel::initVirtualListControl()
     pgd->Update(50);
 #endif
 
-    for (unsigned int index = 0; index < trans_.size(); index++)
+    for (size_t i = 0; i < trans_.size(); ++i)
     {
-        if (trans_[index]->status_ != wxT("V"))
+        bool ok = trans_[i] != 0;
+        wxASSERT(ok);
+
+        if (!ok) {
+            continue;
+        }
+
+        mmBankTransaction &tr = *trans_[i];
+
+        if (tr.status_ != wxT("V"))
         {
-            if (trans_[index]->transType_ == wxT("Deposit"))
+            if (tr.transType_ == wxT("Deposit"))
             {
-                initBalance += trans_[index]->amt_;
+                initBalance += tr.amt_;
             }
-            else if (trans_[index]->transType_ == wxT("Withdrawal"))
+            else if (tr.transType_ == wxT("Withdrawal"))
             {
-                initBalance -= trans_[index]->amt_;
+                initBalance -= tr.amt_;
             }
-            else if (trans_[index]->transType_ == wxT("Transfer"))
+            else if (tr.transType_ == wxT("Transfer"))
             {
-                if (trans_[index]->accountID_ == accountID_)
+                if (tr.accountID_ == accountID_)
                 {
-                    initBalance -= trans_[index]->amt_;
+                    initBalance -= tr.amt_;
                 }
-                else if (trans_[index]->toAccountID_== accountID_)
+                else if (tr.toAccountID_== accountID_)
                 {
-                    initBalance += trans_[index]->toAmt_;
+                    initBalance += tr.toAmt_;
                 }
             }
         }
-        trans_[index]->balance_ = initBalance;
+        
+        tr.balance_ = initBalance;
         wxString balanceStr;
         mmCurrencyFormatter::formatDoubleToCurrencyEdit(initBalance, balanceStr);
-        trans_[index]->balanceStr_ = balanceStr;
+        tr.balanceStr_ = balanceStr;
     }
 
 #if defined (__WXMSW__)
@@ -729,7 +739,7 @@ void mmCheckingPanel::initVirtualListControl()
     {
 		if (asc)
 		{
-			listCtrlAccount_->EnsureVisible(((int)trans_.size()) - 1);
+			listCtrlAccount_->EnsureVisible(static_cast<long>(trans_.size()) - 1);
 		}
 		else
 		{
@@ -872,9 +882,9 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         {
            mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*> ( 
               core_->accountList_.getAccountSharedPtr(accountID_).get());
-            for (unsigned long idx = 0; idx < trans_.size(); idx++)
+            for (size_t i = 0; i < trans_.size(); ++i)
             {
-               core_->bTransactionList_.deleteTransaction(accountID_, trans_[idx]->transactionID());
+               core_->bTransactionList_.deleteTransaction(accountID_, trans_[i]->transactionID());
             }
         }
     }
@@ -887,12 +897,11 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         {
            mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*> ( 
               core_->accountList_.getAccountSharedPtr(accountID_).get());
-            for (unsigned long idx = 0; idx < trans_.size(); idx++)
+            for (size_t i = 0; i < trans_.size(); ++i)
             {
-               if (trans_[idx]->status_ == wxT("F"))
+               if (trans_[i]->status_ == wxT("F"))
                {
-                  core_->bTransactionList_.deleteTransaction(accountID_, 
-                     trans_[idx]->transactionID());
+                  core_->bTransactionList_.deleteTransaction(accountID_, trans_[i]->transactionID());
                }
             }
         }
@@ -904,7 +913,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
 
     listCtrlAccount_->DeleteAllItems();
     initVirtualListControl();
-    listCtrlAccount_->RefreshItems(0, ((int)trans_.size()) - 1);
+    listCtrlAccount_->RefreshItems(0, static_cast<long>(trans_.size()) - 1);
 }
 
 /*******************************************************/
@@ -1003,18 +1012,18 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
         wxASSERT(false);
      }
          
-     for (unsigned int idx = 0; idx < cp_->trans_.size(); idx++)
+     for (size_t i = 0; i < cp_->trans_.size(); ++i)
      {
-        int transID = cp_->trans_[idx]->transactionID();
+        int transID = cp_->trans_[i]->transactionID();
         mmDBWrapper::updateTransactionWithStatus(cp_->db_, transID, status);
-        cp_->trans_[idx]->status_ = status;
+        cp_->trans_[i]->status_ = status;
      }
 
      if (cp_->currentView_ != wxT("View All Transactions"))
      {
          DeleteAllItems();
          cp_->initVirtualListControl();
-         RefreshItems(0, ((int)cp_->trans_.size()) - 1); // refresh everything
+         RefreshItems(0, static_cast<long>(cp_->trans_.size()) - 1); // refresh everything
      }
      cp_->setAccountSummary();
 }
@@ -1034,7 +1043,7 @@ void MyListCtrl::OnColClick(wxListEvent& event)
     asc = asc_;
     SetColumnImage(sortCol_, asc_ ? 5 : 4); // decide whether top or down icon needs to be shown
     cp_->sortTable();   // sort the table
-    RefreshItems(0, ((int)cp_->trans_.size()) - 1); // refresh everything
+    RefreshItems(0, static_cast<long>(cp_->trans_.size()) - 1); // refresh everything
 }
 
 void MyListCtrl::SetColumnImage(int col, int image)
@@ -1047,7 +1056,7 @@ void MyListCtrl::SetColumnImage(int col, int image)
 
 wxString mmCheckingPanel::getItem(long item, long column)
 {  
-    if (!trans_.size())
+    if (trans_.empty())
        return wxT("");
 
     if (item >= static_cast<long>(trans_.size()) )
@@ -1116,14 +1125,29 @@ int MyListCtrl::OnGetItemImage(long item) const
    return 3;
 }
 
+/*
+    Failed wxASSERT will hang application if active modal dialog presents on screen.
+    Assertion's message box will be hidden until you press tab to activate one.
+*/
 wxListItemAttr* MyListCtrl::OnGetItemAttr(long item) const
 {
-    /* Returns the alternating background pattern */
-    if (cp_->trans_[item]->date_ > wxDateTime::Now())
+    wxASSERT(cp_);
+    wxASSERT(item >= 0);
+
+    size_t idx = item;
+    bool ok = cp_ && idx < cp_->trans_.size();
+    
+    mmBankTransaction *tr = ok ? cp_->trans_[idx] : 0;
+    bool in_the_future = tr && tr->date_ > wxDateTime::Now();
+
+    MyListCtrl &self = *const_cast<MyListCtrl*>(this);
+
+    if (in_the_future) // apply alternating background pattern
     {
-        return item % 2 ? (wxListItemAttr *)&attr3_ : (wxListItemAttr *)&attr4_;
+        return item % 2 ? &self.attr3_ : &self.attr4_;
     }
-    return item % 2 ? (wxListItemAttr *)&attr1_ : (wxListItemAttr *)&attr2_;
+
+    return item % 2 ? &self.attr1_ : &self.attr2_;
 
 }
 
@@ -1167,7 +1191,7 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
         boost::shared_ptr<mmCurrency> pCurrencyPtr = cp_->core_->accountList_.getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
         pCopiedTrans->updateAllData(cp_->core_, pCopiedTrans->accountID_, pCurrencyPtr, true);
         cp_->initVirtualListControl();
-        RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+        RefreshItems(0, static_cast<long>(cp_->trans_.size()) - 1);
     }
 }
 
@@ -1227,14 +1251,14 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
     }
 }
 
-void MyListCtrl::OnNewTransaction(wxCommandEvent& event)
+void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 {
     mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_, cp_->accountID_, 
         0, false, cp_->inidb_, this );
     if ( dlg->ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
-        RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+        RefreshItems(0, static_cast<long>(cp_->trans_.size()) - 1);
         if (selectedIndex_ != -1)
         {
            SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
@@ -1246,7 +1270,7 @@ void MyListCtrl::OnNewTransaction(wxCommandEvent& event)
 }
 
 //Delete a transaction from an account
-void MyListCtrl::OnDeleteTransaction(wxCommandEvent& event)
+void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 {
 	//check if a transaction is selected
     if (selectedIndex_ != -1)
@@ -1271,12 +1295,12 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& event)
          //initialize the transaction list to redo balances and images
 			cp_->initVirtualListControl();
 
-         if (cp_->trans_.size() > 0)
+         if (!cp_->trans_.empty())
          {
             //refresh the items showing from the point of the transaction delete down
             //the transactions above the deleted transaction won't change so they 
             // don't need to be refreshed
-            RefreshItems(selectedIndex_, ((int)cp_->trans_.size()) - 1);
+            RefreshItems(selectedIndex_, static_cast<long>(cp_->trans_.size()) - 1);
 
             //set the deleted transaction index to the new selection and focus on it
             SetItemState(selectedIndex_-1, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, 
@@ -1297,7 +1321,7 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& event)
 }
 
 //Edit a transaction in an account
-void MyListCtrl::OnEditTransaction(wxCommandEvent& event)
+void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ != -1)
 	{
@@ -1306,7 +1330,7 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& event)
 		if ( dlg->ShowModal() == wxID_OK )
 		{
 			cp_->initVirtualListControl();
-			RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+			RefreshItems(0, static_cast<long>(cp_->trans_.size()) - 1);
 			SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
 			SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
 			EnsureVisible(selectedIndex_);
@@ -1315,7 +1339,7 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& event)
 	}
 }
 
-void MyListCtrl::OnListItemActivated(wxListEvent& event)
+void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
 {
     if (selectedIndex_ != -1)
 	{
@@ -1325,7 +1349,7 @@ void MyListCtrl::OnListItemActivated(wxListEvent& event)
         if ( dlg->ShowModal() == wxID_OK )
         {
             cp_->initVirtualListControl();
-            RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+            RefreshItems(0, static_cast<long>(cp_->trans_.size()) - 1);
             if (selectedIndex_ != -1)
             {
                 SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
