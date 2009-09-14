@@ -35,9 +35,7 @@ class mmCoreDB
 {
 public: 
    mmCoreDB(boost::shared_ptr<wxSQLite3Database>);
-   ~mmCoreDB();
 
-public:
    /* Data */
    mmAccountList     accountList_;
    mmPayeeList       payeeList_;
@@ -48,4 +46,5 @@ public:
    boost::shared_ptr<wxSQLite3Database> db_;
 };
 
-#endif
+#endif // _MM_EX_COREDB_H_
+

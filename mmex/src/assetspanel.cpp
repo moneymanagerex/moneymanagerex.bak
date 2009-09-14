@@ -212,56 +212,35 @@ void mmAssetsPanel::initVirtualListControl()
     wxString lbl  = wxString::Format(_("Total: %s"), balance.c_str());
     header->SetLabel(lbl);
 
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from ASSETS_V1;");
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+    static const char sql[] = 
+    "select ASSETID, "
+           "ASSETNAME, "
+           "ASSETTYPE "
+    "from ASSETS_V1";
 
-    int ct = 0;
-    while (q1.NextRow())
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+    long cnt = 0;
+    
+    for ( ; q1.NextRow(); ++cnt)
     {
         mmAssetHolder th;
 
-        th.assetID_           = q1.GetInt(wxT("ASSETID"));
-        th.value_             = mmDBWrapper::getAssetValue(db_, th.assetID_);
-        th.assetName_         = q1.GetString(wxT("ASSETNAME"));
-        
-
-        wxString itemAssetTypeStrings[] =  
-        {
-            _("Property"),
-            _("Automobile"),
-            _("Household Object"),
-            _("Art"),
-			   _("Jewellery"),
-			   _("Cash"),
-            _("Other"),
-        };
+        th.assetID_ = q1.GetInt(wxT("ASSETID"));
+        th.value_ = mmDBWrapper::getAssetValue(db_, th.assetID_);
+        th.assetName_ = q1.GetString(wxT("ASSETNAME"));
 
         wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
-        if (assetTypeStr == wxT("Property"))
-           th.assetType_ =  _("Property");
-        else if (assetTypeStr == wxT("Automobile"))
-           th.assetType_ =  _("Automobile");
-        else if (assetTypeStr == wxT("Household Object"))
-           th.assetType_ =  _("Household Object");
-        else if (assetTypeStr == wxT("Art"))
-           th.assetType_ =  _("Art");
-        else if (assetTypeStr == wxT("Jewellery"))
-           th.assetType_ =  _("Jewellery");
-        else if (assetTypeStr == wxT("Cash"))
-           th.assetType_ =  _("Cash");
-        else if (assetTypeStr == wxT("Other"))
-            th.assetType_ =  _("Other");
-                
+        th.assetType_ =  wxGetTranslation(assetTypeStr); // string should be marked for translation
+
         wxString tempString;
         if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, tempString))
-            th.valueStr_   = tempString;
+            th.valueStr_ = tempString;
 
         trans_.push_back(th);
-        ct++;
     }
+
+    listCtrlAssets_->SetItemCount(cnt);
     q1.Finalize();
-    listCtrlAssets_->SetItemCount(ct);
 
     mmENDSQL_LITE_EXCEPTION;
 }

@@ -18,7 +18,7 @@
 #include "util.h"
 #include "mmcoredb.h"
 
-void mmSplitTransactionEntries::addSplit(boost::shared_ptr<mmSplitTransactionEntry>& split)
+void mmSplitTransactionEntries::addSplit(boost::shared_ptr<mmSplitTransactionEntry> split)
 {
     total_ += split->splitAmount_;
     entries_.push_back(split);
@@ -26,11 +26,11 @@ void mmSplitTransactionEntries::addSplit(boost::shared_ptr<mmSplitTransactionEnt
 
 void mmSplitTransactionEntries::removeSplit(int splitID)
 {
-    for (size_t idx = 0; idx < entries_.size(); idx++)
+    for (size_t i = 0; i < entries_.size(); ++i)
     {
-        if (entries_[idx]->splitEntryID_ == splitID)
+        if (entries_[i]->splitEntryID_ == splitID)
         {
-            entries_.erase(entries_.begin() + idx);
+            entries_.erase(entries_.begin() + i);
             break;
         }
     }
@@ -50,19 +50,38 @@ void mmSplitTransactionEntries::updateToDB(boost::shared_ptr<wxSQLite3Database>&
 
     if (edit)
     {
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("delete from SPLITTRANSACTIONS_V1 where TRANSID = %d;", transID);
-        db->ExecuteUpdate(bufSQL);
+        static const char sql[] = "delete from SPLITTRANSACTIONS_V1 where TRANSID = ?";
+
+        wxSQLite3Statement st = db->PrepareStatement(sql);
+        st.Bind(1, transID);
+        st.ExecuteUpdate();
+        st.Finalize();
     }
 
-    for (int idx = 0; idx < numEntries(); idx++)
+    // --
+
+    static const char sql[] = 
+    "insert into SPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) "
+    "values (?, ?, ?, ?)";
+
+    wxSQLite3Statement st = db->PrepareStatement(sql);
+
+    for (size_t i = 0; i < entries_.size(); ++i)
     {
-        wxString bufSQL = wxString::Format(wxT("insert into SPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) \
-                                               values (%d, %d, %d, %f);"), transID, entries_[idx]->categID_,
-                                               entries_[idx]->subCategID_,  entries_[idx]->splitAmount_);  
-        int retVal = db->ExecuteUpdate(bufSQL);
-        entries_[idx]->splitEntryID_ = db->GetLastRowId().ToLong();
+        mmSplitTransactionEntry &r = *entries_[i];
+
+        st.Bind(1, transID);
+        st.Bind(2, r.categID_);
+        st.Bind(3, r.subCategID_);
+        st.Bind(4, r.splitAmount_);
+
+        st.ExecuteUpdate();
+        r.splitEntryID_ = db->GetLastRowId().ToLong();
+        
+        st.Reset();
     }
+
+    st.Finalize();
 
     mmENDSQL_LITE_EXCEPTION;
 }
@@ -70,29 +89,42 @@ void mmSplitTransactionEntries::updateToDB(boost::shared_ptr<wxSQLite3Database>&
 void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core,
 										    int bdID)
 {
-   mmBEGINSQL_LITE_EXCEPTION;
-
    entries_.clear();
    total_ = 0.0;
 
-   wxSQLite3StatementBuffer bufSQL;
-   bufSQL.Format("select * from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = %d;", bdID);
-   wxSQLite3ResultSet q1 = core->db_->ExecuteQuery(bufSQL);
+   static const char sql[] = 
+    "select SPLITTRANSID, "
+           "SPLITTRANSAMOUNT, "
+           "CATEGID, "
+           "SUBCATEGID "
+    "from BUDGETSPLITTRANSACTIONS_V1 "
+    "where TRANSID = ?";
+    
+   mmBEGINSQL_LITE_EXCEPTION;
+
+   wxSQLite3Statement st = core->db_->PrepareStatement(sql);
+   st.Bind(1, bdID);
+
+   wxSQLite3ResultSet q1 = st.ExecuteQuery();
    while (q1.NextRow())
    {
       boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry());
       pSplitEntry->splitEntryID_ = q1.GetInt(wxT("SPLITTRANSID"));
       pSplitEntry->splitAmount_  = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
 
-      pSplitEntry->categID_      = q1.GetInt(wxT("CATEGID"));
-      pSplitEntry->subCategID_   = q1.GetInt(wxT("SUBCATEGID"));
-      pSplitEntry->category_      = core->categoryList_.getCategorySharedPtr(q1.GetInt(wxT("CATEGID")), 
-         q1.GetInt(wxT("SUBCATEGID")));
+      int catID = q1.GetInt(wxT("CATEGID"));
+      int subID = q1.GetInt(wxT("SUBCATEGID"));
+
+      pSplitEntry->categID_ = catID;
+      pSplitEntry->subCategID_ = subID;
+
+      pSplitEntry->category_ = core->categoryList_.getCategorySharedPtr(catID, subID);
       wxASSERT(pSplitEntry->category_.lock());
 
       addSplit(pSplitEntry);
    }
-   q1.Finalize();
+
+    st.Finalize();
 
     mmENDSQL_LITE_EXCEPTION;
 }
@@ -270,38 +302,54 @@ double mmBankTransaction::value(int accountID)
 }
 void mmBankTransaction::getSplitTransactions(mmCoreDB* core, mmSplitTransactionEntries* splits)
 {
-    mmBEGINSQL_LITE_EXCEPTION;
-
     splits->entries_.clear();
     splits->total_ = 0.0;
 
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from SPLITTRANSACTIONS_V1 where TRANSID = %d;", transactionID());
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+    static const char sql[] = 
+    "select SPLITTRANSID, "
+           "SPLITTRANSAMOUNT, "
+           "CATEGID, "
+           "SUBCATEGID "
+    "from SPLITTRANSACTIONS_V1 "
+    "where TRANSID = ?";
+    
+    mmBEGINSQL_LITE_EXCEPTION;
+
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    st.Bind(1, transactionID());
+
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+
     while (q1.NextRow())
     {
-        boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry());
+        boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
+
         pSplitEntry->splitEntryID_ = q1.GetInt(wxT("SPLITTRANSID"));
         pSplitEntry->splitAmount_  = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
 
-        pSplitEntry->categID_      = q1.GetInt(wxT("CATEGID"));
-        pSplitEntry->subCategID_   = q1.GetInt(wxT("SUBCATEGID"));
-        pSplitEntry->category_      = core->categoryList_.getCategorySharedPtr(q1.GetInt(wxT("CATEGID")), 
-                                                                               q1.GetInt(wxT("SUBCATEGID")));
-        wxASSERT(pSplitEntry->category_.lock());
+        int catID = q1.GetInt(wxT("CATEGID"));
+        int subID = q1.GetInt(wxT("SUBCATEGID"));
+
+        pSplitEntry->categID_ = catID;
+        pSplitEntry->subCategID_ = subID;
+
+        boost::shared_ptr<mmCategory> p_cat = core->categoryList_.getCategorySharedPtr(catID, subID);
+        wxASSERT(p_cat);
+        pSplitEntry->category_ = p_cat;
 
         splits->addSplit(pSplitEntry);
     }
-    q1.Finalize();
+    
+    st.Finalize();
 
     mmENDSQL_LITE_EXCEPTION;
 }
 
 bool mmBankTransaction::containsCategory(int categID, int subcategID, bool ignoreSubCateg)
 {
-    if (splitEntries_->numEntries() > 0)
+    if (splitEntries_->numEntries())
     {
-        for(int idx = 0; idx < splitEntries_->numEntries(); idx++)
+        for(size_t idx = 0; idx < splitEntries_->numEntries(); ++idx)
         {
             if ((splitEntries_->entries_[idx]->categID_ == categID) &&
                 (splitEntries_->entries_[idx]->subCategID_ == subcategID))
@@ -327,9 +375,9 @@ bool mmBankTransaction::containsCategory(int categID, int subcategID, bool ignor
 double mmBankTransaction::getAmountForSplit(int categID, int subcategID)
 {
     double splitAmount = 0.0;
-    if (splitEntries_->numEntries() > 0)
+    if (splitEntries_->numEntries())
     {
-        for(int idx = 0; idx < splitEntries_->numEntries(); idx++)
+        for(size_t idx = 0; idx < splitEntries_->numEntries(); ++idx)
         {
             if ((splitEntries_->entries_[idx]->categID_ == categID) &&
                 (splitEntries_->entries_[idx]->subCategID_ == subcategID))
@@ -358,8 +406,6 @@ mmBankTransactionList::mmBankTransactionList(boost::shared_ptr<wxSQLite3Database
 
 int mmBankTransactionList::addTransaction(mmCoreDB* core, boost::shared_ptr<mmBankTransaction> pBankTransaction)
 {
-   mmBEGINSQL_LITE_EXCEPTION;
-   
    if (checkForExistingTransaction(pBankTransaction)){
 	   pBankTransaction->status_ = wxT("D");
    }
@@ -368,28 +414,42 @@ int mmBankTransactionList::addTransaction(mmCoreDB* core, boost::shared_ptr<mmBa
        pBankTransaction->payeeID_ = -1;
    }
 
-   wxString bufSQL = wxString::Format(wxT("insert into CHECKINGACCOUNT_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, \
-                                          TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES,                               \
-                                          CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT)                                              \
-                                          values (%d, %d, %d, '%s', %f, '%s', '%s', '%s', %d, %d, '%s', -1, %f);"),
-                                          pBankTransaction->accountID_, 
-                                          pBankTransaction->toAccountID_, 
-                                          pBankTransaction->payeeID_, 
-                                          pBankTransaction->transType_.c_str(), 
-                                          pBankTransaction->amt_,
-                                          pBankTransaction->status_.c_str(), 
-                                          pBankTransaction->transNum_.c_str(), 
-                                          pBankTransaction->notes_.c_str(), 
-                                          pBankTransaction->categID_, 
-                                          pBankTransaction->subcategID_, 
-                                          pBankTransaction->date_.FormatISODate().c_str(), 
-                                          pBankTransaction->toAmt_ );  
+   static const char sql[] = 
+       "insert into CHECKINGACCOUNT_V1 ( "
+       "ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, "
+       "TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, "
+       "CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT "
+       ") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, -1, ?)";
 
-   int retVal = db_->ExecuteUpdate(bufSQL);
+   mmBEGINSQL_LITE_EXCEPTION;
 
-   pBankTransaction->transactionID(db_->GetLastRowId().ToLong());
-   pBankTransaction->splitEntries_->updateToDB(db_, pBankTransaction->transactionID(), false);
+   wxSQLite3Statement st = db_->PrepareStatement(sql);
+   mmBankTransaction &r = *pBankTransaction;
 
+   int i = 0;
+   st.Bind(++i, r.accountID_);
+   st.Bind(++i, r.toAccountID_);
+   st.Bind(++i, r.payeeID_);
+   st.Bind(++i, r.transType_);
+   st.Bind(++i, r.amt_);
+   st.Bind(++i, r.status_);
+   st.Bind(++i, r.transNum_);
+   st.Bind(++i, r.notes_);
+   st.Bind(++i, r.categID_);
+   st.Bind(++i, r.subcategID_);
+   st.Bind(++i, r.date_.FormatISODate());
+   st.Bind(++i, r.toAmt_);
+
+   bool ok = st.GetParamCount() == i;
+   wxASSERT(ok);
+
+   int rows_affected = st.ExecuteUpdate();
+   wxASSERT(rows_affected == 1);
+
+   r.transactionID(db_->GetLastRowId().ToLong());
+   st.Finalize();
+
+   r.splitEntries_->updateToDB(db_, r.transactionID(), false);
    transactions_.push_back(pBankTransaction);
 
    mmENDSQL_LITE_EXCEPTION;
@@ -399,42 +459,52 @@ int mmBankTransactionList::addTransaction(mmCoreDB* core, boost::shared_ptr<mmBa
 
 bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBankTransaction> pBankTransaction)
 {
+    static const char sql[] = 
+    "select 1 "
+    "from CHECKINGACCOUNT_V1 "
+    "where ACCOUNTID = ? and "
+          "TOACCOUNTID = ? and "
+          "PAYEEID = ? and "
+          "TRANSCODE = ? and "
+          "TRANSAMOUNT = ? and "
+          "TRANSACTIONNUMBER = ? and "
+          "NOTES = ? and "
+          "CATEGID = ? and "
+          "SUBCATEGID = ? and "
+          "TRANSDATE = ? and "
+          "TOTRANSAMOUNT = ? and "
+          "TRANSID > 0"; // is not null
+
+   bool found = false;
+
    mmBEGINSQL_LITE_EXCEPTION;
    
-   wxString bufSQL = wxString::Format(wxT("select TRANSID from CHECKINGACCOUNT_V1 where \
-											ACCOUNTID = %d and TOACCOUNTID = %d and PAYEEID = %d and TRANSCODE = '%s' and \
-											TRANSAMOUNT = %f and TRANSACTIONNUMBER = '%s' and NOTES = '%s' and \
-											CATEGID = %d and SUBCATEGID = %d and TRANSDATE = '%s' and TOTRANSAMOUNT = %f"),
-                                          pBankTransaction->accountID_, 
-                                          pBankTransaction->toAccountID_, 
-                                          pBankTransaction->payeeID_, 
-                                          pBankTransaction->transType_.c_str(), 
-                                          pBankTransaction->amt_,
-                                          pBankTransaction->transNum_.c_str(), 
-                                          pBankTransaction->notes_.c_str(), 
-                                          pBankTransaction->categID_, 
-                                          pBankTransaction->subcategID_, 
-                                          pBankTransaction->date_.FormatISODate().c_str(), 
-                                          pBankTransaction->toAmt_ );  
+   wxSQLite3Statement st = db_->PrepareStatement(sql);
+   const mmBankTransaction &r = *pBankTransaction;
 
-   wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+   int i = 0;
+   st.Bind(++i, r.accountID_);
+   st.Bind(++i, r.toAccountID_);
+   st.Bind(++i, r.payeeID_);
+   st.Bind(++i, r.transType_);
+   st.Bind(++i, r.amt_);
+   st.Bind(++i, r.transNum_);
+   st.Bind(++i, r.notes_);
+   st.Bind(++i, r.categID_);
+   st.Bind(++i, r.subcategID_);
+   st.Bind(++i, r.date_.FormatISODate());
+   st.Bind(++i, r.toAmt_ );
 
-   if (q1.NextRow())
-   {
-       if ( q1.GetString(wxT("TRANSID")).Cmp(wxT("0")) > 0)
-       {
-           // TODO: Need to check split entries
-           return true;
-       }
-       else
-       {
-           return false;
-       }
-   }
+   bool ok = st.GetParamCount() == i;
+   wxASSERT(ok);
+
+   wxSQLite3ResultSet q1 = st.ExecuteQuery();
+   found = q1.NextRow(); // TODO: Need to check split entries
+   st.Finalize();
 	
 	mmENDSQL_LITE_EXCEPTION;
 
-	return false;
+	return found;
 }
 
 boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int transactionID, bool useOriginalDate)
@@ -444,7 +514,6 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int 
        return boost::shared_ptr<mmBankTransaction>();
 
    boost::shared_ptr<mmBankTransaction> pCopyTransaction(new mmBankTransaction(db_));
-   mmBEGINSQL_LITE_EXCEPTION;
    
    pCopyTransaction->accountID_ = pBankTransaction->accountID_; 
    pCopyTransaction->toAccountID_ = pBankTransaction->toAccountID_;
@@ -462,31 +531,45 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int 
    pCopyTransaction->category_ = pBankTransaction->category_;
    *pCopyTransaction->splitEntries_.get() = *pBankTransaction->splitEntries_.get();
 
-   wxString bufSQL = wxString::Format(wxT("insert into CHECKINGACCOUNT_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, \
-                                          TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES,                               \
-                                          CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT)                                              \
-                                          values (%d, %d, %d, '%s', %f, '%s', '%s', '%s', %d, %d, '%s', -1, %f);"),
-                                          pBankTransaction->accountID_, 
-                                          pBankTransaction->toAccountID_, 
-                                          pBankTransaction->payeeID_, 
-                                          pBankTransaction->transType_.c_str(), 
-                                          pBankTransaction->amt_,
-                                          pBankTransaction->status_.c_str(), 
-                                          pBankTransaction->transNum_.c_str(), 
-                                          pBankTransaction->notes_.c_str(), 
-                                          pBankTransaction->categID_, 
-                                          pBankTransaction->subcategID_, 
-                                          pCopyTransaction->date_.FormatISODate().c_str(), 
-                                          pBankTransaction->toAmt_ );  
+   static const char sql[] = 
+   "insert into CHECKINGACCOUNT_V1 ( "
+     "ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, "
+     "TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, "
+     "CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT "
+   ") values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, -1, ? )";
 
-   int retVal = db_->ExecuteUpdate(bufSQL);
+    mmBEGINSQL_LITE_EXCEPTION;
+
+   wxSQLite3Statement st = db_->PrepareStatement(sql);
+   const mmBankTransaction &r = *pBankTransaction;
+
+   int i = 0;
+   st.Bind(++i, r.accountID_);
+   st.Bind(++i, r.toAccountID_);
+   st.Bind(++i, r.payeeID_);
+   st.Bind(++i, r.transType_);
+   st.Bind(++i, r.amt_);
+   st.Bind(++i, r.status_);
+   st.Bind(++i, r.transNum_);
+   st.Bind(++i, r.notes_);
+   st.Bind(++i, r.categID_);
+   st.Bind(++i, r.subcategID_);
+   st.Bind(++i, pCopyTransaction->date_.FormatISODate());
+   st.Bind(++i, r.toAmt_ );
+
+   bool ok = st.GetParamCount() == i;
+   wxASSERT(ok);
+
+   int rows_affected = st.ExecuteUpdate();
+   wxASSERT(rows_affected == 1);
 
    pCopyTransaction->transactionID(db_->GetLastRowId().ToLong());
-   pCopyTransaction->splitEntries_->updateToDB(db_, pCopyTransaction->transactionID(), false);
-
-   transactions_.push_back(pCopyTransaction);
+   st.Finalize();
 
    mmENDSQL_LITE_EXCEPTION;
+
+   pCopyTransaction->splitEntries_->updateToDB(db_, pCopyTransaction->transactionID(), false);
+   transactions_.push_back(pCopyTransaction);
 
    return pCopyTransaction;
 }
@@ -494,27 +577,41 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int 
 void mmBankTransactionList::updateTransaction(
    boost::shared_ptr<mmBankTransaction> pBankTransaction)
 {
-   mmBEGINSQL_LITE_EXCEPTION;
+    static const char sql[] =    
+    "update CHECKINGACCOUNT_V1 "
+    "SET ACCOUNTID=?, TOACCOUNTID=?, PAYEEID=?, TRANSCODE=?, "
+        "TRANSAMOUNT=?, STATUS=?, TRANSACTIONNUMBER=?, NOTES=?, "
+        "CATEGID=?, SUBCATEGID=?, TRANSDATE=?, TOTRANSAMOUNT=? "
+    "WHERE TRANSID = ?";
+    
+    mmBEGINSQL_LITE_EXCEPTION;
    
-   wxString bufSQL = wxString::Format(wxT("update CHECKINGACCOUNT_V1 SET ACCOUNTID=%d, TOACCOUNTID=%d, PAYEEID=%d, TRANSCODE='%s', \
-                                          TRANSAMOUNT=%f, STATUS='%s', TRANSACTIONNUMBER='%s', NOTES='%s',                               \
-                                          CATEGID=%d, SUBCATEGID=%d, TRANSDATE='%s', TOTRANSAMOUNT=%f WHERE TRANSID=%d;"),
-                                          pBankTransaction->accountID_, 
-                                          pBankTransaction->toAccountID_, 
-                                          pBankTransaction->payeeID_, 
-                                          pBankTransaction->transType_.c_str(), 
-                                          pBankTransaction->amt_,
-                                          pBankTransaction->status_.c_str(), 
-                                          pBankTransaction->transNum_.c_str(), 
-                                          pBankTransaction->notes_.c_str(), 
-                                          pBankTransaction->categID_, 
-                                          pBankTransaction->subcategID_, 
-                                          pBankTransaction->date_.FormatISODate().c_str(), 
-                                          pBankTransaction->toAmt_, 
-                                          pBankTransaction->transactionID());  
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    mmBankTransaction &r = *pBankTransaction;
 
-   int retVal = db_->ExecuteUpdate(bufSQL);
-   pBankTransaction->splitEntries_->updateToDB(db_, pBankTransaction->transactionID(), true);
+    int i = 0;
+    st.Bind(++i, r.accountID_);
+    st.Bind(++i, r.toAccountID_);
+    st.Bind(++i, r.payeeID_);
+    st.Bind(++i, r.transType_);
+    st.Bind(++i, r.amt_);
+    st.Bind(++i, r.status_);
+    st.Bind(++i, r.transNum_);
+    st.Bind(++i, r.notes_);
+    st.Bind(++i, r.categID_);
+    st.Bind(++i, r.subcategID_);
+    st.Bind(++i, r.date_.FormatISODate());
+    st.Bind(++i, r.toAmt_);
+    st.Bind(++i, r.transactionID());
+
+    bool ok = st.GetParamCount() == i;
+    wxASSERT(ok);
+
+    int rows_affected = st.ExecuteUpdate();
+    wxASSERT(rows_affected == 1);
+
+    r.splitEntries_->updateToDB(db_, r.transactionID(), true);
+    st.Finalize();
 
     mmENDSQL_LITE_EXCEPTION;
 }

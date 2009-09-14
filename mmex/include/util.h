@@ -47,10 +47,6 @@ wxString mmGetNiceDateSimpleString(wxDateTime dt);
 wxString mmGetNiceMonthName(int month);
 wxString mmGetNiceShortMonthName(int month);
 
-wxString mmCleanString(const wxString& orig);
-wxString mmCleanQuotes(const wxString& orig);
-wxString mmUnCleanString(const wxString& orig);
-
 void mmExportCSV(wxSQLite3Database* db_);
 wxString mmReadyDisplayString(const wxString& orig);
 

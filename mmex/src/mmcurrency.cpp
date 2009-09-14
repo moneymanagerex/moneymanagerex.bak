@@ -100,24 +100,38 @@ void mmCurrencyList::setBaseCurrencySettings(int currencyID)
 
 int mmCurrencyList::addCurrency(boost::shared_ptr<mmCurrency> pCurrency)
 {
+    static const char sql[] = 
+    "insert into CURRENCYFORMATS_V1 ( "
+      "CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT, "
+      "GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL "
+    " ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+
     mmBEGINSQL_LITE_EXCEPTION;
-    wxString bufSQLStr = wxString::Format(wxT("insert into CURRENCYFORMATS_V1 (CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT,   \
-                                              GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, %f, '%s');"), 
-                                              pCurrency->currencyName_.c_str(),
-                                              pCurrency->pfxSymbol_.c_str(), 
-                                              pCurrency->sfxSymbol_.c_str(), 
-                                              pCurrency->dec_.c_str(), 
-                                              pCurrency->grp_.c_str(), 
-                                              pCurrency->unit_.c_str(), 
-                                              pCurrency->cent_.c_str(), 
-                                              pCurrency->scaleDl_, 
-                                              pCurrency->baseConv_,
-                                              pCurrency->currencySymbol_.c_str());
+
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    const mmCurrency &r = *pCurrency;
+
+    int i = 0;
+    st.Bind(++i, r.currencyName_);
+    st.Bind(++i, r.pfxSymbol_);
+    st.Bind(++i, r.sfxSymbol_);
+    st.Bind(++i, r.dec_);
+    st.Bind(++i, r.grp_);
+    st.Bind(++i, r.unit_);
+    st.Bind(++i, r.cent_);
+    st.Bind(++i, r.scaleDl_);
+    st.Bind(++i, r.baseConv_);
+    st.Bind(++i, r.currencySymbol_);
+
+    bool ok = st.GetParamCount() == i;
+    wxASSERT(ok);
                                               
-    int retVal = db_->ExecuteUpdate(bufSQLStr);
+    st.ExecuteUpdate();
 
     pCurrency->currencyID_ = db_->GetLastRowId().ToLong();
     currencies_.push_back(pCurrency);
+
+    st.Finalize();
 
     mmENDSQL_LITE_EXCEPTION;
 
@@ -132,21 +146,36 @@ int mmCurrencyList::addCurrency(boost::shared_ptr<mmCurrency> pCurrency)
 
 void mmCurrencyList::updateCurrency(int currencyID, boost::shared_ptr<mmCurrency> pCurrency)
 {
-    mmBEGINSQL_LITE_EXCEPTION;
-    wxString sqlStmt = wxString::Format(wxT("update CURRENCYFORMATS_V1 set PFX_SYMBOL='%s', SFX_SYMBOL='%s', DECIMAL_POINT='%s', \
-                                            GROUP_SEPARATOR='%s', UNIT_NAME='%s', CENT_NAME='%s', SCALE='%f', BASECONVRATE='%f', CURRENCY_SYMBOL='%s' where CURRENCYNAME='%s';"),
-                                            pCurrency->pfxSymbol_.c_str(), 
-                                            pCurrency->sfxSymbol_.c_str(), 
-                                            pCurrency->dec_.c_str(),
-                                            pCurrency->grp_.c_str(), 
-                                            pCurrency->unit_.c_str(),
-                                            pCurrency->cent_.c_str(), 
-                                            pCurrency->scaleDl_, 
-                                            pCurrency->baseConv_,
-                                            pCurrency->currencySymbol_.c_str(),
-                                            pCurrency->currencyName_.c_str());
+    static const char sql[] = 
+    "update CURRENCYFORMATS_V1 "
+    "set PFX_SYMBOL=?, SFX_SYMBOL=?, DECIMAL_POINT=?,"
+        "GROUP_SEPARATOR=?, UNIT_NAME=?, CENT_NAME=?, "
+        "SCALE=?, BASECONVRATE=?, CURRENCY_SYMBOL=? "
+    "where CURRENCYID = ?";
 
-    int retVal = db_->ExecuteUpdate(sqlStmt);
+    mmBEGINSQL_LITE_EXCEPTION;
+
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    const mmCurrency &r = *pCurrency;
+
+    int i = 0;
+    st.Bind(++i, r.pfxSymbol_);
+    st.Bind(++i, r.sfxSymbol_);
+    st.Bind(++i, r.dec_);
+    st.Bind(++i, r.grp_);
+    st.Bind(++i, r.unit_);
+    st.Bind(++i, r.cent_);
+    st.Bind(++i, r.scaleDl_);
+    st.Bind(++i, r.baseConv_);
+    st.Bind(++i, r.currencySymbol_);
+    st.Bind(++i, r.currencyID_);
+
+    bool ok = st.GetParamCount() == i;
+    wxASSERT(ok);
+
+    st.ExecuteUpdate();
+    st.Finalize();
+
     mmENDSQL_LITE_EXCEPTION;
 }
 

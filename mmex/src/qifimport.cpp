@@ -370,12 +370,19 @@ Are you are sure you want to proceed with the import?"),
     wxArrayString as;
     int fromAccountID = -1;
 
+    static const char sql[] = 
+    "select ACCOUNTNAME "
+    "from ACCOUNTLIST_V1 "
+    "where ACCOUNTTYPE='Checking' "
+    "order by ACCOUNTNAME";
+
     mmBEGINSQL_LITE_EXCEPTION;
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
+    q1.Finalize();
     mmENDSQL_LITE_EXCEPTION
     
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Account to import to:"), 
@@ -686,7 +693,7 @@ Are you are sure you want to proceed with the import?"),
                pTransaction->amt_ = val;
                pTransaction->status_ = status;
                pTransaction->transNum_ = transNum;
-               pTransaction->notes_ = mmCleanString(notes.c_str());
+               pTransaction->notes_ = notes;
                pTransaction->category_ = core->categoryList_.getCategorySharedPtr(categID, subCategID);
                pTransaction->date_ = dtdt;
                pTransaction->toAmt_ = 0.0;

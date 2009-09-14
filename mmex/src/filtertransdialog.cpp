@@ -205,12 +205,19 @@ void mmFilterTransactionsDialog::CreateControls()
     wxArrayString as;
     int fromAccountID = -1;
 
+    static const char sql[] = 
+    "select ACCOUNTNAME "
+    "from ACCOUNTLIST_V1 "
+    "where ACCOUNTTYPE = 'Checking' "
+    "order by ACCOUNTNAME";
+
     mmBEGINSQL_LITE_EXCEPTION;
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
+    q1.Finalize();
     mmENDSQL_LITE_EXCEPTION
    
         accountDropDown = new wxChoice( itemPanel3, ID_CHOICE4, wxDefaultPosition, wxDefaultSize, as, 0 );

@@ -326,10 +326,9 @@ void mmHomePagePanel::updateAccounts()
 
     /////////////////////////////////////
     std::vector<mmBDTransactionHolder> trans_;
-    wxString bufSQLStr = wxString::Format(wxT("select * from BILLSDEPOSITS_V1")); 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQLStr);
 
-    int ct = 0;
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from BILLSDEPOSITS_V1");
+
     while (q1.NextRow())
     {
         mmBDTransactionHolder th;
@@ -431,7 +430,6 @@ void mmHomePagePanel::updateAccounts()
 		//th.payeeStr_ += wxT("]");
 
         trans_.push_back(th);
-        ct++;
     }
     q1.Finalize();
     std::sort(trans_.begin(), trans_.end(), sortTransactionsByRemainingDaysHP);

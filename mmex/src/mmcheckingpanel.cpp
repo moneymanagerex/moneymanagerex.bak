@@ -472,7 +472,7 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
     wxString cat   =  _("Category         : ") + trans_[selIndex]->catStr_  +   wxT("\n"); 
     wxString subcat = _("Sub Category  : ") + trans_[selIndex]->subCatStr_ + wxT("\n");
-    wxString notes =  _("Notes               : ") + mmReadyDisplayString(mmUnCleanString(trans_[selIndex]->notes_)) + wxT("\n");
+    wxString notes =  _("Notes               : ") + mmReadyDisplayString(trans_[selIndex]->notes_) + wxT("\n");
     wxString text = cat + subcat + notes;
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
     st->SetLabel(text);
@@ -1139,8 +1139,6 @@ void MyListCtrl::OnChar(wxKeyEvent& event)
         case 'U':
         case 'f':
         case 'F':
-        case 'd':
-        case 'D':
             // these are the keys we process ourselves
             break;
 

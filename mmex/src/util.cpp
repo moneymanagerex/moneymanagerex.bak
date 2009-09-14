@@ -25,13 +25,36 @@
 #include <wx/sound.h>
 #include "wxautocombobox.h"
 
+//----------------------------------------------------------------------------
+
+namespace 
+{
+
+const char g_AccountNameSQL[] = 
+"select ACCOUNTNAME "
+"from ACCOUNTLIST_V1 "
+"where ACCOUNTTYPE = 'Checking' "
+"order by ACCOUNTNAME";
+//----------------------------------------------------------------------------
+
+wxString mmCleanString(const wxString& orig)
+{
+    wxString toReturn = orig;
+    toReturn.Replace(wxT("'"), wxT("''"));
+    return toReturn;
+}
+//----------------------------------------------------------------------------
+
+} // namespace 
+
+//----------------------------------------------------------------------------
 
 wxString mmOptions::dateFormat = DEFDATEFORMAT;
 wxString mmOptions::language = wxT("english");
 
 void mmOptions::loadOptions(wxSQLite3Database* db)
 {
-   dateFormat = mmUnCleanString(mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), DEFDATEFORMAT));
+   dateFormat = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), DEFDATEFORMAT);
 }
 
 void mmOptions::saveOptions(wxSQLite3Database* db)
@@ -224,29 +247,6 @@ void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 	}
 }
 
-wxString mmCleanString(const wxString& orig)
-{
-    wxString toReturn = orig;
-    toReturn.Replace(wxT("'"), wxT("''"));
-    return toReturn;
-}
-
-wxString mmCleanQuotes(const wxString& orig)
-{
-    wxString toReturn = orig;
-    toReturn.Replace(wxT("'"), wxT("`"));
-    toReturn.Replace(wxT("\""), wxT(""));
-    toReturn.Trim();
-    return toReturn; 
-}
-
-wxString mmUnCleanString(const wxString& orig)
-{
-    wxString toReturn = orig;
-    toReturn.Replace(wxT("''"), wxT("'"));
-    return toReturn;
-}
-
 wxString mmReadyDisplayString(const wxString& orig)
 {
     wxString toReturn = orig;
@@ -320,13 +320,12 @@ void mmExportCSV(wxSQLite3Database* db_)
     wxArrayString as;
     
     mmBEGINSQL_LITE_EXCEPTION;
-    wxSQLite3ResultSet q1 = 
-        db_->ExecuteQuery("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
-
+    q1.Finalize();
     mmENDSQL_LITE_EXCEPTION;
 
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
@@ -346,13 +345,22 @@ void mmExportCSV(wxSQLite3Database* db_)
             wxTextOutputStream text( output );
 
             mmBEGINSQL_LITE_EXCEPTION;
-            wxString bufSQL = wxString::Format(wxT("SELECT TRANSDATE, \
-                TRANSCODE, TRANSAMOUNT,  SUBCATEGID,         \
-                CATEGID, PAYEEID, \
-                TRANSACTIONNUMBER, NOTES, TOACCOUNTID, ACCOUNTID FROM CHECKINGACCOUNT_V1 \
-                where ACCOUNTID = %d OR TOACCOUNTID = %d;"), fromAccountID, fromAccountID );
-            wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+            
+            static const char sql[] = 
+            "SELECT TRANSDATE, "
+                   "TRANSCODE, TRANSAMOUNT,  SUBCATEGID, "
+                   "CATEGID, PAYEEID, "
+                   "TRANSACTIONNUMBER, NOTES, TOACCOUNTID, ACCOUNTID "
+            "FROM CHECKINGACCOUNT_V1 "
+            "where ACCOUNTID = ? OR TOACCOUNTID = ?";
+
+            wxSQLite3Statement st = db_->PrepareStatement(sql);
+            st.Bind(1, fromAccountID);
+            st.Bind(2, fromAccountID);
+
+            wxSQLite3ResultSet q1 = st.ExecuteQuery();
             int numRecords = 0;
+
             while (q1.NextRow())
             {
                 wxString dateDBString = q1.GetString(wxT("TRANSDATE"));
@@ -367,7 +375,7 @@ void mmExportCSV(wxSQLite3Database* db_)
                 wxString subcateg = mmDBWrapper::getSubCategoryName(db_, 
                     q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
                 wxString transNum = q1.GetString(wxT("TRANSACTIONNUMBER"));
-                wxString notes = mmUnCleanString(q1.GetString(wxT("NOTES")));
+                wxString notes = q1.GetString(wxT("NOTES"));
                 wxString transfer = wxT("");
                 if (type == wxT("Transfer"))
                 {
@@ -394,7 +402,7 @@ void mmExportCSV(wxSQLite3Database* db_)
                      << delimit << notes << delimit << transfer << endl;
                 numRecords++;
             }
-            q1.Finalize();
+            st.Finalize();
 
             wxString msg = wxString::Format(wxT("%d transactions exported"), numRecords);
             mmShowErrorMessage(0, msg, _("Export to CSV"));
@@ -447,14 +455,12 @@ int mmImportCSV(mmCoreDB* core)
     int fromAccountID = -1;
     
     mmBEGINSQL_LITE_EXCEPTION;
-
-    wxSQLite3ResultSet q1 
-        = db_->ExecuteQuery("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
-
+    q1.Finalize();
     mmENDSQL_LITE_EXCEPTION;
 
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
@@ -666,7 +672,7 @@ int mmImportCSV(mmCoreDB* core)
                pTransaction->amt_ = val;
                pTransaction->status_ = status;
                pTransaction->transNum_ = transNum;
-               pTransaction->notes_ = mmCleanString(notes.c_str());
+               pTransaction->notes_ = notes;
                pTransaction->category_ = core->categoryList_.getCategorySharedPtr(categID, subCategID);
                pTransaction->date_ = dtdt;
                pTransaction->toAmt_ = 0.0;
@@ -710,11 +716,12 @@ int mmImportCSVMMNET(mmCoreDB* core)
     int fromAccountID = -1;
 
     mmBEGINSQL_LITE_EXCEPTION;
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
+    q1.Finalize();
     mmENDSQL_LITE_EXCEPTION
 
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
@@ -887,7 +894,7 @@ int mmImportCSVMMNET(mmCoreDB* core)
                pTransaction->amt_ = val;
                pTransaction->status_ = status;
                pTransaction->transNum_ = transNum;
-               pTransaction->notes_ = mmCleanString(notes.c_str());
+               pTransaction->notes_ = notes;
                pTransaction->category_ = core->categoryList_.getCategorySharedPtr(categID, subCategID);
                pTransaction->date_ = dtdt;
                pTransaction->toAmt_ = 0.0;

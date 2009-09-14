@@ -118,12 +118,48 @@ bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
 
 void mmTransDialog::dataToControls()
 {
+    static const char sql[] = 
+    "select ca.CATEGID, cat.CATEGNAME, "
+           "ca.SUBCATEGID, sc.SUBCATEGNAME, "
+           "ca.ACCOUNTID, al.ACCOUNTNAME, "
+           "ca.TRANSDATE, "
+           "ca.TRANSACTIONNUMBER, "
+           "ca.STATUS, "
+           "ca.NOTES, "
+           "ca.TRANSCODE, "
+           "ca.TRANSAMOUNT, "
+           "ca.TOTRANSAMOUNT, "
+           "ca.PAYEEID, "
+           "ca.TOACCOUNTID, al2.ACCOUNTNAME as TOACCOUNTNAME, "
+           "p.PAYEENAME "
+
+    "from CHECKINGACCOUNT_V1 ca "
+
+    "join ACCOUNTLIST_V1 al "
+    "on al.ACCOUNTID = ca.ACCOUNTID "
+
+    "left join ACCOUNTLIST_V1 al2 "
+    "on al2.ACCOUNTID = ca.TOACCOUNTID "
+
+    "join PAYEE_V1 p "
+    "on p.PAYEEID = ca.PAYEEID "
+
+    "join CATEGORY_V1 cat "
+    "on cat.CATEGID = ca.CATEGID "
+
+    "left join SUBCATEGORY_V1 sc "
+    "on sc.CATEGID = ca.CATEGID and "
+       "sc.SUBCATEGID = ca.SUBCATEGID "
+
+    "where ca.TRANSID = ?";
+
     //choiceTrans_->Disable();
     mmBEGINSQL_LITE_EXCEPTION;
 
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from CHECKINGACCOUNT_V1 where TRANSID=%d;", transID_);
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    st.Bind(1, transID_);
+
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
     if (q1.NextRow())
     {
         categID_ = q1.GetInt(wxT("CATEGID"));
@@ -137,7 +173,7 @@ void mmTransDialog::dataToControls()
 
         wxString transNumString = q1.GetString(wxT("TRANSACTIONNUMBER"));
         wxString statusString  = q1.GetString(wxT("STATUS"));
-        wxString notesString  = mmUnCleanString(q1.GetString(wxT("NOTES")));
+        wxString notesString  = q1.GetString(wxT("NOTES"));
         wxString transTypeString = q1.GetString(wxT("TRANSCODE"));
         double transAmount = q1.GetDouble(wxT("TRANSAMOUNT"));
         toTransAmount_ = q1.GetDouble(wxT("TOTRANSAMOUNT"));
@@ -179,18 +215,6 @@ void mmTransDialog::dataToControls()
         payeeID_ = q1.GetInt(wxT("PAYEEID"));
         toID_ = q1.GetInt(wxT("TOACCOUNTID"));
         
-
-        q1.Finalize();
-
-        wxString payeeString;
-        bufSQL.Format("select * from PAYEE_V1 where PAYEEID=%d;", payeeID_);
-        q1 = db_->ExecuteQuery(bufSQL);
-        if (q1.NextRow())
-        {
-            payeeString = q1.GetString(wxT("PAYEENAME"));
-            q1.Finalize();
-        }
-
         *split_.get() = *core_->bTransactionList_.getBankTransactionPtr(transID_)->splitEntries_.get();
 
         if (split_->numEntries() > 0)
@@ -200,14 +224,12 @@ void mmTransDialog::dataToControls()
         }
         else
         {
-            wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
-            wxString categString = catName;
+            wxString categString = q1.GetString(wxT("CATEGNAME"));
 
             if (subcategID_ != -1)
             {
-                wxString subcatName = mmDBWrapper::getSubCategoryName(db_, categID_, subcategID_);
                 categString += wxT(" : ");
-                categString += subcatName;
+                categString += q1.GetString(wxT("SUBCATEGNAME"));
             }
             bCategory_->SetLabel(categString);
         }
@@ -225,18 +247,17 @@ void mmTransDialog::dataToControls()
         mmCurrencyFormatter::formatDoubleToCurrencyEdit(transAmount, dispAmount);
         textAmount_->SetValue(dispAmount);
 
-        bPayee_->SetLabel(payeeString);
+        bPayee_->SetLabel(q1.GetString(wxT("PAYEENAME")));
 
         if (transTypeString == wxT("Transfer"))
         {
-            wxString fromAccount = mmDBWrapper::getAccountName(db_, accountID_);
-            wxString toAccount = mmDBWrapper::getAccountName(db_, toID_);
-
-            bPayee_->SetLabel(fromAccount);
-            bTo_->SetLabel(toAccount);
+            bPayee_->SetLabel(q1.GetString(wxT("ACCOUNTNAME")));
+            bTo_->SetLabel(q1.GetString(wxT("TOACCOUNTNAME")));
             payeeID_ = accountID_;            
         }
     }
+    
+    st.Finalize();
     mmENDSQL_LITE_EXCEPTION;
 }
 
@@ -262,7 +283,7 @@ void mmTransDialog::CreateControls()
         _("Transaction Type"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer4->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxString itemChoice6Strings[] = 
+    const wxString itemChoice6Strings[] = 
     {
         _("Withdrawal"),
         _("Deposit"),
@@ -804,8 +825,7 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
     {
         int catID, subcatID;
         wxString payeeName = mmDBWrapper::getPayee(db_, payeeID_, catID, subcatID );
-        mmDBWrapper::updatePayee(db_, 
-            mmCleanString(payeeName), payeeID_, categID_, subcategID_);
+        mmDBWrapper::updatePayee(db_, payeeName, payeeID_, categID_, subcategID_);
     }
 
     if (!advancedToTransAmountSet_ || toTransAmount_ < 0)
@@ -834,8 +854,8 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
         }
     }
     
-    wxString transNum = mmCleanString(textNumber_->GetValue());
-    wxString notes = mmCleanString(textNotes_->GetValue());
+    wxString transNum = textNumber_->GetValue();
+    wxString notes = textNotes_->GetValue();
     wxString status = wxT(""); // nothing yet
 
     if (choiceStatus_->GetSelection() == DEF_STATUS_NONE)

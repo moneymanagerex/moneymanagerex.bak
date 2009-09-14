@@ -116,6 +116,8 @@
 #include "BugTrap.h"
 #endif
 
+#include <string>
+
 /*******************************************************/
 #define MMEX_INIDB_FNAME wxT("/mmexini.db3")
 #define MMEX_SPLASH_FNAME wxT("/splash.png")
@@ -232,21 +234,21 @@ bool mmGUIApp::OnInit()
     wxImage::AddHandler(new wxPNGHandler());
 
     /* Get INI DB for loading settings */
-    wxSQLite3Database* inidb = new wxSQLite3Database();
+    boost::scoped_ptr<wxSQLite3Database> inidb(new wxSQLite3Database);
 
     wxString cfgPath = mmGetBaseWorkingPath() + MMEX_INIDB_FNAME;
     inidb->Open(cfgPath);
-    mmDBWrapper::verifyINIDB(inidb);
+    mmDBWrapper::verifyINIDB(inidb.get());
 
     /* Load Colors from Database */
-    mmLoadColorsFromDatabase(inidb);
+    mmLoadColorsFromDatabase(inidb.get());
 
     /* Load MMEX Custom Settings */
-    mmIniOptions::loadOptions(inidb);
+    mmIniOptions::loadOptions(inidb.get());
 
     /* Was App Maximized? */
     wxString isMaxStrDef = wxT("FALSE");
-    wxString isMaxStr = mmDBWrapper::getINISettingValue(inidb, 
+    wxString isMaxStr = mmDBWrapper::getINISettingValue(inidb.get(), 
         wxT("ISMAXIMIZED"), isMaxStrDef);
 
     /* Load Dimensions of Window */
@@ -254,13 +256,13 @@ bool mmGUIApp::OnInit()
     wxString originY = wxT("50");
     wxString sizeW = wxT("800");
     wxString sizeH = wxT("600");
-    wxString valxStr = mmDBWrapper::getINISettingValue(inidb, 
+    wxString valxStr = mmDBWrapper::getINISettingValue(inidb.get(), 
         wxT("ORIGINX"), originX); 
-    wxString valyStr = mmDBWrapper::getINISettingValue(inidb, 
+    wxString valyStr = mmDBWrapper::getINISettingValue(inidb.get(), 
         wxT("ORIGINY"), originY);
-    wxString valWStr = mmDBWrapper::getINISettingValue(inidb, 
+    wxString valWStr = mmDBWrapper::getINISettingValue(inidb.get(), 
         wxT("SIZEW"),  sizeW);
-    wxString valHStr = mmDBWrapper::getINISettingValue(inidb, 
+    wxString valHStr = mmDBWrapper::getINISettingValue(inidb.get(), 
         wxT("SIZEH"),  sizeH);
     long valx, valy, valw, valh;
     valxStr.ToLong(&valx);
@@ -272,10 +274,9 @@ bool mmGUIApp::OnInit()
 	m_locale.Init(wxLANGUAGE_ENGLISH);
 
 	/* Select language if necessary */
-    mmSelectLanguage(inidb);
+    mmSelectLanguage(inidb.get());
 
     inidb->Close();
-    delete inidb;
 
     /* See if we need to load graphs */
 //#ifdef __WXGTK__
@@ -408,8 +409,6 @@ bool sortCategs( mmGUIFrame::CategInfo elem1, mmGUIFrame::CategInfo elem2 )
 mmGUIFrame::mmGUIFrame(const wxString& title, 
                        const wxPoint& pos, const wxSize& size)
        : wxFrame((wxFrame*)NULL, -1, title, pos, size), 
-       core_(0), 
-       inidb_(0), 
        gotoAccountID_(-1), 
        selectedItemData_(0),
        m_topCategories(wxT("")),
@@ -449,7 +448,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 	// Save default perspective
 	m_perspective = m_mgr.SavePerspective();
 	
-    wxString auiPerspective = mmDBWrapper::getINISettingValue(inidb_, 
+    wxString auiPerspective = mmDBWrapper::getINISettingValue(inidb_.get(), 
         wxT("AUIPERSPECTIVE"), m_perspective);
 
     m_mgr.LoadPerspective(auiPerspective);
@@ -458,7 +457,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 	m_mgr.Update();
 
     // enable or disable online update currency rate
-    wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(inidb_, wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
+    wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(inidb_.get(), wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
     if(enableCurrencyUpd == wxT("TRUE")) 
     {
         if (menuItemOnlineUpdateCurRate_)
@@ -471,7 +470,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     }
 
 	/* Decide if we need to show app start dialog */
-    wxString showBeginApp = mmDBWrapper::getINISettingValue(inidb_, 
+    wxString showBeginApp = mmDBWrapper::getINISettingValue(inidb_.get(), 
         wxT("SHOWBEGINAPP"), wxT("TRUE"));
     if (showBeginApp == wxT("TRUE"))
     {
@@ -486,7 +485,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     else
     {
         /* Try loading last db if it exists */
-        wxString val = mmDBWrapper::getINISettingValue(inidb_, 
+        wxString val = mmDBWrapper::getINISettingValue(inidb_.get(), 
             wxT("LASTFILENAME"), wxT(""));
         if (!val.IsEmpty())
         {
@@ -542,8 +541,7 @@ mmGUIFrame::~mmGUIFrame()
 
     if (core_)
     {
-        delete core_;
-        core_ = 0;
+        core_.reset();
     }
 
     if (db_)
@@ -554,7 +552,6 @@ mmGUIFrame::~mmGUIFrame()
     if (inidb_)
     {
         inidb_->Close();
-        delete inidb_;
     }
 }
 
@@ -569,10 +566,10 @@ void mmGUIFrame::saveConfigFile()
 #else
     bool makeRelative = fname.MakeRelativeTo(appPath.GetPath());
 #endif
-    mmDBWrapper::setINISettingValue(inidb_, 
-        wxT("LASTFILENAME"), mmCleanString(fname.GetFullPath()));
+    mmDBWrapper::setINISettingValue(inidb_.get(), 
+        wxT("LASTFILENAME"), fname.GetFullPath());
 
-    mmSaveColorsToDatabase(inidb_);
+    mmSaveColorsToDatabase(inidb_.get());
 
     bool isMax = this->IsMaximized();
     wxString isMaxStr = wxT("FALSE");
@@ -581,7 +578,7 @@ void mmGUIFrame::saveConfigFile()
 
     /* Aui Settings */
     m_perspective = m_mgr.SavePerspective();
-    mmDBWrapper::setINISettingValue(inidb_, 
+    mmDBWrapper::setINISettingValue(inidb_.get(), 
         wxT("AUIPERSPECTIVE"), m_perspective);
 
     int valx, valy, valw, valh;
@@ -591,16 +588,16 @@ void mmGUIFrame::saveConfigFile()
     wxString valys = wxString::Format(wxT("%d"), valy);
     wxString valws = wxString::Format(wxT("%d"), valw);
     wxString valhs = wxString::Format(wxT("%d"), valh);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("ORIGINX"), valxs); 
-    mmDBWrapper::setINISettingValue(inidb_, wxT("ORIGINY"), valys);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("SIZEW"), valws);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("SIZEH"), valhs);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("ISMAXIMIZED"), isMaxStr);
+    mmDBWrapper::setINISettingValue(inidb_.get(), wxT("ORIGINX"), valxs); 
+    mmDBWrapper::setINISettingValue(inidb_.get(), wxT("ORIGINY"), valys);
+    mmDBWrapper::setINISettingValue(inidb_.get(), wxT("SIZEW"), valws);
+    mmDBWrapper::setINISettingValue(inidb_.get(), wxT("SIZEH"), valhs);
+    mmDBWrapper::setINISettingValue(inidb_.get(), wxT("ISMAXIMIZED"), isMaxStr);
 }
 
 void mmGUIFrame::loadConfigFile()
 {
-    inidb_ = new wxSQLite3Database();
+    inidb_.reset(new wxSQLite3Database);
     wxString iniDBPath = mmGetBaseWorkingPath()
         + MMEX_INIDB_FNAME;
     inidb_->Open(iniDBPath);
@@ -981,7 +978,7 @@ void mmGUIFrame::updateNavTreeControl()
     /* Load Nav Tree Control */
     mmBEGINSQL_LITE_EXCEPTION;
 
-    wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
+    wxString vAccts = mmDBWrapper::getINISettingValue(inidb_.get(), wxT("VIEWACCOUNTS"), wxT("ALL"));
 
     int numAccounts = (int) core_->accountList_.accounts_.size();
     for (int iAdx = 0; iAdx < numAccounts; iAdx++)
@@ -1011,20 +1008,26 @@ void mmGUIFrame::updateNavTreeControl()
 
     if (mmIniOptions::enableBudget_)
     {
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("select * from BUDGETYEAR_V1 order by BUDGETYEARNAME;");
-        wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(bufSQL);
-        int index = 0;
+        static const char sql[] =
+        "select BUDGETYEARID, BUDGETYEARNAME "
+        "from BUDGETYEAR_V1 "
+        "order by BUDGETYEARNAME";
+
+        wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(sql);
+
         while (q1.NextRow())
         {
-            wxTreeItemId bYear = navTreeCtrl_->AppendItem(budgeting, q1.GetString(wxT("BUDGETYEARNAME")), 3, 3);
-            navTreeCtrl_->SetItemData(bYear, new mmTreeItemData(q1.GetInt(wxT("BUDGETYEARID")), true));
+            int id = q1.GetInt(wxT("BUDGETYEARID"));
+            const wxString name = q1.GetString(wxT("BUDGETYEARNAME"));
 
-            wxTreeItemId bYearData = navTreeCtrl_->AppendItem(budgetPerformance, q1.GetString(wxT("BUDGETYEARNAME")), 4, 4);
-            navTreeCtrl_->SetItemData(bYearData, new mmTreeItemData(q1.GetInt(wxT("BUDGETYEARID")), true));
+            wxTreeItemId bYear = navTreeCtrl_->AppendItem(budgeting, name, 3, 3);
+            navTreeCtrl_->SetItemData(bYear, new mmTreeItemData(id, true));
 
-            wxTreeItemId bYearSetupData = navTreeCtrl_->AppendItem(budgetSetupPerformance, q1.GetString(wxT("BUDGETYEARNAME")), 4, 4);
-            navTreeCtrl_->SetItemData(bYearSetupData, new mmTreeItemData(q1.GetInt(wxT("BUDGETYEARID")), true));
+            wxTreeItemId bYearData = navTreeCtrl_->AppendItem(budgetPerformance, name, 4, 4);
+            navTreeCtrl_->SetItemData(bYearData, new mmTreeItemData(id, true));
+
+            wxTreeItemId bYearSetupData = navTreeCtrl_->AppendItem(budgetSetupPerformance, name, 4, 4);
+            navTreeCtrl_->SetItemData(bYearSetupData, new mmTreeItemData(id, true));
         }
         q1.Finalize();
 
@@ -1049,10 +1052,20 @@ wxString mmGUIFrame::createCategoryList()
 
     core_->currencyList_.loadBaseCurrencySettings();
 
+    static const char sql[] = 
+    "select SUBCATEGID, SUBCATEGNAME "
+    "from SUBCATEGORY_V1 "
+    "where CATEGID = ?";
+
     mmBEGINSQL_LITE_EXCEPTION;
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from CATEGORY_V1 order by CATEGNAME;");
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select CATEGID, CATEGNAME "
+                                              "from CATEGORY_V1 "
+                                              "order by CATEGNAME"
+                                             );
+
     while (q1.NextRow())
     {
         wxDateTime today = wxDateTime::Now();
@@ -1075,14 +1088,16 @@ wxString mmGUIFrame::createCategoryList()
             info.amount = amt;
             categList.push_back(info);
         }
+        
+        // --
 
-        wxSQLite3StatementBuffer bufSQL1;
-        bufSQL1.Format("select * from SUBCATEGORY_V1 where CATEGID=%d;", categID);
-        wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL1); 
+        st.Bind(1, categID);
+        wxSQLite3ResultSet q2 = st.ExecuteQuery(); 
+
         while(q2.NextRow())
         {
-            int subcategID          = q2.GetInt(wxT("SUBCATEGID"));
-            wxString subcategString    = q2.GetString(wxT("SUBCATEGNAME"));
+            int subcategID = q2.GetInt(wxT("SUBCATEGID"));
+            wxString subcategString = q2.GetString(wxT("SUBCATEGNAME"));
 
             amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, 
                 false,  dtBegin, dtEnd);
@@ -1097,7 +1112,9 @@ wxString mmGUIFrame::createCategoryList()
                 categList.push_back(infoSC);
             }
         }
+        
         q2.Finalize();
+        st.Reset();
 
     }
     q1.Finalize();
@@ -1146,13 +1163,13 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             mmTreeItemData* iParentData = dynamic_cast<mmTreeItemData*>(navTreeCtrl_->GetItemData(idparent));
             if (iParentData->getString() == wxT("Budget Performance"))
             {
-                mmPrintableBase* rs = new mmReportBudgetingPerformance(core_, data);
+                mmPrintableBase* rs = new mmReportBudgetingPerformance(core_.get(), data);
                 menuPrintingEnable(true);
                 createReportsPage(rs);
             }
             else if (iParentData->getString() == wxT("Budget Setup Performance"))
             {
-                mmPrintableBase* rs = new mmReportBudgetingSetup(core_, data);
+                mmPrintableBase* rs = new mmReportBudgetingSetup(core_.get(), data);
                 menuPrintingEnable(true);
                 createReportsPage(rs);
             }
@@ -1182,7 +1199,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                  wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
                  homePanel->SetSizer(itemBoxSizer1);
 
-                 panelCurrent_ = new mmStocksPanel(db_.get(), inidb_, data, homePanel, ID_PANEL3, 
+                 panelCurrent_ = new mmStocksPanel(db_.get(), inidb_.get(), data, homePanel, ID_PANEL3, 
                     wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
                  itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
@@ -1223,7 +1240,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
         if (iData->getString() == wxT("Summary of Accounts"))
         {
-            mmPrintableBase* rs = new mmReportSummary(core_);
+            mmPrintableBase* rs = new mmReportSummary(core_.get());
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1244,7 +1261,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
         else if (iData->getString() == wxT("Categories - Over Time"))
         {
-            mmPrintableBase* rs = new mmReportCategoryOverTimePerformance(core_);
+            mmPrintableBase* rs = new mmReportCategoryOverTimePerformance(core_.get());
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1262,7 +1279,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
             wxString title = _("Categories");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd, 
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd, 
                 title, 0);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1275,7 +1292,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
             wxString title = _("Categories");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd,
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd,
                 title, 0);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1288,7 +1305,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
             wxString title = _("Categories");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd,
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd,
                title, 0);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1305,7 +1322,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = prevYearEnd;
             wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
             wxString title = _("Categories");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd, 
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd, 
                title, 0);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1322,7 +1339,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = yearBegin;
             wxString title = _("Categories");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd, 
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd, 
                 title, 0);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1334,7 +1351,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd =  wxDateTime::Now();
             wxDateTime dtBegin =  wxDateTime::Now();
             wxString title = _("Where the Money Comes From");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, true, dtBegin, dtEnd, 
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), true, dtBegin, dtEnd, 
                 title, 1);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1354,7 +1371,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
             wxString title = _("Where the Money Comes From");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd, 
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd, 
                 title, 1);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1367,7 +1384,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
             wxString title = _("Where the Money Comes From");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd,
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd,
                 title, 1);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1380,7 +1397,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
             wxString title = _("Where the Money Comes From");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd,
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd,
                title, 1);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1397,7 +1414,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = prevYearEnd;
             wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
             wxString title = _("Where the Money Comes From");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd, 
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd, 
                title, 1);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1414,7 +1431,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = yearBegin;
             wxString title = _("Where the Money Comes From");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd, 
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd, 
                 title, 1);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1426,7 +1443,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = wxDateTime::Now();
             wxDateTime dtBegin = wxDateTime::Now();
             wxString title = _("Where the Money Goes");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, true, dtBegin, dtEnd, 
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), true, dtBegin, dtEnd, 
                 title, 2);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1445,7 +1462,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
             wxString title = _("Where the Money Goes");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd, 
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd, 
                 title, 2);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1458,7 +1475,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
             wxString title = _("Where the Money Goes");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd,
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd,
                 title, 2);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1471,7 +1488,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
             wxString title = _("Where the Money Goes");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd,
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd,
                title, 2);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1488,7 +1505,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = prevYearEnd;
             wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
             wxString title = _("Where the Money Goes");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd, 
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd, 
                title, 2);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1505,7 +1522,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = yearBegin;
             wxString title = _("Where the Money Goes");
-            mmPrintableBase* rs = new mmReportCategoryExpenses(core_, false, dtBegin, dtEnd, 
+            mmPrintableBase* rs = new mmReportCategoryExpenses(core_.get(), false, dtBegin, dtEnd, 
                 title, 2);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1517,7 +1534,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear()-1;
-            mmPrintableBase* rs = new mmReportTransactionStats(core_, year);
+            mmPrintableBase* rs = new mmReportTransactionStats(core_.get(), year);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1529,7 +1546,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear();
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(core_, year);
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(core_.get(), year);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1547,7 +1564,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
 
-            mmPrintableBase* rs = new mmReportIncomeExpenses(core_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportIncomeExpenses(core_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1558,7 +1575,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today;
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            mmPrintableBase* rs = new mmReportIncomeExpenses(core_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportIncomeExpenses(core_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1569,7 +1586,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
-            mmPrintableBase* rs = new mmReportIncomeExpenses(core_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportIncomeExpenses(core_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1578,7 +1595,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear()-1;
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(core_, year);
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(core_.get(), year);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1587,14 +1604,14 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear();
-            mmPrintableBase* rs = new mmReportIncExpensesOverTime(core_, year);
+            mmPrintableBase* rs = new mmReportIncExpensesOverTime(core_.get(), year);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
 
         else if (iData->getString() == wxT("Income vs Expenses - All Time"))
         {
-            mmPrintableBase* rs = new mmReportIncomeExpenses(core_, true, wxDateTime::Now(),
+            mmPrintableBase* rs = new mmReportIncomeExpenses(core_.get(), true, wxDateTime::Now(),
                 wxDateTime::Now());
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1604,7 +1621,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
         else if (iData->getString() == wxT("To Whom the Money Goes"))
         {
-            mmPrintableBase* rs = new mmReportPayeeExpenses(core_, true, wxDateTime::Now(),
+            mmPrintableBase* rs = new mmReportPayeeExpenses(core_.get(), true, wxDateTime::Now(),
                 wxDateTime::Now());
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1624,7 +1641,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
 
-            mmPrintableBase* rs = new mmReportPayeeExpenses(core_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(core_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1635,7 +1652,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today;
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            mmPrintableBase* rs = new mmReportPayeeExpenses(core_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(core_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1646,7 +1663,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
-            mmPrintableBase* rs = new mmReportPayeeExpenses(core_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(core_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1661,7 +1678,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             prevYearEnd.SetDay(31);
             wxDateTime dtEnd = prevYearEnd;
             wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-            mmPrintableBase* rs = new mmReportPayeeExpenses(core_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(core_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1676,14 +1693,14 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             yearBegin.SetDay(31);
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = yearBegin;
-            mmPrintableBase* rs = new mmReportPayeeExpenses(core_, false, dtBegin, dtEnd);
+            mmPrintableBase* rs = new mmReportPayeeExpenses(core_.get(), false, dtBegin, dtEnd);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
 
         else if (iData->getString() == wxT("Cash Flow"))
         {
-            mmPrintableBase* rs = new mmReportCashFlow(core_);
+            mmPrintableBase* rs = new mmReportCashFlow(core_.get());
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1772,7 +1789,7 @@ void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& event)
            wxString acctType = pAccount->acctType_;
            if (acctType == wxT("Checking") || acctType == wxT("Investment"))
            {
-              mmNewAcctDialog *dlg = new mmNewAcctDialog(core_, false, data, this);
+              mmNewAcctDialog *dlg = new mmNewAcctDialog(core_.get(), false, data, this);
               if ( dlg->ShowModal() == wxID_OK )
               {
                  createHomePage();
@@ -1879,7 +1896,7 @@ void mmGUIFrame::createCheckingAccountPage(int accountID)
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
     
-    panelCurrent_ = new mmCheckingPanel(core_, inidb_, 
+    panelCurrent_ = new mmCheckingPanel(core_.get(), inidb_.get(), 
         accountID, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
@@ -1904,7 +1921,7 @@ void mmGUIFrame::createBudgetingPage(int budgetYearID)
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
 
-    panelCurrent_ = new mmBudgetingPanel(db_.get(), inidb_, budgetYearID, homePanel, ID_PANEL3, 
+    panelCurrent_ = new mmBudgetingPanel(db_.get(), inidb_.get(), budgetYearID, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
@@ -1930,8 +1947,8 @@ void mmGUIFrame::createHomePage()
     }
     panelCurrent_ = new mmHomePagePanel(this, 
         db_.get(), 
-        inidb_,
-        core_, 
+        inidb_.get(),
+        core_.get(), 
         m_topCategories,
         homePanel, 
         ID_PANEL3, 
@@ -2262,8 +2279,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
 {
     if (core_)
     {
-        delete core_;
-        core_ = 0;
+        core_.reset();
     }
 
     if (db_)
@@ -2285,7 +2301,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
         && wxFileName::FileExists(fileName))
     {    
         /* Do a backup before opening */
-        wxString backupDBState =  mmDBWrapper::getINISettingValue(inidb_, wxT("BACKUPDB"), wxT("FALSE"));
+        wxString backupDBState =  mmDBWrapper::getINISettingValue(inidb_.get(), wxT("BACKUPDB"), wxT("FALSE"));
         if (backupDBState == wxT("TRUE"))
         {
             wxFileName fn(fileName);
@@ -2312,7 +2328,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
         }
         password_ = password;
 
-        core_ = new mmCoreDB(db_);
+        core_.reset(new mmCoreDB(db_));
     }
     else if (openingNew) // New Database
     {
@@ -2324,7 +2340,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
            db_ = pDB;
            db_->Open(fileName);
            password_ = password;
-           core_ = new mmCoreDB(db_);
+           core_.reset(new mmCoreDB(db_));
        }
        else
        {
@@ -2334,9 +2350,9 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
            password_ = password;
 
            openDataBase(fileName);
-           core_ = new mmCoreDB(db_);
+           core_.reset(new mmCoreDB(db_));
 
-           mmNewDatabaseWizard* wizard = new mmNewDatabaseWizard(this, core_);
+           mmNewDatabaseWizard* wizard = new mmNewDatabaseWizard(this, core_.get());
            wizard->CenterOnParent();
            wizard->RunIt(true);
 
@@ -2431,7 +2447,7 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew)
 
     if (!db_.get())
     {
-        mmDBWrapper::setINISettingValue(inidb_, 
+        mmDBWrapper::setINISettingValue(inidb_.get(), 
             wxT("LASTFILENAME"), wxT(""));
         showBeginAppDialog();
     }
@@ -2574,7 +2590,7 @@ void mmGUIFrame::OnExport(wxCommandEvent& event)
 
 void mmGUIFrame::OnImportCSV(wxCommandEvent& event)
 {
-    int accountID = mmImportCSV(core_);
+    int accountID = mmImportCSV(core_.get());
     if (accountID != -1)
         createCheckingAccountPage(accountID);
 }
@@ -2591,13 +2607,20 @@ void mmGUIFrame::OnImportQFX(wxCommandEvent& event)
     wxArrayString as;
     int fromAccountID = -1;
     
+    static const char sql[] = 
+    "select ACCOUNTNAME "
+    "from ACCOUNTLIST_V1 "
+    "where ACCOUNTTYPE = 'Checking' "
+    "order by ACCOUNTNAME";
+
     mmBEGINSQL_LITE_EXCEPTION;
-    wxSQLite3ResultSet q1 
-        = db_.get()->ExecuteQuery("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
+
+    wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(sql);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
+    q1.Finalize();
 
     mmENDSQL_LITE_EXCEPTION;
 
@@ -2650,7 +2673,7 @@ void mmGUIFrame::OnImportQFX(wxCommandEvent& event)
 
 void mmGUIFrame::OnImportQIF(wxCommandEvent& event)
 {
-    int accountID = mmImportQIF(core_);
+    int accountID = mmImportQIF(core_.get());
     if (accountID != -1)
         createCheckingAccountPage(accountID);
 }
@@ -2664,14 +2687,14 @@ void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& event)
         return;
     }
 
-    mmUnivCSVImportDialog *dlg = new mmUnivCSVImportDialog(core_, this);
+    mmUnivCSVImportDialog *dlg = new mmUnivCSVImportDialog(core_.get(), this);
     dlg->ShowModal();
     dlg->Destroy();
 }
 
 void mmGUIFrame::OnImportCSVMMNET(wxCommandEvent& event)
 {
-    int accountID = mmImportCSVMMNET(core_);
+    int accountID = mmImportCSVMMNET(core_.get());
     if (accountID != -1)
         createCheckingAccountPage(accountID);
 }
@@ -2683,13 +2706,13 @@ void mmGUIFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
     
 void mmGUIFrame::OnNewAccount(wxCommandEvent& event)
 {
-    mmAddAccountWizard* wizard = new mmAddAccountWizard(this, core_);
+    mmAddAccountWizard* wizard = new mmAddAccountWizard(this, core_.get());
     wizard->CenterOnParent();
     wizard->RunIt(true);
 
     if (wizard->acctID_ != -1)
     {
-        mmNewAcctDialog *dlg = new mmNewAcctDialog(core_, false, wizard->acctID_, this);
+        mmNewAcctDialog *dlg = new mmNewAcctDialog(core_.get(), false, wizard->acctID_, this);
         if ( dlg->ShowModal() == wxID_OK )
         {
             
@@ -2714,14 +2737,14 @@ void mmGUIFrame::OnAccountList(wxCommandEvent& event)
 
 void mmGUIFrame::OnOrgCategories(wxCommandEvent& event)
 {
-    mmCategDialog *dlg = new mmCategDialog(core_, this, false);
+    mmCategDialog *dlg = new mmCategDialog(core_.get(), this, false);
     dlg->ShowModal();
     dlg->Destroy();
 }
  
 void mmGUIFrame::OnOrgPayees(wxCommandEvent& event)
 {
-    mmPayeeDialog *dlg = new mmPayeeDialog(core_, true, this, false);
+    mmPayeeDialog *dlg = new mmPayeeDialog(core_.get(), true, this, false);
     dlg->ShowModal();
     dlg->Destroy();
 }
@@ -2743,13 +2766,12 @@ void mmGUIFrame::OnCustomSQL(wxCommandEvent& event)
   if (!db_.get())
       return;
 
-   mmCustomSQLDialog* dlg = new mmCustomSQLDialog(core_, this);
+   mmCustomSQLDialog* dlg = new mmCustomSQLDialog(core_.get(), this);
    if (dlg->ShowModal() == wxID_OK)
    {
        if (dlg->sqlQuery_ != wxT(""))
        {
-           //wxString sqlQuery = mmCleanQuotes(dlg->sqlQuery_);
-           mmPrintableBase* cs = new mmCustomSQLStats(core_, dlg->sqlQuery_);
+           mmPrintableBase* cs = new mmCustomSQLStats(core_.get(), dlg->sqlQuery_);
            menuPrintingEnable(true);
            createReportsPage(cs);
        }
@@ -2767,10 +2789,10 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& event)
 
    std::vector< boost::shared_ptr<mmBankTransaction> >* trans 
       = new std::vector< boost::shared_ptr<mmBankTransaction> >;
-   mmFilterTransactionsDialog* dlg = new mmFilterTransactionsDialog(trans, core_, this);
+   mmFilterTransactionsDialog* dlg = new mmFilterTransactionsDialog(trans, core_.get(), this);
    if (dlg->ShowModal() == wxID_OK)
    {
-      mmPrintableBase* rs = new mmReportTransactions(trans, core_);
+      mmPrintableBase* rs = new mmReportTransactions(trans, core_.get());
       menuPrintingEnable(true);
       createReportsPage(rs);
    }
@@ -2812,7 +2834,7 @@ void mmGUIFrame::OnCashFlowSpecificAccounts()
             selections.Add(accountArray.Item(arraySel[i]));
         }
 
-        mmPrintableBase* rs = new mmReportCashFlow(core_, &selections);
+        mmPrintableBase* rs = new mmReportCashFlow(core_.get(), &selections);
         menuPrintingEnable(true);
         createReportsPage(rs);
     }
@@ -2824,14 +2846,14 @@ void mmGUIFrame::OnOptions(wxCommandEvent& event)
     if (!db_.get() || !inidb_)
         return;
 
-    mmOptionsDialog *dlg = new mmOptionsDialog(core_, inidb_, this);
+    mmOptionsDialog *dlg = new mmOptionsDialog(core_.get(), inidb_.get(), this);
     dlg->ShowModal();
     dlg->Destroy();
     createHomePage();
     updateNavTreeControl();
 
     // enable or disable online update currency rate
-    wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(inidb_, wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
+    wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(inidb_.get(), wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
     if(enableCurrencyUpd == wxT("TRUE")) 
     {
         if (menuItemOnlineUpdateCurRate_)
@@ -3089,7 +3111,7 @@ void mmGUIFrame::OnBeNotified(wxCommandEvent& event)
     
 void mmGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-    mmAboutDialog *dlg = new mmAboutDialog(inidb_, this);
+    mmAboutDialog *dlg = new mmAboutDialog(inidb_.get(), this);
     dlg->ShowModal();
     dlg->Destroy();
 }
@@ -3136,7 +3158,7 @@ void mmGUIFrame::OnPrintPagePreview(wxCommandEvent& WXUNUSED(event))
 
 void mmGUIFrame::showBeginAppDialog()
 {
-    mmAppStartDialog *dlg = new mmAppStartDialog(inidb_, this);
+    mmAppStartDialog *dlg = new mmAppStartDialog(inidb_.get(), this);
     dlg->ShowModal();
     
     if (dlg->getReturnCode() == 0)
@@ -3161,7 +3183,7 @@ void mmGUIFrame::showBeginAppDialog()
     }
     else if (dlg->getReturnCode() == 4)
     {
-        wxString val = mmDBWrapper::getINISettingValue(inidb_, 
+        wxString val = mmDBWrapper::getINISettingValue(inidb_.get(), 
             wxT("LASTFILENAME"), wxT(""));
         if (!val.IsEmpty())
         {
@@ -3212,7 +3234,7 @@ void mmGUIFrame::OnBillsDeposits(wxCommandEvent& event)
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
     
-    panelCurrent_ = new mmBillsDepositsPanel(db_.get(), inidb_, core_, homePanel, ID_PANEL3, 
+    panelCurrent_ = new mmBillsDepositsPanel(db_.get(), inidb_.get(), core_.get(), homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
@@ -3227,7 +3249,7 @@ void mmGUIFrame::OnStocks(wxCommandEvent& event)
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
     
-    panelCurrent_ = new mmStocksPanel(db_.get(), inidb_, -1, homePanel, ID_PANEL3, 
+    panelCurrent_ = new mmStocksPanel(db_.get(), inidb_.get(), -1, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
@@ -3242,7 +3264,7 @@ void mmGUIFrame::OnAssets(wxCommandEvent& event)
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     homePanel->SetSizer(itemBoxSizer1);
     
-    panelCurrent_ = new mmAssetsPanel(db_.get(), inidb_, homePanel, ID_PANEL3, 
+    panelCurrent_ = new mmAssetsPanel(db_.get(), inidb_.get(), homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
@@ -3251,7 +3273,7 @@ void mmGUIFrame::OnAssets(wxCommandEvent& event)
 
 void mmGUIFrame::OnCurrency(wxCommandEvent& event)
 {
-    mmMainCurrencyDialog *dlg = new mmMainCurrencyDialog(core_,this, false);
+    mmMainCurrencyDialog *dlg = new mmMainCurrencyDialog(core_.get(),this, false);
     if ( dlg->ShowModal() == wxID_OK )
     {
     }
@@ -3287,7 +3309,7 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& event)
     {
         int choice = scd->GetSelection();
         int acctID = arrAcctID[choice];
-        mmNewAcctDialog *dlg = new mmNewAcctDialog(core_, false, acctID, this);
+        mmNewAcctDialog *dlg = new mmNewAcctDialog(core_.get(), false, acctID, this);
         if ( dlg->ShowModal() == wxID_OK )
         {
             updateNavTreeControl();      

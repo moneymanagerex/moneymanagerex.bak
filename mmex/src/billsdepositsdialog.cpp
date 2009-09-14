@@ -24,6 +24,7 @@
 #include "dbwrapper.h"
 #include "splittransactionsdialog.h"
 #include "defs.h"
+#include <limits>
 
 #if defined (__WXMAC__)
 #define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
@@ -120,9 +121,13 @@ void mmBDDialog::dataToControls()
 
     mmBEGINSQL_LITE_EXCEPTION;
 
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from BILLSDEPOSITS_V1 where BDID=%d;", bdID_);
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+    wxSQLite3Statement st_payee = db_->PrepareStatement("select PAYEENAME from PAYEE_V1 where PAYEEID = ?");
+
+    wxSQLite3Statement st = db_->PrepareStatement("select * from BILLSDEPOSITS_V1 where BDID = ?");
+    st.Bind(1, bdID_);
+
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+
     if (q1.NextRow())
     {
         categID_ = q1.GetInt(wxT("CATEGID"));
@@ -181,17 +186,24 @@ void mmBDDialog::dataToControls()
         wxString accountName = mmDBWrapper::getAccountName(db_, accountID_);
         itemAccountName_->SetLabel(accountName);
 
-        q1.Finalize();
+        // --
 
         wxString payeeString;
-        bufSQL.Format("select * from PAYEE_V1 where PAYEEID=%d;", payeeID_);
-        q1 = db_->ExecuteQuery(bufSQL);
-        if (q1.NextRow())
+        
         {
-            payeeString = q1.GetString(wxT("PAYEENAME"));
-            q1.Finalize();
+            st_payee.Bind(1, payeeID_);
+
+            wxSQLite3ResultSet rs = st_payee.ExecuteQuery();
+            if (rs.NextRow())
+            {
+                payeeString = rs.GetString(wxT("PAYEENAME"));
+            }
+
+            rs.Finalize();
+            st_payee.Reset();
         }
 
+        // --
       
 		split_->loadFromBDDB(core_, bdID_);
 
@@ -240,6 +252,10 @@ void mmBDDialog::dataToControls()
         }
 
     }
+    
+    st.Finalize();
+    st_payee.Finalize();
+
     mmENDSQL_LITE_EXCEPTION;
 }
 
@@ -880,17 +896,24 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
         }
     }
     
-    
-  
-
-    wxString transNum = mmCleanString(textNumber_->GetValue());
-    wxString notes = mmCleanString(textNotes_->GetValue());
+    wxString transNum = textNumber_->GetValue();
+    wxString notes = textNotes_->GetValue();
     wxString status = wxT(""); // nothing yet
     int repeats = itemRepeats_->GetSelection();
+    
     wxString numRepeatStr = textNumRepeats_->GetValue();
-    long numRepeats = -1;
-    if (numRepeatStr != wxT(""))
-        numRepeatStr.ToLong(&numRepeats);
+    int numRepeats = -1;
+    
+    if (!numRepeatStr.empty()) {
+        long cnt = 0;
+        if (numRepeatStr.ToLong(&cnt))
+        {
+            wxASSERT(std::numeric_limits<int>::min() <= cnt);
+            wxASSERT(cnt <= std::numeric_limits<int>::max());
+            numRepeats = static_cast<int>(cnt);
+        }
+    }
+    
     wxString nextOccurDate = dpcbd_->GetValue().FormatISODate();
 
     if (choiceStatus_->GetSelection() == DEF_STATUS_NONE)
@@ -914,49 +937,131 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
 
     if (!edit_ && !enterOccur_)
     {
-        wxString bufSQL = wxString::Format(wxT("insert into BILLSDEPOSITS_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, \
-                      TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES,                               \
-                      CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT, REPEATS, NEXTOCCURRENCEDATE, NUMOCCURRENCES)                                              \
-                      values (%d, %d, %d, '%s', %f, '%s', '%s', '%s', %d, %d, '%s', -1, %f, %d, '%s', %d);"),
-                      fromAccountID, toAccountID, payeeID_, transCode.c_str(), amount,
-                      status.c_str(), transNum.c_str(), notes.c_str(), categID_, subcategID_, 
-                      date1.c_str(), toTransAmount_, repeats, nextOccurDate.c_str(), numRepeats);  
-
-        int retVal = db_->ExecuteUpdate(bufSQL);
-		int transID = db_->GetLastRowId().ToLong();
+        static const char sql[] = 
+        "insert into BILLSDEPOSITS_V1 (ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, "
+          "TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES,"
+          "CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT, REPEATS, "
+          "NEXTOCCURRENCEDATE, NUMOCCURRENCES) "
+        "values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, -1, ?, ?, ?, ? )";
         
-		for (size_t idx = 0; idx < (size_t)split_->numEntries(); idx++)
+        wxSQLite3Statement st = db_->PrepareStatement(sql);
+        
+        int i = 0;
+        st.Bind(++i, fromAccountID);
+        st.Bind(++i, toAccountID);
+        st.Bind(++i, payeeID_);
+        st.Bind(++i, transCode);
+        st.Bind(++i, amount);
+        st.Bind(++i, status);
+        st.Bind(++i, transNum);
+        st.Bind(++i, notes);
+        st.Bind(++i, categID_);
+        st.Bind(++i, subcategID_);
+        st.Bind(++i, date1);
+        st.Bind(++i, toTransAmount_);
+        st.Bind(++i, repeats);
+        st.Bind(++i, nextOccurDate);
+        st.Bind(++i, numRepeats);
+
+        bool ok = st.GetParamCount() == i;
+        wxASSERT(ok);
+
+        st.ExecuteUpdate();
+		int transID = db_->GetLastRowId().ToLong();
+        st.Finalize();
+        
+        // --
+
+        static const char sql_ins[] = 
+        "insert into BUDGETSPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) "
+        "values (?, ?, ?, ?)";
+
+        st = db_->PrepareStatement(sql_ins);
+
+        for (size_t i = 0; i < split_->numEntries(); ++i)
 		{
-			wxString bufSQL = wxString::Format(wxT("insert into BUDGETSPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) \
-												   values (%d, %d, %d, %f);"), transID, split_->entries_[idx]->categID_,
-												   split_->entries_[idx]->subCategID_,  split_->entries_[idx]->splitAmount_);  
-			int retVal = db_->ExecuteUpdate(bufSQL);
-			split_->entries_[idx]->splitEntryID_ = db_->GetLastRowId().ToLong();
+            mmSplitTransactionEntry &r = *split_->entries_[i];
+
+            st.Bind(1, transID);
+            st.Bind(2, r.categID_);
+            st.Bind(3, r.subCategID_);
+            st.Bind(4, r.splitAmount_);
+
+            st.ExecuteUpdate();
+			r.splitEntryID_ = db_->GetLastRowId().ToLong();
+            
+            st.Reset();
 		}
+
+        st.Finalize();
     }
     else if (edit_)
     {
-        wxString bufSQL = wxString::Format(wxT("update BILLSDEPOSITS_V1 SET ACCOUNTID=%d, TOACCOUNTID=%d, PAYEEID=%d, TRANSCODE='%s', \
-                      TRANSAMOUNT=%f, STATUS='%s', TRANSACTIONNUMBER='%s', NOTES='%s',                               \
-                      CATEGID=%d, SUBCATEGID=%d, TRANSDATE='%s', TOTRANSAMOUNT=%f, REPEATS=%d, NEXTOCCURRENCEDATE='%s', NUMOCCURRENCES=%d WHERE BDID=%d;"),
-                      accountID_, toAccountID, payeeID_, transCode.c_str(), amount,
-                      status.c_str(), transNum.c_str(), notes.c_str(),categID_, subcategID_, 
-                      date1.c_str(), toTransAmount_, repeats, nextOccurDate.c_str(), numRepeats, bdID_);  
+        static const char sql[] = 
+        "update BILLSDEPOSITS_V1 "
+        "SET ACCOUNTID=?, TOACCOUNTID=?, PAYEEID=?, TRANSCODE=?,"
+            "TRANSAMOUNT=?, STATUS=?, TRANSACTIONNUMBER=?, NOTES=?,"
+            "CATEGID=?, SUBCATEGID=?, TRANSDATE=?, TOTRANSAMOUNT=?, REPEATS=?, "
+            "NEXTOCCURRENCEDATE=?, NUMOCCURRENCES=? "
+        "WHERE BDID=?";
 
-        int retVal = db_->ExecuteUpdate(bufSQL);
+        wxSQLite3Statement st = db_->PrepareStatement(sql);
 
-			wxSQLite3StatementBuffer bufSQL1;
-			bufSQL1.Format("delete from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = %d;", bdID_);
-			db_->ExecuteUpdate(bufSQL1);
+        int i = 0;
+        st.Bind(++i, accountID_);
+        st.Bind(++i, toAccountID);
+        st.Bind(++i, payeeID_);
+        st.Bind(++i, transCode);
+        st.Bind(++i, amount);
+        st.Bind(++i, status);
+        st.Bind(++i, transNum);
+        st.Bind(++i, notes);
+        st.Bind(++i, categID_);
+        st.Bind(++i, subcategID_);
+        st.Bind(++i, date1);
+        st.Bind(++i, toTransAmount_);
+        st.Bind(++i, repeats);
+        st.Bind(++i, nextOccurDate);
+        st.Bind(++i, numRepeats);
+        st.Bind(++i, bdID_);
 
-		for (size_t idx = 0; idx < (size_t)split_->numEntries(); idx++)
+        bool ok = st.GetParamCount() == i;
+        wxASSERT(ok);
+
+        st.ExecuteUpdate();
+        st.Finalize();
+
+        // --
+
+		st = db_->PrepareStatement("delete from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = ?");	
+        st.Bind(1, bdID_);
+        st.ExecuteUpdate();
+        st.Finalize();
+
+        // --
+
+		static const char sql_ins[] = 
+        "insert into BUDGETSPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) "
+        "values (?, ?, ?, ?)";
+
+        st = db_->PrepareStatement(sql_ins);
+        
+        for (size_t i = 0; i < split_->numEntries(); ++i)
 		{
-			wxString bufSQL = wxString::Format(wxT("insert into BUDGETSPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) \
-												   values (%d, %d, %d, %f);"), bdID_, split_->entries_[idx]->categID_,
-												   split_->entries_[idx]->subCategID_,  split_->entries_[idx]->splitAmount_);  
-			int retVal = db_->ExecuteUpdate(bufSQL);
-			split_->entries_[idx]->splitEntryID_ = db_->GetLastRowId().ToLong();
+            mmSplitTransactionEntry &r = *split_->entries_[i];
+
+            st.Bind(1, bdID_);
+            st.Bind(2, r.categID_);
+            st.Bind(3, r.subCategID_);
+            st.Bind(4, r.splitAmount_);
+			
+            st.ExecuteUpdate();
+			r.splitEntryID_ = db_->GetLastRowId().ToLong();
+            
+            st.Reset();
 		}
+
+        st.Finalize();
     }
     else if (enterOccur_)
     {

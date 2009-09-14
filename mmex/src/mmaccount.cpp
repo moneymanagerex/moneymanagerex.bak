@@ -152,26 +152,48 @@ bool mmAccountList::deleteAccount(int accountID)
     {
         mmDBWrapper::removeSplitsForAccount(db_.get(), accountID);
 
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("delete from CHECKINGACCOUNT_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", accountID, accountID);
-        int nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
+        wxSQLite3Statement st = db_->PrepareStatement("delete from CHECKINGACCOUNT_V1 where ACCOUNTID=? OR TOACCOUNTID=?");
+        st.Bind(1, accountID);
+        st.Bind(2, accountID);
 
-        bufSQL.Format("delete from BILLSDEPOSITS_V1 where ACCOUNTID=%d OR TOACCOUNTID=%d;", accountID, accountID);
-        nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
+        st.ExecuteUpdate();
+        st.Finalize();
 
-        bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", accountID);
-        int nRows = db_.get()->ExecuteUpdate(bufSQL);
+        // --
+
+        st = db_->PrepareStatement("delete from BILLSDEPOSITS_V1 where ACCOUNTID=? OR TOACCOUNTID=?");
+        st.Bind(1, accountID);
+        st.Bind(2, accountID);
+
+        st.ExecuteUpdate();
+        st.Finalize();
+
+        // --
+
+        st = db_->PrepareStatement("delete from ACCOUNTLIST_V1 where ACCOUNTID=?");
+        st.Bind(1, accountID);
+
+        int nRows = st.ExecuteUpdate();
         wxASSERT(nRows);
+
+        st.Finalize();
     }
     else if (acctType == wxT("Investment"))
     {
-        wxSQLite3StatementBuffer bufSQL;
-        bufSQL.Format("delete from STOCK_V1 where HELDAT=%d;", accountID);
-        int nTransDeleted = db_.get()->ExecuteUpdate(bufSQL);
+        wxSQLite3Statement st = db_->PrepareStatement("delete from STOCK_V1 where HELDAT=?");
+        st.Bind(1, accountID);
+        st.ExecuteUpdate();
+        st.Finalize();
 
-        bufSQL.Format("delete from ACCOUNTLIST_V1 where ACCOUNTID=%d;", accountID);
-        int nRows = db_.get()->ExecuteUpdate(bufSQL);
+        // --
+
+        st = db_->PrepareStatement("delete from ACCOUNTLIST_V1 where ACCOUNTID=?");
+        st.Bind(1, accountID);
+
+        int nRows = st.ExecuteUpdate();
         wxASSERT(nRows);
+
+        st.Finalize();
     }
 
     std::vector<boost::shared_ptr<mmAccount> >::iterator iter;
@@ -220,26 +242,36 @@ void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)
    wxASSERT(pCurrency);
    int currencyID = pCurrency->currencyID_;
 
+    static const char sql[] = 
+    "update ACCOUNTLIST_V1 "
+    "SET ACCOUNTNAME=?, ACCOUNTTYPE=?, ACCOUNTNUM=?,"
+        "STATUS=?, NOTES=?, HELDAT=?, WEBSITE=?, CONTACTINFO=?,  ACCESSINFO=?,"
+        "INITIALBAL=?, FAVORITEACCT=?, CURRENCYID=? "
+    "where ACCOUNTID = ?";
 
-   wxString bufSQL = wxString::Format(wxT("update ACCOUNTLIST_V1 SET ACCOUNTNAME='%s', ACCOUNTTYPE='%s', ACCOUNTNUM='%s', \
-       STATUS='%s', NOTES='%s', HELDAT='%s', WEBSITE='%s', CONTACTINFO='%s',  ACCESSINFO='%s',                               \
-                                          INITIALBAL=%f, FAVORITEACCT='%s', CURRENCYID=%d                     \
-                                          where ACCOUNTID=%d;"), 
-                                          mmCleanString(pAccount->accountName_.c_str()).c_str(), 
-                                          pAccount->acctType_.c_str(), 
-                                          pAccount->accountNum_.c_str(),  
-                                          statusStr.c_str(), 
-                                          pAccount->notes_.c_str(), 
-                                          pAccount->heldAt_.c_str(), 
-                                          pAccount->website_.c_str(),
-                                          pAccount->contactInfo_.c_str(), 
-                                          pAccount->accessInfo_.c_str(),
-                                          pAccount->initialBalance_, 
-                                          favStr.c_str(), 
-                                          currencyID, 
-                                          pAccount->accountID_);
+   wxSQLite3Statement st = db_->PrepareStatement(sql);
+   const mmAccount &r = *pAccount;
 
-   int retVal = db_->ExecuteUpdate(bufSQL);
+   int i = 0;
+   st.Bind(++i, r.accountName_);
+   st.Bind(++i, r.acctType_);
+   st.Bind(++i, r.accountNum_);
+   st.Bind(++i, statusStr);
+   st.Bind(++i, r.notes_);
+   st.Bind(++i, r.heldAt_);
+   st.Bind(++i, r.website_);
+   st.Bind(++i, r.contactInfo_);
+   st.Bind(++i, r.accessInfo_);
+   st.Bind(++i, r.initialBalance_);
+   st.Bind(++i, favStr);
+   st.Bind(++i, currencyID);
+   st.Bind(++i, r.accountID_);
+
+   bool ok = st.GetParamCount() == i;
+   wxASSERT(ok);
+
+   st.ExecuteUpdate();
+   st.Finalize();
 
    mmENDSQL_LITE_EXCEPTION;
 }
@@ -314,31 +346,41 @@ int mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
       wxASSERT(pCurrency);
       int currencyID = pCurrency->currencyID_;
       
-      wxString bufSQL 
-          = wxString::Format(wxT("insert into ACCOUNTLIST_V1 (ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, \
-             STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO,                                 \
-             INITIALBAL, FAVORITEACCT, CURRENCYID)                      \
-             values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, '%s', %d );"), 
-                             mmCleanString(pAccount->accountName_.c_str()).c_str(), 
-                             pAccount->acctType_.c_str(), 
-                             pAccount->accountNum_.c_str(),  
-                             statusStr.c_str(), 
-                             pAccount->notes_.c_str(), 
-                             pAccount->heldAt_.c_str(), 
-                             pAccount->website_.c_str(),
-                             pAccount->contactInfo_.c_str(), 
-                             pAccount->accessInfo_.c_str(),
-                             pAccount->initialBalance_, 
-                             favStr.c_str(), 
-                             currencyID
-                             );
+    static const char sql[] =       
+    "insert into ACCOUNTLIST_V1 ( "
+      "ACCOUNTNAME, ACCOUNTTYPE, ACCOUNTNUM, "
+      "STATUS, NOTES, HELDAT, WEBSITE, CONTACTINFO, ACCESSINFO, "
+      "INITIALBAL, FAVORITEACCT, CURRENCYID "
+    " ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
-        int retVal = db_->ExecuteUpdate(bufSQL);
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    const mmAccount &r = *pAccount;
 
-        pAccount->accountID_ = db_->GetLastRowId().ToLong();
-        accounts_.push_back(pAccount);
+    int i = 0;
+    st.Bind(++i, r.accountName_);
+    st.Bind(++i, r.acctType_);
+    st.Bind(++i, r.accountNum_);
+    st.Bind(++i, statusStr);
+    st.Bind(++i, r.notes_);
+    st.Bind(++i, r.heldAt_);
+    st.Bind(++i, r.website_);
+    st.Bind(++i, r.contactInfo_);
+    st.Bind(++i, r.accessInfo_);
+    st.Bind(++i, r.initialBalance_);
+    st.Bind(++i, favStr);
+    st.Bind(++i, currencyID);
 
-        mmENDSQL_LITE_EXCEPTION;
-    
-        return pAccount->accountID_;
+    bool ok = st.GetParamCount() == i;
+    wxASSERT(ok);
+
+    st.ExecuteUpdate();
+
+    pAccount->accountID_ = db_->GetLastRowId().ToLong();
+    accounts_.push_back(pAccount);
+
+    st.Finalize();
+
+    mmENDSQL_LITE_EXCEPTION;
+
+    return pAccount->accountID_;
 }

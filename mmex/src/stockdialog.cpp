@@ -81,11 +81,17 @@ bool mmStockDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
 
 void mmStockDialog::dataToControls()
 {
+    static const char sql[] = 
+    "select * "
+    "from STOCK_V1 "
+    "where STOCKID = ?";
+
     mmBEGINSQL_LITE_EXCEPTION;
 
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from STOCK_V1 where STOCKID=%d;", stockID_);
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+    wxSQLite3Statement st = db_->PrepareStatement(sql); 
+    st.Bind(1, stockID_);
+
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
     if (q1.NextRow())
     {
         heldAt_->SetLabel(mmDBWrapper::getAccountName(db_, q1.GetInt(wxT("HELDAT"))));
@@ -121,7 +127,7 @@ void mmStockDialog::dataToControls()
             dispAmount);
         commission_->SetValue(dispAmount);
     }
-    q1.Finalize();
+    st.Finalize();
     mmENDSQL_LITE_EXCEPTION;
 }
 
@@ -279,14 +285,21 @@ void mmStockDialog::CreateControls()
 
 void mmStockDialog::OnAccountButton(wxCommandEvent& event)
 {
+    static const char sql[] = 
+    "select ACCOUNTNAME "
+    "from ACCOUNTLIST_V1 "
+    "where ACCOUNTTYPE = 'Investment' "
+    "order by ACCOUNTNAME";
+
     wxArrayString as;
     
     mmBEGINSQL_LITE_EXCEPTION;
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Investment' order by ACCOUNTNAME;");
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
+    q1.Finalize();
     mmENDSQL_LITE_EXCEPTION
     
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Investment Account"), 
@@ -393,31 +406,66 @@ void mmStockDialog::OnOk(wxCommandEvent& event)
 
     if (!edit_)
     {
-        wxString bufSQL = wxString::Format(wxT("insert into STOCK_V1 (HELDAT, PURCHASEDATE, STOCKNAME, SYMBOL, \
-                      NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE,                               \
-                      VALUE, COMMISSION)\
-                      values (%d, '%s', '%s', '%s', %f, %f, '%s', %f, %f, %f);"),
-                      accountID_, pdate.c_str(), mmCleanString(stockName).c_str(), 
-					  mmCleanString(stockSymbol).c_str(), numShares,
-                      pPrice, 
-					  mmCleanString(notes.c_str()).c_str(), 
-					  cPrice, 
-					  cValue, 
-					  commission);  
-
-        int retVal = db_->ExecuteUpdate(bufSQL);
+        static const char sql[]  = 
+        "insert into STOCK_V1 ( "
+          "HELDAT, PURCHASEDATE, STOCKNAME, SYMBOL, "
+          "NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, "
+          "VALUE, COMMISSION "
+        " ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
+        wxSQLite3Statement st = db_->PrepareStatement(sql);
+
+        int i = 0;
+        st.Bind(++i, accountID_);
+        st.Bind(++i, pdate);
+        st.Bind(++i, stockName);
+        st.Bind(++i, stockSymbol);
+        st.Bind(++i, numShares);
+        st.Bind(++i, pPrice);
+        st.Bind(++i, notes);
+        st.Bind(++i, cPrice);
+        st.Bind(++i, cValue);
+        st.Bind(++i, commission);
+
+        bool ok = st.GetParamCount() == i;
+        wxASSERT(ok);
+
+        st.ExecuteUpdate();
+        st.Finalize();
     }
     else 
     {
-        wxString bufSQL = wxString::Format(wxT("update STOCK_V1 SET HELDAT=%d, PURCHASEDATE='%s', STOCKNAME='%s', SYMBOL='%s', \
-                      NUMSHARES=%f, PURCHASEPRICE=%f, NOTES='%s', CURRENTPRICE=%f,                               \
-                      VALUE=%f, COMMISSION=%f WHERE STOCKID=%d;"),
-                      accountID_, pdate.c_str(), mmCleanString(stockName).c_str(), mmCleanString(stockSymbol).c_str(), numShares,
-                      pPrice, mmCleanString(notes.c_str()).c_str(), cPrice, cValue, commission, stockID_);  
+        static const char sql[]  = 
+        "update STOCK_V1 "
+        "SET HELDAT=?, PURCHASEDATE=?, STOCKNAME=?, SYMBOL=?, "
+            "NUMSHARES=?, PURCHASEPRICE=?, NOTES=?, CURRENTPRICE=?, "
+            "VALUE=?, COMMISSION=? "
+        "WHERE STOCKID = ?";
 
-       int retVal = db_->ExecuteUpdate(bufSQL);
+        wxSQLite3Statement st = db_->PrepareStatement(sql);
+
+        int i = 0;
+        st.Bind(++i, accountID_);
+        st.Bind(++i, pdate);
+        st.Bind(++i, stockName);
+        st.Bind(++i, stockSymbol);
+        st.Bind(++i, numShares);
+        st.Bind(++i, pPrice);
+        st.Bind(++i, notes);
+        st.Bind(++i, cPrice);
+        st.Bind(++i, cValue);
+        st.Bind(++i, commission);
+        st.Bind(++i, stockID_);
+
+        bool ok = st.GetParamCount() == i;
+        wxASSERT(ok);
+
+        int rows_affected = st.ExecuteUpdate();
+        wxASSERT(rows_affected == 1);
+
+        st.Finalize();
     }
+
     mmENDSQL_LITE_EXCEPTION;
 
     EndModal(wxID_OK);

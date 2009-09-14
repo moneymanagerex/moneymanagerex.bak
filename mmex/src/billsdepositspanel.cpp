@@ -249,7 +249,7 @@ void mmBillsDepositsPanel::initVirtualListControl()
     mmDBWrapper::loadBaseCurrencySettings(db_);
 
     wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from BILLSDEPOSITS_V1;");
+    bufSQL.Format("select * from BILLSDEPOSITS_V1");
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
 
     int ct = 0;

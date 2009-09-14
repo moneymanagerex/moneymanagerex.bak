@@ -53,13 +53,12 @@ public:
 class mmSplitTransactionEntries
 {
 public:
-   mmSplitTransactionEntries():total_(0.0) {}
-   ~mmSplitTransactionEntries() {entries_.clear();}
+   mmSplitTransactionEntries() : total_() {}
 
-   int numEntries() { return (int)entries_.size(); }
-   double getTotalSplits() { return total_; }
+   size_t numEntries() const { return entries_.size(); }
+   double getTotalSplits() const { return total_; }
 
-   void addSplit(boost::shared_ptr<mmSplitTransactionEntry>& split);
+   void addSplit(boost::shared_ptr<mmSplitTransactionEntry> split);
    void removeSplit(int splitID);
    void removeSplitByIndex(int splitIndex);
 

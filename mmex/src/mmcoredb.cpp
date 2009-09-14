@@ -17,6 +17,161 @@
  /*******************************************************/
 #include "mmcoredb.h"
 #include "util.h"
+//----------------------------------------------------------------------------
+
+namespace
+{
+
+void loadCurrencies(boost::shared_ptr<wxSQLite3Database> db_, mmCurrencyList &cur_list)
+{
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * "
+                                              "from CURRENCYFORMATS_V1 "
+                                              "order by CURRENCYNAME"
+                                             );
+
+    while (q1.NextRow())
+    {
+        boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency(db_, q1));
+        cur_list.currencies_.push_back(pCurrency);
+    }
+
+    q1.Finalize();
+}
+//----------------------------------------------------------------------------
+
+void loadCategories(boost::shared_ptr<wxSQLite3Database> db_, mmCategoryList &cat_list)
+{
+    static const char sql[] = 
+    "select c.CATEGID, c.CATEGNAME, "
+           "sc.SUBCATEGID, sc.SUBCATEGNAME "
+    "from CATEGORY_V1 c "
+    "left join SUBCATEGORY_V1 sc "
+    "on sc.CATEGID = c.CATEGID "
+    "order by c.CATEGNAME, sc.SUBCATEGNAME";
+
+    boost::shared_ptr<mmCategory> pCat;
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+
+    while (q1.NextRow())
+    {
+        int catID = q1.GetInt(wxT("CATEGID"));
+        
+        if (!pCat || pCat->categID_ != catID)
+        {
+            if (pCat) {
+                cat_list.categories_.push_back(pCat);
+            }
+
+            pCat.reset(new mmCategory(catID, q1.GetString(wxT("CATEGNAME"))));
+        }
+
+        int sub_idx = q1.FindColumnIndex(wxT("SUBCATEGID"));
+        wxASSERT(sub_idx);
+
+        if (!q1.IsNull(sub_idx))
+        {
+            int subcatID = q1.GetInt(sub_idx);
+            boost::shared_ptr<mmCategory> pSubCat(new mmCategory(subcatID, q1.GetString(wxT("SUBCATEGNAME"))));
+
+            pSubCat->parent_ = pCat;
+            pCat->children_.push_back(pSubCat);
+        }
+    }
+
+    q1.Finalize();
+
+    if (pCat)
+    {
+        cat_list.categories_.push_back(pCat);
+    }
+}
+//----------------------------------------------------------------------------
+
+void loadPayees(boost::shared_ptr<wxSQLite3Database> db_, 
+                mmCategoryList &cat_list, 
+                mmPayeeList &payee_list
+               )
+{
+    static const char sql[] = 
+    "select PAYEEID, PAYEENAME, CATEGID, SUBCATEGID "
+    "from PAYEE_V1 "
+    "order by PAYEENAME";
+
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+
+    while (q1.NextRow())
+    {
+        int payeeID = q1.GetInt(wxT("PAYEEID"));
+        int categID = q1.GetInt(wxT("CATEGID"));
+        int subCategID = q1.GetInt(wxT("SUBCATEGID"));
+
+        boost::shared_ptr<mmPayee> pPayee(new mmPayee(payeeID, q1.GetString(wxT("PAYEENAME")), 
+                                                      cat_list.getCategorySharedPtr(categID, subCategID)
+                                                     )
+                                         );
+
+        payee_list.payees_.push_back(pPayee);
+    }
+
+    q1.Finalize();
+    payee_list.sortPayeeList();
+}
+//----------------------------------------------------------------------------
+
+void loadAccounts(boost::shared_ptr<wxSQLite3Database> db_, 
+                  mmCurrencyList &cur_list,
+                  mmAccountList &acc_list
+                 )
+{
+    static const char sql[] = 
+    "select * "
+    "from ACCOUNTLIST_V1 "
+    "order by STATUS desc, "
+             "FAVORITEACCT desc, "
+             "ACCOUNTNAME";
+
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+
+    while (q1.NextRow())
+    {
+        mmAccount* ptrBase = 0;
+
+        if (q1.GetString(wxT("ACCOUNTTYPE")) == wxT("Checking"))
+            ptrBase = new mmCheckingAccount(db_, q1);
+        else
+            ptrBase = new mmInvestmentAccount(db_, q1);
+
+        boost::weak_ptr<mmCurrency> pCurrency = cur_list.getCurrencySharedPtr(q1.GetInt(wxT("CURRENCYID")));
+        ptrBase->currency_ = pCurrency;
+
+        boost::shared_ptr<mmAccount> pAccount(ptrBase);
+        acc_list.accounts_.push_back(pAccount);
+    }
+
+    q1.Finalize();
+}
+//----------------------------------------------------------------------------
+
+void loadTransactions(boost::shared_ptr<wxSQLite3Database> db_, 
+                      mmCoreDB *theCore,
+                      mmBankTransactionList &trans_list
+                     )
+{
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from CHECKINGACCOUNT_V1");
+
+    while (q1.NextRow())
+    {
+        boost::shared_ptr<mmBankTransaction> ptrBase(new mmBankTransaction(theCore, q1));
+        trans_list.transactions_.push_back(ptrBase);
+    }
+
+    q1.Finalize();
+}
+//----------------------------------------------------------------------------
+
+} // namespace
+
+//----------------------------------------------------------------------------
 
 mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
 : db_ (db),
@@ -29,102 +184,18 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
     if (!db_)
         throw wxString(wxT("Database Handle is invalid!"));
 
-    mmBEGINSQL_LITE_EXCEPTION;
-    
     /* Load the DB into memory */
 
-    /* Load the Options */
-    mmOptions::loadOptions(db_.get());
-
-    /* Load the Currencies */
-    wxString sqlString =  wxT("select * from CURRENCYFORMATS_V1 order by CURRENCYNAME;");
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sqlString);
-    while (q1.NextRow())
-    {
-       boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency(db_, q1));
-       currencyList_.currencies_.push_back(pCurrency);
-    }
-    q1.Finalize();
-
-    /* Load the Categories */
-    sqlString = wxT("select * from CATEGORY_V1 order by CATEGNAME;");
-    wxSQLite3StatementBuffer bufSQL1;
-    q1 = db_->ExecuteQuery(sqlString);
-    while (q1.NextRow())
-    {
-       int categID          = q1.GetInt(wxT("CATEGID"));
-       boost::shared_ptr<mmCategory> pCategory(
-          new mmCategory(categID, q1.GetString(wxT("CATEGNAME"))));
-    
-       /* Load the SubCategories */
-       bufSQL1.Format("select * from SUBCATEGORY_V1 where CATEGID=%d;", categID);
-       wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL1); 
-       while(q2.NextRow())
-       {
-           int subcategID             = q2.GetInt(wxT("SUBCATEGID"));
-           boost::shared_ptr<mmCategory> pSubCategory(
-              new mmCategory(subcategID, q2.GetString(wxT("SUBCATEGNAME"))));
-           pSubCategory->parent_ = pCategory;
-
-           pCategory->children_.push_back(pSubCategory);
-       }
-       q2.Finalize();
-       categoryList_.categories_.push_back(pCategory);
-    }
-    q1.Finalize();
-
-    /* Load the Payees */
-    sqlString = wxT("select * from PAYEE_V1 order by PAYEENAME;");
-    q1 = db_->ExecuteQuery(sqlString);
-    while (q1.NextRow())
-    {
-        int payeeID = q1.GetInt(wxT("PAYEEID"));
-        int categID = q1.GetInt(wxT("CATEGID"));
-        int subCategID = q1.GetInt(wxT("SUBCATEGID"));
-
-        boost::shared_ptr<mmPayee> pPayee(
-           new mmPayee(payeeID, q1.GetString(wxT("PAYEENAME")), 
-           categoryList_.getCategorySharedPtr(categID, subCategID)));
-        payeeList_.payees_.push_back(pPayee);
-    }
-    q1.Finalize();
-    payeeList_.sortPayeeList();
-
-    /* Load the Accounts */
-    sqlString = wxT("select * from ACCOUNTLIST_V1 order by STATUS desc, FAVORITEACCT desc, ACCOUNTNAME;");
-    q1 = db_->ExecuteQuery(sqlString);
-    while (q1.NextRow())
-    {
-        mmAccount* ptrBase;
-        if (q1.GetString(wxT("ACCOUNTTYPE")) == wxT("Checking"))
-            ptrBase = new mmCheckingAccount(db_, q1);
-        else
-            ptrBase = new mmInvestmentAccount(db_, q1);
-
-        boost::weak_ptr<mmCurrency> pCurrency
-           = currencyList_.getCurrencySharedPtr(q1.GetInt(wxT("CURRENCYID")));
-        ptrBase->currency_ = pCurrency;
-        boost::shared_ptr<mmAccount> pAccount(ptrBase);
-        accountList_.accounts_.push_back(pAccount);
-    }
-    q1.Finalize();
-
-    /* Load the Transactions */
-    sqlString = wxT("select * from CHECKINGACCOUNT_V1;");
-    q1 = db_->ExecuteQuery(sqlString);
-    while (q1.NextRow())
-    {
-       boost::shared_ptr<mmBankTransaction> ptrBase(new mmBankTransaction(this, q1));
-       bTransactionList_.transactions_.push_back(ptrBase);
-    }
-    q1.Finalize();
+    mmBEGINSQL_LITE_EXCEPTION;
+        mmOptions::loadOptions(db_.get());
+        loadCurrencies(db_, currencyList_);
+        loadCategories(db_, categoryList_);
+        loadPayees(db_, categoryList_, payeeList_);
+        loadAccounts(db_, currencyList_, accountList_);
+        loadTransactions(db_, this, bTransactionList_);
     mmENDSQL_LITE_EXCEPTION;
 
     // Update All transactions in case of errors
     bTransactionList_.updateAllTransactions();
 }
-
-mmCoreDB::~mmCoreDB()
-{
-}
-
+//----------------------------------------------------------------------------

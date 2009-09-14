@@ -89,11 +89,23 @@ bool mmAssetDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
 
 void mmAssetDialog::dataToControls()
 {
-    mmBEGINSQL_LITE_EXCEPTION;
+    static const char sql[] = 
+    "select ASSETNAME, "
+           "NOTES, "
+           "STARTDATE, "
+           "VALUE, "
+           "VALUECHANGERATE, "
+           "VALUECHANGE, "
+           "ASSETTYPE "
+    "from ASSETS_V1 "
+    "where ASSETID = ?";
 
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from ASSETS_V1 where ASSETID=%d;", assetID_);
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+	mmBEGINSQL_LITE_EXCEPTION;
+
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    st.Bind(1, assetID_);
+
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
     if (q1.NextRow())
     {
         assetName_->SetValue(q1.GetString(wxT("ASSETNAME")));
@@ -140,7 +152,7 @@ void mmAssetDialog::dataToControls()
             assetType_->SetSelection(DEF_ASSET_OTHER);
 
     }
-    q1.Finalize();
+    st.Finalize();
     mmENDSQL_LITE_EXCEPTION;
 }
 
@@ -197,14 +209,14 @@ void mmAssetDialog::CreateControls()
     itemFlexGridSizer6->Add(itemStaticText15, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-     wxString itemAssetTypeStrings[] =  
+    const wxString itemAssetTypeStrings[] =  
     {
         _("Property"),
         _("Automobile"),
         _("Household Object"),
         _("Art"),
-		_("Jewellery"),
-		_("Cash"),
+        _("Jewellery"),
+	    _("Cash"),
         _("Other"),
     };
     assetType_ = new wxChoice( itemPanel5, ID_DIALOG_ASSETDIALOG_COMBO_ASSETTYPE, 
@@ -231,7 +243,7 @@ void mmAssetDialog::CreateControls()
     itemFlexGridSizer6->Add(itemStaticText11, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxString itemTypeStrings[] =  
+    const wxString itemTypeStrings[] =  
     {
         _("None"),
         _("Appreciates"),
@@ -359,26 +371,61 @@ void mmAssetDialog::OnOk(wxCommandEvent& event)
 
     if (!edit_)
     {
-        wxString bufSQL = wxString::Format(wxT("insert into ASSETS_V1 (STARTDATE, ASSETNAME, VALUE, \
-                      VALUECHANGE, NOTES, VALUECHANGERATE, ASSETTYPE)\
-                      values ('%s', '%s', %f, '%s', '%s', %f, '%s');"),
-                      pdate.c_str(), mmCleanString(name).c_str(), 
-                      value, valueChangeTypeStr.c_str(), mmCleanString(notes.c_str()).c_str(), 
-                      valueChangeRate, assetTypeStr.c_str());  
+        static const char sql[] = 
+        "insert into ASSETS_V1 ("
+          "STARTDATE, ASSETNAME, VALUE, VALUECHANGE, NOTES, VALUECHANGERATE, ASSETTYPE "
+        ") values (?, ?, ?, ?, ?, ?, ?)";
 
-        int retVal = db_->ExecuteUpdate(bufSQL);
+        wxSQLite3Statement st = db_->PrepareStatement(sql);
         
+        int i = 0;
+        st.Bind(++i, pdate);
+        st.Bind(++i, name);
+        st.Bind(++i, value);
+        st.Bind(++i, valueChangeTypeStr);
+        st.Bind(++i, notes);
+        st.Bind(++i, valueChangeRate);
+        st.Bind(++i, assetTypeStr);
+
+        bool ok = st.GetParamCount() == i;
+        wxASSERT(ok);
+
+        int rows_affected = st.ExecuteUpdate();
+        wxASSERT(rows_affected == 1);
+
+        st.Finalize();
     }
     else 
     {
-        wxString bufSQL = wxString::Format(wxT("update ASSETS_V1 SET STARTDATE='%s', ASSETNAME='%s', VALUE=%f, VALUECHANGE='%s', \
-                      NOTES='%s', VALUECHANGERATE=%f, ASSETTYPE='%s' where ASSETID=%d;"),
-                      pdate.c_str(), mmCleanString(name).c_str(), 
-                      value, valueChangeTypeStr.c_str(), mmCleanString(notes.c_str()).c_str(), 
-                      valueChangeRate, assetTypeStr.c_str(), assetID_);  
+        static const char sql[] = 
+        "update ASSETS_V1 "
+        "SET STARTDATE = ?, ASSETNAME = ?, "
+            "VALUE = ?, VALUECHANGE = ?,"
+            "NOTES = ?, VALUECHANGERATE = ?, "
+            "ASSETTYPE = ? "
+        "where ASSETID = ?";
 
-       int retVal = db_->ExecuteUpdate(bufSQL);
+        wxSQLite3Statement st = db_->PrepareStatement(sql);
+
+        int i = 0;
+        st.Bind(++i, pdate);
+        st.Bind(++i, name);
+        st.Bind(++i, value);
+        st.Bind(++i, valueChangeTypeStr);
+        st.Bind(++i, notes);
+        st.Bind(++i, valueChangeRate);
+        st.Bind(++i, assetTypeStr);
+        st.Bind(++i, assetID_);
+
+        bool ok = st.GetParamCount() == i;
+        wxASSERT(ok);
+
+        int rows_affected = st.ExecuteUpdate();
+        wxASSERT(rows_affected == 1);
+
+        st.Finalize();
     }
+
     mmENDSQL_LITE_EXCEPTION;
 
     EndModal(wxID_OK);

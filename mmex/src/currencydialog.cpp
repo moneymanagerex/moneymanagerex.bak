@@ -203,6 +203,7 @@ void mmCurrencyDialog::CreateControls()
     itemComboBox27->Append(wxT("NOK"));
     itemComboBox27->Append(wxT("HRK"));
     itemComboBox27->Append(wxT("RUB"));
+    itemComboBox27->Append(wxT("UAH"));
     itemComboBox27->Append(wxT("TRY"));
     itemComboBox27->Append(wxT("AUD"));
     itemComboBox27->Append(wxT("BRL"));
@@ -357,15 +358,15 @@ void mmCurrencyDialog::OnEdit(wxCommandEvent& event)
 
     boost::shared_ptr<mmCurrency> pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyName);
     
-    pCurrency->pfxSymbol_ = mmCleanString(pfxTx->GetValue()).c_str();
-    pCurrency->sfxSymbol_ = mmCleanString(sfxTx->GetValue()).c_str();
-    pCurrency->dec_ = mmCleanString(decTx->GetValue()).c_str();
-    pCurrency->grp_ =  mmCleanString(grpTx->GetValue()).c_str();
-    pCurrency->unit_ = mmCleanString(unitTx->GetValue()).c_str();
-    pCurrency->cent_ = mmCleanString(centTx->GetValue()).c_str();
+    pCurrency->pfxSymbol_ = pfxTx->GetValue();
+    pCurrency->sfxSymbol_ = sfxTx->GetValue();
+    pCurrency->dec_ = decTx->GetValue();
+    pCurrency->grp_ =  grpTx->GetValue();
+    pCurrency->unit_ = unitTx->GetValue();
+    pCurrency->cent_ = centTx->GetValue();
     pCurrency->scaleDl_ = scal;
     pCurrency->baseConv_ = convRate;
-	pCurrency->currencySymbol_ = mmCleanString(currencySymbol->GetValue()).c_str();
+	pCurrency->currencySymbol_ = currencySymbol->GetValue();
    
     core_->currencyList_.updateCurrency(currencyID_, pCurrency);
 

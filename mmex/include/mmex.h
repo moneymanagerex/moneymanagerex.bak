@@ -29,6 +29,7 @@
 #include "maincurrencydialog.h"
 
 #include "mmcoredb.h"
+#include <boost/scoped_ptr.hpp>
 
 class mmGUIApp : public wxApp
 {
@@ -184,7 +185,7 @@ public:
 
             return false;
         }
-        userName = mmCleanString(itemUserName_->GetValue().Trim());
+        userName = itemUserName_->GetValue().Trim();
         mmDBWrapper::setInfoSettingValue(parent_->core_->db_.get(), wxT("USERNAME"), userName); 
 
         return true;
@@ -262,7 +263,7 @@ public:
 
             return false;
         }
-        parent_->accountName_ = mmCleanString(textAccountName_->GetValue().Trim());
+        parent_->accountName_ = textAccountName_->GetValue().Trim();
         return true;
     }
 
@@ -460,11 +461,11 @@ public:
 
 private:
     /* handles to the DB Abstraction */
-    mmCoreDB* core_;
+    boost::scoped_ptr<mmCoreDB> core_;
 
     /* handles to SQLite Database */
     boost::shared_ptr<wxSQLite3Database> db_;
-    wxSQLite3Database* inidb_;
+    boost::scoped_ptr<wxSQLite3Database> inidb_;
 
     /* Currently open file name */
     wxString fileName_;

@@ -100,8 +100,8 @@ boost::shared_ptr<mmCategory> mmCategoryList::getCategorySharedPtr(int category,
                 if (subcategory == -1)
                     return categories_[idx];
 
-                int numSubCategory = (int)categories_[idx]->children_.size();
-                for (int idxS = 0; idxS < numSubCategory; idxS++)
+                size_t numSubCategory = categories_[idx]->children_.size();
+                for (size_t idxS = 0; idxS < numSubCategory; ++idxS)
                 {
                     if (categories_[idx]->children_[idxS]->categID_ == subcategory)
                     {

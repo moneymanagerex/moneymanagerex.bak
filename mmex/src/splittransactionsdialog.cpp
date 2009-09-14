@@ -84,7 +84,7 @@ bool SplitTransactionDialog::Create( wxWindow* parent, wxWindowID id,
 void SplitTransactionDialog::DataToControls()
 {
     lcSplit_->DeleteAllItems();
-    for (int idx = 0; idx < split_->numEntries(); idx++)
+    for (size_t idx = 0; idx < split_->numEntries(); ++idx)
     {
         boost::shared_ptr<mmCategory> pSharedCategory = split_->entries_[idx]->category_.lock();
         wxASSERT(pSharedCategory);

@@ -112,10 +112,14 @@ void mmBudgetYearEntryDialog::CreateControls()
     itemChoice_->SetSelection(0);
     itemChoice_->SetToolTip(_("Specify year to base budget on."));
     
+    static const char sql[] =
+    "select BUDGETYEARNAME, BUDGETYEARID "
+    "from BUDGETYEAR_V1 "
+    "order by BUDGETYEARNAME";
+
     mmBEGINSQL_LITE_EXCEPTION;
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from BUDGETYEAR_V1 order by BUDGETYEARNAME;");
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+    
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     int index = 1;
     while (q1.NextRow())
     {

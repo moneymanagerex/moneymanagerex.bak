@@ -53,18 +53,29 @@ bool mmPayeeList::payeeExists(const int payeeid)
 int mmPayeeList::addPayee(const wxString &payeeName)
 {
     int payeeID = -1;
-    mmBEGINSQL_LITE_EXCEPTION;
 
-    int categID = -1;
-    int subcategID = -1;
-    wxString bufSQL = wxString::Format(wxT("insert into PAYEE_V1 (PAYEENAME, CATEGID, SUBCATEGID) values ('%s', %d, %d);"), 
-        mmCleanString(payeeName).c_str(), categID, subcategID);
-    int retVal = db_->ExecuteUpdate(bufSQL);
-    payeeID = (db_->GetLastRowId()).ToLong();
+    mmBEGINSQL_LITE_EXCEPTION;
+    
+    static const char sql[] =
+    "insert into PAYEE_V1 (PAYEENAME, CATEGID, SUBCATEGID) values (?, ?, ?)";
+
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    st.Bind(1, payeeName);
+    st.Bind(2, -1);
+    st.Bind(3, -1);
+
+    st.ExecuteUpdate();
+    payeeID = db_->GetLastRowId().ToLong();
+    st.Finalize();
+
+    mmENDSQL_LITE_EXCEPTION;
+
+    wxASSERT(payeeID > 0);
+
     boost::shared_ptr<mmCategory> pNullCategory;
     boost::shared_ptr<mmPayee> pPayee(new mmPayee(payeeID, payeeName, pNullCategory));
     payees_.push_back(pPayee);
-    mmENDSQL_LITE_EXCEPTION;
+
     return payeeID;
 }
 

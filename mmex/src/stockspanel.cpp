@@ -313,17 +313,18 @@ void mmStocksPanel::initVirtualListControl()
     double originalVal = 0.0;
     double total = mmDBWrapper::getStockInvestmentBalance(db_, originalVal);
 
-    wxSQLite3StatementBuffer bufSQL;
     if (accountID_ != -1)
     {
-        bufSQL.Format("select * from ACCOUNTLIST_V1 where ACCOUNTID=%d;", accountID_);
-        wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL);
+        wxSQLite3Statement st = db_->PrepareStatement("select CURRENCYID from ACCOUNTLIST_V1 where ACCOUNTID=?");
+        st.Bind(1, accountID_);
+
+        wxSQLite3ResultSet q2 = st.ExecuteQuery();
         if (q2.NextRow())
         {
             int currencyID = q2.GetInt(wxT("CURRENCYID"));
             mmDBWrapper::loadSettings(db_, currencyID);
         }
-        q2.Finalize();
+        st.Finalize();
         total = mmDBWrapper::getStockInvestmentBalance(db_, accountID_, false, originalVal);
     }
 
@@ -350,14 +351,21 @@ void mmStocksPanel::initVirtualListControl()
         lbl  = wxString::Format(_("Total: %s Invested: %s Loss: %s "), balance.c_str(), original.c_str(), diffStr.c_str());
     header->SetLabel(lbl);
 
-    if (accountID_ == -1)
-        bufSQL.Format("select * from STOCK_V1;");
-    else
-        bufSQL.Format("select * from STOCK_V1 where HELDAT=%d;", accountID_);
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+    // --
 
-    int ct = 0;
-    while (q1.NextRow())
+    wxSQLite3Statement st;
+
+    if (accountID_ == -1) {
+        st = db_->PrepareStatement("select * from STOCK_V1");
+    } else {
+        st = db_->PrepareStatement("select * from STOCK_V1 where HELDAT = ?");
+        st.Bind(1, accountID_);
+    }
+
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    int cnt = 0;
+
+    for ( ; q1.NextRow(); ++cnt)
     {
         mmStockTransactionHolder th;
 
@@ -385,10 +393,10 @@ void mmStocksPanel::initVirtualListControl()
             th.cPriceStr_ = tempString;
 
         trans_.push_back(th);
-        ct++;
     }
-    q1.Finalize();
-    listCtrlAccount_->SetItemCount(ct);
+
+    st.Finalize();
+    listCtrlAccount_->SetItemCount(cnt);
 
     mmENDSQL_LITE_EXCEPTION;
 }
@@ -608,15 +616,10 @@ void mmStocksPanel::OrderQuoteRefresh(void)
 
     mmBEGINSQL_LITE_EXCEPTION;
 
-    wxSQLite3StatementBuffer bufSQL;
-    wxSQLite3ResultSet q1;
-    wxString strSymbol;
-    bufSQL.Format("select * from STOCK_V1;");
-    q1 = db_->ExecuteQuery(bufSQL);
-
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select SYMBOL from STOCK_V1");
     while (q1.NextRow())
     {
-        strSymbol = q1.GetString(wxT("SYMBOL"));
+        wxString strSymbol = q1.GetString(wxT("SYMBOL"));
         if (wxNOT_FOUND == symbolarray.Index(strSymbol.GetData()))
             symbolarray.Add(strSymbol);
     }
@@ -717,14 +720,23 @@ void mmStocksPanel::OrderQuoteRefresh(void)
             dPrice = dPrice / 100;
         }
 
+        static const char sql[] = 
+        "select STOCKID, "
+               "CURRENTPRICE, "
+               "NUMSHARES "
+        "from STOCK_V1 "
+        "where lower(SYMBOL) = ?";
+
         mmBEGINSQL_LITE_EXCEPTION;
 
-        wxSQLite3ResultSet q1;
-        wxString bufSQL;
-        bufSQL.Printf(wxT("select * from STOCK_V1 where lower(SYMBOL) =lower('%s');"), StockSymbolNoSuffix.c_str());
-        q1 = db_->ExecuteQuery(bufSQL);
+        typedef std::vector<mmStockTransactionHolder> vec_t;
+        vec_t stockVec;
 
-        std::vector<mmStockTransactionHolder> stockVec;
+        wxSQLite3Statement st = db_->PrepareStatement(sql);
+        st.Bind(1, StockSymbolNoSuffix.Lower());
+
+        wxSQLite3ResultSet q1 = st.ExecuteQuery();
+
         while (q1.NextRow())
         {
             mmStockTransactionHolder sh;
@@ -741,17 +753,30 @@ void mmStocksPanel::OrderQuoteRefresh(void)
             sh.value_ = sh.numShares_ * dPrice;
             stockVec.push_back(sh);
         }
-        q1.Finalize();
+        st.Finalize();
 
-        for (unsigned int idx = 0 ; idx < stockVec.size(); idx++)
+        // --
+
+        static const char sql_upd[] = 
+        "update STOCK_V1 "
+        "SET CURRENTPRICE = ?, VALUE = ? "
+        "WHERE STOCKID = ?";
+
+        st = db_->PrepareStatement(sql_upd);
+
+        for (vec_t::const_iterator i = stockVec.begin(); i != stockVec.end(); ++i)
         {
-            wxSQLite3StatementBuffer bufSQL2;
-            bufSQL2.Format("update STOCK_V1 SET CURRENTPRICE=%f,VALUE=%f WHERE STOCKID=%d;",
-                stockVec[idx].currentPrice_, stockVec[idx].value_, stockVec[idx].stockID_);
+            st.Bind(1, i->currentPrice_);
+            st.Bind(2, i->value_);
+            st.Bind(3, i->stockID_);
+            
+            int rows_affected = st.ExecuteUpdate();
+            wxASSERT(rows_affected == 1);
 
-            int retVal = db_->ExecuteUpdate(bufSQL2);
-
+            st.Reset();
         }
+        
+        st.Finalize();
 
         mmENDSQL_LITE_EXCEPTION;
     }

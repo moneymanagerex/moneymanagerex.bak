@@ -399,12 +399,12 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& event)
     }
 
     pAccount->accountName_ = acctName;
-    pAccount->accountNum_ = mmCleanString(textCtrlAcctNumber->GetValue());
-    pAccount->notes_ = mmCleanString(textCtrlNotes->GetValue());
-    pAccount->heldAt_ = mmCleanString(textCtrlHeldAt->GetValue());
-    pAccount->website_ = mmCleanString(textCtrlWebsite->GetValue());
-    pAccount->contactInfo_ = mmCleanString(textCtrlContact->GetValue());
-    pAccount->accessInfo_ = mmCleanString(textCtrlAccess->GetValue());
+    pAccount->accountNum_ = textCtrlAcctNumber->GetValue();
+    pAccount->notes_ = textCtrlNotes->GetValue();
+    pAccount->heldAt_ = textCtrlHeldAt->GetValue();
+    pAccount->website_ = textCtrlWebsite->GetValue();
+    pAccount->contactInfo_ = textCtrlContact->GetValue();
+    pAccount->accessInfo_ = textCtrlAccess->GetValue();
     pAccount->currency_ = core_->currencyList_.getCurrencySharedPtr(currencyID_);
 
     if (newAcct_)

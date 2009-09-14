@@ -282,9 +282,22 @@ void mmBudgetingPanel::initVirtualListControl()
     mmBEGINSQL_LITE_EXCEPTION;
     mmDBWrapper::loadBaseCurrencySettings(db_);
 
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from CATEGORY_V1 order by CATEGNAME;");
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+    static const char sql[] =
+    "select CATEGID, CATEGNAME "
+    "from CATEGORY_V1 "
+    "order by CATEGNAME";
+
+    static const char sql_sub[] = 
+    "select SUBCATEGID, SUBCATEGNAME "
+    "from SUBCATEGORY_V1 "
+    "where CATEGID = ? "
+    "order by SUBCATEGNAME";
+
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    wxSQLite3Statement st_sub = db_->PrepareStatement(sql_sub);
+
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+
     while (q1.NextRow())
     {
         mmBudgetEntryHolder th;
@@ -375,15 +388,16 @@ void mmBudgetingPanel::initVirtualListControl()
         else
             trans_.push_back(th);
 
-        wxSQLite3StatementBuffer bufSQL1;
-        bufSQL1.Format("select * from SUBCATEGORY_V1 where CATEGID=%d;", th.categID_);
-        wxSQLite3ResultSet q2 = db_->ExecuteQuery(bufSQL1); 
-        bool hasSubCateg = false;
+        // --
+
+        st_sub.Bind(1, th.categID_);
+        wxSQLite3ResultSet q2 = st_sub.ExecuteQuery(); 
+
         while(q2.NextRow())
         {
             mmBudgetEntryHolder thsub;
-            thsub.categID_ = q1.GetInt(wxT("CATEGID"));
-            thsub.catStr_ = q1.GetString(wxT("CATEGNAME"));
+            thsub.categID_ = th.categID_;
+            thsub.catStr_ = th.catStr_;
             thsub.subcategID_ = q2.GetInt(wxT("SUBCATEGID"));
             thsub.subCatStr_   = q2.GetString(wxT("SUBCATEGNAME"));
             thsub.amt_ = 0.0;
@@ -468,9 +482,12 @@ void mmBudgetingPanel::initVirtualListControl()
                 trans_.push_back(thsub);
 
         }
-        q2.Finalize();
+    
+        st_sub.Reset();
     }
-    q1.Finalize();
+
+    st_sub.Finalize();
+    st.Finalize();
 
     listCtrlAccount_->SetItemCount((int)trans_.size());
     

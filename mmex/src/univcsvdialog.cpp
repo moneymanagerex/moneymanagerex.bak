@@ -42,6 +42,23 @@ BEGIN_EVENT_TABLE( mmUnivCSVImportDialog, wxDialog )
 	EVT_BUTTON(ID_UNIVCSVBUTTON_MOVEDOWN, mmUnivCSVImportDialog::OnMoveDown)
 END_EVENT_TABLE()
 
+//----------------------------------------------------------------------------
+
+namespace
+{
+
+wxString mmCleanQuotes(const wxString& orig)
+{
+    wxString toReturn = orig;
+    toReturn.Replace(wxT("'"), wxT("`"));
+    toReturn.Replace(wxT("\""), wxT(""));
+    toReturn.Trim();
+    return toReturn; 
+}
+
+} // namespace
+
+//----------------------------------------------------------------------------
 
 mmUnivCSVImportDialog::mmUnivCSVImportDialog( )
 {
@@ -375,13 +392,19 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
     wxArrayString as;
     int fromAccountID = -1;
 
+    static const char sql[] = 
+    "select ACCOUNTNAME "
+    "from ACCOUNTLIST_V1 "
+    "where ACCOUNTTYPE = 'Checking' "
+    "order by ACCOUNTNAME";
+    
     mmBEGINSQL_LITE_EXCEPTION;
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from ACCOUNTLIST_V1 where ACCOUNTTYPE='Checking' order by ACCOUNTNAME;");
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
-
+    q1.Finalize();
     mmENDSQL_LITE_EXCEPTION
 
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
@@ -509,7 +532,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
                pTransaction->amt_ = val_;
                pTransaction->status_ = status;
                pTransaction->transNum_ = transNum_;
-               pTransaction->notes_ = mmCleanString(notes_.c_str());
+               pTransaction->notes_ = notes_;
                pTransaction->category_ = core_->categoryList_.getCategorySharedPtr(categID_, subCategID_);
                pTransaction->date_ = dtdt_;
                pTransaction->toAmt_ = 0.0;
