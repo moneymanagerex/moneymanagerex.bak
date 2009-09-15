@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-29 12:15-0600\n"
-"PO-Revision-Date: 2008-12-29 12:15-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"POT-Creation-Date: 2009-09-15 15:21+0300\n"
+"PO-Revision-Date: 2009-09-15 15:21+0300\n"
+"Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: Andreea & Florin Sarghe <florin.sarghe@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,246 +16,233 @@ msgstr ""
 "X-Poedit-SearchPath-0: include\n"
 "X-Poedit-SearchPath-1: src\n"
 
-#: src/aboutdialog.cpp:134
+#: src/aboutdialog.cpp:153
 #, fuzzy
 msgid "Version: "
 msgstr "Istoricul Versiunilor"
 
-#: src/aboutdialog.cpp:145
+#: src/aboutdialog.cpp:164
 msgid "  and contributers from around the world."
 msgstr "şi contribuabili din întreaga lume."
 
-#: src/aboutdialog.cpp:150
+#: src/aboutdialog.cpp:169
 msgid "Released under the GNU GPL License"
 msgstr "Lansat sub licenţă GNU GPL"
 
-#: src/aboutdialog.cpp:162
+#: src/aboutdialog.cpp:181
 msgid "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
 msgstr "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
 
-#: src/aboutdialog.cpp:166
+#: src/aboutdialog.cpp:185
 msgid "Version History"
 msgstr "Istoricul Versiunilor"
 
-#: src/aboutdialog.cpp:171
+#: src/aboutdialog.cpp:190
 msgid "Contributers"
 msgstr "Contribuitori"
 
-#: src/aboutdialog.cpp:179
+#: src/aboutdialog.cpp:198
 msgid "Using Language : "
 msgstr "Foloseşte Limba:"
 
-#: src/appstartdialog.cpp:114
+#: src/appstartdialog.cpp:123
 msgid "Open Last Opened Database"
 msgstr "Deschide Ultima Bază de Date Folosită"
 
-#: src/appstartdialog.cpp:127
+#: src/appstartdialog.cpp:136
 msgid "Open the previously opened database : "
 msgstr "Deschide baza de date deschisă anterior:"
 
-#: src/appstartdialog.cpp:134
+#: src/appstartdialog.cpp:143
 msgid "Create a New Database"
 msgstr "Crează o Nouă Bază de Date"
 
-#: src/appstartdialog.cpp:135
+#: src/appstartdialog.cpp:144
 msgid "Create a new database file to get started"
 msgstr "Crează o nouă bază de date pentu a putea incepe"
 
-#: src/appstartdialog.cpp:139
+#: src/appstartdialog.cpp:148
 msgid "Open Existing Database"
 msgstr "Deschide o Baza de Date Existentă"
 
-#: src/appstartdialog.cpp:140
+#: src/appstartdialog.cpp:149
 msgid "Open an already created database file with extension (*.mmb)"
 msgstr "Deschide o bază de date deja existentă cu extensia (*.mmb)"
 
-#: src/appstartdialog.cpp:144
+#: src/appstartdialog.cpp:153
 msgid "Read Documentation"
 msgstr "Citeşte Documentaţia"
 
-#: src/appstartdialog.cpp:145
+#: src/appstartdialog.cpp:154
 msgid "Read the user manual"
 msgstr "Citeşte manualul utilizatorului"
 
-#: src/appstartdialog.cpp:151
+#: src/appstartdialog.cpp:160
 msgid "Visit Website for more information"
 msgstr "Vizitează Websiteul pentru mai multe informaţii"
 
-#: src/appstartdialog.cpp:152
+#: src/appstartdialog.cpp:161
 msgid "Open the Money Manager Ex website for latest news, updates etc"
 msgstr "Deschide website-ul Money Manager Ex pentru a vizualiza ultimele ştiri, update-uri etc"
 
-#: src/appstartdialog.cpp:159
+#: src/appstartdialog.cpp:168
 msgid "Show this window next time "
 msgstr "Afisează această fereastă data viitoare"
 
-#: src/appstartdialog.cpp:161
+#: src/appstartdialog.cpp:170
 msgid " starts"
 msgstr " început"
 
-#: src/assetdialog.cpp:155
+#: src/assetdialog.cpp:175
 msgid "Asset Details"
 msgstr "Detalii ale Bunului/Proprietăţii"
 
-#: src/assetdialog.cpp:168
+#: src/assetdialog.cpp:188
 #: src/assetspanel.cpp:139
 msgid "Name"
 msgstr "Nume"
 
-#: src/assetdialog.cpp:174
+#: src/assetdialog.cpp:194
 msgid "Enter the name of the asset"
 msgstr "Introdu numele bunului"
 
-#: src/assetdialog.cpp:178
-#: src/billsdepositsdialog.cpp:390
+#: src/assetdialog.cpp:198
+#: src/billsdepositsdialog.cpp:414
 msgid "Date"
 msgstr "Data"
 
-#: src/assetdialog.cpp:185
+#: src/assetdialog.cpp:205
 msgid "Specify the date of purchase of asset"
 msgstr "Data la care a fost achiziţionat bunul"
 
-#: src/assetdialog.cpp:188
+#: src/assetdialog.cpp:208
 msgid "Asset Type"
 msgstr "Tipul Bunului"
 
-#: src/assetdialog.cpp:194
-#: src/assetspanel.cpp:231
-#: src/assetspanel.cpp:242
+#: src/assetdialog.cpp:214
 msgid "Property"
 msgstr "Proprietate"
 
-#: src/assetdialog.cpp:195
-#: src/assetspanel.cpp:232
-#: src/assetspanel.cpp:244
+#: src/assetdialog.cpp:215
 msgid "Automobile"
 msgstr "Automobil"
 
-#: src/assetdialog.cpp:196
-#: src/assetspanel.cpp:233
-#: src/assetspanel.cpp:246
+#: src/assetdialog.cpp:216
 msgid "Household Object"
 msgstr "Obiecte din Casă"
 
-#: src/assetdialog.cpp:197
-#: src/assetspanel.cpp:234
-#: src/assetspanel.cpp:248
+#: src/assetdialog.cpp:217
 msgid "Art"
 msgstr "Artă"
 
-#: src/assetdialog.cpp:198
-#: src/assetspanel.cpp:235
-#: src/assetspanel.cpp:250
+#: src/assetdialog.cpp:218
 msgid "Jewellery"
 msgstr "Bijuterii"
 
-#: src/assetdialog.cpp:199
-#: src/assetspanel.cpp:236
-#: src/assetspanel.cpp:252
+#: src/assetdialog.cpp:219
 msgid "Cash"
 msgstr "Bani"
 
-#: src/assetdialog.cpp:200
-#: src/assetspanel.cpp:237
-#: src/assetspanel.cpp:254
+#: src/assetdialog.cpp:220
 msgid "Other"
 msgstr "Altele"
 
-#: src/assetdialog.cpp:204
+#: src/assetdialog.cpp:224
 msgid "Select type of asset"
 msgstr "Alege tipul bunului"
 
-#: src/assetdialog.cpp:210
-#: src/assetdialog.cpp:294
+#: src/assetdialog.cpp:230
+#: src/assetdialog.cpp:314
 #: src/assetspanel.cpp:147
 msgid "Value"
 msgstr "Valoare"
 
-#: src/assetdialog.cpp:216
+#: src/assetdialog.cpp:236
 msgid "Enter the current value of the asset"
 msgstr "Introduceţi valoarea actuală a bunului"
 
-#: src/assetdialog.cpp:222
+#: src/assetdialog.cpp:242
 msgid "Change in Value"
 msgstr "Schimbări ale Valorii"
 
-#: src/assetdialog.cpp:228
-#: src/billsdepositsdialog.cpp:290
-#: src/billsdepositsdialog.cpp:430
-#: src/billsdepositspanel.cpp:260
-#: src/budgetentrydialog.cpp:157
+#: src/assetdialog.cpp:248
+#: src/billsdepositsdialog.cpp:314
+#: src/billsdepositsdialog.cpp:454
+#: src/billsdepositspanel.cpp:267
+#: src/budgetentrydialog.cpp:165
 msgid "None"
 msgstr "Nimic"
 
-#: src/assetdialog.cpp:229
+#: src/assetdialog.cpp:249
 msgid "Appreciates"
 msgstr "Apreciere"
 
-#: src/assetdialog.cpp:230
+#: src/assetdialog.cpp:250
 msgid "Depreciates"
 msgstr "Depreciere"
 
-#: src/assetdialog.cpp:234
+#: src/assetdialog.cpp:254
 msgid "Specify if the value of the asset changes over time"
 msgstr "Specifică dacă valoarea bunului se modifică în timp"
 
-#: src/assetdialog.cpp:239
+#: src/assetdialog.cpp:259
 msgid "Rate of Change"
 msgstr "Rata de Schimb"
 
-#: src/assetdialog.cpp:245
+#: src/assetdialog.cpp:265
 #, fuzzy, c-format
 msgid "Enter the rate at which the asset changes its value in % per year"
 msgstr "Introdu rata la care bunul îşi schimbă valoare în %"
 
-#: src/assetdialog.cpp:251
-#: src/billsdepositsdialog.cpp:443
+#: src/assetdialog.cpp:271
+#: src/billsdepositsdialog.cpp:467
+#: src/billsdepositspanel.cpp:164
 msgid "Notes"
 msgstr "Note"
 
-#: src/assetdialog.cpp:257
+#: src/assetdialog.cpp:277
 msgid "Enter notes associated with this asset"
 msgstr "Introdu notele asociate cu acest bun"
 
-#: src/assetdialog.cpp:269
-#: src/billsdepositsdialog.cpp:470
-#: src/budgetentrydialog.cpp:187
-#: src/budgetyearentrydialog.cpp:127
+#: src/assetdialog.cpp:289
+#: src/billsdepositsdialog.cpp:494
+#: src/budgetentrydialog.cpp:195
+#: src/budgetyearentrydialog.cpp:139
 msgid "OK"
 msgstr "OK"
 
-#: src/assetdialog.cpp:273
-#: src/billsdepositsdialog.cpp:474
-#: src/budgetentrydialog.cpp:191
-#: src/budgetyearentrydialog.cpp:132
+#: src/assetdialog.cpp:293
+#: src/billsdepositsdialog.cpp:498
+#: src/budgetentrydialog.cpp:199
+#: src/budgetyearentrydialog.cpp:144
 msgid "Cancel"
 msgstr "Renunţă"
 
-#: src/assetdialog.cpp:301
-#: src/assetdialog.cpp:329
+#: src/assetdialog.cpp:321
+#: src/assetdialog.cpp:349
 msgid "Invalid Value "
 msgstr "Valoare Invalidă"
 
-#: src/assetdialog.cpp:301
-#: src/assetdialog.cpp:329
-#: src/billsdepositsdialog.cpp:632
-#: src/billsdepositsdialog.cpp:806
-#: src/billsdepositsdialog.cpp:816
-#: src/billsdepositsdialog.cpp:839
-#: src/budgetentrydialog.cpp:226
-#: src/budgetyearentrydialog.cpp:145
-#: src/budgetyearentrydialog.cpp:152
-#: src/budgetyearentrydialog.cpp:175
-#: src/categdialog.cpp:181
-#: src/categdialog.cpp:189
-#: src/categdialog.cpp:208
-#: src/categdialog.cpp:242
-#: src/categdialog.cpp:250
-#: src/categdialog.cpp:357
+#: src/assetdialog.cpp:321
+#: src/assetdialog.cpp:349
+#: src/billsdepositsdialog.cpp:656
+#: src/billsdepositsdialog.cpp:830
+#: src/billsdepositsdialog.cpp:840
+#: src/billsdepositsdialog.cpp:863
+#: src/budgetentrydialog.cpp:234
+#: src/budgetyearentrydialog.cpp:157
+#: src/budgetyearentrydialog.cpp:164
+#: src/budgetyearentrydialog.cpp:187
+#: src/categdialog.cpp:190
+#: src/categdialog.cpp:198
+#: src/categdialog.cpp:217
+#: src/categdialog.cpp:251
+#: src/categdialog.cpp:259
+#: src/categdialog.cpp:368
 msgid "Error"
 msgstr "Eroare"
 
-#: src/assetdialog.cpp:320
+#: src/assetdialog.cpp:340
 msgid "Rate of Change in Value"
 msgstr "Rata de Schimbare a Valorii"
 
@@ -268,12 +255,13 @@ msgid "Total:"
 msgstr "Total:"
 
 #: src/assetspanel.cpp:143
-#: src/billsdepositspanel.cpp:152
+#: src/billsdepositspanel.cpp:155
 msgid "Type"
 msgstr "Tip"
 
 #: src/assetspanel.cpp:179
-msgid "New"
+#, fuzzy
+msgid "&New"
 msgstr "Nou"
 
 #: src/assetspanel.cpp:181
@@ -281,8 +269,9 @@ msgid "New Asset"
 msgstr "Bun Nou"
 
 #: src/assetspanel.cpp:184
-#: src/categdialog.cpp:153
-msgid "Edit"
+#: src/categdialog.cpp:162
+#, fuzzy
+msgid "&Edit"
 msgstr "Modifică"
 
 #: src/assetspanel.cpp:186
@@ -290,8 +279,9 @@ msgid "Edit Asset"
 msgstr "Modifică Bunul"
 
 #: src/assetspanel.cpp:189
-#: src/categdialog.cpp:158
-msgid "Delete"
+#: src/categdialog.cpp:167
+#, fuzzy
+msgid "&Delete"
 msgstr "Şterge"
 
 #: src/assetspanel.cpp:191
@@ -303,420 +293,424 @@ msgstr "Şterge Bunul"
 msgid "Total: %s"
 msgstr "Total: %s"
 
-#: src/assetspanel.cpp:291
+#: src/assetspanel.cpp:270
 msgid "&New Asset"
 msgstr "&Bun Nou"
 
-#: src/assetspanel.cpp:293
+#: src/assetspanel.cpp:272
 msgid "&Edit Asset"
 msgstr "&Modifică Bunul"
 
-#: src/assetspanel.cpp:294
+#: src/assetspanel.cpp:273
 msgid "&Delete Asset"
 msgstr "&Şterge Bunul"
 
-#: src/assetspanel.cpp:370
+#: src/assetspanel.cpp:349
 msgid "Do you really want to delete the Asset?"
 msgstr "Sigur doriţi să ştergeţi acest bun?"
 
-#: src/assetspanel.cpp:371
+#: src/assetspanel.cpp:350
 msgid "Confirm Asset Deletion"
 msgstr "Confirmă ştergerea bunului"
 
-#: src/billsdepositsdialog.cpp:192
-#: src/billsdepositsdialog.cpp:992
+#: src/billsdepositsdialog.cpp:212
+#: src/billsdepositsdialog.cpp:1105
 msgid "Split Category"
 msgstr "Împarte Categorie"
 
-#: src/billsdepositsdialog.cpp:255
+#: src/billsdepositsdialog.cpp:279
 msgid "Repeating Transaction Details"
 msgstr "Detaliile Tranzacţiei Repetitive"
 
-#: src/billsdepositsdialog.cpp:264
+#: src/billsdepositsdialog.cpp:288
 msgid "Account Name"
 msgstr "Numele Contului"
 
-#: src/billsdepositsdialog.cpp:269
+#: src/billsdepositsdialog.cpp:293
 msgid "Select Account"
 msgstr "Alege Contul"
 
-#: src/billsdepositsdialog.cpp:274
+#: src/billsdepositsdialog.cpp:298
 #, fuzzy
 msgid "Next Occurrence"
 msgstr "Următoarea Apariţie"
 
-#: src/billsdepositsdialog.cpp:281
+#: src/billsdepositsdialog.cpp:305
 msgid "Specify the date of the next bill or deposit"
 msgstr "Specificaţi data următoarei facturi sau depuneri"
 
-#: src/billsdepositsdialog.cpp:284
+#: src/billsdepositsdialog.cpp:308
 msgid "Repeats"
 msgstr "Se repetă"
 
-#: src/billsdepositsdialog.cpp:291
-#: src/billsdepositspanel.cpp:264
-#: src/budgetentrydialog.cpp:158
+#: src/billsdepositsdialog.cpp:315
+#: src/billsdepositspanel.cpp:271
+#: src/budgetentrydialog.cpp:166
 msgid "Weekly"
 msgstr "Săptămânal"
 
-#: src/billsdepositsdialog.cpp:292
-#: src/billsdepositspanel.cpp:268
-#: src/budgetentrydialog.cpp:159
+#: src/billsdepositsdialog.cpp:316
+#: src/billsdepositspanel.cpp:275
+#: src/budgetentrydialog.cpp:167
 msgid "Bi-Weekly"
 msgstr "Bi-Săptămânal"
 
-#: src/billsdepositsdialog.cpp:293
-#: src/billsdepositspanel.cpp:272
-#: src/budgetentrydialog.cpp:160
+#: src/billsdepositsdialog.cpp:317
+#: src/billsdepositspanel.cpp:279
+#: src/budgetentrydialog.cpp:168
 msgid "Monthly"
 msgstr "Lunar"
 
-#: src/billsdepositsdialog.cpp:294
-#: src/billsdepositspanel.cpp:276
-#: src/budgetentrydialog.cpp:161
+#: src/billsdepositsdialog.cpp:318
+#: src/billsdepositspanel.cpp:283
+#: src/budgetentrydialog.cpp:169
 msgid "Bi-Monthly"
 msgstr "Bi-Lunar"
 
-#: src/billsdepositsdialog.cpp:295
-#: src/billsdepositspanel.cpp:280
-#: src/budgetentrydialog.cpp:162
+#: src/billsdepositsdialog.cpp:319
+#: src/billsdepositspanel.cpp:287
+#: src/budgetentrydialog.cpp:170
 msgid "Quarterly"
 msgstr "Trimestrial"
 
-#: src/billsdepositsdialog.cpp:296
-#: src/billsdepositspanel.cpp:284
-#: src/budgetentrydialog.cpp:163
+#: src/billsdepositsdialog.cpp:320
+#: src/billsdepositspanel.cpp:291
+#: src/budgetentrydialog.cpp:171
 msgid "Half-Yearly"
 msgstr "Semestrial"
 
-#: src/billsdepositsdialog.cpp:297
-#: src/billsdepositspanel.cpp:288
-#: src/budgetentrydialog.cpp:164
+#: src/billsdepositsdialog.cpp:321
+#: src/billsdepositspanel.cpp:295
+#: src/budgetentrydialog.cpp:172
 msgid "Yearly"
 msgstr "Anual"
 
-#: src/billsdepositsdialog.cpp:298
-#: src/billsdepositspanel.cpp:292
+#: src/billsdepositsdialog.cpp:322
+#: src/billsdepositspanel.cpp:299
 msgid "Four Months"
 msgstr "Patru Luni"
 
-#: src/billsdepositsdialog.cpp:299
-#: src/billsdepositspanel.cpp:296
+#: src/billsdepositsdialog.cpp:323
+#: src/billsdepositspanel.cpp:303
 msgid "Four Weeks"
 msgstr "Patru Săptămâni"
 
-#: src/billsdepositsdialog.cpp:300
+#: src/billsdepositsdialog.cpp:324
 #, fuzzy
 msgid "Daily"
 msgstr "Afişare"
 
-#: src/billsdepositsdialog.cpp:309
+#: src/billsdepositsdialog.cpp:333
 msgid "Times Repeated"
 msgstr "Numărul de Repetări"
 
-#: src/billsdepositsdialog.cpp:316
+#: src/billsdepositsdialog.cpp:340
 msgid "Specify the number of times this series repeats. Leave blank if this series continues forever."
 msgstr "Specifică numărul de repetări pentru această serie. Lasă gol dacă seria este continuă."
 
-#: src/billsdepositsdialog.cpp:320
+#: src/billsdepositsdialog.cpp:344
 msgid "Transaction Details"
 msgstr "Detaliile Tranzacţiei"
 
-#: src/billsdepositsdialog.cpp:329
+#: src/billsdepositsdialog.cpp:353
 msgid "Transaction Type"
 msgstr "Tipul Tranzacţiei"
 
-#: src/billsdepositsdialog.cpp:334
-#: src/billsdepositspanel.cpp:404
+#: src/billsdepositsdialog.cpp:358
+#: src/billsdepositspanel.cpp:412
 msgid "Withdrawal"
 msgstr "Retragerea"
 
-#: src/billsdepositsdialog.cpp:335
-#: src/billsdepositspanel.cpp:406
+#: src/billsdepositsdialog.cpp:359
+#: src/billsdepositspanel.cpp:414
 msgid "Deposit"
 msgstr "Depunere"
 
-#: src/billsdepositsdialog.cpp:336
-#: src/billsdepositspanel.cpp:408
+#: src/billsdepositsdialog.cpp:360
+#: src/billsdepositspanel.cpp:416
 msgid "Transfer"
 msgstr "Transfer"
 
-#: src/billsdepositsdialog.cpp:343
+#: src/billsdepositsdialog.cpp:367
 msgid "Specify the type of transactions to be created."
 msgstr "Specificaţi tipul tranzacţiilor ce vor fi create."
 
-#: src/billsdepositsdialog.cpp:345
+#: src/billsdepositsdialog.cpp:369
 msgid "Advanced"
 msgstr "Avansate"
 
-#: src/billsdepositsdialog.cpp:349
+#: src/billsdepositsdialog.cpp:373
 msgid "Specify advanced settings for transaction"
 msgstr "Specificaţi setările avansate pentru tranzacţie"
 
-#: src/billsdepositsdialog.cpp:359
-#: src/billsdepositsdialog.cpp:731
-#: src/billsdepositspanel.cpp:150
+#: src/billsdepositsdialog.cpp:383
+#: src/billsdepositsdialog.cpp:755
+#: src/billsdepositspanel.cpp:153
 msgid "Payee"
 msgstr "Beneficiar"
 
-#: src/billsdepositsdialog.cpp:363
-#: src/billsdepositsdialog.cpp:511
-#: src/billsdepositsdialog.cpp:564
-#: src/billsdepositsdialog.cpp:727
-#: src/billsdepositsdialog.cpp:738
+#: src/billsdepositsdialog.cpp:387
+#: src/billsdepositsdialog.cpp:535
+#: src/billsdepositsdialog.cpp:588
+#: src/billsdepositsdialog.cpp:751
+#: src/billsdepositsdialog.cpp:762
 msgid "Select Payee"
 msgstr "Selectaţi Beneficiarul"
 
-#: src/billsdepositsdialog.cpp:366
+#: src/billsdepositsdialog.cpp:390
 msgid "Specify where the transaction is going to or coming from "
 msgstr "Specifică dacă tranzacţia merge spre sau vine dinspre"
 
-#: src/billsdepositsdialog.cpp:368
+#: src/billsdepositsdialog.cpp:392
 msgid "Number"
 msgstr "Număr"
 
-#: src/billsdepositsdialog.cpp:376
+#: src/billsdepositsdialog.cpp:400
 msgid "Specify any associated check number or transaction number"
 msgstr "Specificaţi orice număr asociat cecului sau trazacţiei"
 
-#: src/billsdepositsdialog.cpp:379
+#: src/billsdepositsdialog.cpp:403
 msgid "To"
 msgstr "La"
 
-#: src/billsdepositsdialog.cpp:384
+#: src/billsdepositsdialog.cpp:408
 msgid "Select To Acct"
 msgstr "Selectare Acct"
 
-#: src/billsdepositsdialog.cpp:388
+#: src/billsdepositsdialog.cpp:412
 msgid "Specify the transfer account"
 msgstr "Specificaţi contul de transfer"
 
-#: src/billsdepositsdialog.cpp:398
+#: src/billsdepositsdialog.cpp:422
 msgid "Specify the date of the transaction"
 msgstr "Specificaţi data tranzacţiei"
 
-#: src/billsdepositsdialog.cpp:403
+#: src/billsdepositsdialog.cpp:427
 msgid "Category"
 msgstr "Categoria"
 
-#: src/billsdepositsdialog.cpp:412
-#: src/billsdepositsdialog.cpp:563
-#: src/billsdepositsdialog.cpp:597
-#: src/billsdepositsdialog.cpp:671
-#: src/billsdepositsdialog.cpp:1000
+#: src/billsdepositsdialog.cpp:436
+#: src/billsdepositsdialog.cpp:587
+#: src/billsdepositsdialog.cpp:621
+#: src/billsdepositsdialog.cpp:695
+#: src/billsdepositsdialog.cpp:1113
 msgid "Select Category"
 msgstr "Selectaţi Categoria"
 
-#: src/billsdepositsdialog.cpp:415
+#: src/billsdepositsdialog.cpp:439
 msgid "Specify the category for this transaction"
 msgstr "Specificaţi categoria pentru această tranzacţie"
 
-#: src/billsdepositsdialog.cpp:418
+#: src/billsdepositsdialog.cpp:442
 msgid "Split"
 msgstr "Împarte"
 
-#: src/billsdepositsdialog.cpp:424
+#: src/billsdepositsdialog.cpp:448
 msgid "Status"
 msgstr "Stare"
 
-#: src/billsdepositsdialog.cpp:431
+#: src/billsdepositsdialog.cpp:455
 msgid "Reconciled"
 msgstr "Reconciliată"
 
-#: src/billsdepositsdialog.cpp:432
+#: src/billsdepositsdialog.cpp:456
 msgid "Void"
 msgstr "Vid"
 
-#: src/billsdepositsdialog.cpp:433
+#: src/billsdepositsdialog.cpp:457
 msgid "Follow up"
 msgstr "Următor"
 
-#: src/billsdepositsdialog.cpp:440
+#: src/billsdepositsdialog.cpp:464
 msgid "Specify the status for the transaction"
 msgstr "Specifică statusul tranzacţiei"
 
-#: src/billsdepositsdialog.cpp:450
+#: src/billsdepositsdialog.cpp:474
 msgid "Specify any text notes you want to add to this transaction."
 msgstr "Specifică orice notă ce doreşti să o adaugi la această tranzacţie."
 
-#: src/billsdepositsdialog.cpp:453
-#: src/billsdepositspanel.cpp:156
+#: src/billsdepositsdialog.cpp:477
+#: src/billsdepositspanel.cpp:159
 #: src/budgetingpanel.cpp:234
 msgid "Amount"
 msgstr "Valoare"
 
-#: src/billsdepositsdialog.cpp:460
+#: src/billsdepositsdialog.cpp:484
 msgid "Specify the amount for this transaction"
 msgstr "Specifică suma pentru această tranzacţie"
 
-#: src/billsdepositsdialog.cpp:598
-#: src/billsdepositsdialog.cpp:750
+#: src/billsdepositsdialog.cpp:622
+#: src/billsdepositsdialog.cpp:774
 msgid "Select To"
 msgstr "Selectaţi La"
 
-#: src/billsdepositsdialog.cpp:621
+#: src/billsdepositsdialog.cpp:645
 msgid "To Account Amount Entry"
 msgstr "Mergi la Account Amount Entry"
 
-#: src/billsdepositsdialog.cpp:622
+#: src/billsdepositsdialog.cpp:646
 msgid "Amount to be recorded in To Account"
 msgstr "Suma ce va fi înregistrată în cont"
 
-#: src/billsdepositsdialog.cpp:632
+#: src/billsdepositsdialog.cpp:656
 msgid "Invalid To Amount Entered "
 msgstr "Suma introdusă este invalidă"
 
-#: src/billsdepositsdialog.cpp:742
-#: src/billsdepositsdialog.cpp:756
+#: src/billsdepositsdialog.cpp:766
+#: src/billsdepositsdialog.cpp:780
 msgid "From"
 msgstr "De la"
 
-#: src/billsdepositsdialog.cpp:749
+#: src/billsdepositsdialog.cpp:773
 msgid "Select From"
 msgstr "Selectaţi De La"
 
-#: src/billsdepositsdialog.cpp:777
+#: src/billsdepositsdialog.cpp:801
 msgid "Payee "
 msgstr "Beneficiar"
 
-#: src/billsdepositsdialog.cpp:779
+#: src/billsdepositsdialog.cpp:803
 msgid "From Account "
 msgstr "Din Contul"
 
-#: src/billsdepositsdialog.cpp:787
-#: src/billsdepositsdialog.cpp:795
+#: src/billsdepositsdialog.cpp:811
+#: src/billsdepositsdialog.cpp:819
 msgid "Category "
 msgstr "Categorie"
 
-#: src/billsdepositsdialog.cpp:806
-#: src/billsdepositsdialog.cpp:816
-#: src/budgetentrydialog.cpp:226
+#: src/billsdepositsdialog.cpp:830
+#: src/billsdepositsdialog.cpp:840
+#: src/budgetentrydialog.cpp:234
 msgid "Invalid Amount Entered "
 msgstr "Suma introdusă este invalidă"
 
-#: src/billsdepositsdialog.cpp:823
-#: src/billsdepositspanel.cpp:151
+#: src/billsdepositsdialog.cpp:847
+#: src/billsdepositspanel.cpp:154
 msgid "Account"
 msgstr "Cont"
 
-#: src/billsdepositsdialog.cpp:833
+#: src/billsdepositsdialog.cpp:857
 msgid "To Account "
 msgstr "În Contul"
 
-#: src/billsdepositsdialog.cpp:839
+#: src/billsdepositsdialog.cpp:863
 msgid "From and To Account cannot be the same."
 msgstr "Contul De La si La nu poate fi acelaşi."
 
-#: src/billsdepositspanel.cpp:129
+#: src/billsdepositspanel.cpp:132
 msgid "Repeating Transactions"
 msgstr "Tranzacţii Repetitive"
 
-#: src/billsdepositspanel.cpp:158
+#: src/billsdepositspanel.cpp:161
 msgid "Next Due Date"
 msgstr "Data urmatoare a scadenţei"
 
-#: src/billsdepositspanel.cpp:159
+#: src/billsdepositspanel.cpp:162
 #: src/budgetingpanel.cpp:229
 msgid "Frequency"
 msgstr "Frecvenţă"
 
-#: src/billsdepositspanel.cpp:160
+#: src/billsdepositspanel.cpp:163
 msgid "Remaining Days"
 msgstr "Zile rămase"
 
-#: src/billsdepositspanel.cpp:203
-msgid "New Series"
+#: src/billsdepositspanel.cpp:210
+#, fuzzy
+msgid "&New Series"
 msgstr "Serie Nouă"
 
-#: src/billsdepositspanel.cpp:205
+#: src/billsdepositspanel.cpp:212
 msgid "New Bills && Deposit Series"
 msgstr "Facturi && Serii de Depozite Noi"
 
-#: src/billsdepositspanel.cpp:208
-msgid "Edit Series"
+#: src/billsdepositspanel.cpp:215
+#, fuzzy
+msgid "&Edit Series"
 msgstr "Editează Serii"
 
-#: src/billsdepositspanel.cpp:210
+#: src/billsdepositspanel.cpp:217
 msgid "Edit Bills && Deposit Series"
 msgstr "Editează Facturi && Serii de Depozite"
 
-#: src/billsdepositspanel.cpp:213
-msgid "Delete Series"
+#: src/billsdepositspanel.cpp:220
+#, fuzzy
+msgid "&Delete Series"
 msgstr "Şterge Serii"
 
-#: src/billsdepositspanel.cpp:215
+#: src/billsdepositspanel.cpp:222
 msgid "Delete Bills && Deposit Series"
 msgstr "Şterge Facturi && Serii de Depozite"
 
-#: src/billsdepositspanel.cpp:218
-msgid "Enter Transaction"
+#: src/billsdepositspanel.cpp:225
+#, fuzzy
+msgid "Enter &Transaction"
 msgstr "Introdu Tranzacţie"
 
-#: src/billsdepositspanel.cpp:220
+#: src/billsdepositspanel.cpp:227
 msgid "Enter Next Bills && Deposit Occurrence"
 msgstr "Introdu următoarea Factură && Aparişie a Depozitului"
 
-#: src/billsdepositspanel.cpp:310
+#: src/billsdepositspanel.cpp:317
 msgid " days remaining"
 msgstr "zile rămase"
 
-#: src/billsdepositspanel.cpp:315
+#: src/billsdepositspanel.cpp:322
 msgid " days overdue!"
 msgstr "zile întârziere!"
 
-#: src/billsdepositspanel.cpp:383
+#: src/billsdepositspanel.cpp:391
 msgid "&New Bills && Deposit Series"
 msgstr "&Facturi && Serii de Depozi Noi"
 
-#: src/billsdepositspanel.cpp:385
+#: src/billsdepositspanel.cpp:393
 msgid "&Edit Bills && Deposit Series"
 msgstr "& Editează Facturi && Serii de Depozit"
 
-#: src/billsdepositspanel.cpp:386
+#: src/billsdepositspanel.cpp:394
 msgid "&Delete Bills && Deposit Series"
 msgstr "&Şterge Facturi&& Serii de Depozit"
 
-#: src/billsdepositspanel.cpp:388
+#: src/billsdepositspanel.cpp:396
 msgid "Enter next Occurrence"
 msgstr "Introdu următoarea apariţie"
 
-#: src/billsdepositspanel.cpp:490
+#: src/billsdepositspanel.cpp:501
 msgid "Do you really want to delete the series?"
 msgstr "Sigur doreşti ştergerea seriei?"
 
-#: src/billsdepositspanel.cpp:491
+#: src/billsdepositspanel.cpp:502
 msgid "Confirm Series Deletion"
 msgstr "Confirmă ştergerea seriei"
 
-#: src/budgetentrydialog.cpp:135
+#: src/budgetentrydialog.cpp:143
 msgid "Type:"
 msgstr "Tip:"
 
-#: src/budgetentrydialog.cpp:141
+#: src/budgetentrydialog.cpp:149
 msgid "Expense"
 msgstr "Cheltuieli"
 
-#: src/budgetentrydialog.cpp:142
+#: src/budgetentrydialog.cpp:150
 msgid "Income"
 msgstr "Venit"
 
-#: src/budgetentrydialog.cpp:148
+#: src/budgetentrydialog.cpp:156
 msgid "Specify whether this category is an income or an expense category"
 msgstr "Specifică dacă această categorie este un venit sau o cheltuială"
 
-#: src/budgetentrydialog.cpp:151
+#: src/budgetentrydialog.cpp:159
 msgid "Frequency:"
 msgstr "Frecvenţă:"
 
-#: src/budgetentrydialog.cpp:170
+#: src/budgetentrydialog.cpp:178
 msgid "Specify the frequency of the expense or deposit"
 msgstr "Specifică frecvenţa cheltuielii sau depozitului"
 
-#: src/budgetentrydialog.cpp:173
+#: src/budgetentrydialog.cpp:181
 msgid "Amount:"
 msgstr "Suma:"
 
-#: src/budgetentrydialog.cpp:181
+#: src/budgetentrydialog.cpp:189
 msgid "Enter the amount budgeted for this category."
 msgstr "Introdu suma din buget destinată acestei categorii."
 
@@ -772,255 +766,486 @@ msgstr "Estimat"
 msgid "Actual"
 msgstr "Real"
 
-#: src/budgetingpanel.cpp:490
+#: src/budgetingpanel.cpp:507
 #, c-format
 msgid "Estimated Income: %s Actual Income:  %s"
 msgstr "Venit estimat:%s Venit real:%s"
 
-#: src/budgetingpanel.cpp:495
+#: src/budgetingpanel.cpp:512
 #, c-format
 msgid "Estimated Expenses: %s Actual Expenses:  %s"
 msgstr "Cheltuieli estimate:%s Cheltuieli reale:%s"
 
-#: src/budgetyeardialog.cpp:105
-msgid "Add Budget Year"
+#: src/budgetyeardialog.cpp:116
+#, fuzzy
+msgid "&Add Budget Year"
 msgstr "Adaugă anul bugetului"
 
-#: src/budgetyeardialog.cpp:108
+#: src/budgetyeardialog.cpp:119
 msgid "Add a new budget year"
 msgstr "Adaugă un an nou pentru buget"
 
-#: src/budgetyeardialog.cpp:111
-msgid "Delete Budget Year"
+#: src/budgetyeardialog.cpp:122
+#, fuzzy
+msgid "&Delete Budget Year"
 msgstr "Şterge anul bugetului"
 
-#: src/budgetyeardialog.cpp:113
+#: src/budgetyeardialog.cpp:124
 msgid "Delete existing budget year"
 msgstr "Şterge anul bugetului existent"
 
-#: src/budgetyearentrydialog.cpp:82
+#: src/budgetyearentrydialog.cpp:90
 msgid "Budget Year:"
 msgstr "Anul bugetului:"
 
-#: src/budgetyearentrydialog.cpp:89
+#: src/budgetyearentrydialog.cpp:97
 msgid "Enter the year in YYYY format to specify year"
 msgstr "Intrudu anul în format YYYY pentru a specifica anul"
 
-#: src/budgetyearentrydialog.cpp:92
+#: src/budgetyearentrydialog.cpp:100
 msgid "Base Budget On:"
 msgstr "Baza bugetului la:"
 
-#: src/budgetyearentrydialog.cpp:105
+#: src/budgetyearentrydialog.cpp:113
 msgid "Specify year to base budget on."
 msgstr "Specifică anule pe care se va baza bugetul"
 
-#: src/budgetyearentrydialog.cpp:145
-#: src/budgetyearentrydialog.cpp:175
+#: src/budgetyearentrydialog.cpp:157
+#: src/budgetyearentrydialog.cpp:187
 msgid "Year is not valid"
 msgstr "Anul nu este valid"
 
-#: src/budgetyearentrydialog.cpp:152
+#: src/budgetyearentrydialog.cpp:164
 msgid "Budget Year already exists"
 msgstr "Acest an există deja"
 
-#: src/categdialog.cpp:75
+#: src/categdialog.cpp:84
 msgid "Categories"
 msgstr "Categorii"
 
-#: src/categdialog.cpp:142
+#: src/categdialog.cpp:151
 msgid "Enter the name of the category to add or edit here"
 msgstr "Introdu numele categoriei ce doreşti să o adaugi sau modifici aici"
 
-#: src/categdialog.cpp:148
-msgid "Add"
+#: src/categdialog.cpp:157
+#, fuzzy
+msgid "&Add"
 msgstr "Adaugă"
 
-#: src/categdialog.cpp:150
+#: src/categdialog.cpp:159
 msgid "Add a new category"
 msgstr "Adaugă o categorie nouă"
 
-#: src/categdialog.cpp:155
+#: src/categdialog.cpp:164
 msgid "Edit the name of an existing category"
 msgstr "Modifică numele unei categorii existente"
 
-#: src/categdialog.cpp:160
+#: src/categdialog.cpp:169
 msgid "Delete an existing category. The category cannot be used by existing transactions."
 msgstr "Şterge o categorie existentă. Categoria nu poate fi utilizată de tranzacţiile existente."
 
-#: src/categdialog.cpp:166
-msgid "Select"
+#: src/categdialog.cpp:175
+#, fuzzy
+msgid "&Select"
 msgstr "Selectează"
 
-#: src/categdialog.cpp:168
+#: src/categdialog.cpp:177
 msgid "Select the currently selected category as the selected category for the transaction"
 msgstr "Selectează categoria curentă ca fiind categoria selectată pentru tranzacţie"
 
-#: src/categdialog.cpp:181
+#: src/categdialog.cpp:190
 msgid "Category cannot be empty"
 msgstr "Categoria nu poate fi goală"
 
-#: src/categdialog.cpp:189
+#: src/categdialog.cpp:198
 msgid "Category with same name exists"
 msgstr "O categorie cu acelaşi nume există"
 
-#: src/categdialog.cpp:208
+#: src/categdialog.cpp:217
 msgid "Sub Category with same name exists"
 msgstr "O subcategorie cu acelaşi nume există"
 
-#: src/categdialog.cpp:219
+#: src/categdialog.cpp:228
 msgid "Invalid Parent Category. Choose Root or Main Category node."
 msgstr "Categorie părinte invalidă. Alege rădăcina sau nodul principal al categoriei."
 
-#: src/categdialog.cpp:220
+#: src/categdialog.cpp:229
 msgid "Error adding Category"
 msgstr "Eroare în adăugarea categoriei"
 
-#: src/categdialog.cpp:242
+#: src/categdialog.cpp:251
 msgid "Category is in use"
 msgstr "Categoria este în folosinţă"
 
-#: src/categdialog.cpp:250
+#: src/categdialog.cpp:259
 msgid "Sub-Category is in use"
 msgstr "SubCategoria este în folosinţă"
 
-#: src/categdialog.cpp:357
+#: src/categdialog.cpp:368
 msgid "Update Failed"
 msgstr "Actualizare eşuată"
 
-#: src/currencydialog.cpp:159
+#: src/currencydialog.cpp:167
 msgid "Currency Name"
 msgstr "Numele monedei"
 
-#: src/currencydialog.cpp:170
+#: src/currencydialog.cpp:178
 #, fuzzy
 msgid "Currency Symbol"
 msgstr "Numele monedei"
 
-#: src/currencydialog.cpp:215
+#: src/currencydialog.cpp:224
 msgid "Prefix Symbol"
 msgstr "Simbol prefix"
 
-#: src/currencydialog.cpp:224
+#: src/currencydialog.cpp:233
 msgid "Suffix Symbol"
 msgstr "Simbol sufix"
 
-#: src/currencydialog.cpp:233
+#: src/currencydialog.cpp:242
 msgid "Decimal Char"
 msgstr "Simbol zecimal"
 
-#: src/currencydialog.cpp:244
+#: src/currencydialog.cpp:253
 msgid "Grouping Char"
 msgstr "Simbol de grupare"
 
-#: src/currencydialog.cpp:253
+#: src/currencydialog.cpp:262
 msgid "Unit Name"
 msgstr "Numele unităţii"
 
-#: src/currencydialog.cpp:264
+#: src/currencydialog.cpp:273
 msgid "Cents Name"
 msgstr "Diviziune Moneda"
 
-#: src/currencydialog.cpp:273
+#: src/currencydialog.cpp:282
 msgid "Conversion to Base Rate"
 msgstr "Conversie la rata de bază"
 
-#: src/currencydialog.cpp:282
+#: src/currencydialog.cpp:291
 msgid "Scale"
 msgstr "Balanţă"
 
-#: src/currencydialog.cpp:292
+#: src/currencydialog.cpp:301
 msgid "Value of 123456.78 will be"
 msgstr "Valoarea lui 123456.78 va fi"
 
-#: src/currencydialog.cpp:297
+#: src/currencydialog.cpp:306
 msgid "1234567.89"
 msgstr "1234567.89"
 
-#: src/currencydialog.cpp:305
-msgid "Update"
+#: src/currencydialog.cpp:314
+#, fuzzy
+msgid "&Update"
 msgstr "Actualizare"
 
-#: src/currencydialog.cpp:309
-msgid "Close"
+#: src/currencydialog.cpp:318
+#, fuzzy
+msgid "&Close"
 msgstr "Închide"
 
-#: src/currencydialog.cpp:346
+#: src/currencydialog.cpp:355
 msgid "Base Conversion Rate should be greater than 0.0"
 msgstr "Baza ratei de conversie ar trebui să fie mai mare de 0.0"
 
-#: src/customsqldialog.cpp:88
+#: src/customsqldialog.cpp:96
 msgid "Custom SQL Query"
 msgstr "Interogare SQL obişnuită"
 
-#: src/customsqldialog.cpp:115
-msgid "Load SQL"
+#: src/customsqldialog.cpp:123
+#, fuzzy
+msgid "&Load SQL"
 msgstr "Încarcă SQL"
 
-#: src/customsqldialog.cpp:120
-msgid "Save SQL"
+#: src/customsqldialog.cpp:128
+#, fuzzy
+msgid "&Save SQL"
 msgstr "Salvează SQL"
 
-#: src/customsqldialog.cpp:125
-msgid "Run Query"
+#: src/customsqldialog.cpp:133
+#, fuzzy
+msgid "&Run Query"
 msgstr "Rulează interogarea"
 
-#: src/customsqldialog.cpp:172
+#: src/customsqldialog.cpp:180
 msgid "Unable to open file."
 msgstr "Fişierul nu a putut fi deschis."
 
-#: src/customsqldialog.cpp:201
+#: src/customsqldialog.cpp:209
 msgid "Unable to write to file."
 msgstr "Nu s-a putut scrie în fişier."
 
-#: src/customsqldialog.cpp:222
+#: src/customsqldialog.cpp:230
 msgid "SQL Query will modify your Data. Proceed??"
 msgstr "Interogarea SQL ca modifica datele tale. Continui?"
 
-#: src/customsqldialog.cpp:223
+#: src/customsqldialog.cpp:231
 msgid "Warning"
 msgstr "Avertisment"
 
-#: src/filtertransdialog.cpp:194
+#: src/dbwrapper.cpp:111
+msgid "Telephone"
+msgstr ""
+
+#: src/dbwrapper.cpp:112
+msgid "Electricity"
+msgstr ""
+
+#: src/dbwrapper.cpp:113
+#: src/dbwrapper.cpp:148
+msgid "Gas"
+msgstr ""
+
+#: src/dbwrapper.cpp:114
+#, fuzzy
+msgid "Internet"
+msgstr "Investiţie"
+
+#: src/dbwrapper.cpp:115
+#, fuzzy
+msgid "Rent"
+msgstr "Raport"
+
+#: src/dbwrapper.cpp:116
+msgid "Cable TV"
+msgstr ""
+
+#: src/dbwrapper.cpp:117
+#, fuzzy
+msgid "Water"
+msgstr "Data"
+
+#: src/dbwrapper.cpp:121
+msgid "Bills"
+msgstr ""
+
+#: src/dbwrapper.cpp:126
+msgid "Groceries"
+msgstr ""
+
+#: src/dbwrapper.cpp:127
+msgid "Dining out"
+msgstr ""
+
+#: src/dbwrapper.cpp:131
+msgid "Food"
+msgstr ""
+
+#: src/dbwrapper.cpp:136
+#, fuzzy
+msgid "Movies"
+msgstr "Mută sus"
+
+#: src/dbwrapper.cpp:137
+msgid "Video Rental"
+msgstr ""
+
+#: src/dbwrapper.cpp:138
+msgid "Magazines"
+msgstr ""
+
+#: src/dbwrapper.cpp:142
+msgid "Leisure"
+msgstr ""
+
+#: src/dbwrapper.cpp:147
+msgid "Maintenance"
+msgstr ""
+
+#: src/dbwrapper.cpp:149
+#, fuzzy
+msgid "Parking"
+msgstr "Avertisment"
+
+#: src/dbwrapper.cpp:150
+msgid "Registration"
+msgstr ""
+
+#: src/dbwrapper.cpp:159
+msgid "Books"
+msgstr ""
+
+#: src/dbwrapper.cpp:160
+msgid "Tuition"
+msgstr ""
+
+#: src/dbwrapper.cpp:161
+#: src/dbwrapper.cpp:172
+#: src/dbwrapper.cpp:220
+msgid "Others"
+msgstr "Altele"
+
+#: src/dbwrapper.cpp:165
+msgid "Education"
+msgstr ""
+
+#: src/dbwrapper.cpp:170
+#, fuzzy
+msgid "Clothing"
+msgstr "Verificare"
+
+#: src/dbwrapper.cpp:171
+msgid "Furnishing"
+msgstr ""
+
+#: src/dbwrapper.cpp:176
+msgid "Homeneeds"
+msgstr ""
+
+#: src/dbwrapper.cpp:181
+#: src/dbwrapper.cpp:197
+#, fuzzy
+msgid "Health"
+msgstr "Ţinut la"
+
+#: src/dbwrapper.cpp:182
+#, fuzzy
+msgid "Dental"
+msgstr "General"
+
+#: src/dbwrapper.cpp:183
+msgid "Eyecare"
+msgstr ""
+
+#: src/dbwrapper.cpp:184
+msgid "Physician"
+msgstr ""
+
+#: src/dbwrapper.cpp:185
+#, fuzzy
+msgid "Prescriptions"
+msgstr "Tranzacţii"
+
+#: src/dbwrapper.cpp:189
+msgid "Healthcare"
+msgstr ""
+
+#: src/dbwrapper.cpp:194
+#, fuzzy
+msgid "Auto"
+msgstr "la"
+
+#: src/dbwrapper.cpp:195
+msgid "Life"
+msgstr ""
+
+#: src/dbwrapper.cpp:196
+#, fuzzy
+msgid "Home"
+msgstr "Acasă"
+
+#: src/dbwrapper.cpp:201
+msgid "Insurance"
+msgstr ""
+
+#: src/dbwrapper.cpp:206
+msgid "Travel"
+msgstr ""
+
+#: src/dbwrapper.cpp:207
+#, fuzzy
+msgid "Lodging"
+msgstr "Bugetare"
+
+#: src/dbwrapper.cpp:208
+msgid "Sightseeing"
+msgstr ""
+
+#: src/dbwrapper.cpp:212
+#, fuzzy
+msgid "Vacation"
+msgstr "Navigare"
+
+#: src/dbwrapper.cpp:217
+#, fuzzy
+msgid "Income Tax"
+msgstr "Venit"
+
+#: src/dbwrapper.cpp:218
+msgid "House Tax"
+msgstr ""
+
+#: src/dbwrapper.cpp:219
+msgid "Water Tax"
+msgstr ""
+
+#: src/dbwrapper.cpp:224
+msgid "Taxes"
+msgstr ""
+
+#: src/dbwrapper.cpp:228
+msgid "Miscellaneous"
+msgstr ""
+
+#: src/dbwrapper.cpp:229
+msgid "Gifts"
+msgstr ""
+
+#: src/dbwrapper.cpp:234
+#, fuzzy
+msgid "Salary"
+msgstr "Sumar"
+
+#: src/dbwrapper.cpp:235
+msgid "Reimbursement/Refunds"
+msgstr ""
+
+#: src/dbwrapper.cpp:236
+#, fuzzy
+msgid "Investment Income"
+msgstr "Investiţie"
+
+#: src/dbwrapper.cpp:244
+#, fuzzy
+msgid "Other Income"
+msgstr "Venit"
+
+#: src/dbwrapper.cpp:245
+#, fuzzy
+msgid "Other Expenses"
+msgstr "Cheltuieli"
+
+#: src/filtertransdialog.cpp:201
 msgid "Specify Account"
 msgstr "Specifică Contul"
 
-#: src/filtertransdialog.cpp:215
+#: src/filtertransdialog.cpp:229
 msgid "Specify Date Range"
 msgstr "Specifică intervalul de timp"
 
-#: src/filtertransdialog.cpp:230
+#: src/filtertransdialog.cpp:244
 msgid "Specify Payee"
 msgstr "Specifică beneficiarul"
 
-#: src/filtertransdialog.cpp:241
+#: src/filtertransdialog.cpp:255
 msgid "Specify Category"
 msgstr "Specifică categoria"
 
-#: src/filtertransdialog.cpp:252
+#: src/filtertransdialog.cpp:266
 msgid "Specify Status"
 msgstr "Specifică statusul"
 
-#: src/filtertransdialog.cpp:262
+#: src/filtertransdialog.cpp:276
 msgid "Duplicate"
 msgstr "Duplicat"
 
-#: src/filtertransdialog.cpp:273
+#: src/filtertransdialog.cpp:287
 msgid "Specify Type"
 msgstr "Specifică Tipul"
 
-#: src/filtertransdialog.cpp:288
+#: src/filtertransdialog.cpp:302
 msgid "Specify the type of transaction."
 msgstr "Specifică tipul tranzacţiei"
 
-#: src/filtertransdialog.cpp:293
+#: src/filtertransdialog.cpp:307
 msgid "Specify Amount Range"
 msgstr "Specifică intervalul sumei"
 
-#: src/filtertransdialog.cpp:307
+#: src/filtertransdialog.cpp:321
 msgid "Specify Number"
 msgstr "Specifică Număr"
 
-#: src/filtertransdialog.cpp:318
+#: src/filtertransdialog.cpp:332
 msgid "Specify Notes"
 msgstr "Specifică Nota"
 
@@ -1028,286 +1253,297 @@ msgstr "Specifică Nota"
 msgid "Report"
 msgstr "Raport"
 
-#: src/maincurrencydialog.cpp:109
+#: src/maincurrencydialog.cpp:117
 msgid "Currency List"
 msgstr "Lista monedelor"
 
-#: src/maincurrencydialog.cpp:174
+#: src/maincurrencydialog.cpp:186
 msgid "Name of Currency to Add"
 msgstr "Numele monedei ce va fi adăugată"
 
-#: src/maincurrencydialog.cpp:175
+#: src/maincurrencydialog.cpp:187
 msgid "Add Currency"
 msgstr "Adaugă monedă"
 
-#: src/maincurrencydialog.cpp:193
+#: src/maincurrencydialog.cpp:205
 msgid "Currency name already exists!"
 msgstr "Numele monedei deja există!"
 
-#: src/mmcheckingpanel.cpp:172
-msgid "View All Transactions"
-msgstr "Vizualizează toate tranzacţiile"
-
-#: src/mmcheckingpanel.cpp:173
-msgid "View Reconciled Transactions"
-msgstr "Vizualizează tranzacţiile reconciliate"
-
-#: src/mmcheckingpanel.cpp:174
-msgid "View Un-Reconciled Transactions"
-msgstr "Vizuaizează tranzacţiile nereconciliate"
-
-#: src/mmcheckingpanel.cpp:175
-msgid "View All Except Reconciled Transactions"
-msgstr "Vizualizează toate tranzacţiile, exceptând tranzacţiile reconciliate"
-
-#: src/mmcheckingpanel.cpp:176
-msgid "View Void Transactions"
-msgstr "Vizualizează tranzacţiile goale"
-
-#: src/mmcheckingpanel.cpp:177
-msgid "View Flagged Transactions"
-msgstr "Vizualizează tranzacţiile marcate"
-
-#: src/mmcheckingpanel.cpp:178
-msgid "View Duplicate Transactions"
-msgstr "Vizualizează tranzacţiile duplicat"
-
-#: src/mmcheckingpanel.cpp:180
-msgid "View Transactions from last 30 days"
-msgstr "Vizualizează tranzacţiile din ultimele 30 zile"
-
-#: src/mmcheckingpanel.cpp:181
-msgid "View Transactions from current month"
-msgstr "Vizualizează tranzacţiile din luna curentă"
-
-#: src/mmcheckingpanel.cpp:182
-msgid "View Transactions from last month"
-msgstr "Vizuallizează tranzacţiile de luna trecută"
-
-#: src/mmcheckingpanel.cpp:183
-msgid "View Transactions from last 3 months"
-msgstr "Vizualizează tranzacţiile din ultimele 3 luni"
-
-#: src/mmcheckingpanel.cpp:185
-msgid "Delete all transactions in current view"
-msgstr "Şterge toate tranzacţiile din sesiunea curentă"
-
-#: src/mmcheckingpanel.cpp:186
-msgid "Delete all flagged transactions"
-msgstr "Şterge toate tranzacţiile marcate"
-
-#: src/mmcheckingpanel.cpp:229
-msgid "Viewing All Transactions"
-msgstr "Vizualizarea tuturor tranzacţiilor"
-
-#: src/mmcheckingpanel.cpp:272
+#: src/mmcheckingpanel.cpp:106
 msgid "Date  "
 msgstr "Data"
 
-#: src/mmcheckingpanel.cpp:280
+#: src/mmcheckingpanel.cpp:109
 msgid "C  "
 msgstr "C"
 
-#: src/mmcheckingpanel.cpp:289
+#: src/mmcheckingpanel.cpp:113
 msgid "Balance"
 msgstr "Balanţă"
 
-#: src/mmcheckingpanel.cpp:347
+#: src/mmcheckingpanel.cpp:222
+msgid "View All Transactions"
+msgstr "Vizualizează toate tranzacţiile"
+
+#: src/mmcheckingpanel.cpp:223
+msgid "View Reconciled Transactions"
+msgstr "Vizualizează tranzacţiile reconciliate"
+
+#: src/mmcheckingpanel.cpp:224
+msgid "View Un-Reconciled Transactions"
+msgstr "Vizuaizează tranzacţiile nereconciliate"
+
+#: src/mmcheckingpanel.cpp:225
+msgid "View All Except Reconciled Transactions"
+msgstr "Vizualizează toate tranzacţiile, exceptând tranzacţiile reconciliate"
+
+#: src/mmcheckingpanel.cpp:226
+msgid "View Void Transactions"
+msgstr "Vizualizează tranzacţiile goale"
+
+#: src/mmcheckingpanel.cpp:227
+msgid "View Flagged Transactions"
+msgstr "Vizualizează tranzacţiile marcate"
+
+#: src/mmcheckingpanel.cpp:228
+msgid "View Duplicate Transactions"
+msgstr "Vizualizează tranzacţiile duplicat"
+
+#: src/mmcheckingpanel.cpp:230
+#, fuzzy
+msgid "View Transactions from today"
+msgstr "Vizualizează tranzacţiile din ultimele 30 zile"
+
+#: src/mmcheckingpanel.cpp:231
+msgid "View Transactions from last 30 days"
+msgstr "Vizualizează tranzacţiile din ultimele 30 zile"
+
+#: src/mmcheckingpanel.cpp:232
+msgid "View Transactions from current month"
+msgstr "Vizualizează tranzacţiile din luna curentă"
+
+#: src/mmcheckingpanel.cpp:233
+msgid "View Transactions from last month"
+msgstr "Vizuallizează tranzacţiile de luna trecută"
+
+#: src/mmcheckingpanel.cpp:234
+msgid "View Transactions from last 3 months"
+msgstr "Vizualizează tranzacţiile din ultimele 3 luni"
+
+#: src/mmcheckingpanel.cpp:236
+msgid "Delete all transactions in current view"
+msgstr "Şterge toate tranzacţiile din sesiunea curentă"
+
+#: src/mmcheckingpanel.cpp:237
+msgid "Delete all flagged transactions"
+msgstr "Şterge toate tranzacţiile marcate"
+
+#: src/mmcheckingpanel.cpp:280
+msgid "Viewing All Transactions"
+msgstr "Vizualizarea tuturor tranzacţiilor"
+
+#: src/mmcheckingpanel.cpp:354
 msgid "New Transaction"
 msgstr "Tranzacţie Nouă"
 
-#: src/mmcheckingpanel.cpp:352
+#: src/mmcheckingpanel.cpp:359
 msgid "Edit Transaction"
 msgstr "Modifică tranzacţie"
 
-#: src/mmcheckingpanel.cpp:357
+#: src/mmcheckingpanel.cpp:364
 msgid "Delete Transaction"
 msgstr "Şterge tranzacţie"
 
-#: src/mmcheckingpanel.cpp:466
+#: src/mmcheckingpanel.cpp:473
 msgid "Category         : "
 msgstr "Categorie:"
 
-#: src/mmcheckingpanel.cpp:467
+#: src/mmcheckingpanel.cpp:474
 msgid "Sub Category  : "
 msgstr "SubCategorie:"
 
-#: src/mmcheckingpanel.cpp:468
+#: src/mmcheckingpanel.cpp:475
 msgid "Notes               : "
 msgstr "Note:"
 
-#: src/mmcheckingpanel.cpp:488
+#: src/mmcheckingpanel.cpp:495
 #, c-format
 msgid "Account Balance : %s      Reconciled Balance : %s"
 msgstr "Balanţa Contului:%s Balanţa reconciliatăŞ%s"
 
-#: src/mmcheckingpanel.cpp:498
-#: src/mmex.cpp:2364
+#: src/mmcheckingpanel.cpp:505
+#: src/mmex.cpp:2395
 msgid "Please Wait"
 msgstr "Te rog aşteaptă"
 
-#: src/mmcheckingpanel.cpp:499
+#: src/mmcheckingpanel.cpp:506
 msgid "Accessing Database"
 msgstr "Accesare bază de date"
 
-#: src/mmcheckingpanel.cpp:512
+#: src/mmcheckingpanel.cpp:519
 msgid "Account View : "
 msgstr "Vizualizare cont:"
 
-#: src/mmcheckingpanel.cpp:517
+#: src/mmcheckingpanel.cpp:524
 msgid "Category: \n"
 msgstr "Categorie: \n"
 
-#: src/mmcheckingpanel.cpp:518
+#: src/mmcheckingpanel.cpp:525
 msgid "Sub Category: \n"
 msgstr "SubCategorie: \n"
 
-#: src/mmcheckingpanel.cpp:519
+#: src/mmcheckingpanel.cpp:526
 msgid "Notes: \n"
 msgstr "Note: \n"
 
-#: src/mmcheckingpanel.cpp:749
-#: src/mmcheckingpanel.cpp:787
+#: src/mmcheckingpanel.cpp:776
+#: src/mmcheckingpanel.cpp:818
 msgid "Viewing all transactions"
 msgstr "Vizualizarea tuturor tranzacţiilor"
 
-#: src/mmcheckingpanel.cpp:753
-#: src/mmcheckingpanel.cpp:792
+#: src/mmcheckingpanel.cpp:780
+#: src/mmcheckingpanel.cpp:823
 msgid "Viewing Reconciled transactions"
 msgstr "Vizualizarea tranzacţiilor reconciliate"
 
-#: src/mmcheckingpanel.cpp:757
-#: src/mmcheckingpanel.cpp:802
+#: src/mmcheckingpanel.cpp:784
+#: src/mmcheckingpanel.cpp:833
 msgid "Viewing Un-Reconciled transactions"
 msgstr "Vizualizarea tranzacţiilor nereconciliate"
 
-#: src/mmcheckingpanel.cpp:761
-#: src/mmcheckingpanel.cpp:812
+#: src/mmcheckingpanel.cpp:788
+#: src/mmcheckingpanel.cpp:843
+#, fuzzy
+msgid "Viewing transactions from today"
+msgstr "Vizualizarea tranzacţiilor din ultimele 30 de zile"
+
+#: src/mmcheckingpanel.cpp:792
+#: src/mmcheckingpanel.cpp:848
 msgid "Viewing transactions from last 30 days"
 msgstr "Vizualizarea tranzacţiilor din ultimele 30 de zile"
 
-#: src/mmcheckingpanel.cpp:765
-#: src/mmcheckingpanel.cpp:817
+#: src/mmcheckingpanel.cpp:796
+#: src/mmcheckingpanel.cpp:853
 msgid "Viewing transactions from last 3 months"
 msgstr "Vizualizarea tranzacţiilor din ultimele 3 luni"
 
-#: src/mmcheckingpanel.cpp:769
-#: src/mmcheckingpanel.cpp:822
+#: src/mmcheckingpanel.cpp:800
+#: src/mmcheckingpanel.cpp:858
 msgid "Viewing transactions from current month"
 msgstr "Vizualizarea tranzacţiilor din luna curentă"
 
-#: src/mmcheckingpanel.cpp:773
-#: src/mmcheckingpanel.cpp:827
+#: src/mmcheckingpanel.cpp:804
+#: src/mmcheckingpanel.cpp:863
 msgid "Viewing transactions from last month"
 msgstr "Vizualizarea tranzacţiilor din ultima lună"
 
-#: src/mmcheckingpanel.cpp:777
+#: src/mmcheckingpanel.cpp:808
 msgid "Viewing All Except Reconciled Transactions"
 msgstr "Vizualizază Toate cu Excepţia Tranzacţiilor Reconciliate"
 
-#: src/mmcheckingpanel.cpp:797
+#: src/mmcheckingpanel.cpp:828
 msgid "Viewing Void transactions"
 msgstr "Vizualizarea tranzacţiilor goale"
 
-#: src/mmcheckingpanel.cpp:807
+#: src/mmcheckingpanel.cpp:838
 msgid "Viewing Flagged transactions"
 msgstr "Vizualizarea tranzacţiilor marcate"
 
-#: src/mmcheckingpanel.cpp:832
+#: src/mmcheckingpanel.cpp:868
 msgid "Viewing duplicate transactions"
 msgstr "Vizualizarea tranzacţiilor duplicat"
 
-#: src/mmcheckingpanel.cpp:837
+#: src/mmcheckingpanel.cpp:873
 msgid "Viewing All except Reconciled Transactions"
 msgstr "Vizualizarea tuturor tranzacţiilor, exceptând pe cele reconciliate"
 
-#: src/mmcheckingpanel.cpp:842
+#: src/mmcheckingpanel.cpp:878
 msgid "Do you really want to delete all the transactions shown?"
 msgstr "Sigur doreşti ştergerea tuturor tranzacţiilor afişate?"
 
-#: src/mmcheckingpanel.cpp:843
-#: src/mmcheckingpanel.cpp:858
-#: src/mmcheckingpanel.cpp:1224
+#: src/mmcheckingpanel.cpp:879
+#: src/mmcheckingpanel.cpp:894
+#: src/mmcheckingpanel.cpp:1280
 msgid "Confirm Transaction Deletion"
 msgstr "Confirmă ştergerea tranzacţiilor"
 
-#: src/mmcheckingpanel.cpp:857
+#: src/mmcheckingpanel.cpp:893
 msgid "Do you really want to delete all the flagged transactions?"
 msgstr "Sigur doreşti ştergerea tranzacţiilor marcate?"
 
-#: src/mmcheckingpanel.cpp:896
+#: src/mmcheckingpanel.cpp:931
 msgid "&New Transaction"
 msgstr "Tranzacţie &Nouă"
 
-#: src/mmcheckingpanel.cpp:898
+#: src/mmcheckingpanel.cpp:933
 msgid "&Edit Transaction"
 msgstr "&Modifică Tranzacţia"
 
-#: src/mmcheckingpanel.cpp:899
+#: src/mmcheckingpanel.cpp:934
 msgid "&Delete Transaction"
 msgstr "&Sterge Tranzacţie"
 
-#: src/mmcheckingpanel.cpp:900
+#: src/mmcheckingpanel.cpp:935
 msgid "&Copy Transaction"
 msgstr "&Copiază tranzacţie"
 
-#: src/mmcheckingpanel.cpp:902
+#: src/mmcheckingpanel.cpp:937
 msgid "&Paste Transaction"
 msgstr "&Lipeşte tranzacţie"
 
-#: src/mmcheckingpanel.cpp:904
+#: src/mmcheckingpanel.cpp:939
 msgid "Mark As &Reconciled"
 msgstr "Marchează ca &reconciliată"
 
-#: src/mmcheckingpanel.cpp:905
+#: src/mmcheckingpanel.cpp:940
 msgid "Mark As &Unreconciled"
 msgstr "Marchează ca &nereconciliată"
 
-#: src/mmcheckingpanel.cpp:906
+#: src/mmcheckingpanel.cpp:941
 msgid "Mark As &Void"
 msgstr "Marchează ca &goală"
 
-#: src/mmcheckingpanel.cpp:907
+#: src/mmcheckingpanel.cpp:942
 msgid "Mark For &Followup"
 msgstr "Marchează pentru &urmărire"
 
-#: src/mmcheckingpanel.cpp:908
+#: src/mmcheckingpanel.cpp:943
 msgid "Mark As &Duplicate"
 msgstr "Marchează ca &duplicat"
 
-#: src/mmcheckingpanel.cpp:912
+#: src/mmcheckingpanel.cpp:947
 msgid "as Reconciled"
 msgstr "ca reconciliat"
 
-#: src/mmcheckingpanel.cpp:913
+#: src/mmcheckingpanel.cpp:948
 msgid "as Unreconciled"
 msgstr "ca nereconciliat"
 
-#: src/mmcheckingpanel.cpp:914
+#: src/mmcheckingpanel.cpp:949
 msgid "as Void"
 msgstr "ca gol"
 
-#: src/mmcheckingpanel.cpp:915
+#: src/mmcheckingpanel.cpp:950
 msgid "as needing Followup"
 msgstr "ca nevoie de urmărire"
 
-#: src/mmcheckingpanel.cpp:916
+#: src/mmcheckingpanel.cpp:951
 msgid "as Duplicate"
 msgstr "ca duplicat"
 
-#: src/mmcheckingpanel.cpp:917
+#: src/mmcheckingpanel.cpp:952
 msgid "Mark all "
 msgstr "Marchează tot"
 
-#: src/mmcheckingpanel.cpp:1223
+#: src/mmcheckingpanel.cpp:1279
 msgid "Do you really want to delete the transaction?"
 msgstr "Sigur doreşti ştergerea tranzacţiei?"
 
-#: src/mmex.cpp:297
+#: src/mmex.cpp:310
 msgid "Add Account Wizard"
 msgstr "Adaugă Cont Expert"
 
-#: src/mmex.cpp:306
+#: src/mmex.cpp:319
 msgid ""
 " models all transactions as belonging to accounts.\n"
 "\n"
@@ -1323,11 +1559,11 @@ msgstr ""
 "Ca ajutor de început, încearcă să faci o listă cu toate.\n"
 "instituţiile financiare unde deţii un cont."
 
-#: src/mmex.cpp:348
+#: src/mmex.cpp:361
 msgid "New Database Wizard"
 msgstr "Expert Bază de Date Nou"
 
-#: src/mmex.cpp:355
+#: src/mmex.cpp:368
 #, fuzzy
 msgid ""
 "The next pages will help you create a new database.\n"
@@ -1345,513 +1581,555 @@ msgstr ""
 "fişier şi pastrează-l undeva bine deoarece contine importante \n"
 "informaţii financiare."
 
-#: src/mmex.cpp:450
-#: src/mmex.cpp:2205
-#: src/mmex.cpp:2810
-msgid "&Tools"
-msgstr "&Instrumente"
-
-#: src/mmex.cpp:450
-#: src/mmex.cpp:2167
-#: src/mmex.cpp:2810
-msgid "Online Update Currency Rate"
-msgstr ""
-
-#: src/mmex.cpp:667
-#: src/mmex.cpp:2047
+#: src/mmex.cpp:679
 msgid "Navigation"
 msgstr "Navigare"
 
-#: src/mmex.cpp:681
+#: src/mmex.cpp:693
 msgid "Home Page"
 msgstr "Acasă"
 
-#: src/mmex.cpp:685
+#: src/mmex.cpp:697
 msgid "Bank Accounts"
 msgstr "Cont bancar"
 
-#: src/mmex.cpp:692
-#: src/mmex.cpp:733
+#: src/mmex.cpp:704
+#: src/mmex.cpp:745
 msgid "Stocks"
 msgstr "Stocuri"
 
-#: src/mmex.cpp:714
+#: src/mmex.cpp:726
 msgid "Budgeting"
 msgstr "Bugetare"
 
-#: src/mmex.cpp:720
+#: src/mmex.cpp:732
 msgid "Reports"
 msgstr "Rapoarte"
 
-#: src/mmex.cpp:726
+#: src/mmex.cpp:738
 msgid "Summary of Accounts"
 msgstr "Sumar conturi"
 
-#: src/mmex.cpp:747
-#: src/mmex.cpp:1413
-#: src/mmex.cpp:1432
+#: src/mmex.cpp:759
 #: src/mmex.cpp:1445
-#: src/mmex.cpp:1458
-#: src/mmex.cpp:1475
-#: src/mmex.cpp:1492
+#: src/mmex.cpp:1464
+#: src/mmex.cpp:1477
+#: src/mmex.cpp:1490
+#: src/mmex.cpp:1507
+#: src/mmex.cpp:1524
 msgid "Where the Money Goes"
 msgstr "Unde se Duc Banii Mei"
 
-#: src/mmex.cpp:752
-#: src/mmex.cpp:784
-#: src/mmex.cpp:816
-#: src/mmex.cpp:847
-#: src/mmex.cpp:879
+#: src/mmex.cpp:764
+#: src/mmex.cpp:796
+#: src/mmex.cpp:828
+#: src/mmex.cpp:859
+#: src/mmex.cpp:891
 msgid "Last Calendar Month"
 msgstr "Ultima lună calendaristică"
 
-#: src/mmex.cpp:757
-#: src/mmex.cpp:789
-#: src/mmex.cpp:821
-#: src/mmex.cpp:852
-#: src/mmex.cpp:884
+#: src/mmex.cpp:769
+#: src/mmex.cpp:801
+#: src/mmex.cpp:833
+#: src/mmex.cpp:864
+#: src/mmex.cpp:896
 msgid "Current Month"
 msgstr "Luna curentă"
 
-#: src/mmex.cpp:762
-#: src/mmex.cpp:794
-#: src/mmex.cpp:826
-#: src/mmex.cpp:857
-#: src/mmex.cpp:889
+#: src/mmex.cpp:774
+#: src/mmex.cpp:806
+#: src/mmex.cpp:838
+#: src/mmex.cpp:869
+#: src/mmex.cpp:901
 msgid "Last 30 Days"
 msgstr "Ultimele 30 de zile"
 
-#: src/mmex.cpp:767
-#: src/mmex.cpp:799
-#: src/mmex.cpp:831
-#: src/mmex.cpp:862
-#: src/mmex.cpp:894
+#: src/mmex.cpp:779
+#: src/mmex.cpp:811
+#: src/mmex.cpp:843
+#: src/mmex.cpp:874
+#: src/mmex.cpp:906
 msgid "Last Year"
 msgstr "Anul Trecut"
 
-#: src/mmex.cpp:772
-#: src/mmex.cpp:804
-#: src/mmex.cpp:836
-#: src/mmex.cpp:867
-#: src/mmex.cpp:899
+#: src/mmex.cpp:784
+#: src/mmex.cpp:816
+#: src/mmex.cpp:848
+#: src/mmex.cpp:879
+#: src/mmex.cpp:911
 msgid "Current Year"
 msgstr "Anul Curent"
 
-#: src/mmex.cpp:779
-#: src/mmex.cpp:1321
-#: src/mmex.cpp:1341
-#: src/mmex.cpp:1354
-#: src/mmex.cpp:1367
-#: src/mmex.cpp:1384
-#: src/mmex.cpp:1401
+#: src/mmex.cpp:791
+#: src/mmex.cpp:1353
+#: src/mmex.cpp:1373
+#: src/mmex.cpp:1386
+#: src/mmex.cpp:1399
+#: src/mmex.cpp:1416
+#: src/mmex.cpp:1433
 msgid "Where the Money Comes From"
 msgstr "De Unde Vin Banii Mei"
 
-#: src/mmex.cpp:842
+#: src/mmex.cpp:854
 msgid "To Whom the Money Goes"
 msgstr "La cine merg banii"
 
-#: src/mmex.cpp:874
+#: src/mmex.cpp:886
 msgid "Income vs Expenses"
 msgstr "Venituri vs. Cheltuieli"
 
-#: src/mmex.cpp:904
+#: src/mmex.cpp:916
 msgid "Income vs Expenses - All Time"
 msgstr "Venituri vs. Cheltuieli - Intotdeauna"
 
-#: src/mmex.cpp:910
+#: src/mmex.cpp:922
 msgid "Transaction Report"
 msgstr "Raportul tranzacţiei"
 
-#: src/mmex.cpp:918
+#: src/mmex.cpp:930
 msgid "Budget Performance"
 msgstr "Performanţă bugetară"
 
-#: src/mmex.cpp:927
+#: src/mmex.cpp:939
 #, fuzzy
 msgid "Budget Setup and Performance"
 msgstr "Performanţă bugetară"
 
-#: src/mmex.cpp:933
-#: src/mmex.cpp:2779
+#: src/mmex.cpp:945
+#: src/mmex.cpp:2825
 msgid "Cash Flow"
 msgstr "Flux de numerar"
 
-#: src/mmex.cpp:938
+#: src/mmex.cpp:950
 msgid "Cash Flow - Specific Accounts"
 msgstr "Flux de numerar - Conturi specifice"
 
-#: src/mmex.cpp:944
+#: src/mmex.cpp:956
 msgid "Transaction Statistics"
 msgstr "Statistici ale tranzacţiilor"
 
-#: src/mmex.cpp:950
+#: src/mmex.cpp:962
 msgid "Custom SQL Report"
 msgstr "Raport SQL obişnuit"
 
-#: src/mmex.cpp:955
+#: src/mmex.cpp:967
 msgid "Help"
 msgstr "Ajutor"
 
-#: src/mmex.cpp:1033
-#: src/mmex.cpp:1106
+#: src/mmex.cpp:1051
+#: src/mmex.cpp:1138
 msgid "Top Categories Last 30 Days"
 msgstr "Top categorii pe ultimele 30 zile"
 
-#: src/mmex.cpp:1786
-#: src/mmex.cpp:3302
+#: src/mmex.cpp:1818
+#: src/mmex.cpp:3355
 msgid "Do you really want to delete the account?"
 msgstr "Sigur doreşti ştergerea contului?"
 
-#: src/mmex.cpp:1787
-#: src/mmex.cpp:3303
+#: src/mmex.cpp:1819
+#: src/mmex.cpp:3356
 msgid "Confirm Account Deletion"
 msgstr "Confirmă ştergerea contului"
 
-#: src/mmex.cpp:1832
+#: src/mmex.cpp:1864
 msgid "&Go To.."
 msgstr "&Mergi la..."
 
-#: src/mmex.cpp:1833
-#: src/mmex.cpp:1842
+#: src/mmex.cpp:1865
+#: src/mmex.cpp:1874
+#: src/mmex.cpp:2099
 msgid "&Edit Account"
 msgstr "&Modifică cont"
 
-#: src/mmex.cpp:1834
-#: src/mmex.cpp:1843
+#: src/mmex.cpp:1866
+#: src/mmex.cpp:1875
+#: src/mmex.cpp:2105
 msgid "&Delete Account"
 msgstr "&Şterge cont"
 
-#: src/mmex.cpp:1836
-#: src/mmex.cpp:1845
+#: src/mmex.cpp:1868
+#: src/mmex.cpp:1877
 msgid "&Launch Account Website"
 msgstr "&Lansează Site-ul contului"
 
-#: src/mmex.cpp:1979
+#: src/mmex.cpp:2011
 msgid "&New Database\tCtrl-N"
 msgstr "&Bază de date nouă\tCtrl-N"
 
-#: src/mmex.cpp:1980
-#: src/mmex.cpp:2227
+#: src/mmex.cpp:2012
+#: src/mmex.cpp:2259
 msgid "New Database"
 msgstr "Bază de date nouă"
 
-#: src/mmex.cpp:1984
+#: src/mmex.cpp:2016
 msgid "&Open Database\tCtrl-O"
 msgstr "&Deschide Baza de date\tCtrl-O"
 
-#: src/mmex.cpp:1985
-#: src/mmex.cpp:2229
+#: src/mmex.cpp:2017
+#: src/mmex.cpp:2261
 msgid "Open Database"
 msgstr "Deschide Baza de date"
 
-#: src/mmex.cpp:1992
+#: src/mmex.cpp:2024
 msgid "Save Database &As"
 msgstr "Salvează Baza de date &ca"
 
-#: src/mmex.cpp:1993
+#: src/mmex.cpp:2025
 msgid "Save Database As"
 msgstr "Salvează baza de date ca"
 
-#: src/mmex.cpp:2000
+#: src/mmex.cpp:2032
 msgid "&CSV Files"
 msgstr "&Fişiere CSV"
 
-#: src/mmex.cpp:2000
+#: src/mmex.cpp:2032
 msgid "Export to CSV"
 msgstr "Exportă în CSV"
 
-#: src/mmex.cpp:2001
+#: src/mmex.cpp:2033
 msgid "&Report to HTML"
 msgstr "&Raport HTML"
 
-#: src/mmex.cpp:2001
+#: src/mmex.cpp:2033
 msgid "Export to HTML"
 msgstr "Exportă în HTML"
 
-#: src/mmex.cpp:2002
+#: src/mmex.cpp:2034
 msgid "&Export"
 msgstr "&Exportă"
 
-#: src/mmex.cpp:2005
+#: src/mmex.cpp:2037
 msgid "&QIF Files"
 msgstr "&Fişiere QIF"
 
-#: src/mmex.cpp:2005
+#: src/mmex.cpp:2037
 msgid "Import from QIF"
 msgstr "Importă din QIF"
 
-#: src/mmex.cpp:2006
+#: src/mmex.cpp:2038
 msgid "&Universal CSV Files"
 msgstr "&Fişiere CSV universale"
 
-#: src/mmex.cpp:2006
+#: src/mmex.cpp:2038
 msgid "Import from any CSV file"
 msgstr "Importă din orice fişier CSV"
 
-#: src/mmex.cpp:2008
+#: src/mmex.cpp:2040
 msgid "&MMEX CSV Files"
 msgstr "&Fişiere CSV MMEX"
 
-#: src/mmex.cpp:2008
+#: src/mmex.cpp:2040
 msgid "Import from MMEX CSV"
 msgstr "Importă din CSV MMEX"
 
-#: src/mmex.cpp:2010
-msgid "&MM.NET CSV Files"
+#: src/mmex.cpp:2042
+#, fuzzy
+msgid "MM.&NET CSV Files"
 msgstr "&Fişiere CSV MM.NET"
 
-#: src/mmex.cpp:2010
+#: src/mmex.cpp:2042
 msgid "Import from MM.NET CSV"
 msgstr "Importă din CSV MM:NET"
 
-#: src/mmex.cpp:2012
-msgid "Import"
+#: src/mmex.cpp:2044
+#, fuzzy
+msgid "&Import"
 msgstr "Importare"
 
-#: src/mmex.cpp:2018
-msgid "Page Setup..."
+#: src/mmex.cpp:2050
+#, fuzzy
+msgid "Page Set&up..."
 msgstr "Iniţializare pagină..."
 
-#: src/mmex.cpp:2018
+#: src/mmex.cpp:2050
 msgid "Setup page printing options"
 msgstr "Setarea opţiunilor pentru imprimarea paginii"
 
-#: src/mmex.cpp:2024
-#: src/mmex.cpp:2030
-msgid "Current View"
+#: src/mmex.cpp:2056
+#: src/mmex.cpp:2062
+#, fuzzy
+msgid "Current &View"
 msgstr "Vizualizare curentă"
 
-#: src/mmex.cpp:2024
+#: src/mmex.cpp:2056
 msgid "Preview current report"
 msgstr "Previzualizare raport curent"
 
-#: src/mmex.cpp:2026
-msgid "Print Preview..."
+#: src/mmex.cpp:2058
+#, fuzzy
+msgid "Print Pre&view..."
 msgstr "Previzualizare imprimare..."
 
-#: src/mmex.cpp:2030
+#: src/mmex.cpp:2062
 msgid "Print current report"
 msgstr "Imprimă raport curent"
 
-#: src/mmex.cpp:2033
-msgid "Print..."
+#: src/mmex.cpp:2065
+#, fuzzy
+msgid "&Print..."
 msgstr "Imprimare..."
 
-#: src/mmex.cpp:2038
+#: src/mmex.cpp:2070
 msgid "E&xit\tAlt-X"
 msgstr "E&xit\tAlt-X"
 
-#: src/mmex.cpp:2038
+#: src/mmex.cpp:2070
 msgid "Quit this program"
 msgstr "Părăseşte acest program"
 
-#: src/mmex.cpp:2045
+#: src/mmex.cpp:2077
 msgid "&Toolbar"
 msgstr "&Bară de intrumente"
 
-#: src/mmex.cpp:2045
+#: src/mmex.cpp:2077
 msgid "Show/Hide the toolbar"
 msgstr "Arată/Ascunde bara de instrumente"
 
-#: src/mmex.cpp:2047
+#: src/mmex.cpp:2079
+#, fuzzy
+msgid "&Navigation"
+msgstr "Navigare"
+
+#: src/mmex.cpp:2079
 msgid "Show/Hide the Navigation tree control"
 msgstr "Arată/Ascunde controlul arborelui de navigare"
 
-#: src/mmex.cpp:2057
+#: src/mmex.cpp:2089
 msgid "New &Account"
 msgstr "Cont &Nou"
 
-#: src/mmex.cpp:2057
-#: src/mmex.cpp:2233
+#: src/mmex.cpp:2089
+#: src/mmex.cpp:2265
 msgid "New Account"
 msgstr "Cont Nou"
 
-#: src/mmex.cpp:2063
+#: src/mmex.cpp:2095
 msgid "Account &List"
 msgstr "&Listă  Conturi"
 
-#: src/mmex.cpp:2063
-#: src/mmex.cpp:2235
+#: src/mmex.cpp:2095
+#: src/mmex.cpp:2267
 msgid "Show Account List"
 msgstr "Arată Lista Conturilor"
 
-#: src/mmex.cpp:2067
+#: src/mmex.cpp:2099
 msgid "Edit Account"
 msgstr "Modifică Cont"
 
-#: src/mmex.cpp:2073
-msgid "Delete Account"
-msgstr "Şterge Cont"
-
-#: src/mmex.cpp:2073
+#: src/mmex.cpp:2105
 msgid "Delete Account from database"
 msgstr "Şterge contul din baza de date"
 
-#: src/mmex.cpp:2085
+#: src/mmex.cpp:2117
 msgid "Organize &Categories"
 msgstr "Organizează  &Categoriile"
 
-#: src/mmex.cpp:2085
-#: src/mmex.cpp:2237
+#: src/mmex.cpp:2117
+#: src/mmex.cpp:2269
 msgid "Organize Categories"
 msgstr "Organizează categoriile"
 
-#: src/mmex.cpp:2090
+#: src/mmex.cpp:2122
 msgid "Organize &Payees"
 msgstr "Organizează  &Beneficiarii"
 
-#: src/mmex.cpp:2090
-#: src/mmex.cpp:2238
+#: src/mmex.cpp:2122
+#: src/mmex.cpp:2270
 msgid "Organize Payees"
 msgstr "Organizează beneficiarii"
 
-#: src/mmex.cpp:2095
-#: src/mmex.cpp:2239
+#: src/mmex.cpp:2127
+#, fuzzy
+msgid "Or&ganize Currency"
+msgstr "Organizează Monedele"
+
+#: src/mmex.cpp:2127
+#: src/mmex.cpp:2271
 msgid "Organize Currency"
 msgstr "Organizează Monedele"
 
-#: src/mmex.cpp:2102
+#: src/mmex.cpp:2134
+#, fuzzy
+msgid "&Budget Setup"
+msgstr "Setare buget"
+
+#: src/mmex.cpp:2134
 msgid "Budget Setup"
 msgstr "Setare buget"
 
-#: src/mmex.cpp:2110
+#: src/mmex.cpp:2142
+#, fuzzy
+msgid "&Repeating Transactions"
+msgstr "Tranzacţii Repetitive"
+
+#: src/mmex.cpp:2142
 msgid "Bills && Deposits"
 msgstr "Facturi  && Depozite"
 
-#: src/mmex.cpp:2118
+#: src/mmex.cpp:2150
+#, fuzzy
+msgid "&Stock Investments"
+msgstr "Stocuri investiţii"
+
+#: src/mmex.cpp:2150
 msgid "Stock Investments"
 msgstr "Stocuri investiţii"
 
-#: src/mmex.cpp:2134
+#: src/mmex.cpp:2158
+#, fuzzy
+msgid "&Assets"
+msgstr "Bunuri"
+
+#: src/mmex.cpp:2166
+#, fuzzy
+msgid "&Transaction Filter"
+msgstr "Filtrarea tranzacţiilor"
+
+#: src/mmex.cpp:2166
 msgid "Transaction Filter"
 msgstr "Filtrarea tranzacţiilor"
 
-#: src/mmex.cpp:2141
+#: src/mmex.cpp:2173
 msgid "&Options"
 msgstr "&Opţiuni"
 
-#: src/mmex.cpp:2141
+#: src/mmex.cpp:2173
 msgid "Show the Options Dialog"
 msgstr "Arată Fereastra cu Opţiuni"
 
-#: src/mmex.cpp:2148
+#: src/mmex.cpp:2180
 msgid "&Help\tCtrl-F1"
 msgstr "&Ajutor\tCtrl-F1"
 
-#: src/mmex.cpp:2148
+#: src/mmex.cpp:2180
 msgid "Show the Help file"
 msgstr "Arată fişierul ajutor"
 
-#: src/mmex.cpp:2153
-msgid "Show App Start Dialog"
+#: src/mmex.cpp:2185
+#, fuzzy
+msgid "&Show App Start Dialog"
 msgstr "Arată Fereastra de start a aplicaţiei"
 
-#: src/mmex.cpp:2153
+#: src/mmex.cpp:2185
 msgid "App Start Dialog"
 msgstr "Fereastra de start a aplicaţiei"
 
-#: src/mmex.cpp:2160
-msgid "Convert Encrypted DB"
+#: src/mmex.cpp:2192
+msgid "Convert Encrypted &DB"
 msgstr ""
 
-#: src/mmex.cpp:2161
+#: src/mmex.cpp:2193
 msgid "Convert Encrypted DB to Non-Encrypted DB"
 msgstr ""
 
-#: src/mmex.cpp:2168
+#: src/mmex.cpp:2199
+#, fuzzy
+msgid "Online &Update Currency Rate"
+msgstr "Moneda de bază nu a fost selectată"
+
+#: src/mmex.cpp:2200
 msgid "Online update currency rate"
 msgstr ""
 
-#: src/mmex.cpp:2176
+#: src/mmex.cpp:2208
 msgid "Check for &Updates"
 msgstr "Verifică "
 
-#: src/mmex.cpp:2176
+#: src/mmex.cpp:2208
 msgid "Check For Updates"
 msgstr "Caută Actualizari"
 
-#: src/mmex.cpp:2184
-msgid "Report Issues or Feedback"
+#: src/mmex.cpp:2216
+#, fuzzy
+msgid "&Report Issues or Feedback"
 msgstr "Raportează problemele sau Feedback"
 
-#: src/mmex.cpp:2184
+#: src/mmex.cpp:2216
 msgid "Send email through the mailing list to report issues with the software."
 msgstr "Trimite mail cu ajutorul listei de mailuri pentru a raporta o problemă a software-ului."
 
-#: src/mmex.cpp:2192
-msgid "Be notified of new releases"
+#: src/mmex.cpp:2224
+#, fuzzy
+msgid "Be &notified of new releases"
 msgstr "Notificare în cazul de versiuni noi"
 
-#: src/mmex.cpp:2192
+#: src/mmex.cpp:2224
 msgid "Sign up for the announcement mailing list"
 msgstr "Înscrieţi-vă la lista de discuţii"
 
-#: src/mmex.cpp:2198
+#: src/mmex.cpp:2230
 msgid "&About..."
 msgstr "&Despre..."
 
-#: src/mmex.cpp:2198
+#: src/mmex.cpp:2230
 msgid "Show about dialog"
 msgstr "Arată fereastra Despre"
 
-#: src/mmex.cpp:2203
+#: src/mmex.cpp:2235
 msgid "&File"
 msgstr "&Fişier"
 
-#: src/mmex.cpp:2204
+#: src/mmex.cpp:2236
 msgid "&Accounts"
 msgstr "&Cont"
 
-#: src/mmex.cpp:2206
+#: src/mmex.cpp:2237
+msgid "&Tools"
+msgstr "&Instrumente"
+
+#: src/mmex.cpp:2238
 msgid "&View"
 msgstr "&Vizualizare"
 
-#: src/mmex.cpp:2207
+#: src/mmex.cpp:2239
 msgid "&Help"
 msgstr "&Ajutor"
 
-#: src/mmex.cpp:2228
+#: src/mmex.cpp:2258
+msgid "New"
+msgstr "Nou"
+
+#: src/mmex.cpp:2260
 msgid "Open"
 msgstr "Deschide"
 
-#: src/mmex.cpp:2235
+#: src/mmex.cpp:2267
 msgid "Account List"
 msgstr "Listă Conturi"
 
-#: src/mmex.cpp:2237
+#: src/mmex.cpp:2269
 msgid "Show Organize Categories Dialog"
 msgstr "Arată fereastra de organizare a categoriilor"
 
-#: src/mmex.cpp:2238
+#: src/mmex.cpp:2270
 msgid "Show Organize Payees Dialog"
 msgstr "Arată fereastra de organizare a beneficiarilor"
 
-#: src/mmex.cpp:2239
+#: src/mmex.cpp:2271
 msgid "Show Organize Currency Dialog"
 msgstr "Arată fereastra de organizare a monedelor"
 
-#: src/mmex.cpp:2264
-#: src/mmex.cpp:2455
+#: src/mmex.cpp:2295
+#: src/mmex.cpp:2488
 msgid "Money Manager Ex: Enter Password For Database.."
 msgstr ""
 
-#: src/mmex.cpp:2288
-#: src/mmex.cpp:2342
+#: src/mmex.cpp:2319
+#: src/mmex.cpp:2373
 msgid " - No File opened "
 msgstr "- Nici un fişier deschis"
 
-#: src/mmex.cpp:2291
+#: src/mmex.cpp:2322
 #, fuzzy
 msgid "Sorry. The Database version is too old or Database password is incorrect"
 msgstr "Scuze. Versiunea bazei de date este prea veche sau                 Parola bazei de date este incorectă"
 
-#: src/mmex.cpp:2292
-#: src/mmex.cpp:2346
+#: src/mmex.cpp:2323
+#: src/mmex.cpp:2377
 msgid "Error opening database"
 msgstr "Eroare la deschiderea bazei de date"
 
-#: src/mmex.cpp:2345
+#: src/mmex.cpp:2376
 #, fuzzy
 msgid ""
 "Cannot locate previously opened database.\n"
@@ -1860,140 +2138,140 @@ msgstr ""
 "Nu se poate localiza o bază de date .mmb deschisă anterior.\n"
 "Doreşti să încerci să găseşti fişierul?"
 
-#: src/mmex.cpp:2365
+#: src/mmex.cpp:2396
 msgid "Opening Database File && Verifying Integrity"
 msgstr "Deschidere Fişierul bazei de date && verificare integritate"
 
-#: src/mmex.cpp:2451
+#: src/mmex.cpp:2484
 #, fuzzy
 msgid "Choose Encrypted database file to open"
 msgstr "Alege importarea fişierelor QIF"
 
-#: src/mmex.cpp:2475
+#: src/mmex.cpp:2510
 msgid "Converted DB!"
 msgstr ""
 
-#: src/mmex.cpp:2476
+#: src/mmex.cpp:2511
 msgid "MMEX message"
 msgstr ""
 
-#: src/mmex.cpp:2481
+#: src/mmex.cpp:2516
 msgid "Unable to convert db successfully. Check Password!"
 msgstr ""
 
-#: src/mmex.cpp:2562
-#: src/mmex.cpp:2638
+#: src/mmex.cpp:2602
+#: src/mmex.cpp:2685
 msgid "No Account available! Cannot Import! Create a new account first!"
 msgstr "Nici un cont nu este disponibil! Nu se poate face importarea! Crează un cont nou întâi!"
 
-#: src/mmex.cpp:2581
+#: src/mmex.cpp:2628
 msgid "Choose Account to import to:"
 msgstr "Alege contul unde vrei să se facă importul:"
 
-#: src/mmex.cpp:2582
+#: src/mmex.cpp:2629
 msgid "QFX Import"
 msgstr "Import QFX"
 
-#: src/mmex.cpp:2778
+#: src/mmex.cpp:2824
 msgid "Choose Accounts"
 msgstr "Alege cont"
 
-#: src/mmex.cpp:2834
-#: src/mmex.cpp:2922
+#: src/mmex.cpp:2884
+#: src/mmex.cpp:2972
 msgid "Unable to connect!"
 msgstr "Nu s-a putut face conectarea!"
 
-#: src/mmex.cpp:2834
-#: src/mmex.cpp:2892
-#: src/mmex.cpp:2898
+#: src/mmex.cpp:2884
+#: src/mmex.cpp:2942
+#: src/mmex.cpp:2948
 msgid "Check Update"
 msgstr "Caută Noutăţi"
 
-#: src/mmex.cpp:2892
+#: src/mmex.cpp:2942
 msgid "New update available!"
 msgstr "Sunt disponibile actualizări noi!"
 
-#: src/mmex.cpp:2898
+#: src/mmex.cpp:2948
 msgid "You have the latest version installed!"
 msgstr "Ai instalat cea mai nouă versiune!"
 
-#: src/mmex.cpp:2913
+#: src/mmex.cpp:2963
 #, fuzzy
 msgid "No database!"
 msgstr "Bază de date nouă"
 
-#: src/mmex.cpp:2913
-#: src/mmex.cpp:2922
-#: src/mmex.cpp:2929
-#: src/mmex.cpp:2935
-#: src/mmex.cpp:2944
-#: src/mmex.cpp:2951
-#: src/mmex.cpp:2956
-#: src/mmex.cpp:2961
-#: src/mmex.cpp:2968
-#: src/mmex.cpp:2973
-#: src/mmex.cpp:3016
-#: src/mmex.cpp:3043
+#: src/mmex.cpp:2963
+#: src/mmex.cpp:2972
+#: src/mmex.cpp:2979
+#: src/mmex.cpp:2985
+#: src/mmex.cpp:2994
+#: src/mmex.cpp:3001
+#: src/mmex.cpp:3006
+#: src/mmex.cpp:3011
+#: src/mmex.cpp:3018
+#: src/mmex.cpp:3023
+#: src/mmex.cpp:3066
+#: src/mmex.cpp:3093
 #, fuzzy
 msgid "Update Currency Rate"
 msgstr "Moneda de bază nu a fost selectată"
 
-#: src/mmex.cpp:2929
+#: src/mmex.cpp:2979
 msgid "Cannot get data from WWW!"
 msgstr ""
 
-#: src/mmex.cpp:2935
+#: src/mmex.cpp:2985
 msgid "Incorrect XML data (#1)!"
 msgstr ""
 
-#: src/mmex.cpp:2944
+#: src/mmex.cpp:2994
 msgid "Incorrect XML data (#2)!"
 msgstr ""
 
-#: src/mmex.cpp:2951
+#: src/mmex.cpp:3001
 msgid "Incorrect XML data (#3)!"
 msgstr ""
 
-#: src/mmex.cpp:2956
+#: src/mmex.cpp:3006
 msgid "Incorrect XML data (#4)!"
 msgstr ""
 
-#: src/mmex.cpp:2961
+#: src/mmex.cpp:3011
 msgid "Incorrect XML data (#5)!"
 msgstr ""
 
-#: src/mmex.cpp:2968
+#: src/mmex.cpp:3018
 msgid "Incorrect XML data (#6)!"
 msgstr ""
 
-#: src/mmex.cpp:2973
+#: src/mmex.cpp:3023
 msgid "Incorrect XML data (#7)!"
 msgstr ""
 
-#: src/mmex.cpp:3016
+#: src/mmex.cpp:3066
 msgid "Could not find base currency symbol!"
 msgstr ""
 
-#: src/mmex.cpp:3043
+#: src/mmex.cpp:3093
 #, fuzzy
 msgid "Currency rate updated"
 msgstr "Manager monede"
 
-#: src/mmex.cpp:3239
-#: src/mmex.cpp:3280
+#: src/mmex.cpp:3292
+#: src/mmex.cpp:3333
 msgid "No Account available!"
 msgstr "Nici un cont disponibil!"
 
-#: src/mmex.cpp:3253
+#: src/mmex.cpp:3306
 msgid "Choose Account to Edit"
 msgstr "Alege contul pentru modificare"
 
-#: src/mmex.cpp:3254
-#: src/mmex.cpp:3295
+#: src/mmex.cpp:3307
+#: src/mmex.cpp:3348
 msgid "Accounts"
 msgstr "Conturi"
 
-#: src/mmex.cpp:3294
+#: src/mmex.cpp:3347
 msgid "Choose Account to Delete"
 msgstr "Alege contul pentru ştergere"
 
@@ -2001,35 +2279,41 @@ msgstr "Alege contul pentru ştergere"
 msgid " Help"
 msgstr "Ajutor"
 
-#: src/mmhomepagepanel.cpp:97
+#: src/mmhomepagepanel.cpp:124
 msgid "Today's Date: "
 msgstr "Data de azi:"
 
-#: src/mmhomepagepanel.cpp:110
+#: src/mmhomepagepanel.cpp:137
+#: src/mmhomepagepanel.cpp:260
 msgid "Summary"
 msgstr "Sumar"
 
-#: src/mmhomepagepanel.cpp:199
+#: src/mmhomepagepanel.cpp:259
+#: src/newacctdialog.cpp:343
+msgid "Currency"
+msgstr "Monedă"
+
+#: src/mmhomepagepanel.cpp:282
 msgid "Total of Accounts:"
 msgstr "Total în Conturi:"
 
-#: src/mmhomepagepanel.cpp:220
+#: src/mmhomepagepanel.cpp:303
 msgid "Income vs Expenses: Current Month"
 msgstr "Venit vs Cheltuieli: Luna curentă"
 
-#: src/mmhomepagepanel.cpp:370
+#: src/mmhomepagepanel.cpp:451
 msgid "Upcoming Transactions"
 msgstr "Tranzacţiile următoare"
 
-#: src/mmhomepagepanel.cpp:428
+#: src/mmhomepagepanel.cpp:510
 msgid "Follow Up On "
 msgstr "Urmează după"
 
-#: src/mmhomepagepanel.cpp:432
+#: src/mmhomepagepanel.cpp:514
 msgid "Transactions"
 msgstr "Tranzacţii"
 
-#: src/mmhomepagepanel.cpp:437
+#: src/mmhomepagepanel.cpp:519
 msgid "Total Transactions"
 msgstr "Tranzacţii în total"
 
@@ -2037,416 +2321,435 @@ msgstr "Tranzacţii în total"
 msgid "REPORTS"
 msgstr "RAPOARTE"
 
-#: src/newacctdialog.cpp:146
+#: src/newacctdialog.cpp:153
 msgid "Account Name:"
 msgstr "Numele contului:"
 
-#: src/newacctdialog.cpp:153
+#: src/newacctdialog.cpp:160
 msgid "Enter the Name of the Account. This name can be renamed at any time."
 msgstr "Introdu numele contului. Acest nume poate fi schimbat oricând."
 
-#: src/newacctdialog.cpp:156
+#: src/newacctdialog.cpp:163
 msgid "Account Type:"
 msgstr "Tipul contului:"
 
-#: src/newacctdialog.cpp:162
+#: src/newacctdialog.cpp:169
 msgid "Checking"
 msgstr "Verificare"
 
-#: src/newacctdialog.cpp:163
+#: src/newacctdialog.cpp:170
 msgid "Investment"
 msgstr "Investiţie"
 
-#: src/newacctdialog.cpp:169
+#: src/newacctdialog.cpp:176
 msgid "Specify the type of account to be created."
 msgstr "Specifică tipul contului ce va fi creat."
 
-#: src/newacctdialog.cpp:171
+#: src/newacctdialog.cpp:178
 msgid "Account Number:"
 msgstr "Numărul contului:"
 
-#: src/newacctdialog.cpp:180
+#: src/newacctdialog.cpp:187
 msgid "Enter the Account Number associated with this account."
 msgstr "Introdu numărul contului ce va fi asociat cu acest cont."
 
-#: src/newacctdialog.cpp:183
+#: src/newacctdialog.cpp:190
 msgid "Held At:"
 msgstr "Ţinut la:"
 
-#: src/newacctdialog.cpp:191
+#: src/newacctdialog.cpp:198
 msgid "Enter the name of the financial institution in which the account is held."
 msgstr "Introdu numele instituţiei financiare ce deţine contul."
 
-#: src/newacctdialog.cpp:193
+#: src/newacctdialog.cpp:200
 msgid "Website:"
 msgstr "Site:"
 
-#: src/newacctdialog.cpp:201
+#: src/newacctdialog.cpp:208
 msgid "Enter the URL of the website for the financial institution."
 msgstr "Introdu URL-ul site-ului instituţiei financiare."
 
-#: src/newacctdialog.cpp:204
+#: src/newacctdialog.cpp:211
 msgid "Contact:"
 msgstr "Contact:"
 
-#: src/newacctdialog.cpp:211
+#: src/newacctdialog.cpp:218
 msgid "Enter any contact information for the financial institution."
 msgstr "Introdu orice informaţie de contact pentru instituţia financiară."
 
-#: src/newacctdialog.cpp:214
+#: src/newacctdialog.cpp:221
 msgid "Access Info:"
 msgstr "Informaţii de acces:"
 
-#: src/newacctdialog.cpp:221
+#: src/newacctdialog.cpp:228
 msgid "Enter any login/access information for the financial institution. This is not secure as anyone with access to the mmb file can access it."
 msgstr "Introdu orice informaţie de logare/acces pentru instituţia financiară. Acest lucru nu e sigur din moment ce oricine are acces la fişierul mmb."
 
-#: src/newacctdialog.cpp:223
+#: src/newacctdialog.cpp:230
 msgid "Account Status:"
 msgstr "Statusul contului:"
 
-#: src/newacctdialog.cpp:230
+#: src/newacctdialog.cpp:237
 msgid "Closed"
 msgstr "Închis"
 
-#: src/newacctdialog.cpp:237
+#: src/newacctdialog.cpp:244
 msgid "Specify if this account has been closed. Closed accounts are inactive in most calculations, reporting etc."
 msgstr "Specificaţi dacă acest cont a fost inchis. Conturile închise sunt inactive în majoritatea calculelor, rapoartelor etc."
 
-#: src/newacctdialog.cpp:240
+#: src/newacctdialog.cpp:247
 msgid "Initial Balance:"
 msgstr "Balanţă iniţială:"
 
-#: src/newacctdialog.cpp:248
+#: src/newacctdialog.cpp:255
 msgid "Enter the initial balance in this account."
 msgstr "Introdu balanţa iniţială în cont."
 
-#: src/newacctdialog.cpp:251
+#: src/newacctdialog.cpp:258
 msgid "Currency:"
 msgstr "Moneda:"
 
-#: src/newacctdialog.cpp:256
+#: src/newacctdialog.cpp:263
 msgid "Select Currency"
 msgstr "Selectează moneda"
 
-#: src/newacctdialog.cpp:266
+#: src/newacctdialog.cpp:273
 msgid "Specify the currency to be used by this account."
 msgstr "Specifică moneda ce va fi folosită de acest cont."
 
-#: src/newacctdialog.cpp:269
+#: src/newacctdialog.cpp:276
 msgid "Notes:"
 msgstr "Note:"
 
-#: src/newacctdialog.cpp:276
+#: src/newacctdialog.cpp:283
 msgid "Enter user notes and details about this account."
 msgstr "Introdu notele si detaliile utilizatorului despre acest cont."
 
-#: src/newacctdialog.cpp:281
+#: src/newacctdialog.cpp:288
 msgid "Favorite Account"
 msgstr "Cont favorit"
 
-#: src/newacctdialog.cpp:285
+#: src/newacctdialog.cpp:292
 msgid "Select whether this is an account that is used often. This is used to filter accounts display view."
 msgstr "Selectează dacă acest cont este un cont folosit des. Acest lucru va fi folosit în filtrarea conturilor ce vor fi afişate."
 
-#: src/newacctdialog.cpp:323
+#: src/newacctdialog.cpp:330
 msgid "Account Name "
 msgstr "Numele contului"
 
-#: src/newacctdialog.cpp:330
+#: src/newacctdialog.cpp:337
 msgid "Account Name already exists"
 msgstr "Numele contului deja există"
 
-#: src/newacctdialog.cpp:336
-msgid "Currency"
-msgstr "Monedă"
-
-#: src/newacctdialog.cpp:389
+#: src/newacctdialog.cpp:396
 msgid "Init Balance "
 msgstr "Balanţă iniţială"
 
-#: src/optionsdialog.cpp:241
+#: src/optionsdialog.cpp:271
 msgid " : Restart"
 msgstr ":Resetare"
 
-#: src/optionsdialog.cpp:313
+#: src/optionsdialog.cpp:345
 msgid "General Settings"
 msgstr "Setări generale"
 
-#: src/optionsdialog.cpp:319
+#: src/optionsdialog.cpp:351
 msgid "Base Currency"
 msgstr "Moneda de bază"
 
-#: src/optionsdialog.cpp:324
+#: src/optionsdialog.cpp:356
 msgid "Set Currency"
 msgstr "Setează moneda"
 
-#: src/optionsdialog.cpp:335
+#: src/optionsdialog.cpp:367
 msgid "View Settings"
 msgstr "Vizualizare setări"
 
-#: src/optionsdialog.cpp:341
+#: src/optionsdialog.cpp:373
 msgid "Date Format"
 msgstr "Formatul datei"
 
-#: src/optionsdialog.cpp:368
+#: src/optionsdialog.cpp:404
 msgid "Specify the date format for display"
 msgstr "Specifică formatul datei pentru afişare"
 
-#: src/optionsdialog.cpp:373
+#: src/optionsdialog.cpp:409
 msgid "Set"
 msgstr "Setează"
 
-#: src/optionsdialog.cpp:377
+#: src/optionsdialog.cpp:413
 msgid "Sample Date"
 msgstr "Exemplu dată"
 
-#: src/optionsdialog.cpp:385
+#: src/optionsdialog.cpp:421
 msgid "Import/Export Settings"
 msgstr "Importă/Exportă setări"
 
-#: src/optionsdialog.cpp:391
+#: src/optionsdialog.cpp:427
 msgid "CSV Delimiter"
 msgstr "Delimitare CSV"
 
-#: src/optionsdialog.cpp:398
+#: src/optionsdialog.cpp:434
 msgid "Specify the delimiter to use when importing/exporting CSV files"
 msgstr "Specifică delimitarea în importarea/exportarea fişierelor CSV"
 
-#: src/optionsdialog.cpp:403
+#: src/optionsdialog.cpp:439
 msgid "Display"
 msgstr "Afişare"
 
-#: src/optionsdialog.cpp:409
+#: src/optionsdialog.cpp:445
 msgid "User Name"
 msgstr "Nume utilizator"
 
-#: src/optionsdialog.cpp:416
+#: src/optionsdialog.cpp:452
 msgid "Specify the User Name"
 msgstr "Specifică numele utilizatorului"
 
-#: src/optionsdialog.cpp:421
-#: src/optionsdialog.cpp:427
+#: src/optionsdialog.cpp:457
+#: src/optionsdialog.cpp:463
 msgid "Language"
 msgstr "Limba"
 
-#: src/optionsdialog.cpp:436
+#: src/optionsdialog.cpp:472
 msgid "Specify the language to use"
 msgstr "Specifică limba ce va fi folosită"
 
-#: src/optionsdialog.cpp:446
+#: src/optionsdialog.cpp:482
 msgid "Account View Options"
 msgstr "Opţiunile de vizualizare a contului"
 
-#: src/optionsdialog.cpp:452
+#: src/optionsdialog.cpp:488
 msgid "Accounts Visible"
 msgstr "Conturi Vizibile"
 
-#: src/optionsdialog.cpp:458
+#: src/optionsdialog.cpp:494
 msgid "All"
 msgstr "Toate"
 
-#: src/optionsdialog.cpp:460
+#: src/optionsdialog.cpp:496
 msgid "Favorites"
 msgstr "Favorite"
 
-#: src/optionsdialog.cpp:477
+#: src/optionsdialog.cpp:513
 msgid "Specify which accounts are visible"
 msgstr "Specifică conturile vizibile"
 
-#: src/optionsdialog.cpp:482
+#: src/optionsdialog.cpp:518
 msgid "Transaction View Options"
 msgstr "Opţiunile de vizualizare a tranzacţiilor"
 
-#: src/optionsdialog.cpp:488
+#: src/optionsdialog.cpp:524
 msgid "Transactions Visible"
 msgstr "Tranzacţii vizibile"
 
-#: src/optionsdialog.cpp:495
+#: src/optionsdialog.cpp:531
 msgid "View Reconciled"
 msgstr "Vizuaşizează reconciliate"
 
-#: src/optionsdialog.cpp:496
+#: src/optionsdialog.cpp:532
 msgid "View UnReconciled"
 msgstr "Vizualizează nereconcilliate"
 
-#: src/optionsdialog.cpp:497
+#: src/optionsdialog.cpp:533
+#, fuzzy
+msgid "View Today"
+msgstr "Vizualizează 30 zile"
+
+#: src/optionsdialog.cpp:534
 msgid "View 30 days"
 msgstr "Vizualizează 30 zile"
 
-#: src/optionsdialog.cpp:498
+#: src/optionsdialog.cpp:535
 msgid "View 90 days"
 msgstr "Vizualizează 90 zile"
 
-#: src/optionsdialog.cpp:499
+#: src/optionsdialog.cpp:536
 msgid "View Last Month"
 msgstr "Vizualizează luna trecută"
 
-#: src/optionsdialog.cpp:500
+#: src/optionsdialog.cpp:537
 msgid "View Current Month"
 msgstr "Vizualizează luna curentă"
 
-#: src/optionsdialog.cpp:526
+#: src/optionsdialog.cpp:565
 msgid "Specify which transactions are visible by default"
 msgstr "Specifică ce tranzacţii sunt vizibile in mod implicit"
 
-#: src/optionsdialog.cpp:529
+#: src/optionsdialog.cpp:568
 msgid "Font Size Options"
 msgstr "Opţiuni pentru marimea fontului"
 
-#: src/optionsdialog.cpp:535
+#: src/optionsdialog.cpp:574
 msgid "Report Font Size"
 msgstr "Mărimea fontului pentru rapoarte"
 
-#: src/optionsdialog.cpp:574
+#: src/optionsdialog.cpp:613
 msgid "Specify which font size is used on the report tables"
 msgstr "Specifică ce mărime a fontului se va folosi pentru tabelele raportului"
 
-#: src/optionsdialog.cpp:585
+#: src/optionsdialog.cpp:624
 msgid "Restore Defaults"
 msgstr "Restabilire valori implicite"
 
-#: src/optionsdialog.cpp:588
+#: src/optionsdialog.cpp:627
 msgid "Restore Default Colors"
 msgstr "Restabilire culori implicite"
 
-#: src/optionsdialog.cpp:594
+#: src/optionsdialog.cpp:633
 msgid "Nav Tree"
 msgstr "Arborele de navigare "
 
-#: src/optionsdialog.cpp:596
+#: src/optionsdialog.cpp:635
 msgid "Specify the color for the nav tree"
 msgstr "Specifică culoarea pentru arborele de navigare"
 
-#: src/optionsdialog.cpp:600
+#: src/optionsdialog.cpp:639
 msgid "List Background"
 msgstr "Fondul listei"
 
-#: src/optionsdialog.cpp:602
+#: src/optionsdialog.cpp:641
 msgid "Specify the color for the list background"
 msgstr "Specifică culoarea pentru fondul listei"
 
-#: src/optionsdialog.cpp:606
+#: src/optionsdialog.cpp:645
 msgid "List Row 0"
 msgstr "Rândul 0 al listei"
 
-#: src/optionsdialog.cpp:608
+#: src/optionsdialog.cpp:647
 msgid "Specify the color for the list row 0"
 msgstr "Specifică culoarea pentru rândul 0 al listei"
 
-#: src/optionsdialog.cpp:612
+#: src/optionsdialog.cpp:651
 msgid "List Row 1"
 msgstr "Rândul 1 al listei"
 
-#: src/optionsdialog.cpp:614
+#: src/optionsdialog.cpp:653
 msgid "Specify the color for the list row 1"
 msgstr "Specifică culoarea pentru rândul 1 al listei"
 
-#: src/optionsdialog.cpp:618
+#: src/optionsdialog.cpp:657
 msgid "List Border"
 msgstr "Marginile listei"
 
-#: src/optionsdialog.cpp:620
+#: src/optionsdialog.cpp:659
 msgid "Specify the color for the list Border"
 msgstr "Specifică culoarea pentru marginile listei"
 
-#: src/optionsdialog.cpp:624
+#: src/optionsdialog.cpp:663
 msgid "List Details"
 msgstr "Detalii listă"
 
-#: src/optionsdialog.cpp:626
+#: src/optionsdialog.cpp:665
 msgid "Specify the color for the list details"
 msgstr "Specifică culoarea pentru detaliile listei"
 
-#: src/optionsdialog.cpp:630
+#: src/optionsdialog.cpp:669
 msgid "Future Transactions"
 msgstr "Tranzacţii viitoare"
 
-#: src/optionsdialog.cpp:632
+#: src/optionsdialog.cpp:671
 msgid "Specify the color for future transactions"
 msgstr "Specifică culoarea pentru tranzacţiile viitoare"
 
-#: src/optionsdialog.cpp:644
+#: src/optionsdialog.cpp:683
 msgid "Backup database before opening"
 msgstr "Copie de siguranţă pentru baza de date înainte de deschidere"
 
-#: src/optionsdialog.cpp:650
-msgid "Select whether to create a .bak file when opening a the database file"
+#: src/optionsdialog.cpp:689
+#, fuzzy
+msgid "Select whether to create a .bak file when opening the database file"
 msgstr "Selectează dacă vrei să fie creat un fişier .bak la deschiderea unei baze de date"
 
-#: src/optionsdialog.cpp:657
+#: src/optionsdialog.cpp:696
 msgid "Stock Quote Web Page"
 msgstr "Site-ul incidelui de stoc"
 
-#: src/optionsdialog.cpp:668
+#: src/optionsdialog.cpp:707
 msgid "Use Original Date when Pasting Transactions"
 msgstr "Foloseşte datele originale la inserarea unei tranzacţii"
 
-#: src/optionsdialog.cpp:674
+#: src/optionsdialog.cpp:713
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
 msgstr "Selectează daca se va folosi datele originale ale tranzacţiei sau datele curente la copierea/inserarea tranzacţiei"
 
-#: src/optionsdialog.cpp:679
+#: src/optionsdialog.cpp:718
 msgid "Use Transaction Sound"
 msgstr "Foloseşte sunete pentru tranzacţii"
 
-#: src/optionsdialog.cpp:685
+#: src/optionsdialog.cpp:724
 msgid "Select whether to use sounds when entering transactions"
 msgstr "Selectează dacă se vor folosi sunete la intrarea într-o tranzacţie"
 
-#: src/optionsdialog.cpp:689
+#: src/optionsdialog.cpp:728
 msgid "Enable online currency update (Get data from European Central Bank)"
 msgstr ""
 
-#: src/optionsdialog.cpp:696
+#: src/optionsdialog.cpp:735
 msgid "Enable or disable get data from European Central Bank to update currency rate"
 msgstr ""
 
-#: src/optionsdialog.cpp:702
+#: src/optionsdialog.cpp:741
 msgid "General"
 msgstr "General"
 
-#: src/optionsdialog.cpp:703
+#: src/optionsdialog.cpp:742
 msgid "View Options"
 msgstr "Vizualizare opţiuni"
 
-#: src/optionsdialog.cpp:704
+#: src/optionsdialog.cpp:743
 msgid "Colors"
 msgstr "Culori"
 
-#: src/optionsdialog.cpp:705
-msgid "Others"
-msgstr "Altele"
+#: src/optionsdialog.cpp:768
+#, fuzzy
+msgid "Remember to update currency rate"
+msgstr "Moneda de bază nu a fost selectată"
 
-#: src/payeedialog.cpp:154
+#: src/optionsdialog.cpp:768
+#, fuzzy
+msgid "Important note"
+msgstr "Importă fişier"
+
+#: src/payeedialog.cpp:170
+#, fuzzy
+msgid "Find Payee: "
+msgstr "Beneficiar"
+
+#: src/payeedialog.cpp:177
+#: src/payeedialog.cpp:203
 msgid "Enter the payee name to be added or make edits to an existing payee name"
 msgstr "Introdu numele beneficiarului ce va fi adăugat sau modifică un nume existent"
 
-#: src/payeedialog.cpp:162
+#: src/payeedialog.cpp:196
+#, fuzzy
+msgid "Add/Edit Payee: "
+msgstr "Adăugare beneficiar"
+
+#: src/payeedialog.cpp:211
 msgid "Add a new payee name"
 msgstr "Adaugă un nume de beneficiar nou"
 
-#: src/payeedialog.cpp:167
+#: src/payeedialog.cpp:216
 msgid "Change the name of an existing payee"
 msgstr "Schimbă numele unui beneficiar existent"
 
-#: src/payeedialog.cpp:172
+#: src/payeedialog.cpp:221
 msgid "Delete the selected payee. The payee cannot be used by an existing transaction."
 msgstr "Şterge beneficiarul selectat. Beneficiarul nu va putea fi folosit de o tranzacţie existentă"
 
-#: src/payeedialog.cpp:180
+#: src/payeedialog.cpp:229
 msgid "Select the currently selected payee as the selected payee for the transaction"
 msgstr "Selectează beneficiarul curent ca beneficiarul selectat pentru tranzacţie"
 
-#: src/payeedialog.cpp:190
+#: src/payeedialog.cpp:240
 msgid "Type a Payee Name in the Text Box and then press Add."
 msgstr "Scrie un nume de beneficiar în caseta text şi apăsaţi Adaugă."
 
-#: src/payeedialog.cpp:195
+#: src/payeedialog.cpp:245
 msgid "Payee with same name exists"
 msgstr "Beneficiar cu acelaşi nume există"
 
-#: src/payeedialog.cpp:214
+#: src/payeedialog.cpp:264
 msgid "Payee is in use"
 msgstr "Beneficiarul se foloseşte în acest moment"
 
@@ -2464,90 +2767,90 @@ msgstr ""
 msgid "Confirm QIF import"
 msgstr "Confirmă importul QIF"
 
-#: src/qifimport.cpp:382
+#: src/qifimport.cpp:389
 msgid "QIF Import"
 msgstr "Import QIF"
 
-#: src/qifimport.cpp:393
+#: src/qifimport.cpp:400
 msgid "Choose QIF data file to import"
 msgstr "Alege importarea fişierelor QIF"
 
-#: src/qifimport.cpp:434
-#: src/qifimport.cpp:459
-#: src/qifimport.cpp:529
+#: src/qifimport.cpp:441
+#: src/qifimport.cpp:466
+#: src/qifimport.cpp:536
 msgid "Line : "
 msgstr "Linie:"
 
-#: src/qifimport.cpp:435
+#: src/qifimport.cpp:442
 msgid " incorrect QIF line type"
 msgstr "tipul liniei QIF este incorect"
 
-#: src/qifimport.cpp:446
+#: src/qifimport.cpp:453
 msgid "Importing account type : "
 msgstr "Importă tip cont:"
 
-#: src/qifimport.cpp:459
+#: src/qifimport.cpp:466
 msgid " : "
 msgstr ":"
 
-#: src/qifimport.cpp:460
+#: src/qifimport.cpp:467
 msgid " account name "
 msgstr "nume cont"
 
-#: src/qifimport.cpp:498
+#: src/qifimport.cpp:505
 msgid " cannot process Account Types yet "
 msgstr "nu se pot procesa tipurile contului încă"
 
-#: src/qifimport.cpp:499
+#: src/qifimport.cpp:506
 msgid "Cannot process these QIF Account Types yet"
 msgstr "nu se pot procesa tipurile QIF ale contului încă"
 
-#: src/qifimport.cpp:514
-#: src/qifimport.cpp:630
+#: src/qifimport.cpp:521
+#: src/qifimport.cpp:637
 msgid "Adding payee "
 msgstr "Adăugare beneficiar"
 
-#: src/qifimport.cpp:530
+#: src/qifimport.cpp:537
 msgid " invalid amount, skipping."
 msgstr "sumă invalidă, sare peste."
 
-#: src/qifimport.cpp:609
+#: src/qifimport.cpp:616
 msgid "Date is empty, "
 msgstr "Data este goală,"
 
-#: src/qifimport.cpp:613
+#: src/qifimport.cpp:620
 msgid "Transaction Type is empty"
 msgstr "Tipul tranzacţiei este gol"
 
-#: src/qifimport.cpp:617
+#: src/qifimport.cpp:624
 msgid "Amount is empty"
 msgstr "Suma este goală"
 
-#: src/qifimport.cpp:646
+#: src/qifimport.cpp:653
 msgid "Category is empty, marking transaction as Unknown category"
 msgstr "Categoria este goală, marchează tranzacţia ca fiind categorie necunoascută"
 
-#: src/qifimport.cpp:660
+#: src/qifimport.cpp:667
 msgid "Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had "
 msgstr "Sare peste tranzacţiile QIF deoarece data, tipul, suma sunt goale/ invalide, tranzacţia a fost omisă"
 
-#: src/qifimport.cpp:661
+#: src/qifimport.cpp:668
 msgid " payee "
 msgstr "beneficiar"
 
-#: src/qifimport.cpp:661
+#: src/qifimport.cpp:668
 msgid " type "
 msgstr "tip"
 
-#: src/qifimport.cpp:662
+#: src/qifimport.cpp:669
 msgid " amount "
 msgstr "sumă"
 
-#: src/qifimport.cpp:662
+#: src/qifimport.cpp:669
 msgid " date "
 msgstr "data"
 
-#: src/qifimport.cpp:713
+#: src/qifimport.cpp:720
 msgid " transactions imported from QIF"
 msgstr "tranzacţie importată din QIF"
 
@@ -2556,103 +2859,109 @@ msgid "Invalid Category Entered "
 msgstr "S-a introdus o categorie invalidă"
 
 #: src/splittransactionsdialog.cpp:146
-msgid "Remove"
+#, fuzzy
+msgid "&Remove"
 msgstr "şterge"
 
-#: src/stockdialog.cpp:137
+#: src/splittransactionsdialog.cpp:165
+#, fuzzy
+msgid "&Select Category"
+msgstr "Selectaţi Categoria"
+
+#: src/stockdialog.cpp:150
 msgid "Stock Investment Details"
 msgstr "Detaliile de investiţie a stocurilor"
 
-#: src/stockdialog.cpp:150
-#: src/stockdialog.cpp:326
+#: src/stockdialog.cpp:163
+#: src/stockdialog.cpp:346
 #: src/stockspanel.cpp:204
 msgid "Held At"
 msgstr "Ţinut la"
 
-#: src/stockdialog.cpp:156
+#: src/stockdialog.cpp:169
 msgid "Enter the name of the financial institution where the investment is held"
 msgstr "Introdu numele instituţiei financiare unde este ţinută investiţia"
 
-#: src/stockdialog.cpp:167
+#: src/stockdialog.cpp:180
 msgid "Specify the purchase date of the stock investment"
 msgstr "Specifică data de procurare a stocurilor de investiţie"
 
-#: src/stockdialog.cpp:170
+#: src/stockdialog.cpp:183
 msgid "Stock Name"
 msgstr "Numele stocului"
 
-#: src/stockdialog.cpp:176
+#: src/stockdialog.cpp:189
 msgid "Enter the stock company name"
 msgstr "Introdu numele companiei ce se ocupă de stoc"
 
-#: src/stockdialog.cpp:180
+#: src/stockdialog.cpp:193
 msgid "Symbol"
 msgstr "Simbol"
 
-#: src/stockdialog.cpp:186
+#: src/stockdialog.cpp:199
 msgid "Enter the stock symbol (optional)"
 msgstr "Introdu simbolul stocului( opţional)"
 
-#: src/stockdialog.cpp:191
+#: src/stockdialog.cpp:204
 #: src/stockspanel.cpp:212
 msgid "Number of Shares"
 msgstr "Numărul de acţiuni"
 
-#: src/stockdialog.cpp:197
+#: src/stockdialog.cpp:210
 msgid "Enter number of shares held"
 msgstr "Introdu numărul de acţiuni deţinute"
 
-#: src/stockdialog.cpp:202
+#: src/stockdialog.cpp:215
 msgid "Purchase Price"
 msgstr "Preţul de cumpărare"
 
-#: src/stockdialog.cpp:208
+#: src/stockdialog.cpp:221
 msgid "Enter purchase price for each stock"
 msgstr "Introdu preţul de cumpărare pentru fiecare stoc"
 
-#: src/stockdialog.cpp:213
+#: src/stockdialog.cpp:226
 msgid "Commission"
 msgstr "Comision"
 
-#: src/stockdialog.cpp:219
+#: src/stockdialog.cpp:232
 msgid "Enter any commission paid"
 msgstr "Introdu orice comision plătit"
 
-#: src/stockdialog.cpp:223
+#: src/stockdialog.cpp:236
 msgid "Current Price"
 msgstr "Preţul curent"
 
-#: src/stockdialog.cpp:229
+#: src/stockdialog.cpp:242
 msgid "Enter current stock price"
 msgstr "Introdu preţul curent al stocului"
 
-#: src/stockdialog.cpp:240
+#: src/stockdialog.cpp:253
 msgid "Enter notes associated with this investment"
 msgstr "Introdu note asociate cu această investiţie"
 
-#: src/stockdialog.cpp:269
+#: src/stockdialog.cpp:282
 #, fuzzy
 msgid "Stock Price Web Page"
 msgstr "Site-ul incidelui de stoc"
 
-#: src/stockdialog.cpp:285
+#: src/stockdialog.cpp:305
 msgid "Choose Investment Account"
 msgstr "Alege contul de investiţii"
 
-#: src/stockdialog.cpp:338
-#: src/stockdialog.cpp:352
+#: src/stockdialog.cpp:358
+#: src/stockdialog.cpp:372
 msgid "Num Shares"
 msgstr "Numărul de acţiuni"
 
-#: src/stockdialog.cpp:346
+#: src/stockdialog.cpp:366
 msgid "Invalid number of shares entered "
 msgstr "Numărul de acţiuni introdus este invalid"
 
-#: src/stockdialog.cpp:361
+#: src/stockdialog.cpp:381
 msgid "Invalid purchase price entered "
 msgstr "Preţul de cumpărare introdus este invalid"
 
-#: src/stockdialog.cpp:381
+#: src/stockdialog.cpp:401
 msgid "Invalid commission entered "
 msgstr "Comisionul introdus este invalid"
 
@@ -2685,7 +2994,8 @@ msgid "Delete Stock Investment"
 msgstr "Şterge stocul de investiţii"
 
 #: src/stockspanel.cpp:283
-msgid "Refresh"
+#, fuzzy
+msgid "&Refresh"
 msgstr "Reîncărcare"
 
 #: src/stockspanel.cpp:285
@@ -2693,7 +3003,8 @@ msgid "Refresh Stock Prices from Yahoo"
 msgstr "Reîncarcă preţurile stocurilor de pe yahoo"
 
 #: src/stockspanel.cpp:288
-msgid "Settings"
+#, fuzzy
+msgid "&Settings"
 msgstr "Setări"
 
 #: src/stockspanel.cpp:290
@@ -2704,26 +3015,26 @@ msgstr "Schimbă setările pentru reîncărcare automată"
 msgid "Stock Investments: "
 msgstr "Investiţiile stocului:"
 
-#: src/stockspanel.cpp:348
+#: src/stockspanel.cpp:349
 #, fuzzy, c-format
 msgid "Total: %s Invested: %s Gain: %s "
 msgstr "Total:%s Investid:%s"
 
-#: src/stockspanel.cpp:350
+#: src/stockspanel.cpp:351
 #, fuzzy, c-format
 msgid "Total: %s Invested: %s Loss: %s "
 msgstr "Total:%s Investid:%s"
 
-#: src/stockspanel.cpp:446
+#: src/stockspanel.cpp:454
 #, c-format
 msgid "%s on %s"
 msgstr "%s la %s"
 
-#: src/stockspanel.cpp:449
+#: src/stockspanel.cpp:457
 msgid "never!"
 msgstr "niciodată!"
 
-#: src/stockspanel.cpp:454
+#: src/stockspanel.cpp:462
 #, c-format
 msgid ""
 "Automatic stock quote refresh is disabled. \n"
@@ -2732,7 +3043,7 @@ msgstr ""
 "Reîncărcarea automată a cotei stocului este dezactivată. \n"
 "Ultima actualizare: %s"
 
-#: src/stockspanel.cpp:460
+#: src/stockspanel.cpp:468
 #, c-format
 msgid ""
 "Automatic stock quote refresh idle - Out of Hours. \n"
@@ -2741,11 +3052,11 @@ msgstr ""
 "Reîncărcarea automată a cotei stocului este inactivă - în afara orelor de program. \n"
 "Ultima actualizare: %s"
 
-#: src/stockspanel.cpp:466
+#: src/stockspanel.cpp:474
 msgid "Automatic stock quote refresh in progress..."
 msgstr "Reîncărcarea automată a cotei stocului este in desfăşurare..."
 
-#: src/stockspanel.cpp:472
+#: src/stockspanel.cpp:480
 #, c-format
 msgid ""
 "Automatic stock quote refresh successful. \n"
@@ -2754,7 +3065,7 @@ msgstr ""
 "Reîncărcarea automată a cotei stocului a fost făcută cu succes. \n"
 "Ultima actualizare: %s"
 
-#: src/stockspanel.cpp:478
+#: src/stockspanel.cpp:486
 #, c-format
 msgid ""
 "Automatic stock quote refresh Failed. \n"
@@ -2763,7 +3074,7 @@ msgstr ""
 "Reîncărcarea automată a cotei stocului a eşuat. \n"
 "Ultima actualizare făcută cu succes: %s"
 
-#: src/stockspanel.cpp:485
+#: src/stockspanel.cpp:493
 #, c-format
 msgid ""
 "Automatic stock quote refresh not started. \n"
@@ -2772,138 +3083,139 @@ msgstr ""
 "Reîncărcarea automată a cotei stocului nu a început. \n"
 "Ultima actualizare: %s"
 
-#: src/stockspanel.cpp:648
-#: src/stockspanel.cpp:656
+#: src/stockspanel.cpp:651
+#: src/stockspanel.cpp:659
 msgid "Stock Download"
 msgstr "Download stoc"
 
-#: src/stockspanel.cpp:766
+#: src/stockspanel.cpp:798
 msgid "&New Stock Investment"
 msgstr "&Investiţie a stocului nouă"
 
-#: src/stockspanel.cpp:768
+#: src/stockspanel.cpp:800
 msgid "&Edit Stock Investment"
 msgstr "&Modifică investiţia stocului"
 
-#: src/stockspanel.cpp:769
+#: src/stockspanel.cpp:801
 msgid "&Delete Stock Investment"
 msgstr "&Şterge investiţia stocului"
 
-#: src/stockspanel.cpp:858
+#: src/stockspanel.cpp:890
 msgid "Do you really want to delete the stock investment?"
 msgstr "Sigur doreşti ştergerea investiţiei stocului?"
 
-#: src/stockspanel.cpp:859
+#: src/stockspanel.cpp:891
 msgid "Confirm Stock Investment Deletion"
 msgstr "Confirmă ştergerea investiţiei stocului"
 
-#: src/transdialog.cpp:290
-#: src/transdialog.cpp:670
-#: src/transdialog.cpp:685
+#: src/transdialog.cpp:330
+#: src/transdialog.cpp:711
+#: src/transdialog.cpp:726
 msgid "Specify to whom the transaction is going to or coming from "
 msgstr "Specifică spre cine sau de la cine vine tranzacţia"
 
-#: src/transdialog.cpp:309
+#: src/transdialog.cpp:351
 msgid "Populate Transaction #"
 msgstr "Populează tranzacţia #"
 
-#: src/transdialog.cpp:689
-msgid "Select From Account"
-msgstr "Selectează din cont"
-
-#: src/transdialog.cpp:690
+#: src/transdialog.cpp:730
 msgid "Select To Account"
 msgstr "Selectează în cont"
 
-#: src/transdialog.cpp:699
+#: src/transdialog.cpp:742
 msgid "Specify the account from which the transfer is occurring"
 msgstr "Specifică contul din care se va face transferul"
 
-#: src/univcsvdialog.cpp:93
+#: src/univcsvdialog.cpp:117
 msgid "Specify the order of fields in the CSV file"
 msgstr "Specifică ordine câmpurilor din fişierul CSV"
 
-#: src/univcsvdialog.cpp:108
-msgid "Move Up"
+#: src/univcsvdialog.cpp:132
+#, fuzzy
+msgid "Move &Up"
 msgstr "Mută sus"
 
-#: src/univcsvdialog.cpp:113
-msgid "Move Down"
+#: src/univcsvdialog.cpp:137
+#, fuzzy
+msgid "Move &Down"
 msgstr "Mută jos"
 
-#: src/univcsvdialog.cpp:149
-msgid "Load Template"
+#: src/univcsvdialog.cpp:173
+#, fuzzy
+msgid "&Load Template"
 msgstr "Încărcare şablon"
 
-#: src/univcsvdialog.cpp:154
-msgid "Save As Template"
+#: src/univcsvdialog.cpp:178
+#, fuzzy
+msgid "Save &As Template"
 msgstr "Salvează ca şablon"
 
-#: src/univcsvdialog.cpp:159
-msgid "Import File"
+#: src/univcsvdialog.cpp:183
+#, fuzzy
+msgid "&Import File"
 msgstr "Importă fişier"
 
-#: src/univcsvdialog.cpp:216
+#: src/univcsvdialog.cpp:240
 msgid "Amount(+/-)"
 msgstr "Sumă(+/-)"
 
-#: src/univcsvdialog.cpp:220
+#: src/univcsvdialog.cpp:244
 msgid "SubCategory"
 msgstr "SubCategorie"
 
-#: src/univcsvdialog.cpp:224
+#: src/univcsvdialog.cpp:248
 msgid "Transaction Number"
 msgstr "Numărul tranzacţiei"
 
-#: src/univcsvdialog.cpp:226
+#: src/univcsvdialog.cpp:250
 msgid "Don't Care"
 msgstr "Nu mă interesează"
 
-#: src/univcsvdialog.cpp:233
-#: src/univcsvdialog.cpp:235
+#: src/univcsvdialog.cpp:257
+#: src/univcsvdialog.cpp:259
 msgid "Unknown"
 msgstr "Necunoscut"
 
-#: src/univcsvdialog.cpp:256
+#: src/univcsvdialog.cpp:280
 msgid "Add CSV field"
 msgstr "Adaugă câmp CSV"
 
-#: src/univcsvdialog.cpp:257
+#: src/univcsvdialog.cpp:281
 msgid "CSV Field"
 msgstr "Câmp CSV"
 
-#: src/univcsvdialog.cpp:351
-#: src/univcsvdialog.cpp:363
+#: src/univcsvdialog.cpp:375
+#: src/univcsvdialog.cpp:387
 msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."
 msgstr "Câmpurile specificate pentru importul CSV sunt incorecte! Necesită cel puţin data, suma şi beneficiarul."
 
-#: src/univcsvdialog.cpp:383
-#: src/util.cpp:449
-#: src/util.cpp:709
+#: src/univcsvdialog.cpp:413
+#: src/util.cpp:469
+#: src/util.cpp:730
 msgid "CSV Import"
 msgstr "Import CSV"
 
-#: src/univcsvdialog.cpp:393
-#: src/util.cpp:718
+#: src/univcsvdialog.cpp:423
+#: src/util.cpp:739
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Alege fişierele MM.NET CSV pentru import"
 
-#: src/univcsvdialog.cpp:437
+#: src/univcsvdialog.cpp:467
 msgid " file contains insufficient number of tokens"
 msgstr "fişierul conţine un număr insuficient de simboluri"
 
-#: src/univcsvdialog.cpp:460
+#: src/univcsvdialog.cpp:490
 msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipping"
 msgstr "Unul dintre următoarele câmpuri: dată, beneficiar, sumă, tip lipseşte, sare peste"
 
-#: src/univcsvdialog.cpp:514
-#: src/util.cpp:664
-#: src/util.cpp:885
+#: src/univcsvdialog.cpp:544
+#: src/util.cpp:684
+#: src/util.cpp:906
 msgid " imported OK."
 msgstr "importare OK."
 
-#: src/univcsvdialog.cpp:517
-#: src/util.cpp:888
+#: src/univcsvdialog.cpp:547
+#: src/util.cpp:909
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -2920,182 +3232,182 @@ msgstr ""
 "\n"
 "Tranzacţiile importate au fost marcate astfel pot fi vizualizate."
 
-#: src/univcsvdialog.cpp:518
-#: src/util.cpp:669
-#: src/util.cpp:686
-#: src/util.cpp:889
+#: src/univcsvdialog.cpp:548
+#: src/util.cpp:689
+#: src/util.cpp:706
+#: src/util.cpp:910
 msgid "Import from CSV"
 msgstr "Importă din CSV"
 
-#: src/util.cpp:247
+#: src/util.cpp:261
 msgid "January"
 msgstr "Ianuarie"
 
-#: src/util.cpp:247
+#: src/util.cpp:261
 msgid "February"
 msgstr "Februarie"
 
-#: src/util.cpp:247
+#: src/util.cpp:261
 msgid "March"
 msgstr "Martie"
 
-#: src/util.cpp:247
+#: src/util.cpp:261
 msgid "April"
 msgstr "Aprilie"
 
-#: src/util.cpp:247
-#: src/util.cpp:258
+#: src/util.cpp:261
+#: src/util.cpp:272
 msgid "May"
 msgstr "Mai"
 
-#: src/util.cpp:247
+#: src/util.cpp:261
 msgid "June"
 msgstr "Iunie"
 
-#: src/util.cpp:248
+#: src/util.cpp:262
 msgid "July"
 msgstr "Iulie"
 
-#: src/util.cpp:248
+#: src/util.cpp:262
 msgid "August"
 msgstr "August"
 
-#: src/util.cpp:248
+#: src/util.cpp:262
 msgid "September"
 msgstr "Septembrie"
 
-#: src/util.cpp:248
+#: src/util.cpp:262
 msgid "October"
 msgstr "Octombrie"
 
-#: src/util.cpp:248
+#: src/util.cpp:262
 msgid "November"
 msgstr "Noiembrie"
 
-#: src/util.cpp:248
+#: src/util.cpp:262
 msgid "December"
 msgstr "Decembrie"
 
-#: src/util.cpp:258
+#: src/util.cpp:272
 msgid "Jan"
 msgstr "Ian"
 
-#: src/util.cpp:258
+#: src/util.cpp:272
 msgid "Feb"
 msgstr "Feb"
 
-#: src/util.cpp:258
+#: src/util.cpp:272
 msgid "Mar"
 msgstr "Mar"
 
-#: src/util.cpp:258
+#: src/util.cpp:272
 msgid "Apr"
 msgstr "Apr"
 
-#: src/util.cpp:258
+#: src/util.cpp:272
 msgid "Jun"
 msgstr "Iun"
 
-#: src/util.cpp:259
+#: src/util.cpp:273
 msgid "Jul"
 msgstr "Iul"
 
-#: src/util.cpp:259
+#: src/util.cpp:273
 msgid "Aug"
 msgstr "Aug"
 
-#: src/util.cpp:259
+#: src/util.cpp:273
 msgid "Sep"
 msgstr "Sep"
 
-#: src/util.cpp:259
+#: src/util.cpp:273
 msgid "Oct"
 msgstr "Oct"
 
-#: src/util.cpp:259
+#: src/util.cpp:273
 msgid "Nov"
 msgstr "Nov"
 
-#: src/util.cpp:259
+#: src/util.cpp:273
 msgid "Dec"
 msgstr "Dec"
 
-#: src/util.cpp:274
+#: src/util.cpp:288
 msgid "Sunday"
 msgstr "Duminică"
 
-#: src/util.cpp:274
+#: src/util.cpp:288
 msgid "Monday"
 msgstr "Luni"
 
-#: src/util.cpp:274
+#: src/util.cpp:288
 msgid "Tuesday"
 msgstr "Marţi"
 
-#: src/util.cpp:274
+#: src/util.cpp:288
 msgid "Wednesday"
 msgstr "Miercuri"
 
-#: src/util.cpp:275
+#: src/util.cpp:289
 msgid "Thursday"
 msgstr "Joi"
 
-#: src/util.cpp:275
+#: src/util.cpp:289
 msgid "Friday"
 msgstr "Vineri"
 
-#: src/util.cpp:275
+#: src/util.cpp:289
 msgid "Saturday"
 msgstr "Sâmbătă"
 
-#: src/util.cpp:303
+#: src/util.cpp:317
 msgid "No Account available! Cannot Export!"
 msgstr "Nici un cont nu este accesibil! Exportul nu poate fi realizat!"
 
-#: src/util.cpp:320
+#: src/util.cpp:333
 msgid "Choose Account to Export from:"
 msgstr "Alege contul pentru a exporta din:"
 
-#: src/util.cpp:321
+#: src/util.cpp:334
 msgid "CSV Export"
 msgstr "Export CSV"
 
-#: src/util.cpp:327
+#: src/util.cpp:340
 msgid "Choose CSV data file to Export"
 msgstr "Alege fişier CSV pentru export"
 
-#: src/util.cpp:499
-#: src/util.cpp:759
+#: src/util.cpp:519
+#: src/util.cpp:780
 msgid " missing date, skipping."
 msgstr "date lipsă, sare peste."
 
-#: src/util.cpp:508
-#: src/util.cpp:768
+#: src/util.cpp:528
+#: src/util.cpp:789
 msgid " missing payee, skipping."
 msgstr "beneficiar lipsă, sare peste."
 
-#: src/util.cpp:517
+#: src/util.cpp:537
 msgid " missing transaction type, skipping."
 msgstr "tipul tranzacţiei lipsă, sare peste."
 
-#: src/util.cpp:526
-#: src/util.cpp:777
+#: src/util.cpp:546
+#: src/util.cpp:798
 msgid " missing amount, skipping."
 msgstr "sumă lipsă, sare peste."
 
-#: src/util.cpp:549
+#: src/util.cpp:569
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "unul dintre următoarele câmpuri: data, beneficiarul, tipul tranzacţiei,  sumă şiruri de caractere lipseşte, sare peste"
 
-#: src/util.cpp:556
+#: src/util.cpp:576
 msgid " unrecognized transaction type, skipping."
 msgstr "tip tranzacţie nerecunoscut, sare peste."
 
-#: src/util.cpp:583
+#: src/util.cpp:603
 msgid " transfer transaction not imported."
 msgstr "transferul tranzacţiei nu a fost importat."
 
-#: src/util.cpp:667
+#: src/util.cpp:687
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3111,101 +3423,42 @@ msgstr ""
 "\n"
 "Tranzacţiile importate au fost marcate astfel pot fi vizualizate."
 
-#: src/util.cpp:685
+#: src/util.cpp:705
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Te rog verifică daca fişierul CSV din MMEX.NET conţine un singur cont!"
 
-#: src/util.cpp:792
+#: src/util.cpp:813
 msgid " missing category, skipping."
 msgstr "categorie lipsă, sare peste."
 
-#: src/util.cpp:820
+#: src/util.cpp:841
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr "Unul dintre următoarele câmpuri: data, beneficiarul, tipul tranzacţiei, suma, categoria şirurilor de caractere lipseşte, sare peste"
 
-#: src/util.cpp:829
+#: src/util.cpp:850
 msgid " invalid date, skipping."
 msgstr "dată invalidă, sare peste"
 
-#: src/util.cpp:904
+#: src/util.cpp:925
 msgid "Entry "
 msgstr "Intrare"
 
-#: src/util.cpp:904
+#: src/util.cpp:925
 msgid " is invalid."
 msgstr "este invalid."
 
-#: src/util.cpp:906
+#: src/util.cpp:927
 msgid "Invalid Entry"
 msgstr "Intrare Invalidă."
 
-#: src/wxsqlite3_1_7.cpp:94
-msgid "No Database opened"
-msgstr "Nici o bază de date nu este deschisă."
+#: src/wxsqlite3.cpp:3354
+msgid "Regular expression invalid: '"
+msgstr ""
 
-#: src/wxsqlite3_1_7.cpp:95
-msgid "Statement not accessible"
-msgstr "Declaraţia nu este accesibilă"
-
-#: src/wxsqlite3_1_7.cpp:96
-msgid "Out of memory"
-msgstr "Memorie depăşită"
-
-#: src/wxsqlite3_1_7.cpp:97
-msgid "Cannot decode binary"
-msgstr "Nu poate face decodare binară"
-
-#: src/wxsqlite3_1_7.cpp:98
-msgid "Invalid field index"
-msgstr "Indexul câmpului este invalid"
-
-#: src/wxsqlite3_1_7.cpp:99
-msgid "Invalid field name"
-msgstr "Numele câmpului este invalid"
-
-#: src/wxsqlite3_1_7.cpp:100
-msgid "Invalid row index"
-msgstr "Index rând invalid"
-
-#: src/wxsqlite3_1_7.cpp:101
-msgid "Invalid scalar query"
-msgstr "Interogare scalară invalidă"
-
-#: src/wxsqlite3_1_7.cpp:103
-msgid "Null Results pointer"
-msgstr "Rezultat nul"
-
-#: src/wxsqlite3_1_7.cpp:104
-msgid "Error binding string param"
-msgstr "eroare în legarea parametrilor string"
-
-#: src/wxsqlite3_1_7.cpp:105
-msgid "Error binding int param"
-msgstr "eroare în legarea parametrilor int"
-
-#: src/wxsqlite3_1_7.cpp:106
-msgid "Error binding int64 param"
-msgstr "eroare în legarea parametrilor int64"
-
-#: src/wxsqlite3_1_7.cpp:107
-msgid "Error binding double param"
-msgstr "eroare în legarea parametrilor double"
-
-#: src/wxsqlite3_1_7.cpp:108
-msgid "Error binding blob param"
-msgstr "eroare în legarea parametrilor blob"
-
-#: src/wxsqlite3_1_7.cpp:109
-msgid "Error binding date/time param"
-msgstr "eroare în legarea parametrilor data/timp"
-
-#: src/wxsqlite3_1_7.cpp:110
-msgid "Error binding NULL param"
-msgstr "eroare în legarea parametrilor NULL"
-
-#: src/wxsqlite3_1_7.cpp:111
-msgid "Error clearing bindings"
-msgstr "eroare în ştergerea legăturilor"
+#: src/wxsqlite3.cpp:3359
+#, c-format
+msgid "REGEXP called with wrong number of arguments: %d instead of 2."
+msgstr ""
 
 #: src/yahoosettingsdialog.cpp:61
 msgid "Yahoo Server"
@@ -3252,7 +3505,8 @@ msgid "to"
 msgstr "la"
 
 #: src/yahoosettingsdialog.cpp:139
-msgid "Refresh prices every"
+#, fuzzy
+msgid "&Refresh prices every"
 msgstr "Reîncarcă preţurile la fiecare"
 
 #: src/yahoosettingsdialog.cpp:163
@@ -3287,8 +3541,8 @@ msgstr "Editor ani buget"
 msgid "Budget Year Entry"
 msgstr "Anul de început al bugetului"
 
-#: include/chart.h:246
-#: include/chart.h:447
+#: include/chart.h:247
+#: include/chart.h:448
 msgid "Legend:"
 msgstr "Legendă:"
 
@@ -3312,11 +3566,11 @@ msgstr "Filtre pentru tranzacţii"
 msgid "Currency Dialog"
 msgstr "Fereastra pentru monede"
 
-#: include/mmex.h:136
+#: include/mmex.h:137
 msgid "Base Currency for account"
 msgstr "Moneda de bază pentru cont"
 
-#: include/mmex.h:151
+#: include/mmex.h:152
 msgid ""
 "\n"
 "Specify the base (or default) currency to be used \n"
@@ -3328,19 +3582,19 @@ msgstr ""
 "pentru baza de date. Poţi schimba \n"
 "moneda asociată fiecărui cont daca este necesar.\n"
 
-#: include/mmex.h:169
+#: include/mmex.h:170
 msgid "(Optional)Specify your name. Mainly used for reporting and in printing reports.\n"
 msgstr "(Opţional) Specifică numele tău. Îndeosebi folosit pentru rapoarte şi pentru imprimarea raportelor.\n"
 
-#: include/mmex.h:181
+#: include/mmex.h:182
 msgid "Base Currency Not Set"
 msgstr "Moneda de bază nu a fost selectată"
 
-#: include/mmex.h:231
+#: include/mmex.h:232
 msgid "Name of the Account"
 msgstr "Denumire Cont"
 
-#: include/mmex.h:246
+#: include/mmex.h:247
 msgid ""
 "\n"
 "Specify a descriptive name of the account. This most commonly \n"
@@ -3352,19 +3606,19 @@ msgstr ""
 "este numele instituţiei financiare de care ţine contul. \n"
 "De exemplu  'ABC Bank'."
 
-#: include/mmex.h:259
+#: include/mmex.h:260
 msgid "Account Name Invalid"
 msgstr "Nume Cont Invalid"
 
-#: include/mmex.h:282
+#: include/mmex.h:283
 msgid "Checking/Savings"
 msgstr "Verificări/Economie"
 
-#: include/mmex.h:294
+#: include/mmex.h:295
 msgid "Type of Account"
 msgstr "Tip Cont"
 
-#: include/mmex.h:309
+#: include/mmex.h:310
 msgid ""
 "\n"
 "Select the type of account you want to create:\n"
@@ -3378,7 +3632,7 @@ msgstr ""
 "Conturile bancare generale acoperă o varietate largă de tipuri\n"
 "de conturi cum ar fi Verificări, Economie şi Card de Credit."
 
-#: include/mmex.h:315
+#: include/mmex.h:316
 msgid ""
 "\n"
 "Investment accounts are specialized accounts that only \n"
@@ -3390,7 +3644,7 @@ msgstr ""
 "stocuri/fonduri mutuale de investiţie asociate \n"
 "lor.\n"
 
-#: include/mmex.h:333
+#: include/mmex.h:334
 msgid ""
 "Base Account Currency Not set.\n"
 "Set that first using tools->options menu and then add a new account"
@@ -3482,7 +3736,7 @@ msgstr "Lună"
 msgid "Difference"
 msgstr "Diferenţă"
 
-#: include/reportsummary.h:119
+#: include/reportsummary.h:124
 msgid "Total Balance on all Accounts"
 msgstr "Balanţa totală pe toate conturile"
 
@@ -3490,7 +3744,7 @@ msgstr "Balanţa totală pe toate conturile"
 msgid "Summary of Assets"
 msgstr "Sumarul bunurilor"
 
-#: include/reportsummaryassets.h:121
+#: include/reportsummaryassets.h:98
 msgid "Total Assets: "
 msgstr "Bunuri totale:"
 
@@ -3498,23 +3752,23 @@ msgstr "Bunuri totale:"
 msgid "Summary of Stocks"
 msgstr "Sumarul Stocurilor"
 
-#: include/reportsummarystocks.h:60
+#: include/reportsummarystocks.h:51
 msgid "Company"
 msgstr "Companie"
 
-#: include/reportsummarystocks.h:62
+#: include/reportsummarystocks.h:53
 msgid "Number Shares"
 msgstr "Numărul acţiunilor"
 
-#: include/reportsummarystocks.h:63
+#: include/reportsummarystocks.h:54
 msgid "Purchase Date"
 msgstr "Data Achizitiei"
 
-#: include/reportsummarystocks.h:68
+#: include/reportsummarystocks.h:59
 msgid "Gain Loss"
 msgstr "Câştig Pierdere"
 
-#: include/reportsummarystocks.h:148
+#: include/reportsummarystocks.h:141
 msgid "Total Stock Investments: "
 msgstr "Investiţii totale în stocuri:"
 
@@ -3554,6 +3808,44 @@ msgstr "Fereastra universală pentru importatorul CSV"
 msgid "Options"
 msgstr "Optiuni"
 
+#~ msgid "Delete Account"
+#~ msgstr "Şterge Cont"
+#~ msgid "Select From Account"
+#~ msgstr "Selectează din cont"
+#~ msgid "No Database opened"
+#~ msgstr "Nici o bază de date nu este deschisă."
+#~ msgid "Statement not accessible"
+#~ msgstr "Declaraţia nu este accesibilă"
+#~ msgid "Out of memory"
+#~ msgstr "Memorie depăşită"
+#~ msgid "Cannot decode binary"
+#~ msgstr "Nu poate face decodare binară"
+#~ msgid "Invalid field index"
+#~ msgstr "Indexul câmpului este invalid"
+#~ msgid "Invalid field name"
+#~ msgstr "Numele câmpului este invalid"
+#~ msgid "Invalid row index"
+#~ msgstr "Index rând invalid"
+#~ msgid "Invalid scalar query"
+#~ msgstr "Interogare scalară invalidă"
+#~ msgid "Null Results pointer"
+#~ msgstr "Rezultat nul"
+#~ msgid "Error binding string param"
+#~ msgstr "eroare în legarea parametrilor string"
+#~ msgid "Error binding int param"
+#~ msgstr "eroare în legarea parametrilor int"
+#~ msgid "Error binding int64 param"
+#~ msgstr "eroare în legarea parametrilor int64"
+#~ msgid "Error binding double param"
+#~ msgstr "eroare în legarea parametrilor double"
+#~ msgid "Error binding blob param"
+#~ msgstr "eroare în legarea parametrilor blob"
+#~ msgid "Error binding date/time param"
+#~ msgstr "eroare în legarea parametrilor data/timp"
+#~ msgid "Error binding NULL param"
+#~ msgstr "eroare în legarea parametrilor NULL"
+#~ msgid "Error clearing bindings"
+#~ msgstr "eroare în ştergerea legăturilor"
 #~ msgid "Web Page"
 #~ msgstr "Site"
 #~ msgid "Invalid current price entered "

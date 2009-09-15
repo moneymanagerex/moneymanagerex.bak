@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-09 16:23+0300\n"
-"PO-Revision-Date: 2009-09-13 20:51+0200\n"
-"Last-Translator: Deglis Aldis <yampis@inbox.lv>\n"
+"POT-Creation-Date: 2009-09-15 15:18+0300\n"
+"PO-Revision-Date: 2009-09-15 15:18+0300\n"
+"Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -107,7 +107,7 @@ msgid "Enter the name of the asset"
 msgstr "Ievadiet aktīva nosaukumu"
 
 #: src/assetdialog.cpp:198
-#: src/billsdepositsdialog.cpp:413
+#: src/billsdepositsdialog.cpp:414
 msgid "Date"
 msgstr "Datums"
 
@@ -166,8 +166,8 @@ msgid "Change in Value"
 msgstr "Izmaiņas vērtībā"
 
 #: src/assetdialog.cpp:248
-#: src/billsdepositsdialog.cpp:313
-#: src/billsdepositsdialog.cpp:453
+#: src/billsdepositsdialog.cpp:314
+#: src/billsdepositsdialog.cpp:454
 #: src/billsdepositspanel.cpp:267
 #: src/budgetentrydialog.cpp:165
 msgid "None"
@@ -195,7 +195,7 @@ msgid "Enter the rate at which the asset changes its value in % per year"
 msgstr "Ievadiet aktīva vērtības izmaiņas ātrumu, kas izteikts % par gadu"
 
 #: src/assetdialog.cpp:271
-#: src/billsdepositsdialog.cpp:466
+#: src/billsdepositsdialog.cpp:467
 #: src/billsdepositspanel.cpp:164
 msgid "Notes"
 msgstr "Piezīmes"
@@ -205,14 +205,14 @@ msgid "Enter notes associated with this asset"
 msgstr "Ievadiet piezīmes, kas ir saistīts ar šo aktīvu"
 
 #: src/assetdialog.cpp:289
-#: src/billsdepositsdialog.cpp:493
+#: src/billsdepositsdialog.cpp:494
 #: src/budgetentrydialog.cpp:195
 #: src/budgetyearentrydialog.cpp:139
 msgid "OK"
 msgstr "Labi"
 
 #: src/assetdialog.cpp:293
-#: src/billsdepositsdialog.cpp:497
+#: src/billsdepositsdialog.cpp:498
 #: src/budgetentrydialog.cpp:199
 #: src/budgetyearentrydialog.cpp:144
 msgid "Cancel"
@@ -225,10 +225,10 @@ msgstr "Nederīga vērtība"
 
 #: src/assetdialog.cpp:321
 #: src/assetdialog.cpp:349
-#: src/billsdepositsdialog.cpp:655
-#: src/billsdepositsdialog.cpp:829
-#: src/billsdepositsdialog.cpp:839
-#: src/billsdepositsdialog.cpp:862
+#: src/billsdepositsdialog.cpp:656
+#: src/billsdepositsdialog.cpp:830
+#: src/billsdepositsdialog.cpp:840
+#: src/billsdepositsdialog.cpp:863
 #: src/budgetentrydialog.cpp:234
 #: src/budgetyearentrydialog.cpp:157
 #: src/budgetyearentrydialog.cpp:164
@@ -310,285 +310,285 @@ msgstr "Vai Jūs tiešām vēlaties dzēst šo aktīvu?"
 msgid "Confirm Asset Deletion"
 msgstr "Apstipriniet aktīva dzēšanu"
 
-#: src/billsdepositsdialog.cpp:211
-#: src/billsdepositsdialog.cpp:1097
+#: src/billsdepositsdialog.cpp:212
+#: src/billsdepositsdialog.cpp:1105
 msgid "Split Category"
 msgstr "Sadalīt kategoriju"
 
-#: src/billsdepositsdialog.cpp:278
+#: src/billsdepositsdialog.cpp:279
 msgid "Repeating Transaction Details"
 msgstr "Atkārtojošo darījumu informācija"
 
-#: src/billsdepositsdialog.cpp:287
+#: src/billsdepositsdialog.cpp:288
 msgid "Account Name"
 msgstr "Konta nosaukums"
 
-#: src/billsdepositsdialog.cpp:292
+#: src/billsdepositsdialog.cpp:293
 msgid "Select Account"
 msgstr "Atzīmējiet kontu"
 
-#: src/billsdepositsdialog.cpp:297
+#: src/billsdepositsdialog.cpp:298
 msgid "Next Occurrence"
 msgstr "Nākošais notikums"
 
-#: src/billsdepositsdialog.cpp:304
+#: src/billsdepositsdialog.cpp:305
 msgid "Specify the date of the next bill or deposit"
 msgstr "Norādiet nākošā rēķina vai iemaksas datumu"
 
-#: src/billsdepositsdialog.cpp:307
+#: src/billsdepositsdialog.cpp:308
 msgid "Repeats"
 msgstr "Atkārtošanās"
 
-#: src/billsdepositsdialog.cpp:314
+#: src/billsdepositsdialog.cpp:315
 #: src/billsdepositspanel.cpp:271
 #: src/budgetentrydialog.cpp:166
 msgid "Weekly"
 msgstr "Reizi nedēļā"
 
-#: src/billsdepositsdialog.cpp:315
+#: src/billsdepositsdialog.cpp:316
 #: src/billsdepositspanel.cpp:275
 #: src/budgetentrydialog.cpp:167
 msgid "Bi-Weekly"
 msgstr "Reizi divās nedēļās"
 
-#: src/billsdepositsdialog.cpp:316
+#: src/billsdepositsdialog.cpp:317
 #: src/billsdepositspanel.cpp:279
 #: src/budgetentrydialog.cpp:168
 msgid "Monthly"
 msgstr "Reizi mēnesī"
 
-#: src/billsdepositsdialog.cpp:317
+#: src/billsdepositsdialog.cpp:318
 #: src/billsdepositspanel.cpp:283
 #: src/budgetentrydialog.cpp:169
 msgid "Bi-Monthly"
 msgstr "Reizi divos mēnešos"
 
-#: src/billsdepositsdialog.cpp:318
+#: src/billsdepositsdialog.cpp:319
 #: src/billsdepositspanel.cpp:287
 #: src/budgetentrydialog.cpp:170
 msgid "Quarterly"
 msgstr "Reizi ceturksnī"
 
-#: src/billsdepositsdialog.cpp:319
+#: src/billsdepositsdialog.cpp:320
 #: src/billsdepositspanel.cpp:291
 #: src/budgetentrydialog.cpp:171
 msgid "Half-Yearly"
 msgstr "Reizi pusgadā"
 
-#: src/billsdepositsdialog.cpp:320
+#: src/billsdepositsdialog.cpp:321
 #: src/billsdepositspanel.cpp:295
 #: src/budgetentrydialog.cpp:172
 msgid "Yearly"
 msgstr "Reizi gadā"
 
-#: src/billsdepositsdialog.cpp:321
+#: src/billsdepositsdialog.cpp:322
 #: src/billsdepositspanel.cpp:299
 msgid "Four Months"
 msgstr "Četri mēneši"
 
-#: src/billsdepositsdialog.cpp:322
+#: src/billsdepositsdialog.cpp:323
 #: src/billsdepositspanel.cpp:303
 msgid "Four Weeks"
 msgstr "Četras nedēļas"
 
-#: src/billsdepositsdialog.cpp:323
+#: src/billsdepositsdialog.cpp:324
 msgid "Daily"
 msgstr "Reizi dienā"
 
-#: src/billsdepositsdialog.cpp:332
+#: src/billsdepositsdialog.cpp:333
 msgid "Times Repeated"
 msgstr "Reizes atkārtot"
 
-#: src/billsdepositsdialog.cpp:339
+#: src/billsdepositsdialog.cpp:340
 msgid "Specify the number of times this series repeats. Leave blank if this series continues forever."
 msgstr "Norādiet reižu skaitu, kuru atkārto šī sērija. Atstājiet tukšu, ja sērija turpinās mūžīgi."
 
-#: src/billsdepositsdialog.cpp:343
+#: src/billsdepositsdialog.cpp:344
 msgid "Transaction Details"
 msgstr "Darījuma informācija"
 
-#: src/billsdepositsdialog.cpp:352
+#: src/billsdepositsdialog.cpp:353
 msgid "Transaction Type"
 msgstr "Darījuma tips"
 
-#: src/billsdepositsdialog.cpp:357
+#: src/billsdepositsdialog.cpp:358
 #: src/billsdepositspanel.cpp:412
 msgid "Withdrawal"
 msgstr "Izmaksa"
 
-#: src/billsdepositsdialog.cpp:358
+#: src/billsdepositsdialog.cpp:359
 #: src/billsdepositspanel.cpp:414
 msgid "Deposit"
 msgstr "Iemaksa"
 
-#: src/billsdepositsdialog.cpp:359
+#: src/billsdepositsdialog.cpp:360
 #: src/billsdepositspanel.cpp:416
 msgid "Transfer"
 msgstr "Pārskaitījums"
 
-#: src/billsdepositsdialog.cpp:366
+#: src/billsdepositsdialog.cpp:367
 msgid "Specify the type of transactions to be created."
 msgstr "Norādiet darījuma tipu, kas ir jāizveido"
 
-#: src/billsdepositsdialog.cpp:368
+#: src/billsdepositsdialog.cpp:369
 msgid "Advanced"
 msgstr "Papildus"
 
-#: src/billsdepositsdialog.cpp:372
+#: src/billsdepositsdialog.cpp:373
 msgid "Specify advanced settings for transaction"
 msgstr "Norādiet darījuma papildus parametrus"
 
-#: src/billsdepositsdialog.cpp:382
-#: src/billsdepositsdialog.cpp:754
+#: src/billsdepositsdialog.cpp:383
+#: src/billsdepositsdialog.cpp:755
 #: src/billsdepositspanel.cpp:153
 msgid "Payee"
 msgstr "Darījuma partneris"
 
-#: src/billsdepositsdialog.cpp:386
-#: src/billsdepositsdialog.cpp:534
-#: src/billsdepositsdialog.cpp:587
-#: src/billsdepositsdialog.cpp:750
-#: src/billsdepositsdialog.cpp:761
+#: src/billsdepositsdialog.cpp:387
+#: src/billsdepositsdialog.cpp:535
+#: src/billsdepositsdialog.cpp:588
+#: src/billsdepositsdialog.cpp:751
+#: src/billsdepositsdialog.cpp:762
 msgid "Select Payee"
 msgstr "Atzīmējiet darījuma partneri"
 
-#: src/billsdepositsdialog.cpp:389
+#: src/billsdepositsdialog.cpp:390
 msgid "Specify where the transaction is going to or coming from "
 msgstr "Norādiet, kur darījums iet vai nāk no"
 
-#: src/billsdepositsdialog.cpp:391
+#: src/billsdepositsdialog.cpp:392
 msgid "Number"
 msgstr "Numurs"
 
-#: src/billsdepositsdialog.cpp:399
+#: src/billsdepositsdialog.cpp:400
 msgid "Specify any associated check number or transaction number"
 msgstr "Norādiet čeka vai darījuma numuru"
 
-#: src/billsdepositsdialog.cpp:402
+#: src/billsdepositsdialog.cpp:403
 msgid "To"
 msgstr "Uz"
 
-#: src/billsdepositsdialog.cpp:407
+#: src/billsdepositsdialog.cpp:408
 msgid "Select To Acct"
 msgstr "Atzīmējiet kontu"
 
-#: src/billsdepositsdialog.cpp:411
+#: src/billsdepositsdialog.cpp:412
 msgid "Specify the transfer account"
 msgstr "Norādiet pārskaitījuma kontu"
 
-#: src/billsdepositsdialog.cpp:421
+#: src/billsdepositsdialog.cpp:422
 msgid "Specify the date of the transaction"
 msgstr "Norādiet darījuma datumu"
 
-#: src/billsdepositsdialog.cpp:426
+#: src/billsdepositsdialog.cpp:427
 msgid "Category"
 msgstr "Kategorija"
 
-#: src/billsdepositsdialog.cpp:435
-#: src/billsdepositsdialog.cpp:586
-#: src/billsdepositsdialog.cpp:620
-#: src/billsdepositsdialog.cpp:694
-#: src/billsdepositsdialog.cpp:1105
+#: src/billsdepositsdialog.cpp:436
+#: src/billsdepositsdialog.cpp:587
+#: src/billsdepositsdialog.cpp:621
+#: src/billsdepositsdialog.cpp:695
+#: src/billsdepositsdialog.cpp:1113
 msgid "Select Category"
 msgstr "Atzīmējiet kategoriju"
 
-#: src/billsdepositsdialog.cpp:438
+#: src/billsdepositsdialog.cpp:439
 msgid "Specify the category for this transaction"
 msgstr "Norādiet darījuma kategoriju"
 
-#: src/billsdepositsdialog.cpp:441
+#: src/billsdepositsdialog.cpp:442
 msgid "Split"
 msgstr "Sadalīt"
 
-#: src/billsdepositsdialog.cpp:447
+#: src/billsdepositsdialog.cpp:448
 msgid "Status"
 msgstr "Statuss"
 
-#: src/billsdepositsdialog.cpp:454
+#: src/billsdepositsdialog.cpp:455
 msgid "Reconciled"
 msgstr "Saskaņots"
 
-#: src/billsdepositsdialog.cpp:455
+#: src/billsdepositsdialog.cpp:456
 msgid "Void"
 msgstr "Atcelts"
 
-#: src/billsdepositsdialog.cpp:456
+#: src/billsdepositsdialog.cpp:457
 msgid "Follow up"
 msgstr "Sekot"
 
-#: src/billsdepositsdialog.cpp:463
+#: src/billsdepositsdialog.cpp:464
 msgid "Specify the status for the transaction"
 msgstr "Norādiet darījuma statusu"
 
-#: src/billsdepositsdialog.cpp:473
+#: src/billsdepositsdialog.cpp:474
 msgid "Specify any text notes you want to add to this transaction."
 msgstr "Norādiet teksta piezīmes, kuras Jūs vēlaties pievienot darījumam."
 
-#: src/billsdepositsdialog.cpp:476
+#: src/billsdepositsdialog.cpp:477
 #: src/billsdepositspanel.cpp:159
 #: src/budgetingpanel.cpp:234
 msgid "Amount"
 msgstr "Summa"
 
-#: src/billsdepositsdialog.cpp:483
+#: src/billsdepositsdialog.cpp:484
 msgid "Specify the amount for this transaction"
 msgstr "Norādiet darījuma summu"
 
-#: src/billsdepositsdialog.cpp:621
-#: src/billsdepositsdialog.cpp:773
+#: src/billsdepositsdialog.cpp:622
+#: src/billsdepositsdialog.cpp:774
 msgid "Select To"
 msgstr "Atzīmējiet, uz kuru kontu"
 
-#: src/billsdepositsdialog.cpp:644
+#: src/billsdepositsdialog.cpp:645
 msgid "To Account Amount Entry"
 msgstr "Konta summas ieraksts"
 
-#: src/billsdepositsdialog.cpp:645
+#: src/billsdepositsdialog.cpp:646
 msgid "Amount to be recorded in To Account"
 msgstr "Summa, kas tiks ierakstīta uz kontu"
 
-#: src/billsdepositsdialog.cpp:655
+#: src/billsdepositsdialog.cpp:656
 msgid "Invalid To Amount Entered "
 msgstr "Ievadīta nederīga summa"
 
-#: src/billsdepositsdialog.cpp:765
-#: src/billsdepositsdialog.cpp:779
+#: src/billsdepositsdialog.cpp:766
+#: src/billsdepositsdialog.cpp:780
 msgid "From"
 msgstr "No"
 
-#: src/billsdepositsdialog.cpp:772
+#: src/billsdepositsdialog.cpp:773
 msgid "Select From"
 msgstr "Atzīmējiet, no kura konta"
 
-#: src/billsdepositsdialog.cpp:800
+#: src/billsdepositsdialog.cpp:801
 msgid "Payee "
 msgstr "Darījuma partneris"
 
-#: src/billsdepositsdialog.cpp:802
+#: src/billsdepositsdialog.cpp:803
 msgid "From Account "
 msgstr "No konta"
 
-#: src/billsdepositsdialog.cpp:810
-#: src/billsdepositsdialog.cpp:818
+#: src/billsdepositsdialog.cpp:811
+#: src/billsdepositsdialog.cpp:819
 msgid "Category "
 msgstr "Kategorija"
 
-#: src/billsdepositsdialog.cpp:829
-#: src/billsdepositsdialog.cpp:839
+#: src/billsdepositsdialog.cpp:830
+#: src/billsdepositsdialog.cpp:840
 #: src/budgetentrydialog.cpp:234
 msgid "Invalid Amount Entered "
 msgstr "Ievadīta nederīga summa"
 
-#: src/billsdepositsdialog.cpp:846
+#: src/billsdepositsdialog.cpp:847
 #: src/billsdepositspanel.cpp:154
 msgid "Account"
 msgstr "Konts"
 
-#: src/billsdepositsdialog.cpp:856
+#: src/billsdepositsdialog.cpp:857
 msgid "To Account "
 msgstr "Uz kontu "
 
-#: src/billsdepositsdialog.cpp:862
+#: src/billsdepositsdialog.cpp:863
 msgid "From and To Account cannot be the same."
 msgstr "Nevar izmantot to pašu kontu priekš no konta un uz kontu."
 
@@ -964,207 +964,207 @@ msgstr "SQL vaicājums mainīs jūsu datus. Turpināt??"
 msgid "Warning"
 msgstr "Brīdinājums"
 
-#: src/dbwrapper.cpp:110
+#: src/dbwrapper.cpp:111
 msgid "Telephone"
 msgstr "Telefons"
 
-#: src/dbwrapper.cpp:111
+#: src/dbwrapper.cpp:112
 msgid "Electricity"
 msgstr "Elektrība"
 
-#: src/dbwrapper.cpp:112
-#: src/dbwrapper.cpp:147
+#: src/dbwrapper.cpp:113
+#: src/dbwrapper.cpp:148
 msgid "Gas"
 msgstr "Degviela"
 
-#: src/dbwrapper.cpp:113
+#: src/dbwrapper.cpp:114
 msgid "Internet"
 msgstr "Internets"
 
-#: src/dbwrapper.cpp:114
+#: src/dbwrapper.cpp:115
 msgid "Rent"
 msgstr "Īre"
 
-#: src/dbwrapper.cpp:115
+#: src/dbwrapper.cpp:116
 msgid "Cable TV"
 msgstr "Kabeļtelevīzija"
 
-#: src/dbwrapper.cpp:116
+#: src/dbwrapper.cpp:117
 msgid "Water"
 msgstr "Ūdens"
 
-#: src/dbwrapper.cpp:120
+#: src/dbwrapper.cpp:121
 msgid "Bills"
 msgstr "Rēķini"
 
-#: src/dbwrapper.cpp:125
+#: src/dbwrapper.cpp:126
 msgid "Groceries"
 msgstr "Pārtikas preces"
 
-#: src/dbwrapper.cpp:126
+#: src/dbwrapper.cpp:127
 msgid "Dining out"
 msgstr "Ēšana ārpus mājam"
 
-#: src/dbwrapper.cpp:130
+#: src/dbwrapper.cpp:131
 msgid "Food"
 msgstr "Pārtika"
 
-#: src/dbwrapper.cpp:135
+#: src/dbwrapper.cpp:136
 msgid "Movies"
 msgstr "Filmas"
 
-#: src/dbwrapper.cpp:136
+#: src/dbwrapper.cpp:137
 msgid "Video Rental"
 msgstr "Video noma"
 
-#: src/dbwrapper.cpp:137
+#: src/dbwrapper.cpp:138
 msgid "Magazines"
 msgstr "Avīzes, žurnāli"
 
-#: src/dbwrapper.cpp:141
+#: src/dbwrapper.cpp:142
 msgid "Leisure"
 msgstr "Brīvais laiks"
 
-#: src/dbwrapper.cpp:146
+#: src/dbwrapper.cpp:147
 msgid "Maintenance"
 msgstr "Apkope"
 
-#: src/dbwrapper.cpp:148
+#: src/dbwrapper.cpp:149
 msgid "Parking"
 msgstr "Stāvvieta"
 
-#: src/dbwrapper.cpp:149
+#: src/dbwrapper.cpp:150
 msgid "Registration"
 msgstr "Reģistrācija"
 
-#: src/dbwrapper.cpp:158
+#: src/dbwrapper.cpp:159
 msgid "Books"
 msgstr "Grāmatas"
 
-#: src/dbwrapper.cpp:159
+#: src/dbwrapper.cpp:160
 msgid "Tuition"
 msgstr "Mācību maksa"
 
-#: src/dbwrapper.cpp:160
-#: src/dbwrapper.cpp:171
-#: src/dbwrapper.cpp:219
+#: src/dbwrapper.cpp:161
+#: src/dbwrapper.cpp:172
+#: src/dbwrapper.cpp:220
 msgid "Others"
 msgstr "Citi"
 
-#: src/dbwrapper.cpp:164
+#: src/dbwrapper.cpp:165
 msgid "Education"
 msgstr "Mācības"
 
-#: src/dbwrapper.cpp:169
+#: src/dbwrapper.cpp:170
 msgid "Clothing"
 msgstr "Apģērbs"
 
-#: src/dbwrapper.cpp:170
+#: src/dbwrapper.cpp:171
 msgid "Furnishing"
 msgstr "Mēbeles"
 
-#: src/dbwrapper.cpp:175
+#: src/dbwrapper.cpp:176
 msgid "Homeneeds"
 msgstr "Mājas vajadzības"
 
-#: src/dbwrapper.cpp:180
-#: src/dbwrapper.cpp:196
+#: src/dbwrapper.cpp:181
+#: src/dbwrapper.cpp:197
 msgid "Health"
 msgstr "Veselība"
 
-#: src/dbwrapper.cpp:181
+#: src/dbwrapper.cpp:182
 msgid "Dental"
 msgstr "Zobārstniecība"
 
-#: src/dbwrapper.cpp:182
+#: src/dbwrapper.cpp:183
 msgid "Eyecare"
 msgstr "Acu aprūpe"
 
-#: src/dbwrapper.cpp:183
+#: src/dbwrapper.cpp:184
 msgid "Physician"
 msgstr "Ārsts, terapeits"
 
-#: src/dbwrapper.cpp:184
+#: src/dbwrapper.cpp:185
 msgid "Prescriptions"
 msgstr "Zāles, receptes"
 
-#: src/dbwrapper.cpp:188
+#: src/dbwrapper.cpp:189
 msgid "Healthcare"
 msgstr "Veselības aprūpe"
 
-#: src/dbwrapper.cpp:193
+#: src/dbwrapper.cpp:194
 msgid "Auto"
 msgstr "Automašīna"
 
-#: src/dbwrapper.cpp:194
+#: src/dbwrapper.cpp:195
 msgid "Life"
 msgstr "Dzīvība"
 
-#: src/dbwrapper.cpp:195
+#: src/dbwrapper.cpp:196
 msgid "Home"
 msgstr "Māja"
 
-#: src/dbwrapper.cpp:200
+#: src/dbwrapper.cpp:201
 msgid "Insurance"
 msgstr "Apdrošināšana"
 
-#: src/dbwrapper.cpp:205
+#: src/dbwrapper.cpp:206
 msgid "Travel"
 msgstr "Ceļojums"
 
-#: src/dbwrapper.cpp:206
+#: src/dbwrapper.cpp:207
 msgid "Lodging"
 msgstr "Naktsmājas"
 
-#: src/dbwrapper.cpp:207
+#: src/dbwrapper.cpp:208
 msgid "Sightseeing"
 msgstr "Ievērojamu vietu apskatīšana"
 
-#: src/dbwrapper.cpp:211
+#: src/dbwrapper.cpp:212
 msgid "Vacation"
 msgstr "Atvaļinājums"
 
-#: src/dbwrapper.cpp:216
+#: src/dbwrapper.cpp:217
 msgid "Income Tax"
 msgstr "Ienākuma nodoklis"
 
-#: src/dbwrapper.cpp:217
+#: src/dbwrapper.cpp:218
 msgid "House Tax"
 msgstr "Īpašuma nodoklis"
 
-#: src/dbwrapper.cpp:218
+#: src/dbwrapper.cpp:219
 msgid "Water Tax"
 msgstr "Ūdens nodoklis"
 
-#: src/dbwrapper.cpp:223
+#: src/dbwrapper.cpp:224
 msgid "Taxes"
 msgstr "Nodokļi"
 
-#: src/dbwrapper.cpp:227
+#: src/dbwrapper.cpp:228
 msgid "Miscellaneous"
 msgstr "Dažādi"
 
-#: src/dbwrapper.cpp:228
+#: src/dbwrapper.cpp:229
 msgid "Gifts"
 msgstr "Dāvanas"
 
-#: src/dbwrapper.cpp:233
+#: src/dbwrapper.cpp:234
 msgid "Salary"
 msgstr "Alga"
 
-#: src/dbwrapper.cpp:234
+#: src/dbwrapper.cpp:235
 msgid "Reimbursement/Refunds"
 msgstr "Kompensācija/izdevumu atlīdzināšana"
 
-#: src/dbwrapper.cpp:235
+#: src/dbwrapper.cpp:236
 msgid "Investment Income"
 msgstr "Ienākumi no investīcijām"
 
-#: src/dbwrapper.cpp:243
+#: src/dbwrapper.cpp:244
 msgid "Other Income"
 msgstr "Citi ienākumi"
 
-#: src/dbwrapper.cpp:244
+#: src/dbwrapper.cpp:245
 msgid "Other Expenses"
 msgstr "Citi izdevumi"
 
@@ -1232,279 +1232,279 @@ msgstr "Pievienot valūtu"
 msgid "Currency name already exists!"
 msgstr "Valūtas nosaukums jau eksistē!"
 
-#: src/mmcheckingpanel.cpp:107
+#: src/mmcheckingpanel.cpp:106
 msgid "Date  "
 msgstr "Datums"
 
-#: src/mmcheckingpanel.cpp:110
+#: src/mmcheckingpanel.cpp:109
 msgid "C  "
 msgstr "S  "
 
-#: src/mmcheckingpanel.cpp:114
+#: src/mmcheckingpanel.cpp:113
 msgid "Balance"
 msgstr "Atlikums"
 
-#: src/mmcheckingpanel.cpp:223
+#: src/mmcheckingpanel.cpp:222
 msgid "View All Transactions"
 msgstr "Apskatīt visus darījumus"
 
-#: src/mmcheckingpanel.cpp:224
+#: src/mmcheckingpanel.cpp:223
 msgid "View Reconciled Transactions"
 msgstr "Apskatīt saskaņotos darījumus"
 
-#: src/mmcheckingpanel.cpp:225
+#: src/mmcheckingpanel.cpp:224
 msgid "View Un-Reconciled Transactions"
 msgstr "Apskatīt nesaskaņotos darījumus"
 
-#: src/mmcheckingpanel.cpp:226
+#: src/mmcheckingpanel.cpp:225
 msgid "View All Except Reconciled Transactions"
 msgstr "Apskatīt visus, izņemot saskaņotos, darījumus"
 
-#: src/mmcheckingpanel.cpp:227
+#: src/mmcheckingpanel.cpp:226
 msgid "View Void Transactions"
 msgstr "Apskatīt atceltos darījumus"
 
-#: src/mmcheckingpanel.cpp:228
+#: src/mmcheckingpanel.cpp:227
 msgid "View Flagged Transactions"
 msgstr "Apskatīt ar karodziņu atzīmētos darījumus"
 
-#: src/mmcheckingpanel.cpp:229
+#: src/mmcheckingpanel.cpp:228
 msgid "View Duplicate Transactions"
 msgstr "Apskatīt dublikātos darījumus"
 
-#: src/mmcheckingpanel.cpp:231
+#: src/mmcheckingpanel.cpp:230
 msgid "View Transactions from today"
 msgstr "Apskatīt šodienas darījumus"
 
-#: src/mmcheckingpanel.cpp:232
+#: src/mmcheckingpanel.cpp:231
 msgid "View Transactions from last 30 days"
 msgstr "Apskatīt pēdējo 30 dienu darījumus"
 
-#: src/mmcheckingpanel.cpp:233
+#: src/mmcheckingpanel.cpp:232
 msgid "View Transactions from current month"
 msgstr "Apskatīt pašreizējā mēneša darījumus"
 
-#: src/mmcheckingpanel.cpp:234
+#: src/mmcheckingpanel.cpp:233
 msgid "View Transactions from last month"
 msgstr "Apskatīt pēdējā mēneša darījumus"
 
-#: src/mmcheckingpanel.cpp:235
+#: src/mmcheckingpanel.cpp:234
 msgid "View Transactions from last 3 months"
 msgstr "Apskatīt pēdējo 3 mēnešu darījumus"
 
-#: src/mmcheckingpanel.cpp:237
+#: src/mmcheckingpanel.cpp:236
 msgid "Delete all transactions in current view"
 msgstr "Dzēst visus darījumus no šī skata"
 
-#: src/mmcheckingpanel.cpp:238
+#: src/mmcheckingpanel.cpp:237
 msgid "Delete all flagged transactions"
 msgstr "Dzēst visus darījumus ar karodziņiem"
 
-#: src/mmcheckingpanel.cpp:281
+#: src/mmcheckingpanel.cpp:280
 msgid "Viewing All Transactions"
 msgstr "Visu darījumu apskate"
 
-#: src/mmcheckingpanel.cpp:355
+#: src/mmcheckingpanel.cpp:354
 msgid "New Transaction"
 msgstr "Jauns darījums"
 
-#: src/mmcheckingpanel.cpp:360
+#: src/mmcheckingpanel.cpp:359
 msgid "Edit Transaction"
 msgstr "Rediģēt darījumu"
 
-#: src/mmcheckingpanel.cpp:365
+#: src/mmcheckingpanel.cpp:364
 msgid "Delete Transaction"
 msgstr "Dzēst darījumu"
 
-#: src/mmcheckingpanel.cpp:474
+#: src/mmcheckingpanel.cpp:473
 msgid "Category         : "
 msgstr "Kategorija         : "
 
-#: src/mmcheckingpanel.cpp:475
+#: src/mmcheckingpanel.cpp:474
 msgid "Sub Category  : "
 msgstr "Apakškategorija: "
 
-#: src/mmcheckingpanel.cpp:476
+#: src/mmcheckingpanel.cpp:475
 msgid "Notes               : "
 msgstr "Piezīmes            : "
 
-#: src/mmcheckingpanel.cpp:496
+#: src/mmcheckingpanel.cpp:495
 #, c-format
 msgid "Account Balance : %s      Reconciled Balance : %s"
 msgstr "Konta atlikums : %s      Saskaņotais atlikums : %s"
 
-#: src/mmcheckingpanel.cpp:506
-#: src/mmex.cpp:2393
+#: src/mmcheckingpanel.cpp:505
+#: src/mmex.cpp:2395
 msgid "Please Wait"
 msgstr "Lūdzu uzgaidiet"
 
-#: src/mmcheckingpanel.cpp:507
+#: src/mmcheckingpanel.cpp:506
 msgid "Accessing Database"
 msgstr "Piekļūšana datu bāzei"
 
-#: src/mmcheckingpanel.cpp:520
+#: src/mmcheckingpanel.cpp:519
 msgid "Account View : "
 msgstr "Kontu skats :"
 
-#: src/mmcheckingpanel.cpp:525
+#: src/mmcheckingpanel.cpp:524
 msgid "Category: \n"
 msgstr "Kategorija: \n"
 
-#: src/mmcheckingpanel.cpp:526
+#: src/mmcheckingpanel.cpp:525
 msgid "Sub Category: \n"
 msgstr "Apakškategorija: \n"
 
-#: src/mmcheckingpanel.cpp:527
+#: src/mmcheckingpanel.cpp:526
 msgid "Notes: \n"
 msgstr "Piezīmes: \n"
 
-#: src/mmcheckingpanel.cpp:767
-#: src/mmcheckingpanel.cpp:809
+#: src/mmcheckingpanel.cpp:776
+#: src/mmcheckingpanel.cpp:818
 msgid "Viewing all transactions"
 msgstr "Visu darījumu apskate"
 
-#: src/mmcheckingpanel.cpp:771
-#: src/mmcheckingpanel.cpp:814
+#: src/mmcheckingpanel.cpp:780
+#: src/mmcheckingpanel.cpp:823
 msgid "Viewing Reconciled transactions"
 msgstr "Saskaņoto darījumu apskate"
 
-#: src/mmcheckingpanel.cpp:775
-#: src/mmcheckingpanel.cpp:824
+#: src/mmcheckingpanel.cpp:784
+#: src/mmcheckingpanel.cpp:833
 msgid "Viewing Un-Reconciled transactions"
 msgstr "Nesaskaņoto darījumu apskate"
 
-#: src/mmcheckingpanel.cpp:779
-#: src/mmcheckingpanel.cpp:834
+#: src/mmcheckingpanel.cpp:788
+#: src/mmcheckingpanel.cpp:843
 msgid "Viewing transactions from today"
 msgstr "Šodienas darījumu apskate"
 
-#: src/mmcheckingpanel.cpp:783
-#: src/mmcheckingpanel.cpp:839
+#: src/mmcheckingpanel.cpp:792
+#: src/mmcheckingpanel.cpp:848
 msgid "Viewing transactions from last 30 days"
 msgstr "Pēdējo 30 dienu darījumu apskate"
 
-#: src/mmcheckingpanel.cpp:787
-#: src/mmcheckingpanel.cpp:844
+#: src/mmcheckingpanel.cpp:796
+#: src/mmcheckingpanel.cpp:853
 msgid "Viewing transactions from last 3 months"
 msgstr "Pēdējo 3 mēnešu darījumu apskate"
 
-#: src/mmcheckingpanel.cpp:791
-#: src/mmcheckingpanel.cpp:849
+#: src/mmcheckingpanel.cpp:800
+#: src/mmcheckingpanel.cpp:858
 msgid "Viewing transactions from current month"
 msgstr "Pašreizējā mēneša darījumu apskate"
 
-#: src/mmcheckingpanel.cpp:795
-#: src/mmcheckingpanel.cpp:854
+#: src/mmcheckingpanel.cpp:804
+#: src/mmcheckingpanel.cpp:863
 msgid "Viewing transactions from last month"
 msgstr "Pagājušā mēneša darījumu apskate"
 
-#: src/mmcheckingpanel.cpp:799
+#: src/mmcheckingpanel.cpp:808
 msgid "Viewing All Except Reconciled Transactions"
 msgstr "Visu, izņemot saskaņoto, darījumu apskate"
 
-#: src/mmcheckingpanel.cpp:819
+#: src/mmcheckingpanel.cpp:828
 msgid "Viewing Void transactions"
 msgstr "Atcelto darījumu apskate"
 
-#: src/mmcheckingpanel.cpp:829
+#: src/mmcheckingpanel.cpp:838
 msgid "Viewing Flagged transactions"
 msgstr "Ar karodziņu atzīmēto darījumu apskate"
 
-#: src/mmcheckingpanel.cpp:859
+#: src/mmcheckingpanel.cpp:868
 msgid "Viewing duplicate transactions"
 msgstr "Dublikātu darījumu apskate"
 
-#: src/mmcheckingpanel.cpp:864
+#: src/mmcheckingpanel.cpp:873
 msgid "Viewing All except Reconciled Transactions"
 msgstr "Visu, izņemot saskaņoto, darījumu apskate"
 
-#: src/mmcheckingpanel.cpp:869
+#: src/mmcheckingpanel.cpp:878
 msgid "Do you really want to delete all the transactions shown?"
 msgstr "Vai Jūs tiešām vēlaties dzēst visus parādītos darījumus?"
 
-#: src/mmcheckingpanel.cpp:870
-#: src/mmcheckingpanel.cpp:885
-#: src/mmcheckingpanel.cpp:1272
+#: src/mmcheckingpanel.cpp:879
+#: src/mmcheckingpanel.cpp:894
+#: src/mmcheckingpanel.cpp:1280
 msgid "Confirm Transaction Deletion"
 msgstr "Apstipriniet darījuma dzēšanu"
 
-#: src/mmcheckingpanel.cpp:884
+#: src/mmcheckingpanel.cpp:893
 msgid "Do you really want to delete all the flagged transactions?"
 msgstr "Vai Jūs tiešām vēlaties dzēst visus ar karodziņu atzīmētos darījumus?"
 
-#: src/mmcheckingpanel.cpp:923
+#: src/mmcheckingpanel.cpp:931
 msgid "&New Transaction"
 msgstr "&Jauns darījums"
 
-#: src/mmcheckingpanel.cpp:925
+#: src/mmcheckingpanel.cpp:933
 msgid "&Edit Transaction"
 msgstr "R&ediģēt darījumu"
 
-#: src/mmcheckingpanel.cpp:926
+#: src/mmcheckingpanel.cpp:934
 msgid "&Delete Transaction"
 msgstr "&Dzēst darījumu"
 
-#: src/mmcheckingpanel.cpp:927
+#: src/mmcheckingpanel.cpp:935
 msgid "&Copy Transaction"
 msgstr "K&opēt darījumu"
 
-#: src/mmcheckingpanel.cpp:929
+#: src/mmcheckingpanel.cpp:937
 msgid "&Paste Transaction"
 msgstr "&Ielīmēt darījumu"
 
-#: src/mmcheckingpanel.cpp:931
+#: src/mmcheckingpanel.cpp:939
 msgid "Mark As &Reconciled"
 msgstr "Atzīmēt kā saskaņo&tu"
 
-#: src/mmcheckingpanel.cpp:932
+#: src/mmcheckingpanel.cpp:940
 msgid "Mark As &Unreconciled"
 msgstr "Atzīmēt kā &nesaskaņotu"
 
-#: src/mmcheckingpanel.cpp:933
+#: src/mmcheckingpanel.cpp:941
 msgid "Mark As &Void"
 msgstr "Atzīmēt kā &atceltu"
 
-#: src/mmcheckingpanel.cpp:934
+#: src/mmcheckingpanel.cpp:942
 msgid "Mark For &Followup"
 msgstr "Atzī&mēt priekš sekošanas"
 
-#: src/mmcheckingpanel.cpp:935
+#: src/mmcheckingpanel.cpp:943
 msgid "Mark As &Duplicate"
 msgstr "Atzīmēt kā du&blikātu"
 
-#: src/mmcheckingpanel.cpp:939
+#: src/mmcheckingpanel.cpp:947
 msgid "as Reconciled"
 msgstr "kā saskaņotu"
 
-#: src/mmcheckingpanel.cpp:940
+#: src/mmcheckingpanel.cpp:948
 msgid "as Unreconciled"
 msgstr "kā nesaskaņotu"
 
-#: src/mmcheckingpanel.cpp:941
+#: src/mmcheckingpanel.cpp:949
 msgid "as Void"
 msgstr "kā atceltu"
 
-#: src/mmcheckingpanel.cpp:942
+#: src/mmcheckingpanel.cpp:950
 msgid "as needing Followup"
 msgstr "nepieciešama sekošana"
 
-#: src/mmcheckingpanel.cpp:943
+#: src/mmcheckingpanel.cpp:951
 msgid "as Duplicate"
 msgstr "kā dublikātu"
 
-#: src/mmcheckingpanel.cpp:944
+#: src/mmcheckingpanel.cpp:952
 msgid "Mark all "
 msgstr "Atzīmēt visus"
 
-#: src/mmcheckingpanel.cpp:1271
+#: src/mmcheckingpanel.cpp:1279
 msgid "Do you really want to delete the transaction?"
 msgstr "Vai Jūs tiešām vēlaties dzēst darījumu?"
 
-#: src/mmex.cpp:308
+#: src/mmex.cpp:310
 msgid "Add Account Wizard"
 msgstr "Konta pievienošanas veidnis"
 
-#: src/mmex.cpp:317
+#: src/mmex.cpp:319
 msgid ""
 " models all transactions as belonging to accounts.\n"
 "\n"
@@ -1520,11 +1520,11 @@ msgstr ""
 "Lai palīdzētu Jums iesākt, sāciet ar saraksta izveidi, kurā ir  \n"
 "norādītas visas finanšu iestādes, kuros Jūs turat savus kontus."
 
-#: src/mmex.cpp:359
+#: src/mmex.cpp:361
 msgid "New Database Wizard"
 msgstr "Jaunas datu bāzes veidne"
 
-#: src/mmex.cpp:366
+#: src/mmex.cpp:368
 msgid ""
 "The next pages will help you create a new database.\n"
 "\n"
@@ -1542,536 +1542,536 @@ msgstr ""
 "un rūpīgi tās uzglabājat, jo tas satur svarīgu \n"
 "finansu informāciju."
 
-#: src/mmex.cpp:677
+#: src/mmex.cpp:679
 msgid "Navigation"
 msgstr "Navigācija"
 
-#: src/mmex.cpp:691
+#: src/mmex.cpp:693
 msgid "Home Page"
 msgstr "Mājas lapa"
 
-#: src/mmex.cpp:695
+#: src/mmex.cpp:697
 msgid "Bank Accounts"
 msgstr "Bankas konts"
 
-#: src/mmex.cpp:702
-#: src/mmex.cpp:743
+#: src/mmex.cpp:704
+#: src/mmex.cpp:745
 msgid "Stocks"
 msgstr "Akcijas"
 
-#: src/mmex.cpp:724
+#: src/mmex.cpp:726
 msgid "Budgeting"
 msgstr "Budžeta plāns"
 
-#: src/mmex.cpp:730
+#: src/mmex.cpp:732
 msgid "Reports"
 msgstr "Pārskati"
 
-#: src/mmex.cpp:736
+#: src/mmex.cpp:738
 msgid "Summary of Accounts"
 msgstr "Kontu kopsavilkums"
 
-#: src/mmex.cpp:757
-#: src/mmex.cpp:1443
-#: src/mmex.cpp:1462
-#: src/mmex.cpp:1475
-#: src/mmex.cpp:1488
-#: src/mmex.cpp:1505
-#: src/mmex.cpp:1522
+#: src/mmex.cpp:759
+#: src/mmex.cpp:1445
+#: src/mmex.cpp:1464
+#: src/mmex.cpp:1477
+#: src/mmex.cpp:1490
+#: src/mmex.cpp:1507
+#: src/mmex.cpp:1524
 msgid "Where the Money Goes"
 msgstr "Kur aiziet nauda"
 
-#: src/mmex.cpp:762
-#: src/mmex.cpp:794
-#: src/mmex.cpp:826
-#: src/mmex.cpp:857
-#: src/mmex.cpp:889
+#: src/mmex.cpp:764
+#: src/mmex.cpp:796
+#: src/mmex.cpp:828
+#: src/mmex.cpp:859
+#: src/mmex.cpp:891
 msgid "Last Calendar Month"
 msgstr "Pēdējais kalendārais mēnesis"
 
-#: src/mmex.cpp:767
-#: src/mmex.cpp:799
-#: src/mmex.cpp:831
-#: src/mmex.cpp:862
-#: src/mmex.cpp:894
+#: src/mmex.cpp:769
+#: src/mmex.cpp:801
+#: src/mmex.cpp:833
+#: src/mmex.cpp:864
+#: src/mmex.cpp:896
 msgid "Current Month"
 msgstr "Pašreizējais mēnesis"
 
-#: src/mmex.cpp:772
-#: src/mmex.cpp:804
-#: src/mmex.cpp:836
-#: src/mmex.cpp:867
-#: src/mmex.cpp:899
+#: src/mmex.cpp:774
+#: src/mmex.cpp:806
+#: src/mmex.cpp:838
+#: src/mmex.cpp:869
+#: src/mmex.cpp:901
 msgid "Last 30 Days"
 msgstr "Pēdējās 30 dienas"
 
-#: src/mmex.cpp:777
-#: src/mmex.cpp:809
-#: src/mmex.cpp:841
-#: src/mmex.cpp:872
-#: src/mmex.cpp:904
+#: src/mmex.cpp:779
+#: src/mmex.cpp:811
+#: src/mmex.cpp:843
+#: src/mmex.cpp:874
+#: src/mmex.cpp:906
 msgid "Last Year"
 msgstr "Pēdējais gads"
 
-#: src/mmex.cpp:782
-#: src/mmex.cpp:814
-#: src/mmex.cpp:846
-#: src/mmex.cpp:877
-#: src/mmex.cpp:909
+#: src/mmex.cpp:784
+#: src/mmex.cpp:816
+#: src/mmex.cpp:848
+#: src/mmex.cpp:879
+#: src/mmex.cpp:911
 msgid "Current Year"
 msgstr "Pašreizējais gads"
 
-#: src/mmex.cpp:789
-#: src/mmex.cpp:1351
-#: src/mmex.cpp:1371
-#: src/mmex.cpp:1384
-#: src/mmex.cpp:1397
-#: src/mmex.cpp:1414
-#: src/mmex.cpp:1431
+#: src/mmex.cpp:791
+#: src/mmex.cpp:1353
+#: src/mmex.cpp:1373
+#: src/mmex.cpp:1386
+#: src/mmex.cpp:1399
+#: src/mmex.cpp:1416
+#: src/mmex.cpp:1433
 msgid "Where the Money Comes From"
 msgstr "No kurienes nāk nauda"
 
-#: src/mmex.cpp:852
+#: src/mmex.cpp:854
 msgid "To Whom the Money Goes"
 msgstr "Kam aiziet nauda"
 
-#: src/mmex.cpp:884
+#: src/mmex.cpp:886
 msgid "Income vs Expenses"
 msgstr "Ienākumi pret izdevumiem"
 
-#: src/mmex.cpp:914
+#: src/mmex.cpp:916
 msgid "Income vs Expenses - All Time"
 msgstr "Ienākumi pret izdevumiem - visi"
 
-#: src/mmex.cpp:920
+#: src/mmex.cpp:922
 msgid "Transaction Report"
 msgstr "Darījumu pārskats"
 
-#: src/mmex.cpp:928
+#: src/mmex.cpp:930
 msgid "Budget Performance"
 msgstr "Budžeta izpilde"
 
-#: src/mmex.cpp:937
+#: src/mmex.cpp:939
 msgid "Budget Setup and Performance"
 msgstr "Budžeta aprēķins un izpilde"
 
-#: src/mmex.cpp:943
-#: src/mmex.cpp:2823
+#: src/mmex.cpp:945
+#: src/mmex.cpp:2825
 msgid "Cash Flow"
 msgstr "Naudas plūsma"
 
-#: src/mmex.cpp:948
+#: src/mmex.cpp:950
 msgid "Cash Flow - Specific Accounts"
 msgstr "Naudas plūsma - Specifiski konti"
 
-#: src/mmex.cpp:954
+#: src/mmex.cpp:956
 msgid "Transaction Statistics"
 msgstr "Darījumu statistika"
 
-#: src/mmex.cpp:960
+#: src/mmex.cpp:962
 msgid "Custom SQL Report"
 msgstr "Lietotāja SQL pārskats"
 
-#: src/mmex.cpp:965
+#: src/mmex.cpp:967
 msgid "Help"
 msgstr "Palīdzība"
 
-#: src/mmex.cpp:1049
-#: src/mmex.cpp:1136
+#: src/mmex.cpp:1051
+#: src/mmex.cpp:1138
 msgid "Top Categories Last 30 Days"
 msgstr "Top kategorijas pēdējās 30 dienās"
 
-#: src/mmex.cpp:1816
-#: src/mmex.cpp:3353
+#: src/mmex.cpp:1818
+#: src/mmex.cpp:3355
 msgid "Do you really want to delete the account?"
 msgstr "Vai Jūs tiešām vēlaties dzēst kontu?"
 
-#: src/mmex.cpp:1817
-#: src/mmex.cpp:3354
+#: src/mmex.cpp:1819
+#: src/mmex.cpp:3356
 msgid "Confirm Account Deletion"
 msgstr "Apstipriniet konta dzēšanu"
 
-#: src/mmex.cpp:1862
+#: src/mmex.cpp:1864
 msgid "&Go To.."
 msgstr "&Iet uz.."
 
-#: src/mmex.cpp:1863
-#: src/mmex.cpp:1872
-#: src/mmex.cpp:2097
+#: src/mmex.cpp:1865
+#: src/mmex.cpp:1874
+#: src/mmex.cpp:2099
 msgid "&Edit Account"
 msgstr "&Rediģēt kontu"
 
-#: src/mmex.cpp:1864
-#: src/mmex.cpp:1873
-#: src/mmex.cpp:2103
+#: src/mmex.cpp:1866
+#: src/mmex.cpp:1875
+#: src/mmex.cpp:2105
 msgid "&Delete Account"
 msgstr "&Dzēst kontu"
 
-#: src/mmex.cpp:1866
-#: src/mmex.cpp:1875
+#: src/mmex.cpp:1868
+#: src/mmex.cpp:1877
 msgid "&Launch Account Website"
 msgstr "&Atvērt konta mājas lapu"
 
-#: src/mmex.cpp:2009
+#: src/mmex.cpp:2011
 msgid "&New Database\tCtrl-N"
 msgstr "&Jauna datu bāze\tCtrl-J"
 
-#: src/mmex.cpp:2010
-#: src/mmex.cpp:2257
+#: src/mmex.cpp:2012
+#: src/mmex.cpp:2259
 msgid "New Database"
 msgstr "Jauna datu bāze"
 
-#: src/mmex.cpp:2014
+#: src/mmex.cpp:2016
 msgid "&Open Database\tCtrl-O"
 msgstr "&Atvērt datu bāzi\tCtrl-A"
 
-#: src/mmex.cpp:2015
-#: src/mmex.cpp:2259
+#: src/mmex.cpp:2017
+#: src/mmex.cpp:2261
 msgid "Open Database"
 msgstr "Atvērt datu bāzi"
 
-#: src/mmex.cpp:2022
+#: src/mmex.cpp:2024
 msgid "Save Database &As"
 msgstr "&Saglabāt datu bāzi kā"
 
-#: src/mmex.cpp:2023
+#: src/mmex.cpp:2025
 msgid "Save Database As"
 msgstr "Saglabāt datu bāzi kā"
 
-#: src/mmex.cpp:2030
+#: src/mmex.cpp:2032
 msgid "&CSV Files"
 msgstr "&CSV faili"
 
-#: src/mmex.cpp:2030
+#: src/mmex.cpp:2032
 msgid "Export to CSV"
 msgstr "Eksportēt uz CSV"
 
-#: src/mmex.cpp:2031
+#: src/mmex.cpp:2033
 msgid "&Report to HTML"
 msgstr "&Pārskatu uz HTML"
 
-#: src/mmex.cpp:2031
+#: src/mmex.cpp:2033
 msgid "Export to HTML"
 msgstr "Eksportēt uz HTML"
 
-#: src/mmex.cpp:2032
+#: src/mmex.cpp:2034
 msgid "&Export"
 msgstr "&Eksportēt"
 
-#: src/mmex.cpp:2035
+#: src/mmex.cpp:2037
 msgid "&QIF Files"
 msgstr "&QIF faili"
 
-#: src/mmex.cpp:2035
+#: src/mmex.cpp:2037
 msgid "Import from QIF"
 msgstr "Importēt no QIF"
 
-#: src/mmex.cpp:2036
+#: src/mmex.cpp:2038
 msgid "&Universal CSV Files"
 msgstr "&Universālie CSV faili"
 
-#: src/mmex.cpp:2036
+#: src/mmex.cpp:2038
 msgid "Import from any CSV file"
 msgstr "Importēt no CSV faila"
 
-#: src/mmex.cpp:2038
+#: src/mmex.cpp:2040
 msgid "&MMEX CSV Files"
 msgstr "&MMEX CSV faili"
 
-#: src/mmex.cpp:2038
+#: src/mmex.cpp:2040
 msgid "Import from MMEX CSV"
 msgstr "Importēt no MMEX CSV"
 
-#: src/mmex.cpp:2040
+#: src/mmex.cpp:2042
 msgid "MM.&NET CSV Files"
 msgstr "MM.NET &CSV faili"
 
-#: src/mmex.cpp:2040
+#: src/mmex.cpp:2042
 msgid "Import from MM.NET CSV"
 msgstr "Importēt no MM.NET CSV"
 
-#: src/mmex.cpp:2042
+#: src/mmex.cpp:2044
 msgid "&Import"
 msgstr "Importēt"
 
-#: src/mmex.cpp:2048
+#: src/mmex.cpp:2050
 msgid "Page Set&up..."
 msgstr "&Lapas iestatīšana..."
 
-#: src/mmex.cpp:2048
+#: src/mmex.cpp:2050
 msgid "Setup page printing options"
 msgstr "Iestatīt lapas drukāšanas opcijas"
 
-#: src/mmex.cpp:2054
-#: src/mmex.cpp:2060
+#: src/mmex.cpp:2056
+#: src/mmex.cpp:2062
 msgid "Current &View"
 msgstr "&Pašreizējais skats"
 
-#: src/mmex.cpp:2054
+#: src/mmex.cpp:2056
 msgid "Preview current report"
 msgstr "Priekšskatīt pašreizējo pārskatu"
 
-#: src/mmex.cpp:2056
+#: src/mmex.cpp:2058
 msgid "Print Pre&view..."
 msgstr "Drukāšanas &priekšskatījums..."
 
-#: src/mmex.cpp:2060
+#: src/mmex.cpp:2062
 msgid "Print current report"
 msgstr "Drukāt pašreizējo pārskatu"
 
-#: src/mmex.cpp:2063
+#: src/mmex.cpp:2065
 msgid "&Print..."
 msgstr "&Drukāt..."
 
-#: src/mmex.cpp:2068
+#: src/mmex.cpp:2070
 msgid "E&xit\tAlt-X"
 msgstr "I&zeja\tAlt-Z"
 
-#: src/mmex.cpp:2068
+#: src/mmex.cpp:2070
 msgid "Quit this program"
 msgstr "Aizvērt šo programmu"
 
-#: src/mmex.cpp:2075
+#: src/mmex.cpp:2077
 msgid "&Toolbar"
 msgstr "&Rīkjosla"
 
-#: src/mmex.cpp:2075
+#: src/mmex.cpp:2077
 msgid "Show/Hide the toolbar"
 msgstr "Parādīt/slēpt rīkjoslu"
 
-#: src/mmex.cpp:2077
+#: src/mmex.cpp:2079
 msgid "&Navigation"
 msgstr "&Navigācija"
 
-#: src/mmex.cpp:2077
+#: src/mmex.cpp:2079
 msgid "Show/Hide the Navigation tree control"
 msgstr "Parādīt/slēpt navigācijas koka vadību"
 
-#: src/mmex.cpp:2087
+#: src/mmex.cpp:2089
 msgid "New &Account"
 msgstr "&Jauns konts"
 
-#: src/mmex.cpp:2087
-#: src/mmex.cpp:2263
+#: src/mmex.cpp:2089
+#: src/mmex.cpp:2265
 msgid "New Account"
 msgstr "Jauns konts"
 
-#: src/mmex.cpp:2093
+#: src/mmex.cpp:2095
 msgid "Account &List"
 msgstr "&Kontu saraksts"
 
-#: src/mmex.cpp:2093
-#: src/mmex.cpp:2265
+#: src/mmex.cpp:2095
+#: src/mmex.cpp:2267
 msgid "Show Account List"
 msgstr "Parādīt kontu sarakstu"
 
-#: src/mmex.cpp:2097
+#: src/mmex.cpp:2099
 msgid "Edit Account"
 msgstr "Rediģēt kontu"
 
-#: src/mmex.cpp:2103
+#: src/mmex.cpp:2105
 msgid "Delete Account from database"
 msgstr "Dzēst kontu no datu bāzes"
 
-#: src/mmex.cpp:2115
+#: src/mmex.cpp:2117
 msgid "Organize &Categories"
 msgstr "Organizēt &kategorijas"
 
-#: src/mmex.cpp:2115
-#: src/mmex.cpp:2267
+#: src/mmex.cpp:2117
+#: src/mmex.cpp:2269
 msgid "Organize Categories"
 msgstr "Organizēt kategorijas"
 
-#: src/mmex.cpp:2120
+#: src/mmex.cpp:2122
 msgid "Organize &Payees"
 msgstr "Organizēt &darījuma partnerus"
 
-#: src/mmex.cpp:2120
-#: src/mmex.cpp:2268
+#: src/mmex.cpp:2122
+#: src/mmex.cpp:2270
 msgid "Organize Payees"
 msgstr "Organizēt darījuma partnerus"
 
-#: src/mmex.cpp:2125
+#: src/mmex.cpp:2127
 msgid "Or&ganize Currency"
 msgstr "Organizēt &valūtas"
 
-#: src/mmex.cpp:2125
-#: src/mmex.cpp:2269
+#: src/mmex.cpp:2127
+#: src/mmex.cpp:2271
 msgid "Organize Currency"
 msgstr "Organizēt valūtas"
 
-#: src/mmex.cpp:2132
+#: src/mmex.cpp:2134
 msgid "&Budget Setup"
 msgstr "&Budžeta aprēķins"
 
-#: src/mmex.cpp:2132
+#: src/mmex.cpp:2134
 msgid "Budget Setup"
 msgstr "Budžeta aprēķins"
 
-#: src/mmex.cpp:2140
+#: src/mmex.cpp:2142
 msgid "&Repeating Transactions"
 msgstr "Atkā&rtojošies darījumi"
 
-#: src/mmex.cpp:2140
+#: src/mmex.cpp:2142
 msgid "Bills && Deposits"
 msgstr "Rēķini && Iemaksas"
 
-#: src/mmex.cpp:2148
+#: src/mmex.cpp:2150
 msgid "&Stock Investments"
 msgstr "Akciju &ieguldījumi"
 
-#: src/mmex.cpp:2148
+#: src/mmex.cpp:2150
 msgid "Stock Investments"
 msgstr "Akciju ieguldījumi"
 
-#: src/mmex.cpp:2156
+#: src/mmex.cpp:2158
 msgid "&Assets"
 msgstr "&Aktīvi"
 
-#: src/mmex.cpp:2164
+#: src/mmex.cpp:2166
 msgid "&Transaction Filter"
 msgstr "Darījumu &filtrs"
 
-#: src/mmex.cpp:2164
+#: src/mmex.cpp:2166
 msgid "Transaction Filter"
 msgstr "Darījumu filtrs"
 
-#: src/mmex.cpp:2171
+#: src/mmex.cpp:2173
 msgid "&Options"
 msgstr "&Opcijas"
 
-#: src/mmex.cpp:2171
+#: src/mmex.cpp:2173
 msgid "Show the Options Dialog"
 msgstr "Parādīt opciju logu"
 
-#: src/mmex.cpp:2178
+#: src/mmex.cpp:2180
 msgid "&Help\tCtrl-F1"
 msgstr "Pa&līdzība\tCtrl-F1"
 
-#: src/mmex.cpp:2178
+#: src/mmex.cpp:2180
 msgid "Show the Help file"
 msgstr "Parādīt palīdzības failu"
 
-#: src/mmex.cpp:2183
+#: src/mmex.cpp:2185
 msgid "&Show App Start Dialog"
 msgstr "Parādīt programmas &sākuma logu"
 
-#: src/mmex.cpp:2183
+#: src/mmex.cpp:2185
 msgid "App Start Dialog"
 msgstr "Programmas sākuma logs"
 
-#: src/mmex.cpp:2190
+#: src/mmex.cpp:2192
 msgid "Convert Encrypted &DB"
 msgstr "Konv&ertēt šifrētu datu bāzi"
 
-#: src/mmex.cpp:2191
+#: src/mmex.cpp:2193
 msgid "Convert Encrypted DB to Non-Encrypted DB"
 msgstr "Konvertēt šifrētu datu bāzi uz nešifrētu datu bāzi"
 
-#: src/mmex.cpp:2197
+#: src/mmex.cpp:2199
 msgid "Online &Update Currency Rate"
 msgstr "Atjaunināt valūtas kursu &tiešsaistē"
 
-#: src/mmex.cpp:2198
+#: src/mmex.cpp:2200
 msgid "Online update currency rate"
 msgstr "Atjaunināt valūtas kursu tiešsaistē"
 
-#: src/mmex.cpp:2206
+#: src/mmex.cpp:2208
 msgid "Check for &Updates"
 msgstr "Pārbaudīt &atjauninājumus"
 
-#: src/mmex.cpp:2206
+#: src/mmex.cpp:2208
 msgid "Check For Updates"
 msgstr "Pārbaudīt atjauninājumus"
 
-#: src/mmex.cpp:2214
+#: src/mmex.cpp:2216
 msgid "&Report Issues or Feedback"
 msgstr "&Ziņot par kļūdām vai atgriezeniskā saite"
 
-#: src/mmex.cpp:2214
+#: src/mmex.cpp:2216
 msgid "Send email through the mailing list to report issues with the software."
 msgstr "Sūti epastu uz adresātu sarakstu, lai ziņotu par programmas kļūdām."
 
-#: src/mmex.cpp:2222
+#: src/mmex.cpp:2224
 msgid "Be &notified of new releases"
 msgstr "&Esi informēts par jauniem laidieniem"
 
-#: src/mmex.cpp:2222
+#: src/mmex.cpp:2224
 msgid "Sign up for the announcement mailing list"
 msgstr "Pievienojiet paziņojumu adresātu sarakstam"
 
-#: src/mmex.cpp:2228
+#: src/mmex.cpp:2230
 msgid "&About..."
 msgstr "&Par"
 
-#: src/mmex.cpp:2228
+#: src/mmex.cpp:2230
 msgid "Show about dialog"
 msgstr "Parādīt logu par"
 
-#: src/mmex.cpp:2233
+#: src/mmex.cpp:2235
 msgid "&File"
 msgstr "&Fails"
 
-#: src/mmex.cpp:2234
+#: src/mmex.cpp:2236
 msgid "&Accounts"
 msgstr "&Konti"
 
-#: src/mmex.cpp:2235
+#: src/mmex.cpp:2237
 msgid "&Tools"
 msgstr "&Rīki"
 
-#: src/mmex.cpp:2236
+#: src/mmex.cpp:2238
 msgid "&View"
 msgstr "&Skats"
 
-#: src/mmex.cpp:2237
+#: src/mmex.cpp:2239
 msgid "&Help"
 msgstr "&Palīdzība"
 
-#: src/mmex.cpp:2256
+#: src/mmex.cpp:2258
 msgid "New"
 msgstr "Jauns"
 
-#: src/mmex.cpp:2258
+#: src/mmex.cpp:2260
 msgid "Open"
 msgstr "Atvērts"
 
-#: src/mmex.cpp:2265
+#: src/mmex.cpp:2267
 msgid "Account List"
 msgstr "Kontu saraksts"
 
-#: src/mmex.cpp:2267
+#: src/mmex.cpp:2269
 msgid "Show Organize Categories Dialog"
 msgstr "Parādīt kategoriju organizēšanas logu"
 
-#: src/mmex.cpp:2268
+#: src/mmex.cpp:2270
 msgid "Show Organize Payees Dialog"
 msgstr "Parādīt darījuma partneru organizēšanas logu"
 
-#: src/mmex.cpp:2269
+#: src/mmex.cpp:2271
 msgid "Show Organize Currency Dialog"
 msgstr "Parādīt valūtu organizēšanas logu"
 
-#: src/mmex.cpp:2293
-#: src/mmex.cpp:2486
+#: src/mmex.cpp:2295
+#: src/mmex.cpp:2488
 msgid "Money Manager Ex: Enter Password For Database.."
 msgstr "Money Manager Ex: Ievadiet datu bāzes paroli.."
 
-#: src/mmex.cpp:2317
-#: src/mmex.cpp:2371
+#: src/mmex.cpp:2319
+#: src/mmex.cpp:2373
 msgid " - No File opened "
 msgstr " - Nav atvērta faila "
 
-#: src/mmex.cpp:2320
+#: src/mmex.cpp:2322
 msgid "Sorry. The Database version is too old or Database password is incorrect"
 msgstr "Atvainojiet. Datu bāzes versija ir novecojusi vai datu bāzes parole ir nepareiza"
 
-#: src/mmex.cpp:2321
-#: src/mmex.cpp:2375
+#: src/mmex.cpp:2323
+#: src/mmex.cpp:2377
 msgid "Error opening database"
 msgstr "Kļūda atverot datu bāzi"
 
-#: src/mmex.cpp:2374
+#: src/mmex.cpp:2376
 msgid ""
 "Cannot locate previously opened database.\n"
 "Do you want to browse to locate the file?"
@@ -2079,136 +2079,136 @@ msgstr ""
 "Nevar atrast iepriekš izmantoto datu bāzi.\n"
 "Vai Jūs vēlaties pārlūkot, lai atrastu failu?"
 
-#: src/mmex.cpp:2394
+#: src/mmex.cpp:2396
 msgid "Opening Database File && Verifying Integrity"
 msgstr "Atveru datu bāzes failu && pārbaudu integritāti"
 
-#: src/mmex.cpp:2482
+#: src/mmex.cpp:2484
 msgid "Choose Encrypted database file to open"
 msgstr "Izvēlieties šifrēto datu bāzes failu, kurš ir jāatver"
 
-#: src/mmex.cpp:2508
+#: src/mmex.cpp:2510
 msgid "Converted DB!"
 msgstr "Datu bāze konvertēta!"
 
-#: src/mmex.cpp:2509
+#: src/mmex.cpp:2511
 msgid "MMEX message"
 msgstr "MMEX ziņojums"
 
-#: src/mmex.cpp:2514
+#: src/mmex.cpp:2516
 msgid "Unable to convert db successfully. Check Password!"
 msgstr "Nevarētu konvertēt datu bāzi. Pārbaudiet paroli!"
 
-#: src/mmex.cpp:2600
-#: src/mmex.cpp:2683
+#: src/mmex.cpp:2602
+#: src/mmex.cpp:2685
 msgid "No Account available! Cannot Import! Create a new account first!"
 msgstr "Nav pieejamu kontu! Imports nav iespējams! Vispirms izveidojiet kontu!"
 
-#: src/mmex.cpp:2626
+#: src/mmex.cpp:2628
 msgid "Choose Account to import to:"
 msgstr "Izvēlieties kontu, uz kuru importēt:"
 
-#: src/mmex.cpp:2627
+#: src/mmex.cpp:2629
 msgid "QFX Import"
 msgstr "QFX imports"
 
-#: src/mmex.cpp:2822
+#: src/mmex.cpp:2824
 msgid "Choose Accounts"
 msgstr "Izvēlieties kontus"
 
-#: src/mmex.cpp:2882
-#: src/mmex.cpp:2970
+#: src/mmex.cpp:2884
+#: src/mmex.cpp:2972
 msgid "Unable to connect!"
 msgstr "Nevar pieslēgties!"
 
-#: src/mmex.cpp:2882
-#: src/mmex.cpp:2940
-#: src/mmex.cpp:2946
+#: src/mmex.cpp:2884
+#: src/mmex.cpp:2942
+#: src/mmex.cpp:2948
 msgid "Check Update"
 msgstr "Pārbaudīt atjauninājumus"
 
-#: src/mmex.cpp:2940
+#: src/mmex.cpp:2942
 msgid "New update available!"
 msgstr "Pieejams jauns atjauninājums!"
 
-#: src/mmex.cpp:2946
+#: src/mmex.cpp:2948
 msgid "You have the latest version installed!"
 msgstr "Jums ir instalēta jaunākā versija!"
 
-#: src/mmex.cpp:2961
+#: src/mmex.cpp:2963
 msgid "No database!"
 msgstr "Nav datu bāzes"
 
-#: src/mmex.cpp:2961
-#: src/mmex.cpp:2970
-#: src/mmex.cpp:2977
-#: src/mmex.cpp:2983
-#: src/mmex.cpp:2992
-#: src/mmex.cpp:2999
-#: src/mmex.cpp:3004
-#: src/mmex.cpp:3009
-#: src/mmex.cpp:3016
-#: src/mmex.cpp:3021
-#: src/mmex.cpp:3064
-#: src/mmex.cpp:3091
+#: src/mmex.cpp:2963
+#: src/mmex.cpp:2972
+#: src/mmex.cpp:2979
+#: src/mmex.cpp:2985
+#: src/mmex.cpp:2994
+#: src/mmex.cpp:3001
+#: src/mmex.cpp:3006
+#: src/mmex.cpp:3011
+#: src/mmex.cpp:3018
+#: src/mmex.cpp:3023
+#: src/mmex.cpp:3066
+#: src/mmex.cpp:3093
 msgid "Update Currency Rate"
 msgstr "Atjaunot valūtas kursu"
 
-#: src/mmex.cpp:2977
+#: src/mmex.cpp:2979
 msgid "Cannot get data from WWW!"
 msgstr "Nevar iegūt datus no tīmekļa!"
 
-#: src/mmex.cpp:2983
+#: src/mmex.cpp:2985
 msgid "Incorrect XML data (#1)!"
 msgstr "Nepareizi XML dati (#1)!"
 
-#: src/mmex.cpp:2992
+#: src/mmex.cpp:2994
 msgid "Incorrect XML data (#2)!"
 msgstr "Nepareizi XML dati (#2)!"
 
-#: src/mmex.cpp:2999
+#: src/mmex.cpp:3001
 msgid "Incorrect XML data (#3)!"
 msgstr "Nepareizi XML dati (#3)!"
 
-#: src/mmex.cpp:3004
+#: src/mmex.cpp:3006
 msgid "Incorrect XML data (#4)!"
 msgstr "Nepareizi XML dati (#4)!"
 
-#: src/mmex.cpp:3009
+#: src/mmex.cpp:3011
 msgid "Incorrect XML data (#5)!"
 msgstr "Nepareizi XML dati (#5)!"
 
-#: src/mmex.cpp:3016
+#: src/mmex.cpp:3018
 msgid "Incorrect XML data (#6)!"
 msgstr "Nepareizi XML dati (#6)!"
 
-#: src/mmex.cpp:3021
+#: src/mmex.cpp:3023
 msgid "Incorrect XML data (#7)!"
 msgstr "Nepareizi XML dati (#7)!"
 
-#: src/mmex.cpp:3064
+#: src/mmex.cpp:3066
 msgid "Could not find base currency symbol!"
 msgstr "Nevar atrast pamata valūtas simbolu!"
 
-#: src/mmex.cpp:3091
+#: src/mmex.cpp:3093
 msgid "Currency rate updated"
 msgstr "Valūtas kurs atjaunots"
 
-#: src/mmex.cpp:3290
-#: src/mmex.cpp:3331
+#: src/mmex.cpp:3292
+#: src/mmex.cpp:3333
 msgid "No Account available!"
 msgstr "Nav pieejamu kontu!"
 
-#: src/mmex.cpp:3304
+#: src/mmex.cpp:3306
 msgid "Choose Account to Edit"
 msgstr "Izvēlieties kontu rediģēšanai"
 
-#: src/mmex.cpp:3305
-#: src/mmex.cpp:3346
+#: src/mmex.cpp:3307
+#: src/mmex.cpp:3348
 msgid "Accounts"
 msgstr "Konti"
 
-#: src/mmex.cpp:3345
+#: src/mmex.cpp:3347
 msgid "Choose Account to Delete"
 msgstr "Izvēlieties kontu dzēšanai"
 
@@ -3371,73 +3371,14 @@ msgstr " ir nederīgs"
 msgid "Invalid Entry"
 msgstr "Nederīgs ieraksts"
 
-#: src/wxsqlite3_1_7.cpp:94
-msgid "No Database opened"
-msgstr "Nav atvērtas datubāzes"
+#: src/wxsqlite3.cpp:3354
+msgid "Regular expression invalid: '"
+msgstr ""
 
-#: src/wxsqlite3_1_7.cpp:95
-msgid "Statement not accessible"
-msgstr "Priekšraksts nav pieejams"
-
-#: src/wxsqlite3_1_7.cpp:96
-msgid "Out of memory"
-msgstr "Nepietiek atmiņas"
-
-#: src/wxsqlite3_1_7.cpp:97
-msgid "Cannot decode binary"
-msgstr "Nevar atšifrēt failu"
-
-#: src/wxsqlite3_1_7.cpp:98
-msgid "Invalid field index"
-msgstr "Nederīgs lauka indekss"
-
-#: src/wxsqlite3_1_7.cpp:99
-msgid "Invalid field name"
-msgstr "Nederīgs lauka nosaukums"
-
-#: src/wxsqlite3_1_7.cpp:100
-msgid "Invalid row index"
-msgstr "Nederīgs rindas indekss"
-
-#: src/wxsqlite3_1_7.cpp:101
-msgid "Invalid scalar query"
-msgstr "Nederīgs skalārais vaicājums"
-
-#: src/wxsqlite3_1_7.cpp:103
-msgid "Null Results pointer"
-msgstr "Nulles rezultātu rādītājs"
-
-#: src/wxsqlite3_1_7.cpp:104
-msgid "Error binding string param"
-msgstr "Kļūda saistot string tipa parametru"
-
-#: src/wxsqlite3_1_7.cpp:105
-msgid "Error binding int param"
-msgstr "Kļūda saistot int tipa parametru"
-
-#: src/wxsqlite3_1_7.cpp:106
-msgid "Error binding int64 param"
-msgstr "Kļūda saistot int64 tipa parametru"
-
-#: src/wxsqlite3_1_7.cpp:107
-msgid "Error binding double param"
-msgstr "Kļūda saistot double tipa parametru"
-
-#: src/wxsqlite3_1_7.cpp:108
-msgid "Error binding blob param"
-msgstr "Kļūda saistot blob tipa parametru"
-
-#: src/wxsqlite3_1_7.cpp:109
-msgid "Error binding date/time param"
-msgstr "Kļūda saistot datuma/laika tipa parametru"
-
-#: src/wxsqlite3_1_7.cpp:110
-msgid "Error binding NULL param"
-msgstr "Kļūda saistot NULL tipa parametru"
-
-#: src/wxsqlite3_1_7.cpp:111
-msgid "Error clearing bindings"
-msgstr "Kļūda notīrot saistības"
+#: src/wxsqlite3.cpp:3359
+#, c-format
+msgid "REGEXP called with wrong number of arguments: %d instead of 2."
+msgstr ""
 
 #: src/yahoosettingsdialog.cpp:61
 msgid "Yahoo Server"
@@ -3719,7 +3660,7 @@ msgstr "Visu kontu kopējais atlikums"
 msgid "Summary of Assets"
 msgstr "Aktīvu kopsavilkums"
 
-#: include/reportsummaryassets.h:121
+#: include/reportsummaryassets.h:98
 msgid "Total Assets: "
 msgstr "Aktīvi kopā: "
 
@@ -3727,23 +3668,23 @@ msgstr "Aktīvi kopā: "
 msgid "Summary of Stocks"
 msgstr "Akciju kopsavilkums"
 
-#: include/reportsummarystocks.h:60
+#: include/reportsummarystocks.h:51
 msgid "Company"
 msgstr "Kompānija"
 
-#: include/reportsummarystocks.h:62
+#: include/reportsummarystocks.h:53
 msgid "Number Shares"
 msgstr "Akciju skaits"
 
-#: include/reportsummarystocks.h:63
+#: include/reportsummarystocks.h:54
 msgid "Purchase Date"
 msgstr "Iegādes datums"
 
-#: include/reportsummarystocks.h:68
+#: include/reportsummarystocks.h:59
 msgid "Gain Loss"
 msgstr "Pieaugums, zaudējums"
 
-#: include/reportsummarystocks.h:148
+#: include/reportsummarystocks.h:141
 msgid "Total Stock Investments: "
 msgstr "Kopā akciju ieguldījumi"
 
@@ -3783,6 +3724,40 @@ msgstr "Universālā CSV importētāja logs"
 msgid "Options"
 msgstr "Opcijas"
 
+#~ msgid "No Database opened"
+#~ msgstr "Nav atvērtas datubāzes"
+#~ msgid "Statement not accessible"
+#~ msgstr "Priekšraksts nav pieejams"
+#~ msgid "Out of memory"
+#~ msgstr "Nepietiek atmiņas"
+#~ msgid "Cannot decode binary"
+#~ msgstr "Nevar atšifrēt failu"
+#~ msgid "Invalid field index"
+#~ msgstr "Nederīgs lauka indekss"
+#~ msgid "Invalid field name"
+#~ msgstr "Nederīgs lauka nosaukums"
+#~ msgid "Invalid row index"
+#~ msgstr "Nederīgs rindas indekss"
+#~ msgid "Invalid scalar query"
+#~ msgstr "Nederīgs skalārais vaicājums"
+#~ msgid "Null Results pointer"
+#~ msgstr "Nulles rezultātu rādītājs"
+#~ msgid "Error binding string param"
+#~ msgstr "Kļūda saistot string tipa parametru"
+#~ msgid "Error binding int param"
+#~ msgstr "Kļūda saistot int tipa parametru"
+#~ msgid "Error binding int64 param"
+#~ msgstr "Kļūda saistot int64 tipa parametru"
+#~ msgid "Error binding double param"
+#~ msgstr "Kļūda saistot double tipa parametru"
+#~ msgid "Error binding blob param"
+#~ msgstr "Kļūda saistot blob tipa parametru"
+#~ msgid "Error binding date/time param"
+#~ msgstr "Kļūda saistot datuma/laika tipa parametru"
+#~ msgid "Error binding NULL param"
+#~ msgstr "Kļūda saistot NULL tipa parametru"
+#~ msgid "Error clearing bindings"
+#~ msgstr "Kļūda notīrot saistības"
 #~ msgid "Delete Account"
 #~ msgstr "Dzēst kontu"
 #~ msgid "Select From Account"

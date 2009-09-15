@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-29 12:14-0600\n"
-"PO-Revision-Date: 2008-12-29 12:14-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
+"POT-Creation-Date: 2009-09-15 15:18+0300\n"
+"PO-Revision-Date: 2009-09-15 15:18+0300\n"
+"Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,252 +16,239 @@ msgstr ""
 "X-Poedit-SearchPath-0: include\n"
 "X-Poedit-SearchPath-1: src\n"
 
-#: src/aboutdialog.cpp:134
+#: src/aboutdialog.cpp:153
 #, fuzzy
 msgid "Version: "
 msgstr "Versjons historikk"
 
-#: src/aboutdialog.cpp:145
+#: src/aboutdialog.cpp:164
 msgid "  and contributers from around the world."
 msgstr "og andre bidragsytere fra resten av verden."
 
-#: src/aboutdialog.cpp:150
+#: src/aboutdialog.cpp:169
 msgid "Released under the GNU GPL License"
 msgstr "Sluppet under GNU GPL lisens"
 
-#: src/aboutdialog.cpp:162
+#: src/aboutdialog.cpp:181
 #, fuzzy
 msgid "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
 msgstr "Bruker wxWidgets og SQLite"
 
-#: src/aboutdialog.cpp:166
+#: src/aboutdialog.cpp:185
 msgid "Version History"
 msgstr "Versjons historikk"
 
-#: src/aboutdialog.cpp:171
+#: src/aboutdialog.cpp:190
 msgid "Contributers"
 msgstr "Bidragsytere"
 
-#: src/aboutdialog.cpp:179
+#: src/aboutdialog.cpp:198
 msgid "Using Language : "
 msgstr "Språk :"
 
-#: src/appstartdialog.cpp:114
+#: src/appstartdialog.cpp:123
 msgid "Open Last Opened Database"
 msgstr "Åpne sist brukte database"
 
-#: src/appstartdialog.cpp:127
+#: src/appstartdialog.cpp:136
 msgid "Open the previously opened database : "
 msgstr "Åpne sist brukte database :"
 
-#: src/appstartdialog.cpp:134
+#: src/appstartdialog.cpp:143
 #, fuzzy
 msgid "Create a New Database"
 msgstr "Lag en ny Money Manager fil"
 
-#: src/appstartdialog.cpp:135
+#: src/appstartdialog.cpp:144
 msgid "Create a new database file to get started"
 msgstr "Åpne en ny database for å begynne"
 
-#: src/appstartdialog.cpp:139
+#: src/appstartdialog.cpp:148
 #, fuzzy
 msgid "Open Existing Database"
 msgstr "Åpne sist brukte database"
 
-#: src/appstartdialog.cpp:140
+#: src/appstartdialog.cpp:149
 #, fuzzy
 msgid "Open an already created database file with extension (*.mmb)"
 msgstr "Åpne en eksisterende Money Manager Ex database (*.mmb)"
 
-#: src/appstartdialog.cpp:144
+#: src/appstartdialog.cpp:153
 msgid "Read Documentation"
 msgstr "Les dokumentasjon"
 
-#: src/appstartdialog.cpp:145
+#: src/appstartdialog.cpp:154
 msgid "Read the user manual"
 msgstr "Les brukermanualen"
 
-#: src/appstartdialog.cpp:151
+#: src/appstartdialog.cpp:160
 msgid "Visit Website for more information"
 msgstr "Besøk websiden for mer informasjon"
 
-#: src/appstartdialog.cpp:152
+#: src/appstartdialog.cpp:161
 msgid "Open the Money Manager Ex website for latest news, updates etc"
 msgstr "Gå til Money Manager Ex websiden for siste nytt, oppdateringer osv"
 
-#: src/appstartdialog.cpp:159
+#: src/appstartdialog.cpp:168
 #, fuzzy
 msgid "Show this window next time "
 msgstr "Vis dette vinduet neste gang programmet starter"
 
-#: src/appstartdialog.cpp:161
+#: src/appstartdialog.cpp:170
 #, fuzzy
 msgid " starts"
 msgstr "Status"
 
-#: src/assetdialog.cpp:155
+#: src/assetdialog.cpp:175
 msgid "Asset Details"
 msgstr "Detalijer Aktiva"
 
-#: src/assetdialog.cpp:168
+#: src/assetdialog.cpp:188
 #: src/assetspanel.cpp:139
 msgid "Name"
 msgstr "Navn"
 
-#: src/assetdialog.cpp:174
+#: src/assetdialog.cpp:194
 msgid "Enter the name of the asset"
 msgstr "Skriv aktivaens navn"
 
-#: src/assetdialog.cpp:178
-#: src/billsdepositsdialog.cpp:390
+#: src/assetdialog.cpp:198
+#: src/billsdepositsdialog.cpp:414
 msgid "Date"
 msgstr "Dato"
 
-#: src/assetdialog.cpp:185
+#: src/assetdialog.cpp:205
 msgid "Specify the date of purchase of asset"
 msgstr "Angi kjøpsdatoen for aktiva"
 
-#: src/assetdialog.cpp:188
+#: src/assetdialog.cpp:208
 msgid "Asset Type"
 msgstr "aktiva type"
 
-#: src/assetdialog.cpp:194
-#: src/assetspanel.cpp:231
-#: src/assetspanel.cpp:242
+#: src/assetdialog.cpp:214
 msgid "Property"
 msgstr "Egenskap"
 
-#: src/assetdialog.cpp:195
-#: src/assetspanel.cpp:232
-#: src/assetspanel.cpp:244
+#: src/assetdialog.cpp:215
 msgid "Automobile"
 msgstr "Bil"
 
-#: src/assetdialog.cpp:196
-#: src/assetspanel.cpp:233
-#: src/assetspanel.cpp:246
+#: src/assetdialog.cpp:216
 msgid "Household Object"
 msgstr "Husholdingsartikkel"
 
-#: src/assetdialog.cpp:197
-#: src/assetspanel.cpp:234
-#: src/assetspanel.cpp:248
+#: src/assetdialog.cpp:217
 msgid "Art"
 msgstr "Kunst"
 
-#: src/assetdialog.cpp:198
-#: src/assetspanel.cpp:235
-#: src/assetspanel.cpp:250
+#: src/assetdialog.cpp:218
 msgid "Jewellery"
 msgstr "Smykker"
 
-#: src/assetdialog.cpp:199
-#: src/assetspanel.cpp:236
-#: src/assetspanel.cpp:252
+#: src/assetdialog.cpp:219
 msgid "Cash"
 msgstr ""
 
-#: src/assetdialog.cpp:200
-#: src/assetspanel.cpp:237
-#: src/assetspanel.cpp:254
+#: src/assetdialog.cpp:220
 msgid "Other"
 msgstr "Annet"
 
-#: src/assetdialog.cpp:204
+#: src/assetdialog.cpp:224
 msgid "Select type of asset"
 msgstr "Velg type aktiva"
 
-#: src/assetdialog.cpp:210
-#: src/assetdialog.cpp:294
+#: src/assetdialog.cpp:230
+#: src/assetdialog.cpp:314
 #: src/assetspanel.cpp:147
 msgid "Value"
 msgstr "Verdi"
 
-#: src/assetdialog.cpp:216
+#: src/assetdialog.cpp:236
 msgid "Enter the current value of the asset"
 msgstr "angi nåværende verdi av aktiva"
 
-#: src/assetdialog.cpp:222
+#: src/assetdialog.cpp:242
 msgid "Change in Value"
 msgstr "Forandring i verdi"
 
-#: src/assetdialog.cpp:228
-#: src/billsdepositsdialog.cpp:290
-#: src/billsdepositsdialog.cpp:430
-#: src/billsdepositspanel.cpp:260
-#: src/budgetentrydialog.cpp:157
+#: src/assetdialog.cpp:248
+#: src/billsdepositsdialog.cpp:314
+#: src/billsdepositsdialog.cpp:454
+#: src/billsdepositspanel.cpp:267
+#: src/budgetentrydialog.cpp:165
 msgid "None"
 msgstr "Ingen"
 
-#: src/assetdialog.cpp:229
+#: src/assetdialog.cpp:249
 msgid "Appreciates"
 msgstr "Verdiøkning"
 
-#: src/assetdialog.cpp:230
+#: src/assetdialog.cpp:250
 msgid "Depreciates"
 msgstr "Foringelse"
 
-#: src/assetdialog.cpp:234
+#: src/assetdialog.cpp:254
 msgid "Specify if the value of the asset changes over time"
 msgstr "Angi verdi aktiva endring over tid"
 
-#: src/assetdialog.cpp:239
+#: src/assetdialog.cpp:259
 msgid "Rate of Change"
 msgstr "Forandring hastighet"
 
-#: src/assetdialog.cpp:245
+#: src/assetdialog.cpp:265
 #, fuzzy, c-format
 msgid "Enter the rate at which the asset changes its value in % per year"
 msgstr "Angi hastigethen som aktiven har endret seg i %"
 
-#: src/assetdialog.cpp:251
-#: src/billsdepositsdialog.cpp:443
+#: src/assetdialog.cpp:271
+#: src/billsdepositsdialog.cpp:467
+#: src/billsdepositspanel.cpp:164
 msgid "Notes"
 msgstr "Notat"
 
-#: src/assetdialog.cpp:257
+#: src/assetdialog.cpp:277
 msgid "Enter notes associated with this asset"
 msgstr "Angi ett notat for dette aktiva"
 
-#: src/assetdialog.cpp:269
-#: src/billsdepositsdialog.cpp:470
-#: src/budgetentrydialog.cpp:187
-#: src/budgetyearentrydialog.cpp:127
+#: src/assetdialog.cpp:289
+#: src/billsdepositsdialog.cpp:494
+#: src/budgetentrydialog.cpp:195
+#: src/budgetyearentrydialog.cpp:139
 msgid "OK"
 msgstr "OK"
 
-#: src/assetdialog.cpp:273
-#: src/billsdepositsdialog.cpp:474
-#: src/budgetentrydialog.cpp:191
-#: src/budgetyearentrydialog.cpp:132
+#: src/assetdialog.cpp:293
+#: src/billsdepositsdialog.cpp:498
+#: src/budgetentrydialog.cpp:199
+#: src/budgetyearentrydialog.cpp:144
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: src/assetdialog.cpp:301
-#: src/assetdialog.cpp:329
+#: src/assetdialog.cpp:321
+#: src/assetdialog.cpp:349
 msgid "Invalid Value "
 msgstr "Ugyldig verdi"
 
-#: src/assetdialog.cpp:301
-#: src/assetdialog.cpp:329
-#: src/billsdepositsdialog.cpp:632
-#: src/billsdepositsdialog.cpp:806
-#: src/billsdepositsdialog.cpp:816
-#: src/billsdepositsdialog.cpp:839
-#: src/budgetentrydialog.cpp:226
-#: src/budgetyearentrydialog.cpp:145
-#: src/budgetyearentrydialog.cpp:152
-#: src/budgetyearentrydialog.cpp:175
-#: src/categdialog.cpp:181
-#: src/categdialog.cpp:189
-#: src/categdialog.cpp:208
-#: src/categdialog.cpp:242
-#: src/categdialog.cpp:250
-#: src/categdialog.cpp:357
+#: src/assetdialog.cpp:321
+#: src/assetdialog.cpp:349
+#: src/billsdepositsdialog.cpp:656
+#: src/billsdepositsdialog.cpp:830
+#: src/billsdepositsdialog.cpp:840
+#: src/billsdepositsdialog.cpp:863
+#: src/budgetentrydialog.cpp:234
+#: src/budgetyearentrydialog.cpp:157
+#: src/budgetyearentrydialog.cpp:164
+#: src/budgetyearentrydialog.cpp:187
+#: src/categdialog.cpp:190
+#: src/categdialog.cpp:198
+#: src/categdialog.cpp:217
+#: src/categdialog.cpp:251
+#: src/categdialog.cpp:259
+#: src/categdialog.cpp:368
 msgid "Error"
 msgstr "Feil"
 
-#: src/assetdialog.cpp:320
+#: src/assetdialog.cpp:340
 msgid "Rate of Change in Value"
 msgstr "Forandringhastighet i verdi"
 
@@ -274,12 +261,13 @@ msgid "Total:"
 msgstr "Total:"
 
 #: src/assetspanel.cpp:143
-#: src/billsdepositspanel.cpp:152
+#: src/billsdepositspanel.cpp:155
 msgid "Type"
 msgstr "Type"
 
 #: src/assetspanel.cpp:179
-msgid "New"
+#, fuzzy
+msgid "&New"
 msgstr "Ny"
 
 #: src/assetspanel.cpp:181
@@ -287,8 +275,9 @@ msgid "New Asset"
 msgstr "Ny aktiva"
 
 #: src/assetspanel.cpp:184
-#: src/categdialog.cpp:153
-msgid "Edit"
+#: src/categdialog.cpp:162
+#, fuzzy
+msgid "&Edit"
 msgstr "Rediger"
 
 #: src/assetspanel.cpp:186
@@ -296,8 +285,9 @@ msgid "Edit Asset"
 msgstr "Endre aktiva"
 
 #: src/assetspanel.cpp:189
-#: src/categdialog.cpp:158
-msgid "Delete"
+#: src/categdialog.cpp:167
+#, fuzzy
+msgid "&Delete"
 msgstr "Slett"
 
 #: src/assetspanel.cpp:191
@@ -309,421 +299,425 @@ msgstr "Slette Aktiva"
 msgid "Total: %s"
 msgstr "Total: %s"
 
-#: src/assetspanel.cpp:291
+#: src/assetspanel.cpp:270
 msgid "&New Asset"
 msgstr "&Ny aktiva"
 
-#: src/assetspanel.cpp:293
+#: src/assetspanel.cpp:272
 msgid "&Edit Asset"
 msgstr "&Endre aktiva"
 
-#: src/assetspanel.cpp:294
+#: src/assetspanel.cpp:273
 msgid "&Delete Asset"
 msgstr "&Slette aktiva"
 
-#: src/assetspanel.cpp:370
+#: src/assetspanel.cpp:349
 msgid "Do you really want to delete the Asset?"
 msgstr "Vil du virkelig slette "
 
-#: src/assetspanel.cpp:371
+#: src/assetspanel.cpp:350
 msgid "Confirm Asset Deletion"
 msgstr "Bekreft sletting av aktiva"
 
-#: src/billsdepositsdialog.cpp:192
-#: src/billsdepositsdialog.cpp:992
+#: src/billsdepositsdialog.cpp:212
+#: src/billsdepositsdialog.cpp:1105
 #, fuzzy
 msgid "Split Category"
 msgstr "Velg Kategori"
 
-#: src/billsdepositsdialog.cpp:255
+#: src/billsdepositsdialog.cpp:279
 #, fuzzy
 msgid "Repeating Transaction Details"
 msgstr "Gjenta transaksjoner"
 
-#: src/billsdepositsdialog.cpp:264
+#: src/billsdepositsdialog.cpp:288
 msgid "Account Name"
 msgstr "Konto Navn"
 
-#: src/billsdepositsdialog.cpp:269
+#: src/billsdepositsdialog.cpp:293
 msgid "Select Account"
 msgstr "Velg Konto"
 
-#: src/billsdepositsdialog.cpp:274
+#: src/billsdepositsdialog.cpp:298
 #, fuzzy
 msgid "Next Occurrence"
 msgstr "Neste Hendelse"
 
-#: src/billsdepositsdialog.cpp:281
+#: src/billsdepositsdialog.cpp:305
 msgid "Specify the date of the next bill or deposit"
 msgstr "Angi dato for neste regning eller innskudd"
 
-#: src/billsdepositsdialog.cpp:284
+#: src/billsdepositsdialog.cpp:308
 msgid "Repeats"
 msgstr "Gjentar seg"
 
-#: src/billsdepositsdialog.cpp:291
-#: src/billsdepositspanel.cpp:264
-#: src/budgetentrydialog.cpp:158
+#: src/billsdepositsdialog.cpp:315
+#: src/billsdepositspanel.cpp:271
+#: src/budgetentrydialog.cpp:166
 msgid "Weekly"
 msgstr "Ukentlig"
 
-#: src/billsdepositsdialog.cpp:292
-#: src/billsdepositspanel.cpp:268
-#: src/budgetentrydialog.cpp:159
+#: src/billsdepositsdialog.cpp:316
+#: src/billsdepositspanel.cpp:275
+#: src/budgetentrydialog.cpp:167
 msgid "Bi-Weekly"
 msgstr "Andre hver uke"
 
-#: src/billsdepositsdialog.cpp:293
-#: src/billsdepositspanel.cpp:272
-#: src/budgetentrydialog.cpp:160
+#: src/billsdepositsdialog.cpp:317
+#: src/billsdepositspanel.cpp:279
+#: src/budgetentrydialog.cpp:168
 msgid "Monthly"
 msgstr "Månedlig"
 
-#: src/billsdepositsdialog.cpp:294
-#: src/billsdepositspanel.cpp:276
-#: src/budgetentrydialog.cpp:161
+#: src/billsdepositsdialog.cpp:318
+#: src/billsdepositspanel.cpp:283
+#: src/budgetentrydialog.cpp:169
 msgid "Bi-Monthly"
 msgstr "Annenhver måned"
 
-#: src/billsdepositsdialog.cpp:295
-#: src/billsdepositspanel.cpp:280
-#: src/budgetentrydialog.cpp:162
+#: src/billsdepositsdialog.cpp:319
+#: src/billsdepositspanel.cpp:287
+#: src/budgetentrydialog.cpp:170
 msgid "Quarterly"
 msgstr "Kvartalsvis"
 
-#: src/billsdepositsdialog.cpp:296
-#: src/billsdepositspanel.cpp:284
-#: src/budgetentrydialog.cpp:163
+#: src/billsdepositsdialog.cpp:320
+#: src/billsdepositspanel.cpp:291
+#: src/budgetentrydialog.cpp:171
 msgid "Half-Yearly"
 msgstr "Halvårlig"
 
-#: src/billsdepositsdialog.cpp:297
-#: src/billsdepositspanel.cpp:288
-#: src/budgetentrydialog.cpp:164
+#: src/billsdepositsdialog.cpp:321
+#: src/billsdepositspanel.cpp:295
+#: src/budgetentrydialog.cpp:172
 msgid "Yearly"
 msgstr "Årlig"
 
-#: src/billsdepositsdialog.cpp:298
-#: src/billsdepositspanel.cpp:292
+#: src/billsdepositsdialog.cpp:322
+#: src/billsdepositspanel.cpp:299
 msgid "Four Months"
 msgstr "Fire måneder"
 
-#: src/billsdepositsdialog.cpp:299
-#: src/billsdepositspanel.cpp:296
+#: src/billsdepositsdialog.cpp:323
+#: src/billsdepositspanel.cpp:303
 msgid "Four Weeks"
 msgstr "Fire uker"
 
-#: src/billsdepositsdialog.cpp:300
+#: src/billsdepositsdialog.cpp:324
 msgid "Daily"
 msgstr ""
 
-#: src/billsdepositsdialog.cpp:309
+#: src/billsdepositsdialog.cpp:333
 msgid "Times Repeated"
 msgstr "Antall gjentakelser"
 
-#: src/billsdepositsdialog.cpp:316
+#: src/billsdepositsdialog.cpp:340
 msgid "Specify the number of times this series repeats. Leave blank if this series continues forever."
 msgstr "Angi antall gjentakelser for serien. Blank for uendelig antall"
 
-#: src/billsdepositsdialog.cpp:320
+#: src/billsdepositsdialog.cpp:344
 msgid "Transaction Details"
 msgstr "Transaksjonsdetaljer"
 
-#: src/billsdepositsdialog.cpp:329
+#: src/billsdepositsdialog.cpp:353
 msgid "Transaction Type"
 msgstr "Transaksjonstype"
 
-#: src/billsdepositsdialog.cpp:334
-#: src/billsdepositspanel.cpp:404
+#: src/billsdepositsdialog.cpp:358
+#: src/billsdepositspanel.cpp:412
 msgid "Withdrawal"
 msgstr "Uttak"
 
-#: src/billsdepositsdialog.cpp:335
-#: src/billsdepositspanel.cpp:406
+#: src/billsdepositsdialog.cpp:359
+#: src/billsdepositspanel.cpp:414
 msgid "Deposit"
 msgstr "Innskudd"
 
-#: src/billsdepositsdialog.cpp:336
-#: src/billsdepositspanel.cpp:408
+#: src/billsdepositsdialog.cpp:360
+#: src/billsdepositspanel.cpp:416
 msgid "Transfer"
 msgstr "Overfør"
 
-#: src/billsdepositsdialog.cpp:343
+#: src/billsdepositsdialog.cpp:367
 msgid "Specify the type of transactions to be created."
 msgstr "Angi type transaksjon"
 
-#: src/billsdepositsdialog.cpp:345
+#: src/billsdepositsdialog.cpp:369
 msgid "Advanced"
 msgstr "Avansert"
 
-#: src/billsdepositsdialog.cpp:349
+#: src/billsdepositsdialog.cpp:373
 msgid "Specify advanced settings for transaction"
 msgstr "Angi avanserte instillinger for transaksjonen"
 
-#: src/billsdepositsdialog.cpp:359
-#: src/billsdepositsdialog.cpp:731
-#: src/billsdepositspanel.cpp:150
+#: src/billsdepositsdialog.cpp:383
+#: src/billsdepositsdialog.cpp:755
+#: src/billsdepositspanel.cpp:153
 msgid "Payee"
 msgstr "Mottaker"
 
-#: src/billsdepositsdialog.cpp:363
-#: src/billsdepositsdialog.cpp:511
-#: src/billsdepositsdialog.cpp:564
-#: src/billsdepositsdialog.cpp:727
-#: src/billsdepositsdialog.cpp:738
+#: src/billsdepositsdialog.cpp:387
+#: src/billsdepositsdialog.cpp:535
+#: src/billsdepositsdialog.cpp:588
+#: src/billsdepositsdialog.cpp:751
+#: src/billsdepositsdialog.cpp:762
 msgid "Select Payee"
 msgstr "Velg mottaker"
 
-#: src/billsdepositsdialog.cpp:366
+#: src/billsdepositsdialog.cpp:390
 msgid "Specify where the transaction is going to or coming from "
 msgstr "Angi hvor transakjsonen kommer fra eller skal til"
 
-#: src/billsdepositsdialog.cpp:368
+#: src/billsdepositsdialog.cpp:392
 msgid "Number"
 msgstr "Nummer"
 
-#: src/billsdepositsdialog.cpp:376
+#: src/billsdepositsdialog.cpp:400
 msgid "Specify any associated check number or transaction number"
 msgstr "Angi sjekknummer eller transaksjonsnummer"
 
-#: src/billsdepositsdialog.cpp:379
+#: src/billsdepositsdialog.cpp:403
 msgid "To"
 msgstr "Til"
 
-#: src/billsdepositsdialog.cpp:384
+#: src/billsdepositsdialog.cpp:408
 msgid "Select To Acct"
 msgstr "Velg til konto"
 
-#: src/billsdepositsdialog.cpp:388
+#: src/billsdepositsdialog.cpp:412
 msgid "Specify the transfer account"
 msgstr "Angi overføringskonto"
 
-#: src/billsdepositsdialog.cpp:398
+#: src/billsdepositsdialog.cpp:422
 msgid "Specify the date of the transaction"
 msgstr "Angi transaksjonsdato"
 
-#: src/billsdepositsdialog.cpp:403
+#: src/billsdepositsdialog.cpp:427
 msgid "Category"
 msgstr "Kategori"
 
-#: src/billsdepositsdialog.cpp:412
-#: src/billsdepositsdialog.cpp:563
-#: src/billsdepositsdialog.cpp:597
-#: src/billsdepositsdialog.cpp:671
-#: src/billsdepositsdialog.cpp:1000
+#: src/billsdepositsdialog.cpp:436
+#: src/billsdepositsdialog.cpp:587
+#: src/billsdepositsdialog.cpp:621
+#: src/billsdepositsdialog.cpp:695
+#: src/billsdepositsdialog.cpp:1113
 msgid "Select Category"
 msgstr "Velg Kategori"
 
-#: src/billsdepositsdialog.cpp:415
+#: src/billsdepositsdialog.cpp:439
 msgid "Specify the category for this transaction"
 msgstr "Angi kategori for denne transaksjonen"
 
-#: src/billsdepositsdialog.cpp:418
+#: src/billsdepositsdialog.cpp:442
 msgid "Split"
 msgstr ""
 
-#: src/billsdepositsdialog.cpp:424
+#: src/billsdepositsdialog.cpp:448
 msgid "Status"
 msgstr "Status"
 
-#: src/billsdepositsdialog.cpp:431
+#: src/billsdepositsdialog.cpp:455
 msgid "Reconciled"
 msgstr "Utført"
 
-#: src/billsdepositsdialog.cpp:432
+#: src/billsdepositsdialog.cpp:456
 msgid "Void"
 msgstr "Ugyldig"
 
-#: src/billsdepositsdialog.cpp:433
+#: src/billsdepositsdialog.cpp:457
 msgid "Follow up"
 msgstr "Følg opp"
 
-#: src/billsdepositsdialog.cpp:440
+#: src/billsdepositsdialog.cpp:464
 msgid "Specify the status for the transaction"
 msgstr "Angi status for denne transaksjonen"
 
-#: src/billsdepositsdialog.cpp:450
+#: src/billsdepositsdialog.cpp:474
 msgid "Specify any text notes you want to add to this transaction."
 msgstr "Angi ett notat til denne transaksjonen"
 
-#: src/billsdepositsdialog.cpp:453
-#: src/billsdepositspanel.cpp:156
+#: src/billsdepositsdialog.cpp:477
+#: src/billsdepositspanel.cpp:159
 #: src/budgetingpanel.cpp:234
 msgid "Amount"
 msgstr "Beløp"
 
-#: src/billsdepositsdialog.cpp:460
+#: src/billsdepositsdialog.cpp:484
 msgid "Specify the amount for this transaction"
 msgstr "Angi beløp til denne transaksjonen"
 
-#: src/billsdepositsdialog.cpp:598
-#: src/billsdepositsdialog.cpp:750
+#: src/billsdepositsdialog.cpp:622
+#: src/billsdepositsdialog.cpp:774
 msgid "Select To"
 msgstr "Velg til"
 
-#: src/billsdepositsdialog.cpp:621
+#: src/billsdepositsdialog.cpp:645
 msgid "To Account Amount Entry"
 msgstr "Til konto beløp innslag"
 
-#: src/billsdepositsdialog.cpp:622
+#: src/billsdepositsdialog.cpp:646
 msgid "Amount to be recorded in To Account"
 msgstr "Beløp som skal skrives til konto"
 
-#: src/billsdepositsdialog.cpp:632
+#: src/billsdepositsdialog.cpp:656
 msgid "Invalid To Amount Entered "
 msgstr "Ugyldig til beløp"
 
-#: src/billsdepositsdialog.cpp:742
-#: src/billsdepositsdialog.cpp:756
+#: src/billsdepositsdialog.cpp:766
+#: src/billsdepositsdialog.cpp:780
 msgid "From"
 msgstr "Fra"
 
-#: src/billsdepositsdialog.cpp:749
+#: src/billsdepositsdialog.cpp:773
 msgid "Select From"
 msgstr "Velg Fra"
 
-#: src/billsdepositsdialog.cpp:777
+#: src/billsdepositsdialog.cpp:801
 msgid "Payee "
 msgstr "Mottaker"
 
-#: src/billsdepositsdialog.cpp:779
+#: src/billsdepositsdialog.cpp:803
 msgid "From Account "
 msgstr "Fra Konto"
 
-#: src/billsdepositsdialog.cpp:787
-#: src/billsdepositsdialog.cpp:795
+#: src/billsdepositsdialog.cpp:811
+#: src/billsdepositsdialog.cpp:819
 msgid "Category "
 msgstr "Kategori"
 
-#: src/billsdepositsdialog.cpp:806
-#: src/billsdepositsdialog.cpp:816
-#: src/budgetentrydialog.cpp:226
+#: src/billsdepositsdialog.cpp:830
+#: src/billsdepositsdialog.cpp:840
+#: src/budgetentrydialog.cpp:234
 msgid "Invalid Amount Entered "
 msgstr "Ugyldig beløp"
 
-#: src/billsdepositsdialog.cpp:823
-#: src/billsdepositspanel.cpp:151
+#: src/billsdepositsdialog.cpp:847
+#: src/billsdepositspanel.cpp:154
 msgid "Account"
 msgstr "Konto"
 
-#: src/billsdepositsdialog.cpp:833
+#: src/billsdepositsdialog.cpp:857
 msgid "To Account "
 msgstr "Til Konto"
 
-#: src/billsdepositsdialog.cpp:839
+#: src/billsdepositsdialog.cpp:863
 msgid "From and To Account cannot be the same."
 msgstr "Fra og Til Konto kan ikke være de samme."
 
-#: src/billsdepositspanel.cpp:129
+#: src/billsdepositspanel.cpp:132
 msgid "Repeating Transactions"
 msgstr "Gjenta transaksjoner"
 
-#: src/billsdepositspanel.cpp:158
+#: src/billsdepositspanel.cpp:161
 msgid "Next Due Date"
 msgstr "Neste forfallsdato"
 
-#: src/billsdepositspanel.cpp:159
+#: src/billsdepositspanel.cpp:162
 #: src/budgetingpanel.cpp:229
 msgid "Frequency"
 msgstr "Gjentakelsesfrekvens"
 
-#: src/billsdepositspanel.cpp:160
+#: src/billsdepositspanel.cpp:163
 msgid "Remaining Days"
 msgstr "Gjenstående ant. dager"
 
-#: src/billsdepositspanel.cpp:203
-msgid "New Series"
+#: src/billsdepositspanel.cpp:210
+#, fuzzy
+msgid "&New Series"
 msgstr "Ny serie"
 
-#: src/billsdepositspanel.cpp:205
+#: src/billsdepositspanel.cpp:212
 msgid "New Bills && Deposit Series"
 msgstr "Nye regning && innskuddserie"
 
-#: src/billsdepositspanel.cpp:208
-msgid "Edit Series"
+#: src/billsdepositspanel.cpp:215
+#, fuzzy
+msgid "&Edit Series"
 msgstr "Endre Serier"
 
-#: src/billsdepositspanel.cpp:210
+#: src/billsdepositspanel.cpp:217
 msgid "Edit Bills && Deposit Series"
 msgstr "Endre Regning && Innskuddserier"
 
-#: src/billsdepositspanel.cpp:213
-msgid "Delete Series"
+#: src/billsdepositspanel.cpp:220
+#, fuzzy
+msgid "&Delete Series"
 msgstr "Slette Serier"
 
-#: src/billsdepositspanel.cpp:215
+#: src/billsdepositspanel.cpp:222
 msgid "Delete Bills && Deposit Series"
 msgstr "Slette Regning && Innskuddserier"
 
-#: src/billsdepositspanel.cpp:218
-msgid "Enter Transaction"
+#: src/billsdepositspanel.cpp:225
+#, fuzzy
+msgid "Enter &Transaction"
 msgstr "Angi Transaksjon"
 
-#: src/billsdepositspanel.cpp:220
+#: src/billsdepositspanel.cpp:227
 msgid "Enter Next Bills && Deposit Occurrence"
 msgstr "Angi neste Regning && Innskudds hendelse"
 
-#: src/billsdepositspanel.cpp:310
+#: src/billsdepositspanel.cpp:317
 msgid " days remaining"
 msgstr " dager gjenstår"
 
-#: src/billsdepositspanel.cpp:315
+#: src/billsdepositspanel.cpp:322
 msgid " days overdue!"
 msgstr " dager over tiden!"
 
-#: src/billsdepositspanel.cpp:383
+#: src/billsdepositspanel.cpp:391
 msgid "&New Bills && Deposit Series"
 msgstr "Ny Regning && Innskuddserier"
 
-#: src/billsdepositspanel.cpp:385
+#: src/billsdepositspanel.cpp:393
 msgid "&Edit Bills && Deposit Series"
 msgstr "Endre Regning && Innskuddserier"
 
-#: src/billsdepositspanel.cpp:386
+#: src/billsdepositspanel.cpp:394
 msgid "&Delete Bills && Deposit Series"
 msgstr "Slette Regning && Innskuddserier"
 
-#: src/billsdepositspanel.cpp:388
+#: src/billsdepositspanel.cpp:396
 msgid "Enter next Occurrence"
 msgstr "Angi neste gjentakelse"
 
-#: src/billsdepositspanel.cpp:490
+#: src/billsdepositspanel.cpp:501
 msgid "Do you really want to delete the series?"
 msgstr "Vil du virkelig slette denne serien?"
 
-#: src/billsdepositspanel.cpp:491
+#: src/billsdepositspanel.cpp:502
 msgid "Confirm Series Deletion"
 msgstr "Bekreft Sletting"
 
-#: src/budgetentrydialog.cpp:135
+#: src/budgetentrydialog.cpp:143
 msgid "Type:"
 msgstr "Type:"
 
-#: src/budgetentrydialog.cpp:141
+#: src/budgetentrydialog.cpp:149
 msgid "Expense"
 msgstr "Utgift"
 
-#: src/budgetentrydialog.cpp:142
+#: src/budgetentrydialog.cpp:150
 msgid "Income"
 msgstr "Inntekt"
 
-#: src/budgetentrydialog.cpp:148
+#: src/budgetentrydialog.cpp:156
 msgid "Specify whether this category is an income or an expense category"
 msgstr "Velg om denne kategorien er en inntekt eller utgift kategori"
 
-#: src/budgetentrydialog.cpp:151
+#: src/budgetentrydialog.cpp:159
 msgid "Frequency:"
 msgstr "Frekvens:"
 
-#: src/budgetentrydialog.cpp:170
+#: src/budgetentrydialog.cpp:178
 msgid "Specify the frequency of the expense or deposit"
 msgstr "Angi gjentakelse av denne utgift eller innskudd"
 
-#: src/budgetentrydialog.cpp:173
+#: src/budgetentrydialog.cpp:181
 msgid "Amount:"
 msgstr "Beløp:"
 
-#: src/budgetentrydialog.cpp:181
+#: src/budgetentrydialog.cpp:189
 msgid "Enter the amount budgeted for this category."
 msgstr "Angi beløp budsjettert for denne kategorien"
 
@@ -781,261 +775,486 @@ msgstr "Estimert"
 msgid "Actual"
 msgstr "Faktisk"
 
-#: src/budgetingpanel.cpp:490
+#: src/budgetingpanel.cpp:507
 #, c-format
 msgid "Estimated Income: %s Actual Income:  %s"
 msgstr "Estimerte inntekter: %s Faktiske inntekter: %s"
 
-#: src/budgetingpanel.cpp:495
+#: src/budgetingpanel.cpp:512
 #, c-format
 msgid "Estimated Expenses: %s Actual Expenses:  %s"
 msgstr "Estimerte utgifter: %s Faktiske utgifter: %s"
 
-#: src/budgetyeardialog.cpp:105
-msgid "Add Budget Year"
+#: src/budgetyeardialog.cpp:116
+#, fuzzy
+msgid "&Add Budget Year"
 msgstr "Legg til budskjett år"
 
-#: src/budgetyeardialog.cpp:108
+#: src/budgetyeardialog.cpp:119
 msgid "Add a new budget year"
 msgstr "Legg til nytt budskjett år"
 
-#: src/budgetyeardialog.cpp:111
-msgid "Delete Budget Year"
+#: src/budgetyeardialog.cpp:122
+#, fuzzy
+msgid "&Delete Budget Year"
 msgstr "Slett budskjett år"
 
-#: src/budgetyeardialog.cpp:113
+#: src/budgetyeardialog.cpp:124
 msgid "Delete existing budget year"
 msgstr "Slett eksisterende budskjett år"
 
-#: src/budgetyearentrydialog.cpp:82
+#: src/budgetyearentrydialog.cpp:90
 msgid "Budget Year:"
 msgstr "Budskjett år:"
 
-#: src/budgetyearentrydialog.cpp:89
+#: src/budgetyearentrydialog.cpp:97
 msgid "Enter the year in YYYY format to specify year"
 msgstr "Skriv inn årstall i ÅÅÅÅ format for å spesifisere år"
 
-#: src/budgetyearentrydialog.cpp:92
+#: src/budgetyearentrydialog.cpp:100
 msgid "Base Budget On:"
 msgstr "Baser budskjettet på:"
 
-#: src/budgetyearentrydialog.cpp:105
+#: src/budgetyearentrydialog.cpp:113
 msgid "Specify year to base budget on."
 msgstr "Angi år som grunnlag for budsjett"
 
-#: src/budgetyearentrydialog.cpp:145
-#: src/budgetyearentrydialog.cpp:175
+#: src/budgetyearentrydialog.cpp:157
+#: src/budgetyearentrydialog.cpp:187
 msgid "Year is not valid"
 msgstr "Ugyldig år"
 
-#: src/budgetyearentrydialog.cpp:152
+#: src/budgetyearentrydialog.cpp:164
 msgid "Budget Year already exists"
 msgstr "Budsjettår eksisterer"
 
-#: src/categdialog.cpp:75
+#: src/categdialog.cpp:84
 #, fuzzy
 msgid "Categories"
 msgstr "Kategori"
 
-#: src/categdialog.cpp:142
+#: src/categdialog.cpp:151
 msgid "Enter the name of the category to add or edit here"
 msgstr "Angi kategori som skal legges til eller endre her"
 
-#: src/categdialog.cpp:148
-msgid "Add"
+#: src/categdialog.cpp:157
+#, fuzzy
+msgid "&Add"
 msgstr "Legg til"
 
-#: src/categdialog.cpp:150
+#: src/categdialog.cpp:159
 msgid "Add a new category"
 msgstr "Legg til ny kategori"
 
-#: src/categdialog.cpp:155
+#: src/categdialog.cpp:164
 msgid "Edit the name of an existing category"
 msgstr "Endre navn på eksisterende kategori"
 
-#: src/categdialog.cpp:160
+#: src/categdialog.cpp:169
 msgid "Delete an existing category. The category cannot be used by existing transactions."
 msgstr "Slett eksisterende kategori. Denne kan ikke brukes av eksisterende transaksjoner."
 
-#: src/categdialog.cpp:166
-msgid "Select"
+#: src/categdialog.cpp:175
+#, fuzzy
+msgid "&Select"
 msgstr "Velg"
 
-#: src/categdialog.cpp:168
+#: src/categdialog.cpp:177
 msgid "Select the currently selected category as the selected category for the transaction"
 msgstr "Velg den valgte kategorien for denne transaksjonen"
 
-#: src/categdialog.cpp:181
+#: src/categdialog.cpp:190
 msgid "Category cannot be empty"
 msgstr ""
 
-#: src/categdialog.cpp:189
+#: src/categdialog.cpp:198
 msgid "Category with same name exists"
 msgstr "Kategori med samme navn eksisterer"
 
-#: src/categdialog.cpp:208
+#: src/categdialog.cpp:217
 msgid "Sub Category with same name exists"
 msgstr "Underkategori med samme navn eksisterer"
 
-#: src/categdialog.cpp:219
+#: src/categdialog.cpp:228
 msgid "Invalid Parent Category. Choose Root or Main Category node."
 msgstr "Ugyldig hovedkategori, velg topp kategorien"
 
-#: src/categdialog.cpp:220
+#: src/categdialog.cpp:229
 msgid "Error adding Category"
 msgstr "Feil under oppretting av kategori"
 
-#: src/categdialog.cpp:242
+#: src/categdialog.cpp:251
 msgid "Category is in use"
 msgstr "Kategorien er i bruk"
 
-#: src/categdialog.cpp:250
+#: src/categdialog.cpp:259
 msgid "Sub-Category is in use"
 msgstr "Underkategorien er i bruk"
 
-#: src/categdialog.cpp:357
+#: src/categdialog.cpp:368
 #, fuzzy
 msgid "Update Failed"
 msgstr "Oppdater"
 
-#: src/currencydialog.cpp:159
+#: src/currencydialog.cpp:167
 msgid "Currency Name"
 msgstr "Valuta navn"
 
-#: src/currencydialog.cpp:170
+#: src/currencydialog.cpp:178
 #, fuzzy
 msgid "Currency Symbol"
 msgstr "Valuta navn"
 
-#: src/currencydialog.cpp:215
+#: src/currencydialog.cpp:224
 msgid "Prefix Symbol"
 msgstr "Prefiks notasjon"
 
-#: src/currencydialog.cpp:224
+#: src/currencydialog.cpp:233
 msgid "Suffix Symbol"
 msgstr "Postfiks notasjon"
 
-#: src/currencydialog.cpp:233
+#: src/currencydialog.cpp:242
 msgid "Decimal Char"
 msgstr "Desimal tegn"
 
-#: src/currencydialog.cpp:244
+#: src/currencydialog.cpp:253
 msgid "Grouping Char"
 msgstr "Grupperingstegn"
 
-#: src/currencydialog.cpp:253
+#: src/currencydialog.cpp:262
 msgid "Unit Name"
 msgstr "Enhet"
 
-#: src/currencydialog.cpp:264
+#: src/currencydialog.cpp:273
 msgid "Cents Name"
 msgstr "Under enhet (1/100)"
 
-#: src/currencydialog.cpp:273
+#: src/currencydialog.cpp:282
 msgid "Conversion to Base Rate"
 msgstr "Konverteringssats"
 
-#: src/currencydialog.cpp:282
+#: src/currencydialog.cpp:291
 msgid "Scale"
 msgstr "Skala"
 
-#: src/currencydialog.cpp:292
+#: src/currencydialog.cpp:301
 msgid "Value of 123456.78 will be"
 msgstr "Verdien av 123456.78 vil være"
 
-#: src/currencydialog.cpp:297
+#: src/currencydialog.cpp:306
 msgid "1234567.89"
 msgstr "1234567.89"
 
-#: src/currencydialog.cpp:305
-msgid "Update"
+#: src/currencydialog.cpp:314
+#, fuzzy
+msgid "&Update"
 msgstr "Oppdater"
 
-#: src/currencydialog.cpp:309
+#: src/currencydialog.cpp:318
 #, fuzzy
-msgid "Close"
+msgid "&Close"
 msgstr "Avsluttet"
 
-#: src/currencydialog.cpp:346
+#: src/currencydialog.cpp:355
 msgid "Base Conversion Rate should be greater than 0.0"
 msgstr "Konverteringssats må være høyere en 0.0"
 
-#: src/customsqldialog.cpp:88
+#: src/customsqldialog.cpp:96
 msgid "Custom SQL Query"
 msgstr ""
 
-#: src/customsqldialog.cpp:115
-msgid "Load SQL"
+#: src/customsqldialog.cpp:123
+msgid "&Load SQL"
 msgstr ""
 
-#: src/customsqldialog.cpp:120
-msgid "Save SQL"
+#: src/customsqldialog.cpp:128
+msgid "&Save SQL"
 msgstr ""
 
-#: src/customsqldialog.cpp:125
-msgid "Run Query"
+#: src/customsqldialog.cpp:133
+msgid "&Run Query"
 msgstr ""
 
-#: src/customsqldialog.cpp:172
+#: src/customsqldialog.cpp:180
 msgid "Unable to open file."
 msgstr ""
 
-#: src/customsqldialog.cpp:201
+#: src/customsqldialog.cpp:209
 msgid "Unable to write to file."
 msgstr ""
 
-#: src/customsqldialog.cpp:222
+#: src/customsqldialog.cpp:230
 msgid "SQL Query will modify your Data. Proceed??"
 msgstr ""
 
-#: src/customsqldialog.cpp:223
+#: src/customsqldialog.cpp:231
 msgid "Warning"
 msgstr ""
 
-#: src/filtertransdialog.cpp:194
+#: src/dbwrapper.cpp:111
+msgid "Telephone"
+msgstr ""
+
+#: src/dbwrapper.cpp:112
+msgid "Electricity"
+msgstr ""
+
+#: src/dbwrapper.cpp:113
+#: src/dbwrapper.cpp:148
+msgid "Gas"
+msgstr ""
+
+#: src/dbwrapper.cpp:114
+#, fuzzy
+msgid "Internet"
+msgstr "Invistering"
+
+#: src/dbwrapper.cpp:115
+#, fuzzy
+msgid "Rent"
+msgstr "Rapporter"
+
+#: src/dbwrapper.cpp:116
+msgid "Cable TV"
+msgstr ""
+
+#: src/dbwrapper.cpp:117
+#, fuzzy
+msgid "Water"
+msgstr "Dato"
+
+#: src/dbwrapper.cpp:121
+msgid "Bills"
+msgstr ""
+
+#: src/dbwrapper.cpp:126
+msgid "Groceries"
+msgstr ""
+
+#: src/dbwrapper.cpp:127
+msgid "Dining out"
+msgstr ""
+
+#: src/dbwrapper.cpp:131
+msgid "Food"
+msgstr ""
+
+#: src/dbwrapper.cpp:136
+msgid "Movies"
+msgstr ""
+
+#: src/dbwrapper.cpp:137
+msgid "Video Rental"
+msgstr ""
+
+#: src/dbwrapper.cpp:138
+msgid "Magazines"
+msgstr ""
+
+#: src/dbwrapper.cpp:142
+msgid "Leisure"
+msgstr ""
+
+#: src/dbwrapper.cpp:147
+msgid "Maintenance"
+msgstr ""
+
+#: src/dbwrapper.cpp:149
+msgid "Parking"
+msgstr ""
+
+#: src/dbwrapper.cpp:150
+msgid "Registration"
+msgstr ""
+
+#: src/dbwrapper.cpp:159
+msgid "Books"
+msgstr ""
+
+#: src/dbwrapper.cpp:160
+msgid "Tuition"
+msgstr ""
+
+#: src/dbwrapper.cpp:161
+#: src/dbwrapper.cpp:172
+#: src/dbwrapper.cpp:220
+msgid "Others"
+msgstr "Andre"
+
+#: src/dbwrapper.cpp:165
+msgid "Education"
+msgstr ""
+
+#: src/dbwrapper.cpp:170
+#, fuzzy
+msgid "Clothing"
+msgstr "Sjekkonto"
+
+#: src/dbwrapper.cpp:171
+msgid "Furnishing"
+msgstr ""
+
+#: src/dbwrapper.cpp:176
+msgid "Homeneeds"
+msgstr ""
+
+#: src/dbwrapper.cpp:181
+#: src/dbwrapper.cpp:197
+#, fuzzy
+msgid "Health"
+msgstr "Hos"
+
+#: src/dbwrapper.cpp:182
+#, fuzzy
+msgid "Dental"
+msgstr "Generellt"
+
+#: src/dbwrapper.cpp:183
+msgid "Eyecare"
+msgstr ""
+
+#: src/dbwrapper.cpp:184
+msgid "Physician"
+msgstr ""
+
+#: src/dbwrapper.cpp:185
+#, fuzzy
+msgid "Prescriptions"
+msgstr "transaksjonsliste"
+
+#: src/dbwrapper.cpp:189
+msgid "Healthcare"
+msgstr ""
+
+#: src/dbwrapper.cpp:194
+#, fuzzy
+msgid "Auto"
+msgstr "Beløp"
+
+#: src/dbwrapper.cpp:195
+msgid "Life"
+msgstr ""
+
+#: src/dbwrapper.cpp:196
+#, fuzzy
+msgid "Home"
+msgstr "Hjemme Side"
+
+#: src/dbwrapper.cpp:201
+msgid "Insurance"
+msgstr ""
+
+#: src/dbwrapper.cpp:206
+msgid "Travel"
+msgstr ""
+
+#: src/dbwrapper.cpp:207
+#, fuzzy
+msgid "Lodging"
+msgstr "Budsjettering"
+
+#: src/dbwrapper.cpp:208
+msgid "Sightseeing"
+msgstr ""
+
+#: src/dbwrapper.cpp:212
+#, fuzzy
+msgid "Vacation"
+msgstr "transaksjonsliste"
+
+#: src/dbwrapper.cpp:217
+#, fuzzy
+msgid "Income Tax"
+msgstr "Inntekt"
+
+#: src/dbwrapper.cpp:218
+msgid "House Tax"
+msgstr ""
+
+#: src/dbwrapper.cpp:219
+msgid "Water Tax"
+msgstr ""
+
+#: src/dbwrapper.cpp:224
+msgid "Taxes"
+msgstr ""
+
+#: src/dbwrapper.cpp:228
+msgid "Miscellaneous"
+msgstr ""
+
+#: src/dbwrapper.cpp:229
+msgid "Gifts"
+msgstr ""
+
+#: src/dbwrapper.cpp:234
+#, fuzzy
+msgid "Salary"
+msgstr "Sammendrag"
+
+#: src/dbwrapper.cpp:235
+msgid "Reimbursement/Refunds"
+msgstr ""
+
+#: src/dbwrapper.cpp:236
+#, fuzzy
+msgid "Investment Income"
+msgstr "Invistering"
+
+#: src/dbwrapper.cpp:244
+#, fuzzy
+msgid "Other Income"
+msgstr "Inntekt"
+
+#: src/dbwrapper.cpp:245
+#, fuzzy
+msgid "Other Expenses"
+msgstr "Utgift"
+
+#: src/filtertransdialog.cpp:201
 msgid "Specify Account"
 msgstr "Angi konto"
 
-#: src/filtertransdialog.cpp:215
+#: src/filtertransdialog.cpp:229
 msgid "Specify Date Range"
 msgstr "Angi dato område"
 
-#: src/filtertransdialog.cpp:230
+#: src/filtertransdialog.cpp:244
 msgid "Specify Payee"
 msgstr "Angi mottaker"
 
-#: src/filtertransdialog.cpp:241
+#: src/filtertransdialog.cpp:255
 msgid "Specify Category"
 msgstr "Angi kategori"
 
-#: src/filtertransdialog.cpp:252
+#: src/filtertransdialog.cpp:266
 msgid "Specify Status"
 msgstr "Angi status"
 
-#: src/filtertransdialog.cpp:262
+#: src/filtertransdialog.cpp:276
 #, fuzzy
 msgid "Duplicate"
 msgstr "Dato"
 
-#: src/filtertransdialog.cpp:273
+#: src/filtertransdialog.cpp:287
 msgid "Specify Type"
 msgstr "Angi type"
 
-#: src/filtertransdialog.cpp:288
+#: src/filtertransdialog.cpp:302
 #, fuzzy
 msgid "Specify the type of transaction."
 msgstr "Angi transaksjonsdato"
 
-#: src/filtertransdialog.cpp:293
+#: src/filtertransdialog.cpp:307
 msgid "Specify Amount Range"
 msgstr "Angi beløp område"
 
-#: src/filtertransdialog.cpp:307
+#: src/filtertransdialog.cpp:321
 #, fuzzy
 msgid "Specify Number"
 msgstr "Angi notater"
 
-#: src/filtertransdialog.cpp:318
+#: src/filtertransdialog.cpp:332
 msgid "Specify Notes"
 msgstr "Angi notater"
 
@@ -1044,299 +1263,310 @@ msgstr "Angi notater"
 msgid "Report"
 msgstr "Rapporter"
 
-#: src/maincurrencydialog.cpp:109
+#: src/maincurrencydialog.cpp:117
 #, fuzzy
 msgid "Currency List"
 msgstr "Valutta"
 
-#: src/maincurrencydialog.cpp:174
+#: src/maincurrencydialog.cpp:186
 msgid "Name of Currency to Add"
 msgstr "Valutanavn"
 
-#: src/maincurrencydialog.cpp:175
+#: src/maincurrencydialog.cpp:187
 msgid "Add Currency"
 msgstr "Legg til valuta"
 
-#: src/maincurrencydialog.cpp:193
+#: src/maincurrencydialog.cpp:205
 msgid "Currency name already exists!"
 msgstr "Valuta navn eksisterer!"
 
-#: src/mmcheckingpanel.cpp:172
+#: src/mmcheckingpanel.cpp:106
+msgid "Date  "
+msgstr "Dato"
+
+#: src/mmcheckingpanel.cpp:109
+msgid "C  "
+msgstr "C"
+
+#: src/mmcheckingpanel.cpp:113
+msgid "Balance"
+msgstr "Balanse"
+
+#: src/mmcheckingpanel.cpp:222
 msgid "View All Transactions"
 msgstr "Vis alle transaksjoner"
 
-#: src/mmcheckingpanel.cpp:173
+#: src/mmcheckingpanel.cpp:223
 msgid "View Reconciled Transactions"
 msgstr "Vis alle gjennomførte transaksjoner"
 
-#: src/mmcheckingpanel.cpp:174
+#: src/mmcheckingpanel.cpp:224
 msgid "View Un-Reconciled Transactions"
 msgstr "Vis alle ikke gjennomførte transaksjoner"
 
-#: src/mmcheckingpanel.cpp:175
+#: src/mmcheckingpanel.cpp:225
 #, fuzzy
 msgid "View All Except Reconciled Transactions"
 msgstr "Vis alle gjennomførte transaksjoner"
 
-#: src/mmcheckingpanel.cpp:176
+#: src/mmcheckingpanel.cpp:226
 msgid "View Void Transactions"
 msgstr "Vis Ikke godkjente transaksjoner"
 
-#: src/mmcheckingpanel.cpp:177
+#: src/mmcheckingpanel.cpp:227
 msgid "View Flagged Transactions"
 msgstr "Vis merkede transaksjoner"
 
-#: src/mmcheckingpanel.cpp:178
+#: src/mmcheckingpanel.cpp:228
 #, fuzzy
 msgid "View Duplicate Transactions"
 msgstr "Vis merkede transaksjoner"
 
-#: src/mmcheckingpanel.cpp:180
+#: src/mmcheckingpanel.cpp:230
+#, fuzzy
+msgid "View Transactions from today"
+msgstr "Vis transaksjoner fra de siste 30 dager"
+
+#: src/mmcheckingpanel.cpp:231
 msgid "View Transactions from last 30 days"
 msgstr "Vis transaksjoner fra de siste 30 dager"
 
-#: src/mmcheckingpanel.cpp:181
+#: src/mmcheckingpanel.cpp:232
 #, fuzzy
 msgid "View Transactions from current month"
 msgstr "Vis transaksjoner fra de siste 3 måneder"
 
-#: src/mmcheckingpanel.cpp:182
+#: src/mmcheckingpanel.cpp:233
 #, fuzzy
 msgid "View Transactions from last month"
 msgstr "Vis transaksjoner fra de siste 3 måneder"
 
-#: src/mmcheckingpanel.cpp:183
+#: src/mmcheckingpanel.cpp:234
 msgid "View Transactions from last 3 months"
 msgstr "Vis transaksjoner fra de siste 3 måneder"
 
-#: src/mmcheckingpanel.cpp:185
+#: src/mmcheckingpanel.cpp:236
 msgid "Delete all transactions in current view"
 msgstr "Slett alle viste transaksjoner"
 
-#: src/mmcheckingpanel.cpp:186
+#: src/mmcheckingpanel.cpp:237
 msgid "Delete all flagged transactions"
 msgstr "Slett alle merkede transaksjoner"
 
-#: src/mmcheckingpanel.cpp:229
+#: src/mmcheckingpanel.cpp:280
 msgid "Viewing All Transactions"
 msgstr "Vis alle transaksjoner"
 
-#: src/mmcheckingpanel.cpp:272
-msgid "Date  "
-msgstr "Dato"
-
-#: src/mmcheckingpanel.cpp:280
-msgid "C  "
-msgstr "C"
-
-#: src/mmcheckingpanel.cpp:289
-msgid "Balance"
-msgstr "Balanse"
-
-#: src/mmcheckingpanel.cpp:347
+#: src/mmcheckingpanel.cpp:354
 msgid "New Transaction"
 msgstr "Ny transaksjon"
 
-#: src/mmcheckingpanel.cpp:352
+#: src/mmcheckingpanel.cpp:359
 msgid "Edit Transaction"
 msgstr "Endre transaksjon"
 
-#: src/mmcheckingpanel.cpp:357
+#: src/mmcheckingpanel.cpp:364
 msgid "Delete Transaction"
 msgstr "Slett transaksjon"
 
-#: src/mmcheckingpanel.cpp:466
+#: src/mmcheckingpanel.cpp:473
 msgid "Category         : "
 msgstr "Kategori          :"
 
-#: src/mmcheckingpanel.cpp:467
+#: src/mmcheckingpanel.cpp:474
 msgid "Sub Category  : "
 msgstr "Underkategori :"
 
-#: src/mmcheckingpanel.cpp:468
+#: src/mmcheckingpanel.cpp:475
 msgid "Notes               : "
 msgstr "Notater            :"
 
-#: src/mmcheckingpanel.cpp:488
+#: src/mmcheckingpanel.cpp:495
 #, c-format
 msgid "Account Balance : %s      Reconciled Balance : %s"
 msgstr "Konto balanse     : %s      Godkjent balanse   : %s"
 
-#: src/mmcheckingpanel.cpp:498
-#: src/mmex.cpp:2364
+#: src/mmcheckingpanel.cpp:505
+#: src/mmex.cpp:2395
 msgid "Please Wait"
 msgstr "Vennlgst vent"
 
-#: src/mmcheckingpanel.cpp:499
+#: src/mmcheckingpanel.cpp:506
 msgid "Accessing Database"
 msgstr "Åpner tilgang til database"
 
-#: src/mmcheckingpanel.cpp:512
+#: src/mmcheckingpanel.cpp:519
 msgid "Account View : "
 msgstr "Kontovisning :"
 
-#: src/mmcheckingpanel.cpp:517
+#: src/mmcheckingpanel.cpp:524
 msgid "Category: \n"
 msgstr "Kategori :\n"
 
-#: src/mmcheckingpanel.cpp:518
+#: src/mmcheckingpanel.cpp:525
 msgid "Sub Category: \n"
 msgstr "Under kategori :\n"
 
-#: src/mmcheckingpanel.cpp:519
+#: src/mmcheckingpanel.cpp:526
 msgid "Notes: \n"
 msgstr "Notater: \n"
 
-#: src/mmcheckingpanel.cpp:749
-#: src/mmcheckingpanel.cpp:787
+#: src/mmcheckingpanel.cpp:776
+#: src/mmcheckingpanel.cpp:818
 msgid "Viewing all transactions"
 msgstr "Viser alle transaksjoner"
 
-#: src/mmcheckingpanel.cpp:753
-#: src/mmcheckingpanel.cpp:792
+#: src/mmcheckingpanel.cpp:780
+#: src/mmcheckingpanel.cpp:823
 msgid "Viewing Reconciled transactions"
 msgstr "Viser godkjente transaksjoner"
 
-#: src/mmcheckingpanel.cpp:757
-#: src/mmcheckingpanel.cpp:802
+#: src/mmcheckingpanel.cpp:784
+#: src/mmcheckingpanel.cpp:833
 msgid "Viewing Un-Reconciled transactions"
 msgstr "Viser ikke utførte transaksjoner"
 
-#: src/mmcheckingpanel.cpp:761
-#: src/mmcheckingpanel.cpp:812
+#: src/mmcheckingpanel.cpp:788
+#: src/mmcheckingpanel.cpp:843
+#, fuzzy
+msgid "Viewing transactions from today"
+msgstr "Viser transaksjoner fra de siste 30 dager"
+
+#: src/mmcheckingpanel.cpp:792
+#: src/mmcheckingpanel.cpp:848
 msgid "Viewing transactions from last 30 days"
 msgstr "Viser transaksjoner fra de siste 30 dager"
 
-#: src/mmcheckingpanel.cpp:765
-#: src/mmcheckingpanel.cpp:817
+#: src/mmcheckingpanel.cpp:796
+#: src/mmcheckingpanel.cpp:853
 msgid "Viewing transactions from last 3 months"
 msgstr "Viser transaksjoner fra de siste 3 måneder"
 
-#: src/mmcheckingpanel.cpp:769
-#: src/mmcheckingpanel.cpp:822
+#: src/mmcheckingpanel.cpp:800
+#: src/mmcheckingpanel.cpp:858
 #, fuzzy
 msgid "Viewing transactions from current month"
 msgstr "Viser transaksjoner fra de siste 3 måneder"
 
-#: src/mmcheckingpanel.cpp:773
-#: src/mmcheckingpanel.cpp:827
+#: src/mmcheckingpanel.cpp:804
+#: src/mmcheckingpanel.cpp:863
 #, fuzzy
 msgid "Viewing transactions from last month"
 msgstr "Viser transaksjoner fra de siste 3 måneder"
 
-#: src/mmcheckingpanel.cpp:777
+#: src/mmcheckingpanel.cpp:808
 #, fuzzy
 msgid "Viewing All Except Reconciled Transactions"
 msgstr "Viser godkjente transaksjoner"
 
-#: src/mmcheckingpanel.cpp:797
+#: src/mmcheckingpanel.cpp:828
 msgid "Viewing Void transactions"
 msgstr "Viser ikke godkjente transaksjoner"
 
-#: src/mmcheckingpanel.cpp:807
+#: src/mmcheckingpanel.cpp:838
 msgid "Viewing Flagged transactions"
 msgstr "Viser merkede transaksjoner"
 
-#: src/mmcheckingpanel.cpp:832
+#: src/mmcheckingpanel.cpp:868
 #, fuzzy
 msgid "Viewing duplicate transactions"
 msgstr "Viser merkede transaksjoner"
 
-#: src/mmcheckingpanel.cpp:837
+#: src/mmcheckingpanel.cpp:873
 #, fuzzy
 msgid "Viewing All except Reconciled Transactions"
 msgstr "Viser godkjente transaksjoner"
 
-#: src/mmcheckingpanel.cpp:842
+#: src/mmcheckingpanel.cpp:878
 msgid "Do you really want to delete all the transactions shown?"
 msgstr "Vil du slette alle viste transaksjoner?"
 
-#: src/mmcheckingpanel.cpp:843
-#: src/mmcheckingpanel.cpp:858
-#: src/mmcheckingpanel.cpp:1224
+#: src/mmcheckingpanel.cpp:879
+#: src/mmcheckingpanel.cpp:894
+#: src/mmcheckingpanel.cpp:1280
 msgid "Confirm Transaction Deletion"
 msgstr "Bekreft sletting"
 
-#: src/mmcheckingpanel.cpp:857
+#: src/mmcheckingpanel.cpp:893
 msgid "Do you really want to delete all the flagged transactions?"
 msgstr "Vil du slette alle merkede transaksjoner?"
 
-#: src/mmcheckingpanel.cpp:896
+#: src/mmcheckingpanel.cpp:931
 msgid "&New Transaction"
 msgstr "&Ny transaksjon"
 
-#: src/mmcheckingpanel.cpp:898
+#: src/mmcheckingpanel.cpp:933
 msgid "&Edit Transaction"
 msgstr "&Endre transaksjon"
 
-#: src/mmcheckingpanel.cpp:899
+#: src/mmcheckingpanel.cpp:934
 msgid "&Delete Transaction"
 msgstr "&Slette transaksjon"
 
-#: src/mmcheckingpanel.cpp:900
+#: src/mmcheckingpanel.cpp:935
 #, fuzzy
 msgid "&Copy Transaction"
 msgstr "&Ny transaksjon"
 
-#: src/mmcheckingpanel.cpp:902
+#: src/mmcheckingpanel.cpp:937
 #, fuzzy
 msgid "&Paste Transaction"
 msgstr "&Ny transaksjon"
 
-#: src/mmcheckingpanel.cpp:904
+#: src/mmcheckingpanel.cpp:939
 msgid "Mark As &Reconciled"
 msgstr "Marker som &Godkjent"
 
-#: src/mmcheckingpanel.cpp:905
+#: src/mmcheckingpanel.cpp:940
 msgid "Mark As &Unreconciled"
 msgstr "Marker som &ikke godkjent"
 
-#: src/mmcheckingpanel.cpp:906
+#: src/mmcheckingpanel.cpp:941
 msgid "Mark As &Void"
 msgstr "Marker som &Ugyldig"
 
-#: src/mmcheckingpanel.cpp:907
+#: src/mmcheckingpanel.cpp:942
 msgid "Mark For &Followup"
 msgstr "Marker til &Oppfølging"
 
-#: src/mmcheckingpanel.cpp:908
+#: src/mmcheckingpanel.cpp:943
 #, fuzzy
 msgid "Mark As &Duplicate"
 msgstr "Marker som &Ugyldig"
 
-#: src/mmcheckingpanel.cpp:912
+#: src/mmcheckingpanel.cpp:947
 msgid "as Reconciled"
 msgstr "som godkjent"
 
-#: src/mmcheckingpanel.cpp:913
+#: src/mmcheckingpanel.cpp:948
 msgid "as Unreconciled"
 msgstr "som ikke godkjent"
 
-#: src/mmcheckingpanel.cpp:914
+#: src/mmcheckingpanel.cpp:949
 msgid "as Void"
 msgstr "som ugyldig"
 
-#: src/mmcheckingpanel.cpp:915
+#: src/mmcheckingpanel.cpp:950
 msgid "as needing Followup"
 msgstr "som behov for oppfølging"
 
-#: src/mmcheckingpanel.cpp:916
+#: src/mmcheckingpanel.cpp:951
 msgid "as Duplicate"
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:917
+#: src/mmcheckingpanel.cpp:952
 msgid "Mark all "
 msgstr "Marker alle"
 
-#: src/mmcheckingpanel.cpp:1223
+#: src/mmcheckingpanel.cpp:1279
 msgid "Do you really want to delete the transaction?"
 msgstr "Vil du slette denne transaksjonen"
 
-#: src/mmex.cpp:297
+#: src/mmex.cpp:310
 msgid "Add Account Wizard"
 msgstr "Legg til kontoveiviser"
 
-#: src/mmex.cpp:306
+#: src/mmex.cpp:319
 #, fuzzy
 msgid ""
 " models all transactions as belonging to accounts.\n"
@@ -1352,11 +1582,11 @@ msgstr ""
 "\n"
 " Begynn med å lage en liste over alle de finansielle institusjonene du har konto."
 
-#: src/mmex.cpp:348
+#: src/mmex.cpp:361
 msgid "New Database Wizard"
 msgstr "Ny database veiviser"
 
-#: src/mmex.cpp:355
+#: src/mmex.cpp:368
 #, fuzzy
 msgid ""
 "The next pages will help you create a new database.\n"
@@ -1371,663 +1601,704 @@ msgstr ""
 "\n"
 "Filen vil få etternavnet .mmb. Ta sikkerhetskopi av denne filen!! Den inneholder dine finansielle data."
 
-#: src/mmex.cpp:450
-#: src/mmex.cpp:2205
-#: src/mmex.cpp:2810
-msgid "&Tools"
-msgstr "&Verktøy"
-
-#: src/mmex.cpp:450
-#: src/mmex.cpp:2167
-#: src/mmex.cpp:2810
-msgid "Online Update Currency Rate"
-msgstr ""
-
-#: src/mmex.cpp:667
-#: src/mmex.cpp:2047
+#: src/mmex.cpp:679
 msgid "Navigation"
 msgstr ""
 
-#: src/mmex.cpp:681
+#: src/mmex.cpp:693
 msgid "Home Page"
 msgstr "Hjemme Side"
 
-#: src/mmex.cpp:685
+#: src/mmex.cpp:697
 msgid "Bank Accounts"
 msgstr "Bankkonti"
 
-#: src/mmex.cpp:692
-#: src/mmex.cpp:733
+#: src/mmex.cpp:704
+#: src/mmex.cpp:745
 msgid "Stocks"
 msgstr "Aksjer"
 
-#: src/mmex.cpp:714
+#: src/mmex.cpp:726
 msgid "Budgeting"
 msgstr "Budsjettering"
 
-#: src/mmex.cpp:720
+#: src/mmex.cpp:732
 msgid "Reports"
 msgstr "Rapporter"
 
-#: src/mmex.cpp:726
+#: src/mmex.cpp:738
 msgid "Summary of Accounts"
 msgstr "Sammendrag av konti"
 
-#: src/mmex.cpp:747
-#: src/mmex.cpp:1413
-#: src/mmex.cpp:1432
+#: src/mmex.cpp:759
 #: src/mmex.cpp:1445
-#: src/mmex.cpp:1458
-#: src/mmex.cpp:1475
-#: src/mmex.cpp:1492
+#: src/mmex.cpp:1464
+#: src/mmex.cpp:1477
+#: src/mmex.cpp:1490
+#: src/mmex.cpp:1507
+#: src/mmex.cpp:1524
 msgid "Where the Money Goes"
 msgstr "Hvor går pengene"
 
-#: src/mmex.cpp:752
-#: src/mmex.cpp:784
-#: src/mmex.cpp:816
-#: src/mmex.cpp:847
-#: src/mmex.cpp:879
+#: src/mmex.cpp:764
+#: src/mmex.cpp:796
+#: src/mmex.cpp:828
+#: src/mmex.cpp:859
+#: src/mmex.cpp:891
 msgid "Last Calendar Month"
 msgstr "Siste kalender måned"
 
-#: src/mmex.cpp:757
-#: src/mmex.cpp:789
-#: src/mmex.cpp:821
-#: src/mmex.cpp:852
-#: src/mmex.cpp:884
+#: src/mmex.cpp:769
+#: src/mmex.cpp:801
+#: src/mmex.cpp:833
+#: src/mmex.cpp:864
+#: src/mmex.cpp:896
 msgid "Current Month"
 msgstr "Denne måneden"
 
-#: src/mmex.cpp:762
-#: src/mmex.cpp:794
-#: src/mmex.cpp:826
-#: src/mmex.cpp:857
-#: src/mmex.cpp:889
+#: src/mmex.cpp:774
+#: src/mmex.cpp:806
+#: src/mmex.cpp:838
+#: src/mmex.cpp:869
+#: src/mmex.cpp:901
 msgid "Last 30 Days"
 msgstr "Siste 30 dager"
 
-#: src/mmex.cpp:767
-#: src/mmex.cpp:799
-#: src/mmex.cpp:831
-#: src/mmex.cpp:862
-#: src/mmex.cpp:894
+#: src/mmex.cpp:779
+#: src/mmex.cpp:811
+#: src/mmex.cpp:843
+#: src/mmex.cpp:874
+#: src/mmex.cpp:906
 msgid "Last Year"
 msgstr "Forrige år"
 
-#: src/mmex.cpp:772
-#: src/mmex.cpp:804
-#: src/mmex.cpp:836
-#: src/mmex.cpp:867
-#: src/mmex.cpp:899
+#: src/mmex.cpp:784
+#: src/mmex.cpp:816
+#: src/mmex.cpp:848
+#: src/mmex.cpp:879
+#: src/mmex.cpp:911
 msgid "Current Year"
 msgstr "Dette året"
 
-#: src/mmex.cpp:779
-#: src/mmex.cpp:1321
-#: src/mmex.cpp:1341
-#: src/mmex.cpp:1354
-#: src/mmex.cpp:1367
-#: src/mmex.cpp:1384
-#: src/mmex.cpp:1401
+#: src/mmex.cpp:791
+#: src/mmex.cpp:1353
+#: src/mmex.cpp:1373
+#: src/mmex.cpp:1386
+#: src/mmex.cpp:1399
+#: src/mmex.cpp:1416
+#: src/mmex.cpp:1433
 #, fuzzy
 msgid "Where the Money Comes From"
 msgstr "Hvor går pengene"
 
-#: src/mmex.cpp:842
+#: src/mmex.cpp:854
 msgid "To Whom the Money Goes"
 msgstr "Hvem går pengene til"
 
-#: src/mmex.cpp:874
+#: src/mmex.cpp:886
 msgid "Income vs Expenses"
 msgstr "Inntekt vs Utgifter"
 
-#: src/mmex.cpp:904
+#: src/mmex.cpp:916
 msgid "Income vs Expenses - All Time"
 msgstr "Inntekt vs utgifter - for all tid"
 
-#: src/mmex.cpp:910
+#: src/mmex.cpp:922
 msgid "Transaction Report"
 msgstr "Transaksjonsrapport"
 
-#: src/mmex.cpp:918
+#: src/mmex.cpp:930
 msgid "Budget Performance"
 msgstr "Budsjett evaluering"
 
-#: src/mmex.cpp:927
+#: src/mmex.cpp:939
 #, fuzzy
 msgid "Budget Setup and Performance"
 msgstr "Budsjett evaluering"
 
-#: src/mmex.cpp:933
-#: src/mmex.cpp:2779
+#: src/mmex.cpp:945
+#: src/mmex.cpp:2825
 msgid "Cash Flow"
 msgstr ""
 
-#: src/mmex.cpp:938
+#: src/mmex.cpp:950
 #, fuzzy
 msgid "Cash Flow - Specific Accounts"
 msgstr "Angi konto"
 
-#: src/mmex.cpp:944
+#: src/mmex.cpp:956
 #, fuzzy
 msgid "Transaction Statistics"
 msgstr "transaksjonsliste"
 
-#: src/mmex.cpp:950
+#: src/mmex.cpp:962
 msgid "Custom SQL Report"
 msgstr ""
 
-#: src/mmex.cpp:955
+#: src/mmex.cpp:967
 msgid "Help"
 msgstr "Hjelp"
 
-#: src/mmex.cpp:1033
-#: src/mmex.cpp:1106
+#: src/mmex.cpp:1051
+#: src/mmex.cpp:1138
 #, fuzzy
 msgid "Top Categories Last 30 Days"
 msgstr "Siste 30 dager"
 
-#: src/mmex.cpp:1786
-#: src/mmex.cpp:3302
+#: src/mmex.cpp:1818
+#: src/mmex.cpp:3355
 msgid "Do you really want to delete the account?"
 msgstr "Vil du virkelig slette kontoen"
 
-#: src/mmex.cpp:1787
-#: src/mmex.cpp:3303
+#: src/mmex.cpp:1819
+#: src/mmex.cpp:3356
 msgid "Confirm Account Deletion"
 msgstr "Bekreft sletting av konto"
 
-#: src/mmex.cpp:1832
+#: src/mmex.cpp:1864
 msgid "&Go To.."
 msgstr "&Gå til.."
 
-#: src/mmex.cpp:1833
-#: src/mmex.cpp:1842
+#: src/mmex.cpp:1865
+#: src/mmex.cpp:1874
+#: src/mmex.cpp:2099
 msgid "&Edit Account"
 msgstr "&Endre konto"
 
-#: src/mmex.cpp:1834
-#: src/mmex.cpp:1843
+#: src/mmex.cpp:1866
+#: src/mmex.cpp:1875
+#: src/mmex.cpp:2105
 msgid "&Delete Account"
 msgstr "&Slette konto"
 
-#: src/mmex.cpp:1836
-#: src/mmex.cpp:1845
+#: src/mmex.cpp:1868
+#: src/mmex.cpp:1877
 msgid "&Launch Account Website"
 msgstr "&Åpne kontoens hjemmeside"
 
-#: src/mmex.cpp:1979
+#: src/mmex.cpp:2011
 msgid "&New Database\tCtrl-N"
 msgstr "&Ny database\tCtrl-N"
 
-#: src/mmex.cpp:1980
-#: src/mmex.cpp:2227
+#: src/mmex.cpp:2012
+#: src/mmex.cpp:2259
 #, fuzzy
 msgid "New Database"
 msgstr "Ny database veiviser"
 
-#: src/mmex.cpp:1984
+#: src/mmex.cpp:2016
 msgid "&Open Database\tCtrl-O"
 msgstr "&Åpne database\tCTRL-Å"
 
-#: src/mmex.cpp:1985
-#: src/mmex.cpp:2229
+#: src/mmex.cpp:2017
+#: src/mmex.cpp:2261
 #, fuzzy
 msgid "Open Database"
 msgstr "&Åpne database\tCTRL-Å"
 
-#: src/mmex.cpp:1992
+#: src/mmex.cpp:2024
 msgid "Save Database &As"
 msgstr "Lagre database &Som"
 
-#: src/mmex.cpp:1993
+#: src/mmex.cpp:2025
 #, fuzzy
 msgid "Save Database As"
 msgstr "Lagre database &Som"
 
-#: src/mmex.cpp:2000
+#: src/mmex.cpp:2032
 msgid "&CSV Files"
 msgstr "&CSV filer"
 
-#: src/mmex.cpp:2000
+#: src/mmex.cpp:2032
 msgid "Export to CSV"
 msgstr "Eksporter til CSV"
 
-#: src/mmex.cpp:2001
+#: src/mmex.cpp:2033
 msgid "&Report to HTML"
 msgstr "&Rapporter til HTML"
 
-#: src/mmex.cpp:2001
+#: src/mmex.cpp:2033
 msgid "Export to HTML"
 msgstr "Eksporter til HTML"
 
-#: src/mmex.cpp:2002
+#: src/mmex.cpp:2034
 msgid "&Export"
 msgstr "&Eksporter"
 
-#: src/mmex.cpp:2005
+#: src/mmex.cpp:2037
 msgid "&QIF Files"
 msgstr "&QIF filer"
 
-#: src/mmex.cpp:2005
+#: src/mmex.cpp:2037
 msgid "Import from QIF"
 msgstr "Importer fra QIF"
 
-#: src/mmex.cpp:2006
+#: src/mmex.cpp:2038
 msgid "&Universal CSV Files"
 msgstr "&Universelle CSV filer"
 
-#: src/mmex.cpp:2006
+#: src/mmex.cpp:2038
 msgid "Import from any CSV file"
 msgstr "Importer fra alle typer CSV filer"
 
-#: src/mmex.cpp:2008
+#: src/mmex.cpp:2040
 msgid "&MMEX CSV Files"
 msgstr "&MMEX CSV filer"
 
-#: src/mmex.cpp:2008
+#: src/mmex.cpp:2040
 msgid "Import from MMEX CSV"
 msgstr "Importer fra MMEX CSV"
 
-#: src/mmex.cpp:2010
-msgid "&MM.NET CSV Files"
+#: src/mmex.cpp:2042
+#, fuzzy
+msgid "MM.&NET CSV Files"
 msgstr "&MM.NET CSV filer"
 
-#: src/mmex.cpp:2010
+#: src/mmex.cpp:2042
 msgid "Import from MM.NET CSV"
 msgstr "Importer fra MM.NET CSV"
 
-#: src/mmex.cpp:2012
-msgid "Import"
+#: src/mmex.cpp:2044
+#, fuzzy
+msgid "&Import"
 msgstr "Importer"
 
-#: src/mmex.cpp:2018
-msgid "Page Setup..."
+#: src/mmex.cpp:2050
+#, fuzzy
+msgid "Page Set&up..."
 msgstr "Side oppsett..."
 
-#: src/mmex.cpp:2018
+#: src/mmex.cpp:2050
 msgid "Setup page printing options"
 msgstr "Oppsettsside for utskrift"
 
-#: src/mmex.cpp:2024
-#: src/mmex.cpp:2030
-msgid "Current View"
+#: src/mmex.cpp:2056
+#: src/mmex.cpp:2062
+#, fuzzy
+msgid "Current &View"
 msgstr "Nåværende visning"
 
-#: src/mmex.cpp:2024
+#: src/mmex.cpp:2056
 msgid "Preview current report"
 msgstr "Forhåndsvisning denne rapporten"
 
-#: src/mmex.cpp:2026
-msgid "Print Preview..."
+#: src/mmex.cpp:2058
+#, fuzzy
+msgid "Print Pre&view..."
 msgstr "Forhåndsvisning av utskrift"
 
-#: src/mmex.cpp:2030
+#: src/mmex.cpp:2062
 msgid "Print current report"
 msgstr "Skriv ut denne rapporten"
 
-#: src/mmex.cpp:2033
-msgid "Print..."
+#: src/mmex.cpp:2065
+#, fuzzy
+msgid "&Print..."
 msgstr "Print..."
 
-#: src/mmex.cpp:2038
+#: src/mmex.cpp:2070
 msgid "E&xit\tAlt-X"
 msgstr "&Avslutt\tAlt-A"
 
-#: src/mmex.cpp:2038
+#: src/mmex.cpp:2070
 msgid "Quit this program"
 msgstr "Avslutt programmet"
 
-#: src/mmex.cpp:2045
+#: src/mmex.cpp:2077
 #, fuzzy
 msgid "&Toolbar"
 msgstr "&Verktøy"
 
-#: src/mmex.cpp:2045
+#: src/mmex.cpp:2077
 msgid "Show/Hide the toolbar"
 msgstr ""
 
-#: src/mmex.cpp:2047
+#: src/mmex.cpp:2079
+msgid "&Navigation"
+msgstr ""
+
+#: src/mmex.cpp:2079
 msgid "Show/Hide the Navigation tree control"
 msgstr ""
 
-#: src/mmex.cpp:2057
+#: src/mmex.cpp:2089
 msgid "New &Account"
 msgstr "Ny &Konto"
 
-#: src/mmex.cpp:2057
-#: src/mmex.cpp:2233
+#: src/mmex.cpp:2089
+#: src/mmex.cpp:2265
 msgid "New Account"
 msgstr "Ny konto"
 
-#: src/mmex.cpp:2063
+#: src/mmex.cpp:2095
 msgid "Account &List"
 msgstr "Konto &Liste"
 
-#: src/mmex.cpp:2063
-#: src/mmex.cpp:2235
+#: src/mmex.cpp:2095
+#: src/mmex.cpp:2267
 msgid "Show Account List"
 msgstr "Vis konto liste"
 
-#: src/mmex.cpp:2067
+#: src/mmex.cpp:2099
 msgid "Edit Account"
 msgstr "Endre konto"
 
-#: src/mmex.cpp:2073
-msgid "Delete Account"
-msgstr "Slett konto"
-
-#: src/mmex.cpp:2073
+#: src/mmex.cpp:2105
 msgid "Delete Account from database"
 msgstr "Slett konto fra database"
 
-#: src/mmex.cpp:2085
+#: src/mmex.cpp:2117
 msgid "Organize &Categories"
 msgstr "Organiser &Kategorier"
 
-#: src/mmex.cpp:2085
-#: src/mmex.cpp:2237
+#: src/mmex.cpp:2117
+#: src/mmex.cpp:2269
 msgid "Organize Categories"
 msgstr "Organiser kategorier"
 
-#: src/mmex.cpp:2090
+#: src/mmex.cpp:2122
 msgid "Organize &Payees"
 msgstr "Organiser &mottakere"
 
-#: src/mmex.cpp:2090
-#: src/mmex.cpp:2238
+#: src/mmex.cpp:2122
+#: src/mmex.cpp:2270
 msgid "Organize Payees"
 msgstr "Organiser mottakere"
 
-#: src/mmex.cpp:2095
-#: src/mmex.cpp:2239
+#: src/mmex.cpp:2127
+#, fuzzy
+msgid "Or&ganize Currency"
+msgstr "Organiser valuta"
+
+#: src/mmex.cpp:2127
+#: src/mmex.cpp:2271
 msgid "Organize Currency"
 msgstr "Organiser valuta"
 
-#: src/mmex.cpp:2102
+#: src/mmex.cpp:2134
+#, fuzzy
+msgid "&Budget Setup"
+msgstr "Oppsett budsjett"
+
+#: src/mmex.cpp:2134
 msgid "Budget Setup"
 msgstr "Oppsett budsjett"
 
-#: src/mmex.cpp:2110
+#: src/mmex.cpp:2142
+#, fuzzy
+msgid "&Repeating Transactions"
+msgstr "Gjenta transaksjoner"
+
+#: src/mmex.cpp:2142
 msgid "Bills && Deposits"
 msgstr "Regninger & &Innskudd"
 
-#: src/mmex.cpp:2118
+#: src/mmex.cpp:2150
+#, fuzzy
+msgid "&Stock Investments"
+msgstr "Aksjeinvesteringer"
+
+#: src/mmex.cpp:2150
 msgid "Stock Investments"
 msgstr "Aksjeinvesteringer"
 
-#: src/mmex.cpp:2134
+#: src/mmex.cpp:2158
+#, fuzzy
+msgid "&Assets"
+msgstr "Aktiva"
+
+#: src/mmex.cpp:2166
+#, fuzzy
+msgid "&Transaction Filter"
+msgstr "Transaksjonsfilter"
+
+#: src/mmex.cpp:2166
 msgid "Transaction Filter"
 msgstr "Transaksjonsfilter"
 
-#: src/mmex.cpp:2141
+#: src/mmex.cpp:2173
 msgid "&Options"
 msgstr "&Instillinger"
 
-#: src/mmex.cpp:2141
+#: src/mmex.cpp:2173
 #, fuzzy
 msgid "Show the Options Dialog"
 msgstr "Alternativer vindu"
 
-#: src/mmex.cpp:2148
+#: src/mmex.cpp:2180
 msgid "&Help\tCtrl-F1"
 msgstr "&Hjelp\tCtrl-F1"
 
-#: src/mmex.cpp:2148
+#: src/mmex.cpp:2180
 msgid "Show the Help file"
 msgstr ""
 
-#: src/mmex.cpp:2153
-msgid "Show App Start Dialog"
+#: src/mmex.cpp:2185
+#, fuzzy
+msgid "&Show App Start Dialog"
 msgstr "Vis Oppstartsvinduet"
 
-#: src/mmex.cpp:2153
+#: src/mmex.cpp:2185
 msgid "App Start Dialog"
 msgstr "Oppstartsvinduet"
 
-#: src/mmex.cpp:2160
-msgid "Convert Encrypted DB"
+#: src/mmex.cpp:2192
+msgid "Convert Encrypted &DB"
 msgstr ""
 
-#: src/mmex.cpp:2161
+#: src/mmex.cpp:2193
 msgid "Convert Encrypted DB to Non-Encrypted DB"
 msgstr ""
 
-#: src/mmex.cpp:2168
+#: src/mmex.cpp:2199
+#, fuzzy
+msgid "Online &Update Currency Rate"
+msgstr "Hoved valuta ikke angitt"
+
+#: src/mmex.cpp:2200
 msgid "Online update currency rate"
 msgstr ""
 
-#: src/mmex.cpp:2176
+#: src/mmex.cpp:2208
 msgid "Check for &Updates"
 msgstr "Sjekk etter &Oppdateringer"
 
-#: src/mmex.cpp:2176
+#: src/mmex.cpp:2208
 msgid "Check For Updates"
 msgstr "Sjekk etter oppdateringer"
 
-#: src/mmex.cpp:2184
-msgid "Report Issues or Feedback"
+#: src/mmex.cpp:2216
+#, fuzzy
+msgid "&Report Issues or Feedback"
 msgstr "Send tilbakemeldinger eller feil"
 
-#: src/mmex.cpp:2184
+#: src/mmex.cpp:2216
 msgid "Send email through the mailing list to report issues with the software."
 msgstr "Send en epost via epostlista for å rapportere feil med programmvaren"
 
-#: src/mmex.cpp:2192
-msgid "Be notified of new releases"
+#: src/mmex.cpp:2224
+#, fuzzy
+msgid "Be &notified of new releases"
 msgstr "Bli informert om nye oppdateringer"
 
-#: src/mmex.cpp:2192
+#: src/mmex.cpp:2224
 msgid "Sign up for the announcement mailing list"
 msgstr "Abbonere på epostlista"
 
-#: src/mmex.cpp:2198
+#: src/mmex.cpp:2230
 msgid "&About..."
 msgstr "&Om...."
 
-#: src/mmex.cpp:2198
+#: src/mmex.cpp:2230
 msgid "Show about dialog"
 msgstr "Vis Om vinduet"
 
-#: src/mmex.cpp:2203
+#: src/mmex.cpp:2235
 msgid "&File"
 msgstr "&Fil"
 
-#: src/mmex.cpp:2204
+#: src/mmex.cpp:2236
 msgid "&Accounts"
 msgstr "&Konti"
 
-#: src/mmex.cpp:2206
+#: src/mmex.cpp:2237
+msgid "&Tools"
+msgstr "&Verktøy"
+
+#: src/mmex.cpp:2238
 msgid "&View"
 msgstr ""
 
-#: src/mmex.cpp:2207
+#: src/mmex.cpp:2239
 msgid "&Help"
 msgstr "&Hjelp"
 
-#: src/mmex.cpp:2228
+#: src/mmex.cpp:2258
+msgid "New"
+msgstr "Ny"
+
+#: src/mmex.cpp:2260
 msgid "Open"
 msgstr "Åpne"
 
-#: src/mmex.cpp:2235
+#: src/mmex.cpp:2267
 msgid "Account List"
 msgstr "Konto liste"
 
-#: src/mmex.cpp:2237
+#: src/mmex.cpp:2269
 msgid "Show Organize Categories Dialog"
 msgstr "Vis organisere kategorier vinduet"
 
-#: src/mmex.cpp:2238
+#: src/mmex.cpp:2270
 msgid "Show Organize Payees Dialog"
 msgstr "Vis organisere mottakere vinduet"
 
-#: src/mmex.cpp:2239
+#: src/mmex.cpp:2271
 msgid "Show Organize Currency Dialog"
 msgstr "Vis organisere valuta vinduet"
 
-#: src/mmex.cpp:2264
-#: src/mmex.cpp:2455
+#: src/mmex.cpp:2295
+#: src/mmex.cpp:2488
 msgid "Money Manager Ex: Enter Password For Database.."
 msgstr ""
 
-#: src/mmex.cpp:2288
-#: src/mmex.cpp:2342
+#: src/mmex.cpp:2319
+#: src/mmex.cpp:2373
 #, fuzzy
 msgid " - No File opened "
 msgstr "Money Manager EX - Ingen fil åpnet"
 
-#: src/mmex.cpp:2291
+#: src/mmex.cpp:2322
 msgid "Sorry. The Database version is too old or Database password is incorrect"
 msgstr ""
 
-#: src/mmex.cpp:2292
-#: src/mmex.cpp:2346
+#: src/mmex.cpp:2323
+#: src/mmex.cpp:2377
 msgid "Error opening database"
 msgstr "Feil ved åpning av database"
 
-#: src/mmex.cpp:2345
+#: src/mmex.cpp:2376
 #, fuzzy
 msgid ""
 "Cannot locate previously opened database.\n"
 "Do you want to browse to locate the file?"
 msgstr "Kan ikke finne tidligere åpnet database.+n Vil du angi filen manuellt?"
 
-#: src/mmex.cpp:2365
+#: src/mmex.cpp:2396
 msgid "Opening Database File && Verifying Integrity"
 msgstr "Åpner databasefil && verifiserer filen"
 
-#: src/mmex.cpp:2451
+#: src/mmex.cpp:2484
 #, fuzzy
 msgid "Choose Encrypted database file to open"
 msgstr "Velg en QIF fil for å importere"
 
-#: src/mmex.cpp:2475
+#: src/mmex.cpp:2510
 msgid "Converted DB!"
 msgstr ""
 
-#: src/mmex.cpp:2476
+#: src/mmex.cpp:2511
 msgid "MMEX message"
 msgstr ""
 
-#: src/mmex.cpp:2481
+#: src/mmex.cpp:2516
 msgid "Unable to convert db successfully. Check Password!"
 msgstr ""
 
-#: src/mmex.cpp:2562
-#: src/mmex.cpp:2638
+#: src/mmex.cpp:2602
+#: src/mmex.cpp:2685
 msgid "No Account available! Cannot Import! Create a new account first!"
 msgstr "Ingen konto tilgjengelig! Kan ikke importere! Opprett ny konto først!"
 
-#: src/mmex.cpp:2581
+#: src/mmex.cpp:2628
 msgid "Choose Account to import to:"
 msgstr "Velg konto å importere til:"
 
-#: src/mmex.cpp:2582
+#: src/mmex.cpp:2629
 msgid "QFX Import"
 msgstr "QFX import"
 
-#: src/mmex.cpp:2778
+#: src/mmex.cpp:2824
 #, fuzzy
 msgid "Choose Accounts"
 msgstr "Velg konto for redigering"
 
-#: src/mmex.cpp:2834
-#: src/mmex.cpp:2922
+#: src/mmex.cpp:2884
+#: src/mmex.cpp:2972
 msgid "Unable to connect!"
 msgstr ""
 
-#: src/mmex.cpp:2834
-#: src/mmex.cpp:2892
-#: src/mmex.cpp:2898
+#: src/mmex.cpp:2884
+#: src/mmex.cpp:2942
+#: src/mmex.cpp:2948
 msgid "Check Update"
 msgstr "Se etter oppdatering"
 
-#: src/mmex.cpp:2892
+#: src/mmex.cpp:2942
 msgid "New update available!"
 msgstr "Ny oppdatering tilgjengelig!"
 
-#: src/mmex.cpp:2898
+#: src/mmex.cpp:2948
 msgid "You have the latest version installed!"
 msgstr "Du har den siste versionen installert!"
 
-#: src/mmex.cpp:2913
+#: src/mmex.cpp:2963
 #, fuzzy
 msgid "No database!"
 msgstr "Ny database veiviser"
 
-#: src/mmex.cpp:2913
-#: src/mmex.cpp:2922
-#: src/mmex.cpp:2929
-#: src/mmex.cpp:2935
-#: src/mmex.cpp:2944
-#: src/mmex.cpp:2951
-#: src/mmex.cpp:2956
-#: src/mmex.cpp:2961
-#: src/mmex.cpp:2968
-#: src/mmex.cpp:2973
-#: src/mmex.cpp:3016
-#: src/mmex.cpp:3043
+#: src/mmex.cpp:2963
+#: src/mmex.cpp:2972
+#: src/mmex.cpp:2979
+#: src/mmex.cpp:2985
+#: src/mmex.cpp:2994
+#: src/mmex.cpp:3001
+#: src/mmex.cpp:3006
+#: src/mmex.cpp:3011
+#: src/mmex.cpp:3018
+#: src/mmex.cpp:3023
+#: src/mmex.cpp:3066
+#: src/mmex.cpp:3093
 #, fuzzy
 msgid "Update Currency Rate"
 msgstr "Hoved valuta ikke angitt"
 
-#: src/mmex.cpp:2929
+#: src/mmex.cpp:2979
 msgid "Cannot get data from WWW!"
 msgstr ""
 
-#: src/mmex.cpp:2935
+#: src/mmex.cpp:2985
 msgid "Incorrect XML data (#1)!"
 msgstr ""
 
-#: src/mmex.cpp:2944
+#: src/mmex.cpp:2994
 msgid "Incorrect XML data (#2)!"
 msgstr ""
 
-#: src/mmex.cpp:2951
+#: src/mmex.cpp:3001
 msgid "Incorrect XML data (#3)!"
 msgstr ""
 
-#: src/mmex.cpp:2956
+#: src/mmex.cpp:3006
 msgid "Incorrect XML data (#4)!"
 msgstr ""
 
-#: src/mmex.cpp:2961
+#: src/mmex.cpp:3011
 msgid "Incorrect XML data (#5)!"
 msgstr ""
 
-#: src/mmex.cpp:2968
+#: src/mmex.cpp:3018
 msgid "Incorrect XML data (#6)!"
 msgstr ""
 
-#: src/mmex.cpp:2973
+#: src/mmex.cpp:3023
 msgid "Incorrect XML data (#7)!"
 msgstr ""
 
-#: src/mmex.cpp:3016
+#: src/mmex.cpp:3066
 msgid "Could not find base currency symbol!"
 msgstr ""
 
-#: src/mmex.cpp:3043
+#: src/mmex.cpp:3093
 #, fuzzy
 msgid "Currency rate updated"
 msgstr "valuta håndterer"
 
-#: src/mmex.cpp:3239
-#: src/mmex.cpp:3280
+#: src/mmex.cpp:3292
+#: src/mmex.cpp:3333
 msgid "No Account available!"
 msgstr "Ingen konto tilgjengelig"
 
-#: src/mmex.cpp:3253
+#: src/mmex.cpp:3306
 msgid "Choose Account to Edit"
 msgstr "Velg konto for redigering"
 
-#: src/mmex.cpp:3254
-#: src/mmex.cpp:3295
+#: src/mmex.cpp:3307
+#: src/mmex.cpp:3348
 msgid "Accounts"
 msgstr "Konti"
 
-#: src/mmex.cpp:3294
+#: src/mmex.cpp:3347
 msgid "Choose Account to Delete"
 msgstr "Velg konto som skal slettes"
 
@@ -2036,38 +2307,44 @@ msgstr "Velg konto som skal slettes"
 msgid " Help"
 msgstr "Hjelp"
 
-#: src/mmhomepagepanel.cpp:97
+#: src/mmhomepagepanel.cpp:124
 msgid "Today's Date: "
 msgstr "Dagens dato:"
 
-#: src/mmhomepagepanel.cpp:110
+#: src/mmhomepagepanel.cpp:137
+#: src/mmhomepagepanel.cpp:260
 msgid "Summary"
 msgstr "Sammendrag"
 
-#: src/mmhomepagepanel.cpp:199
+#: src/mmhomepagepanel.cpp:259
+#: src/newacctdialog.cpp:343
+msgid "Currency"
+msgstr "Valutta"
+
+#: src/mmhomepagepanel.cpp:282
 #, fuzzy
 msgid "Total of Accounts:"
 msgstr "Totalt på alle konti:"
 
-#: src/mmhomepagepanel.cpp:220
+#: src/mmhomepagepanel.cpp:303
 msgid "Income vs Expenses: Current Month"
 msgstr "Inntekt vs utgift: Denne måneden"
 
-#: src/mmhomepagepanel.cpp:370
+#: src/mmhomepagepanel.cpp:451
 #, fuzzy
 msgid "Upcoming Transactions"
 msgstr "Gjenta transaksjoner"
 
-#: src/mmhomepagepanel.cpp:428
+#: src/mmhomepagepanel.cpp:510
 msgid "Follow Up On "
 msgstr "Følg opp"
 
-#: src/mmhomepagepanel.cpp:432
+#: src/mmhomepagepanel.cpp:514
 #, fuzzy
 msgid "Transactions"
 msgstr "transaksjonsliste"
 
-#: src/mmhomepagepanel.cpp:437
+#: src/mmhomepagepanel.cpp:519
 #, fuzzy
 msgid "Total Transactions"
 msgstr "Endre transaksjon"
@@ -2076,432 +2353,450 @@ msgstr "Endre transaksjon"
 msgid "REPORTS"
 msgstr "RAPPORTER"
 
-#: src/newacctdialog.cpp:146
+#: src/newacctdialog.cpp:153
 msgid "Account Name:"
 msgstr "Konto navn :"
 
-#: src/newacctdialog.cpp:153
+#: src/newacctdialog.cpp:160
 msgid "Enter the Name of the Account. This name can be renamed at any time."
 msgstr "Angi kontoens navn. Navnet kan endres siden"
 
-#: src/newacctdialog.cpp:156
+#: src/newacctdialog.cpp:163
 msgid "Account Type:"
 msgstr "Konto type :"
 
-#: src/newacctdialog.cpp:162
+#: src/newacctdialog.cpp:169
 msgid "Checking"
 msgstr "Sjekkonto"
 
-#: src/newacctdialog.cpp:163
+#: src/newacctdialog.cpp:170
 msgid "Investment"
 msgstr "Invistering"
 
-#: src/newacctdialog.cpp:169
+#: src/newacctdialog.cpp:176
 msgid "Specify the type of account to be created."
 msgstr "Angi kontotype"
 
-#: src/newacctdialog.cpp:171
+#: src/newacctdialog.cpp:178
 msgid "Account Number:"
 msgstr "Konto nummer:"
 
-#: src/newacctdialog.cpp:180
+#: src/newacctdialog.cpp:187
 msgid "Enter the Account Number associated with this account."
 msgstr "Angi nummer som skal bindes mot denne konto"
 
-#: src/newacctdialog.cpp:183
+#: src/newacctdialog.cpp:190
 msgid "Held At:"
 msgstr "Hos:"
 
-#: src/newacctdialog.cpp:191
+#: src/newacctdialog.cpp:198
 msgid "Enter the name of the financial institution in which the account is held."
 msgstr "Angi navnet på den finansielle institusjonen som kontoen er"
 
-#: src/newacctdialog.cpp:193
+#: src/newacctdialog.cpp:200
 msgid "Website:"
 msgstr "Hjemmeside:"
 
-#: src/newacctdialog.cpp:201
+#: src/newacctdialog.cpp:208
 msgid "Enter the URL of the website for the financial institution."
 msgstr "Angi webaddressn til den finansielle institusjonen"
 
-#: src/newacctdialog.cpp:204
+#: src/newacctdialog.cpp:211
 msgid "Contact:"
 msgstr "Kontakt:"
 
-#: src/newacctdialog.cpp:211
+#: src/newacctdialog.cpp:218
 msgid "Enter any contact information for the financial institution."
 msgstr "Angi kontakt informasjon til den finansielle institusjonen"
 
-#: src/newacctdialog.cpp:214
+#: src/newacctdialog.cpp:221
 msgid "Access Info:"
 msgstr "Tilgangsinformasjon:"
 
-#: src/newacctdialog.cpp:221
+#: src/newacctdialog.cpp:228
 msgid "Enter any login/access information for the financial institution. This is not secure as anyone with access to the mmb file can access it."
 msgstr "Angi innloggings informasjon til den finansielle institusjonen. Dette er ikke SIKKERT, da alle som har tilgang til databasefilen kan finne denne informasjonen."
 
-#: src/newacctdialog.cpp:223
+#: src/newacctdialog.cpp:230
 msgid "Account Status:"
 msgstr "Konto status:"
 
-#: src/newacctdialog.cpp:230
+#: src/newacctdialog.cpp:237
 msgid "Closed"
 msgstr "Avsluttet"
 
-#: src/newacctdialog.cpp:237
+#: src/newacctdialog.cpp:244
 msgid "Specify if this account has been closed. Closed accounts are inactive in most calculations, reporting etc."
 msgstr "Angi om denne kontoen er stengt"
 
-#: src/newacctdialog.cpp:240
+#: src/newacctdialog.cpp:247
 msgid "Initial Balance:"
 msgstr "Åpnings balanse:"
 
-#: src/newacctdialog.cpp:248
+#: src/newacctdialog.cpp:255
 msgid "Enter the initial balance in this account."
 msgstr "Angi åpningsbalanse for denne kontoen"
 
-#: src/newacctdialog.cpp:251
+#: src/newacctdialog.cpp:258
 msgid "Currency:"
 msgstr "Valutta:"
 
-#: src/newacctdialog.cpp:256
+#: src/newacctdialog.cpp:263
 msgid "Select Currency"
 msgstr "Velg valutta"
 
-#: src/newacctdialog.cpp:266
+#: src/newacctdialog.cpp:273
 msgid "Specify the currency to be used by this account."
 msgstr "Angi kontoens valuta."
 
-#: src/newacctdialog.cpp:269
+#: src/newacctdialog.cpp:276
 msgid "Notes:"
 msgstr "Notater:"
 
-#: src/newacctdialog.cpp:276
+#: src/newacctdialog.cpp:283
 msgid "Enter user notes and details about this account."
 msgstr "Angi bruker notater og detaljer for denne kontoen"
 
-#: src/newacctdialog.cpp:281
+#: src/newacctdialog.cpp:288
 msgid "Favorite Account"
 msgstr "Favoritt konto"
 
-#: src/newacctdialog.cpp:285
+#: src/newacctdialog.cpp:292
 msgid "Select whether this is an account that is used often. This is used to filter accounts display view."
 msgstr "Velg om denne kontoen er brukt ofte eller sjelden. Dette er brukt til å flitrere kontooversikten"
 
-#: src/newacctdialog.cpp:323
+#: src/newacctdialog.cpp:330
 msgid "Account Name "
 msgstr "Konto navn"
 
-#: src/newacctdialog.cpp:330
+#: src/newacctdialog.cpp:337
 msgid "Account Name already exists"
 msgstr "Konto navnet eksisterer allerede"
 
-#: src/newacctdialog.cpp:336
-msgid "Currency"
-msgstr "Valutta"
-
-#: src/newacctdialog.cpp:389
+#: src/newacctdialog.cpp:396
 msgid "Init Balance "
 msgstr "Åpningsbalanse"
 
-#: src/optionsdialog.cpp:241
+#: src/optionsdialog.cpp:271
 #, fuzzy
 msgid " : Restart"
 msgstr "Status"
 
-#: src/optionsdialog.cpp:313
+#: src/optionsdialog.cpp:345
 msgid "General Settings"
 msgstr "Generelle instillinger"
 
-#: src/optionsdialog.cpp:319
+#: src/optionsdialog.cpp:351
 msgid "Base Currency"
 msgstr "Hoved valuta"
 
-#: src/optionsdialog.cpp:324
+#: src/optionsdialog.cpp:356
 msgid "Set Currency"
 msgstr "Velg valutta"
 
-#: src/optionsdialog.cpp:335
+#: src/optionsdialog.cpp:367
 msgid "View Settings"
 msgstr "Vis innstillinger"
 
-#: src/optionsdialog.cpp:341
+#: src/optionsdialog.cpp:373
 msgid "Date Format"
 msgstr "Dato format"
 
-#: src/optionsdialog.cpp:368
+#: src/optionsdialog.cpp:404
 msgid "Specify the date format for display"
 msgstr "Angi dato formatet for visning"
 
-#: src/optionsdialog.cpp:373
+#: src/optionsdialog.cpp:409
 #, fuzzy
 msgid "Set"
 msgstr "Velg"
 
-#: src/optionsdialog.cpp:377
+#: src/optionsdialog.cpp:413
 msgid "Sample Date"
 msgstr "Eksempel dato"
 
-#: src/optionsdialog.cpp:385
+#: src/optionsdialog.cpp:421
 msgid "Import/Export Settings"
 msgstr "Import/Eksport instillinger"
 
-#: src/optionsdialog.cpp:391
+#: src/optionsdialog.cpp:427
 msgid "CSV Delimiter"
 msgstr "CSV skilletegn"
 
-#: src/optionsdialog.cpp:398
+#: src/optionsdialog.cpp:434
 msgid "Specify the delimiter to use when importing/exporting CSV files"
 msgstr "Angi skilletegn for import/eksport av CVS filer"
 
-#: src/optionsdialog.cpp:403
+#: src/optionsdialog.cpp:439
 msgid "Display"
 msgstr ""
 
-#: src/optionsdialog.cpp:409
+#: src/optionsdialog.cpp:445
 #, fuzzy
 msgid "User Name"
 msgstr "Enhet"
 
-#: src/optionsdialog.cpp:416
+#: src/optionsdialog.cpp:452
 #, fuzzy
 msgid "Specify the User Name"
 msgstr "Angi overføringskonto"
 
-#: src/optionsdialog.cpp:421
-#: src/optionsdialog.cpp:427
+#: src/optionsdialog.cpp:457
+#: src/optionsdialog.cpp:463
 msgid "Language"
 msgstr "Språk"
 
-#: src/optionsdialog.cpp:436
+#: src/optionsdialog.cpp:472
 msgid "Specify the language to use"
 msgstr "Angi språk"
 
-#: src/optionsdialog.cpp:446
+#: src/optionsdialog.cpp:482
 msgid "Account View Options"
 msgstr "Vis kontovalg"
 
-#: src/optionsdialog.cpp:452
+#: src/optionsdialog.cpp:488
 msgid "Accounts Visible"
 msgstr "Synlige konti"
 
-#: src/optionsdialog.cpp:458
+#: src/optionsdialog.cpp:494
 msgid "All"
 msgstr "Alle"
 
-#: src/optionsdialog.cpp:460
+#: src/optionsdialog.cpp:496
 msgid "Favorites"
 msgstr "Favoritter"
 
-#: src/optionsdialog.cpp:477
+#: src/optionsdialog.cpp:513
 msgid "Specify which accounts are visible"
 msgstr "Angi hvilke konti som er synlige"
 
-#: src/optionsdialog.cpp:482
+#: src/optionsdialog.cpp:518
 #, fuzzy
 msgid "Transaction View Options"
 msgstr "Transaksjonsdetaljer"
 
-#: src/optionsdialog.cpp:488
+#: src/optionsdialog.cpp:524
 #, fuzzy
 msgid "Transactions Visible"
 msgstr "Transaksjonsfilter"
 
-#: src/optionsdialog.cpp:495
+#: src/optionsdialog.cpp:531
 #, fuzzy
 msgid "View Reconciled"
 msgstr "Utført"
 
-#: src/optionsdialog.cpp:496
+#: src/optionsdialog.cpp:532
 #, fuzzy
 msgid "View UnReconciled"
 msgstr "som ikke godkjent"
 
-#: src/optionsdialog.cpp:497
+#: src/optionsdialog.cpp:533
+msgid "View Today"
+msgstr ""
+
+#: src/optionsdialog.cpp:534
 msgid "View 30 days"
 msgstr ""
 
-#: src/optionsdialog.cpp:498
+#: src/optionsdialog.cpp:535
 msgid "View 90 days"
 msgstr ""
 
-#: src/optionsdialog.cpp:499
+#: src/optionsdialog.cpp:536
 msgid "View Last Month"
 msgstr ""
 
-#: src/optionsdialog.cpp:500
+#: src/optionsdialog.cpp:537
 #, fuzzy
 msgid "View Current Month"
 msgstr "Denne måneden"
 
-#: src/optionsdialog.cpp:526
+#: src/optionsdialog.cpp:565
 #, fuzzy
 msgid "Specify which transactions are visible by default"
 msgstr "Angi hvilke konti som er synlige"
 
-#: src/optionsdialog.cpp:529
+#: src/optionsdialog.cpp:568
 #, fuzzy
 msgid "Font Size Options"
 msgstr "Vis kontovalg"
 
-#: src/optionsdialog.cpp:535
+#: src/optionsdialog.cpp:574
 msgid "Report Font Size"
 msgstr ""
 
-#: src/optionsdialog.cpp:574
+#: src/optionsdialog.cpp:613
 msgid "Specify which font size is used on the report tables"
 msgstr ""
 
-#: src/optionsdialog.cpp:585
+#: src/optionsdialog.cpp:624
 msgid "Restore Defaults"
 msgstr "Gjennopprett Standard"
 
-#: src/optionsdialog.cpp:588
+#: src/optionsdialog.cpp:627
 msgid "Restore Default Colors"
 msgstr "Gjennopprett Standard farger"
 
-#: src/optionsdialog.cpp:594
+#: src/optionsdialog.cpp:633
 msgid "Nav Tree"
 msgstr "Nav. Tre"
 
-#: src/optionsdialog.cpp:596
+#: src/optionsdialog.cpp:635
 msgid "Specify the color for the nav tree"
 msgstr "Angi farge for nav. tre"
 
-#: src/optionsdialog.cpp:600
+#: src/optionsdialog.cpp:639
 msgid "List Background"
 msgstr "Liste bakgrunn"
 
-#: src/optionsdialog.cpp:602
+#: src/optionsdialog.cpp:641
 msgid "Specify the color for the list background"
 msgstr "Angi farge for liste bakgrunn"
 
-#: src/optionsdialog.cpp:606
+#: src/optionsdialog.cpp:645
 msgid "List Row 0"
 msgstr "Liste rad 0"
 
-#: src/optionsdialog.cpp:608
+#: src/optionsdialog.cpp:647
 msgid "Specify the color for the list row 0"
 msgstr "Angi farge for liste rad 0"
 
-#: src/optionsdialog.cpp:612
+#: src/optionsdialog.cpp:651
 msgid "List Row 1"
 msgstr "Liste rad 1"
 
-#: src/optionsdialog.cpp:614
+#: src/optionsdialog.cpp:653
 msgid "Specify the color for the list row 1"
 msgstr "Angi farge for liste rad 1"
 
-#: src/optionsdialog.cpp:618
+#: src/optionsdialog.cpp:657
 msgid "List Border"
 msgstr "Liste ramme"
 
-#: src/optionsdialog.cpp:620
+#: src/optionsdialog.cpp:659
 msgid "Specify the color for the list Border"
 msgstr "Angi farge for liste ramme"
 
-#: src/optionsdialog.cpp:624
+#: src/optionsdialog.cpp:663
 msgid "List Details"
 msgstr "List opp detaljer"
 
-#: src/optionsdialog.cpp:626
+#: src/optionsdialog.cpp:665
 msgid "Specify the color for the list details"
 msgstr "Angi farger for liste detaljer"
 
-#: src/optionsdialog.cpp:630
+#: src/optionsdialog.cpp:669
 #, fuzzy
 msgid "Future Transactions"
 msgstr "Filtrer transaksjoner"
 
-#: src/optionsdialog.cpp:632
+#: src/optionsdialog.cpp:671
 #, fuzzy
 msgid "Specify the color for future transactions"
 msgstr "Angi kategori for denne transaksjonen"
 
-#: src/optionsdialog.cpp:644
+#: src/optionsdialog.cpp:683
 msgid "Backup database before opening"
 msgstr "Sikkerhetskopier databasen før opning"
 
-#: src/optionsdialog.cpp:650
-msgid "Select whether to create a .bak file when opening a the database file"
+#: src/optionsdialog.cpp:689
+#, fuzzy
+msgid "Select whether to create a .bak file when opening the database file"
 msgstr "Velg om det skal lages en .bak fil ved åpning av database fil"
 
-#: src/optionsdialog.cpp:657
+#: src/optionsdialog.cpp:696
 msgid "Stock Quote Web Page"
 msgstr "Aksjeportal webside"
 
-#: src/optionsdialog.cpp:668
+#: src/optionsdialog.cpp:707
 #, fuzzy
 msgid "Use Original Date when Pasting Transactions"
 msgstr "Gjenta transaksjoner"
 
-#: src/optionsdialog.cpp:674
+#: src/optionsdialog.cpp:713
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
 msgstr ""
 
-#: src/optionsdialog.cpp:679
+#: src/optionsdialog.cpp:718
 #, fuzzy
 msgid "Use Transaction Sound"
 msgstr "Ny transaksjon"
 
-#: src/optionsdialog.cpp:685
+#: src/optionsdialog.cpp:724
 #, fuzzy
 msgid "Select whether to use sounds when entering transactions"
 msgstr "Angi status for denne transaksjonen"
 
-#: src/optionsdialog.cpp:689
+#: src/optionsdialog.cpp:728
 msgid "Enable online currency update (Get data from European Central Bank)"
 msgstr ""
 
-#: src/optionsdialog.cpp:696
+#: src/optionsdialog.cpp:735
 msgid "Enable or disable get data from European Central Bank to update currency rate"
 msgstr ""
 
-#: src/optionsdialog.cpp:702
+#: src/optionsdialog.cpp:741
 msgid "General"
 msgstr "Generellt"
 
-#: src/optionsdialog.cpp:703
+#: src/optionsdialog.cpp:742
 msgid "View Options"
 msgstr "Vis alternativer"
 
-#: src/optionsdialog.cpp:704
+#: src/optionsdialog.cpp:743
 msgid "Colors"
 msgstr "Farger"
 
-#: src/optionsdialog.cpp:705
-msgid "Others"
-msgstr "Andre"
+#: src/optionsdialog.cpp:768
+#, fuzzy
+msgid "Remember to update currency rate"
+msgstr "Hoved valuta ikke angitt"
 
-#: src/payeedialog.cpp:154
+#: src/optionsdialog.cpp:768
+#, fuzzy
+msgid "Important note"
+msgstr "Importer"
+
+#: src/payeedialog.cpp:170
+#, fuzzy
+msgid "Find Payee: "
+msgstr "Mottaker"
+
+#: src/payeedialog.cpp:177
+#: src/payeedialog.cpp:203
 msgid "Enter the payee name to be added or make edits to an existing payee name"
 msgstr "Angi mottakers navn, eller endere en eksisterende mottakers navn"
 
-#: src/payeedialog.cpp:162
+#: src/payeedialog.cpp:196
+#, fuzzy
+msgid "Add/Edit Payee: "
+msgstr "Legger til mottaker"
+
+#: src/payeedialog.cpp:211
 msgid "Add a new payee name"
 msgstr "Legg til ny mottaker"
 
-#: src/payeedialog.cpp:167
+#: src/payeedialog.cpp:216
 msgid "Change the name of an existing payee"
 msgstr "Endre navn på en eksisterende mottaker"
 
-#: src/payeedialog.cpp:172
+#: src/payeedialog.cpp:221
 msgid "Delete the selected payee. The payee cannot be used by an existing transaction."
 msgstr "Slett valgte mottaker. Mottakeren kan ikke brukes av en eksisterende transaksjon"
 
-#: src/payeedialog.cpp:180
+#: src/payeedialog.cpp:229
 msgid "Select the currently selected payee as the selected payee for the transaction"
 msgstr "Bruk den valgte mottakeren for transaksjonen"
 
-#: src/payeedialog.cpp:190
+#: src/payeedialog.cpp:240
 msgid "Type a Payee Name in the Text Box and then press Add."
 msgstr ""
 
-#: src/payeedialog.cpp:195
+#: src/payeedialog.cpp:245
 msgid "Payee with same name exists"
 msgstr "Mottaker med samme navn eksisterer"
 
-#: src/payeedialog.cpp:214
+#: src/payeedialog.cpp:264
 msgid "Payee is in use"
 msgstr "Mottaker er i bruk"
 
@@ -2517,96 +2812,96 @@ msgstr ""
 msgid "Confirm QIF import"
 msgstr "QIF import"
 
-#: src/qifimport.cpp:382
+#: src/qifimport.cpp:389
 msgid "QIF Import"
 msgstr "QIF import"
 
-#: src/qifimport.cpp:393
+#: src/qifimport.cpp:400
 msgid "Choose QIF data file to import"
 msgstr "Velg en QIF fil for å importere"
 
-#: src/qifimport.cpp:434
-#: src/qifimport.cpp:459
-#: src/qifimport.cpp:529
+#: src/qifimport.cpp:441
+#: src/qifimport.cpp:466
+#: src/qifimport.cpp:536
 msgid "Line : "
 msgstr "Linje :"
 
-#: src/qifimport.cpp:435
+#: src/qifimport.cpp:442
 msgid " incorrect QIF line type"
 msgstr "Ugyldig QIF linje type"
 
-#: src/qifimport.cpp:446
+#: src/qifimport.cpp:453
 msgid "Importing account type : "
 msgstr "Importerer konto type :"
 
-#: src/qifimport.cpp:459
+#: src/qifimport.cpp:466
 msgid " : "
 msgstr " :"
 
-#: src/qifimport.cpp:460
+#: src/qifimport.cpp:467
 msgid " account name "
 msgstr "konto navn"
 
-#: src/qifimport.cpp:498
+#: src/qifimport.cpp:505
 msgid " cannot process Account Types yet "
 msgstr "kan ikke prossessere konto typer nå"
 
-#: src/qifimport.cpp:499
+#: src/qifimport.cpp:506
 #, fuzzy
 msgid "Cannot process these QIF Account Types yet"
 msgstr "kan ikke prossessere konto typer nå"
 
-#: src/qifimport.cpp:514
-#: src/qifimport.cpp:630
+#: src/qifimport.cpp:521
+#: src/qifimport.cpp:637
 msgid "Adding payee "
 msgstr "Legger til mottaker"
 
-#: src/qifimport.cpp:530
+#: src/qifimport.cpp:537
 msgid " invalid amount, skipping."
 msgstr "Ugyldig beløp, hopper over."
 
-#: src/qifimport.cpp:609
+#: src/qifimport.cpp:616
 msgid "Date is empty, "
 msgstr "Dato er tom"
 
-#: src/qifimport.cpp:613
+#: src/qifimport.cpp:620
 msgid "Transaction Type is empty"
 msgstr "Transaksjonstype er blank"
 
-#: src/qifimport.cpp:617
+#: src/qifimport.cpp:624
 msgid "Amount is empty"
 msgstr "Beløp er blank"
 
-#: src/qifimport.cpp:646
+#: src/qifimport.cpp:653
 msgid "Category is empty, marking transaction as Unknown category"
 msgstr "Kategori er tom, markerer transaksjonen som Ukjent kategori"
 
-#: src/qifimport.cpp:660
+#: src/qifimport.cpp:667
 #, fuzzy
 msgid "Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had "
 msgstr "Hopper over QIF transaksjon, dato, type, beløp er tomt/ugyldig"
 
-#: src/qifimport.cpp:661
+#: src/qifimport.cpp:668
 #, fuzzy
 msgid " payee "
 msgstr "Mottaker"
 
-#: src/qifimport.cpp:661
+#: src/qifimport.cpp:668
 #, fuzzy
 msgid " type "
 msgstr "Type"
 
-#: src/qifimport.cpp:662
+#: src/qifimport.cpp:669
 #, fuzzy
 msgid " amount "
 msgstr "Beløp"
 
-#: src/qifimport.cpp:662
+#: src/qifimport.cpp:669
 #, fuzzy
 msgid " date "
 msgstr "Oppdater"
 
-#: src/qifimport.cpp:713
+#: src/qifimport.cpp:720
 msgid " transactions imported from QIF"
 msgstr "Transaksjoner importert fra QIF"
 
@@ -2616,103 +2911,109 @@ msgid "Invalid Category Entered "
 msgstr "Ugyldig beløp"
 
 #: src/splittransactionsdialog.cpp:146
-msgid "Remove"
+#, fuzzy
+msgid "&Remove"
 msgstr "Fjern"
 
-#: src/stockdialog.cpp:137
+#: src/splittransactionsdialog.cpp:165
+#, fuzzy
+msgid "&Select Category"
+msgstr "Velg Kategori"
+
+#: src/stockdialog.cpp:150
 msgid "Stock Investment Details"
 msgstr "Aksje investeringsdetaljer"
 
-#: src/stockdialog.cpp:150
-#: src/stockdialog.cpp:326
+#: src/stockdialog.cpp:163
+#: src/stockdialog.cpp:346
 #: src/stockspanel.cpp:204
 msgid "Held At"
 msgstr "Hos"
 
-#: src/stockdialog.cpp:156
+#: src/stockdialog.cpp:169
 msgid "Enter the name of the financial institution where the investment is held"
 msgstr "Angi navnet på den finansielle institusjonen som investeringen er"
 
-#: src/stockdialog.cpp:167
+#: src/stockdialog.cpp:180
 msgid "Specify the purchase date of the stock investment"
 msgstr "Angi kjøpsdato for aksjeinvesteringen"
 
-#: src/stockdialog.cpp:170
+#: src/stockdialog.cpp:183
 msgid "Stock Name"
 msgstr "Aksjenavn"
 
-#: src/stockdialog.cpp:176
+#: src/stockdialog.cpp:189
 msgid "Enter the stock company name"
 msgstr "Angi navnet på Aksjeselskapet"
 
-#: src/stockdialog.cpp:180
+#: src/stockdialog.cpp:193
 msgid "Symbol"
 msgstr "Symbol"
 
-#: src/stockdialog.cpp:186
+#: src/stockdialog.cpp:199
 msgid "Enter the stock symbol (optional)"
 msgstr "Angi aksjesymbol (valgfritt)"
 
-#: src/stockdialog.cpp:191
+#: src/stockdialog.cpp:204
 #: src/stockspanel.cpp:212
 msgid "Number of Shares"
 msgstr "Antall aksjer"
 
-#: src/stockdialog.cpp:197
+#: src/stockdialog.cpp:210
 msgid "Enter number of shares held"
 msgstr "Angi antall aksjer"
 
-#: src/stockdialog.cpp:202
+#: src/stockdialog.cpp:215
 msgid "Purchase Price"
 msgstr "Kjøpspris"
 
-#: src/stockdialog.cpp:208
+#: src/stockdialog.cpp:221
 msgid "Enter purchase price for each stock"
 msgstr "Angi kjøpspris for hver aksje"
 
-#: src/stockdialog.cpp:213
+#: src/stockdialog.cpp:226
 msgid "Commission"
 msgstr "Kommisjon"
 
-#: src/stockdialog.cpp:219
+#: src/stockdialog.cpp:232
 msgid "Enter any commission paid"
 msgstr "Angi kommisjon "
 
-#: src/stockdialog.cpp:223
+#: src/stockdialog.cpp:236
 msgid "Current Price"
 msgstr "Nåværende pris"
 
-#: src/stockdialog.cpp:229
+#: src/stockdialog.cpp:242
 msgid "Enter current stock price"
 msgstr "Angi nåværende aksjekurs"
 
-#: src/stockdialog.cpp:240
+#: src/stockdialog.cpp:253
 msgid "Enter notes associated with this investment"
 msgstr "Angi notater for denne investeringen"
 
-#: src/stockdialog.cpp:269
+#: src/stockdialog.cpp:282
 #, fuzzy
 msgid "Stock Price Web Page"
 msgstr "Aksjeportal webside"
 
-#: src/stockdialog.cpp:285
+#: src/stockdialog.cpp:305
 msgid "Choose Investment Account"
 msgstr "Velg investeringskonto"
 
-#: src/stockdialog.cpp:338
-#: src/stockdialog.cpp:352
+#: src/stockdialog.cpp:358
+#: src/stockdialog.cpp:372
 msgid "Num Shares"
 msgstr "Ant. aksjer"
 
-#: src/stockdialog.cpp:346
+#: src/stockdialog.cpp:366
 msgid "Invalid number of shares entered "
 msgstr "Ugyldig antall aksjer"
 
-#: src/stockdialog.cpp:361
+#: src/stockdialog.cpp:381
 msgid "Invalid purchase price entered "
 msgstr "Ugyldig kjøpspris"
 
-#: src/stockdialog.cpp:381
+#: src/stockdialog.cpp:401
 msgid "Invalid commission entered "
 msgstr "ugyldig kommisjon"
 
@@ -2746,7 +3047,7 @@ msgid "Delete Stock Investment"
 msgstr "Slette aksjeinvestering"
 
 #: src/stockspanel.cpp:283
-msgid "Refresh"
+msgid "&Refresh"
 msgstr ""
 
 #: src/stockspanel.cpp:285
@@ -2755,7 +3056,7 @@ msgstr ""
 
 #: src/stockspanel.cpp:288
 #, fuzzy
-msgid "Settings"
+msgid "&Settings"
 msgstr "Vis innstillinger"
 
 #: src/stockspanel.cpp:290
@@ -2766,200 +3067,196 @@ msgstr ""
 msgid "Stock Investments: "
 msgstr "Aksjeinvesteringer :"
 
-#: src/stockspanel.cpp:348
+#: src/stockspanel.cpp:349
 #, fuzzy, c-format
 msgid "Total: %s Invested: %s Gain: %s "
 msgstr "Totale aksjeinvesteringer :"
 
-#: src/stockspanel.cpp:350
+#: src/stockspanel.cpp:351
 #, fuzzy, c-format
 msgid "Total: %s Invested: %s Loss: %s "
 msgstr "Totale aksjeinvesteringer :"
 
-#: src/stockspanel.cpp:446
+#: src/stockspanel.cpp:454
 #, c-format
 msgid "%s on %s"
 msgstr ""
 
-#: src/stockspanel.cpp:449
+#: src/stockspanel.cpp:457
 msgid "never!"
 msgstr ""
 
-#: src/stockspanel.cpp:454
+#: src/stockspanel.cpp:462
 #, c-format
 msgid ""
 "Automatic stock quote refresh is disabled. \n"
 "Last update: %s"
 msgstr ""
 
-#: src/stockspanel.cpp:460
+#: src/stockspanel.cpp:468
 #, c-format
 msgid ""
 "Automatic stock quote refresh idle - Out of Hours. \n"
 "Last update: %s"
 msgstr ""
 
-#: src/stockspanel.cpp:466
+#: src/stockspanel.cpp:474
 msgid "Automatic stock quote refresh in progress..."
 msgstr ""
 
-#: src/stockspanel.cpp:472
+#: src/stockspanel.cpp:480
 #, c-format
 msgid ""
 "Automatic stock quote refresh successful. \n"
 "Last update: %s"
 msgstr ""
 
-#: src/stockspanel.cpp:478
+#: src/stockspanel.cpp:486
 #, c-format
 msgid ""
 "Automatic stock quote refresh Failed. \n"
 "Last successful update: %s"
 msgstr ""
 
-#: src/stockspanel.cpp:485
+#: src/stockspanel.cpp:493
 #, c-format
 msgid ""
 "Automatic stock quote refresh not started. \n"
 "Last update: %s"
 msgstr ""
 
-#: src/stockspanel.cpp:648
-#: src/stockspanel.cpp:656
+#: src/stockspanel.cpp:651
+#: src/stockspanel.cpp:659
 msgid "Stock Download"
 msgstr ""
 
-#: src/stockspanel.cpp:766
+#: src/stockspanel.cpp:798
 msgid "&New Stock Investment"
 msgstr "&Ny aksjeinvestering"
 
-#: src/stockspanel.cpp:768
+#: src/stockspanel.cpp:800
 msgid "&Edit Stock Investment"
 msgstr "&Endre aksjeinvestering"
 
-#: src/stockspanel.cpp:769
+#: src/stockspanel.cpp:801
 msgid "&Delete Stock Investment"
 msgstr "&Slette aksjeinvestering"
 
-#: src/stockspanel.cpp:858
+#: src/stockspanel.cpp:890
 msgid "Do you really want to delete the stock investment?"
 msgstr "Vil du slette aksjeinvesteringen?"
 
-#: src/stockspanel.cpp:859
+#: src/stockspanel.cpp:891
 msgid "Confirm Stock Investment Deletion"
 msgstr "Bekreft sletting"
 
-#: src/transdialog.cpp:290
-#: src/transdialog.cpp:670
-#: src/transdialog.cpp:685
+#: src/transdialog.cpp:330
+#: src/transdialog.cpp:711
+#: src/transdialog.cpp:726
 msgid "Specify to whom the transaction is going to or coming from "
 msgstr "Velg til hvem overføringen skal gå til eller kommer i fra"
 
-#: src/transdialog.cpp:309
+#: src/transdialog.cpp:351
 #, fuzzy
 msgid "Populate Transaction #"
 msgstr "&Ny transaksjon"
 
-#: src/transdialog.cpp:689
-msgid "Select From Account"
-msgstr "Velg fra konto"
-
-#: src/transdialog.cpp:690
+#: src/transdialog.cpp:730
 msgid "Select To Account"
 msgstr "Velg til konto"
 
-#: src/transdialog.cpp:699
+#: src/transdialog.cpp:742
 msgid "Specify the account from which the transfer is occurring"
 msgstr "Velg kontoen som overføringen skal gå i fra"
 
-#: src/univcsvdialog.cpp:93
+#: src/univcsvdialog.cpp:117
 msgid "Specify the order of fields in the CSV file"
 msgstr "Velg rekkefølgen på feltene i CSV filen"
 
-#: src/univcsvdialog.cpp:108
-msgid "Move Up"
+#: src/univcsvdialog.cpp:132
+msgid "Move &Up"
 msgstr ""
 
-#: src/univcsvdialog.cpp:113
-msgid "Move Down"
+#: src/univcsvdialog.cpp:137
+msgid "Move &Down"
 msgstr ""
 
-#: src/univcsvdialog.cpp:149
-msgid "Load Template"
+#: src/univcsvdialog.cpp:173
+msgid "&Load Template"
 msgstr ""
 
-#: src/univcsvdialog.cpp:154
-msgid "Save As Template"
+#: src/univcsvdialog.cpp:178
+msgid "Save &As Template"
 msgstr ""
 
-#: src/univcsvdialog.cpp:159
+#: src/univcsvdialog.cpp:183
 #, fuzzy
-msgid "Import File"
+msgid "&Import File"
 msgstr "Importer"
 
-#: src/univcsvdialog.cpp:216
+#: src/univcsvdialog.cpp:240
 msgid "Amount(+/-)"
 msgstr "Beløp(+/-)"
 
-#: src/univcsvdialog.cpp:220
+#: src/univcsvdialog.cpp:244
 msgid "SubCategory"
 msgstr "Under kategori"
 
-#: src/univcsvdialog.cpp:224
+#: src/univcsvdialog.cpp:248
 msgid "Transaction Number"
 msgstr "Transaksjonsnummer"
 
-#: src/univcsvdialog.cpp:226
+#: src/univcsvdialog.cpp:250
 msgid "Don't Care"
 msgstr "Ikke viktig"
 
-#: src/univcsvdialog.cpp:233
-#: src/univcsvdialog.cpp:235
+#: src/univcsvdialog.cpp:257
+#: src/univcsvdialog.cpp:259
 msgid "Unknown"
 msgstr "Ukjent"
 
-#: src/univcsvdialog.cpp:256
+#: src/univcsvdialog.cpp:280
 msgid "Add CSV field"
 msgstr "Legg til CSV felt"
 
-#: src/univcsvdialog.cpp:257
+#: src/univcsvdialog.cpp:281
 msgid "CSV Field"
 msgstr "CSV felt"
 
-#: src/univcsvdialog.cpp:351
-#: src/univcsvdialog.cpp:363
+#: src/univcsvdialog.cpp:375
+#: src/univcsvdialog.cpp:387
 #, fuzzy
 msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."
 msgstr "Feil felt angitt for CVS importering! Må minst ha dato, beløp og mottaker"
 
-#: src/univcsvdialog.cpp:383
-#: src/util.cpp:449
-#: src/util.cpp:709
+#: src/univcsvdialog.cpp:413
+#: src/util.cpp:469
+#: src/util.cpp:730
 msgid "CSV Import"
 msgstr "CVS Import"
 
-#: src/univcsvdialog.cpp:393
-#: src/util.cpp:718
+#: src/univcsvdialog.cpp:423
+#: src/util.cpp:739
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Velg MM.NET CVS fil som skal importeres"
 
-#: src/univcsvdialog.cpp:437
+#: src/univcsvdialog.cpp:467
 msgid " file contains insufficient number of tokens"
 msgstr "Filen inneholder for få tokiner"
 
-#: src/univcsvdialog.cpp:460
+#: src/univcsvdialog.cpp:490
 #, fuzzy
 msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipping"
 msgstr "Ett av feltene: dato, mottaker, beløp, type mangler, hopper over"
 
-#: src/univcsvdialog.cpp:514
-#: src/util.cpp:664
-#: src/util.cpp:885
+#: src/univcsvdialog.cpp:544
+#: src/util.cpp:684
+#: src/util.cpp:906
 msgid " imported OK."
 msgstr "Importering OK."
 
-#: src/univcsvdialog.cpp:517
-#: src/util.cpp:888
+#: src/univcsvdialog.cpp:547
+#: src/util.cpp:909
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -2976,188 +3273,188 @@ msgstr ""
 "\n"
 "Importerte transaksjoner har blitt merktet så du kan gå igjenom dem."
 
-#: src/univcsvdialog.cpp:518
-#: src/util.cpp:669
-#: src/util.cpp:686
-#: src/util.cpp:889
+#: src/univcsvdialog.cpp:548
+#: src/util.cpp:689
+#: src/util.cpp:706
+#: src/util.cpp:910
 msgid "Import from CSV"
 msgstr "Importer fra CVS"
 
-#: src/util.cpp:247
+#: src/util.cpp:261
 msgid "January"
 msgstr ""
 
-#: src/util.cpp:247
+#: src/util.cpp:261
 msgid "February"
 msgstr ""
 
-#: src/util.cpp:247
+#: src/util.cpp:261
 msgid "March"
 msgstr ""
 
-#: src/util.cpp:247
+#: src/util.cpp:261
 msgid "April"
 msgstr ""
 
-#: src/util.cpp:247
-#: src/util.cpp:258
+#: src/util.cpp:261
+#: src/util.cpp:272
 msgid "May"
 msgstr ""
 
-#: src/util.cpp:247
+#: src/util.cpp:261
 msgid "June"
 msgstr ""
 
-#: src/util.cpp:248
+#: src/util.cpp:262
 msgid "July"
 msgstr ""
 
-#: src/util.cpp:248
+#: src/util.cpp:262
 msgid "August"
 msgstr ""
 
-#: src/util.cpp:248
+#: src/util.cpp:262
 msgid "September"
 msgstr ""
 
-#: src/util.cpp:248
+#: src/util.cpp:262
 #, fuzzy
 msgid "October"
 msgstr "Annet"
 
-#: src/util.cpp:248
+#: src/util.cpp:262
 #, fuzzy
 msgid "November"
 msgstr "Nummer"
 
-#: src/util.cpp:248
+#: src/util.cpp:262
 msgid "December"
 msgstr ""
 
-#: src/util.cpp:258
+#: src/util.cpp:272
 msgid "Jan"
 msgstr ""
 
-#: src/util.cpp:258
+#: src/util.cpp:272
 msgid "Feb"
 msgstr ""
 
-#: src/util.cpp:258
+#: src/util.cpp:272
 msgid "Mar"
 msgstr ""
 
-#: src/util.cpp:258
+#: src/util.cpp:272
 #, fuzzy
 msgid "Apr"
 msgstr "Kunst"
 
-#: src/util.cpp:258
+#: src/util.cpp:272
 msgid "Jun"
 msgstr ""
 
-#: src/util.cpp:259
+#: src/util.cpp:273
 msgid "Jul"
 msgstr ""
 
-#: src/util.cpp:259
+#: src/util.cpp:273
 msgid "Aug"
 msgstr ""
 
-#: src/util.cpp:259
+#: src/util.cpp:273
 msgid "Sep"
 msgstr ""
 
-#: src/util.cpp:259
+#: src/util.cpp:273
 msgid "Oct"
 msgstr ""
 
-#: src/util.cpp:259
+#: src/util.cpp:273
 msgid "Nov"
 msgstr ""
 
-#: src/util.cpp:259
+#: src/util.cpp:273
 msgid "Dec"
 msgstr ""
 
-#: src/util.cpp:274
+#: src/util.cpp:288
 #, fuzzy
 msgid "Sunday"
 msgstr "Sammendrag"
 
-#: src/util.cpp:274
+#: src/util.cpp:288
 #, fuzzy
 msgid "Monday"
 msgstr "Månedlig"
 
-#: src/util.cpp:274
+#: src/util.cpp:288
 msgid "Tuesday"
 msgstr ""
 
-#: src/util.cpp:274
+#: src/util.cpp:288
 msgid "Wednesday"
 msgstr ""
 
-#: src/util.cpp:275
+#: src/util.cpp:289
 msgid "Thursday"
 msgstr ""
 
-#: src/util.cpp:275
+#: src/util.cpp:289
 msgid "Friday"
 msgstr ""
 
-#: src/util.cpp:275
+#: src/util.cpp:289
 msgid "Saturday"
 msgstr ""
 
-#: src/util.cpp:303
+#: src/util.cpp:317
 msgid "No Account available! Cannot Export!"
 msgstr "Ingen konto tilgjenelig! Kan ikke eksportere!"
 
-#: src/util.cpp:320
+#: src/util.cpp:333
 msgid "Choose Account to Export from:"
 msgstr "Velg konto å eksportere fra:"
 
-#: src/util.cpp:321
+#: src/util.cpp:334
 msgid "CSV Export"
 msgstr "CVS Eksport:"
 
-#: src/util.cpp:327
+#: src/util.cpp:340
 msgid "Choose CSV data file to Export"
 msgstr "Velg fil å eksportere CVS data til"
 
-#: src/util.cpp:499
-#: src/util.cpp:759
+#: src/util.cpp:519
+#: src/util.cpp:780
 msgid " missing date, skipping."
 msgstr "mangler dato, hopper over."
 
-#: src/util.cpp:508
-#: src/util.cpp:768
+#: src/util.cpp:528
+#: src/util.cpp:789
 msgid " missing payee, skipping."
 msgstr "mangler mottaker, hopper over."
 
-#: src/util.cpp:517
+#: src/util.cpp:537
 msgid " missing transaction type, skipping."
 msgstr "mangler transaksjonstype, hopper over."
 
-#: src/util.cpp:526
-#: src/util.cpp:777
+#: src/util.cpp:546
+#: src/util.cpp:798
 msgid " missing amount, skipping."
 msgstr "mangler beløp, hopper over."
 
-#: src/util.cpp:549
+#: src/util.cpp:569
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "Ett av feltene mangler: dato, mottaker, type, beløp  feltet er blankt, hopper over."
 
-#: src/util.cpp:556
+#: src/util.cpp:576
 msgid " unrecognized transaction type, skipping."
 msgstr "Ukjent transaksjonstype, hopper over."
 
-#: src/util.cpp:583
+#: src/util.cpp:603
 #, fuzzy
 msgid " transfer transaction not imported."
 msgstr "Transaksjoner importert fra QIF"
 
-#: src/util.cpp:667
+#: src/util.cpp:687
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3172,106 +3469,41 @@ msgstr ""
 "\n"
 "Importerte transaksjoner har blit merket slik at du kan se over dem."
 
-#: src/util.cpp:685
+#: src/util.cpp:705
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Vennligst sjekk at CVS filen fra MMEX.NET innheloder bare en konto!"
 
-#: src/util.cpp:792
+#: src/util.cpp:813
 msgid " missing category, skipping."
 msgstr "mangler kategori, hopper over."
 
-#: src/util.cpp:820
+#: src/util.cpp:841
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr "Ett av følgende felt: dato, mottaker, transaksjonstype, beløp er blankt, hopper over."
 
-#: src/util.cpp:829
+#: src/util.cpp:850
 msgid " invalid date, skipping."
 msgstr "ugyldig dato, hopper over."
 
-#: src/util.cpp:904
+#: src/util.cpp:925
 msgid "Entry "
 msgstr "Oppføring"
 
-#: src/util.cpp:904
+#: src/util.cpp:925
 msgid " is invalid."
 msgstr "er ugyldig."
 
-#: src/util.cpp:906
+#: src/util.cpp:927
 msgid "Invalid Entry"
 msgstr "Ugyldig Oppføring"
 
-#: src/wxsqlite3_1_7.cpp:94
-#, fuzzy
-msgid "No Database opened"
-msgstr "Ny database veiviser"
-
-#: src/wxsqlite3_1_7.cpp:95
-msgid "Statement not accessible"
+#: src/wxsqlite3.cpp:3354
+msgid "Regular expression invalid: '"
 msgstr ""
 
-#: src/wxsqlite3_1_7.cpp:96
-msgid "Out of memory"
-msgstr ""
-
-#: src/wxsqlite3_1_7.cpp:97
-msgid "Cannot decode binary"
-msgstr ""
-
-#: src/wxsqlite3_1_7.cpp:98
-#, fuzzy
-msgid "Invalid field index"
-msgstr "Ugyldig verdi"
-
-#: src/wxsqlite3_1_7.cpp:99
-#, fuzzy
-msgid "Invalid field name"
-msgstr "Ugyldig verdi"
-
-#: src/wxsqlite3_1_7.cpp:100
-msgid "Invalid row index"
-msgstr ""
-
-#: src/wxsqlite3_1_7.cpp:101
-#, fuzzy
-msgid "Invalid scalar query"
-msgstr "Ugyldig verdi"
-
-#: src/wxsqlite3_1_7.cpp:103
-msgid "Null Results pointer"
-msgstr ""
-
-#: src/wxsqlite3_1_7.cpp:104
-msgid "Error binding string param"
-msgstr ""
-
-#: src/wxsqlite3_1_7.cpp:105
-#, fuzzy
-msgid "Error binding int param"
-msgstr "Feil ved åpning av database"
-
-#: src/wxsqlite3_1_7.cpp:106
-msgid "Error binding int64 param"
-msgstr ""
-
-#: src/wxsqlite3_1_7.cpp:107
-msgid "Error binding double param"
-msgstr ""
-
-#: src/wxsqlite3_1_7.cpp:108
-msgid "Error binding blob param"
-msgstr ""
-
-#: src/wxsqlite3_1_7.cpp:109
-#, fuzzy
-msgid "Error binding date/time param"
-msgstr "Feil ved åpning av database"
-
-#: src/wxsqlite3_1_7.cpp:110
-msgid "Error binding NULL param"
-msgstr ""
-
-#: src/wxsqlite3_1_7.cpp:111
-msgid "Error clearing bindings"
+#: src/wxsqlite3.cpp:3359
+#, c-format
+msgid "REGEXP called with wrong number of arguments: %d instead of 2."
 msgstr ""
 
 #: src/yahoosettingsdialog.cpp:61
@@ -3317,7 +3549,7 @@ msgid "to"
 msgstr ""
 
 #: src/yahoosettingsdialog.cpp:139
-msgid "Refresh prices every"
+msgid "&Refresh prices every"
 msgstr ""
 
 #: src/yahoosettingsdialog.cpp:163
@@ -3355,8 +3587,8 @@ msgstr "Budsjettårs editor"
 msgid "Budget Year Entry"
 msgstr "Budsjettår oppføring"
 
-#: include/chart.h:246
-#: include/chart.h:447
+#: include/chart.h:247
+#: include/chart.h:448
 msgid "Legend:"
 msgstr ""
 
@@ -3381,11 +3613,11 @@ msgstr "Filtrer transaksjoner"
 msgid "Currency Dialog"
 msgstr "Valuta navn"
 
-#: include/mmex.h:136
+#: include/mmex.h:137
 msgid "Base Currency for account"
 msgstr "Hoved valuta for denne konto"
 
-#: include/mmex.h:151
+#: include/mmex.h:152
 msgid ""
 "\n"
 "Specify the base (or default) currency to be used \n"
@@ -3397,19 +3629,19 @@ msgstr ""
 "med denne databasen. Du kan endre valuta \n"
 "for hver konto hvis ønskelig.\n"
 
-#: include/mmex.h:169
+#: include/mmex.h:170
 msgid "(Optional)Specify your name. Mainly used for reporting and in printing reports.\n"
 msgstr ""
 
-#: include/mmex.h:181
+#: include/mmex.h:182
 msgid "Base Currency Not Set"
 msgstr "Hoved valuta ikke angitt"
 
-#: include/mmex.h:231
+#: include/mmex.h:232
 msgid "Name of the Account"
 msgstr "Konto navn"
 
-#: include/mmex.h:246
+#: include/mmex.h:247
 msgid ""
 "\n"
 "Specify a descriptive name of the account. This most commonly \n"
@@ -3421,20 +3653,20 @@ msgstr ""
 "navnet på den finansielle institusjonen.\n"
 " Feks 'Skandiabanken'"
 
-#: include/mmex.h:259
+#: include/mmex.h:260
 msgid "Account Name Invalid"
 msgstr "Ugyldig kontonavn"
 
-#: include/mmex.h:282
+#: include/mmex.h:283
 #, fuzzy
 msgid "Checking/Savings"
 msgstr "Sjekkonto/Sparekonto/Kredittkonto"
 
-#: include/mmex.h:294
+#: include/mmex.h:295
 msgid "Type of Account"
 msgstr "Type konto"
 
-#: include/mmex.h:309
+#: include/mmex.h:310
 msgid ""
 "\n"
 "Select the type of account you want to create:\n"
@@ -3448,7 +3680,7 @@ msgstr ""
 "Generelle bank konti dekker ett stort antall konto typer\n"
 "feks: sjekkkonto, sparekonto, kredittkortkonto."
 
-#: include/mmex.h:315
+#: include/mmex.h:316
 msgid ""
 "\n"
 "Investment accounts are specialized accounts that only \n"
@@ -3459,7 +3691,7 @@ msgstr ""
 "Investeringskonto er spesielle konti som bare har\n"
 "aksjer/fond knyttet til seg.\n"
 
-#: include/mmex.h:333
+#: include/mmex.h:334
 msgid ""
 "Base Account Currency Not set.\n"
 "Set that first using tools->options menu and then add a new account"
@@ -3554,7 +3786,7 @@ msgstr "Måned"
 msgid "Difference"
 msgstr ""
 
-#: include/reportsummary.h:119
+#: include/reportsummary.h:124
 #, fuzzy
 msgid "Total Balance on all Accounts"
 msgstr "Total balanse for alle konti :"
@@ -3563,7 +3795,7 @@ msgstr "Total balanse for alle konti :"
 msgid "Summary of Assets"
 msgstr "Sammendrag av aktiva:"
 
-#: include/reportsummaryassets.h:121
+#: include/reportsummaryassets.h:98
 #, fuzzy
 msgid "Total Assets: "
 msgstr "Totalt aktiva :"
@@ -3572,27 +3804,27 @@ msgstr "Totalt aktiva :"
 msgid "Summary of Stocks"
 msgstr "Sammendrag aksjer"
 
-#: include/reportsummarystocks.h:60
+#: include/reportsummarystocks.h:51
 #, fuzzy
 msgid "Company"
 msgstr "Firma"
 
-#: include/reportsummarystocks.h:62
+#: include/reportsummarystocks.h:53
 #, fuzzy
 msgid "Number Shares"
 msgstr "Antall aksjer"
 
-#: include/reportsummarystocks.h:63
+#: include/reportsummarystocks.h:54
 #, fuzzy
 msgid "Purchase Date"
 msgstr "Kjøpsdato"
 
-#: include/reportsummarystocks.h:68
+#: include/reportsummarystocks.h:59
 #, fuzzy
 msgid "Gain Loss"
 msgstr "Fortjeneste Tap"
 
-#: include/reportsummarystocks.h:148
+#: include/reportsummarystocks.h:141
 #, fuzzy
 msgid "Total Stock Investments: "
 msgstr "Totale aksjeinvesteringer :"
@@ -3637,6 +3869,34 @@ msgstr "Universell CVS importerings vindu"
 msgid "Options"
 msgstr "&Instillinger"
 
+#~ msgid "Delete Account"
+#~ msgstr "Slett konto"
+#~ msgid "Select From Account"
+#~ msgstr "Velg fra konto"
+
+#, fuzzy
+#~ msgid "No Database opened"
+#~ msgstr "Ny database veiviser"
+
+#, fuzzy
+#~ msgid "Invalid field index"
+#~ msgstr "Ugyldig verdi"
+
+#, fuzzy
+#~ msgid "Invalid field name"
+#~ msgstr "Ugyldig verdi"
+
+#, fuzzy
+#~ msgid "Invalid scalar query"
+#~ msgstr "Ugyldig verdi"
+
+#, fuzzy
+#~ msgid "Error binding int param"
+#~ msgstr "Feil ved åpning av database"
+
+#, fuzzy
+#~ msgid "Error binding date/time param"
+#~ msgstr "Feil ved åpning av database"
 #~ msgid "Web Page"
 #~ msgstr "Webside"
 #~ msgid "Invalid current price entered "
