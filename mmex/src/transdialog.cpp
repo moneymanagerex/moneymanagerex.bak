@@ -141,7 +141,7 @@ void mmTransDialog::dataToControls()
     "left join ACCOUNTLIST_V1 al2 "
     "on al2.ACCOUNTID = ca.TOACCOUNTID "
 
-    "join PAYEE_V1 p "
+    "left join PAYEE_V1 p "
     "on p.PAYEEID = ca.PAYEEID "
 
     "join CATEGORY_V1 cat "
@@ -452,12 +452,12 @@ void mmTransDialog::CreateControls()
     itemBoxSizer26->Add(itemButton28, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 }
 
-void mmTransDialog::OnCancel(wxCommandEvent& event)
+void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
 {
     Close(TRUE);
 }
 
-void mmTransDialog::OnPayee(wxCommandEvent& event)
+void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 {
     bool selectPayees = true;
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
@@ -536,14 +536,14 @@ void mmTransDialog::OnPayee(wxCommandEvent& event)
 
     dlg->Destroy();
 }
-void mmTransDialog::OnAutoTransNum(wxCommandEvent& event)
+void mmTransDialog::OnAutoTransNum(wxCommandEvent& /*event*/)
 {
     int mID = mmDBWrapper::getTransIDByDate(db_, dpc_->GetValue().FormatISODate(), accountID_);
     wxString wxIDstr = wxString::Format(wxT( "%d" ), (int) mID);
     textNumber_->SetValue( wxIDstr );	
 }
 
-void mmTransDialog::OnTo(wxCommandEvent& event)
+void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
 {
     bool selectPayees = true;
      if (choiceTrans_->GetSelection() == DEF_TRANSFER)
@@ -577,12 +577,12 @@ void mmTransDialog::OnTo(wxCommandEvent& event)
     dlg->Destroy();
 }
 
-void mmTransDialog::OnDateChanged(wxDateEvent& event)
+void mmTransDialog::OnDateChanged(wxDateEvent& /*event*/)
 {
 	fillControls();
 }
 
-void mmTransDialog::OnAdvanced(wxCommandEvent& event)
+void mmTransDialog::OnAdvanced(wxCommandEvent& /*event*/)
 {
     wxString dispString = textAmount_->GetValue();
     if (toTransAmount_ > 0.0)
@@ -612,7 +612,7 @@ void mmTransDialog::OnAdvanced(wxCommandEvent& event)
     dlg->Destroy();
 }
 
-void mmTransDialog::OnCategs(wxCommandEvent& event)
+void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
 {
     if (cSplit_->GetValue())
     {
@@ -685,7 +685,7 @@ void mmTransDialog::OnCategs(wxCommandEvent& event)
     }
 }
 
-void mmTransDialog::OnTransTypeChanged(wxCommandEvent& event)
+void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
 {
     updateControlsForTransType();
 }
@@ -743,7 +743,7 @@ void mmTransDialog::updateControlsForTransType()
     }
 }
 
-void mmTransDialog::OnOk(wxCommandEvent& event)
+void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 {
     wxString transCode = wxT("");
     int tCode = choiceTrans_->GetSelection();
@@ -924,7 +924,7 @@ void mmTransDialog::OnOk(wxCommandEvent& event)
     EndModal(wxID_OK);
 }
 
-void mmTransDialog::OnSplitChecked(wxCommandEvent& event)
+void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
 {
   /* Reset Category */
   categID_ = -1;
