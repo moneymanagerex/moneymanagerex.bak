@@ -173,9 +173,7 @@ bool mmAccountList::deleteAccount(int accountID)
         st = db_->PrepareStatement("delete from ACCOUNTLIST_V1 where ACCOUNTID=?");
         st.Bind(1, accountID);
 
-        int nRows = st.ExecuteUpdate();
-        wxASSERT(nRows);
-
+        st.ExecuteUpdate();
         st.Finalize();
     }
     else if (acctType == wxT("Investment"))
@@ -190,9 +188,7 @@ bool mmAccountList::deleteAccount(int accountID)
         st = db_->PrepareStatement("delete from ACCOUNTLIST_V1 where ACCOUNTID=?");
         st.Bind(1, accountID);
 
-        int nRows = st.ExecuteUpdate();
-        wxASSERT(nRows);
-
+        st.ExecuteUpdate();
         st.Finalize();
     }
 
@@ -267,8 +263,7 @@ void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)
    st.Bind(++i, currencyID);
    st.Bind(++i, r.accountID_);
 
-   bool ok = st.GetParamCount() == i;
-   wxASSERT(ok);
+   wxASSERT(st.GetParamCount() == i);
 
    st.ExecuteUpdate();
    st.Finalize();
@@ -278,18 +273,19 @@ void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)
 
 boost::shared_ptr<mmAccount> mmAccountList::getAccountSharedPtr(int accountID)
 {
-    std::vector<boost::shared_ptr<mmAccount> >::iterator iter;
-    for (iter = accounts_.begin(); iter != accounts_.end(); )
+    account_v::value_type res;
+
+    for (account_v::const_iterator i = accounts_.begin(); i != accounts_.end(); ++i)
     {
-        boost::shared_ptr<mmAccount> pAccount = (*iter);
-        if (pAccount->accountID_ == accountID)
+        account_v::const_reference r = *i;
+        if (r->accountID_ == accountID)
         {
-           return (*iter);
+            res = r;
+            break;
         }
-        else
-           iter++;
     }
-    return boost::shared_ptr<mmAccount>();
+
+    return res;
 }
     
 bool mmAccountList::accountExists(const wxString& accountName)
@@ -370,9 +366,7 @@ int mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
     st.Bind(++i, favStr);
     st.Bind(++i, currencyID);
 
-    bool ok = st.GetParamCount() == i;
-    wxASSERT(ok);
-
+    wxASSERT(st.GetParamCount() == i);
     st.ExecuteUpdate();
 
     pAccount->accountID_ = db_->GetLastRowId().ToLong();

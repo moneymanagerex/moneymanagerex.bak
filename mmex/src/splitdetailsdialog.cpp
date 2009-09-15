@@ -212,7 +212,7 @@ bool SplitDetailDialog::ShowToolTips()
  * Get bitmap resources
  */
 
-wxBitmap SplitDetailDialog::GetBitmapResource( const wxString& name )
+wxBitmap SplitDetailDialog::GetBitmapResource( const wxString& /*name*/ )
 {
     // Bitmap retrieval
 ////@begin SplitDetailDialog bitmap retrieval
@@ -224,7 +224,7 @@ wxBitmap SplitDetailDialog::GetBitmapResource( const wxString& name )
  * Get icon resources
  */
 
-wxIcon SplitDetailDialog::GetIconResource( const wxString& name )
+wxIcon SplitDetailDialog::GetIconResource( const wxString& /*name*/ )
 {
     // Icon retrieval
 ////@begin SplitDetailDialog icon retrieval

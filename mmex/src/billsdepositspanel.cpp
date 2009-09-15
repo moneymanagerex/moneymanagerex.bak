@@ -476,7 +476,7 @@ void billsDepositsListCtrl::OnListKeyDown(wxListEvent& event)
     }
 }
 
-void billsDepositsListCtrl::OnNewBDSeries(wxCommandEvent& event)
+void billsDepositsListCtrl::OnNewBDSeries(wxCommandEvent& /*event*/)
 {
     mmBDDialog *dlg = new mmBDDialog(cp_->db_, cp_->core_, 0, false, false, this );
     if ( dlg->ShowModal() == wxID_OK )
@@ -487,7 +487,7 @@ void billsDepositsListCtrl::OnNewBDSeries(wxCommandEvent& event)
     dlg->Destroy();
 }
 
-void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& event)
+void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ == -1)
         return;
@@ -513,7 +513,7 @@ void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& event)
     }
 }
 
-void billsDepositsListCtrl::OnEnterBDSeriesOccurrence(wxCommandEvent& event)
+void billsDepositsListCtrl::OnEnterBDSeriesOccurrence(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ == -1)
         return;
@@ -531,7 +531,7 @@ void billsDepositsListCtrl::OnEnterBDSeriesOccurrence(wxCommandEvent& event)
     dlg->Destroy();
 }
 
-void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& event)
+void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ == -1)
         return;

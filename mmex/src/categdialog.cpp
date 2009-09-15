@@ -177,7 +177,7 @@ void mmCategDialog::CreateControls()
     itemButton11->SetToolTip(_("Select the currently selected category as the selected category for the transaction"));
 }
 
-void mmCategDialog::OnAdd(wxCommandEvent& event)
+void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
 {
     if (mmIniOptions::disableCategoryModify_)
         return;
@@ -229,7 +229,7 @@ void mmCategDialog::OnAdd(wxCommandEvent& event)
                              _("Error adding Category"));
  }
  
-void mmCategDialog::OnDelete(wxCommandEvent& event)
+void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
 {
    if (mmIniOptions::disableCategoryModify_)
         return;
@@ -264,7 +264,7 @@ void mmCategDialog::OnDelete(wxCommandEvent& event)
     treeCtrl_->Delete(selectedItemId_);
 }
  
-void mmCategDialog::OnBSelect(wxCommandEvent& event)
+void mmCategDialog::OnBSelect(wxCommandEvent& /*event*/)
 {
     if (selectedItemId_ == root_)
     {
@@ -278,7 +278,7 @@ void mmCategDialog::OnBSelect(wxCommandEvent& event)
     EndModal(wxID_OK);
 }
 
-void mmCategDialog::OnDoubleClicked(wxTreeEvent& event)
+void mmCategDialog::OnDoubleClicked(wxTreeEvent& /*event*/)
 {
     if (selectedItemId_ == root_)
     {
@@ -292,7 +292,7 @@ void mmCategDialog::OnDoubleClicked(wxTreeEvent& event)
     EndModal(wxID_OK);
 }
 
-void mmCategDialog::OnOk(wxCommandEvent& event)
+void mmCategDialog::OnOk(wxCommandEvent& /*event*/)
 {
     Close(TRUE);
 }
@@ -345,7 +345,7 @@ void mmCategDialog::OnSelChanged(wxTreeEvent& event)
     }
 }
 
-void mmCategDialog::OnEdit(wxCommandEvent& event)
+void mmCategDialog::OnEdit(wxCommandEvent& /*event*/)
 {
     if (mmIniOptions::disableCategoryModify_)
         return;

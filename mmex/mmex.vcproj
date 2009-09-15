@@ -42,14 +42,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\msw&quot;;&quot;$(WXWIN)\samples&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\include\&quot;;include\;&quot;bugtrap-1.2&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;SQLITE_CORE;WXSQLITE3_HAVE_METADATA;WXSQLITE3_HAVE_CODEC"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;include\;&quot;bugtrap-1.2&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH;_CRT_SECURE_NO_WARNINGS;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				WarningLevel="4"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -126,14 +126,14 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\msw&quot;;&quot;$(WXWIN)\samples&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\include\&quot;;include\;&quot;bugtrap-1.2&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;WXSQLITE3_HAVE_CODEC;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;SQLITE_CORE;WXSQLITE3_HAVE_METADATA"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;include\;&quot;bugtrap-1.2&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -148,7 +148,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28_aui.lib wxmsw28_core.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28_net.lib wxmsw28_adv.lib wxmsw28_html.lib wxbase28_xml.lib"
+				AdditionalDependencies="wxmsw28_aui.lib wxmsw28_core.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxexpat.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28_net.lib wxmsw28_adv.lib wxmsw28_html.lib wxbase28_xml.lib wxregex.lib"
 				OutputFile="$(OutDir)/mmexa.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;lib\;"
@@ -210,14 +210,15 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;bugtrap-1.2&quot;;&quot;$(WXWIN)\samples&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\include\&quot;;include\"
-				PreprocessorDefinitions="WXSQLITE3_HAVE_METADATA;WXSQLITE3_HAVE_CODEC;WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH;_UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;SQLITE_CORE"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;include\;&quot;bugtrap-1.2&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH;_UNICODE;UNICODE;_CRT_SECURE_NO_WARNINGS;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -232,6 +233,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				UseLibraryDependencyInputs="false"
 				AdditionalDependencies="wxmsw28ud_aui.lib wxzlibd.lib wxmsw28ud_core.lib wxbase28ud.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28ud_net.lib wxmsw28ud_adv.lib wxpngd.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxjpegd.lib bugtrapu.lib wxexpatd.lib wxregexud.lib"
 				OutputFile="$(OutDir)/mmex.exe"
 				LinkIncremental="2"
@@ -294,14 +296,14 @@
 				Optimization="0"
 				InlineFunctionExpansion="0"
 				OmitFramePointers="false"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu,$(WXWIN)\samples,$(WXWIN)\include,$(WXWIN)\include\,include\;&quot;bugtrap-1.2&quot;"
-				PreprocessorDefinitions="UNICODE;_WINDOWS;WIN32;NDEBUG;__WXMSW__;_CONSOLE;_UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA;SQLITE_CORE"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;include\;&quot;bugtrap-1.2&quot;"
+				PreprocessorDefinitions="_UNICODE;UNICODE;_WINDOWS;WIN32;NDEBUG;__WXMSW__;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -433,10 +435,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\led.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\maincurrencydialog.cpp"
 				>
 			</File>
@@ -525,22 +523,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\tinystr.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\tinyxml.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\tinyxmlerror.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\tinyxmlparser.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\transdialog.cpp"
 				>
 			</File>
@@ -553,414 +535,46 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\wxsqlite3.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\wxtinyxml.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\yahoosettingsdialog.cpp"
 				>
 			</File>
 			<Filter
-				Name="sqlite"
+				Name="wxCode"
 				>
 				<File
-					RelativePath=".\src\sqlite\alter.c"
+					RelativePath=".\src\led.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\sqlite\analyze.c"
+					RelativePath=".\src\tinystr.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\sqlite\attach.c"
+					RelativePath=".\src\tinyxml.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\sqlite\auth.c"
+					RelativePath=".\src\tinyxmlerror.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\sqlite\bitvec.c"
+					RelativePath=".\src\tinyxmlparser.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\sqlite\btmutex.c"
+					RelativePath=".\src\wxsqlite3.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\sqlite\btree.c"
+					RelativePath=".\src\wxtinyxml.cpp"
 					>
 				</File>
-				<File
-					RelativePath=".\src\sqlite\btree.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\btreeInt.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\build.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\callback.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\complete.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\date.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\delete.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\expr.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\fault.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\fts3.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\fts3.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\fts3_hash.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\fts3_hash.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\fts3_icu.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\fts3_porter.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\fts3_tokenizer.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\fts3_tokenizer.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\fts3_tokenizer1.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\func.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\global.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\hash.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\hash.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\hwtime.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\icu.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\insert.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\journal.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\keywordhash.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\legacy.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\loadext.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\main.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\malloc.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\mem1.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\mem2.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\mem3.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\mem4.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\mem5.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\mutex.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\mutex.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\mutex_os2.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\mutex_unix.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\mutex_w32.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\opcodes.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\opcodes.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\os.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\os.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\os_common.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\os_os2.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\os_os2.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\os_unix.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\os_win.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\pager.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\pager_secure.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\parse.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\parse.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\pragma.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\prepare.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\printf.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\random.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\rtree.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\rtree.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\select.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\sqlite3.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\sqlite3ext.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\sqliteInt.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\sqliteLimit.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\status.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\table.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\tokenize.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\trigger.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\update.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\utf.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\util1.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\vacuum.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\vdbe.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\vdbe.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\vdbeapi.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\vdbeaux.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\vdbeblob.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\vdbefifo.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\vdbeInt.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\vdbemem.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\vtab.c"
-					>
-				</File>
-				<File
-					RelativePath=".\src\sqlite\where.c"
-					>
-				</File>
-				<Filter
-					Name="codec"
-					>
-					<File
-						RelativePath=".\src\sqlite\codec\codec.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\sqlite\codec\codec.h"
-						>
-					</File>
-					<File
-						RelativePath=".\src\sqlite\codec\codecext.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\sqlite\codec\rijndael.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\sqlite\codec\rijndael.h"
-						>
-					</File>
-				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc"
 			>
-			<File
-				RelativePath=".\include\_wx_intellisense.h"
-				>
-			</File>
 			<File
 				RelativePath=".\include\aboutdialog.h"
 				>
@@ -1202,23 +816,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\sqlite3.h"
-				>
-			</File>
-			<File
 				RelativePath=".\include\stockdialog.h"
 				>
 			</File>
 			<File
 				RelativePath=".\include\stockspanel.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\tinystr.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\tinyxml.h"
 				>
 			</File>
 			<File
@@ -1234,17 +836,61 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\wxautocombobox.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\wxtinyxml.h"
-				>
-			</File>
-			<File
 				RelativePath=".\include\yahoosettingsdialog.h"
 				>
 			</File>
+			<Filter
+				Name="wxCode"
+				>
+				<File
+					RelativePath=".\include\_wx_intellisense.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\tinystr.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\tinyxml.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\wxautocombobox.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\wxtinyxml.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="wxSQLite3"
+				>
+				<File
+					RelativePath=".\include\wx\wxsqlite3.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\wx\wxsqlite3def.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\wx\wxsqlite3dyn.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\wx\wxsqlite3opt.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="awx"
+				>
+				<File
+					RelativePath=".\include\awx\led.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"

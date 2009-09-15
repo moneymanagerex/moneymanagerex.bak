@@ -27,8 +27,6 @@
 #define MMEX_ICON_FNAME wxT("mmex.ico")
 #endif
 
-using namespace std;
-
 IMPLEMENT_DYNAMIC_CLASS( mmUnivCSVImportDialog, wxDialog )
 
 
@@ -46,6 +44,21 @@ END_EVENT_TABLE()
 
 namespace
 {
+
+enum EUnivCvs
+{
+    UNIV_CSV_DATE,
+    UNIV_CSV_PAYEE,
+    UNIV_CSV_AMOUNT,
+    UNIV_CSV_CATEGORY,
+    UNIV_CSV_SUBCATEGORY,
+    UNIV_CSV_NOTES,
+    UNIV_CSV_TRANSNUM,
+    UNIV_CSV_DONTCARE,
+    UNIV_CSV_WITHDRAWAL,
+    UNIV_CSV_DEPOSIT
+};
+//----------------------------------------------------------------------------
 
 wxString mmCleanQuotes(const wxString& orig)
 {
@@ -200,7 +213,7 @@ bool mmUnivCSVImportDialog::ShowToolTips()
  * Get bitmap resources
  */
 
-wxBitmap mmUnivCSVImportDialog::GetBitmapResource( const wxString& name )
+wxBitmap mmUnivCSVImportDialog::GetBitmapResource( const wxString& /*name*/ )
 {
     // Bitmap retrieval
 ////@begin MyDialog bitmap retrieval
@@ -212,55 +225,66 @@ wxBitmap mmUnivCSVImportDialog::GetBitmapResource( const wxString& name )
  * Get icon resources
  */
 
-wxIcon mmUnivCSVImportDialog::GetIconResource( const wxString& name )
+wxIcon mmUnivCSVImportDialog::GetIconResource( const wxString& /*name*/ )
 {
     return wxNullIcon;
 }
 
-#define UNIV_CSV_DATE     0
-#define UNIV_CSV_PAYEE    1
-#define UNIV_CSV_AMOUNT   2
-#define UNIV_CSV_CATEGORY 3
-#define UNIV_CSV_SUBCATEGORY 4
-#define UNIV_CSV_NOTES    5
-#define UNIV_CSV_TRANSNUM 6
-#define UNIV_CSV_DONTCARE 7
-#define UNIV_CSV_WITHDRAWAL  8
-#define UNIV_CSV_DEPOSIT  9
-
 wxString getCSVFieldName(int index)
 {
+    wxString s;
+    
     switch (index)
     {
     case UNIV_CSV_DATE:
-        return wxString(_("Date"));
+        s = _("Date");
+        break;
+    
     case UNIV_CSV_PAYEE:
-        return wxString(_("Payee"));
+        s = _("Payee");
+        break;
+    
     case UNIV_CSV_AMOUNT:
-        return wxString(_("Amount(+/-)"));
+        s = _("Amount(+/-)");
+        break;
+    
     case UNIV_CSV_CATEGORY:
-        return wxString(_("Category"));
+        s = _("Category");
+        break;
+    
     case UNIV_CSV_SUBCATEGORY:
-        return wxString(_("SubCategory"));
+        s = _("SubCategory");
+        break;
+    
     case UNIV_CSV_NOTES:
-        return wxString(_("Notes"));
+        s = _("Notes");
+        break;
+    
     case UNIV_CSV_TRANSNUM:
-        return wxString(_("Transaction Number"));
+        s = _("Transaction Number");
+        break;
+    
     case UNIV_CSV_DONTCARE:
-        return wxString(_("Don't Care"));
+        s = _("Don't Care");
+        break;
+    
     case UNIV_CSV_WITHDRAWAL:
-        return wxString(_("Withdrawal"));
+        s = _("Withdrawal");
+        break;
+    
     case UNIV_CSV_DEPOSIT:
-        return wxString(_("Deposit"));
-
+        s = _("Deposit");
+        break;
+    
     default:
-        return wxString(_("Unknown"));
+        s = _("Unknown");
     };
-    return wxString(_("Unknown"));
+
+    return s;
 }
 
 //Selection dialog for fields to be added to listbox
-void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& event)
+void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& /*event*/)
 {
     wxArrayString csvArray;
 	wxArrayInt csvArrayLocation;
@@ -269,7 +293,7 @@ void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& event)
 		//check if the field is already selected unless it is "Don't Care"
 		//multiple fields of "Don't Care" may be necessary
 		//the code for "Don't Care" is 7
-		vector<int>::iterator loc = find(csvFieldOrder_.begin(), csvFieldOrder_.end(), i);
+        std::vector<int>::iterator loc = find(csvFieldOrder_.begin(), csvFieldOrder_.end(), i);
 		if( loc == csvFieldOrder_.end() || i == 7 ){
 			csvArray.Add((getCSVFieldName(i)));
 			csvArrayLocation.Add((i));
@@ -301,7 +325,7 @@ bool mmUnivCSVImportDialog::isIndexPresent(int index)
     return false;
 }
 
-void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& event)
+void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
 {
    wxString fileName = wxFileSelector(wxT("Choose Universal CSV format file to load"), 
       wxT(""), wxT(""), wxT(""),  wxT("CSV Template(*.mcv)|*.mcv"), wxFILE_MUST_EXIST);
@@ -337,7 +361,7 @@ void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& event)
 }
 
 //Saves the field order to a template file
-void mmUnivCSVImportDialog::OnSave(wxCommandEvent& event)
+void mmUnivCSVImportDialog::OnSave(wxCommandEvent& /*event*/)
 {
      wxString fileName = wxFileSelector(wxT("Choose Universal CSV format file to save"), 
                 wxT(""), wxT(""), wxT(""), wxT("CSV Template(*.mcv)|*.mcv"), wxSAVE);
@@ -367,7 +391,7 @@ void mmUnivCSVImportDialog::OnSave(wxCommandEvent& event)
     }
 }
 
-void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
+void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
 {
     if (csvFieldOrder_.size() < 3)
     {
@@ -560,7 +584,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& event)
 }
 
 //Removes an item from the field list box
-void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& event)
+void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& /*event*/)
 {
     int selIndex = csvListBox_->GetSelection();
     if (selIndex != wxNOT_FOUND)
@@ -588,7 +612,7 @@ void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& event)
     }
 }
 
-void mmUnivCSVImportDialog::OnMoveUp(wxCommandEvent& event)
+void mmUnivCSVImportDialog::OnMoveUp(wxCommandEvent& /*event*/)
 {
     int selIndex = csvListBox_->GetSelection();
     if (selIndex != wxNOT_FOUND && selIndex != 0)
@@ -619,10 +643,10 @@ void mmUnivCSVImportDialog::OnMoveUp(wxCommandEvent& event)
     }
 }
 
-void mmUnivCSVImportDialog::OnMoveDown(wxCommandEvent& event)
+void mmUnivCSVImportDialog::OnMoveDown(wxCommandEvent& /*event*/)
 {
     int selIndex = csvListBox_->GetSelection();
-    if (selIndex != wxNOT_FOUND && selIndex != csvFieldOrder_.size() - 1)
+    if (selIndex != wxNOT_FOUND && selIndex != static_cast<int>(csvFieldOrder_.size()) - 1)
     {
 		//reorder the attributes (description string) in the list box
 		//source = the selected place in the list (place to be moved up)

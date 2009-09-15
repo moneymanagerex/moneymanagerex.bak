@@ -436,12 +436,12 @@ void mmHomePagePanel::updateAccounts()
 
     ////////////////////////////////////
     std::vector<wxString> data4;
-    for (unsigned int bdidx = 0; bdidx < trans_.size(); bdidx++)
+    for (size_t bdidx = 0; bdidx < trans_.size(); ++bdidx)
     {
         data4.clear();
         wxDateTime today = wxDateTime::Now();
         wxTimeSpan ts = trans_[bdidx].nextOccurDate_.Subtract(today);
-        int hoursRemaining_ = ts.GetHours();
+        //int hoursRemaining_ = ts.GetHours();
 
         if (trans_[bdidx].daysRemaining_ <= 14)
         {

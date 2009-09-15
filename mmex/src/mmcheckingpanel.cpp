@@ -141,8 +141,7 @@ void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
         
         if (val.ToLong(&width))
         {
-            bool ok = lst.SetColumnWidth(i, width);    
-            wxASSERT(ok);
+            lst.SetColumnWidth(i, width);    
         }
     }
 }
@@ -880,8 +879,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
             wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
         {
-           mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*> ( 
-              core_->accountList_.getAccountSharedPtr(accountID_).get());
+           //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(core_->accountList_.getAccountSharedPtr(accountID_).get());
             for (size_t i = 0; i < trans_.size(); ++i)
             {
                core_->bTransactionList_.deleteTransaction(accountID_, trans_[i]->transactionID());
@@ -895,8 +893,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
             wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
         {
-           mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*> ( 
-              core_->accountList_.getAccountSharedPtr(accountID_).get());
+           //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(core_->accountList_.getAccountSharedPtr(accountID_).get());
             for (size_t i = 0; i < trans_.size(); ++i)
             {
                if (trans_[i]->status_ == wxT("F"))

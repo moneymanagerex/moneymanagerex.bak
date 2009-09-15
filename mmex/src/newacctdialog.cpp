@@ -303,12 +303,12 @@ void mmNewAcctDialog::CreateControls()
     itemBoxSizer9->Add(itemButton8, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 }
 
-void mmNewAcctDialog::OnCancel(wxCommandEvent& event)
+void mmNewAcctDialog::OnCancel(wxCommandEvent& /*event*/)
 {
     EndModal(wxID_CANCEL);
 }
 
-void mmNewAcctDialog::OnCurrency(wxCommandEvent& event)
+void mmNewAcctDialog::OnCurrency(wxCommandEvent& /*event*/)
 {
    mmMainCurrencyDialog *dlg = new mmMainCurrencyDialog(core_, this);
     if ( dlg->ShowModal() == wxID_OK )
@@ -322,7 +322,7 @@ void mmNewAcctDialog::OnCurrency(wxCommandEvent& event)
     dlg->Destroy();
 }
 
-void mmNewAcctDialog::OnOk(wxCommandEvent& event)
+void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
 {
     wxString acctName = textAccountName_->GetValue().Trim();
     if (acctName.IsEmpty())

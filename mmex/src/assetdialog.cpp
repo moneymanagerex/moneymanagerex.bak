@@ -295,12 +295,12 @@ void mmAssetDialog::CreateControls()
 
 }
 
-void mmAssetDialog::OnCancel(wxCommandEvent& event)
+void mmAssetDialog::OnCancel(wxCommandEvent& /*event*/)
 {
     Close(TRUE);
 }
 
-void mmAssetDialog::OnOk(wxCommandEvent& event)
+void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
 {
     mmBEGINSQL_LITE_EXCEPTION;
     
@@ -387,12 +387,9 @@ void mmAssetDialog::OnOk(wxCommandEvent& event)
         st.Bind(++i, valueChangeRate);
         st.Bind(++i, assetTypeStr);
 
-        bool ok = st.GetParamCount() == i;
-        wxASSERT(ok);
+        wxASSERT(st.GetParamCount() == i);
 
-        int rows_affected = st.ExecuteUpdate();
-        wxASSERT(rows_affected == 1);
-
+        st.ExecuteUpdate();
         st.Finalize();
     }
     else 
@@ -417,12 +414,9 @@ void mmAssetDialog::OnOk(wxCommandEvent& event)
         st.Bind(++i, assetTypeStr);
         st.Bind(++i, assetID_);
 
-        bool ok = st.GetParamCount() == i;
-        wxASSERT(ok);
+        wxASSERT(st.GetParamCount() == i);
 
-        int rows_affected = st.ExecuteUpdate();
-        wxASSERT(rows_affected == 1);
-
+        st.ExecuteUpdate();
         st.Finalize();
     }
 

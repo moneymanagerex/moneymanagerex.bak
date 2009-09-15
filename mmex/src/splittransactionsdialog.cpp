@@ -208,7 +208,7 @@ void SplitTransactionDialog::OnButtonRemoveClick( wxCommandEvent& event )
 }
 
 
-void SplitTransactionDialog::OnButtonCloseClick( wxCommandEvent& event )
+void SplitTransactionDialog::OnButtonCloseClick( wxCommandEvent& /*event*/ )
 {
     EndModal(wxID_OK);
 }
@@ -218,12 +218,12 @@ bool SplitTransactionDialog::ShowToolTips()
     return TRUE;
 }
 
-wxBitmap SplitTransactionDialog::GetBitmapResource( const wxString& name )
+wxBitmap SplitTransactionDialog::GetBitmapResource( const wxString& /*name*/ )
 {
     return wxNullBitmap;
 }
 
-wxIcon SplitTransactionDialog::GetIconResource( const wxString& name )
+wxIcon SplitTransactionDialog::GetIconResource( const wxString& /*name*/ )
 {
     return wxNullIcon;
 }

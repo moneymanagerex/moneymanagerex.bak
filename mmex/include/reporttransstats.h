@@ -47,9 +47,6 @@ public:
 		hb.addTableHeaderCell(thisYearStr);
 		hb.endTableRow();
 
-        double income = 0.0;
-        double expenses = 0.0;
-        
         for (int yidx = 0; yidx < 12; yidx++)
         {
             wxString monName = mmGetNiceMonthName(yidx);

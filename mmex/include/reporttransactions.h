@@ -38,7 +38,6 @@ public:
 
     ~mmReportTransactions()
     {
-        std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = *trans_;
         delete trans_;
     }
 

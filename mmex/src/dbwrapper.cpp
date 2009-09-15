@@ -285,8 +285,12 @@ void mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
         ")";
 
         db->ExecuteUpdate(sql);
-        bool ok = db->TableExists(wxT("INFOTABLE_V1"));
-        wxASSERT(ok);
+
+        {
+            bool ok = db->TableExists(wxT("INFOTABLE_V1"));
+            wxASSERT(ok);
+            ok = ok; // removes compiler's warning
+        }
 
         // --    
 
@@ -497,8 +501,11 @@ void mmDBWrapper::loadCurrencies(wxSQLite3Database* db, const wxString& fpath)
     wxASSERT(wxFileName::FileExists(fName));
     
     inidb->Open(fName);
-    bool valid = inidb->TableExists(wxT("CURRENCYFORMATS_V1"));
-    wxASSERT(valid);
+    {
+        bool ok = inidb->TableExists(wxT("CURRENCYFORMATS_V1"));
+        wxASSERT(ok);
+        ok = ok; // removes compiler's warning
+    }
 
     wxSQLite3Statement st = db->PrepareStatement(sql2);
     wxSQLite3ResultSet q1 = inidb->ExecuteQuery(sql);
@@ -516,8 +523,7 @@ void mmDBWrapper::loadCurrencies(wxSQLite3Database* db, const wxString& fpath)
         st.Bind(++i, q1.GetDouble(wxT("SCALE")));
         st.Bind(++i, q1.GetDouble(wxT("BASECONVRATE"), g_defBASECONVRATE));
 
-        bool ok = q1.GetColumnCount() == i;
-        wxASSERT(ok);
+        wxASSERT(st.GetParamCount() == i);
         
         st.ExecuteUpdate();
         st.Reset();
@@ -620,8 +626,12 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
         /* Create CATEGORY_V1 Tables */
         db->ExecuteUpdate(wxT("create table CATEGORY_V1(CATEGID integer primary key, \
                              CATEGNAME TEXT NOT NULL);"));
-        bool exists = db->TableExists(wxT("CATEGORY_V1"));
-        wxASSERT(exists);
+
+        {
+            bool ok = db->TableExists(wxT("CATEGORY_V1"));
+            wxASSERT(ok);
+            ok = ok; // removes compiler's warning
+        }
     }
 
     bool existsSubCat = db->TableExists(wxT("SUBCATEGORY_V1"));
@@ -1359,9 +1369,7 @@ void mmDBWrapper::addPayee(wxSQLite3Database* db, const wxString &payee, int cat
     st.Bind(2, categID);
     st.Bind(3, subcategID);
 
-    int rows_affected = st.ExecuteUpdate();
-    wxASSERT(rows_affected == 1);
-
+    st.ExecuteUpdate();
     st.Finalize();
 
     mmENDSQL_LITE_EXCEPTION;
@@ -1743,9 +1751,7 @@ bool mmDBWrapper::updatePayee(wxSQLite3Database* db, const wxString& payeeName,
     st.Bind(3, subcategID);
     st.Bind(4, payeeID);
     
-    int rows_affected = st.ExecuteUpdate();
-    wxASSERT(rows_affected == 1);
-
+    st.ExecuteUpdate();
     st.Finalize();
 
     mmENDSQL_LITE_EXCEPTION;
@@ -1779,9 +1785,7 @@ bool mmDBWrapper::deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID)
     st = db->PrepareStatement("delete from PAYEE_V1 where PAYEEID = ?");
     st.Bind(1, payeeID);
     
-    int rows_affected = st.ExecuteUpdate();
-    wxASSERT(rows_affected == 1);
-    
+    st.ExecuteUpdate();
     st.Finalize();
 
     mmENDSQL_LITE_EXCEPTION;
@@ -1961,8 +1965,12 @@ void mmDBWrapper::verifyINIDB(wxSQLite3Database* inidb)
         /* Create INFOTABLE_V1 Table */
         inidb->ExecuteUpdate(wxT("create table SETTING_V1(SETTINGID integer primary key, \
                               SETTINGNAME TEXT NOT NULL, SETTINGVALUE TEXT)"));
-        bool valid = inidb->TableExists(wxT("SETTING_V1"));
-        wxASSERT(valid);
+        
+        {
+            bool ok = inidb->TableExists(wxT("SETTING_V1"));
+            wxASSERT(ok);
+            ok = ok; // removes compiler's warning
+        }
     }
     mmENDSQL_LITE_EXCEPTION;
 }
@@ -2031,9 +2039,7 @@ void mmDBWrapper::updateTransactionWithStatus(wxSQLite3Database* db, int transID
     st.Bind(1, status);
     st.Bind(2, transID);
 
-    int rows_affected = st.ExecuteUpdate();
-    wxASSERT(rows_affected == 1);
-
+    st.ExecuteUpdate();
     st.Finalize();
     
     mmENDSQL_LITE_EXCEPTION;
@@ -2391,9 +2397,7 @@ void mmDBWrapper::updateYearForID(wxSQLite3Database* db,
 	 st.Bind(1, yearName);	
 	 st.Bind(2, yearid);	
 
-     int rows_affected = st.ExecuteUpdate();
-     wxASSERT(rows_affected == 1);
-
+     st.ExecuteUpdate();
 	 st.Finalize();
 
 	 mmENDSQL_LITE_EXCEPTION;
@@ -2487,12 +2491,9 @@ bool mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearNa
 	st.Bind(++i, period);
 	st.Bind(++i, amount);
 
-    bool ok = st.GetParamCount() == i;
-    wxASSERT(ok);
+    wxASSERT(st.GetParamCount() == i);
 
-    int rows_affected = st.ExecuteUpdate();
-	wxASSERT(rows_affected == 1);
-
+    st.ExecuteUpdate();
 	st.Finalize();
 
 	mmENDSQL_LITE_EXCEPTION;
@@ -2691,9 +2692,7 @@ bool mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearNa
 		st.Bind(2, numRepeats);
 		st.Bind(3, bdID);
 
-		int rows_affected = st.ExecuteUpdate();
-        wxASSERT(rows_affected == 1);
-
+		st.ExecuteUpdate();
 		st.Finalize();
 	 }
 

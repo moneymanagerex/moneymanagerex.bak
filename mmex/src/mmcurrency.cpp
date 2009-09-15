@@ -123,9 +123,7 @@ int mmCurrencyList::addCurrency(boost::shared_ptr<mmCurrency> pCurrency)
     st.Bind(++i, r.baseConv_);
     st.Bind(++i, r.currencySymbol_);
 
-    bool ok = st.GetParamCount() == i;
-    wxASSERT(ok);
-                                              
+    wxASSERT(st.GetParamCount() == i);
     st.ExecuteUpdate();
 
     pCurrency->currencyID_ = db_->GetLastRowId().ToLong();
@@ -153,6 +151,8 @@ void mmCurrencyList::updateCurrency(int currencyID, boost::shared_ptr<mmCurrency
         "SCALE=?, BASECONVRATE=?, CURRENCY_SYMBOL=? "
     "where CURRENCYID = ?";
 
+    wxASSERT(currencyID == pCurrency->currencyID_);
+
     mmBEGINSQL_LITE_EXCEPTION;
 
     wxSQLite3Statement st = db_->PrepareStatement(sql);
@@ -170,8 +170,7 @@ void mmCurrencyList::updateCurrency(int currencyID, boost::shared_ptr<mmCurrency
     st.Bind(++i, r.currencySymbol_);
     st.Bind(++i, r.currencyID_);
 
-    bool ok = st.GetParamCount() == i;
-    wxASSERT(ok);
+    wxASSERT(st.GetParamCount() == i);
 
     st.ExecuteUpdate();
     st.Finalize();

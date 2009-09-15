@@ -298,7 +298,7 @@ void assetsListCtrl::OnListItemSelected(wxListEvent& event)
     selectedIndex_ = event.GetIndex();
 }
 
-int assetsListCtrl::OnGetItemImage(long item) const
+int assetsListCtrl::OnGetItemImage(long /*item*/) const
 {
    /* Returns the icon to be shown for each entry */
    return 0;
@@ -327,7 +327,7 @@ void assetsListCtrl::OnListKeyDown(wxListEvent& event)
     }
 }
 
-void assetsListCtrl::OnNewAsset(wxCommandEvent& event)
+void assetsListCtrl::OnNewAsset(wxCommandEvent& /*event*/)
 {
     mmAssetDialog *dlg = new mmAssetDialog(cp_->db_, 0, false, this );
     if ( dlg->ShowModal() == wxID_OK )
@@ -338,7 +338,7 @@ void assetsListCtrl::OnNewAsset(wxCommandEvent& event)
     dlg->Destroy();
 }
 
-void assetsListCtrl::OnDeleteAsset(wxCommandEvent& event)
+void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
 {
 	if (selectedIndex_ == -1)
 		return;
@@ -361,7 +361,7 @@ void assetsListCtrl::OnDeleteAsset(wxCommandEvent& event)
     }
 }
 
-void assetsListCtrl::OnEditAsset(wxCommandEvent& event)
+void assetsListCtrl::OnEditAsset(wxCommandEvent& /*event*/)
 {
 	if (selectedIndex_ == -1)
 		return;

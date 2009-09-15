@@ -146,9 +146,9 @@ void mmCurrencyDialog::updateControls()
     Fit();    
 }
 
-void mmCurrencyDialog::OnCurrencyTypeChanged(wxCommandEvent& event)
+void mmCurrencyDialog::OnCurrencyTypeChanged(wxCommandEvent& /*event*/)
 {
-    INT_PTR currencyID = (INT_PTR)currencyChoice_->GetClientData();
+    /*INT_PTR currencyID = (INT_PTR)*/currencyChoice_->GetClientData();
     updateControls();
 }
 
@@ -319,19 +319,19 @@ void mmCurrencyDialog::CreateControls()
     itemBoxSizer22->Add(itemButton25, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 }
 
-void mmCurrencyDialog::OnCancel(wxCommandEvent& event)
+void mmCurrencyDialog::OnCancel(wxCommandEvent& /*event*/)
 {
    EndModal(wxID_OK);   
 }
 
-void mmCurrencyDialog::OnBSelect(wxCommandEvent& event)
+void mmCurrencyDialog::OnBSelect(wxCommandEvent& /*event*/)
 {
     wxString currencyName = currencyChoice_->GetStringSelection();
     currencyID_ = mmDBWrapper::getCurrencyID(core_->db_.get(), currencyName);
     EndModal(wxID_OK);
 }
 
-void mmCurrencyDialog::OnEdit(wxCommandEvent& event)
+void mmCurrencyDialog::OnEdit(wxCommandEvent& /*event*/)
 {
     wxString currencyName = currencyChoice_->GetStringSelection();
 

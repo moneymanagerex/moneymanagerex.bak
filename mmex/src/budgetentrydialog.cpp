@@ -201,7 +201,7 @@ void mmBudgetEntryDialog::CreateControls()
 }
 
 
-void mmBudgetEntryDialog::OnOk(wxCommandEvent& event)
+void mmBudgetEntryDialog::OnOk(wxCommandEvent& /*event*/)
 {
     int typeSelection = type_->GetSelection();
 

@@ -42,9 +42,6 @@ public:
         hb.addLineBreak();
         hb.addLineBreak();
 
-        int ct = 0;  
-        double tincome = 0.0;
-        double texpenses = 0.0;
         double tBalance = 0.0;
 
 		hb.startCenter();

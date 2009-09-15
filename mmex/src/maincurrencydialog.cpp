@@ -164,7 +164,7 @@ bool mmMainCurrencyDialog::ShowToolTips()
  * Get bitmap resources
  */
 
-wxBitmap mmMainCurrencyDialog::GetBitmapResource( const wxString& name )
+wxBitmap mmMainCurrencyDialog::GetBitmapResource( const wxString& /*name*/ )
 {
     // Bitmap retrieval
 ////@begin MyDialog bitmap retrieval
@@ -176,12 +176,12 @@ wxBitmap mmMainCurrencyDialog::GetBitmapResource( const wxString& name )
  * Get icon resources
  */
 
-wxIcon mmMainCurrencyDialog::GetIconResource( const wxString& name )
+wxIcon mmMainCurrencyDialog::GetIconResource( const wxString& /*name*/ )
 {
     return wxNullIcon;
 }
 
-void mmMainCurrencyDialog::OnAdd(wxCommandEvent& event)
+void mmMainCurrencyDialog::OnAdd(wxCommandEvent& /*event*/)
 {
    wxTextEntryDialog* dlg = new wxTextEntryDialog(this, _("Name of Currency to Add"), 
       _("Add Currency"));
@@ -211,7 +211,7 @@ void mmMainCurrencyDialog::OnAdd(wxCommandEvent& event)
 }
 
 
-void mmMainCurrencyDialog::OnEdit(wxCommandEvent& event)
+void mmMainCurrencyDialog::OnEdit(wxCommandEvent& /*event*/)
 {
    int selIndex = currencyListBox_->GetSelection();
     if (selIndex != wxNOT_FOUND)
@@ -228,7 +228,7 @@ void mmMainCurrencyDialog::OnEdit(wxCommandEvent& event)
     }
 }
 
-void mmMainCurrencyDialog::OnSelect(wxCommandEvent& event)
+void mmMainCurrencyDialog::OnSelect(wxCommandEvent& /*event*/)
 {
     int selIndex = currencyListBox_->GetSelection();
     if (selIndex != wxNOT_FOUND)

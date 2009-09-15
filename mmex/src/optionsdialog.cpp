@@ -249,7 +249,7 @@ wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
     return wxT("");
 }
 
-void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& event)
+void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& /*event*/)
 {
    wxString format = choiceDateFormat_->GetValue();
    if (format.Trim().IsEmpty())
@@ -274,7 +274,7 @@ void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& event)
    Fit();
 }
 
-void mmOptionsDialog::OnViewAccountsChanged(wxCommandEvent& event)
+void mmOptionsDialog::OnViewAccountsChanged(wxCommandEvent& /*event*/)
 {
    int selection = choiceVisible_->GetSelection();
 
@@ -287,7 +287,7 @@ void mmOptionsDialog::OnViewAccountsChanged(wxCommandEvent& event)
    mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWACCOUNTS"), viewAcct);
 }
 
-void mmOptionsDialog::OnViewTransChanged(wxCommandEvent& event)
+void mmOptionsDialog::OnViewTransChanged(wxCommandEvent& /*event*/)
 {
    int selection = choiceTransVisible_->GetSelection();
 
@@ -750,7 +750,7 @@ void mmOptionsDialog::CreateControls()
     Fit();
 }
 
-void mmOptionsDialog::OnCurrency(wxCommandEvent& event)
+void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
 {
     int currencyID = mmDBWrapper::getBaseCurrencySettings(db_);
      
@@ -773,7 +773,7 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& event)
     dlg->Destroy();
 }
 
-void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& event)
+void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& /*event*/)
 {
     mmSelectLanguage(inidb_, true);
 	wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
@@ -788,7 +788,7 @@ void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& event)
 //        mmIniOptions::enableGraphs_ = false;
 }
 
-void mmOptionsDialog::OnNavTreeColorChanged(wxCommandEvent& event)
+void mmOptionsDialog::OnNavTreeColorChanged(wxCommandEvent& /*event*/)
 {
     wxColourData data;
     data.SetChooseFull(true);
@@ -805,7 +805,7 @@ void mmOptionsDialog::OnNavTreeColorChanged(wxCommandEvent& event)
     }
 }
 
-void mmOptionsDialog::OnAlt0Changed(wxCommandEvent& event)
+void mmOptionsDialog::OnAlt0Changed(wxCommandEvent& /*event*/)
 {
     wxColourData data;
     data.SetChooseFull(true);
@@ -822,7 +822,7 @@ void mmOptionsDialog::OnAlt0Changed(wxCommandEvent& event)
     }
 }
 
-void mmOptionsDialog::OnAlt1Changed(wxCommandEvent& event)
+void mmOptionsDialog::OnAlt1Changed(wxCommandEvent& /*event*/)
 {
     wxColourData data;
     data.SetChooseFull(true);
@@ -839,7 +839,7 @@ void mmOptionsDialog::OnAlt1Changed(wxCommandEvent& event)
     }
 }
 
-void mmOptionsDialog::OnListBackgroundChanged(wxCommandEvent& event)
+void mmOptionsDialog::OnListBackgroundChanged(wxCommandEvent& /*event*/)
 {
     wxColourData data;
     data.SetChooseFull(true);
@@ -856,7 +856,7 @@ void mmOptionsDialog::OnListBackgroundChanged(wxCommandEvent& event)
     }
 }
 
-void mmOptionsDialog::OnListBorderChanged(wxCommandEvent& event)
+void mmOptionsDialog::OnListBorderChanged(wxCommandEvent& /*event*/)
 {
     wxColourData data;
     data.SetChooseFull(true);
@@ -873,7 +873,7 @@ void mmOptionsDialog::OnListBorderChanged(wxCommandEvent& event)
     }
 }
 
-void  mmOptionsDialog::OnListDetailsColors(wxCommandEvent& event)
+void  mmOptionsDialog::OnListDetailsColors(wxCommandEvent& /*event*/)
 {
     wxColourData data;
     data.SetChooseFull(true);
@@ -890,7 +890,7 @@ void  mmOptionsDialog::OnListDetailsColors(wxCommandEvent& event)
     }
 }
 
-void  mmOptionsDialog::OnListFutureDates(wxCommandEvent& event)
+void  mmOptionsDialog::OnListFutureDates(wxCommandEvent& /*event*/)
 {
     wxColourData data;
     data.SetChooseFull(true);
@@ -908,12 +908,12 @@ void  mmOptionsDialog::OnListFutureDates(wxCommandEvent& event)
 }
 
 
-void mmOptionsDialog::OnRestoreDefaultColors(wxCommandEvent& event)
+void mmOptionsDialog::OnRestoreDefaultColors(wxCommandEvent& /*event*/)
 {
     mmRestoreDefaultColors();
 }
 
-void mmOptionsDialog::OnBackupDBChecked(wxCommandEvent& event)
+void mmOptionsDialog::OnBackupDBChecked(wxCommandEvent& /*event*/)
 {
   wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_BACKUP);
   bool state = itemCheckBox->GetValue();
@@ -923,7 +923,7 @@ void mmOptionsDialog::OnBackupDBChecked(wxCommandEvent& event)
     mmDBWrapper::setINISettingValue(inidb_, wxT("BACKUPDB"), wxT("FALSE"));
 }
 
-void mmOptionsDialog::OnOriginalDateChecked(wxCommandEvent& event)
+void mmOptionsDialog::OnOriginalDateChecked(wxCommandEvent& /*event*/)
 {
   wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_ORIG_DATE);
   bool state = itemCheckBox->GetValue();
@@ -933,7 +933,7 @@ void mmOptionsDialog::OnOriginalDateChecked(wxCommandEvent& event)
     mmDBWrapper::setINISettingValue(inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
 }
 
-void mmOptionsDialog::OnUseSoundChecked(wxCommandEvent& event)
+void mmOptionsDialog::OnUseSoundChecked(wxCommandEvent& /*event*/)
 {
   wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_USE_SOUND);
   bool state = itemCheckBox->GetValue();
@@ -943,7 +943,7 @@ void mmOptionsDialog::OnUseSoundChecked(wxCommandEvent& event)
     mmDBWrapper::setINISettingValue(inidb_, wxT("USETRANSSOUND"), wxT("FALSE"));
 }
 
-void mmOptionsDialog::OnUpdCurrencyChecked(wxCommandEvent& event)
+void mmOptionsDialog::OnUpdCurrencyChecked(wxCommandEvent& /*event*/)
 {
   wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_UPD_CURRENCY);
   bool state = itemCheckBox->GetValue();
@@ -953,7 +953,7 @@ void mmOptionsDialog::OnUpdCurrencyChecked(wxCommandEvent& event)
      mmDBWrapper::setINISettingValue(inidb_, wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
 }
 
-void mmOptionsDialog::OnFontSizeChanged(wxCommandEvent& event)
+void mmOptionsDialog::OnFontSizeChanged(wxCommandEvent& /*event*/)
 {
    int size = choiceFontSize_->GetCurrentSelection() + 1;
    mmIniOptions::fontSize_ = wxString::Format(wxT("%d"), size);

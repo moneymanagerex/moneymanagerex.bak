@@ -100,7 +100,7 @@ void mmAppStartDialog::CreateControls()
     wxBitmap itemStaticBitmap4Bitmap;
     itemStaticBitmap4Bitmap.LoadFile(MMEX_SPLASH_FNAME, wxBITMAP_TYPE_PNG); 
     
-    wxStaticBitmap* itemStaticBitmap4;
+    wxStaticBitmap* itemStaticBitmap4 = 0;
     if (!mmIniOptions::enableCustomLogo_)
     {
         itemStaticBitmap4 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
@@ -114,7 +114,10 @@ void mmAppStartDialog::CreateControls()
             itemStaticCustomBitmap, wxDefaultPosition, wxSize(181, 200), 0 );
 #endif
     }
-    itemBoxSizer3->Add(itemStaticBitmap4, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    
+    if (itemStaticBitmap4) {
+        itemBoxSizer3->Add(itemStaticBitmap4, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    }
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer3->Add(itemBoxSizer5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -180,31 +183,31 @@ void mmAppStartDialog::CreateControls()
     itemBoxSizer10->Add(itemCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 }
 
-void mmAppStartDialog::OnButtonAppstartNewDatabaseClick( wxCommandEvent& event )
+void mmAppStartDialog::OnButtonAppstartNewDatabaseClick( wxCommandEvent& /*event*/ )
 {
     retCode_ = 0;
     Close(TRUE);   
 }
 
-void mmAppStartDialog::OnButtonAppstartOpenDatabaseClick( wxCommandEvent& event )
+void mmAppStartDialog::OnButtonAppstartOpenDatabaseClick( wxCommandEvent& /*event*/ )
 {
     retCode_ = 1;
     Close(TRUE);   
 }
 
-void mmAppStartDialog::OnButtonAppstartHelpClick( wxCommandEvent& event )
+void mmAppStartDialog::OnButtonAppstartHelpClick( wxCommandEvent& /*event*/ )
 {
    retCode_ = 2;
    Close(TRUE);   
 }
 
-void mmAppStartDialog::OnButtonAppstartWebsiteClick( wxCommandEvent& event )
+void mmAppStartDialog::OnButtonAppstartWebsiteClick( wxCommandEvent& /*event*/ )
 {
    retCode_ = 3;
    Close(TRUE);   
 }
     
-void mmAppStartDialog::OnButtonAppstartLastDatabaseClick( wxCommandEvent& event )
+void mmAppStartDialog::OnButtonAppstartLastDatabaseClick( wxCommandEvent& /*event*/ )
 {
     retCode_ = 4;
     Close(TRUE);   

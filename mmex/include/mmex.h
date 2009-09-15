@@ -95,7 +95,7 @@ private:
 class wxNewDatabaseWizardPage1 : public wxWizardPageSimple
 {
 public:
-    void OnCurrency(wxCommandEvent& event)
+    void OnCurrency(wxCommandEvent& /*event*/)
     {
        currencyID_ = parent_->core_->currencyList_.getBaseCurrencySettings();
 

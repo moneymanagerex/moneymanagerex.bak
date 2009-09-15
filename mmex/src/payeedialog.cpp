@@ -231,7 +231,7 @@ void mmPayeeDialog::CreateControls()
    // this->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_SET_FOCUS, wxFocusEventHandler(mmPayeeDialog::OnFocus)); 
 }
 
-void mmPayeeDialog::OnAdd(wxCommandEvent& event)
+void mmPayeeDialog::OnAdd(wxCommandEvent& /*event*/)
 {
     wxTextCtrl* payeeText = (wxTextCtrl*)FindWindow(ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME);
     wxString text = payeeText->GetValue();
@@ -257,7 +257,7 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
     }
 }
  
-void mmPayeeDialog::OnDelete(wxCommandEvent& event)
+void mmPayeeDialog::OnDelete(wxCommandEvent& /*event*/)
 {
     if (!core_->payeeList_.deletePayee(payeeID_))
     {
@@ -269,7 +269,7 @@ void mmPayeeDialog::OnDelete(wxCommandEvent& event)
     fillControls();
 }
  
-void mmPayeeDialog::OnBSelect(wxCommandEvent& event)
+void mmPayeeDialog::OnBSelect(wxCommandEvent& /*event*/)
 {
     //wxString payeeString = listBox_->GetStringSelection();
     if (payeeID_ != -1)
@@ -303,12 +303,12 @@ void mmPayeeDialog::OnBSelect(wxCommandEvent& event)
 #endif
 }
 
-void mmPayeeDialog::OnOk(wxCommandEvent& event)
+void mmPayeeDialog::OnOk(wxCommandEvent& /*event*/)
 {
     Close(TRUE);
 }
 
-void mmPayeeDialog::OnSelChanged(wxCommandEvent& event)
+void mmPayeeDialog::OnSelChanged(wxCommandEvent& /*event*/)
 {
     wxString payeeString = listBox_->GetStringSelection();
     int selInd = listBox_->GetSelection();
@@ -320,7 +320,7 @@ void mmPayeeDialog::OnSelChanged(wxCommandEvent& event)
     //payeeComboBox_->SetValue(payeeString);
 }
 
-void mmPayeeDialog::OnComboSelected(wxCommandEvent& event)
+void mmPayeeDialog::OnComboSelected(wxCommandEvent& /*event*/)
 {
     wxString payeeString = payeeComboBox_->GetValue();
     int selInd = payeeComboBox_->GetSelection();
@@ -355,11 +355,11 @@ void mmPayeeDialog::OnComboSelected(wxCommandEvent& event)
 }
 
 
-void mmPayeeDialog::OnSetFocus(wxFocusEvent& event)
+void mmPayeeDialog::OnSetFocus(wxFocusEvent& /*event*/)
 {
 }
 
-void mmPayeeDialog::OnFocus(wxFocusEvent& event)
+void mmPayeeDialog::OnFocus(wxFocusEvent& /*event*/)
 {
     wxString payeeString = payeeComboBox_->GetValue();
     int selInd = payeeComboBox_->GetSelection();
@@ -390,7 +390,7 @@ void mmPayeeDialog::OnDoubleClicked(wxCommandEvent& event)
     OnBSelect(event);
 }
 
-void mmPayeeDialog::OnEdit(wxCommandEvent& event)
+void mmPayeeDialog::OnEdit(wxCommandEvent& /*event*/)
 {
     wxString text = textCtrl->GetValue();
     core_->payeeList_.updatePayee(payeeID_, text);

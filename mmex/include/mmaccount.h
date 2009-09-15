@@ -93,6 +93,8 @@ public:
 
 class mmAccountList
 {
+    typedef std::vector<boost::shared_ptr<mmAccount> > account_v;
+
 public:
     mmAccountList(boost::shared_ptr<wxSQLite3Database> db);
     ~mmAccountList() {}
@@ -109,8 +111,7 @@ public:
     boost::weak_ptr<mmCurrency> getCurrencyWeakPtr(int accountID);
     double getAccountBaseCurrencyConvRate(int accountID);
 
-    std::vector< boost::shared_ptr<mmAccount> > accounts_;
-    
+    account_v accounts_;
     
 private:
     boost::shared_ptr<wxSQLite3Database> db_;

@@ -150,7 +150,7 @@ bool mmCustomSQLDialog::ShowToolTips()
  * Get bitmap resources
  */
 
-wxBitmap mmCustomSQLDialog::GetBitmapResource( const wxString& name )
+wxBitmap mmCustomSQLDialog::GetBitmapResource( const wxString& /*name*/ )
 {
     // Bitmap retrieval
 ////@begin MyDialog bitmap retrieval
@@ -162,12 +162,12 @@ wxBitmap mmCustomSQLDialog::GetBitmapResource( const wxString& name )
  * Get icon resources
  */
 
-wxIcon mmCustomSQLDialog::GetIconResource( const wxString& name )
+wxIcon mmCustomSQLDialog::GetIconResource( const wxString& /*name*/ )
 {
     return wxNullIcon;
 }
 
-void mmCustomSQLDialog::OnLoad(wxCommandEvent& event)
+void mmCustomSQLDialog::OnLoad(wxCommandEvent& /*event*/)
 {
    wxString fileName = wxFileSelector(wxT("Choose Custom SQL file to load"), 
       wxT(""), wxT(""), wxT(""),  wxT("SQL File(*.sql)|*.sql"), wxFILE_MUST_EXIST);
@@ -194,7 +194,7 @@ void mmCustomSQLDialog::OnLoad(wxCommandEvent& event)
 }
 
 //Saves the field order to a template file
-void mmCustomSQLDialog::OnSave(wxCommandEvent& event)
+void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
 {
      wxString fileName = wxFileSelector(wxT("Choose Custom SQL file to save"), 
                 wxT(""), wxT(""), wxT(""), wxT("SQL File(*.sql)|*.sql"), wxSAVE);
@@ -220,7 +220,7 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& event)
     }
 }
 
-void mmCustomSQLDialog::OnQuery(wxCommandEvent& event)
+void mmCustomSQLDialog::OnQuery(wxCommandEvent& /*event*/)
 {
    wxString lower = queryBox_->GetValue().Lower();
    if ((lower.Find(wxT("update")) != wxNOT_FOUND) ||

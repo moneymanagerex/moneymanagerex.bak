@@ -124,7 +124,7 @@ void mmBudgetYearDialog::CreateControls()
     itemButton8->SetToolTip(_("Delete existing budget year"));
 }
 
-void mmBudgetYearDialog::OnAdd(wxCommandEvent& event)
+void mmBudgetYearDialog::OnAdd(wxCommandEvent& /*event*/)
 {
     mmBudgetYearEntryDialog* dlg = new mmBudgetYearEntryDialog(db_, this); 
     if ( dlg->ShowModal() == wxID_OK )
@@ -135,7 +135,7 @@ void mmBudgetYearDialog::OnAdd(wxCommandEvent& event)
     dlg->Destroy();
 }
  
-void mmBudgetYearDialog::OnDelete(wxCommandEvent& event)
+void mmBudgetYearDialog::OnDelete(wxCommandEvent& /*event*/)
 {
     wxString budgetYearString = listBox_->GetStringSelection();
     mmDBWrapper::deleteBudgetYear(db_, budgetYearString);
@@ -143,7 +143,7 @@ void mmBudgetYearDialog::OnDelete(wxCommandEvent& event)
     fillControls();
 }
  
-void mmBudgetYearDialog::OnOk(wxCommandEvent& event)
+void mmBudgetYearDialog::OnOk(wxCommandEvent& /*event*/)
 {
     EndModal(wxID_OK);
 }

@@ -283,7 +283,7 @@ void mmStockDialog::CreateControls()
     itemBoxSizer28->Add(itemButton31, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 }
 
-void mmStockDialog::OnAccountButton(wxCommandEvent& event)
+void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
 {
     static const char sql[] = 
     "select ACCOUNTNAME "
@@ -314,12 +314,12 @@ void mmStockDialog::OnAccountButton(wxCommandEvent& event)
 
 }
 
-void mmStockDialog::OnCancel(wxCommandEvent& event)
+void mmStockDialog::OnCancel(wxCommandEvent& /*event*/)
 {
     Close(TRUE);
 }
 
-void mmStockDialog::OnStockPriceButton(wxCommandEvent& event)
+void mmStockDialog::OnStockPriceButton(wxCommandEvent& /*event*/)
 {
 	wxString stockSymbol = stockSymbol_->GetValue().Trim();
 	if (!stockSymbol.IsEmpty())
@@ -335,7 +335,7 @@ void mmStockDialog::OnStockPriceButton(wxCommandEvent& event)
 	}
 }
 
-void mmStockDialog::OnOk(wxCommandEvent& event)
+void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
 {
     mmBEGINSQL_LITE_EXCEPTION;
     
@@ -427,8 +427,7 @@ void mmStockDialog::OnOk(wxCommandEvent& event)
         st.Bind(++i, cValue);
         st.Bind(++i, commission);
 
-        bool ok = st.GetParamCount() == i;
-        wxASSERT(ok);
+        wxASSERT(st.GetParamCount() == i);
 
         st.ExecuteUpdate();
         st.Finalize();
@@ -457,12 +456,9 @@ void mmStockDialog::OnOk(wxCommandEvent& event)
         st.Bind(++i, commission);
         st.Bind(++i, stockID_);
 
-        bool ok = st.GetParamCount() == i;
-        wxASSERT(ok);
+        wxASSERT(st.GetParamCount() == i);
 
-        int rows_affected = st.ExecuteUpdate();
-        wxASSERT(rows_affected == 1);
-
+        st.ExecuteUpdate();
         st.Finalize();
     }
 

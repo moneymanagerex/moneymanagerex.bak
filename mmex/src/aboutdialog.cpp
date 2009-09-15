@@ -20,7 +20,6 @@
 #include "defs.h"
 #include "dbwrapper.h"
 #include "util.h"
-#include "defs.h"
 
 /*******************************************************/
 /* Include XPM Support */
@@ -76,7 +75,7 @@ bool mmAboutDialog::Create( wxWindow* parent, wxWindowID id,
     return TRUE;
 }
 
-void mmAboutDialog::OnVersionHistory(wxCommandEvent& event)
+void mmAboutDialog::OnVersionHistory(wxCommandEvent& /*event*/)
 {
     wxFileName fname(wxTheApp->argv[0]);
     wxString filePath = fname.GetPath(wxPATH_GET_VOLUME) 
@@ -92,7 +91,7 @@ void mmAboutDialog::OnVersionHistory(wxCommandEvent& event)
     dlg->Destroy();
 }
 
-void mmAboutDialog::OnContributerList(wxCommandEvent& event)
+void mmAboutDialog::OnContributerList(wxCommandEvent& /*event*/)
 {
     wxFileName fname(wxTheApp->argv[0]);
     wxString filePath = fname.GetPath(wxPATH_GET_VOLUME) 
@@ -121,7 +120,7 @@ void mmAboutDialog::CreateControls()
     wxBitmap itemStaticBitmap3Bitmap;
     itemStaticBitmap3Bitmap.LoadFile(MMEX_SPLASH_FNAME, wxBITMAP_TYPE_PNG); 
 
-    wxStaticBitmap* itemStaticBitmap3;
+    wxStaticBitmap* itemStaticBitmap3 = 0;
     if (!mmIniOptions::enableCustomLogo_)
     {
         itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
@@ -135,7 +134,10 @@ void mmAboutDialog::CreateControls()
             itemStaticCustomBitmap, wxDefaultPosition, wxSize(235, 157), 0 );
 #endif
     }
-    itemBoxSizerN->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    
+    if (itemStaticBitmap3) {
+        itemBoxSizerN->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    }
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer2->Add(itemBoxSizer4, 1, wxGROW|wxALL, 5);

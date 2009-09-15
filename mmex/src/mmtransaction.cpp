@@ -440,11 +440,8 @@ int mmBankTransactionList::addTransaction(mmCoreDB* core, boost::shared_ptr<mmBa
    st.Bind(++i, r.date_.FormatISODate());
    st.Bind(++i, r.toAmt_);
 
-   bool ok = st.GetParamCount() == i;
-   wxASSERT(ok);
-
-   int rows_affected = st.ExecuteUpdate();
-   wxASSERT(rows_affected == 1);
+   wxASSERT(st.GetParamCount() == i);
+   st.ExecuteUpdate();
 
    r.transactionID(db_->GetLastRowId().ToLong());
    st.Finalize();
@@ -495,8 +492,7 @@ bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBank
    st.Bind(++i, r.date_.FormatISODate());
    st.Bind(++i, r.toAmt_ );
 
-   bool ok = st.GetParamCount() == i;
-   wxASSERT(ok);
+   wxASSERT(st.GetParamCount() == i);
 
    wxSQLite3ResultSet q1 = st.ExecuteQuery();
    found = q1.NextRow(); // TODO: Need to check split entries
@@ -557,11 +553,8 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int 
    st.Bind(++i, pCopyTransaction->date_.FormatISODate());
    st.Bind(++i, r.toAmt_ );
 
-   bool ok = st.GetParamCount() == i;
-   wxASSERT(ok);
-
-   int rows_affected = st.ExecuteUpdate();
-   wxASSERT(rows_affected == 1);
+   wxASSERT(st.GetParamCount() == i);
+   st.ExecuteUpdate();
 
    pCopyTransaction->transactionID(db_->GetLastRowId().ToLong());
    st.Finalize();
@@ -604,11 +597,8 @@ void mmBankTransactionList::updateTransaction(
     st.Bind(++i, r.toAmt_);
     st.Bind(++i, r.transactionID());
 
-    bool ok = st.GetParamCount() == i;
-    wxASSERT(ok);
-
-    int rows_affected = st.ExecuteUpdate();
-    wxASSERT(rows_affected == 1);
+    wxASSERT(st.GetParamCount() == i);
+    st.ExecuteUpdate();
 
     r.splitEntries_->updateToDB(db_, r.transactionID(), true);
     st.Finalize();

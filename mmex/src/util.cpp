@@ -136,7 +136,7 @@ void mmIniOptions::loadInfoOptions(wxSQLite3Database* db)
    mmIniOptions::userNameString_ = mmDBWrapper::getInfoSettingValue(db, wxT("USERNAME"), wxT(""));
 }
 
-void mmIniOptions::saveOptions(wxSQLite3Database* db)
+void mmIniOptions::saveOptions(wxSQLite3Database* /*db*/)
 {
  
 }
@@ -607,9 +607,9 @@ int mmImportCSV(mmCoreDB* core)
                wxDateTime dtdt = mmParseDisplayStringToDate(db_, dt);
                wxString convDate = dtdt.FormatISODate();
 
-               int payeeID, categID , subCategID;
-               categID = -1;
-               subCategID = -1;
+               int payeeID = -1;
+               int categID = -1;
+               int subCategID = -1;
                 
                if (!isTransfer)
                {
@@ -852,7 +852,10 @@ int mmImportCSVMMNET(mmCoreDB* core)
                }
                wxString convDate = dtdt.FormatISODate();
 
-               int payeeID, categID, subCategID;
+               int payeeID = -1;
+               int categID = -1;
+               int subCategID = -1;
+
                if (!core->payeeList_.payeeExists(payee))
                {
                    payeeID = core->payeeList_.addPayee(payee);
@@ -929,7 +932,7 @@ void mmShowErrorMessageInvalid(wxWindow* parent, wxString message)
 }
 
 /* -------------------------------------------- */
-wxString mmGetDateForDisplay(wxSQLite3Database* db, wxDateTime dt)
+wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, wxDateTime dt)
 {
     return dt.Format(mmOptions::dateFormat);
 }
@@ -1127,9 +1130,8 @@ bool mmCurrencyFormatter::formatDoubleToCurrencyEdit(double val, wxString& rdata
   double absx = value > 0 ? value : - value;      //  Get magnitude of argument
   double whole = mmMoneyInt(absx);       //  Isolate whole monetary units
   short  cents = mmCents(absx);     //  Isolate fractional units
-  double remdr = absx - ((whole * 100 + cents) / 100);
+  //double remdr = absx - ((whole * 100 + cents) / 100);
 
-  int i = 0;
   if  (value < 0) 
      data += '-';    //  Print prefix minus, if needed
  // data = data + pfx_symbol;           //  Insert prefix
@@ -1219,9 +1221,8 @@ bool mmCurrencyFormatter::formatDoubleToCurrency(double val, wxString& rdata)
   double absx = value > 0 ? value : - value;      //  Get magnitude of argument
   double whole = mmMoneyInt(absx);       //  Isolate whole monetary units
   short  cents = mmCents(absx);     //  Isolate fractional units
-  double remdr = absx - ((whole * 100 + cents) / 100);
+  //double remdr = absx - ((whole * 100 + cents) / 100);
 
-  int i = 0;
   data = data + pfx_symbol; //  insert prefix
   data = data + wxT(' ');  // insert space
   if  (value < 0) 

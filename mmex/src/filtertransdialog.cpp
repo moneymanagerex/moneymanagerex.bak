@@ -203,7 +203,6 @@ void mmFilterTransactionsDialog::CreateControls()
     itemFlexGridSizer4->Add(accountCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString as;
-    int fromAccountID = -1;
 
     static const char sql[] = 
     "select ACCOUNTNAME "
@@ -230,12 +229,10 @@ void mmFilterTransactionsDialog::CreateControls()
     dateRangeCheckBox->SetValue(FALSE);
     itemFlexGridSizer4->Add(dateRangeCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxString* fromDateCtrlStrings = NULL;
     fromDateCtrl = new wxDatePickerCtrl( itemPanel3, ID_CHOICE5, 
        wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
     itemFlexGridSizer4->Add(fromDateCtrl, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxString* toDateControlStrings = NULL;
     toDateControl = new wxDatePickerCtrl( itemPanel3, ID_CHOICE6,  
        wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
     itemFlexGridSizer4->Add(toDateControl, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -377,57 +374,56 @@ bool mmFilterTransactionsDialog::ShowToolTips()
     return TRUE;
 }
 
-void mmFilterTransactionsDialog::OnCheckboxaccountClick( wxCommandEvent& event )
+void mmFilterTransactionsDialog::OnCheckboxaccountClick( wxCommandEvent& /*event*/ )
 {
     accountDropDown->Enable(accountCheckBox->GetValue());
 }
 
 
-void mmFilterTransactionsDialog::OnCheckboxDateRangeClick( wxCommandEvent& event )
+void mmFilterTransactionsDialog::OnCheckboxDateRangeClick( wxCommandEvent& /*event*/ )
 {
     fromDateCtrl->Enable(this->dateRangeCheckBox->GetValue());
     toDateControl->Enable(this->dateRangeCheckBox->GetValue());
 }
 
-void mmFilterTransactionsDialog::OnCheckboxpayeeClick( wxCommandEvent& event )
+void mmFilterTransactionsDialog::OnCheckboxpayeeClick( wxCommandEvent& /*event*/ )
 {
     btnPayee->Enable(this->payeeCheckBox->GetValue());
 }
 
-void mmFilterTransactionsDialog::OnCheckboxcategoryClick( wxCommandEvent& event )
+void mmFilterTransactionsDialog::OnCheckboxcategoryClick( wxCommandEvent& /*event*/ )
 {
     btnCategory->Enable(this->categoryCheckBox->GetValue());
 }
 
-void mmFilterTransactionsDialog::OnCheckboxstatusClick( wxCommandEvent& event )
+void mmFilterTransactionsDialog::OnCheckboxstatusClick( wxCommandEvent& /*event*/ )
 {
     choiceStatus->Enable(statusCheckBox->GetValue());
 }
 
-void mmFilterTransactionsDialog::OnCheckboxtypeClick( wxCommandEvent& event )
+void mmFilterTransactionsDialog::OnCheckboxtypeClick( wxCommandEvent& /*event*/ )
 {
     choiceType->Enable(typeCheckBox->GetValue());
 }
 
-void mmFilterTransactionsDialog::OnCheckboxamountrangeClick( wxCommandEvent& event )
+void mmFilterTransactionsDialog::OnCheckboxamountrangeClick( wxCommandEvent& /*event*/ )
 {
     amountMinEdit->Enable(amountRangeCheckBox->GetValue());
     amountMaxEdit->Enable(amountRangeCheckBox->GetValue());
 }
 
-void mmFilterTransactionsDialog::OnCheckboxnotesClick( wxCommandEvent& event )
+void mmFilterTransactionsDialog::OnCheckboxnotesClick( wxCommandEvent& /*event*/ )
 {
     notesEdit->Enable(notesCheckBox->GetValue());
 }
 
-void mmFilterTransactionsDialog::OnCheckboxTransNumberClick( wxCommandEvent& event )
+void mmFilterTransactionsDialog::OnCheckboxTransNumberClick( wxCommandEvent& /*event*/ )
 {
     transNumberEdit->Enable(transNumberCheckBox->GetValue());
 }
 
-void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& event )
+void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
 {
-   int ct = 0;
    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
    for (i = core_->bTransactionList_.transactions_.begin(); 
         i != core_->bTransactionList_.transactions_.end(); i++ )
@@ -597,12 +593,12 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& event )
     EndModal(wxID_OK);
 }
 
-void mmFilterTransactionsDialog::OnButtoncancelClick( wxCommandEvent& event )
+void mmFilterTransactionsDialog::OnButtoncancelClick( wxCommandEvent& /*event*/ )
 {
     Close(TRUE);
 }
 
-void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& event)
+void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
 {
     mmCategDialog *dlg = new mmCategDialog(core_, this);
     if ( dlg->ShowModal() == wxID_OK )
@@ -663,7 +659,7 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& event)
      btnCategory->SetLabel(categString);
 }
 
-void mmFilterTransactionsDialog::OnPayee(wxCommandEvent& event)
+void mmFilterTransactionsDialog::OnPayee(wxCommandEvent& /*event*/)
 {
     mmPayeeDialog* dlg = new mmPayeeDialog(core_, true, this);    
     if ( dlg->ShowModal() == wxID_OK )

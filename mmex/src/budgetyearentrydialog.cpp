@@ -113,7 +113,7 @@ void mmBudgetYearEntryDialog::CreateControls()
     itemChoice_->SetToolTip(_("Specify year to base budget on."));
     
     static const char sql[] =
-    "select BUDGETYEARNAME, BUDGETYEARID "
+    "select BUDGETYEARNAME "
     "from BUDGETYEAR_V1 "
     "order by BUDGETYEARNAME";
 
@@ -124,7 +124,6 @@ void mmBudgetYearEntryDialog::CreateControls()
     while (q1.NextRow())
     {
         wxString payeeString = q1.GetString(wxT("BUDGETYEARNAME"));
-        int budgetYearID = q1.GetInt(wxT("BUDGETYEARID"));
         itemChoice_->Insert(payeeString, index++);
     }
     q1.Finalize();
@@ -145,7 +144,7 @@ void mmBudgetYearEntryDialog::CreateControls()
     itemBoxSizer9->Add(itemButton8, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 }
 
-void mmBudgetYearEntryDialog::OnOk(wxCommandEvent& event)
+void mmBudgetYearEntryDialog::OnOk(wxCommandEvent& /*event*/)
 {
     wxString currText = textYear_->GetValue().Trim();
     wxString baseYear = itemChoice_->GetStringSelection();

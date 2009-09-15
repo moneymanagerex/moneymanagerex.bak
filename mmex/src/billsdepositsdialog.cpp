@@ -499,12 +499,12 @@ void mmBDDialog::CreateControls()
     itemBoxSizer26->Add(itemButton28, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 }
 
-void mmBDDialog::OnCancel(wxCommandEvent& event)
+void mmBDDialog::OnCancel(wxCommandEvent& /*event*/)
 {
     Close(TRUE);
 }
 
-void mmBDDialog::OnAccountName(wxCommandEvent& event)
+void mmBDDialog::OnAccountName(wxCommandEvent& /*event*/)
 {
     bool selectPayees = false;
     mmPayeeDialog *dlg = new mmPayeeDialog(core_, selectPayees, this);    
@@ -518,7 +518,7 @@ void mmBDDialog::OnAccountName(wxCommandEvent& event)
     }
 }
 
-void mmBDDialog::OnPayee(wxCommandEvent& event)
+void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 {
     bool selectPayees = true;
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
@@ -596,7 +596,7 @@ void mmBDDialog::OnPayee(wxCommandEvent& event)
 }
 
 
-void mmBDDialog::OnTo(wxCommandEvent& event)
+void mmBDDialog::OnTo(wxCommandEvent& /*event*/)
 {
     bool selectPayees = true;
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
@@ -630,12 +630,12 @@ void mmBDDialog::OnTo(wxCommandEvent& event)
     dlg->Destroy();
 }
 
-void mmBDDialog::OnDateChanged(wxDateEvent& event)
+void mmBDDialog::OnDateChanged(wxDateEvent& /*event*/)
 {
     
 }
 
-void mmBDDialog::OnAdvanced(wxCommandEvent& event)
+void mmBDDialog::OnAdvanced(wxCommandEvent& /*event*/)
 {
     wxString dispString = textAmount_->GetValue();
     if (toTransAmount_ > 0.0)
@@ -665,7 +665,7 @@ void mmBDDialog::OnAdvanced(wxCommandEvent& event)
     dlg->Destroy();
 }
 
-void mmBDDialog::OnCategs(wxCommandEvent& event)
+void mmBDDialog::OnCategs(wxCommandEvent& /*event*/)
 {
    if (cSplit_->GetValue())
    {
@@ -736,7 +736,7 @@ void mmBDDialog::OnCategs(wxCommandEvent& event)
    }
 }
 
-void mmBDDialog::OnTransTypeChanged(wxCommandEvent& event)
+void mmBDDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
 {
     updateControlsForTransType();
 }
@@ -782,7 +782,7 @@ void mmBDDialog::updateControlsForTransType()
     }
 }
 
-void mmBDDialog::OnOk(wxCommandEvent& event)
+void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
 {
     mmBEGINSQL_LITE_EXCEPTION;
     wxString transCode = wxT(""); 
@@ -963,8 +963,7 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
         st.Bind(++i, nextOccurDate);
         st.Bind(++i, numRepeats);
 
-        bool ok = st.GetParamCount() == i;
-        wxASSERT(ok);
+        wxASSERT(st.GetParamCount() == i);
 
         st.ExecuteUpdate();
 		int transID = db_->GetLastRowId().ToLong();
@@ -1025,8 +1024,7 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
         st.Bind(++i, numRepeats);
         st.Bind(++i, bdID_);
 
-        bool ok = st.GetParamCount() == i;
-        wxASSERT(ok);
+        wxASSERT(st.GetParamCount() == i);
 
         st.ExecuteUpdate();
         st.Finalize();
@@ -1094,7 +1092,7 @@ void mmBDDialog::OnOk(wxCommandEvent& event)
     EndModal(wxID_OK);
 }
 
-void mmBDDialog::OnSplitChecked(wxCommandEvent& event)
+void mmBDDialog::OnSplitChecked(wxCommandEvent& /*event*/)
 {
   categID_ = -1;
   subcategID_ = -1;
