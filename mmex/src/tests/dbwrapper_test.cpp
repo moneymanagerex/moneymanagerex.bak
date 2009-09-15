@@ -58,8 +58,7 @@ wxSQLite3Database& getDb()
     {
         std::wstring path = getDbPath();
         
-        int rc = _unlink(utils::asString(path.c_str()).c_str());
-        CHECK(!rc);
+        _unlink(utils::asString(path.c_str()).c_str());
 
         db.Open(path.c_str());
         CHECK(db.IsOpen());
