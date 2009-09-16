@@ -31,6 +31,7 @@ const wxString g_BudgetYear = wxT("2009");
 const wxString g_CategName = wxT("new category");
 const wxString g_SubCategName= wxT("new subcategory");
 const wxString g_CurrencyName = wxT("US DOLLAR");
+const wxString g_PayeeName = wxT("Payee #1");
 //----------------------------------------------------------------------------
 
 struct SQLiteInit
@@ -498,6 +499,158 @@ TEST(getInfoSettingValue)
     mmDBWrapper::setInfoSettingValue(&db, name, defVal);
     s = mmDBWrapper::getInfoSettingValue(&db, name, wxT(""));
     CHECK(s == defVal);
+}
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+
+TEST(addPayee)
+{
+    wxSQLite3Database &db = getDb();
+
+    bool added = mmDBWrapper::addCategory(&db, g_CategName);
+    CHECK(added);
+
+    int cat_id = mmDBWrapper::getCategoryID(&db, g_CategName);
+    CHECK(cat_id > 0);
+
+    added = mmDBWrapper::addSubCategory(&db, cat_id, g_SubCategName);
+    CHECK(added);
+
+    int sc_id = mmDBWrapper::getSubCategoryID(&db, cat_id, g_SubCategName);
+    CHECK(sc_id > 0);
+
+    // --
+
+    mmDBWrapper::addPayee(&db, g_PayeeName, cat_id, sc_id);
+}
+//----------------------------------------------------------------------------
+
+TEST(getPayeeID)
+{
+    wxSQLite3Database &db = getDb();
+
+    int cat_id = mmDBWrapper::getCategoryID(&db, g_CategName);
+    CHECK(cat_id > 0);
+
+    int sc_id = mmDBWrapper::getSubCategoryID(&db, cat_id, g_SubCategName);
+    CHECK(sc_id > 0);
+
+    // --
+
+    int id = 0;
+    int cat = 0;
+    int subc = 0;
+
+    bool ok = mmDBWrapper::getPayeeID(&db, g_PayeeName, id, cat, subc);
+    CHECK(ok);
+    CHECK(id > 0);
+    CHECK(cat > 0);
+    CHECK(subc > 0);
+
+    // --
+
+    ok = mmDBWrapper::getPayeeID(&db, wxT("bad payee name"), id, cat, subc);
+    CHECK(!ok);
+}
+//----------------------------------------------------------------------------
+
+TEST(getPayee)
+{
+    wxSQLite3Database &db = getDb();
+
+    int id = 0;
+    int cat = 0;
+    int subc = 0;
+
+    bool ok = mmDBWrapper::getPayeeID(&db, g_PayeeName, id, cat, subc);
+    CHECK(ok);
+
+    // --
+
+    int cat2 = 0;
+    int subc2 = 0;
+    wxString name = mmDBWrapper::getPayee(&db, id, cat2, subc2);
+    CHECK(name == g_PayeeName);
+    CHECK(cat2 == cat);
+    CHECK(subc2 == subc);
+
+    // --
+
+    name = mmDBWrapper::getPayee(&db, 0, cat, subc);
+    CHECK(name.empty());
+}
+//----------------------------------------------------------------------------
+
+TEST(updatePayee)
+{
+    wxSQLite3Database &db = getDb();
+
+    int id = 0;
+    int cat = 0;
+    int subc = 0;
+
+    bool ok = mmDBWrapper::getPayeeID(&db, g_PayeeName, id, cat, subc);
+    CHECK(ok);
+
+    // --
+
+    const wxString new_name = wxT("new payee name");
+    ok = mmDBWrapper::updatePayee(&db, new_name, id, cat, -1);
+    CHECK(ok);
+
+    // --
+
+    int subc2 = 0;
+    wxString name = mmDBWrapper::getPayee(&db, id, cat, subc2);
+    CHECK(name == new_name);
+    CHECK(subc2 == -1);
+
+    // restore
+
+    ok = mmDBWrapper::updatePayee(&db, g_PayeeName, id, cat, subc);
+    CHECK(ok);
+}
+//----------------------------------------------------------------------------
+
+TEST(getAmountForPayee)
+{
+    wxSQLite3Database &db = getDb();
+
+    int id = 0;
+    int cat = 0;
+    int subc = 0;
+
+    bool ok = mmDBWrapper::getPayeeID(&db, g_PayeeName, id, cat, subc);
+    CHECK(ok);
+
+    // --
+
+    const wxDateTime dt = wxDateTime::Now();
+    double amt = mmDBWrapper::getAmountForPayee(&db, id, true, dt, dt);
+    CHECK(amt == 0.0);
+}
+//----------------------------------------------------------------------------
+
+TEST(deletePayeeWithConstraints)
+{
+    wxSQLite3Database &db = getDb();
+
+    int id = 0;
+    int cat = 0;
+    int subc = 0;
+
+    bool ok = mmDBWrapper::getPayeeID(&db, g_PayeeName, id, cat, subc);
+    CHECK(ok);
+
+    // --
+
+    ok = mmDBWrapper::deletePayeeWithConstraints(&db, id);
+    CHECK(ok);
+
+    // --
+
+    ok = mmDBWrapper::deletePayeeWithConstraints(&db, 0);
+    CHECK(ok); // returns true even for wrong id
 }
 //----------------------------------------------------------------------------
 
