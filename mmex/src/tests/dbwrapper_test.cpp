@@ -30,6 +30,7 @@ namespace
 const wxString g_BudgetYear = wxT("2009");
 const wxString g_CategName = wxT("new category");
 const wxString g_SubCategName= wxT("new subcategory");
+const wxString g_CurrencyName = wxT("US DOLLAR");
 //----------------------------------------------------------------------------
 
 struct SQLiteInit
@@ -376,6 +377,127 @@ TEST(deleteCategoryWithConstraints)
 
     bool ok = mmDBWrapper::deleteCategoryWithConstraints(&db, cat_id);
     CHECK(ok);
+}
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+
+TEST(getCurrencyID)
+{
+    wxSQLite3Database &db = getDb();
+
+    int id = mmDBWrapper::getCurrencyID(&db, g_CurrencyName);
+    CHECK(id > 0);
+
+    id = mmDBWrapper::getCurrencyID(&db, wxT("unknown currency"));
+    CHECK(id == -1);
+}
+//----------------------------------------------------------------------------
+
+TEST(getCurrencyName)
+{
+    wxSQLite3Database &db = getDb();
+
+    int id = mmDBWrapper::getCurrencyID(&db, g_CurrencyName);
+    CHECK(id > 0);
+
+    wxString name = mmDBWrapper::getCurrencyName(&db, id);
+    CHECK(name == g_CurrencyName);
+
+    // --
+
+    name = mmDBWrapper::getCurrencyName(&db, -1);
+    CHECK(name.empty());
+}
+//----------------------------------------------------------------------------
+
+TEST(setBaseCurrencySettings)
+{
+    wxSQLite3Database &db = getDb();
+
+    int id = mmDBWrapper::getCurrencyID(&db, g_CurrencyName);
+    CHECK(id > 0);
+
+    mmDBWrapper::setBaseCurrencySettings(&db, id);
+    
+    int base_id = mmDBWrapper::getBaseCurrencySettings(&db);
+    CHECK(base_id == id);
+}
+//----------------------------------------------------------------------------
+
+TEST(getBaseCurrencySettings)
+{
+    wxSQLite3Database &db = getDb();
+
+    int id = mmDBWrapper::getCurrencyID(&db, g_CurrencyName);
+    CHECK(id > 0);
+
+    int base_id = mmDBWrapper::getBaseCurrencySettings(&db);
+    CHECK(base_id == id);
+}
+//----------------------------------------------------------------------------
+
+TEST(loadBaseCurrencySettings)
+{
+    wxSQLite3Database &db = getDb();
+
+    mmDBWrapper::loadBaseCurrencySettings(&db);
+    CHECK(true);
+}
+//----------------------------------------------------------------------------
+
+TEST(getCurrencyBaseConvRate)
+{
+    wxSQLite3Database &db = getDb();
+
+    int id = mmDBWrapper::getCurrencyID(&db, g_CurrencyName);
+    CHECK(id > 0);
+
+    double rate = mmDBWrapper::getCurrencyBaseConvRateForId(&db, id);
+    CHECK(rate != 0.0);
+}
+//----------------------------------------------------------------------------
+
+TEST(loadSettings)
+{
+    wxSQLite3Database &db = getDb();
+
+    int id = mmDBWrapper::getCurrencyID(&db, g_CurrencyName);
+    CHECK(id > 0);
+
+    mmDBWrapper::loadSettings(&db, id);
+}
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+
+TEST(setInfoSettingValue)
+{
+    wxSQLite3Database &db = getDb();
+
+    const wxString name = wxT("settings name");
+    const wxString val = wxT("settings value");
+
+    mmDBWrapper::setInfoSettingValue(&db, name, val);
+
+    wxString s = mmDBWrapper::getInfoSettingValue(&db, name, wxT(""));
+    CHECK(s == val);
+}
+//----------------------------------------------------------------------------
+
+TEST(getInfoSettingValue)
+{
+    wxSQLite3Database &db = getDb();
+
+    const wxString name = wxT("wrong name");
+    const wxString defVal = wxT("default value");
+
+    wxString s = mmDBWrapper::getInfoSettingValue(&db, name, defVal);
+    CHECK(s == defVal);
+
+    // --
+
+    mmDBWrapper::setInfoSettingValue(&db, name, defVal);
+    s = mmDBWrapper::getInfoSettingValue(&db, name, wxT(""));
+    CHECK(s == defVal);
 }
 //----------------------------------------------------------------------------
 
