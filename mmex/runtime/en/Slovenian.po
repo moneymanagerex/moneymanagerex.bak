@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-09-15 12:53+0300\n"
-"PO-Revision-Date: 2009-09-15 12:56+0300\n"
-"Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
+"PO-Revision-Date: 2009-09-16 09:52+0100\n"
+"Last-Translator: Gregor Meglic <gregor.meglic@gmail.com>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -59,7 +59,7 @@ msgstr "Kreiraj novo bazo podatkov"
 
 #: src/appstartdialog.cpp:144
 msgid "Create a new database file to get started"
-msgstr "Kreiraj novo bazo podatkov da boste začeli"
+msgstr "Kreiraj novo bazo podatkov za pričetek dela"
 
 #: src/appstartdialog.cpp:148
 msgid "Open Existing Database"
@@ -83,7 +83,7 @@ msgstr "Za več informacij obiščite spletno stran"
 
 #: src/appstartdialog.cpp:161
 msgid "Open the Money Manager Ex website for latest news, updates etc"
-msgstr "Odpritee Money Manager Ex spletno stran za zadnje novice, update ipd."
+msgstr "Odprite Money Manager Ex spletno stran za zadnje novice, update ipd."
 
 #: src/appstartdialog.cpp:168
 msgid "Show this window next time "
@@ -259,9 +259,8 @@ msgid "Type"
 msgstr "Vrsta"
 
 #: src/assetspanel.cpp:179
-#, fuzzy
 msgid "&New"
-msgstr "Novo"
+msgstr "&Novo"
 
 #: src/assetspanel.cpp:181
 msgid "New Asset"
@@ -269,9 +268,8 @@ msgstr "Nova lastnina"
 
 #: src/assetspanel.cpp:184
 #: src/categdialog.cpp:162
-#, fuzzy
 msgid "&Edit"
-msgstr "Uredi"
+msgstr "&Uredi"
 
 #: src/assetspanel.cpp:186
 msgid "Edit Asset"
@@ -279,9 +277,8 @@ msgstr "Uredi lastnino"
 
 #: src/assetspanel.cpp:189
 #: src/categdialog.cpp:167
-#, fuzzy
 msgid "&Delete"
-msgstr "Izbriši"
+msgstr "&Izbriši"
 
 #: src/assetspanel.cpp:191
 msgid "Delete Asset"
@@ -407,7 +404,7 @@ msgstr "Določi število ponavljanj. Posti prazno, če se ponavlja neskončno."
 
 #: src/billsdepositsdialog.cpp:344
 msgid "Transaction Details"
-msgstr "Detalji transakcije"
+msgstr "Podrobnosti transakcije"
 
 #: src/billsdepositsdialog.cpp:353
 msgid "Transaction Type"
@@ -612,36 +609,32 @@ msgid "Remaining Days"
 msgstr "Preostalo dni"
 
 #: src/billsdepositspanel.cpp:210
-#, fuzzy
 msgid "&New Series"
-msgstr "Novo ponavljanje"
+msgstr "&Novo ponavljanje"
 
 #: src/billsdepositspanel.cpp:212
 msgid "New Bills && Deposit Series"
 msgstr "Novo ponavljanje Računov && Vplačil"
 
 #: src/billsdepositspanel.cpp:215
-#, fuzzy
 msgid "&Edit Series"
-msgstr "Uredi ponavljanja"
+msgstr "&Uredi ponavljanja"
 
 #: src/billsdepositspanel.cpp:217
 msgid "Edit Bills && Deposit Series"
 msgstr "Uredi ponavljanja Računov && Vplačil"
 
 #: src/billsdepositspanel.cpp:220
-#, fuzzy
 msgid "&Delete Series"
-msgstr "Izbriši ponavljanja"
+msgstr "&Izbriši ponavljanja"
 
 #: src/billsdepositspanel.cpp:222
 msgid "Delete Bills && Deposit Series"
 msgstr "Izbriši ponavljanja Računov && Vplačil"
 
 #: src/billsdepositspanel.cpp:225
-#, fuzzy
 msgid "Enter &Transaction"
-msgstr "Vnesi transakcijo"
+msgstr "Vnesi &transakcijo"
 
 #: src/billsdepositspanel.cpp:227
 msgid "Enter Next Bills && Deposit Occurrence"
@@ -774,18 +767,16 @@ msgid "Estimated Expenses: %s Actual Expenses:  %s"
 msgstr "Predvideni izdatki: %s Dejanski izdatki: %s"
 
 #: src/budgetyeardialog.cpp:116
-#, fuzzy
 msgid "&Add Budget Year"
-msgstr "Dodaj proračunsko leto"
+msgstr "&Dodaj proračunsko leto"
 
 #: src/budgetyeardialog.cpp:119
 msgid "Add a new budget year"
 msgstr "Dodaj novo proračunsko leto"
 
 #: src/budgetyeardialog.cpp:122
-#, fuzzy
 msgid "&Delete Budget Year"
-msgstr "Izbriši proračunsko leto"
+msgstr "&Izbriši proračunsko leto"
 
 #: src/budgetyeardialog.cpp:124
 msgid "Delete existing budget year"
@@ -825,9 +816,8 @@ msgid "Enter the name of the category to add or edit here"
 msgstr "Vnesi ime kategorije katero dodajaš ali urejaš"
 
 #: src/categdialog.cpp:157
-#, fuzzy
 msgid "&Add"
-msgstr "Dodaj"
+msgstr "&Dodaj"
 
 #: src/categdialog.cpp:159
 msgid "Add a new category"
@@ -842,9 +832,8 @@ msgid "Delete an existing category. The category cannot be used by existing tran
 msgstr "Izbriši obstoječo kategorijo. Kategorija ne sme biti uporabljena v obstoječih transakcijah."
 
 #: src/categdialog.cpp:175
-#, fuzzy
 msgid "&Select"
-msgstr "Izberi"
+msgstr "&Izberi"
 
 #: src/categdialog.cpp:177
 msgid "Select the currently selected category as the selected category for the transaction"
@@ -931,14 +920,12 @@ msgid "1234567.89"
 msgstr "1234567.89"
 
 #: src/currencydialog.cpp:314
-#, fuzzy
 msgid "&Update"
-msgstr "Posodobitev"
+msgstr "&Posodobitev"
 
 #: src/currencydialog.cpp:318
-#, fuzzy
 msgid "&Close"
-msgstr "Zapri"
+msgstr "&Zapri"
 
 #: src/currencydialog.cpp:355
 msgid "Base Conversion Rate should be greater than 0.0"
@@ -949,19 +936,16 @@ msgid "Custom SQL Query"
 msgstr "Privzeta SQL poizvedba"
 
 #: src/customsqldialog.cpp:123
-#, fuzzy
 msgid "&Load SQL"
-msgstr "Naloži SQL"
+msgstr "&Naloži SQL"
 
 #: src/customsqldialog.cpp:128
-#, fuzzy
 msgid "&Save SQL"
-msgstr "Shrani SQL"
+msgstr "&Shrani SQL"
 
 #: src/customsqldialog.cpp:133
-#, fuzzy
 msgid "&Run Query"
-msgstr "Zaženi poizvedbo"
+msgstr "&Zaženi poizvedbo"
 
 #: src/customsqldialog.cpp:180
 msgid "Unable to open file."
@@ -981,89 +965,84 @@ msgstr "Opozorilo"
 
 #: src/dbwrapper.cpp:111
 msgid "Telephone"
-msgstr ""
+msgstr "Telefon"
 
 #: src/dbwrapper.cpp:112
 msgid "Electricity"
-msgstr ""
+msgstr "Elektrika"
 
 #: src/dbwrapper.cpp:113
 #: src/dbwrapper.cpp:148
 msgid "Gas"
-msgstr ""
+msgstr "Plin"
 
 #: src/dbwrapper.cpp:114
-#, fuzzy
 msgid "Internet"
-msgstr "Investicije"
+msgstr "Internet"
 
 #: src/dbwrapper.cpp:115
-#, fuzzy
 msgid "Rent"
-msgstr "Poročilo"
+msgstr "Najem"
 
 #: src/dbwrapper.cpp:116
 msgid "Cable TV"
-msgstr ""
+msgstr "Kabelska TV"
 
 #: src/dbwrapper.cpp:117
-#, fuzzy
 msgid "Water"
-msgstr "Datum"
+msgstr "Voda"
 
 #: src/dbwrapper.cpp:121
 msgid "Bills"
-msgstr ""
+msgstr "Položnice"
 
 #: src/dbwrapper.cpp:126
 msgid "Groceries"
-msgstr ""
+msgstr "Živila"
 
 #: src/dbwrapper.cpp:127
 msgid "Dining out"
-msgstr ""
+msgstr "Gostilne, restavracije"
 
 #: src/dbwrapper.cpp:131
 msgid "Food"
-msgstr ""
+msgstr "Hrana"
 
 #: src/dbwrapper.cpp:136
-#, fuzzy
 msgid "Movies"
-msgstr "Pomakni navzgor"
+msgstr "Filmi"
 
 #: src/dbwrapper.cpp:137
 msgid "Video Rental"
-msgstr ""
+msgstr "Izposoja filmov"
 
 #: src/dbwrapper.cpp:138
 msgid "Magazines"
-msgstr ""
+msgstr "Revije, časopisi"
 
 #: src/dbwrapper.cpp:142
 msgid "Leisure"
-msgstr ""
+msgstr "Prosti čas"
 
 #: src/dbwrapper.cpp:147
 msgid "Maintenance"
-msgstr ""
+msgstr "Vzdrževanje"
 
 #: src/dbwrapper.cpp:149
-#, fuzzy
 msgid "Parking"
-msgstr "Opozorilo"
+msgstr "Parkirnina"
 
 #: src/dbwrapper.cpp:150
 msgid "Registration"
-msgstr ""
+msgstr "Registracija"
 
 #: src/dbwrapper.cpp:159
 msgid "Books"
-msgstr ""
+msgstr "Knjige"
 
 #: src/dbwrapper.cpp:160
 msgid "Tuition"
-msgstr ""
+msgstr "Šolnine"
 
 #: src/dbwrapper.cpp:161
 #: src/dbwrapper.cpp:172
@@ -1073,133 +1052,120 @@ msgstr "Ostalo"
 
 #: src/dbwrapper.cpp:165
 msgid "Education"
-msgstr ""
+msgstr "Izobraževanje"
 
 #: src/dbwrapper.cpp:170
-#, fuzzy
 msgid "Clothing"
-msgstr "Preverjanje"
+msgstr "Obleka"
 
 #: src/dbwrapper.cpp:171
 msgid "Furnishing"
-msgstr ""
+msgstr "Notranja oprema"
 
 #: src/dbwrapper.cpp:176
 msgid "Homeneeds"
-msgstr ""
+msgstr "Gospodinjstvo"
 
 #: src/dbwrapper.cpp:181
 #: src/dbwrapper.cpp:197
-#, fuzzy
 msgid "Health"
-msgstr "Naloženo pri"
+msgstr "Zdravje"
 
 #: src/dbwrapper.cpp:182
-#, fuzzy
 msgid "Dental"
-msgstr "Splošno"
+msgstr "Zobna"
 
 #: src/dbwrapper.cpp:183
 msgid "Eyecare"
-msgstr ""
+msgstr "Okolist"
 
 #: src/dbwrapper.cpp:184
 msgid "Physician"
-msgstr ""
+msgstr "Zdravnik"
 
 #: src/dbwrapper.cpp:185
-#, fuzzy
 msgid "Prescriptions"
-msgstr "Transakcije"
+msgstr "Recepti"
 
 #: src/dbwrapper.cpp:189
 msgid "Healthcare"
-msgstr ""
+msgstr "Zdravstvo"
 
 #: src/dbwrapper.cpp:194
-#, fuzzy
 msgid "Auto"
-msgstr "za"
+msgstr "Avto"
 
 #: src/dbwrapper.cpp:195
 msgid "Life"
-msgstr ""
+msgstr "Življenje"
 
 #: src/dbwrapper.cpp:196
-#, fuzzy
 msgid "Home"
-msgstr "Osnovna stran"
+msgstr "Dom"
 
 #: src/dbwrapper.cpp:201
 msgid "Insurance"
-msgstr ""
+msgstr "Zavarovanje"
 
 #: src/dbwrapper.cpp:206
 msgid "Travel"
-msgstr ""
+msgstr "Potovanja"
 
 #: src/dbwrapper.cpp:207
-#, fuzzy
 msgid "Lodging"
-msgstr "Izdelava proračuna"
+msgstr "Nastanitev"
 
 #: src/dbwrapper.cpp:208
 msgid "Sightseeing"
-msgstr ""
+msgstr "Znamenitosti"
 
 #: src/dbwrapper.cpp:212
-#, fuzzy
 msgid "Vacation"
-msgstr "Navigacija"
+msgstr "Počitnice"
 
 #: src/dbwrapper.cpp:217
-#, fuzzy
 msgid "Income Tax"
-msgstr "Prihodki"
+msgstr "Prejeti davki"
 
 #: src/dbwrapper.cpp:218
 msgid "House Tax"
-msgstr ""
+msgstr "Davek na napremičnine"
 
 #: src/dbwrapper.cpp:219
 msgid "Water Tax"
-msgstr ""
+msgstr "Vodni davek"
 
 #: src/dbwrapper.cpp:224
 msgid "Taxes"
-msgstr ""
+msgstr "Davki"
 
 #: src/dbwrapper.cpp:228
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Razno"
 
 #: src/dbwrapper.cpp:229
 msgid "Gifts"
-msgstr ""
+msgstr "Darila"
 
 #: src/dbwrapper.cpp:234
-#, fuzzy
 msgid "Salary"
-msgstr "Povzetek"
+msgstr "Plača"
 
 #: src/dbwrapper.cpp:235
 msgid "Reimbursement/Refunds"
-msgstr ""
+msgstr "Poplačila/Vračila"
 
 #: src/dbwrapper.cpp:236
-#, fuzzy
 msgid "Investment Income"
-msgstr "Investicije"
+msgstr "Investicijski prihodki"
 
 #: src/dbwrapper.cpp:244
-#, fuzzy
 msgid "Other Income"
-msgstr "Prihodki"
+msgstr "Ostali prihodki"
 
 #: src/dbwrapper.cpp:245
-#, fuzzy
 msgid "Other Expenses"
-msgstr "Izdatki"
+msgstr "Ostali izdatki"
 
 #: src/filtertransdialog.cpp:201
 msgid "Specify Account"
@@ -1306,9 +1272,8 @@ msgid "View Duplicate Transactions"
 msgstr "Prikaži podvojene transakcije"
 
 #: src/mmcheckingpanel.cpp:230
-#, fuzzy
 msgid "View Transactions from today"
-msgstr "Prikaži transakcije zadnjih 30 dni"
+msgstr "Prikaži današnje transakcije"
 
 #: src/mmcheckingpanel.cpp:231
 msgid "View Transactions from last 30 days"
@@ -1409,9 +1374,8 @@ msgstr "Pregled neusklajenih transakcij"
 
 #: src/mmcheckingpanel.cpp:788
 #: src/mmcheckingpanel.cpp:843
-#, fuzzy
 msgid "Viewing transactions from today"
-msgstr "Pregled transakcij zadnjih 30 dni"
+msgstr "Pregled današnjih transakcij"
 
 #: src/mmcheckingpanel.cpp:792
 #: src/mmcheckingpanel.cpp:848
@@ -1818,23 +1782,20 @@ msgid "Import from MMEX CSV"
 msgstr "Uvoz iz MMEX CSV"
 
 #: src/mmex.cpp:2042
-#, fuzzy
 msgid "MM.&NET CSV Files"
-msgstr "&MM.NET CSV Datoteke"
+msgstr "MM.&NET CSV Datoteke"
 
 #: src/mmex.cpp:2042
 msgid "Import from MM.NET CSV"
 msgstr "Uvoz iz MM.NET CSV"
 
 #: src/mmex.cpp:2044
-#, fuzzy
 msgid "&Import"
-msgstr "Uvoz"
+msgstr "&Uvoz"
 
 #: src/mmex.cpp:2050
-#, fuzzy
 msgid "Page Set&up..."
-msgstr "Nastavitve strani..."
+msgstr "Nastavitve &strani..."
 
 #: src/mmex.cpp:2050
 msgid "Setup page printing options"
@@ -1842,27 +1803,24 @@ msgstr "Nastavitve tiskanja strani"
 
 #: src/mmex.cpp:2056
 #: src/mmex.cpp:2062
-#, fuzzy
 msgid "Current &View"
-msgstr "Trenutni pogled"
+msgstr "Trenutni &pogled"
 
 #: src/mmex.cpp:2056
 msgid "Preview current report"
 msgstr "Predogled trenutnega poročila"
 
 #: src/mmex.cpp:2058
-#, fuzzy
 msgid "Print Pre&view..."
-msgstr "Predogled tiskanja..."
+msgstr "Pred&ogled tiskanja..."
 
 #: src/mmex.cpp:2062
 msgid "Print current report"
 msgstr "Tiskaj trenutno poročilo"
 
 #: src/mmex.cpp:2065
-#, fuzzy
 msgid "&Print..."
-msgstr "Tiskanje..."
+msgstr "&Tiskanje..."
 
 #: src/mmex.cpp:2070
 msgid "E&xit\tAlt-X"
@@ -1881,9 +1839,8 @@ msgid "Show/Hide the toolbar"
 msgstr "Prikaži/Skrij orodno vrstico"
 
 #: src/mmex.cpp:2079
-#, fuzzy
 msgid "&Navigation"
-msgstr "Navigacija"
+msgstr "&Navigacija"
 
 #: src/mmex.cpp:2079
 msgid "Show/Hide the Navigation tree control"
@@ -1934,9 +1891,8 @@ msgid "Organize Payees"
 msgstr "Uredi prejemnike"
 
 #: src/mmex.cpp:2127
-#, fuzzy
 msgid "Or&ganize Currency"
-msgstr "Uredi valute"
+msgstr "Uredi &valute"
 
 #: src/mmex.cpp:2127
 #: src/mmex.cpp:2271
@@ -1944,41 +1900,36 @@ msgid "Organize Currency"
 msgstr "Uredi valute"
 
 #: src/mmex.cpp:2134
-#, fuzzy
 msgid "&Budget Setup"
-msgstr "Nastavitve proračuna"
+msgstr "&Nastavitve proračuna"
 
 #: src/mmex.cpp:2134
 msgid "Budget Setup"
 msgstr "Nastavitve proračuna"
 
 #: src/mmex.cpp:2142
-#, fuzzy
 msgid "&Repeating Transactions"
-msgstr "Ponavljajoče transakcije"
+msgstr "&Ponavljajoče transakcije"
 
 #: src/mmex.cpp:2142
 msgid "Bills && Deposits"
 msgstr "Računi && Vplačila"
 
 #: src/mmex.cpp:2150
-#, fuzzy
 msgid "&Stock Investments"
-msgstr "Investicije v delnice"
+msgstr "&Investicije v delnice"
 
 #: src/mmex.cpp:2150
 msgid "Stock Investments"
 msgstr "Investicije v delnice"
 
 #: src/mmex.cpp:2158
-#, fuzzy
 msgid "&Assets"
-msgstr "Premoženje"
+msgstr "&Premoženje"
 
 #: src/mmex.cpp:2166
-#, fuzzy
 msgid "&Transaction Filter"
-msgstr "Filter transakcij"
+msgstr "&Filter transakcij"
 
 #: src/mmex.cpp:2166
 msgid "Transaction Filter"
@@ -2001,27 +1952,24 @@ msgid "Show the Help file"
 msgstr "Prikaži pomoč"
 
 #: src/mmex.cpp:2185
-#, fuzzy
 msgid "&Show App Start Dialog"
-msgstr "Pokaži začetno okno aplikacije"
+msgstr "&Pokaži začetno okno aplikacije"
 
 #: src/mmex.cpp:2185
 msgid "App Start Dialog"
 msgstr "Začetno okno aplikacije"
 
 #: src/mmex.cpp:2192
-#, fuzzy
 msgid "Convert Encrypted &DB"
-msgstr "Pretvori kodirano PB"
+msgstr "Pretvori kodirano &PB"
 
 #: src/mmex.cpp:2193
 msgid "Convert Encrypted DB to Non-Encrypted DB"
 msgstr "Pretvori kodirano PB v nekodirano PB"
 
 #: src/mmex.cpp:2199
-#, fuzzy
 msgid "Online &Update Currency Rate"
-msgstr "Online osvežitev stopnje valute"
+msgstr "Online &osvežitev stopnje valute"
 
 #: src/mmex.cpp:2200
 msgid "Online update currency rate"
@@ -2036,18 +1984,16 @@ msgid "Check For Updates"
 msgstr "Preveri posodobitve"
 
 #: src/mmex.cpp:2216
-#, fuzzy
 msgid "&Report Issues or Feedback"
-msgstr "Prijavi napako ali pošlji povratno informacijo"
+msgstr "&Prijavi napako ali pošlji povratno informacijo"
 
 #: src/mmex.cpp:2216
 msgid "Send email through the mailing list to report issues with the software."
 msgstr "Pošlji e-mail na mail-seznam za prijavo težav s programom"
 
 #: src/mmex.cpp:2224
-#, fuzzy
 msgid "Be &notified of new releases"
-msgstr "Prijavi se za prejem obvestil o novih različicah"
+msgstr "Prijavi se &za prejem obvestil o novih različicah"
 
 #: src/mmex.cpp:2224
 msgid "Sign up for the announcement mailing list"
@@ -2213,31 +2159,31 @@ msgstr "Ne morem do podatkov iz WWW!"
 
 #: src/mmex.cpp:2985
 msgid "Incorrect XML data (#1)!"
-msgstr ""
+msgstr "Napačni XML podatki (#1)!"
 
 #: src/mmex.cpp:2994
 msgid "Incorrect XML data (#2)!"
-msgstr ""
+msgstr "Napačni XML podatki (#2)!"
 
 #: src/mmex.cpp:3001
 msgid "Incorrect XML data (#3)!"
-msgstr ""
+msgstr "Napačni XML podatki (#3)!"
 
 #: src/mmex.cpp:3006
 msgid "Incorrect XML data (#4)!"
-msgstr ""
+msgstr "Napačni XML podatki (#4)!"
 
 #: src/mmex.cpp:3011
 msgid "Incorrect XML data (#5)!"
-msgstr ""
+msgstr "Napačni XML podatki (#5)!"
 
 #: src/mmex.cpp:3018
 msgid "Incorrect XML data (#6)!"
-msgstr ""
+msgstr "Napačni XML podatki (#6)!"
 
 #: src/mmex.cpp:3023
 msgid "Incorrect XML data (#7)!"
-msgstr ""
+msgstr "Napačni XML podatki (#6)!"
 
 #: src/mmex.cpp:3066
 msgid "Could not find base currency symbol!"
@@ -2541,9 +2487,8 @@ msgid "View UnReconciled"
 msgstr "Poglej Neusklajene"
 
 #: src/optionsdialog.cpp:533
-#, fuzzy
 msgid "View Today"
-msgstr "Poglej 30 dni"
+msgstr "Poglej današnje"
 
 #: src/optionsdialog.cpp:534
 msgid "View 30 days"
@@ -2646,9 +2591,8 @@ msgid "Backup database before opening"
 msgstr "Naredite varnostno kopijo baze podatkov preden oprete"
 
 #: src/optionsdialog.cpp:689
-#, fuzzy
 msgid "Select whether to create a .bak file when opening the database file"
-msgstr "Odaberite ali naj se kreira .bak datoteka ko odpirate datoteko baze podatkov"
+msgstr "Izberi ali naj se kreira .bak datoteka ko odpirate datoteko baze podatkov"
 
 #: src/optionsdialog.cpp:696
 msgid "Stock Quote Web Page"
@@ -2691,19 +2635,16 @@ msgid "Colors"
 msgstr "Barve"
 
 #: src/optionsdialog.cpp:768
-#, fuzzy
 msgid "Remember to update currency rate"
-msgstr "Online osvežitev stopnje valute"
+msgstr "Ne pozabi osvežiti stopnje valute"
 
 #: src/optionsdialog.cpp:768
-#, fuzzy
 msgid "Important note"
-msgstr "Uvoz datoteke"
+msgstr "Pomembna opomba"
 
 #: src/payeedialog.cpp:170
-#, fuzzy
 msgid "Find Payee: "
-msgstr "Prejemnik "
+msgstr "Poišči prejemnika"
 
 #: src/payeedialog.cpp:177
 #: src/payeedialog.cpp:203
@@ -2711,9 +2652,8 @@ msgid "Enter the payee name to be added or make edits to an existing payee name"
 msgstr "Vnesite naziv prejemnika katerega dodajate ali uredite naziv obstoječega prejemnika"
 
 #: src/payeedialog.cpp:196
-#, fuzzy
 msgid "Add/Edit Payee: "
-msgstr "Dodajanje prejemnika"
+msgstr "Dodaj/Uredi prejemnika:"
 
 #: src/payeedialog.cpp:211
 msgid "Add a new payee name"
@@ -2849,14 +2789,12 @@ msgid "Invalid Category Entered "
 msgstr "Vnešena napačna kategorija"
 
 #: src/splittransactionsdialog.cpp:146
-#, fuzzy
 msgid "&Remove"
-msgstr "Odstrani"
+msgstr "&Odstrani"
 
 #: src/splittransactionsdialog.cpp:165
-#, fuzzy
 msgid "&Select Category"
-msgstr "Izberi kategorijo"
+msgstr "&Izberi kategorijo"
 
 #: src/stockdialog.cpp:150
 msgid "Stock Investment Details"
@@ -2983,18 +2921,16 @@ msgid "Delete Stock Investment"
 msgstr "Izbriši borzno investicijo"
 
 #: src/stockspanel.cpp:283
-#, fuzzy
 msgid "&Refresh"
-msgstr "Osveži"
+msgstr "&Osveži"
 
 #: src/stockspanel.cpp:285
 msgid "Refresh Stock Prices from Yahoo"
 msgstr "Osveži cene delnic z Yahoo-ja"
 
 #: src/stockspanel.cpp:288
-#, fuzzy
 msgid "&Settings"
-msgstr "Nastavitve"
+msgstr "&Nastavitve"
 
 #: src/stockspanel.cpp:290
 msgid "Change settings for automatic refresh"
@@ -3120,29 +3056,24 @@ msgid "Specify the order of fields in the CSV file"
 msgstr "Določite zaporedje polj v CSV datoteki"
 
 #: src/univcsvdialog.cpp:132
-#, fuzzy
 msgid "Move &Up"
-msgstr "Pomakni navzgor"
+msgstr "Pomakni &navzgor"
 
 #: src/univcsvdialog.cpp:137
-#, fuzzy
 msgid "Move &Down"
-msgstr "Pomakni navzdol"
+msgstr "Pomakni &navzdol"
 
 #: src/univcsvdialog.cpp:173
-#, fuzzy
 msgid "&Load Template"
-msgstr "Naloži predlogo"
+msgstr "&Naloži predlogo"
 
 #: src/univcsvdialog.cpp:178
-#, fuzzy
 msgid "Save &As Template"
-msgstr "Shrani kot predlogo"
+msgstr "Shrani &kot predlogo"
 
 #: src/univcsvdialog.cpp:183
-#, fuzzy
 msgid "&Import File"
-msgstr "Uvoz datoteke"
+msgstr "&Uvoz datoteke"
 
 #: src/univcsvdialog.cpp:240
 msgid "Amount(+/-)"
@@ -3493,9 +3424,8 @@ msgid "to"
 msgstr "za"
 
 #: src/yahoosettingsdialog.cpp:139
-#, fuzzy
 msgid "&Refresh prices every"
-msgstr "Osveži cene vsakih"
+msgstr "&Osveži cene vsakih"
 
 #: src/yahoosettingsdialog.cpp:163
 msgid "minutes while market is open"
