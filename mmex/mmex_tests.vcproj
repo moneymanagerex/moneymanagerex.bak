@@ -92,7 +92,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&quot;$(TargetPath)&quot;"
+				CommandLine="cd $(SolutionDir)\runtime&#x0D;&#x0A;$(TargetPath)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -121,14 +121,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\include;UnitTest++\src;include"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;UnitTest++\src&quot;;include;bugtrap-1.2"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE"
 				ExceptionHandling="2"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="false"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -143,6 +143,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="bugtrap.lib wxmsw28_aui.lib wxzlib.lib wxmsw28_core.lib wxbase28.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib oleacc.lib odbc32.lib wxbase28_net.lib wxmsw28_adv.lib wxpng.lib wxjpeg.lib wxexpat.lib wxregex.lib wxmsw28_html.lib wxbase28_xml.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;bugtrap-1.2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -171,7 +172,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&quot;$(TargetPath)&quot;"
+				CommandLine="cd $(SolutionDir)\runtime&#x0D;&#x0A;$(TargetPath)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
