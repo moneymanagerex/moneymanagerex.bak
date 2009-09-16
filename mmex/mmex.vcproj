@@ -620,6 +620,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\chart.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\currencydialog.h"
 				>
 			</File>

@@ -653,6 +653,16 @@ TEST(deletePayeeWithConstraints)
     CHECK(ok); // returns true even for wrong id
 }
 //----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+
+TEST(getNumAccounts)
+{
+    wxSQLite3Database &db = getDb();
+
+    int cnt = mmDBWrapper::getNumAccounts(&db);
+    CHECK(!cnt);
+}
+//----------------------------------------------------------------------------
 
 } // SUITE
 

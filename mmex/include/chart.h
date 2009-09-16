@@ -8,14 +8,17 @@
 #include <wx/pen.h>
 #include <wx/brush.h>
 #include <wx/colour.h>
+
 #include <limits>
+#include <algorithm> // min, max
 #include <math.h>
 
-// General macros
-#define ABS(x)     ((x) <  0  ?-(x) : (x))
-#define MIN(x,y)   ((x) < (y) ? (x) : (y))
-#define MAX(x,y)   ((x) > (y) ? (x) : (y))
-#define ROUND(x)   ((int) (x + 0.5))
+
+inline int ROUND(double x)
+{
+    return static_cast<int>(ceil(x)); // (int)(x + 0.5)
+}
+
 
 class ChartData
 {
@@ -38,8 +41,7 @@ public:
 	std::vector<float> serie;
 };
 
-#define CHART_LEGEND_FIXED	0
-#define CHART_LEGEND_FLOAT	1
+enum { CHART_LEGEND_FIXED, CHART_LEGEND_FLOAT };
 
 class AbstractChart
 {
@@ -125,12 +127,12 @@ public:
 
 			for (unsigned int i = 0; i < data.size(); i++)
 			{
-				vtotal += ABS(data[i].val);
+				vtotal += fabs(data[i].val);
 			}
 			// normalize 0..100 for percentage charts
 			for (unsigned int i = 0; i < data.size(); i++)
 			{
-				data[i].val = ABS(data[i].val) * 100.0 / vtotal;
+				data[i].val = fabs(data[i].val) * 100.0 / vtotal;
 			}
 		}
 	};
@@ -191,8 +193,7 @@ private:
 	wxBitmap image;
 };
 
-#define PIE_CHART_PERCENT	0
-#define PIE_CHART_ABSOLUT	1
+enum { PIE_CHART_PERCENT, PIE_CHART_ABSOLUT };
 
 class PieChart : public AbstractChart
 {
@@ -335,8 +336,7 @@ private:
 	int mode;
 };
 
-#define BAR_CHART_SIMPLE	0
-#define BAR_CHART_SERIES	1
+enum { BAR_CHART_SIMPLE, BAR_CHART_SERIES };
 
 class BarChart : public AbstractChart
 {
@@ -371,8 +371,8 @@ public:
 
 			for(unsigned int i=0; i<data.size(); i++)
 			{
-				min = MIN(min, data[i].aval);
-				max = MAX(max, data[i].aval);
+                min = std::min(min, data[i].aval);
+				max = std::max(max, data[i].aval);
 			}
 		}
 		else
@@ -385,8 +385,8 @@ public:
 			{
 				for(unsigned int j=0; j<data[i].serie.size(); j++)
 				{
-					min = MIN(min, data[i].serie[j]);
-					max = MAX(max, data[i].serie[j]);
+                    min = std::min(min, data[i].serie[j]);
+					max = std::max(max, data[i].serie[j]);
 				}
 			}
 		}
@@ -395,7 +395,8 @@ public:
 		if(min == max) max = 1.0;
 
 		// get the freq
-		int freq = GetFrequency(ABS((int) ABS(min) + (int) ABS(max)));
+		int fpar = static_cast<int>(fabs(min)) + static_cast<int>(fabs(max));
+        int freq = GetFrequency(abs(fpar));
 
 		if(title != wxT(""))
 		{
@@ -491,8 +492,8 @@ public:
 			dc.DrawLine(originLeft, height - 22, originLeft, 22);
 			// vertical axis labels
 			int y = height - 25;
-			int step = (int) ((height - 50) / ((ABS(min) + ABS(max)) / freq));
-			for(int i= (int) min; i<=max; i += freq)
+			int step = static_cast<int>( (height - 50) / ( (fabs(min) + fabs(max))/freq ) );
+			for(int i= static_cast<int>(min); i<=max; i += freq)
 			{
 				// draw the label
                 ClearFillColour();
@@ -543,7 +544,7 @@ public:
             dc.SetFont(plainFont);
 
             int y = height - 25;
-            int step = (int) ((height - 50) / ((ABS(min) + ABS(max)) / freq));
+            int step = static_cast<int>( (height - 50) / ( (fabs(min) + fabs(max))/freq ));
 
             // horiz axis labels
             if(mode == BAR_CHART_SIMPLE)
@@ -717,4 +718,6 @@ private:
 	int keymode;
 	int mode;
 };
-#endif
+
+#endif // _MM_EX_CHART_H_
+
