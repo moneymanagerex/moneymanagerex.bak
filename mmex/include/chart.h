@@ -16,7 +16,8 @@
 
 inline int ROUND(double x)
 {
-    return static_cast<int>(ceil(x)); // (int)(x + 0.5)
+    double res = floor(x + 0.5);
+    return static_cast<int>(res); // (int)(x + 0.5)
 }
 
 
@@ -48,31 +49,33 @@ class AbstractChart
 public:
 	AbstractChart(int aWidth, int aHeight) : width(aWidth), height(aHeight)
 	{
-        palete[0]  = wxColour(0x00, 0x79, 0xEA);
-        palete[1]  = wxColour(0xee, 0x2A, 0x00);
-        palete[2]  = wxColour(0xF7, 0x97, 0x31);
-        palete[3]  = wxColour(0xBD, 0x7F, 0xAE);
-        palete[4]  = wxColour(0xFF, 0xF3, 0xAB);
-        palete[5]  = wxColour(0x66, 0xAE, 0x3F);
-        palete[6]  = wxColour(0xBB, 0x7F, 0xB8);
-        palete[7]  = wxColour(0x64, 0x91, 0xAA);
-        palete[8]  = wxColour(0xE8, 0xC1, 0x45);
-        palete[9]  = wxColour(0x2B, 0x96, 0xE7);
-        palete[10] = wxColour(0xD2, 0x9A, 0xf7);
-        palete[11] = wxColour(0x8F, 0xEA, 0x7B);
-        palete[12] = wxColour(0xFF, 0xFF, 0x3B);
-        palete[13] = wxColour(0x58, 0xCC, 0xCC);
-        palete[14] = wxColour(0x7A, 0xB3, 0x3E);
-        palete[15] = wxColour(0x42, 0x44, 0x3F);
-        palete[16] = wxColour(0xFC, 0xAC, 0x00);
-        palete[17] = wxColour(0xA2, 0xE1, 0x4A);
-        palete[18] = wxColour(0xa8, 0x62, 0x16);
-        palete[19] = wxColour(0xC3, 0xD9, 0xFF);
-        palete[20] = wxColour(0xC7, 0x98, 0x10);
-
-        palete[21] = wxColour(0x6B, 0xBA, 0x70);
-        palete[22] = wxColour(0xCD, 0xEB, 0x8B);
-        palete[23] = wxColour(0xD0, 0x1F, 0x3C);
+        int i = -1;
+        palete[++i] = wxColour(0x00, 0x79, 0xEA);
+        palete[++i] = wxColour(0xee, 0x2A, 0x00);
+        palete[++i] = wxColour(0xF7, 0x97, 0x31);
+        palete[++i] = wxColour(0xBD, 0x7F, 0xAE);
+        palete[++i] = wxColour(0xFF, 0xF3, 0xAB);
+        palete[++i] = wxColour(0x66, 0xAE, 0x3F);
+        palete[++i] = wxColour(0xBB, 0x7F, 0xB8);
+        palete[++i] = wxColour(0x64, 0x91, 0xAA);
+        palete[++i] = wxColour(0xE8, 0xC1, 0x45);
+        palete[++i] = wxColour(0x2B, 0x96, 0xE7);
+        palete[++i] = wxColour(0xD2, 0x9A, 0xf7);
+        palete[++i] = wxColour(0x8F, 0xEA, 0x7B);
+        palete[++i] = wxColour(0xFF, 0xFF, 0x3B);
+        palete[++i] = wxColour(0x58, 0xCC, 0xCC);
+        palete[++i] = wxColour(0x7A, 0xB3, 0x3E);
+        palete[++i] = wxColour(0x42, 0x44, 0x3F);
+        palete[++i] = wxColour(0xFC, 0xAC, 0x00);
+        palete[++i] = wxColour(0xA2, 0xE1, 0x4A);
+        palete[++i] = wxColour(0xa8, 0x62, 0x16);
+        palete[++i] = wxColour(0xC3, 0xD9, 0xFF);
+        palete[++i] = wxColour(0xC7, 0x98, 0x10);
+        palete[++i] = wxColour(0x6B, 0xBA, 0x70);
+        palete[++i] = wxColour(0xCD, 0xEB, 0x8B);
+        palete[++i] = wxColour(0xD0, 0x1F, 0x3C);
+        
+        wxASSERT(++i == PAL_MAX);
 
 		image = wxBitmap(width, height);
 		dc.SelectObject(image);
@@ -180,7 +183,9 @@ protected:
 protected:
 	std::vector<ChartData> data;
 	std::vector<wxString> serieLabel;
-	wxColour palete[24];
+	
+    enum { PAL_MAX = 24 };
+    wxColour palete[PAL_MAX];
 	
 	wxMemoryDC dc;
 	int width;
@@ -310,7 +315,7 @@ public:
 		for (unsigned int k = 0; k < data.size(); k++)
 		{
 			ClearStrokeColour();
-			SetFillColour(palete[k%24]);
+			SetFillColour(palete[k % PAL_MAX]);
 
 			if (keymode == CHART_LEGEND_FIXED)
 				dc.DrawRectangle(csize + 23, 30 + k * 18, 12, 12);
@@ -608,9 +613,9 @@ public:
             for (unsigned int k = 0; k < data.size(); k++)
 			{
 				ClearStrokeColour();
-				SetFillColour(palete[k%24]);
+				SetFillColour(palete[k % PAL_MAX]);
 
-                int h = (int) (data[k].aval * (height - 50) / (max - min));
+                int h = static_cast<int>( data[k].aval*(height - 50)/(max - min) );
 
 				if(h == 0)
 				{
@@ -661,7 +666,7 @@ public:
                 for (unsigned int j = 0; j < serieLabel.size(); j++)
                 {
                     ClearStrokeColour();
-                    SetFillColour(palete[j%24]);
+                    SetFillColour(palete[j % PAL_MAX]);
 
                     int h = (int) (data[k].serie[j] * (height - 50) / (max - min));
 
