@@ -14,12 +14,15 @@
 		/>
 	</Platforms>
 	<ToolFiles>
+		<ToolFile
+			RelativePath=".\msgfmt.rules"
+		/>
 	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="Debug"
-			IntermediateDirectory="Debug"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC70.vsprops"
 			CharacterSet="2"
@@ -29,6 +32,9 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="msgfmt"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -100,8 +106,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="Release"
-			IntermediateDirectory="Release"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC70.vsprops"
 			CharacterSet="2"
@@ -111,6 +117,9 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="msgfmt"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -199,6 +208,9 @@
 				Name="VCCustomBuildTool"
 			/>
 			<Tool
+				Name="msgfmt"
+			/>
+			<Tool
 				Name="VCXMLDataGeneratorTool"
 			/>
 			<Tool
@@ -281,6 +293,9 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="msgfmt"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -935,6 +950,134 @@
 						PreprocessorDefinitions="_VC80_UPGRADE=0x0700;wxUSE_NO_MANIFEST=1;"
 					/>
 				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Translations"
+			>
+			<File
+				RelativePath=".\runtime\en\bulgarian.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\chinese_chs.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\chinese_zh.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\croatian.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\czech.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\dutch.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\dutch_be.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\english-uk.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\english.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\french.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\german.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\greek.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\hebrew.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\hungarian.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\indonesian.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\italian.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\latvian.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\norwegian.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\polish.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\portuguese.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\portuguese_portugal.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\romanian.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\russian.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\slovak.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\Slovenian.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\spanish.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\swedish.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\tamil.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\turkish.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\ukrainian.po"
+				>
+			</File>
+			<File
+				RelativePath=".\runtime\en\vietnamese.po"
+				>
 			</File>
 		</Filter>
 	</Files>
