@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="mmex_unicode_debug|Win32"
-			OutputDirectory="$(ConfigurationName)\$(ProjectName)"
-			IntermediateDirectory="$(ConfigurationName)\$(ProjectName)"
+			OutputDirectory="$(SolutionDir)\$(ConfigurationName)\$(ProjectName)"
+			IntermediateDirectory="$(SolutionDir)\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="4"
 			CharacterSet="1"
 			>
@@ -82,8 +82,8 @@
 		</Configuration>
 		<Configuration
 			Name="mmex_unicode_release|Win32"
-			OutputDirectory="$(ConfigurationName)\$(ProjectName)"
-			IntermediateDirectory="$(ConfigurationName)\$(ProjectName)"
+			OutputDirectory="$(SolutionDir)\$(ConfigurationName)\$(ProjectName)"
+			IntermediateDirectory="$(SolutionDir)\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="4"
 			CharacterSet="1"
 			WholeProgramOptimization="0"
@@ -144,8 +144,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(ConfigurationName)\$(ProjectName)"
-			IntermediateDirectory="$(ConfigurationName)\$(ProjectName)"
+			OutputDirectory="$(SolutionDir)\$(ConfigurationName)\$(ProjectName)"
+			IntermediateDirectory="$(SolutionDir)\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="4"
 			CharacterSet="2"
 			>
@@ -208,8 +208,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(ConfigurationName)\$(ProjectName)"
-			IntermediateDirectory="$(ConfigurationName)\$(ProjectName)"
+			OutputDirectory="$(SolutionDir)\$(ConfigurationName)\$(ProjectName)"
+			IntermediateDirectory="$(SolutionDir)\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="4"
 			CharacterSet="2"
 			WholeProgramOptimization="0"
