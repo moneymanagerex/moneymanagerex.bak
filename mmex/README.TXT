@@ -34,10 +34,12 @@ Microsoft Windows
 2. Install the Platform SDK and make sure Visual Studio 2008 is correctly setup.
 3. Install wxWidgets 2.8.0 and above in a directory like c:\pgmming\wxwidgets2.8.0 and then create an environment variable WXWIN to point to this directory.
 4. Follow the instructions given by WxWidgets install on how to build it in 4 build modes. Static Ansi Debug, Static Ansi Release, Static Unicode Debug, Static Unicode Release.
-5. Open mmex.vcproj under mmex directory and do a batch build of all modes neceesary
-5. Copy currency.db3 from runtime directory into the appropriate build directories. Now you can run the project to launch the exe.
-6. Static Ansi is used under Windows 95/98/Me
-7. Static Unicode is used under Windows 2000/Windows XP/Windows 2003.
+5. Install GNU GetText for Windows, http://gnuwin32.sourceforge.net/packages/gettext.htm. This software requires to generate binary translation files from .po files.
+   Append path to bin folder of installed software to PATH environment variable (usually "C:\Program Files\GnuWin32\bin").
+6. Open mmex.vcproj under mmex directory and do a batch build of all modes neceesary
+7. Copy currency.db3 from runtime directory into the appropriate build directories. Now you can run the project to launch the exe.
+8. Static Ansi is used under Windows 95/98/Me
+9. Static Unicode is used under Windows 2000/Windows XP/Windows 2003.
 
 Windows Installer Setup
 ------------------------
