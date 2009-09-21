@@ -37,7 +37,7 @@ Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription
 [Files]
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 Source: ..\..\runtime\*; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: ..\..\release\mmexa.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ..\..\Release\mmexa.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [INI]
 
