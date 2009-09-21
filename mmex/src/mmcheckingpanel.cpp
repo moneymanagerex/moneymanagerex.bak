@@ -14,7 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
 
 #include "mmcheckingpanel.h"
 #include "transdialog.h"
@@ -150,16 +150,20 @@ void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
 
 /*******************************************************/
 
-mmCheckingPanel::mmCheckingPanel(mmCoreDB* core,
-                                 wxSQLite3Database* inidb,
-                                 int accountID, wxWindow *parent,
-            wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
-            const wxString& name )
-            : core_(core),
-            db_(core->db_.get()), 
-            accountID_(accountID), 
-            m_imageList(0), 
-            inidb_(inidb)
+mmCheckingPanel::mmCheckingPanel
+(
+    mmCoreDB* core,
+    wxSQLite3Database* inidb,
+    int accountID, wxWindow *parent,
+    wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
+    const wxString& name
+) : 
+    core_(core),
+    db_(core->db_.get()), 
+    inidb_(inidb),
+    listCtrlAccount_(),
+    m_imageList(), 
+    accountID_(accountID)
 {
     wxASSERT(db_);
     

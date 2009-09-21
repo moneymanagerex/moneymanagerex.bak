@@ -14,7 +14,8 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
+
 #include "util.h"
 #include "dbwrapper.h"
 #include "guiid.h"
@@ -151,9 +152,9 @@ void mmPlayTransactionSound(wxSQLite3Database* db_)
 	wxString soundPath = mmGetBaseWorkingPath()+wxT("\\kaching.wav");
 	
 	// Added path for mac app bundles
-	#if defined (__WXMAC__) || defined(__WXOSX__)
+#if defined (__WXMAC__) || defined(__WXOSX__)
 	soundPath = wxT("MMEX.app/Contents/Resources/kaching.wav");
-	#else if defined (__WXGTK__)
+#elif defined (__WXGTK__)
 	soundPath = mmGetBaseWorkingPath()+wxT("//kaching.wav");
 #endif
 	
@@ -1352,33 +1353,31 @@ wxAutoComboBox::~wxAutoComboBox(void)
 
 void wxAutoComboBox::OnKeyUp(wxKeyEvent &event)
 {
-        int nKeyCode = event.GetKeyCode();
-        if ( ((nKeyCode >= 32) && (nKeyCode <= 126)) || ((nKeyCode >= 128) && (nKeyCode <= 254)))
+    int nKeyCode = event.GetKeyCode();
+    
+    if ( ((nKeyCode >= 32) && (nKeyCode <= 126)) || ((nKeyCode >= 128) && (nKeyCode <= 254)))
+    {
+        wxString txtValue = GetValue();
+
+        long start = -1;
+        long end = -1;
+        GetSelection(&start, &end);
+
+        wxString EnteredValue = txtValue.Left(start);
+
+        for (int i = 0; i < static_cast<int>(this->GetCount()); ++i)
         {
-                wxString txtValue = GetValue();
-
-                long start=-1, end=-1;
-                GetSelection(&start, &end);
-
-                wxString EnteredValue = txtValue.Left(start);
-                int Idx = -1;
-                for( size_t i=0; i<this->GetCount(); i++ )
+                if (this->GetString(i).Left(EnteredValue.Length()).CmpNoCase(EnteredValue) == 0)
                 {
-                        if (this->GetString(i).Left(EnteredValue.Length()).CmpNoCase(EnteredValue) == 0)
-                        {
-                                Idx = i;
-                                break;
-                        }                     
-                }
-                if (Idx != -1)
-                {
-                        SetSelection(Idx);
-                        SetSelection(start,GetValue().Length());                       
-                        return;
-                }              
-               
+                    SetSelection(i);
+                    SetSelection(start, static_cast<long>(GetValue().Length()));
+                    return;
+                }                     
+        }              
+           
     }
-        event.Skip(true);
+
+    event.Skip(true);
 }
 #endif // wxUSE_COMBOBOX
 

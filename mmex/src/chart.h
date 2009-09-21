@@ -24,11 +24,11 @@ inline int ROUND(double x)
 class ChartData
 {
 public:
-	ChartData(wxString aKey, float aVal = 0.0) : val(aVal), aval(aVal), key(aKey)
+	ChartData(wxString aKey, float aVal = 0.0) : key(aKey), val(aVal), aval(aVal)
 	{
 	};
 
-	ChartData(wxString aKey, std::vector<float> aSerie) : key(aKey), serie(aSerie)
+	ChartData(wxString aKey, std::vector<float> aSerie) : key(aKey), val(), aval(), serie(aSerie)
 	{
 	};
 	
@@ -181,7 +181,7 @@ protected:
 	};
 
 protected:
-	std::vector<ChartData> data;
+    std::vector<ChartData> data;
 	std::vector<wxString> serieLabel;
 	
     enum { PAL_MAX = 24 };
@@ -527,12 +527,12 @@ public:
                 SetStrokeColour(*wxBLACK);
                 ClearFillColour();
                 
-                for (unsigned int i = 0; i < data.size(); i++) {
+                for (int i = 0; i < static_cast<int>(data.size()); ++i) 
+                {
                     wxString key = data[i].key /* + wxT(" (") + wxString::Format(wxT("%.2f"), data[i].aval) + wxT(")") */;
-                    dc.DrawText(
-                            key,
-                            originLeft + i * (barwidth * serieLabel.size()) + (i + 1) * gap + labelOffset - (dc.GetTextExtent(key).GetWidth() / 2),
-                            height - 10 - dc.GetTextExtent(key).GetHeight());
+                    wxCoord x = originLeft + i * (barwidth * static_cast<int>(serieLabel.size())) + (i + 1) * gap + labelOffset - (dc.GetTextExtent(key).GetWidth() / 2);
+                    wxCoord y = height - 10 - dc.GetTextExtent(key).GetHeight();
+                    dc.DrawText(key, x, y);
                 }
             }
         }
@@ -595,12 +595,12 @@ public:
                 SetStrokeColour(*wxBLACK);
                 ClearFillColour();
 
-                for (unsigned int i = 0; i < data.size(); i++) {
+                for (int i = 0; i < static_cast<int>(data.size()); ++i)
+                {
                     wxString key = data[i].key /* + wxT(" (") + wxString::Format(wxT("%.2f"), data[i].aval) + wxT(")") */;
-                    dc.DrawText(
-                            key,
-                            originLeft + i * (barwidth * serieLabel.size()) + (i + 1) * gap + labelOffset /* - (dc.GetTextExtent(key).GetLength() / 2) */,
-                            height - 10 - dc.GetTextExtent(key).GetHeight());
+                    wxCoord x = originLeft + i * (barwidth * static_cast<int>(serieLabel.size())) + (i + 1) * gap + labelOffset /* - (dc.GetTextExtent(key).GetLength() / 2) */;
+                    wxCoord y = height - 10 - dc.GetTextExtent(key).GetHeight();
+                    dc.DrawText(key, x, y);
                 }
             }
         }
@@ -683,19 +683,15 @@ public:
 					}
                     if(data[k].serie[j] >= 0)
                     {
-                        dc.DrawRectangle(
-                                originLeft + (k * serieLabel.size() + j) * barwidth + (k + 1)*gap,
-                                (height - 25) + zero - h,
-                                barwidth,
-                                h);
+                        wxCoord x = originLeft + (k * static_cast<int>(serieLabel.size()) + j) * barwidth + (k + 1)*gap;
+                        wxCoord y = (height - 25) + zero - h;
+                        dc.DrawRectangle(x, y, barwidth, h);
                     }
                     else
                     {
-                        dc.DrawRectangle(
-                                originLeft + (k * serieLabel.size() + j) * barwidth + (k + 1)*gap,
-                                (height - 25) + zero,
-                                barwidth,
-                                -h);
+                        wxCoord x = originLeft + (k * static_cast<int>(serieLabel.size()) + j) * barwidth + (k + 1)*gap;
+                        wxCoord y = (height - 25) + zero;
+                        dc.DrawRectangle(x, y, barwidth, -h);
                     }
 
                     // key tag

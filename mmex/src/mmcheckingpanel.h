@@ -14,7 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
 
 #ifndef _MM_EX_CHECKINGPANEL_H_
 #define _MM_EX_CHECKINGPANEL_H_
@@ -153,6 +153,7 @@ public:
         const wxSize& size = wxDefaultSize,
         long style = wxTAB_TRAVERSAL | wxNO_BORDER,
         const wxString& name = wxPanelNameStr );
+    
     ~mmCheckingPanel();
 
     bool Create( wxWindow *parent, wxWindowID winid,
@@ -186,13 +187,13 @@ public:
     void sortTable();
 
 public:
-    int accountID_;
-    wxSQLite3Database* db_;
     mmCoreDB* core_;
+    wxSQLite3Database* db_;
+    wxSQLite3Database* inidb_;
     MyListCtrl* listCtrlAccount_;
     wxImageList* m_imageList;
-    wxSQLite3Database* inidb_;
     wxString currentView_;
+    int accountID_;
 };
 
 #endif

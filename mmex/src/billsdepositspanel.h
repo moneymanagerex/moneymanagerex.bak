@@ -14,7 +14,8 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
+
 #ifndef _MM_EX_BILLSDEPOSITSPANEL_H_
 #define _MM_EX_BILLSDEPOSITSPANEL_H_
 
@@ -149,9 +150,9 @@ public:
 public:
     wxSQLite3Database* db_;
     mmCoreDB* core_;
-    billsDepositsListCtrl* listCtrlAccount_;
     wxSQLite3Database* inidb_;
     wxImageList* m_imageList;
+    billsDepositsListCtrl* listCtrlAccount_;
 };
 
 #endif

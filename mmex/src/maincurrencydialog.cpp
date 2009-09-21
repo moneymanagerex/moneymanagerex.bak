@@ -14,7 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
 
 #include "maincurrencydialog.h"
 #include "currencydialog.h"
@@ -39,21 +39,21 @@ BEGIN_EVENT_TABLE( mmMainCurrencyDialog, wxDialog )
 END_EVENT_TABLE()
 
 
-mmMainCurrencyDialog::mmMainCurrencyDialog( )
+mmMainCurrencyDialog::mmMainCurrencyDialog(
+    mmCoreDB* core, 
+    wxWindow* parent, 
+    bool bEnableSelect, 
+    wxWindowID id, 
+    const wxString& caption, 
+    const wxPoint& pos, 
+    const wxSize& size, 
+    long style 
+) : currencyID_(-1),
+    db_ (core->db_.get()), 
+    core_(core),
+    currencyListBox_(),
+    bEnableSelect_(bEnableSelect)
 {
-}
-
-mmMainCurrencyDialog::mmMainCurrencyDialog(mmCoreDB* core, 
-                   wxWindow* parent, bool bEnableSelect, wxWindowID id, 
-                   const wxString& caption, 
-                   const wxPoint& pos, 
-                   const wxSize& size, 
-                   long style ) 
-                   : db_ (core->db_.get()), 
-                   core_(core),
-                   currencyID_(-1)
-{
-    bEnableSelect_ = bEnableSelect;
     Create(parent, id, caption, pos, size, style);
 }
 

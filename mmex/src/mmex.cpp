@@ -14,7 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
 
 #include "mmex.h"
 #include "guiid.h"
@@ -112,10 +112,6 @@
 #include "../resources/user_edit.xpm"
 #include "../resources/wrench.xpm"
 
-#ifdef WIN32
-#include "BugTrap.h"
-#endif
-
 #include <string>
 #include <boost/scoped_array.hpp>
 
@@ -195,8 +191,10 @@ END_EVENT_TABLE()
 IMPLEMENT_APP(mmGUIApp)
 /*******************************************************/
 
-#ifdef WIN32
-#ifdef _UNICODE
+#if defined(_MSVC) && defined(_UNICODE)
+
+#include "BugTrap.h"
+
 void setupBugTrap()
 {
     // ...Set the BugTrap Exception Handler
@@ -217,17 +215,13 @@ void setupBugTrap()
     DWORD dwMode = SetErrorMode(SEM_NOGPFAULTERRORBOX);
     SetErrorMode(dwMode | SEM_NOGPFAULTERRORBOX);
 }
-#endif
-#endif
+#else
+void setupBugTrap() {}
+#endif // defined(_MSVC) && defined(_UNICODE)
 
 bool mmGUIApp::OnInit()
 {
-#ifdef WIN32
-#ifdef _UNICODE
-    /* Setup BugTrap */
     setupBugTrap();
-#endif
-#endif
 
     /* Initialize Image Handlers */
     wxImage::AddHandler( new wxICOHandler ); 
@@ -307,6 +301,23 @@ bool mmGUIApp::OnInit()
     return TRUE;
 }
 /*******************************************************/
+
+mmTreeItemData::mmTreeItemData(int id, bool isBudget) :
+    id_(id), 
+    isString_(false), 
+    isBudgetingNode_(isBudget) 
+{
+}
+
+mmTreeItemData::mmTreeItemData(const wxString& string) :
+    id_(), 
+    isString_(true), 
+    isBudgetingNode_(false),
+    stringData_(string)
+{
+}
+
+
 mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, mmCoreDB* core)
          :wxWizard(frame,wxID_ANY,_("Add Account Wizard"),
                    wxBitmap(addacctwiz_xpm),wxDefaultPosition,
@@ -3083,7 +3094,7 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
         for(i=0; i<(int)currency_name.GetCount(); i++) {
             if(currency_name[i] == currencySymbol) {
                 core_->currencyList_.currencies_[idx]->baseConv_ = rate_ptr[i];
-                core_->currencyList_.updateCurrency(core_->currencyList_.currencies_[idx]->currencyID_, core_->currencyList_.currencies_[idx]);
+                core_->currencyList_.updateCurrency(core_->currencyList_.currencies_[idx]);
             }
         } // for i loop
     }

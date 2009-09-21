@@ -14,7 +14,8 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
+
 #include "budgetingpanel.h"
 #include "budgetentrydialog.h"
 #include "util.h"
@@ -31,9 +32,6 @@
 #include "../resources/uparrow.xpm"
 #include "../resources/downarrow.xpm"
 #include "../resources/rightarrow.xpm"
-/*******************************************************/
-static int sortcol = 0;
-static bool asc = true;
 /*******************************************************/
 BEGIN_EVENT_TABLE(mmBudgetingPanel, wxPanel)
     EVT_LEFT_DOWN( mmBudgetingPanel::OnMouseLeftDown ) 
@@ -52,8 +50,13 @@ END_EVENT_TABLE()
 /*******************************************************/
 mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, wxSQLite3Database* inidb, int budgetYearID, wxWindow *parent,
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
-            const wxString& name )
-            : db_(db), budgetYearID_(budgetYearID), inidb_(inidb), m_imageList(0)
+            const wxString& name 
+           ) : 
+    db_(db), 
+    inidb_(inidb), 
+    m_imageList(), 
+    listCtrlAccount_(),
+    budgetYearID_(budgetYearID)
 {
     Create(parent, winid, pos, size, style, name);
     currentView_ = wxT("View All Budget Categories");

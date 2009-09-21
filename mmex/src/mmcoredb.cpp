@@ -14,7 +14,8 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
+
 #include "mmcoredb.h"
 #include "util.h"
 //----------------------------------------------------------------------------
@@ -173,13 +174,13 @@ void loadTransactions(boost::shared_ptr<wxSQLite3Database> db_,
 
 //----------------------------------------------------------------------------
 
-mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db)
-: db_ (db),
-  payeeList_(db),
-  categoryList_(db),
-  accountList_(db),
-  currencyList_(db),
-  bTransactionList_(db)
+mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db) : 
+    db_(db),
+    payeeList_(db),
+    categoryList_(db),
+    accountList_(db),
+    currencyList_(db),
+    bTransactionList_(db)
 {
     if (!db_)
         throw wxString(wxT("Database Handle is invalid!"));

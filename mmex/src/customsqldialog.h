@@ -14,7 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
 
 #ifndef _MM_EX_CUSTOMSQLDIALOG_H_
 #define _MM_EX_CUSTOMSQLDIALOG_H_
@@ -55,7 +55,7 @@ class mmCustomSQLDialog: public wxDialog
 
 public:
     /// Constructors
-    mmCustomSQLDialog( );
+    mmCustomSQLDialog( ) {}
     mmCustomSQLDialog( mmCoreDB* core, wxWindow* parent, 
         wxWindowID id = SYMBOL_CUSTOMSQLDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_CUSTOMSQLDIALOG_TITLE, 
@@ -85,9 +85,8 @@ public:
     wxString sqlQuery_;
 
 private:
-    mmCoreDB* core_;
     wxSQLite3Database* db_;
-
+    mmCoreDB* core_;
     wxTextCtrl* queryBox_;
 };
 

@@ -12,7 +12,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
 
 #include "mmtransaction.h"
 #include "util.h"
@@ -129,11 +129,11 @@ void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core,
     mmENDSQL_LITE_EXCEPTION;
 }
 //-----------------------------------------------------------------------------//
-mmBankTransaction::mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db)
-: mmTransaction(-1),
-  db_(db), 
-  isInited_(false), 
-  updateRequired_(false)
+mmBankTransaction::mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db) : 
+    mmTransaction(-1),
+    db_(db), 
+    isInited_(false), 
+    updateRequired_(false)
 {
     splitEntries_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
 }

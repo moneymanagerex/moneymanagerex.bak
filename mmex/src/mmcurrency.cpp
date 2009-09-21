@@ -12,7 +12,8 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
+
 #include "mmcurrency.h"
 #include "util.h"
 
@@ -142,7 +143,7 @@ int mmCurrencyList::addCurrency(boost::shared_ptr<mmCurrency> pCurrency)
 //   return true;
 //}
 
-void mmCurrencyList::updateCurrency(int currencyID, boost::shared_ptr<mmCurrency> pCurrency)
+void mmCurrencyList::updateCurrency(boost::shared_ptr<mmCurrency> pCurrency)
 {
     static const char sql[] = 
     "update CURRENCYFORMATS_V1 "
@@ -151,7 +152,7 @@ void mmCurrencyList::updateCurrency(int currencyID, boost::shared_ptr<mmCurrency
         "SCALE=?, BASECONVRATE=?, CURRENCY_SYMBOL=? "
     "where CURRENCYID = ?";
 
-    wxASSERT(currencyID == pCurrency->currencyID_);
+    wxASSERT(pCurrency->currencyID_ > 0);
 
     mmBEGINSQL_LITE_EXCEPTION;
 

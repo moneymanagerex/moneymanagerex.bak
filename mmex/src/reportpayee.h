@@ -15,9 +15,9 @@ public:
         wxDateTime dtBegin, 
         wxDateTime dtEnd) 
         : core_(core),
-          ignoreDate_(ignoreDate),
           dtBegin_(dtBegin),
-          dtEnd_(dtEnd)
+          dtEnd_(dtEnd),
+          ignoreDate_(ignoreDate)
     {
     }
 

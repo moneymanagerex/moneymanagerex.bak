@@ -219,7 +219,7 @@ KC 	Check transaction
 #include "fileviewerdialog.h"
 #include "mmex.h"
 
-typedef enum qifAccountInfoType 
+enum qifAccountInfoType 
 {
     Name        = 1, // N
     AccountType = 2, // T
@@ -231,7 +231,7 @@ typedef enum qifAccountInfoType
     UnknownInfo = 8
 };
 
-typedef enum qifLineType 
+enum qifLineType 
  {
      AcctType = 1, // !
      Date        = 2, // D

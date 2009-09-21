@@ -14,7 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
 
 #include "billsdepositspanel.h"
 #include "util.h"
@@ -53,7 +53,7 @@ mmBillsDepositsPanel::mmBillsDepositsPanel(wxSQLite3Database* db, wxSQLite3Datab
             wxWindow *parent,
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
             const wxString& name )
-            : db_(db), inidb_(inidb), m_imageList(0), core_(core)
+            : db_(db), core_(core), inidb_(inidb), m_imageList(), listCtrlAccount_()
 {
     
     Create(parent, winid, pos, size, style, name);
@@ -248,12 +248,10 @@ void mmBillsDepositsPanel::initVirtualListControl()
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
 
-    wxSQLite3StatementBuffer bufSQL;
-    bufSQL.Format("select * from BILLSDEPOSITS_V1");
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(bufSQL);
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from BILLSDEPOSITS_V1");
 
-    int ct = 0;
-    while (q1.NextRow())
+    long cnt = 0;
+    for (; q1.NextRow(); ++cnt)
     {
         mmBDTransactionHolder th;
 
@@ -352,11 +350,11 @@ void mmBillsDepositsPanel::initVirtualListControl()
         }
 
         trans_.push_back(th);
-        ct++;
     }
+
     q1.Finalize();
     std::sort(trans_.begin(), trans_.end(), sortTransactionsByRemainingDays);
-    listCtrlAccount_->SetItemCount(ct);
+    listCtrlAccount_->SetItemCount(cnt);
 
     mmENDSQL_LITE_EXCEPTION;
 }

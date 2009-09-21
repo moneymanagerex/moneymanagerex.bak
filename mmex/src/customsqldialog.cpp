@@ -14,7 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
 
 #include "customsqldialog.h"
 #include "util.h"
@@ -39,16 +39,15 @@ BEGIN_EVENT_TABLE( mmCustomSQLDialog, wxDialog )
 END_EVENT_TABLE()
 
 
-mmCustomSQLDialog::mmCustomSQLDialog( )
-{
-}
-
 mmCustomSQLDialog::mmCustomSQLDialog(mmCoreDB* core, 
                    wxWindow* parent, wxWindowID id, 
                    const wxString& caption, 
                    const wxPoint& pos, 
                    const wxSize& size, 
-                   long style ) : db_ (core->db_.get()), core_(core)
+                   long style ) : 
+    db_ (core->db_.get()), 
+    core_(core),
+    queryBox_()
 {
     Create(parent, id, caption, pos, size, style);
 }

@@ -14,7 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
 
 #ifndef _MM_EX_MMEX_H_
 #define _MM_EX_MMEX_H_
@@ -59,24 +59,19 @@ Class used to store item specific information in a tree node
 class mmTreeItemData : public wxTreeItemData
 {
 public:
-    mmTreeItemData(int id, bool isBudget) 
-       :id_(id), 
-        isString_(false), 
-        isBudgetingNode_(isBudget) {}
-    mmTreeItemData(const wxString& string) 
-       :stringData_(string), 
-        isString_(true), 
-        isBudgetingNode_(false) {}
-    int getData() { return id_; }
-    wxString getString() { return stringData_; }
-    bool isStringData() { return isString_; }
-    bool isBudgetingNode() { return isBudgetingNode_; }
+    mmTreeItemData(int id, bool isBudget);
+    mmTreeItemData(const wxString& string);
+
+    int getData() const { return id_; }
+    wxString getString() const { return stringData_; }
+    bool isStringData() const { return isString_; }
+    bool isBudgetingNode() const { return isBudgetingNode_; }
 
 private:
     int id_;
     bool isString_;
-    wxString stringData_;
     bool isBudgetingNode_;
+    wxString stringData_;
 };
 
 class mmNewDatabaseWizard : public wxWizard
@@ -497,4 +492,5 @@ private:
     DECLARE_EVENT_TABLE()
 };
 
-#endif
+#endif // _MM_EX_MMEX_H_
+

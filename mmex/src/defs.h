@@ -14,7 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
 
 #ifndef _MM_EX_DEFS_H_
 #define _MM_EX_DEFS_H_
@@ -69,8 +69,8 @@
 
 #endif
 
-/*******************************************************/
-/* Adapted by Wesley Ellis to allow for OS X app file paths
+/*
+// Adapted by Wesley Ellis to allow for OS X app file paths
 #if defined (__WXMAC__) || defined (__WXOSX__)
 #define MMEX_INIDB_FNAME wxT("/mmexini.db3")
 #define MMEX_SPLASH_FNAME wxT("MMEX.app/Contents/Resources/runtime_osx/splash.png")
@@ -81,5 +81,4 @@
 #define MMEX_SPLASH_FNAME wxT("splash.png")
 #define MMEX_ICON_FNAME wxT("mmex.ico")
 #endif
-/*******************************************************/
-
+*/

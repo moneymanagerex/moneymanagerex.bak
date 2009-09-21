@@ -12,7 +12,8 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
+
 #ifndef _MM_EX_MMCURRENCY_H_
 #define _MM_EX_MMCURRENCY_H_
 
@@ -57,7 +58,7 @@ public:
     /* Currency Functions */
     int addCurrency(boost::shared_ptr<mmCurrency> pCurrency);
     //bool deleteCurrency(int currencyID);
-    void updateCurrency(int currencyID, boost::shared_ptr<mmCurrency> pCurrency);
+    void updateCurrency(boost::shared_ptr<mmCurrency> pCurrency);
     //bool currencyExists(const wxString& currencyName);
     //int getCurrencyID(const wxString& currencyName);
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID);

@@ -14,7 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- /*******************************************************/
+ ********************************************************/
 
 #ifndef _MM_EX_MAINCURRENCY_DIALOG_H_
 #define _MM_EX_MAINCURRENCY_DIALOG_H_
@@ -71,7 +71,8 @@ class mmMainCurrencyDialog: public wxDialog
 
 public:
     /// Constructors
-    mmMainCurrencyDialog( );
+    mmMainCurrencyDialog( ) {}
+
     mmMainCurrencyDialog( mmCoreDB* core, wxWindow* parent, 
         bool bEnableSelect = true, 
         wxWindowID id = SYMBOL_MAINCURRENCYDIALOG_IDNAME, 
@@ -102,11 +103,13 @@ public:
     static bool ShowToolTips();
 
      int currencyID_;
+
 private:
-    mmCoreDB* core_;
     wxSQLite3Database* db_;
+    mmCoreDB* core_;
     wxListBox* currencyListBox_;
     bool bEnableSelect_;
 };
 
-#endif
+#endif // _MM_EX_MAINCURRENCY_DIALOG_H_
+
