@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<!-- $Id: wx.bkl,v 1.6 2006/10/10 09:54:26 VS Exp $ -->
+<!-- $Id: wx.bkl 41871 2006-10-10 09:54:26Z VS $ -->
 
 <!--
     Presets for building wxWidgets applications.

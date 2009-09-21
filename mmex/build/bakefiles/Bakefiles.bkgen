@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+
+<bakefile-gen xmlns="http://www.bakefile.org/schema/bakefile-gen">
+
+    <!-- These wildcards match all .bkl files in source tree: -->
+    <input>
+        mmex.bkl
+    </input>
+
+    
+    <!-- List of output formats to generate: -->
+    <add-formats>
+        autoconf,mingw,msvc
+    </add-formats>
+
+   
+    <!-- Default flags (for all formats and bakefiles): -->
+    <add-flags>-Iformats</add-flags>
+
+    
+    <!-- Directories where the files go: -->
+    <add-flags files="mmex.bkl" formats="autoconf">
+        -o../../Makefile.in
+    </add-flags>
+    <add-flags files="mmex.bkl" formats="mingw">
+        -o../msw/makefile.gcc
+    </add-flags>
+    <add-flags files="mmex.bkl" formats="msvc">
+        -o../msw/makefile.vc
+    </add-flags>
+
+
+    <!-- Format specific settings: -->
+    <add-flags formats="autoconf">
+        -DAUTOCONF_MACROS_FILE=../../autoconf_inc.m4
+    </add-flags>
+
+
+    <!-- Makefile specific settings: -->
+
+    <add-flags files="mmex.bkl" formats="mingw">
+        -DOPTIONS_FILE=config.gcc
+    </add-flags>
+    <add-flags files="mmex.bkl" formats="msvc">
+        -DOPTIONS_FILE=config.vc
+    </add-flags>
+
+
+</bakefile-gen>

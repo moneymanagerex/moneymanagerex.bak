@@ -1,0 +1,127 @@
+<?xml version="1.0" ?>
+
+<!-- sqlite3 sources -->
+
+<makefile>
+
+    <lib id="sqlite3">
+
+        <warnings>max</warnings>
+        <precomp-headers>off</precomp-headers>
+        <threading>multi</threading>
+        <cxx-exceptions>off</cxx-exceptions>
+        <cxx-rtti>off</cxx-rtti>
+        <pic>on</pic>
+
+        <set var="SQLITE3_FLAGS">-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA</set>
+        <cflags>$(SQLITE3_FLAGS)</cflags>
+        <cxxflags>$(SQLITE3_FLAGS)</cxxflags>
+
+
+        <headers>
+                btree.h
+                btreeInt.h
+                fts3.h
+                fts3_hash.h
+                fts3_tokenizer.h
+                hwtime.h
+                keywordhash.h
+                mutex.h
+                opcodes.h
+                os.h
+                os_common.h
+                os_os2.h
+                pager.h
+                parse.h
+                rtree.h
+                sqlite3.h
+                sqlite3ext.h
+                sqliteInt.h
+                sqliteLimit.h
+                vdbe.h
+                vdbeInt.h
+        </headers>
+        
+       
+        <set var="SRC">sqlite</set>
+
+        
+        <sources>
+                $(SRC)/alter.c
+                $(SRC)/analyze.c
+                $(SRC)/attach.c
+                $(SRC)/auth.c
+                $(SRC)/bitvec.c
+                $(SRC)/btmutex.c
+                $(SRC)/btree.c
+                $(SRC)/build.c
+                $(SRC)/callback.c
+                $(SRC)/complete.c
+                $(SRC)/date.c
+                $(SRC)/delete.c
+                $(SRC)/expr.c
+                $(SRC)/fault.c
+                $(SRC)/fts3.c
+                $(SRC)/fts3_hash.c
+                $(SRC)/fts3_icu.c
+                $(SRC)/fts3_porter.c
+                $(SRC)/fts3_tokenizer1.c
+                $(SRC)/fts3_tokenizer.c
+                $(SRC)/func.c
+                $(SRC)/global.c
+                $(SRC)/hash.c
+                $(SRC)/icu.c
+                $(SRC)/insert.c
+                $(SRC)/journal.c
+                $(SRC)/legacy.c
+                $(SRC)/loadext.c
+                $(SRC)/main.c
+                $(SRC)/malloc.c
+                $(SRC)/mem1.c
+                $(SRC)/mem2.c
+                $(SRC)/mem3.c
+                $(SRC)/mem4.c
+                $(SRC)/mem5.c
+                $(SRC)/mutex.c
+                $(SRC)/mutex_os2.c
+                $(SRC)/mutex_unix.c
+                $(SRC)/mutex_w32.c
+                $(SRC)/opcodes.c
+                $(SRC)/os.c
+                $(SRC)/os_os2.c
+                $(SRC)/os_unix.c
+                $(SRC)/os_win.c
+                $(SRC)/pager_secure.c
+                $(SRC)/parse.c
+                $(SRC)/pragma.c
+                $(SRC)/prepare.c
+                $(SRC)/printf.c
+                $(SRC)/random.c
+                $(SRC)/rtree.c
+                $(SRC)/select.c
+                $(SRC)/status.c
+                $(SRC)/table.c
+                $(SRC)/tokenize.c
+                $(SRC)/trigger.c
+                $(SRC)/update.c
+                $(SRC)/utf.c
+                $(SRC)/util1.c
+                $(SRC)/vacuum.c
+                $(SRC)/vdbe.c
+                $(SRC)/vdbeapi.c
+                $(SRC)/vdbeaux.c
+                $(SRC)/vdbeblob.c
+                $(SRC)/vdbefifo.c
+                $(SRC)/vdbemem.c
+                $(SRC)/vtab.c
+                $(SRC)/where.c
+
+                $(SRC)/codec/codec.cpp
+                $(SRC)/codec/codecext.cpp
+                $(SRC)/codec/rijndael.cpp
+
+        </sources>
+
+    </lib>
+
+</makefile>

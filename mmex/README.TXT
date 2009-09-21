@@ -36,7 +36,7 @@ Microsoft Windows
 4. Follow the instructions given by WxWidgets install on how to build it in 4 build modes. Static Ansi Debug, Static Ansi Release, Static Unicode Debug, Static Unicode Release.
 5. Install GNU GetText for Windows, http://gnuwin32.sourceforge.net/packages/gettext.htm. This software requires to generate binary translation files from .po files.
    Append path to bin folder of installed software to PATH environment variable (usually "C:\Program Files\GnuWin32\bin").
-6. Open mmex.vcproj under mmex directory and do a batch build of all modes neceesary
+6. Open mmex.sln under mmex directory and do a batch build of all modes neceesary
 7. Copy currency.db3 from runtime directory into the appropriate build directories. Now you can run the project to launch the exe.
 8. Static Ansi is used under Windows 95/98/Me
 9. Static Unicode is used under Windows 2000/Windows XP/Windows 2003.
@@ -103,11 +103,11 @@ This might be required if you are adding new source files to MMEX.
 
 2. Make sure mmex.bkl is updated if necessary
 
-2. Navigate to \trunk\mmex\bakefile directory
+2. Navigate to trunk/mmex/build/bakefiles directory
  
 3. Do
-        > bakefile -f autoconf mmex.bkl -o ../Makefile.in
-        > cd ..
+        > bakefile_gen Bakefiles.bkgen
+        > cd ../..
         > bakefilize --copy && aclocal -I . -I /usr/share/aclocal -I /usr/local/share/aclocal && autoconf
 
 CREATING A DEBIAN PACKAGE
