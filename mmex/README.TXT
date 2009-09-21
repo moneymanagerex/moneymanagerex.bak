@@ -64,16 +64,16 @@ GENERIC INSTRUCTIONS
   1) Read the install directions in wxWidgets for how to do a build and then install the build on the machine. For eg wxWidgets has been built with --with-gtk --disable-shared --enable-unicode
   2) After installation, wx-config will copied to the /usr/bin and can now correctly identify the command line params required.
 
-3. Navigate to /trunk/mmex/
+3. Navigate to trunk/mmex
 
    Do 
         >  mkdir buildgtk
         >  cd buildgtk
         >  ../configure --with-wx-config=[LOCATION of WX-CONFIG]
         >  make
-        >  cp mmex ../runtime/.
+        >  cp mmex ../runtime
         
-   /trunk/runtime/mmex/mmex should run Money Manager Ex.
+   trunk/runtime/mmex/mmex should run Money Manager Ex.
 
 UBUNTU SPECIFIC INSTRUCTIONS
 
@@ -82,26 +82,26 @@ With apt-get support, it is a little easier to do this in Ubuntu.
 1. [Optional] Install Dev Tools by the following: sudo apt-get install build-essential
 
 2. Download and install the following packages
-	libwxgtk2.8-0, 
-    libwxgtk2.8-dev, 
+    libwxgtk2.8-0, 
+    libwxgtk2.8-dev
 
 3. Do 
         >  mkdir buildgtk
         >  cd buildgtk
         >  ../configure --with-wx-config=/usr/lib/wx/config/gtk2-unicode-release-2.8
         >  make
-        >  cp mmex ../runtime/.
+        >  cp mmex ../runtime
         
-   /trunk/runtime/mmex/mmex should run Money Manager Ex.
+   trunk/runtime/mmex/mmex should run Money Manager Ex.
 
 REGENERATING AUTOMAKE FILES
 
 If for some reason, you need to regenerate AutoMake Makefile.in.
 This might be required if you are adding new source files to MMEX.
 
-1. Download and install Bakefile (>=0.2.1)
+1. Download and install Bakefile (>=0.2.1), www.bakefile.org.
 
-2. Make sure mmex.bkl is updated if necessary
+2. Make sure all .bkl files in mmex/build/bakefiles is updated if necessary
 
 2. Navigate to trunk/mmex/build/bakefiles directory
  
