@@ -17,7 +17,7 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="mmex_unicode_debug|Win32"
+			Name="Unicode Debug|Win32"
 			OutputDirectory="$(SolutionDir)\$(ConfigurationName)\$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="4"
@@ -81,7 +81,7 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="mmex_unicode_release|Win32"
+			Name="Unicode Release|Win32"
 			OutputDirectory="$(SolutionDir)\$(ConfigurationName)\$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="4"
