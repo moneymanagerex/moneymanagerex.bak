@@ -7,15 +7,24 @@ Bakefile for generating makefiles.
 
 <makefile>
 
+    <!-- Default root of sources is dir where output script will be created.
+         autoconf script resides in trunk/mmex but others in trunk/mmex/build/msw.
+         We should fix this.
+    -->
+
+    <if cond="FORMAT!='autoconf'">
+            <set-srcdir>../..</set-srcdir>
+    </if>
+
+    
     <include file="presets/wx.bkl"/>
     <include file="sqlite.bkl"/>
     
+
     <exe id="mmex" template="wx">
 
         <app-type>gui</app-type>
         <library>sqlite3</library>
-        <include>$(SRCDIR)/include</include>
-        <include>$(SRCDIR)/sqlite</include>
         <debug-info>on</debug-info>
         <debug-info-edit-and-continue>on</debug-info-edit-and-continue>
         <warnings>max</warnings>
@@ -23,11 +32,12 @@ Bakefile for generating makefiles.
         <precomp-headers>off</precomp-headers>
         <threading>multi</threading>
         <cxx-exceptions>on</cxx-exceptions>
-        <win32-res>resources/mmex.rc</win32-res>
 
+        <include>$(SRCDIR)/include</include>
+	<include>$(SRCDIR)/sqlite</include>
+	<win32-res>resources/mmex.rc</win32-res>
 
         <cxxflags>-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA</cxxflags>
-
 
         <headers>
 		aboutdialog.h
@@ -98,6 +108,7 @@ Bakefile for generating makefiles.
 		yahoosettingsdialog.h
         </headers>
 
+	<!-- relative to trunk/mmex -->
         <set var="SRC">src</set>
 
         <sources>

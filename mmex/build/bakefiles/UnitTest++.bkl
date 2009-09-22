@@ -1,0 +1,73 @@
+<?xml version="1.0" ?>
+
+<!-- UnitTest++ sources -->
+
+<makefile>
+
+    <lib id="UnitTest++">
+
+        <warnings>max</warnings>
+        <precomp-headers>off</precomp-headers>
+        <threading>multi</threading>
+        <cxx-exceptions>on</cxx-exceptions>
+        <cxx-rtti>on</cxx-rtti>
+        <pic>on</pic>
+
+        <headers>
+            AssertException.h
+            CheckMacros.h
+            Checks.h
+            Config.h
+            CurrentTest.h
+            DeferredTestReporter.h
+            DeferredTestResult.h
+            ExecuteTest.h
+            MemoryOutStream.h
+            ReportAssert.h
+            Test.h
+            TestDetails.h
+            TestList.h
+            TestMacros.h
+            TestReporter.h
+            TestReporterStdout.h
+            TestResults.h
+            TestRunner.h
+            TestSuite.h
+            TimeConstraint.h
+            TimeHelpers.h
+            UnitTest++.h
+            XmlTestReporter.h
+            
+            Posix/SignalTranslator.h
+            Posix/TimeHelpers.h
+            
+            Win32/TimeHelpers.h
+        </headers>
+        
+        <!-- relative to trunk/mmex -->
+        <set var="SRC">UnitTest++/src</set>
+        
+        <sources>
+            $(SRC)/AssertException.cpp
+            $(SRC)/Checks.cpp
+            $(SRC)/CurrentTest.cpp
+            $(SRC)/DeferredTestReporter.cpp
+            $(SRC)/DeferredTestResult.cpp
+            $(SRC)/MemoryOutStream.cpp
+            $(SRC)/ReportAssert.cpp
+            $(SRC)/Test.cpp
+            $(SRC)/TestDetails.cpp
+            $(SRC)/TestList.cpp
+            $(SRC)/TestReporter.cpp
+            $(SRC)/TestReporterStdout.cpp
+            $(SRC)/TestResults.cpp
+            $(SRC)/TestRunner.cpp
+            $(SRC)/TimeConstraint.cpp
+            $(SRC)/XmlTestReporter.cpp
+            
+            $(SRC)/Win32/TimeHelpers.cpp
+        </sources>
+
+    </lib>
+
+</makefile>

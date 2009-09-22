@@ -103,12 +103,11 @@ This might be required if you are adding new source files to MMEX.
 
 2. Make sure all .bkl files in mmex/build/bakefiles is updated if necessary
 
-2. Navigate to trunk/mmex/build/bakefiles directory
+2. Navigate to trunk/mmex
  
 3. Do
-        > bakefile_gen Bakefiles.bkgen
-        > cd ../..
-        > bakefilize --copy && aclocal -I . -I /usr/share/aclocal -I /usr/local/share/aclocal && autoconf
+        > chmod a+rx bootstrap
+        > ./bootstrap
 
 CREATING A DEBIAN PACKAGE
 

@@ -42,9 +42,8 @@
                 vdbeInt.h
         </headers>
         
-       
+        <!-- relative to trunk/mmex -->
         <set var="SRC">sqlite</set>
-
         
         <sources>
                 $(SRC)/alter.c

@@ -2,10 +2,8 @@
 
 <bakefile-gen xmlns="http://www.bakefile.org/schema/bakefile-gen">
 
-    <!-- These wildcards match all .bkl files in source tree: -->
-    <input>
-        mmex.bkl
-    </input>
+
+    <input>mmex.bkl</input>
 
     
     <!-- List of output formats to generate: -->

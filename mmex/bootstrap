@@ -1,0 +1,12 @@
+#!/bin/sh
+
+cd build/bakefiles
+bakefile_gen Bakefiles.bkgen
+
+cd ../..
+bakefilize -c -v
+
+aclocal -I . -I /usr/share/aclocal -I /usr/local/share/aclocal
+autoconf
+
+chmod a+rx configure
