@@ -94,20 +94,18 @@ With apt-get support, it is a little easier to do this in Ubuntu.
         
    trunk/runtime/mmex/mmex should run Money Manager Ex.
 
+
 REGENERATING AUTOMAKE FILES
 
 If for some reason, you need to regenerate AutoMake Makefile.in.
 This might be required if you are adding new source files to MMEX.
 
 1. Download and install Bakefile (>=0.2.1), www.bakefile.org.
-
 2. Make sure all .bkl files in mmex/build/bakefiles is updated if necessary
+3. Execute commands
+   cd trunk/mmex
+   ./bootstrap
 
-2. Navigate to trunk/mmex
- 
-3. Do
-        > chmod a+rx bootstrap
-        > ./bootstrap
 
 CREATING A DEBIAN PACKAGE
 
