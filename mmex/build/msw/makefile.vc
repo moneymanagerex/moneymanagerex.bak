@@ -12,6 +12,11 @@
 
 ### Variables: ###
 
+MAKEARGS = CC="$(CC)" CXX="$(CXX)" CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
+	CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)" WX_DIR="$(WX_DIR)" \
+	WX_SHARED="$(WX_SHARED)" WX_UNICODE="$(WX_UNICODE)" WX_DEBUG="$(WX_DEBUG)" \
+	WX_VERSION="$(WX_VERSION)" WX_MONOLITHIC="$(WX_MONOLITHIC)" \
+	WX_PYTHON="$(WX_PYTHON)"
 SQLITE3_CFLAGS = /MD /DWIN32 /W4 -DSQLITE_CORE -DSQLITE_HAS_CODEC \
 	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
 SQLITE3_CXXFLAGS = /MD /DWIN32 /W4 -DSQLITE_CORE -DSQLITE_HAS_CODEC \
@@ -230,6 +235,9 @@ clean:
 	-if exist .\*.res del .\*.res
 	-if exist .\*.pch del .\*.pch
 	-if exist sqlite3.lib del sqlite3.lib
+	cd src\tests
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
 	-if exist mmex.exe del mmex.exe
 	-if exist mmex.ilk del mmex.ilk
 	-if exist mmex.pdb del mmex.pdb
@@ -239,6 +247,11 @@ sqlite3.lib: $(SQLITE3_OBJECTS)
 	link /LIB /NOLOGO /OUT:$@ @<<
 	$(SQLITE3_OBJECTS)
 <<
+
+sub_mmex_tests: 
+	cd src\tests
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
 
 mmex.exe: $(MMEX_OBJECTS) sqlite3.lib mmex_mmex.res
 	link /NOLOGO /OUT:$@  /LIBPATH:$(WX_DIR)$(__WXLIBPATH_FILENAMES) /SUBSYSTEM:WINDOWS /DEBUG /pdb:"mmex.pdb"  $(LDFLAGS) @<<

@@ -199,15 +199,20 @@ clean:
 	rm -rf ./.deps ./.pch
 	rm -f ./*.o
 	rm -f $(LIBPREFIX)sqlite3$(LIBEXT)
+	-(cd src/tests && $(MAKE) clean)
 	rm -f mmex$(EXEEXT)
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
+	-(cd src/tests && $(MAKE) distclean)
 
 $(LIBPREFIX)sqlite3$(LIBEXT): $(SQLITE3_OBJECTS)
 	rm -f $@
 	$(AR) $(AROPTIONS) $@ $(SQLITE3_OBJECTS)
 	$(RANLIB) $@
+
+mmex_tests: 
+	(cd src/tests && $(MAKE) all)
 
 mmex$(EXEEXT): $(MMEX_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(__mmex___win32rc)
 	$(CXX) -o $@ $(MMEX_OBJECTS) -L.  $(LDFLAGS_GUI)   $(WX_LIBS) $(LDFLAGS)  -lsqlite3 $(LIBS)
@@ -591,4 +596,4 @@ mmex_yahoosettingsdialog.o: $(srcdir)/src/yahoosettingsdialog.cpp
 # Include dependency info, if present:
 @IF_GNU_MAKE@-include ./.deps/*.d
 
-.PHONY: all install uninstall clean distclean
+.PHONY: all install uninstall clean distclean mmex_tests

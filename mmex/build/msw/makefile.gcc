@@ -12,6 +12,13 @@ include config.gcc
 
 ### Variables: ###
 
+MAKEARGS = LINK_DLL_FLAGS="$(LINK_DLL_FLAGS)" \
+	LINK_MODULE_FLAGS="$(LINK_MODULE_FLAGS)" CC="$(CC)" CXX="$(CXX)" \
+	CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" CPPFLAGS="$(CPPFLAGS)" \
+	LDFLAGS="$(LDFLAGS)" WX_DIR="$(WX_DIR)" WX_SHARED="$(WX_SHARED)" \
+	WX_UNICODE="$(WX_UNICODE)" WX_DEBUG="$(WX_DEBUG)" \
+	WX_VERSION="$(WX_VERSION)" WX_MONOLITHIC="$(WX_MONOLITHIC)" \
+	WX_PYTHON="$(WX_PYTHON)"
 CPPDEPS = -MT$@ -MF$@.d -MD -MP
 SQLITE3_CFLAGS = -W -Wall -mthreads -DSQLITE_CORE -DSQLITE_HAS_CODEC \
 	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
@@ -251,12 +258,16 @@ clean:
 	-if exist .\*.o del .\*.o
 	-if exist .\*.d del .\*.d
 	-if exist libsqlite3.a del libsqlite3.a
+	$(MAKE) -C src\tests -f makefile.gcc $(MAKEARGS) clean
 	-if exist mmex.exe del mmex.exe
 
 libsqlite3.a: $(SQLITE3_OBJECTS)
 	if exist $@ del $@
 	ar rcu $@ $(SQLITE3_OBJECTS)
 	ranlib $@
+
+mmex_tests: 
+	$(MAKE) -C src\tests -f makefile.gcc $(MAKEARGS) all
 
 mmex.exe: $(MMEX_OBJECTS) libsqlite3.a mmex_mmex_rc.o
 	$(CXX) -o $@ $(MMEX_OBJECTS)  -mthreads -L$(WX_DIR)$(WXLIBPATH) -Wl,--subsystem,windows -mwindows -g -mthreads $(LDFLAGS)  libsqlite3.a $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_BASE_NAME_p) $(__WXLIB_ADV_NAME_p) -lwxtiff$(WX3RDPARTYLIBPOSTFIX) -lwxjpeg$(WX3RDPARTYLIBPOSTFIX) -lwxpng$(WX3RDPARTYLIBPOSTFIX) -lwxzlib$(WX3RDPARTYLIBPOSTFIX) -lwxregex$(WXLIBPOSTFIX) -lwxexpat$(WX3RDPARTYLIBPOSTFIX) -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32
@@ -633,7 +644,7 @@ mmex_wxtinyxml.o: ../../src/wxtinyxml.cpp
 mmex_yahoosettingsdialog.o: ../../src/yahoosettingsdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
-.PHONY: all clean
+.PHONY: all clean mmex_tests
 
 
 SHELL := $(COMSPEC)

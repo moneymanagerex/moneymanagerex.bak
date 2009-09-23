@@ -1,9 +1,4 @@
 <?xml version="1.0" ?>
-<!--
-Money Manager Ex BAKEFILE
-=========================
-Bakefile for generating makefiles.
--->
 
 <makefile>
 
@@ -13,28 +8,20 @@ Bakefile for generating makefiles.
     -->
 
     <if cond="FORMAT!='autoconf'">
-            <set-srcdir>../..</set-srcdir>
+            <set-srcdir>../../..</set-srcdir>
     </if>
 
-    <!-- relative to trunk/mmex -->
-    <set var="SRC">src</set>
-
     
-    <include file="presets/wx.bkl"/>
-    <include file="sqlite.bkl"/>
-
+    <include file="../../build/bakefiles/presets/wx.bkl"/>
+    <include file="../../build/bakefiles/sqlite.bkl"/>
+    <include file="../../build/bakefiles/UnitTest++.bkl"/>
     
-    <!-- unit tests target (not dependency of 'all'): -->
-    <subproject id="mmex_tests">
-        <installable>no</installable>
-        <dir>$(SRC)/tests</dir>
-    </subproject>
 
-
-    <exe id="mmex" template="wx">
+    <exe id="mmex_tests" template="wx">
 
         <app-type>gui</app-type>
         <library>sqlite3</library>
+        <library>UnitTest++</library>
         <debug-info>on</debug-info>
         <debug-info-edit-and-continue>on</debug-info-edit-and-continue>
         <warnings>max</warnings>
@@ -42,9 +29,13 @@ Bakefile for generating makefiles.
         <precomp-headers>off</precomp-headers>
         <threading>multi</threading>
         <cxx-exceptions>on</cxx-exceptions>
+        <cxx-rtti>on</cxx-rtti>
 
+	<include>$(SRCDIR)/src</include>
         <include>$(SRCDIR)/include</include>
 	<include>$(SRCDIR)/sqlite</include>
+	<include>$(SRCDIR)/UnitTest++/src</include>
+
 	<win32-res>resources/mmex.rc</win32-res>
 
         <cxxflags>-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA</cxxflags>
@@ -116,8 +107,11 @@ Bakefile for generating makefiles.
 		univcsvdialog.h
 		util.h
 		yahoosettingsdialog.h
+
         </headers>
 
+	<!-- relative to trunk/mmex -->
+        <set var="SRC">src</set>
 
         <sources>
 		$(SRC)/aboutdialog.cpp
@@ -172,6 +166,11 @@ Bakefile for generating makefiles.
 		$(SRC)/wxsqlite3.cpp
 		$(SRC)/wxtinyxml.cpp
 		$(SRC)/yahoosettingsdialog.cpp
+
+		$(SRC)/tests/utils.cpp
+		$(SRC)/tests/dbwrapper_test.cpp
+		$(SRC)/tests/Main.cpp
+			
         </sources>
 
 

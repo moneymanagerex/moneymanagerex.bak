@@ -42,6 +42,7 @@
             Posix/TimeHelpers.h
             
             Win32/TimeHelpers.h
+
         </headers>
         
         <!-- relative to trunk/mmex -->
@@ -64,9 +65,22 @@
             $(SRC)/TestRunner.cpp
             $(SRC)/TimeConstraint.cpp
             $(SRC)/XmlTestReporter.cpp
-            
-            $(SRC)/Win32/TimeHelpers.cpp
         </sources>
+
+        <!-- platform-dependent sources -->
+
+        <if cond="TOOLSET=='win32'">
+            <sources>
+                    $(SRC)/Win32/TimeHelpers.cpp
+            </sources>
+        </if>
+
+        <if cond="TOOLSET=='unix'">
+            <sources>
+                    $(SRC)/Posix/TimeHelpers.cpp
+                    $(SRC)/Posix/SignalTranslator.cpp
+            </sources>
+        </if>
 
     </lib>
 

@@ -3,7 +3,11 @@
 <bakefile-gen xmlns="http://www.bakefile.org/schema/bakefile-gen">
 
 
-    <input>mmex.bkl</input>
+    <!-- All .bkl files in mmex tree -->
+    <input>
+        mmex.bkl
+        ../../src/tests/mmex_tests.bkl
+    </input>
 
     
     <!-- List of output formats to generate: -->
@@ -26,6 +30,12 @@
     <add-flags files="mmex.bkl" formats="msvc">
         -o../msw/makefile.vc
     </add-flags>
+    <add-flags files="../../src/tests/mmex_tests.bkl" formats="mingw">
+        -o../msw/tests/makefile.gcc
+    </add-flags>
+    <add-flags files="../../src/tests/mmex_tests.bkl" formats="msvc">
+        -o../msw/tests/makefile.vc
+    </add-flags>
 
 
     <!-- Format specific settings: -->
@@ -39,8 +49,14 @@
     <add-flags files="mmex.bkl" formats="mingw">
         -DOPTIONS_FILE=config.gcc
     </add-flags>
+    <add-flags files="../../src/tests/mmex_tests.bkl" formats="mingw">
+        -DOPTIONS_FILE=../config.gcc  -DWRITE_OPTIONS_FILE=0
+    </add-flags>
     <add-flags files="mmex.bkl" formats="msvc">
         -DOPTIONS_FILE=config.vc
+    </add-flags>
+    <add-flags files="../../src/tests/mmex_tests.bkl" formats="msvc">
+        -DOPTIONS_FILE=../config.vc  -DWRITE_OPTIONS_FILE=0
     </add-flags>
 
 
