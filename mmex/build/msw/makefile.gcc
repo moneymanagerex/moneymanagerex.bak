@@ -106,6 +106,7 @@ MMEX_OBJECTS =  \
 	mmex_budgetyeardialog.o \
 	mmex_budgetyearentrydialog.o \
 	mmex_categdialog.o \
+	mmex_chart.o \
 	mmex_currencydialog.o \
 	mmex_customsqldialog.o \
 	mmex_dbwrapper.o \
@@ -121,6 +122,7 @@ MMEX_OBJECTS =  \
 	mmex_mmcurrency.o \
 	mmex_mmex.o \
 	mmex_mmgraphgenerator.o \
+	mmex_mmgraphtopcategories.o \
 	mmex_mmhelppanel.o \
 	mmex_mmhomepagepanel.o \
 	mmex_mmpayee.o \
@@ -508,6 +510,9 @@ mmex_budgetyearentrydialog.o: ../../src/budgetyearentrydialog.cpp
 mmex_categdialog.o: ../../src/categdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
+mmex_chart.o: ../../src/chart.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
 mmex_currencydialog.o: ../../src/currencydialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
@@ -551,6 +556,9 @@ mmex_mmex.o: ../../src/mmex.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
 mmex_mmgraphgenerator.o: ../../src/mmgraphgenerator.cpp
+	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
+
+mmex_mmgraphtopcategories.o: ../../src/mmgraphtopcategories.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
 mmex_mmhelppanel.o: ../../src/mmhelppanel.cpp

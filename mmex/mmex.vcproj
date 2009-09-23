@@ -426,6 +426,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\chart.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\currencydialog.cpp"
 				>
 			</File>
@@ -479,6 +483,10 @@
 			</File>
 			<File
 				RelativePath=".\src\mmgraphgenerator.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\mmgraphtopcategories.cpp"
 				>
 			</File>
 			<File
@@ -1005,10 +1013,6 @@
 			</File>
 			<File
 				RelativePath=".\runtime\en\greek.po"
-				>
-			</File>
-			<File
-				RelativePath=".\runtime\en\hebrew.po"
 				>
 			</File>
 			<File

@@ -123,6 +123,7 @@ Bakefile for generating makefiles.
 		$(SRC)/budgetyeardialog.cpp
 		$(SRC)/budgetyearentrydialog.cpp
 		$(SRC)/categdialog.cpp
+		$(SRC)/chart.cpp
 		$(SRC)/currencydialog.cpp
 		$(SRC)/customsqldialog.cpp
 		$(SRC)/dbwrapper.cpp
@@ -138,6 +139,7 @@ Bakefile for generating makefiles.
 		$(SRC)/mmcurrency.cpp
 		$(SRC)/mmex.cpp
 		$(SRC)/mmgraphgenerator.cpp
+		$(SRC)/mmgraphtopcategories.cpp
 		$(SRC)/mmhelppanel.cpp
 		$(SRC)/mmhomepagepanel.cpp
 		$(SRC)/mmpayee.cpp
