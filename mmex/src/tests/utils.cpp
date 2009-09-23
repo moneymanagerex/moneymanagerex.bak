@@ -25,6 +25,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 extern const char* g_exepath; // defined in Main.cpp
 //----------------------------------------------------------------------------
 
+namespace
+{
+
+const size_t rc_err = static_cast<size_t>(-1);
+
+} // namespace
+
+//----------------------------------------------------------------------------
+
 std::wstring utils::asWString(const char *str)
 {
     std::wstring ws;
@@ -32,7 +41,7 @@ std::wstring utils::asWString(const char *str)
     size_t len = strlen(str);
     size_t cnt = mbstowcs(0, str, len);
     
-    if (cnt != -1U) 
+    if (cnt != rc_err) 
     {
         wchar_t *buf = new wchar_t[cnt];
         cnt = mbstowcs(buf, str, len);
@@ -51,7 +60,7 @@ std::string utils::asString(const wchar_t *str)
     size_t len = wcslen(str);
     size_t cnt = wcstombs(0, str, len);
 
-    if (cnt != -1U) 
+    if (cnt != rc_err) 
     {
         char *buf = new char[cnt];
         cnt = wcstombs(buf, str, len);
