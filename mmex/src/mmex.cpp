@@ -191,7 +191,7 @@ END_EVENT_TABLE()
 IMPLEMENT_APP(mmGUIApp)
 /*******************************************************/
 
-#if defined(_MSVC) && defined(_UNICODE)
+#ifdef _MSC_VER
 
 #include "BugTrap.h"
 
@@ -216,8 +216,8 @@ void setupBugTrap()
     SetErrorMode(dwMode | SEM_NOGPFAULTERRORBOX);
 }
 #else
-void setupBugTrap() {}
-#endif // defined(_MSVC) && defined(_UNICODE)
+inline void setupBugTrap() {}
+#endif // _MSC_VER
 
 bool mmGUIApp::OnInit()
 {
