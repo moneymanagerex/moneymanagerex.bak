@@ -354,6 +354,13 @@ private:
     mmAddAccountWizard* parent_;
 };
 
+struct CategInfo
+{
+    wxString categ;
+    wxString amountStr;
+    double   amount;
+};
+
 class mmGUIFrame : public wxFrame
 {
 public:
@@ -440,13 +447,6 @@ public:
     void OnPopupEditAccount(wxCommandEvent& event);
 
     void OnWizardCancel(wxWizardEvent& event);
-
-    struct CategInfo
-    {
-        wxString categ;
-        wxString amountStr;
-        double   amount;
-    };
 
 public:
     mmPanelBase* panelCurrent_;

@@ -413,7 +413,7 @@ void mmNewDatabaseWizard::RunIt(bool modal)
 /******************************************************
 mmGUIFrame 
 ********************************************************/
-bool sortCategs( mmGUIFrame::CategInfo elem1, mmGUIFrame::CategInfo elem2 )
+inline bool sortCategs( const CategInfo &elem1, const CategInfo &elem2 )
 {
    return elem1.amount < elem2.amount;
 }
