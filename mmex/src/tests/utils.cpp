@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "utils.h"
 //----------------------------------------------------------------------------
 #include <stdlib.h>
+#include <string.h>
 //----------------------------------------------------------------------------
 extern const char* g_exepath; // defined in Main.cpp
 //----------------------------------------------------------------------------
@@ -31,7 +32,7 @@ std::wstring utils::asWString(const char *str)
     size_t len = strlen(str);
     size_t cnt = mbstowcs(0, str, len);
     
-    if (cnt != -1) 
+    if (cnt != -1U) 
     {
         wchar_t *buf = new wchar_t[cnt];
         cnt = mbstowcs(buf, str, len);
@@ -50,7 +51,7 @@ std::string utils::asString(const wchar_t *str)
     size_t len = wcslen(str);
     size_t cnt = wcstombs(0, str, len);
 
-    if (cnt != -1) 
+    if (cnt != -1U) 
     {
         char *buf = new char[cnt];
         cnt = wcstombs(buf, str, len);
