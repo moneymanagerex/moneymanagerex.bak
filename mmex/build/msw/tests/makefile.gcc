@@ -277,6 +277,7 @@ clean:
 	-if exist libsqlite3.a del libsqlite3.a
 	-if exist libUnitTest++.a del libUnitTest++.a
 	-if exist mmex_tests.exe del mmex_tests.exe
+	-if exist currency.db3 del currency.db3
 
 libsqlite3.a: $(SQLITE3_OBJECTS)
 	if exist $@ del $@
@@ -289,7 +290,11 @@ libUnitTest++.a: $(UNITTEST++_OBJECTS)
 	ranlib $@
 
 mmex_tests.exe: $(MMEX_TESTS_OBJECTS) libsqlite3.a libUnitTest++.a mmex_tests_mmex_rc.o
-	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS)  -mthreads -L$(WX_DIR)$(WXLIBPATH) -Wl,--subsystem,windows -mwindows -g -mthreads $(LDFLAGS)  libsqlite3.a libUnitTest++.a $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_BASE_NAME_p) $(__WXLIB_ADV_NAME_p) -lwxtiff$(WX3RDPARTYLIBPOSTFIX) -lwxjpeg$(WX3RDPARTYLIBPOSTFIX) -lwxpng$(WX3RDPARTYLIBPOSTFIX) -lwxzlib$(WX3RDPARTYLIBPOSTFIX) -lwxregex$(WXLIBPOSTFIX) -lwxexpat$(WX3RDPARTYLIBPOSTFIX) -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32
+	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS)  -mthreads -L$(WX_DIR)$(WXLIBPATH)  -g -mthreads $(LDFLAGS)  libsqlite3.a libUnitTest++.a $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_BASE_NAME_p) $(__WXLIB_ADV_NAME_p) -lwxtiff$(WX3RDPARTYLIBPOSTFIX) -lwxjpeg$(WX3RDPARTYLIBPOSTFIX) -lwxpng$(WX3RDPARTYLIBPOSTFIX) -lwxzlib$(WX3RDPARTYLIBPOSTFIX) -lwxregex$(WXLIBPOSTFIX) -lwxexpat$(WX3RDPARTYLIBPOSTFIX) -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32
+
+test: mmex_tests.exe
+	cp ../../../runtime/currency.db3 .
+	./mmex_tests
 
 sqlite3_alter.o: ../../../sqlite/alter.c
 	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
@@ -723,7 +728,7 @@ mmex_tests_dbwrapper_test.o: ../../../src/tests/dbwrapper_test.cpp
 mmex_tests_Main.o: ../../../src/tests/Main.cpp
 	$(CXX) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(CPPDEPS) $<
 
-.PHONY: all clean
+.PHONY: all clean test
 
 
 SHELL := $(COMSPEC)

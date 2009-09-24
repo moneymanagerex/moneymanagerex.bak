@@ -19,13 +19,13 @@
 
     <exe id="mmex_tests" template="wx">
 
-        <app-type>gui</app-type>
+        <app-type>console</app-type>
         <library>sqlite3</library>
         <library>UnitTest++</library>
         <debug-info>on</debug-info>
         <debug-info-edit-and-continue>on</debug-info-edit-and-continue>
         <warnings>max</warnings>
-        <runtime-libs>dynamic</runtime-libs>
+        <runtime-libs>static</runtime-libs>
         <precomp-headers>off</precomp-headers>
         <threading>multi</threading>
         <cxx-exceptions>on</cxx-exceptions>
@@ -185,5 +185,19 @@
         <wx-lib>adv</wx-lib>
         
     </exe>
+
+    
+    <action id="test">
+	<depends>mmex_tests</depends>
+	<is-phony>on</is-phony>
+
+	<command>
+		cp $(SRCDIR)/runtime/currency.db3 $(BUILDDIR)
+		$(BUILDDIR)/mmex_tests
+	</command>
+
+	<clean-files>currency.db3</clean-files>
+	
+    </action>
 
 </makefile>

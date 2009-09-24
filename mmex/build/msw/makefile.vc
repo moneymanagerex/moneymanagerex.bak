@@ -235,7 +235,7 @@ clean:
 	-if exist .\*.res del .\*.res
 	-if exist .\*.pch del .\*.pch
 	-if exist sqlite3.lib del sqlite3.lib
-	cd src\tests
+	cd tests
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 	-if exist mmex.exe del mmex.exe
@@ -248,9 +248,9 @@ sqlite3.lib: $(SQLITE3_OBJECTS)
 	$(SQLITE3_OBJECTS)
 <<
 
-sub_mmex_tests: 
-	cd src\tests
-	$(MAKE) -f makefile.vc $(MAKEARGS) all
+sub_test: 
+	cd tests
+	$(MAKE) -f makefile.vc $(MAKEARGS) test
 	cd "$(MAKEDIR)"
 
 mmex.exe: $(MMEX_OBJECTS) sqlite3.lib mmex_mmex.res

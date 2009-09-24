@@ -51,7 +51,7 @@ AM_INIT_AUTOMAKE
 # Process standard bakefile
 AC_BAKEFILE([m4_include(autoconf_inc.m4)])
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile src/tests/Makefile])
 AC_OUTPUT
 
 ##########################################################################

@@ -107,10 +107,10 @@ UNITTEST++_OBJECTS =  \
 	UnitTest++_TimeConstraint.obj \
 	UnitTest++_XmlTestReporter.obj \
 	UnitTest++_TimeHelpers.obj
-MMEX_TESTS_CXXFLAGS = /MDd /DWIN32 $(__WXUNICODE_DEFINE_p) \
+MMEX_TESTS_CXXFLAGS = /MTd /DWIN32 $(__WXUNICODE_DEFINE_p) \
 	$(__WXDEBUG_DEFINE_p) /D__WXMSW__ \
 	/I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
-	/I$(WX_DIR)\include /D_WINDOWS /Zi /D_DEBUG /Fdmmex_tests.pdb /W4 \
+	/I$(WX_DIR)\include /D_CONSOLE /Zi /D_DEBUG /Fdmmex_tests.pdb /W4 \
 	/I..\..\..\src /I..\..\..\include /I..\..\..\sqlite \
 	/I..\..\..\UnitTest++\src /EHsc /GR -DSQLITE_HAS_CODEC \
 	-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
@@ -258,6 +258,7 @@ clean:
 	-if exist mmex_tests.exe del mmex_tests.exe
 	-if exist mmex_tests.ilk del mmex_tests.ilk
 	-if exist mmex_tests.pdb del mmex_tests.pdb
+	-if exist currency.db3 del currency.db3
 
 sqlite3.lib: $(SQLITE3_OBJECTS)
 	if exist $@ del $@
@@ -272,9 +273,13 @@ UnitTest++.lib: $(UNITTEST++_OBJECTS)
 <<
 
 mmex_tests.exe: $(MMEX_TESTS_OBJECTS) sqlite3.lib UnitTest++.lib mmex_tests_mmex.res
-	link /NOLOGO /OUT:$@  /LIBPATH:$(WX_DIR)$(__WXLIBPATH_FILENAMES) /SUBSYSTEM:WINDOWS /DEBUG /pdb:"mmex_tests.pdb"  $(LDFLAGS) @<<
+	link /NOLOGO /OUT:$@  /LIBPATH:$(WX_DIR)$(__WXLIBPATH_FILENAMES) /SUBSYSTEM:CONSOLE /DEBUG /pdb:"mmex_tests.pdb"  $(LDFLAGS) @<<
 	$(MMEX_TESTS_OBJECTS)  sqlite3.lib UnitTest++.lib $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_BASE_NAME_p) $(__WXLIB_ADV_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib
 <<
+
+test: mmex_tests.exe
+	cp ../../../runtime/currency.db3 .
+	./mmex_tests
 
 sqlite3_alter.obj: ..\..\..\sqlite\alter.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\..\sqlite\alter.c
@@ -541,7 +546,7 @@ UnitTest++_TimeHelpers.obj: ..\..\..\UnitTest++\src\Win32\TimeHelpers.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(UNITTEST++_CXXFLAGS) ..\..\..\UnitTest++\src\Win32\TimeHelpers.cpp
 
 mmex_tests_mmex.res: ..\..\..\resources\mmex.rc
-	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include /d _WINDOWS /d _DEBUG /i ..\..\..\src /i ..\..\..\include /i ..\..\..\sqlite /i ..\..\..\UnitTest++\src ..\..\..\resources\mmex.rc
+	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include /d _CONSOLE /d _DEBUG /i ..\..\..\src /i ..\..\..\include /i ..\..\..\sqlite /i ..\..\..\UnitTest++\src ..\..\..\resources\mmex.rc
 
 mmex_tests_aboutdialog.obj: ..\..\..\src\aboutdialog.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\aboutdialog.cpp

@@ -25,9 +25,10 @@ Bakefile for generating makefiles.
 
     
     <!-- unit tests target (not dependency of 'all'): -->
-    <subproject id="mmex_tests">
+    <subproject id="test">
+        <dir>tests</dir>
+        <target>test</target>
         <installable>no</installable>
-        <dir>$(SRC)/tests</dir>
     </subproject>
 
 

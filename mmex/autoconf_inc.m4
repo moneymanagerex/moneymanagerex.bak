@@ -30,7 +30,7 @@ dnl ### begin block 20_COND_PLATFORM_MAC_1[../../src/tests/mmex_tests.bkl,mmex.b
         COND_PLATFORM_MAC_1=""
     fi
     AC_SUBST(COND_PLATFORM_MAC_1)
-dnl ### begin block 20_COND_PLATFORM_OS2_1[../../src/tests/mmex_tests.bkl,mmex.bkl] ###
+dnl ### begin block 20_COND_PLATFORM_OS2_1[mmex.bkl] ###
     COND_PLATFORM_OS2_1="#"
     if test "x$PLATFORM_OS2" = "x1" ; then
         COND_PLATFORM_OS2_1=""

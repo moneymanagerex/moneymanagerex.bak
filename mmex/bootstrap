@@ -8,5 +8,3 @@ bakefilize -c -v
 
 aclocal -I . -I /usr/share/aclocal -I /usr/local/share/aclocal
 autoconf
-
-chmod a+rx configure

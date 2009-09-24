@@ -45,9 +45,24 @@
 
         </headers>
         
+
         <!-- relative to trunk/mmex -->
         <set var="SRC">UnitTest++/src</set>
         
+
+        <!-- platform-dependent sources -->
+
+        <set var="PLATFORM_DEP_SOURCES" hint="files">
+
+	        <if cond="TOOLSET=='win32'">$(SRC)/Win32/TimeHelpers.cpp</if>
+        	
+        	<if cond="TOOLSET=='unix'">
+        		$(SRC)/Posix/TimeHelpers.cpp
+        		$(SRC)/Posix/SignalTranslator.cpp
+        	</if>
+        </set>
+
+
         <sources>
             $(SRC)/AssertException.cpp
             $(SRC)/Checks.cpp
@@ -65,22 +80,8 @@
             $(SRC)/TestRunner.cpp
             $(SRC)/TimeConstraint.cpp
             $(SRC)/XmlTestReporter.cpp
+            $(PLATFORM_DEP_SOURCES)
         </sources>
-
-        <!-- platform-dependent sources -->
-
-        <if cond="TOOLSET=='win32'">
-            <sources>
-                    $(SRC)/Win32/TimeHelpers.cpp
-            </sources>
-        </if>
-
-        <if cond="TOOLSET=='unix'">
-            <sources>
-                    $(SRC)/Posix/TimeHelpers.cpp
-                    $(SRC)/Posix/SignalTranslator.cpp
-            </sources>
-        </if>
 
     </lib>
 

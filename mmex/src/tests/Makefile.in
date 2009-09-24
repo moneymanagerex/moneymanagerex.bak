@@ -16,11 +16,9 @@ LIBPREFIX = @LIBPREFIX@
 EXEEXT = @EXEEXT@
 SETFILE = @SETFILE@
 PIC_FLAG = @PIC_FLAG@
-NM = @NM@
 BK_DEPS = @BK_DEPS@
 srcdir = @srcdir@
 LIBS = @LIBS@
-LDFLAGS_GUI = @LDFLAGS_GUI@
 AR = @AR@
 AROPTIONS = @AROPTIONS@
 RANLIB = @RANLIB@
@@ -203,9 +201,6 @@ MMEX_TESTS_OBJECTS =  \
 @COND_PLATFORM_MAC_0@__mmex_tests___mac_setfilecmd = @true
 @COND_PLATFORM_MAC_1@__mmex_tests___mac_setfilecmd = \
 @COND_PLATFORM_MAC_1@	$(SETFILE) -t APPL mmex_tests$(EXEEXT)
-COND_PLATFORM_OS2_1___mmex_tests___os2_emxbindcmd = $(NM) mmex_tests$(EXEEXT) \
-	| if grep -q pmwin.763 ; then emxbind -ep mmex_tests$(EXEEXT) ; fi
-@COND_PLATFORM_OS2_1@__mmex_tests___os2_emxbindcmd = $(COND_PLATFORM_OS2_1___mmex_tests___os2_emxbindcmd)
 @COND_PLATFORM_WIN32_1@__mmex_tests___win32rc = mmex_tests_mmex_rc.o
 
 ### Targets: ###
@@ -224,6 +219,7 @@ clean:
 	rm -f $(LIBPREFIX)sqlite3$(LIBEXT)
 	rm -f $(LIBPREFIX)UnitTest++$(LIBEXT)
 	rm -f mmex_tests$(EXEEXT)
+	rm -f currency.db3
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
@@ -239,10 +235,13 @@ $(LIBPREFIX)UnitTest++$(LIBEXT): $(UNITTEST++_OBJECTS)
 	$(RANLIB) $@
 
 mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(LIBPREFIX)UnitTest++$(LIBEXT) $(__mmex_tests___win32rc)
-	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS) -L. -L.  $(LDFLAGS_GUI)   $(WX_LIBS) $(LDFLAGS)  -lsqlite3 -lUnitTest++ $(LIBS)
+	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS) -L. -L.     $(WX_LIBS) $(LDFLAGS)  -lsqlite3 -lUnitTest++ $(LIBS)
 	
 	$(__mmex_tests___mac_setfilecmd)
-	$(__mmex_tests___os2_emxbindcmd)
+
+test: mmex_tests$(EXEEXT)
+	cp $(srcdir)/runtime/currency.db3 .
+	./mmex_tests
 
 sqlite3_alter.o: $(srcdir)/sqlite/alter.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/alter.c
@@ -683,4 +682,4 @@ mmex_tests_Main.o: $(srcdir)/src/tests/Main.cpp
 # Include dependency info, if present:
 @IF_GNU_MAKE@-include ./.deps/*.d
 
-.PHONY: all install uninstall clean distclean
+.PHONY: all install uninstall clean distclean test
