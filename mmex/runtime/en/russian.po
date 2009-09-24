@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-09-15 18:19+0300\n"
-"PO-Revision-Date: 2009-09-15 18:19+0300\n"
+"PO-Revision-Date: 2009-09-24 15:29+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -203,7 +203,6 @@ msgid "Rate of Change"
 msgstr "Процент изменения стоимости"
 
 #: src/assetdialog.cpp:253
-#, fuzzy, c-format
 msgid "Enter the rate at which the asset changes its value in % per year"
 msgstr "Введите ежегодное изменение стоимости имущества в  процентах"
 
@@ -648,7 +647,7 @@ msgstr "Удаление запланированной проводки"
 
 #: src/billsdepositspanel.cpp:225
 msgid "Enter &Transaction"
-msgstr "&Начислить"
+msgstr "Н&ачислить"
 
 #: src/billsdepositspanel.cpp:227
 msgid "Enter Next Bills && Deposit Occurrence"
