@@ -23,6 +23,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <dbwrapper.h>
 #include "utils.h"
 //----------------------------------------------------------------------------
+#include <stdio.h> // remove
+//----------------------------------------------------------------------------
 
 namespace
 {
@@ -60,7 +62,7 @@ wxSQLite3Database& getDb()
     {
         std::wstring path = getDbPath();
         
-        _unlink(utils::asString(path.c_str()).c_str());
+        remove(utils::asString(path.c_str()).c_str());
 
         db.Open(path.c_str());
         CHECK(db.IsOpen());
