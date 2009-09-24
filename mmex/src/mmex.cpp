@@ -3410,3 +3410,237 @@ void mmGUIFrame::OnViewLinksUpdateUI(wxUpdateUIEvent &event)
 	else
 		event.Check(false);
 }
+//----------------------------------------------------------------------------
+
+void wxNewDatabaseWizardPage1::OnCurrency(wxCommandEvent& /*event*/)
+{
+    currencyID_ = parent_->core_->currencyList_.getBaseCurrencySettings();
+
+
+    mmMainCurrencyDialog *dlg = new mmMainCurrencyDialog(parent_->core_, this);
+    if ( dlg->ShowModal() == wxID_OK )
+    {
+        currencyID_ = dlg->currencyID_;
+        if (currencyID_ != -1)
+        {
+            wxString currName = parent_->core_->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
+            wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_CURRENCY);
+            bn->SetLabel(currName);
+            parent_->core_->currencyList_.setBaseCurrencySettings(currencyID_);
+        }
+    }
+
+    dlg->Destroy();
+}
+//----------------------------------------------------------------------------
+
+wxNewDatabaseWizardPage1::wxNewDatabaseWizardPage1(mmNewDatabaseWizard* parent) : 
+    wxWizardPageSimple(parent), 
+    parent_(parent), 
+    currencyID_(-1)
+{
+    currencyID_ = parent_->core_->currencyList_.getBaseCurrencySettings();
+    wxString currName = _("Set Currency");
+    if (currencyID_ != -1)
+    {
+        currName = parent_->core_->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
+    }
+
+    itemButtonCurrency_ = new wxButton( this, 
+        ID_DIALOG_OPTIONS_BUTTON_CURRENCY, currName, wxDefaultPosition, wxDefaultSize, 0 );
+
+
+    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
+
+    mainSizer->Add(
+        new wxStaticText(this, wxID_ANY,
+        _("Base Currency for account")),
+        0,
+        wxALL,
+        5
+        );
+
+    mainSizer->Add(
+        itemButtonCurrency_,
+        0, // No stretching
+        wxALL,
+        5 // Border
+        );
+
+    mainSizer->Add(
+        new wxStaticText(this, wxID_ANY,
+        _("\nSpecify the base (or default) currency to be used \nwith the database. You can change the \ncurrency associated with each account if needed.\n")), 0,
+        wxALL,
+        5);
+
+
+    wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
+    mainSizer->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
+
+    wxStaticText* itemStaticText6 = new wxStaticText( this, wxID_STATIC, _("User Name"), 
+        wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer5->Add(itemStaticText6, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+    itemUserName_ = new wxTextCtrl( this, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME, _T(""), 
+        wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer5->Add(itemUserName_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    mainSizer->Add(
+        new wxStaticText(this, wxID_ANY,
+        _("(Optional)Specify your name. Mainly used for reporting and in printing reports.\n")), 0,
+        wxALL,
+        5);
+
+    SetSizer(mainSizer);
+    mainSizer->Fit(this);
+}
+//----------------------------------------------------------------------------
+
+bool wxNewDatabaseWizardPage1::TransferDataFromWindow()
+{
+    if ( currencyID_ == -1)
+    {
+        wxMessageBox(_("Base Currency Not Set"), 
+            _("Error"),
+            wxICON_WARNING | wxOK, this);
+
+        return false;
+    }
+    userName = itemUserName_->GetValue().Trim();
+    mmDBWrapper::setInfoSettingValue(parent_->core_->db_.get(), wxT("USERNAME"), userName); 
+
+    return true;
+}
+//----------------------------------------------------------------------------
+
+wxAddAccountPage1::wxAddAccountPage1(mmAddAccountWizard* parent) : 
+    wxWizardPageSimple(parent), parent_(parent)
+{
+    textAccountName_ = new wxTextCtrl(this, wxID_ANY, 
+        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+
+    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
+
+    mainSizer->Add(
+        new wxStaticText(this, wxID_ANY,
+        _("Name of the Account")),
+        0,
+        wxALL,
+        5
+        );
+
+    mainSizer->Add(
+        textAccountName_,
+        0, // No stretching
+        wxALL,
+        5 // Border
+        );
+
+    mainSizer->Add(
+        new wxStaticText(this, wxID_ANY,
+        _("\nSpecify a descriptive name of the account. This most commonly \nis the name of the financial institution where the account is held. \nFor example 'ABC Bank'.")), 0,
+        wxALL,
+        5);
+
+
+    SetSizer(mainSizer);
+    mainSizer->Fit(this);
+}
+//----------------------------------------------------------------------------
+
+bool wxAddAccountPage1::TransferDataFromWindow()
+{
+    if ( textAccountName_->GetValue() == wxT(""))
+    {
+        wxMessageBox(_("Account Name Invalid"), 
+            _("Error"),
+            wxICON_WARNING | wxOK, this);
+
+        return false;
+    }
+    parent_->accountName_ = textAccountName_->GetValue().Trim();
+    return true;
+}
+//----------------------------------------------------------------------------
+
+wxAddAccountPage2::wxAddAccountPage2(mmAddAccountWizard *parent) : 
+    wxWizardPageSimple(parent), 
+    parent_(parent)
+{
+    wxString itemAcctTypeStrings[] =  
+    {
+        _("Checking/Savings"),
+        _("Investment"),
+    };
+    itemChoiceType_ = new wxChoice( this, wxID_ANY, 
+        wxDefaultPosition, wxDefaultSize, 2, itemAcctTypeStrings, 0 );
+    itemChoiceType_->SetSelection(0); // Checking
+    itemChoiceType_->SetToolTip(_("Specify the type of account to be created."));
+
+    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
+
+    mainSizer->Add(
+        new wxStaticText(this, wxID_ANY,
+        _("Type of Account")),
+        0,
+        wxALL,
+        5
+        );
+
+    mainSizer->Add(
+        itemChoiceType_,
+        0, // No stretching
+        wxALL,
+        5 // Border
+        );
+
+    mainSizer->Add(
+        new wxStaticText(this, wxID_ANY,
+        _("\nSelect the type of account you want to create:\n\nGeneral bank accounts cover a wide variety of account\n types like Checking, Savings and Credit card type accounts.")), 0,
+        wxALL,
+        5);
+
+    mainSizer->Add(
+        new wxStaticText(this, wxID_ANY,
+        _("\nInvestment accounts are specialized accounts that only \nhave stock/mutual fund investments associated \nwith them.\n")), 0,
+        wxALL,
+        5);
+
+    SetSizer(mainSizer);
+    mainSizer->Fit(this);
+}
+//----------------------------------------------------------------------------
+
+bool wxAddAccountPage2::TransferDataFromWindow()
+{
+    int acctType = itemChoiceType_->GetSelection();
+    wxString acctTypeStr = wxT("Checking");
+    if (acctType == 1)
+        acctTypeStr = wxT("Investment");
+
+    int currencyID = parent_->core_->currencyList_.getBaseCurrencySettings();
+    if (currencyID == -1)
+    {
+        mmShowErrorMessage(this, _("Base Account Currency Not set.\nSet that first using tools->options menu and then add a new account"), _("Error"));
+        return false;
+    }
+
+    mmAccount* ptrBase;
+    if (acctTypeStr == wxT("Checking"))
+        ptrBase = new mmCheckingAccount(parent_->core_->db_);
+    else
+        ptrBase = new mmInvestmentAccount(parent_->core_->db_);
+
+    boost::shared_ptr<mmAccount> pAccount(ptrBase);
+
+    pAccount->favoriteAcct_ = true;
+    pAccount->status_ = mmAccount::MMEX_Open;
+    pAccount->acctType_ = acctTypeStr;
+    pAccount->accountName_ = parent_->accountName_;
+    pAccount->initialBalance_ = 0.0;
+    pAccount->currency_ = parent_->core_->currencyList_.getCurrencySharedPtr(currencyID);
+    parent_->acctID_ = parent_->core_->accountList_.addAccount(pAccount);
+
+    return true;
+}
+//----------------------------------------------------------------------------
