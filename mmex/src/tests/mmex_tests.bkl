@@ -28,7 +28,7 @@
         <debug-info>on</debug-info>
         <debug-info-edit-and-continue>on</debug-info-edit-and-continue>
         <warnings>max</warnings>
-        <runtime-libs>static</runtime-libs>
+        <runtime-libs>dynamic</runtime-libs>
         <precomp-headers>off</precomp-headers>
         <threading>multi</threading>
         <cxx-exceptions>on</cxx-exceptions>
