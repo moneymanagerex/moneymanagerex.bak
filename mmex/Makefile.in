@@ -199,12 +199,12 @@ clean:
 	rm -rf ./.deps ./.pch
 	rm -f ./*.o
 	rm -f $(LIBPREFIX)sqlite3$(LIBEXT)
-	-(cd tests && $(MAKE) clean)
+	-(cd $(srcdir)/src/tests && $(MAKE) clean)
 	rm -f mmex$(EXEEXT)
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
-	-(cd tests && $(MAKE) distclean)
+	-(cd $(srcdir)/src/tests && $(MAKE) distclean)
 
 $(LIBPREFIX)sqlite3$(LIBEXT): $(SQLITE3_OBJECTS)
 	rm -f $@
@@ -212,7 +212,7 @@ $(LIBPREFIX)sqlite3$(LIBEXT): $(SQLITE3_OBJECTS)
 	$(RANLIB) $@
 
 test: 
-	(cd tests && $(MAKE) test)
+	(cd $(srcdir)/src/tests && $(MAKE) test)
 
 mmex$(EXEEXT): $(MMEX_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(__mmex___win32rc)
 	$(CXX) -o $@ $(MMEX_OBJECTS) -L.  $(LDFLAGS_GUI)   $(WX_LIBS) $(LDFLAGS)  -lsqlite3 $(LIBS)

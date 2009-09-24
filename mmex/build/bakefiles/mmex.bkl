@@ -27,10 +27,15 @@ Bakefile for generating makefiles.
     <include file="presets/wx.bkl"/>
     <include file="sqlite.bkl"/>
 
+
+    <set var="TESTS_DIR_PREFIX">
+	<if cond="TOOLSET!='win32'">$(SRCDIR)/$(SRC)/</if>
+    </set>
     
+
     <!-- unit tests target (not dependency of 'all'): -->
     <subproject id="test">
-        <dir>tests</dir>
+        <dir>$(TESTS_DIR_PREFIX)tests</dir>
         <target>test</target>
         <installable>no</installable>
     </subproject>
