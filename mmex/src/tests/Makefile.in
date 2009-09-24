@@ -131,9 +131,10 @@ UNITTEST++_OBJECTS =  \
 	UnitTest++_XmlTestReporter.o \
 	UnitTest++_TimeHelpers.o \
 	UnitTest++_SignalTranslator.o
-MMEX_TESTS_CXXFLAGS = -I$(srcdir)/src -I$(srcdir)/include -I$(srcdir)/sqlite \
-	-I$(srcdir)/UnitTest++/src $(WX_CXXFLAGS) -DSQLITE_HAS_CODEC \
-	-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
+MMEX_TESTS_CXXFLAGS = -I$(srcdir)/../../src -I$(srcdir)/../../include \
+	-I$(srcdir)/../../sqlite -I$(srcdir)/../../UnitTest++/src $(WX_CXXFLAGS) \
+	-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA \
+	$(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
 	$(__mmex_tests___win32rc) \
 	mmex_tests_aboutdialog.o \
@@ -240,443 +241,443 @@ mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(LIBPRE
 	$(__mmex_tests___mac_setfilecmd)
 
 test: mmex_tests$(EXEEXT)
-	cp $(srcdir)/runtime/currency.db3 .
+	cp $(srcdir)/../../runtime/currency.db3 .
 	./mmex_tests
 
-sqlite3_alter.o: $(srcdir)/sqlite/alter.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/alter.c
+sqlite3_alter.o: $(srcdir)/../../sqlite/alter.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/alter.c
 
-sqlite3_analyze.o: $(srcdir)/sqlite/analyze.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/analyze.c
+sqlite3_analyze.o: $(srcdir)/../../sqlite/analyze.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/analyze.c
 
-sqlite3_attach.o: $(srcdir)/sqlite/attach.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/attach.c
+sqlite3_attach.o: $(srcdir)/../../sqlite/attach.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/attach.c
 
-sqlite3_auth.o: $(srcdir)/sqlite/auth.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/auth.c
+sqlite3_auth.o: $(srcdir)/../../sqlite/auth.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/auth.c
 
-sqlite3_bitvec.o: $(srcdir)/sqlite/bitvec.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/bitvec.c
+sqlite3_bitvec.o: $(srcdir)/../../sqlite/bitvec.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/bitvec.c
 
-sqlite3_btmutex.o: $(srcdir)/sqlite/btmutex.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/btmutex.c
+sqlite3_btmutex.o: $(srcdir)/../../sqlite/btmutex.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/btmutex.c
 
-sqlite3_btree.o: $(srcdir)/sqlite/btree.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/btree.c
+sqlite3_btree.o: $(srcdir)/../../sqlite/btree.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/btree.c
 
-sqlite3_build.o: $(srcdir)/sqlite/build.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/build.c
+sqlite3_build.o: $(srcdir)/../../sqlite/build.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/build.c
 
-sqlite3_callback.o: $(srcdir)/sqlite/callback.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/callback.c
+sqlite3_callback.o: $(srcdir)/../../sqlite/callback.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/callback.c
 
-sqlite3_complete.o: $(srcdir)/sqlite/complete.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/complete.c
+sqlite3_complete.o: $(srcdir)/../../sqlite/complete.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/complete.c
 
-sqlite3_date.o: $(srcdir)/sqlite/date.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/date.c
+sqlite3_date.o: $(srcdir)/../../sqlite/date.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/date.c
 
-sqlite3_delete.o: $(srcdir)/sqlite/delete.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/delete.c
+sqlite3_delete.o: $(srcdir)/../../sqlite/delete.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/delete.c
 
-sqlite3_expr.o: $(srcdir)/sqlite/expr.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/expr.c
+sqlite3_expr.o: $(srcdir)/../../sqlite/expr.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/expr.c
 
-sqlite3_fault.o: $(srcdir)/sqlite/fault.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/fault.c
+sqlite3_fault.o: $(srcdir)/../../sqlite/fault.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/fault.c
 
-sqlite3_fts3.o: $(srcdir)/sqlite/fts3.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/fts3.c
+sqlite3_fts3.o: $(srcdir)/../../sqlite/fts3.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/fts3.c
 
-sqlite3_fts3_hash.o: $(srcdir)/sqlite/fts3_hash.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/fts3_hash.c
+sqlite3_fts3_hash.o: $(srcdir)/../../sqlite/fts3_hash.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/fts3_hash.c
 
-sqlite3_fts3_icu.o: $(srcdir)/sqlite/fts3_icu.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/fts3_icu.c
+sqlite3_fts3_icu.o: $(srcdir)/../../sqlite/fts3_icu.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/fts3_icu.c
 
-sqlite3_fts3_porter.o: $(srcdir)/sqlite/fts3_porter.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/fts3_porter.c
+sqlite3_fts3_porter.o: $(srcdir)/../../sqlite/fts3_porter.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/fts3_porter.c
 
-sqlite3_fts3_tokenizer1.o: $(srcdir)/sqlite/fts3_tokenizer1.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/fts3_tokenizer1.c
+sqlite3_fts3_tokenizer1.o: $(srcdir)/../../sqlite/fts3_tokenizer1.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/fts3_tokenizer1.c
 
-sqlite3_fts3_tokenizer.o: $(srcdir)/sqlite/fts3_tokenizer.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/fts3_tokenizer.c
+sqlite3_fts3_tokenizer.o: $(srcdir)/../../sqlite/fts3_tokenizer.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/fts3_tokenizer.c
 
-sqlite3_func.o: $(srcdir)/sqlite/func.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/func.c
+sqlite3_func.o: $(srcdir)/../../sqlite/func.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/func.c
 
-sqlite3_global.o: $(srcdir)/sqlite/global.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/global.c
+sqlite3_global.o: $(srcdir)/../../sqlite/global.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/global.c
 
-sqlite3_hash.o: $(srcdir)/sqlite/hash.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/hash.c
+sqlite3_hash.o: $(srcdir)/../../sqlite/hash.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/hash.c
 
-sqlite3_icu.o: $(srcdir)/sqlite/icu.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/icu.c
+sqlite3_icu.o: $(srcdir)/../../sqlite/icu.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/icu.c
 
-sqlite3_insert.o: $(srcdir)/sqlite/insert.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/insert.c
+sqlite3_insert.o: $(srcdir)/../../sqlite/insert.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/insert.c
 
-sqlite3_journal.o: $(srcdir)/sqlite/journal.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/journal.c
+sqlite3_journal.o: $(srcdir)/../../sqlite/journal.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/journal.c
 
-sqlite3_legacy.o: $(srcdir)/sqlite/legacy.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/legacy.c
+sqlite3_legacy.o: $(srcdir)/../../sqlite/legacy.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/legacy.c
 
-sqlite3_loadext.o: $(srcdir)/sqlite/loadext.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/loadext.c
+sqlite3_loadext.o: $(srcdir)/../../sqlite/loadext.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/loadext.c
 
-sqlite3_main.o: $(srcdir)/sqlite/main.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/main.c
+sqlite3_main.o: $(srcdir)/../../sqlite/main.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/main.c
 
-sqlite3_malloc.o: $(srcdir)/sqlite/malloc.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/malloc.c
+sqlite3_malloc.o: $(srcdir)/../../sqlite/malloc.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/malloc.c
 
-sqlite3_mem1.o: $(srcdir)/sqlite/mem1.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/mem1.c
+sqlite3_mem1.o: $(srcdir)/../../sqlite/mem1.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/mem1.c
 
-sqlite3_mem2.o: $(srcdir)/sqlite/mem2.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/mem2.c
+sqlite3_mem2.o: $(srcdir)/../../sqlite/mem2.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/mem2.c
 
-sqlite3_mem3.o: $(srcdir)/sqlite/mem3.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/mem3.c
+sqlite3_mem3.o: $(srcdir)/../../sqlite/mem3.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/mem3.c
 
-sqlite3_mem4.o: $(srcdir)/sqlite/mem4.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/mem4.c
+sqlite3_mem4.o: $(srcdir)/../../sqlite/mem4.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/mem4.c
 
-sqlite3_mem5.o: $(srcdir)/sqlite/mem5.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/mem5.c
+sqlite3_mem5.o: $(srcdir)/../../sqlite/mem5.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/mem5.c
 
-sqlite3_mutex.o: $(srcdir)/sqlite/mutex.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/mutex.c
+sqlite3_mutex.o: $(srcdir)/../../sqlite/mutex.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/mutex.c
 
-sqlite3_mutex_os2.o: $(srcdir)/sqlite/mutex_os2.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/mutex_os2.c
+sqlite3_mutex_os2.o: $(srcdir)/../../sqlite/mutex_os2.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/mutex_os2.c
 
-sqlite3_mutex_unix.o: $(srcdir)/sqlite/mutex_unix.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/mutex_unix.c
+sqlite3_mutex_unix.o: $(srcdir)/../../sqlite/mutex_unix.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/mutex_unix.c
 
-sqlite3_mutex_w32.o: $(srcdir)/sqlite/mutex_w32.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/mutex_w32.c
+sqlite3_mutex_w32.o: $(srcdir)/../../sqlite/mutex_w32.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/mutex_w32.c
 
-sqlite3_opcodes.o: $(srcdir)/sqlite/opcodes.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/opcodes.c
+sqlite3_opcodes.o: $(srcdir)/../../sqlite/opcodes.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/opcodes.c
 
-sqlite3_os.o: $(srcdir)/sqlite/os.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/os.c
+sqlite3_os.o: $(srcdir)/../../sqlite/os.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/os.c
 
-sqlite3_os_os2.o: $(srcdir)/sqlite/os_os2.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/os_os2.c
+sqlite3_os_os2.o: $(srcdir)/../../sqlite/os_os2.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/os_os2.c
 
-sqlite3_os_unix.o: $(srcdir)/sqlite/os_unix.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/os_unix.c
+sqlite3_os_unix.o: $(srcdir)/../../sqlite/os_unix.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/os_unix.c
 
-sqlite3_os_win.o: $(srcdir)/sqlite/os_win.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/os_win.c
+sqlite3_os_win.o: $(srcdir)/../../sqlite/os_win.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/os_win.c
 
-sqlite3_pager_secure.o: $(srcdir)/sqlite/pager_secure.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/pager_secure.c
+sqlite3_pager_secure.o: $(srcdir)/../../sqlite/pager_secure.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/pager_secure.c
 
-sqlite3_parse.o: $(srcdir)/sqlite/parse.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/parse.c
+sqlite3_parse.o: $(srcdir)/../../sqlite/parse.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/parse.c
 
-sqlite3_pragma.o: $(srcdir)/sqlite/pragma.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/pragma.c
+sqlite3_pragma.o: $(srcdir)/../../sqlite/pragma.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/pragma.c
 
-sqlite3_prepare.o: $(srcdir)/sqlite/prepare.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/prepare.c
+sqlite3_prepare.o: $(srcdir)/../../sqlite/prepare.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/prepare.c
 
-sqlite3_printf.o: $(srcdir)/sqlite/printf.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/printf.c
+sqlite3_printf.o: $(srcdir)/../../sqlite/printf.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/printf.c
 
-sqlite3_random.o: $(srcdir)/sqlite/random.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/random.c
+sqlite3_random.o: $(srcdir)/../../sqlite/random.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/random.c
 
-sqlite3_rtree.o: $(srcdir)/sqlite/rtree.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/rtree.c
+sqlite3_rtree.o: $(srcdir)/../../sqlite/rtree.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/rtree.c
 
-sqlite3_select.o: $(srcdir)/sqlite/select.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/select.c
+sqlite3_select.o: $(srcdir)/../../sqlite/select.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/select.c
 
-sqlite3_status.o: $(srcdir)/sqlite/status.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/status.c
+sqlite3_status.o: $(srcdir)/../../sqlite/status.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/status.c
 
-sqlite3_table.o: $(srcdir)/sqlite/table.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/table.c
+sqlite3_table.o: $(srcdir)/../../sqlite/table.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/table.c
 
-sqlite3_tokenize.o: $(srcdir)/sqlite/tokenize.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/tokenize.c
+sqlite3_tokenize.o: $(srcdir)/../../sqlite/tokenize.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/tokenize.c
 
-sqlite3_trigger.o: $(srcdir)/sqlite/trigger.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/trigger.c
+sqlite3_trigger.o: $(srcdir)/../../sqlite/trigger.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/trigger.c
 
-sqlite3_update.o: $(srcdir)/sqlite/update.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/update.c
+sqlite3_update.o: $(srcdir)/../../sqlite/update.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/update.c
 
-sqlite3_utf.o: $(srcdir)/sqlite/utf.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/utf.c
+sqlite3_utf.o: $(srcdir)/../../sqlite/utf.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/utf.c
 
-sqlite3_util1.o: $(srcdir)/sqlite/util1.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/util1.c
+sqlite3_util1.o: $(srcdir)/../../sqlite/util1.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/util1.c
 
-sqlite3_vacuum.o: $(srcdir)/sqlite/vacuum.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/vacuum.c
+sqlite3_vacuum.o: $(srcdir)/../../sqlite/vacuum.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/vacuum.c
 
-sqlite3_vdbe.o: $(srcdir)/sqlite/vdbe.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/vdbe.c
+sqlite3_vdbe.o: $(srcdir)/../../sqlite/vdbe.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/vdbe.c
 
-sqlite3_vdbeapi.o: $(srcdir)/sqlite/vdbeapi.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/vdbeapi.c
+sqlite3_vdbeapi.o: $(srcdir)/../../sqlite/vdbeapi.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/vdbeapi.c
 
-sqlite3_vdbeaux.o: $(srcdir)/sqlite/vdbeaux.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/vdbeaux.c
+sqlite3_vdbeaux.o: $(srcdir)/../../sqlite/vdbeaux.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/vdbeaux.c
 
-sqlite3_vdbeblob.o: $(srcdir)/sqlite/vdbeblob.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/vdbeblob.c
+sqlite3_vdbeblob.o: $(srcdir)/../../sqlite/vdbeblob.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/vdbeblob.c
 
-sqlite3_vdbefifo.o: $(srcdir)/sqlite/vdbefifo.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/vdbefifo.c
+sqlite3_vdbefifo.o: $(srcdir)/../../sqlite/vdbefifo.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/vdbefifo.c
 
-sqlite3_vdbemem.o: $(srcdir)/sqlite/vdbemem.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/vdbemem.c
+sqlite3_vdbemem.o: $(srcdir)/../../sqlite/vdbemem.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/vdbemem.c
 
-sqlite3_vtab.o: $(srcdir)/sqlite/vtab.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/vtab.c
+sqlite3_vtab.o: $(srcdir)/../../sqlite/vtab.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/vtab.c
 
-sqlite3_where.o: $(srcdir)/sqlite/where.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/where.c
+sqlite3_where.o: $(srcdir)/../../sqlite/where.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/where.c
 
-sqlite3_codec.o: $(srcdir)/sqlite/codec/codec.cpp
-	$(CXXC) -c -o $@ $(SQLITE3_CXXFLAGS) $(srcdir)/sqlite/codec/codec.cpp
+sqlite3_codec.o: $(srcdir)/../../sqlite/codec/codec.cpp
+	$(CXXC) -c -o $@ $(SQLITE3_CXXFLAGS) $(srcdir)/../../sqlite/codec/codec.cpp
 
-sqlite3_codecext.o: $(srcdir)/sqlite/codec/codecext.cpp
-	$(CXXC) -c -o $@ $(SQLITE3_CXXFLAGS) $(srcdir)/sqlite/codec/codecext.cpp
+sqlite3_codecext.o: $(srcdir)/../../sqlite/codec/codecext.cpp
+	$(CXXC) -c -o $@ $(SQLITE3_CXXFLAGS) $(srcdir)/../../sqlite/codec/codecext.cpp
 
-sqlite3_rijndael.o: $(srcdir)/sqlite/codec/rijndael.cpp
-	$(CXXC) -c -o $@ $(SQLITE3_CXXFLAGS) $(srcdir)/sqlite/codec/rijndael.cpp
+sqlite3_rijndael.o: $(srcdir)/../../sqlite/codec/rijndael.cpp
+	$(CXXC) -c -o $@ $(SQLITE3_CXXFLAGS) $(srcdir)/../../sqlite/codec/rijndael.cpp
 
-UnitTest++_AssertException.o: $(srcdir)/UnitTest++/src/AssertException.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/AssertException.cpp
+UnitTest++_AssertException.o: $(srcdir)/../../UnitTest++/src/AssertException.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/AssertException.cpp
 
-UnitTest++_Checks.o: $(srcdir)/UnitTest++/src/Checks.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/Checks.cpp
+UnitTest++_Checks.o: $(srcdir)/../../UnitTest++/src/Checks.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/Checks.cpp
 
-UnitTest++_CurrentTest.o: $(srcdir)/UnitTest++/src/CurrentTest.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/CurrentTest.cpp
+UnitTest++_CurrentTest.o: $(srcdir)/../../UnitTest++/src/CurrentTest.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/CurrentTest.cpp
 
-UnitTest++_DeferredTestReporter.o: $(srcdir)/UnitTest++/src/DeferredTestReporter.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/DeferredTestReporter.cpp
+UnitTest++_DeferredTestReporter.o: $(srcdir)/../../UnitTest++/src/DeferredTestReporter.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/DeferredTestReporter.cpp
 
-UnitTest++_DeferredTestResult.o: $(srcdir)/UnitTest++/src/DeferredTestResult.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/DeferredTestResult.cpp
+UnitTest++_DeferredTestResult.o: $(srcdir)/../../UnitTest++/src/DeferredTestResult.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/DeferredTestResult.cpp
 
-UnitTest++_MemoryOutStream.o: $(srcdir)/UnitTest++/src/MemoryOutStream.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/MemoryOutStream.cpp
+UnitTest++_MemoryOutStream.o: $(srcdir)/../../UnitTest++/src/MemoryOutStream.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/MemoryOutStream.cpp
 
-UnitTest++_ReportAssert.o: $(srcdir)/UnitTest++/src/ReportAssert.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/ReportAssert.cpp
+UnitTest++_ReportAssert.o: $(srcdir)/../../UnitTest++/src/ReportAssert.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/ReportAssert.cpp
 
-UnitTest++_Test.o: $(srcdir)/UnitTest++/src/Test.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/Test.cpp
+UnitTest++_Test.o: $(srcdir)/../../UnitTest++/src/Test.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/Test.cpp
 
-UnitTest++_TestDetails.o: $(srcdir)/UnitTest++/src/TestDetails.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/TestDetails.cpp
+UnitTest++_TestDetails.o: $(srcdir)/../../UnitTest++/src/TestDetails.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/TestDetails.cpp
 
-UnitTest++_TestList.o: $(srcdir)/UnitTest++/src/TestList.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/TestList.cpp
+UnitTest++_TestList.o: $(srcdir)/../../UnitTest++/src/TestList.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/TestList.cpp
 
-UnitTest++_TestReporter.o: $(srcdir)/UnitTest++/src/TestReporter.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/TestReporter.cpp
+UnitTest++_TestReporter.o: $(srcdir)/../../UnitTest++/src/TestReporter.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/TestReporter.cpp
 
-UnitTest++_TestReporterStdout.o: $(srcdir)/UnitTest++/src/TestReporterStdout.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/TestReporterStdout.cpp
+UnitTest++_TestReporterStdout.o: $(srcdir)/../../UnitTest++/src/TestReporterStdout.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/TestReporterStdout.cpp
 
-UnitTest++_TestResults.o: $(srcdir)/UnitTest++/src/TestResults.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/TestResults.cpp
+UnitTest++_TestResults.o: $(srcdir)/../../UnitTest++/src/TestResults.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/TestResults.cpp
 
-UnitTest++_TestRunner.o: $(srcdir)/UnitTest++/src/TestRunner.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/TestRunner.cpp
+UnitTest++_TestRunner.o: $(srcdir)/../../UnitTest++/src/TestRunner.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/TestRunner.cpp
 
-UnitTest++_TimeConstraint.o: $(srcdir)/UnitTest++/src/TimeConstraint.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/TimeConstraint.cpp
+UnitTest++_TimeConstraint.o: $(srcdir)/../../UnitTest++/src/TimeConstraint.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/TimeConstraint.cpp
 
-UnitTest++_XmlTestReporter.o: $(srcdir)/UnitTest++/src/XmlTestReporter.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/XmlTestReporter.cpp
+UnitTest++_XmlTestReporter.o: $(srcdir)/../../UnitTest++/src/XmlTestReporter.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/XmlTestReporter.cpp
 
-UnitTest++_TimeHelpers.o: $(srcdir)/UnitTest++/src/Posix/TimeHelpers.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/Posix/TimeHelpers.cpp
+UnitTest++_TimeHelpers.o: $(srcdir)/../../UnitTest++/src/Posix/TimeHelpers.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/Posix/TimeHelpers.cpp
 
-UnitTest++_SignalTranslator.o: $(srcdir)/UnitTest++/src/Posix/SignalTranslator.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/UnitTest++/src/Posix/SignalTranslator.cpp
+UnitTest++_SignalTranslator.o: $(srcdir)/../../UnitTest++/src/Posix/SignalTranslator.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/Posix/SignalTranslator.cpp
 
-mmex_tests_mmex_rc.o: $(srcdir)/resources/mmex.rc
-	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/src --include-dir $(srcdir)/include --include-dir $(srcdir)/sqlite --include-dir $(srcdir)/UnitTest++/src
+mmex_tests_mmex_rc.o: $(srcdir)/../../resources/mmex.rc
+	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../sqlite --include-dir $(srcdir)/../../UnitTest++/src
 
-mmex_tests_aboutdialog.o: $(srcdir)/src/aboutdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/aboutdialog.cpp
+mmex_tests_aboutdialog.o: $(srcdir)/../../src/aboutdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/aboutdialog.cpp
 
-mmex_tests_appstartdialog.o: $(srcdir)/src/appstartdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/appstartdialog.cpp
+mmex_tests_appstartdialog.o: $(srcdir)/../../src/appstartdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/appstartdialog.cpp
 
-mmex_tests_assetdialog.o: $(srcdir)/src/assetdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/assetdialog.cpp
+mmex_tests_assetdialog.o: $(srcdir)/../../src/assetdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/assetdialog.cpp
 
-mmex_tests_assetspanel.o: $(srcdir)/src/assetspanel.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/assetspanel.cpp
+mmex_tests_assetspanel.o: $(srcdir)/../../src/assetspanel.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/assetspanel.cpp
 
-mmex_tests_billsdepositsdialog.o: $(srcdir)/src/billsdepositsdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/billsdepositsdialog.cpp
+mmex_tests_billsdepositsdialog.o: $(srcdir)/../../src/billsdepositsdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/billsdepositsdialog.cpp
 
-mmex_tests_billsdepositspanel.o: $(srcdir)/src/billsdepositspanel.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/billsdepositspanel.cpp
+mmex_tests_billsdepositspanel.o: $(srcdir)/../../src/billsdepositspanel.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/billsdepositspanel.cpp
 
-mmex_tests_budgetentrydialog.o: $(srcdir)/src/budgetentrydialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/budgetentrydialog.cpp
+mmex_tests_budgetentrydialog.o: $(srcdir)/../../src/budgetentrydialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/budgetentrydialog.cpp
 
-mmex_tests_budgetingpanel.o: $(srcdir)/src/budgetingpanel.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/budgetingpanel.cpp
+mmex_tests_budgetingpanel.o: $(srcdir)/../../src/budgetingpanel.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/budgetingpanel.cpp
 
-mmex_tests_budgetyeardialog.o: $(srcdir)/src/budgetyeardialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/budgetyeardialog.cpp
+mmex_tests_budgetyeardialog.o: $(srcdir)/../../src/budgetyeardialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/budgetyeardialog.cpp
 
-mmex_tests_budgetyearentrydialog.o: $(srcdir)/src/budgetyearentrydialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/budgetyearentrydialog.cpp
+mmex_tests_budgetyearentrydialog.o: $(srcdir)/../../src/budgetyearentrydialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/budgetyearentrydialog.cpp
 
-mmex_tests_categdialog.o: $(srcdir)/src/categdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/categdialog.cpp
+mmex_tests_categdialog.o: $(srcdir)/../../src/categdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/categdialog.cpp
 
-mmex_tests_chart.o: $(srcdir)/src/chart.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/chart.cpp
+mmex_tests_chart.o: $(srcdir)/../../src/chart.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/chart.cpp
 
-mmex_tests_currencydialog.o: $(srcdir)/src/currencydialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/currencydialog.cpp
+mmex_tests_currencydialog.o: $(srcdir)/../../src/currencydialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/currencydialog.cpp
 
-mmex_tests_customsqldialog.o: $(srcdir)/src/customsqldialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/customsqldialog.cpp
+mmex_tests_customsqldialog.o: $(srcdir)/../../src/customsqldialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/customsqldialog.cpp
 
-mmex_tests_dbwrapper.o: $(srcdir)/src/dbwrapper.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/dbwrapper.cpp
+mmex_tests_dbwrapper.o: $(srcdir)/../../src/dbwrapper.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/dbwrapper.cpp
 
-mmex_tests_fileviewerdialog.o: $(srcdir)/src/fileviewerdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/fileviewerdialog.cpp
+mmex_tests_fileviewerdialog.o: $(srcdir)/../../src/fileviewerdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/fileviewerdialog.cpp
 
-mmex_tests_filtertransdialog.o: $(srcdir)/src/filtertransdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/filtertransdialog.cpp
+mmex_tests_filtertransdialog.o: $(srcdir)/../../src/filtertransdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/filtertransdialog.cpp
 
-mmex_tests_htmlbuilder.o: $(srcdir)/src/htmlbuilder.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/htmlbuilder.cpp
+mmex_tests_htmlbuilder.o: $(srcdir)/../../src/htmlbuilder.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/htmlbuilder.cpp
 
-mmex_tests_led.o: $(srcdir)/src/led.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/led.cpp
+mmex_tests_led.o: $(srcdir)/../../src/led.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/led.cpp
 
-mmex_tests_maincurrencydialog.o: $(srcdir)/src/maincurrencydialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/maincurrencydialog.cpp
+mmex_tests_maincurrencydialog.o: $(srcdir)/../../src/maincurrencydialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/maincurrencydialog.cpp
 
-mmex_tests_mmaccount.o: $(srcdir)/src/mmaccount.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/mmaccount.cpp
+mmex_tests_mmaccount.o: $(srcdir)/../../src/mmaccount.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmaccount.cpp
 
-mmex_tests_mmcategory.o: $(srcdir)/src/mmcategory.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/mmcategory.cpp
+mmex_tests_mmcategory.o: $(srcdir)/../../src/mmcategory.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmcategory.cpp
 
-mmex_tests_mmcheckingpanel.o: $(srcdir)/src/mmcheckingpanel.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/mmcheckingpanel.cpp
+mmex_tests_mmcheckingpanel.o: $(srcdir)/../../src/mmcheckingpanel.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmcheckingpanel.cpp
 
-mmex_tests_mmcoredb.o: $(srcdir)/src/mmcoredb.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/mmcoredb.cpp
+mmex_tests_mmcoredb.o: $(srcdir)/../../src/mmcoredb.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmcoredb.cpp
 
-mmex_tests_mmcurrency.o: $(srcdir)/src/mmcurrency.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/mmcurrency.cpp
+mmex_tests_mmcurrency.o: $(srcdir)/../../src/mmcurrency.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmcurrency.cpp
 
-mmex_tests_src_mmex.o: $(srcdir)/src/mmex.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/mmex.cpp
+mmex_tests_src_mmex.o: $(srcdir)/../../src/mmex.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmex.cpp
 
-mmex_tests_mmgraphgenerator.o: $(srcdir)/src/mmgraphgenerator.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/mmgraphgenerator.cpp
+mmex_tests_mmgraphgenerator.o: $(srcdir)/../../src/mmgraphgenerator.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmgraphgenerator.cpp
 
-mmex_tests_mmgraphtopcategories.o: $(srcdir)/src/mmgraphtopcategories.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/mmgraphtopcategories.cpp
+mmex_tests_mmgraphtopcategories.o: $(srcdir)/../../src/mmgraphtopcategories.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmgraphtopcategories.cpp
 
-mmex_tests_mmhelppanel.o: $(srcdir)/src/mmhelppanel.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/mmhelppanel.cpp
+mmex_tests_mmhelppanel.o: $(srcdir)/../../src/mmhelppanel.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmhelppanel.cpp
 
-mmex_tests_mmhomepagepanel.o: $(srcdir)/src/mmhomepagepanel.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/mmhomepagepanel.cpp
+mmex_tests_mmhomepagepanel.o: $(srcdir)/../../src/mmhomepagepanel.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmhomepagepanel.cpp
 
-mmex_tests_mmpayee.o: $(srcdir)/src/mmpayee.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/mmpayee.cpp
+mmex_tests_mmpayee.o: $(srcdir)/../../src/mmpayee.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmpayee.cpp
 
-mmex_tests_mmreportspanel.o: $(srcdir)/src/mmreportspanel.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/mmreportspanel.cpp
+mmex_tests_mmreportspanel.o: $(srcdir)/../../src/mmreportspanel.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmreportspanel.cpp
 
-mmex_tests_mmtransaction.o: $(srcdir)/src/mmtransaction.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/mmtransaction.cpp
+mmex_tests_mmtransaction.o: $(srcdir)/../../src/mmtransaction.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmtransaction.cpp
 
-mmex_tests_mmyahoo.o: $(srcdir)/src/mmyahoo.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/mmyahoo.cpp
+mmex_tests_mmyahoo.o: $(srcdir)/../../src/mmyahoo.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmyahoo.cpp
 
-mmex_tests_newacctdialog.o: $(srcdir)/src/newacctdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/newacctdialog.cpp
+mmex_tests_newacctdialog.o: $(srcdir)/../../src/newacctdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/newacctdialog.cpp
 
-mmex_tests_optionsdialog.o: $(srcdir)/src/optionsdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/optionsdialog.cpp
+mmex_tests_optionsdialog.o: $(srcdir)/../../src/optionsdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/optionsdialog.cpp
 
-mmex_tests_payeedialog.o: $(srcdir)/src/payeedialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/payeedialog.cpp
+mmex_tests_payeedialog.o: $(srcdir)/../../src/payeedialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/payeedialog.cpp
 
-mmex_tests_qifimport.o: $(srcdir)/src/qifimport.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/qifimport.cpp
+mmex_tests_qifimport.o: $(srcdir)/../../src/qifimport.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/qifimport.cpp
 
-mmex_tests_splitdetailsdialog.o: $(srcdir)/src/splitdetailsdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/splitdetailsdialog.cpp
+mmex_tests_splitdetailsdialog.o: $(srcdir)/../../src/splitdetailsdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/splitdetailsdialog.cpp
 
-mmex_tests_splittransactionsdialog.o: $(srcdir)/src/splittransactionsdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/splittransactionsdialog.cpp
+mmex_tests_splittransactionsdialog.o: $(srcdir)/../../src/splittransactionsdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/splittransactionsdialog.cpp
 
-mmex_tests_stockdialog.o: $(srcdir)/src/stockdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/stockdialog.cpp
+mmex_tests_stockdialog.o: $(srcdir)/../../src/stockdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/stockdialog.cpp
 
-mmex_tests_stockspanel.o: $(srcdir)/src/stockspanel.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/stockspanel.cpp
+mmex_tests_stockspanel.o: $(srcdir)/../../src/stockspanel.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/stockspanel.cpp
 
-mmex_tests_tinystr.o: $(srcdir)/src/tinystr.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/tinystr.cpp
+mmex_tests_tinystr.o: $(srcdir)/../../src/tinystr.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tinystr.cpp
 
-mmex_tests_tinyxml.o: $(srcdir)/src/tinyxml.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/tinyxml.cpp
+mmex_tests_tinyxml.o: $(srcdir)/../../src/tinyxml.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tinyxml.cpp
 
-mmex_tests_tinyxmlerror.o: $(srcdir)/src/tinyxmlerror.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/tinyxmlerror.cpp
+mmex_tests_tinyxmlerror.o: $(srcdir)/../../src/tinyxmlerror.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tinyxmlerror.cpp
 
-mmex_tests_tinyxmlparser.o: $(srcdir)/src/tinyxmlparser.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/tinyxmlparser.cpp
+mmex_tests_tinyxmlparser.o: $(srcdir)/../../src/tinyxmlparser.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tinyxmlparser.cpp
 
-mmex_tests_transdialog.o: $(srcdir)/src/transdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/transdialog.cpp
+mmex_tests_transdialog.o: $(srcdir)/../../src/transdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/transdialog.cpp
 
-mmex_tests_univcsvdialog.o: $(srcdir)/src/univcsvdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/univcsvdialog.cpp
+mmex_tests_univcsvdialog.o: $(srcdir)/../../src/univcsvdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/univcsvdialog.cpp
 
-mmex_tests_util.o: $(srcdir)/src/util.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/util.cpp
+mmex_tests_util.o: $(srcdir)/../../src/util.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/util.cpp
 
-mmex_tests_wxsqlite3.o: $(srcdir)/src/wxsqlite3.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/wxsqlite3.cpp
+mmex_tests_wxsqlite3.o: $(srcdir)/../../src/wxsqlite3.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/wxsqlite3.cpp
 
-mmex_tests_wxtinyxml.o: $(srcdir)/src/wxtinyxml.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/wxtinyxml.cpp
+mmex_tests_wxtinyxml.o: $(srcdir)/../../src/wxtinyxml.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/wxtinyxml.cpp
 
-mmex_tests_yahoosettingsdialog.o: $(srcdir)/src/yahoosettingsdialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/yahoosettingsdialog.cpp
+mmex_tests_yahoosettingsdialog.o: $(srcdir)/../../src/yahoosettingsdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/yahoosettingsdialog.cpp
 
-mmex_tests_utils.o: $(srcdir)/src/tests/utils.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/tests/utils.cpp
+mmex_tests_utils.o: $(srcdir)/../../src/tests/utils.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/utils.cpp
 
-mmex_tests_dbwrapper_test.o: $(srcdir)/src/tests/dbwrapper_test.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/tests/dbwrapper_test.cpp
+mmex_tests_dbwrapper_test.o: $(srcdir)/../../src/tests/dbwrapper_test.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/dbwrapper_test.cpp
 
-mmex_tests_Main.o: $(srcdir)/src/tests/Main.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/src/tests/Main.cpp
+mmex_tests_Main.o: $(srcdir)/../../src/tests/Main.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/Main.cpp
 
 
 # Include dependency info, if present:

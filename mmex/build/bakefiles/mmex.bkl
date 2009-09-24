@@ -13,11 +13,10 @@ Bakefile for generating makefiles.
     
     <!-- Default root of sources is dir where output script will be created.
          autoconf script resides in trunk/mmex but others in trunk/mmex/build/msw.
-         We should fix this.
     -->
 
     <if cond="FORMAT!='autoconf'">
-            <set-srcdir>../..</set-srcdir>
+	<set-srcdir>../..</set-srcdir>
     </if>
 
     <!-- relative to trunk/mmex -->
@@ -28,16 +27,15 @@ Bakefile for generating makefiles.
     <include file="sqlite.bkl"/>
 
 
-    <set var="TESTS_DIR_PREFIX">
-	<if cond="TOOLSET!='win32'">$(SRCDIR)/$(SRC)/</if>
-    </set>
-    
-
     <!-- unit tests target (not dependency of 'all'): -->
     <subproject id="test">
-        <dir>$(TESTS_DIR_PREFIX)tests</dir>
+        
+        <dir cond="FORMAT=='autoconf'">$(BUILDDIR)/src/tests</dir>
+        <dir cond="FORMAT!='autoconf'">tests</dir>
+    
         <target>test</target>
         <installable>no</installable>
+
     </subproject>
 
 
