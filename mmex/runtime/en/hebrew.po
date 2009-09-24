@@ -1,2744 +1,3780 @@
+#msgid "Total: %s"
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"סה\"כ: %s\n"
+"Project-Id-Version: TheZeal Software\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-11-01 21:24-0600\n"
-"Last-Translator: Madhan <madhan@yahoo.com>\n"
-"Language-Team: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
+"Language-Team: Avi Markovitz\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-msgid ""=0A"
-msgstr ""=0A"
-
-#: src/aboutdialog.cpp:88=0A=
-msgid "Linux Port by : "=0A"
-msgstr ""=0A"
-
-#: src/aboutdialog.cpp:94=0A=
-msgid "Translations by : "=0A"
-msgstr ""=0A"
-
-#: src/aboutdialog.cpp:125=0A=
-msgid "  and contributers from around the world."=0A"
-msgstr ""=0A"
-
-#: src/aboutdialog.cpp:130=0A=
-msgid "Released under the GNU GPL License"=0A"
-msgstr ""=0A"
-
-#: src/aboutdialog.cpp:142=0A=
-msgid "Powered by wxWidgets (c) www.wxwidgets.org"=0A"
-msgstr ""=0A"
-
-#: src/aboutdialog.cpp:146=0A=
-msgid "Powered by SQLite (c) www.sqlite.org"=0A"
-msgstr ""=0A"
-
-#: src/aboutdialog.cpp:150=0A=
-msgid "Version History"=0A"
-msgstr ""=0A"
-
-#: src/aboutdialog.cpp:158=0A=
-msgid "Using Language : "=0A"
-msgstr ""=0A"
-
-#: src/appstartdialog.cpp:97=0A=
-msgid "Open Last Opened Database"=0A"
-msgstr "=D7=A4=D7=AA=D7=97 =D7=9E=D7=A1=D7=93 "
-
-#: src/appstartdialog.cpp:110=0A=
-msgid "Open the previously opened database : "=0A"
-msgstr ""=0A"
-
-#: src/appstartdialog.cpp:117=0A=
-msgid "Create a New Money Manager File"=0A"
-msgstr ""=0A"
-
-#: src/appstartdialog.cpp:118=0A=
-msgid "Create a new database file to get started"=0A"
-msgstr "=D7=A6=D7=95=D7=A8 =D7=9E=D7=A1=D7=93 "
-
-#: src/appstartdialog.cpp:122=0A=
-msgid "Open Existing Money Manager File"=0A"
-msgstr ""=0A"
-
-#: src/appstartdialog.cpp:123=0A=
-msgid "Open an already created Money Manager Ex database file with "
-msgstr ""=0A"
-
-#: src/appstartdialog.cpp:127=0A=
-msgid "Read Documentation"=0A"
-msgstr ""=0A"
-
-#: src/appstartdialog.cpp:128=0A=
-msgid "Read the user manual"=0A"
-msgstr ""=0A"
-
-#: src/appstartdialog.cpp:132=0A=
-msgid "Visit Website for more information"=0A"
-msgstr ""=0A"
-
-#: src/appstartdialog.cpp:133=0A=
-msgid "Open the Money Manager Ex website for latest news, updates etc"=0A"
-msgstr ""=0A"
-
-#: src/appstartdialog.cpp:140=0A=
-msgid "Show this window next time Money Manager Ex starts"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:153=0A=
-msgid "Asset Details"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:166=0A=
-#: src/assets.cpp:139=0A=
-msgid "Name"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:172=0A=
-msgid "Enter the name of the asset"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:176=0A=
-#: src/bddialog.cpp:369=0A=
-#: src/stockdialog.cpp:160=0A=
-#: src/transdialog.cpp:278=0A=
-#: src/univcsv.cpp:166=0A=
-#: src/univcsv.cpp:196=0A=
-msgid "Date"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:183=0A=
-msgid "Specify the date of purchase of asset"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:186=0A=
-msgid "Asset Type"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:192=0A=
-msgid "Property"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:193=0A=
-msgid "Automobile"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:194=0A=
-msgid "Household Object"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:195=0A=
-msgid "Art"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:196=0A=
-msgid "Jewellery"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:197=0A=
-msgid "Other"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:201=0A=
-msgid "Select type of asset"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:207=0A=
-#: src/assetdialog.cpp:292=0A=
-#: src/assets.cpp:147=0A=
-#: src/stockdialog.cpp:245=0A=
-#: src/stocks.cpp:170=0A=
-msgid "Value"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:213=0A=
-msgid "Enter the current value of the asset"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:219=0A=
-msgid "Change in Value"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:225=0A=
-#: src/bddialog.cpp:270=0A=
-#: src/bddialog.cpp:397=0A=
-#: src/billsdeposits.cpp:243=0A=
-#: src/budgetentrydialog.cpp:157=0A=
-#: src/filtertransdialog.cpp:240=0A=
-#: src/transdialog.cpp:306=0A=
-msgid "None"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:226=0A=
-msgid "Appreciates"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:227=0A=
-msgid "Depreciates"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:231=0A=
-msgid "Specify if the value of the asset changes over time"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:236=0A=
-msgid "Rate of Change"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:242=0A=
-msgid "Enter the rate at which the asset changes its value in %"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:249=0A=
-#: src/bddialog.cpp:410=0A=
-#: src/stockdialog.cpp:213=0A=
-#: src/transdialog.cpp:319=0A=
-#: src/univcsv.cpp:176=0A=
-#: src/univcsv.cpp:201=0A=
-msgid "Notes"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:255=0A=
-msgid "Enter notes associated with this asset"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:267=0A=
-#: src/bddialog.cpp:437=0A=
-#: src/budgetentrydialog.cpp:187=0A=
-#: src/budgetyearentrydialog.cpp:127=0A=
-#: src/filtertransdialog.cpp:293=0A=
-#: src/newchkacctdialog.cpp:317=0A=
-#: src/stockdialog.cpp:262=0A=
-#: src/transdialog.cpp:346=0A=
-msgid "OK"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:271=0A=
-#: src/bddialog.cpp:441=0A=
-#: src/budgetentrydialog.cpp:191=0A=
-#: src/budgetyearentrydialog.cpp:132=0A=
-#: src/filtertransdialog.cpp:296=0A=
-#: src/newchkacctdialog.cpp:321=0A=
-#: src/stockdialog.cpp:266=0A=
-#: src/transdialog.cpp:350=0A=
-msgid "Cancel"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:299=0A=
-#: src/assetdialog.cpp:325=0A=
-msgid "Invalid Value "=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:299=0A=
-#: src/assetdialog.cpp:325=0A=
-#: src/bddialog.cpp:590=0A=
-#: src/bddialog.cpp:747=0A=
-#: src/bddialog.cpp:768=0A=
-#: src/budgetentrydialog.cpp:226=0A=
-#: src/budgetyearentrydialog.cpp:145=0A=
-#: src/budgetyearentrydialog.cpp:152=0A=
-#: src/budgetyearentrydialog.cpp:175=0A=
-#: src/categdialog.cpp:168=0A=
-#: src/categdialog.cpp:188=0A=
-#: src/categdialog.cpp:220=0A=
-#: src/categdialog.cpp:228=0A=
-#: src/currencydialog.cpp:308=0A=
-#: src/filtertransdialog.cpp:503=0A=
-#: src/filtertransdialog.cpp:517=0A=
-#: src/mmex.cpp:1774=0A=
-#: src/mmex.cpp:1850=0A=
-#: src/mmex.cpp:2175=0A=
-#: src/mmex.cpp:2217=0A=
-#: src/newchkacctdialog.cpp:357=0A=
-#: src/payeedialog.cpp:176=0A=
-#: src/payeedialog.cpp:188=0A=
-#: src/qifimport.cpp:355=0A=
-#: src/stockdialog.cpp:347=0A=
-#: src/stockdialog.cpp:362=0A=
-#: src/stockdialog.cpp:371=0A=
-#: src/stockdialog.cpp:380=0A=
-#: src/transdialog.cpp:491=0A=
-#: src/transdialog.cpp:656=0A=
-#: src/transdialog.cpp:677=0A=
-#: src/univcsv.cpp:236=0A=
-#: src/univcsv.cpp:248=0A=
-#: src/util.cpp:141=0A=
-#: src/util.cpp:222=0A=
-#: src/util.cpp:461=0A=
-#: include/mmex.h:299=0A=
-msgid "Error"=0A"
-msgstr ""=0A"
-
-#: src/assetdialog.cpp:318=0A=
-msgid "Rate of Change in Value"=0A"
-msgstr ""=0A"
-
-#: src/assets.cpp:112=0A=
-#: src/mmex.cpp:520=0A=
-#: src/mmex.cpp:548=0A=
-#: src/mmex.cpp:1495=0A=
-#: src/mmhomepagepanel.cpp:175=0A=
-msgid "Assets"=0A"
-msgstr "=D7=A0=D7=9B=D7=A1=D7=99=D7=9D"=0A"
-
-#: src/assets.cpp:118=0A=
-#: src/stocks.cpp:130=0A=
-msgid "Total:"=0A"
-msgstr ""=0A"
-
-#: src/assets.cpp:143=0A=
-msgid "Type"=0A"
-msgstr ""=0A"
-
-#: src/assets.cpp:179=0A=
-#: src/mmcheckingpanel.cpp:317=0A=
-#: src/mmex.cpp:1573=0A=
-#: src/stocks.cpp:208=0A=
-msgid "New"=0A"
-msgstr ""=0A"
-
-#: src/assets.cpp:181=0A=
-msgid "New Asset"=0A"
-msgstr ""=0A"
-
-#: src/assets.cpp:184=0A=
-#: src/categdialog.cpp:140=0A=
-#: src/mmcheckingpanel.cpp:322=0A=
-#: src/payeedialog.cpp:148=0A=
-#: src/stocks.cpp:213=0A=
-msgid "Edit"=0A"
-msgstr ""=0A"
-
-#: src/assets.cpp:186=0A=
-msgid "Edit Asset"=0A"
-msgstr ""=0A"
-
-#: src/assets.cpp:189=0A=
-#: src/categdialog.cpp:145=0A=
-#: src/mmcheckingpanel.cpp:327=0A=
-#: src/payeedialog.cpp:153=0A=
-#: src/stocks.cpp:218=0A=
-msgid "Delete"=0A"
-msgstr ""=0A"
-
-#: src/assets.cpp:191=0A=
-msgid "Delete Asset"=0A"
-msgstr ""=0A"
-
-#: src/assets.cpp:210=0A=
-#: src/stocks.cpp:262=0A=
-#, c-format=0A=
-msgid "Total: %s"=0A"
-msgstr ""=0A"
-
-#: src/assets.cpp:261=0A=
-msgid "&New Asset"=0A"
-msgstr ""=0A"
-
-#: src/assets.cpp:263=0A=
-msgid "&Edit Asset"=0A"
-msgstr ""=0A"
-
-#: src/assets.cpp:264=0A=
-msgid "&Delete Asset"=0A"
-msgstr ""=0A"
-
-#: src/assets.cpp:337=0A=
-msgid "Do you really want to delete the Asset?"=0A"
-msgstr ""=0A"
-
-#: src/assets.cpp:338=0A=
-msgid "Confirm Asset Deletion"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:235=0A=
-msgid "Bills && Deposit Details"=0A"
-msgstr "=D7=97=D7=A9=D7=91=D7=95=D7=A0=D7=95=D7=AA "=0A"
-
-#: src/bddialog.cpp:244=0A=
-msgid "Account Name"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:249=0A=
-#: src/stockdialog.cpp:154=0A=
-#: src/stockdialog.cpp:287=0A=
-msgid "Select Account"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:254=0A=
-msgid "Next Occurence"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:261=0A=
-msgid "Specify the date of the next bill or deposit"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:264=0A=
-msgid "Repeats"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:271=0A=
-#: src/billsdeposits.cpp:247=0A=
-#: src/budgetentrydialog.cpp:158=0A=
-msgid "Weekly"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:272=0A=
-#: src/billsdeposits.cpp:251=0A=
-#: src/budgetentrydialog.cpp:159=0A=
-msgid "Bi-Weekly"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:273=0A=
-#: src/billsdeposits.cpp:255=0A=
-#: src/budgetentrydialog.cpp:160=0A=
-msgid "Monthly"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:274=0A=
-#: src/billsdeposits.cpp:259=0A=
-#: src/budgetentrydialog.cpp:161=0A=
-msgid "Bi-Monthly"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:275=0A=
-#: src/billsdeposits.cpp:263=0A=
-#: src/budgetentrydialog.cpp:162=0A=
-msgid "Quarterly"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:276=0A=
-#: src/billsdeposits.cpp:267=0A=
-#: src/budgetentrydialog.cpp:163=0A=
-msgid "Half-Yearly"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:277=0A=
-#: src/billsdeposits.cpp:271=0A=
-#: src/budgetentrydialog.cpp:164=0A=
-msgid "Yearly"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:278=0A=
-#: src/billsdeposits.cpp:275=0A=
-msgid "Four Months"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:279=0A=
-#: src/billsdeposits.cpp:279=0A=
-msgid "Four Weeks"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:288=0A=
-msgid "Times Repeated"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:295=0A=
-msgid "Specify the number of times this series repeats. Leave blank if "
-msgstr ""=0A"
-
-#: src/bddialog.cpp:299=0A=
-msgid "Transaction Details"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:308=0A=
-#: src/transdialog.cpp:216=0A=
-msgid "Transaction Type"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:313=0A=
-#: src/filtertransdialog.cpp:259=0A=
-#: src/mmcheckingpanel.cpp:258=0A=
-#: src/qifimport.cpp:518=0A=
-#: src/transdialog.cpp:221=0A=
-#: src/univcsv.cpp:182=0A=
-#: src/univcsv.cpp:204=0A=
-msgid "Withdrawal"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:314=0A=
-#: src/filtertransdialog.cpp:260=0A=
-#: src/mmcheckingpanel.cpp:260=0A=
-#: src/qifimport.cpp:520=0A=
-#: src/transdialog.cpp:222=0A=
-#: src/univcsv.cpp:184=0A=
-#: src/univcsv.cpp:205=0A=
-msgid "Deposit"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:315=0A=
-#: src/filtertransdialog.cpp:261=0A=
-#: src/transdialog.cpp:223=0A=
-msgid "Transfer"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:322=0A=
-#: src/filtertransdialog.cpp:266=0A=
-#: src/transdialog.cpp:230=0A=
-msgid "Specify the type of transactions to be created."=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:324=0A=
-#: src/transdialog.cpp:232=0A=
-msgid "Advanced"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:328=0A=
-#: src/transdialog.cpp:236=0A=
-msgid "Specify advanced settings for transaction"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:338=0A=
-#: src/bddialog.cpp:677=0A=
-#: src/billsdeposits.cpp:145=0A=
-#: src/mmcheckingpanel.cpp:253=0A=
-#: src/transdialog.cpp:247=0A=
-#: src/transdialog.cpp:582=0A=
-#: src/univcsv.cpp:168=0A=
-#: src/univcsv.cpp:197=0A=
-msgid "Payee"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:342=0A=
-#: src/bddialog.cpp:478=0A=
-#: src/bddialog.cpp:522=0A=
-#: src/bddialog.cpp:673=0A=
-#: src/bddialog.cpp:684=0A=
-#: src/filtertransdialog.cpp:220=0A=
-#: src/transdialog.cpp:252=0A=
-#: src/transdialog.cpp:421=0A=
-#: src/transdialog.cpp:584=0A=
-#: src/transdialog.cpp:600=0A=
-msgid "Select Payee"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:345=0A=
-msgid "Specify where the transaction is going to or coming from "=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:347=0A=
-#: src/mmcheckingpanel.cpp:250=0A=
-#: src/transdialog.cpp:257=0A=
-msgid "Number"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:355=0A=
-#: src/transdialog.cpp:264=0A=
-msgid "Specify any associated check number or transaction number"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:358=0A=
-#: src/transdialog.cpp:267=0A=
-msgid "To"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:363=0A=
-#: src/transdialog.cpp:272=0A=
-msgid "Select To Acct"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:367=0A=
-#: src/transdialog.cpp:276=0A=
-msgid "Specify the transfer account"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:377=0A=
-#: src/transdialog.cpp:286=0A=
-msgid "Specify the date of the transaction"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:382=0A=
-#: src/transdialog.cpp:289=0A=
-#: src/univcsv.cpp:172=0A=
-#: src/univcsv.cpp:199=0A=
-msgid "Category"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:386=0A=
-#: src/bddialog.cpp:487=0A=
-#: src/bddialog.cpp:521=0A=
-#: src/bddialog.cpp:555=0A=
-#: src/bddialog.cpp:620=0A=
-#: src/filtertransdialog.cpp:229=0A=
-#: src/filtertransdialog.cpp:569=0A=
-#: src/transdialog.cpp:294=0A=
-#: src/transdialog.cpp:383=0A=
-#: src/transdialog.cpp:420=0A=
-#: src/transdialog.cpp:456=0A=
-#: src/transdialog.cpp:521=0A=
-msgid "Select Category"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:389=0A=
-#: src/transdialog.cpp:297=0A=
-msgid "Specify the category for this transaction"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:391=0A=
-#: src/transdialog.cpp:300=0A=
-#: include/reporttransactions.h:70=0A=
-msgid "Status"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:398=0A=
-#: src/filtertransdialog.cpp:241=0A=
-#: src/transdialog.cpp:307=0A=
-msgid "Reconciled"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:399=0A=
-#: src/filtertransdialog.cpp:242=0A=
-#: src/transdialog.cpp:308=0A=
-msgid "Void"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:400=0A=
-#: src/filtertransdialog.cpp:243=0A=
-#: src/transdialog.cpp:309=0A=
-msgid "Follow up"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:407=0A=
-#: src/filtertransdialog.cpp:248=0A=
-#: src/transdialog.cpp:316=0A=
-msgid "Specify the status for the transaction"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:417=0A=
-#: src/transdialog.cpp:325=0A=
-msgid "Specify any text notes you want to add to this transaction."=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:420=0A=
-#: src/billsdeposits.cpp:149=0A=
-#: src/budgetingpanel.cpp:221=0A=
-#: src/transdialog.cpp:328=0A=
-msgid "Amount"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:427=0A=
-#: src/transdialog.cpp:336=0A=
-msgid "Specify the amount for this transaction"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:556=0A=
-#: src/bddialog.cpp:696=0A=
-#: src/transdialog.cpp:457=0A=
-msgid "Select To"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:579=0A=
-#: src/transdialog.cpp:480=0A=
-msgid "To Account Amount Entry"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:580=0A=
-#: src/transdialog.cpp:481=0A=
-msgid "Amount to be recorded in To Account"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:590=0A=
-#: src/transdialog.cpp:491=0A=
-msgid "Invalid To Amount Entered "=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:688=0A=
-#: src/bddialog.cpp:702=0A=
-#: src/transdialog.cpp:598=0A=
-#: src/transdialog.cpp:615=0A=
-msgid "From"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:695=0A=
-msgid "Select From"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:723=0A=
-#: src/transdialog.cpp:638=0A=
-msgid "Payee "=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:725=0A=
-#: src/transdialog.cpp:640=0A=
-msgid "From Account "=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:731=0A=
-#: src/mmhomepagepanel.cpp:93=0A=
-#: include/reporttransactions.h:67=0A=
-msgid "Account"=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:741=0A=
-#: src/transdialog.cpp:650=0A=
-msgid "To Account "=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:747=0A=
-#: src/transdialog.cpp:656=0A=
-msgid "From and To Account cannot be the same."=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:768=0A=
-#: src/budgetentrydialog.cpp:226=0A=
-#: src/filtertransdialog.cpp:503=0A=
-#: src/filtertransdialog.cpp:517=0A=
-#: src/transdialog.cpp:677=0A=
-msgid "Invalid Amount Entered "=0A"
-msgstr ""=0A"
-
-#: src/bddialog.cpp:795=0A=
-#: src/transdialog.cpp:705=0A=
-msgid "Category "=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:124=0A=
-#: src/mmex.cpp:1485=0A=
-msgid "Bills && Deposits"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:151=0A=
-msgid "Next Due Date"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:152=0A=
-#: src/budgetingpanel.cpp:216=0A=
-msgid "Frequency"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:153=0A=
-msgid "Remaining Days"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:189=0A=
-msgid "New Series"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:191=0A=
-msgid "New Bills && Deposit Series"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:194=0A=
-msgid "Edit Series"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:196=0A=
-msgid "Edit Bills && Deposit Series"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:199=0A=
-msgid "Delete Series"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:201=0A=
-msgid "Delete Bills && Deposit Series"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:204=0A=
-msgid "Enter Transaction"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:206=0A=
-msgid "Enter Next Bills && Deposit Occurrence"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:288=0A=
-#: src/mmhomepagepanel.cpp:276=0A=
-msgid " days remaining"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:293=0A=
-#: src/mmhomepagepanel.cpp:281=0A=
-msgid " days overdue!"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:360=0A=
-msgid "&New Bills && Deposit Series"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:362=0A=
-msgid "&Edit Bills && Deposit Series"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:363=0A=
-msgid "&Delete Bills && Deposit Series"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:365=0A=
-msgid "Enter next Occurrence"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:451=0A=
-msgid "Do you really want to delete the series?"=0A"
-msgstr ""=0A"
-
-#: src/billsdeposits.cpp:452=0A=
-msgid "Confirm Series Deletion"=0A"
-msgstr ""=0A"
-
-#: src/budgetentrydialog.cpp:135=0A=
-msgid "Type:"=0A"
-msgstr ""=0A"
-
-#: src/budgetentrydialog.cpp:141=0A=
-#: src/mmhomepagepanel.cpp:200=0A=
-msgid "Expense"=0A"
-msgstr ""=0A"
-
-#: src/budgetentrydialog.cpp:142=0A=
-#: src/mmhomepagepanel.cpp:199=0A=
-#: include/reportincexpesestime.h:45=0A=
-msgid "Income"=0A"
-msgstr ""=0A"
-
-#: src/budgetentrydialog.cpp:148=0A=
-msgid "Specify whether this category is an income or an expense category"=0A"
-msgstr ""=0A"
-
-#: src/budgetentrydialog.cpp:151=0A=
-msgid "Frequency:"=0A"
-msgstr ""=0A"
-
-#: src/budgetentrydialog.cpp:170=0A=
-msgid "Specify the frequency of the expense or deposit"=0A"
-msgstr ""=0A"
-
-#: src/budgetentrydialog.cpp:173=0A=
-msgid "Amount:"=0A"
-msgstr ""=0A"
-
-#: src/budgetentrydialog.cpp:181=0A=
-msgid "Enter the amount budgeted for this category."=0A"
-msgstr ""=0A"
-
-#: src/budgetingpanel.cpp:113=0A=
-#: src/budgetingpanel.cpp:140=0A=
-msgid "View All Budget Categories"=0A"
-msgstr ""=0A"
-
-#: src/budgetingpanel.cpp:118=0A=
-#: src/budgetingpanel.cpp:141=0A=
-msgid "View Non-Zero Budget Categories"=0A"
-msgstr ""=0A"
-
-#: src/budgetingpanel.cpp:166=0A=
-msgid "Budget Setup for "=0A"
-msgstr ""=0A"
-
-#: src/budgetingpanel.cpp:183=0A=
-msgid "Viewing All Budget Categories"=0A"
-msgstr ""=0A"
-
-#: src/budgetingpanel.cpp:188=0A=
-msgid "Estimated Income: Actual Income: "=0A"
-msgstr ""=0A"
-
-#: src/budgetingpanel.cpp:195=0A=
-msgid "Estimated Expenses: Actual Expenses: "=0A"
-msgstr ""=0A"
-
-#: src/budgetingpanel.cpp:214=0A=
-#: include/reportcategexp.h:68=0A=
-msgid "Category  "=0A"
-msgstr ""=0A"
-
-#: src/budgetingpanel.cpp:215=0A=
-msgid "Sub Category"=0A"
-msgstr ""=0A"
-
-#: src/budgetingpanel.cpp:224=0A=
-msgid "Estimated"=0A"
-msgstr ""=0A"
-
-#: src/budgetingpanel.cpp:227=0A=
-msgid "Actual"=0A"
-msgstr ""=0A"
-
-#: src/budgetingpanel.cpp:453=0A=
-#, c-format=0A=
-msgid "Estimated Income: %s Actual Income:  %s"=0A"
-msgstr ""=0A"
-
-#: src/budgetingpanel.cpp:458=0A=
-#, c-format=0A=
-msgid "Estimated Expenses: %s Actual Expenses:  %s"=0A"
-msgstr ""=0A"
-
-#: src/budgetyeardialog.cpp:105=0A=
-msgid "Add Budget Year"=0A"
-msgstr ""=0A"
-
-#: src/budgetyeardialog.cpp:108=0A=
-msgid "Add a new budget year"=0A"
-msgstr ""=0A"
-
-#: src/budgetyeardialog.cpp:111=0A=
-msgid "Delete Budget Year"=0A"
-msgstr ""=0A"
-
-#: src/budgetyeardialog.cpp:113=0A=
-msgid "Delete existing budget year"=0A"
-msgstr ""=0A"
-
-#: src/budgetyearentrydialog.cpp:82=0A=
-msgid "Budget Year:"=0A"
-msgstr ""=0A"
-
-#: src/budgetyearentrydialog.cpp:89=0A=
-msgid "Enter the year in YYYY format to specify year"=0A"
-msgstr ""=0A"
-
-#: src/budgetyearentrydialog.cpp:92=0A=
-msgid "Base Budget On:"=0A"
-msgstr ""=0A"
-
-#: src/budgetyearentrydialog.cpp:105=0A=
-msgid "Specify year to base budget on."=0A"
-msgstr ""=0A"
-
-#: src/budgetyearentrydialog.cpp:145=0A=
-#: src/budgetyearentrydialog.cpp:175=0A=
-msgid "Year is not valid"=0A"
-msgstr ""=0A"
-
-#: src/budgetyearentrydialog.cpp:152=0A=
-msgid "Budget Year already exists"=0A"
-msgstr ""=0A"
-
-#: src/categdialog.cpp:132=0A=
-msgid "Enter the name of the category to add or edit here"=0A"
-msgstr ""=0A"
-
-#: src/categdialog.cpp:135=0A=
-#: src/payeedialog.cpp:143=0A=
-#: src/univcsv.cpp:105=0A=
-msgid "Add"=0A"
-msgstr ""=0A"
-
-#: src/categdialog.cpp:137=0A=
-msgid "Add a new category"=0A"
-msgstr ""=0A"
-
-#: src/categdialog.cpp:142=0A=
-msgid "Edit the name of an existing category"=0A"
-msgstr ""=0A"
-
-#: src/categdialog.cpp:147=0A=
-msgid "Delete an existing category. The category cannot be used by "
-msgstr ""=0A"
-
-#: src/categdialog.cpp:153=0A=
-#: src/currencydialog.cpp:280=0A=
-#: src/payeedialog.cpp:161=0A=
-msgid "Select"=0A"
-msgstr ""=0A"
-
-#: src/categdialog.cpp:155=0A=
-msgid "Select the currently selected category as the selected category "
-msgstr ""=0A"
-
-#: src/categdialog.cpp:168=0A=
-msgid "Category with same name exists"=0A"
-msgstr ""=0A"
-
-#: src/categdialog.cpp:188=0A=
-msgid "Sub Category with same name exists"=0A"
-msgstr ""=0A"
-
-#: src/categdialog.cpp:200=0A=
-msgid "Invalid Parent Category. Choose Root or Main Category node."=0A"
-msgstr ""=0A"
-
-#: src/categdialog.cpp:201=0A=
-msgid "Error adding Category"=0A"
-msgstr ""=0A"
-
-#: src/categdialog.cpp:220=0A=
-msgid "Category is in use"=0A"
-msgstr ""=0A"
-
-#: src/categdialog.cpp:228=0A=
-msgid "Sub-Category is in use"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:174=0A=
-msgid "Currency Name"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:184=0A=
-msgid "Prefix Symbol"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:193=0A=
-msgid "Suffix Symbol"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:200=0A=
-msgid "Decimal Char"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:211=0A=
-msgid "Grouping Char"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:220=0A=
-msgid "Unit Name"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:231=0A=
-msgid "Cents Name"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:240=0A=
-msgid "Conversion to Base Rate"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:249=0A=
-msgid "Scale"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:259=0A=
-msgid "Value of 123456.78 will be"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:264=0A=
-msgid "1234567.89"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:272=0A=
-msgid "Add New"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:276=0A=
-msgid "Update"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:286=0A=
-msgid "Name of Currency to Add"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:287=0A=
-msgid "Add Currency"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:308=0A=
-msgid "Currency name already exists!"=0A"
-msgstr ""=0A"
-
-#: src/currencydialog.cpp:343=0A=
-msgid "Base Conversion Rate should be greater than 0.0"=0A"
-msgstr ""=0A"
-
-#: src/filtertransdialog.cpp:184=0A=
-msgid "Specify Account"=0A"
-msgstr ""=0A"
-
-#: src/filtertransdialog.cpp:204=0A=
-msgid "Specify Date Range"=0A"
-msgstr ""=0A"
-
-#: src/filtertransdialog.cpp:216=0A=
-msgid "Specify Payee"=0A"
-msgstr ""=0A"
-
-#: src/filtertransdialog.cpp:225=0A=
-msgid "Specify Category"=0A"
-msgstr ""=0A"
-
-#: src/filtertransdialog.cpp:234=0A=
-msgid "Specify Status"=0A"
-msgstr ""=0A"
-
-#: src/filtertransdialog.cpp:252=0A=
-msgid "Specify Type"=0A"
-msgstr ""=0A"
-
-#: src/filtertransdialog.cpp:270=0A=
-msgid "Specify Amount Range"=0A"
-msgstr ""=0A"
-
-#: src/filtertransdialog.cpp:280=0A=
-msgid "Specify Notes"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:156=0A=
-msgid "View All Transactions"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:157=0A=
-msgid "View Reconciled Transactions"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:158=0A=
-msgid "View Un-Reconciled Transactions"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:159=0A=
-msgid "View Void Transactions"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:160=0A=
-msgid "View Flagged Transactions"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:162=0A=
-msgid "View Transactions from last 30 days"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:163=0A=
-msgid "View Transactions from last 3 months"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:165=0A=
-msgid "Delete all transactions in current view"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:166=0A=
-msgid "Delete all flagged transactions"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:209=0A=
-msgid "Viewing All Transactions"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:246=0A=
-#: include/reporttransactions.h:66=0A=
-msgid "Date  "=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:254=0A=
-msgid "C  "=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:262=0A=
-msgid "Balance"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:319=0A=
-msgid "New Transaction"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:324=0A=
-msgid "Edit Transaction"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:329=0A=
-msgid "Delete Transaction"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:396=0A=
-msgid "Category         : "=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:397=0A=
-msgid "Sub Category  : "=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:398=0A=
-msgid "Notes               : "=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:416=0A=
-#, c-format=0A=
-msgid "Account Balance : %s      Reconciled Balance : %s"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:423=0A=
-#: src/mmex.cpp:1672=0A=
-msgid "Please Wait"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:424=0A=
-msgid "Accessing Database"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:451=0A=
-msgid "Account View : "=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:456=0A=
+"X-Poedit-Language: Hebrew\n"
+"X-Poedit-Country: Israel\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: src/aboutdialog.cpp:153
+msgid "Version: "
+msgstr "גרסה: "
+
+#: src/aboutdialog.cpp:164
+msgid "  and contributers from around the world."
+msgstr "ותורמים מרחבי העולם."
+
+#: src/aboutdialog.cpp:169
+msgid "Released under the GNU GPL License"
+msgstr "GNU GPL מופץ תחת רשיון"
+
+#: src/aboutdialog.cpp:181
+msgid "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
+msgstr "מועצם על ידי wxWidgets, SQLite, wxSQLite (Ulrich Telle)"
+
+#: src/aboutdialog.cpp:185
+msgid "Version History"
+msgstr "הסטורית גרסאות"
+
+#: src/aboutdialog.cpp:190
+msgid "Contributers"
+msgstr "תורמים למאמץ: "
+
+#: src/aboutdialog.cpp:198
+msgid "Using Language : "
+msgstr ": שפת מנשק"
+
+#: src/appstartdialog.cpp:123
+msgid "Open Last Opened Database"
+msgstr "פתח מסד נתונים שנפתח לאחרונה"
+
+#: src/appstartdialog.cpp:136
+msgid "Open the previously opened database : "
+msgstr "פתח מסד נתונים שנפתח לאחרונה: "
+
+#: src/appstartdialog.cpp:143
+msgid "Create a New Database"
+msgstr "צור מסד נתונים חדש"
+
+#: src/appstartdialog.cpp:144
+msgid "Create a new database file to get started"
+msgstr "להתחיל, צור קובץ מסד נתונים חדש"
+
+#: src/appstartdialog.cpp:148
+msgid "Open Existing Database"
+msgstr "פתח מסד נתונים קיים"
+
+#: src/appstartdialog.cpp:149
+msgid "Open an already created database file with extension (*.mmb)"
+msgstr "פתח קובץ מסד נתונים קיים עם סיומת (*.mmb)"
+
+#: src/appstartdialog.cpp:153
+msgid "Read Documentation"
+msgstr "עיין בתעוד"
+
+#: src/appstartdialog.cpp:154
+msgid "Read the user manual"
+msgstr "קרא את המדריך למשתמש"
+
+#: src/appstartdialog.cpp:160
+msgid "Visit Website for more information"
+msgstr "למידע נוסף, בקר באתר הבית"
+
+#: src/appstartdialog.cpp:161
+msgid "Open the Money Manager Ex website for latest news, updates etc"
+msgstr "פתח את אתר Money Manager Ex לחדשות, עדכונים וכו'..."
+
+#: src/appstartdialog.cpp:168
+msgid "Show this window next time "
+msgstr "הצג חלון זה בכניסה הבאה"
+
+#: src/appstartdialog.cpp:170
+msgid " starts"
+msgstr "מתחיל"
+
+#: src/assetdialog.cpp:163
+msgid "Asset Details"
+msgstr "פרטי הנכס"
+
+#: src/assetdialog.cpp:176
+#: src/assetspanel.cpp:139
+msgid "Name"
+msgstr "שם"
+
+#: src/assetdialog.cpp:182
+msgid "Enter the name of the asset"
+msgstr "הזן את שם הנכס"
+
+#: src/assetdialog.cpp:186
+#: src/billsdepositsdialog.cpp:398
+msgid "Date"
+msgstr "תאריך"
+
+#: src/assetdialog.cpp:193
+msgid "Specify the date of purchase of asset"
+msgstr "ציין את מועד רכישת הנכס"
+
+#: src/assetdialog.cpp:196
+msgid "Asset Type"
+msgstr "סוג נכס"
+
+#: src/assetdialog.cpp:202
+#: src/assetspanel.cpp:231
+#: src/assetspanel.cpp:242
+msgid "Property"
+msgstr "נדל\"ן"
+
+#: src/assetdialog.cpp:203
+#: src/assetspanel.cpp:232
+#: src/assetspanel.cpp:244
+msgid "Automobile"
+msgstr "רכב"
+
+#: src/assetdialog.cpp:204
+#: src/assetspanel.cpp:233
+#: src/assetspanel.cpp:246
+msgid "Household Object"
+msgstr "תכולת בית"
+
+#: src/assetdialog.cpp:205
+#: src/assetspanel.cpp:234
+#: src/assetspanel.cpp:248
+msgid "Art"
+msgstr "חפצי אמנות"
+
+#: src/assetdialog.cpp:206
+#: src/assetspanel.cpp:235
+#: src/assetspanel.cpp:250
+msgid "Jewellery"
+msgstr "תכשיטים"
+
+#: src/assetdialog.cpp:207
+#: src/assetspanel.cpp:236
+#: src/assetspanel.cpp:252
+msgid "Cash"
+msgstr "מטבעות"
+
+#: src/assetdialog.cpp:208
+#: src/assetspanel.cpp:237
+#: src/assetspanel.cpp:254
+msgid "Other"
+msgstr "אחר"
+
+#: src/assetdialog.cpp:212
+msgid "Select type of asset"
+msgstr "בחר סוג נכס"
+
+#: src/assetdialog.cpp:218
+#: src/assetdialog.cpp:302
+#: src/assetspanel.cpp:147
+msgid "Value"
+msgstr "ערך נוכחי"
+
+#: src/assetdialog.cpp:224
+msgid "Enter the current value of the asset"
+msgstr "הזן ערך נוכחי של הנכס"
+
+#: src/assetdialog.cpp:230
+msgid "Change in Value"
+msgstr "שינוי ערך"
+
+#: src/assetdialog.cpp:236
+#: src/billsdepositsdialog.cpp:298
+#: src/billsdepositsdialog.cpp:438
+#: src/billsdepositspanel.cpp:267
+#: src/budgetentrydialog.cpp:165
+msgid "None"
+msgstr "ללא"
+
+#: src/assetdialog.cpp:237
+msgid "Appreciates"
+msgstr "מתייקר"
+
+#: src/assetdialog.cpp:238
+msgid "Depreciates"
+msgstr "מופחת"
+
+#: src/assetdialog.cpp:242
+msgid "Specify if the value of the asset changes over time"
+msgstr "הגדר האם ערך הנכס משתנה לאורך זמן"
+
+#: src/assetdialog.cpp:247
+msgid "Rate of Change"
+msgstr "שיעור השינוי"
+
+#: src/assetdialog.cpp:253
+msgid "Enter the rate at which the asset changes its value in % per year"
+msgstr "הזן האחוזים את השיעור השנתי בו הנכס משנה את ערכו"
+
+#: src/assetdialog.cpp:259
+#: src/billsdepositsdialog.cpp:451
+#: src/billsdepositspanel.cpp:164
+msgid "Notes"
+msgstr "הערות"
+
+#: src/assetdialog.cpp:265
+msgid "Enter notes associated with this asset"
+msgstr "הזן הערות משוייכות לנכס"
+
+#: src/assetdialog.cpp:277
+#: src/billsdepositsdialog.cpp:478
+#: src/budgetentrydialog.cpp:195
+#: src/budgetyearentrydialog.cpp:135
+msgid "OK"
+msgstr "OK"
+
+#: src/assetdialog.cpp:281
+#: src/billsdepositsdialog.cpp:482
+#: src/budgetentrydialog.cpp:199
+#: src/budgetyearentrydialog.cpp:140
+msgid "Cancel"
+msgstr "חזור"
+
+#: src/assetdialog.cpp:309
+#: src/assetdialog.cpp:337
+msgid "Invalid Value "
+msgstr "ערך לא חוקי"
+
+#: src/assetdialog.cpp:309
+#: src/assetdialog.cpp:337
+#: src/billsdepositsdialog.cpp:640
+#: src/billsdepositsdialog.cpp:814
+#: src/billsdepositsdialog.cpp:824
+#: src/billsdepositsdialog.cpp:847
+#: src/budgetentrydialog.cpp:234
+#: src/budgetyearentrydialog.cpp:153
+#: src/budgetyearentrydialog.cpp:160
+#: src/budgetyearentrydialog.cpp:183
+#: src/categdialog.cpp:190
+#: src/categdialog.cpp:198
+#: src/categdialog.cpp:217
+#: src/categdialog.cpp:251
+#: src/categdialog.cpp:259
+#: src/categdialog.cpp:368
+msgid "Error"
+msgstr "שגיאה"
+
+#: src/assetdialog.cpp:328
+msgid "Rate of Change in Value"
+msgstr "שיעור השינוי בערך"
+
+#: src/assetspanel.cpp:112
+msgid "Assets"
+msgstr "נכסים"
+
+#: src/assetspanel.cpp:118
+msgid "Total:"
+msgstr " סך הכל:"
+
+#: src/assetspanel.cpp:143
+#: src/billsdepositspanel.cpp:155
+msgid "Type"
+msgstr "סוג"
+
+#: src/assetspanel.cpp:179
+msgid "&New"
+msgstr "ח&דש"
+
+#: src/assetspanel.cpp:181
+msgid "New Asset"
+msgstr "נכס חדש"
+
+#: src/assetspanel.cpp:184
+#: src/categdialog.cpp:162
+msgid "&Edit"
+msgstr "ע&רוך"
+
+#: src/assetspanel.cpp:186
+msgid "Edit Asset"
+msgstr "ערוך נכס"
+
+#: src/assetspanel.cpp:189
+#: src/categdialog.cpp:167
+msgid "&Delete"
+msgstr "מחק&"
+
+#: src/assetspanel.cpp:191
+msgid "Delete Asset"
+msgstr "מחק נכס"
+
+#: src/assetspanel.cpp:291
+msgid "&New Asset"
+msgstr "נ&כס חדש"
+
+#: src/assetspanel.cpp:293
+msgid "&Edit Asset"
+msgstr "ע&רוך נכס"
+
+#: src/assetspanel.cpp:294
+msgid "&Delete Asset"
+msgstr "מח&ק נכס"
+
+#: src/assetspanel.cpp:370
+msgid "Do you really want to delete the Asset?"
+msgstr "האם למחוק את הנכס?"
+
+#: src/assetspanel.cpp:371
+msgid "Confirm Asset Deletion"
+msgstr "אשר מחיקת נכס"
+
+#: src/billsdepositsdialog.cpp:200
+#: src/billsdepositsdialog.cpp:1000
+msgid "Split Category"
+msgstr "פצל קטגוריה"
+
+#: src/billsdepositsdialog.cpp:263
+msgid "Repeating Transaction Details"
+msgstr "פרטי תנועות חוזרות"
+
+#: src/billsdepositsdialog.cpp:272
+msgid "Account Name"
+msgstr "שם חשבון"
+
+#: src/billsdepositsdialog.cpp:277
+msgid "Select Account"
+msgstr "בחר חשבון"
+
+#: src/billsdepositsdialog.cpp:282
+msgid "Next Occurrence"
+msgstr "החזרה הבאה"
+
+#: src/billsdepositsdialog.cpp:289
+msgid "Specify the date of the next bill or deposit"
+msgstr "ציין את מועד ההוצאה או ההפקדה הבאה"
+
+#: src/billsdepositsdialog.cpp:292
+msgid "Repeats"
+msgstr "מחזור"
+
+#: src/billsdepositsdialog.cpp:299
+#: src/billsdepositspanel.cpp:271
+#: src/budgetentrydialog.cpp:166
+msgid "Weekly"
+msgstr "שבועי"
+
+#: src/billsdepositsdialog.cpp:300
+#: src/billsdepositspanel.cpp:275
+#: src/budgetentrydialog.cpp:167
+msgid "Bi-Weekly"
+msgstr "דו שבועי"
+
+#: src/billsdepositsdialog.cpp:301
+#: src/billsdepositspanel.cpp:279
+#: src/budgetentrydialog.cpp:168
+msgid "Monthly"
+msgstr "חודשי"
+
+#: src/billsdepositsdialog.cpp:302
+#: src/billsdepositspanel.cpp:283
+#: src/budgetentrydialog.cpp:169
+msgid "Bi-Monthly"
+msgstr "דו חודשי"
+
+#: src/billsdepositsdialog.cpp:303
+#: src/billsdepositspanel.cpp:287
+#: src/budgetentrydialog.cpp:170
+msgid "Quarterly"
+msgstr "רבעוני"
+
+#: src/billsdepositsdialog.cpp:304
+#: src/billsdepositspanel.cpp:291
+#: src/budgetentrydialog.cpp:171
+msgid "Half-Yearly"
+msgstr "חצי שנתי"
+
+#: src/billsdepositsdialog.cpp:305
+#: src/billsdepositspanel.cpp:295
+#: src/budgetentrydialog.cpp:172
+msgid "Yearly"
+msgstr "שנתי"
+
+#: src/billsdepositsdialog.cpp:306
+#: src/billsdepositspanel.cpp:299
+msgid "Four Months"
+msgstr "ארבעה חודשים"
+
+#: src/billsdepositsdialog.cpp:307
+#: src/billsdepositspanel.cpp:303
+msgid "Four Weeks"
+msgstr "ארבעה שבועות"
+
+#: src/billsdepositsdialog.cpp:308
+msgid "Daily"
+msgstr "יומי"
+
+#: src/billsdepositsdialog.cpp:317
+msgid "Times Repeated"
+msgstr "מספר חזרות"
+
+#: src/billsdepositsdialog.cpp:324
+msgid "Specify the number of times this series repeats. Leave blank if this series continues forever."
+msgstr "הגדר את מספר המופעים של הסידרה. השאר ריק אם הסדרה ללא מועד סיום."
+
+#: src/billsdepositsdialog.cpp:328
+msgid "Transaction Details"
+msgstr "פירטי תנועה"
+
+#: src/billsdepositsdialog.cpp:337
+msgid "Transaction Type"
+msgstr "סוג תנועה"
+
+#: src/billsdepositsdialog.cpp:342
+#: src/billsdepositspanel.cpp:412
+msgid "Withdrawal"
+msgstr "משיכה"
+
+#: src/billsdepositsdialog.cpp:343
+#: src/billsdepositspanel.cpp:414
+msgid "Deposit"
+msgstr "הפקדה"
+
+#: src/billsdepositsdialog.cpp:344
+#: src/billsdepositspanel.cpp:416
+msgid "Transfer"
+msgstr "העברה"
+
+#: src/billsdepositsdialog.cpp:351
+msgid "Specify the type of transactions to be created."
+msgstr "ציין את סוג התנועה שתווצר"
+
+#: src/billsdepositsdialog.cpp:353
+msgid "Advanced"
+msgstr "מתקדם"
+
+#: src/billsdepositsdialog.cpp:357
+msgid "Specify advanced settings for transaction"
+msgstr "ציין הגדרות מתקדמות לתנועה"
+
+#: src/billsdepositsdialog.cpp:367
+#: src/billsdepositsdialog.cpp:739
+#: src/billsdepositspanel.cpp:153
+msgid "Payee"
+msgstr "מוטב"
+
+#: src/billsdepositsdialog.cpp:371
+#: src/billsdepositsdialog.cpp:519
+#: src/billsdepositsdialog.cpp:572
+#: src/billsdepositsdialog.cpp:735
+#: src/billsdepositsdialog.cpp:746
+msgid "Select Payee"
+msgstr "בחר מוטב"
+
+#: src/billsdepositsdialog.cpp:374
+msgid "Specify where the transaction is going to or coming from "
+msgstr "ציין מהיכן או להיכן הולכת התנועה"
+
+#: src/billsdepositsdialog.cpp:376
+msgid "Number"
+msgstr "אסמכתא"
+
+#: src/billsdepositsdialog.cpp:384
+msgid "Specify any associated check number or transaction number"
+msgstr "הזן מספר שק או מספר תנועה כאסמכתא"
+
+#: src/billsdepositsdialog.cpp:387
+msgid "To"
+msgstr "אל"
+
+#: src/billsdepositsdialog.cpp:392
+msgid "Select To Acct"
+msgstr "בחר לחשבון"
+
+#: src/billsdepositsdialog.cpp:396
+msgid "Specify the transfer account"
+msgstr "ציין  את חשבון ההעברה"
+
+#: src/billsdepositsdialog.cpp:406
+msgid "Specify the date of the transaction"
+msgstr "ציין את תאריך התנועה"
+
+#: src/billsdepositsdialog.cpp:411
+msgid "Category"
+msgstr "קטגוריה"
+
+#: src/billsdepositsdialog.cpp:420
+#: src/billsdepositsdialog.cpp:571
+#: src/billsdepositsdialog.cpp:605
+#: src/billsdepositsdialog.cpp:679
+#: src/billsdepositsdialog.cpp:1008
+msgid "Select Category"
+msgstr "בחר קטגוריה"
+
+#: src/billsdepositsdialog.cpp:423
+msgid "Specify the category for this transaction"
+msgstr "ציין קטגוריה עבור תנועה זו"
+
+#: src/billsdepositsdialog.cpp:426
+msgid "Split"
+msgstr "פצל"
+
+#: src/billsdepositsdialog.cpp:432
+msgid "Status"
+msgstr "סטאטוס"
+
+#: src/billsdepositsdialog.cpp:439
+msgid "Reconciled"
+msgstr "מותאם"
+
+#: src/billsdepositsdialog.cpp:440
+msgid "Void"
+msgstr "מבוטל"
+
+#: src/billsdepositsdialog.cpp:441
+msgid "Follow up"
+msgstr "מעקב"
+
+#: src/billsdepositsdialog.cpp:448
+msgid "Specify the status for the transaction"
+msgstr "ציין את הסטאטוס של התנועה"
+
+#: src/billsdepositsdialog.cpp:458
+msgid "Specify any text notes you want to add to this transaction."
+msgstr "הזן הערת טקסט שתרצה לצרף לתנועה זו"
+
+#: src/billsdepositsdialog.cpp:461
+#: src/billsdepositspanel.cpp:159
+#: src/budgetingpanel.cpp:234
+msgid "Amount"
+msgstr "סכום"
+
+#: src/billsdepositsdialog.cpp:468
+msgid "Specify the amount for this transaction"
+msgstr "ציין את סכום התנועה"
+
+#: src/billsdepositsdialog.cpp:606
+#: src/billsdepositsdialog.cpp:758
+msgid "Select To"
+msgstr "בחר אל"
+
+#: src/billsdepositsdialog.cpp:629
+msgid "To Account Amount Entry"
+msgstr "הזנת סכום לחשבון"
+
+#: src/billsdepositsdialog.cpp:630
+msgid "Amount to be recorded in To Account"
+msgstr "סכום שיוזן בשדה לחשבון"
+
+#: src/billsdepositsdialog.cpp:640
+msgid "Invalid To Amount Entered "
+msgstr "הסכום שהוזן לא חוקי"
+
+#: src/billsdepositsdialog.cpp:750
+#: src/billsdepositsdialog.cpp:764
+msgid "From"
+msgstr "מ"
+
+#: src/billsdepositsdialog.cpp:757
+msgid "Select From"
+msgstr "בחר מ"
+
+#: src/billsdepositsdialog.cpp:785
+msgid "Payee "
+msgstr "מוטב"
+
+#: src/billsdepositsdialog.cpp:787
+msgid "From Account "
+msgstr "מחשבון"
+
+#: src/billsdepositsdialog.cpp:795
+#: src/billsdepositsdialog.cpp:803
+msgid "Category "
+msgstr "קטגוריה"
+
+#: src/billsdepositsdialog.cpp:814
+#: src/billsdepositsdialog.cpp:824
+#: src/budgetentrydialog.cpp:234
+msgid "Invalid Amount Entered "
+msgstr "הסכום שהוזן לא חוקי"
+
+#: src/billsdepositsdialog.cpp:831
+#: src/billsdepositspanel.cpp:154
+msgid "Account"
+msgstr "חשבון"
+
+#: src/billsdepositsdialog.cpp:841
+msgid "To Account "
+msgstr "לחשבון"
+
+#: src/billsdepositsdialog.cpp:847
+msgid "From and To Account cannot be the same."
+msgstr "חשבון שולח וחשבון מקבל לא יכולים להיות זהים."
+
+#: src/billsdepositspanel.cpp:132
+msgid "Repeating Transactions"
+msgstr "תנועות חוזרות"
+
+#: src/billsdepositspanel.cpp:161
+msgid "Next Due Date"
+msgstr "מועד הפרעון הבא"
+
+#: src/billsdepositspanel.cpp:162
+#: src/budgetingpanel.cpp:229
+msgid "Frequency"
+msgstr "תדירות"
+
+#: src/billsdepositspanel.cpp:163
+msgid "Remaining Days"
+msgstr "ימים נותרים"
+
+#: src/billsdepositspanel.cpp:210
+msgid "&New Series"
+msgstr "סדרה ח&דשה"
+
+#: src/billsdepositspanel.cpp:212
+msgid "New Bills && Deposit Series"
+msgstr "סידרת משיכות/הפקדות חדשה"
+
+#: src/billsdepositspanel.cpp:215
+msgid "&Edit Series"
+msgstr "ע&רוך סדרות"
+
+#: src/billsdepositspanel.cpp:217
+msgid "Edit Bills && Deposit Series"
+msgstr "ערוך סידרת משיכות/הפקדות"
+
+#: src/billsdepositspanel.cpp:220
+msgid "&Delete Series"
+msgstr "מח&ק סדרה"
+
+#: src/billsdepositspanel.cpp:222
+msgid "Delete Bills && Deposit Series"
+msgstr "מחק סידרת משיכות/הפקדות"
+
+#: src/billsdepositspanel.cpp:225
+msgid "Enter &Transaction"
+msgstr "הזן &תנועה"
+
+#: src/billsdepositspanel.cpp:227
+msgid "Enter Next Bills && Deposit Occurrence"
+msgstr "הזן את המופע הבא של משיכות והפקדות"
+
+#: src/billsdepositspanel.cpp:317
+msgid " days remaining"
+msgstr "ימים נותרים"
+
+#: src/billsdepositspanel.cpp:322
+msgid " days overdue!"
+msgstr "ימים בפיגור! "
+
+#: src/billsdepositspanel.cpp:391
+msgid "&New Bills && Deposit Series"
+msgstr "סידרת מש&כות/הפקדות חדשה"
+
+#: src/billsdepositspanel.cpp:393
+msgid "&Edit Bills && Deposit Series"
+msgstr "ער&וך סידרת משיכות/הפקדות"
+
+#: src/billsdepositspanel.cpp:394
+msgid "&Delete Bills && Deposit Series"
+msgstr "מח&ק סידרת משיכות/הפקדות"
+
+#: src/billsdepositspanel.cpp:396
+msgid "Enter next Occurrence"
+msgstr "הזן החזרה הבאה"
+
+#: src/billsdepositspanel.cpp:501
+msgid "Do you really want to delete the series?"
+msgstr "האם למחוק את הסדרה?"
+
+#: src/billsdepositspanel.cpp:502
+msgid "Confirm Series Deletion"
+msgstr "אשר מחיקת סדרה"
+
+#: src/budgetentrydialog.cpp:143
+msgid "Type:"
+msgstr "סוג: "
+
+#: src/budgetentrydialog.cpp:149
+msgid "Expense"
+msgstr "הוצאה"
+
+#: src/budgetentrydialog.cpp:150
+msgid "Income"
+msgstr "הכנסה"
+
+#: src/budgetentrydialog.cpp:156
+msgid "Specify whether this category is an income or an expense category"
+msgstr "ציין האם קטגוריה זו היא מסוג הכנסה או הוצאה"
+
+#: src/budgetentrydialog.cpp:159
+msgid "Frequency:"
+msgstr "תדירות: "
+
+#: src/budgetentrydialog.cpp:178
+msgid "Specify the frequency of the expense or deposit"
+msgstr "ציין את תדירות ההפקדה או הוצאה"
+
+#: src/budgetentrydialog.cpp:181
+msgid "Amount:"
+msgstr "סכום:"
+
+#: src/budgetentrydialog.cpp:189
+msgid "Enter the amount budgeted for this category."
+msgstr "הזן את הסכום שתוקצב עבור קטגוריה זו"
+
+#: src/budgetingpanel.cpp:115
+#: src/budgetingpanel.cpp:152
+msgid "View All Budget Categories"
+msgstr "הצג את כל קטגוריות התקציב"
+
+#: src/budgetingpanel.cpp:120
+#: src/budgetingpanel.cpp:153
+msgid "View Non-Zero Budget Categories"
+msgstr "הסתר קטגוריות תקציב בסכום אפס"
+
+#: src/budgetingpanel.cpp:125
+#: src/budgetingpanel.cpp:154
+msgid "View Income Budget Categories"
+msgstr "הצג קטגוריות תקציב הכנסות"
+
+#: src/budgetingpanel.cpp:130
+#: src/budgetingpanel.cpp:155
+msgid "View Expense Budget Categories"
+msgstr "הצג קטגוריות תקציב הוצאות"
+
+#: src/budgetingpanel.cpp:179
+msgid "Budget Setup for "
+msgstr "הגדרת תקציב עבור"
+
+#: src/budgetingpanel.cpp:196
+msgid "Viewing All Budget Categories"
+msgstr "צפייה בכל קטגוריות התקציב"
+
+#: src/budgetingpanel.cpp:201
+msgid "Estimated Income: Actual Income: "
+msgstr "הכנסות צפויות: הכנסות בפועל:"
+
+#: src/budgetingpanel.cpp:208
+msgid "Estimated Expenses: Actual Expenses: "
+msgstr "הוצאות חזויות: הוצאות בפועל"
+
+#: src/budgetingpanel.cpp:227
+msgid "Category  "
+msgstr "קטגוריה"
+
+#: src/budgetingpanel.cpp:228
+msgid "Sub Category"
+msgstr "קטגורית משנה"
+
+#: src/budgetingpanel.cpp:237
+msgid "Estimated"
+msgstr "משוער"
+
+#: src/budgetingpanel.cpp:240
+msgid "Actual"
+msgstr "בפועל"
+
+#: src/budgetingpanel.cpp:490
+msgid "Estimated Income: %s Actual Income:  %s"
+msgstr "הכנסות צפויות: %s הכנסות בפועל:  %s"
+
+#: src/budgetingpanel.cpp:495
+msgid "Estimated Expenses: %s Actual Expenses:  %s"
+msgstr "הוצאות חזויות: %s הוצאות בפועל: %s"
+
+#: src/budgetyeardialog.cpp:113
+msgid "&Add Budget Year"
+msgstr "הוסף ש&נת תקציב"
+
+#: src/budgetyeardialog.cpp:116
+msgid "Add a new budget year"
+msgstr "הוסף שנת תקציב חדשה"
+
+#: src/budgetyeardialog.cpp:119
+msgid "&Delete Budget Year"
+msgstr "מח&ק שנת תקציב"
+
+#: src/budgetyeardialog.cpp:121
+msgid "Delete existing budget year"
+msgstr "מחק שנת תקציב קיימת"
+
+#: src/budgetyearentrydialog.cpp:90
+msgid "Budget Year:"
+msgstr "שנת תקציב:"
+
+#: src/budgetyearentrydialog.cpp:97
+msgid "Enter the year in YYYY format to specify year"
+msgstr "הזן שנה בפורמט YYYY"
+
+#: src/budgetyearentrydialog.cpp:100
+msgid "Base Budget On:"
+msgstr "בסס תקציב על:"
+
+#: src/budgetyearentrydialog.cpp:113
+msgid "Specify year to base budget on."
+msgstr "ציין שנה כבסיס לתקציב"
+
+#: src/budgetyearentrydialog.cpp:153
+#: src/budgetyearentrydialog.cpp:183
+msgid "Year is not valid"
+msgstr "שנה לא חוקית"
+
+#: src/budgetyearentrydialog.cpp:160
+msgid "Budget Year already exists"
+msgstr "שנת תקציב קיימת"
+
+#: src/categdialog.cpp:84
+msgid "Categories"
+msgstr "קטגוריות"
+
+#: src/categdialog.cpp:151
+msgid "Enter the name of the category to add or edit here"
+msgstr "הזן את שם הקטגוריה להוספה או עריכה"
+
+#: src/categdialog.cpp:157
+msgid "&Add"
+msgstr "ה&וסף"
+
+#: src/categdialog.cpp:159
+msgid "Add a new category"
+msgstr "הוסף קטגוריה חדשה"
+
+#: src/categdialog.cpp:164
+msgid "Edit the name of an existing category"
+msgstr "ערוך שם של קטגוריה קיימת"
+
+#: src/categdialog.cpp:169
+msgid "Delete an existing category. The category cannot be used by existing transactions."
+msgstr "מחק קטגוריה קימת. לא ניתן להשתמש בקטגוריה בתנועות הקימות"
+
+#: src/categdialog.cpp:175
+msgid "&Select"
+msgstr "בח&ר"
+
+#: src/categdialog.cpp:177
+msgid "Select the currently selected category as the selected category for the transaction"
+msgstr "בחר בקטגוריה הנוכחית כקטגוריה הנבחרת עבור התנועה"
+
+#: src/categdialog.cpp:190
+msgid "Category cannot be empty"
+msgstr "שדה קטגוריה חיב להכיל ערכים"
+
+#: src/categdialog.cpp:198
+msgid "Category with same name exists"
+msgstr "קטגוריה בשם זהה כבר קימת"
+
+#: src/categdialog.cpp:217
+msgid "Sub Category with same name exists"
+msgstr "קיימת כבר תת קטגוריה עם שם זהה"
+
+#: src/categdialog.cpp:228
+msgid "Invalid Parent Category. Choose Root or Main Category node."
+msgstr "קטגורית אב שגויה. בחר רמה ראשית או קטגוריה ראשית. "
+
+#: src/categdialog.cpp:229
+msgid "Error adding Category"
+msgstr "שגיאה בהוספת קטגוריה"
+
+#: src/categdialog.cpp:251
+msgid "Category is in use"
+msgstr "הקטגוריה בשימוש"
+
+#: src/categdialog.cpp:259
+msgid "Sub-Category is in use"
+msgstr "תת קטגוריה נמצאת בשימוש"
+
+#: src/categdialog.cpp:368
+msgid "Update Failed"
+msgstr "עדכן שדה"
+
+#: src/currencydialog.cpp:167
+msgid "Currency Name"
+msgstr "שם מטבע"
+
+#: src/currencydialog.cpp:178
+msgid "Currency Symbol"
+msgstr "סמל מטבע"
+
+#: src/currencydialog.cpp:223
+msgid "Prefix Symbol"
+msgstr "סמל משמאל לסכום"
+
+#: src/currencydialog.cpp:232
+msgid "Suffix Symbol"
+msgstr "סמל מימין לסכום"
+
+#: src/currencydialog.cpp:241
+msgid "Decimal Char"
+msgstr "מפריד עשרוני"
+
+#: src/currencydialog.cpp:252
+msgid "Grouping Char"
+msgstr "תו קיבוץ"
+
+#: src/currencydialog.cpp:261
+msgid "Unit Name"
+msgstr "שם מטבע"
+
+#: src/currencydialog.cpp:272
+msgid "Cents Name"
+msgstr "שם אגורות"
+
+#: src/currencydialog.cpp:281
+msgid "Conversion to Base Rate"
+msgstr "תרגום לשער בסיס"
+
+#: src/currencydialog.cpp:290
+msgid "Scale"
+msgstr "סרגל"
+
+#: src/currencydialog.cpp:300
+msgid "Value of 123456.78 will be"
+msgstr "הערך 123456.78 יוצג כ"
+
+#: src/currencydialog.cpp:305
+msgid "1234567.89"
+msgstr "1234567.89"
+
+#: src/currencydialog.cpp:313
+msgid "&Update"
+msgstr "עדכן&"
+
+#: src/currencydialog.cpp:317
+msgid "&Close"
+msgstr "סגור&"
+
+#: src/currencydialog.cpp:354
+msgid "Base Conversion Rate should be greater than 0.0"
+msgstr "שער המרה בסיסי צריך להיות גדול מ 0.0"
+
+#: src/customsqldialog.cpp:96
+msgid "Custom SQL Query"
+msgstr "שאילתת SQL מוגדרת אישית"
+
+#: src/customsqldialog.cpp:123
+msgid "&Load SQL"
+msgstr "טען SQL&"
+
+#: src/customsqldialog.cpp:128
+msgid "&Save SQL"
+msgstr "שמור SQL&"
+
+#: src/customsqldialog.cpp:133
+msgid "&Run Query"
+msgstr "הרץ שאילתה&"
+
+#: src/customsqldialog.cpp:180
+msgid "Unable to open file."
+msgstr "לא ניתן לפתוח קובץ."
+
+#: src/customsqldialog.cpp:209
+msgid "Unable to write to file."
+msgstr "לא ניתן לכתוב לקובץ."
+
+#: src/customsqldialog.cpp:230
+msgid "SQL Query will modify your Data. Proceed??"
+msgstr "שאילתת SQL תעדכן את הנתונים, להמשיך??"
+
+#: src/customsqldialog.cpp:231
+msgid "Warning"
+msgstr "אזהרה"
+
+#: src/dbwrapper.cpp:385
+msgid "Telephone"
+msgstr "טלפון"
+
+#: src/dbwrapper.cpp:386
+msgid "Electricity"
+msgstr "חשמל"
+
+#: src/dbwrapper.cpp:387
+#: src/dbwrapper.cpp:422
+msgid "Gas"
+msgstr "דלק"
+
+#: src/dbwrapper.cpp:388
+msgid "Internet"
+msgstr "אינטרנט"
+
+#: src/dbwrapper.cpp:389
+msgid "Rent"
+msgstr "שכירות"
+
+#: src/dbwrapper.cpp:390
+msgid "Cable TV"
+msgstr "כבלים"
+
+#: src/dbwrapper.cpp:391
+msgid "Water"
+msgstr "מים"
+
+#: src/dbwrapper.cpp:395
+msgid "Bills"
+msgstr "חשבונות"
+
+#: src/dbwrapper.cpp:400
+msgid "Groceries"
+msgstr "מצרכים"
+
+#: src/dbwrapper.cpp:401
+msgid "Dining out"
+msgstr "מסעדות"
+
+#: src/dbwrapper.cpp:405
+msgid "Food"
+msgstr "מזון"
+
+#: src/dbwrapper.cpp:410
+msgid "Movies"
+msgstr "סרטים"
+
+#: src/dbwrapper.cpp:411
+msgid "Video Rental"
+msgstr "השכרת סרטי וידאו"
+
+#: src/dbwrapper.cpp:412
+msgid "Magazines"
+msgstr "עיתונים"
+
+#: src/dbwrapper.cpp:416
+msgid "Leisure"
+msgstr "פנאי"
+
+#: src/dbwrapper.cpp:421
+msgid "Maintenance"
+msgstr "אחזקה"
+
+#: src/dbwrapper.cpp:423
+msgid "Parking"
+msgstr "חניה"
+
+#: src/dbwrapper.cpp:424
+msgid "Registration"
+msgstr "ספרים"
+
+#: src/dbwrapper.cpp:433
+msgid "Books"
+msgstr "ספרים"
+
+#: src/dbwrapper.cpp:434
+msgid "Tuition"
+msgstr "שכר לימוד"
+
+#: src/dbwrapper.cpp:435
+#: src/dbwrapper.cpp:446
+#: src/dbwrapper.cpp:494
+msgid "Others"
+msgstr "אחר"
+
+#: src/dbwrapper.cpp:439
+msgid "Education"
+msgstr "השכלה"
+
+#: src/dbwrapper.cpp:444
+msgid "Clothing"
+msgstr "הלבשה"
+
+#: src/dbwrapper.cpp:445
+msgid "Furnishing"
+msgstr "ריהוט"
+
+#: src/dbwrapper.cpp:450
+msgid "Homeneeds"
+msgstr "משק בית"
+
+#: src/dbwrapper.cpp:455
+#: src/dbwrapper.cpp:471
+msgid "Health"
+msgstr "בריאות"
+
+#: src/dbwrapper.cpp:456
+msgid "Dental"
+msgstr "שיניים"
+
+#: src/dbwrapper.cpp:457
+msgid "Eyecare"
+msgstr "עינים וראיה"
+
+#: src/dbwrapper.cpp:458
+msgid "Physician"
+msgstr "רופא"
+
+#: src/dbwrapper.cpp:459
+msgid "Prescriptions"
+msgstr "מרשמים"
+
+#: src/dbwrapper.cpp:463
+msgid "Healthcare"
+msgstr "בריאות"
+
+#: src/dbwrapper.cpp:468
+msgid "Auto"
+msgstr "רכב"
+
+#: src/dbwrapper.cpp:469
+msgid "Life"
+msgstr "חיים"
+
+#: src/dbwrapper.cpp:470
+msgid "Home"
+msgstr "בית"
+
+#: src/dbwrapper.cpp:475
+msgid "Insurance"
+msgstr "ביטוח"
+
+#: src/dbwrapper.cpp:480
+msgid "Travel"
+msgstr "נסיעה"
+
+#: src/dbwrapper.cpp:481
+msgid "Lodging"
+msgstr "לינה"
+
+#: src/dbwrapper.cpp:482
+msgid "Sightseeing"
+msgstr "תיור"
+
+#: src/dbwrapper.cpp:486
+msgid "Vacation"
+msgstr "חופשה"
+
+#: src/dbwrapper.cpp:491
+msgid "Income Tax"
+msgstr "מס הכנסה"
+
+#: src/dbwrapper.cpp:492
+msgid "House Tax"
+msgstr "ארנונה"
+
+#: src/dbwrapper.cpp:493
+msgid "Water Tax"
+msgstr "מים"
+
+#: src/dbwrapper.cpp:498
+msgid "Taxes"
+msgstr "מיסים"
+
+#: src/dbwrapper.cpp:502
+msgid "Miscellaneous"
+msgstr "שונות"
+
+#: src/dbwrapper.cpp:503
+msgid "Gifts"
+msgstr "מתנות"
+
+#: src/dbwrapper.cpp:508
+msgid "Salary"
+msgstr "משכורת"
+
+#: src/dbwrapper.cpp:509
+msgid "Reimbursement/Refunds"
+msgstr "החזרים"
+
+#: src/dbwrapper.cpp:510
+msgid "Investment Income"
+msgstr "רוח הון"
+
+#: src/dbwrapper.cpp:518
+msgid "Other Income"
+msgstr "הכנסות אחרות"
+
+#: src/dbwrapper.cpp:519
+msgid "Other Expenses"
+msgstr "הוצאות אחרות"
+
+#: src/filtertransdialog.cpp:201
+msgid "Specify Account"
+msgstr "ציין חשבון"
+
+#: src/filtertransdialog.cpp:222
+msgid "Specify Date Range"
+msgstr "ציין טווח תאריכים"
+
+#: src/filtertransdialog.cpp:237
+msgid "Specify Payee"
+msgstr "ציין מוטב"
+
+#: src/filtertransdialog.cpp:248
+msgid "Specify Category"
+msgstr "ציין קטגוריה"
+
+#: src/filtertransdialog.cpp:259
+msgid "Specify Status"
+msgstr "ציין סטאטוס"
+
+#: src/filtertransdialog.cpp:269
+msgid "Duplicate"
+msgstr "כפול"
+
+#: src/filtertransdialog.cpp:280
+msgid "Specify Type"
+msgstr "ציין סוג"
+
+#: src/filtertransdialog.cpp:295
+msgid "Specify the type of transaction."
+msgstr "ציין את סוג התנועה"
+
+#: src/filtertransdialog.cpp:300
+msgid "Specify Amount Range"
+msgstr "ציין טווח סכום"
+
+#: src/filtertransdialog.cpp:314
+msgid "Specify Number"
+msgstr "ציין מספר"
+
+#: src/filtertransdialog.cpp:325
+msgid "Specify Notes"
+msgstr "ציין הערות"
+
+#: src/htmlbuilder.cpp:39
+msgid "Report"
+msgstr "דוח"
+
+#: src/maincurrencydialog.cpp:117
+msgid "Currency List"
+msgstr "רשימת מטבעות"
+
+#: src/maincurrencydialog.cpp:186
+msgid "Name of Currency to Add"
+msgstr "שם המטבע להוספה"
+
+#: src/maincurrencydialog.cpp:187
+msgid "Add Currency"
+msgstr "הוסף מטבע"
+
+#: src/maincurrencydialog.cpp:205
+msgid "Currency name already exists!"
+msgstr "שם מטבע קיים כבר!"
+
+#: src/mmcheckingpanel.cpp:107
+msgid "Date  "
+msgstr "תאריך"
+
+# סוג תנועה
+#: src/mmcheckingpanel.cpp:110
+msgid "C  "
+msgstr "סת"
+
+#: src/mmcheckingpanel.cpp:114
+msgid "Balance"
+msgstr "יתרה"
+
+#: src/mmcheckingpanel.cpp:223
+msgid "View All Transactions"
+msgstr "הצג את כל התנועות"
+
+#: src/mmcheckingpanel.cpp:224
+msgid "View Reconciled Transactions"
+msgstr "הצג תנועות מותאמות"
+
+#: src/mmcheckingpanel.cpp:225
+msgid "View Un-Reconciled Transactions"
+msgstr "הצג תנועות פתוחות"
+
+#: src/mmcheckingpanel.cpp:226
+msgid "View All Except Reconciled Transactions"
+msgstr "הצג כל התנואות למעט מותאמות"
+
+#: src/mmcheckingpanel.cpp:227
+msgid "View Void Transactions"
+msgstr "הצג תנועות מבוטלות"
+
+#: src/mmcheckingpanel.cpp:228
+msgid "View Flagged Transactions"
+msgstr "הצג תנועות מסומנות"
+
+#: src/mmcheckingpanel.cpp:229
+msgid "View Duplicate Transactions"
+msgstr "הצג תנועות כפולות"
+
+#: src/mmcheckingpanel.cpp:231
+msgid "View Transactions from today"
+msgstr "הצג תנועות מהיום"
+
+#: src/mmcheckingpanel.cpp:232
+msgid "View Transactions from last 30 days"
+msgstr "הצג תנועות מ 30 ימים אחרונים"
+
+#: src/mmcheckingpanel.cpp:233
+msgid "View Transactions from current month"
+msgstr "הצג תנועות החודש הנוכחי"
+
+#: src/mmcheckingpanel.cpp:234
+msgid "View Transactions from last month"
+msgstr "הצג תנועות החודש האחרון"
+
+#: src/mmcheckingpanel.cpp:235
+msgid "View Transactions from last 3 months"
+msgstr "הצג תנועות 3 החודשים האחרונים"
+
+#: src/mmcheckingpanel.cpp:237
+msgid "Delete all transactions in current view"
+msgstr "מחק כל התנועות שבתצוגה הנוכחית"
+
+#: src/mmcheckingpanel.cpp:238
+msgid "Delete all flagged transactions"
+msgstr "מחק כל התנועות המסומנות"
+
+#: src/mmcheckingpanel.cpp:281
+msgid "Viewing All Transactions"
+msgstr "הצגת כל התנועות"
+
+#: src/mmcheckingpanel.cpp:355
+msgid "New Transaction"
+msgstr "תנועה חדשה"
+
+#: src/mmcheckingpanel.cpp:360
+msgid "Edit Transaction"
+msgstr "ערוך תנועה"
+
+#: src/mmcheckingpanel.cpp:365
+msgid "Delete Transaction"
+msgstr "מחק תנועה"
+
+#: src/mmcheckingpanel.cpp:474
+msgid "Category         : "
+msgstr "קטגוריה             :"
+
+#: src/mmcheckingpanel.cpp:475
+msgid "Sub Category  : "
+msgstr "קטגורית משנה  :"
+
+#: src/mmcheckingpanel.cpp:476
+msgid "Notes               : "
+msgstr "הערות               :"
+
+#: src/mmcheckingpanel.cpp:496
+msgid "Account Balance : %s      Reconciled Balance : %s"
+msgstr "יתרת חשבון: %s   יתרה מותאמת: %s "
+
+#: src/mmcheckingpanel.cpp:506
+#: src/mmex.cpp:2379
+msgid "Please Wait"
+msgstr "נא המתן"
+
+#: src/mmcheckingpanel.cpp:507
+msgid "Accessing Database"
+msgstr "ניגש למסד הנתונים"
+
+#: src/mmcheckingpanel.cpp:520
+msgid "Account View : "
+msgstr "תצוגת חשבון:"
+
+#: src/mmcheckingpanel.cpp:525
+msgid "Category: \n"
+msgstr "קטגוריה:  \n"
+
+#: src/mmcheckingpanel.cpp:526
+msgid "Sub Category: \n"
+msgstr "תת קטגוריה:  \n"
+
+#: src/mmcheckingpanel.cpp:527
+msgid "Notes: \n"
+msgstr "הערות:  \n"
+
+#: src/mmcheckingpanel.cpp:767
+#: src/mmcheckingpanel.cpp:809
+msgid "Viewing all transactions"
+msgstr "הצג את כל התנועות"
+
+#: src/mmcheckingpanel.cpp:771
+#: src/mmcheckingpanel.cpp:814
+msgid "Viewing Reconciled transactions"
+msgstr "הצג תנועות מותאמות"
+
+#: src/mmcheckingpanel.cpp:775
+#: src/mmcheckingpanel.cpp:824
+msgid "Viewing Un-Reconciled transactions"
+msgstr "הצג תנועות בלתי מותאמות"
+
+#: src/mmcheckingpanel.cpp:779
+#: src/mmcheckingpanel.cpp:834
+msgid "Viewing transactions from today"
+msgstr "מציג תנועות מהיום"
+
+#: src/mmcheckingpanel.cpp:783
+#: src/mmcheckingpanel.cpp:839
+msgid "Viewing transactions from last 30 days"
+msgstr "הצג תנועות מ 30 הימים האחרונים"
+
+#: src/mmcheckingpanel.cpp:787
+#: src/mmcheckingpanel.cpp:844
+msgid "Viewing transactions from last 3 months"
+msgstr "הצג תנועות מ 3 חודשים אחרונים"
+
+#: src/mmcheckingpanel.cpp:791
+#: src/mmcheckingpanel.cpp:849
+msgid "Viewing transactions from current month"
+msgstr "הצג תנועות מחודש נוכחי"
+
+#: src/mmcheckingpanel.cpp:795
+#: src/mmcheckingpanel.cpp:854
+msgid "Viewing transactions from last month"
+msgstr "הצג תנועות מחודש קודם"
+
+#: src/mmcheckingpanel.cpp:799
+msgid "Viewing All Except Reconciled Transactions"
+msgstr "הצג הכל למעט תנועות מותאמות"
+
+#: src/mmcheckingpanel.cpp:819
+msgid "Viewing Void transactions"
+msgstr "צפייה בתנועות מבוטלות"
+
+#: src/mmcheckingpanel.cpp:829
+msgid "Viewing Flagged transactions"
+msgstr "הצג תנועות מסומנות"
+
+#: src/mmcheckingpanel.cpp:859
+msgid "Viewing duplicate transactions"
+msgstr "הצג תנועות כפולות"
+
+#: src/mmcheckingpanel.cpp:864
+msgid "Viewing All except Reconciled Transactions"
+msgstr "הצג כל התנועות למעת מותאמות"
+
+#: src/mmcheckingpanel.cpp:869
+msgid "Do you really want to delete all the transactions shown?"
+msgstr "האם אתה רוצה למחוק את כל התנועות המוצגות?"
+
+#: src/mmcheckingpanel.cpp:870
+#: src/mmcheckingpanel.cpp:885
+#: src/mmcheckingpanel.cpp:1258
+msgid "Confirm Transaction Deletion"
+msgstr "אשר מחיקת תנועה"
+
+#: src/mmcheckingpanel.cpp:884
+msgid "Do you really want to delete all the flagged transactions?"
+msgstr "האם למחוק את כל התנועות המסומנות?"
+
+#: src/mmcheckingpanel.cpp:923
+msgid "&New Transaction"
+msgstr "ת&נועה חדשה"
+
+#: src/mmcheckingpanel.cpp:925
+msgid "&Edit Transaction"
+msgstr "ע&רוך תנועה"
+
+#: src/mmcheckingpanel.cpp:926
+msgid "&Delete Transaction"
+msgstr "מ&חק תנועה"
+
+#: src/mmcheckingpanel.cpp:927
+msgid "&Copy Transaction"
+msgstr "העת&ק תנועה"
+
+#: src/mmcheckingpanel.cpp:929
+msgid "&Paste Transaction"
+msgstr "הד&בק תנועה"
+
+#: src/mmcheckingpanel.cpp:931
+msgid "Mark As &Reconciled"
+msgstr "סמן כמות&אם"
+
+#: src/mmcheckingpanel.cpp:932
+msgid "Mark As &Unreconciled"
+msgstr "סמן כלא& מותאם"
+
+#: src/mmcheckingpanel.cpp:933
+msgid "Mark As &Void"
+msgstr "סמן במבוט&ל"
+
+#: src/mmcheckingpanel.cpp:934
+msgid "Mark For &Followup"
+msgstr "מסומן לב&ירור"
+
+#: src/mmcheckingpanel.cpp:935
+msgid "Mark As &Duplicate"
+msgstr "סמן כ&כפילות"
+
+#: src/mmcheckingpanel.cpp:939
+msgid "as Reconciled"
+msgstr "כמותאם"
+
+#: src/mmcheckingpanel.cpp:940
+msgid "as Unreconciled"
+msgstr "כלא מותאם"
+
+#: src/mmcheckingpanel.cpp:941
+msgid "as Void"
+msgstr "כמבוטל"
+
+#: src/mmcheckingpanel.cpp:942
+msgid "as needing Followup"
+msgstr "כדרוש בדיקה"
+
+#: src/mmcheckingpanel.cpp:943
+msgid "as Duplicate"
+msgstr "ככפילות"
+
+#: src/mmcheckingpanel.cpp:944
+msgid "Mark all "
+msgstr "סמן הכל"
+
+#: src/mmcheckingpanel.cpp:1257
+msgid "Do you really want to delete the transaction?"
+msgstr "האם למחוק את התנועה?"
+
+#: src/mmex.cpp:309
+msgid "Add Account Wizard"
+msgstr "אשף הוספת חשבון"
+
+#: src/mmex.cpp:318
 msgid ""
-"Category: \n"
-""=0A"
-msgstr ""=0A"
+" models all transactions as belonging to accounts.\n"
+"\n"
+" The next pages will help you create a new account.\n"
+"\n"
+"To help you get started, begin by making a list of all\n"
+"financial institutions where you hold an account."
+msgstr ""
+"ממדל את כל התנועות כמשויכוך לחשבונות.\n"
+"\n"
+"העמוד הבא יסיע לך ליצור חשבון חדש.\n"
+"\n"
+"על מנת להתחיל, הכן רשימה של כל המוסדות הפיננסיים\n"
+"בהם מנוהלים חשבונותך."
 
-#: src/mmcheckingpanel.cpp:457=0A=
+#: src/mmex.cpp:360
+msgid "New Database Wizard"
+msgstr "אשף מסד נתונים חדש"
+
+#: src/mmex.cpp:367
 msgid ""
-"Sub Category: \n"
-""=0A"
-msgstr ""=0A"
+"The next pages will help you create a new database.\n"
+"\n"
+"Your database file is stored with an extension of .mmb.\n"
+"\n"
+"Make sure to make backups of this file \n"
+"and to store it carefully as it contains important \n"
+"financial information."
+msgstr ""
+"העמוד הבא יסיע לך לייצור מסד נתונים חדש.\n"
+"\n"
+"מסד הנתונים שיצרת ישמר בקובץ עם הסיומת  .mmb.\n"
+"\n"
+"\"ודא גיבוי סדיר של קובץ מסד הנתונים\n"
+"ואחסן אותו בכפידה שכן הוא מכיל אינפורמצה\n"
+" פיננסית חשובה ורגישה."
 
-#: src/mmcheckingpanel.cpp:458=0A=
+#: src/mmex.cpp:682
+msgid "Navigation"
+msgstr "סרגל ניווט"
+
+#: src/mmex.cpp:696
+msgid "Home Page"
+msgstr "דף הבית"
+
+#: src/mmex.cpp:700
+msgid "Bank Accounts"
+msgstr "חשבונות בנק"
+
+#: src/mmex.cpp:707
+#: src/mmex.cpp:748
+msgid "Stocks"
+msgstr "נירות ערך"
+
+#: src/mmex.cpp:729
+msgid "Budgeting"
+msgstr "תקציב"
+
+#: src/mmex.cpp:735
+msgid "Reports"
+msgstr "דוחות"
+
+#: src/mmex.cpp:741
+msgid "Summary of Accounts"
+msgstr "יתרת חשבונות"
+
+#: src/mmex.cpp:762
+#: src/mmex.cpp:1428
+#: src/mmex.cpp:1447
+#: src/mmex.cpp:1460
+#: src/mmex.cpp:1473
+#: src/mmex.cpp:1490
+#: src/mmex.cpp:1507
+msgid "Where the Money Goes"
+msgstr "לאן הולך הכסף"
+
+#: src/mmex.cpp:767
+#: src/mmex.cpp:799
+#: src/mmex.cpp:831
+#: src/mmex.cpp:862
+#: src/mmex.cpp:894
+msgid "Last Calendar Month"
+msgstr "חודש אחרון"
+
+#: src/mmex.cpp:772
+#: src/mmex.cpp:804
+#: src/mmex.cpp:836
+#: src/mmex.cpp:867
+#: src/mmex.cpp:899
+msgid "Current Month"
+msgstr "חודש נוכחי"
+
+#: src/mmex.cpp:777
+#: src/mmex.cpp:809
+#: src/mmex.cpp:841
+#: src/mmex.cpp:872
+#: src/mmex.cpp:904
+msgid "Last 30 Days"
+msgstr "30 ימים אחרונים"
+
+#: src/mmex.cpp:782
+#: src/mmex.cpp:814
+#: src/mmex.cpp:846
+#: src/mmex.cpp:877
+#: src/mmex.cpp:909
+msgid "Last Year"
+msgstr "שנה קודמת"
+
+#: src/mmex.cpp:787
+#: src/mmex.cpp:819
+#: src/mmex.cpp:851
+#: src/mmex.cpp:882
+#: src/mmex.cpp:914
+msgid "Current Year"
+msgstr "שנה נוכחית"
+
+#: src/mmex.cpp:794
+#: src/mmex.cpp:1336
+#: src/mmex.cpp:1356
+#: src/mmex.cpp:1369
+#: src/mmex.cpp:1382
+#: src/mmex.cpp:1399
+#: src/mmex.cpp:1416
+msgid "Where the Money Comes From"
+msgstr "מאין מגיע הכסף"
+
+#: src/mmex.cpp:857
+msgid "To Whom the Money Goes"
+msgstr "למי הולך הכסף"
+
+#: src/mmex.cpp:889
+msgid "Income vs Expenses"
+msgstr "הכנסות מול הוצאות"
+
+#: src/mmex.cpp:919
+msgid "Income vs Expenses - All Time"
+msgstr "הכנסות מול הוצאות - בכל הזמנים"
+
+#: src/mmex.cpp:925
+msgid "Transaction Report"
+msgstr "דוח תנועות"
+
+#: src/mmex.cpp:933
+msgid "Budget Performance"
+msgstr "בצועי תקציב"
+
+#: src/mmex.cpp:942
+msgid "Budget Setup and Performance"
+msgstr "הגדרות ובצועי תקציב"
+
+#: src/mmex.cpp:948
+#: src/mmex.cpp:2803
+msgid "Cash Flow"
+msgstr "תזרים מזומנים"
+
+#: src/mmex.cpp:953
+msgid "Cash Flow - Specific Accounts"
+msgstr "חשבונות משתתפים בתזרים מזומנים"
+
+#: src/mmex.cpp:959
+msgid "Transaction Statistics"
+msgstr "סטטיסטיקת תנועות"
+
+#: src/mmex.cpp:965
+msgid "Custom SQL Report"
+msgstr "דוח SQL מוגדר אישית"
+
+#: src/mmex.cpp:970
+msgid "Help"
+msgstr "עזרה"
+
+#: src/mmex.cpp:1048
+#: src/mmex.cpp:1121
+msgid "Top Categories Last 30 Days"
+msgstr "קטגוריות מובילות ב 30 ימים אחרונים"
+
+#: src/mmex.cpp:1801
+#: src/mmex.cpp:3333
+msgid "Do you really want to delete the account?"
+msgstr "האם למחוק את החשבון?"
+
+#: src/mmex.cpp:1802
+#: src/mmex.cpp:3334
+msgid "Confirm Account Deletion"
+msgstr "אשר מחיקת חשבון"
+
+#: src/mmex.cpp:1847
+msgid "&Go To.."
+msgstr "עבור א&ל..."
+
+#: src/mmex.cpp:1848
+#: src/mmex.cpp:1857
+#: src/mmex.cpp:2082
+msgid "&Edit Account"
+msgstr "ע&רוך חשבון"
+
+#: src/mmex.cpp:1849
+#: src/mmex.cpp:1858
+#: src/mmex.cpp:2088
+msgid "&Delete Account"
+msgstr "מח&ק חשבון"
+
+#: src/mmex.cpp:1851
+#: src/mmex.cpp:1860
+msgid "&Launch Account Website"
+msgstr "פתח את א&תר החשבון"
+
+#: src/mmex.cpp:1994
+msgid "&New Database\tCtrl-N"
+msgstr "מס&ד נתונים חדש\tCtrl-N"
+
+#: src/mmex.cpp:1995
+#: src/mmex.cpp:2242
+msgid "New Database"
+msgstr "מסד נתונים חדש"
+
+#: src/mmex.cpp:1999
+msgid "&Open Database\tCtrl-O"
+msgstr "פ&תח מסד נתונים\tCtrl-O"
+
+#: src/mmex.cpp:2000
+#: src/mmex.cpp:2244
+msgid "Open Database"
+msgstr "פתח מסד נתונים"
+
+#: src/mmex.cpp:2007
+msgid "Save Database &As"
+msgstr "שמור מסד נת&נים כ"
+
+#: src/mmex.cpp:2008
+msgid "Save Database As"
+msgstr "שמור מסד נתונים כ"
+
+#: src/mmex.cpp:2015
+msgid "&CSV Files"
+msgstr "קובצ&י CSV"
+
+#: src/mmex.cpp:2015
+msgid "Export to CSV"
+msgstr "יצא ל CAV"
+
+#: src/mmex.cpp:2016
+msgid "&Report to HTML"
+msgstr "ד&וח HTML"
+
+#: src/mmex.cpp:2016
+msgid "Export to HTML"
+msgstr "יצא ל HTML"
+
+#: src/mmex.cpp:2017
+msgid "&Export"
+msgstr "יצ&וא"
+
+#: src/mmex.cpp:2020
+msgid "&QIF Files"
+msgstr " &QIF קובצי"
+
+#: src/mmex.cpp:2020
+msgid "Import from QIF"
+msgstr "יבא מ QIF"
+
+#: src/mmex.cpp:2021
+msgid "&Universal CSV Files"
+msgstr " CSV אוניברסלי קובצי"
+
+#: src/mmex.cpp:2021
+msgid "Import from any CSV file"
+msgstr "יבא מכל קובץ CSV"
+
+#: src/mmex.cpp:2023
+msgid "&MMEX CSV Files"
+msgstr " &MMEX CSV קובצי"
+
+#: src/mmex.cpp:2023
+msgid "Import from MMEX CSV"
+msgstr "יבא מ MMEX CSV"
+
+#: src/mmex.cpp:2025
+msgid "MM.&NET CSV Files"
+msgstr " MM.&NET CSV קובצי"
+
+#: src/mmex.cpp:2025
+msgid "Import from MM.NET CSV"
+msgstr "יבא מ MM.NET CSV"
+
+#: src/mmex.cpp:2027
+msgid "&Import"
+msgstr "יבוא&"
+
+#: src/mmex.cpp:2033
+msgid "Page Set&up..."
+msgstr "הג&דרת עמוד..."
+
+#: src/mmex.cpp:2033
+msgid "Setup page printing options"
+msgstr "הגדרות אפשרויות הדפסה"
+
+#: src/mmex.cpp:2039
+#: src/mmex.cpp:2045
+msgid "Current &View"
+msgstr "תצוגה& נוכחית"
+
+#: src/mmex.cpp:2039
+msgid "Preview current report"
+msgstr "הצג דוח נוכחי"
+
+#: src/mmex.cpp:2041
+msgid "Print Pre&view..."
+msgstr "תצוגה מק&דימה..."
+
+#: src/mmex.cpp:2045
+msgid "Print current report"
+msgstr "הדפס דוח נוכחי"
+
+#: src/mmex.cpp:2048
+msgid "&Print..."
+msgstr "הדפס&..."
+
+#: src/mmex.cpp:2053
+msgid "E&xit\tAlt-X"
+msgstr "יצ&אה\tAlt-X"
+
+#: src/mmex.cpp:2053
+msgid "Quit this program"
+msgstr "צא מתוכנית זו"
+
+#: src/mmex.cpp:2060
+msgid "&Toolbar"
+msgstr "ס&רגל כלים"
+
+#: src/mmex.cpp:2060
+msgid "Show/Hide the toolbar"
+msgstr "הצג/הסתר סרגל כלים"
+
+#: src/mmex.cpp:2062
+msgid "&Navigation"
+msgstr "סרגל ניווט&"
+
+#: src/mmex.cpp:2062
+msgid "Show/Hide the Navigation tree control"
+msgstr "הצג/הסתר את חלון הניווט"
+
+#: src/mmex.cpp:2072
+msgid "New &Account"
+msgstr "חשבון ח&דש"
+
+#: src/mmex.cpp:2072
+#: src/mmex.cpp:2248
+msgid "New Account"
+msgstr "חשבון חדש"
+
+#: src/mmex.cpp:2078
+msgid "Account &List"
+msgstr "רשימת חש&בונות"
+
+#: src/mmex.cpp:2078
+#: src/mmex.cpp:2250
+msgid "Show Account List"
+msgstr "הצג רשימת חשבונות"
+
+#: src/mmex.cpp:2082
+msgid "Edit Account"
+msgstr "ערוך חשבון"
+
+#: src/mmex.cpp:2088
+msgid "Delete Account from database"
+msgstr "מחק חשבון ממסד הנתונים"
+
+#: src/mmex.cpp:2100
+msgid "Organize &Categories"
+msgstr "נהל ק&טגוריות"
+
+#: src/mmex.cpp:2100
+#: src/mmex.cpp:2252
+msgid "Organize Categories"
+msgstr "נהל קטגוריות"
+
+#: src/mmex.cpp:2105
+msgid "Organize &Payees"
+msgstr "נהל מוט&בים"
+
+#: src/mmex.cpp:2105
+#: src/mmex.cpp:2253
+msgid "Organize Payees"
+msgstr "נהל מוטבים"
+
+#: src/mmex.cpp:2110
+msgid "Or&ganize Currency"
+msgstr "נהל& מטבעות"
+
+#: src/mmex.cpp:2110
+#: src/mmex.cpp:2254
+msgid "Organize Currency"
+msgstr "נהל מטבעות"
+
+#: src/mmex.cpp:2117
+msgid "&Budget Setup"
+msgstr "הגדרת תקציב&"
+
+#: src/mmex.cpp:2117
+msgid "Budget Setup"
+msgstr "הגדרת תקציב"
+
+#: src/mmex.cpp:2125
+msgid "&Repeating Transactions"
+msgstr "תנועות חוזרות&"
+
+#: src/mmex.cpp:2125
+msgid "Bills && Deposits"
+msgstr "משיכות והפקדות"
+
+#: src/mmex.cpp:2133
+msgid "&Stock Investments"
+msgstr "השקעה במניות&"
+
+#: src/mmex.cpp:2133
+msgid "Stock Investments"
+msgstr "השקעה במניות"
+
+#: src/mmex.cpp:2141
+msgid "&Assets"
+msgstr "נכסים&"
+
+#: src/mmex.cpp:2149
+msgid "&Transaction Filter"
+msgstr "מסנן תנועות&"
+
+#: src/mmex.cpp:2149
+msgid "Transaction Filter"
+msgstr "מסנן תנועות"
+
+#: src/mmex.cpp:2156
+msgid "&Options"
+msgstr "א&פשרויות"
+
+#: src/mmex.cpp:2156
+msgid "Show the Options Dialog"
+msgstr "הצג חלון אפשרויות"
+
+#: src/mmex.cpp:2163
+msgid "&Help\tCtrl-F1"
+msgstr "עזרה&\tCtrl-F1"
+
+#: src/mmex.cpp:2163
+msgid "Show the Help file"
+msgstr "הצג קובץ עזרה"
+
+#: src/mmex.cpp:2168
+msgid "&Show App Start Dialog"
+msgstr "הצג חלון פתיחה&"
+
+#: src/mmex.cpp:2168
+msgid "App Start Dialog"
+msgstr "חלון פתיחה"
+
+#: src/mmex.cpp:2175
+msgid "Convert Encrypted &DB"
+msgstr "המר מסד נתונים &מוצפן"
+
+#: src/mmex.cpp:2176
+msgid "Convert Encrypted DB to Non-Encrypted DB"
+msgstr "המר מסד נתונים מוצפן למסד נתונים לא מוצפן"
+
+#: src/mmex.cpp:2182
+msgid "Online &Update Currency Rate"
+msgstr "עדכון &מקוון של שערי מטבע"
+
+#: src/mmex.cpp:2183
+msgid "Online update currency rate"
+msgstr "עדכון שערי מטח מקוון"
+
+#: src/mmex.cpp:2191
+msgid "Check for &Updates"
+msgstr "בד&וק עדכונים"
+
+#: src/mmex.cpp:2191
+msgid "Check For Updates"
+msgstr "בדוק עדכונים"
+
+#: src/mmex.cpp:2199
+msgid "&Report Issues or Feedback"
+msgstr "שלח משוב או דווח על בעיות&"
+
+#: src/mmex.cpp:2199
+msgid "Send email through the mailing list to report issues with the software."
+msgstr "שלח דוא\"ל לרשימת התפוצה על מנת לדווח על בעיות הקשורות לתוכנה"
+
+#: src/mmex.cpp:2207
+msgid "Be &notified of new releases"
+msgstr "קב&ל התראות על גרסאות חדשות"
+
+#: src/mmex.cpp:2207
+msgid "Sign up for the announcement mailing list"
+msgstr "הרשם לרשימת התפוצה לקבלת התרעות"
+
+#: src/mmex.cpp:2213
+msgid "&About..."
+msgstr "אוד&ות..."
+
+#: src/mmex.cpp:2213
+msgid "Show about dialog"
+msgstr "הצג חלון אודות"
+
+#: src/mmex.cpp:2218
+msgid "&File"
+msgstr "ק&ובץ"
+
+#: src/mmex.cpp:2219
+msgid "&Accounts"
+msgstr "חש&בונות"
+
+#: src/mmex.cpp:2220
+msgid "&Tools"
+msgstr "כ&לים"
+
+#: src/mmex.cpp:2221
+msgid "&View"
+msgstr "הצג&"
+
+#: src/mmex.cpp:2222
+msgid "&Help"
+msgstr "ע&זרה"
+
+#: src/mmex.cpp:2241
+msgid "New"
+msgstr "חדש"
+
+#: src/mmex.cpp:2243
+msgid "Open"
+msgstr "פתוחים"
+
+#: src/mmex.cpp:2250
+msgid "Account List"
+msgstr "רשימת חשבונות"
+
+#: src/mmex.cpp:2252
+msgid "Show Organize Categories Dialog"
+msgstr "הצג חלון נהול קטגוריות"
+
+#: src/mmex.cpp:2253
+msgid "Show Organize Payees Dialog"
+msgstr "הצג חלון נוהל מוטבים"
+
+#: src/mmex.cpp:2254
+msgid "Show Organize Currency Dialog"
+msgstr "הצג חלון נהול מטבעות"
+
+#: src/mmex.cpp:2279
+#: src/mmex.cpp:2472
+msgid "Money Manager Ex: Enter Password For Database.."
+msgstr "Money Manager Ex: הזן סיסמת מסד נתונים..."
+
+#: src/mmex.cpp:2303
+#: src/mmex.cpp:2357
+msgid " - No File opened "
+msgstr "קובץ לא נפתח"
+
+#: src/mmex.cpp:2306
+msgid "Sorry. The Database version is too old or Database password is incorrect"
+msgstr "מצטער, גרסת מסד הנתונים ישנה מדי או שהסיסמה שגויה"
+
+#: src/mmex.cpp:2307
+#: src/mmex.cpp:2361
+msgid "Error opening database"
+msgstr "שגיאה בפתיחת מסד נתונים"
+
+#: src/mmex.cpp:2360
 msgid ""
-"Notes: \n"
-""=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:668=0A=
-msgid "Viewing all transactions"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:673=0A=
-msgid "Viewing Reconciled transactions"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:678=0A=
-msgid "Viewing Void transactions"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:683=0A=
-msgid "Viewing Un-Reconciled transactions"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:688=0A=
-msgid "Viewing Flagged transactions"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:693=0A=
-msgid "Viewing transactions from last 30 days"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:698=0A=
-msgid "Viewing transactions from last 3 months"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:703=0A=
-msgid "Do you really want to delete all the transactions shown?"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:704=0A=
-#: src/mmcheckingpanel.cpp:717=0A=
-#: src/mmcheckingpanel.cpp:990=0A=
-msgid "Confirm Transaction Deletion"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:716=0A=
-msgid "Do you really want to delete all the flagged transactions?"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:746=0A=
-msgid "&New Transaction"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:748=0A=
-msgid "&Edit Transaction"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:749=0A=
-msgid "&Delete Transaction"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:751=0A=
-msgid "Mark As &Reconciled"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:752=0A=
-msgid "Mark As &Unreconciled"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:753=0A=
-msgid "Mark As &Void"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:754=0A=
-msgid "Mark For &Followup"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:758=0A=
-msgid "as Reconciled"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:759=0A=
-msgid "as Unreconciled"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:760=0A=
-msgid "as Void"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:761=0A=
-msgid "as needing Followup"=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:762=0A=
-msgid "Mark all "=0A"
-msgstr ""=0A"
-
-#: src/mmcheckingpanel.cpp:989=0A=
-msgid "Do you really want to delete the transaction?"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:218=0A=
-msgid "Add Account Wizard"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:226=0A=
-msgid ""=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:263=0A=
-msgid "New Database Wizard"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:271=0A=
-msgid ""=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:508=0A=
-msgid "Home Page"=0A"
-msgstr "=D7=93=D7=A3 =D7=94=D7=91=D7=99=D7=AA"=0A"
-
-#: src/mmex.cpp:512=0A=
-msgid "Bank Accounts"=0A"
-msgstr "=D7=97=D7=A9=D7=91=D7=95=D7=A0=D7=95=D7=AA =D7=91=D7=A0=D7=A7"=0A"
-
-#: src/mmex.cpp:516=0A=
-#: src/mmex.cpp:543=0A=
-msgid "Stocks"=0A"
-msgstr "=D7=9E=D7=A0=D7=99=D7=95=D7=AA"=0A"
-
-#: src/mmex.cpp:524=0A=
-msgid "Bills & Deposits"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:528=0A=
-msgid "Budgeting"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:534=0A=
-msgid "Reports"=0A"
-msgstr "=D7=93=D7=95=D7=97=D7=95=D7=AA"=0A"
-
-#: src/mmex.cpp:538=0A=
-#: include/reportsummary.h:36=0A=
-msgid "Summary of Accounts"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:553=0A=
-#: include/reportcategexp.h:45=0A=
-msgid "Where the Money Goes"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:558=0A=
-#: src/mmex.cpp:590=0A=
-#: src/mmex.cpp:622=0A=
-msgid "Last Calendar Month"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:563=0A=
-#: src/mmex.cpp:595=0A=
-#: src/mmex.cpp:627=0A=
-msgid "Current Month"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:568=0A=
-#: src/mmex.cpp:600=0A=
-#: src/mmex.cpp:632=0A=
-msgid "Last 30 Days"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:573=0A=
-#: src/mmex.cpp:605=0A=
-#: src/mmex.cpp:637=0A=
-msgid "Last Year"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:578=0A=
-#: src/mmex.cpp:610=0A=
-#: src/mmex.cpp:642=0A=
-msgid "Current Year"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:585=0A=
-#: include/reportpayee.h:27=0A=
-msgid "To Whom the Money Goes"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:617=0A=
-#: include/reportincexpenses.h:28=0A=
-msgid "Income vs Expenses"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:647=0A=
-msgid "Income vs Expenses - All Time"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:653=0A=
-msgid "Transaction Report"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:658=0A=
-msgid "Budget Performance"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:663=0A=
-msgid "Help"=0A"
-msgstr "=D7=A2=D7=96=D7=A8=D7=94"=0A"
-
-#: src/mmex.cpp:1171=0A=
-#: src/mmex.cpp:1193=0A=
-#: src/mmex.cpp:2248=0A=
-msgid "Do you really want to delete the account?"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1172=0A=
-#: src/mmex.cpp:1194=0A=
-#: src/mmex.cpp:2249=0A=
-msgid "Confirm Account Deletion"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1249=0A=
-msgid "&Go To.."=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1250=0A=
-#: src/mmex.cpp:1259=0A=
-msgid "&Edit Account"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1251=0A=
-#: src/mmex.cpp:1260=0A=
-msgid "&Delete Account"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1253=0A=
-#: src/mmex.cpp:1262=0A=
-msgid "&Launch Account Website"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1380=0A=
-msgid "&New Database\tCtrl-N"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1380=0A=
-#: src/mmex.cpp:1573=0A=
-msgid "New Money Manager Database"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1384=0A=
-msgid "&Open Database\tCtrl-O"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1384=0A=
-#: src/mmex.cpp:1574=0A=
-msgid "Open Money Manager Database"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1391=0A=
-msgid "Save Database &As"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1391=0A=
-msgid "Save Money Manager Database As"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1398=0A=
-msgid "&CSV Files"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1398=0A=
-#: src/util.cpp:208=0A=
-msgid "Export to CSV"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1399=0A=
-msgid "&Report to HTML"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1399=0A=
-msgid "Export to HTML"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1400=0A=
-msgid "&Export"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1403=0A=
-msgid "&QIF Files"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1403=0A=
-msgid "Import from QIF"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1404=0A=
-msgid "&Universal CSV Files"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1404=0A=
-msgid "Import from any CSV file"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1405=0A=
-msgid "&MMEX CSV Files"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1405=0A=
-msgid "Import from MMEX CSV"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1406=0A=
-msgid "&MM.NET CSV Files"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1406=0A=
-msgid "Import from MM.NET CSV"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1408=0A=
-#: src/univcsv.cpp:113=0A=
-msgid "Import"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1414=0A=
-msgid "Page Setup..."=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1414=0A=
-msgid "Setup page printing options"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1420=0A=
-#: src/mmex.cpp:1426=0A=
-msgid "Current View"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1420=0A=
-msgid "Preview current report"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1422=0A=
-msgid "Print Preview..."=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1426=0A=
-msgid "Print current report"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1429=0A=
-msgid "Print..."=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1434=0A=
-msgid "E&xit\tAlt-X"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1434=0A=
-msgid "Quit this program"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1441=0A=
-msgid "New &Account"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1441=0A=
-#: src/mmex.cpp:1577=0A=
-msgid "New Money Manager Account"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1445=0A=
-msgid "Account &List"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1445=0A=
-#: src/mmex.cpp:1578=0A=
-msgid "Show Account List"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1449=0A=
-msgid "Edit Account"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1453=0A=
-msgid "Delete Account"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1453=0A=
-msgid "Delete Account from database"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1465=0A=
-msgid "Organize &Categories"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1465=0A=
-#: src/mmex.cpp:1580=0A=
-#: include/categdialog.h:23=0A=
-msgid "Organize Categories"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1470=0A=
-msgid "Organize &Payees"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1470=0A=
-#: src/mmex.cpp:1581=0A=
-#: include/payeedialog.h:22=0A=
-msgid "Organize Payees"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1475=0A=
-#: src/mmex.cpp:1582=0A=
-msgid "Organize Currency"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1480=0A=
-msgid "Budget Setup"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1490=0A=
-#: src/mmhomepagepanel.cpp:157=0A=
-#: src/stocks.cpp:124=0A=
-msgid "Stock Investments"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1502=0A=
-msgid "Transaction Filter"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1511=0A=
-msgid "&Options"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1511=0A=
-msgid "Money Manager Options"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1518=0A=
-msgid "&Help\tCtrl-F1"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1518=0A=
-msgid "Money Manager Help"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1523=0A=
-msgid "Show App Start Dialog"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1523=0A=
-msgid "App Start Dialog"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1531=0A=
-msgid "Check for &Updates"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1531=0A=
-msgid "Check For Updates"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1536=0A=
-msgid "Report Issues or Feedback"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1536=0A=
-msgid "Send email through the mailing list to report issues with the "
-msgstr ""=0A"
-
-#: src/mmex.cpp:1541=0A=
-msgid "Be notified of new releases"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1541=0A=
-msgid "Sign up for the announcement mailing list"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1547=0A=
-msgid "&About..."=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1547=0A=
-msgid "Show about dialog"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1552=0A=
-msgid "&File"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1553=0A=
-msgid "&Accounts"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1554=0A=
-msgid "&Tools"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1555=0A=
-msgid "&Help"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1574=0A=
-#: src/newchkacctdialog.cpp:255=0A=
-#: src/optionsdialog.cpp:263=0A=
-msgid "Open"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1577=0A=
-#: include/newchkacctdialog.h:23=0A=
-msgid "New Account"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1578=0A=
-msgid "Account List"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1580=0A=
-msgid "Show Organize Categories Dialog"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1581=0A=
-msgid "Show Organize Payees Dialog"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1582=0A=
-msgid "Show Organize Currency Dialog"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1618=0A=
-#: src/mmex.cpp:1650=0A=
-msgid "Money Manager EX - No File opened "=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1620=0A=
-msgid "Sorry. The Database version is too old.                     "
-msgstr ""=0A"
-
-#: src/mmex.cpp:1622=0A=
-#: src/mmex.cpp:1653=0A=
-msgid "Error opening database"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1652=0A=
-msgid ""=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1673=0A=
-msgid "Opening Database File && Verifying Integrity"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1773=0A=
-#: src/mmex.cpp:1849=0A=
-#: src/qifimport.cpp:354=0A=
-#: src/util.cpp:221=0A=
-#: src/util.cpp:460=0A=
-msgid "No Account available! Cannot Import! Create a new account first!"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1792=0A=
-#: src/qifimport.cpp:370=0A=
-#: src/univcsv.cpp:266=0A=
-#: src/util.cpp:241=0A=
-#: src/util.cpp:478=0A=
-msgid "Choose Account to import to:"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:1793=0A=
-msgid "QFX Import"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:2175=0A=
-#: src/mmex.cpp:2217=0A=
-msgid "No Account available!"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:2195=0A=
-msgid "Choose Account to Edit"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:2196=0A=
-#: src/mmex.cpp:2240=0A=
-msgid "Accounts"=0A"
-msgstr ""=0A"
-
-#: src/mmex.cpp:2239=0A=
-msgid "Choose Account to Delete"=0A"
-msgstr ""=0A"
-
-#: src/mmhelppanel.cpp:78=0A=
-msgid "Money Manager Ex Help"=0A"
-msgstr ""=0A"
-
-#: src/mmhomepagepanel.cpp:85=0A=
-#: include/reportcategexp.h:48=0A=
-#: include/reporttransactions.h:59=0A=
-msgid "Today's Date: "=0A"
-msgstr ""=0A"
-
-#: src/mmhomepagepanel.cpp:94=0A=
-msgid "Summary"=0A"
-msgstr ""=0A"
-
-#: src/mmhomepagepanel.cpp:186=0A=
-msgid "Total of Accounts :"=0A"
-msgstr ""=0A"
-
-#: src/mmhomepagepanel.cpp:205=0A=
-msgid "Income vs Expenses: Current Month"=0A"
-msgstr ""=0A"
-
-#: src/mmhomepagepanel.cpp:260=0A=
-msgid "Upcoming Bills & Deposits"=0A"
-msgstr ""=0A"
-
-#: src/mmhomepagepanel.cpp:303=0A=
-msgid "Follow Up On "=0A"
-msgstr ""=0A"
-
-#: src/mmreportspanel.cpp:80=0A=
-msgid "REPORTS"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:172=0A=
-msgid "Account Name:"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:179=0A=
-msgid "Enter the Name of the Account. This name can be renamed at any "
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:182=0A=
-msgid "Account Type:"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:188=0A=
-msgid "Checking"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:189=0A=
-#: include/mmex.h:245=0A=
-msgid "Investment"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:195=0A=
-#: include/mmex.h:250=0A=
-msgid "Specify the type of account to be created."=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:197=0A=
-msgid "Account Number:"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:206=0A=
-msgid "Enter the Account Number associated with this account."=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:209=0A=
-msgid "Held At:"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:217=0A=
-msgid "Enter the name of the financial institution in which the account "
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:219=0A=
-msgid "Website:"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:227=0A=
-msgid "Enter the URL of the website for the financial institution."=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:230=0A=
-msgid "Contact:"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:237=0A=
-msgid "Enter any contact information for the financial institution."=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:240=0A=
-msgid "Access Info:"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:247=0A=
-msgid "Enter any login/access information for the financial institution. "
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:249=0A=
-msgid "Account Status:"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:256=0A=
-msgid "Closed"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:263=0A=
-msgid "Specify if this account has been closed. Closed accounts are "
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:266=0A=
-msgid "Initial Balance:"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:274=0A=
-msgid "Enter the initial balance in this account."=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:277=0A=
-msgid "Currency:"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:282=0A=
-msgid "Select Currency"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:292=0A=
-msgid "Specify the currency to be used by this account."=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:295=0A=
-msgid "Notes:"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:302=0A=
-msgid "Enter user notes and details about this account."=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:307=0A=
-msgid "Favorite Account"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:311=0A=
-msgid "Select whether this is an account that is used often. This is "
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:350=0A=
-msgid "Account Name "=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:357=0A=
-msgid "Account Name already exists"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:363=0A=
-msgid "Currency"=0A"
-msgstr ""=0A"
-
-#: src/newchkacctdialog.cpp:398=0A=
-msgid "Init Balance "=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:147=0A=
-msgid "General Settings"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:153=0A=
-msgid "Base Currency"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:158=0A=
-#: include/mmex.h:111=0A=
-msgid "Set Currency"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:169=0A=
-msgid "View Settings"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:175=0A=
-msgid "Date Format"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:196=0A=
-msgid "Specify the date format for display"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:199=0A=
-msgid "Sample Date"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:207=0A=
-msgid "Import/Export Settings"=0A"
-msgstr "=D7=99=D7=91=D7=90/=D7=99=D7=A6=D7=90 "
-
-#: src/optionsdialog.cpp:213=0A=
-msgid "CSV Delimiter"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:220=0A=
-msgid "Specify the delimiter to use when importing/exporting CSV files"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:225=0A=
-#: src/optionsdialog.cpp:231=0A=
-msgid "Language"=0A"
-msgstr "=D7=A9=D7=A4=D7=94"=0A"
-
-#: src/optionsdialog.cpp:240=0A=
-msgid "Specify the language to use"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:250=0A=
-msgid "Account View Options"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:256=0A=
-msgid "Accounts Visible"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:262=0A=
-msgid "All"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:264=0A=
-msgid "Favorites"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:281=0A=
-msgid "Specify which accounts are visible"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:290=0A=
-msgid "Restore Defaults"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:293=0A=
-msgid "Restore Default Colors"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:299=0A=
-msgid "Nav Tree"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:301=0A=
-msgid "Specify the color for the nav tree"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:305=0A=
-msgid "List Background"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:307=0A=
-msgid "Specify the color for the list background"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:311=0A=
-msgid "List Row 0"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:313=0A=
-msgid "Specify the color for the list row 0"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:317=0A=
-msgid "List Row 1"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:319=0A=
-msgid "Specify the color for the list row 1"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:323=0A=
-msgid "List Border"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:325=0A=
-msgid "Specify the color for the list Border"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:329=0A=
-msgid "List Details"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:331=0A=
-msgid "Specify the color for the list details"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:343=0A=
-msgid "Backup database before opening"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:349=0A=
-msgid "Select whether to create a .bak file when opening a the database "
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:356=0A=
-msgid "Stock Quote Web Page"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:369=0A=
-msgid "General"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:370=0A=
-msgid "View Options"=0A"
-msgstr ""=0A"
-
-#: src/optionsdialog.cpp:371=0A=
-msgid "Colors"=0A"
-msgstr "=D7=A6=D7=91=D7=A2=D7=99=D7=9D"=0A"
-
-#: src/optionsdialog.cpp:372=0A=
-msgid "Others"=0A"
-msgstr ""=0A"
-
-#: src/payeedialog.cpp:140=0A=
-msgid "Enter the payee name to be added or make edits to an existing "
-msgstr ""=0A"
-
-#: src/payeedialog.cpp:145=0A=
-msgid "Add a new payee name"=0A"
-msgstr ""=0A"
-
-#: src/payeedialog.cpp:150=0A=
-msgid "Change the name of an existing payee"=0A"
-msgstr ""=0A"
-
-#: src/payeedialog.cpp:155=0A=
-msgid "Delete the selected payee. The payee cannot be used by an "
-msgstr ""=0A"
-
-#: src/payeedialog.cpp:163=0A=
-msgid "Select the currently selected payee as the selected payee for the "
-msgstr ""=0A"
-
-#: src/payeedialog.cpp:176=0A=
-msgid "Payee with same name exists"=0A"
-msgstr ""=0A"
-
-#: src/payeedialog.cpp:188=0A=
-msgid "Payee is in use"=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:371=0A=
-msgid "QIF Import"=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:378=0A=
-msgid "Choose QIF data file to import"=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:419=0A=
-#: src/qifimport.cpp:445=0A=
-#: src/qifimport.cpp:511=0A=
-#: src/univcsv.cpp:317=0A=
-#: src/univcsv.cpp:340=0A=
-#: src/univcsv.cpp:374=0A=
-#: src/util.cpp:289=0A=
-#: src/util.cpp:298=0A=
-#: src/util.cpp:307=0A=
-#: src/util.cpp:316=0A=
-#: src/util.cpp:336=0A=
-#: src/util.cpp:343=0A=
-#: src/util.cpp:351=0A=
-#: src/util.cpp:435=0A=
-#: src/util.cpp:526=0A=
-#: src/util.cpp:535=0A=
-#: src/util.cpp:544=0A=
-#: src/util.cpp:559=0A=
-#: src/util.cpp:571=0A=
-#: src/util.cpp:587=0A=
-#: src/util.cpp:596=0A=
-#: src/util.cpp:648=0A=
-msgid "Line : "=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:420=0A=
-msgid " incorrect QIF line type"=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:432=0A=
-msgid "Importing account type : "=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:445=0A=
-msgid " : "=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:446=0A=
-msgid " account name "=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:484=0A=
-msgid " cannot process Account Types yet "=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:499=0A=
-msgid "Adding payee "=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:512=0A=
-#: src/util.cpp:352=0A=
-#: src/util.cpp:572=0A=
-msgid " invalid amount, skipping."=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:590=0A=
-msgid "Date is empty, "=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:594=0A=
-msgid "Transaction Type is empty"=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:598=0A=
-msgid "Amount is empty"=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:608=0A=
-msgid "Category is empty, marking transaction as Unknown category"=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:621=0A=
-msgid "Skipping QIF transaction"=0A"
-msgstr ""=0A"
-
-#: src/qifimport.cpp:654=0A=
-msgid " transactions imported from QIF"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:137=0A=
-msgid "Stock Investment Details"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:150=0A=
-#: src/stockdialog.cpp:327=0A=
-#: src/stocks.cpp:152=0A=
-msgid "Held At"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:156=0A=
-msgid "Enter the name of the financial institution where the investment "
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:167=0A=
-msgid "Specify the purchase date of the stock investment"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:170=0A=
-msgid "Stock Name"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:176=0A=
-msgid "Enter the stock company name"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:180=0A=
-msgid "Symbol"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:186=0A=
-msgid "Enter the stock symbol (optional)"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:191=0A=
-#: src/stocks.cpp:160=0A=
-msgid "Number of Shares"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:197=0A=
-msgid "Enter number of shares held"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:202=0A=
-msgid "Purchase Price"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:208=0A=
-msgid "Enter purchase price for each stock"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:219=0A=
-msgid "Enter notes associated with this investment"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:223=0A=
-msgid "Current Price"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:229=0A=
-msgid "Enter current stock price"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:235=0A=
-msgid "Commission"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:241=0A=
-msgid "Enter any commission paid"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:270=0A=
-msgid "Web Page"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:286=0A=
-msgid "Choose Investment Account"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:339=0A=
-#: src/stockdialog.cpp:353=0A=
-msgid "Num Shares"=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:347=0A=
-msgid "Invalid number of shares entered "=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:362=0A=
-msgid "Invalid purchase price entered "=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:371=0A=
-msgid "Invalid current price entered "=0A"
-msgstr ""=0A"
-
-#: src/stockdialog.cpp:380=0A=
-msgid "Invalid commission entered "=0A"
-msgstr ""=0A"
-
-#: src/stocks.cpp:156=0A=
-msgid "Share Name"=0A"
-msgstr ""=0A"
-
-#: src/stocks.cpp:165=0A=
-msgid "Gain/Loss"=0A"
-msgstr "=D7=A8=D7=95=D7=95=D7=97/=D7=94=D7=A4=D7=A1=D7=93"=0A"
-
-#: src/stocks.cpp:210=0A=
-msgid "New Stock Investment"=0A"
-msgstr ""=0A"
-
-#: src/stocks.cpp:215=0A=
-msgid "Edit Stock Investment"=0A"
-msgstr ""=0A"
-
-#: src/stocks.cpp:220=0A=
-msgid "Delete Stock Investment"=0A"
-msgstr ""=0A"
-
-#: src/stocks.cpp:240=0A=
-msgid "Stock Investments: "=0A"
-msgstr ""=0A"
-
-#: src/stocks.cpp:327=0A=
-msgid "&New Stock Investment"=0A"
-msgstr ""=0A"
-
-#: src/stocks.cpp:329=0A=
-msgid "&Edit Stock Investment"=0A"
-msgstr ""=0A"
-
-#: src/stocks.cpp:330=0A=
-msgid "&Delete Stock Investment"=0A"
-msgstr ""=0A"
-
-#: src/stocks.cpp:411=0A=
-msgid "Do you really want to delete the stock investment?"=0A"
-msgstr ""=0A"
-
-#: src/stocks.cpp:412=0A=
-msgid "Confirm Stock Investment Deletion"=0A"
-msgstr ""=0A"
-
-#: src/transdialog.cpp:254=0A=
-#: src/transdialog.cpp:589=0A=
-#: src/transdialog.cpp:604=0A=
-msgid "Specify to whom the transaction is going to or coming from "=0A"
-msgstr ""=0A"
-
-#: src/transdialog.cpp:608=0A=
-msgid "Select From Account"=0A"
-msgstr ""=0A"
-
-#: src/transdialog.cpp:609=0A=
-msgid "Select To Account"=0A"
-msgstr ""=0A"
-
-#: src/transdialog.cpp:618=0A=
-msgid "Specify the account from which the transfer is occurring"=0A"
-msgstr ""=0A"
-
-#: src/univcsv.cpp:87=0A=
-msgid "Specify the order of fields in the CSV file"=0A"
-msgstr ""=0A"
-
-#: src/univcsv.cpp:109=0A=
-msgid "Remove"=0A"
-msgstr "=D7=94=D7=A1=D7=A8"=0A"
-
-#: src/univcsv.cpp:170=0A=
-#: src/univcsv.cpp:198=0A=
-msgid "Amount(+/-)"=0A"
-msgstr ""=0A"
-
-#: src/univcsv.cpp:174=0A=
-#: src/univcsv.cpp:200=0A=
-msgid "SubCategory"=0A"
-msgstr ""=0A"
-
-#: src/univcsv.cpp:178=0A=
-#: src/univcsv.cpp:202=0A=
-msgid "Transaction Number"=0A"
-msgstr ""=0A"
-
-#: src/univcsv.cpp:180=0A=
-#: src/univcsv.cpp:203=0A=
-msgid "Don't Care"=0A"
-msgstr ""=0A"
-
-#: src/univcsv.cpp:188=0A=
-#: src/univcsv.cpp:190=0A=
-msgid "Unknown"=0A"
-msgstr ""=0A"
-
-#: src/univcsv.cpp:208=0A=
-msgid "Add CSV field"=0A"
-msgstr ""=0A"
-
-#: src/univcsv.cpp:209=0A=
-msgid "CSV Field"=0A"
-msgstr ""=0A"
-
-#: src/univcsv.cpp:235=0A=
-#: src/univcsv.cpp:247=0A=
-msgid "Incorrect fields specified for CSV import! Requires atleast date, "
-msgstr ""=0A"
-
-#: src/univcsv.cpp:267=0A=
-#: src/util.cpp:242=0A=
-#: src/util.cpp:479=0A=
-msgid "CSV Import"=0A"
-msgstr ""=0A"
-
-#: src/univcsv.cpp:273=0A=
-#: src/util.cpp:485=0A=
-msgid "Choose MM.NET CSV data file to import"=0A"
-msgstr ""=0A"
-
-#: src/univcsv.cpp:318=0A=
-msgid " file contains insufficient number of tokens"=0A"
-msgstr ""=0A"
-
-#: src/univcsv.cpp:341=0A=
-msgid " One of the following fields: date, payee, amount, type is "
-msgstr ""=0A"
-
-#: src/univcsv.cpp:374=0A=
-#: src/util.cpp:435=0A=
-#: src/util.cpp:648=0A=
-msgid " imported OK."=0A"
-msgstr ""=0A"
-
-#: src/univcsv.cpp:377=0A=
-#: src/util.cpp:651=0A=
-#, c-format=0A=
-msgid ""=0A"
-msgstr ""=0A"
-
-#: src/univcsv.cpp:378=0A=
-#: src/util.cpp:440=0A=
-#: src/util.cpp:456=0A=
-#: src/util.cpp:652=0A=
-msgid "Import from CSV"=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:141=0A=
-msgid "No Account available! Cannot Export!"=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:158=0A=
-msgid "Choose Account to Export from:"=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:159=0A=
-msgid "CSV Export"=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:165=0A=
-msgid "Choose CSV data file to Export"=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:290=0A=
-#: src/util.cpp:527=0A=
-msgid " missing date, skipping."=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:299=0A=
-#: src/util.cpp:536=0A=
-msgid " missing payee, skipping."=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:308=0A=
-msgid " missing transaction type, skipping."=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:317=0A=
-#: src/util.cpp:545=0A=
-msgid " missing amount, skipping."=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:337=0A=
-msgid "one of the following fields: date, payee, transaction type, "
-msgstr ""=0A"
-
-#: src/util.cpp:344=0A=
-msgid " unrecognized transaction type, skipping."=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:438=0A=
-#, c-format=0A=
-msgid ""=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:455=0A=
-msgid "Please verify that the CSV file from MMEX.NET contains only one "
-msgstr ""=0A"
-
-#: src/util.cpp:560=0A=
-msgid " missing category, skipping."=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:588=0A=
-msgid " One of the following fields: date, payee, transaction type, "
-msgstr ""=0A"
-
-#: src/util.cpp:597=0A=
-msgid " invalid date, skipping."=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:667=0A=
-msgid "Entry "=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:667=0A=
-msgid " is invalid."=0A"
-msgstr ""=0A"
-
-#: src/util.cpp:669=0A=
-msgid "Invalid Entry"=0A"
-msgstr ""=0A"
-
-#: include/aboutdialog.h:24=0A=
-msgid "About Money Manager Ex"=0A"
-msgstr ""=0A"
-
-#: include/appstartdialog.h:26=0A=
-msgid "Money Manager Ex Start Page"=0A"
-msgstr ""=0A"
-
-#: include/assetdialog.h:21=0A=
-msgid "New/Edit Asset"=0A"
-msgstr ""=0A"
-
-#: include/bddialog.h:22=0A=
-msgid "New/Edit Bills & Deposit Series"=0A"
-msgstr ""=0A"
-
-#: include/budgetentrydialog.h:22=0A=
-msgid "Budget Entry Dialog"=0A"
-msgstr ""=0A"
-
-#: include/budgetyeardialog.h:22=0A=
-msgid "Budget Year Editor"=0A"
-msgstr ""=0A"
-
-#: include/budgetyearentrydialog.h:23=0A=
-msgid "Budget Year Entry"=0A"
-msgstr ""=0A"
-
-#: include/currencydialog.h:23=0A=
-msgid "Currency Manager"=0A"
-msgstr ""=0A"
-
-#: include/fileviewerdialog.h:24=0A=
-msgid "View File Contents"=0A"
-msgstr ""=0A"
-
-#: include/filtertransdialog.h:45=0A=
-msgid "Filter Transactions"=0A"
-msgstr ""=0A"
-
-#: include/mmex.h:124=0A=
-msgid "Base Currency for account"=0A"
-msgstr ""=0A"
-
-#: include/mmex.h:139=0A=
-msgid ""=0A"
-msgstr ""=0A"
-
-#: include/mmex.h:152=0A=
-msgid "Base Currency Not Set"=0A"
-msgstr ""=0A"
-
-#: include/mmex.h:194=0A=
-msgid "Name of the Account"=0A"
-msgstr ""=0A"
-
-#: include/mmex.h:209=0A=
-msgid ""=0A"
-msgstr ""=0A"
-
-#: include/mmex.h:222=0A=
-msgid "Account Name Invalid"=0A"
-msgstr ""=0A"
-
-#: include/mmex.h:244=0A=
-msgid "Checking/Savings/CreditCard"=0A"
-msgstr ""=0A"
-
-#: include/mmex.h:257=0A=
-msgid "Type of Account"=0A"
-msgstr ""=0A"
-
-#: include/mmex.h:272=0A=
-msgid ""=0A"
-msgstr ""=0A"
-
-#: include/mmex.h:278=0A=
-msgid ""=0A"
-msgstr ""=0A"
-
-#: include/mmex.h:299=0A=
-msgid ""=0A"
-msgstr ""=0A"
-
-#: include/optionsdialog.h:25=0A=
-msgid "Options Dialog"=0A"
-msgstr ""=0A"
-
-#: include/reportbudgetingperf.h:26=0A=
-msgid "Budget Performance for Year : "=0A"
-msgstr ""=0A"
-
-#: include/reportcategexp.h:56=0A=
-#: include/reportincexpenses.h:39=0A=
-msgid "From: "=0A"
-msgstr ""=0A"
-
-#: include/reportcategexp.h:58=0A=
-#: include/reportincexpenses.h:40=0A=
-msgid " To: "=0A"
-msgstr ""=0A"
-
-#: include/reportcategexp.h:69=0A=
-#: include/reporttransactions.h:71=0A=
-msgid "Amount   "=0A"
-msgstr "=D7=A1=D7=9B=D7=95=D7=9D"=0A"
-
-#: include/reportincexpesestime.h:28=0A=
-msgid "Income vs Expenses for Year : "=0A"
-msgstr ""=0A"
-
-#: include/reportincexpesestime.h:44=0A=
-msgid "Month"=0A"
-msgstr "=D7=97=D7=95=D7=93=D7=A9"=0A"
-
-#: include/reportincexpesestime.h:46=0A=
-msgid "Expenses"=0A"
-msgstr ""=0A"
-
-#: include/reportincexpesestime.h:93=0A=
-msgid "Total"=0A"
-msgstr ""=0A"
-
-#: include/reportsummary.h:58=0A=
-msgid "Account Name  "=0A"
-msgstr ""=0A"
-
-#: include/reportsummary.h:59=0A=
-msgid "Balance   "=0A"
-msgstr "=D7=9E=D7=90=D7=96=D7=9F"=0A"
-
-#: include/reportsummary.h:97=0A=
-msgid "Stock Investments :"=0A"
-msgstr ""=0A"
-
-#: include/reportsummary.h:106=0A=
-msgid "Assets :"=0A"
-msgstr ""=0A"
-
-#: include/reportsummary.h:116=0A=
-msgid "Total Balance on all Accounts :"=0A"
-msgstr ""=0A"
-
-#: include/reportsummaryassets.h:37=0A=
-msgid "Summary of Assets"=0A"
-msgstr ""=0A"
-
-#: include/reportsummaryassets.h:64=0A=
-msgid "Name "=0A"
-msgstr "=D7=A9=D7=9D"=0A"
-
-#: include/reportsummaryassets.h:65=0A=
-#: include/reporttransactions.h:69=0A=
-msgid "Type   "=0A"
-msgstr "=D7=A1=D7=95=D7=92"=0A"
-
-#: include/reportsummaryassets.h:66=0A=
-#: include/reportsummarystocks.h:71=0A=
-msgid "Value  "=0A"
-msgstr "=D7=A2=D7=A8=D7=9A"=0A"
-
-#: include/reportsummaryassets.h:104=0A=
-msgid "Total Assets :"=0A"
-msgstr ""=0A"
-
-#: include/reportsummarystocks.h:37=0A=
-msgid "Summary of Stocks"=0A"
-msgstr ""=0A"
-
-#: include/reportsummarystocks.h:64=0A=
-msgid "Company  "=0A"
-msgstr "=D7=97=D7=91=D7=A8=D7=94"=0A"
-
-#: include/reportsummarystocks.h:65=0A=
-msgid "Symbol   "=0A"
-msgstr "=D7=A1=D7=9E=D7=9C / =D7=A1=D7=99=D7=9E=D7=9F"=0A"
-
-#: include/reportsummarystocks.h:66=0A=
-msgid "Number Shares  "=0A"
-msgstr ""=0A"
-
-#: include/reportsummarystocks.h:67=0A=
-msgid "Purchase Date "=0A"
-msgstr ""=0A"
-
-#: include/reportsummarystocks.h:68=0A=
-msgid "Purchase Price "=0A"
-msgstr ""=0A"
-
-#: include/reportsummarystocks.h:69=0A=
-msgid "Current Price  "=0A"
-msgstr "=D7=9E=D7=97=D7=99=D7=A8 =D7=A0=D7=95=D7=9B=D7=97=D7=99"=0A"
-
-#: include/reportsummarystocks.h:70=0A=
-msgid "Commission  "=0A"
-msgstr "=D7=A2=D7=9E=D7=9C=D7=94"=0A"
-
-#: include/reportsummarystocks.h:72=0A=
-msgid "Gain Loss  "=0A"
-msgstr ""=0A"
-
-#: include/reportsummarystocks.h:141=0A=
-msgid "Total Stock Investments :"=0A"
-msgstr ""=0A"
-
-#: include/reporttransactions.h:56=0A=
-msgid "Transaction List"=0A"
-msgstr ""=0A"
-
-#: include/reporttransactions.h:68=0A=
-msgid "Payee  "=0A"
-msgstr ""=0A"
-
-#: include/reporttransactions.h:104=0A=
-msgid "Total Amount: "=0A"
-msgstr ""=0A"
-
-#: include/stockdialog.h:23=0A=
-msgid "New/Edit Stock Investment"=0A"
-msgstr "=D7=97=D7=93=D7=A9/=D7=A2=D7=A8=D7=95=D7=9A "
-
-#: include/transdialog.h:23=0A=
-msgid "New/Edit Transaction"=0A"
-msgstr ""=0A"
-
-#: include/univcsv.h:28=0A=
-msgid "Universal CSV Importer Dialog"=0A"
-msgstr ""=0A"
+"Cannot locate previously opened database.\n"
+"Do you want to browse to locate the file?"
+msgstr ""
+"מסד הנתונים שהיה בשימוש לאחרונה לא אותר.\n"
+"האם ברצונך לנווט לאיתור הקובץ?"
+
+#: src/mmex.cpp:2380
+msgid "Opening Database File && Verifying Integrity"
+msgstr "פותח מסד נתונים && בודק אינטגריטי"
+
+#: src/mmex.cpp:2468
+msgid "Choose Encrypted database file to open"
+msgstr "בחר מסד נתונים מוצפן לפתיחה"
+
+#: src/mmex.cpp:2494
+msgid "Converted DB!"
+msgstr "המר מסד נתונים!"
+
+#: src/mmex.cpp:2495
+msgid "MMEX message"
+msgstr "הודעת MMEX"
+
+#: src/mmex.cpp:2500
+msgid "Unable to convert db successfully. Check Password!"
+msgstr "המרת מסד הנתונים לא הצליחה. בדוק את הסיסמה!"
+
+#: src/mmex.cpp:2586
+#: src/mmex.cpp:2662
+msgid "No Account available! Cannot Import! Create a new account first!"
+msgstr "החשבון אינו זמין! לא ניתן ליבא! צור חשבון חדש תחילה!"
+
+#: src/mmex.cpp:2605
+msgid "Choose Account to import to:"
+msgstr "בחר חשבון יעד לייבוא:"
+
+#: src/mmex.cpp:2606
+msgid "QFX Import"
+msgstr "יבואQFX "
+
+#: src/mmex.cpp:2802
+msgid "Choose Accounts"
+msgstr "בחר חשבונות"
+
+#: src/mmex.cpp:2862
+#: src/mmex.cpp:2950
+msgid "Unable to connect!"
+msgstr "!לא היתה אפשרות להתחבר לשרת"
+
+#: src/mmex.cpp:2862
+#: src/mmex.cpp:2920
+#: src/mmex.cpp:2926
+msgid "Check Update"
+msgstr "בדוק עדכונים"
+
+#: src/mmex.cpp:2920
+msgid "New update available!"
+msgstr "גרסה חדשה זמינה!"
+
+#: src/mmex.cpp:2926
+msgid "You have the latest version installed!"
+msgstr "יש לך את הגרסה האחרונה"
+
+#: src/mmex.cpp:2941
+msgid "No database!"
+msgstr "אין מסד נתונים!"
+
+#: src/mmex.cpp:2941
+#: src/mmex.cpp:2950
+#: src/mmex.cpp:2957
+#: src/mmex.cpp:2963
+#: src/mmex.cpp:2972
+#: src/mmex.cpp:2979
+#: src/mmex.cpp:2984
+#: src/mmex.cpp:2989
+#: src/mmex.cpp:2996
+#: src/mmex.cpp:3001
+#: src/mmex.cpp:3044
+#: src/mmex.cpp:3071
+msgid "Update Currency Rate"
+msgstr "עדכן שערי מטח"
+
+#: src/mmex.cpp:2957
+msgid "Cannot get data from WWW!"
+msgstr "לא מצליח לקבל נתונים נהאיטרנט!"
+
+#: src/mmex.cpp:2963
+msgid "Incorrect XML data (#1)!"
+msgstr "נתוני XML שגויים (#1)!"
+
+#: src/mmex.cpp:2972
+msgid "Incorrect XML data (#2)!"
+msgstr "נתוני XML שגויים (#2)!"
+
+#: src/mmex.cpp:2979
+msgid "Incorrect XML data (#3)!"
+msgstr "נתוני XML שגויים (#3)!"
+
+#: src/mmex.cpp:2984
+msgid "Incorrect XML data (#4)!"
+msgstr "נתוני XML שגויים (#4)!"
+
+#: src/mmex.cpp:2989
+msgid "Incorrect XML data (#5)!"
+msgstr "נתוני XML שגויים (#5)!"
+
+#: src/mmex.cpp:2996
+msgid "Incorrect XML data (#6)!"
+msgstr "נתוני XML שגויים (#6)!"
+
+#: src/mmex.cpp:3001
+msgid "Incorrect XML data (#7)!"
+msgstr "נתוני XML שגויים (#7)!"
+
+#: src/mmex.cpp:3044
+msgid "Could not find base currency symbol!"
+msgstr "סמל מטבע הבסיס לא נמצא!"
+
+#: src/mmex.cpp:3071
+msgid "Currency rate updated"
+msgstr "עדכון שערי מט\"ח"
+
+#: src/mmex.cpp:3270
+#: src/mmex.cpp:3311
+msgid "No Account available!"
+msgstr "חשבון לא זמין!"
+
+#: src/mmex.cpp:3284
+msgid "Choose Account to Edit"
+msgstr "בחר חשבוון לעריכה"
+
+#: src/mmex.cpp:3285
+#: src/mmex.cpp:3326
+msgid "Accounts"
+msgstr "חשבונות"
+
+#: src/mmex.cpp:3325
+msgid "Choose Account to Delete"
+msgstr "בחר חשבון למחיקה"
+
+#: src/mmhelppanel.cpp:77
+msgid " Help"
+msgstr "עזרה"
+
+#: src/mmhomepagepanel.cpp:124
+msgid "Today's Date: "
+msgstr "תאריך היום :"
+
+#: src/mmhomepagepanel.cpp:137
+#: src/mmhomepagepanel.cpp:260
+msgid "Summary"
+msgstr "סיכום"
+
+#: src/mmhomepagepanel.cpp:259
+#: src/newacctdialog.cpp:343
+msgid "Currency"
+msgstr "מטבע"
+
+#: src/mmhomepagepanel.cpp:282
+msgid "Total of Accounts:"
+msgstr "סך כל חשבונות:"
+
+#: src/mmhomepagepanel.cpp:303
+msgid "Income vs Expenses: Current Month"
+msgstr "הכנסות מול הוצאות: חודש נוכחי"
+
+#: src/mmhomepagepanel.cpp:453
+msgid "Upcoming Transactions"
+msgstr "חזויות תנועות"
+
+#: src/mmhomepagepanel.cpp:512
+msgid "Follow Up On "
+msgstr "מעקב על"
+
+#: src/mmhomepagepanel.cpp:516
+msgid "Transactions"
+msgstr "תנועות"
+
+#: src/mmhomepagepanel.cpp:521
+msgid "Total Transactions"
+msgstr "סך כל תנועות"
+
+#: src/mmreportspanel.cpp:80
+msgid "REPORTS"
+msgstr "דוחות"
+
+#: src/newacctdialog.cpp:153
+msgid "Account Name:"
+msgstr "שם חשבון:"
+
+#: src/newacctdialog.cpp:160
+msgid "Enter the Name of the Account. This name can be renamed at any time."
+msgstr "הזן שם חשבון, ניתן לשנות שם חשבון בכל עת."
+
+#: src/newacctdialog.cpp:163
+msgid "Account Type:"
+msgstr "סוג חשבון:"
+
+#: src/newacctdialog.cpp:169
+msgid "Checking"
+msgstr "עו\"ש"
+
+#: src/newacctdialog.cpp:170
+msgid "Investment"
+msgstr "השקעה"
+
+#: src/newacctdialog.cpp:176
+msgid "Specify the type of account to be created."
+msgstr "הגדר את סוג החשבון שיוצר."
+
+#: src/newacctdialog.cpp:178
+msgid "Account Number:"
+msgstr "מספר חשבון:"
+
+#: src/newacctdialog.cpp:187
+msgid "Enter the Account Number associated with this account."
+msgstr "הזן את מספר החשבון המשוייח לחשבון"
+
+#: src/newacctdialog.cpp:190
+msgid "Held At:"
+msgstr "מוחזק ב:"
+
+#: src/newacctdialog.cpp:198
+msgid "Enter the name of the financial institution in which the account is held."
+msgstr "הזן את שם המוסד הכספי בו מנוהל החשבון."
+
+#: src/newacctdialog.cpp:200
+msgid "Website:"
+msgstr "אתר:"
+
+#: src/newacctdialog.cpp:208
+msgid "Enter the URL of the website for the financial institution."
+msgstr "הזן את כתובת ה URL של המוסד הכספי\"."
+
+#: src/newacctdialog.cpp:211
+msgid "Contact:"
+msgstr "קשר:"
+
+#: src/newacctdialog.cpp:218
+msgid "Enter any contact information for the financial institution."
+msgstr "הזן פרטי קשר של המוסד הכספי."
+
+#: src/newacctdialog.cpp:221
+msgid "Access Info:"
+msgstr "קוד גישה:"
+
+#: src/newacctdialog.cpp:228
+msgid "Enter any login/access information for the financial institution. This is not secure as anyone with access to the mmb file can access it."
+msgstr "הזן שם משתמש/קוד גישה לחשבון במוסד הכספי. שים לב! שדה זה אינו מאובטח וכל אדם עם גישה לבסיס הנתונים יוכל לגשת אליו."
+
+#: src/newacctdialog.cpp:230
+msgid "Account Status:"
+msgstr "סטאטוס חשבון:"
+
+#: src/newacctdialog.cpp:237
+msgid "Closed"
+msgstr "סגור"
+
+#: src/newacctdialog.cpp:244
+msgid "Specify if this account has been closed. Closed accounts are inactive in most calculations, reporting etc."
+msgstr "ציין אם חשבון זה נסגר. חשבונות לא פעילים לא יופיעו ברוב החישובים, דוחות וכו'."
+
+#: src/newacctdialog.cpp:247
+msgid "Initial Balance:"
+msgstr "יתרת פתיחה:"
+
+#: src/newacctdialog.cpp:255
+msgid "Enter the initial balance in this account."
+msgstr "הזן את יתרת הפתיחה של החשבון."
+
+#: src/newacctdialog.cpp:258
+msgid "Currency:"
+msgstr "מטבע:"
+
+#: src/newacctdialog.cpp:263
+msgid "Select Currency"
+msgstr "בחר מטבע"
+
+#: src/newacctdialog.cpp:273
+msgid "Specify the currency to be used by this account."
+msgstr "הזן את מטבע החשבון."
+
+#: src/newacctdialog.cpp:276
+msgid "Notes:"
+msgstr "הערות:"
+
+#: src/newacctdialog.cpp:283
+msgid "Enter user notes and details about this account."
+msgstr "הזן הערות משתמש ופרטים אודות חשבון זה\"."
+
+#: src/newacctdialog.cpp:288
+msgid "Favorite Account"
+msgstr "חשבון מועדף"
+
+#: src/newacctdialog.cpp:292
+msgid "Select whether this is an account that is used often. This is used to filter accounts display view."
+msgstr "ציין אם חשבון זה בשימוש תכוף. משמש עבור סינון תצוגת חשבונות."
+
+#: src/newacctdialog.cpp:330
+msgid "Account Name "
+msgstr "שם חשבון"
+
+#: src/newacctdialog.cpp:337
+msgid "Account Name already exists"
+msgstr "שם חשבון קיים כבר"
+
+#: src/newacctdialog.cpp:396
+msgid "Init Balance "
+msgstr "יתרת פתיחה"
+
+#: src/optionsdialog.cpp:267
+msgid " : Restart"
+msgstr ": אתחל"
+
+#: src/optionsdialog.cpp:341
+msgid "General Settings"
+msgstr "הגדרות כלליות"
+
+#: src/optionsdialog.cpp:347
+msgid "Base Currency"
+msgstr "מטבע בסיס"
+
+#: src/optionsdialog.cpp:352
+msgid "Set Currency"
+msgstr "קבע מטבע"
+
+#: src/optionsdialog.cpp:363
+msgid "View Settings"
+msgstr "הצג הגדרות"
+
+#: src/optionsdialog.cpp:369
+msgid "Date Format"
+msgstr "פורמט תאריך"
+
+#: src/optionsdialog.cpp:399
+msgid "Specify the date format for display"
+msgstr "הגדר את פורמט התאריך לתצוגה"
+
+#: src/optionsdialog.cpp:404
+msgid "Set"
+msgstr "קבע"
+
+#: src/optionsdialog.cpp:408
+msgid "Sample Date"
+msgstr "תאריך דוגמה"
+
+#: src/optionsdialog.cpp:416
+msgid "Import/Export Settings"
+msgstr "הגדרות יבוא/יצוא"
+
+#: src/optionsdialog.cpp:422
+msgid "CSV Delimiter"
+msgstr "מפריד CSV "
+
+#: src/optionsdialog.cpp:429
+msgid "Specify the delimiter to use when importing/exporting CSV files"
+msgstr "צין את המפריד שבו יעשה שימוש ביבוא/יצוא של קבצים."
+
+#: src/optionsdialog.cpp:434
+msgid "Display"
+msgstr "תצוגה"
+
+#: src/optionsdialog.cpp:440
+msgid "User Name"
+msgstr "שם משתמש"
+
+#: src/optionsdialog.cpp:447
+msgid "Specify the User Name"
+msgstr "ציין את שם המשתמש"
+
+#: src/optionsdialog.cpp:452
+#: src/optionsdialog.cpp:458
+msgid "Language"
+msgstr "שפה"
+
+#: src/optionsdialog.cpp:467
+msgid "Specify the language to use"
+msgstr "בחר שפה"
+
+#: src/optionsdialog.cpp:477
+msgid "Account View Options"
+msgstr "אפשרות תצוגת חשבונות"
+
+#: src/optionsdialog.cpp:483
+msgid "Accounts Visible"
+msgstr "חשבונות גלויים"
+
+#: src/optionsdialog.cpp:489
+msgid "All"
+msgstr "כולם"
+
+#: src/optionsdialog.cpp:491
+msgid "Favorites"
+msgstr "מועדפים"
+
+#: src/optionsdialog.cpp:508
+msgid "Specify which accounts are visible"
+msgstr "הגדר אילו חשבונות יהיו גלויים"
+
+#: src/optionsdialog.cpp:513
+msgid "Transaction View Options"
+msgstr "אפשרויות תצוגת תנועות"
+
+#: src/optionsdialog.cpp:519
+msgid "Transactions Visible"
+msgstr "תנועות גלויות"
+
+#: src/optionsdialog.cpp:526
+msgid "View Reconciled"
+msgstr "הצג מותאמים"
+
+#: src/optionsdialog.cpp:527
+msgid "View UnReconciled"
+msgstr "הצג בלתי מותאמים"
+
+#: src/optionsdialog.cpp:528
+msgid "View Today"
+msgstr "הצג היום"
+
+#: src/optionsdialog.cpp:529
+msgid "View 30 days"
+msgstr "הצג 30 יום"
+
+#: src/optionsdialog.cpp:530
+msgid "View 90 days"
+msgstr "הצג 90 יום"
+
+#: src/optionsdialog.cpp:531
+msgid "View Last Month"
+msgstr "הצג חודש קודם"
+
+#: src/optionsdialog.cpp:532
+msgid "View Current Month"
+msgstr "הצג חודש נוכחי"
+
+#: src/optionsdialog.cpp:560
+msgid "Specify which transactions are visible by default"
+msgstr "ציין אילו תנועות יהיות גלויות כברירת מחדל"
+
+#: src/optionsdialog.cpp:563
+msgid "Font Size Options"
+msgstr "אפשרויות גודל גופן"
+
+#: src/optionsdialog.cpp:569
+msgid "Report Font Size"
+msgstr "גודל גופן דוח"
+
+#: src/optionsdialog.cpp:608
+msgid "Specify which font size is used on the report tables"
+msgstr "הגדר את הגופן לשימוש בטבלאות הדיווח"
+
+#: src/optionsdialog.cpp:619
+msgid "Restore Defaults"
+msgstr "שחזר ברירת מחדל"
+
+#: src/optionsdialog.cpp:622
+msgid "Restore Default Colors"
+msgstr "שחזר צבע ברירת מחדל"
+
+#: src/optionsdialog.cpp:628
+msgid "Nav Tree"
+msgstr "סרגל ניווט"
+
+#: src/optionsdialog.cpp:630
+msgid "Specify the color for the nav tree"
+msgstr "הגדר צבע לסרגל הניווט"
+
+#: src/optionsdialog.cpp:634
+msgid "List Background"
+msgstr "רקע רשימה"
+
+#: src/optionsdialog.cpp:636
+msgid "Specify the color for the list background"
+msgstr "הגדר צבעי  רקע לרשימה "
+
+#: src/optionsdialog.cpp:640
+msgid "List Row 0"
+msgstr "שורת רשימה 0"
+
+#: src/optionsdialog.cpp:642
+msgid "Specify the color for the list row 0"
+msgstr "הגדר צבע עבור שורת רשימה 0"
+
+#: src/optionsdialog.cpp:646
+msgid "List Row 1"
+msgstr "שורת רשימה 1"
+
+#: src/optionsdialog.cpp:648
+msgid "Specify the color for the list row 1"
+msgstr "הגדר צבע עבור שורת רשימה 1"
+
+#: src/optionsdialog.cpp:652
+msgid "List Border"
+msgstr "גבולות רשימה"
+
+#: src/optionsdialog.cpp:654
+msgid "Specify the color for the list Border"
+msgstr "הגדר צבע עבור גבולות רשימה"
+
+#: src/optionsdialog.cpp:658
+msgid "List Details"
+msgstr "פרוט רשימה"
+
+#: src/optionsdialog.cpp:660
+msgid "Specify the color for the list details"
+msgstr "הגדר צבע עבור פירטי רשימה"
+
+#: src/optionsdialog.cpp:664
+msgid "Future Transactions"
+msgstr "תנועות עתידיות"
+
+#: src/optionsdialog.cpp:666
+msgid "Specify the color for future transactions"
+msgstr "הגדר צבע עבור תנועות עתידיות"
+
+#: src/optionsdialog.cpp:678
+msgid "Backup database before opening"
+msgstr "גבה מסד נתונים לפני פתיחתו"
+
+#: src/optionsdialog.cpp:684
+msgid "Select whether to create a .bak file when opening the database file"
+msgstr "הגדר האם לגבות את מסד הנתונים אם פתיחתו קובץ עם סיומת bak."
+
+#: src/optionsdialog.cpp:691
+msgid "Stock Quote Web Page"
+msgstr "אתר בית של שערי נ\"ע"
+
+#: src/optionsdialog.cpp:702
+msgid "Use Original Date when Pasting Transactions"
+msgstr "השתמש בתאריך מקורי בזמן רישום תנועה"
+
+#: src/optionsdialog.cpp:708
+msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
+msgstr "הגדר האם להשתמש בתאריך מקורי או תאריך היום בזמן העתקה והדבקה של תנועה"
+
+#: src/optionsdialog.cpp:713
+msgid "Use Transaction Sound"
+msgstr "השתמש בצליל תנועה"
+
+#: src/optionsdialog.cpp:719
+msgid "Select whether to use sounds when entering transactions"
+msgstr "הגדר האם להשתמש בצליל בעת קליטת תנועה"
+
+#: src/optionsdialog.cpp:723
+msgid "Enable online currency update (Get data from European Central Bank)"
+msgstr "אפשר עדכון שערים מקוונת (קבל מידע מ European Central Bank) "
+
+#: src/optionsdialog.cpp:730
+msgid "Enable or disable get data from European Central Bank to update currency rate"
+msgstr "אפשר או הפסק עדכוני שערי מטבע מ European Central Bank"
+
+#: src/optionsdialog.cpp:736
+msgid "General"
+msgstr "כללי"
+
+#: src/optionsdialog.cpp:737
+msgid "View Options"
+msgstr "הצג אפשרויות"
+
+#: src/optionsdialog.cpp:738
+msgid "Colors"
+msgstr "צבעים"
+
+#: src/optionsdialog.cpp:763
+msgid "Remember to update currency rate"
+msgstr "זכור את שער ההמרה המעודכן"
+
+#: src/optionsdialog.cpp:763
+msgid "Important note"
+msgstr "הערה חשובה"
+
+#: src/payeedialog.cpp:170
+msgid "Find Payee: "
+msgstr "מצא מוטב:"
+
+#: src/payeedialog.cpp:177
+#: src/payeedialog.cpp:203
+msgid "Enter the payee name to be added or make edits to an existing payee name"
+msgstr "הזן את שם המוטב שברצונך להוסיף, או, ערוך שם מוטב קיים"
+
+#: src/payeedialog.cpp:196
+msgid "Add/Edit Payee: "
+msgstr "ערוך/הוסף מוטב"
+
+#: src/payeedialog.cpp:211
+msgid "Add a new payee name"
+msgstr "הוסף מוטב חדש"
+
+#: src/payeedialog.cpp:216
+msgid "Change the name of an existing payee"
+msgstr "שנה שם מוטב קיים"
+
+#: src/payeedialog.cpp:221
+msgid "Delete the selected payee. The payee cannot be used by an existing transaction."
+msgstr "מחק את המוטב הנבחר. לא ניתן להשתש במוטב לתנועה קיימת"
+
+#: src/payeedialog.cpp:229
+msgid "Select the currently selected payee as the selected payee for the transaction"
+msgstr "בחר את המוטב הנוכחי כמוטב הנבחר עבור התנועה"
+
+#: src/payeedialog.cpp:240
+msgid "Type a Payee Name in the Text Box and then press Add."
+msgstr "הזן שם מוטב בתיבת הטקסט והקש על הוסף."
+
+#: src/payeedialog.cpp:245
+msgid "Payee with same name exists"
+msgstr "קיים כבר מוטב בעל שם זהה"
+
+#: src/payeedialog.cpp:264
+msgid "Payee is in use"
+msgstr "מוטב בשימוש"
+
+#: src/qifimport.cpp:361
+msgid ""
+"To import QIF files correctly, the date option set in MMEX \n"
+" must match the format of the date in the QIF file.\n"
+"Are you are sure you want to proceed with the import?"
+msgstr ""
+"על מנת ליבא קובץ QIF בהצלחה, פורמט התאריך ב MMEX  \n"
+" חייב להיות זהה לזה של הקובץ. \n"
+"האם ברצונך להמשיך ביבוא הקובץ? "
+
+#: src/qifimport.cpp:363
+msgid "Confirm QIF import"
+msgstr "אשר יבוא QIF"
+
+#: src/qifimport.cpp:382
+msgid "QIF Import"
+msgstr "יבוא QIF"
+
+#: src/qifimport.cpp:393
+msgid "Choose QIF data file to import"
+msgstr "בחר קובץ נתוני QIF ליבוא"
+
+#: src/qifimport.cpp:434
+#: src/qifimport.cpp:459
+#: src/qifimport.cpp:529
+msgid "Line : "
+msgstr "שורה:"
+
+#: src/qifimport.cpp:435
+msgid " incorrect QIF line type"
+msgstr "סוג שורת QIF שגויה"
+
+#: src/qifimport.cpp:446
+msgid "Importing account type : "
+msgstr "מיבא סוגי חשבון:"
+
+#: src/qifimport.cpp:459
+msgid " : "
+msgstr ":"
+
+#: src/qifimport.cpp:460
+msgid " account name "
+msgstr "שם חשבון"
+
+#: src/qifimport.cpp:498
+msgid " cannot process Account Types yet "
+msgstr "לא ניתן לעבד סוגי חשבון"
+
+#: src/qifimport.cpp:499
+msgid "Cannot process these QIF Account Types yet"
+msgstr "לא ניתן לעבד סוגי חשבון QIF "
+
+#: src/qifimport.cpp:514
+#: src/qifimport.cpp:630
+msgid "Adding payee "
+msgstr "מוסיף מוטב"
+
+#: src/qifimport.cpp:530
+msgid " invalid amount, skipping."
+msgstr "סכום לא חוקי, מדלג."
+
+#: src/qifimport.cpp:609
+msgid "Date is empty, "
+msgstr "שדה תאריך ריק,"
+
+#: src/qifimport.cpp:613
+msgid "Transaction Type is empty"
+msgstr "סוג תנועה ריק שדה"
+
+#: src/qifimport.cpp:617
+msgid "Amount is empty"
+msgstr "שדה סכום ריק,"
+
+#: src/qifimport.cpp:646
+msgid "Category is empty, marking transaction as Unknown category"
+msgstr "שדה קטגוריה ריק, התנועה הנוכחית תרשם לקטגוריה: Unknown "
+
+#: src/qifimport.cpp:660
+msgid "Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had "
+msgstr "מדלג על תנועות QIF בגלל תאריך,סוג, סכום חסרים, או, שגויים"
+
+#: src/qifimport.cpp:661
+msgid " payee "
+msgstr "מוטב"
+
+#: src/qifimport.cpp:661
+msgid " type "
+msgstr "סוג"
+
+#: src/qifimport.cpp:662
+msgid " amount "
+msgstr "סכום"
+
+#: src/qifimport.cpp:662
+msgid " date "
+msgstr "תאריך"
+
+#: src/qifimport.cpp:713
+msgid " transactions imported from QIF"
+msgstr "תנועות יובאו מ QIF"
+
+#: src/splitdetailsdialog.cpp:182
+msgid "Invalid Category Entered "
+msgstr "הקטגוריה שהוזנה לא חוקית"
+
+#: src/splittransactionsdialog.cpp:146
+msgid "&Remove"
+msgstr "הס&ר"
+
+#: src/splittransactionsdialog.cpp:165
+msgid "&Select Category"
+msgstr "בחר קטגוריה&"
+
+#: src/stockdialog.cpp:144
+msgid "Stock Investment Details"
+msgstr "פרטי תיקנירות ערך"
+
+#: src/stockdialog.cpp:157
+#: src/stockdialog.cpp:333
+#: src/stockspanel.cpp:204
+msgid "Held At"
+msgstr "מוחזק ב"
+
+#: src/stockdialog.cpp:163
+msgid "Enter the name of the financial institution where the investment is held"
+msgstr "הזן את שם בית ההשקעות/מוסד כספי שמחזיק במניה"
+
+#: src/stockdialog.cpp:174
+msgid "Specify the purchase date of the stock investment"
+msgstr "ציין את תאריך רכישת המניה"
+
+#: src/stockdialog.cpp:177
+msgid "Stock Name"
+msgstr "שם מניה"
+
+#: src/stockdialog.cpp:183
+msgid "Enter the stock company name"
+msgstr "הזן את שם המניה"
+
+#: src/stockdialog.cpp:187
+msgid "Symbol"
+msgstr "סמל"
+
+#: src/stockdialog.cpp:193
+msgid "Enter the stock symbol (optional)"
+msgstr "הזן את סמל המניה (אופציונאלי)"
+
+#: src/stockdialog.cpp:198
+#: src/stockspanel.cpp:212
+msgid "Number of Shares"
+msgstr "מספר מניות"
+
+#: src/stockdialog.cpp:204
+msgid "Enter number of shares held"
+msgstr "הזן מספר המניות המוחזקות"
+
+#: src/stockdialog.cpp:209
+msgid "Purchase Price"
+msgstr "מחיר קניה"
+
+#: src/stockdialog.cpp:215
+msgid "Enter purchase price for each stock"
+msgstr "הזן לכל מניה שער קניה"
+
+#: src/stockdialog.cpp:220
+msgid "Commission"
+msgstr "עמלה"
+
+#: src/stockdialog.cpp:226
+msgid "Enter any commission paid"
+msgstr "הזן סכום עמלה ששולמה"
+
+#: src/stockdialog.cpp:230
+msgid "Current Price"
+msgstr "מחיר נוכחי"
+
+#: src/stockdialog.cpp:236
+msgid "Enter current stock price"
+msgstr "הזן שער נ\"ע נוכחי"
+
+#: src/stockdialog.cpp:247
+msgid "Enter notes associated with this investment"
+msgstr "הזן הערות קשורות להשקעה זו"
+
+#: src/stockdialog.cpp:276
+msgid "Stock Price Web Page"
+msgstr "אתר הבית של שערי מניות"
+
+#: src/stockdialog.cpp:292
+msgid "Choose Investment Account"
+msgstr "בחר חשבון השקעות"
+
+#: src/stockdialog.cpp:345
+#: src/stockdialog.cpp:359
+msgid "Num Shares"
+msgstr "מספר מניות"
+
+#: src/stockdialog.cpp:353
+msgid "Invalid number of shares entered "
+msgstr "מספר המניות שהוזן לא חוקי"
+
+#: src/stockdialog.cpp:368
+msgid "Invalid purchase price entered "
+msgstr "שער הקניה שהוזן לא חוקי"
+
+#: src/stockdialog.cpp:388
+msgid "Invalid commission entered "
+msgstr "העמלה שהוזנה לא חוקית"
+
+#: src/stockspanel.cpp:177
+msgid "Idle"
+msgstr "לא פעיל"
+
+#: src/stockspanel.cpp:208
+msgid "Share Name"
+msgstr "מחיר מניה"
+
+#: src/stockspanel.cpp:217
+msgid "Gain/Loss"
+msgstr "רוח/הפסד"
+
+#: src/stockspanel.cpp:227
+msgid "Current"
+msgstr "שער נוחכי"
+
+#: src/stockspanel.cpp:270
+msgid "New Stock Investment"
+msgstr "השקעה חדשה"
+
+#: src/stockspanel.cpp:275
+msgid "Edit Stock Investment"
+msgstr "ערוך תיק נירות ערך"
+
+#: src/stockspanel.cpp:280
+msgid "Delete Stock Investment"
+msgstr "מחק תיק נירות ערך"
+
+#: src/stockspanel.cpp:283
+msgid "&Refresh"
+msgstr "רענן&"
+
+#: src/stockspanel.cpp:285
+msgid "Refresh Stock Prices from Yahoo"
+msgstr "Yahoo רענון שערי נ\"ע מ"
+
+#: src/stockspanel.cpp:288
+msgid "&Settings"
+msgstr "הגדרות&"
+
+#: src/stockspanel.cpp:290
+msgid "Change settings for automatic refresh"
+msgstr "שנה הגדרות רענון אוטומטי"
+
+#: src/stockspanel.cpp:309
+msgid "Stock Investments: "
+msgstr "תיק נירות ערך:"
+
+#: src/stockspanel.cpp:348
+msgid "Total: %s Invested: %s Gain: %s "
+msgstr "סה\"כ:  %s  השקעה:  %s  רווח:  %s "
+
+#: src/stockspanel.cpp:350
+msgid "Total: %s Invested: %s Loss: %s "
+msgstr "סה\"כ:  %s  השקעה:  %s הפסד:  %s "
+
+#: src/stockspanel.cpp:446
+msgid "%s on %s"
+msgstr "%s ב %s"
+
+#: src/stockspanel.cpp:449
+msgid "never!"
+msgstr "אף פעם:"
+
+#: src/stockspanel.cpp:454
+msgid ""
+"Automatic stock quote refresh is disabled. \n"
+"Last update: %s"
+msgstr ""
+"רענון אוטמטי של שערי נ\"ע מופסק.\n"
+"עדכון אחרון ב:  %s"
+
+#: src/stockspanel.cpp:460
+msgid ""
+"Automatic stock quote refresh idle - Out of Hours. \n"
+"Last update: %s"
+msgstr ""
+"רענון אוטמטי של שערי נ\"ע בהמתנה - מחוץ לשעות המסחר\n"
+"עדכון אחרון ב:  %s"
+
+#: src/stockspanel.cpp:466
+msgid "Automatic stock quote refresh in progress..."
+msgstr "רענון אוטומטי של שערי נ\"ע  בתהליך..."
+
+#: src/stockspanel.cpp:472
+msgid ""
+"Automatic stock quote refresh successful. \n"
+"Last update: %s"
+msgstr ""
+"רענון אוטמטי של שערי נ\"ע בוצע בהצלחה.\n"
+"עדכון אחרון ב:  %s"
+
+#: src/stockspanel.cpp:478
+msgid ""
+"Automatic stock quote refresh Failed. \n"
+"Last successful update: %s"
+msgstr ""
+"רענון אוטמטי של שערי נ\"ע כשל.\n"
+"עדכון אחרון ב:  %s"
+
+#: src/stockspanel.cpp:485
+msgid ""
+"Automatic stock quote refresh not started. \n"
+"Last update: %s"
+msgstr ""
+"\"רענון אוטמטי של שערי נ\"ע לא החל.\n"
+"עדכון אחרון ב:  %s\""
+
+#: src/stockspanel.cpp:648
+#: src/stockspanel.cpp:656
+msgid "Stock Download"
+msgstr "יבוא נירות ערך"
+
+#: src/stockspanel.cpp:773
+msgid "&New Stock Investment"
+msgstr "הש&קעה חדשה"
+
+#: src/stockspanel.cpp:775
+msgid "&Edit Stock Investment"
+msgstr "ע&רוך תיק נירות ערך"
+
+#: src/stockspanel.cpp:776
+msgid "&Delete Stock Investment"
+msgstr "מח&ק תיק נירות ערך"
+
+#: src/stockspanel.cpp:865
+msgid "Do you really want to delete the stock investment?"
+msgstr "האם אתה מתכוון למחוק את תיק נירות הערך?"
+
+#: src/stockspanel.cpp:866
+msgid "Confirm Stock Investment Deletion"
+msgstr "אשר מחיקת ניר ערך"
+
+#: src/transdialog.cpp:309
+#: src/transdialog.cpp:690
+#: src/transdialog.cpp:705
+msgid "Specify to whom the transaction is going to or coming from "
+msgstr "ציין אל מי התנועה מוזרמת או ממי"
+
+#: src/transdialog.cpp:330
+msgid "Populate Transaction #"
+msgstr "אכלס תנועה #"
+
+#: src/transdialog.cpp:709
+msgid "Select To Account"
+msgstr "בחר אל חשבון"
+
+#: src/transdialog.cpp:721
+msgid "Specify the account from which the transfer is occurring"
+msgstr "הגדר את החשבון ממנו בוצעה ההעברה"
+
+#: src/univcsvdialog.cpp:100
+msgid "Specify the order of fields in the CSV file"
+msgstr "הגדר את סדר השדות בקובצ ה CSV"
+
+#: src/univcsvdialog.cpp:115
+msgid "Move &Up"
+msgstr "הזז &למעלה"
+
+#: src/univcsvdialog.cpp:120
+msgid "Move &Down"
+msgstr "הזז &למטה"
+
+#: src/univcsvdialog.cpp:156
+msgid "&Load Template"
+msgstr "&טען תבנית"
+
+#: src/univcsvdialog.cpp:161
+msgid "Save &As Template"
+msgstr "שמור &כתבנית"
+
+#: src/univcsvdialog.cpp:166
+msgid "&Import File"
+msgstr "יבא קובץ&"
+
+#: src/univcsvdialog.cpp:223
+msgid "Amount(+/-)"
+msgstr "סכום(+/-)"
+
+#: src/univcsvdialog.cpp:227
+msgid "SubCategory"
+msgstr "תת קטגוריה"
+
+#: src/univcsvdialog.cpp:231
+msgid "Transaction Number"
+msgstr "אסמכתא"
+
+#: src/univcsvdialog.cpp:233
+msgid "Don't Care"
+msgstr "התעלם"
+
+#: src/univcsvdialog.cpp:240
+#: src/univcsvdialog.cpp:242
+msgid "Unknown"
+msgstr "לא ידוע"
+
+#: src/univcsvdialog.cpp:263
+msgid "Add CSV field"
+msgstr "הוסף שדה CSV"
+
+#: src/univcsvdialog.cpp:264
+msgid "CSV Field"
+msgstr "שדה CSV"
+
+#: src/univcsvdialog.cpp:358
+#: src/univcsvdialog.cpp:370
+msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."
+msgstr "לא הוגדרו השדות הנחוצים ליבוא קובץ CSV! השדות המינימליים הדרושים הם: תאריך, סכום ומוטב."
+
+#: src/univcsvdialog.cpp:390
+#: src/util.cpp:463
+#: src/util.cpp:723
+msgid "CSV Import"
+msgstr "יבא CSV"
+
+#: src/univcsvdialog.cpp:400
+#: src/util.cpp:732
+msgid "Choose MM.NET CSV data file to import"
+msgstr "בחר קובץ MM.NET CSV  ליבוא"
+
+#: src/univcsvdialog.cpp:444
+msgid " file contains insufficient number of tokens"
+msgstr ""
+
+#: src/univcsvdialog.cpp:467
+msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipping"
+msgstr "אחד השדות הבאים חסר: תאריך, מוטב, סכום. מדלג"
+
+#: src/univcsvdialog.cpp:521
+#: src/util.cpp:678
+#: src/util.cpp:899
+msgid " imported OK."
+msgstr "יובא בהצלחה."
+
+#: src/univcsvdialog.cpp:524
+#: src/util.cpp:902
+msgid ""
+"Total Lines : %d \n"
+"Total Imported : %d\n"
+"\n"
+"Log file written to : %s.\n"
+"\n"
+"Imported transactions have been flagged so you can review them. "
+msgstr ""
+"סך כל שורות : %d \n"
+"סך הכול יובא : %d\n"
+"\n"
+"קובץ לוג נוצר ב: %s.\n"
+"\n"
+"תנועות שיובאו סומנו כך שתוכל לבקרן."
+
+#: src/univcsvdialog.cpp:525
+#: src/util.cpp:683
+#: src/util.cpp:700
+#: src/util.cpp:903
+msgid "Import from CSV"
+msgstr "יבא מקובץ CSV"
+
+#: src/util.cpp:261
+msgid "January"
+msgstr "ינואר"
+
+#: src/util.cpp:261
+msgid "February"
+msgstr "פברואר"
+
+#: src/util.cpp:261
+msgid "March"
+msgstr "מרץ"
+
+#: src/util.cpp:261
+msgid "April"
+msgstr "אפריל"
+
+#: src/util.cpp:261
+#: src/util.cpp:272
+msgid "May"
+msgstr "מאי"
+
+#: src/util.cpp:261
+msgid "June"
+msgstr "יוני"
+
+#: src/util.cpp:262
+msgid "July"
+msgstr "יולי"
+
+#: src/util.cpp:262
+msgid "August"
+msgstr "אוגוסט"
+
+#: src/util.cpp:262
+msgid "September"
+msgstr "ספטמבר"
+
+#: src/util.cpp:262
+msgid "October"
+msgstr "אוקטובר"
+
+#: src/util.cpp:262
+msgid "November"
+msgstr "נובמבר"
+
+#: src/util.cpp:262
+msgid "December"
+msgstr "דצמבר"
+
+#: src/util.cpp:272
+msgid "Jan"
+msgstr "ינו"
+
+#: src/util.cpp:272
+msgid "Feb"
+msgstr "פבר"
+
+#: src/util.cpp:272
+msgid "Mar"
+msgstr "מרץ"
+
+#: src/util.cpp:272
+msgid "Apr"
+msgstr "אפר"
+
+#: src/util.cpp:272
+msgid "Jun"
+msgstr "יונ"
+
+#: src/util.cpp:273
+msgid "Jul"
+msgstr "יול"
+
+#: src/util.cpp:273
+msgid "Aug"
+msgstr "אוג"
+
+#: src/util.cpp:273
+msgid "Sep"
+msgstr "ספט"
+
+#: src/util.cpp:273
+msgid "Oct"
+msgstr "אוק"
+
+#: src/util.cpp:273
+msgid "Nov"
+msgstr "נוב"
+
+#: src/util.cpp:273
+msgid "Dec"
+msgstr "דצמ"
+
+#: src/util.cpp:288
+msgid "Sunday"
+msgstr "ראשון"
+
+#: src/util.cpp:288
+msgid "Monday"
+msgstr "שני"
+
+#: src/util.cpp:288
+msgid "Tuesday"
+msgstr "שלישי"
+
+#: src/util.cpp:288
+msgid "Wednesday"
+msgstr "רביעי"
+
+#: src/util.cpp:289
+msgid "Thursday"
+msgstr "חמישי"
+
+#: src/util.cpp:289
+msgid "Friday"
+msgstr "שישי"
+
+#: src/util.cpp:289
+msgid "Saturday"
+msgstr "שבת"
+
+#: src/util.cpp:317
+msgid "No Account available! Cannot Export!"
+msgstr "!חשבון לא זמין! לא ניתן לייצא"
+
+#: src/util.cpp:334
+msgid "Choose Account to Export from:"
+msgstr "בחר חשבון ליצא:"
+
+#: src/util.cpp:335
+msgid "CSV Export"
+msgstr "יצא CSV"
+
+#: src/util.cpp:341
+msgid "Choose CSV data file to Export"
+msgstr "בחר קובץ נתונים CSV ליצא"
+
+#: src/util.cpp:513
+#: src/util.cpp:773
+msgid " missing date, skipping."
+msgstr "חסר תאריך, מדלג."
+
+#: src/util.cpp:522
+#: src/util.cpp:782
+msgid " missing payee, skipping."
+msgstr "חסר מוטב, מדלג."
+
+#: src/util.cpp:531
+msgid " missing transaction type, skipping."
+msgstr "חסר סוג תנועה, מדלג."
+
+#: src/util.cpp:540
+#: src/util.cpp:791
+msgid " missing amount, skipping."
+msgstr "חסר סכום, מדלג."
+
+#: src/util.cpp:563
+msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
+msgstr "אחד השדות הבאים ריקים: תאריך, מוטב, סוג תנועה, סכום. מדלג"
+
+#: src/util.cpp:570
+msgid " unrecognized transaction type, skipping."
+msgstr "סוג תנועה לא מזוהה, מדלג."
+
+#: src/util.cpp:597
+msgid " transfer transaction not imported."
+msgstr "תנועות מסוג העברה לא יובאו."
+
+#: src/util.cpp:681
+msgid ""
+"Total Lines : %d.\n"
+"Total Imported : %d\n"
+"Log file written to : %s.\n"
+"\n"
+"Imported transactions have been flagged so you can review them."
+msgstr ""
+"סך כל שורות : %d.\n"
+"סך הכול יובא : %d\n"
+"קובץ לוג נוצר ב: %s.\n"
+"\n"
+"תנועות שיובאו סומנו כך שתוכל לבקרן."
+
+#: src/util.cpp:699
+msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
+msgstr "אנא ודא כי קובץ ה CSV, מ MMEX.NET מכיל רק חשבון אחד!"
+
+#: src/util.cpp:806
+msgid " missing category, skipping."
+msgstr "חסר קטגוריה, מדלג."
+
+#: src/util.cpp:834
+msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
+msgstr "אחד השדות הבאים ריק: תאריך, מוטב, סוג תנועה, סכום. מדלג"
+
+#: src/util.cpp:843
+msgid " invalid date, skipping."
+msgstr "תאריך לא חוקי, מדלג."
+
+#: src/util.cpp:918
+msgid "Entry "
+msgstr "תנועה"
+
+#: src/util.cpp:918
+msgid " is invalid."
+msgstr "לא חוקי.  "
+
+#: src/util.cpp:920
+msgid "Invalid Entry"
+msgstr "תנועה לא חוקית"
+
+#: src/wxsqlite3_1_7.cpp:94
+msgid "No Database opened"
+msgstr "לא נפתח מסד נתונים"
+
+#: src/wxsqlite3_1_7.cpp:95
+msgid "Statement not accessible"
+msgstr "דף החשבון לא נגיש"
+
+#: src/wxsqlite3_1_7.cpp:96
+msgid "Out of memory"
+msgstr "חורג מהזיכרון"
+
+#: src/wxsqlite3_1_7.cpp:97
+msgid "Cannot decode binary"
+msgstr "לא מסוגל לפענח קובץ בינארי"
+
+#: src/wxsqlite3_1_7.cpp:98
+msgid "Invalid field index"
+msgstr "מפתח שדה לא חוקי"
+
+#: src/wxsqlite3_1_7.cpp:99
+msgid "Invalid field name"
+msgstr "שם שדה לא חוקי"
+
+#: src/wxsqlite3_1_7.cpp:100
+msgid "Invalid row index"
+msgstr "מפתח שורה לא חוקי"
+
+#: src/wxsqlite3_1_7.cpp:101
+msgid "Invalid scalar query"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:103
+msgid "Null Results pointer"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:104
+msgid "Error binding string param"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:105
+msgid "Error binding int param"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:106
+msgid "Error binding int64 param"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:107
+msgid "Error binding double param"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:108
+msgid "Error binding blob param"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:109
+msgid "Error binding date/time param"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:110
+msgid "Error binding NULL param"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:111
+msgid "Error clearing bindings"
+msgstr ""
+
+#: src/yahoosettingsdialog.cpp:61
+msgid "Yahoo Server"
+msgstr "שרת Yahoo"
+
+#: src/yahoosettingsdialog.cpp:65
+msgid "finance.au.yahoo.com"
+msgstr "finance.au.yahoo.com"
+
+#: src/yahoosettingsdialog.cpp:66
+msgid "Do not enter anything except the server name (or IP address, if you're feeling lucky)"
+msgstr "אל תזין דבר למעט שם השרת (או כתובת IP אם אתה חש בר מזל)"
+
+#: src/yahoosettingsdialog.cpp:72
+msgid "Yahoo Suffix"
+msgstr "סיומת Yahoo "
+
+#: src/yahoosettingsdialog.cpp:77
+msgid ""
+"Enter the suffix used by Yahoo for the market of your stocks. \n"
+"If your stocks are in multiple markets, leave this blank and add  the suffix to each symbol in your portfolio."
+msgstr ""
+"הזן סיומת Yahoo לסמל השוק בו נסחרת המניה. \n"
+" \"במידה ומניותך נסחרת במספר שווקים, השאר שדה זה ריק והזן הסמל לכל אחת מהמניות בנפרד."
+
+#: src/yahoosettingsdialog.cpp:82
+msgid "Market open from"
+msgstr "המסחר נפתח בשעה"
+
+#: src/yahoosettingsdialog.cpp:91
+#: src/yahoosettingsdialog.cpp:102
+#: src/yahoosettingsdialog.cpp:119
+#: src/yahoosettingsdialog.cpp:130
+msgid "Allow for any delay in quotes"
+msgstr "אפשר עבור כל השהיה בשערי המסחר"
+
+#: src/yahoosettingsdialog.cpp:98
+#: src/yahoosettingsdialog.cpp:126
+msgid ":"
+msgstr ":"
+
+#: src/yahoosettingsdialog.cpp:110
+msgid "to"
+msgstr "עד"
+
+#: src/yahoosettingsdialog.cpp:139
+msgid "&Refresh prices every"
+msgstr "&רענן מחירים כל"
+
+#: src/yahoosettingsdialog.cpp:163
+msgid "minutes while market is open"
+msgstr "דקות לפתיחת המסחר"
+
+#: include/aboutdialog.h:25
+msgid "About "
+msgstr "אודות"
+
+#: include/appstartdialog.h:27
+msgid " Start Page"
+msgstr "דף פתיחה"
+
+#: include/assetdialog.h:21
+msgid "New/Edit Asset"
+msgstr "הוסף/ערוך נכס"
+
+#: include/billsdepositsdialog.h:22
+msgid "New/Edit Repeating Transaction"
+msgstr "הוסף/ערוך תנועות חוזרות"
+
+#: include/budgetentrydialog.h:22
+msgid "Budget Entry Dialog"
+msgstr "חלון הזנת תקציב"
+
+#: include/budgetyeardialog.h:22
+msgid "Budget Year Editor"
+msgstr "עורך שנת תקציב"
+
+#: include/budgetyearentrydialog.h:23
+msgid "Budget Year Entry"
+msgstr "הזנת שנת תקציב"
+
+#: include/chart.h:247
+#: include/chart.h:448
+msgid "Legend:"
+msgstr "מקור:"
+
+#: include/currencydialog.h:23
+msgid "Currency Manager"
+msgstr "נהול מטבעות"
+
+#: include/customsqldialog.h:29
+msgid "Custom SQL Dialog"
+msgstr "חלון שאילתות SQL מותאמות אישית"
+
+#: include/fileviewerdialog.h:24
+msgid "View File Contents"
+msgstr "הצג תוכן קובץ"
+
+#: include/filtertransdialog.h:46
+msgid "Filter Transactions"
+msgstr "סנן תנועות"
+
+#: include/maincurrencydialog.h:29
+msgid "Currency Dialog"
+msgstr "חלון מטבעות"
+
+#: include/mmex.h:136
+msgid "Base Currency for account"
+msgstr "מטבע בסיס לחשבון"
+
+#: include/mmex.h:151
+msgid ""
+"\n"
+"Specify the base (or default) currency to be used \n"
+"with the database. You can change the \n"
+"currency associated with each account if needed.\n"
+msgstr ""
+"\n"
+"\"הגדר את מטבע בריריתהמחדל למסד הנתונים\n"
+"במידת הצורך, ניתן לשנות את המטבע המשוייך לחשבון.\n"
+
+#: include/mmex.h:169
+msgid "(Optional)Specify your name. Mainly used for reporting and in printing reports.\n"
+msgstr "הזן את שמך. בעיקר לצרכי דיווח והדפסת דוחות (אופציונאלי).\n"
+
+#: include/mmex.h:181
+msgid "Base Currency Not Set"
+msgstr "לא נקבע מטבע בסיס"
+
+#: include/mmex.h:231
+msgid "Name of the Account"
+msgstr "שם החשבון"
+
+#: include/mmex.h:246
+msgid ""
+"\n"
+"Specify a descriptive name of the account. This most commonly \n"
+"is the name of the financial institution where the account is held. \n"
+"For example 'ABC Bank'."
+msgstr ""
+"\n"
+"\"הזן את שם המוסד הכספי בו מתנהל החשבון, לדוגמה: 'בנק לאומי'."
+
+#: include/mmex.h:259
+msgid "Account Name Invalid"
+msgstr "שם חשבון לא חוקי"
+
+#: include/mmex.h:282
+msgid "Checking/Savings"
+msgstr "עו\"ש/חיסכון"
+
+#: include/mmex.h:294
+msgid "Type of Account"
+msgstr "סוג חשבון"
+
+#: include/mmex.h:309
+msgid ""
+"\n"
+"Select the type of account you want to create:\n"
+"\n"
+"General bank accounts cover a wide variety of account\n"
+" types like Checking, Savings and Credit card type accounts."
+msgstr ""
+"\n"
+"בחר את סוג החשבון שברצונך ליצור:\n"
+"\n"
+"חשבון בנק כללי מכסה טווח רחב של סוגי חשבונות\n"
+"כגון עובר ושב, חיסכון, גמל, בטוחי מנהלים ועוד."
+
+#: include/mmex.h:315
+msgid ""
+"\n"
+"Investment accounts are specialized accounts that only \n"
+"have stock/mutual fund investments associated \n"
+"with them.\n"
+msgstr ""
+"\n"
+"חשבון השקעות הם חשבונות יעודיים לניהול תיקי נירות ערך\n"
+"ומשויכים אליו קרנות, נירות ערך, אגרות חוב ומכשירים פיננסיים.\n"
+
+#: include/mmex.h:333
+msgid ""
+"Base Account Currency Not set.\n"
+"Set that first using tools->options menu and then add a new account"
+msgstr ""
+"לא הוגדר מטבע חשבון בסיסי.\n"
+"הגדר תחילה בשימוש בתפריט: כלים=>אפשרויות=>הוסף חשבון חדש"
+
+#: include/mmgraphincexpensesmonth.h:26
+msgid "Expenses"
+msgstr "הוצאות"
+
+#: include/optionsdialog.h:26
+msgid "Options Dialog"
+msgstr "חלון אפשרויות"
+
+#: include/reportbudgetingperf.h:26
+msgid "Budget Performance for Year : "
+msgstr "ביצועי תקציב לשנה :"
+
+#: include/reportbudgetingperf.h:63
+#: include/reportcategovertimeperf.h:55
+msgid "Overall"
+msgstr "כולל"
+
+#: include/reportbudgetingperf.h:64
+msgid "%"
+msgstr "%"
+
+#: include/reportbudgetsetup.h:26
+msgid "Budget setup for Year : "
+msgstr "הגדרות תקיצב לשנה :"
+
+#: include/reportbudgetsetup.h:26
+msgid " (Estimated Vs Actual)"
+msgstr "(תחזית מול בפועל)"
+
+#: include/reportcashflow.h:24
+msgid "Cash Flow Forecast For All Accounts - A Year Ahead"
+msgstr "תחזית תזרים מזומנים לכל החשבונות - שנה קדימה"
+
+#: include/reportcashflow.h:37
+#: include/reportincexpesestime.h:122
+msgid "Total"
+msgstr "סך הכל"
+
+#: include/reportcategexp.h:62
+#: include/reportincexpenses.h:40
+#: include/reportpayee.h:39
+msgid "From: "
+msgstr "מ:"
+
+#: include/reportcategexp.h:64
+#: include/reportincexpenses.h:41
+#: include/reportpayee.h:41
+msgid " To: "
+msgstr "אל:"
+
+#: include/reportcategovertimeperf.h:23
+msgid "Category Income/Expenses Over Last 12 Months "
+msgstr "קטגורית הכנסה/הוצראה ב 12 החודשים החולפים"
+
+#: include/reportcustomsql.h:24
+msgid "Custom SQL Report "
+msgstr "דוח SQL מותאם אישית"
+
+#: include/reportincexpenses.h:76
+msgid "Income:"
+msgstr "הכנסות:"
+
+#: include/reportincexpenses.h:81
+msgid "Expenses:"
+msgstr "הוצאות:"
+
+#: include/reportincexpenses.h:93
+msgid "Difference:"
+msgstr "הפרש:"
+
+#: include/reportincexpesestime.h:28
+msgid "Income vs Expenses for Year: "
+msgstr "הכנסות מול הוצאות לשנה :"
+
+#: include/reportincexpesestime.h:43
+msgid "Month"
+msgstr "חודש"
+
+#: include/reportincexpesestime.h:46
+msgid "Difference"
+msgstr "הפרש"
+
+#: include/reportsummary.h:124
+msgid "Total Balance on all Accounts"
+msgstr "יתרה כוללת לכל החשבונות"
+
+#: include/reportsummaryassets.h:37
+msgid "Summary of Assets"
+msgstr "סיכום נכסים"
+
+#: include/reportsummaryassets.h:121
+msgid "Total Assets: "
+msgstr "סה\"כ נכסים:"
+
+#: include/reportsummarystocks.h:37
+msgid "Summary of Stocks"
+msgstr "סיכום מניות"
+
+#: include/reportsummarystocks.h:60
+msgid "Company"
+msgstr "חברה"
+
+#: include/reportsummarystocks.h:62
+msgid "Number Shares"
+msgstr "מספר מניות"
+
+#: include/reportsummarystocks.h:63
+msgid "Purchase Date"
+msgstr "מועד רכישה"
+
+#: include/reportsummarystocks.h:68
+msgid "Gain Loss"
+msgstr "רוח או הפסד"
+
+#: include/reportsummarystocks.h:148
+msgid "Total Stock Investments: "
+msgstr "סך כל השקעה במניות:"
+
+#: include/reporttransactions.h:49
+msgid "Transaction List"
+msgstr "רשימת תנועות"
+
+#: include/reporttransactions.h:135
+msgid "Total Amount: "
+msgstr "סכום כולל:"
+
+#: include/reporttransstats.h:30
+msgid "Transaction Statistics for "
+msgstr "סטטיסטיקת תנועות עבור"
+
+#: include/splitdetailsdialog.h:39
+msgid "Split Detail Dialog"
+msgstr "חלון פרטי פיצול"
+
+#: include/splittransactionsdialog.h:50
+msgid "Split Transaction Dialog"
+msgstr "חלון פיצול תנועה"
+
+#: include/stockdialog.h:23
+msgid "New/Edit Stock Investment"
+msgstr "הוסף/ערוך השקעה"
+
+#: include/transdialog.h:23
+msgid "New/Edit Transaction"
+msgstr "הוסף/ערוך תנועה"
+
+#: include/univcsvdialog.h:29
+msgid "Universal CSV Importer Dialog"
+msgstr "חלון ייבוא CSV אוניברסלי"
+
+#: include/yahoosettingsdialog.h:108
+msgid "Options"
+msgstr "אפשרויות"
+
+#~ msgid "Delete Account"
+#~ msgstr "מחק חשבון"
+#~ msgid "Select From Account"
+#~ msgstr "בחר מחשבון"
 
