@@ -1,0 +1,3774 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Money Manager Ex\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-15 18:01+0300\n"
+"PO-Revision-Date: 2009-09-24 22:25+0300\n"
+"Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
+"Language-Team: hasan almemar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Arabic\n"
+"X-Poedit-Country: SAUDI ARABIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: ..\\..\\\n"
+"X-Poedit-SearchPath-0: include\n"
+"X-Poedit-SearchPath-1: src\n"
+
+#: src/aboutdialog.cpp:153
+msgid "Version: "
+msgstr "الاصدار:"
+
+#: src/aboutdialog.cpp:164
+msgid "  and contributers from around the world."
+msgstr ""
+
+#: src/aboutdialog.cpp:169
+msgid "Released under the GNU GPL License"
+msgstr "الاصدار تجت تصريح GPL مجاني ومفتوح المصدر"
+
+#: src/aboutdialog.cpp:181
+msgid "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
+msgstr ""
+
+#: src/aboutdialog.cpp:185
+msgid "Version History"
+msgstr "تاريخ الاصدار"
+
+#: src/aboutdialog.cpp:190
+msgid "Contributers"
+msgstr ""
+
+#: src/aboutdialog.cpp:198
+msgid "Using Language : "
+msgstr "اللغة المستخدمة :"
+
+#: src/appstartdialog.cpp:123
+msgid "Open Last Opened Database"
+msgstr "فتح قاعدة البيانات اﻷخيرة"
+
+#: src/appstartdialog.cpp:136
+msgid "Open the previously opened database : "
+msgstr "فنح قاعدة بيانات سابقة :"
+
+#: src/appstartdialog.cpp:143
+msgid "Create a New Database"
+msgstr "انشاء قاعدة بيانات جديدة"
+
+#: src/appstartdialog.cpp:144
+msgid "Create a new database file to get started"
+msgstr "انشاء قاعدة بيانات جديدة للبدء"
+
+#: src/appstartdialog.cpp:148
+msgid "Open Existing Database"
+msgstr "فتح قاعدة بيانات موجودة"
+
+#: src/appstartdialog.cpp:149
+msgid "Open an already created database file with extension (*.mmb)"
+msgstr ""
+
+#: src/appstartdialog.cpp:153
+msgid "Read Documentation"
+msgstr "قراءة المستندات"
+
+#: src/appstartdialog.cpp:154
+msgid "Read the user manual"
+msgstr "قراءة دليل المستخدم"
+
+#: src/appstartdialog.cpp:160
+msgid "Visit Website for more information"
+msgstr "زيارة الموقع لمعلومات أكثر"
+
+#: src/appstartdialog.cpp:161
+msgid "Open the Money Manager Ex website for latest news, updates etc"
+msgstr ""
+
+#: src/appstartdialog.cpp:168
+msgid "Show this window next time "
+msgstr "عرض هذه النافذة مرة أخرى"
+
+#: src/appstartdialog.cpp:170
+msgid " starts"
+msgstr ""
+
+#: src/assetdialog.cpp:163
+msgid "Asset Details"
+msgstr "تفاصيل الممتلك"
+
+#: src/assetdialog.cpp:176
+#: src/assetspanel.cpp:139
+msgid "Name"
+msgstr "الاسم"
+
+#: src/assetdialog.cpp:182
+msgid "Enter the name of the asset"
+msgstr "اكتب اسم الممتلك"
+
+#: src/assetdialog.cpp:186
+#: src/billsdepositsdialog.cpp:398
+msgid "Date"
+msgstr "التاريخ"
+
+#: src/assetdialog.cpp:193
+msgid "Specify the date of purchase of asset"
+msgstr "تعيين تاريخ شراء الممتلك"
+
+#: src/assetdialog.cpp:196
+msgid "Asset Type"
+msgstr "نوع الممتلك"
+
+#: src/assetdialog.cpp:202
+#: src/assetspanel.cpp:231
+#: src/assetspanel.cpp:242
+msgid "Property"
+msgstr "عقار"
+
+#: src/assetdialog.cpp:203
+#: src/assetspanel.cpp:232
+#: src/assetspanel.cpp:244
+msgid "Automobile"
+msgstr "سيارة"
+
+#: src/assetdialog.cpp:204
+#: src/assetspanel.cpp:233
+#: src/assetspanel.cpp:246
+msgid "Household Object"
+msgstr "اثاث"
+
+#: src/assetdialog.cpp:205
+#: src/assetspanel.cpp:234
+#: src/assetspanel.cpp:248
+msgid "Art"
+msgstr "لوحات"
+
+#: src/assetdialog.cpp:206
+#: src/assetspanel.cpp:235
+#: src/assetspanel.cpp:250
+msgid "Jewellery"
+msgstr "مجوهرات"
+
+#: src/assetdialog.cpp:207
+#: src/assetspanel.cpp:236
+#: src/assetspanel.cpp:252
+msgid "Cash"
+msgstr "نقد"
+
+#: src/assetdialog.cpp:208
+#: src/assetspanel.cpp:237
+#: src/assetspanel.cpp:254
+msgid "Other"
+msgstr "أخرى"
+
+#: src/assetdialog.cpp:212
+msgid "Select type of asset"
+msgstr "اختيارا نوع الممتلك"
+
+#: src/assetdialog.cpp:218
+#: src/assetdialog.cpp:302
+#: src/assetspanel.cpp:147
+msgid "Value"
+msgstr "القيمة"
+
+#: src/assetdialog.cpp:224
+msgid "Enter the current value of the asset"
+msgstr "اكتب القيمة الحالية للممتلك"
+
+#: src/assetdialog.cpp:230
+msgid "Change in Value"
+msgstr "تغير القيمة مع الزمن"
+
+#: src/assetdialog.cpp:236
+#: src/billsdepositsdialog.cpp:298
+#: src/billsdepositsdialog.cpp:438
+#: src/billsdepositspanel.cpp:267
+#: src/budgetentrydialog.cpp:165
+msgid "None"
+msgstr "ﻻشئ"
+
+#: src/assetdialog.cpp:237
+msgid "Appreciates"
+msgstr "بالزيادة"
+
+#: src/assetdialog.cpp:238
+msgid "Depreciates"
+msgstr "بالنقصان"
+
+#: src/assetdialog.cpp:242
+msgid "Specify if the value of the asset changes over time"
+msgstr "تعيين مدى تغير قيمة الممتلك مع الزمن"
+
+#: src/assetdialog.cpp:247
+msgid "Rate of Change"
+msgstr "معدل التغير"
+
+#: src/assetdialog.cpp:253
+#, c-format
+msgid "Enter the rate at which the asset changes its value in % per year"
+msgstr "اكتب معدل التغير السنوي في قيمة الممتلك بالنسبة المئوية% p"
+
+#: src/assetdialog.cpp:259
+#: src/billsdepositsdialog.cpp:451
+#: src/billsdepositspanel.cpp:164
+msgid "Notes"
+msgstr "ملاحظات"
+
+#: src/assetdialog.cpp:265
+msgid "Enter notes associated with this asset"
+msgstr "اكتب ملاحظات متعلقة بهذا الممتلك"
+
+#: src/assetdialog.cpp:277
+#: src/billsdepositsdialog.cpp:478
+#: src/budgetentrydialog.cpp:195
+#: src/budgetyearentrydialog.cpp:135
+msgid "OK"
+msgstr "موافق"
+
+#: src/assetdialog.cpp:281
+#: src/billsdepositsdialog.cpp:482
+#: src/budgetentrydialog.cpp:199
+#: src/budgetyearentrydialog.cpp:140
+msgid "Cancel"
+msgstr "الغاء"
+
+#: src/assetdialog.cpp:309
+#: src/assetdialog.cpp:337
+msgid "Invalid Value "
+msgstr "قيمة غير صالحة"
+
+#: src/assetdialog.cpp:309
+#: src/assetdialog.cpp:337
+#: src/billsdepositsdialog.cpp:640
+#: src/billsdepositsdialog.cpp:814
+#: src/billsdepositsdialog.cpp:824
+#: src/billsdepositsdialog.cpp:847
+#: src/budgetentrydialog.cpp:234
+#: src/budgetyearentrydialog.cpp:153
+#: src/budgetyearentrydialog.cpp:160
+#: src/budgetyearentrydialog.cpp:183
+#: src/categdialog.cpp:190
+#: src/categdialog.cpp:198
+#: src/categdialog.cpp:217
+#: src/categdialog.cpp:251
+#: src/categdialog.cpp:259
+#: src/categdialog.cpp:368
+msgid "Error"
+msgstr "خطأ"
+
+#: src/assetdialog.cpp:328
+msgid "Rate of Change in Value"
+msgstr "معدل التغير في القيمة"
+
+#: src/assetspanel.cpp:112
+msgid "Assets"
+msgstr "الممتلكات"
+
+#: src/assetspanel.cpp:118
+msgid "Total:"
+msgstr "المجموع:"
+
+#: src/assetspanel.cpp:143
+#: src/billsdepositspanel.cpp:155
+msgid "Type"
+msgstr "النوع"
+
+#: src/assetspanel.cpp:179
+msgid "&New"
+msgstr "&جديد"
+
+#: src/assetspanel.cpp:181
+msgid "New Asset"
+msgstr "اضافة ممتلك"
+
+#: src/assetspanel.cpp:184
+#: src/categdialog.cpp:162
+msgid "&Edit"
+msgstr "&تحرير"
+
+#: src/assetspanel.cpp:186
+msgid "Edit Asset"
+msgstr "تحرير ممتلك"
+
+#: src/assetspanel.cpp:189
+#: src/categdialog.cpp:167
+msgid "&Delete"
+msgstr "&حذف"
+
+#: src/assetspanel.cpp:191
+msgid "Delete Asset"
+msgstr "حذف ممتلك"
+
+#: src/assetspanel.cpp:212
+#, c-format
+msgid "Total: %s"
+msgstr "المجموع: %s"
+
+#: src/assetspanel.cpp:291
+msgid "&New Asset"
+msgstr "&اضافة ممتلك"
+
+#: src/assetspanel.cpp:293
+msgid "&Edit Asset"
+msgstr "&تحرير ممتلك"
+
+#: src/assetspanel.cpp:294
+msgid "&Delete Asset"
+msgstr "&حذف ممتلك"
+
+#: src/assetspanel.cpp:370
+msgid "Do you really want to delete the Asset?"
+msgstr "تأكيد حذف الممتلك؟"
+
+#: src/assetspanel.cpp:371
+msgid "Confirm Asset Deletion"
+msgstr "تأكيد حذف ممتلك"
+
+#: src/billsdepositsdialog.cpp:200
+#: src/billsdepositsdialog.cpp:1000
+msgid "Split Category"
+msgstr "تجزئ الصنف"
+
+#: src/billsdepositsdialog.cpp:263
+msgid "Repeating Transaction Details"
+msgstr "تفاصيل المعاملة المتكررة"
+
+#: src/billsdepositsdialog.cpp:272
+msgid "Account Name"
+msgstr "اسم الحساب"
+
+#: src/billsdepositsdialog.cpp:277
+msgid "Select Account"
+msgstr "اختيار حساب"
+
+#: src/billsdepositsdialog.cpp:282
+msgid "Next Occurrence"
+msgstr "الحدوث التالي"
+
+#: src/billsdepositsdialog.cpp:289
+msgid "Specify the date of the next bill or deposit"
+msgstr "تحديد تاريخ الفاتورة القادمة أو الإيداع"
+
+#: src/billsdepositsdialog.cpp:292
+msgid "Repeats"
+msgstr "التكرار"
+
+#: src/billsdepositsdialog.cpp:299
+#: src/billsdepositspanel.cpp:271
+#: src/budgetentrydialog.cpp:166
+msgid "Weekly"
+msgstr "اسبوعي"
+
+#: src/billsdepositsdialog.cpp:300
+#: src/billsdepositspanel.cpp:275
+#: src/budgetentrydialog.cpp:167
+msgid "Bi-Weekly"
+msgstr "كل أسبوعين"
+
+#: src/billsdepositsdialog.cpp:301
+#: src/billsdepositspanel.cpp:279
+#: src/budgetentrydialog.cpp:168
+msgid "Monthly"
+msgstr "شهري"
+
+#: src/billsdepositsdialog.cpp:302
+#: src/billsdepositspanel.cpp:283
+#: src/budgetentrydialog.cpp:169
+msgid "Bi-Monthly"
+msgstr "كل شهرين"
+
+#: src/billsdepositsdialog.cpp:303
+#: src/billsdepositspanel.cpp:287
+#: src/budgetentrydialog.cpp:170
+msgid "Quarterly"
+msgstr "ربع سنوي"
+
+#: src/billsdepositsdialog.cpp:304
+#: src/billsdepositspanel.cpp:291
+#: src/budgetentrydialog.cpp:171
+msgid "Half-Yearly"
+msgstr "نصف سنوي"
+
+#: src/billsdepositsdialog.cpp:305
+#: src/billsdepositspanel.cpp:295
+#: src/budgetentrydialog.cpp:172
+msgid "Yearly"
+msgstr "سنوي"
+
+#: src/billsdepositsdialog.cpp:306
+#: src/billsdepositspanel.cpp:299
+msgid "Four Months"
+msgstr "اربع اشهر"
+
+#: src/billsdepositsdialog.cpp:307
+#: src/billsdepositspanel.cpp:303
+msgid "Four Weeks"
+msgstr "اربعة اسابيع"
+
+#: src/billsdepositsdialog.cpp:308
+msgid "Daily"
+msgstr "يومي"
+
+#: src/billsdepositsdialog.cpp:317
+msgid "Times Repeated"
+msgstr "زمن التكرار"
+
+#: src/billsdepositsdialog.cpp:324
+msgid "Specify the number of times this series repeats. Leave blank if this series continues forever."
+msgstr ""
+
+#: src/billsdepositsdialog.cpp:328
+msgid "Transaction Details"
+msgstr "تفاصيل المعاملة"
+
+#: src/billsdepositsdialog.cpp:337
+msgid "Transaction Type"
+msgstr "نوع المعاملة"
+
+#: src/billsdepositsdialog.cpp:342
+#: src/billsdepositspanel.cpp:412
+msgid "Withdrawal"
+msgstr "سحب"
+
+#: src/billsdepositsdialog.cpp:343
+#: src/billsdepositspanel.cpp:414
+msgid "Deposit"
+msgstr "ايداع"
+
+#: src/billsdepositsdialog.cpp:344
+#: src/billsdepositspanel.cpp:416
+msgid "Transfer"
+msgstr "تحويل"
+
+#: src/billsdepositsdialog.cpp:351
+msgid "Specify the type of transactions to be created."
+msgstr "تحديد نوع المعاملات التي سيتم إنشاؤها."
+
+#: src/billsdepositsdialog.cpp:353
+msgid "Advanced"
+msgstr "متقدم"
+
+#: src/billsdepositsdialog.cpp:357
+msgid "Specify advanced settings for transaction"
+msgstr "تعيين الاعدادات المتقدمة للمعاملة"
+
+#: src/billsdepositsdialog.cpp:367
+#: src/billsdepositsdialog.cpp:739
+#: src/billsdepositspanel.cpp:153
+msgid "Payee"
+msgstr "المستفيد"
+
+#: src/billsdepositsdialog.cpp:371
+#: src/billsdepositsdialog.cpp:519
+#: src/billsdepositsdialog.cpp:572
+#: src/billsdepositsdialog.cpp:735
+#: src/billsdepositsdialog.cpp:746
+msgid "Select Payee"
+msgstr "اختيار المستفيد"
+
+#: src/billsdepositsdialog.cpp:374
+msgid "Specify where the transaction is going to or coming from "
+msgstr "تعيين المكان الذي ستذهب إليه أو تأتي منه المعاملة"
+
+#: src/billsdepositsdialog.cpp:376
+msgid "Number"
+msgstr "عدد"
+
+#: src/billsdepositsdialog.cpp:384
+msgid "Specify any associated check number or transaction number"
+msgstr ""
+
+#: src/billsdepositsdialog.cpp:387
+msgid "To"
+msgstr "إلى"
+
+#: src/billsdepositsdialog.cpp:392
+msgid "Select To Acct"
+msgstr ""
+
+#: src/billsdepositsdialog.cpp:396
+msgid "Specify the transfer account"
+msgstr "تعيين رقم الحوالة"
+
+#: src/billsdepositsdialog.cpp:406
+msgid "Specify the date of the transaction"
+msgstr "تعيين تاريخ المعاملة"
+
+#: src/billsdepositsdialog.cpp:411
+msgid "Category"
+msgstr "الفئة"
+
+#: src/billsdepositsdialog.cpp:420
+#: src/billsdepositsdialog.cpp:571
+#: src/billsdepositsdialog.cpp:605
+#: src/billsdepositsdialog.cpp:679
+#: src/billsdepositsdialog.cpp:1008
+msgid "Select Category"
+msgstr "اختيار الفئة"
+
+#: src/billsdepositsdialog.cpp:423
+msgid "Specify the category for this transaction"
+msgstr "تعيين صنف المعاملة"
+
+#: src/billsdepositsdialog.cpp:426
+msgid "Split"
+msgstr "تجزئ"
+
+#: src/billsdepositsdialog.cpp:432
+msgid "Status"
+msgstr "الحالة"
+
+#: src/billsdepositsdialog.cpp:439
+msgid "Reconciled"
+msgstr ""
+
+#: src/billsdepositsdialog.cpp:440
+msgid "Void"
+msgstr "ملغي"
+
+#: src/billsdepositsdialog.cpp:441
+msgid "Follow up"
+msgstr ""
+
+#: src/billsdepositsdialog.cpp:448
+msgid "Specify the status for the transaction"
+msgstr "تعيين حالة المعاملة"
+
+#: src/billsdepositsdialog.cpp:458
+msgid "Specify any text notes you want to add to this transaction."
+msgstr "تعيين أي ملاحظة نصية ترغب اضافتها للمعاملة"
+
+#: src/billsdepositsdialog.cpp:461
+#: src/billsdepositspanel.cpp:159
+#: src/budgetingpanel.cpp:234
+msgid "Amount"
+msgstr "المبلغ"
+
+#: src/billsdepositsdialog.cpp:468
+msgid "Specify the amount for this transaction"
+msgstr "تعيين مبلغ المعاملة"
+
+#: src/billsdepositsdialog.cpp:606
+#: src/billsdepositsdialog.cpp:758
+msgid "Select To"
+msgstr "اختيار لـ"
+
+#: src/billsdepositsdialog.cpp:629
+msgid "To Account Amount Entry"
+msgstr ""
+
+#: src/billsdepositsdialog.cpp:630
+msgid "Amount to be recorded in To Account"
+msgstr "مبلغ يتم تسجيله في الحساب"
+
+#: src/billsdepositsdialog.cpp:640
+msgid "Invalid To Amount Entered "
+msgstr ""
+
+#: src/billsdepositsdialog.cpp:750
+#: src/billsdepositsdialog.cpp:764
+msgid "From"
+msgstr "من"
+
+#: src/billsdepositsdialog.cpp:757
+msgid "Select From"
+msgstr "اختيار من"
+
+#: src/billsdepositsdialog.cpp:785
+msgid "Payee "
+msgstr "المستفيد"
+
+#: src/billsdepositsdialog.cpp:787
+msgid "From Account "
+msgstr "من الحساب"
+
+#: src/billsdepositsdialog.cpp:795
+#: src/billsdepositsdialog.cpp:803
+msgid "Category "
+msgstr "الصنف"
+
+#: src/billsdepositsdialog.cpp:814
+#: src/billsdepositsdialog.cpp:824
+#: src/budgetentrydialog.cpp:234
+msgid "Invalid Amount Entered "
+msgstr "المبلغ الذي تم ادخاله غير صالح"
+
+#: src/billsdepositsdialog.cpp:831
+#: src/billsdepositspanel.cpp:154
+msgid "Account"
+msgstr "الحساب"
+
+#: src/billsdepositsdialog.cpp:841
+msgid "To Account "
+msgstr "للحساب"
+
+#: src/billsdepositsdialog.cpp:847
+msgid "From and To Account cannot be the same."
+msgstr ""
+
+#: src/billsdepositspanel.cpp:132
+msgid "Repeating Transactions"
+msgstr "المعاملات المتكررة"
+
+#: src/billsdepositspanel.cpp:161
+msgid "Next Due Date"
+msgstr "تاريخ الاستحقاق القادم"
+
+#: src/billsdepositspanel.cpp:162
+#: src/budgetingpanel.cpp:229
+msgid "Frequency"
+msgstr ""
+
+#: src/billsdepositspanel.cpp:163
+msgid "Remaining Days"
+msgstr ""
+
+#: src/billsdepositspanel.cpp:210
+msgid "&New Series"
+msgstr ""
+
+#: src/billsdepositspanel.cpp:212
+msgid "New Bills && Deposit Series"
+msgstr ""
+
+#: src/billsdepositspanel.cpp:215
+msgid "&Edit Series"
+msgstr ""
+
+#: src/billsdepositspanel.cpp:217
+msgid "Edit Bills && Deposit Series"
+msgstr ""
+
+#: src/billsdepositspanel.cpp:220
+msgid "&Delete Series"
+msgstr ""
+
+#: src/billsdepositspanel.cpp:222
+msgid "Delete Bills && Deposit Series"
+msgstr ""
+
+#: src/billsdepositspanel.cpp:225
+msgid "Enter &Transaction"
+msgstr "دخول &المعاملات"
+
+#: src/billsdepositspanel.cpp:227
+msgid "Enter Next Bills && Deposit Occurrence"
+msgstr ""
+
+#: src/billsdepositspanel.cpp:317
+msgid " days remaining"
+msgstr "	الأيام المتبقية"
+
+#: src/billsdepositspanel.cpp:322
+msgid " days overdue!"
+msgstr "الأيام المتأخرة!"
+
+#: src/billsdepositspanel.cpp:391
+msgid "&New Bills && Deposit Series"
+msgstr ""
+
+#: src/billsdepositspanel.cpp:393
+msgid "&Edit Bills && Deposit Series"
+msgstr ""
+
+#: src/billsdepositspanel.cpp:394
+msgid "&Delete Bills && Deposit Series"
+msgstr ""
+
+#: src/billsdepositspanel.cpp:396
+msgid "Enter next Occurrence"
+msgstr ""
+
+#: src/billsdepositspanel.cpp:501
+msgid "Do you really want to delete the series?"
+msgstr ""
+
+#: src/billsdepositspanel.cpp:502
+msgid "Confirm Series Deletion"
+msgstr ""
+
+#: src/budgetentrydialog.cpp:143
+msgid "Type:"
+msgstr "النوع:"
+
+#: src/budgetentrydialog.cpp:149
+msgid "Expense"
+msgstr "المصروفات"
+
+#: src/budgetentrydialog.cpp:150
+msgid "Income"
+msgstr "الايرادات"
+
+#: src/budgetentrydialog.cpp:156
+msgid "Specify whether this category is an income or an expense category"
+msgstr "تحديد اذا ما كان هذا الصنف من الواردات ام المصروفات"
+
+#: src/budgetentrydialog.cpp:159
+msgid "Frequency:"
+msgstr ""
+
+#: src/budgetentrydialog.cpp:178
+msgid "Specify the frequency of the expense or deposit"
+msgstr ""
+
+#: src/budgetentrydialog.cpp:181
+msgid "Amount:"
+msgstr "المبلغ:"
+
+#: src/budgetentrydialog.cpp:189
+msgid "Enter the amount budgeted for this category."
+msgstr "اكتب مبلغ الميزانية المخصص لهذا الصنف."
+
+#: src/budgetingpanel.cpp:115
+#: src/budgetingpanel.cpp:152
+msgid "View All Budget Categories"
+msgstr "عرض ميزانية كل الاصناف"
+
+#: src/budgetingpanel.cpp:120
+#: src/budgetingpanel.cpp:153
+msgid "View Non-Zero Budget Categories"
+msgstr "عرض ميزانية الاصناف غير الصفرية"
+
+#: src/budgetingpanel.cpp:125
+#: src/budgetingpanel.cpp:154
+msgid "View Income Budget Categories"
+msgstr "عرض ميزانية اصناف الواردات"
+
+#: src/budgetingpanel.cpp:130
+#: src/budgetingpanel.cpp:155
+msgid "View Expense Budget Categories"
+msgstr "عرض ميزانية اصناف المصروفات"
+
+#: src/budgetingpanel.cpp:179
+msgid "Budget Setup for "
+msgstr "اعداد الميزانية لـ"
+
+#: src/budgetingpanel.cpp:196
+msgid "Viewing All Budget Categories"
+msgstr "عرض كل اصناف الميزانية"
+
+#: src/budgetingpanel.cpp:201
+msgid "Estimated Income: Actual Income: "
+msgstr "الايرادات المتوقعة: الايرادات الفعلية"
+
+#: src/budgetingpanel.cpp:208
+msgid "Estimated Expenses: Actual Expenses: "
+msgstr "المصروفات المتوقعة: المصروفات الفعلية"
+
+#: src/budgetingpanel.cpp:227
+msgid "Category  "
+msgstr "الصنف"
+
+#: src/budgetingpanel.cpp:228
+msgid "Sub Category"
+msgstr "الصنف الفرعي"
+
+#: src/budgetingpanel.cpp:237
+msgid "Estimated"
+msgstr "المتوقعة"
+
+#: src/budgetingpanel.cpp:240
+msgid "Actual"
+msgstr "الفعلية"
+
+#: src/budgetingpanel.cpp:490
+#, c-format
+msgid "Estimated Income: %s Actual Income:  %s"
+msgstr "الايرادات المتوقعة: %s الايرادات الفعلية:  %s"
+
+#: src/budgetingpanel.cpp:495
+#, c-format
+msgid "Estimated Expenses: %s Actual Expenses:  %s"
+msgstr "المصروفات المتوقعة: %s المصروفات الفعلية:  %s"
+
+#: src/budgetyeardialog.cpp:113
+msgid "&Add Budget Year"
+msgstr "&اضافة سنة مالية"
+
+#: src/budgetyeardialog.cpp:116
+msgid "Add a new budget year"
+msgstr "اضافة ميزانية سنة مالية"
+
+#: src/budgetyeardialog.cpp:119
+msgid "&Delete Budget Year"
+msgstr "&حذف سنة مالية"
+
+#: src/budgetyeardialog.cpp:121
+msgid "Delete existing budget year"
+msgstr "حذف ميزانية سنة مالية موجودة"
+
+#: src/budgetyearentrydialog.cpp:90
+msgid "Budget Year:"
+msgstr "السنة المالية:"
+
+#: src/budgetyearentrydialog.cpp:97
+msgid "Enter the year in YYYY format to specify year"
+msgstr ""
+
+#: src/budgetyearentrydialog.cpp:100
+msgid "Base Budget On:"
+msgstr "تأسست الميزانية في:"
+
+#: src/budgetyearentrydialog.cpp:113
+msgid "Specify year to base budget on."
+msgstr "تعيين عام تأسيس الميزانية."
+
+#: src/budgetyearentrydialog.cpp:153
+#: src/budgetyearentrydialog.cpp:183
+msgid "Year is not valid"
+msgstr "عام غير صالح"
+
+#: src/budgetyearentrydialog.cpp:160
+msgid "Budget Year already exists"
+msgstr "السنة المالية موجودة حاليا"
+
+#: src/categdialog.cpp:84
+msgid "Categories"
+msgstr "الاصناف"
+
+#: src/categdialog.cpp:151
+msgid "Enter the name of the category to add or edit here"
+msgstr "اكتب اسم الصنف هنا ﻻضافته أو تحريره"
+
+#: src/categdialog.cpp:157
+msgid "&Add"
+msgstr "&اضافة"
+
+#: src/categdialog.cpp:159
+msgid "Add a new category"
+msgstr "اضافة صنف جديد"
+
+#: src/categdialog.cpp:164
+msgid "Edit the name of an existing category"
+msgstr "تحرير اسم صنف موجود"
+
+#: src/categdialog.cpp:169
+msgid "Delete an existing category. The category cannot be used by existing transactions."
+msgstr "حذف صنف موجود. لن تستطيع المعاملات استخدام هذا الصنف المحذوف."
+
+#: src/categdialog.cpp:175
+msgid "&Select"
+msgstr "&اختر"
+
+#: src/categdialog.cpp:177
+msgid "Select the currently selected category as the selected category for the transaction"
+msgstr "اختيار الصنف الحالي كصنف للمعاملة"
+
+#: src/categdialog.cpp:190
+msgid "Category cannot be empty"
+msgstr ""
+
+#: src/categdialog.cpp:198
+msgid "Category with same name exists"
+msgstr "اسم الصنف موجود مسبقا"
+
+#: src/categdialog.cpp:217
+msgid "Sub Category with same name exists"
+msgstr "اسم الصنف الفرعي موجود مسبقا"
+
+#: src/categdialog.cpp:228
+msgid "Invalid Parent Category. Choose Root or Main Category node."
+msgstr ""
+
+#: src/categdialog.cpp:229
+msgid "Error adding Category"
+msgstr ""
+
+#: src/categdialog.cpp:251
+msgid "Category is in use"
+msgstr "الصنف مستخدم حاليا"
+
+#: src/categdialog.cpp:259
+msgid "Sub-Category is in use"
+msgstr "الصنف الفرعي مستخدم حاليا"
+
+#: src/categdialog.cpp:368
+msgid "Update Failed"
+msgstr ""
+
+#: src/currencydialog.cpp:167
+msgid "Currency Name"
+msgstr "اسم العملة"
+
+#: src/currencydialog.cpp:178
+msgid "Currency Symbol"
+msgstr "رمز العملة"
+
+#: src/currencydialog.cpp:223
+msgid "Prefix Symbol"
+msgstr ""
+
+#: src/currencydialog.cpp:232
+msgid "Suffix Symbol"
+msgstr ""
+
+#: src/currencydialog.cpp:241
+msgid "Decimal Char"
+msgstr ""
+
+#: src/currencydialog.cpp:252
+msgid "Grouping Char"
+msgstr ""
+
+#: src/currencydialog.cpp:261
+msgid "Unit Name"
+msgstr "اسم الوحدة"
+
+#: src/currencydialog.cpp:272
+msgid "Cents Name"
+msgstr "اجزاء الوحدة"
+
+#: src/currencydialog.cpp:281
+msgid "Conversion to Base Rate"
+msgstr ""
+
+#: src/currencydialog.cpp:290
+msgid "Scale"
+msgstr ""
+
+#: src/currencydialog.cpp:300
+msgid "Value of 123456.78 will be"
+msgstr "قيمة 123456.78 تساوي"
+
+#: src/currencydialog.cpp:305
+msgid "1234567.89"
+msgstr ""
+
+#: src/currencydialog.cpp:313
+msgid "&Update"
+msgstr "&تحديث"
+
+#: src/currencydialog.cpp:317
+msgid "&Close"
+msgstr "&اغلاق"
+
+#: src/currencydialog.cpp:354
+msgid "Base Conversion Rate should be greater than 0.0"
+msgstr ""
+
+#: src/customsqldialog.cpp:96
+msgid "Custom SQL Query"
+msgstr ""
+
+#: src/customsqldialog.cpp:123
+msgid "&Load SQL"
+msgstr ""
+
+#: src/customsqldialog.cpp:128
+msgid "&Save SQL"
+msgstr ""
+
+#: src/customsqldialog.cpp:133
+msgid "&Run Query"
+msgstr ""
+
+#: src/customsqldialog.cpp:180
+msgid "Unable to open file."
+msgstr "غير قادر على فتح الملف."
+
+#: src/customsqldialog.cpp:209
+msgid "Unable to write to file."
+msgstr "غير قادر على الكتابة في الملف."
+
+#: src/customsqldialog.cpp:230
+msgid "SQL Query will modify your Data. Proceed??"
+msgstr ""
+
+#: src/customsqldialog.cpp:231
+msgid "Warning"
+msgstr "تحذير"
+
+#: src/dbwrapper.cpp:385
+msgid "Telephone"
+msgstr "الهاتف"
+
+#: src/dbwrapper.cpp:386
+msgid "Electricity"
+msgstr "الكهرباء"
+
+#: src/dbwrapper.cpp:387
+#: src/dbwrapper.cpp:422
+msgid "Gas"
+msgstr "الغاز"
+
+#: src/dbwrapper.cpp:388
+msgid "Internet"
+msgstr "النت"
+
+#: src/dbwrapper.cpp:389
+msgid "Rent"
+msgstr "الايجار"
+
+#: src/dbwrapper.cpp:390
+msgid "Cable TV"
+msgstr "تلفزيون الكابل"
+
+#: src/dbwrapper.cpp:391
+msgid "Water"
+msgstr "الماء"
+
+#: src/dbwrapper.cpp:395
+msgid "Bills"
+msgstr "الفواتير"
+
+#: src/dbwrapper.cpp:400
+msgid "Groceries"
+msgstr "سلع البقالة"
+
+#: src/dbwrapper.cpp:401
+msgid "Dining out"
+msgstr "الطعام في الخارج"
+
+#: src/dbwrapper.cpp:405
+msgid "Food"
+msgstr "الطعام"
+
+#: src/dbwrapper.cpp:410
+msgid "Movies"
+msgstr "الافلام"
+
+#: src/dbwrapper.cpp:411
+msgid "Video Rental"
+msgstr "تأجير الفيديو"
+
+#: src/dbwrapper.cpp:412
+msgid "Magazines"
+msgstr "المجلات"
+
+#: src/dbwrapper.cpp:416
+msgid "Leisure"
+msgstr "الاستجمام"
+
+#: src/dbwrapper.cpp:421
+msgid "Maintenance"
+msgstr "الصيانة"
+
+#: src/dbwrapper.cpp:423
+msgid "Parking"
+msgstr "المواقف"
+
+#: src/dbwrapper.cpp:424
+msgid "Registration"
+msgstr "التسجيل"
+
+#: src/dbwrapper.cpp:433
+msgid "Books"
+msgstr "الكتب"
+
+#: src/dbwrapper.cpp:434
+msgid "Tuition"
+msgstr "الرسوم الدراسية"
+
+#: src/dbwrapper.cpp:435
+#: src/dbwrapper.cpp:446
+#: src/dbwrapper.cpp:494
+msgid "Others"
+msgstr "أخرى"
+
+#: src/dbwrapper.cpp:439
+msgid "Education"
+msgstr "التعليم"
+
+#: src/dbwrapper.cpp:444
+msgid "Clothing"
+msgstr "الملابس"
+
+#: src/dbwrapper.cpp:445
+msgid "Furnishing"
+msgstr "الاثاث"
+
+#: src/dbwrapper.cpp:450
+msgid "Homeneeds"
+msgstr "احتياجات المنزل"
+
+#: src/dbwrapper.cpp:455
+#: src/dbwrapper.cpp:471
+msgid "Health"
+msgstr "الصحة"
+
+#: src/dbwrapper.cpp:456
+msgid "Dental"
+msgstr "الاسنان"
+
+#: src/dbwrapper.cpp:457
+msgid "Eyecare"
+msgstr "العيون"
+
+#: src/dbwrapper.cpp:458
+msgid "Physician"
+msgstr "الطبيب"
+
+#: src/dbwrapper.cpp:459
+msgid "Prescriptions"
+msgstr "الوصفات"
+
+#: src/dbwrapper.cpp:463
+msgid "Healthcare"
+msgstr "العناية الصحية"
+
+#: src/dbwrapper.cpp:468
+msgid "Auto"
+msgstr ""
+
+#: src/dbwrapper.cpp:469
+msgid "Life"
+msgstr ""
+
+#: src/dbwrapper.cpp:470
+msgid "Home"
+msgstr "المنزل"
+
+#: src/dbwrapper.cpp:475
+msgid "Insurance"
+msgstr "التأمين"
+
+#: src/dbwrapper.cpp:480
+msgid "Travel"
+msgstr "السفر"
+
+#: src/dbwrapper.cpp:481
+msgid "Lodging"
+msgstr "السكن"
+
+#: src/dbwrapper.cpp:482
+msgid "Sightseeing"
+msgstr "السياحة"
+
+#: src/dbwrapper.cpp:486
+msgid "Vacation"
+msgstr "الاجازة"
+
+#: src/dbwrapper.cpp:491
+msgid "Income Tax"
+msgstr "ضريبة الايرادات"
+
+#: src/dbwrapper.cpp:492
+msgid "House Tax"
+msgstr "ضريبة المنزل"
+
+#: src/dbwrapper.cpp:493
+msgid "Water Tax"
+msgstr "ضريبة الماء"
+
+#: src/dbwrapper.cpp:498
+msgid "Taxes"
+msgstr "الضرائب"
+
+#: src/dbwrapper.cpp:502
+msgid "Miscellaneous"
+msgstr "متنوعة"
+
+#: src/dbwrapper.cpp:503
+msgid "Gifts"
+msgstr "الهبات"
+
+#: src/dbwrapper.cpp:508
+msgid "Salary"
+msgstr "الراتب"
+
+#: src/dbwrapper.cpp:509
+msgid "Reimbursement/Refunds"
+msgstr "تسديد/استرداد"
+
+#: src/dbwrapper.cpp:510
+msgid "Investment Income"
+msgstr "الواردات الاستثمارية"
+
+#: src/dbwrapper.cpp:518
+msgid "Other Income"
+msgstr "الايرادات الاخرى"
+
+#: src/dbwrapper.cpp:519
+msgid "Other Expenses"
+msgstr "المصرفات الاخرى"
+
+#: src/filtertransdialog.cpp:201
+msgid "Specify Account"
+msgstr "تعيين الحساب"
+
+#: src/filtertransdialog.cpp:222
+msgid "Specify Date Range"
+msgstr "تعيين مدى التاريخ"
+
+#: src/filtertransdialog.cpp:237
+msgid "Specify Payee"
+msgstr "تعيين المستفيد"
+
+#: src/filtertransdialog.cpp:248
+msgid "Specify Category"
+msgstr "تعيين الصنف"
+
+#: src/filtertransdialog.cpp:259
+msgid "Specify Status"
+msgstr "تعيين الحالة"
+
+#: src/filtertransdialog.cpp:269
+msgid "Duplicate"
+msgstr ""
+
+#: src/filtertransdialog.cpp:280
+msgid "Specify Type"
+msgstr "تعيين النوع"
+
+#: src/filtertransdialog.cpp:295
+msgid "Specify the type of transaction."
+msgstr "تعيين نوع المعاملة."
+
+#: src/filtertransdialog.cpp:300
+msgid "Specify Amount Range"
+msgstr "تعيين مدى المبلغ"
+
+#: src/filtertransdialog.cpp:314
+msgid "Specify Number"
+msgstr "تعيين الرقم"
+
+#: src/filtertransdialog.cpp:325
+msgid "Specify Notes"
+msgstr "كتابة ملاحظة"
+
+#: src/htmlbuilder.cpp:39
+msgid "Report"
+msgstr "تقرير"
+
+#: src/maincurrencydialog.cpp:117
+msgid "Currency List"
+msgstr "قائمة العملات"
+
+#: src/maincurrencydialog.cpp:186
+msgid "Name of Currency to Add"
+msgstr "اسم العملة لاضافتها"
+
+#: src/maincurrencydialog.cpp:187
+msgid "Add Currency"
+msgstr "اضافة عملة"
+
+#: src/maincurrencydialog.cpp:205
+msgid "Currency name already exists!"
+msgstr "اسم العملة موجود مسبقا"
+
+#: src/mmcheckingpanel.cpp:106
+msgid "Date  "
+msgstr "التاريخ"
+
+#: src/mmcheckingpanel.cpp:109
+msgid "C  "
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:113
+msgid "Balance"
+msgstr "الرصيد"
+
+#: src/mmcheckingpanel.cpp:222
+msgid "View All Transactions"
+msgstr "عرض كل المعاملات"
+
+#: src/mmcheckingpanel.cpp:223
+msgid "View Reconciled Transactions"
+msgstr "عرض المعاملات الناجحة"
+
+#: src/mmcheckingpanel.cpp:224
+msgid "View Un-Reconciled Transactions"
+msgstr "عرض المعاملات الفاشلة"
+
+#: src/mmcheckingpanel.cpp:225
+msgid "View All Except Reconciled Transactions"
+msgstr "عرض كل المعاملات عدا الناجحة"
+
+#: src/mmcheckingpanel.cpp:226
+msgid "View Void Transactions"
+msgstr "عرض المعاملات الملغية"
+
+#: src/mmcheckingpanel.cpp:227
+msgid "View Flagged Transactions"
+msgstr "عرض المعاملات المؤشرة"
+
+#: src/mmcheckingpanel.cpp:228
+msgid "View Duplicate Transactions"
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:230
+msgid "View Transactions from today"
+msgstr "عرض معاملات اليوم"
+
+#: src/mmcheckingpanel.cpp:231
+msgid "View Transactions from last 30 days"
+msgstr "عرض معاملات آخر 30 يوم"
+
+#: src/mmcheckingpanel.cpp:232
+msgid "View Transactions from current month"
+msgstr "عرض معاملات الشهر الحالي"
+
+#: src/mmcheckingpanel.cpp:233
+msgid "View Transactions from last month"
+msgstr "عرض معاملات آخر شهر"
+
+#: src/mmcheckingpanel.cpp:234
+msgid "View Transactions from last 3 months"
+msgstr "عرض معاملات آخر 3 أشهر"
+
+#: src/mmcheckingpanel.cpp:236
+msgid "Delete all transactions in current view"
+msgstr "حذف كل المعاملات في العرض الحالي"
+
+#: src/mmcheckingpanel.cpp:237
+msgid "Delete all flagged transactions"
+msgstr "حذف كل المعاملات المؤشرة"
+
+#: src/mmcheckingpanel.cpp:280
+msgid "Viewing All Transactions"
+msgstr "استعراض كل المعاملات"
+
+#: src/mmcheckingpanel.cpp:354
+msgid "New Transaction"
+msgstr "اضافة معاملة"
+
+#: src/mmcheckingpanel.cpp:359
+msgid "Edit Transaction"
+msgstr "تحرير معاملة"
+
+#: src/mmcheckingpanel.cpp:364
+msgid "Delete Transaction"
+msgstr "حذف معاملة"
+
+#: src/mmcheckingpanel.cpp:473
+msgid "Category         : "
+msgstr "الصنف         : "
+
+#: src/mmcheckingpanel.cpp:474
+msgid "Sub Category  : "
+msgstr "الصنف الفرعي         : "
+
+#: src/mmcheckingpanel.cpp:475
+msgid "Notes               : "
+msgstr "ملاحظات         : "
+
+#: src/mmcheckingpanel.cpp:495
+#, c-format
+msgid "Account Balance : %s      Reconciled Balance : %s"
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:505
+#: src/mmex.cpp:2379
+msgid "Please Wait"
+msgstr "فضلاً انتظر"
+
+#: src/mmcheckingpanel.cpp:506
+msgid "Accessing Database"
+msgstr "الوصول إلى قاعدة البيانات"
+
+#: src/mmcheckingpanel.cpp:519
+msgid "Account View : "
+msgstr "عرض حساب"
+
+#: src/mmcheckingpanel.cpp:524
+msgid "Category: \n"
+msgstr "الصنف: \n"
+
+#: src/mmcheckingpanel.cpp:525
+msgid "Sub Category: \n"
+msgstr "الصنف الفرعي: \n"
+
+#: src/mmcheckingpanel.cpp:526
+msgid "Notes: \n"
+msgstr "الملاحظات: \n"
+
+#: src/mmcheckingpanel.cpp:766
+#: src/mmcheckingpanel.cpp:808
+msgid "Viewing all transactions"
+msgstr "استعراض كل المعاملات"
+
+#: src/mmcheckingpanel.cpp:770
+#: src/mmcheckingpanel.cpp:813
+msgid "Viewing Reconciled transactions"
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:774
+#: src/mmcheckingpanel.cpp:823
+msgid "Viewing Un-Reconciled transactions"
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:778
+#: src/mmcheckingpanel.cpp:833
+msgid "Viewing transactions from today"
+msgstr "استعراض معاملات اليوم"
+
+#: src/mmcheckingpanel.cpp:782
+#: src/mmcheckingpanel.cpp:838
+msgid "Viewing transactions from last 30 days"
+msgstr "استعراض معاملات آخر 30 يوم"
+
+#: src/mmcheckingpanel.cpp:786
+#: src/mmcheckingpanel.cpp:843
+msgid "Viewing transactions from last 3 months"
+msgstr "استعراض معاملات آخر 3 اشهر"
+
+#: src/mmcheckingpanel.cpp:790
+#: src/mmcheckingpanel.cpp:848
+msgid "Viewing transactions from current month"
+msgstr "استعراض معاملات الشهر الحالي"
+
+#: src/mmcheckingpanel.cpp:794
+#: src/mmcheckingpanel.cpp:853
+msgid "Viewing transactions from last month"
+msgstr "استعراض معاملات آخر شهر"
+
+#: src/mmcheckingpanel.cpp:798
+msgid "Viewing All Except Reconciled Transactions"
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:818
+msgid "Viewing Void transactions"
+msgstr "استعراض المعاملات الملغاة"
+
+#: src/mmcheckingpanel.cpp:828
+msgid "Viewing Flagged transactions"
+msgstr "عرض المعاملات المؤشرة"
+
+#: src/mmcheckingpanel.cpp:858
+msgid "Viewing duplicate transactions"
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:863
+msgid "Viewing All except Reconciled Transactions"
+msgstr "عرض الكل عدا المعاملات الناجحة"
+
+#: src/mmcheckingpanel.cpp:868
+msgid "Do you really want to delete all the transactions shown?"
+msgstr "تأكيد حذف كل المعاملات الظاهرة ؟"
+
+#: src/mmcheckingpanel.cpp:869
+#: src/mmcheckingpanel.cpp:884
+#: src/mmcheckingpanel.cpp:1258
+msgid "Confirm Transaction Deletion"
+msgstr "تأكيد حذف معاملة"
+
+#: src/mmcheckingpanel.cpp:883
+msgid "Do you really want to delete all the flagged transactions?"
+msgstr "تأكيد حذف جميع المعاملات المؤشرة؟"
+
+#: src/mmcheckingpanel.cpp:922
+msgid "&New Transaction"
+msgstr "&اضافة معاملة"
+
+#: src/mmcheckingpanel.cpp:924
+msgid "&Edit Transaction"
+msgstr "&تحرير معاملة"
+
+#: src/mmcheckingpanel.cpp:925
+msgid "&Delete Transaction"
+msgstr "&حذف معاملة"
+
+#: src/mmcheckingpanel.cpp:926
+msgid "&Copy Transaction"
+msgstr "&نسخ معاملة"
+
+#: src/mmcheckingpanel.cpp:928
+msgid "&Paste Transaction"
+msgstr "&لصق معاملة"
+
+#: src/mmcheckingpanel.cpp:930
+msgid "Mark As &Reconciled"
+msgstr "علم ك&ناجح"
+
+#: src/mmcheckingpanel.cpp:931
+msgid "Mark As &Unreconciled"
+msgstr "علم ك&فاشل"
+
+#: src/mmcheckingpanel.cpp:932
+msgid "Mark As &Void"
+msgstr "علم كمل&غي"
+
+#: src/mmcheckingpanel.cpp:933
+msgid "Mark For &Followup"
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:934
+msgid "Mark As &Duplicate"
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:938
+msgid "as Reconciled"
+msgstr "كناجح"
+
+#: src/mmcheckingpanel.cpp:939
+msgid "as Unreconciled"
+msgstr "كفاشل"
+
+#: src/mmcheckingpanel.cpp:940
+msgid "as Void"
+msgstr "كملغي"
+
+#: src/mmcheckingpanel.cpp:941
+msgid "as needing Followup"
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:942
+msgid "as Duplicate"
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:943
+msgid "Mark all "
+msgstr "تعليم الكل"
+
+#: src/mmcheckingpanel.cpp:1257
+msgid "Do you really want to delete the transaction?"
+msgstr "تأكيد حذف المعاملة؟"
+
+#: src/mmex.cpp:309
+msgid "Add Account Wizard"
+msgstr "وزرد انشاء حساب"
+
+#: src/mmex.cpp:318
+msgid ""
+" models all transactions as belonging to accounts.\n"
+"\n"
+" The next pages will help you create a new account.\n"
+"\n"
+"To help you get started, begin by making a list of all\n"
+"financial institutions where you hold an account."
+msgstr ""
+" models all transactions as belonging to accounts.\n"
+"\n"
+" الصفحة التالية ستساعدك على انشاء حساب جديد.\n"
+"\n"
+"لمساعدتك على البدء ، البدء في وضع قائمة\n"
+" من جميع المؤسسات المالية التي تملك بها حساب."
+
+#: src/mmex.cpp:360
+msgid "New Database Wizard"
+msgstr "وزرد انشاء قاعدة بيانات"
+
+#: src/mmex.cpp:367
+msgid ""
+"The next pages will help you create a new database.\n"
+"\n"
+"Your database file is stored with an extension of .mmb.\n"
+"\n"
+"Make sure to make backups of this file \n"
+"and to store it carefully as it contains important \n"
+"financial information."
+msgstr ""
+
+#: src/mmex.cpp:682
+msgid "Navigation"
+msgstr "التصفح"
+
+#: src/mmex.cpp:696
+msgid "Home Page"
+msgstr "الصفحة الرئيسية"
+
+#: src/mmex.cpp:700
+msgid "Bank Accounts"
+msgstr "الحسابات البنكية"
+
+#: src/mmex.cpp:707
+#: src/mmex.cpp:748
+msgid "Stocks"
+msgstr "الاسهم"
+
+#: src/mmex.cpp:729
+msgid "Budgeting"
+msgstr "الموازنة"
+
+#: src/mmex.cpp:735
+msgid "Reports"
+msgstr "التقارير"
+
+#: src/mmex.cpp:741
+msgid "Summary of Accounts"
+msgstr "ملخص الحسابات"
+
+#: src/mmex.cpp:762
+#: src/mmex.cpp:1428
+#: src/mmex.cpp:1447
+#: src/mmex.cpp:1460
+#: src/mmex.cpp:1473
+#: src/mmex.cpp:1490
+#: src/mmex.cpp:1507
+msgid "Where the Money Goes"
+msgstr "اين صرف المال"
+
+#: src/mmex.cpp:767
+#: src/mmex.cpp:799
+#: src/mmex.cpp:831
+#: src/mmex.cpp:862
+#: src/mmex.cpp:894
+msgid "Last Calendar Month"
+msgstr "تقويم آخر شهر"
+
+#: src/mmex.cpp:772
+#: src/mmex.cpp:804
+#: src/mmex.cpp:836
+#: src/mmex.cpp:867
+#: src/mmex.cpp:899
+msgid "Current Month"
+msgstr "الشهر الحالي"
+
+#: src/mmex.cpp:777
+#: src/mmex.cpp:809
+#: src/mmex.cpp:841
+#: src/mmex.cpp:872
+#: src/mmex.cpp:904
+msgid "Last 30 Days"
+msgstr "آخر 30 يوم"
+
+#: src/mmex.cpp:782
+#: src/mmex.cpp:814
+#: src/mmex.cpp:846
+#: src/mmex.cpp:877
+#: src/mmex.cpp:909
+msgid "Last Year"
+msgstr "آخر عام"
+
+#: src/mmex.cpp:787
+#: src/mmex.cpp:819
+#: src/mmex.cpp:851
+#: src/mmex.cpp:882
+#: src/mmex.cpp:914
+msgid "Current Year"
+msgstr "العام الحالي"
+
+#: src/mmex.cpp:794
+#: src/mmex.cpp:1336
+#: src/mmex.cpp:1356
+#: src/mmex.cpp:1369
+#: src/mmex.cpp:1382
+#: src/mmex.cpp:1399
+#: src/mmex.cpp:1416
+msgid "Where the Money Comes From"
+msgstr "ما هي مصادر المال"
+
+#: src/mmex.cpp:857
+msgid "To Whom the Money Goes"
+msgstr "إلى أين سيذهب المال"
+
+#: src/mmex.cpp:889
+msgid "Income vs Expenses"
+msgstr "الايرادات والمصروفات"
+
+#: src/mmex.cpp:919
+msgid "Income vs Expenses - All Time"
+msgstr "الايرادات والمصروفات - كل الوقت"
+
+#: src/mmex.cpp:925
+msgid "Transaction Report"
+msgstr "تقرير المعاملة"
+
+#: src/mmex.cpp:933
+msgid "Budget Performance"
+msgstr "أداء الميزانية"
+
+#: src/mmex.cpp:942
+msgid "Budget Setup and Performance"
+msgstr "اعداد الميزانية والاداء"
+
+#: src/mmex.cpp:948
+#: src/mmex.cpp:2803
+msgid "Cash Flow"
+msgstr "التدفق النقدي"
+
+#: src/mmex.cpp:953
+msgid "Cash Flow - Specific Accounts"
+msgstr "التدفق النقدي - حسابات محددة"
+
+#: src/mmex.cpp:959
+msgid "Transaction Statistics"
+msgstr "احصاءات المعاملات"
+
+#: src/mmex.cpp:965
+msgid "Custom SQL Report"
+msgstr ""
+
+#: src/mmex.cpp:970
+msgid "Help"
+msgstr "مساعدة"
+
+#: src/mmex.cpp:1048
+#: src/mmex.cpp:1121
+msgid "Top Categories Last 30 Days"
+msgstr "اعلى اصناف في آخر 30 يوم"
+
+#: src/mmex.cpp:1801
+#: src/mmex.cpp:3333
+msgid "Do you really want to delete the account?"
+msgstr "تأكيد حذف الحساب؟"
+
+#: src/mmex.cpp:1802
+#: src/mmex.cpp:3334
+msgid "Confirm Account Deletion"
+msgstr "تأكيد حذف حساب"
+
+#: src/mmex.cpp:1847
+msgid "&Go To.."
+msgstr "&اذهب إلى.."
+
+#: src/mmex.cpp:1848
+#: src/mmex.cpp:1857
+#: src/mmex.cpp:2082
+msgid "&Edit Account"
+msgstr "&تحرير الحساب"
+
+#: src/mmex.cpp:1849
+#: src/mmex.cpp:1858
+#: src/mmex.cpp:2088
+msgid "&Delete Account"
+msgstr "&حذف الحساب"
+
+#: src/mmex.cpp:1851
+#: src/mmex.cpp:1860
+msgid "&Launch Account Website"
+msgstr ""
+
+#: src/mmex.cpp:1994
+msgid "&New Database\tCtrl-N"
+msgstr "&قاعدة بيانات جديدة\tCtrl-N"
+
+#: src/mmex.cpp:1995
+#: src/mmex.cpp:2242
+msgid "New Database"
+msgstr "قاعدة بيانات جديدة"
+
+#: src/mmex.cpp:1999
+msgid "&Open Database\tCtrl-O"
+msgstr "&فتح قاعدة بيانات\tCtrl-O"
+
+#: src/mmex.cpp:2000
+#: src/mmex.cpp:2244
+msgid "Open Database"
+msgstr "فتح قاعدة بيانات"
+
+#: src/mmex.cpp:2007
+msgid "Save Database &As"
+msgstr "حفظ قاعدة البيانات &بإسم"
+
+#: src/mmex.cpp:2008
+msgid "Save Database As"
+msgstr "حفظ قاعدة البيانات باسم"
+
+#: src/mmex.cpp:2015
+msgid "&CSV Files"
+msgstr "&ملفاتCSV"
+
+#: src/mmex.cpp:2015
+msgid "Export to CSV"
+msgstr "تصدير إلى CSV"
+
+#: src/mmex.cpp:2016
+msgid "&Report to HTML"
+msgstr "&تقرير إلى HTML"
+
+#: src/mmex.cpp:2016
+msgid "Export to HTML"
+msgstr "تصدير إلى HTML"
+
+#: src/mmex.cpp:2017
+msgid "&Export"
+msgstr "&تصدير"
+
+#: src/mmex.cpp:2020
+msgid "&QIF Files"
+msgstr "&ملفات QIF"
+
+#: src/mmex.cpp:2020
+msgid "Import from QIF"
+msgstr "استيراد من QIF"
+
+#: src/mmex.cpp:2021
+msgid "&Universal CSV Files"
+msgstr "&ملف CSV قياسي"
+
+#: src/mmex.cpp:2021
+msgid "Import from any CSV file"
+msgstr "استيراد من أي ملف CSV"
+
+#: src/mmex.cpp:2023
+msgid "&MMEX CSV Files"
+msgstr "&ملفات MMEX CSV"
+
+#: src/mmex.cpp:2023
+msgid "Import from MMEX CSV"
+msgstr "استيراد من MMEX CSV"
+
+#: src/mmex.cpp:2025
+msgid "MM.&NET CSV Files"
+msgstr "ملفات MM.&NET CSV"
+
+#: src/mmex.cpp:2025
+msgid "Import from MM.NET CSV"
+msgstr "استيراد من ملفات MM.NET CSV"
+
+#: src/mmex.cpp:2027
+msgid "&Import"
+msgstr "&استيراد"
+
+#: src/mmex.cpp:2033
+msgid "Page Set&up..."
+msgstr "اعدا&د الصفحة"
+
+#: src/mmex.cpp:2033
+msgid "Setup page printing options"
+msgstr "اعداد خيارات طباعة الصفحة"
+
+#: src/mmex.cpp:2039
+#: src/mmex.cpp:2045
+msgid "Current &View"
+msgstr "العر&ض الحالي"
+
+#: src/mmex.cpp:2039
+msgid "Preview current report"
+msgstr "استعراض التقرير الحالي"
+
+#: src/mmex.cpp:2041
+msgid "Print Pre&view..."
+msgstr "معاينة &طباعة"
+
+#: src/mmex.cpp:2045
+msgid "Print current report"
+msgstr "طباعة التقرير الحالي"
+
+#: src/mmex.cpp:2048
+msgid "&Print..."
+msgstr "&طباعة..."
+
+#: src/mmex.cpp:2053
+msgid "E&xit\tAlt-X"
+msgstr "&خروج\tAlt-X"
+
+#: src/mmex.cpp:2053
+msgid "Quit this program"
+msgstr "اغلاق البرنامج"
+
+#: src/mmex.cpp:2060
+msgid "&Toolbar"
+msgstr "&شريط الادوات"
+
+#: src/mmex.cpp:2060
+msgid "Show/Hide the toolbar"
+msgstr "عرض/اخفاء شريط الادوات"
+
+#: src/mmex.cpp:2062
+msgid "&Navigation"
+msgstr "&التصفح"
+
+#: src/mmex.cpp:2062
+msgid "Show/Hide the Navigation tree control"
+msgstr "عرض/ اخفاء شجرة التحكم"
+
+#: src/mmex.cpp:2072
+msgid "New &Account"
+msgstr "انشاء &حساب"
+
+#: src/mmex.cpp:2072
+#: src/mmex.cpp:2248
+msgid "New Account"
+msgstr "انشاء حساب"
+
+#: src/mmex.cpp:2078
+msgid "Account &List"
+msgstr "قائمة ال&حساب"
+
+#: src/mmex.cpp:2078
+#: src/mmex.cpp:2250
+msgid "Show Account List"
+msgstr "عرض قائمة الحساب"
+
+#: src/mmex.cpp:2082
+msgid "Edit Account"
+msgstr "تحرير حساب"
+
+#: src/mmex.cpp:2088
+msgid "Delete Account from database"
+msgstr "حذف الحساب من قاعدة البيانات"
+
+#: src/mmex.cpp:2100
+msgid "Organize &Categories"
+msgstr "تنظيم الا&صناف"
+
+#: src/mmex.cpp:2100
+#: src/mmex.cpp:2252
+msgid "Organize Categories"
+msgstr "تنظيم الاصناف"
+
+#: src/mmex.cpp:2105
+msgid "Organize &Payees"
+msgstr "تنظيم الم&ستفيدين"
+
+#: src/mmex.cpp:2105
+#: src/mmex.cpp:2253
+msgid "Organize Payees"
+msgstr "تنظيم المستفيدين"
+
+#: src/mmex.cpp:2110
+msgid "Or&ganize Currency"
+msgstr "تنظيم ال&عملة"
+
+#: src/mmex.cpp:2110
+#: src/mmex.cpp:2254
+msgid "Organize Currency"
+msgstr "تنظيم العملة"
+
+#: src/mmex.cpp:2117
+msgid "&Budget Setup"
+msgstr "&اعداد الميزانية"
+
+#: src/mmex.cpp:2117
+msgid "Budget Setup"
+msgstr "اعداد الميزانية"
+
+#: src/mmex.cpp:2125
+msgid "&Repeating Transactions"
+msgstr "&المعاملات المتكررة"
+
+#: src/mmex.cpp:2125
+msgid "Bills && Deposits"
+msgstr "الفواتير والودائع"
+
+#: src/mmex.cpp:2133
+msgid "&Stock Investments"
+msgstr "&الاسهم الاستثمارية"
+
+#: src/mmex.cpp:2133
+msgid "Stock Investments"
+msgstr "الاسهم الاستثمارية"
+
+#: src/mmex.cpp:2141
+msgid "&Assets"
+msgstr "&الممتلكات"
+
+#: src/mmex.cpp:2149
+msgid "&Transaction Filter"
+msgstr "&مرشح المعاملات"
+
+#: src/mmex.cpp:2149
+msgid "Transaction Filter"
+msgstr "مرشح المعاملات"
+
+#: src/mmex.cpp:2156
+msgid "&Options"
+msgstr "&خيارات"
+
+#: src/mmex.cpp:2156
+msgid "Show the Options Dialog"
+msgstr "عرض نافذة الخيارات"
+
+#: src/mmex.cpp:2163
+msgid "&Help\tCtrl-F1"
+msgstr "&مساعدة\tCtrl-F1"
+
+#: src/mmex.cpp:2163
+msgid "Show the Help file"
+msgstr "عرض ملف المساعدة"
+
+#: src/mmex.cpp:2168
+msgid "&Show App Start Dialog"
+msgstr "&عرض نافذة بدء البرنامج"
+
+#: src/mmex.cpp:2168
+msgid "App Start Dialog"
+msgstr "نافذة بدء البرنامج"
+
+#: src/mmex.cpp:2175
+msgid "Convert Encrypted &DB"
+msgstr "تحويل قاعدة بيانات م&شفرة"
+
+#: src/mmex.cpp:2176
+msgid "Convert Encrypted DB to Non-Encrypted DB"
+msgstr "ازالة تشفير قاعدة بيانات مشفرة"
+
+#: src/mmex.cpp:2182
+msgid "Online &Update Currency Rate"
+msgstr "تحديث قيم العملات او&نلاين"
+
+#: src/mmex.cpp:2183
+msgid "Online update currency rate"
+msgstr "تحديث قيم العملات اونلاين"
+
+#: src/mmex.cpp:2191
+msgid "Check for &Updates"
+msgstr "البحث عن &تحديث"
+
+#: src/mmex.cpp:2191
+msgid "Check For Updates"
+msgstr "البحث عن تحديث"
+
+#: src/mmex.cpp:2199
+msgid "&Report Issues or Feedback"
+msgstr "&تقرير المشاكل والاقتراحات"
+
+#: src/mmex.cpp:2199
+msgid "Send email through the mailing list to report issues with the software."
+msgstr "فضلا ارسل رسالة للقائمة البريدية الخاصة بالبرنامج في حالة مواجهة أي مشكلة."
+
+#: src/mmex.cpp:2207
+msgid "Be &notified of new releases"
+msgstr ""
+
+#: src/mmex.cpp:2207
+msgid "Sign up for the announcement mailing list"
+msgstr ""
+
+#: src/mmex.cpp:2213
+msgid "&About..."
+msgstr "&حول..."
+
+#: src/mmex.cpp:2213
+msgid "Show about dialog"
+msgstr "عرض نافذة حول"
+
+#: src/mmex.cpp:2218
+msgid "&File"
+msgstr "&ملف"
+
+#: src/mmex.cpp:2219
+msgid "&Accounts"
+msgstr "&الحسابات"
+
+#: src/mmex.cpp:2220
+msgid "&Tools"
+msgstr "&الادوات"
+
+#: src/mmex.cpp:2221
+msgid "&View"
+msgstr "&عرض"
+
+#: src/mmex.cpp:2222
+msgid "&Help"
+msgstr "&مساعدة"
+
+#: src/mmex.cpp:2241
+msgid "New"
+msgstr "جديد"
+
+#: src/mmex.cpp:2243
+msgid "Open"
+msgstr "مفتوح"
+
+#: src/mmex.cpp:2250
+msgid "Account List"
+msgstr "قائمة الحساب"
+
+#: src/mmex.cpp:2252
+msgid "Show Organize Categories Dialog"
+msgstr "عرض نافذة تنظيم الاصناف"
+
+#: src/mmex.cpp:2253
+msgid "Show Organize Payees Dialog"
+msgstr "عرض نافذة تنظيم المستفيدين"
+
+#: src/mmex.cpp:2254
+msgid "Show Organize Currency Dialog"
+msgstr "عرض نافذة تنظيم العملات"
+
+#: src/mmex.cpp:2279
+#: src/mmex.cpp:2472
+msgid "Money Manager Ex: Enter Password For Database.."
+msgstr "مدير المال إي إكس: ادخل كلمة مرور قاعدة البيانات"
+
+#: src/mmex.cpp:2303
+#: src/mmex.cpp:2357
+msgid " - No File opened "
+msgstr " - لم يتم فتح الملف"
+
+#: src/mmex.cpp:2306
+msgid "Sorry. The Database version is too old or Database password is incorrect"
+msgstr "عذرا. قاعدة الييانات قديمة جداً أو كلمة المرور غير صحيحة"
+
+#: src/mmex.cpp:2307
+#: src/mmex.cpp:2361
+msgid "Error opening database"
+msgstr "خطأ في فتح قاعدة البيانات"
+
+#: src/mmex.cpp:2360
+msgid ""
+"Cannot locate previously opened database.\n"
+"Do you want to browse to locate the file?"
+msgstr ""
+
+#: src/mmex.cpp:2380
+msgid "Opening Database File && Verifying Integrity"
+msgstr ""
+
+#: src/mmex.cpp:2468
+msgid "Choose Encrypted database file to open"
+msgstr "اختيار قاعدة بيانات مشفرة لفتحها"
+
+#: src/mmex.cpp:2494
+msgid "Converted DB!"
+msgstr "حولت قاعدة البيانات!"
+
+#: src/mmex.cpp:2495
+msgid "MMEX message"
+msgstr ""
+
+#: src/mmex.cpp:2500
+msgid "Unable to convert db successfully. Check Password!"
+msgstr "فشل تحويل قاعدة البيانات. تأكد من كلمة المرور!"
+
+#: src/mmex.cpp:2586
+#: src/mmex.cpp:2662
+msgid "No Account available! Cannot Import! Create a new account first!"
+msgstr "ﻻ يوجد حساب متاح! ﻻ يمكن الاستيراد! انشئ حساب جديد اوﻻ!"
+
+#: src/mmex.cpp:2605
+msgid "Choose Account to import to:"
+msgstr "اختر الحساب ﻻستيراده إلى:"
+
+#: src/mmex.cpp:2606
+msgid "QFX Import"
+msgstr ""
+
+#: src/mmex.cpp:2802
+msgid "Choose Accounts"
+msgstr "اختار الحسابات"
+
+#: src/mmex.cpp:2862
+#: src/mmex.cpp:2950
+msgid "Unable to connect!"
+msgstr "فشل الاتصال!"
+
+#: src/mmex.cpp:2862
+#: src/mmex.cpp:2920
+#: src/mmex.cpp:2926
+msgid "Check Update"
+msgstr "البحث عن تحديث"
+
+#: src/mmex.cpp:2920
+msgid "New update available!"
+msgstr "يوجد تحديث!"
+
+#: src/mmex.cpp:2926
+msgid "You have the latest version installed!"
+msgstr "لديك آخر اصدار!"
+
+#: src/mmex.cpp:2941
+msgid "No database!"
+msgstr "ﻻ توجد قاعدة بيانات!"
+
+#: src/mmex.cpp:2941
+#: src/mmex.cpp:2950
+#: src/mmex.cpp:2957
+#: src/mmex.cpp:2963
+#: src/mmex.cpp:2972
+#: src/mmex.cpp:2979
+#: src/mmex.cpp:2984
+#: src/mmex.cpp:2989
+#: src/mmex.cpp:2996
+#: src/mmex.cpp:3001
+#: src/mmex.cpp:3044
+#: src/mmex.cpp:3071
+msgid "Update Currency Rate"
+msgstr "تحديث قيم العملات"
+
+#: src/mmex.cpp:2957
+msgid "Cannot get data from WWW!"
+msgstr "لم يتم الحصول على معلومات من الموقع!"
+
+#: src/mmex.cpp:2963
+msgid "Incorrect XML data (#1)!"
+msgstr ""
+
+#: src/mmex.cpp:2972
+msgid "Incorrect XML data (#2)!"
+msgstr ""
+
+#: src/mmex.cpp:2979
+msgid "Incorrect XML data (#3)!"
+msgstr ""
+
+#: src/mmex.cpp:2984
+msgid "Incorrect XML data (#4)!"
+msgstr ""
+
+#: src/mmex.cpp:2989
+msgid "Incorrect XML data (#5)!"
+msgstr ""
+
+#: src/mmex.cpp:2996
+msgid "Incorrect XML data (#6)!"
+msgstr ""
+
+#: src/mmex.cpp:3001
+msgid "Incorrect XML data (#7)!"
+msgstr ""
+
+#: src/mmex.cpp:3044
+msgid "Could not find base currency symbol!"
+msgstr "لم يتم العثور على رمز العملة الاساسية!"
+
+#: src/mmex.cpp:3071
+msgid "Currency rate updated"
+msgstr "تم تحديث قيم العملات"
+
+#: src/mmex.cpp:3270
+#: src/mmex.cpp:3311
+msgid "No Account available!"
+msgstr "ﻻ يوجد حساب متاح!"
+
+#: src/mmex.cpp:3284
+msgid "Choose Account to Edit"
+msgstr "اختيار الحساب لتحريره"
+
+#: src/mmex.cpp:3285
+#: src/mmex.cpp:3326
+msgid "Accounts"
+msgstr "الحسابات"
+
+#: src/mmex.cpp:3325
+msgid "Choose Account to Delete"
+msgstr "اختيار الحساب لحذفه"
+
+#: src/mmhelppanel.cpp:77
+msgid " Help"
+msgstr "مساعدة"
+
+#: src/mmhomepagepanel.cpp:124
+msgid "Today's Date: "
+msgstr "تاريخ اليوم:"
+
+#: src/mmhomepagepanel.cpp:137
+#: src/mmhomepagepanel.cpp:260
+msgid "Summary"
+msgstr "الملخص"
+
+#: src/mmhomepagepanel.cpp:259
+#: src/newacctdialog.cpp:343
+msgid "Currency"
+msgstr "العملة"
+
+#: src/mmhomepagepanel.cpp:282
+msgid "Total of Accounts:"
+msgstr "مجموع الحسابات:"
+
+#: src/mmhomepagepanel.cpp:303
+msgid "Income vs Expenses: Current Month"
+msgstr "الإيرادات مقابل النفقات : الشهر الحالي"
+
+#: src/mmhomepagepanel.cpp:453
+msgid "Upcoming Transactions"
+msgstr "معاملات قادمة"
+
+#: src/mmhomepagepanel.cpp:512
+msgid "Follow Up On "
+msgstr ""
+
+#: src/mmhomepagepanel.cpp:516
+msgid "Transactions"
+msgstr "المعاملات"
+
+#: src/mmhomepagepanel.cpp:521
+msgid "Total Transactions"
+msgstr "اجمالي المعاملات"
+
+#: src/mmreportspanel.cpp:80
+msgid "REPORTS"
+msgstr "التقارير"
+
+#: src/newacctdialog.cpp:153
+msgid "Account Name:"
+msgstr "اسم الحساب:"
+
+#: src/newacctdialog.cpp:160
+msgid "Enter the Name of the Account. This name can be renamed at any time."
+msgstr "اكتب اسم حسابك. ويمكنك تعديل هذا الاسم في أي وقت."
+
+#: src/newacctdialog.cpp:163
+msgid "Account Type:"
+msgstr "نوع الحساب:"
+
+#: src/newacctdialog.cpp:169
+msgid "Checking"
+msgstr ""
+
+#: src/newacctdialog.cpp:170
+msgid "Investment"
+msgstr ""
+
+#: src/newacctdialog.cpp:176
+msgid "Specify the type of account to be created."
+msgstr "تحديد نوع الحساب التي سيتم إنشاؤها."
+
+#: src/newacctdialog.cpp:178
+msgid "Account Number:"
+msgstr "رقم الحساب:"
+
+#: src/newacctdialog.cpp:187
+msgid "Enter the Account Number associated with this account."
+msgstr "اكتب رقم الحساب لربطه مع هذا الحساب"
+
+#: src/newacctdialog.cpp:190
+msgid "Held At:"
+msgstr ""
+
+#: src/newacctdialog.cpp:198
+msgid "Enter the name of the financial institution in which the account is held."
+msgstr "اكتب اسم المؤسسة المالية التي لديك حساب فيها"
+
+#: src/newacctdialog.cpp:200
+msgid "Website:"
+msgstr "الموقع:"
+
+#: src/newacctdialog.cpp:208
+msgid "Enter the URL of the website for the financial institution."
+msgstr "ادخل رابط موقع المؤسسة المالية."
+
+#: src/newacctdialog.cpp:211
+msgid "Contact:"
+msgstr "الاتصال:"
+
+#: src/newacctdialog.cpp:218
+msgid "Enter any contact information for the financial institution."
+msgstr "ادخل معلومات أي وسيلة اتصال بالمؤسسة المالية."
+
+#: src/newacctdialog.cpp:221
+msgid "Access Info:"
+msgstr "معلومات الوصول:"
+
+#: src/newacctdialog.cpp:228
+msgid "Enter any login/access information for the financial institution. This is not secure as anyone with access to the mmb file can access it."
+msgstr ""
+
+#: src/newacctdialog.cpp:230
+msgid "Account Status:"
+msgstr "حالة الحساب:"
+
+#: src/newacctdialog.cpp:237
+msgid "Closed"
+msgstr "مغلق"
+
+#: src/newacctdialog.cpp:244
+msgid "Specify if this account has been closed. Closed accounts are inactive in most calculations, reporting etc."
+msgstr ""
+
+#: src/newacctdialog.cpp:247
+msgid "Initial Balance:"
+msgstr ""
+
+#: src/newacctdialog.cpp:255
+msgid "Enter the initial balance in this account."
+msgstr ""
+
+#: src/newacctdialog.cpp:258
+msgid "Currency:"
+msgstr "العملة:"
+
+#: src/newacctdialog.cpp:263
+msgid "Select Currency"
+msgstr "اختيار العملة"
+
+#: src/newacctdialog.cpp:273
+msgid "Specify the currency to be used by this account."
+msgstr "تعيين العملة لاستخدامها مع هذا الحساب."
+
+#: src/newacctdialog.cpp:276
+msgid "Notes:"
+msgstr "ملاحظات"
+
+#: src/newacctdialog.cpp:283
+msgid "Enter user notes and details about this account."
+msgstr "اكتب ملاحظات أو تفاصيل عن هذا الحساب."
+
+#: src/newacctdialog.cpp:288
+msgid "Favorite Account"
+msgstr "الحساب المفضل"
+
+#: src/newacctdialog.cpp:292
+msgid "Select whether this is an account that is used often. This is used to filter accounts display view."
+msgstr ""
+
+#: src/newacctdialog.cpp:330
+msgid "Account Name "
+msgstr "اسم الحساب"
+
+#: src/newacctdialog.cpp:337
+msgid "Account Name already exists"
+msgstr "اسم الحساب موجود مسبقا"
+
+#: src/newacctdialog.cpp:396
+msgid "Init Balance "
+msgstr ""
+
+#: src/optionsdialog.cpp:271
+msgid " : Restart"
+msgstr ""
+
+#: src/optionsdialog.cpp:345
+msgid "General Settings"
+msgstr "اعدادات عامة"
+
+#: src/optionsdialog.cpp:351
+msgid "Base Currency"
+msgstr "العملة الاساسية"
+
+#: src/optionsdialog.cpp:356
+msgid "Set Currency"
+msgstr "تعيين العملة"
+
+#: src/optionsdialog.cpp:367
+msgid "View Settings"
+msgstr "اعدادات العرض"
+
+#: src/optionsdialog.cpp:373
+msgid "Date Format"
+msgstr "هيئة التاريخ"
+
+#: src/optionsdialog.cpp:404
+msgid "Specify the date format for display"
+msgstr "تعيين هيئة عرض التاريخ"
+
+#: src/optionsdialog.cpp:409
+msgid "Set"
+msgstr "تعيين"
+
+#: src/optionsdialog.cpp:413
+msgid "Sample Date"
+msgstr ""
+
+#: src/optionsdialog.cpp:421
+msgid "Import/Export Settings"
+msgstr "استيراد/تصدير الاعدادات"
+
+#: src/optionsdialog.cpp:427
+msgid "CSV Delimiter"
+msgstr "محددة CSV"
+
+#: src/optionsdialog.cpp:434
+msgid "Specify the delimiter to use when importing/exporting CSV files"
+msgstr "تعيين المحددة المستخدمة عند استيراد/تصدير ملفات CSV"
+
+#: src/optionsdialog.cpp:439
+msgid "Display"
+msgstr "العرض"
+
+#: src/optionsdialog.cpp:445
+msgid "User Name"
+msgstr "اسم المستخدم"
+
+#: src/optionsdialog.cpp:452
+msgid "Specify the User Name"
+msgstr "تعيين اسم المستخدم"
+
+#: src/optionsdialog.cpp:457
+#: src/optionsdialog.cpp:463
+msgid "Language"
+msgstr "اللغة"
+
+#: src/optionsdialog.cpp:472
+msgid "Specify the language to use"
+msgstr "تعيين اللغة المستخدمة"
+
+#: src/optionsdialog.cpp:482
+msgid "Account View Options"
+msgstr "خيارات عرض الحساب"
+
+#: src/optionsdialog.cpp:488
+msgid "Accounts Visible"
+msgstr "الحسابات المرئية"
+
+#: src/optionsdialog.cpp:494
+msgid "All"
+msgstr "الكل"
+
+#: src/optionsdialog.cpp:496
+msgid "Favorites"
+msgstr "المفضلة"
+
+#: src/optionsdialog.cpp:513
+msgid "Specify which accounts are visible"
+msgstr "تعيين الحسابات المرئية"
+
+#: src/optionsdialog.cpp:518
+msgid "Transaction View Options"
+msgstr "خيارات عرض المعاملات"
+
+#: src/optionsdialog.cpp:524
+msgid "Transactions Visible"
+msgstr "المعاملات المرئية"
+
+#: src/optionsdialog.cpp:531
+msgid "View Reconciled"
+msgstr "عرض الناجح"
+
+#: src/optionsdialog.cpp:532
+msgid "View UnReconciled"
+msgstr "عرض الفاشل"
+
+#: src/optionsdialog.cpp:533
+msgid "View Today"
+msgstr "عرض اليوم"
+
+#: src/optionsdialog.cpp:534
+msgid "View 30 days"
+msgstr "عرض 30 يوم"
+
+#: src/optionsdialog.cpp:535
+msgid "View 90 days"
+msgstr "عرض 90 يوم"
+
+#: src/optionsdialog.cpp:536
+msgid "View Last Month"
+msgstr "عرض آخر شهر"
+
+#: src/optionsdialog.cpp:537
+msgid "View Current Month"
+msgstr "عرض الشهر الحالي"
+
+#: src/optionsdialog.cpp:565
+msgid "Specify which transactions are visible by default"
+msgstr "تعيين المعاملات المرئية افتراضيا"
+
+#: src/optionsdialog.cpp:568
+msgid "Font Size Options"
+msgstr "خيارات حجم الخط"
+
+#: src/optionsdialog.cpp:574
+msgid "Report Font Size"
+msgstr "حجم خط التقرير"
+
+#: src/optionsdialog.cpp:613
+msgid "Specify which font size is used on the report tables"
+msgstr "تعيين حجم الخط المستخدم في جدول التقرير"
+
+#: src/optionsdialog.cpp:624
+msgid "Restore Defaults"
+msgstr "استعادة الافتراضي"
+
+#: src/optionsdialog.cpp:627
+msgid "Restore Default Colors"
+msgstr "استعادة الالوان الافتراضية"
+
+#: src/optionsdialog.cpp:633
+msgid "Nav Tree"
+msgstr ""
+
+#: src/optionsdialog.cpp:635
+msgid "Specify the color for the nav tree"
+msgstr ""
+
+#: src/optionsdialog.cpp:639
+msgid "List Background"
+msgstr "خلفية القائمة"
+
+#: src/optionsdialog.cpp:641
+msgid "Specify the color for the list background"
+msgstr "تعيين لون خلفية القائمة"
+
+#: src/optionsdialog.cpp:645
+msgid "List Row 0"
+msgstr "صف القائمة 0"
+
+#: src/optionsdialog.cpp:647
+msgid "Specify the color for the list row 0"
+msgstr "تعيين لون صف القائمة 0"
+
+#: src/optionsdialog.cpp:651
+msgid "List Row 1"
+msgstr "صف القائمة 1"
+
+#: src/optionsdialog.cpp:653
+msgid "Specify the color for the list row 1"
+msgstr "تعيين لون صف القائمة 1"
+
+#: src/optionsdialog.cpp:657
+msgid "List Border"
+msgstr "اطار القائمة"
+
+#: src/optionsdialog.cpp:659
+msgid "Specify the color for the list Border"
+msgstr "تعيين لون اطار القائمة"
+
+#: src/optionsdialog.cpp:663
+msgid "List Details"
+msgstr "تفاصيل القائمة"
+
+#: src/optionsdialog.cpp:665
+msgid "Specify the color for the list details"
+msgstr "تعيين لون تفاصيل القائمة"
+
+#: src/optionsdialog.cpp:669
+msgid "Future Transactions"
+msgstr "المعاملات المستقبلية"
+
+#: src/optionsdialog.cpp:671
+msgid "Specify the color for future transactions"
+msgstr "تعيين لون المعاملات المستقبلية"
+
+#: src/optionsdialog.cpp:683
+msgid "Backup database before opening"
+msgstr "نسخ احتياطي لقاعدة البيانات قبل الفتح"
+
+#: src/optionsdialog.cpp:689
+msgid "Select whether to create a .bak file when opening the database file"
+msgstr ""
+
+#: src/optionsdialog.cpp:696
+msgid "Stock Quote Web Page"
+msgstr "موقع اسعار الاسهم"
+
+#: src/optionsdialog.cpp:707
+msgid "Use Original Date when Pasting Transactions"
+msgstr "استخدام التاريخ الاصلي عند لصق المعاملات"
+
+#: src/optionsdialog.cpp:713
+msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
+msgstr "استخدام التاريخ الاصلي عند نسخ/لصق المعاملات"
+
+#: src/optionsdialog.cpp:718
+msgid "Use Transaction Sound"
+msgstr ""
+
+#: src/optionsdialog.cpp:724
+msgid "Select whether to use sounds when entering transactions"
+msgstr ""
+
+#: src/optionsdialog.cpp:728
+msgid "Enable online currency update (Get data from European Central Bank)"
+msgstr "تفعيل تحديث قيم العملات اونلاين (جلب البيانات من المصرف المركزي الاوروبي)"
+
+#: src/optionsdialog.cpp:735
+msgid "Enable or disable get data from European Central Bank to update currency rate"
+msgstr "تفعيل او تعطيل جلب البيانات من المصرف المركزي الاوروبي لتحديث قيم العملات"
+
+#: src/optionsdialog.cpp:741
+msgid "General"
+msgstr "عام"
+
+#: src/optionsdialog.cpp:742
+msgid "View Options"
+msgstr "خيارات العرض"
+
+#: src/optionsdialog.cpp:743
+msgid "Colors"
+msgstr "الالوان"
+
+#: src/optionsdialog.cpp:768
+msgid "Remember to update currency rate"
+msgstr "تذكر تحديث قيم العملات"
+
+#: src/optionsdialog.cpp:768
+msgid "Important note"
+msgstr "ملاحظة مهمة"
+
+#: src/payeedialog.cpp:170
+msgid "Find Payee: "
+msgstr "بحث المستفيد:"
+
+#: src/payeedialog.cpp:177
+#: src/payeedialog.cpp:203
+msgid "Enter the payee name to be added or make edits to an existing payee name"
+msgstr "ادخل اسم مستفيد جديد أو حرر اسم مستفيد موجود مسبقا"
+
+#: src/payeedialog.cpp:196
+msgid "Add/Edit Payee: "
+msgstr "اضافة/تحرير مستفيد"
+
+#: src/payeedialog.cpp:211
+msgid "Add a new payee name"
+msgstr "اضافة اسم مستفيد جديد"
+
+#: src/payeedialog.cpp:216
+msgid "Change the name of an existing payee"
+msgstr "تغيير اسم مستفيد موجود"
+
+#: src/payeedialog.cpp:221
+msgid "Delete the selected payee. The payee cannot be used by an existing transaction."
+msgstr "حذف المستفيد المحدد. لن تستطيع استخدام المستفيد في أي معاملة موجودة حاليا."
+
+#: src/payeedialog.cpp:229
+msgid "Select the currently selected payee as the selected payee for the transaction"
+msgstr ""
+
+#: src/payeedialog.cpp:240
+msgid "Type a Payee Name in the Text Box and then press Add."
+msgstr "اكتب اسم المستفيد في مربع النص ثم اضغط على زر اضافة."
+
+#: src/payeedialog.cpp:245
+msgid "Payee with same name exists"
+msgstr "يوجد مستفيد بنفس الاسم حاليا"
+
+#: src/payeedialog.cpp:264
+msgid "Payee is in use"
+msgstr "المستفيد مستخدم حاليا"
+
+#: src/qifimport.cpp:361
+msgid ""
+"To import QIF files correctly, the date option set in MMEX \n"
+" must match the format of the date in the QIF file.\n"
+"Are you are sure you want to proceed with the import?"
+msgstr ""
+
+#: src/qifimport.cpp:363
+msgid "Confirm QIF import"
+msgstr ""
+
+#: src/qifimport.cpp:382
+msgid "QIF Import"
+msgstr "استيراد QIF"
+
+#: src/qifimport.cpp:393
+msgid "Choose QIF data file to import"
+msgstr "اختيار ملفا بيانات QIF ﻻستيراده"
+
+#: src/qifimport.cpp:434
+#: src/qifimport.cpp:459
+#: src/qifimport.cpp:529
+msgid "Line : "
+msgstr ""
+
+#: src/qifimport.cpp:435
+msgid " incorrect QIF line type"
+msgstr ""
+
+#: src/qifimport.cpp:446
+msgid "Importing account type : "
+msgstr ""
+
+#: src/qifimport.cpp:459
+msgid " : "
+msgstr ""
+
+#: src/qifimport.cpp:460
+msgid " account name "
+msgstr "اسم الحساب"
+
+#: src/qifimport.cpp:498
+msgid " cannot process Account Types yet "
+msgstr "ﻻ يمكن معالجة نوع الحساب حاليا"
+
+#: src/qifimport.cpp:499
+msgid "Cannot process these QIF Account Types yet"
+msgstr "ﻻ يمكن التعامل مع هذا النوع من ملفات QIF حاليا"
+
+#: src/qifimport.cpp:514
+#: src/qifimport.cpp:630
+msgid "Adding payee "
+msgstr "اضافة مستفيد"
+
+#: src/qifimport.cpp:530
+msgid " invalid amount, skipping."
+msgstr "مبلغ غير صالح, تجاوز."
+
+#: src/qifimport.cpp:609
+msgid "Date is empty, "
+msgstr "التاريخ فارغ, "
+
+#: src/qifimport.cpp:613
+msgid "Transaction Type is empty"
+msgstr "نوع المعاملة فارغ"
+
+#: src/qifimport.cpp:617
+msgid "Amount is empty"
+msgstr "المبلغ فارغ"
+
+#: src/qifimport.cpp:646
+msgid "Category is empty, marking transaction as Unknown category"
+msgstr "الصنف فارغ, تعيين المعاملة بصنف مجهول"
+
+#: src/qifimport.cpp:660
+msgid "Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had "
+msgstr ""
+
+#: src/qifimport.cpp:661
+msgid " payee "
+msgstr "المستفيد"
+
+#: src/qifimport.cpp:661
+msgid " type "
+msgstr "النوع"
+
+#: src/qifimport.cpp:662
+msgid " amount "
+msgstr "المبلغ"
+
+#: src/qifimport.cpp:662
+msgid " date "
+msgstr "التاريخ"
+
+#: src/qifimport.cpp:713
+msgid " transactions imported from QIF"
+msgstr "تم استيراد المعاملات من ملف QIF"
+
+#: src/splitdetailsdialog.cpp:182
+msgid "Invalid Category Entered "
+msgstr "ادخال صنف غير صالح"
+
+#: src/splittransactionsdialog.cpp:146
+msgid "&Remove"
+msgstr "&ازالة"
+
+#: src/splittransactionsdialog.cpp:165
+msgid "&Select Category"
+msgstr "&اختيار صنف"
+
+#: src/stockdialog.cpp:144
+msgid "Stock Investment Details"
+msgstr "تفاصيل الاسهم الاستثمارية"
+
+#: src/stockdialog.cpp:157
+#: src/stockdialog.cpp:333
+#: src/stockspanel.cpp:204
+msgid "Held At"
+msgstr ""
+
+#: src/stockdialog.cpp:163
+msgid "Enter the name of the financial institution where the investment is held"
+msgstr "اكتب اسم المؤسسة المالية التي تضع حسابك الاستثماري لديها"
+
+#: src/stockdialog.cpp:174
+msgid "Specify the purchase date of the stock investment"
+msgstr "تعيين تاريخ شراء الاسهم الاستثمارية"
+
+#: src/stockdialog.cpp:177
+msgid "Stock Name"
+msgstr "اسم السهم"
+
+#: src/stockdialog.cpp:183
+msgid "Enter the stock company name"
+msgstr "اكتب اسم شركة السهم"
+
+#: src/stockdialog.cpp:187
+msgid "Symbol"
+msgstr "الرمز"
+
+#: src/stockdialog.cpp:193
+msgid "Enter the stock symbol (optional)"
+msgstr "اكتب رمز السهم (اختياري)"
+
+#: src/stockdialog.cpp:198
+#: src/stockspanel.cpp:212
+msgid "Number of Shares"
+msgstr "عدد الاسهم"
+
+#: src/stockdialog.cpp:204
+msgid "Enter number of shares held"
+msgstr "اكتب عدد الاسهم التي تملكها"
+
+#: src/stockdialog.cpp:209
+msgid "Purchase Price"
+msgstr "سعر الشراء"
+
+#: src/stockdialog.cpp:215
+msgid "Enter purchase price for each stock"
+msgstr "اكتب ثمن شراء كل الاسهم"
+
+#: src/stockdialog.cpp:220
+msgid "Commission"
+msgstr "العمولة"
+
+#: src/stockdialog.cpp:226
+msgid "Enter any commission paid"
+msgstr "اكتب أي عمولة دفعتها"
+
+#: src/stockdialog.cpp:230
+msgid "Current Price"
+msgstr "السعر الحالي"
+
+#: src/stockdialog.cpp:236
+msgid "Enter current stock price"
+msgstr "اكتب سعر السهم حاليا"
+
+#: src/stockdialog.cpp:247
+msgid "Enter notes associated with this investment"
+msgstr "اكتب أي ملاحظات متعلقة بهذا الاستثمار"
+
+#: src/stockdialog.cpp:276
+msgid "Stock Price Web Page"
+msgstr "موقع اسعار الاسهم"
+
+#: src/stockdialog.cpp:292
+msgid "Choose Investment Account"
+msgstr "اختيار حساب الاستثمار"
+
+#: src/stockdialog.cpp:345
+#: src/stockdialog.cpp:359
+msgid "Num Shares"
+msgstr "ارقام الأسهم"
+
+#: src/stockdialog.cpp:353
+msgid "Invalid number of shares entered "
+msgstr "عدد الاسهم غير صالح"
+
+#: src/stockdialog.cpp:368
+msgid "Invalid purchase price entered "
+msgstr "ثمن الشراح غير صالح"
+
+#: src/stockdialog.cpp:388
+msgid "Invalid commission entered "
+msgstr "قيمة العمولة غير صالحة"
+
+#: src/stockspanel.cpp:177
+msgid "Idle"
+msgstr ""
+
+#: src/stockspanel.cpp:208
+msgid "Share Name"
+msgstr ""
+
+#: src/stockspanel.cpp:217
+msgid "Gain/Loss"
+msgstr ""
+
+#: src/stockspanel.cpp:227
+msgid "Current"
+msgstr "الحالي"
+
+#: src/stockspanel.cpp:270
+msgid "New Stock Investment"
+msgstr "اضافة سهم استثماري"
+
+#: src/stockspanel.cpp:275
+msgid "Edit Stock Investment"
+msgstr "تحرير سهم استثماري"
+
+#: src/stockspanel.cpp:280
+msgid "Delete Stock Investment"
+msgstr "حذف سهم استثماري"
+
+#: src/stockspanel.cpp:283
+msgid "&Refresh"
+msgstr "&تحديث"
+
+#: src/stockspanel.cpp:285
+msgid "Refresh Stock Prices from Yahoo"
+msgstr "تحديث سعر الاسهم من ياهو"
+
+#: src/stockspanel.cpp:288
+msgid "&Settings"
+msgstr "&اعدادات"
+
+#: src/stockspanel.cpp:290
+msgid "Change settings for automatic refresh"
+msgstr "تغيير اعدادات التحديث اﻵلي"
+
+#: src/stockspanel.cpp:309
+msgid "Stock Investments: "
+msgstr "الاسهم الاستثمارية:"
+
+#: src/stockspanel.cpp:348
+#, c-format
+msgid "Total: %s Invested: %s Gain: %s "
+msgstr ""
+
+#: src/stockspanel.cpp:350
+#, c-format
+msgid "Total: %s Invested: %s Loss: %s "
+msgstr ""
+
+#: src/stockspanel.cpp:446
+#, c-format
+msgid "%s on %s"
+msgstr ""
+
+#: src/stockspanel.cpp:449
+msgid "never!"
+msgstr "ابداً!"
+
+#: src/stockspanel.cpp:454
+#, c-format
+msgid ""
+"Automatic stock quote refresh is disabled. \n"
+"Last update: %s"
+msgstr ""
+"التحديث اﻵلي ﻻسعار الاسهم معطل. \n"
+"آخر تحديث: %s"
+
+#: src/stockspanel.cpp:460
+#, c-format
+msgid ""
+"Automatic stock quote refresh idle - Out of Hours. \n"
+"Last update: %s"
+msgstr ""
+"التحديث التلقائي للأسهم خارج أوقات العمل. \n"
+"آخر تحديث: %s"
+
+#: src/stockspanel.cpp:466
+msgid "Automatic stock quote refresh in progress..."
+msgstr "التحديث التلقائي ﻷسعار العملات يعمل..."
+
+#: src/stockspanel.cpp:472
+#, c-format
+msgid ""
+"Automatic stock quote refresh successful. \n"
+"Last update: %s"
+msgstr ""
+"تم التحديث التلقائي ﻻسعار العملات. \n"
+"آخر تحديث: %s"
+
+#: src/stockspanel.cpp:478
+#, c-format
+msgid ""
+"Automatic stock quote refresh Failed. \n"
+"Last successful update: %s"
+msgstr ""
+"فشل التحديث التلقائي للاسعار العملات. \n"
+"آخر تحديث ناجح: %s"
+
+#: src/stockspanel.cpp:485
+#, c-format
+msgid ""
+"Automatic stock quote refresh not started. \n"
+"Last update: %s"
+msgstr ""
+"التحديث التلقائي ﻻسعار العملات لم يبدأ. \n"
+"آخر تحديث: %s"
+
+#: src/stockspanel.cpp:648
+#: src/stockspanel.cpp:656
+msgid "Stock Download"
+msgstr ""
+
+#: src/stockspanel.cpp:773
+msgid "&New Stock Investment"
+msgstr "&اضافة اسهم استثمارية"
+
+#: src/stockspanel.cpp:775
+msgid "&Edit Stock Investment"
+msgstr "&تحرير اسهم استثمارية"
+
+#: src/stockspanel.cpp:776
+msgid "&Delete Stock Investment"
+msgstr "&حذف اسهم استثمارية"
+
+#: src/stockspanel.cpp:865
+msgid "Do you really want to delete the stock investment?"
+msgstr "تأكيد حذف الاسهم الاستثمارية؟"
+
+#: src/stockspanel.cpp:866
+msgid "Confirm Stock Investment Deletion"
+msgstr "تأكيد حذف الاسهم الاستثمارية"
+
+#: src/transdialog.cpp:309
+#: src/transdialog.cpp:690
+#: src/transdialog.cpp:705
+msgid "Specify to whom the transaction is going to or coming from "
+msgstr "تحديد الجهة التي ستذهب إليها أو تأتي منها المعاملة "
+
+#: src/transdialog.cpp:330
+msgid "Populate Transaction #"
+msgstr ""
+
+#: src/transdialog.cpp:709
+msgid "Select To Account"
+msgstr ""
+
+#: src/transdialog.cpp:721
+msgid "Specify the account from which the transfer is occurring"
+msgstr "تعيين الحساب الذي حدث منه التحويل"
+
+#: src/univcsvdialog.cpp:100
+msgid "Specify the order of fields in the CSV file"
+msgstr ""
+
+#: src/univcsvdialog.cpp:115
+msgid "Move &Up"
+msgstr "للأ&على"
+
+#: src/univcsvdialog.cpp:120
+msgid "Move &Down"
+msgstr "للأ&سفل"
+
+#: src/univcsvdialog.cpp:156
+msgid "&Load Template"
+msgstr ""
+
+#: src/univcsvdialog.cpp:161
+msgid "Save &As Template"
+msgstr ""
+
+#: src/univcsvdialog.cpp:166
+msgid "&Import File"
+msgstr "&استيراد ملف"
+
+#: src/univcsvdialog.cpp:223
+msgid "Amount(+/-)"
+msgstr "المبلغ(+/-)"
+
+#: src/univcsvdialog.cpp:227
+msgid "SubCategory"
+msgstr "الصنف الفرعي"
+
+#: src/univcsvdialog.cpp:231
+msgid "Transaction Number"
+msgstr "رقم المعاملة"
+
+#: src/univcsvdialog.cpp:233
+msgid "Don't Care"
+msgstr ""
+
+#: src/univcsvdialog.cpp:240
+#: src/univcsvdialog.cpp:242
+msgid "Unknown"
+msgstr "مجهول"
+
+#: src/univcsvdialog.cpp:263
+msgid "Add CSV field"
+msgstr "اضافة حقل CSV"
+
+#: src/univcsvdialog.cpp:264
+msgid "CSV Field"
+msgstr "حقل CSV"
+
+#: src/univcsvdialog.cpp:358
+#: src/univcsvdialog.cpp:370
+msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."
+msgstr ""
+
+#: src/univcsvdialog.cpp:390
+#: src/util.cpp:463
+#: src/util.cpp:723
+msgid "CSV Import"
+msgstr "استيراد CSV"
+
+#: src/univcsvdialog.cpp:400
+#: src/util.cpp:732
+msgid "Choose MM.NET CSV data file to import"
+msgstr "اختر ملفا بيانات MM.NET CSV ﻻستيراده"
+
+#: src/univcsvdialog.cpp:444
+msgid " file contains insufficient number of tokens"
+msgstr ""
+
+#: src/univcsvdialog.cpp:467
+msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipping"
+msgstr ""
+
+#: src/univcsvdialog.cpp:521
+#: src/util.cpp:678
+#: src/util.cpp:899
+msgid " imported OK."
+msgstr "تم الاستيراد."
+
+#: src/univcsvdialog.cpp:524
+#: src/util.cpp:902
+#, c-format
+msgid ""
+"Total Lines : %d \n"
+"Total Imported : %d\n"
+"\n"
+"Log file written to : %s.\n"
+"\n"
+"Imported transactions have been flagged so you can review them. "
+msgstr ""
+
+#: src/univcsvdialog.cpp:525
+#: src/util.cpp:683
+#: src/util.cpp:700
+#: src/util.cpp:903
+msgid "Import from CSV"
+msgstr "استيراد من CSV"
+
+#: src/util.cpp:261
+msgid "January"
+msgstr "يناير"
+
+#: src/util.cpp:261
+msgid "February"
+msgstr "فبراير"
+
+#: src/util.cpp:261
+msgid "March"
+msgstr "مارس"
+
+#: src/util.cpp:261
+msgid "April"
+msgstr "ابريل"
+
+#: src/util.cpp:261
+#: src/util.cpp:272
+msgid "May"
+msgstr "مايو"
+
+#: src/util.cpp:261
+msgid "June"
+msgstr "يونيو"
+
+#: src/util.cpp:262
+msgid "July"
+msgstr "يوليو"
+
+#: src/util.cpp:262
+msgid "August"
+msgstr "اغسطس"
+
+#: src/util.cpp:262
+msgid "September"
+msgstr "سبتمبر"
+
+#: src/util.cpp:262
+msgid "October"
+msgstr "اكتوبر"
+
+#: src/util.cpp:262
+msgid "November"
+msgstr "نوفمبر"
+
+#: src/util.cpp:262
+msgid "December"
+msgstr "ديسمبر"
+
+#: src/util.cpp:272
+msgid "Jan"
+msgstr "يناير"
+
+#: src/util.cpp:272
+msgid "Feb"
+msgstr "فبراير"
+
+#: src/util.cpp:272
+msgid "Mar"
+msgstr "مارس"
+
+#: src/util.cpp:272
+msgid "Apr"
+msgstr "ابريل"
+
+#: src/util.cpp:272
+msgid "Jun"
+msgstr "يونيو"
+
+#: src/util.cpp:273
+msgid "Jul"
+msgstr "يوليو"
+
+#: src/util.cpp:273
+msgid "Aug"
+msgstr "اغسطس"
+
+#: src/util.cpp:273
+msgid "Sep"
+msgstr "سبتمبر"
+
+#: src/util.cpp:273
+msgid "Oct"
+msgstr "اكتوبر"
+
+#: src/util.cpp:273
+msgid "Nov"
+msgstr "نوفمبر"
+
+#: src/util.cpp:273
+msgid "Dec"
+msgstr "ديسمبر"
+
+#: src/util.cpp:288
+msgid "Sunday"
+msgstr "الاحد"
+
+#: src/util.cpp:288
+msgid "Monday"
+msgstr "الاثنين"
+
+#: src/util.cpp:288
+msgid "Tuesday"
+msgstr "الثلاثاء"
+
+#: src/util.cpp:288
+msgid "Wednesday"
+msgstr "الاربعاء"
+
+#: src/util.cpp:289
+msgid "Thursday"
+msgstr "الخميس"
+
+#: src/util.cpp:289
+msgid "Friday"
+msgstr "الجمعة"
+
+#: src/util.cpp:289
+msgid "Saturday"
+msgstr "السبت"
+
+#: src/util.cpp:317
+msgid "No Account available! Cannot Export!"
+msgstr "ﻻ يوجد حساب متاح! ﻻ يمكن التصدير!"
+
+#: src/util.cpp:334
+msgid "Choose Account to Export from:"
+msgstr "اختيار الحساب المراد تصديره من :"
+
+#: src/util.cpp:335
+msgid "CSV Export"
+msgstr "تصدير CSV"
+
+#: src/util.cpp:341
+msgid "Choose CSV data file to Export"
+msgstr "اختيار ملف بيانات CSV لتصديره"
+
+#: src/util.cpp:513
+#: src/util.cpp:773
+msgid " missing date, skipping."
+msgstr "بيانات مفقودة, تجاوز."
+
+#: src/util.cpp:522
+#: src/util.cpp:782
+msgid " missing payee, skipping."
+msgstr "المستفيد مفقود, تجاوز."
+
+#: src/util.cpp:531
+msgid " missing transaction type, skipping."
+msgstr "نوع المعاملة مفقود, تجاوز."
+
+#: src/util.cpp:540
+#: src/util.cpp:791
+msgid " missing amount, skipping."
+msgstr "المبلغ مفقود, تجاوز."
+
+#: src/util.cpp:563
+msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
+msgstr ""
+
+#: src/util.cpp:570
+msgid " unrecognized transaction type, skipping."
+msgstr ""
+
+#: src/util.cpp:597
+msgid " transfer transaction not imported."
+msgstr "لم يتم استيراد معاملة الحوالة."
+
+#: src/util.cpp:681
+#, c-format
+msgid ""
+"Total Lines : %d.\n"
+"Total Imported : %d\n"
+"Log file written to : %s.\n"
+"\n"
+"Imported transactions have been flagged so you can review them."
+msgstr ""
+
+#: src/util.cpp:699
+msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
+msgstr ""
+
+#: src/util.cpp:806
+msgid " missing category, skipping."
+msgstr "الصنف مفقود, تجاوز."
+
+#: src/util.cpp:834
+msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
+msgstr ""
+
+#: src/util.cpp:843
+msgid " invalid date, skipping."
+msgstr "بيانات غير صالحة, تجاوز."
+
+#: src/util.cpp:918
+msgid "Entry "
+msgstr ""
+
+#: src/util.cpp:918
+msgid " is invalid."
+msgstr ""
+
+#: src/util.cpp:920
+msgid "Invalid Entry"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:94
+msgid "No Database opened"
+msgstr "ﻻ توجد قاعدة بيانات مفتوحة"
+
+#: src/wxsqlite3_1_7.cpp:95
+msgid "Statement not accessible"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:96
+msgid "Out of memory"
+msgstr "من الذاكرة"
+
+#: src/wxsqlite3_1_7.cpp:97
+msgid "Cannot decode binary"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:98
+msgid "Invalid field index"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:99
+msgid "Invalid field name"
+msgstr "اسم حقل غير صالح"
+
+#: src/wxsqlite3_1_7.cpp:100
+msgid "Invalid row index"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:101
+msgid "Invalid scalar query"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:103
+msgid "Null Results pointer"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:104
+msgid "Error binding string param"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:105
+msgid "Error binding int param"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:106
+msgid "Error binding int64 param"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:107
+msgid "Error binding double param"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:108
+msgid "Error binding blob param"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:109
+msgid "Error binding date/time param"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:110
+msgid "Error binding NULL param"
+msgstr ""
+
+#: src/wxsqlite3_1_7.cpp:111
+msgid "Error clearing bindings"
+msgstr ""
+
+#: src/yahoosettingsdialog.cpp:61
+msgid "Yahoo Server"
+msgstr "خادم ياهو"
+
+#: src/yahoosettingsdialog.cpp:65
+msgid "finance.au.yahoo.com"
+msgstr ""
+
+#: src/yahoosettingsdialog.cpp:66
+msgid "Do not enter anything except the server name (or IP address, if you're feeling lucky)"
+msgstr ""
+
+#: src/yahoosettingsdialog.cpp:72
+msgid "Yahoo Suffix"
+msgstr ""
+
+#: src/yahoosettingsdialog.cpp:77
+msgid ""
+"Enter the suffix used by Yahoo for the market of your stocks. \n"
+"If your stocks are in multiple markets, leave this blank and add  the suffix to each symbol in your portfolio."
+msgstr ""
+
+#: src/yahoosettingsdialog.cpp:82
+msgid "Market open from"
+msgstr ""
+
+#: src/yahoosettingsdialog.cpp:91
+#: src/yahoosettingsdialog.cpp:102
+#: src/yahoosettingsdialog.cpp:119
+#: src/yahoosettingsdialog.cpp:130
+msgid "Allow for any delay in quotes"
+msgstr "السماح بأي تأخير في السعر"
+
+#: src/yahoosettingsdialog.cpp:98
+#: src/yahoosettingsdialog.cpp:126
+msgid ":"
+msgstr ":"
+
+#: src/yahoosettingsdialog.cpp:110
+msgid "to"
+msgstr "إلى"
+
+#: src/yahoosettingsdialog.cpp:139
+msgid "&Refresh prices every"
+msgstr "&تحديث السعر كل "
+
+#: src/yahoosettingsdialog.cpp:163
+msgid "minutes while market is open"
+msgstr "دقيقة اثناء عمل السوق"
+
+#: include/aboutdialog.h:25
+msgid "About "
+msgstr "حول"
+
+#: include/appstartdialog.h:27
+msgid " Start Page"
+msgstr "صفحة البدء"
+
+#: include/assetdialog.h:21
+msgid "New/Edit Asset"
+msgstr "اضافة/تعديل ممتلك"
+
+#: include/billsdepositsdialog.h:22
+msgid "New/Edit Repeating Transaction"
+msgstr "اضافة/تحرير المعاملات المتكررة"
+
+#: include/budgetentrydialog.h:22
+msgid "Budget Entry Dialog"
+msgstr "نافذة ادخال الميزانية"
+
+#: include/budgetyeardialog.h:22
+msgid "Budget Year Editor"
+msgstr "محرر الميزانية السنوية"
+
+#: include/budgetyearentrydialog.h:23
+msgid "Budget Year Entry"
+msgstr "ادخال الميزانية السنوية"
+
+#: include/chart.h:247
+#: include/chart.h:448
+msgid "Legend:"
+msgstr "المفسر:"
+
+#: include/currencydialog.h:23
+msgid "Currency Manager"
+msgstr "ادارة العملة"
+
+#: include/customsqldialog.h:29
+msgid "Custom SQL Dialog"
+msgstr ""
+
+#: include/fileviewerdialog.h:24
+msgid "View File Contents"
+msgstr "عرض محتوى الملف"
+
+#: include/filtertransdialog.h:46
+msgid "Filter Transactions"
+msgstr ""
+
+#: include/maincurrencydialog.h:29
+msgid "Currency Dialog"
+msgstr "نافذة العملة"
+
+#: include/mmex.h:136
+msgid "Base Currency for account"
+msgstr "العملة الاساسية للحساب"
+
+#: include/mmex.h:151
+msgid ""
+"\n"
+"Specify the base (or default) currency to be used \n"
+"with the database. You can change the \n"
+"currency associated with each account if needed.\n"
+msgstr ""
+"\n"
+"تعيين العملة الاساسية (أو الافتراضية) ﻻستخدامها \n"
+"مع قاعدة البيانات. وتستطيع تغيير العملة \n"
+"وربطها بأي حساب اذا اردت.\n"
+
+#: include/mmex.h:169
+msgid "(Optional)Specify your name. Mainly used for reporting and in printing reports.\n"
+msgstr ""
+
+#: include/mmex.h:181
+msgid "Base Currency Not Set"
+msgstr "العملة الاساسية غير معينة"
+
+#: include/mmex.h:231
+msgid "Name of the Account"
+msgstr "اسم الحساب"
+
+#: include/mmex.h:246
+msgid ""
+"\n"
+"Specify a descriptive name of the account. This most commonly \n"
+"is the name of the financial institution where the account is held. \n"
+"For example 'ABC Bank'."
+msgstr ""
+"\n"
+"حدد اسما وصفيا للحساب. هذا الأكثر شيوعا \n"
+"هو اسم المؤسسة المالية حيث يتم الاحتفاظ الحساب. \n"
+"على سبيل المثال 'بنك الراجحي'."
+
+#: include/mmex.h:259
+msgid "Account Name Invalid"
+msgstr "اسم حساب غير صالح"
+
+#: include/mmex.h:282
+msgid "Checking/Savings"
+msgstr ""
+
+#: include/mmex.h:294
+msgid "Type of Account"
+msgstr "نوع الحساب"
+
+#: include/mmex.h:309
+msgid ""
+"\n"
+"Select the type of account you want to create:\n"
+"\n"
+"General bank accounts cover a wide variety of account\n"
+" types like Checking, Savings and Credit card type accounts."
+msgstr ""
+"\n"
+"اختر نوع الحساب الذي تريد انشائه:\n"
+"\n"
+"الحسابات المصرفية عادة تشمل طائفة واسعة من الحسابات\n"
+" انواع مثل الجاري, الادخار والبطاقات الاتمانية."
+
+#: include/mmex.h:315
+msgid ""
+"\n"
+"Investment accounts are specialized accounts that only \n"
+"have stock/mutual fund investments associated \n"
+"with them.\n"
+msgstr ""
+"\n"
+"الحسابات الاستثمارية هي حسابات مخصصة فقط \n"
+"لمالكي الاسهم/الصناديق الاستثمارية \n"
+"المرتبطة به.\n"
+
+#: include/mmex.h:333
+msgid ""
+"Base Account Currency Not set.\n"
+"Set that first using tools->options menu and then add a new account"
+msgstr ""
+"لم تعين العملة الاساسية.\n"
+"Set that first using tools->قائمة خيارات واضف حساب جديد"
+
+#: include/mmgraphincexpensesmonth.h:26
+msgid "Expenses"
+msgstr "المصروفات"
+
+#: include/optionsdialog.h:26
+msgid "Options Dialog"
+msgstr "نافذة الخيارات"
+
+#: include/reportbudgetingperf.h:26
+msgid "Budget Performance for Year : "
+msgstr "اداء الميزانية لعام :"
+
+#: include/reportbudgetingperf.h:63
+#: include/reportcategovertimeperf.h:55
+msgid "Overall"
+msgstr ""
+
+#: include/reportbudgetingperf.h:64
+msgid "%"
+msgstr ""
+
+#: include/reportbudgetsetup.h:26
+msgid "Budget setup for Year : "
+msgstr "اعداد ميزانية عام :"
+
+#: include/reportbudgetsetup.h:26
+msgid " (Estimated Vs Actual)"
+msgstr " (المتوقع والفعلي)"
+
+#: include/reportcashflow.h:24
+msgid "Cash Flow Forecast For All Accounts - A Year Ahead"
+msgstr ""
+
+#: include/reportcashflow.h:37
+#: include/reportincexpesestime.h:122
+msgid "Total"
+msgstr "المجموع"
+
+#: include/reportcategexp.h:62
+#: include/reportincexpenses.h:40
+#: include/reportpayee.h:39
+msgid "From: "
+msgstr "من:"
+
+#: include/reportcategexp.h:64
+#: include/reportincexpenses.h:41
+#: include/reportpayee.h:41
+msgid " To: "
+msgstr "إلى:"
+
+#: include/reportcategovertimeperf.h:23
+msgid "Category Income/Expenses Over Last 12 Months "
+msgstr ""
+
+#: include/reportcustomsql.h:24
+msgid "Custom SQL Report "
+msgstr ""
+
+#: include/reportincexpenses.h:76
+msgid "Income:"
+msgstr "الواردات:"
+
+#: include/reportincexpenses.h:81
+msgid "Expenses:"
+msgstr "المصروفات"
+
+#: include/reportincexpenses.h:93
+msgid "Difference:"
+msgstr "الفرق:"
+
+#: include/reportincexpesestime.h:28
+msgid "Income vs Expenses for Year: "
+msgstr "الواردات والمصروفات لعام:"
+
+#: include/reportincexpesestime.h:43
+msgid "Month"
+msgstr "الشهر"
+
+#: include/reportincexpesestime.h:46
+msgid "Difference"
+msgstr "الفرق"
+
+#: include/reportsummary.h:124
+msgid "Total Balance on all Accounts"
+msgstr "الرصيد في كل الحسابات"
+
+#: include/reportsummaryassets.h:37
+msgid "Summary of Assets"
+msgstr "ملخص الممتلكات"
+
+#: include/reportsummaryassets.h:121
+msgid "Total Assets: "
+msgstr "مجموع الممتلكات:"
+
+#: include/reportsummarystocks.h:37
+msgid "Summary of Stocks"
+msgstr "ملخص الاسهم"
+
+#: include/reportsummarystocks.h:60
+msgid "Company"
+msgstr "الشركة"
+
+#: include/reportsummarystocks.h:62
+msgid "Number Shares"
+msgstr "عدد الاسهم"
+
+#: include/reportsummarystocks.h:63
+msgid "Purchase Date"
+msgstr "تاريخ الشراء"
+
+#: include/reportsummarystocks.h:68
+msgid "Gain Loss"
+msgstr ""
+
+#: include/reportsummarystocks.h:148
+msgid "Total Stock Investments: "
+msgstr "مجموع الاسهم الاستثمارية:"
+
+#: include/reporttransactions.h:49
+msgid "Transaction List"
+msgstr "قائمة المعاملات"
+
+#: include/reporttransactions.h:135
+msgid "Total Amount: "
+msgstr "مجموع المبالغ:"
+
+#: include/reporttransstats.h:30
+msgid "Transaction Statistics for "
+msgstr "احصاءات المعاملات لـ"
+
+#: include/splitdetailsdialog.h:39
+msgid "Split Detail Dialog"
+msgstr ""
+
+#: include/splittransactionsdialog.h:50
+msgid "Split Transaction Dialog"
+msgstr ""
+
+#: include/stockdialog.h:23
+msgid "New/Edit Stock Investment"
+msgstr "اضافة/تحرير اسهم استثمارية"
+
+#: include/transdialog.h:23
+msgid "New/Edit Transaction"
+msgstr "اضافة تحرير معاملة"
+
+#: include/univcsvdialog.h:29
+msgid "Universal CSV Importer Dialog"
+msgstr "نافذة مستورد CSV القياسي"
+
+#: include/yahoosettingsdialog.h:108
+msgid "Options"
+msgstr "خيارات"
+
