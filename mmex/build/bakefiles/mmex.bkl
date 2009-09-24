@@ -7,6 +7,10 @@ Bakefile for generating makefiles.
 
 <makefile>
 
+    <!-- checks version of Bakefile -->
+    <requires version="0.2.1"/>
+
+    
     <!-- Default root of sources is dir where output script will be created.
          autoconf script resides in trunk/mmex but others in trunk/mmex/build/msw.
          We should fix this.

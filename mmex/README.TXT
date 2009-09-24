@@ -90,6 +90,7 @@ With apt-get support, it is a little easier to do this in Ubuntu.
         >  cd buildgtk
         >  ../configure --with-wx-config=/usr/lib/wx/config/gtk2-unicode-release-2.8
         >  make
+        >  make test
         >  cp mmex ../runtime
         
    trunk/runtime/mmex/mmex should run Money Manager Ex.
@@ -100,11 +101,11 @@ REGENERATING AUTOMAKE FILES
 If for some reason, you need to regenerate AutoMake Makefile.in.
 This might be required if you are adding new source files to MMEX.
 
-1. Download and install Bakefile (>=0.2.1), www.bakefile.org.
-2. Make sure all .bkl files in mmex/build/bakefiles is updated if necessary
-3. Execute commands
-   cd trunk/mmex
-   ./bootstrap
+1. Download and install Bakefile, www.bakefile.org.
+2. Make sure all .bkl files in mmex/build/bakefiles are updated if necessary
+3. Do
+	>  cd trunk/mmex
+	>  ./bootstrap
 
 
 CREATING A DEBIAN PACKAGE
