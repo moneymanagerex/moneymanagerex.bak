@@ -54,12 +54,13 @@
 
         <set var="PLATFORM_DEP_SOURCES" hint="files">
 
-	        <if cond="TOOLSET=='win32'">$(SRC)/Win32/TimeHelpers.cpp</if>
+	    <if cond="TOOLSET=='win32'">$(SRC)/Win32/TimeHelpers.cpp</if>
         	
-        	<if cond="TOOLSET=='unix'">
-        		$(SRC)/Posix/TimeHelpers.cpp
-        		$(SRC)/Posix/SignalTranslator.cpp
-        	</if>
+            <if cond="TOOLSET=='unix'">
+                $(SRC)/Posix/TimeHelpers.cpp
+        	$(SRC)/Posix/SignalTranslator.cpp
+            </if>
+
         </set>
 
 

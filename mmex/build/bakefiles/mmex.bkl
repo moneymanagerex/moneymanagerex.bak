@@ -19,9 +19,6 @@ Bakefile for generating makefiles.
 	<set-srcdir>../..</set-srcdir>
     </if>
 
-    <!-- relative to trunk/mmex -->
-    <set var="SRC">src</set>
-
     
     <include file="presets/wx.bkl"/>
     <include file="sqlite.bkl"/>
@@ -125,6 +122,10 @@ Bakefile for generating makefiles.
 		util.h
 		yahoosettingsdialog.h
         </headers>
+
+
+    	<!-- relative to trunk/mmex -->
+    	<set var="SRC">src</set>
 
 
         <sources>

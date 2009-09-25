@@ -107,7 +107,7 @@ UNITTEST++_OBJECTS =  \
 	UnitTest++_TimeConstraint.obj \
 	UnitTest++_XmlTestReporter.obj \
 	UnitTest++_TimeHelpers.obj
-MMEX_TESTS_CXXFLAGS = /MTd /DWIN32 $(__WXUNICODE_DEFINE_p) \
+MMEX_TESTS_CXXFLAGS = /MDd /DWIN32 $(__WXUNICODE_DEFINE_p) \
 	$(__WXDEBUG_DEFINE_p) /D__WXMSW__ \
 	/I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
 	/I$(WX_DIR)\include /D_CONSOLE /Zi /D_DEBUG /Fdmmex_tests.pdb /W4 \
@@ -278,7 +278,7 @@ mmex_tests.exe: $(MMEX_TESTS_OBJECTS) sqlite3.lib UnitTest++.lib mmex_tests_mmex
 <<
 
 test: mmex_tests.exe
-	cp ../../../runtime/currency.db3 .
+	copy /Y ..\..\..\runtime\currency.db3 .
 	./mmex_tests
 
 sqlite3_alter.obj: ..\..\..\sqlite\alter.c
