@@ -191,12 +191,20 @@
 
     
     <action id="test">
+
 	<depends>mmex_tests</depends>
 	<is-phony>on</is-phony>
 
+	<set var="COPY_CMD">
+	    <if cond="TOOLSET=='win32'">copy /Y</if>
+	    <if cond="TOOLSET=='unix'">cp</if>
+	</set>
+
+	<set var="SRC_PATH">$(SRCDIR)/runtime/currency.db3</set>
+
 	<command>
-		cp $(SRCDIR)/runtime/currency.db3 $(BUILDDIR)
-		$(BUILDDIR)/mmex_tests
+	    $(COPY_CMD) $(nativePaths(SRC_PATH)) $(nativePaths(BUILDDIR))
+	    $(BUILDDIR)/mmex_tests
 	</command>
 
 	<clean-files>currency.db3</clean-files>
