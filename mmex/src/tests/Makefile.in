@@ -58,8 +58,8 @@ SQLITE3_OBJECTS =  \
 	sqlite3_fts3_hash.o \
 	sqlite3_fts3_icu.o \
 	sqlite3_fts3_porter.o \
-	sqlite3_fts3_tokenizer1.o \
 	sqlite3_fts3_tokenizer.o \
+	sqlite3_fts3_tokenizer1.o \
 	sqlite3_func.o \
 	sqlite3_global.o \
 	sqlite3_hash.o \
@@ -84,11 +84,6 @@ SQLITE3_OBJECTS =  \
 	sqlite3_os_os2.o \
 	sqlite3_os_unix.o \
 	sqlite3_os_win.o \
-	sqlite3_pager_secure.o \
-	sqlite3_parse.o \
-	sqlite3_pragma.o \
-	sqlite3_prepare.o \
-	sqlite3_printf.o \
 	sqlite3_random.o \
 	sqlite3_rtree.o \
 	sqlite3_select.o \
@@ -108,6 +103,11 @@ SQLITE3_OBJECTS =  \
 	sqlite3_vdbemem.o \
 	sqlite3_vtab.o \
 	sqlite3_where.o \
+	sqlite3_pragma.o \
+	sqlite3_prepare.o \
+	sqlite3_printf.o \
+	sqlite3_parse.o \
+	sqlite3_pager_secure.o \
 	sqlite3_codec.o \
 	sqlite3_codecext.o \
 	sqlite3_rijndael.o
@@ -129,8 +129,8 @@ UNITTEST++_OBJECTS =  \
 	UnitTest++_TestRunner.o \
 	UnitTest++_TimeConstraint.o \
 	UnitTest++_XmlTestReporter.o \
-	UnitTest++_TimeHelpers.o \
-	UnitTest++_SignalTranslator.o
+	UnitTest++_SignalTranslator.o \
+	UnitTest++_TimeHelpers.o
 MMEX_TESTS_CXXFLAGS = -I$(srcdir)/../../src -I$(srcdir)/../../include \
 	-I$(srcdir)/../../sqlite -I$(srcdir)/../../UnitTest++/src $(WX_CXXFLAGS) \
 	-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA \
@@ -189,9 +189,9 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_wxsqlite3.o \
 	mmex_tests_wxtinyxml.o \
 	mmex_tests_yahoosettingsdialog.o \
-	mmex_tests_utils.o \
+	mmex_tests_Main.o \
 	mmex_tests_dbwrapper_test.o \
-	mmex_tests_Main.o
+	mmex_tests_utils.o
 
 ### Conditionally set variables: ###
 
@@ -298,11 +298,11 @@ sqlite3_fts3_icu.o: $(srcdir)/../../sqlite/fts3_icu.c
 sqlite3_fts3_porter.o: $(srcdir)/../../sqlite/fts3_porter.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/fts3_porter.c
 
-sqlite3_fts3_tokenizer1.o: $(srcdir)/../../sqlite/fts3_tokenizer1.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/fts3_tokenizer1.c
-
 sqlite3_fts3_tokenizer.o: $(srcdir)/../../sqlite/fts3_tokenizer.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/fts3_tokenizer.c
+
+sqlite3_fts3_tokenizer1.o: $(srcdir)/../../sqlite/fts3_tokenizer1.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/fts3_tokenizer1.c
 
 sqlite3_func.o: $(srcdir)/../../sqlite/func.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/func.c
@@ -376,21 +376,6 @@ sqlite3_os_unix.o: $(srcdir)/../../sqlite/os_unix.c
 sqlite3_os_win.o: $(srcdir)/../../sqlite/os_win.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/os_win.c
 
-sqlite3_pager_secure.o: $(srcdir)/../../sqlite/pager_secure.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/pager_secure.c
-
-sqlite3_parse.o: $(srcdir)/../../sqlite/parse.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/parse.c
-
-sqlite3_pragma.o: $(srcdir)/../../sqlite/pragma.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/pragma.c
-
-sqlite3_prepare.o: $(srcdir)/../../sqlite/prepare.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/prepare.c
-
-sqlite3_printf.o: $(srcdir)/../../sqlite/printf.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/printf.c
-
 sqlite3_random.o: $(srcdir)/../../sqlite/random.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/random.c
 
@@ -447,6 +432,21 @@ sqlite3_vtab.o: $(srcdir)/../../sqlite/vtab.c
 
 sqlite3_where.o: $(srcdir)/../../sqlite/where.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/where.c
+
+sqlite3_pragma.o: $(srcdir)/../../sqlite/pragma.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/pragma.c
+
+sqlite3_prepare.o: $(srcdir)/../../sqlite/prepare.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/prepare.c
+
+sqlite3_printf.o: $(srcdir)/../../sqlite/printf.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/printf.c
+
+sqlite3_parse.o: $(srcdir)/../../sqlite/parse.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/parse.c
+
+sqlite3_pager_secure.o: $(srcdir)/../../sqlite/pager_secure.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/pager_secure.c
 
 sqlite3_codec.o: $(srcdir)/../../sqlite/codec/codec.cpp
 	$(CXXC) -c -o $@ $(SQLITE3_CXXFLAGS) $(srcdir)/../../sqlite/codec/codec.cpp
@@ -505,11 +505,11 @@ UnitTest++_TimeConstraint.o: $(srcdir)/../../UnitTest++/src/TimeConstraint.cpp
 UnitTest++_XmlTestReporter.o: $(srcdir)/../../UnitTest++/src/XmlTestReporter.cpp
 	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/XmlTestReporter.cpp
 
-UnitTest++_TimeHelpers.o: $(srcdir)/../../UnitTest++/src/Posix/TimeHelpers.cpp
-	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/Posix/TimeHelpers.cpp
-
 UnitTest++_SignalTranslator.o: $(srcdir)/../../UnitTest++/src/Posix/SignalTranslator.cpp
 	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/Posix/SignalTranslator.cpp
+
+UnitTest++_TimeHelpers.o: $(srcdir)/../../UnitTest++/src/Posix/TimeHelpers.cpp
+	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/Posix/TimeHelpers.cpp
 
 mmex_tests_mmex_rc.o: $(srcdir)/../../resources/mmex.rc
 	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../sqlite --include-dir $(srcdir)/../../UnitTest++/src
@@ -670,14 +670,14 @@ mmex_tests_wxtinyxml.o: $(srcdir)/../../src/wxtinyxml.cpp
 mmex_tests_yahoosettingsdialog.o: $(srcdir)/../../src/yahoosettingsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/yahoosettingsdialog.cpp
 
-mmex_tests_utils.o: $(srcdir)/../../src/tests/utils.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/utils.cpp
+mmex_tests_Main.o: $(srcdir)/../../src/tests/Main.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/Main.cpp
 
 mmex_tests_dbwrapper_test.o: $(srcdir)/../../src/tests/dbwrapper_test.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/dbwrapper_test.cpp
 
-mmex_tests_Main.o: $(srcdir)/../../src/tests/Main.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/Main.cpp
+mmex_tests_utils.o: $(srcdir)/../../src/tests/utils.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/utils.cpp
 
 
 # Include dependency info, if present:

@@ -15,12 +15,12 @@
 
     	<!-- paths relative to trunk/mmex -->
 
-        <set var="SRC">UnitTest++/src</set>
-
         <set var="PLATF_DIR">
 	    <if cond="TOOLSET=='win32'">/Win32</if>
             <if cond="TOOLSET=='unix'">/Posix</if>
         </set>
+
+        <set var="SRC">UnitTest++/src</set>
 
         <headers>$(fileList( [ SRC + '/*.h',   SRC + PLATF_DIR + '/*.h'   ] ))</headers>
         <sources>$(fileList( [ SRC + '/*.cpp', SRC + PLATF_DIR + '/*.cpp' ] ))</sources>

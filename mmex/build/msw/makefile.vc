@@ -40,8 +40,8 @@ SQLITE3_OBJECTS =  \
 	sqlite3_fts3_hash.obj \
 	sqlite3_fts3_icu.obj \
 	sqlite3_fts3_porter.obj \
-	sqlite3_fts3_tokenizer1.obj \
 	sqlite3_fts3_tokenizer.obj \
+	sqlite3_fts3_tokenizer1.obj \
 	sqlite3_func.obj \
 	sqlite3_global.obj \
 	sqlite3_hash.obj \
@@ -66,11 +66,6 @@ SQLITE3_OBJECTS =  \
 	sqlite3_os_os2.obj \
 	sqlite3_os_unix.obj \
 	sqlite3_os_win.obj \
-	sqlite3_pager_secure.obj \
-	sqlite3_parse.obj \
-	sqlite3_pragma.obj \
-	sqlite3_prepare.obj \
-	sqlite3_printf.obj \
 	sqlite3_random.obj \
 	sqlite3_rtree.obj \
 	sqlite3_select.obj \
@@ -90,6 +85,11 @@ SQLITE3_OBJECTS =  \
 	sqlite3_vdbemem.obj \
 	sqlite3_vtab.obj \
 	sqlite3_where.obj \
+	sqlite3_pragma.obj \
+	sqlite3_prepare.obj \
+	sqlite3_printf.obj \
+	sqlite3_parse.obj \
+	sqlite3_pager_secure.obj \
 	sqlite3_codec.obj \
 	sqlite3_codecext.obj \
 	sqlite3_rijndael.obj
@@ -312,11 +312,11 @@ sqlite3_fts3_icu.obj: ..\..\sqlite\fts3_icu.c
 sqlite3_fts3_porter.obj: ..\..\sqlite\fts3_porter.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\fts3_porter.c
 
-sqlite3_fts3_tokenizer1.obj: ..\..\sqlite\fts3_tokenizer1.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\fts3_tokenizer1.c
-
 sqlite3_fts3_tokenizer.obj: ..\..\sqlite\fts3_tokenizer.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\fts3_tokenizer.c
+
+sqlite3_fts3_tokenizer1.obj: ..\..\sqlite\fts3_tokenizer1.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\fts3_tokenizer1.c
 
 sqlite3_func.obj: ..\..\sqlite\func.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\func.c
@@ -390,21 +390,6 @@ sqlite3_os_unix.obj: ..\..\sqlite\os_unix.c
 sqlite3_os_win.obj: ..\..\sqlite\os_win.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\os_win.c
 
-sqlite3_pager_secure.obj: ..\..\sqlite\pager_secure.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\pager_secure.c
-
-sqlite3_parse.obj: ..\..\sqlite\parse.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\parse.c
-
-sqlite3_pragma.obj: ..\..\sqlite\pragma.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\pragma.c
-
-sqlite3_prepare.obj: ..\..\sqlite\prepare.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\prepare.c
-
-sqlite3_printf.obj: ..\..\sqlite\printf.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\printf.c
-
 sqlite3_random.obj: ..\..\sqlite\random.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\random.c
 
@@ -461,6 +446,21 @@ sqlite3_vtab.obj: ..\..\sqlite\vtab.c
 
 sqlite3_where.obj: ..\..\sqlite\where.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\where.c
+
+sqlite3_pragma.obj: ..\..\sqlite\pragma.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\pragma.c
+
+sqlite3_prepare.obj: ..\..\sqlite\prepare.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\prepare.c
+
+sqlite3_printf.obj: ..\..\sqlite\printf.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\printf.c
+
+sqlite3_parse.obj: ..\..\sqlite\parse.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\parse.c
+
+sqlite3_pager_secure.obj: ..\..\sqlite\pager_secure.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\pager_secure.c
 
 sqlite3_codec.obj: ..\..\sqlite\codec\codec.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(SQLITE3_CXXFLAGS) ..\..\sqlite\codec\codec.cpp

@@ -60,8 +60,8 @@ SQLITE3_OBJECTS =  \
 	sqlite3_fts3_hash.o \
 	sqlite3_fts3_icu.o \
 	sqlite3_fts3_porter.o \
-	sqlite3_fts3_tokenizer1.o \
 	sqlite3_fts3_tokenizer.o \
+	sqlite3_fts3_tokenizer1.o \
 	sqlite3_func.o \
 	sqlite3_global.o \
 	sqlite3_hash.o \
@@ -86,11 +86,6 @@ SQLITE3_OBJECTS =  \
 	sqlite3_os_os2.o \
 	sqlite3_os_unix.o \
 	sqlite3_os_win.o \
-	sqlite3_pager_secure.o \
-	sqlite3_parse.o \
-	sqlite3_pragma.o \
-	sqlite3_prepare.o \
-	sqlite3_printf.o \
 	sqlite3_random.o \
 	sqlite3_rtree.o \
 	sqlite3_select.o \
@@ -110,6 +105,11 @@ SQLITE3_OBJECTS =  \
 	sqlite3_vdbemem.o \
 	sqlite3_vtab.o \
 	sqlite3_where.o \
+	sqlite3_pragma.o \
+	sqlite3_prepare.o \
+	sqlite3_printf.o \
+	sqlite3_parse.o \
+	sqlite3_pager_secure.o \
 	sqlite3_codec.o \
 	sqlite3_codecext.o \
 	sqlite3_rijndael.o
@@ -274,11 +274,11 @@ sqlite3_fts3_icu.o: $(srcdir)/sqlite/fts3_icu.c
 sqlite3_fts3_porter.o: $(srcdir)/sqlite/fts3_porter.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/fts3_porter.c
 
-sqlite3_fts3_tokenizer1.o: $(srcdir)/sqlite/fts3_tokenizer1.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/fts3_tokenizer1.c
-
 sqlite3_fts3_tokenizer.o: $(srcdir)/sqlite/fts3_tokenizer.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/fts3_tokenizer.c
+
+sqlite3_fts3_tokenizer1.o: $(srcdir)/sqlite/fts3_tokenizer1.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/fts3_tokenizer1.c
 
 sqlite3_func.o: $(srcdir)/sqlite/func.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/func.c
@@ -352,21 +352,6 @@ sqlite3_os_unix.o: $(srcdir)/sqlite/os_unix.c
 sqlite3_os_win.o: $(srcdir)/sqlite/os_win.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/os_win.c
 
-sqlite3_pager_secure.o: $(srcdir)/sqlite/pager_secure.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/pager_secure.c
-
-sqlite3_parse.o: $(srcdir)/sqlite/parse.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/parse.c
-
-sqlite3_pragma.o: $(srcdir)/sqlite/pragma.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/pragma.c
-
-sqlite3_prepare.o: $(srcdir)/sqlite/prepare.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/prepare.c
-
-sqlite3_printf.o: $(srcdir)/sqlite/printf.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/printf.c
-
 sqlite3_random.o: $(srcdir)/sqlite/random.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/random.c
 
@@ -423,6 +408,21 @@ sqlite3_vtab.o: $(srcdir)/sqlite/vtab.c
 
 sqlite3_where.o: $(srcdir)/sqlite/where.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/where.c
+
+sqlite3_pragma.o: $(srcdir)/sqlite/pragma.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/pragma.c
+
+sqlite3_prepare.o: $(srcdir)/sqlite/prepare.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/prepare.c
+
+sqlite3_printf.o: $(srcdir)/sqlite/printf.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/printf.c
+
+sqlite3_parse.o: $(srcdir)/sqlite/parse.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/parse.c
+
+sqlite3_pager_secure.o: $(srcdir)/sqlite/pager_secure.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/pager_secure.c
 
 sqlite3_codec.o: $(srcdir)/sqlite/codec/codec.cpp
 	$(CXXC) -c -o $@ $(SQLITE3_CXXFLAGS) $(srcdir)/sqlite/codec/codec.cpp

@@ -43,8 +43,8 @@ SQLITE3_OBJECTS =  \
 	sqlite3_fts3_hash.o \
 	sqlite3_fts3_icu.o \
 	sqlite3_fts3_porter.o \
-	sqlite3_fts3_tokenizer1.o \
 	sqlite3_fts3_tokenizer.o \
+	sqlite3_fts3_tokenizer1.o \
 	sqlite3_func.o \
 	sqlite3_global.o \
 	sqlite3_hash.o \
@@ -69,11 +69,6 @@ SQLITE3_OBJECTS =  \
 	sqlite3_os_os2.o \
 	sqlite3_os_unix.o \
 	sqlite3_os_win.o \
-	sqlite3_pager_secure.o \
-	sqlite3_parse.o \
-	sqlite3_pragma.o \
-	sqlite3_prepare.o \
-	sqlite3_printf.o \
 	sqlite3_random.o \
 	sqlite3_rtree.o \
 	sqlite3_select.o \
@@ -93,6 +88,11 @@ SQLITE3_OBJECTS =  \
 	sqlite3_vdbemem.o \
 	sqlite3_vtab.o \
 	sqlite3_where.o \
+	sqlite3_pragma.o \
+	sqlite3_prepare.o \
+	sqlite3_printf.o \
+	sqlite3_parse.o \
+	sqlite3_pager_secure.o \
 	sqlite3_codec.o \
 	sqlite3_codecext.o \
 	sqlite3_rijndael.o
@@ -326,10 +326,10 @@ sqlite3_fts3_icu.o: ../../sqlite/fts3_icu.c
 sqlite3_fts3_porter.o: ../../sqlite/fts3_porter.c
 	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
 
-sqlite3_fts3_tokenizer1.o: ../../sqlite/fts3_tokenizer1.c
+sqlite3_fts3_tokenizer.o: ../../sqlite/fts3_tokenizer.c
 	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
 
-sqlite3_fts3_tokenizer.o: ../../sqlite/fts3_tokenizer.c
+sqlite3_fts3_tokenizer1.o: ../../sqlite/fts3_tokenizer1.c
 	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
 
 sqlite3_func.o: ../../sqlite/func.c
@@ -404,21 +404,6 @@ sqlite3_os_unix.o: ../../sqlite/os_unix.c
 sqlite3_os_win.o: ../../sqlite/os_win.c
 	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
 
-sqlite3_pager_secure.o: ../../sqlite/pager_secure.c
-	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
-
-sqlite3_parse.o: ../../sqlite/parse.c
-	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
-
-sqlite3_pragma.o: ../../sqlite/pragma.c
-	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
-
-sqlite3_prepare.o: ../../sqlite/prepare.c
-	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
-
-sqlite3_printf.o: ../../sqlite/printf.c
-	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
-
 sqlite3_random.o: ../../sqlite/random.c
 	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
 
@@ -474,6 +459,21 @@ sqlite3_vtab.o: ../../sqlite/vtab.c
 	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
 
 sqlite3_where.o: ../../sqlite/where.c
+	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
+
+sqlite3_pragma.o: ../../sqlite/pragma.c
+	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
+
+sqlite3_prepare.o: ../../sqlite/prepare.c
+	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
+
+sqlite3_printf.o: ../../sqlite/printf.c
+	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
+
+sqlite3_parse.o: ../../sqlite/parse.c
+	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
+
+sqlite3_pager_secure.o: ../../sqlite/pager_secure.c
 	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
 
 sqlite3_codec.o: ../../sqlite/codec/codec.cpp
