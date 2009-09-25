@@ -1,6 +1,6 @@
 /*
  * This is a part of the BugTrap package.
- * Copyright (c) 2005-2007 IntelleSoft.
+ * Copyright (c) 2005-2009 IntelleSoft.
  * All rights reserved.
  *
  * Description: Definitions of external functions.
@@ -19,7 +19,7 @@
 
 #if defined _MANAGED && ! defined _UNICODE
  #error Managed version of BugTrap requires Unicode character set
-#endif // _MANAGED && _UNICODE
+#endif // _MANAGED && ! _UNICODE
 
 /*
  * The following ifdef block is the standard way of creating macros which make exporting
@@ -79,19 +79,19 @@ typedef enum BUGTRAP_FLAGS_tag
 	/**
 	 * @brief Equivalent of no options.
 	 */
-	BTF_NONE           = 0x00,
+	BTF_NONE           = 0x000,
 	/**
 	 * @brief In detailed mode BugTrap generates mini-dump and
 	 * packs custom log files within the report.
 	 */
-	BTF_DETAILEDMODE   = 0x01,
+	BTF_DETAILEDMODE   = 0x001,
 	/**
 	 * @brief BugTrap may open its own editor for e-mail messages
 	 * instead of the editor used by the system. Use this
 	 * option if you aren't aware of the type of e-mail
 	 * client installed on user computers.
 	 */
-	BTF_EDITMAIL       = 0x02,
+	BTF_EDITMAIL       = 0x002,
 	/**
 	 * @brief Specify this option to attach bug report to e-mail
 	 * messages. Be careful with this option. It's potentially
@@ -100,37 +100,82 @@ typedef enum BUGTRAP_FLAGS_tag
 	 * maximum size of e-mail message supported by Internet
 	 * provider.
 	 */
-	BTF_ATTACHREPORT   = 0x04,
+	BTF_ATTACHREPORT   = 0x004,
 	/**
 	 * @brief Set this flag to add list of all processes and loaded
 	 * modules to the report. Disable this option to speedup report
 	 * generation.
 	 */
-	BTF_LISTPROCESSES  = 0x08,
+	BTF_LISTPROCESSES  = 0x008,
 	/**
 	 * @brief By default BugTrap displays simplified dialog on the
 	 * screen allowing user to perform only common actions. Enable
 	 * this flag to immediately display dialog with advanced error
 	 * information.
 	 */
-	BTF_SHOWADVANCEDUI = 0x10,
+	BTF_SHOWADVANCEDUI = 0x010,
 	/**
 	 * @brief Bug report in detailed error mode may also include a
 	 * screen shot automatically captured by BugTrap. By default this
 	 * option is disabled to minimize report size, but it may be useful
 	 * if you want to know which dialogs were shown on the screen.
 	 */
-	BTF_SCREENCAPTURE  = 0x20,
+	BTF_SCREENCAPTURE  = 0x020,
 #ifdef _MANAGED
 	/**
 	 * @brief Generate native stack trace and modules information along
 	 * with managed exception information. Disable this option to speedup
 	 * report generation.
 	 */
-	 BTF_NATIVEINFO    = 0x40
+	 BTF_NATIVEINFO    = 0x040,
 #endif // _MANAGED
+	 /**
+	  * @brief When enabled, BugTrap injects fake SetUnhandledExceptionFilter()
+	  * to handle the most severe C runtime errors. Usually such errors
+	  * are not being reported to custom unhandled exception filters. This
+	  * flag vanishes any attempts of C runtime library to override
+	  * unhandled exception filter defined in BugTrap. This option should
+	  * be used with caution, because such technique may be incompatible
+	  * with future Windows versions.
+	  */
+	 BTF_INTERCEPTSUEF = 0x080,
+	 /**
+	  * @brief When report is being sent over TCP/HTTP protocol, BugTrap could
+	  * ask user to provide verbal description of the problem if this option is
+	  * enabled. BugTrap always prompts user to describe error for reports
+	  * transmitted over email regardless this option.
+	  */
+	 BTF_DESCRIBEERROR = 0x100,
+	 /**
+	  * @brief Automatically restart the application after the crash has been
+	  * handled.
+	  */
+	 BTF_RESTARTAPP    = 0x200
 }
 BUGTRAP_FLAGS;
+
+/**
+ * @brief These flags control application termination mode:
+ * whatever the application needs to be terminated after error handling,
+ * control should passed to another exception handler.
+ */
+typedef enum BUGTRAP_EXITMODE_tag
+{
+	/**
+	 * @brief BugTrap executes desirable action (usually displays the dialog).
+	 * The application is being terminated when user closes the dialog. This is default action.
+	 */
+	BTEM_TERMINATEAPP,
+	/**
+	 * @brief BugTrap executes desirable action and continues to search up the stack for a handler.
+	 */
+	BTEM_CONTINUESEARCH,
+	/**
+	 * @brief BugTrap executes desirable action and transfers control to the exception handlers.
+	 */
+	BTEM_EXECUTEHANDLER
+}
+BUGTRAP_EXITMODE;
 
 /**
  * @brief Set of available log levels.
@@ -497,6 +542,14 @@ BUGTRAP_API BUGTRAP_ACTIVITY APIENTRY BT_GetActivityType(void);
  */
 BUGTRAP_API void APIENTRY BT_SetActivityType(BUGTRAP_ACTIVITY eActivityType);
 /**
+ * @brief Get application termination mode.
+ */
+BUGTRAP_API BUGTRAP_EXITMODE APIENTRY BT_GetExitMode(void);
+/**
+ * @brief Set application termination mode.
+ */
+BUGTRAP_API void APIENTRY BT_SetExitMode(BUGTRAP_EXITMODE eExitMode);
+/**
  * @brief Get the path of error report.
  */
 BUGTRAP_API LPCTSTR APIENTRY BT_GetReportFilePath(void);
@@ -688,17 +741,34 @@ BUGTRAP_API LPTOP_LEVEL_EXCEPTION_FILTER APIENTRY BT_InstallSehFilter(void);
  */
 BUGTRAP_API void APIENTRY BT_UninstallSehFilter(void);
 /**
+ * @brief Explicitly intercepts SetUnhandledExceptionFilter() in a module.
+ * This function could be useful for dynamically loaded modules.
+ */
+BUGTRAP_API void BT_InterceptSUEF(HMODULE hModule, BOOL bOverride);
+/**
  * @brief Take a snapshot of program memory and save it to a file.
  */
 BUGTRAP_API BOOL APIENTRY BT_SaveSnapshot(PCTSTR pszFileName);
+/**
+ * @brief Take a snapshot of program memory and save it to a file.
+ */
+BUGTRAP_API BOOL APIENTRY BT_SaveSnapshotEx(PEXCEPTION_POINTERS pExceptionPointers, PCTSTR pszFileName);
 /**
  * @brief Take a snapshot of program memory and send over network.
  */
 BUGTRAP_API BOOL APIENTRY BT_SendSnapshot(void);
 /**
+ * @brief Take a snapshot of program memory and send over network.
+ */
+BUGTRAP_API BOOL APIENTRY BT_SendSnapshotEx(PEXCEPTION_POINTERS pExceptionPointers);
+/**
  * @brief Take a snapshot of program memory and e-mail it.
  */
 BUGTRAP_API BOOL APIENTRY BT_MailSnapshot(void);
+/**
+ * @brief Take a snapshot of program memory and e-mail it.
+ */
+BUGTRAP_API BOOL APIENTRY BT_MailSnapshotEx(PEXCEPTION_POINTERS pExceptionPointers);
 /**
  * @brief Executes structured exception filter.
  * @note Don't call this function directly in your code.
