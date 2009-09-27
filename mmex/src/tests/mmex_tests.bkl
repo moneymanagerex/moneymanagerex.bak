@@ -11,56 +11,38 @@
     </if>
 
     <if cond="FORMAT!='autoconf'">
-            <set-srcdir>../../..</set-srcdir>
+        <set-srcdir>../../..</set-srcdir>
     </if>
-
     
-    <include file="../../build/bakefiles/presets/wx.bkl"/>
+    
+    <include file="../../build/bakefiles/common.bkl"/>
     <include file="../../build/bakefiles/sqlite.bkl"/>
     <include file="../../build/bakefiles/UnitTest++.bkl"/>
     
 
-    <exe id="mmex_tests" template="wx">
+    <!-- unit tests console application -->
+
+    <exe id="mmex_tests" template="mmex_common">
 
         <app-type>console</app-type>
+        
         <library>sqlite3</library>
         <library>UnitTest++</library>
-        <debug-info>on</debug-info>
-        <debug-info-edit-and-continue>on</debug-info-edit-and-continue>
-        <warnings>max</warnings>
-        <runtime-libs>dynamic</runtime-libs>
-        <precomp-headers>off</precomp-headers>
-        <threading>multi</threading>
-        <cxx-exceptions>on</cxx-exceptions>
-        <cxx-rtti>on</cxx-rtti>
 
 	<include>$(SRCDIR)/src</include>
-        <include>$(SRCDIR)/include</include>
-	<include>$(SRCDIR)/sqlite</include>
 	<include>$(SRCDIR)/UnitTest++/src</include>
 
-	<win32-res>resources/mmex.rc</win32-res>
+    	<!-- relative to trunk/mmex -->
 
-        <cxxflags>-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA</cxxflags>
+        <headers>$(fileList('src/tests/*.h'))</headers>
+        <sources>$(fileList('src/tests/*.cpp'))</sources>
 
-        <headers>$(fileList( [ 'src/*.h',   'src/tests/*.h'  ] ))</headers>
-        <sources>$(fileList( [ 'src/*.cpp', 'src/tests/*.cpp'] ))</sources>
-
-
-        <!-- wxWidgets libs -->
-
-        <wx-lib>core</wx-lib>
-        <wx-lib>net</wx-lib>                
-        <wx-lib>html</wx-lib>                
-        <wx-lib>xml</wx-lib>
-        <wx-lib>aui</wx-lib> 
-        <wx-lib>base</wx-lib>
-        <wx-lib>adv</wx-lib>
-        
     </exe>
 
     
-    <action id="test">
+    <!-- make check -->
+
+    <action id="check">
 
 	<depends>mmex_tests</depends>
 	<is-phony>on</is-phony>
@@ -80,5 +62,6 @@
 	<clean-files>currency.db3</clean-files>
 	
     </action>
+
 
 </makefile>

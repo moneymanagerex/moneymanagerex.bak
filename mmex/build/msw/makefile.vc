@@ -13,13 +13,18 @@
 ### Variables: ###
 
 MAKEARGS = CC="$(CC)" CXX="$(CXX)" CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
-	CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)" WX_DIR="$(WX_DIR)" \
-	WX_SHARED="$(WX_SHARED)" WX_UNICODE="$(WX_UNICODE)" WX_DEBUG="$(WX_DEBUG)" \
+	CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)" BUILD="$(BUILD)" \
+	RUNTIME_LIBS="$(RUNTIME_LIBS)" WX_DIR="$(WX_DIR)" WX_SHARED="$(WX_SHARED)" \
+	WX_UNICODE="$(WX_UNICODE)" WX_DEBUG="$(WX_DEBUG)" \
 	WX_VERSION="$(WX_VERSION)" WX_MONOLITHIC="$(WX_MONOLITHIC)" \
 	WX_PYTHON="$(WX_PYTHON)"
-SQLITE3_CFLAGS = /MD /DWIN32 /W4 -DSQLITE_CORE -DSQLITE_HAS_CODEC \
-	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
-SQLITE3_CXXFLAGS = /MD /DWIN32 /W4 -DSQLITE_CORE -DSQLITE_HAS_CODEC \
+SQLITE3_CFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUGINFO_0) /DWIN32 /W4 $(__DEBUGINFO) \
+	$(____DEBUGINFO) /Fdsqlite3.pdb $(__DEBUG_DEFINE_p) $(__OPTIMIZEFLAG) \
+	-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA \
+	$(CPPFLAGS) $(CFLAGS)
+SQLITE3_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUGINFO_0) /DWIN32 /W4 \
+	$(__DEBUGINFO) $(____DEBUGINFO) /Fdsqlite3.pdb $(__DEBUG_DEFINE_p) \
+	$(__OPTIMIZEFLAG) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
 	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CXXFLAGS)
 SQLITE3_OBJECTS =  \
 	sqlite3_alter.obj \
@@ -66,6 +71,11 @@ SQLITE3_OBJECTS =  \
 	sqlite3_os_os2.obj \
 	sqlite3_os_unix.obj \
 	sqlite3_os_win.obj \
+	sqlite3_pager_secure.obj \
+	sqlite3_parse.obj \
+	sqlite3_pragma.obj \
+	sqlite3_prepare.obj \
+	sqlite3_printf.obj \
 	sqlite3_random.obj \
 	sqlite3_rtree.obj \
 	sqlite3_select.obj \
@@ -85,21 +95,17 @@ SQLITE3_OBJECTS =  \
 	sqlite3_vdbemem.obj \
 	sqlite3_vtab.obj \
 	sqlite3_where.obj \
-	sqlite3_pragma.obj \
-	sqlite3_prepare.obj \
-	sqlite3_printf.obj \
-	sqlite3_parse.obj \
-	sqlite3_pager_secure.obj \
 	sqlite3_codec.obj \
 	sqlite3_codecext.obj \
 	sqlite3_rijndael.obj
-MMEX_CXXFLAGS = /MDd /DWIN32 $(__WXUNICODE_DEFINE_p) $(__WXDEBUG_DEFINE_p) \
-	/D__WXMSW__ /I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
-	/I$(WX_DIR)\include /D_WINDOWS /Zi /D_DEBUG /Fdmmex.pdb /W4 /I..\..\include \
-	/I..\..\sqlite /GR /EHsc -DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC \
-	-DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
+MMEX_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUGINFO_0) /DWIN32 \
+	$(__WXUNICODE_DEFINE_p) $(__WXDEBUG_DEFINE_p) /D__WXMSW__ \
+	/I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
+	/I$(WX_DIR)\include /W4 $(__DEBUGINFO) $(____DEBUGINFO) /Fdmmex.pdb \
+	$(__DEBUG_DEFINE_p) $(__OPTIMIZEFLAG) /I..\..\include /I..\..\sqlite \
+	/D_WINDOWS /I..\..\BugTrap /EHsc /GR -DSQLITE_HAS_CODEC \
+	-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
-	mmex_mmex.res \
 	mmex_aboutdialog.obj \
 	mmex_appstartdialog.obj \
 	mmex_assetdialog.obj \
@@ -151,7 +157,8 @@ MMEX_OBJECTS =  \
 	mmex_util.obj \
 	mmex_wxsqlite3.obj \
 	mmex_wxtinyxml.obj \
-	mmex_yahoosettingsdialog.obj
+	mmex_yahoosettingsdialog.obj \
+	mmex_mmex.res
 
 ### Conditionally set variables: ###
 
@@ -179,6 +186,24 @@ __WXDEBUG_DEFINE_p_1 = /d __WXDEBUG__
 !if "$(WX_PYTHON)" == "1"
 __WXDEBUG_DEFINE_p_1 = /d __WXDEBUG__
 !endif
+!if "$(BUILD)" == "debug"
+__DEBUGINFO_22 = /DEBUG
+!endif
+!if "$(BUILD)" == "release"
+__DEBUGINFO_22 = 
+!endif
+!if "$(BUILD)" == "debug"
+____DEBUGINFO_23_p_1 = /d _DEBUG
+!endif
+!if "$(BUILD)" == "release"
+____DEBUGINFO_23_p_1 = 
+!endif
+!if "$(BUILD)" == "debug"
+__DEBUG_DEFINE_p_2 = /d _DEBUG
+!endif
+!if "$(BUILD)" == "release"
+__DEBUG_DEFINE_p_2 = /d NDEBUG
+!endif
 !if "$(WX_MONOLITHIC)" == "0"
 __WXLIB_CORE_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_core.lib
 !endif
@@ -202,6 +227,48 @@ __WXLIB_BASE_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX).lib
 !endif
 !if "$(WX_MONOLITHIC)" == "0"
 __WXLIB_ADV_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_adv.lib
+!endif
+!if "$(WX_UNICODE)" == "0"
+____mmex_BugTrapLib_p = BugTrap.lib
+!endif
+!if "$(WX_UNICODE)" == "1"
+____mmex_BugTrapLib_p = BugTrapU.lib
+!endif
+!if "$(RUNTIME_LIBS)" == "dynamic"
+__RUNTIME_LIBS = D
+!endif
+!if "$(RUNTIME_LIBS)" == "static"
+__RUNTIME_LIBS = T
+!endif
+!if "$(BUILD)" == "debug"
+__DEBUGINFO = /Zi
+!endif
+!if "$(BUILD)" == "release"
+__DEBUGINFO = 
+!endif
+!if "$(BUILD)" == "debug"
+____DEBUGINFO = /D_DEBUG
+!endif
+!if "$(BUILD)" == "release"
+____DEBUGINFO = 
+!endif
+!if "$(BUILD)" == "debug"
+__DEBUGINFO_0 = d
+!endif
+!if "$(BUILD)" == "release"
+__DEBUGINFO_0 = 
+!endif
+!if "$(BUILD)" == "debug"
+__DEBUG_DEFINE_p = /D_DEBUG
+!endif
+!if "$(BUILD)" == "release"
+__DEBUG_DEFINE_p = /DNDEBUG
+!endif
+!if "$(BUILD)" == "debug"
+__OPTIMIZEFLAG = /Od
+!endif
+!if "$(BUILD)" == "release"
+__OPTIMIZEFLAG = /O2
 !endif
 !if "$(WX_DEBUG)" == "0" && "$(WX_PYTHON)" == "0" && "$(WX_UNICODE)" == "1"
 WXLIBPOSTFIX = u
@@ -228,19 +295,22 @@ __WXLIBPATH_FILENAMES = \lib\vc_dll
 
 ### Targets: ###
 
-all: sqlite3.lib mmex.exe
+all: sqlite3.lib mmex.exe sub_i18n
 
 clean: 
 	-if exist .\*.obj del .\*.obj
 	-if exist .\*.res del .\*.res
 	-if exist .\*.pch del .\*.pch
 	-if exist sqlite3.lib del sqlite3.lib
-	cd tests
-	$(MAKE) -f makefile.vc $(MAKEARGS) clean
-	cd "$(MAKEDIR)"
 	-if exist mmex.exe del mmex.exe
 	-if exist mmex.ilk del mmex.ilk
 	-if exist mmex.pdb del mmex.pdb
+	cd ..\..\runtime\en
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
+	cd tests
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
 
 sqlite3.lib: $(SQLITE3_OBJECTS)
 	if exist $@ del $@
@@ -248,15 +318,20 @@ sqlite3.lib: $(SQLITE3_OBJECTS)
 	$(SQLITE3_OBJECTS)
 <<
 
-sub_test: 
-	cd tests
-	$(MAKE) -f makefile.vc $(MAKEARGS) test
+mmex.exe: $(MMEX_OBJECTS) sqlite3.lib mmex_mmex.res
+	link /NOLOGO /OUT:$@  /LIBPATH:$(WX_DIR)$(__WXLIBPATH_FILENAMES)  $(__DEBUGINFO_22) /pdb:"mmex.pdb" /SUBSYSTEM:WINDOWS /LIBPATH:..\..\BugTrap $(LDFLAGS) @<<
+	$(MMEX_OBJECTS)  $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_BASE_NAME_p) $(__WXLIB_ADV_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib sqlite3.lib $(____mmex_BugTrapLib_p)
+<<
+
+sub_i18n: 
+	cd ..\..\runtime\en
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 
-mmex.exe: $(MMEX_OBJECTS) sqlite3.lib mmex_mmex.res
-	link /NOLOGO /OUT:$@  /LIBPATH:$(WX_DIR)$(__WXLIBPATH_FILENAMES) /SUBSYSTEM:WINDOWS /DEBUG /pdb:"mmex.pdb"  $(LDFLAGS) @<<
-	$(MMEX_OBJECTS)  sqlite3.lib $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_BASE_NAME_p) $(__WXLIB_ADV_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib
-<<
+sub_check: 
+	cd tests
+	$(MAKE) -f makefile.vc $(MAKEARGS) check
+	cd "$(MAKEDIR)"
 
 sqlite3_alter.obj: ..\..\sqlite\alter.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\alter.c
@@ -390,6 +465,21 @@ sqlite3_os_unix.obj: ..\..\sqlite\os_unix.c
 sqlite3_os_win.obj: ..\..\sqlite\os_win.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\os_win.c
 
+sqlite3_pager_secure.obj: ..\..\sqlite\pager_secure.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\pager_secure.c
+
+sqlite3_parse.obj: ..\..\sqlite\parse.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\parse.c
+
+sqlite3_pragma.obj: ..\..\sqlite\pragma.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\pragma.c
+
+sqlite3_prepare.obj: ..\..\sqlite\prepare.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\prepare.c
+
+sqlite3_printf.obj: ..\..\sqlite\printf.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\printf.c
+
 sqlite3_random.obj: ..\..\sqlite\random.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\random.c
 
@@ -447,21 +537,6 @@ sqlite3_vtab.obj: ..\..\sqlite\vtab.c
 sqlite3_where.obj: ..\..\sqlite\where.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\where.c
 
-sqlite3_pragma.obj: ..\..\sqlite\pragma.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\pragma.c
-
-sqlite3_prepare.obj: ..\..\sqlite\prepare.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\prepare.c
-
-sqlite3_printf.obj: ..\..\sqlite\printf.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\printf.c
-
-sqlite3_parse.obj: ..\..\sqlite\parse.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\parse.c
-
-sqlite3_pager_secure.obj: ..\..\sqlite\pager_secure.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\sqlite\pager_secure.c
-
 sqlite3_codec.obj: ..\..\sqlite\codec\codec.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(SQLITE3_CXXFLAGS) ..\..\sqlite\codec\codec.cpp
 
@@ -470,9 +545,6 @@ sqlite3_codecext.obj: ..\..\sqlite\codec\codecext.cpp
 
 sqlite3_rijndael.obj: ..\..\sqlite\codec\rijndael.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(SQLITE3_CXXFLAGS) ..\..\sqlite\codec\rijndael.cpp
-
-mmex_mmex.res: ..\..\resources\mmex.rc
-	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include /d _WINDOWS /d _DEBUG /i ..\..\include /i ..\..\sqlite ..\..\resources\mmex.rc
 
 mmex_aboutdialog.obj: ..\..\src\aboutdialog.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\aboutdialog.cpp
@@ -629,4 +701,7 @@ mmex_wxtinyxml.obj: ..\..\src\wxtinyxml.cpp
 
 mmex_yahoosettingsdialog.obj: ..\..\src\yahoosettingsdialog.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\yahoosettingsdialog.cpp
+
+mmex_mmex.res: ..\..\resources\mmex.rc
+	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include $(____DEBUGINFO_23_p_1) $(__DEBUG_DEFINE_p_2) /i ..\..\include /i ..\..\sqlite /d _WINDOWS /i ..\..\BugTrap ..\..\resources\mmex.rc
 

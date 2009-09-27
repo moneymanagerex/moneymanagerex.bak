@@ -35,10 +35,10 @@ WX_RESCOMP = @WX_RESCOMP@
 ### Variables: ###
 
 DESTDIR = 
-SQLITE3_CFLAGS = $(PIC_FLAG) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
-	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
-SQLITE3_CXXFLAGS = $(PIC_FLAG) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
-	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CXXFLAGS)
+SQLITE3_CFLAGS = $(__DEBUG_DEFINE_p) $(PIC_FLAG) -DSQLITE_CORE \
+	-DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
+SQLITE3_CXXFLAGS = $(__DEBUG_DEFINE_p) $(PIC_FLAG) -DSQLITE_CORE \
+	-DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CXXFLAGS)
 SQLITE3_OBJECTS =  \
 	sqlite3_alter.o \
 	sqlite3_analyze.o \
@@ -84,6 +84,11 @@ SQLITE3_OBJECTS =  \
 	sqlite3_os_os2.o \
 	sqlite3_os_unix.o \
 	sqlite3_os_win.o \
+	sqlite3_pager_secure.o \
+	sqlite3_parse.o \
+	sqlite3_pragma.o \
+	sqlite3_prepare.o \
+	sqlite3_printf.o \
 	sqlite3_random.o \
 	sqlite3_rtree.o \
 	sqlite3_select.o \
@@ -103,15 +108,10 @@ SQLITE3_OBJECTS =  \
 	sqlite3_vdbemem.o \
 	sqlite3_vtab.o \
 	sqlite3_where.o \
-	sqlite3_pragma.o \
-	sqlite3_prepare.o \
-	sqlite3_printf.o \
-	sqlite3_parse.o \
-	sqlite3_pager_secure.o \
 	sqlite3_codec.o \
 	sqlite3_codecext.o \
 	sqlite3_rijndael.o
-UNITTEST++_CXXFLAGS =       $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
+UNITTEST++_CXXFLAGS = $(__DEBUG_DEFINE_p) $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
 UNITTEST++_OBJECTS =  \
 	UnitTest++_AssertException.o \
 	UnitTest++_Checks.o \
@@ -131,12 +131,12 @@ UNITTEST++_OBJECTS =  \
 	UnitTest++_XmlTestReporter.o \
 	UnitTest++_SignalTranslator.o \
 	UnitTest++_TimeHelpers.o
-MMEX_TESTS_CXXFLAGS = -I$(srcdir)/../../src -I$(srcdir)/../../include \
-	-I$(srcdir)/../../sqlite -I$(srcdir)/../../UnitTest++/src $(WX_CXXFLAGS) \
+MMEX_TESTS_CXXFLAGS = $(__DEBUG_DEFINE_p) -I$(srcdir)/../../include \
+	-I$(srcdir)/../../sqlite -I$(srcdir)/../../src \
+	-I$(srcdir)/../../UnitTest++/src $(WX_CXXFLAGS) $(PIC_FLAG) \
 	-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA \
 	$(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
-	$(__mmex_tests___win32rc) \
 	mmex_tests_aboutdialog.o \
 	mmex_tests_appstartdialog.o \
 	mmex_tests_assetdialog.o \
@@ -162,7 +162,7 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_mmcheckingpanel.o \
 	mmex_tests_mmcoredb.o \
 	mmex_tests_mmcurrency.o \
-	mmex_tests_src_mmex.o \
+	mmex_tests_mmex.o \
 	mmex_tests_mmgraphgenerator.o \
 	mmex_tests_mmgraphtopcategories.o \
 	mmex_tests_mmhelppanel.o \
@@ -189,6 +189,7 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_wxsqlite3.o \
 	mmex_tests_wxtinyxml.o \
 	mmex_tests_yahoosettingsdialog.o \
+	$(__mmex_tests___win32rc) \
 	mmex_tests_Main.o \
 	mmex_tests_dbwrapper_test.o \
 	mmex_tests_utils.o
@@ -202,7 +203,12 @@ MMEX_TESTS_OBJECTS =  \
 @COND_PLATFORM_MAC_0@__mmex_tests___mac_setfilecmd = @true
 @COND_PLATFORM_MAC_1@__mmex_tests___mac_setfilecmd = \
 @COND_PLATFORM_MAC_1@	$(SETFILE) -t APPL mmex_tests$(EXEEXT)
-@COND_PLATFORM_WIN32_1@__mmex_tests___win32rc = mmex_tests_mmex_rc.o
+@COND_BUILD_debug@__DEBUG_DEFINE_p_4 = --define _DEBUG
+@COND_BUILD_release@__DEBUG_DEFINE_p_4 = --define NDEBUG
+@COND_PLATFORM_WIN32_1@__mmex_tests___win32rc = \
+@COND_PLATFORM_WIN32_1@	mmex_tests_resources_mmex_rc.o
+@COND_BUILD_debug@__DEBUG_DEFINE_p = -D_DEBUG
+@COND_BUILD_release@__DEBUG_DEFINE_p = -DNDEBUG
 
 ### Targets: ###
 
@@ -236,11 +242,11 @@ $(LIBPREFIX)UnitTest++$(LIBEXT): $(UNITTEST++_OBJECTS)
 	$(RANLIB) $@
 
 mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(LIBPREFIX)UnitTest++$(LIBEXT) $(__mmex_tests___win32rc)
-	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS) -L. -L.     $(WX_LIBS) $(LDFLAGS)  -lsqlite3 -lUnitTest++ $(LIBS)
+	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS) -L. -L.    $(WX_LIBS)  $(LDFLAGS)  -lsqlite3 -lUnitTest++ $(LIBS)
 	
 	$(__mmex_tests___mac_setfilecmd)
 
-test: mmex_tests$(EXEEXT)
+check: mmex_tests$(EXEEXT)
 	cp $(srcdir)/../../runtime/currency.db3 .
 	./mmex_tests
 
@@ -376,6 +382,21 @@ sqlite3_os_unix.o: $(srcdir)/../../sqlite/os_unix.c
 sqlite3_os_win.o: $(srcdir)/../../sqlite/os_win.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/os_win.c
 
+sqlite3_pager_secure.o: $(srcdir)/../../sqlite/pager_secure.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/pager_secure.c
+
+sqlite3_parse.o: $(srcdir)/../../sqlite/parse.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/parse.c
+
+sqlite3_pragma.o: $(srcdir)/../../sqlite/pragma.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/pragma.c
+
+sqlite3_prepare.o: $(srcdir)/../../sqlite/prepare.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/prepare.c
+
+sqlite3_printf.o: $(srcdir)/../../sqlite/printf.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/printf.c
+
 sqlite3_random.o: $(srcdir)/../../sqlite/random.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/random.c
 
@@ -432,21 +453,6 @@ sqlite3_vtab.o: $(srcdir)/../../sqlite/vtab.c
 
 sqlite3_where.o: $(srcdir)/../../sqlite/where.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/where.c
-
-sqlite3_pragma.o: $(srcdir)/../../sqlite/pragma.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/pragma.c
-
-sqlite3_prepare.o: $(srcdir)/../../sqlite/prepare.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/prepare.c
-
-sqlite3_printf.o: $(srcdir)/../../sqlite/printf.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/printf.c
-
-sqlite3_parse.o: $(srcdir)/../../sqlite/parse.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/parse.c
-
-sqlite3_pager_secure.o: $(srcdir)/../../sqlite/pager_secure.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/pager_secure.c
 
 sqlite3_codec.o: $(srcdir)/../../sqlite/codec/codec.cpp
 	$(CXXC) -c -o $@ $(SQLITE3_CXXFLAGS) $(srcdir)/../../sqlite/codec/codec.cpp
@@ -510,9 +516,6 @@ UnitTest++_SignalTranslator.o: $(srcdir)/../../UnitTest++/src/Posix/SignalTransl
 
 UnitTest++_TimeHelpers.o: $(srcdir)/../../UnitTest++/src/Posix/TimeHelpers.cpp
 	$(CXXC) -c -o $@ $(UNITTEST++_CXXFLAGS) $(srcdir)/../../UnitTest++/src/Posix/TimeHelpers.cpp
-
-mmex_tests_mmex_rc.o: $(srcdir)/../../resources/mmex.rc
-	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../sqlite --include-dir $(srcdir)/../../UnitTest++/src
 
 mmex_tests_aboutdialog.o: $(srcdir)/../../src/aboutdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/aboutdialog.cpp
@@ -589,7 +592,7 @@ mmex_tests_mmcoredb.o: $(srcdir)/../../src/mmcoredb.cpp
 mmex_tests_mmcurrency.o: $(srcdir)/../../src/mmcurrency.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmcurrency.cpp
 
-mmex_tests_src_mmex.o: $(srcdir)/../../src/mmex.cpp
+mmex_tests_mmex.o: $(srcdir)/../../src/mmex.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmex.cpp
 
 mmex_tests_mmgraphgenerator.o: $(srcdir)/../../src/mmgraphgenerator.cpp
@@ -670,6 +673,9 @@ mmex_tests_wxtinyxml.o: $(srcdir)/../../src/wxtinyxml.cpp
 mmex_tests_yahoosettingsdialog.o: $(srcdir)/../../src/yahoosettingsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/yahoosettingsdialog.cpp
 
+mmex_tests_resources_mmex_rc.o: $(srcdir)/../../resources/mmex.rc
+	$(WX_RESCOMP) -i$< -o$@  $(__DEBUG_DEFINE_p_4) --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../sqlite --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../UnitTest++/src
+
 mmex_tests_Main.o: $(srcdir)/../../src/tests/Main.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/Main.cpp
 
@@ -683,4 +689,4 @@ mmex_tests_utils.o: $(srcdir)/../../src/tests/utils.cpp
 # Include dependency info, if present:
 @IF_GNU_MAKE@-include ./.deps/*.d
 
-.PHONY: all install uninstall clean distclean test
+.PHONY: all install uninstall clean distclean check

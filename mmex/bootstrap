@@ -3,8 +3,9 @@
 cd build/bakefiles
 bakefile_gen Bakefiles.bkgen
 
-cd ../..
+cd ../../auxd
 bakefilize -c -v
 
-aclocal -I . -I /usr/share/aclocal -I /usr/local/share/aclocal
+cd ..
+aclocal -I m4 -I /usr/share/aclocal -I /usr/local/share/aclocal
 autoconf

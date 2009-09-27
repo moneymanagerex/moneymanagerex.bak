@@ -1,17 +1,13 @@
 <?xml version="1.0" ?>
 
-<!-- UnitTest++ sources -->
+<!-- UnitTest++ library -->
 
 <makefile>
 
-    <lib id="UnitTest++">
+    <lib id="UnitTest++" template="compiler_common">
 
-        <warnings>max</warnings>
-        <precomp-headers>off</precomp-headers>
-        <threading>multi</threading>
         <cxx-exceptions>on</cxx-exceptions>
         <cxx-rtti>on</cxx-rtti>
-        <pic>on</pic>
 
     	<!-- paths relative to trunk/mmex -->
 

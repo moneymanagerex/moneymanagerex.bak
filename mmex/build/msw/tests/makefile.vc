@@ -12,9 +12,13 @@
 
 ### Variables: ###
 
-SQLITE3_CFLAGS = /MD /DWIN32 /W4 -DSQLITE_CORE -DSQLITE_HAS_CODEC \
-	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
-SQLITE3_CXXFLAGS = /MD /DWIN32 /W4 -DSQLITE_CORE -DSQLITE_HAS_CODEC \
+SQLITE3_CFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUGINFO_1) /DWIN32 /W4 $(__DEBUGINFO) \
+	$(____DEBUGINFO) /Fdsqlite3.pdb $(__DEBUG_DEFINE_p) $(__OPTIMIZEFLAG) \
+	-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA \
+	$(CPPFLAGS) $(CFLAGS)
+SQLITE3_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUGINFO_1) /DWIN32 /W4 \
+	$(__DEBUGINFO) $(____DEBUGINFO) /Fdsqlite3.pdb $(__DEBUG_DEFINE_p) \
+	$(__OPTIMIZEFLAG) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
 	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CXXFLAGS)
 SQLITE3_OBJECTS =  \
 	sqlite3_alter.obj \
@@ -61,6 +65,11 @@ SQLITE3_OBJECTS =  \
 	sqlite3_os_os2.obj \
 	sqlite3_os_unix.obj \
 	sqlite3_os_win.obj \
+	sqlite3_pager_secure.obj \
+	sqlite3_parse.obj \
+	sqlite3_pragma.obj \
+	sqlite3_prepare.obj \
+	sqlite3_printf.obj \
 	sqlite3_random.obj \
 	sqlite3_rtree.obj \
 	sqlite3_select.obj \
@@ -80,15 +89,12 @@ SQLITE3_OBJECTS =  \
 	sqlite3_vdbemem.obj \
 	sqlite3_vtab.obj \
 	sqlite3_where.obj \
-	sqlite3_pragma.obj \
-	sqlite3_prepare.obj \
-	sqlite3_printf.obj \
-	sqlite3_parse.obj \
-	sqlite3_pager_secure.obj \
 	sqlite3_codec.obj \
 	sqlite3_codecext.obj \
 	sqlite3_rijndael.obj
-UNITTEST++_CXXFLAGS = /MD /DWIN32 /W4 /EHsc /GR $(CPPFLAGS) $(CXXFLAGS)
+UNITTEST++_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUGINFO_1) /DWIN32 /W4 \
+	$(__DEBUGINFO) $(____DEBUGINFO) /FdUnitTest++.pdb $(__DEBUG_DEFINE_p) \
+	$(__OPTIMIZEFLAG) /EHsc /GR $(CPPFLAGS) $(CXXFLAGS)
 UNITTEST++_OBJECTS =  \
 	UnitTest++_AssertException.obj \
 	UnitTest++_Checks.obj \
@@ -107,15 +113,15 @@ UNITTEST++_OBJECTS =  \
 	UnitTest++_TimeConstraint.obj \
 	UnitTest++_XmlTestReporter.obj \
 	UnitTest++_TimeHelpers.obj
-MMEX_TESTS_CXXFLAGS = /MDd /DWIN32 $(__WXUNICODE_DEFINE_p) \
-	$(__WXDEBUG_DEFINE_p) /D__WXMSW__ \
+MMEX_TESTS_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUGINFO_1) /DWIN32 \
+	$(__WXUNICODE_DEFINE_p) $(__WXDEBUG_DEFINE_p) /D__WXMSW__ \
 	/I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
-	/I$(WX_DIR)\include /D_CONSOLE /Zi /D_DEBUG /Fdmmex_tests.pdb /W4 \
-	/I..\..\..\src /I..\..\..\include /I..\..\..\sqlite \
-	/I..\..\..\UnitTest++\src /EHsc /GR -DSQLITE_HAS_CODEC \
-	-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
+	/I$(WX_DIR)\include /W4 $(__DEBUGINFO) $(____DEBUGINFO) /Fdmmex_tests.pdb \
+	$(__DEBUG_DEFINE_p) $(__OPTIMIZEFLAG) /I..\..\..\include /I..\..\..\sqlite \
+	/D_CONSOLE /I..\..\..\src /I..\..\..\UnitTest++\src /EHsc /GR \
+	-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA \
+	$(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
-	mmex_tests_mmex.res \
 	mmex_tests_aboutdialog.obj \
 	mmex_tests_appstartdialog.obj \
 	mmex_tests_assetdialog.obj \
@@ -168,6 +174,7 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_wxsqlite3.obj \
 	mmex_tests_wxtinyxml.obj \
 	mmex_tests_yahoosettingsdialog.obj \
+	mmex_tests_mmex.res \
 	mmex_tests_Main.obj \
 	mmex_tests_dbwrapper_test.obj \
 	mmex_tests_utils.obj
@@ -198,6 +205,24 @@ __WXDEBUG_DEFINE_p_1 = /d __WXDEBUG__
 !if "$(WX_PYTHON)" == "1"
 __WXDEBUG_DEFINE_p_1 = /d __WXDEBUG__
 !endif
+!if "$(BUILD)" == "debug"
+__DEBUGINFO_36 = /DEBUG
+!endif
+!if "$(BUILD)" == "release"
+__DEBUGINFO_36 = 
+!endif
+!if "$(BUILD)" == "debug"
+____DEBUGINFO_37_p_1 = /d _DEBUG
+!endif
+!if "$(BUILD)" == "release"
+____DEBUGINFO_37_p_1 = 
+!endif
+!if "$(BUILD)" == "debug"
+__DEBUG_DEFINE_p_3 = /d _DEBUG
+!endif
+!if "$(BUILD)" == "release"
+__DEBUG_DEFINE_p_3 = /d NDEBUG
+!endif
 !if "$(WX_MONOLITHIC)" == "0"
 __WXLIB_CORE_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_core.lib
 !endif
@@ -221,6 +246,42 @@ __WXLIB_BASE_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX).lib
 !endif
 !if "$(WX_MONOLITHIC)" == "0"
 __WXLIB_ADV_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_adv.lib
+!endif
+!if "$(RUNTIME_LIBS)" == "dynamic"
+__RUNTIME_LIBS = D
+!endif
+!if "$(RUNTIME_LIBS)" == "static"
+__RUNTIME_LIBS = T
+!endif
+!if "$(BUILD)" == "debug"
+__DEBUGINFO = /Zi
+!endif
+!if "$(BUILD)" == "release"
+__DEBUGINFO = 
+!endif
+!if "$(BUILD)" == "debug"
+____DEBUGINFO = /D_DEBUG
+!endif
+!if "$(BUILD)" == "release"
+____DEBUGINFO = 
+!endif
+!if "$(BUILD)" == "debug"
+__DEBUGINFO_1 = d
+!endif
+!if "$(BUILD)" == "release"
+__DEBUGINFO_1 = 
+!endif
+!if "$(BUILD)" == "debug"
+__DEBUG_DEFINE_p = /D_DEBUG
+!endif
+!if "$(BUILD)" == "release"
+__DEBUG_DEFINE_p = /DNDEBUG
+!endif
+!if "$(BUILD)" == "debug"
+__OPTIMIZEFLAG = /Od
+!endif
+!if "$(BUILD)" == "release"
+__OPTIMIZEFLAG = /O2
 !endif
 !if "$(WX_DEBUG)" == "0" && "$(WX_PYTHON)" == "0" && "$(WX_UNICODE)" == "1"
 WXLIBPOSTFIX = u
@@ -273,11 +334,11 @@ UnitTest++.lib: $(UNITTEST++_OBJECTS)
 <<
 
 mmex_tests.exe: $(MMEX_TESTS_OBJECTS) sqlite3.lib UnitTest++.lib mmex_tests_mmex.res
-	link /NOLOGO /OUT:$@  /LIBPATH:$(WX_DIR)$(__WXLIBPATH_FILENAMES) /SUBSYSTEM:CONSOLE /DEBUG /pdb:"mmex_tests.pdb"  $(LDFLAGS) @<<
-	$(MMEX_TESTS_OBJECTS)  sqlite3.lib UnitTest++.lib $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_BASE_NAME_p) $(__WXLIB_ADV_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib
+	link /NOLOGO /OUT:$@  /LIBPATH:$(WX_DIR)$(__WXLIBPATH_FILENAMES)  $(__DEBUGINFO_36) /pdb:"mmex_tests.pdb" /SUBSYSTEM:CONSOLE $(LDFLAGS) @<<
+	$(MMEX_TESTS_OBJECTS)  $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_BASE_NAME_p) $(__WXLIB_ADV_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib sqlite3.lib UnitTest++.lib
 <<
 
-test: mmex_tests.exe
+check: mmex_tests.exe
 	copy /Y ..\..\..\runtime\currency.db3 .
 	./mmex_tests
 
@@ -413,6 +474,21 @@ sqlite3_os_unix.obj: ..\..\..\sqlite\os_unix.c
 sqlite3_os_win.obj: ..\..\..\sqlite\os_win.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\..\sqlite\os_win.c
 
+sqlite3_pager_secure.obj: ..\..\..\sqlite\pager_secure.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\..\sqlite\pager_secure.c
+
+sqlite3_parse.obj: ..\..\..\sqlite\parse.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\..\sqlite\parse.c
+
+sqlite3_pragma.obj: ..\..\..\sqlite\pragma.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\..\sqlite\pragma.c
+
+sqlite3_prepare.obj: ..\..\..\sqlite\prepare.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\..\sqlite\prepare.c
+
+sqlite3_printf.obj: ..\..\..\sqlite\printf.c
+	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\..\sqlite\printf.c
+
 sqlite3_random.obj: ..\..\..\sqlite\random.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\..\sqlite\random.c
 
@@ -469,21 +545,6 @@ sqlite3_vtab.obj: ..\..\..\sqlite\vtab.c
 
 sqlite3_where.obj: ..\..\..\sqlite\where.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\..\sqlite\where.c
-
-sqlite3_pragma.obj: ..\..\..\sqlite\pragma.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\..\sqlite\pragma.c
-
-sqlite3_prepare.obj: ..\..\..\sqlite\prepare.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\..\sqlite\prepare.c
-
-sqlite3_printf.obj: ..\..\..\sqlite\printf.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\..\sqlite\printf.c
-
-sqlite3_parse.obj: ..\..\..\sqlite\parse.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\..\sqlite\parse.c
-
-sqlite3_pager_secure.obj: ..\..\..\sqlite\pager_secure.c
-	$(CC) /c /nologo /TC /Fo$@ $(SQLITE3_CFLAGS) ..\..\..\sqlite\pager_secure.c
 
 sqlite3_codec.obj: ..\..\..\sqlite\codec\codec.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(SQLITE3_CXXFLAGS) ..\..\..\sqlite\codec\codec.cpp
@@ -544,9 +605,6 @@ UnitTest++_XmlTestReporter.obj: ..\..\..\UnitTest++\src\XmlTestReporter.cpp
 
 UnitTest++_TimeHelpers.obj: ..\..\..\UnitTest++\src\Win32\TimeHelpers.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(UNITTEST++_CXXFLAGS) ..\..\..\UnitTest++\src\Win32\TimeHelpers.cpp
-
-mmex_tests_mmex.res: ..\..\..\resources\mmex.rc
-	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include /d _CONSOLE /d _DEBUG /i ..\..\..\src /i ..\..\..\include /i ..\..\..\sqlite /i ..\..\..\UnitTest++\src ..\..\..\resources\mmex.rc
 
 mmex_tests_aboutdialog.obj: ..\..\..\src\aboutdialog.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\aboutdialog.cpp
@@ -703,6 +761,9 @@ mmex_tests_wxtinyxml.obj: ..\..\..\src\wxtinyxml.cpp
 
 mmex_tests_yahoosettingsdialog.obj: ..\..\..\src\yahoosettingsdialog.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\yahoosettingsdialog.cpp
+
+mmex_tests_mmex.res: ..\..\..\resources\mmex.rc
+	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include $(____DEBUGINFO_37_p_1) $(__DEBUG_DEFINE_p_3) /i ..\..\..\include /i ..\..\..\sqlite /d _CONSOLE /i ..\..\..\src /i ..\..\..\UnitTest++\src ..\..\..\resources\mmex.rc
 
 mmex_tests_Main.obj: ..\..\..\src\tests\Main.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\tests\Main.cpp

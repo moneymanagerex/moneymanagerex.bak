@@ -37,10 +37,10 @@ WX_RESCOMP = @WX_RESCOMP@
 ### Variables: ###
 
 DESTDIR = 
-SQLITE3_CFLAGS = $(PIC_FLAG) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
-	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
-SQLITE3_CXXFLAGS = $(PIC_FLAG) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
-	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CXXFLAGS)
+SQLITE3_CFLAGS = $(__DEBUG_DEFINE_p) $(PIC_FLAG) -DSQLITE_CORE \
+	-DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
+SQLITE3_CXXFLAGS = $(__DEBUG_DEFINE_p) $(PIC_FLAG) -DSQLITE_CORE \
+	-DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CXXFLAGS)
 SQLITE3_OBJECTS =  \
 	sqlite3_alter.o \
 	sqlite3_analyze.o \
@@ -86,6 +86,11 @@ SQLITE3_OBJECTS =  \
 	sqlite3_os_os2.o \
 	sqlite3_os_unix.o \
 	sqlite3_os_win.o \
+	sqlite3_pager_secure.o \
+	sqlite3_parse.o \
+	sqlite3_pragma.o \
+	sqlite3_prepare.o \
+	sqlite3_printf.o \
 	sqlite3_random.o \
 	sqlite3_rtree.o \
 	sqlite3_select.o \
@@ -105,17 +110,12 @@ SQLITE3_OBJECTS =  \
 	sqlite3_vdbemem.o \
 	sqlite3_vtab.o \
 	sqlite3_where.o \
-	sqlite3_pragma.o \
-	sqlite3_prepare.o \
-	sqlite3_printf.o \
-	sqlite3_parse.o \
-	sqlite3_pager_secure.o \
 	sqlite3_codec.o \
 	sqlite3_codecext.o \
 	sqlite3_rijndael.o
-MMEX_CXXFLAGS = -I$(srcdir)/include -I$(srcdir)/sqlite $(WX_CXXFLAGS) \
-	-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA \
-	$(CPPFLAGS) $(CXXFLAGS)
+MMEX_CXXFLAGS = $(__DEBUG_DEFINE_p) -I$(srcdir)/include -I$(srcdir)/sqlite \
+	$(WX_CXXFLAGS) $(PIC_FLAG) -DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC \
+	-DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
 	$(__mmex___win32rc) \
 	mmex_aboutdialog.o \
@@ -180,14 +180,18 @@ MMEX_OBJECTS =  \
 @COND_PLATFORM_MAC_0@__mmex___mac_setfilecmd = @true
 @COND_PLATFORM_MAC_1@__mmex___mac_setfilecmd = \
 @COND_PLATFORM_MAC_1@	$(SETFILE) -t APPL mmex$(EXEEXT)
+@COND_BUILD_debug@__DEBUG_DEFINE_p_3 = --define _DEBUG
+@COND_BUILD_release@__DEBUG_DEFINE_p_3 = --define NDEBUG
+@COND_PLATFORM_WIN32_1@__mmex___win32rc = mmex_mmex_rc.o
 COND_PLATFORM_OS2_1___mmex___os2_emxbindcmd = $(NM) mmex$(EXEEXT) | if grep -q \
 	pmwin.763 ; then emxbind -ep mmex$(EXEEXT) ; fi
 @COND_PLATFORM_OS2_1@__mmex___os2_emxbindcmd = $(COND_PLATFORM_OS2_1___mmex___os2_emxbindcmd)
-@COND_PLATFORM_WIN32_1@__mmex___win32rc = mmex_mmex_rc.o
+@COND_BUILD_debug@__DEBUG_DEFINE_p = -D_DEBUG
+@COND_BUILD_release@__DEBUG_DEFINE_p = -DNDEBUG
 
 ### Targets: ###
 
-all: $(LIBPREFIX)sqlite3$(LIBEXT) mmex$(EXEEXT)
+all: $(LIBPREFIX)sqlite3$(LIBEXT) mmex$(EXEEXT) i18n
 
 install: 
 
@@ -199,11 +203,13 @@ clean:
 	rm -rf ./.deps ./.pch
 	rm -f ./*.o
 	rm -f $(LIBPREFIX)sqlite3$(LIBEXT)
-	-(cd ./src/tests && $(MAKE) clean)
 	rm -f mmex$(EXEEXT)
+	-(cd $(srcdir)/runtime/en && $(MAKE) clean)
+	-(cd ./src/tests && $(MAKE) clean)
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
+	-(cd $(srcdir)/runtime/en && $(MAKE) distclean)
 	-(cd ./src/tests && $(MAKE) distclean)
 
 $(LIBPREFIX)sqlite3$(LIBEXT): $(SQLITE3_OBJECTS)
@@ -211,14 +217,17 @@ $(LIBPREFIX)sqlite3$(LIBEXT): $(SQLITE3_OBJECTS)
 	$(AR) $(AROPTIONS) $@ $(SQLITE3_OBJECTS)
 	$(RANLIB) $@
 
-test: 
-	(cd ./src/tests && $(MAKE) test)
-
-mmex$(EXEEXT): $(MMEX_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(__mmex___win32rc)
-	$(CXX) -o $@ $(MMEX_OBJECTS) -L.  $(LDFLAGS_GUI)   $(WX_LIBS) $(LDFLAGS)  -lsqlite3 $(LIBS)
+mmex$(EXEEXT): $(MMEX_OBJECTS) $(__mmex___win32rc) $(LIBPREFIX)sqlite3$(LIBEXT)
+	$(CXX) -o $@ $(MMEX_OBJECTS) -L.    $(WX_LIBS) $(LDFLAGS_GUI) $(LDFLAGS)  -lsqlite3 $(LIBS)
 	
 	$(__mmex___mac_setfilecmd)
 	$(__mmex___os2_emxbindcmd)
+
+i18n: 
+	(cd $(srcdir)/runtime/en && $(MAKE) all)
+
+check: 
+	(cd ./src/tests && $(MAKE) check)
 
 sqlite3_alter.o: $(srcdir)/sqlite/alter.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/alter.c
@@ -352,6 +361,21 @@ sqlite3_os_unix.o: $(srcdir)/sqlite/os_unix.c
 sqlite3_os_win.o: $(srcdir)/sqlite/os_win.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/os_win.c
 
+sqlite3_pager_secure.o: $(srcdir)/sqlite/pager_secure.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/pager_secure.c
+
+sqlite3_parse.o: $(srcdir)/sqlite/parse.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/parse.c
+
+sqlite3_pragma.o: $(srcdir)/sqlite/pragma.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/pragma.c
+
+sqlite3_prepare.o: $(srcdir)/sqlite/prepare.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/prepare.c
+
+sqlite3_printf.o: $(srcdir)/sqlite/printf.c
+	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/printf.c
+
 sqlite3_random.o: $(srcdir)/sqlite/random.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/random.c
 
@@ -409,21 +433,6 @@ sqlite3_vtab.o: $(srcdir)/sqlite/vtab.c
 sqlite3_where.o: $(srcdir)/sqlite/where.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/where.c
 
-sqlite3_pragma.o: $(srcdir)/sqlite/pragma.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/pragma.c
-
-sqlite3_prepare.o: $(srcdir)/sqlite/prepare.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/prepare.c
-
-sqlite3_printf.o: $(srcdir)/sqlite/printf.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/printf.c
-
-sqlite3_parse.o: $(srcdir)/sqlite/parse.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/parse.c
-
-sqlite3_pager_secure.o: $(srcdir)/sqlite/pager_secure.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/pager_secure.c
-
 sqlite3_codec.o: $(srcdir)/sqlite/codec/codec.cpp
 	$(CXXC) -c -o $@ $(SQLITE3_CXXFLAGS) $(srcdir)/sqlite/codec/codec.cpp
 
@@ -434,7 +443,7 @@ sqlite3_rijndael.o: $(srcdir)/sqlite/codec/rijndael.cpp
 	$(CXXC) -c -o $@ $(SQLITE3_CXXFLAGS) $(srcdir)/sqlite/codec/rijndael.cpp
 
 mmex_mmex_rc.o: $(srcdir)/resources/mmex.rc
-	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/include --include-dir $(srcdir)/sqlite
+	$(WX_RESCOMP) -i$< -o$@  $(__DEBUG_DEFINE_p_3) --include-dir $(srcdir)/include --include-dir $(srcdir)/sqlite
 
 mmex_aboutdialog.o: $(srcdir)/src/aboutdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/aboutdialog.cpp
@@ -596,4 +605,4 @@ mmex_yahoosettingsdialog.o: $(srcdir)/src/yahoosettingsdialog.cpp
 # Include dependency info, if present:
 @IF_GNU_MAKE@-include ./.deps/*.d
 
-.PHONY: all install uninstall clean distclean test
+.PHONY: all install uninstall clean distclean i18n check

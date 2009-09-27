@@ -13,10 +13,12 @@ include ../config.gcc
 ### Variables: ###
 
 CPPDEPS = -MT$@ -MF$@.d -MD -MP
-SQLITE3_CFLAGS = -W -Wall -mthreads -DSQLITE_CORE -DSQLITE_HAS_CODEC \
+SQLITE3_CFLAGS = -mthreads -W -Wall $(__DEBUGINFO) $(__DEBUG_DEFINE_p) \
+	$(__OPTIMIZEFLAG) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
 	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
-SQLITE3_CXXFLAGS = -W -Wall -mthreads -fno-exceptions -fno-rtti -DSQLITE_CORE \
-	-DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CXXFLAGS)
+SQLITE3_CXXFLAGS = -mthreads -W -Wall $(__DEBUGINFO) $(__DEBUG_DEFINE_p) \
+	$(__OPTIMIZEFLAG) -fno-exceptions -fno-rtti -DSQLITE_CORE -DSQLITE_HAS_CODEC \
+	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CXXFLAGS)
 SQLITE3_OBJECTS =  \
 	sqlite3_alter.o \
 	sqlite3_analyze.o \
@@ -62,6 +64,11 @@ SQLITE3_OBJECTS =  \
 	sqlite3_os_os2.o \
 	sqlite3_os_unix.o \
 	sqlite3_os_win.o \
+	sqlite3_pager_secure.o \
+	sqlite3_parse.o \
+	sqlite3_pragma.o \
+	sqlite3_prepare.o \
+	sqlite3_printf.o \
 	sqlite3_random.o \
 	sqlite3_rtree.o \
 	sqlite3_select.o \
@@ -81,15 +88,11 @@ SQLITE3_OBJECTS =  \
 	sqlite3_vdbemem.o \
 	sqlite3_vtab.o \
 	sqlite3_where.o \
-	sqlite3_pragma.o \
-	sqlite3_prepare.o \
-	sqlite3_printf.o \
-	sqlite3_parse.o \
-	sqlite3_pager_secure.o \
 	sqlite3_codec.o \
 	sqlite3_codecext.o \
 	sqlite3_rijndael.o
-UNITTEST++_CXXFLAGS =  -W -Wall -mthreads     $(CPPFLAGS) $(CXXFLAGS)
+UNITTEST++_CXXFLAGS = -mthreads -W -Wall $(__DEBUGINFO) $(__DEBUG_DEFINE_p) \
+	$(__OPTIMIZEFLAG) $(CPPFLAGS) $(CXXFLAGS)
 UNITTEST++_OBJECTS =  \
 	UnitTest++_AssertException.o \
 	UnitTest++_Checks.o \
@@ -110,12 +113,12 @@ UNITTEST++_OBJECTS =  \
 	UnitTest++_TimeHelpers.o
 MMEX_TESTS_CXXFLAGS = -DHAVE_W32API_H $(__WXUNICODE_DEFINE_p) \
 	$(__WXDEBUG_DEFINE_p) -D__WXMSW__ \
-	-I$(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) -I$(WX_DIR)\include -g -W -Wall \
-	-mthreads -I..\..\..\src -I..\..\..\include -I..\..\..\sqlite \
+	-I$(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) -I$(WX_DIR)\include -mthreads -W \
+	-Wall $(__DEBUGINFO) $(__DEBUG_DEFINE_p) $(__OPTIMIZEFLAG) \
+	-I..\..\..\include -I..\..\..\sqlite -I..\..\..\src \
 	-I..\..\..\UnitTest++\src -DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC \
 	-DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
-	mmex_tests_mmex_rc.o \
 	mmex_tests_aboutdialog.o \
 	mmex_tests_appstartdialog.o \
 	mmex_tests_assetdialog.o \
@@ -168,6 +171,7 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_wxsqlite3.o \
 	mmex_tests_wxtinyxml.o \
 	mmex_tests_yahoosettingsdialog.o \
+	mmex_tests_mmex_rc.o \
 	mmex_tests_Main.o \
 	mmex_tests_dbwrapper_test.o \
 	mmex_tests_utils.o
@@ -203,6 +207,12 @@ endif
 endif
 ifeq ($(WX_PYTHON),1)
 __WXDEBUG_DEFINE_p_1 = --define __WXDEBUG__
+endif
+ifeq ($(BUILD),debug)
+__DEBUG_DEFINE_p_3 = --define _DEBUG
+endif
+ifeq ($(BUILD),release)
+__DEBUG_DEFINE_p_3 = --define NDEBUG
 endif
 ifeq ($(WX_MONOLITHIC),0)
 __WXLIB_CORE_NAME_p = -lwxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_core
@@ -259,11 +269,29 @@ ifeq ($(WX_UNICODE),1)
 WXLIBPOSTFIX = uh
 endif
 endif
+ifeq ($(BUILD),debug)
+__DEBUG_DEFINE_p = -D_DEBUG
+endif
+ifeq ($(BUILD),release)
+__DEBUG_DEFINE_p = -DNDEBUG
+endif
+ifeq ($(BUILD),debug)
+__OPTIMIZEFLAG = -O0
+endif
+ifeq ($(BUILD),release)
+__OPTIMIZEFLAG = -O2
+endif
 ifeq ($(WX_SHARED),0)
 WXLIBPATH = \lib\gcc_lib
 endif
 ifeq ($(WX_SHARED),1)
 WXLIBPATH = \lib\gcc_dll
+endif
+ifeq ($(BUILD),debug)
+__DEBUGINFO = -g
+endif
+ifeq ($(BUILD),release)
+__DEBUGINFO = 
 endif
 
 
@@ -290,9 +318,9 @@ libUnitTest++.a: $(UNITTEST++_OBJECTS)
 	ranlib $@
 
 mmex_tests.exe: $(MMEX_TESTS_OBJECTS) libsqlite3.a libUnitTest++.a mmex_tests_mmex_rc.o
-	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS)  -mthreads -L$(WX_DIR)$(WXLIBPATH)  -g -mthreads $(LDFLAGS)  libsqlite3.a libUnitTest++.a $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_BASE_NAME_p) $(__WXLIB_ADV_NAME_p) -lwxtiff$(WX3RDPARTYLIBPOSTFIX) -lwxjpeg$(WX3RDPARTYLIBPOSTFIX) -lwxpng$(WX3RDPARTYLIBPOSTFIX) -lwxzlib$(WX3RDPARTYLIBPOSTFIX) -lwxregex$(WXLIBPOSTFIX) -lwxexpat$(WX3RDPARTYLIBPOSTFIX) -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32
+	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS)  -mthreads -L$(WX_DIR)$(WXLIBPATH) -mthreads $(__DEBUGINFO)  $(LDFLAGS)  $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_BASE_NAME_p) $(__WXLIB_ADV_NAME_p) -lwxtiff$(WX3RDPARTYLIBPOSTFIX) -lwxjpeg$(WX3RDPARTYLIBPOSTFIX) -lwxpng$(WX3RDPARTYLIBPOSTFIX) -lwxzlib$(WX3RDPARTYLIBPOSTFIX) -lwxregex$(WXLIBPOSTFIX) -lwxexpat$(WX3RDPARTYLIBPOSTFIX) -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32 libsqlite3.a libUnitTest++.a
 
-test: mmex_tests.exe
+check: mmex_tests.exe
 	copy /Y ..\..\..\runtime\currency.db3 .
 	./mmex_tests
 
@@ -428,6 +456,21 @@ sqlite3_os_unix.o: ../../../sqlite/os_unix.c
 sqlite3_os_win.o: ../../../sqlite/os_win.c
 	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
 
+sqlite3_pager_secure.o: ../../../sqlite/pager_secure.c
+	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
+
+sqlite3_parse.o: ../../../sqlite/parse.c
+	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
+
+sqlite3_pragma.o: ../../../sqlite/pragma.c
+	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
+
+sqlite3_prepare.o: ../../../sqlite/prepare.c
+	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
+
+sqlite3_printf.o: ../../../sqlite/printf.c
+	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
+
 sqlite3_random.o: ../../../sqlite/random.c
 	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
 
@@ -483,21 +526,6 @@ sqlite3_vtab.o: ../../../sqlite/vtab.c
 	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
 
 sqlite3_where.o: ../../../sqlite/where.c
-	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
-
-sqlite3_pragma.o: ../../../sqlite/pragma.c
-	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
-
-sqlite3_prepare.o: ../../../sqlite/prepare.c
-	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
-
-sqlite3_printf.o: ../../../sqlite/printf.c
-	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
-
-sqlite3_parse.o: ../../../sqlite/parse.c
-	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
-
-sqlite3_pager_secure.o: ../../../sqlite/pager_secure.c
 	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
 
 sqlite3_codec.o: ../../../sqlite/codec/codec.cpp
@@ -559,9 +587,6 @@ UnitTest++_XmlTestReporter.o: ../../../UnitTest++/src/XmlTestReporter.cpp
 
 UnitTest++_TimeHelpers.o: ../../../UnitTest++/src/Win32/TimeHelpers.cpp
 	$(CXX) -c -o $@ $(UNITTEST++_CXXFLAGS) $(CPPDEPS) $<
-
-mmex_tests_mmex_rc.o: ../../../resources/mmex.rc
-	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include --include-dir ../../../src --include-dir ../../../include --include-dir ../../../sqlite --include-dir ../../../UnitTest++/src
 
 mmex_tests_aboutdialog.o: ../../../src/aboutdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(CPPDEPS) $<
@@ -719,6 +744,9 @@ mmex_tests_wxtinyxml.o: ../../../src/wxtinyxml.cpp
 mmex_tests_yahoosettingsdialog.o: ../../../src/yahoosettingsdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(CPPDEPS) $<
 
+mmex_tests_mmex_rc.o: ../../../resources/mmex.rc
+	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include $(__DEBUG_DEFINE_p_3) --include-dir ../../../include --include-dir ../../../sqlite --include-dir ../../../src --include-dir ../../../UnitTest++/src
+
 mmex_tests_Main.o: ../../../src/tests/Main.cpp
 	$(CXX) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(CPPDEPS) $<
 
@@ -728,7 +756,7 @@ mmex_tests_dbwrapper_test.o: ../../../src/tests/dbwrapper_test.cpp
 mmex_tests_utils.o: ../../../src/tests/utils.cpp
 	$(CXX) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(CPPDEPS) $<
 
-.PHONY: all clean test
+.PHONY: all clean check
 
 
 SHELL := $(COMSPEC)

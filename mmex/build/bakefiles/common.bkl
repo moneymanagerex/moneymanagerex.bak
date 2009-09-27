@@ -1,0 +1,113 @@
+<?xml version="1.0" ?>
+
+<!-- common templates -->
+
+<makefile>
+
+
+    <!-- configurable options -->
+
+    <option name="BUILD">
+        <values>debug,release</values>
+        <values-description>Debug,Release</values-description>
+        <default-value>release</default-value>
+        <description>Type of compiled binaries</description>
+    </option>
+
+    <option name="RUNTIME_LIBS">
+        <values>dynamic,static</values>
+        <default-value>dynamic</default-value>
+        <description>Version of C runtime library to use</description>
+    </option>
+
+
+    <!-- set compiler's flags according to selected options -->
+
+    <set var="DEBUGINFO">
+        <if cond="BUILD=='debug'">on</if>
+        <if cond="BUILD=='release'">off</if>
+    </set>
+
+    <set var="DEBUG_DEFINE">
+        <if cond="BUILD=='debug'">_DEBUG</if>
+        <if cond="BUILD=='release'">NDEBUG</if>
+    </set>
+
+    <set var="OPTIMIZEFLAG">
+        <if cond="BUILD=='debug'">off</if>
+        <if cond="BUILD=='release'">speed</if>
+    </set>
+
+    
+    <!-- generic compiler's flags -->
+
+
+    <template id="compiler_common">
+    
+        <precomp-headers>off</precomp-headers>
+        <threading>multi</threading>
+        <warnings>max</warnings>
+        <pic>on</pic>
+
+        <runtime-libs>$(RUNTIME_LIBS)</runtime-libs>
+        <debug-info>$(DEBUGINFO)</debug-info>
+        <debug-info-edit-and-continue>$(DEBUGINFO)</debug-info-edit-and-continue>
+        <define>$(DEBUG_DEFINE)</define>
+        <optimize>$(OPTIMIZEFLAG)</optimize>
+
+    </template>
+
+
+    <include file="presets/wx.bkl"/>
+
+
+    <if cond="FORMAT!='autoconf' and PLATFORM_WIN32=='1'">
+        
+        <!-- redefine defaults -->
+
+        <set var="WX_DEBUG_DEFAULT">0</set>
+        <set var="WX_UNICODE_DEFAULT">1</set>
+    
+        <if cond="FORMAT=='mingw'">
+            <set var="WX_MONOLITHIC_DEFAULT">1</set>
+        </if>
+
+    </if>
+
+
+    <!-- common part of mmex and mmex_tests -->
+
+
+    <template id="mmex_common" template="wx,compiler_common">
+
+        <cxx-exceptions>on</cxx-exceptions>
+        <cxx-rtti>on</cxx-rtti>
+
+        <include>$(SRCDIR)/include</include>
+	<include>$(SRCDIR)/sqlite</include>
+
+        <win32-res>resources/mmex.rc</win32-res>
+
+    	<!-- flags for wxSQLite3 -->
+        <cxxflags>-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA</cxxflags>
+
+    	<!-- relative to trunk/mmex -->
+
+        <headers>$(fileList('src/*.h'))</headers>
+        <sources>$(fileList('src/*.cpp'))</sources>
+
+
+        <!-- wxWidgets libs -->
+
+        <wx-lib>core</wx-lib>
+        <wx-lib>net</wx-lib>                
+        <wx-lib>html</wx-lib>                
+        <wx-lib>xml</wx-lib>
+        <wx-lib>aui</wx-lib> 
+        <wx-lib>base</wx-lib>
+        <wx-lib>adv</wx-lib>
+        
+    </template>
+
+
+</makefile>

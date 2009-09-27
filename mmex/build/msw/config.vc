@@ -28,6 +28,12 @@ CPPFLAGS =
 # Standard linker flags 
 LDFLAGS = 
 
+# Type of compiled binaries [debug,release]
+BUILD = release
+
+# Version of C runtime library to use [dynamic,static]
+RUNTIME_LIBS = dynamic
+
 # The directory where wxWidgets library is installed 
 WX_DIR = $(WXWIN)
 
@@ -35,10 +41,10 @@ WX_DIR = $(WXWIN)
 WX_SHARED = 0
 
 # Compile Unicode build of wxWidgets? [0,1]
-WX_UNICODE = 0
+WX_UNICODE = 1
 
 # Use debug build of wxWidgets (define __WXDEBUG__)? [0,1]
-WX_DEBUG = 1
+WX_DEBUG = 0
 
 # Version of the wx library to build against. 
 WX_VERSION = 28

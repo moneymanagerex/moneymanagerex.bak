@@ -1,23 +1,21 @@
 <?xml version="1.0" ?>
 
-<!-- sqlite3 sources -->
+<!-- sqlite3 library -->
 
 <makefile>
 
-    <lib id="sqlite3">
+    <lib id="sqlite3" template="compiler_common">
 
-        <warnings>max</warnings>
-        <precomp-headers>off</precomp-headers>
-        <threading>multi</threading>
         <cxx-exceptions>off</cxx-exceptions>
         <cxx-rtti>off</cxx-rtti>
-        <pic>on</pic>
 
-        
-        <set var="SQLITE3_FLAGS">-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA</set>
 
-        <cflags>$(SQLITE3_FLAGS)</cflags>
-        <cxxflags>$(SQLITE3_FLAGS)</cxxflags>
+        <!-- sqlite has .c and sqlite/codec has .cpp sources -->
+
+        <set var="SQLITE_FLAGS">-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA</set>
+
+        <cflags>$(SQLITE_FLAGS)</cflags>
+        <cxxflags>$(SQLITE_FLAGS)</cxxflags>
 
 
     	<!-- paths relative to trunk/mmex -->
@@ -26,15 +24,10 @@
 
         <headers>$(fileList( [ SRC + '*.h', SRC + 'codec/*.h' ] ))</headers>
 
-    	<!-- we have to include pager_secure.c instead of pager.c -->
-        
         <sources>
-            $(fileList( [ SRC + '[!p]*.c', 	<!-- don't start with 'p' -->
-        	          SRC + 'p[!a]*.c',	<!-- first 'p', next not 'a' -->
-        		  SRC + 'pa[!g]*.c', 	<!-- exclude 'pager.c' -->
-        		  SRC + 'pager_secure.c',
-        		  SRC + 'codec/*.cpp'
-        		] ))
+            <!-- we have to exclude pager.c because pager_secure.c includes one -->
+            $(fileList(SRC + '*.c').replace(SRC + 'pager.c', ''))
+            $(fileList(SRC + 'codec/*.cpp'))
         </sources>
 
     </lib>

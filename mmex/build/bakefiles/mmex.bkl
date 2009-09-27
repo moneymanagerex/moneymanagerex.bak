@@ -1,4 +1,5 @@
 <?xml version="1.0" ?>
+
 <!--
 Money Manager Ex BAKEFILE
 =========================
@@ -7,7 +8,7 @@ Bakefile for generating makefiles.
 
 <makefile>
 
-    <!-- checks version of Bakefile -->
+    <!-- check version of Bakefile -->
     <requires version="0.2.1"/>
 
     
@@ -20,56 +21,53 @@ Bakefile for generating makefiles.
     </if>
 
     
-    <include file="presets/wx.bkl"/>
+    <include file="common.bkl"/>
     <include file="sqlite.bkl"/>
 
 
-    <!-- unit tests target (not dependency of 'all'): -->
-    <subproject id="test">
-        
-        <dir cond="FORMAT=='autoconf'">$(BUILDDIR)/src/tests</dir>
-        <dir cond="FORMAT!='autoconf'">tests</dir>
-    
-        <target>test</target>
-        <installable>no</installable>
+    <!-- MoneyManagerEx application -->
 
-    </subproject>
-
-
-    <exe id="mmex" template="wx">
+    <exe id="mmex" template="mmex_common">
 
         <app-type>gui</app-type>
         <library>sqlite3</library>
-        <debug-info>on</debug-info>
-        <debug-info-edit-and-continue>on</debug-info-edit-and-continue>
-        <warnings>max</warnings>
-        <runtime-libs>dynamic</runtime-libs>
-        <precomp-headers>off</precomp-headers>
-        <threading>multi</threading>
-        <cxx-exceptions>on</cxx-exceptions>
 
-        <include>$(SRCDIR)/include</include>
-	<include>$(SRCDIR)/sqlite</include>
-	<win32-res>resources/mmex.rc</win32-res>
+        <if cond="FORMAT=='msvc'">
 
-        <cxxflags>-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA</cxxflags>
+            <include>$(SRCDIR)/BugTrap</include>
+            <lib-path>$(SRCDIR)/BugTrap</lib-path>
 
-    	<!-- relative to trunk/mmex -->
+            <set var="BugTrapLib">
+                <if cond="WX_UNICODE=='0'">BugTrap</if>
+                <if cond="WX_UNICODE=='1'">BugTrapU</if>
+            </set>
 
-        <headers>$(fileList('src/*.h'))</headers>
-        <sources>$(fileList('src/*.cpp'))</sources>
+            <sys-lib>$(BugTrapLib)</sys-lib>
 
+        </if>
 
-        <!-- wxWidgets libs -->
-
-        <wx-lib>core</wx-lib>
-        <wx-lib>net</wx-lib>                
-        <wx-lib>html</wx-lib>                
-        <wx-lib>xml</wx-lib>
-        <wx-lib>aui</wx-lib> 
-        <wx-lib>base</wx-lib>
-        <wx-lib>adv</wx-lib>
-        
     </exe>
+
+
+    <!-- generation of translation files -->
+
+    <subproject id="i18n">
+        <dependency-of>all</dependency-of>
+        <dir>$(SRCDIR)/runtime/en</dir>
+    </subproject>
+
+    
+    <!-- unit tests target (not dependency of 'all'): -->
+
+    <subproject id="check">
+        
+        <target>check</target>
+        <installable>no</installable>
+
+        <dir cond="FORMAT=='autoconf'">$(BUILDDIR)/src/tests</dir>
+        <dir cond="FORMAT!='autoconf'">tests</dir>
+
+    </subproject>
+
 
 </makefile>
