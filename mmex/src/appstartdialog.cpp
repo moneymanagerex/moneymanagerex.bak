@@ -28,14 +28,6 @@
 #include "../resources/bma.xpm"
 #endif
 /*******************************************************/
-#if defined (__WXMAC__)
-#define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
-#define MMEX_SPLASH_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/splash.png")
-#else
-#define MMEX_ICON_FNAME wxT("mmex.ico")
-#define MMEX_SPLASH_FNAME wxT("/splash.png")
-#endif
-
 
 
 IMPLEMENT_DYNAMIC_CLASS( mmAppStartDialog, wxDialog )
@@ -78,7 +70,7 @@ bool mmAppStartDialog::Create( wxWindow* parent, wxWindowID id, const wxString& 
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
 
-    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
+    wxIcon icon(mmGetBaseWorkingPath() + wxT("/mmex.ico"), wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
 
     CreateControls();
@@ -99,7 +91,7 @@ void mmAppStartDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxBitmap itemStaticBitmap4Bitmap;
-    itemStaticBitmap4Bitmap.LoadFile(MMEX_SPLASH_FNAME, wxBITMAP_TYPE_PNG); 
+    itemStaticBitmap4Bitmap.LoadFile(mmGetBaseWorkingPath() + wxT("/splash.png"), wxBITMAP_TYPE_PNG); 
     
     wxStaticBitmap* itemStaticBitmap4 = 0;
     if (!mmIniOptions::enableCustomLogo_)
