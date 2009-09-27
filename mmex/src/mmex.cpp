@@ -115,17 +115,23 @@
 #include <string>
 #include <boost/scoped_array.hpp>
 
-/*******************************************************/
-#define MMEX_INIDB_FNAME wxT("/mmexini.db3")
-#define MMEX_SPLASH_FNAME wxT("/splash.png")
+//----------------------------------------------------------------------------
+
+namespace
+{
+
+const wxChar *MMEX_INIDB_FNAME = wxT("/mmexini.db3");
+//----------------------------------------------------------------------------
 
 #if defined (__WXMAC__)
-#define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
+const wxString MMEX_ICON_FNAME = wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
 #else
-#define MMEX_ICON_FNAME wxT("mmex.ico")
+const wxString MMEX_ICON_FNAME = wxT("mmex.ico");
 #endif
 
-/*******************************************************/
+} // namespace
+
+//----------------------------------------------------------------------------
 
 BEGIN_EVENT_TABLE(mmNewDatabaseWizard, wxWizard)
     EVT_WIZARD_CANCEL(wxID_ANY,   mmGUIFrame::OnWizardCancel)
@@ -610,8 +616,7 @@ void mmGUIFrame::saveConfigFile()
 void mmGUIFrame::loadConfigFile()
 {
     inidb_.reset(new wxSQLite3Database);
-    wxString iniDBPath = mmGetBaseWorkingPath()
-        + MMEX_INIDB_FNAME;
+    wxString iniDBPath = mmGetBaseWorkingPath() + MMEX_INIDB_FNAME;
     inidb_->Open(iniDBPath);
 }
 
