@@ -4,6 +4,15 @@
 
 <makefile>
 
+    <!-- Default root of sources is dir where output script will be created.
+         autoconf will generate Makefile in trunk/mmex/runtime/en.
+    -->
+
+    <if cond="FORMAT=='autoconf'">
+        <set-srcdir>../..</set-srcdir>
+    </if>
+
+    
     <!-- rule for translation .po file to binary .mo -->
 
     <define-rule name="msgfmt" extends="action">

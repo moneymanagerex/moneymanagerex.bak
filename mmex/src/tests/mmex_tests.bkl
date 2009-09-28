@@ -3,7 +3,7 @@
 <makefile>
 
     <!-- Default root of sources is dir where output script will be created.
-         autoconf script resides in trunk/mmex/src/tests but others in trunk/mmex/build/msw/tests.
+         autoconf generates Makefile in trunk/mmex/src/tests but others in trunk/mmex/build/msw/tests.
     -->
 
     <if cond="FORMAT=='autoconf'">
