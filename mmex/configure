@@ -12607,7 +12607,7 @@ $as_echo "$as_me: error: Versions of Bakefile used to generate makefiles ($BAKEF
     fi
 
 
-ac_config_files="$ac_config_files Makefile src/tests/Makefile runtime/en/Makefile"
+ac_config_files="$ac_config_files Makefile src/tests/Makefile ${srcdir}/runtime/en/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -13221,7 +13221,7 @@ do
   case $ac_config_target in
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/tests/Makefile") CONFIG_FILES="$CONFIG_FILES src/tests/Makefile" ;;
-    "runtime/en/Makefile") CONFIG_FILES="$CONFIG_FILES runtime/en/Makefile" ;;
+    "${srcdir}/runtime/en/Makefile") CONFIG_FILES="$CONFIG_FILES ${srcdir}/runtime/en/Makefile" ;;
 
   *) { { $as_echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
 $as_echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
