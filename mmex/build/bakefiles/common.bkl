@@ -72,28 +72,27 @@
         </if>
 
 
-    	<!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
-
-    	<set var="DEBUGBUILDPOSTFIX">
-	    <if cond="BUILD=='debug'">dbg</if>
-	    <if cond="BUILD=='release'">rel</if>
+	<!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
+    
+	<set var="SHAREDBUILDPOSTFIX">
+            <if cond="WX_SHARED=='0'">stat</if>
+            <if cond="WX_SHARED=='1'">shar</if>
 	</set>
 
-
+	
 	<!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
     
 	<set var="UNICODEBUILDPOSTFIX">
-            <if cond="WX_UNICODE=='0'">a</if>
             <if cond="WX_UNICODE=='1'">u</if>
 	</set>
 
 
-	<!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
-    
-	<set var="SHAREDBUILDPOSTFIX">
-            <if cond="WX_SHARED=='0'">static</if>
-            <if cond="WX_SHARED=='1'">shared</if>
+    	<!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
+
+    	<set var="DEBUGBUILDPOSTFIX">
+	    <if cond="BUILD=='debug'">d</if>
 	</set>
+
 
         <!-- set bakefile's predefined variable BUILDDIR -->
         <include file="presets/setbuilddir.bkl"/>

@@ -51,12 +51,12 @@ Usage:
 
     <!-- some helpers -->
     <set var="SHRDSTR"><if cond="isdefined('SHAREDBUILDPOSTFIX')">_$(SHAREDBUILDPOSTFIX)</if></set>
-    <set var="DBGSTR"><if cond="isdefined('DEBUGBUILDPOSTFIX')">_$(DEBUGBUILDPOSTFIX)</if></set>
-    <set var="UNICSTR"><if cond="isdefined('UNICODEBUILDPOSTFIX')">_$(UNICODEBUILDPOSTFIX)</if></set>
+    <set var="UNICSTR"><if cond="isdefined('UNICODEBUILDPOSTFIX')">$(UNICODEBUILDPOSTFIX)</if></set>
+    <set var="DBGSTR"><if cond="isdefined('DEBUGBUILDPOSTFIX')">$(DEBUGBUILDPOSTFIX)</if></set>
 
     <if cond="FORMAT!='autoconf'">
         <set var="BUILDDIR">
-            $(COMPILER)$(SHRDSTR)$(DBGSTR)$(UNICSTR)
+            $(COMPILER)$(SHRDSTR)$(UNICSTR)$(DBGSTR)
         </set>
     </if>
 
