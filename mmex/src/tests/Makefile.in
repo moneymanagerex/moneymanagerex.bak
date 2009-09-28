@@ -246,7 +246,7 @@ mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(LIBPRE
 	
 	$(__mmex_tests___mac_setfilecmd)
 
-check: mmex_tests$(EXEEXT)
+check: all
 	cp $(srcdir)/../../runtime/currency.db3 .
 	./mmex_tests
 

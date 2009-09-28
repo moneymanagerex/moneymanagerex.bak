@@ -44,7 +44,7 @@
 
     <action id="check">
 
-	<depends>mmex_tests</depends>
+        <depends>all</depends>
 	<is-phony>on</is-phony>
 
 	<set var="COPY_CMD">
