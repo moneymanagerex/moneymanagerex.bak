@@ -41,7 +41,6 @@
     
     <!-- generic compiler's flags -->
 
-
     <template id="compiler_common">
     
         <precomp-headers>off</precomp-headers>
@@ -72,11 +71,37 @@
             <set var="WX_MONOLITHIC_DEFAULT">1</set>
         </if>
 
+
+    	<!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
+
+    	<set var="DEBUGBUILDPOSTFIX">
+	    <if cond="BUILD=='debug'">dbg</if>
+	    <if cond="BUILD=='release'">rel</if>
+	</set>
+
+
+	<!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
+    
+	<set var="UNICODEBUILDPOSTFIX">
+            <if cond="WX_UNICODE=='0'">a</if>
+            <if cond="WX_UNICODE=='1'">u</if>
+	</set>
+
+
+	<!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
+    
+	<set var="SHAREDBUILDPOSTFIX">
+            <if cond="WX_SHARED=='0'">static</if>
+            <if cond="WX_SHARED=='1'">shared</if>
+	</set>
+
+        <!-- set bakefile's predefined variable BUILDDIR -->
+        <include file="presets/setbuilddir.bkl"/>
+
     </if>
 
-
+    
     <!-- common part of mmex and mmex_tests -->
-
 
     <template id="mmex_common" template="wx,compiler_common">
 
