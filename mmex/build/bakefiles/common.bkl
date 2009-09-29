@@ -55,9 +55,6 @@
 
         <define>$(DEBUG_DEFINE)</define>
 
-        <!-- disable precompiled headers for wxWidgets -->
-        <define>NOPCH</define>
-
     </template>
 
 
@@ -113,6 +110,9 @@
 
         <include>$(SRCDIR)/include</include>
 	<include>$(SRCDIR)/sqlite</include>
+
+        <!-- disable precompiled headers for wxWidgets -->
+        <define>NOPCH</define>
 
         <win32-res>resources/mmex.rc</win32-res>
 

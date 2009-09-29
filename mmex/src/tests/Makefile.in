@@ -35,9 +35,9 @@ WX_RESCOMP = @WX_RESCOMP@
 ### Variables: ###
 
 DESTDIR = 
-SQLITE3_CFLAGS = $(__DEBUG_DEFINE_p) -DNOPCH $(PIC_FLAG) -DSQLITE_CORE \
+SQLITE3_CFLAGS = $(__DEBUG_DEFINE_p) $(PIC_FLAG) -DSQLITE_CORE \
 	-DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
-SQLITE3_CXXFLAGS = $(__DEBUG_DEFINE_p) -DNOPCH $(PIC_FLAG) -DSQLITE_CORE \
+SQLITE3_CXXFLAGS = $(__DEBUG_DEFINE_p) $(PIC_FLAG) -DSQLITE_CORE \
 	-DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CXXFLAGS)
 SQLITE3_OBJECTS =  \
 	sqlite3_alter.o \
@@ -111,8 +111,7 @@ SQLITE3_OBJECTS =  \
 	sqlite3_codec.o \
 	sqlite3_codecext.o \
 	sqlite3_rijndael.o
-UNITTEST++_CXXFLAGS = $(__DEBUG_DEFINE_p) -DNOPCH $(PIC_FLAG) $(CPPFLAGS) \
-	$(CXXFLAGS)
+UNITTEST++_CXXFLAGS = $(__DEBUG_DEFINE_p) $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
 UNITTEST++_OBJECTS =  \
 	UnitTest++_AssertException.o \
 	UnitTest++_Checks.o \
@@ -132,8 +131,8 @@ UNITTEST++_OBJECTS =  \
 	UnitTest++_XmlTestReporter.o \
 	UnitTest++_SignalTranslator.o \
 	UnitTest++_TimeHelpers.o
-MMEX_TESTS_CXXFLAGS = $(__DEBUG_DEFINE_p) -DNOPCH -I$(srcdir)/../../include \
-	-I$(srcdir)/../../sqlite -I$(srcdir)/../../src \
+MMEX_TESTS_CXXFLAGS = $(__DEBUG_DEFINE_p) -I$(srcdir)/../../include \
+	-I$(srcdir)/../../sqlite -DNOPCH -I$(srcdir)/../../src \
 	-I$(srcdir)/../../UnitTest++/src $(WX_CXXFLAGS) $(PIC_FLAG) \
 	-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA \
 	$(CPPFLAGS) $(CXXFLAGS)
@@ -675,7 +674,7 @@ mmex_tests_yahoosettingsdialog.o: $(srcdir)/../../src/yahoosettingsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/yahoosettingsdialog.cpp
 
 mmex_tests_resources_mmex_rc.o: $(srcdir)/../../resources/mmex.rc
-	$(WX_RESCOMP) -i$< -o$@  $(__DEBUG_DEFINE_p_4) --define NOPCH --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../sqlite --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../UnitTest++/src
+	$(WX_RESCOMP) -i$< -o$@  $(__DEBUG_DEFINE_p_4) --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../sqlite --define NOPCH --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../UnitTest++/src
 
 mmex_tests_Main.o: $(srcdir)/../../src/tests/Main.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/Main.cpp
