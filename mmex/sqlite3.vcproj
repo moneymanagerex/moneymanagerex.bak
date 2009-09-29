@@ -21,7 +21,6 @@
 			OutputDirectory="$(ConfigurationName)\$(ProjectName)"
 			IntermediateDirectory="$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC70.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -88,7 +87,6 @@
 			OutputDirectory="$(ConfigurationName)\$(ProjectName)"
 			IntermediateDirectory="$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC70.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -156,7 +154,6 @@
 			OutputDirectory="$(ConfigurationName)\$(ProjectName)"
 			IntermediateDirectory="$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC70.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="0"
 			>
@@ -224,7 +221,6 @@
 			OutputDirectory="$(ConfigurationName)\$(ProjectName)"
 			IntermediateDirectory="$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC70.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
