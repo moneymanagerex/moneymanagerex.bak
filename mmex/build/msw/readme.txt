@@ -3,7 +3,7 @@
 
 
 You can build mmex on Windows using VisualC++ or MinGW compilers.
-Firstly, you can run mmex/bootstrap.bat which will refresh makefiles.
+Firstly you can run mmex/bootstrap.bat which will refresh makefiles.
 Bakefile must be installed to do that. But you can skip this step 
 if you don't add\remove project's files.
 
@@ -60,4 +60,4 @@ Currently bakefile can generate makefiles\projects for these compilers (run bake
 The mmex build scripts resides in mmex\build\bakefiles. 
 Firstly modify Bakefiles.bkgen to add missing output formats.
 Append new format to tag <add-formats> and add flag to makefile's output directory.
-If you are lucky you will get makefile\project for your compiler after running mmex\bootstrap.bat.
+If you are lucky, you will get makefile\project for your compiler after running mmex\bootstrap.bat.
