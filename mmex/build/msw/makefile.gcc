@@ -20,12 +20,12 @@ MAKEARGS = LINK_DLL_FLAGS="$(LINK_DLL_FLAGS)" \
 	WX_DEBUG="$(WX_DEBUG)" WX_VERSION="$(WX_VERSION)" \
 	WX_MONOLITHIC="$(WX_MONOLITHIC)" WX_PYTHON="$(WX_PYTHON)"
 CPPDEPS = -MT$@ -MF$@.d -MD -MP
-SQLITE3_CFLAGS = -mthreads -W -Wall $(__DEBUGINFO) $(__DEBUG_DEFINE_p) \
-	$(__OPTIMIZEFLAG) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
+SQLITE3_CFLAGS = -mthreads -W -Wall $(__DEBUGINFO) $(__OPTIMIZEFLAG) \
+	$(__DEBUG_DEFINE_p) -DNOPCH -DSQLITE_CORE -DSQLITE_HAS_CODEC \
 	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
-SQLITE3_CXXFLAGS = -mthreads -W -Wall $(__DEBUGINFO) $(__DEBUG_DEFINE_p) \
-	$(__OPTIMIZEFLAG) -fno-exceptions -fno-rtti -DSQLITE_CORE -DSQLITE_HAS_CODEC \
-	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CXXFLAGS)
+SQLITE3_CXXFLAGS = -mthreads -W -Wall $(__DEBUGINFO) $(__OPTIMIZEFLAG) \
+	$(__DEBUG_DEFINE_p) -DNOPCH -fno-exceptions -fno-rtti -DSQLITE_CORE \
+	-DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CXXFLAGS)
 SQLITE3_OBJECTS =  \
 	gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3_alter.o \
 	gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3_analyze.o \
@@ -100,9 +100,9 @@ SQLITE3_OBJECTS =  \
 	gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3_rijndael.o
 MMEX_CXXFLAGS = -DHAVE_W32API_H $(__WXUNICODE_DEFINE_p) $(__WXDEBUG_DEFINE_p) \
 	-D__WXMSW__ -I$(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) -I$(WX_DIR)\include \
-	-mthreads -W -Wall $(__DEBUGINFO) $(__DEBUG_DEFINE_p) $(__OPTIMIZEFLAG) \
-	-I..\..\include -I..\..\sqlite -DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC \
-	-DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
+	-mthreads -W -Wall $(__DEBUGINFO) $(__OPTIMIZEFLAG) $(__DEBUG_DEFINE_p) \
+	-DNOPCH -I..\..\include -I..\..\sqlite -DSQLITE_HAS_CODEC \
+	-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
 	gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_mmex_rc.o \
 	gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_aboutdialog.o \
@@ -264,16 +264,16 @@ WXLIBPOSTFIX = uh
 endif
 endif
 ifeq ($(BUILD),debug)
-__DEBUG_DEFINE_p = -D_DEBUG
-endif
-ifeq ($(BUILD),release)
-__DEBUG_DEFINE_p = -DNDEBUG
-endif
-ifeq ($(BUILD),debug)
 __OPTIMIZEFLAG = -O0
 endif
 ifeq ($(BUILD),release)
 __OPTIMIZEFLAG = -O2
+endif
+ifeq ($(BUILD),debug)
+__DEBUG_DEFINE_p = -D_DEBUG
+endif
+ifeq ($(BUILD),release)
+__DEBUG_DEFINE_p = -DNDEBUG
 endif
 ifeq ($(WX_SHARED),0)
 WXLIBPATH = \lib\gcc_lib
@@ -533,7 +533,7 @@ gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3_rijn
 	$(CXX) -c -o $@ $(SQLITE3_CXXFLAGS) $(CPPDEPS) $<
 
 gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_mmex_rc.o: ../../resources/mmex.rc
-	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include $(__DEBUG_DEFINE_p_2) --include-dir ../../include --include-dir ../../sqlite
+	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include $(__DEBUG_DEFINE_p_2) --define NOPCH --include-dir ../../include --include-dir ../../sqlite
 
 gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_aboutdialog.o: ../../src/aboutdialog.cpp
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<

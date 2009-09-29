@@ -51,8 +51,12 @@
         <runtime-libs>$(RUNTIME_LIBS)</runtime-libs>
         <debug-info>$(DEBUGINFO)</debug-info>
         <debug-info-edit-and-continue>$(DEBUGINFO)</debug-info-edit-and-continue>
-        <define>$(DEBUG_DEFINE)</define>
         <optimize>$(OPTIMIZEFLAG)</optimize>
+
+        <define>$(DEBUG_DEFINE)</define>
+
+        <!-- disable precompiled headers for wxWidgets -->
+        <define>NOPCH</define>
 
     </template>
 

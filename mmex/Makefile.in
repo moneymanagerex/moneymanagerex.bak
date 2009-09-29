@@ -37,9 +37,9 @@ WX_RESCOMP = @WX_RESCOMP@
 ### Variables: ###
 
 DESTDIR = 
-SQLITE3_CFLAGS = $(__DEBUG_DEFINE_p) $(PIC_FLAG) -DSQLITE_CORE \
+SQLITE3_CFLAGS = $(__DEBUG_DEFINE_p) -DNOPCH $(PIC_FLAG) -DSQLITE_CORE \
 	-DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
-SQLITE3_CXXFLAGS = $(__DEBUG_DEFINE_p) $(PIC_FLAG) -DSQLITE_CORE \
+SQLITE3_CXXFLAGS = $(__DEBUG_DEFINE_p) -DNOPCH $(PIC_FLAG) -DSQLITE_CORE \
 	-DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CXXFLAGS)
 SQLITE3_OBJECTS =  \
 	sqlite3_alter.o \
@@ -113,9 +113,9 @@ SQLITE3_OBJECTS =  \
 	sqlite3_codec.o \
 	sqlite3_codecext.o \
 	sqlite3_rijndael.o
-MMEX_CXXFLAGS = $(__DEBUG_DEFINE_p) -I$(srcdir)/include -I$(srcdir)/sqlite \
-	$(WX_CXXFLAGS) $(PIC_FLAG) -DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC \
-	-DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
+MMEX_CXXFLAGS = $(__DEBUG_DEFINE_p) -DNOPCH -I$(srcdir)/include \
+	-I$(srcdir)/sqlite $(WX_CXXFLAGS) $(PIC_FLAG) -DSQLITE_HAS_CODEC \
+	-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
 	$(__mmex___win32rc) \
 	mmex_aboutdialog.o \
@@ -443,7 +443,7 @@ sqlite3_rijndael.o: $(srcdir)/sqlite/codec/rijndael.cpp
 	$(CXXC) -c -o $@ $(SQLITE3_CXXFLAGS) $(srcdir)/sqlite/codec/rijndael.cpp
 
 mmex_mmex_rc.o: $(srcdir)/resources/mmex.rc
-	$(WX_RESCOMP) -i$< -o$@  $(__DEBUG_DEFINE_p_3) --include-dir $(srcdir)/include --include-dir $(srcdir)/sqlite
+	$(WX_RESCOMP) -i$< -o$@  $(__DEBUG_DEFINE_p_3) --define NOPCH --include-dir $(srcdir)/include --include-dir $(srcdir)/sqlite
 
 mmex_aboutdialog.o: $(srcdir)/src/aboutdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/aboutdialog.cpp
