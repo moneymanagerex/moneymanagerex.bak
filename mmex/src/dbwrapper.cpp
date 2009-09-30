@@ -2030,12 +2030,12 @@ void mmDBWrapper::setINISettingValue(wxSQLite3Database* db, const wxString& sett
     mmENDSQL_LITE_EXCEPTION;
 }
 
-void mmDBWrapper::updateTransactionWithStatus(wxSQLite3Database* db, int transID, 
+void mmDBWrapper::updateTransactionWithStatus(wxSQLite3Database &db, int transID, 
                                               const wxString& status)
 {
     mmBEGINSQL_LITE_EXCEPTION;
     
-    wxSQLite3Statement st = db->PrepareStatement("update CHECKINGACCOUNT_V1 set STATUS=? where TRANSID=?");
+    wxSQLite3Statement st = db.PrepareStatement("update CHECKINGACCOUNT_V1 set STATUS=? where TRANSID=?");
     st.Bind(1, status);
     st.Bind(2, transID);
 

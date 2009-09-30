@@ -114,7 +114,7 @@ double getAmountForCategory(wxSQLite3Database* db, int categID, int subcategID,
 	bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
 
 /* Transactions API */
-void updateTransactionWithStatus(wxSQLite3Database* db, int transID, 
+void updateTransactionWithStatus(wxSQLite3Database &db, int transID, 
 	const wxString& status);
 bool deleteTransaction(wxSQLite3Database* db, int transID);
 bool deleteFlaggedTransactions(wxSQLite3Database* db, int accountID);
