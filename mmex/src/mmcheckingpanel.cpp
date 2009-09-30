@@ -20,6 +20,7 @@
 #include "transdialog.h"
 #include "util.h"
 #include "dbwrapper.h"
+//----------------------------------------------------------------------------
 #include <algorithm>
 #include <vector>
 //----------------------------------------------------------------------------
@@ -165,13 +166,13 @@ mmCheckingPanel::mmCheckingPanel
     db_(core->db_.get()), 
     inidb_(inidb),
     listCtrlAccount_(),
-    m_imageList(), 
     accountID_(accountID)
 {
     wxASSERT(db_);
     
     Create(parent, winid, pos, size, style, name);
 }
+//----------------------------------------------------------------------------
 
 bool mmCheckingPanel::Create( wxWindow *parent,
             wxWindowID winid, const wxPoint& pos, 
@@ -194,9 +195,6 @@ bool mmCheckingPanel::Create( wxWindow *parent,
 
 mmCheckingPanel::~mmCheckingPanel()
 {
-    if (m_imageList)
-        delete m_imageList;
-
     // save widths of columns to ini database
     
     int cols = listCtrlAccount_->GetColumnCount();
@@ -308,8 +306,7 @@ void mmCheckingPanel::CreateControls()
         wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
     wxSize imageSize(16, 16);
-    m_imageList = new wxImageList( imageSize.GetWidth(), 
-        imageSize.GetHeight() );
+    m_imageList.reset(new wxImageList(imageSize.GetWidth(), imageSize.GetHeight()));
     m_imageList->Add(wxBitmap(reconciled_xpm));
     m_imageList->Add(wxBitmap(void_xpm));
     m_imageList->Add(wxBitmap(flag_xpm));
@@ -321,10 +318,11 @@ void mmCheckingPanel::CreateControls()
     listCtrlAccount_ = new MyListCtrl( this, itemSplitterWindow10, 
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
+    
+    listCtrlAccount_->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
     listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
-    listCtrlAccount_->asc_ = g_asc;
-    listCtrlAccount_->sortCol_ = g_sortcol;
+    listCtrlAccount_->m_asc = g_asc;
+    listCtrlAccount_->m_sortCol = g_sortcol;
     listCtrlAccount_->SetFocus();
     
     createColumns(inidb_, *listCtrlAccount_);
@@ -338,9 +336,9 @@ void mmCheckingPanel::CreateControls()
         mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_ASC"), wxT("1")).ToLong(&iniSortAsc); 
         g_asc = iniSortAsc != 0;
 
-        listCtrlAccount_->sortCol_ = g_sortcol;
-        listCtrlAccount_->asc_ = g_asc;
-        listCtrlAccount_->SetColumnImage(listCtrlAccount_->sortCol_, 5); // asc\desc sort mark (arrow)
+        listCtrlAccount_->m_sortCol = g_sortcol;
+        listCtrlAccount_->m_asc = g_asc;
+        listCtrlAccount_->SetColumnImage(listCtrlAccount_->m_sortCol, 5); // asc\desc sort mark (arrow)
     }
 
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, ID_PANEL1, 
@@ -379,7 +377,9 @@ void mmCheckingPanel::CreateControls()
 }
 //----------------------------------------------------------------------------
 
-// Return whether first element is greater than the second
+/*
+    Return whether first element is greater than the second
+*/
 bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
 {
 	const int COL_DATE_OR_TRANSACTION_ID = 0;
@@ -937,14 +937,14 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
 
 void MyListCtrl::OnListItemSelected(wxListEvent& event)
 {
-    selectedIndex_ = event.GetIndex();
-    cp_->updateExtraTransactionData(selectedIndex_);
+    m_selectedIndex = event.GetIndex();
+    m_cp->updateExtraTransactionData(m_selectedIndex);
 }
 //----------------------------------------------------------------------------
 
 void MyListCtrl::OnItemRightClick(wxListEvent& event)
 {
-    selectedIndex_ = event.GetIndex();
+    m_selectedIndex = event.GetIndex();
 
     wxMenu menu;
     menu.Append(MENU_TREEPOPUP_NEW, _("&New Transaction"));
@@ -952,7 +952,7 @@ void MyListCtrl::OnItemRightClick(wxListEvent& event)
     menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Transaction"));
     menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Transaction"));
     menu.Append(MENU_ON_COPY_TRANSACTION, _("&Copy Transaction"));
-    if (m_selectedForCopy_ != -1)
+    if (m_selectedForCopy != -1)
         menu.Append(MENU_ON_PASTE_TRANSACTION, _("&Paste Transaction"));
     menu.AppendSeparator();
     menu.Append(MENU_TREEPOPUP_MARKRECONCILED, _("Mark As &Reconciled"));
@@ -976,19 +976,19 @@ void MyListCtrl::OnItemRightClick(wxListEvent& event)
 
 void MyListCtrl::OnMarkTransactionDB(const wxString& status)
 {
-    if (selectedIndex_ == -1)
+    if (m_selectedIndex == -1)
         return;
-    int transID = cp_->trans_[selectedIndex_]->transactionID();
-    mmDBWrapper::updateTransactionWithStatus(cp_->db_, transID, status);
-    cp_->trans_[selectedIndex_]->status_ = status;
+    int transID = m_cp->trans_[m_selectedIndex]->transactionID();
+    mmDBWrapper::updateTransactionWithStatus(m_cp->db_, transID, status);
+    m_cp->trans_[m_selectedIndex]->status_ = status;
 
-    if (cp_->currentView_ != wxT("View All Transactions"))
+    if (m_cp->currentView_ != wxT("View All Transactions"))
     {
         DeleteAllItems();
-        cp_->initVirtualListControl();
+        m_cp->initVirtualListControl();
     }
-    RefreshItem(selectedIndex_);
-    cp_->setAccountSummary();
+    RefreshItem(m_selectedIndex);
+    m_cp->setAccountSummary();
 }
 //----------------------------------------------------------------------------
 
@@ -1034,20 +1034,20 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
         wxASSERT(false);
      }
          
-     for (size_t i = 0; i < cp_->trans_.size(); ++i)
+     for (size_t i = 0; i < m_cp->trans_.size(); ++i)
      {
-        int transID = cp_->trans_[i]->transactionID();
-        mmDBWrapper::updateTransactionWithStatus(cp_->db_, transID, status);
-        cp_->trans_[i]->status_ = status;
+        int transID = m_cp->trans_[i]->transactionID();
+        mmDBWrapper::updateTransactionWithStatus(m_cp->db_, transID, status);
+        m_cp->trans_[i]->status_ = status;
      }
 
-     if (cp_->currentView_ != wxT("View All Transactions"))
+     if (m_cp->currentView_ != wxT("View All Transactions"))
      {
          DeleteAllItems();
-         cp_->initVirtualListControl();
-         RefreshItems(0, static_cast<long>(cp_->trans_.size()) - 1); // refresh everything
+         m_cp->initVirtualListControl();
+         RefreshItems(0, static_cast<long>(m_cp->trans_.size()) - 1); // refresh everything
      }
-     cp_->setAccountSummary();
+     m_cp->setAccountSummary();
 }
 //----------------------------------------------------------------------------
 
@@ -1058,15 +1058,15 @@ void MyListCtrl::OnColClick(wxListEvent& event)
         return;
 
     /* Clear previous column image */
-    SetColumnImage(sortCol_, -1);
+    SetColumnImage(m_sortCol, -1);
 
-    sortCol_ = event.GetColumn();
-    g_sortcol = sortCol_;
-    asc_ = !asc_; // toggle sort order
-    g_asc = asc_;
-    SetColumnImage(sortCol_, asc_ ? 5 : 4); // decide whether top or down icon needs to be shown
-    cp_->sortTable();   // sort the table
-    RefreshItems(0, static_cast<long>(cp_->trans_.size()) - 1); // refresh everything
+    m_sortCol = event.GetColumn();
+    g_sortcol = m_sortCol;
+    m_asc = !m_asc; // toggle sort order
+    g_asc = m_asc;
+    SetColumnImage(m_sortCol, m_asc ? 5 : 4); // decide whether top or down icon needs to be shown
+    m_cp->sortTable();   // sort the table
+    RefreshItems(0, static_cast<long>(m_cp->trans_.size()) - 1); // refresh everything
 }
 //----------------------------------------------------------------------------
 
@@ -1125,14 +1125,14 @@ wxString mmCheckingPanel::getItem(long item, long column)
 
 wxString MyListCtrl::OnGetItemText(long item, long column) const
 {
-    return cp_->getItem(item, column);
+    return m_cp->getItem(item, column);
 }
 //----------------------------------------------------------------------------
 
 int MyListCtrl::OnGetItemImage(long item) const
 {
    /* Returns the icon to be shown for each transaction */
-   wxString status = cp_->getItem(item, 3);
+   wxString status = m_cp->getItem(item, 3);
    if (status == wxT("F"))
    {
         return 2;
@@ -1159,23 +1159,23 @@ int MyListCtrl::OnGetItemImage(long item) const
 */
 wxListItemAttr* MyListCtrl::OnGetItemAttr(long item) const
 {
-    wxASSERT(cp_);
+    wxASSERT(m_cp);
     wxASSERT(item >= 0);
 
     size_t idx = item;
-    bool ok = cp_ && idx < cp_->trans_.size();
+    bool ok = m_cp && idx < m_cp->trans_.size();
     
-    mmBankTransaction *tr = ok ? cp_->trans_[idx] : 0;
+    mmBankTransaction *tr = ok ? m_cp->trans_[idx] : 0;
     bool in_the_future = tr && tr->date_ > wxDateTime::Now();
 
     MyListCtrl &self = *const_cast<MyListCtrl*>(this);
 
     if (in_the_future) // apply alternating background pattern
     {
-        return item % 2 ? &self.attr3_ : &self.attr4_;
+        return item % 2 ? &self.m_attr3 : &self.m_attr4;
     }
 
-    return item % 2 ? &self.attr1_ : &self.attr2_;
+    return item % 2 ? &self.m_attr1 : &self.m_attr2;
 
 }
 //----------------------------------------------------------------------------
@@ -1203,26 +1203,26 @@ void MyListCtrl::OnChar(wxKeyEvent& event)
 
 void MyListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
 {
-    if (selectedIndex_ == -1)
+    if (m_selectedIndex == -1)
         return;
 
-    m_selectedForCopy_ = cp_->trans_[selectedIndex_]->transactionID();
+    m_selectedForCopy = m_cp->trans_[m_selectedIndex]->transactionID();
 }
 //----------------------------------------------------------------------------
 
 void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 {
-    if (m_selectedForCopy_ != -1)
+    if (m_selectedForCopy != -1)
     {
-        wxString useOriginalDate =  mmDBWrapper::getINISettingValue(cp_->inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
+        wxString useOriginalDate =  mmDBWrapper::getINISettingValue(m_cp->inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
         bool useOriginal = false;
         if (useOriginalDate == wxT("TRUE"))
             useOriginal = true;
-        boost::shared_ptr<mmBankTransaction> pCopiedTrans = cp_->core_->bTransactionList_.copyTransaction(m_selectedForCopy_, useOriginal);
-        boost::shared_ptr<mmCurrency> pCurrencyPtr = cp_->core_->accountList_.getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
-        pCopiedTrans->updateAllData(cp_->core_, pCopiedTrans->accountID_, pCurrencyPtr, true);
-        cp_->initVirtualListControl();
-        RefreshItems(0, static_cast<long>(cp_->trans_.size()) - 1);
+        boost::shared_ptr<mmBankTransaction> pCopiedTrans = m_cp->core_->bTransactionList_.copyTransaction(m_selectedForCopy, useOriginal);
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
+        pCopiedTrans->updateAllData(m_cp->core_, pCopiedTrans->accountID_, pCurrencyPtr, true);
+        m_cp->initVirtualListControl();
+        RefreshItems(0, static_cast<long>(m_cp->trans_.size()) - 1);
     }
 }
 //----------------------------------------------------------------------------
@@ -1286,17 +1286,17 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
 
 void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 {
-    mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_, cp_->accountID_, 
-        0, false, cp_->inidb_, this );
+    mmTransDialog *dlg = new mmTransDialog(m_cp->db_, m_cp->core_, m_cp->accountID_, 
+        0, false, m_cp->inidb_, this );
     if ( dlg->ShowModal() == wxID_OK )
     {
-        cp_->initVirtualListControl();
-        RefreshItems(0, static_cast<long>(cp_->trans_.size()) - 1);
-        if (selectedIndex_ != -1)
+        m_cp->initVirtualListControl();
+        RefreshItems(0, static_cast<long>(m_cp->trans_.size()) - 1);
+        if (m_selectedIndex != -1)
         {
-           SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-           SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-           EnsureVisible(selectedIndex_);
+           SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+           SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+           EnsureVisible(m_selectedIndex);
         }
     }
     dlg->Destroy();
@@ -1306,7 +1306,7 @@ void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 {
 	//check if a transaction is selected
-    if (selectedIndex_ != -1)
+    if (m_selectedIndex != -1)
 	{
 		//ask if they really want to delete
 		wxMessageDialog msgDlg(this, _("Do you really want to delete the transaction?"),
@@ -1321,22 +1321,22 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 			long topItemIndex = GetTopItem();
          
 			//remove the transaction
-			this->cp_->core_->bTransactionList_.deleteTransaction(this->cp_->accountID_, 
-			   cp_->trans_[selectedIndex_]->transactionID());
+			this->m_cp->core_->bTransactionList_.deleteTransaction(this->m_cp->accountID_, 
+			   m_cp->trans_[m_selectedIndex]->transactionID());
 			
 
          //initialize the transaction list to redo balances and images
-			cp_->initVirtualListControl();
+			m_cp->initVirtualListControl();
 
-         if (!cp_->trans_.empty())
+         if (!m_cp->trans_.empty())
          {
             //refresh the items showing from the point of the transaction delete down
             //the transactions above the deleted transaction won't change so they 
             // don't need to be refreshed
-            RefreshItems(selectedIndex_, static_cast<long>(cp_->trans_.size()) - 1);
+            RefreshItems(m_selectedIndex, static_cast<long>(m_cp->trans_.size()) - 1);
 
             //set the deleted transaction index to the new selection and focus on it
-            SetItemState(selectedIndex_-1, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, 
+            SetItemState(m_selectedIndex-1, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, 
                wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED);
 
             //make sure the topmost item before transaction deletion is visible, otherwise 
@@ -1347,7 +1347,7 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
          {
             SetItemCount(0);
             DeleteAllItems();
-            selectedIndex_ = -1;
+            m_selectedIndex = -1;
          }
 		}
 	}
@@ -1356,17 +1356,17 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 
 void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 {
-    if (selectedIndex_ != -1)
+    if (m_selectedIndex != -1)
 	{
-		mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_, cp_->accountID_, 
-		   cp_->trans_[selectedIndex_]->transactionID(), true, cp_->inidb_, this);
+		mmTransDialog *dlg = new mmTransDialog(m_cp->db_, m_cp->core_, m_cp->accountID_, 
+		   m_cp->trans_[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
 		if ( dlg->ShowModal() == wxID_OK )
 		{
-			cp_->initVirtualListControl();
-			RefreshItems(0, static_cast<long>(cp_->trans_.size()) - 1);
-			SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-			SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-			EnsureVisible(selectedIndex_);
+			m_cp->initVirtualListControl();
+			RefreshItems(0, static_cast<long>(m_cp->trans_.size()) - 1);
+			SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+			SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+			EnsureVisible(m_selectedIndex);
 		}
 		dlg->Destroy();
 	}
@@ -1375,23 +1375,55 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 
 void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
 {
-    if (selectedIndex_ != -1)
+    if (m_selectedIndex != -1)
 	{
-        //selectedIndex_ = event.GetIndex();
-        mmTransDialog *dlg = new mmTransDialog(cp_->db_, cp_->core_,  cp_->accountID_, 
-            cp_->trans_[selectedIndex_]->transactionID(), true, cp_->inidb_, this);
+        //m_selectedIndex = event.GetIndex();
+        mmTransDialog *dlg = new mmTransDialog(m_cp->db_, m_cp->core_,  m_cp->accountID_, 
+            m_cp->trans_[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
         if ( dlg->ShowModal() == wxID_OK )
         {
-            cp_->initVirtualListControl();
-            RefreshItems(0, static_cast<long>(cp_->trans_.size()) - 1);
-            if (selectedIndex_ != -1)
+            m_cp->initVirtualListControl();
+            RefreshItems(0, static_cast<long>(m_cp->trans_.size()) - 1);
+            if (m_selectedIndex != -1)
             {
-                SetItemState(selectedIndex_, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-                SetItemState(selectedIndex_, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-                EnsureVisible(selectedIndex_);
+                SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+                SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                EnsureVisible(m_selectedIndex);
             }
         }
         dlg->Destroy();
     }
 }
 //----------------------------------------------------------------------------
+
+MyListCtrl::MyListCtrl(
+    mmCheckingPanel *cp, 
+    wxWindow *parent,
+    const wxWindowID id, 
+    const wxPoint& pos,
+    const wxSize& size, 
+    long style
+) : 
+    wxListCtrl(parent, id, pos, size, style | wxWANTS_CHARS),
+    m_sortCol(),
+    m_asc(true),
+    m_cp(cp),
+    m_selectedIndex(-1),
+    m_selectedForCopy(-1),
+    m_attr1(*wxBLACK, mmColors::listAlternativeColor0, wxNullFont),
+    m_attr2(*wxBLACK, mmColors::listAlternativeColor1, wxNullFont),
+    m_attr3(mmColors::listFutureDateColor, mmColors::listAlternativeColor0, wxNullFont),
+    m_attr4(mmColors::listFutureDateColor, mmColors::listAlternativeColor1, wxNullFont)
+{
+    wxASSERT(m_cp);
+    
+    const wxAcceleratorEntry entries[] =
+    {
+        wxAcceleratorEntry(wxACCEL_CTRL, 'C', MENU_ON_COPY_TRANSACTION),
+        wxAcceleratorEntry(wxACCEL_CTRL, 'V', MENU_ON_PASTE_TRANSACTION),
+        wxAcceleratorEntry(wxACCEL_ALT,  'N', MENU_ON_NEW_TRANSACTION)
+    };
+
+    wxAcceleratorTable tab(sizeof(entries)/sizeof(*entries), entries);
+    SetAcceleratorTable(tab); 
+}

@@ -20,13 +20,14 @@
 #ifndef _MM_EX_CHECKINGPANEL_H_
 #define _MM_EX_CHECKINGPANEL_H_
 //----------------------------------------------------------------------------
-
+#include "defs.h"
 #include "mmpanelbase.h"
 #include "guiid.h"
-#include "defs.h"
 #include "wx/wxprec.h"
 #include "util.h"
 #include "mmcoredb.h"
+//----------------------------------------------------------------------------
+#include <boost/scoped_ptr.hpp>
 //----------------------------------------------------------------------------
 class wxListCtrl;
 class wxListEvent;
@@ -42,35 +43,12 @@ class MyListCtrl: public wxListCtrl
     DECLARE_EVENT_TABLE()
 
 public:
-    MyListCtrl(mmCheckingPanel* cp, wxWindow *parent,
-        const wxWindowID id, const wxPoint& pos,
-        const wxSize& size, long style)
-        : wxListCtrl(parent, id, pos, size, style | wxWANTS_CHARS),
-        attr1_(*wxBLACK, mmColors::listAlternativeColor0, wxNullFont),
-        attr2_(*wxBLACK, mmColors::listAlternativeColor1, wxNullFont),
-        attr3_(mmColors::listFutureDateColor, mmColors::listAlternativeColor0, wxNullFont),
-        attr4_(mmColors::listFutureDateColor, mmColors::listAlternativeColor1, wxNullFont),
-        cp_(cp),
-        sortCol_(0),
-        asc_(true),
-        selectedIndex_(-1),
-        m_selectedForCopy_(-1)
-    {
-        /* Setup the Accelorator Table */
-        wxAcceleratorEntry entries[3];
-        entries[0].Set(wxACCEL_CTRL,  (int) 'C', MENU_ON_COPY_TRANSACTION);
-        entries[1].Set(wxACCEL_CTRL,  (int) 'V', MENU_ON_PASTE_TRANSACTION);
-        entries[2].Set(wxACCEL_ALT,  (int) 'N', MENU_ON_NEW_TRANSACTION);
-   
-        wxAcceleratorTable accel(3, entries);
-        this->SetAcceleratorTable(accel); 
-    }
+    MyListCtrl(mmCheckingPanel *cp, wxWindow *parent,const wxWindowID id, const wxPoint& pos,const wxSize& size, long style);
 
-public:
     /* required overrides for virtual style list control */
-    virtual wxString OnGetItemText(long item, long column) const;
-    virtual int OnGetItemImage(long item) const;
-    virtual wxListItemAttr *OnGetItemAttr(long item) const;
+    wxString OnGetItemText(long item, long column) const;
+    int OnGetItemImage(long item) const;
+    wxListItemAttr *OnGetItemAttr(long item) const;
 
     void OnItemRightClick(wxListEvent& event);
     void OnListItemSelected(wxListEvent& event);
@@ -91,27 +69,27 @@ public:
     void OnDeleteTransaction(wxCommandEvent& event);
     void OnEditTransaction(wxCommandEvent& event);
 
-private:
-    wxListItemAttr attr1_; // style1
-    wxListItemAttr attr2_; // style2
-    wxListItemAttr attr3_; // style, for future dates
-    wxListItemAttr attr4_; // style, for future dates
-    mmCheckingPanel* cp_;
-    long selectedIndex_;
-    long m_selectedForCopy_;
-
 public:
-    long sortCol_;
-    bool asc_;
+    long m_sortCol;
+    bool m_asc;
+
+private:
+    mmCheckingPanel *m_cp;
+    long m_selectedIndex;
+    long m_selectedForCopy;
+
+    wxListItemAttr m_attr1; // style1
+    wxListItemAttr m_attr2; // style2
+    wxListItemAttr m_attr3; // style, for future dates
+    wxListItemAttr m_attr4; // style, for future dates
 };
 //----------------------------------------------------------------------------
 
 /* 
     Holds a single transaction 
 */
-class mmTransactionHolder
+struct mmTransactionHolder
 {
-public:
     int transID_;
 
     wxDateTime date_;
@@ -192,15 +170,16 @@ public:
 
     /* Helper Functions/data */
     int accountID() const { return accountID_; }
-    std::vector<mmBankTransaction*> trans_;
     void sortTable();
+
+    std::vector<mmBankTransaction*> trans_;
 
 public:
     mmCoreDB* core_;
     wxSQLite3Database* db_;
     wxSQLite3Database* inidb_;
     MyListCtrl* listCtrlAccount_;
-    wxImageList* m_imageList;
+    boost::scoped_ptr<wxImageList> m_imageList;
     wxString currentView_;
     int accountID_;
 };
