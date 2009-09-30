@@ -16,14 +16,19 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
+//----------------------------------------------------------------------------
 #ifndef _MM_EX_PANELBASE_H_
 #define _MM_EX_PANELBASE_H_
-
-#include "defs.h"
+//----------------------------------------------------------------------------
+#include <wx/panel.h>
+#include <wx/string.h>
+//----------------------------------------------------------------------------
 
 class mmPanelBase : public wxPanel
 {
-    public: virtual wxString getReportText() { return wxT("");}
+public: 
+    virtual wxString getReportText() const { return wxGetEmptyString(); }
 };
-
-#endif
+//----------------------------------------------------------------------------
+#endif // _MM_EX_PANELBASE_H_
+//----------------------------------------------------------------------------
