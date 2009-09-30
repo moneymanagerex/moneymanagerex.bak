@@ -15,14 +15,14 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
-
+//----------------------------------------------------------------------------
 #include "mmcheckingpanel.h"
 #include "transdialog.h"
 #include "util.h"
 #include "dbwrapper.h"
 #include <algorithm>
 #include <vector>
-/*******************************************************/
+//----------------------------------------------------------------------------
 /* Include XPM Support */
 #include "../resources/exefile.xpm"
 #include "../resources/flag.xpm"
@@ -33,10 +33,8 @@
 #include "../resources/downarrow.xpm"
 #include "../resources/rightarrow.xpm"
 #include "../resources/duplicate.xpm"
-/*******************************************************/
-static int sortcol = 0;
-static bool asc = true;
-/*******************************************************/
+//----------------------------------------------------------------------------
+
 BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_BUTTON(ID_BUTTON_NEW_TRANS,         mmCheckingPanel::OnNewTransaction)
     EVT_BUTTON(ID_BUTTON_EDIT_TRANS,        mmCheckingPanel::OnEditTransaction)
@@ -58,7 +56,8 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_MENU(MENU_VIEW_CURRENTMONTH, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_LASTMONTH, mmCheckingPanel::OnViewPopupSelected)
 END_EVENT_TABLE()
-/*******************************************************/
+//----------------------------------------------------------------------------
+
 BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
     EVT_LIST_ITEM_SELECTED(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListItemSelected)
     EVT_LIST_ITEM_ACTIVATED(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListItemActivated)
@@ -89,10 +88,14 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
 
     EVT_CHAR(MyListCtrl::OnChar)
 END_EVENT_TABLE()
-/*******************************************************/
+//----------------------------------------------------------------------------
 
 namespace
 {
+
+int g_sortcol = 0; // index of column to sort
+bool g_asc = true; // asc\desc sorting
+//----------------------------------------------------------------------------
 
 /*
     Adds columns to list controls and setup their initial widths.
@@ -148,7 +151,7 @@ void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
 
 } // namespace
 
-/*******************************************************/
+//----------------------------------------------------------------------------
 
 mmCheckingPanel::mmCheckingPanel
 (
@@ -187,6 +190,7 @@ bool mmCheckingPanel::Create( wxWindow *parent,
     this->Thaw();
     return TRUE;
 }
+//----------------------------------------------------------------------------
 
 mmCheckingPanel::~mmCheckingPanel()
 {
@@ -207,12 +211,13 @@ mmCheckingPanel::~mmCheckingPanel()
         mmDBWrapper::setINISettingValue(inidb_, name, val); 
     }
 
-    wxString val = wxString::Format(wxT("%d"), sortcol);
+    wxString val = wxString::Format(wxT("%d"), g_sortcol);
     mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_SORT_COL"), val); 
 
-    val = wxString::Format(wxT("%d"), asc);
+    val = wxString::Format(wxT("%d"), g_asc);
     mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_ASC"), val); 
 }
+//----------------------------------------------------------------------------
 
 void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
 {
@@ -246,6 +251,7 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
     }
     event.Skip();
 } 
+//----------------------------------------------------------------------------
 
 void mmCheckingPanel::CreateControls()
 {    
@@ -317,8 +323,8 @@ void mmCheckingPanel::CreateControls()
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
-    listCtrlAccount_->asc_ = asc;
-    listCtrlAccount_->sortCol_ = sortcol;
+    listCtrlAccount_->asc_ = g_asc;
+    listCtrlAccount_->sortCol_ = g_sortcol;
     listCtrlAccount_->SetFocus();
     
     createColumns(inidb_, *listCtrlAccount_);
@@ -326,14 +332,14 @@ void mmCheckingPanel::CreateControls()
     {   // load the global variables
         long iniSortCol = 0;
         mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_SORT_COL"), wxT("0")).ToLong(&iniSortCol);
-        sortcol = iniSortCol;
+        g_sortcol = iniSortCol;
 
         long iniSortAsc = 0;
         mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_ASC"), wxT("1")).ToLong(&iniSortAsc); 
-        asc = iniSortAsc != 0;
+        g_asc = iniSortAsc != 0;
 
-        listCtrlAccount_->sortCol_ = sortcol;
-        listCtrlAccount_->asc_ = asc;
+        listCtrlAccount_->sortCol_ = g_sortcol;
+        listCtrlAccount_->asc_ = g_asc;
         listCtrlAccount_->SetColumnImage(listCtrlAccount_->sortCol_, 5); // asc\desc sort mark (arrow)
     }
 
@@ -371,6 +377,7 @@ void mmCheckingPanel::CreateControls()
         ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
     itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
 }
+//----------------------------------------------------------------------------
 
 // Return whether first element is greater than the second
 bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
@@ -384,19 +391,19 @@ bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
 	const int COL_DEPOSIT = 6 ;
 	
 	long elem1Long=0, elem2Long=0;
-	switch( sortcol )
+	switch( g_sortcol )
 		{
 		case COL_DATE_OR_TRANSACTION_ID:
 			if (elem1->date_ != elem2->date_)
 			{
-			  if (asc)
+			  if (g_asc)
 			    return elem1->date_ < elem2->date_;
 			  else
 				return elem1->date_ > elem2->date_;
 			}
 			else
 			{
-				if (asc)
+				if (g_asc)
 					return elem1->transactionID() < elem2->transactionID();
 				else
 					return elem1->transactionID() > elem2->transactionID();
@@ -408,14 +415,14 @@ bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
                 bool isOK2 = elem2->transNum_.ToLong(&elem2Long );
                 if (isOK1 && isOK2)
                 {
-                    if (asc)
+                    if (g_asc)
                         return elem1Long < elem2Long;
                     else
                         return elem1Long > elem2Long;
                 }
                 else
                 {
-                    if (asc)
+                    if (g_asc)
                         return elem1->transNum_ < elem2->transNum_;
                     else
                         return elem1->transNum_ > elem2->transNum_;
@@ -423,20 +430,20 @@ bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
             }
 		break;
 		case COL_PAYEE_STR:
-        if (asc)
+        if (g_asc)
             return elem1->payeeStr_ < elem2->payeeStr_;
         else
             return elem1->payeeStr_ > elem2->payeeStr_;
 		break;
 		case COL_STATUS:
-			if (asc)
+			if (g_asc)
 				return elem1->status_ < elem2->status_;
 			else
 			    return elem1->status_ > elem2->status_;
             
 		break;
 		case COL_CATEGORY:
-			if (asc)
+			if (g_asc)
 			   return elem1->fullCatStr_ < elem2->fullCatStr_;
 			else
 			   return elem1->fullCatStr_ > elem2->fullCatStr_;
@@ -444,7 +451,7 @@ bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
 		break;
 		case COL_WITHDRAWAL:
 		case COL_DEPOSIT:
-			if (asc)
+			if (g_asc)
 			   return elem1->amt_ < elem2->amt_;
 			else
 			  return elem1->amt_ > elem2->amt_;  		
@@ -453,6 +460,7 @@ bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
     wxASSERT(false);
     return true;
 }
+//----------------------------------------------------------------------------
 
 bool sortTransactionsByDate( mmBankTransaction* elem1, mmBankTransaction* elem2 )
 {
@@ -465,11 +473,13 @@ bool sortTransactionsByDate( mmBankTransaction* elem1, mmBankTransaction* elem2 
       return elem1->transactionID() < elem2->transactionID();
    }
 }
+//----------------------------------------------------------------------------
 
 void mmCheckingPanel::sortTable()
 {
     std::sort(trans_.begin(), trans_.end(), sortTransactions);
 }
+//----------------------------------------------------------------------------
 
 void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
@@ -480,6 +490,7 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
     st->SetLabel(text);
 }
+//----------------------------------------------------------------------------
 
 void mmCheckingPanel::setAccountSummary()
 {
@@ -499,6 +510,7 @@ void mmCheckingPanel::setAccountSummary()
         balance.c_str(), recbalance.c_str());
     header->SetLabel(lbl);
 }
+//----------------------------------------------------------------------------
 
 void mmCheckingPanel::initVirtualListControl()
 {
@@ -731,7 +743,7 @@ void mmCheckingPanel::initVirtualListControl()
 
     /* Setup the Sorting */
      // decide whether top or down icon needs to be shown
-    listCtrlAccount_->SetColumnImage(sortcol, asc ? 5 : 4);
+    listCtrlAccount_->SetColumnImage(g_sortcol, g_asc ? 5 : 4);
     
     // sort the table
     sortTable(); 
@@ -740,7 +752,7 @@ void mmCheckingPanel::initVirtualListControl()
 
     if (trans_.size() > 1)
     {
-		if (asc)
+		if (g_asc)
 		{
 			listCtrlAccount_->EnsureVisible(static_cast<long>(trans_.size()) - 1);
 		}
@@ -755,21 +767,25 @@ void mmCheckingPanel::initVirtualListControl()
     pgd->Destroy();
 #endif
 }
+//----------------------------------------------------------------------------
 
 void mmCheckingPanel::OnDeleteTransaction(wxCommandEvent& event)
 {
     listCtrlAccount_->OnDeleteTransaction(event);
 }
+//----------------------------------------------------------------------------
 
 void mmCheckingPanel::OnNewTransaction(wxCommandEvent& event)
 {
    listCtrlAccount_->OnNewTransaction(event);
 }
+//----------------------------------------------------------------------------
 
 void mmCheckingPanel::OnEditTransaction(wxCommandEvent& event)
 {
     listCtrlAccount_->OnEditTransaction(event);
 }
+//----------------------------------------------------------------------------
 
 void mmCheckingPanel::initViewTransactionsHeader()
 {
@@ -811,6 +827,7 @@ void mmCheckingPanel::initViewTransactionsHeader()
         header->SetLabel(_("Viewing All Except Reconciled Transactions"));
     }
 }
+//----------------------------------------------------------------------------
 
 void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
 {
@@ -916,13 +933,14 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     initVirtualListControl();
     listCtrlAccount_->RefreshItems(0, static_cast<long>(trans_.size()) - 1);
 }
+//----------------------------------------------------------------------------
 
-/*******************************************************/
 void MyListCtrl::OnListItemSelected(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
     cp_->updateExtraTransactionData(selectedIndex_);
 }
+//----------------------------------------------------------------------------
 
 void MyListCtrl::OnItemRightClick(wxListEvent& event)
 {
@@ -954,6 +972,7 @@ void MyListCtrl::OnItemRightClick(wxListEvent& event)
 
     PopupMenu(&menu, event.GetPoint());
 }
+//----------------------------------------------------------------------------
 
 void MyListCtrl::OnMarkTransactionDB(const wxString& status)
 {
@@ -971,6 +990,7 @@ void MyListCtrl::OnMarkTransactionDB(const wxString& status)
     RefreshItem(selectedIndex_);
     cp_->setAccountSummary();
 }
+//----------------------------------------------------------------------------
 
 void MyListCtrl::OnMarkTransaction(wxCommandEvent& event)
 {
@@ -993,6 +1013,7 @@ void MyListCtrl::OnMarkTransaction(wxCommandEvent& event)
       
     OnMarkTransactionDB(status);
 }
+//----------------------------------------------------------------------------
 
 void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
 {
@@ -1028,6 +1049,7 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
      }
      cp_->setAccountSummary();
 }
+//----------------------------------------------------------------------------
 
 void MyListCtrl::OnColClick(wxListEvent& event)
 {
@@ -1039,13 +1061,14 @@ void MyListCtrl::OnColClick(wxListEvent& event)
     SetColumnImage(sortCol_, -1);
 
     sortCol_ = event.GetColumn();
-    sortcol = sortCol_;
+    g_sortcol = sortCol_;
     asc_ = !asc_; // toggle sort order
-    asc = asc_;
+    g_asc = asc_;
     SetColumnImage(sortCol_, asc_ ? 5 : 4); // decide whether top or down icon needs to be shown
     cp_->sortTable();   // sort the table
     RefreshItems(0, static_cast<long>(cp_->trans_.size()) - 1); // refresh everything
 }
+//----------------------------------------------------------------------------
 
 void MyListCtrl::SetColumnImage(int col, int image)
 {
@@ -1054,6 +1077,7 @@ void MyListCtrl::SetColumnImage(int col, int image)
     item.SetImage(image);
     SetColumn(col, item);
 }
+//----------------------------------------------------------------------------
 
 wxString mmCheckingPanel::getItem(long item, long column)
 {  
@@ -1097,11 +1121,13 @@ wxString mmCheckingPanel::getItem(long item, long column)
 		
     return wxT("");
 }
+//----------------------------------------------------------------------------
 
 wxString MyListCtrl::OnGetItemText(long item, long column) const
 {
     return cp_->getItem(item, column);
 }
+//----------------------------------------------------------------------------
 
 int MyListCtrl::OnGetItemImage(long item) const
 {
@@ -1125,6 +1151,7 @@ int MyListCtrl::OnGetItemImage(long item) const
    }
    return 3;
 }
+//----------------------------------------------------------------------------
 
 /*
     Failed wxASSERT will hang application if active modal dialog presents on screen.
@@ -1151,6 +1178,7 @@ wxListItemAttr* MyListCtrl::OnGetItemAttr(long item) const
     return item % 2 ? &self.attr1_ : &self.attr2_;
 
 }
+//----------------------------------------------------------------------------
 
 void MyListCtrl::OnChar(wxKeyEvent& event)
 {
@@ -1171,6 +1199,7 @@ void MyListCtrl::OnChar(wxKeyEvent& event)
             event.Skip();
     }
 }
+//----------------------------------------------------------------------------
 
 void MyListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
 {
@@ -1179,6 +1208,7 @@ void MyListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
 
     m_selectedForCopy_ = cp_->trans_[selectedIndex_]->transactionID();
 }
+//----------------------------------------------------------------------------
 
 void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 {
@@ -1195,6 +1225,7 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
         RefreshItems(0, static_cast<long>(cp_->trans_.size()) - 1);
     }
 }
+//----------------------------------------------------------------------------
 
 void MyListCtrl::OnListKeyDown(wxListEvent& event)
 {
@@ -1251,6 +1282,7 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
             event.Skip();
     }
 }
+//----------------------------------------------------------------------------
 
 void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 {
@@ -1269,8 +1301,8 @@ void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
     }
     dlg->Destroy();
 }
+//----------------------------------------------------------------------------
 
-//Delete a transaction from an account
 void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 {
 	//check if a transaction is selected
@@ -1320,8 +1352,8 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 		}
 	}
 }
+//----------------------------------------------------------------------------
 
-//Edit a transaction in an account
 void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ != -1)
@@ -1339,6 +1371,7 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 		dlg->Destroy();
 	}
 }
+//----------------------------------------------------------------------------
 
 void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
 {
@@ -1361,4 +1394,4 @@ void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
         dlg->Destroy();
     }
 }
-
+//----------------------------------------------------------------------------

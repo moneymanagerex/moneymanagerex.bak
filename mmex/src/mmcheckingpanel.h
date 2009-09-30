@@ -16,8 +16,10 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
+//----------------------------------------------------------------------------
 #ifndef _MM_EX_CHECKINGPANEL_H_
 #define _MM_EX_CHECKINGPANEL_H_
+//----------------------------------------------------------------------------
 
 #include "mmpanelbase.h"
 #include "guiid.h"
@@ -25,12 +27,15 @@
 #include "wx/wxprec.h"
 #include "util.h"
 #include "mmcoredb.h"
-
+//----------------------------------------------------------------------------
 class wxListCtrl;
 class wxListEvent;
 class mmCheckingPanel;
+//----------------------------------------------------------------------------
 
-/* Custom ListCtrl class that implements virtual LC style */
+/* 
+    Custom ListCtrl class that implements virtual LC style 
+*/
 class MyListCtrl: public wxListCtrl
 {
     DECLARE_NO_COPY_CLASS(MyListCtrl)
@@ -99,8 +104,11 @@ public:
     long sortCol_;
     bool asc_;
 };
+//----------------------------------------------------------------------------
 
-/* Holds a single transaction */
+/* 
+    Holds a single transaction 
+*/
 class mmTransactionHolder
 {
 public:
@@ -139,6 +147,7 @@ public:
     double balance_;
     wxString balanceStr_;
 };
+//----------------------------------------------------------------------------
 
 class mmCheckingPanel : public mmPanelBase
 {
@@ -195,6 +204,7 @@ public:
     wxString currentView_;
     int accountID_;
 };
-
-#endif
+//----------------------------------------------------------------------------
+#endif // _MM_EX_CHECKINGPANEL_H_
+//----------------------------------------------------------------------------
 
