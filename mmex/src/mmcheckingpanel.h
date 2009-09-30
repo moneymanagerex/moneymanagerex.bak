@@ -24,63 +24,11 @@
 #include "mmpanelbase.h"
 //----------------------------------------------------------------------------
 #include <boost/scoped_ptr.hpp>
-//----------------------------------------------------------------------------
-class wxListCtrl;
-class wxListEvent;
-class mmCheckingPanel;
+#include <boost/shared_ptr.hpp>
 //----------------------------------------------------------------------------
 class mmCoreDB;
 class mmBankTransaction;
-//----------------------------------------------------------------------------
-/* 
-    Custom ListCtrl class that implements virtual LC style 
-*/
-class MyListCtrl: public wxListCtrl
-{
-    DECLARE_NO_COPY_CLASS(MyListCtrl)
-    DECLARE_EVENT_TABLE()
-
-public:
-    MyListCtrl(mmCheckingPanel *cp, wxWindow *parent,const wxWindowID id, const wxPoint& pos,const wxSize& size, long style);
-
-    /* required overrides for virtual style list control */
-    wxString OnGetItemText(long item, long column) const;
-    int OnGetItemImage(long item) const;
-    wxListItemAttr *OnGetItemAttr(long item) const;
-
-    void OnItemRightClick(wxListEvent& event);
-    void OnListItemSelected(wxListEvent& event);
-    void OnListItemActivated(wxListEvent& event);
-    void OnMarkTransaction(wxCommandEvent& event);
-    void OnMarkAllTransactions(wxCommandEvent& event);
-    void OnListKeyDown(wxListEvent& event);
-    void OnChar(wxKeyEvent& event);
-    void OnMarkTransactionDB(const wxString& status);
-    void OnCopy(wxCommandEvent& WXUNUSED(event));
-    void OnPaste(wxCommandEvent& WXUNUSED(event));
-
-    /* Sort Columns */
-    void OnColClick(wxListEvent& event);
-    void SetColumnImage(int col, int image);
-    
-    void OnNewTransaction(wxCommandEvent& event);
-    void OnDeleteTransaction(wxCommandEvent& event);
-    void OnEditTransaction(wxCommandEvent& event);
-
-public:
-    long m_sortCol;
-    bool m_asc;
-
-private:
-    mmCheckingPanel *m_cp;
-    long m_selectedIndex;
-    long m_selectedForCopy;
-
-    wxListItemAttr m_attr1; // style1
-    wxListItemAttr m_attr2; // style2
-    wxListItemAttr m_attr3; // style, for future dates
-    wxListItemAttr m_attr4; // style, for future dates
-};
+class MyListCtrl;
 //----------------------------------------------------------------------------
 
 /* 
@@ -130,22 +78,28 @@ class mmCheckingPanel : public mmPanelBase
     DECLARE_EVENT_TABLE()
 
 public:
-    mmCheckingPanel( mmCoreDB* core,
+    mmCheckingPanel(
+        mmCoreDB* core,
         wxSQLite3Database* inidb, 
-        int accountID, wxWindow *parent,
+        int accountID, 
+        wxWindow *parent,
         wxWindowID winid = wxID_ANY,
         const wxPoint& pos = wxDefaultPosition,
         const wxSize& size = wxDefaultSize,
         long style = wxTAB_TRAVERSAL | wxNO_BORDER,
-        const wxString& name = wxPanelNameStr );
+        const wxString& name = wxPanelNameStr 
+    );
     
     ~mmCheckingPanel();
 
-    bool Create( wxWindow *parent, wxWindowID winid,
-                const wxPoint& pos = wxDefaultPosition,
-                const wxSize& size = wxDefaultSize,
-                long style = wxTAB_TRAVERSAL | wxNO_BORDER,
-                const wxString& name = wxPanelNameStr);
+    bool Create( 
+        wxWindow *parent, 
+        wxWindowID winid,
+        const wxPoint& pos = wxDefaultPosition,
+        const wxSize& size = wxDefaultSize,
+        long style = wxTAB_TRAVERSAL | wxNO_BORDER,
+        const wxString& name = wxPanelNameStr
+    );
       
     void CreateControls();
 
@@ -166,20 +120,23 @@ public:
 
     void setAccountSummary();
 
-    /* Helper Functions/data */
-    int accountID() const { return accountID_; }
+    int accountID() const { return m_AccountID; }
     void sortTable();
 
     std::vector<mmBankTransaction*> trans_;
 
-public:
+private:
     mmCoreDB* core_;
-    wxSQLite3Database* db_;
     wxSQLite3Database* inidb_;
-    MyListCtrl* listCtrlAccount_;
-    boost::scoped_ptr<wxImageList> m_imageList;
     wxString currentView_;
-    int accountID_;
+
+    MyListCtrl *listCtrlAccount_;
+    const int m_AccountID;
+    boost::scoped_ptr<wxImageList> m_imageList;
+
+    friend class MyListCtrl;
+
+    boost::shared_ptr<wxSQLite3Database> getDb() const;
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_CHECKINGPANEL_H_

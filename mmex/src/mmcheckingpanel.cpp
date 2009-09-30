@@ -36,61 +36,6 @@
 #include "../resources/duplicate.xpm"
 //----------------------------------------------------------------------------
 
-BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
-    EVT_BUTTON(ID_BUTTON_NEW_TRANS,         mmCheckingPanel::OnNewTransaction)
-    EVT_BUTTON(ID_BUTTON_EDIT_TRANS,        mmCheckingPanel::OnEditTransaction)
-    EVT_BUTTON(ID_BUTTON_DELETE_TRANS,      mmCheckingPanel::OnDeleteTransaction)
-    EVT_LEFT_DOWN( mmCheckingPanel::OnMouseLeftDown ) 
-
-    EVT_MENU(MENU_VIEW_ALLTRANSACTIONS, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_RECONCILED, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_UNRECONCILED, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_NOTRECONCILED, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_VOID, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_TODAY, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_LAST30, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_LAST3MONTHS, mmCheckingPanel::OnViewPopupSelected)
-	EVT_MENU(MENU_VIEW_DUPLICATE, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_DELETE_TRANS, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_DELETE_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_CURRENTMONTH, mmCheckingPanel::OnViewPopupSelected)
-    EVT_MENU(MENU_VIEW_LASTMONTH, mmCheckingPanel::OnViewPopupSelected)
-END_EVENT_TABLE()
-//----------------------------------------------------------------------------
-
-BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
-    EVT_LIST_ITEM_SELECTED(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListItemSelected)
-    EVT_LIST_ITEM_ACTIVATED(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListItemActivated)
-    EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnItemRightClick)
-    
-    EVT_MENU(MENU_TREEPOPUP_MARKRECONCILED,   MyListCtrl::OnMarkTransaction)
-    EVT_MENU(MENU_TREEPOPUP_MARKUNRECONCILED, MyListCtrl::OnMarkTransaction)
-    EVT_MENU(MENU_TREEPOPUP_MARKVOID,         MyListCtrl::OnMarkTransaction)
-    EVT_MENU(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP, MyListCtrl::OnMarkTransaction)
-	EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE,         MyListCtrl::OnMarkTransaction)
-
-    EVT_MENU(MENU_TREEPOPUP_MARKRECONCILED_ALL,   MyListCtrl::OnMarkAllTransactions)
-    EVT_MENU(MENU_TREEPOPUP_MARKUNRECONCILED_ALL, MyListCtrl::OnMarkAllTransactions)
-    EVT_MENU(MENU_TREEPOPUP_MARKVOID_ALL,         MyListCtrl::OnMarkAllTransactions)
-    EVT_MENU(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL, MyListCtrl::OnMarkAllTransactions)
-	EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE_ALL,         MyListCtrl::OnMarkAllTransactions)
-
-    EVT_MENU(MENU_TREEPOPUP_NEW,              MyListCtrl::OnNewTransaction)
-    EVT_MENU(MENU_TREEPOPUP_DELETE,           MyListCtrl::OnDeleteTransaction)
-    EVT_MENU(MENU_TREEPOPUP_EDIT,             MyListCtrl::OnEditTransaction)
-    
-    EVT_LIST_COL_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnColClick)
-    EVT_LIST_KEY_DOWN(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListKeyDown)
-
-    EVT_MENU(MENU_ON_COPY_TRANSACTION, MyListCtrl::OnCopy) 
-    EVT_MENU(MENU_ON_PASTE_TRANSACTION, MyListCtrl::OnPaste) 
-    EVT_MENU(MENU_ON_NEW_TRANSACTION, MyListCtrl::OnNewTransaction) 
-
-    EVT_CHAR(MyListCtrl::OnChar)
-END_EVENT_TABLE()
-//----------------------------------------------------------------------------
-
 namespace
 {
 
@@ -154,6 +99,116 @@ void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
 
 //----------------------------------------------------------------------------
 
+/* 
+    Custom ListCtrl class that implements virtual LC style 
+*/
+class MyListCtrl : public wxListCtrl
+{
+    DECLARE_NO_COPY_CLASS(MyListCtrl)
+    DECLARE_EVENT_TABLE()
+
+public:
+    MyListCtrl(mmCheckingPanel *cp, wxWindow *parent,const wxWindowID id, const wxPoint& pos,const wxSize& size, long style);
+
+    /* required overrides for virtual style list control */
+    wxString OnGetItemText(long item, long column) const;
+    int OnGetItemImage(long item) const;
+    wxListItemAttr *OnGetItemAttr(long item) const;
+
+    void OnItemRightClick(wxListEvent& event);
+    void OnListItemSelected(wxListEvent& event);
+    void OnListItemActivated(wxListEvent& event);
+    void OnMarkTransaction(wxCommandEvent& event);
+    void OnMarkAllTransactions(wxCommandEvent& event);
+    void OnListKeyDown(wxListEvent& event);
+    void OnChar(wxKeyEvent& event);
+    void OnMarkTransactionDB(const wxString& status);
+    void OnCopy(wxCommandEvent& WXUNUSED(event));
+    void OnPaste(wxCommandEvent& WXUNUSED(event));
+
+    /* Sort Columns */
+    void OnColClick(wxListEvent& event);
+    void SetColumnImage(int col, int image);
+
+    void OnNewTransaction(wxCommandEvent& event);
+    void OnDeleteTransaction(wxCommandEvent& event);
+    void OnEditTransaction(wxCommandEvent& event);
+
+public:
+    long m_sortCol;
+    bool m_asc;
+
+private:
+    mmCheckingPanel *m_cp;
+    long m_selectedIndex;
+    long m_selectedForCopy;
+
+    wxListItemAttr m_attr1; // style1
+    wxListItemAttr m_attr2; // style2
+    wxListItemAttr m_attr3; // style, for future dates
+    wxListItemAttr m_attr4; // style, for future dates
+};
+//----------------------------------------------------------------------------
+
+BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
+
+    EVT_BUTTON(ID_BUTTON_NEW_TRANS,         mmCheckingPanel::OnNewTransaction)
+    EVT_BUTTON(ID_BUTTON_EDIT_TRANS,        mmCheckingPanel::OnEditTransaction)
+    EVT_BUTTON(ID_BUTTON_DELETE_TRANS,      mmCheckingPanel::OnDeleteTransaction)
+    EVT_LEFT_DOWN( mmCheckingPanel::OnMouseLeftDown ) 
+
+    EVT_MENU(MENU_VIEW_ALLTRANSACTIONS, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_RECONCILED, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_UNRECONCILED, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_NOTRECONCILED, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_VOID, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_TODAY, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_LAST30, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_LAST3MONTHS, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_DUPLICATE, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_DELETE_TRANS, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_DELETE_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_CURRENTMONTH, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_LASTMONTH, mmCheckingPanel::OnViewPopupSelected)
+
+END_EVENT_TABLE()
+//----------------------------------------------------------------------------
+
+BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
+
+    EVT_LIST_ITEM_SELECTED(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListItemSelected)
+    EVT_LIST_ITEM_ACTIVATED(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListItemActivated)
+    EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnItemRightClick)
+
+    EVT_MENU(MENU_TREEPOPUP_MARKRECONCILED,   MyListCtrl::OnMarkTransaction)
+    EVT_MENU(MENU_TREEPOPUP_MARKUNRECONCILED, MyListCtrl::OnMarkTransaction)
+    EVT_MENU(MENU_TREEPOPUP_MARKVOID,         MyListCtrl::OnMarkTransaction)
+    EVT_MENU(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP, MyListCtrl::OnMarkTransaction)
+    EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE,         MyListCtrl::OnMarkTransaction)
+
+    EVT_MENU(MENU_TREEPOPUP_MARKRECONCILED_ALL,   MyListCtrl::OnMarkAllTransactions)
+    EVT_MENU(MENU_TREEPOPUP_MARKUNRECONCILED_ALL, MyListCtrl::OnMarkAllTransactions)
+    EVT_MENU(MENU_TREEPOPUP_MARKVOID_ALL,         MyListCtrl::OnMarkAllTransactions)
+    EVT_MENU(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL, MyListCtrl::OnMarkAllTransactions)
+    EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE_ALL,         MyListCtrl::OnMarkAllTransactions)
+
+    EVT_MENU(MENU_TREEPOPUP_NEW,              MyListCtrl::OnNewTransaction)
+    EVT_MENU(MENU_TREEPOPUP_DELETE,           MyListCtrl::OnDeleteTransaction)
+    EVT_MENU(MENU_TREEPOPUP_EDIT,             MyListCtrl::OnEditTransaction)
+
+    EVT_LIST_COL_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnColClick)
+    EVT_LIST_KEY_DOWN(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListKeyDown)
+
+    EVT_MENU(MENU_ON_COPY_TRANSACTION, MyListCtrl::OnCopy) 
+    EVT_MENU(MENU_ON_PASTE_TRANSACTION, MyListCtrl::OnPaste) 
+    EVT_MENU(MENU_ON_NEW_TRANSACTION, MyListCtrl::OnNewTransaction) 
+
+    EVT_CHAR(MyListCtrl::OnChar)
+
+END_EVENT_TABLE()
+//----------------------------------------------------------------------------
+
 mmCheckingPanel::mmCheckingPanel
 (
     mmCoreDB* core,
@@ -163,13 +218,10 @@ mmCheckingPanel::mmCheckingPanel
     const wxString& name
 ) : 
     core_(core),
-    db_(core->db_.get()), 
     inidb_(inidb),
     listCtrlAccount_(),
-    accountID_(accountID)
+    m_AccountID(accountID)
 {
-    wxASSERT(db_);
-    
     Create(parent, winid, pos, size, style, name);
 }
 //----------------------------------------------------------------------------
@@ -499,12 +551,12 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 
 void mmCheckingPanel::setAccountSummary()
 {
-    double total = core_->accountList_.getAccountSharedPtr(accountID_)->balance();
+    double total = core_->accountList_.getAccountSharedPtr(m_AccountID)->balance();
     wxString balance;
     mmCurrencyFormatter::formatDoubleToCurrency(total, balance);
 
-    double reconciledBal = core_->bTransactionList_.getReconciledBalance(accountID_);
-    double acctInitBalance = core_->accountList_.getAccountSharedPtr(accountID_)->initialBalance_;
+    double reconciledBal = core_->bTransactionList_.getReconciledBalance(m_AccountID);
+    double acctInitBalance = core_->accountList_.getAccountSharedPtr(m_AccountID)->initialBalance_;
     
     wxString recbalance;
     mmCurrencyFormatter::formatDoubleToCurrency(reconciledBal + acctInitBalance, recbalance);
@@ -529,7 +581,7 @@ void mmCheckingPanel::initVirtualListControl()
     pgd->Update(10);
 #endif
    
-    boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(accountID_);
+    boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(m_AccountID);
     double acctInitBalance = pAccount->initialBalance_;
     boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
     wxASSERT(pCurrency);
@@ -552,10 +604,10 @@ void mmCheckingPanel::initVirtualListControl()
     for (size_t i = 0; i < core_->bTransactionList_.transactions_.size(); ++i)
     {
         boost::shared_ptr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[i];
-        if ((pBankTransaction->accountID_ != accountID_) && (pBankTransaction->toAccountID_ != accountID_))
+        if ((pBankTransaction->accountID_ != m_AccountID) && (pBankTransaction->toAccountID_ != m_AccountID))
            continue;
 
-        pBankTransaction->updateAllData(core_, accountID_, pCurrency);
+        pBankTransaction->updateAllData(core_, m_AccountID, pCurrency);
 
         bool toAdd = true;
 		bool getBal = false;
@@ -671,11 +723,11 @@ void mmCheckingPanel::initVirtualListControl()
 				   }
 				   else if (pBankTransaction->transType_ == wxT("Transfer"))
 				   {
-					   if (pBankTransaction->accountID_ == accountID_)
+					   if (pBankTransaction->accountID_ == m_AccountID)
 					   {
 						   unseenBalance -= pBankTransaction->amt_;
 					   }
-					   else if (pBankTransaction->toAccountID_== accountID_)
+					   else if (pBankTransaction->toAccountID_== m_AccountID)
 					   {
 						   unseenBalance += pBankTransaction->toAmt_;
 					   }
@@ -693,7 +745,7 @@ void mmCheckingPanel::initVirtualListControl()
     double initBalance = acctInitBalance + unseenBalance;
     if (currentView_ == wxT("View UnReconciled"))
     {
-        initBalance = core_->bTransactionList_.getReconciledBalance(accountID_);
+        initBalance = core_->bTransactionList_.getReconciledBalance(m_AccountID);
     }
 
     std::sort(trans_.begin(), trans_.end(), sortTransactionsByDate);
@@ -725,11 +777,11 @@ void mmCheckingPanel::initVirtualListControl()
             }
             else if (tr.transType_ == wxT("Transfer"))
             {
-                if (tr.accountID_ == accountID_)
+                if (tr.accountID_ == m_AccountID)
                 {
                     initBalance -= tr.amt_;
                 }
-                else if (tr.toAccountID_== accountID_)
+                else if (tr.toAccountID_== m_AccountID)
                 {
                     initBalance += tr.toAmt_;
                 }
@@ -905,10 +957,10 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
             wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
         {
-           //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(core_->accountList_.getAccountSharedPtr(accountID_).get());
+           //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(core_->accountList_.getAccountSharedPtr(m_AccountID).get());
             for (size_t i = 0; i < trans_.size(); ++i)
             {
-               core_->bTransactionList_.deleteTransaction(accountID_, trans_[i]->transactionID());
+               core_->bTransactionList_.deleteTransaction(m_AccountID, trans_[i]->transactionID());
             }
         }
     }
@@ -919,12 +971,12 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
             wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
         {
-           //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(core_->accountList_.getAccountSharedPtr(accountID_).get());
+           //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(core_->accountList_.getAccountSharedPtr(m_AccountID).get());
             for (size_t i = 0; i < trans_.size(); ++i)
             {
                if (trans_[i]->status_ == wxT("F"))
                {
-                  core_->bTransactionList_.deleteTransaction(accountID_, trans_[i]->transactionID());
+                  core_->bTransactionList_.deleteTransaction(m_AccountID, trans_[i]->transactionID());
                }
             }
         }
@@ -984,7 +1036,7 @@ void MyListCtrl::OnMarkTransactionDB(const wxString& status)
     if (m_selectedIndex == -1)
         return;
     int transID = m_cp->trans_[m_selectedIndex]->transactionID();
-    mmDBWrapper::updateTransactionWithStatus(m_cp->db_, transID, status);
+    mmDBWrapper::updateTransactionWithStatus(*m_cp->getDb(), transID, status);
     m_cp->trans_[m_selectedIndex]->status_ = status;
 
     if (m_cp->currentView_ != wxT("View All Transactions"))
@@ -1042,7 +1094,7 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
      for (size_t i = 0; i < m_cp->trans_.size(); ++i)
      {
         int transID = m_cp->trans_[i]->transactionID();
-        mmDBWrapper::updateTransactionWithStatus(m_cp->db_, transID, status);
+        mmDBWrapper::updateTransactionWithStatus(*m_cp->getDb(), transID, status);
         m_cp->trans_[i]->status_ = status;
      }
 
@@ -1291,8 +1343,9 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
 
 void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 {
-    mmTransDialog *dlg = new mmTransDialog(m_cp->db_, m_cp->core_, m_cp->accountID_, 
+    mmTransDialog *dlg = new mmTransDialog(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 
         0, false, m_cp->inidb_, this );
+
     if ( dlg->ShowModal() == wxID_OK )
     {
         m_cp->initVirtualListControl();
@@ -1326,7 +1379,7 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 			long topItemIndex = GetTopItem();
          
 			//remove the transaction
-			this->m_cp->core_->bTransactionList_.deleteTransaction(this->m_cp->accountID_, 
+			this->m_cp->core_->bTransactionList_.deleteTransaction(this->m_cp->accountID(), 
 			   m_cp->trans_[m_selectedIndex]->transactionID());
 			
 
@@ -1363,7 +1416,7 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex != -1)
 	{
-		mmTransDialog *dlg = new mmTransDialog(m_cp->db_, m_cp->core_, m_cp->accountID_, 
+		mmTransDialog *dlg = new mmTransDialog(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 
 		   m_cp->trans_[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
 		if ( dlg->ShowModal() == wxID_OK )
 		{
@@ -1383,7 +1436,7 @@ void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
     if (m_selectedIndex != -1)
 	{
         //m_selectedIndex = event.GetIndex();
-        mmTransDialog *dlg = new mmTransDialog(m_cp->db_, m_cp->core_,  m_cp->accountID_, 
+        mmTransDialog *dlg = new mmTransDialog(m_cp->getDb(), m_cp->core_,  m_cp->accountID(), 
             m_cp->trans_[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
         if ( dlg->ShowModal() == wxID_OK )
         {
@@ -1432,3 +1485,10 @@ MyListCtrl::MyListCtrl(
     wxAcceleratorTable tab(sizeof(entries)/sizeof(*entries), entries);
     SetAcceleratorTable(tab); 
 }
+//----------------------------------------------------------------------------
+
+boost::shared_ptr<wxSQLite3Database> mmCheckingPanel::getDb() const 
+{ 
+    return core_->db_; 
+}
+//----------------------------------------------------------------------------
