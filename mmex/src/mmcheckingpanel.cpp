@@ -382,17 +382,22 @@ void mmCheckingPanel::CreateControls()
 */
 bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
 {
-	const int COL_DATE_OR_TRANSACTION_ID = 0;
-	const int COL_TRANSACTION_NUMBER = 1;
-	const int COL_PAYEE_STR = 2;
-	const int COL_STATUS = 3;
-	const int COL_CATEGORY = 4;
-	const int COL_WITHDRAWAL = 5; 
-	const int COL_DEPOSIT = 6 ;
+    enum 
+    { 
+        COL_DATE_OR_TRANSACTION_ID, 
+        COL_TRANSACTION_NUMBER, 
+        COL_PAYEE_STR, 
+        COL_STATUS, 
+        COL_CATEGORY, 
+        COL_WITHDRAWAL, 
+        COL_DEPOSIT 
+    };
 	
-	long elem1Long=0, elem2Long=0;
+	long elem1Long = 0;
+    long elem2Long = 0;
+
 	switch( g_sortcol )
-		{
+    {
 		case COL_DATE_OR_TRANSACTION_ID:
 			if (elem1->date_ != elem2->date_)
 			{

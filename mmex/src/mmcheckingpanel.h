@@ -22,10 +22,6 @@
 //----------------------------------------------------------------------------
 #include "defs.h"
 #include "mmpanelbase.h"
-#include "guiid.h"
-#include "wx/wxprec.h"
-#include "util.h"
-#include "mmcoredb.h"
 //----------------------------------------------------------------------------
 #include <boost/scoped_ptr.hpp>
 //----------------------------------------------------------------------------
@@ -33,7 +29,9 @@ class wxListCtrl;
 class wxListEvent;
 class mmCheckingPanel;
 //----------------------------------------------------------------------------
-
+class mmCoreDB;
+class mmBankTransaction;
+//----------------------------------------------------------------------------
 /* 
     Custom ListCtrl class that implements virtual LC style 
 */
