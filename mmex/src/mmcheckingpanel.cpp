@@ -324,7 +324,8 @@ mmCheckingPanel::mmCheckingPanel
 (
     mmCoreDB* core,
     wxSQLite3Database* inidb,
-    int accountID, wxWindow *parent,
+    int accountID, 
+    wxWindow *parent,
     wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
     const wxString& name
 ) : 
@@ -333,33 +334,56 @@ mmCheckingPanel::mmCheckingPanel
     m_listCtrlAccount(),
     m_AccountID(accountID)
 {
+    wxASSERT(m_core);
+    wxASSERT(m_inidb);
+
     Create(parent, winid, pos, size, style, name);
 }
 //----------------------------------------------------------------------------
 
-bool mmCheckingPanel::Create( wxWindow *parent,
-            wxWindowID winid, const wxPoint& pos, 
-            const wxSize& size,long style, const wxString& name  )
+/*
+    We cannon use OnClose() event because this class deletes 
+    via DestroyChildren() of its parent.
+*/
+mmCheckingPanel::~mmCheckingPanel()
 {
-    SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
-    wxPanel::Create(parent, winid, pos, size, style, name);
-
-    this->Freeze();
-    CreateControls();
-    GetSizer()->Fit(this);
-    GetSizer()->SetSizeHints(this);
-    
-    initVirtualListControl();
-    
-    this->Thaw();
-    return TRUE;
+    try {
+        saveSettings();
+    } catch (...) {
+        wxASSERT(false);
+    }
 }
 //----------------------------------------------------------------------------
 
-mmCheckingPanel::~mmCheckingPanel()
+bool mmCheckingPanel::Create
+(
+    wxWindow *parent,
+    wxWindowID winid, const wxPoint& pos, 
+    const wxSize& size,long style, const wxString& name
+)
 {
-    // save widths of columns to ini database
-    
+    SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
+    bool ok = wxPanel::Create(parent, winid, pos, size, style, name);
+
+    if (ok) {
+        Freeze();
+        CreateControls();
+        GetSizer()->Fit(this);
+        GetSizer()->SetSizeHints(this);
+
+        initVirtualListControl();
+        Thaw();
+    }
+
+    return ok;
+}
+//----------------------------------------------------------------------------
+
+/*
+    Save data to ini database.
+*/
+void mmCheckingPanel::saveSettings()
+{
     int cols = m_listCtrlAccount->GetColumnCount();
 
     for (int i = 0; i < cols; ++i)
@@ -372,11 +396,15 @@ mmCheckingPanel::~mmCheckingPanel()
         mmDBWrapper::setINISettingValue(m_inidb, name, val); 
     }
 
+    // sorting column index
+
     wxString val = wxString::Format(wxT("%d"), g_sortcol);
     mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_SORT_COL"), val); 
 
+    // asc\desc sorting flag
+
     val = wxString::Format(wxT("%d"), g_asc);
-    mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_ASC"), val); 
+    mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_ASC"), val);
 }
 //----------------------------------------------------------------------------
 
@@ -1382,8 +1410,7 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 			long topItemIndex = GetTopItem();
          
 			//remove the transaction
-			this->m_cp->m_core->bTransactionList_.deleteTransaction(this->m_cp->accountID(), 
-			   m_cp->m_trans[m_selectedIndex]->transactionID());
+			m_cp->m_core->bTransactionList_.deleteTransaction(m_cp->accountID(), m_cp->m_trans[m_selectedIndex]->transactionID());
 			
 
          //initialize the transaction list to redo balances and images

@@ -75,9 +75,8 @@ struct mmTransactionHolder
 
 class mmCheckingPanel : public mmPanelBase
 {
-    DECLARE_EVENT_TABLE()
-
 public:
+
     mmCheckingPanel(
         mmCoreDB* core,
         wxSQLite3Database* inidb, 
@@ -89,41 +88,11 @@ public:
         long style = wxTAB_TRAVERSAL | wxNO_BORDER,
         const wxString& name = wxPanelNameStr 
     );
-    
+
     ~mmCheckingPanel();
 
-    bool Create( 
-        wxWindow *parent, 
-        wxWindowID winid,
-        const wxPoint& pos = wxDefaultPosition,
-        const wxSize& size = wxDefaultSize,
-        long style = wxTAB_TRAVERSAL | wxNO_BORDER,
-        const wxString& name = wxPanelNameStr
-    );
-      
-    void CreateControls();
-
-    /* updates the checking panel data */
-    void initVirtualListControl();
-    void updateExtraTransactionData(int selIndex);
-
-    /* Getter for Virtual List Control */
-    wxString getItem(long item, long column);
-  
-    /* Event handlers for Buttons */
-    void OnNewTransaction(wxCommandEvent& event);
-    void OnDeleteTransaction(wxCommandEvent& event);
-    void OnEditTransaction(wxCommandEvent& event);
-    void OnMouseLeftDown( wxMouseEvent& event );
-    void OnViewPopupSelected(wxCommandEvent& event);
-    void initViewTransactionsHeader();
-
-    void setAccountSummary();
-
-    int accountID() const { return m_AccountID; }
-    void sortTable();
-
 private:
+    DECLARE_EVENT_TABLE()
     friend class MyListCtrl; // needs access to m_core, initdb_, ...
 
     mmCoreDB* m_core;
@@ -136,6 +105,35 @@ private:
     std::vector<mmBankTransaction*> m_trans;
 
     boost::shared_ptr<wxSQLite3Database> getDb() const;
+    void initViewTransactionsHeader();
+    void setAccountSummary();
+    void sortTable();
+    void CreateControls();
+
+    bool Create( 
+        wxWindow *parent, 
+        wxWindowID winid,
+        const wxPoint& pos = wxDefaultPosition,
+        const wxSize& size = wxDefaultSize,
+        long style = wxTAB_TRAVERSAL | wxNO_BORDER,
+        const wxString& name = wxPanelNameStr
+    );
+
+    void OnNewTransaction(wxCommandEvent& event);
+    void OnDeleteTransaction(wxCommandEvent& event);
+    void OnEditTransaction(wxCommandEvent& event);
+    void OnMouseLeftDown( wxMouseEvent& event );
+    void OnViewPopupSelected(wxCommandEvent& event);
+
+    /* updates the checking panel data */
+    void initVirtualListControl();
+    void updateExtraTransactionData(int selIndex);
+    void saveSettings();
+
+    /* Getter for Virtual List Control */
+    wxString getItem(long item, long column);
+
+    int accountID() const { return m_AccountID; }
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_CHECKINGPANEL_H_
