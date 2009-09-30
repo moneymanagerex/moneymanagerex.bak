@@ -288,6 +288,8 @@ private:
 private:
     // any class wishing to process wxWindows events must use this macro
     DECLARE_EVENT_TABLE()
+
+    wxSizer* cleanupHomePanel(bool new_sizer = true);
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_MMEX_H_

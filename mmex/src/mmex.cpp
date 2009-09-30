@@ -129,6 +129,8 @@ const wxString MMEX_ICON_FNAME = wxStandardPaths::Get().GetResourcesDir() + wxT(
 const wxString MMEX_ICON_FNAME = wxT("mmex.ico");
 #endif
 
+//----------------------------------------------------------------------------
+
 } // namespace
 
 //----------------------------------------------------------------------------
@@ -544,7 +546,7 @@ mmGUIFrame::~mmGUIFrame()
     m_mgr.UnInit();
  
     /* Delete the GUI */
-    homePanel->DestroyChildren();
+    cleanupHomePanel(false);
 
     /* Delete any temp *.png files left behind */
     if (wxFile::Exists(wxT("inc_expenses_month.png")))
@@ -1210,15 +1212,10 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
               else
               {
                  Freeze();
-                 homePanel->DestroyChildren();
-                 homePanel->SetSizer(NULL);
+                 wxSizer *sizer = cleanupHomePanel();
 
-                 wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-                 homePanel->SetSizer(itemBoxSizer1);
-
-                 panelCurrent_ = new mmStocksPanel(db_.get(), inidb_.get(), data, homePanel, ID_PANEL3, 
-                    wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-                 itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+                 panelCurrent_ = new mmStocksPanel(db_.get(), inidb_.get(), data, homePanel, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+                 sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
                  homePanel->Layout();
                  Thaw();
@@ -1907,18 +1904,14 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
 
 void mmGUIFrame::createCheckingAccountPage(int accountID)
 {
-    homePanel->DestroyChildren();
-    homePanel->SetSizer(NULL);
-
-    wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-    homePanel->SetSizer(itemBoxSizer1);
+    wxSizer *sizer = cleanupHomePanel();
     
-    panelCurrent_ = new mmCheckingPanel(core_.get(), inidb_.get(), 
-        accountID, homePanel, ID_PANEL3, 
-        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+    panelCurrent_ = new mmCheckingPanel(core_.get(), inidb_.get(),  
+                                        accountID, homePanel, ID_PANEL3, 
+                                        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL
+                                       );
 
-
+    sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
     homePanel->Layout();
 }
 
@@ -1932,26 +1925,19 @@ void mmGUIFrame::OnGotoAccount(wxCommandEvent& WXUNUSED(event))
 
 void mmGUIFrame::createBudgetingPage(int budgetYearID)
 {
-    homePanel->DestroyChildren();
-    homePanel->SetSizer(NULL);
-
-    wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-    homePanel->SetSizer(itemBoxSizer1);
+    wxSizer *sizer = cleanupHomePanel();
 
     panelCurrent_ = new mmBudgetingPanel(db_.get(), inidb_.get(), budgetYearID, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+    
+    sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
     homePanel->Layout();
 }
 
 void mmGUIFrame::createHomePage()
 {
-    homePanel->DestroyChildren();
-    homePanel->SetSizer(NULL);
-
-    wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-    homePanel->SetSizer(itemBoxSizer1);
+    wxSizer *sizer = cleanupHomePanel();
     
     if (m_topCategories == wxT(""))
        m_topCategories = createCategoryList();
@@ -1972,7 +1958,8 @@ void mmGUIFrame::createHomePage()
         wxDefaultPosition, 
         wxDefaultSize, 
         wxNO_BORDER|wxTAB_TRAVERSAL);
-    itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+    
+    sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
      
     homePanel->Layout();
     refreshRequested_ = false;
@@ -1980,30 +1967,24 @@ void mmGUIFrame::createHomePage()
 
 void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
 {
-    homePanel->DestroyChildren();
-    homePanel->SetSizer(NULL);
-
-    wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-    homePanel->SetSizer(itemBoxSizer1);
+    wxSizer *sizer = cleanupHomePanel();
        
     panelCurrent_ = new mmReportsPanel(this, db_.get(), rs, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
-    itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+    
+    sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
      
     homePanel->Layout();
 }
 
 void mmGUIFrame::createHelpPage()
 {
-    homePanel->DestroyChildren();
-    homePanel->SetSizer(NULL);
-
-    wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-    homePanel->SetSizer(itemBoxSizer1);
+    wxSizer *sizer = cleanupHomePanel();
        
     panelCurrent_ = new mmHelpPanel(this, db_.get(), homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
-    itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+    
+    sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
      
     homePanel->Layout();
 }
@@ -3244,45 +3225,36 @@ void mmGUIFrame::OnExportToHtml(wxCommandEvent& WXUNUSED(event))
 
 void mmGUIFrame::OnBillsDeposits(wxCommandEvent& WXUNUSED(event))
 {
-    homePanel->DestroyChildren();
-    homePanel->SetSizer(NULL);
-
-    wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-    homePanel->SetSizer(itemBoxSizer1);
+    wxSizer *sizer = cleanupHomePanel();
     
     panelCurrent_ = new mmBillsDepositsPanel(db_.get(), inidb_.get(), core_.get(), homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+    
+    sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
     homePanel->Layout();
 }
 
 void mmGUIFrame::OnStocks(wxCommandEvent& /*event*/)
 {
-    homePanel->DestroyChildren();
-    homePanel->SetSizer(NULL);
-
-    wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-    homePanel->SetSizer(itemBoxSizer1);
+    wxSizer *sizer = cleanupHomePanel();
     
     panelCurrent_ = new mmStocksPanel(db_.get(), inidb_.get(), -1, homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+
+    sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
     homePanel->Layout();
 }
 
 void mmGUIFrame::OnAssets(wxCommandEvent& /*event*/)
 {
-    homePanel->DestroyChildren();
-    homePanel->SetSizer(NULL);
-
-    wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-    homePanel->SetSizer(itemBoxSizer1);
+    wxSizer *sizer = cleanupHomePanel();
     
     panelCurrent_ = new mmAssetsPanel(db_.get(), inidb_.get(), homePanel, ID_PANEL3, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    itemBoxSizer1->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+    
+    sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
     homePanel->Layout();
 }
@@ -3647,5 +3619,16 @@ bool wxAddAccountPage2::TransferDataFromWindow()
     parent_->acctID_ = parent_->core_->accountList_.addAccount(pAccount);
 
     return true;
+}
+//----------------------------------------------------------------------------
+
+wxSizer* mmGUIFrame::cleanupHomePanel(bool new_sizer)
+{
+    wxASSERT(homePanel);
+
+    homePanel->DestroyChildren();
+    homePanel->SetSizer(new_sizer ? new wxBoxSizer(wxHORIZONTAL) : 0);
+
+    return homePanel->GetSizer();
 }
 //----------------------------------------------------------------------------
