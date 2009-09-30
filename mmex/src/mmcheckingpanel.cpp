@@ -94,6 +94,117 @@ void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
         }
     }
 }
+//----------------------------------------------------------------------------
+
+/*
+    Return whether first element is greater than the second
+*/
+bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
+{
+    enum 
+    { 
+        COL_DATE_OR_TRANSACTION_ID, 
+        COL_TRANSACTION_NUMBER, 
+        COL_PAYEE_STR, 
+        COL_STATUS, 
+        COL_CATEGORY, 
+        COL_WITHDRAWAL, 
+        COL_DEPOSIT 
+    };
+
+    long elem1Long = 0;
+    long elem2Long = 0;
+
+    switch( g_sortcol )
+    {
+    case COL_DATE_OR_TRANSACTION_ID:
+        if (elem1->date_ != elem2->date_)
+        {
+            if (g_asc)
+                return elem1->date_ < elem2->date_;
+            else
+                return elem1->date_ > elem2->date_;
+        }
+        else
+        {
+            if (g_asc)
+                return elem1->transactionID() < elem2->transactionID();
+            else
+                return elem1->transactionID() > elem2->transactionID();
+        }
+        break;
+
+    case COL_TRANSACTION_NUMBER:
+        {
+            bool isOK1 = elem1->transNum_.ToLong(&elem1Long );
+            bool isOK2 = elem2->transNum_.ToLong(&elem2Long );
+            if (isOK1 && isOK2)
+            {
+                if (g_asc)
+                    return elem1Long < elem2Long;
+                else
+                    return elem1Long > elem2Long;
+            }
+            else
+            {
+                if (g_asc)
+                    return elem1->transNum_ < elem2->transNum_;
+                else
+                    return elem1->transNum_ > elem2->transNum_;
+            }
+        }
+        break;
+
+    case COL_PAYEE_STR:
+        if (g_asc)
+            return elem1->payeeStr_ < elem2->payeeStr_;
+        else
+            return elem1->payeeStr_ > elem2->payeeStr_;
+        break;
+
+    case COL_STATUS:
+        if (g_asc)
+            return elem1->status_ < elem2->status_;
+        else
+            return elem1->status_ > elem2->status_;
+
+        break;
+
+    case COL_CATEGORY:
+        if (g_asc)
+            return elem1->fullCatStr_ < elem2->fullCatStr_;
+        else
+            return elem1->fullCatStr_ > elem2->fullCatStr_;
+
+        break;
+
+    case COL_WITHDRAWAL:
+    case COL_DEPOSIT:
+        if (g_asc)
+            return elem1->amt_ < elem2->amt_;
+        else
+            return elem1->amt_ > elem2->amt_;  		
+        break;
+    }
+
+    wxASSERT(false);
+    return true;
+}
+//----------------------------------------------------------------------------
+
+bool sortTransactionsByDate(const mmBankTransaction *t1, const mmBankTransaction *t2)
+{
+    bool res = false;
+
+    if (t1->date_ == t2->date_) {
+        res = t1->transactionID() < t2->transactionID();
+    } else {
+        res = t1->date_ < t2->date_;
+    }
+
+    return res;
+}
+//----------------------------------------------------------------------------
 
 } // namespace
 
@@ -217,9 +328,9 @@ mmCheckingPanel::mmCheckingPanel
     wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
     const wxString& name
 ) : 
-    core_(core),
-    inidb_(inidb),
-    listCtrlAccount_(),
+    m_core(core),
+    m_inidb(inidb),
+    m_listCtrlAccount(),
     m_AccountID(accountID)
 {
     Create(parent, winid, pos, size, style, name);
@@ -249,23 +360,23 @@ mmCheckingPanel::~mmCheckingPanel()
 {
     // save widths of columns to ini database
     
-    int cols = listCtrlAccount_->GetColumnCount();
+    int cols = m_listCtrlAccount->GetColumnCount();
 
     for (int i = 0; i < cols; ++i)
     {
         wxString name = wxString::Format(wxT("CHECK_COL%d_WIDTH"), i);
 
-        int width = listCtrlAccount_->GetColumnWidth(i);
+        int width = m_listCtrlAccount->GetColumnWidth(i);
         wxString val = wxString::Format(wxT("%d"), width);
 
-        mmDBWrapper::setINISettingValue(inidb_, name, val); 
+        mmDBWrapper::setINISettingValue(m_inidb, name, val); 
     }
 
     wxString val = wxString::Format(wxT("%d"), g_sortcol);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_SORT_COL"), val); 
+    mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_SORT_COL"), val); 
 
     val = wxString::Format(wxT("%d"), g_asc);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_ASC"), val); 
+    mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_ASC"), val); 
 }
 //----------------------------------------------------------------------------
 
@@ -339,7 +450,7 @@ void mmCheckingPanel::CreateControls()
             _("Viewing All Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerHHeader2->Add(itemStaticText18, 0, wxALL, 1);
 
-    currentView_ = mmDBWrapper::getINISettingValue(inidb_, 
+    m_currentView = mmDBWrapper::getINISettingValue(m_inidb, 
        wxT("VIEWTRANSACTIONS"), wxT("View All Transactions"));
     initViewTransactionsHeader();
 
@@ -367,36 +478,36 @@ void mmCheckingPanel::CreateControls()
     m_imageList->Add(wxBitmap(downarrow_xpm));
 	m_imageList->Add(wxBitmap(duplicate_xpm));
 
-    listCtrlAccount_ = new MyListCtrl( this, itemSplitterWindow10, 
+    m_listCtrlAccount = new MyListCtrl( this, itemSplitterWindow10, 
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     
-    listCtrlAccount_->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
-    listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
-    listCtrlAccount_->m_asc = g_asc;
-    listCtrlAccount_->m_sortCol = g_sortcol;
-    listCtrlAccount_->SetFocus();
+    m_listCtrlAccount->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
+    m_listCtrlAccount->SetBackgroundColour(mmColors::listBackColor);
+    m_listCtrlAccount->m_asc = g_asc;
+    m_listCtrlAccount->m_sortCol = g_sortcol;
+    m_listCtrlAccount->SetFocus();
     
-    createColumns(inidb_, *listCtrlAccount_);
+    createColumns(m_inidb, *m_listCtrlAccount);
 
     {   // load the global variables
         long iniSortCol = 0;
-        mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_SORT_COL"), wxT("0")).ToLong(&iniSortCol);
+        mmDBWrapper::getINISettingValue(m_inidb, wxT("CHECK_SORT_COL"), wxT("0")).ToLong(&iniSortCol);
         g_sortcol = iniSortCol;
 
         long iniSortAsc = 0;
-        mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_ASC"), wxT("1")).ToLong(&iniSortAsc); 
+        mmDBWrapper::getINISettingValue(m_inidb, wxT("CHECK_ASC"), wxT("1")).ToLong(&iniSortAsc); 
         g_asc = iniSortAsc != 0;
 
-        listCtrlAccount_->m_sortCol = g_sortcol;
-        listCtrlAccount_->m_asc = g_asc;
-        listCtrlAccount_->SetColumnImage(listCtrlAccount_->m_sortCol, 5); // asc\desc sort mark (arrow)
+        m_listCtrlAccount->m_sortCol = g_sortcol;
+        m_listCtrlAccount->m_asc = g_asc;
+        m_listCtrlAccount->SetColumnImage(m_listCtrlAccount->m_sortCol, 5); // asc\desc sort mark (arrow)
     }
 
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, ID_PANEL1, 
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
 
-    itemSplitterWindow10->SplitHorizontally(listCtrlAccount_, itemPanel12);
+    itemSplitterWindow10->SplitHorizontally(m_listCtrlAccount, itemPanel12);
     itemSplitterWindow10->SetMinimumPaneSize(100);
     itemSplitterWindow10->SetSashGravity(1.0);
     itemBoxSizer9->Add(itemSplitterWindow10, 1, wxGROW|wxALL, 1);
@@ -429,120 +540,11 @@ void mmCheckingPanel::CreateControls()
 }
 //----------------------------------------------------------------------------
 
-/*
-    Return whether first element is greater than the second
-*/
-bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
-{
-    enum 
-    { 
-        COL_DATE_OR_TRANSACTION_ID, 
-        COL_TRANSACTION_NUMBER, 
-        COL_PAYEE_STR, 
-        COL_STATUS, 
-        COL_CATEGORY, 
-        COL_WITHDRAWAL, 
-        COL_DEPOSIT 
-    };
-	
-	long elem1Long = 0;
-    long elem2Long = 0;
-
-	switch( g_sortcol )
-    {
-		case COL_DATE_OR_TRANSACTION_ID:
-			if (elem1->date_ != elem2->date_)
-			{
-			  if (g_asc)
-			    return elem1->date_ < elem2->date_;
-			  else
-				return elem1->date_ > elem2->date_;
-			}
-			else
-			{
-				if (g_asc)
-					return elem1->transactionID() < elem2->transactionID();
-				else
-					return elem1->transactionID() > elem2->transactionID();
-			}
-        break;
-		case COL_TRANSACTION_NUMBER:
-            {
-                bool isOK1 = elem1->transNum_.ToLong(&elem1Long );
-                bool isOK2 = elem2->transNum_.ToLong(&elem2Long );
-                if (isOK1 && isOK2)
-                {
-                    if (g_asc)
-                        return elem1Long < elem2Long;
-                    else
-                        return elem1Long > elem2Long;
-                }
-                else
-                {
-                    if (g_asc)
-                        return elem1->transNum_ < elem2->transNum_;
-                    else
-                        return elem1->transNum_ > elem2->transNum_;
-                }
-            }
-		break;
-		case COL_PAYEE_STR:
-        if (g_asc)
-            return elem1->payeeStr_ < elem2->payeeStr_;
-        else
-            return elem1->payeeStr_ > elem2->payeeStr_;
-		break;
-		case COL_STATUS:
-			if (g_asc)
-				return elem1->status_ < elem2->status_;
-			else
-			    return elem1->status_ > elem2->status_;
-            
-		break;
-		case COL_CATEGORY:
-			if (g_asc)
-			   return elem1->fullCatStr_ < elem2->fullCatStr_;
-			else
-			   return elem1->fullCatStr_ > elem2->fullCatStr_;
-            
-		break;
-		case COL_WITHDRAWAL:
-		case COL_DEPOSIT:
-			if (g_asc)
-			   return elem1->amt_ < elem2->amt_;
-			else
-			  return elem1->amt_ > elem2->amt_;  		
-		break;
-		}
-    wxASSERT(false);
-    return true;
-}
-//----------------------------------------------------------------------------
-
-bool sortTransactionsByDate( mmBankTransaction* elem1, mmBankTransaction* elem2 )
-{
-   if (elem1->date_ != elem2->date_)
-   {
-      return elem1->date_ < elem2->date_;
-   }
-   else
-   {
-      return elem1->transactionID() < elem2->transactionID();
-   }
-}
-//----------------------------------------------------------------------------
-
-void mmCheckingPanel::sortTable()
-{
-    std::sort(trans_.begin(), trans_.end(), sortTransactions);
-}
-//----------------------------------------------------------------------------
-
 void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
-    wxString cat   =  _("Category         : ") + trans_[selIndex]->catStr_  +   wxT("\n"); 
-    wxString subcat = _("Sub Category  : ") + trans_[selIndex]->subCatStr_ + wxT("\n");
-    wxString notes =  _("Notes               : ") + mmReadyDisplayString(trans_[selIndex]->notes_) + wxT("\n");
+    wxString cat   =  _("Category         : ") + m_trans[selIndex]->catStr_  +   wxT("\n"); 
+    wxString subcat = _("Sub Category  : ") + m_trans[selIndex]->subCatStr_ + wxT("\n");
+    wxString notes =  _("Notes               : ") + mmReadyDisplayString(m_trans[selIndex]->notes_) + wxT("\n");
     wxString text = cat + subcat + notes;
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
     st->SetLabel(text);
@@ -551,12 +553,12 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 
 void mmCheckingPanel::setAccountSummary()
 {
-    double total = core_->accountList_.getAccountSharedPtr(m_AccountID)->balance();
+    double total = m_core->accountList_.getAccountSharedPtr(m_AccountID)->balance();
     wxString balance;
     mmCurrencyFormatter::formatDoubleToCurrency(total, balance);
 
-    double reconciledBal = core_->bTransactionList_.getReconciledBalance(m_AccountID);
-    double acctInitBalance = core_->accountList_.getAccountSharedPtr(m_AccountID)->initialBalance_;
+    double reconciledBal = m_core->bTransactionList_.getReconciledBalance(m_AccountID);
+    double acctInitBalance = m_core->accountList_.getAccountSharedPtr(m_AccountID)->initialBalance_;
     
     wxString recbalance;
     mmCurrencyFormatter::formatDoubleToCurrency(reconciledBal + acctInitBalance, recbalance);
@@ -572,7 +574,8 @@ void mmCheckingPanel::setAccountSummary()
 void mmCheckingPanel::initVirtualListControl()
 {
     // clear everything
-    trans_.clear();
+    m_trans.clear();
+
 #if defined (__WXMSW__)
     wxProgressDialog* pgd = new wxProgressDialog(_("Please Wait"), 
         _("Accessing Database"), 100, this, 
@@ -581,7 +584,7 @@ void mmCheckingPanel::initVirtualListControl()
     pgd->Update(10);
 #endif
    
-    boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(m_AccountID);
+    boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(m_AccountID);
     double acctInitBalance = pAccount->initialBalance_;
     boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
     wxASSERT(pCurrency);
@@ -601,47 +604,47 @@ void mmCheckingPanel::initVirtualListControl()
 
     int numTransactions = 0;
 	double unseenBalance = 0.0;
-    for (size_t i = 0; i < core_->bTransactionList_.transactions_.size(); ++i)
+    for (size_t i = 0; i < m_core->bTransactionList_.transactions_.size(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[i];
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = m_core->bTransactionList_.transactions_[i];
         if ((pBankTransaction->accountID_ != m_AccountID) && (pBankTransaction->toAccountID_ != m_AccountID))
            continue;
 
-        pBankTransaction->updateAllData(core_, m_AccountID, pCurrency);
+        pBankTransaction->updateAllData(m_core, m_AccountID, pCurrency);
 
         bool toAdd = true;
 		bool getBal = false;
-        if (currentView_ == wxT("View Reconciled"))
+        if (m_currentView == wxT("View Reconciled"))
         {
             if (pBankTransaction->status_ != wxT("R"))
                 toAdd = false;
         }
-        else if (currentView_ == wxT("View Void"))
+        else if (m_currentView == wxT("View Void"))
         {
              if (pBankTransaction->status_ != wxT("V"))
                 toAdd = false;
         }
-        else if (currentView_ == wxT("View Flagged"))
+        else if (m_currentView == wxT("View Flagged"))
         {
             if (pBankTransaction->status_ != wxT("F"))
                 toAdd = false;
         }
-        else if (currentView_ == wxT("View UnReconciled"))
+        else if (m_currentView == wxT("View UnReconciled"))
         {
             if (pBankTransaction->status_ != wxT(""))
                 toAdd = false;
         }
-        else if (currentView_ == wxT("View Not-Reconciled"))
+        else if (m_currentView == wxT("View Not-Reconciled"))
         {
             if (pBankTransaction->status_ == wxT("R"))
                 toAdd = false;
         }
-		else if (currentView_ == wxT("View Duplicates"))
+		else if (m_currentView == wxT("View Duplicates"))
         {
             if (pBankTransaction->status_ != wxT("D"))
                 toAdd = false;
         }
-        else  if (currentView_ == wxT("View Today"))
+        else  if (m_currentView == wxT("View Today"))
 	   {
            wxDateTime dtBegin = wxDateTime::Now().GetDateOnly();
            wxDateTime dtEnd = dtBegin + wxTimeSpan(23, 59, 59);
@@ -651,7 +654,7 @@ void mmCheckingPanel::initVirtualListControl()
 
            getBal = true;
 	    }
-        else  if (currentView_ == wxT("View 30 days"))
+        else  if (m_currentView == wxT("View 30 days"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today;
@@ -663,7 +666,7 @@ void mmCheckingPanel::initVirtualListControl()
 
 			getBal = true;
         }
-        else if (currentView_ == wxT("View 90 days"))
+        else if (m_currentView == wxT("View 90 days"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today;
@@ -675,7 +678,7 @@ void mmCheckingPanel::initVirtualListControl()
 
 			 getBal = true;
         }
-        else if (currentView_ == wxT("View Current Month"))
+        else if (m_currentView == wxT("View Current Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
@@ -687,7 +690,7 @@ void mmCheckingPanel::initVirtualListControl()
 
 			 getBal = true;
         }
-        else if (currentView_ == wxT("View Last Month"))
+        else if (m_currentView == wxT("View Last Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
@@ -704,8 +707,8 @@ void mmCheckingPanel::initVirtualListControl()
 
         if (toAdd)
         {
-           trans_.push_back(pBankTransaction.get());
-           numTransactions++;
+           m_trans.push_back(pBankTransaction.get());
+           ++numTransactions;
 		}
 		else
 		{
@@ -741,29 +744,29 @@ void mmCheckingPanel::initVirtualListControl()
     pgd->Update(30);
 #endif
 
-    // sort trans_ by date
+    // sort m_trans by date
     double initBalance = acctInitBalance + unseenBalance;
-    if (currentView_ == wxT("View UnReconciled"))
+    if (m_currentView == wxT("View UnReconciled"))
     {
-        initBalance = core_->bTransactionList_.getReconciledBalance(m_AccountID);
+        initBalance = m_core->bTransactionList_.getReconciledBalance(m_AccountID);
     }
 
-    std::sort(trans_.begin(), trans_.end(), sortTransactionsByDate);
+    std::sort(m_trans.begin(), m_trans.end(), sortTransactionsByDate);
 
 #if defined (__WXMSW__)
     pgd->Update(50);
 #endif
 
-    for (size_t i = 0; i < trans_.size(); ++i)
+    for (size_t i = 0; i < m_trans.size(); ++i)
     {
-        bool ok = trans_[i] != 0;
+        bool ok = m_trans[i] != 0;
         wxASSERT(ok);
 
         if (!ok) {
             continue;
         }
 
-        mmBankTransaction &tr = *trans_[i];
+        mmBankTransaction &tr = *m_trans[i];
 
         if (tr.status_ != wxT("V"))
         {
@@ -800,22 +803,22 @@ void mmCheckingPanel::initVirtualListControl()
 
     /* Setup the Sorting */
      // decide whether top or down icon needs to be shown
-    listCtrlAccount_->SetColumnImage(g_sortcol, g_asc ? 5 : 4);
+    m_listCtrlAccount->SetColumnImage(g_sortcol, g_asc ? 5 : 4);
     
     // sort the table
     sortTable(); 
 
-	listCtrlAccount_->SetItemCount(numTransactions);
+	m_listCtrlAccount->SetItemCount(numTransactions);
 
-    if (trans_.size() > 1)
+    if (m_trans.size() > 1)
     {
 		if (g_asc)
 		{
-			listCtrlAccount_->EnsureVisible(static_cast<long>(trans_.size()) - 1);
+			m_listCtrlAccount->EnsureVisible(static_cast<long>(m_trans.size()) - 1);
 		}
 		else
 		{
-			listCtrlAccount_->EnsureVisible(0);
+			m_listCtrlAccount->EnsureVisible(0);
 		}
     }
 
@@ -828,58 +831,58 @@ void mmCheckingPanel::initVirtualListControl()
 
 void mmCheckingPanel::OnDeleteTransaction(wxCommandEvent& event)
 {
-    listCtrlAccount_->OnDeleteTransaction(event);
+    m_listCtrlAccount->OnDeleteTransaction(event);
 }
 //----------------------------------------------------------------------------
 
 void mmCheckingPanel::OnNewTransaction(wxCommandEvent& event)
 {
-   listCtrlAccount_->OnNewTransaction(event);
+   m_listCtrlAccount->OnNewTransaction(event);
 }
 //----------------------------------------------------------------------------
 
 void mmCheckingPanel::OnEditTransaction(wxCommandEvent& event)
 {
-    listCtrlAccount_->OnEditTransaction(event);
+    m_listCtrlAccount->OnEditTransaction(event);
 }
 //----------------------------------------------------------------------------
 
 void mmCheckingPanel::initViewTransactionsHeader()
 {
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_PANELVIEW);
-    if (currentView_ == wxT("View All Transactions"))
+    if (m_currentView == wxT("View All Transactions"))
     {
         header->SetLabel(_("Viewing all transactions"));
     }
-    else if (currentView_ == wxT("View Reconciled"))
+    else if (m_currentView == wxT("View Reconciled"))
     {
         header->SetLabel(_("Viewing Reconciled transactions"));
     }
-    else if (currentView_ == wxT("View UnReconciled"))
+    else if (m_currentView == wxT("View UnReconciled"))
     {
         header->SetLabel(_("Viewing Un-Reconciled transactions"));
     }
-    else if (currentView_ == wxT("View Today"))
+    else if (m_currentView == wxT("View Today"))
     {
        header->SetLabel(_("Viewing transactions from today"));
     }
-    else if (currentView_ == wxT("View 30 days"))
+    else if (m_currentView == wxT("View 30 days"))
     {
         header->SetLabel(_("Viewing transactions from last 30 days"));
     }
-    else if (currentView_ == wxT("View 90 days"))
+    else if (m_currentView == wxT("View 90 days"))
     {
         header->SetLabel(_("Viewing transactions from last 3 months"));
     }
-    else if (currentView_ == wxT("View Current Month"))
+    else if (m_currentView == wxT("View Current Month"))
     {
         header->SetLabel(_("Viewing transactions from current month"));
     }
-    else if (currentView_ == wxT("View Last Month"))
+    else if (m_currentView == wxT("View Last Month"))
     {
         header->SetLabel(_("Viewing transactions from last month"));
     }
-    else if (currentView_ == wxT("View Not-Reconciled"))
+    else if (m_currentView == wxT("View Not-Reconciled"))
     {
         header->SetLabel(_("Viewing All Except Reconciled Transactions"));
     }
@@ -893,62 +896,62 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     if (evt ==  MENU_VIEW_ALLTRANSACTIONS)
     {
         header->SetLabel(_("Viewing all transactions"));
-        currentView_ = wxT("View All Transactions");
+        m_currentView = wxT("View All Transactions");
     }
     else if (evt == MENU_VIEW_RECONCILED)
     {
         header->SetLabel(_("Viewing Reconciled transactions"));
-        currentView_ = wxT("View Reconciled");
+        m_currentView = wxT("View Reconciled");
     }
     else if (evt == MENU_VIEW_VOID)
     {
         header->SetLabel(_("Viewing Void transactions"));
-        currentView_ = wxT("View Void");
+        m_currentView = wxT("View Void");
     }
     else if (evt == MENU_VIEW_UNRECONCILED)
     {
         header->SetLabel(_("Viewing Un-Reconciled transactions"));
-        currentView_ = wxT("View UnReconciled");
+        m_currentView = wxT("View UnReconciled");
     }
     else if (evt == MENU_VIEW_FLAGGED)
     {
         header->SetLabel(_("Viewing Flagged transactions"));
-        currentView_ = wxT("View Flagged");
+        m_currentView = wxT("View Flagged");
     }
     else if (evt == MENU_VIEW_TODAY)
     {
         header->SetLabel(_("Viewing transactions from today"));
-        currentView_ = wxT("View Today");
+        m_currentView = wxT("View Today");
     }
     else if (evt == MENU_VIEW_LAST30)
     {
         header->SetLabel(_("Viewing transactions from last 30 days"));
-        currentView_ = wxT("View 30 days");
+        m_currentView = wxT("View 30 days");
     }
     else if (evt == MENU_VIEW_LAST3MONTHS)
     {
         header->SetLabel(_("Viewing transactions from last 3 months"));
-        currentView_ = wxT("View 90 days");
+        m_currentView = wxT("View 90 days");
     }
     else if (evt == MENU_VIEW_CURRENTMONTH)
     {
         header->SetLabel(_("Viewing transactions from current month"));
-        currentView_ = wxT("View Current Month");
+        m_currentView = wxT("View Current Month");
     }
     else if (evt == MENU_VIEW_LASTMONTH)
     {
         header->SetLabel(_("Viewing transactions from last month"));
-        currentView_ = wxT("View Last Month");
+        m_currentView = wxT("View Last Month");
     }
 	else if (evt == MENU_VIEW_DUPLICATE)
     {
         header->SetLabel(_("Viewing duplicate transactions"));
-        currentView_ = wxT("View Duplicates");
+        m_currentView = wxT("View Duplicates");
     }
     else if (evt == MENU_VIEW_NOTRECONCILED)
     {
         header->SetLabel(_("Viewing All except Reconciled Transactions"));
-        currentView_ = wxT("View Not-Reconciled");
+        m_currentView = wxT("View Not-Reconciled");
     }
     else if (evt == MENU_VIEW_DELETE_TRANS)
     {
@@ -957,10 +960,10 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
             wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
         {
-           //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(core_->accountList_.getAccountSharedPtr(m_AccountID).get());
-            for (size_t i = 0; i < trans_.size(); ++i)
+           //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.getAccountSharedPtr(m_AccountID).get());
+            for (size_t i = 0; i < m_trans.size(); ++i)
             {
-               core_->bTransactionList_.deleteTransaction(m_AccountID, trans_[i]->transactionID());
+               m_core->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
             }
         }
     }
@@ -971,12 +974,12 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
             wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
         {
-           //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(core_->accountList_.getAccountSharedPtr(m_AccountID).get());
-            for (size_t i = 0; i < trans_.size(); ++i)
+           //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.getAccountSharedPtr(m_AccountID).get());
+            for (size_t i = 0; i < m_trans.size(); ++i)
             {
-               if (trans_[i]->status_ == wxT("F"))
+               if (m_trans[i]->status_ == wxT("F"))
                {
-                  core_->bTransactionList_.deleteTransaction(m_AccountID, trans_[i]->transactionID());
+                  m_core->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
                }
             }
         }
@@ -986,9 +989,9 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         wxASSERT(false);
     }
 
-    listCtrlAccount_->DeleteAllItems();
+    m_listCtrlAccount->DeleteAllItems();
     initVirtualListControl();
-    listCtrlAccount_->RefreshItems(0, static_cast<long>(trans_.size()) - 1);
+    m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
 }
 //----------------------------------------------------------------------------
 
@@ -1035,11 +1038,11 @@ void MyListCtrl::OnMarkTransactionDB(const wxString& status)
 {
     if (m_selectedIndex == -1)
         return;
-    int transID = m_cp->trans_[m_selectedIndex]->transactionID();
+    int transID = m_cp->m_trans[m_selectedIndex]->transactionID();
     mmDBWrapper::updateTransactionWithStatus(*m_cp->getDb(), transID, status);
-    m_cp->trans_[m_selectedIndex]->status_ = status;
+    m_cp->m_trans[m_selectedIndex]->status_ = status;
 
-    if (m_cp->currentView_ != wxT("View All Transactions"))
+    if (m_cp->m_currentView != wxT("View All Transactions"))
     {
         DeleteAllItems();
         m_cp->initVirtualListControl();
@@ -1091,18 +1094,18 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
         wxASSERT(false);
      }
          
-     for (size_t i = 0; i < m_cp->trans_.size(); ++i)
+     for (size_t i = 0; i < m_cp->m_trans.size(); ++i)
      {
-        int transID = m_cp->trans_[i]->transactionID();
+        int transID = m_cp->m_trans[i]->transactionID();
         mmDBWrapper::updateTransactionWithStatus(*m_cp->getDb(), transID, status);
-        m_cp->trans_[i]->status_ = status;
+        m_cp->m_trans[i]->status_ = status;
      }
 
-     if (m_cp->currentView_ != wxT("View All Transactions"))
+     if (m_cp->m_currentView != wxT("View All Transactions"))
      {
          DeleteAllItems();
          m_cp->initVirtualListControl();
-         RefreshItems(0, static_cast<long>(m_cp->trans_.size()) - 1); // refresh everything
+         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
      }
      m_cp->setAccountSummary();
 }
@@ -1123,7 +1126,7 @@ void MyListCtrl::OnColClick(wxListEvent& event)
     g_asc = m_asc;
     SetColumnImage(m_sortCol, m_asc ? 5 : 4); // decide whether top or down icon needs to be shown
     m_cp->sortTable();   // sort the table
-    RefreshItems(0, static_cast<long>(m_cp->trans_.size()) - 1); // refresh everything
+    RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
 }
 //----------------------------------------------------------------------------
 
@@ -1138,43 +1141,43 @@ void MyListCtrl::SetColumnImage(int col, int image)
 
 wxString mmCheckingPanel::getItem(long item, long column)
 {  
-    if (trans_.empty())
+    if (m_trans.empty())
        return wxT("");
 
-    if (item >= static_cast<long>(trans_.size()) )
+    if (item >= static_cast<long>(m_trans.size()) )
         return wxT("");
 
-    if (!trans_[item])
+    if (!m_trans[item])
     {
         return wxT("");;
     }
 
     if (column == 0)
-        return trans_[item]->dateStr_;
+        return m_trans[item]->dateStr_;
 
     if (column == 1)
-       return trans_[item]->transNum_;
+       return m_trans[item]->transNum_;
 
     if (column == 2)
-        return trans_[item]->payeeStr_;
+        return m_trans[item]->payeeStr_;
 
     if (column == 3)
-        return trans_[item]->status_;
+        return m_trans[item]->status_;
 
     if (column == 4)
-       return trans_[item]->fullCatStr_;
+       return m_trans[item]->fullCatStr_;
 
     if (column == 5)
-       return trans_[item]->withdrawalStr_;
+       return m_trans[item]->withdrawalStr_;
 
     if (column == 6)
-        return trans_[item]->depositStr_; 
+        return m_trans[item]->depositStr_; 
     
     if (column == 7)
-        return trans_[item]->balanceStr_;
+        return m_trans[item]->balanceStr_;
 
 	if (column == 8)
-        return trans_[item]->notes_;
+        return m_trans[item]->notes_;
 		
     return wxT("");
 }
@@ -1220,9 +1223,9 @@ wxListItemAttr* MyListCtrl::OnGetItemAttr(long item) const
     wxASSERT(item >= 0);
 
     size_t idx = item;
-    bool ok = m_cp && idx < m_cp->trans_.size();
+    bool ok = m_cp && idx < m_cp->m_trans.size();
     
-    mmBankTransaction *tr = ok ? m_cp->trans_[idx] : 0;
+    mmBankTransaction *tr = ok ? m_cp->m_trans[idx] : 0;
     bool in_the_future = tr && tr->date_ > wxDateTime::Now();
 
     MyListCtrl &self = *const_cast<MyListCtrl*>(this);
@@ -1263,7 +1266,7 @@ void MyListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
     if (m_selectedIndex == -1)
         return;
 
-    m_selectedForCopy = m_cp->trans_[m_selectedIndex]->transactionID();
+    m_selectedForCopy = m_cp->m_trans[m_selectedIndex]->transactionID();
 }
 //----------------------------------------------------------------------------
 
@@ -1271,15 +1274,15 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 {
     if (m_selectedForCopy != -1)
     {
-        wxString useOriginalDate =  mmDBWrapper::getINISettingValue(m_cp->inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
+        wxString useOriginalDate =  mmDBWrapper::getINISettingValue(m_cp->m_inidb, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
         bool useOriginal = false;
         if (useOriginalDate == wxT("TRUE"))
             useOriginal = true;
-        boost::shared_ptr<mmBankTransaction> pCopiedTrans = m_cp->core_->bTransactionList_.copyTransaction(m_selectedForCopy, useOriginal);
-        boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
-        pCopiedTrans->updateAllData(m_cp->core_, pCopiedTrans->accountID_, pCurrencyPtr, true);
+        boost::shared_ptr<mmBankTransaction> pCopiedTrans = m_cp->m_core->bTransactionList_.copyTransaction(m_selectedForCopy, useOriginal);
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->m_core->accountList_.getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
+        pCopiedTrans->updateAllData(m_cp->m_core, pCopiedTrans->accountID_, pCurrencyPtr, true);
         m_cp->initVirtualListControl();
-        RefreshItems(0, static_cast<long>(m_cp->trans_.size()) - 1);
+        RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
     }
 }
 //----------------------------------------------------------------------------
@@ -1343,13 +1346,13 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
 
 void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 {
-    mmTransDialog *dlg = new mmTransDialog(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 
-        0, false, m_cp->inidb_, this );
+    mmTransDialog *dlg = new mmTransDialog(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 
+        0, false, m_cp->m_inidb, this );
 
     if ( dlg->ShowModal() == wxID_OK )
     {
         m_cp->initVirtualListControl();
-        RefreshItems(0, static_cast<long>(m_cp->trans_.size()) - 1);
+        RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
         if (m_selectedIndex != -1)
         {
            SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
@@ -1379,19 +1382,19 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 			long topItemIndex = GetTopItem();
          
 			//remove the transaction
-			this->m_cp->core_->bTransactionList_.deleteTransaction(this->m_cp->accountID(), 
-			   m_cp->trans_[m_selectedIndex]->transactionID());
+			this->m_cp->m_core->bTransactionList_.deleteTransaction(this->m_cp->accountID(), 
+			   m_cp->m_trans[m_selectedIndex]->transactionID());
 			
 
          //initialize the transaction list to redo balances and images
 			m_cp->initVirtualListControl();
 
-         if (!m_cp->trans_.empty())
+         if (!m_cp->m_trans.empty())
          {
             //refresh the items showing from the point of the transaction delete down
             //the transactions above the deleted transaction won't change so they 
             // don't need to be refreshed
-            RefreshItems(m_selectedIndex, static_cast<long>(m_cp->trans_.size()) - 1);
+            RefreshItems(m_selectedIndex, static_cast<long>(m_cp->m_trans.size()) - 1);
 
             //set the deleted transaction index to the new selection and focus on it
             SetItemState(m_selectedIndex-1, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, 
@@ -1416,12 +1419,12 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex != -1)
 	{
-		mmTransDialog *dlg = new mmTransDialog(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 
-		   m_cp->trans_[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
+		mmTransDialog *dlg = new mmTransDialog(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 
+		   m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->m_inidb, this);
 		if ( dlg->ShowModal() == wxID_OK )
 		{
 			m_cp->initVirtualListControl();
-			RefreshItems(0, static_cast<long>(m_cp->trans_.size()) - 1);
+			RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
 			SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
 			SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
 			EnsureVisible(m_selectedIndex);
@@ -1436,12 +1439,12 @@ void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
     if (m_selectedIndex != -1)
 	{
         //m_selectedIndex = event.GetIndex();
-        mmTransDialog *dlg = new mmTransDialog(m_cp->getDb(), m_cp->core_,  m_cp->accountID(), 
-            m_cp->trans_[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
+        mmTransDialog *dlg = new mmTransDialog(m_cp->getDb(), m_cp->m_core,  m_cp->accountID(), 
+            m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->m_inidb, this);
         if ( dlg->ShowModal() == wxID_OK )
         {
             m_cp->initVirtualListControl();
-            RefreshItems(0, static_cast<long>(m_cp->trans_.size()) - 1);
+            RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
             if (m_selectedIndex != -1)
             {
                 SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
@@ -1489,6 +1492,13 @@ MyListCtrl::MyListCtrl(
 
 boost::shared_ptr<wxSQLite3Database> mmCheckingPanel::getDb() const 
 { 
-    return core_->db_; 
+    wxASSERT(m_core);
+    return m_core->db_; 
+}
+//----------------------------------------------------------------------------
+
+void mmCheckingPanel::sortTable()
+{
+    std::sort(m_trans.begin(), m_trans.end(), sortTransactions);
 }
 //----------------------------------------------------------------------------

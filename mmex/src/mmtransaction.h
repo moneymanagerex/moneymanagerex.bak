@@ -32,8 +32,9 @@ public:
    mmTransaction(int transactionID) : transactionID_(transactionID) {}
    virtual ~mmTransaction() {}
 
-   int transactionID() { return transactionID_; }
+   int transactionID() const { return transactionID_; }
    void transactionID(int transactionID) { transactionID_ = transactionID; }
+
    virtual double value(int accountCtx) = 0;
 
 protected:

@@ -123,18 +123,17 @@ public:
     int accountID() const { return m_AccountID; }
     void sortTable();
 
-    std::vector<mmBankTransaction*> trans_;
-
 private:
-    mmCoreDB* core_;
-    wxSQLite3Database* inidb_;
-    wxString currentView_;
+    friend class MyListCtrl; // needs access to m_core, initdb_, ...
 
-    MyListCtrl *listCtrlAccount_;
+    mmCoreDB* m_core;
+    wxSQLite3Database* m_inidb;
+    wxString m_currentView;
+
+    MyListCtrl *m_listCtrlAccount;
     const int m_AccountID;
     boost::scoped_ptr<wxImageList> m_imageList;
-
-    friend class MyListCtrl;
+    std::vector<mmBankTransaction*> m_trans;
 
     boost::shared_ptr<wxSQLite3Database> getDb() const;
 };
