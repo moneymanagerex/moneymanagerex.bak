@@ -60,32 +60,30 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTRANSNUM, mmTransDialog::OnAutoTransNum)
 END_EVENT_TABLE()
 
-mmTransDialog::mmTransDialog( )
+mmTransDialog::mmTransDialog(
+    boost::shared_ptr<wxSQLite3Database> db, 
+    mmCoreDB* core,
+    int accountID, int transID, bool edit, 
+    wxSQLite3Database* inidb,
+    wxWindow* parent, wxWindowID id, 
+    const wxString& caption, const wxPoint& pos, 
+    const wxSize& size, long style 
+) :
+    db_(db),
+    inidb_(inidb),
+    core_(core),
+    transID_(transID),
+    accountID_(accountID),
+    edit_(edit),
+    categID_(-1),
+    subcategID_(-1),
+    payeeID_(-1),
+    toID_(-1),
+    toTransAmount_(-1),
+    advancedToTransAmountSet_(false),
+    edit_currency_rate(1.0)
 {
-}
-
-mmTransDialog::mmTransDialog(wxSQLite3Database* db, 
-                             mmCoreDB* core,
-                             int accountID, int transID, bool edit, 
-                             wxSQLite3Database* inidb,
-                             wxWindow* parent, wxWindowID id, 
-                             const wxString& caption, const wxPoint& pos, 
-                             const wxSize& size, long style )
-{
-    db_ = db;
-    core_ = core;
-    transID_ = transID;
-    accountID_ = accountID;
-    edit_ = edit;
-    categID_ = -1;
-    subcategID_ = -1;
-    payeeID_ = -1;
-    toID_ = -1;
-    toTransAmount_ = -1;
-    advancedToTransAmountSet_ = false;
-    edit_currency_rate = 1.0;
     Create(parent, id, caption, pos, size, style);
-    inidb_ = inidb;    
 }
 
 bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption, 
@@ -168,7 +166,7 @@ void mmTransDialog::dataToControls()
        
         wxString dateString = q1.GetString(wxT("TRANSDATE"));
         wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
-        wxString dt = mmGetDateForDisplay(db_, dtdt);
+        wxString dt = mmGetDateForDisplay(db_.get(), dtdt);
         dpc_->SetValue(dtdt);
 
         wxString transNumString = q1.GetString(wxT("TRANSACTIONNUMBER"));
@@ -481,7 +479,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 
             int tempCategID = -1;
             int tempSubCategID = -1;
-            wxString payeeName = mmDBWrapper::getPayee(db_, 
+            wxString payeeName = mmDBWrapper::getPayee(db_.get(), 
                 payeeID_, tempCategID, tempSubCategID);
             bPayee_->SetLabel(mmReadyDisplayString(payeeName));
 
@@ -490,12 +488,12 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
                 return;
             }
 
-            wxString catName = mmDBWrapper::getCategoryName(db_, tempCategID);
+            wxString catName = mmDBWrapper::getCategoryName(db_.get(), tempCategID);
             wxString categString = catName;
 
             if (tempSubCategID != -1)
             {
-                wxString subcatName = mmDBWrapper::getSubCategoryName(db_,
+                wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(),
                     tempCategID, tempSubCategID);
                 categString += wxT(" : ");
                 categString += subcatName;
@@ -511,13 +509,13 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
             if (dlg->payeeID_ == -1)
                 return;
             payeeID_ = dlg->payeeID_;
-            wxString acctName = mmDBWrapper::getAccountName(db_, payeeID_);
+            wxString acctName = mmDBWrapper::getAccountName(db_.get(), payeeID_);
             bPayee_->SetLabel(acctName);
         }
     }
     else
     {
-        wxString payeeName = mmDBWrapper::getPayee(db_, 
+        wxString payeeName = mmDBWrapper::getPayee(db_.get(), 
             payeeID_, categID_, subcategID_);
         if (payeeName.IsEmpty())
         {
@@ -538,7 +536,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 }
 void mmTransDialog::OnAutoTransNum(wxCommandEvent& /*event*/)
 {
-    int mID = mmDBWrapper::getTransIDByDate(db_, dpc_->GetValue().FormatISODate(), accountID_);
+    int mID = mmDBWrapper::getTransIDByDate(db_.get(), dpc_->GetValue().FormatISODate(), accountID_);
     wxString wxIDstr = wxString::Format(wxT( "%d" ), (int) mID);
     textNumber_->SetValue( wxIDstr );	
 }
@@ -555,13 +553,13 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
         if (dlg->payeeID_ == -1)
             return;
         toID_ = dlg->payeeID_;
-        wxString acctName = mmDBWrapper::getAccountName(db_, toID_);
+        wxString acctName = mmDBWrapper::getAccountName(db_.get(), toID_);
         bTo_->SetLabel(acctName);
     }
     else
     {
         int categID, subcategID;
-        wxString toName = mmDBWrapper::getPayee(db_, toID_, categID, subcategID);
+        wxString toName = mmDBWrapper::getPayee(db_.get(), toID_, categID, subcategID);
         if (toName.IsEmpty())
         {
             toID_ = -1;
@@ -633,7 +631,7 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
             if (dlg->categID_ == -1)
             {
                 // check if categ and subcateg are now invalid
-                wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
+                wxString catName = mmDBWrapper::getCategoryName(db_.get(), categID_);
                 if ( catName.IsEmpty())
                 {
                     // cannot find category
@@ -645,7 +643,7 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
 
                 if (dlg->subcategID_ != -1)
                 {
-                    wxString subcatName = mmDBWrapper::getSubCategoryName(db_,
+                    wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(),
                         categID_, subcategID_);
                     if (subcatName.IsEmpty())
                     {
@@ -666,13 +664,13 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
             categID_ = dlg->categID_;
             subcategID_ = dlg->subcategID_;
 
-            wxString catName = mmDBWrapper::getCategoryName(db_, dlg->categID_);
+            wxString catName = mmDBWrapper::getCategoryName(db_.get(), dlg->categID_);
             catName.Replace (wxT("&"), wxT("&&"));
             wxString categString = catName;
 
             if (dlg->subcategID_ != -1)
             {
-                wxString subcatName = mmDBWrapper::getSubCategoryName(db_,
+                wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(),
                     dlg->categID_, dlg->subcategID_);
                 subcatName.Replace (wxT("&"), wxT("&&"));
                 categString += wxT(" : ");
@@ -735,7 +733,7 @@ void mmTransDialog::updateControlsForTransType()
         stp->SetLabel(_("From"));   
         bAdvanced_->Enable(true);
 
-        wxString acctName = mmDBWrapper::getAccountName(db_, accountID_);
+        wxString acctName = mmDBWrapper::getAccountName(db_.get(), accountID_);
         bPayee_->SetLabel(acctName);
         payeeID_ = accountID_;
 
@@ -824,8 +822,8 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     else
     {
         int catID, subcatID;
-        wxString payeeName = mmDBWrapper::getPayee(db_, payeeID_, catID, subcatID );
-        mmDBWrapper::updatePayee(db_, payeeName, payeeID_, categID_, subcategID_);
+        wxString payeeName = mmDBWrapper::getPayee(db_.get(), payeeID_, catID, subcatID );
+        mmDBWrapper::updatePayee(db_.get(), payeeName, payeeID_, categID_, subcategID_);
     }
 
     if (!advancedToTransAmountSet_ || toTransAmount_ < 0)
@@ -836,8 +834,8 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         if (!edit_)
         {
             if(toAccountID != -1) {
-                double rateFrom = mmDBWrapper::getCurrencyBaseConvRate(db_, fromAccountID);
-                double rateTo = mmDBWrapper::getCurrencyBaseConvRate(db_, toAccountID);
+                double rateFrom = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), fromAccountID);
+                double rateTo = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), toAccountID);
 
                 double convToBaseFrom = rateFrom * amount;
                 toTransAmount_ = convToBaseFrom / rateTo;

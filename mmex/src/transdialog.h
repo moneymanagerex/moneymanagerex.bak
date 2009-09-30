@@ -40,8 +40,9 @@ class mmTransDialog : public wxDialog
     DECLARE_EVENT_TABLE()
 
 public:
-    mmTransDialog();
-    mmTransDialog(wxSQLite3Database* db, 
+    mmTransDialog() {}
+
+    mmTransDialog(boost::shared_ptr<wxSQLite3Database> db, 
         mmCoreDB* core,
         int accountID, int transID, 
         bool edit, 
@@ -78,7 +79,7 @@ public:
     void OnSplitChecked(wxCommandEvent& event);
 
 private:
-    wxSQLite3Database* db_;
+    boost::shared_ptr<wxSQLite3Database> db_;
     wxSQLite3Database* inidb_;
     mmCoreDB* core_;
     int transID_;
