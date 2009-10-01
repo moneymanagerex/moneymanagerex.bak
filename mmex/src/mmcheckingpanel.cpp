@@ -39,8 +39,35 @@
 namespace
 {
 
-int g_sortcol = 0; // index of column to sort
+enum EColumn
+{ 
+    COL_DATE_OR_TRANSACTION_ID, 
+    COL_TRANSACTION_NUMBER, 
+    COL_PAYEE_STR, 
+    COL_STATUS, 
+    COL_CATEGORY, 
+    COL_WITHDRAWAL, 
+    COL_DEPOSIT,
+    COL_BALANSE,
+    COL_NOTES,
+    COL_MAX, // number of columns
+    COL_DEF_SORT = COL_DATE_OR_TRANSACTION_ID
+};
+//----------------------------------------------------------------------------
+EColumn g_sortcol = COL_DEF_SORT; // index of column to sort
 bool g_asc = true; // asc\desc sorting
+//----------------------------------------------------------------------------
+
+EColumn toEColumn(long col)
+{
+    EColumn res = COL_DEF_SORT;
+
+    if (col >= 0 && col < COL_MAX) {
+        res = static_cast<EColumn>(col);
+    }
+
+    return res;
+}
 //----------------------------------------------------------------------------
 
 /*
@@ -50,22 +77,22 @@ void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
 {
     wxASSERT(inidb_);
 
-    {
-        long i = 0;
-        lst.InsertColumn(i++, _("Date  "));
-        lst.InsertColumn(i++, _("Number"), wxLIST_FORMAT_RIGHT);
-        lst.InsertColumn(i++, _("Payee"));
-        lst.InsertColumn(i++, _("C  "));
-        lst.InsertColumn(i++, _("Category"));
-        lst.InsertColumn(i++, _("Withdrawal"), wxLIST_FORMAT_RIGHT);
-        lst.InsertColumn(i++, _("Deposit"), wxLIST_FORMAT_RIGHT);
-        lst.InsertColumn(i++, _("Balance"), wxLIST_FORMAT_RIGHT);
-        lst.InsertColumn(i++, _("Notes"));
-    }
+    lst.InsertColumn(COL_DATE_OR_TRANSACTION_ID, _("Date  "));
+    lst.InsertColumn(COL_TRANSACTION_NUMBER, _("Number"), wxLIST_FORMAT_RIGHT);
+    lst.InsertColumn(COL_PAYEE_STR, _("Payee"));
+    lst.InsertColumn(COL_STATUS, _("C  "));
+    lst.InsertColumn(COL_CATEGORY, _("Category"));
+    lst.InsertColumn(COL_WITHDRAWAL, _("Withdrawal"), wxLIST_FORMAT_RIGHT);
+    lst.InsertColumn(COL_DEPOSIT, _("Deposit"), wxLIST_FORMAT_RIGHT);
+    lst.InsertColumn(COL_BALANSE, _("Balance"), wxLIST_FORMAT_RIGHT);
+    lst.InsertColumn(COL_NOTES, _("Notes"));
+
+    const int col_cnt = lst.GetColumnCount();
+    wxASSERT(col_cnt == COL_MAX);
 
     // adjust columns' widths
 
-    const wxChar* def_widths[] = 
+    const wxChar* def_widths[COL_MAX] = 
     {
         wxT("80"),  // date
         wxT("-2"),  // number
@@ -78,13 +105,13 @@ void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
         wxT("200")  // notes
     };
 
-    const int cnt = lst.GetColumnCount();
-    wxASSERT( cnt == sizeof(def_widths)/sizeof(*def_widths) );
-
-    for (int i = 0; i < cnt; ++i)
+    for (int i = 0; i < col_cnt; ++i)
     {
+        const wxChar *def_width = def_widths[i];
+        wxASSERT(def_width);
+
         wxString name = wxString::Format(wxT("CHECK_COL%d_WIDTH"), i);
-        wxString val = mmDBWrapper::getINISettingValue(inidb_, name, def_widths[i]);
+        wxString val = mmDBWrapper::getINISettingValue(inidb_, name, def_width);
         
         long width = -1;
         
@@ -95,104 +122,38 @@ void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
     }
 }
 //----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+
+template<class T>
+inline bool sort(const T &t1, const T &t2, bool asc)
+{
+    return asc ? t1 < t2 : t1 > t2;
+}
+//----------------------------------------------------------------------------
+typedef bool (*sort_fun_t)(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc);
+//----------------------------------------------------------------------------
 
 /*
-    Return whether first element is greater than the second
+    sort_fun_t.
 */
-bool sortTransactions( mmBankTransaction* elem1, mmBankTransaction* elem2 )
+bool sortTransByDate(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
 {
-    enum 
-    { 
-        COL_DATE_OR_TRANSACTION_ID, 
-        COL_TRANSACTION_NUMBER, 
-        COL_PAYEE_STR, 
-        COL_STATUS, 
-        COL_CATEGORY, 
-        COL_WITHDRAWAL, 
-        COL_DEPOSIT 
-    };
+    bool res = false;
 
-    long elem1Long = 0;
-    long elem2Long = 0;
-
-    switch( g_sortcol )
-    {
-    case COL_DATE_OR_TRANSACTION_ID:
-        if (elem1->date_ != elem2->date_)
-        {
-            if (g_asc)
-                return elem1->date_ < elem2->date_;
-            else
-                return elem1->date_ > elem2->date_;
-        }
-        else
-        {
-            if (g_asc)
-                return elem1->transactionID() < elem2->transactionID();
-            else
-                return elem1->transactionID() > elem2->transactionID();
-        }
-        break;
-
-    case COL_TRANSACTION_NUMBER:
-        {
-            bool isOK1 = elem1->transNum_.ToLong(&elem1Long );
-            bool isOK2 = elem2->transNum_.ToLong(&elem2Long );
-            if (isOK1 && isOK2)
-            {
-                if (g_asc)
-                    return elem1Long < elem2Long;
-                else
-                    return elem1Long > elem2Long;
-            }
-            else
-            {
-                if (g_asc)
-                    return elem1->transNum_ < elem2->transNum_;
-                else
-                    return elem1->transNum_ > elem2->transNum_;
-            }
-        }
-        break;
-
-    case COL_PAYEE_STR:
-        if (g_asc)
-            return elem1->payeeStr_ < elem2->payeeStr_;
-        else
-            return elem1->payeeStr_ > elem2->payeeStr_;
-        break;
-
-    case COL_STATUS:
-        if (g_asc)
-            return elem1->status_ < elem2->status_;
-        else
-            return elem1->status_ > elem2->status_;
-
-        break;
-
-    case COL_CATEGORY:
-        if (g_asc)
-            return elem1->fullCatStr_ < elem2->fullCatStr_;
-        else
-            return elem1->fullCatStr_ > elem2->fullCatStr_;
-
-        break;
-
-    case COL_WITHDRAWAL:
-    case COL_DEPOSIT:
-        if (g_asc)
-            return elem1->amt_ < elem2->amt_;
-        else
-            return elem1->amt_ > elem2->amt_;  		
-        break;
+    if (t1->date_ == t2->date_) {
+        res = sort(t1->transactionID(), t2->transactionID(), asc);
+    } else {
+        res = sort(t1->date_, t2->date_, asc);
     }
 
-    wxASSERT(false);
-    return true;
+    return res;
 }
 //----------------------------------------------------------------------------
 
-bool sortTransactionsByDate(const mmBankTransaction *t1, const mmBankTransaction *t2)
+/*
+    This function is not sort_fun_t.
+*/
+bool sortTransByDateAsc(const mmBankTransaction *t1, const mmBankTransaction *t2)
 {
     bool res = false;
 
@@ -206,6 +167,126 @@ bool sortTransactionsByDate(const mmBankTransaction *t1, const mmBankTransaction
 }
 //----------------------------------------------------------------------------
 
+/*
+    sort_fun_t.
+*/
+bool sortTransByNum(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
+{
+    long v1 = 0;
+    long v2 = 0;
+
+    bool ok1 = t1->transNum_.ToLong(&v1);
+    bool ok2 = t2->transNum_.ToLong(&v2);
+
+    bool res = false;
+
+    if (ok1 && ok2) {
+        res = sort(v1, v2, asc);
+    } else {
+        res = sort(t1->transNum_, t2->transNum_, asc);
+    }
+
+    return res;
+}
+//----------------------------------------------------------------------------
+
+/*
+    sort_fun_t.
+*/
+bool sortTransByPayee(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
+{
+    return sort(t1->payeeStr_, t2->payeeStr_, asc);
+}
+//----------------------------------------------------------------------------
+
+/*
+    sort_fun_t.
+*/
+bool sortTransByStatus(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
+{
+    return sort(t1->status_, t2->status_, asc);
+}
+//----------------------------------------------------------------------------
+
+/*
+    sort_fun_t.
+*/
+bool sortTransByCateg(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
+{
+    return sort(t1->fullCatStr_, t2->fullCatStr_, asc);
+}
+//----------------------------------------------------------------------------
+
+/*
+    sort_fun_t.
+*/
+bool sortTransByWD(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
+{
+    return sort(t1->amt_, t2->amt_, asc);
+}
+//----------------------------------------------------------------------------
+
+/*
+    sort_fun_t.
+*/
+bool sortTransByBalanse(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
+{
+    return sort(t1->balance_, t2->balance_, asc);
+}
+//----------------------------------------------------------------------------
+
+/*
+    sort_fun_t.
+*/
+bool sortTransByNotes(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
+{
+    return sort(t1->notes_, t2->notes_, asc);
+}
+//----------------------------------------------------------------------------
+
+sort_fun_t getSortFx(EColumn col)
+{
+    static sort_fun_t fx[COL_MAX] = {0};
+
+    if (!fx[0])
+    {
+        fx[COL_DATE_OR_TRANSACTION_ID] = sortTransByDate;
+        fx[COL_TRANSACTION_NUMBER] = sortTransByNum;
+        fx[COL_PAYEE_STR] = sortTransByPayee;
+        fx[COL_STATUS] = sortTransByStatus;
+        fx[COL_CATEGORY] = sortTransByCateg;
+        fx[COL_WITHDRAWAL] = sortTransByWD;
+        fx[COL_DEPOSIT] = sortTransByWD;
+        fx[COL_BALANSE] = sortTransByBalanse;
+        fx[COL_NOTES] = sortTransByNotes;
+
+        wxASSERT(sizeof(fx)/sizeof(*fx) == COL_MAX);
+    }
+
+    return fx[col];
+}
+//----------------------------------------------------------------------------
+
+/*
+    Return whether first element is greater than the second
+*/
+struct TransSort : public std::binary_function<const mmBankTransaction*, 
+                                               const mmBankTransaction*, 
+                                               bool>
+{
+    TransSort(EColumn col, bool asc) : m_f(getSortFx(col)), m_asc(asc) {}
+
+    bool operator() (const mmBankTransaction *t1, const mmBankTransaction *t2) const
+    {
+        return m_f(t1, t2, m_asc);
+    }
+
+private:
+    sort_fun_t m_f;
+    bool m_asc;
+};
+//----------------------------------------------------------------------------
+
 } // namespace
 
 //----------------------------------------------------------------------------
@@ -215,11 +296,36 @@ bool sortTransactionsByDate(const mmBankTransaction *t1, const mmBankTransaction
 */
 class MyListCtrl : public wxListCtrl
 {
+public:
+    MyListCtrl(mmCheckingPanel *cp, wxWindow *parent,const wxWindowID id, const wxPoint& pos,const wxSize& size, long style);
+
+    bool getSortOrder() const { return m_asc; }
+    EColumn getSortColumn() const { return m_sortCol; }
+
+    void setSortOrder(bool asc) { m_asc = asc; }
+    void setSortColumn(EColumn col) { m_sortCol = col; }
+
+    void setColumnImage(EColumn col, int image);
+
+    void OnNewTransaction(wxCommandEvent& event);
+    void OnDeleteTransaction(wxCommandEvent& event);
+    void OnEditTransaction(wxCommandEvent& event);
+
+private:
     DECLARE_NO_COPY_CLASS(MyListCtrl)
     DECLARE_EVENT_TABLE()
 
-public:
-    MyListCtrl(mmCheckingPanel *cp, wxWindow *parent,const wxWindowID id, const wxPoint& pos,const wxSize& size, long style);
+    mmCheckingPanel *m_cp;
+    long m_selectedIndex;
+    long m_selectedForCopy;
+
+    wxListItemAttr m_attr1; // style1
+    wxListItemAttr m_attr2; // style2
+    wxListItemAttr m_attr3; // style, for future dates
+    wxListItemAttr m_attr4; // style, for future dates
+
+    EColumn m_sortCol;
+    bool m_asc;
 
     /* required overrides for virtual style list control */
     wxString OnGetItemText(long item, long column) const;
@@ -239,25 +345,6 @@ public:
 
     /* Sort Columns */
     void OnColClick(wxListEvent& event);
-    void SetColumnImage(int col, int image);
-
-    void OnNewTransaction(wxCommandEvent& event);
-    void OnDeleteTransaction(wxCommandEvent& event);
-    void OnEditTransaction(wxCommandEvent& event);
-
-public:
-    long m_sortCol;
-    bool m_asc;
-
-private:
-    mmCheckingPanel *m_cp;
-    long m_selectedIndex;
-    long m_selectedForCopy;
-
-    wxListItemAttr m_attr1; // style1
-    wxListItemAttr m_attr2; // style2
-    wxListItemAttr m_attr3; // style, for future dates
-    wxListItemAttr m_attr4; // style, for future dates
 };
 //----------------------------------------------------------------------------
 
@@ -389,22 +476,22 @@ void mmCheckingPanel::saveSettings()
     for (int i = 0; i < cols; ++i)
     {
         wxString name = wxString::Format(wxT("CHECK_COL%d_WIDTH"), i);
-
         int width = m_listCtrlAccount->GetColumnWidth(i);
-        wxString val = wxString::Format(wxT("%d"), width);
 
-        mmDBWrapper::setINISettingValue(m_inidb, name, val); 
+        mmDBWrapper::setINISettingValue(m_inidb, name, wxString() << width); 
     }
 
     // sorting column index
-
-    wxString val = wxString::Format(wxT("%d"), g_sortcol);
-    mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_SORT_COL"), val); 
+    mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_SORT_COL"), wxString() << g_sortcol); 
 
     // asc\desc sorting flag
+    mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_ASC"), wxString() << g_asc);
+}
+//----------------------------------------------------------------------------
 
-    val = wxString::Format(wxT("%d"), g_asc);
-    mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_ASC"), val);
+void mmCheckingPanel::sortTable()
+{
+    std::sort(m_trans.begin(), m_trans.end(), TransSort(g_sortcol, g_asc));
 }
 //----------------------------------------------------------------------------
 
@@ -512,24 +599,34 @@ void mmCheckingPanel::CreateControls()
     
     m_listCtrlAccount->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
     m_listCtrlAccount->SetBackgroundColour(mmColors::listBackColor);
-    m_listCtrlAccount->m_asc = g_asc;
-    m_listCtrlAccount->m_sortCol = g_sortcol;
+    m_listCtrlAccount->setSortOrder(g_asc);
+    m_listCtrlAccount->setSortColumn(g_sortcol);
     m_listCtrlAccount->SetFocus();
     
     createColumns(m_inidb, *m_listCtrlAccount);
 
     {   // load the global variables
-        long iniSortCol = 0;
-        mmDBWrapper::getINISettingValue(m_inidb, wxT("CHECK_SORT_COL"), wxT("0")).ToLong(&iniSortCol);
-        g_sortcol = iniSortCol;
+        long val = COL_DEF_SORT;
+        wxString strVal = mmDBWrapper::getINISettingValue(m_inidb, wxT("CHECK_SORT_COL"), wxString() << val);
+        
+        if (strVal.ToLong(&val)) {
+            g_sortcol = toEColumn(val);
+        }
 
-        long iniSortAsc = 0;
-        mmDBWrapper::getINISettingValue(m_inidb, wxT("CHECK_ASC"), wxT("1")).ToLong(&iniSortAsc); 
-        g_asc = iniSortAsc != 0;
+        // --
 
-        m_listCtrlAccount->m_sortCol = g_sortcol;
-        m_listCtrlAccount->m_asc = g_asc;
-        m_listCtrlAccount->SetColumnImage(m_listCtrlAccount->m_sortCol, 5); // asc\desc sort mark (arrow)
+        val = 1; // asc sorting default
+        strVal = mmDBWrapper::getINISettingValue(m_inidb, wxT("CHECK_ASC"), wxString() << val);
+
+        if (strVal.ToLong(&val)) {
+            g_asc = val != 0;
+        }
+
+        // --
+
+        m_listCtrlAccount->setSortColumn(g_sortcol);
+        m_listCtrlAccount->setSortOrder(g_asc);
+        m_listCtrlAccount->setColumnImage(m_listCtrlAccount->getSortColumn(), 5); // asc\desc sort mark (arrow)
     }
 
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, ID_PANEL1, 
@@ -779,7 +876,7 @@ void mmCheckingPanel::initVirtualListControl()
         initBalance = m_core->bTransactionList_.getReconciledBalance(m_AccountID);
     }
 
-    std::sort(m_trans.begin(), m_trans.end(), sortTransactionsByDate);
+    std::sort(m_trans.begin(), m_trans.end(), sortTransByDateAsc);
 
 #if defined (__WXMSW__)
     pgd->Update(50);
@@ -831,7 +928,7 @@ void mmCheckingPanel::initVirtualListControl()
 
     /* Setup the Sorting */
      // decide whether top or down icon needs to be shown
-    m_listCtrlAccount->SetColumnImage(g_sortcol, g_asc ? 5 : 4);
+    m_listCtrlAccount->setColumnImage(g_sortcol, g_asc ? 5 : 4); // FIXME!!! magic constants
     
     // sort the table
     sortTable(); 
@@ -1141,28 +1238,28 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
 
 void MyListCtrl::OnColClick(wxListEvent& event)
 {
-    /* Figure out which column has to be sorted */
-    if (event.GetColumn() == 7)
-        return;
-
     /* Clear previous column image */
-    SetColumnImage(m_sortCol, -1);
+    setColumnImage(m_sortCol, -1);
 
-    m_sortCol = event.GetColumn();
+    m_sortCol = toEColumn(event.GetColumn());
     g_sortcol = m_sortCol;
+
     m_asc = !m_asc; // toggle sort order
     g_asc = m_asc;
-    SetColumnImage(m_sortCol, m_asc ? 5 : 4); // decide whether top or down icon needs to be shown
-    m_cp->sortTable();   // sort the table
+
+    setColumnImage(m_sortCol, m_asc ? 5 : 4); // decide whether top or down icon needs to be shown
+
+    m_cp->sortTable();
     RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::SetColumnImage(int col, int image)
+void MyListCtrl::setColumnImage(EColumn col, int image)
 {
     wxListItem item;
     item.SetMask(wxLIST_MASK_IMAGE);
     item.SetImage(image);
+
     SetColumn(col, item);
 }
 //----------------------------------------------------------------------------
@@ -1521,11 +1618,5 @@ boost::shared_ptr<wxSQLite3Database> mmCheckingPanel::getDb() const
 { 
     wxASSERT(m_core);
     return m_core->db_; 
-}
-//----------------------------------------------------------------------------
-
-void mmCheckingPanel::sortTable()
-{
-    std::sort(m_trans.begin(), m_trans.end(), sortTransactions);
 }
 //----------------------------------------------------------------------------
