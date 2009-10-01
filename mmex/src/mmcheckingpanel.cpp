@@ -217,12 +217,41 @@ bool sortTransByCateg(const mmBankTransaction *t1, const mmBankTransaction *t2, 
 }
 //----------------------------------------------------------------------------
 
+bool sortAsCurrency(const wxString &s1, const wxString &s2, bool asc)
+{
+    double v1 = 0;
+    double v2 = 0;
+
+    bool ok1 = mmCurrencyFormatter::formatCurrencyToDouble(s1, v1);
+    bool ok2 = mmCurrencyFormatter::formatCurrencyToDouble(s2, v2);
+
+    bool res = false;
+
+    if (ok1 && ok2) {
+        res = sort(v1, v2, asc);
+    } else {
+        res = sort(s1, s2, asc);
+    }
+
+    return res;
+}
+//----------------------------------------------------------------------------
+
 /*
     sort_fun_t.
 */
-bool sortTransByWD(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
+bool sortTransByWithdrowal(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
 {
-    return sort(t1->amt_, t2->amt_, asc);
+    return sortAsCurrency(t1->withdrawalStr_, t2->withdrawalStr_, asc);
+}
+//----------------------------------------------------------------------------
+
+/*
+    sort_fun_t.
+*/
+bool sortTransByDeposit(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
+{
+    return sortAsCurrency(t1->depositStr_, t2->depositStr_, asc);
 }
 //----------------------------------------------------------------------------
 
@@ -255,15 +284,16 @@ sort_fun_t getSortFx(EColumn col)
         fx[COL_PAYEE_STR] = sortTransByPayee;
         fx[COL_STATUS] = sortTransByStatus;
         fx[COL_CATEGORY] = sortTransByCateg;
-        fx[COL_WITHDRAWAL] = sortTransByWD;
-        fx[COL_DEPOSIT] = sortTransByWD;
+        fx[COL_WITHDRAWAL] = sortTransByWithdrowal;
+        fx[COL_DEPOSIT] = sortTransByDeposit;
         fx[COL_BALANSE] = sortTransByBalanse;
         fx[COL_NOTES] = sortTransByNotes;
-
-        wxASSERT(sizeof(fx)/sizeof(*fx) == COL_MAX);
     }
 
-    return fx[col];
+    sort_fun_t f = fx[col];
+    wxASSERT(f);
+
+    return f;
 }
 //----------------------------------------------------------------------------
 
