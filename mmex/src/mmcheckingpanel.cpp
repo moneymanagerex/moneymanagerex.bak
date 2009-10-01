@@ -54,6 +54,18 @@ enum EColumn
     COL_DEF_SORT = COL_DATE_OR_TRANSACTION_ID
 };
 //----------------------------------------------------------------------------
+
+enum EIcons
+{ 
+    ICON_RECONCILED,
+    ICON_VOID,
+    ICON_FOLLOWUP,
+    ICON_NONE,
+    ICON_DESC,
+    ICON_ASC,
+    ICON_DUPLICATE
+};
+//----------------------------------------------------------------------------
 EColumn g_sortcol = COL_DEF_SORT; // index of column to sort
 bool g_asc = true; // asc\desc sorting
 //----------------------------------------------------------------------------
@@ -217,6 +229,9 @@ bool sortTransByCateg(const mmBankTransaction *t1, const mmBankTransaction *t2, 
 }
 //----------------------------------------------------------------------------
 
+/*
+    FIXME: formatCurrencyToDouble too slow.
+*/
 bool sortAsCurrency(const wxString &s1, const wxString &s2, bool asc)
 {
     double v1 = 0;
@@ -277,7 +292,7 @@ sort_fun_t getSortFx(EColumn col)
 {
     static sort_fun_t fx[COL_MAX] = {0};
 
-    if (!fx[0])
+    if (!fx[COL_DATE_OR_TRANSACTION_ID])
     {
         fx[COL_DATE_OR_TRANSACTION_ID] = sortTransByDate;
         fx[COL_TRANSACTION_NUMBER] = sortTransByNum;
@@ -656,7 +671,7 @@ void mmCheckingPanel::CreateControls()
 
         m_listCtrlAccount->setSortColumn(g_sortcol);
         m_listCtrlAccount->setSortOrder(g_asc);
-        m_listCtrlAccount->setColumnImage(m_listCtrlAccount->getSortColumn(), 5); // asc\desc sort mark (arrow)
+        m_listCtrlAccount->setColumnImage(m_listCtrlAccount->getSortColumn(), ICON_ASC); // asc\desc sort mark (arrow)
     }
 
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, ID_PANEL1, 
@@ -958,7 +973,7 @@ void mmCheckingPanel::initVirtualListControl()
 
     /* Setup the Sorting */
      // decide whether top or down icon needs to be shown
-    m_listCtrlAccount->setColumnImage(g_sortcol, g_asc ? 5 : 4); // FIXME!!! magic constants
+    m_listCtrlAccount->setColumnImage(g_sortcol, g_asc ? ICON_ASC : ICON_DESC);
     
     // sort the table
     sortTable(); 
@@ -1277,7 +1292,7 @@ void MyListCtrl::OnColClick(wxListEvent& event)
     m_asc = !m_asc; // toggle sort order
     g_asc = m_asc;
 
-    setColumnImage(m_sortCol, m_asc ? 5 : 4); // decide whether top or down icon needs to be shown
+    setColumnImage(m_sortCol, m_asc ? ICON_ASC : ICON_DESC);
 
     m_cp->sortTable();
     RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
@@ -1365,28 +1380,28 @@ wxString MyListCtrl::OnGetItemText(long item, long column) const
 */
 int MyListCtrl::OnGetItemImage(long item) const
 {
-   wxString status = m_cp->getItem(item, COL_STATUS);
-   
-   int res = 3;
+    wxString status = m_cp->getItem(item, COL_STATUS);
 
-   if (status == wxT("F"))
-   {
-        res = 2;
-   }
-   else if (status == wxT("R"))
-   {
-        res = 0;
-   }
-   else if (status == wxT("V"))
-   {
-        res = 1;
-   }
-   else if (status == wxT("D"))
-   {
-        res = 6;
-   }
+    int res = ICON_NONE;
 
-   return res;
+    if (status == wxT("F"))
+    {
+        res = ICON_FOLLOWUP;
+    }
+    else if (status == wxT("R"))
+    {
+        res = ICON_RECONCILED;
+    }
+    else if (status == wxT("V"))
+    {
+        res = ICON_VOID;
+    }
+    else if (status == wxT("D"))
+    {
+        res = ICON_DUPLICATE;
+    }
+
+    return res;
 }
 //----------------------------------------------------------------------------
 
@@ -1440,10 +1455,9 @@ void MyListCtrl::OnChar(wxKeyEvent& event)
 
 void MyListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
 {
-    if (m_selectedIndex == -1)
-        return;
-
-    m_selectedForCopy = m_cp->m_trans[m_selectedIndex]->transactionID();
+    if (m_selectedIndex != -1) {
+        m_selectedForCopy = m_cp->m_trans[m_selectedIndex]->transactionID();
+    }
 }
 //----------------------------------------------------------------------------
 
