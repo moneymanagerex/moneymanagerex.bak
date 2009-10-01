@@ -536,7 +536,7 @@ void mmCheckingPanel::saveSettings()
 
 void mmCheckingPanel::sortTable()
 {
-    std::sort(m_trans.begin(), m_trans.end(), TransSort(g_sortcol, g_asc));
+    std::sort(m_trans.begin(), m_trans.end(), TransSort(m_listCtrlAccount->getSortColumn(), m_listCtrlAccount->getSortOrder()));
 }
 //----------------------------------------------------------------------------
 
@@ -671,7 +671,7 @@ void mmCheckingPanel::CreateControls()
 
         m_listCtrlAccount->setSortColumn(g_sortcol);
         m_listCtrlAccount->setSortOrder(g_asc);
-        m_listCtrlAccount->setColumnImage(m_listCtrlAccount->getSortColumn(), ICON_ASC); // asc\desc sort mark (arrow)
+        m_listCtrlAccount->setColumnImage(m_listCtrlAccount->getSortColumn(), m_listCtrlAccount->getSortOrder() ? ICON_ASC : ICON_DESC); // asc\desc sort mark (arrow)
     }
 
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, ID_PANEL1, 
@@ -1656,7 +1656,7 @@ MyListCtrl::MyListCtrl(
     long style
 ) : 
     wxListCtrl(parent, id, pos, size, style | wxWANTS_CHARS),
-    m_sortCol(),
+    m_sortCol(COL_DEF_SORT),
     m_asc(true),
     m_cp(cp),
     m_selectedIndex(-1),
