@@ -536,7 +536,7 @@ void mmCheckingPanel::saveSettings()
 
 void mmCheckingPanel::sortTable()
 {
-    std::sort(m_trans.begin(), m_trans.end(), TransSort(m_listCtrlAccount->getSortColumn(), m_listCtrlAccount->getSortOrder()));
+    std::sort(m_trans.begin(), m_trans.end(), TransSort(g_sortcol, g_asc));
 }
 //----------------------------------------------------------------------------
 
