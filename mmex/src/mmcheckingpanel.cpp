@@ -1656,15 +1656,15 @@ MyListCtrl::MyListCtrl(
     long style
 ) : 
     wxListCtrl(parent, id, pos, size, style | wxWANTS_CHARS),
-    m_sortCol(COL_DEF_SORT),
-    m_asc(true),
     m_cp(cp),
     m_selectedIndex(-1),
     m_selectedForCopy(-1),
     m_attr1(*wxBLACK, mmColors::listAlternativeColor0, wxNullFont),
     m_attr2(*wxBLACK, mmColors::listAlternativeColor1, wxNullFont),
     m_attr3(mmColors::listFutureDateColor, mmColors::listAlternativeColor0, wxNullFont),
-    m_attr4(mmColors::listFutureDateColor, mmColors::listAlternativeColor1, wxNullFont)
+    m_attr4(mmColors::listFutureDateColor, mmColors::listAlternativeColor1, wxNullFont),
+    m_sortCol(COL_DEF_SORT),
+    m_asc(true)
 {
     wxASSERT(m_cp);
     
