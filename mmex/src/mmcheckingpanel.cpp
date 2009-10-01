@@ -1266,45 +1266,61 @@ void MyListCtrl::setColumnImage(EColumn col, int image)
 
 wxString mmCheckingPanel::getItem(long item, long column)
 {  
-    if (m_trans.empty())
-       return wxT("");
+    wxString s;
 
-    if (item >= static_cast<long>(m_trans.size()) )
-        return wxT("");
+    bool ok = !m_trans.empty() &&
+              ( item >= 0 ) &&
+              ( item < static_cast<long>(m_trans.size()) ) &&
+              m_trans[item];
 
-    if (!m_trans[item])
+    if (ok)
     {
-        return wxT("");;
+        const mmBankTransaction &t = *m_trans[item];
+
+        switch (column)
+        {
+        case COL_DATE_OR_TRANSACTION_ID:
+            s = t.dateStr_;
+            break;
+
+        case COL_TRANSACTION_NUMBER:
+            s = t.transNum_;
+            break;
+
+        case COL_PAYEE_STR:
+            s = t.payeeStr_;
+            break;
+
+        case COL_STATUS:
+            s = t.status_;
+            break;
+
+        case COL_CATEGORY:
+            s = t.fullCatStr_;
+            break;
+
+        case COL_WITHDRAWAL:
+            s = t.withdrawalStr_;
+            break;
+
+        case COL_DEPOSIT:
+            s = t.depositStr_; 
+            break;
+
+        case COL_BALANSE:
+            s = t.balanceStr_;
+            break;
+
+        case COL_NOTES:
+            s = t.notes_;
+            break;
+
+        default:
+            wxASSERT(false);
+        }
     }
 
-    if (column == 0)
-        return m_trans[item]->dateStr_;
-
-    if (column == 1)
-       return m_trans[item]->transNum_;
-
-    if (column == 2)
-        return m_trans[item]->payeeStr_;
-
-    if (column == 3)
-        return m_trans[item]->status_;
-
-    if (column == 4)
-       return m_trans[item]->fullCatStr_;
-
-    if (column == 5)
-       return m_trans[item]->withdrawalStr_;
-
-    if (column == 6)
-        return m_trans[item]->depositStr_; 
-    
-    if (column == 7)
-        return m_trans[item]->balanceStr_;
-
-	if (column == 8)
-        return m_trans[item]->notes_;
-		
-    return wxT("");
+    return s;
 }
 //----------------------------------------------------------------------------
 
@@ -1314,27 +1330,33 @@ wxString MyListCtrl::OnGetItemText(long item, long column) const
 }
 //----------------------------------------------------------------------------
 
+/* 
+    Returns the icon to be shown for each transaction
+*/
 int MyListCtrl::OnGetItemImage(long item) const
 {
-   /* Returns the icon to be shown for each transaction */
-   wxString status = m_cp->getItem(item, 3);
+   wxString status = m_cp->getItem(item, COL_STATUS);
+   
+   int res = 3;
+
    if (status == wxT("F"))
    {
-        return 2;
+        res = 2;
    }
    else if (status == wxT("R"))
    {
-        return 0;
+        res = 0;
    }
    else if (status == wxT("V"))
    {
-        return 1;
+        res = 1;
    }
    else if (status == wxT("D"))
    {
-        return 6;
+        res = 6;
    }
-   return 3;
+
+   return res;
 }
 //----------------------------------------------------------------------------
 
