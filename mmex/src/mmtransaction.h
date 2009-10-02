@@ -79,9 +79,8 @@ public:
     mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db);
     virtual ~mmBankTransaction() {}
 
-    bool containsCategory(int categID, int subcategID, bool ignoreSubCateg = false);
-    double getAmountForSplit(int categID, 
-        int subcategID);
+    bool containsCategory(int categID, int subcategID, bool ignoreSubCateg = false) const;
+    double getAmountForSplit(int categID, int subcategID) const;
 
     double value(int accountID);
     void updateAllData(mmCoreDB* core,
@@ -156,15 +155,10 @@ public:
     void deleteTransactions(int accountID);
 
     /* Query Functions */
-    void getExpensesIncome(int accountID, double& expenses, double& income,
-                           bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd);
-    double getAmountForCategory(int categID, int subcategID, bool ignoreDate,
-                                 wxDateTime dtBegin, wxDateTime dtEnd);
-    double getAmountForPayee(int payeeID, bool ignoreDate,
-                                 wxDateTime dtbegin, wxDateTime dtEnd);
-    void getTransactionStats(int accountID, int& number,
-                           bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd);
-
+    void getExpensesIncome(int accountID, double& expenses, double& income, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd) const;
+    double getAmountForCategory(int categID, int subcategID, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd) const;
+    double getAmountForPayee(int payeeID, bool ignoreDate, const wxDateTime &dtbegin, const wxDateTime &dtEnd) const;
+    void getTransactionStats(int accountID, int& number, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd) const;
 
     double getBalance(int accountID, bool ignoreFuture = false);
     double getReconciledBalance(int accountID);

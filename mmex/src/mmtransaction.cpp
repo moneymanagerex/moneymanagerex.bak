@@ -345,7 +345,7 @@ void mmBankTransaction::getSplitTransactions(mmCoreDB* core, mmSplitTransactionE
     mmENDSQL_LITE_EXCEPTION;
 }
 
-bool mmBankTransaction::containsCategory(int categID, int subcategID, bool ignoreSubCateg)
+bool mmBankTransaction::containsCategory(int categID, int subcategID, bool ignoreSubCateg) const
 {
     if (splitEntries_->numEntries())
     {
@@ -372,7 +372,7 @@ bool mmBankTransaction::containsCategory(int categID, int subcategID, bool ignor
     return false;
 }
 
-double mmBankTransaction::getAmountForSplit(int categID, int subcategID)
+double mmBankTransaction::getAmountForSplit(int categID, int subcategID) const
 {
     double splitAmount = 0.0;
     if (splitEntries_->numEntries())
@@ -725,12 +725,12 @@ void mmBankTransactionList::updateAllTransactionsForPayee(mmCoreDB* core,
 }
 
 void mmBankTransactionList::getExpensesIncome(int accountID, double& expenses, double& income,  
-                           bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd)
+                           bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd) const
 {
-    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
     for (i = transactions_.begin(); i != transactions_.end(); i++ )
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        boost::shared_ptr<const mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
             if (accountID != -1)
@@ -772,12 +772,14 @@ void mmBankTransactionList::getExpensesIncome(int accountID, double& expenses, d
 
 
 void mmBankTransactionList::getTransactionStats(int accountID, int& number,  
-                           bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd)
+                           bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd) const
 {
-    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
-    for (i = transactions_.begin(); i != transactions_.end(); i++ )
+    std::vector<boost::shared_ptr<mmBankTransaction> >::const_iterator i;
+
+    for (i = transactions_.begin(); i != transactions_.end(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        boost::shared_ptr<const mmBankTransaction> pBankTransaction = *i;
+
         if (pBankTransaction)
         {
             if (accountID != -1)
@@ -801,12 +803,12 @@ void mmBankTransactionList::getTransactionStats(int accountID, int& number,
             }
 
             if (pBankTransaction->transType_ == wxT("Deposit"))
-                number++;
+                ++number;
             else if (pBankTransaction->transType_ == wxT("Withdrawal"))
-                number++;
+                ++number;
             else if (pBankTransaction->transType_ == wxT("Transfer"))
             {
-                number++;
+                ++number;
             }
 
         }
@@ -814,13 +816,13 @@ void mmBankTransactionList::getTransactionStats(int accountID, int& number,
 }
 
 double mmBankTransactionList::getAmountForPayee(int payeeID, bool ignoreDate, 
-                                 wxDateTime dtBegin, wxDateTime dtEnd)
+                                 const wxDateTime &dtBegin, const wxDateTime &dtEnd) const
 {
     double amt = 0.0;
-    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
     for (i = transactions_.begin(); i != transactions_.end(); i++ )
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        boost::shared_ptr<const mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
            if (pBankTransaction->payeeID_ == payeeID)
@@ -850,42 +852,47 @@ double mmBankTransactionList::getAmountForPayee(int payeeID, bool ignoreDate,
 }
 
 double mmBankTransactionList::getAmountForCategory(
-                                         int categID, 
-                                         int subcategID,
-                                         bool ignoreDate,
-                                         wxDateTime dtBegin,
-                                         wxDateTime dtEnd)
+    int categID, 
+    int subcategID,
+    bool ignoreDate,
+    const wxDateTime &dtBegin,
+    const wxDateTime &dtEnd
+) const
 {
-    double amt = 0.0;
-    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
-    for (i = transactions_.begin(); i != transactions_.end(); i++ )
+    double amt = 0;
+
+    for (std::vector<boost::shared_ptr<mmBankTransaction> >::const_iterator i = transactions_.begin(); 
+         i != transactions_.end(); 
+         i++
+        )
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
-        if (pBankTransaction)
+        boost::shared_ptr<const mmBankTransaction> pBankTransaction = *i;
+
+        if (!pBankTransaction || !pBankTransaction->containsCategory(categID, subcategID)) {
+            continue;
+        }
+
+        if (pBankTransaction->status_ == wxT("V"))
+          continue; // skip
+
+        if (!ignoreDate)
         {
-            if (pBankTransaction->containsCategory(categID, subcategID))
-            {
-               if (pBankTransaction->status_ == wxT("V"))
-                  continue; // skip
+          if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+             continue; //skip
+        }
 
-               if (!ignoreDate)
-               {
-                  if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
-                     continue; //skip
-               }
+        if (pBankTransaction->transType_ == wxT("Transfer"))
+          continue;
 
-               if (pBankTransaction->transType_ == wxT("Transfer"))
-                  continue;
+        double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), pBankTransaction->accountID_);
 
-              double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), pBankTransaction->accountID_);
-
-               if (pBankTransaction->transType_ == wxT("Withdrawal"))
-                  amt -= pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
-               else if (pBankTransaction->transType_ == wxT("Deposit"))
-                  amt += pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
-            }
+        if (pBankTransaction->transType_ == wxT("Withdrawal")) {
+          amt -= pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
+        } else if (pBankTransaction->transType_ == wxT("Deposit")) {
+          amt += pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
         }
     }
+    
     return amt;
 }
 
