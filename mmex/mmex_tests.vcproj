@@ -506,6 +506,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\reportcategovertimeperf.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\splitdetailsdialog.cpp"
 					>
 				</File>
