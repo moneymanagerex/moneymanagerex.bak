@@ -75,15 +75,13 @@ void prepareAndPrintPeriods
     periods_t &periods
 )
 {
-    int j = 0;
-
-    for (periods_t::iterator i = periods.begin(); i != periods.end(); ++i, ++j)
+    for (periods_t::iterator i = periods.begin(); i != periods.end(); ++i)
     {
         wxDateTime &dtBegin = i->first;
         wxDateTime &dtEnd = i->second;
 
         dtBegin = periodBegin;
-        dtBegin += wxDateSpan::Months(j);
+        dtBegin += wxDateSpan::Months(std::distance(periods.begin(), i));
 
         if (i == periods.begin()) {
             wxASSERT(dtBegin == periodBegin);
@@ -138,8 +136,7 @@ void printRow
 
     hb.addTableCell(categ, false, true);
 
-    size_t j = 0;
-    for (periods_t::const_iterator i = periods.begin(); i != periods.end(); ++i, ++j)
+    for (periods_t::const_iterator i = periods.begin(); i != periods.end(); ++i)
     {
         const wxDateTime &dtBegin = i->first;
         const wxDateTime &dtEnd = i->second;
@@ -152,7 +149,7 @@ void printRow
 
         if (month_amount != 0) {
             mmCurrencyFormatter::formatDoubleToCurrencyEdit(month_amount, month_amount_str);
-            months_totals[j] += month_amount;
+            months_totals[std::distance(periods.begin(), i)] += month_amount;
         }
 
         hb.addTableCell(month_amount_str, true);
