@@ -156,6 +156,7 @@ MMEX_OBJECTS =  \
 	mmex_optionsdialog.o \
 	mmex_payeedialog.o \
 	mmex_qifimport.o \
+	mmex_reportcategovertimeperf.o \
 	mmex_splitdetailsdialog.o \
 	mmex_splittransactionsdialog.o \
 	mmex_stockdialog.o \
@@ -558,6 +559,9 @@ mmex_payeedialog.o: $(srcdir)/src/payeedialog.cpp
 
 mmex_qifimport.o: $(srcdir)/src/qifimport.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/qifimport.cpp
+
+mmex_reportcategovertimeperf.o: $(srcdir)/src/reportcategovertimeperf.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reportcategovertimeperf.cpp
 
 mmex_splitdetailsdialog.o: $(srcdir)/src/splitdetailsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/splitdetailsdialog.cpp

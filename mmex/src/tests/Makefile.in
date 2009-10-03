@@ -175,6 +175,7 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_optionsdialog.o \
 	mmex_tests_payeedialog.o \
 	mmex_tests_qifimport.o \
+	mmex_tests_reportcategovertimeperf.o \
 	mmex_tests_splitdetailsdialog.o \
 	mmex_tests_splittransactionsdialog.o \
 	mmex_tests_stockdialog.o \
@@ -630,6 +631,9 @@ mmex_tests_payeedialog.o: $(srcdir)/../../src/payeedialog.cpp
 
 mmex_tests_qifimport.o: $(srcdir)/../../src/qifimport.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/qifimport.cpp
+
+mmex_tests_reportcategovertimeperf.o: $(srcdir)/../../src/reportcategovertimeperf.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportcategovertimeperf.cpp
 
 mmex_tests_splitdetailsdialog.o: $(srcdir)/../../src/splitdetailsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/splitdetailsdialog.cpp
