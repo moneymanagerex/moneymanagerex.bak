@@ -35,7 +35,7 @@ public:
 	void end();
     
 	/** Clears the current HTML document */
-	void clear() { html = wxT(""); }
+	void clear() { html = wxGetEmptyString(); }
 	
 	/** Create an HTML header and returns as a wxString */
     void addHeader(int level, const wxString& header);
@@ -59,13 +59,13 @@ public:
 	void endCenter();
 
 	/** Start a table element */
-    void startTable(const wxString& width = wxT(""), const wxString& valign = wxT(""));
+    void startTable(const wxString& width = wxGetEmptyString(), const wxString& valign = wxGetEmptyString());
 	
 	/** Starts a table row */
     void startTableRow();
 	
 	/** Starts a table cell (use only if want to nest other elements inside */
-	void startTableCell(const wxString& width = wxT(""));
+	void startTableCell(const wxString& width = wxGetEmptyString());
 	
 	/** Add a special row that is a separator, cols is the number of columns the row has to spread along */
     void addRowSeparator(int cols);
@@ -89,10 +89,10 @@ public:
     void addTableHeaderRowLink(const wxString& href, const wxString& value, int cols);
 
 	/** Add a Cell value */
-    void addTableCell(const wxString& value, bool numeric = false, bool italic = false, bool bold = false, const wxString& fontColor = wxT(""));
+    void addTableCell(const wxString& value, bool numeric = false, bool italic = false, bool bold = false, const wxString& fontColor = wxGetEmptyString());
 	
 	/** Add a Cell value */
-    void addTableCellLink(const wxString& href, const wxString& value, bool numeric = false, bool italic = false, bool bold = false, const wxString& fontColor = wxT(""));
+    void addTableCellLink(const wxString& href, const wxString& value, bool numeric = false, bool italic = false, bool bold = false, const wxString& fontColor = wxGetEmptyString());
 
     void endTable();
     void endTableRow();
