@@ -67,6 +67,16 @@ private:
 class mmBudgetEntryHolder
 {
 public:
+    mmBudgetEntryHolder() :
+        budgetEntryID_(),
+        categID_(),
+        subcategID_(),
+        amt_(),
+        estimated_(),
+        actual_()
+    {
+    }
+
     int budgetEntryID_;
 
     int categID_;
