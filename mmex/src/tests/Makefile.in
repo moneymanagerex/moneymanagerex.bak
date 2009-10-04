@@ -153,6 +153,7 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_dbwrapper.o \
 	mmex_tests_fileviewerdialog.o \
 	mmex_tests_filtertransdialog.o \
+	mmex_tests_guiid.o \
 	mmex_tests_htmlbuilder.o \
 	mmex_tests_led.o \
 	mmex_tests_maincurrencydialog.o \
@@ -564,6 +565,9 @@ mmex_tests_fileviewerdialog.o: $(srcdir)/../../src/fileviewerdialog.cpp
 
 mmex_tests_filtertransdialog.o: $(srcdir)/../../src/filtertransdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/filtertransdialog.cpp
+
+mmex_tests_guiid.o: $(srcdir)/../../src/guiid.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/guiid.cpp
 
 mmex_tests_htmlbuilder.o: $(srcdir)/../../src/htmlbuilder.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/htmlbuilder.cpp

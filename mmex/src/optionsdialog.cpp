@@ -396,7 +396,7 @@ void mmOptionsDialog::CreateControls()
         wxT("YYYY.MM.DD"),
     };
 
-    wxString selection = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), DEFDATEFORMAT);
+    wxString selection = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
     choiceDateFormat_ = new wxComboBox( itemPanelGeneral, 
         ID_DIALOG_OPTIONS_DATE_FORMAT, wxT(""), wxDefaultPosition, 
         wxSize(120, -1), TOTAL_DATEFORMAT, itemChoice7Strings, 0 );
@@ -428,7 +428,7 @@ void mmOptionsDialog::CreateControls()
     itemStaticBoxSizer18->Add(itemStaticText5, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
+    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     wxTextCtrl* textDelimiter = new wxTextCtrl( itemPanelGeneral, ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER, 
         delimit, wxDefaultPosition, wxDefaultSize, 0 );
     textDelimiter->SetToolTip(_("Specify the delimiter to use when importing/exporting CSV files"));
@@ -696,7 +696,7 @@ void mmOptionsDialog::CreateControls()
         _("Stock Quote Web Page"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerStockURL->Add(itemStaticTextURL, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), DEFSTOCKURL);
+    wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), mmex::DEFSTOCKURL);
     wxTextCtrl* itemTextCtrURL = new wxTextCtrl( itemPanelMisc, 
         ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL, stockURL, 
         wxDefaultPosition, wxSize(250, -1), 0 );

@@ -26,6 +26,7 @@
 #define SYMBOL_STOCKDIALOG_POSITION wxDefaultPosition
 
 #include "guiid.h"
+#include "defs.h"
 
 class mmData;
 class wxDatePickerCtrl;

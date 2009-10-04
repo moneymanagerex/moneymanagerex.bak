@@ -23,6 +23,7 @@
 #define SYMBOL_ASSETDIALOG_SIZE wxSize(400, 300)
 #define SYMBOL_ASSETDIALOG_POSITION wxDefaultPosition
 
+#include "defs.h"
 #include "guiid.h"
 
 class mmData;

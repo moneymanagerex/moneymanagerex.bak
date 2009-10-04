@@ -2869,7 +2869,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
     wxString build = tkz.GetNextToken();
 
     // get current version
-    wxString currentV = MMEXVERSION;
+    wxString currentV = mmex::getVersion();
     wxStringTokenizer tkz1(currentV, wxT('.'), wxTOKEN_RET_EMPTY_ALL);  
     numTokens = (int)tkz1.CountTokens();
     

@@ -325,7 +325,7 @@ void mmStockDialog::OnStockPriceButton(wxCommandEvent& /*event*/)
 	if (!stockSymbol.IsEmpty())
 	{
 		// Use Google for stock quotes
-        wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), DEFSTOCKURL);
+        wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), mmex::DEFSTOCKURL);
         //wxString paddedURL = wxT("\"") + stockURL + wxT("\"");
 		//wxString httpString = wxString::Format(paddedURL, stockSymbol);
         //wxExecute(_T("explorer ") + httpString, wxEXEC_ASYNC, NULL ); 

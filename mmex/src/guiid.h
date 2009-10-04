@@ -16,34 +16,36 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
+//----------------------------------------------------------------------------
 #ifndef _MM_EX_GUIID_H_
 #define _MM_EX_GUIID_H_
+//----------------------------------------------------------------------------
+#include <wx/defs.h> // wxID_HIGHEST
+//----------------------------------------------------------------------------
+class wxString;
+//----------------------------------------------------------------------------
 
-#include "defs.h"
+namespace mmex 
+{
 
-#define EXC_GEN       42
-#define MMEXVERSION   wxT("0.9.4.2")
-#define DEFDATEFORMAT wxT("%m/%d/%y")
-#define DEFDELIMTER   wxT(",")
-#define MM_MIN_DATAVERSION 2
-#define MMDATAVERSION wxT("2")
-#define MMEX_CURRENCYDB_FNAME wxT("/currency.db3")
-#define DEFSTOCKURL  wxT("http://www.google.com/finance?q=%s")
+extern const int MIN_DATAVERSION;
+extern const wxChar * const DATAVERSION;
+//----------------------------------------------------------------------------
+extern const wxChar *const DEFDATEFORMAT;
+extern const wxChar *const DEFDELIMTER;
+extern const wxChar *const CURRENCYDB_FNAME;
+extern const wxChar *const DEFSTOCKURL;
 
-#if defined (__WXGTK__) || (__WXMAC__)
-#define  LOG_INFO(x)
-#else
-#ifdef _DEBUG
-#define  LOG_INFO(x) OutputDebugString(x)
-#else
-#define LOG_INFO(x)
-#endif
-#endif
+wxString getVersion();
+
+} // mmex
+
+//----------------------------------------------------------------------------
 
 enum
 {
     /* Main Menu  */
-    MENU_NEW=wxID_HIGHEST + 1,
+    MENU_NEW = wxID_HIGHEST + 1,
     MENU_OPEN,
     MENU_SAVE,
     MENU_SAVE_AS,
@@ -388,8 +390,7 @@ enum
     ID_DIALOG_FILEVIEWER,
     ID_TEXTCTRL_FILEVIEWER,
 };
+//----------------------------------------------------------------------------
+#endif // _MM_EX_GUIID_H_
+//----------------------------------------------------------------------------
 
-
-#include "../resources/mainicon.xpm"
-
-#endif

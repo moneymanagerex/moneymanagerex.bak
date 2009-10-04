@@ -272,7 +272,7 @@ void mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
     if (exists)
     {
         setInfoSettingValue(db, wxT("MODIFIEDDATE"), wxDateTime::Now().FormatISODate());
-        setInfoSettingValue(db, wxT("DATAVERSION"), MMDATAVERSION);
+        setInfoSettingValue(db, wxT("DATAVERSION"), mmex::DATAVERSION);
     }
     else
     {
@@ -302,11 +302,11 @@ void mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
 
         const Rec data[] = 
         {
-            { "MMEXVERSION", MMEXVERSION },
-            { "DATAVERSION", MMDATAVERSION },
+            { "MMEXVERSION", mmex::getVersion()},
+            { "DATAVERSION", mmex::DATAVERSION },
             { "CREATEDATE", wxDateTime::Now().FormatISODate() },
-            { "DATEFORMAT", DEFDATEFORMAT },
-            { 0, wxT("") }
+            { "DATEFORMAT", mmex::DEFDATEFORMAT },
+            { 0, wxGetEmptyString() }
         };
 
         static const char sql_ins[] = 
@@ -466,7 +466,7 @@ bool mmDBWrapper::checkDBVersion(wxSQLite3Database* db)
     if (q1.NextRow())
     {
         int dataVersion = q1.GetInt(wxT("INFOVALUE"));
-        ok = dataVersion >= MM_MIN_DATAVERSION;
+        ok = dataVersion >= mmex::MIN_DATAVERSION;
     }
     q1.Finalize();
 
@@ -497,7 +497,7 @@ void mmDBWrapper::loadCurrencies(wxSQLite3Database* db, const wxString& fpath)
     boost::scoped_ptr<wxSQLite3Database> inidb(new wxSQLite3Database());
     mmBEGINSQL_LITE_EXCEPTION;
 
-    wxString fName = fpath + MMEX_CURRENCYDB_FNAME;
+    wxString fName = fpath + mmex::CURRENCYDB_FNAME;
     wxASSERT(wxFileName::FileExists(fName));
     
     inidb->Open(fName);

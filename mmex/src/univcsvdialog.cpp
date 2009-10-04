@@ -431,7 +431,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
     q1.Finalize();
     mmENDSQL_LITE_EXCEPTION
 
-    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
+    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Account to import to:"), 
         _("CSV Import"), as);

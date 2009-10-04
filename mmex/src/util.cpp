@@ -49,13 +49,13 @@ wxString mmCleanString(const wxString& orig)
 } // namespace 
 
 //----------------------------------------------------------------------------
-
-wxString mmOptions::dateFormat = DEFDATEFORMAT;
+wxString mmOptions::dateFormat = mmex::DEFDATEFORMAT;
 wxString mmOptions::language = wxT("english");
+//----------------------------------------------------------------------------
 
 void mmOptions::loadOptions(wxSQLite3Database* db)
 {
-   dateFormat = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), DEFDATEFORMAT);
+   dateFormat = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
 }
 
 void mmOptions::saveOptions(wxSQLite3Database* db)
@@ -329,7 +329,7 @@ void mmExportCSV(wxSQLite3Database* db_)
     q1.Finalize();
     mmENDSQL_LITE_EXCEPTION;
 
-    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
+    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Account to Export from:"), 
         _("CSV Export"), as);
@@ -464,7 +464,7 @@ int mmImportCSV(mmCoreDB* core)
     q1.Finalize();
     mmENDSQL_LITE_EXCEPTION;
 
-    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
+    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Account to import to:"), 
         _("CSV Import"), as);
@@ -725,7 +725,7 @@ int mmImportCSVMMNET(mmCoreDB* core)
     q1.Finalize();
     mmENDSQL_LITE_EXCEPTION
 
-    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), DEFDELIMTER);
+    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Account to import to:"), 
         _("CSV Import"), as);
@@ -940,7 +940,7 @@ wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, wxDateTime dt)
 
 wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* db, const wxString& dtstr)
 {
-    wxString selection = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), DEFDATEFORMAT);
+    wxString selection = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
     wxDateTime dt;
     const wxChar* char1 = dt.ParseFormat(dtstr.GetData(), selection.GetData());
 	if (char1 == NULL)

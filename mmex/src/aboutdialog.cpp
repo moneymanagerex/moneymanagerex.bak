@@ -152,7 +152,7 @@ void mmAboutDialog::CreateControls()
 #endif
 
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, 
-        wxString(_("Version: ")) + MMEXVERSION , wxDefaultPosition, wxDefaultSize, 0 );
+        wxString(_("Version: ")) + mmex::getVersion(), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer4->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
     if (!mmIniOptions::enableCustomAboutDialog_)

@@ -20,6 +20,7 @@
 #define _MM_EX_FILEVIEWER_H_
 
 #include "guiid.h"
+#include "defs.h"
 
 #define SYMBOL_FILEVIEWER_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
 #define SYMBOL_FILEVIEWER_TITLE _("View File Contents")

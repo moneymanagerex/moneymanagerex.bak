@@ -21,6 +21,8 @@
 
 #include "guiid.h"
 
+class wxSQLite3Database;
+
 class mmYahoo
 {
 public:
