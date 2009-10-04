@@ -229,7 +229,6 @@ public:
     void OnBudgetSetupDialog(wxCommandEvent& event);
     void OnCurrency(wxCommandEvent& event);
     void OnTransactionReport(wxCommandEvent& event);
-    void OnCustomSQL(wxCommandEvent& event);
     void OnCashFlowSpecificAccounts();
 
     void OnHelp(wxCommandEvent& event);

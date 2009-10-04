@@ -410,10 +410,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\customsqldialog.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\src\dbwrapper.cpp"
 					>
 				</File>
@@ -638,10 +634,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\customsqldialog.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\dbwrapper.h"
 					>
 				</File>
@@ -775,10 +767,6 @@
 				</File>
 				<File
 					RelativePath=".\src\reportcategovertimeperf.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\reportcustomsql.h"
 					>
 				</File>
 				<File

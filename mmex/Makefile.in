@@ -131,7 +131,6 @@ MMEX_OBJECTS =  \
 	mmex_categdialog.o \
 	mmex_chart.o \
 	mmex_currencydialog.o \
-	mmex_customsqldialog.o \
 	mmex_dbwrapper.o \
 	mmex_fileviewerdialog.o \
 	mmex_filtertransdialog.o \
@@ -484,9 +483,6 @@ mmex_chart.o: $(srcdir)/src/chart.cpp
 
 mmex_currencydialog.o: $(srcdir)/src/currencydialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/currencydialog.cpp
-
-mmex_customsqldialog.o: $(srcdir)/src/customsqldialog.cpp
-	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/customsqldialog.cpp
 
 mmex_dbwrapper.o: $(srcdir)/src/dbwrapper.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/dbwrapper.cpp

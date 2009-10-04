@@ -43,7 +43,6 @@
 #include "reportcashflow.h"
 #include "reporttransstats.h"
 #include "reportcategovertimeperf.h"
-#include "reportcustomsql.h"
 #include "reportbudgetsetup.h"
 
 #include "mmgraphtopcategories.h"
@@ -59,7 +58,6 @@
 #include "maincurrencydialog.h"
 #include "filtertransdialog.h"
 #include "billsdepositsdialog.h"
-#include "customsqldialog.h"
 
 #include "util.h"
 #include "dbwrapper.h"
@@ -193,7 +191,6 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_GOTOACCOUNT, mmGUIFrame::OnGotoAccount)
 
     EVT_MENU(MENU_TRANSACTIONREPORT, mmGUIFrame::OnTransactionReport)
-    EVT_MENU(MENU_CUSTOMSQL, mmGUIFrame::OnCustomSQL)
 END_EVENT_TABLE()
 /*******************************************************/
 IMPLEMENT_APP(mmGUIApp)
@@ -977,11 +974,6 @@ void mmGUIFrame::updateNavTreeControl()
         new mmTreeItemData(wxT("Transaction Statistics")));
 
      ///////////////////////////////////////////////////////////////////
-    wxTreeItemId customReport = navTreeCtrl_->AppendItem(reports, 
-        _("Custom SQL Report"), 4, 4);
-    navTreeCtrl_->SetItemData(customReport, 
-        new mmTreeItemData(wxT("Custom SQL Report")));
-    ///////////////////////////////////////////////////////////////////
 
     wxTreeItemId help = navTreeCtrl_->AppendItem(root, _("Help"), 5, 5);
     navTreeCtrl_->SetItemData(help, new mmTreeItemData(wxT("Help")));
@@ -1733,13 +1725,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
            AddPendingEvent(evt);
         }
         
-         ///////////////////////////////////////////////
-        else if (iData->getString() == wxT("Custom SQL Report"))
-        {
-           wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_CUSTOMSQL);
-           AddPendingEvent(evt);
-        }
-
         //////////////////////////////////////////////
 
         else if (iData->getString() == wxT("Budgeting"))
@@ -2756,24 +2741,6 @@ void mmGUIFrame::OnBudgetSetupDialog(wxCommandEvent& /*event*/)
     createHomePage();
     updateNavTreeControl();    
     dlg->Destroy();
-}
-
-void mmGUIFrame::OnCustomSQL(wxCommandEvent& /*event*/)
-{
-  if (!db_.get())
-      return;
-
-   mmCustomSQLDialog* dlg = new mmCustomSQLDialog(core_.get(), this);
-   if (dlg->ShowModal() == wxID_OK)
-   {
-       if (dlg->sqlQuery_ != wxT(""))
-       {
-           mmPrintableBase* cs = new mmCustomSQLStats(core_.get(), dlg->sqlQuery_);
-           menuPrintingEnable(true);
-           createReportsPage(cs);
-       }
-   }
-   dlg->Destroy();
 }
 
 void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
