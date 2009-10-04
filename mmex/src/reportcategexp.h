@@ -93,8 +93,6 @@ public:
         "from SUBCATEGORY_V1 "
         "where CATEGID = ?";
 
-        mmBEGINSQL_LITE_EXCEPTION;
-
         wxSQLite3Statement st = db_->PrepareStatement(sql_sub);
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
 
@@ -163,8 +161,6 @@ public:
         
         q1.Finalize();
         st.Finalize();
-
-        mmENDSQL_LITE_EXCEPTION;
 
         hb.endTable();
 		hb.endCenter();

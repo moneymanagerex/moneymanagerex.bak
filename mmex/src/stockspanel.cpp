@@ -300,8 +300,6 @@ void mmStocksPanel::initVirtualListControl()
     /* Clear all the records */
     trans_.clear();
 
-    mmBEGINSQL_LITE_EXCEPTION;
-
     if (accountID_ != -1)
     {
         wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_BD_STATIC_HEADER);
@@ -397,8 +395,6 @@ void mmStocksPanel::initVirtualListControl()
 
     st.Finalize();
     listCtrlAccount_->SetItemCount(cnt);
-
-    mmENDSQL_LITE_EXCEPTION;
 }
 
 void mmStocksPanel::OnRefreshQuotes(wxCommandEvent& WXUNUSED(event))
@@ -614,8 +610,6 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     wxString YSymbols;
     wxSortedArrayString symbolarray;
 
-    mmBEGINSQL_LITE_EXCEPTION;
-
     wxSQLite3ResultSet q1 = db_->ExecuteQuery("select SYMBOL from STOCK_V1");
     while (q1.NextRow())
     {
@@ -624,8 +618,6 @@ void mmStocksPanel::OrderQuoteRefresh(void)
             symbolarray.Add(strSymbol);
     }
     q1.Finalize();
-
-    mmENDSQL_LITE_EXCEPTION;
 
     if(symbolarray.GetCount() < 1) {
         return;
@@ -727,8 +719,6 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         "from STOCK_V1 "
         "where lower(SYMBOL) = ?";
 
-        mmBEGINSQL_LITE_EXCEPTION;
-
         typedef std::vector<mmStockTransactionHolder> vec_t;
         vec_t stockVec;
 
@@ -775,8 +765,6 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         }
         
         st.Finalize();
-
-        mmENDSQL_LITE_EXCEPTION;
     }
 
     // Now refresh the display

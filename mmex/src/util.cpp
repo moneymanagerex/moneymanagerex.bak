@@ -199,9 +199,9 @@ void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 	langPath = wxT("MMEX.app/Contents/Resources/en/");
 #endif
 #if defined (__WXGTK__)
-    mmApp->m_locale.AddCatalogLookupPathPrefix(fname.GetPath(wxPATH_GET_VOLUME));
+    mmApp->getLocale().AddCatalogLookupPathPrefix(fname.GetPath(wxPATH_GET_VOLUME));
 #else
-    mmApp->m_locale.AddCatalogLookupPathPrefix(langPath);
+    mmApp->getLocale().AddCatalogLookupPathPrefix(langPath);
 #endif
 	if (langStr == wxT("") || showSelection)
 	{
@@ -227,7 +227,7 @@ void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 
                 if (newLangStr != wxT(""))
                 {
-                    if(mmApp->m_locale.AddCatalog(newLangStr) == false) {
+                    if(mmApp->getLocale().AddCatalog(newLangStr) == false) {
                         ::wxLogMessage(wxT("m_locate Error!"));
                     }
 
@@ -243,7 +243,7 @@ void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 	else
 	{
 		/* Previous language found */
-		mmApp->m_locale.AddCatalog(langStr);
+		mmApp->getLocale().AddCatalog(langStr);
         mmOptions::language = langStr;
 	}
 }
@@ -320,14 +320,12 @@ void mmExportCSV(wxSQLite3Database* db_)
     }
     wxArrayString as;
     
-    mmBEGINSQL_LITE_EXCEPTION;
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
     q1.Finalize();
-    mmENDSQL_LITE_EXCEPTION;
 
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     
@@ -345,8 +343,6 @@ void mmExportCSV(wxSQLite3Database* db_)
             wxFileOutputStream output( fileName );
             wxTextOutputStream text( output );
 
-            mmBEGINSQL_LITE_EXCEPTION;
-            
             static const char sql[] = 
             "SELECT TRANSDATE, "
                    "TRANSCODE, TRANSAMOUNT,  SUBCATEGID, "
@@ -407,8 +403,6 @@ void mmExportCSV(wxSQLite3Database* db_)
 
             wxString msg = wxString::Format(wxT("%d transactions exported"), numRecords);
             mmShowErrorMessage(0, msg, _("Export to CSV"));
-
-            mmENDSQL_LITE_EXCEPTION;
         }// if fileName.empty();
 
     }// show Modal
@@ -455,14 +449,12 @@ int mmImportCSV(mmCoreDB* core)
     wxArrayString as;
     int fromAccountID = -1;
     
-    mmBEGINSQL_LITE_EXCEPTION;
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
     q1.Finalize();
-    mmENDSQL_LITE_EXCEPTION;
 
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     
@@ -716,14 +708,12 @@ int mmImportCSVMMNET(mmCoreDB* core)
     wxArrayString as;
     int fromAccountID = -1;
 
-    mmBEGINSQL_LITE_EXCEPTION;
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
     q1.Finalize();
-    mmENDSQL_LITE_EXCEPTION
 
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     

@@ -54,8 +54,6 @@ int mmPayeeList::addPayee(const wxString &payeeName)
 {
     int payeeID = -1;
 
-    mmBEGINSQL_LITE_EXCEPTION;
-    
     static const char sql[] =
     "insert into PAYEE_V1 (PAYEENAME, CATEGID, SUBCATEGID) values (?, ?, ?)";
 
@@ -67,8 +65,6 @@ int mmPayeeList::addPayee(const wxString &payeeName)
     st.ExecuteUpdate();
     payeeID = db_->GetLastRowId().ToLong();
     st.Finalize();
-
-    mmENDSQL_LITE_EXCEPTION;
 
     wxASSERT(payeeID > 0);
 

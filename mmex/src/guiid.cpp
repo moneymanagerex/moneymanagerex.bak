@@ -31,7 +31,7 @@ const wxChar *const mmex::DEFSTOCKURL = wxT("http://www.google.com/finance?q=%s"
 
 wxString mmex::getVersion()
 {
-    static const wxString version(wxT("0.9.6.0"));
+    static const wxString version(wxT("0.9.6.0")); // FIXME! get from version resource of exe
     return version;
 
 }

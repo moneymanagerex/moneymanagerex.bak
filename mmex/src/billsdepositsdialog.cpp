@@ -119,8 +119,6 @@ void mmBDDialog::dataToControls()
         itemAccountName_->Disable();
     }
 
-    mmBEGINSQL_LITE_EXCEPTION;
-
     wxSQLite3Statement st_payee = db_->PrepareStatement("select PAYEENAME from PAYEE_V1 where PAYEEID = ?");
 
     wxSQLite3Statement st = db_->PrepareStatement("select * from BILLSDEPOSITS_V1 where BDID = ?");
@@ -255,8 +253,6 @@ void mmBDDialog::dataToControls()
     
     st.Finalize();
     st_payee.Finalize();
-
-    mmENDSQL_LITE_EXCEPTION;
 }
 
 void mmBDDialog::fillControls()
@@ -784,8 +780,7 @@ void mmBDDialog::updateControlsForTransType()
 
 void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    mmBEGINSQL_LITE_EXCEPTION;
-    wxString transCode = wxT(""); 
+    wxString transCode; 
         
     int tCode = choiceTrans_->GetSelection();
     if (tCode == DEF_WITHDRAWAL)
@@ -1088,7 +1083,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
         mmDBWrapper::completeBDInSeries(db_, bdID_);
 
     }
-    mmENDSQL_LITE_EXCEPTION;
+
     EndModal(wxID_OK);
 }
 

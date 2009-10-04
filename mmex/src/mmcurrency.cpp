@@ -107,8 +107,6 @@ int mmCurrencyList::addCurrency(boost::shared_ptr<mmCurrency> pCurrency)
       "GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL "
     " ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
-    mmBEGINSQL_LITE_EXCEPTION;
-
     wxSQLite3Statement st = db_->PrepareStatement(sql);
     const mmCurrency &r = *pCurrency;
 
@@ -132,8 +130,6 @@ int mmCurrencyList::addCurrency(boost::shared_ptr<mmCurrency> pCurrency)
 
     st.Finalize();
 
-    mmENDSQL_LITE_EXCEPTION;
-
     return pCurrency->currencyID_;
 }
 
@@ -154,8 +150,6 @@ void mmCurrencyList::updateCurrency(boost::shared_ptr<mmCurrency> pCurrency)
 
     wxASSERT(pCurrency->currencyID_ > 0);
 
-    mmBEGINSQL_LITE_EXCEPTION;
-
     wxSQLite3Statement st = db_->PrepareStatement(sql);
     const mmCurrency &r = *pCurrency;
 
@@ -175,8 +169,6 @@ void mmCurrencyList::updateCurrency(boost::shared_ptr<mmCurrency> pCurrency)
 
     st.ExecuteUpdate();
     st.Finalize();
-
-    mmENDSQL_LITE_EXCEPTION;
 }
 
 //bool mmCurrencyList::currencyExists(const wxString& currencyName)

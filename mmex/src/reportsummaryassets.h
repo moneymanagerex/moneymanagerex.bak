@@ -60,8 +60,6 @@ public:
                "ASSETTYPE " 
         "from ASSETS_V1";
 
-        mmBEGINSQL_LITE_EXCEPTION;
-        
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
 
         while (q1.NextRow())
@@ -87,8 +85,6 @@ public:
         }
         q1.Finalize();
         
-        mmENDSQL_LITE_EXCEPTION
-
         /* Assets */
         double assetBalance = mmDBWrapper::getAssetBalance(db_);
         wxString assetBalanceStr;

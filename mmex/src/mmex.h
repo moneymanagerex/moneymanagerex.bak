@@ -35,9 +35,13 @@
 class mmGUIApp : public wxApp
 {
 public:
-    virtual bool OnInit();
+    wxLocale& getLocale() { return m_locale; }
 
+private:
     wxLocale m_locale; // locale we'll be using
+
+    bool OnInit();
+    void HandleEvent(wxEvtHandler *handler, wxEventFunction func, wxEvent& event) const;
 };
 //----------------------------------------------------------------------------
 class wxListCtrl;

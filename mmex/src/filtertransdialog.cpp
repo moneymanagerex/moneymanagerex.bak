@@ -210,16 +210,14 @@ void mmFilterTransactionsDialog::CreateControls()
     "where ACCOUNTTYPE = 'Checking' "
     "order by ACCOUNTNAME";
 
-    mmBEGINSQL_LITE_EXCEPTION;
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
     q1.Finalize();
-    mmENDSQL_LITE_EXCEPTION
    
-        accountDropDown = new wxChoice( itemPanel3, ID_CHOICE4, wxDefaultPosition, wxDefaultSize, as, 0 );
+    accountDropDown = new wxChoice( itemPanel3, ID_CHOICE4, wxDefaultPosition, wxDefaultSize, as, 0 );
     itemFlexGridSizer4->Add(accountDropDown, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     itemFlexGridSizer4->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);

@@ -243,9 +243,6 @@ void mmBillsDepositsPanel::initVirtualListControl()
     /* Clear all the records */
     trans_.clear();
 
-    mmBEGINSQL_LITE_EXCEPTION;
-
-
     mmDBWrapper::loadBaseCurrencySettings(db_);
 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from BILLSDEPOSITS_V1");
@@ -355,8 +352,6 @@ void mmBillsDepositsPanel::initVirtualListControl()
     q1.Finalize();
     std::sort(trans_.begin(), trans_.end(), sortTransactionsByRemainingDays);
     listCtrlAccount_->SetItemCount(cnt);
-
-    mmENDSQL_LITE_EXCEPTION;
 }
 
 void mmBillsDepositsPanel::OnDeleteBDSeries(wxCommandEvent& event)

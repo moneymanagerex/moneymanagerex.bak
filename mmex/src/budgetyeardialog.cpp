@@ -82,8 +82,6 @@ void mmBudgetYearDialog::fillControls()
         "from BUDGETYEAR_V1 "
         "order by BUDGETYEARNAME";
 
-    mmBEGINSQL_LITE_EXCEPTION;
-
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     int index = 0;
     while (q1.NextRow())
@@ -93,7 +91,6 @@ void mmBudgetYearDialog::fillControls()
         listBox_->Insert(payeeString, index++, new mmBudgetYearListBoxItem(budgetYearID));
     }
     q1.Finalize();
-    mmENDSQL_LITE_EXCEPTION;
 }
 
 void mmBudgetYearDialog::CreateControls()

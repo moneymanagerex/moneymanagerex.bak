@@ -50,15 +50,11 @@ int mmCategoryList::addCategory(const wxString& category)
 {
     int cID = -1;
 
-    mmBEGINSQL_LITE_EXCEPTION;
-
     mmDBWrapper::addCategory(db_.get(), category);
     cID = (db_->GetLastRowId()).ToLong();
 
     boost::shared_ptr<mmCategory> pCategory(new mmCategory(cID, category));
     categories_.push_back(pCategory);
-
-    mmENDSQL_LITE_EXCEPTION;
 
     return cID;
 }
@@ -72,8 +68,6 @@ int mmCategoryList::addSubCategory(int parentID, const wxString& text)
 {
     int cID = -1;
 
-    mmBEGINSQL_LITE_EXCEPTION;
-
     mmDBWrapper::addSubCategory(db_.get(), parentID, text);
     cID = (db_->GetLastRowId()).ToLong();
 
@@ -83,8 +77,6 @@ int mmCategoryList::addSubCategory(int parentID, const wxString& text)
     subCateg->parent_ = categ;
     categ->children_.push_back(subCateg);
     
-    mmENDSQL_LITE_EXCEPTION;
-
     return cID;
 }
 

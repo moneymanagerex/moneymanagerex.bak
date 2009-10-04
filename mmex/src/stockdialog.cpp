@@ -86,8 +86,6 @@ void mmStockDialog::dataToControls()
     "from STOCK_V1 "
     "where STOCKID = ?";
 
-    mmBEGINSQL_LITE_EXCEPTION;
-
     wxSQLite3Statement st = db_->PrepareStatement(sql); 
     st.Bind(1, stockID_);
 
@@ -128,7 +126,6 @@ void mmStockDialog::dataToControls()
         commission_->SetValue(dispAmount);
     }
     st.Finalize();
-    mmENDSQL_LITE_EXCEPTION;
 }
 
 void mmStockDialog::fillControls()
@@ -293,14 +290,12 @@ void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
 
     wxArrayString as;
     
-    mmBEGINSQL_LITE_EXCEPTION;
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
     q1.Finalize();
-    mmENDSQL_LITE_EXCEPTION
     
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Investment Account"), 
         _("Select Account"), as);
@@ -337,8 +332,6 @@ void mmStockDialog::OnStockPriceButton(wxCommandEvent& /*event*/)
 
 void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    mmBEGINSQL_LITE_EXCEPTION;
-    
     wxString pdate = dpc_->GetValue().FormatISODate();
     
     if (accountID_ == -1)
@@ -461,8 +454,6 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
         st.ExecuteUpdate();
         st.Finalize();
     }
-
-    mmENDSQL_LITE_EXCEPTION;
 
     EndModal(wxID_OK);
 }

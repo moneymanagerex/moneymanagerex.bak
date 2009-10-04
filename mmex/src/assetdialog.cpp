@@ -100,8 +100,6 @@ void mmAssetDialog::dataToControls()
     "from ASSETS_V1 "
     "where ASSETID = ?";
 
-	mmBEGINSQL_LITE_EXCEPTION;
-
     wxSQLite3Statement st = db_->PrepareStatement(sql);
     st.Bind(1, assetID_);
 
@@ -153,7 +151,6 @@ void mmAssetDialog::dataToControls()
 
     }
     st.Finalize();
-    mmENDSQL_LITE_EXCEPTION;
 }
 
 void mmAssetDialog::fillControls()
@@ -302,8 +299,6 @@ void mmAssetDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    mmBEGINSQL_LITE_EXCEPTION;
-    
     wxString pdate = dpc_->GetValue().FormatISODate();
     wxString notes       = notes_->GetValue().Trim();
     wxString name       = assetName_->GetValue().Trim();
@@ -419,8 +414,6 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         st.ExecuteUpdate();
         st.Finalize();
     }
-
-    mmENDSQL_LITE_EXCEPTION;
 
     EndModal(wxID_OK);
 }

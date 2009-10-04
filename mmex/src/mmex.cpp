@@ -129,6 +129,110 @@ const wxString MMEX_ICON_FNAME = wxT("mmex.ico");
 
 //----------------------------------------------------------------------------
 
+#ifdef _MSC_VER
+
+#include "BugTrap.h"
+
+void setupBugTrap()
+{
+    BT_InstallSehFilter(); // must be called
+    BT_SetTerminate(); // set_terminate() must be called from every thread
+
+    UINT dwMode = GetErrorMode();
+    SetErrorMode(dwMode | SEM_NOGPFAULTERRORBOX);
+
+    // --
+
+    BOOL ok = BT_ReadVersionInfo(0); // read from resources of executable
+    wxASSERT(ok);
+
+    BT_SetDialogMessage(BTDM_INTRO1, _T("Money Manager Ex has encountered an unrecoverable error and needs to close!"));
+    BT_SetDialogMessage(BTDM_INTRO2, _T("To help fix this issue, please save the information in this crash report and send it to us."));
+    BT_SetFlags(BTF_DETAILEDMODE);
+
+    BT_SetSupportURL(_T("http://www.codelathe.com/mmex"));
+    // BT_SetSupportEMail(_T("kkkvadim@sourceforge.net"));
+}
+#else
+inline void setupBugTrap() {}
+#endif // _MSC_VER
+//----------------------------------------------------------------------------
+
+bool OnInitImpl(wxLocale &locale)
+{
+    setupBugTrap();
+
+    /* Setting Locale causes unexpected problems, so default to English Locale */
+    locale.Init(wxLANGUAGE_ENGLISH);
+
+    /* Initialize Image Handlers */
+    wxImage::AddHandler( new wxICOHandler ); 
+    wxImage::AddHandler(new wxJPEGHandler());
+    wxImage::AddHandler(new wxPNGHandler());
+
+    /* Get INI DB for loading settings */
+    boost::scoped_ptr<wxSQLite3Database> inidb(new wxSQLite3Database);
+
+    wxString cfgPath = mmGetBaseWorkingPath() + MMEX_INIDB_FNAME;
+    inidb->Open(cfgPath);
+
+    mmDBWrapper::verifyINIDB(inidb.get());
+
+    /* Load Colors from Database */
+    mmLoadColorsFromDatabase(inidb.get());
+
+    /* Load MMEX Custom Settings */
+    mmIniOptions::loadOptions(inidb.get());
+
+    /* Was App Maximized? */
+    wxString isMaxStrDef = wxT("FALSE");
+    wxString isMaxStr = mmDBWrapper::getINISettingValue(inidb.get(), wxT("ISMAXIMIZED"), isMaxStrDef);
+
+    /* Load Dimensions of Window */
+    wxString originX = wxT("50");
+    wxString originY = wxT("50");
+    wxString sizeW = wxT("800");
+    wxString sizeH = wxT("600");
+    wxString valxStr = mmDBWrapper::getINISettingValue(inidb.get(), wxT("ORIGINX"), originX); 
+    wxString valyStr = mmDBWrapper::getINISettingValue(inidb.get(), wxT("ORIGINY"), originY);
+    wxString valWStr = mmDBWrapper::getINISettingValue(inidb.get(), wxT("SIZEW"),  sizeW);
+    wxString valHStr = mmDBWrapper::getINISettingValue(inidb.get(), wxT("SIZEH"),  sizeH);
+
+    long valx = 0;
+    long valy = 0; 
+    long valw = 0;
+    long valh = 0;
+
+    valxStr.ToLong(&valx);
+    valyStr.ToLong(&valy);
+    valWStr.ToLong(&valw);
+    valHStr.ToLong(&valh);
+
+    /* Select language if necessary */
+    mmSelectLanguage(inidb.get());
+
+    inidb->Close();
+
+#if defined (__WXMAC__) || defined (__WXOSX__)
+    wxApp::s_macAboutMenuItemId = MENU_ABOUT;
+    wxApp::s_macPreferencesMenuItemId = MENU_OPTIONS;
+    wxApp::s_macHelpMenuTitleName = "&Help";
+#endif
+
+    mmGUIFrame *frame = new mmGUIFrame(mmIniOptions::appName_, wxPoint(valx, valy), wxSize(valw, valh));
+    frame->Show(TRUE);
+
+    if (isMaxStr == wxT("TRUE")) {
+        frame->Maximize(true);
+    }
+
+    // success: wxApp::OnRun() will be called which will enter the main message
+    // loop and the application will run. If we returned FALSE here, the
+    // application would exit immediately.
+    return true;
+}
+//----------------------------------------------------------------------------
+
 } // namespace
 
 //----------------------------------------------------------------------------
@@ -194,117 +298,6 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
 END_EVENT_TABLE()
 /*******************************************************/
 IMPLEMENT_APP(mmGUIApp)
-/*******************************************************/
-
-#ifdef _MSC_VER
-
-#include "BugTrap.h"
-
-void setupBugTrap()
-{
-    // ...Set the BugTrap Exception Handler
-    BT_InstallSehFilter();
-
-	BT_SetAppName(L"Money Manager Ex");
-
-	BT_SetAppVersion(L"0.9.3.0");
-
-    BT_SetDialogMessage(BTDM_INTRO1, L"Money Manager Ex has encountered an unrecoverable error and needs to close!");
-    BT_SetDialogMessage(BTDM_INTRO2, L"To help fix this issue, please save the information in this crash report and send it to us.");
-	BT_SetFlags(BTF_DETAILEDMODE);
-
-    BT_SetSupportURL(L"http://www.codelathe.com/mmex");
-   
-    BT_SetTerminate(); // set_terminate() must be called from every thread
-
-    DWORD dwMode = SetErrorMode(SEM_NOGPFAULTERRORBOX);
-    SetErrorMode(dwMode | SEM_NOGPFAULTERRORBOX);
-}
-#else
-inline void setupBugTrap() {}
-#endif // _MSC_VER
-
-bool mmGUIApp::OnInit()
-{
-    setupBugTrap();
-
-    /* Initialize Image Handlers */
-    wxImage::AddHandler( new wxICOHandler ); 
-    wxImage::AddHandler(new wxJPEGHandler());
-    wxImage::AddHandler(new wxPNGHandler());
-
-    /* Get INI DB for loading settings */
-    boost::scoped_ptr<wxSQLite3Database> inidb(new wxSQLite3Database);
-
-    wxString cfgPath = mmGetBaseWorkingPath() + MMEX_INIDB_FNAME;
-    inidb->Open(cfgPath);
-    mmDBWrapper::verifyINIDB(inidb.get());
-
-    /* Load Colors from Database */
-    mmLoadColorsFromDatabase(inidb.get());
-
-    /* Load MMEX Custom Settings */
-    mmIniOptions::loadOptions(inidb.get());
-
-    /* Was App Maximized? */
-    wxString isMaxStrDef = wxT("FALSE");
-    wxString isMaxStr = mmDBWrapper::getINISettingValue(inidb.get(), 
-        wxT("ISMAXIMIZED"), isMaxStrDef);
-
-    /* Load Dimensions of Window */
-    wxString originX = wxT("50");
-    wxString originY = wxT("50");
-    wxString sizeW = wxT("800");
-    wxString sizeH = wxT("600");
-    wxString valxStr = mmDBWrapper::getINISettingValue(inidb.get(), 
-        wxT("ORIGINX"), originX); 
-    wxString valyStr = mmDBWrapper::getINISettingValue(inidb.get(), 
-        wxT("ORIGINY"), originY);
-    wxString valWStr = mmDBWrapper::getINISettingValue(inidb.get(), 
-        wxT("SIZEW"),  sizeW);
-    wxString valHStr = mmDBWrapper::getINISettingValue(inidb.get(), 
-        wxT("SIZEH"),  sizeH);
-    long valx, valy, valw, valh;
-    valxStr.ToLong(&valx);
-    valyStr.ToLong(&valy);
-    valWStr.ToLong(&valw);
-    valHStr.ToLong(&valh);
-
-	/* Setting Locale causes unexpected problems, so default to English Locale */
-	m_locale.Init(wxLANGUAGE_ENGLISH);
-
-	/* Select language if necessary */
-    mmSelectLanguage(inidb.get());
-
-    inidb->Close();
-
-    /* See if we need to load graphs */
-//#ifdef __WXGTK__
-//    mmIniOptions::enableGraphs_ = false;
-//#else
-//    if (!mmGraphGenerator::checkGraphFiles())
-//        mmIniOptions::enableGraphs_ = false;
-//#endif
-#if defined (__WXMAC__) || defined (__WXOSX__)
-	wxApp::s_macAboutMenuItemId = MENU_ABOUT;
-	wxApp::s_macPreferencesMenuItemId = MENU_OPTIONS;
-	wxApp::s_macHelpMenuTitleName = "&Help";
-#endif
-
-    /* Load GUI Frame */
-    mmGUIFrame *frame = new mmGUIFrame(mmIniOptions::appName_,
-                                 wxPoint(valx, valy), 
-                                 wxSize(valw, valh));
-    frame->Show(TRUE);
-
-    if (isMaxStr == wxT("TRUE"))
-        frame->Maximize(true);
-  
-    // success: wxApp::OnRun() will be called which will enter the main message
-    // loop and the application will run. If we returned FALSE here, the
-    // application would exit immediately.
-    return TRUE;
-}
 /*******************************************************/
 
 mmTreeItemData::mmTreeItemData(int id, bool isBudget) :
@@ -428,7 +421,6 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
        : wxFrame((wxFrame*)NULL, -1, title, pos, size), 
        gotoAccountID_(-1), 
        selectedItemData_(0),
-       m_topCategories(wxT("")),
        panelCurrent_(0),
        refreshRequested_(false)
 
@@ -503,7 +495,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     {
         /* Try loading last db if it exists */
         wxString val = mmDBWrapper::getINISettingValue(inidb_.get(), 
-            wxT("LASTFILENAME"), wxT(""));
+            wxT("LASTFILENAME"), wxGetEmptyString());
         if (!val.IsEmpty())
         {
             /* Try Opening the file */
@@ -987,7 +979,6 @@ void mmGUIFrame::updateNavTreeControl()
        return;
 
     /* Load Nav Tree Control */
-    mmBEGINSQL_LITE_EXCEPTION;
 
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_.get(), wxT("VIEWACCOUNTS"), wxT("ALL"));
 
@@ -1045,15 +1036,13 @@ void mmGUIFrame::updateNavTreeControl()
         navTreeCtrl_->Expand(budgeting);
     }
 
-    mmENDSQL_LITE_EXCEPTION;
-
     navTreeCtrl_->Expand(accounts);
 }
 
 wxString mmGUIFrame::createCategoryList()
 {
     if (!db_)
-        return wxT("");
+        return wxGetEmptyString();
 
     mmHTMLBuilder hb;
 
@@ -1067,8 +1056,6 @@ wxString mmGUIFrame::createCategoryList()
     "select SUBCATEGID, SUBCATEGNAME "
     "from SUBCATEGORY_V1 "
     "where CATEGID = ?";
-
-    mmBEGINSQL_LITE_EXCEPTION;
 
     wxSQLite3Statement st = db_->PrepareStatement(sql);
 
@@ -1129,7 +1116,6 @@ wxString mmGUIFrame::createCategoryList()
 
     }
     q1.Finalize();
-    mmENDSQL_LITE_EXCEPTION;
 
     std::sort(categList.begin(), categList.end(), sortCategs);
     for (int idx = 0; idx < (int)categList.size(); idx++)
@@ -1924,8 +1910,9 @@ void mmGUIFrame::createHomePage()
 {
     wxSizer *sizer = cleanupHomePanel();
     
-    if (m_topCategories == wxT(""))
+    if (m_topCategories.empty()) {
        m_topCategories = createCategoryList();
+    }
 
     if (panelCurrent_)
     {
@@ -2387,18 +2374,17 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
         + fileName;
     this->SetTitle(title);
 
-    m_topCategories = wxT("");
+    m_topCategories.Clear();
     mmIniOptions::loadInfoOptions(db_.get());
 
     if (db_.get())
     {
         fileName_ = fileName;
-        
     }
     else
 	{
-      fileName_ = wxT("");
-      password_ = wxEmptyString;
+      fileName_.Clear();
+      password_.Clear();
 	}
 }
 
@@ -2431,7 +2417,7 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew)
     if (!db_.get())
     {
         mmDBWrapper::setINISettingValue(inidb_.get(), 
-            wxT("LASTFILENAME"), wxT(""));
+            wxT("LASTFILENAME"), wxGetEmptyString());
         showBeginAppDialog();
     }
 }
@@ -2440,7 +2426,7 @@ void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
 {
   wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb");  
   wxFileDialog dlg(this, wxT("Choose database file to create"), 
-                                     wxT(""), wxT(""), extSupported, wxSAVE | wxOVERWRITE_PROMPT);
+                                     wxGetEmptyString(), wxGetEmptyString(), extSupported, wxSAVE | wxOVERWRITE_PROMPT);
 
   if(dlg.ShowModal() == wxID_OK) {
       wxString fileName = dlg.GetPath();
@@ -2454,7 +2440,7 @@ void mmGUIFrame::OnOpen(wxCommandEvent& /*event*/)
 {
   wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
   wxString fileName = wxFileSelector(wxT("Choose database file to open"), 
-                                     wxT(""), wxT(""), wxT(""), extSupported, wxFILE_MUST_EXIST);
+                                     wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), extSupported, wxFILE_MUST_EXIST);
   if ( !fileName.empty() )
   {
     openFile(fileName, false);
@@ -2465,7 +2451,7 @@ void mmGUIFrame::OnConvertEncryptedDB(wxCommandEvent& /*event*/)
 {
     wxString extSupported = wxT("Encrypted MMB files (*.emb)|*.emb");
     wxString encFileName = wxFileSelector(_("Choose Encrypted database file to open"), 
-        wxT(""), wxT(""), wxT(""), extSupported, wxFILE_MUST_EXIST);
+        wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), extSupported, wxFILE_MUST_EXIST);
     if ( !encFileName.empty() )
     {
         wxString password = wxGetPasswordFromUser(_("Money Manager Ex: Enter Password For Database.."));
@@ -2473,7 +2459,7 @@ void mmGUIFrame::OnConvertEncryptedDB(wxCommandEvent& /*event*/)
         {
             wxString wildCardStr = wxT("MMB Files(*.mmb)|*.mmb");
             wxFileDialog dlg(this, wxT("Choose database file to Save As"), 
-                wxT(""), wxT(""), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
+                wxGetEmptyString(), wxGetEmptyString(), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
  
             if(dlg.ShowModal() == wxID_OK)
             {
@@ -2508,7 +2494,7 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
 {
   wxString wildCardStr = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
   wxFileDialog dlg(this, wxT("Choose database file to Save As"), 
-                                     wxT(""), wxT(""), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
+                                     wxGetEmptyString(), wxGetEmptyString(), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
   if(dlg.ShowModal() == wxID_OK)
   {
     wxString fileName = dlg.GetPath();
@@ -2596,16 +2582,12 @@ void mmGUIFrame::OnImportQFX(wxCommandEvent& /*event*/)
     "where ACCOUNTTYPE = 'Checking' "
     "order by ACCOUNTNAME";
 
-    mmBEGINSQL_LITE_EXCEPTION;
-
     wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(sql);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
     q1.Finalize();
-
-    mmENDSQL_LITE_EXCEPTION;
 
     
     wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Account to import to:"), 
@@ -2616,7 +2598,7 @@ void mmGUIFrame::OnImportQFX(wxCommandEvent& /*event*/)
         fromAccountID = mmDBWrapper::getAccountID(db_.get(), acctName);
      
         wxString fileName = wxFileSelector(wxT("Choose QFX data file to import"), 
-                wxT(""), wxT(""), wxT(""), wxT("*.qfx"), wxFILE_MUST_EXIST);
+                wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), wxT("*.qfx"), wxFILE_MUST_EXIST);
         if ( !fileName.empty() )
         {
             wxTiXmlDocument xmlDoc; 
@@ -2995,7 +2977,7 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
             currency_rate.Add(wxT("1.0"));
 
             while(cube_lv2_child) {
-                wxString name = cube_lv2_child->GetPropVal(wxT("currency"), wxT(""));
+                wxString name = cube_lv2_child->GetPropVal(wxT("currency"), wxGetEmptyString());
                 wxString rate = cube_lv2_child->GetPropVal(wxT("rate"), wxT("1"));
 
                 currency_name.Add(name);
@@ -3148,7 +3130,7 @@ void mmGUIFrame::showBeginAppDialog()
     else if (dlg->getReturnCode() == 4)
     {
         wxString val = mmDBWrapper::getINISettingValue(inidb_.get(), 
-            wxT("LASTFILENAME"), wxT(""));
+            wxT("LASTFILENAME"), wxGetEmptyString());
         if (!val.IsEmpty())
         {
             /* Try Opening the file */
@@ -3180,7 +3162,7 @@ void mmGUIFrame::OnExportToHtml(wxCommandEvent& WXUNUSED(event))
     if (rp)
     {
         wxString fileName = wxFileSelector(wxT("Choose HTML file to Export"), 
-            wxT(""), wxT(""), wxT(""), wxT("*.html"), wxSAVE | wxOVERWRITE_PROMPT);
+            wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), wxT("*.html"), wxSAVE | wxOVERWRITE_PROMPT);
         if ( !fileName.empty() )
         {
             wxFileOutputStream output( fileName );
@@ -3461,7 +3443,7 @@ wxAddAccountPage1::wxAddAccountPage1(mmAddAccountWizard* parent) :
     wxWizardPageSimple(parent), parent_(parent)
 {
     textAccountName_ = new wxTextCtrl(this, wxID_ANY, 
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+        wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
 
     wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -3494,7 +3476,7 @@ wxAddAccountPage1::wxAddAccountPage1(mmAddAccountWizard* parent) :
 
 bool wxAddAccountPage1::TransferDataFromWindow()
 {
-    if ( textAccountName_->GetValue() == wxT(""))
+    if ( textAccountName_->GetValue().empty())
     {
         wxMessageBox(_("Account Name Invalid"), 
             _("Error"),
@@ -3597,5 +3579,48 @@ wxSizer* mmGUIFrame::cleanupHomePanel(bool new_sizer)
     homePanel->SetSizer(new_sizer ? new wxBoxSizer(wxHORIZONTAL) : 0);
 
     return homePanel->GetSizer();
+}
+//----------------------------------------------------------------------------
+
+/*
+    This method allows catching the exceptions thrown by any event handler.
+*/
+void mmGUIApp::HandleEvent(wxEvtHandler *handler, wxEventFunction func, wxEvent& event) const
+{
+    try
+    {
+        wxApp::HandleEvent(handler, func, event);
+    } 
+    catch (wxSQLite3Exception &e) 
+    {
+        wxLogError(e.GetMessage());
+    }
+    catch (std::exception &e)
+    {
+        wxString msg(e.what(), wxConvCurrent); // wxConvLibc, wxConvLocal
+        wxLogError(msg);
+    }
+}
+//----------------------------------------------------------------------------
+
+bool mmGUIApp::OnInit()
+{
+    bool ok = false;
+
+    try
+    {
+        ok = OnInitImpl(m_locale);
+    } 
+    catch (wxSQLite3Exception &e)
+    {
+        wxLogError(e.GetMessage());
+    } 
+    catch (std::exception &e)
+    {
+        wxString msg(e.what(), wxConvCurrent);
+        wxLogError(msg);
+    }
+
+    return ok;
 }
 //----------------------------------------------------------------------------

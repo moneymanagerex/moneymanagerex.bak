@@ -201,8 +201,6 @@ void mmAssetsPanel::initVirtualListControl()
     /* Clear all the records */
     trans_.clear();
 
-    mmBEGINSQL_LITE_EXCEPTION;
-
     mmDBWrapper::loadBaseCurrencySettings(db_);
 
     double total = mmDBWrapper::getAssetBalance(db_);
@@ -241,8 +239,6 @@ void mmAssetsPanel::initVirtualListControl()
 
     listCtrlAssets_->SetItemCount(cnt);
     q1.Finalize();
-
-    mmENDSQL_LITE_EXCEPTION;
 }
 
 void mmAssetsPanel::OnDeleteAsset(wxCommandEvent& event)

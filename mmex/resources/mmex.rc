@@ -17,7 +17,6 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
 #endif //_WIN32
 
-aaaaaaaa	            ICON                    "../resources/mainicon.ico"
 MAINICON                ICON                    "../resources/mainicon.ico"
 
 #ifdef APSTUDIO_INVOKED
@@ -51,8 +50,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,9,4,2
- PRODUCTVERSION 0,9,4,2
+ FILEVERSION 0,9,6,0
+ PRODUCTVERSION 0,9,6,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -60,7 +59,7 @@ VS_VERSION_INFO VERSIONINFO
  FILEFLAGS 0x0L
 #endif
  FILEOS 0x4L
- FILETYPE 0x0L
+ FILETYPE 0x1L
  FILESUBTYPE 0x0L
 BEGIN
     BLOCK "StringFileInfo"
@@ -69,12 +68,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "CodeLathe LLC"
             VALUE "FileDescription", "Money Management Software"
-            VALUE "FileVersion", "0, 9, 4, 2"
+            VALUE "FileVersion", "0, 9, 6, 0"
             VALUE "InternalName", "mmex"
-            VALUE "LegalCopyright", "Copyright (C) 2006-2008 CodeLathe LLC (http://www.codelathe.com/mmex)"
-            VALUE "OriginalFilename", "mmex.rc"
-            VALUE "ProductName", " mmex"
-            VALUE "ProductVersion", "0, 9, 4, 2"
+            VALUE "LegalCopyright", "Copyright (C) 2006-2009 CodeLathe LLC (http://www.codelathe.com/mmex)"
+            VALUE "OriginalFilename", "mmex.exe"
+            VALUE "ProductName", "Money Manager Ex"
+            VALUE "ProductVersion", "0, 9, 6, 0"
         END
     END
     BLOCK "VarFileInfo"

@@ -146,7 +146,6 @@ mmAccountList::mmAccountList(boost::shared_ptr<wxSQLite3Database> db)
 
 bool mmAccountList::deleteAccount(int accountID)
 {
-    mmBEGINSQL_LITE_EXCEPTION;
     wxString acctType = getAccountType(accountID);
     if (acctType == wxT("Checking"))
     {
@@ -205,7 +204,6 @@ bool mmAccountList::deleteAccount(int accountID)
             ++iter;
     }
 
-    mmENDSQL_LITE_EXCEPTION;
     return true;
 }
 
@@ -224,8 +222,6 @@ double mmAccountList::getAccountBaseCurrencyConvRate(int accountID)
 
 void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)
 {
-   mmBEGINSQL_LITE_EXCEPTION;
-
    wxString statusStr = wxT("Open");
    if (pAccount->status_ == mmAccount::MMEX_Closed)
       statusStr = wxT("Closed");
@@ -267,8 +263,6 @@ void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)
 
    st.ExecuteUpdate();
    st.Finalize();
-
-   mmENDSQL_LITE_EXCEPTION;
 }
 
 boost::shared_ptr<mmAccount> mmAccountList::getAccountSharedPtr(int accountID)
@@ -328,8 +322,6 @@ boost::weak_ptr<mmCurrency> mmAccountList::getCurrencyWeakPtr(int accountID)
 
 int mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
 {
-      mmBEGINSQL_LITE_EXCEPTION;
-    
       wxString statusStr = wxT("Open");
       if (pAccount->status_ == mmAccount::MMEX_Closed)
          statusStr = wxT("Closed");
@@ -373,8 +365,6 @@ int mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
     accounts_.push_back(pAccount);
 
     st.Finalize();
-
-    mmENDSQL_LITE_EXCEPTION;
 
     return pAccount->accountID_;
 }

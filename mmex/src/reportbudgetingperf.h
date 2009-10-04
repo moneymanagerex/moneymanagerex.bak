@@ -74,7 +74,6 @@ public:
         "from SUBCATEGORY_V1 "
         "where CATEGID = ?";
 
-        mmBEGINSQL_LITE_EXCEPTION;
         mmDBWrapper::loadBaseCurrencySettings(db_);
 
         wxSQLite3Statement st = db_->PrepareStatement(sql_sub);
@@ -366,8 +365,6 @@ public:
 
         st.Finalize();
         q1.Finalize();
-
-        mmENDSQL_LITE_EXCEPTION;
 
         hb.endTable();
 		hb.endCenter();

@@ -56,7 +56,6 @@ public:
 			hb.addTableHeaderCell(_("Actual"));
 			hb.endTableRow();
 
-		mmBEGINSQL_LITE_EXCEPTION;
 		mmDBWrapper::loadBaseCurrencySettings(db_);
 
 		static const char sql[] = 
@@ -235,7 +234,6 @@ public:
 		q1.Finalize();
         st.Finalize();
 
-		mmENDSQL_LITE_EXCEPTION;
         hb.endTable();
 		hb.endCenter();
 

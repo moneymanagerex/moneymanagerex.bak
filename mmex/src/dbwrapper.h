@@ -16,22 +16,16 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
+//----------------------------------------------------------------------------
 #ifndef _MM_EX_DBWRAPPER_H_
 #define _MM_EX_DBWRAPPER_H_
-
 //----------------------------------------------------------------------------
 #include "defs.h"
-//----------------------------------------------------------------------------
-
-#define mmBEGINSQL_LITE_EXCEPTION   try { 
-#define mmENDSQL_LITE_EXCEPTION     } catch (wxSQLite3Exception& e) { mmDBWrapper::handleError(e); }
-
 //----------------------------------------------------------------------------
 
 namespace mmDBWrapper
 {
 
-void handleError(const wxSQLite3Exception &e);
 bool ViewExists(wxSQLite3Database* db, const char *viewName);
     
 /* Creating new DBs */
@@ -63,16 +57,10 @@ void updateYearForID(wxSQLite3Database* db, const wxString& yearName, int yearid
 bool deleteBudgetYear(wxSQLite3Database* db, const wxString& yearName);
 
 /* Budgeting BUDGETTABLE_V1 API */
-void addBudgetEntry(wxSQLite3Database* db, int budgetYearID, 
-							int categID, int subCategID,
-							const wxString& period, double amount);
+void addBudgetEntry(wxSQLite3Database* db, int budgetYearID, int categID, int subCategID, const wxString& period, double amount);
 void deleteBudgetEntry(wxSQLite3Database* db, int budgetEntryID);
-void updateBudgetEntry(wxSQLite3Database* db, int budgetYearID, 
-	int categID, int subCategID,
-							const wxString& period, double amout);
-bool getBudgetEntry(wxSQLite3Database* db, int budgetYearID, 
-							int categID, int subCategID, 
-							wxString& period, double& amt);
+void updateBudgetEntry(wxSQLite3Database* db, int budgetYearID, int categID, int subCategID, const wxString& period, double amout);
+bool getBudgetEntry(wxSQLite3Database* db, int budgetYearID, int categID, int subCategID, wxString& period, double& amt);
     
 
 /* Account API */
@@ -82,36 +70,28 @@ wxString getAccountType(wxSQLite3Database* db, int accountID);
 int getAccountID(wxSQLite3Database* db, const wxString& accountName);
 double getTotalBalanceOnAccount(wxSQLite3Database* db, int accountID, bool ignoreFuture=false);
 double getReconciledBalanceOnAccount(wxSQLite3Database* db, int accountID);
-bool getExpensesIncome(wxSQLite3Database* db, int accountID, 
-	double& expenses, double& income, bool ignoreDate, 
-	wxDateTime dtbegin, wxDateTime dtEnd);
+bool getExpensesIncome(wxSQLite3Database* db, int accountID, double& expenses, double& income, bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
 void removeSplitsForAccount(wxSQLite3Database* db, int accountID);
 
 /* Payee Table API */
 void addPayee(wxSQLite3Database* db, const wxString &payee, int categID, int subcategID);
 wxString getPayee(wxSQLite3Database* db, int payeeID, int& categID, int& subcategID );
-bool getPayeeID(wxSQLite3Database* db, const wxString &payee, int& payeeID, 
-	int& categID, int& subcategID );
-bool updatePayee(wxSQLite3Database* db, const wxString& payeeName, 
-	int payeeID, int categID, int subcategID);
+bool getPayeeID(wxSQLite3Database* db, const wxString &payee, int& payeeID, int& categID, int& subcategID );
+bool updatePayee(wxSQLite3Database* db, const wxString& payeeName, int payeeID, int categID, int subcategID);
 bool deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID);
-double getAmountForPayee(wxSQLite3Database* db, int payeeID,
-	bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
+double getAmountForPayee(wxSQLite3Database* db, int payeeID, bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
 
 /* Category Table API */
 bool deleteCategoryWithConstraints(wxSQLite3Database* db, int categID);
-bool deleteSubCategoryWithConstraints(wxSQLite3Database* db, 
-	int categID, int subcategID);
-bool updateCategory(wxSQLite3Database* db, int categID, 
-	int subcategID, const wxString &newName);
+bool deleteSubCategoryWithConstraints(wxSQLite3Database* db, int categID, int subcategID);
+bool updateCategory(wxSQLite3Database* db, int categID, int subcategID, const wxString &newName);
 bool addCategory(wxSQLite3Database* db, const wxString &newName);
 bool addSubCategory(wxSQLite3Database* db, int categID, const wxString &newName);
 int getCategoryID(wxSQLite3Database* db, const wxString &name);
 int getSubCategoryID(wxSQLite3Database* db, int categID, const wxString &name);
 wxString getCategoryName(wxSQLite3Database* db, int categID);
 wxString getSubCategoryName(wxSQLite3Database* db, int categID, int subcategID);
-double getAmountForCategory(wxSQLite3Database* db, int categID, int subcategID,
-	bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
+double getAmountForCategory(wxSQLite3Database* db, int categID, int subcategID, bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
 
 /* Transactions API */
 void updateTransactionWithStatus(wxSQLite3Database &db, int transID, 
@@ -135,10 +115,8 @@ double getCurrencyBaseConvRate(wxSQLite3Database* db, int accountID);
 double getCurrencyBaseConvRateForId(wxSQLite3Database* db, int currencyID);
 
 /* Operations on INFOTABLE */
-wxString getInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, 
-	const wxString& defaultVal);
-void setInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, 
-	const wxString& settingValue);
+wxString getInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& defaultVal);
+void setInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& settingValue);
 
 /* Operations on the INI SETTINGS DB */
 wxString getINISettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& defaultVal);
@@ -148,8 +126,7 @@ void verifyINIDB(wxSQLite3Database* inidb);
 /* Stocks API */
 void deleteStockInvestment(wxSQLite3Database* db, int stockID);
 double getStockInvestmentBalance(wxSQLite3Database* db, double& invested);
-double getStockInvestmentBalance(wxSQLite3Database* db, int accountID, 
-	bool convertToBase, double& originalVal);
+double getStockInvestmentBalance(wxSQLite3Database* db, int accountID, bool convertToBase, double& originalVal);
 
 /* Assets API */
 void deleteAsset(wxSQLite3Database* db, int assetID);
@@ -157,8 +134,7 @@ double getAssetBalance(wxSQLite3Database* db);
 double getAssetValue(wxSQLite3Database* db, int assetID);
 
 /* Split Transaction API */
-double getSplitTransactionValueForCategory(wxSQLite3Database* db, int transID, 
-                                                      int categID, int subcategID);
+double getSplitTransactionValueForCategory(wxSQLite3Database* db, int transID, int categID, int subcategID);
 
 //----------------------------------------------------------------------------
     

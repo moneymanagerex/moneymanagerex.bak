@@ -187,14 +187,12 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db) :
 
     /* Load the DB into memory */
 
-    mmBEGINSQL_LITE_EXCEPTION;
-        mmOptions::loadOptions(db_.get());
-        loadCurrencies(db_, currencyList_);
-        loadCategories(db_, categoryList_);
-        loadPayees(db_, categoryList_, payeeList_);
-        loadAccounts(db_, currencyList_, accountList_);
-        loadTransactions(db_, this, bTransactionList_);
-    mmENDSQL_LITE_EXCEPTION;
+    mmOptions::loadOptions(db_.get());
+    loadCurrencies(db_, currencyList_);
+    loadCategories(db_, categoryList_);
+    loadPayees(db_, categoryList_, payeeList_);
+    loadAccounts(db_, currencyList_, accountList_);
+    loadTransactions(db_, this, bTransactionList_);
 
     // Update All transactions in case of errors
     bTransactionList_.updateAllTransactions();

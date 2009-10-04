@@ -152,7 +152,6 @@ void mmTransDialog::dataToControls()
     "where ca.TRANSID = ?";
 
     //choiceTrans_->Disable();
-    mmBEGINSQL_LITE_EXCEPTION;
 
     wxSQLite3Statement st = db_->PrepareStatement(sql);
     st.Bind(1, transID_);
@@ -256,7 +255,6 @@ void mmTransDialog::dataToControls()
     }
     
     st.Finalize();
-    mmENDSQL_LITE_EXCEPTION;
 }
 
 void mmTransDialog::fillControls()

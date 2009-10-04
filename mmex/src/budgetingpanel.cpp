@@ -282,7 +282,6 @@ void mmBudgetingPanel::initVirtualListControl()
     wxDateTime dtBegin(1, wxDateTime::Jan, year);
     wxDateTime dtEnd(31, wxDateTime::Dec, year);
 
-    mmBEGINSQL_LITE_EXCEPTION;
     mmDBWrapper::loadBaseCurrencySettings(db_);
 
     static const char sql[] =
@@ -494,8 +493,6 @@ void mmBudgetingPanel::initVirtualListControl()
 
     listCtrlAccount_->SetItemCount((int)trans_.size());
     
-    mmENDSQL_LITE_EXCEPTION;
-
     wxString estIncomeStr, actIncomeStr,  estExpensesStr, actExpensesStr;
     mmCurrencyFormatter::formatDoubleToCurrency(estIncome, estIncomeStr);
     mmCurrencyFormatter::formatDoubleToCurrency(actIncome, actIncomeStr);

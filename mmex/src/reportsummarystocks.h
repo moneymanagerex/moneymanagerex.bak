@@ -60,8 +60,6 @@ public:
 		hb.addTableHeaderCell(_("Gain Loss"));
 		hb.endTableRow();
 
-        mmBEGINSQL_LITE_EXCEPTION;
-
         wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from STOCK_V1");
 
         while (q1.NextRow())
@@ -129,10 +127,8 @@ public:
         }
         q1.Finalize();
         
-        mmENDSQL_LITE_EXCEPTION
-
         /* Stocks */
-        double invested;
+        double invested = 0;
         double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);
         wxString stockBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);

@@ -422,14 +422,12 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
     "where ACCOUNTTYPE = 'Checking' "
     "order by ACCOUNTNAME";
     
-    mmBEGINSQL_LITE_EXCEPTION;
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
     q1.Finalize();
-    mmENDSQL_LITE_EXCEPTION
 
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     

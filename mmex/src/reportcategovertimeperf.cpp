@@ -271,7 +271,6 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
 
     // begin of table
 
-    mmBEGINSQL_LITE_EXCEPTION;
     mmDBWrapper::loadBaseCurrencySettings(&getDb());
 
     wxSQLite3ResultSet q1 = getDb().ExecuteQuery(g_sql);
@@ -294,8 +293,6 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
     }
 
     q1.Finalize();
-
-    mmENDSQL_LITE_EXCEPTION;
 
     printColumnsTotals(columns_totals, INCOME, hb);
     printColumnsTotals(columns_totals, EXPENSES, hb);

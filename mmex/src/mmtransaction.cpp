@@ -46,8 +46,6 @@ void mmSplitTransactionEntries::updateToDB(boost::shared_ptr<wxSQLite3Database>&
                                            int transID,
                                            bool edit)
 {
-    mmBEGINSQL_LITE_EXCEPTION;
-
     if (edit)
     {
         static const char sql[] = "delete from SPLITTRANSACTIONS_V1 where TRANSID = ?";
@@ -82,8 +80,6 @@ void mmSplitTransactionEntries::updateToDB(boost::shared_ptr<wxSQLite3Database>&
     }
 
     st.Finalize();
-
-    mmENDSQL_LITE_EXCEPTION;
 }
 
 void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core,
@@ -100,8 +96,6 @@ void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core,
     "from BUDGETSPLITTRANSACTIONS_V1 "
     "where TRANSID = ?";
     
-   mmBEGINSQL_LITE_EXCEPTION;
-
    wxSQLite3Statement st = core->db_->PrepareStatement(sql);
    st.Bind(1, bdID);
 
@@ -125,8 +119,6 @@ void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core,
    }
 
     st.Finalize();
-
-    mmENDSQL_LITE_EXCEPTION;
 }
 //-----------------------------------------------------------------------------//
 mmBankTransaction::mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db) : 
@@ -313,8 +305,6 @@ void mmBankTransaction::getSplitTransactions(mmCoreDB* core, mmSplitTransactionE
     "from SPLITTRANSACTIONS_V1 "
     "where TRANSID = ?";
     
-    mmBEGINSQL_LITE_EXCEPTION;
-
     wxSQLite3Statement st = db_->PrepareStatement(sql);
     st.Bind(1, transactionID());
 
@@ -341,8 +331,6 @@ void mmBankTransaction::getSplitTransactions(mmCoreDB* core, mmSplitTransactionE
     }
     
     st.Finalize();
-
-    mmENDSQL_LITE_EXCEPTION;
 }
 
 bool mmBankTransaction::containsCategory(int categID, int subcategID, bool ignoreSubCateg) const
@@ -421,8 +409,6 @@ int mmBankTransactionList::addTransaction(mmCoreDB* core, boost::shared_ptr<mmBa
        "CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT "
        ") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, -1, ?)";
 
-   mmBEGINSQL_LITE_EXCEPTION;
-
    wxSQLite3Statement st = db_->PrepareStatement(sql);
    mmBankTransaction &r = *pBankTransaction;
 
@@ -449,8 +435,6 @@ int mmBankTransactionList::addTransaction(mmCoreDB* core, boost::shared_ptr<mmBa
    r.splitEntries_->updateToDB(db_, r.transactionID(), false);
    transactions_.push_back(pBankTransaction);
 
-   mmENDSQL_LITE_EXCEPTION;
-
    return pBankTransaction->transactionID();
 }
 
@@ -474,8 +458,6 @@ bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBank
 
    bool found = false;
 
-   mmBEGINSQL_LITE_EXCEPTION;
-   
    wxSQLite3Statement st = db_->PrepareStatement(sql);
    const mmBankTransaction &r = *pBankTransaction;
 
@@ -498,8 +480,6 @@ bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBank
    found = q1.NextRow(); // TODO: Need to check split entries
    st.Finalize();
 	
-	mmENDSQL_LITE_EXCEPTION;
-
 	return found;
 }
 
@@ -534,8 +514,6 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int 
      "CATEGID, SUBCATEGID, TRANSDATE, FOLLOWUPID, TOTRANSAMOUNT "
    ") values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, -1, ? )";
 
-    mmBEGINSQL_LITE_EXCEPTION;
-
    wxSQLite3Statement st = db_->PrepareStatement(sql);
    const mmBankTransaction &r = *pBankTransaction;
 
@@ -559,8 +537,6 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int 
    pCopyTransaction->transactionID(db_->GetLastRowId().ToLong());
    st.Finalize();
 
-   mmENDSQL_LITE_EXCEPTION;
-
    pCopyTransaction->splitEntries_->updateToDB(db_, pCopyTransaction->transactionID(), false);
    transactions_.push_back(pCopyTransaction);
 
@@ -577,8 +553,6 @@ void mmBankTransactionList::updateTransaction(
         "CATEGID=?, SUBCATEGID=?, TRANSDATE=?, TOTRANSAMOUNT=? "
     "WHERE TRANSID = ?";
     
-    mmBEGINSQL_LITE_EXCEPTION;
-   
     wxSQLite3Statement st = db_->PrepareStatement(sql);
     mmBankTransaction &r = *pBankTransaction;
 
@@ -602,8 +576,6 @@ void mmBankTransactionList::updateTransaction(
 
     r.splitEntries_->updateToDB(db_, r.transactionID(), true);
     st.Finalize();
-
-    mmENDSQL_LITE_EXCEPTION;
 }
 
 
