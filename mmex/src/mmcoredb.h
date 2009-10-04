@@ -16,16 +16,20 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
+//----------------------------------------------------------------------------
 #ifndef _MM_EX_COREDB_H_
 #define _MM_EX_COREDB_H_
-
-#include <vector>
-#include "boost/shared_ptr.hpp"
-#include "mmaccount.h"
+//----------------------------------------------------------------------------
 #include "mmpayee.h"
 #include "mmcategory.h"
-#include "dbwrapper.h"
+#include "mmaccount.h"
 #include "mmcurrency.h"
+#include "mmtransaction.h"
+//----------------------------------------------------------------------------
+#include "boost/shared_ptr.hpp"
+//----------------------------------------------------------------------------
+class wxSQLite3Database;
+//----------------------------------------------------------------------------
 
 /** 
    mmCoreDB encapsulates most of the work in translating between
@@ -39,14 +43,14 @@ public:
 
    boost::shared_ptr<wxSQLite3Database> db_;
 
-   /* Data */
-   mmPayeeList       payeeList_;
-   mmCategoryList    categoryList_;
-   mmAccountList     accountList_;
-   mmCurrencyList    currencyList_;
+   mmPayeeList payeeList_;
+   mmCategoryList categoryList_;
+   mmAccountList accountList_;
+   mmCurrencyList currencyList_;
    mmBankTransactionList bTransactionList_;
    
 };
-
+//----------------------------------------------------------------------------
 #endif // _MM_EX_COREDB_H_
+//----------------------------------------------------------------------------
 

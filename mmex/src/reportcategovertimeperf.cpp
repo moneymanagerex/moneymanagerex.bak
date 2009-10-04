@@ -20,8 +20,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "htmlbuilder.h"
 #include "util.h"
 #include "mmcoredb.h"
-#include "dbwrapper.h"
-#include "budgetingpanel.h"
 #include "reportcategovertimeperf.h"
 //----------------------------------------------------------------------------
 #include <vector>
@@ -32,6 +30,8 @@ namespace
 
 const int g_NullCategory = -1;
 const int g_NullSubCat = g_NullCategory;
+//----------------------------------------------------------------------------
+enum EWhat { INCOME, EXPENSES, OVERALL, WHAT_MAX };
 //----------------------------------------------------------------------------
 
 const char g_sql[] = 
@@ -63,8 +63,8 @@ wxDateTime& prepareEndDate(wxDateTime &dt)
     return dt;
 }
 //----------------------------------------------------------------------------
-typedef std::vector<std::pair<wxDateTime,wxDateTime> > periods_t;
-typedef std::vector<double> months_amounts_t;
+typedef std::vector<std::pair<wxDateTime, wxDateTime> > periods_t;
+typedef std::vector<std::pair<double, double> > columns_totals_t;
 //----------------------------------------------------------------------------
 
 void prepareAndPrintPeriods
@@ -116,7 +116,7 @@ void printRow
     int subcat_id,
     mmCoreDB &core,
     mmHTMLBuilder &hb,
-    months_amounts_t &months_totals
+    columns_totals_t &columns_totals
 )
 {
     double period_amount = core.bTransactionList_.getAmountForCategory(cat_id, subcat_id, false, periodBegin, periodEnd);
@@ -136,6 +136,8 @@ void printRow
 
     hb.addTableCell(categ, false, true);
 
+    double period_amount_sum = 0; // row summary
+
     for (periods_t::const_iterator i = periods.begin(); i != periods.end(); ++i)
     {
         const wxDateTime &dtBegin = i->first;
@@ -147,13 +149,21 @@ void printRow
 
         wxString month_amount_str;
 
-        if (month_amount != 0) {
+        if (month_amount != 0)
+        {
+            period_amount_sum += month_amount;
             mmCurrencyFormatter::formatDoubleToCurrencyEdit(month_amount, month_amount_str);
-            months_totals[std::distance(periods.begin(), i)] += month_amount;
+
+            periods_t::const_iterator::difference_type j = std::distance(periods.begin(), i);
+            columns_totals_t::reference r = columns_totals[j];
+            
+            (month_amount < 0 ? r.second : r.first) += month_amount;
         }
 
         hb.addTableCell(month_amount_str, true);
     }
+
+    wxASSERT(std::abs(period_amount_sum - period_amount) < 0.01);
 
     // summary of period for category\subcategory
 
@@ -165,21 +175,32 @@ void printRow
 }
 //----------------------------------------------------------------------------
 
-void printColumnsTotals(const months_amounts_t &months_totals, mmHTMLBuilder &hb)
+void printColumnsTotals
+(
+    const columns_totals_t &columns_totals, 
+    EWhat what, 
+    mmHTMLBuilder &hb
+)
 {
     hb.startTableRow();
 
-    hb.addTableHeaderCell(_("Overall"));
+    const wxString title[WHAT_MAX] = { _("Income"), _("Expenses"), _("Overall") };
+    hb.addTableHeaderCell(title[what]);
 
-    for (months_amounts_t::const_iterator i = months_totals.begin(); i != months_totals.end(); ++i)
+    for (columns_totals_t::const_iterator i = columns_totals.begin(); i != columns_totals.end(); ++i)
     {
-        wxString val;
+        double val = what == INCOME   ?  i->first  :
+                     what == EXPENSES ? -i->second : // print as positive value in report
+                     what == OVERALL  ? (i->first + i->second) :
+                     0;
 
-        if (*i != 0) {
-            mmCurrencyFormatter::formatDoubleToCurrencyEdit(*i, val);
+        wxString str;
+
+        if (val != 0) {
+            mmCurrencyFormatter::formatDoubleToCurrencyEdit(val, str);
         }
 
-        hb.addTableCell(val, true, false, true);
+        hb.addTableCell(str, true, false, true);
     }
 
     hb.addTableHeaderCell(wxGetEmptyString());
@@ -206,12 +227,12 @@ wxSQLite3Database& mmReportCategoryOverTimePerformance::getDb() const
 
 wxString mmReportCategoryOverTimePerformance::getHTMLText()
 {
-    const int MONTHS_IN_PERIOD = 12;
+    const int MONTHS_IN_PERIOD = 12; // including current month
 
     mmHTMLBuilder hb;
     hb.init();
     
-    hb.addHeader(3, wxString::Format(_("Category Income/Expenses Over Last %d Months "), MONTHS_IN_PERIOD)); // including current month
+    hb.addHeader(3, wxString::Format(_("Category Income/Expenses Over Last %d Months "), MONTHS_IN_PERIOD));
 
     const wxDateTime now = wxDateTime::Now();
 
@@ -243,7 +264,7 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
     periods_t periods(MONTHS_IN_PERIOD);
     prepareAndPrintPeriods(periodBegin, periodEnd, hb, periods);
 
-    months_amounts_t months_totals(periods.size());
+    columns_totals_t columns_totals(periods.size());
 
     hb.addTableHeaderCell(_("Overall"));
 	hb.endTableRow();
@@ -261,14 +282,14 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
         
         if (last_cat_id != cat_id) { // category changed
             last_cat_id = cat_id;
-            printRow(periodBegin, periodEnd, periods, q1, cat_id, g_NullSubCat, *m_core, hb, months_totals);
+            printRow(periodBegin, periodEnd, periods, q1, cat_id, g_NullSubCat, *m_core, hb, columns_totals);
         }
 
         int sc_idx = q1.FindColumnIndex(wxT("SUBCATEGID"));
         
         if (!q1.IsNull(sc_idx)) {
             int subcat_id = q1.GetInt(sc_idx);
-            printRow(periodBegin, periodEnd, periods, q1, cat_id, subcat_id, *m_core, hb, months_totals);
+            printRow(periodBegin, periodEnd, periods, q1, cat_id, subcat_id, *m_core, hb, columns_totals);
         }
     }
 
@@ -276,7 +297,9 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
 
     mmENDSQL_LITE_EXCEPTION;
 
-    printColumnsTotals(months_totals, hb);
+    printColumnsTotals(columns_totals, INCOME, hb);
+    printColumnsTotals(columns_totals, EXPENSES, hb);
+    printColumnsTotals(columns_totals, OVERALL, hb);
 
     hb.endTable();
 	hb.endCenter();
