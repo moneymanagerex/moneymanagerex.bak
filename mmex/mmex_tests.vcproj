@@ -893,6 +893,14 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="sqlite3"
+					>
+					<File
+						RelativePath=".\sqlite\sqlite3.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

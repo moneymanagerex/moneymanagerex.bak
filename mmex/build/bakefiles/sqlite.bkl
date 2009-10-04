@@ -20,15 +20,10 @@
 
     	<!-- paths relative to trunk/mmex -->
 
-        <set var="SRC">sqlite/</set>
+        <set var="SRC">sqlite</set>
 
-        <headers>$(fileList( [ SRC + '*.h', SRC + 'codec/*.h' ] ))</headers>
-
-        <sources>
-            <!-- we have to exclude pager.c because pager_secure.c includes one -->
-            $(fileList(SRC + '*.c').replace(SRC + 'pager.c', ''))
-            $(fileList(SRC + 'codec/*.cpp'))
-        </sources>
+        <headers>$(fileList(SRC + '/*.h'))</headers>
+        <sources>$(SRC)/sqlite3secure.c</sources>
 
     </lib>
 
