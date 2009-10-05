@@ -30,14 +30,11 @@
 /*******************************************************/
 /* Indicate file path for OS X */
 #if defined (__WXMAC__)
-#define MMEX_INIDB_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmexini.db3")
 #define MMEX_SPLASH_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/splash.png")
 #define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
-
 #else
-#define MMEX_INIDB_FNAME wxT("/mmexini.db3")
-#define MMEX_SPLASH_FNAME wxT("splash.png")
-#define MMEX_ICON_FNAME wxT("mmex.ico")
+#define MMEX_SPLASH_FNAME wxT("/splash.png")
+#define MMEX_ICON_FNAME wxT("/mmex.ico")
 #endif
 /*******************************************************/
 IMPLEMENT_DYNAMIC_CLASS( mmAboutDialog, wxDialog )
@@ -68,7 +65,7 @@ bool mmAboutDialog::Create( wxWindow* parent, wxWindowID id,
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
+    wxIcon icon(mmGetBaseWorkingPath() + MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
 
     Centre();
@@ -118,7 +115,7 @@ void mmAboutDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizerN, 1, wxGROW|wxALL, 5);
 
     wxBitmap itemStaticBitmap3Bitmap;
-    itemStaticBitmap3Bitmap.LoadFile(MMEX_SPLASH_FNAME, wxBITMAP_TYPE_PNG); 
+    itemStaticBitmap3Bitmap.LoadFile(mmGetBaseWorkingPath() + MMEX_SPLASH_FNAME, wxBITMAP_TYPE_PNG); 
 
     wxStaticBitmap* itemStaticBitmap3 = 0;
     if (!mmIniOptions::enableCustomLogo_)
