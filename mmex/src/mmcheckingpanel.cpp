@@ -1433,24 +1433,29 @@ wxListItemAttr* MyListCtrl::OnGetItemAttr(long item) const
 //----------------------------------------------------------------------------
 
 void MyListCtrl::OnChar(wxKeyEvent& event)
-{
-    switch ( event.GetKeyCode() )
-    {
-        case 'v':
-        case 'V':
-        case 'r':
-        case 'R':
-        case 'u':
-        case 'U':
-        case 'f':
-        case 'F':
-            // these are the keys we process ourselves
-            break;
-
-        default:
-            event.Skip();
-    }
-}
+{	if (wxGetKeyState(WXK_ALT) || 
+		wxGetKeyState(WXK_COMMAND) ||
+		wxGetKeyState(WXK_UP) || 
+		wxGetKeyState(WXK_DOWN) || 
+		wxGetKeyState(WXK_LEFT) || 
+		wxGetKeyState(WXK_RIGHT) || 
+		wxGetKeyState(WXK_HOME) || 
+		wxGetKeyState(WXK_END) ||
+		wxGetKeyState(WXK_PAGEUP) || 
+		wxGetKeyState(WXK_PAGEDOWN) || 
+		wxGetKeyState(WXK_NUMPAD_UP) ||
+		wxGetKeyState(WXK_NUMPAD_DOWN) ||
+		wxGetKeyState(WXK_NUMPAD_LEFT) ||
+		wxGetKeyState(WXK_NUMPAD_RIGHT) ||
+		wxGetKeyState(WXK_NUMPAD_PAGEDOWN) ||
+		wxGetKeyState(WXK_NUMPAD_PAGEUP) ||
+		wxGetKeyState(WXK_NUMPAD_HOME) ||
+		wxGetKeyState(WXK_NUMPAD_END) ||
+		wxGetKeyState(WXK_DELETE) ||
+		wxGetKeyState(WXK_NUMPAD_DELETE)
+		)
+	event.Skip();
+  }
 //----------------------------------------------------------------------------
 
 void MyListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
@@ -1480,6 +1485,8 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 
 void MyListCtrl::OnListKeyDown(wxListEvent& event)
 {
+	if (!wxGetKeyState(WXK_COMMAND) && !wxGetKeyState(WXK_ALT))
+	{
   switch ( event.GetKeyCode() )
     {
         case WXK_DELETE:
@@ -1532,6 +1539,7 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
         default:
             event.Skip();
     }
+	}
 }
 //----------------------------------------------------------------------------
 
