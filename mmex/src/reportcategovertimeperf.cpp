@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "reportcategovertimeperf.h"
 //----------------------------------------------------------------------------
 #include <vector>
+#include <math.h>
 //----------------------------------------------------------------------------
 
 namespace
@@ -163,7 +164,7 @@ void printRow
         hb.addTableCell(month_amount_str, true);
     }
 
-    wxASSERT(std::abs(period_amount_sum - period_amount) < 0.01);
+    wxASSERT(fabs(period_amount_sum - period_amount) < 0.01);
 
     // summary of period for category\subcategory
 
