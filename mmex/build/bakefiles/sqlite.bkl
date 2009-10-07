@@ -9,13 +9,8 @@
         <cxx-exceptions>off</cxx-exceptions>
         <cxx-rtti>off</cxx-rtti>
 
-
-        <!-- sqlite has .c and sqlite/codec has .cpp sources -->
-
-        <set var="SQLITE_FLAGS">-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA</set>
-
-        <cflags>$(SQLITE_FLAGS)</cflags>
-        <cxxflags>$(SQLITE_FLAGS)</cxxflags>
+        <!-- sqlite has only .c sources -->
+        <cflags>-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA</cflags>
 
 
     	<!-- paths relative to trunk/mmex -->

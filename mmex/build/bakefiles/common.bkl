@@ -117,7 +117,7 @@
         <win32-res>resources/mmex.rc</win32-res>
 
     	<!-- flags for wxSQLite3 -->
-        <cxxflags>-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA</cxxflags>
+        <cxxflags>-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA</cxxflags>
 
     	<!-- relative to trunk/mmex -->
 

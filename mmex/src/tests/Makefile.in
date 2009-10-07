@@ -62,8 +62,7 @@ UNITTEST++_OBJECTS =  \
 MMEX_TESTS_CXXFLAGS = $(__DEBUG_DEFINE_p) -I$(srcdir)/../../include \
 	-I$(srcdir)/../../sqlite -DNOPCH -I$(srcdir)/../../src \
 	-I$(srcdir)/../../UnitTest++/src $(WX_CXXFLAGS) $(PIC_FLAG) \
-	-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA \
-	$(CPPFLAGS) $(CXXFLAGS)
+	-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
 	mmex_tests_aboutdialog.o \
 	mmex_tests_appstartdialog.o \
@@ -155,7 +154,6 @@ clean:
 	rm -f $(LIBPREFIX)sqlite3$(LIBEXT)
 	rm -f $(LIBPREFIX)UnitTest++$(LIBEXT)
 	rm -f mmex_tests$(EXEEXT)
-	rm -f currency.db3
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
@@ -176,8 +174,7 @@ mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(LIBPRE
 	$(__mmex_tests___mac_setfilecmd)
 
 check: all
-	cp $(srcdir)/../../runtime/currency.db3 .
-	./mmex_tests
+	cd $(srcdir)/../../runtime && ../build/msw/tests/./mmex_tests
 
 sqlite3_sqlite3secure.o: $(srcdir)/../../sqlite/sqlite3secure.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/sqlite3secure.c
