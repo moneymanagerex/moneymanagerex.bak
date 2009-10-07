@@ -34,8 +34,12 @@
 
     	<!-- relative to trunk/mmex -->
 
-        <headers>$(fileList('src/tests/*.h'))</headers>
-        <sources>$(fileList('src/tests/*.cpp'))</sources>
+    	<set var="SRC">src/tests</set>
+
+        <headers>$(fileList(SRC + '/*.h'))</headers>
+        <sources>$(fileList(SRC + '/*.cpp'))</sources>
+
+        <win32-res>$(SRC)/mmex_tests.rc</win32-res>
 
     </exe>
 

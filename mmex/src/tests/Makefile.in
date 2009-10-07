@@ -117,10 +117,10 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_wxsqlite3.o \
 	mmex_tests_wxtinyxml.o \
 	mmex_tests_yahoosettingsdialog.o \
-	$(__mmex_tests___win32rc) \
 	mmex_tests_Main.o \
 	mmex_tests_dbwrapper_test.o \
-	mmex_tests_utils.o
+	mmex_tests_utils.o \
+	$(__mmex_tests___win32rc)
 
 ### Conditionally set variables: ###
 
@@ -133,8 +133,7 @@ MMEX_TESTS_OBJECTS =  \
 @COND_PLATFORM_MAC_1@	$(SETFILE) -t APPL mmex_tests$(EXEEXT)
 @COND_BUILD_debug@__DEBUG_DEFINE_p_4 = --define _DEBUG
 @COND_BUILD_release@__DEBUG_DEFINE_p_4 = --define NDEBUG
-@COND_PLATFORM_WIN32_1@__mmex_tests___win32rc = \
-@COND_PLATFORM_WIN32_1@	mmex_tests_resources_mmex_rc.o
+@COND_PLATFORM_WIN32_1@__mmex_tests___win32rc = mmex_tests_mmex_tests_rc.o
 @COND_BUILD_debug@__DEBUG_DEFINE_p = -D_DEBUG
 @COND_BUILD_release@__DEBUG_DEFINE_p = -DNDEBUG
 
@@ -392,9 +391,6 @@ mmex_tests_wxtinyxml.o: $(srcdir)/../../src/wxtinyxml.cpp
 mmex_tests_yahoosettingsdialog.o: $(srcdir)/../../src/yahoosettingsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/yahoosettingsdialog.cpp
 
-mmex_tests_resources_mmex_rc.o: $(srcdir)/../../resources/mmex.rc
-	$(WX_RESCOMP) -i$< -o$@  $(__DEBUG_DEFINE_p_4) --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../sqlite --define NOPCH --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../UnitTest++/src
-
 mmex_tests_Main.o: $(srcdir)/../../src/tests/Main.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/Main.cpp
 
@@ -403,6 +399,9 @@ mmex_tests_dbwrapper_test.o: $(srcdir)/../../src/tests/dbwrapper_test.cpp
 
 mmex_tests_utils.o: $(srcdir)/../../src/tests/utils.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/utils.cpp
+
+mmex_tests_mmex_tests_rc.o: $(srcdir)/../../src/tests/mmex_tests.rc
+	$(WX_RESCOMP) -i$< -o$@  $(__DEBUG_DEFINE_p_4) --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../sqlite --define NOPCH --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../UnitTest++/src
 
 
 # Include dependency info, if present:
