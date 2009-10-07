@@ -144,7 +144,7 @@ void setupBugTrap()
     BT_InstallSehFilter(); // must be called
     BT_SetTerminate(); // set_terminate() must be called from every thread
 
-    UINT dwMode = SetErrorMode(SEM_NOGPFAULTERRORBOX);
+    UINT dwMode = SetErrorMode(SEM_NOGPFAULTERRORBOX); // returns original flags
     SetErrorMode(dwMode | SEM_NOGPFAULTERRORBOX);
 
     // --
