@@ -126,7 +126,7 @@ wxString getMMEXIconPath()
     wxString path;
 
 #if defined (__WXMAC__)
-    path = wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
+    path = wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico");
 #else
     path = wxT("mmex.ico");
 #endif
