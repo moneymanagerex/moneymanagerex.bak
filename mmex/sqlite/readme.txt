@@ -22,3 +22,5 @@ Copy to this folder:
   wxsqlite3def.h
   wxsqlite3dyn.h
   wxsqlite3opt.h
+
+  wxsqlite3.cpp copy to mmex\src.
