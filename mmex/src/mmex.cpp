@@ -121,12 +121,18 @@ namespace
 const wxChar *MMEX_INIDB_FNAME = wxT("/mmexini.db3");
 //----------------------------------------------------------------------------
 
+wxString getMMEXIconPath()
+{
+    wxString path;
+
 #if defined (__WXMAC__)
-const wxString MMEX_ICON_FNAME = wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
+    path = wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
 #else
-const wxString MMEX_ICON_FNAME = wxT("mmex.ico");
+    path = wxT("mmex.ico");
 #endif
 
+    return path;
+}
 //----------------------------------------------------------------------------
 
 #ifdef _MSC_VER
@@ -429,7 +435,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 	m_mgr.SetManagedWindow(this);
 
 	/* Set Icon for Frame */
-    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
+    wxIcon icon(getMMEXIconPath(), wxBITMAP_TYPE_ICO, 32, 32);
     SetIcon(icon);
 
     /* Setup Printer */
