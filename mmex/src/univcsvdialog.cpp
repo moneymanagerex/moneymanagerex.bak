@@ -498,11 +498,11 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
                 }
 
 
-                for (unsigned int idx=0;idx < (int)csvFieldOrder_.size(); idx++)
+                for (size_t i = 0; i < csvFieldOrder_.size(); ++i)
                 {
-                    if (tokens.size() < idx)
-                        continue;
-                    parseToken(csvFieldOrder_[idx], tokens[idx]);
+                    if (tokens.size() >= i) {
+                        parseToken(csvFieldOrder_[i], tokens[i]);
+                    }
                 }
 
                 if (dt_.Trim().IsEmpty() || payeeID_ == -1 ||
