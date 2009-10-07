@@ -32,6 +32,8 @@ Bakefile for generating makefiles.
         <app-type>gui</app-type>
         <library>sqlite3</library>
 
+        <win32-res>resources/mmex.rc</win32-res>
+
         <if cond="FORMAT=='msvc'">
 
             <include>$(SRCDIR)/BugTrap</include>

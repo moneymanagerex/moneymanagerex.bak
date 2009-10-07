@@ -114,8 +114,6 @@
         <!-- disable precompiled headers for wxWidgets -->
         <define>NOPCH</define>
 
-        <win32-res>resources/mmex.rc</win32-res>
-
     	<!-- flags for wxSQLite3 -->
         <cxxflags>-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA</cxxflags>
 
