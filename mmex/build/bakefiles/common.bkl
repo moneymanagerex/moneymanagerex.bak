@@ -9,6 +9,9 @@
 
 <makefile>
 
+    <!-- check version of Bakefile -->
+    <requires version="0.2.1"/>
+
 
     <!-- configurable options -->
 

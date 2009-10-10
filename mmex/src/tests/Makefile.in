@@ -118,8 +118,8 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_wxsqlite3.o \
 	mmex_tests_wxtinyxml.o \
 	mmex_tests_yahoosettingsdialog.o \
-	mmex_tests_Main.o \
 	mmex_tests_dbwrapper_test.o \
+	mmex_tests_mmex_tests.o \
 	mmex_tests_utils.o \
 	$(__mmex_tests___win32rc)
 
@@ -394,11 +394,11 @@ mmex_tests_wxtinyxml.o: $(srcdir)/../../src/wxtinyxml.cpp
 mmex_tests_yahoosettingsdialog.o: $(srcdir)/../../src/yahoosettingsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/yahoosettingsdialog.cpp
 
-mmex_tests_Main.o: $(srcdir)/../../src/tests/Main.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/Main.cpp
-
 mmex_tests_dbwrapper_test.o: $(srcdir)/../../src/tests/dbwrapper_test.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/dbwrapper_test.cpp
+
+mmex_tests_mmex_tests.o: $(srcdir)/../../src/tests/mmex_tests.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/mmex_tests.cpp
 
 mmex_tests_utils.o: $(srcdir)/../../src/tests/utils.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/utils.cpp

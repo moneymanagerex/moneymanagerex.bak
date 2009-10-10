@@ -347,7 +347,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\tests\Main.cpp"
+				RelativePath=".\src\tests\mmex_tests.cpp"
 				>
 			</File>
 			<File
