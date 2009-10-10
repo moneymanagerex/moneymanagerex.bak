@@ -1133,8 +1133,8 @@ wxString mmGUIFrame::createCategoryList()
 		hb.startTableRow();
 		hb.addTableCell(categList[idx].categ, false, true);
 		hb.addTableCell(categList[idx].amountStr, true);
-		}
 		hb.endTableRow();
+		}
     }
 
     hb.endTable();
