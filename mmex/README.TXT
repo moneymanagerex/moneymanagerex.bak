@@ -101,7 +101,8 @@ This might be required if you are adding new source files to MMEX.
 2. Make sure all .bkl files in source tree are updated if necessary
 3. Do
 	>  cd trunk/mmex
-	>  ./bootstrap
+	>  chmod a+rx bootstrap
+        >  ./bootstrap
 
 
 CREATING A DEBIAN PACKAGE

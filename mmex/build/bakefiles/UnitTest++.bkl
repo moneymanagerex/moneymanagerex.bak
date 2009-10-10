@@ -1,6 +1,11 @@
 <?xml version="1.0" ?>
 
-<!-- UnitTest++ library -->
+<!-- 
+    MMEX build scripts.
+    Copyright (C) 2009 VaDiM.
+
+    UnitTest++ library.
+-->
 
 <makefile>
 

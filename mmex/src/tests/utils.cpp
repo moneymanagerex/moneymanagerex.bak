@@ -97,12 +97,12 @@ const std::wstring& utils::getTempDir()
 
     if (path.empty()) 
     {
-        if (const char *dir = getenv("TMP"))
-        {
+        if (const char *dir = getenv("TMP")) {
             path = asWString(dir);
-        } else if (const char *dir = getenv("TEMP"))
-        {
+        } else if (const char *dir = getenv("TEMP")) {
             path = asWString(dir);
+        } else {
+            path = L".";
         }
     }
 

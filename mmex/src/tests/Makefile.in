@@ -61,8 +61,9 @@ UNITTEST++_OBJECTS =  \
 	UnitTest++_TimeHelpers.o
 MMEX_TESTS_CXXFLAGS = $(__DEBUG_DEFINE_p) -I$(srcdir)/../../include \
 	-I$(srcdir)/../../sqlite -DNOPCH -I$(srcdir)/../../src \
-	-I$(srcdir)/../../UnitTest++/src $(WX_CXXFLAGS) $(PIC_FLAG) \
-	-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
+	-I$(srcdir)/../../UnitTest++/src -DIMPLEMENT_WXWIN_MAIN= $(WX_CXXFLAGS) \
+	$(PIC_FLAG) -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) \
+	$(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
 	mmex_tests_aboutdialog.o \
 	mmex_tests_appstartdialog.o \
@@ -153,6 +154,7 @@ clean:
 	rm -f $(LIBPREFIX)sqlite3$(LIBEXT)
 	rm -f $(LIBPREFIX)UnitTest++$(LIBEXT)
 	rm -f mmex_tests$(EXEEXT)
+	rm -f ./currency.db3
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
@@ -173,7 +175,8 @@ mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(LIBPRE
 	$(__mmex_tests___mac_setfilecmd)
 
 check: all
-	cd $(srcdir)/../../runtime && ../build/msw/tests/./mmex_tests
+	cp $(srcdir)/../../runtime/currency.db3 .
+	cd . && ./mmex_tests
 
 sqlite3_sqlite3secure.o: $(srcdir)/../../sqlite/sqlite3secure.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/sqlite3secure.c
@@ -401,7 +404,7 @@ mmex_tests_utils.o: $(srcdir)/../../src/tests/utils.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/utils.cpp
 
 mmex_tests_mmex_tests_rc.o: $(srcdir)/../../src/tests/mmex_tests.rc
-	$(WX_RESCOMP) -i$< -o$@  $(__DEBUG_DEFINE_p_4) --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../sqlite --define NOPCH --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../UnitTest++/src
+	$(WX_RESCOMP) -i$< -o$@  $(__DEBUG_DEFINE_p_4) --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../sqlite --define NOPCH --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../UnitTest++/src --define IMPLEMENT_WXWIN_MAIN=
 
 
 # Include dependency info, if present:

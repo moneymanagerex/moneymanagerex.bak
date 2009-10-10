@@ -43,7 +43,7 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "FileDescription", "unit tests for Money Manager Ex"
+            VALUE "FileDescription", "Unit Tests for Money Manager Ex"
             VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "InternalName", "mmex_tests"
             VALUE "LegalCopyright", "(C) 2009 VaDiM"

@@ -1,6 +1,11 @@
 <?xml version="1.0" ?>
 
-<!-- sqlite3 library -->
+<!-- 
+    MMEX build scripts.
+    Copyright (C) 2009 VaDiM.
+
+    sqlite3 library.
+-->
 
 <makefile>
 

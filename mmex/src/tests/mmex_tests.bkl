@@ -1,5 +1,12 @@
 <?xml version="1.0" ?>
 
+<!-- 
+    MMEX build scripts.
+    Copyright (C) 2009 VaDiM.
+
+    MMEX Unit Tests application.
+-->
+
 <makefile>
 
     <!-- Default root of sources is dir where output script will be created.
@@ -18,7 +25,7 @@
     <include file="../../build/bakefiles/common.bkl"/>
     <include file="../../build/bakefiles/sqlite.bkl"/>
     <include file="../../build/bakefiles/UnitTest++.bkl"/>
-    
+
 
     <!-- unit tests console application -->
 
@@ -31,6 +38,16 @@
 
 	<include>$(SRCDIR)/src</include>
 	<include>$(SRCDIR)/UnitTest++/src</include>
+
+
+    	<!-- IMPLEMENT_APP(mmGUIApp) in mmex.cpp defines main() on Unixes, see wx\app.h.
+             But mmex_tests.cpp also defines main(). 
+        -->
+
+        <if cond="TOOLSET=='unix'">
+            <define>IMPLEMENT_WXWIN_MAIN=</define>
+        </if>
+
 
     	<!-- relative to trunk/mmex -->
 
@@ -51,10 +68,19 @@
         <depends>all</depends>
 	<is-phony>on</is-phony>
 
+    	<set var="COPY">
+            <if cond="TOOLSET=='win32'">copy /Y</if>
+            <if cond="TOOLSET=='unix'">cp</if>
+        </set>
+
+        <!-- && is "&amp;&amp;" in HTML -->
+
 	<command>
-            <!-- && is "&amp;&amp;" in HTML -->
-            cd $(nativePaths(SRCDIR + '/runtime')) &amp;&amp; $(nativePaths('../build/msw/tests/' + BUILDDIR + '/mmex_tests'))
+            $(COPY) $(nativePaths(SRCDIR + '/runtime/currency.db3')) $(nativePaths(BUILDDIR))
+            cd $(nativePaths(BUILDDIR)) &amp;&amp; $(nativePaths('./mmex_tests'))
 	</command>
+
+        <clean-files>$(nativePaths(BUILDDIR + '/currency.db3'))</clean-files>
 
     </action>
 

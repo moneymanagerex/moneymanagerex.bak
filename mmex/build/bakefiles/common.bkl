@@ -1,6 +1,11 @@
 <?xml version="1.0" ?>
 
-<!-- common templates -->
+<!-- 
+    MMEX build scripts.
+    Copyright (C) 2009 VaDiM.
+    
+    Common templates.
+-->
 
 <makefile>
 

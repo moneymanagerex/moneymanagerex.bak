@@ -30,7 +30,7 @@ if you don't add\remove project's files.
 
 3.You can create .bat file to run gcc with next content (assume MinGW installed in "C:\bin\MinGW")
 
-  set PATH=C:\bin\MinGW\bin;C:\bin\MinGW\lib
+  set PATH=C:\bin\MinGW\bin
   mingw32-make -f makefile.gcc %* 2> mingw.log
 
 4.Edit mmex\build\msw\config.gcc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
@@ -60,4 +60,4 @@ Currently bakefile can generate makefiles\projects for these compilers (run bake
 The mmex build scripts resides in mmex\build\bakefiles. 
 Firstly modify Bakefiles.bkgen to add missing output formats.
 Append new format to tag <add-formats> and add flag to makefile's output directory.
-If you are lucky, you will get makefile\project for your compiler after running mmex\bootstrap.bat.
+If you are lucky, you will get makefile\project for your compiler after running mmex\bootstrap[.bat].
