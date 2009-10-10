@@ -136,6 +136,9 @@ romanian.mo: romanian.po
 russian.mo: russian.po
 	msgfmt -o russian.mo russian.po
 
+serbo-croatian.mo: serbo-croatian.po
+	msgfmt -o serbo-croatian.mo serbo-croatian.po
+
 slovak.mo: slovak.po
 	msgfmt -o slovak.mo slovak.po
 

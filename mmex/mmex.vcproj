@@ -1052,6 +1052,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\runtime\en\serbo-croatian.po"
+				>
+			</File>
+			<File
 				RelativePath=".\runtime\en\slovak.po"
 				>
 			</File>
