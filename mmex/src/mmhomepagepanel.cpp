@@ -495,11 +495,11 @@ void mmHomePagePanel::updateAccounts()
     // update category List
     topCategories_ = frame_->createCategoryList();
     hb.addHTML(topCategories_);
-#if 0
-   // ... Doesn't work under negative values, currently
+
+   // Top 10 Graph
    mmGraphTopCategories gtp;
    hb.addImage(gtp.GetOutputFileName());
-#endif
+
 
 	//--------------------------------------------------------
     hb.addLineBreak();

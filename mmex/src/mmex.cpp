@@ -1126,11 +1126,14 @@ wxString mmGUIFrame::createCategoryList()
     std::sort(categList.begin(), categList.end(), sortCategs);
     for (int idx = 0; idx < (int)categList.size(); idx++)
     {
-        if (idx > 5)
+		if (idx >= 10) //Show top 10 or less
             break;
+		if (categList[idx].amount < 0.0) //Show negative amounts only
+		{
 		hb.startTableRow();
 		hb.addTableCell(categList[idx].categ, false, true);
 		hb.addTableCell(categList[idx].amountStr, true);
+		}
 		hb.endTableRow();
     }
 

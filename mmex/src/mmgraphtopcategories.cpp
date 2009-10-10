@@ -16,9 +16,14 @@ void mmGraphTopCategories::init(const std::vector<CategInfo> &categList)
 	std::vector<ChartData> barData;
 	barData.reserve(categList.size());
 
-	for (size_t i = 0; i < categList.size(); ++i)
+	for (size_t i = 0; i < categList.size(); ++i) 
 	{
-        barData.push_back(ChartData(categList[i].categ, categList[i].amount));
+		if (i >= 10) //Show top 10 or less
+            break;
+		if (categList[i].amount < 0.0 ) //Show withdrawal only
+		{
+        barData.push_back(ChartData(categList[i].categ, -1*(categList[i].amount)));
+		}
 	}
 
     m_chart->SetData(barData);
