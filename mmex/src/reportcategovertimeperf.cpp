@@ -94,7 +94,9 @@ void prepareAndPrintPeriods
         prepareEndDate(dtEnd);
 
         if (i == --periods.end()) {
-            wxASSERT(dtEnd == periodEnd);
+            bool ok = dtEnd == periodEnd; 
+            wxASSERT(ok);
+            wxUnusedVar(ok);
         }
 
         // --

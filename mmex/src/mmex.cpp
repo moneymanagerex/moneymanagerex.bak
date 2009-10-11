@@ -151,6 +151,7 @@ void setupBugTrap()
 
     BOOL ok = BT_ReadVersionInfo(0); // read from resources of executable
     wxASSERT(ok);
+    wxUnusedVar(ok); // suppresses warning in RELEASE build
 
     BT_SetDialogMessage(BTDM_INTRO1, _T("Money Manager Ex has encountered an unrecoverable error and needs to close!"));
     BT_SetDialogMessage(BTDM_INTRO2, _T("To help fix this issue, please save the information in this crash report and send it to us."));
