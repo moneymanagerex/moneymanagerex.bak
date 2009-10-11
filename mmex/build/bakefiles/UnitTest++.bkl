@@ -9,7 +9,7 @@
 
 <makefile>
 
-    <lib id="UnitTest++" template="compiler_common">
+    <lib id="UnitTestPP" template="compiler_common">
 
         <cxx-exceptions>on</cxx-exceptions>
         <cxx-rtti>on</cxx-rtti>

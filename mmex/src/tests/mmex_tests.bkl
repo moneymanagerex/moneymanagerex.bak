@@ -34,7 +34,7 @@
         <app-type>console</app-type>
         
         <library>sqlite3</library>
-        <library>UnitTest++</library>
+        <library>UnitTestPP</library>
 
 	<include>$(SRCDIR)/src</include>
 	<include>$(SRCDIR)/UnitTest++/src</include>
