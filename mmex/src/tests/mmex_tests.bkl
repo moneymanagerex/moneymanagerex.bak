@@ -61,9 +61,12 @@
     </exe>
 
     
-    <!-- make check -->
+    <!-- 
+         make check
+         All formats expect MS VisualStudio projects.
+    -->
 
-    <action id="check">
+    <action id="check" cond="not FORMAT.endswith('prj')">
 
         <depends>all</depends>
 	<is-phony>on</is-phony>

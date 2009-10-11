@@ -1,6 +1,11 @@
 <?xml version="1.0" ?>
 
-<!-- generation of translation files -->
+<!-- 
+    MMEX build scripts.
+    Copyright (C) 2009 VaDiM.
+    
+    Generation of translation files.
+-->
 
 <makefile>
 
@@ -11,6 +16,18 @@
     <if cond="FORMAT=='autoconf'">
         <set-srcdir>../..</set-srcdir>
     </if>
+
+    
+<!-- can be used later
+
+    <fragment format="mingw">
+SUFFIXES: .po
+
+.po.mo:
+        msgfmt -o $@ $$&lt;
+    </fragment>
+    
+-->
 
     
     <!-- rule for translation .po file to binary .mo -->

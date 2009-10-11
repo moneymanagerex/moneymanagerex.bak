@@ -30,7 +30,10 @@ Bakefile for generating makefiles.
 
         <win32-res>resources/mmex.rc</win32-res>
 
-        <if cond="FORMAT=='msvc'">
+        
+        <!-- Microsoft compilers only -->
+
+        <if cond="FORMAT.startswith('msv')">
 
             <include>$(SRCDIR)/BugTrap</include>
             <lib-path>$(SRCDIR)/BugTrap</lib-path>
