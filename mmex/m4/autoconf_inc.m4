@@ -6,18 +6,6 @@ dnl Do not modify, all changes will be overwritten!
 
 BAKEFILE_AUTOCONF_INC_M4_VERSION="0.2.6"
 
-dnl ### begin block 20_COND_BUILD_debug[../../src/tests/mmex_tests.bkl,mmex.bkl] ###
-    COND_BUILD_debug="#"
-    if test "x$BUILD" = "xdebug" ; then
-        COND_BUILD_debug=""
-    fi
-    AC_SUBST(COND_BUILD_debug)
-dnl ### begin block 20_COND_BUILD_release[../../src/tests/mmex_tests.bkl,mmex.bkl] ###
-    COND_BUILD_release="#"
-    if test "x$BUILD" = "xrelease" ; then
-        COND_BUILD_release=""
-    fi
-    AC_SUBST(COND_BUILD_release)
 dnl ### begin block 20_COND_DEPS_TRACKING_0[../../runtime/en/i18n.bkl,../../src/tests/mmex_tests.bkl,mmex.bkl] ###
     COND_DEPS_TRACKING_0="#"
     if test "x$DEPS_TRACKING" = "x0" ; then

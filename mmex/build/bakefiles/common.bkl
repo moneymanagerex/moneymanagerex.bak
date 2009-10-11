@@ -12,64 +12,17 @@
     <!-- check version of Bakefile -->
     <requires version="0.2.1"/>
 
-
-    <!-- configurable options -->
-
-    <option name="BUILD">
-        <values>debug,release</values>
-        <values-description>Debug,Release</values-description>
-        <default-value>release</default-value>
-        <description>Type of compiled binaries</description>
-    </option>
-
-    <option name="RUNTIME_LIBS">
-        <values>dynamic,static</values>
-        <default-value>dynamic</default-value>
-        <description>Version of C runtime library to use</description>
-    </option>
-
-
-    <!-- set compiler's flags according to selected options -->
-
-    <set var="DEBUGINFO">
-        <if cond="BUILD=='debug'">on</if>
-        <if cond="BUILD=='release'">off</if>
-    </set>
-
-    <set var="DEBUG_DEFINE">
-        <if cond="BUILD=='debug'">_DEBUG</if>
-        <if cond="BUILD=='release'">NDEBUG</if>
-    </set>
-
-    <set var="OPTIMIZEFLAG">
-        <if cond="BUILD=='debug'">off</if>
-        <if cond="BUILD=='release'">speed</if>
-    </set>
-
     
-    <!-- generic compiler's flags -->
-
-    <template id="compiler_common">
-    
-        <precomp-headers>off</precomp-headers>
-        <threading>multi</threading>
-        <warnings>max</warnings>
-        <pic>on</pic>
-
-        <runtime-libs>$(RUNTIME_LIBS)</runtime-libs>
-        <debug-info>$(DEBUGINFO)</debug-info>
-        <debug-info-edit-and-continue>$(DEBUGINFO)</debug-info-edit-and-continue>
-        <optimize>$(OPTIMIZEFLAG)</optimize>
-
-        <define>$(DEBUG_DEFINE)</define>
-
-    </template>
-
-
     <include file="presets/wx.bkl"/>
 
 
-    <if cond="FORMAT!='autoconf' and PLATFORM_WIN32=='1'">
+    <set var="CAN_CONFIG">
+        <!-- condition must be the same as for <include file="wx_win32.bkl"> in presets\wx\wx.bkl -->
+        <if cond="FORMAT!='autoconf' and PLATFORM_WIN32=='1'">1</if>
+    </set>
+
+
+    <if cond="CAN_CONFIG=='1'">
         
         <!-- redefine defaults -->
 
@@ -81,7 +34,25 @@
         </if>
 
 
-	<!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
+        <!-- set compiler's flags according to selected options -->
+
+        <set var="DEBUGINFO">
+            <if cond="WX_DEBUG=='1'">on</if>
+            <if cond="WX_DEBUG=='0'">off</if>
+        </set>
+
+        <set var="DEBUG_DEFINE">
+            <if cond="WX_DEBUG=='1'">_DEBUG</if>
+            <if cond="WX_DEBUG=='0'">NDEBUG</if>
+        </set>
+
+        <set var="OPTIMIZEFLAG">
+            <if cond="WX_DEBUG=='1'">off</if>
+            <if cond="WX_DEBUG=='0'">speed</if>
+        </set>
+
+	
+        <!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
     
 	<set var="SHAREDBUILDPOSTFIX">
             <if cond="WX_SHARED=='0'">stat</if>
@@ -99,7 +70,7 @@
     	<!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
 
     	<set var="DEBUGBUILDPOSTFIX">
-	    <if cond="BUILD=='debug'">d</if>
+	    <if cond="WX_DEBUG=='1'">d</if>
 	</set>
 
 
@@ -108,7 +79,26 @@
 
     </if>
 
+
+    <!-- generic compiler's flags -->
+
+    <template id="compiler_common">
     
+        <precomp-headers>off</precomp-headers>
+        <threading>multi</threading>
+        <warnings>max</warnings>
+        <pic>on</pic>
+
+        <if cond="CAN_CONFIG=='1'">
+            <debug-info>$(DEBUGINFO)</debug-info>
+            <debug-info-edit-and-continue>$(DEBUGINFO)</debug-info-edit-and-continue>
+            <optimize>$(OPTIMIZEFLAG)</optimize>
+            <define>$(DEBUG_DEFINE)</define>
+        </if>
+
+    </template>
+
+
     <!-- common part of mmex and mmex_tests -->
 
     <template id="mmex_common" template="wx,compiler_common">
@@ -149,11 +139,11 @@
             <!-- For BugTrap: enable PDB files for Release configuration -->
 
             <set var="COMP_FLAGS">
-                <if cond="BUILD=='release'">/Zi</if>
+                <if cond="WX_DEBUG=='0'">/Zi</if>
             </set>
 
             <set var="LINK_FLAGS">
-                <if cond="BUILD=='release'">/DEBUG /MAP</if>
+                <if cond="WX_DEBUG=='0'">/DEBUG /MAP</if>
             </set>
 
             <cxxflags>$(COMP_FLAGS)</cxxflags>
@@ -169,8 +159,8 @@
         <wx-lib>html</wx-lib>                
         <wx-lib>xml</wx-lib>
         <wx-lib>aui</wx-lib> 
-        <wx-lib>base</wx-lib>
         <wx-lib>adv</wx-lib>
+        <wx-lib>base</wx-lib>
         
     </template>
 

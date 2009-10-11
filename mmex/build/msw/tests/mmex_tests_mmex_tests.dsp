@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_0
+CFG=mmex_tests - Win32 Release Multilib WX_PYTHON_0
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,138 +13,42 @@ CFG=mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_0
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "mmex_tests_mmex_tests.mak" CFG="mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_0"
+!MESSAGE NMAKE /f "mmex_tests_mmex_tests.mak" CFG="mmex_tests - Win32 Release Multilib WX_PYTHON_0"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_static Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_static Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
-!MESSAGE "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Unicode Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Unicode Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Unicode Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Unicode Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Unicode Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Unicode Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Unicode Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Unicode Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 DLL Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Unicode Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Unicode Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Unicode Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Unicode Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Unicode Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Unicode Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Unicode Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Unicode Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Debug Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Debug Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Debug Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Debug Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Release Monolithic WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Release Monolithic WX_PYTHON_0" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Release Multilib WX_PYTHON_1" (based on "Win32 (x86) Console Application")
+!MESSAGE "mmex_tests - Win32 Release Multilib WX_PYTHON_0" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -154,2215 +58,7 @@ CFG=mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_0
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Debug Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Debug Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Debug Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Debug Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Release Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Release Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Release Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Release Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Debug Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Debug Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Debug Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Debug Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Release Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Release Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Release Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Release Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Debug Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Debug Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Debug Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Debug Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Release Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Release Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Release Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Release Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Debug Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Debug Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Debug Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Debug Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Release Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Release Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Release Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_static Release Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MT /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Debug Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Debug Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Debug Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Debug Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Release Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Release Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Release Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Release Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_sharu"
-# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_sharu"
-# PROP Intermediate_Dir "vc_sharu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Debug Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Debug Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Debug Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Debug Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Release Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Release Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Release Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Release Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_shar"
-# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_shar"
-# PROP Intermediate_Dir "vc_shar\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Debug Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Debug Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Debug Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Debug Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswud" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswud" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Release Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Release Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Release Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Release Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_statu"
-# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_statu"
-# PROP Intermediate_Dir "vc_statu\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Debug Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Debug Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Debug Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Debug Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswd" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswd" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Release Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Release Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "vc_stat"
-# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "vc_stat"
-# PROP Intermediate_Dir "vc_stat\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Debug Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_sharud"
-# PROP BASE Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_sharud"
-# PROP Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Debug Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_sharud"
-# PROP BASE Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_sharud"
-# PROP Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswud" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswud" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswud" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswud" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Debug Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_sharud"
-# PROP BASE Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_sharud"
-# PROP Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Debug Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_sharud"
-# PROP BASE Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_sharud"
-# PROP Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswud" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswud" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswud" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswud" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Release Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_sharud"
-# PROP BASE Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_sharud"
-# PROP Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Release Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_sharud"
-# PROP BASE Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_sharud"
-# PROP Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Release Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_sharud"
-# PROP BASE Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_sharud"
-# PROP Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Release Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_sharud"
-# PROP BASE Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_sharud"
-# PROP Intermediate_Dir "vc_sharud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Debug Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_shard"
-# PROP BASE Intermediate_Dir "vc_shard\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_shard"
-# PROP Intermediate_Dir "vc_shard\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Debug Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_shard"
-# PROP BASE Intermediate_Dir "vc_shard\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_shard"
-# PROP Intermediate_Dir "vc_shard\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswd" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswd" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswd" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswd" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Debug Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_shard"
-# PROP BASE Intermediate_Dir "vc_shard\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_shard"
-# PROP Intermediate_Dir "vc_shard\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Debug Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_shard"
-# PROP BASE Intermediate_Dir "vc_shard\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_shard"
-# PROP Intermediate_Dir "vc_shard\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswd" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswd" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswd" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswd" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Release Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_shard"
-# PROP BASE Intermediate_Dir "vc_shard\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_shard"
-# PROP Intermediate_Dir "vc_shard\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Release Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_shard"
-# PROP BASE Intermediate_Dir "vc_shard\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_shard"
-# PROP Intermediate_Dir "vc_shard\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Release Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_shard"
-# PROP BASE Intermediate_Dir "vc_shard\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_shard"
-# PROP Intermediate_Dir "vc_shard\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Release Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_shard"
-# PROP BASE Intermediate_Dir "vc_shard\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_shard"
-# PROP Intermediate_Dir "vc_shard\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Debug Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statud"
-# PROP BASE Intermediate_Dir "vc_statud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statud"
-# PROP Intermediate_Dir "vc_statud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Debug Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statud"
-# PROP BASE Intermediate_Dir "vc_statud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statud"
-# PROP Intermediate_Dir "vc_statud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswud" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswud" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswud" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswud" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Debug Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statud"
-# PROP BASE Intermediate_Dir "vc_statud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statud"
-# PROP Intermediate_Dir "vc_statud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Debug Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statud"
-# PROP BASE Intermediate_Dir "vc_statud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statud"
-# PROP Intermediate_Dir "vc_statud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswud" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswud" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswud" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswud" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Release Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statud"
-# PROP BASE Intermediate_Dir "vc_statud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statud"
-# PROP Intermediate_Dir "vc_statud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Release Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statud"
-# PROP BASE Intermediate_Dir "vc_statud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statud"
-# PROP Intermediate_Dir "vc_statud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Release Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statud"
-# PROP BASE Intermediate_Dir "vc_statud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statud"
-# PROP Intermediate_Dir "vc_statud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Release Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statud"
-# PROP BASE Intermediate_Dir "vc_statud\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statud"
-# PROP Intermediate_Dir "vc_statud\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Debug Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statd"
-# PROP BASE Intermediate_Dir "vc_statd\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statd"
-# PROP Intermediate_Dir "vc_statd\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Debug Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statd"
-# PROP BASE Intermediate_Dir "vc_statd\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statd"
-# PROP Intermediate_Dir "vc_statd\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswd" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswd" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswd" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswd" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Debug Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statd"
-# PROP BASE Intermediate_Dir "vc_statd\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statd"
-# PROP Intermediate_Dir "vc_statd\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Debug Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statd"
-# PROP BASE Intermediate_Dir "vc_statd\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statd"
-# PROP Intermediate_Dir "vc_statd\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswd" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswd" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswd" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswd" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Release Monolithic WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statd"
-# PROP BASE Intermediate_Dir "vc_statd\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statd"
-# PROP Intermediate_Dir "vc_statd\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Release Monolithic WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statd"
-# PROP BASE Intermediate_Dir "vc_statd\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statd"
-# PROP Intermediate_Dir "vc_statd\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Release Multilib WX_PYTHON_1"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statd"
-# PROP BASE Intermediate_Dir "vc_statd\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statd"
-# PROP Intermediate_Dir "vc_statd\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_static Release Multilib WX_PYTHON_0"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statd"
-# PROP BASE Intermediate_Dir "vc_statd\mmex_tests"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statd"
-# PROP Intermediate_Dir "vc_statd\mmex_tests"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MTd /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Debug Monolithic WX_PYTHON_1"
+!IF  "$(CFG)" == "mmex_tests - Win32 DLL Unicode Debug Monolithic WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2385,7 +81,7 @@ LINK32=link.exe
 # ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 # ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Debug Monolithic WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Unicode Debug Monolithic WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2408,7 +104,7 @@ LINK32=link.exe
 # ADD BASE LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 # ADD LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Debug Multilib WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Unicode Debug Multilib WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2428,10 +124,10 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Debug Multilib WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Unicode Debug Multilib WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2451,102 +147,102 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxmsw28ud_adv.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxmsw28ud_adv.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Release Monolithic WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Unicode Release Monolithic WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_sharud"
-# PROP BASE Intermediate_Dir "vc_sharud\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_sharu"
+# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_sharud"
-# PROP Intermediate_Dir "vc_sharud\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_sharu"
+# PROP Intermediate_Dir "vc_sharu\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Release Monolithic WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Unicode Release Monolithic WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_sharud"
-# PROP BASE Intermediate_Dir "vc_sharud\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_sharu"
+# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_sharud"
-# PROP Intermediate_Dir "vc_sharud\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_sharu"
+# PROP Intermediate_Dir "vc_sharu\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Release Multilib WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Unicode Release Multilib WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_sharud"
-# PROP BASE Intermediate_Dir "vc_sharud\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_sharu"
+# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_sharud"
-# PROP Intermediate_Dir "vc_sharud\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_sharu"
+# PROP Intermediate_Dir "vc_sharu\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Release Multilib WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Unicode Release Multilib WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_sharud"
-# PROP BASE Intermediate_Dir "vc_sharud\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_sharu"
+# PROP BASE Intermediate_Dir "vc_sharu\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_sharud"
-# PROP Intermediate_Dir "vc_sharud\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_sharu"
+# PROP Intermediate_Dir "vc_sharu\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_sharud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_sharu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharud\sqlite3.lib vc_sharud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_sharud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_sharu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_sharu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Debug Monolithic WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Debug Monolithic WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2569,7 +265,7 @@ LINK32=link.exe
 # ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 # ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Debug Monolithic WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Debug Monolithic WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2592,7 +288,7 @@ LINK32=link.exe
 # ADD BASE LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 # ADD LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Debug Multilib WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Debug Multilib WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2612,10 +308,10 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Debug Multilib WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Debug Multilib WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2635,102 +331,102 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxmsw28d_adv.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxmsw28d_adv.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Release Monolithic WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Release Monolithic WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_shard"
-# PROP BASE Intermediate_Dir "vc_shard\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_shar"
+# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_shard"
-# PROP Intermediate_Dir "vc_shard\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_shar"
+# PROP Intermediate_Dir "vc_shar\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Release Monolithic WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Release Monolithic WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_shard"
-# PROP BASE Intermediate_Dir "vc_shard\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_shar"
+# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_shard"
-# PROP Intermediate_Dir "vc_shard\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_shar"
+# PROP Intermediate_Dir "vc_shar\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Release Multilib WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Release Multilib WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_shard"
-# PROP BASE Intermediate_Dir "vc_shard\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_shar"
+# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_shard"
-# PROP Intermediate_Dir "vc_shard\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_shar"
+# PROP Intermediate_Dir "vc_shar\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Release Multilib WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 DLL Release Multilib WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_shard"
-# PROP BASE Intermediate_Dir "vc_shard\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_shar"
+# PROP BASE Intermediate_Dir "vc_shar\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_shard"
-# PROP Intermediate_Dir "vc_shard\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_shar"
+# PROP Intermediate_Dir "vc_shar\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_shard\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_dll\msw" /I "$(WXWIN)\include" /W4 /Fdvc_shar\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_dll\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shard\sqlite3.lib vc_shard\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shard\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /debug /pdb:"vc_shard\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib /nologo /machine:i386 /out:"vc_shar\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_dll" /pdb:"vc_shar\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Debug Monolithic WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Unicode Debug Monolithic WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2753,7 +449,7 @@ LINK32=link.exe
 # ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 # ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Debug Monolithic WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Unicode Debug Monolithic WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2776,7 +472,7 @@ LINK32=link.exe
 # ADD BASE LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 # ADD LINK32 BugTrapU.lib wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Debug Multilib WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Unicode Debug Multilib WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2796,10 +492,10 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Debug Multilib WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Unicode Debug Multilib WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2819,102 +515,102 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxbase28ud.lib wxmsw28ud_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxmsw28ud_adv.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD LINK32 BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxmsw28ud_adv.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Release Monolithic WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Unicode Release Monolithic WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statud"
-# PROP BASE Intermediate_Dir "vc_statud\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_statu"
+# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statud"
-# PROP Intermediate_Dir "vc_statud\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_statu"
+# PROP Intermediate_Dir "vc_statu\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrapU.lib wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Release Monolithic WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Unicode Release Monolithic WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statud"
-# PROP BASE Intermediate_Dir "vc_statud\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_statu"
+# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statud"
-# PROP Intermediate_Dir "vc_statud\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_statu"
+# PROP Intermediate_Dir "vc_statu\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrapU.lib wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Release Multilib WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Unicode Release Multilib WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statud"
-# PROP BASE Intermediate_Dir "vc_statud\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_statu"
+# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statud"
-# PROP Intermediate_Dir "vc_statud\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_statu"
+# PROP Intermediate_Dir "vc_statu\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswuh" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswuh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxbase28uh.lib wxmsw28uh_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Release Multilib WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Unicode Release Multilib WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statud"
-# PROP BASE Intermediate_Dir "vc_statud\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_statu"
+# PROP BASE Intermediate_Dir "vc_statu\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statud"
-# PROP Intermediate_Dir "vc_statud\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_statu"
+# PROP Intermediate_Dir "vc_statu\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statud\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswu" /I "$(WXWIN)\include" /W4 /Fdvc_statu\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "_UNICODE" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "_UNICODE" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswu" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxbase28u.lib wxmsw28u_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statud\sqlite3.lib vc_statud\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statud\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statud\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statu\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_statu\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Debug Monolithic WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug Monolithic WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2937,7 +633,7 @@ LINK32=link.exe
 # ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 # ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Debug Monolithic WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug Monolithic WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2960,7 +656,7 @@ LINK32=link.exe
 # ADD BASE LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 # ADD LINK32 BugTrap.lib wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Debug Multilib WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug Multilib WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -2980,10 +676,10 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Debug Multilib WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug Multilib WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -3003,233 +699,137 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxbase28d.lib wxmsw28d_adv.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxmsw28d_adv.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD LINK32 BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxmsw28d_adv.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Monolithic WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release Monolithic WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statd"
-# PROP BASE Intermediate_Dir "vc_statd\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_stat"
+# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statd"
-# PROP Intermediate_Dir "vc_statd\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_stat"
+# PROP Intermediate_Dir "vc_stat\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrap.lib wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Monolithic WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release Monolithic WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statd"
-# PROP BASE Intermediate_Dir "vc_statd\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_stat"
+# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statd"
-# PROP Intermediate_Dir "vc_statd\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_stat"
+# PROP Intermediate_Dir "vc_stat\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrap.lib wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_1"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release Multilib WX_PYTHON_1"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statd"
-# PROP BASE Intermediate_Dir "vc_statd\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_stat"
+# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statd"
-# PROP Intermediate_Dir "vc_statd\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_stat"
+# PROP Intermediate_Dir "vc_stat\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\mswh" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXDEBUG__" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "__WXDEBUG__" /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\mswh" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxbase28h.lib wxmsw28h_adv.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
-!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_0"
+!ELSEIF  "$(CFG)" == "mmex_tests - Win32 Release Multilib WX_PYTHON_0"
 
 # PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "vc_statd"
-# PROP BASE Intermediate_Dir "vc_statd\mmex_tests"
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "vc_stat"
+# PROP BASE Intermediate_Dir "vc_stat\mmex_tests"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "vc_statd"
-# PROP Intermediate_Dir "vc_statd\mmex_tests"
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "vc_stat"
+# PROP Intermediate_Dir "vc_stat\mmex_tests"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD CPP /nologo /FD /MDd /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Zi /Fdvc_statd\mmex_tests.pdb /Od /Gm /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "_DEBUG" /D "_DEBUG" /D "NOPCH" /D "_CONSOLE" /c
-# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
-# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "_DEBUG" /d "_DEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD BASE CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD CPP /nologo /FD /MD /I "$(WXWIN)\lib\vc_lib\msw" /I "$(WXWIN)\include" /W4 /Fdvc_stat\mmex_tests.pdb /O2 /EHsc /GR /I "..\..\..\include" /I "..\..\..\sqlite" -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /I "..\..\..\BugTrap" /Zi /I "..\..\..\src" /I "..\..\..\UnitTest++\src" /D "WIN32" /D "__WXMSW__" /D "NDEBUG" /D "NOPCH" /D "_CONSOLE" /c
+# ADD BASE RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
+# ADD RSC /l 0x409 /d "__WXMSW__" /i "$(WXWIN)\lib\vc_lib\msw" /i "$(WXWIN)\include" /d "NDEBUG" /i "..\..\..\include" /i "..\..\..\sqlite" /d "NOPCH" /i "..\..\..\BugTrap" /d "_CONSOLE" /i "..\..\..\src" /i ..\..\..\UnitTest++\src
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
-# ADD LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxbase28.lib wxmsw28_adv.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_statd\sqlite3.lib vc_statd\UnitTestPP.lib /nologo /machine:i386 /out:"vc_statd\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /debug /pdb:"vc_statd\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /subsystem:console
+# ADD BASE LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
+# ADD LINK32 BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib /nologo /machine:i386 /out:"vc_stat\mmex_tests.exe" /libpath:"$(WXWIN)\lib\vc_lib" /pdb:"vc_stat\mmex_tests.pdb" /libpath:"..\..\..\BugTrap" /DEBUG /MAP /subsystem:console
 
 !ENDIF
 
 # Begin Target
 
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Unicode Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static DLL Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Unicode Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_static Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Unicode Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic DLL Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Unicode Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Release RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Unicode Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static DLL Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Unicode Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_static Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Unicode Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic DLL Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Unicode Release Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Debug Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Debug Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Debug Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Debug Multilib WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Monolithic WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Monolithic WX_PYTHON_0"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_1"
-# Name "mmex_tests - Win32 Debug RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_0"
+# Name "mmex_tests - Win32 DLL Unicode Debug Monolithic WX_PYTHON_1"
+# Name "mmex_tests - Win32 DLL Unicode Debug Monolithic WX_PYTHON_0"
+# Name "mmex_tests - Win32 DLL Unicode Debug Multilib WX_PYTHON_1"
+# Name "mmex_tests - Win32 DLL Unicode Debug Multilib WX_PYTHON_0"
+# Name "mmex_tests - Win32 DLL Unicode Release Monolithic WX_PYTHON_1"
+# Name "mmex_tests - Win32 DLL Unicode Release Monolithic WX_PYTHON_0"
+# Name "mmex_tests - Win32 DLL Unicode Release Multilib WX_PYTHON_1"
+# Name "mmex_tests - Win32 DLL Unicode Release Multilib WX_PYTHON_0"
+# Name "mmex_tests - Win32 DLL Debug Monolithic WX_PYTHON_1"
+# Name "mmex_tests - Win32 DLL Debug Monolithic WX_PYTHON_0"
+# Name "mmex_tests - Win32 DLL Debug Multilib WX_PYTHON_1"
+# Name "mmex_tests - Win32 DLL Debug Multilib WX_PYTHON_0"
+# Name "mmex_tests - Win32 DLL Release Monolithic WX_PYTHON_1"
+# Name "mmex_tests - Win32 DLL Release Monolithic WX_PYTHON_0"
+# Name "mmex_tests - Win32 DLL Release Multilib WX_PYTHON_1"
+# Name "mmex_tests - Win32 DLL Release Multilib WX_PYTHON_0"
+# Name "mmex_tests - Win32 Unicode Debug Monolithic WX_PYTHON_1"
+# Name "mmex_tests - Win32 Unicode Debug Monolithic WX_PYTHON_0"
+# Name "mmex_tests - Win32 Unicode Debug Multilib WX_PYTHON_1"
+# Name "mmex_tests - Win32 Unicode Debug Multilib WX_PYTHON_0"
+# Name "mmex_tests - Win32 Unicode Release Monolithic WX_PYTHON_1"
+# Name "mmex_tests - Win32 Unicode Release Monolithic WX_PYTHON_0"
+# Name "mmex_tests - Win32 Unicode Release Multilib WX_PYTHON_1"
+# Name "mmex_tests - Win32 Unicode Release Multilib WX_PYTHON_0"
+# Name "mmex_tests - Win32 Debug Monolithic WX_PYTHON_1"
+# Name "mmex_tests - Win32 Debug Monolithic WX_PYTHON_0"
+# Name "mmex_tests - Win32 Debug Multilib WX_PYTHON_1"
+# Name "mmex_tests - Win32 Debug Multilib WX_PYTHON_0"
+# Name "mmex_tests - Win32 Release Monolithic WX_PYTHON_1"
+# Name "mmex_tests - Win32 Release Monolithic WX_PYTHON_0"
+# Name "mmex_tests - Win32 Release Multilib WX_PYTHON_1"
+# Name "mmex_tests - Win32 Release Multilib WX_PYTHON_0"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ""

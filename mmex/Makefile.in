@@ -37,13 +37,13 @@ WX_RESCOMP = @WX_RESCOMP@
 ### Variables: ###
 
 DESTDIR = 
-SQLITE3_CFLAGS = $(__DEBUG_DEFINE_p) $(PIC_FLAG) -DSQLITE_CORE \
-	-DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
+SQLITE3_CFLAGS = $(PIC_FLAG) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
+	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
 SQLITE3_OBJECTS =  \
 	sqlite3_sqlite3secure.o
-MMEX_CXXFLAGS = $(__DEBUG_DEFINE_p) -I$(srcdir)/include -I$(srcdir)/sqlite \
-	-DNOPCH $(WX_CXXFLAGS) $(PIC_FLAG) -DWXSQLITE3_HAVE_CODEC \
-	-DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
+MMEX_CXXFLAGS = -I$(srcdir)/include -I$(srcdir)/sqlite -DNOPCH $(WX_CXXFLAGS) \
+	$(PIC_FLAG) -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) \
+	$(CXXFLAGS)
 MMEX_OBJECTS =  \
 	mmex_aboutdialog.o \
 	mmex_appstartdialog.o \
@@ -109,14 +109,10 @@ MMEX_OBJECTS =  \
 @COND_PLATFORM_MAC_0@__mmex___mac_setfilecmd = @true
 @COND_PLATFORM_MAC_1@__mmex___mac_setfilecmd = \
 @COND_PLATFORM_MAC_1@	$(SETFILE) -t APPL mmex$(EXEEXT)
-@COND_BUILD_debug@__DEBUG_DEFINE_p_3 = --define _DEBUG
-@COND_BUILD_release@__DEBUG_DEFINE_p_3 = --define NDEBUG
 COND_PLATFORM_OS2_1___mmex___os2_emxbindcmd = $(NM) mmex$(EXEEXT) | if grep -q \
 	pmwin.763 ; then emxbind -ep mmex$(EXEEXT) ; fi
 @COND_PLATFORM_OS2_1@__mmex___os2_emxbindcmd = $(COND_PLATFORM_OS2_1___mmex___os2_emxbindcmd)
 @COND_PLATFORM_WIN32_1@__mmex___win32rc = mmex_resources_mmex_rc.o
-@COND_BUILD_debug@__DEBUG_DEFINE_p = -D_DEBUG
-@COND_BUILD_release@__DEBUG_DEFINE_p = -DNDEBUG
 
 ### Targets: ###
 
@@ -147,7 +143,7 @@ $(LIBPREFIX)sqlite3$(LIBEXT): $(SQLITE3_OBJECTS)
 	$(RANLIB) $@
 
 mmex$(EXEEXT): $(MMEX_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(__mmex___win32rc)
-	$(CXX) -o $@ $(MMEX_OBJECTS) -L.    $(WX_LIBS) $(LDFLAGS_GUI) $(LDFLAGS)  -lsqlite3 $(LIBS)
+	$(CXX) -o $@ $(MMEX_OBJECTS) -L.   $(WX_LIBS) $(LDFLAGS_GUI) $(LDFLAGS)  -lsqlite3 $(LIBS)
 	
 	$(__mmex___mac_setfilecmd)
 	$(__mmex___os2_emxbindcmd)
@@ -321,7 +317,7 @@ mmex_yahoosettingsdialog.o: $(srcdir)/src/yahoosettingsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/yahoosettingsdialog.cpp
 
 mmex_resources_mmex_rc.o: $(srcdir)/resources/mmex.rc
-	$(WX_RESCOMP) -i$< -o$@  $(__DEBUG_DEFINE_p_3) --include-dir $(srcdir)/include --include-dir $(srcdir)/sqlite --define NOPCH
+	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/include --include-dir $(srcdir)/sqlite --define NOPCH
 
 
 # Include dependency info, if present:

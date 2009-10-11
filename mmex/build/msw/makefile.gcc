@@ -15,10 +15,10 @@ include config.gcc
 MAKEARGS = LINK_DLL_FLAGS="$(LINK_DLL_FLAGS)" \
 	LINK_MODULE_FLAGS="$(LINK_MODULE_FLAGS)" CC="$(CC)" CXX="$(CXX)" \
 	CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" CPPFLAGS="$(CPPFLAGS)" \
-	LDFLAGS="$(LDFLAGS)" BUILD="$(BUILD)" RUNTIME_LIBS="$(RUNTIME_LIBS)" \
-	WX_DIR="$(WX_DIR)" WX_SHARED="$(WX_SHARED)" WX_UNICODE="$(WX_UNICODE)" \
-	WX_DEBUG="$(WX_DEBUG)" WX_VERSION="$(WX_VERSION)" \
-	WX_MONOLITHIC="$(WX_MONOLITHIC)" WX_PYTHON="$(WX_PYTHON)"
+	LDFLAGS="$(LDFLAGS)" WX_DIR="$(WX_DIR)" WX_SHARED="$(WX_SHARED)" \
+	WX_UNICODE="$(WX_UNICODE)" WX_DEBUG="$(WX_DEBUG)" \
+	WX_VERSION="$(WX_VERSION)" WX_MONOLITHIC="$(WX_MONOLITHIC)" \
+	WX_PYTHON="$(WX_PYTHON)"
 CPPDEPS = -MT$@ -MF$@.d -MD -MP
 SQLITE3_CFLAGS = -mthreads -W -Wall $(__DEBUGINFO) $(__OPTIMIZEFLAG) \
 	$(__DEBUG_DEFINE_p) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
@@ -105,7 +105,7 @@ endif
 ifeq ($(WX_UNICODE),1)
 UNICODEBUILDPOSTFIX = u
 endif
-ifeq ($(BUILD),debug)
+ifeq ($(WX_DEBUG),1)
 DEBUGBUILDPOSTFIX = d
 endif
 ifeq ($(WX_UNICODE),1)
@@ -130,11 +130,11 @@ endif
 ifeq ($(WX_PYTHON),1)
 __WXDEBUG_DEFINE_p_1 = --define __WXDEBUG__
 endif
-ifeq ($(BUILD),debug)
-__DEBUG_DEFINE_p_2 = --define _DEBUG
-endif
-ifeq ($(BUILD),release)
+ifeq ($(WX_DEBUG),0)
 __DEBUG_DEFINE_p_2 = --define NDEBUG
+endif
+ifeq ($(WX_DEBUG),1)
+__DEBUG_DEFINE_p_2 = --define _DEBUG
 endif
 ifeq ($(WX_MONOLITHIC),0)
 __WXLIB_CORE_NAME_p = -lwxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_core
@@ -152,13 +152,13 @@ ifeq ($(WX_MONOLITHIC),0)
 __WXLIB_AUI_NAME_p = -lwxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_aui
 endif
 ifeq ($(WX_MONOLITHIC),0)
+__WXLIB_ADV_NAME_p = -lwxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_adv
+endif
+ifeq ($(WX_MONOLITHIC),0)
 __WXLIB_BASE_NAME_p = -lwxbase$(WX_VERSION)$(WXLIBPOSTFIX)
 endif
 ifeq ($(WX_MONOLITHIC),1)
 __WXLIB_BASE_NAME_p = -lwxmsw$(WX_VERSION)$(WXLIBPOSTFIX)
-endif
-ifeq ($(WX_MONOLITHIC),0)
-__WXLIB_ADV_NAME_p = -lwxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_adv
 endif
 ifeq ($(WX_DEBUG),0)
 ifeq ($(WX_PYTHON),0)
@@ -191,17 +191,17 @@ ifeq ($(WX_UNICODE),1)
 WXLIBPOSTFIX = uh
 endif
 endif
-ifeq ($(BUILD),debug)
-__OPTIMIZEFLAG = -O0
-endif
-ifeq ($(BUILD),release)
+ifeq ($(WX_DEBUG),0)
 __OPTIMIZEFLAG = -O2
 endif
-ifeq ($(BUILD),debug)
-__DEBUG_DEFINE_p = -D_DEBUG
+ifeq ($(WX_DEBUG),1)
+__OPTIMIZEFLAG = -O0
 endif
-ifeq ($(BUILD),release)
+ifeq ($(WX_DEBUG),0)
 __DEBUG_DEFINE_p = -DNDEBUG
+endif
+ifeq ($(WX_DEBUG),1)
+__DEBUG_DEFINE_p = -D_DEBUG
 endif
 ifeq ($(WX_SHARED),0)
 WXLIBPATH = \lib\gcc_lib
@@ -209,11 +209,11 @@ endif
 ifeq ($(WX_SHARED),1)
 WXLIBPATH = \lib\gcc_dll
 endif
-ifeq ($(BUILD),debug)
-__DEBUGINFO = -g
-endif
-ifeq ($(BUILD),release)
+ifeq ($(WX_DEBUG),0)
 __DEBUGINFO = 
+endif
+ifeq ($(WX_DEBUG),1)
+__DEBUGINFO = -g
 endif
 
 
@@ -239,7 +239,7 @@ gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\libsqlite3.a
 	ranlib $@
 
 gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe: $(MMEX_OBJECTS) gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\libsqlite3.a gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_mmex_rc.o
-	$(CXX) -o $@ $(MMEX_OBJECTS)  -mthreads -L$(WX_DIR)$(WXLIBPATH) -mthreads $(__DEBUGINFO) -Wl,--subsystem,windows -mwindows $(LDFLAGS)  $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_BASE_NAME_p) $(__WXLIB_ADV_NAME_p) -lwxtiff$(WX3RDPARTYLIBPOSTFIX) -lwxjpeg$(WX3RDPARTYLIBPOSTFIX) -lwxpng$(WX3RDPARTYLIBPOSTFIX) -lwxzlib$(WX3RDPARTYLIBPOSTFIX) -lwxregex$(WXLIBPOSTFIX) -lwxexpat$(WX3RDPARTYLIBPOSTFIX) -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32 gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\libsqlite3.a
+	$(CXX) -o $@ $(MMEX_OBJECTS)  -mthreads -L$(WX_DIR)$(WXLIBPATH) -mthreads $(__DEBUGINFO) -Wl,--subsystem,windows -mwindows $(LDFLAGS)  $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_ADV_NAME_p) $(__WXLIB_BASE_NAME_p) -lwxtiff$(WX3RDPARTYLIBPOSTFIX) -lwxjpeg$(WX3RDPARTYLIBPOSTFIX) -lwxpng$(WX3RDPARTYLIBPOSTFIX) -lwxzlib$(WX3RDPARTYLIBPOSTFIX) -lwxregex$(WXLIBPOSTFIX) -lwxexpat$(WX3RDPARTYLIBPOSTFIX) -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32 gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\libsqlite3.a
 
 i18n: 
 	$(MAKE) -C ..\..\runtime\en -f makefile.gcc $(MAKEARGS) all

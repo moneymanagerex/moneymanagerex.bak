@@ -34,12 +34,6 @@ CPPFLAGS ?=
 # Standard linker flags 
 LDFLAGS ?= 
 
-# Type of compiled binaries [debug,release]
-BUILD ?= release
-
-# Version of C runtime library to use [dynamic,static]
-RUNTIME_LIBS ?= dynamic
-
 # The directory where wxWidgets library is installed 
 WX_DIR ?= $(WXWIN)
 

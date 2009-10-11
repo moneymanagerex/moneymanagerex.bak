@@ -8,7 +8,9 @@ Bakefile must be installed to do that. But you can skip this step
 if you don't add\remove project's files.
 
 
+
 	*** Compiling using VisualC++ command prompt *** 
+
 
 1.Build wxWidgets library using VisualStudio.
 2.Open "Visual Studio 200X Command Prompt".
@@ -20,19 +22,24 @@ if you don't add\remove project's files.
   You can use almost any version of Visual Studio because we do not use IDE at all.
 
 
+
         *** Compiling using VisualC++ IDE *** 
 
-1.Open mmex.dsw in IDE.
-2.Select configuration to build:
-  Unicode Release -> "Release RUNTIME_LIBS_dynamic Unicode Release Multilib WX_PYTHON_0"
-  Unicode Debug   -> "Debug RUNTIME_LIBS_dynamic Unicode Debug Multilib WX_PYTHON_0"
 
-  Ansi Release -> "Release RUNTIME_LIBS_dynamic Release Multilib WX_PYTHON_0"
-  Ansi Debug   -> "Debug RUNTIME_LIBS_dynamic Debug Multilib WX_PYTHON_0"
+1.Open mmex.dsw in IDE.
+
+2.Select configuration to build:
+  Unicode Release -> "Unicode Release Multilib WX_PYTHON_0"
+  Unicode Debug   -> "Unicode Debug Multilib WX_PYTHON_0"
+  Ansi Release    -> "Release Multilib WX_PYTHON_0"
+  Ansi Debug      -> "Debug Multilib WX_PYTHON_0"
+
 3.Build solution.
 
 
+
 	*** Compiling using MinGW *** 
+
 
 1.Install the latest version of MinGW and GCC compiler for it.
 
