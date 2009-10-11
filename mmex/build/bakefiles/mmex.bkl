@@ -27,25 +27,7 @@ Bakefile for generating makefiles.
 
         <app-type>gui</app-type>
         <library>sqlite3</library>
-
         <win32-res>resources/mmex.rc</win32-res>
-
-        
-        <!-- Microsoft compilers only -->
-
-        <if cond="FORMAT.startswith('msv')">
-
-            <include>$(SRCDIR)/BugTrap</include>
-            <lib-path>$(SRCDIR)/BugTrap</lib-path>
-
-            <set var="BugTrapLib">
-                <if cond="WX_UNICODE=='0'">BugTrap</if>
-                <if cond="WX_UNICODE=='1'">BugTrapU</if>
-            </set>
-
-            <sys-lib>$(BugTrapLib)</sys-lib>
-
-        </if>
 
     </exe>
 

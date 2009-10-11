@@ -131,6 +131,37 @@
         <sources>$(fileList('src/*.cpp'))</sources>
 
 
+        <!-- Microsoft compilers only, add BugTrap lib -->
+
+        <if cond="FORMAT.startswith('msv')">
+
+            <include>$(SRCDIR)/BugTrap</include>
+            <lib-path>$(SRCDIR)/BugTrap</lib-path>
+
+            <set var="BugTrapLib">
+                <if cond="WX_UNICODE=='0'">BugTrap</if>
+                <if cond="WX_UNICODE=='1'">BugTrapU</if>
+            </set>
+
+            <sys-lib>$(BugTrapLib)</sys-lib>
+
+
+            <!-- For BugTrap: enable PDB files for Release configuration -->
+
+            <set var="COMP_FLAGS">
+                <if cond="BUILD=='release'">/Zi</if>
+            </set>
+
+            <set var="LINK_FLAGS">
+                <if cond="BUILD=='release'">/DEBUG /MAP</if>
+            </set>
+
+            <cxxflags>$(COMP_FLAGS)</cxxflags>
+            <ldflags>$(LINK_FLAGS)</ldflags>
+
+        </if>
+
+
         <!-- wxWidgets libs -->
 
         <wx-lib>core</wx-lib>

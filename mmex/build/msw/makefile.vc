@@ -31,8 +31,8 @@ MMEX_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUGINFO_0) /DWIN32 \
 	/I$(WX_DIR)\include /W4 $(__DEBUGINFO) $(____DEBUGINFO) \
 	/Fdvc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.pdb \
 	$(__OPTIMIZEFLAG) $(__DEBUG_DEFINE_p) /I..\..\include /I..\..\sqlite /DNOPCH \
-	/D_WINDOWS /I..\..\BugTrap /EHsc /GR -DWXSQLITE3_HAVE_CODEC \
-	-DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
+	/I..\..\BugTrap /D_WINDOWS /EHsc /GR -DWXSQLITE3_HAVE_CODEC \
+	-DWXSQLITE3_HAVE_METADATA $(__mmex_COMP_FLAGS) $(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
 	vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_aboutdialog.obj \
 	vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_appstartdialog.obj \
@@ -145,6 +145,18 @@ __DEBUG_DEFINE_p_2 = /d _DEBUG
 !if "$(BUILD)" == "release"
 __DEBUG_DEFINE_p_2 = /d NDEBUG
 !endif
+!if "$(WX_UNICODE)" == "0"
+____mmex_BugTrapLib_p = BugTrap.lib
+!endif
+!if "$(WX_UNICODE)" == "1"
+____mmex_BugTrapLib_p = BugTrapU.lib
+!endif
+!if "$(BUILD)" == "release"
+__mmex_COMP_FLAGS = /Zi
+!endif
+!if "$(BUILD)" == "release"
+__mmex_LINK_FLAGS = /DEBUG /MAP
+!endif
 !if "$(WX_MONOLITHIC)" == "0"
 __WXLIB_CORE_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_core.lib
 !endif
@@ -168,12 +180,6 @@ __WXLIB_BASE_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX).lib
 !endif
 !if "$(WX_MONOLITHIC)" == "0"
 __WXLIB_ADV_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_adv.lib
-!endif
-!if "$(WX_UNICODE)" == "0"
-____mmex_BugTrapLib_p = BugTrap.lib
-!endif
-!if "$(WX_UNICODE)" == "1"
-____mmex_BugTrapLib_p = BugTrapU.lib
 !endif
 !if "$(RUNTIME_LIBS)" == "dynamic"
 __RUNTIME_LIBS = D
@@ -264,8 +270,8 @@ vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3.lib: 
 <<
 
 vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe: $(MMEX_OBJECTS) vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3.lib vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_mmex.res
-	link /NOLOGO /OUT:$@  /LIBPATH:$(WX_DIR)$(__WXLIBPATH_FILENAMES)  $(__DEBUGINFO_22) /pdb:"vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.pdb" /SUBSYSTEM:WINDOWS /LIBPATH:..\..\BugTrap $(LDFLAGS) @<<
-	$(MMEX_OBJECTS)  $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_BASE_NAME_p) $(__WXLIB_ADV_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3.lib $(____mmex_BugTrapLib_p)
+	link /NOLOGO /OUT:$@  /LIBPATH:$(WX_DIR)$(__WXLIBPATH_FILENAMES)  $(__DEBUGINFO_22) /pdb:"vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.pdb" /LIBPATH:..\..\BugTrap $(__mmex_LINK_FLAGS) /SUBSYSTEM:WINDOWS $(LDFLAGS) @<<
+	$(MMEX_OBJECTS)  $(____mmex_BugTrapLib_p) $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_BASE_NAME_p) $(__WXLIB_ADV_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3.lib
 <<
 
 sub_i18n: 
@@ -441,5 +447,5 @@ vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_yahooset
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\yahoosettingsdialog.cpp
 
 vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_mmex.res: ..\..\resources\mmex.rc
-	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include $(____DEBUGINFO_23_p_1) $(__DEBUG_DEFINE_p_2) /i ..\..\include /i ..\..\sqlite /d NOPCH /d _WINDOWS /i ..\..\BugTrap ..\..\resources\mmex.rc
+	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include $(____DEBUGINFO_23_p_1) $(__DEBUG_DEFINE_p_2) /i ..\..\include /i ..\..\sqlite /d NOPCH /i ..\..\BugTrap /d _WINDOWS ..\..\resources\mmex.rc
 

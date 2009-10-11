@@ -21,7 +21,7 @@ DESTDIR =
 
 ### Targets: ###
 
-all: arabic.mo bulgarian.mo chinese_chs.mo chinese_zh.mo croatian.mo czech.mo dutch.mo dutch_be.mo english-uk.mo english.mo french.mo german.mo greek.mo hebrew.mo hungarian.mo indonesian.mo italian.mo latvian.mo norwegian.mo polish.mo portuguese.mo portuguese_portugal.mo romanian.mo russian.mo slovak.mo Slovenian.mo spanish.mo swedish.mo tamil.mo turkish.mo ukrainian.mo vietnamese.mo
+all: arabic.mo bulgarian.mo chinese_chs.mo chinese_zh.mo croatian.mo czech.mo dutch.mo dutch_be.mo english-uk.mo english.mo french.mo german.mo greek.mo hebrew.mo hungarian.mo indonesian.mo italian.mo latvian.mo norwegian.mo polish.mo portuguese.mo portuguese_portugal.mo romanian.mo russian.mo serbo-croatian.mo slovak.mo Slovenian.mo spanish.mo swedish.mo tamil.mo turkish.mo ukrainian.mo vietnamese.mo
 
 install: 
 
@@ -56,6 +56,7 @@ clean:
 	rm -f portuguese_portugal.mo
 	rm -f romanian.mo
 	rm -f russian.mo
+	rm -f serbo-croatian.mo
 	rm -f slovak.mo
 	rm -f Slovenian.mo
 	rm -f spanish.mo
