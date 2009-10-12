@@ -10,7 +10,7 @@
 <makefile>
 
     <!-- check version of Bakefile -->
-    <requires version="0.2.1"/>
+    <requires version="0.2.6"/>
 
     
     <include file="presets/wx.bkl"/>
