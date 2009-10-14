@@ -9,6 +9,7 @@
 
 
     <!-- All .bkl files in mmex tree -->
+
     <input>
         mmex.bkl
         ../../src/tests/*.bkl
@@ -16,23 +17,29 @@
     </input>
 
     
-    <!-- List of output formats to generate: -->
+    <!-- Output formats to generate for all .bkl -->
+
     <add-formats>
-        autoconf,mingw,msvc,msvc6prj
+        autoconf,mingw,msvc,msvs2003prj,borland
     </add-formats>
 
 
-    <!-- do not generate these formats for given files: -->
+    <!-- Add these formats for given .bkl -->
+
+    <add-formats files="../../runtime/en/*.bkl">
+        gnu
+    </add-formats>
+
+
+    <!-- Do not generate these formats for given .bkl -->
+
     <del-formats files="../../runtime/en/*.bkl">
-        msvc6prj
+        msvs2003prj
     </del-formats>
 
     
-    <!-- Default flags (for all formats and bakefiles): -->
-    <add-flags>-Iformats</add-flags>
+    <!-- Directories where the files go -->
 
-    
-    <!-- Directories where the files go: -->
     <add-flags files="mmex.bkl" formats="autoconf">
         -o../../Makefile.in
     </add-flags>
@@ -42,27 +49,35 @@
     <add-flags files="mmex.bkl" formats="msvc">
         -o../msw/makefile.vc
     </add-flags>
-    <add-flags files="mmex.bkl" formats="msvc6prj">
-        -o../msw/mmex.dsw
+    <add-flags files="mmex.bkl" formats="msvs2003prj">
+        -o../msw/mmex.sln
     </add-flags>
+    <add-flags files="mmex.bkl" formats="borland">
+        -o../msw/makefile.bcc
+    </add-flags>
+
     <add-flags files="../../src/tests/*.bkl" formats="mingw">
         -o../msw/tests/makefile.gcc
     </add-flags>
     <add-flags files="../../src/tests/*.bkl" formats="msvc">
         -o../msw/tests/makefile.vc
     </add-flags>
-    <add-flags files="../../src/tests/*.bkl" formats="msvc6prj">
-        -o../msw/tests/mmex_tests.dsw
+    <add-flags files="../../src/tests/*.bkl" formats="msvs2003prj">
+        -o../msw/tests/mmex_tests.sln
+    </add-flags>
+    <add-flags files="../../src/tests/*.bkl" formats="borland">
+        -o../msw/tests/mmex_tests.bcc
     </add-flags>
 
 
-    <!-- Format specific settings: -->
+    <!-- Format specific settings -->
+
     <add-flags formats="autoconf">
         -DAUTOCONF_MACROS_FILE=../../m4/autoconf_inc.m4
     </add-flags>
 
 
-    <!-- Makefile specific settings: -->
+    <!-- Makefile specific settings -->
 
     <add-flags files="mmex.bkl" formats="mingw">
         -DOPTIONS_FILE=config.gcc
@@ -70,6 +85,7 @@
     <add-flags files="../../src/tests/*.bkl" formats="mingw">
         -DOPTIONS_FILE=../config.gcc  -DWRITE_OPTIONS_FILE=0
     </add-flags>
+
     <add-flags files="mmex.bkl" formats="msvc">
         -DOPTIONS_FILE=config.vc
     </add-flags>
@@ -77,5 +93,11 @@
         -DOPTIONS_FILE=../config.vc  -DWRITE_OPTIONS_FILE=0
     </add-flags>
 
+    <add-flags files="mmex.bkl" formats="borland">
+        -DOPTIONS_FILE=config.bcc
+    </add-flags>
+    <add-flags files="../../src/tests/*.bkl" formats="borland">
+        -DOPTIONS_FILE=../config.bcc  -DWRITE_OPTIONS_FILE=0
+    </add-flags>
 
 </bakefile-gen>
