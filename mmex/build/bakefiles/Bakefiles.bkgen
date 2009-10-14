@@ -62,11 +62,11 @@
     <add-flags files="../../src/tests/*.bkl" formats="msvc">
         -o../msw/tests/makefile.vc
     </add-flags>
+    <add-flags files="../../src/tests/*.bkl" formats="borland">
+        -o../msw/tests/makefile.bcc
+    </add-flags>
     <add-flags files="../../src/tests/*.bkl" formats="msvs2003prj">
         -o../msw/tests/mmex_tests.sln
-    </add-flags>
-    <add-flags files="../../src/tests/*.bkl" formats="borland">
-        -o../msw/tests/mmex_tests.bcc
     </add-flags>
 
 
