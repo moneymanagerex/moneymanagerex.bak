@@ -1,41 +1,64 @@
-		
 		*** Build instruction for MS Windows platform ***
 
 
-You can build mmex on Windows using VisualC++ or MinGW compilers.
-Firstly you can run mmex/bootstrap.bat which will refresh makefiles.
-Bakefile must be installed to do that. But you can skip this step 
-if you don't add\remove project's files.
+You can build MMEx on Windows using VisualC++ 2003 or later, or MinGW with GCC.
+Firstly you can run mmex/bootstrap.bat which will refresh makefiles and projects.
+Bakefile must be installed to do that. But you can skip this step if you just want 
+to build sources.
+
+
+	*** Prerequisites ***
+
+
+1. Install wxWidgets 2.8.0 and above in a directory like c:\wxwidgets2.8.0 and then 
+   create an environment variable WXWIN to point to this directory.
+
+2. Follow the instructions given by WxWidgets install on how to build it.
+   You should build these configurations: Unicode Release, Unicode Debug, Release, Debug.
+
+3. Install GNU GetText for Windows, http://gnuwin32.sourceforge.net/packages/gettext.htm. 
+   This software requires to generate binary translation files from .po files.
+   Append path to bin folder of installed software to PATH environment variable
+   (usually "C:\Program Files\GnuWin32\bin").
 
 
 
 	*** Compiling using VisualC++ command prompt *** 
 
 
-1.Build wxWidgets library using VisualStudio.
-2.Open "Visual Studio 200X Command Prompt".
-3.Change working directory to mmex\build\msw.
-4.Edit mmex\build\msw\config.vc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
-5.Type in command prompt to build mmex
+1.Open "Visual Studio 200X Command Prompt".
+2.Change working directory to mmex\build\msw.
+3.Edit mmex\build\msw\config.vc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
+4.Type in command prompt to build mmex
   nmake -f makefile.vc 
 
-  You can use almost any version of Visual Studio because we do not use IDE at all.
+  This is the most preferable way to build MMEX.
 
 
 
-        *** Compiling using VisualC++ IDE *** 
+	*** Compiling using VisualStudio IDE *** 
 
 
-1.Open mmex.dsw in IDE.
+1. Open build\msw\mmex.sln under mmex directory.
+   Select one of following configurations to build (accordingly to wxWidgets builds):
+   
+   Unicode builds, for Windows 2000 or later
+   "Unicode Release Multilib WX_PYTHON_0" <-- choice number one for most people
+   "Unicode Debug Multilib WX_PYTHON_0"
 
-2.Select configuration to build:
-  Unicode Release -> "Unicode Release Multilib WX_PYTHON_0"
-  Unicode Debug   -> "Unicode Debug Multilib WX_PYTHON_0"
-  Ansi Release    -> "Release Multilib WX_PYTHON_0"
-  Ansi Debug      -> "Debug Multilib WX_PYTHON_0"
+   Ansi builds, for Windows 95/98/Me.
+   "Release Multilib WX_PYTHON_0" 
+   "Debug Multilib WX_PYTHON_0"
 
-3.Build solution.
+   To build unit tests use solution build\msw\tests\mmex_tests.sln. Build tests, 
+   copy mmex_tests.exe to mmex\runtime and run one.
 
+2. Copy currency.db3 from mmex\runtime into the appropriate build directory.
+   Now you can run the project to launch the exe.
+
+3. IDE cannot translate files from mmex\runtime\en\*.po. You should use one of makefiles
+   in that directory to build translations. For example, run Visual Studio Command Prompt,
+   change dir to mmex\runtime\en and type "nmake -f makefile.vc".
 
 
 	*** Compiling using MinGW *** 
@@ -56,7 +79,9 @@ if you don't add\remove project's files.
 5.Run created on step #3 .bat file from mmex\build\msw directory to build mmex.
 
 
+
 	*** Your compiler do not present in this document *** 
+
 
 This means someone should modify bakefile build scripts to add output for your compiler.
 Currently bakefile can generate makefiles\projects for these compilers (run bakefile --help)
