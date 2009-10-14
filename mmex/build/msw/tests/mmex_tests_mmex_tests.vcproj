@@ -42,7 +42,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib"
 				OutputFile="vc_stat\mmex_tests.exe"
 				LinkIncremental="1"
@@ -103,7 +103,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib"
 				OutputFile="vc_stat\mmex_tests.exe"
 				LinkIncremental="1"
@@ -164,7 +164,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrap.lib       wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib"
 				OutputFile="vc_stat\mmex_tests.exe"
 				LinkIncremental="1"
@@ -225,7 +225,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrap.lib       wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_stat\sqlite3.lib vc_stat\UnitTestPP.lib"
 				OutputFile="vc_stat\mmex_tests.exe"
 				LinkIncremental="1"
@@ -547,7 +547,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib"
 				OutputFile="vc_statu\mmex_tests.exe"
 				LinkIncremental="1"
@@ -609,7 +609,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib"
 				OutputFile="vc_statu\mmex_tests.exe"
 				LinkIncremental="1"
@@ -671,7 +671,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrapU.lib       wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib"
 				OutputFile="vc_statu\mmex_tests.exe"
 				LinkIncremental="1"
@@ -733,7 +733,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrapU.lib       wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statu\sqlite3.lib vc_statu\UnitTestPP.lib"
 				OutputFile="vc_statu\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1058,7 +1058,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib"
 				OutputFile="vc_shar\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1119,7 +1119,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib"
 				OutputFile="vc_shar\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1180,7 +1180,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrap.lib       wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib"
 				OutputFile="vc_shar\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1241,7 +1241,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrap.lib       wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_shar\sqlite3.lib vc_shar\UnitTestPP.lib"
 				OutputFile="vc_shar\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1563,7 +1563,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib"
 				OutputFile="vc_sharu\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1625,7 +1625,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib"
 				OutputFile="vc_sharu\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1687,7 +1687,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrapU.lib       wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib"
 				OutputFile="vc_sharu\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1749,7 +1749,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES"
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
 				AdditionalDependencies="BugTrapU.lib       wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_sharu\sqlite3.lib vc_sharu\UnitTestPP.lib"
 				OutputFile="vc_sharu\mmex_tests.exe"
 				LinkIncremental="1"

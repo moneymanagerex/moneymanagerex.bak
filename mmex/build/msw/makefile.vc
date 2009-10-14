@@ -153,7 +153,7 @@ ____mmex_BugTrapLib_p = BugTrapU.lib
 __mmex_COMP_FLAGS = /Zi
 !endif
 !if "$(WX_DEBUG)" == "0"
-__mmex_LINK_FLAGS = /DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES
+__mmex_LINK_FLAGS = /DEBUG /MAP /MAPINFO:EXPORTS
 !endif
 !if "$(WX_MONOLITHIC)" == "0"
 __WXLIB_CORE_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_core.lib

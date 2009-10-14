@@ -144,7 +144,7 @@
             </set>
 
             <set var="LINK_FLAGS">
-                <if cond="WX_DEBUG=='0'">/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES</if>
+                <if cond="WX_DEBUG=='0'">/DEBUG /MAP /MAPINFO:EXPORTS</if>
             </set>
 
             <cxxflags>$(COMP_FLAGS)</cxxflags>
