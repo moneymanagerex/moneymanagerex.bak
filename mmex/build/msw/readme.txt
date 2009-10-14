@@ -14,7 +14,7 @@ to build sources.
    create an environment variable WXWIN to point to this directory.
 
 2. Follow the instructions given by WxWidgets install on how to build it.
-   You should build these configurations: Unicode Release, Unicode Debug, Release, Debug.
+   Build these configurations: Unicode Release, Unicode Debug, Release, Debug.
 
 3. Install GNU GetText for Windows, http://gnuwin32.sourceforge.net/packages/gettext.htm. 
    This software requires to generate binary translation files from .po files.
@@ -29,7 +29,7 @@ to build sources.
 1.Open "Visual Studio 200X Command Prompt".
 2.Change working directory to mmex\build\msw.
 3.Edit mmex\build\msw\config.vc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
-4.Type in command prompt to build mmex
+4.Type in command prompt
   nmake -f makefile.vc 
 
   This is the most preferable way to build MMEX.

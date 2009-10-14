@@ -139,11 +139,12 @@
             <!-- For BugTrap: enable PDB files for Release configuration -->
 
             <set var="COMP_FLAGS">
+                <!-- /Zi - Program Database -->
                 <if cond="WX_DEBUG=='0'">/Zi</if>
             </set>
 
             <set var="LINK_FLAGS">
-                <if cond="WX_DEBUG=='0'">/DEBUG /MAP</if>
+                <if cond="WX_DEBUG=='0'">/DEBUG /MAP /MAPINFO:EXPORTS /MAPINFO:LINES</if>
             </set>
 
             <cxxflags>$(COMP_FLAGS)</cxxflags>
