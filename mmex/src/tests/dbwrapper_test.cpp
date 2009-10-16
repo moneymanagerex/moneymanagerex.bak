@@ -23,7 +23,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <dbwrapper.h>
 #include "utils.h"
 //----------------------------------------------------------------------------
-#include <wx/stdpaths.h>
 #include <wx/filename.h>
 //----------------------------------------------------------------------------
 
