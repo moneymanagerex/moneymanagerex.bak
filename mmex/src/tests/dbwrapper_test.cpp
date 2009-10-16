@@ -23,7 +23,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <dbwrapper.h>
 #include "utils.h"
 //----------------------------------------------------------------------------
-#include <stdio.h> // remove
+#include <wx/stdpaths.h>
+#include <wx/filename.h>
 //----------------------------------------------------------------------------
 
 namespace
@@ -39,17 +40,21 @@ const wxString g_PayeeName = wxT("Payee #1");
 struct SQLiteInit
 {
     SQLiteInit() { wxSQLite3Database::InitializeSQLite(); }
-   ~SQLiteInit() { wxSQLite3Database::ShutdownSQLite();   }
+   ~SQLiteInit();
 };
 //----------------------------------------------------------------------------
 
-std::wstring getDbPath()
+wxString getDbPath()
 {
-    std::wstring path = utils::getTempDir();
-    path += utils::DirSep;
-    path += L"mmex_tests.db3";
+    wxFileName fn(wxFileName::GetTempDir(), wxT("mmex_tests.db3"));
+    return fn.GetFullPath();
+}
+//----------------------------------------------------------------------------
 
-    return path;
+SQLiteInit::~SQLiteInit()
+{ 
+    wxSQLite3Database::ShutdownSQLite();   
+    wxRemoveFile(getDbPath());
 }
 //----------------------------------------------------------------------------
 
@@ -60,11 +65,10 @@ wxSQLite3Database& getDb()
 
     if (!db.IsOpen())
     {
-        std::wstring path = getDbPath();
-        
-        remove(utils::asString(path.c_str()).c_str());
+        wxString path = getDbPath();
+        wxRemoveFile(path);
 
-        db.Open(path.c_str());
+        db.Open(path);
         CHECK(db.IsOpen());
     }
 

@@ -18,12 +18,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include <UnitTest++.h>
 //----------------------------------------------------------------------------
-const char* g_exepath;
-//----------------------------------------------------------------------------
 
-int main(int, char const * argv[])
+int main(int /*argc*/, char const * /*argv*/[])
 {
-    g_exepath = argv[0];
     return UnitTest::RunAllTests();
 }
 //----------------------------------------------------------------------------

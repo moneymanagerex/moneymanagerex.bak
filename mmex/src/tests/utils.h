@@ -19,24 +19,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _MM_EX_TESTS_UTILS_H_
 #define _MM_EX_TESTS_UTILS_H_
 //----------------------------------------------------------------------------
-#include <string>
+#include <wx/string.h>
 //----------------------------------------------------------------------------
 
 namespace utils
 {
 
-#ifdef _WINDOWS
-    const wchar_t DirSep = L'\\';
-#else
-    const wchar_t DirSep = L'/';
-#endif
-//----------------------------------------------------------------------------
-std::wstring asWString(const char *str);
-std::string asString(const wchar_t *str);
-//----------------------------------------------------------------------------
-const std::wstring& getExePath();
-const std::wstring& getTempDir();
-//----------------------------------------------------------------------------
+const wxString& getExeDir();
 
 } // namespace utils
 
