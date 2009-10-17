@@ -27,7 +27,7 @@
 
     <!-- Add these formats for given .bkl -->
 
-    <add-formats files="../../runtime/en/*.bkl">
+    <add-formats files="../../runtime/en/*.bkl,../../setup/win32/*.bkl">
         gnu
     </add-formats>
 

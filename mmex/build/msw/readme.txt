@@ -10,16 +10,21 @@ to build sources.
 	*** Prerequisites ***
 
 
-1. Install wxWidgets 2.8.0 and above in a directory like c:\wxwidgets2.8.0 and then 
+1. Install wxWidgets 2.8.0 and above in a directory like c:\wxWidgets-2.8.0 and then 
    create an environment variable WXWIN to point to this directory.
 
 2. Follow the instructions given by WxWidgets install on how to build it.
-   Build these configurations: Unicode Release, Unicode Debug, Release, Debug.
+   Build these configurations: Unicode Release, Unicode Debug, Release, Debug
+   (or only those you need).
 
 3. Install GNU GetText for Windows, http://gnuwin32.sourceforge.net/packages/gettext.htm. 
    This software requires to generate binary translation files from .po files.
    Append path to bin folder of installed software to PATH environment variable
    (usually "C:\Program Files\GnuWin32\bin").
+
+4. To build installation (setup) of MMEx download and install InnoSetup.
+   Append path to bin folder of installed software to PATH environment variable
+   (something like a "C:\Program Files\Inno Setup 5").
 
 
 
@@ -33,7 +38,7 @@ to build sources.
   nmake -f makefile.vc 
 5.Run tests (you can skip this step)
   nmake -f makefile.vc sub_check
-6.Build installations
+6.Build installation
   nmake -f makefile.vc sub_setup
 
   This is the most preferable way to build MMEX.
@@ -63,6 +68,7 @@ to build sources.
 3. IDE cannot translate files from mmex\runtime\en\*.po. You should use one of makefiles
    in that directory to build translations. For example, run Visual Studio Command Prompt,
    change dir to mmex\runtime\en and type "nmake -f makefile.vc".
+   The same you should do to build setup in mmex\setup\win32.
 
 
 
@@ -75,13 +81,17 @@ to build sources.
   SHARED ?= 0
   MONOLITHIC ?= 1 
 
-3.You can create .bat file to run gcc with next content (assume MinGW installed in "C:\bin\MinGW")
+3.You can create mingw.bat file to run gcc with next content (assume MinGW installed in "C:\bin\MinGW")
 
   set PATH=C:\bin\MinGW\bin
   mingw32-make -f makefile.gcc %* 2> mingw.log
 
 4.Edit mmex\build\msw\config.gcc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
-5.Run created on step #3 .bat file from mmex\build\msw directory to build mmex.
+5.Run mingw.bat from mmex\build\msw directory to build mmex.
+6.Execute
+  mingw.bat check
+7.Execute
+  mingw.bat setup
 
 
 
