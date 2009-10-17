@@ -9,17 +9,19 @@
 
 <makefile>
 
-    <define-rule name="iscc" extends="action">
+    <define-rule name="innosetup" extends="action">
         
         <template>
         
-            <set var="ISS">$(id).iss</set>
+            <set var="SETUP_SCRIPT">$(id).iss</set>
 
-            <is-phony>on</is-phony>
-            <depends-on-file>$(ISS)</depends-on-file>
+            <depends-on-file>$(SETUP_SCRIPT)</depends-on-file>
             <dependency-of>all</dependency-of>
+            <is-phony>on</is-phony>
 
-            <command>iscc.exe $(ISS)</command>
+            <!-- see mmex.bkl for definition of APP_EXE_PATH -->
+            <command>iscc.exe $(SETUP_SCRIPT) -dAppExePath="$(DOLLAR)(APP_EXE_PATH)"</command>
+
             <clean-files>*.exe</clean-files>
 
         </template>
@@ -27,10 +29,7 @@
     </define-rule>
 
 
-    <!-- All InnoSetup scripts -->
-
-    <iscc id="installu"/>
-    <iscc id="installa"/>
+    <innosetup id="mmex"/>
 
 
 </makefile>

@@ -88,10 +88,8 @@ to build sources.
 
 4.Edit mmex\build\msw\config.gcc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
 5.Run mingw.bat from mmex\build\msw directory to build mmex.
-6.Execute
-  mingw.bat check
-7.Execute
-  mingw.bat setup
+6.mingw.bat check
+7.mingw.bat setup
 
 
 

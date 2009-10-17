@@ -251,10 +251,10 @@ clean:
 	cd ..\..\runtime\en
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
-	cd tests
+	cd ..\..\setup\win32
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
-	cd ..\..\setup\win32
+	cd tests
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 
@@ -274,14 +274,14 @@ sub_i18n:
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 
+sub_setup: all
+	cd ..\..\setup\win32
+	$(MAKE) -f makefile.vc $(MAKEARGS) APP_EXE_PATH="D:\mmex\trunk\mmex\build\msw\vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe" all
+	cd "$(MAKEDIR)"
+
 sub_check: 
 	cd tests
 	$(MAKE) -f makefile.vc $(MAKEARGS) check
-	cd "$(MAKEDIR)"
-
-sub_setup: 
-	cd ..\..\setup\win32
-	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 
 vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3_sqlite3secure.obj: ..\..\sqlite\sqlite3secure.c

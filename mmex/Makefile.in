@@ -130,14 +130,14 @@ clean:
 	rm -f $(LIBPREFIX)sqlite3$(LIBEXT)
 	rm -f mmex$(EXEEXT)
 	-(cd $(srcdir)/runtime/en && $(MAKE) clean)
-	-(cd ./src/tests && $(MAKE) clean)
 	-(cd $(srcdir)/setup/win32 && $(MAKE) clean)
+	-(cd ./src/tests && $(MAKE) clean)
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
 	-(cd $(srcdir)/runtime/en && $(MAKE) distclean)
-	-(cd ./src/tests && $(MAKE) distclean)
 	-(cd $(srcdir)/setup/win32 && $(MAKE) distclean)
+	-(cd ./src/tests && $(MAKE) distclean)
 
 $(LIBPREFIX)sqlite3$(LIBEXT): $(SQLITE3_OBJECTS)
 	rm -f $@
@@ -153,11 +153,11 @@ mmex$(EXEEXT): $(MMEX_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(__mmex___win32rc)
 i18n: 
 	(cd $(srcdir)/runtime/en && $(MAKE) all)
 
+@COND_PLATFORM_WIN32_1@setup: all
+@COND_PLATFORM_WIN32_1@	(cd $(srcdir)/setup/win32 && $(MAKE) APP_EXE_PATH="D:\mmex\trunk\mmex/./mmex$(EXEEXT)" all)
+
 check: 
 	(cd ./src/tests && $(MAKE) check)
-
-@COND_PLATFORM_WIN32_1@setup: 
-@COND_PLATFORM_WIN32_1@	(cd $(srcdir)/setup/win32 && $(MAKE) all)
 
 sqlite3_sqlite3secure.o: $(srcdir)/sqlite/sqlite3secure.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/sqlite/sqlite3secure.c
@@ -328,4 +328,4 @@ mmex_resources_mmex_rc.o: $(srcdir)/resources/mmex.rc
 # Include dependency info, if present:
 @IF_GNU_MAKE@-include ./.deps/*.d
 
-.PHONY: all install uninstall clean distclean i18n check setup
+.PHONY: all install uninstall clean distclean i18n setup check

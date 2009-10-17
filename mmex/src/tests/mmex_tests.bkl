@@ -79,7 +79,7 @@
         <!-- && is "&amp;&amp;" in HTML -->
 
         <command cond="FORMAT!='autoconf'">
-            <!-- can't get executable dir for autoconf -->
+            <!-- can't get executable dir if autoconf -->
             cd $(nativePaths(SRCDIR + '/runtime')) &amp;&amp; $(nativePaths(os.path.abspath(os.path.dirname(OUTPUT_FILE)) + '/' + BUILDDIR + '/mmex_tests' + EXEEXT))
         </command>
 

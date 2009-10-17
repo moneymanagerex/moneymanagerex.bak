@@ -25,7 +25,7 @@
 
 ### Targets: ###
 
-all: installu installa
+all: mmex
 
 install: 
 
@@ -35,15 +35,11 @@ clean:
 	rm -f ./*.o
 	rm -f ./*.d
 	rm -f *.exe
-	rm -f *.exe
 
-installu: installu.iss
-	iscc.exe installu.iss
+mmex: mmex.iss
+	iscc.exe mmex.iss -dAppExePath="$(APP_EXE_PATH)"
 
-installa: installa.iss
-	iscc.exe installa.iss
-
-.PHONY: all install uninstall clean installu installa
+.PHONY: all install uninstall clean mmex
 
 
 # Dependencies tracking:

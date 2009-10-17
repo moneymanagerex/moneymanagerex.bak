@@ -40,6 +40,24 @@ Bakefile for generating makefiles.
     </subproject>
 
     
+    <!-- Generation of InnoSetup installations for Windows except VStudio IDE projects -->
+
+    <subproject id="setup" cond="PLATFORM_WIN32=='1' and not FORMAT.endswith('prj')">
+        
+        <depends>all</depends>
+        <installable>no</installable>
+        <dir>$(SRCDIR)/setup/win32</dir>
+
+        <set var="MMEX_PATH">
+            <!-- absolute path to built executable -->
+            $(os.path.abspath(os.path.dirname(OUTPUT_FILE)) + DIRSEP + BUILDDIR + DIRSEP + 'mmex' + EXEEXT)
+        </set>
+        
+        <target>APP_EXE_PATH="$(MMEX_PATH)" all</target>
+
+    </subproject>
+
+    
     <!-- unit tests target (not dependency of 'all'): -->
 
     <subproject id="check">
@@ -53,14 +71,4 @@ Bakefile for generating makefiles.
     </subproject>
 
 
-    <!-- Generation of InnoSetup installations for Windows except VStudio IDE projects.
-         Not dependency of 'all'. 
-    -->
-
-    <subproject id="setup" cond="PLATFORM_WIN32=='1' and not FORMAT.endswith('prj')">
-        <installable>no</installable>
-        <dir>$(SRCDIR)/setup/win32</dir>
-    </subproject>
-
-    
 </makefile>
