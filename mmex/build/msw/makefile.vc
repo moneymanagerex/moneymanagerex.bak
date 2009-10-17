@@ -291,7 +291,7 @@ sub_i18n:
 
 sub_setup: all
 	cd ..\..\setup\win32
-	$(MAKE) -f makefile.vc $(MAKEARGS) APP_EXE_PATH="D:\mmex\trunk\mmex\build\msw\vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe" APP_SHARED=$(__setup_SHARED) APP_UNICODE=$(__setup_UNICODE) APP_DEBUG=$(__setup_DEBUG) all
+	$(MAKE) -f makefile.vc $(MAKEARGS) APP_EXE_PATH="D:\mmex\trunk\mmex\build\msw\vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe" BUILD_OPTS="$(__setup_SHARED)$(__setup_UNICODE)$(__setup_DEBUG)" all
 	cd "$(MAKEDIR)"
 
 sub_check: 

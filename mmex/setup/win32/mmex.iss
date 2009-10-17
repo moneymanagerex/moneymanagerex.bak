@@ -5,16 +5,8 @@
         #error Use option -dAppExePath=path_to_your_exe
 #endif
 
-#ifndef AppShared
-        #error Use option -dAppShared=value
-#endif
-
-#ifndef AppUnicode
-        #error Use option -dAppUnicode=value
-#endif
-
-#ifndef AppDebug
-        #error Use option -dAppDebug=value
+#ifndef BuildOpts
+        #error Use option -dBuildOpts=value
 #endif
 
 #define AppURL "http://www.codelathe.com/mmex"
@@ -43,7 +35,7 @@ DisableProgramGroupPage=yes
 LicenseFile="..\..\runtime\license.txt"
 
 OutputDir=.
-OutputBaseFilename={#GetStringFileInfo( AppExePath, INTERNAL_NAME )}-{#VersionInfo}{#AppShared}{#AppUnicode}{#AppDebug}-setup
+OutputBaseFilename={#GetStringFileInfo( AppExePath, INTERNAL_NAME )}-{#VersionInfo}{#BuildOpts}-setup
 Compression=lzma/ultra
 SolidCompression=yes
 SetupIconFile="..\..\runtime\mmex.ico"
@@ -63,7 +55,7 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "hebrew";  MessagesFile: "compiler:Languages\Hebrew.isl"
 Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
 Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
-Name: "Norwegian";  MessagesFile: "compiler:Languages\Norwegian.isl"
+Name: "norwegian";  MessagesFile: "compiler:Languages\Norwegian.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked

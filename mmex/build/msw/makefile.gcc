@@ -261,7 +261,7 @@ i18n:
 	$(MAKE) -C ..\..\runtime\en -f makefile.gcc $(MAKEARGS) all
 
 setup: all
-	$(MAKE) -C ..\..\setup\win32 -f makefile.gcc $(MAKEARGS) APP_EXE_PATH="D:\mmex\trunk\mmex\build\msw\gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe" APP_SHARED=$(__setup_SHARED) APP_UNICODE=$(__setup_UNICODE) APP_DEBUG=$(__setup_DEBUG) all
+	$(MAKE) -C ..\..\setup\win32 -f makefile.gcc $(MAKEARGS) APP_EXE_PATH="D:\mmex\trunk\mmex\build\msw\gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe" BUILD_OPTS="$(__setup_SHARED)$(__setup_UNICODE)$(__setup_DEBUG)" all
 
 check: 
 	$(MAKE) -C tests -f makefile.gcc $(MAKEARGS) check

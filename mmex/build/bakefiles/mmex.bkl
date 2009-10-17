@@ -72,7 +72,7 @@
         </set>
         
         <target>
-            APP_EXE_PATH="$(MMEX_PATH)" APP_SHARED=$(SHARED) APP_UNICODE=$(UNICODE) APP_DEBUG=$(DEBUG) all
+            APP_EXE_PATH="$(MMEX_PATH)" BUILD_OPTS="$(SHARED)$(UNICODE)$(DEBUG)" all
         </target>
 
     </subproject>
