@@ -83,11 +83,11 @@ to build sources.
 
 3.You can create mingw.bat file to run gcc with next content (assume MinGW installed in "C:\bin\MinGW")
 
-  set PATH=C:\bin\MinGW\bin
-  mingw32-make -f makefile.gcc %* 2> mingw.log
+  set PATH=C:\bin\MinGW\bin;"C:\Program Files\Inno Setup 5"
+  mingw32-make -f makefile.gcc %* 2>mingw.log
 
-4.Edit mmex\build\msw\config.gcc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
-5.Run mingw.bat from mmex\build\msw directory to build mmex.
+4.Edit config.gcc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
+5.mingw.bat
 6.mingw.bat check
 7.mingw.bat setup
 

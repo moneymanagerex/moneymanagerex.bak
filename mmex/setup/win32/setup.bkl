@@ -19,8 +19,10 @@
             <dependency-of>all</dependency-of>
             <is-phony>on</is-phony>
 
-            <!-- see mmex.bkl for definition of APP_EXE_PATH -->
-            <command>iscc.exe $(SETUP_SCRIPT) -dAppExePath="$(DOLLAR)(APP_EXE_PATH)"</command>
+            <!-- see mmex.bkl for definition of APP_EXE_PATH and others -->
+            <command>
+               iscc.exe $(SETUP_SCRIPT) -dAppExePath="$(DOLLAR)(APP_EXE_PATH)" -dAppShared=$(DOLLAR)(APP_SHARED) -dAppUnicode=$(DOLLAR)(APP_UNICODE) -dAppDebug=$(DOLLAR)(APP_DEBUG)
+            </command>
 
             <clean-files>*.exe</clean-files>
 

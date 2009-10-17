@@ -38,7 +38,7 @@ distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
 
 mmex: mmex.iss
-	iscc.exe mmex.iss -dAppExePath="$(APP_EXE_PATH)"
+	iscc.exe mmex.iss -dAppExePath="$(APP_EXE_PATH)" -dAppShared=$(APP_SHARED) -dAppUnicode=$(APP_UNICODE) -dAppDebug=$(APP_DEBUG)
 
 
 # Include dependency info, if present:

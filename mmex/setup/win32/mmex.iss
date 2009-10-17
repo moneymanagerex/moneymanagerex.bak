@@ -5,6 +5,18 @@
         #error Use option -dAppExePath=path_to_your_exe
 #endif
 
+#ifndef AppShared
+        #error Use option -dAppShared=value
+#endif
+
+#ifndef AppUnicode
+        #error Use option -dAppUnicode=value
+#endif
+
+#ifndef AppDebug
+        #error Use option -dAppDebug=value
+#endif
+
 #define AppURL "http://www.codelathe.com/mmex"
 #define AppExeName ExtractFileName( AppExePath )
 
@@ -31,7 +43,7 @@ DisableProgramGroupPage=yes
 LicenseFile="..\..\runtime\license.txt"
 
 OutputDir=.
-OutputBaseFilename={#GetStringFileInfo( AppExePath, INTERNAL_NAME )}-{#VersionInfo}-setup
+OutputBaseFilename={#GetStringFileInfo( AppExePath, INTERNAL_NAME )}-{#VersionInfo}{#AppShared}{#AppUnicode}{#AppDebug}-setup
 Compression=lzma/ultra
 SolidCompression=yes
 SetupIconFile="..\..\runtime\mmex.ico"

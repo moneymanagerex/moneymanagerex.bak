@@ -1,9 +1,10 @@
 <?xml version="1.0" ?>
 
 <!--
-Money Manager Ex BAKEFILE
-=========================
-Bakefile for generating makefiles.
+    MMEX build scripts.
+    Copyright (C) 2009 VaDiM.
+
+    MoneyManagerEx application.
 -->
 
 <makefile>
@@ -53,7 +54,26 @@ Bakefile for generating makefiles.
             $(os.path.abspath(os.path.dirname(OUTPUT_FILE)) + DIRSEP + BUILDDIR + DIRSEP + 'mmex' + EXEEXT)
         </set>
         
-        <target>APP_EXE_PATH="$(MMEX_PATH)" all</target>
+        <set var="SHARED">
+            <if cond="FORMAT=='autoconf'"></if>
+            <if cond="WX_SHARED=='0'">-static</if>
+            <if cond="WX_SHARED=='1'">-shared</if>
+        </set>
+        
+        <set var="UNICODE">
+            <if cond="FORMAT=='autoconf'"></if>
+            <if cond="WX_UNICODE=='0'">-ansi</if>
+            <if cond="WX_UNICODE=='1'">-unicode</if>
+        </set>
+        
+        <set var="DEBUG">
+            <if cond="FORMAT=='autoconf'"></if>
+            <if cond="WX_DEBUG=='1'">-debug</if>
+        </set>
+        
+        <target>
+            APP_EXE_PATH="$(MMEX_PATH)" APP_SHARED=$(SHARED) APP_UNICODE=$(UNICODE) APP_DEBUG=$(DEBUG) all
+        </target>
 
     </subproject>
 

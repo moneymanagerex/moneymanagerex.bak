@@ -160,6 +160,21 @@ endif
 ifeq ($(WX_MONOLITHIC),1)
 __WXLIB_BASE_NAME_p = -lwxmsw$(WX_VERSION)$(WXLIBPOSTFIX)
 endif
+ifeq ($(WX_SHARED),0)
+__setup_SHARED = -static
+endif
+ifeq ($(WX_SHARED),1)
+__setup_SHARED = -shared
+endif
+ifeq ($(WX_UNICODE),0)
+__setup_UNICODE = -ansi
+endif
+ifeq ($(WX_UNICODE),1)
+__setup_UNICODE = -unicode
+endif
+ifeq ($(WX_DEBUG),1)
+__setup_DEBUG = -debug
+endif
 ifeq ($(WX_DEBUG),0)
 ifeq ($(WX_PYTHON),0)
 ifeq ($(WX_UNICODE),1)
@@ -246,7 +261,7 @@ i18n:
 	$(MAKE) -C ..\..\runtime\en -f makefile.gcc $(MAKEARGS) all
 
 setup: all
-	$(MAKE) -C ..\..\setup\win32 -f makefile.gcc $(MAKEARGS) APP_EXE_PATH="D:\mmex\trunk\mmex\build\msw\gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe" all
+	$(MAKE) -C ..\..\setup\win32 -f makefile.gcc $(MAKEARGS) APP_EXE_PATH="D:\mmex\trunk\mmex\build\msw\gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe" APP_SHARED=$(__setup_SHARED) APP_UNICODE=$(__setup_UNICODE) APP_DEBUG=$(__setup_DEBUG) all
 
 check: 
 	$(MAKE) -C tests -f makefile.gcc $(MAKEARGS) check

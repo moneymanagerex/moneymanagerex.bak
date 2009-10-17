@@ -179,6 +179,21 @@ __WXLIB_BASE_NAME_p = wxbase$(WX_VERSION)$(WXLIBPOSTFIX).lib
 !if "$(WX_MONOLITHIC)" == "1"
 __WXLIB_BASE_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX).lib
 !endif
+!if "$(WX_SHARED)" == "0"
+__setup_SHARED = -static
+!endif
+!if "$(WX_SHARED)" == "1"
+__setup_SHARED = -shared
+!endif
+!if "$(WX_UNICODE)" == "0"
+__setup_UNICODE = -ansi
+!endif
+!if "$(WX_UNICODE)" == "1"
+__setup_UNICODE = -unicode
+!endif
+!if "$(WX_DEBUG)" == "1"
+__setup_DEBUG = -debug
+!endif
 !if "$(WX_DEBUG)" == "0"
 __DEBUGINFO = 
 !endif
@@ -276,7 +291,7 @@ sub_i18n:
 
 sub_setup: all
 	cd ..\..\setup\win32
-	$(MAKE) -f makefile.vc $(MAKEARGS) APP_EXE_PATH="D:\mmex\trunk\mmex\build\msw\vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe" all
+	$(MAKE) -f makefile.vc $(MAKEARGS) APP_EXE_PATH="D:\mmex\trunk\mmex\build\msw\vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe" APP_SHARED=$(__setup_SHARED) APP_UNICODE=$(__setup_UNICODE) APP_DEBUG=$(__setup_DEBUG) all
 	cd "$(MAKEDIR)"
 
 sub_check: 

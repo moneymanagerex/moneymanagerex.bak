@@ -161,6 +161,21 @@ __WXLIB_BASE_NAME_p = wxbase$(WX_VERSION)$(WXLIBPOSTFIX).lib
 !if "$(WX_MONOLITHIC)" == "1"
 __WXLIB_BASE_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX).lib
 !endif
+!if "$(WX_SHARED)" == "0"
+__setup_SHARED = -static
+!endif
+!if "$(WX_SHARED)" == "1"
+__setup_SHARED = -shared
+!endif
+!if "$(WX_UNICODE)" == "0"
+__setup_UNICODE = -ansi
+!endif
+!if "$(WX_UNICODE)" == "1"
+__setup_UNICODE = -unicode
+!endif
+!if "$(WX_DEBUG)" == "1"
+__setup_DEBUG = -debug
+!endif
 !if "$(WX_DEBUG)" == "0"
 __OPTIMIZEFLAG = -O2
 !endif
@@ -253,7 +268,7 @@ i18n:
 
 setup: all
 	@echo cd ..\..\setup\win32 >bcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\setup.bat
-	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) APP_EXE_PATH="D:\mmex\trunk\mmex\build\msw\bcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe" all >>bcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\setup.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) APP_EXE_PATH="D:\mmex\trunk\mmex\build\msw\bcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe" APP_SHARED=$(__setup_SHARED) APP_UNICODE=$(__setup_UNICODE) APP_DEBUG=$(__setup_DEBUG) all >>bcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\setup.bat
 	call bcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\setup.bat
 	@del bcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\setup.bat
 
