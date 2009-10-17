@@ -766,9 +766,11 @@ void mmCheckingPanel::initVirtualListControl()
     setAccountSummary();
 
     wxString text;
-    text += _("Category: \n"); 
-    text += _("Sub Category: \n"); 
-    text += _("Notes: \n"); 
+    text += _("Category         : "); 
+	text += wxT("\n");
+    text += _("Sub Category  : "); 
+	text += wxT("\n");
+	text +=  _("Notes               : "); 
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
     st->SetLabel(text);
 
