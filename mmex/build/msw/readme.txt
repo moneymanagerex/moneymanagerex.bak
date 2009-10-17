@@ -23,8 +23,8 @@ to build sources.
    (usually "C:\Program Files\GnuWin32\bin").
 
 4. To build installation (setup) of MMEx download and install InnoSetup.
-   Append path to bin folder of installed software to PATH environment variable
-   (something like a "C:\Program Files\Inno Setup 5").
+   Append path to folder of installed software (something like a "C:\Program Files\Inno Setup 5")
+   to PATH environment variable.
 
 
 
@@ -38,10 +38,10 @@ to build sources.
   nmake -f makefile.vc 
 5.Run tests (you can skip this step)
   nmake -f makefile.vc sub_check
-6.Build installation
+6.Build installation (if InnoSetup installed)
   nmake -f makefile.vc sub_setup
 
-  This is the most preferable way to build MMEX.
+  This is the most preferable way to build MMEX using VC++.
 
 
 

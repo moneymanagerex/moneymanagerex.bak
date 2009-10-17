@@ -52,8 +52,12 @@ wxString getDbPath()
 
 SQLiteInit::~SQLiteInit()
 { 
-    wxSQLite3Database::ShutdownSQLite();   
-    wxRemoveFile(getDbPath());
+    try {
+        wxSQLite3Database::ShutdownSQLite();   
+        wxRemoveFile(getDbPath());
+    } catch (...) {
+        wxASSERT(false);
+    }        
 }
 //----------------------------------------------------------------------------
 

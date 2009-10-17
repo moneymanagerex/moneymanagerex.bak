@@ -53,7 +53,7 @@ Bakefile for generating makefiles.
     </subproject>
 
 
-    <!-- Generation of InnoSetup installations for Windows except IDE projects.
+    <!-- Generation of InnoSetup installations for Windows except VStudio IDE projects.
          Not dependency of 'all'. 
     -->
 
