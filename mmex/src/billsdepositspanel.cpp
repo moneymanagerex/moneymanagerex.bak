@@ -245,7 +245,13 @@ void mmBillsDepositsPanel::initVirtualListControl()
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from BILLSDEPOSITS_V1");
+    static const char sql[] = 
+    "select c.categname, s.subcategname, BDID, NEXTOCCURRENCEDATE, REPEATS, PAYEEID, TRANSCODE, "
+	"ACCOUNTID, TOACCOUNTID, TRANSAMOUNT, TOTRANSAMOUNT, NOTES, b.CATEGID, b.SUBCATEGID from BILLSDEPOSITS_V1 b "
+    "inner join category_v1 c on b.categid=c.categid "
+    "left join subcategory_v1 s on b.subcategid=s.subcategid; ";
+
+	wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
 
     long cnt = 0;
     for (; q1.NextRow(); ++cnt)
@@ -256,6 +262,18 @@ void mmBillsDepositsPanel::initVirtualListControl()
         th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
         th.nextOccurStr_   = mmGetDateForDisplay(db_, th.nextOccurDate_);
         int repeats        = q1.GetInt(wxT("REPEATS"));
+        th.payeeID_        = q1.GetInt(wxT("PAYEEID"));
+        th.transType_      = q1.GetString(wxT("TRANSCODE"));
+        th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
+        th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
+		th.accountStr_     = mmDBWrapper::getAccountName(db_, th.accountID_);
+        th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
+        th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
+		th.notesStr_	   = q1.GetString(wxT("NOTES"));
+		th.categID_		   = q1.GetInt(wxT("CATEGID"));
+		th.categoryStr_	   = q1.GetString(wxT("CATEGNAME"));
+		th.subcategID_	   = q1.GetInt(wxT("SUBCATEGID"));
+		th.subcategoryStr_ = q1.GetString(wxT("SUBCATEGNAME"));
 
         if (repeats == 0)
         {
@@ -317,16 +335,6 @@ void mmBillsDepositsPanel::initVirtualListControl()
             _(" days overdue!");
         }
 
-        th.payeeID_        = q1.GetInt(wxT("PAYEEID"));
-        th.transType_      = q1.GetString(wxT("TRANSCODE"));
-        th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
-        th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
-		th.accountStr_     = mmDBWrapper::getAccountName(db_, th.accountID_);
-
-        th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
-        th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
-		th.notesStr_	   = q1.GetString(wxT("NOTES"));
-
         wxString displayTransAmtString;
         if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayTransAmtString))
             th.transAmtString_ = displayTransAmtString;
@@ -352,6 +360,17 @@ void mmBillsDepositsPanel::initVirtualListControl()
     q1.Finalize();
     std::sort(trans_.begin(), trans_.end(), sortTransactionsByRemainingDays);
     listCtrlAccount_->SetItemCount(cnt);
+
+	//Set an empty text for Bottom Info Panel 
+	    wxString text;
+    text += _("Category         : "); 
+	text += wxT("\n");
+    text += _("Sub Category  : "); 
+	text += wxT("\n");
+	text +=  _("Notes               : "); 
+	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
+    st->SetLabel(text);
+
 }
 
 void mmBillsDepositsPanel::OnDeleteBDSeries(wxCommandEvent& event)
@@ -435,6 +454,7 @@ wxString billsDepositsListCtrl::OnGetItemText(long item, long column) const
 void billsDepositsListCtrl::OnListItemSelected(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
+	cp_->updateBottomPanelData(selectedIndex_);
 }
 
 int billsDepositsListCtrl::OnGetItemImage(long item) const
@@ -561,4 +581,23 @@ void billsDepositsListCtrl::OnListItemActivated(wxListEvent& event)
     }
     dlg->Destroy();
 
+}
+void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
+{
+    // Get the items we need to change
+	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);	
+	wxString text;
+	if (selIndex!=-1)
+	{
+		text += _("Category         : ");
+		text += trans_[selIndex].categoryStr_;
+        text += wxT("\n");
+		text += _("Sub Category  : "); 
+		text += trans_[selIndex].subcategoryStr_;
+        text += wxT("\n");
+		text +=  _("Notes               : "); 
+		text += trans_[selIndex].notesStr_;
+//        text += wxT("\n");
+	}
+    st->SetLabel(text);
 }

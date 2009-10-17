@@ -100,9 +100,11 @@ public:
 
 	wxString accountStr_;
 	wxString notesStr_;
-	int categID;
+	int categID_;
 	wxString categoryStr_;
-    
+    int subcategID_;
+	wxString subcategoryStr_;
+
 };
 
 class mmBillsDepositsPanel : public mmPanelBase
@@ -129,8 +131,9 @@ public:
       
     void CreateControls();
 
-    /* updates the checking panel data */
+    /* updates the Repeating transactions panel data */
     void initVirtualListControl();
+	void updateBottomPanelData(int selIndex);
 
     /* Getter for Virtual List Control */
     wxString getItem(long item, long column);
