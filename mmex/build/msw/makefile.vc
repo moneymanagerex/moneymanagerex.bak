@@ -254,6 +254,9 @@ clean:
 	cd tests
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
+	cd ..\..\setup\win32
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
 
 vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3.lib: $(SQLITE3_OBJECTS)
 	if exist $@ del $@
@@ -274,6 +277,11 @@ sub_i18n:
 sub_check: 
 	cd tests
 	$(MAKE) -f makefile.vc $(MAKEARGS) check
+	cd "$(MAKEDIR)"
+
+sub_setup: 
+	cd ..\..\setup\win32
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 
 vc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3_sqlite3secure.obj: ..\..\sqlite\sqlite3secure.c

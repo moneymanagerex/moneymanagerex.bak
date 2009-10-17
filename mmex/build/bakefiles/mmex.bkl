@@ -53,4 +53,14 @@ Bakefile for generating makefiles.
     </subproject>
 
 
+    <!-- Generation of InnoSetup installations for Windows except IDE projects.
+         Not dependency of 'all'. 
+    -->
+
+    <subproject id="setup" cond="PLATFORM_WIN32=='1' and not FORMAT.endswith('prj')">
+        <installable>no</installable>
+        <dir>$(SRCDIR)/setup/win32</dir>
+    </subproject>
+
+    
 </makefile>

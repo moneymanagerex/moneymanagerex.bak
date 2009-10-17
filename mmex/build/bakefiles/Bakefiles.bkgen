@@ -14,6 +14,7 @@
         mmex.bkl
         ../../src/tests/*.bkl
         ../../runtime/en/*.bkl
+        ../../setup/win32/*.bkl
     </input>
 
     
@@ -33,7 +34,7 @@
 
     <!-- Do not generate these formats for given .bkl -->
 
-    <del-formats files="../../runtime/en/*.bkl">
+    <del-formats files="../../runtime/en/*.bkl,../../setup/win32/*.bkl">
         msvs2003prj
     </del-formats>
 

@@ -48,7 +48,7 @@ AM_WXPRESETS_FULL([2.8.0], [base, core, html, xml, net, aui, adv])
 # Process standard bakefile
 AC_BAKEFILE([m4_include(m4/autoconf_inc.m4)])
 
-AC_CONFIG_FILES([Makefile src/tests/Makefile ${srcdir}/runtime/en/Makefile])
+AC_CONFIG_FILES([Makefile src/tests/Makefile ${srcdir}/runtime/en/Makefile] ${srcdir}/setup/win32/Makefile])
 AC_OUTPUT
 
 ##########################################################################

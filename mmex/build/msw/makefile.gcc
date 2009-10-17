@@ -232,6 +232,7 @@ clean:
 	-if exist gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe del gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex.exe
 	$(MAKE) -C ..\..\runtime\en -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C tests -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C ..\..\setup\win32 -f makefile.gcc $(MAKEARGS) clean
 
 gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\libsqlite3.a: $(SQLITE3_OBJECTS)
 	if exist $@ del $@
@@ -246,6 +247,9 @@ i18n:
 
 check: 
 	$(MAKE) -C tests -f makefile.gcc $(MAKEARGS) check
+
+setup: 
+	$(MAKE) -C ..\..\setup\win32 -f makefile.gcc $(MAKEARGS) all
 
 gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3_sqlite3secure.o: ../../sqlite/sqlite3secure.c
 	$(CC) -c -o $@ $(SQLITE3_CFLAGS) $(CPPDEPS) $<
@@ -412,7 +416,7 @@ gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_yahoose
 gcc_$(SHAREDBUILDPOSTFIX)$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_mmex_rc.o: ../../resources/mmex.rc
 	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include $(__DEBUG_DEFINE_p_2) --include-dir ../../include --include-dir ../../sqlite --define NOPCH
 
-.PHONY: all clean i18n check
+.PHONY: all clean i18n check setup
 
 
 SHELL := $(COMSPEC)

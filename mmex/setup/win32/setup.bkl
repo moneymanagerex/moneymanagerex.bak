@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+
+<!-- 
+    MMEX build scripts.
+    Copyright (C) 2009 VaDiM.
+    
+    Generation of InnoSetup's installations.
+-->
+
+<makefile>
+
+    <define-rule name="iscc" extends="action">
+        
+        <template>
+        
+            <set var="ISS">$(id).iss</set>
+
+            <is-phony>on</is-phony>
+            <depends-on-file>$(ISS)</depends-on-file>
+            <dependency-of>all</dependency-of>
+
+            <command>iscc.exe $(ISS)</command>
+            <clean-files>*.exe</clean-files>
+
+        </template>
+
+    </define-rule>
+
+
+    <!-- All InnoSetup scripts -->
+
+    <iscc id="installu"/>
+    <iscc id="installa"/>
+
+
+</makefile>

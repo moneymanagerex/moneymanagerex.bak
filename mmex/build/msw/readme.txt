@@ -1,4 +1,4 @@
-		*** Build instruction for MS Windows platform ***
+		*** Build instructions for MS Windows platform ***
 
 
 You can build MMEx on Windows using VisualC++ 2003 or later, or MinGW with GCC.
@@ -31,6 +31,10 @@ to build sources.
 3.Edit mmex\build\msw\config.vc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
 4.Type in command prompt
   nmake -f makefile.vc 
+5.Run tests (you can skip this step)
+  nmake -f makefile.vc sub_check
+6.Build installations
+  nmake -f makefile.vc sub_setup
 
   This is the most preferable way to build MMEX.
 
@@ -59,6 +63,7 @@ to build sources.
 3. IDE cannot translate files from mmex\runtime\en\*.po. You should use one of makefiles
    in that directory to build translations. For example, run Visual Studio Command Prompt,
    change dir to mmex\runtime\en and type "nmake -f makefile.vc".
+
 
 
 	*** Compiling using MinGW *** 
