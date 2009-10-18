@@ -37,7 +37,7 @@ clean:
 	rm -f *.exe
 
 mmex: mmex.iss
-	iscc.exe mmex.iss -dAppExePath="$(APP_EXE_PATH)" -dBuildOpts="$(BUILD_OPTS)"
+	iscc.exe mmex.iss -dOutputDir="$(OUTPUT_DIR)" -dAppExePath="$(APP_EXE_PATH)" -dBuildOpts="$(BUILD_OPTS)"
 
 .PHONY: all install uninstall clean mmex
 

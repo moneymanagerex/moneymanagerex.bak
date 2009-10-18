@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Release Multilib WX_PYTHON_0|Win32"
-			OutputDirectory="vc_stat"
-			IntermediateDirectory="vc_stat\mmex"
+			OutputDirectory="vc-static-"
+			IntermediateDirectory="vc-static-\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -32,8 +32,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_stat\mmex\"
-				ProgramDataBaseFileName="vc_stat\mmex.pdb"
+				ObjectFile="vc-static-\mmex\"
+				ProgramDataBaseFileName="vc-static-\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -43,12 +43,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_stat\sqlite3.lib"
-				OutputFile="vc_stat\mmex.exe"
+				AdditionalDependencies="BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib"
+				OutputFile="vc-static-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
-				ProgramDatabaseFile="vc_stat\mmex.pdb"
+				ProgramDatabaseFile="vc-static-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -79,8 +79,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release Multilib WX_PYTHON_1|Win32"
-			OutputDirectory="vc_stat"
-			IntermediateDirectory="vc_stat\mmex"
+			OutputDirectory="vc-static-"
+			IntermediateDirectory="vc-static-\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -93,8 +93,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_stat\mmex\"
-				ProgramDataBaseFileName="vc_stat\mmex.pdb"
+				ObjectFile="vc-static-\mmex\"
+				ProgramDataBaseFileName="vc-static-\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -104,12 +104,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_stat\sqlite3.lib"
-				OutputFile="vc_stat\mmex.exe"
+				AdditionalDependencies="BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib"
+				OutputFile="vc-static-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
-				ProgramDatabaseFile="vc_stat\mmex.pdb"
+				ProgramDatabaseFile="vc-static-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -140,8 +140,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release Monolithic WX_PYTHON_0|Win32"
-			OutputDirectory="vc_stat"
-			IntermediateDirectory="vc_stat\mmex"
+			OutputDirectory="vc-static-"
+			IntermediateDirectory="vc-static-\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -154,8 +154,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_stat\mmex\"
-				ProgramDataBaseFileName="vc_stat\mmex.pdb"
+				ObjectFile="vc-static-\mmex\"
+				ProgramDataBaseFileName="vc-static-\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -165,12 +165,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib       wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_stat\sqlite3.lib"
-				OutputFile="vc_stat\mmex.exe"
+				AdditionalDependencies="BugTrap.lib       wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib"
+				OutputFile="vc-static-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
-				ProgramDatabaseFile="vc_stat\mmex.pdb"
+				ProgramDatabaseFile="vc-static-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -201,8 +201,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release Monolithic WX_PYTHON_1|Win32"
-			OutputDirectory="vc_stat"
-			IntermediateDirectory="vc_stat\mmex"
+			OutputDirectory="vc-static-"
+			IntermediateDirectory="vc-static-\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -215,8 +215,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_stat\mmex\"
-				ProgramDataBaseFileName="vc_stat\mmex.pdb"
+				ObjectFile="vc-static-\mmex\"
+				ProgramDataBaseFileName="vc-static-\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -226,12 +226,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib       wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_stat\sqlite3.lib"
-				OutputFile="vc_stat\mmex.exe"
+				AdditionalDependencies="BugTrap.lib       wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib"
+				OutputFile="vc-static-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
-				ProgramDatabaseFile="vc_stat\mmex.pdb"
+				ProgramDatabaseFile="vc-static-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -262,8 +262,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug Multilib WX_PYTHON_0|Win32"
-			OutputDirectory="vc_statd"
-			IntermediateDirectory="vc_statd\mmex"
+			OutputDirectory="vc-static-d"
+			IntermediateDirectory="vc-static-d\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -279,8 +279,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_statd\mmex\"
-				ProgramDataBaseFileName="vc_statd\mmex.pdb"
+				ObjectFile="vc-static-d\mmex\"
+				ProgramDataBaseFileName="vc-static-d\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -290,13 +290,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxmsw28d_adv.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statd\sqlite3.lib"
-				OutputFile="vc_statd\mmex.exe"
+				AdditionalDependencies="BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxmsw28d_adv.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-d\sqlite3.lib"
+				OutputFile="vc-static-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_statd\mmex.pdb"
+				ProgramDatabaseFile="vc-static-d\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -327,8 +327,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug Multilib WX_PYTHON_1|Win32"
-			OutputDirectory="vc_statd"
-			IntermediateDirectory="vc_statd\mmex"
+			OutputDirectory="vc-static-d"
+			IntermediateDirectory="vc-static-d\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -344,8 +344,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_statd\mmex\"
-				ProgramDataBaseFileName="vc_statd\mmex.pdb"
+				ObjectFile="vc-static-d\mmex\"
+				ProgramDataBaseFileName="vc-static-d\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -355,13 +355,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statd\sqlite3.lib"
-				OutputFile="vc_statd\mmex.exe"
+				AdditionalDependencies="BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-d\sqlite3.lib"
+				OutputFile="vc-static-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_statd\mmex.pdb"
+				ProgramDatabaseFile="vc-static-d\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -392,8 +392,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug Monolithic WX_PYTHON_0|Win32"
-			OutputDirectory="vc_statd"
-			IntermediateDirectory="vc_statd\mmex"
+			OutputDirectory="vc-static-d"
+			IntermediateDirectory="vc-static-d\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -409,8 +409,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_statd\mmex\"
-				ProgramDataBaseFileName="vc_statd\mmex.pdb"
+				ObjectFile="vc-static-d\mmex\"
+				ProgramDataBaseFileName="vc-static-d\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -420,13 +420,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib       wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statd\sqlite3.lib"
-				OutputFile="vc_statd\mmex.exe"
+				AdditionalDependencies="BugTrap.lib       wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-d\sqlite3.lib"
+				OutputFile="vc-static-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_statd\mmex.pdb"
+				ProgramDatabaseFile="vc-static-d\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -457,8 +457,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug Monolithic WX_PYTHON_1|Win32"
-			OutputDirectory="vc_statd"
-			IntermediateDirectory="vc_statd\mmex"
+			OutputDirectory="vc-static-d"
+			IntermediateDirectory="vc-static-d\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -474,8 +474,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_statd\mmex\"
-				ProgramDataBaseFileName="vc_statd\mmex.pdb"
+				ObjectFile="vc-static-d\mmex\"
+				ProgramDataBaseFileName="vc-static-d\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -485,13 +485,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib       wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statd\sqlite3.lib"
-				OutputFile="vc_statd\mmex.exe"
+				AdditionalDependencies="BugTrap.lib       wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-d\sqlite3.lib"
+				OutputFile="vc-static-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_statd\mmex.pdb"
+				ProgramDatabaseFile="vc-static-d\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -522,8 +522,8 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Release Multilib WX_PYTHON_0|Win32"
-			OutputDirectory="vc_statu"
-			IntermediateDirectory="vc_statu\mmex"
+			OutputDirectory="vc-static-u"
+			IntermediateDirectory="vc-static-u\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -537,8 +537,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_statu\mmex\"
-				ProgramDataBaseFileName="vc_statu\mmex.pdb"
+				ObjectFile="vc-static-u\mmex\"
+				ProgramDataBaseFileName="vc-static-u\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -548,12 +548,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statu\sqlite3.lib"
-				OutputFile="vc_statu\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib"
+				OutputFile="vc-static-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
-				ProgramDatabaseFile="vc_statu\mmex.pdb"
+				ProgramDatabaseFile="vc-static-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -584,8 +584,8 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Release Multilib WX_PYTHON_1|Win32"
-			OutputDirectory="vc_statu"
-			IntermediateDirectory="vc_statu\mmex"
+			OutputDirectory="vc-static-u"
+			IntermediateDirectory="vc-static-u\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -599,8 +599,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_statu\mmex\"
-				ProgramDataBaseFileName="vc_statu\mmex.pdb"
+				ObjectFile="vc-static-u\mmex\"
+				ProgramDataBaseFileName="vc-static-u\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -610,12 +610,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statu\sqlite3.lib"
-				OutputFile="vc_statu\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib"
+				OutputFile="vc-static-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
-				ProgramDatabaseFile="vc_statu\mmex.pdb"
+				ProgramDatabaseFile="vc-static-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -646,8 +646,8 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Release Monolithic WX_PYTHON_0|Win32"
-			OutputDirectory="vc_statu"
-			IntermediateDirectory="vc_statu\mmex"
+			OutputDirectory="vc-static-u"
+			IntermediateDirectory="vc-static-u\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -661,8 +661,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_statu\mmex\"
-				ProgramDataBaseFileName="vc_statu\mmex.pdb"
+				ObjectFile="vc-static-u\mmex\"
+				ProgramDataBaseFileName="vc-static-u\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -672,12 +672,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib       wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statu\sqlite3.lib"
-				OutputFile="vc_statu\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib       wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib"
+				OutputFile="vc-static-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
-				ProgramDatabaseFile="vc_statu\mmex.pdb"
+				ProgramDatabaseFile="vc-static-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -708,8 +708,8 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Release Monolithic WX_PYTHON_1|Win32"
-			OutputDirectory="vc_statu"
-			IntermediateDirectory="vc_statu\mmex"
+			OutputDirectory="vc-static-u"
+			IntermediateDirectory="vc-static-u\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -723,8 +723,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_statu\mmex\"
-				ProgramDataBaseFileName="vc_statu\mmex.pdb"
+				ObjectFile="vc-static-u\mmex\"
+				ProgramDataBaseFileName="vc-static-u\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -734,12 +734,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib       wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statu\sqlite3.lib"
-				OutputFile="vc_statu\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib       wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib"
+				OutputFile="vc-static-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
-				ProgramDatabaseFile="vc_statu\mmex.pdb"
+				ProgramDatabaseFile="vc-static-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -770,8 +770,8 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Debug Multilib WX_PYTHON_0|Win32"
-			OutputDirectory="vc_statud"
-			IntermediateDirectory="vc_statud\mmex"
+			OutputDirectory="vc-static-ud"
+			IntermediateDirectory="vc-static-ud\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -788,8 +788,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_statud\mmex\"
-				ProgramDataBaseFileName="vc_statud\mmex.pdb"
+				ObjectFile="vc-static-ud\mmex\"
+				ProgramDataBaseFileName="vc-static-ud\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -799,13 +799,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxmsw28ud_adv.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statud\sqlite3.lib"
-				OutputFile="vc_statud\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxmsw28ud_adv.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-ud\sqlite3.lib"
+				OutputFile="vc-static-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_statud\mmex.pdb"
+				ProgramDatabaseFile="vc-static-ud\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -836,8 +836,8 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Debug Multilib WX_PYTHON_1|Win32"
-			OutputDirectory="vc_statud"
-			IntermediateDirectory="vc_statud\mmex"
+			OutputDirectory="vc-static-ud"
+			IntermediateDirectory="vc-static-ud\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -854,8 +854,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_statud\mmex\"
-				ProgramDataBaseFileName="vc_statud\mmex.pdb"
+				ObjectFile="vc-static-ud\mmex\"
+				ProgramDataBaseFileName="vc-static-ud\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -865,13 +865,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statud\sqlite3.lib"
-				OutputFile="vc_statud\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-ud\sqlite3.lib"
+				OutputFile="vc-static-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_statud\mmex.pdb"
+				ProgramDatabaseFile="vc-static-ud\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -902,8 +902,8 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Debug Monolithic WX_PYTHON_0|Win32"
-			OutputDirectory="vc_statud"
-			IntermediateDirectory="vc_statud\mmex"
+			OutputDirectory="vc-static-ud"
+			IntermediateDirectory="vc-static-ud\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -920,8 +920,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_statud\mmex\"
-				ProgramDataBaseFileName="vc_statud\mmex.pdb"
+				ObjectFile="vc-static-ud\mmex\"
+				ProgramDataBaseFileName="vc-static-ud\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -931,13 +931,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib       wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statud\sqlite3.lib"
-				OutputFile="vc_statud\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib       wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-ud\sqlite3.lib"
+				OutputFile="vc-static-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_statud\mmex.pdb"
+				ProgramDatabaseFile="vc-static-ud\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -968,8 +968,8 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Debug Monolithic WX_PYTHON_1|Win32"
-			OutputDirectory="vc_statud"
-			IntermediateDirectory="vc_statud\mmex"
+			OutputDirectory="vc-static-ud"
+			IntermediateDirectory="vc-static-ud\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -986,8 +986,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_statud\mmex\"
-				ProgramDataBaseFileName="vc_statud\mmex.pdb"
+				ObjectFile="vc-static-ud\mmex\"
+				ProgramDataBaseFileName="vc-static-ud\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -997,13 +997,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib       wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_statud\sqlite3.lib"
-				OutputFile="vc_statud\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib       wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-ud\sqlite3.lib"
+				OutputFile="vc-static-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_statud\mmex.pdb"
+				ProgramDatabaseFile="vc-static-ud\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1034,8 +1034,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Release Multilib WX_PYTHON_0|Win32"
-			OutputDirectory="vc_shar"
-			IntermediateDirectory="vc_shar\mmex"
+			OutputDirectory="vc-shared-"
+			IntermediateDirectory="vc-shared-\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -1048,8 +1048,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_shar\mmex\"
-				ProgramDataBaseFileName="vc_shar\mmex.pdb"
+				ObjectFile="vc-shared-\mmex\"
+				ProgramDataBaseFileName="vc-shared-\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1059,12 +1059,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_shar\sqlite3.lib"
-				OutputFile="vc_shar\mmex.exe"
+				AdditionalDependencies="BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib"
+				OutputFile="vc-shared-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
-				ProgramDatabaseFile="vc_shar\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1095,8 +1095,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Release Multilib WX_PYTHON_1|Win32"
-			OutputDirectory="vc_shar"
-			IntermediateDirectory="vc_shar\mmex"
+			OutputDirectory="vc-shared-"
+			IntermediateDirectory="vc-shared-\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -1109,8 +1109,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_shar\mmex\"
-				ProgramDataBaseFileName="vc_shar\mmex.pdb"
+				ObjectFile="vc-shared-\mmex\"
+				ProgramDataBaseFileName="vc-shared-\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1120,12 +1120,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_shar\sqlite3.lib"
-				OutputFile="vc_shar\mmex.exe"
+				AdditionalDependencies="BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib"
+				OutputFile="vc-shared-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
-				ProgramDatabaseFile="vc_shar\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1156,8 +1156,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Release Monolithic WX_PYTHON_0|Win32"
-			OutputDirectory="vc_shar"
-			IntermediateDirectory="vc_shar\mmex"
+			OutputDirectory="vc-shared-"
+			IntermediateDirectory="vc-shared-\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -1170,8 +1170,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_shar\mmex\"
-				ProgramDataBaseFileName="vc_shar\mmex.pdb"
+				ObjectFile="vc-shared-\mmex\"
+				ProgramDataBaseFileName="vc-shared-\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1181,12 +1181,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib       wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_shar\sqlite3.lib"
-				OutputFile="vc_shar\mmex.exe"
+				AdditionalDependencies="BugTrap.lib       wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib"
+				OutputFile="vc-shared-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
-				ProgramDatabaseFile="vc_shar\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1217,8 +1217,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Release Monolithic WX_PYTHON_1|Win32"
-			OutputDirectory="vc_shar"
-			IntermediateDirectory="vc_shar\mmex"
+			OutputDirectory="vc-shared-"
+			IntermediateDirectory="vc-shared-\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -1231,8 +1231,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_shar\mmex\"
-				ProgramDataBaseFileName="vc_shar\mmex.pdb"
+				ObjectFile="vc-shared-\mmex\"
+				ProgramDataBaseFileName="vc-shared-\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1242,12 +1242,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib       wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_shar\sqlite3.lib"
-				OutputFile="vc_shar\mmex.exe"
+				AdditionalDependencies="BugTrap.lib       wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib"
+				OutputFile="vc-shared-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
-				ProgramDatabaseFile="vc_shar\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1278,8 +1278,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Debug Multilib WX_PYTHON_0|Win32"
-			OutputDirectory="vc_shard"
-			IntermediateDirectory="vc_shard\mmex"
+			OutputDirectory="vc-shared-d"
+			IntermediateDirectory="vc-shared-d\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -1295,8 +1295,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_shard\mmex\"
-				ProgramDataBaseFileName="vc_shard\mmex.pdb"
+				ObjectFile="vc-shared-d\mmex\"
+				ProgramDataBaseFileName="vc-shared-d\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1306,13 +1306,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxmsw28d_adv.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_shard\sqlite3.lib"
-				OutputFile="vc_shard\mmex.exe"
+				AdditionalDependencies="BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxmsw28d_adv.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-d\sqlite3.lib"
+				OutputFile="vc-shared-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_shard\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-d\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1343,8 +1343,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Debug Multilib WX_PYTHON_1|Win32"
-			OutputDirectory="vc_shard"
-			IntermediateDirectory="vc_shard\mmex"
+			OutputDirectory="vc-shared-d"
+			IntermediateDirectory="vc-shared-d\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -1360,8 +1360,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_shard\mmex\"
-				ProgramDataBaseFileName="vc_shard\mmex.pdb"
+				ObjectFile="vc-shared-d\mmex\"
+				ProgramDataBaseFileName="vc-shared-d\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1371,13 +1371,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_shard\sqlite3.lib"
-				OutputFile="vc_shard\mmex.exe"
+				AdditionalDependencies="BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-d\sqlite3.lib"
+				OutputFile="vc-shared-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_shard\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-d\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1408,8 +1408,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Debug Monolithic WX_PYTHON_0|Win32"
-			OutputDirectory="vc_shard"
-			IntermediateDirectory="vc_shard\mmex"
+			OutputDirectory="vc-shared-d"
+			IntermediateDirectory="vc-shared-d\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -1425,8 +1425,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_shard\mmex\"
-				ProgramDataBaseFileName="vc_shard\mmex.pdb"
+				ObjectFile="vc-shared-d\mmex\"
+				ProgramDataBaseFileName="vc-shared-d\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1436,13 +1436,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib       wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_shard\sqlite3.lib"
-				OutputFile="vc_shard\mmex.exe"
+				AdditionalDependencies="BugTrap.lib       wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-d\sqlite3.lib"
+				OutputFile="vc-shared-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_shard\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-d\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1473,8 +1473,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Debug Monolithic WX_PYTHON_1|Win32"
-			OutputDirectory="vc_shard"
-			IntermediateDirectory="vc_shard\mmex"
+			OutputDirectory="vc-shared-d"
+			IntermediateDirectory="vc-shared-d\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -1490,8 +1490,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_shard\mmex\"
-				ProgramDataBaseFileName="vc_shard\mmex.pdb"
+				ObjectFile="vc-shared-d\mmex\"
+				ProgramDataBaseFileName="vc-shared-d\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1501,13 +1501,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib       wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_shard\sqlite3.lib"
-				OutputFile="vc_shard\mmex.exe"
+				AdditionalDependencies="BugTrap.lib       wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-d\sqlite3.lib"
+				OutputFile="vc-shared-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_shard\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-d\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1538,8 +1538,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Unicode Release Multilib WX_PYTHON_0|Win32"
-			OutputDirectory="vc_sharu"
-			IntermediateDirectory="vc_sharu\mmex"
+			OutputDirectory="vc-shared-u"
+			IntermediateDirectory="vc-shared-u\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -1553,8 +1553,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_sharu\mmex\"
-				ProgramDataBaseFileName="vc_sharu\mmex.pdb"
+				ObjectFile="vc-shared-u\mmex\"
+				ProgramDataBaseFileName="vc-shared-u\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1564,12 +1564,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_sharu\sqlite3.lib"
-				OutputFile="vc_sharu\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib"
+				OutputFile="vc-shared-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
-				ProgramDatabaseFile="vc_sharu\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1600,8 +1600,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Unicode Release Multilib WX_PYTHON_1|Win32"
-			OutputDirectory="vc_sharu"
-			IntermediateDirectory="vc_sharu\mmex"
+			OutputDirectory="vc-shared-u"
+			IntermediateDirectory="vc-shared-u\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -1615,8 +1615,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_sharu\mmex\"
-				ProgramDataBaseFileName="vc_sharu\mmex.pdb"
+				ObjectFile="vc-shared-u\mmex\"
+				ProgramDataBaseFileName="vc-shared-u\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1626,12 +1626,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_sharu\sqlite3.lib"
-				OutputFile="vc_sharu\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib"
+				OutputFile="vc-shared-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
-				ProgramDatabaseFile="vc_sharu\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1662,8 +1662,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Unicode Release Monolithic WX_PYTHON_0|Win32"
-			OutputDirectory="vc_sharu"
-			IntermediateDirectory="vc_sharu\mmex"
+			OutputDirectory="vc-shared-u"
+			IntermediateDirectory="vc-shared-u\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -1677,8 +1677,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_sharu\mmex\"
-				ProgramDataBaseFileName="vc_sharu\mmex.pdb"
+				ObjectFile="vc-shared-u\mmex\"
+				ProgramDataBaseFileName="vc-shared-u\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1688,12 +1688,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib       wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_sharu\sqlite3.lib"
-				OutputFile="vc_sharu\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib       wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib"
+				OutputFile="vc-shared-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
-				ProgramDatabaseFile="vc_sharu\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1724,8 +1724,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Unicode Release Monolithic WX_PYTHON_1|Win32"
-			OutputDirectory="vc_sharu"
-			IntermediateDirectory="vc_sharu\mmex"
+			OutputDirectory="vc-shared-u"
+			IntermediateDirectory="vc-shared-u\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -1739,8 +1739,8 @@
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_sharu\mmex\"
-				ProgramDataBaseFileName="vc_sharu\mmex.pdb"
+				ObjectFile="vc-shared-u\mmex\"
+				ProgramDataBaseFileName="vc-shared-u\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1750,12 +1750,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib       wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_sharu\sqlite3.lib"
-				OutputFile="vc_sharu\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib       wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib"
+				OutputFile="vc-shared-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
-				ProgramDatabaseFile="vc_sharu\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1786,8 +1786,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Unicode Debug Multilib WX_PYTHON_0|Win32"
-			OutputDirectory="vc_sharud"
-			IntermediateDirectory="vc_sharud\mmex"
+			OutputDirectory="vc-shared-ud"
+			IntermediateDirectory="vc-shared-ud\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -1804,8 +1804,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_sharud\mmex\"
-				ProgramDataBaseFileName="vc_sharud\mmex.pdb"
+				ObjectFile="vc-shared-ud\mmex\"
+				ProgramDataBaseFileName="vc-shared-ud\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1815,13 +1815,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxmsw28ud_adv.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_sharud\sqlite3.lib"
-				OutputFile="vc_sharud\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxmsw28ud_adv.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-ud\sqlite3.lib"
+				OutputFile="vc-shared-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_sharud\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-ud\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1852,8 +1852,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Unicode Debug Multilib WX_PYTHON_1|Win32"
-			OutputDirectory="vc_sharud"
-			IntermediateDirectory="vc_sharud\mmex"
+			OutputDirectory="vc-shared-ud"
+			IntermediateDirectory="vc-shared-ud\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -1870,8 +1870,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_sharud\mmex\"
-				ProgramDataBaseFileName="vc_sharud\mmex.pdb"
+				ObjectFile="vc-shared-ud\mmex\"
+				ProgramDataBaseFileName="vc-shared-ud\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1881,13 +1881,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_sharud\sqlite3.lib"
-				OutputFile="vc_sharud\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-ud\sqlite3.lib"
+				OutputFile="vc-shared-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_sharud\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-ud\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1918,8 +1918,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Unicode Debug Monolithic WX_PYTHON_0|Win32"
-			OutputDirectory="vc_sharud"
-			IntermediateDirectory="vc_sharud\mmex"
+			OutputDirectory="vc-shared-ud"
+			IntermediateDirectory="vc-shared-ud\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -1936,8 +1936,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_sharud\mmex\"
-				ProgramDataBaseFileName="vc_sharud\mmex.pdb"
+				ObjectFile="vc-shared-ud\mmex\"
+				ProgramDataBaseFileName="vc-shared-ud\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1947,13 +1947,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib       wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_sharud\sqlite3.lib"
-				OutputFile="vc_sharud\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib       wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-ud\sqlite3.lib"
+				OutputFile="vc-shared-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_sharud\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-ud\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -1984,8 +1984,8 @@
 		</Configuration>
 		<Configuration
 			Name="DLL Unicode Debug Monolithic WX_PYTHON_1|Win32"
-			OutputDirectory="vc_sharud"
-			IntermediateDirectory="vc_sharud\mmex"
+			OutputDirectory="vc-shared-ud"
+			IntermediateDirectory="vc-shared-ud\mmex"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -2002,8 +2002,8 @@
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="TRUE"
-				ObjectFile="vc_sharud\mmex\"
-				ProgramDataBaseFileName="vc_sharud\mmex.pdb"
+				ObjectFile="vc-shared-ud\mmex\"
+				ProgramDataBaseFileName="vc-shared-ud\mmex.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -2013,13 +2013,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib       wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc_sharud\sqlite3.lib"
-				OutputFile="vc_sharud\mmex.exe"
+				AdditionalDependencies="BugTrapU.lib       wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-ud\sqlite3.lib"
+				OutputFile="vc-shared-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="vc_sharud\mmex.pdb"
+				ProgramDatabaseFile="vc-shared-ud\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool

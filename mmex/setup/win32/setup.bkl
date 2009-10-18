@@ -21,7 +21,7 @@
 
             <!-- see mmex.bkl for definition of APP_EXE_PATH and others -->
             <command>
-               iscc.exe $(SETUP_SCRIPT) -dAppExePath="$(DOLLAR)(APP_EXE_PATH)" -dBuildOpts="$(DOLLAR)(BUILD_OPTS)"
+               iscc.exe $(SETUP_SCRIPT) -dOutputDir="$(DOLLAR)(OUTPUT_DIR)" -dAppExePath="$(DOLLAR)(APP_EXE_PATH)" -dBuildOpts="$(DOLLAR)(BUILD_OPTS)"
             </command>
 
             <clean-files>*.exe</clean-files>

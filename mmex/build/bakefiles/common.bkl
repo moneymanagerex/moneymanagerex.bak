@@ -55,8 +55,8 @@
         <!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
     
 	<set var="SHAREDBUILDPOSTFIX">
-            <if cond="WX_SHARED=='0'">stat</if>
-            <if cond="WX_SHARED=='1'">shar</if>
+            <if cond="WX_SHARED=='0'">static</if>
+            <if cond="WX_SHARED=='1'">shared</if>
 	</set>
 
 	

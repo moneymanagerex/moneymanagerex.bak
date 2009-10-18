@@ -49,9 +49,12 @@
         <installable>no</installable>
         <dir>$(SRCDIR)/setup/win32</dir>
 
+        <set var="OUTPUT_DIR">
+            $(os.path.abspath( os.path.dirname(OUTPUT_FILE) + DIRSEP + BUILDDIR ))
+        </set>
+
         <set var="MMEX_PATH">
-            <!-- absolute path to built executable -->
-            $(os.path.abspath(os.path.dirname(OUTPUT_FILE)) + DIRSEP + BUILDDIR + DIRSEP + 'mmex' + EXEEXT)
+            $(OUTPUT_DIR + DIRSEP + 'mmex' + EXEEXT)
         </set>
         
         <set var="SHARED">
@@ -72,7 +75,7 @@
         </set>
         
         <target>
-            APP_EXE_PATH="$(MMEX_PATH)" BUILD_OPTS="$(SHARED)$(UNICODE)$(DEBUG)" all
+            OUTPUT_DIR="$(OUTPUT_DIR)" APP_EXE_PATH="$(MMEX_PATH)" BUILD_OPTS="$(SHARED)$(UNICODE)$(DEBUG)" all
         </target>
 
     </subproject>
