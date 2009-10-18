@@ -127,16 +127,14 @@
         
             <!-- Program Database -->
 
-            <cxxflags>
-                <if cond="WX_DEBUG=='0'">/Zi</if>
-            </cxxflags>
+            <set var="CL_FLAGS"><if cond="WX_DEBUG=='0'">/Zi</if></set>
+            <cxxflags>$(CL_FLAGS)</cxxflags>
 
             <!-- /opt:ref option suppressed by using /debug linker option by default
                   but should be always enabled for release builds -->
 
-            <ldflags>
-                <if cond="WX_DEBUG=='0'">/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF</if>
-            </ldflags>
+            <set var="LINK_FLAGS"><if cond="WX_DEBUG=='0'">/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF</if></set>
+            <ldflags>$(LINK_FLAGS)</ldflags>
 
         </if>
 

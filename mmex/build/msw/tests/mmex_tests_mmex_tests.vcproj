@@ -25,7 +25,7 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -42,7 +42,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28_core.lib wxmsw28_qa.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib vc-static-\UnitTestPP.lib"
 				OutputFile="vc-static-\mmex_tests.exe"
 				LinkIncremental="1"
@@ -86,7 +86,7 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -103,7 +103,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28h_core.lib wxmsw28h_qa.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib vc-static-\UnitTestPP.lib"
 				OutputFile="vc-static-\mmex_tests.exe"
 				LinkIncremental="1"
@@ -147,7 +147,7 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -164,7 +164,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib vc-static-\UnitTestPP.lib"
 				OutputFile="vc-static-\mmex_tests.exe"
 				LinkIncremental="1"
@@ -208,7 +208,7 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -225,7 +225,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib vc-static-\UnitTestPP.lib"
 				OutputFile="vc-static-\mmex_tests.exe"
 				LinkIncremental="1"
@@ -530,7 +530,7 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -547,7 +547,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28u_core.lib wxmsw28u_qa.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib vc-static-u\UnitTestPP.lib"
 				OutputFile="vc-static-u\mmex_tests.exe"
 				LinkIncremental="1"
@@ -592,7 +592,7 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -609,7 +609,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28uh_core.lib wxmsw28uh_qa.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib vc-static-u\UnitTestPP.lib"
 				OutputFile="vc-static-u\mmex_tests.exe"
 				LinkIncremental="1"
@@ -654,7 +654,7 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -671,7 +671,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib vc-static-u\UnitTestPP.lib"
 				OutputFile="vc-static-u\mmex_tests.exe"
 				LinkIncremental="1"
@@ -716,7 +716,7 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -733,7 +733,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib vc-static-u\UnitTestPP.lib"
 				OutputFile="vc-static-u\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1041,7 +1041,7 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -1058,7 +1058,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28_core.lib wxmsw28_qa.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib vc-shared-\UnitTestPP.lib"
 				OutputFile="vc-shared-\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1102,7 +1102,7 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -1119,7 +1119,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28h_core.lib wxmsw28h_qa.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib vc-shared-\UnitTestPP.lib"
 				OutputFile="vc-shared-\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1163,7 +1163,7 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -1180,7 +1180,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib vc-shared-\UnitTestPP.lib"
 				OutputFile="vc-shared-\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1224,7 +1224,7 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -1241,7 +1241,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib vc-shared-\UnitTestPP.lib"
 				OutputFile="vc-shared-\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1546,7 +1546,7 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -1563,7 +1563,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28u_core.lib wxmsw28u_qa.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib vc-shared-u\UnitTestPP.lib"
 				OutputFile="vc-shared-u\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1608,7 +1608,7 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -1625,7 +1625,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28uh_core.lib wxmsw28uh_qa.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib vc-shared-u\UnitTestPP.lib"
 				OutputFile="vc-shared-u\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1670,7 +1670,7 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -1687,7 +1687,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib vc-shared-u\UnitTestPP.lib"
 				OutputFile="vc-shared-u\mmex_tests.exe"
 				LinkIncremental="1"
@@ -1732,7 +1732,7 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
@@ -1749,7 +1749,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions=""
+				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF /OPT:ICF"
 				AdditionalDependencies="wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib vc-shared-u\UnitTestPP.lib"
 				OutputFile="vc-shared-u\mmex_tests.exe"
 				LinkIncremental="1"
