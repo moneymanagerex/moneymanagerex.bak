@@ -46,10 +46,8 @@ MMEX_TESTS_CXXFLAGS = /MD$(__DEBUGINFO_1) /DWIN32 $(__WXUNICODE_DEFINE_p) \
 	/I$(WX_DIR)\include /W4 $(__DEBUGINFO) $(____DEBUGINFO) \
 	/Fdvc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_tests.pdb \
 	$(__OPTIMIZEFLAG) $(__DEBUG_DEFINE_p) /I..\..\..\include /I..\..\..\sqlite \
-	/DNOPCH /I..\..\..\BugTrap /D_CONSOLE /I..\..\..\src \
-	/I..\..\..\UnitTest++\src /EHsc /GR -DWXSQLITE3_HAVE_CODEC \
-	-DWXSQLITE3_HAVE_METADATA $(__mmex_tests_COMP_FLAGS) $(CPPFLAGS) \
-	$(CXXFLAGS)
+	/DNOPCH /D_CONSOLE /I..\..\..\src /I..\..\..\UnitTest++\src /EHsc /GR \
+	-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_tests_aboutdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_tests_appstartdialog.obj \
@@ -153,20 +151,11 @@ __DEBUG_DEFINE_p_3 = /d NDEBUG
 !if "$(WX_DEBUG)" == "1"
 __DEBUG_DEFINE_p_3 = /d _DEBUG
 !endif
-!if "$(WX_UNICODE)" == "0"
-____mmex_tests_BugTrapLib_p = BugTrap.lib
-!endif
-!if "$(WX_UNICODE)" == "1"
-____mmex_tests_BugTrapLib_p = BugTrapU.lib
-!endif
-!if "$(WX_DEBUG)" == "0"
-__mmex_tests_COMP_FLAGS = /Zi
-!endif
-!if "$(WX_DEBUG)" == "0"
-__mmex_tests_LINK_FLAGS = /DEBUG /MAP /MAPINFO:EXPORTS
-!endif
 !if "$(WX_MONOLITHIC)" == "0"
 __WXLIB_CORE_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_core.lib
+!endif
+!if "$(WX_MONOLITHIC)" == "0"
+__WXLIB_QA_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_qa.lib
 !endif
 !if "$(WX_MONOLITHIC)" == "0"
 __WXLIB_NET_NAME_p = wxbase$(WX_VERSION)$(WXLIBPOSTFIX)_net.lib
@@ -285,8 +274,8 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\UnitTestPP.l
 <<
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_tests.exe: $(MMEX_TESTS_OBJECTS) vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\UnitTestPP.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_tests_mmex_tests.res
-	link /NOLOGO /OUT:$@  /LIBPATH:$(WX_DIR)$(__WXLIBPATH_FILENAMES)  $(__DEBUGINFO_33) /pdb:"vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_tests.pdb" /LIBPATH:..\..\..\BugTrap $(__mmex_tests_LINK_FLAGS) /SUBSYSTEM:CONSOLE $(LDFLAGS) @<<
-	$(MMEX_TESTS_OBJECTS)  $(____mmex_tests_BugTrapLib_p) $(__WXLIB_CORE_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_ADV_NAME_p) $(__WXLIB_BASE_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\UnitTestPP.lib
+	link /NOLOGO /OUT:$@  /LIBPATH:$(WX_DIR)$(__WXLIBPATH_FILENAMES)  $(__DEBUGINFO_33) /pdb:"vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_tests.pdb"  /SUBSYSTEM:CONSOLE $(LDFLAGS) @<<
+	$(MMEX_TESTS_OBJECTS)  $(__WXLIB_CORE_NAME_p) $(__WXLIB_QA_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_ADV_NAME_p) $(__WXLIB_BASE_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\sqlite3.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\UnitTestPP.lib
 <<
 
 check: all
@@ -515,5 +504,5 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_tests_u
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\tests\utils.cpp
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)\mmex_tests_mmex_tests.res: ..\..\..\src\tests\mmex_tests.rc
-	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include $(____DEBUGINFO_34_p_1) $(__DEBUG_DEFINE_p_3) /i ..\..\..\include /i ..\..\..\sqlite /d NOPCH /i ..\..\..\BugTrap /d _CONSOLE /i ..\..\..\src /i ..\..\..\UnitTest++\src ..\..\..\src\tests\mmex_tests.rc
+	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include $(____DEBUGINFO_34_p_1) $(__DEBUG_DEFINE_p_3) /i ..\..\..\include /i ..\..\..\sqlite /d NOPCH /d _CONSOLE /i ..\..\..\src /i ..\..\..\UnitTest++\src ..\..\..\src\tests\mmex_tests.rc
 

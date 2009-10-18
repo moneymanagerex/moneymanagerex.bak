@@ -121,34 +121,22 @@
         <sources>$(fileList('src/*.cpp'))</sources>
 
 
-        <!-- Microsoft compilers only, add BugTrap lib -->
+        <!-- Microsoft compilers only, enable PDB for Release build -->
 
         <if cond="FORMAT.startswith('msv')">
+        
+            <!-- Program Database -->
 
-            <include>$(SRCDIR)/BugTrap</include>
-            <lib-path>$(SRCDIR)/BugTrap</lib-path>
-
-            <set var="BugTrapLib">
-                <if cond="WX_UNICODE=='0'">BugTrap</if>
-                <if cond="WX_UNICODE=='1'">BugTrapU</if>
-            </set>
-
-            <sys-lib>$(BugTrapLib)</sys-lib>
-
-
-            <!-- For BugTrap: enable PDB files for Release configuration -->
-
-            <set var="COMP_FLAGS">
-                <!-- /Zi - Program Database -->
+            <cxxflags>
                 <if cond="WX_DEBUG=='0'">/Zi</if>
-            </set>
+            </cxxflags>
 
-            <set var="LINK_FLAGS">
-                <if cond="WX_DEBUG=='0'">/DEBUG /MAP /MAPINFO:EXPORTS</if>
-            </set>
+            <!-- /opt:ref option suppressed by using /debug linker option by default
+                  but should be always enabled for release builds -->
 
-            <cxxflags>$(COMP_FLAGS)</cxxflags>
-            <ldflags>$(LINK_FLAGS)</ldflags>
+            <ldflags>
+                <if cond="WX_DEBUG=='0'">/DEBUG /MAP /MAPINFO:EXPORTS /OPT:REF</if>
+            </ldflags>
 
         </if>
 
@@ -156,6 +144,7 @@
         <!-- wxWidgets libs -->
 
         <wx-lib>core</wx-lib>
+        <wx-lib>qa</wx-lib>
         <wx-lib>net</wx-lib>                
         <wx-lib>html</wx-lib>                
         <wx-lib>xml</wx-lib>

@@ -110,9 +110,11 @@
 #include "../resources/user_edit.xpm"
 #include "../resources/wrench.xpm"
 
+//----------------------------------------------------------------------------
+#include <wx/debugrpt.h>
+//----------------------------------------------------------------------------
 #include <string>
 #include <boost/scoped_array.hpp>
-
 //----------------------------------------------------------------------------
 
 namespace
@@ -135,42 +137,35 @@ wxString getMMEXIconPath()
 }
 //----------------------------------------------------------------------------
 
-#ifdef _MSC_VER
-
-#include "BugTrap.h"
-
-void setupBugTrap()
+/*
+    See also: wxStackWalker, wxDebugReportUpload.
+*/
+void reportFatalException(wxDebugReport::Context ctx)
 {
-    BT_InstallSehFilter(); // must be called
-    BT_SetTerminate(); // set_terminate() must be called from every thread
+    wxDebugReportCompress rep;
 
-    UINT dwMode = SetErrorMode(SEM_NOGPFAULTERRORBOX); // returns original flags
-    SetErrorMode(dwMode | SEM_NOGPFAULTERRORBOX);
+    if (!rep.IsOk()) 
+    {
+        wxSafeShowMessage(mmIniOptions::appName_, _("Fatal error occured.\nApplication will be terminated."));
+        return;
+    } 
 
-    // --
+    rep.AddAll(ctx);
 
-    BOOL ok = BT_ReadVersionInfo(0); // read from resources of executable
-    wxASSERT(ok);
-    wxUnusedVar(ok); // suppresses warning in RELEASE build
+    wxDebugReportPreviewStd preview;
 
-    BT_SetDialogMessage(BTDM_INTRO1, _T("Money Manager Ex has encountered an unrecoverable error and needs to close!"));
-    BT_SetDialogMessage(BTDM_INTRO2, _T("To help fix this issue, please save the information in this crash report and send it to us."));
-    BT_SetFlags(BTF_DETAILEDMODE);
-
-    BT_SetSupportURL(_T("http://www.codelathe.com/mmex"));
-    // BT_SetSupportEMail(_T("kkkvadim@sourceforge.net"));
+    if (preview.Show(rep) && rep.Process()) {
+        rep.Reset();
+    }
 }
-#else
-inline void setupBugTrap() {}
-#endif // _MSC_VER
 //----------------------------------------------------------------------------
 
-bool OnInitImpl(wxLocale &locale)
+bool OnInitImpl(mmGUIApp &app)
 {
-    setupBugTrap();
+    app.SetAppName(mmIniOptions::appName_); // TODO: read from version resource
 
     /* Setting Locale causes unexpected problems, so default to English Locale */
-    locale.Init(wxLANGUAGE_ENGLISH);
+    app.getLocale().Init(wxLANGUAGE_ENGLISH);
 
     /* Initialize Image Handlers */
     wxImage::AddHandler( new wxICOHandler ); 
@@ -3591,6 +3586,13 @@ wxSizer* mmGUIFrame::cleanupHomePanel(bool new_sizer)
     return homePanel->GetSizer();
 }
 //----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+
+mmGUIApp::mmGUIApp()
+{
+    wxHandleFatalExceptions(); // tell the library to call OnFatalException()
+}
+//----------------------------------------------------------------------------
 
 /*
     This method allows catching the exceptions thrown by any event handler.
@@ -3619,7 +3621,7 @@ bool mmGUIApp::OnInit()
 
     try
     {
-        ok = OnInitImpl(m_locale);
+        ok = wxApp::OnInit() && OnInitImpl(*this);
     } 
     catch (wxSQLite3Exception &e)
     {
@@ -3632,5 +3634,11 @@ bool mmGUIApp::OnInit()
     }
 
     return ok;
+}
+//----------------------------------------------------------------------------
+    
+void mmGUIApp::OnFatalException()
+{
+    reportFatalException(wxDebugReport::Context_Exception);
 }
 //----------------------------------------------------------------------------

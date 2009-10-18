@@ -25,9 +25,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -42,19 +42,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28_core.lib wxmsw28_qa.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib"
 				OutputFile="vc-static-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				ProgramDatabaseFile="vc-static-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -65,7 +65,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -86,9 +86,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -103,19 +103,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28h_core.lib wxmsw28h_qa.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib"
 				OutputFile="vc-static-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				ProgramDatabaseFile="vc-static-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -126,7 +126,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -147,9 +147,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -164,19 +164,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib       wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib"
 				OutputFile="vc-static-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				ProgramDatabaseFile="vc-static-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -187,7 +187,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -208,9 +208,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -225,19 +225,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib       wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-\sqlite3.lib"
 				OutputFile="vc-static-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				ProgramDatabaseFile="vc-static-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -248,7 +248,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -271,7 +271,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -290,11 +290,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxmsw28d_adv.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-d\sqlite3.lib"
+				AdditionalDependencies="wxmsw28d_core.lib wxmsw28d_qa.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxmsw28d_adv.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-d\sqlite3.lib"
 				OutputFile="vc-static-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-static-d\mmex.pdb"
 				SubSystem="2"
@@ -302,7 +302,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -313,7 +313,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -336,7 +336,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -355,11 +355,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-d\sqlite3.lib"
+				AdditionalDependencies="wxmsw28h_core.lib wxmsw28h_qa.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-d\sqlite3.lib"
 				OutputFile="vc-static-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-static-d\mmex.pdb"
 				SubSystem="2"
@@ -367,7 +367,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -378,7 +378,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -401,7 +401,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -420,11 +420,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib       wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-d\sqlite3.lib"
+				AdditionalDependencies="wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-d\sqlite3.lib"
 				OutputFile="vc-static-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-static-d\mmex.pdb"
 				SubSystem="2"
@@ -432,7 +432,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -443,7 +443,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -466,7 +466,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -485,11 +485,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib       wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-d\sqlite3.lib"
+				AdditionalDependencies="wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-d\sqlite3.lib"
 				OutputFile="vc-static-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-static-d\mmex.pdb"
 				SubSystem="2"
@@ -497,7 +497,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -508,7 +508,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -530,9 +530,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -547,19 +547,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28u_core.lib wxmsw28u_qa.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib"
 				OutputFile="vc-static-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				ProgramDatabaseFile="vc-static-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -570,7 +570,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -592,9 +592,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -609,19 +609,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28uh_core.lib wxmsw28uh_qa.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib"
 				OutputFile="vc-static-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				ProgramDatabaseFile="vc-static-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -632,7 +632,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -654,9 +654,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -671,19 +671,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib       wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib"
 				OutputFile="vc-static-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				ProgramDatabaseFile="vc-static-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -694,7 +694,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -716,9 +716,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -733,19 +733,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib       wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-u\sqlite3.lib"
 				OutputFile="vc-static-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				ProgramDatabaseFile="vc-static-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -756,7 +756,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -780,7 +780,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -799,11 +799,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxmsw28ud_adv.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-ud\sqlite3.lib"
+				AdditionalDependencies="wxmsw28ud_core.lib wxmsw28ud_qa.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxmsw28ud_adv.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-ud\sqlite3.lib"
 				OutputFile="vc-static-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-static-ud\mmex.pdb"
 				SubSystem="2"
@@ -811,7 +811,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -822,7 +822,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -846,7 +846,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -865,11 +865,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-ud\sqlite3.lib"
+				AdditionalDependencies="wxmsw28uh_core.lib wxmsw28uh_qa.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-ud\sqlite3.lib"
 				OutputFile="vc-static-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-static-ud\mmex.pdb"
 				SubSystem="2"
@@ -877,7 +877,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -888,7 +888,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -912,7 +912,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -931,11 +931,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib       wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-ud\sqlite3.lib"
+				AdditionalDependencies="wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-ud\sqlite3.lib"
 				OutputFile="vc-static-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-static-ud\mmex.pdb"
 				SubSystem="2"
@@ -943,7 +943,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -954,7 +954,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -978,7 +978,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -997,11 +997,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib       wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-ud\sqlite3.lib"
+				AdditionalDependencies="wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-static-ud\sqlite3.lib"
 				OutputFile="vc-static-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-static-ud\mmex.pdb"
 				SubSystem="2"
@@ -1009,7 +1009,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1020,7 +1020,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1041,9 +1041,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1058,19 +1058,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib wxmsw28_core.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28_core.lib wxmsw28_qa.lib wxbase28_net.lib wxmsw28_html.lib wxbase28_xml.lib wxmsw28_aui.lib wxmsw28_adv.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib"
 				OutputFile="vc-shared-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				ProgramDatabaseFile="vc-shared-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1081,7 +1081,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1102,9 +1102,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1119,19 +1119,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28h_core.lib wxmsw28h_qa.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib"
 				OutputFile="vc-shared-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				ProgramDatabaseFile="vc-shared-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1142,7 +1142,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1163,9 +1163,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1180,19 +1180,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib       wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib"
 				OutputFile="vc-shared-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				ProgramDatabaseFile="vc-shared-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1203,7 +1203,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1224,9 +1224,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1241,19 +1241,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrap.lib       wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-\sqlite3.lib"
 				OutputFile="vc-shared-\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				ProgramDatabaseFile="vc-shared-\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1264,7 +1264,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1287,7 +1287,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1306,11 +1306,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib wxmsw28d_core.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxmsw28d_adv.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-d\sqlite3.lib"
+				AdditionalDependencies="wxmsw28d_core.lib wxmsw28d_qa.lib wxbase28d_net.lib wxmsw28d_html.lib wxbase28d_xml.lib wxmsw28d_aui.lib wxmsw28d_adv.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-d\sqlite3.lib"
 				OutputFile="vc-shared-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-shared-d\mmex.pdb"
 				SubSystem="2"
@@ -1318,7 +1318,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1329,7 +1329,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1352,7 +1352,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1371,11 +1371,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib wxmsw28h_core.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-d\sqlite3.lib"
+				AdditionalDependencies="wxmsw28h_core.lib wxmsw28h_qa.lib wxbase28h_net.lib wxmsw28h_html.lib wxbase28h_xml.lib wxmsw28h_aui.lib wxmsw28h_adv.lib wxbase28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-d\sqlite3.lib"
 				OutputFile="vc-shared-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-shared-d\mmex.pdb"
 				SubSystem="2"
@@ -1383,7 +1383,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1394,7 +1394,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1417,7 +1417,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1436,11 +1436,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib       wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-d\sqlite3.lib"
+				AdditionalDependencies="wxmsw28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-d\sqlite3.lib"
 				OutputFile="vc-shared-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-shared-d\mmex.pdb"
 				SubSystem="2"
@@ -1448,7 +1448,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1459,7 +1459,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1482,7 +1482,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1501,11 +1501,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrap.lib       wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-d\sqlite3.lib"
+				AdditionalDependencies="wxmsw28h.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-d\sqlite3.lib"
 				OutputFile="vc-shared-d\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-shared-d\mmex.pdb"
 				SubSystem="2"
@@ -1513,7 +1513,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1524,7 +1524,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1546,9 +1546,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1563,19 +1563,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib wxmsw28u_core.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28u_core.lib wxmsw28u_qa.lib wxbase28u_net.lib wxmsw28u_html.lib wxbase28u_xml.lib wxmsw28u_aui.lib wxmsw28u_adv.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib"
 				OutputFile="vc-shared-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				ProgramDatabaseFile="vc-shared-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1586,7 +1586,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1608,9 +1608,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1625,19 +1625,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28uh_core.lib wxmsw28uh_qa.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib"
 				OutputFile="vc-shared-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				ProgramDatabaseFile="vc-shared-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1648,7 +1648,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1670,9 +1670,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1687,19 +1687,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib       wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib"
 				OutputFile="vc-shared-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				ProgramDatabaseFile="vc-shared-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1710,7 +1710,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1732,9 +1732,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1749,19 +1749,19 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/DEBUG /MAP /MAPINFO:EXPORTS"
-				AdditionalDependencies="BugTrapU.lib       wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib"
+				AdditionalOptions=""
+				AdditionalDependencies="wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-u\sqlite3.lib"
 				OutputFile="vc-shared-u\mmex.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				ProgramDatabaseFile="vc-shared-u\mmex.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1772,7 +1772,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1796,7 +1796,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1815,11 +1815,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib wxmsw28ud_core.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxmsw28ud_adv.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-ud\sqlite3.lib"
+				AdditionalDependencies="wxmsw28ud_core.lib wxmsw28ud_qa.lib wxbase28ud_net.lib wxmsw28ud_html.lib wxbase28ud_xml.lib wxmsw28ud_aui.lib wxmsw28ud_adv.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-ud\sqlite3.lib"
 				OutputFile="vc-shared-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-shared-ud\mmex.pdb"
 				SubSystem="2"
@@ -1827,7 +1827,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1838,7 +1838,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1862,7 +1862,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1881,11 +1881,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib wxmsw28uh_core.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-ud\sqlite3.lib"
+				AdditionalDependencies="wxmsw28uh_core.lib wxmsw28uh_qa.lib wxbase28uh_net.lib wxmsw28uh_html.lib wxbase28uh_xml.lib wxmsw28uh_aui.lib wxmsw28uh_adv.lib wxbase28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-ud\sqlite3.lib"
 				OutputFile="vc-shared-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-shared-ud\mmex.pdb"
 				SubSystem="2"
@@ -1893,7 +1893,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1904,7 +1904,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1928,7 +1928,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1947,11 +1947,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib       wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-ud\sqlite3.lib"
+				AdditionalDependencies="wxmsw28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-ud\sqlite3.lib"
 				OutputFile="vc-shared-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-shared-ud\mmex.pdb"
 				SubSystem="2"
@@ -1959,7 +1959,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1970,7 +1970,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1994,7 +1994,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -2013,11 +2013,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=""
-				AdditionalDependencies="BugTrapU.lib       wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-ud\sqlite3.lib"
+				AdditionalDependencies="wxmsw28uh.lib wxtiffh.lib wxjpegh.lib wxpngh.lib wxzlibh.lib wxregexuh.lib wxexpath.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib vc-shared-ud\sqlite3.lib"
 				OutputFile="vc-shared-ud\mmex.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll;..\..\BugTrap"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_dll"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="vc-shared-ud\mmex.pdb"
 				SubSystem="2"
@@ -2025,7 +2025,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -2036,7 +2036,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite;..\..\BugTrap"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\include;..\..\sqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool

@@ -35,14 +35,19 @@
 class mmGUIApp : public wxApp
 {
 public:
+    mmGUIApp();
+
     wxLocale& getLocale() { return m_locale; }
 
 private:
     wxLocale m_locale; // locale we'll be using
 
     bool OnInit();
+    void OnFatalException(); // called when a crash occurs in this application
     void HandleEvent(wxEvtHandler *handler, wxEventFunction func, wxEvent& event) const;
 };
+//----------------------------------------------------------------------------
+DECLARE_APP(mmGUIApp)
 //----------------------------------------------------------------------------
 class wxListCtrl;
 class wxPanel;
