@@ -3588,9 +3588,17 @@ wxSizer* mmGUIFrame::cleanupHomePanel(bool new_sizer)
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
 
+/*
+    wxHandleFatalExceptions implemented for some compilers\platforms only.
+    MinGW could't find this function, wxWidgets 2.8.10.
+
+    P.S. Try for next versions of wxWidgets.
+*/
 mmGUIApp::mmGUIApp()
 {
+#ifndef __MINGW32__ 
     wxHandleFatalExceptions(); // tell the library to call OnFatalException()
+#endif
 }
 //----------------------------------------------------------------------------
 

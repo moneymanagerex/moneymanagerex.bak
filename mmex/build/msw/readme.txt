@@ -80,6 +80,7 @@ to build sources.
 2.Build wxWidgets library using gcc from MinGW. Use these option in config.gcc:
   SHARED ?= 0
   MONOLITHIC ?= 1 
+  USE_QA ?= 1
 
 3.You can create mingw.bat file to run gcc with next content (assume MinGW installed in "C:\bin\MinGW")
 
