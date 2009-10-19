@@ -22,7 +22,7 @@ to build sources.
    Append path to bin folder of installed software to PATH environment variable
    (usually "C:\Program Files\GnuWin32\bin").
 
-4. To build installation (setup) of MMEx download and install InnoSetup.
+4. To build installation (setup) of MMEx download and install InnoSetup with preprocessor.
    Append path to folder of installed software (something like a "C:\Program Files\Inno Setup 5")
    to PATH environment variable.
 
@@ -75,7 +75,7 @@ to build sources.
 	*** Compiling using MinGW *** 
 
 
-1.Install the latest version of MinGW and GCC compiler for it.
+1.Install the latest version of MinGW, GCC compiler and mingw-make for it.
 
 2.Build wxWidgets library using gcc from MinGW. Use these option in config.gcc:
   SHARED ?= 0
