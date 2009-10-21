@@ -30,7 +30,7 @@ all: mmex
 clean: 
 	-if exist .\*.o del .\*.o
 	-if exist .\*.d del .\*.d
-	-if exist *.exe del *.exe
+	-if exist *$(BUILD_OPTS)-setup.exe del *$(BUILD_OPTS)-setup.exe
 
 mmex: mmex.iss
 	-"..\..\tools\upx.exe" --best "$(APP_EXE_PATH)"

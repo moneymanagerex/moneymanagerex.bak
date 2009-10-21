@@ -26,7 +26,7 @@
                iscc.exe $(SETUP_SCRIPT) -dOutputDir="$(DOLLAR)(OUTPUT_DIR)" -dAppExePath="$(DOLLAR)(APP_EXE_PATH)" -dBuildOpts="$(DOLLAR)(BUILD_OPTS)"
             </command>
 
-            <clean-files>*.exe</clean-files>
+            <clean-files>*$(DOLLAR)(BUILD_OPTS)-setup.exe</clean-files>
 
         </template>
 

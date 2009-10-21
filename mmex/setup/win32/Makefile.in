@@ -32,7 +32,7 @@ install-strip: install
 clean: 
 	rm -rf ./.deps ./.pch
 	rm -f ./*.o
-	rm -f *.exe
+	rm -f *$(BUILD_OPTS)-setup.exe
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile

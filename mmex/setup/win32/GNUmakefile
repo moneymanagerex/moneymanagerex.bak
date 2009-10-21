@@ -34,7 +34,7 @@ uninstall:
 clean: 
 	rm -f ./*.o
 	rm -f ./*.d
-	rm -f *.exe
+	rm -f *$(BUILD_OPTS)-setup.exe
 
 mmex: mmex.iss
 	-"..\..\tools\upx.exe" --best "$(APP_EXE_PATH)"

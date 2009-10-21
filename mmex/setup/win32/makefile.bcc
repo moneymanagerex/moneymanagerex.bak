@@ -40,7 +40,7 @@ clean:
 	-if exist .\*.obj del .\*.obj
 	-if exist .\*.res del .\*.res
 	-if exist .\*.csm del .\*.csm
-	-if exist *.exe del *.exe
+	-if exist *$(BUILD_OPTS)-setup.exe del *$(BUILD_OPTS)-setup.exe
 
 mmex: mmex.iss
 	-"..\..\tools\upx.exe" --best "$(APP_EXE_PATH)"
