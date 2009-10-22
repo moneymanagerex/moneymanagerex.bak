@@ -8,9 +8,12 @@ Author:
 Madhan Kanagavel [madhankk AT GMAIL . COM]
 
 Description:
-Money Manager Ex is a free, open-source, cross-platform, easy-to-use personal finance software. It primarily helps organize one's finances and keeps track of where, when and how the money goes. It is also a great tool to get a bird's eye view of your financial worth.
+Money Manager Ex is a free, open-source, cross-platform, easy-to-use personal finance software. 
+It primarily helps organize one's finances and keeps track of where, when and how the money goes. 
+It is also a great tool to get a bird's eye view of your financial worth.
 
-Money Manager includes all the basic features that 90% of users would want to see in a personal finance application. The design goals are to concentrate on simplicity and user-friendliness - something one can use everyday.
+Money Manager includes all the basic features that 90% of users would want to see in a personal finance application. 
+The design goals are to concentrate on simplicity and user-friendliness - something one can use everyday.
 
 Requirements:
 
@@ -33,11 +36,6 @@ Microsoft Windows
 Read build\msw\readme.txt for build instructions.
 
 
-Windows Installer Setup
-------------------------
-MMEX uses innosetup to create installer packages.
-The script is checked into mmex\setup directory
-
 =================
 Building on Linux
 =================
@@ -51,7 +49,7 @@ Building from Source
 
 GENERIC INSTRUCTIONS
 
-1. Download latest wxWidgets for wxGTK and download and install.
+1. Download & install the latest wxWidgets for wxGTK.
     
   1) Read the install directions in wxWidgets for how to do a build and then install the build on the machine. 
      For eg wxWidgets has been built with --with-gtk --disable-shared --enable-unicode
