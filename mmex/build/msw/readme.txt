@@ -33,7 +33,7 @@ to build sources.
 
 1.Open "Visual Studio 200X Command Prompt".
 2.Change working directory to mmex\build\msw.
-3.Edit mmex\build\msw\config.vc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
+3.Edit config.vc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
 4.Type in command prompt
   nmake -f makefile.vc 
 5.Run tests (you can skip this step)
@@ -77,7 +77,7 @@ to build sources.
 
 1.Install the latest version of MinGW, GCC compiler and mingw-make for it.
 
-2.Build wxWidgets library using gcc from MinGW. Use these option in config.gcc:
+2.Build wxWidgets library using gcc from MinGW. Use these options in config.gcc:
   SHARED ?= 0
   MONOLITHIC ?= 1 
   USE_QA ?= 1
