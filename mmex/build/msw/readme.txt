@@ -84,7 +84,7 @@ to build sources.
 
 3.You can create mingw.bat file to run gcc with next content (assume MinGW installed in "C:\bin\MinGW")
 
-  set PATH=C:\bin\MinGW\bin;"C:\Program Files\Inno Setup 5"
+  set PATH=C:\bin\MinGW\bin;C:\Program Files\Inno Setup 5
   mingw32-make -f makefile.gcc %* 2>mingw.log
 
 4.Edit config.gcc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
