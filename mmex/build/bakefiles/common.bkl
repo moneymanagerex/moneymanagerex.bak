@@ -155,8 +155,9 @@
              By default, Visual Studio tries to embed the manifest when it builds a project from source files.
              However if an application is built by using nmake, some changes to the existing makefile are necessary.
 
-             FIXME: If you are doing an incremental build, directly editing the resource as done here will disable
-             incremental building and cause a full rebuild.
+             FIXME: If you are doing an incremental build, directly editing the resource as done here will disable 
+                    incremental building and cause a full rebuild. The possible decision described on MSDN
+                    in document "How to: Embed a Manifest Inside a C/C++ Application".
 	-->
 
         <if cond="FORMAT=='msvc'">
