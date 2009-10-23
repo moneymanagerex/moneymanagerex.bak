@@ -89,8 +89,8 @@ to build sources.
 
 4.Edit config.gcc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
 5.mingw.bat
-6.mingw.bat check
-7.mingw.bat setup
+6.mingw.bat check (executes some tests)
+7.mingw.bat setup (if InnoSetup installed)
 
 
 
