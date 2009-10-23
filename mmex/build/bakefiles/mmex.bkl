@@ -43,20 +43,14 @@
     
     <!-- Generation of InnoSetup installations for Windows except VStudio IDE projects -->
 
-    <subproject id="setup" cond="PLATFORM_WIN32=='1' and not FORMAT.endswith('prj')">
+    <subproject id="setup" template="common_variables" cond="PLATFORM_WIN32=='1' and not FORMAT.endswith('prj')">
         
         <depends>all</depends>
         <installable>no</installable>
         <dir>$(SRCDIR)/setup/win32</dir>
 
-        <set var="OUTPUT_DIR">
-            $(os.path.abspath( os.path.dirname(OUTPUT_FILE) + DIRSEP + BUILDDIR ))
-        </set>
+        <set var="TARGET_PATH">$(TARGET_DIR + DIRSEP + 'mmex' + EXEEXT)</set>
 
-        <set var="MMEX_PATH">
-            $(OUTPUT_DIR + DIRSEP + 'mmex' + EXEEXT)
-        </set>
-        
         <set var="SHARED">
             <if cond="FORMAT=='autoconf'"></if>
             <if cond="WX_SHARED=='0'">-static</if>
@@ -75,7 +69,7 @@
         </set>
         
         <target>
-            OUTPUT_DIR="$(OUTPUT_DIR)" APP_EXE_PATH="$(MMEX_PATH)" BUILD_OPTS="$(SHARED)$(UNICODE)$(DEBUG)" all
+            OUTPUT_DIR="$(TARGET_DIR)" APP_EXE_PATH="$(TARGET_PATH)" BUILD_OPTS="$(SHARED)$(UNICODE)$(DEBUG)" all
         </target>
 
     </subproject>

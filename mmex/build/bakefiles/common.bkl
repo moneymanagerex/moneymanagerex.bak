@@ -80,6 +80,18 @@
     </if>
 
 
+    <!-- defines some useful variables -->
+
+    <template id="common_variables">
+
+	<!-- absolute path to target dir -->
+        <set var="TARGET_DIR">
+            $(os.path.abspath( os.path.dirname(OUTPUT_FILE) + DIRSEP + BUILDDIR ))
+        </set>
+    
+    </template>
+
+
     <!-- generic compiler's flags -->
 
     <template id="compiler_common">
@@ -101,7 +113,7 @@
 
     <!-- common part of mmex and mmex_tests -->
 
-    <template id="mmex_common" template="wx,compiler_common">
+    <template id="mmex_common" template="wx,common_variables,compiler_common">
 
         <cxx-exceptions>on</cxx-exceptions>
         <cxx-rtti>on</cxx-rtti>
@@ -137,6 +149,25 @@
             <ldflags>$(LINK_FLAGS)</ldflags>
 
         </if>
+
+
+        <!-- Embed a manifest inside executable for VC++.
+             By default, Visual Studio tries to embed the manifest when it builds a project from source files.
+             However if an application is built by using nmake, some changes to the existing makefile are necessary.
+
+             FIXME: If you are doing an incremental build, directly editing the resource as done here will disable
+             incremental building and cause a full rebuild.
+	-->
+
+        <if cond="FORMAT=='msvc'">
+	    
+            <set var="TARGET_PATH">$(TARGET_DIR + DIRSEP + id + EXEEXT)</set>
+
+	    <postlink-command>
+        	mt.exe -manifest "$(TARGET_PATH).manifest" -outputresource:"$(TARGET_PATH)";1
+            </postlink-command>
+
+	</if>
 
 
         <!-- wxWidgets libs -->
