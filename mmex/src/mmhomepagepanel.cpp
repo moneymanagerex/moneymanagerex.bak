@@ -28,7 +28,7 @@
 #include "dbwrapper.h"
 #include "billsdepositspanel.h"
 #include "mmgraphincexpensesmonth.h"
-#include "mmgraphtopcategories.h"
+
 
 BEGIN_EVENT_TABLE( mmHomePagePanel, wxPanel )
 END_EVENT_TABLE()
@@ -491,17 +491,21 @@ void mmHomePagePanel::updateAccounts()
 	hb.startTableCell();
 
     mmCurrencyFormatter::loadDefaultSettings();
-	//--------------------------------------------------------
+
     // update category List
+
     topCategories_ = frame_->createCategoryList();
     hb.addHTML(topCategories_);
+    
+/*
+    // Commented because there is not enough vertical space to show main page
+    // without vertical scrollbar on 19-20" monitors.
 
-   // Top 10 Graph
-   mmGraphTopCategories gtp;
-   hb.addImage(gtp.GetOutputFileName());
+    // Top 10 Graph.
+    mmGraphTopCategories gtp;
+    hb.addImage(gtp.GetOutputFileName());
+*/
 
-
-	//--------------------------------------------------------
     hb.addLineBreak();
     int countFollowUp = core_->bTransactionList_.countFollowupTransactions();
 
