@@ -93,6 +93,26 @@ to build sources.
 7.mingw.bat setup (if InnoSetup installed)
 
 
+	
+	*** Building 64-bit MMEX using Visual C++ *** 
+
+
+  Visual Studio 2008 Express Edition does not have 64-bit compiler. 
+  You should use Standard, Professional or Team System edition of Visual Studio.
+
+1.As usually, firstly you should build wxWidgets. 
+  Run Visual Studio Command Prompt x64 (or IA-64), change dir to wxWidgets\build\msw.
+  Edit config.vc and set TARGET_CPU to your system's CPU (AMD64 in most cases).
+  Run nmake -f makefile.vc 
+  and you will build libraries at wxWidgets\lib\vc_amd64_lib.
+
+2.Change dir to trunk\mmex\build\msw, edit config.vc settings and type
+  nmake -f makefile.vc again. You will get linker error at end of build.
+  Bakefile set wrong lib-path in generated makefiles which points to x86 libs (wxWidgets\lib\vc_lib). 
+  I do not fix this issue at the moment. To link MMEX rename wxWidgets\lib\vc_amd64_lib to vc_lib 
+  and run nmake again. After this your will succesful build 64-bit MMEX :-)
+
+
 
 	*** Your compiler do not present in this document *** 
 
