@@ -50,13 +50,6 @@ PATH. Accepted values: AMD64, IA64.
 
             </option>
 
-            <!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
-
-            <set var="TARGETCPUPOSTFIX">
-                <if cond="TARGET_CPU=='AMD64'">-x64</if>
-                <if cond="TARGET_CPU=='IA64'">-ia64</if>
-           </set>
-
         </if>
 
         
@@ -100,6 +93,16 @@ PATH. Accepted values: AMD64, IA64.
 	</set>
 
 
+        <!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
+        <!-- BUG of bakefile 0.2.8: "-x64" instead of "-amd64" causes wrong makefile -->
+       
+        <set var="TARGETCPUPOSTFIX">
+            <if cond="not isdefined('TARGET_CPU')"></if>
+            <if cond="TARGET_CPU=='AMD64'">-amd64</if>
+            <if cond="TARGET_CPU=='IA64'">-ia64</if>
+        </set>
+
+        
         <!-- set bakefile's predefined variable BUILDDIR -->
         <include file="presets/setbuilddir.bkl"/>
 
@@ -145,8 +148,7 @@ PATH. Accepted values: AMD64, IA64.
 
     <template id="lib_path_x64_hack">
     
-        <!-- except VC++ IDE projects -->
-        <if cond="CAN_CONFIG=='1' and not FORMAT.endswith('prj')">
+        <if cond="CAN_CONFIG=='1' and isdefined('TARGET_CPU')">
         
             <set var="CPU_SUF">
                 <if cond="TARGET_CPU=='AMD64'">_amd64</if>
