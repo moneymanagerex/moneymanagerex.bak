@@ -49,8 +49,6 @@
         <installable>no</installable>
         <dir>$(SRCDIR)/setup/win32</dir>
 
-        <set var="TARGET_PATH">$(TARGET_DIR + DIRSEP + 'mmex' + EXEEXT)</set>
-
         <set var="SHARED">
             <if cond="FORMAT=='autoconf'"></if>
             <if cond="WX_SHARED=='0'">-static</if>
@@ -68,8 +66,16 @@
             <if cond="WX_DEBUG=='1'">-debug</if>
         </set>
         
+        <set var="HARDWARE">
+            <if cond="FORMAT=='autoconf'"></if>
+            <if cond="TARGET_CPU=='AMD64'">-x64</if>
+            <if cond="TARGET_CPU=='IA64'">-ia64</if>
+        </set>
+
+        <set var="TARGET_PATH">$(TARGET_DIR + DIRSEP + 'mmex' + EXEEXT)</set>
+
         <target>
-            OUTPUT_DIR="$(TARGET_DIR)" APP_EXE_PATH="$(TARGET_PATH)" BUILD_OPTS="$(SHARED)$(UNICODE)$(DEBUG)" all
+            OUTPUT_DIR="$(TARGET_DIR)" APP_EXE_PATH="$(TARGET_PATH)" BUILD_OPTS="$(SHARED)$(UNICODE)$(DEBUG)$(HARDWARE)" all
         </target>
 
     </subproject>

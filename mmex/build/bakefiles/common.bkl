@@ -34,6 +34,32 @@
         </if>
 
 
+        <!-- except VC++ IDE projects -->
+        <if cond="not FORMAT.endswith('prj')">
+
+            <option name="TARGET_CPU">
+
+                <default-value>$(DOLLAR)(CPU)</default-value>
+
+                <description>
+The target processor architecture must be specified when it is not X86.
+This does not affect the compiler output, so you still need to make sure
+your environment is set up appropriately with the correct compiler in the
+PATH. Accepted values: AMD64, IA64.
+                </description>
+
+            </option>
+
+            <!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
+
+            <set var="TARGETCPUPOSTFIX">
+                <if cond="TARGET_CPU=='AMD64'">-x64</if>
+                <if cond="TARGET_CPU=='IA64'">-ia64</if>
+           </set>
+
+        </if>
+
+        
         <!-- set compiler's flags according to selected options -->
 
         <set var="DEBUGINFO">
@@ -111,9 +137,41 @@
     </template>
 
 
+    <!-- Prepend valid lib-path if TARGET_CPU option set.
+         Template "wx" sets lib-path to x86 libs (lib\vc_lib) even if x64 libs exists (lib\vc_amd64_lib).
+         We should insert valid lib-path prior wrong one.
+         See wxWidgets\build\bakefiles\config.bkl <== TARGET_CPU, common.bkl <== DIR_SUFFIX_CPU.
+    -->
+
+    <template id="lib_path_x64_hack">
+    
+        <!-- except VC++ IDE projects -->
+        <if cond="CAN_CONFIG=='1' and not FORMAT.endswith('prj')">
+        
+            <set var="CPU_SUF">
+                <if cond="TARGET_CPU=='AMD64'">_amd64</if>
+                <if cond="TARGET_CPU=='IA64'">_ia64</if>
+            </set>
+            
+            <set var="LIB_SUF">
+                <if cond="WX_SHARED=='0'">_lib</if>
+                <if cond="WX_SHARED=='1'">_dll</if>
+            </set>
+
+            <!-- prepend valid lib-path to x64 libs (\lib\vc_amd64_lib) -->
+
+            <lib-path>
+                $(nativePaths(WX_DIR) + '\lib' + DIRSEP + COMPILER + CPU_SUF + LIB_SUF)
+            </lib-path>
+
+        </if>
+
+    </template>
+
+    
     <!-- common part of mmex and mmex_tests -->
 
-    <template id="mmex_common" template="wx,common_variables,compiler_common">
+    <template id="mmex_common" template="lib_path_x64_hack,wx,common_variables,compiler_common">
 
         <cxx-exceptions>on</cxx-exceptions>
         <cxx-rtti>on</cxx-rtti>

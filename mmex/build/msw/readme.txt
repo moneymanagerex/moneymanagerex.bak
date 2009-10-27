@@ -107,10 +107,7 @@ to build sources.
   and you will build libraries at wxWidgets\lib\vc_amd64_lib.
 
 2.Change dir to trunk\mmex\build\msw, edit config.vc settings and type
-  nmake -f makefile.vc again. You will get linker error at end of build.
-  Bakefile set wrong lib-path in generated makefiles which points to x86 libs (wxWidgets\lib\vc_lib). 
-  I do not fix this issue at the moment. To link MMEX rename wxWidgets\lib\vc_amd64_lib to vc_lib 
-  and run nmake again. After this your will succesful build 64-bit MMEX :-)
+  nmake -f makefile.vc again. After this your will get 64-bit MMEX :-)
 
 
 

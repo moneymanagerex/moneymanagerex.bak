@@ -53,13 +53,14 @@ Usage:
     <set var="SHRDSTR"><if cond="isdefined('SHAREDBUILDPOSTFIX')">-$(SHAREDBUILDPOSTFIX)</if></set>
     <set var="UNICSTR"><if cond="isdefined('UNICODEBUILDPOSTFIX')">$(UNICODEBUILDPOSTFIX)</if></set>
     <set var="DBGSTR"><if cond="isdefined('DEBUGBUILDPOSTFIX')">$(DEBUGBUILDPOSTFIX)</if></set>
+    <set var="CPUSTR"><if cond="isdefined('TARGETCPUPOSTFIX')">$(TARGETCPUPOSTFIX)</if></set>
 
     <set var="UD">$(UNICSTR)$(DBGSTR)</set>
     <set var="UD"><if cond="UD!=''">-$(UD)</if></set>
 
     <if cond="FORMAT!='autoconf'">
         <set var="BUILDDIR">
-            $(COMPILER)$(SHRDSTR)$(UD)
+            $(COMPILER)$(SHRDSTR)$(UD)$(CPUSTR)
         </set>
     </if>
 
