@@ -106,7 +106,7 @@ to build sources.
   Run nmake -f makefile.vc 
   and you will build libraries at wxWidgets\lib\vc_amd64_lib.
 
-2.Change dir to trunk\mmex\build\msw, edit config.vc settings and type
+2.Change dir to trunk\mmex\build\msw, set TARGET_CPU in config.vc and type
   nmake -f makefile.vc again. After this your will get 64-bit MMEX :-)
 
 
