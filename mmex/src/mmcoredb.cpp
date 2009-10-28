@@ -127,8 +127,7 @@ void loadAccounts(boost::shared_ptr<wxSQLite3Database> db_,
     static const char sql[] = 
     "select * "
     "from ACCOUNTLIST_V1 "
-    "order by STATUS desc, "
-             "FAVORITEACCT desc, "
+    "order by  FAVORITEACCT, "
              "ACCOUNTNAME";
 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
