@@ -212,6 +212,12 @@ ifeq ($(WX_UNICODE),1)
 WXLIBPOSTFIX = uh
 endif
 endif
+ifeq ($(TARGET_CPU),AMD64)
+TARGETCPUPOSTFIX = -amd64
+endif
+ifeq ($(TARGET_CPU),IA64)
+TARGETCPUPOSTFIX = -ia64
+endif
 ifeq ($(WX_SHARED),0)
 SHAREDBUILDPOSTFIX = static
 endif
@@ -223,12 +229,6 @@ UNICODEBUILDPOSTFIX = u
 endif
 ifeq ($(WX_DEBUG),1)
 DEBUGBUILDPOSTFIX = d
-endif
-ifeq ($(TARGET_CPU),AMD64)
-TARGETCPUPOSTFIX = -amd64
-endif
-ifeq ($(TARGET_CPU),IA64)
-TARGETCPUPOSTFIX = -ia64
 endif
 ifeq ($(WX_DEBUG),0)
 __OPTIMIZEFLAG = -O2
