@@ -205,6 +205,7 @@ public:
     void OnConvertEncryptedDB(wxCommandEvent& event);
     void OnSaveAs(wxCommandEvent& event);
     void OnExport(wxCommandEvent& event);
+	void OnExportToQIF(wxCommandEvent& event);
     void OnExportToHtml(wxCommandEvent& event);
     void OnImportCSV(wxCommandEvent& event);
     void OnImportQFX(wxCommandEvent& event);

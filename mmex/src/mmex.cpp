@@ -253,6 +253,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_SAVE_AS, mmGUIFrame::OnSaveAs)
     EVT_MENU(MENU_CONVERT_ENC_DB, mmGUIFrame::OnConvertEncryptedDB)
     EVT_MENU(MENU_EXPORT_CSV, mmGUIFrame::OnExport)
+	EVT_MENU(MENU_EXPORT_QIF, mmGUIFrame::OnExportToQIF)
     EVT_MENU(MENU_IMPORT_CSV, mmGUIFrame::OnImportCSV)
     EVT_MENU(MENU_IMPORT_MMNETCSV, mmGUIFrame::OnImportCSVMMNET)
     EVT_MENU(MENU_IMPORT_QIF, mmGUIFrame::OnImportQIF)
@@ -2005,6 +2006,7 @@ void mmGUIFrame::createMenu()
 
    wxMenu* exportMenu = new wxMenu;
    exportMenu->Append(MENU_EXPORT_CSV, _("&CSV Files"), _("Export to CSV"));
+   exportMenu->Append(MENU_EXPORT_QIF, _("&QIF Files"), _("Export to QIF"));
    exportMenu->Append(MENU_EXPORT_HTML, _("&Report to HTML"), _("Export to HTML"));
    menuFile->Append(MENU_EXPORT, _("&Export"), exportMenu);
 
@@ -2562,6 +2564,11 @@ void mmGUIFrame::OnExport(wxCommandEvent& /*event*/)
    mmExportCSV(db_.get());
 }
 
+void mmGUIFrame::OnExportToQIF(wxCommandEvent& /*event*/)
+{
+   mmExportQIF(db_.get());
+}
+ 
 void mmGUIFrame::OnImportCSV(wxCommandEvent& /*event*/)
 {
     int accountID = mmImportCSV(core_.get());
