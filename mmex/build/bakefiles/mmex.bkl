@@ -67,9 +67,7 @@
         </set>
         
         <set var="HARDWARE">
-            <if cond="FORMAT=='autoconf'"></if>
-            <if cond="TARGET_CPU=='AMD64'">-x64</if>
-            <if cond="TARGET_CPU=='IA64'">-ia64</if>
+            <if cond="isdefined('TARGETCPUPOSTFIX')">$(TARGETCPUPOSTFIX)</if>
         </set>
 
         <set var="TARGET_PATH">$(TARGET_DIR + DIRSEP + 'mmex' + EXEEXT)</set>
