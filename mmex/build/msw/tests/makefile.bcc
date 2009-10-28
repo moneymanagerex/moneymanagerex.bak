@@ -182,6 +182,12 @@ __WXLIB_BASE_NAME_p = wxbase$(WX_VERSION)$(WXLIBPOSTFIX).lib
 !if "$(WX_MONOLITHIC)" == "1"
 __WXLIB_BASE_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX).lib
 !endif
+!if "$(TARGET_CPU)" == "AMD64"
+TARGETCPUPOSTFIX = -amd64
+!endif
+!if "$(TARGET_CPU)" == "IA64"
+TARGETCPUPOSTFIX = -ia64
+!endif
 !if "$(WX_SHARED)" == "0"
 SHAREDBUILDPOSTFIX = static
 !endif
@@ -193,12 +199,6 @@ UNICODEBUILDPOSTFIX = u
 !endif
 !if "$(WX_DEBUG)" == "1"
 DEBUGBUILDPOSTFIX = d
-!endif
-!if "$(TARGET_CPU)" == "AMD64"
-TARGETCPUPOSTFIX = -amd64
-!endif
-!if "$(TARGET_CPU)" == "IA64"
-TARGETCPUPOSTFIX = -ia64
 !endif
 !if "$(WX_DEBUG)" == "0"
 __OPTIMIZEFLAG = -O2
