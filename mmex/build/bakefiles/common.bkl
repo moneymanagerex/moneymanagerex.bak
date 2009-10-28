@@ -153,20 +153,16 @@ PATH. Accepted values: AMD64, IA64.
                 <if cond="TARGET_CPU=='IA64'">_ia64</if>
             </set>
             
-            <if cond="CPU_SUF!=''">
+            <set var="LIB_SUF">
+                <if cond="WX_SHARED=='0'">_lib</if>
+                <if cond="WX_SHARED=='1'">_dll</if>
+            </set>
 
-                <set var="LIB_SUF">
-                    <if cond="WX_SHARED=='0'">_lib</if>
-                    <if cond="WX_SHARED=='1'">_dll</if>
-                </set>
+            <!-- prepend valid lib-path to x64 libs (\lib\vc_amd64_lib) -->
 
-                <!-- prepend valid lib-path to x64 libs (\lib\vc_amd64_lib) -->
-
-                <lib-path>
-                    $(nativePaths(WX_DIR) + '\lib' + DIRSEP + COMPILER + CPU_SUF + LIB_SUF)
-                </lib-path>
-            
-            </if>
+            <lib-path>
+                $(nativePaths(WX_DIR) + '\lib' + DIRSEP + COMPILER + CPU_SUF + LIB_SUF)
+            </lib-path>
 
         </if>
 
