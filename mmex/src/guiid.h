@@ -390,6 +390,26 @@ enum
     /* File Viewer */
     ID_DIALOG_FILEVIEWER,
     ID_TEXTCTRL_FILEVIEWER,
+	/* Navigation Panel */
+	/*Popup Menu for Bank Accounts*/
+
+	//New Account    //
+	//Delete Account //
+	//Edit Account   //
+	//Export >       //  
+	//Import >       //  
+
+    MENU_TREEPOPUP_ACCOUNT_NEW,
+    MENU_TREEPOPUP_ACCOUNT_DELETE,
+    MENU_TREEPOPUP_ACCOUNT_EDIT,
+    MENU_TREEPOPUP_ACCOUNT_LIST,
+    MENU_TREEPOPUP_ACCOUNT_EXPORT2CSV,
+    MENU_TREEPOPUP_ACCOUNT_EXPORT2QIF,
+    MENU_TREEPOPUP_ACCOUNT_IMPORTCSV,
+    MENU_TREEPOPUP_ACCOUNT_IMPORTQIF,
+    MENU_TREEPOPUP_ACCOUNT_IMPORTUNIVCSV,
+    MENU_TREEPOPUP_ACCOUNT_IMPORTMMNET,
+
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_GUIID_H_
