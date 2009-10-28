@@ -298,6 +298,32 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_GOTOACCOUNT, mmGUIFrame::OnGotoAccount)
 
     EVT_MENU(MENU_TRANSACTIONREPORT, mmGUIFrame::OnTransactionReport)
+
+    /* Navigation Panel */
+	/*Popup Menu for Bank Accounts*/
+
+	//New Account    //
+	//Delete Account //
+	//Edit Account   //
+	//Export >       //  
+	        //CSV Files //
+	        //QIF Files //
+	//Import >       //
+			//Universal CSV Files //
+			//QIF Files           //
+			//MMEX CSV Files      //
+			//MM.&NET CSV Files   //
+	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_NEW, mmGUIFrame::OnNewAccount)
+	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_DELETE, mmGUIFrame::OnDeleteAccount)
+	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_EDIT, mmGUIFrame::OnEditAccount)
+	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_LIST, mmGUIFrame::OnAccountList)
+	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_EXPORT2CSV, mmGUIFrame::OnExport)
+	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_EXPORT2QIF, mmGUIFrame::OnExportToQIF)
+	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_IMPORTQIF, mmGUIFrame::OnImportQIF)
+	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_IMPORTCSV, mmGUIFrame::OnImportCSV)
+	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_IMPORTUNIVCSV, mmGUIFrame::OnImportUniversalCSV)
+	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_IMPORTMMNET, mmGUIFrame::OnImportCSVMMNET)
+
 END_EVENT_TABLE()
 /*******************************************************/
 IMPLEMENT_APP(mmGUIApp)
@@ -1841,7 +1867,7 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
     selectedItemData_ = iData;
     
     if (!iData->isStringData())
-    {
+	{
         int data = iData->getData();
         if (!iData->isBudgetingNode())
         {
@@ -1876,6 +1902,35 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
             }
         }
     }
+		else 
+	{
+       if (iData->getString() == wxT("Bank Accounts"))
+		{
+
+         //wxMenu menu;
+		 wxMenu *menu = new wxMenu;
+         menu->Append(MENU_TREEPOPUP_ACCOUNT_NEW, _("New &Account"));
+         menu->Append(MENU_TREEPOPUP_ACCOUNT_DELETE, _("&Delete Account"));
+         menu->Append(MENU_TREEPOPUP_ACCOUNT_EDIT, _("&Edit Account"));
+         menu->Append(MENU_TREEPOPUP_ACCOUNT_LIST, _("Account &List"));
+         
+		 menu->AppendSeparator();
+		// menu->Append(menuItemOnlineUpdateCurRate_);
+		// menu->AppendSeparator();
+
+		 wxMenu *exportTo = new wxMenu;
+		 exportTo->Append(MENU_TREEPOPUP_ACCOUNT_EXPORT2CSV, _("&CSV Files"));
+		 exportTo->Append(MENU_TREEPOPUP_ACCOUNT_EXPORT2QIF, _("&QIF Files"));
+		 menu->AppendSubMenu(exportTo,  _("&Export"));
+		 wxMenu *importFrom = new wxMenu;
+		 importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTUNIVCSV, _("&Universal CSV Files"));
+		 importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTQIF, _("&QIF Files"));
+		 importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTCSV, _("&MMEX CSV Files"));
+		 importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTMMNET, _("MM.&NET CSV Files"));
+		 menu->AppendSubMenu(importFrom,  _("&Import"));
+         PopupMenu(&*menu, pt);
+		}
+	}
 }
 
 
