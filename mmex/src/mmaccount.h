@@ -53,12 +53,12 @@ public:
    AccountStatus status_;
    wxString accountNum_;
    wxString notes_;
+   wxString favorite_;
    wxString heldAt_;
    wxString website_;
    wxString contactInfo_;
    wxString accessInfo_;
    wxString acctType_;
-   bool favoriteAcct_;
    double initialBalance_;
    boost::weak_ptr<mmCurrency> currency_;
 

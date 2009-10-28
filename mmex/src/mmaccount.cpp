@@ -38,17 +38,14 @@ mmAccount::mmAccount(boost::shared_ptr<wxSQLite3Database> db,
     contactInfo_ = q1.GetString(wxT("CONTACTINFO"));
     accessInfo_ = q1.GetString(wxT("ACCESSINFO"));
     notes_ = q1.GetString(wxT("NOTES"));  
+	favorite_ = q1.GetString(wxT("FAVORITEACCT"));
     acctType_ = q1.GetString(wxT("ACCOUNTTYPE"));
 
     status_ =  mmAccount::MMEX_Open;
     if (q1.GetString(wxT("STATUS")) == wxT("Closed"))
         status_ = mmAccount::MMEX_Closed;
 
-    wxString retVal = q1.GetString(wxT("FAVORITEACCT"));
-    if (retVal == wxT("TRUE"))
-        favoriteAcct_ = true;
-    else
-        favoriteAcct_ = false;
+    wxString favorite_ = q1.GetString(wxT("FAVORITEACCT"));
 
     initialBalance_ = q1.GetDouble(wxT("INITIALBAL"));
 }
@@ -226,10 +223,6 @@ void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)
    if (pAccount->status_ == mmAccount::MMEX_Closed)
       statusStr = wxT("Closed");
 
-   wxString favStr = wxT("TRUE");
-   if (!pAccount->favoriteAcct_)
-      favStr = wxT("FALSE");
-
    boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
    wxASSERT(pCurrency);
    int currencyID = pCurrency->currencyID_;
@@ -255,7 +248,7 @@ void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)
    st.Bind(++i, r.contactInfo_);
    st.Bind(++i, r.accessInfo_);
    st.Bind(++i, r.initialBalance_);
-   st.Bind(++i, favStr);
+   st.Bind(++i, r.favorite_);
    st.Bind(++i, currencyID);
    st.Bind(++i, r.accountID_);
 
@@ -326,9 +319,7 @@ int mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
       if (pAccount->status_ == mmAccount::MMEX_Closed)
          statusStr = wxT("Closed");
 
-      wxString favStr = wxT("TRUE");
-      if (!pAccount->favoriteAcct_)
-         favStr = wxT("FALSE");
+	  wxString favorite_ = wxT("2");
 
       boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
       wxASSERT(pCurrency);
@@ -355,7 +346,7 @@ int mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
     st.Bind(++i, r.contactInfo_);
     st.Bind(++i, r.accessInfo_);
     st.Bind(++i, r.initialBalance_);
-    st.Bind(++i, favStr);
+	st.Bind(++i, r.favorite_);
     st.Bind(++i, currencyID);
 
     wxASSERT(st.GetParamCount() == i);

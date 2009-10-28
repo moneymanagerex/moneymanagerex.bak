@@ -108,6 +108,9 @@ void mmNewAcctDialog::fillControlsWithData()
     textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_NOTES);
     textCtrl->SetValue(pAccount->notes_);
 
+	textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_FAVACCOUNT);
+    textCtrl->SetValue(pAccount->favorite_);
+
     wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
     if (pAccount->acctType_ == wxT("Checking"))
        itemAcctType->SetSelection(ACCT_TYPE_CHECKING);
@@ -119,9 +122,6 @@ void mmNewAcctDialog::fillControlsWithData()
     choice->SetSelection(ACCT_STATUS_OPEN);
     if (pAccount->status_ == mmAccount::MMEX_Closed)
        choice->SetSelection(ACCT_STATUS_CLOSED);
-
-    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT);
-    itemCheckBox->SetValue(pAccount->favoriteAcct_);
 
     textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE);
     double initBal = pAccount->initialBalance_;
@@ -282,14 +282,16 @@ void mmNewAcctDialog::CreateControls()
     itemGridSizer2->Add(itemTextCtrl18, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
     itemTextCtrl18->SetToolTip(_("Enter user notes and details about this account."));
 
-     itemGridSizer2->Add(5, 5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    wxCheckBox* itemCheckBox10 = new wxCheckBox( itemDialog1, 
-        ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT, _("Favorite Account"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    itemCheckBox10->SetValue(TRUE);
-    itemGridSizer2->Add(itemCheckBox10, 0, 
-        wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
-    itemCheckBox10->SetToolTip(_("Select whether this is an account that is used often. This is used to filter accounts display view."));
+    //Favorite Account check box has been removed. Now it's a Text box with a Sequence parameter
+    wxStaticText* itemStaticText21 = new wxStaticText( itemDialog1, 
+		wxID_STATIC, _("Sequence:"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer2->Add(itemStaticText21, 0, 
+        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    
+    wxTextCtrl* itemTextCtrl21 = new wxTextCtrl( itemDialog1, ID_DIALOG_NEWACCT_TEXTCTRL_FAVACCOUNT, 
+        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer2->Add(itemTextCtrl21, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+    itemTextCtrl21->SetToolTip(_("Enter the sequence of the account. This is used to filter accounts display view."));
 
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
@@ -345,7 +347,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     }
 
     wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
-    int acctType = itemAcctType->GetSelection();
+	int acctType = itemAcctType->GetSelection();
    
     boost::shared_ptr<mmAccount> pAccount;
     if (newAcct_)
@@ -373,18 +375,13 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     wxTextCtrl* textCtrlContact = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_CONTACT);
     wxTextCtrl* textCtrlAccess = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_ACCESSINFO);
     wxTextCtrl* textCtrlNotes = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_NOTES);
+	wxTextCtrl* textCtrlFavorite = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_FAVACCOUNT);
     wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTSTATUS);
     int acctStatus = choice->GetSelection();
     pAccount->status_ = mmAccount::MMEX_Open;
     if (acctStatus == ACCT_STATUS_CLOSED)
         pAccount->status_ = mmAccount::MMEX_Closed;
     
-    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT);
-    if (itemCheckBox->IsChecked())
-       pAccount->favoriteAcct_ = true;
-    else
-       pAccount->favoriteAcct_ = false;  
-        
     mmDBWrapper::loadSettings(core_->db_.get(), currencyID_);
     wxTextCtrl* textCtrlInit = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE);
     wxString bal = textCtrlInit->GetValue().Trim();
@@ -401,6 +398,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     pAccount->accountName_ = acctName;
     pAccount->accountNum_ = textCtrlAcctNumber->GetValue();
     pAccount->notes_ = textCtrlNotes->GetValue();
+	pAccount->favorite_ = textCtrlFavorite->GetValue();
     pAccount->heldAt_ = textCtrlHeldAt->GetValue();
     pAccount->website_ = textCtrlWebsite->GetValue();
     pAccount->contactInfo_ = textCtrlContact->GetValue();
