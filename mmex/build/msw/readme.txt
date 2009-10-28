@@ -7,6 +7,12 @@ Bakefile must be installed to do that. But you can skip this step if you just wa
 to build sources.
 
 
+WARNING: all files in this directory generated from bakefile's scripts (..\bakefiles). 
+         Do not modify these files and never commit them to svn. All changes will be lost 
+         if bootstrap.bat will rerun!!! These files should be commited only if you changed
+         some bakefile scripts and run bootstrap.bat to refresh content of this directory..
+
+
 	*** Prerequisites ***
 
 
