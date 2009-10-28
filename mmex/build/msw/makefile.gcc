@@ -97,7 +97,7 @@ ifeq ($(WX_PYTHON),1)
 WX3RDPARTYLIBPOSTFIX = h
 endif
 ifeq ($(TARGET_CPU),AMD64)
-TARGETCPUPOSTFIX = -amd64
+TARGETCPUPOSTFIX = -x64
 endif
 ifeq ($(TARGET_CPU),IA64)
 TARGETCPUPOSTFIX = -ia64
@@ -196,12 +196,6 @@ endif
 ifeq ($(WX_DEBUG),1)
 __setup_DEBUG = -debug
 endif
-ifeq ($(TARGET_CPU),AMD64)
-__setup_HARDWARE = -x64
-endif
-ifeq ($(TARGET_CPU),IA64)
-__setup_HARDWARE = -ia64
-endif
 ifeq ($(WX_DEBUG),0)
 ifeq ($(WX_PYTHON),0)
 ifeq ($(WX_UNICODE),1)
@@ -288,7 +282,7 @@ i18n:
 	$(MAKE) -C ..\..\runtime\en -f makefile.gcc $(MAKEARGS) all
 
 setup: all
-	$(MAKE) -C ..\..\setup\win32 -f makefile.gcc $(MAKEARGS) OUTPUT_DIR="D:\mmex\trunk\mmex\build\msw\gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)$(TARGETCPUPOSTFIX)" APP_EXE_PATH="D:\mmex\trunk\mmex\build\msw\gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)$(TARGETCPUPOSTFIX)\mmex.exe" BUILD_OPTS="$(__setup_SHARED)$(__setup_UNICODE)$(__setup_DEBUG)$(__setup_HARDWARE)" all
+	$(MAKE) -C ..\..\setup\win32 -f makefile.gcc $(MAKEARGS) OUTPUT_DIR="D:\mmex\trunk\mmex\build\msw\gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)$(TARGETCPUPOSTFIX)" APP_EXE_PATH="D:\mmex\trunk\mmex\build\msw\gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)$(TARGETCPUPOSTFIX)\mmex.exe" BUILD_OPTS="$(__setup_SHARED)$(__setup_UNICODE)$(__setup_DEBUG)$(TARGETCPUPOSTFIX)" all
 
 check: 
 	$(MAKE) -C tests -f makefile.gcc $(MAKEARGS) check

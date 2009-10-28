@@ -54,7 +54,7 @@ PATH. Accepted values: AMD64, IA64.
             <!-- WORKAROUND of bug in bakefile 0.2.8: "-x64" instead of "-amd64" causes wrong makefile -->
        
             <set var="TARGETCPUPOSTFIX">
-                <if cond="TARGET_CPU=='AMD64'">-amd64</if>
+                <if cond="TARGET_CPU=='AMD64'">-x64</if>
                 <if cond="TARGET_CPU=='IA64'">-ia64</if>
             </set>
         
