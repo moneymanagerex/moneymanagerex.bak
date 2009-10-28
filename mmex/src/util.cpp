@@ -255,6 +255,13 @@ wxString mmReadyDisplayString(const wxString& orig)
     return toReturn;
 }
 
+wxString mmUnCleanString(const wxString& orig)
+{
+    wxString toReturn = orig;
+    toReturn.Replace(wxT("''"), wxT("'"));
+    return toReturn;
+}
+
 wxString mmGetNiceMonthName(int month)
 {
     const wxString gMonthsInYear[12] =
@@ -472,6 +479,157 @@ void mmExportCSV(wxSQLite3Database* db_)
 
     }// show Modal
     scd->Destroy();
+}
+
+void mmExportQIF(wxSQLite3Database* db_)
+{
+ if (mmDBWrapper::getNumAccounts(db_) == 0)
+    {
+        mmShowErrorMessage(0, _("No Account available! Cannot Export!"), _("Error"));
+        return;
+    }
+    wxArrayString as;
+    
+    wxSQLite3ResultSet q3 = db_->ExecuteQuery(g_AccountNameSQL);
+    while (q3.NextRow())
+    {
+        as.Add(q3.GetString(wxT("ACCOUNTNAME")));
+    }
+    q3.Finalize();
+
+    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
+    
+    wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Account to Export from:"), 
+        _("QIF Export"), as);
+
+	wxString acctName;
+
+	if (scd->ShowModal() == wxID_OK)
+	{
+	acctName = scd->GetStringSelection();
+	}
+
+	scd->Destroy();
+
+	if (acctName.IsEmpty()) {
+	return;
+	}
+
+	wxString fileName = wxFileSelector(_("Choose QIF data file to Export"),wxT(""), wxT(""), wxT(""), wxT("*.qif"), wxSAVE | wxOVERWRITE_PROMPT);
+
+	if ( fileName.IsEmpty() ) {
+	return;
+	}
+            wxFileOutputStream output( fileName );
+            wxTextOutputStream text( output );
+			int fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+
+			static const char sql[] = 
+            "SELECT transid, transdate as DATE, "
+                   "transcode as TRANSACTIONTYPE, transamount as AMOUNT,  SUBCATEGID, "
+                   "CATEGID, PAYEEID, "
+                   "TRANSACTIONNUMBER, NOTES, TOACCOUNTID, ACCOUNTID "
+            "FROM checkingaccount_v1 "
+            "WHERE ACCOUNTID = ? OR TOACCOUNTID = ?"
+			"ORDER BY transdate"; 
+
+            wxSQLite3Statement st = db_->PrepareStatement(sql);
+            st.Bind(1, fromAccountID);
+            st.Bind(2, fromAccountID);
+
+            wxSQLite3ResultSet q1 = st.ExecuteQuery();
+            int numRecords = 0;
+
+			text 
+				 << wxT("!Account") << endl 
+				 << wxT("N") << acctName <<  endl
+				 << wxT("TChecking") << endl
+				 << wxT("^") <<  endl
+				 << wxT("!Type:Cash") << endl;
+
+            while (q1.NextRow())
+            {
+                wxString transid = q1.GetString(wxT("TRANSID"));
+				wxString dateDBString = q1.GetString(wxT("DATE"));
+                wxDateTime dtdt = mmGetStorageStringAsDate(dateDBString);
+                wxString dateString = mmGetDateForDisplay(db_, dtdt);
+
+                int sid, cid;
+                wxString payee = mmDBWrapper::getPayee(db_, q1.GetInt(wxT("PAYEEID")), sid, cid);
+                wxString type = q1.GetString(wxT("TRANSACTIONTYPE"));
+                wxString amount = q1.GetString(wxT("AMOUNT"));
+				//Amount should be formated 
+				double value = 0;
+				mmCurrencyFormatter::formatCurrencyToDouble(amount, value);
+				mmCurrencyFormatter::formatDoubleToCurrencyEdit(value, amount);
+				wxString transNum = q1.GetString(wxT("TRANSACTIONNUMBER"));
+                wxString categ = mmDBWrapper::getCategoryName(db_, q1.GetInt(wxT("CATEGID")));
+                wxString subcateg = mmDBWrapper::getSubCategoryName(db_, 
+                    q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
+                wxString notes = mmUnCleanString(q1.GetString(wxT("NOTES")));
+				notes.Replace(wxT("\n"),wxT(" "));
+                if (type == wxT("Transfer"))
+                {
+                   int tAccountID = q1.GetInt(wxT("TOACCOUNTID"));
+                   int fAccountID = q1.GetInt(wxT("ACCOUNTID"));
+
+                   wxString fromAccount = mmDBWrapper::getAccountName(db_,  fAccountID);
+                   wxString toAccount = mmDBWrapper::getAccountName(db_,  tAccountID );
+
+                   if (tAccountID == fromAccountID)
+                   {
+                      type = wxT("Deposit");
+                      payee = fromAccount;
+                   }
+                   else if (fAccountID == fromAccountID)
+                   {
+                      type = wxT("Withdrawal");
+                      payee = toAccount;
+                  //    transfer = wxT("T");
+                   }
+                }
+               
+				text << wxT('D') <<dateString << endl 
+					 << wxT('T') << (type == wxT("Withdrawal") ? wxT("-"): wxT("")) << amount << endl 
+					 << wxT('P') << payee << endl
+					 << wxT('N') << transNum << endl
+					 << wxT('L') << (!categ.IsEmpty() ? categ : wxT("Split")) << (!subcateg.IsEmpty() ? wxT(":") : wxT("")) << subcateg << endl
+					 << wxT('M') << notes << endl;
+				
+				//if categ id is empty the transaction has been splited
+				if (categ.IsEmpty() && subcateg.IsEmpty())
+			{
+			static const char sql4splitedtrx[] = 
+            "SELECT SUBCATEGID, CATEGID, SPLITTRANSAMOUNT "
+            "FROM splittransactions_v1 "
+            "WHERE TRANSID = ?"; 
+
+			wxSQLite3Statement st2 = db_->PrepareStatement(sql4splitedtrx);
+            st2.Bind(1, transid);
+            
+			wxSQLite3ResultSet q2 = st2.ExecuteQuery();
+			while (q2.NextRow())
+			   {
+                   wxString splitamount = q2.GetString(wxT("SPLITTRANSAMOUNT"));
+                   wxString splitcateg = mmDBWrapper::getCategoryName(db_, q2.GetInt(wxT("CATEGID")));
+                   wxString splitsubcateg = mmDBWrapper::getSubCategoryName(db_, 
+                       q2.GetInt(wxT("CATEGID")), q2.GetInt(wxT("SUBCATEGID")));
+				   text << wxT('S') << splitcateg << (splitsubcateg!=wxT("") ? wxT(":") : wxT("")) << splitsubcateg << endl
+				   	 << wxT('$') << (type == wxT("Withdrawal") ? wxT("-"): wxT("")) << splitamount << endl;
+			   }
+			q2.Finalize();
+			}
+
+				text << wxT('^') << endl;
+				numRecords++;
+            }
+			
+            q1.Finalize();
+
+            wxString msg = wxString::Format(wxT("%d transactions exported"), numRecords);
+            mmShowErrorMessage(0, msg, _("Export to QIF"));
+
+		scd->Destroy();
 }
 
 void mmSetCategory(mmCoreDB* core, wxString categ, wxString subcateg, int& categID, int& subCategID)
