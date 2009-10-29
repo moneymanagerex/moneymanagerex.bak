@@ -1,10 +1,25 @@
 Version History of Money Manager Ex
 
-0.9.5
+0.9.5 (Nov ??, 2009)
 - Fix for Mac Paths (Wesley Ellis)
-- Add Notes in Transaction Lists (Wesley Ellis)
+- Add Notes in Transaction Lists (Wesley Ellis, Vadim)
 - Better Currency Summary (Vadim)
 - Add "View Today's Transactions" (Vadim)
+- Add translations for categories (Vadim, Nikolay)
+- View all data (Nikolay)
+- More date formats (Nikolay)
+- Modified sound when adding transactions (madhan)
+- New Arabic translation
+- Keystroke improvements for the checking panel (Nikolay)
+- Sorting of records on column click fixed (Vadim)
+- Fix for report "Category Income/Expense Over Last 12 Months", 
+  The "overall" amount was not equal to the previous columns total (Vadim)
+- QIF Export (Nikolay)
+- CSV Export improvements (Nikolay)
+- New Serbo-croatian translation 
+- Disabling of Edit and Delete Buttons when any transaction unselected (Pat)
+- Asset dialog show/hide controls (Pat)
+- Bank Accounts popup menu (Nikolay)
 
 0.9.4.2 (Mar 17, 2009)
 - Fix potential crash in Account Transactions Screen
