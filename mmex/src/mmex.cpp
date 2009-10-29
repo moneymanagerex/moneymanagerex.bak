@@ -1018,7 +1018,7 @@ void mmGUIFrame::updateNavTreeControl()
         if (pCA)
         {
             if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
-               // (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
+                (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
                 (vAccts == wxT("ALL")))
             {
                 wxTreeItemId tacct = navTreeCtrl_->AppendItem(accounts, pCA->accountName_, 1, 1);
@@ -3626,7 +3626,7 @@ bool wxAddAccountPage2::TransferDataFromWindow()
 
     boost::shared_ptr<mmAccount> pAccount(ptrBase);
 
-    pAccount->favorite_ = wxT("2");
+    pAccount->favoriteAcct_ = true;
     pAccount->status_ = mmAccount::MMEX_Open;
     pAccount->acctType_ = acctTypeStr;
     pAccount->accountName_ = parent_->accountName_;
