@@ -178,7 +178,7 @@ void mmHomePagePanel::updateAccounts()
               false,dtBegin, dtEnd);
 
            if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
-             //  (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
+               (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
                (vAccts == wxT("ALL")))
            {
                hb.startTableRow();
