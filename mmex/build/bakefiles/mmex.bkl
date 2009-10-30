@@ -41,12 +41,9 @@
     </subproject>
 
     
-    <!-- Generation of InnoSetup installations on Windows. The condition skips 'autoconf' format.
-         If you run bootstrap, the bakefile generates native paths in makefiles accordingly to platform 
-         on which it launches. If you commit such changes, makefiles become invalid for opposite platform.
-    -->
+    <!-- Generation of InnoSetup installations on Windows -->
 
-    <subproject id="setup" template="common_variables" cond="TOOLSET=='win32'">
+    <subproject id="setup" template="common_variables" cond="PLATFORM_WIN32=='1'">
         
         <depends>all</depends>
         <installable>no</installable>
