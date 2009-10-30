@@ -130,13 +130,11 @@ clean:
 	rm -f $(LIBPREFIX)sqlite3$(LIBEXT)
 	rm -f mmex$(EXEEXT)
 	-(cd $(srcdir)/runtime/en && $(MAKE) clean)
-	-(cd $(srcdir)/setup/win32 && $(MAKE) clean)
 	-(cd ./src/tests && $(MAKE) clean)
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
 	-(cd $(srcdir)/runtime/en && $(MAKE) distclean)
-	-(cd $(srcdir)/setup/win32 && $(MAKE) distclean)
 	-(cd ./src/tests && $(MAKE) distclean)
 
 $(LIBPREFIX)sqlite3$(LIBEXT): $(SQLITE3_OBJECTS)
@@ -152,9 +150,6 @@ mmex$(EXEEXT): $(MMEX_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(__mmex___win32rc)
 
 i18n: 
 	(cd $(srcdir)/runtime/en && $(MAKE) all)
-
-@COND_PLATFORM_WIN32_1@setup: all
-@COND_PLATFORM_WIN32_1@	(cd $(srcdir)/setup/win32 && $(MAKE) OUTPUT_DIR="D:\mmex\trunk\mmex" APP_EXE_PATH="D:\mmex\trunk\mmex\mmex.exe" BUILD_OPTS="" all)
 
 check: 
 	(cd ./src/tests && $(MAKE) check)
@@ -328,4 +323,4 @@ mmex_resources_mmex_rc.o: $(srcdir)/resources/mmex.rc
 # Include dependency info, if present:
 @IF_GNU_MAKE@-include ./.deps/*.d
 
-.PHONY: all install uninstall clean distclean i18n setup check
+.PHONY: all install uninstall clean distclean i18n check
