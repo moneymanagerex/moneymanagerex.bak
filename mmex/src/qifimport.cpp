@@ -219,6 +219,14 @@ KC 	Check transaction
 #include "fileviewerdialog.h"
 #include "mmex.h"
 
+namespace
+{
+const char g_AccountNameSQL[] = 
+    "select ACCOUNTNAME "
+    "from ACCOUNTLIST_V1 "
+    "where ACCOUNTTYPE='Checking' "
+    "order by ACCOUNTNAME";
+};
 enum qifAccountInfoType 
 {
     Name        = 1, // N
@@ -370,13 +378,7 @@ Are you are sure you want to proceed with the import?"),
     wxArrayString as;
     int fromAccountID = -1;
 
-    static const char sql[] = 
-    "select ACCOUNTNAME "
-    "from ACCOUNTLIST_V1 "
-    "where ACCOUNTTYPE='Checking' "
-    "order by ACCOUNTNAME";
-
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
@@ -414,14 +416,14 @@ Are you are sure you want to proceed with the import?"),
         int numImported = 0;
 
         wxString dt = wxDateTime::Now().FormatISODate();
-        wxString payee = wxT("");
-        wxString type = wxT("");
-        wxString amount = wxT("");
-        wxString categ = wxT("");
-        wxString subcateg = wxT("");
-        wxString transNum = wxT("");
-        wxString notes = wxT("");
-        wxString convDate = wxDateTime::Now().FormatISODate();
+        wxString payee;
+        wxString type;
+        wxString amount;
+        wxString categ;
+        wxString subcateg;
+        wxString transNum;
+        wxString notes;
+        wxString convDate;
         wxDateTime dtdt = wxDateTime::Now();
         int payeeID = -1, categID = -1, subCategID = -1;
         subCategID = -1;
@@ -458,7 +460,17 @@ Are you are sure you want to proceed with the import?"),
                     // Need to read till we get to end of account information
                     while((readLine = text.ReadLine()) != wxT("^"))
                     {
-                        numLines++;
+                        payee = wxT("");
+                        type = wxT("");
+                        amount = wxT("");
+                        categ = wxT("");
+                        notes = wxT("");
+                        subCategID = -1;
+                        transNum = wxT("");
+                        categID = -1;
+                        val = 0.0;
+                        convDate = wxDateTime::Now().FormatISODate();                        
+						numLines++;
                         if (accountInfoType(readLine) == Name)
                         {
                             log << _("Line : " ) << numLines << _(" : ")
@@ -667,19 +679,8 @@ Are you are sure you want to proceed with the import?"),
                        << _(" amount ") << amount << _(" date ") << convDate 
                         << endl;
 
-                    payee = wxT("");
-                    type = wxT("");
-                    amount = wxT("");
-                    categ = wxT("");
-                    notes = wxT("");
-                    subCategID = -1;
-                    transNum = wxT("");
-                    categID = -1;
-                    val = 0.0;
-                    convDate = wxDateTime::Now().FormatISODate();
-
                     continue;
-                }
+				}
 
                 int toAccountID = -1;
 
@@ -699,20 +700,9 @@ Are you are sure you want to proceed with the import?"),
 
                core->bTransactionList_.addTransaction(core, pTransaction);
 
-                payee = wxT("");
-                type = wxT("");
-                amount = wxT("");
-                categ = wxT("");
-                notes = wxT("");
-                subCategID = -1;
-                transNum = wxT("");
-                categID = -1;
-                val = 0.0;
-                convDate = wxDateTime::Now().FormatISODate();
-
                 numImported++;
                 continue;
-            }
+			}
         }
 
         log << numImported << _(" transactions imported from QIF") << endl;
