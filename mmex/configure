@@ -616,7 +616,7 @@ WINDRES
 BK_DEPS
 DEPS_TRACKING
 SONAME_FLAG
-USE_SOSYMLINKS
+USE_SOTWOSYMLINKS
 USE_MACVERSION
 USE_SOVERCYGWIN
 USE_SOVERSOLARIS
@@ -11440,7 +11440,7 @@ EOF
         chmod +x shared-ld-sh
 
         SHARED_LD_MODULE_CC="`pwd`/shared-ld-sh -bundle -headerpad_max_install_names -o"
-        SHARED_LD_MODULE_CXX="CXX=\$(CXX) $SHARED_LD_MODULE_CC"
+        SHARED_LD_MODULE_CXX="CXX=\"\$(CXX)\" $SHARED_LD_MODULE_CC"
 
 
                                 { $as_echo "$as_me:$LINENO: checking for gcc 3.1 or later" >&5
@@ -12119,7 +12119,7 @@ $as_echo "$as_me: error: unknown system type $BAKEFILE_HOST." >&2;}
     USE_SOVERLINUX=0
     USE_SOVERSOLARIS=0
     USE_SOVERCYGWIN=0
-    USE_SOSYMLINKS=0
+    USE_SOTWOSYMLINKS=0
     USE_MACVERSION=0
     SONAME_FLAG=
 
@@ -12133,20 +12133,19 @@ $as_echo "$as_me: error: unknown system type $BAKEFILE_HOST." >&2;}
         fi
         USE_SOVERSION=1
         USE_SOVERLINUX=1
-        USE_SOSYMLINKS=1
+        USE_SOTWOSYMLINKS=1
       ;;
 
       *-*-solaris2* )
         SONAME_FLAG="-h "
         USE_SOVERSION=1
         USE_SOVERSOLARIS=1
-        USE_SOSYMLINKS=1
       ;;
 
       *-*-darwin* )
         USE_MACVERSION=1
         USE_SOVERSION=1
-        USE_SOSYMLINKS=1
+        USE_SOTWOSYMLINKS=1
       ;;
 
       *-*-cygwin* )
@@ -12545,10 +12544,10 @@ fi
 
 
 
-    BAKEFILE_BAKEFILE_M4_VERSION="0.2.6"
+    BAKEFILE_BAKEFILE_M4_VERSION="0.2.8"
 
 
-BAKEFILE_AUTOCONF_INC_M4_VERSION="0.2.6"
+BAKEFILE_AUTOCONF_INC_M4_VERSION="0.2.8"
 
     COND_DEPS_TRACKING_0="#"
     if test "x$DEPS_TRACKING" = "x0" ; then
