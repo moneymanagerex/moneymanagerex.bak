@@ -171,7 +171,7 @@ mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(LIBPRE
 
 check: all
 	cp $(srcdir)/../../runtime/currency.db3 .
-	cd . && ./mmex_tests
+	./mmex_tests
 
 sqlite3_sqlite3secure.o: $(srcdir)/../../sqlite/sqlite3secure.c
 	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/sqlite3secure.c

@@ -80,12 +80,12 @@
 
         <command cond="FORMAT!='autoconf'">
             <!-- can't get executable dir if autoconf -->
-            cd $(nativePaths(SRCDIR + '/runtime')) &amp;&amp; $(nativePaths(os.path.abspath(os.path.dirname(OUTPUT_FILE)) + '/' + BUILDDIR + '/mmex_tests' + EXEEXT))
+            cd $(nativePaths(SRCDIR + '/runtime')) &amp;&amp; $('..\\build\\msw\\tests\\' + BUILDDIR + '\\mmex_tests' + EXEEXT)
         </command>
 
         <command cond="FORMAT=='autoconf'">
             $(COPY) $(nativePaths(SRCDIR + '/runtime/currency.db3')) $(nativePaths(BUILDDIR))
-            cd $(nativePaths(BUILDDIR)) &amp;&amp; $(nativePaths('./mmex_tests'))
+            $(nativePaths('./mmex_tests'))
 	</command>
 
         <clean-files  cond="FORMAT=='autoconf'">$(nativePaths(BUILDDIR + '/currency.db3'))</clean-files>
