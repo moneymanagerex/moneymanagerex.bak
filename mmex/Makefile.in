@@ -154,7 +154,7 @@ i18n:
 	(cd $(srcdir)/runtime/en && $(MAKE) all)
 
 @COND_PLATFORM_WIN32_1@setup: all
-@COND_PLATFORM_WIN32_1@	(cd $(srcdir)/setup/win32 && $(MAKE) OUTPUT_DIR="D:\mmex\trunk\mmex" APP_EXE_PATH="D:\mmex\trunk\mmex\mmex.exe" BUILD_OPTS="" all)
+@COND_PLATFORM_WIN32_1@	(cd $(srcdir)/setup/win32 && $(MAKE) OUTPUT_DIR="..\..\build\msw" APP_EXE_PATH="..\..\build\msw\mmex.exe" BUILD_OPTS="" all)
 
 check: 
 	(cd ./src/tests && $(MAKE) check)

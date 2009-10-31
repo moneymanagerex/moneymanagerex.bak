@@ -107,18 +107,6 @@ PATH. Accepted values: AMD64, IA64.
     </if>
 
 
-    <!-- defines some useful variables -->
-
-    <template id="common_variables">
-
-	<!-- absolute path to target dir -->
-        <set var="TARGET_DIR">
-            $(os.path.abspath( os.path.dirname(OUTPUT_FILE) + DIRSEP + BUILDDIR ))
-        </set>
-    
-    </template>
-
-
     <!-- generic compiler's flags -->
 
     <template id="compiler_common">
@@ -171,7 +159,7 @@ PATH. Accepted values: AMD64, IA64.
     
     <!-- common part of mmex and mmex_tests -->
 
-    <template id="mmex_common" template="lib_path_x64_hack,wx,common_variables,compiler_common">
+    <template id="mmex_common" template="lib_path_x64_hack,wx,compiler_common">
 
         <cxx-exceptions>on</cxx-exceptions>
         <cxx-rtti>on</cxx-rtti>
@@ -220,7 +208,7 @@ PATH. Accepted values: AMD64, IA64.
 
         <if cond="FORMAT=='msvc'">
 	    
-            <set var="TARGET_PATH">$(TARGET_DIR + DIRSEP + id + EXEEXT)</set>
+            <set var="TARGET_PATH">$(BUILDDIR + DIRSEP + id + EXEEXT)</set>
 
 	    <postlink-command>
         	mt.exe -manifest "$(TARGET_PATH).manifest" -outputresource:"$(TARGET_PATH)";1
