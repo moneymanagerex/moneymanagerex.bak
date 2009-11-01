@@ -255,6 +255,10 @@ public:
 
     void OnWizardCancel(wxWizardEvent& event);
 
+	void OnViewAllAccounts(wxCommandEvent& event);
+	void OnViewFavoriteAccounts(wxCommandEvent& event);
+	void OnViewOpenAccounts(wxCommandEvent& event);
+
 public:
     mmPanelBase* panelCurrent_;
     wxPanel* homePanel;
