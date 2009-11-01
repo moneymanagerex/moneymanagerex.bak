@@ -70,15 +70,39 @@
             <if cond="isdefined('TARGETCPUPOSTFIX')">$(TARGETCPUPOSTFIX)</if>
         </set>
 
+        <set var="HARDWARE_CPU">
+            <if cond="isdefined('TARGETCPUID')">$(TARGETCPUID)</if>
+        </set>
+
+
+        <!-- select which C++ runtime libraries include to setup -->                
+            
+        <set var="CRT_DLLS">
+            
+            <if cond="WX_DEBUG=='0' and FORMAT.startswith('msv')">
+                $(envvar('VCINSTALLDIR') + '\\redist\\' + HARDWARE_CPU + '\Microsoft.VC' + CRT_VERSION + '.CRT\\*')
+            </if>
+
+            <if cond="WX_DEBUG=='1' and FORMAT.startswith('msv')">
+                $(envvar('VCINSTALLDIR') + '\\redist\\Debug_NonRedist\\' + HARDWARE_CPU + '\Microsoft.VC' + CRT_VERSION + '.DebugCRT\\*')
+            </if>
+
+            <if cond="FORMAT=='mingw'">
+                <!-- FIXME: ';' causes InnoSetup compiler's error -->
+                $(envvar('MINGWDIR') + '\\libgcc*.dll;' + envvar('MINGWDIR') + '\\mingwm10.dll')
+            </if>
+
+        </set>
+
         <set var="TARGET_DIR">$('..\\..\\build\msw' + ifthenelse(BUILDDIR=='.', '', '\\' + BUILDDIR))</set>
 
         <target>
-            OUTPUT_DIR="$(TARGET_DIR)" APP_EXE_PATH="$(TARGET_DIR)\mmex.exe" BUILD_OPTS="$(SHARED)$(UNICODE)$(DEBUG)$(HARDWARE)" all
+            APP_EXE_PATH="$(TARGET_DIR)\mmex.exe" BUILD_OPTS="$(SHARED)$(UNICODE)$(DEBUG)$(HARDWARE)" CRT_DLLS="$(CRT_DLLS)" all
         </target>
 
     </subproject>
 
-    
+
     <!-- unit tests target (not dependency of 'all'): -->
 
     <subproject id="check">
@@ -91,5 +115,5 @@
 
     </subproject>
 
-
+    
 </makefile>
