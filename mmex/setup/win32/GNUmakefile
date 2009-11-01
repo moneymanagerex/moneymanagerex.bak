@@ -38,7 +38,7 @@ clean:
 
 mmex: mmex.iss
 	-"..\..\tools\upx.exe" --best "$(APP_EXE_PATH)"
-	iscc.exe mmex.iss -dOutputDir="$(OUTPUT_DIR)" -dAppExePath="$(APP_EXE_PATH)" -dBuildOpts="$(BUILD_OPTS)"
+	iscc.exe mmex.iss -dAppExePath="$(APP_EXE_PATH)" -dBuildOpts="$(BUILD_OPTS)" -dCrtDlls="$(CRT_DLLS)"
 
 .PHONY: all install uninstall clean mmex
 
