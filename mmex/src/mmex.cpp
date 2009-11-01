@@ -297,19 +297,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_TRANSACTIONREPORT, mmGUIFrame::OnTransactionReport)
 
     /* Navigation Panel */
-	/*Popup Menu for Bank Accounts*/
 
-	//New Account    //
-	//Delete Account //
-	//Edit Account   //
-	//Export >       //  
-	        //CSV Files //
-	        //QIF Files //
-	//Import >       //
-			//Universal CSV Files //
-			//QIF Files           //
-			//MMEX CSV Files      //
-			//MM.&NET CSV Files   //
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_NEW, mmGUIFrame::OnNewAccount)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_DELETE, mmGUIFrame::OnDeleteAccount)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_EDIT, mmGUIFrame::OnEditAccount)
@@ -320,6 +308,9 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_IMPORTCSV, mmGUIFrame::OnImportCSV)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_IMPORTUNIVCSV, mmGUIFrame::OnImportUniversalCSV)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_IMPORTMMNET, mmGUIFrame::OnImportCSVMMNET)
+	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWALL, mmGUIFrame::OnViewAllAccounts)
+	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWFAVORITE, mmGUIFrame::OnViewFavoriteAccounts)
+	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWOPEN, mmGUIFrame::OnViewOpenAccounts)
 
 END_EVENT_TABLE()
 /*******************************************************/
@@ -1905,6 +1896,24 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
 		{
 
          //wxMenu menu;
+			/*Popup Menu for Bank Accounts*/
+		//New Account    //
+		//Delete Account //
+		//Edit Account   //
+		//Export >       //  
+	        //CSV Files //
+	        //QIF Files //
+		//Import >       //
+			//Universal CSV Files //
+			//QIF Files           //
+			//MMEX CSV Files      //
+			//MM.&NET CSV Files   //
+		//Accounts Visible//
+			//All      //
+			//Favorite //
+			//Open     //
+
+
 		 wxMenu *menu = new wxMenu;
          menu->Append(MENU_TREEPOPUP_ACCOUNT_NEW, _("New &Account"));
          menu->Append(MENU_TREEPOPUP_ACCOUNT_DELETE, _("&Delete Account"));
@@ -1925,12 +1934,62 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
 		 importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTCSV, _("&MMEX CSV Files"));
 		 importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTMMNET, _("MM.&NET CSV Files"));
 		 menu->AppendSubMenu(importFrom,  _("&Import"));
+		 menu->AppendSeparator();
+		 wxMenu *viewAccounts = new wxMenu;
+		 viewAccounts->Append(MENU_TREEPOPUP_ACCOUNT_VIEWALL, _("All"));
+		 viewAccounts->Append(MENU_TREEPOPUP_ACCOUNT_VIEWOPEN, _("Open"));
+		 viewAccounts->Append(MENU_TREEPOPUP_ACCOUNT_VIEWFAVORITE, _("Favorites"));
+		 menu->AppendSubMenu(viewAccounts, _("Accounts Visible"));
          PopupMenu(&*menu, pt);
 		}
 	}
 }
 
+void mmGUIFrame::OnViewAllAccounts(wxCommandEvent&)
+{
+	//Get current settings for view accounts
+	wxString vAccts = mmDBWrapper::getINISettingValue(inidb_.get(), wxT("VIEWACCOUNTS"), wxT("ALL"));
 
+	//Set view ALL 
+	mmDBWrapper::setINISettingValue(inidb_.get(), wxT("VIEWACCOUNTS"), wxT("ALL"));
+
+	//Refresh Navigation Panel
+	mmGUIFrame::updateNavTreeControl();
+
+	//Restore settings
+	mmDBWrapper::setINISettingValue(inidb_.get(), wxT("VIEWACCOUNTS"), vAccts);
+
+}
+void mmGUIFrame::OnViewFavoriteAccounts(wxCommandEvent&)
+{
+	//Get current settings for view accounts
+	wxString vAccts = mmDBWrapper::getINISettingValue(inidb_.get(), wxT("VIEWACCOUNTS"), wxT("ALL"));
+
+	//Set view ALL 
+	mmDBWrapper::setINISettingValue(inidb_.get(), wxT("VIEWACCOUNTS"), wxT("Favorites"));
+
+	//Refresh Navigation Panel
+	mmGUIFrame::updateNavTreeControl();
+
+	//Restore settings
+	mmDBWrapper::setINISettingValue(inidb_.get(), wxT("VIEWACCOUNTS"), vAccts);
+
+}
+void mmGUIFrame::OnViewOpenAccounts(wxCommandEvent&)
+{
+	//Get current settings for view accounts
+	wxString vAccts = mmDBWrapper::getINISettingValue(inidb_.get(), wxT("VIEWACCOUNTS"), wxT("ALL"));
+
+	//Set view ALL 
+	mmDBWrapper::setINISettingValue(inidb_.get(), wxT("VIEWACCOUNTS"), wxT("Open"));
+
+	//Refresh Navigation Panel
+	mmGUIFrame::updateNavTreeControl();
+
+	//Restore settings
+	mmDBWrapper::setINISettingValue(inidb_.get(), wxT("VIEWACCOUNTS"), vAccts);
+
+}
 void mmGUIFrame::createCheckingAccountPage(int accountID)
 {
     wxSizer *sizer = cleanupHomePanel();
