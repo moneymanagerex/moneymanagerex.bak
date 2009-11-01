@@ -28,14 +28,8 @@
 #include "../resources/bma.xpm"
 #endif
 /*******************************************************/
-/* Indicate file path for OS X */
-#if defined (__WXMAC__)
-#define MMEX_SPLASH_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/splash.png")
-#define MMEX_ICON_FNAME wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico")
-#else
 #define MMEX_SPLASH_FNAME wxT("/splash.png")
 #define MMEX_ICON_FNAME wxT("/mmex.ico")
-#endif
 /*******************************************************/
 IMPLEMENT_DYNAMIC_CLASS( mmAboutDialog, wxDialog )
 

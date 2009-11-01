@@ -69,16 +69,4 @@
 
 #endif
 
-/*
-// Adapted by Wesley Ellis to allow for OS X app file paths
-#if defined (__WXMAC__) || defined (__WXOSX__)
-#define MMEX_INIDB_FNAME wxT("/mmexini.db3")
-#define MMEX_SPLASH_FNAME wxT("MMEX.app/Contents/Resources/runtime_osx/splash.png")
-#define MMEX_ICON_FNAME wxT("MMEX.app/Contents/Resources/runtime_osx/mmex.ico")
 
-#else
-#define MMEX_INIDB_FNAME wxT("/mmexini.db3")
-#define MMEX_SPLASH_FNAME wxT("splash.png")
-#define MMEX_ICON_FNAME wxT("mmex.ico")
-#endif
-*/
