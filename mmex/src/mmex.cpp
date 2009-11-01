@@ -112,6 +112,7 @@
 
 //----------------------------------------------------------------------------
 #include <wx/debugrpt.h>
+#include "wx/sysopt.h"
 //----------------------------------------------------------------------------
 #include <string>
 #include <boost/scoped_array.hpp>
@@ -127,11 +128,9 @@ wxString getMMEXIconPath()
 {
     wxString path;
 
-#if defined (__WXMAC__)
-    path = wxStandardPaths::Get().GetResourcesDir() + wxT("/mmex.ico");
-#else
-    path = wxT("mmex.ico");
-#endif
+
+    path = mmGetBaseWorkingPath() + wxT("/mmex.ico");
+
 
     return path;
 }
@@ -216,9 +215,7 @@ bool OnInitImpl(mmGUIApp &app)
     inidb->Close();
 
 #if defined (__WXMAC__) || defined (__WXOSX__)
-    wxApp::s_macAboutMenuItemId = MENU_ABOUT;
-    wxApp::s_macPreferencesMenuItemId = MENU_OPTIONS;
-    wxApp::s_macHelpMenuTitleName = "&Help";
+wxSystemOptions::SetOption(wxMAC_ALWAYS_USE_GENERIC_LISTCTRL,1);
 #endif
 
     mmGUIFrame *frame = new mmGUIFrame(mmIniOptions::appName_, wxPoint(valx, valy), wxSize(valw, valh));
@@ -259,20 +256,20 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_IMPORT_QIF, mmGUIFrame::OnImportQIF)
     EVT_MENU(MENU_IMPORT_QFX, mmGUIFrame::OnImportQFX)
     EVT_MENU(MENU_IMPORT_UNIVCSV, mmGUIFrame::OnImportUniversalCSV)
-    EVT_MENU(MENU_QUIT,  mmGUIFrame::OnQuit)
+    EVT_MENU(wxID_EXIT,  mmGUIFrame::OnQuit)
     EVT_MENU(MENU_NEWACCT,  mmGUIFrame::OnNewAccount)
     EVT_MENU(MENU_ACCTLIST,  mmGUIFrame::OnAccountList)
     EVT_MENU(MENU_ACCTEDIT,  mmGUIFrame::OnEditAccount)
     EVT_MENU(MENU_ACCTDELETE,  mmGUIFrame::OnDeleteAccount)
     EVT_MENU(MENU_ORGCATEGS,  mmGUIFrame::OnOrgCategories)
     EVT_MENU(MENU_ORGPAYEE,  mmGUIFrame::OnOrgPayees)
-    EVT_MENU(MENU_OPTIONS,  mmGUIFrame::OnOptions)
+    EVT_MENU(wxID_PREFERENCES,  mmGUIFrame::OnOptions)
     EVT_MENU(MENU_BUDGETSETUPDIALOG, mmGUIFrame::OnBudgetSetupDialog)
-    EVT_MENU(MENU_HELP,  mmGUIFrame::OnHelp)
+    EVT_MENU(wxID_HELP,  mmGUIFrame::OnHelp)
     EVT_MENU(MENU_CHECKUPDATE,  mmGUIFrame::OnCheckUpdate)
     EVT_MENU(MENU_REPORTISSUES,  mmGUIFrame::OnReportIssues)
     EVT_MENU(MENU_ANNOUNCEMENTMAILING,  mmGUIFrame::OnBeNotified)
-    EVT_MENU(MENU_ABOUT, mmGUIFrame::OnAbout)
+    EVT_MENU(wxID_ABOUT, mmGUIFrame::OnAbout)
     EVT_MENU(MENU_PRINT_PAGE_SETUP, mmGUIFrame::OnPrintPageSetup)
     EVT_MENU(MENU_PRINT_REPORT, mmGUIFrame::OnPrintPageReport)
     EVT_MENU(MENU_PRINT_PREVIEW_REPORT, mmGUIFrame::OnPrintPagePreview)
@@ -655,7 +652,7 @@ void mmGUIFrame::menuEnableItems(bool enable)
     menuBar_->FindItem(MENU_IMPORT)->Enable(enable);
     menuBar_->FindItem(MENU_PRINT_PREVIEW)->Enable(enable);
     menuBar_->FindItem(MENU_PRINT)->Enable(enable);
-    menuBar_->FindItem(MENU_OPTIONS)->Enable(enable);
+    menuBar_->FindItem(wxID_PREFERENCES)->Enable(enable);
     if (mmIniOptions::enableRepeatingTransactions_)
       menuBar_->FindItem(MENU_BILLSDEPOSITS)->Enable(enable);
     if (mmIniOptions::enableStocks_)
@@ -2098,7 +2095,7 @@ void mmGUIFrame::createMenu()
 
     menuFile->AppendSeparator();
 
-    wxMenuItem* menuItemQuit = new wxMenuItem(menuFile, MENU_QUIT, 
+    wxMenuItem* menuItemQuit = new wxMenuItem(menuFile, wxID_EXIT, 
 		_("E&xit\tAlt-X"), _("Quit this program"));
 	menuItemQuit->SetBitmap(wxBitmap(exit_xpm));
     menuFile->Append(menuItemQuit);
@@ -2201,14 +2198,14 @@ void mmGUIFrame::createMenu()
 
     menuTools->AppendSeparator();
 
-    wxMenuItem* menuItemOptions = new wxMenuItem(menuTools, MENU_OPTIONS, 
+    wxMenuItem* menuItemOptions = new wxMenuItem(menuTools, wxID_PREFERENCES, 
 		  _("&Options"), _("Show the Options Dialog"));
 	menuItemOptions->SetBitmap(wxBitmap(wrench_xpm));
     menuTools->Append(menuItemOptions);
 
     wxMenu *menuHelp = new wxMenu;
 
-    wxMenuItem* menuItemHelp = new wxMenuItem(menuTools, MENU_HELP, 
+    wxMenuItem* menuItemHelp = new wxMenuItem(menuTools, wxID_HELP, 
 		 _("&Help\tCtrl-F1"), _("Show the Help file"));
 	menuItemHelp->SetBitmap(wxBitmap(help_xpm));
     menuHelp->Append(menuItemHelp);
@@ -2258,7 +2255,7 @@ void mmGUIFrame::createMenu()
        menuHelp->Append(menuItemNotify); 
     }
         
-    wxMenuItem* menuItemAbout = new wxMenuItem(menuTools, MENU_ABOUT, 
+    wxMenuItem* menuItemAbout = new wxMenuItem(menuTools, wxID_ABOUT, 
        _("&About..."), _("Show about dialog"));
     menuItemAbout->SetBitmap(wxBitmap(about_xpm));
     menuHelp->Append(menuItemAbout);
@@ -3186,7 +3183,7 @@ void mmGUIFrame::showBeginAppDialog()
     }
     else if (dlg->getReturnCode() == 2)
     {
-       wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_HELP);
+       wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, wxID_HELP);
        AddPendingEvent(evt);
     }
     else if (dlg->getReturnCode() == 3)
