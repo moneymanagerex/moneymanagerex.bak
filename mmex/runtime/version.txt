@@ -1,6 +1,6 @@
 Version History of Money Manager Ex
 
-0.9.5 (Nov ??, 2009)
+0.9.5 (Nov 3, 2009)
 - Fix for Mac Paths (Wesley Ellis)
 - Add Notes in Transaction Lists (Wesley Ellis, Vadim)
 - Better Currency Summary (Vadim)
