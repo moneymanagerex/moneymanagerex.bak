@@ -105,8 +105,9 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
 	*** Building 64-bit MMEX using Visual C++ *** 
 
 
-  Visual Studio 2008 Express Edition does not have 64-bit compiler. 
-  You should use Standard, Professional or Team System edition of Visual Studio.
+  64-bit tools are not available on Visual C++ Express Edition by default. To enable 64-bit tools 
+  on VC++ Express, install the Windows Software Development Kit (SDK) in addition to VC++ Express.
+  Otherwise, an error occurs when you attempt to configure a project to target a 64-bit platform.
 
 1.As usually, firstly you should build wxWidgets. 
   Run Visual Studio Command Prompt x64 (or IA-64), change dir to wxWidgets\build\msw.
