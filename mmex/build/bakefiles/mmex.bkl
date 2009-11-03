@@ -74,17 +74,30 @@
             <if cond="isdefined('TARGETCPUID')">$(TARGETCPUID)</if>
         </set>
 
+        <!-- Select VC++ runtime libraries to embed into setup. 
+             We deploying Visual C++ library DLLs as private side-by-side assemblies.
 
-        <!-- select which C++ runtime libraries include to setup -->                
+             FIXME: 
+             Visual C++ Express does not create %PROGDIR%\Microsoft Visual Studio X.0\VC\Redist\ during installation 
+             on the development computer. To redistribute Visual C++ libraries with applications built with 
+             Visual C++ Express, please use Visual C++ Redistributable Packages (VCRedist_*.exe). 
+             
+             Use Visual C++ Redistributable Package (VCRedist_x86.exe, VCRedist_x64.exe, VCRedist_ia64.exe) to install
+             all Visual C++ libraries as shared side-by-side assemblies into the native assembly cache (WinSxS folder). 
+             This package is installed by Visual Studio into %WindowsSdkDir%\Bootstrapper\Packages\ folder and can also 
+             be downloaded from the Microsoft site. Redistributing Visual C++ libraries using this package is recommended
+             for applications built with Visual C++ Express and for cases when deployment of all Visual C++ libraries 
+             at once is desirable.
+        -->
             
         <set var="CRT_DLLS">
             
             <if cond="WX_DEBUG=='0' and FORMAT.startswith('msv')">
-                $(envvar('VCINSTALLDIR') + '\\redist\\' + HARDWARE_CPU + '\Microsoft.VC' + CRT_VERSION + '.CRT\\*')
+                $(envvar('VCINSTALLDIR') + '\\redist\\' + HARDWARE_CPU + '\\Microsoft.VC' + CRT_VERSION + '.CRT\\*')
             </if>
 
             <if cond="WX_DEBUG=='1' and FORMAT.startswith('msv')">
-                $(envvar('VCINSTALLDIR') + '\\redist\\Debug_NonRedist\\' + HARDWARE_CPU + '\Microsoft.VC' + CRT_VERSION + '.DebugCRT\\*')
+                $(envvar('VCINSTALLDIR') + '\\redist\\Debug_NonRedist\\' + HARDWARE_CPU + '\\Microsoft.VC' + CRT_VERSION + '.DebugCRT\\*')
             </if>
 
             <if cond="FORMAT=='mingw'">
