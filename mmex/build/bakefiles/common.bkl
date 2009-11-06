@@ -71,15 +71,16 @@ PATH. Accepted values: AMD64, IA64.
 
             </option>
 
-            <set var="TARGETCPUID">
+            <set var="CPU_ARCH">
                 <if cond="TARGET_CPU==''">x86</if>
+                <if cond="TARGET_CPU=='x86'">x86</if>
                 <if cond="TARGET_CPU=='AMD64'">amd64</if>
                 <if cond="TARGET_CPU=='IA64'">ia64</if>
             </set>
         
             <!-- This variable is useful to set the BUILDDIR variable as done in presets/setbuilddir.bkl -->
        
-            <set var="TARGETCPUPOSTFIX">-$(TARGETCPUID)</set>
+            <set var="TARGETCPUPOSTFIX">-$(CPU_ARCH)</set>
         
         </if>
 

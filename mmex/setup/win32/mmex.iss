@@ -9,6 +9,10 @@
         #error Use option -dBuildOpts=value
 #endif
 
+#ifndef CpuArch
+        #error Use option -dCpuArch=[x86|amd64|ia64]
+#endif
+
 #ifndef CrtDlls
         #error Use option -dCrtDlls=value
 #endif
@@ -55,6 +59,22 @@ VersionInfoCopyright={#Copyright}
 
 ; disable the "Select Setup Language" dialog and have it rely solely on auto-detection
 ;ShowLanguageDialog=no
+
+
+; "ArchitecturesAllowed=x64" specifies that Setup cannot run on anything but x64
+#if CpuArch == "x86"
+  ArchitecturesAllowed=x86 x64
+#elif CpuArch == "amd64"
+  ArchitecturesAllowed=x64
+#else
+  ArchitecturesAllowed={#CpuArch}
+#endif
+
+; "ArchitecturesInstallIn64BitMode=x64 ia64" requests that the install
+; be done in "64-bit mode" on x64 & Itanium, meaning it should use the
+; native 64-bit Program Files directory and the 64-bit view of the
+; registry. On all other architectures it will install in "32-bit mode".
+ArchitecturesInstallIn64BitMode=x64 ia64
 
 
 [Languages]
@@ -120,18 +140,6 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-Source: "..\..\runtime\*"; DestDir: "{app}"; Components: program; Flags: ignoreversion
-
-#define help_dir "{app}\help"
-
-Source: "..\..\docs\*.jpg"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "..\..\docs\*.png"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "..\..\docs\investment.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "..\..\docs\index.html"; Languages: english; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "..\..\docs\french-help.html";  Languages: french; DestName: "index.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "..\..\docs\index_fichiers\*";  Languages: french; DestDir: "{#help_dir}\index_fichiers"; Components: help; Flags: ignoreversion
-Source: "..\..\docs\italian-help.html"; Languages: italian; DestName: "index.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "..\..\docs\russian-help.html"; Languages: russian; DestName: "index.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
 
 #define lang_dir "{app}\en"
 
@@ -169,6 +177,18 @@ Source: "..\..\runtime\en\turkish.*";          DestDir: {#lang_dir}; Components:
 Source: "..\..\runtime\en\ukrainian.*";        DestDir: {#lang_dir}; Components: "lang\ukrainian";     Flags: ignoreversion
 Source: "..\..\runtime\en\vietnamese.*";       DestDir: {#lang_dir}; Components: "lang\vietnamese";    Flags: ignoreversion
 
+#define help_dir "{app}\help"
+
+Source: "..\..\docs\*.jpg"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "..\..\docs\*.png"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "..\..\docs\investment.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "..\..\docs\index.html"; Languages: english; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "..\..\docs\french-help.html";  Languages: french; DestName: "index.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "..\..\docs\index_fichiers\*";  Languages: french; DestDir: "{#help_dir}\index_fichiers"; Components: help; Flags: ignoreversion
+Source: "..\..\docs\italian-help.html"; Languages: italian; DestName: "index.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "..\..\docs\russian-help.html"; Languages: russian; DestName: "index.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+
+Source: "..\..\runtime\*"; DestDir: "{app}"; Components: program; Flags: ignoreversion
 ; .exe already compressed by UPX
 Source: {#AppExePath}; DestDir: "{app}"; Components: program; Flags: ignoreversion nocompression
 Source: {#CrtDlls}; DestDir: "{app}"; Components: program; Flags: ignoreversion
