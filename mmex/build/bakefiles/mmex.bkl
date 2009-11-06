@@ -65,13 +65,13 @@
             <if cond="FORMAT=='autoconf'"></if>
             <if cond="WX_DEBUG=='1'">-debug</if>
         </set>
-        
+                
         <set var="HARDWARE">
             <if cond="isdefined('TARGETCPUPOSTFIX')">$(TARGETCPUPOSTFIX)</if>
         </set>
 
         <set var="HARDWARE_CPU">
-            <if cond="isdefined('TARGETCPUID')">$(TARGETCPUID)</if>
+            <if cond="isdefined('CPU_ARCH')">$(CPU_ARCH)</if>
         </set>
 
         <!-- Select VC++ runtime libraries to embed into setup. 
@@ -110,7 +110,7 @@
         <set var="TARGET_DIR">$('..\\..\\build\msw' + ifthenelse(BUILDDIR=='.', '', '\\' + BUILDDIR))</set>
 
         <target>
-            APP_EXE_PATH="$(TARGET_DIR)\mmex.exe" BUILD_OPTS="$(SHARED)$(UNICODE)$(DEBUG)$(HARDWARE)" CRT_DLLS="$(CRT_DLLS)" all
+            APP_EXE_PATH="$(TARGET_DIR)\mmex.exe" BUILD_OPTS="$(SHARED)$(UNICODE)$(DEBUG)$(HARDWARE)" CPU_ARCH="$(HARDWARE_CPU)" CRT_DLLS="$(CRT_DLLS)" all
         </target>
 
     </subproject>
