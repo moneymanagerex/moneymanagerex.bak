@@ -240,21 +240,37 @@ bool sortTransactionsByRemainingDays( mmBDTransactionHolder elem1, mmBDTransacti
 
 void mmBillsDepositsPanel::initVirtualListControl()
 {
-    /* Clear all the records */
+    static const char sql[] = 
+"select c.categname, "
+       "sc.subcategname, "
+       "b.BDID, "
+       "b.NEXTOCCURRENCEDATE, "
+       "b.REPEATS, "
+       "b.PAYEEID, "
+       "b.TRANSCODE, "
+       "b.ACCOUNTID, "
+       "b.TOACCOUNTID, "
+       "b.TRANSAMOUNT, "
+       "b.TOTRANSAMOUNT, "
+       "b.NOTES, "
+       "b.CATEGID, "
+       "b.SUBCATEGID "
+
+"from BILLSDEPOSITS_V1 b "
+
+"left join category_v1 c "
+"on c.categid = b.categid "
+
+"left join subcategory_v1 sc "
+"on sc.subcategid = b.subcategid";
+
     trans_.clear();
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
 
-    static const char sql[] = 
-    "select c.categname, s.subcategname, BDID, NEXTOCCURRENCEDATE, REPEATS, PAYEEID, TRANSCODE, "
-	"ACCOUNTID, TOACCOUNTID, TRANSAMOUNT, TOTRANSAMOUNT, NOTES, b.CATEGID, b.SUBCATEGID from BILLSDEPOSITS_V1 b "
-    "inner join category_v1 c on b.categid=c.categid "
-    "left join subcategory_v1 s on b.subcategid=s.subcategid; ";
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
 
-	wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-
-    long cnt = 0;
-    for (; q1.NextRow(); ++cnt)
+    while (q1.NextRow())
     {
         mmBDTransactionHolder th;
 
@@ -358,19 +374,21 @@ void mmBillsDepositsPanel::initVirtualListControl()
     }
 
     q1.Finalize();
+
     std::sort(trans_.begin(), trans_.end(), sortTransactionsByRemainingDays);
-    listCtrlAccount_->SetItemCount(cnt);
+    listCtrlAccount_->SetItemCount(static_cast<long>(trans_.size()));
 
-	//Set an empty text for Bottom Info Panel 
-	    wxString text;
-    text += _("Category         : "); 
-	text += wxT("\n");
+    // set an empty text for Bottom Info Panel 
+
+    wxString text(_("Category         : "));
+    text += wxT("\n");
     text += _("Sub Category  : "); 
-	text += wxT("\n");
-	text +=  _("Notes               : "); 
-	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
+    text += wxT("\n");
+    text +=  _("Notes               : "); 
+    
+    wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
+    wxASSERT(st);
     st->SetLabel(text);
-
 }
 
 void mmBillsDepositsPanel::OnDeleteBDSeries(wxCommandEvent& event)
