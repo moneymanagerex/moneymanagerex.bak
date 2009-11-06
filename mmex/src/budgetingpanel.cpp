@@ -188,13 +188,13 @@ void mmBudgetingPanel::CreateControls()
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader2, 0, wxALL, 1);
 
     wxBitmap itemStaticBitmap3Bitmap(rightarrow_xpm);
-	wxBitmapButton* itemStaticBitmap3 = new wxBitmapButton (itemPanel3, 
-															ID_PANEL_BUDGETENTRY_STATIC_BITMAP_VIEW,itemStaticBitmap3Bitmap, wxDefaultPosition,
-															wxSize (16, 16), 0);
-    itemBoxSizerHHeader2->Add(itemStaticBitmap3);
-    itemStaticBitmap3->SetEventHandler( this );
-	
-    wxStaticText* itemStaticText18 = new wxStaticText( itemPanel3, 
+    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( itemPanel3, 
+        ID_PANEL_BUDGETENTRY_STATIC_BITMAP_VIEW, 
+        itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(16, 16), 0 );
+    itemBoxSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemStaticBitmap3->SetEventHandler( this ); 
+
+     wxStaticText* itemStaticText18 = new wxStaticText( itemPanel3, 
             ID_PANEL_CHECKING_STATIC_PANELVIEW, 
             _("Viewing All Budget Categories"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerHHeader2->Add(itemStaticText18, 0, wxALL, 1);
