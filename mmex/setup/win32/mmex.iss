@@ -97,8 +97,8 @@ Name: "custom"; Description: "Custom installation"; Flags: iscustom
 Name: "program"; Description: "Program Files"; Types: full minimal custom; Flags: fixed
 Name: "help"; Description: "Help files"; Types: full minimal
 
-Name: "lang"; Description: "Languages"; Types: full minimal
-Name: "lang\english"; Description: "English"; Types: full minimal
+Name: "lang"; Description: "Languages"; Types: full
+Name: "lang\english"; Description: "English"; Types: full
 Name: "lang\arabic"; Description: "Arabic"; Types: full
 Name: "lang\bulgarian"; Description: "Bulgarian"; Types: full
 Name: "lang\chinese_chs"; Description: "Chinese Chs"; Types: full
