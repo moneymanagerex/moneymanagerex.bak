@@ -1,0 +1,76 @@
+-------------------------------------------------------------------------------
+1. Required Libraries
+-------------------------------------------------------------------------------
+- wxWidgets >= 2.8.0 (www.wxwidgets.org)
+
+Prepackaged Libraries
+- wxSqlite3
+- sqlite3
+- TinyXML
+- Boost C++ Library
+- UnitTest++
+
+-------------------------------------------------------------------------------
+2. Building Money Manager Ex
+-------------------------------------------------------------------------------
+2.1. Microsoft Windows: read build\msw\readme.txt for build instructions.
+
+2.2. Building on Linux
+     
+2.2.1. Pre-built Binaries
+       If you don't want to build MMEX, you can download prebuilt binary packages 
+       for UBUNTU and SUSE.
+
+2.2.2. Building from Source.
+
+       GENERIC INSTRUCTIONS
+
+    1. Download & install the latest wxWidgets for wxGTK.
+    
+    a) Read the install directions in wxWidgets for how to do a build and then
+       install the build on the machine. For eg wxWidgets has been built with 
+       --with-gtk --disable-shared --enable-unicode
+
+    b) After installation, wx-config will copied to the /usr/bin and can now 
+       correctly identify the command line params required.
+
+    2. Navigate to trunk/mmex and do
+        >  mkdir bin
+        >  cd bin
+        >  ../configure --with-wx-config=[LOCATION of WX-CONFIG, f.e. /usr/local/lib/wx/config/gtk2-unicode-release-2.8]
+        >  make
+        >  make check
+        >  cp mmex ../runtime
+        > ../runtime/mmex&
+
+
+       UBUNTU SPECIFIC INSTRUCTIONS
+
+       With apt-get support, it is a little easier to do this in Ubuntu.
+
+    1. [Optional] Install Dev Tools by the following: sudo apt-get install build-essential
+
+    2. Download and install the following packages
+       libwxgtk2.8-?, 
+       libwxgtk2.8-dev
+
+    3. Execute step #2 from generic instructions.
+
+-------------------------------------------------------------------------------
+3. REGENERATING AUTOMAKE FILES
+-------------------------------------------------------------------------------
+If for some reason, you need to regenerate AutoMake files.
+This might be required if you are adding new source files to MMEX.
+
+1. Download and install latest version of Bakefile, www.bakefile.org.
+2. Do
+   > cd trunk/mmex
+   > chmod a+rx bootstrap
+   > ./bootstrap
+
+-------------------------------------------------------------------------------
+4. CREATING A DEBIAN PACKAGE
+-------------------------------------------------------------------------------
+Once the source tree is setup correctly.
+Simply do a 
+	dpkg -b mmex mmex.deb
