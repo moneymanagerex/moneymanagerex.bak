@@ -23,7 +23,7 @@
 
             <command>
                -"..\..\tools\upx.exe" --best "$(DOLLAR)(APP_EXE_PATH)"
-               iscc.exe $(SETUP_SCRIPT) -dAppExePath="$(DOLLAR)(APP_EXE_PATH)" -dBuildOpts="$(DOLLAR)(BUILD_OPTS)" -dCpuArch="$(DOLLAR)(CPU_ARCH)" -dCrtDlls="$(DOLLAR)(CRT_DLLS)"
+               iscc.exe $(SETUP_SCRIPT) -dAppExePath="$(DOLLAR)(APP_EXE_PATH)" -dBuildOpts="$(DOLLAR)(BUILD_OPTS)" -dCpuArch="$(DOLLAR)(CPU_ARCH)" -dCrtDlls="$(DOLLAR)(CRT_DLLS)" -dFormat="$(DOLLAR)(FORMAT)"
             </command>
 
             <clean-files>*$(DOLLAR)(BUILD_OPTS)-setup.exe</clean-files>

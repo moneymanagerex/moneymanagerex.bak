@@ -100,17 +100,14 @@
                 $(envvar('VCINSTALLDIR') + '\\redist\\Debug_NonRedist\\' + HARDWARE_CPU + '\\Microsoft.VC' + CRT_VERSION + '.DebugCRT\\*')
             </if>
 
-            <if cond="FORMAT=='mingw'">
-                <!-- FIXME: ';' causes InnoSetup compiler's error -->
-                $(envvar('MINGWDIR') + '\\libgcc*.dll;' + envvar('MINGWDIR') + '\\mingwm10.dll')
-            </if>
+            <if cond="FORMAT=='mingw'">$(envvar('MINGWDIR') + '\\bin\\libgcc_s_*.dll')</if>
 
         </set>
 
         <set var="TARGET_DIR">$('..\\..\\build\msw' + ifthenelse(BUILDDIR=='.', '', '\\' + BUILDDIR))</set>
 
         <target>
-            APP_EXE_PATH="$(TARGET_DIR)\mmex.exe" BUILD_OPTS="$(SHARED)$(UNICODE)$(DEBUG)$(HARDWARE)" CPU_ARCH="$(HARDWARE_CPU)" CRT_DLLS="$(CRT_DLLS)" all
+            APP_EXE_PATH="$(TARGET_DIR)\mmex.exe" BUILD_OPTS="$(SHARED)$(UNICODE)$(DEBUG)$(HARDWARE)" CPU_ARCH="$(HARDWARE_CPU)" CRT_DLLS="$(CRT_DLLS)" FORMAT="$(FORMAT)" all
         </target>
 
     </subproject>
