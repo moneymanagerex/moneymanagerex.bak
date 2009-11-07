@@ -218,6 +218,7 @@ KC 	Check transaction
 #include "guiid.h"
 #include "fileviewerdialog.h"
 #include "mmex.h"
+#include "mmcoredb.h"
 
 namespace
 {

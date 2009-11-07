@@ -565,7 +565,7 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
     {
         long id = -1;
         number.ToLong(&id);
-        frame_->gotoAccountID_ = id;
+        frame_->setGotoAccountID(id);
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
         frame_->GetEventHandler()->AddPendingEvent(evt);
     }
@@ -580,7 +580,7 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
         frame_->GetEventHandler()->AddPendingEvent(evt);
     }
     // Deselect any selections in the tree ctrl, so tree works
-    frame_->navTreeCtrl_->Unselect();
+    frame_->unselectNavTree();
 }
 
 
