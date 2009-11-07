@@ -93,6 +93,34 @@ TEST(wxSQLite3Exception)
 }
 //----------------------------------------------------------------------------
 
+TEST(HasBackupSupport)
+{
+    bool ok = wxSQLite3Database::HasBackupSupport();
+    CHECK(ok);
+}
+//----------------------------------------------------------------------------
+
+TEST(HasEncryptionSupport)
+{
+    bool ok = wxSQLite3Database::HasEncryptionSupport();
+    CHECK(ok);
+}
+//----------------------------------------------------------------------------
+
+TEST(HasMetaDataSupport)
+{
+    bool ok = wxSQLite3Database::HasMetaDataSupport();
+    CHECK(ok);
+}
+//----------------------------------------------------------------------------
+
+TEST(HasSavepointSupport)
+{
+    bool ok = wxSQLite3Database::HasSavepointSupport();
+    CHECK(ok);
+}
+//----------------------------------------------------------------------------
+
 TEST(ViewExists)
 {
     wxSQLite3Database &db = getDb();
