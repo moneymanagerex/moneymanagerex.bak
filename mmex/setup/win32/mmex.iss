@@ -56,7 +56,7 @@ InfoAfterFile="..\..\runtime\version.txt"
 
 OutputDir={#OutputDir}
 OutputBaseFilename={#OutputBaseFilename}
-OutputManifestFile="{#OutputBaseFilename}.manifest.txt"
+OutputManifestFile="{#OutputBaseFilename}.manifest"
 Compression=lzma/ultra
 SolidCompression=yes
 SetupIconFile="..\..\runtime\mmex.ico"
@@ -90,7 +90,7 @@ ArchitecturesInstallIn64BitMode=x64 ia64
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl"
-Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"; InfoBeforeFile: "..\..\README.RU"
 Name: "fr"; MessagesFile: "compiler:Languages\French.isl"
 Name: "de"; MessagesFile: "compiler:Languages\German.isl"
 Name: "es"; MessagesFile: "compiler:Languages\Spanish.isl"
