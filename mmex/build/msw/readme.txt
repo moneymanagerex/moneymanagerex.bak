@@ -83,6 +83,7 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
 
 
 1.Install the latest version of MinGW, GCC compiler and mingw-make for it.
+  Add environment variable MINGWDIR which points to directory of MinGW.
 
 2.Build wxWidgets library using gcc from MinGW. Use these options in config.gcc:
   SHARED ?= 0
