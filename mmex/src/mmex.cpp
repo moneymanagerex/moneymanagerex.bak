@@ -29,7 +29,6 @@
 #include "univcsvdialog.h"
 #include "wxtinyxml.h"
 #include "tinyxml.h"
-
 #include "reportbase.h"
 #include "reportsummary.h"
 #include "reportcategexp.h"
@@ -44,9 +43,7 @@
 #include "reporttransstats.h"
 #include "reportcategovertimeperf.h"
 #include "reportbudgetsetup.h"
-
 #include "mmgraphtopcategories.h"
-
 #include "appstartdialog.h"
 #include "aboutdialog.h"
 #include "newacctdialog.h"
@@ -58,9 +55,9 @@
 #include "maincurrencydialog.h"
 #include "filtertransdialog.h"
 #include "billsdepositsdialog.h"
-
 #include "util.h"
 #include "dbwrapper.h"
+//----------------------------------------------------------------------------
 
 /* Include XPM Support */
 #include "../resources/new.xpm"
@@ -96,6 +93,7 @@
 #include "../resources/edit_account.xpm"
 #include "../resources/delete_account.xpm"
 #include "../resources/filter.xpm"
+//----------------------------------------------------------------------------
 
 // Icons from Silk Collection
 #include "../resources/house.xpm"
@@ -109,19 +107,94 @@
 #include "../resources/money_dollar.xpm"
 #include "../resources/user_edit.xpm"
 #include "../resources/wrench.xpm"
-
 //----------------------------------------------------------------------------
 #include <wx/debugrpt.h>
 #include "wx/sysopt.h"
+#include "wx/wizard.h"
+#include <wx/xml/xml.h>
 //----------------------------------------------------------------------------
-#include <string>
 #include <boost/scoped_array.hpp>
+#include <string>
 //----------------------------------------------------------------------------
 
 namespace
 {
 
 const wxChar *MMEX_INIDB_FNAME = wxT("/mmexini.db3");
+//----------------------------------------------------------------------------
+
+class mmNewDatabaseWizard : public wxWizard
+{
+public:
+    mmNewDatabaseWizard(wxFrame *frame, mmCoreDB* core);
+    void RunIt(bool modal);
+
+    mmCoreDB* core_;
+
+private:
+    wxWizardPageSimple* page1;
+
+    DECLARE_EVENT_TABLE()
+};
+//----------------------------------------------------------------------------
+
+class wxNewDatabaseWizardPage1 : public wxWizardPageSimple
+{
+public:
+    wxNewDatabaseWizardPage1(mmNewDatabaseWizard* parent);
+
+    void OnCurrency(wxCommandEvent& /*event*/);
+    virtual bool TransferDataFromWindow();
+
+private:
+    mmNewDatabaseWizard* parent_;
+    wxButton* itemButtonCurrency_;
+    wxTextCtrl* itemUserName_;
+    int currencyID_;
+
+    wxString userName;
+
+    DECLARE_EVENT_TABLE()
+};
+//----------------------------------------------------------------------------
+
+class mmAddAccountWizard : public wxWizard
+{
+public:
+    mmAddAccountWizard(wxFrame *frame, mmCoreDB* core);
+    void RunIt(bool modal);
+    wxString accountName_;
+
+    mmCoreDB* core_;
+    int acctID_;
+
+private:
+    wxWizardPageSimple* page1;
+};
+//----------------------------------------------------------------------------
+
+class wxAddAccountPage1 : public wxWizardPageSimple
+{
+public:
+    wxAddAccountPage1(mmAddAccountWizard* parent);
+    virtual bool TransferDataFromWindow();
+
+private:
+    mmAddAccountWizard* parent_;
+    wxTextCtrl* textAccountName_;
+};
+//----------------------------------------------------------------------------
+
+class wxAddAccountPage2 : public wxWizardPageSimple
+{
+public:
+    wxAddAccountPage2(mmAddAccountWizard *parent);
+    virtual bool TransferDataFromWindow();
+
+private:
+    wxChoice* itemChoiceType_;
+    mmAddAccountWizard* parent_;
+};
 //----------------------------------------------------------------------------
 
 wxString getMMEXIconPath()
@@ -133,6 +206,12 @@ wxString getMMEXIconPath()
 
 
     return path;
+}
+//----------------------------------------------------------------------------
+
+inline bool sortCategs(const CategInfo &elem1, const CategInfo &elem2)
+{
+    return elem1.amount < elem2.amount;
 }
 //----------------------------------------------------------------------------
 
@@ -161,7 +240,7 @@ void reportFatalException(wxDebugReport::Context ctx)
 
 bool OnInitImpl(mmGUIApp &app)
 {
-    app.SetAppName(mmIniOptions::appName_); // TODO: read from version resource
+    app.SetAppName(mmIniOptions::appName_); // FIXME: read from version resource
 
     /* Setting Locale causes unexpected problems, so default to English Locale */
     app.getLocale().Init(wxLANGUAGE_ENGLISH);
@@ -219,7 +298,8 @@ wxSystemOptions::SetOption(wxMAC_ALWAYS_USE_GENERIC_LISTCTRL,1);
 #endif
 
     mmGUIFrame *frame = new mmGUIFrame(mmIniOptions::appName_, wxPoint(valx, valy), wxSize(valw, valh));
-    frame->Show(TRUE);
+    bool ok = frame->Show();
+    wxASSERT(ok);
 
     if (isMaxStr == wxT("TRUE")) {
         frame->Maximize(true);
@@ -228,7 +308,18 @@ wxSystemOptions::SetOption(wxMAC_ALWAYS_USE_GENERIC_LISTCTRL,1);
     // success: wxApp::OnRun() will be called which will enter the main message
     // loop and the application will run. If we returned FALSE here, the
     // application would exit immediately.
-    return true;
+    return ok;
+}
+//----------------------------------------------------------------------------
+
+/*
+    Extention expected in lower case.
+*/
+void fixFileExt(wxFileName &f, const wxString &ext)
+{
+    if (f.GetExt().Lower() != ext) {
+        f.SetExt(ext);
+    }
 }
 //----------------------------------------------------------------------------
 
@@ -239,10 +330,12 @@ wxSystemOptions::SetOption(wxMAC_ALWAYS_USE_GENERIC_LISTCTRL,1);
 BEGIN_EVENT_TABLE(mmNewDatabaseWizard, wxWizard)
     EVT_WIZARD_CANCEL(wxID_ANY,   mmGUIFrame::OnWizardCancel)
 END_EVENT_TABLE()
+//----------------------------------------------------------------------------
 
 BEGIN_EVENT_TABLE(wxNewDatabaseWizardPage1, wxWizardPageSimple)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_CURRENCY, wxNewDatabaseWizardPage1::OnCurrency)
 END_EVENT_TABLE()
+//----------------------------------------------------------------------------
 
 BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_NEW, mmGUIFrame::OnNew)
@@ -313,9 +406,31 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWOPEN, mmGUIFrame::OnViewOpenAccounts)
 
 END_EVENT_TABLE()
-/*******************************************************/
+//----------------------------------------------------------------------------
 IMPLEMENT_APP(mmGUIApp)
-/*******************************************************/
+//----------------------------------------------------------------------------
+
+/*
+    Class used to store item specific information in a tree node
+*/
+class mmTreeItemData : public wxTreeItemData
+{
+public:
+    mmTreeItemData(int id, bool isBudget);
+    mmTreeItemData(const wxString& string);
+
+    int getData() const { return id_; }
+    wxString getString() const { return stringData_; }
+    bool isStringData() const { return isString_; }
+    bool isBudgetingNode() const { return isBudgetingNode_; }
+
+private:
+    int id_;
+    bool isString_;
+    bool isBudgetingNode_;
+    wxString stringData_;
+};
+//----------------------------------------------------------------------------
 
 mmTreeItemData::mmTreeItemData(int id, bool isBudget) :
     id_(id), 
@@ -323,6 +438,7 @@ mmTreeItemData::mmTreeItemData(int id, bool isBudget) :
     isBudgetingNode_(isBudget) 
 {
 }
+//----------------------------------------------------------------------------
 
 mmTreeItemData::mmTreeItemData(const wxString& string) :
     id_(), 
@@ -331,24 +447,20 @@ mmTreeItemData::mmTreeItemData(const wxString& string) :
     stringData_(string)
 {
 }
+//----------------------------------------------------------------------------
 
-
-mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, mmCoreDB* core)
-         :wxWizard(frame,wxID_ANY,_("Add Account Wizard"),
-                   wxBitmap(addacctwiz_xpm),wxDefaultPosition,
-                   wxDEFAULT_DIALOG_STYLE), core_(core), acctID_(-1)
+mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, mmCoreDB* core) :
+    wxWizard(frame,wxID_ANY,_("Add Account Wizard"),
+    wxBitmap(addacctwiz_xpm),wxDefaultPosition,
+    wxDEFAULT_DIALOG_STYLE), core_(core), acctID_(-1)
 {
     // a wizard page may be either an object of predefined class
     page1 = new wxWizardPageSimple(this);
 
-    wxString noteString = mmIniOptions::appName_
-                          + 
+    wxString noteString = mmIniOptions::appName_ +
     _(" models all transactions as belonging to accounts.\n\n The next pages will help you create a new account.\n\nTo help you get started, begin by making a list of all\nfinancial institutions where you hold an account.");
 
-    new wxStaticText(page1, 
-       wxID_ANY,
-       noteString         
-        );
+    new wxStaticText(page1, wxID_ANY, noteString);
 
     wxAddAccountPage1* page2 = new wxAddAccountPage1(this);
     wxAddAccountPage2* page3 = new wxAddAccountPage2(this);
@@ -356,33 +468,28 @@ mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, mmCoreDB* core)
     // set the page order using a convenience function - could also use
     // SetNext/Prev directly as below
     wxWizardPageSimple::Chain(page1, page2);
-
-     wxWizardPageSimple::Chain(page2, page3);
+    wxWizardPageSimple::Chain(page2, page3);
 
     // allow the wizard to size itself around the pages
     GetPageAreaSizer()->Add(page1);
     this->CentreOnParent();
 }
+//----------------------------------------------------------------------------
 
 void mmAddAccountWizard::RunIt(bool modal)
 {
-    if ( modal )
-    {
-        if ( RunWizard(page1) )
-        {
+    if (modal) {
+        if (RunWizard(page1)) {
             // Success
         }
-
         Destroy();
-    }
-    else
-    {
+    } else {
         FinishLayout();
         ShowPage(page1);
         Show(true);
     }
 }
-
+//----------------------------------------------------------------------------
 
 mmNewDatabaseWizard::mmNewDatabaseWizard(wxFrame *frame, mmCoreDB* core)
          :wxWizard(frame,wxID_ANY,_("New Database Wizard"),
@@ -405,6 +512,7 @@ mmNewDatabaseWizard::mmNewDatabaseWizard(wxFrame *frame, mmCoreDB* core)
     // allow the wizard to size itself around the pages
     GetPageAreaSizer()->Add(page1);
 }
+//----------------------------------------------------------------------------
 
 void mmNewDatabaseWizard::RunIt(bool modal)
 {
@@ -424,23 +532,22 @@ void mmNewDatabaseWizard::RunIt(bool modal)
         Show(true);
     }
 }
-
-/******************************************************
-mmGUIFrame 
-********************************************************/
-inline bool sortCategs( const CategInfo &elem1, const CategInfo &elem2 )
-{
-   return elem1.amount < elem2.amount;
-}
+//----------------------------------------------------------------------------
 
 mmGUIFrame::mmGUIFrame(const wxString& title, 
-                       const wxPoint& pos, const wxSize& size)
-       : wxFrame((wxFrame*)NULL, -1, title, pos, size), 
-       gotoAccountID_(-1), 
-       selectedItemData_(0),
-       panelCurrent_(0),
-       refreshRequested_(false)
-
+                       const wxPoint& pos, 
+                       const wxSize& size
+                      ) : 
+    wxFrame(0, -1, title, pos, size), 
+    gotoAccountID_(-1), 
+    refreshRequested_(),
+    panelCurrent_(),
+    homePanel(),
+    navTreeCtrl_(),
+    menuBar_(),
+    toolBar_(),
+    selectedItemData_(),
+    menuItemOnlineUpdateCurRate_()
 {
 	// tell wxAuiManager to manage this frame
 	m_mgr.SetManagedWindow(this);
@@ -450,7 +557,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     SetIcon(icon);
 
     /* Setup Printer */
-    printer_ = new wxHtmlEasyPrinting(mmIniOptions::appName_, this);
+    printer_.reset(new wxHtmlEasyPrinting(mmIniOptions::appName_, this));
     wxString printHeaderBase = mmIniOptions::appName_;
     printer_-> SetHeader( printHeaderBase + wxT("(@PAGENUM@/@PAGESCNT@)<hr>"), wxPAGE_ALL);
 
@@ -543,14 +650,25 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
         }
     }
 }
+//----------------------------------------------------------------------------
 
 mmGUIFrame::~mmGUIFrame()
 {
-	delete printer_;
+    try {
+        cleanup();
+    } catch (...) {
+        wxASSERT(false);
+    }
+}
+//----------------------------------------------------------------------------
+
+void mmGUIFrame::cleanup()
+{
+    printer_.reset();
     saveConfigFile();
 
     m_mgr.UnInit();
- 
+
     /* Delete the GUI */
     cleanupHomePanel(false);
 
@@ -565,21 +683,26 @@ mmGUIFrame::~mmGUIFrame()
         ::wxRemoveFile(wxT("top_categories.png"));
 
 
-    if (core_)
-    {
+    if (core_) {
         core_.reset();
     }
 
-    if (db_)
-    {
+    if (db_) {
         db_->Close();
     }
 
-    if (inidb_)
-    {
+    if (inidb_) {
         inidb_->Close();
     }
 }
+//----------------------------------------------------------------------------
+
+void mmGUIFrame::unselectNavTree()
+{ 
+    wxASSERT(navTreeCtrl_);
+    navTreeCtrl_->Unselect(); 
+}
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::saveConfigFile()
 {
@@ -620,6 +743,7 @@ void mmGUIFrame::saveConfigFile()
     mmDBWrapper::setINISettingValue(inidb_.get(), wxT("SIZEH"), valhs);
     mmDBWrapper::setINISettingValue(inidb_.get(), wxT("ISMAXIMIZED"), isMaxStr);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::loadConfigFile()
 {
@@ -627,6 +751,7 @@ void mmGUIFrame::loadConfigFile()
     wxString iniDBPath = mmGetBaseWorkingPath() + MMEX_INIDB_FNAME;
     inidb_->Open(iniDBPath);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::menuEnableItems(bool enable)
 {
@@ -662,6 +787,7 @@ void mmGUIFrame::menuEnableItems(bool enable)
     toolBar_->EnableTool(MENU_ORGCATEGS, enable);
     toolBar_->EnableTool(MENU_CURRENCY, enable);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::menuPrintingEnable(bool enable)
 {
@@ -669,6 +795,7 @@ void mmGUIFrame::menuPrintingEnable(bool enable)
     menuBar_->FindItem(MENU_PRINT)->Enable(enable);
     menuBar_->FindItem(MENU_EXPORT_HTML)->Enable(enable);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::createControls()
 {
@@ -709,6 +836,7 @@ void mmGUIFrame::createControls()
 		Name(wxT("Home")).Caption(wxT("Home")).
 		CenterPane().PaneBorder(false));
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::updateNavTreeControl()
 {
@@ -1055,6 +1183,7 @@ void mmGUIFrame::updateNavTreeControl()
 
     navTreeCtrl_->Expand(accounts);
 }
+//----------------------------------------------------------------------------
 
 wxString mmGUIFrame::createCategoryList()
 {
@@ -1156,6 +1285,7 @@ wxString mmGUIFrame::createCategoryList()
 
     return hb.getHTMLText();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 {
@@ -1759,6 +1889,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnLaunchAccountWebsite(wxCommandEvent& /*event*/)
 {
@@ -1782,6 +1913,7 @@ void mmGUIFrame::OnLaunchAccountWebsite(wxCommandEvent& /*event*/)
       }
    }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& /*event*/)
 {
@@ -1810,6 +1942,7 @@ void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& /*event*/)
         }
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
 {
@@ -1843,11 +1976,13 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
         }
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnItemRightClick(wxTreeEvent& event)
 {
     showTreePopupMenu(event.GetItem(), event.GetPoint());
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
 {
@@ -1944,6 +2079,7 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
 		}
 	}
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnViewAllAccounts(wxCommandEvent&)
 {
@@ -1960,6 +2096,8 @@ void mmGUIFrame::OnViewAllAccounts(wxCommandEvent&)
 	mmDBWrapper::setINISettingValue(inidb_.get(), wxT("VIEWACCOUNTS"), vAccts);
 
 }
+//----------------------------------------------------------------------------
+
 void mmGUIFrame::OnViewFavoriteAccounts(wxCommandEvent&)
 {
 	//Get current settings for view accounts
@@ -1975,6 +2113,8 @@ void mmGUIFrame::OnViewFavoriteAccounts(wxCommandEvent&)
 	mmDBWrapper::setINISettingValue(inidb_.get(), wxT("VIEWACCOUNTS"), vAccts);
 
 }
+//----------------------------------------------------------------------------
+
 void mmGUIFrame::OnViewOpenAccounts(wxCommandEvent&)
 {
 	//Get current settings for view accounts
@@ -1990,6 +2130,8 @@ void mmGUIFrame::OnViewOpenAccounts(wxCommandEvent&)
 	mmDBWrapper::setINISettingValue(inidb_.get(), wxT("VIEWACCOUNTS"), vAccts);
 
 }
+//----------------------------------------------------------------------------
+
 void mmGUIFrame::createCheckingAccountPage(int accountID)
 {
     wxSizer *sizer = cleanupHomePanel();
@@ -2002,6 +2144,7 @@ void mmGUIFrame::createCheckingAccountPage(int accountID)
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
     homePanel->Layout();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnGotoAccount(wxCommandEvent& WXUNUSED(event))
 {
@@ -2010,6 +2153,7 @@ void mmGUIFrame::OnGotoAccount(wxCommandEvent& WXUNUSED(event))
         createCheckingAccountPage(gotoAccountID_);
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::createBudgetingPage(int budgetYearID)
 {
@@ -2022,6 +2166,7 @@ void mmGUIFrame::createBudgetingPage(int budgetYearID)
 
     homePanel->Layout();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::createHomePage()
 {
@@ -2053,6 +2198,7 @@ void mmGUIFrame::createHomePage()
     homePanel->Layout();
     refreshRequested_ = false;
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
 {
@@ -2065,6 +2211,7 @@ void mmGUIFrame::createReportsPage(mmPrintableBase* rs)
      
     homePanel->Layout();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::createHelpPage()
 {
@@ -2077,7 +2224,7 @@ void mmGUIFrame::createHelpPage()
      
     homePanel->Layout();
 }
-
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::createMenu()
 {
@@ -2328,6 +2475,7 @@ void mmGUIFrame::createMenu()
 
     SetMenuBar(menuBar_);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::createToolBar()
 {
@@ -2361,9 +2509,9 @@ void mmGUIFrame::createToolBar()
     // after adding the buttons to the toolbar, must call Realize() to reflect changes
     toolBar_->Realize();
 }
+//----------------------------------------------------------------------------
 
-void mmGUIFrame::createDataStore(const wxString& fileName, 
-                                 bool openingNew)
+void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, bool openingNew)
 {
     if (core_)
     {
@@ -2377,10 +2525,10 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
     }
 
 	wxFileName checkExt(fileName);
-	wxString password = wxEmptyString;
-	if (checkExt.GetExt() == wxT("emb") && wxFileName::FileExists(fileName))
+	wxString password;
+	if (checkExt.GetExt().Lower() == wxT("emb") && wxFileName::FileExists(fileName))
 	{
-        password = wxGetPasswordFromUser(_("Money Manager Ex: Enter Password For Database.."));
+        password = !pwd.empty() ? pwd : wxGetPasswordFromUser(_("Enter database's password"));
 	}
 
     // Existing Database
@@ -2403,19 +2551,18 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
         // we need to check the db whether it is the right version
         if (!mmDBWrapper::checkDBVersion(db_.get()))
         {
-           wxString note = mmIniOptions::appName_
-              + _(" - No File opened ");
+           wxString note = mmIniOptions::appName_ + _(" - No File opened ");
            this->SetTitle(note);   
            mmShowErrorMessage(this, 
-              _("Sorry. The Database version is too old or Database password is incorrect"), 
+                _("Sorry. The Database version is too old or Database password is incorrect"), 
                 _("Error opening database"));
 
            db_->Close();
            db_.reset();
            return ;
         }
-        password_ = password;
 
+        password_ = password;
         core_.reset(new mmCoreDB(db_));
     }
     else if (openingNew) // New Database
@@ -2457,9 +2604,8 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
     }
     else // open of existing database failed
     {
-       wxString note = mmIniOptions::appName_ + 
-               _(" - No File opened ");
-        this->SetTitle(note);   
+       wxString note = mmIniOptions::appName_ + _(" - No File opened ");
+       this->SetTitle(note);   
         
         wxMessageDialog msgDlg(this, _("Cannot locate previously opened database.\nDo you want to browse to locate the file?"), 
                                 _("Error opening database"), wxYES_NO);
@@ -2475,6 +2621,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName,
 
     openDataBase(fileName);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::openDataBase(const wxString& fileName)
 {
@@ -2505,17 +2652,21 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
       password_.Clear();
 	}
 }
+//----------------------------------------------------------------------------
 
 wxPanel* mmGUIFrame::createMainFrame(wxPanel* /*parent*/)
 {
        return 0;
 }
+//----------------------------------------------------------------------------
 
-void mmGUIFrame::openFile(const wxString& fileName, bool openingNew)
+void mmGUIFrame::openFile(const wxString& fileName, 
+                          bool openingNew, 
+                          const wxString &password
+                         )
 {
-    // Before deleting, go to home page first
-    // createHomePage();
-    createDataStore(fileName, openingNew);
+    // Before deleting, go to home page first createHomePage()
+    createDataStore(fileName, password, openingNew);
   
     if (db_.get())
     {
@@ -2534,36 +2685,51 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew)
 
     if (!db_.get())
     {
-        mmDBWrapper::setINISettingValue(inidb_.get(), 
-            wxT("LASTFILENAME"), wxGetEmptyString());
+        mmDBWrapper::setINISettingValue(inidb_.get(), wxT("LASTFILENAME"), wxGetEmptyString());
         showBeginAppDialog();
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
 {
-  wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb");  
-  wxFileDialog dlg(this, wxT("Choose database file to create"), 
-                                     wxGetEmptyString(), wxGetEmptyString(), extSupported, wxSAVE | wxOVERWRITE_PROMPT);
+    wxFileDialog dlg(this, 
+                     _("Choose database file to create"), 
+                     wxGetEmptyString(), 
+                     wxGetEmptyString(), 
+                     wxT("MMB Files(*.mmb)|*.mmb"), 
+                     wxSAVE | wxOVERWRITE_PROMPT
+                    );
 
-  if(dlg.ShowModal() == wxID_OK) {
-      wxString fileName = dlg.GetPath();
-      if (!dlg.GetPath().Contains(wxT(".mmb")))
-        fileName = dlg.GetPath() + wxT(".mmb");
-      openFile(fileName, true);
-  }
+    if(dlg.ShowModal() != wxID_OK) {
+      return;
+    }
+
+    wxString fileName = dlg.GetPath();
+    
+    if (!fileName.EndsWith(wxT(".mmb"))) {
+        fileName += wxT(".mmb");
+    }
+    
+    openFile(fileName, true);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnOpen(wxCommandEvent& /*event*/)
 {
-  wxString extSupported = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
-  wxString fileName = wxFileSelector(wxT("Choose database file to open"), 
-                                     wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), extSupported, wxFILE_MUST_EXIST);
-  if ( !fileName.empty() )
-  {
-    openFile(fileName, false);
-  }
+    wxString fileName = wxFileSelector(_("Choose database file to open"), 
+                                       wxGetEmptyString(), 
+                                       wxGetEmptyString(), 
+                                       wxGetEmptyString(), 
+                                       wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb"), 
+                                       wxFILE_MUST_EXIST
+                                      );
+  
+    if (!fileName.empty()) {
+        openFile(fileName, false);
+    }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnConvertEncryptedDB(wxCommandEvent& /*event*/)
 {
@@ -2572,11 +2738,11 @@ void mmGUIFrame::OnConvertEncryptedDB(wxCommandEvent& /*event*/)
         wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), extSupported, wxFILE_MUST_EXIST);
     if ( !encFileName.empty() )
     {
-        wxString password = wxGetPasswordFromUser(_("Money Manager Ex: Enter Password For Database.."));
+        wxString password = wxGetPasswordFromUser(_("Enter password for database"));
         if (!password.IsEmpty())
         {
             wxString wildCardStr = wxT("MMB Files(*.mmb)|*.mmb");
-            wxFileDialog dlg(this, wxT("Choose database file to Save As"), 
+            wxFileDialog dlg(this, _("Choose database file to Save As"), 
                 wxGetEmptyString(), wxGetEmptyString(), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
  
             if(dlg.ShowModal() == wxID_OK)
@@ -2607,78 +2773,95 @@ void mmGUIFrame::OnConvertEncryptedDB(wxCommandEvent& /*event*/)
         }
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
 {
-  wxString wildCardStr = wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb");
-  wxFileDialog dlg(this, wxT("Choose database file to Save As"), 
-                                     wxGetEmptyString(), wxGetEmptyString(), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
-  if(dlg.ShowModal() == wxID_OK)
-  {
-    wxString fileName = dlg.GetPath();
-    if(dlg.GetFilterIndex() == 0) 
-    {
-        if (!dlg.GetPath().Contains(wxT(".mmb")))
-            fileName = dlg.GetPath() + wxT(".mmb");
-    } 
-    else 
-    {
-        if (!dlg.GetPath().Contains(wxT(".emb")))
-            fileName = dlg.GetPath() + wxT(".emb");
+    bool ok = db_ != 0;
+    wxASSERT(ok);
+
+    if (fileName_.empty()) {
+        wxASSERT(false);
+        return;
     }
 
-    if (db_)
+    wxFileDialog dlg(this,
+                     _("Save database file as"),
+                     wxGetEmptyString(),
+                     wxGetEmptyString(),
+                     wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb"),
+                     wxSAVE | wxOVERWRITE_PROMPT
+                    );
+
+    if (dlg.ShowModal() != wxID_OK) {
+        return;
+    }
+
+    bool encrypt = dlg.GetFilterIndex() != 0; // emb -> Encrypted mMB
+    wxFileName newFileName(dlg.GetPath());
+    fixFileExt(newFileName, encrypt ? wxT("emb") : wxT("mmb"));
+
+    wxFileName oldFileName(fileName_); // opened db's file
+
+    if (newFileName == oldFileName) { // on case-sensitive FS uses case-sensitive comparison
+        wxMessageDialog dlg(this, _("Can't copy file to itself"), _("Error"), wxICON_ERROR);
+        dlg.ShowModal();
+        return;
+    }
+
+    // prepare to copy
+
+    wxString new_password;
+    bool rekey = encrypt ^ db_->IsEncrypted();
+
+    if (encrypt)
+    {
+        if (rekey) {
+            new_password = wxGetPasswordFromUser(_("Enter password for new database"));
+            if (new_password.empty()) {
+                return;
+            }
+        } else {
+            new_password = password_;
+        }
+    }
+
+    // copying db
+
+    if (db_) // database must be closed before copying its file
     {
       db_->Close();
       db_.reset();
     }
-    wxCopyFile(fileName_, fileName, false);
-    
-        wxFileName newFileName(fileName);
-        wxFileName oldFileName(fileName_);
-        if (newFileName.GetExt() == oldFileName.GetExt())
-        {
-          // do nothing
-        }
-        else
-        {
-          wxString password    = wxEmptyString;
-          wxString oldpassword = password_;
-          if (newFileName.GetExt() == wxT("emb"))
-          {
-              password = wxGetPasswordFromUser(wxT("Money Manager Ex: Set Password For New Database.."));
-          }
-          
-          boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
-          db_ = pDB;
-          
-          if (oldFileName.GetExt() == wxT("emb"))
-          {
-            db_->Open(fileName, oldpassword);
-            db_->ReKey(wxEmptyString);
-          }
-          else
-          {
-            db_->Open(fileName);
-            db_->ReKey(password);
-          }
-          
-          db_->Close();
-          db_.reset();
-        }
-        openFile(fileName, false);
+
+    if (!wxCopyFile(oldFileName.GetFullPath(), newFileName.GetFullPath(), true)) { // true -> overwrite if file exists
+        return;
     }
+    
+    if (rekey) // encrypt or reset encryption
+    {
+        wxSQLite3Database dbx;
+        dbx.Open(newFileName.GetFullPath(), password_);
+        dbx.ReKey(new_password); // empty password resets encryption
+        dbx.Close();
+    }
+    
+    password_.clear();
+    openFile(newFileName.GetFullPath(), false, new_password);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnExport(wxCommandEvent& /*event*/)
 {
    mmExportCSV(db_.get());
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnExportToQIF(wxCommandEvent& /*event*/)
 {
    mmExportQIF(db_.get());
 }
+//----------------------------------------------------------------------------
  
 void mmGUIFrame::OnImportCSV(wxCommandEvent& /*event*/)
 {
@@ -2686,6 +2869,7 @@ void mmGUIFrame::OnImportCSV(wxCommandEvent& /*event*/)
     if (accountID != -1)
         createCheckingAccountPage(accountID);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnImportQFX(wxCommandEvent& /*event*/)
 {
@@ -2720,7 +2904,7 @@ void mmGUIFrame::OnImportQFX(wxCommandEvent& /*event*/)
         wxString acctName = scd->GetStringSelection();
         fromAccountID = mmDBWrapper::getAccountID(db_.get(), acctName);
      
-        wxString fileName = wxFileSelector(wxT("Choose QFX data file to import"), 
+        wxString fileName = wxFileSelector(_("Choose QFX data file to import"), 
                 wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), wxT("*.qfx"), wxFILE_MUST_EXIST);
         if ( !fileName.empty() )
         {
@@ -2757,6 +2941,7 @@ void mmGUIFrame::OnImportQFX(wxCommandEvent& /*event*/)
     }
     scd->Destroy();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnImportQIF(wxCommandEvent& /*event*/)
 {
@@ -2764,6 +2949,7 @@ void mmGUIFrame::OnImportQIF(wxCommandEvent& /*event*/)
     if (accountID != -1)
         createCheckingAccountPage(accountID);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& /*event*/)
 {
@@ -2778,6 +2964,7 @@ void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& /*event*/)
     dlg->ShowModal();
     dlg->Destroy();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnImportCSVMMNET(wxCommandEvent& /*event*/)
 {
@@ -2785,11 +2972,13 @@ void mmGUIFrame::OnImportCSVMMNET(wxCommandEvent& /*event*/)
     if (accountID != -1)
         createCheckingAccountPage(accountID);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 {
     Close(TRUE);
 }
+//----------------------------------------------------------------------------
     
 void mmGUIFrame::OnNewAccount(wxCommandEvent& /*event*/)
 {
@@ -2816,11 +3005,13 @@ void mmGUIFrame::OnNewAccount(wxCommandEvent& /*event*/)
         GetEventHandler()->AddPendingEvent(ev); 
     }
 }
+//----------------------------------------------------------------------------
     
 void mmGUIFrame::OnAccountList(wxCommandEvent& /*event*/)
 {
     createHomePage();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnOrgCategories(wxCommandEvent& /*event*/)
 {
@@ -2828,6 +3019,7 @@ void mmGUIFrame::OnOrgCategories(wxCommandEvent& /*event*/)
     dlg->ShowModal();
     dlg->Destroy();
 }
+//----------------------------------------------------------------------------
  
 void mmGUIFrame::OnOrgPayees(wxCommandEvent& /*event*/)
 {
@@ -2835,6 +3027,7 @@ void mmGUIFrame::OnOrgPayees(wxCommandEvent& /*event*/)
     dlg->ShowModal();
     dlg->Destroy();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnBudgetSetupDialog(wxCommandEvent& /*event*/)
 {
@@ -2847,6 +3040,7 @@ void mmGUIFrame::OnBudgetSetupDialog(wxCommandEvent& /*event*/)
     updateNavTreeControl();    
     dlg->Destroy();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 {
@@ -2871,6 +3065,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
    }
    dlg->Destroy();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnCashFlowSpecificAccounts()
 {
@@ -2909,6 +3104,7 @@ void mmGUIFrame::OnCashFlowSpecificAccounts()
     }
     mcd->Destroy();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnOptions(wxCommandEvent& /*event*/)
 {
@@ -2934,12 +3130,14 @@ void mmGUIFrame::OnOptions(wxCommandEvent& /*event*/)
             menuItemOnlineUpdateCurRate_->Enable(false);
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnHelp(wxCommandEvent& /*event*/)
 {
     menuPrintingEnable(true);
     createHelpPage();
 }
+//----------------------------------------------------------------------------
  
 void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
 {
@@ -3018,6 +3216,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
     }
 
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 {
@@ -3165,18 +3364,21 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     createHomePage();
     updateNavTreeControl();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnReportIssues(wxCommandEvent& /*event*/)
 {
    wxString url = wxT("http://www.codelathe.com/forum");
    wxLaunchDefaultBrowser(url);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnBeNotified(wxCommandEvent& /*event*/)
 {
     wxString url = wxT("http://groups.google.com/group/mmlist");
     wxLaunchDefaultBrowser(url);
 }
+//----------------------------------------------------------------------------
     
 void mmGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
@@ -3184,12 +3386,14 @@ void mmGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
     dlg->ShowModal();
     dlg->Destroy();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnPrintPageSetup(wxCommandEvent& WXUNUSED(event))
 {
     if (printer_)
         printer_->PageSetup();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnPrintPageReport(wxCommandEvent& WXUNUSED(event))
 {
@@ -3207,6 +3411,7 @@ void mmGUIFrame::OnPrintPageReport(wxCommandEvent& WXUNUSED(event))
         printer_ ->PrintFile(wxT("help/index.html"));
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnPrintPagePreview(wxCommandEvent& WXUNUSED(event))
 { 
@@ -3224,6 +3429,7 @@ void mmGUIFrame::OnPrintPagePreview(wxCommandEvent& WXUNUSED(event))
         printer_ ->PreviewFile(wxT("help/index.html"));
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::showBeginAppDialog()
 {
@@ -3272,12 +3478,13 @@ void mmGUIFrame::showBeginAppDialog()
 
     dlg->Destroy();
 }
-
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnShowAppStartDialog(wxCommandEvent& WXUNUSED(event))
 {
     showBeginAppDialog();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnExportToHtml(wxCommandEvent& WXUNUSED(event))
 {
@@ -3294,6 +3501,7 @@ void mmGUIFrame::OnExportToHtml(wxCommandEvent& WXUNUSED(event))
         }
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnBillsDeposits(wxCommandEvent& WXUNUSED(event))
 {
@@ -3306,6 +3514,7 @@ void mmGUIFrame::OnBillsDeposits(wxCommandEvent& WXUNUSED(event))
 
     homePanel->Layout();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnStocks(wxCommandEvent& /*event*/)
 {
@@ -3318,6 +3527,7 @@ void mmGUIFrame::OnStocks(wxCommandEvent& /*event*/)
 
     homePanel->Layout();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnAssets(wxCommandEvent& /*event*/)
 {
@@ -3330,6 +3540,7 @@ void mmGUIFrame::OnAssets(wxCommandEvent& /*event*/)
 
     homePanel->Layout();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnCurrency(wxCommandEvent& /*event*/)
 {
@@ -3339,11 +3550,13 @@ void mmGUIFrame::OnCurrency(wxCommandEvent& /*event*/)
     }
     dlg->Destroy();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnWizardCancel(wxWizardEvent& event)
 {
      event.Veto();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnEditAccount(wxCommandEvent& /*event*/)
 {
@@ -3384,6 +3597,7 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& /*event*/)
     }
     scd->Destroy();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
 {
@@ -3430,19 +3644,22 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
     }
     delete[] arrAcctID;
     scd->Destroy();
- }
+}
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnViewToolbar(wxCommandEvent &event)
 {
 	m_mgr.GetPane(wxT("toolbar")).Show(event.IsChecked());
 	m_mgr.Update();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnViewLinks(wxCommandEvent &event)
 {
 	m_mgr.GetPane(wxT("Navigation")).Show(event.IsChecked());
 	m_mgr.Update();
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnViewToolbarUpdateUI(wxUpdateUIEvent &event)
 {
@@ -3451,6 +3668,7 @@ void mmGUIFrame::OnViewToolbarUpdateUI(wxUpdateUIEvent &event)
 	else
 		event.Check(false);
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnViewLinksUpdateUI(wxUpdateUIEvent &event)
 {
