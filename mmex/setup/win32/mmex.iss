@@ -227,7 +227,7 @@ Source: {#AppExePath}; DestDir: "{app}"; Components: program; Flags: ignoreversi
 Source: {#CrtDlls}; DestDir: "{app}"; Components: program; Flags: ignoreversion
 
 #if Format == "mingw"
-  #define MingwDllPath  GetEnv("MINGWDIR", "C:\MinGW") + "\bin\mingwm10.dll"
+  #define MingwDllPath  GetEnv("MINGWDIR") + "\bin\mingwm10.dll"
   Source: "{#MingwDllPath}"; DestDir: "{app}"; Components: program; Flags: ignoreversion
 #endif
 
