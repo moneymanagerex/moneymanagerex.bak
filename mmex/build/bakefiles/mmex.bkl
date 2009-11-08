@@ -29,6 +29,7 @@
         <app-type>gui</app-type>
         <library>sqlite3</library>
         <win32-res>resources/mmex.rc</win32-res>
+        <install-to></install-to>
 
     </exe>
 
