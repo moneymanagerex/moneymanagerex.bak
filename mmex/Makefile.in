@@ -16,7 +16,10 @@ LIBPREFIX = @LIBPREFIX@
 EXEEXT = @EXEEXT@
 SETFILE = @SETFILE@
 PIC_FLAG = @PIC_FLAG@
+STRIP = @STRIP@
 NM = @NM@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DIR = @INSTALL_DIR@
 BK_DEPS = @BK_DEPS@
 srcdir = @srcdir@
 LIBS = @LIBS@
@@ -118,11 +121,12 @@ COND_PLATFORM_OS2_1___mmex___os2_emxbindcmd = $(NM) mmex$(EXEEXT) | if grep -q \
 
 all: $(LIBPREFIX)sqlite3$(LIBEXT) mmex$(EXEEXT) i18n
 
-install: 
+install: install_mmex
 
-uninstall: 
+uninstall: uninstall_mmex
 
 install-strip: install
+	$(STRIP) $(DESTDIR)/mmex$(EXEEXT)
 
 clean: 
 	rm -rf ./.deps ./.pch
@@ -149,6 +153,13 @@ mmex$(EXEEXT): $(MMEX_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(__mmex___win32rc)
 	
 	$(__mmex___mac_setfilecmd)
 	$(__mmex___os2_emxbindcmd)
+
+install_mmex: mmex$(EXEEXT)
+	$(INSTALL_DIR) $(DESTDIR)
+	$(INSTALL_PROGRAM) mmex$(EXEEXT) $(DESTDIR)
+
+uninstall_mmex: 
+	rm -f $(DESTDIR)/mmex$(EXEEXT)
 
 i18n: 
 	(cd $(srcdir)/runtime/en && $(MAKE) all)
@@ -328,4 +339,5 @@ mmex_resources_mmex_rc.o: $(srcdir)/resources/mmex.rc
 # Include dependency info, if present:
 @IF_GNU_MAKE@-include ./.deps/*.d
 
-.PHONY: all install uninstall clean distclean i18n setup check
+.PHONY: all install uninstall clean distclean install_mmex uninstall_mmex i18n \
+	setup check
