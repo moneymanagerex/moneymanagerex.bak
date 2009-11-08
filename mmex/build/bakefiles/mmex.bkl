@@ -77,17 +77,28 @@
         <!-- Select VC++ runtime libraries to embed into setup. 
              We deploying Visual C++ library DLLs as private side-by-side assemblies.
 
+             With this technique, it is enough to copy a folder with DLLs and manifests for dependent assemblies to the 
+             application's local folder. The operating system's loader, when executing the application, still looks for 
+             dependent assemblies in the WinSxS folder first; however when a corresponding assembly cannot be found, 
+             the loader loads a private assembly from this sub-directory.        
+
              FIXME: 
              Visual C++ Express does not create %PROGDIR%\Microsoft Visual Studio X.0\VC\Redist\ during installation 
              on the development computer. To redistribute Visual C++ libraries with applications built with 
-             Visual C++ Express, please use Visual C++ Redistributable Packages (VCRedist_*.exe). 
-             
+             Visual C++ Express, please use Visual C++ Redistributable Packages (VCRedist_*.exe). Visual C++ Express 
+             does not install this package.
+                          
              Use Visual C++ Redistributable Package (VCRedist_x86.exe, VCRedist_x64.exe, VCRedist_ia64.exe) to install
              all Visual C++ libraries as shared side-by-side assemblies into the native assembly cache (WinSxS folder). 
              This package is installed by Visual Studio into %WindowsSdkDir%\Bootstrapper\Packages\ folder and can also 
              be downloaded from the Microsoft site. Redistributing Visual C++ libraries using this package is recommended
              for applications built with Visual C++ Express and for cases when deployment of all Visual C++ libraries 
              at once is desirable.
+
+             vcredist_*.exe installs only the release versions of Visual C++ DLLs. Debug versions should only be 
+             deployed as private assemblies. For debug applications, use debug DLLs from \vc\redist\debug_nonredist\. 
+             However, remote debugging may not work for an application that deploys debug versions of Visual C++ libraries
+             as private assemblies.
         -->
             
         <set var="CRT_DLLS">
