@@ -1,7 +1,7 @@
 ﻿; Money Manager Ex InnoSetup script
 
 ; This file encoded as UTF-8 with BOM.
-; UTF-8 enables custom messages in such languages as Chinese, Japan, etc.
+; UTF-8 enables custom messages in such languages as Chinese, Japanese, etc.
 
 ; Copyright (C) 2006 Madhan Kanagavel
 ; Copyright (C) 2009 VaDiM
