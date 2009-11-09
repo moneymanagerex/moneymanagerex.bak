@@ -732,7 +732,7 @@ void mmOptionsDialog::CreateControls()
     }
     itemBoxSizerMisc->Add(itemCheckBoxOnlineCurrencyUpd, 0, 
         wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemCheckBoxBackup->SetToolTip(_("Enable or disable get data from European Central Bank to update currency rate"));
+    itemCheckBoxOnlineCurrencyUpd->SetToolTip(_("Enable or disable get data from European Central Bank to update currency rate"));
 
     // -------------------------------------------
 
