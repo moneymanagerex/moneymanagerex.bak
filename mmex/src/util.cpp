@@ -46,6 +46,12 @@ wxString mmCleanString(const wxString& orig)
 }
 //----------------------------------------------------------------------------
 
+inline int CaseInsensitiveCmp(const wxString &s1, const wxString &s2)
+{
+    return s1.CmpNoCase(s2);
+}
+//----------------------------------------------------------------------------
+
 } // namespace 
 
 //----------------------------------------------------------------------------
@@ -217,6 +223,8 @@ void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
 					wxString name = fname.GetName();
 					langFileArray[ix] = name;
 				}
+
+				langFileArray.Sort(CaseInsensitiveCmp);
 
 				wxString newLangStr = wxGetSingleChoice
 					(
