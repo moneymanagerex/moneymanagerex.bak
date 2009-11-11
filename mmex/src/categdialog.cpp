@@ -130,7 +130,7 @@ void mmCategDialog::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
-#if defined (__WXGTK__) || (__WXMAC__)
+#if defined (__WXGTK__) || defined (__WXMAC__)
     treeCtrl_ = new wxTreeCtrl( itemDialog1, ID_DIALOG_CATEG_TREECTRL_CATS, 
         wxDefaultPosition, wxSize(100, 200));
 #else
