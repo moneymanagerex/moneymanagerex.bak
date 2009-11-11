@@ -45,6 +45,7 @@ BEGIN_EVENT_TABLE(stocksListCtrl, wxListCtrl)
     EVT_LIST_ITEM_ACTIVATED(ID_PANEL_STOCKS_LISTCTRL,   stocksListCtrl::OnListItemActivated)
     EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_STOCKS_LISTCTRL, stocksListCtrl::OnItemRightClick)
     EVT_LIST_ITEM_SELECTED(ID_PANEL_STOCKS_LISTCTRL,    stocksListCtrl::OnListItemSelected)
+	EVT_LIST_ITEM_DESELECTED(ID_PANEL_STOCKS_LISTCTRL,    stocksListCtrl::OnListItemDeselected)
 
     EVT_MENU(MENU_TREEPOPUP_NEW,              stocksListCtrl::OnNewStocks)
     EVT_MENU(MENU_TREEPOPUP_EDIT,             stocksListCtrl::OnEditStocks)
@@ -171,8 +172,8 @@ void mmStocksPanel::CreateControls()
                                      ID_PANEL_CHECKING_STATIC_BALHEADER,
                                      _("Total:"), wxDefaultPosition, wxSize(500, 20), 0 );
 
-    //m_LED = new awxLed( headerPanel, ID_PANEL_STOCK_UPDATE_LED, wxDefaultPosition, wxDefaultSize, awxLED_GREEN, 0 );
-    m_LED = new awxLed( headerPanel, ID_PANEL_STOCK_UPDATE_LED, wxDefaultPosition, wxDefaultSize, awxLED_GREEN);
+    m_LED = new awxLed( headerPanel, ID_PANEL_STOCK_UPDATE_LED, wxDefaultPosition, wxDefaultSize, awxLED_GREEN, 1, 5 );
+    //m_LED = new awxLed( headerPanel, ID_PANEL_STOCK_UPDATE_LED, wxDefaultPosition, wxDefaultSize, awxLED_GREEN);
     m_LED->SetState( awxLED_OFF );
     m_LED->SetToolTip( _("Idle") );
 
@@ -274,12 +275,14 @@ void mmStocksPanel::CreateControls()
                                            wxDefaultPosition, wxDefaultSize, 0 );
     itemButton81->SetToolTip(_("Edit Stock Investment"));
     itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemButton81->Enable(false);
 
     wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_DELETE_STOCK, _("&Delete"),
                                           wxDefaultPosition, wxDefaultSize, 0 );
     itemButton7->SetToolTip(_("Delete Stock Investment"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-
+	itemButton7->Enable(false);
+	
     wxButton* itemButton8 = new wxButton( itemPanel12, ID_BUTTON_REFRESH_STOCK, _("&Refresh"),
                                           wxDefaultPosition, wxDefaultSize, 0 );
     itemButton8->SetToolTip(_("Refresh Stock Prices from Yahoo"));
@@ -819,6 +822,20 @@ wxString stocksListCtrl::OnGetItemText(long item, long column) const
 void stocksListCtrl::OnListItemSelected(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
+	cp_->enableEditDeleteButtons(true);
+}
+void stocksListCtrl::OnListItemDeselected(wxListEvent& event)
+{
+    selectedIndex_ = -1;
+	cp_->enableEditDeleteButtons(false);
+}
+
+void mmStocksPanel::enableEditDeleteButtons(bool en)
+{
+	wxButton* bE = (wxButton*)FindWindow(ID_BUTTON_EDIT_STOCK);
+	wxButton* bD = (wxButton*)FindWindow(ID_BUTTON_DELETE_STOCK);
+	bE->Enable(en);
+	bD->Enable(en);
 }
 
 int stocksListCtrl::OnGetItemImage(long item) const
