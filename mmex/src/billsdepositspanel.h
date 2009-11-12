@@ -59,6 +59,7 @@ public:
     void OnMarkAllTransactions(wxCommandEvent& event);
     void OnListKeyDown(wxListEvent& event);
     void OnListItemSelected(wxListEvent& event);
+    void OnListItemDeselected(wxListEvent& event);
 
     void OnNewBDSeries(wxCommandEvent& event);
     void OnDeleteBDSeries(wxCommandEvent& event);
@@ -143,6 +144,7 @@ public:
     void OnDeleteBDSeries(wxCommandEvent& event);
     void OnEditBDSeries(wxCommandEvent& event);
     void OnEnterBDSeriesOccurrence(wxCommandEvent& event);
+	void enableEditDeleteButtons(bool en);
 
     void OnViewPopupSelected(wxCommandEvent& event);
 
