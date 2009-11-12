@@ -39,6 +39,7 @@ BEGIN_EVENT_TABLE(billsDepositsListCtrl, wxListCtrl)
     EVT_LIST_ITEM_ACTIVATED(ID_PANEL_BD_LISTCTRL,   billsDepositsListCtrl::OnListItemActivated)
     EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_BD_LISTCTRL, billsDepositsListCtrl::OnItemRightClick)
     EVT_LIST_ITEM_SELECTED(ID_PANEL_BD_LISTCTRL,    billsDepositsListCtrl::OnListItemSelected)
+	EVT_LIST_ITEM_DESELECTED(ID_PANEL_BD_LISTCTRL,    billsDepositsListCtrl::OnListItemDeselected)
         
     EVT_MENU(MENU_TREEPOPUP_NEW,              billsDepositsListCtrl::OnNewBDSeries)
     EVT_MENU(MENU_TREEPOPUP_EDIT,             billsDepositsListCtrl::OnEditBDSeries)
@@ -216,16 +217,19 @@ void mmBillsDepositsPanel::CreateControls()
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton81->SetToolTip(_("Edit Bills && Deposit Series"));
     itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-
+	itemButton81->Enable(false);
+	
     wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_DELETE_BD, _("&Delete Series"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton7->SetToolTip(_("Delete Bills && Deposit Series"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-
+	itemButton7->Enable(false);
+	
     wxButton* itemButton8 = new wxButton( itemPanel12, ID_BUTTON_ENTEROCCUR_BD, _("Enter &Transaction"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton8->SetToolTip(_("Enter Next Bills && Deposit Occurrence"));
     itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemButton8->Enable(false);
 
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12, 
         ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
@@ -475,6 +479,12 @@ void billsDepositsListCtrl::OnListItemSelected(wxListEvent& event)
 	cp_->updateBottomPanelData(selectedIndex_);
 }
 
+void billsDepositsListCtrl::OnListItemDeselected(wxListEvent& event)
+{
+    selectedIndex_ = -1;
+    cp_->updateBottomPanelData(selectedIndex_);
+}
+
 int billsDepositsListCtrl::OnGetItemImage(long item) const
 {
    /* Returns the icon to be shown for each entry */
@@ -598,8 +608,8 @@ void billsDepositsListCtrl::OnListItemActivated(wxListEvent& event)
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
     }
     dlg->Destroy();
-
 }
+
 void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
 {
     // Get the items we need to change
@@ -607,6 +617,7 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
 	wxString text;
 	if (selIndex!=-1)
 	{
+		enableEditDeleteButtons(true);
 		text += _("Category         : ");
 		text += trans_[selIndex].categoryStr_;
         text += wxT("\n");
@@ -617,5 +628,22 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
 		text += trans_[selIndex].notesStr_;
 //        text += wxT("\n");
 	}
+	else 
+	{
+		enableEditDeleteButtons(false);
+		text = wxT("");
+	}
+
     st->SetLabel(text);
 }
+
+void mmBillsDepositsPanel::enableEditDeleteButtons(bool en)
+{
+	wxButton* bE = (wxButton*)FindWindow(ID_BUTTON_EDIT_BD);
+	wxButton* bD = (wxButton*)FindWindow(ID_BUTTON_DELETE_BD);
+	wxButton* bN = (wxButton*)FindWindow(ID_BUTTON_ENTEROCCUR_BD);
+	bE->Enable(en);
+	bD->Enable(en);
+	bN->Enable(en);
+}
+
