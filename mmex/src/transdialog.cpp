@@ -139,7 +139,7 @@ void mmTransDialog::dataToControls()
     "left join PAYEE_V1 p "
     "on p.PAYEEID = ca.PAYEEID "
 
-    "join CATEGORY_V1 cat "
+    "left join CATEGORY_V1 cat "
     "on cat.CATEGID = ca.CATEGID "
 
     "left join SUBCATEGORY_V1 sc "
