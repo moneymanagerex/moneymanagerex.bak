@@ -118,6 +118,7 @@ private:
         long style = wxTAB_TRAVERSAL | wxNO_BORDER,
         const wxString& name = wxPanelNameStr
     );
+	void enableEditDeleteButtons(bool en);
 
     void OnNewTransaction(wxCommandEvent& event);
     void OnDeleteTransaction(wxCommandEvent& event);
