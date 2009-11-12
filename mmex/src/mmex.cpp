@@ -628,7 +628,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 
             /* Relative paths don't work well in Linux, so using it only
             for Windows */
-#if defined (__WXGTK__) || (__WXMAC__)
+#if defined (__WXGTK__) || defined (__WXMAC__)
             absName = fName.GetFullPath();		
 #else	
             wxFileName appPath(mmGetBaseWorkingPath(true));
@@ -710,7 +710,7 @@ void mmGUIFrame::saveConfigFile()
     wxFileName appPath(mmGetBaseWorkingPath(true));
     wxFileName fname(fileName_);
 
-#if defined (__WXGTK__) || (__WXMAC__)
+#if defined (__WXGTK__) || defined (__WXMAC__)
 
 #else
     /*bool makeRelative = */fname.MakeRelativeTo(appPath.GetPath());
@@ -799,7 +799,7 @@ void mmGUIFrame::menuPrintingEnable(bool enable)
 
 void mmGUIFrame::createControls()
 {
-#if defined (__WXGTK__) || (__WXMAC__)
+#if defined (__WXGTK__) || defined (__WXMAC__)
     // Under GTK, row lines look ugly
     navTreeCtrl_ = new wxTreeCtrl( this, ID_NAVTREECTRL, 
         wxDefaultPosition, wxSize(100, 100));
