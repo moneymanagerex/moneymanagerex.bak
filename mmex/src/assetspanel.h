@@ -52,6 +52,7 @@ public:
     void OnListItemActivated(wxListEvent& event);
     void OnListKeyDown(wxListEvent& event);
     void OnListItemSelected(wxListEvent& event);
+	void OnListItemDeselected(wxListEvent& event);
 
     void OnNewAsset(wxCommandEvent& event);
     void OnDeleteAsset(wxCommandEvent& event);
@@ -109,6 +110,7 @@ public:
     void OnNewAsset(wxCommandEvent& event);
     void OnDeleteAsset(wxCommandEvent& event);
     void OnEditAsset(wxCommandEvent& event);
+	void enableEditDeleteButtons(bool en);
 
     void OnViewPopupSelected(wxCommandEvent& event);
 

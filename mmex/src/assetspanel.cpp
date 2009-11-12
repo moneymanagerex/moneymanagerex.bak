@@ -36,6 +36,7 @@ BEGIN_EVENT_TABLE(assetsListCtrl, wxListCtrl)
     EVT_LIST_ITEM_ACTIVATED(ID_PANEL_STOCKS_LISTCTRL,   assetsListCtrl::OnListItemActivated)
     EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_STOCKS_LISTCTRL, assetsListCtrl::OnItemRightClick)
     EVT_LIST_ITEM_SELECTED(ID_PANEL_STOCKS_LISTCTRL,    assetsListCtrl::OnListItemSelected)
+	EVT_LIST_ITEM_DESELECTED(ID_PANEL_STOCKS_LISTCTRL,    assetsListCtrl::OnListItemDeselected)
         
     EVT_MENU(MENU_TREEPOPUP_NEW,              assetsListCtrl::OnNewAsset)
     EVT_MENU(MENU_TREEPOPUP_EDIT,             assetsListCtrl::OnEditAsset)
@@ -185,12 +186,14 @@ void mmAssetsPanel::CreateControls()
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton81->SetToolTip(_("Edit Asset"));
     itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-
+	itemButton81->Enable(false);
+	
     wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_DELETE_ASSET, _("&Delete"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton7->SetToolTip(_("Delete Asset"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-
+	itemButton7->Enable(false);
+	
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12, 
         ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
     itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
@@ -292,6 +295,21 @@ wxString assetsListCtrl::OnGetItemText(long item, long column) const
 void assetsListCtrl::OnListItemSelected(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
+	cp_->enableEditDeleteButtons(true);
+}
+
+void assetsListCtrl::OnListItemDeselected(wxListEvent& event)
+{
+    selectedIndex_ = -1;
+	cp_->enableEditDeleteButtons(false);
+}
+
+void mmAssetsPanel::enableEditDeleteButtons(bool en)
+{
+	wxButton* bE = (wxButton*)FindWindow(ID_BUTTON_EDIT_ASSET);
+	wxButton* bD = (wxButton*)FindWindow(ID_BUTTON_DELETE_ASSET);
+	bE->Enable(en);
+	bD->Enable(en);
 }
 
 int assetsListCtrl::OnGetItemImage(long /*item*/) const
