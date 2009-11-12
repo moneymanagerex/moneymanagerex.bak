@@ -56,6 +56,8 @@ public:
     
     void OnOk(wxCommandEvent& event);
     void OnCancel(wxCommandEvent& event);
+    void OnChangeAppreciationType(wxCommandEvent& event);
+	void enableDisableRate(bool en);
     
     void fillControls();
     void dataToControls();
@@ -72,6 +74,8 @@ private:
     
     wxChoice*  assetType_;
     wxChoice*  valueChange_;
+	
+	wxStaticText* valueChangeRateLabel_;
     
 
     bool edit_;

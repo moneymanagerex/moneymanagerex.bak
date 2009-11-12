@@ -43,6 +43,7 @@ IMPLEMENT_DYNAMIC_CLASS( mmAssetDialog, wxDialog )
 BEGIN_EVENT_TABLE( mmAssetDialog, wxDialog )
     EVT_BUTTON(ID_BUTTON_ASSET_OK, mmAssetDialog::OnOk)
     EVT_BUTTON(ID_BUTTON_ASSET_CANCEL, mmAssetDialog::OnCancel)
+	EVT_CHOICE(ID_DIALOG_ASSETDIALOG_COMBO_TYPE, mmAssetDialog::OnChangeAppreciationType)
 END_EVENT_TABLE()
 
 mmAssetDialog::mmAssetDialog( )
@@ -80,6 +81,11 @@ bool mmAssetDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
     {
         dataToControls();
     }
+	else 
+	{   
+		enableDisableRate(false);
+	}
+
 
     Centre();
     return TRUE;
@@ -123,14 +129,26 @@ void mmAssetDialog::dataToControls()
     
         wxString valueChangeTypeStr = q1.GetString(wxT("VALUECHANGE"));
         if (valueChangeTypeStr == wxT("None"))
+		{
             valueChange_->SetSelection(DEF_CHANGE_NONE);
+			enableDisableRate(false);
+		}
         else if (valueChangeTypeStr == wxT("Appreciates"))
-            valueChange_->SetSelection(DEF_CHANGE_APPRECIATE);
+		{
+			valueChange_->SetSelection(DEF_CHANGE_APPRECIATE);
+			enableDisableRate(true);
+		}
         else if (valueChangeTypeStr == wxT("Depreciates"))
-            valueChange_->SetSelection(DEF_CHANGE_DEPRECIATE);
-        else
-            wxASSERT(false);
 
+		{
+            valueChange_->SetSelection(DEF_CHANGE_DEPRECIATE);
+			enableDisableRate(true);
+		}
+        else
+		{
+            wxASSERT(false);
+		}
+		
          wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
          if (assetTypeStr == wxT("Property"))
             assetType_->SetSelection(DEF_ASSET_PROPERTY);
@@ -250,9 +268,9 @@ void mmAssetDialog::CreateControls()
     valueChange_->SetSelection(DEF_CHANGE_NONE);
     itemFlexGridSizer6->Add(valueChange_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticText13 = new wxStaticText( itemPanel5, 
+    valueChangeRateLabel_ = new wxStaticText( itemPanel5, 
         wxID_STATIC, _("Rate of Change"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText13, 0, 
+    itemFlexGridSizer6->Add(valueChangeRateLabel_, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     valueChangeRate_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSETDIALOG_CHANGERATE, wxT(""), 
@@ -260,7 +278,7 @@ void mmAssetDialog::CreateControls()
     valueChangeRate_->SetToolTip(_("Enter the rate at which the asset changes its value in % per year"));
     itemFlexGridSizer6->Add(valueChangeRate_, 0, 
         wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    
+    enableDisableRate(false);
 
     wxStaticText* itemStaticText19 = new wxStaticText( itemPanel5, wxID_STATIC, 
         _("Notes"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -337,6 +355,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     if(valueChangeRateStr.ToDouble(&valueChangeRate) == false) {
         valueChangeRate = -1.0;
     }
+	//This should be unnecessary with hidden controls
 	if ((valueChangeType != DEF_CHANGE_NONE) && (valueChangeRate < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid Value "), _("Error"));
@@ -416,3 +435,24 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     EndModal(wxID_OK);
 }
 
+void mmAssetDialog::OnChangeAppreciationType(wxCommandEvent& event)
+{
+	int selection = valueChange_->GetSelection();
+	// Disable for "None", Enable for "Appreciates" or "Depreciates"
+	enableDisableRate(selection != DEF_CHANGE_NONE);
+}
+
+void mmAssetDialog::enableDisableRate(bool en)
+{
+	if (en)
+	{
+		valueChangeRate_->SetEditable(true);
+		valueChangeRateLabel_->Enable(true);
+	}
+	else 
+	{
+		valueChangeRate_->SetValue(wxT("0"));
+		valueChangeRate_->SetEditable(false);
+		valueChangeRateLabel_->Enable(false);
+	}
+}
