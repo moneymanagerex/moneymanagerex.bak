@@ -379,6 +379,7 @@ private:
 
     void OnItemRightClick(wxListEvent& event);
     void OnListItemSelected(wxListEvent& event);
+    void OnListItemDeselected(wxListEvent& event);
     void OnListItemActivated(wxListEvent& event);
     void OnMarkTransaction(wxCommandEvent& event);
     void OnMarkAllTransactions(wxCommandEvent& event);
@@ -421,6 +422,7 @@ END_EVENT_TABLE()
 BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
 
     EVT_LIST_ITEM_SELECTED(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListItemSelected)
+    EVT_LIST_ITEM_DESELECTED(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListItemDeselected)
     EVT_LIST_ITEM_ACTIVATED(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListItemActivated)
     EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnItemRightClick)
 
@@ -698,25 +700,46 @@ void mmCheckingPanel::CreateControls()
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton7->SetToolTip(_("Edit Transaction"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemButton7->Enable(false);
 
     wxButton* itemButton8 = new wxButton( itemPanel12, ID_BUTTON_DELETE_TRANS, _("&Delete"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton8->SetToolTip(_("Delete Transaction"));
     itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-
+    itemButton8->Enable(false);
+	
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12, 
         ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
     itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
 }
 //----------------------------------------------------------------------------
 
+void mmCheckingPanel::enableEditDeleteButtons(bool en)
+{
+	wxButton* bE = (wxButton*)FindWindow(ID_BUTTON_EDIT_TRANS);
+	wxButton* bD = (wxButton*)FindWindow(ID_BUTTON_DELETE_TRANS);
+	bE->Enable(en);
+	bD->Enable(en);
+}
+
 void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
-    wxString cat   =  _("Category         : ") + m_trans[selIndex]->catStr_  +   wxT("\n"); 
-    wxString subcat = _("Sub Category  : ") + m_trans[selIndex]->subCatStr_ + wxT("\n");
-    wxString notes =  _("Notes               : ") + mmReadyDisplayString(m_trans[selIndex]->notes_) + wxT("\n");
-    wxString text = cat + subcat + notes;
-    wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
+    // Get the items we need to change
+	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);	
+	wxString text;
+	if (selIndex!=-1)
+	{
+		enableEditDeleteButtons(true);
+		wxString cat   =  _("Category         : ") + m_trans[selIndex]->catStr_  +   wxT("\n"); 
+		wxString subcat = _("Sub Category  : ") + m_trans[selIndex]->subCatStr_ + wxT("\n");
+		wxString notes =  _("Notes               : ") + mmReadyDisplayString(m_trans[selIndex]->notes_) + wxT("\n");
+		text = cat + subcat + notes;
+	}
+	else
+	{
+		enableEditDeleteButtons(false);
+		text = wxT("");
+	}
     st->SetLabel(text);
 }
 //----------------------------------------------------------------------------
@@ -1173,6 +1196,12 @@ void MyListCtrl::OnListItemSelected(wxListEvent& event)
     m_cp->updateExtraTransactionData(m_selectedIndex);
 }
 //----------------------------------------------------------------------------
+
+void MyListCtrl::OnListItemDeselected(wxListEvent& event)
+{
+	m_selectedIndex = -1;
+	m_cp->updateExtraTransactionData(m_selectedIndex);
+}
 
 void MyListCtrl::OnItemRightClick(wxListEvent& event)
 {
