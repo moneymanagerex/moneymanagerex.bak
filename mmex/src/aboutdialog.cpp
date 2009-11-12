@@ -154,7 +154,7 @@ void mmAboutDialog::CreateControls()
        itemBoxSizer4->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
        wxStaticText* itemStaticText91 = new wxStaticText( itemDialog1, 
-          wxID_STATIC, _("  and contributers from around the world."), 
+          wxID_STATIC, _("  and contributors from around the world."), 
           wxDefaultPosition, wxDefaultSize, 0 );
        itemBoxSizer4->Add(itemStaticText91, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -180,7 +180,7 @@ void mmAboutDialog::CreateControls()
        itemBoxSizer4->Add(itemButton14, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
        wxButton* itemButton18 = new wxButton( itemDialog1, ID_DIALOG_BUTTON_ABOUT_CONTRIBUTERS, 
-          _("Contributers"), 
+          _("Contributors"), 
           wxDefaultPosition, wxDefaultSize, 0 );
        itemBoxSizer4->Add(itemButton18, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
