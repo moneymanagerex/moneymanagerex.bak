@@ -497,7 +497,7 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int 
    pCopyTransaction->payeeID_=    pBankTransaction->payeeID_;
    pCopyTransaction->transType_=    pBankTransaction->transType_;
    pCopyTransaction->amt_ =   pBankTransaction->amt_;
-   pCopyTransaction->status_ =    pBankTransaction->status_;
+   pCopyTransaction->status_ =    (useOriginalDate ? wxChar('D') : pBankTransaction->status_);
    pCopyTransaction->transNum_=   pBankTransaction->transNum_;
    pCopyTransaction->notes_=   pBankTransaction->notes_;
    pCopyTransaction->categID_  =   pBankTransaction->categID_;
