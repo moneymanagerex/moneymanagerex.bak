@@ -51,7 +51,6 @@ public:
     mmPayeeDialog();
     mmPayeeDialog(
         mmCoreDB* core,
-        bool selectPayees, 
         wxWindow* parent, 
         bool showSelectButton = true, 
         wxWindowID id = SYMBOL_PAYEEDIALOG_IDNAME, 
@@ -96,7 +95,6 @@ private:
 
 public:
     int payeeID_;
-    bool selectPayees_;
 };
 
 #endif

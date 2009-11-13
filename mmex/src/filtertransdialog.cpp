@@ -657,7 +657,7 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
 
 void mmFilterTransactionsDialog::OnPayee(wxCommandEvent& /*event*/)
 {
-    mmPayeeDialog* dlg = new mmPayeeDialog(core_, true, this);    
+    mmPayeeDialog* dlg = new mmPayeeDialog(core_, this);    
     if ( dlg->ShowModal() == wxID_OK )
     {
         payeeID_ = dlg->payeeID_;
