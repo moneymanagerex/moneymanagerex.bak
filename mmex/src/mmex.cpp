@@ -3023,7 +3023,7 @@ void mmGUIFrame::OnOrgCategories(wxCommandEvent& /*event*/)
  
 void mmGUIFrame::OnOrgPayees(wxCommandEvent& /*event*/)
 {
-    mmPayeeDialog *dlg = new mmPayeeDialog(core_.get(), true, this, false);
+    mmPayeeDialog *dlg = new mmPayeeDialog(core_.get(), this, false);
     dlg->ShowModal();
     dlg->Destroy();
 }

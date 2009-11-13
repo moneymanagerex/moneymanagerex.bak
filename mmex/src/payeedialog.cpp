@@ -46,7 +46,6 @@ END_EVENT_TABLE()
 mmPayeeDialog::mmPayeeDialog( )
 {
     payeeID_ = -1;
-    selectPayees_ = true;
 }
 
 void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
@@ -68,7 +67,6 @@ void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
 }
 
 mmPayeeDialog::mmPayeeDialog(mmCoreDB* core,
-                             bool selectPayees, 
                              wxWindow* parent, 
                              bool showSelectButton, 
                              wxWindowID id, 
@@ -78,7 +76,6 @@ mmPayeeDialog::mmPayeeDialog(mmCoreDB* core,
  
     core_ = core;
     payeeID_ = -1;
-    selectPayees_ = selectPayees;
     showSelectButton_ = showSelectButton;
     Create(parent, id, caption, pos, size, style | wxWANTS_CHARS);
 }
@@ -93,13 +90,6 @@ bool mmPayeeDialog::Create( wxWindow* parent, wxWindowID id,
     CreateControls();
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
-
-    if (!selectPayees_)
-    {
-        addButton->Disable();
-        editButton->Disable();
-        deleteButton->Disable();
-    }
 
     if (!showSelectButton_)
     {
@@ -118,8 +108,7 @@ bool mmPayeeDialog::Create( wxWindow* parent, wxWindowID id,
 void mmPayeeDialog::fillControls()
 {
     core_->payeeList_.sortPayeeList();
-    if (selectPayees_)
-    {
+
         int numPayees = (int)core_->payeeList_.payees_.size();
         for (int idx = 0; idx < numPayees; idx++)
         {
@@ -130,29 +119,6 @@ void mmPayeeDialog::fillControls()
         payeeComboBox_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_SET_FOCUS, wxFocusEventHandler(mmPayeeDialog::OnSetFocus), NULL, this);        
         payeeComboBox_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_KILL_FOCUS, wxFocusEventHandler(mmPayeeDialog::OnFocus), NULL, this); 
         payeeComboBox_->SetFocus();
-        
-       
-    }
-    else
-    {
-        int numAccounts = (int) core_->accountList_.accounts_.size();
-        int insertCount = 0;
-        for (int iAdx = 0; iAdx < numAccounts; iAdx++)
-        {
-            mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
-            if (pCA)
-            {
-                listBox_->Insert(pCA->accountName_, insertCount, new mmPayeeListBoxItem(pCA->accountID_));
-                insertCount++;
-            }
-        }
-
-        listBox_->SetFocus();
-        if (!listBox_->IsEmpty())
-        {
-            listBox_->SetSelection(0);
-        }
-    }
 }
 
 void mmPayeeDialog::CreateControls()
@@ -162,8 +128,6 @@ void mmPayeeDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    if (selectPayees_)
-    {
         wxStaticText* itemStaticTextName = new wxStaticText( itemDialog1, wxID_STATIC, 
             _("Find Payee: "), wxDefaultPosition, wxDefaultSize, 0 );
         itemBoxSizer2->Add(itemStaticTextName, 0,
@@ -173,7 +137,6 @@ void mmPayeeDialog::CreateControls()
             ID_DIALOG_TRANS_PAYEECOMBO, wxT(""), wxDefaultPosition, wxSize(250, -1), wxCB_READONLY);
         itemBoxSizer2->Add(payeeComboBox_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
         payeeComboBox_->SetToolTip(_("Enter the payee name to be added or make edits to an existing payee name"));
-    }
 
      wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
@@ -190,9 +153,9 @@ void mmPayeeDialog::CreateControls()
     //itemBoxSizerPayee->Add(itemStaticTextName, 0,
       //  wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticTextName = new wxStaticText( itemDialog1, wxID_STATIC, 
+    wxStaticText* itemStaticTextName2 = new wxStaticText( itemDialog1, wxID_STATIC, 
             _("Add/Edit Payee: "), wxDefaultPosition, wxDefaultSize, 0 );
-        itemBoxSizer2->Add(itemStaticTextName, 0,
+        itemBoxSizer2->Add(itemStaticTextName2, 0,
             wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     textCtrl = new wxTextCtrl( itemDialog1, ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME, 

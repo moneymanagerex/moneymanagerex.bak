@@ -452,82 +452,112 @@ void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 {
-    bool selectPayees = true;
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
-        selectPayees = false;
-
-    mmPayeeDialog *dlg = new mmPayeeDialog(core_, selectPayees, this);    
-    if ( dlg->ShowModal() == wxID_OK )
-    {
-        if (selectPayees)
-        {
-            payeeID_ = dlg->payeeID_;
-            if (payeeID_ == -1)
-            {
-                bPayee_->SetLabel(wxT("Select Payee"));
-                return;
-            }
-            
-            // ... If this is a Split Transaction, ignore the Payee change
-            if (split_->numEntries())
-                return;
-
-            int tempCategID = -1;
-            int tempSubCategID = -1;
-            wxString payeeName = mmDBWrapper::getPayee(db_.get(), 
-                payeeID_, tempCategID, tempSubCategID);
-            bPayee_->SetLabel(mmReadyDisplayString(payeeName));
-
-            if (tempCategID == -1)
-            {
-                return;
-            }
-
-            wxString catName = mmDBWrapper::getCategoryName(db_.get(), tempCategID);
-            wxString categString = catName;
-
-            if (tempSubCategID != -1)
-            {
-                wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(),
-                    tempCategID, tempSubCategID);
-                categString += wxT(" : ");
-                categString += subcatName;
-            }
-
-            categID_ = tempCategID;
-            subcategID_ = tempSubCategID;
-            bCategory_->SetLabel(categString);
-        }
-        else
-        {
-
-            if (dlg->payeeID_ == -1)
-                return;
-            payeeID_ = dlg->payeeID_;
-            wxString acctName = mmDBWrapper::getAccountName(db_.get(), payeeID_);
+	{
+	    static const char sql[] = 
+    	"select ACCOUNTNAME "
+    	"from ACCOUNTLIST_V1 "
+    	"where ACCOUNTTYPE = 'Checking' "
+    	"order by ACCOUNTNAME";
+	
+    	wxArrayString as;
+    	
+    	wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+    	while (q1.NextRow())
+    	{
+    	    as.Add(q1.GetString(wxT("ACCOUNTNAME")));
+    	}
+    	q1.Finalize();
+    	
+    	wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Bank Account"), 
+    	    _("Select Account"), as);
+    	if (scd->ShowModal() == wxID_OK)
+    	{
+			wxString acctName = scd->GetStringSelection();
+            payeeID_ = mmDBWrapper::getAccountID(db_.get(), acctName);
             bPayee_->SetLabel(acctName);
-        }
-    }
-    else
-    {
-        wxString payeeName = mmDBWrapper::getPayee(db_.get(), 
-            payeeID_, categID_, subcategID_);
-        if (payeeName.IsEmpty())
-        {
-            payeeID_ = -1;
-            categID_ = -1;
-            subcategID_ = -1;
-            bCategory_->SetLabel(_("Select Category"));
-            bPayee_->SetLabel(_("Select Payee"));
-        }
-        else
-        {
-            bPayee_->SetLabel(payeeName);
-        }
-        
-    }
+    	}
+		else
+	    {
+	        wxString acctName = mmDBWrapper::getAccountName(db_.get(), payeeID_);
+	        if (acctName.IsEmpty())
+	        {
+	            payeeID_ = -1;
+	            categID_ = -1;
+	            subcategID_ = -1;
+	            bCategory_->SetLabel(_("Select Category"));
+	            bPayee_->SetLabel(_("Select Payee"));
+	        }
+	        else
+	        {
+	            bPayee_->SetLabel(acctName);
+	        }  
+	    }
+    	scd->Destroy();
+	}
+	else
+	{
+	    mmPayeeDialog *dlg = new mmPayeeDialog(core_, this);    
+	    if ( dlg->ShowModal() == wxID_OK )
+	    {
+	            payeeID_ = dlg->payeeID_;
+	            if (payeeID_ == -1)
+            	{
+	                bPayee_->SetLabel(wxT("Select Payee"));
+	                return;
+            	}
+	            
+	            // ... If this is a Split Transaction, ignore the Payee change
+	            if (split_->numEntries())
+	                return;
+	
+            	int tempCategID = -1;
+	            int tempSubCategID = -1;
+	            wxString payeeName = mmDBWrapper::getPayee(db_.get(), 
+                	payeeID_, tempCategID, tempSubCategID);
+	            bPayee_->SetLabel(mmReadyDisplayString(payeeName));
 
-    dlg->Destroy();
+    	        if (tempCategID == -1)
+	            {
+	                return;
+	            }
+	
+	            wxString catName = mmDBWrapper::getCategoryName(db_.get(), tempCategID);
+	            wxString categString = catName;
+	
+	            if (tempSubCategID != -1)
+	            {
+	                wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(),
+	                    tempCategID, tempSubCategID);
+	                categString += wxT(" : ");
+	                categString += subcatName;
+	            }
+	
+	            categID_ = tempCategID;
+	            subcategID_ = tempSubCategID;
+	            bCategory_->SetLabel(categString);
+	    }
+	    else
+	    {
+	        wxString payeeName = mmDBWrapper::getPayee(db_.get(), 
+	            payeeID_, categID_, subcategID_);
+	        if (payeeName.IsEmpty())
+	        {
+	            payeeID_ = -1;
+	            categID_ = -1;
+	            subcategID_ = -1;
+	            bCategory_->SetLabel(_("Select Category"));
+	            bPayee_->SetLabel(_("Select Payee"));
+	        }
+	        else
+	        {
+	            bPayee_->SetLabel(payeeName);
+	        }
+	        
+	    }
+	
+    	dlg->Destroy();
+	}
 }
 void mmTransDialog::OnAutoTransNum(wxCommandEvent& /*event*/)
 {
@@ -537,37 +567,47 @@ void mmTransDialog::OnAutoTransNum(wxCommandEvent& /*event*/)
 }
 
 void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
-{
-    bool selectPayees = true;
-     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
-        selectPayees = false;
-    
-    mmPayeeDialog *dlg = new mmPayeeDialog(core_, selectPayees, this);    
-    if ( dlg->ShowModal() == wxID_OK )
-    {
-        if (dlg->payeeID_ == -1)
-            return;
-        toID_ = dlg->payeeID_;
-        wxString acctName = mmDBWrapper::getAccountName(db_.get(), toID_);
-        bTo_->SetLabel(acctName);
-    }
-    else
-    {
-        int categID, subcategID;
-        wxString toName = mmDBWrapper::getPayee(db_.get(), toID_, categID, subcategID);
-        if (toName.IsEmpty())
-        {
-            toID_ = -1;
-            bCategory_->SetLabel(_("Select Category"));
-            bTo_->SetLabel(_("Select To"));
-        }
-        else
-        {
-            bTo_->SetLabel(toName);
-        }
-    }
-   
-    dlg->Destroy();
+{	
+	// This should only get called if we are in a transfer
+
+	    static const char sql[] = 
+    	"select ACCOUNTNAME "
+    	"from ACCOUNTLIST_V1 "
+    	"where ACCOUNTTYPE = 'Checking' "
+    	"order by ACCOUNTNAME";
+	
+    	wxArrayString as;
+    	
+    	wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+    	while (q1.NextRow())
+    	{
+    	    as.Add(q1.GetString(wxT("ACCOUNTNAME")));
+    	}
+    	q1.Finalize();
+    	
+    	wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Bank Account"), 
+    	    _("Select Account"), as);
+    	if (scd->ShowModal() == wxID_OK)
+    	{
+			wxString acctName = scd->GetStringSelection();
+            toID_ = mmDBWrapper::getAccountID(db_.get(), acctName);
+            bTo_->SetLabel(acctName);
+    	}
+		else
+	    {
+	        wxString acctName = mmDBWrapper::getAccountName(db_.get(), toID_);
+	        if (acctName.IsEmpty())
+	        {
+	            toID_ = -1;
+	            bCategory_->SetLabel(_("Select Category"));
+	            bPayee_->SetLabel(_("Select To"));
+	        }
+	        else
+	        {
+	            bPayee_->SetLabel(acctName);
+	        }  
+	    }
+    	scd->Destroy();
 }
 
 void mmTransDialog::OnDateChanged(wxDateEvent& /*event*/)
