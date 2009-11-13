@@ -38,27 +38,72 @@ int ofx_proc_account_cb(struct OfxAccountData data, void * account_user_data);
 
 int ofx_proc_security_cb(const struct OfxSecurityData data, void * security_user_data)
 {
-	char * tmp_cusip=NULL;
-	char * tmp_default_fullname=NULL;
-	char * tmp_default_mnemonic=NULL;
+	wxChar * tmp_cusip=NULL;
+	wxChar * tmp_default_fullname=NULL;
+	wxChar * tmp_default_mnemonic=NULL;
+	double * tmp_unitprice=NULL;
+	wxChar * tmp_notes=NULL;
+	wxDateTime * tmp_pdate=NULL;
+	//wxChar * tmp_currency=NULL;
+	
+	mmStockDialog::OnAccountButton
 	
 	if(data.unique_id_valid==true)
     {
-		tmp_cusip=(char *)data.unique_id;
+		tmp_cusip=(wxChar *)data.unique_id;
     }
 	if(data.secname_valid==true)
     {
-		tmp_default_fullname=(char *)data.secname;
+		tmp_default_fullname=(wxChar *)data.secname;
     }
 	if(data.ticker_valid==true)
     {
-		tmp_default_mnemonic=(char *)data.ticker;
+		tmp_default_symbol=(wxChar *)data.ticker;
     }
+	if(data.unitprice_valid==true)
+	{
+		tmp_unitprice = (double *)data.unitprice;
+	}
+	if(data.memo_valid==true)
+	   {
+		   tmp_notes = (wxChar *)data.memo;
+	   }
+	if(data.date_unitprice_valid==true)
+	{
+		tmp_pdate=(wxDateTime *)data.memo;
+	}
+	//Currency to be used once we sort out how to convert to the currency used by the database
+	/*if(data.currency_valid==true)
+	{
+		tmp_currency=(wxChar *)data.currency;
+	}*/
+		
+	static const char sql[]  = 
+	"insert into STOCK_V1 ( "
+	"HELDAT, PURCHASEDATE, STOCKNAME, SYMBOL, "
+	"NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, "
+	"VALUE, COMMISSION "
+	" ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
-	gnc_import_select_commodity(tmp_cusip,
-								true,
-								tmp_default_fullname,
-								tmp_default_mnemonic);
+	wxSQLite3Statement st = db_->PrepareStatement(sql);
+	
+	int i = 0;
+	st.Bind(++i, accountID_);
+	st.Bind(++i, tmp_pdate);
+	st.Bind(++i, tmp_default_fullname);
+	st.Bind(++i, tmp_default_symbol);
+	st.Bind(++i, numShares);
+	st.Bind(++i, tmp_unitprice);
+	st.Bind(++i, tmp_notes);
+	st.Bind(++i, wxT("cPrice"));
+	st.Bind(++i, wxT("cValue"));
+	st.Bind(++i, wxT("commission"));
+	
+	wxASSERT(st.GetParamCount() == i);
+	
+	st.ExecuteUpdate();
+	st.Finalize();
+	
 	return 0;
 }
 
