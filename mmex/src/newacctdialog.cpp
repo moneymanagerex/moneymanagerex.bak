@@ -105,7 +105,7 @@ void mmNewAcctDialog::fillControlsWithData()
     textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_NOTES);
     textCtrl->SetValue(pAccount->notes_);
 
-    wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
+	wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
     if (pAccount->acctType_ == wxT("Checking"))
        itemAcctType->SetSelection(ACCT_TYPE_CHECKING);
     else
@@ -120,7 +120,7 @@ void mmNewAcctDialog::fillControlsWithData()
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT);
     itemCheckBox->SetValue(pAccount->favoriteAcct_);
 
-    textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE);
+	textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE);
     double initBal = pAccount->initialBalance_;
 
     boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
@@ -280,7 +280,7 @@ void mmNewAcctDialog::CreateControls()
     itemTextCtrl18->SetToolTip(_("Enter user notes and details about this account."));
 
      itemGridSizer2->Add(5, 5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
+ 
     wxCheckBox* itemCheckBox10 = new wxCheckBox( itemDialog1, 
         ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT, _("Favorite Account"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemCheckBox10->SetValue(TRUE);
@@ -375,13 +375,13 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     pAccount->status_ = mmAccount::MMEX_Open;
     if (acctStatus == ACCT_STATUS_CLOSED)
         pAccount->status_ = mmAccount::MMEX_Closed;
-    
-    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT);
+
+	wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT);
     if (itemCheckBox->IsChecked())
        pAccount->favoriteAcct_ = true;
     else
        pAccount->favoriteAcct_ = false;  
-        
+
     mmDBWrapper::loadSettings(core_->db_.get(), currencyID_);
     wxTextCtrl* textCtrlInit = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE);
     wxString bal = textCtrlInit->GetValue().Trim();
@@ -415,4 +415,3 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
 
     EndModal(wxID_OK);
 }
-
