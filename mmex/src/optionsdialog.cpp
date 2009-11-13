@@ -147,12 +147,9 @@ wxString mmOptionsDialog::DisplayDate2FormatDate(wxString strDate)
         wxT("%d/%m/%Y"),
         wxT("%m/%d/%y"),
         wxT("%m/%d/%Y"),
-
         wxT("%m/%d'%Y"),
-        
         wxT("%y/%m/%d"),
         wxT("%Y/%m/%d"),
-
         wxT("%d-%m-%y"),
         wxT("%d-%m-%Y"),
         wxT("%m-%d-%y"),
@@ -161,7 +158,9 @@ wxString mmOptionsDialog::DisplayDate2FormatDate(wxString strDate)
         wxT("%d.%m.%Y"),
         wxT("%Y-%m-%d"),
         wxT("%Y.%m.%d"),
-    };
+		wxT("%d,%m,%y"),
+		wxT("%d/%m %Y"),
+	};
 
     wxString itemChoice7Strings[TOTAL_DATEFORMAT] = 
     {
@@ -169,20 +168,19 @@ wxString mmOptionsDialog::DisplayDate2FormatDate(wxString strDate)
         wxT("DD/MM/YYYY"),
         wxT("MM/DD/YY"),
         wxT("MM/DD/YYYY"),
-
         wxT("MM/DD'YYYY"),
-        
         wxT("YY/MM/DD"),
         wxT("YYYY/MM/DD"),
-
         wxT("DD-MM-YY"),
         wxT("DD-MM-YYYY"),
         wxT("MM-DD-YY"),
         wxT("MM-DD-YYYY"),
-		wxT("DD.MM.YY"),
+        wxT("DD.MM.YY"),
         wxT("DD.MM.YYYY"),
-	    wxT("YYYY-MM-DD"),
+        wxT("YYYY-MM-DD"),
         wxT("YYYY.MM.DD"),
+		wxT("DD,MM,YY"),
+		wxT("DD/MM YYYY"),
     };
 
     for(int i=0; i<TOTAL_DATEFORMAT; i++) {
@@ -202,12 +200,9 @@ wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
         wxT("%d/%m/%Y"),
         wxT("%m/%d/%y"),
         wxT("%m/%d/%Y"),
-
         wxT("%m/%d'%Y"),
-        
         wxT("%y/%m/%d"),
         wxT("%Y/%m/%d"),
-
         wxT("%d-%m-%y"),
         wxT("%d-%m-%Y"),
         wxT("%m-%d-%y"),
@@ -216,6 +211,8 @@ wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
         wxT("%d.%m.%Y"),
 		wxT("%Y-%m-%d"),
         wxT("%Y.%m.%d"),
+		wxT("%d,%m,%y"),
+        wxT("%d/%m %Y"),
     };
 
     wxString itemChoice7Strings[TOTAL_DATEFORMAT] = 
@@ -224,12 +221,9 @@ wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
         wxT("DD/MM/YYYY"),
         wxT("MM/DD/YY"),
         wxT("MM/DD/YYYY"),
-
         wxT("MM/DD'YYYY"),
-        
         wxT("YY/MM/DD"),
         wxT("YYYY/MM/DD"),
-
         wxT("DD-MM-YY"),
         wxT("DD-MM-YYYY"),
         wxT("MM-DD-YY"),
@@ -238,6 +232,8 @@ wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
         wxT("DD.MM.YYYY"),
 	    wxT("YYYY-MM-DD"),
         wxT("YYYY.MM.DD"),
+		wxT("DD,MM,YY"),
+		wxT("DD/MM YYYY"),
     };
 
     for(int i=0; i<TOTAL_DATEFORMAT; i++) {
@@ -380,12 +376,9 @@ void mmOptionsDialog::CreateControls()
         wxT("DD/MM/YYYY"),
         wxT("MM/DD/YY"),
         wxT("MM/DD/YYYY"),
-
         wxT("MM/DD'YYYY"),
-        
         wxT("YY/MM/DD"),
         wxT("YYYY/MM/DD"),
-
         wxT("DD-MM-YY"),
         wxT("DD-MM-YYYY"),
         wxT("MM-DD-YY"),
@@ -394,6 +387,8 @@ void mmOptionsDialog::CreateControls()
         wxT("DD.MM.YYYY"),
         wxT("YYYY-MM-DD"),
         wxT("YYYY.MM.DD"),
+		wxT("DD,MM,YY"),
+		wxT("DD/MM YYYY"),
     };
 
     wxString selection = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
@@ -961,4 +956,3 @@ void mmOptionsDialog::OnFontSizeChanged(wxCommandEvent& /*event*/)
    // resize dialog window
    Fit();
 }
-
