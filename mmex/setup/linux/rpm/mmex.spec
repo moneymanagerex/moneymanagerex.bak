@@ -42,13 +42,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 /mmex
 /contrib.txt
+/license.txt
+/version.txt
 /currency.db3
 /kaching.wav
-/license.txt
 /mmex.ico
 /splash.png
-/version.txt
-/en
+/i18n
+%docdir /help
 /help
 
 

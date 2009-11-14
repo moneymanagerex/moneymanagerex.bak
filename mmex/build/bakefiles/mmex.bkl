@@ -62,8 +62,8 @@
 	</data-files>
 
 	<data-files>
-	    <install-to>$(PREFIX)/mmex/en</install-to>
-	    <srcdir>$(SRCDIR)/runtime/en</srcdir>
+	    <install-to>$(PREFIX)/mmex/i18n</install-to>
+	    <srcdir>$(SRCDIR)/i18n</srcdir>
 	    <files>*.po *.mo</files>
 	</data-files>
 
@@ -129,17 +129,17 @@
 	    <files>*.png</files>
 	</data-files>
 
-	<!-- runtime/en/* -> mmex/en -->
+	<!-- i18n/* -> mmex/i18n -->
 
 	<data-files>
-	    <install-to>$(PREFIX)/mmex/en</install-to>
-	    <srcdir>$(SRCDIR)/runtime/en</srcdir>
+	    <install-to>$(PREFIX)/mmex/i18n</install-to>
+	    <srcdir>$(SRCDIR)/i18n</srcdir>
 	    <files>*.po</files>
 	</data-files>
 
 	<data-files>
-	    <install-to>$(PREFIX)/mmex/en</install-to>
-	    <srcdir>$(SRCDIR)/runtime/en</srcdir>
+	    <install-to>$(PREFIX)/mmex/i18n</install-to>
+	    <srcdir>$(SRCDIR)/i18n</srcdir>
 	    <files>*.mo</files>
 	</data-files>
 
@@ -150,7 +150,7 @@
 
     <subproject id="i18n">
         <dependency-of>all</dependency-of>
-        <dir>$(SRCDIR)/runtime/en</dir>
+        <dir>$(SRCDIR)/i18n</dir>
     </subproject>
 
     

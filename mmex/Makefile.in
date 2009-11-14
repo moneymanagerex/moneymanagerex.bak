@@ -129,14 +129,14 @@ install: install_mmex
 	(cd $(srcdir)/docs ; $(INSTALL_DATA)  *.html *.jpg *.png $(DESTDIR)$(prefix)/mmex/help)
 	$(INSTALL_DIR) $(DESTDIR)$(prefix)/mmex/help/index_fichiers
 	(cd $(srcdir)/docs/index_fichiers ; $(INSTALL_DATA)  * $(DESTDIR)$(prefix)/mmex/help/index_fichiers)
-	$(INSTALL_DIR) $(DESTDIR)$(prefix)/mmex/en
-	(cd $(srcdir)/runtime/en ; $(INSTALL_DATA)  *.po *.mo $(DESTDIR)$(prefix)/mmex/en)
+	$(INSTALL_DIR) $(DESTDIR)$(prefix)/mmex/i18n
+	(cd $(srcdir)/i18n ; $(INSTALL_DATA)  *.po *.mo $(DESTDIR)$(prefix)/mmex/i18n)
 
 uninstall: uninstall_mmex
 	(cd $(DESTDIR)$(prefix)/mmex ; rm -f *.txt currency.db3 kaching.wav mmex.ico splash.png)
 	(cd $(DESTDIR)$(prefix)/mmex/help ; rm -f *.html *.jpg *.png)
 	(cd $(DESTDIR)$(prefix)/mmex/help/index_fichiers ; rm -f *)
-	(cd $(DESTDIR)$(prefix)/mmex/en ; rm -f *.po *.mo)
+	(cd $(DESTDIR)$(prefix)/mmex/i18n ; rm -f *.po *.mo)
 
 install-strip: install
 	$(STRIP) $(DESTDIR)$(prefix)/mmex/mmex$(EXEEXT)
@@ -146,13 +146,13 @@ clean:
 	rm -f ./*.o
 	rm -f $(LIBPREFIX)sqlite3$(LIBEXT)
 	rm -f mmex$(EXEEXT)
-	-(cd $(srcdir)/runtime/en && $(MAKE) clean)
+	-(cd $(srcdir)/i18n && $(MAKE) clean)
 	-(cd $(srcdir)/setup/win32 && $(MAKE) clean)
 	-(cd ./src/tests && $(MAKE) clean)
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
-	-(cd $(srcdir)/runtime/en && $(MAKE) distclean)
+	-(cd $(srcdir)/i18n && $(MAKE) distclean)
 	-(cd $(srcdir)/setup/win32 && $(MAKE) distclean)
 	-(cd ./src/tests && $(MAKE) distclean)
 
@@ -175,7 +175,7 @@ uninstall_mmex:
 	rm -f $(DESTDIR)$(prefix)/mmex/mmex$(EXEEXT)
 
 i18n: 
-	(cd $(srcdir)/runtime/en && $(MAKE) all)
+	(cd $(srcdir)/i18n && $(MAKE) all)
 
 @COND_PLATFORM_WIN32_1@setup: all
 @COND_PLATFORM_WIN32_1@	(cd $(srcdir)/setup/win32 && $(MAKE) APP_EXE_PATH="..\..\build\msw\mmex.exe" BUILD_OPTS="" CPU_ARCH="" CRT_DLLS="" FORMAT="autoconf" all)
