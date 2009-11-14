@@ -288,8 +288,7 @@ bool OnInitImpl(mmGUIApp &app)
     valWStr.ToLong(&valw);
     valHStr.ToLong(&valh);
 
-    /* Select language if necessary */
-    mmSelectLanguage(inidb.get());
+    mmSelectLanguage(0, inidb.get(), false);
 
     inidb->Close();
 

@@ -37,7 +37,7 @@ wxString mmGetBaseWorkingPath(bool ignoreCommandLine = false);
 void mmShowErrorMessageInvalid(wxWindow* parent, wxString message);
 void mmShowErrorMessage(wxWindow* parent,  wxString message, wxString messageheader);
 
-void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection=false);
+wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database *inidb, bool forced_show_dlg);
 
 wxString mmGetDateForStorage(wxDateTime dt);
 wxDateTime mmGetStorageStringAsDate(const wxString& str);

@@ -454,15 +454,10 @@ void mmOptionsDialog::CreateControls()
         wxHORIZONTAL);
     itemBoxSizer20->Add(itemStaticBoxSizerLang, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
     
-    wxStaticText* itemStaticText555 = new wxStaticText( itemPanelGeneral, wxID_STATIC, 
-        _("Language"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticBoxSizerLang->Add(itemStaticText555, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-
-    wxString lang = mmDBWrapper::getINISettingValue(inidb_, 
-        wxT("LANGUAGE"), wxT(""));
-	wxButton* itemButtonLanguage = new wxButton( itemPanelGeneral, 
-        ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, lang, wxDefaultPosition, wxDefaultSize, 0 );
+    wxString lang = mmDBWrapper::getINISettingValue(inidb_, wxT("LANGUAGE"));
+    wxButton* itemButtonLanguage = new wxButton( itemPanelGeneral, 
+        ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, lang, wxDefaultPosition, wxDefaultSize, 0);
+    
     itemStaticBoxSizerLang->Add(itemButtonLanguage, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
     itemButtonLanguage->SetToolTip(_("Specify the language to use"));
     
@@ -770,17 +765,29 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
 
 void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& /*event*/)
 {
-    mmSelectLanguage(inidb_, true);
-	wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
-	wxString lang = mmDBWrapper::getINISettingValue(inidb_, 
-        wxT("LANGUAGE"), wxT(""));
-	bn->SetLabel(lang);
+    wxString lang = mmSelectLanguage(this, inidb_, true);
 
-    // resize dialog window            
-    Fit();
+    if (lang.empty()) {
+        return;
+    }
 
-//    if (!mmGraphGenerator::checkGraphFiles())
-//        mmIniOptions::enableGraphs_ = false;
+    wxButton *btn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
+    wxASSERT(btn);
+        
+    if (btn && btn->GetLabel() != lang) {
+
+        int x = 0;
+        int y = 0;
+        btn->GetTextExtent(lang, &x, &y);
+
+        wxSize sz = btn->GetSize();
+        sz.SetWidth(x << 1);
+        btn->SetSize(sz);
+
+        btn->SetLabel(lang);
+
+        Fit(); // resize dialog window
+    }
 }
 
 void mmOptionsDialog::OnNavTreeColorChanged(wxCommandEvent& /*event*/)

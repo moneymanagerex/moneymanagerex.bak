@@ -46,9 +46,41 @@ wxString mmCleanString(const wxString& orig)
 }
 //----------------------------------------------------------------------------
 
-inline int CaseInsensitiveCmp(const wxString &s1, const wxString &s2)
+int CaseInsensitiveCmp(const wxString &s1, const wxString &s2)
 {
     return s1.CmpNoCase(s2);
+}
+//----------------------------------------------------------------------------
+
+wxString selectLanguageDlg(wxWindow *parent, const wxString &langPath, bool verbose)
+{
+        wxString lang;
+
+        wxArrayString lang_files;
+	size_t cnt = wxDir::GetAllFiles(langPath, &lang_files, wxT("*.mo"));
+       
+	if (!cnt) {
+
+		if (verbose) {
+                    wxString s = wxT("Can't find language files (.mo) at \"");
+                    s << langPath << wxT('\"');
+
+                    wxMessageDialog dlg(parent, s, wxT("Error"), wxICON_ERROR);
+                    dlg.ShowModal();
+                }
+
+                return lang;
+	}
+	
+	for (size_t i = 0; i < cnt; ++i) {
+		wxFileName fname(lang_files[i]);
+                lang_files[i] = fname.GetName();
+	}
+
+	lang_files.Sort(CaseInsensitiveCmp);
+	lang = wxGetSingleChoice(wxT("Please choose language"), wxT("Languages"), lang_files, parent);
+
+        return lang;
 }
 //----------------------------------------------------------------------------
 
@@ -63,6 +95,7 @@ void mmOptions::loadOptions(wxSQLite3Database* db)
 {
    dateFormat = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
 }
+//----------------------------------------------------------------------------
 
 void mmOptions::saveOptions(wxSQLite3Database* db)
 {
@@ -186,74 +219,59 @@ wxString mmGetBaseWorkingPath(bool ignoreCommandLine)
 #endif
 }
 
-void mmSelectLanguage(wxSQLite3Database* inidb, bool showSelection)
+
+/*
+        locale.AddCatalog(lang) calls wxLogWarning and returns true for corrupted .mo file,
+        so I should use locale.IsLoaded(lang) also.
+*/
+wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database* inidb, bool forced_show_dlg)
 {
-	wxFileName fname(wxTheApp->argv[0]);
-	mmGUIApp* mmApp = dynamic_cast<mmGUIApp*>(wxTheApp);
-	wxASSERT(mmApp);
-	/*******************************************************/
-	/* Select Language */
-    // TODO : Issue with wxWidgets 2.6.2 causes crash when trying to AddCatalog
-    // http://cvs.wxwidgets.org/viewcvs.cgi/wxWindows/src/common/intl.cpp.diff?r1=1.166&r2=1.166.2.1
-    /*******************************************************/
-	wxString langStr = mmDBWrapper::getINISettingValue(inidb, 
-		wxT("LANGUAGE"), wxT("")); 
+        wxString lang;
 
-	wxString langPath = fname.GetPath(wxPATH_GET_VOLUME)
-		+ wxT("//en//");
-#if defined (__WXMAC__) || defined (__WXOSX__)
-	langPath = mmGetBaseWorkingPath() + wxT("/en/");
-#endif
-#if defined (__WXGTK__)
-    mmApp->getLocale().AddCatalogLookupPathPrefix(fname.GetPath(wxPATH_GET_VOLUME));
-#else
-    mmApp->getLocale().AddCatalogLookupPathPrefix(langPath);
-#endif
-	if (langStr == wxT("") || showSelection)
-	{
-		wxArrayString langFileArray;
-		if (wxDir::Exists(langPath))
-		{
-			int num = (int)wxDir::GetAllFiles(langPath, &langFileArray, wxT("*.mo"));
-			if (num > 0)
-			{
-				for (int ix = 0; ix < num; ix++)
-				{
-					wxFileName fname(langFileArray[ix]);
-					wxString name = fname.GetName();
-					langFileArray[ix] = name;
-				}
+        const wxString langPath = mmGetBaseWorkingPath() + wxT("/en");
+        wxLocale &locale = wxGetApp().getLocale();
+        bool verbose = forced_show_dlg;
 
-				langFileArray.Sort(CaseInsensitiveCmp);
+        if (wxDir::Exists(langPath)) {
+                locale.AddCatalogLookupPathPrefix(langPath);
+        } else {
+        	if (verbose) {
+                    wxString s = wxT("Directory of language files does not exist:\n\"");
+                    s << langPath << wxT('\"');
 
-				wxString newLangStr = wxGetSingleChoice
-					(
-					wxT("Please choose language:"),
-					wxT("Language"),
-					langFileArray
-					);
-
-                if (newLangStr != wxT(""))
-                {
-                    if(mmApp->getLocale().AddCatalog(newLangStr) == false) {
-                        ::wxLogMessage(wxT("m_locate Error!"));
-                    }
-
-                    /* Save Language Setting */
-                    mmDBWrapper::setINISettingValue(inidb, wxT("LANGUAGE"), 
-                        newLangStr);
-
-                    mmOptions::language = newLangStr;
+                    wxMessageDialog dlg(parent, s, wxT("Error"), wxICON_ERROR);
+                    dlg.ShowModal();
                 }
-			}
-		}
+
+                return lang;
+        }
+	
+        const wxString param_lang(wxT("LANGUAGE"));
+
+        if (!forced_show_dlg) {
+
+            lang = mmDBWrapper::getINISettingValue(inidb, param_lang);
+            
+            if (!lang.empty() && locale.AddCatalog(lang) && locale.IsLoaded(lang)) {
+                mmOptions::language = lang;
+                return lang;
+            }
+        }
+
+        lang = selectLanguageDlg(parent, langPath, verbose);
+
+	if (!lang.empty()) {
+            
+            bool ok = locale.AddCatalog(lang) && locale.IsLoaded(lang);
+            if (!ok) {
+                lang.clear(); // bad .mo file
+            }
+
+            mmOptions::language = lang;
+            mmDBWrapper::setINISettingValue(inidb, param_lang, lang);
 	}
-	else
-	{
-		/* Previous language found */
-		mmApp->getLocale().AddCatalog(langStr);
-        mmOptions::language = langStr;
-	}
+
+        return lang;
 }
 
 wxString mmReadyDisplayString(const wxString& orig)
@@ -272,44 +290,38 @@ wxString mmUnCleanString(const wxString& orig)
 
 wxString mmGetNiceMonthName(int month)
 {
-    const wxString gMonthsInYear[12] =
-    {
-		_("January"), _("February"), _("March"), _("April"), _("May"), _("June"),
-		_("July"), _("August"), _("September"), _("October"), _("November"), _("December")
-	};
+    static const wxString mon[12] = {
+      _("January"), _("February"), _("March"), _("April"), _("May"), _("June"),
+      _("July"), _("August"), _("September"), _("October"), _("November"), _("December")
+    };
 
-    return gMonthsInYear[month];
+    wxASSERT(month >= 0 && month < 12);
+    return mon[month];
 }
 
 wxString mmGetNiceShortMonthName(int month)
 {
-    const wxString gMonthsInYear[12] =
-    {
-		_("Jan"), _("Feb"), _("Mar"), _("Apr"), _("May"), _("Jun"),
-		_("Jul"), _("Aug"), _("Sep"), _("Oct"), _("Nov"), _("Dec")
-	};
+    static const wxString mon[12] = {
+      _("Jan"), _("Feb"), _("Mar"), _("Apr"), _("May"), _("Jun"),
+      _("Jul"), _("Aug"), _("Sep"), _("Oct"), _("Nov"), _("Dec")
+    };
 
-    return gMonthsInYear[month];
+    wxASSERT(month >= 0 && month < 12);
+    return mon[month];
 }
 
 wxString mmGetNiceDateString(wxDateTime dt)
 {
-#if 0
-    return dt.Format(wxT("%A, %B %d, %Y"));
-#endif
-
-
-    const wxString gDaysInWeek[7] =
-	{
-		_("Sunday"), _("Monday"), _("Tuesday"), _("Wednesday"),
-		_("Thursday"), _("Friday"), _("Saturday")
-	};
+    static const wxString gDaysInWeek[7] = {
+      _("Sunday"), _("Monday"), _("Tuesday"), _("Wednesday"),
+      _("Thursday"), _("Friday"), _("Saturday")
+    };
 	
-	wxString dts(gDaysInWeek[dt.GetWeekDay()] + wxString(wxT(", ")));
+    wxString dts(gDaysInWeek[dt.GetWeekDay()] + wxString(wxT(", ")));
     dts += mmGetNiceMonthName(dt.GetMonth()) + wxString(wxT(" "));
-    dts += wxString::Format(wxT("%d"), dt.GetDay()) + wxT(", ") 
-        + wxString::Format(wxT("%d"), dt.GetYear());
-	return dts;    
+    dts += wxString::Format(wxT("%d"), dt.GetDay()) + wxT(", ") + wxString::Format(wxT("%d"), dt.GetYear());
+
+    return dts;    
 }
 
 wxString mmGetNiceDateSimpleString(wxDateTime dt)
