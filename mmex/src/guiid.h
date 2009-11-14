@@ -49,6 +49,15 @@ enum
     MENU_OPEN,
     MENU_SAVE,
     MENU_SAVE_AS,
+	//Keep this block in order ---
+	MENU_RECENT,				//
+	MENU_RECENT_1,				//
+	MENU_RECENT_2,				//
+	MENU_RECENT_3,				//
+	MENU_RECENT_4,				//
+	MENU_RECENT_5,				//
+	MENU_RECENT_CLEAR,			//
+	//----------------------------
     MENU_EXPORT,
     MENU_QUIT,
     MENU_ABOUT,
