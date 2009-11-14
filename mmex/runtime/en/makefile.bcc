@@ -19,6 +19,16 @@ BCCDIR = $(MAKEDIR)\..
 # These are configurable options:
 # -------------------------------------------------------------------------
 
+# The common installation prefix for header, data and library files 
+!ifndef PREFIX
+PREFIX = C:\opt
+!endif
+
+# The common installation prefix for binary and DLL files 
+!ifndef EXEC_PREFIX
+EXEC_PREFIX = C:\opt\bin
+!endif
+
 
 
 # -------------------------------------------------------------------------
@@ -35,6 +45,10 @@ BCCDIR = $(MAKEDIR)\..
 ### Targets: ###
 
 all: arabic.mo bulgarian.mo chinese_chs.mo chinese_zh.mo croatian.mo czech.mo dutch.mo dutch_be.mo english-uk.mo english.mo french.mo german.mo greek.mo hebrew.mo hungarian.mo indonesian.mo italian.mo latvian.mo norwegian.mo polish.mo portuguese.mo portuguese_portugal.mo romanian.mo russian.mo serbo-croatian.mo slovak.mo Slovenian.mo spanish.mo swedish.mo tamil.mo turkish.mo ukrainian.mo vietnamese.mo
+
+install: 
+
+uninstall: 
 
 clean: 
 	-if exist .\*.obj del .\*.obj

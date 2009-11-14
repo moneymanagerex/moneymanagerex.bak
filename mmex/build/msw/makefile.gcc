@@ -12,7 +12,8 @@ include config.gcc
 
 ### Variables: ###
 
-MAKEARGS = LINK_DLL_FLAGS="$(LINK_DLL_FLAGS)" \
+MAKEARGS = PREFIX="$(PREFIX)" EXEC_PREFIX="$(EXEC_PREFIX)" \
+	LINK_DLL_FLAGS="$(LINK_DLL_FLAGS)" \
 	LINK_MODULE_FLAGS="$(LINK_MODULE_FLAGS)" CC="$(CC)" CXX="$(CXX)" \
 	CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" CPPFLAGS="$(CPPFLAGS)" \
 	LDFLAGS="$(LDFLAGS)" WX_DIR="$(WX_DIR)" WX_SHARED="$(WX_SHARED)" \
@@ -267,6 +268,43 @@ gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 
 all: gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\libsqlite3.a gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe i18n
 
+install: install_mmex
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  *.txt $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  currency.db3 $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  kaching.wav $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  mmex.ico $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  splash.png $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex\help
+	( cd ..\..\docs && copy /Y  *.html $(PREFIX)\mmex\help )
+	-mkdir $(PREFIX)\mmex\help
+	( cd ..\..\docs && copy /Y  *.png $(PREFIX)\mmex\help )
+	-mkdir $(PREFIX)\mmex\help
+	( cd ..\..\docs && copy /Y  *.jpg $(PREFIX)\mmex\help )
+	-mkdir $(PREFIX)\mmex\help\index_fichiers
+	( cd ..\..\docs\index_fichiers && copy /Y  *.png $(PREFIX)\mmex\help\index_fichiers )
+	-mkdir $(PREFIX)\mmex\en
+	( cd ..\..\runtime\en && copy /Y  *.po $(PREFIX)\mmex\en )
+	-mkdir $(PREFIX)\mmex\en
+	( cd ..\..\runtime\en && copy /Y  *.mo $(PREFIX)\mmex\en )
+
+uninstall: uninstall_mmex
+	-if exist $(PREFIX)\mmex\*.txt -del *.txt
+	-if exist $(PREFIX)\mmex\currency.db3 -del currency.db3
+	-if exist $(PREFIX)\mmex\kaching.wav -del kaching.wav
+	-if exist $(PREFIX)\mmex\mmex.ico -del mmex.ico
+	-if exist $(PREFIX)\mmex\splash.png -del splash.png
+	-if exist $(PREFIX)\mmex\help\*.html -del *.html
+	-if exist $(PREFIX)\mmex\help\*.png -del *.png
+	-if exist $(PREFIX)\mmex\help\*.jpg -del *.jpg
+	-if exist $(PREFIX)\mmex\help\index_fichiers\*.png -del *.png
+	-if exist $(PREFIX)\mmex\en\*.po -del *.po
+	-if exist $(PREFIX)\mmex\en\*.mo -del *.mo
+
 clean: 
 	-if exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.o del gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.o
 	-if exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.d del gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.d
@@ -283,6 +321,13 @@ gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 
 gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe: $(MMEX_OBJECTS) gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\libsqlite3.a gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_resources_mmex_rc.o
 	$(CXX) -o $@ $(MMEX_OBJECTS)  -L$(WX_DIR)\lib\gcc$(____mmex_CPU_SUF_FILENAMES)$(____mmex_LIB_SUF_FILENAMES) -mthreads -L$(WX_DIR)$(WXLIBPATH) -mthreads $(__DEBUGINFO) -Wl,--subsystem,windows -mwindows $(LDFLAGS)  $(__WXLIB_CORE_NAME_p) $(__WXLIB_QA_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_ADV_NAME_p) $(__WXLIB_BASE_NAME_p) -lwxtiff$(WX3RDPARTYLIBPOSTFIX) -lwxjpeg$(WX3RDPARTYLIBPOSTFIX) -lwxpng$(WX3RDPARTYLIBPOSTFIX) -lwxzlib$(WX3RDPARTYLIBPOSTFIX) -lwxregex$(WXLIBPOSTFIX) -lwxexpat$(WX3RDPARTYLIBPOSTFIX) -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32 gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\libsqlite3.a
+
+install_mmex: gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe
+	-mkdir $(PREFIX)\mmex
+	copy /Y gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe $(PREFIX)\mmex
+
+uninstall_mmex: 
+	-del $(PREFIX)\mmex\mmex.exe
 
 i18n: 
 	$(MAKE) -C ..\..\runtime\en -f makefile.gcc $(MAKEARGS) all
@@ -458,7 +503,7 @@ gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_resources_mmex_rc.o: ../../resources/mmex.rc
 	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include $(__DEBUG_DEFINE_p_2) --include-dir ../../include --include-dir ../../sqlite --define NOPCH --define WXSQLITE3_HAVE_CODEC --define WXSQLITE3_HAVE_METADATA --define TIXML_USE_STL
 
-.PHONY: all clean i18n setup check
+.PHONY: all install uninstall clean install_mmex uninstall_mmex i18n setup check
 
 
 SHELL := $(COMSPEC)

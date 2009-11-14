@@ -12,7 +12,8 @@
 
 ### Variables: ###
 
-MAKEARGS = CC="$(CC)" CXX="$(CXX)" CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
+MAKEARGS = PREFIX="$(PREFIX)" EXEC_PREFIX="$(EXEC_PREFIX)" CC="$(CC)" \
+	CXX="$(CXX)" CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
 	CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)" WX_DIR="$(WX_DIR)" \
 	WX_SHARED="$(WX_SHARED)" WX_UNICODE="$(WX_UNICODE)" WX_DEBUG="$(WX_DEBUG)" \
 	WX_VERSION="$(WX_VERSION)" WX_MONOLITHIC="$(WX_MONOLITHIC)" \
@@ -310,6 +311,43 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH):
 
 all: vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite3.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe sub_i18n
 
+install: install_mmex
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  *.txt $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  currency.db3 $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  kaching.wav $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  mmex.ico $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  splash.png $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex\help
+	( cd ..\..\docs && copy /Y  *.html $(PREFIX)\mmex\help )
+	-mkdir $(PREFIX)\mmex\help
+	( cd ..\..\docs && copy /Y  *.png $(PREFIX)\mmex\help )
+	-mkdir $(PREFIX)\mmex\help
+	( cd ..\..\docs && copy /Y  *.jpg $(PREFIX)\mmex\help )
+	-mkdir $(PREFIX)\mmex\help\index_fichiers
+	( cd ..\..\docs\index_fichiers && copy /Y  *.png $(PREFIX)\mmex\help\index_fichiers )
+	-mkdir $(PREFIX)\mmex\en
+	( cd ..\..\runtime\en && copy /Y  *.po $(PREFIX)\mmex\en )
+	-mkdir $(PREFIX)\mmex\en
+	( cd ..\..\runtime\en && copy /Y  *.mo $(PREFIX)\mmex\en )
+
+uninstall: uninstall_mmex
+	-if exist $(PREFIX)\mmex\*.txt -del *.txt
+	-if exist $(PREFIX)\mmex\currency.db3 -del currency.db3
+	-if exist $(PREFIX)\mmex\kaching.wav -del kaching.wav
+	-if exist $(PREFIX)\mmex\mmex.ico -del mmex.ico
+	-if exist $(PREFIX)\mmex\splash.png -del splash.png
+	-if exist $(PREFIX)\mmex\help\*.html -del *.html
+	-if exist $(PREFIX)\mmex\help\*.png -del *.png
+	-if exist $(PREFIX)\mmex\help\*.jpg -del *.jpg
+	-if exist $(PREFIX)\mmex\help\index_fichiers\*.png -del *.png
+	-if exist $(PREFIX)\mmex\en\*.po -del *.po
+	-if exist $(PREFIX)\mmex\en\*.mo -del *.mo
+
 clean: 
 	-if exist vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.obj del vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.obj
 	-if exist vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.res del vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.res
@@ -339,6 +377,13 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 	$(MMEX_OBJECTS) $(MMEX_RESOURCES)  $(__WXLIB_CORE_NAME_p) $(__WXLIB_QA_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_ADV_NAME_p) $(__WXLIB_BASE_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite3.lib
 <<
 	mt.exe -manifest "vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe.manifest" -outputresource:"vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe";1
+
+install_mmex: vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe
+	-mkdir $(PREFIX)\mmex
+	copy /Y vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe $(PREFIX)\mmex
+
+uninstall_mmex: 
+	-del $(PREFIX)\mmex\mmex.exe
 
 sub_i18n: 
 	cd ..\..\runtime\en

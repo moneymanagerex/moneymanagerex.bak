@@ -10,6 +10,12 @@
 # These are configurable options:
 # -------------------------------------------------------------------------
 
+# The common installation prefix for header, data and library files 
+PREFIX ?= C:\opt
+
+# The common installation prefix for binary and DLL files 
+EXEC_PREFIX ?= C:\opt\bin
+
 
 
 # -------------------------------------------------------------------------
@@ -27,6 +33,10 @@
 
 all: mmex
 
+install: 
+
+uninstall: 
+
 clean: 
 	-if exist .\*.o del .\*.o
 	-if exist .\*.d del .\*.d
@@ -36,7 +46,7 @@ mmex: mmex.iss
 	-"..\..\tools\upx.exe" --best "$(APP_EXE_PATH)"
 	iscc.exe mmex.iss -dAppExePath="$(APP_EXE_PATH)" -dBuildOpts="$(BUILD_OPTS)" -dCpuArch="$(CPU_ARCH)" -dCrtDlls="$(CRT_DLLS)" -dFormat="$(FORMAT)"
 
-.PHONY: all clean mmex
+.PHONY: all install uninstall clean mmex
 
 
 SHELL := $(COMSPEC)

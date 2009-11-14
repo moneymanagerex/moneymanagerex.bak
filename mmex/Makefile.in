@@ -19,6 +19,7 @@ PIC_FLAG = @PIC_FLAG@
 STRIP = @STRIP@
 NM = @NM@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
 INSTALL_DIR = @INSTALL_DIR@
 BK_DEPS = @BK_DEPS@
 srcdir = @srcdir@
@@ -122,11 +123,23 @@ COND_PLATFORM_OS2_1___mmex___os2_emxbindcmd = $(NM) mmex$(EXEEXT) | if grep -q \
 all: $(LIBPREFIX)sqlite3$(LIBEXT) mmex$(EXEEXT) i18n
 
 install: install_mmex
+	$(INSTALL_DIR) $(DESTDIR)$(prefix)/mmex
+	(cd $(srcdir)/runtime ; $(INSTALL_DATA)  *.txt currency.db3 kaching.wav mmex.ico splash.png $(DESTDIR)$(prefix)/mmex)
+	$(INSTALL_DIR) $(DESTDIR)$(prefix)/mmex/help
+	(cd $(srcdir)/docs ; $(INSTALL_DATA)  *.html *.jpg *.png $(DESTDIR)$(prefix)/mmex/help)
+	$(INSTALL_DIR) $(DESTDIR)$(prefix)/mmex/help/index_fichiers
+	(cd $(srcdir)/docs/index_fichiers ; $(INSTALL_DATA)  * $(DESTDIR)$(prefix)/mmex/help/index_fichiers)
+	$(INSTALL_DIR) $(DESTDIR)$(prefix)/mmex/en
+	(cd $(srcdir)/runtime/en ; $(INSTALL_DATA)  *.po *.mo $(DESTDIR)$(prefix)/mmex/en)
 
 uninstall: uninstall_mmex
+	(cd $(DESTDIR)$(prefix)/mmex ; rm -f *.txt currency.db3 kaching.wav mmex.ico splash.png)
+	(cd $(DESTDIR)$(prefix)/mmex/help ; rm -f *.html *.jpg *.png)
+	(cd $(DESTDIR)$(prefix)/mmex/help/index_fichiers ; rm -f *)
+	(cd $(DESTDIR)$(prefix)/mmex/en ; rm -f *.po *.mo)
 
 install-strip: install
-	$(STRIP) $(DESTDIR)/mmex$(EXEEXT)
+	$(STRIP) $(DESTDIR)$(prefix)/mmex/mmex$(EXEEXT)
 
 clean: 
 	rm -rf ./.deps ./.pch
@@ -155,11 +168,11 @@ mmex$(EXEEXT): $(MMEX_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(__mmex___win32rc)
 	$(__mmex___os2_emxbindcmd)
 
 install_mmex: mmex$(EXEEXT)
-	$(INSTALL_DIR) $(DESTDIR)
-	$(INSTALL_PROGRAM) mmex$(EXEEXT) $(DESTDIR)
+	$(INSTALL_DIR) $(DESTDIR)$(prefix)/mmex
+	$(INSTALL_PROGRAM) mmex$(EXEEXT) $(DESTDIR)$(prefix)/mmex
 
 uninstall_mmex: 
-	rm -f $(DESTDIR)/mmex$(EXEEXT)
+	rm -f $(DESTDIR)$(prefix)/mmex/mmex$(EXEEXT)
 
 i18n: 
 	(cd $(srcdir)/runtime/en && $(MAKE) all)
