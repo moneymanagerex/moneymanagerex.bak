@@ -25,10 +25,10 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -53,7 +53,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -63,7 +63,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -86,10 +86,10 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -114,7 +114,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -124,7 +124,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -147,10 +147,10 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -175,7 +175,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -185,7 +185,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -208,10 +208,10 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -236,7 +236,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -246,7 +246,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -269,10 +269,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -301,7 +300,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -311,7 +310,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -334,10 +333,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -366,7 +364,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -376,7 +374,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -399,10 +397,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -431,7 +428,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -441,7 +438,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -464,10 +461,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -496,7 +492,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -506,7 +502,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -530,10 +526,10 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -558,7 +554,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -568,7 +564,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -592,10 +588,10 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -620,7 +616,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -630,7 +626,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -654,10 +650,10 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -682,7 +678,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -692,7 +688,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -716,10 +712,10 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -744,7 +740,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -754,7 +750,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -778,10 +774,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -810,7 +805,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -820,7 +815,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -844,10 +839,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -876,7 +870,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -886,7 +880,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -910,10 +904,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -942,7 +935,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -952,7 +945,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -976,10 +969,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -1008,7 +1000,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1018,7 +1010,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1041,10 +1033,10 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -1069,7 +1061,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1079,7 +1071,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1102,10 +1094,10 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -1130,7 +1122,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1140,7 +1132,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1163,10 +1155,10 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -1191,7 +1183,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1201,7 +1193,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1224,10 +1216,10 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -1252,7 +1244,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1262,7 +1254,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1285,10 +1277,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -1317,7 +1308,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1327,7 +1318,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1350,10 +1341,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -1382,7 +1372,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1392,7 +1382,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1415,10 +1405,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -1447,7 +1436,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1457,7 +1446,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1480,10 +1469,9 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -1512,7 +1500,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1522,7 +1510,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1546,10 +1534,10 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -1574,7 +1562,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1584,7 +1572,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1608,10 +1596,10 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -1636,7 +1624,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1646,7 +1634,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1670,10 +1658,10 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -1698,7 +1686,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1708,7 +1696,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1732,10 +1720,10 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA /Zi"
+				AdditionalOptions="/Zi"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
@@ -1760,7 +1748,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1770,7 +1758,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1794,10 +1782,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -1826,7 +1813,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1836,7 +1823,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1860,10 +1847,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -1892,7 +1878,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1902,7 +1888,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1926,10 +1912,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -1958,7 +1943,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1968,7 +1953,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
@@ -1992,10 +1977,9 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
@@ -2024,7 +2008,7 @@
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -2034,7 +2018,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_CONSOLE"
+				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;WXSQLITE3_HAVE_CODEC;WXSQLITE3_HAVE_METADATA;TIXML_USE_STL;_CONSOLE"
 				Culture="1033"
 				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;..\..\..\include;..\..\..\sqlite;..\..\..\src;..\..\..\UnitTest++\src"/>
 			<Tool

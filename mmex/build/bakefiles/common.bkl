@@ -195,7 +195,12 @@ PATH. Accepted values: AMD64, IA64.
         <define>NOPCH</define>
 
     	<!-- flags for wxSQLite3 -->
-        <cxxflags>-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA</cxxflags>
+        <define>WXSQLITE3_HAVE_CODEC</define>
+        <define>WXSQLITE3_HAVE_METADATA</define>
+
+    	<!-- flags for TinyXml -->
+        <define>TIXML_USE_STL</define>
+
 
     	<!-- relative to trunk/mmex -->
 

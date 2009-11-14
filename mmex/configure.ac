@@ -26,6 +26,7 @@ AC_PROG_CC
 AC_PROG_CXXCPP
 AC_PROG_CPP
 AC_PROG_RANLIB
+AC_PROG_INSTALL
 #AC_PROG_LIBTOOL
 
 ##########################################################################
