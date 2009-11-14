@@ -174,41 +174,42 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 [Files]
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
-#define lang_dir "{app}\en"
+#define lang_src "..\..\i18n"
+#define lang_dst "{app}\i18n"
 
-Source: "..\..\i18n\english.*";          DestDir: {#lang_dir}; Components: "lang\en";             Flags: ignoreversion
-Source: "..\..\i18n\arabic.*";           DestDir: {#lang_dir}; Components: "lang\arabic";         Flags: ignoreversion
-Source: "..\..\i18n\bulgarian.*";        DestDir: {#lang_dir}; Components: "lang\bulgarian";      Flags: ignoreversion
-Source: "..\..\i18n\chinese_chs.*";      DestDir: {#lang_dir}; Components: "lang\chinese_chs";    Flags: ignoreversion
-Source: "..\..\i18n\chinese_zh.*";       DestDir: {#lang_dir}; Components: "lang\chinese_zh";     Flags: ignoreversion
-Source: "..\..\i18n\croatian.*";         DestDir: {#lang_dir}; Components: "lang\croatian";       Flags: ignoreversion
-Source: "..\..\i18n\czech.*";            DestDir: {#lang_dir}; Components: "lang\cs";             Flags: ignoreversion
-Source: "..\..\i18n\dutch.*";            DestDir: {#lang_dir}; Components: "lang\nl";             Flags: ignoreversion
-Source: "..\..\i18n\dutch_be.*";         DestDir: {#lang_dir}; Components: "lang\dutch_be";       Flags: ignoreversion
-Source: "..\..\i18n\english-uk.*";       DestDir: {#lang_dir}; Components: "lang\english_uk";     Flags: ignoreversion
-Source: "..\..\i18n\french.*";           DestDir: {#lang_dir}; Components: "lang\fr";             Flags: ignoreversion
-Source: "..\..\i18n\german.*";           DestDir: {#lang_dir}; Components: "lang\de";             Flags: ignoreversion
-Source: "..\..\i18n\greek.*";            DestDir: {#lang_dir}; Components: "lang\greek";          Flags: ignoreversion
-Source: "..\..\i18n\hebrew.*";           DestDir: {#lang_dir}; Components: "lang\he";             Flags: ignoreversion
-Source: "..\..\i18n\hungarian.*";        DestDir: {#lang_dir}; Components: "lang\hu";             Flags: ignoreversion
-Source: "..\..\i18n\indonesian.*";       DestDir: {#lang_dir}; Components: "lang\indonesian";     Flags: ignoreversion
-Source: "..\..\i18n\italian.*";          DestDir: {#lang_dir}; Components: "lang\it";             Flags: ignoreversion
-Source: "..\..\i18n\latvian.*";          DestDir: {#lang_dir}; Components: "lang\latvian";        Flags: ignoreversion
-Source: "..\..\i18n\norwegian.*";        DestDir: {#lang_dir}; Components: "lang\no";             Flags: ignoreversion
-Source: "..\..\i18n\polish.*";           DestDir: {#lang_dir}; Components: "lang\pl";             Flags: ignoreversion
-Source: "..\..\i18n\portuguese.*";       DestDir: {#lang_dir}; Components: "lang\pt";             Flags: ignoreversion
-Source: "..\..\i18n\portuguese_portugal.*"; DestDir: {#lang_dir}; Components: "lang\portuguese_portugal"; Flags: ignoreversion
-Source: "..\..\i18n\romanian.*";         DestDir: {#lang_dir}; Components: "lang\romanian";       Flags: ignoreversion
-Source: "..\..\i18n\russian.*";          DestDir: {#lang_dir}; Components: "lang\ru";             Flags: ignoreversion
-Source: "..\..\i18n\serbo-croatian.*";   DestDir: {#lang_dir}; Components: "lang\serbo_croatian"; Flags: ignoreversion
-Source: "..\..\i18n\slovak.*";           DestDir: {#lang_dir}; Components: "lang\sk";             Flags: ignoreversion
-Source: "..\..\i18n\Slovenian.*";        DestDir: {#lang_dir}; Components: "lang\sl";             Flags: ignoreversion
-Source: "..\..\i18n\spanish.*";          DestDir: {#lang_dir}; Components: "lang\es";             Flags: ignoreversion
-Source: "..\..\i18n\swedish.*";          DestDir: {#lang_dir}; Components: "lang\swedish";       Flags: ignoreversion
-Source: "..\..\i18n\tamil.*";            DestDir: {#lang_dir}; Components: "lang\tamil";         Flags: ignoreversion
-Source: "..\..\i18n\turkish.*";          DestDir: {#lang_dir}; Components: "lang\turkish";       Flags: ignoreversion
-Source: "..\..\i18n\ukrainian.*";        DestDir: {#lang_dir}; Components: "lang\ukrainian";     Flags: ignoreversion
-Source: "..\..\i18n\vietnamese.*";       DestDir: {#lang_dir}; Components: "lang\vietnamese";    Flags: ignoreversion
+Source: "{#lang_src}\english.*";          DestDir: {#lang_dst}; Components: "lang\en";             Flags: ignoreversion
+Source: "{#lang_src}\arabic.*";           DestDir: {#lang_dst}; Components: "lang\arabic";         Flags: ignoreversion
+Source: "{#lang_src}\bulgarian.*";        DestDir: {#lang_dst}; Components: "lang\bulgarian";      Flags: ignoreversion
+Source: "{#lang_src}\chinese_chs.*";      DestDir: {#lang_dst}; Components: "lang\chinese_chs";    Flags: ignoreversion
+Source: "{#lang_src}\chinese_zh.*";       DestDir: {#lang_dst}; Components: "lang\chinese_zh";     Flags: ignoreversion
+Source: "{#lang_src}\croatian.*";         DestDir: {#lang_dst}; Components: "lang\croatian";       Flags: ignoreversion
+Source: "{#lang_src}\czech.*";            DestDir: {#lang_dst}; Components: "lang\cs";             Flags: ignoreversion
+Source: "{#lang_src}\dutch.*";            DestDir: {#lang_dst}; Components: "lang\nl";             Flags: ignoreversion
+Source: "{#lang_src}\dutch_be.*";         DestDir: {#lang_dst}; Components: "lang\dutch_be";       Flags: ignoreversion
+Source: "{#lang_src}\english-uk.*";       DestDir: {#lang_dst}; Components: "lang\english_uk";     Flags: ignoreversion
+Source: "{#lang_src}\french.*";           DestDir: {#lang_dst}; Components: "lang\fr";             Flags: ignoreversion
+Source: "{#lang_src}\german.*";           DestDir: {#lang_dst}; Components: "lang\de";             Flags: ignoreversion
+Source: "{#lang_src}\greek.*";            DestDir: {#lang_dst}; Components: "lang\greek";          Flags: ignoreversion
+Source: "{#lang_src}\hebrew.*";           DestDir: {#lang_dst}; Components: "lang\he";             Flags: ignoreversion
+Source: "{#lang_src}\hungarian.*";        DestDir: {#lang_dst}; Components: "lang\hu";             Flags: ignoreversion
+Source: "{#lang_src}\indonesian.*";       DestDir: {#lang_dst}; Components: "lang\indonesian";     Flags: ignoreversion
+Source: "{#lang_src}\italian.*";          DestDir: {#lang_dst}; Components: "lang\it";             Flags: ignoreversion
+Source: "{#lang_src}\latvian.*";          DestDir: {#lang_dst}; Components: "lang\latvian";        Flags: ignoreversion
+Source: "{#lang_src}\norwegian.*";        DestDir: {#lang_dst}; Components: "lang\no";             Flags: ignoreversion
+Source: "{#lang_src}\polish.*";           DestDir: {#lang_dst}; Components: "lang\pl";             Flags: ignoreversion
+Source: "{#lang_src}\portuguese.*";       DestDir: {#lang_dst}; Components: "lang\pt";             Flags: ignoreversion
+Source: "{#lang_src}\portuguese_portugal.*"; DestDir: {#lang_dst}; Components: "lang\portuguese_portugal"; Flags: ignoreversion
+Source: "{#lang_src}\romanian.*";         DestDir: {#lang_dst}; Components: "lang\romanian";       Flags: ignoreversion
+Source: "{#lang_src}\russian.*";          DestDir: {#lang_dst}; Components: "lang\ru";             Flags: ignoreversion
+Source: "{#lang_src}\serbo-croatian.*";   DestDir: {#lang_dst}; Components: "lang\serbo_croatian"; Flags: ignoreversion
+Source: "{#lang_src}\slovak.*";           DestDir: {#lang_dst}; Components: "lang\sk";             Flags: ignoreversion
+Source: "{#lang_src}\Slovenian.*";        DestDir: {#lang_dst}; Components: "lang\sl";             Flags: ignoreversion
+Source: "{#lang_src}\spanish.*";          DestDir: {#lang_dst}; Components: "lang\es";             Flags: ignoreversion
+Source: "{#lang_src}\swedish.*";          DestDir: {#lang_dst}; Components: "lang\swedish";       Flags: ignoreversion
+Source: "{#lang_src}\tamil.*";            DestDir: {#lang_dst}; Components: "lang\tamil";         Flags: ignoreversion
+Source: "{#lang_src}\turkish.*";          DestDir: {#lang_dst}; Components: "lang\turkish";       Flags: ignoreversion
+Source: "{#lang_src}\ukrainian.*";        DestDir: {#lang_dst}; Components: "lang\ukrainian";     Flags: ignoreversion
+Source: "{#lang_src}\vietnamese.*";       DestDir: {#lang_dst}; Components: "lang\vietnamese";    Flags: ignoreversion
 
 #define help_dir "{app}\help"
 
