@@ -60,9 +60,9 @@ UNITTESTPP_OBJECTS =  \
 	UnitTestPP_SignalTranslator.o \
 	UnitTestPP_TimeHelpers.o
 MMEX_TESTS_CXXFLAGS = -I$(srcdir)/../../include -I$(srcdir)/../../sqlite \
-	-DNOPCH -I$(srcdir)/../../src -I$(srcdir)/../../UnitTest++/src \
-	-DIMPLEMENT_WXWIN_MAIN= $(WX_CXXFLAGS) $(PIC_FLAG) -DWXSQLITE3_HAVE_CODEC \
-	-DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
+	-DNOPCH -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA -DTIXML_USE_STL \
+	-I$(srcdir)/../../src -I$(srcdir)/../../UnitTest++/src \
+	-DIMPLEMENT_WXWIN_MAIN= $(WX_CXXFLAGS) $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
 	mmex_tests_aboutdialog.o \
 	mmex_tests_appstartdialog.o \
@@ -399,7 +399,7 @@ mmex_tests_utils.o: $(srcdir)/../../src/tests/utils.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/utils.cpp
 
 mmex_tests_mmex_tests_rc.o: $(srcdir)/../../src/tests/mmex_tests.rc
-	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../sqlite --define NOPCH --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../UnitTest++/src --define IMPLEMENT_WXWIN_MAIN=
+	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../sqlite --define NOPCH --define WXSQLITE3_HAVE_CODEC --define WXSQLITE3_HAVE_METADATA --define TIXML_USE_STL --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../UnitTest++/src --define IMPLEMENT_WXWIN_MAIN=
 
 
 # Include dependency info, if present:

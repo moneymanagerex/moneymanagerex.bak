@@ -51,8 +51,8 @@ MMEX_TESTS_CXXFLAGS = -I$(BCCDIR)\include $(__WXUNICODE_DEFINE_p) \
 	-I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
 	-I$(WX_DIR)\include -tWM $(__DEBUGINFO) $(__OPTIMIZEFLAG) \
 	$(__DEBUG_DEFINE_p) -I..\..\..\include -I..\..\..\sqlite -DNOPCH \
-	-I..\..\..\src -I..\..\..\UnitTest++\src -DWXSQLITE3_HAVE_CODEC \
-	-DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) $(CXXFLAGS)
+	-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA -DTIXML_USE_STL \
+	-I..\..\..\src -I..\..\..\UnitTest++\src $(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_aboutdialog.obj \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_appstartdialog.obj \
@@ -511,5 +511,5 @@ bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 	$(CXX) -q -c -P -o$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\tests\utils.cpp
 
 bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_mmex_tests.res: ..\..\..\src\tests\mmex_tests.rc
-	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) -d__WXMSW__ -i$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) -i$(WX_DIR)\include $(__DEBUG_DEFINE_p_3) -i..\..\..\include -i..\..\..\sqlite -dNOPCH -i..\..\..\src -i..\..\..\UnitTest++\src ..\..\..\src\tests\mmex_tests.rc
+	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) -d__WXMSW__ -i$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) -i$(WX_DIR)\include $(__DEBUG_DEFINE_p_3) -i..\..\..\include -i..\..\..\sqlite -dNOPCH -dWXSQLITE3_HAVE_CODEC -dWXSQLITE3_HAVE_METADATA -dTIXML_USE_STL -i..\..\..\src -i..\..\..\UnitTest++\src ..\..\..\src\tests\mmex_tests.rc
 

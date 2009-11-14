@@ -44,9 +44,9 @@ SQLITE3_CFLAGS = $(PIC_FLAG) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
 	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
 SQLITE3_OBJECTS =  \
 	sqlite3_sqlite3secure.o
-MMEX_CXXFLAGS = -I$(srcdir)/include -I$(srcdir)/sqlite -DNOPCH $(WX_CXXFLAGS) \
-	$(PIC_FLAG) -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA $(CPPFLAGS) \
-	$(CXXFLAGS)
+MMEX_CXXFLAGS = -I$(srcdir)/include -I$(srcdir)/sqlite -DNOPCH \
+	-DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA -DTIXML_USE_STL \
+	$(WX_CXXFLAGS) $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
 	mmex_aboutdialog.o \
 	mmex_appstartdialog.o \
@@ -333,7 +333,7 @@ mmex_yahoosettingsdialog.o: $(srcdir)/src/yahoosettingsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/yahoosettingsdialog.cpp
 
 mmex_resources_mmex_rc.o: $(srcdir)/resources/mmex.rc
-	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/include --include-dir $(srcdir)/sqlite --define NOPCH
+	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/include --include-dir $(srcdir)/sqlite --define NOPCH --define WXSQLITE3_HAVE_CODEC --define WXSQLITE3_HAVE_METADATA --define TIXML_USE_STL
 
 
 # Include dependency info, if present:
