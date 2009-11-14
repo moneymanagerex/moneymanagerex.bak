@@ -221,7 +221,13 @@ Source: "..\..\docs\french-help.html";  Languages: fr; DestName: "index.html"; D
 Source: "..\..\docs\index_fichiers\*";  Languages: fr; DestDir: "{#help_dir}\index_fichiers"; Components: help; Flags: ignoreversion
 Source: "..\..\docs\italian-help.html"; Languages: it; DestName: "index.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
 
-Source: "..\..\runtime\*"; DestDir: "{app}"; Components: program; Flags: ignoreversion
+Source: "..\..\runtime\contrib.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
+Source: "..\..\runtime\license.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
+Source: "..\..\runtime\version.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
+Source: "..\..\runtime\currency.db3";DestDir: "{app}"; Components: program; Flags: ignoreversion
+Source: "..\..\runtime\kaching.wav"; DestDir: "{app}"; Components: program; Flags: ignoreversion
+Source: "..\..\runtime\mmex.ico";    DestDir: "{app}"; Components: program; Flags: ignoreversion
+Source: "..\..\runtime\splash.png";  DestDir: "{app}"; Components: program; Flags: ignoreversion
 ; .exe already compressed by UPX
 Source: {#AppExePath}; DestDir: "{app}"; Components: program; Flags: ignoreversion nocompression
 Source: {#CrtDlls}; DestDir: "{app}"; Components: program; Flags: ignoreversion
