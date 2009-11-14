@@ -1076,7 +1076,19 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(transactionList, 
         new mmTreeItemData(wxT("Transaction Report")));
     ///////////////////////////////////////////////////////////////////
-    wxTreeItemId budgetPerformance;
+    
+	static const char sql[] = 
+    "select * from BUDGETYEAR_V1";
+	
+	
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    //st.Bind(1, transID_);
+	
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    if (q1.NextRow())
+    {
+	
+	wxTreeItemId budgetPerformance;
     if (mmIniOptions::enableBudget_)
     {
         budgetPerformance = navTreeCtrl_->AppendItem(reports, 
@@ -1093,7 +1105,37 @@ void mmGUIFrame::updateNavTreeControl()
         navTreeCtrl_->SetItemData(budgetSetupPerformance, 
             new mmTreeItemData(wxT("Budget Setup Performance")));
     }
-     ///////////////////////////////////////////////////////////////////
+		if (mmIniOptions::enableBudget_)
+		{
+			static const char sql[] =
+			"select BUDGETYEARID, BUDGETYEARNAME "
+			"from BUDGETYEAR_V1 "
+			"order by BUDGETYEARNAME";
+			
+			wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(sql);
+			
+			while (q1.NextRow())
+			{
+				int id = q1.GetInt(wxT("BUDGETYEARID"));
+				const wxString name = q1.GetString(wxT("BUDGETYEARNAME"));
+				
+				wxTreeItemId bYear = navTreeCtrl_->AppendItem(budgeting, name, 3, 3);
+				navTreeCtrl_->SetItemData(bYear, new mmTreeItemData(id, true));
+				
+				wxTreeItemId bYearData = navTreeCtrl_->AppendItem(budgetPerformance, name, 4, 4);
+				navTreeCtrl_->SetItemData(bYearData, new mmTreeItemData(id, true));
+				
+				wxTreeItemId bYearSetupData = navTreeCtrl_->AppendItem(budgetSetupPerformance, name, 4, 4);
+				navTreeCtrl_->SetItemData(bYearSetupData, new mmTreeItemData(id, true));
+			}
+			q1.Finalize();
+			
+			navTreeCtrl_->Expand(budgeting);
+		}		
+		
+	}
+    st.Finalize();
+		///////////////////////////////////////////////////////////////////
     wxTreeItemId cashFlow = navTreeCtrl_->AppendItem(reports, 
         _("Cash Flow"), 4, 4);
     navTreeCtrl_->SetItemData(cashFlow, 
@@ -1151,34 +1193,6 @@ void mmGUIFrame::updateNavTreeControl()
                 navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pIA->accountID_, false));
             }
         }
-    }
-
-    if (mmIniOptions::enableBudget_)
-    {
-        static const char sql[] =
-        "select BUDGETYEARID, BUDGETYEARNAME "
-        "from BUDGETYEAR_V1 "
-        "order by BUDGETYEARNAME";
-
-        wxSQLite3ResultSet q1 = db_.get()->ExecuteQuery(sql);
-
-        while (q1.NextRow())
-        {
-            int id = q1.GetInt(wxT("BUDGETYEARID"));
-            const wxString name = q1.GetString(wxT("BUDGETYEARNAME"));
-
-            wxTreeItemId bYear = navTreeCtrl_->AppendItem(budgeting, name, 3, 3);
-            navTreeCtrl_->SetItemData(bYear, new mmTreeItemData(id, true));
-
-            wxTreeItemId bYearData = navTreeCtrl_->AppendItem(budgetPerformance, name, 4, 4);
-            navTreeCtrl_->SetItemData(bYearData, new mmTreeItemData(id, true));
-
-            wxTreeItemId bYearSetupData = navTreeCtrl_->AppendItem(budgetSetupPerformance, name, 4, 4);
-            navTreeCtrl_->SetItemData(bYearSetupData, new mmTreeItemData(id, true));
-        }
-        q1.Finalize();
-
-        navTreeCtrl_->Expand(budgeting);
     }
 
     navTreeCtrl_->Expand(accounts);
