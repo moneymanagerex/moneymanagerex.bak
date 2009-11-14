@@ -10,6 +10,12 @@
 # These are configurable options:
 # -------------------------------------------------------------------------
 
+# The common installation prefix for header, data and library files 
+PREFIX = C:\opt
+
+# The common installation prefix for binary and DLL files 
+EXEC_PREFIX = C:\opt\bin
+
 # C compiler 
 CC = cl
 

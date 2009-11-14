@@ -21,7 +21,6 @@
     <include file="common.bkl"/>
     <include file="sqlite.bkl"/>
 
-
     <!-- MoneyManagerEx application -->
 
     <exe id="mmex" template="mmex_common">
@@ -29,11 +28,124 @@
         <app-type>gui</app-type>
         <library>sqlite3</library>
         <win32-res>resources/mmex.rc</win32-res>
-        <install-to></install-to>
+        <install-to>$(PREFIX)/mmex</install-to>
 
     </exe>
 
 
+    <!-- "make install" targets for all formats except VC++ IDE.
+         Windows command "copy" can't copy multiple files.
+         "make ininstall" doesn't work on Windows due to wrong generation of command "-del".
+    -->
+
+    <using module="datafiles"/>
+
+    <if cond="FORMAT=='autoconf'">
+    
+	<data-files>
+            <install-to>$(PREFIX)/mmex</install-to>
+	    <srcdir>$(SRCDIR)/runtime</srcdir>
+	    <files>*.txt currency.db3 kaching.wav mmex.ico splash.png</files>
+	</data-files>
+
+	<!-- data-files-tree has bug in v.0.2.8 -->
+        <data-files>
+	    <install-to>$(PREFIX)/mmex/help</install-to>
+	    <srcdir>$(SRCDIR)/docs</srcdir>
+            <files>*.html *.jpg *.png</files>
+	</data-files>
+
+        <data-files>
+	    <install-to>$(PREFIX)/mmex/help/index_fichiers</install-to>
+	    <srcdir>$(SRCDIR)/docs/index_fichiers</srcdir>
+	    <files>*</files>
+	</data-files>
+
+	<data-files>
+	    <install-to>$(PREFIX)/mmex/en</install-to>
+	    <srcdir>$(SRCDIR)/runtime/en</srcdir>
+	    <files>*.po *.mo</files>
+	</data-files>
+
+    </if>
+
+    <if cond="FORMAT!='autoconf'">
+
+        <!-- runtime/* -> mmex -->
+
+	<data-files>
+	    <install-to>$(PREFIX)/mmex</install-to>
+	    <srcdir>$(SRCDIR)/runtime</srcdir>
+	    <files>*.txt</files>
+	</data-files>
+
+	<data-files>
+	    <install-to>$(PREFIX)/mmex</install-to>
+	    <srcdir>$(SRCDIR)/runtime</srcdir>
+	    <files>currency.db3</files>
+	</data-files>
+
+	<data-files>
+	    <install-to>$(PREFIX)/mmex</install-to>
+	    <srcdir>$(SRCDIR)/runtime</srcdir>
+	    <files>kaching.wav</files>
+	</data-files>
+
+        <data-files>
+	    <install-to>$(PREFIX)/mmex</install-to>
+	    <srcdir>$(SRCDIR)/runtime</srcdir>
+	    <files>mmex.ico</files>
+	</data-files>
+
+        <data-files>
+	    <install-to>$(PREFIX)/mmex</install-to>
+	    <srcdir>$(SRCDIR)/runtime</srcdir>
+	    <files>splash.png</files>
+	</data-files>
+
+	<!-- docs -> mmex/help -->
+
+	<data-files>
+	    <install-to>$(PREFIX)/mmex/help</install-to>
+	    <srcdir>$(SRCDIR)/docs</srcdir>
+	    <files>*.html</files>
+	</data-files>
+
+        <data-files>
+	    <install-to>$(PREFIX)/mmex/help</install-to>
+	    <srcdir>$(SRCDIR)/docs</srcdir>
+	    <files>*.png</files>
+	</data-files>
+
+	<data-files>
+	    <install-to>$(PREFIX)/mmex/help</install-to>
+	    <srcdir>$(SRCDIR)/docs</srcdir>
+	    <files>*.jpg</files>
+	</data-files>
+
+	<data-files>
+	    <install-to>$(PREFIX)/mmex/help/index_fichiers</install-to>
+	    <srcdir>$(SRCDIR)/docs/index_fichiers</srcdir>
+	    <files>*.png</files>
+	</data-files>
+
+	<!-- runtime/en/* -> mmex/en -->
+
+	<data-files>
+	    <install-to>$(PREFIX)/mmex/en</install-to>
+	    <srcdir>$(SRCDIR)/runtime/en</srcdir>
+	    <files>*.po</files>
+	</data-files>
+
+	<data-files>
+	    <install-to>$(PREFIX)/mmex/en</install-to>
+	    <srcdir>$(SRCDIR)/runtime/en</srcdir>
+	    <files>*.mo</files>
+	</data-files>
+
+    </if>
+
+    
     <!-- generation of translation files -->
 
     <subproject id="i18n">

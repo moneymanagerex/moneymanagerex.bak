@@ -77,6 +77,10 @@
         -DAUTOCONF_MACROS_FILE=../../m4/autoconf_inc.m4
     </add-flags>
 
+    <add-flags formats="msvc,mingw,borland">
+        -DFORMAT_HAS_MAKE_INSTALL=1
+    </add-flags>
+
 
     <!-- Makefile specific settings -->
 

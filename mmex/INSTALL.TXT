@@ -37,7 +37,7 @@ Prepackaged Libraries
     2. Navigate to trunk/mmex and do
         >  mkdir bin
         >  cd bin
-        >  ../configure --with-wx-config=[LOCATION of WX-CONFIG, f.e. /usr/local/lib/wx/config/gtk2-unicode-release-2.8]
+        >  ../configure
         >  make
         >  make check
         >  cp mmex ../runtime

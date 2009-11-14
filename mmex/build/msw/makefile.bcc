@@ -21,12 +21,13 @@ BCCDIR = $(MAKEDIR)\..
 
 ### Variables: ###
 
-MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
-	-DCXXFLAGS="$(CXXFLAGS)" -DCPPFLAGS="$(CPPFLAGS)" -DLDFLAGS="$(LDFLAGS)" \
-	-DWX_DIR="$(WX_DIR)" -DWX_SHARED="$(WX_SHARED)" \
-	-DWX_UNICODE="$(WX_UNICODE)" -DWX_DEBUG="$(WX_DEBUG)" \
-	-DWX_VERSION="$(WX_VERSION)" -DWX_MONOLITHIC="$(WX_MONOLITHIC)" \
-	-DWX_PYTHON="$(WX_PYTHON)" -DTARGET_CPU="$(TARGET_CPU)"
+MAKEARGS = -DPREFIX="$(PREFIX)" -DEXEC_PREFIX="$(EXEC_PREFIX)" -DCC="$(CC)" \
+	-DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" -DCXXFLAGS="$(CXXFLAGS)" \
+	-DCPPFLAGS="$(CPPFLAGS)" -DLDFLAGS="$(LDFLAGS)" -DWX_DIR="$(WX_DIR)" \
+	-DWX_SHARED="$(WX_SHARED)" -DWX_UNICODE="$(WX_UNICODE)" \
+	-DWX_DEBUG="$(WX_DEBUG)" -DWX_VERSION="$(WX_VERSION)" \
+	-DWX_MONOLITHIC="$(WX_MONOLITHIC)" -DWX_PYTHON="$(WX_PYTHON)" \
+	-DTARGET_CPU="$(TARGET_CPU)"
 SQLITE3_CFLAGS = -I$(BCCDIR)\include -tWM $(__DEBUGINFO) $(__OPTIMIZEFLAG) \
 	$(__DEBUG_DEFINE_p) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
 	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
@@ -253,6 +254,43 @@ bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 
 all: bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite3.lib bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe i18n
 
+install: install_mmex
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  *.txt $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  currency.db3 $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  kaching.wav $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  mmex.ico $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex
+	( cd ..\..\runtime && copy /Y  splash.png $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex\help
+	( cd ..\..\docs && copy /Y  *.html $(PREFIX)\mmex\help )
+	-mkdir $(PREFIX)\mmex\help
+	( cd ..\..\docs && copy /Y  *.png $(PREFIX)\mmex\help )
+	-mkdir $(PREFIX)\mmex\help
+	( cd ..\..\docs && copy /Y  *.jpg $(PREFIX)\mmex\help )
+	-mkdir $(PREFIX)\mmex\help\index_fichiers
+	( cd ..\..\docs\index_fichiers && copy /Y  *.png $(PREFIX)\mmex\help\index_fichiers )
+	-mkdir $(PREFIX)\mmex\en
+	( cd ..\..\runtime\en && copy /Y  *.po $(PREFIX)\mmex\en )
+	-mkdir $(PREFIX)\mmex\en
+	( cd ..\..\runtime\en && copy /Y  *.mo $(PREFIX)\mmex\en )
+
+uninstall: uninstall_mmex
+	-if exist $(PREFIX)\mmex\*.txt -del *.txt
+	-if exist $(PREFIX)\mmex\currency.db3 -del currency.db3
+	-if exist $(PREFIX)\mmex\kaching.wav -del kaching.wav
+	-if exist $(PREFIX)\mmex\mmex.ico -del mmex.ico
+	-if exist $(PREFIX)\mmex\splash.png -del splash.png
+	-if exist $(PREFIX)\mmex\help\*.html -del *.html
+	-if exist $(PREFIX)\mmex\help\*.png -del *.png
+	-if exist $(PREFIX)\mmex\help\*.jpg -del *.jpg
+	-if exist $(PREFIX)\mmex\help\index_fichiers\*.png -del *.png
+	-if exist $(PREFIX)\mmex\en\*.po -del *.po
+	-if exist $(PREFIX)\mmex\en\*.mo -del *.mo
+
 clean: 
 	-if exist bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.obj del bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.obj
 	-if exist bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.res del bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.res
@@ -287,6 +325,13 @@ bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 	ilink32 -Tpe -q  -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk -L$(WX_DIR)\lib\bcc$(____mmex_CPU_SUF_FILENAMES)$(____mmex_LIB_SUF_FILENAMES) -L$(WX_DIR)$(__WXLIBPATH_FILENAMES)  $(__DEBUGINFO) -aa $(LDFLAGS) @&&|
 	c0w32.obj $(MMEX_OBJECTS),$@,, $(__WXLIB_CORE_NAME_p) $(__WXLIB_QA_NAME_p) $(__WXLIB_NET_NAME_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_XML_NAME_p) $(__WXLIB_AUI_NAME_p) $(__WXLIB_ADV_NAME_p) $(__WXLIB_BASE_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib ole2w32.lib odbc32.lib oleacc.lib bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite3.lib import32.lib cw32mt.lib,, bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_resources_mmex.res
 |
+
+install_mmex: bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe
+	-mkdir $(PREFIX)\mmex
+	copy /Y bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe $(PREFIX)\mmex
+
+uninstall_mmex: 
+	-del $(PREFIX)\mmex\mmex.exe
 
 i18n: 
 	@echo cd ..\..\runtime\en >bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\i18n.bat

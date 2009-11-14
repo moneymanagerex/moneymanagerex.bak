@@ -19,6 +19,16 @@ BCCDIR = $(MAKEDIR)\..
 # These are configurable options:
 # -------------------------------------------------------------------------
 
+# The common installation prefix for header, data and library files 
+!ifndef PREFIX
+PREFIX = C:\opt
+!endif
+
+# The common installation prefix for binary and DLL files 
+!ifndef EXEC_PREFIX
+EXEC_PREFIX = C:\opt\bin
+!endif
+
 
 
 # -------------------------------------------------------------------------
@@ -35,6 +45,10 @@ BCCDIR = $(MAKEDIR)\..
 ### Targets: ###
 
 all: mmex
+
+install: 
+
+uninstall: 
 
 clean: 
 	-if exist .\*.obj del .\*.obj
