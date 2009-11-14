@@ -228,7 +228,7 @@ wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database* inidb, bool force
 {
         wxString lang;
 
-        const wxString langPath = mmGetBaseWorkingPath() + wxT("/en");
+        const wxString langPath = mmGetBaseWorkingPath() + wxT("/i18n");
         wxLocale &locale = wxGetApp().getLocale();
         bool verbose = forced_show_dlg;
 

@@ -14,7 +14,7 @@
     -->
 
     <if cond="FORMAT=='autoconf'">
-        <set-srcdir>../..</set-srcdir>
+        <set-srcdir>..</set-srcdir>
     </if>
 
     

@@ -35,13 +35,13 @@ Prepackaged Libraries
        correctly identify the command line params required.
 
     2. Navigate to trunk/mmex and do
-        >  mkdir bin
-        >  cd bin
+        >  mkdir obj
+        >  cd obj
         >  ../configure
         >  make
         >  make check
-        >  cp mmex ../runtime
-        > ../runtime/mmex&
+        >  make install prefix=~
+        >  ~/mmex/mmex&
 
 
        UBUNTU SPECIFIC INSTRUCTIONS

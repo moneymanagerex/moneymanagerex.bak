@@ -273,10 +273,10 @@ install: install_mmex
 	( cd ..\..\docs && copy /Y  *.jpg $(PREFIX)\mmex\help )
 	-mkdir $(PREFIX)\mmex\help\index_fichiers
 	( cd ..\..\docs\index_fichiers && copy /Y  *.png $(PREFIX)\mmex\help\index_fichiers )
-	-mkdir $(PREFIX)\mmex\en
-	( cd ..\..\runtime\en && copy /Y  *.po $(PREFIX)\mmex\en )
-	-mkdir $(PREFIX)\mmex\en
-	( cd ..\..\runtime\en && copy /Y  *.mo $(PREFIX)\mmex\en )
+	-mkdir $(PREFIX)\mmex\i18n
+	( cd ..\..\i18n && copy /Y  *.po $(PREFIX)\mmex\i18n )
+	-mkdir $(PREFIX)\mmex\i18n
+	( cd ..\..\i18n && copy /Y  *.mo $(PREFIX)\mmex\i18n )
 
 uninstall: uninstall_mmex
 	-if exist $(PREFIX)\mmex\*.txt -del *.txt
@@ -288,8 +288,8 @@ uninstall: uninstall_mmex
 	-if exist $(PREFIX)\mmex\help\*.png -del *.png
 	-if exist $(PREFIX)\mmex\help\*.jpg -del *.jpg
 	-if exist $(PREFIX)\mmex\help\index_fichiers\*.png -del *.png
-	-if exist $(PREFIX)\mmex\en\*.po -del *.po
-	-if exist $(PREFIX)\mmex\en\*.mo -del *.mo
+	-if exist $(PREFIX)\mmex\i18n\*.po -del *.po
+	-if exist $(PREFIX)\mmex\i18n\*.mo -del *.mo
 
 clean: 
 	-if exist bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.obj del bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.obj
@@ -302,7 +302,7 @@ clean:
 	-if exist bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.ild del bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.ild
 	-if exist bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.ilf del bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.ilf
 	-if exist bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.ils del bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.ils
-	@echo cd ..\..\runtime\en >bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\i18n.bat
+	@echo cd ..\..\i18n >bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\i18n.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\i18n.bat
 	call bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\i18n.bat
 	@del bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\i18n.bat
@@ -334,7 +334,7 @@ uninstall_mmex:
 	-del $(PREFIX)\mmex\mmex.exe
 
 i18n: 
-	@echo cd ..\..\runtime\en >bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\i18n.bat
+	@echo cd ..\..\i18n >bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\i18n.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\i18n.bat
 	call bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\i18n.bat
 	@del bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\i18n.bat
