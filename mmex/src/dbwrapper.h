@@ -115,11 +115,11 @@ double getCurrencyBaseConvRate(wxSQLite3Database* db, int accountID);
 double getCurrencyBaseConvRateForId(wxSQLite3Database* db, int currencyID);
 
 /* Operations on INFOTABLE */
-wxString getInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& defaultVal);
+wxString getInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& defaultVal = wxGetEmptyString());
 void setInfoSettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& settingValue);
 
 /* Operations on the INI SETTINGS DB */
-wxString getINISettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& defaultVal);
+wxString getINISettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& defaultVal = wxGetEmptyString());
 void setINISettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& settingValue);
 void verifyINIDB(wxSQLite3Database* inidb);
 
