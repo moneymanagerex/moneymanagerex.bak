@@ -3532,14 +3532,32 @@ void mmGUIFrame::OnBillsDeposits(wxCommandEvent& WXUNUSED(event))
 
 void mmGUIFrame::OnStocks(wxCommandEvent& /*event*/)
 {
-    wxSizer *sizer = cleanupHomePanel();
-    
-    panelCurrent_ = new mmStocksPanel(db_.get(), inidb_.get(), -1, homePanel, ID_PANEL3, 
-        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-
-    sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
-
-    homePanel->Layout();
+	// First, check to see if there is a stock account setup
+	static const char sql[] = 
+    "SELECT * FROM ACCOUNTLIST_V1 WHERE ACCOUNTTYPE = 'Investment' ";
+	
+	
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    //st.Bind(1, transID_);
+	
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    if (q1.NextRow())
+    {
+		wxSizer *sizer = cleanupHomePanel();
+		
+		panelCurrent_ = new mmStocksPanel(db_.get(), inidb_.get(), -1, homePanel, ID_PANEL3, 
+										  wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+		
+		sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+		
+		homePanel->Layout();		
+	}
+	else 
+	{
+		wxMessageBox(wxT("This database does not have any investment accounts associated with it.  You can create one using the Accounts menu."),
+					 wxT("No Investment Accounts Configured"),wxOK);
+	}
+	q1.Finalize();
 }
 //----------------------------------------------------------------------------
 
