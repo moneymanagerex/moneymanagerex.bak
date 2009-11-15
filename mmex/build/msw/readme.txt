@@ -45,7 +45,8 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
   nmake -f makefile.vc 
 5.Run tests (you can skip this step)
   nmake -f makefile.vc sub_check
-6.Build installation (if InnoSetup installed)
+6.nmake -f makefile.vc install (optionally)
+7.Build installation (if InnoSetup installed)
   nmake -f makefile.vc sub_setup
 
   This is the most preferable way to build MMEX using VC++.
@@ -99,7 +100,8 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
 4.Edit config.gcc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
 5.mingw.bat
 6.mingw.bat check (executes some tests)
-7.mingw.bat setup (if InnoSetup installed)
+7.mingw.bat install (optionally)
+8.mingw.bat setup (if InnoSetup installed)
 
 
 	
