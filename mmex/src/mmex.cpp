@@ -1083,19 +1083,19 @@ void mmGUIFrame::updateNavTreeControl()
         new mmTreeItemData(wxT("Transaction Report")));
     ///////////////////////////////////////////////////////////////////
     
-	static const char sql[] = 
-    "select * from BUDGETYEAR_V1";
-	
-	
-    wxSQLite3Statement st = db_->PrepareStatement(sql);
-    //st.Bind(1, transID_);
-	
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow())
-    {
+	// Check to see if there are any budget years in the db
+	bool budget_exists=false;	
+	if (db_.get())
+	{
+		static const char sql_be[] = "select * from BUDGETYEAR_V1";
+		wxSQLite3ResultSet q_be = db_.get()->ExecuteQuery(sql_be);
+		if (q_be.NextRow())
+			budget_exists = true;
+		q_be.Finalize();
+	}
 	
 	wxTreeItemId budgetPerformance;
-    if (mmIniOptions::enableBudget_)
+    if (mmIniOptions::enableBudget_ && budget_exists)
     {
         budgetPerformance = navTreeCtrl_->AppendItem(reports, 
             _("Budget Performance"), 4, 4);
@@ -1104,14 +1104,14 @@ void mmGUIFrame::updateNavTreeControl()
     }
     ///////////////////////////////////////////////////////////////////
     wxTreeItemId budgetSetupPerformance;
-    if (mmIniOptions::enableBudget_)
+    if (mmIniOptions::enableBudget_ && budget_exists)
     {
         budgetSetupPerformance = navTreeCtrl_->AppendItem(reports, 
             _("Budget Setup and Performance"), 4, 4);
         navTreeCtrl_->SetItemData(budgetSetupPerformance, 
             new mmTreeItemData(wxT("Budget Setup Performance")));
     }
-		if (mmIniOptions::enableBudget_)
+		if (mmIniOptions::enableBudget_ && budget_exists)
 		{
 			static const char sql[] =
 			"select BUDGETYEARID, BUDGETYEARNAME "
@@ -1139,9 +1139,7 @@ void mmGUIFrame::updateNavTreeControl()
 			navTreeCtrl_->Expand(budgeting);
 		}		
 		
-	}
-    st.Finalize();
-		///////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////
     wxTreeItemId cashFlow = navTreeCtrl_->AppendItem(reports, 
         _("Cash Flow"), 4, 4);
     navTreeCtrl_->SetItemData(cashFlow, 
