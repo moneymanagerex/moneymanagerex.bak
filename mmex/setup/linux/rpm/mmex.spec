@@ -2,13 +2,14 @@ Name:           mmex
 Version:        0.9.6.0
 Release:        1%{?dist}
 Summary:        Cross-platform simple to use financial management software
-Group:          Applications/Databases
+Group:          Applications/Productivity
 License:        GPL2
 URL:            http://www.codelathe.com/mmex
 Packager:       VaDiM
 Source:         %{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-Requires:       libc6, libwxgtk2.8-0
+Prefix:         /usr
+Requires:       libc6 >= 2.3.5-1, libwxgtk >= 2.8.0.1-1
 
 %description
 Money Manager Ex is a free, open-source, cross-platform, easy-to-use personal 
@@ -40,17 +41,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-/mmex
-/contrib.txt
-/license.txt
-/version.txt
-/currency.db3
-/kaching.wav
-/mmex.ico
-/splash.png
-/i18n
-%docdir /help
-/help
+/usr/mmex
+%doc /usr/mmex/contrib.txt
+%doc /usr/mmex/license.txt
+%doc /usr/mmex/version.txt
+%docdir /usr/mmex/help
 
 
 %changelog
