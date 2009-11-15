@@ -36,6 +36,7 @@
     <!-- "make install" targets for all formats except VC++ IDE.
          Windows command "copy" can't copy multiple files.
          "make ininstall" doesn't work on Windows due to wrong generation of command "-del".
+         "make ininstall" doesn't delete directories.
     -->
 
     <using module="datafiles"/>
@@ -48,7 +49,7 @@
 	    <files>*.txt currency.db3 kaching.wav mmex.ico splash.png</files>
 	</data-files>
 
-	<!-- data-files-tree has bug in v.0.2.8 -->
+	<!-- data-files-tree generates wrong commands in bakefile v.0.2.8 -->
         <data-files>
 	    <install-to>$(PREFIX)/mmex/help</install-to>
 	    <srcdir>$(SRCDIR)/docs</srcdir>
