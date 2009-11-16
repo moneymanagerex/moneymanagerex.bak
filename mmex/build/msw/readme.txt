@@ -29,8 +29,9 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
    Append path to bin folder of installed software to PATH environment variable
    (usually "C:\Program Files\GnuWin32\bin").
 
-4. To build installation (setup) of MMEx download and install InnoSetup with preprocessor.
-   Append path to folder of installed software (something like a "C:\Program Files\Inno Setup 5")
+4. To build installation (setup) of MMEx download and install InnoSetup Quick Start Pack
+   (which includes InnoSetup itself and Inno Setup Preprocessor). Append path to folder 
+   of installed software (something like a "C:\Program Files\Inno Setup 5")
    to PATH environment variable.
 
 
