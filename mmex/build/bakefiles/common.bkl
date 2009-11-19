@@ -246,7 +246,7 @@ PATH. Accepted values: AMD64, IA64.
 	</if>
 
 
-        <!-- wxWidgets libs -->
+        <!-- wxWidgets libs, "base" must be last -->
 
         <wx-lib>core</wx-lib>
         <wx-lib>qa</wx-lib>

@@ -42,7 +42,7 @@ AC_SYS_LARGEFILE
 AM_OPTIONS_WXCONFIG
 AM_OPTIONS_WXPRESETS
 
-AM_WXPRESETS_FULL([2.8.0], [base, core, html, xml, net, aui, adv, qa])
+AM_WXPRESETS_FULL([2.8.10], [base, core, html, xml, net, aui, adv, qa])
 
 ##########################################################################
 
