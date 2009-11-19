@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 1. Required Libraries
 -------------------------------------------------------------------------------
-- wxWidgets >= 2.8.0 (www.wxwidgets.org)
+- wxWidgets >= 2.8.10 (www.wxwidgets.org)
 
 Prepackaged Libraries
 - wxSqlite3
@@ -50,9 +50,9 @@ Prepackaged Libraries
 
     1. [Optional] Install Dev Tools by the following: sudo apt-get install build-essential
 
-    2. Download and install the following packages
+    2. Install these packages
        libwxgtk2.8-?, 
-       libwxgtk2.8-dev
+       libwxgtk2.8-?-dev
 
     3. Execute step #2 from generic instructions.
 
