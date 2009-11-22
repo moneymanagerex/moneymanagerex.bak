@@ -10,7 +10,7 @@ Source:         http://www.codelathe.com/mmex/%{name}-%{version}.tar.gz
 Summary:        Cross-platform simple to use financial management software
 Group:          Applications/Productivity
 License:        GPL2 or any later version
-Icon:           mainicon.xpm
+Icon:           mmex.xpm
 URL:            http://www.codelathe.com/mmex
 Packager:       VaDiM <kkkvadim@sourceforge.net>
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -46,20 +46,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %files
-# I can't just add "/usr/mmex" because I should mark "%doc /usr/mmex/*.txt", thus 
-# these files will be added twice (in /usr/mmex and /usr/share/doc/mmex-x.x.x.x).
 %defattr(-,root,root,-)
-%dir /usr/mmex
-/usr/mmex/mmex
-/usr/mmex/currency.db3
-/usr/mmex/kaching.wav
-/usr/mmex/mmex.ico
-/usr/mmex/splash.png
-%doc /usr/mmex/contrib.txt
-%doc /usr/mmex/license.txt
-%doc /usr/mmex/version.txt
-%docdir /usr/mmex/help
-/usr/mmex/i18n
+/usr/bin/mmex
+/usr/share/mmex
+%docdir /usr/share/doc/mmex
+/usr/share/doc/mmex
 
 
 %changelog
