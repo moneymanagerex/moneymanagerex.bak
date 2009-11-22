@@ -23,6 +23,8 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_DIR = @INSTALL_DIR@
 BK_DEPS = @BK_DEPS@
 srcdir = @srcdir@
+bindir = @bindir@
+datadir = @datadir@
 LIBS = @LIBS@
 LDFLAGS_GUI = @LDFLAGS_GUI@
 AR = @AR@
@@ -61,6 +63,7 @@ MMEX_OBJECTS =  \
 	mmex_budgetyearentrydialog.o \
 	mmex_categdialog.o \
 	mmex_chart.o \
+	mmex_constants.o \
 	mmex_currencydialog.o \
 	mmex_dbwrapper.o \
 	mmex_fileviewerdialog.o \
@@ -76,6 +79,8 @@ MMEX_OBJECTS =  \
 	mmex_mmcurrency.o \
 	mmex_mmex.o \
 	mmex_mmgraphgenerator.o \
+	mmex_mmgraphincexpensesmonth.o \
+	mmex_mmgraphpie.o \
 	mmex_mmgraphtopcategories.o \
 	mmex_mmhelppanel.o \
 	mmex_mmhomepagepanel.o \
@@ -85,6 +90,7 @@ MMEX_OBJECTS =  \
 	mmex_mmyahoo.o \
 	mmex_newacctdialog.o \
 	mmex_optionsdialog.o \
+	mmex_paths.o \
 	mmex_payeedialog.o \
 	mmex_qifimport.o \
 	mmex_reportcategovertimeperf.o \
@@ -102,6 +108,7 @@ MMEX_OBJECTS =  \
 	mmex_wxsqlite3.o \
 	mmex_wxtinyxml.o \
 	mmex_yahoosettingsdialog.o \
+	mmex_platfdep.o \
 	$(__mmex___win32rc)
 
 ### Conditionally set variables: ###
@@ -123,23 +130,29 @@ COND_PLATFORM_OS2_1___mmex___os2_emxbindcmd = $(NM) mmex$(EXEEXT) | if grep -q \
 all: $(LIBPREFIX)sqlite3$(LIBEXT) mmex$(EXEEXT) i18n
 
 install: install_mmex
-	$(INSTALL_DIR) $(DESTDIR)$(prefix)/mmex
-	(cd $(srcdir)/runtime ; $(INSTALL_DATA)  *.txt currency.db3 kaching.wav mmex.ico splash.png $(DESTDIR)$(prefix)/mmex)
-	$(INSTALL_DIR) $(DESTDIR)$(prefix)/mmex/help
-	(cd $(srcdir)/docs ; $(INSTALL_DATA)  *.html *.jpg *.png $(DESTDIR)$(prefix)/mmex/help)
-	$(INSTALL_DIR) $(DESTDIR)$(prefix)/mmex/help/index_fichiers
-	(cd $(srcdir)/docs/index_fichiers ; $(INSTALL_DATA)  * $(DESTDIR)$(prefix)/mmex/help/index_fichiers)
-	$(INSTALL_DIR) $(DESTDIR)$(prefix)/mmex/i18n
-	(cd $(srcdir)/i18n ; $(INSTALL_DATA)  *.po *.mo $(DESTDIR)$(prefix)/mmex/i18n)
+	$(INSTALL_DIR) $(DESTDIR)$(datadir)/mmex
+	(cd $(srcdir)/runtime ; $(INSTALL_DATA)  currency_seed.db3 $(DESTDIR)$(datadir)/mmex)
+	$(INSTALL_DIR) $(DESTDIR)$(datadir)/mmex/res
+	(cd $(srcdir)/runtime ; $(INSTALL_DATA)  kaching.wav mmex.ico splash.png $(DESTDIR)$(datadir)/mmex/res)
+	$(INSTALL_DIR) $(DESTDIR)$(datadir)/mmex/i18n
+	(cd $(srcdir)/i18n ; $(INSTALL_DATA)  *.po *.mo $(DESTDIR)$(datadir)/mmex/i18n)
+	$(INSTALL_DIR) $(DESTDIR)$(datadir)/doc/mmex
+	(cd $(srcdir)/runtime ; $(INSTALL_DATA)  *.txt $(DESTDIR)$(datadir)/doc/mmex)
+	$(INSTALL_DIR) $(DESTDIR)$(datadir)/doc/mmex/help
+	(cd $(srcdir)/docs ; $(INSTALL_DATA)  *.html *.jpg *.png $(DESTDIR)$(datadir)/doc/mmex/help)
+	$(INSTALL_DIR) $(DESTDIR)$(datadir)/doc/mmex/help/index_fichiers
+	(cd $(srcdir)/docs/index_fichiers ; $(INSTALL_DATA)  * $(DESTDIR)$(datadir)/doc/mmex/help/index_fichiers)
 
 uninstall: uninstall_mmex
-	(cd $(DESTDIR)$(prefix)/mmex ; rm -f *.txt currency.db3 kaching.wav mmex.ico splash.png)
-	(cd $(DESTDIR)$(prefix)/mmex/help ; rm -f *.html *.jpg *.png)
-	(cd $(DESTDIR)$(prefix)/mmex/help/index_fichiers ; rm -f *)
-	(cd $(DESTDIR)$(prefix)/mmex/i18n ; rm -f *.po *.mo)
+	(cd $(DESTDIR)$(datadir)/mmex ; rm -f currency_seed.db3)
+	(cd $(DESTDIR)$(datadir)/mmex/res ; rm -f kaching.wav mmex.ico splash.png)
+	(cd $(DESTDIR)$(datadir)/mmex/i18n ; rm -f *.po *.mo)
+	(cd $(DESTDIR)$(datadir)/doc/mmex ; rm -f *.txt)
+	(cd $(DESTDIR)$(datadir)/doc/mmex/help ; rm -f *.html *.jpg *.png)
+	(cd $(DESTDIR)$(datadir)/doc/mmex/help/index_fichiers ; rm -f *)
 
 install-strip: install
-	$(STRIP) $(DESTDIR)$(prefix)/mmex/mmex$(EXEEXT)
+	$(STRIP) $(DESTDIR)$(bindir)/mmex$(EXEEXT)
 
 clean: 
 	rm -rf ./.deps ./.pch
@@ -168,11 +181,11 @@ mmex$(EXEEXT): $(MMEX_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(__mmex___win32rc)
 	$(__mmex___os2_emxbindcmd)
 
 install_mmex: mmex$(EXEEXT)
-	$(INSTALL_DIR) $(DESTDIR)$(prefix)/mmex
-	$(INSTALL_PROGRAM) mmex$(EXEEXT) $(DESTDIR)$(prefix)/mmex
+	$(INSTALL_DIR) $(DESTDIR)$(bindir)
+	$(INSTALL_PROGRAM) mmex$(EXEEXT) $(DESTDIR)$(bindir)
 
 uninstall_mmex: 
-	rm -f $(DESTDIR)$(prefix)/mmex/mmex$(EXEEXT)
+	rm -f $(DESTDIR)$(bindir)/mmex$(EXEEXT)
 
 i18n: 
 	(cd $(srcdir)/i18n && $(MAKE) all)
@@ -222,6 +235,9 @@ mmex_categdialog.o: $(srcdir)/src/categdialog.cpp
 mmex_chart.o: $(srcdir)/src/chart.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/chart.cpp
 
+mmex_constants.o: $(srcdir)/src/constants.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/constants.cpp
+
 mmex_currencydialog.o: $(srcdir)/src/currencydialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/currencydialog.cpp
 
@@ -267,6 +283,12 @@ mmex_mmex.o: $(srcdir)/src/mmex.cpp
 mmex_mmgraphgenerator.o: $(srcdir)/src/mmgraphgenerator.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/mmgraphgenerator.cpp
 
+mmex_mmgraphincexpensesmonth.o: $(srcdir)/src/mmgraphincexpensesmonth.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/mmgraphincexpensesmonth.cpp
+
+mmex_mmgraphpie.o: $(srcdir)/src/mmgraphpie.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/mmgraphpie.cpp
+
 mmex_mmgraphtopcategories.o: $(srcdir)/src/mmgraphtopcategories.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/mmgraphtopcategories.cpp
 
@@ -293,6 +315,9 @@ mmex_newacctdialog.o: $(srcdir)/src/newacctdialog.cpp
 
 mmex_optionsdialog.o: $(srcdir)/src/optionsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/optionsdialog.cpp
+
+mmex_paths.o: $(srcdir)/src/paths.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/paths.cpp
 
 mmex_payeedialog.o: $(srcdir)/src/payeedialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/payeedialog.cpp
@@ -344,6 +369,9 @@ mmex_wxtinyxml.o: $(srcdir)/src/wxtinyxml.cpp
 
 mmex_yahoosettingsdialog.o: $(srcdir)/src/yahoosettingsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/yahoosettingsdialog.cpp
+
+mmex_platfdep.o: $(srcdir)/src/unix/platfdep.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/unix/platfdep.cpp
 
 mmex_resources_mmex_rc.o: $(srcdir)/resources/mmex.rc
 	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/include --include-dir $(srcdir)/sqlite --define NOPCH --define WXSQLITE3_HAVE_CODEC --define WXSQLITE3_HAVE_METADATA --define TIXML_USE_STL

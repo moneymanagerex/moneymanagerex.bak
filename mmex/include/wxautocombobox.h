@@ -28,7 +28,7 @@ class wxAutoComboBox : public wxComboBox
         DECLARE_DYNAMIC_CLASS(wxAutoComboBox)
 
 public:
-        wxAutoComboBox();
+        wxAutoComboBox() {}
 
         /**
          * Constructor
@@ -43,11 +43,6 @@ public:
          * \param name    Name of the control.
          */
         wxAutoComboBox(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& value = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, const wxArrayString& choices = NULL, long style = 0, const wxValidator& validator = wxDefaultValidator, const wxString& name = wxT("Auto Text Control"));
-
-        /**
-         * Default Destructor.
-         */
-        virtual ~wxAutoComboBox(void);
 
 protected:
         /**
