@@ -72,7 +72,7 @@ BEGIN
             VALUE "InternalName", "mmex"
             VALUE "LegalCopyright", "Copyright (C) 2006-2009 CodeLathe LLC (http://www.codelathe.com/mmex)"
             VALUE "OriginalFilename", "mmex.exe"
-            VALUE "ProductName", "Money Manager Ex"
+            VALUE "ProductName", "MoneyManagerEx"
             VALUE "ProductVersion", "0, 9, 6, 0"
         END
     END

@@ -40,8 +40,8 @@ Prepackaged Libraries
         >  ../configure
         >  make
         >  make check
-        >  make install prefix=~
-        >  ~/mmex/mmex&
+        >  make install
+        >  /usr/bin/mmex &
 
 
        UBUNTU SPECIFIC INSTRUCTIONS

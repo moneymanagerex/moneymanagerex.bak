@@ -3,7 +3,7 @@
 ##########################################################################
 
 AC_PREREQ(2.53)
-AC_INIT([Money Manager Ex], [0.9.6.0], [madhan@sourceforge.net])
+AC_INIT([MoneyManagerEx], [0.9.6.0], [madhan@sourceforge.net])
 
 ##########################################################################
 
@@ -49,7 +49,8 @@ AM_WXPRESETS_FULL([2.8.10], [base, core, html, xml, net, aui, adv, qa])
 # Process standard bakefile
 AC_BAKEFILE([m4_include(m4/autoconf_inc.m4)])
 
-AC_CONFIG_FILES([Makefile src/tests/Makefile ${srcdir}/i18n/Makefile ${srcdir}/setup/win32/Makefile])
+AC_CONFIG_FILES([ Makefile src/tests/Makefile ${srcdir}/i18n/Makefile ${srcdir}/setup/win32/Makefile ])
+
 AC_OUTPUT
 
 ##########################################################################
