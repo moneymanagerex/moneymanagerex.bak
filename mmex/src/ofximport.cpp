@@ -126,15 +126,15 @@ int ofx_proc_security_cb(const struct OfxSecurityData data, void * security_user
 
 int ofx_proc_transaction_cb(struct OfxTransactionData data, void * transaction_user_data)
 {
-	char dest_string[255];
-	time_t current_time; 
-	Account *account;
-	Account *investment_account=NULL;
-	Account *income_account=NULL;
+	wxChar dest_string[255];
+	wxDateTime current_time; 
+	mmAccount *account;
+	mmAccount *investment_account=NULL;
+	mmAccount *income_account=NULL;
 	kvp_frame * acc_frame;
 	kvp_value * kvp_val;
 	const GUID * income_acc_guid;
-	gchar *investment_account_text;
+	wxChar *investment_account_text;
 	gnc_commodity *currency=NULL;
 	gnc_commodity *investment_commodity=NULL;
 	gnc_numeric gnc_amount, gnc_units;
@@ -146,105 +146,119 @@ int ofx_proc_transaction_cb(struct OfxTransactionData data, void * transaction_u
 	g_assert(gnc_ofx_importer_gui);
 	
 	if(data.account_id_valid==true){
-		account = gnc_import_select_account(NULL, data.account_id, 0, NULL, NULL,
-											ACCT_TYPE_NONE, NULL, NULL);
-		if(account!=NULL)
+		//Check to see if account alredy exists based on the account number.
+		
+		
+		//If account does not match account number of any account, wxDialog to select the account or create a new one.
+		wxArrayString as;
+		int importAccountID = -1;
+		
+		wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
+		while (q1.NextRow())
 		{
-			/********** Validate the input strings to ensure utf8 ********************/
-			if (data.name_valid)
-				gnc_utf8_strip_invalid(data.name);
-			if (data.memo_valid)
-				gnc_utf8_strip_invalid(data.memo);
-			if (data.check_number_valid)
-				gnc_utf8_strip_invalid(data.check_number);
-			if (data.reference_number_valid)
-				gnc_utf8_strip_invalid(data.reference_number);
-			
+			as.Add(q1.GetString(wxT("ACCOUNTNAME")));
+		}
+		q1.Finalize();
+		
+		wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Account to import to:"), 
+															 _("OFX Import"), as);
+		if (scd->ShowModal() != wxID_OK)
+			return -1;
+		
+		wxString acctName = scd->GetStringSelection();
+		importAccountID = mmDBWrapper::getAccountID(db_, acctName);
+		
+		if(importAccountID!=NULL)
+		{
 			/********** Create the transaction and setup transaction data ************/
+			 boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core->db_));
 			book = gnc_account_get_book(account);
 			transaction = xaccMallocTransaction(book);
 			xaccTransBeginEdit(transaction);
 			
-			if(data.fi_id_valid==true){
-				gnc_import_set_trans_online_id(transaction, data.fi_id);
-			}
+			// fi_id can be used to identify duplicate downloads/imports
+			/*if(data.fi_id_valid==true){
+				pTransaction->fi_id_ = data.fi_id);
+			}*/
 			
-			if(data.date_initiated_valid==true){
-				xaccTransSetDateSecs(transaction, data.date_initiated);
+			// This could be useful.
+			/*if(data.date_initiated_valid==true){
+				pTransaction->date_transaction = data.date_initiated;
 			}
-			else if(data.date_posted_valid==true){
-				xaccTransSetDateSecs(transaction, data.date_posted);
-			}
+			 else if(data.date_posted_valid==true){
+				pTransaction->date_transaction = data.date_posted;
+			}*/
 			
+			// We will use the posted date as the date of the transaction
 			if(data.date_posted_valid==true){
-				xaccTransSetDatePostedSecs(transaction, data.date_posted);
+				pTransaction->date_ = data.date_posted);
 			}
 			
-			current_time = time(NULL);
-			xaccTransSetDateEnteredSecs(transaction, mktime(localtime(&current_time)));
-			
+			//Enter the check number of the transaction
+			/*
 			if(data.check_number_valid==true){
-				xaccTransSetNum(transaction, data.check_number);
-			}
-			else if(data.reference_number_valid==true){
-				xaccTransSetNum(transaction, data.reference_number);
-			}
-			/* Put transaction name in Description, or memo if name unavailable */ 
-			if(data.name_valid==true){
-				xaccTransSetDescription(transaction, data.name);
+				pTransaction->?? = data.check_number);
+			}*/
+			// Might present in addition to or instead of a check_number. Not necessarily a number
+			/*else if(data.reference_number_valid==true){
+				pTransaction->?? = data.reference_number);
+			}*/
+			
+			// Put transaction name in Description, or memo if name unavailable
+			/*if(data.name_valid==true){
+				pTransaction->??? = data.name);
 			}
 			else if(data.memo_valid==true){
-				xaccTransSetDescription(transaction, data.memo);
-			}
+				pTransaction->notes_ = data.memo);
+			}*/
 			
 			/* Put everything else in the Notes field */
-			notes=g_strdup_printf("OFX ext. info: ");
+			wxString notes_str;
 			
 			if(data.transactiontype_valid==true){
 				switch(data.transactiontype){
-					case OFX_CREDIT: strncpy(dest_string, "Generic credit", sizeof(dest_string));
+					case OFX_CREDIT: notes_str = wxT("Generic credit");
 						break;
-					case OFX_DEBIT: strncpy(dest_string, "Generic debit", sizeof(dest_string));
+					case OFX_DEBIT: notes_str = wxT("Generic debit");
 						break;
-					case OFX_INT: strncpy(dest_string, "Interest earned or paid (Note: Depends on signage of amount)", sizeof(dest_string));
+					case OFX_INT: notes_str = wxT("Interest earned or paid (Note: Depends on signage of amount)");
 						break;
-					case OFX_DIV: strncpy(dest_string, "Dividend", sizeof(dest_string));
+					case OFX_DIV: notes_str = wxT("Dividend");
 						break;
-					case OFX_FEE: strncpy(dest_string, "FI fee", sizeof(dest_string));
+					case OFX_FEE: notes_str = wxT("FI fee");
 						break;
-					case OFX_SRVCHG: strncpy(dest_string, "Service charge", sizeof(dest_string));
+					case OFX_SRVCHG: notes_str = wxT("Service charge");
 						break;
-					case OFX_DEP: strncpy(dest_string, "Deposit", sizeof(dest_string));
+					case OFX_DEP: notes_str = wxT("Deposit");
 						break;
-					case OFX_ATM: strncpy(dest_string, "ATM debit or credit (Note: Depends on signage of amount)", sizeof(dest_string));
+					case OFX_ATM: notes_str = wxT("ATM debit or credit (Note: Depends on signage of amount)");
 						break;
-					case OFX_POS: strncpy(dest_string, "Point of sale debit or credit (Note: Depends on signage of amount)", sizeof(dest_string));
+					case OFX_POS: notes_str = wxT("Point of sale debit or credit (Note: Depends on signage of amount)");
 						break;
-					case OFX_XFER: strncpy(dest_string, "Transfer", sizeof(dest_string));
+					case OFX_XFER: notes_str = wxT("Transfer");
 						break;
-					case OFX_CHECK: strncpy(dest_string, "Check", sizeof(dest_string));
+					case OFX_CHECK: notes_str = wxT("Check");
 						break;
-					case OFX_PAYMENT: strncpy(dest_string, "Electronic payment", sizeof(dest_string));
+					case OFX_PAYMENT: notes_str = wxT("Electronic payment");
 						break;
-					case OFX_CASH: strncpy(dest_string, "Cash withdrawal", sizeof(dest_string));
+					case OFX_CASH: notes_str = wxT("Cash withdrawal");
 						break;
-					case OFX_DIRECTDEP: strncpy(dest_string, "Direct deposit", sizeof(dest_string));
+					case OFX_DIRECTDEP: notes_str = wxT("Direct deposit");
 						break;
-					case OFX_DIRECTDEBIT: strncpy(dest_string, "Merchant initiated debit", sizeof(dest_string));
+					case OFX_DIRECTDEBIT: notes_str = wxT("Merchant initiated debit");
 						break;
-					case OFX_REPEATPMT: strncpy(dest_string, "Repeating payment/standing order", sizeof(dest_string));
+					case OFX_REPEATPMT: notes_str = wxT("Repeating payment/standing order");
 						break;
-					case OFX_OTHER: strncpy(dest_string, "Other", sizeof(dest_string));
+					case OFX_OTHER: notes_str = wxT("Other");
 						break;
-					default : strncpy(dest_string, "Unknown transaction type", sizeof(dest_string));
+					default : notes_str = wxT("Unknown transaction type");
 						break;
 				}
-				tmp=notes;
-				notes=g_strdup_printf("%s%s%s",tmp,"|Trans type:", dest_string);
-				g_free(tmp);
+				pTransaction->notes_ = notes_str;
 			}
 			
-			if(data.invtransactiontype_valid==true){
+			//Not using this as of yet
+			/*if(data.invtransactiontype_valid==true){
 				switch(data.invtransactiontype){
 					case OFX_BUYDEBT: strncpy(dest_string, "BUYDEBT (Buy debt security)", sizeof(dest_string));
 						break;
@@ -290,12 +304,15 @@ int ofx_proc_transaction_cb(struct OfxTransactionData data, void * transaction_u
 				tmp=notes;
 				notes=g_strdup_printf("%s%s%s",tmp,"|Investment Trans type:", dest_string);
 				g_free(tmp);
+			}*/
+			
+			//Append to the Notes filed
+			if(data.memo_valid){
+				wxString notes_memo = pTransaction.notes_& Append(data.memo);
+				pTransaction-> notes_ = notes_memo;
 			}
-			if(data.memo_valid==true&&data.name_valid==true){/* Copy only if memo wasn't put in Description */
-				tmp=notes;
-				notes=g_strdup_printf("%s%s%s",tmp, "|Memo:", data.memo);
-				g_free(tmp);
-			}
+			// Not using this
+			/*
 			if(data.date_funds_available_valid==true){
 				Timespec ts;
 				timespecFromTime_t(&ts, data.date_funds_available);
@@ -304,34 +321,39 @@ int ofx_proc_transaction_cb(struct OfxTransactionData data, void * transaction_u
 				notes=g_strdup_printf("%s%s%s",tmp,"|Date funds available:", dest_string);
 				g_free(tmp);
 			}
+			// Not using this
 			if(data.server_transaction_id_valid==true){
 				tmp=notes;
 				notes=g_strdup_printf("%s%s%s",tmp, "|Server trans ID (conf. number):", data.server_transaction_id);
 				g_free(tmp);
 			}
+			// Not using this
 			if(data.standard_industrial_code_valid==true){
 				tmp=notes;
 				notes=g_strdup_printf("%s%s%ld",tmp, "|Standard Industrial Code:",data.standard_industrial_code);
 				g_free(tmp);
 				
-			}
+			}*/
+			
+			//Add the payee
 			if(data.payee_id_valid==true){
-				tmp=notes;
-				notes=g_strdup_printf("%s%s%s",tmp,"|Payee ID:", data.payee_id);
-				g_free(tmp);
+				wxSting payee = data.payee_id;
+                if (payee.Trim().IsEmpty())
+                {
+                    payee = wxT("Unknown");
+                }
+				
+                if (!core->payeeList_.payeeExists(payee))
+                {
+                    log << _("Adding payee ") << payee << endl;   
+                    payeeID = core->payeeList_.addPayee(payee);
+                }
+                else
+                    payeeID = core->payeeList_.getPayeeID(payee);
+				pTransaction->payee_ = payeeList_.getPayeeSharedPtr(payeeID);
 			}
 			
-			PERR("WRITEME: GnuCash ofx_proc_transaction():Add PAYEE and ADRESS here once supported by libofx!\n");
 			
-			/* Ideally, gnucash should process the corrected transactions */
-			if(data.fi_id_corrected_valid==true){
-				PERR("WRITEME: GnuCash ofx_proc_transaction(): WARNING: This transaction corrected a previous transaction, but we created a new one instead!\n");
-				tmp=notes;
-				notes=g_strdup_printf("%s%s%s%s",tmp,"|This corrects transaction #",data.fi_id_corrected,"but GnuCash didn't process the correction!");
-				g_free(tmp);
-			}
-			xaccTransSetNotes(transaction, notes);
-			g_free(notes);
 			if ( data.account_ptr && data.account_ptr->currency_valid )
 			{
 				DEBUG("Currency from libofx: %s",data.account_ptr->currency);
@@ -566,6 +588,9 @@ int ofx_proc_transaction_cb(struct OfxTransactionData data, void * transaction_u
     {
 		PERR("account ID for this transaction is unavailable!");
     }
+	
+	core->bTransactionList_.addTransaction(core, pTransaction);
+	
 	return 0;
 }//end ofx_proc_transaction()
 
@@ -576,7 +601,7 @@ int ofx_proc_transaction_cb(struct OfxTransactionData data, void * transaction_u
  }//end ofx_proc_statement()
  */
 
-int ofx_proc_account_cb(struct OfxAccountData data, void * account_user_data)
+int ofx_proc_account_cb(struct OfxAccountData data, /*void * account_user_data*/)
 {
 	Account *selected_account;
 	gnc_commodity_table * commodity_table;
@@ -585,11 +610,22 @@ int ofx_proc_account_cb(struct OfxAccountData data, void * account_user_data)
 	gchar * account_description;
 	gchar * account_type_name = NULL;
 	
+	
+	//Find out if account data is valid
 	if(data.account_id_valid==true){
-		commodity_table = gnc_get_current_commodities ();
+		
+		//Check to see if account exists
+			//If account exists load account
+			//Else set default for new account wizzard to account
+				//If select account, load that account
+				//Else, create a new account by running the new account wizzard with the account number filled in and not modifiable
+		
+		//Check to see if the currency is valid
 		if( data.currency_valid == true)
 		{
+			//Log the currency
 			DEBUG("Currency from libofx: %s",data.currency);
+			//Set the currency for the account to data.currency
 			default_commodity = gnc_commodity_table_lookup(commodity_table,
 														   GNC_COMMODITY_NS_CURRENCY,
 														   data.currency);
@@ -599,9 +635,11 @@ int ofx_proc_account_cb(struct OfxAccountData data, void * account_user_data)
 			default_commodity = NULL;
 		}
 		
+		//Make sure the account type is valid
 		if(data.account_type_valid==true){
 			switch(data.account_type){
 				case OFX_CHECKING : 
+					//Set the default for the new account wizzard to Checking/Savings
 					default_type=ACCT_TYPE_BANK;
 					account_type_name = g_strdup_printf(_("Unknown OFX checking account"));
 					break;
