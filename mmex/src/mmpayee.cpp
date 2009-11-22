@@ -18,6 +18,7 @@
 
 #include "mmpayee.h"
 #include "util.h"
+#include "dbwrapper.h"
 
 mmPayee::mmPayee(int payeeID, 
                  const wxString& payeeString, 
