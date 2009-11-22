@@ -19,11 +19,7 @@
 #include "budgetyearentrydialog.h"
 #include "util.h"
 #include "defs.h"
-
-
-#define MMEX_ICON_FNAME mmGetBaseWorkingPath() + wxT("/mmex.ico")
-
-
+#include "paths.h"
 
 IMPLEMENT_DYNAMIC_CLASS( mmBudgetYearEntryDialog, wxDialog )
 
@@ -31,21 +27,15 @@ BEGIN_EVENT_TABLE( mmBudgetYearEntryDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_BUDGETYEARENTRY_BUTTON_OK, mmBudgetYearEntryDialog::OnOk)
 END_EVENT_TABLE()
 
-mmBudgetYearEntryDialog::mmBudgetYearEntryDialog( )
+mmBudgetYearEntryDialog::mmBudgetYearEntryDialog() : db_()
 {
-    db_ = 0;
-    budgetYear_ = wxT("");
-    yearToCopy_ = wxT("");
 }
 
 mmBudgetYearEntryDialog::mmBudgetYearEntryDialog( wxSQLite3Database* db, 
                                        wxWindow* parent, 
                                        wxWindowID id, const wxString& caption, 
-                                       const wxPoint& pos, const wxSize& size, long style )
+                                       const wxPoint& pos, const wxSize& size, long style ) : db_(db)
 {
-    db_ = db;
-    budgetYear_ = wxT("");
-    yearToCopy_ = wxT("");
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -60,8 +50,7 @@ bool mmBudgetYearEntryDialog::Create( wxWindow* parent, wxWindowID id,
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
-    SetIcon(icon);
+    SetIcon(mmex::getProgramIcon());
     
     fillControls();
 

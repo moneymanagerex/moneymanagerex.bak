@@ -18,6 +18,7 @@
 
 #include "htmlbuilder.h"
 #include "util.h"
+#include "constants.h"
 
 mmHTMLBuilder::mmHTMLBuilder() {
 	// init colors from config
@@ -35,7 +36,7 @@ mmHTMLBuilder::mmHTMLBuilder() {
 void mmHTMLBuilder::init()
 {
     html += wxT("<html><head><meta http-equiv=\"content-type\" content=\"text/html;charset=UTF-8\"><title>");  
-    html += mmIniOptions::appName_;
+    html += mmex::getProgramName();
     html += wxT(" - ");
 	html += _("Report");
 	html += wxT("</title></head><body bgcolor=\"#ffffff\" text=\"#000000\" link=\"#0000cc\" vlink=\"#551a8b\" alink=\"#ff0000\">");
