@@ -24,23 +24,15 @@
 #include "dbwrapper.h"
 #include "splittransactionsdialog.h"
 #include "defs.h"
+#include "paths.h"
 
-#include "sstream"
+#include <sstream>
 
 // Defines for Transaction Type
-#define DEF_WITHDRAWAL 0
-#define DEF_DEPOSIT    1
-#define DEF_TRANSFER   2
+enum { DEF_WITHDRAWAL, DEF_DEPOSIT, DEF_TRANSFER };
 
 // Defines for Transaction Status
-#define DEF_STATUS_NONE       0
-#define DEF_STATUS_RECONCILED 1
-#define DEF_STATUS_VOID       2
-#define DEF_STATUS_FOLLOWUP   3
-#define DEF_STATUS_DUPLICATE   4
-
-#define MMEX_ICON_FNAME mmGetBaseWorkingPath() + wxT("/mmex.ico")
-
+enum { DEF_STATUS_NONE, DEF_STATUS_RECONCILED, DEF_STATUS_VOID, DEF_STATUS_FOLLOWUP, DEF_STATUS_DUPLICATE };
 
 
 IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
@@ -93,8 +85,7 @@ bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
-    SetIcon(icon);
+    SetIcon(mmex::getProgramIcon());
     
     fillControls();
 
