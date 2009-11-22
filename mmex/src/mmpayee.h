@@ -17,7 +17,6 @@
 #ifndef _MM_EX_MMPAYEE_H_
 #define _MM_EX_MMPAYEE_H_
 
-#include "mmdbinterface.h"
 #include "mmcategory.h"
 #include "boost/shared_ptr.hpp"
 
