@@ -298,7 +298,7 @@ void assetsListCtrl::OnListItemSelected(wxListEvent& event)
 	cp_->enableEditDeleteButtons(true);
 }
 
-void assetsListCtrl::OnListItemDeselected(wxListEvent& event)
+void assetsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 {
     selectedIndex_ = -1;
 	cp_->enableEditDeleteButtons(false);

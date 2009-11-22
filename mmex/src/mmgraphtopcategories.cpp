@@ -5,8 +5,12 @@
 //----------------------------------------------------------------------------
 
 mmGraphTopCategories::mmGraphTopCategories() : 
-    mmGraphGenerator(wxT("top_categories.png")),
-	m_chart(new BarChart(320, 240))
+        m_chart(new BarChart(320, 240))
+{
+}
+//----------------------------------------------------------------------------
+
+mmGraphTopCategories::~mmGraphTopCategories()
 {
 }
 //----------------------------------------------------------------------------
