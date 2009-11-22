@@ -19,9 +19,7 @@
 #include "categdialog.h"
 #include "util.h"
 #include "defs.h"
-
-#define MMEX_ICON_FNAME mmGetBaseWorkingPath() + wxT("/mmex.ico")
-
+#include "paths.h"
 
 IMPLEMENT_DYNAMIC_CLASS( mmCategDialog, wxDialog )
 
@@ -66,8 +64,7 @@ bool mmCategDialog::Create( wxWindow* parent, wxWindowID id,
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
-    SetIcon(icon);
+    SetIcon(mmex::getProgramIcon());
     
     fillControls();
 

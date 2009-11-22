@@ -4,6 +4,7 @@
 //----------------------------------------------------------------------------
 #include "mmgraphgenerator.h"
 //----------------------------------------------------------------------------
+#include <vector>
 #include <boost/scoped_ptr.hpp>
 //----------------------------------------------------------------------------
 class BarChart;
@@ -14,6 +15,7 @@ class mmGraphTopCategories : public mmGraphGenerator
 {
 public:
 	mmGraphTopCategories();
+       ~mmGraphTopCategories();
 
 	void init(const std::vector<CategInfo> &categList);
 	bool Generate(const wxString& chartTitle);
