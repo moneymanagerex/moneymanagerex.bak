@@ -204,8 +204,14 @@ PATH. Accepted values: AMD64, IA64.
 
     	<!-- relative to trunk/mmex -->
 
+        <set var="PLATF_DIR">
+	    <if cond="TOOLSET=='win32'">win</if>
+            <if cond="TOOLSET=='unix'">unix</if>
+            <if cond="1">/mac</if>
+        </set>
+
         <headers>$(fileList('src/*.h'))</headers>
-        <sources>$(fileList('src/*.cpp'))</sources>
+        <sources>$(fileList( [ 'src/*.cpp', 'src/' + PLATF_DIR + '/*.cpp' ] ))</sources>
 
 
         <!-- Microsoft compilers only, enable PDB for Release build -->

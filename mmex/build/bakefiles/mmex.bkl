@@ -28,7 +28,9 @@
         <app-type>gui</app-type>
         <library>sqlite3</library>
         <win32-res>resources/mmex.rc</win32-res>
-        <install-to>$(PREFIX)/mmex</install-to>
+    
+        <install-to cond="FORMAT=='autoconf'">$(BINDIR)</install-to>
+        <install-to cond="FORMAT!='autoconf'">$(PREFIX)/mmex</install-to>
 
     </exe>
 
@@ -44,28 +46,40 @@
     <if cond="FORMAT=='autoconf'">
     
 	<data-files>
-            <install-to>$(PREFIX)/mmex</install-to>
+            <install-to>$(DATADIR)/mmex</install-to>
 	    <srcdir>$(SRCDIR)/runtime</srcdir>
-	    <files>*.txt currency.db3 kaching.wav mmex.ico splash.png</files>
+	    <files>currency_seed.db3</files>
+	</data-files>
+
+        <data-files>
+            <install-to>$(DATADIR)/mmex/res</install-to>
+	    <srcdir>$(SRCDIR)/runtime</srcdir>
+	    <files>kaching.wav mmex.ico splash.png</files>
+	</data-files>
+
+        <data-files>
+	    <install-to>$(DATADIR)/mmex/i18n</install-to>
+	    <srcdir>$(SRCDIR)/i18n</srcdir>
+	    <files>*.po *.mo</files>
+	</data-files>
+
+        <data-files>
+	    <install-to>$(DATADIR)/doc/mmex</install-to>
+            <srcdir>$(SRCDIR)/runtime</srcdir>
+	    <files>*.txt</files>
 	</data-files>
 
 	<!-- data-files-tree generates wrong commands in bakefile v.0.2.8 -->
         <data-files>
-	    <install-to>$(PREFIX)/mmex/help</install-to>
+	    <install-to>$(DATADIR)/doc/mmex/help</install-to>
 	    <srcdir>$(SRCDIR)/docs</srcdir>
             <files>*.html *.jpg *.png</files>
 	</data-files>
 
         <data-files>
-	    <install-to>$(PREFIX)/mmex/help/index_fichiers</install-to>
+	    <install-to>$(DATADIR)/doc/mmex/help/index_fichiers</install-to>
 	    <srcdir>$(SRCDIR)/docs/index_fichiers</srcdir>
 	    <files>*</files>
-	</data-files>
-
-	<data-files>
-	    <install-to>$(PREFIX)/mmex/i18n</install-to>
-	    <srcdir>$(SRCDIR)/i18n</srcdir>
-	    <files>*.po *.mo</files>
 	</data-files>
 
     </if>
@@ -83,7 +97,7 @@
 	<data-files>
 	    <install-to>$(PREFIX)/mmex</install-to>
 	    <srcdir>$(SRCDIR)/runtime</srcdir>
-	    <files>currency.db3</files>
+	    <files>currency_seed.db3</files>
 	</data-files>
 
 	<data-files>
