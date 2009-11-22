@@ -20,13 +20,8 @@
 #include "currencydialog.h"
 #include "util.h"
 #include "defs.h"
-
+#include "paths.h"
  
-#define MMEX_ICON_FNAME mmGetBaseWorkingPath() + wxT("/mmex.ico")
-
-
-using namespace std;
-
 IMPLEMENT_DYNAMIC_CLASS( mmMainCurrencyDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmMainCurrencyDialog, wxDialog )
@@ -72,8 +67,7 @@ bool mmMainCurrencyDialog::Create(  wxWindow* parent, wxWindowID id,
     //GetSizer()->Fit(this);
     //GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
-    SetIcon(icon);
+    SetIcon(mmex::getProgramIcon());
 
     fillControls();
 
