@@ -18,21 +18,10 @@
 
 //----------------------------------------------------------------------------
 #include "guiid.h"
-#include <wx/string.h>
 //----------------------------------------------------------------------------
 const int mmex::MIN_DATAVERSION = 2;
 const wxChar * const mmex::DATAVERSION = wxT("2");
-//----------------------------------------------------------------------------
 const wxChar *const mmex::DEFDATEFORMAT = wxT("%m/%d/%y");
 const wxChar *const mmex::DEFDELIMTER = wxT(",");
-const wxChar *const mmex::CURRENCYDB_FNAME = wxT("/currency.db3");
 const wxChar *const mmex::DEFSTOCKURL = wxT("http://www.google.com/finance?q=%s");
-//----------------------------------------------------------------------------
-
-wxString mmex::getVersion()
-{
-    static const wxString version(wxT("0.9.6.0")); // FIXME! get from version resource of exe
-    return version;
-
-}
 //----------------------------------------------------------------------------
