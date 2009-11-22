@@ -19,19 +19,19 @@
 #ifndef _MM_EX_GRAPHGENERATOR_H_
 #define _MM_EX_GRAPHGENERATOR_H_
 
-#include "defs.h"
+#include <wx/string.h>
 
 class mmGraphGenerator
 {
 public:
-    mmGraphGenerator(const wxString& outFileName);
+    mmGraphGenerator();
+    virtual ~mmGraphGenerator() {}
 
-public:
-    const wxString& GetOutputFileName();
-	virtual bool Generate(const wxString& chartTitle) = 0;
+    virtual bool Generate(const wxString& chartTitle) = 0;
+    const wxString& GetOutputFileName() const { return m_htmlString; }
 
 private:
-    wxString htmlString_;
+    wxString m_htmlString;
 };
 
 #endif

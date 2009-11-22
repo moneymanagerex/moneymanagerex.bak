@@ -20,16 +20,11 @@
 #include "dbwrapper.h"
 #include "maincurrencydialog.h"
 #include "defs.h"
-
 #include "util.h"
+#include "paths.h"
 
-#define ACCT_TYPE_CHECKING 0
-#define ACCT_TYPE_INVESTMENT 1
-
-#define ACCT_STATUS_OPEN 0
-#define ACCT_STATUS_CLOSED 1
-
-#define MMEX_ICON_FNAME mmGetBaseWorkingPath() + wxT("/mmex.ico")
+enum { ACCT_TYPE_CHECKING, ACCT_TYPE_INVESTMENT };
+enum { ACCT_STATUS_OPEN, ACCT_STATUS_CLOSED };
 
 
 IMPLEMENT_DYNAMIC_CLASS( mmNewAcctDialog, wxDialog )
@@ -66,8 +61,7 @@ bool mmNewAcctDialog::Create( wxWindow* parent, wxWindowID id,
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
-    SetIcon(icon);
+    SetIcon(mmex::getProgramIcon());
     
     Centre();
 
