@@ -17,15 +17,57 @@
  ********************************************************/
 
 #include "mmgraphgenerator.h"
-#include "util.h"
+//----------------------------------------------------------------------------
+#include <vector>
+#include <algorithm>
+#include <wx/filename.h>
+//----------------------------------------------------------------------------
 
-mmGraphGenerator::mmGraphGenerator(const wxString& outFileName)
+namespace 
 {
-	// for systems without the graphs directory this would assert an error!
-	htmlString_ = /* wxT("graphs\\") + */ outFileName;
-}
 
-const wxString& mmGraphGenerator::GetOutputFileName() 
-{ 
-   return htmlString_; 
+class Deleter
+{
+public:
+        Deleter() : files(64) {}
+       ~Deleter();
+
+        void add(const wxString &f) { files.push_back(f); }
+        void delete_all();
+
+private:
+        std::vector<wxString> files;
+};
+//----------------------------------------------------------------------------
+Deleter g_deleter;
+//----------------------------------------------------------------------------
+
+Deleter::~Deleter()
+{
+        try {
+                delete_all();
+        } catch (...) {
+                wxASSERT(false);
+        }
 }
+//----------------------------------------------------------------------------
+
+void Deleter::delete_all()
+{
+        for_each(files.begin(), files.end(), wxRemoveFile);
+}
+//----------------------------------------------------------------------------
+
+} // namespace 
+
+//----------------------------------------------------------------------------
+
+/*
+        FIXME: do not create temp files in public temporary directory.
+*/
+mmGraphGenerator::mmGraphGenerator() :
+        m_htmlString(wxFileName::CreateTempFileName(wxGetEmptyString()))
+{
+        g_deleter.add(m_htmlString);
+}
+//----------------------------------------------------------------------------

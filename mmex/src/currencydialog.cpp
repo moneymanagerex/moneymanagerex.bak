@@ -19,16 +19,13 @@
 #include "currencydialog.h"
 #include "util.h"
 #include "defs.h"
+#include "paths.h"
 
 #include <wx/combobox.h>
 
 #ifndef __VISUALC__
 #define INT_PTR intptr_t
 #endif
-
-
-#define MMEX_ICON_FNAME mmGetBaseWorkingPath() + wxT("/mmex.ico")
-
 
 
 IMPLEMENT_DYNAMIC_CLASS( mmCurrencyDialog, wxDialog )
@@ -79,8 +76,7 @@ bool mmCurrencyDialog::Create( wxWindow* parent, wxWindowID id,
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
-    SetIcon(icon);
+    SetIcon(mmex::getProgramIcon());
     
     fillControls();
 

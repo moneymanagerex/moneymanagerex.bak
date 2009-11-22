@@ -22,8 +22,6 @@
 //----------------------------------------------------------------------------
 #include <wx/defs.h> // wxID_HIGHEST
 //----------------------------------------------------------------------------
-class wxString;
-//----------------------------------------------------------------------------
 
 namespace mmex 
 {
@@ -33,10 +31,7 @@ extern const wxChar * const DATAVERSION;
 //----------------------------------------------------------------------------
 extern const wxChar *const DEFDATEFORMAT;
 extern const wxChar *const DEFDELIMTER;
-extern const wxChar *const CURRENCYDB_FNAME;
 extern const wxChar *const DEFSTOCKURL;
-
-wxString getVersion();
 
 } // mmex
 
@@ -426,4 +421,3 @@ enum
 //----------------------------------------------------------------------------
 #endif // _MM_EX_GUIID_H_
 //----------------------------------------------------------------------------
-
