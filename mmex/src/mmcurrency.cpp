@@ -16,6 +16,7 @@
 
 #include "mmcurrency.h"
 #include "util.h"
+#include "dbwrapper.h"
 
 mmCurrency::mmCurrency(boost::shared_ptr<wxSQLite3Database> db, 
                        wxSQLite3ResultSet& q1)

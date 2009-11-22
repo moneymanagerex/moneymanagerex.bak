@@ -36,6 +36,7 @@
 #include "dbwrapper.h"
 #include "categdialog.h"
 #include "payeedialog.h"
+#include "paths.h"
 #include <algorithm>
 #include <vector>
 
@@ -53,10 +54,6 @@
 #define DEF_STATUS_VOID       2
 #define DEF_STATUS_FOLLOWUP   3
 #define DEF_STATUS_DUPLICATE  4
-
-
-#define MMEX_ICON_FNAME mmGetBaseWorkingPath() + wxT("/mmex.ico")
-
 
 
 bool sortTransactionsByDate1( boost::shared_ptr<mmBankTransaction> elem1, 
@@ -170,11 +167,10 @@ bool mmFilterTransactionsDialog::Create( wxWindow* parent, wxWindowID id,
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
-    SetIcon(icon);
+    SetIcon(mmex::getProgramIcon());
 
     Centre();
-    return TRUE;
+    return true;
 }
 
 /*!

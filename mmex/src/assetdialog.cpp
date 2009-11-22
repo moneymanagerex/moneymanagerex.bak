@@ -20,24 +20,13 @@
 #include "dbwrapper.h"
 #include "currencydialog.h"
 #include "defs.h"
-
-#define DEF_CHANGE_NONE 0
-#define DEF_CHANGE_APPRECIATE 1
-#define DEF_CHANGE_DEPRECIATE 2
-
-#define DEF_ASSET_PROPERTY 0
-#define DEF_ASSET_AUTO 1
-#define DEF_ASSET_HOUSE 2
-#define DEF_ASSET_ART 3
-#define DEF_ASSET_JEWELLERY 4
-#define DEF_ASSET_CASH 5
-#define DEF_ASSET_OTHER 6
+#include "paths.h"
 
 
-#define MMEX_ICON_FNAME mmGetBaseWorkingPath() + wxT("/mmex.ico")
-#define MMEX_SPLASH_FNAME mmGetBaseWorkingPath() + wxT("/splash.png")
+enum { DEF_CHANGE_NONE, DEF_CHANGE_APPRECIATE, DEF_CHANGE_DEPRECIATE };
+enum { DEF_ASSET_PROPERTY, DEF_ASSET_AUTO, DEF_ASSET_HOUSE, DEF_ASSET_ART, DEF_ASSET_JEWELLERY, DEF_ASSET_CASH, DEF_ASSET_OTHER };
 
- 
+
 IMPLEMENT_DYNAMIC_CLASS( mmAssetDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmAssetDialog, wxDialog )
@@ -72,8 +61,7 @@ bool mmAssetDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
-    SetIcon(icon);
+    SetIcon(mmex::getProgramIcon());
     
     fillControls();
 
@@ -435,7 +423,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     EndModal(wxID_OK);
 }
 
-void mmAssetDialog::OnChangeAppreciationType(wxCommandEvent& event)
+void mmAssetDialog::OnChangeAppreciationType(wxCommandEvent& /*event*/)
 {
 	int selection = valueChange_->GetSelection();
 	// Disable for "None", Enable for "Appreciates" or "Depreciates"
