@@ -100,7 +100,6 @@ public:
    static bool enableBeNotifiedForNewReleases_;
    static bool enableVisitWebsite_;
    static wxString logoName_;
-   static wxString appName_;
    static wxString fontSize_;
    static bool enableImportMMNETCSV_;
    static bool enableImportMMCSV_;
@@ -124,27 +123,28 @@ public:
     static wxColour listFutureDateColor;
 };
 
+
 class mmCurrencyFormatter
 {
-    public: mmCurrencyFormatter() {}
-    public: ~mmCurrencyFormatter() {}
+public:
 
-    public: static void loadSettings(wxString pfx, wxString sfx, wxChar dec, wxChar grp,
-                                wxString unit, wxString cent, double scale);
-    public: static void loadDefaultSettings();
-    public: static bool formatDoubleToCurrency(double val, wxString& data);
-    public: static bool formatCurrencyToDouble(const wxString& str, double& val);
-    public: static bool formatDoubleToCurrencyEdit(double val, wxString& rdata);
-    public: static void loadSettings(boost::shared_ptr<mmCurrency> pCurrencyPtr);
+static void loadSettings(wxString pfx, wxString sfx, wxChar dec, wxChar grp, wxString unit, wxString cent, double scale);
+static void loadDefaultSettings();
 
-    public:
-    static wxString pfx_symbol;   // Leading currency symbol (U.S.: '$')
-    static wxString sfx_symbol;   // Trailing currency symbol
-    static wxChar decimal_point;  // Character for 100ths  (U.S.:  period)
-    static wxChar group_separator;// Character for 1000nds (U.S.:  comma)
-    static wxString unit_name;    // Name of monetary unit (U.S.:  "dollar")
-    static wxString cent_name;    // Name of fraction unit (U.S.:  "cent")
-    static double  scale;         // Scale 100
+static bool formatDoubleToCurrency(double val, wxString& data);
+static bool formatCurrencyToDouble(const wxString& str, double& val);
+static bool formatDoubleToCurrencyEdit(double val, wxString& rdata);
+static void loadSettings(boost::shared_ptr<mmCurrency> pCurrencyPtr);
+
+static wxString pfx_symbol;   // Leading currency symbol (U.S.: '$')
+static wxString sfx_symbol;   // Trailing currency symbol
+static wxChar decimal_point;  // Character for 100ths  (U.S.:  period)
+static wxChar group_separator;// Character for 1000nds (U.S.:  comma)
+static wxString unit_name;    // Name of monetary unit (U.S.:  "dollar")
+static wxString cent_name;    // Name of fraction unit (U.S.:  "cent")
+static double  scale;         // Scale 100
+
 };
+
 
 #endif

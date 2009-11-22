@@ -23,8 +23,10 @@
 #include "mmex.h"
 #include "univcsvdialog.h"
 #include "mmcoredb.h"
-#include <wx/sound.h>
+#include "paths.h"
 #include "wxautocombobox.h"
+
+#include <wx/sound.h>
 
 //----------------------------------------------------------------------------
 
@@ -113,7 +115,6 @@ void mmOptions::saveOptions(wxSQLite3Database* db)
    wxString mmIniOptions::logoName_ = wxT("bma_small.jpg");
    bool mmIniOptions::enableAddAccount_ = false;
    bool mmIniOptions::enableRepeatingTransactions_ = true;
-   wxString mmIniOptions::appName_ = wxT("Hotel Manager");
    bool mmIniOptions::enableImportMMNETCSV_ = false;
    bool mmIniOptions::enableImportMMCSV_ = false;
    bool mmIniOptions::enableCheckForUpdates_ = false;
@@ -136,7 +137,6 @@ void mmOptions::saveOptions(wxSQLite3Database* db)
    wxString mmIniOptions::logoName_ = wxT("");
    bool mmIniOptions::enableAddAccount_ = true;
    bool mmIniOptions::enableRepeatingTransactions_ = true;
-   wxString mmIniOptions::appName_ = wxT("Money Manager Ex - CodeLathe");
    bool mmIniOptions::enableImportMMNETCSV_ = true;
    bool mmIniOptions::enableImportMMCSV_ = true;
    bool mmIniOptions::enableCheckForUpdates_ = true;
@@ -184,22 +184,13 @@ void mmIniOptions::saveOptions(wxSQLite3Database* /*db*/)
 // ---------------------------------------------------------------------------
 void mmPlayTransactionSound(wxSQLite3Database* db_)
 {
-    wxString useSound = mmDBWrapper::getINISettingValue(db_, 
-       wxT("USETRANSSOUND"), wxT("TRUE"));
-    if (useSound != wxT("TRUE"))
-        return;
-	wxString soundPath = mmGetBaseWorkingPath()+wxT("\\kaching.wav");
-	
-	// Added path for mac app bundles
-#if defined (__WXMAC__) || defined(__WXOSX__)
-	soundPath = wxT("MMEX.app/Contents/Resources/kaching.wav");
-#elif defined (__WXGTK__)
-	soundPath = mmGetBaseWorkingPath()+wxT("//kaching.wav");
-#endif
-	
-    wxSound registerSound(soundPath);
-    if (registerSound.IsOk())
-        registerSound.Play(wxSOUND_ASYNC);
+    wxString useSound = mmDBWrapper::getINISettingValue(db_, wxT("USETRANSSOUND"), wxT("TRUE"));
+
+    if (useSound == wxT("TRUE")) {
+        wxSound registerSound(mmex::getPathResource(mmex::TRANS_SOUND));
+        if (registerSound.IsOk())
+                registerSound.Play(wxSOUND_ASYNC);
+    }
 }
 
 wxString mmGetBaseWorkingPath(bool ignoreCommandLine)
@@ -228,7 +219,7 @@ wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database* inidb, bool force
 {
         wxString lang;
 
-        const wxString langPath = mmGetBaseWorkingPath() + wxT("/i18n");
+        const wxString langPath = mmex::getPathShared(mmex::LANG_DIR);
         wxLocale &locale = wxGetApp().getLocale();
         bool verbose = forced_show_dlg;
 
@@ -1284,13 +1275,14 @@ wxColour mmColors::listFutureDateColor = wxColour(116, 134, 168);
 
 /* -------------------------------------------- */
 // setup the defaults for US Dollar
-wxString  mmCurrencyFormatter::pfx_symbol     = wxT("$");
-wxString  mmCurrencyFormatter::sfx_symbol      = wxT("");
-wxChar    mmCurrencyFormatter::decimal_point   = wxT('.');
+wxString  mmCurrencyFormatter::pfx_symbol = wxT("$");
+wxString  mmCurrencyFormatter::sfx_symbol;
+wxChar    mmCurrencyFormatter::decimal_point = wxT('.');
 wxChar    mmCurrencyFormatter::group_separator = wxT(',');
-wxString  mmCurrencyFormatter::unit_name       = wxT("dollar");
-wxString  mmCurrencyFormatter::cent_name       = wxT("cent");
-double    mmCurrencyFormatter::scale           = 100; 
+wxString  mmCurrencyFormatter::unit_name = wxT("dollar");
+wxString  mmCurrencyFormatter::cent_name = wxT("cent");
+double    mmCurrencyFormatter::scale = 100; 
+
 
 double mmRound(const double x)            
 {
@@ -1312,49 +1304,46 @@ double mmMoneyInt(double value)
 void mmCurrencyFormatter::loadSettings(wxString pfx, wxString sfx, wxChar dec, wxChar grp,
                                 wxString unit, wxString cent, double scale)
 {
-    mmCurrencyFormatter::pfx_symbol = pfx;
-    mmCurrencyFormatter::sfx_symbol  = sfx;
-    mmCurrencyFormatter::decimal_point   = dec;
-    mmCurrencyFormatter::group_separator = grp;
-    mmCurrencyFormatter::unit_name = unit;
-    mmCurrencyFormatter::cent_name = cent;
-    mmCurrencyFormatter::scale      = scale; 
+    pfx_symbol = pfx;
+    sfx_symbol  = sfx;
+    decimal_point   = dec;
+    group_separator = grp;
+    unit_name = unit;
+    cent_name = cent;
+    scale = scale; 
 }
 
 void mmCurrencyFormatter::loadSettings(boost::shared_ptr<mmCurrency> pCurrencyPtr)
 {
-    mmCurrencyFormatter::pfx_symbol = pCurrencyPtr->pfxSymbol_;
-    mmCurrencyFormatter::sfx_symbol  = pCurrencyPtr->sfxSymbol_;
+    pfx_symbol = pCurrencyPtr->pfxSymbol_;
+    sfx_symbol = pCurrencyPtr->sfxSymbol_;
 
-    if (!pCurrencyPtr->dec_.IsEmpty())
-    {
-        mmCurrencyFormatter::decimal_point   = pCurrencyPtr->dec_.GetChar(0);
+    if (!pCurrencyPtr->dec_.IsEmpty()) {
+        decimal_point = pCurrencyPtr->dec_.GetChar(0);
+    } else {
+        decimal_point = 0;
     }
-    else
-        mmCurrencyFormatter::decimal_point = 0;
     
-    if (!pCurrencyPtr->grp_.IsEmpty())
-    {
-        mmCurrencyFormatter::group_separator = pCurrencyPtr->grp_.GetChar(0);
+    if (!pCurrencyPtr->grp_.IsEmpty()) {
+        group_separator = pCurrencyPtr->grp_.GetChar(0);
+    } else {
+        group_separator = 0;
     }
-    else
-        mmCurrencyFormatter::group_separator = 0;
-
         
-    mmCurrencyFormatter::unit_name = pCurrencyPtr->unit_;
-    mmCurrencyFormatter::cent_name = pCurrencyPtr->cent_;
-    mmCurrencyFormatter::scale     = pCurrencyPtr->scaleDl_;
+    unit_name = pCurrencyPtr->unit_;
+    cent_name = pCurrencyPtr->cent_;
+    scale     = pCurrencyPtr->scaleDl_;
 }
 
 void mmCurrencyFormatter::loadDefaultSettings()
 {
-    mmCurrencyFormatter::pfx_symbol = wxT("$");
-    mmCurrencyFormatter::sfx_symbol  = wxT("");
-    mmCurrencyFormatter::decimal_point   = wxT('.');
-    mmCurrencyFormatter::group_separator = wxT(',');
-    mmCurrencyFormatter::unit_name = wxT("dollar");
-    mmCurrencyFormatter::cent_name = wxT("cent");
-    mmCurrencyFormatter::scale      = 100; 
+    pfx_symbol = wxT("$");
+    sfx_symbol.clear();
+    decimal_point   = wxT('.');
+    group_separator = wxT(',');
+    unit_name = wxT("dollar");
+    cent_name = wxT("cent");
+    scale = 100; 
 }
 
 bool mmCurrencyFormatter::formatDoubleToCurrencyEdit(double val, wxString& rdata)
@@ -1450,15 +1439,15 @@ bool mmCurrencyFormatter::formatDoubleToCurrencyEdit(double val, wxString& rdata
 
 bool mmCurrencyFormatter::formatDoubleToCurrency(double val, wxString& rdata)
 {
-  wxString data = wxT("");
-  double value = mmRound(val * mmCurrencyFormatter::scale);
+  wxString data;
+  double value = mmRound(val * scale);
   double absx = value > 0 ? value : - value;      //  Get magnitude of argument
   double whole = mmMoneyInt(absx);       //  Isolate whole monetary units
   short  cents = mmCents(absx);     //  Isolate fractional units
   //double remdr = absx - ((whole * 100 + cents) / 100);
 
-  data = data + pfx_symbol; //  insert prefix
-  data = data + wxT(' ');  // insert space
+  data += pfx_symbol; //  insert prefix
+  data += wxT(' ');  // insert space
   if  (value < 0) 
      data += '-';    //  print prefix minus, if needed
   
@@ -1569,20 +1558,11 @@ BEGIN_EVENT_TABLE(wxAutoComboBox, wxComboBox)
         EVT_KEY_UP(wxAutoComboBox::OnKeyUp)
 END_EVENT_TABLE()
 
-wxAutoComboBox::wxAutoComboBox()
-{
-
-}
-
 wxAutoComboBox::wxAutoComboBox(wxWindow* parent, wxWindowID id, const wxString& value, const wxPoint& pos, const wxSize& size, const wxArrayString& choices, long style, const wxValidator& validator, const wxString& name)
 : wxComboBox(parent, id, value, pos, size, choices, style, validator, name)
 {
 }
 
-
-wxAutoComboBox::~wxAutoComboBox(void)
-{
-}
 
 void wxAutoComboBox::OnKeyUp(wxKeyEvent &event)
 {
