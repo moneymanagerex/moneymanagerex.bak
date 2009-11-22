@@ -17,8 +17,13 @@
 #ifndef _MM_EX_MMCURRENCY_H_
 #define _MM_EX_MMCURRENCY_H_
 
-#include "mmdbinterface.h"
-#include "boost/shared_ptr.hpp"
+#include <vector>
+#include <boost/shared_ptr.hpp>
+#include <wx/string.h>
+
+class wxSQLite3Database;
+class wxSQLite3ResultSet;
+
 
 class mmCurrency
 {

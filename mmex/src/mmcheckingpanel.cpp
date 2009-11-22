@@ -1197,7 +1197,7 @@ void MyListCtrl::OnListItemSelected(wxListEvent& event)
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::OnListItemDeselected(wxListEvent& event)
+void MyListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 {
 	m_selectedIndex = -1;
 	m_cp->updateExtraTransactionData(m_selectedIndex);
