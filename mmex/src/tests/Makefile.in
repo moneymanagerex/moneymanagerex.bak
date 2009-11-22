@@ -76,6 +76,7 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_budgetyearentrydialog.o \
 	mmex_tests_categdialog.o \
 	mmex_tests_chart.o \
+	mmex_tests_constants.o \
 	mmex_tests_currencydialog.o \
 	mmex_tests_dbwrapper.o \
 	mmex_tests_fileviewerdialog.o \
@@ -91,6 +92,8 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_mmcurrency.o \
 	mmex_tests_mmex.o \
 	mmex_tests_mmgraphgenerator.o \
+	mmex_tests_mmgraphincexpensesmonth.o \
+	mmex_tests_mmgraphpie.o \
 	mmex_tests_mmgraphtopcategories.o \
 	mmex_tests_mmhelppanel.o \
 	mmex_tests_mmhomepagepanel.o \
@@ -100,6 +103,7 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_mmyahoo.o \
 	mmex_tests_newacctdialog.o \
 	mmex_tests_optionsdialog.o \
+	mmex_tests_paths.o \
 	mmex_tests_payeedialog.o \
 	mmex_tests_qifimport.o \
 	mmex_tests_reportcategovertimeperf.o \
@@ -117,6 +121,7 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_wxsqlite3.o \
 	mmex_tests_wxtinyxml.o \
 	mmex_tests_yahoosettingsdialog.o \
+	mmex_tests_platfdep.o \
 	mmex_tests_dbwrapper_test.o \
 	mmex_tests_mmex_tests.o \
 	mmex_tests_utils.o \
@@ -266,6 +271,9 @@ mmex_tests_categdialog.o: $(srcdir)/../../src/categdialog.cpp
 mmex_tests_chart.o: $(srcdir)/../../src/chart.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/chart.cpp
 
+mmex_tests_constants.o: $(srcdir)/../../src/constants.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/constants.cpp
+
 mmex_tests_currencydialog.o: $(srcdir)/../../src/currencydialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/currencydialog.cpp
 
@@ -311,6 +319,12 @@ mmex_tests_mmex.o: $(srcdir)/../../src/mmex.cpp
 mmex_tests_mmgraphgenerator.o: $(srcdir)/../../src/mmgraphgenerator.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmgraphgenerator.cpp
 
+mmex_tests_mmgraphincexpensesmonth.o: $(srcdir)/../../src/mmgraphincexpensesmonth.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmgraphincexpensesmonth.cpp
+
+mmex_tests_mmgraphpie.o: $(srcdir)/../../src/mmgraphpie.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmgraphpie.cpp
+
 mmex_tests_mmgraphtopcategories.o: $(srcdir)/../../src/mmgraphtopcategories.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/mmgraphtopcategories.cpp
 
@@ -337,6 +351,9 @@ mmex_tests_newacctdialog.o: $(srcdir)/../../src/newacctdialog.cpp
 
 mmex_tests_optionsdialog.o: $(srcdir)/../../src/optionsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/optionsdialog.cpp
+
+mmex_tests_paths.o: $(srcdir)/../../src/paths.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/paths.cpp
 
 mmex_tests_payeedialog.o: $(srcdir)/../../src/payeedialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/payeedialog.cpp
@@ -388,6 +405,9 @@ mmex_tests_wxtinyxml.o: $(srcdir)/../../src/wxtinyxml.cpp
 
 mmex_tests_yahoosettingsdialog.o: $(srcdir)/../../src/yahoosettingsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/yahoosettingsdialog.cpp
+
+mmex_tests_platfdep.o: $(srcdir)/../../src/unix/platfdep.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/unix/platfdep.cpp
 
 mmex_tests_dbwrapper_test.o: $(srcdir)/../../src/tests/dbwrapper_test.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/dbwrapper_test.cpp
