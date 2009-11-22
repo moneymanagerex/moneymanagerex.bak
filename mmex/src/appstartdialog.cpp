@@ -20,15 +20,14 @@
 #include "appstartdialog.h"
 #include "guiid.h"
 #include "dbwrapper.h"
+#include "paths.h"
+#include "constants.h"
+#include "util.h"
 
 /*******************************************************/
 /* Include XPM Support */
 #include "../resources/money.xpm"
-#ifdef MMEX_CUSTOM_BUILD
-#include "../resources/bma.xpm"
-#endif
 /*******************************************************/
-
 
 IMPLEMENT_DYNAMIC_CLASS( mmAppStartDialog, wxDialog )
 
@@ -40,45 +39,51 @@ BEGIN_EVENT_TABLE( mmAppStartDialog, wxDialog )
     EVT_BUTTON( ID_BUTTON_APPSTART_LAST_DATABASE, mmAppStartDialog::OnButtonAppstartLastDatabaseClick )
 END_EVENT_TABLE()
 
-mmAppStartDialog::mmAppStartDialog( )
+
+mmAppStartDialog::mmAppStartDialog() : 
+        inidb_(),
+        itemCheckBox(),
+        retCode_(-1)
 {
-    retCode_ = -1;
 }
 
-mmAppStartDialog::~mmAppStartDialog()
-{
-    wxString showBeginApp = wxT("FALSE");
-    if (itemCheckBox->GetValue() == true)
-        showBeginApp = wxT("TRUE");
 
-    mmDBWrapper::setINISettingValue(inidb_, 
-        wxT("SHOWBEGINAPP"), showBeginApp);
-}
-
-mmAppStartDialog::mmAppStartDialog( wxSQLite3Database* inidb, wxWindow* parent, wxWindowID id, 
-                                   const wxString& caption, const wxPoint& pos, 
-                                   const wxSize& size, long style )
+mmAppStartDialog::mmAppStartDialog(wxSQLite3Database* inidb, wxWindow* parent) :
+        inidb_(inidb),
+        itemCheckBox(),
+        retCode_(-1)
 {
-    retCode_ = -1;
-    inidb_ = inidb;
-    Create(parent, id, caption, pos, size, style);
+    wxString caption = mmex::getProgramName() + _(" Start Page");
+    Create(parent, ID_DIALOG_APPSTART, caption, wxDefaultPosition, wxSize(400, 300), wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX);
 }
 
 bool mmAppStartDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption, 
                               const wxPoint& pos, const wxSize& size, long style )
 {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
-    wxDialog::Create( parent, id, caption, pos, size, style );
+    bool ok = wxDialog::Create( parent, id, caption, pos, size, style );
 
-    wxIcon icon(mmGetBaseWorkingPath() + wxT("/mmex.ico"), wxBITMAP_TYPE_ICO, 32, 32);
-    SetIcon(icon);
+    if (ok) {
+        SetIcon(mmex::getProgramIcon());
+        CreateControls();
+        GetSizer()->Fit(this);
+        GetSizer()->SetSizeHints(this);
+        CentreOnScreen();
+    }
 
-    CreateControls();
-    GetSizer()->Fit(this);
-    GetSizer()->SetSizeHints(this);
-    CentreOnScreen();
-    return TRUE;
+    return ok;
 }
+
+mmAppStartDialog::~mmAppStartDialog()
+{
+    try {
+        wxString showBeginApp = itemCheckBox->GetValue() ? wxT("TRUE") : wxT("FALSE");
+        mmDBWrapper::setINISettingValue(inidb_, wxT("SHOWBEGINAPP"), showBeginApp);
+    } catch (...) {
+        wxASSERT(false);
+    }
+}
+
 
 void mmAppStartDialog::CreateControls()
 {    
@@ -91,21 +96,13 @@ void mmAppStartDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxBitmap itemStaticBitmap4Bitmap;
-    itemStaticBitmap4Bitmap.LoadFile(mmGetBaseWorkingPath() + wxT("/splash.png"), wxBITMAP_TYPE_PNG); 
+    itemStaticBitmap4Bitmap.LoadFile(mmex::getPathResource(mmex::SPLASH_ICON), wxBITMAP_TYPE_PNG); 
     
     wxStaticBitmap* itemStaticBitmap4 = 0;
     if (!mmIniOptions::enableCustomLogo_)
     {
         itemStaticBitmap4 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
             itemStaticBitmap4Bitmap, wxDefaultPosition, wxSize(400, 209), 0 );
-    }
-    else
-    {
-#ifdef MMEX_CUSTOM_BUILD
-        wxBitmap itemStaticCustomBitmap(bma_xpm);
-        itemStaticBitmap4 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
-            itemStaticCustomBitmap, wxDefaultPosition, wxSize(181, 200), 0 );
-#endif
     }
     
     if (itemStaticBitmap4) {
@@ -154,16 +151,22 @@ void mmAppStartDialog::CreateControls()
     {
        wxButton* itemButton9 = new wxButton( itemDialog1, ID_BUTTON_APPSTART_WEBSITE, 
           _("Visit Website for more information"), wxDefaultPosition, wxDefaultSize, 0 );
-       itemButton9->SetToolTip(_("Open the Money Manager Ex website for latest news, updates etc"));
+
+       wxString s = _("Open the ");
+       s += mmex::getProgramName();
+       s += _(" website for latest news, updates etc");
+       
+       itemButton9->SetToolTip(s);
        itemBoxSizer5->Add(itemButton9, 0, wxGROW|wxALL, 5);
     }
 
     wxBoxSizer* itemBoxSizer10 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer10, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxString showAppStartString = _("Show this window next time ") + 
-                                  mmIniOptions::appName_ + 
-                                  _(" starts");
+    wxString showAppStartString = _("Show this window next time ");
+    showAppStartString += mmex::getProgramName();
+    showAppStartString += _(" starts");
+
     itemCheckBox = new wxCheckBox( itemDialog1, ID_CHECKBOX_APPSTART_SHOWAPPSTART, 
         showAppStartString, wxDefaultPosition, 
         wxDefaultSize, wxCHK_2STATE );

@@ -20,82 +20,64 @@
 #include "defs.h"
 #include "dbwrapper.h"
 #include "util.h"
-
+#include "paths.h"
+#include "constants.h"
 /*******************************************************/
 /* Include XPM Support */
 #include "../resources/money.xpm"
-#ifdef MMEX_CUSTOM_BUILD
-#include "../resources/bma.xpm"
-#endif
 /*******************************************************/
-#define MMEX_SPLASH_FNAME wxT("/splash.png")
-#define MMEX_ICON_FNAME wxT("/mmex.ico")
-/*******************************************************/
-IMPLEMENT_DYNAMIC_CLASS( mmAboutDialog, wxDialog )
 
-BEGIN_EVENT_TABLE( mmAboutDialog, wxDialog )
+IMPLEMENT_DYNAMIC_CLASS(mmAboutDialog, wxDialog)
+
+
+BEGIN_EVENT_TABLE(mmAboutDialog, wxDialog)
   EVT_BUTTON(ID_DIALOG_BUTTON_ABOUT_VERSION_HISTORY, mmAboutDialog::OnVersionHistory)
   EVT_BUTTON(ID_DIALOG_BUTTON_ABOUT_CONTRIBUTERS, mmAboutDialog::OnContributerList)
 END_EVENT_TABLE()
 
-mmAboutDialog::mmAboutDialog()
+
+mmAboutDialog::mmAboutDialog( wxSQLite3Database* inidb, wxWindow* parent) :
+        inidb_(inidb)
 {
+    wxString caption = _("About ") + mmex::getProgramName();
+    Create(parent, ID_DIALOG_ABOUT, caption, wxDefaultPosition, wxSize(500, 220), wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX);
 }
 
-mmAboutDialog::mmAboutDialog( wxSQLite3Database* inidb, wxWindow* parent, wxWindowID id, 
-    const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+bool mmAboutDialog::Create(wxWindow* parent, 
+                           wxWindowID id, 
+                           const wxString& caption, 
+                           const wxPoint& pos, 
+                           const wxSize& size, 
+                           long style
+                          )
 {
-    inidb_ = inidb;
-    Create(parent, id, caption, pos, size, style);
-}
+    SetExtraStyle(GetExtraStyle() | wxWS_EX_BLOCK_EVENTS);
 
-bool mmAboutDialog::Create( wxWindow* parent, wxWindowID id, 
-    const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
-{
-    SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
-    wxDialog::Create( parent, id, caption, pos, size, style );
+    bool ok = wxDialog::Create(parent, id, caption, pos, size, style);
 
-    CreateControls();
-    GetSizer()->Fit(this);
-    GetSizer()->SetSizeHints(this);
+    if (ok) {
+        CreateControls();
+        GetSizer()->Fit(this);
+        GetSizer()->SetSizeHints(this);
+        SetIcon(mmex::getProgramIcon());
+        Centre();
+    }
 
-    wxIcon icon(mmGetBaseWorkingPath() + MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
-    SetIcon(icon);
-
-    Centre();
-    return TRUE;
+    return ok;
 }
 
 void mmAboutDialog::OnVersionHistory(wxCommandEvent& /*event*/)
 {
-    wxFileName fname(wxTheApp->argv[0]);
-    wxString filePath = fname.GetPath(wxPATH_GET_VOLUME) 
-                       + wxFileName::GetPathSeparator()
-                       + wxT("version.txt");
-#if defined (__WXMAC__) || defined (__WXOSX__)
-	filePath = wxT("MMEX.app/Contents/Resources/version.txt");
-#endif
-    fileviewer* dlg = new fileviewer(filePath, this);
-    if ( dlg->ShowModal() == wxID_OK )
-    {
-    }
-    dlg->Destroy();
+    wxString filePath = mmex::getPathDoc(mmex::F_VERSION);
+    fileviewer dlg(filePath, this);
+    dlg.ShowModal();
 }
 
 void mmAboutDialog::OnContributerList(wxCommandEvent& /*event*/)
 {
-    wxFileName fname(wxTheApp->argv[0]);
-    wxString filePath = fname.GetPath(wxPATH_GET_VOLUME) 
-                        + wxFileName::GetPathSeparator()
-                        + wxT("contrib.txt");
-#if defined (__WXMAC__) || defined (__WXOSX__)
-	filePath = wxT("MMEX.app/Contents/Resources/contrib.txt");
-#endif
-    fileviewer* dlg = new fileviewer(filePath, this);
-    if ( dlg->ShowModal() == wxID_OK )
-    {
-    }
-    dlg->Destroy();
+    wxString filePath = mmex::getPathDoc(mmex::F_CONTRIB);
+    fileviewer dlg(filePath, this);
+    dlg.ShowModal();
 }
 
 void mmAboutDialog::CreateControls()
@@ -109,21 +91,13 @@ void mmAboutDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizerN, 1, wxGROW|wxALL, 5);
 
     wxBitmap itemStaticBitmap3Bitmap;
-    itemStaticBitmap3Bitmap.LoadFile(mmGetBaseWorkingPath() + MMEX_SPLASH_FNAME, wxBITMAP_TYPE_PNG); 
+    itemStaticBitmap3Bitmap.LoadFile(mmex::getPathResource(mmex::SPLASH_ICON), wxBITMAP_TYPE_PNG); 
 
     wxStaticBitmap* itemStaticBitmap3 = 0;
     if (!mmIniOptions::enableCustomLogo_)
     {
         itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
             itemStaticBitmap3Bitmap, wxDefaultPosition);
-    }
-    else
-    {
-#ifdef MMEX_CUSTOM_BUILD
-        wxBitmap itemStaticCustomBitmap(bma_xpm);
-         itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
-            itemStaticCustomBitmap, wxDefaultPosition, wxSize(235, 157), 0 );
-#endif
     }
     
     if (itemStaticBitmap3) {
@@ -133,17 +107,8 @@ void mmAboutDialog::CreateControls()
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer2->Add(itemBoxSizer4, 1, wxGROW|wxALL, 5);
 
-#if 0
-    wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, 
-        mmIniOptions::appName_, 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText5->SetFont(wxFont(16, 
-       wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
-    itemBoxSizer4->Add(itemStaticText5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
-#endif
-
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, 
-        wxString(_("Version: ")) + mmex::getVersion(), wxDefaultPosition, wxDefaultSize, 0 );
+        wxString(_("Version: ")) + mmex::getProgramVersion(), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer4->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
     if (!mmIniOptions::enableCustomAboutDialog_)
@@ -154,7 +119,7 @@ void mmAboutDialog::CreateControls()
        itemBoxSizer4->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
        wxStaticText* itemStaticText91 = new wxStaticText( itemDialog1, 
-          wxID_STATIC, _("  and contributors from around the world."), 
+          wxID_STATIC, _("  and contributors from around the world"), 
           wxDefaultPosition, wxDefaultSize, 0 );
        itemBoxSizer4->Add(itemStaticText91, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -171,7 +136,7 @@ void mmAboutDialog::CreateControls()
        itemBoxSizer4->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
        wxStaticText* itemStaticText12 = new wxStaticText( itemDialog1, 
-          wxID_STATIC, _("Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"), wxDefaultPosition, wxDefaultSize, 0 );
+          wxID_STATIC, _("Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle), Boost C++"), wxDefaultPosition, wxDefaultSize, 0 );
        itemBoxSizer4->Add(itemStaticText12, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
        wxButton* itemButton14 = new wxButton( itemDialog1, ID_DIALOG_BUTTON_ABOUT_VERSION_HISTORY, 
@@ -184,8 +149,7 @@ void mmAboutDialog::CreateControls()
           wxDefaultPosition, wxDefaultSize, 0 );
        itemBoxSizer4->Add(itemButton18, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-       wxString langStr = mmDBWrapper::getINISettingValue(inidb_, 
-          wxT("LANGUAGE"), wxT("")); 
+       wxString langStr = mmDBWrapper::getINISettingValue(inidb_, wxT("LANGUAGE")); 
 
        wxStaticText* itemStaticText15 = new wxStaticText( itemDialog1, 
           wxID_STATIC, _("Using Language : ") + langStr, wxDefaultPosition, wxDefaultSize, 0 );

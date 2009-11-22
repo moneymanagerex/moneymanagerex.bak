@@ -19,41 +19,29 @@
 #ifndef _MM_EX_ABOUTDIALOG_H_
 #define _MM_EX_ABOUTDIALOG_H_
 
-#include "guiid.h"
-#include "util.h"
+#include <wx/dialog.h>
 
-#define SYMBOL_ABOUTDIALOG_STYLE    wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX
-#define SYMBOL_ABOUTDIALOG_TITLE    _("About ") + mmIniOptions::appName_
-#define SYMBOL_ABOUTDIALOG_IDNAME   ID_DIALOG_ABOUT
-#define SYMBOL_ABOUTDIALOG_SIZE     wxSize(500, 220)
-#define SYMBOL_ABOUTDIALOG_POSITION wxDefaultPosition
+
+class wxSQLite3Database;
+
 
 class mmAboutDialog : public wxDialog
 {    
-    DECLARE_DYNAMIC_CLASS( mmTransDialog )
+    DECLARE_DYNAMIC_CLASS(mmAboutDialog)
     DECLARE_EVENT_TABLE()
 
 public:
-    mmAboutDialog();
-    mmAboutDialog(wxSQLite3Database* inidb, wxWindow* parent, 
-        wxWindowID id = SYMBOL_ABOUTDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_ABOUTDIALOG_TITLE, 
-        const wxPoint& pos      = SYMBOL_ABOUTDIALOG_POSITION, 
-        const wxSize& size      = SYMBOL_ABOUTDIALOG_SIZE, 
-        long style              = SYMBOL_ABOUTDIALOG_STYLE );
-
-    bool Create(wxWindow* parent, wxWindowID id = SYMBOL_ABOUTDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_ABOUTDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_ABOUTDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_ABOUTDIALOG_SIZE, 
-        long style = SYMBOL_ABOUTDIALOG_STYLE );
-
-    void CreateControls();
-    void OnVersionHistory(wxCommandEvent& event);
-    void OnContributerList(wxCommandEvent& event);
+    mmAboutDialog() : inidb_() {}
+    mmAboutDialog(wxSQLite3Database* inidb, wxWindow* parent);
 
 private:
     wxSQLite3Database* inidb_; 
+
+    bool Create(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style);
+    void CreateControls();
+    void OnVersionHistory(wxCommandEvent& event);
+    void OnContributerList(wxCommandEvent& event);
 };
 
-#endif
+#endif // _MM_EX_ABOUTDIALOG_H_
+

@@ -19,51 +19,37 @@
 #ifndef _MM_EX_APPSTARTDIALOG_H_
 #define _MM_EX_APPSTARTDIALOG_H_
 
-#include "defs.h"
-#include "guiid.h"
-#include "util.h"
+#include <wx/dialog.h>
 
-#define SYMBOL_MMAPPSTARTDIALOG_STYLE    wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_MMAPPSTARTDIALOG_TITLE    mmIniOptions::appName_ + _(" Start Page")
-#define SYMBOL_MMAPPSTARTDIALOG_IDNAME   ID_DIALOG_APPSTART
-#define SYMBOL_MMAPPSTARTDIALOG_SIZE     wxSize(400, 300)
-#define SYMBOL_MMAPPSTARTDIALOG_POSITION wxDefaultPosition
+class wxCheckBox;
+class wxSQLite3Database;
+
 
 class mmAppStartDialog: public wxDialog
 {    
-    DECLARE_DYNAMIC_CLASS( mmAppStartDialog )
+    DECLARE_DYNAMIC_CLASS(mmAppStartDialog)
     DECLARE_EVENT_TABLE()
 
 public:
-    mmAppStartDialog( );
-    mmAppStartDialog( wxSQLite3Database* inidb, wxWindow* parent, 
-        wxWindowID id = SYMBOL_MMAPPSTARTDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_MMAPPSTARTDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_MMAPPSTARTDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_MMAPPSTARTDIALOG_SIZE, 
-        long style = SYMBOL_MMAPPSTARTDIALOG_STYLE );
-    ~mmAppStartDialog();
+    mmAppStartDialog();
+    mmAppStartDialog(wxSQLite3Database* inidb, wxWindow* parent);
+   ~mmAppStartDialog();
 
-    bool Create( wxWindow* parent, 
-        wxWindowID id = SYMBOL_MMAPPSTARTDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_MMAPPSTARTDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_MMAPPSTARTDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_MMAPPSTARTDIALOG_SIZE, 
-        long style = SYMBOL_MMAPPSTARTDIALOG_STYLE );
+    int getReturnCode() const { return retCode_; }
 
+private:
+    wxSQLite3Database* inidb_;
+    wxCheckBox* itemCheckBox;
+    int retCode_;
+
+    bool Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style);
     void CreateControls();
-
-    int getReturnCode() { return retCode_; }
     void OnButtonAppstartOpenDatabaseClick( wxCommandEvent& event );
     void OnButtonAppstartNewDatabaseClick( wxCommandEvent& event );
     void OnButtonAppstartHelpClick( wxCommandEvent& event );
     void OnButtonAppstartWebsiteClick( wxCommandEvent& event );
     void OnButtonAppstartLastDatabaseClick( wxCommandEvent& event );
-
-private:
-    int retCode_;
-    wxSQLite3Database* inidb_;
-    wxCheckBox* itemCheckBox;
 };
 
-#endif
+#endif // _MM_EX_APPSTARTDIALOG_H_
+
