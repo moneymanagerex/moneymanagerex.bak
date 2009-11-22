@@ -49,10 +49,7 @@ AppPublisher={#Company}
 AppPublisherURL={#AppURL}
 AppSupportURL={#AppURL}
 AppUpdatesURL={#AppURL}
-
-; {pf}\{#AppName}
-DefaultDirName={userappdata}\{#AppName}
-
+DefaultDirName={pf}\{#AppName}
 DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
 LicenseFile="..\..\runtime\license.txt"
@@ -222,37 +219,44 @@ Source: "..\..\docs\french-help.html";  Languages: fr; DestName: "index.html"; D
 Source: "..\..\docs\index_fichiers\*";  Languages: fr; DestDir: "{#help_dir}\index_fichiers"; Components: help; Flags: ignoreversion
 Source: "..\..\docs\italian-help.html"; Languages: it; DestName: "index.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
 
+Source: "..\..\README.TXT";          Languages: en; DestDir: "{app}"; DestName: "readme.txt"; Components: program; Flags: ignoreversion
+Source: "..\..\README.RU";           Languages: ru; DestDir: "{app}"; DestName: "readme.txt"; Components: program; Flags: ignoreversion
 Source: "..\..\runtime\contrib.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
 Source: "..\..\runtime\license.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
 Source: "..\..\runtime\version.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
-Source: "..\..\runtime\currency.db3";DestDir: "{app}"; Components: program; Flags: ignoreversion
-Source: "..\..\runtime\kaching.wav"; DestDir: "{app}"; Components: program; Flags: ignoreversion
-Source: "..\..\runtime\mmex.ico";    DestDir: "{app}"; Components: program; Flags: ignoreversion
-Source: "..\..\runtime\splash.png";  DestDir: "{app}"; Components: program; Flags: ignoreversion
+Source: "..\..\runtime\currency_seed.db3";DestDir: "{app}"; Components: program; Flags: ignoreversion
+
+#define res_dir "{app}\res"
+Source: "..\..\runtime\kaching.wav"; DestDir: {#res_dir}; Components: program; Flags: ignoreversion
+Source: "..\..\runtime\mmex.ico";    DestDir: {#res_dir}; Components: program; Flags: ignoreversion
+Source: "..\..\runtime\splash.png";  DestDir: {#res_dir}; Components: program; Flags: ignoreversion
+
+#define bin_dir "{app}\bin"
+
 ; .exe already compressed by UPX
-Source: {#AppExePath}; DestDir: "{app}"; Components: program; Flags: ignoreversion nocompression
-Source: {#CrtDlls}; DestDir: "{app}"; Components: program; Flags: ignoreversion
+Source: {#AppExePath}; DestDir: {#bin_dir}; Components: program; Flags: ignoreversion nocompression
+Source: {#CrtDlls}; DestDir: {#bin_dir}; Components: program; Flags: ignoreversion
 
 #if Format == "mingw"
   #define MingwDllPath  GetEnv("MINGWDIR") + "\bin\mingwm10.dll"
-  Source: "{#MingwDllPath}"; DestDir: "{app}"; Components: program; Flags: ignoreversion
+  Source: "{#MingwDllPath}"; DestDir: {#bin_dir}; Components: program; Flags: ignoreversion
 #endif
 
 
 [Icons]
-Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExeName}"; IconFilename: "{app}\{#AppExeName}"; WorkingDir: {app}; IconIndex: 0
+Name: "{group}\{#AppName}"; Filename: "{#bin_dir}\{#AppExeName}"; IconFilename: "{#bin_dir}\{#AppExeName}"; WorkingDir: {#bin_dir}; IconIndex: 0
 Name: "{group}\{cm:UninstallProgram,{#AppName}}"; Filename: "{uninstallexe}"
 ; Name: "{commondesktop}\{#AppName}"; Filename: "{app}\{#AppExeName}"; Tasks: desktopicon
-Name: "{userdesktop}\{#AppName}"; Filename: "{app}\{#AppExeName}"; Tasks: desktopicon; IconFilename: "{app}\{#AppExeName}"; WorkingDir: {app}; IconIndex: 0
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#AppName}"; Filename: "{app}\{#AppExeName}"; Tasks: quicklaunchicon; WorkingDir: {app}; IconFilename: "{app}\{#AppExeName}"; IconIndex: 0
+Name: "{userdesktop}\{#AppName}"; Filename: "{#bin_dir}\{#AppExeName}"; Tasks: desktopicon; IconFilename: "{#bin_dir}\{#AppExeName}"; WorkingDir: {#bin_dir}; IconIndex: 0
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#AppName}"; Filename: "{#bin_dir}\{#AppExeName}"; Tasks: quicklaunchicon; WorkingDir: {#bin_dir}; IconFilename: "{#bin_dir}\{#AppExeName}"; IconIndex: 0
 
 [Run]
-Filename: "{app}\{#AppExeName}"; Description: "{cm:LaunchProgram,{#AppName}}"; Flags: nowait postinstall skipifsilent
+Filename: "{#bin_dir}\{#AppExeName}"; Description: "{cm:LaunchProgram,{#AppName}}"; Flags: nowait postinstall skipifsilent
 
 [UninstallDelete]
-Type: files; Name: "{app}\mmexini.db3"
-Type: files; Name: "{app}\*.png"
-Type: files; Name: "{app}\*.txt"
+Type: files; Name: "{userappdata}\{#AppName}\mmexini.db3"
+Type: files; Name: "{userappdata}\{#AppName}\*.png"
+Type: files; Name: "{userappdata}\{#AppName}\*.txt"
 
 [Messages]
 en.WelcomeLabel1=Welcome to [name] Setup

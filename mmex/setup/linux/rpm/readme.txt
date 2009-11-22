@@ -2,6 +2,7 @@
 
 cp mmex.spec ~/rpmbuild/SPECS
 cp mmex-X.X.X.X.tar.gz ~/rpmbuild/SOURCES
+cp mmex\resources\mainicon.xpm ~/rpmbuild/SOURCES/mmex.xpm
 
 cd ~/rpmbuild/SPECS
 rpmbuild -ba mmex.spec
@@ -22,6 +23,4 @@ The "Icon" tag is used to name a file containing an icon representing the packag
 software. The file may be in either GIF or XPM format, although XPM is preferred. 
 In either case, the background of the icon should be transparent. The file should 
 be placed in RPM's SOURCES directory prior to performing a build, so no path is 
-needed (mmex\graphics\mainicon.xpm copy to ~/rpmbuild/SOURCES).
-
-file:///D:/mmex/articles/max-rpm/s1-rpm-inside-tags.html
+needed.
