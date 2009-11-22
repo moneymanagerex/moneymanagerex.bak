@@ -2078,6 +2078,9 @@
 				RelativePath="..\..\..\src\chart.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\constants.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\currencydialog.cpp">
 			</File>
 			<File
@@ -2129,6 +2132,12 @@
 				RelativePath="..\..\..\src\mmgraphgenerator.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\mmgraphincexpensesmonth.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\mmgraphpie.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\mmgraphtopcategories.cpp">
 			</File>
 			<File
@@ -2156,7 +2165,13 @@
 				RelativePath="..\..\..\src\optionsdialog.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\paths.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\payeedialog.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\win\platfdep.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\qifimport.cpp">
@@ -2251,6 +2266,9 @@
 				RelativePath="..\..\..\src\chart.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\constants.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\currencydialog.h">
 			</File>
 			<File
@@ -2288,9 +2306,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\mmcurrency.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\mmdbinterface.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\mmex.h">
@@ -2335,7 +2350,13 @@
 				RelativePath="..\..\..\src\optionsdialog.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\paths.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\payeedialog.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\platfdep.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\reportbase.h">

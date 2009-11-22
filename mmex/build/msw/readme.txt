@@ -10,15 +10,15 @@ to build sources.
 WARNING: all files in this directory generated from bakefile's scripts (..\bakefiles). 
          Do not modify these files and never commit them to svn. All changes will be lost 
          if bootstrap.bat will rerun!!! These files should be commited only if you changed
-         some bakefile scripts and run bootstrap.bat to refresh content of this directory..
+         some bakefile scripts and run bootstrap.bat to refresh content of this directory.
 
 
 
 	*** Prerequisites ***
 
 
-1. Install wxWidgets 2.8.0 and above in a directory like c:\wxWidgets-2.8.0 and then 
-   create an environment variable WXWIN to point to this directory.
+1. Install wxWidgets 2.8.10 and above in a directory like c:\wxWidgets-2.8.0 
+   and then create an environment variable WXWIN to point to this directory.
 
 2. Follow the instructions given by WxWidgets install on how to build it.
    Build these configurations: Unicode Release, Unicode Debug, Release, Debug
