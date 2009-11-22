@@ -57,6 +57,9 @@
 #include "billsdepositsdialog.h"
 #include "util.h"
 #include "dbwrapper.h"
+#include "paths.h"
+#include "constants.h"
+#include "platfdep.h"
 //----------------------------------------------------------------------------
 
 /* Include XPM Support */
@@ -119,9 +122,6 @@
 
 namespace
 {
-
-const wxChar *MMEX_INIDB_FNAME = wxT("/mmexini.db3");
-//----------------------------------------------------------------------------
 
 class mmNewDatabaseWizard : public wxWizard
 {
@@ -197,18 +197,6 @@ private:
 };
 //----------------------------------------------------------------------------
 
-wxString getMMEXIconPath()
-{
-    wxString path;
-
-
-    path = mmGetBaseWorkingPath() + wxT("/mmex.ico");
-
-
-    return path;
-}
-//----------------------------------------------------------------------------
-
 inline bool sortCategs(const CategInfo &elem1, const CategInfo &elem2)
 {
     return elem1.amount < elem2.amount;
@@ -224,7 +212,7 @@ void reportFatalException(wxDebugReport::Context ctx)
 
     if (!rep.IsOk()) 
     {
-        wxSafeShowMessage(mmIniOptions::appName_, _("Fatal error occured.\nApplication will be terminated."));
+        wxSafeShowMessage(mmex::getProgramName(), _("Fatal error occured.\nApplication will be terminated."));
         return;
     } 
 
@@ -240,7 +228,7 @@ void reportFatalException(wxDebugReport::Context ctx)
 
 bool OnInitImpl(mmGUIApp &app)
 {
-    app.SetAppName(mmIniOptions::appName_); // FIXME: read from version resource
+    app.SetAppName(mmex::GetAppName());
 
     /* Setting Locale causes unexpected problems, so default to English Locale */
     app.getLocale().Init(wxLANGUAGE_ENGLISH);
@@ -251,32 +239,30 @@ bool OnInitImpl(mmGUIApp &app)
     wxImage::AddHandler(new wxPNGHandler());
 
     /* Get INI DB for loading settings */
-    boost::scoped_ptr<wxSQLite3Database> inidb(new wxSQLite3Database);
+    wxSQLite3Database inidb;
+    inidb.Open(mmex::getPathUser(mmex::SETTINGS));
 
-    wxString cfgPath = mmGetBaseWorkingPath() + MMEX_INIDB_FNAME;
-    inidb->Open(cfgPath);
-
-    mmDBWrapper::verifyINIDB(inidb.get());
+    mmDBWrapper::verifyINIDB(&inidb);
 
     /* Load Colors from Database */
-    mmLoadColorsFromDatabase(inidb.get());
+    mmLoadColorsFromDatabase(&inidb);
 
     /* Load MMEX Custom Settings */
-    mmIniOptions::loadOptions(inidb.get());
+    mmIniOptions::loadOptions(&inidb);
 
     /* Was App Maximized? */
     wxString isMaxStrDef = wxT("FALSE");
-    wxString isMaxStr = mmDBWrapper::getINISettingValue(inidb.get(), wxT("ISMAXIMIZED"), isMaxStrDef);
+    wxString isMaxStr = mmDBWrapper::getINISettingValue(&inidb, wxT("ISMAXIMIZED"), isMaxStrDef);
 
     /* Load Dimensions of Window */
     wxString originX = wxT("50");
     wxString originY = wxT("50");
     wxString sizeW = wxT("800");
     wxString sizeH = wxT("600");
-    wxString valxStr = mmDBWrapper::getINISettingValue(inidb.get(), wxT("ORIGINX"), originX); 
-    wxString valyStr = mmDBWrapper::getINISettingValue(inidb.get(), wxT("ORIGINY"), originY);
-    wxString valWStr = mmDBWrapper::getINISettingValue(inidb.get(), wxT("SIZEW"),  sizeW);
-    wxString valHStr = mmDBWrapper::getINISettingValue(inidb.get(), wxT("SIZEH"),  sizeH);
+    wxString valxStr = mmDBWrapper::getINISettingValue(&inidb, wxT("ORIGINX"), originX); 
+    wxString valyStr = mmDBWrapper::getINISettingValue(&inidb, wxT("ORIGINY"), originY);
+    wxString valWStr = mmDBWrapper::getINISettingValue(&inidb, wxT("SIZEW"),  sizeW);
+    wxString valHStr = mmDBWrapper::getINISettingValue(&inidb, wxT("SIZEH"),  sizeH);
 
     long valx = 0;
     long valy = 0; 
@@ -288,15 +274,15 @@ bool OnInitImpl(mmGUIApp &app)
     valWStr.ToLong(&valw);
     valHStr.ToLong(&valh);
 
-    mmSelectLanguage(0, inidb.get(), false);
+    mmSelectLanguage(0, &inidb, false);
 
-    inidb->Close();
+    inidb.Close();
 
 #if defined (__WXMAC__) || defined (__WXOSX__)
 wxSystemOptions::SetOption(wxMAC_ALWAYS_USE_GENERIC_LISTCTRL,1);
 #endif
 
-    mmGUIFrame *frame = new mmGUIFrame(mmIniOptions::appName_, wxPoint(valx, valy), wxSize(valw, valh));
+    mmGUIFrame *frame = new mmGUIFrame(mmex::getProgramName(), wxPoint(valx, valy), wxSize(valw, valh));
     bool ok = frame->Show();
     wxASSERT(ok);
 
@@ -462,7 +448,7 @@ mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, mmCoreDB* core) :
     // a wizard page may be either an object of predefined class
     page1 = new wxWizardPageSimple(this);
 
-    wxString noteString = mmIniOptions::appName_ +
+    wxString noteString = mmex::getProgramName() +
     _(" models all transactions as belonging to accounts.\n\n The next pages will help you create a new account.\n\nTo help you get started, begin by making a list of all\nfinancial institutions where you hold an account.");
 
     new wxStaticText(page1, wxID_ANY, noteString);
@@ -557,13 +543,11 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 	// tell wxAuiManager to manage this frame
 	m_mgr.SetManagedWindow(this);
 
-	/* Set Icon for Frame */
-    wxIcon icon(getMMEXIconPath(), wxBITMAP_TYPE_ICO, 32, 32);
-    SetIcon(icon);
+    SetIcon(mmex::getProgramIcon());
 
     /* Setup Printer */
-    printer_.reset(new wxHtmlEasyPrinting(mmIniOptions::appName_, this));
-    wxString printHeaderBase = mmIniOptions::appName_;
+    printer_.reset(new wxHtmlEasyPrinting(mmex::getProgramName(), this));
+    wxString printHeaderBase = mmex::getProgramName();
     printer_-> SetHeader( printHeaderBase + wxT("(@PAGENUM@/@PAGESCNT@)<hr>"), wxPAGE_ALL);
 
 	/* Load from Settings DB */
@@ -678,17 +662,6 @@ void mmGUIFrame::cleanup()
     /* Delete the GUI */
     cleanupHomePanel(false);
 
-    /* Delete any temp *.png files left behind */
-    if (wxFile::Exists(wxT("inc_expenses_month.png")))
-        ::wxRemoveFile(wxT("inc_expenses_month.png"));
-
-    if (wxFile::Exists(wxT("pie_chart.png")))
-        ::wxRemoveFile(wxT("pie_chart.png"));
-
-    if (wxFile::Exists(wxT("top_categories.png")))
-        ::wxRemoveFile(wxT("top_categories.png"));
-
-
     if (core_) {
         core_.reset();
     }
@@ -754,8 +727,7 @@ void mmGUIFrame::saveConfigFile()
 void mmGUIFrame::loadConfigFile()
 {
     inidb_.reset(new wxSQLite3Database);
-    wxString iniDBPath = mmGetBaseWorkingPath() + MMEX_INIDB_FNAME;
-    inidb_->Open(iniDBPath);
+    inidb_->Open(mmex::getPathUser(mmex::SETTINGS));
 }
 //----------------------------------------------------------------------------
 
@@ -2555,7 +2527,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
         // we need to check the db whether it is the right version
         if (!mmDBWrapper::checkDBVersion(db_.get()))
         {
-           wxString note = mmIniOptions::appName_ + _(" - No File opened ");
+           wxString note = mmex::getProgramName() + _(" - No File opened ");
            this->SetTitle(note);   
            mmShowErrorMessage(this, 
                 _("Sorry. The Database version is too old or Database password is incorrect"), 
@@ -2608,7 +2580,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
     }
     else // open of existing database failed
     {
-       wxString note = mmIniOptions::appName_ + _(" - No File opened ");
+       wxString note = mmex::getProgramName() + _(" - No File opened ");
        this->SetTitle(note);   
         
         wxMessageDialog msgDlg(this, _("Cannot locate previously opened database.\nDo you want to browse to locate the file?"), 
@@ -2629,32 +2601,26 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
 
 void mmGUIFrame::openDataBase(const wxString& fileName)
 {
-    wxString appPath = mmGetBaseWorkingPath();
-
-    wxProgressDialog* pgd = new wxProgressDialog(_("Please Wait"), 
+    wxProgressDialog dlg(_("Please Wait"), 
         _("Opening Database File && Verifying Integrity"), 100, this, 
         wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
-    mmDBWrapper::initDB(db_.get(), pgd, appPath);
-    pgd->Update(100);
-    pgd->Destroy();
 
-    wxFileName fName(fileName);
-    wxString title = mmIniOptions::appName_ + wxT(" : ") 
-        + fileName;
-    this->SetTitle(title);
+    mmDBWrapper::initDB(db_.get(), &dlg);
+    dlg.Update(100);
+    dlg.Destroy();
+
+    wxString title = mmex::getProgramName() + wxT(" : ") + fileName;
+    SetTitle(title);
 
     m_topCategories.Clear();
     mmIniOptions::loadInfoOptions(db_.get());
 
-    if (db_.get())
-    {
+    if (db_) {
         fileName_ = fileName;
-    }
-    else
-	{
+    } else {
       fileName_.Clear();
       password_.Clear();
-	}
+    }
 }
 //----------------------------------------------------------------------------
 
@@ -3275,7 +3241,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
     wxString build = tkz.GetNextToken();
 
     // get current version
-    wxString currentV = mmex::getVersion();
+    wxString currentV = mmex::getProgramVersion();
     wxStringTokenizer tkz1(currentV, wxT('.'), wxTOKEN_RET_EMPTY_ALL);  
     numTokens = (int)tkz1.CountTokens();
     
@@ -3511,7 +3477,7 @@ void mmGUIFrame::OnPrintPageReport(wxCommandEvent& WXUNUSED(event))
     }
      else if (hp)
     {
-        printer_ ->PrintFile(wxT("help/index.html"));
+        printer_ ->PrintFile(mmex::getPathDoc(mmex::HTML_INDEX));
     }
 }
 //----------------------------------------------------------------------------
@@ -3529,7 +3495,7 @@ void mmGUIFrame::OnPrintPagePreview(wxCommandEvent& WXUNUSED(event))
     }
     else if (hp)
     {
-        printer_ ->PreviewFile(wxT("help/index.html"));
+        printer_ ->PreviewFile(mmex::getPathDoc(mmex::HTML_INDEX));
     }
 }
 //----------------------------------------------------------------------------
