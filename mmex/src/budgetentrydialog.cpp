@@ -19,21 +19,10 @@
 #include "budgetentrydialog.h"
 #include "util.h"
 #include "defs.h"
+#include "paths.h"
 
-#define DEF_TYPE_EXPENSE 0
-#define DEF_TYPE_INCOME 1
-
-#define DEF_FREQ_NONE 0
-#define DEF_FREQ_WEEKLY 1
-#define DEF_FREQ_BIWEEKLY 2
-#define DEF_FREQ_MONTHLY 3
-#define DEF_FREQ_BIMONTHLY 4
-#define DEF_FREQ_QUARTERLY 5
-#define DEF_FREQ_HALFYEARLY 6
-#define DEF_FREQ_YEARLY 7
-
-
-#define MMEX_ICON_FNAME mmGetBaseWorkingPath() + wxT("/mmex.ico")
+enum { DEF_TYPE_EXPENSE, DEF_TYPE_INCOME };
+enum { DEF_FREQ_NONE, DEF_FREQ_WEEKLY, DEF_FREQ_BIWEEKLY, DEF_FREQ_MONTHLY, DEF_FREQ_BIMONTHLY, DEF_FREQ_QUARTERLY, DEF_FREQ_HALFYEARLY, DEF_FREQ_YEARLY };
 
 
 IMPLEMENT_DYNAMIC_CLASS( mmBudgetEntryDialog, wxDialog )
@@ -74,8 +63,7 @@ bool mmBudgetEntryDialog::Create( wxWindow* parent, wxWindowID id,
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
-    SetIcon(icon);
+    SetIcon(mmex::getProgramIcon());
     
     fillControls();
 
