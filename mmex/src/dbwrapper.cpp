@@ -20,6 +20,8 @@
 #include "wx/datetime.h"
 #include "util.h"
 #include "guiid.h"
+#include "paths.h"
+#include "constants.h"
 //----------------------------------------------------------------------------
 #include <boost/scoped_ptr.hpp>
 #include <string>
@@ -49,6 +51,67 @@ std::string joinCURRENCYFORMATS(const char *table_alias, const char *col_account
     sql +=  " on cf.CURRENCYID = acl.CURRENCYID ";
 
     return sql;
+}
+//----------------------------------------------------------------------------
+
+void loadCurrencies(wxSQLite3Database* db)
+{
+    static const char sql[] = 
+    "select CURRENCYNAME, "
+           "PFX_SYMBOL, "
+           "SFX_SYMBOL, "
+           "DECIMAL_POINT, "
+           "GROUP_SEPARATOR, "
+           "UNIT_NAME, "
+           "CENT_NAME, "
+           "SCALE, "
+           "BASECONVRATE " // CURRENCY_SYMBOL not exists in this table
+    "from CURRENCYFORMATS_V1";
+
+    static const char sql2[] = 
+    "insert into CURRENCYFORMATS_V1 ("
+      "CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT, GROUP_SEPARATOR, "
+      "UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL "
+    " ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, '' )";
+
+    wxString fName = mmex::getPathShared(mmex::CURRENCY_DB_SEED);
+    wxASSERT(wxFileName::FileExists(fName));
+    
+    wxSQLite3Database currencies;
+    currencies.Open(fName);
+
+    {
+        bool ok = currencies.TableExists(wxT("CURRENCYFORMATS_V1"));
+        wxASSERT(ok);
+        ok = ok; // removes compiler's warning
+    }
+
+    wxSQLite3ResultSet rs = currencies.ExecuteQuery(sql);
+    wxSQLite3Statement st = db->PrepareStatement(sql2);
+    
+    while(rs.NextRow())
+    {
+        int i = 0;
+        st.Bind(++i, rs.GetString(wxT("CURRENCYNAME")));
+        st.Bind(++i, rs.GetString(wxT("PFX_SYMBOL")));
+        st.Bind(++i, rs.GetString(wxT("SFX_SYMBOL")));
+        st.Bind(++i, rs.GetString(wxT("DECIMAL_POINT")));
+        st.Bind(++i, rs.GetString(wxT("GROUP_SEPARATOR")));
+        st.Bind(++i, rs.GetString(wxT("UNIT_NAME")));
+        st.Bind(++i, rs.GetString(wxT("CENT_NAME")));
+        st.Bind(++i, rs.GetDouble(wxT("SCALE")));
+        st.Bind(++i, rs.GetDouble(wxT("BASECONVRATE"), g_defBASECONVRATE));
+
+        wxASSERT(st.GetParamCount() == i);
+        
+        st.ExecuteUpdate();
+        st.Reset();
+    }
+
+    st.Finalize();
+    rs.Finalize();
+
+    currencies.Close();
 }
 //----------------------------------------------------------------------------
 
@@ -293,7 +356,7 @@ void mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
 
         const Rec data[] = 
         {
-            { "MMEXVERSION", mmex::getVersion()},
+            { "MMEXVERSION", mmex::getProgramVersion()},
             { "DATAVERSION", mmex::DATAVERSION },
             { "CREATEDATE", wxDateTime::Now().FormatISODate() },
             { "DATEFORMAT", mmex::DEFDATEFORMAT },
@@ -318,17 +381,29 @@ void mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
     }
 }
 
-void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db, const wxString& fpath)
+void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
 {
-       bool valid = db->TableExists(wxT("CURRENCYFORMATS_V1"));
-       if (!valid)
-       { 
+       bool exists = db->TableExists(wxT("CURRENCYFORMATS_V1"));
+
+       if (exists) { 
+
+           /* Check whether the column "CURRENCY_SYMBOL" exists or not */
+           wxSQLite3ResultSet q1 = db->ExecuteQuery(wxT("select * from CURRENCYFORMATS_V1 limit 1"));
+           
+           if(q1.GetColumnCount() < 11) {
+                /* not exist, create the column */
+                db->ExecuteUpdate(wxT("alter table CURRENCYFORMATS_V1 add CURRENCY_SYMBOL TEXT"));
+           }
+
+       } else {
+
            db->ExecuteUpdate(wxT("create table CURRENCYFORMATS_V1(CURRENCYID integer primary key, \
                                 CURRENCYNAME TEXT NOT NULL, PFX_SYMBOL TEXT, SFX_SYMBOL TEXT,              \
                                 DECIMAL_POINT TEXT, GROUP_SEPARATOR TEXT,               \
                                 UNIT_NAME TEXT, CENT_NAME TEXT, SCALE numeric, BASECONVRATE numeric, CURRENCY_SYMBOL TEXT);"));
-           valid = db->TableExists(wxT("CURRENCYFORMATS_V1"));
-           wxASSERT(valid);
+
+           exists = db->TableExists(wxT("CURRENCYFORMATS_V1"));
+           wxASSERT(exists);
 
            /* Load Default US Currency */
 
@@ -341,17 +416,7 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db, const wxString& f
             ")";
            
            db->ExecuteUpdate(sql);
-
-           /* Load Currencies from iniDB */
-           loadCurrencies(db, fpath);
-       } else {
-           /* Check whether the column "CURRENCY_SYMBOL" exists or not */
-           wxSQLite3ResultSet q1 = db->ExecuteQuery(wxT("select * from CURRENCYFORMATS_V1"));
-           
-           if(q1.GetColumnCount() < 11) {
-                /* not exist, create the column */
-                db->ExecuteUpdate(wxT("alter table CURRENCYFORMATS_V1 add CURRENCY_SYMBOL TEXT;"));
-           }
+           loadCurrencies(db);
        }
 }
 
@@ -442,66 +507,6 @@ bool mmDBWrapper::checkDBVersion(wxSQLite3Database* db)
     q1.Finalize();
 
     return ok;
-}
-
-void mmDBWrapper::loadCurrencies(wxSQLite3Database* db, const wxString& fpath)
-{
-    static const char sql[] = 
-    "select CURRENCYNAME, "
-           "PFX_SYMBOL, "
-           "SFX_SYMBOL, "
-           "DECIMAL_POINT, "
-           "GROUP_SEPARATOR, "
-           "UNIT_NAME, "
-           "CENT_NAME, "
-           "SCALE, "
-           "BASECONVRATE " // CURRENCY_SYMBOL not exists in this table
-    "from CURRENCYFORMATS_V1";
-
-    static const char sql2[] = 
-    "insert into CURRENCYFORMATS_V1 ("
-      "CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT, GROUP_SEPARATOR, "
-      "UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL "
-    " ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, '' )";
-
-    boost::scoped_ptr<wxSQLite3Database> inidb(new wxSQLite3Database());
-
-    wxString fName = fpath + mmex::CURRENCYDB_FNAME;
-    wxASSERT(wxFileName::FileExists(fName));
-    
-    inidb->Open(fName);
-    {
-        bool ok = inidb->TableExists(wxT("CURRENCYFORMATS_V1"));
-        wxASSERT(ok);
-        ok = ok; // removes compiler's warning
-    }
-
-    wxSQLite3Statement st = db->PrepareStatement(sql2);
-    wxSQLite3ResultSet q1 = inidb->ExecuteQuery(sql);
-    
-    while(q1.NextRow())
-    {
-        int i = 0;
-        st.Bind(++i, q1.GetString(wxT("CURRENCYNAME")));
-        st.Bind(++i, q1.GetString(wxT("PFX_SYMBOL")));
-        st.Bind(++i, q1.GetString(wxT("SFX_SYMBOL")));
-        st.Bind(++i, q1.GetString(wxT("DECIMAL_POINT")));
-        st.Bind(++i, q1.GetString(wxT("GROUP_SEPARATOR")));
-        st.Bind(++i, q1.GetString(wxT("UNIT_NAME")));
-        st.Bind(++i, q1.GetString(wxT("CENT_NAME")));
-        st.Bind(++i, q1.GetDouble(wxT("SCALE")));
-        st.Bind(++i, q1.GetDouble(wxT("BASECONVRATE"), g_defBASECONVRATE));
-
-        wxASSERT(st.GetParamCount() == i);
-        
-        st.ExecuteUpdate();
-        st.Reset();
-    }
-
-    q1.Finalize();
-    st.Finalize();
-
-    inidb->Close();
 }
 
 void mmDBWrapper::createAccountListV1Table(wxSQLite3Database* db)
@@ -785,7 +790,7 @@ void removeCruft(wxSQLite3Database* db)
     This routine sets up a new DB as well as update an old one
 */
 
-void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd, const wxString& fpath)
+void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd)
 {
     /* Create INFOTABLE_V1 Tables */
     createInfoV1Table(db);
@@ -793,7 +798,7 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd, const wxS
         pgd->Update(10);
 
     /* Create Currency Settings */
-    createCurrencyV1Table(db, fpath);
+    createCurrencyV1Table(db);
     if (pgd)
         pgd->Update(20);
 

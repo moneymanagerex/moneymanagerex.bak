@@ -29,10 +29,9 @@ namespace mmDBWrapper
 bool ViewExists(wxSQLite3Database* db, const char *viewName);
     
 /* Creating new DBs */
-void initDB(wxSQLite3Database* db, wxProgressDialog* pgd, const wxString& path);
-void loadCurrencies(wxSQLite3Database* db, const wxString& fpath);
+void initDB(wxSQLite3Database* db, wxProgressDialog* pgd);
 void createInfoV1Table(wxSQLite3Database* db);
-void createCurrencyV1Table(wxSQLite3Database* db, const wxString& fpath);
+void createCurrencyV1Table(wxSQLite3Database* db);
 void createAccountListV1Table(wxSQLite3Database* db);
 void createCheckingAccountV1Table(wxSQLite3Database* db);
 void createPayeeV1Table(wxSQLite3Database* db);
