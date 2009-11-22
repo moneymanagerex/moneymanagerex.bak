@@ -24,11 +24,9 @@
 #include "dbwrapper.h"
 #include "splittransactionsdialog.h"
 #include "defs.h"
+#include "paths.h"
+
 #include <limits>
-
-
-#define MMEX_ICON_FNAME mmGetBaseWorkingPath() + wxT("/mmex.ico")
-
 
 
 IMPLEMENT_DYNAMIC_CLASS( mmBDDialog, wxDialog )
@@ -91,8 +89,7 @@ bool mmBDDialog::Create( wxWindow* parent, wxWindowID id, const wxString& captio
     GetSizer()->Fit(this);
     GetSizer()->SetSizeHints(this);
 
-    wxIcon icon(MMEX_ICON_FNAME, wxBITMAP_TYPE_ICO, 32, 32);
-    SetIcon(icon);
+    SetIcon(mmex::getProgramIcon());
     
     fillControls();
     boost::shared_ptr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());

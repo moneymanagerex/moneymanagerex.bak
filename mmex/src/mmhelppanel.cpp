@@ -20,10 +20,13 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "htmlbuilder.h"
-#include <algorithm>
-#include <vector>
 #include "reportbase.h"
+#include "paths.h"
+#include "constants.h"
+
 #include <wx/app.h>
+#include <vector>
+#include <algorithm>
 
 BEGIN_EVENT_TABLE(mmHelpPanel, wxPanel)
 END_EVENT_TABLE()
@@ -75,7 +78,7 @@ void mmHelpPanel::CreateControls()
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     itemPanel3->SetSizer(itemBoxSizerVHeader);
 
-    wxString helpHeader = mmIniOptions::appName_ + _(" Help");
+    wxString helpHeader = mmex::getProgramName() + _(" Help");
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, ID_PANEL_REPORTS_STATIC_HEADER, 
         helpHeader, wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, 
@@ -87,10 +90,6 @@ void mmHelpPanel::CreateControls()
         wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     itemBoxSizer2->Add(htmlWindow_, 1, wxGROW|wxALL, 1);
 
-	wxString helpPath = mmGetBaseWorkingPath(true)
-                + wxT("\\help\\index.html");
-	
-    
-	htmlWindow_ ->LoadPage(helpPath);
+    htmlWindow_ ->LoadPage(mmex::getPathDoc(mmex::HTML_INDEX));
 }
 
