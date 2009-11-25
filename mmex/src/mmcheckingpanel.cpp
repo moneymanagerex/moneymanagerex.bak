@@ -1243,13 +1243,12 @@ void MyListCtrl::OnMarkTransactionDB(const wxString& status)
     mmDBWrapper::updateTransactionWithStatus(*m_cp->getDb(), transID, status);
     m_cp->m_trans[m_selectedIndex]->status_ = status;
 
-    if (m_cp->m_currentView != wxT("View All Transactions"))
-    {
-        DeleteAllItems();
-        m_cp->initVirtualListControl();
-    }
-    RefreshItem(m_selectedIndex);
-    m_cp->setAccountSummary();
+	// Remake the register. If user was viewing some transactions (eg void)
+	//  any changes need to be reflected.  Even if we are viewing all transactions,
+	//  the register needs to be updated so the balance col is correct (eg a trans
+	//  was changed from unreconciled to void).
+	DeleteAllItems();
+	m_cp->initVirtualListControl();
 }
 //----------------------------------------------------------------------------
 
