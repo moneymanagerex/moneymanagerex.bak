@@ -79,7 +79,8 @@ bool getPayeeID(wxSQLite3Database* db, const wxString &payee, int& payeeID, int&
 bool updatePayee(wxSQLite3Database* db, const wxString& payeeName, int payeeID, int categID, int subcategID);
 bool deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID);
 double getAmountForPayee(wxSQLite3Database* db, int payeeID, bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
-
+wxArrayString filterPayees(wxSQLite3Database* db, const wxString& patt);
+	
 /* Category Table API */
 bool deleteCategoryWithConstraints(wxSQLite3Database* db, int categID);
 bool deleteSubCategoryWithConstraints(wxSQLite3Database* db, int categID, int subcategID);

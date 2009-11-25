@@ -76,6 +76,7 @@ public:
     void OnListKeyDown(wxKeyEvent &event);
     
     void fillControls();
+	void OnTextCtrlChanged(wxCommandEvent& event);
     void OnSelChanged(wxCommandEvent& event);
     void OnComboSelected(wxCommandEvent& event);
     void OnDoubleClicked(wxCommandEvent& event);

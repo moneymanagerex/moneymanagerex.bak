@@ -2133,6 +2133,22 @@ double mmDBWrapper::getAmountForPayee(wxSQLite3Database* db, int payeeID,
     return amt;
 }
 
+wxArrayString mmDBWrapper::filterPayees(wxSQLite3Database* db, const wxString& patt)
+{
+	wxArrayString flist;
+	wxString sql;
+	sql.Printf(wxT("select PAYEENAME from PAYEE_V1 where PAYEENAME LIKE '%s%%' ORDER BY PAYEENAME"),patt.c_str());
+		
+	wxSQLite3Statement st = db->PrepareStatement(sql);
+	wxSQLite3ResultSet q1 = st.ExecuteQuery();
+	while (q1.NextRow())
+	{
+			flist.Add(q1.GetString(wxT("PAYEENAME")));
+	}
+	st.Finalize();
+	return flist;
+}
+
 
  void mmDBWrapper::addBudgetYear(wxSQLite3Database* db, const wxString &year)
  {
