@@ -33,9 +33,9 @@ BEGIN_EVENT_TABLE( mmPayeeDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_PAYEE_BUTTON_SELECT, mmPayeeDialog::OnBSelect)
     EVT_BUTTON(ID_DIALOG_PAYEE_BUTTON_EDIT, mmPayeeDialog::OnEdit)
     EVT_LISTBOX(ID_DIALOG_PAYEE_LISTBOX_PAYEES, mmPayeeDialog::OnSelChanged)
-    EVT_COMBOBOX(ID_DIALOG_TRANS_PAYEECOMBO, mmPayeeDialog::OnComboSelected)
     EVT_LISTBOX_DCLICK(ID_DIALOG_PAYEE_LISTBOX_PAYEES, mmPayeeDialog::OnDoubleClicked)
     EVT_CHAR_HOOK(mmPayeeDialog::OnListKeyDown)    
+	EVT_TEXT(ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME, mmPayeeDialog::OnTextCtrlChanged)
 END_EVENT_TABLE()
 
 
@@ -51,7 +51,7 @@ void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
 {
     long keycode = event.GetKeyCode();
 
-    if(keycode == 13)
+    if(keycode == 13 && showSelectButton_)
     {
         wxCommandEvent event;
         OnBSelect(event);
@@ -105,18 +105,12 @@ bool mmPayeeDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmPayeeDialog::fillControls()
 {
-    core_->payeeList_.sortPayeeList();
-
-        int numPayees = (int)core_->payeeList_.payees_.size();
-        for (int idx = 0; idx < numPayees; idx++)
-        {
-            listBox_->Insert(core_->payeeList_.payees_[idx]->payeeName_, idx, 
-                new mmPayeeListBoxItem(core_->payeeList_.payees_[idx]->payeeID_));
-            payeeComboBox_->Insert(core_->payeeList_.payees_[idx]->payeeName_, idx, new mmPayeeListBoxItem(core_->payeeList_.payees_[idx]->payeeID_));
-        }
-        payeeComboBox_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_SET_FOCUS, wxFocusEventHandler(mmPayeeDialog::OnSetFocus), NULL, this);        
-        payeeComboBox_->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_KILL_FOCUS, wxFocusEventHandler(mmPayeeDialog::OnFocus), NULL, this); 
-        payeeComboBox_->SetFocus();
+	listBox_->Clear();
+	wxArrayString filtd = mmDBWrapper::filterPayees(core_->db_.get(),textCtrl->GetValue());
+	for (int i=0; i < filtd.GetCount(); i++)
+	{
+		listBox_->Append(filtd.Item(i));
+	}
 }
 
 void mmPayeeDialog::CreateControls()
@@ -131,10 +125,6 @@ void mmPayeeDialog::CreateControls()
         itemBoxSizer2->Add(itemStaticTextName, 0,
             wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-        payeeComboBox_ = new wxAutoComboBox(itemDialog1,
-            ID_DIALOG_TRANS_PAYEECOMBO, wxT(""), wxDefaultPosition, wxSize(250, -1), wxCB_READONLY);
-        itemBoxSizer2->Add(payeeComboBox_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-        payeeComboBox_->SetToolTip(_("Enter the payee name to be added or make edits to an existing payee name"));
 
      wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
@@ -143,23 +133,15 @@ void mmPayeeDialog::CreateControls()
         wxDefaultPosition, wxSize(100, 200), wxArrayString(), wxLB_SINGLE);
     itemBoxSizer3->Add(listBox_, 1, wxGROW|wxALL, 1);
 
-    //wxBoxSizer* itemBoxSizerPayee = new wxBoxSizer(wxHORIZONTAL);
-    //itemBoxSizer2->Add(itemBoxSizerPayee, 1, wxGROW|wxALL, 5);
-
-    //wxStaticText* itemStaticTextName = new wxStaticText( itemDialog1, wxID_STATIC, 
-      //  _("Payee Name"), wxDefaultPosition, wxDefaultSize, 0 );
-    //itemBoxSizerPayee->Add(itemStaticTextName, 0,
-      //  wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
     wxStaticText* itemStaticTextName2 = new wxStaticText( itemDialog1, wxID_STATIC, 
-            _("Add/Edit Payee: "), wxDefaultPosition, wxDefaultSize, 0 );
+            _("Filter Payees: "), wxDefaultPosition, wxDefaultSize, 0 );
         itemBoxSizer2->Add(itemStaticTextName2, 0,
             wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     textCtrl = new wxTextCtrl( itemDialog1, ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME, 
         wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(textCtrl, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    textCtrl->SetToolTip(_("Enter the payee name to be added or make edits to an existing payee name"));
+    textCtrl->SetToolTip(_("Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."));
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
@@ -168,17 +150,20 @@ void mmPayeeDialog::CreateControls()
         _("&Add"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(addButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     addButton->SetToolTip(_("Add a new payee name"));
+	addButton->Disable();
 
     editButton = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_EDIT, 
         _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(editButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     editButton->SetToolTip(_("Change the name of an existing payee"));
-    
+    editButton->Disable();
+	
     deleteButton = new wxButton( itemDialog1, ID_DIALOG_PAYEE_BUTTON_DELETE, 
         _("&Delete"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(deleteButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     deleteButton->SetToolTip(_("Delete the selected payee. The payee cannot be used by an existing transaction."));
-
+	deleteButton->Disable();
+	
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 5);
 
@@ -186,17 +171,33 @@ void mmPayeeDialog::CreateControls()
         _("&Select"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer9->Add(selectButton, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     selectButton->SetToolTip(_("Select the currently selected payee as the selected payee for the transaction"));
-
-   // this->Connect(ID_DIALOG_TRANS_PAYEECOMBO, wxEVT_SET_FOCUS, wxFocusEventHandler(mmPayeeDialog::OnFocus)); 
+	selectButton->Disable();
 }
 
-void mmPayeeDialog::OnAdd(wxCommandEvent& /*event*/)
+void mmPayeeDialog::OnTextCtrlChanged(wxCommandEvent& event)
 {
-    wxTextCtrl* payeeText = (wxTextCtrl*)FindWindow(ID_DIALOG_PAYEE_TEXTCTRL_PAYEENAME);
-    wxString text = payeeText->GetValue();
-    if (text.Trim().IsEmpty())
+	wxString payeeString = listBox_->GetStringSelection();
+	fillControls();
+	if (textCtrl->GetValue() != wxGetEmptyString())
+	{
+		addButton->Enable();
+		listBox_->SetSelection(0);
+	}
+	else 
+	{
+		addButton->Disable();
+		listBox_->SetStringSelection(payeeString);
+	}
+	OnSelChanged(event);
+}
+
+
+void mmPayeeDialog::OnAdd(wxCommandEvent& event)
+{
+    wxString text = wxGetTextFromUser(_("Enter the name of the payee to add:"), _("Add Payee"), textCtrl->GetValue());
+	if (text == wxGetEmptyString())
     {
-        mmShowErrorMessage(this, _("Type a Payee Name in the Text Box and then press Add."), _("Error"));
+        //mmShowErrorMessage(this, _("Type a Payee Name in the Text Box and then press Add."), _("Error"));
         return;
     }
     if (core_->payeeList_.payeeExists(text))
@@ -206,60 +207,36 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& /*event*/)
     else
     {
         core_->payeeList_.addPayee(text);
-        listBox_->Clear();
+		textCtrl->SetValue(wxGetEmptyString());
         fillControls();
 
         listBox_->SetStringSelection(text);
-        wxString payeeString = listBox_->GetStringSelection();
-        payeeID_ = core_->payeeList_.getPayeeID(payeeString);
-        textCtrl->SetValue(payeeString);
+		
+		// SetStringSelection does not emit event, so we need to do it manually.
+		// This is important because it is where payeeID_ gets set
+		OnSelChanged(event);
     }
 }
  
-void mmPayeeDialog::OnDelete(wxCommandEvent& /*event*/)
+void mmPayeeDialog::OnDelete(wxCommandEvent& event)
 {
     if (!core_->payeeList_.deletePayee(payeeID_))
     {
         mmShowErrorMessage(this, _("Payee is in use"), _("Error"));
         return;
     }
-    payeeComboBox_->SetValue(wxT(""));
-    listBox_->Clear();
+	textCtrl->SetValue(wxGetEmptyString());
     fillControls();
+	OnSelChanged(event);
 }
  
 void mmPayeeDialog::OnBSelect(wxCommandEvent& /*event*/)
 {
-    //wxString payeeString = listBox_->GetStringSelection();
     if (payeeID_ != -1)
     {
         EndModal(wxID_OK);
         return;
     }
-
-    int sel = listBox_->GetSelection();
-    if (sel != -1)
-    {
-        mmPayeeListBoxItem* lbitem = (mmPayeeListBoxItem*)listBox_->GetClientObject(sel);
-        payeeID_ = lbitem->getPayeeID();
-        EndModal(wxID_OK);
-    }
-#if 0
-    else
-    {
-        wxString payeeString = payeeComboBox_->GetValue();
-        if (listBox_->SetStringSelection(payeeString, true))
-        {
-            wxString payeeString = listBox_->GetStringSelection();
-            int selInd = listBox_->GetSelection();
-            if (selInd == -1)
-                return;
-            mmPayeeListBoxItem* lbitem = (mmPayeeListBoxItem*)listBox_->GetClientObject(selInd);
-            payeeID_ = lbitem->getPayeeID();
-            EndModal(wxID_OK);
-        }
-    }
-#endif
 }
 
 void mmPayeeDialog::OnOk(wxCommandEvent& /*event*/)
@@ -270,78 +247,20 @@ void mmPayeeDialog::OnOk(wxCommandEvent& /*event*/)
 void mmPayeeDialog::OnSelChanged(wxCommandEvent& /*event*/)
 {
     wxString payeeString = listBox_->GetStringSelection();
-    int selInd = listBox_->GetSelection();
-    if (selInd == -1)
+    if (payeeString==wxGetEmptyString())
+	{
+		editButton->Disable();
+		deleteButton->Disable();
+		selectButton->Disable();
+		payeeID_ = -1;
         return;
-    mmPayeeListBoxItem* lbitem = (mmPayeeListBoxItem*)listBox_->GetClientObject(selInd);
-    payeeID_ = lbitem->getPayeeID();
-    textCtrl->SetValue(payeeString);
-    //payeeComboBox_->SetValue(payeeString);
-}
-
-void mmPayeeDialog::OnComboSelected(wxCommandEvent& /*event*/)
-{
-    wxString payeeString = payeeComboBox_->GetValue();
-    int selInd = payeeComboBox_->GetSelection();
-    if (selInd == -1)
-        return;
-
-    mmPayeeListBoxItem* lbitem = (mmPayeeListBoxItem*)payeeComboBox_->GetClientObject(selInd);
-    payeeID_ = lbitem->getPayeeID();
-    textCtrl->SetValue(payeeString);
-    //payeeComboBox_->SetFocus();
-#if 0
-    if (listBox_->SetStringSelection(payeeString, true))
-    {
-        wxString payeeString = listBox_->GetStringSelection();
-        int selInd = listBox_->GetSelection();
-        if (selInd == -1)
-            return;
-        mmPayeeListBoxItem* lbitem = (mmPayeeListBoxItem*)listBox_->GetClientObject(selInd);
-        payeeID_ = lbitem->getPayeeID();
-        textCtrl->SetValue(payeeString);
-        payeeComboBox_->SetFocus();
-    }
-#endif
-    //int selInd = payeeComboBox_->GetCurrentSelection();
-    //if (selInd == -1)
-      //  return;
-    //mmPayeeListBoxItem* lbitem = (mmPayeeListBoxItem*)listBox_->GetClientObject(selInd);
-    //payeeID_ = lbitem->getPayeeID();
-    
-    //textCtrl->SetValue(payeeString);
-   // payeeComboBox_->SetValue(payeeString);
-}
-
-
-void mmPayeeDialog::OnSetFocus(wxFocusEvent& /*event*/)
-{
-}
-
-void mmPayeeDialog::OnFocus(wxFocusEvent& /*event*/)
-{
-    wxString payeeString = payeeComboBox_->GetValue();
-    int selInd = payeeComboBox_->GetSelection();
-    if (selInd == -1)
-        return;
-
-    mmPayeeListBoxItem* lbitem = (mmPayeeListBoxItem*)payeeComboBox_->GetClientObject(selInd);
-    payeeID_ = lbitem->getPayeeID();
-    textCtrl->SetValue(payeeString);
-#if 0   
-    wxString payeeString = payeeComboBox_->GetValue();
-    if (listBox_->SetStringSelection(payeeString, true))
-    {
-        wxString payeeString = listBox_->GetStringSelection();
-        int selInd = listBox_->GetSelection();
-        if (selInd == -1)
-            return;
-        mmPayeeListBoxItem* lbitem = (mmPayeeListBoxItem*)listBox_->GetClientObject(selInd);
-        payeeID_ = lbitem->getPayeeID();
-        textCtrl->SetValue(payeeString);
-        //payeeComboBox_->SetFocus();
-    }
-#endif
+	}
+	if (showSelectButton_)
+		selectButton->Enable();
+	editButton->Enable();
+	deleteButton->Enable();
+    payeeID_ = core_->payeeList_.getPayeeID(payeeString);
+	
 }
 
 void mmPayeeDialog::OnDoubleClicked(wxCommandEvent& event)
@@ -349,11 +268,23 @@ void mmPayeeDialog::OnDoubleClicked(wxCommandEvent& event)
     OnBSelect(event);
 }
 
-void mmPayeeDialog::OnEdit(wxCommandEvent& /*event*/)
+void mmPayeeDialog::OnEdit(wxCommandEvent& event)
 {
-    wxString text = textCtrl->GetValue();
-    core_->payeeList_.updatePayee(payeeID_, text);
-    core_->bTransactionList_.updateAllTransactionsForPayee(core_, payeeID_);
-    listBox_->Clear();
-    fillControls();
+	wxString oldname = listBox_->GetStringSelection();
+	
+	wxString mesg;
+	mesg.Printf(_("Enter a new name for %s"),oldname.c_str());
+	wxString newName = wxGetTextFromUser(mesg, _("Edit Payee Name"), oldname);
+    if (newName != wxGetEmptyString())
+	{
+		core_->payeeList_.updatePayee(payeeID_, newName);
+		core_->bTransactionList_.updateAllTransactionsForPayee(core_, payeeID_);
+		editButton->Disable();
+		fillControls();
+		
+		// Now we need to make sure that the edited name is selected after the dialog is closed
+		textCtrl->SetValue(wxGetEmptyString());
+		listBox_->SetStringSelection(newName);
+		OnSelChanged(event);
+	}
 }
