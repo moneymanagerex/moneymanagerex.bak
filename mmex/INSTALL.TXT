@@ -2,12 +2,12 @@
 1. Required Libraries
 -------------------------------------------------------------------------------
 - wxWidgets >= 2.8.10 (www.wxwidgets.org)
+- Boost C++ Libraries
 
 Prepackaged Libraries
-- wxSqlite3
 - sqlite3
+- wxSqlite3
 - TinyXML
-- Boost C++ Library
 - UnitTest++
 
 -------------------------------------------------------------------------------
@@ -51,8 +51,8 @@ Prepackaged Libraries
     1. [Optional] Install Dev Tools by the following: sudo apt-get install build-essential
 
     2. Install these packages
-       libwxgtk2.8-?, 
-       libwxgtk2.8-?-dev
+       libwxgtk2.X-X, 
+       libwxgtk2.X-X-dev
 
     3. Execute step #2 from generic instructions.
 
