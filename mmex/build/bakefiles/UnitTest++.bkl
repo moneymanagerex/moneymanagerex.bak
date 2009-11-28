@@ -21,7 +21,7 @@
             <if cond="TOOLSET=='unix'">/Posix</if>
         </set>
 
-        <set var="SRC">UnitTest++/src</set>
+        <set var="SRC">libs/UnitTest++</set>
 
         <headers>$(fileList( [ SRC + '/*.h',   SRC + PLATF_DIR + '/*.h'   ] ))</headers>
         <sources>$(fileList( [ SRC + '/*.cpp', SRC + PLATF_DIR + '/*.cpp' ] ))</sources>

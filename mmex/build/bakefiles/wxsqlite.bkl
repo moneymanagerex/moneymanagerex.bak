@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<!-- 
+    MMEX build scripts.
+    Copyright (C) 2009 VaDiM.
+
+    wxsqlite3 library.
+-->
+
+<makefile>
+
+    <lib id="wxsqlite" template="compiler_common">
+
+        <cxx-rtti>off</cxx-rtti>
+
+        <define>WXSQLITE3_HAVE_CODEC</define>
+        <define>WXSQLITE3_HAVE_METADATA</define>
+
+    	<!-- paths relative to trunk/mmex -->
+
+        <set var="SRC">libs/wxsqlite</set>
+
+        <headers>$(fileList(SRC + '/wx/*.h'))</headers>
+        <sources>$(SRC)/wxsqlite3.cpp</sources>
+
+    </lib>
+
+</makefile>

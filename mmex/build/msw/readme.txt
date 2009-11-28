@@ -24,12 +24,15 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
    Build these configurations: Unicode Release, Unicode Debug, Release, Debug
    (or only those you need).
 
-3. Install GNU GetText for Windows, http://gnuwin32.sourceforge.net/packages/gettext.htm. 
+3. Install Boost C++ Libraries and create an environment variable BOOSTDIR
+   that points to directory where Boost were installed.
+
+4. Install GNU GetText for Windows, http://gnuwin32.sourceforge.net/packages/gettext.htm. 
    This software requires to generate binary translation files from .po files.
    Append path to bin folder of installed software to PATH environment variable
    (usually "C:\Program Files\GnuWin32\bin").
 
-4. To build installation (setup) of MMEx download and install InnoSetup Quick Start Pack
+5. To build installation (setup) of MMEx download and install InnoSetup Quick Start Pack
    (which includes InnoSetup itself and Inno Setup Preprocessor). Append path to folder 
    of installed software (something like a "C:\Program Files\Inno Setup 5")
    to PATH environment variable.

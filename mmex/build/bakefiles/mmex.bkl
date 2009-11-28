@@ -20,13 +20,15 @@
     
     <include file="common.bkl"/>
     <include file="sqlite.bkl"/>
+    <include file="wxsqlite.bkl"/>
 
     <!-- MoneyManagerEx application -->
 
     <exe id="mmex" template="mmex_common">
 
         <app-type>gui</app-type>
-        <library>sqlite3</library>
+        <library>sqlite</library>
+        <library>wxsqlite</library>
         <win32-res>resources/mmex.rc</win32-res>
     
         <install-to cond="FORMAT=='autoconf'">$(BINDIR)</install-to>
