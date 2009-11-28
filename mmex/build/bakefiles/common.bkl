@@ -34,6 +34,15 @@
         </if>
 
 
+        <if cond="not isdefined('BOOST_DIR')">
+            <set var="BOOSTDIR_DEFAULT" overwrite="0">$(DOLLAR)($(ENV_VAR)BOOSTDIR)</set>
+            <option name="BOOST_DIR" category="path">
+                <default-value>$(BOOSTDIR_DEFAULT)</default-value>
+                <description>The directory where Boost C++ libraries is installed</description>
+            </option>
+        </if>
+    
+
         <!-- VC++ -->
         <if cond="FORMAT.startswith('msv')">
 
@@ -188,19 +197,12 @@ PATH. Accepted values: AMD64, IA64.
         <cxx-exceptions>on</cxx-exceptions>
         <cxx-rtti>on</cxx-rtti>
 
+        <include cond="isdefined('BOOST_DIR')">$(BOOST_DIR)</include>
         <include>$(SRCDIR)/include</include>
-	<include>$(SRCDIR)/sqlite</include>
+        <include>$(SRCDIR)/libs/wxsqlite</include>
 
         <!-- disable precompiled headers for wxWidgets -->
         <define>NOPCH</define>
-
-    	<!-- flags for wxSQLite3 -->
-        <define>WXSQLITE3_HAVE_CODEC</define>
-        <define>WXSQLITE3_HAVE_METADATA</define>
-
-    	<!-- flags for TinyXml -->
-        <define>TIXML_USE_STL</define>
-
 
     	<!-- relative to trunk/mmex -->
 

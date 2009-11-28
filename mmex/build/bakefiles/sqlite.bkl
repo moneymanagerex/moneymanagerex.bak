@@ -9,7 +9,7 @@
 
 <makefile>
 
-    <lib id="sqlite3" template="compiler_common">
+    <lib id="sqlite" template="compiler_common">
 
         <cxx-exceptions>off</cxx-exceptions>
         <cxx-rtti>off</cxx-rtti>
@@ -20,7 +20,7 @@
 
     	<!-- paths relative to trunk/mmex -->
 
-        <set var="SRC">sqlite</set>
+        <set var="SRC">libs/sqlite</set>
 
         <headers>$(fileList(SRC + '/*.h'))</headers>
         <sources>$(SRC)/sqlite3secure.c</sources>
