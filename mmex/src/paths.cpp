@@ -41,6 +41,19 @@ wxFileName mmex::GetUserDir(bool create)
 }
 //----------------------------------------------------------------------------
 
+wxFileName mmex::GetLogDir(bool create)
+{
+        static wxFileName fname;
+
+        if (!fname.IsOk()) {
+                fname = GetUserDir(create);
+                fname.AppendDir(wxT("logs"));
+        }
+        
+        return fname;
+}
+//----------------------------------------------------------------------------
+
 wxString mmex::getPathDoc(EDocFile f)
 {
         static const wxChar* files[DOC_FILES_MAX] = { 

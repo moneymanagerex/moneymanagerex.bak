@@ -35,6 +35,8 @@ wxFileName GetDocDir();
 wxFileName GetResourceDir();
 wxFileName GetSharedDir();
 wxFileName GetUserDir(bool create);
+wxFileName GetLogDir(bool create);
+
 
 /*
     wxStandardPaths uses wxApp::GetAppName(), so you should
