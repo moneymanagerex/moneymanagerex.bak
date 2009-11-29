@@ -824,7 +824,7 @@ void stocksListCtrl::OnListItemSelected(wxListEvent& event)
     selectedIndex_ = event.GetIndex();
 	cp_->enableEditDeleteButtons(true);
 }
-void stocksListCtrl::OnListItemDeselected(wxListEvent& event)
+void stocksListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 {
     selectedIndex_ = -1;
 	cp_->enableEditDeleteButtons(false);
