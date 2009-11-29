@@ -55,6 +55,9 @@ WX_MONOLITHIC = 0
 # Whether or not we're building against wxPython libraries. [0,1]
 WX_PYTHON = 0
 
+# The directory where Boost C++ libraries is installed 
+BOOST_DIR = $(BOOSTDIR)
+
 # The version of Visual Studio.
 # Accepted values: 2008, 2005, 2003. 
 VS_VERSION = $(VS_VER)

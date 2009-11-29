@@ -144,7 +144,7 @@ TEST(initDB)
 {
     wxSQLite3Database &db = getDb();
 
-    mmDBWrapper::initDB(&db, 0, wxT(".")); // currency.db3 must be in the current directory
+    mmDBWrapper::initDB(&db, 0);
     CHECK(true);
 }
 //----------------------------------------------------------------------------

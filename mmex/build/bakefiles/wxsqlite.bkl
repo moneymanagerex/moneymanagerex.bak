@@ -9,12 +9,15 @@
 
 <makefile>
 
-    <lib id="wxsqlite" template="compiler_common">
+    <lib id="wxsqlite" template="compiler_common,wx-lib">
 
-        <cxx-rtti>off</cxx-rtti>
+        <!-- disable precompiled headers for wxWidgets -->
+        <define>NOPCH</define>
 
         <define>WXSQLITE3_HAVE_CODEC</define>
         <define>WXSQLITE3_HAVE_METADATA</define>
+
+        <include>$(SRCDIR)/libs/sqlite</include>
 
     	<!-- paths relative to trunk/mmex -->
 

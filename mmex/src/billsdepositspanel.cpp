@@ -479,7 +479,7 @@ void billsDepositsListCtrl::OnListItemSelected(wxListEvent& event)
 	cp_->updateBottomPanelData(selectedIndex_);
 }
 
-void billsDepositsListCtrl::OnListItemDeselected(wxListEvent& event)
+void billsDepositsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 {
     selectedIndex_ = -1;
     cp_->updateBottomPanelData(selectedIndex_);

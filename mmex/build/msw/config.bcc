@@ -85,6 +85,11 @@ WX_MONOLITHIC = 0
 WX_PYTHON = 0
 !endif
 
+# The directory where Boost C++ libraries is installed 
+!ifndef BOOST_DIR
+BOOST_DIR = $(BOOSTDIR)
+!endif
+
 # The target processor architecture must be specified when it is not X86.
 # This does not affect the compiler output, so you still need to make sure
 # your environment is set up appropriately with the correct compiler in the
