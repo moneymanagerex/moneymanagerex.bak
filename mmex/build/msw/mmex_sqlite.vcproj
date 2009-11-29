@@ -9,8 +9,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="sqlite3"
-	ProjectGUID="{DA9318EB-58C5-58AC-A35F-5DCA4A338C92}">
+	Name="sqlite"
+	ProjectGUID="{382FD0E4-8751-5D7B-8B68-83ABC996DF6C}">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -19,21 +19,20 @@
 		<Configuration
 			Name="Release Multilib WX_PYTHON_0|Win32"
 			OutputDirectory="vc-static-"
-			IntermediateDirectory="vc-static-\sqlite3"
+			IntermediateDirectory="vc-static-\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-\sqlite3\"
-				ProgramDataBaseFileName="vc-static-\sqlite3.pdb"
+				ObjectFile="vc-static-\sqlite\"
+				ProgramDataBaseFileName="vc-static-\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -42,11 +41,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-\sqlite3.lib"
+				OutputFile="vc-static-\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -56,7 +55,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -73,21 +72,20 @@
 		<Configuration
 			Name="Release Multilib WX_PYTHON_1|Win32"
 			OutputDirectory="vc-static-"
-			IntermediateDirectory="vc-static-\sqlite3"
+			IntermediateDirectory="vc-static-\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-\sqlite3\"
-				ProgramDataBaseFileName="vc-static-\sqlite3.pdb"
+				ObjectFile="vc-static-\sqlite\"
+				ProgramDataBaseFileName="vc-static-\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -96,11 +94,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-\sqlite3.lib"
+				OutputFile="vc-static-\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -110,7 +108,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -127,21 +125,20 @@
 		<Configuration
 			Name="Release Monolithic WX_PYTHON_0|Win32"
 			OutputDirectory="vc-static-"
-			IntermediateDirectory="vc-static-\sqlite3"
+			IntermediateDirectory="vc-static-\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-\sqlite3\"
-				ProgramDataBaseFileName="vc-static-\sqlite3.pdb"
+				ObjectFile="vc-static-\sqlite\"
+				ProgramDataBaseFileName="vc-static-\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -150,11 +147,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-\sqlite3.lib"
+				OutputFile="vc-static-\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -164,7 +161,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -181,21 +178,20 @@
 		<Configuration
 			Name="Release Monolithic WX_PYTHON_1|Win32"
 			OutputDirectory="vc-static-"
-			IntermediateDirectory="vc-static-\sqlite3"
+			IntermediateDirectory="vc-static-\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-\sqlite3\"
-				ProgramDataBaseFileName="vc-static-\sqlite3.pdb"
+				ObjectFile="vc-static-\sqlite\"
+				ProgramDataBaseFileName="vc-static-\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -204,11 +200,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-\sqlite3.lib"
+				OutputFile="vc-static-\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -218,7 +214,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -235,24 +231,23 @@
 		<Configuration
 			Name="Debug Multilib WX_PYTHON_0|Win32"
 			OutputDirectory="vc-static-d"
-			IntermediateDirectory="vc-static-d\sqlite3"
+			IntermediateDirectory="vc-static-d\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-d\sqlite3\"
-				ProgramDataBaseFileName="vc-static-d\sqlite3.pdb"
+				ObjectFile="vc-static-d\sqlite\"
+				ProgramDataBaseFileName="vc-static-d\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -261,11 +256,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-d\sqlite3.lib"
+				OutputFile="vc-static-d\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -275,7 +270,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -292,24 +287,23 @@
 		<Configuration
 			Name="Debug Multilib WX_PYTHON_1|Win32"
 			OutputDirectory="vc-static-d"
-			IntermediateDirectory="vc-static-d\sqlite3"
+			IntermediateDirectory="vc-static-d\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-d\sqlite3\"
-				ProgramDataBaseFileName="vc-static-d\sqlite3.pdb"
+				ObjectFile="vc-static-d\sqlite\"
+				ProgramDataBaseFileName="vc-static-d\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -318,11 +312,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-d\sqlite3.lib"
+				OutputFile="vc-static-d\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -332,7 +326,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -349,24 +343,23 @@
 		<Configuration
 			Name="Debug Monolithic WX_PYTHON_0|Win32"
 			OutputDirectory="vc-static-d"
-			IntermediateDirectory="vc-static-d\sqlite3"
+			IntermediateDirectory="vc-static-d\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-d\sqlite3\"
-				ProgramDataBaseFileName="vc-static-d\sqlite3.pdb"
+				ObjectFile="vc-static-d\sqlite\"
+				ProgramDataBaseFileName="vc-static-d\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -375,11 +368,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-d\sqlite3.lib"
+				OutputFile="vc-static-d\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -389,7 +382,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -406,24 +399,23 @@
 		<Configuration
 			Name="Debug Monolithic WX_PYTHON_1|Win32"
 			OutputDirectory="vc-static-d"
-			IntermediateDirectory="vc-static-d\sqlite3"
+			IntermediateDirectory="vc-static-d\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-d\sqlite3\"
-				ProgramDataBaseFileName="vc-static-d\sqlite3.pdb"
+				ObjectFile="vc-static-d\sqlite\"
+				ProgramDataBaseFileName="vc-static-d\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -432,11 +424,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-d\sqlite3.lib"
+				OutputFile="vc-static-d\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -446,7 +438,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -463,21 +455,20 @@
 		<Configuration
 			Name="Unicode Release Multilib WX_PYTHON_0|Win32"
 			OutputDirectory="vc-static-u"
-			IntermediateDirectory="vc-static-u\sqlite3"
+			IntermediateDirectory="vc-static-u\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-u\sqlite3\"
-				ProgramDataBaseFileName="vc-static-u\sqlite3.pdb"
+				ObjectFile="vc-static-u\sqlite\"
+				ProgramDataBaseFileName="vc-static-u\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -486,11 +477,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-u\sqlite3.lib"
+				OutputFile="vc-static-u\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -500,7 +491,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -517,21 +508,20 @@
 		<Configuration
 			Name="Unicode Release Multilib WX_PYTHON_1|Win32"
 			OutputDirectory="vc-static-u"
-			IntermediateDirectory="vc-static-u\sqlite3"
+			IntermediateDirectory="vc-static-u\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-u\sqlite3\"
-				ProgramDataBaseFileName="vc-static-u\sqlite3.pdb"
+				ObjectFile="vc-static-u\sqlite\"
+				ProgramDataBaseFileName="vc-static-u\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -540,11 +530,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-u\sqlite3.lib"
+				OutputFile="vc-static-u\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -554,7 +544,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -571,21 +561,20 @@
 		<Configuration
 			Name="Unicode Release Monolithic WX_PYTHON_0|Win32"
 			OutputDirectory="vc-static-u"
-			IntermediateDirectory="vc-static-u\sqlite3"
+			IntermediateDirectory="vc-static-u\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-u\sqlite3\"
-				ProgramDataBaseFileName="vc-static-u\sqlite3.pdb"
+				ObjectFile="vc-static-u\sqlite\"
+				ProgramDataBaseFileName="vc-static-u\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -594,11 +583,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-u\sqlite3.lib"
+				OutputFile="vc-static-u\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -608,7 +597,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -625,21 +614,20 @@
 		<Configuration
 			Name="Unicode Release Monolithic WX_PYTHON_1|Win32"
 			OutputDirectory="vc-static-u"
-			IntermediateDirectory="vc-static-u\sqlite3"
+			IntermediateDirectory="vc-static-u\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-u\sqlite3\"
-				ProgramDataBaseFileName="vc-static-u\sqlite3.pdb"
+				ObjectFile="vc-static-u\sqlite\"
+				ProgramDataBaseFileName="vc-static-u\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -648,11 +636,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-u\sqlite3.lib"
+				OutputFile="vc-static-u\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -662,7 +650,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -679,24 +667,23 @@
 		<Configuration
 			Name="Unicode Debug Multilib WX_PYTHON_0|Win32"
 			OutputDirectory="vc-static-ud"
-			IntermediateDirectory="vc-static-ud\sqlite3"
+			IntermediateDirectory="vc-static-ud\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-ud\sqlite3\"
-				ProgramDataBaseFileName="vc-static-ud\sqlite3.pdb"
+				ObjectFile="vc-static-ud\sqlite\"
+				ProgramDataBaseFileName="vc-static-ud\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -705,11 +692,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-ud\sqlite3.lib"
+				OutputFile="vc-static-ud\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -719,7 +706,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -736,24 +723,23 @@
 		<Configuration
 			Name="Unicode Debug Multilib WX_PYTHON_1|Win32"
 			OutputDirectory="vc-static-ud"
-			IntermediateDirectory="vc-static-ud\sqlite3"
+			IntermediateDirectory="vc-static-ud\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-ud\sqlite3\"
-				ProgramDataBaseFileName="vc-static-ud\sqlite3.pdb"
+				ObjectFile="vc-static-ud\sqlite\"
+				ProgramDataBaseFileName="vc-static-ud\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -762,11 +748,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-ud\sqlite3.lib"
+				OutputFile="vc-static-ud\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -776,7 +762,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -793,24 +779,23 @@
 		<Configuration
 			Name="Unicode Debug Monolithic WX_PYTHON_0|Win32"
 			OutputDirectory="vc-static-ud"
-			IntermediateDirectory="vc-static-ud\sqlite3"
+			IntermediateDirectory="vc-static-ud\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-ud\sqlite3\"
-				ProgramDataBaseFileName="vc-static-ud\sqlite3.pdb"
+				ObjectFile="vc-static-ud\sqlite\"
+				ProgramDataBaseFileName="vc-static-ud\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -819,11 +804,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-ud\sqlite3.lib"
+				OutputFile="vc-static-ud\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -833,7 +818,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -850,24 +835,23 @@
 		<Configuration
 			Name="Unicode Debug Monolithic WX_PYTHON_1|Win32"
 			OutputDirectory="vc-static-ud"
-			IntermediateDirectory="vc-static-ud\sqlite3"
+			IntermediateDirectory="vc-static-ud\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-static-ud\sqlite3\"
-				ProgramDataBaseFileName="vc-static-ud\sqlite3.pdb"
+				ObjectFile="vc-static-ud\sqlite\"
+				ProgramDataBaseFileName="vc-static-ud\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -876,11 +860,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-static-ud\sqlite3.lib"
+				OutputFile="vc-static-ud\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -890,7 +874,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -907,21 +891,20 @@
 		<Configuration
 			Name="DLL Release Multilib WX_PYTHON_0|Win32"
 			OutputDirectory="vc-shared-"
-			IntermediateDirectory="vc-shared-\sqlite3"
+			IntermediateDirectory="vc-shared-\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-\sqlite3.pdb"
+				ObjectFile="vc-shared-\sqlite\"
+				ProgramDataBaseFileName="vc-shared-\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -930,11 +913,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-\sqlite3.lib"
+				OutputFile="vc-shared-\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -944,7 +927,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -961,21 +944,20 @@
 		<Configuration
 			Name="DLL Release Multilib WX_PYTHON_1|Win32"
 			OutputDirectory="vc-shared-"
-			IntermediateDirectory="vc-shared-\sqlite3"
+			IntermediateDirectory="vc-shared-\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-\sqlite3.pdb"
+				ObjectFile="vc-shared-\sqlite\"
+				ProgramDataBaseFileName="vc-shared-\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -984,11 +966,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-\sqlite3.lib"
+				OutputFile="vc-shared-\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -998,7 +980,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1015,21 +997,20 @@
 		<Configuration
 			Name="DLL Release Monolithic WX_PYTHON_0|Win32"
 			OutputDirectory="vc-shared-"
-			IntermediateDirectory="vc-shared-\sqlite3"
+			IntermediateDirectory="vc-shared-\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-\sqlite3.pdb"
+				ObjectFile="vc-shared-\sqlite\"
+				ProgramDataBaseFileName="vc-shared-\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1038,11 +1019,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-\sqlite3.lib"
+				OutputFile="vc-shared-\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1052,7 +1033,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1069,21 +1050,20 @@
 		<Configuration
 			Name="DLL Release Monolithic WX_PYTHON_1|Win32"
 			OutputDirectory="vc-shared-"
-			IntermediateDirectory="vc-shared-\sqlite3"
+			IntermediateDirectory="vc-shared-\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-\sqlite3.pdb"
+				ObjectFile="vc-shared-\sqlite\"
+				ProgramDataBaseFileName="vc-shared-\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1092,11 +1072,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-\sqlite3.lib"
+				OutputFile="vc-shared-\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1106,7 +1086,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1123,24 +1103,23 @@
 		<Configuration
 			Name="DLL Debug Multilib WX_PYTHON_0|Win32"
 			OutputDirectory="vc-shared-d"
-			IntermediateDirectory="vc-shared-d\sqlite3"
+			IntermediateDirectory="vc-shared-d\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-d\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-d\sqlite3.pdb"
+				ObjectFile="vc-shared-d\sqlite\"
+				ProgramDataBaseFileName="vc-shared-d\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1149,11 +1128,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-d\sqlite3.lib"
+				OutputFile="vc-shared-d\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1163,7 +1142,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1180,24 +1159,23 @@
 		<Configuration
 			Name="DLL Debug Multilib WX_PYTHON_1|Win32"
 			OutputDirectory="vc-shared-d"
-			IntermediateDirectory="vc-shared-d\sqlite3"
+			IntermediateDirectory="vc-shared-d\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-d\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-d\sqlite3.pdb"
+				ObjectFile="vc-shared-d\sqlite\"
+				ProgramDataBaseFileName="vc-shared-d\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1206,11 +1184,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-d\sqlite3.lib"
+				OutputFile="vc-shared-d\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1220,7 +1198,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1237,24 +1215,23 @@
 		<Configuration
 			Name="DLL Debug Monolithic WX_PYTHON_0|Win32"
 			OutputDirectory="vc-shared-d"
-			IntermediateDirectory="vc-shared-d\sqlite3"
+			IntermediateDirectory="vc-shared-d\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-d\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-d\sqlite3.pdb"
+				ObjectFile="vc-shared-d\sqlite\"
+				ProgramDataBaseFileName="vc-shared-d\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1263,11 +1240,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-d\sqlite3.lib"
+				OutputFile="vc-shared-d\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1277,7 +1254,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1294,24 +1271,23 @@
 		<Configuration
 			Name="DLL Debug Monolithic WX_PYTHON_1|Win32"
 			OutputDirectory="vc-shared-d"
-			IntermediateDirectory="vc-shared-d\sqlite3"
+			IntermediateDirectory="vc-shared-d\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-d\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-d\sqlite3.pdb"
+				ObjectFile="vc-shared-d\sqlite\"
+				ProgramDataBaseFileName="vc-shared-d\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1320,11 +1296,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-d\sqlite3.lib"
+				OutputFile="vc-shared-d\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1334,7 +1310,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1351,21 +1327,20 @@
 		<Configuration
 			Name="DLL Unicode Release Multilib WX_PYTHON_0|Win32"
 			OutputDirectory="vc-shared-u"
-			IntermediateDirectory="vc-shared-u\sqlite3"
+			IntermediateDirectory="vc-shared-u\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-u\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-u\sqlite3.pdb"
+				ObjectFile="vc-shared-u\sqlite\"
+				ProgramDataBaseFileName="vc-shared-u\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1374,11 +1349,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-u\sqlite3.lib"
+				OutputFile="vc-shared-u\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1388,7 +1363,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1405,21 +1380,20 @@
 		<Configuration
 			Name="DLL Unicode Release Multilib WX_PYTHON_1|Win32"
 			OutputDirectory="vc-shared-u"
-			IntermediateDirectory="vc-shared-u\sqlite3"
+			IntermediateDirectory="vc-shared-u\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-u\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-u\sqlite3.pdb"
+				ObjectFile="vc-shared-u\sqlite\"
+				ProgramDataBaseFileName="vc-shared-u\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1428,11 +1402,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-u\sqlite3.lib"
+				OutputFile="vc-shared-u\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1442,7 +1416,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1459,21 +1433,20 @@
 		<Configuration
 			Name="DLL Unicode Release Monolithic WX_PYTHON_0|Win32"
 			OutputDirectory="vc-shared-u"
-			IntermediateDirectory="vc-shared-u\sqlite3"
+			IntermediateDirectory="vc-shared-u\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-u\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-u\sqlite3.pdb"
+				ObjectFile="vc-shared-u\sqlite\"
+				ProgramDataBaseFileName="vc-shared-u\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1482,11 +1455,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-u\sqlite3.lib"
+				OutputFile="vc-shared-u\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1496,7 +1469,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1513,21 +1486,20 @@
 		<Configuration
 			Name="DLL Unicode Release Monolithic WX_PYTHON_1|Win32"
 			OutputDirectory="vc-shared-u"
-			IntermediateDirectory="vc-shared-u\sqlite3"
+			IntermediateDirectory="vc-shared-u\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="2"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-u\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-u\sqlite3.pdb"
+				ObjectFile="vc-shared-u\sqlite\"
+				ProgramDataBaseFileName="vc-shared-u\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1536,11 +1508,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-u\sqlite3.lib"
+				OutputFile="vc-shared-u\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;NDEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1550,7 +1522,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1567,24 +1539,23 @@
 		<Configuration
 			Name="DLL Unicode Debug Multilib WX_PYTHON_0|Win32"
 			OutputDirectory="vc-shared-ud"
-			IntermediateDirectory="vc-shared-ud\sqlite3"
+			IntermediateDirectory="vc-shared-ud\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-ud\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-ud\sqlite3.pdb"
+				ObjectFile="vc-shared-ud\sqlite\"
+				ProgramDataBaseFileName="vc-shared-ud\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1593,11 +1564,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-ud\sqlite3.lib"
+				OutputFile="vc-shared-ud\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1607,7 +1578,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1624,24 +1595,23 @@
 		<Configuration
 			Name="DLL Unicode Debug Multilib WX_PYTHON_1|Win32"
 			OutputDirectory="vc-shared-ud"
-			IntermediateDirectory="vc-shared-ud\sqlite3"
+			IntermediateDirectory="vc-shared-ud\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-ud\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-ud\sqlite3.pdb"
+				ObjectFile="vc-shared-ud\sqlite\"
+				ProgramDataBaseFileName="vc-shared-ud\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1650,11 +1620,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-ud\sqlite3.lib"
+				OutputFile="vc-shared-ud\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1664,7 +1634,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1681,24 +1651,23 @@
 		<Configuration
 			Name="DLL Unicode Debug Monolithic WX_PYTHON_0|Win32"
 			OutputDirectory="vc-shared-ud"
-			IntermediateDirectory="vc-shared-ud\sqlite3"
+			IntermediateDirectory="vc-shared-ud\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-ud\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-ud\sqlite3.pdb"
+				ObjectFile="vc-shared-ud\sqlite\"
+				ProgramDataBaseFileName="vc-shared-ud\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1707,11 +1676,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-ud\sqlite3.lib"
+				OutputFile="vc-shared-ud\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1721,7 +1690,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1738,24 +1707,23 @@
 		<Configuration
 			Name="DLL Unicode Debug Monolithic WX_PYTHON_1|Win32"
 			OutputDirectory="vc-shared-ud"
-			IntermediateDirectory="vc-shared-ud\sqlite3"
+			IntermediateDirectory="vc-shared-ud\sqlite"
 			ConfigurationType="4"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="TRUE"
 				RuntimeTypeInfo="FALSE"
-				ObjectFile="vc-shared-ud\sqlite3\"
-				ProgramDataBaseFileName="vc-shared-ud\sqlite3.pdb"
+				ObjectFile="vc-shared-ud\sqlite\"
+				ProgramDataBaseFileName="vc-shared-ud\sqlite.pdb"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
@@ -1764,11 +1732,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="vc-shared-ud\sqlite3.lib"
+				OutputFile="vc-shared-ud\sqlite.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG"
+				PreprocessorDefinitions="WIN32;_LIB;_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -1778,7 +1746,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_DEBUG"
+				PreprocessorDefinitions="_DEBUG;_DEBUG;SQLITE_CORE;SQLITE_HAS_CODEC;SQLITE_ENABLE_COLUMN_METADATA"
 				Culture="1033"
 				AdditionalIncludeDirectories=""/>
 			<Tool
@@ -1802,7 +1770,7 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="..\..\sqlite\sqlite3secure.c">
+				RelativePath="..\..\libs\sqlite\sqlite3secure.c">
 			</File>
 		</Filter>
 		<Filter
@@ -1810,16 +1778,16 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="..\..\sqlite\codec.h">
+				RelativePath="..\..\libs\sqlite\codec.h">
 			</File>
 			<File
-				RelativePath="..\..\sqlite\rijndael.h">
+				RelativePath="..\..\libs\sqlite\rijndael.h">
 			</File>
 			<File
-				RelativePath="..\..\sqlite\sqlite3.h">
+				RelativePath="..\..\libs\sqlite\sqlite3.h">
 			</File>
 			<File
-				RelativePath="..\..\sqlite\sqlite3ext.h">
+				RelativePath="..\..\libs\sqlite\sqlite3ext.h">
 			</File>
 		</Filter>
 	</Files>
