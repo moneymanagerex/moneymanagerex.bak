@@ -18,6 +18,7 @@
         <define>WXSQLITE3_HAVE_METADATA</define>
 
         <include>$(SRCDIR)/libs/sqlite</include>
+        <include>$(SRCDIR)/libs/wxsqlite</include>
 
     	<!-- paths relative to trunk/mmex -->
 

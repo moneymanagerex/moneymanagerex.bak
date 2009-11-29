@@ -48,7 +48,8 @@ SQLITE_CFLAGS = -DSQLITE_CORE -DSQLITE_HAS_CODEC \
 SQLITE_OBJECTS =  \
 	sqlite_sqlite3secure.o
 WXSQLITE_CXXFLAGS = -DNOPCH -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA \
-	-I$(srcdir)/libs/sqlite $(PIC_FLAG) $(WX_CXXFLAGS) $(CPPFLAGS) $(CXXFLAGS)
+	-I$(srcdir)/libs/sqlite -I$(srcdir)/libs/wxsqlite $(PIC_FLAG) \
+	$(WX_CXXFLAGS) $(CPPFLAGS) $(CXXFLAGS)
 WXSQLITE_OBJECTS =  \
 	wxsqlite_wxsqlite3.o
 MMEX_CXXFLAGS = -I$(srcdir)/include -I$(srcdir)/libs/wxsqlite -DNOPCH \
