@@ -35,10 +35,15 @@ WX_RESCOMP = @WX_RESCOMP@
 ### Variables: ###
 
 DESTDIR = 
-SQLITE3_CFLAGS = $(PIC_FLAG) -DSQLITE_CORE -DSQLITE_HAS_CODEC \
-	-DSQLITE_ENABLE_COLUMN_METADATA $(CPPFLAGS) $(CFLAGS)
-SQLITE3_OBJECTS =  \
-	sqlite3_sqlite3secure.o
+SQLITE_CFLAGS = -DSQLITE_CORE -DSQLITE_HAS_CODEC \
+	-DSQLITE_ENABLE_COLUMN_METADATA $(PIC_FLAG) $(CPPFLAGS) $(CFLAGS)
+SQLITE_OBJECTS =  \
+	sqlite_sqlite3secure.o
+WXSQLITE_CXXFLAGS = -DNOPCH -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA \
+	-I$(srcdir)/../../libs/sqlite $(PIC_FLAG) $(WX_CXXFLAGS) $(CPPFLAGS) \
+	$(CXXFLAGS)
+WXSQLITE_OBJECTS =  \
+	wxsqlite_wxsqlite3.o
 UNITTESTPP_CXXFLAGS =     $(PIC_FLAG)   $(CPPFLAGS) $(CXXFLAGS)
 UNITTESTPP_OBJECTS =  \
 	UnitTestPP_AssertException.o \
@@ -59,10 +64,10 @@ UNITTESTPP_OBJECTS =  \
 	UnitTestPP_XmlTestReporter.o \
 	UnitTestPP_SignalTranslator.o \
 	UnitTestPP_TimeHelpers.o
-MMEX_TESTS_CXXFLAGS = -I$(srcdir)/../../include -I$(srcdir)/../../sqlite \
-	-DNOPCH -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA -DTIXML_USE_STL \
-	-I$(srcdir)/../../src -I$(srcdir)/../../UnitTest++/src \
-	-DIMPLEMENT_WXWIN_MAIN= $(WX_CXXFLAGS) $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
+MMEX_TESTS_CXXFLAGS = -I$(srcdir)/../../include \
+	-I$(srcdir)/../../libs/wxsqlite -DNOPCH -I$(srcdir)/../../src \
+	-I$(srcdir)/../../libs/UnitTest++ -DIMPLEMENT_WXWIN_MAIN= $(WX_CXXFLAGS) \
+	$(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
 	mmex_tests_aboutdialog.o \
 	mmex_tests_appstartdialog.o \
@@ -111,15 +116,9 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_splittransactionsdialog.o \
 	mmex_tests_stockdialog.o \
 	mmex_tests_stockspanel.o \
-	mmex_tests_tinystr.o \
-	mmex_tests_tinyxml.o \
-	mmex_tests_tinyxmlerror.o \
-	mmex_tests_tinyxmlparser.o \
 	mmex_tests_transdialog.o \
 	mmex_tests_univcsvdialog.o \
 	mmex_tests_util.o \
-	mmex_tests_wxsqlite3.o \
-	mmex_tests_wxtinyxml.o \
 	mmex_tests_yahoosettingsdialog.o \
 	mmex_tests_platfdep.o \
 	mmex_tests_dbwrapper_test.o \
@@ -140,7 +139,7 @@ MMEX_TESTS_OBJECTS =  \
 
 ### Targets: ###
 
-all: $(LIBPREFIX)sqlite3$(LIBEXT) $(LIBPREFIX)UnitTestPP$(LIBEXT) mmex_tests$(EXEEXT)
+all: $(LIBPREFIX)sqlite$(LIBEXT) $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)UnitTestPP$(LIBEXT) mmex_tests$(EXEEXT)
 
 install: 
 
@@ -151,17 +150,23 @@ install-strip: install
 clean: 
 	rm -rf ./.deps ./.pch
 	rm -f ./*.o
-	rm -f $(LIBPREFIX)sqlite3$(LIBEXT)
+	rm -f $(LIBPREFIX)sqlite$(LIBEXT)
+	rm -f $(LIBPREFIX)wxsqlite$(LIBEXT)
 	rm -f $(LIBPREFIX)UnitTestPP$(LIBEXT)
 	rm -f mmex_tests$(EXEEXT)
-	rm -f ./currency.db3
+	rm -f ./currency_seed.db3
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
 
-$(LIBPREFIX)sqlite3$(LIBEXT): $(SQLITE3_OBJECTS)
+$(LIBPREFIX)sqlite$(LIBEXT): $(SQLITE_OBJECTS)
 	rm -f $@
-	$(AR) $(AROPTIONS) $@ $(SQLITE3_OBJECTS)
+	$(AR) $(AROPTIONS) $@ $(SQLITE_OBJECTS)
+	$(RANLIB) $@
+
+$(LIBPREFIX)wxsqlite$(LIBEXT): $(WXSQLITE_OBJECTS)
+	rm -f $@
+	$(AR) $(AROPTIONS) $@ $(WXSQLITE_OBJECTS)
 	$(RANLIB) $@
 
 $(LIBPREFIX)UnitTestPP$(LIBEXT): $(UNITTESTPP_OBJECTS)
@@ -169,71 +174,74 @@ $(LIBPREFIX)UnitTestPP$(LIBEXT): $(UNITTESTPP_OBJECTS)
 	$(AR) $(AROPTIONS) $@ $(UNITTESTPP_OBJECTS)
 	$(RANLIB) $@
 
-mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)sqlite3$(LIBEXT) $(LIBPREFIX)UnitTestPP$(LIBEXT) $(__mmex_tests___win32rc)
-	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS) -L. -L.   $(WX_LIBS)  $(LDFLAGS)  -lsqlite3 -lUnitTestPP $(LIBS)
+mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)sqlite$(LIBEXT) $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)UnitTestPP$(LIBEXT) $(__mmex_tests___win32rc)
+	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS) -L. -L. -L.   $(WX_LIBS)  $(LDFLAGS)  -lsqlite -lwxsqlite -lUnitTestPP $(LIBS)
 	
 	$(__mmex_tests___mac_setfilecmd)
 
 check: all
-	cp $(srcdir)/../../runtime/currency.db3 .
+	cp $(srcdir)/../../runtime/currency_seed.db3 .
 	./mmex_tests
 
-sqlite3_sqlite3secure.o: $(srcdir)/../../sqlite/sqlite3secure.c
-	$(CCC) -c -o $@ $(SQLITE3_CFLAGS) $(srcdir)/../../sqlite/sqlite3secure.c
+sqlite_sqlite3secure.o: $(srcdir)/../../libs/sqlite/sqlite3secure.c
+	$(CCC) -c -o $@ $(SQLITE_CFLAGS) $(srcdir)/../../libs/sqlite/sqlite3secure.c
 
-UnitTestPP_AssertException.o: $(srcdir)/../../UnitTest++/src/AssertException.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/AssertException.cpp
+wxsqlite_wxsqlite3.o: $(srcdir)/../../libs/wxsqlite/wxsqlite3.cpp
+	$(CXXC) -c -o $@ $(WXSQLITE_CXXFLAGS) $(srcdir)/../../libs/wxsqlite/wxsqlite3.cpp
 
-UnitTestPP_Checks.o: $(srcdir)/../../UnitTest++/src/Checks.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/Checks.cpp
+UnitTestPP_AssertException.o: $(srcdir)/../../libs/UnitTest++/AssertException.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/AssertException.cpp
 
-UnitTestPP_CurrentTest.o: $(srcdir)/../../UnitTest++/src/CurrentTest.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/CurrentTest.cpp
+UnitTestPP_Checks.o: $(srcdir)/../../libs/UnitTest++/Checks.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/Checks.cpp
 
-UnitTestPP_DeferredTestReporter.o: $(srcdir)/../../UnitTest++/src/DeferredTestReporter.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/DeferredTestReporter.cpp
+UnitTestPP_CurrentTest.o: $(srcdir)/../../libs/UnitTest++/CurrentTest.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/CurrentTest.cpp
 
-UnitTestPP_DeferredTestResult.o: $(srcdir)/../../UnitTest++/src/DeferredTestResult.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/DeferredTestResult.cpp
+UnitTestPP_DeferredTestReporter.o: $(srcdir)/../../libs/UnitTest++/DeferredTestReporter.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/DeferredTestReporter.cpp
 
-UnitTestPP_MemoryOutStream.o: $(srcdir)/../../UnitTest++/src/MemoryOutStream.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/MemoryOutStream.cpp
+UnitTestPP_DeferredTestResult.o: $(srcdir)/../../libs/UnitTest++/DeferredTestResult.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/DeferredTestResult.cpp
 
-UnitTestPP_ReportAssert.o: $(srcdir)/../../UnitTest++/src/ReportAssert.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/ReportAssert.cpp
+UnitTestPP_MemoryOutStream.o: $(srcdir)/../../libs/UnitTest++/MemoryOutStream.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/MemoryOutStream.cpp
 
-UnitTestPP_Test.o: $(srcdir)/../../UnitTest++/src/Test.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/Test.cpp
+UnitTestPP_ReportAssert.o: $(srcdir)/../../libs/UnitTest++/ReportAssert.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/ReportAssert.cpp
 
-UnitTestPP_TestDetails.o: $(srcdir)/../../UnitTest++/src/TestDetails.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/TestDetails.cpp
+UnitTestPP_Test.o: $(srcdir)/../../libs/UnitTest++/Test.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/Test.cpp
 
-UnitTestPP_TestList.o: $(srcdir)/../../UnitTest++/src/TestList.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/TestList.cpp
+UnitTestPP_TestDetails.o: $(srcdir)/../../libs/UnitTest++/TestDetails.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/TestDetails.cpp
 
-UnitTestPP_TestReporter.o: $(srcdir)/../../UnitTest++/src/TestReporter.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/TestReporter.cpp
+UnitTestPP_TestList.o: $(srcdir)/../../libs/UnitTest++/TestList.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/TestList.cpp
 
-UnitTestPP_TestReporterStdout.o: $(srcdir)/../../UnitTest++/src/TestReporterStdout.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/TestReporterStdout.cpp
+UnitTestPP_TestReporter.o: $(srcdir)/../../libs/UnitTest++/TestReporter.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/TestReporter.cpp
 
-UnitTestPP_TestResults.o: $(srcdir)/../../UnitTest++/src/TestResults.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/TestResults.cpp
+UnitTestPP_TestReporterStdout.o: $(srcdir)/../../libs/UnitTest++/TestReporterStdout.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/TestReporterStdout.cpp
 
-UnitTestPP_TestRunner.o: $(srcdir)/../../UnitTest++/src/TestRunner.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/TestRunner.cpp
+UnitTestPP_TestResults.o: $(srcdir)/../../libs/UnitTest++/TestResults.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/TestResults.cpp
 
-UnitTestPP_TimeConstraint.o: $(srcdir)/../../UnitTest++/src/TimeConstraint.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/TimeConstraint.cpp
+UnitTestPP_TestRunner.o: $(srcdir)/../../libs/UnitTest++/TestRunner.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/TestRunner.cpp
 
-UnitTestPP_XmlTestReporter.o: $(srcdir)/../../UnitTest++/src/XmlTestReporter.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/XmlTestReporter.cpp
+UnitTestPP_TimeConstraint.o: $(srcdir)/../../libs/UnitTest++/TimeConstraint.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/TimeConstraint.cpp
 
-UnitTestPP_SignalTranslator.o: $(srcdir)/../../UnitTest++/src/Posix/SignalTranslator.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/Posix/SignalTranslator.cpp
+UnitTestPP_XmlTestReporter.o: $(srcdir)/../../libs/UnitTest++/XmlTestReporter.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/XmlTestReporter.cpp
 
-UnitTestPP_TimeHelpers.o: $(srcdir)/../../UnitTest++/src/Posix/TimeHelpers.cpp
-	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../UnitTest++/src/Posix/TimeHelpers.cpp
+UnitTestPP_SignalTranslator.o: $(srcdir)/../../libs/UnitTest++/Posix/SignalTranslator.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/Posix/SignalTranslator.cpp
+
+UnitTestPP_TimeHelpers.o: $(srcdir)/../../libs/UnitTest++/Posix/TimeHelpers.cpp
+	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/Posix/TimeHelpers.cpp
 
 mmex_tests_aboutdialog.o: $(srcdir)/../../src/aboutdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/aboutdialog.cpp
@@ -376,18 +384,6 @@ mmex_tests_stockdialog.o: $(srcdir)/../../src/stockdialog.cpp
 mmex_tests_stockspanel.o: $(srcdir)/../../src/stockspanel.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/stockspanel.cpp
 
-mmex_tests_tinystr.o: $(srcdir)/../../src/tinystr.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tinystr.cpp
-
-mmex_tests_tinyxml.o: $(srcdir)/../../src/tinyxml.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tinyxml.cpp
-
-mmex_tests_tinyxmlerror.o: $(srcdir)/../../src/tinyxmlerror.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tinyxmlerror.cpp
-
-mmex_tests_tinyxmlparser.o: $(srcdir)/../../src/tinyxmlparser.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tinyxmlparser.cpp
-
 mmex_tests_transdialog.o: $(srcdir)/../../src/transdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/transdialog.cpp
 
@@ -396,12 +392,6 @@ mmex_tests_univcsvdialog.o: $(srcdir)/../../src/univcsvdialog.cpp
 
 mmex_tests_util.o: $(srcdir)/../../src/util.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/util.cpp
-
-mmex_tests_wxsqlite3.o: $(srcdir)/../../src/wxsqlite3.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/wxsqlite3.cpp
-
-mmex_tests_wxtinyxml.o: $(srcdir)/../../src/wxtinyxml.cpp
-	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/wxtinyxml.cpp
 
 mmex_tests_yahoosettingsdialog.o: $(srcdir)/../../src/yahoosettingsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/yahoosettingsdialog.cpp
@@ -419,7 +409,7 @@ mmex_tests_utils.o: $(srcdir)/../../src/tests/utils.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/utils.cpp
 
 mmex_tests_mmex_tests_rc.o: $(srcdir)/../../src/tests/mmex_tests.rc
-	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../sqlite --define NOPCH --define WXSQLITE3_HAVE_CODEC --define WXSQLITE3_HAVE_METADATA --define TIXML_USE_STL --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../UnitTest++/src --define IMPLEMENT_WXWIN_MAIN=
+	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../libs/wxsqlite --define NOPCH --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../libs/UnitTest++ --define IMPLEMENT_WXWIN_MAIN=
 
 
 # Include dependency info, if present:

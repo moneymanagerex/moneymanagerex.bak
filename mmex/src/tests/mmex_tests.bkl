@@ -23,7 +23,6 @@
     
     
     <include file="../../build/bakefiles/common.bkl"/>
-    <include file="../../build/bakefiles/sqlite.bkl"/>
     <include file="../../build/bakefiles/UnitTest++.bkl"/>
 
 
@@ -32,12 +31,10 @@
     <exe id="mmex_tests" template="mmex_common">
 
         <app-type>console</app-type>
-        
-        <library>sqlite3</library>
         <library>UnitTestPP</library>
 
 	<include>$(SRCDIR)/src</include>
-	<include>$(SRCDIR)/UnitTest++/src</include>
+	<include>$(SRCDIR)/libs/UnitTest++</include>
 
 
     	<!-- IMPLEMENT_APP(mmGUIApp) in mmex.cpp defines main() on Unixes, see wx\app.h.
@@ -84,11 +81,11 @@
         </command>
 
         <command cond="FORMAT=='autoconf'">
-            $(COPY) $(nativePaths(SRCDIR + '/runtime/currency.db3')) $(nativePaths(BUILDDIR))
-            $(nativePaths('./mmex_tests'))
+            $(COPY) $(nativePaths(SRCDIR + '/runtime/currency_seed.db3')) $(nativePaths(BUILDDIR))
+            ./mmex_tests
 	</command>
 
-        <clean-files  cond="FORMAT=='autoconf'">$(nativePaths(BUILDDIR + '/currency.db3'))</clean-files>
+        <clean-files  cond="FORMAT=='autoconf'">$(nativePaths(BUILDDIR + '/currency_seed.db3'))</clean-files>
 
     </action>
 
