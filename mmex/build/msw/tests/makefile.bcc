@@ -79,6 +79,7 @@ MMEX_TESTS_OBJECTS =  \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_fileviewerdialog.obj \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_filtertransdialog.obj \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_guiid.obj \
+	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_helpers.obj \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_htmlbuilder.obj \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_led.obj \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_maincurrencydialog.obj \
@@ -415,6 +416,9 @@ bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 
 bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_guiid.obj: ..\..\..\src\guiid.cpp
 	$(CXX) -q -c -P -o$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\guiid.cpp
+
+bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_helpers.obj: ..\..\..\src\helpers.cpp
+	$(CXX) -q -c -P -o$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\helpers.cpp
 
 bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_htmlbuilder.obj: ..\..\..\src\htmlbuilder.cpp
 	$(CXX) -q -c -P -o$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\htmlbuilder.cpp

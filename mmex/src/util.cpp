@@ -25,9 +25,11 @@
 #include "mmcoredb.h"
 #include "paths.h"
 #include "platfdep.h"
+#include "helpers.h"
 #include "wxautocombobox.h"
 //----------------------------------------------------------------------------
 #include <wx/sound.h>
+#include <boost/shared_ptr.hpp>
 //----------------------------------------------------------------------------
 
 namespace 
@@ -329,149 +331,152 @@ wxString mmNotes4ExportString(const wxString& orig)
 
 void mmExportCSV(wxSQLite3Database* db_)
 {
- if (mmDBWrapper::getNumAccounts(db_) == 0)
+    if (mmDBWrapper::getNumAccounts(db_) == 0)
     {
         mmShowErrorMessage(0, _("No Account available! Cannot Export!"), _("Error"));
         return;
     }
+    
     wxArrayString as;
     
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
-    while (q1.NextRow())
     {
-        as.Add(q1.GetString(wxT("ACCOUNTNAME")));
+        wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
+        while (q1.NextRow())
+        {
+            as.Add(q1.GetString(wxT("ACCOUNTNAME")));
+        }
+        q1.Finalize();
     }
-    q1.Finalize();
 
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     
-    wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Account to Export from:"), 
-        _("CSV Export"), as);
-    if (scd->ShowModal() == wxID_OK)
+    boost::shared_ptr<wxSingleChoiceDialog> scd(new wxSingleChoiceDialog(0, 
+                _("Choose Account to Export from:"), _("CSV Export"), as), mmex::Destroy);
+
+    if (scd->ShowModal() != wxID_OK)
+        return;
+        
+    wxString acctName = scd->GetStringSelection();
+    int fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+
+     wxString fileName = wxFileSelector(_("Choose CSV data file to Export"), 
+            wxT(""), wxT(""), wxT(""), wxT("*.csv"), wxSAVE | wxOVERWRITE_PROMPT);
+
+    if (fileName.empty())
+        return;
+        
+    wxFileOutputStream output( fileName );
+    wxTextOutputStream text( output );
+
+    static const char sql[] = 
+    "SELECT TRANSID, TRANSDATE, "
+           "TRANSCODE, TRANSAMOUNT,  SUBCATEGID, "
+           "CATEGID, PAYEEID, "
+           "TRANSACTIONNUMBER, NOTES, TOACCOUNTID, ACCOUNTID "
+    "FROM CHECKINGACCOUNT_V1 "
+    "where ACCOUNTID = ? OR TOACCOUNTID = ?"
+    "ORDER BY TRANSDATE";
+
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    st.Bind(1, fromAccountID);
+    st.Bind(2, fromAccountID);
+
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    int numRecords = 0;
+
+    while (q1.NextRow())
     {
-        wxString acctName = scd->GetStringSelection();
-        int fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+        wxString transid = q1.GetString(wxT("TRANSID"));
+        wxString dateDBString = q1.GetString(wxT("TRANSDATE"));
+        wxDateTime dtdt = mmGetStorageStringAsDate(dateDBString);
+        wxString dateString = mmGetDateForDisplay(db_, dtdt);
 
-         wxString fileName = wxFileSelector(_("Choose CSV data file to Export"), 
-                wxT(""), wxT(""), wxT(""), wxT("*.csv"), wxSAVE | wxOVERWRITE_PROMPT);
-        if ( !fileName.IsEmpty() )
+        int sid, cid;
+        wxString payee = mmDBWrapper::getPayee(db_, q1.GetInt(wxT("PAYEEID")), sid, cid);
+        wxString type = q1.GetString(wxT("TRANSCODE"));
+        wxString sign = wxT("");
+        wxString amount = q1.GetString(wxT("TRANSAMOUNT"));
+        //Amount should be formated if delimiters is not "." or ","
+        if (delimit != wxT(".") && delimit != wxT(","))
         {
-            wxFileOutputStream output( fileName );
-            wxTextOutputStream text( output );
+        double value = 0;
+        mmCurrencyFormatter::formatCurrencyToDouble(amount, value);
+        mmCurrencyFormatter::formatDoubleToCurrencyEdit(value, amount);
+        }
+        wxString categ = mmDBWrapper::getCategoryName(db_, q1.GetInt(wxT("CATEGID")));
+        wxString subcateg = mmDBWrapper::getSubCategoryName(db_, 
+            q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
+        wxString transNum = mmNotes4ExportString(q1.GetString(wxT("TRANSACTIONNUMBER")));
+        wxString notes = mmNotes4ExportString(q1.GetString(wxT("NOTES")));
+        wxString origtype = type;
+        if (type == wxT("Transfer"))
+        {
+           int tAccountID = q1.GetInt(wxT("TOACCOUNTID"));
+           int fAccountID = q1.GetInt(wxT("ACCOUNTID"));
 
-            static const char sql[] = 
-            "SELECT TRANSID, TRANSDATE, "
-                   "TRANSCODE, TRANSAMOUNT,  SUBCATEGID, "
-                   "CATEGID, PAYEEID, "
-                   "TRANSACTIONNUMBER, NOTES, TOACCOUNTID, ACCOUNTID "
-            "FROM CHECKINGACCOUNT_V1 "
-            "where ACCOUNTID = ? OR TOACCOUNTID = ?"
-			"ORDER BY TRANSDATE";
+           wxString fromAccount = mmDBWrapper::getAccountName(db_,  fAccountID);
+           wxString toAccount = mmDBWrapper::getAccountName(db_,  tAccountID );
 
-            wxSQLite3Statement st = db_->PrepareStatement(sql);
-            st.Bind(1, fromAccountID);
-            st.Bind(2, fromAccountID);
-
-            wxSQLite3ResultSet q1 = st.ExecuteQuery();
-            int numRecords = 0;
-
-            while (q1.NextRow())
-            {
-                wxString transid = q1.GetString(wxT("TRANSID"));
-				wxString dateDBString = q1.GetString(wxT("TRANSDATE"));
-                wxDateTime dtdt = mmGetStorageStringAsDate(dateDBString);
-                wxString dateString = mmGetDateForDisplay(db_, dtdt);
-
-                int sid, cid;
-                wxString payee = mmDBWrapper::getPayee(db_, q1.GetInt(wxT("PAYEEID")), sid, cid);
-                wxString type = q1.GetString(wxT("TRANSCODE"));
-				wxString sign = wxT("");
-                wxString amount = q1.GetString(wxT("TRANSAMOUNT"));
-				//Amount should be formated if delimiters is not "." or ","
-		        if (delimit != wxT(".") && delimit != wxT(","))
-				{
-				double value = 0;
-				mmCurrencyFormatter::formatCurrencyToDouble(amount, value);
-				mmCurrencyFormatter::formatDoubleToCurrencyEdit(value, amount);
-				}
-                wxString categ = mmDBWrapper::getCategoryName(db_, q1.GetInt(wxT("CATEGID")));
-                wxString subcateg = mmDBWrapper::getSubCategoryName(db_, 
-                    q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
-                wxString transNum = mmNotes4ExportString(q1.GetString(wxT("TRANSACTIONNUMBER")));
-                wxString notes = mmNotes4ExportString(q1.GetString(wxT("NOTES")));
-                wxString origtype = type;
-                if (type == wxT("Transfer"))
-                {
-                   int tAccountID = q1.GetInt(wxT("TOACCOUNTID"));
-                   int fAccountID = q1.GetInt(wxT("ACCOUNTID"));
-
-                   wxString fromAccount = mmDBWrapper::getAccountName(db_,  fAccountID);
-                   wxString toAccount = mmDBWrapper::getAccountName(db_,  tAccountID );
-
-                   if (tAccountID == fromAccountID)
-                   {
-                      type = wxT("Deposit");
-                      payee = fromAccount;
-                   }
-                   else if (fAccountID == fromAccountID)
-                   {
-                      type = wxT("Withdrawal");
-                      payee = toAccount;
-                      //transfer = wxT("T");
-					}
-                }
-				//It should be negative amounts for withdrwal
-				if (type == wxT("Withdrawal"))
-				{
-				sign = wxT("-");
-				}
-				if (categ.IsEmpty() && subcateg.IsEmpty())
-			{
-			static const char sql4splitedtrx[] = 
-            "SELECT SUBCATEGID, CATEGID, SPLITTRANSAMOUNT "
-            "FROM splittransactions_v1 "
-            "WHERE TRANSID = ?"; 
-
-			wxSQLite3Statement st2 = db_->PrepareStatement(sql4splitedtrx);
-            st2.Bind(1, transid);
-            
-			wxSQLite3ResultSet q2 = st2.ExecuteQuery();
-			while (q2.NextRow())
-				{
-					wxString splitamount = q2.GetString(wxT("SPLITTRANSAMOUNT"));
-					//Amount should be formated if delimiters is not "." or ","
-					if (delimit != wxT(".") && delimit != wxT(","))
-					{
-					double value = 0;
-					mmCurrencyFormatter::formatCurrencyToDouble(splitamount, value);
-					mmCurrencyFormatter::formatDoubleToCurrencyEdit(value, splitamount);
-					}
-                   wxString splitcateg = mmDBWrapper::getCategoryName(db_, q2.GetInt(wxT("CATEGID")));
-                   wxString splitsubcateg = mmDBWrapper::getSubCategoryName(db_,q2.GetInt(wxT("CATEGID")), q2.GetInt(wxT("SUBCATEGID")));
-				   
-					text << dateString << delimit << payee << delimit << sign << splitamount << delimit 
-					<< splitcateg << delimit << splitsubcateg << delimit << transNum << delimit 
-					<< notes << delimit << origtype << endl;
-
-				}
-				st2.Finalize();
-			}
-			else
-			{			
-                text << dateString << delimit << payee << delimit << sign << amount << delimit 
-				<< categ << delimit << subcateg << delimit << transNum << delimit
-				<< notes << delimit << origtype << endl;
-			}		 
-                numRecords++;
+           if (tAccountID == fromAccountID)
+           {
+              type = wxT("Deposit");
+              payee = fromAccount;
+           }
+           else if (fAccountID == fromAccountID)
+           {
+              type = wxT("Withdrawal");
+              payee = toAccount;
+              //transfer = wxT("T");
             }
-            st.Finalize();
+        }
+        //It should be negative amounts for withdrwal
+        if (type == wxT("Withdrawal"))
+        {
+        sign = wxT("-");
+        }
+        if (categ.IsEmpty() && subcateg.IsEmpty())
+    {
+    static const char sql4splitedtrx[] = 
+    "SELECT SUBCATEGID, CATEGID, SPLITTRANSAMOUNT "
+    "FROM splittransactions_v1 "
+    "WHERE TRANSID = ?"; 
 
-            wxString msg = wxString::Format(wxT("%d transactions exported"), numRecords);
-            mmShowErrorMessage(0, msg, _("Export to CSV"));
-        }// if fileName.empty();
+    wxSQLite3Statement st2 = db_->PrepareStatement(sql4splitedtrx);
+    st2.Bind(1, transid);
+    
+    wxSQLite3ResultSet q2 = st2.ExecuteQuery();
+    while (q2.NextRow())
+        {
+            wxString splitamount = q2.GetString(wxT("SPLITTRANSAMOUNT"));
+            //Amount should be formated if delimiters is not "." or ","
+            if (delimit != wxT(".") && delimit != wxT(","))
+            {
+            double value = 0;
+            mmCurrencyFormatter::formatCurrencyToDouble(splitamount, value);
+            mmCurrencyFormatter::formatDoubleToCurrencyEdit(value, splitamount);
+            }
+           wxString splitcateg = mmDBWrapper::getCategoryName(db_, q2.GetInt(wxT("CATEGID")));
+           wxString splitsubcateg = mmDBWrapper::getSubCategoryName(db_,q2.GetInt(wxT("CATEGID")), q2.GetInt(wxT("SUBCATEGID")));
+           
+            text << dateString << delimit << payee << delimit << sign << splitamount << delimit 
+            << splitcateg << delimit << splitsubcateg << delimit << transNum << delimit 
+            << notes << delimit << origtype << endl;
 
-    }// show Modal
-    scd->Destroy();
+        }
+        st2.Finalize();
+    }
+    else
+    {			
+        text << dateString << delimit << payee << delimit << sign << amount << delimit 
+        << categ << delimit << subcateg << delimit << transNum << delimit
+        << notes << delimit << origtype << endl;
+    }		 
+        numRecords++;
+    }
+    st.Finalize();
+
+    wxString msg = wxString::Format(wxT("%d transactions exported"), numRecords);
+    mmShowErrorMessage(0, msg, _("Export to CSV"));
 }
 
 void mmExportQIF(wxSQLite3Database* db_)
@@ -898,9 +903,8 @@ int mmImportCSV(mmCoreDB* core)
             mmShowErrorMessage(0, msg, _("Import from CSV"));
             outputLog.Close();
 
-            fileviewer* dlg = new fileviewer(logFile.GetFullPath(), 0);
+            boost::shared_ptr<fileviewer> dlg(new fileviewer(logFile.GetFullPath(), 0), mmex::Destroy);
             dlg->ShowModal();
-            dlg->Destroy();
         }
     }
     scd->Destroy();
@@ -1120,9 +1124,8 @@ int mmImportCSVMMNET(mmCoreDB* core)
             mmShowErrorMessage(0, msg, _("Import from CSV"));
             outputLog.Close();
 
-            fileviewer* dlg = new fileviewer(logFile.GetFullPath(), 0);
+            boost::shared_ptr<fileviewer> dlg(new fileviewer(logFile.GetFullPath(), 0), mmex::Destroy);
             dlg->ShowModal();
-            dlg->Destroy();
         }
     }
     scd->Destroy();

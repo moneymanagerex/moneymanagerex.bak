@@ -2099,6 +2099,9 @@
 				RelativePath="..\..\..\src\guiid.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\helpers.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\htmlbuilder.cpp">
 			</File>
 			<File
@@ -2267,6 +2270,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\guiid.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\helpers.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\htmlbuilder.h">
