@@ -220,6 +220,7 @@ KC 	Check transaction
 #include "mmex.h"
 #include "mmcoredb.h"
 #include "platfdep.h"
+#include "helpers.h"
 
 namespace
 {
@@ -711,9 +712,8 @@ Are you are sure you want to proceed with the import?"),
 
         outputLog.Close();
 
-        fileviewer *dlg = new fileviewer(logFile.GetFullPath(), 0);
+        boost::shared_ptr<fileviewer> dlg(new fileviewer(logFile.GetFullPath(), 0), mmex::Destroy);
         dlg->ShowModal();
-        dlg->Destroy();
     }
    
     scd->Destroy();
