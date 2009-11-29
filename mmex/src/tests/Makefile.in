@@ -35,15 +35,15 @@ WX_RESCOMP = @WX_RESCOMP@
 ### Variables: ###
 
 DESTDIR = 
-SQLITE_CFLAGS = -DSQLITE_CORE -DSQLITE_HAS_CODEC \
-	-DSQLITE_ENABLE_COLUMN_METADATA $(PIC_FLAG) $(CPPFLAGS) $(CFLAGS)
-SQLITE_OBJECTS =  \
-	sqlite_sqlite3secure.o
 WXSQLITE_CXXFLAGS = -DNOPCH -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA \
 	-I$(srcdir)/../../libs/sqlite -I$(srcdir)/../../libs/wxsqlite $(PIC_FLAG) \
 	$(WX_CXXFLAGS) $(CPPFLAGS) $(CXXFLAGS)
 WXSQLITE_OBJECTS =  \
 	wxsqlite_wxsqlite3.o
+SQLITE_CFLAGS = -DSQLITE_CORE -DSQLITE_HAS_CODEC \
+	-DSQLITE_ENABLE_COLUMN_METADATA $(PIC_FLAG) $(CPPFLAGS) $(CFLAGS)
+SQLITE_OBJECTS =  \
+	sqlite_sqlite3secure.o
 UNITTESTPP_CXXFLAGS =     $(PIC_FLAG)   $(CPPFLAGS) $(CXXFLAGS)
 UNITTESTPP_OBJECTS =  \
 	UnitTestPP_AssertException.o \
@@ -140,7 +140,7 @@ MMEX_TESTS_OBJECTS =  \
 
 ### Targets: ###
 
-all: $(LIBPREFIX)sqlite$(LIBEXT) $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)UnitTestPP$(LIBEXT) mmex_tests$(EXEEXT)
+all: $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) $(LIBPREFIX)UnitTestPP$(LIBEXT) mmex_tests$(EXEEXT)
 
 install: 
 
@@ -151,8 +151,8 @@ install-strip: install
 clean: 
 	rm -rf ./.deps ./.pch
 	rm -f ./*.o
-	rm -f $(LIBPREFIX)sqlite$(LIBEXT)
 	rm -f $(LIBPREFIX)wxsqlite$(LIBEXT)
+	rm -f $(LIBPREFIX)sqlite$(LIBEXT)
 	rm -f $(LIBPREFIX)UnitTestPP$(LIBEXT)
 	rm -f mmex_tests$(EXEEXT)
 	rm -f ./currency_seed.db3
@@ -160,14 +160,14 @@ clean:
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
 
-$(LIBPREFIX)sqlite$(LIBEXT): $(SQLITE_OBJECTS)
-	rm -f $@
-	$(AR) $(AROPTIONS) $@ $(SQLITE_OBJECTS)
-	$(RANLIB) $@
-
 $(LIBPREFIX)wxsqlite$(LIBEXT): $(WXSQLITE_OBJECTS)
 	rm -f $@
 	$(AR) $(AROPTIONS) $@ $(WXSQLITE_OBJECTS)
+	$(RANLIB) $@
+
+$(LIBPREFIX)sqlite$(LIBEXT): $(SQLITE_OBJECTS)
+	rm -f $@
+	$(AR) $(AROPTIONS) $@ $(SQLITE_OBJECTS)
 	$(RANLIB) $@
 
 $(LIBPREFIX)UnitTestPP$(LIBEXT): $(UNITTESTPP_OBJECTS)
@@ -175,8 +175,8 @@ $(LIBPREFIX)UnitTestPP$(LIBEXT): $(UNITTESTPP_OBJECTS)
 	$(AR) $(AROPTIONS) $@ $(UNITTESTPP_OBJECTS)
 	$(RANLIB) $@
 
-mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)sqlite$(LIBEXT) $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)UnitTestPP$(LIBEXT) $(__mmex_tests___win32rc)
-	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS) -L. -L. -L.   $(WX_LIBS)  $(LDFLAGS)  -lsqlite -lwxsqlite -lUnitTestPP $(LIBS)
+mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) $(LIBPREFIX)UnitTestPP$(LIBEXT) $(__mmex_tests___win32rc)
+	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS) -L. -L. -L.   $(WX_LIBS)  $(LDFLAGS)  -lwxsqlite -lsqlite -lUnitTestPP $(LIBS)
 	
 	$(__mmex_tests___mac_setfilecmd)
 
@@ -184,11 +184,11 @@ check: all
 	cp $(srcdir)/../../runtime/currency_seed.db3 .
 	./mmex_tests
 
-sqlite_sqlite3secure.o: $(srcdir)/../../libs/sqlite/sqlite3secure.c
-	$(CCC) -c -o $@ $(SQLITE_CFLAGS) $(srcdir)/../../libs/sqlite/sqlite3secure.c
-
 wxsqlite_wxsqlite3.o: $(srcdir)/../../libs/wxsqlite/wxsqlite3.cpp
 	$(CXXC) -c -o $@ $(WXSQLITE_CXXFLAGS) $(srcdir)/../../libs/wxsqlite/wxsqlite3.cpp
+
+sqlite_sqlite3secure.o: $(srcdir)/../../libs/sqlite/sqlite3secure.c
+	$(CCC) -c -o $@ $(SQLITE_CFLAGS) $(srcdir)/../../libs/sqlite/sqlite3secure.c
 
 UnitTestPP_AssertException.o: $(srcdir)/../../libs/UnitTest++/AssertException.cpp
 	$(CXXC) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(srcdir)/../../libs/UnitTest++/AssertException.cpp

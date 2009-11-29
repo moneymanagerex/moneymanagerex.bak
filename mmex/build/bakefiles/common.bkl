@@ -159,8 +159,8 @@ PATH. Accepted values: AMD64, IA64.
     </template>
 
     
-    <include file="sqlite.bkl"/>
     <include file="wxsqlite.bkl"/>
+    <include file="sqlite.bkl"/>
 
 
     <!-- Prepend valid lib-path if TARGET_CPU option set.
@@ -208,8 +208,8 @@ PATH. Accepted values: AMD64, IA64.
         <!-- disable precompiled headers for wxWidgets -->
         <define>NOPCH</define>
 
-        <library>sqlite</library>
         <library>wxsqlite</library>
+        <library>sqlite</library>
 
     	<!-- relative to trunk/mmex -->
 
