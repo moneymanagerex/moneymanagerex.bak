@@ -24,10 +24,10 @@
 #include "univcsvdialog.h"
 #include "mmcoredb.h"
 #include "paths.h"
+#include "platfdep.h"
 #include "wxautocombobox.h"
-
+//----------------------------------------------------------------------------
 #include <wx/sound.h>
-
 //----------------------------------------------------------------------------
 
 namespace 
@@ -192,24 +192,6 @@ void mmPlayTransactionSound(wxSQLite3Database* db_)
                 registerSound.Play(wxSOUND_ASYNC);
     }
 }
-
-wxString mmGetBaseWorkingPath(bool ignoreCommandLine)
-{
-#if defined (__WXMAC__)
-	wxString path = wxStandardPaths::Get().GetResourcesDir();
-	return path;
-#else
-   if (!ignoreCommandLine && (wxTheApp->argc > 1))
-   {
-      wxString path = wxTheApp->argv[1];
-      if (wxFileName::DirExists(path))
-         return path;
-   }
-   wxFileName fname(wxTheApp->argv[0]);
-   return fname.GetPath(wxPATH_GET_VOLUME);
-#endif
-}
-
 
 /*
         locale.AddCatalog(lang) calls wxLogWarning and returns true for corrupted .mo file,
@@ -705,15 +687,15 @@ int mmImportCSV(mmCoreDB* core)
                 wxT(""), wxT(""), wxT(""), wxT("*.csv"), wxFILE_MUST_EXIST);
         if ( !fileName.empty() )
         {
-            wxFileInputStream input( fileName );
-            wxTextInputStream text( input );
+            wxFileInputStream input(fileName);
+            wxTextInputStream text(input);
 
-            /* Create Log File */
-            wxFileName csvName(fileName);
-            wxString logFile = mmGetBaseWorkingPath() + wxT("\\") 
-                + csvName.GetName() + wxT(".txt");
-            wxFileOutputStream outputLog( logFile );
-            wxTextOutputStream log( outputLog );
+            wxFileName logFile = mmex::GetLogDir(true);
+            logFile.SetFullName(fileName);
+            logFile.SetExt(wxT(".txt"));
+
+            wxFileOutputStream outputLog(logFile.GetFullPath());
+            wxTextOutputStream log(outputLog);
 
             // We have a fixed format for now
             // date, payeename, "withdrawal/deposit", amount, category, subcategory, transactionnumber, notes
@@ -723,19 +705,19 @@ int mmImportCSV(mmCoreDB* core)
             {
                 wxString line = text.ReadLine();
                 if (!line.IsEmpty())
-                    countNumTotal++;
+                    ++countNumTotal;
                 else
                     continue;
 
                 wxString dt = wxDateTime::Now().FormatISODate();
-                wxString payee = wxT("");
-                wxString type = wxT("");
-                wxString amount = wxT("");
-                wxString categ = wxT("");
-                wxString subcateg = wxT("");
-                wxString transNum = wxT("");
-                wxString notes = wxT("");
-                wxString transfer = wxT("");
+                wxString payee;
+                wxString type;
+                wxString amount;
+                wxString categ;
+                wxString subcateg;
+                wxString transNum;
+                wxString notes;
+                wxString transfer;
 
                 wxStringTokenizer tkz(line, delimit, wxTOKEN_RET_EMPTY_ALL);
                 if (tkz.HasMoreTokens())
@@ -912,11 +894,11 @@ int mmImportCSV(mmCoreDB* core)
             } // while EOF
 
             wxString msg = wxString::Format(_("Total Lines : %d.\nTotal Imported : %d\nLog file written to : %s.\n\nImported transactions have been flagged so you can review them."), 
-                countNumTotal, countImported, logFile.c_str());
+                countNumTotal, countImported, logFile.GetFullPath().c_str());
             mmShowErrorMessage(0, msg, _("Import from CSV"));
             outputLog.Close();
 
-            fileviewer* dlg = new fileviewer(logFile, 0);
+            fileviewer* dlg = new fileviewer(logFile.GetFullPath(), 0);
             dlg->ShowModal();
             dlg->Destroy();
         }
@@ -961,19 +943,19 @@ int mmImportCSVMMNET(mmCoreDB* core)
         boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
         wxASSERT(pCurrencyPtr);
      
-        wxString fileName = wxFileSelector(_("Choose MM.NET CSV data file to import"), 
-                wxT(""), wxT(""), wxT(""), wxT("*.csv"), wxFILE_MUST_EXIST);
+        wxString fileName = wxFileSelector(_("Choose MM.NET CSV data file to import"), wxT(""), wxT(""), wxT(""), wxT("*.csv"), wxFILE_MUST_EXIST);
+
         if ( !fileName.IsEmpty() )
         {
-            wxFileInputStream input( fileName );
-            wxTextInputStream text( input );
+            wxFileInputStream input(fileName);
+            wxTextInputStream text(input);
 
-            /* Create Log File */
-            wxFileName csvName(fileName);
-            wxString logFile = mmGetBaseWorkingPath() + wxT("\\") 
-                + csvName.GetName() + wxT(".txt");
-            wxFileOutputStream outputLog( logFile );
-            wxTextOutputStream log( outputLog );
+            wxFileName logFile = mmex::GetLogDir(true);
+            logFile.SetFullName(fileName);
+            logFile.SetExt(wxT(".txt"));
+
+            wxFileOutputStream outputLog(logFile.GetFullPath());
+            wxTextOutputStream log(outputLog);
 
             /* The following is the MM.NET CSV format */
             /* date, payeename, amount(+/-), Number, status, category : subcategory, notes */
@@ -988,13 +970,13 @@ int mmImportCSVMMNET(mmCoreDB* core)
                     continue;
 
                 wxString dt = wxDateTime::Now().FormatISODate();
-                wxString payee = wxT("");
-                wxString type = wxT("");
-                wxString amount = wxT("");
-                wxString categ = wxT("");
-                wxString subcateg = wxT("");
-                wxString transNum = wxT("");
-                wxString notes = wxT("");
+                wxString payee;
+                wxString type;
+                wxString amount;
+                wxString categ;
+                wxString subcateg;
+                wxString transNum;
+                wxString notes;
 
                 wxStringTokenizer tkz(line, delimit, wxTOKEN_RET_EMPTY_ALL);
                 if (tkz.HasMoreTokens())
@@ -1134,11 +1116,11 @@ int mmImportCSVMMNET(mmCoreDB* core)
                log << _("Line : " ) << countNumTotal << _(" imported OK.") << endl;
             } // while EOF
 
-            wxString msg = wxString::Format(_("Total Lines : %d \nTotal Imported : %d\n\nLog file written to : %s.\n\nImported transactions have been flagged so you can review them. "), countNumTotal, countImported, logFile.c_str());
+            wxString msg = wxString::Format(_("Total Lines : %d \nTotal Imported : %d\n\nLog file written to : %s.\n\nImported transactions have been flagged so you can review them. "), countNumTotal, countImported, logFile.GetFullPath().c_str());
             mmShowErrorMessage(0, msg, _("Import from CSV"));
             outputLog.Close();
 
-            fileviewer* dlg = new fileviewer(logFile, 0);
+            fileviewer* dlg = new fileviewer(logFile.GetFullPath(), 0);
             dlg->ShowModal();
             dlg->Destroy();
         }

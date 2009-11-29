@@ -219,6 +219,7 @@ KC 	Check transaction
 #include "fileviewerdialog.h"
 #include "mmex.h"
 #include "mmcoredb.h"
+#include "platfdep.h"
 
 namespace
 {
@@ -402,15 +403,15 @@ Are you are sure you want to proceed with the import?"),
         wxT(""), wxT(""), wxT(""), wxT("*.qif"), wxFILE_MUST_EXIST);
     if ( !fileName.IsEmpty() )
     {
-        wxFileInputStream input( fileName );
-        wxTextInputStream text( input );
+        wxFileInputStream input(fileName);
+        wxTextInputStream text(input);
 
-        /* Create Log File */
-        wxFileName csvName(fileName);
-        wxString logFile = mmGetBaseWorkingPath() + wxT("\\") 
-            + csvName.GetName() + wxT(".txt");
-        wxFileOutputStream outputLog( logFile );
-        wxTextOutputStream log( outputLog );
+        wxFileName logFile = mmex::GetLogDir(true);
+        logFile.SetFullName(fileName);
+        logFile.SetExt(wxT(".txt"));
+
+        wxFileOutputStream outputLog(logFile.GetFullPath());
+        wxTextOutputStream log(outputLog);
 
         wxString readLine;
         int numLines = 0;
@@ -710,7 +711,7 @@ Are you are sure you want to proceed with the import?"),
 
         outputLog.Close();
 
-        fileviewer* dlg = new fileviewer(logFile, 0);
+        fileviewer *dlg = new fileviewer(logFile.GetFullPath(), 0);
         dlg->ShowModal();
         dlg->Destroy();
     }
