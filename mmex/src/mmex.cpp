@@ -589,52 +589,21 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
             menuItemOnlineUpdateCurRate_->Enable(false);
     }
 
-	/* Decide if we need to show app start dialog */
-    wxString showBeginApp = mmDBWrapper::getINISettingValue(inidb_.get(), 
-        wxT("SHOWBEGINAPP"), wxT("TRUE"));
-    if (showBeginApp == wxT("TRUE"))
-    {
-         /* No Previous File */
+    // decide if we need to show app start dialog
+    wxString showBeginApp = mmDBWrapper::getINISettingValue(inidb_.get(), wxT("SHOWBEGINAPP"), wxT("TRUE"));
+    bool from_scratch = showBeginApp == wxT("TRUE");
+
+    wxFileName dbpath = from_scratch ? wxGetEmptyString() : 
+                                       mmDBWrapper::getINISettingValue(inidb_.get(), wxT("LASTFILENAME"));
+ 
+
+    if (from_scratch || !dbpath.IsOk()) {
         menuEnableItems(false);
         createHomePage();
         updateNavTreeControl();
-
-        /* Show Begin App Dialog */
         showBeginAppDialog();
-    }
-    else
-    {
-        /* Try loading last db if it exists */
-        wxString val = mmDBWrapper::getINISettingValue(inidb_.get(), 
-            wxT("LASTFILENAME"), wxGetEmptyString());
-        if (!val.IsEmpty())
-        {
-            /* Try Opening the file */
-            wxFileName fName(val);
-            wxString absName;
-
-            /* Relative paths don't work well in Linux, so using it only
-            for Windows */
-#if defined (__WXGTK__) || defined (__WXMAC__)
-            absName = fName.GetFullPath();		
-#else	
-            wxFileName appPath(mmGetBaseWorkingPath(true));
-            fName.Normalize( wxPATH_NORM_ALL, appPath.GetPath());
-            absName = fName.GetFullPath();
-#endif
-
-            openFile(absName, false);
-        }
-        else
-        {
-            /* No Previous File */
-            menuEnableItems(false);
-            createHomePage();
-            updateNavTreeControl();
-
-            /* Show Begin App Dialog */
-            showBeginAppDialog();
-        }
+    } else {
+        openFile(dbpath.GetFullPath(), false);
     }
 }
 //----------------------------------------------------------------------------
@@ -680,44 +649,38 @@ void mmGUIFrame::unselectNavTree()
 }
 //----------------------------------------------------------------------------
 
+/* 
+        Save our settings to ini db.
+*/
 void mmGUIFrame::saveConfigFile()
 {
-    /* Save our settings to ini db */
-    wxFileName appPath(mmGetBaseWorkingPath(true));
     wxFileName fname(fileName_);
-
-#if defined (__WXGTK__) || defined (__WXMAC__)
-
-#else
-    /*bool makeRelative = */fname.MakeRelativeTo(appPath.GetPath());
-#endif
-    mmDBWrapper::setINISettingValue(inidb_.get(), 
-        wxT("LASTFILENAME"), fname.GetFullPath());
+    mmDBWrapper::setINISettingValue(inidb_.get(), wxT("LASTFILENAME"), fname.GetFullPath());
 
     mmSaveColorsToDatabase(inidb_.get());
 
-    bool isMax = this->IsMaximized();
-    wxString isMaxStr = wxT("FALSE");
-    if (isMax)
-        isMaxStr = wxT("TRUE");
-
     /* Aui Settings */
     m_perspective = m_mgr.SavePerspective();
-    mmDBWrapper::setINISettingValue(inidb_.get(), 
-        wxT("AUIPERSPECTIVE"), m_perspective);
+    mmDBWrapper::setINISettingValue(inidb_.get(), wxT("AUIPERSPECTIVE"), m_perspective);
 
-    int valx, valy, valw, valh;
+    int valx = 0;
+    int valy = 0;
+    int valw = 0;
+    int valh = 0;
+    
     this->GetPosition(&valx, &valy);
     this->GetSize(&valw, &valh);    
+
     wxString valxs = wxString::Format(wxT("%d"), valx);
     wxString valys = wxString::Format(wxT("%d"), valy);
     wxString valws = wxString::Format(wxT("%d"), valw);
     wxString valhs = wxString::Format(wxT("%d"), valh);
+
     mmDBWrapper::setINISettingValue(inidb_.get(), wxT("ORIGINX"), valxs); 
     mmDBWrapper::setINISettingValue(inidb_.get(), wxT("ORIGINY"), valys);
     mmDBWrapper::setINISettingValue(inidb_.get(), wxT("SIZEW"), valws);
     mmDBWrapper::setINISettingValue(inidb_.get(), wxT("SIZEH"), valhs);
-    mmDBWrapper::setINISettingValue(inidb_.get(), wxT("ISMAXIMIZED"), isMaxStr);
+    mmDBWrapper::setINISettingValue(inidb_.get(), wxT("ISMAXIMIZED"), this->IsMaximized() ? wxT("TRUE") : wxT("FALSE"));
 }
 //----------------------------------------------------------------------------
 
@@ -3428,43 +3391,36 @@ void mmGUIFrame::showBeginAppDialog()
 {
     mmAppStartDialog *dlg = new mmAppStartDialog(inidb_.get(), this);
     dlg->ShowModal();
-    
-    if (dlg->getReturnCode() == 0)
+    int rc = dlg->getReturnCode();
+
+    if (rc == 0)
     {
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_NEW);
         AddPendingEvent(evt);
     }
-    else if (dlg->getReturnCode() == 1)
+    else if (rc == 1)
     {
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_OPEN);
         AddPendingEvent(evt);
     }
-    else if (dlg->getReturnCode() == 2)
+    else if (rc == 2)
     {
        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, wxID_HELP);
        AddPendingEvent(evt);
     }
-    else if (dlg->getReturnCode() == 3)
+    else if (rc == 3)
     {
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_REPORTISSUES);
         AddPendingEvent(evt);
     }
-    else if (dlg->getReturnCode() == 4)
+    else if (rc == 4)
     {
-        wxString val = mmDBWrapper::getINISettingValue(inidb_.get(), 
-            wxT("LASTFILENAME"), wxGetEmptyString());
-        if (!val.IsEmpty())
-        {
-            /* Try Opening the file */
-            wxFileName fName(val);
-            wxFileName appPath(mmGetBaseWorkingPath(true));
-            fName.Normalize( wxPATH_NORM_ALL, appPath.GetPath());
-            wxString absName = fName.GetFullPath();
-            if (!absName.IsEmpty())
-                openFile(absName, false);
+        wxFileName fname(mmDBWrapper::getINISettingValue(inidb_.get(), wxT("LASTFILENAME")));
+        if (fname.IsOk()) {
+                openFile(fname.GetFullPath(), false);
         }
     }
-    else if (dlg->getReturnCode() == -1)
+    else if (rc == -1)
     {
         /* Do Nothing in this case */
     }

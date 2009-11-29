@@ -21,6 +21,7 @@
 #include "fileviewerdialog.h"
 #include "defs.h"
 #include "paths.h"
+#include "platfdep.h"
 
 IMPLEMENT_DYNAMIC_CLASS( mmUnivCSVImportDialog, wxDialog )
 
@@ -59,7 +60,7 @@ wxString mmCleanQuotes(const wxString& orig)
 {
     wxString toReturn = orig;
     toReturn.Replace(wxT("'"), wxT("`"));
-    toReturn.Replace(wxT("\""), wxT(""));
+    toReturn.Replace(wxT("\""), wxGetEmptyString());
     toReturn.Trim();
     return toReturn; 
 }
@@ -322,7 +323,7 @@ bool mmUnivCSVImportDialog::isIndexPresent(int index)
 void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
 {
    wxString fileName = wxFileSelector(wxT("Choose Universal CSV format file to load"), 
-      wxT(""), wxT(""), wxT(""),  wxT("CSV Template(*.mcv)|*.mcv"), wxFILE_MUST_EXIST);
+      wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(),  wxT("CSV Template(*.mcv)|*.mcv"), wxFILE_MUST_EXIST);
    if ( !fileName.empty() )
    {
       wxTextFile tFile(fileName);
@@ -358,7 +359,7 @@ void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
 void mmUnivCSVImportDialog::OnSave(wxCommandEvent& /*event*/)
 {
      wxString fileName = wxFileSelector(wxT("Choose Universal CSV format file to save"), 
-                wxT(""), wxT(""), wxT(""), wxT("CSV Template(*.mcv)|*.mcv"), wxSAVE);
+                wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), wxT("CSV Template(*.mcv)|*.mcv"), wxSAVE);
     if ( !fileName.empty() )
     {
          wxTextFile tFile(fileName);
@@ -437,18 +438,18 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
         mmCurrencyFormatter::loadSettings(pCurrencyPtr);
              
         wxString fileName = wxFileSelector(_("Choose MM.NET CSV data file to import"), 
-                wxT(""), wxT(""), wxT(""), wxT("*.csv"), wxFILE_MUST_EXIST);
+                wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), wxT("*.csv"), wxFILE_MUST_EXIST);
         if ( !fileName.IsEmpty() )
         {
-            wxFileInputStream input( fileName );
-            wxTextInputStream text( input );
+            wxFileInputStream input(fileName);
+            wxTextInputStream text(input);
 
-            /* Create Log File */
-            wxFileName csvName(fileName);
-            wxString logFile = mmGetBaseWorkingPath() + wxT("\\") 
-                + csvName.GetName() + wxT(".txt");
-            wxFileOutputStream outputLog( logFile );
-            wxTextOutputStream log( outputLog );
+            wxFileName logFile = mmex::GetLogDir(true);
+            logFile.SetFullName(fileName);
+            logFile.SetExt(wxT(".txt"));
+
+            wxFileOutputStream outputLog(logFile.GetFullPath());
+            wxTextOutputStream log(outputLog);
 
             
             /* date, payeename, amount(+/-), Number, status, category : subcategory, notes */
@@ -458,18 +459,18 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
             {
                 wxString line = text.ReadLine();
                 if (!line.IsEmpty())
-                    countNumTotal++;
+                    ++countNumTotal;
                 else
                     continue;
 
-                dt_ = wxT("");
-                payee_ = wxT("");
-                type_ = wxT("");
-                amount_ = wxT("");
-                categ_ = wxT("");
-                subcateg_ = wxT("");
-                transNum_ = wxT("");
-                notes_ = wxT("");
+                dt_.clear();
+                payee_.clear();
+                type_.clear();
+                amount_.clear();
+                categ_.clear();
+                subcateg_.clear();
+                transNum_.clear();
+                notes_.clear();
                 payeeID_ = -1;
                 categID_ = -1;
                 subCategID_ = -1;
@@ -560,11 +561,11 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
                log << _("Line : " ) << countNumTotal << _(" imported OK.") << endl;
             }
 
-            wxString msg = wxString::Format(_("Total Lines : %d \nTotal Imported : %d\n\nLog file written to : %s.\n\nImported transactions have been flagged so you can review them. "), countNumTotal, countImported, logFile.c_str());
+            wxString msg = wxString::Format(_("Total Lines : %d \nTotal Imported : %d\n\nLog file written to : %s.\n\nImported transactions have been flagged so you can review them. "), countNumTotal, countImported, logFile.GetFullPath().c_str());
             mmShowErrorMessage(0, msg, _("Import from CSV"));
             outputLog.Close();
 
-            fileviewer* dlg = new fileviewer(logFile, 0);
+            fileviewer* dlg = new fileviewer(logFile.GetFullPath(), 0);
             dlg->ShowModal();
             dlg->Destroy();
 
