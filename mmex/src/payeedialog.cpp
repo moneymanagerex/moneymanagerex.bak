@@ -107,7 +107,7 @@ void mmPayeeDialog::fillControls()
 {
 	listBox_->Clear();
 	wxArrayString filtd = mmDBWrapper::filterPayees(core_->db_.get(),textCtrl->GetValue());
-	for (int i=0; i < filtd.GetCount(); i++)
+	for (size_t i = 0; i < filtd.GetCount(); ++i)
 	{
 		listBox_->Append(filtd.Item(i));
 	}
