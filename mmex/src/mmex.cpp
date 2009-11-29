@@ -27,8 +27,6 @@
 #include "stockspanel.h"
 #include "assetspanel.h"
 #include "univcsvdialog.h"
-#include "wxtinyxml.h"
-#include "tinyxml.h"
 #include "reportbase.h"
 #include "reportsummary.h"
 #include "reportcategexp.h"
@@ -112,8 +110,8 @@
 #include "../resources/wrench.xpm"
 //----------------------------------------------------------------------------
 #include <wx/debugrpt.h>
-#include "wx/sysopt.h"
-#include "wx/wizard.h"
+#include <wx/sysopt.h>
+#include <wx/wizard.h>
 #include <wx/xml/xml.h>
 //----------------------------------------------------------------------------
 #include <boost/scoped_array.hpp>
@@ -338,7 +336,6 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_IMPORT_CSV, mmGUIFrame::OnImportCSV)
     EVT_MENU(MENU_IMPORT_MMNETCSV, mmGUIFrame::OnImportCSVMMNET)
     EVT_MENU(MENU_IMPORT_QIF, mmGUIFrame::OnImportQIF)
-    EVT_MENU(MENU_IMPORT_QFX, mmGUIFrame::OnImportQFX)
     EVT_MENU(MENU_IMPORT_UNIVCSV, mmGUIFrame::OnImportUniversalCSV)
     EVT_MENU(wxID_EXIT,  mmGUIFrame::OnQuit)
     EVT_MENU(MENU_NEWACCT,  mmGUIFrame::OnNewAccount)
@@ -2251,7 +2248,6 @@ void mmGUIFrame::createMenu()
       importMenu->Append(MENU_IMPORT_CSV, _("&MMEX CSV Files"), _("Import from MMEX CSV"));
    if (mmIniOptions::enableImportMMNETCSV_)
       importMenu->Append(MENU_IMPORT_MMNETCSV, _("MM.&NET CSV Files"), _("Import from MM.NET CSV"));
-   //importMenu->Append(MENU_IMPORT_QFX, _("&QFX Files"), _("Import from QFX"));
    menuFile_->Append(MENU_IMPORT, _("&Import"), importMenu);
 
    menuFile_->AppendSeparator();
@@ -2937,78 +2933,6 @@ void mmGUIFrame::OnImportCSV(wxCommandEvent& /*event*/)
     int accountID = mmImportCSV(core_.get());
     if (accountID != -1)
         createCheckingAccountPage(accountID);
-}
-//----------------------------------------------------------------------------
-
-void mmGUIFrame::OnImportQFX(wxCommandEvent& /*event*/)
-{
-    if (mmDBWrapper::getNumAccounts(db_.get()) == 0)
-    {
-        mmShowErrorMessage(0, _("No Account available! Cannot Import! Create a new account first!"), 
-            _("Error"));
-        return ;
-    }
-
-    wxArrayString as;
-    int fromAccountID = -1;
-    
-    static const char sql[] = 
-    "select ACCOUNTNAME "
-    "from ACCOUNTLIST_V1 "
-    "where ACCOUNTTYPE = 'Checking' "
-    "order by ACCOUNTNAME";
-
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-    while (q1.NextRow())
-    {
-        as.Add(q1.GetString(wxT("ACCOUNTNAME")));
-    }
-    q1.Finalize();
-
-    
-    wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Account to import to:"), 
-        _("QFX Import"), as);
-    if (scd->ShowModal() == wxID_OK)
-    {
-        wxString acctName = scd->GetStringSelection();
-        fromAccountID = mmDBWrapper::getAccountID(db_.get(), acctName);
-     
-        wxString fileName = wxFileSelector(_("Choose QFX data file to import"), 
-                wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), wxT("*.qfx"), wxFILE_MUST_EXIST);
-        if ( !fileName.empty() )
-        {
-            wxTiXmlDocument xmlDoc; 
-
-            wxFileInputStream fs(fileName);
-            xmlDoc.LoadFile(fs);
-
-
-            TiXmlNode* node = 0;
-            for( node = xmlDoc.IterateChildren( 0 );
-                node;
-                node = xmlDoc.IterateChildren( node ) )
-            {
-                // parse XML declaration
-                if (node->ToDeclaration())
-                {
-                    //TiXmlDeclaration* declaration = node->ToDeclaration();
-                }
-
-                if (node->ToElement())
-                {
-                    TiXmlElement* ele = node->ToElement();
-                    std::string str = ele->ValueStr();
-                    wxString eleStr = wxString::FromAscii(str.c_str());
-                    if (eleStr != wxT("mmCoreDataStore"))
-                    {
-
-                    }
-                }
-            }
-           
-        }
-    }
-    scd->Destroy();
 }
 //----------------------------------------------------------------------------
 
