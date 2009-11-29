@@ -14,8 +14,9 @@
         <cxx-exceptions>off</cxx-exceptions>
         <cxx-rtti>off</cxx-rtti>
 
-        <!-- sqlite has only .c sources -->
-        <cflags>-DSQLITE_CORE -DSQLITE_HAS_CODEC -DSQLITE_ENABLE_COLUMN_METADATA</cflags>
+        <define>SQLITE_CORE</define>
+        <define>SQLITE_HAS_CODEC</define>
+        <define>SQLITE_ENABLE_COLUMN_METADATA</define>
 
 
     	<!-- paths relative to trunk/mmex -->
