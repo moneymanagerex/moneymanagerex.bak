@@ -53,6 +53,7 @@ Prepackaged Libraries
     2. Install these packages
        libwxgtk2.X-X, 
        libwxgtk2.X-X-dev
+       libboost-dev
 
     3. Execute step #2 from generic instructions.
 
