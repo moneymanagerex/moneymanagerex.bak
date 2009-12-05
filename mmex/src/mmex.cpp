@@ -27,6 +27,7 @@
 #include "stockspanel.h"
 #include "assetspanel.h"
 #include "univcsvdialog.h"
+#include "htmlbuilder.h"
 #include "reportbase.h"
 #include "reportsummary.h"
 #include "reportcategexp.h"

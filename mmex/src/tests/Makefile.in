@@ -112,7 +112,19 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_paths.o \
 	mmex_tests_payeedialog.o \
 	mmex_tests_qifimport.o \
+	mmex_tests_reportbudgetingperf.o \
+	mmex_tests_reportbudgetsetup.o \
+	mmex_tests_reportcashflow.o \
+	mmex_tests_reportcategexp.o \
 	mmex_tests_reportcategovertimeperf.o \
+	mmex_tests_reportincexpenses.o \
+	mmex_tests_reportincexpesestime.o \
+	mmex_tests_reportpayee.o \
+	mmex_tests_reportsummary.o \
+	mmex_tests_reportsummaryassets.o \
+	mmex_tests_reportsummarystocks.o \
+	mmex_tests_reporttransactions.o \
+	mmex_tests_reporttransstats.o \
 	mmex_tests_splitdetailsdialog.o \
 	mmex_tests_splittransactionsdialog.o \
 	mmex_tests_stockdialog.o \
@@ -373,8 +385,44 @@ mmex_tests_payeedialog.o: $(srcdir)/../../src/payeedialog.cpp
 mmex_tests_qifimport.o: $(srcdir)/../../src/qifimport.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/qifimport.cpp
 
+mmex_tests_reportbudgetingperf.o: $(srcdir)/../../src/reportbudgetingperf.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportbudgetingperf.cpp
+
+mmex_tests_reportbudgetsetup.o: $(srcdir)/../../src/reportbudgetsetup.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportbudgetsetup.cpp
+
+mmex_tests_reportcashflow.o: $(srcdir)/../../src/reportcashflow.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportcashflow.cpp
+
+mmex_tests_reportcategexp.o: $(srcdir)/../../src/reportcategexp.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportcategexp.cpp
+
 mmex_tests_reportcategovertimeperf.o: $(srcdir)/../../src/reportcategovertimeperf.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportcategovertimeperf.cpp
+
+mmex_tests_reportincexpenses.o: $(srcdir)/../../src/reportincexpenses.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportincexpenses.cpp
+
+mmex_tests_reportincexpesestime.o: $(srcdir)/../../src/reportincexpesestime.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportincexpesestime.cpp
+
+mmex_tests_reportpayee.o: $(srcdir)/../../src/reportpayee.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportpayee.cpp
+
+mmex_tests_reportsummary.o: $(srcdir)/../../src/reportsummary.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportsummary.cpp
+
+mmex_tests_reportsummaryassets.o: $(srcdir)/../../src/reportsummaryassets.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportsummaryassets.cpp
+
+mmex_tests_reportsummarystocks.o: $(srcdir)/../../src/reportsummarystocks.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportsummarystocks.cpp
+
+mmex_tests_reporttransactions.o: $(srcdir)/../../src/reporttransactions.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reporttransactions.cpp
+
+mmex_tests_reporttransstats.o: $(srcdir)/../../src/reporttransstats.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reporttransstats.cpp
 
 mmex_tests_splitdetailsdialog.o: $(srcdir)/../../src/splitdetailsdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/splitdetailsdialog.cpp
