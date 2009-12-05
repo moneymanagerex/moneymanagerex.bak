@@ -70,16 +70,20 @@ wxString mmCleanQuotes(const wxString& orig)
 
 //----------------------------------------------------------------------------
 
-mmUnivCSVImportDialog::mmUnivCSVImportDialog( )
+mmUnivCSVImportDialog::mmUnivCSVImportDialog()
 {
 }
 
-mmUnivCSVImportDialog::mmUnivCSVImportDialog(mmCoreDB* core, 
-                   wxWindow* parent, wxWindowID id, 
-                   const wxString& caption, 
-                   const wxPoint& pos, 
-                   const wxSize& size, 
-                   long style ) : db_ (core->db_.get()), core_(core)
+mmUnivCSVImportDialog::mmUnivCSVImportDialog(
+	mmCoreDB* core, 
+        wxWindow* parent, wxWindowID id, 
+        const wxString& caption, 
+        const wxPoint& pos, 
+        const wxSize& size, 
+        long style
+) : 
+	core_(core),
+	db_ (core->db_.get())
 {
     Create(parent, id, caption, pos, size, style);
 }

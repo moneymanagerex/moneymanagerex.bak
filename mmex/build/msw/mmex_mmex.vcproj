@@ -2174,7 +2174,43 @@
 				RelativePath="..\..\src\qifimport.cpp">
 			</File>
 			<File
+				RelativePath="..\..\src\reportbudgetingperf.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\reportbudgetsetup.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\reportcashflow.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\reportcategexp.cpp">
+			</File>
+			<File
 				RelativePath="..\..\src\reportcategovertimeperf.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\reportincexpenses.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\reportincexpesestime.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\reportpayee.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\reportsummary.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\reportsummaryassets.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\reportsummarystocks.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\reporttransactions.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\reporttransstats.cpp">
 			</File>
 			<File
 				RelativePath="..\..\src\splitdetailsdialog.cpp">
