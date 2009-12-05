@@ -52,9 +52,9 @@ AppUpdatesURL={#AppURL}
 DefaultDirName={pf}\{#AppName}
 DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
-LicenseFile="..\..\runtime\license.txt"
+LicenseFile="..\..\doc\license.txt"
 InfoBeforeFile="..\..\README.TXT"
-InfoAfterFile="..\..\runtime\version.txt"
+InfoAfterFile="..\..\doc\version.txt"
 
 OutputDir={#OutputDir}
 OutputBaseFilename={#OutputBaseFilename}
@@ -62,7 +62,7 @@ OutputManifestFile="{#OutputBaseFilename}.manifest"
 Compression=lzma/ultra
 SolidCompression=yes
 
-SetupIconFile="..\..\runtime\mmex.ico"
+SetupIconFile="..\..\graphics\mmex.ico"
 ;WizardImageFile="..\..\graphics\new.bmp"
 ;WizardImageBackColor=clWhite
 ;WizardImageStretch=no
@@ -209,30 +209,28 @@ Source: "{#lang_src}\ukrainian.*";        DestDir: {#lang_dst}; Components: "lan
 Source: "{#lang_src}\vietnamese.*";       DestDir: {#lang_dst}; Components: "lang\vietnamese";    Flags: ignoreversion
 
 #define help_dir "{app}\help"
-
-Source: "..\..\docs\*.jpg"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "..\..\docs\*.png"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "..\..\docs\investment.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "..\..\docs\index.html"; Languages: en; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "..\..\docs\russian-help.html"; Languages: ru; DestName: "index.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "..\..\docs\french-help.html";  Languages: fr; DestName: "index.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "..\..\docs\index_fichiers\*";  Languages: fr; DestDir: "{#help_dir}\index_fichiers"; Components: help; Flags: ignoreversion
-Source: "..\..\docs\italian-help.html"; Languages: it; DestName: "index.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "..\..\doc\help\*.jpg"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "..\..\doc\help\*.png"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "..\..\doc\help\investment.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "..\..\doc\help\index.html"; Languages: en; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "..\..\doc\help\russian-help.html"; Languages: ru; DestName: "index.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "..\..\doc\help\french-help.html";  Languages: fr; DestName: "index.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "..\..\doc\help\index_fichiers\*";  Languages: fr; DestDir: "{#help_dir}\index_fichiers"; Components: help; Flags: ignoreversion
+Source: "..\..\doc\help\italian-help.html"; Languages: it; DestName: "index.html"; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
 
 Source: "..\..\README.TXT";          Languages: en; DestDir: "{app}"; DestName: "readme.txt"; Components: program; Flags: ignoreversion
 Source: "..\..\README.RU";           Languages: ru; DestDir: "{app}"; DestName: "readme.txt"; Components: program; Flags: ignoreversion
-Source: "..\..\runtime\contrib.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
-Source: "..\..\runtime\license.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
-Source: "..\..\runtime\version.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
-Source: "..\..\runtime\currency_seed.db3";DestDir: "{app}"; Components: program; Flags: ignoreversion
+Source: "..\..\doc\contrib.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
+Source: "..\..\doc\license.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
+Source: "..\..\doc\version.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
+Source: "..\..\resources\currency_seed.db3";DestDir: "{app}"; Components: program; Flags: ignoreversion
 
 #define res_dir "{app}\res"
-Source: "..\..\runtime\kaching.wav"; DestDir: {#res_dir}; Components: program; Flags: ignoreversion
-Source: "..\..\runtime\mmex.ico";    DestDir: {#res_dir}; Components: program; Flags: ignoreversion
-Source: "..\..\runtime\splash.png";  DestDir: {#res_dir}; Components: program; Flags: ignoreversion
+Source: "..\..\resources\kaching.wav"; DestDir: {#res_dir}; Components: program; Flags: ignoreversion
+Source: "..\..\graphics\mmex.ico";     DestDir: {#res_dir}; Components: program; Flags: ignoreversion
+Source: "..\..\graphics\splash.png";   DestDir: {#res_dir}; Components: program; Flags: ignoreversion
 
 #define bin_dir "{app}\bin"
-
 ; .exe already compressed by UPX
 Source: {#AppExePath}; DestDir: {#bin_dir}; Components: program; Flags: ignoreversion nocompression
 Source: {#CrtDlls}; DestDir: {#bin_dir}; Components: program; Flags: ignoreversion
@@ -255,8 +253,6 @@ Filename: "{#bin_dir}\{#AppExeName}"; Description: "{cm:LaunchProgram,{#AppName}
 
 [UninstallDelete]
 Type: files; Name: "{userappdata}\{#AppName}\mmexini.db3"
-Type: files; Name: "{userappdata}\{#AppName}\*.png"
-Type: files; Name: "{userappdata}\{#AppName}\*.txt"
 
 [Messages]
 en.WelcomeLabel1=Welcome to [name] Setup
