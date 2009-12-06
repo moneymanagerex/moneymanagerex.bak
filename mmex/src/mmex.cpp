@@ -59,6 +59,7 @@
 #include "paths.h"
 #include "constants.h"
 #include "platfdep.h"
+#include "helpers.h"
 //----------------------------------------------------------------------------
 
 /* Include XPM Support */
@@ -397,6 +398,18 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
 END_EVENT_TABLE()
 //----------------------------------------------------------------------------
 IMPLEMENT_APP(mmGUIApp)
+//----------------------------------------------------------------------------
+
+mmGUIApp::SQLiteInit::SQLiteInit()
+{
+        wxSQLite3Database::InitializeSQLite();
+}
+//----------------------------------------------------------------------------
+
+mmGUIApp::SQLiteInit::~SQLiteInit()
+{
+        wxSQLite3Database::ShutdownSQLite();
+}
 //----------------------------------------------------------------------------
 
 /*
@@ -2194,7 +2207,7 @@ void mmGUIFrame::createMenu()
    menuFile_->Append(menuItemSaveAs);
 
 	menuFile_->AppendSeparator();
-	
+
 	// Create the recently used files list
 	recentMenu_ = new wxMenu;
 	RecentFilesMenu();
@@ -2627,6 +2640,7 @@ void mmGUIFrame::openFile(const wxString& fileName,
 	}
 
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::RecentFilesMenu()
 {
@@ -2738,69 +2752,71 @@ void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
 void mmGUIFrame::OnOpen(wxCommandEvent& /*event*/)
 {
     wxString fileName = wxFileSelector(_("Choose database file to open"), 
-                                       wxGetEmptyString(), 
-                                       wxGetEmptyString(), 
-                                       wxGetEmptyString(), 
+                                       0, 0, 0, 
                                        wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb"), 
-                                       wxFILE_MUST_EXIST
+                                       wxFILE_MUST_EXIST,
+                                       this
                                       );
   
     if (!fileName.empty()) {
         openFile(fileName, false);
     }
 }
+//----------------------------------------------------------------------------
 
 void mmGUIFrame::OnOpenRecent(wxCommandEvent& event)
 {
-	wxString rfq;	
-	rfq.Printf(wxT("FILEHIST%d"),event.GetId()-MENU_RECENT);
-	wxString fileName = mmDBWrapper::getINISettingValue(inidb_.get(), rfq, wxGetEmptyString()); 
-	openFile(fileName, false);
-}
+	wxString s;	
+	s.Printf(wxT("FILEHIST%d"),event.GetId()-MENU_RECENT);
 
+	wxString fileName = mmDBWrapper::getINISettingValue(inidb_.get(), s); 
+	
+        if (!fileName.empty()) {
+                openFile(fileName, false);
+        }
+}
 //----------------------------------------------------------------------------
 
 void mmGUIFrame::OnConvertEncryptedDB(wxCommandEvent& /*event*/)
 {
-    wxString extSupported = wxT("Encrypted MMB files (*.emb)|*.emb");
     wxString encFileName = wxFileSelector(_("Choose Encrypted database file to open"), 
-        wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), extSupported, wxFILE_MUST_EXIST);
-    if ( !encFileName.empty() )
-    {
-        wxString password = wxGetPasswordFromUser(_("Enter password for database"));
-        if (!password.IsEmpty())
-        {
-            wxString wildCardStr = wxT("MMB Files(*.mmb)|*.mmb");
-            wxFileDialog dlg(this, _("Choose database file to Save As"), 
-                wxGetEmptyString(), wxGetEmptyString(), wildCardStr, wxSAVE | wxOVERWRITE_PROMPT);
- 
-            if(dlg.ShowModal() == wxID_OK)
-            {
-                wxString fileName = dlg.GetPath();
-                if (!dlg.GetPath().Contains(wxT(".mmb")))
-                    fileName = dlg.GetPath() + wxT(".mmb");
+                                          0, 0, 0, 
+                                          wxT("Encrypted MMB files (*.emb)|*.emb"), 
+                                          wxFILE_MUST_EXIST, 
+                                          this
+                                         );
 
-                wxCopyFile(encFileName, fileName, false);
+    if (encFileName.empty())
+        return;
+    
+    wxString password = wxGetPasswordFromUser(_("Enter password for database"));
+    if (password.empty())
+        return;
+        
+    wxFileDialog dlg(this, 
+                     _("Choose database file to Save As"), 
+                     wxGetEmptyString(), 
+                     wxGetEmptyString(), 
+                     wxT("MMB Files(*.mmb)|*.mmb"), 
+                     wxSAVE | wxOVERWRITE_PROMPT
+                    );
 
-                try
-                {
-                    boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
-                    pDB->Open(fileName, password);
+    if(dlg.ShowModal() != wxID_OK)
+        return;
+        
+    wxString fileName = dlg.GetPath();
+    
+    if (!dlg.GetPath().EndsWith(wxT(".mmb")))
+        fileName += wxT(".mmb");
 
-                    pDB->ReKey(wxEmptyString);
-                    pDB->Close();
-                    mmShowErrorMessage(0, _("Converted DB!"), 
-                        _("MMEX message"));
+    wxCopyFile(encFileName, fileName);
 
-                }
-                catch(...)
-                {
-                    mmShowErrorMessage(0, _("Unable to convert db successfully. Check Password!"), 
-                        _("Error"));
-                }
-            }
-        }
-    }
+    wxSQLite3Database db;
+    db.Open(fileName, password);
+    db.ReKey(wxEmptyString);
+    db.Close();
+
+    mmShowErrorMessage(this, _("Converted DB!"), _("MMEX message"));
 }
 //----------------------------------------------------------------------------
 
@@ -2917,9 +2933,8 @@ void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& /*event*/)
         return;
     }
 
-    mmUnivCSVImportDialog *dlg = new mmUnivCSVImportDialog(core_.get(), this);
+    boost::shared_ptr<mmUnivCSVImportDialog> dlg(new mmUnivCSVImportDialog(core_.get(), this), mmex::Destroy);
     dlg->ShowModal();
-    dlg->Destroy();
 }
 //----------------------------------------------------------------------------
 
