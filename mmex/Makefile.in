@@ -141,22 +141,19 @@ COND_PLATFORM_OS2_1___mmex___os2_emxbindcmd = $(NM) mmex$(EXEEXT) | if grep -q \
 all: $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) mmex$(EXEEXT) i18n
 
 install: install_mmex
-	$(INSTALL_DIR) $(DESTDIR)$(datadir)/mmex
-	(cd $(srcdir)/runtime ; $(INSTALL_DATA)  currency_seed.db3 $(DESTDIR)$(datadir)/mmex)
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/mmex/res
-	(cd $(srcdir)/runtime ; $(INSTALL_DATA)  kaching.wav mmex.ico splash.png $(DESTDIR)$(datadir)/mmex/res)
+	(cd $(srcdir)/resources ; $(INSTALL_DATA)  kaching.wav mmex.ico splash.png currency_seed.db3 $(DESTDIR)$(datadir)/mmex/res)
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/mmex/i18n
 	(cd $(srcdir)/i18n ; $(INSTALL_DATA)  *.po *.mo $(DESTDIR)$(datadir)/mmex/i18n)
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/doc/mmex
-	(cd $(srcdir)/runtime ; $(INSTALL_DATA)  *.txt $(DESTDIR)$(datadir)/doc/mmex)
+	(cd $(srcdir)/doc ; $(INSTALL_DATA)  *.txt $(DESTDIR)$(datadir)/doc/mmex)
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/doc/mmex/help
-	(cd $(srcdir)/docs ; $(INSTALL_DATA)  *.html *.jpg *.png $(DESTDIR)$(datadir)/doc/mmex/help)
+	(cd $(srcdir)/doc/help ; $(INSTALL_DATA)  *.html *.jpg *.png $(DESTDIR)$(datadir)/doc/mmex/help)
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/doc/mmex/help/index_fichiers
-	(cd $(srcdir)/docs/index_fichiers ; $(INSTALL_DATA)  * $(DESTDIR)$(datadir)/doc/mmex/help/index_fichiers)
+	(cd $(srcdir)/doc/help/index_fichiers ; $(INSTALL_DATA)  * $(DESTDIR)$(datadir)/doc/mmex/help/index_fichiers)
 
 uninstall: uninstall_mmex
-	(cd $(DESTDIR)$(datadir)/mmex ; rm -f currency_seed.db3)
-	(cd $(DESTDIR)$(datadir)/mmex/res ; rm -f kaching.wav mmex.ico splash.png)
+	(cd $(DESTDIR)$(datadir)/mmex/res ; rm -f kaching.wav mmex.ico splash.png currency_seed.db3)
 	(cd $(DESTDIR)$(datadir)/mmex/i18n ; rm -f *.po *.mo)
 	(cd $(DESTDIR)$(datadir)/doc/mmex ; rm -f *.txt)
 	(cd $(DESTDIR)$(datadir)/doc/mmex/help ; rm -f *.html *.jpg *.png)

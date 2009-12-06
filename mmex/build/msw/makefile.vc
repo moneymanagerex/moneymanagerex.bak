@@ -336,23 +336,23 @@ all: vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_A
 
 install: install_mmex
 	-mkdir $(PREFIX)\mmex
-	( cd ..\..\runtime && copy /Y  *.txt $(PREFIX)\mmex )
-	-mkdir $(PREFIX)\mmex
-	( cd ..\..\runtime && copy /Y  currency_seed.db3 $(PREFIX)\mmex )
-	-mkdir $(PREFIX)\mmex
-	( cd ..\..\runtime && copy /Y  kaching.wav $(PREFIX)\mmex )
-	-mkdir $(PREFIX)\mmex
-	( cd ..\..\runtime && copy /Y  mmex.ico $(PREFIX)\mmex )
-	-mkdir $(PREFIX)\mmex
-	( cd ..\..\runtime && copy /Y  splash.png $(PREFIX)\mmex )
+	( cd ..\..\doc && copy /Y  *.txt $(PREFIX)\mmex )
+	-mkdir $(PREFIX)\mmex\res
+	( cd ..\..\resources && copy /Y  currency_seed.db3 $(PREFIX)\mmex\res )
+	-mkdir $(PREFIX)\mmex\res
+	( cd ..\..\resources && copy /Y  mmex.ico $(PREFIX)\mmex\res )
+	-mkdir $(PREFIX)\mmex\res
+	( cd ..\..\resources && copy /Y  splash.png $(PREFIX)\mmex\res )
+	-mkdir $(PREFIX)\mmex\res
+	( cd ..\..\resources && copy /Y  kaching.wav $(PREFIX)\mmex\res )
 	-mkdir $(PREFIX)\mmex\help
-	( cd ..\..\docs && copy /Y  *.html $(PREFIX)\mmex\help )
+	( cd ..\..\doc\help && copy /Y  *.html $(PREFIX)\mmex\help )
 	-mkdir $(PREFIX)\mmex\help
-	( cd ..\..\docs && copy /Y  *.png $(PREFIX)\mmex\help )
+	( cd ..\..\doc\help && copy /Y  *.png $(PREFIX)\mmex\help )
 	-mkdir $(PREFIX)\mmex\help
-	( cd ..\..\docs && copy /Y  *.jpg $(PREFIX)\mmex\help )
+	( cd ..\..\doc\help && copy /Y  *.jpg $(PREFIX)\mmex\help )
 	-mkdir $(PREFIX)\mmex\help\index_fichiers
-	( cd ..\..\docs\index_fichiers && copy /Y  *.png $(PREFIX)\mmex\help\index_fichiers )
+	( cd ..\..\doc\help\index_fichiers && copy /Y  *.png $(PREFIX)\mmex\help\index_fichiers )
 	-mkdir $(PREFIX)\mmex\i18n
 	( cd ..\..\i18n && copy /Y  *.po $(PREFIX)\mmex\i18n )
 	-mkdir $(PREFIX)\mmex\i18n
@@ -360,10 +360,10 @@ install: install_mmex
 
 uninstall: uninstall_mmex
 	-if exist $(PREFIX)\mmex\*.txt -del *.txt
-	-if exist $(PREFIX)\mmex\currency_seed.db3 -del currency_seed.db3
-	-if exist $(PREFIX)\mmex\kaching.wav -del kaching.wav
-	-if exist $(PREFIX)\mmex\mmex.ico -del mmex.ico
-	-if exist $(PREFIX)\mmex\splash.png -del splash.png
+	-if exist $(PREFIX)\mmex\res\currency_seed.db3 -del currency_seed.db3
+	-if exist $(PREFIX)\mmex\res\mmex.ico -del mmex.ico
+	-if exist $(PREFIX)\mmex\res\splash.png -del splash.png
+	-if exist $(PREFIX)\mmex\res\kaching.wav -del kaching.wav
 	-if exist $(PREFIX)\mmex\help\*.html -del *.html
 	-if exist $(PREFIX)\mmex\help\*.png -del *.png
 	-if exist $(PREFIX)\mmex\help\*.jpg -del *.jpg
@@ -409,11 +409,11 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 	mt.exe -manifest "vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe.manifest" -outputresource:"vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe";1
 
 install_mmex: vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe
-	-mkdir $(PREFIX)\mmex
-	copy /Y vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe $(PREFIX)\mmex
+	-mkdir $(PREFIX)\mmex\bin
+	copy /Y vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe $(PREFIX)\mmex\bin
 
 uninstall_mmex: 
-	-del $(PREFIX)\mmex\mmex.exe
+	-del $(PREFIX)\mmex\bin\mmex.exe
 
 sub_i18n: 
 	cd ..\..\i18n
