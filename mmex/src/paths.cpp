@@ -80,7 +80,8 @@ wxString mmex::getPathResource(EResFile f)
         static const wxChar* files[RES_FILES_MAX] = { 
           wxT("mmex.ico"),
           wxT("splash.png"),
-          wxT("kaching.wav")
+          wxT("kaching.wav"),
+          wxT("currency_seed.db3")
         };
 
         wxASSERT(sizeof(files)/sizeof(*files) == RES_FILES_MAX);
@@ -96,7 +97,6 @@ wxString mmex::getPathResource(EResFile f)
 wxString mmex::getPathShared(ESharedFile f)
 {
         static const wxChar* files[SHARED_FILES_MAX] = { 
-          wxT("currency_seed.db3"),
           wxT("i18n")
         };
 

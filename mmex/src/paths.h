@@ -34,13 +34,13 @@ namespace mmex
 enum EDocFile { F_README, F_CONTRIB, F_LICENSE, F_VERSION, HTML_INDEX, DOC_FILES_MAX };
 wxString getPathDoc(EDocFile f);
 
-enum EResFile { PROGRAM_ICON, SPLASH_ICON, TRANS_SOUND, RES_FILES_MAX };
+enum EResFile { PROGRAM_ICON, SPLASH_ICON, TRANS_SOUND, CURRENCY_DB_SEED, RES_FILES_MAX };
 wxString getPathResource(EResFile f);
 
 // use instead of getPathResource(PROGRAM_ICON)
 const wxIcon& getProgramIcon();
 
-enum ESharedFile { CURRENCY_DB_SEED, LANG_DIR, SHARED_FILES_MAX };
+enum ESharedFile { LANG_DIR, SHARED_FILES_MAX };
 wxString getPathShared(ESharedFile f);
 
 enum EUserFile { SETTINGS, USER_FILES_MAX };
