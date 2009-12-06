@@ -29,7 +29,7 @@
         <win32-res>resources/mmex.rc</win32-res>
     
         <install-to cond="FORMAT=='autoconf'">$(BINDIR)</install-to>
-        <install-to cond="FORMAT!='autoconf'">$(PREFIX)/mmex</install-to>
+        <install-to cond="FORMAT!='autoconf'">$(PREFIX)/mmex/bin</install-to>
 
     </exe>
 
@@ -44,16 +44,10 @@
 
     <if cond="FORMAT=='autoconf'">
     
-	<data-files>
-            <install-to>$(DATADIR)/mmex</install-to>
-	    <srcdir>$(SRCDIR)/runtime</srcdir>
-	    <files>currency_seed.db3</files>
-	</data-files>
-
         <data-files>
             <install-to>$(DATADIR)/mmex/res</install-to>
-	    <srcdir>$(SRCDIR)/runtime</srcdir>
-	    <files>kaching.wav mmex.ico splash.png</files>
+	    <srcdir>$(SRCDIR)/resources</srcdir>
+	    <files>kaching.wav mmex.ico splash.png currency_seed.db3</files>
 	</data-files>
 
         <data-files>
@@ -64,20 +58,20 @@
 
         <data-files>
 	    <install-to>$(DATADIR)/doc/mmex</install-to>
-            <srcdir>$(SRCDIR)/runtime</srcdir>
+            <srcdir>$(SRCDIR)/doc</srcdir>
 	    <files>*.txt</files>
 	</data-files>
 
 	<!-- data-files-tree generates wrong commands in bakefile v.0.2.8 -->
         <data-files>
 	    <install-to>$(DATADIR)/doc/mmex/help</install-to>
-	    <srcdir>$(SRCDIR)/docs</srcdir>
+	    <srcdir>$(SRCDIR)/doc/help</srcdir>
             <files>*.html *.jpg *.png</files>
 	</data-files>
 
         <data-files>
 	    <install-to>$(DATADIR)/doc/mmex/help/index_fichiers</install-to>
-	    <srcdir>$(SRCDIR)/docs/index_fichiers</srcdir>
+	    <srcdir>$(SRCDIR)/doc/help/index_fichiers</srcdir>
 	    <files>*</files>
 	</data-files>
 
@@ -89,57 +83,57 @@
 
 	<data-files>
 	    <install-to>$(PREFIX)/mmex</install-to>
-	    <srcdir>$(SRCDIR)/runtime</srcdir>
+	    <srcdir>$(SRCDIR)/doc</srcdir>
 	    <files>*.txt</files>
 	</data-files>
 
 	<data-files>
-	    <install-to>$(PREFIX)/mmex</install-to>
-	    <srcdir>$(SRCDIR)/runtime</srcdir>
+	    <install-to>$(PREFIX)/mmex/res</install-to>
+            <srcdir>$(SRCDIR)/resources</srcdir>
 	    <files>currency_seed.db3</files>
 	</data-files>
 
-	<data-files>
-	    <install-to>$(PREFIX)/mmex</install-to>
-	    <srcdir>$(SRCDIR)/runtime</srcdir>
-	    <files>kaching.wav</files>
-	</data-files>
-
         <data-files>
-	    <install-to>$(PREFIX)/mmex</install-to>
-	    <srcdir>$(SRCDIR)/runtime</srcdir>
+	    <install-to>$(PREFIX)/mmex/res</install-to>
+            <srcdir>$(SRCDIR)/resources</srcdir>
 	    <files>mmex.ico</files>
 	</data-files>
 
         <data-files>
-	    <install-to>$(PREFIX)/mmex</install-to>
-	    <srcdir>$(SRCDIR)/runtime</srcdir>
+	    <install-to>$(PREFIX)/mmex/res</install-to>
+            <srcdir>$(SRCDIR)/resources</srcdir>
 	    <files>splash.png</files>
 	</data-files>
 
-	<!-- docs -> mmex/help -->
+        <data-files>
+	    <install-to>$(PREFIX)/mmex/res</install-to>
+            <srcdir>$(SRCDIR)/resources</srcdir>
+	    <files>kaching.wav</files>
+	</data-files>
+
+	<!-- doc -> mmex/help -->
 
 	<data-files>
 	    <install-to>$(PREFIX)/mmex/help</install-to>
-	    <srcdir>$(SRCDIR)/docs</srcdir>
+	    <srcdir>$(SRCDIR)/doc/help</srcdir>
 	    <files>*.html</files>
 	</data-files>
 
         <data-files>
 	    <install-to>$(PREFIX)/mmex/help</install-to>
-	    <srcdir>$(SRCDIR)/docs</srcdir>
+	    <srcdir>$(SRCDIR)/doc/help</srcdir>
 	    <files>*.png</files>
 	</data-files>
 
 	<data-files>
 	    <install-to>$(PREFIX)/mmex/help</install-to>
-	    <srcdir>$(SRCDIR)/docs</srcdir>
+	    <srcdir>$(SRCDIR)/doc/help</srcdir>
 	    <files>*.jpg</files>
 	</data-files>
 
 	<data-files>
 	    <install-to>$(PREFIX)/mmex/help/index_fichiers</install-to>
-	    <srcdir>$(SRCDIR)/docs/index_fichiers</srcdir>
+	    <srcdir>$(SRCDIR)/doc/help/index_fichiers</srcdir>
 	    <files>*.png</files>
 	</data-files>
 
