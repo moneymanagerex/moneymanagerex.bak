@@ -17,7 +17,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
 #endif //_WIN32
 
-MAINICON                ICON                    "../resources/mainicon.ico"
+MAINICON                ICON                    "../resources/mmex.ico"
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
