@@ -24,14 +24,17 @@
 class mmGraphGenerator
 {
 public:
-    mmGraphGenerator();
+    enum EType { EXPENSES_MONTHS, PIE, TOP_CATEG, TYPE_MAX };
+
+    mmGraphGenerator(EType type);
     virtual ~mmGraphGenerator() {}
 
     virtual bool Generate(const wxString& chartTitle) = 0;
-    const wxString& GetOutputFileName() const { return m_htmlString; }
+
+    wxString getOutputFileName() const { return m_path; }
 
 private:
-    wxString m_htmlString;
+    wxString m_path;
 };
 
-#endif
+#endif // _MM_EX_GRAPHGENERATOR_H_

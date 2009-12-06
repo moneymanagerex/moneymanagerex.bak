@@ -26,35 +26,60 @@
 namespace 
 {
 
-class Deleter
+class Eraser
 {
 public:
-        Deleter() : files(64) {}
-       ~Deleter();
+       ~Eraser();
 
-        void add(const wxString &f) { files.push_back(f); }
-        void delete_all();
+        wxString getFilePath(mmGraphGenerator::EType type);
+        static Eraser& instance();
 
 private:
         std::vector<wxString> files;
+
+        Eraser() : files(mmGraphGenerator::TYPE_MAX) {}
+        void clear();
 };
 //----------------------------------------------------------------------------
-Deleter g_deleter;
-//----------------------------------------------------------------------------
 
-Deleter::~Deleter()
+Eraser::~Eraser()
 {
         try {
-                delete_all();
+                clear();
         } catch (...) {
                 wxASSERT(false);
         }
 }
 //----------------------------------------------------------------------------
 
-void Deleter::delete_all()
+void Eraser::clear()
 {
         for_each(files.begin(), files.end(), wxRemoveFile);
+        files.clear();
+}
+//----------------------------------------------------------------------------
+
+/*
+        FIXME: do not create temp files in public temporary directory.
+*/
+wxString Eraser::getFilePath(mmGraphGenerator::EType type)
+{
+        wxASSERT(type < mmGraphGenerator::TYPE_MAX);
+
+        wxString &path = files[type];
+
+        if (path.empty()) {
+                path = wxFileName::CreateTempFileName(wxGetEmptyString());
+        }
+
+        return path;
+}
+//----------------------------------------------------------------------------
+
+Eraser& Eraser::instance()
+{
+        static Eraser e;
+        return e;
 }
 //----------------------------------------------------------------------------
 
@@ -62,12 +87,8 @@ void Deleter::delete_all()
 
 //----------------------------------------------------------------------------
 
-/*
-        FIXME: do not create temp files in public temporary directory.
-*/
-mmGraphGenerator::mmGraphGenerator() :
-        m_htmlString(wxFileName::CreateTempFileName(wxGetEmptyString()))
+mmGraphGenerator::mmGraphGenerator(EType type) :
+        m_path(Eraser::instance().getFilePath(type))
 {
-        g_deleter.add(m_htmlString);
 }
 //----------------------------------------------------------------------------
