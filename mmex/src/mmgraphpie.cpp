@@ -2,12 +2,20 @@
 #include "chart.h"
 #include "util.h"
 
+namespace
+{
+
 bool sortValueList(const ValuePair& elem1, const ValuePair& elem2)
 {
     return fabs(elem1.amount) > fabs(elem2.amount);
 }
 
-mmGraphPie::mmGraphPie() : chart(new PieChart(480, 320))
+} // namespace
+
+
+mmGraphPie::mmGraphPie() : 
+        mmGraphGenerator(PIE),
+        chart(new PieChart(480, 320))
 {
 }
 
@@ -32,5 +40,5 @@ void mmGraphPie::init(std::vector<ValuePair>& valueList)
 bool mmGraphPie::Generate(const wxString& chartTitle)
 {
         chart->Render(chartTitle);
-	return chart->Save(GetOutputFileName());
+	return chart->Save(getOutputFileName());
 }

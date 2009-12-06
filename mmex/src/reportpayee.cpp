@@ -52,7 +52,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
         // Add the graph
         mmGraphPie gg;
         if (numPayees)
-           hb.addImage(gg.GetOutputFileName());
+           hb.addImage(gg.getOutputFileName());
 
 		hb.startTable(wxT("50%"));
 		hb.startTableRow();

@@ -314,7 +314,7 @@ void mmHomePagePanel::updateAccounts()
     hb.endTable();
 
     // Add the graph
-    hb.addImage(gg.GetOutputFileName());
+    hb.addImage(gg.getOutputFileName());
 
 	hb.endTableCell();
 	hb.endTableRow();
@@ -503,7 +503,7 @@ void mmHomePagePanel::updateAccounts()
 
     // Top 10 Graph.
     mmGraphTopCategories gtp;
-    hb.addImage(gtp.GetOutputFileName());
+    hb.addImage(gtp.getOutputFileName());
 */
 
     hb.addLineBreak();
