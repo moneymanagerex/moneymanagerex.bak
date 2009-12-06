@@ -62,7 +62,7 @@ OutputManifestFile="{#OutputBaseFilename}.manifest"
 Compression=lzma/ultra
 SolidCompression=yes
 
-SetupIconFile="..\..\graphics\mmex.ico"
+SetupIconFile="..\..\resources\mmex.ico"
 ;WizardImageFile="..\..\graphics\new.bmp"
 ;WizardImageBackColor=clWhite
 ;WizardImageStretch=no
@@ -223,12 +223,12 @@ Source: "..\..\README.RU";           Languages: ru; DestDir: "{app}"; DestName: 
 Source: "..\..\doc\contrib.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
 Source: "..\..\doc\license.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
 Source: "..\..\doc\version.txt"; DestDir: "{app}"; Components: program; Flags: ignoreversion
-Source: "..\..\resources\currency_seed.db3";DestDir: "{app}"; Components: program; Flags: ignoreversion
 
 #define res_dir "{app}\res"
 Source: "..\..\resources\kaching.wav"; DestDir: {#res_dir}; Components: program; Flags: ignoreversion
-Source: "..\..\graphics\mmex.ico";     DestDir: {#res_dir}; Components: program; Flags: ignoreversion
-Source: "..\..\graphics\splash.png";   DestDir: {#res_dir}; Components: program; Flags: ignoreversion
+Source: "..\..\resources\mmex.ico";    DestDir: {#res_dir}; Components: program; Flags: ignoreversion
+Source: "..\..\resources\splash.png";  DestDir: {#res_dir}; Components: program; Flags: ignoreversion
+Source: "..\..\resources\currency_seed.db3";DestDir: {#res_dir}; Components: program; Flags: ignoreversion
 
 #define bin_dir "{app}\bin"
 ; .exe already compressed by UPX
@@ -253,6 +253,7 @@ Filename: "{#bin_dir}\{#AppExeName}"; Description: "{cm:LaunchProgram,{#AppName}
 
 [UninstallDelete]
 Type: files; Name: "{userappdata}\{#AppName}\mmexini.db3"
+Type: dirifempty; Name: "{userappdata}\{#AppName}"
 
 [Messages]
 en.WelcomeLabel1=Welcome to [name] Setup
