@@ -285,7 +285,7 @@ wxString mmGetNiceShortMonthName(int month)
     return mon[month];
 }
 
-wxString mmGetNiceDateString(wxDateTime dt)
+wxString mmGetNiceDateString(const wxDateTime &dt)
 {
     static const wxString gDaysInWeek[7] = {
       _("Sunday"), _("Monday"), _("Tuesday"), _("Wednesday"),
@@ -299,7 +299,7 @@ wxString mmGetNiceDateString(wxDateTime dt)
     return dts;    
 }
 
-wxString mmGetNiceDateSimpleString(wxDateTime dt)
+wxString mmGetNiceDateSimpleString(const wxDateTime &dt)
 {
 	wxString dts = mmGetNiceMonthName(dt.GetMonth()) + wxString(wxT(" "));
     dts += wxString::Format(wxT("%d"), dt.GetDay()) + wxT(", ") 
@@ -307,10 +307,16 @@ wxString mmGetNiceDateSimpleString(wxDateTime dt)
 	return dts;    
 }
 
-void mmShowErrorMessage(wxWindow* parent, wxString message, wxString messageheader)
+void mmShowErrorMessage(wxWindow *parent, const wxString &message, const wxString &messageheader)
 {
      wxMessageDialog msgDlg(parent, message, messageheader);
      msgDlg.ShowModal();
+}
+
+void mmShowErrorMessageInvalid(wxWindow *parent, const wxString &message)
+{
+   wxString msg = _("Entry ") + message + _(" is invalid.");
+   mmShowErrorMessage(parent, msg, _("Invalid Entry"));
 }
 
 wxString mmNotes4ExportString(const wxString& orig)
@@ -1133,16 +1139,7 @@ int mmImportCSVMMNET(mmCoreDB* core)
  }
 
 
-void mmShowErrorMessageInvalid(wxWindow* parent, wxString message)
-{
-   wxString msg = _("Entry ") + message + _(" is invalid.");
-   wxMessageDialog msgDlg(parent, msg,
-                           _("Invalid Entry"));
-    msgDlg.ShowModal();
-}
-
-/* -------------------------------------------- */
-wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, wxDateTime dt)
+wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, const wxDateTime &dt)
 {
     return dt.Format(mmOptions::dateFormat);
 }
@@ -1157,7 +1154,7 @@ wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* db, const wxString& dts
     return dt;
 }
 
-wxString mmGetDateForStorage(wxDateTime dt)
+wxString mmGetDateForStorage(const wxDateTime &dt)
 {
     return dt.FormatISODate();
 }
@@ -1286,8 +1283,8 @@ double mmMoneyInt(double value)
     double dummy; return modf(double(value) / mmCurrencyFormatter::scale, &dummy),dummy;
 }
 
-void mmCurrencyFormatter::loadSettings(wxString pfx, wxString sfx, wxChar dec, wxChar grp,
-                                wxString unit, wxString cent, double scale)
+void mmCurrencyFormatter::loadSettings(const wxString &pfx, const wxString &sfx, wxChar dec, wxChar grp,
+                                const wxString &unit, const wxString &cent, double scale)
 {
     pfx_symbol = pfx;
     sfx_symbol  = sfx;
