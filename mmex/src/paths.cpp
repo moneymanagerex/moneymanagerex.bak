@@ -33,7 +33,7 @@ wxFileName mmex::GetUserDir(bool create)
         static wxFileName fname(wxFileName::DirName(wxStandardPaths::Get().GetUserDataDir()));
 
         if (create && !fname.DirExists()) {
-                bool ok = fname.Mkdir(777, wxPATH_MKDIR_FULL);
+                bool ok = fname.Mkdir(0700, wxPATH_MKDIR_FULL);
                 wxASSERT(ok);
         }
         
