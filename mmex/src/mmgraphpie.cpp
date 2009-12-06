@@ -2,6 +2,8 @@
 #include "chart.h"
 #include "util.h"
 
+#include <algorithm>
+
 namespace
 {
 
@@ -25,12 +27,14 @@ mmGraphPie::~mmGraphPie()
 
 void mmGraphPie::init(std::vector<ValuePair>& valueList)
 {
-        std::vector<ChartData> pieData;
         std::sort(valueList.begin(), valueList.end(), sortValueList);
+        size_t cnt = std::min(valueList.size(), size_t(15));
 
-	for (size_t i = 0; i < valueList.size(); ++i) {
-                if (i < 15)
-	              pieData.push_back(ChartData(valueList[i].label, valueList[i].amount));
+        std::vector<ChartData> pieData;
+        pieData.reserve(cnt);
+
+	for (size_t i = 0; i < cnt; ++i) {
+                pieData.push_back(ChartData(valueList[i].label, valueList[i].amount));
 	}
 
 	chart->SetData(pieData);
