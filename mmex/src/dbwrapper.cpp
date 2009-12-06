@@ -74,11 +74,11 @@ void loadCurrencies(wxSQLite3Database* db)
       "UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL "
     " ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, '' )";
 
-    wxString fName = mmex::getPathShared(mmex::CURRENCY_DB_SEED);
+    wxString fName = mmex::getPathResource(mmex::CURRENCY_DB_SEED);
     wxASSERT(wxFileName::FileExists(fName));
     
     wxSQLite3Database currencies;
-    currencies.Open(fName);
+    currencies.Open(fName, wxGetEmptyString(), WXSQLITE_OPEN_READONLY);
 
     {
         bool ok = currencies.TableExists(wxT("CURRENCYFORMATS_V1"));
