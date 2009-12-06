@@ -58,7 +58,7 @@ wxString mmReportIncomeExpenses::getHTMLText()
         mmGraphIncExpensesMonth gg;
         gg.init(income, expenses);
         gg.Generate(_("Income vs Expenses"));
-        hb.addImage(gg.GetOutputFileName());
+        hb.addImage(gg.getOutputFileName());
 
 		hb.startTable(wxT("50%"));
 		hb.startTableRow();

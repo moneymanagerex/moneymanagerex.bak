@@ -5,6 +5,7 @@
 //----------------------------------------------------------------------------
 
 mmGraphTopCategories::mmGraphTopCategories() : 
+        mmGraphGenerator(TOP_CATEG),
         m_chart(new BarChart(320, 240))
 {
 }
@@ -38,6 +39,6 @@ void mmGraphTopCategories::init(const std::vector<CategInfo> &categList)
 bool mmGraphTopCategories::Generate(const wxString& chartTitle)
 {
 	m_chart->Render(chartTitle);
-	return m_chart->Save(GetOutputFileName());
+	return m_chart->Save(getOutputFileName());
 }
 //----------------------------------------------------------------------------

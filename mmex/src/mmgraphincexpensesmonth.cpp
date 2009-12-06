@@ -3,6 +3,7 @@
 #include <vector>
 
 mmGraphIncExpensesMonth::mmGraphIncExpensesMonth() : 
+        mmGraphGenerator(EXPENSES_MONTHS),
         chart(new BarChart(200, 240))
 {
 }
@@ -25,5 +26,5 @@ void mmGraphIncExpensesMonth::init(double income, double expenses)
 bool mmGraphIncExpensesMonth::Generate(const wxString& chartTitle)
 {
         chart->Render(chartTitle);
-	return chart->Save(GetOutputFileName());
+	return chart->Save(getOutputFileName());
 }
