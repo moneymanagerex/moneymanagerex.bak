@@ -32,17 +32,17 @@ struct ValuePair
     double   amount;
 };
 
-void mmShowErrorMessageInvalid(wxWindow* parent, wxString message);
-void mmShowErrorMessage(wxWindow* parent,  wxString message, wxString messageheader);
+void mmShowErrorMessageInvalid(wxWindow *parent, const wxString &message);
+void mmShowErrorMessage(wxWindow *parent, const wxString &message, const wxString &messageheader);
 
 wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database *inidb, bool forced_show_dlg);
 
-wxString mmGetDateForStorage(wxDateTime dt);
+wxString mmGetDateForStorage(const wxDateTime &dt);
 wxDateTime mmGetStorageStringAsDate(const wxString& str);
-wxString mmGetDateForDisplay(wxSQLite3Database* db, wxDateTime dt);
+wxString mmGetDateForDisplay(wxSQLite3Database* db, const wxDateTime &dt);
 wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* db, const wxString& dt);
-wxString mmGetNiceDateString(wxDateTime dt);
-wxString mmGetNiceDateSimpleString(wxDateTime dt);
+wxString mmGetNiceDateString(const wxDateTime &dt);
+wxString mmGetNiceDateSimpleString(const wxDateTime &dt);
 wxString mmGetNiceMonthName(int month);
 wxString mmGetNiceShortMonthName(int month);
 
@@ -126,7 +126,7 @@ class mmCurrencyFormatter
 {
 public:
 
-static void loadSettings(wxString pfx, wxString sfx, wxChar dec, wxChar grp, wxString unit, wxString cent, double scale);
+static void loadSettings(const wxString &pfx, const wxString &sfx, wxChar dec, wxChar grp, const wxString &unit, const wxString &cent, double scale);
 static void loadDefaultSettings();
 
 static bool formatDoubleToCurrency(double val, wxString& data);
