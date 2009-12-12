@@ -127,8 +127,7 @@ void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
         
         long width = -1;
         
-        if (val.ToLong(&width))
-        {
+        if (val.ToLong(&width)) {
             lst.SetColumnWidth(i, width);    
         }
     }
@@ -489,8 +488,7 @@ mmCheckingPanel::~mmCheckingPanel()
 }
 //----------------------------------------------------------------------------
 
-bool mmCheckingPanel::Create
-(
+bool mmCheckingPanel::Create(
     wxWindow *parent,
     wxWindowID winid, const wxPoint& pos, 
     const wxSize& size,long style, const wxString& name
@@ -676,41 +674,45 @@ void mmCheckingPanel::CreateControls()
         m_listCtrlAccount->setColumnImage(m_listCtrlAccount->getSortColumn(), m_listCtrlAccount->getSortOrder() ? ICON_ASC : ICON_DESC); // asc\desc sort mark (arrow)
     }
 
-    wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, ID_PANEL1, 
-        wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
-
-    itemSplitterWindow10->SplitHorizontally(m_listCtrlAccount, itemPanel12);
-    itemSplitterWindow10->SetMinimumPaneSize(100);
-    itemSplitterWindow10->SetSashGravity(1.0);
-    itemBoxSizer9->Add(itemSplitterWindow10, 1, wxGROW|wxALL, 1);
-
-    wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
-    itemPanel12->SetSizer(itemBoxSizer4);
+    wxPanel *itemPanel12 = new wxPanel(itemSplitterWindow10, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
     itemPanel12->SetBackgroundColour(mmColors::listDetailsPanelColor);
 
+    itemSplitterWindow10->SplitHorizontally(m_listCtrlAccount, itemPanel12);
+    itemSplitterWindow10->SetMinimumPaneSize(itemPanel12->GetSize().GetHeight());
+    itemSplitterWindow10->SetSashGravity(1.0);
+
+    itemBoxSizer9->Add(itemSplitterWindow10, 1, wxGROW|wxALL, 1);
+
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
+    itemPanel12->SetSizer(itemBoxSizer5);
 
-    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_NEW_TRANS, _("&New"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxSizerFlags flags;
+    flags.Center().Border().Expand().Proportion(1);
+
+    wxButton* itemButton6 = new wxButton(itemPanel12, ID_BUTTON_NEW_TRANS, _("&New"));
     itemButton6->SetToolTip(_("New Transaction"));
-    itemBoxSizer5->Add(itemButton6, 0, wxGROW|wxALL, 1);
 
-    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_EDIT_TRANS, _("&Edit"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxFont fnt = itemButton6->GetFont();
+    fnt.SetWeight(wxFONTWEIGHT_BOLD);
+    fnt.SetPointSize(fnt.GetPointSize()*3/2);
+
+    itemButton6->SetFont(fnt);
+    itemButton6->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
+    itemBoxSizer5->Add(itemButton6, flags);
+
+    wxButton* itemButton7 = new wxButton(itemPanel12, ID_BUTTON_EDIT_TRANS, _("&Edit"));
     itemButton7->SetToolTip(_("Edit Transaction"));
-    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-	itemButton7->Enable(false);
+    itemButton7->SetFont(fnt);
+    itemButton7->SetForegroundColour(wxColour(wxT("SALMON")));
+    itemBoxSizer5->Add(itemButton7, flags);
+    itemButton7->Enable(false);
 
-    wxButton* itemButton8 = new wxButton( itemPanel12, ID_BUTTON_DELETE_TRANS, _("&Delete"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton8 = new wxButton(itemPanel12, ID_BUTTON_DELETE_TRANS, _("&Delete"));
     itemButton8->SetToolTip(_("Delete Transaction"));
-    itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemButton8->SetFont(fnt);
+    itemButton8->SetForegroundColour(wxColour(wxT("ORANGE"))); // FIREBRICK
+    itemBoxSizer5->Add(itemButton8, flags);
     itemButton8->Enable(false);
-	
-    wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12, 
-        ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
-    itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
 }
 //----------------------------------------------------------------------------
 
@@ -721,26 +723,11 @@ void mmCheckingPanel::enableEditDeleteButtons(bool en)
 	bE->Enable(en);
 	bD->Enable(en);
 }
+//----------------------------------------------------------------------------
 
 void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
-    // Get the items we need to change
-	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);	
-	wxString text;
-	if (selIndex!=-1)
-	{
-		enableEditDeleteButtons(true);
-		wxString cat   =  _("Category         : ") + m_trans[selIndex]->catStr_  +   wxT("\n"); 
-		wxString subcat = _("Sub Category  : ") + m_trans[selIndex]->subCatStr_ + wxT("\n");
-		wxString notes =  _("Notes               : ") + mmReadyDisplayString(m_trans[selIndex]->notes_) + wxT("\n");
-		text = cat + subcat + notes;
-	}
-	else
-	{
-		enableEditDeleteButtons(false);
-		text = wxT("");
-	}
-    st->SetLabel(text);
+        enableEditDeleteButtons(selIndex >= 0);
 }
 //----------------------------------------------------------------------------
 
@@ -787,15 +774,6 @@ void mmCheckingPanel::initVirtualListControl()
     header->SetLabel(_("Account View : ") + pAccount->accountName_);
 
     setAccountSummary();
-
-    wxString text;
-    text += _("Category         : "); 
-	text += wxT("\n");
-    text += _("Sub Category  : "); 
-	text += wxT("\n");
-	text +=  _("Notes               : "); 
-    wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
-    st->SetLabel(text);
 
     int numTransactions = 0;
 	double unseenBalance = 0.0;

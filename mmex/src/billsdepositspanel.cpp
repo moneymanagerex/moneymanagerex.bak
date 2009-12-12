@@ -49,6 +49,19 @@ BEGIN_EVENT_TABLE(billsDepositsListCtrl, wxListCtrl)
     EVT_LIST_KEY_DOWN(ID_PANEL_BD_LISTCTRL,   billsDepositsListCtrl::OnListKeyDown)
 END_EVENT_TABLE()
 /*******************************************************/
+
+namespace 
+{
+
+inline bool sortTransactionsByRemainingDays(const mmBDTransactionHolder &p1, const mmBDTransactionHolder &p2)
+{
+    return p1.daysRemaining_ < p2.daysRemaining_;
+}
+
+} // namespace
+
+
+
 mmBillsDepositsPanel::mmBillsDepositsPanel(wxSQLite3Database* db, wxSQLite3Database* inidb,
             mmCoreDB* core,
             wxWindow *parent,
@@ -230,17 +243,7 @@ void mmBillsDepositsPanel::CreateControls()
     itemButton8->SetToolTip(_("Enter Next Bills && Deposit Occurrence"));
     itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 	itemButton8->Enable(false);
-
-    wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12, 
-        ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
-    itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
 }
-
-bool sortTransactionsByRemainingDays( mmBDTransactionHolder elem1, mmBDTransactionHolder elem2 )
-{
-    return elem1.daysRemaining_ < elem2.daysRemaining_;
-}
-
 
 void mmBillsDepositsPanel::initVirtualListControl()
 {
@@ -381,18 +384,6 @@ void mmBillsDepositsPanel::initVirtualListControl()
 
     std::sort(trans_.begin(), trans_.end(), sortTransactionsByRemainingDays);
     listCtrlAccount_->SetItemCount(static_cast<long>(trans_.size()));
-
-    // set an empty text for Bottom Info Panel 
-
-    wxString text(_("Category         : "));
-    text += wxT("\n");
-    text += _("Sub Category  : "); 
-    text += wxT("\n");
-    text +=  _("Notes               : "); 
-    
-    wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);
-    wxASSERT(st);
-    st->SetLabel(text);
 }
 
 void mmBillsDepositsPanel::OnDeleteBDSeries(wxCommandEvent& event)
@@ -612,29 +603,7 @@ void billsDepositsListCtrl::OnListItemActivated(wxListEvent& event)
 
 void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
 {
-    // Get the items we need to change
-	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);	
-	wxString text;
-	if (selIndex!=-1)
-	{
-		enableEditDeleteButtons(true);
-		text += _("Category         : ");
-		text += trans_[selIndex].categoryStr_;
-        text += wxT("\n");
-		text += _("Sub Category  : "); 
-		text += trans_[selIndex].subcategoryStr_;
-        text += wxT("\n");
-		text +=  _("Notes               : "); 
-		text += trans_[selIndex].notesStr_;
-//        text += wxT("\n");
-	}
-	else 
-	{
-		enableEditDeleteButtons(false);
-		text = wxT("");
-	}
-
-    st->SetLabel(text);
+        enableEditDeleteButtons(selIndex >= 0);
 }
 
 void mmBillsDepositsPanel::enableEditDeleteButtons(bool en)
