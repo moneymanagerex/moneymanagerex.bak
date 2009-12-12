@@ -2583,6 +2583,10 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
     dlg.Destroy();
 
     wxString title = mmex::getProgramName() + wxT(" : ") + fileName;
+
+    if (mmex::isPortableMode())
+        title << wxT(" [") << _("portable mode") << wxT(']');
+
     SetTitle(title);
 
     m_topCategories.Clear();
