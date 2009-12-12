@@ -46,6 +46,8 @@ wxString getPathShared(ESharedFile f);
 enum EUserFile { SETTINGS, USER_FILES_MAX };
 wxString getPathUser(EUserFile f);
 
+bool isPortableMode();
+
 } // namespace mmex
 
 //----------------------------------------------------------------------------
