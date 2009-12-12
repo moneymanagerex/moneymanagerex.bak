@@ -2,7 +2,7 @@
 
 cp mmex.spec ~/rpmbuild/SPECS
 cp mmex-X.X.X.X.tar.gz ~/rpmbuild/SOURCES
-cp mmex\resources\mainicon.xpm ~/rpmbuild/SOURCES/mmex.xpm
+cp mmex\resources\mmex.xpm ~/rpmbuild/SOURCES
 
 cd ~/rpmbuild/SPECS
 rpmbuild -ba mmex.spec
