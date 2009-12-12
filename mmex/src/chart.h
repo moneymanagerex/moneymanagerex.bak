@@ -9,7 +9,7 @@
 class ChartData
 {
 public:
-	ChartData(const wxString &aKey, float aVal = 0.0);
+	ChartData(const wxString &aKey, float aVal = 0);
 	ChartData(const wxString &aKey, const std::vector<float> &aSerie);
 	
 	wxString key;
@@ -74,7 +74,7 @@ public:
 	PieChart(int aWidth, int aHeight);
 	
 	void Init(int aChartsize, EChartLegend aLegendMode = CHART_LEGEND_FIXED, EPieChartStyle aPieMode = PIE_CHART_PERCENT);
-	bool Render(const wxString& title = wxT(""));
+	bool Render(const wxString& title = wxGetEmptyString());
 
 private:
 	int csize;
@@ -91,7 +91,7 @@ public:
 	BarChart(int aWidth, int aHeight);
 
     void Init(int aChartsize, EChartLegend aLegendMode = CHART_LEGEND_FIXED, EBarChartStyle aMode = BAR_CHART_SIMPLE);
-	bool Render(const wxString& title = wxT(""));
+	bool Render(const wxString& title = wxGetEmptyString());
 
 private:
 	int csize;
