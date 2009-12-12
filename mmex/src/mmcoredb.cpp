@@ -183,7 +183,7 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db) :
     bTransactionList_(db)
 {
     if (!db_)
-        throw wxString(wxT("Database Handle is invalid!"));
+        throw wxSQLite3Exception(WXSQLITE_ERROR, wxT("Null pointer to database"));
 
     /* Load the DB into memory */
 
