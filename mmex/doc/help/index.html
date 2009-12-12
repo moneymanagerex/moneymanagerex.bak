@@ -945,12 +945,26 @@ to Top</a></font></h5>
 <h3><font face="Verdana"><a name="usbkey">Can
 MMEX run from a USB Key?<!--</a--></a></font></h3>
 <p>
-<font face="Verdana"><a name="usbkey">Yes,
-MMEX has been carefully written to
-avoid dependencies in the Windows registry etc. MMEX is completely self
-contained and to make it
-operate from a USB key is as simple as dropping the MMEX install folder
-into a USB key drive and running the mmex executable. </a></font></p>
+<font face="Verdana"><a name="usbkey">
+<p>Yes,
+MMEX is a portable application which means ability to run
+without installation, for example, from USB flash drive.
+Copy mmex's files to USB Key and copy yours mmexini.db3 to
+mmex's folder on USB Key</p>
+<p>To make MMEX portable:</p>
+<p>1. On Windows (assume F:\ is USB flash drive)</p>
+<p>&nbsp Copy "C:\Program Files\MoneyManagerEx" to F:\<BR>
+&nbsp Copy "%APPDATA%\MoneyManagerEx\mmexini.db3" to F:\MoneyManagerEx</p>
+<p>2. On Unix (assume /media/disk is mounted USB flash drive)</p>
+<p>&nbsp Compile mmex from sources as usually, and</p>
+&nbsp make install prefix=/media/disk<BR>
+&nbsp cp ~/.mmex/mmexini.db3 /media/disk/mmex/share/mmex
+<p>&nbsp or if you want to copy mmex which has already installed in /usr</p>
+<p>&nbsp cp /usr/bin/mmex /media/disk/mmex/bin<BR>
+&nbsp cp /usr/share/mmex /media/disk/mmex/share<BR>
+&nbsp cp /usr/share/doc/mmex /media/disk/mmex/share/doc<BR>
+&nbsp cp ~/.mmex/mmexini.db3 /media/disk/mmex/share/mmex</p>
+</a></font></p>
 <h5><font face="Verdana"><a href="#top">Back
 to Top</a></font></h5>
 <h3><font face="Verdana"><a name="safety">How
