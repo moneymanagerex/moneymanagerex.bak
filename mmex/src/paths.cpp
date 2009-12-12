@@ -64,8 +64,8 @@ wxString mmex::getPathDoc(EDocFile f)
           wxT("help/index.html")
         };
 
-        wxASSERT(sizeof(files)/sizeof(*files) == DOC_FILES_MAX);
         wxASSERT(f >= 0 && f < DOC_FILES_MAX);
+        wxASSERT(files[f]);
 
         wxString path = GetDocDir().GetPath();
         path += wxFileName::GetPathSeparator();
@@ -84,8 +84,8 @@ wxString mmex::getPathResource(EResFile f)
           wxT("currency_seed.db3")
         };
 
-        wxASSERT(sizeof(files)/sizeof(*files) == RES_FILES_MAX);
         wxASSERT(f >= 0 && f < RES_FILES_MAX);
+        wxASSERT(files[f]);
 
         wxFileName fname = GetResourceDir();
         fname.SetFullName(files[f]);
@@ -100,8 +100,8 @@ wxString mmex::getPathShared(ESharedFile f)
           wxT("i18n")
         };
 
-        wxASSERT(sizeof(files)/sizeof(*files) == SHARED_FILES_MAX);
         wxASSERT(f >= 0 && f < SHARED_FILES_MAX);
+        wxASSERT(files[f]);
 
         wxFileName fname = GetSharedDir();
         fname.SetFullName(files[f]);
@@ -110,14 +110,30 @@ wxString mmex::getPathShared(ESharedFile f)
 }
 //----------------------------------------------------------------------------
 
+/*
+        MMEX is a portable application which means ability to to run
+        without installation, for example, from USB flash drive.
+        
+        To make MMEX portable
+
+        1.On Windows (assume F:\ is USB flash drive)
+          copy "C:\Program Files\MoneyManagerEx" F:\
+          copy %APPDATA%\MoneyManagerEx\mmexini.db3 F:\MoneyManagerEx
+
+        2.On Unix (assume /media/disk is mounted USB flash drive)
+          make install prefix=/media/disk
+          cp ~/.mmex/mmexini.db3 /media/disk/mmex/share/mmex
+
+        FIXME: GetLogDir() and temp files will be created on host filesystem.
+*/
 wxString mmex::getPathUser(EUserFile f)
 {
         static const wxChar* files[USER_FILES_MAX] = { 
           wxT("mmexini.db3")
         };
 
-        wxASSERT(sizeof(files)/sizeof(*files) == USER_FILES_MAX);
         wxASSERT(f >= 0 && f < USER_FILES_MAX);
+        wxASSERT(files[f]);
 
         wxFileName fname = GetUserDir(true);
         fname.SetFullName(files[f]);
