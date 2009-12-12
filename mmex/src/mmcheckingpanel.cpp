@@ -1573,51 +1573,47 @@ void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 
 void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 {
-	//check if a transaction is selected
-    if (m_selectedIndex != -1)
-	{
-		//ask if they really want to delete
-		wxMessageDialog msgDlg(this, _("Do you really want to delete the transaction?"),
-											_("Confirm Transaction Deletion"),
-											wxYES_NO|wxNO_DEFAULT);
-		//if yes the user wants to delete the transaction then delete and refresh the 
-		// transactions list
-		if (msgDlg.ShowModal() == wxID_YES)
-		{
-			//find the topmost visible item - this will be used to set 
-			// where to display the list again after refresh
-			long topItemIndex = GetTopItem();
-         
-			//remove the transaction
-			m_cp->m_core->bTransactionList_.deleteTransaction(m_cp->accountID(), m_cp->m_trans[m_selectedIndex]->transactionID());
-			
+    if (m_selectedIndex == -1) //check if a transaction is selected
+        return;
 
-         //initialize the transaction list to redo balances and images
-			m_cp->initVirtualListControl();
+    //ask if they really want to delete
+    wxMessageDialog msgDlg(this, 
+                           _("Do you really want to delete the transaction?"),
+                           _("Delete Transaction"),
+                           wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION
+                          );
+                          
+    if (msgDlg.ShowModal() != wxID_YES)
+        return;
 
-         if (!m_cp->m_trans.empty())
-         {
-            //refresh the items showing from the point of the transaction delete down
-            //the transactions above the deleted transaction won't change so they 
-            // don't need to be refreshed
-            RefreshItems(m_selectedIndex, static_cast<long>(m_cp->m_trans.size()) - 1);
+    //find the topmost visible item - this will be used to set 
+    // where to display the list again after refresh
+    long topItemIndex = GetTopItem();
 
-            //set the deleted transaction index to the new selection and focus on it
-            SetItemState(m_selectedIndex-1, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, 
-               wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED);
+    //remove the transaction
+    m_cp->m_core->bTransactionList_.deleteTransaction(m_cp->accountID(), m_cp->m_trans[m_selectedIndex]->transactionID());
 
-            //make sure the topmost item before transaction deletion is visible, otherwise 
-            // the control will go back to the very top or bottom when refreshed
-            EnsureVisible(topItemIndex);
-         }
-         else
-         {
-            SetItemCount(0);
-            DeleteAllItems();
-            m_selectedIndex = -1;
-         }
-		}
-	}
+    //initialize the transaction list to redo balances and images
+    m_cp->initVirtualListControl();
+
+    if (!m_cp->m_trans.empty()) {
+        //refresh the items showing from the point of the transaction delete down
+        //the transactions above the deleted transaction won't change so they 
+        // don't need to be refreshed
+        RefreshItems(m_selectedIndex, static_cast<long>(m_cp->m_trans.size()) - 1);
+
+        //set the deleted transaction index to the new selection and focus on it
+        SetItemState(m_selectedIndex-1, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, 
+        wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED);
+
+        //make sure the topmost item before transaction deletion is visible, otherwise 
+        // the control will go back to the very top or bottom when refreshed
+        EnsureVisible(topItemIndex);
+    } else {
+        SetItemCount(0);
+        DeleteAllItems();
+        m_selectedIndex = -1;
+    }
 }
 //----------------------------------------------------------------------------
 
