@@ -193,10 +193,6 @@ void mmAssetsPanel::CreateControls()
     itemButton7->SetToolTip(_("Delete Asset"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 	itemButton7->Enable(false);
-	
-    wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12, 
-        ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
-    itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
 }
 
 void mmAssetsPanel::initVirtualListControl()

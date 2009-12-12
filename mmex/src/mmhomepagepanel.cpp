@@ -53,7 +53,7 @@ inline boost::shared_ptr<mmCurrency> getCurrency(mmCoreDB* core, int currencyID)
 struct CurrencyCompare : public std::binary_function<boost::shared_ptr<mmCurrency>, 
                                                      boost::shared_ptr<mmCurrency>, bool> 
 {
-        bool operator() (boost::shared_ptr<mmCurrency> _Left, boost::shared_ptr<mmCurrency> _Right) const
+        bool operator() (const boost::shared_ptr<mmCurrency> &_Left, const boost::shared_ptr<mmCurrency> &_Right) const
         {
                 return _Left->currencyName_ < _Right->currencyName_; // order by currency name
         }

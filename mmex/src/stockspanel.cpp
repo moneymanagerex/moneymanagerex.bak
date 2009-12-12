@@ -292,10 +292,6 @@ void mmStocksPanel::CreateControls()
                                           wxDefaultPosition, wxDefaultSize, 0 );
     itemButton9->SetToolTip(_("Change settings for automatic refresh"));
     itemBoxSizer5->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-
-    wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12,
-                                     ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
-    itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
 }
 
 void mmStocksPanel::initVirtualListControl()
