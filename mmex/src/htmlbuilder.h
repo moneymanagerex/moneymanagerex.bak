@@ -96,13 +96,11 @@ public:
 
     void endTable();
     void endTableRow();
-	void endTableCell();
+    void endTableCell();
     
-	wxString getHTMLText() {
-		return html;
-	}
+    wxString getHTMLText() const { return html; }
 
-	void addHTML(const wxString& raw) { html += raw; }
+    void addHTML(const wxString& raw) { html += raw; }
     
 private:
     wxString html;
