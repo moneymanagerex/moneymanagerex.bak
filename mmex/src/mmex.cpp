@@ -2528,8 +2528,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
        }
        else
        {
-           boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
-           db_ = pDB;
+           db_.reset(new wxSQLite3Database);
            db_->Open(fileName, password);
            password_ = password;
 
