@@ -1814,21 +1814,24 @@ double mmDBWrapper::getCurrencyBaseConvRate(wxSQLite3Database* db, int accountID
 
 void mmDBWrapper::verifyINIDB(wxSQLite3Database* inidb)
 {
-    wxASSERT(inidb);
+        wxASSERT(inidb);
 
-    bool exists = inidb->TableExists(wxT("SETTING_V1"));
-    if (!exists)
-    {
-        /* Create INFOTABLE_V1 Table */
-        inidb->ExecuteUpdate(wxT("create table SETTING_V1(SETTINGID integer primary key, \
-                              SETTINGNAME TEXT NOT NULL, SETTINGVALUE TEXT)"));
+        bool ok = inidb->TableExists(wxT("SETTING_V1"));
+        if (ok)
+                return;
         
-        {
-            bool ok = inidb->TableExists(wxT("SETTING_V1"));
-            wxASSERT(ok);
-            ok = ok; // removes compiler's warning
-        }
-    }
+        static const char sql[] =
+        "create table SETTING_V1"
+        "( "
+          "SETTINGID integer not null primary key, "
+          "SETTINGNAME TEXT NOT NULL, "
+          "SETTINGVALUE TEXT "
+       " )";
+
+        inidb->ExecuteUpdate(sql);
+        
+        ok = inidb->TableExists(wxT("SETTING_V1"));
+        wxASSERT(ok);
 }
 
 wxString mmDBWrapper::getINISettingValue(wxSQLite3Database* db, const wxString& settingName, 
