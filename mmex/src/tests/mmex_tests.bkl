@@ -81,7 +81,7 @@
         </set>
 
         <command>
-            -mkdir $(RES_DIR)
+            -mkdir $(nativePaths(RES_DIR))
             $(COPY) $(nativePaths(SRCDIR + '/resources/currency_seed.db3')) $(nativePaths(RES_DIR))
         </command>
 
