@@ -139,30 +139,6 @@ WX3RDPARTYLIBPOSTFIX = d
 !if "$(WX_PYTHON)" == "1"
 WX3RDPARTYLIBPOSTFIX = h
 !endif
-!if "$(TARGET_CPU)" == ""
-CPU_ARCH = x86
-!endif
-!if "$(TARGET_CPU)" == "x86"
-CPU_ARCH = x86
-!endif
-!if "$(TARGET_CPU)" == "AMD64"
-CPU_ARCH = amd64
-!endif
-!if "$(TARGET_CPU)" == "IA64"
-CPU_ARCH = ia64
-!endif
-!if "$(WX_SHARED)" == "0"
-SHAREDBUILDPOSTFIX = static
-!endif
-!if "$(WX_SHARED)" == "1"
-SHAREDBUILDPOSTFIX = shared
-!endif
-!if "$(WX_UNICODE)" == "1"
-UNICODEBUILDPOSTFIX = u
-!endif
-!if "$(WX_DEBUG)" == "1"
-DEBUGBUILDPOSTFIX = d
-!endif
 !if "$(TARGET_CPU)" == "AMD64"
 ____mmex_tests_CPU_SUF_FILENAMES = _amd64
 !endif
@@ -265,6 +241,30 @@ __DEBUGINFO = -v-
 !if "$(WX_DEBUG)" == "1"
 __DEBUGINFO = -v
 !endif
+!if "$(WX_SHARED)" == "0"
+SHAREDBUILDPOSTFIX = static
+!endif
+!if "$(WX_SHARED)" == "1"
+SHAREDBUILDPOSTFIX = shared
+!endif
+!if "$(WX_UNICODE)" == "1"
+UNICODEBUILDPOSTFIX = u
+!endif
+!if "$(WX_DEBUG)" == "1"
+DEBUGBUILDPOSTFIX = d
+!endif
+!if "$(TARGET_CPU)" == ""
+CPU_ARCH = x86
+!endif
+!if "$(TARGET_CPU)" == "AMD64"
+CPU_ARCH = amd64
+!endif
+!if "$(TARGET_CPU)" == "IA64"
+CPU_ARCH = ia64
+!endif
+!if "$(TARGET_CPU)" == "x86"
+CPU_ARCH = x86
+!endif
 
 
 all: bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
@@ -292,6 +292,7 @@ clean:
 	-if exist bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests.ild del bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests.ild
 	-if exist bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests.ilf del bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests.ilf
 	-if exist bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests.ils del bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests.ils
+	-if exist bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\res\currency_seed.db3 del bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\res\currency_seed.db3
 
 bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite.lib: $(WXSQLITE_OBJECTS)
 	if exist $@ del $@
@@ -317,7 +318,9 @@ bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 |
 
 check: all
-	cd ..\..\..\runtime && ..\build\msw\tests\bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests.exe
+	-mkdir bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)/res
+	copy /Y ..\..\..\resources\currency_seed.db3 bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\res
+	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests.exe
 
 bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite_wxsqlite3.obj: ..\..\..\libs\wxsqlite\wxsqlite3.cpp
 	$(CXX) -q -c -P -o$@ $(WXSQLITE_CXXFLAGS) ..\..\..\libs\wxsqlite\wxsqlite3.cpp

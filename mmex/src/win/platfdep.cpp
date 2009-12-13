@@ -25,11 +25,18 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 namespace 
 {
 
+/*
+        The root directory of the installation of MMEX.
+*/
 wxFileName GetInstallDir()
 {
         const wxStandardPathsBase &p = wxStandardPaths::Get();
         wxFileName fname(p.GetExecutablePath());
-        fname.RemoveLastDir(); // bin\mmex.exe
+        
+        const wxArrayString &dirs = fname.GetDirs();
+
+        if (dirs.Last().MakeUpper() == wxT("BIN")) // bin\mmex.exe
+                fname.RemoveLastDir();
         
         return fname;
 }

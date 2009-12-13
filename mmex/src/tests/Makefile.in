@@ -167,7 +167,7 @@ clean:
 	rm -f $(LIBPREFIX)sqlite$(LIBEXT)
 	rm -f $(LIBPREFIX)UnitTestPP$(LIBEXT)
 	rm -f mmex_tests$(EXEEXT)
-	rm -f ./currency_seed.db3
+	rm -f ./share/mmex/res/currency_seed.db3
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
@@ -193,7 +193,8 @@ mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPR
 	$(__mmex_tests___mac_setfilecmd)
 
 check: all
-	cp $(srcdir)/../../runtime/currency_seed.db3 .
+	-mkdir ./share/mmex/res
+	cp $(srcdir)/../../resources/currency_seed.db3 ./share/mmex/res
 	./mmex_tests
 
 wxsqlite_wxsqlite3.o: $(srcdir)/../../libs/wxsqlite/wxsqlite3.cpp

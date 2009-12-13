@@ -17,10 +17,18 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
 #include <UnitTest++.h>
+#include <wx/app.h>
 //----------------------------------------------------------------------------
 
+/*
+        I must create an instance of application because some 
+        classes require one (for example, wxStandardPaths).
+*/
 int main(int /*argc*/, char const * /*argv*/[])
 {
-    return UnitTest::RunAllTests();
+        wxAppInitializerFunction f = wxAppConsole::GetInitializerFunction();
+        f(); // creates instance of application
+
+        return UnitTest::RunAllTests();
 }
 //----------------------------------------------------------------------------

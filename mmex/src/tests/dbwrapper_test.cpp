@@ -36,10 +36,9 @@ const wxString g_CurrencyName = wxT("US DOLLAR");
 const wxString g_PayeeName = wxT("Payee #1");
 //----------------------------------------------------------------------------
 
-struct SQLiteInit
+struct Cleanup
 {
-    SQLiteInit() { wxSQLite3Database::InitializeSQLite(); }
-   ~SQLiteInit();
+   ~Cleanup();
 };
 //----------------------------------------------------------------------------
 
@@ -50,10 +49,9 @@ wxString getDbPath()
 }
 //----------------------------------------------------------------------------
 
-SQLiteInit::~SQLiteInit()
+Cleanup::~Cleanup()
 { 
     try {
-        wxSQLite3Database::ShutdownSQLite();   
         wxRemoveFile(getDbPath());
     } catch (...) {
         wxASSERT(false);
@@ -63,7 +61,6 @@ SQLiteInit::~SQLiteInit()
 
 wxSQLite3Database& getDb()
 {
-    static SQLiteInit db_init;
     static wxSQLite3Database db;
 
     if (!db.IsOpen())

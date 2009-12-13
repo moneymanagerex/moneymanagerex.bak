@@ -27,8 +27,7 @@ const wxString& utils::getExeDir()
 {
     static wxString path;
 
-    if (path.empty()) 
-    {
+    if (path.empty()) {
         wxFileName fn(wxStandardPaths::Get().GetExecutablePath());
         path = fn.GetPath();
     }
