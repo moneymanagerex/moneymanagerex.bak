@@ -68,24 +68,32 @@
         <depends>all</depends>
 	<is-phony>on</is-phony>
 
+        <!-- "&&" is "&amp;&amp;" in XML -->
+
     	<set var="COPY">
             <if cond="TOOLSET=='win32'">copy /Y</if>
             <if cond="TOOLSET=='unix'">cp</if>
         </set>
 
-        <!-- && is "&amp;&amp;" in HTML -->
+        <set var="RES_DIR">
+            <if cond="FORMAT!='autoconf'">$(BUILDDIR)/res</if>
+            <if cond="FORMAT=='autoconf'">$(BUILDDIR)/share/mmex/res</if>
+        </set>
+
+        <command>
+            -mkdir $(RES_DIR)
+            $(COPY) $(nativePaths(SRCDIR + '/resources/currency_seed.db3')) $(nativePaths(RES_DIR))
+        </command>
 
         <command cond="FORMAT!='autoconf'">
-            <!-- can't get executable dir if autoconf -->
-            cd $(nativePaths(SRCDIR + '/runtime')) &amp;&amp; $('..\\build\\msw\\tests\\' + BUILDDIR + '\\mmex_tests' + EXEEXT)
+            $(nativePaths(BUILDDIR + '/mmex_tests' + EXEEXT))
         </command>
 
         <command cond="FORMAT=='autoconf'">
-            $(COPY) $(nativePaths(SRCDIR + '/runtime/currency_seed.db3')) $(nativePaths(BUILDDIR))
             ./mmex_tests
 	</command>
 
-        <clean-files  cond="FORMAT=='autoconf'">$(nativePaths(BUILDDIR + '/currency_seed.db3'))</clean-files>
+        <clean-files>$(nativePaths(RES_DIR + '/currency_seed.db3'))</clean-files>
 
     </action>
 
