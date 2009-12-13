@@ -61,6 +61,7 @@ Cleanup::~Cleanup()
 
 wxSQLite3Database& getDb()
 {
+    static Cleanup dummy;
     static wxSQLite3Database db;
 
     if (!db.IsOpen())
