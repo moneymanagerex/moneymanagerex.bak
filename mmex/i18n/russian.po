@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-12-16 21:36+0300\n"
-"PO-Revision-Date: 2009-12-16 22:04+0300\n"
+"PO-Revision-Date: 2009-12-17 16:56+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,6 @@ msgid "Version: "
 msgstr "Версия: "
 
 #: src/aboutdialog.cpp:125
-#, fuzzy
 msgid "  and contributors from around the world"
 msgstr "  и соратники :-) со всего мира."
 
@@ -203,7 +202,6 @@ msgid "Rate of Change"
 msgstr "Процент изменения стоимости"
 
 #: src/assetdialog.cpp:266
-#, fuzzy, c-format
 msgid "Enter the rate at which the asset changes its value in % per year"
 msgstr "Введите ежегодное изменение стоимости имущества в процентах"
 
@@ -569,7 +567,7 @@ msgstr "Введите сумму:"
 
 #: src/billsdepositsdialog.cpp:694
 msgid "Amount to be recorded in To Account"
-msgstr "Сумма, которая попадет на счет-получатель"
+msgstr "Сумма, которая попадет на счёт-получатель"
 
 #: src/billsdepositsdialog.cpp:704
 msgid "Invalid To Amount Entered "
@@ -960,7 +958,7 @@ msgstr "&Закрыть"
 
 #: src/currencydialog.cpp:350
 msgid "Base Conversion Rate should be greater than 0.0"
-msgstr "Основной обменный курс должен быть больше 0"
+msgstr "Основной обменный курс должен быть больше чем 0"
 
 #: src/dbwrapper.cpp:174
 msgid "Telephone"
@@ -1515,6 +1513,8 @@ msgid ""
 "Fatal error occured.\n"
 "Application will be terminated."
 msgstr ""
+"Произошел критический сбой.\n"
+"Программа будет закрыта."
 
 #: src/mmex.cpp:455
 msgid "Add Account Wizard"
@@ -2094,7 +2094,7 @@ msgstr "Вызов редактора валют"
 
 #: src/mmex.cpp:2480
 msgid "Enter database's password"
-msgstr ""
+msgstr "Введите пароль базы данных"
 
 #: src/mmex.cpp:2503
 #: src/mmex.cpp:2555
@@ -2124,11 +2124,11 @@ msgstr "Открытие и проверка целосности базы да�
 
 #: src/mmex.cpp:2587
 msgid "portable mode"
-msgstr ""
+msgstr "портативный режим"
 
 #: src/mmex.cpp:2676
 msgid "Clear Recent Files"
-msgstr ""
+msgstr "Очистить список недавних файлов"
 
 #: src/mmex.cpp:2677
 msgid "Recent Files"
@@ -2136,7 +2136,7 @@ msgstr "Недавние файлы"
 
 #: src/mmex.cpp:2734
 msgid "Choose database file to create"
-msgstr "Выберите файл базы данных, чтобы создать"
+msgstr "Выберите файл базы данных для создания"
 
 #: src/mmex.cpp:2757
 msgid "Choose database file to open"
@@ -2168,7 +2168,7 @@ msgstr "Сохранть базу данных как"
 
 #: src/mmex.cpp:2855
 msgid "Can't copy file to itself"
-msgstr ""
+msgstr "Нельзя скопировать файл в себя"
 
 #: src/mmex.cpp:2868
 msgid "Enter password for new database"
@@ -2369,7 +2369,7 @@ msgid ""
 msgstr ""
 "\n"
 "Инвестиционные счета - это специальные счета,  \n"
-"которые связаны только с вложениями в ценные бумаги,\n"
+"которые связаны только с вложениями в ценные бумаги, \n"
 "паевые фонды и т.п.\n"
 
 #: src/mmex.cpp:3877
@@ -2567,36 +2567,36 @@ msgstr "Добавление плательщика "
 #: src/ofximport.cpp:409
 #, c-format
 msgid "Stock account for security \"%s\""
-msgstr ""
+msgstr "Инвестиционный счёт для ценной бумаги \"%s\""
 
 #: src/ofximport.cpp:475
 #, c-format
 msgid "Income account for security \"%s\""
-msgstr ""
+msgstr "Доходный счёт для ценной бумаги \"%s\""
 
 #: src/ofximport.cpp:644
 msgid "Unknown OFX checking account"
-msgstr ""
+msgstr "Неизвестный OFX текущий счёт"
 
 #: src/ofximport.cpp:648
 msgid "Unknown OFX savings account"
-msgstr ""
+msgstr "Неизвестный OFX накопительный счёт"
 
 #: src/ofximport.cpp:652
 msgid "Unknown OFX money market account"
-msgstr ""
+msgstr "Неизвестный OFX денежный счёт"
 
 #: src/ofximport.cpp:656
 msgid "Unknown OFX credit line account"
-msgstr ""
+msgstr "Неизвестный OFX счёт кредитной линии"
 
 #: src/ofximport.cpp:660
 msgid "Unknown OFX CMA account"
-msgstr ""
+msgstr "Неизвестный OFX CMA счёт"
 
 #: src/ofximport.cpp:664
 msgid "Unknown OFX credit card account"
-msgstr ""
+msgstr "Неизвестный OFX счёт кредитной карты"
 
 #: src/ofximport.cpp:668
 msgid "Unknown OFX investment account"
@@ -2604,7 +2604,7 @@ msgstr "Неизвестный OFX инвестиционный счёт"
 
 #: src/ofximport.cpp:719
 msgid "Select an OFX/QFX file to process"
-msgstr ""
+msgstr "Выберите OFX/QFX файл для обработки"
 
 #: src/optionsdialog.cpp:267
 msgid " : Restart"
@@ -2855,9 +2855,8 @@ msgid "Filter Payees: "
 msgstr "Фильтр плательщиков:"
 
 #: src/payeedialog.cpp:144
-#, c-format
 msgid "Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."
-msgstr ""
+msgstr "Введите строку поиска. Вы можете использовать % как маску 0 или более символов или _ как маску одного символа."
 
 #: src/payeedialog.cpp:152
 msgid "Add a new payee name"
