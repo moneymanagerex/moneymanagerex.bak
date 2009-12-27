@@ -22,20 +22,61 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <wx/filename.h>
 //----------------------------------------------------------------------------
 
+namespace 
+{
+
+void SetInstallPrefix()
+{
+        wxStandardPathsBase &p = wxStandardPaths::Get();
+
+        wxFileName fname(p.GetExecutablePath());
+	fname.SetFullName(wxGetEmptyString());
+        
+        const wxArrayString &dirs = fname.GetDirs();
+
+        if (dirs.Last().Upper() == wxT("BIN")) // something like a /usr/bin or /usr/local/bin
+                fname.RemoveLastDir();
+        
+        if (wxStandardPaths *pp = dynamic_cast<wxStandardPaths*>(&p))
+		pp->SetInstallPrefix(fname.GetFullPath());
+}
+
+} // namespace 
+
+//----------------------------------------------------------------------------
+
+/*
+        $(prefix)/share/mmex.
+        Default install prefix is /usr (often /usr/local).
+*/
 wxFileName mmex::GetSharedDir()
 {
-        static wxFileName fname(wxFileName::DirName(wxStandardPaths::Get().GetDataDir()));
+        static wxFileName fname;
+
+        if (!fname.IsOk()) {
+                SetInstallPrefix();
+		fname = wxFileName::DirName(wxStandardPaths::Get().GetDataDir());
+	}
+
         return fname;
 }
 //----------------------------------------------------------------------------
 
+/*
+        $(prefix)/share/doc/mmex
+*/
 wxFileName mmex::GetDocDir()
 {
         static wxFileName fname;
 
         if (!fname.IsOk()) {
+
                 fname = GetSharedDir();
-                fname.RemoveLastDir(); // mmex folder
+
+                const wxArrayString &dirs = fname.GetDirs();
+                if (dirs.Last().Lower() == GetAppName())
+                        fname.RemoveLastDir(); // mmex folder
+
                 fname.AppendDir(wxT("doc"));
                 fname.AppendDir(GetAppName());
         }
@@ -44,6 +85,9 @@ wxFileName mmex::GetDocDir()
 }
 //----------------------------------------------------------------------------
 
+/*
+        $(prefix)/share/mmex/res
+*/
 wxFileName mmex::GetResourceDir()
 {
         static wxFileName fname;
