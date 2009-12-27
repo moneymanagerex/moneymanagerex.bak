@@ -17,7 +17,7 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
 	*** Prerequisites ***
 
 
-1. Install wxWidgets 2.8.10 and above in a directory like c:\wxWidgets-2.8.0 
+1. Install wxWidgets 2.8.10 and above in a directory like C:\wxWidgets-2.8.10 
    and then create an environment variable WXWIN to point to this directory.
 
 2. Follow the instructions given by WxWidgets install on how to build it.
