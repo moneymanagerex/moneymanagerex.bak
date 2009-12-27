@@ -75,13 +75,18 @@
             <if cond="TOOLSET=='unix'">cp</if>
         </set>
 
+    	<set var="MKDIR">
+            <if cond="TOOLSET=='win32'">mkdir</if>
+            <if cond="TOOLSET=='unix'">mkdir -p</if>
+        </set>
+
         <set var="RES_DIR">
             <if cond="FORMAT!='autoconf'">$(BUILDDIR)/res</if>
             <if cond="FORMAT=='autoconf'">$(BUILDDIR)/share/mmex/res</if>
         </set>
 
         <command>
-            -mkdir $(nativePaths(RES_DIR))
+            -$(MKDIR) $(nativePaths(RES_DIR))
             $(COPY) $(nativePaths(SRCDIR + '/resources/currency_seed.db3')) $(nativePaths(RES_DIR))
         </command>
 
@@ -93,7 +98,7 @@
             ./mmex_tests
 	</command>
 
-        <clean-files>$(nativePaths(RES_DIR + '/currency_seed.db3'))</clean-files>
+        <clean-files>$(RES_DIR)/currency_seed.db3</clean-files>
 
     </action>
 

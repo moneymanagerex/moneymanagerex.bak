@@ -193,7 +193,7 @@ mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPR
 	$(__mmex_tests___mac_setfilecmd)
 
 check: all
-	-mkdir ./share/mmex/res
+	-mkdir -p ./share/mmex/res
 	cp $(srcdir)/../../resources/currency_seed.db3 ./share/mmex/res
 	./mmex_tests
 
