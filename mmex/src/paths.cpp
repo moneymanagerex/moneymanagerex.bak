@@ -72,7 +72,7 @@ wxFileName mmex::GetUserDir(bool create)
                         fname.AssignDir(wxStandardPaths::Get().GetUserDataDir());
 
                         if (create && !fname.DirExists()) {
-                                bool ok = fname.Mkdir(0700, wxPATH_MKDIR_FULL);
+                                bool ok = fname.Mkdir(0700, wxPATH_MKDIR_FULL); // 0700 - octal, "111 000 000"
                                 wxASSERT(ok);
                         }
                 }
