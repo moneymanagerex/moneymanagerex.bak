@@ -115,10 +115,6 @@ private:
     mmTreeItemData* selectedItemData_;
     wxMenuItem* menuItemOnlineUpdateCurRate_; // Menu Item for Disabling Item
 	
-	//We need to be able to update these on the fly
-	wxMenu* recentMenu_; 
-	wxMenu* menuFile_;
-
     /* printing */
     boost::scoped_ptr<wxHtmlEasyPrinting> printer_;
 
@@ -210,10 +206,6 @@ private:
     void OnViewFavoriteAccounts(wxCommandEvent& event);
     void OnViewOpenAccounts(wxCommandEvent& event);
 
-	void RecentFilesMenu();
-	void UpdateRecentFilesINI();
-	void OnRecentFilesClear(wxCommandEvent& WXUNUSED(event));
-	void OnOpenRecent(wxCommandEvent& event);
     // any class wishing to process wxWindows events must use this macro
     DECLARE_EVENT_TABLE()
 };
