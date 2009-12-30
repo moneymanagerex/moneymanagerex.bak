@@ -326,12 +326,6 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_NEW, mmGUIFrame::OnNew)
     EVT_MENU(MENU_OPEN, mmGUIFrame::OnOpen)
     EVT_MENU(MENU_SAVE_AS, mmGUIFrame::OnSaveAs)
-	EVT_MENU(MENU_RECENT_1, mmGUIFrame::OnOpenRecent)
-	EVT_MENU(MENU_RECENT_2, mmGUIFrame::OnOpenRecent)
-	EVT_MENU(MENU_RECENT_3, mmGUIFrame::OnOpenRecent)
-	EVT_MENU(MENU_RECENT_4, mmGUIFrame::OnOpenRecent)
-	EVT_MENU(MENU_RECENT_5, mmGUIFrame::OnOpenRecent)
-	EVT_MENU(MENU_RECENT_CLEAR, mmGUIFrame::OnRecentFilesClear)
     EVT_MENU(MENU_CONVERT_ENC_DB, mmGUIFrame::OnConvertEncryptedDB)
     EVT_MENU(MENU_EXPORT_CSV, mmGUIFrame::OnExport)
 	EVT_MENU(MENU_EXPORT_QIF, mmGUIFrame::OnExportToQIF)
@@ -2186,37 +2180,34 @@ void mmGUIFrame::createMenu()
    toolBarBitmaps[8] = wxBitmap(edit_account_xpm);
    toolBarBitmaps[9] = wxBitmap(delete_account_xpm);
 
-   menuFile_ = new wxMenu;
-   wxMenuItem* menuItemNew = new wxMenuItem(menuFile_, MENU_NEW, 
+   wxMenu *menu_file = new wxMenu;
+
+   wxMenuItem* menuItemNew = new wxMenuItem(menu_file, MENU_NEW, 
       _("&New Database\tCtrl-N"), 
       _("New Database"));
    menuItemNew->SetBitmap(toolBarBitmaps[0]);
 
-   wxMenuItem* menuItemOpen = new wxMenuItem(menuFile_, MENU_OPEN, 
+   wxMenuItem* menuItemOpen = new wxMenuItem(menu_file, MENU_OPEN, 
       _("&Open Database\tCtrl-O"), 
       _("Open Database"));
    menuItemOpen->SetBitmap(toolBarBitmaps[1]);
 
-   menuFile_->Append(menuItemNew);
-   menuFile_->Append(menuItemOpen);
+   menu_file->Append(menuItemNew);
+   menu_file->Append(menuItemOpen);
 
-   wxMenuItem* menuItemSaveAs = new wxMenuItem(menuFile_, MENU_SAVE_AS, 
+   wxMenuItem* menuItemSaveAs = new wxMenuItem(menu_file, MENU_SAVE_AS, 
       _("Save Database &As"), 
       _("Save Database As"));
    menuItemSaveAs->SetBitmap(wxBitmap(saveas_xpm));
-   menuFile_->Append(menuItemSaveAs);
+   menu_file->Append(menuItemSaveAs);
 
-	menuFile_->AppendSeparator();
+	menu_file->AppendSeparator();
 
-	// Create the recently used files list
-	recentMenu_ = new wxMenu;
-	RecentFilesMenu();
-	
    wxMenu* exportMenu = new wxMenu;
    exportMenu->Append(MENU_EXPORT_CSV, _("&CSV Files"), _("Export to CSV"));
    exportMenu->Append(MENU_EXPORT_QIF, _("&QIF Files"), _("Export to QIF"));
    exportMenu->Append(MENU_EXPORT_HTML, _("&Report to HTML"), _("Export to HTML"));
-   menuFile_->Append(MENU_EXPORT, _("&Export"), exportMenu);
+   menu_file->Append(MENU_EXPORT, _("&Export"), exportMenu);
 
    wxMenu* importMenu = new wxMenu;
    importMenu->Append(MENU_IMPORT_QIF, _("&QIF Files"), _("Import from QIF"));
@@ -2225,35 +2216,35 @@ void mmGUIFrame::createMenu()
       importMenu->Append(MENU_IMPORT_CSV, _("&MMEX CSV Files"), _("Import from MMEX CSV"));
    if (mmIniOptions::enableImportMMNETCSV_)
       importMenu->Append(MENU_IMPORT_MMNETCSV, _("MM.&NET CSV Files"), _("Import from MM.NET CSV"));
-   menuFile_->Append(MENU_IMPORT, _("&Import"), importMenu);
+   menu_file->Append(MENU_IMPORT, _("&Import"), importMenu);
 
-   menuFile_->AppendSeparator();
+   menu_file->AppendSeparator();
 
     
-	wxMenuItem* menuItemPrintSetup = new wxMenuItem(menuFile_, MENU_PRINT_PAGE_SETUP, 
+	wxMenuItem* menuItemPrintSetup = new wxMenuItem(menu_file, MENU_PRINT_PAGE_SETUP, 
 	   _("Page Set&up..."), _("Setup page printing options"));
 	menuItemPrintSetup->SetBitmap(toolBarBitmaps[7]);
-    menuFile_->Append(menuItemPrintSetup); 
+    menu_file->Append(menuItemPrintSetup); 
      
     wxMenu* printPreviewMenu = new wxMenu;
     printPreviewMenu->Append(MENU_PRINT_PREVIEW_REPORT, 
         _("Current &View"), _("Preview current report"));
 
-    menuFile_->Append(MENU_PRINT_PREVIEW, _("Print Pre&view..."), printPreviewMenu);
+    menu_file->Append(MENU_PRINT_PREVIEW, _("Print Pre&view..."), printPreviewMenu);
 
     wxMenu* printMenu = new wxMenu;
     wxMenuItem* menuItemPrintView = new wxMenuItem(printMenu, MENU_PRINT_REPORT, 
 		_("Current &View"), _("Print current report"));
     printMenu->Append(menuItemPrintView);
 
-    menuFile_->Append( MENU_PRINT, _("&Print..."),  printMenu);
+    menu_file->Append( MENU_PRINT, _("&Print..."),  printMenu);
 
-    menuFile_->AppendSeparator();
+    menu_file->AppendSeparator();
 
-    wxMenuItem* menuItemQuit = new wxMenuItem(menuFile_, wxID_EXIT, 
+    wxMenuItem* menuItemQuit = new wxMenuItem(menu_file, wxID_EXIT, 
 		_("E&xit\tAlt-X"), _("Quit this program"));
 	menuItemQuit->SetBitmap(wxBitmap(exit_xpm));
-    menuFile_->Append(menuItemQuit);
+    menu_file->Append(menuItemQuit);
    
 	wxMenu *menuView = new wxMenu;
 
@@ -2416,7 +2407,7 @@ void mmGUIFrame::createMenu()
     menuHelp->Append(menuItemAbout);
 
     menuBar_ = new wxMenuBar;
-    menuBar_->Append(menuFile_, _("&File"));
+    menuBar_->Append(menu_file, _("&File"));
     menuBar_->Append(menuAccounts, _("&Accounts"));
     menuBar_->Append(menuTools, _("&Tools"));
     menuBar_->Append(menuView, _("&View"));
@@ -2614,117 +2605,22 @@ void mmGUIFrame::openFile(const wxString& fileName,
     // Before deleting, go to home page first createHomePage()
     createDataStore(fileName, password, openingNew);
   
-    if (db_.get())
-    {
+    if (db_) {
         menuEnableItems(true);
         menuPrintingEnable(false);
     }
     
     updateNavTreeControl();
-    if (!refreshRequested_)
-    {
+
+    if (!refreshRequested_) {
         refreshRequested_ = true;
         /* Currency Options might have changed so refresh */
         wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
         GetEventHandler()->AddPendingEvent(ev); 
     }
 
-    if (!db_.get())
-    {
-        mmDBWrapper::setINISettingValue(inidb_.get(), wxT("LASTFILENAME"), wxGetEmptyString());
+    if (!db_)
         showBeginAppDialog();
-    }
-	else
-	{
-		//File successfully opened, so we need to update history,
-		//Unless we are opening the same file as before
-		if (!fileName.IsSameAs(mmDBWrapper::getINISettingValue(inidb_.get(), wxT("LASTFILENAME"), wxGetEmptyString())))
-			UpdateRecentFilesINI();
-	}
-
-}
-//----------------------------------------------------------------------------
-
-void mmGUIFrame::RecentFilesMenu()
-{
-	//First, we need to see if the recent files menu is already there and destroy it if so.
-	if (menuFile_->FindItem(MENU_RECENT))
-	{
-		menuFile_->Delete(MENU_RECENT);
-		for (int i=0; i<6; i++)		//1-5 are files, 6 is clear
-			recentMenu_->Delete(MENU_RECENT+i+1);
-	}
-
-	
-	wxString recent_ini;
-	wxString rfq;
-	for (int i=0; i<5; i++)
-	{
-		rfq.Printf(wxT("FILEHIST%d"),i+1);
-		recent_ini = mmDBWrapper::getINISettingValue(inidb_.get(), rfq, wxGetEmptyString()); 
-		if (recent_ini.IsSameAs(wxGetEmptyString()))
-		{
-			break;
-		}
-		else 
-		{
-			recentMenu_->Append(MENU_RECENT+i+1,recent_ini);
-		}
-	}
-	if (recentMenu_->GetMenuItemCount()>0)
-	{
-		recentMenu_->Append(MENU_RECENT_CLEAR,_("Clear Recent Files"));		
-		menuFile_->Insert(3,MENU_RECENT,_("Recent Files"),recentMenu_);
-		//menuFile_->AppendSeparator();
-	}
-	
-}
-
-void mmGUIFrame::OnRecentFilesClear(wxCommandEvent& WXUNUSED(event))
-{
-	wxString rfq;
-	for (int i=0; i<5; i++)
-	{
-		rfq.Printf(wxT("FILEHIST%d"),i+1);
-		mmDBWrapper::setINISettingValue(inidb_.get(), rfq, wxGetEmptyString());
-	}
-	RecentFilesMenu();
-}
-
-void mmGUIFrame::UpdateRecentFilesINI()
-{
-	//Take the LASTFILE and bump it into the history, making sure there are no repeats or gaps.
-	// This is a work in progress...
-	wxString replacing = 	mmDBWrapper::getINISettingValue(inidb_.get(), 
-															wxT("LASTFILENAME"), wxGetEmptyString());
-	wxString getting_replaced;
-	// Now bump everybody down
-	wxString recent_ini;
-	wxString rfq;
-	for (int i=0; i<5; i++)
-	{
-		//First, get whatever the next value is before we replace it:
-		rfq.Printf(wxT("FILEHIST%d"),i+1);
-		getting_replaced = mmDBWrapper::getINISettingValue(inidb_.get(), rfq, wxGetEmptyString()); 
-		
-		if (i==0 && (getting_replaced.IsSameAs(replacing)))
-			break;  //LASTFILENAME was reopened (ie at program launch, no need to continue
-		
-		//Next, replace it with the one above in the list
-		mmDBWrapper::setINISettingValue(inidb_.get(), rfq, replacing);
-		
-		// Get ready for the next iteration
-		if (!getting_replaced.IsSameAs(wxGetEmptyString()))
-		{
-			replacing = getting_replaced;
-		}
-		else
-		{
-			break;
-		}
-	}
-	RecentFilesMenu();
-	saveConfigFile();
 }
 //----------------------------------------------------------------------------
 
@@ -2764,19 +2660,6 @@ void mmGUIFrame::OnOpen(wxCommandEvent& /*event*/)
     if (!fileName.empty()) {
         openFile(fileName, false);
     }
-}
-//----------------------------------------------------------------------------
-
-void mmGUIFrame::OnOpenRecent(wxCommandEvent& event)
-{
-	wxString s;	
-	s.Printf(wxT("FILEHIST%d"),event.GetId()-MENU_RECENT);
-
-	wxString fileName = mmDBWrapper::getINISettingValue(inidb_.get(), s); 
-	
-        if (!fileName.empty()) {
-                openFile(fileName, false);
-        }
 }
 //----------------------------------------------------------------------------
 
