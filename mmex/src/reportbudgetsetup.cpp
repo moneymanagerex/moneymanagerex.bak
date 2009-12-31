@@ -140,10 +140,10 @@ wxString mmReportBudgetingSetup::getHTMLText()
 			hb.startTableRow();
 			hb.addTableCell(th.catStr_, false, true);
 			hb.addTableCell(wxT(""), false, true);
-			hb.addTableCell(th.period_, false, true);
-			hb.addTableCell(th.amtString_, false, true);//Amount
-			hb.addTableCell(th.estimatedStr_, false, true);//estimated for subcategory
-			hb.addTableCell(th.actualStr_, false, true);//actual Amount for subcategory
+			hb.addTableCell(th.period_, false, true); 
+			hb.addTableCell(th.amtString_, true);//Amount
+			hb.addTableCell(th.estimatedStr_, true);//estimated for subcategory
+			hb.addTableCell(th.actualStr_, true);//actual Amount for subcategory
 			hb.endTableRow();
 			//END:CATEGORY ROW
 
@@ -220,9 +220,9 @@ wxString mmReportBudgetingSetup::getHTMLText()
 				hb.addTableCell(th.catStr_, false, true);//CATEGORY			
 				hb.addTableCell(thsub.subCatStr_, false, true);//SUBCATEGORY			
 				hb.addTableCell(thsub.period_, false, true);//FREQUENCY
-				hb.addTableCell(thsub.amtString_, false, true);//Amount
-				hb.addTableCell(thsub.estimatedStr_, false, true);//estimated amount for subcategory
-				hb.addTableCell(thsub.actualStr_, false, true);//actual amount for subcategory
+				hb.addTableCell(thsub.amtString_, true);//Amount
+				hb.addTableCell(thsub.estimatedStr_, true);//estimated amount for subcategory
+				hb.addTableCell(thsub.actualStr_, true);//actual amount for subcategory
 
 				hb.endTableRow(); 
 				//END: SUBCATEGORY ROW
