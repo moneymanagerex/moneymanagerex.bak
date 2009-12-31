@@ -1204,17 +1204,15 @@ wxString mmGUIFrame::createCategoryList()
     q1.Finalize();
 
     std::sort(categList.begin(), categList.end(), sortCategs);
-    for (int idx = 0; idx < (int)categList.size(); idx++)
-    {
-		if (idx >= 10) //Show top 10 or less
-            break;
-		if (categList[idx].amount < 0.0) //Show negative amounts only
-		{
+
+    for (size_t i = 0; i < std::min(categList.size(), size_t(10)); ++i) {
+
+        if (categList[i].amount < 0) {
 		hb.startTableRow();
-		hb.addTableCell(categList[idx].categ, false, true);
-		hb.addTableCell(categList[idx].amountStr, true);
+		hb.addTableCell(categList[i].categ, false, true);
+		hb.addTableCell(categList[i].amountStr, true);
 		hb.endTableRow();
-		}
+        }
     }
 
     hb.endTable();

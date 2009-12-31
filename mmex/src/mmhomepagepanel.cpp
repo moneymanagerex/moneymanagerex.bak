@@ -149,7 +149,7 @@ void mmHomePagePanel::updateAccounts()
     bool print_bal4cur = false;
 
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
-    for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
+    for (size_t iAdx = 0; iAdx < core_->accountList_.accounts_.size(); ++iAdx)
     {
         mmCheckingAccount* pCA 
            = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
@@ -173,7 +173,9 @@ void mmHomePagePanel::updateAccounts()
            wxString balance;
            mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
 
-           double income = 0.0, expenses = 0.0;
+           double income = 0;
+           double expenses = 0;
+
            core_->bTransactionList_.getExpensesIncome(pCA->accountID_, expenses, income, 
               false,dtBegin, dtEnd);
 
