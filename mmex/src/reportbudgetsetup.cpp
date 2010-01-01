@@ -133,8 +133,8 @@ wxString mmReportBudgetingSetup::getHTMLText()
 				actIncome += th.actual_;
 
 			wxString displayAmtString;
-			if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayAmtString))
-				th.amtString_ = displayAmtString;
+			mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayAmtString);
+			th.amtString_ = displayAmtString;
 
 			//START:CATEGORY ROW
 			hb.startTableRow();
@@ -213,8 +213,8 @@ wxString mmReportBudgetingSetup::getHTMLText()
 					actIncome += thsub.actual_;
 
 
-				if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(thsub.amt_, displayAmtString))
-					thsub.amtString_ = displayAmtString;
+				mmCurrencyFormatter::formatDoubleToCurrencyEdit(thsub.amt_, displayAmtString);
+				thsub.amtString_ = displayAmtString;
 				
 				hb.startTableRow();
 				hb.addTableCell(th.catStr_, false, true);//CATEGORY			

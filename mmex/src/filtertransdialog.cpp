@@ -474,14 +474,12 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
 
                 boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pBankTransaction->accountID_).lock();
                 wxASSERT(pCurrencyPtr);
-                wxString displayTransAmtString;
-                if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(pBankTransaction->reportCategAmount_, displayTransAmtString))
-                    pBankTransaction->reportCategAmountStr_ = displayTransAmtString;
+                mmCurrencyFormatter::formatDoubleToCurrencyEdit(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
             }
             else
             {
                 pBankTransaction->reportCategAmount_ = -1;
-                pBankTransaction->reportCategAmountStr_ = wxT("");
+                pBankTransaction->reportCategAmountStr_.clear();
             }
         }
 

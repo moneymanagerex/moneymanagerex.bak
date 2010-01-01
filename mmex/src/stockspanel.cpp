@@ -383,11 +383,8 @@ void mmStocksPanel::initVirtualListControl()
 
         th.gainLoss_        = th.value_ - ((th.numShares_ * th.purchasePrice_) + commission);
 
-        wxString tempString;
-        if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.gainLoss_, tempString))
-            th.gainLossStr_ = tempString;
-        if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.currentPrice_, tempString))
-            th.cPriceStr_ = tempString;
+        mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
+        mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
 
         trans_.push_back(th);
     }

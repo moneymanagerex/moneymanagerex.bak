@@ -80,19 +80,12 @@ wxString mmReportSummaryStocks::getHTMLText()
 
             th.gainLoss_        = th.value_ - ((th.numShares_ * th.purchasePrice_) + commission);
 
-            wxString tempString;
-            if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.gainLoss_, tempString))
-                th.gainLossStr_ = tempString;
-
-            if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.currentPrice_, tempString))
-                th.cPriceStr_ = tempString;
-
-            if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.purchasePrice_, tempString))
-                th.pPriceStr_ = tempString;
+            mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
+            mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
+            mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.purchasePrice_, th.pPriceStr_);
 
             wxString commString;
-            if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(commission, tempString))
-                commString = tempString;
+            mmCurrencyFormatter::formatDoubleToCurrencyEdit(commission, commString);
 
 			hb.startTableRow();
 			hb.addTableCell(th.shareName_, false, true);

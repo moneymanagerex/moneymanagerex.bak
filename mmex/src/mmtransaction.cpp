@@ -175,12 +175,12 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
    dateStr_            = mmGetDateForDisplay(db_.get(), date_);
 
    wxString displayTransAmtString;
-   if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(amt_, displayTransAmtString))
-      transAmtString_ = displayTransAmtString;
+   mmCurrencyFormatter::formatDoubleToCurrencyEdit(amt_, displayTransAmtString);
+   transAmtString_ = displayTransAmtString;
 
    wxString displayToTransAmtString;
-   if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(toAmt_, displayToTransAmtString))
-      transToAmtString_ = displayToTransAmtString;
+   mmCurrencyFormatter::formatDoubleToCurrencyEdit(toAmt_, displayToTransAmtString);
+   transToAmtString_ = displayToTransAmtString;
 
    if (transType_ != wxT("Transfer"))
    {
