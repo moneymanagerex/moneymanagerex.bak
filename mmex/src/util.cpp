@@ -117,6 +117,33 @@ short mmCents(double x)
 }
 //----------------------------------------------------------------------------
 
+/*
+	Formats groups of 3 digits separated by group_separator.
+*/
+wxString format_groups(double x, size_t grp_sz)
+{
+	wxString val;
+	val.Printf(wxT("%.0f"), x);
+
+	if (val.length() > grp_sz) { // there will be groups
+
+		std::wstring s;
+		s.reserve(val.length() + val.length()/grp_sz);
+		s.assign(val.wc_str(), val.length());
+
+		for (size_t i = 0, j = i + grp_sz*(i+1); j < s.length(); ++i, j = i + grp_sz*(i+1)) {
+			std::wstring::iterator it = s.begin();
+			std::advance(it, s.length() - j);	
+			s.insert(it, mmCurrencyFormatter::group_separator);
+		}
+
+		val = wxString(s.data(), *wxConvCurrent, s.length());
+	}
+
+	return val;
+}
+//----------------------------------------------------------------------------
+
 void DoubleToCurrency(double val, wxString& rdata, bool for_edit)
 {
         double value = mmRound(val*mmCurrencyFormatter::scale);
@@ -125,49 +152,24 @@ void DoubleToCurrency(double val, wxString& rdata, bool for_edit)
         double whole = mmMoneyInt(absv); // Isolate whole monetary units
         short  cents = mmCents(absv); // Isolate fractional units
 
-        wxString data;
-        data.Alloc(32);
+        wxString s;
+        s.Alloc(32);
 
         if (!for_edit) {
-	        data += mmCurrencyFormatter::pfx_symbol; // insert prefix
-        	data += wxT(' ');   // insert space
+	        s += mmCurrencyFormatter::pfx_symbol;
+        	s += wxT(' ');
 	}
 
         if (value < 0)
-                data += wxT('-'); // "minus" sign
+                s += wxT('-'); // "minus" sign
 
-        //  Print groups of 3 digits separated by group_separator
-
-        {
-		const size_t grp_sz = 3; // number of digits in a group
-
-		wxString val;
-		val.Printf(wxT("%.0f"), whole);
-
-		if (val.length() > grp_sz) { // there will be groups
-
-			std::wstring s;
-			s.reserve(val.length() + val.length()/grp_sz);
-			s.assign(val.wc_str(), val.length());
-
-			for (size_t i = 0, j = i + grp_sz*(i+1); j < s.length(); ++i, j = i + grp_sz*(i+1)) {
-				std::wstring::iterator it = s.begin();
-				std::advance(it, s.length() - j);	
-				s.insert(it, mmCurrencyFormatter::group_separator);
-			}
-
-			data += wxString(s.data(), *wxConvCurrent, s.length());
-
-		} else {
-			data += val;
-		}
-	}
+	s += format_groups(whole, 3);
 
 	//  Print cents portion
 
         if ( mmCurrencyFormatter::decimal_point != 0 ) {
 
-                data += mmCurrencyFormatter::decimal_point;
+                s += mmCurrencyFormatter::decimal_point;
 
                 const wxChar *fmt = 0;
 
@@ -182,13 +184,13 @@ void DoubleToCurrency(double val, wxString& rdata, bool for_edit)
                         fmt = wxT("%03d");
                 }
 
-                data += wxString::Format(fmt, cents);
+                s += wxString::Format(fmt, cents);
         }
 
         if (!for_edit)
-	        data += mmCurrencyFormatter::sfx_symbol; // insert trailing currency symbol
+	        s += mmCurrencyFormatter::sfx_symbol;
 
-        rdata = data;
+        rdata = s;
 }
 //----------------------------------------------------------------------------
 
