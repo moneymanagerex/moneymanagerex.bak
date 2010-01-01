@@ -364,8 +364,7 @@ void mmBudgetingPanel::initVirtualListControl()
             actIncome += th.actual_;
 
         wxString displayAmtString;
-        if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayAmtString))
-            th.amtString_ = displayAmtString;
+        mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, th.amtString_);
 
         if (currentView_ == wxT("View Non-Zero Budget Categories"))
         {
@@ -457,8 +456,7 @@ void mmBudgetingPanel::initVirtualListControl()
                 actIncome += thsub.actual_;
 
 
-            if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(thsub.amt_, displayAmtString))
-                thsub.amtString_ = displayAmtString;
+            mmCurrencyFormatter::formatDoubleToCurrencyEdit(thsub.amt_, thsub.amtString_);
 
             if (currentView_ == wxT("View Non-Zero Budget Categories"))
             {

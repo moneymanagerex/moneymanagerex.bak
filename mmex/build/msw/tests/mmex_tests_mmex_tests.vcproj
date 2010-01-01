@@ -2240,6 +2240,9 @@
 				RelativePath="..\..\..\src\util.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\tests\util_test.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\tests\utils.cpp">
 			</File>
 			<File

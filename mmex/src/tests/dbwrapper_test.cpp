@@ -20,7 +20,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <UnitTest++.h>
 #include <boost/scoped_ptr.hpp>
 //----------------------------------------------------------------------------
-#include <dbwrapper.h>
+#include "dbwrapper.h"
 #include "utils.h"
 //----------------------------------------------------------------------------
 #include <wx/filename.h>

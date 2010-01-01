@@ -29,7 +29,8 @@ float getFrequency(float vmax)
 
 	if (step > new_step) {
 		size_t cnt = floor(step/new_step + 0.5f);
-		new_step *= cnt;
+		if (cnt > 1)
+			new_step *= cnt;
 	}
 	
 	return new_step;

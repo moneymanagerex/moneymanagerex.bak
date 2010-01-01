@@ -408,13 +408,8 @@ void mmHomePagePanel::updateAccounts()
         th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
         th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
 
-        wxString displayTransAmtString;
-        if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayTransAmtString))
-            th.transAmtString_ = displayTransAmtString;
-
-        wxString displayToTransAmtString;
-        if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.toAmt_, displayToTransAmtString))
-            th.transToAmtString_ = displayToTransAmtString;
+        mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
+        mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
 
         int cid = 0, sid = 0;
         th.payeeStr_ = mmDBWrapper::getPayee(db_, th.payeeID_, cid, sid);

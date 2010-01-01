@@ -229,10 +229,7 @@ void mmAssetsPanel::initVirtualListControl()
         wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
         th.assetType_ =  wxGetTranslation(assetTypeStr); // string should be marked for translation
 
-        wxString tempString;
-        if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, tempString))
-            th.valueStr_ = tempString;
-
+        mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
         trans_.push_back(th);
     }
 

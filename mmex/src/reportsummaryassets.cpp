@@ -67,9 +67,7 @@ wxString mmReportSummaryAssets::getHTMLText()
             wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
             th.assetType_ = wxGetTranslation(assetTypeStr);
 
-            wxString tempString;
-            if (mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, tempString))
-                th.valueStr_   = tempString;
+            mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
 
 			hb.startTableRow();
 			hb.addTableCell(th.assetName_, false, true);

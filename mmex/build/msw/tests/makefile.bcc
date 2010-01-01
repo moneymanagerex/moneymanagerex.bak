@@ -129,6 +129,7 @@ MMEX_TESTS_OBJECTS =  \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_platfdep.obj \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_dbwrapper_test.obj \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_mmex_tests.obj \
+	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_util_test.obj \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_utils.obj
 
 ### Conditionally set variables: ###
@@ -579,6 +580,9 @@ bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 
 bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_mmex_tests.obj: ..\..\..\src\tests\mmex_tests.cpp
 	$(CXX) -q -c -P -o$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\tests\mmex_tests.cpp
+
+bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_util_test.obj: ..\..\..\src\tests\util_test.cpp
+	$(CXX) -q -c -P -o$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\tests\util_test.cpp
 
 bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_utils.obj: ..\..\..\src\tests\utils.cpp
 	$(CXX) -q -c -P -o$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\tests\utils.cpp
