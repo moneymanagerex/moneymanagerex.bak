@@ -65,7 +65,7 @@ wxString mmReportCashFlow::getHTMLText()
               boost::shared_ptr<mmCurrency> pCurrencyPtr 
                  = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
               wxASSERT(pCurrencyPtr);
-              mmCurrencyFormatter::loadSettings(pCurrencyPtr);
+              mmex::CurrencyFormatter::instance().loadSettings(pCurrencyPtr);
               double rate = pCurrencyPtr->baseConv_;
 
               tBalance += bal * rate;;
@@ -231,7 +231,7 @@ wxString mmReportCashFlow::getHTMLText()
            wxDateTime dtEnd   = wxDateTime::Now().Add(wxDateSpan::Months(idx+1));
            
            wxString balance;
-           mmCurrencyFormatter::formatDoubleToCurrency(forecastOver12Months[idx] + tBalance, balance);
+           mmex::formatDoubleToCurrency(forecastOver12Months[idx] + tBalance, balance);
 
            wxString dtStr = mmGetDateForDisplay(core_->db_.get(), dtEnd);
 

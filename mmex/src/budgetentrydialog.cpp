@@ -110,7 +110,7 @@ void mmBudgetEntryDialog::fillControls()
     else
         type_->SetSelection(DEF_TYPE_INCOME);
     
-    mmCurrencyFormatter::formatDoubleToCurrencyEdit(amt, displayAmtString);
+    mmex::formatDoubleToCurrencyEdit(amt, displayAmtString);
     textAmount_->SetValue(displayAmtString);
 }
 
@@ -213,7 +213,7 @@ void mmBudgetEntryDialog::OnOk(wxCommandEvent& /*event*/)
 
     wxString displayAmtString = textAmount_->GetValue().Trim();
     double amt = 0.0;
-    if (!mmCurrencyFormatter::formatCurrencyToDouble(displayAmtString, amt)
+    if (!mmex::formatCurrencyToDouble(displayAmtString, amt)
         || (amt < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));

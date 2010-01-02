@@ -94,7 +94,7 @@ bool SplitDetailDialog::Create( wxWindow* parent, wxWindowID id,
 ////@end SplitDetailDialog creation
 
     wxString dispAmount;
-    mmCurrencyFormatter::formatDoubleToCurrencyEdit(*m_amount_, dispAmount);
+    mmex::formatDoubleToCurrencyEdit(*m_amount_, dispAmount);
     textAmount_->SetValue(dispAmount);
 
     return TRUE;
@@ -185,8 +185,7 @@ void SplitDetailDialog::OnButtonOKClick( wxCommandEvent& event )
 
     wxString amountStr = textAmount_->GetValue().Trim();
     double amount;
-    if (!mmCurrencyFormatter::formatCurrencyToDouble(amountStr, amount) 
-        || (amount < 0.0))
+    if (!mmex::formatCurrencyToDouble(amountStr, amount) || (amount < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
         return;

@@ -98,24 +98,24 @@ void mmStockDialog::dataToControls()
         dpc_->SetValue(dtdt);
 
 		wxString numShares;
-		mmCurrencyFormatter::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("NUMSHARES")), 
+		mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("NUMSHARES")), 
             numShares);
 		numShares_->SetValue(numShares);
 
         wxString dispAmount;
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUE")), 
+        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUE")), 
             dispAmount);
         valueInvestment_->SetLabel(dispAmount);
     
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("PURCHASEPRICE")), 
+        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("PURCHASEPRICE")), 
             dispAmount);
         purchasePrice_->SetValue(dispAmount);
 
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("CURRENTPRICE")), 
+        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("CURRENTPRICE")), 
             dispAmount);
         currentPrice_->SetValue(dispAmount);
 
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("COMMISSION")), 
+        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("COMMISSION")), 
             dispAmount);
         commission_->SetValue(dispAmount);
     }
@@ -347,8 +347,7 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
     }
     
      double numShares = 0;
-	 if (!mmCurrencyFormatter::formatCurrencyToDouble(numSharesStr, numShares) 
-        || (numShares < 0.0))
+	 if (!mmex::formatCurrencyToDouble(numSharesStr, numShares) || (numShares < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid number of shares entered "), _("Error"));
         return;
@@ -362,8 +361,7 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
 
     wxString pPriceStr    = purchasePrice_->GetValue().Trim();
     double pPrice;
-    if (!mmCurrencyFormatter::formatCurrencyToDouble(pPriceStr, pPrice) 
-        || (pPrice < 0.0))
+    if (!mmex::formatCurrencyToDouble(pPriceStr, pPrice) || (pPrice < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid purchase price entered "), _("Error"));
         return;
@@ -371,8 +369,7 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
     
     wxString currentPriceStr = currentPrice_->GetValue().Trim();
     double cPrice;
-    if (!mmCurrencyFormatter::formatCurrencyToDouble(currentPriceStr, cPrice) 
-        || (cPrice < 0.0))
+    if (!mmex::formatCurrencyToDouble(currentPriceStr, cPrice) || (cPrice < 0.0))
     {
         //mmShowErrorMessage(this, _("Invalid current price entered "), _("Error"));        
         //return;
@@ -382,8 +379,7 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
     
     wxString commissionStr = commission_->GetValue().Trim();
     double commission;
-    if (!mmCurrencyFormatter::formatCurrencyToDouble(commissionStr, commission) 
-        || (commission < 0.0))
+    if (!mmex::formatCurrencyToDouble(commissionStr, commission) || (commission < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid commission entered "), _("Error"));
         return;

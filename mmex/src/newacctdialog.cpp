@@ -126,7 +126,7 @@ void mmNewAcctDialog::fillControlsWithData()
 
     mmDBWrapper::loadSettings(core_->db_.get(), currencyID_);
     wxString dispAmount;
-    mmCurrencyFormatter::formatDoubleToCurrencyEdit(initBal, dispAmount);
+    mmex::formatDoubleToCurrencyEdit(initBal, dispAmount);
     textCtrl->SetValue(dispAmount);
 }
 
@@ -382,7 +382,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     pAccount->initialBalance_ = 0.0;
     if (!bal.IsEmpty())
     {
-        if (!mmCurrencyFormatter::formatCurrencyToDouble(bal, pAccount->initialBalance_))
+        if (!mmex::formatCurrencyToDouble(bal, pAccount->initialBalance_))
         {
             mmShowErrorMessageInvalid(this, _("Init Balance "));
             return;

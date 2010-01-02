@@ -49,10 +49,6 @@ mmCurrency::mmCurrency(boost::shared_ptr<wxSQLite3Database> db,
    {
       grpChar_ = grp_.GetChar(0);
    }
-   
-   if(currencySymbol_ == wxEmptyString) {
-      currencySymbol_ = wxT("");
-   }
 }
 
 mmCurrency::mmCurrency()
@@ -74,14 +70,15 @@ mmCurrency::mmCurrency()
 
 void mmCurrency::loadCurrencySettings()
 {
-   mmCurrencyFormatter::loadSettings
-      (pfxSymbol_, 
-       sfxSymbol_, 
-       decChar_, 
-       grpChar_, 
-       unit_, 
-       cent_, 
-       scaleDl_);
+	mmex::CurrencyFormatter::instance().loadSettings(
+		pfxSymbol_, 
+		sfxSymbol_, 
+		decChar_, 
+		grpChar_, 
+		unit_, 
+		cent_, 
+		scaleDl_
+	);
 }
 
 //-----------------------------------------------------------------------------//

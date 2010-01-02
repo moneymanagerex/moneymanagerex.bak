@@ -326,10 +326,10 @@ void mmStocksPanel::initVirtualListControl()
     }
 
     wxString balance;
-    mmCurrencyFormatter::formatDoubleToCurrency(total, balance);
+    mmex::formatDoubleToCurrency(total, balance);
 
     wxString original;
-    mmCurrencyFormatter::formatDoubleToCurrency(originalVal, original);
+    mmex::formatDoubleToCurrency(originalVal, original);
 
     double diff = 0.0;
     if (total > originalVal)
@@ -338,7 +338,7 @@ void mmStocksPanel::initVirtualListControl()
         diff = originalVal - total;
 
     wxString diffStr;
-    mmCurrencyFormatter::formatDoubleToCurrency(diff, diffStr);
+    mmex::formatDoubleToCurrency(diff, diffStr);
 
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
     wxString lbl;
@@ -383,8 +383,8 @@ void mmStocksPanel::initVirtualListControl()
 
         th.gainLoss_        = th.value_ - ((th.numShares_ * th.purchasePrice_) + commission);
 
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
+        mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
+        mmex::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
 
         trans_.push_back(th);
     }

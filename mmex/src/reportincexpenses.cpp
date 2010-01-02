@@ -68,10 +68,11 @@ wxString mmReportIncomeExpenses::getHTMLText()
 
         wxString incString;
         wxString expString;
-		wxString diffString;
-        mmCurrencyFormatter::formatDoubleToCurrency(expenses, expString);
-        mmCurrencyFormatter::formatDoubleToCurrency(income, incString);
-		mmCurrencyFormatter::formatDoubleToCurrency(income - expenses, diffString);
+	wxString diffString;
+
+        mmex::formatDoubleToCurrency(expenses, expString);
+        mmex::formatDoubleToCurrency(income, incString);
+	mmex::formatDoubleToCurrency(income - expenses, diffString);
 
 		hb.startTableRow();
 		hb.addTableCell(_("Income:"), false, true);

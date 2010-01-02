@@ -137,14 +137,14 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             else
                 estIncome += totalEstimated_;
 
-            mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.estimated_, th.estimatedStr_);
+            mmex::formatDoubleToCurrencyEdit(th.estimated_, th.estimatedStr_);
 
             wxString totalEstimatedStr_;
-            mmCurrencyFormatter::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
+            mmex::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
 
             th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_, 
                 false,  yearBegin, yearEnd);
-            mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
+            mmex::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
 
             if (th.actual_ < 0)
                 actExpenses += th.actual_;
@@ -152,7 +152,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
                 actIncome += th.actual_;
 
             wxString displayAmtString;
-            mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayAmtString);
+            mmex::formatDoubleToCurrencyEdit(th.amt_, displayAmtString);
             th.amtString_ = displayAmtString;
 
 
@@ -181,7 +181,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
                     double actualMonthVal = core_->bTransactionList_.getAmountForCategory(
                                  th.categID_, th.subcategID_, false,  dtBegin, dtEnd);
                     wxString actualMonthValStr;
-                    mmCurrencyFormatter::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
+                    mmex::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
 					if(actualMonthVal < th.estimated_)
 					{
 						hb.addTableCell(actualMonthValStr, true, true, true, wxT("#ff0000"));
@@ -276,7 +276,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
                 else
                     wxASSERT(true);
 
-                mmCurrencyFormatter::formatDoubleToCurrencyEdit(thsub.estimated_, thsub.estimatedStr_);
+                mmex::formatDoubleToCurrencyEdit(thsub.estimated_, thsub.estimatedStr_);
                 if (thsub.estimated_ < 0)
                     estExpenses += totalEstimated_;
                 else
@@ -284,14 +284,14 @@ wxString mmReportBudgetingPerformance::getHTMLText()
 
                 thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, 
                     false,  yearBegin, yearEnd);
-                mmCurrencyFormatter::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
+                mmex::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
                 if (thsub.actual_ < 0)
                     actExpenses += thsub.actual_;
                 else
                     actIncome += thsub.actual_;
 
 
-                mmCurrencyFormatter::formatDoubleToCurrencyEdit(thsub.amt_, displayAmtString);
+                mmex::formatDoubleToCurrencyEdit(thsub.amt_, displayAmtString);
                 thsub.amtString_ = displayAmtString;
 
                 if ((totalEstimated_ != 0.0) || (thsub.actual_ != 0.0))
@@ -301,7 +301,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
 					hb.addTableCell(_("Estimated"));
 					for (int yidx = 0; yidx < 12; yidx++)
 						hb.addTableCell(thsub.estimatedStr_, true, true);
-                    mmCurrencyFormatter::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
+                    mmex::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
 					hb.addTableCell(totalEstimatedStr_, true, true, true);
                     hb.addTableCell(wxT("-"));
 					hb.endTableRow();
@@ -320,7 +320,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
                             false,  dtBegin, dtEnd);
                         wxString actualMonthValStr;
 
-						mmCurrencyFormatter::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
+						mmex::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
 						if(actualMonthVal < thsub.estimated_)
 						{
 							hb.addTableCell(actualMonthValStr, true, true, true, wxT("#ff0000"));

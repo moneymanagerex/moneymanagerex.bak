@@ -544,7 +544,7 @@ Are you are sure you want to proceed with the import?"),
             {
                 amount = getLineData(readLine);
               
-                if (!mmCurrencyFormatter::formatCurrencyToDouble(amount, val))
+                if (!mmex::formatCurrencyToDouble(amount, val))
                 {
                     log << _("Line : " ) << numLines 
                         << _(" invalid amount, skipping.") << endl;

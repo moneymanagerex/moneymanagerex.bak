@@ -26,53 +26,53 @@ SUITE(util)
 
 TEST(formatDoubleToCurrency1)
 {
-	mmCurrencyFormatter::loadDefaultSettings();
+	mmex::CurrencyFormatter::instance().loadDefaultSettings();
 
 	wxString s;
 	
-	mmCurrencyFormatter::formatDoubleToCurrency(0, s);
+	mmex::formatDoubleToCurrency(0, s);
 	CHECK(s == wxT("$ 0.00"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(-0, s);
+	mmex::formatDoubleToCurrency(-0, s);
 	CHECK(s == wxT("$ 0.00"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(1.0, s);
+	mmex::formatDoubleToCurrency(1.0, s);
 	CHECK(s == wxT("$ 1.00"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(-12.3, s);
+	mmex::formatDoubleToCurrency(-12.3, s);
 	CHECK(s == wxT("$ -12.30"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(123.4, s);
+	mmex::formatDoubleToCurrency(123.4, s);
 	CHECK(s == wxT("$ 123.40"));
 	
-	mmCurrencyFormatter::formatDoubleToCurrency(-1000.0, s);
+	mmex::formatDoubleToCurrency(-1000.0, s);
 	CHECK(s == wxT("$ -1,000.00"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(10000.0, s);
+	mmex::formatDoubleToCurrency(10000.0, s);
 	CHECK(s == wxT("$ 10,000.00"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(-100000.0, s);
+	mmex::formatDoubleToCurrency(-100000.0, s);
 	CHECK(s == wxT("$ -100,000.00"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(1000000.0, s);
+	mmex::formatDoubleToCurrency(1000000.0, s);
 	CHECK(s == wxT("$ 1,000,000.00"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(-10000000.0, s);
+	mmex::formatDoubleToCurrency(-10000000.0, s);
 	CHECK(s == wxT("$ -10,000,000.00"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(100000000.0, s);
+	mmex::formatDoubleToCurrency(100000000.0, s);
 	CHECK(s == wxT("$ 100,000,000.00"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(1000000000.0, s);
+	mmex::formatDoubleToCurrency(1000000000.0, s);
 	CHECK(s == wxT("$ 1,000,000,000.00"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(-10000000000.0, s);
+	mmex::formatDoubleToCurrency(-10000000000.0, s);
 	CHECK(s == wxT("$ -10,000,000,000.00"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(100000000000.0, s);
+	mmex::formatDoubleToCurrency(100000000000.0, s);
 	CHECK(s == wxT("$ 100,000,000,000.00"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(-1234567890123.45, s);
+	mmex::formatDoubleToCurrency(-1234567890123.45, s);
 	CHECK(s == wxT("$ -1,234,567,890,123.45"));
 }
 //----------------------------------------------------------------------------
@@ -82,10 +82,10 @@ TEST(formatDoubleToCurrency2)
 	double val = 1234.1415;
 	wxString s;
 
-	mmCurrencyFormatter::formatDoubleToCurrency(val, s);
+	mmex::formatDoubleToCurrency(val, s);
 	CHECK(s == wxT("$ 1,234.14"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(-val, s);
+	mmex::formatDoubleToCurrency(-val, s);
 	CHECK(s == wxT("$ -1,234.14"));
 }
 //----------------------------------------------------------------------------
@@ -95,16 +95,16 @@ TEST(formatDoubleToCurrency3)
         double val = 0.0099;
 	wxString s;
 
-	mmCurrencyFormatter::formatDoubleToCurrency(val, s);
+	mmex::formatDoubleToCurrency(val, s);
 	CHECK(s == wxT("$ 0.01"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(-val, s);
+	mmex::formatDoubleToCurrency(-val, s);
 	CHECK(s == wxT("$ -0.01"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(0.004, s);
+	mmex::formatDoubleToCurrency(0.004, s);
 	CHECK(s == wxT("$ 0.00"));
 
-	mmCurrencyFormatter::formatDoubleToCurrency(0.005, s);
+	mmex::formatDoubleToCurrency(0.005, s);
 	CHECK(s == wxT("$ 0.01"));
 }
 //----------------------------------------------------------------------------
@@ -119,22 +119,22 @@ TEST(formatDoubleToCurrency4)
 	wxString cent = wxT("kop.");
 	double scale = 100;
 
-	mmCurrencyFormatter::loadSettings(pfx, sfx, dec, grp, unit, cent, scale);
+	mmex::CurrencyFormatter::instance().loadSettings(pfx, sfx, dec, grp, unit, cent, scale);
 
 	wxString s;
-	mmCurrencyFormatter::formatDoubleToCurrency(-9123456789012.34, s);
+	mmex::formatDoubleToCurrency(-9123456789012.34, s);
 	CHECK(s == wxT("AAA -9:123:456:789:012%34ZZZ"));
 }
 //----------------------------------------------------------------------------
 
-TEST(formatDoubleToCurrency5)
+TEST(formatDoubleToCurrencyEdit)
 {
 	wxString s;
 
-	mmCurrencyFormatter::formatDoubleToCurrencyEdit(0, s);
+	mmex::formatDoubleToCurrencyEdit(0, s);
 	CHECK(s == wxT("0%00"));
 
-	mmCurrencyFormatter::formatDoubleToCurrencyEdit(-9123456789012.34, s);
+	mmex::formatDoubleToCurrencyEdit(-9123456789012.34, s);
 	CHECK(s == wxT("-9:123:456:789:012%34"));
 }
 //----------------------------------------------------------------------------

@@ -159,7 +159,7 @@ void mmHomePagePanel::updateAccounts()
            boost::shared_ptr<mmCurrency> pCurrencyPtr 
 			   = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
            wxASSERT(pCurrencyPtr);
-           mmCurrencyFormatter::loadSettings(pCurrencyPtr);
+           mmex::CurrencyFormatter::instance().loadSettings(pCurrencyPtr);
 
            double bal = pCA->initialBalance_ 
               + core_->bTransactionList_.getBalance(pCA->accountID_);
@@ -171,7 +171,7 @@ void mmHomePagePanel::updateAccounts()
            print_bal4cur |= (bal != 0.0 && tBalances[pCurrencyPtr] != 0.0);
            tBalances[pCurrencyPtr] += bal;
            wxString balance;
-           mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
+           mmex::formatDoubleToCurrency(bal, balance);
 
            double income = 0;
            double expenses = 0;
@@ -197,7 +197,7 @@ void mmHomePagePanel::updateAccounts()
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
     wxString tBalanceStr;
-    mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
+    mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
     hb.startTableRow();
 	hb.addTotalRow(_("Total:"), 2, tBalanceStr);
@@ -213,7 +213,7 @@ void mmHomePagePanel::updateAccounts()
         double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);
         wxString stockBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
-        mmCurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
+        mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
 
 		hb.addRowSeparator(2);
 		hb.startTableRow();
@@ -236,7 +236,7 @@ void mmHomePagePanel::updateAccounts()
         double assetBalance = mmDBWrapper::getAssetBalance(db_);
         wxString assetBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
-        mmCurrencyFormatter::formatDoubleToCurrency(assetBalance, assetBalanceStr);
+        mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
 		hb.addRowSeparator(2);
 		hb.startTableRow();
@@ -265,8 +265,8 @@ void mmHomePagePanel::updateAccounts()
             for (balances_t::const_iterator i = tBalances.begin(); i != tBalances.end(); ++i)
             {
                     wxString tBalanceStr;
-                    mmCurrencyFormatter::loadSettings(i->first);
-                    mmCurrencyFormatter::formatDoubleToCurrency(i->second, tBalanceStr);
+                    mmex::CurrencyFormatter::instance().loadSettings(i->first);
+                    mmex::formatDoubleToCurrency(i->second, tBalanceStr);
 
                     hb.startTableRow();
                     hb.addTableCell(i->first->currencyName_);
@@ -278,7 +278,7 @@ void mmHomePagePanel::updateAccounts()
     tBalances.clear();
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
-    mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
+    mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
 	hb.addRowSeparator(2);
 	hb.addTotalRow(_("Total of Accounts:"), 2, tBalanceStr);
@@ -290,8 +290,8 @@ void mmHomePagePanel::updateAccounts()
 	hb.startTable(wxT("95%"));
 
     wxString incStr, expStr;
-    mmCurrencyFormatter::formatDoubleToCurrency(tincome, incStr); // must use loadBaseCurrencySettings (called above)
-    mmCurrencyFormatter::formatDoubleToCurrency(texpenses, expStr);
+    mmex::formatDoubleToCurrency(tincome, incStr); // must use loadBaseCurrencySettings (called above)
+    mmex::formatDoubleToCurrency(texpenses, expStr);
 
     wxString baseInc = _("Income");
     wxString baseExp = _("Expense");
@@ -408,8 +408,8 @@ void mmHomePagePanel::updateAccounts()
         th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
         th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
 
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
+        mmex::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
+        mmex::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
 
         int cid = 0, sid = 0;
         th.payeeStr_ = mmDBWrapper::getPayee(db_, th.payeeID_, cid, sid);
@@ -471,7 +471,7 @@ void mmHomePagePanel::updateAccounts()
             }
 
 			wxString displayBDAmtString;
-			mmCurrencyFormatter::formatDoubleToCurrency(trans_[bdidx].amt_, displayBDAmtString);
+			mmex::formatDoubleToCurrency(trans_[bdidx].amt_, displayBDAmtString);
            
 			hb.startTableRow();
 			hb.addTableCell(trans_[bdidx].payeeStr_, false, true);
@@ -487,7 +487,7 @@ void mmHomePagePanel::updateAccounts()
 	hb.endTableCell();
 	hb.startTableCell();
 
-    mmCurrencyFormatter::loadDefaultSettings();
+    mmex::CurrencyFormatter::instance().loadDefaultSettings();
 
     // update category List
 

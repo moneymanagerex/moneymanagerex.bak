@@ -66,13 +66,13 @@ wxString mmReportSummary::getHTMLText()
               
               boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
               wxASSERT(pCurrencyPtr);
-              mmCurrencyFormatter::loadSettings(pCurrencyPtr);
+              mmex::CurrencyFormatter::instance().loadSettings(pCurrencyPtr);
               double rate = pCurrencyPtr->baseConv_;
 
               tBalance += bal * rate;;
 
               wxString balance;
-              mmCurrencyFormatter::formatDoubleToCurrency(bal, balance);
+              mmex::formatDoubleToCurrency(bal, balance);
 
 			  hb.startTableRow();
 			  hb.addTableCell(pCA->accountName_, false, true);
@@ -85,7 +85,7 @@ wxString mmReportSummary::getHTMLText()
         mmDBWrapper::loadBaseCurrencySettings(db_);
 
         wxString tBalanceStr;
-	mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
+	mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
 	hb.startTableRow();
 	hb.addTotalRow(_("Total:"), 2, tBalanceStr);
@@ -97,7 +97,7 @@ wxString mmReportSummary::getHTMLText()
         double invested;
         double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);
         wxString stockBalanceStr;
-        mmCurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
+        mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
         wxString dispStr =  + stockBalanceStr; 
 
 	hb.startTableRow();
@@ -108,7 +108,7 @@ wxString mmReportSummary::getHTMLText()
         /* Assets */
         double assetBalance = mmDBWrapper::getAssetBalance(db_);
         wxString assetBalanceStr;
-        mmCurrencyFormatter::formatDoubleToCurrency(assetBalance, assetBalanceStr);
+        mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
 	hb.startTableRow();
 	hb.addTableCell(_("Assets"));
@@ -117,7 +117,7 @@ wxString mmReportSummary::getHTMLText()
 
         tBalance += stockBalance;
         tBalance += assetBalance;
-        mmCurrencyFormatter::formatDoubleToCurrency(tBalance, tBalanceStr);
+        mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
 	hb.addRowSeparator(2);
 

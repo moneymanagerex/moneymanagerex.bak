@@ -67,7 +67,7 @@ wxString mmReportSummaryAssets::getHTMLText()
             wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
             th.assetType_ = wxGetTranslation(assetTypeStr);
 
-            mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
+            mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
 
 			hb.startTableRow();
 			hb.addTableCell(th.assetName_, false, true);
@@ -81,7 +81,7 @@ wxString mmReportSummaryAssets::getHTMLText()
         double assetBalance = mmDBWrapper::getAssetBalance(db_);
         wxString assetBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
-        mmCurrencyFormatter::formatDoubleToCurrency(assetBalance, assetBalanceStr);
+        mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
 	hb.addRowSeparator(3);
 	hb.addTotalRow(_("Total Assets: "), 3, assetBalanceStr);

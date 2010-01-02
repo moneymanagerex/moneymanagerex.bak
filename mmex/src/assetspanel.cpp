@@ -204,7 +204,7 @@ void mmAssetsPanel::initVirtualListControl()
 
     double total = mmDBWrapper::getAssetBalance(db_);
     wxString balance;
-    mmCurrencyFormatter::formatDoubleToCurrency(total, balance);
+    mmex::formatDoubleToCurrency(total, balance);
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
     wxString lbl  = wxString::Format(_("Total: %s"), balance.c_str());
     header->SetLabel(lbl);
@@ -229,7 +229,7 @@ void mmAssetsPanel::initVirtualListControl()
         wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
         th.assetType_ =  wxGetTranslation(assetTypeStr); // string should be marked for translation
 
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
+        mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
         trans_.push_back(th);
     }
 

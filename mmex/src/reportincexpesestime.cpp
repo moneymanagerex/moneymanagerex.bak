@@ -60,17 +60,17 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
             core_->bTransactionList_.getExpensesIncome(-1, expenses, income,  ignoreDate, dtBegin, dtEnd);
             
             wxString actualExpStr;
-            mmCurrencyFormatter::formatDoubleToCurrencyEdit(expenses, actualExpStr);
+            mmex::formatDoubleToCurrencyEdit(expenses, actualExpStr);
             
             wxString actualIncStr;
-            mmCurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
+            mmex::formatDoubleToCurrencyEdit(income, actualIncStr);
 
             hb.startTableRow();
 			hb.addTableCell(monName, false, true);
 			
 			balance = income - expenses;
 			wxString actualBalStr;
-			mmCurrencyFormatter::formatDoubleToCurrencyEdit(balance, actualBalStr);
+			mmex::formatDoubleToCurrencyEdit(balance, actualBalStr);
 
 			if (balance < 0.0)
 			{
@@ -101,14 +101,14 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
         core_->bTransactionList_.getExpensesIncome(-1, expenses, income,  false, dtBegin, dtEnd);
         
         wxString actualExpStr;
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(expenses, actualExpStr);
+        mmex::formatDoubleToCurrencyEdit(expenses, actualExpStr);
 
         wxString actualIncStr;
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(income, actualIncStr);
+        mmex::formatDoubleToCurrencyEdit(income, actualIncStr);
 
 		balance = income - expenses;
         wxString actualBalStr;
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(balance, actualBalStr);
+        mmex::formatDoubleToCurrencyEdit(balance, actualBalStr);
 
         std::vector<wxString> data;
         data.push_back(actualIncStr);
