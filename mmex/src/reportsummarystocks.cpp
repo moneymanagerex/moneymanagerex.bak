@@ -80,12 +80,12 @@ wxString mmReportSummaryStocks::getHTMLText()
 
             th.gainLoss_        = th.value_ - ((th.numShares_ * th.purchasePrice_) + commission);
 
-            mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
-            mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
-            mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.purchasePrice_, th.pPriceStr_);
+            mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
+            mmex::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
+            mmex::formatDoubleToCurrencyEdit(th.purchasePrice_, th.pPriceStr_);
 
             wxString commString;
-            mmCurrencyFormatter::formatDoubleToCurrencyEdit(commission, commString);
+            mmex::formatDoubleToCurrencyEdit(commission, commString);
 
 			hb.startTableRow();
 			hb.addTableCell(th.shareName_, false, true);
@@ -119,7 +119,7 @@ wxString mmReportSummaryStocks::getHTMLText()
         double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);
         wxString stockBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
-        mmCurrencyFormatter::formatDoubleToCurrency(stockBalance, stockBalanceStr);
+        mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
 
 	hb.addRowSeparator(9);
 	hb.addTotalRow(_("Total Stock Investments: "), 9, stockBalanceStr);

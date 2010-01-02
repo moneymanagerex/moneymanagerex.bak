@@ -116,7 +116,7 @@ wxString mmReportTransactions::getHTMLText()
 
         wxString balanceStr;
         core_->currencyList_.loadBaseCurrencySettings();
-        mmCurrencyFormatter::formatDoubleToCurrency(total, balanceStr);
+        mmex::formatDoubleToCurrency(total, balanceStr);
 
 	hb.addRowSeparator(8);
 	hb.addTotalRow(_("Total Amount: "), 8, balanceStr);

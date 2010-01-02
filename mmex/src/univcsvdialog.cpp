@@ -440,7 +440,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
 
         boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
         wxASSERT(pCurrencyPtr);
-        mmCurrencyFormatter::loadSettings(pCurrencyPtr);
+        mmex::CurrencyFormatter::instance().loadSettings(pCurrencyPtr);
              
         wxString fileName = wxFileSelector(_("Choose MM.NET CSV data file to import"), 
                 wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), wxT("*.csv"), wxFILE_MUST_EXIST);
@@ -708,7 +708,7 @@ void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
                 return;
            
             
-            if (!mmCurrencyFormatter::formatCurrencyToDouble(token, val_))
+            if (!mmex::formatCurrencyToDouble(token, val_))
             {
                 return;
             }

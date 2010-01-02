@@ -119,28 +119,49 @@ public:
         static wxColour listDetailsPanelColor;
         static wxColour listFutureDateColor;
 };
+//----------------------------------------------------------------------------
 
+namespace mmex
+{
 
-class mmCurrencyFormatter
+class CurrencyFormatter
 {
 public:
+	static CurrencyFormatter& instance();
 
-        static void loadSettings( const wxString &pfx, const wxString &sfx, wxChar dec, wxChar grp, const wxString &unit, const wxString &cent, double scale );
-        static void loadDefaultSettings();
+        void loadDefaultSettings();
+        void loadSettings( boost::shared_ptr<mmCurrency> pCurrencyPtr );
+        void loadSettings( const wxString &pfx, const wxString &sfx, wxChar dec, wxChar grp, const wxString &unit, const wxString &cent, double scale );
 
-        static void formatDoubleToCurrency( double val, wxString& rdata );
-        static bool formatCurrencyToDouble( const wxString& str, double& val );
-        static void formatDoubleToCurrencyEdit( double val, wxString& rdata );
-        static void loadSettings( boost::shared_ptr<mmCurrency> pCurrencyPtr );
+        wxString getPrefix() const { return pfx_symbol; }
+        wxString getSuffix() const { return sfx_symbol; }
 
-        static wxString pfx_symbol;   // Leading currency symbol (U.S.: '$')
-        static wxString sfx_symbol;   // Trailing currency symbol
-        static wxChar decimal_point;  // Character for 100ths  (U.S.:  period)
-        static wxChar group_separator;// Character for 1000nds (U.S.:  comma)
-        static wxString unit_name;    // Name of monetary unit (U.S.:  "dollar")
-        static wxString cent_name;    // Name of fraction unit (U.S.:  "cent")
-        static double  scale;         // Scale 100
+        wxChar getDecimalPoint() const { return decimal_point; }
+        wxChar getGroupSeparator() const { return group_separator; }
+	double getScale() const { return scale; }
+
+private:
+        wxString pfx_symbol;   // Leading currency symbol (U.S.: '$')
+        wxString sfx_symbol;   // Trailing currency symbol
+        wxChar decimal_point;  // Character for 100ths  (U.S.:  period)
+        wxChar group_separator;// Character for 1000nds (U.S.:  comma)
+        wxString unit_name;    // Name of monetary unit (U.S.:  "dollar")
+        wxString cent_name;    // Name of fraction unit (U.S.:  "cent")
+        double  scale;         // Scale 100
+
+        CurrencyFormatter();
 };
+//----------------------------------------------------------------------------
 
+void formatDoubleToCurrency( double val, wxString& rdata );
+void formatDoubleToCurrencyEdit( double val, wxString& rdata );
+bool formatCurrencyToDouble( const wxString& str, double& val );
 
-#endif
+//----------------------------------------------------------------------------
+
+} // namespace mmex
+
+//----------------------------------------------------------------------------
+#endif // _MM_EX_UTIL_H_
+//----------------------------------------------------------------------------
+

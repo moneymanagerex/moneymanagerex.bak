@@ -474,7 +474,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
 
                 boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pBankTransaction->accountID_).lock();
                 wxASSERT(pCurrencyPtr);
-                mmCurrencyFormatter::formatDoubleToCurrencyEdit(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
+                mmex::formatDoubleToCurrencyEdit(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
             }
             else
             {
@@ -532,8 +532,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
             if (!minamt.IsEmpty())
             {
                 double amount;
-                if (!mmCurrencyFormatter::formatCurrencyToDouble(minamt, amount) 
-                    || (amount < 0.0))
+                if (!mmex::formatCurrencyToDouble(minamt, amount) || (amount < 0.0))
                 {
                     mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
                     return;
@@ -546,8 +545,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
             if (!maxamt.IsEmpty())
             {
                 double amount;
-                if (!mmCurrencyFormatter::formatCurrencyToDouble(maxamt, amount) 
-                    || (amount < 0.0))
+                if (!mmex::formatCurrencyToDouble(maxamt, amount) || (amount < 0.0))
                 {
                     mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
                     return;

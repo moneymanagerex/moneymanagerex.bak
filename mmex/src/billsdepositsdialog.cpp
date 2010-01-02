@@ -229,7 +229,7 @@ void mmBDDialog::dataToControls()
             textAmount_->Enable(false);
         }
         wxString dispAmount;
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(transAmount, dispAmount);
+        mmex::formatDoubleToCurrencyEdit(transAmount, dispAmount);
         textAmount_->SetValue(dispAmount);
 
         bPayee_->SetLabel(payeeString);
@@ -688,7 +688,7 @@ void mmBDDialog::OnAdvanced(wxCommandEvent& /*event*/)
     wxString dispString = textAmount_->GetValue();
     if (toTransAmount_ > 0.0)
     {
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(toTransAmount_, dispString);
+        mmex::formatDoubleToCurrencyEdit(toTransAmount_, dispString);
     }
     wxTextEntryDialog* dlg = new wxTextEntryDialog(this, _("To Account Amount Entry"), 
         _("Amount to be recorded in To Account"),  dispString);
@@ -698,7 +698,7 @@ void mmBDDialog::OnAdvanced(wxCommandEvent& /*event*/)
         if (!currText.IsEmpty())
         {
             double amount;
-            if (!mmCurrencyFormatter::formatCurrencyToDouble(currText, amount) 
+            if (!mmex::formatCurrencyToDouble(currText, amount) 
                  || (amount < 0.0))
             {
                 mmShowErrorMessage(this, _("Invalid To Amount Entered "), _("Error"));
@@ -721,7 +721,7 @@ void mmBDDialog::OnCategs(wxCommandEvent& /*event*/)
       if (dlg->ShowModal() == wxID_OK)
       {
          wxString dispAmount;
-         mmCurrencyFormatter::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
+         mmex::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
          textAmount_->SetValue(dispAmount);
       }
       dlg->Destroy();
@@ -881,7 +881,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
     else
     {
         wxString amountStr = textAmount_->GetValue().Trim();
-        if (!mmCurrencyFormatter::formatCurrencyToDouble(amountStr, amount) 
+        if (!mmex::formatCurrencyToDouble(amountStr, amount) 
             || (amount < 0.0))
         {
             mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
@@ -1150,7 +1150,7 @@ void mmBDDialog::OnSplitChecked(wxCommandEvent& /*event*/)
     bCategory_->SetLabel(_("Split Category"));
     textAmount_->Enable(false);
     wxString dispAmount;
-    mmCurrencyFormatter::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
+    mmex::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
     textAmount_->SetValue(dispAmount);
   }
   else
@@ -1158,7 +1158,7 @@ void mmBDDialog::OnSplitChecked(wxCommandEvent& /*event*/)
     bCategory_->SetLabel(_("Select Category"));
     textAmount_->Enable(true);
     wxString dispAmount;
-    mmCurrencyFormatter::formatDoubleToCurrencyEdit(0.0, dispAmount);
+    mmex::formatDoubleToCurrencyEdit(0.0, dispAmount);
     textAmount_->SetValue(dispAmount);
   }
 }

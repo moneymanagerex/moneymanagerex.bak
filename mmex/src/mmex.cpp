@@ -1162,7 +1162,7 @@ wxString mmGUIFrame::createCategoryList()
         wxString balance;
         double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, false, 
             dtBegin, dtEnd);
-        mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
+        mmex::formatDoubleToCurrency(amt, balance);
 
         if (amt != 0.0)
         {
@@ -1185,7 +1185,7 @@ wxString mmGUIFrame::createCategoryList()
 
             amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, 
                 false,  dtBegin, dtEnd);
-            mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
+            mmex::formatDoubleToCurrency(amt, balance);
 
             if (amt != 0.0)
             {

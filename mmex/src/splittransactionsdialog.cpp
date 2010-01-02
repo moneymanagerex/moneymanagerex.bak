@@ -102,7 +102,7 @@ void SplitTransactionDialog::DataToControls()
         lcSplit_->InsertItem((long)idx,fullCatStr, -1);
 
         wxString dispAmount;
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(split_->entries_[idx]->splitAmount_, dispAmount);
+        mmex::formatDoubleToCurrencyEdit(split_->entries_[idx]->splitAmount_, dispAmount);
 
         lcSplit_->SetItem((long)idx, 1, dispAmount);
     }
@@ -169,7 +169,7 @@ void SplitTransactionDialog::OnButtonAddClick( wxCommandEvent& event )
         lcSplit_->InsertItem(numToInsert, sdd->m_categString_, -1);
        
         wxString dispAmount;
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(*sdd->m_amount_, dispAmount);
+        mmex::formatDoubleToCurrencyEdit(*sdd->m_amount_, dispAmount);
         
         lcSplit_->SetItem(numToInsert, 1, dispAmount);
 

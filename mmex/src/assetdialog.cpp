@@ -107,7 +107,7 @@ void mmAssetDialog::dataToControls()
         dpc_->SetValue(dtdt);
 
 		wxString value;
-		mmCurrencyFormatter::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUE")), 
+		mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUE")), 
             value);
 		value_->SetValue(value);
 
@@ -314,8 +314,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         return;
     }
     double value = 0;
-	if (!mmCurrencyFormatter::formatCurrencyToDouble(valueStr, value) 
-        || (value < 0.0))
+	if (!mmex::formatCurrencyToDouble(valueStr, value) || (value < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid Value "), _("Error"));
         return;

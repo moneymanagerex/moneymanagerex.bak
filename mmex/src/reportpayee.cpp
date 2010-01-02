@@ -71,7 +71,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
                core_->payeeList_.payees_[idx]->payeeID_, ignoreDate_, 
                 dtBegin_, dtEnd_);
 
-            mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
+            mmex::formatDoubleToCurrency(amt, balance);
 
             if (amt != 0.0)
             {

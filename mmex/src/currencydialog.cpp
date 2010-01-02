@@ -134,7 +134,7 @@ void mmCurrencyDialog::updateControls()
     wxString dispAmount;
     double amount = 123456.78;
     mmDBWrapper::loadSettings(core_->db_.get(), pCurrency->currencyID_);
-    mmCurrencyFormatter::formatDoubleToCurrency(amount, dispAmount);
+    mmex::formatDoubleToCurrency(amount, dispAmount);
     sample->SetLabel(dispAmount);
 
     // resize the dialog window

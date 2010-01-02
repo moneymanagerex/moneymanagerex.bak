@@ -236,8 +236,8 @@ bool sortAsCurrency(const wxString &s1, const wxString &s2, bool asc)
     double v1 = 0;
     double v2 = 0;
 
-    bool ok1 = mmCurrencyFormatter::formatCurrencyToDouble(s1, v1);
-    bool ok2 = mmCurrencyFormatter::formatCurrencyToDouble(s2, v2);
+    bool ok1 = mmex::formatCurrencyToDouble(s1, v1);
+    bool ok2 = mmex::formatCurrencyToDouble(s2, v2);
 
     bool res = false;
 
@@ -735,13 +735,13 @@ void mmCheckingPanel::setAccountSummary()
 {
     double total = m_core->accountList_.getAccountSharedPtr(m_AccountID)->balance();
     wxString balance;
-    mmCurrencyFormatter::formatDoubleToCurrency(total, balance);
+    mmex::formatDoubleToCurrency(total, balance);
 
     double reconciledBal = m_core->bTransactionList_.getReconciledBalance(m_AccountID);
     double acctInitBalance = m_core->accountList_.getAccountSharedPtr(m_AccountID)->initialBalance_;
     
     wxString recbalance;
-    mmCurrencyFormatter::formatDoubleToCurrency(reconciledBal + acctInitBalance, recbalance);
+    mmex::formatDoubleToCurrency(reconciledBal + acctInitBalance, recbalance);
 
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
 
@@ -966,7 +966,7 @@ void mmCheckingPanel::initVirtualListControl()
         
         tr.balance_ = initBalance;
         wxString balanceStr;
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(initBalance, balanceStr);
+        mmex::formatDoubleToCurrencyEdit(initBalance, balanceStr);
         tr.balanceStr_ = balanceStr;
     }
 

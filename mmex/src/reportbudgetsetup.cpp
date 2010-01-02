@@ -121,11 +121,11 @@ wxString mmReportBudgetingSetup::getHTMLText()
 			else
 				estIncome += th.estimated_;
 
-			mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.estimated_, th.estimatedStr_);
+			mmex::formatDoubleToCurrencyEdit(th.estimated_, th.estimatedStr_);
 
 			th.actual_ = mmDBWrapper::getAmountForCategory(db_, th.categID_, th.subcategID_, 
 						false,  dtBegin, dtEnd);
-			mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
+			mmex::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
 
 			if (th.actual_ < 0)
 				actExpenses += th.actual_;
@@ -133,7 +133,7 @@ wxString mmReportBudgetingSetup::getHTMLText()
 				actIncome += th.actual_;
 
 			wxString displayAmtString;
-			mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, displayAmtString);
+			mmex::formatDoubleToCurrencyEdit(th.amt_, displayAmtString);
 			th.amtString_ = displayAmtString;
 
 			//START:CATEGORY ROW
@@ -198,7 +198,7 @@ wxString mmReportBudgetingSetup::getHTMLText()
 				else
 					wxASSERT(true);
 
-				mmCurrencyFormatter::formatDoubleToCurrencyEdit(thsub.estimated_, thsub.estimatedStr_);
+				mmex::formatDoubleToCurrencyEdit(thsub.estimated_, thsub.estimatedStr_);
 				if (thsub.estimated_ < 0)
 					estExpenses += thsub.estimated_;
 				else
@@ -206,14 +206,14 @@ wxString mmReportBudgetingSetup::getHTMLText()
 
 				thsub.actual_ = mmDBWrapper::getAmountForCategory(db_, thsub.categID_, thsub.subcategID_, 
 					false,  dtBegin, dtEnd);
-				mmCurrencyFormatter::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
+				mmex::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
 				if (thsub.actual_ < 0)
 					actExpenses += thsub.actual_;
 				else
 					actIncome += thsub.actual_;
 
 
-				mmCurrencyFormatter::formatDoubleToCurrencyEdit(thsub.amt_, displayAmtString);
+				mmex::formatDoubleToCurrencyEdit(thsub.amt_, displayAmtString);
 				thsub.amtString_ = displayAmtString;
 				
 				hb.startTableRow();
@@ -236,14 +236,14 @@ wxString mmReportBudgetingSetup::getHTMLText()
 		hb.endCenter();
 
 		wxString estIncomeStr, actIncomeStr,  estExpensesStr, actExpensesStr;
-		mmCurrencyFormatter::formatDoubleToCurrency(estIncome, estIncomeStr);
-		mmCurrencyFormatter::formatDoubleToCurrency(actIncome, actIncomeStr);
+		mmex::formatDoubleToCurrency(estIncome, estIncomeStr);
+		mmex::formatDoubleToCurrency(actIncome, actIncomeStr);
 		if (estExpenses < 0.0)
 			estExpenses = -estExpenses;
 		if (actExpenses < 0.0)
 			actExpenses = -actExpenses;
-		mmCurrencyFormatter::formatDoubleToCurrency(estExpenses, estExpensesStr);
-		mmCurrencyFormatter::formatDoubleToCurrency(actExpenses, actExpensesStr);
+		mmex::formatDoubleToCurrency(estExpenses, estExpensesStr);
+		mmex::formatDoubleToCurrency(actExpenses, actExpensesStr);
 
 		wxString incStr = wxString::Format(_("Estimated Income: %s Actual Income:  %s"), 
 			estIncomeStr.c_str(), actIncomeStr.c_str());

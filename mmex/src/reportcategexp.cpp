@@ -104,7 +104,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
             wxString balance;
             double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignoreDate_, 
                 dtBegin_, dtEnd_);
-            mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
+            mmex::formatDoubleToCurrency(amt, balance);
 
             if ((type_ == 0) || ((type_ == 1 && amt > 0.0) ||
                 (type_ == 2 && amt < 0.0)))
@@ -133,7 +133,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
 
                 amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, 
                     ignoreDate_,  dtBegin_, dtEnd_);
-                mmCurrencyFormatter::formatDoubleToCurrency(amt, balance);
+                mmex::formatDoubleToCurrency(amt, balance);
 
                 // if we want only income
                 if (type_ == 1 && amt < 0.0)

@@ -358,8 +358,8 @@ void mmBillsDepositsPanel::initVirtualListControl()
             _(" days overdue!");
         }
 
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
-        mmCurrencyFormatter::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
+        mmex::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
+        mmex::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
 
         int cid = 0, sid = 0;
         th.payeeStr_ = mmDBWrapper::getPayee(db_, th.payeeID_, cid, sid);

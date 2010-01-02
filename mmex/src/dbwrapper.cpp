@@ -981,14 +981,11 @@ void mmDBWrapper::setBaseCurrencySettings(wxSQLite3Database* db, int currencyID)
 void mmDBWrapper::loadBaseCurrencySettings(wxSQLite3Database* db)
 {
     int currencyID = getBaseCurrencySettings(db);
+
     if (currencyID != -1)
-    {
         loadSettings(db, currencyID);
-    }
     else
-    {
-        mmCurrencyFormatter::loadDefaultSettings();
-    }
+        mmex::CurrencyFormatter::instance().loadDefaultSettings();
 }
 
 void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
@@ -1010,8 +1007,8 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
 
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
     
-    if (q1.NextRow())
-    {
+    if (q1.NextRow()) {
+
         wxString pfxSymbol = q1.GetString(wxT("PFX_SYMBOL"));
         wxString sfxSymbol = q1.GetString(wxT("SFX_SYMBOL"));
         wxString dec = q1.GetString(wxT("DECIMAL_POINT"));
@@ -1024,25 +1021,17 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
         wxChar decChar = 0;
         wxChar grpChar = 0;
         
-        if (!dec.IsEmpty())
-        {
+        if (!dec.empty()) {
             decChar = dec.GetChar(0);
         }
 
-        if (!grp.IsEmpty())
-        {
+        if (!grp.empty()) {
             grpChar = grp.GetChar(0);
         }
 
-        if(currencySymbol == wxEmptyString) {
-            currencySymbol = wxT("");
-        }
+	mmex::CurrencyFormatter::instance().loadSettings(pfxSymbol, sfxSymbol, decChar, grpChar, unit, cent, scaleDl);
 
-        mmCurrencyFormatter::loadSettings(pfxSymbol, sfxSymbol, 
-            decChar, grpChar, unit, cent, scaleDl);
-    }
-    else
-    {
+    } else {
         wxASSERT(true);
     }
 
