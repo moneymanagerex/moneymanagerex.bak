@@ -76,7 +76,7 @@ void mmBudgetEntryDialog::fillControls()
     if (!db_)
        return;
 
-    wxString period = wxT("None");
+    wxString period = wxT("Monthly");
     double amt = 0.0;
     mmDBWrapper::getBudgetEntry(db_, budgetYearID_, categID_, subcategID_, period, amt);
 
@@ -102,7 +102,7 @@ void mmBudgetEntryDialog::fillControls()
     mmDBWrapper::loadBaseCurrencySettings(db_);
     wxString displayAmtString = wxT("0");
 
-    if (amt < 0.0)
+    if (amt <= 0.0)
     {
         type_->SetSelection(DEF_TYPE_EXPENSE);
         amt = -amt;
@@ -222,6 +222,9 @@ void mmBudgetEntryDialog::OnOk(wxCommandEvent& /*event*/)
 
     if (period == wxT("None"))
         amt = 0.0;
+	
+	if (amt == 0.0)
+        period = wxT("None");
 
     if (typeSelection == DEF_TYPE_EXPENSE)
         amt = -amt;
