@@ -139,6 +139,19 @@ TEST(formatDoubleToCurrencyEdit)
 }
 //----------------------------------------------------------------------------
 
+TEST(formatDoubleToCurrency5)
+{
+	wxString s;
+	wxChar dec = wxT('\1'); // isprint() -> false
+	wxChar grp = wxT('\0');
+
+	mmex::CurrencyFormatter::instance().loadSettings(s, s, dec, grp, s, s, 100);
+
+	mmex::formatDoubleToCurrency(12345670.89, s);
+	CHECK(s == wxT("12345670.89"));
+}
+//----------------------------------------------------------------------------
+
 } // SUITE
 
 //----------------------------------------------------------------------------

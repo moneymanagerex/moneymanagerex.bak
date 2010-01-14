@@ -42,6 +42,8 @@ const char g_AccountNameSQL[] =
 "order by ACCOUNTNAME";
 
 //----------------------------------------------------------------------------
+const wxChar g_def_decimal_point = wxT('.');
+//----------------------------------------------------------------------------
 
 wxString mmCleanString( const wxString& orig )
 {
@@ -128,15 +130,21 @@ wchar_t get_group_separator(wxChar sep)
 
 /*
 	Formats groups of 3 digits separated by group_separator.
+	
+	Empty separator means zero will be inserted. 
+	Thus, if separator is not a printable char, it ignores.
+	The same for decimal point char.
 */
 wxString format_groups(const mmex::CurrencyFormatter &fmt, double x, size_t grp_sz)
 {
 	wxString val;
 	val.Printf(wxT("%.0f"), x);
 
-	if (val.length() > grp_sz) { // there will be groups
+	wxChar grp_sep = fmt.getGroupSeparator();
 
-		wchar_t sep = get_group_separator(fmt.getGroupSeparator());
+	if (wxIsprint(grp_sep) && val.length() > grp_sz) { // there will be groups
+
+		wchar_t sep = get_group_separator(grp_sep);
 
 		std::wstring s;
 		s.reserve(val.length() + val.length()/grp_sz);
@@ -157,28 +165,27 @@ wxString format_groups(const mmex::CurrencyFormatter &fmt, double x, size_t grp_
 
 wxString format_cents(const mmex::CurrencyFormatter &f, int cents)
 {
-        wxString s;
+        wxChar pt = f.getDecimalPoint();
 
-	if ( wxChar pt = f.getDecimalPoint() ) {
+	if (!wxIsprint(pt))
+		pt = g_def_decimal_point;
 
-                s += pt;
+        wxString s = pt;
 
-                const wxChar *fmt = 0;
+        const wxChar *fmt = 0;
 
-                switch (static_cast<int>(f.getScale())) {
-                case 100:
-                        fmt = wxT("%02d");
-                        break;
-                case 10:
-                        fmt = wxT("%01d");
-                        break;
-                default:
-                        fmt = wxT("%03d");
-                }
+        switch (static_cast<int>(f.getScale())) {
+        case 100:
+        	fmt = wxT("%02d");
+                break;
+	case 10:
+        	fmt = wxT("%01d");
+                break;
+	default:
+        	fmt = wxT("%03d");
+	}
 
-                s += wxString::Format(fmt, cents);
-        }
-
+        s += wxString::Format(fmt, cents);
         return s;
 }
 //----------------------------------------------------------------------------
@@ -1346,7 +1353,7 @@ void mmex::CurrencyFormatter::loadDefaultSettings()
 {
         pfx_symbol = wxT( "$" );
         sfx_symbol.clear();
-        decimal_point   = wxT( '.' );
+        decimal_point = g_def_decimal_point;
         group_separator = wxT( ',' );
         unit_name = wxT( "dollar" );
         cent_name = wxT( "cent" );

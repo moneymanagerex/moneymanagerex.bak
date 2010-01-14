@@ -138,6 +138,7 @@ public:
 
         wxChar getDecimalPoint() const { return decimal_point; }
         wxChar getGroupSeparator() const { return group_separator; }
+
 	double getScale() const { return scale; }
 
 private:
