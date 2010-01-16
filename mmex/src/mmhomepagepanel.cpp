@@ -159,7 +159,7 @@ void mmHomePagePanel::updateAccounts()
            boost::shared_ptr<mmCurrency> pCurrencyPtr 
 			   = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
            wxASSERT(pCurrencyPtr);
-           mmex::CurrencyFormatter::instance().loadSettings(pCurrencyPtr);
+           mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
            double bal = pCA->initialBalance_ 
               + core_->bTransactionList_.getBalance(pCA->accountID_);
@@ -265,7 +265,7 @@ void mmHomePagePanel::updateAccounts()
             for (balances_t::const_iterator i = tBalances.begin(); i != tBalances.end(); ++i)
             {
                     wxString tBalanceStr;
-                    mmex::CurrencyFormatter::instance().loadSettings(i->first);
+                    mmex::CurrencyFormatter::instance().loadSettings(*i->first);
                     mmex::formatDoubleToCurrency(i->second, tBalanceStr);
 
                     hb.startTableRow();

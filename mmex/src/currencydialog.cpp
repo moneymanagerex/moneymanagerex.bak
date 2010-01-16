@@ -127,8 +127,8 @@ void mmCurrencyDialog::updateControls()
     grpTx->SetValue(pCurrency->grp_);
     unitTx->SetValue(pCurrency->unit_);
     centTx->SetValue(pCurrency->cent_);
-    scaleTx->SetValue(wxString::Format(wxT("%f"), pCurrency->scaleDl_));
-    baseConvRate->SetValue(wxString::Format(wxT("%f"), pCurrency->baseConv_));
+    scaleTx->SetValue(wxString() << pCurrency->scaleDl_);
+    baseConvRate->SetValue(wxString() << pCurrency->baseConv_);
 	currencySymbol->SetValue(pCurrency->currencySymbol_);
 
     wxString dispAmount;
@@ -338,16 +338,21 @@ void mmCurrencyDialog::OnEdit(wxCommandEvent& /*event*/)
     wxTextCtrl* centTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_CENTS);
     wxTextCtrl* scaleTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SCALE);
     wxTextCtrl* baseConvRate = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_BASECONVRATE);
-	wxComboBox* currencySymbol = (wxComboBox*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SYMBOL);
+    wxComboBox* currencySymbol = (wxComboBox*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SYMBOL);
 
-    double scal = 0.0;
-    scaleTx->GetValue().ToDouble(&scal);
+    long scal = 0;
+    scaleTx->GetValue().ToLong(&scal);
+    if (scal <= 0) {
+        wxMessageDialog dlg(this, _("Scale should be greater than zero"), _("Error"), wxICON_ERROR);
+        dlg.ShowModal();
+        return;
+    }
 
-    double convRate = 1.0;
+    double convRate = 1;
     baseConvRate->GetValue().ToDouble(&convRate);
-    if (convRate <= 0.0)
-    {
-        mmShowErrorMessageInvalid(this, _("Base Conversion Rate should be greater than 0.0"));
+    if (convRate <= 0) {
+        wxMessageDialog dlg(this, _("Base Conversion Rate should be greater than zero"), _("Error"), wxICON_ERROR);
+        dlg.ShowModal();
         return;
     }
 
@@ -360,7 +365,7 @@ void mmCurrencyDialog::OnEdit(wxCommandEvent& /*event*/)
     pCurrency->grp_ =  grpTx->GetValue();
     pCurrency->unit_ = unitTx->GetValue();
     pCurrency->cent_ = centTx->GetValue();
-    pCurrency->scaleDl_ = scal;
+    pCurrency->scaleDl_ = static_cast<int>(scal);
     pCurrency->baseConv_ = convRate;
 	pCurrency->currencySymbol_ = currencySymbol->GetValue();
    

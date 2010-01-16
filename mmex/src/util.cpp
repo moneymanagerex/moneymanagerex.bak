@@ -43,6 +43,7 @@ const char g_AccountNameSQL[] =
 
 //----------------------------------------------------------------------------
 const wxChar g_def_decimal_point = wxT('.');
+const int g_def_scale = 100;
 //----------------------------------------------------------------------------
 
 wxString mmCleanString( const wxString& orig )
@@ -102,7 +103,7 @@ double mmRound(double x)
 }
 //----------------------------------------------------------------------------
 
-double mmMoneyInt(double x, double scale)
+double mmMoneyInt(double x, int scale)
 {
         double n = 0;
         modf(x/scale, &n);
@@ -110,7 +111,7 @@ double mmMoneyInt(double x, double scale)
 }
 //----------------------------------------------------------------------------
 
-int mmCents(double x, double scale)
+int mmCents(double x, int scale)
 {
         x += (x < 0 ? -0.5 : 0.5);
 
@@ -165,27 +166,26 @@ wxString format_groups(const mmex::CurrencyFormatter &fmt, double x, size_t grp_
 
 wxString format_cents(const mmex::CurrencyFormatter &f, int cents)
 {
-        wxChar pt = f.getDecimalPoint();
+        const wxChar* fmt[] = { wxT("%02d"), wxT("%01d"), wxT("%03d"), wxT("%04d") };
 
-	if (!wxIsprint(pt))
-		pt = g_def_decimal_point;
+        wxASSERT(g_def_scale == 100);
+        size_t i = 0; // "%02d" for g_def_scale
 
-        wxString s = pt;
+        int scale = f.getScale();
 
-        const wxChar *fmt = 0;
-
-        switch (static_cast<int>(f.getScale())) {
-        case 100:
-        	fmt = wxT("%02d");
-                break;
-	case 10:
-        	fmt = wxT("%01d");
-                break;
-	default:
-        	fmt = wxT("%03d");
+        if (scale >= 10000) {
+        	i = 3;
+        } else if (scale >= 1000) {
+        	i = 2;
+        } else if (scale < 100) {
+        	i = 1;
 	}
 
-        s += wxString::Format(fmt, cents);
+	wxASSERT(i < sizeof(fmt)/sizeof(*fmt));
+	
+        wxString s = f.getDecimalPoint();
+        s += wxString::Format(fmt[i], cents);
+
         return s;
 }
 //----------------------------------------------------------------------------
@@ -196,14 +196,17 @@ void DoubleToCurrency(const mmex::CurrencyFormatter &fmt, double val, wxString& 
         s.Alloc(32);
 
         if (!for_edit) {
-	        s += fmt.getPrefix();
-        	s += wxT(' ');
+		wxString pfx = fmt.getPrefix();
+	        if (!pfx.empty()) {
+		        s += pfx;
+        		s += wxT(' ');
+		}
 	}
 
         if (val < 0)
                 s += wxT('-'); // "minus" sign
 
-        double scale = fmt.getScale();
+        int scale = fmt.getScale();
         double abs_val = fabs(mmRound(val*scale));
 
 	s += format_groups(fmt, mmMoneyInt(abs_val, scale), 3);
@@ -1351,56 +1354,55 @@ mmex::CurrencyFormatter::CurrencyFormatter()
 
 void mmex::CurrencyFormatter::loadDefaultSettings()
 {
-        pfx_symbol = wxT( "$" );
-        sfx_symbol.clear();
-        decimal_point = g_def_decimal_point;
-        group_separator = wxT( ',' );
-        unit_name = wxT( "dollar" );
-        cent_name = wxT( "cent" );
-        scale = 100;
+        m_pfx_symbol = wxT("$");
+        m_sfx_symbol.clear();
+
+        m_decimal_point = g_def_decimal_point;
+        m_group_separator = wxT(',');
+        
+        m_unit_name = wxT("dollar");
+        m_cent_name = wxT("cent");
+        
+        m_scale = g_def_scale;
 }
 //----------------------------------------------------------------------------
 
-void mmex::CurrencyFormatter::loadSettings (
+void mmex::CurrencyFormatter::loadSettings(
 	const wxString &pfx, 
 	const wxString &sfx, 
 	wxChar dec, 
 	wxChar grp,
 	const wxString &unit, 
 	const wxString &cent, 
-	double scale 
+	int scale 
       )
 {
-        pfx_symbol = pfx;
-        sfx_symbol = sfx;
-        decimal_point = dec;
-        group_separator = grp;
-        unit_name = unit;
-        cent_name = cent;
-        scale = scale;
+        m_pfx_symbol = pfx;
+        m_sfx_symbol = sfx;
+
+        m_decimal_point = wxIsprint(dec) ? dec : g_def_decimal_point;
+        m_group_separator = grp;
+        
+        m_unit_name = unit;
+        m_cent_name = cent;
+        
+        m_scale = scale > 0 ? scale : g_def_scale;
 }
 //----------------------------------------------------------------------------
 
-void mmex::CurrencyFormatter::loadSettings(boost::shared_ptr<mmCurrency> pCurrencyPtr)
+void mmex::CurrencyFormatter::loadSettings(const mmCurrency &cur)
 {
-        pfx_symbol = pCurrencyPtr->pfxSymbol_;
-        sfx_symbol = pCurrencyPtr->sfxSymbol_;
+	wxChar dec = cur.dec_.empty() ? wxT('\0') : cur.dec_.GetChar(0);
+	wxChar grp = cur.grp_.empty() ? wxT('\0') : cur.grp_.GetChar(0);
 
-        if ( !pCurrencyPtr->dec_.IsEmpty() ) {
-                decimal_point = pCurrencyPtr->dec_.GetChar( 0 );
-        } else {
-                decimal_point = 0;
-        }
-
-        if ( !pCurrencyPtr->grp_.IsEmpty() ) {
-                group_separator = pCurrencyPtr->grp_.GetChar( 0 );
-        } else {
-                group_separator = 0;
-        }
-
-        unit_name = pCurrencyPtr->unit_;
-        cent_name = pCurrencyPtr->cent_;
-        scale     = pCurrencyPtr->scaleDl_;
+	loadSettings(cur.pfxSymbol_,
+	             cur.sfxSymbol_,
+	             dec,
+	             grp,
+	             cur.unit_,
+	             cur.cent_,
+                     cur.scaleDl_
+                    );
 }
 //----------------------------------------------------------------------------
 
@@ -1436,12 +1438,11 @@ bool mmex::formatCurrencyToDouble( const wxString& str, double& val )
 
         for (size_t i = 0; i < str.length() ; ++i) {
 
-                if ( str[i] == fmt.getGroupSeparator() ) {
-
-                } else if ( str[i] == fmt.getDecimalPoint() ) {
-                        s += wxT( '.' );
+                if (str[i] == fmt.getGroupSeparator()) {
+			// skip group separator char
+                } else if (str[i] == fmt.getDecimalPoint()) {
+                        s += wxT('.');
                 } else {
-                        /* if we ever make this intelligent, we need to make it accept neg numbers symbol*/
                         s += str[i];
                 }
         }

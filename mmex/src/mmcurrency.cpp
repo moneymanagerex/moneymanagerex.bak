@@ -30,7 +30,7 @@ mmCurrency::mmCurrency(boost::shared_ptr<wxSQLite3Database> db,
    grp_              = q1.GetString(wxT("GROUP_SEPARATOR"));
    unit_             = q1.GetString(wxT("UNIT_NAME"));
    cent_             = q1.GetString(wxT("CENT_NAME"));
-   scaleDl_          = q1.GetDouble(wxT("SCALE"));
+   scaleDl_          = q1.GetInt(wxT("SCALE"));
    baseConv_         = q1.GetDouble(wxT("BASECONVRATE"), 1.0);
    if(q1.GetColumnCount() < 11) {
        /* no Currency symbol in the table yet */
@@ -51,21 +51,21 @@ mmCurrency::mmCurrency(boost::shared_ptr<wxSQLite3Database> db,
    }
 }
 
-mmCurrency::mmCurrency()
+mmCurrency::mmCurrency() :
+   currencyID_(-1),
+   currencyName_(wxT("US Dollar")),
+   pfxSymbol_(wxT('$')),
+   sfxSymbol_(),
+   dec_(wxT('.')),
+   grp_(wxT(',')),
+   unit_(wxT("dollar")),
+   cent_(wxT("cent")),
+   scaleDl_(100),
+   baseConv_(1),
+   decChar_(wxT('\0')),
+   grpChar_(wxT('\0')),
+   currencySymbol_(wxT("USD"))
 {
-   currencyID_   = -1;
-   currencyName_ = wxT("US Dollar");
-   pfxSymbol_    = wxT("$");
-   sfxSymbol_    = wxT("");
-   dec_          = wxT(".");
-   grp_          = wxT(",");
-   unit_         = wxT("dollar");
-   cent_         = wxT("cent");
-   scaleDl_      = 100.0;
-   baseConv_     = 1.0;
-   decChar_      = 0;
-   grpChar_      = 0;
-   currencySymbol_ = wxT("USD");
 }
 
 void mmCurrency::loadCurrencySettings()
@@ -183,27 +183,23 @@ void mmCurrencyList::updateCurrency(boost::shared_ptr<mmCurrency> pCurrency)
 
 boost::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(int currencyID)
 {
-   for (int idx = 0; idx < (int)currencies_.size(); idx++)
-   {
-      if (currencies_[idx]->currencyID_ == currencyID)
-      {
-         return currencies_[idx];
-      }
-   }
-   wxASSERT(false);
-   return boost::shared_ptr<mmCurrency>();
+	for (size_t i = 0; i < currencies_.size(); ++i) {
+		if (currencies_[i]->currencyID_ == currencyID)
+			return currencies_[i];
+	}
+
+	wxASSERT(false);
+	return boost::shared_ptr<mmCurrency>();
 }
 
 boost::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(const wxString& currencyName)
 {
-   for (int idx = 0; idx < (int)currencies_.size(); idx++)
-   {
-      if (currencies_[idx]->currencyName_ == currencyName)
-      {
-         return currencies_[idx];
-      }
-   }
-   wxASSERT(false);
-   return boost::shared_ptr<mmCurrency>();
+	for (size_t i = 0; i < currencies_.size(); ++i) {
+		if (currencies_[i]->currencyName_ == currencyName)
+			return currencies_[i];
+	}
+
+	wxASSERT(false);
+	return boost::shared_ptr<mmCurrency>();
 }
   
