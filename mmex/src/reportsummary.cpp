@@ -66,7 +66,7 @@ wxString mmReportSummary::getHTMLText()
               
               boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
               wxASSERT(pCurrencyPtr);
-              mmex::CurrencyFormatter::instance().loadSettings(pCurrencyPtr);
+              mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
               double rate = pCurrencyPtr->baseConv_;
 
               tBalance += bal * rate;;

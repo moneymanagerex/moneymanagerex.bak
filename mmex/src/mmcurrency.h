@@ -30,7 +30,6 @@ class mmCurrency
 public: 
    mmCurrency();
    mmCurrency(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1);
-   ~mmCurrency() {}
 
    void loadCurrencySettings();
 
@@ -43,7 +42,7 @@ public:
    wxString grp_;
    wxString unit_;
    wxString cent_;
-   double scaleDl_;
+   int scaleDl_;
    double baseConv_;
    wxChar decChar_;
    wxChar grpChar_;
@@ -56,9 +55,7 @@ private:
 class mmCurrencyList
 {
 public:
-    mmCurrencyList(boost::shared_ptr<wxSQLite3Database> db)
-        : db_(db) {}
-    ~mmCurrencyList() {}
+    mmCurrencyList(boost::shared_ptr<wxSQLite3Database> db) : db_(db) {}
 
     /* Currency Functions */
     int addCurrency(boost::shared_ptr<mmCurrency> pCurrency);

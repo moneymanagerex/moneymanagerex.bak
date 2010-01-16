@@ -141,12 +141,45 @@ TEST(formatDoubleToCurrencyEdit)
 
 TEST(formatDoubleToCurrency5)
 {
-	wxString s;
-	wxChar dec = wxT('\1'); // isprint() -> false
+	wxString es;
+	wxChar dec = wxT('\a'); // isprint() -> false
 	wxChar grp = wxT('\0');
 
-	mmex::CurrencyFormatter::instance().loadSettings(s, s, dec, grp, s, s, 100);
+	mmex::CurrencyFormatter::instance().loadSettings(es, es, dec, grp, es, es, 1000);
 
+	wxString s;
+	mmex::formatDoubleToCurrency(12345670.895, s);
+	CHECK(s == wxT("12345670.895"));
+
+	// --
+
+	mmex::CurrencyFormatter::instance().loadSettings(es, es, dec, grp, es, es, 10);
+
+	s.clear();
+	mmex::formatDoubleToCurrency(12345670.895, s);
+	CHECK(s == wxT("12345670.9"));
+
+	// --
+
+	mmex::CurrencyFormatter::instance().loadSettings(es, es, dec, grp, es, es, 10000);
+
+	s.clear();
+	mmex::formatDoubleToCurrency(12345670.8954, s);
+	CHECK(s == wxT("12345670.8954"));
+
+	// --
+
+	mmex::CurrencyFormatter::instance().loadSettings(es, es, dec, grp, es, es, 0);
+
+	s.clear();
+	mmex::formatDoubleToCurrency(12345670.89, s);
+	CHECK(s == wxT("12345670.89"));
+
+	// --
+
+	mmex::CurrencyFormatter::instance().loadSettings(es, es, dec, grp, es, es, -100);
+
+	s.clear();
 	mmex::formatDoubleToCurrency(12345670.89, s);
 	CHECK(s == wxT("12345670.89"));
 }
