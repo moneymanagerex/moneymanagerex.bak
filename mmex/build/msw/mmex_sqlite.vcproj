@@ -1784,6 +1784,9 @@
 				RelativePath="..\..\libs\sqlite\rijndael.h">
 			</File>
 			<File
+				RelativePath="..\..\libs\sqlite\sha2.h">
+			</File>
+			<File
 				RelativePath="..\..\libs\sqlite\sqlite3.h">
 			</File>
 			<File
