@@ -1760,11 +1760,26 @@ SQLiteSpy и SQLite Browser (http://sqlitebrowser.sourceforge.net/) две
 
 
 <p>
-<font face="Verdana"><a name="usbkey">Да,
-MMEX была написана таким образом, чтобы избежать зависимости от
-реестра Windows т.д. Программа полностью самодостаточна, что делает её
-способной работать с USB носителя. Просто скопируйте папку с программой
-MMEX на USB&nbsp;диск и запустите исполняемый файл mmex. </a></font></p>
+<font face="Verdana"><a name="usbkey">
+<p>Да,
+MMEX может работать без исталляции со сменных носителей, например, с USB флешки.
+Если MMEX обнаруживает файл mmexini.db3 в своём каталоге, программа считает, что запущена в portable режиме.
+Скопируйте каталог MMEX на флешку и скопируйте mmexini.db3 в каталог с программой на флешке.</p>
+<p>Чтобы сделать MMEX переносимым:</p>
+<p>1. В Windows (пусть F:\ это USB флешка)</p>
+<p>&nbsp Скопируйте каталог "C:\Program Files\MoneyManagerEx" на диск F:\<BR>
+&nbsp Скопируйте файл "%APPDATA%\MoneyManagerEx\mmexini.db3" в каталог F:\MoneyManagerEx<BR>
+&nbsp Скопируйте файл Вашей базы данных в любой каталог диска F:\</p>
+<p>2. В Unix (пусть /media/disk это флешка)</p>
+<p>&nbsp Скомпилируйте mmex из исходников как обычно, и</p>
+&nbsp make install prefix=/media/disk<BR>
+&nbsp cp ~/.mmex/mmexini.db3 /media/disk/mmex/share/mmex
+<p>&nbsp или, если mmex уже установлен в /usr</p>
+<p>&nbsp cp /usr/bin/mmex /media/disk/mmex/bin<BR>
+&nbsp cp /usr/share/mmex /media/disk/mmex/share<BR>
+&nbsp cp /usr/share/doc/mmex /media/disk/mmex/share/doc<BR>
+&nbsp cp ~/.mmex/mmexini.db3 /media/disk/mmex/share/mmex</p>
+</a></font></p>
 
 
 <h5><font face="Verdana"><a href="#top">Наверх</a></font></h5>
