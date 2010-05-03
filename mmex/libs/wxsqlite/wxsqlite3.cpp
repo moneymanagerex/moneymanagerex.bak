@@ -94,6 +94,44 @@ static void InitSQLite3DLL()
 
 // Error messages
 
+#if wxCHECK_VERSION(2,9,0)
+const char* wxERRMSG_NODB          = wxTRANSLATE("No Database opened");
+const char* wxERRMSG_NOSTMT        = wxTRANSLATE("Statement not accessible");
+const char* wxERRMSG_NOMEM         = wxTRANSLATE("Out of memory");
+const char* wxERRMSG_DECODE        = wxTRANSLATE("Cannot decode binary");
+const char* wxERRMSG_INVALID_INDEX = wxTRANSLATE("Invalid field index");
+const char* wxERRMSG_INVALID_NAME  = wxTRANSLATE("Invalid field name");
+const char* wxERRMSG_INVALID_ROW   = wxTRANSLATE("Invalid row index");
+const char* wxERRMSG_INVALID_QUERY = wxTRANSLATE("Invalid scalar query");
+const char* wxERRMSG_INVALID_BLOB  = wxTRANSLATE("Invalid BLOB handle");
+
+const char* wxERRMSG_NORESULT      = wxTRANSLATE("Null Results pointer");
+const char* wxERRMSG_BIND_STR      = wxTRANSLATE("Error binding string param");
+const char* wxERRMSG_BIND_INT      = wxTRANSLATE("Error binding int param");
+const char* wxERRMSG_BIND_INT64    = wxTRANSLATE("Error binding int64 param");
+const char* wxERRMSG_BIND_DBL      = wxTRANSLATE("Error binding double param");
+const char* wxERRMSG_BIND_BLOB     = wxTRANSLATE("Error binding blob param");
+const char* wxERRMSG_BIND_DATETIME = wxTRANSLATE("Error binding date/time param");
+const char* wxERRMSG_BIND_NULL     = wxTRANSLATE("Error binding NULL param");
+const char* wxERRMSG_BIND_ZEROBLOB = wxTRANSLATE("Error binding zero blob param");
+const char* wxERRMSG_BIND_CLEAR    = wxTRANSLATE("Error clearing bindings");
+
+const char* wxERRMSG_NOMETADATA    = wxTRANSLATE("Meta data support not available");
+const char* wxERRMSG_NOCODEC       = wxTRANSLATE("Encryption support not available");
+const char* wxERRMSG_NOLOADEXT     = wxTRANSLATE("Loadable extension support not available");
+const char* wxERRMSG_NOINCBLOB     = wxTRANSLATE("Incremental BLOB support not available");
+const char* wxERRMSG_NOSAVEPOINT   = wxTRANSLATE("Savepoint support not available");
+const char* wxERRMSG_NOBACKUP      = wxTRANSLATE("Backup/restore support not available");
+
+const char* wxERRMSG_SHARED_CACHE  = wxTRANSLATE("Setting SQLite shared cache mode failed");
+
+const char* wxERRMSG_INITIALIZE    = wxTRANSLATE("Initialization of SQLite failed");
+const char* wxERRMSG_SHUTDOWN      = wxTRANSLATE("Shutdown of SQLite failed");
+
+const char* wxERRMSG_SOURCEDB_BUSY = wxTRANSLATE("Source database is busy");
+const char* wxERRMSG_DBOPEN_FAILED = wxTRANSLATE("Database open failed");
+const char* wxERRMSG_DBASSIGN_FAILED = wxTRANSLATE("Database assignment failed");
+#else
 const wxChar* wxERRMSG_NODB          = wxTRANSLATE("No Database opened");
 const wxChar* wxERRMSG_NOSTMT        = wxTRANSLATE("Statement not accessible");
 const wxChar* wxERRMSG_NOMEM         = wxTRANSLATE("Out of memory");
@@ -130,6 +168,7 @@ const wxChar* wxERRMSG_SHUTDOWN      = wxTRANSLATE("Shutdown of SQLite failed");
 const wxChar* wxERRMSG_SOURCEDB_BUSY   = wxTRANSLATE("Source database is busy");
 const wxChar* wxERRMSG_DBOPEN_FAILED   = wxTRANSLATE("Database open failed");
 const wxChar* wxERRMSG_DBASSIGN_FAILED = wxTRANSLATE("Database assignment failed");
+#endif
 
 // ----------------------------------------------------------------------------
 // inline conversion from UTF8 strings to wxStringe
@@ -295,6 +334,13 @@ const char* wxSQLite3StatementBuffer::Format(const char* format, ...)
   va_start(va, format);
   m_buffer = sqlite3_vmprintf(format, va);
   va_end(va);
+  return m_buffer;
+}
+
+const char* wxSQLite3StatementBuffer::FormatV(const char* format, va_list va)
+{
+  Clear();
+  m_buffer = sqlite3_vmprintf(format, va);
   return m_buffer;
 }
 
@@ -2634,6 +2680,32 @@ wxString wxSQLite3Database::GetSourceId()
 {
 #if SQLITE_VERSION_NUMBER >= 3006018
   return UTF8toWxString(sqlite3_sourceid());
+#else
+  return wxEmptyString;
+#endif
+}
+
+bool wxSQLite3Database::CompileOptionUsed(const wxString& optionName)
+{
+#if SQLITE_VERSION_NUMBER >= 3006023
+  wxCharBuffer strOption = wxConvUTF8.cWC2MB(optionName.wc_str(*wxConvCurrent));
+  const char* localOption = strOption;
+  return sqlite3_compileoption_used(localOption) == 1;
+#else
+  return false;
+#endif
+}
+
+wxString wxSQLite3Database::GetCompileOptionName(int optionIndex)
+{
+#if SQLITE_VERSION_NUMBER >= 3006023
+  const char* unknownOption = "";
+  const char* optionName = sqlite3_compileoption_get(optionIndex);
+  if (optionName == NULL)
+  {
+    optionName = unknownOption;
+  }
+  return UTF8toWxString(optionName);
 #else
   return wxEmptyString;
 #endif
