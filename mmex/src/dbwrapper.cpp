@@ -2739,3 +2739,28 @@ void mmDBWrapper::removeSplitsForAccount(wxSQLite3Database* db, int accountID)
     st.ExecuteUpdate();
 	st.Finalize();
 }
+//----------------------------------------------------------------------------
+
+wxString mmDBWrapper::getLastDbPath(wxSQLite3Database *db, const wxString &defaultVal)
+{
+	wxString path = getINISettingValue(db, wxT("LASTFILENAME"), defaultVal);
+	
+	if (!mmex::isPortableMode()) {
+		return path;
+	}
+
+	wxString vol = wxFileName(wxStandardPaths::Get().GetExecutablePath()).GetVolume();
+	
+	if (!vol.IsEmpty()) {
+
+		wxFileName fname(path);
+		fname.SetVolume(vol); // database should be on portable device
+
+		if (fname.FileExists()) {
+			path = fname.GetFullPath();
+		}
+	}	
+
+	return path;
+}
+//----------------------------------------------------------------------------
