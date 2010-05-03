@@ -118,8 +118,7 @@ void mmAppStartDialog::CreateControls()
 
     if (inidb_)
     {
-        wxString val = mmDBWrapper::getINISettingValue(inidb_, 
-            wxT("LASTFILENAME"), wxT(""));
+        wxString val = mmDBWrapper::getLastDbPath(inidb_);
         if (val.IsEmpty())
         {
             itemButton61->Disable();

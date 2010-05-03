@@ -601,8 +601,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     wxString showBeginApp = mmDBWrapper::getINISettingValue(inidb_.get(), wxT("SHOWBEGINAPP"), wxT("TRUE"));
     bool from_scratch = showBeginApp == wxT("TRUE");
 
-    wxFileName dbpath = from_scratch ? wxGetEmptyString() : 
-                                       mmDBWrapper::getINISettingValue(inidb_.get(), wxT("LASTFILENAME"));
+    wxFileName dbpath = from_scratch ? wxGetEmptyString() : mmDBWrapper::getLastDbPath(inidb_.get());
  
 
     if (from_scratch || !dbpath.IsOk()) {
@@ -663,7 +662,7 @@ void mmGUIFrame::unselectNavTree()
 void mmGUIFrame::saveConfigFile()
 {
     wxFileName fname(fileName_);
-    mmDBWrapper::setINISettingValue(inidb_.get(), wxT("LASTFILENAME"), fname.GetFullPath());
+    mmDBWrapper::setLastDbPath(inidb_.get(), fname.GetFullPath());
 
     mmSaveColorsToDatabase(inidb_.get());
 
@@ -2483,7 +2482,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
             wxCopyFile(fileName, bkupName, true);
         }
 
-        boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database());
+        boost::shared_ptr<wxSQLite3Database> pDB(new wxSQLite3Database);
         db_ = pDB;
         db_->Open(fileName, password);
         // we need to check the db whether it is the right version
@@ -2595,10 +2594,7 @@ wxPanel* mmGUIFrame::createMainFrame(wxPanel* /*parent*/)
 }
 //----------------------------------------------------------------------------
 
-void mmGUIFrame::openFile(const wxString& fileName, 
-                          bool openingNew, 
-                          const wxString &password
-                         )
+void mmGUIFrame::openFile(const wxString& fileName, bool openingNew, const wxString &password)
 {
     // Before deleting, go to home page first createHomePage()
     createDataStore(fileName, password, openingNew);
@@ -3315,7 +3311,7 @@ void mmGUIFrame::showBeginAppDialog()
     }
     else if (rc == 4)
     {
-        wxFileName fname(mmDBWrapper::getINISettingValue(inidb_.get(), wxT("LASTFILENAME")));
+        wxFileName fname(mmDBWrapper::getLastDbPath(inidb_.get()));
         if (fname.IsOk()) {
                 openFile(fname.GetFullPath(), false);
         }

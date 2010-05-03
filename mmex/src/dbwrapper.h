@@ -123,6 +123,9 @@ wxString getINISettingValue(wxSQLite3Database* db, const wxString& settingName, 
 void setINISettingValue(wxSQLite3Database* db, const wxString& settingName, const wxString& settingValue);
 void verifyINIDB(wxSQLite3Database* inidb);
 
+wxString getLastDbPath(wxSQLite3Database *db, const wxString &defaultVal = wxGetEmptyString());
+void setLastDbPath(wxSQLite3Database *db, const wxString &path);
+
 /* Stocks API */
 void deleteStockInvestment(wxSQLite3Database* db, int stockID);
 double getStockInvestmentBalance(wxSQLite3Database* db, double& invested);
@@ -140,6 +143,12 @@ double getSplitTransactionValueForCategory(wxSQLite3Database* db, int transID, i
     
 } // namespace mmDBWrapper
 
+//----------------------------------------------------------------------------
+
+inline void mmDBWrapper::setLastDbPath(wxSQLite3Database *db, const wxString &path)
+{
+	setINISettingValue(db, wxT("LASTFILENAME"), path);
+}
 //----------------------------------------------------------------------------
 #endif // _MM_EX_DBWRAPPER_H_
 //----------------------------------------------------------------------------
