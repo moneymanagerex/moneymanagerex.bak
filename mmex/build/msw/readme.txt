@@ -32,7 +32,7 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
    Append path to bin folder of installed software to PATH environment variable
    (usually "C:\Program Files\GnuWin32\bin").
 
-5. To build installation (setup) of MMEx download and install InnoSetup Quick Start Pack
+5. To build installation (setup) of MMEX download and install InnoSetup Quick Start Pack
    (which includes InnoSetup itself and Inno Setup Preprocessor). Append path to folder 
    of installed software (something like a "C:\Program Files\Inno Setup 5")
    to PATH environment variable.
@@ -46,7 +46,9 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
 2.Change working directory to mmex\build\msw.
 3.Edit config.vc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
 4.Type in command prompt
-  nmake -f makefile.vc 
+  nmake -f makefile.vc
+  or if you don't like to edit config.vc, type something like that
+  nmake -f makefile.vc WX_DEBUG=1 CPU=AMD64
 5.Run tests (you can skip this step)
   nmake -f makefile.vc sub_check
 6.nmake -f makefile.vc install (optionally)
@@ -74,10 +76,7 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
    To build unit tests use solution build\msw\tests\mmex_tests.sln. Build tests, 
    copy mmex_tests.exe to mmex\runtime and run one.
 
-2. Copy currency.db3 from mmex\runtime into the appropriate build directory.
-   Now you can run the project to launch the exe.
-
-3. IDE cannot translate files from mmex\runtime\en\*.po. You should use one of makefiles
+2. IDE cannot translate files from mmex\runtime\en\*.po. You should use one of makefiles
    in that directory to build translations. For example, run Visual Studio Command Prompt,
    change dir to mmex\runtime\en and type "nmake -f makefile.vc".
    The same you should do to build setup in mmex\setup\win32.

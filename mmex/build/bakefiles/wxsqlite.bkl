@@ -2,7 +2,7 @@
 
 <!-- 
     MMEX build scripts.
-    Copyright (C) 2009 VaDiM.
+    Copyright (C) 2009, 2010 VaDiM.
 
     wxsqlite3 library.
 -->
@@ -14,6 +14,7 @@
         <!-- disable precompiled headers for wxWidgets -->
         <define>NOPCH</define>
 
+        <define>SQLITE_HAS_CODEC</define>
         <define>WXSQLITE3_HAVE_CODEC</define>
         <define>WXSQLITE3_HAVE_METADATA</define>
 
