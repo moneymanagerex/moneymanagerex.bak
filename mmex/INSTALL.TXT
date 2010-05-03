@@ -3,6 +3,7 @@
 -------------------------------------------------------------------------------
 - wxWidgets >= 2.8.10 (www.wxwidgets.org)
 - Boost C++ Libraries
+- GNU GetText
 
 Prepackaged Libraries
 - sqlite3

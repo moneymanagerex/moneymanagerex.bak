@@ -1,5 +1,22 @@
 Version History of Money Manager Ex
 
+0.9.6.0 (May 7, 2010)
+- wxSQLite3 updated to v.1.9.9 (sqlite3 v.3.6.23.1).
+- CurrencyFormatter refactoring, bugfix for huge amounts (like a 1000000000000)
+- Alignment of some columns changed
+- 'Recent files' submenu removed
+- Main window title will contain "[portable mode]" suffix if mmex runs in portable mode
+- English/Russian HTML help updated
+- Unnecessary notes removed on the bottom of the main screen
+- Improvements of temporary files generation
+- Select Language dialog refactored
+- Ability to select language during setup, native HTML help will be installed if one presents
+- OnSaveAs refactoring & bugfix
+- x64 build on Windows
+- Ability to build rmp package on Linux
+- Installation directory changed to %ProgramFiles% (C:\Program Files\MoneyManagerEx)
+- User's database and settings files default location is %APPDATA%\MoneyManagerEx
+
 0.9.5.1 (Nov 6, 2009)
 - Fix: changes reverted for popup menu "Viewing transaction from ..."
 - Fix: if record in BILLSDEPOSITS_V1 has invalid CATEGID (for example, -1),
