@@ -613,8 +613,8 @@ void mmTransDialog::OnAdvanced(wxCommandEvent& /*event*/)
     {
         mmex::formatDoubleToCurrencyEdit(toTransAmount_, dispString);
     }
-    wxTextEntryDialog* dlg = new wxTextEntryDialog(this, _("To Account Amount Entry"), 
-        _("Amount to be recorded in To Account"),  dispString);
+    wxTextEntryDialog* dlg = new wxTextEntryDialog(this, _("Amount to be recorded in To Account"), 
+        _("To Account Amount Entry"),  dispString);
     if ( dlg->ShowModal() == wxID_OK )
     {
         wxString currText = dlg->GetValue().Trim();
