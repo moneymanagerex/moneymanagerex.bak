@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-03 13:39+0200\n"
-"PO-Revision-Date: 2010-05-03 13:39+0200\n"
-"Last-Translator: Vadim <vadim.grinchishin@gmail.com>\n"
+"POT-Creation-Date: 2010-05-05 09:35+0300\n"
+"PO-Revision-Date: 2010-05-05 09:37+0300\n"
+"Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -202,7 +202,6 @@ msgid "Rate of Change"
 msgstr "Процент изменения стоимости"
 
 #: src/assetdialog.cpp:266
-#, fuzzy, c-format
 msgid "Enter the rate at which the asset changes its value in % per year"
 msgstr "Введите ежегодное изменение стоимости имущества в процентах"
 
@@ -1171,6 +1170,42 @@ msgstr "Прочие доходы"
 msgid "Other Expenses"
 msgstr "Прочие расходы"
 
+#: src/filtercashflowdialog.cpp:140
+msgid "Years to Forecast:"
+msgstr "Кол-во лет для прогноза:"
+
+#: src/filtercashflowdialog.cpp:146
+msgid "1"
+msgstr "1"
+
+#: src/filtercashflowdialog.cpp:147
+msgid "2"
+msgstr "2"
+
+#: src/filtercashflowdialog.cpp:148
+msgid "3"
+msgstr "3"
+
+#: src/filtercashflowdialog.cpp:149
+msgid "4"
+msgstr "4"
+
+#: src/filtercashflowdialog.cpp:150
+msgid "5"
+msgstr "5"
+
+#: src/filtercashflowdialog.cpp:156
+msgid "Specify the number of years to forecast."
+msgstr "Укажите количество лет для прогноза."
+
+#: src/filtercashflowdialog.cpp:160
+msgid "Forecast Initial Date:"
+msgstr "Начальная дата прогноза:"
+
+#: src/filtercashflowdialog.cpp:167
+msgid "Specify the starting date of the forecast"
+msgstr "Укажите дату начала прогноза"
+
 #: src/filtertransdialog.cpp:195
 msgid "Specify Account"
 msgstr "Укажите счёт"
@@ -1630,7 +1665,7 @@ msgstr "Доходы/Расходы - За всё время"
 
 #: src/mmex.cpp:1020
 msgid "Transaction Report"
-msgstr "Отчёт по проводкам"
+msgstr "Отчёт по критериям"
 
 #: src/mmex.cpp:1040
 msgid "Budget Performance"
@@ -1749,7 +1784,7 @@ msgstr "Все"
 #: src/mmex.cpp:2012
 #: src/mmex.cpp:2433
 msgid "Open"
-msgstr "Открытые"
+msgstr "Открыт"
 
 #: src/mmex.cpp:2013
 msgid "Favorites"
@@ -1873,7 +1908,7 @@ msgstr "Показать/Скрыть окно навигации"
 #: src/mmex.cpp:2261
 #: src/mmex.cpp:2438
 msgid "New Account"
-msgstr "Новый счёт"
+msgstr "Свойства счёта"
 
 #: src/mmex.cpp:2267
 #: src/mmex.cpp:2440
@@ -2356,7 +2391,6 @@ msgstr " Помощь"
 #: src/reportbudgetsetup.cpp:27
 #: src/reportcashflow.cpp:25
 #: src/reportcategexp.cpp:55
-#: src/reportcategovertimeperf.cpp:242
 msgid "Today's Date: "
 msgstr "Сегодня: "
 
@@ -2412,7 +2446,7 @@ msgstr "Тип счёта:"
 
 #: src/newacctdialog.cpp:160
 msgid "Checking"
-msgstr "Проверка"
+msgstr "Чековый"
 
 #: src/newacctdialog.cpp:169
 msgid "Account Number:"
@@ -2763,9 +2797,8 @@ msgid "Filter Payees: "
 msgstr "Фильтр плательщиков:"
 
 #: src/payeedialog.cpp:144
-#, fuzzy, c-format
 msgid "Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."
-msgstr "Введите строку поиска. Вы можете использовать % как маску 0 или более символов или _ как маску одного символа."
+msgstr "Введите строку поиска. Вы можете использовать '%' как маску, 0 или более символов или '_' как маску одного символа."
 
 #: src/payeedialog.cpp:152
 msgid "Add a new payee name"
@@ -2966,8 +2999,6 @@ msgid "Dec"
 msgstr "Дек"
 
 #: src/reportbudgetingperf.cpp:61
-#: src/reportcategovertimeperf.cpp:190
-#: src/reportcategovertimeperf.cpp:272
 msgid "Overall"
 msgstr "Суммарно"
 
@@ -3715,6 +3746,10 @@ msgstr "Менеджер валют"
 msgid "View File Contents"
 msgstr "Просмотр файла"
 
+#: src/filtercashflowdialog.h:33
+msgid "Cash Flow Filter"
+msgstr "Движение средств"
+
 #: src/filtertransdialog.h:46
 msgid "Filter Transactions"
 msgstr "Фильтр проводок"
@@ -3751,220 +3786,132 @@ msgstr "Импорт Universal CSV"
 msgid "Options"
 msgstr "Настройrки"
 
-#~ msgid "Years to Forecast:"
-#~ msgstr "Кол-во лет для прогноза:"
-
-#~ msgid "1"
-#~ msgstr "1"
-
-#~ msgid "2"
-#~ msgstr "2"
-
-#~ msgid "3"
-#~ msgstr "3"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "5"
-#~ msgstr "5"
-
-#~ msgid "Specify the number of years to forecast."
-#~ msgstr "Укажите количество лет для прогноза."
-
-#~ msgid "Forecast Initial Date:"
-#~ msgstr "Начальная дата прогноза:"
-
-#~ msgid "Specify the starting date of the forecast"
-#~ msgstr "Укажите дату начала прогноза"
-
 #~ msgid "Clear Recent Files"
 #~ msgstr "Очистить список недавних файлов"
-
 #~ msgid "Recent Files"
 #~ msgstr "Недавние файлы"
-
 #~ msgid "OFX Import"
 #~ msgstr "OFX импорт"
-
 #~ msgid "Stock account for security \"%s\""
 #~ msgstr "Инвестиционный счёт для ценной бумаги \"%s\""
-
 #~ msgid "Income account for security \"%s\""
 #~ msgstr "Доходный счёт для ценной бумаги \"%s\""
-
 #~ msgid "Unknown OFX checking account"
 #~ msgstr "Неизвестный OFX текущий счёт"
-
 #~ msgid "Unknown OFX savings account"
 #~ msgstr "Неизвестный OFX накопительный счёт"
-
 #~ msgid "Unknown OFX money market account"
 #~ msgstr "Неизвестный OFX денежный счёт"
-
 #~ msgid "Unknown OFX credit line account"
 #~ msgstr "Неизвестный OFX счёт кредитной линии"
-
 #~ msgid "Unknown OFX CMA account"
 #~ msgstr "Неизвестный OFX CMA счёт"
-
 #~ msgid "Unknown OFX credit card account"
 #~ msgstr "Неизвестный OFX счёт кредитной карты"
-
 #~ msgid "Unknown OFX investment account"
 #~ msgstr "Неизвестный OFX инвестиционный счёт"
-
 #~ msgid "Select an OFX/QFX file to process"
 #~ msgstr "Выберите OFX/QFX файл для обработки"
-
-#~ msgid "Cash Flow Filter"
-#~ msgstr "Движение средств"
-
 #~ msgid "Custom SQL Query"
 #~ msgstr "SQL запрос"
-
 #~ msgid "&Load SQL"
 #~ msgstr "&Загрузить SQL"
-
 #~ msgid "&Save SQL"
 #~ msgstr "&Сохранить SQL"
-
 #~ msgid "&Run Query"
 #~ msgstr "&Выполнить запрос"
-
 #~ msgid "SQL Query will modify your Data. Proceed??"
 #~ msgstr "Запрос SQL изменит Ваши данные. Продолжить??"
-
 #~ msgid "Warning"
 #~ msgstr "Внимание"
-
 #~ msgid "Category         : "
 #~ msgstr "Категория       : "
-
 #~ msgid "Sub Category  : "
 #~ msgstr "Подкатегория : "
-
 #~ msgid "Notes               : "
 #~ msgstr "Примечания     : "
-
 #~ msgid "Category: \n"
 #~ msgstr "Категория: \n"
-
 #~ msgid "Sub Category: \n"
 #~ msgstr "Подкатегория: \n"
-
 #~ msgid "Notes: \n"
 #~ msgstr "Примечания: \n"
-
 #~ msgid "Custom SQL Report"
 #~ msgstr "Свой SQL отчёт"
-
 #~ msgid "Unable to convert db successfully. Check Password!"
 #~ msgstr "Не могу соединиться с БД. Проверьте пароль!"
-
 #~ msgid ""
 #~ "Enter the payee name to be added or make edits to an existing payee name"
 #~ msgstr ""
 #~ "Введите имя плательщика платежа, которое будет добавлено к существующему "
 #~ "или будет изменено"
-
 #~ msgid "Type a Payee Name in the Text Box and then press Add."
 #~ msgstr ""
 #~ "Напишите имя плательщика в текстовом поле, затем нажмите кнопку Добавить."
-
 #~ msgid "Regular expression invalid: '"
 #~ msgstr "Неправильное регулярное выражение: '"
-
 #~ msgid "REGEXP called with wrong number of arguments: %d instead of 2."
 #~ msgstr "REGEXP вызван с неправильным количеством аргументов: %d вместо 2."
-
 #~ msgid "Custom SQL Dialog"
 #~ msgstr "Редактор SQL"
-
 #~ msgid "Custom SQL Report "
 #~ msgstr "Свой SQL отчёт"
-
 #~ msgid "No Database opened"
 #~ msgstr "База данных не открыта"
-
 #~ msgid "Statement not accessible"
 #~ msgstr "Выражение не доступно"
-
 #~ msgid "Out of memory"
 #~ msgstr "Недостаточно памяти"
-
 #~ msgid "Cannot decode binary"
 #~ msgstr "Невозможно раскодировать файл"
-
 #~ msgid "Invalid field index"
 #~ msgstr "Неверный индекс"
-
 #~ msgid "Invalid field name"
 #~ msgstr "Неверное имя поля"
-
 #~ msgid "Invalid row index"
 #~ msgstr "Неверный индекс строки"
-
 #~ msgid "Invalid scalar query"
 #~ msgstr "Неверный запрос"
-
 #~ msgid "Null Results pointer"
 #~ msgstr "Нулевой указатель результата"
-
 #~ msgid "Error binding string param"
 #~ msgstr "Ошибка привязки строкового параметра"
-
 #~ msgid "Error binding int param"
 #~ msgstr "Ошибка параметров инициализации"
-
 #~ msgid "Error binding int64 param"
 #~ msgstr "Ошибка привязки целочисленного параметра"
-
 #~ msgid "Error binding double param"
 #~ msgstr "Ошибка привязки параметра с плавающей точкой"
-
 #~ msgid "Error binding blob param"
 #~ msgstr "Ошибка привязки параметра blob"
-
 #~ msgid "Error binding date/time param"
 #~ msgstr "Ошибка формата даты/времени"
-
 #~ msgid "Error binding NULL param"
 #~ msgstr "Ошибка привязки параметра NULL"
-
 #~ msgid "Error clearing bindings"
 #~ msgstr "Ошибка очистки привязок"
-
 #~ msgid "Add"
 #~ msgstr "Добавить"
-
 #~ msgid "Close"
 #~ msgstr "Закрыть"
-
 #~ msgid "O&rganize Currency"
 #~ msgstr "&Валюта"
-
 #~ msgid "Organize C&urrency"
 #~ msgstr "&Валюта"
-
 #~ msgid "Edit"
 #~ msgstr "&Редактировать"
-
 #~ msgid "Delete"
 #~ msgstr "&Удалить"
-
 #~ msgid "Delete Account"
 #~ msgstr "&Удалить счёт"
 
 #, fuzzy
 #~ msgid "Repeating Transactions-menu"
 #~ msgstr "Планирование"
-
 #~ msgid "Select From Account"
 #~ msgstr "Из счёта"
-
 #~ msgid "Web Page"
 #~ msgstr "Web-страница"
-
 #~ msgid "Invalid current price entered "
 #~ msgstr "Введена ошибочная цена"
+
