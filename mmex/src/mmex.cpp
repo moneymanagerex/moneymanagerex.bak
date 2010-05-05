@@ -356,6 +356,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_STOCKS, mmGUIFrame::OnStocks)
     EVT_MENU(MENU_ASSETS, mmGUIFrame::OnAssets)
     EVT_MENU(MENU_CURRENCY, mmGUIFrame::OnCurrency)
+	EVT_MENU(MENU_TRANSACTIONREPORT, mmGUIFrame::OnTransactionReport)
     EVT_MENU(MENU_TREEPOPUP_LAUNCHWEBSITE, mmGUIFrame::OnLaunchAccountWebsite)
 	EVT_MENU(MENU_VIEW_TOOLBAR, mmGUIFrame::OnViewToolbar)
 	EVT_MENU(MENU_VIEW_LINKS, mmGUIFrame::OnViewLinks)
@@ -2300,7 +2301,7 @@ void mmGUIFrame::createMenu()
 	menuItemCurrency->SetBitmap(wxBitmap(money_dollar_xpm));
     menuTools->Append(menuItemCurrency);
 
-    if (mmIniOptions::enableBudget_)
+	if (mmIniOptions::enableBudget_)
     {
         wxMenuItem* menuItemBudgeting = new wxMenuItem(menuTools, MENU_BUDGETSETUPDIALOG, 
             _("&Budget Setup"), _("Budget Setup"));
@@ -2418,7 +2419,7 @@ void mmGUIFrame::createToolBar()
 {
 	toolBar_ = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
 		wxTB_FLAT | wxTB_NODIVIDER);
-    wxBitmap toolBarBitmaps[8];
+    wxBitmap toolBarBitmaps[9];
     toolBarBitmaps[0] = wxBitmap(new_xpm);
     toolBarBitmaps[1] = wxBitmap(open_xpm);
     toolBarBitmaps[2] = wxBitmap(save_xpm);
@@ -2427,11 +2428,10 @@ void mmGUIFrame::createToolBar()
     toolBarBitmaps[5] = wxBitmap(categoryedit_xpm);
     toolBarBitmaps[6] = wxBitmap(user_edit_xpm);
     toolBarBitmaps[7] = wxBitmap(money_dollar_xpm);
+    toolBarBitmaps[8] = wxBitmap(filter_xpm);
 
-    toolBar_->AddTool(MENU_NEW, _("New"), toolBarBitmaps[0], 
-       _("New Database"));
-    toolBar_->AddTool(MENU_OPEN, _("Open"), toolBarBitmaps[1], 
-       _("Open Database"));
+    toolBar_->AddTool(MENU_NEW, _("New"), toolBarBitmaps[0], _("New Database"));
+    toolBar_->AddTool(MENU_OPEN, _("Open"), toolBarBitmaps[1], _("Open Database"));
     toolBar_->AddSeparator();
     if (mmIniOptions::enableAddAccount_)
     {
@@ -2442,6 +2442,8 @@ void mmGUIFrame::createToolBar()
     toolBar_->AddTool(MENU_ORGCATEGS, _("Organize Categories"), toolBarBitmaps[5], _("Show Organize Categories Dialog"));
     toolBar_->AddTool(MENU_ORGPAYEE, _("Organize Payees"), toolBarBitmaps[6], _("Show Organize Payees Dialog"));
     toolBar_->AddTool(MENU_CURRENCY, _("Organize Currency"), toolBarBitmaps[7], _("Show Organize Currency Dialog"));
+	toolBar_->AddSeparator();
+    toolBar_->AddTool(MENU_TRANSACTIONREPORT, _("Transaction Filter"), toolBarBitmaps[8], _("Transaction Filter"));
     
     // after adding the buttons to the toolbar, must call Realize() to reflect changes
     toolBar_->Realize();
