@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-05-05 09:35+0300\n"
-"PO-Revision-Date: 2010-05-05 09:37+0300\n"
+"PO-Revision-Date: 2010-05-05 14:02+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -565,11 +565,11 @@ msgstr "Выберите куда"
 
 #: src/billsdepositsdialog.cpp:693
 msgid "To Account Amount Entry"
-msgstr "Введите сумму:"
+msgstr "Сумма на другом счёте"
 
 #: src/billsdepositsdialog.cpp:694
 msgid "Amount to be recorded in To Account"
-msgstr "Сумма, которая попадет на счёт-получатель"
+msgstr "Сумма, которая попадет на счёт-получатель:"
 
 #: src/billsdepositsdialog.cpp:704
 msgid "Invalid To Amount Entered "
