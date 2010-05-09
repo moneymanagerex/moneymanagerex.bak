@@ -1,6 +1,6 @@
 Version History of Money Manager Ex
 
-0.9.6.0 (May 7, 2010)
+0.9.6.0 (May 11, 2010)
 - wxSQLite3 updated to v.1.9.9 (sqlite3 v.3.6.23.1).
 - CurrencyFormatter refactoring, bugfix for huge amounts (like a 1000000000000)
 - Alignment of some columns changed
@@ -16,6 +16,8 @@ Version History of Money Manager Ex
 - Ability to build rmp package on Linux
 - Installation directory changed to %ProgramFiles% (C:\Program Files\MoneyManagerEx)
 - User's database and settings files default location is %APPDATA%\MoneyManagerEx
+- Check whether user has write access on database's file
+- About dialog shows versions of libraries which uses by MMEX
 
 0.9.5.1 (Nov 6, 2009)
 - Fix: changes reverted for popup menu "Viewing transaction from ..."
