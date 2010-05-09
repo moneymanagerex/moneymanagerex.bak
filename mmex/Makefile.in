@@ -52,8 +52,9 @@ SQLITE_CFLAGS = -DSQLITE_CORE -DSQLITE_HAS_CODEC \
 	-DSQLITE_ENABLE_COLUMN_METADATA $(PIC_FLAG) $(CPPFLAGS) $(CFLAGS)
 SQLITE_OBJECTS =  \
 	sqlite_sqlite3secure.o
-MMEX_CXXFLAGS = -I$(srcdir)/include -I$(srcdir)/libs/wxsqlite -DNOPCH \
-	$(WX_CXXFLAGS) $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
+MMEX_CXXFLAGS = -I$(srcdir)/include -I$(srcdir)/libs/sqlite \
+	-I$(srcdir)/libs/wxsqlite -DNOPCH $(WX_CXXFLAGS) $(PIC_FLAG) $(CPPFLAGS) \
+	$(CXXFLAGS)
 MMEX_OBJECTS =  \
 	mmex_aboutdialog.o \
 	mmex_appstartdialog.o \
@@ -412,7 +413,7 @@ mmex_platfdep.o: $(srcdir)/src/unix/platfdep.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/unix/platfdep.cpp
 
 mmex_resources_mmex_rc.o: $(srcdir)/resources/mmex.rc
-	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/include --include-dir $(srcdir)/libs/wxsqlite --define NOPCH
+	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/include --include-dir $(srcdir)/libs/sqlite --include-dir $(srcdir)/libs/wxsqlite --define NOPCH
 
 
 # Include dependency info, if present:
