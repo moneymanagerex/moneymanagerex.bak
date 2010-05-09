@@ -28,6 +28,30 @@
 #include "../resources/money.xpm"
 /*******************************************************/
 
+#include <boost/version.hpp>
+#include <wx/version.h>
+#include <wx/wxsqlite3.h>
+
+namespace
+{
+
+wxString get_libs_info()
+{
+	wxString s;
+
+	s << wxVERSION_STRING
+	  << wxT(",  Boost C++ ") << (BOOST_VERSION/100000) << wxT('.') 
+				  << (BOOST_VERSION / 100 % 1000) << wxT('.') 
+				  << (BOOST_VERSION % 100)
+	  << wxT(",  SQLite3 ") << wxSQLite3Database::GetVersion()
+	  << wxT(",  wxSQLite by Ulrich Telle");
+
+	return s;
+}
+
+} // namespace
+
+
 IMPLEMENT_DYNAMIC_CLASS(mmAboutDialog, wxDialog)
 
 
@@ -139,8 +163,8 @@ void mmAboutDialog::CreateControls()
        itemBoxSizer4->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
        wxStaticText* itemStaticText12 = new wxStaticText( itemDialog1, 
-          wxID_STATIC, _("Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle), Boost C++"), wxDefaultPosition, wxDefaultSize, 0 );
-       itemBoxSizer4->Add(itemStaticText12, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+          wxID_STATIC, get_libs_info(), wxDefaultPosition, wxDefaultSize, 0 );
+       itemBoxSizer4->Add(itemStaticText12, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
        wxButton* itemButton14 = new wxButton( itemDialog1, ID_DIALOG_BUTTON_ABOUT_VERSION_HISTORY, 
           _("Version History"), 
