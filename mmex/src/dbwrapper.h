@@ -22,9 +22,14 @@
 //----------------------------------------------------------------------------
 #include "defs.h"
 //----------------------------------------------------------------------------
+#include <boost/shared_ptr.hpp>
+//----------------------------------------------------------------------------
 
 namespace mmDBWrapper
 {
+
+bool isReadOnly(wxSQLite3Database &db);
+boost::shared_ptr<wxSQLite3Database> OpenReadWrite(const wxString &dbpath, const wxString &key = wxGetEmptyString());
 
 bool ViewExists(wxSQLite3Database* db, const char *viewName);
     
