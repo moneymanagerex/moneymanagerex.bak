@@ -17,7 +17,7 @@ Version History of Money Manager Ex
 - Installation directory changed to %ProgramFiles% (C:\Program Files\MoneyManagerEx)
 - User's database and settings files default location is %APPDATA%\MoneyManagerEx
 - Check whether user has write access on database's file
-- About dialog shows versions of libraries which uses by MMEX
+- About dialog shows versions of libraries which where used to build MMEX
 
 0.9.5.1 (Nov 6, 2009)
 - Fix: changes reverted for popup menu "Viewing transaction from ..."
