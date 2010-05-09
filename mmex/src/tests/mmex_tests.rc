@@ -44,12 +44,12 @@ BEGIN
         BLOCK "000004b0"
         BEGIN
             VALUE "FileDescription", "Unit Tests for Money Manager Ex"
-            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "FileVersion", "1, 0, 0, 2"
             VALUE "InternalName", "mmex_tests"
-            VALUE "LegalCopyright", "(C) 2009 VaDiM"
+            VALUE "LegalCopyright", "(C) 2009-2010 VaDiM"
             VALUE "OriginalFilename", "mmex_tests.exe"
             VALUE "ProductName", "MMEX Tests"
-            VALUE "ProductVersion", "1, 0, 0, 1"
+            VALUE "ProductVersion", "1, 0, 0, 2"
         END
     END
     BLOCK "VarFileInfo"

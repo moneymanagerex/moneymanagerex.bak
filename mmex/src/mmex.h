@@ -91,11 +91,11 @@ public:
 
 private:
     /* handles to the DB Abstraction */
-    boost::scoped_ptr<mmCoreDB> core_;
+    boost::scoped_ptr<mmCoreDB> m_core;
 
     /* handles to SQLite Database */
-    boost::shared_ptr<wxSQLite3Database> db_;
-    boost::scoped_ptr<wxSQLite3Database> inidb_;
+    boost::shared_ptr<wxSQLite3Database> m_db;
+    boost::shared_ptr<wxSQLite3Database> m_inidb;
 
     /* Currently open file name */
     wxString fileName_;
