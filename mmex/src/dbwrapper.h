@@ -28,8 +28,8 @@
 namespace mmDBWrapper
 {
 
-bool isReadOnly(wxSQLite3Database &db);
-boost::shared_ptr<wxSQLite3Database> OpenReadWrite(const wxString &dbpath, const wxString &key = wxGetEmptyString());
+int isReadOnly(wxSQLite3Database &db);
+boost::shared_ptr<wxSQLite3Database> Open(const wxString &dbpath, const wxString &key = wxGetEmptyString());
 
 bool ViewExists(wxSQLite3Database* db, const char *viewName);
     

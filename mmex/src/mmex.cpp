@@ -693,7 +693,7 @@ void mmGUIFrame::saveConfigFile()
 
 void mmGUIFrame::loadConfigFile()
 {
-	m_inidb = mmDBWrapper::OpenReadWrite(mmex::getPathUser(mmex::SETTINGS));
+	m_inidb = mmDBWrapper::Open(mmex::getPathUser(mmex::SETTINGS));
 }
 //----------------------------------------------------------------------------
 
@@ -2482,7 +2482,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
             wxCopyFile(fileName, bkupName, true);
         }
 
-        m_db = mmDBWrapper::OpenReadWrite(fileName, password);
+        m_db = mmDBWrapper::Open(fileName, password);
         // we need to check the db whether it is the right version
         if (!mmDBWrapper::checkDBVersion(m_db.get()))
         {
@@ -2506,13 +2506,13 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
            && wxFileName::FileExists(mmIniOptions::customTemplateDB_))
        {
            wxCopyFile(mmIniOptions::customTemplateDB_, fileName, true);
-           m_db = mmDBWrapper::OpenReadWrite(fileName);
+           m_db = mmDBWrapper::Open(fileName);
            password_ = password;
            m_core.reset(new mmCoreDB(m_db));
        }
        else
        {
-           m_db = mmDBWrapper::OpenReadWrite(fileName, password);
+           m_db = mmDBWrapper::Open(fileName, password);
            password_ = password;
 
            openDataBase(fileName);
@@ -2697,8 +2697,7 @@ void mmGUIFrame::OnConvertEncryptedDB(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
 {
-    bool ok = m_db != 0;
-    wxASSERT(ok);
+    wxASSERT(m_db);
 
     if (fileName_.empty()) {
         wxASSERT(false);
