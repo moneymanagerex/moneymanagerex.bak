@@ -2768,12 +2768,12 @@ wxString mmDBWrapper::getLastDbPath(wxSQLite3Database *db, const wxString &defau
 }
 //----------------------------------------------------------------------------
 
-bool mmDBWrapper::isReadOnly(wxSQLite3Database &db)
+int mmDBWrapper::isReadOnly(wxSQLite3Database &db)
 {
-        bool ok = false;
+        int err = SQLITE_OK;
 
         if (!db.IsOpen()) {
-        	return ok;
+        	return err;
         }
 
 	try {
@@ -2781,16 +2781,14 @@ bool mmDBWrapper::isReadOnly(wxSQLite3Database &db)
 		db.Commit();
 
 	} catch (wxSQLite3Exception &e) {
-
-		int err = e.GetExtendedErrorCode();
-		ok = err == SQLITE_CANTOPEN || err == SQLITE_READONLY;
-
-		if (!ok) {
+	
+		err = e.GetExtendedErrorCode();
+		if (err != SQLITE_CANTOPEN && err != SQLITE_READONLY) {
 			throw;
 		}
 	}
 
-	return ok;
+	return err;
 }
 //----------------------------------------------------------------------------
 
@@ -2800,19 +2798,19 @@ bool mmDBWrapper::isReadOnly(wxSQLite3Database &db)
 	only if the file is write protected by the operating system.  In either
 	case the database must already exist, otherwise an error is returned.
 */
-boost::shared_ptr<wxSQLite3Database> mmDBWrapper::OpenReadWrite(const wxString &dbpath, const wxString &key)
+boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, const wxString &key)
 {
         boost::shared_ptr<wxSQLite3Database> db(new wxSQLite3Database);
-
         db->Open(dbpath, key);
 
-	if (!mmDBWrapper::isReadOnly(*db)) {
+	int err = isReadOnly(*db);
+	if (err == SQLITE_OK) {
 		return db;
 	}	
 	
 	db->Close();
 
         wxString s = wxString::Format(_("\n%s\nNot a writeable database\nYou must have write permission to that file"), dbpath);
-        throw wxSQLite3Exception(SQLITE_CANTOPEN, s);
+        throw wxSQLite3Exception(err, s);
 }
 //----------------------------------------------------------------------------
