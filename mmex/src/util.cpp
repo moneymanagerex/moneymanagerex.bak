@@ -125,7 +125,7 @@ int mmCents(double x, int scale)
 wchar_t get_group_separator(wxChar sep)
 {
 	wxString s(sep);
-	return *s.wc_str();
+	return *s.wc_str(*wxConvCurrent);
 }
 //----------------------------------------------------------------------------
 
@@ -149,7 +149,7 @@ wxString format_groups(const mmex::CurrencyFormatter &fmt, double x, size_t grp_
 
 		std::wstring s;
 		s.reserve(val.length() + val.length()/grp_sz);
-		s.assign(val.wc_str(), val.length());
+		s.assign(val.wc_str(*wxConvCurrent), val.length());
 
 		for (size_t i = 0, j = i + grp_sz*(i+1); j < s.length(); ++i, j = i + grp_sz*(i+1)) {
 			std::wstring::iterator it = s.begin();
