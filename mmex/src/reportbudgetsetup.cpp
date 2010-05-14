@@ -64,7 +64,7 @@ wxString mmReportBudgetingSetup::getHTMLText()
         static const char sql_sub[] = 
         "select SUBCATEGID, SUBCATEGNAME "
         "from SUBCATEGORY_V1 "
-        "where CATEGID = ?"
+        "where CATEGID = ? "
 		"order by SUBCATEGNAME";
 
         wxSQLite3Statement st = db_->PrepareStatement(sql_sub);
