@@ -70,7 +70,8 @@ wxString mmReportBudgetingPerformance::getHTMLText()
         static const char sql_sub[] = 
         "select SUBCATEGID, SUBCATEGNAME "
         "from SUBCATEGORY_V1 "
-        "where CATEGID = ?";
+        "where CATEGID = ?"
+        "order by SUBCATEGNAME";
 
         mmDBWrapper::loadBaseCurrencySettings(db_);
 
