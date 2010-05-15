@@ -25,24 +25,20 @@ Prepackaged Libraries
 
        GENERIC INSTRUCTIONS
 
-    1. Download & install the latest wxWidgets for wxGTK.
-    
-    a) Read the install directions in wxWidgets for how to do a build and then
-       install the build on the machine. For eg wxWidgets has been built with 
-       --with-gtk --disable-shared --enable-unicode
+    1. Download & install the latest wxWidgets for wxGTK:
+       tar xfv wxGTK-2.8.11.tar.gz
+       cd wxGTK-2.8.11
+       ./configure --disable-shared --enable-unicode
+       sudo make install
 
-    b) After installation, wx-config will copied to the /usr/bin and can now 
-       correctly identify the command line params required.
-
-    2. Navigate to trunk/mmex and do
-        >  mkdir obj
-        >  cd obj
-        >  ../configure
-        >  make
-        >  make check
-        >  make install
-        >  /usr/bin/mmex &
-
+    2. cd trunk/mmex
+       mkdir release
+       cd release
+       ../configure
+       make
+       make check
+       sudo make install
+       /usr/local/bin/mmex &
 
        UBUNTU SPECIFIC INSTRUCTIONS
 
@@ -61,13 +57,13 @@ Prepackaged Libraries
 3. REGENERATING AUTOMAKE FILES
 -------------------------------------------------------------------------------
 If for some reason, you need to regenerate AutoMake files.
-This might be required if you are adding new source files to MMEX.
+This might be required if you are adding new source files to MMEX 
+or if bakefile's script(s) has modified.
 
 1. Download and install latest version of Bakefile, www.bakefile.org.
-2. Do
-   > cd trunk/mmex
-   > chmod a+rx bootstrap
-   > ./bootstrap
+2. cd trunk/mmex
+   chmod a+rx bootstrap
+   ./bootstrap
 
 -------------------------------------------------------------------------------
 4. CREATING A DEBIAN PACKAGE
