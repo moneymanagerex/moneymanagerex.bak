@@ -78,13 +78,12 @@ int mmPayeeList::addPayee(const wxString &payeeName)
 
 int mmPayeeList::getPayeeID(const wxString& payeeName)
 {
-    int numPayees = (int)payees_.size();
-    for (int idx = 0; idx < numPayees; idx++)
-    {
-        if (!payees_[idx]->payeeName_.CmpNoCase(payeeName))
-            return payees_[idx]->payeeID_;
-    }
-    return -1;
+	for (size_t i = 0; i < payees_.size(); ++i) {
+		if (!payees_[i]->payeeName_.CmpNoCase(payeeName))
+			return payees_[i]->payeeID_;
+	}
+	
+	return -1;
 }
 
 bool mmPayeeList::deletePayee(int payeeID)
