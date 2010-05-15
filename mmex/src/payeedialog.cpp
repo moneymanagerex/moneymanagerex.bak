@@ -103,16 +103,6 @@ bool mmPayeeDialog::Create( wxWindow* parent, wxWindowID id,
     return TRUE;
 }
 
-void mmPayeeDialog::fillControls()
-{
-	listBox_->Clear();
-	wxArrayString filtd = mmDBWrapper::filterPayees(core_->db_.get(),textCtrl->GetValue());
-	for (size_t i = 0; i < filtd.GetCount(); ++i)
-	{
-		listBox_->Append(filtd.Item(i));
-	}
-}
-
 void mmPayeeDialog::CreateControls()
 {    
     mmPayeeDialog* itemDialog1 = this;
@@ -174,23 +164,45 @@ void mmPayeeDialog::CreateControls()
 	selectButton->Disable();
 }
 
+void mmPayeeDialog::fillControls()
+{
+	wxArrayString filtd = mmDBWrapper::filterPayees(core_->db_.get(), textCtrl->GetValue());
+
+	listBox_->Clear();
+
+	for (size_t i = 0; i < filtd.GetCount(); ++i) {
+		listBox_->Append(filtd.Item(i));
+	}
+}
+
 void mmPayeeDialog::OnTextCtrlChanged(wxCommandEvent& event)
 {
-	wxString payeeString = listBox_->GetStringSelection();
+	bool filter_ok = !textCtrl->GetValue().IsEmpty();
+	addButton->Enable(filter_ok);
+	
+	wxString payee = listBox_->GetStringSelection();
 	fillControls();
-	if (textCtrl->GetValue() != wxGetEmptyString())
-	{
-		addButton->Enable();
-		listBox_->SetSelection(0);
+	
+	if (!listBox_->IsEmpty()) {
+		if (!listBox_->SetStringSelection(payee)) {
+			listBox_->Select(0);
+		}
 	}
-	else 
-	{
-		addButton->Disable();
-		listBox_->SetStringSelection(payeeString);
-	}
+
 	OnSelChanged(event);
 }
 
+void mmPayeeDialog::OnSelChanged(wxCommandEvent& /*event*/)
+{
+	wxString payee = listBox_->GetStringSelection();
+
+	payeeID_ = payee.IsEmpty() ? -1 : core_->payeeList_.getPayeeID(payee);
+	bool ok = payeeID_ != -1;
+
+	editButton->Enable(ok);
+	deleteButton->Enable(ok);
+	selectButton->Enable(ok && showSelectButton_);
+}
 
 void mmPayeeDialog::OnAdd(wxCommandEvent& event)
 {
@@ -242,25 +254,6 @@ void mmPayeeDialog::OnBSelect(wxCommandEvent& /*event*/)
 void mmPayeeDialog::OnOk(wxCommandEvent& /*event*/)
 {
     Close(TRUE);
-}
-
-void mmPayeeDialog::OnSelChanged(wxCommandEvent& /*event*/)
-{
-    wxString payeeString = listBox_->GetStringSelection();
-    if (payeeString==wxGetEmptyString())
-	{
-		editButton->Disable();
-		deleteButton->Disable();
-		selectButton->Disable();
-		payeeID_ = -1;
-        return;
-	}
-	if (showSelectButton_)
-		selectButton->Enable();
-	editButton->Enable();
-	deleteButton->Enable();
-    payeeID_ = core_->payeeList_.getPayeeID(payeeString);
-	
 }
 
 void mmPayeeDialog::OnDoubleClicked(wxCommandEvent& event)
