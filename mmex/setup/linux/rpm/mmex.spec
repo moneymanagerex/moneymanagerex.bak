@@ -15,7 +15,7 @@ URL:            http://www.codelathe.com/mmex
 Packager:       VaDiM <kkkvadim@sourceforge.net>
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Prefix:         /usr
-Requires:       libwxgtk >= 2.8.10
+#Requires:    	libgtk-x11 >= 2.0
 
 %description
 Money Manager Ex is a free, open-source, cross-platform, easy-to-use personal 
