@@ -1,0 +1,9 @@
+Package: mmex
+Version: 0.9.6.0
+Section: misc
+Priority: optional
+Architecture: i386
+Depends: libc6 (>= 2.3.5-1)
+Maintainer: VaDiM <kkkvadim@sourceforge.net>
+Description: Cross-platform simple to use financial management software
+
