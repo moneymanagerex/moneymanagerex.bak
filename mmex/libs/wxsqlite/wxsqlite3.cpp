@@ -3444,7 +3444,7 @@ void wxSQLite3Transaction::Rollback()
 
 // --- User defined function classes
 
-#if wxUSE_REGEX
+#if 0 // wxUSE_REGEX
 
 wxSQLite3RegExpOperator::wxSQLite3RegExpOperator(int flags) : m_flags(flags)
 {
