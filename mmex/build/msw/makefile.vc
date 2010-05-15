@@ -383,7 +383,7 @@ clean:
 	cd ..\..\i18n
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
-	cd ..\..\setup\win32
+	cd ..\..\setup\win
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 	cd tests
@@ -421,7 +421,7 @@ sub_i18n:
 	cd "$(MAKEDIR)"
 
 sub_setup: all
-	cd ..\..\setup\win32
+	cd ..\..\setup\win
 	$(MAKE) -f makefile.vc $(MAKEARGS) APP_EXE_PATH="..\..\build\msw\vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe" BUILD_OPTS="$(__setup_SHARED)$(__setup_UNICODE)$(__setup_DEBUG)-$(CPU_ARCH)" CPU_ARCH="$(CPU_ARCH)" CRT_DLLS="$(__setup_CRT_DLLS)" FORMAT="msvc" all
 	cd "$(MAKEDIR)"
 

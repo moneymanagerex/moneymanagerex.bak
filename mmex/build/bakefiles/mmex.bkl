@@ -168,7 +168,7 @@
         
         <depends>all</depends>
         <installable>no</installable>
-        <dir>$(SRCDIR)/setup/win32</dir>
+        <dir>$(SRCDIR)/setup/win</dir>
 
         <set var="SHARED">
             <if cond="FORMAT=='autoconf'"></if>

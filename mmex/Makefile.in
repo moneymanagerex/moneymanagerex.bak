@@ -170,13 +170,13 @@ clean:
 	rm -f $(LIBPREFIX)sqlite$(LIBEXT)
 	rm -f mmex$(EXEEXT)
 	-(cd $(srcdir)/i18n && $(MAKE) clean)
-	-(cd $(srcdir)/setup/win32 && $(MAKE) clean)
+	-(cd $(srcdir)/setup/win && $(MAKE) clean)
 	-(cd ./src/tests && $(MAKE) clean)
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
 	-(cd $(srcdir)/i18n && $(MAKE) distclean)
-	-(cd $(srcdir)/setup/win32 && $(MAKE) distclean)
+	-(cd $(srcdir)/setup/win && $(MAKE) distclean)
 	-(cd ./src/tests && $(MAKE) distclean)
 
 $(LIBPREFIX)wxsqlite$(LIBEXT): $(WXSQLITE_OBJECTS)
@@ -206,7 +206,7 @@ i18n:
 	(cd $(srcdir)/i18n && $(MAKE) all)
 
 @COND_PLATFORM_WIN32_1@setup: all
-@COND_PLATFORM_WIN32_1@	(cd $(srcdir)/setup/win32 && $(MAKE) APP_EXE_PATH="..\..\build\msw\mmex.exe" BUILD_OPTS="" CPU_ARCH="" CRT_DLLS="" FORMAT="autoconf" all)
+@COND_PLATFORM_WIN32_1@	(cd $(srcdir)/setup/win && $(MAKE) APP_EXE_PATH="..\..\build\msw\mmex.exe" BUILD_OPTS="" CPU_ARCH="" CRT_DLLS="" FORMAT="autoconf" all)
 
 check: 
 	(cd ./src/tests && $(MAKE) check)

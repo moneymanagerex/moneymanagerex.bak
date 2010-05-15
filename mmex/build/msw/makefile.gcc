@@ -333,7 +333,7 @@ clean:
 	-if exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\libsqlite.a del gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\libsqlite.a
 	-if exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe del gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe
 	$(MAKE) -C ..\..\i18n -f makefile.gcc $(MAKEARGS) clean
-	$(MAKE) -C ..\..\setup\win32 -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C ..\..\setup\win -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C tests -f makefile.gcc $(MAKEARGS) clean
 
 gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\libwxsqlite.a: $(WXSQLITE_OBJECTS)
@@ -360,7 +360,7 @@ i18n:
 	$(MAKE) -C ..\..\i18n -f makefile.gcc $(MAKEARGS) all
 
 setup: all
-	$(MAKE) -C ..\..\setup\win32 -f makefile.gcc $(MAKEARGS) APP_EXE_PATH="..\..\build\msw\gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe" BUILD_OPTS="$(__setup_SHARED)$(__setup_UNICODE)$(__setup_DEBUG)-$(CPU_ARCH)" CPU_ARCH="$(CPU_ARCH)" CRT_DLLS="$(MINGWDIR)\bin\libgcc_s_*.dll" FORMAT="mingw" all
+	$(MAKE) -C ..\..\setup\win -f makefile.gcc $(MAKEARGS) APP_EXE_PATH="..\..\build\msw\gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe" BUILD_OPTS="$(__setup_SHARED)$(__setup_UNICODE)$(__setup_DEBUG)-$(CPU_ARCH)" CPU_ARCH="$(CPU_ARCH)" CRT_DLLS="$(MINGWDIR)\bin\libgcc_s_*.dll" FORMAT="mingw" all
 
 check: 
 	$(MAKE) -C tests -f makefile.gcc $(MAKEARGS) check
