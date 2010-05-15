@@ -2810,7 +2810,9 @@ boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, c
 	
 	db->Close();
 
-        wxString s = wxString::Format(_("\n%s\nNot a writeable database\nYou must have write permission to that file"), dbpath);
+        wxString s = wxString::Format(_("\n%s\nNot a writeable database\nYou must have write permission to that file"), 
+        			         dbpath.c_str());
+
         throw wxSQLite3Exception(err, s);
 }
 //----------------------------------------------------------------------------
