@@ -20,6 +20,9 @@
 #include "util.h"
 #include "defs.h"
 #include "paths.h"
+#include "guiid.h"
+#include "dbwrapper.h"
+#include "mmcoredb.h"
 
 #include <wx/event.h>
 
@@ -42,11 +45,6 @@ END_EVENT_TABLE()
 // EVT_TEXT_ENTER(ID_DIALOG_TRANS_PAYEECOMBO, mmPayeeDialog::OnComboSelected)
 //EVT_TEXT(ID_DIALOG_TRANS_PAYEECOMBO, mmPayeeDialog::OnComboSelected)
    
-mmPayeeDialog::mmPayeeDialog( )
-{
-    payeeID_ = -1;
-}
-
 void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
 {
     long keycode = event.GetKeyCode();
@@ -58,25 +56,21 @@ void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
     }
     else if (keycode == 27)
     {
-        payeeID_ = -1;
+        m_payee_id = -1;
          Close(FALSE);
     }
 
     event.Skip();
 }
 
-mmPayeeDialog::mmPayeeDialog(mmCoreDB* core,
-                             wxWindow* parent, 
-                             bool showSelectButton, 
-                             wxWindowID id, 
-                             const wxString& caption, const wxPoint& pos, 
-                             const wxSize& size, long style )
+mmPayeeDialog::mmPayeeDialog(wxWindow *parent, mmCoreDB *core, bool showSelectButton) : 
+	m_payee_id(-1),
+	m_core(core),
+	showSelectButton_(showSelectButton)
 {
- 
-    core_ = core;
-    payeeID_ = -1;
-    showSelectButton_ = showSelectButton;
-    Create(parent, id, caption, pos, size, style | wxWANTS_CHARS);
+	long style = wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX | wxRESIZE_BORDER | wxWANTS_CHARS;
+
+	Create(parent, ID_DIALOG_PAYEE, _("Organize Payees"), wxDefaultPosition, wxSize(500, 300), style);
 }
 
 bool mmPayeeDialog::Create( wxWindow* parent, wxWindowID id, 
@@ -166,7 +160,7 @@ void mmPayeeDialog::CreateControls()
 
 void mmPayeeDialog::fillControls()
 {
-	wxArrayString filtd = mmDBWrapper::filterPayees(core_->db_.get(), textCtrl->GetValue());
+	wxArrayString filtd = mmDBWrapper::filterPayees(m_core->db_.get(), textCtrl->GetValue());
 
 	listBox_->Clear();
 
@@ -196,8 +190,8 @@ void mmPayeeDialog::OnSelChanged(wxCommandEvent& /*event*/)
 {
 	wxString payee = listBox_->GetStringSelection();
 
-	payeeID_ = payee.IsEmpty() ? -1 : core_->payeeList_.getPayeeID(payee);
-	bool ok = payeeID_ != -1;
+	m_payee_id = payee.IsEmpty() ? -1 : m_core->payeeList_.getPayeeID(payee);
+	bool ok = m_payee_id != -1;
 
 	editButton->Enable(ok);
 	deleteButton->Enable(ok);
@@ -212,27 +206,27 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
         //mmShowErrorMessage(this, _("Type a Payee Name in the Text Box and then press Add."), _("Error"));
         return;
     }
-    if (core_->payeeList_.payeeExists(text))
+    if (m_core->payeeList_.payeeExists(text))
     {
         mmShowErrorMessage(this, _("Payee with same name exists"), _("Error"));
     }
     else
     {
-        core_->payeeList_.addPayee(text);
+        m_core->payeeList_.addPayee(text);
 		textCtrl->SetValue(wxGetEmptyString());
         fillControls();
 
         listBox_->SetStringSelection(text);
 		
 		// SetStringSelection does not emit event, so we need to do it manually.
-		// This is important because it is where payeeID_ gets set
+		// This is important because it is where m_payee_id gets set
 		OnSelChanged(event);
     }
 }
  
 void mmPayeeDialog::OnDelete(wxCommandEvent& event)
 {
-    if (!core_->payeeList_.deletePayee(payeeID_))
+    if (!m_core->payeeList_.deletePayee(m_payee_id))
     {
         mmShowErrorMessage(this, _("Payee is in use"), _("Error"));
         return;
@@ -244,7 +238,7 @@ void mmPayeeDialog::OnDelete(wxCommandEvent& event)
  
 void mmPayeeDialog::OnBSelect(wxCommandEvent& /*event*/)
 {
-    if (payeeID_ != -1)
+    if (m_payee_id != -1)
     {
         EndModal(wxID_OK);
         return;
@@ -270,8 +264,8 @@ void mmPayeeDialog::OnEdit(wxCommandEvent& event)
 	wxString newName = wxGetTextFromUser(mesg, _("Edit Payee Name"), oldname);
     if (newName != wxGetEmptyString())
 	{
-		core_->payeeList_.updatePayee(payeeID_, newName);
-		core_->bTransactionList_.updateAllTransactionsForPayee(core_, payeeID_);
+		m_core->payeeList_.updatePayee(m_payee_id, newName);
+		m_core->bTransactionList_.updateAllTransactionsForPayee(m_core, m_payee_id);
 		editButton->Disable();
 		fillControls();
 		

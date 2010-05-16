@@ -37,6 +37,8 @@
 #include "categdialog.h"
 #include "payeedialog.h"
 #include "paths.h"
+#include "helpers.h"
+
 #include <algorithm>
 #include <vector>
 
@@ -649,10 +651,10 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
 
 void mmFilterTransactionsDialog::OnPayee(wxCommandEvent& /*event*/)
 {
-    mmPayeeDialog* dlg = new mmPayeeDialog(core_, this);    
+    boost::shared_ptr<mmPayeeDialog> dlg(new mmPayeeDialog(this, core_), mmex::Destroy);    
     if ( dlg->ShowModal() == wxID_OK )
     {
-        payeeID_ = dlg->payeeID_;
+        payeeID_ = dlg->getPayeeId();
         if (payeeID_ == -1)
         {
             btnPayee->SetLabel(wxT("Select Payee"));
@@ -662,5 +664,4 @@ void mmFilterTransactionsDialog::OnPayee(wxCommandEvent& /*event*/)
             payeeID_, categID_, subcategID_);
         btnPayee->SetLabel(mmReadyDisplayString(payeeName));
     }
-    dlg->Destroy();
 }

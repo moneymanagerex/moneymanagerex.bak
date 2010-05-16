@@ -2861,30 +2861,27 @@ void mmGUIFrame::OnAccountList(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnOrgCategories(wxCommandEvent& /*event*/)
 {
-    mmCategDialog *dlg = new mmCategDialog(m_core.get(), this, false);
+    boost::shared_ptr<mmCategDialog> dlg(new mmCategDialog(m_core.get(), this, false), mmex::Destroy);
     dlg->ShowModal();
-    dlg->Destroy();
 }
 //----------------------------------------------------------------------------
  
 void mmGUIFrame::OnOrgPayees(wxCommandEvent& /*event*/)
 {
-    mmPayeeDialog *dlg = new mmPayeeDialog(m_core.get(), this, false);
+    boost::shared_ptr<mmPayeeDialog> dlg(new mmPayeeDialog(this, m_core.get(), false), mmex::Destroy);
     dlg->ShowModal();
-    dlg->Destroy();
 }
 //----------------------------------------------------------------------------
 
 void mmGUIFrame::OnBudgetSetupDialog(wxCommandEvent& /*event*/)
 {
-     if (!m_db.get())
+     if (!m_db)
        return;
 
-    mmBudgetYearDialog *dlg = new mmBudgetYearDialog(m_db.get(), this);
+    boost::shared_ptr<mmBudgetYearDialog> dlg(new mmBudgetYearDialog(m_db.get(), this), mmex::Destroy);
     dlg->ShowModal();
     createHomePage();
     updateNavTreeControl();    
-    dlg->Destroy();
 }
 //----------------------------------------------------------------------------
 

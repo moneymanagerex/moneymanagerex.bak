@@ -19,55 +19,37 @@
 #ifndef _MM_EX_PAYEEDIALOG_H_
 #define _MM_EX_PAYEEDIALOG_H_
 
-#define SYMBOL_PAYEEDIALOG_STYLE wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX|wxRESIZE_BORDER
-#define SYMBOL_PAYEEDIALOG_TITLE _("Organize Payees")
-#define SYMBOL_PAYEEDIALOG_IDNAME ID_DIALOG_PAYEE
-#define SYMBOL_PAYEEDIALOG_SIZE wxSize(500, 300)
-#define SYMBOL_PAYEEDIALOG_POSITION wxDefaultPosition
-
-#include "guiid.h"
-#include "dbwrapper.h"
-#include "mmcoredb.h"
 #include "wxautocombobox.h"
 
-class mmPayeeListBoxItem: public wxClientData
-{
-public:
-    mmPayeeListBoxItem(int payeeID) 
-        : payeeID_(payeeID){}
-          
-    int getPayeeID() { return payeeID_; }
+class mmCoreDB;
 
-private:
-    int payeeID_;
-};
 
 class mmPayeeDialog : public wxDialog
 {    
-    DECLARE_DYNAMIC_CLASS( mmPayeeDialog )
+    DECLARE_DYNAMIC_CLASS(mmPayeeDialog)
     DECLARE_EVENT_TABLE()
 
 public:
-    mmPayeeDialog();
-    mmPayeeDialog(
-        mmCoreDB* core,
-        wxWindow* parent, 
-        bool showSelectButton = true, 
-        wxWindowID id = SYMBOL_PAYEEDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_PAYEEDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_PAYEEDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_PAYEEDIALOG_SIZE, 
-        long style = SYMBOL_PAYEEDIALOG_STYLE );
+    mmPayeeDialog() : m_payee_id(-1) {}
+    mmPayeeDialog(wxWindow* parent, mmCoreDB* core, bool showSelectButton = true);
 
-    bool Create( wxWindow* parent, wxWindowID id = SYMBOL_PAYEEDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_PAYEEDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_PAYEEDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_PAYEEDIALOG_SIZE, 
-        long style = SYMBOL_PAYEEDIALOG_STYLE );
+    int getPayeeId() const { return m_payee_id; }
 
+private:
+    int m_payee_id;
+    mmCoreDB *m_core;
+    bool showSelectButton_;
+    wxListBox* listBox_;
+    wxButton* addButton;
+    wxButton* editButton;
+    wxButton* deleteButton;
+    wxButton* selectButton;
+    wxTextCtrl* textCtrl;
+    wxAutoComboBox* payeeComboBox_;
+
+    bool Create(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style);
     void CreateControls();
-    
-    // utility functions
+
     void OnOk(wxCommandEvent& event);
     void OnAdd(wxCommandEvent& event);
     void OnDelete(wxCommandEvent& event);
@@ -76,27 +58,13 @@ public:
     void OnListKeyDown(wxKeyEvent &event);
     
     void fillControls();
-	void OnTextCtrlChanged(wxCommandEvent& event);
+    void OnTextCtrlChanged(wxCommandEvent& event);
     void OnSelChanged(wxCommandEvent& event);
     void OnComboSelected(wxCommandEvent& event);
     void OnDoubleClicked(wxCommandEvent& event);
     void OnFocus(wxFocusEvent& event);
     void OnSetFocus(wxFocusEvent& event);
-
-private:
-    mmCoreDB* core_;
-    wxListBox* listBox_;
-    bool showSelectButton_;
-    wxButton* addButton;
-    wxButton* editButton;
-    wxButton* deleteButton;
-    wxButton* selectButton;
-    wxTextCtrl* textCtrl;
-    wxAutoComboBox* payeeComboBox_;
-
-public:
-    int payeeID_;
 };
 
-#endif
+#endif // _MM_EX_PAYEEDIALOG_H_
 
