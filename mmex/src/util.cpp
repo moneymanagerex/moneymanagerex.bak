@@ -26,7 +26,6 @@
 #include "paths.h"
 #include "platfdep.h"
 #include "helpers.h"
-#include "wxautocombobox.h"
 //----------------------------------------------------------------------------
 #include <wx/sound.h>
 #include <boost/shared_ptr.hpp>
@@ -1450,47 +1449,3 @@ bool mmex::formatCurrencyToDouble( const wxString& str, double& val )
         return !s.empty() && s.ToDouble(&val);
 }
 //----------------------------------------------------------------------------
-
-#if wxUSE_COMBOBOX
-
-IMPLEMENT_DYNAMIC_CLASS( wxAutoComboBox, wxComboBox )
-
-BEGIN_EVENT_TABLE( wxAutoComboBox, wxComboBox )
-        EVT_KEY_UP( wxAutoComboBox::OnKeyUp )
-END_EVENT_TABLE()
-
-wxAutoComboBox::wxAutoComboBox( wxWindow* parent, wxWindowID id, const wxString& value, const wxPoint& pos, const wxSize& size, const wxArrayString& choices, long style, const wxValidator& validator, const wxString& name )
-                : wxComboBox( parent, id, value, pos, size, choices, style, validator, name )
-{
-}
-
-
-void wxAutoComboBox::OnKeyUp( wxKeyEvent &event )
-{
-        int nKeyCode = event.GetKeyCode();
-
-        if ( ( ( nKeyCode >= 32 ) && ( nKeyCode <= 126 ) ) || ( ( nKeyCode >= 128 ) && ( nKeyCode <= 254 ) ) ) {
-                wxString txtValue = GetValue();
-
-                long start = -1;
-                long end = -1;
-                GetSelection( &start, &end );
-
-                wxString EnteredValue = txtValue.Left( start );
-
-                for ( int i = 0; i < static_cast<int>( this->GetCount() ); ++i ) {
-                        if ( this->GetString( i ).Left( EnteredValue.Length() ).CmpNoCase( EnteredValue ) == 0 ) {
-                                SetSelection( i );
-                                SetSelection( start, static_cast<long>( GetValue().Length() ) );
-                                return;
-                        }
-                }
-
-        }
-
-        event.Skip( true );
-}
-#endif // wxUSE_COMBOBOX
-
-
-

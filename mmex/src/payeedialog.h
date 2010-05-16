@@ -19,7 +19,7 @@
 #ifndef _MM_EX_PAYEEDIALOG_H_
 #define _MM_EX_PAYEEDIALOG_H_
 
-#include "wxautocombobox.h"
+#include "defs.h"
 
 class mmCoreDB;
 
@@ -44,7 +44,6 @@ private:
     wxButton* deleteButton;
     wxButton* selectButton;
     wxTextCtrl* textCtrl;
-    wxAutoComboBox* payeeComboBox_;
 
     mmPayeeDialog() : m_payee_id(-1) {}
 

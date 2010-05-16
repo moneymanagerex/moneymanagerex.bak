@@ -19,10 +19,11 @@
 #ifndef _MM_EX_UTIL_H_
 #define _MM_EX_UTIL_H_
 
-#include <wx/wxprec.h>
-#include "boost/shared_ptr.hpp"
 #include "defs.h"
 #include "mmcurrency.h"
+
+#include <wx/wxprec.h>
+#include <boost/shared_ptr.hpp>
 
 class mmCoreDB;
 
