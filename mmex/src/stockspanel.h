@@ -22,7 +22,7 @@
 #include "mmpanelbase.h"
 #include "guiid.h"
 #include "util.h"
-#include <awx/led.h>
+#include "led.h"
 #include <wx/tglbtn.h>
 #include "mmyahoo.h"
 
