@@ -177,10 +177,8 @@ void mmPayeeDialog::OnTextCtrlChanged(wxCommandEvent& event)
 	wxString payee = listBox_->GetStringSelection();
 	fillControls();
 	
-	if (!listBox_->IsEmpty()) {
-		if (!listBox_->SetStringSelection(payee)) {
-			listBox_->Select(0);
-		}
+	if (!listBox_->IsEmpty() && !listBox_->SetStringSelection(payee)) {
+		listBox_->Select(0);
 	}
 
 	OnSelChanged(event);
@@ -201,8 +199,7 @@ void mmPayeeDialog::OnSelChanged(wxCommandEvent& /*event*/)
 void mmPayeeDialog::OnAdd(wxCommandEvent& event)
 {
     wxString text = wxGetTextFromUser(_("Enter the name of the payee to add:"), _("Add Payee"), textCtrl->GetValue());
-	if (text == wxGetEmptyString())
-    {
+    if (text.IsEmpty()) {
         //mmShowErrorMessage(this, _("Type a Payee Name in the Text Box and then press Add."), _("Error"));
         return;
     }
@@ -213,7 +210,7 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
     else
     {
         m_core->payeeList_.addPayee(text);
-		textCtrl->SetValue(wxGetEmptyString());
+	textCtrl->Clear();
         fillControls();
 
         listBox_->SetStringSelection(text);
@@ -231,7 +228,7 @@ void mmPayeeDialog::OnDelete(wxCommandEvent& event)
         mmShowErrorMessage(this, _("Payee is in use"), _("Error"));
         return;
     }
-	textCtrl->SetValue(wxGetEmptyString());
+	textCtrl->Clear();
     fillControls();
 	OnSelChanged(event);
 }
@@ -263,7 +260,7 @@ void mmPayeeDialog::OnEdit(wxCommandEvent& event)
 		fillControls();
 		
 		// Now we need to make sure that the edited name is selected after the dialog is closed
-		textCtrl->SetValue(wxGetEmptyString());
+		textCtrl->Clear();
 		listBox_->SetStringSelection(newName);
 		OnSelChanged(event);
 	}
