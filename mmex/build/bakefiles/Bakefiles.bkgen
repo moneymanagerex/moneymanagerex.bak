@@ -13,7 +13,7 @@
     <input>
         mmex.bkl
         ../../src/tests/*.bkl
-        ../../runtime/en/*.bkl
+        ../../i18n/*.bkl
         ../../setup/win/*.bkl
     </input>
 
@@ -27,14 +27,14 @@
 
     <!-- Add these formats for given .bkl -->
 
-    <add-formats files="../../runtime/en/*.bkl,../../setup/win/*.bkl">
+    <add-formats files="../../i18n/*.bkl,../../setup/win/*.bkl">
         gnu
     </add-formats>
 
 
     <!-- Do not generate these formats for given .bkl -->
 
-    <del-formats files="../../runtime/en/*.bkl,../../setup/win/*.bkl">
+    <del-formats files="../../i18n/*.bkl,../../setup/win/*.bkl">
         msvs2003prj
     </del-formats>
 
