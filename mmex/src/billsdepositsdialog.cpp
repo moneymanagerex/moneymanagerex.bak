@@ -25,6 +25,7 @@
 #include "splittransactionsdialog.h"
 #include "defs.h"
 #include "paths.h"
+#include "helpers.h"
 
 #include <limits>
 
@@ -571,10 +572,10 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 	}
 	else
 	{
-	    mmPayeeDialog *dlg = new mmPayeeDialog(core_, this);    
+	    boost::shared_ptr<mmPayeeDialog> dlg(new mmPayeeDialog(this, core_), mmex::Destroy);    
 	    if ( dlg->ShowModal() == wxID_OK )
 	    {
-	            payeeID_ = dlg->payeeID_;
+	            payeeID_ = dlg->getPayeeId();
 	            if (payeeID_ == -1)
             	{
 	                bPayee_->SetLabel(wxT("Select Payee"));
@@ -613,8 +614,7 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 	    }
 	    else
 	    {
-	        wxString payeeName = mmDBWrapper::getPayee(db_, 
-	            payeeID_, categID_, subcategID_);
+	        wxString payeeName = mmDBWrapper::getPayee(db_, payeeID_, categID_, subcategID_);
 	        if (payeeName.IsEmpty())
 	        {
 	            payeeID_ = -1;
@@ -629,8 +629,6 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 	        }
 	        
 	    }
-	
-    	dlg->Destroy();
 	}
 }
 

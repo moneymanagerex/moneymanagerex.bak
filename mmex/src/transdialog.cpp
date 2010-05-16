@@ -25,6 +25,7 @@
 #include "splittransactionsdialog.h"
 #include "defs.h"
 #include "paths.h"
+#include "helpers.h"
 
 #include <sstream>
 
@@ -488,10 +489,11 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 	}
 	else
 	{
-	    mmPayeeDialog *dlg = new mmPayeeDialog(core_, this);    
+	    boost::shared_ptr<mmPayeeDialog> dlg(new mmPayeeDialog(this, core_), mmex::Destroy);
+
 	    if ( dlg->ShowModal() == wxID_OK )
 	    {
-	            payeeID_ = dlg->payeeID_;
+	            payeeID_ = dlg->getPayeeId();
 	            if (payeeID_ == -1)
             	{
 	                bPayee_->SetLabel(wxT("Select Payee"));
@@ -546,8 +548,6 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 	        }
 	        
 	    }
-	
-    	dlg->Destroy();
 	}
 }
 void mmTransDialog::OnAutoTransNum(wxCommandEvent& /*event*/)

@@ -22,14 +22,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <wx/debug.h>
 //----------------------------------------------------------------------------
 
-bool mmex::Destroy(wxWindow *w)
+bool mmex::Destroy(wxWindow *wnd)
 {
-        bool ok = w != 0;
+        bool ok = wnd ? wnd->Destroy() : true;
         wxASSERT(ok);
-
-        ok = w->Destroy();
-        wxASSERT(ok);
-
         return ok;
 }
 //----------------------------------------------------------------------------
