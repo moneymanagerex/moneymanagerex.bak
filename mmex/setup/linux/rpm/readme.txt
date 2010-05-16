@@ -1,3 +1,5 @@
+Firstly rename source directory mmex to mmex-X.X.X.X and compress it as mmex-X.X.X.X.tar.gz
+
 #rpmdev-setuptree
 
 cp mmex.spec ~/rpmbuild/SPECS
@@ -8,6 +10,8 @@ cd ~/rpmbuild/SPECS
 rpmbuild -ba mmex.spec
 
 # rpmdev-wipetree
+
+P.S. OpenSUSE uses /usr/src/packages instead of ~/rpmbuild.
 
 
                                 REMINDER
