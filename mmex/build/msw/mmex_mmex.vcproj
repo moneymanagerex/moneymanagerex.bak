@@ -27,7 +27,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -54,7 +54,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -65,7 +65,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -88,7 +88,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -115,7 +115,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -126,7 +126,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -149,7 +149,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -176,7 +176,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -187,7 +187,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -210,7 +210,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -237,7 +237,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -248,7 +248,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -270,7 +270,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -301,7 +301,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -312,7 +312,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -334,7 +334,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -365,7 +365,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -376,7 +376,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -398,7 +398,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -429,7 +429,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -440,7 +440,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -462,7 +462,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -493,7 +493,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -504,7 +504,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -528,7 +528,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -555,7 +555,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -566,7 +566,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -590,7 +590,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -617,7 +617,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -628,7 +628,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -652,7 +652,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -679,7 +679,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -690,7 +690,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -714,7 +714,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -741,7 +741,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -752,7 +752,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -775,7 +775,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -806,7 +806,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -817,7 +817,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -840,7 +840,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -871,7 +871,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -882,7 +882,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -905,7 +905,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -936,7 +936,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -947,7 +947,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -970,7 +970,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1001,7 +1001,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1012,7 +1012,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_lib\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1035,7 +1035,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1062,7 +1062,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1073,7 +1073,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1096,7 +1096,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1123,7 +1123,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1134,7 +1134,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1157,7 +1157,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1184,7 +1184,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1195,7 +1195,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\msw;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1218,7 +1218,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1245,7 +1245,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1256,7 +1256,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1278,7 +1278,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1309,7 +1309,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1320,7 +1320,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1342,7 +1342,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1373,7 +1373,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1384,7 +1384,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1406,7 +1406,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1437,7 +1437,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1448,7 +1448,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswd;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1470,7 +1470,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1501,7 +1501,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1512,7 +1512,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1536,7 +1536,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1563,7 +1563,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1574,7 +1574,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1598,7 +1598,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1625,7 +1625,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1636,7 +1636,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1660,7 +1660,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1687,7 +1687,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1698,7 +1698,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswu;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1722,7 +1722,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zi"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="2"
@@ -1749,7 +1749,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1760,7 +1760,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;NDEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1783,7 +1783,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1814,7 +1814,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1825,7 +1825,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1848,7 +1848,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1879,7 +1879,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1890,7 +1890,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1913,7 +1913,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -1944,7 +1944,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -1955,7 +1955,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswud;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -1978,7 +1978,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="TRUE"
@@ -2009,7 +2009,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -2020,7 +2020,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;__WXDEBUG__;__WXMSW__;_DEBUG;_DEBUG;NOPCH;_WINDOWS"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\include;..\..\libs\sqlite;..\..\libs\wxsqlite"/>
+				AdditionalIncludeDirectories="$(WXWIN)\lib\vc_dll\mswuh;$(WXWIN)\include;$(BOOSTDIR);..\..\libs\sqlite;..\..\libs\wxsqlite"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -2303,6 +2303,9 @@
 			</File>
 			<File
 				RelativePath="..\..\src\htmlbuilder.h">
+			</File>
+			<File
+				RelativePath="..\..\src\led.h">
 			</File>
 			<File
 				RelativePath="..\..\src\maincurrencydialog.h">

@@ -38,8 +38,8 @@ SQLITE_OBJECTS =  \
 MMEX_CXXFLAGS = -DHAVE_W32API_H $(__WXUNICODE_DEFINE_p) $(__WXDEBUG_DEFINE_p) \
 	-D__WXMSW__ -I$(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) -I$(WX_DIR)\include \
 	-mthreads -W -Wall $(__DEBUGINFO) $(__OPTIMIZEFLAG) $(__DEBUG_DEFINE_p) \
-	-I$(BOOST_DIR) -I..\..\include -I..\..\libs\sqlite -I..\..\libs\wxsqlite \
-	-DNOPCH $(CPPFLAGS) $(CXXFLAGS)
+	-I$(BOOST_DIR) -I..\..\libs\sqlite -I..\..\libs\wxsqlite -DNOPCH $(CPPFLAGS) \
+	$(CXXFLAGS)
 MMEX_OBJECTS =  \
 	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_aboutdialog.o \
 	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_appstartdialog.o \
@@ -567,7 +567,7 @@ gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 	$(CXX) -c -o $@ $(MMEX_CXXFLAGS) $(CPPDEPS) $<
 
 gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_resources_mmex_rc.o: ../../resources/mmex.rc
-	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include $(__DEBUG_DEFINE_p_3) --include-dir $(BOOST_DIR) --include-dir ../../include --include-dir ../../libs/sqlite --include-dir ../../libs/wxsqlite --define NOPCH
+	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include $(__DEBUG_DEFINE_p_3) --include-dir $(BOOST_DIR) --include-dir ../../libs/sqlite --include-dir ../../libs/wxsqlite --define NOPCH
 
 .PHONY: all install uninstall clean install_mmex uninstall_mmex i18n setup check
 

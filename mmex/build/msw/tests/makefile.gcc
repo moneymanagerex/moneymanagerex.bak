@@ -50,8 +50,8 @@ MMEX_TESTS_CXXFLAGS = -DHAVE_W32API_H $(__WXUNICODE_DEFINE_p) \
 	$(__WXDEBUG_DEFINE_p) -D__WXMSW__ \
 	-I$(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) -I$(WX_DIR)\include -mthreads -W \
 	-Wall $(__DEBUGINFO) $(__OPTIMIZEFLAG) $(__DEBUG_DEFINE_p) -I$(BOOST_DIR) \
-	-I..\..\..\include -I..\..\..\libs\sqlite -I..\..\..\libs\wxsqlite -DNOPCH \
-	-I..\..\..\src -I..\..\..\libs\UnitTest++ $(CPPFLAGS) $(CXXFLAGS)
+	-I..\..\..\libs\sqlite -I..\..\..\libs\wxsqlite -DNOPCH -I..\..\..\src \
+	-I..\..\..\libs\UnitTest++ $(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
 	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_aboutdialog.o \
 	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_appstartdialog.o \
@@ -591,7 +591,7 @@ gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 	$(CXX) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(CPPDEPS) $<
 
 gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_mmex_tests_rc.o: ../../../src/tests/mmex_tests.rc
-	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include $(__DEBUG_DEFINE_p_4) --include-dir $(BOOST_DIR) --include-dir ../../../include --include-dir ../../../libs/sqlite --include-dir ../../../libs/wxsqlite --define NOPCH --include-dir ../../../src --include-dir ../../../libs/UnitTest++
+	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include $(__DEBUG_DEFINE_p_4) --include-dir $(BOOST_DIR) --include-dir ../../../libs/sqlite --include-dir ../../../libs/wxsqlite --define NOPCH --include-dir ../../../src --include-dir ../../../libs/UnitTest++
 
 .PHONY: all install uninstall clean check
 

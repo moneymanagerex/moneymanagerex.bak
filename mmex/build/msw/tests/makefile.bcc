@@ -58,9 +58,9 @@ MMEX_TESTS_CXXFLAGS = -I$(BCCDIR)\include $(__WXUNICODE_DEFINE_p) \
 	$(__WXDEBUG_DEFINE_p) -D__WXMSW__ \
 	-I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
 	-I$(WX_DIR)\include -tWM $(__DEBUGINFO) $(__OPTIMIZEFLAG) \
-	$(__DEBUG_DEFINE_p) -I$(BOOST_DIR) -I..\..\..\include \
-	-I..\..\..\libs\sqlite -I..\..\..\libs\wxsqlite -DNOPCH -I..\..\..\src \
-	-I..\..\..\libs\UnitTest++ $(CPPFLAGS) $(CXXFLAGS)
+	$(__DEBUG_DEFINE_p) -I$(BOOST_DIR) -I..\..\..\libs\sqlite \
+	-I..\..\..\libs\wxsqlite -DNOPCH -I..\..\..\src -I..\..\..\libs\UnitTest++ \
+	$(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_aboutdialog.obj \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_appstartdialog.obj \
@@ -588,5 +588,5 @@ bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 	$(CXX) -q -c -P -o$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\tests\utils.cpp
 
 bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_mmex_tests.res: ..\..\..\src\tests\mmex_tests.rc
-	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) -d__WXMSW__ -i$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) -i$(WX_DIR)\include $(__DEBUG_DEFINE_p_4) -i$(BOOST_DIR) -i..\..\..\include -i..\..\..\libs\sqlite -i..\..\..\libs\wxsqlite -dNOPCH -i..\..\..\src -i..\..\..\libs\UnitTest++ ..\..\..\src\tests\mmex_tests.rc
+	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) -d__WXMSW__ -i$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) -i$(WX_DIR)\include $(__DEBUG_DEFINE_p_4) -i$(BOOST_DIR) -i..\..\..\libs\sqlite -i..\..\..\libs\wxsqlite -dNOPCH -i..\..\..\src -i..\..\..\libs\UnitTest++ ..\..\..\src\tests\mmex_tests.rc
 
