@@ -65,7 +65,7 @@ UNITTESTPP_OBJECTS =  \
 	UnitTestPP_XmlTestReporter.o \
 	UnitTestPP_SignalTranslator.o \
 	UnitTestPP_TimeHelpers.o
-MMEX_TESTS_CXXFLAGS = -I$(srcdir)/../../include -I$(srcdir)/../../libs/sqlite \
+MMEX_TESTS_CXXFLAGS = -I$(srcdir)/../../libs/sqlite \
 	-I$(srcdir)/../../libs/wxsqlite -DNOPCH -I$(srcdir)/../../src \
 	-I$(srcdir)/../../libs/UnitTest++ -DIMPLEMENT_WXWIN_MAIN= $(WX_CXXFLAGS) \
 	$(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
@@ -467,7 +467,7 @@ mmex_tests_utils.o: $(srcdir)/../../src/tests/utils.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/utils.cpp
 
 mmex_tests_mmex_tests_rc.o: $(srcdir)/../../src/tests/mmex_tests.rc
-	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/../../include --include-dir $(srcdir)/../../libs/sqlite --include-dir $(srcdir)/../../libs/wxsqlite --define NOPCH --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../libs/UnitTest++ --define IMPLEMENT_WXWIN_MAIN=
+	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/../../libs/sqlite --include-dir $(srcdir)/../../libs/wxsqlite --define NOPCH --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../libs/UnitTest++ --define IMPLEMENT_WXWIN_MAIN=
 
 
 # Include dependency info, if present:
