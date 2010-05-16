@@ -30,7 +30,6 @@ class mmPayeeDialog : public wxDialog
     DECLARE_EVENT_TABLE()
 
 public:
-    mmPayeeDialog() : m_payee_id(-1) {}
     mmPayeeDialog(wxWindow* parent, mmCoreDB* core, bool showSelectButton = true);
 
     int getPayeeId() const { return m_payee_id; }
@@ -47,17 +46,17 @@ private:
     wxTextCtrl* textCtrl;
     wxAutoComboBox* payeeComboBox_;
 
-    bool Create(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style);
-    void CreateControls();
+    mmPayeeDialog() : m_payee_id(-1) {}
 
-    void OnOk(wxCommandEvent& event);
+    void do_create(wxWindow* parent);
+    void CreateControls();
+    void fillControls();
+
     void OnAdd(wxCommandEvent& event);
     void OnDelete(wxCommandEvent& event);
     void OnBSelect(wxCommandEvent& event);
     void OnEdit(wxCommandEvent& event);
     void OnListKeyDown(wxKeyEvent &event);
-    
-    void fillControls();
     void OnTextCtrlChanged(wxCommandEvent& event);
     void OnSelChanged(wxCommandEvent& event);
     void OnComboSelected(wxCommandEvent& event);
@@ -67,4 +66,3 @@ private:
 };
 
 #endif // _MM_EX_PAYEEDIALOG_H_
-
