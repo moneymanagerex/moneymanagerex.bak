@@ -2,7 +2,7 @@
 
 <!-- 
     MMEX build scripts.
-    Copyright (C) 2009 VaDiM.
+    Copyright (C) 2009, 2010 VaDiM.
     
     Common templates.
 -->
@@ -202,7 +202,6 @@ PATH. Accepted values: AMD64, IA64.
         <cxx-rtti>on</cxx-rtti>
 
         <include cond="isdefined('BOOST_DIR')">$(BOOST_DIR)</include>
-        <include>$(SRCDIR)/include</include>
         <include>$(SRCDIR)/libs/sqlite</include>
         <include>$(SRCDIR)/libs/wxsqlite</include>
 

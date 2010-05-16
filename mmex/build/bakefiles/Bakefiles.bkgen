@@ -2,7 +2,7 @@
 
 <!-- 
     MMEX build scripts.
-    Copyright (C) 2009 VaDiM.
+    Copyright (C) 2009, 2010 VaDiM.
 -->
 
 <bakefile-gen xmlns="http://www.bakefile.org/schema/bakefile-gen">
@@ -14,7 +14,7 @@
         mmex.bkl
         ../../src/tests/*.bkl
         ../../runtime/en/*.bkl
-        ../../setup/win32/*.bkl
+        ../../setup/win/*.bkl
     </input>
 
     
@@ -27,14 +27,14 @@
 
     <!-- Add these formats for given .bkl -->
 
-    <add-formats files="../../runtime/en/*.bkl,../../setup/win32/*.bkl">
+    <add-formats files="../../runtime/en/*.bkl,../../setup/win/*.bkl">
         gnu
     </add-formats>
 
 
     <!-- Do not generate these formats for given .bkl -->
 
-    <del-formats files="../../runtime/en/*.bkl,../../setup/win32/*.bkl">
+    <del-formats files="../../runtime/en/*.bkl,../../setup/win/*.bkl">
         msvs2003prj
     </del-formats>
 

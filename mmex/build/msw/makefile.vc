@@ -41,9 +41,9 @@ MMEX_CXXFLAGS = /MD$(__DEBUGINFO_1) /DWIN32 $(__WXUNICODE_DEFINE_p) \
 	/I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
 	/I$(WX_DIR)\include /W4 $(__DEBUGINFO) $(____DEBUGINFO) \
 	/Fdvc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.pdb \
-	$(__OPTIMIZEFLAG) $(__DEBUG_DEFINE_p) /I$(BOOST_DIR) /I..\..\include \
-	/I..\..\libs\sqlite /I..\..\libs\wxsqlite /DNOPCH /D_WINDOWS /EHsc /GR \
-	$(__mmex_CL_FLAGS) $(CPPFLAGS) $(CXXFLAGS)
+	$(__OPTIMIZEFLAG) $(__DEBUG_DEFINE_p) /I$(BOOST_DIR) /I..\..\libs\sqlite \
+	/I..\..\libs\wxsqlite /DNOPCH /D_WINDOWS /EHsc /GR $(__mmex_CL_FLAGS) \
+	$(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_aboutdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_appstartdialog.obj \
@@ -632,5 +632,5 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_CXXFLAGS) ..\..\src\win\platfdep.cpp
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_resources_mmex.res: ..\..\resources\mmex.rc
-	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include $(____DEBUGINFO_38_p_1) $(__DEBUG_DEFINE_p_3) /i $(BOOST_DIR) /i ..\..\include /i ..\..\libs\sqlite /i ..\..\libs\wxsqlite /d NOPCH /d _WINDOWS ..\..\resources\mmex.rc
+	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include $(____DEBUGINFO_38_p_1) $(__DEBUG_DEFINE_p_3) /i $(BOOST_DIR) /i ..\..\libs\sqlite /i ..\..\libs\wxsqlite /d NOPCH /d _WINDOWS ..\..\resources\mmex.rc
 
