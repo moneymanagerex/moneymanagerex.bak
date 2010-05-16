@@ -20,6 +20,7 @@
 #define _MM_EX_HTMLBUILDER_H_
 
 #include "defs.h"
+#include <vector>
 
 class mmHTMLBuilder
 {

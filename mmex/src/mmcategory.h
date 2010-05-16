@@ -20,7 +20,10 @@
 #define _MM_EX_MMCATEGORY_H_
 
 #include "defs.h"
-#include "boost/weak_ptr.hpp"
+
+#include <boost/weak_ptr.hpp>
+#include <vector>
+
 
 class mmCategory
 {

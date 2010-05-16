@@ -25,6 +25,7 @@
 //----------------------------------------------------------------------------
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
+#include <vector>
 //----------------------------------------------------------------------------
 class mmCoreDB;
 class mmBankTransaction;

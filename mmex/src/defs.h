@@ -19,31 +19,31 @@
 #ifndef _MM_EX_DEFS_H_
 #define _MM_EX_DEFS_H_
 
-// For compilers that support precompilation, includes "wx/wx.h".
-#include "wx/wxprec.h"
+// For compilers that support precompilation, includes "wx/wx.h>.
+#include <wx/wxprec.h>
 
 #ifdef __BORLANDC__
     #pragma hdrstop
 #endif
 
 #ifndef WX_PRECOMP
-    #include "wx/wx.h"
+    #include <wx/wx.h>
 #endif
 
-#include "wx/splitter.h"
-#include "wx/treectrl.h"
-#include "wx/listctrl.h"
-#include "wx/fileconf.h"
-#include "wx/filename.h"
-#include "wx/splitter.h"
-#include "wx/treectrl.h"
-#include "wx/listctrl.h"
-#include "wx/gdicmn.h"
-#include "wx/string.h"
-#include "wx/datectrl.h"
-#include "wx/datetime.h"
-#include "wx/wxsqlite3.h"
-#include "wx/progdlg.h"
+#include <wx/splitter.h>
+#include <wx/treectrl.h>
+#include <wx/listctrl.h>
+#include <wx/fileconf.h>
+#include <wx/filename.h>
+#include <wx/splitter.h>
+#include <wx/treectrl.h>
+#include <wx/listctrl.h>
+#include <wx/gdicmn.h>
+#include <wx/string.h>
+#include <wx/datectrl.h>
+#include <wx/datetime.h>
+#include <wx/wxsqlite3.h>
+#include <wx/progdlg.h>
 #include <wx/utils.h>
 #include <wx/splash.h>
 #include <wx/imagpng.h> 
@@ -53,20 +53,16 @@
 #include <wx/wfstream.h>
 #include <wx/txtstrm.h>
 #include <wx/url.h>
-#include "wx/html/htmlwin.h"
-#include "wx/html/htmlproc.h"
+#include <wx/html/htmlwin.h>
+#include <wx/html/htmlproc.h>
 #include <wx/html/htmprint.h>
-#include "wx/fs_inet.h"
+#include <wx/fs_inet.h>
 #include <wx/listbook.h>
-#include "wx/imaglist.h"
-#include "wx/popupwin.h"
+#include <wx/imaglist.h>
+#include <wx/popupwin.h>
 #include <wx/dir.h>
 #include <wx/stdpaths.h>
 #include <wx/app.h>
 
-#include <vector>
-#include <string.h>
-
-#endif
-
+#endif // _MM_EX_DEFS_H_
 
