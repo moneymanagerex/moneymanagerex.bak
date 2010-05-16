@@ -302,13 +302,6 @@ void mmTransDialog::CreateControls()
     itemFlexGridSizer8->Add(itemStaticText9, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    //wxBoxSizer* itemBoxSizerPayee = new wxBoxSizer(wxHORIZONTAL);
-    //itemFlexGridSizer8->Add(itemBoxSizerPayee, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    //payeeComboBox_ = new wxAutoComboBox(itemPanel7,
-          //ID_DIALOG_TRANS_PAYEECOMBO, wxT(""), wxDefaultPosition, wxSize(100, -1));
-    //itemBoxSizerPayee->Add(payeeComboBox_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL);
-
     bPayee_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONPAYEE, 
         _("Select Payee"), wxDefaultPosition, wxSize(200, -1), 0 );
     itemFlexGridSizer8->Add(bPayee_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
