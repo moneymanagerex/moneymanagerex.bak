@@ -162,19 +162,19 @@ void SplitTransactionDialog::OnButtonAddClick( wxCommandEvent& event )
     int categID = -1;
     int subcategID = -1;
     double amount  = 0.0;
-    SplitDetailDialog* sdd = new SplitDetailDialog(core_, _("&Select Category"), &categID, &subcategID, &amount, this);
-    if (sdd->ShowModal() == wxID_OK)
+    SplitDetailDialog sdd(core_, _("&Select Category"), &categID, &subcategID, &amount, this);
+    if (sdd.ShowModal() == wxID_OK)
     {
         int numToInsert = lcSplit_->GetItemCount();
-        lcSplit_->InsertItem(numToInsert, sdd->m_categString_, -1);
+        lcSplit_->InsertItem(numToInsert, sdd.m_categString_, -1);
        
         wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(*sdd->m_amount_, dispAmount);
+        mmex::formatDoubleToCurrencyEdit(*sdd.m_amount_, dispAmount);
         
         lcSplit_->SetItem(numToInsert, 1, dispAmount);
 
-        boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry());
-        pSplitEntry->splitAmount_  = *sdd->m_amount_;
+        boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
+        pSplitEntry->splitAmount_  = *sdd.m_amount_;
         pSplitEntry->categID_      = categID;
         pSplitEntry->subCategID_   = subcategID;
         pSplitEntry->category_      = core_->categoryList_.getCategorySharedPtr(categID, 
@@ -182,7 +182,6 @@ void SplitTransactionDialog::OnButtonAddClick( wxCommandEvent& event )
         wxASSERT(pSplitEntry->category_.lock());
         split_->addSplit(pSplitEntry);
     }
-    sdd->Destroy();
 
     event.Skip();
 }

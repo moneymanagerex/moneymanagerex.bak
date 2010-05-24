@@ -589,14 +589,10 @@ void mmFilterTransactionsDialog::OnButtoncancelClick( wxCommandEvent& /*event*/ 
 
 void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
 {
-    mmCategDialog *dlg = new mmCategDialog(core_, this);
-    if ( dlg->ShowModal() == wxID_OK )
-    {
-       
-    }
-    dlg->Destroy();
-    
-    if (dlg->categID_ == -1)
+    mmCategDialog dlg(core_, this);
+    dlg.ShowModal();
+
+    if (dlg.categID_ == -1)
     {
         // check if categ and subcateg are now invalid
         wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
@@ -609,10 +605,9 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
             return;
         }
 
-        if (dlg->subcategID_ != -1)
+        if (dlg.subcategID_ != -1)
         {
-            wxString subcatName = mmDBWrapper::getSubCategoryName(db_, 
-                categID_, subcategID_);
+            wxString subcatName = mmDBWrapper::getSubCategoryName(db_, categID_, subcategID_);
             if (subcatName.IsEmpty())
             {
                 subcategID_ = -1;
@@ -629,17 +624,17 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
         return;
     }
     
-    categID_ = dlg->categID_;
-    subcategID_ = dlg->subcategID_;
+    categID_ = dlg.categID_;
+    subcategID_ = dlg.subcategID_;
 
-    wxString catName = mmDBWrapper::getCategoryName(db_, dlg->categID_);
+    wxString catName = mmDBWrapper::getCategoryName(db_, dlg.categID_);
     catName.Replace(wxT("&"), wxT("&&"));
     wxString categString = catName;
 
-    if (dlg->subcategID_ != -1)
+    if (dlg.subcategID_ != -1)
     {
         wxString subcatName = mmDBWrapper::getSubCategoryName(db_,
-            dlg->categID_, dlg->subcategID_);
+            dlg.categID_, dlg.subcategID_);
         subcatName.Replace(wxT("&"), wxT("&&"));
         categString += wxT(" : ");
         categString += subcatName;

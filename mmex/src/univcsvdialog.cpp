@@ -430,11 +430,10 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
 
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     
-    wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Account to import to:"), 
-        _("CSV Import"), as);
-    if (scd->ShowModal() == wxID_OK)
+    wxSingleChoiceDialog scd(0, _("Choose Account to import to:"), _("CSV Import"), as);
+    if (scd.ShowModal() == wxID_OK)
     {
-        wxString acctName = scd->GetStringSelection();
+        wxString acctName = scd.GetStringSelection();
         fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
 
         boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
@@ -572,7 +571,6 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
             fileviewer(logFile.GetFullPath(), this).ShowModal();
         }
     }
-    scd->Destroy();
     Close();
 }
 

@@ -150,20 +150,20 @@ void SplitDetailDialog::CreateControls()
 
 void SplitDetailDialog::OnButtonCategoryClick( wxCommandEvent& event )
 {
-    mmCategDialog *dlg = new mmCategDialog(core_, this);
-    if ( dlg->ShowModal() == wxID_OK )
+    mmCategDialog dlg(core_, this);
+    if ( dlg.ShowModal() == wxID_OK )
     {
-        *m_categID_ = dlg->categID_;
-        *m_subcategID_ = dlg->subcategID_;
+        *m_categID_ = dlg.categID_;
+        *m_subcategID_ = dlg.subcategID_;
 
-        wxString catName = mmDBWrapper::getCategoryName(core_->db_.get(), dlg->categID_);
+        wxString catName = mmDBWrapper::getCategoryName(core_->db_.get(), dlg.categID_);
         catName.Replace (wxT("&"), wxT("&&"));
         m_categString_ = catName;
 
-        if (dlg->subcategID_ != -1)
+        if (dlg.subcategID_ != -1)
         {
             wxString subcatName = mmDBWrapper::getSubCategoryName(core_->db_.get(),
-                dlg->categID_, dlg->subcategID_);
+                dlg.categID_, dlg.subcategID_);
             subcatName.Replace (wxT("&"), wxT("&&"));
             m_categString_ += wxT(" : ");
             m_categString_ += subcatName;
@@ -171,7 +171,6 @@ void SplitDetailDialog::OnButtonCategoryClick( wxCommandEvent& event )
 
         bCategory_->SetLabel(m_categString_);
     }
-    dlg->Destroy();
     event.Skip();
 }
 
