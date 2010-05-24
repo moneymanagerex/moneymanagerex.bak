@@ -19,10 +19,10 @@ Copy to this folder:
   sha2.h
   sqlite3secure.c
 
-  Headers of wxSQLite3 copy to mmex\libs\wxsqlite\wx:
+  Headers of wxSQLite3 copy to mmex\lib\wxsqlite\wx:
   wxsqlite3.h
   wxsqlite3def.h
   wxsqlite3dyn.h
   wxsqlite3opt.h
 
-  wxsqlite3.cpp copy to mmex\libs\wxsqlite.
+  wxsqlite3.cpp copy to mmex\lib\wxsqlite.

@@ -22,7 +22,6 @@
 #include "defs.h"
 #include "paths.h"
 #include "platfdep.h"
-#include "helpers.h"
 
 IMPLEMENT_DYNAMIC_CLASS( mmUnivCSVImportDialog, wxDialog )
 
@@ -570,8 +569,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
             mmShowErrorMessage(0, msg, _("Import from CSV"));
             outputLog.Close();
 
-            boost::shared_ptr<fileviewer> dlg(new fileviewer(logFile.GetFullPath(), 0), mmex::Destroy);
-            dlg->ShowModal();
+            fileviewer(logFile.GetFullPath(), this).ShowModal();
         }
     }
     scd->Destroy();

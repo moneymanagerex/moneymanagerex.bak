@@ -59,7 +59,6 @@
 #include "paths.h"
 #include "constants.h"
 #include "platfdep.h"
-#include "helpers.h"
 //----------------------------------------------------------------------------
 
 /* Include XPM Support */
@@ -1862,13 +1861,12 @@ void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& /*event*/)
            wxString acctType = pAccount->acctType_;
            if (acctType == wxT("Checking") || acctType == wxT("Investment"))
            {
-              mmNewAcctDialog *dlg = new mmNewAcctDialog(m_core.get(), false, data, this);
-              if ( dlg->ShowModal() == wxID_OK )
+              mmNewAcctDialog dlg(m_core.get(), false, data, this);
+              if ( dlg.ShowModal() == wxID_OK )
               {
                  createHomePage();
                  updateNavTreeControl();      
               }
-              dlg->Destroy();
            }
         }
         else
@@ -2807,8 +2805,7 @@ void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& /*event*/)
         return;
     }
 
-    boost::shared_ptr<mmUnivCSVImportDialog> dlg(new mmUnivCSVImportDialog(m_core.get(), this), mmex::Destroy);
-    dlg->ShowModal();
+    mmUnivCSVImportDialog(m_core.get(), this).ShowModal();
 }
 //----------------------------------------------------------------------------
 
@@ -2834,13 +2831,8 @@ void mmGUIFrame::OnNewAccount(wxCommandEvent& /*event*/)
 
     if (wizard->acctID_ != -1)
     {
-        mmNewAcctDialog *dlg = new mmNewAcctDialog(m_core.get(), false, wizard->acctID_, this);
-        if ( dlg->ShowModal() == wxID_OK )
-        {
-            
-        }
+        mmNewAcctDialog(m_core.get(), false, wizard->acctID_, this).ShowModal();
         updateNavTreeControl();    
-        dlg->Destroy();
     }
     
     if (!refreshRequested_)
@@ -2861,33 +2853,29 @@ void mmGUIFrame::OnAccountList(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnOrgCategories(wxCommandEvent& /*event*/)
 {
-    boost::shared_ptr<mmCategDialog> dlg(new mmCategDialog(m_core.get(), this, false), mmex::Destroy);
-    dlg->ShowModal();
+    mmCategDialog(m_core.get(), this, false).ShowModal();
 }
 //----------------------------------------------------------------------------
  
 void mmGUIFrame::OnOrgPayees(wxCommandEvent& /*event*/)
 {
-    boost::shared_ptr<mmPayeeDialog> dlg(new mmPayeeDialog(this, m_core.get(), false), mmex::Destroy);
-    dlg->ShowModal();
+    mmPayeeDialog(this, m_core.get(), false).ShowModal();
 }
 //----------------------------------------------------------------------------
 
 void mmGUIFrame::OnBudgetSetupDialog(wxCommandEvent& /*event*/)
 {
-     if (!m_db)
-       return;
-
-    boost::shared_ptr<mmBudgetYearDialog> dlg(new mmBudgetYearDialog(m_db.get(), this), mmex::Destroy);
-    dlg->ShowModal();
-    createHomePage();
-    updateNavTreeControl();    
+	if (m_db) {
+		mmBudgetYearDialog(m_db.get(), this).ShowModal();
+		createHomePage();
+		updateNavTreeControl();    
+	}
 }
 //----------------------------------------------------------------------------
 
 void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 {
-   if (!m_db.get())
+   if (!m_db)
       return;
 
    if (mmDBWrapper::getNumAccounts(m_db.get()) == 0)
@@ -2895,8 +2883,9 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 
    std::vector< boost::shared_ptr<mmBankTransaction> >* trans 
       = new std::vector< boost::shared_ptr<mmBankTransaction> >;
-   mmFilterTransactionsDialog* dlg = new mmFilterTransactionsDialog(trans, m_core.get(), this);
-   if (dlg->ShowModal() == wxID_OK)
+
+   mmFilterTransactionsDialog dlg(trans, m_core.get(), this);
+   if (dlg.ShowModal() == wxID_OK)
    {
       mmPrintableBase* rs = new mmReportTransactions(trans, m_core.get());
       menuPrintingEnable(true);
@@ -2906,7 +2895,6 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
    {
       delete trans;
    }
-   dlg->Destroy();
 }
 //----------------------------------------------------------------------------
 
@@ -2928,15 +2916,13 @@ void mmGUIFrame::OnCashFlowSpecificAccounts()
              accountArray.Add(pCA->accountName_);
          }
      }
-    wxMultiChoiceDialog* mcd = new wxMultiChoiceDialog(this, _("Choose Accounts"), 
-        _("Cash Flow"),
-        accountArray);
-    if (mcd->ShowModal() == wxID_OK)
+    wxMultiChoiceDialog mcd(this, _("Choose Accounts"), _("Cash Flow"), accountArray);
+    if (mcd.ShowModal() == wxID_OK)
     {
-        wxArrayInt arraySel = mcd->GetSelections();
+        wxArrayInt arraySel = mcd.GetSelections();
 
         wxArrayString selections;
-        for (int i = 0; i < (int)arraySel.size(); i++)
+        for (size_t i = 0; i < arraySel.size(); ++i)
         {
             selections.Add(accountArray.Item(arraySel[i]));
         }
@@ -2945,7 +2931,6 @@ void mmGUIFrame::OnCashFlowSpecificAccounts()
         menuPrintingEnable(true);
         createReportsPage(rs);
     }
-    mcd->Destroy();
 }
 //----------------------------------------------------------------------------
 
@@ -2954,9 +2939,7 @@ void mmGUIFrame::OnOptions(wxCommandEvent& /*event*/)
     if (!m_db.get() || !m_inidb)
         return;
 
-    mmOptionsDialog *dlg = new mmOptionsDialog(m_core.get(), m_inidb.get(), this);
-    dlg->ShowModal();
-    dlg->Destroy();
+    mmOptionsDialog(m_core.get(), m_inidb.get(), this).ShowModal();
     createHomePage();
     updateNavTreeControl();
 
@@ -3225,9 +3208,7 @@ void mmGUIFrame::OnBeNotified(wxCommandEvent& /*event*/)
     
 void mmGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-    mmAboutDialog *dlg = new mmAboutDialog(m_inidb.get(), this);
-    dlg->ShowModal();
-    dlg->Destroy();
+	mmAboutDialog(m_inidb.get(), this).ShowModal();
 }
 //----------------------------------------------------------------------------
 
@@ -3276,9 +3257,9 @@ void mmGUIFrame::OnPrintPagePreview(wxCommandEvent& WXUNUSED(event))
 
 void mmGUIFrame::showBeginAppDialog()
 {
-    mmAppStartDialog *dlg = new mmAppStartDialog(m_inidb.get(), this);
-    dlg->ShowModal();
-    int rc = dlg->getReturnCode();
+    mmAppStartDialog dlg(m_inidb.get(), this);
+    dlg.ShowModal();
+    int rc = dlg.getReturnCode();
 
     if (rc == 0)
     {
@@ -3311,8 +3292,6 @@ void mmGUIFrame::showBeginAppDialog()
     {
         /* Do Nothing in this case */
     }
-
-    dlg->Destroy();
 }
 //----------------------------------------------------------------------------
 
@@ -3398,11 +3377,7 @@ void mmGUIFrame::OnAssets(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnCurrency(wxCommandEvent& /*event*/)
 {
-    mmMainCurrencyDialog *dlg = new mmMainCurrencyDialog(m_core.get(),this, false);
-    if ( dlg->ShowModal() == wxID_OK )
-    {
-    }
-    dlg->Destroy();
+	mmMainCurrencyDialog(m_core.get(),this, false).ShowModal();
 }
 //----------------------------------------------------------------------------
 
@@ -3429,15 +3404,13 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& /*event*/)
         arrAcctID[idx] = m_core->accountList_.accounts_[idx]->accountID_;
     }
   
-    wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, 
-        _("Choose Account to Edit"), 
-        _("Accounts"), as);
-    if (scd->ShowModal() == wxID_OK)
+    wxSingleChoiceDialog scd(this, _("Choose Account to Edit"), _("Accounts"), as);
+    if (scd.ShowModal() == wxID_OK)
     {
-        int choice = scd->GetSelection();
+        int choice = scd.GetSelection();
         int acctID = arrAcctID[choice];
-        mmNewAcctDialog *dlg = new mmNewAcctDialog(m_core.get(), false, acctID, this);
-        if ( dlg->ShowModal() == wxID_OK )
+        mmNewAcctDialog dlg(m_core.get(), false, acctID, this);
+        if ( dlg.ShowModal() == wxID_OK )
         {
             updateNavTreeControl();      
             if (!refreshRequested_)
@@ -3449,7 +3422,6 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& /*event*/)
             
         }
     }
-    scd->Destroy();
 }
 //----------------------------------------------------------------------------
 
@@ -3470,12 +3442,10 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
         arrAcctID[idx] = m_core->accountList_.accounts_[idx]->accountID_;
     }
   
-    wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, 
-        _("Choose Account to Delete"), 
-        _("Accounts"), as);
-    if (scd->ShowModal() == wxID_OK)
+    wxSingleChoiceDialog scd (this, _("Choose Account to Delete"), _("Accounts"), as);
+    if (scd.ShowModal() == wxID_OK)
     {
-        int choice = scd->GetSelection();
+        int choice = scd.GetSelection();
         int acctID = arrAcctID[choice];
 
         wxMessageDialog msgDlg(this, 
@@ -3497,7 +3467,6 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
         }
     }
     delete[] arrAcctID;
-    scd->Destroy();
 }
 //----------------------------------------------------------------------------
 
@@ -3538,10 +3507,10 @@ void wxNewDatabaseWizardPage1::OnCurrency(wxCommandEvent& /*event*/)
     currencyID_ = parent_->m_core->currencyList_.getBaseCurrencySettings();
 
 
-    mmMainCurrencyDialog *dlg = new mmMainCurrencyDialog(parent_->m_core, this);
-    if ( dlg->ShowModal() == wxID_OK )
+    mmMainCurrencyDialog dlg(parent_->m_core, this);
+    if ( dlg.ShowModal() == wxID_OK )
     {
-        currencyID_ = dlg->currencyID_;
+        currencyID_ = dlg.currencyID_;
         if (currencyID_ != -1)
         {
             wxString currName = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
@@ -3550,8 +3519,6 @@ void wxNewDatabaseWizardPage1::OnCurrency(wxCommandEvent& /*event*/)
             parent_->m_core->currencyList_.setBaseCurrencySettings(currencyID_);
         }
     }
-
-    dlg->Destroy();
 }
 //----------------------------------------------------------------------------
 

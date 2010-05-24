@@ -22,7 +22,6 @@
 #include "util.h"
 #include "paths.h"
 #include "constants.h"
-#include "helpers.h"
 /*******************************************************/
 /* Include XPM Support */
 #include "../resources/money.xpm"
@@ -93,18 +92,14 @@ bool mmAboutDialog::Create(wxWindow* parent,
 
 void mmAboutDialog::OnVersionHistory(wxCommandEvent& /*event*/)
 {
-    wxString filePath = mmex::getPathDoc(mmex::F_VERSION);
-
-    boost::shared_ptr<fileviewer> dlg(new fileviewer(filePath, this), mmex::Destroy);
-    dlg->ShowModal();
+	wxString filePath = mmex::getPathDoc(mmex::F_VERSION);
+	fileviewer(filePath, this).ShowModal();
 }
 
 void mmAboutDialog::OnContributerList(wxCommandEvent& /*event*/)
 {
-    wxString filePath = mmex::getPathDoc(mmex::F_CONTRIB);
-
-    boost::shared_ptr<fileviewer> dlg(new fileviewer(filePath, this), mmex::Destroy);
-    dlg->ShowModal();
+	wxString filePath = mmex::getPathDoc(mmex::F_CONTRIB);
+	fileviewer(filePath, this).ShowModal();
 }
 
 void mmAboutDialog::CreateControls()

@@ -1553,10 +1553,9 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
 
 void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 {
-    mmTransDialog *dlg = new mmTransDialog(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 
-        0, false, m_cp->m_inidb, this );
+    mmTransDialog dlg(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 0, false, m_cp->m_inidb, this );
 
-    if ( dlg->ShowModal() == wxID_OK )
+    if ( dlg.ShowModal() == wxID_OK )
     {
         m_cp->initVirtualListControl();
         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
@@ -1567,7 +1566,6 @@ void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
            EnsureVisible(m_selectedIndex);
         }
     }
-    dlg->Destroy();
 }
 //----------------------------------------------------------------------------
 
@@ -1621,9 +1619,9 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex != -1)
 	{
-		mmTransDialog *dlg = new mmTransDialog(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 
+		mmTransDialog dlg(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 
 		   m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->m_inidb, this);
-		if ( dlg->ShowModal() == wxID_OK )
+		if ( dlg.ShowModal() == wxID_OK )
 		{
 			m_cp->initVirtualListControl();
 			RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
@@ -1631,7 +1629,6 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 			SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
 			EnsureVisible(m_selectedIndex);
 		}
-		dlg->Destroy();
 	}
 }
 //----------------------------------------------------------------------------
@@ -1641,9 +1638,9 @@ void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
     if (m_selectedIndex != -1)
 	{
         //m_selectedIndex = event.GetIndex();
-        mmTransDialog *dlg = new mmTransDialog(m_cp->getDb(), m_cp->m_core,  m_cp->accountID(), 
+        mmTransDialog dlg(m_cp->getDb(), m_cp->m_core,  m_cp->accountID(), 
             m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->m_inidb, this);
-        if ( dlg->ShowModal() == wxID_OK )
+        if ( dlg.ShowModal() == wxID_OK )
         {
             m_cp->initVirtualListControl();
             RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
@@ -1654,7 +1651,6 @@ void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
                 EnsureVisible(m_selectedIndex);
             }
         }
-        dlg->Destroy();
     }
 }
 //----------------------------------------------------------------------------

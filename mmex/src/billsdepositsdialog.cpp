@@ -25,7 +25,6 @@
 #include "splittransactionsdialog.h"
 #include "defs.h"
 #include "paths.h"
-#include "helpers.h"
 
 #include <limits>
 
@@ -514,15 +513,12 @@ void mmBDDialog::OnAccountName(wxCommandEvent& /*event*/)
     	}
     	q1.Finalize();
     	
-    	wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Bank Account"), 
-    	    _("Select Account"), as);
-    	if (scd->ShowModal() == wxID_OK)
-    	{
-			wxString acctName = scd->GetStringSelection();
-            accountID_ = mmDBWrapper::getAccountID(db_, acctName);
-            itemAccountName_->SetLabel(acctName);
+    	wxSingleChoiceDialog scd(this, _("Choose Bank Account"), _("Select Account"), as);
+    	if (scd.ShowModal() == wxID_OK) {
+		wxString acctName = scd.GetStringSelection();
+		accountID_ = mmDBWrapper::getAccountID(db_, acctName);
+		itemAccountName_->SetLabel(acctName);
     	}
-    	scd->Destroy();
 }
 
 void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
@@ -544,16 +540,12 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
     	}
     	q1.Finalize();
     	
-    	wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Bank Account"), 
-    	    _("Select Account"), as);
-    	if (scd->ShowModal() == wxID_OK)
-    	{
-			wxString acctName = scd->GetStringSelection();
-            payeeID_ = mmDBWrapper::getAccountID(db_, acctName);
-            bPayee_->SetLabel(acctName);
-    	}
-		else
-	    {
+    	wxSingleChoiceDialog scd(this, _("Choose Bank Account"), _("Select Account"), as);
+    	if (scd.ShowModal() == wxID_OK) {
+		wxString acctName = scd.GetStringSelection();
+		payeeID_ = mmDBWrapper::getAccountID(db_, acctName);
+		bPayee_->SetLabel(acctName);
+    	} else {
 	        wxString acctName = mmDBWrapper::getAccountName(db_, payeeID_);
 	        if (acctName.IsEmpty())
 	        {
@@ -568,14 +560,12 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 	            bPayee_->SetLabel(acctName);
 	        }  
 	    }
-    	scd->Destroy();
-	}
-	else
-	{
-	    boost::shared_ptr<mmPayeeDialog> dlg(new mmPayeeDialog(this, core_), mmex::Destroy);    
-	    if ( dlg->ShowModal() == wxID_OK )
+
+	} else {
+	    mmPayeeDialog dlg(this, core_);    
+	    if ( dlg.ShowModal() == wxID_OK )
 	    {
-	            payeeID_ = dlg->getPayeeId();
+	            payeeID_ = dlg.getPayeeId();
 	            if (payeeID_ == -1)
             	{
 	                bPayee_->SetLabel(wxT("Select Payee"));
@@ -651,11 +641,10 @@ void mmBDDialog::OnTo(wxCommandEvent& /*event*/)
     	}
     	q1.Finalize();
     	
-    	wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Bank Account"), 
-    	    _("Select Account"), as);
-    	if (scd->ShowModal() == wxID_OK)
+    	wxSingleChoiceDialog scd(this, _("Choose Bank Account"), _("Select Account"), as);
+    	if (scd.ShowModal() == wxID_OK)
     	{
-			wxString acctName = scd->GetStringSelection();
+			wxString acctName = scd.GetStringSelection();
             toID_ = mmDBWrapper::getAccountID(db_, acctName);
             bTo_->SetLabel(acctName);
     	}
@@ -673,7 +662,6 @@ void mmBDDialog::OnTo(wxCommandEvent& /*event*/)
 	            bPayee_->SetLabel(acctName);
 	        }  
 	    }
-    	scd->Destroy();
 }
 
 void mmBDDialog::OnDateChanged(wxDateEvent& /*event*/)
@@ -688,11 +676,10 @@ void mmBDDialog::OnAdvanced(wxCommandEvent& /*event*/)
     {
         mmex::formatDoubleToCurrencyEdit(toTransAmount_, dispString);
     }
-    wxTextEntryDialog* dlg = new wxTextEntryDialog(this, _("To Account Amount Entry"), 
-        _("Amount to be recorded in To Account"),  dispString);
-    if ( dlg->ShowModal() == wxID_OK )
+    wxTextEntryDialog dlg(this, _("To Account Amount Entry"), _("Amount to be recorded in To Account"),  dispString);
+    if ( dlg.ShowModal() == wxID_OK )
     {
-        wxString currText = dlg->GetValue().Trim();
+        wxString currText = dlg.GetValue().Trim();
         if (!currText.IsEmpty())
         {
             double amount;
@@ -708,28 +695,26 @@ void mmBDDialog::OnAdvanced(wxCommandEvent& /*event*/)
             }
         }
     }
-    dlg->Destroy();
 }
 
 void mmBDDialog::OnCategs(wxCommandEvent& /*event*/)
 {
    if (cSplit_->GetValue())
    {
-      SplitTransactionDialog* dlg = new SplitTransactionDialog(core_, split_.get(), this);
-      if (dlg->ShowModal() == wxID_OK)
+      SplitTransactionDialog dlg(core_, split_.get(), this);
+      if (dlg.ShowModal() == wxID_OK)
       {
          wxString dispAmount;
          mmex::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
          textAmount_->SetValue(dispAmount);
       }
-      dlg->Destroy();
    }
    else
    {
-      mmCategDialog *dlg = new mmCategDialog(core_, this);
-      if ( dlg->ShowModal() == wxID_OK )
+      mmCategDialog dlg(core_, this);
+      if ( dlg.ShowModal() == wxID_OK )
       {
-         if (dlg->categID_ == -1)
+         if (dlg.categID_ == -1)
          {
             // check if categ and subcateg are now invalid
             wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
@@ -742,7 +727,7 @@ void mmBDDialog::OnCategs(wxCommandEvent& /*event*/)
                return;
             }
 
-            if (dlg->subcategID_ != -1)
+            if (dlg.subcategID_ != -1)
             {
                wxString subcatName = mmDBWrapper::getSubCategoryName(db_, categID_, subcategID_);
                if (subcatName.IsEmpty())
@@ -761,16 +746,16 @@ void mmBDDialog::OnCategs(wxCommandEvent& /*event*/)
             return;
          }
 
-         categID_ = dlg->categID_;
-         subcategID_ = dlg->subcategID_;
+         categID_ = dlg.categID_;
+         subcategID_ = dlg.subcategID_;
 
-         wxString catName = mmDBWrapper::getCategoryName(db_, dlg->categID_);
+         wxString catName = mmDBWrapper::getCategoryName(db_, dlg.categID_);
          catName.Replace(wxT("&"), wxT("&&"));
          wxString categString = catName;
 
-         if (dlg->subcategID_ != -1)
+         if (dlg.subcategID_ != -1)
          {
-            wxString subcatName = mmDBWrapper::getSubCategoryName(db_, dlg->categID_, dlg->subcategID_);
+            wxString subcatName = mmDBWrapper::getSubCategoryName(db_, dlg.categID_, dlg.subcategID_);
             subcatName.Replace(wxT("&"), wxT("&&"));
             categString += wxT(" : ");
             categString += subcatName;
@@ -778,7 +763,6 @@ void mmBDDialog::OnCategs(wxCommandEvent& /*event*/)
 
          bCategory_->SetLabel(categString);
       }
-      dlg->Destroy();
    }
 }
 

@@ -25,7 +25,6 @@
 #include "mmcoredb.h"
 #include "paths.h"
 #include "platfdep.h"
-#include "helpers.h"
 //----------------------------------------------------------------------------
 #include <wx/sound.h>
 #include <boost/shared_ptr.hpp>
@@ -463,13 +462,12 @@ void mmExportCSV( wxSQLite3Database* db_ )
 
         wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
 
-        boost::shared_ptr<wxSingleChoiceDialog> scd( new wxSingleChoiceDialog( 0,
-                        _( "Choose Account to Export from:" ), _( "CSV Export" ), as ), mmex::Destroy );
+        wxSingleChoiceDialog scd( 0, _( "Choose Account to Export from:" ), _( "CSV Export" ), as);
 
-        if ( scd->ShowModal() != wxID_OK )
+        if ( scd.ShowModal() != wxID_OK )
                 return;
 
-        wxString acctName = scd->GetStringSelection();
+        wxString acctName = scd.GetStringSelection();
         int fromAccountID = mmDBWrapper::getAccountID( db_, acctName );
 
         wxString fileName = wxFileSelector( _( "Choose CSV data file to Export" ),
@@ -994,8 +992,7 @@ int mmImportCSV( mmCoreDB* core )
                         mmShowErrorMessage( 0, msg, _( "Import from CSV" ) );
                         outputLog.Close();
 
-                        boost::shared_ptr<fileviewer> dlg( new fileviewer( logFile.GetFullPath(), 0 ), mmex::Destroy );
-                        dlg->ShowModal();
+                        fileviewer( logFile.GetFullPath(), 0 ).ShowModal();
                 }
         }
 
@@ -1214,8 +1211,7 @@ int mmImportCSVMMNET( mmCoreDB* core )
                         mmShowErrorMessage( 0, msg, _( "Import from CSV" ) );
                         outputLog.Close();
 
-                        boost::shared_ptr<fileviewer> dlg( new fileviewer( logFile.GetFullPath(), 0 ), mmex::Destroy );
-                        dlg->ShowModal();
+                        fileviewer( logFile.GetFullPath(), 0 ).ShowModal();
                 }
         }
 

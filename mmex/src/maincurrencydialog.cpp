@@ -175,11 +175,11 @@ wxIcon mmMainCurrencyDialog::GetIconResource( const wxString& /*name*/ )
 
 void mmMainCurrencyDialog::OnAdd(wxCommandEvent& /*event*/)
 {
-   wxTextEntryDialog* dlg = new wxTextEntryDialog(this, _("Name of Currency to Add"), 
+   wxTextEntryDialog dlg(this, _("Name of Currency to Add"), 
       _("Add Currency"));
-   if ( dlg->ShowModal() == wxID_OK )
+   if ( dlg.ShowModal() == wxID_OK )
    {
-      wxString currText = dlg->GetValue().Trim();
+      wxString currText = dlg.GetValue().Trim();
       if (!currText.IsEmpty())
       {
          int currID = mmDBWrapper::getCurrencyID(core_->db_.get(), currText);
@@ -199,7 +199,6 @@ void mmMainCurrencyDialog::OnAdd(wxCommandEvent& /*event*/)
          }
       }
    }
-   dlg->Destroy();
 }
 
 
@@ -212,11 +211,7 @@ void mmMainCurrencyDialog::OnEdit(wxCommandEvent& /*event*/)
         currencyID_ = pItem->getListIndex();
         wxASSERT(currencyID_ != -1);
 
-        mmCurrencyDialog *dlg = new mmCurrencyDialog(core_, currencyID_, this);
-        if ( dlg->ShowModal() == wxID_OK )
-        {
-        }
-        dlg->Destroy();
+        mmCurrencyDialog(core_, currencyID_, this).ShowModal();
     }
 }
 
