@@ -505,13 +505,12 @@ void billsDepositsListCtrl::OnListKeyDown(wxListEvent& event)
 
 void billsDepositsListCtrl::OnNewBDSeries(wxCommandEvent& /*event*/)
 {
-    mmBDDialog *dlg = new mmBDDialog(cp_->db_, cp_->core_, 0, false, false, this );
-    if ( dlg->ShowModal() == wxID_OK )
+    mmBDDialog dlg(cp_->db_, cp_->core_, 0, false, false, this );
+    if ( dlg.ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
     }
-    dlg->Destroy();
 }
 
 void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& /*event*/)
@@ -548,14 +547,12 @@ void billsDepositsListCtrl::OnEnterBDSeriesOccurrence(wxCommandEvent& /*event*/)
     if (!cp_->db_)
         return;
 
-    mmBDDialog *dlg = new mmBDDialog(cp_->db_, cp_->core_,
-        cp_->trans_[selectedIndex_].bdID_, false, true, this );
-    if ( dlg->ShowModal() == wxID_OK )
+    mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].bdID_, false, true, this );
+    if ( dlg.ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
     }
-    dlg->Destroy();
 }
 
 void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& /*event*/)
@@ -566,14 +563,12 @@ void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& /*event*/)
     if (!cp_->db_)
         return;
 
-    mmBDDialog *dlg = new mmBDDialog(cp_->db_, cp_->core_,
-        cp_->trans_[selectedIndex_].bdID_, true, false, this );
-    if ( dlg->ShowModal() == wxID_OK )
+    mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].bdID_, true, false, this );
+    if ( dlg.ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
     }
-    dlg->Destroy();
 }
 
 void billsDepositsListCtrl::OnListItemActivated(wxListEvent& event)
@@ -586,14 +581,12 @@ void billsDepositsListCtrl::OnListItemActivated(wxListEvent& event)
     if (!cp_->db_)
         return;
 
-    mmBDDialog *dlg = new mmBDDialog(cp_->db_, cp_->core_,
-        cp_->trans_[selectedIndex_].bdID_, true, false, this );
-    if ( dlg->ShowModal() == wxID_OK )
+    mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].bdID_, true, false, this );
+    if ( dlg.ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
     }
-    dlg->Destroy();
 }
 
 void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)

@@ -291,16 +291,13 @@ void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
     }
     q1.Finalize();
     
-    wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Investment Account"), 
-        _("Select Account"), as);
-    if (scd->ShowModal() == wxID_OK)
+    wxSingleChoiceDialog scd(0, _("Choose Investment Account"), _("Select Account"), as);
+    if (scd.ShowModal() == wxID_OK)
     {
-        wxString acctName = scd->GetStringSelection();
+        wxString acctName = scd.GetStringSelection();
         accountID_ = mmDBWrapper::getAccountID(db_, acctName);
         heldAt_->SetLabel(acctName);
     }
-    scd->Destroy();
-
 }
 
 void mmStockDialog::OnCancel(wxCommandEvent& /*event*/)

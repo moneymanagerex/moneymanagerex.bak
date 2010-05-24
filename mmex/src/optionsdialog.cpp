@@ -744,10 +744,10 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
 {
     int currencyID = mmDBWrapper::getBaseCurrencySettings(db_);
      
-    mmMainCurrencyDialog *dlg = new mmMainCurrencyDialog(core_, this);
-    if ( dlg->ShowModal() == wxID_OK )
+    mmMainCurrencyDialog dlg(core_, this);
+    if ( dlg.ShowModal() == wxID_OK )
     {
-        currencyID = dlg->currencyID_;
+        currencyID = dlg.currencyID_;
         if (currencyID != -1)
         {
             wxString currName = mmDBWrapper::getCurrencyName(db_, currencyID);
@@ -759,8 +759,6 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
             msgDlg.ShowModal();            
         }
     }
-
-    dlg->Destroy();
 }
 
 void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& /*event*/)

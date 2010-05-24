@@ -400,18 +400,16 @@ void mmStocksPanel::OnRefreshQuotes(wxCommandEvent& WXUNUSED(event))
 
 void mmStocksPanel::OnHTTPSettings(wxCommandEvent& WXUNUSED(event))
 {
-    YahooSettingsDialog* YHDialog = new YahooSettingsDialog(yahoo_, this);
-    if ( YHDialog->ShowModal() == wxID_OK )
+    YahooSettingsDialog dlg(yahoo_, this);
+    if ( dlg.ShowModal() == wxID_OK )
     {
         // Copy dialog values back to yahoo_->
-        yahoo_->UpdatingEnabled_ = YHDialog->m_checkBoxRefreshPrices->GetValue();
-        yahoo_->UpdateIntervalMinutes_ = YHDialog->m_RefreshInterval->GetValue();
-        yahoo_->Suffix_ = YHDialog->m_YahooSuffix->GetValue();
-        yahoo_->Server_ = YHDialog->m_YahooServer->GetValue();
-        yahoo_->OpenTimeStr_ = wxString::Format(wxT("%02d:%02d:00"),
-            YHDialog->m_MarketOpenHour->GetValue(),YHDialog->m_MarketOpenMinute->GetValue());
-        yahoo_->CloseTimeStr_ = wxString::Format(wxT("%02d:%02d:00"),
-            YHDialog->m_MarketCloseHour->GetValue(),YHDialog->m_MarketCloseMinute->GetValue());
+        yahoo_->UpdatingEnabled_ = dlg.m_checkBoxRefreshPrices->GetValue();
+        yahoo_->UpdateIntervalMinutes_ = dlg.m_RefreshInterval->GetValue();
+        yahoo_->Suffix_ = dlg.m_YahooSuffix->GetValue();
+        yahoo_->Server_ = dlg.m_YahooServer->GetValue();
+        yahoo_->OpenTimeStr_ = wxString::Format(wxT("%02d:%02d:00"), dlg.m_MarketOpenHour->GetValue(),dlg.m_MarketOpenMinute->GetValue());
+        yahoo_->CloseTimeStr_ = wxString::Format(wxT("%02d:%02d:00"), dlg.m_MarketCloseHour->GetValue(),dlg.m_MarketCloseMinute->GetValue());
     }
 }
 
@@ -864,13 +862,12 @@ void stocksListCtrl::OnListKeyDown(wxListEvent& event)
 
 void stocksListCtrl::OnNewStocks(wxCommandEvent& /*event*/)
 {
-    mmStockDialog *dlg = new mmStockDialog(cp_->db_, 0, false, this );
-    if ( dlg->ShowModal() == wxID_OK )
+    mmStockDialog dlg(cp_->db_, 0, false, this );
+    if ( dlg.ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
     }
-    dlg->Destroy();
 }
 
 void stocksListCtrl::OnDeleteStocks(wxCommandEvent& /*event*/)
@@ -902,25 +899,21 @@ void stocksListCtrl::OnEditStocks(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ == -1)
         return;
-    mmStockDialog *dlg = new mmStockDialog(cp_->db_,
-                                           cp_->trans_[selectedIndex_].stockID_, true, this );
-    if ( dlg->ShowModal() == wxID_OK )
+    mmStockDialog dlg(cp_->db_, cp_->trans_[selectedIndex_].stockID_, true, this );
+    if ( dlg.ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
     }
-    dlg->Destroy();
 }
 
 void stocksListCtrl::OnListItemActivated(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
-    mmStockDialog *dlg = new mmStockDialog(cp_->db_,
-                                           cp_->trans_[selectedIndex_].stockID_, true, this );
-    if ( dlg->ShowModal() == wxID_OK )
+    mmStockDialog dlg(cp_->db_, cp_->trans_[selectedIndex_].stockID_, true, this );
+    if ( dlg.ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
     }
-    dlg->Destroy();
 }

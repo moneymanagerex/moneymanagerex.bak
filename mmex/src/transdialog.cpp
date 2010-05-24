@@ -453,11 +453,10 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
     	}
     	q1.Finalize();
     	
-    	wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Bank Account"), 
-    	    _("Select Account"), as);
-    	if (scd->ShowModal() == wxID_OK)
+    	wxSingleChoiceDialog scd(0, _("Choose Bank Account"), _("Select Account"), as);
+    	if (scd.ShowModal() == wxID_OK)
     	{
-			wxString acctName = scd->GetStringSelection();
+	    wxString acctName = scd.GetStringSelection();
             payeeID_ = mmDBWrapper::getAccountID(db_.get(), acctName);
             bPayee_->SetLabel(acctName);
     	}
@@ -477,7 +476,6 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 	            bPayee_->SetLabel(acctName);
 	        }  
 	    }
-    	scd->Destroy();
 	}
 	else
 	{
@@ -568,11 +566,10 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
     	}
     	q1.Finalize();
     	
-    	wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Bank Account"), 
-    	    _("Select Account"), as);
-    	if (scd->ShowModal() == wxID_OK)
+    	wxSingleChoiceDialog scd(0, _("Choose Bank Account"), _("Select Account"), as);
+    	if (scd.ShowModal() == wxID_OK)
     	{
-			wxString acctName = scd->GetStringSelection();
+	    wxString acctName = scd.GetStringSelection();
             toID_ = mmDBWrapper::getAccountID(db_.get(), acctName);
             bTo_->SetLabel(acctName);
     	}
@@ -590,7 +587,6 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
 	            bPayee_->SetLabel(acctName);
 	        }  
 	    }
-    	scd->Destroy();
 }
 
 void mmTransDialog::OnDateChanged(wxDateEvent& /*event*/)

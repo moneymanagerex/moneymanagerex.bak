@@ -608,16 +608,13 @@ void mmExportQIF( wxSQLite3Database* db_ )
 
         wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
 
-        wxSingleChoiceDialog* scd = new wxSingleChoiceDialog( 0, _( "Choose Account to Export from:" ),
-                        _( "QIF Export" ), as );
+        wxSingleChoiceDialog scd( 0, _( "Choose Account to Export from:" ),_( "QIF Export" ), as );
 
         wxString acctName;
 
-        if ( scd->ShowModal() == wxID_OK ) {
-                acctName = scd->GetStringSelection();
+        if ( scd.ShowModal() == wxID_OK ) {
+                acctName = scd.GetStringSelection();
         }
-
-        scd->Destroy();
 
         if ( acctName.IsEmpty() ) {
                 return;
@@ -733,8 +730,6 @@ void mmExportQIF( wxSQLite3Database* db_ )
 
         wxString msg = wxString::Format( wxT( "%d transactions exported" ), numRecords );
         mmShowErrorMessage( 0, msg, _( "Export to QIF" ) );
-
-        scd->Destroy();
 }
 
 void mmSetCategory( mmCoreDB* core, wxString categ, wxString subcateg, int& categID, int& subCategID )
@@ -786,11 +781,10 @@ int mmImportCSV( mmCoreDB* core )
 
         wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
 
-        wxSingleChoiceDialog* scd = new wxSingleChoiceDialog( 0, _( "Choose Account to import to:" ),
-                        _( "CSV Import" ), as );
+        wxSingleChoiceDialog scd( 0, _( "Choose Account to import to:" ), _( "CSV Import" ), as );
 
-        if ( scd->ShowModal() == wxID_OK ) {
-                wxString acctName = scd->GetStringSelection();
+        if ( scd.ShowModal() == wxID_OK ) {
+                wxString acctName = scd.GetStringSelection();
                 fromAccountID = mmDBWrapper::getAccountID( db_, acctName );
                 boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr( fromAccountID ).lock();
                 wxASSERT( pCurrencyPtr );
@@ -996,7 +990,6 @@ int mmImportCSV( mmCoreDB* core )
                 }
         }
 
-        scd->Destroy();
         return fromAccountID;
 }
 
@@ -1026,11 +1019,10 @@ int mmImportCSVMMNET( mmCoreDB* core )
 
         wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
 
-        wxSingleChoiceDialog* scd = new wxSingleChoiceDialog( 0, _( "Choose Account to import to:" ),
-                        _( "CSV Import" ), as );
+        wxSingleChoiceDialog scd( 0, _( "Choose Account to import to:" ),_( "CSV Import" ), as );
 
-        if ( scd->ShowModal() == wxID_OK ) {
-                wxString acctName = scd->GetStringSelection();
+        if ( scd.ShowModal() == wxID_OK ) {
+                wxString acctName = scd.GetStringSelection();
                 fromAccountID = mmDBWrapper::getAccountID( db_, acctName );
 
                 boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr( fromAccountID ).lock();
@@ -1215,7 +1207,6 @@ int mmImportCSVMMNET( mmCoreDB* core )
                 }
         }
 
-        scd->Destroy();
         return fromAccountID;
 }
 

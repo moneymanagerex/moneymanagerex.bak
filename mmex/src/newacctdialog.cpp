@@ -301,16 +301,14 @@ void mmNewAcctDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmNewAcctDialog::OnCurrency(wxCommandEvent& /*event*/)
 {
-   mmMainCurrencyDialog *dlg = new mmMainCurrencyDialog(core_, this);
-    if ( dlg->ShowModal() == wxID_OK )
+   mmMainCurrencyDialog dlg(core_, this);
+    if ( dlg.ShowModal() == wxID_OK )
     {
-        currencyID_ = dlg->currencyID_;
+        currencyID_ = dlg.currencyID_;
         wxString currName = mmDBWrapper::getCurrencyName(core_->db_.get(), currencyID_);
         wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_NEWACCT_BUTTON_CURRENCY);
         bn->SetLabel(currName);
     }
-
-    dlg->Destroy();
 }
 
 void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
