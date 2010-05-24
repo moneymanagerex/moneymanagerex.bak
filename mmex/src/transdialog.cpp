@@ -25,7 +25,6 @@
 #include "splittransactionsdialog.h"
 #include "defs.h"
 #include "paths.h"
-#include "helpers.h"
 
 #include <sstream>
 
@@ -482,11 +481,11 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 	}
 	else
 	{
-	    boost::shared_ptr<mmPayeeDialog> dlg(new mmPayeeDialog(this, core_), mmex::Destroy);
+	    mmPayeeDialog dlg(this, core_);
 
-	    if ( dlg->ShowModal() == wxID_OK )
+	    if ( dlg.ShowModal() == wxID_OK )
 	    {
-	            payeeID_ = dlg->getPayeeId();
+	            payeeID_ = dlg.getPayeeId();
 	            if (payeeID_ == -1)
             	{
 	                bPayee_->SetLabel(wxT("Select Payee"));
@@ -606,11 +605,10 @@ void mmTransDialog::OnAdvanced(wxCommandEvent& /*event*/)
     {
         mmex::formatDoubleToCurrencyEdit(toTransAmount_, dispString);
     }
-    wxTextEntryDialog* dlg = new wxTextEntryDialog(this, _("Amount to be recorded in To Account"), 
-        _("To Account Amount Entry"),  dispString);
-    if ( dlg->ShowModal() == wxID_OK )
+    wxTextEntryDialog dlg(this, _("Amount to be recorded in To Account"), _("To Account Amount Entry"),  dispString);
+    if ( dlg.ShowModal() == wxID_OK )
     {
-        wxString currText = dlg->GetValue().Trim();
+        wxString currText = dlg.GetValue().Trim();
         if (!currText.IsEmpty())
         {
             double amount;
@@ -625,28 +623,26 @@ void mmTransDialog::OnAdvanced(wxCommandEvent& /*event*/)
             }
         }
     }
-    dlg->Destroy();
 }
 
 void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
 {
     if (cSplit_->GetValue())
     {
-        SplitTransactionDialog* dlg = new SplitTransactionDialog(core_, split_.get(), this);
-        if (dlg->ShowModal() == wxID_OK)
+        SplitTransactionDialog dlg(core_, split_.get(), this);
+        if (dlg.ShowModal() == wxID_OK)
         {
             wxString dispAmount;
             mmex::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
             textAmount_->SetValue(dispAmount);
         }
-        dlg->Destroy();
     }
     else
     {
-        mmCategDialog *dlg = new mmCategDialog(core_, this);
-        if ( dlg->ShowModal() == wxID_OK )
+        mmCategDialog dlg(core_, this);
+        if ( dlg.ShowModal() == wxID_OK )
         {
-            if (dlg->categID_ == -1)
+            if (dlg.categID_ == -1)
             {
                 // check if categ and subcateg are now invalid
                 wxString catName = mmDBWrapper::getCategoryName(db_.get(), categID_);
@@ -659,7 +655,7 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
                     return;
                 }
 
-                if (dlg->subcategID_ != -1)
+                if (dlg.subcategID_ != -1)
                 {
                     wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(),
                         categID_, subcategID_);
@@ -679,17 +675,16 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
                 return;
             }
 
-            categID_ = dlg->categID_;
-            subcategID_ = dlg->subcategID_;
+            categID_ = dlg.categID_;
+            subcategID_ = dlg.subcategID_;
 
-            wxString catName = mmDBWrapper::getCategoryName(db_.get(), dlg->categID_);
+            wxString catName = mmDBWrapper::getCategoryName(db_.get(), dlg.categID_);
             catName.Replace (wxT("&"), wxT("&&"));
             wxString categString = catName;
 
-            if (dlg->subcategID_ != -1)
+            if (dlg.subcategID_ != -1)
             {
-                wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(),
-                    dlg->categID_, dlg->subcategID_);
+                wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(), dlg.categID_, dlg.subcategID_);
                 subcatName.Replace (wxT("&"), wxT("&&"));
                 categString += wxT(" : ");
                 categString += subcatName;
@@ -697,7 +692,6 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
 
             bCategory_->SetLabel(categString);
         }
-        dlg->Destroy();
     }
 }
 

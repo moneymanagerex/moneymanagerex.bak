@@ -118,13 +118,12 @@ void mmBudgetYearDialog::CreateControls()
 
 void mmBudgetYearDialog::OnAdd(wxCommandEvent& /*event*/)
 {
-    mmBudgetYearEntryDialog* dlg = new mmBudgetYearEntryDialog(db_, this); 
-    if ( dlg->ShowModal() == wxID_OK )
+    mmBudgetYearEntryDialog dlg(db_, this); 
+    if ( dlg.ShowModal() == wxID_OK )
     {
         listBox_->Clear();
         fillControls();
     }
-    dlg->Destroy();
 }
  
 void mmBudgetYearDialog::OnDelete(wxCommandEvent& /*event*/)

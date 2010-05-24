@@ -336,13 +336,12 @@ void assetsListCtrl::OnListKeyDown(wxListEvent& event)
 
 void assetsListCtrl::OnNewAsset(wxCommandEvent& /*event*/)
 {
-    mmAssetDialog *dlg = new mmAssetDialog(cp_->db_, 0, false, this );
-    if ( dlg->ShowModal() == wxID_OK )
-    {
-        cp_->initVirtualListControl();
-        RefreshItems(0, ((int)cp_->trans_.size()) - 1);
-    }
-    dlg->Destroy();
+	mmAssetDialog dlg(cp_->db_, 0, false, this);
+
+	if (dlg.ShowModal() == wxID_OK) {
+        	cp_->initVirtualListControl();
+		RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+	}
 }
 
 void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
@@ -372,27 +371,23 @@ void assetsListCtrl::OnEditAsset(wxCommandEvent& /*event*/)
 {
 	if (selectedIndex_ == -1)
 		return;
-    mmAssetDialog *dlg = new mmAssetDialog(cp_->db_, 
-        cp_->trans_[selectedIndex_].assetID_, true, this );
-    if ( dlg->ShowModal() == wxID_OK )
-    {
-        cp_->initVirtualListControl();
-        RefreshItems(0, ((int)cp_->trans_.size()) - 1);
-    }
-    dlg->Destroy();
 
+	mmAssetDialog dlg(cp_->db_, cp_->trans_[selectedIndex_].assetID_, true, this);
+
+	if (dlg.ShowModal() == wxID_OK) {
+		cp_->initVirtualListControl();
+		RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+	}
 }
 
 void assetsListCtrl::OnListItemActivated(wxListEvent& event)
 {
-    selectedIndex_ = event.GetIndex();
-    mmAssetDialog *dlg = new mmAssetDialog(cp_->db_, 
-        cp_->trans_[selectedIndex_].assetID_, true, this );
-    if ( dlg->ShowModal() == wxID_OK )
-    {
-        cp_->initVirtualListControl();
-        RefreshItems(0, ((int)cp_->trans_.size()) - 1);
-    }
-    dlg->Destroy();
+	selectedIndex_ = event.GetIndex();
 
+	mmAssetDialog dlg(cp_->db_, cp_->trans_[selectedIndex_].assetID_, true, this);
+
+	if (dlg.ShowModal() == wxID_OK) {
+		cp_->initVirtualListControl();
+		RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+	}
 }

@@ -575,12 +575,11 @@ void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
 
-    mmBudgetEntryDialog *dlg = new mmBudgetEntryDialog(cp_->db_, cp_->budgetYearID_, 
+    mmBudgetEntryDialog dlg(cp_->db_, cp_->budgetYearID_, 
         cp_->trans_[selectedIndex_].categID_, cp_->trans_[selectedIndex_].subcategID_, this);
-    if ( dlg->ShowModal() == wxID_OK )
+    if ( dlg.ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
         RefreshItem(selectedIndex_);
     }
-    dlg->Destroy();
 }

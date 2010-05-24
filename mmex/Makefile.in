@@ -73,7 +73,6 @@ MMEX_OBJECTS =  \
 	mmex_fileviewerdialog.o \
 	mmex_filtertransdialog.o \
 	mmex_guiid.o \
-	mmex_helpers.o \
 	mmex_htmlbuilder.o \
 	mmex_led.o \
 	mmex_maincurrencydialog.o \
@@ -269,9 +268,6 @@ mmex_filtertransdialog.o: $(srcdir)/src/filtertransdialog.cpp
 
 mmex_guiid.o: $(srcdir)/src/guiid.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/guiid.cpp
-
-mmex_helpers.o: $(srcdir)/src/helpers.cpp
-	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/helpers.cpp
 
 mmex_htmlbuilder.o: $(srcdir)/src/htmlbuilder.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/htmlbuilder.cpp

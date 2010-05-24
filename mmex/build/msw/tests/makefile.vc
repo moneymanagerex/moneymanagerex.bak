@@ -79,7 +79,6 @@ MMEX_TESTS_OBJECTS =  \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_fileviewerdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_filtertransdialog.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_guiid.obj \
-	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_helpers.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_htmlbuilder.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_led.obj \
 	vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_maincurrencydialog.obj \
@@ -474,9 +473,6 @@ vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_guiid.obj: ..\..\..\src\guiid.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\guiid.cpp
-
-vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_helpers.obj: ..\..\..\src\helpers.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\helpers.cpp
 
 vc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_htmlbuilder.obj: ..\..\..\src\htmlbuilder.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(MMEX_TESTS_CXXFLAGS) ..\..\..\src\htmlbuilder.cpp

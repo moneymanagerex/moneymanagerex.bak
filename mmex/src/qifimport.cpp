@@ -220,7 +220,6 @@ KC 	Check transaction
 #include "mmex.h"
 #include "mmcoredb.h"
 #include "platfdep.h"
-#include "helpers.h"
 
 namespace
 {
@@ -388,12 +387,11 @@ Are you are sure you want to proceed with the import?"),
     }
     q1.Finalize();
     
-    wxSingleChoiceDialog* scd = new wxSingleChoiceDialog(0, _("Choose Account to import to:"), 
-        _("QIF Import"), as);
-    if (scd->ShowModal() != wxID_OK)
+    wxSingleChoiceDialog scd(0, _("Choose Account to import to:"), _("QIF Import"), as);
+    if (scd.ShowModal() != wxID_OK)
         return -1;
 
-    wxString acctName = scd->GetStringSelection();
+    wxString acctName = scd.GetStringSelection();
     fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
 
     boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
@@ -712,11 +710,9 @@ Are you are sure you want to proceed with the import?"),
 
         outputLog.Close();
 
-        boost::shared_ptr<fileviewer> dlg(new fileviewer(logFile.GetFullPath(), 0), mmex::Destroy);
-        dlg->ShowModal();
+        fileviewer(logFile.GetFullPath(), 0).ShowModal();
     }
    
-    scd->Destroy();
     return fromAccountID;
 }
 
