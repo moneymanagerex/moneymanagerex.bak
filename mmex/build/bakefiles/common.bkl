@@ -202,8 +202,8 @@ PATH. Accepted values: AMD64, IA64.
         <cxx-rtti>on</cxx-rtti>
 
         <include cond="isdefined('BOOST_DIR')">$(BOOST_DIR)</include>
-        <include>$(SRCDIR)/libs/sqlite</include>
-        <include>$(SRCDIR)/libs/wxsqlite</include>
+        <include>$(SRCDIR)/lib/sqlite</include>
+        <include>$(SRCDIR)/lib/wxsqlite</include>
 
         <!-- disable precompiled headers for wxWidgets -->
         <define>NOPCH</define>

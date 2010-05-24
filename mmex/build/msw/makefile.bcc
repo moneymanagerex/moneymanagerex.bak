@@ -32,7 +32,7 @@ WXSQLITE_CXXFLAGS = -I$(BCCDIR)\include -tWM $(__DEBUGINFO) $(__OPTIMIZEFLAG) \
 	$(__DEBUG_DEFINE_p) $(__WXUNICODE_DEFINE_p) $(__WXDEBUG_DEFINE_p) \
 	-D__WXMSW__ -I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
 	-I$(WX_DIR)\include -DNOPCH -DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC \
-	-DWXSQLITE3_HAVE_METADATA -I..\..\libs\sqlite -I..\..\libs\wxsqlite \
+	-DWXSQLITE3_HAVE_METADATA -I..\..\lib\sqlite -I..\..\lib\wxsqlite \
 	$(CPPFLAGS) $(CXXFLAGS)
 WXSQLITE_OBJECTS =  \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite_wxsqlite3.obj
@@ -45,8 +45,8 @@ MMEX_CXXFLAGS = -I$(BCCDIR)\include $(__WXUNICODE_DEFINE_p) \
 	$(__WXDEBUG_DEFINE_p) -D__WXMSW__ \
 	-I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
 	-I$(WX_DIR)\include -tWM $(__DEBUGINFO) $(__OPTIMIZEFLAG) \
-	$(__DEBUG_DEFINE_p) -I$(BOOST_DIR) -I..\..\libs\sqlite \
-	-I..\..\libs\wxsqlite -DNOPCH $(CPPFLAGS) $(CXXFLAGS)
+	$(__DEBUG_DEFINE_p) -I$(BOOST_DIR) -I..\..\lib\sqlite -I..\..\lib\wxsqlite \
+	-DNOPCH $(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_aboutdialog.obj \
 	bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_appstartdialog.obj \
@@ -377,11 +377,11 @@ check:
 	call bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\check.bat
 	@del bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\check.bat
 
-bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite_wxsqlite3.obj: ..\..\libs\wxsqlite\wxsqlite3.cpp
-	$(CXX) -q -c -P -o$@ $(WXSQLITE_CXXFLAGS) ..\..\libs\wxsqlite\wxsqlite3.cpp
+bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite_wxsqlite3.obj: ..\..\lib\wxsqlite\wxsqlite3.cpp
+	$(CXX) -q -c -P -o$@ $(WXSQLITE_CXXFLAGS) ..\..\lib\wxsqlite\wxsqlite3.cpp
 
-bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite_sqlite3secure.obj: ..\..\libs\sqlite\sqlite3secure.c
-	$(CC) -q -c -P- -o$@ $(SQLITE_CFLAGS) ..\..\libs\sqlite\sqlite3secure.c
+bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite_sqlite3secure.obj: ..\..\lib\sqlite\sqlite3secure.c
+	$(CC) -q -c -P- -o$@ $(SQLITE_CFLAGS) ..\..\lib\sqlite\sqlite3secure.c
 
 bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_aboutdialog.obj: ..\..\src\aboutdialog.cpp
 	$(CXX) -q -c -P -o$@ $(MMEX_CXXFLAGS) ..\..\src\aboutdialog.cpp
@@ -579,5 +579,5 @@ bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 	$(CXX) -q -c -P -o$@ $(MMEX_CXXFLAGS) ..\..\src\win\platfdep.cpp
 
 bcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_resources_mmex.res: ..\..\resources\mmex.rc
-	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) -d__WXMSW__ -i$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) -i$(WX_DIR)\include $(__DEBUG_DEFINE_p_3) -i$(BOOST_DIR) -i..\..\libs\sqlite -i..\..\libs\wxsqlite -dNOPCH ..\..\resources\mmex.rc
+	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) -d__WXMSW__ -i$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) -i$(WX_DIR)\include $(__DEBUG_DEFINE_p_3) -i$(BOOST_DIR) -i..\..\lib\sqlite -i..\..\lib\wxsqlite -dNOPCH ..\..\resources\mmex.rc
 

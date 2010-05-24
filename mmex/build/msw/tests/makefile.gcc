@@ -18,7 +18,7 @@ WXSQLITE_CXXFLAGS = -mthreads -W -Wall $(__DEBUGINFO) $(__OPTIMIZEFLAG) \
 	$(__WXDEBUG_DEFINE_p) -D__WXMSW__ \
 	-I$(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) -I$(WX_DIR)\include -DNOPCH \
 	-DSQLITE_HAS_CODEC -DWXSQLITE3_HAVE_CODEC -DWXSQLITE3_HAVE_METADATA \
-	-I..\..\..\libs\sqlite -I..\..\..\libs\wxsqlite $(CPPFLAGS) $(CXXFLAGS)
+	-I..\..\..\lib\sqlite -I..\..\..\lib\wxsqlite $(CPPFLAGS) $(CXXFLAGS)
 WXSQLITE_OBJECTS =  \
 	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite_wxsqlite3.o
 SQLITE_CFLAGS = -mthreads -W -Wall $(__DEBUGINFO) $(__OPTIMIZEFLAG) \
@@ -50,8 +50,8 @@ MMEX_TESTS_CXXFLAGS = -DHAVE_W32API_H $(__WXUNICODE_DEFINE_p) \
 	$(__WXDEBUG_DEFINE_p) -D__WXMSW__ \
 	-I$(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) -I$(WX_DIR)\include -mthreads -W \
 	-Wall $(__DEBUGINFO) $(__OPTIMIZEFLAG) $(__DEBUG_DEFINE_p) -I$(BOOST_DIR) \
-	-I..\..\..\libs\sqlite -I..\..\..\libs\wxsqlite -DNOPCH -I..\..\..\src \
-	-I..\..\..\libs\UnitTest++ $(CPPFLAGS) $(CXXFLAGS)
+	-I..\..\..\lib\sqlite -I..\..\..\lib\wxsqlite -DNOPCH -I..\..\..\src \
+	-I..\..\..\lib\UnitTest++ $(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
 	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_aboutdialog.o \
 	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_appstartdialog.o \
@@ -326,61 +326,61 @@ check: all
 	copy /Y ..\..\..\resources\currency_seed.db3 gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\res
 	gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests.exe
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite_wxsqlite3.o: ../../../libs/wxsqlite/wxsqlite3.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\wxsqlite_wxsqlite3.o: ../../../lib/wxsqlite/wxsqlite3.cpp
 	$(CXX) -c -o $@ $(WXSQLITE_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite_sqlite3secure.o: ../../../libs/sqlite/sqlite3secure.c
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\sqlite_sqlite3secure.o: ../../../lib/sqlite/sqlite3secure.c
 	$(CC) -c -o $@ $(SQLITE_CFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_AssertException.o: ../../../libs/UnitTest++/AssertException.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_AssertException.o: ../../../lib/UnitTest++/AssertException.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_Checks.o: ../../../libs/UnitTest++/Checks.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_Checks.o: ../../../lib/UnitTest++/Checks.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_CurrentTest.o: ../../../libs/UnitTest++/CurrentTest.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_CurrentTest.o: ../../../lib/UnitTest++/CurrentTest.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_DeferredTestReporter.o: ../../../libs/UnitTest++/DeferredTestReporter.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_DeferredTestReporter.o: ../../../lib/UnitTest++/DeferredTestReporter.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_DeferredTestResult.o: ../../../libs/UnitTest++/DeferredTestResult.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_DeferredTestResult.o: ../../../lib/UnitTest++/DeferredTestResult.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_MemoryOutStream.o: ../../../libs/UnitTest++/MemoryOutStream.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_MemoryOutStream.o: ../../../lib/UnitTest++/MemoryOutStream.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_ReportAssert.o: ../../../libs/UnitTest++/ReportAssert.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_ReportAssert.o: ../../../lib/UnitTest++/ReportAssert.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_Test.o: ../../../libs/UnitTest++/Test.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_Test.o: ../../../lib/UnitTest++/Test.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TestDetails.o: ../../../libs/UnitTest++/TestDetails.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TestDetails.o: ../../../lib/UnitTest++/TestDetails.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TestList.o: ../../../libs/UnitTest++/TestList.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TestList.o: ../../../lib/UnitTest++/TestList.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TestReporter.o: ../../../libs/UnitTest++/TestReporter.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TestReporter.o: ../../../lib/UnitTest++/TestReporter.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TestReporterStdout.o: ../../../libs/UnitTest++/TestReporterStdout.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TestReporterStdout.o: ../../../lib/UnitTest++/TestReporterStdout.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TestResults.o: ../../../libs/UnitTest++/TestResults.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TestResults.o: ../../../lib/UnitTest++/TestResults.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TestRunner.o: ../../../libs/UnitTest++/TestRunner.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TestRunner.o: ../../../lib/UnitTest++/TestRunner.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TimeConstraint.o: ../../../libs/UnitTest++/TimeConstraint.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TimeConstraint.o: ../../../lib/UnitTest++/TimeConstraint.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_XmlTestReporter.o: ../../../libs/UnitTest++/XmlTestReporter.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_XmlTestReporter.o: ../../../lib/UnitTest++/XmlTestReporter.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
-gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TimeHelpers.o: ../../../libs/UnitTest++/Win32/TimeHelpers.cpp
+gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\UnitTestPP_TimeHelpers.o: ../../../lib/UnitTest++/Win32/TimeHelpers.cpp
 	$(CXX) -c -o $@ $(UNITTESTPP_CXXFLAGS) $(CPPDEPS) $<
 
 gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_aboutdialog.o: ../../../src/aboutdialog.cpp
@@ -591,7 +591,7 @@ gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 	$(CXX) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(CPPDEPS) $<
 
 gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_tests_mmex_tests_rc.o: ../../../src/tests/mmex_tests.rc
-	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include $(__DEBUG_DEFINE_p_4) --include-dir $(BOOST_DIR) --include-dir ../../../libs/sqlite --include-dir ../../../libs/wxsqlite --define NOPCH --include-dir ../../../src --include-dir ../../../libs/UnitTest++
+	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include $(__DEBUG_DEFINE_p_4) --include-dir $(BOOST_DIR) --include-dir ../../../lib/sqlite --include-dir ../../../lib/wxsqlite --define NOPCH --include-dir ../../../src --include-dir ../../../lib/UnitTest++
 
 .PHONY: all install uninstall clean check
 

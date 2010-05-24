@@ -1770,55 +1770,55 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\AssertException.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\AssertException.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\Checks.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\Checks.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\CurrentTest.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\CurrentTest.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\DeferredTestReporter.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\DeferredTestReporter.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\DeferredTestResult.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\DeferredTestResult.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\MemoryOutStream.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\MemoryOutStream.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\ReportAssert.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\ReportAssert.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\Test.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\Test.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TestDetails.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\TestDetails.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TestList.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\TestList.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TestReporter.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\TestReporter.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TestReporterStdout.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\TestReporterStdout.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TestResults.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\TestResults.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TestRunner.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\TestRunner.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TimeConstraint.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\TimeConstraint.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\Win32\TimeHelpers.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\Win32\TimeHelpers.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\XmlTestReporter.cpp">
+				RelativePath="..\..\..\lib\UnitTest++\XmlTestReporter.cpp">
 			</File>
 		</Filter>
 		<Filter
@@ -1826,76 +1826,76 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\AssertException.h">
+				RelativePath="..\..\..\lib\UnitTest++\AssertException.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\CheckMacros.h">
+				RelativePath="..\..\..\lib\UnitTest++\CheckMacros.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\Checks.h">
+				RelativePath="..\..\..\lib\UnitTest++\Checks.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\Config.h">
+				RelativePath="..\..\..\lib\UnitTest++\Config.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\CurrentTest.h">
+				RelativePath="..\..\..\lib\UnitTest++\CurrentTest.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\DeferredTestReporter.h">
+				RelativePath="..\..\..\lib\UnitTest++\DeferredTestReporter.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\DeferredTestResult.h">
+				RelativePath="..\..\..\lib\UnitTest++\DeferredTestResult.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\ExecuteTest.h">
+				RelativePath="..\..\..\lib\UnitTest++\ExecuteTest.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\MemoryOutStream.h">
+				RelativePath="..\..\..\lib\UnitTest++\MemoryOutStream.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\ReportAssert.h">
+				RelativePath="..\..\..\lib\UnitTest++\ReportAssert.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\Test.h">
+				RelativePath="..\..\..\lib\UnitTest++\Test.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TestDetails.h">
+				RelativePath="..\..\..\lib\UnitTest++\TestDetails.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TestList.h">
+				RelativePath="..\..\..\lib\UnitTest++\TestList.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TestMacros.h">
+				RelativePath="..\..\..\lib\UnitTest++\TestMacros.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TestReporter.h">
+				RelativePath="..\..\..\lib\UnitTest++\TestReporter.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TestReporterStdout.h">
+				RelativePath="..\..\..\lib\UnitTest++\TestReporterStdout.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TestResults.h">
+				RelativePath="..\..\..\lib\UnitTest++\TestResults.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TestRunner.h">
+				RelativePath="..\..\..\lib\UnitTest++\TestRunner.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TestSuite.h">
+				RelativePath="..\..\..\lib\UnitTest++\TestSuite.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TimeConstraint.h">
+				RelativePath="..\..\..\lib\UnitTest++\TimeConstraint.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\TimeHelpers.h">
+				RelativePath="..\..\..\lib\UnitTest++\TimeHelpers.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\Win32\TimeHelpers.h">
+				RelativePath="..\..\..\lib\UnitTest++\Win32\TimeHelpers.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\UnitTest++.h">
+				RelativePath="..\..\..\lib\UnitTest++\UnitTest++.h">
 			</File>
 			<File
-				RelativePath="..\..\..\libs\UnitTest++\XmlTestReporter.h">
+				RelativePath="..\..\..\lib\UnitTest++\XmlTestReporter.h">
 			</File>
 		</Filter>
 	</Files>

@@ -16,7 +16,7 @@
 
     	<!-- paths relative to trunk/mmex -->
 
-        <set var="SRC">libs/UnitTest++</set>
+        <set var="SRC">lib/UnitTest++</set>
 
         <set var="PLATF_DIR">
 	    <if cond="TOOLSET=='win32'">/Win32</if>
