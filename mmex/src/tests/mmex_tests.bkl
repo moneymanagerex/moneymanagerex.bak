@@ -34,7 +34,7 @@
         <library>UnitTestPP</library>
 
 	<include>$(SRCDIR)/src</include>
-	<include>$(SRCDIR)/libs/UnitTest++</include>
+	<include>$(SRCDIR)/lib/UnitTest++</include>
 
 
     	<!-- IMPLEMENT_APP(mmGUIApp) in mmex.cpp defines main() on Unixes, see wx\app.h.

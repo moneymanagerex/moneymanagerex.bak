@@ -18,12 +18,12 @@
         <define>WXSQLITE3_HAVE_CODEC</define>
         <define>WXSQLITE3_HAVE_METADATA</define>
 
-        <include>$(SRCDIR)/libs/sqlite</include>
-        <include>$(SRCDIR)/libs/wxsqlite</include>
+        <include>$(SRCDIR)/lib/sqlite</include>
+        <include>$(SRCDIR)/lib/wxsqlite</include>
 
     	<!-- paths relative to trunk/mmex -->
 
-        <set var="SRC">libs/wxsqlite</set>
+        <set var="SRC">lib/wxsqlite</set>
 
         <headers>$(fileList(SRC + '/wx/*.h'))</headers>
         <sources>$(SRC)/wxsqlite3.cpp</sources>

@@ -1770,7 +1770,7 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="..\..\libs\sqlite\sqlite3secure.c">
+				RelativePath="..\..\lib\sqlite\sqlite3secure.c">
 			</File>
 		</Filter>
 		<Filter
@@ -1778,19 +1778,19 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="..\..\libs\sqlite\codec.h">
+				RelativePath="..\..\lib\sqlite\codec.h">
 			</File>
 			<File
-				RelativePath="..\..\libs\sqlite\rijndael.h">
+				RelativePath="..\..\lib\sqlite\rijndael.h">
 			</File>
 			<File
-				RelativePath="..\..\libs\sqlite\sha2.h">
+				RelativePath="..\..\lib\sqlite\sha2.h">
 			</File>
 			<File
-				RelativePath="..\..\libs\sqlite\sqlite3.h">
+				RelativePath="..\..\lib\sqlite\sqlite3.h">
 			</File>
 			<File
-				RelativePath="..\..\libs\sqlite\sqlite3ext.h">
+				RelativePath="..\..\lib\sqlite\sqlite3ext.h">
 			</File>
 		</Filter>
 	</Files>

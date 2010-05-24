@@ -21,7 +21,7 @@
 
     	<!-- paths relative to trunk/mmex -->
 
-        <set var="SRC">libs/sqlite</set>
+        <set var="SRC">lib/sqlite</set>
 
         <headers>$(fileList(SRC + '/*.h'))</headers>
         <sources>$(SRC)/sqlite3secure.c</sources>
