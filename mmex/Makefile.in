@@ -138,13 +138,13 @@ COND_PLATFORM_OS2_1___mmex___os2_emxbindcmd = $(NM) mmex$(EXEEXT) | if grep -q \
 
 ### Targets: ###
 
-all: $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) mmex$(EXEEXT) i18n
+all: $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) mmex$(EXEEXT) po
 
 install: install_mmex
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/mmex/res
 	(cd $(srcdir)/resources ; $(INSTALL_DATA)  kaching.wav mmex.ico splash.png currency_seed.db3 $(DESTDIR)$(datadir)/mmex/res)
-	$(INSTALL_DIR) $(DESTDIR)$(datadir)/mmex/i18n
-	(cd $(srcdir)/i18n ; $(INSTALL_DATA)  *.po *.mo $(DESTDIR)$(datadir)/mmex/i18n)
+	$(INSTALL_DIR) $(DESTDIR)$(datadir)/mmex/po
+	(cd $(srcdir)/po ; $(INSTALL_DATA)  *.po *.mo $(DESTDIR)$(datadir)/mmex/po)
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/doc/mmex
 	(cd $(srcdir)/doc ; $(INSTALL_DATA)  *.txt $(DESTDIR)$(datadir)/doc/mmex)
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/doc/mmex/help
@@ -154,7 +154,7 @@ install: install_mmex
 
 uninstall: uninstall_mmex
 	(cd $(DESTDIR)$(datadir)/mmex/res ; rm -f kaching.wav mmex.ico splash.png currency_seed.db3)
-	(cd $(DESTDIR)$(datadir)/mmex/i18n ; rm -f *.po *.mo)
+	(cd $(DESTDIR)$(datadir)/mmex/po ; rm -f *.po *.mo)
 	(cd $(DESTDIR)$(datadir)/doc/mmex ; rm -f *.txt)
 	(cd $(DESTDIR)$(datadir)/doc/mmex/help ; rm -f *.html *.jpg *.png)
 	(cd $(DESTDIR)$(datadir)/doc/mmex/help/index_fichiers ; rm -f *)
@@ -168,13 +168,13 @@ clean:
 	rm -f $(LIBPREFIX)wxsqlite$(LIBEXT)
 	rm -f $(LIBPREFIX)sqlite$(LIBEXT)
 	rm -f mmex$(EXEEXT)
-	-(cd $(srcdir)/i18n && $(MAKE) clean)
+	-(cd $(srcdir)/po && $(MAKE) clean)
 	-(cd $(srcdir)/setup/win && $(MAKE) clean)
 	-(cd ./src/tests && $(MAKE) clean)
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
-	-(cd $(srcdir)/i18n && $(MAKE) distclean)
+	-(cd $(srcdir)/po && $(MAKE) distclean)
 	-(cd $(srcdir)/setup/win && $(MAKE) distclean)
 	-(cd ./src/tests && $(MAKE) distclean)
 
@@ -201,8 +201,8 @@ install_mmex: mmex$(EXEEXT)
 uninstall_mmex: 
 	rm -f $(DESTDIR)$(bindir)/mmex$(EXEEXT)
 
-i18n: 
-	(cd $(srcdir)/i18n && $(MAKE) all)
+po: 
+	(cd $(srcdir)/po && $(MAKE) all)
 
 @COND_PLATFORM_WIN32_1@setup: all
 @COND_PLATFORM_WIN32_1@	(cd $(srcdir)/setup/win && $(MAKE) APP_EXE_PATH="..\..\build\msw\mmex.exe" BUILD_OPTS="" CPU_ARCH="" CRT_DLLS="" FORMAT="autoconf" all)
@@ -418,5 +418,5 @@ mmex_resources_mmex_rc.o: $(srcdir)/resources/mmex.rc
 # Include dependency info, if present:
 @IF_GNU_MAKE@-include ./.deps/*.d
 
-.PHONY: all install uninstall clean distclean install_mmex uninstall_mmex i18n \
-	setup check
+.PHONY: all install uninstall clean distclean install_mmex uninstall_mmex po setup \
+	check

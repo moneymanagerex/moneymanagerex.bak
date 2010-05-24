@@ -147,7 +147,7 @@ wxString mmex::getPathResource(EResFile f)
 wxString mmex::getPathShared(ESharedFile f)
 {
         static const wxChar* files[SHARED_FILES_MAX] = { 
-          wxT("i18n")
+          wxT("po")
         };
 
         wxASSERT(f >= 0 && f < SHARED_FILES_MAX);

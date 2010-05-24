@@ -287,7 +287,7 @@ gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 
 ### Targets: ###
 
-all: gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\libwxsqlite.a gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\libsqlite.a gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe i18n
+all: gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\libwxsqlite.a gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\libsqlite.a gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe po
 
 install: install_mmex
 	-mkdir $(PREFIX)\mmex
@@ -308,10 +308,10 @@ install: install_mmex
 	( cd ..\..\doc\help && copy /Y  *.jpg $(PREFIX)\mmex\help )
 	-mkdir $(PREFIX)\mmex\help\index_fichiers
 	( cd ..\..\doc\help\index_fichiers && copy /Y  *.png $(PREFIX)\mmex\help\index_fichiers )
-	-mkdir $(PREFIX)\mmex\i18n
-	( cd ..\..\i18n && copy /Y  *.po $(PREFIX)\mmex\i18n )
-	-mkdir $(PREFIX)\mmex\i18n
-	( cd ..\..\i18n && copy /Y  *.mo $(PREFIX)\mmex\i18n )
+	-mkdir $(PREFIX)\mmex\po
+	( cd ..\..\po && copy /Y  *.po $(PREFIX)\mmex\po )
+	-mkdir $(PREFIX)\mmex\po
+	( cd ..\..\po && copy /Y  *.mo $(PREFIX)\mmex\po )
 
 uninstall: uninstall_mmex
 	-if exist $(PREFIX)\mmex\*.txt -del *.txt
@@ -323,8 +323,8 @@ uninstall: uninstall_mmex
 	-if exist $(PREFIX)\mmex\help\*.png -del *.png
 	-if exist $(PREFIX)\mmex\help\*.jpg -del *.jpg
 	-if exist $(PREFIX)\mmex\help\index_fichiers\*.png -del *.png
-	-if exist $(PREFIX)\mmex\i18n\*.po -del *.po
-	-if exist $(PREFIX)\mmex\i18n\*.mo -del *.mo
+	-if exist $(PREFIX)\mmex\po\*.po -del *.po
+	-if exist $(PREFIX)\mmex\po\*.mo -del *.mo
 
 clean: 
 	-if exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.o del gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\*.o
@@ -332,7 +332,7 @@ clean:
 	-if exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\libwxsqlite.a del gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\libwxsqlite.a
 	-if exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\libsqlite.a del gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\libsqlite.a
 	-if exist gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe del gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe
-	$(MAKE) -C ..\..\i18n -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C ..\..\po -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C ..\..\setup\win -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C tests -f makefile.gcc $(MAKEARGS) clean
 
@@ -356,8 +356,8 @@ install_mmex: gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFI
 uninstall_mmex: 
 	-del $(PREFIX)\mmex\bin\mmex.exe
 
-i18n: 
-	$(MAKE) -C ..\..\i18n -f makefile.gcc $(MAKEARGS) all
+po: 
+	$(MAKE) -C ..\..\po -f makefile.gcc $(MAKEARGS) all
 
 setup: all
 	$(MAKE) -C ..\..\setup\win -f makefile.gcc $(MAKEARGS) APP_EXE_PATH="..\..\build\msw\gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex.exe" BUILD_OPTS="$(__setup_SHARED)$(__setup_UNICODE)$(__setup_DEBUG)-$(CPU_ARCH)" CPU_ARCH="$(CPU_ARCH)" CRT_DLLS="$(MINGWDIR)\bin\libgcc_s_*.dll" FORMAT="mingw" all
@@ -569,7 +569,7 @@ gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)
 gcc-$(SHAREDBUILDPOSTFIX)-$(UNICODEBUILDPOSTFIX)$(DEBUGBUILDPOSTFIX)-$(CPU_ARCH)\mmex_resources_mmex_rc.o: ../../resources/mmex.rc
 	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_2) $(__WXDEBUG_DEFINE_p_2) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include $(__DEBUG_DEFINE_p_3) --include-dir $(BOOST_DIR) --include-dir ../../libs/sqlite --include-dir ../../libs/wxsqlite --define NOPCH
 
-.PHONY: all install uninstall clean install_mmex uninstall_mmex i18n setup check
+.PHONY: all install uninstall clean install_mmex uninstall_mmex po setup check
 
 
 SHELL := $(COMSPEC)

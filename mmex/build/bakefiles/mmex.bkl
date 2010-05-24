@@ -51,8 +51,8 @@
 	</data-files>
 
         <data-files>
-	    <install-to>$(DATADIR)/mmex/i18n</install-to>
-	    <srcdir>$(SRCDIR)/i18n</srcdir>
+	    <install-to>$(DATADIR)/mmex/po</install-to>
+	    <srcdir>$(SRCDIR)/po</srcdir>
 	    <files>*.po *.mo</files>
 	</data-files>
 
@@ -137,17 +137,17 @@
 	    <files>*.png</files>
 	</data-files>
 
-	<!-- i18n/* -> mmex/i18n -->
+	<!-- po/* -> mmex/po -->
 
 	<data-files>
-	    <install-to>$(PREFIX)/mmex/i18n</install-to>
-	    <srcdir>$(SRCDIR)/i18n</srcdir>
+	    <install-to>$(PREFIX)/mmex/po</install-to>
+	    <srcdir>$(SRCDIR)/po</srcdir>
 	    <files>*.po</files>
 	</data-files>
 
 	<data-files>
-	    <install-to>$(PREFIX)/mmex/i18n</install-to>
-	    <srcdir>$(SRCDIR)/i18n</srcdir>
+	    <install-to>$(PREFIX)/mmex/po</install-to>
+	    <srcdir>$(SRCDIR)/po</srcdir>
 	    <files>*.mo</files>
 	</data-files>
 
@@ -156,9 +156,9 @@
     
     <!-- generation of translation files -->
 
-    <subproject id="i18n">
+    <subproject id="po">
         <dependency-of>all</dependency-of>
-        <dir>$(SRCDIR)/i18n</dir>
+        <dir>$(SRCDIR)/po</dir>
     </subproject>
 
     

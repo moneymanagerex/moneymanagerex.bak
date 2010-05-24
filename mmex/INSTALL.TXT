@@ -66,8 +66,3 @@ or if bakefile's script(s) has modified.
    ./bootstrap
 
 -------------------------------------------------------------------------------
-4. CREATING A DEBIAN PACKAGE
--------------------------------------------------------------------------------
-Once the source tree is setup correctly.
-Simply do a 
-	dpkg -b mmex mmex.deb
