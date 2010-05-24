@@ -171,8 +171,8 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 [Files]
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
-#define lang_src "..\..\i18n"
-#define lang_dst "{app}\i18n"
+#define lang_src "..\..\po"
+#define lang_dst "{app}\po"
 
 Source: "{#lang_src}\english.*";          DestDir: {#lang_dst}; Components: "lang\en";             Flags: ignoreversion
 Source: "{#lang_src}\arabic.*";           DestDir: {#lang_dst}; Components: "lang\arabic";         Flags: ignoreversion
