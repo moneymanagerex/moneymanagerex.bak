@@ -10458,7 +10458,7 @@ BAKEFILE_AUTOCONF_INC_M4_VERSION="0.2.8"
     fi
 
 
-ac_config_files="$ac_config_files Makefile src/tests/Makefile ${srcdir}/i18n/Makefile ${srcdir}/setup/win/Makefile"
+ac_config_files="$ac_config_files Makefile src/tests/Makefile ${srcdir}/po/Makefile ${srcdir}/setup/win/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -11163,7 +11163,7 @@ do
   case $ac_config_target in
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/tests/Makefile") CONFIG_FILES="$CONFIG_FILES src/tests/Makefile" ;;
-    "${srcdir}/i18n/Makefile") CONFIG_FILES="$CONFIG_FILES ${srcdir}/i18n/Makefile" ;;
+    "${srcdir}/po/Makefile") CONFIG_FILES="$CONFIG_FILES ${srcdir}/po/Makefile" ;;
     "${srcdir}/setup/win/Makefile") CONFIG_FILES="$CONFIG_FILES ${srcdir}/setup/win/Makefile" ;;
 
   *) as_fn_error "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
