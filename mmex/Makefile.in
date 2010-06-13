@@ -168,13 +168,11 @@ clean:
 	rm -f $(LIBPREFIX)sqlite$(LIBEXT)
 	rm -f mmex$(EXEEXT)
 	-(cd $(srcdir)/po && $(MAKE) clean)
-	-(cd $(srcdir)/setup/win && $(MAKE) clean)
 	-(cd ./src/tests && $(MAKE) clean)
 
 distclean: clean
 	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
 	-(cd $(srcdir)/po && $(MAKE) distclean)
-	-(cd $(srcdir)/setup/win && $(MAKE) distclean)
 	-(cd ./src/tests && $(MAKE) distclean)
 
 $(LIBPREFIX)wxsqlite$(LIBEXT): $(WXSQLITE_OBJECTS)
@@ -202,9 +200,6 @@ uninstall_mmex:
 
 po: 
 	(cd $(srcdir)/po && $(MAKE) all)
-
-@COND_PLATFORM_WIN32_1@setup: all
-@COND_PLATFORM_WIN32_1@	(cd $(srcdir)/setup/win && $(MAKE) APP_EXE_PATH="..\..\build\msw\mmex.exe" BUILD_OPTS="" CPU_ARCH="" CRT_DLLS="" FORMAT="autoconf" all)
 
 check: 
 	(cd ./src/tests && $(MAKE) check)
@@ -414,5 +409,4 @@ mmex_resources_mmex_rc.o: $(srcdir)/resources/mmex.rc
 # Include dependency info, if present:
 @IF_GNU_MAKE@-include ./.deps/*.d
 
-.PHONY: all install uninstall clean distclean install_mmex uninstall_mmex po setup \
-	check
+.PHONY: all install uninstall clean distclean install_mmex uninstall_mmex po check
