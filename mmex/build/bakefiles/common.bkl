@@ -41,24 +41,25 @@
                 <description>The directory where Boost C++ libraries is installed</description>
             </option>
         </if>
-    
 
-        <!-- VC++ -->
-        <if cond="FORMAT.startswith('msv')">
+        
+        <!-- VC++ makefile -->
 
-            <option name="VS_VERSION">
-                <default-value>$(DOLLAR)(VS_VER)</default-value>
-                <description>
-The version of Visual Studio.
-Accepted values: 2008, 2005, 2003.
-                </description>
+        <if cond="FORMAT=='msvc'">
+
+            <set var="VSTUDIO_VER_DEFAULT" overwrite="0">2010</set>
+
+            <option name="VSTUDIO_VER">
+                <values>2010,2008,2005,2003</values>
+                <default-value>$(VSTUDIO_VER_DEFAULT)</default-value>
+                <description>The version of Visual Studio</description>
             </option>
 
             <set var="CRT_VERSION">
-                <if cond="VS_VERSION==''">90</if>
-                <if cond="VS_VERSION=='2008'">90</if>
-                <if cond="VS_VERSION=='2005'">80</if>
-                <if cond="VS_VERSION=='2003'">70</if>
+                <if cond="VSTUDIO_VER=='2010'">100</if>
+                <if cond="VSTUDIO_VER=='2008'">90</if>
+                <if cond="VSTUDIO_VER=='2005'">80</if>
+                <if cond="VSTUDIO_VER=='2003'">70</if>
             </set>
 
         </if>
@@ -83,7 +84,7 @@ PATH. Accepted values: AMD64, IA64.
             <set var="CPU_ARCH">
                 <if cond="TARGET_CPU==''">x86</if>
                 <if cond="TARGET_CPU=='x86'">x86</if>
-                <if cond="TARGET_CPU=='AMD64'">amd64</if>
+                <if cond="TARGET_CPU=='AMD64'">x64</if>
                 <if cond="TARGET_CPU=='IA64'">ia64</if>
             </set>
         
