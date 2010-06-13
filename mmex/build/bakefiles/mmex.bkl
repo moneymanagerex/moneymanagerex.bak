@@ -2,7 +2,7 @@
 
 <!--
     MMEX build scripts.
-    Copyright (C) 2009 VaDiM.
+    Copyright (C) 2009, 2010 VaDiM.
 
     MoneyManagerEx application.
 -->
@@ -162,38 +162,37 @@
     </subproject>
 
     
-    <!-- Generation of InnoSetup installations on Windows -->
+    <!-- Generation of InnoSetup installations on Windows, makefiles only -->
 
-    <subproject id="setup" cond="PLATFORM_WIN32=='1'">
+    <subproject id="setup" cond="PLATFORM_WIN32=='1' and FORMAT in('msvc','mingw')">
         
         <depends>all</depends>
         <installable>no</installable>
         <dir>$(SRCDIR)/setup/win</dir>
 
         <set var="SHARED">
-            <if cond="FORMAT=='autoconf'"></if>
             <if cond="WX_SHARED=='0'">-static</if>
             <if cond="WX_SHARED=='1'">-shared</if>
         </set>
         
         <set var="UNICODE">
-            <if cond="FORMAT=='autoconf'"></if>
             <if cond="WX_UNICODE=='0'">-ansi</if>
             <if cond="WX_UNICODE=='1'">-unicode</if>
         </set>
         
         <set var="DEBUG">
-            <if cond="FORMAT=='autoconf'"></if>
             <if cond="WX_DEBUG=='1'">-debug</if>
         </set>
                 
-        <set var="HARDWARE">
-            <if cond="isdefined('TARGETCPUPOSTFIX')">$(TARGETCPUPOSTFIX)</if>
-        </set>
+        <set var="HARDWARE">$(TARGETCPUPOSTFIX)</set>
 
         <set var="HARDWARE_CPU">
-            <if cond="isdefined('CPU_ARCH')">$(CPU_ARCH)</if>
+            <if cond="not isdefined('VSTUDIO_VER')">$(CPU_ARCH)</if>
+            <if cond="VSTUDIO_VER=='2010'">$(CPU_ARCH)</if>
+            <if cond="TARGET_CPU=='AMD64'">amd64</if>
+            <if cond="1">$(CPU_ARCH)</if>
         </set>
+
 
         <!-- Select VC++ runtime libraries to embed into setup. 
              We deploying Visual C++ library DLLs as private side-by-side assemblies.
