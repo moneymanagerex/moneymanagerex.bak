@@ -300,7 +300,7 @@ DEBUGBUILDPOSTFIX = d
 CPU_ARCH = x86
 !endif
 !if "$(TARGET_CPU)" == "AMD64"
-CPU_ARCH = amd64
+CPU_ARCH = x64
 !endif
 !if "$(TARGET_CPU)" == "IA64"
 CPU_ARCH = ia64

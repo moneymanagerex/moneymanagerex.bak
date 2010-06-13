@@ -44,7 +44,8 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
 
 1.Open "Visual Studio 200X Command Prompt".
 2.Change working directory to mmex\build\msw.
-3.Edit config.vc to select build options (Ansi\Unicode, Debug\Release, Static\Shared, etc.).
+3.Edit config.vc to select build options. You must always set these options: 
+  BOOST_DIR, WX_DIR, VSTUDIO_VER (for Visual Studio only).
 4.Type in command prompt
   nmake -f makefile.vc
   or if you don't like to edit config.vc, type something like that
@@ -130,22 +131,7 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
 
 
 This means someone should modify bakefile build scripts to add output for your compiler.
-Currently bakefile can generate makefiles\projects for these compilers (run bakefile --help)
-
-    borland       Borland C/C++ makefiles
-    dmars         Digital Mars makefiles
-    dmars_smake   Digital Mars makefiles for SMAKE
-    gnu           GNU toolchain makefiles (Unix)
-    mingw         MinGW makefiles (mingw32-make)
-    msevc4prj     MS eMbedded Visual C++ 4 project files
-    msvc          MS Visual C++ nmake makefiles
-    msvc6prj      MS Visual C++ 6.0 project files
-    msvs2003prj   MS Visual Studio 2003 project files
-    msvs2005prj   MS Visual Studio 2005 project files
-    msvs2008prj   MS Visual Studio 2008 project files
-    symbian       Symbian development files
-    watcom        OpenWatcom makefiles
-    xcode2        Xcode 2.4 project files
+Run bakefile --help to list makefiles\projects that one can generate.
 
 The mmex build scripts resides in mmex\build\bakefiles. 
 Firstly modify Bakefiles.bkgen to add missing output formats.
