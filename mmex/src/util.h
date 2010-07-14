@@ -24,6 +24,7 @@
 
 #include <wx/wxprec.h>
 #include <boost/shared_ptr.hpp>
+#include <boost/static_assert.hpp>
 
 class mmCoreDB;
 
@@ -168,29 +169,6 @@ bool formatCurrencyToDouble( const wxString& str, double& val );
 
 } // namespace mmex
 
-namespace collections {
-
-template <class T>
-class Matcher
-{
-public:
-	virtual bool Match(const T& t) = 0;
-};
-
-template<typename T>
-struct CompareTraits_Equal
-{
-	static bool Equal(const T& t1, const T& t2) { return t1 == t2; }
-};
-
-template<typename T>
-struct CompareTraits_NotEqual
-{
-	static bool Equal(const T& t1, const T& t2) { return t1 != t2; }
-};
-
-} // namespace collections
-
 namespace boost
 {
 	inline std::size_t hash_value(const wxChar* string)
@@ -206,8 +184,72 @@ namespace boost
 	{
 		return boost::hash_value(value.c_str());
 	}
-}
-//----------------------------------------------------------------------------
-#endif // _MM_EX_UTIL_H_
+} // namespace boost
+
 //----------------------------------------------------------------------------
 
+namespace DateTimeProviders {
+
+struct Today
+{
+	inline static wxDateTime StartRange()
+	{
+		return wxDateTime::Now().GetDateOnly();
+	}
+	inline static wxDateTime EndRange()
+	{
+		return StartRange() + wxTimeSpan(23, 59, 59, 999);
+	}
+};
+
+template <int year, wxDateTime::Month month, int day>
+struct CustomDate
+{
+	inline static wxDateTime StartRange()
+	{
+		return wxDateTime(day, month, year, 0, 0, 0, 0);
+	}
+	inline static wxDateTime EndRange()
+	{
+		return wxDateTime(day, month, year, 23, 59, 59, 999);
+	}
+};
+
+template <int Period, typename CurrentData = Today>
+struct LastDays
+{
+	inline static wxDateTime StartRange()
+	{
+		wxDateTime today = CurrentData::StartRange();
+		return today.Subtract((Period - 1) * wxDateSpan::Day());;
+	}
+	inline static wxDateTime EndRange()
+	{
+		return CurrentData::EndRange();
+	}
+};
+
+template <int MonthsAgoStart, int MonthsAgoEnd = 0, typename CurrentData = Today>
+struct LastMonths
+{
+	BOOST_STATIC_ASSERT(MonthsAgoStart >= MonthsAgoEnd);
+
+	inline static wxDateTime StartRange()
+	{
+		wxDateTime datePast = CurrentData::StartRange().Subtract(MonthsAgoStart * wxDateSpan::Month());
+		wxDateTime result(1, datePast.GetMonth(), datePast.GetYear());
+        return result;
+	}
+	inline static wxDateTime EndRange()
+	{
+		return StartRange().Add((MonthsAgoStart-MonthsAgoEnd+1) * wxDateSpan::Month()).Subtract(wxTimeSpan(0,0,0,1));
+	}
+};
+
+template <typename CurrentData = Today>
+struct CurrentMonth: public LastMonths<0, 0, CurrentData> { };
+
+} // namespace DateTimeProviders
+
+#endif // _MM_EX_UTIL_H_
+//----------------------------------------------------------------------------
