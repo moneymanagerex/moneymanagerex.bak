@@ -752,26 +752,25 @@ void mmCheckingPanel::setAccountSummary()
 }
 //----------------------------------------------------------------------------
 
-using namespace collections;
-
-typedef Matcher<mmBankTransaction> TransactionMatcher;
-typedef Matcher<boost::shared_ptr<mmBankTransaction> > TransactionPtr_Matcher;
+typedef boost::shared_ptr<mmBankTransaction> TransactionPtr;
+struct TransactionPtr_Matcher
+{
+    virtual bool Match(const TransactionPtr&) = 0;	
+};
 typedef boost::shared_ptr<TransactionPtr_Matcher> TransactionPtr_MatcherPtr;
 
-//---------------------------------------------------------------------------
-
-template <template<class> class CompareTraits = CompareTraits_Equal>
-class MatchTransaction_Name: public TransactionPtr_Matcher
+template <class EqualTraits = std::equal_to<wxString> >
+class MatchTransaction_Status: public TransactionPtr_Matcher
 {
-	typedef wxString ArgType;
+	wxString m_name;
+	EqualTraits m_equalTraits;
 
-	ArgType name;
 public:
-	MatchTransaction_Name(wxString n): name(n) {}
+	MatchTransaction_Status(wxString n): m_name(n) {}
 
-	virtual bool Match(const boost::shared_ptr<mmBankTransaction>& pTrans)
+	bool Match(const TransactionPtr& pTrans)
 	{
-		return CompareTraits<ArgType>::Equal(pTrans->status_, name);
+		return m_equalTraits(pTrans->status_, m_name);
 	}
 };
 
@@ -779,7 +778,7 @@ template <typename DateTimeProvider>
 class MatchTransaction_DateTime: public TransactionPtr_Matcher
 {
 public:
-	virtual bool Match(const boost::shared_ptr<mmBankTransaction>& pTrans)
+	virtual bool Match(const TransactionPtr& pTrans)
 	{
 		wxASSERT(pTrans);
 		wxDateTime startRange = DateTimeProvider::StartRange();
@@ -788,68 +787,6 @@ public:
 		return pTrans->date_.IsBetween(startRange, endRange);
 	}
 };
-
-//---------------------------------------------------------------------------
-
-namespace DateTimeProviders {
-
-struct Today
-{
-	inline static wxDateTime StartRange()
-	{
-		return wxDateTime::Now().GetDateOnly();
-	}
-	inline static wxDateTime EndRange()
-	{
-		return StartRange() + wxTimeSpan(23, 59, 59);
-	}
-};
-
-template <int Period>
-struct LastDays
-{
-	inline static wxDateTime StartRange()
-	{
-		wxDateTime today = Today::StartRange();
-		return today.Subtract((Period - 1) * wxDateSpan::Day());;
-	}
-	inline static wxDateTime EndRange()
-	{
-		return Today::EndRange(); // end of today
-	}
-};
-
-struct CurrentMonth
-{
-	inline static wxDateTime StartRange()
-	{
-		wxDateTime today = Today::StartRange();
-        return today.Subtract(wxDateSpan::Days(today.GetDay()));
-	}
-	inline static wxDateTime EndRange()
-	{
-		return Today::EndRange(); // end of today
-	}
-};
-
-template <int Period>
-struct LastMonths
-{
-	inline static wxDateTime StartRange()
-	{
-		wxDateTime datePast = Today::StartRange().Subtract(Period * wxDateSpan::Month());
-		wxDateTime result(1, datePast.GetMonth());
-        return result;
-	}
-	inline static wxDateTime EndRange()
-	{
-		return StartRange().Add(Period * wxDateSpan::Month()).Subtract(wxTimeSpan(0,0,1));
-	}
-};
-
-
-} // namespace DateTimeProviders
-
 //---------------------------------------------------------------------------
 
 typedef std::pair<boost::shared_ptr<TransactionPtr_Matcher>, bool> TransactionMatchData;
@@ -859,18 +796,20 @@ const TransactionMatchMap& initTransactionMatchMap()
 {
 	static TransactionMatchMap map;
 
-	map[wxT("View Reconciled")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Name<>(wxT("R"))), false);
-	map[wxT("View Void")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Name<>(wxT("V"))), false);
-	map[wxT("View Flagged")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Name<>(wxT("F"))), false);
-	map[wxT("View UnReconciled")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Name<>(wxT(""))), false);
-	map[wxT("View Not-Reconciled")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Name<CompareTraits_NotEqual>(wxT("R"))), false);
-	map[wxT("View Duplicates")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Name<>(wxT("D"))), false);
+	map[wxT("View Reconciled")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("R"))), false);
+	map[wxT("View Void")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("V"))), false);
+	map[wxT("View Flagged")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("F"))), false);
+	map[wxT("View UnReconciled")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT(""))), false);
+	map[wxT("View Not-Reconciled")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status< std::not_equal_to<wxString> >(wxT("R"))), false);
+	map[wxT("View Duplicates")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("D"))), false);
+
 	map[wxT("View Today")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::Today>()), true);
 	map[wxT("View 30 days")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<30> >()), true);
 	map[wxT("View 90 days")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<90> >()), true);
-	map[wxT("View Current Month")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::CurrentMonth>()), true);
-	map[wxT("View Last Month")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<1> >()), true);
-	map[wxT("View Last 3 Months")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<3> >()), true);
+	map[wxT("View Current Month")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::CurrentMonth<> >()), true);
+	map[wxT("View Last Month")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<1, 1> >()), true);
+	map[wxT("View Last 3 Months")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<2> >()), true);
+
 	return map;
 }
 static const TransactionMatchMap& s_transactionMatchers_Map = initTransactionMatchMap();
@@ -888,7 +827,7 @@ void mmCheckingPanel::initVirtualListControl()
     pgd->Update(10);
 #endif
    
-    boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(m_AccountID);
+	boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(m_AccountID);
     double acctInitBalance = pAccount->initialBalance_;
     boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
     wxASSERT(pCurrency);
@@ -1283,7 +1222,7 @@ void MyListCtrl::OnMarkTransactionDB(const wxString& status)
 
 void MyListCtrl::OnMarkTransaction(wxCommandEvent& event)
 {
-     int evt =  event.GetId();
+     int evt = event.GetId();
      wxString status = wxT("");
      if (evt ==  MENU_TREEPOPUP_MARKRECONCILED)
         status = wxT("R");

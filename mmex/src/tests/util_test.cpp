@@ -30,72 +30,169 @@ struct TestData
 	wxString name;
 };
 
-using namespace collections;
 
-template <template<class> class CompareTraits = CompareTraits_Equal>
-class MatchTestData_Id: public Matcher<TestData>
+SUITE(DateTimeProviders)
 {
-	int id;
-public:
-	MatchTestData_Id(int i): id(i) {}
+using namespace DateTimeProviders;
 
-	virtual bool Match(const TestData& t)
-	{
-		return CompareTraits<int>::Equal(id, t.id);
-	}
-};
-
-template <template<class> class CompareTraits = CompareTraits_Equal>
-class MatchTestDataPtr_Id: public Matcher<boost::shared_ptr<TestData> >
+static void dumpDates(wxString mgs, wxDateTime dateStart, wxDateTime dateEnd)
 {
-	int id;
-public:
-	MatchTestDataPtr_Id(int i): id(i) {}
+	::OutputDebugStringW(mgs.c_str());
+	::OutputDebugStringW((dateStart.FormatISODate() + wxT("-") + dateStart.FormatISOTime()).c_str());
+	::OutputDebugStringA(" - ");
+	::OutputDebugStringW((dateEnd.FormatISODate() + wxT("-") + dateEnd.FormatISOTime()).c_str());
+	::OutputDebugStringA("\r\n");
+}
 
-	virtual bool Match(const boost::shared_ptr<TestData>& t)
-	{
-		return CompareTraits<int>::Equal(id, t->id);
-	}
-};
+TEST(CustomDate)
+{
+	typedef CustomDate<2010, wxDateTime::May, 1> Date_20100501;
+	wxDateTime dateStart = Date_20100501::StartRange();
+	wxDateTime dateEnd = Date_20100501::EndRange();
+	CHECK(2010 == dateStart.GetYear());
+	CHECK(2010 == dateEnd.GetYear());
+	CHECK(wxDateTime::May == dateStart.GetMonth());
+	CHECK(wxDateTime::May == dateEnd.GetMonth());
+	CHECK(1 == dateStart.GetDay());
+	CHECK(1 == dateEnd.GetDay());
+}
+
+TEST(LastDays)
+{
+	typedef CustomDate<2010, wxDateTime::May, 1> Date_20100501;
+
+	wxDateTime dateStart = LastDays<5, Date_20100501>::StartRange();
+	wxDateTime dateEnd = LastDays<5, Date_20100501>::EndRange();
+	dumpDates(wxT("LastDays [1]: "), dateStart, dateEnd);
+
+	CHECK(!wxDateTime(26, wxDateTime::Apr, 2010, 23, 59, 59, 999).IsBetween(dateStart, dateEnd));
+	CHECK(wxDateTime(27, wxDateTime::Apr, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
+	CHECK(wxDateTime(1, wxDateTime::May, 2010, 23, 59, 59, 0).IsBetween(dateStart, dateEnd));
+	CHECK(!wxDateTime(2, wxDateTime::May, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
+
+	CHECK(2010 == dateStart.GetYear());
+	CHECK(2010 == dateEnd.GetYear());
+	CHECK(wxDateTime::Apr == dateStart.GetMonth());
+	CHECK(wxDateTime::May == dateEnd.GetMonth());
+	CHECK(27 == dateStart.GetDay());
+	CHECK(1 == dateEnd.GetDay());
+
+	dateStart = LastDays<1, Date_20100501>::StartRange();
+	dateEnd = LastDays<1, Date_20100501>::EndRange();
+	dumpDates(wxT("LastDays [2]: "), dateStart, dateEnd);
+
+	CHECK(!wxDateTime(4, wxDateTime::May, 2010, 23, 59, 59, 999).IsBetween(dateStart, dateEnd));
+	CHECK(wxDateTime(1, wxDateTime::May, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
+	CHECK(wxDateTime(1, wxDateTime::May, 2010, 23, 59, 59, 0).IsBetween(dateStart, dateEnd));
+	CHECK(!wxDateTime(6, wxDateTime::May, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
+
+	CHECK(2010 == dateStart.GetYear());
+	CHECK(2010 == dateEnd.GetYear());
+	CHECK(wxDateTime::May == dateStart.GetMonth());
+	CHECK(wxDateTime::May == dateEnd.GetMonth());
+	CHECK(1 == dateStart.GetDay());
+	CHECK(1 == dateEnd.GetDay());
+
+	dateStart = LastDays<30, Date_20100501>::StartRange();
+	dateEnd = LastDays<30, Date_20100501>::EndRange();
+	dumpDates(wxT("LastDays [3]: "), dateStart, dateEnd);
+
+	CHECK(!wxDateTime(1, wxDateTime::Apr, 2010, 23, 59, 59, 999).IsBetween(dateStart, dateEnd));
+	CHECK(wxDateTime(2, wxDateTime::Apr, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
+	CHECK(wxDateTime(1, wxDateTime::May, 2010, 23, 59, 59, 0).IsBetween(dateStart, dateEnd));
+	CHECK(!wxDateTime(2, wxDateTime::May, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
+
+	CHECK(2010 == dateStart.GetYear());
+	CHECK(2010 == dateEnd.GetYear());
+	CHECK(wxDateTime::Apr == dateStart.GetMonth());
+	CHECK(wxDateTime::May == dateEnd.GetMonth());
+	CHECK(2 == dateStart.GetDay());
+	CHECK(1 == dateEnd.GetDay());
+}
+
+TEST(CurrentMonth)
+{
+	typedef CustomDate<2010, wxDateTime::May, 1> Date_20100501;
+	typedef CustomDate<2010, wxDateTime::Jun, 12> Date_20100612;
+	typedef CustomDate<2010, wxDateTime::Oct, 26> Date_20101026;
+
+	wxDateTime dateStart = CurrentMonth<Date_20100501>::StartRange();
+	wxDateTime dateEnd = CurrentMonth<Date_20100501>::EndRange();	
+	dumpDates(wxT("Current month [1]: "), dateStart, dateEnd);
+
+	CHECK(!wxDateTime(30, wxDateTime::Apr, 2010, 23, 59, 59, 999).IsBetween(dateStart, dateEnd));
+	CHECK(wxDateTime(1, wxDateTime::May, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
+	CHECK(wxDateTime(31, wxDateTime::May, 2010, 23, 59, 59, 0).IsBetween(dateStart, dateEnd));
+	CHECK(!wxDateTime(1, wxDateTime::Jun, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
+
+	CHECK(2010 == dateStart.GetYear());
+	CHECK(2010 == dateEnd.GetYear());
+	CHECK(wxDateTime::May == dateStart.GetMonth());
+	CHECK(wxDateTime::May == dateEnd.GetMonth());
+	CHECK(1 == dateStart.GetDay());
+	CHECK(31 == dateEnd.GetDay());
+
+	dateStart = CurrentMonth<Date_20100612>::StartRange();
+	dateEnd = CurrentMonth<Date_20100612>::EndRange();
+	dumpDates(wxT("Current month [2]: "), dateStart, dateEnd);
+
+	CHECK(!wxDateTime(31, wxDateTime::May, 2010, 23, 59, 59, 999).IsBetween(dateStart, dateEnd));
+	CHECK(wxDateTime(1, wxDateTime::Jun, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
+	CHECK(wxDateTime(30, wxDateTime::Jun, 2010, 23, 59, 59, 0).IsBetween(dateStart, dateEnd));
+	CHECK(!wxDateTime(1, wxDateTime::Jul, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
+
+	CHECK(2010 == dateStart.GetYear());
+	CHECK(2010 == dateEnd.GetYear());
+	CHECK(wxDateTime::Jun == dateStart.GetMonth());
+	CHECK(wxDateTime::Jun == dateEnd.GetMonth());
+	CHECK(1 == dateStart.GetDay());
+	CHECK(30 == dateEnd.GetDay());
+
+	dateStart = CurrentMonth<Date_20101026>::StartRange();
+	dateEnd = CurrentMonth<Date_20101026>::EndRange();
+	dumpDates(wxT("Current month [3]: "), dateStart, dateEnd);
+
+	CHECK(!wxDateTime(30, wxDateTime::Sep, 2010, 23, 59, 59, 999).IsBetween(dateStart, dateEnd));
+	CHECK(wxDateTime(1, wxDateTime::Oct, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
+	CHECK(wxDateTime(30, wxDateTime::Oct, 2010, 23, 59, 59, 0).IsBetween(dateStart, dateEnd));
+	CHECK(!wxDateTime(1, wxDateTime::Nov, 2010, 0, 0, 0, 0).IsBetween(dateStart, dateEnd));
+
+	CHECK(2010 == dateStart.GetYear());
+	CHECK(2010 == dateEnd.GetYear());
+	CHECK(wxDateTime::Oct == dateStart.GetMonth());
+	CHECK(wxDateTime::Oct == dateEnd.GetMonth());
+	CHECK(1 == dateStart.GetDay());
+	CHECK(31 == dateEnd.GetDay());
+}
+
+TEST(LastMonths)
+{
+	typedef CustomDate<2010, wxDateTime::May, 1> Date_20100501;
+	typedef CustomDate<2010, wxDateTime::Jun, 12> Date_20100612;
+	typedef CustomDate<2010, wxDateTime::Oct, 26> Date_20101026;
+
+	wxDateTime dateStart = LastMonths<1, 0, Date_20100501>::StartRange();
+	wxDateTime dateEnd = LastMonths<1, 0, Date_20100501>::EndRange();	
+	dumpDates(wxT("Last months [1]: "), dateStart, dateEnd);
+
+	dateStart = LastMonths<2, 0, Date_20100501>::StartRange();
+	dateEnd = LastMonths<2, 0, Date_20100501>::EndRange();	
+	dumpDates(wxT("Last months [2]: "), dateStart, dateEnd);
+
+	dateStart = LastMonths<2, 1, Date_20100501>::StartRange();
+	dateEnd = LastMonths<2, 1, Date_20100501>::EndRange();	
+	dumpDates(wxT("Last months [3]: "), dateStart, dateEnd);
+
+	dateStart = LastMonths<0, 0, Date_20100501>::StartRange();
+	dateEnd = LastMonths<0, 0, Date_20100501>::EndRange();	
+	dumpDates(wxT("Last months [4]: "), dateStart, dateEnd);
+}
+
+}
 
 SUITE(collections)
 {
-
-TEST(Matcher)
-{
-	TestData d1(55, wxT("data-55"));
-	TestData d2(56, wxT("data-56"));
-	TestData d3(99, wxT("data-99"));
-
-	MatchTestData_Id<> match_equal(55);
-	CHECK(match_equal.Match(d1));
-	CHECK(!match_equal.Match(d2));
-	CHECK(!match_equal.Match(d3));
-
-	MatchTestData_Id<CompareTraits_NotEqual> match_not_equal(56);
-	CHECK(match_not_equal.Match(d1));
-	CHECK(!match_not_equal.Match(d2));
-	CHECK(match_not_equal.Match(d3));
-}
-
-TEST(MatcherPtr)
-{
-	boost::shared_ptr<TestData> d1(new TestData(55, wxT("data-55")));
-	boost::shared_ptr<TestData> d2(new TestData(56, wxT("data-56")));
-	boost::shared_ptr<TestData> d3(new TestData(99, wxT("data-99")));
-
-	MatchTestDataPtr_Id<> match_equal(55);
-	CHECK(match_equal.Match(d1));
-	CHECK(!match_equal.Match(d2));
-	CHECK(!match_equal.Match(d3));
-
-	MatchTestDataPtr_Id<CompareTraits_NotEqual> match_not_equal(56);
-	CHECK(match_not_equal.Match(d1));
-	CHECK(!match_not_equal.Match(d2));
-	CHECK(match_not_equal.Match(d3));
-}
-
-typedef boost::unordered_map<wxString, wxString/*, utils::swStringHash*/> TransactionMatchMap;
+typedef boost::unordered_map<wxString, wxString> TransactionMatchMap;
 
 static const wxString s_view_reconciled(wxT("View Reconciled"));
 static const wxString s_view_void(wxT("View Void"));
