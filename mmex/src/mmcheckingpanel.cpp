@@ -135,7 +135,6 @@ void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
     }
 }
 //----------------------------------------------------------------------------
-//----------------------------------------------------------------------------
 
 template<class T>
 inline bool sort(const T &t1, const T &t2, bool asc)
@@ -785,7 +784,7 @@ public:
 		wxASSERT(pTrans);
 		wxDateTime startRange = DateTimeProvider::StartRange();
 		wxDateTime endRange = DateTimeProvider::EndRange();
-		::OutputDebugStringW((wxT("- start: ") + startRange.Format(L"%x %X") + wxT(", end: ") + endRange.Format(L"%x %X") + wxT("\r\n")).c_str());
+		// ::OutputDebugStringW((wxT("- start: ") + startRange.Format(L"%x %X") + wxT(", end: ") + endRange.Format(L"%x %X") + wxT("\r\n")).c_str());
 		return pTrans->date_.IsBetween(startRange, endRange);
 	}
 };
@@ -840,9 +839,6 @@ struct LastMonths
 	{
 		wxDateTime datePast = Today::StartRange().Subtract(Period * wxDateSpan::Month());
 		wxDateTime result(1, datePast.GetMonth());
-
-		::OutputDebugStringW((wxT("LastMonths - start: ") + result.Format(L"%x %X") + wxT("\r\n")).c_str());
-
         return result;
 	}
 	inline static wxDateTime EndRange()
