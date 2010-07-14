@@ -18,8 +18,124 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 //----------------------------------------------------------------------------
 #include <UnitTest++.h>
+#include <boost/unordered_map.hpp>
 #include "util.h"
+#include "utils.h"
 //----------------------------------------------------------------------------
+
+struct TestData
+{
+	TestData(int i, wxString n): id(i), name(n) {}
+	int id;
+	wxString name;
+};
+
+using namespace collections;
+
+template <template<class> class CompareTraits = CompareTraits_Equal>
+class MatchTestData_Id: public Matcher<TestData>
+{
+	int id;
+public:
+	MatchTestData_Id(int i): id(i) {}
+
+	virtual bool Match(const TestData& t)
+	{
+		return CompareTraits<int>::Equal(id, t.id);
+	}
+};
+
+template <template<class> class CompareTraits = CompareTraits_Equal>
+class MatchTestDataPtr_Id: public Matcher<boost::shared_ptr<TestData> >
+{
+	int id;
+public:
+	MatchTestDataPtr_Id(int i): id(i) {}
+
+	virtual bool Match(const boost::shared_ptr<TestData>& t)
+	{
+		return CompareTraits<int>::Equal(id, t->id);
+	}
+};
+
+SUITE(collections)
+{
+
+TEST(Matcher)
+{
+	TestData d1(55, wxT("data-55"));
+	TestData d2(56, wxT("data-56"));
+	TestData d3(99, wxT("data-99"));
+
+	MatchTestData_Id<> match_equal(55);
+	CHECK(match_equal.Match(d1));
+	CHECK(!match_equal.Match(d2));
+	CHECK(!match_equal.Match(d3));
+
+	MatchTestData_Id<CompareTraits_NotEqual> match_not_equal(56);
+	CHECK(match_not_equal.Match(d1));
+	CHECK(!match_not_equal.Match(d2));
+	CHECK(match_not_equal.Match(d3));
+}
+
+TEST(MatcherPtr)
+{
+	boost::shared_ptr<TestData> d1(new TestData(55, wxT("data-55")));
+	boost::shared_ptr<TestData> d2(new TestData(56, wxT("data-56")));
+	boost::shared_ptr<TestData> d3(new TestData(99, wxT("data-99")));
+
+	MatchTestDataPtr_Id<> match_equal(55);
+	CHECK(match_equal.Match(d1));
+	CHECK(!match_equal.Match(d2));
+	CHECK(!match_equal.Match(d3));
+
+	MatchTestDataPtr_Id<CompareTraits_NotEqual> match_not_equal(56);
+	CHECK(match_not_equal.Match(d1));
+	CHECK(!match_not_equal.Match(d2));
+	CHECK(match_not_equal.Match(d3));
+}
+
+typedef boost::unordered_map<wxString, wxString/*, utils::swStringHash*/> TransactionMatchMap;
+
+static const wxString s_view_reconciled(wxT("View Reconciled"));
+static const wxString s_view_void(wxT("View Void"));
+static const wxString s_view_flagged(wxT("View Flagged"));
+static const wxString s_view_unreconciled(wxT("View UnReconciled"));
+static const wxString s_view_not_reconciled(wxT("View Not-Reconciled"));
+static const wxString s_view_duplicates(wxT("View Duplicates"));
+
+const TransactionMatchMap& initTransactionMatchMap()
+{
+	static TransactionMatchMap map;
+
+	map[s_view_reconciled] = wxT("R");
+	map[s_view_void] = wxT("V");
+	map[s_view_flagged] = wxT("F");
+	map[s_view_unreconciled] = wxT("");
+	map[s_view_not_reconciled] = wxT("R");
+	map[s_view_duplicates] = wxT("D");
+
+	return map;
+}
+static const TransactionMatchMap& s_transactionMatchers_Map = initTransactionMatchMap();
+
+TEST(BoostHashMap)
+{
+	TransactionMatchMap::const_iterator end;
+
+	size_t size = s_transactionMatchers_Map.size();
+	CHECK(size == 6);
+
+	TransactionMatchMap::hasher hasher = s_transactionMatchers_Map.hash_function();
+	std::size_t h1 = hasher(s_view_reconciled);
+	std::size_t h2 = hasher(wxT("View Reconciled"));
+	CHECK(h1 == h2);
+
+	TransactionMatchMap::const_iterator result = s_transactionMatchers_Map.find(wxT("View Void"));
+	CHECK(result != end);
+}
+
+} // SUITE
 
 SUITE(util)
 {
