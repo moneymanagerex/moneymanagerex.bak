@@ -168,6 +168,45 @@ bool formatCurrencyToDouble( const wxString& str, double& val );
 
 } // namespace mmex
 
+namespace collections {
+
+template <class T>
+class Matcher
+{
+public:
+	virtual bool Match(const T& t) = 0;
+};
+
+template<typename T>
+struct CompareTraits_Equal
+{
+	static bool Equal(const T& t1, const T& t2) { return t1 == t2; }
+};
+
+template<typename T>
+struct CompareTraits_NotEqual
+{
+	static bool Equal(const T& t1, const T& t2) { return t1 != t2; }
+};
+
+} // namespace collections
+
+namespace boost
+{
+	inline std::size_t hash_value(const wxChar* string)
+	{
+		long int_key = 0;
+
+		while (*string)
+			int_key += (wxUChar) *string++;
+		return int_key;
+	}
+
+	inline std::size_t hash_value(const wxString& value)
+	{
+		return boost::hash_value(value.c_str());
+	}
+}
 //----------------------------------------------------------------------------
 #endif // _MM_EX_UTIL_H_
 //----------------------------------------------------------------------------

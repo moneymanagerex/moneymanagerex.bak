@@ -23,6 +23,8 @@
 //----------------------------------------------------------------------------
 #include <algorithm>
 #include <vector>
+#include <boost/unordered_map.hpp>
+
 //----------------------------------------------------------------------------
 /* Include XPM Support */
 #include "../resources/exefile.xpm"
@@ -751,6 +753,132 @@ void mmCheckingPanel::setAccountSummary()
 }
 //----------------------------------------------------------------------------
 
+using namespace collections;
+
+typedef Matcher<mmBankTransaction> TransactionMatcher;
+typedef Matcher<boost::shared_ptr<mmBankTransaction> > TransactionPtr_Matcher;
+typedef boost::shared_ptr<TransactionPtr_Matcher> TransactionPtr_MatcherPtr;
+
+//---------------------------------------------------------------------------
+
+template <template<class> class CompareTraits = CompareTraits_Equal>
+class MatchTransaction_Name: public TransactionPtr_Matcher
+{
+	typedef wxString ArgType;
+
+	ArgType name;
+public:
+	MatchTransaction_Name(wxString n): name(n) {}
+
+	virtual bool Match(const boost::shared_ptr<mmBankTransaction>& pTrans)
+	{
+		return CompareTraits<ArgType>::Equal(pTrans->status_, name);
+	}
+};
+
+template <typename DateTimeProvider>
+class MatchTransaction_DateTime: public TransactionPtr_Matcher
+{
+public:
+	virtual bool Match(const boost::shared_ptr<mmBankTransaction>& pTrans)
+	{
+		wxASSERT(pTrans);
+		wxDateTime startRange = DateTimeProvider::StartRange();
+		wxDateTime endRange = DateTimeProvider::EndRange();
+		::OutputDebugStringW((wxT("- start: ") + startRange.Format(L"%x %X") + wxT(", end: ") + endRange.Format(L"%x %X") + wxT("\r\n")).c_str());
+		return pTrans->date_.IsBetween(startRange, endRange);
+	}
+};
+
+//---------------------------------------------------------------------------
+
+namespace DateTimeProviders {
+
+struct Today
+{
+	inline static wxDateTime StartRange()
+	{
+		return wxDateTime::Now().GetDateOnly();
+	}
+	inline static wxDateTime EndRange()
+	{
+		return StartRange() + wxTimeSpan(23, 59, 59);
+	}
+};
+
+template <int Period>
+struct LastDays
+{
+	inline static wxDateTime StartRange()
+	{
+		wxDateTime today = Today::StartRange();
+		return today.Subtract((Period - 1) * wxDateSpan::Day());;
+	}
+	inline static wxDateTime EndRange()
+	{
+		return Today::EndRange(); // end of today
+	}
+};
+
+struct CurrentMonth
+{
+	inline static wxDateTime StartRange()
+	{
+		wxDateTime today = Today::StartRange();
+        return today.Subtract(wxDateSpan::Days(today.GetDay()));
+	}
+	inline static wxDateTime EndRange()
+	{
+		return Today::EndRange(); // end of today
+	}
+};
+
+template <int Period>
+struct LastMonths
+{
+	inline static wxDateTime StartRange()
+	{
+		wxDateTime datePast = Today::StartRange().Subtract(Period * wxDateSpan::Month());
+		wxDateTime result(1, datePast.GetMonth());
+
+		::OutputDebugStringW((wxT("LastMonths - start: ") + result.Format(L"%x %X") + wxT("\r\n")).c_str());
+
+        return result;
+	}
+	inline static wxDateTime EndRange()
+	{
+		return StartRange().Add(Period * wxDateSpan::Month()).Subtract(wxTimeSpan(0,0,1));
+	}
+};
+
+
+} // namespace DateTimeProviders
+
+//---------------------------------------------------------------------------
+
+typedef std::pair<boost::shared_ptr<TransactionPtr_Matcher>, bool> TransactionMatchData;
+typedef boost::unordered_map<wxString, TransactionMatchData> TransactionMatchMap;
+
+const TransactionMatchMap& initTransactionMatchMap()
+{
+	static TransactionMatchMap map;
+
+	map[wxT("View Reconciled")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Name<>(wxT("R"))), false);
+	map[wxT("View Void")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Name<>(wxT("V"))), false);
+	map[wxT("View Flagged")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Name<>(wxT("F"))), false);
+	map[wxT("View UnReconciled")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Name<>(wxT(""))), false);
+	map[wxT("View Not-Reconciled")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Name<CompareTraits_NotEqual>(wxT("R"))), false);
+	map[wxT("View Duplicates")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Name<>(wxT("D"))), false);
+	map[wxT("View Today")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::Today>()), true);
+	map[wxT("View 30 days")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<30> >()), true);
+	map[wxT("View 90 days")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<90> >()), true);
+	map[wxT("View Current Month")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::CurrentMonth>()), true);
+	map[wxT("View Last Month")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<1> >()), true);
+	map[wxT("View Last 3 Months")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<3> >()), true);
+	return map;
+}
+static const TransactionMatchMap& s_transactionMatchers_Map = initTransactionMatchMap();
+
 void mmCheckingPanel::initVirtualListControl()
 {
     // clear everything
@@ -787,96 +915,23 @@ void mmCheckingPanel::initVirtualListControl()
 
         bool toAdd = true;
 		bool getBal = false;
-        if (m_currentView == wxT("View Reconciled"))
-        {
-            if (pBankTransaction->status_ != wxT("R"))
-                toAdd = false;
-        }
-        else if (m_currentView == wxT("View Void"))
-        {
-             if (pBankTransaction->status_ != wxT("V"))
-                toAdd = false;
-        }
-        else if (m_currentView == wxT("View Flagged"))
-        {
-            if (pBankTransaction->status_ != wxT("F"))
-                toAdd = false;
-        }
-        else if (m_currentView == wxT("View UnReconciled"))
-        {
-            if (pBankTransaction->status_ != wxT(""))
-                toAdd = false;
-        }
-        else if (m_currentView == wxT("View Not-Reconciled"))
-        {
-            if (pBankTransaction->status_ == wxT("R"))
-                toAdd = false;
-        }
-		else if (m_currentView == wxT("View Duplicates"))
-        {
-            if (pBankTransaction->status_ != wxT("D"))
-                toAdd = false;
-        }
-        else  if (m_currentView == wxT("View Today"))
-	   {
-           wxDateTime dtBegin = wxDateTime::Now().GetDateOnly();
-           wxDateTime dtEnd = dtBegin + wxTimeSpan(23, 59, 59);
+		if (s_transactionMatchers_Map.count(m_currentView) > 0)
+		{
+			// boost::shared_ptr<TransactionPtr_Matcher> pMatcher;
+			TransactionMatchMap::const_iterator it = s_transactionMatchers_Map.find(m_currentView);
+			TransactionMatchMap::const_iterator end;
+			if (it != end)
+			{
+				TransactionMatchMap::value_type pair = *it;
+				
+				TransactionMatchData data = pair.second;
+				TransactionPtr_MatcherPtr matcher = data.first;
+				wxASSERT(matcher);
 
-           if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
-               toAdd = false;
-
-           getBal = true;
-	    }
-        else  if (m_currentView == wxT("View 30 days"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime prevMonthEnd = today;
-            wxDateTime dtEnd = today;
-            wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-
-            if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
-                toAdd = false;
-
-			getBal = true;
-        }
-        else if (m_currentView == wxT("View 90 days"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime prevMonthEnd = today;
-            wxDateTime dtEnd = today;
-            wxDateTime dtBegin = today.Subtract(90 * wxDateSpan::Day());
-
-             if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
-                 toAdd = false;
-
-			 getBal = true;
-        }
-        else if (m_currentView == wxT("View Current Month"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-            wxDateTime dtBegin = prevMonthEnd;
-            wxDateTime dtEnd = wxDateTime::Now();
-
-            if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
-                 toAdd = false;
-
-			 getBal = true;
-        }
-        else if (m_currentView == wxT("View Last Month"))
-        {
-            wxDateTime today = wxDateTime::Now();
-            wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-            wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Month());
-            today = wxDateTime::Now();
-            wxDateTime dtEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
-
-            if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
-                 toAdd = false;
-
-			 getBal = true;
-
-        }
+				toAdd = matcher->Match(pBankTransaction);
+				getBal = data.second;
+			}
+		}
 
         if (toAdd)
         {
