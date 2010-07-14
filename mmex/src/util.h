@@ -238,7 +238,7 @@ struct LastMonths
 	{
 		wxDateTime datePast = CurrentData::StartRange().Subtract(MonthsAgoStart * wxDateSpan::Month());
 		wxDateTime result(1, datePast.GetMonth(), datePast.GetYear());
-        return result;
+        	return result;
 	}
 	inline static wxDateTime EndRange()
 	{
