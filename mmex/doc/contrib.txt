@@ -1,3 +1,9 @@
+Active developers
+==================
+Vadim
+Nikolay
+Alex Ukhov
+
 Code Fixes/Patches
 ==================
 Priyank Bolia
@@ -14,7 +20,6 @@ Rohit Kumar
 Ho Yin Kwok
 Jeancf
 Wesley Ellis
-Vadim
 Pat
 
 Silk Icons
