@@ -28,6 +28,6 @@ wxString mmex::getProgramName()
 
 wxString mmex::getProgramVersion()
 {
-        return wxString(wxT("0.9.6.0"));
+        return wxString(wxT("0.9.7.0"));
 }
 //----------------------------------------------------------------------------
