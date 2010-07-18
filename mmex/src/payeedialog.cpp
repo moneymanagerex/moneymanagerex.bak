@@ -67,7 +67,7 @@ void mmPayeeDialog::do_create(wxWindow* parent)
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
 
     long style = wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX | wxRESIZE_BORDER | wxWANTS_CHARS;
-    if (!wxDialog::Create(parent, -1, _("Organize Payees"), wxDefaultPosition, wxDefaultSize, style)) {
+    if (!wxDialog::Create(parent, wxID_ANY, _("Organize Payees"), wxDefaultPosition, wxDefaultSize, style)) {
     	return;
     }
 

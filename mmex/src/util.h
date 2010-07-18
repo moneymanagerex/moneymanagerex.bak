@@ -175,8 +175,10 @@ namespace boost
 	{
 		long int_key = 0;
 
-		while (*string)
-			int_key += (wxUChar) *string++;
+		while (*string) {
+			int_key += static_cast<wxUChar>(*string++);
+	        }
+
 		return int_key;
 	}
 
@@ -184,6 +186,7 @@ namespace boost
 	{
 		return boost::hash_value(value.c_str());
 	}
+
 } // namespace boost
 
 //----------------------------------------------------------------------------
