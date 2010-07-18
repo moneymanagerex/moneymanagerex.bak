@@ -15,47 +15,52 @@
  ********************************************************/
 
 #include "assetdialog.h"
-#include "wx/datectrl.h"
 #include "util.h"
 #include "dbwrapper.h"
 #include "currencydialog.h"
 #include "defs.h"
 #include "paths.h"
 
+#include <wx/datectrl.h>
+
+namespace
+{
 
 enum { DEF_CHANGE_NONE, DEF_CHANGE_APPRECIATE, DEF_CHANGE_DEPRECIATE };
 enum { DEF_ASSET_PROPERTY, DEF_ASSET_AUTO, DEF_ASSET_HOUSE, DEF_ASSET_ART, DEF_ASSET_JEWELLERY, DEF_ASSET_CASH, DEF_ASSET_OTHER };
+enum { IDC_COMBO_TYPE = wxID_HIGHEST + 1 };
+
+} // namespace
 
 
 IMPLEMENT_DYNAMIC_CLASS( mmAssetDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmAssetDialog, wxDialog )
-    EVT_BUTTON(ID_BUTTON_ASSET_OK, mmAssetDialog::OnOk)
-    EVT_BUTTON(ID_BUTTON_ASSET_CANCEL, mmAssetDialog::OnCancel)
-	EVT_CHOICE(ID_DIALOG_ASSETDIALOG_COMBO_TYPE, mmAssetDialog::OnChangeAppreciationType)
+    EVT_BUTTON(wxID_OK, mmAssetDialog::OnOk)
+    EVT_BUTTON(wxID_CANCEL, mmAssetDialog::OnCancel)
+    EVT_CHOICE(IDC_COMBO_TYPE, mmAssetDialog::OnChangeAppreciationType)
 END_EVENT_TABLE()
 
-mmAssetDialog::mmAssetDialog( )
+
+mmAssetDialog::mmAssetDialog(wxWindow* parent, wxSQLite3Database* db, int assetID, bool edit) :
+	db_(db),
+	assetID_(assetID),
+	edit_(edit)
 {
+	long style = wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX;
+
+	if (Create(parent, wxID_ANY, _("New/Edit Asset"), wxDefaultPosition, wxSize(400, 300), style)) {
+		mmDBWrapper::loadBaseCurrencySettings(db_);
+	}
 }
 
-mmAssetDialog::mmAssetDialog(wxSQLite3Database* db, int assetID, bool edit,
-                             wxWindow* parent, wxWindowID id, 
-                             const wxString& caption, const wxPoint& pos, 
-                             const wxSize& size, long style )
-{
-    db_ = db;
-    assetID_ = assetID;
-    edit_ = edit;
-    Create(parent, id, caption, pos, size, style);
-    mmDBWrapper::loadBaseCurrencySettings(db_);
-}
-
-bool mmAssetDialog::Create( wxWindow* parent, wxWindowID id, const wxString& caption, 
-                           const wxPoint& pos, const wxSize& size, long style )
+bool mmAssetDialog::Create(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
 {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
-    wxDialog::Create( parent, id, caption, pos, size, style );
+
+    if (!wxDialog::Create(parent, id, caption, pos, size, style)) {
+    	return false;
+    }
 
     CreateControls();
     GetSizer()->Fit(this);
@@ -65,18 +70,15 @@ bool mmAssetDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
     
     fillControls();
 
-    if (edit_)
-    {
+    if (edit_) {
         dataToControls();
+    } else {   
+	enableDisableRate(false);
     }
-	else 
-	{   
-		enableDisableRate(false);
-	}
 
 
     Centre();
-    return TRUE;
+    return true;
 }
 
 void mmAssetDialog::dataToControls()
@@ -190,8 +192,7 @@ void mmAssetDialog::CreateControls()
     itemFlexGridSizer6->Add(itemStaticText7, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    assetName_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSETNAME, wxT(""), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    assetName_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSETNAME, wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
     assetName_->SetToolTip(_("Enter the name of the asset"));
     itemFlexGridSizer6->Add(assetName_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -232,17 +233,13 @@ void mmAssetDialog::CreateControls()
     itemFlexGridSizer6->Add(itemStaticText31, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    value_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSETDIALOG_VALUE, wxT(""), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    value_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSETDIALOG_VALUE, wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
     value_->SetToolTip(_("Enter the current value of the asset"));
-    itemFlexGridSizer6->Add(value_, 0, 
-        wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer6->Add(value_, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 
-    wxStaticText* itemStaticText11 = new wxStaticText( itemPanel5, wxID_STATIC, 
-        _("Change in Value"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText11, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText11 = new wxStaticText( itemPanel5, wxID_STATIC, _("Change in Value"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(itemStaticText11, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     const wxString itemTypeStrings[] =  
     {
@@ -250,65 +247,56 @@ void mmAssetDialog::CreateControls()
         _("Appreciates"),
         _("Depreciates"),
     };
-    valueChange_ = new wxChoice( itemPanel5, ID_DIALOG_ASSETDIALOG_COMBO_TYPE, 
-        wxDefaultPosition, wxDefaultSize, 3, itemTypeStrings, 0 );
+
+    valueChange_ = new wxChoice( itemPanel5, IDC_COMBO_TYPE, wxDefaultPosition, wxDefaultSize, 3, itemTypeStrings, 0 );
     valueChange_->SetToolTip(_("Specify if the value of the asset changes over time"));
     valueChange_->SetSelection(DEF_CHANGE_NONE);
     itemFlexGridSizer6->Add(valueChange_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    valueChangeRateLabel_ = new wxStaticText( itemPanel5, 
-        wxID_STATIC, _("Rate of Change"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(valueChangeRateLabel_, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    valueChangeRateLabel_ = new wxStaticText( itemPanel5, wxID_STATIC, _("Rate of Change"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(valueChangeRateLabel_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    valueChangeRate_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSETDIALOG_CHANGERATE, wxT(""), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    valueChangeRate_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSETDIALOG_CHANGERATE, wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
     valueChangeRate_->SetToolTip(_("Enter the rate at which the asset changes its value in % per year"));
-    itemFlexGridSizer6->Add(valueChangeRate_, 0, 
-        wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer6->Add(valueChangeRate_, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     enableDisableRate(false);
 
     wxStaticText* itemStaticText19 = new wxStaticText( itemPanel5, wxID_STATIC, 
         _("Notes"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText19, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemFlexGridSizer6->Add(itemStaticText19, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    notes_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSET_NOTES, wxT(""), 
-        wxDefaultPosition, wxSize(-1, 75), wxTE_MULTILINE );
+    notes_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSET_NOTES, wxGetEmptyString(), wxDefaultPosition, wxSize(-1, 75), wxTE_MULTILINE );
     notes_->SetToolTip(_("Enter notes associated with this asset"));
     itemFlexGridSizer6->Add(notes_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
   
-    wxPanel* itemPanel27 = new wxPanel( itemDialog1, wxID_ANY, 
-        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* itemPanel27 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemBoxSizer3->Add(itemPanel27, 0, wxALIGN_RIGHT|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer28 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel27->SetSizer(itemBoxSizer28);
 
-    wxButton* itemButton29 = new wxButton( itemPanel27, ID_BUTTON_ASSET_OK, 
-        _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton29 = new wxButton( itemPanel27, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer28->Add(itemButton29, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
-    wxButton* itemButton30 = new wxButton( itemPanel27, ID_BUTTON_ASSET_CANCEL, 
-        _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton30 = new wxButton( itemPanel27, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer28->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 }
 
 void mmAssetDialog::OnCancel(wxCommandEvent& /*event*/)
 {
-    Close(TRUE);
+    Close(true);
 }
 
 void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
 {
     wxString pdate = dpc_->GetValue().FormatISODate();
-    wxString notes       = notes_->GetValue().Trim();
-    wxString name       = assetName_->GetValue().Trim();
+    wxString notes = notes_->GetValue().Trim();
+    wxString name = assetName_->GetValue().Trim();
 
     wxString valueStr = value_->GetValue().Trim();
-    if (valueStr == wxT(""))
+    if (valueStr.IsEmpty())
     {
         mmShowErrorMessageInvalid(this, _("Value"));
         return;
@@ -333,7 +321,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
 
 
     wxString valueChangeRateStr = valueChangeRate_->GetValue().Trim();
-    if ((valueChangeRateStr == wxT("")) && (valueChangeType != DEF_CHANGE_NONE))
+    if (valueChangeRateStr.IsEmpty() && valueChangeType != DEF_CHANGE_NONE)
     {
         mmShowErrorMessageInvalid(this, _("Rate of Change in Value"));
         return;

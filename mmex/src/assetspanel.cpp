@@ -336,7 +336,7 @@ void assetsListCtrl::OnListKeyDown(wxListEvent& event)
 
 void assetsListCtrl::OnNewAsset(wxCommandEvent& /*event*/)
 {
-	mmAssetDialog dlg(cp_->db_, 0, false, this);
+	mmAssetDialog dlg(this, cp_->db_, 0, false);
 
 	if (dlg.ShowModal() == wxID_OK) {
         	cp_->initVirtualListControl();
@@ -372,7 +372,7 @@ void assetsListCtrl::OnEditAsset(wxCommandEvent& /*event*/)
 	if (selectedIndex_ == -1)
 		return;
 
-	mmAssetDialog dlg(cp_->db_, cp_->trans_[selectedIndex_].assetID_, true, this);
+	mmAssetDialog dlg(this, cp_->db_, cp_->trans_[selectedIndex_].assetID_, true);
 
 	if (dlg.ShowModal() == wxID_OK) {
 		cp_->initVirtualListControl();
@@ -384,7 +384,7 @@ void assetsListCtrl::OnListItemActivated(wxListEvent& event)
 {
 	selectedIndex_ = event.GetIndex();
 
-	mmAssetDialog dlg(cp_->db_, cp_->trans_[selectedIndex_].assetID_, true, this);
+	mmAssetDialog dlg(this, cp_->db_, cp_->trans_[selectedIndex_].assetID_, true);
 
 	if (dlg.ShowModal() == wxID_OK) {
 		cp_->initVirtualListControl();
