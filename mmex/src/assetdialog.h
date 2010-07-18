@@ -17,19 +17,13 @@
 #ifndef _MM_EX_ASSETDIALOG_H_
 #define _MM_EX_ASSETDIALOG_H_
 
-#define SYMBOL_ASSETDIALOG_STYLE wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_ASSETDIALOG_TITLE _("New/Edit Asset")
-#define SYMBOL_ASSETDIALOG_IDNAME ID_DIALOG_ASSETS
-#define SYMBOL_ASSETDIALOG_SIZE wxSize(400, 300)
-#define SYMBOL_ASSETDIALOG_POSITION wxDefaultPosition
-
 #include "defs.h"
-#include "guiid.h"
 
 class mmData;
 class wxDatePickerCtrl;
 class mmCategory;
 class mmAdvancedPopup;
+
 
 class mmAssetDialog : public wxDialog
 {    
@@ -37,34 +31,13 @@ class mmAssetDialog : public wxDialog
     DECLARE_EVENT_TABLE()
 
 public:
-    mmAssetDialog();
-    mmAssetDialog(wxSQLite3Database* db, 
-        int assetID, bool edit, wxWindow* parent, 
-        wxWindowID id = SYMBOL_ASSETDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_ASSETDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_ASSETDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_ASSETDIALOG_SIZE, 
-        long style = SYMBOL_ASSETDIALOG_STYLE );
-
-    bool Create( wxWindow* parent, wxWindowID id = SYMBOL_ASSETDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_ASSETDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_ASSETDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_ASSETDIALOG_SIZE, 
-        long style = SYMBOL_ASSETDIALOG_STYLE );
-
-    void CreateControls();
-    
-    void OnOk(wxCommandEvent& event);
-    void OnCancel(wxCommandEvent& event);
-    void OnChangeAppreciationType(wxCommandEvent& event);
-	void enableDisableRate(bool en);
-    
-    void fillControls();
-    void dataToControls();
+    mmAssetDialog() : db_(), assetID_(-1), edit_() {}
+    mmAssetDialog(wxWindow *parent, wxSQLite3Database* db, int assetID, bool edit);
 
 private:
     wxSQLite3Database* db_;
     int assetID_;
+    bool edit_;
 
     wxTextCtrl* assetName_;
     wxDatePickerCtrl* dpc_;
@@ -75,10 +48,19 @@ private:
     wxChoice*  assetType_;
     wxChoice*  valueChange_;
 	
-	wxStaticText* valueChangeRateLabel_;
-    
+    wxStaticText* valueChangeRateLabel_;
 
-    bool edit_;
+    bool Create(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style);
+    void CreateControls();
+    
+    void OnOk(wxCommandEvent& event);
+    void OnCancel(wxCommandEvent& event);
+    void OnChangeAppreciationType(wxCommandEvent& event);
+    void enableDisableRate(bool en);
+    
+    void fillControls();
+    void dataToControls();
+
 };
 
 #endif
