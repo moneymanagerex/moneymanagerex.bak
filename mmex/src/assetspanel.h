@@ -18,8 +18,10 @@
 #define _MM_EX_ASSETSPANEL_H_
 
 #include "mmpanelbase.h"
-#include "guiid.h"
 #include "util.h"
+
+#include <boost/scoped_ptr.hpp>
+
 
 class wxListCtrl;
 class wxListEvent;
@@ -36,13 +38,22 @@ public:
         const wxWindowID id, const wxPoint& pos,
         const wxSize& size, long style)
         : wxListCtrl(parent, id, pos, size, style),
-        attr1_(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont),
-        attr2_(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont),
-        cp_(cp),
-        selectedIndex_(-1)
+        m_attr1(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont),
+        m_attr2(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont),
+        m_cp(cp),
+        m_selectedIndex(-1)
     {}
 
-public:
+    void OnNewAsset(wxCommandEvent& event);
+    void OnEditAsset(wxCommandEvent& event);
+    void OnDeleteAsset(wxCommandEvent& event);
+
+private:
+    wxListItemAttr m_attr1; // style1
+    wxListItemAttr m_attr2; // style2
+    mmAssetsPanel* m_cp;
+    long m_selectedIndex;
+
     /* required overrides for virtual style list control */
     virtual wxString OnGetItemText(long item, long column) const;
     virtual int OnGetItemImage(long item) const;
@@ -52,17 +63,8 @@ public:
     void OnListItemActivated(wxListEvent& event);
     void OnListKeyDown(wxListEvent& event);
     void OnListItemSelected(wxListEvent& event);
-	void OnListItemDeselected(wxListEvent& event);
-
-    void OnNewAsset(wxCommandEvent& event);
-    void OnDeleteAsset(wxCommandEvent& event);
-    void OnEditAsset(wxCommandEvent& event);
-
-private:
-    wxListItemAttr attr1_; // style1
-    wxListItemAttr attr2_; // style2
-    mmAssetsPanel* cp_;
-    long selectedIndex_;
+    void OnListItemDeselected(wxListEvent& event);
+    void doRefreshItems();
 };
 
 /* Holds a single transaction */
@@ -83,46 +85,34 @@ class mmAssetsPanel : public mmPanelBase
     DECLARE_EVENT_TABLE()
 
 public:
-    mmAssetsPanel( wxSQLite3Database* db, wxSQLite3Database* inidb, 
-            wxWindow *parent,
-            wxWindowID winid = wxID_ANY,
-            const wxPoint& pos = wxDefaultPosition,
-            const wxSize& size = wxDefaultSize,
-            long style = wxTAB_TRAVERSAL | wxNO_BORDER,
-            const wxString& name = wxPanelNameStr );
-    ~mmAssetsPanel();
+    mmAssetsPanel(wxWindow *parent, wxSQLite3Database* db, wxSQLite3Database* inidb);
+   ~mmAssetsPanel();
 
-    bool Create( wxWindow *parent, wxWindowID winid,
-                const wxPoint& pos = wxDefaultPosition,
-                const wxSize& size = wxDefaultSize,
-                long style = wxTAB_TRAVERSAL | wxNO_BORDER,
-                const wxString& name = wxPanelNameStr);
-      
-    void CreateControls();
-
-    /* updates the checking panel data */
+    void enableEditDeleteButtons(bool enable);
     void initVirtualListControl();
 
-    /* Getter for Virtual List Control */
     wxString getItem(long item, long column);
-  
+    wxSQLite3Database* getDb() const { return m_db; }
+    const std::vector<mmAssetHolder>& getTrans() const { return m_trans; }
+
+private:
+    wxSQLite3Database* m_db;
+    wxSQLite3Database* m_inidb;
+    assetsListCtrl* m_listCtrlAssets;
+    boost::scoped_ptr<wxImageList> m_imageList;
+    std::vector<mmAssetHolder> m_trans;
+
+    bool Create(wxWindow *parent, wxWindowID winid, const wxPoint& pos, const wxSize& size, long style, const wxString &name);
+    void CreateControls();
+
     /* Event handlers for Buttons */
     void OnNewAsset(wxCommandEvent& event);
     void OnDeleteAsset(wxCommandEvent& event);
     void OnEditAsset(wxCommandEvent& event);
-	void enableEditDeleteButtons(bool en);
 
     void OnViewPopupSelected(wxCommandEvent& event);
-
-    /* Helper Functions/data */
-    std::vector<mmAssetHolder> trans_;
     void sortTable();
-
-public:
-    wxSQLite3Database* db_;
-    assetsListCtrl* listCtrlAssets_;
-    wxSQLite3Database* inidb_;
-    wxImageList* m_imageList;
+    void destroy();
 };
 
 #endif

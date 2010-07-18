@@ -3354,12 +3354,8 @@ void mmGUIFrame::OnStocks(wxCommandEvent& /*event*/)
 void mmGUIFrame::OnAssets(wxCommandEvent& /*event*/)
 {
     wxSizer *sizer = cleanupHomePanel();
-    
-    panelCurrent_ = new mmAssetsPanel(m_db.get(), m_inidb.get(), homePanel, ID_PANEL3, 
-        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    
+    panelCurrent_ = new mmAssetsPanel(homePanel, m_db.get(), m_inidb.get());
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
-
     homePanel->Layout();
 }
 //----------------------------------------------------------------------------
