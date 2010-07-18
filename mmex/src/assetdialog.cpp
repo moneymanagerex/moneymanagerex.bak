@@ -28,7 +28,12 @@ namespace
 
 enum { DEF_CHANGE_NONE, DEF_CHANGE_APPRECIATE, DEF_CHANGE_DEPRECIATE };
 enum { DEF_ASSET_PROPERTY, DEF_ASSET_AUTO, DEF_ASSET_HOUSE, DEF_ASSET_ART, DEF_ASSET_JEWELLERY, DEF_ASSET_CASH, DEF_ASSET_OTHER };
-enum { IDC_COMBO_TYPE = wxID_HIGHEST + 1 };
+
+enum { 
+  IDC_COMBO_TYPE = wxID_HIGHEST + 1,
+  IDC_BUTTON_OK,
+  IDC_BUTTON_CANCEL
+};
 
 } // namespace
 
@@ -36,8 +41,8 @@ enum { IDC_COMBO_TYPE = wxID_HIGHEST + 1 };
 IMPLEMENT_DYNAMIC_CLASS( mmAssetDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmAssetDialog, wxDialog )
-    EVT_BUTTON(wxID_OK, mmAssetDialog::OnOk)
-    EVT_BUTTON(wxID_CANCEL, mmAssetDialog::OnCancel)
+    EVT_BUTTON(IDC_BUTTON_OK, mmAssetDialog::OnOk)
+    EVT_BUTTON(IDC_BUTTON_CANCEL, mmAssetDialog::OnCancel)
     EVT_CHOICE(IDC_COMBO_TYPE, mmAssetDialog::OnChangeAppreciationType)
 END_EVENT_TABLE()
 
@@ -275,10 +280,10 @@ void mmAssetDialog::CreateControls()
     wxBoxSizer* itemBoxSizer28 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel27->SetSizer(itemBoxSizer28);
 
-    wxButton* itemButton29 = new wxButton( itemPanel27, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton29 = new wxButton( itemPanel27, IDC_BUTTON_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer28->Add(itemButton29, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
-    wxButton* itemButton30 = new wxButton( itemPanel27, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton30 = new wxButton( itemPanel27, IDC_BUTTON_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer28->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 }
