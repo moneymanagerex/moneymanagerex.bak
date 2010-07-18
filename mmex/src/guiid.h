@@ -28,7 +28,7 @@ namespace mmex
 
 extern const int MIN_DATAVERSION;
 extern const wxChar * const DATAVERSION;
-//----------------------------------------------------------------------------
+
 extern const wxChar *const DEFDATEFORMAT;
 extern const wxChar *const DEFDELIMTER;
 extern const wxChar *const DEFSTOCKURL;
@@ -207,7 +207,6 @@ enum
     ID_BUTTON_DELETE_BD,
     ID_BUTTON_ENTEROCCUR_BD,
     ID_BUTTON_EDIT_BD,
-    ID_PANEL15,
     ID_PANEL_BD_STATIC_HEADER,
     ID_PANEL_BD_STATIC_BALHEADER,
     ID_PANEL_BD_LISTCTRL,
@@ -308,10 +307,6 @@ enum
     ID_DIALOG_OPTIONS_BUTTON_DATEFORMAT,
     ID_DIALOG_OPTIONS_UPD_CURRENCY,
 
-    /* About Dialog */
-    ID_DIALOG_BUTTON_ABOUT_VERSION_HISTORY,
-    ID_DIALOG_BUTTON_ABOUT_CONTRIBUTERS,
-
     /* APP Start Dialog */
     ID_BUTTON_APPSTART_NEW_DATABASE,
     ID_BUTTON_APPSTART_OPEN_DATABASE,
@@ -352,31 +347,9 @@ enum
     ID_BUTTON_DELETE_STOCK,
     ID_PANEL_STOCKS_LISTCTRL,
 
-    /* Assets */
-    ID_BUTTON_NEW_ASSET,
-    ID_BUTTON_EDIT_ASSET,
-    ID_BUTTON_DELETE_ASSET,
-    ID_PANEL_ASSETS_LISTCTRL,
-    ID_BUTTON_ASSETDIALOG_OK,
-    ID_BUTTON_ASSETDIALOG_CANCEL,
-    ID_TEXTCTRL_ASSETNAME,
-    ID_DPC_ASSET_PDATE,
-    ID_TEXTCTRL_ASSETDIALOG_CHANGERATE,
-    ID_DIALOG_ASSETDIALOG_COMBO_ASSETTYPE,
-    ID_TEXTCTRL_ASSET_NOTES,
-    ID_TEXTCTRL_ASSETDIALOG_VALUE,
-
     /* File Viewer */
     ID_DIALOG_FILEVIEWER,
     ID_TEXTCTRL_FILEVIEWER,
-	/* Navigation Panel */
-	/*Popup Menu for Bank Accounts*/
-
-	//New Account    //
-	//Delete Account //
-	//Edit Account   //
-	//Export >       //  
-	//Import >       //  
 
     MENU_TREEPOPUP_ACCOUNT_NEW,
     MENU_TREEPOPUP_ACCOUNT_DELETE,

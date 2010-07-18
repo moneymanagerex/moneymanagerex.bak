@@ -170,7 +170,7 @@ void mmAppStartDialog::CreateControls()
         showAppStartString, wxDefaultPosition, 
         wxDefaultSize, wxCHK_2STATE );
     wxString showBeginApp = mmDBWrapper::getINISettingValue(inidb_, 
-        wxT("SHOWBEGINAPP"), wxT(""));
+        wxT("SHOWBEGINAPP"), wxGetEmptyString());
     if (showBeginApp == wxT("TRUE") )
         itemCheckBox->SetValue(true);
     else

@@ -31,24 +31,24 @@ class mmAssetDialog : public wxDialog
     DECLARE_EVENT_TABLE()
 
 public:
-    mmAssetDialog() : db_(), assetID_(-1), edit_() {}
+    mmAssetDialog() : m_db(), m_assetID(-1), m_edit() {}
     mmAssetDialog(wxWindow *parent, wxSQLite3Database* db, int assetID, bool edit);
 
 private:
-    wxSQLite3Database* db_;
-    int assetID_;
-    bool edit_;
+    wxSQLite3Database* m_db;
+    int m_assetID;
+    bool m_edit;
 
-    wxTextCtrl* assetName_;
-    wxDatePickerCtrl* dpc_;
-    wxTextCtrl* notes_;
-    wxTextCtrl* value_;
-    wxTextCtrl* valueChangeRate_;
+    wxTextCtrl* m_assetName;
+    wxDatePickerCtrl* m_dpc;
+    wxTextCtrl* m_notes;
+    wxTextCtrl* m_value;
+    wxTextCtrl* m_valueChangeRate;
     
-    wxChoice*  assetType_;
-    wxChoice*  valueChange_;
+    wxChoice*  m_assetType;
+    wxChoice*  m_valueChange;
 	
-    wxStaticText* valueChangeRateLabel_;
+    wxStaticText* m_valueChangeRateLabel;
 
     bool Create(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style);
     void CreateControls();

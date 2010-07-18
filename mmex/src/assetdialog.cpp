@@ -43,14 +43,14 @@ END_EVENT_TABLE()
 
 
 mmAssetDialog::mmAssetDialog(wxWindow* parent, wxSQLite3Database* db, int assetID, bool edit) :
-	db_(db),
-	assetID_(assetID),
-	edit_(edit)
+	m_db(db),
+	m_assetID(assetID),
+	m_edit(edit)
 {
 	long style = wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX;
 
 	if (Create(parent, wxID_ANY, _("New/Edit Asset"), wxDefaultPosition, wxSize(400, 300), style)) {
-		mmDBWrapper::loadBaseCurrencySettings(db_);
+		mmDBWrapper::loadBaseCurrencySettings(m_db);
 	}
 }
 
@@ -70,7 +70,7 @@ bool mmAssetDialog::Create(wxWindow* parent, wxWindowID id, const wxString& capt
     
     fillControls();
 
-    if (edit_) {
+    if (m_edit) {
         dataToControls();
     } else {   
 	enableDisableRate(false);
@@ -94,44 +94,44 @@ void mmAssetDialog::dataToControls()
     "from ASSETS_V1 "
     "where ASSETID = ?";
 
-    wxSQLite3Statement st = db_->PrepareStatement(sql);
-    st.Bind(1, assetID_);
+    wxSQLite3Statement st = m_db->PrepareStatement(sql);
+    st.Bind(1, m_assetID);
 
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
     if (q1.NextRow())
     {
-        assetName_->SetValue(q1.GetString(wxT("ASSETNAME")));
-        notes_->SetValue(q1.GetString(wxT("NOTES")));
+        m_assetName->SetValue(q1.GetString(wxT("ASSETNAME")));
+        m_notes->SetValue(q1.GetString(wxT("NOTES")));
 
         wxString dateString = q1.GetString(wxT("STARTDATE"));
         wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
-        wxString dt = mmGetDateForDisplay(db_, dtdt);
-        dpc_->SetValue(dtdt);
+        wxString dt = mmGetDateForDisplay(m_db, dtdt);
+        m_dpc->SetValue(dtdt);
 
 		wxString value;
 		mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUE")), 
             value);
-		value_->SetValue(value);
+		m_value->SetValue(value);
 
         wxString valueChangeRate;
         valueChangeRate.Printf(wxT("%.3f"), q1.GetDouble(wxT("VALUECHANGERATE")));
-        valueChangeRate_->SetValue(valueChangeRate);
+        m_valueChangeRate->SetValue(valueChangeRate);
     
         wxString valueChangeTypeStr = q1.GetString(wxT("VALUECHANGE"));
         if (valueChangeTypeStr == wxT("None"))
 		{
-            valueChange_->SetSelection(DEF_CHANGE_NONE);
+            m_valueChange->SetSelection(DEF_CHANGE_NONE);
 			enableDisableRate(false);
 		}
         else if (valueChangeTypeStr == wxT("Appreciates"))
 		{
-			valueChange_->SetSelection(DEF_CHANGE_APPRECIATE);
+			m_valueChange->SetSelection(DEF_CHANGE_APPRECIATE);
 			enableDisableRate(true);
 		}
         else if (valueChangeTypeStr == wxT("Depreciates"))
 
 		{
-            valueChange_->SetSelection(DEF_CHANGE_DEPRECIATE);
+            m_valueChange->SetSelection(DEF_CHANGE_DEPRECIATE);
 			enableDisableRate(true);
 		}
         else
@@ -141,19 +141,19 @@ void mmAssetDialog::dataToControls()
 		
          wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
          if (assetTypeStr == wxT("Property"))
-            assetType_->SetSelection(DEF_ASSET_PROPERTY);
+            m_assetType->SetSelection(DEF_ASSET_PROPERTY);
          else if (assetTypeStr == wxT("Automobile"))
-            assetType_->SetSelection(DEF_ASSET_AUTO);
+            m_assetType->SetSelection(DEF_ASSET_AUTO);
          else if (assetTypeStr == wxT("Household Object"))
-            assetType_->SetSelection(DEF_ASSET_HOUSE);
+            m_assetType->SetSelection(DEF_ASSET_HOUSE);
          else if (assetTypeStr == wxT("Art"))
-            assetType_->SetSelection(DEF_ASSET_ART);
+            m_assetType->SetSelection(DEF_ASSET_ART);
 		 else if (assetTypeStr == wxT("Jewellery"))
-			 assetType_->SetSelection(DEF_ASSET_JEWELLERY);
+			 m_assetType->SetSelection(DEF_ASSET_JEWELLERY);
 		 else if (assetTypeStr == wxT("Cash"))
-			 assetType_->SetSelection(DEF_ASSET_CASH);
+			 m_assetType->SetSelection(DEF_ASSET_CASH);
          else if (assetTypeStr == wxT("Other"))
-            assetType_->SetSelection(DEF_ASSET_OTHER);
+            m_assetType->SetSelection(DEF_ASSET_OTHER);
 
     }
     st.Finalize();
@@ -192,19 +192,19 @@ void mmAssetDialog::CreateControls()
     itemFlexGridSizer6->Add(itemStaticText7, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    assetName_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSETNAME, wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
-    assetName_->SetToolTip(_("Enter the name of the asset"));
-    itemFlexGridSizer6->Add(assetName_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_assetName = new wxTextCtrl( itemPanel5, wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
+    m_assetName->SetToolTip(_("Enter the name of the asset"));
+    itemFlexGridSizer6->Add(m_assetName, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel5, wxID_STATIC, 
         _("Date"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText9, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
     
-    dpc_ = new wxDatePickerCtrl( itemPanel5, ID_DPC_ASSET_PDATE, wxDefaultDateTime, 
+    m_dpc = new wxDatePickerCtrl( itemPanel5, wxID_ANY, wxDefaultDateTime, 
               wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);    
-    itemFlexGridSizer6->Add(dpc_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    dpc_->SetToolTip(_("Specify the date of purchase of asset"));
+    itemFlexGridSizer6->Add(m_dpc, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_dpc->SetToolTip(_("Specify the date of purchase of asset"));
 
     wxStaticText* itemStaticText15 = new wxStaticText( itemPanel5, wxID_STATIC,
         _("Asset Type"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -221,11 +221,10 @@ void mmAssetDialog::CreateControls()
 	    _("Cash"),
         _("Other"),
     };
-    assetType_ = new wxChoice( itemPanel5, ID_DIALOG_ASSETDIALOG_COMBO_ASSETTYPE, 
-        wxDefaultPosition, wxDefaultSize, 7, itemAssetTypeStrings, 0 );
-    assetType_->SetToolTip(_("Select type of asset"));
-    assetType_->SetSelection(DEF_ASSET_PROPERTY);
-    itemFlexGridSizer6->Add(assetType_, 0, 
+    m_assetType = new wxChoice( itemPanel5, wxID_ANY, wxDefaultPosition, wxDefaultSize, 7, itemAssetTypeStrings, 0 );
+    m_assetType->SetToolTip(_("Select type of asset"));
+    m_assetType->SetSelection(DEF_ASSET_PROPERTY);
+    itemFlexGridSizer6->Add(m_assetType, 0, 
         wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
      wxStaticText* itemStaticText31 = new wxStaticText( itemPanel5, 
@@ -233,9 +232,9 @@ void mmAssetDialog::CreateControls()
     itemFlexGridSizer6->Add(itemStaticText31, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    value_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSETDIALOG_VALUE, wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
-    value_->SetToolTip(_("Enter the current value of the asset"));
-    itemFlexGridSizer6->Add(value_, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_value = new wxTextCtrl( itemPanel5, wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
+    m_value->SetToolTip(_("Enter the current value of the asset"));
+    itemFlexGridSizer6->Add(m_value, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel5, wxID_STATIC, _("Change in Value"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -248,26 +247,26 @@ void mmAssetDialog::CreateControls()
         _("Depreciates"),
     };
 
-    valueChange_ = new wxChoice( itemPanel5, IDC_COMBO_TYPE, wxDefaultPosition, wxDefaultSize, 3, itemTypeStrings, 0 );
-    valueChange_->SetToolTip(_("Specify if the value of the asset changes over time"));
-    valueChange_->SetSelection(DEF_CHANGE_NONE);
-    itemFlexGridSizer6->Add(valueChange_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_valueChange = new wxChoice( itemPanel5, IDC_COMBO_TYPE, wxDefaultPosition, wxDefaultSize, 3, itemTypeStrings, 0 );
+    m_valueChange->SetToolTip(_("Specify if the value of the asset changes over time"));
+    m_valueChange->SetSelection(DEF_CHANGE_NONE);
+    itemFlexGridSizer6->Add(m_valueChange, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    valueChangeRateLabel_ = new wxStaticText( itemPanel5, wxID_STATIC, _("Rate of Change"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(valueChangeRateLabel_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    m_valueChangeRateLabel = new wxStaticText( itemPanel5, wxID_STATIC, _("Rate of Change"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(m_valueChangeRateLabel, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    valueChangeRate_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSETDIALOG_CHANGERATE, wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
-    valueChangeRate_->SetToolTip(_("Enter the rate at which the asset changes its value in % per year"));
-    itemFlexGridSizer6->Add(valueChangeRate_, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_valueChangeRate = new wxTextCtrl( itemPanel5, wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
+    m_valueChangeRate->SetToolTip(_("Enter the rate at which the asset changes its value in % per year"));
+    itemFlexGridSizer6->Add(m_valueChangeRate, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     enableDisableRate(false);
 
     wxStaticText* itemStaticText19 = new wxStaticText( itemPanel5, wxID_STATIC, 
         _("Notes"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText19, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    notes_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_ASSET_NOTES, wxGetEmptyString(), wxDefaultPosition, wxSize(-1, 75), wxTE_MULTILINE );
-    notes_->SetToolTip(_("Enter notes associated with this asset"));
-    itemFlexGridSizer6->Add(notes_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_notes = new wxTextCtrl( itemPanel5, wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxSize(-1, 75), wxTE_MULTILINE );
+    m_notes->SetToolTip(_("Enter notes associated with this asset"));
+    itemFlexGridSizer6->Add(m_notes, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
   
     wxPanel* itemPanel27 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
@@ -291,11 +290,11 @@ void mmAssetDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    wxString pdate = dpc_->GetValue().FormatISODate();
-    wxString notes = notes_->GetValue().Trim();
-    wxString name = assetName_->GetValue().Trim();
+    wxString pdate = m_dpc->GetValue().FormatISODate();
+    wxString notes = m_notes->GetValue().Trim();
+    wxString name = m_assetName->GetValue().Trim();
 
-    wxString valueStr = value_->GetValue().Trim();
+    wxString valueStr = m_value->GetValue().Trim();
     if (valueStr.IsEmpty())
     {
         mmShowErrorMessageInvalid(this, _("Value"));
@@ -308,7 +307,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         return;
     }
 
-    int valueChangeType = valueChange_->GetSelection();
+    int valueChangeType = m_valueChange->GetSelection();
     wxString valueChangeTypeStr;
     if (valueChangeType == DEF_CHANGE_NONE)
         valueChangeTypeStr = wxT("None");
@@ -320,7 +319,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         wxASSERT(false);
 
 
-    wxString valueChangeRateStr = valueChangeRate_->GetValue().Trim();
+    wxString valueChangeRateStr = m_valueChangeRate->GetValue().Trim();
     if (valueChangeRateStr.IsEmpty() && valueChangeType != DEF_CHANGE_NONE)
     {
         mmShowErrorMessageInvalid(this, _("Rate of Change in Value"));
@@ -337,7 +336,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         return;
     }
 
-    int assetType = assetType_->GetSelection();
+    int assetType = m_assetType->GetSelection();
     wxString assetTypeStr;
     if (assetType == DEF_ASSET_PROPERTY)
         assetTypeStr = wxT("Property");
@@ -356,14 +355,14 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     else
         wxASSERT(false);
 
-    if (!edit_)
+    if (!m_edit)
     {
         static const char sql[] = 
         "insert into ASSETS_V1 ("
           "STARTDATE, ASSETNAME, VALUE, VALUECHANGE, NOTES, VALUECHANGERATE, ASSETTYPE "
         ") values (?, ?, ?, ?, ?, ?, ?)";
 
-        wxSQLite3Statement st = db_->PrepareStatement(sql);
+        wxSQLite3Statement st = m_db->PrepareStatement(sql);
         
         int i = 0;
         st.Bind(++i, pdate);
@@ -389,7 +388,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
             "ASSETTYPE = ? "
         "where ASSETID = ?";
 
-        wxSQLite3Statement st = db_->PrepareStatement(sql);
+        wxSQLite3Statement st = m_db->PrepareStatement(sql);
 
         int i = 0;
         st.Bind(++i, pdate);
@@ -399,7 +398,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         st.Bind(++i, notes);
         st.Bind(++i, valueChangeRate);
         st.Bind(++i, assetTypeStr);
-        st.Bind(++i, assetID_);
+        st.Bind(++i, m_assetID);
 
         wxASSERT(st.GetParamCount() == i);
 
@@ -412,7 +411,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
 
 void mmAssetDialog::OnChangeAppreciationType(wxCommandEvent& /*event*/)
 {
-	int selection = valueChange_->GetSelection();
+	int selection = m_valueChange->GetSelection();
 	// Disable for "None", Enable for "Appreciates" or "Depreciates"
 	enableDisableRate(selection != DEF_CHANGE_NONE);
 }
@@ -421,13 +420,13 @@ void mmAssetDialog::enableDisableRate(bool en)
 {
 	if (en)
 	{
-		valueChangeRate_->SetEditable(true);
-		valueChangeRateLabel_->Enable(true);
+		m_valueChangeRate->SetEditable(true);
+		m_valueChangeRateLabel->Enable(true);
 	}
 	else 
 	{
-		valueChangeRate_->SetValue(wxT("0"));
-		valueChangeRate_->SetEditable(false);
-		valueChangeRateLabel_->Enable(false);
+		m_valueChangeRate->SetValue(wxT("0"));
+		m_valueChangeRate->SetEditable(false);
+		m_valueChangeRateLabel->Enable(false);
 	}
 }

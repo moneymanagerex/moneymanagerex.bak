@@ -34,6 +34,12 @@
 namespace
 {
 
+enum { 
+  IDC_DIALOG_BUTTON_ABOUT_VERSION_HISTORY = wxID_HIGHEST + 1,
+  IDC_DIALOG_BUTTON_ABOUT_CONTRIBUTERS
+};
+
+
 wxString get_libs_info()
 {
 	wxString s;
@@ -55,8 +61,8 @@ IMPLEMENT_DYNAMIC_CLASS(mmAboutDialog, wxDialog)
 
 
 BEGIN_EVENT_TABLE(mmAboutDialog, wxDialog)
-  EVT_BUTTON(ID_DIALOG_BUTTON_ABOUT_VERSION_HISTORY, mmAboutDialog::OnVersionHistory)
-  EVT_BUTTON(ID_DIALOG_BUTTON_ABOUT_CONTRIBUTERS, mmAboutDialog::OnContributerList)
+  EVT_BUTTON(IDC_DIALOG_BUTTON_ABOUT_VERSION_HISTORY, mmAboutDialog::OnVersionHistory)
+  EVT_BUTTON(IDC_DIALOG_BUTTON_ABOUT_CONTRIBUTERS, mmAboutDialog::OnContributerList)
 END_EVENT_TABLE()
 
 
@@ -137,7 +143,7 @@ void mmAboutDialog::CreateControls()
     {
        wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
           wxID_STATIC, wxT("(c) 2005-2010 Madhan Kanagavel"), wxDefaultPosition, wxDefaultSize, 0 );
-       itemStaticText8->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+       itemStaticText8->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxGetEmptyString()));
        itemBoxSizer4->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
        wxStaticText* itemStaticText91 = new wxStaticText( itemDialog1, 
@@ -148,7 +154,7 @@ void mmAboutDialog::CreateControls()
        wxStaticText* itemStaticText911 = new wxStaticText( itemDialog1, 
           wxID_STATIC, _("Released under the GNU GPL License"), 
           wxDefaultPosition, wxDefaultSize, 0 );
-       itemStaticText911->SetFont(wxFont(8, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+       itemStaticText911->SetFont(wxFont(8, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxGetEmptyString()));
        itemBoxSizer4->Add(itemStaticText911, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
        wxStaticText* itemStaticText10 = new wxStaticText( itemDialog1, 
@@ -161,12 +167,12 @@ void mmAboutDialog::CreateControls()
           wxID_STATIC, get_libs_info(), wxDefaultPosition, wxDefaultSize, 0 );
        itemBoxSizer4->Add(itemStaticText12, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-       wxButton* itemButton14 = new wxButton( itemDialog1, ID_DIALOG_BUTTON_ABOUT_VERSION_HISTORY, 
+       wxButton* itemButton14 = new wxButton( itemDialog1, IDC_DIALOG_BUTTON_ABOUT_VERSION_HISTORY, 
           _("Version History"), 
           wxDefaultPosition, wxDefaultSize, 0 );
        itemBoxSizer4->Add(itemButton14, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-       wxButton* itemButton18 = new wxButton( itemDialog1, ID_DIALOG_BUTTON_ABOUT_CONTRIBUTERS, 
+       wxButton* itemButton18 = new wxButton( itemDialog1, IDC_DIALOG_BUTTON_ABOUT_CONTRIBUTERS, 
           _("Contributors"), 
           wxDefaultPosition, wxDefaultSize, 0 );
        itemBoxSizer4->Add(itemButton18, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
@@ -181,7 +187,7 @@ void mmAboutDialog::CreateControls()
     {
        wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
           wxID_STATIC, mmIniOptions::aboutCompanyName_ , wxDefaultPosition, wxDefaultSize, 0 );
-       itemStaticText8->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+       itemStaticText8->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxGetEmptyString()));
        itemBoxSizer4->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
     }
 }
