@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-16 23:26+0300\n"
-"PO-Revision-Date: 2010-07-16 23:28+0300\n"
+"POT-Creation-Date: 2010-07-26 11:56+0300\n"
+"PO-Revision-Date: 2010-07-26 11:57+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -12,36 +12,36 @@ msgstr ""
 "X-Poedit-Language: Polish\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Basepath: ..\\\n"
+"X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: src\n"
 
-#: src/aboutdialog.cpp:66
+#: src/aboutdialog.cpp:72
 msgid "About "
 msgstr "O..."
 
-#: src/aboutdialog.cpp:133
+#: src/aboutdialog.cpp:139
 msgid "Version: "
 msgstr "Wersja:"
 
-#: src/aboutdialog.cpp:144
+#: src/aboutdialog.cpp:150
 #, fuzzy
 msgid "  and contributors from around the world"
 msgstr "  przy współpracy całego świata"
 
-#: src/aboutdialog.cpp:149
+#: src/aboutdialog.cpp:155
 msgid "Released under the GNU GPL License"
 msgstr "Opublikowane pod licencją GNU GPL"
 
-#: src/aboutdialog.cpp:165
+#: src/aboutdialog.cpp:171
 msgid "Version History"
 msgstr "Historia wersji"
 
-#: src/aboutdialog.cpp:170
+#: src/aboutdialog.cpp:176
 #, fuzzy
 msgid "Contributors"
 msgstr "Wsparcie"
 
-#: src/aboutdialog.cpp:177
+#: src/aboutdialog.cpp:183
 msgid "Using Language : "
 msgstr "Używany język : "
 
@@ -103,80 +103,84 @@ msgstr "Pokaż to okno przy następnym uruchomieniu"
 msgid " starts"
 msgstr " rozruch"
 
-#: src/assetdialog.cpp:176
+#: src/assetdialog.cpp:57
+msgid "New/Edit Asset"
+msgstr "Nowe/Edycja aktywów"
+
+#: src/assetdialog.cpp:183
 msgid "Asset Details"
 msgstr "Szczegóły aktywów"
 
-#: src/assetdialog.cpp:189
-#: src/assetspanel.cpp:140
+#: src/assetdialog.cpp:196
+#: src/assetspanel.cpp:150
 msgid "Name"
 msgstr "Nazwa"
 
-#: src/assetdialog.cpp:195
+#: src/assetdialog.cpp:201
 msgid "Enter the name of the asset"
 msgstr "Wprowadź nazwę aktywów"
 
-#: src/assetdialog.cpp:199
+#: src/assetdialog.cpp:205
 #: src/billsdepositsdialog.cpp:405
 msgid "Date"
 msgstr "Data"
 
-#: src/assetdialog.cpp:206
+#: src/assetdialog.cpp:212
 msgid "Specify the date of purchase of asset"
 msgstr "Określ datę zakupu aktywów"
 
-#: src/assetdialog.cpp:209
+#: src/assetdialog.cpp:215
 msgid "Asset Type"
 msgstr "Rodzaj aktywów"
 
-#: src/assetdialog.cpp:215
+#: src/assetdialog.cpp:221
 msgid "Property"
 msgstr "Własność"
 
-#: src/assetdialog.cpp:216
+#: src/assetdialog.cpp:222
 #: src/dbwrapper.cpp:220
 msgid "Automobile"
 msgstr "Samochód"
 
-#: src/assetdialog.cpp:217
+#: src/assetdialog.cpp:223
 msgid "Household Object"
 msgstr "Wyposażenie domu"
 
-#: src/assetdialog.cpp:218
+#: src/assetdialog.cpp:224
 msgid "Art"
 msgstr "Sztuka"
 
-#: src/assetdialog.cpp:219
+#: src/assetdialog.cpp:225
 msgid "Jewellery"
 msgstr "Biżuteria"
 
-#: src/assetdialog.cpp:220
+#: src/assetdialog.cpp:226
 msgid "Cash"
 msgstr "Gotówka"
 
-#: src/assetdialog.cpp:221
+#: src/assetdialog.cpp:227
 msgid "Other"
 msgstr "Inne"
 
-#: src/assetdialog.cpp:225
+#: src/assetdialog.cpp:230
 msgid "Select type of asset"
 msgstr "Wybierz rodzaj aktywów"
 
-#: src/assetdialog.cpp:231
-#: src/assetdialog.cpp:313
-#: src/assetspanel.cpp:148
+#: src/assetdialog.cpp:236
+#: src/assetdialog.cpp:305
+#: src/assetspanel.cpp:158
 msgid "Value"
 msgstr "Wartość"
 
-#: src/assetdialog.cpp:237
+#: src/assetdialog.cpp:241
 msgid "Enter the current value of the asset"
 msgstr "Wprowadź obecną wartość aktywów"
 
-#: src/assetdialog.cpp:243
+#: src/assetdialog.cpp:245
 msgid "Change in Value"
 msgstr "Zmień wartość"
 
-#: src/assetdialog.cpp:249
+#: src/assetdialog.cpp:250
 #: src/billsdepositsdialog.cpp:305
 #: src/billsdepositsdialog.cpp:445
 #: src/billsdepositspanel.cpp:303
@@ -184,15 +188,15 @@ msgstr "Zmień wartość"
 msgid "None"
 msgstr "Brak"
 
-#: src/assetdialog.cpp:250
+#: src/assetdialog.cpp:251
 msgid "Appreciates"
 msgstr "Uznania"
 
-#: src/assetdialog.cpp:251
+#: src/assetdialog.cpp:252
 msgid "Depreciates"
 msgstr "Obciążenia"
 
-#: src/assetdialog.cpp:255
+#: src/assetdialog.cpp:256
 msgid "Specify if the value of the asset changes over time"
 msgstr "Określ jeśli wartość aktywów zmienia się w czasie"
 
@@ -200,41 +204,42 @@ msgstr "Określ jeśli wartość aktywów zmienia się w czasie"
 msgid "Rate of Change"
 msgstr "Współczynnik zmiany"
 
-#: src/assetdialog.cpp:266
+#: src/assetdialog.cpp:264
+#, fuzzy, c-format
 msgid "Enter the rate at which the asset changes its value in % per year"
 msgstr "Wprowadź stopę zmiany wartości aktywów w % na rok"
 
-#: src/assetdialog.cpp:272
+#: src/assetdialog.cpp:269
 #: src/billsdepositsdialog.cpp:458
 #: src/billsdepositspanel.cpp:178
 msgid "Notes"
 msgstr "Notatki"
 
-#: src/assetdialog.cpp:278
+#: src/assetdialog.cpp:273
 msgid "Enter notes associated with this asset"
 msgstr "Wprowadź notatki powiązane z tymi aktywami"
 
-#: src/assetdialog.cpp:290
+#: src/assetdialog.cpp:283
 #: src/billsdepositsdialog.cpp:485
 #: src/budgetentrydialog.cpp:180
 #: src/budgetyearentrydialog.cpp:121
 msgid "OK"
 msgstr "OK"
 
-#: src/assetdialog.cpp:294
+#: src/assetdialog.cpp:286
 #: src/billsdepositsdialog.cpp:489
 #: src/budgetentrydialog.cpp:184
 #: src/budgetyearentrydialog.cpp:126
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: src/assetdialog.cpp:319
-#: src/assetdialog.cpp:348
+#: src/assetdialog.cpp:311
+#: src/assetdialog.cpp:340
 msgid "Invalid Value "
 msgstr "Nieprawidłowa wartość"
 
-#: src/assetdialog.cpp:319
-#: src/assetdialog.cpp:348
+#: src/assetdialog.cpp:311
+#: src/assetdialog.cpp:340
 #: src/billsdepositsdialog.cpp:689
 #: src/billsdepositsdialog.cpp:859
 #: src/billsdepositsdialog.cpp:869
@@ -254,71 +259,71 @@ msgstr "Nieprawidłowa wartość"
 msgid "Error"
 msgstr "Błąd"
 
-#: src/assetdialog.cpp:338
+#: src/assetdialog.cpp:330
 msgid "Rate of Change in Value"
 msgstr "Wielkość zmiany jako wartość"
 
-#: src/assetspanel.cpp:113
+#: src/assetspanel.cpp:127
 msgid "Assets"
 msgstr "Aktywa"
 
-#: src/assetspanel.cpp:119
+#: src/assetspanel.cpp:131
 msgid "Total:"
 msgstr "Ogólnie: "
 
-#: src/assetspanel.cpp:144
+#: src/assetspanel.cpp:154
 #: src/billsdepositspanel.cpp:169
 msgid "Type"
 msgstr "Rodzaj"
 
-#: src/assetspanel.cpp:180
+#: src/assetspanel.cpp:189
 msgid "&New"
 msgstr "&Nowy"
 
-#: src/assetspanel.cpp:182
+#: src/assetspanel.cpp:191
 msgid "New Asset"
 msgstr "Nowe aktywa"
 
-#: src/assetspanel.cpp:185
+#: src/assetspanel.cpp:194
 #: src/categdialog.cpp:155
 msgid "&Edit"
 msgstr "&Edytuj"
 
-#: src/assetspanel.cpp:187
+#: src/assetspanel.cpp:196
 msgid "Edit Asset"
 msgstr "Edytuj aktywa"
 
-#: src/assetspanel.cpp:191
+#: src/assetspanel.cpp:200
 #: src/categdialog.cpp:160
 msgid "&Delete"
 msgstr "Usuń"
 
-#: src/assetspanel.cpp:193
+#: src/assetspanel.cpp:202
 msgid "Delete Asset"
 msgstr "Usuń aktywa"
 
-#: src/assetspanel.cpp:209
+#: src/assetspanel.cpp:219
 #, c-format
 msgid "Total: %s"
 msgstr "Ogólnie: %s"
 
-#: src/assetspanel.cpp:262
+#: src/assetspanel.cpp:272
 msgid "&New Asset"
 msgstr "&Nowe aktywa"
 
-#: src/assetspanel.cpp:264
+#: src/assetspanel.cpp:274
 msgid "&Edit Asset"
 msgstr "&Edytuj aktywa"
 
-#: src/assetspanel.cpp:265
+#: src/assetspanel.cpp:275
 msgid "&Delete Asset"
 msgstr "&Usuń aktywa"
 
-#: src/assetspanel.cpp:355
+#: src/assetspanel.cpp:366
 msgid "Do you really want to delete the Asset?"
 msgstr "Czy na pewno chcesz usunąć te aktywa?"
 
-#: src/assetspanel.cpp:356
+#: src/assetspanel.cpp:366
 msgid "Confirm Asset Deletion"
 msgstr "Potwierdź usunięcie aktywów"
 
@@ -1672,12 +1677,12 @@ msgid "Top Categories Last 30 Days"
 msgstr "Najważniejsze operacje z ostatnich 30 dni"
 
 #: src/mmex.cpp:1890
-#: src/mmex.cpp:3441
+#: src/mmex.cpp:3437
 msgid "Do you really want to delete the account?"
 msgstr "Czy na pewno chcesz usunąć konto?"
 
 #: src/mmex.cpp:1891
-#: src/mmex.cpp:3442
+#: src/mmex.cpp:3438
 msgid "Confirm Account Deletion"
 msgstr "Potwierdź usunięcie konta"
 
@@ -2248,33 +2253,33 @@ msgstr ""
 msgid "Investment Accounts"
 msgstr "Wybierz konto inwestycyjne"
 
-#: src/mmex.cpp:3383
-#: src/mmex.cpp:3421
+#: src/mmex.cpp:3379
+#: src/mmex.cpp:3417
 msgid "No Account available!"
 msgstr "Brak kont!"
 
-#: src/mmex.cpp:3396
+#: src/mmex.cpp:3392
 msgid "Choose Account to Edit"
 msgstr "Wybierz konto do edycji"
 
-#: src/mmex.cpp:3396
-#: src/mmex.cpp:3434
+#: src/mmex.cpp:3392
+#: src/mmex.cpp:3430
 msgid "Accounts"
 msgstr "Konta"
 
-#: src/mmex.cpp:3434
+#: src/mmex.cpp:3430
 msgid "Choose Account to Delete"
 msgstr "Wybierz konto do usunięcia"
 
-#: src/mmex.cpp:3520
+#: src/mmex.cpp:3516
 msgid "Set Currency"
 msgstr "Ustaw walutę"
 
-#: src/mmex.cpp:3534
+#: src/mmex.cpp:3530
 msgid "Base Currency for account"
 msgstr "Bazowa waluta dla konta"
 
-#: src/mmex.cpp:3549
+#: src/mmex.cpp:3545
 msgid ""
 "\n"
 "Specify the base (or default) currency to be used \n"
@@ -2286,23 +2291,23 @@ msgstr ""
 "używana z bazą danych. Możesz zmienić walutę\n"
 "związaną z kontem kiedy zechcesz.\n"
 
-#: src/mmex.cpp:3557
+#: src/mmex.cpp:3553
 msgid "User Name"
 msgstr "Nazwa użytkownika"
 
-#: src/mmex.cpp:3567
+#: src/mmex.cpp:3563
 msgid "(Optional)Specify your name. Mainly used for reporting and in printing reports.\n"
 msgstr "(Opcjonalnie) Określ swoja nazwę. Używane głównie do raportów i wydruków. \n"
 
-#: src/mmex.cpp:3580
+#: src/mmex.cpp:3576
 msgid "Base Currency Not Set"
 msgstr "Nie ustawiono waluty bazowej"
 
-#: src/mmex.cpp:3603
+#: src/mmex.cpp:3599
 msgid "Name of the Account"
 msgstr "Nazwa konta"
 
-#: src/mmex.cpp:3618
+#: src/mmex.cpp:3614
 msgid ""
 "\n"
 "Specify a descriptive name of the account. This most commonly \n"
@@ -2314,27 +2319,27 @@ msgstr ""
 "instytucji finansowej która utrzymuje konto.\n"
 "Na przykład 'Bank ABC'."
 
-#: src/mmex.cpp:3632
+#: src/mmex.cpp:3628
 msgid "Account Name Invalid"
 msgstr "Nieprawidłowa nazwa konta"
 
-#: src/mmex.cpp:3649
+#: src/mmex.cpp:3645
 msgid "Checking/Savings"
 msgstr "Czekowe/Oszczędnościowe"
 
-#: src/mmex.cpp:3650
+#: src/mmex.cpp:3646
 msgid "Investment"
 msgstr "Inwestycyjne"
 
-#: src/mmex.cpp:3655
+#: src/mmex.cpp:3651
 msgid "Specify the type of account to be created."
 msgstr "Określ typ konta jakie ma być utworzone."
 
-#: src/mmex.cpp:3661
+#: src/mmex.cpp:3657
 msgid "Type of Account"
 msgstr "Rodzaj konta"
 
-#: src/mmex.cpp:3676
+#: src/mmex.cpp:3672
 msgid ""
 "\n"
 "Select the type of account you want to create:\n"
@@ -2348,7 +2353,7 @@ msgstr ""
 "Konta głównych banków pokrywają zapotrzebowanie na szeroki\n"
 "wachlarz usług, jak konta czekowe, oszczędnościowe i karty kredytowe."
 
-#: src/mmex.cpp:3682
+#: src/mmex.cpp:3678
 msgid ""
 "\n"
 "Investment accounts are specialized accounts that only \n"
@@ -2359,7 +2364,7 @@ msgstr ""
 "Konta inwestycyjne są specjalnymi kontami, które mogą mieć\n"
 "skojarzone ze sobą jedynie inwestycje w akcje.\n"
 
-#: src/mmex.cpp:3701
+#: src/mmex.cpp:3697
 msgid ""
 "Base Account Currency Not set.\n"
 "Set that first using tools->options menu and then add a new account"
@@ -3718,10 +3723,6 @@ msgstr "Odśwież ceny co"
 #: src/yahoosettingsdialog.cpp:162
 msgid "minutes while market is open"
 msgstr "minut kiedy rynek jest otwarty"
-
-#: src/assetdialog.h:21
-msgid "New/Edit Asset"
-msgstr "Nowe/Edycja aktywów"
 
 #: src/billsdepositsdialog.h:23
 msgid "New/Edit Repeating Transaction"
