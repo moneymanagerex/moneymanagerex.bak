@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-16 23:48+0300\n"
-"PO-Revision-Date: 2010-07-16 23:48+0300\n"
+"POT-Creation-Date: 2010-07-26 10:51+0300\n"
+"PO-Revision-Date: 2010-07-26 10:51+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software <Kyosuketam>\n"
 "MIME-Version: 1.0\n"
@@ -15,33 +15,33 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: src\n"
 
-#: src/aboutdialog.cpp:66
+#: src/aboutdialog.cpp:72
 msgid "About "
 msgstr "关于"
 
-#: src/aboutdialog.cpp:133
+#: src/aboutdialog.cpp:139
 msgid "Version: "
-msgstr "版本历史："
+msgstr "版本："
 
-#: src/aboutdialog.cpp:144
+#: src/aboutdialog.cpp:150
 #, fuzzy
 msgid "  and contributors from around the world"
 msgstr "和来自全世界的贡献者"
 
-#: src/aboutdialog.cpp:149
+#: src/aboutdialog.cpp:155
 msgid "Released under the GNU GPL License"
 msgstr "遵循GNU GPL 协议"
 
-#: src/aboutdialog.cpp:165
+#: src/aboutdialog.cpp:171
 msgid "Version History"
 msgstr "版本历史"
 
-#: src/aboutdialog.cpp:170
+#: src/aboutdialog.cpp:176
 #, fuzzy
 msgid "Contributors"
 msgstr "贡献者"
 
-#: src/aboutdialog.cpp:177
+#: src/aboutdialog.cpp:183
 msgid "Using Language : "
 msgstr "使用语言："
 
@@ -103,80 +103,84 @@ msgstr "下次打开 Money Manager Ex 时显示该窗口"
 msgid " starts"
 msgstr " 状态"
 
-#: src/assetdialog.cpp:176
+#: src/assetdialog.cpp:57
+msgid "New/Edit Asset"
+msgstr "新增/编辑资产"
+
+#: src/assetdialog.cpp:183
 msgid "Asset Details"
 msgstr "资产明细"
 
-#: src/assetdialog.cpp:189
-#: src/assetspanel.cpp:140
+#: src/assetdialog.cpp:196
+#: src/assetspanel.cpp:150
 msgid "Name"
 msgstr "名称"
 
-#: src/assetdialog.cpp:195
+#: src/assetdialog.cpp:201
 msgid "Enter the name of the asset"
 msgstr "请输入资产名称"
 
-#: src/assetdialog.cpp:199
+#: src/assetdialog.cpp:205
 #: src/billsdepositsdialog.cpp:405
 msgid "Date"
 msgstr "日期"
 
-#: src/assetdialog.cpp:206
+#: src/assetdialog.cpp:212
 msgid "Specify the date of purchase of asset"
 msgstr "资产具体购买日期"
 
-#: src/assetdialog.cpp:209
+#: src/assetdialog.cpp:215
 msgid "Asset Type"
 msgstr "资产分类"
 
-#: src/assetdialog.cpp:215
+#: src/assetdialog.cpp:221
 msgid "Property"
 msgstr "房地产"
 
-#: src/assetdialog.cpp:216
+#: src/assetdialog.cpp:222
 #: src/dbwrapper.cpp:220
 msgid "Automobile"
 msgstr "汽车"
 
-#: src/assetdialog.cpp:217
+#: src/assetdialog.cpp:223
 msgid "Household Object"
 msgstr "家庭用品"
 
-#: src/assetdialog.cpp:218
+#: src/assetdialog.cpp:224
 msgid "Art"
 msgstr "艺术品"
 
-#: src/assetdialog.cpp:219
+#: src/assetdialog.cpp:225
 msgid "Jewellery"
 msgstr "珠宝首饰"
 
-#: src/assetdialog.cpp:220
+#: src/assetdialog.cpp:226
 msgid "Cash"
 msgstr "现金"
 
-#: src/assetdialog.cpp:221
+#: src/assetdialog.cpp:227
 msgid "Other"
 msgstr "其他"
 
-#: src/assetdialog.cpp:225
+#: src/assetdialog.cpp:230
 msgid "Select type of asset"
 msgstr "请选择资产分类"
 
-#: src/assetdialog.cpp:231
-#: src/assetdialog.cpp:313
-#: src/assetspanel.cpp:148
+#: src/assetdialog.cpp:236
+#: src/assetdialog.cpp:305
+#: src/assetspanel.cpp:158
 msgid "Value"
 msgstr "价格"
 
-#: src/assetdialog.cpp:237
+#: src/assetdialog.cpp:241
 msgid "Enter the current value of the asset"
 msgstr "请输入资产当前的价格"
 
-#: src/assetdialog.cpp:243
+#: src/assetdialog.cpp:245
 msgid "Change in Value"
 msgstr "价格变化"
 
-#: src/assetdialog.cpp:249
+#: src/assetdialog.cpp:250
 #: src/billsdepositsdialog.cpp:305
 #: src/billsdepositsdialog.cpp:445
 #: src/billsdepositspanel.cpp:303
@@ -184,15 +188,15 @@ msgstr "价格变化"
 msgid "None"
 msgstr "无"
 
-#: src/assetdialog.cpp:250
+#: src/assetdialog.cpp:251
 msgid "Appreciates"
 msgstr "增值"
 
-#: src/assetdialog.cpp:251
+#: src/assetdialog.cpp:252
 msgid "Depreciates"
 msgstr "贬值"
 
-#: src/assetdialog.cpp:255
+#: src/assetdialog.cpp:256
 msgid "Specify if the value of the asset changes over time"
 msgstr "选中该项当资产价格随时间变化时"
 
@@ -200,42 +204,42 @@ msgstr "选中该项当资产价格随时间变化时"
 msgid "Rate of Change"
 msgstr "变化率"
 
-#: src/assetdialog.cpp:266
+#: src/assetdialog.cpp:264
 #, c-format
 msgid "Enter the rate at which the asset changes its value in % per year"
 msgstr "Enter the rate at which the asset changes its value in % per year"
 
-#: src/assetdialog.cpp:272
+#: src/assetdialog.cpp:269
 #: src/billsdepositsdialog.cpp:458
 #: src/billsdepositspanel.cpp:178
 msgid "Notes"
 msgstr "备注："
 
-#: src/assetdialog.cpp:278
+#: src/assetdialog.cpp:273
 msgid "Enter notes associated with this asset"
 msgstr "输入该资产相关的备注"
 
-#: src/assetdialog.cpp:290
+#: src/assetdialog.cpp:283
 #: src/billsdepositsdialog.cpp:485
 #: src/budgetentrydialog.cpp:180
 #: src/budgetyearentrydialog.cpp:121
 msgid "OK"
 msgstr "确认"
 
-#: src/assetdialog.cpp:294
+#: src/assetdialog.cpp:286
 #: src/billsdepositsdialog.cpp:489
 #: src/budgetentrydialog.cpp:184
 #: src/budgetyearentrydialog.cpp:126
 msgid "Cancel"
 msgstr "取消"
 
-#: src/assetdialog.cpp:319
-#: src/assetdialog.cpp:348
+#: src/assetdialog.cpp:311
+#: src/assetdialog.cpp:340
 msgid "Invalid Value "
 msgstr "无效值"
 
-#: src/assetdialog.cpp:319
-#: src/assetdialog.cpp:348
+#: src/assetdialog.cpp:311
+#: src/assetdialog.cpp:340
 #: src/billsdepositsdialog.cpp:689
 #: src/billsdepositsdialog.cpp:859
 #: src/billsdepositsdialog.cpp:869
@@ -255,71 +259,71 @@ msgstr "无效值"
 msgid "Error"
 msgstr "错误"
 
-#: src/assetdialog.cpp:338
+#: src/assetdialog.cpp:330
 msgid "Rate of Change in Value"
 msgstr "价格变化率"
 
-#: src/assetspanel.cpp:113
+#: src/assetspanel.cpp:127
 msgid "Assets"
 msgstr "资产"
 
-#: src/assetspanel.cpp:119
+#: src/assetspanel.cpp:131
 msgid "Total:"
 msgstr "总计："
 
-#: src/assetspanel.cpp:144
+#: src/assetspanel.cpp:154
 #: src/billsdepositspanel.cpp:169
 msgid "Type"
 msgstr "分类"
 
-#: src/assetspanel.cpp:180
+#: src/assetspanel.cpp:189
 msgid "&New"
 msgstr "新增(&N)"
 
-#: src/assetspanel.cpp:182
+#: src/assetspanel.cpp:191
 msgid "New Asset"
 msgstr "新增资产"
 
-#: src/assetspanel.cpp:185
+#: src/assetspanel.cpp:194
 #: src/categdialog.cpp:155
 msgid "&Edit"
 msgstr "编辑(&E)"
 
-#: src/assetspanel.cpp:187
+#: src/assetspanel.cpp:196
 msgid "Edit Asset"
 msgstr "编辑资产"
 
-#: src/assetspanel.cpp:191
+#: src/assetspanel.cpp:200
 #: src/categdialog.cpp:160
 msgid "&Delete"
 msgstr "删除(&D)"
 
-#: src/assetspanel.cpp:193
+#: src/assetspanel.cpp:202
 msgid "Delete Asset"
 msgstr "删除资产"
 
-#: src/assetspanel.cpp:209
+#: src/assetspanel.cpp:219
 #, c-format
 msgid "Total: %s"
 msgstr "总计：%s"
 
-#: src/assetspanel.cpp:262
+#: src/assetspanel.cpp:272
 msgid "&New Asset"
 msgstr "新增资产(&N)"
 
-#: src/assetspanel.cpp:264
+#: src/assetspanel.cpp:274
 msgid "&Edit Asset"
 msgstr "编辑资产(&E)"
 
-#: src/assetspanel.cpp:265
+#: src/assetspanel.cpp:275
 msgid "&Delete Asset"
 msgstr "删除资产(&D)"
 
-#: src/assetspanel.cpp:355
+#: src/assetspanel.cpp:366
 msgid "Do you really want to delete the Asset?"
 msgstr "您确认删除该资产吗？"
 
-#: src/assetspanel.cpp:356
+#: src/assetspanel.cpp:366
 msgid "Confirm Asset Deletion"
 msgstr "确认删除资产"
 
@@ -330,7 +334,7 @@ msgstr "多选分类"
 
 #: src/billsdepositsdialog.cpp:270
 msgid "Repeating Transaction Details"
-msgstr "删除交易"
+msgstr "重复交易详情"
 
 #: src/billsdepositsdialog.cpp:279
 msgid "Account Name"
@@ -405,7 +409,7 @@ msgstr "每四个月"
 #: src/billsdepositsdialog.cpp:314
 #: src/billsdepositspanel.cpp:339
 msgid "Four Weeks"
-msgstr ""
+msgstr "四周"
 
 #: src/billsdepositsdialog.cpp:315
 msgid "Daily"
@@ -619,7 +623,7 @@ msgstr "收款和发款账户不能相同"
 
 #: src/billsdepositspanel.cpp:146
 msgid "Repeating Transactions"
-msgstr "删除交易"
+msgstr "重复交易"
 
 #: src/billsdepositspanel.cpp:175
 msgid "Next Due Date"
@@ -1040,7 +1044,7 @@ msgstr "停车费"
 
 #: src/dbwrapper.cpp:216
 msgid "Registration"
-msgstr ""
+msgstr "注册"
 
 #: src/dbwrapper.cpp:225
 msgid "Books"
@@ -1069,8 +1073,9 @@ msgid "Furnishing"
 msgstr "家具"
 
 #: src/dbwrapper.cpp:242
+#, fuzzy
 msgid "Homeneeds"
-msgstr ""
+msgstr "首页所需"
 
 #: src/dbwrapper.cpp:247
 #: src/dbwrapper.cpp:263
@@ -1090,9 +1095,8 @@ msgid "Physician"
 msgstr "看病费"
 
 #: src/dbwrapper.cpp:251
-#, fuzzy
 msgid "Prescriptions"
-msgstr "交易明细"
+msgstr "规定"
 
 #: src/dbwrapper.cpp:255
 msgid "Healthcare"
@@ -1272,9 +1276,8 @@ msgid "View Un-Reconciled Transactions"
 msgstr "查看未核实交易"
 
 #: src/mmcheckingpanel.cpp:555
-#, fuzzy
 msgid "View All Except Reconciled Transactions"
-msgstr "查看已核实交易"
+msgstr "查看全部交易，除了已核实的"
 
 #: src/mmcheckingpanel.cpp:556
 msgid "View Void Transactions"
@@ -1392,9 +1395,8 @@ msgid "Viewing transactions from last month"
 msgstr "查看最后一月的交易"
 
 #: src/mmcheckingpanel.cpp:1050
-#, fuzzy
 msgid "Viewing All Except Reconciled Transactions"
-msgstr "查看核实交易"
+msgstr "查看全部交易，除了已核实的"
 
 #: src/mmcheckingpanel.cpp:1071
 msgid "Viewing Void transactions"
@@ -1409,9 +1411,8 @@ msgid "Viewing duplicate transactions"
 msgstr "查看重复的交易"
 
 #: src/mmcheckingpanel.cpp:1116
-#, fuzzy
 msgid "Viewing All except Reconciled Transactions"
-msgstr "查看核实交易"
+msgstr "查看全部交易，除了已核实的"
 
 #: src/mmcheckingpanel.cpp:1121
 msgid "Do you really want to delete all the transactions shown?"
@@ -1513,7 +1514,7 @@ msgid ""
 "To help you get started, begin by making a list of all\n"
 "financial institutions where you hold an account."
 msgstr ""
-"本程序认为所有的交易都隶属于账户。\n"
+" 认为所有的交易都隶属于账户。\n"
 "\n"
 "下一个页面将帮助您建立一个新的账户。\n"
 "\n"
@@ -1629,7 +1630,7 @@ msgstr "资金走向"
 
 #: src/mmex.cpp:950
 msgid "To Whom the Money Goes"
-msgstr "按商户查看资金走向"
+msgstr "按人查看资金走向"
 
 #: src/mmex.cpp:982
 msgid "Income vs Expenses"
@@ -1674,12 +1675,12 @@ msgid "Top Categories Last 30 Days"
 msgstr "最近 30 天的热门分类"
 
 #: src/mmex.cpp:1890
-#: src/mmex.cpp:3441
+#: src/mmex.cpp:3437
 msgid "Do you really want to delete the account?"
 msgstr "您是否确认删除该账户?"
 
 #: src/mmex.cpp:1891
-#: src/mmex.cpp:3442
+#: src/mmex.cpp:3438
 msgid "Confirm Account Deletion"
 msgstr "确认删除账户"
 
@@ -1936,7 +1937,7 @@ msgstr "预算管理"
 
 #: src/mmex.cpp:2311
 msgid "&Repeating Transactions"
-msgstr "删除交易"
+msgstr "重复交易(&R)"
 
 #: src/mmex.cpp:2311
 msgid "Bills && Deposits"
@@ -2250,33 +2251,33 @@ msgstr ""
 msgid "Investment Accounts"
 msgstr "输入投资账户"
 
-#: src/mmex.cpp:3383
-#: src/mmex.cpp:3421
+#: src/mmex.cpp:3379
+#: src/mmex.cpp:3417
 msgid "No Account available!"
 msgstr "没有可用的账户"
 
-#: src/mmex.cpp:3396
+#: src/mmex.cpp:3392
 msgid "Choose Account to Edit"
 msgstr "选择要编辑的账户"
 
-#: src/mmex.cpp:3396
-#: src/mmex.cpp:3434
+#: src/mmex.cpp:3392
+#: src/mmex.cpp:3430
 msgid "Accounts"
 msgstr "账户"
 
-#: src/mmex.cpp:3434
+#: src/mmex.cpp:3430
 msgid "Choose Account to Delete"
 msgstr "选择要删除的账户"
 
-#: src/mmex.cpp:3520
+#: src/mmex.cpp:3516
 msgid "Set Currency"
 msgstr "货币设置"
 
-#: src/mmex.cpp:3534
+#: src/mmex.cpp:3530
 msgid "Base Currency for account"
 msgstr "账户的基本货币"
 
-#: src/mmex.cpp:3549
+#: src/mmex.cpp:3545
 msgid ""
 "\n"
 "Specify the base (or default) currency to be used \n"
@@ -2287,23 +2288,23 @@ msgstr ""
 "指定数据库使用的基本货币（或使用默认）。 \n"
 "在需要时也可随时更改。 \n"
 
-#: src/mmex.cpp:3557
+#: src/mmex.cpp:3553
 msgid "User Name"
 msgstr "用户名称"
 
-#: src/mmex.cpp:3567
+#: src/mmex.cpp:3563
 msgid "(Optional)Specify your name. Mainly used for reporting and in printing reports.\n"
 msgstr "（可选）指定您的名字。主要用于显示和打印报表。\n"
 
-#: src/mmex.cpp:3580
+#: src/mmex.cpp:3576
 msgid "Base Currency Not Set"
 msgstr "基本货币没有设置"
 
-#: src/mmex.cpp:3603
+#: src/mmex.cpp:3599
 msgid "Name of the Account"
 msgstr "账户名称"
 
-#: src/mmex.cpp:3618
+#: src/mmex.cpp:3614
 msgid ""
 "\n"
 "Specify a descriptive name of the account. This most commonly \n"
@@ -2314,27 +2315,27 @@ msgstr ""
 "指定该账目的名称. 通常使用对应的银行名称 \n"
 "例如：“招商银行”"
 
-#: src/mmex.cpp:3632
+#: src/mmex.cpp:3628
 msgid "Account Name Invalid"
 msgstr "错误的账户名"
 
-#: src/mmex.cpp:3649
+#: src/mmex.cpp:3645
 msgid "Checking/Savings"
 msgstr "支票/存款/交易"
 
-#: src/mmex.cpp:3650
+#: src/mmex.cpp:3646
 msgid "Investment"
 msgstr "投资"
 
-#: src/mmex.cpp:3655
+#: src/mmex.cpp:3651
 msgid "Specify the type of account to be created."
 msgstr "指定要创建的账户的类型。"
 
-#: src/mmex.cpp:3661
+#: src/mmex.cpp:3657
 msgid "Type of Account"
 msgstr "账户分类"
 
-#: src/mmex.cpp:3676
+#: src/mmex.cpp:3672
 msgid ""
 "\n"
 "Select the type of account you want to create:\n"
@@ -2348,7 +2349,7 @@ msgstr ""
 "通常的帐薄包含很多不用的分类\n"
 "例如支付卡，储蓄卡和信用卡."
 
-#: src/mmex.cpp:3682
+#: src/mmex.cpp:3678
 msgid ""
 "\n"
 "Investment accounts are specialized accounts that only \n"
@@ -2358,7 +2359,7 @@ msgstr ""
 "\n"
 "投资账户是用于证券或基金投资的专用账户。\n"
 
-#: src/mmex.cpp:3701
+#: src/mmex.cpp:3697
 msgid ""
 "Base Account Currency Not set.\n"
 "Set that first using tools->options menu and then add a new account"
@@ -2403,12 +2404,10 @@ msgid "Income vs Expenses: Current Month"
 msgstr "收支：本月"
 
 #: src/mmhomepagepanel.cpp:448
-#, fuzzy
 msgid "Upcoming Transactions"
-msgstr "删除交易"
+msgstr "将进行的交易"
 
 #: src/mmhomepagepanel.cpp:511
-#, fuzzy
 msgid "Follow Up On "
 msgstr "跟进"
 
@@ -2541,9 +2540,8 @@ msgid "Init Balance "
 msgstr "初始金额"
 
 #: src/optionsdialog.cpp:267
-#, fuzzy
 msgid " : Restart"
-msgstr "状态"
+msgstr "：重置"
 
 #: src/optionsdialog.cpp:341
 msgid "General Settings"
@@ -2579,7 +2577,7 @@ msgstr "导入∕导出设定"
 
 #: src/optionsdialog.cpp:422
 msgid "CSV Delimiter"
-msgstr "CSV定位符"
+msgstr "CSV分隔符"
 
 #: src/optionsdialog.cpp:429
 msgid "Specify the delimiter to use when importing/exporting CSV files"
@@ -2719,7 +2717,7 @@ msgstr "指定列表内容的颜色"
 
 #: src/optionsdialog.cpp:659
 msgid "Future Transactions"
-msgstr "今后的交易"
+msgstr "将来的交易"
 
 #: src/optionsdialog.cpp:661
 msgid "Specify the color for future transactions"
@@ -2750,9 +2748,8 @@ msgid "Use Transaction Sound"
 msgstr "使用交易声"
 
 #: src/optionsdialog.cpp:714
-#, fuzzy
 msgid "Select whether to use sounds when entering transactions"
-msgstr "指定交易状态"
+msgstr "选择当登记交易时是否使用声音提示"
 
 #: src/optionsdialog.cpp:718
 msgid "Enable online currency update (Get data from European Central Bank)"
@@ -2892,9 +2889,8 @@ msgid " cannot process Account Types yet "
 msgstr "不能处理QIF文件（没有账户类型信息）"
 
 #: src/qifimport.cpp:517
-#, fuzzy
 msgid "Cannot process these QIF Account Types yet"
-msgstr "不能处理QIF文件（没有账户类型信息）"
+msgstr "尚不能处理这些 QIF 账户类型"
 
 #: src/qifimport.cpp:532
 #: src/qifimport.cpp:648
@@ -3005,7 +3001,7 @@ msgstr "总计"
 
 #: src/reportbudgetingperf.cpp:62
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/reportbudgetsetup.cpp:24
 msgid "Budget setup for Year : "
@@ -3017,7 +3013,7 @@ msgstr "（预计对比实际）"
 
 #: src/reportcashflow.cpp:22
 msgid "Cash Flow Forecast For All Accounts - A Year Ahead"
-msgstr "所有账户的现金流预测 - 提前一年"
+msgstr "预测所有账户的现金流 - 预测一年"
 
 #: src/reportcashflow.cpp:35
 msgid "Total"
@@ -3036,7 +3032,7 @@ msgstr " 至："
 #: src/reportcategovertimeperf.cpp:238
 #, c-format
 msgid "Category Income/Expenses Over Last %d Months "
-msgstr "按收入/支出类别统计过去 %d 个月"
+msgstr "统计之前 %d 个月的收支情况"
 
 #: src/reportincexpenses.cpp:78
 msgid "Income:"
@@ -3226,7 +3222,7 @@ msgstr "委托价输入错误"
 
 #: src/stockspanel.cpp:178
 msgid "Idle"
-msgstr ""
+msgstr "空闲"
 
 #: src/stockspanel.cpp:209
 msgid "Share Name"
@@ -3266,7 +3262,7 @@ msgstr "设置(&S)"
 
 #: src/stockspanel.cpp:293
 msgid "Change settings for automatic refresh"
-msgstr ""
+msgstr "改变自动刷新设置"
 
 #: src/stockspanel.cpp:306
 msgid "Stock Investments: "
@@ -3285,11 +3281,11 @@ msgstr "总计：%s     投资：%s     损失：%s"
 #: src/stockspanel.cpp:444
 #, c-format
 msgid "%s on %s"
-msgstr ""
+msgstr "%s 对 %s"
 
 #: src/stockspanel.cpp:447
 msgid "never!"
-msgstr ""
+msgstr "从不！"
 
 #: src/stockspanel.cpp:452
 #, c-format
@@ -3306,6 +3302,8 @@ msgid ""
 "Automatic stock quote refresh idle - Out of Hours. \n"
 "Last update: %s"
 msgstr ""
+"自动股票刷新空闲时间（小时）。\n"
+"最后更新：%s"
 
 #: src/stockspanel.cpp:464
 msgid "Automatic stock quote refresh in progress..."
@@ -3372,7 +3370,7 @@ msgstr "指定交易对象"
 #: src/transdialog.cpp:328
 #, fuzzy
 msgid "Populate Transaction #"
-msgstr "新增交易(&N)"
+msgstr "移动交易 #"
 
 #: src/transdialog.cpp:736
 msgid "Select To Account"
@@ -3444,9 +3442,8 @@ msgstr "无法写入文件"
 
 #: src/univcsvdialog.cpp:398
 #: src/univcsvdialog.cpp:410
-#, fuzzy
 msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."
-msgstr "不正确的CSV导入字段！至少需要date，amount，payee三个字段。"
+msgstr "不正确的 CSV 导入字段！至少需要 Date，Amount，Payee 三个字段。"
 
 #: src/univcsvdialog.cpp:433
 #: src/util.cpp:784
@@ -3464,9 +3461,8 @@ msgid " file contains insufficient number of tokens"
 msgstr "文件包含的信息(条目数)不足"
 
 #: src/univcsvdialog.cpp:510
-#, fuzzy
 msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipping"
-msgstr "下列字段缺失并跳过：date，payee，amount，type"
+msgstr "下列字段之一： Date, Payee, Amount, Type is missing, skipping"
 
 #: src/univcsvdialog.cpp:564
 #: src/util.cpp:981
@@ -3678,7 +3674,7 @@ msgstr "Yahoo 服务器"
 
 #: src/yahoosettingsdialog.cpp:64
 msgid "finance.au.yahoo.com"
-msgstr ""
+msgstr "finance.au.yahoo.com"
 
 #: src/yahoosettingsdialog.cpp:65
 msgid "Do not enter anything except the server name (or IP address, if you're feeling lucky)"
@@ -3693,6 +3689,8 @@ msgid ""
 "Enter the suffix used by Yahoo for the market of your stocks. \n"
 "If your stocks are in multiple markets, leave this blank and add  the suffix to each symbol in your portfolio."
 msgstr ""
+"输入一个你的 Yahoo 股市的后缀。\n"
+"如果你的股票存在多个股市，请为每个账户输入后缀名。"
 
 #: src/yahoosettingsdialog.cpp:81
 msgid "Market open from"
@@ -3721,10 +3719,6 @@ msgstr "(&R)刷新报价每"
 #: src/yahoosettingsdialog.cpp:162
 msgid "minutes while market is open"
 msgstr "分钟（市场开放时）"
-
-#: src/assetdialog.h:21
-msgid "New/Edit Asset"
-msgstr "新增/编辑资产"
 
 #: src/billsdepositsdialog.h:23
 msgid "New/Edit Repeating Transaction"
