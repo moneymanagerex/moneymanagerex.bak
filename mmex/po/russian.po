@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-16 23:32+0300\n"
-"PO-Revision-Date: 2010-07-16 23:36+0300\n"
+"POT-Creation-Date: 2010-07-26 11:58+0300\n"
+"PO-Revision-Date: 2010-07-26 11:59+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -15,31 +15,31 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: src\n"
 
-#: src/aboutdialog.cpp:66
+#: src/aboutdialog.cpp:72
 msgid "About "
 msgstr "О программе"
 
-#: src/aboutdialog.cpp:133
+#: src/aboutdialog.cpp:139
 msgid "Version: "
 msgstr "Версия: "
 
-#: src/aboutdialog.cpp:144
+#: src/aboutdialog.cpp:150
 msgid "  and contributors from around the world"
 msgstr "  и соратники :-) со всего мира."
 
-#: src/aboutdialog.cpp:149
+#: src/aboutdialog.cpp:155
 msgid "Released under the GNU GPL License"
 msgstr "Распространяется на правах лицензии GNU GPL"
 
-#: src/aboutdialog.cpp:165
+#: src/aboutdialog.cpp:171
 msgid "Version History"
 msgstr "История версий"
 
-#: src/aboutdialog.cpp:170
+#: src/aboutdialog.cpp:176
 msgid "Contributors"
 msgstr "Участники"
 
-#: src/aboutdialog.cpp:177
+#: src/aboutdialog.cpp:183
 msgid "Using Language : "
 msgstr "Текущий язык: "
 
@@ -99,80 +99,84 @@ msgstr "Показывать это окно при следующем запу�
 msgid " starts"
 msgstr " "
 
-#: src/assetdialog.cpp:176
+#: src/assetdialog.cpp:57
+msgid "New/Edit Asset"
+msgstr "Редактор актива"
+
+#: src/assetdialog.cpp:183
 msgid "Asset Details"
 msgstr "Детали актива"
 
-#: src/assetdialog.cpp:189
-#: src/assetspanel.cpp:140
+#: src/assetdialog.cpp:196
+#: src/assetspanel.cpp:150
 msgid "Name"
 msgstr "Название"
 
-#: src/assetdialog.cpp:195
+#: src/assetdialog.cpp:201
 msgid "Enter the name of the asset"
 msgstr "Введите название актива"
 
-#: src/assetdialog.cpp:199
+#: src/assetdialog.cpp:205
 #: src/billsdepositsdialog.cpp:405
 msgid "Date"
 msgstr "Дата"
 
-#: src/assetdialog.cpp:206
+#: src/assetdialog.cpp:212
 msgid "Specify the date of purchase of asset"
 msgstr "Укажите дату приобретения актива"
 
-#: src/assetdialog.cpp:209
+#: src/assetdialog.cpp:215
 msgid "Asset Type"
 msgstr "Тип актива"
 
-#: src/assetdialog.cpp:215
+#: src/assetdialog.cpp:221
 msgid "Property"
 msgstr "Имущество"
 
-#: src/assetdialog.cpp:216
+#: src/assetdialog.cpp:222
 #: src/dbwrapper.cpp:220
 msgid "Automobile"
 msgstr "Авто"
 
-#: src/assetdialog.cpp:217
+#: src/assetdialog.cpp:223
 msgid "Household Object"
 msgstr "Хозяйственный обьект"
 
-#: src/assetdialog.cpp:218
+#: src/assetdialog.cpp:224
 msgid "Art"
 msgstr "Искусство"
 
-#: src/assetdialog.cpp:219
+#: src/assetdialog.cpp:225
 msgid "Jewellery"
 msgstr "Драгоценности"
 
-#: src/assetdialog.cpp:220
+#: src/assetdialog.cpp:226
 msgid "Cash"
 msgstr "Наличные"
 
-#: src/assetdialog.cpp:221
+#: src/assetdialog.cpp:227
 msgid "Other"
 msgstr "Прочий"
 
-#: src/assetdialog.cpp:225
+#: src/assetdialog.cpp:230
 msgid "Select type of asset"
 msgstr "Выберите тип актива"
 
-#: src/assetdialog.cpp:231
-#: src/assetdialog.cpp:313
-#: src/assetspanel.cpp:148
+#: src/assetdialog.cpp:236
+#: src/assetdialog.cpp:305
+#: src/assetspanel.cpp:158
 msgid "Value"
 msgstr "Оценочная стоимость"
 
-#: src/assetdialog.cpp:237
+#: src/assetdialog.cpp:241
 msgid "Enter the current value of the asset"
 msgstr "Введите текущую стоимость актива"
 
-#: src/assetdialog.cpp:243
+#: src/assetdialog.cpp:245
 msgid "Change in Value"
 msgstr "Изменение стоимости"
 
-#: src/assetdialog.cpp:249
+#: src/assetdialog.cpp:250
 #: src/billsdepositsdialog.cpp:305
 #: src/billsdepositsdialog.cpp:445
 #: src/billsdepositspanel.cpp:303
@@ -180,15 +184,15 @@ msgstr "Изменение стоимости"
 msgid "None"
 msgstr "Нет"
 
-#: src/assetdialog.cpp:250
+#: src/assetdialog.cpp:251
 msgid "Appreciates"
 msgstr "Удорожание"
 
-#: src/assetdialog.cpp:251
+#: src/assetdialog.cpp:252
 msgid "Depreciates"
 msgstr "Удешевление"
 
-#: src/assetdialog.cpp:255
+#: src/assetdialog.cpp:256
 msgid "Specify if the value of the asset changes over time"
 msgstr "Выберите, если происходит изменение стоимости актива со временем"
 
@@ -196,41 +200,41 @@ msgstr "Выберите, если происходит изменение ст�
 msgid "Rate of Change"
 msgstr "Процент изменения стоимости"
 
-#: src/assetdialog.cpp:266
+#: src/assetdialog.cpp:264
 msgid "Enter the rate at which the asset changes its value in % per year"
-msgstr "Введите ежегодное изменение стоимости имущества в процентах"
+msgstr "Введите ежегодное изменение стоимости имущества в % "
 
-#: src/assetdialog.cpp:272
+#: src/assetdialog.cpp:269
 #: src/billsdepositsdialog.cpp:458
 #: src/billsdepositspanel.cpp:178
 msgid "Notes"
 msgstr "Примечания"
 
-#: src/assetdialog.cpp:278
+#: src/assetdialog.cpp:273
 msgid "Enter notes associated with this asset"
 msgstr "Введите примечания для этого актива"
 
-#: src/assetdialog.cpp:290
+#: src/assetdialog.cpp:283
 #: src/billsdepositsdialog.cpp:485
 #: src/budgetentrydialog.cpp:180
 #: src/budgetyearentrydialog.cpp:121
 msgid "OK"
 msgstr "OK"
 
-#: src/assetdialog.cpp:294
+#: src/assetdialog.cpp:286
 #: src/billsdepositsdialog.cpp:489
 #: src/budgetentrydialog.cpp:184
 #: src/budgetyearentrydialog.cpp:126
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/assetdialog.cpp:319
-#: src/assetdialog.cpp:348
+#: src/assetdialog.cpp:311
+#: src/assetdialog.cpp:340
 msgid "Invalid Value "
 msgstr "Неверное значение"
 
-#: src/assetdialog.cpp:319
-#: src/assetdialog.cpp:348
+#: src/assetdialog.cpp:311
+#: src/assetdialog.cpp:340
 #: src/billsdepositsdialog.cpp:689
 #: src/billsdepositsdialog.cpp:859
 #: src/billsdepositsdialog.cpp:869
@@ -250,71 +254,71 @@ msgstr "Неверное значение"
 msgid "Error"
 msgstr "Ошибка"
 
-#: src/assetdialog.cpp:338
+#: src/assetdialog.cpp:330
 msgid "Rate of Change in Value"
 msgstr "Оценить изменения в стоимости"
 
-#: src/assetspanel.cpp:113
+#: src/assetspanel.cpp:127
 msgid "Assets"
 msgstr "Активы"
 
-#: src/assetspanel.cpp:119
+#: src/assetspanel.cpp:131
 msgid "Total:"
 msgstr "Всего:"
 
-#: src/assetspanel.cpp:144
+#: src/assetspanel.cpp:154
 #: src/billsdepositspanel.cpp:169
 msgid "Type"
 msgstr "Тип"
 
-#: src/assetspanel.cpp:180
+#: src/assetspanel.cpp:189
 msgid "&New"
 msgstr "С&оздать"
 
-#: src/assetspanel.cpp:182
+#: src/assetspanel.cpp:191
 msgid "New Asset"
 msgstr "Создание нового актива"
 
-#: src/assetspanel.cpp:185
+#: src/assetspanel.cpp:194
 #: src/categdialog.cpp:155
 msgid "&Edit"
 msgstr "&Редактировать"
 
-#: src/assetspanel.cpp:187
+#: src/assetspanel.cpp:196
 msgid "Edit Asset"
 msgstr "Редактирование актива"
 
-#: src/assetspanel.cpp:191
+#: src/assetspanel.cpp:200
 #: src/categdialog.cpp:160
 msgid "&Delete"
 msgstr "&Удалить"
 
-#: src/assetspanel.cpp:193
+#: src/assetspanel.cpp:202
 msgid "Delete Asset"
 msgstr "Удаление актива"
 
-#: src/assetspanel.cpp:209
+#: src/assetspanel.cpp:219
 #, c-format
 msgid "Total: %s"
 msgstr "Всего: %s"
 
-#: src/assetspanel.cpp:262
+#: src/assetspanel.cpp:272
 msgid "&New Asset"
 msgstr "Новый актив"
 
-#: src/assetspanel.cpp:264
+#: src/assetspanel.cpp:274
 msgid "&Edit Asset"
 msgstr "Редактировать актив"
 
-#: src/assetspanel.cpp:265
+#: src/assetspanel.cpp:275
 msgid "&Delete Asset"
 msgstr "Удалить актив"
 
-#: src/assetspanel.cpp:355
+#: src/assetspanel.cpp:366
 msgid "Do you really want to delete the Asset?"
 msgstr "Вы действительно хотите удалить данный актив?"
 
-#: src/assetspanel.cpp:356
+#: src/assetspanel.cpp:366
 msgid "Confirm Asset Deletion"
 msgstr "Подтверждение удаления актива"
 
@@ -1670,12 +1674,12 @@ msgid "Top Categories Last 30 Days"
 msgstr "Самые расходные категории за последние 30 дней"
 
 #: src/mmex.cpp:1890
-#: src/mmex.cpp:3441
+#: src/mmex.cpp:3437
 msgid "Do you really want to delete the account?"
 msgstr "Вы действительно хотите удалить счёт?"
 
 #: src/mmex.cpp:1891
-#: src/mmex.cpp:3442
+#: src/mmex.cpp:3438
 msgid "Confirm Account Deletion"
 msgstr "Подтверждение удаления счёта"
 
@@ -2239,33 +2243,33 @@ msgstr "Нет ни одного инвестиционного счёта. Со
 msgid "Investment Accounts"
 msgstr " Инвестиционные счета"
 
-#: src/mmex.cpp:3383
-#: src/mmex.cpp:3421
+#: src/mmex.cpp:3379
+#: src/mmex.cpp:3417
 msgid "No Account available!"
 msgstr "Нет доступного счёта!"
 
-#: src/mmex.cpp:3396
+#: src/mmex.cpp:3392
 msgid "Choose Account to Edit"
 msgstr "Выберите счёт для редактирования"
 
-#: src/mmex.cpp:3396
-#: src/mmex.cpp:3434
+#: src/mmex.cpp:3392
+#: src/mmex.cpp:3430
 msgid "Accounts"
 msgstr "Счета"
 
-#: src/mmex.cpp:3434
+#: src/mmex.cpp:3430
 msgid "Choose Account to Delete"
 msgstr "Выберите счёт для удаления"
 
-#: src/mmex.cpp:3520
+#: src/mmex.cpp:3516
 msgid "Set Currency"
 msgstr "Установить валюту"
 
-#: src/mmex.cpp:3534
+#: src/mmex.cpp:3530
 msgid "Base Currency for account"
 msgstr "Основная валюта счёта"
 
-#: src/mmex.cpp:3549
+#: src/mmex.cpp:3545
 msgid ""
 "\n"
 "Specify the base (or default) currency to be used \n"
@@ -2277,23 +2281,23 @@ msgstr ""
 "с базой данных. Вы можете изменять \n"
 "валюту, связанную с каждым счётом, если это будет необходимо. \n"
 
-#: src/mmex.cpp:3557
+#: src/mmex.cpp:3553
 msgid "User Name"
 msgstr "Имя пользователя"
 
-#: src/mmex.cpp:3567
+#: src/mmex.cpp:3563
 msgid "(Optional)Specify your name. Mainly used for reporting and in printing reports.\n"
 msgstr "(Необязательно) Укажите свое имя. В основном будет использоваться в отчётов. \n"
 
-#: src/mmex.cpp:3580
+#: src/mmex.cpp:3576
 msgid "Base Currency Not Set"
 msgstr "Основная валюта не установлена"
 
-#: src/mmex.cpp:3603
+#: src/mmex.cpp:3599
 msgid "Name of the Account"
 msgstr "Название счёта"
 
-#: src/mmex.cpp:3618
+#: src/mmex.cpp:3614
 msgid ""
 "\n"
 "Specify a descriptive name of the account. This most commonly \n"
@@ -2305,27 +2309,27 @@ msgstr ""
 "название финансового учреждения, где находится счёт. \n"
 " Например, 'ABC Банк'."
 
-#: src/mmex.cpp:3632
+#: src/mmex.cpp:3628
 msgid "Account Name Invalid"
 msgstr "Неверное название счёта"
 
-#: src/mmex.cpp:3649
+#: src/mmex.cpp:3645
 msgid "Checking/Savings"
 msgstr "Чековый"
 
-#: src/mmex.cpp:3650
+#: src/mmex.cpp:3646
 msgid "Investment"
 msgstr "Инвестиционный"
 
-#: src/mmex.cpp:3655
+#: src/mmex.cpp:3651
 msgid "Specify the type of account to be created."
 msgstr "Укажите тип создаваемого счёта"
 
-#: src/mmex.cpp:3661
+#: src/mmex.cpp:3657
 msgid "Type of Account"
 msgstr "Тип счёта"
 
-#: src/mmex.cpp:3676
+#: src/mmex.cpp:3672
 msgid ""
 "\n"
 "Select the type of account you want to create:\n"
@@ -2339,7 +2343,7 @@ msgstr ""
 "'Чековый' для учёта доходов и расходов.  \n"
 "'Инвестиционный' для ценных бумаг. "
 
-#: src/mmex.cpp:3682
+#: src/mmex.cpp:3678
 msgid ""
 "\n"
 "Investment accounts are specialized accounts that only \n"
@@ -2351,7 +2355,7 @@ msgstr ""
 "которые связаны только с вложениями в ценные бумаги, \n"
 "паевые фонды и т.п.\n"
 
-#: src/mmex.cpp:3701
+#: src/mmex.cpp:3697
 msgid ""
 "Base Account Currency Not set.\n"
 "Set that first using tools->options menu and then add a new account"
@@ -3704,10 +3708,6 @@ msgstr "&Обновлять каждые"
 #: src/yahoosettingsdialog.cpp:162
 msgid "minutes while market is open"
 msgstr "минут пока торги открыты"
-
-#: src/assetdialog.h:21
-msgid "New/Edit Asset"
-msgstr "Редактор актива"
 
 #: src/billsdepositsdialog.h:23
 msgid "New/Edit Repeating Transaction"
