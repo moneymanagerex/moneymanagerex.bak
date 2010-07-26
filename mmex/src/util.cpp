@@ -502,7 +502,7 @@ void mmExportCSV( wxSQLite3Database* db_ )
                 wxString dateString = mmGetDateForDisplay( db_, dtdt );
 
                 int sid, cid;
-                wxString payee = mmDBWrapper::getPayee( db_, q1.GetInt( wxT( "PAYEEID" ) ), sid, cid );
+                wxString payee = mmNotes4ExportString(mmDBWrapper::getPayee( db_, q1.GetInt( wxT( "PAYEEID" ) ), sid, cid ));
                 wxString type = q1.GetString( wxT( "TRANSCODE" ) );
                 wxString sign = wxT( "" );
                 wxString amount = q1.GetString( wxT( "TRANSAMOUNT" ) );
@@ -514,9 +514,9 @@ void mmExportCSV( wxSQLite3Database* db_ )
                         mmex::formatDoubleToCurrencyEdit( value, amount );
                 }
 
-                wxString categ = mmDBWrapper::getCategoryName( db_, q1.GetInt( wxT( "CATEGID" ) ) );
-                wxString subcateg = mmDBWrapper::getSubCategoryName( db_,
-                                    q1.GetInt( wxT( "CATEGID" ) ), q1.GetInt( wxT( "SUBCATEGID" ) ) );
+                wxString categ = mmNotes4ExportString(mmDBWrapper::getCategoryName( db_, q1.GetInt( wxT( "CATEGID" ))));
+                wxString subcateg = mmNotes4ExportString(mmDBWrapper::getSubCategoryName( db_,
+                                    q1.GetInt( wxT( "CATEGID" ) ), q1.GetInt( wxT( "SUBCATEGID" ))));
                 wxString transNum = mmNotes4ExportString( q1.GetString( wxT( "TRANSACTIONNUMBER" ) ) );
                 wxString notes = mmNotes4ExportString( q1.GetString( wxT( "NOTES" ) ) );
                 wxString origtype = type;
@@ -564,20 +564,20 @@ void mmExportCSV( wxSQLite3Database* db_ )
                                         mmex::formatDoubleToCurrencyEdit( value, splitamount );
                                 }
 
-                                wxString splitcateg = mmDBWrapper::getCategoryName( db_, q2.GetInt( wxT( "CATEGID" ) ) );
-                                wxString splitsubcateg = mmDBWrapper::getSubCategoryName( db_, q2.GetInt( wxT( "CATEGID" ) ), q2.GetInt( wxT( "SUBCATEGID" ) ) );
+                                wxString splitcateg = mmNotes4ExportString(mmDBWrapper::getCategoryName( db_, q2.GetInt( wxT( "CATEGID" ) ) ));
+                                wxString splitsubcateg = mmNotes4ExportString(mmDBWrapper::getSubCategoryName( db_, q2.GetInt( wxT( "CATEGID" ) ), q2.GetInt( wxT( "SUBCATEGID" ) ) ));
 
-                                text << dateString << delimit << payee << delimit << sign << splitamount << delimit
+                                text << wxT("\"") << dateString << wxT("\"") << delimit << payee << delimit << wxT("\"") << sign << splitamount << wxT("\"") << delimit
                                 << splitcateg << delimit << splitsubcateg << delimit << transNum << delimit
-                                << notes << delimit << origtype << endl;
+                                << notes << delimit << wxT("\"") << origtype << wxT("\"") << endl;
 
                         }
 
                         st2.Finalize();
                 } else {
-                        text << dateString << delimit << payee << delimit << sign << amount << delimit
-                        << categ << delimit << subcateg << delimit << transNum << delimit
-                        << notes << delimit << origtype << endl;
+                        text << wxT("\"") << dateString << wxT("\"") << delimit << payee << delimit
+                        << wxT("\"") << sign << amount << wxT("\"") << delimit << categ << delimit << subcateg << delimit 
+						<< transNum << delimit << notes << delimit << wxT("\"") << origtype << wxT("\"") << endl;
                 }
 
                 numRecords++;
