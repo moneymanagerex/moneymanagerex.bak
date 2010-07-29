@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-07-26 11:58+0300\n"
-"PO-Revision-Date: 2010-07-26 11:59+0300\n"
+"PO-Revision-Date: 2010-07-29 09:45+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -1884,7 +1884,7 @@ msgstr "Показать/Скрыть окно навигации"
 #: src/mmex.cpp:2258
 #: src/mmex.cpp:2434
 msgid "New Account"
-msgstr "Свойства счёта"
+msgstr "Новый счёт"
 
 #: src/mmex.cpp:2264
 #: src/mmex.cpp:2436
