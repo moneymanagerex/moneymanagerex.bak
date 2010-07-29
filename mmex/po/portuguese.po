@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-07-26 11:57+0300\n"
-"PO-Revision-Date: 2010-07-26 11:57+0300\n"
-"Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
+"PO-Revision-Date: 2010-07-28 19:25-0300\n"
+"Last-Translator: Bruno Fernandes\n"
 "Language-Team: Portuguese/Brazil <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -168,7 +168,7 @@ msgstr "Jóia"
 
 #: src/assetdialog.cpp:226
 msgid "Cash"
-msgstr ""
+msgstr "Dinheiro"
 
 #: src/assetdialog.cpp:227
 msgid "Other"
@@ -289,9 +289,8 @@ msgid "Type"
 msgstr "Tipo"
 
 #: src/assetspanel.cpp:189
-#, fuzzy
 msgid "&New"
-msgstr "Novo"
+msgstr "&Novo"
 
 #: src/assetspanel.cpp:191
 msgid "New Asset"
@@ -299,9 +298,8 @@ msgstr "Novo Bem"
 
 #: src/assetspanel.cpp:194
 #: src/categdialog.cpp:155
-#, fuzzy
 msgid "&Edit"
-msgstr "Editar"
+msgstr "&Editar"
 
 #: src/assetspanel.cpp:196
 msgid "Edit Asset"
@@ -309,9 +307,8 @@ msgstr "Editar o Bem"
 
 #: src/assetspanel.cpp:200
 #: src/categdialog.cpp:160
-#, fuzzy
 msgid "&Delete"
-msgstr "Excluir"
+msgstr "E&xcluir"
 
 #: src/assetspanel.cpp:202
 msgid "Delete Asset"
@@ -344,14 +341,12 @@ msgstr "Confirmar a exclusão do Bem"
 
 #: src/billsdepositsdialog.cpp:205
 #: src/billsdepositsdialog.cpp:1132
-#, fuzzy
 msgid "Split Category"
-msgstr "Selecione a Categoria"
+msgstr "Separar a Categoria"
 
 #: src/billsdepositsdialog.cpp:270
-#, fuzzy
 msgid "Repeating Transaction Details"
-msgstr "Excluir a Transação"
+msgstr "Repetir os Detalhes da Transação"
 
 #: src/billsdepositsdialog.cpp:279
 msgid "Account Name"
@@ -427,11 +422,11 @@ msgstr "Quadrimestral"
 #: src/billsdepositsdialog.cpp:314
 #: src/billsdepositspanel.cpp:339
 msgid "Four Weeks"
-msgstr ""
+msgstr "Quatro Semanas"
 
 #: src/billsdepositsdialog.cpp:315
 msgid "Daily"
-msgstr ""
+msgstr "Diário"
 
 #: src/billsdepositsdialog.cpp:324
 msgid "Times Repeated"
@@ -537,8 +532,9 @@ msgid "Specify the category for this transaction"
 msgstr "Especifique a categoria desta transação"
 
 #: src/billsdepositsdialog.cpp:433
+#, fuzzy
 msgid "Split"
-msgstr ""
+msgstr "Separar"
 
 #: src/billsdepositsdialog.cpp:439
 msgid "Status"
@@ -640,9 +636,8 @@ msgid "From and To Account cannot be the same."
 msgstr "A Conta de Origem e a Conta de Destino não podem ser a mesma."
 
 #: src/billsdepositspanel.cpp:146
-#, fuzzy
 msgid "Repeating Transactions"
-msgstr "Excluir a Transação"
+msgstr "Repetir a Transação"
 
 #: src/billsdepositspanel.cpp:175
 msgid "Next Due Date"
@@ -658,27 +653,24 @@ msgid "Remaining Days"
 msgstr "Dias Restantes"
 
 #: src/billsdepositspanel.cpp:224
-#, fuzzy
 msgid "&New Series"
-msgstr "Novo"
+msgstr "Novo Serie"
 
 #: src/billsdepositspanel.cpp:226
 msgid "New Bills && Deposit Series"
 msgstr "Nova Transação Agendada"
 
 #: src/billsdepositspanel.cpp:229
-#, fuzzy
 msgid "&Edit Series"
-msgstr "Editar"
+msgstr "Editar Serie"
 
 #: src/billsdepositspanel.cpp:231
 msgid "Edit Bills && Deposit Series"
 msgstr "Editar a Transação Agendada"
 
 #: src/billsdepositspanel.cpp:235
-#, fuzzy
 msgid "&Delete Series"
-msgstr "Excluir"
+msgstr "Excluir Serie"
 
 #: src/billsdepositspanel.cpp:237
 msgid "Delete Bills && Deposit Series"
@@ -770,15 +762,13 @@ msgstr "Visualizar as Categorias não Zeradas"
 
 #: src/budgetingpanel.cpp:128
 #: src/budgetingpanel.cpp:157
-#, fuzzy
 msgid "View Income Budget Categories"
-msgstr "Visualizar Todas as Categorias"
+msgstr "Visualizar Categoria de Orçamento de Entrada"
 
 #: src/budgetingpanel.cpp:133
 #: src/budgetingpanel.cpp:158
-#, fuzzy
 msgid "View Expense Budget Categories"
-msgstr "Visualizar Todas as Categorias"
+msgstr "Visualizar Categoria de Orçamento de Despesa"
 
 #: src/budgetingpanel.cpp:182
 #, fuzzy
@@ -903,7 +893,7 @@ msgstr "Utilizar a categoria selecionada na transação"
 
 #: src/categdialog.cpp:183
 msgid "Category cannot be empty"
-msgstr ""
+msgstr "Categoria não pode ser vazia"
 
 #: src/categdialog.cpp:191
 msgid "Category with same name exists"
@@ -930,14 +920,14 @@ msgid "Sub-Category is in use"
 msgstr "A subcategoria esta em uso"
 
 #: src/categdialog.cpp:361
-#, fuzzy
 msgid "Update Failed"
-msgstr "Atualizar"
+msgstr "Atualização Falhou"
 
 #: src/chart.cpp:221
 #: src/chart.cpp:399
+#, fuzzy
 msgid "Legend:"
-msgstr ""
+msgstr "Anotação:"
 
 #: src/currencydialog.cpp:162
 msgid "Currency Name"
@@ -1010,16 +1000,17 @@ msgstr "A Base de Conversão deve ser de 0.0 até 1.0"
 
 #: src/dbwrapper.cpp:177
 msgid "Telephone"
-msgstr ""
+msgstr "Telefone"
 
 #: src/dbwrapper.cpp:178
+#, fuzzy
 msgid "Electricity"
-msgstr ""
+msgstr "Eletricidade"
 
 #: src/dbwrapper.cpp:179
 #: src/dbwrapper.cpp:214
 msgid "Gas"
-msgstr ""
+msgstr "Gás"
 
 #: src/dbwrapper.cpp:180
 #, fuzzy
@@ -1027,22 +1018,20 @@ msgid "Internet"
 msgstr "Investimento"
 
 #: src/dbwrapper.cpp:181
-#, fuzzy
 msgid "Rent"
-msgstr "Relatórios"
+msgstr "Aluguel"
 
 #: src/dbwrapper.cpp:182
 msgid "Cable TV"
-msgstr ""
+msgstr "TV a Cabo"
 
 #: src/dbwrapper.cpp:183
-#, fuzzy
 msgid "Water"
-msgstr "Data"
+msgstr "Água"
 
 #: src/dbwrapper.cpp:187
 msgid "Bills"
-msgstr ""
+msgstr "Contas"
 
 #: src/dbwrapper.cpp:192
 msgid "Groceries"
@@ -1050,23 +1039,23 @@ msgstr ""
 
 #: src/dbwrapper.cpp:193
 msgid "Dining out"
-msgstr ""
+msgstr "Jantar Fora"
 
 #: src/dbwrapper.cpp:197
 msgid "Food"
-msgstr ""
+msgstr "Comida"
 
 #: src/dbwrapper.cpp:202
 msgid "Movies"
-msgstr ""
+msgstr "Cinemas"
 
 #: src/dbwrapper.cpp:203
 msgid "Video Rental"
-msgstr ""
+msgstr "Aluguel de Filme"
 
 #: src/dbwrapper.cpp:204
 msgid "Magazines"
-msgstr ""
+msgstr "Revistas"
 
 #: src/dbwrapper.cpp:208
 msgid "Leisure"
@@ -1074,11 +1063,11 @@ msgstr ""
 
 #: src/dbwrapper.cpp:213
 msgid "Maintenance"
-msgstr ""
+msgstr "Manutenção"
 
 #: src/dbwrapper.cpp:215
 msgid "Parking"
-msgstr ""
+msgstr "Estacionamento"
 
 #: src/dbwrapper.cpp:216
 msgid "Registration"
@@ -1086,11 +1075,11 @@ msgstr ""
 
 #: src/dbwrapper.cpp:225
 msgid "Books"
-msgstr ""
+msgstr "Livros"
 
 #: src/dbwrapper.cpp:226
 msgid "Tuition"
-msgstr ""
+msgstr "Tutor"
 
 #: src/dbwrapper.cpp:227
 #: src/dbwrapper.cpp:238
@@ -1100,12 +1089,12 @@ msgstr "Outros"
 
 #: src/dbwrapper.cpp:231
 msgid "Education"
-msgstr ""
+msgstr "Educação"
 
 #: src/dbwrapper.cpp:236
 #, fuzzy
 msgid "Clothing"
-msgstr "Checando"
+msgstr "Roupas"
 
 #: src/dbwrapper.cpp:237
 msgid "Furnishing"
@@ -1113,22 +1102,21 @@ msgstr ""
 
 #: src/dbwrapper.cpp:242
 msgid "Homeneeds"
-msgstr ""
+msgstr "Necessidades de Casa"
 
 #: src/dbwrapper.cpp:247
 #: src/dbwrapper.cpp:263
 #, fuzzy
 msgid "Health"
-msgstr "Mantido na"
+msgstr "Saúde"
 
 #: src/dbwrapper.cpp:248
-#, fuzzy
 msgid "Dental"
-msgstr "Geral"
+msgstr "Dentista"
 
 #: src/dbwrapper.cpp:249
 msgid "Eyecare"
-msgstr ""
+msgstr "Oculista"
 
 #: src/dbwrapper.cpp:250
 msgid "Physician"
@@ -1141,43 +1129,43 @@ msgstr "Detalhes da Transação"
 
 #: src/dbwrapper.cpp:255
 msgid "Healthcare"
-msgstr ""
+msgstr "Plano de Saude"
 
 #: src/dbwrapper.cpp:260
 #, fuzzy
 msgid "Auto"
-msgstr "Montante"
+msgstr "Carro"
 
 #: src/dbwrapper.cpp:261
+#, fuzzy
 msgid "Life"
-msgstr ""
+msgstr "Vida"
 
 #: src/dbwrapper.cpp:262
 #, fuzzy
 msgid "Home"
-msgstr "Home Page"
+msgstr "Casa"
 
 #: src/dbwrapper.cpp:267
 msgid "Insurance"
-msgstr ""
+msgstr "Seguro"
 
 #: src/dbwrapper.cpp:272
 msgid "Travel"
-msgstr ""
+msgstr "Viagem"
 
 #: src/dbwrapper.cpp:273
 #, fuzzy
 msgid "Lodging"
-msgstr "Orçamento"
+msgstr "Aluguel"
 
 #: src/dbwrapper.cpp:274
 msgid "Sightseeing"
 msgstr ""
 
 #: src/dbwrapper.cpp:278
-#, fuzzy
 msgid "Vacation"
-msgstr "Detalhes da Transação"
+msgstr "Férias"
 
 #: src/dbwrapper.cpp:283
 #, fuzzy
@@ -1186,7 +1174,7 @@ msgstr "Recebimento"
 
 #: src/dbwrapper.cpp:284
 msgid "House Tax"
-msgstr ""
+msgstr "Imposto Imobiliário (IPTU)"
 
 #: src/dbwrapper.cpp:285
 msgid "Water Tax"
@@ -1194,7 +1182,7 @@ msgstr ""
 
 #: src/dbwrapper.cpp:290
 msgid "Taxes"
-msgstr ""
+msgstr "Impostos"
 
 #: src/dbwrapper.cpp:294
 msgid "Miscellaneous"
@@ -1202,16 +1190,15 @@ msgstr ""
 
 #: src/dbwrapper.cpp:295
 msgid "Gifts"
-msgstr ""
+msgstr "Presentes"
 
 #: src/dbwrapper.cpp:300
-#, fuzzy
 msgid "Salary"
-msgstr "Resumo"
+msgstr "Salário"
 
 #: src/dbwrapper.cpp:301
 msgid "Reimbursement/Refunds"
-msgstr ""
+msgstr "Reembolsos"
 
 #: src/dbwrapper.cpp:302
 #, fuzzy
@@ -1236,6 +1223,10 @@ msgid ""
 "Not a writeable database\n"
 "You must have write permission to that file"
 msgstr ""
+"\n"
+"%s\n"
+"Não é possivel escrever no banco de dados\n"
+"Você precisa ter permissão de escrita para o arquivo"
 
 #: src/filtertransdialog.cpp:196
 #, fuzzy
@@ -1263,13 +1254,12 @@ msgid "Specify Status"
 msgstr "Especifique a língua utilizada"
 
 #: src/filtertransdialog.cpp:266
-#, fuzzy
 msgid "Duplicate"
-msgstr "Data"
+msgstr "Duplicar"
 
 #: src/filtertransdialog.cpp:277
 msgid "Specify Type"
-msgstr ""
+msgstr "Especifique o Tipo"
 
 #: src/filtertransdialog.cpp:292
 #, fuzzy
@@ -1281,9 +1271,8 @@ msgid "Specify Amount Range"
 msgstr ""
 
 #: src/filtertransdialog.cpp:311
-#, fuzzy
 msgid "Specify Number"
-msgstr "Selecione o Favorecido"
+msgstr "Selecione o Numero"
 
 #: src/filtertransdialog.cpp:322
 msgid "Specify Notes"
@@ -1295,9 +1284,8 @@ msgid "Report"
 msgstr "Relatórios"
 
 #: src/maincurrencydialog.cpp:109
-#, fuzzy
 msgid "Currency List"
-msgstr "Moeda"
+msgstr "Lista de Moedas"
 
 #: src/maincurrencydialog.cpp:178
 msgid "Name of Currency to Add"
@@ -1413,7 +1401,7 @@ msgstr "Aguarde..."
 
 #: src/mmcheckingpanel.cpp:824
 msgid "Accessing Database"
-msgstr ""
+msgstr "Acessando Banco de Dados"
 
 #: src/mmcheckingpanel.cpp:837
 msgid "Account View : "
@@ -1511,14 +1499,12 @@ msgid "&Delete Transaction"
 msgstr "E&xcluir"
 
 #: src/mmcheckingpanel.cpp:1183
-#, fuzzy
 msgid "&Copy Transaction"
-msgstr "&Nova"
+msgstr "&Copiar Transação"
 
 #: src/mmcheckingpanel.cpp:1185
-#, fuzzy
 msgid "&Paste Transaction"
-msgstr "&Nova"
+msgstr "&Colar Transação"
 
 #: src/mmcheckingpanel.cpp:1187
 msgid "Mark As &Reconciled"
@@ -1537,9 +1523,8 @@ msgid "Mark For &Followup"
 msgstr "Marcar para Ver &Depois"
 
 #: src/mmcheckingpanel.cpp:1191
-#, fuzzy
 msgid "Mark As &Duplicate"
-msgstr "Marcar Como &Nula"
+msgstr "Marcar Como &Duplicata"
 
 #: src/mmcheckingpanel.cpp:1195
 msgid "as Reconciled"
@@ -1558,8 +1543,9 @@ msgid "as needing Followup"
 msgstr "como Ver Depois"
 
 #: src/mmcheckingpanel.cpp:1199
+#, fuzzy
 msgid "as Duplicate"
-msgstr ""
+msgstr "como Duplicata"
 
 #: src/mmcheckingpanel.cpp:1200
 msgid "Mark all "
@@ -1570,10 +1556,13 @@ msgid "Do you really want to delete the transaction?"
 msgstr "Tem certeza de que deseja apagar esta transação"
 
 #: src/mmex.cpp:214
+#, fuzzy
 msgid ""
 "Fatal error occured.\n"
 "Application will be terminated."
 msgstr ""
+"Erro fatal ocorreu.\n"
+"O aplicativo será fechado."
 
 #: src/mmex.cpp:449
 msgid "Add Account Wizard"
@@ -1620,7 +1609,7 @@ msgstr ""
 
 #: src/mmex.cpp:774
 msgid "Navigation"
-msgstr ""
+msgstr "Navegação"
 
 #: src/mmex.cpp:789
 msgid "Home Page"
@@ -1721,9 +1710,8 @@ msgid "Income vs Expenses - All Time"
 msgstr "Recebimentos X Despesas - Tudo"
 
 #: src/mmex.cpp:1018
-#, fuzzy
 msgid "Transaction Report"
-msgstr "Número da Transação"
+msgstr "Relatório da Transação"
 
 #: src/mmex.cpp:1038
 msgid "Budget Performance"
@@ -1737,12 +1725,12 @@ msgstr "Desempenho do Orçamento"
 #: src/mmex.cpp:1064
 #: src/mmex.cpp:2919
 msgid "Cash Flow"
-msgstr ""
+msgstr "Fluxo de Caixa"
 
 #: src/mmex.cpp:1068
 #, fuzzy
 msgid "Cash Flow - Specific Accounts"
-msgstr "Selecionar a Conta"
+msgstr "Fluxo de Caixa - Contas Especificas"
 
 #: src/mmex.cpp:1074
 #, fuzzy
@@ -1812,7 +1800,7 @@ msgstr "Arquivos &CSV"
 #: src/mmex.cpp:2202
 #: src/mmex.cpp:2207
 msgid "&QIF Files"
-msgstr "Arquivo &QIF"
+msgstr "Arquivos &QIF"
 
 #: src/mmex.cpp:1999
 #: src/mmex.cpp:2204
@@ -1837,9 +1825,8 @@ msgstr "Arquivos &MM.NET CSV"
 
 #: src/mmex.cpp:2005
 #: src/mmex.cpp:2213
-#, fuzzy
 msgid "&Import"
-msgstr "Importar"
+msgstr "&Importar"
 
 #: src/mmex.cpp:2008
 msgid "All"
@@ -1893,9 +1880,8 @@ msgid "Export to CSV"
 msgstr "Exportar para CSV"
 
 #: src/mmex.cpp:2202
-#, fuzzy
 msgid "Export to QIF"
-msgstr "Exportar para CSV"
+msgstr "Exportar para QIF"
 
 #: src/mmex.cpp:2203
 msgid "&Report to HTML"
@@ -1968,16 +1954,18 @@ msgid "&Toolbar"
 msgstr "&Ferramentas"
 
 #: src/mmex.cpp:2246
+#, fuzzy
 msgid "Show/Hide the toolbar"
-msgstr ""
+msgstr "Mostrar/Esconder a barra de ferramentas"
 
 #: src/mmex.cpp:2248
 msgid "&Navigation"
-msgstr ""
+msgstr "&Navegação"
 
 #: src/mmex.cpp:2248
+#, fuzzy
 msgid "Show/Hide the Navigation tree control"
-msgstr ""
+msgstr "Mostrar/Esconder a arvore de controle de Navegação"
 
 #: src/mmex.cpp:2258
 #: src/mmex.cpp:2434
@@ -2083,7 +2071,7 @@ msgstr "Aj&uda\tCtrl-F1"
 
 #: src/mmex.cpp:2349
 msgid "Show the Help file"
-msgstr ""
+msgstr "Mostrar o arquivo de ajuda"
 
 #: src/mmex.cpp:2354
 #, fuzzy
@@ -2096,11 +2084,11 @@ msgstr "Página de Inicialização"
 
 #: src/mmex.cpp:2361
 msgid "Convert Encrypted &DB"
-msgstr ""
+msgstr "Converter &BD Encriptado"
 
 #: src/mmex.cpp:2362
 msgid "Convert Encrypted DB to Non-Encrypted DB"
-msgstr ""
+msgstr "Converter &DB Encriptado para DB Não Encriptado"
 
 #: src/mmex.cpp:2368
 #, fuzzy
@@ -2159,7 +2147,7 @@ msgstr "&Ferramentas"
 
 #: src/mmex.cpp:2407
 msgid "&View"
-msgstr ""
+msgstr "&Exibir"
 
 #: src/mmex.cpp:2408
 msgid "&Help"
@@ -2190,7 +2178,7 @@ msgstr "Moedas"
 
 #: src/mmex.cpp:2466
 msgid "Enter database's password"
-msgstr ""
+msgstr "Entre a senha do banco de dados"
 
 #: src/mmex.cpp:2487
 #: src/mmex.cpp:2536
@@ -2200,7 +2188,7 @@ msgstr "Money Manager EX - Nenhum arquivo aberto "
 
 #: src/mmex.cpp:2490
 msgid "Sorry. The Database version is too old or Database password is incorrect"
-msgstr ""
+msgstr "Desculpe. A versão do banco de dados e muito antiga ou a senha está incorreta"
 
 #: src/mmex.cpp:2491
 #: src/mmex.cpp:2540
@@ -2222,17 +2210,15 @@ msgstr "Abrindo o Arquivo e Verificando a Integridade"
 
 #: src/mmex.cpp:2568
 msgid "portable mode"
-msgstr ""
+msgstr "Modo portatil"
 
 #: src/mmex.cpp:2617
-#, fuzzy
 msgid "Choose database file to create"
-msgstr "Escolha o arquivo QIF a ser importado"
+msgstr "Escolha o arquivo de banco de dados para criar"
 
 #: src/mmex.cpp:2640
-#, fuzzy
 msgid "Choose database file to open"
-msgstr "Escolha o arquivo QIF a ser importado"
+msgstr "Escolha o arquivo de banco de dados para abrir"
 
 #: src/mmex.cpp:2655
 #, fuzzy
@@ -2245,17 +2231,17 @@ msgid "Enter password for database"
 msgstr "Erro abrindo o arquivo"
 
 #: src/mmex.cpp:2670
-#, fuzzy
 msgid "Choose database file to Save As"
-msgstr "Escolha o arquivo QIF a ser importado"
+msgstr "Escolha o arquivo de banco de dados para Salvar Como"
 
 #: src/mmex.cpp:2692
 msgid "Converted DB!"
-msgstr ""
+msgstr "BD Convertido!"
 
 #: src/mmex.cpp:2692
+#, fuzzy
 msgid "MMEX message"
-msgstr ""
+msgstr "Mensagem MMEX"
 
 #: src/mmex.cpp:2706
 #, fuzzy
@@ -2264,7 +2250,7 @@ msgstr "&Salvar\tCtrl-S"
 
 #: src/mmex.cpp:2724
 msgid "Can't copy file to itself"
-msgstr ""
+msgstr "Não pode copiar o arquivo para ele mesmo"
 
 #: src/mmex.cpp:2737
 #, fuzzy
@@ -2283,7 +2269,7 @@ msgstr "Escolha a Conta para Edição"
 #: src/mmex.cpp:2977
 #: src/mmex.cpp:3066
 msgid "Unable to connect!"
-msgstr ""
+msgstr "Impossivel conectar!"
 
 #: src/mmex.cpp:2977
 #: src/mmex.cpp:3035
@@ -2299,7 +2285,7 @@ msgstr "Nenhuma conta disponível!"
 
 #: src/mmex.cpp:3041
 msgid "You have the latest version installed!"
-msgstr ""
+msgstr "Você tem a ultima versão instalada!"
 
 #: src/mmex.cpp:3057
 #, fuzzy
@@ -2328,35 +2314,35 @@ msgstr ""
 
 #: src/mmex.cpp:3079
 msgid "Incorrect XML data (#1)!"
-msgstr ""
+msgstr "Dados do XML incorretos (#1)!"
 
 #: src/mmex.cpp:3088
 msgid "Incorrect XML data (#2)!"
-msgstr ""
+msgstr "Dados do XML incorretos (#2)!"
 
 #: src/mmex.cpp:3095
 msgid "Incorrect XML data (#3)!"
-msgstr ""
+msgstr "Dados do XML incorretos (#3)!"
 
 #: src/mmex.cpp:3100
 msgid "Incorrect XML data (#4)!"
-msgstr ""
+msgstr "Dados do XML incorretos (#4)!"
 
 #: src/mmex.cpp:3105
 msgid "Incorrect XML data (#5)!"
-msgstr ""
+msgstr "Dados do XML incorretos (#5)!"
 
 #: src/mmex.cpp:3112
 msgid "Incorrect XML data (#6)!"
-msgstr ""
+msgstr "Dados do XML incorretos (#6)!"
 
 #: src/mmex.cpp:3117
 msgid "Incorrect XML data (#7)!"
-msgstr ""
+msgstr "Dados do XML incorretos (#7)!"
 
 #: src/mmex.cpp:3160
 msgid "Could not find base currency symbol!"
-msgstr ""
+msgstr "Não foi possivel achar o simbolo base da moeda"
 
 #: src/mmex.cpp:3187
 #, fuzzy
@@ -2720,7 +2706,7 @@ msgstr "Especifique o delimitador utilizado na importação/exportação de arqu
 
 #: src/optionsdialog.cpp:434
 msgid "Display"
-msgstr ""
+msgstr "Exibir"
 
 #: src/optionsdialog.cpp:447
 #, fuzzy
@@ -2765,19 +2751,19 @@ msgstr "como Não Reconciliada"
 
 #: src/optionsdialog.cpp:523
 msgid "View Today"
-msgstr ""
+msgstr "Visualizar Hoje"
 
 #: src/optionsdialog.cpp:524
 msgid "View 30 days"
-msgstr ""
+msgstr "Visualizar 30 dias"
 
 #: src/optionsdialog.cpp:525
 msgid "View 90 days"
-msgstr ""
+msgstr "Visualizar 90 dias"
 
 #: src/optionsdialog.cpp:526
 msgid "View Last Month"
-msgstr ""
+msgstr "Visualizar ultimo mês"
 
 #: src/optionsdialog.cpp:527
 #, fuzzy
@@ -2796,11 +2782,11 @@ msgstr "Opções de Visualização de Contas"
 
 #: src/optionsdialog.cpp:564
 msgid "Report Font Size"
-msgstr ""
+msgstr "Tamanho da Fonte do Relatório"
 
 #: src/optionsdialog.cpp:603
 msgid "Specify which font size is used on the report tables"
-msgstr ""
+msgstr "Especifique o tamanho da fonte usado nas tabelas do relatório"
 
 #: src/optionsdialog.cpp:614
 msgid "Restore Defaults"
@@ -2888,7 +2874,7 @@ msgstr "Excluir a Transação"
 
 #: src/optionsdialog.cpp:703
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
-msgstr ""
+msgstr "Selecione se é para usar a data da transação original ou a data corrente quando copiando/colando transações"
 
 #: src/optionsdialog.cpp:708
 #, fuzzy
@@ -2902,11 +2888,11 @@ msgstr "Especifique a situação da transação"
 
 #: src/optionsdialog.cpp:718
 msgid "Enable online currency update (Get data from European Central Bank)"
-msgstr ""
+msgstr "Habilitar atualização online da moeda (Pega o dado do Banco Central Europeu)"
 
 #: src/optionsdialog.cpp:725
 msgid "Enable or disable get data from European Central Bank to update currency rate"
-msgstr ""
+msgstr "Habilitar ou Desabilitar a recuperação de dados do Banco Central Europeu para atualizar o cambio da moeda"
 
 #: src/optionsdialog.cpp:731
 msgid "General"
@@ -2941,9 +2927,9 @@ msgid "Filter Payees: "
 msgstr "Favorecido "
 
 #: src/payeedialog.cpp:115
-#, c-format
+#, fuzzy, c-format
 msgid "Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."
-msgstr ""
+msgstr "Entre com a palavra de pesquisa.  Você pode usar % como uma mascara para esprimir zero ou mais caracteres ou _ para um unico caracter."
 
 #: src/payeedialog.cpp:123
 msgid "Add a new payee name"
@@ -2995,11 +2981,13 @@ msgid ""
 " must match the format of the date in the QIF file.\n"
 "Are you are sure you want to proceed with the import?"
 msgstr ""
+"Para importar arquivos QIF corretamente, a opcão de data selecionada no MMEX \n"
+" precisa ser igual ao formato de data no arquivo QIF. \n"
+"Você tem certeza que deseja prosseguir com a importação?"
 
 #: src/qifimport.cpp:373
-#, fuzzy
 msgid "Confirm QIF import"
-msgstr "Importação QIF"
+msgstr "Confirme a Importação para QIF"
 
 #: src/qifimport.cpp:390
 msgid "Choose Account to import to:"
@@ -3007,7 +2995,7 @@ msgstr "Escolha uma Conta para a importação:"
 
 #: src/qifimport.cpp:390
 msgid "QIF Import"
-msgstr "Importação QIF"
+msgstr "Importar de QIF"
 
 #: src/qifimport.cpp:401
 msgid "Choose QIF data file to import"
@@ -3040,9 +3028,8 @@ msgid " cannot process Account Types yet "
 msgstr " impossível importar os Tipos de Contas agora "
 
 #: src/qifimport.cpp:517
-#, fuzzy
 msgid "Cannot process these QIF Account Types yet"
-msgstr " impossível importar os Tipos de Contas agora "
+msgstr "Impossível processar esses Tipos de Contas QIF por enquanto"
 
 #: src/qifimport.cpp:532
 #: src/qifimport.cpp:648
@@ -3103,15 +3090,15 @@ msgstr "Desempenho do Orçamento para o Ano : "
 
 #: src/reportbudgetingperf.cpp:49
 msgid "Jan"
-msgstr ""
+msgstr "Jan"
 
 #: src/reportbudgetingperf.cpp:50
 msgid "Feb"
-msgstr ""
+msgstr "Fev"
 
 #: src/reportbudgetingperf.cpp:51
 msgid "Mar"
-msgstr ""
+msgstr "Mar"
 
 #: src/reportbudgetingperf.cpp:52
 #, fuzzy
@@ -3120,35 +3107,35 @@ msgstr "Obras de Arte"
 
 #: src/reportbudgetingperf.cpp:53
 msgid "May"
-msgstr ""
+msgstr "Mai"
 
 #: src/reportbudgetingperf.cpp:54
 msgid "Jun"
-msgstr ""
+msgstr "Jun"
 
 #: src/reportbudgetingperf.cpp:55
 msgid "Jul"
-msgstr ""
+msgstr "Jul"
 
 #: src/reportbudgetingperf.cpp:56
 msgid "Aug"
-msgstr ""
+msgstr "Ago"
 
 #: src/reportbudgetingperf.cpp:57
 msgid "Sep"
-msgstr ""
+msgstr "Set"
 
 #: src/reportbudgetingperf.cpp:58
 msgid "Oct"
-msgstr ""
+msgstr "Out"
 
 #: src/reportbudgetingperf.cpp:59
 msgid "Nov"
-msgstr ""
+msgstr "Nov"
 
 #: src/reportbudgetingperf.cpp:60
 msgid "Dec"
-msgstr ""
+msgstr "Dez"
 
 #: src/reportbudgetingperf.cpp:61
 #: src/reportcategovertimeperf.cpp:190
@@ -3158,7 +3145,7 @@ msgstr ""
 
 #: src/reportbudgetingperf.cpp:62
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/reportbudgetsetup.cpp:24
 #, fuzzy
@@ -3172,7 +3159,7 @@ msgstr "Recebimento Estimado: Recebimento Atual: "
 
 #: src/reportcashflow.cpp:22
 msgid "Cash Flow Forecast For All Accounts - A Year Ahead"
-msgstr ""
+msgstr "Previsão do Fulxo de Caixa para todas as Contas - Para um Ano"
 
 #: src/reportcashflow.cpp:35
 msgid "Total"
@@ -3205,7 +3192,7 @@ msgstr "Gastos"
 
 #: src/reportincexpenses.cpp:96
 msgid "Difference:"
-msgstr ""
+msgstr "Diferença:"
 
 #: src/reportincexpesestime.cpp:25
 #, fuzzy
@@ -3219,7 +3206,7 @@ msgstr "Mês"
 
 #: src/reportincexpesestime.cpp:43
 msgid "Difference"
-msgstr ""
+msgstr "Diferença"
 
 #: src/reportsummary.cpp:124
 #, fuzzy
@@ -3243,7 +3230,7 @@ msgstr "Resumo das Contas"
 
 #: src/reportsummarystocks.cpp:46
 msgid "Company"
-msgstr ""
+msgstr "Empresa"
 
 #: src/reportsummarystocks.cpp:47
 #: src/stockdialog.cpp:184
@@ -3399,7 +3386,7 @@ msgstr "Comissão inválida "
 
 #: src/stockspanel.cpp:178
 msgid "Idle"
-msgstr ""
+msgstr "Livre"
 
 #: src/stockspanel.cpp:209
 msgid "Share Name"
@@ -3428,11 +3415,12 @@ msgstr "Excluir o Investimento"
 
 #: src/stockspanel.cpp:286
 msgid "&Refresh"
-msgstr ""
+msgstr "&Atualizar"
 
 #: src/stockspanel.cpp:288
+#, fuzzy
 msgid "Refresh Stock Prices from Yahoo"
-msgstr ""
+msgstr "Atualizar os preços de ações do Yahoo"
 
 #: src/stockspanel.cpp:291
 #, fuzzy
@@ -3441,7 +3429,7 @@ msgstr "Ver Configurações"
 
 #: src/stockspanel.cpp:293
 msgid "Change settings for automatic refresh"
-msgstr ""
+msgstr "Mudar configuração para atualização automatica"
 
 #: src/stockspanel.cpp:306
 msgid "Stock Investments: "
@@ -3460,11 +3448,11 @@ msgstr "Investimentos :"
 #: src/stockspanel.cpp:444
 #, c-format
 msgid "%s on %s"
-msgstr ""
+msgstr "%s em %s"
 
 #: src/stockspanel.cpp:447
 msgid "never!"
-msgstr ""
+msgstr "nunca!"
 
 #: src/stockspanel.cpp:452
 #, c-format
@@ -3604,11 +3592,11 @@ msgstr "Campo CSV"
 
 #: src/univcsvdialog.cpp:337
 msgid "Unable to open file."
-msgstr ""
+msgstr "Impossivel abrir o arquivo"
 
 #: src/univcsvdialog.cpp:375
 msgid "Unable to write to file."
-msgstr ""
+msgstr "Impossivel escrever no arquivo"
 
 #: src/univcsvdialog.cpp:398
 #: src/univcsvdialog.cpp:410
@@ -3669,80 +3657,75 @@ msgstr "Importar de CSV"
 
 #: src/util.cpp:374
 msgid "January"
-msgstr ""
+msgstr "Janeiro"
 
 #: src/util.cpp:374
 msgid "February"
-msgstr ""
+msgstr "Fevereiro"
 
 #: src/util.cpp:374
 msgid "March"
-msgstr ""
+msgstr "Março"
 
 #: src/util.cpp:374
 msgid "April"
-msgstr ""
+msgstr "Abril"
 
 #: src/util.cpp:374
 msgid "June"
-msgstr ""
+msgstr "Junho"
 
 #: src/util.cpp:375
 msgid "July"
-msgstr ""
+msgstr "Julho"
 
 #: src/util.cpp:375
 msgid "August"
-msgstr ""
+msgstr "Agosto"
 
 #: src/util.cpp:375
-#, fuzzy
 msgid "September"
-msgstr "Selecione o Favorecido"
+msgstr "Setembro"
 
 #: src/util.cpp:375
-#, fuzzy
 msgid "October"
-msgstr "Outro"
+msgstr "Outubro"
 
 #: src/util.cpp:375
-#, fuzzy
 msgid "November"
-msgstr "Número"
+msgstr "Novembro"
 
 #: src/util.cpp:375
 msgid "December"
-msgstr ""
+msgstr "Dezembro"
 
 #: src/util.cpp:396
-#, fuzzy
 msgid "Sunday"
-msgstr "Resumo"
+msgstr "Domingo"
 
 #: src/util.cpp:396
-#, fuzzy
 msgid "Monday"
-msgstr "Mensal"
+msgstr "Segunda-feira"
 
 #: src/util.cpp:396
 msgid "Tuesday"
-msgstr ""
+msgstr "Terça-feira"
 
 #: src/util.cpp:396
 msgid "Wednesday"
-msgstr ""
+msgstr "Quarta-feira"
 
 #: src/util.cpp:397
 msgid "Thursday"
-msgstr ""
+msgstr "Quinta-feira"
 
 #: src/util.cpp:397
 msgid "Friday"
-msgstr ""
+msgstr "Sexta-feira"
 
 #: src/util.cpp:397
 msgid "Saturday"
-msgstr ""
+msgstr "Sábado"
 
 #: src/util.cpp:423
 msgid "Entry "
@@ -3775,14 +3758,12 @@ msgid "Choose CSV data file to Export"
 msgstr "Escolha o arquivo para a Exportação"
 
 #: src/util.cpp:611
-#, fuzzy
 msgid "QIF Export"
-msgstr "Importação QIF"
+msgstr "Exportar para QIF"
 
 #: src/util.cpp:623
-#, fuzzy
 msgid "Choose QIF data file to Export"
-msgstr "Escolha o arquivo QIF a ser importado"
+msgstr "Escolha o arquivo QIF a ser exportado"
 
 #: src/util.cpp:835
 #: src/util.cpp:1072
@@ -3812,9 +3793,8 @@ msgid " unrecognized transaction type, skipping."
 msgstr " tipo da transação não reconhecido, pulando."
 
 #: src/util.cpp:911
-#, fuzzy
 msgid " transfer transaction not imported."
-msgstr " transações importadas do QIF"
+msgstr " transferência de transações não importadas."
 
 #: src/util.cpp:984
 #, c-format
@@ -3849,11 +3829,11 @@ msgstr " data inválida, pulando."
 
 #: src/yahoosettingsdialog.cpp:60
 msgid "Yahoo Server"
-msgstr ""
+msgstr "Servidor Yahoo"
 
 #: src/yahoosettingsdialog.cpp:64
 msgid "finance.au.yahoo.com"
-msgstr ""
+msgstr "finance.au.yahoo.com"
 
 #: src/yahoosettingsdialog.cpp:65
 msgid "Do not enter anything except the server name (or IP address, if you're feeling lucky)"
@@ -3871,7 +3851,7 @@ msgstr ""
 
 #: src/yahoosettingsdialog.cpp:81
 msgid "Market open from"
-msgstr ""
+msgstr "Mercado aberto desde"
 
 #: src/yahoosettingsdialog.cpp:90
 #: src/yahoosettingsdialog.cpp:101
@@ -3887,15 +3867,15 @@ msgstr ""
 
 #: src/yahoosettingsdialog.cpp:109
 msgid "to"
-msgstr ""
+msgstr "para"
 
 #: src/yahoosettingsdialog.cpp:138
 msgid "&Refresh prices every"
-msgstr ""
+msgstr "&Atualizar preços todo"
 
 #: src/yahoosettingsdialog.cpp:162
 msgid "minutes while market is open"
-msgstr ""
+msgstr "minutos enqunto o mercado está aberto"
 
 #: src/billsdepositsdialog.h:23
 #, fuzzy
@@ -3966,22 +3946,29 @@ msgstr "&Opções"
 #, fuzzy
 #~ msgid "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
 #~ msgstr "Powered by wxWidgets (c) www.wxwidgets.org"
+
 #~ msgid "Category         : "
 #~ msgstr "Categoria         : "
+
 #~ msgid "Sub Category  : "
 #~ msgstr "Subcategoria  : "
+
 #~ msgid "Notes               : "
 #~ msgstr "Obs               : "
+
 #~ msgid "Category: \n"
 #~ msgstr "Categoria: \n"
+
 #~ msgid "Sub Category: \n"
 #~ msgstr "Subcategoria: \n"
+
 #~ msgid "Notes: \n"
 #~ msgstr "Obs: \n"
 
 #, fuzzy
 #~ msgid "QFX Import"
 #~ msgstr "Importação QIF"
+
 #~ msgid ""
 #~ "Enter the payee name to be added or make edits to an existing payee name"
 #~ msgstr "Entre com o nome do favorecido a ser incluído ou editado"
@@ -4009,12 +3996,15 @@ msgstr "&Opções"
 #, fuzzy
 #~ msgid "Error binding date/time param"
 #~ msgstr "Erro abrindo o arquivo"
+
 #~ msgid "Delete Account"
 #~ msgstr "Excluir"
+
 #~ msgid "Select From Account"
 #~ msgstr "Selecione a Conta de Origem"
+
 #~ msgid "Web Page"
 #~ msgstr "Site"
+
 #~ msgid "Invalid current price entered "
 #~ msgstr "Preço atual inválido "
-
