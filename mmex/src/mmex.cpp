@@ -3246,7 +3246,7 @@ void mmGUIFrame::OnPrintPagePreview(wxCommandEvent& WXUNUSED(event))
     mmHelpPanel* hp = dynamic_cast<mmHelpPanel*>(panelCurrent_);
     if (rp)
     {
-        printer_ ->PreviewText(panelCurrent_->getReportText());
+        printer_ ->PreviewText(rp->getReportText());
     }
     else if (hp)
     {
@@ -3312,7 +3312,7 @@ void mmGUIFrame::OnExportToHtml(wxCommandEvent& WXUNUSED(event))
         {
             wxFileOutputStream output( fileName );
             wxTextOutputStream text( output );
-            text << panelCurrent_->getReportText();
+            text << rp->getReportText();
         }
     }
 }
