@@ -18,10 +18,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 //----------------------------------------------------------------------------
 #include <UnitTest++.h>
-#include <boost/unordered_map.hpp>
 #include "util.h"
 #include "utils.h"
 //----------------------------------------------------------------------------
+#include <boost/unordered_map.hpp>
+#include <wx/log.h>
+//----------------------------------------------------------------------------
+
+namespace
+{
 
 struct TestData
 {
@@ -30,19 +35,23 @@ struct TestData
 	wxString name;
 };
 
+void dumpDates(wxString mgs, wxDateTime dateStart, wxDateTime dateEnd)
+{
+	wxLogDebug(mgs.c_str());
+	wxLogDebug((dateStart.FormatISODate() + wxT('-') + dateStart.FormatISOTime()).c_str());
+	wxLogDebug(wxT(" - "));
+	wxLogDebug((dateEnd.FormatISODate() + wxT('-') + dateEnd.FormatISOTime()).c_str());
+	wxLogDebug(wxT("\n"));
+}
+
+} // namespace
+
+//----------------------------------------------------------------------------
 
 SUITE(DateTimeProviders)
 {
-using namespace DateTimeProviders;
 
-static void dumpDates(wxString mgs, wxDateTime dateStart, wxDateTime dateEnd)
-{
-	::OutputDebugStringW(mgs.c_str());
-	::OutputDebugStringW((dateStart.FormatISODate() + wxT("-") + dateStart.FormatISOTime()).c_str());
-	::OutputDebugStringA(" - ");
-	::OutputDebugStringW((dateEnd.FormatISODate() + wxT("-") + dateEnd.FormatISOTime()).c_str());
-	::OutputDebugStringA("\r\n");
-}
+using namespace DateTimeProviders;
 
 TEST(CustomDate)
 {
@@ -56,6 +65,7 @@ TEST(CustomDate)
 	CHECK(1 == dateStart.GetDay());
 	CHECK(1 == dateEnd.GetDay());
 }
+//----------------------------------------------------------------------------
 
 TEST(LastDays)
 {
@@ -109,6 +119,7 @@ TEST(LastDays)
 	CHECK(2 == dateStart.GetDay());
 	CHECK(1 == dateEnd.GetDay());
 }
+//----------------------------------------------------------------------------
 
 TEST(CurrentMonth)
 {
@@ -164,6 +175,7 @@ TEST(CurrentMonth)
 	CHECK(1 == dateStart.GetDay());
 	CHECK(31 == dateEnd.GetDay());
 }
+//----------------------------------------------------------------------------
 
 TEST(LastMonths)
 {
@@ -187,19 +199,26 @@ TEST(LastMonths)
 	dateEnd = LastMonths<0, 0, Date_20100501>::EndRange();	
 	dumpDates(wxT("Last months [4]: "), dateStart, dateEnd);
 }
+//----------------------------------------------------------------------------
 
 }
 
+//----------------------------------------------------------------------------
+
 SUITE(collections)
 {
+
+namespace
+{
+
 typedef boost::unordered_map<wxString, wxString> TransactionMatchMap;
 
-static const wxString s_view_reconciled(wxT("View Reconciled"));
-static const wxString s_view_void(wxT("View Void"));
-static const wxString s_view_flagged(wxT("View Flagged"));
-static const wxString s_view_unreconciled(wxT("View UnReconciled"));
-static const wxString s_view_not_reconciled(wxT("View Not-Reconciled"));
-static const wxString s_view_duplicates(wxT("View Duplicates"));
+const wxString s_view_reconciled(wxT("View Reconciled"));
+const wxString s_view_void(wxT("View Void"));
+const wxString s_view_flagged(wxT("View Flagged"));
+const wxString s_view_unreconciled(wxT("View UnReconciled"));
+const wxString s_view_not_reconciled(wxT("View Not-Reconciled"));
+const wxString s_view_duplicates(wxT("View Duplicates"));
 
 const TransactionMatchMap& initTransactionMatchMap()
 {
@@ -214,7 +233,12 @@ const TransactionMatchMap& initTransactionMatchMap()
 
 	return map;
 }
-static const TransactionMatchMap& s_transactionMatchers_Map = initTransactionMatchMap();
+
+const TransactionMatchMap& s_transactionMatchers_Map = initTransactionMatchMap();
+
+} // namespace
+
+//----------------------------------------------------------------------------
 
 TEST(BoostHashMap)
 {
@@ -232,7 +256,11 @@ TEST(BoostHashMap)
 	CHECK(result != end);
 }
 
+//----------------------------------------------------------------------------
+
 } // SUITE
+
+//----------------------------------------------------------------------------
 
 SUITE(util)
 {
