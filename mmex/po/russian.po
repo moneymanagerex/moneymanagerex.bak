@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 11:58+0300\n"
-"PO-Revision-Date: 2010-07-29 09:45+0300\n"
+"POT-Creation-Date: 2010-08-01 13:41+0300\n"
+"PO-Revision-Date: 2010-08-01 13:43+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -1843,7 +1843,7 @@ msgstr "Текущий &вид"
 
 #: src/mmex.cpp:2225
 msgid "Preview current report"
-msgstr "Предварительный просмотр текущего отчёта"
+msgstr "Просмотр текущего отчёта"
 
 #: src/mmex.cpp:2227
 msgid "Print Pre&view..."
@@ -3437,13 +3437,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "Указаны неверные поля для импорта из CSV! Обязательны дата, сумма и плательщик."
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr "CSV импорт"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Выберите MM.NET CSV файл данных для импорта"
 
@@ -3456,13 +3456,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr " Одно из полей (дата, плательщик, тип проводки, количество строк) не заполнено, пропущено"
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr " успешно импортировано."
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3479,9 +3479,9 @@ msgstr ""
 "Импортированные проводки отмечены как требующие уточнения."
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "Импорт из CSV"
 
@@ -3500,6 +3500,10 @@ msgstr "Март"
 #: src/util.cpp:374
 msgid "April"
 msgstr "Апрель"
+
+#: src/util.cpp:374
+msgid "May "
+msgstr "Май"
 
 #: src/util.cpp:374
 msgid "June"
@@ -3595,38 +3599,38 @@ msgstr "QIF экспорт"
 msgid "Choose QIF data file to Export"
 msgstr "Выберите QIF файл для экспорта"
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr " отсутствует дата, пропущено."
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr " отсутствует плательщик, пропущено."
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr " отсутствует тип проводки, пропущено."
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr " отсутствует сумма, пропущено."
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "одно из следующих полей: дата, плательщик, тип проводки, количество строк не заполнено, пропущено"
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr " неопознанный тип проводки, пропущено."
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 msgid " transfer transaction not imported."
 msgstr " перевод не импортирован."
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3641,19 +3645,19 @@ msgstr ""
 "\n"
 "Импортированные проводки отмечены как требующие уточнения."
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Пожалуйста проверьте, что CSV файл из MMEX.NET содержит только один счёт!"
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr " отсутствует категория, пропущено."
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr " Одно из следующих полей: дата, плательщик, тип операции, сумма, категория отсутсвует, пропущено"
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr " неверная дата, пропущено."
 
