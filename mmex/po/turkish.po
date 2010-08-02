@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 12:02+0300\n"
-"PO-Revision-Date: 2010-07-26 12:03+0300\n"
+"POT-Creation-Date: 2010-08-02 15:17+0300\n"
+"PO-Revision-Date: 2010-08-02 15:18+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -3024,7 +3024,7 @@ msgstr "Nis"
 
 #: src/reportbudgetingperf.cpp:53
 msgid "May"
-msgstr "Mayıs"
+msgstr "May"
 
 #: src/reportbudgetingperf.cpp:54
 msgid "Jun"
@@ -3515,13 +3515,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "CVS aktarımı için hatalı alanlar belirtilmiş! En azından Tarih, Tutar ve Alacaklı olmalı"
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr "CVS'tenr"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "İçeri aktarım için MM.NET CSV dosyası seçiniz"
 
@@ -3534,13 +3534,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr "Tarih, Alacaklı, Tutar veya Tip eksik, yok sayılıyor"
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr " Aktarım Tamalandı."
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3558,9 +3558,9 @@ msgstr ""
 "Aktarılan hareketler işaretlendi, bu sayede inceleyebilirsiniz."
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "CVS'ten"
 
@@ -3579,6 +3579,10 @@ msgstr "Mart"
 #: src/util.cpp:374
 msgid "April"
 msgstr "Nisan"
+
+#: src/util.cpp:374
+msgid "May "
+msgstr "Mayıs"
 
 #: src/util.cpp:374
 msgid "June"
@@ -3676,38 +3680,38 @@ msgstr "QIF'ten"
 msgid "Choose QIF data file to Export"
 msgstr "Aktarılacak QIF dosyasını seçiniz"
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr "eksik tarih, yok sayılıyor."
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr "eksik alacaklı, yok sayılıyor."
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr " eksik hareket tipi, yok sayılıyor."
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr "eksik tutar, yok sayılıyor."
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "tarih, alacaklı,hareket tipi veya tutar alanı boş, yok sayılıyor"
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr " tanınmayan hareket tipi, yok sayılıyor"
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 msgid " transfer transaction not imported."
 msgstr "transfer işlemi aktarılamadı."
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3722,19 +3726,19 @@ msgstr ""
 "\n"
 "Aktarılan hareketler işaretlendi, bu sayede inceleyebilirsiniz."
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Lütfen MMEX.NET'ten gelen CSV dosyasının tek hesap içerdiğini doğrulayınız!"
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr " eksik kategori, atlanıyor."
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr "Tarih, Alacaklı, İşlem Tipi, Tutar veya kategori alanı boş, yok sayılıyor"
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr " geçersiz tarih, yok sayılıyor."
 

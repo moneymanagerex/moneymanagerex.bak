@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TheZeal Software\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 11:53+0300\n"
+"POT-Creation-Date: 2010-08-02 15:29+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: Avi Markovitz\n"
@@ -3453,13 +3453,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "לא הוגדרו השדות הנחוצים ליבוא קובץ CSV! השדות המינימליים הדרושים הם: תאריך, סכום ומוטב."
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr "יבא CSV"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "בחר קובץ MM.NET CSV  ליבוא"
 
@@ -3472,13 +3472,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr "אחד השדות הבאים חסר: תאריך, מוטב, סכום. מדלג"
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr "יובא בהצלחה."
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3496,9 +3496,9 @@ msgstr ""
 "תנועות שיובאו סומנו כך שתוכל לבקרן."
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "יבא מקובץ CSV"
 
@@ -3517,6 +3517,10 @@ msgstr "מרץ"
 #: src/util.cpp:374
 msgid "April"
 msgstr "אפריל"
+
+#: src/util.cpp:374
+msgid "May "
+msgstr "מאי"
 
 #: src/util.cpp:374
 msgid "June"
@@ -3614,38 +3618,38 @@ msgstr "יבוא QIF"
 msgid "Choose QIF data file to Export"
 msgstr "בחר קובץ נתוני QIF ליבוא"
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr "חסר תאריך, מדלג."
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr "חסר מוטב, מדלג."
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr "חסר סוג תנועה, מדלג."
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr "חסר סכום, מדלג."
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "אחד השדות הבאים ריקים: תאריך, מוטב, סוג תנועה, סכום. מדלג"
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr "סוג תנועה לא מזוהה, מדלג."
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 msgid " transfer transaction not imported."
 msgstr "תנועות מסוג העברה לא יובאו."
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3660,19 +3664,19 @@ msgstr ""
 "\n"
 "תנועות שיובאו סומנו כך שתוכל לבקרן."
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "אנא ודא כי קובץ ה CSV, מ MMEX.NET מכיל רק חשבון אחד!"
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr "חסר קטגוריה, מדלג."
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr "אחד השדות הבאים ריק: תאריך, מוטב, סוג תנועה, סכום. מדלג"
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr "תאריך לא חוקי, מדלג."
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 11:52+0300\n"
-"PO-Revision-Date: 2010-07-26 11:52+0300\n"
+"POT-Creation-Date: 2010-08-02 15:30+0300\n"
+"PO-Revision-Date: 2010-08-02 15:30+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -3639,13 +3639,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr ""
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr "Εισαγωγή CSV αρχείου"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Διάλεξε ένα αρχείο MM.NET CSV  προς εισαγωγή"
 
@@ -3659,13 +3659,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr "Ενα από τα επόμενα πεδία είναι κενά : Ημερομηνία, πληρωνόμενος,τύπος κίνησης, ποσό, κατηγορία, παραλείπεται"
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr "Η εισαγωγή είναι OK"
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3683,9 +3683,9 @@ msgstr ""
 "Οι κινήσεις έχουν μαρκαρισθεί και μπορούν να ξαναεπεξεργασθούν. "
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "Εισαγωγή από αρχείο CSV"
 
@@ -3704,6 +3704,11 @@ msgstr ""
 #: src/util.cpp:374
 msgid "April"
 msgstr ""
+
+#: src/util.cpp:374
+#, fuzzy
+msgid "May "
+msgstr "Πληρωμή"
 
 #: src/util.cpp:374
 msgid "June"
@@ -3805,39 +3810,39 @@ msgstr "Εισαγωγή"
 msgid "Choose QIF data file to Export"
 msgstr "Επιλέξτε ένα αρχείο CSV για να εξαχθούν τα δεδομένα"
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr "Μη υπαρκτή ημερομηνία, παραλείπεται."
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr "Μη υπαρκτός πληρωνόμενος, παραλείπεται."
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr "Μη υπαρκτός τύπο κίνησης, παραλείπεται."
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr "Δεν υπάρχει ποσό, παραλείπεται."
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 #, fuzzy
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "Ενα από τα επόμενα πεδία είναι κενά : Ημερομηνία, πληρωνόμενος,τύπος κίνησης, ποσό, κατηγορία, παραλείπεται"
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr "Μη αναγνωρισμένος τύπος κίνησης παραλείπεται."
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 msgid " transfer transaction not imported."
 msgstr ""
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3853,19 +3858,19 @@ msgstr ""
 "\n"
 "Οι κινήσεις έχουν μαρκαρισθεί και μπορούν να ξαναεπεξεργασθούν. "
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "παρεακαλώ επιβεβαιώστε ότι το αρχείο CSV από MMEX.NET περιέχει ένα μόνο λογαριασμό"
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr "Η κατηγορία δεν υπάρχει, παραλείπεται."
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr "Ενα από τα επόμενα πεδία είναι κενά : Ημερομηνία, πληρωνόμενος,τύπος κίνησης, ποσό, κατηγορία, παραλείπεται"
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr " Λάνθασμένη ημερομηνία, παραλείπεται."
 

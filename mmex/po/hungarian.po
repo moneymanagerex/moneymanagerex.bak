@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 11:54+0300\n"
-"PO-Revision-Date: 2010-07-26 11:54+0300\n"
+"POT-Creation-Date: 2010-08-02 15:29+0300\n"
+"PO-Revision-Date: 2010-08-02 15:29+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -3083,7 +3083,7 @@ msgstr "Április"
 
 #: src/reportbudgetingperf.cpp:53
 msgid "May"
-msgstr "Május"
+msgstr "Máj"
 
 #: src/reportbudgetingperf.cpp:54
 #, fuzzy
@@ -3579,13 +3579,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "Érvénytelen mezőket adott meg a CSV importhoz! Legalább a dátum, összeg és kedvezményezett kell!"
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr ""
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Válasszon MM.NET CSV fájlt az importáláshoz"
 
@@ -3599,13 +3599,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr " néhány mező: dátum, kedvezményezett, összeg, típus nincs kitöltve, átugrás"
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr " Sikeres importálás"
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3623,9 +3623,9 @@ msgstr ""
 "Az importált ügyletek megjelölve, így ellenőrizheti őket. "
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "Importálás CSV-ből"
 
@@ -3644,6 +3644,10 @@ msgstr "Március"
 #: src/util.cpp:374
 msgid "April"
 msgstr "Április"
+
+#: src/util.cpp:374
+msgid "May "
+msgstr "Május"
 
 #: src/util.cpp:374
 msgid "June"
@@ -3741,39 +3745,39 @@ msgstr "&Exportálás"
 msgid "Choose QIF data file to Export"
 msgstr "Válasszon QIF fájlt az importáláshoz"
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr " hiányzó dátum, kihagyás."
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr " hiányzó kedvezményezett, kihagyás."
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr " hiányzó ügylet típus, kihagyás."
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr " hiányzó összeg, kihagyás"
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "néhány mező: dátum, kedvezményezett, ügylet típus, összeg nincs kitöltve, átugrás"
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr " ismeretlen ügylet típus, kihagyás."
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 #, fuzzy
 msgid " transfer transaction not imported."
 msgstr " ügyletek importálva QIF-ből"
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3788,19 +3792,19 @@ msgstr ""
 "\n"
 "Az importált ügyletek megjelölve, így ellenőrizheti azokat."
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Ellenőrizze, hogy az MMEX.NET CSV fájl csak egy számlát tartalmaz!"
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr " hiányzó kategória, kihagyás."
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr " néhány mező: dátum, kedvezményezett, ügylet típus, összeg kategória nincs kitöltve, átugrás"
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr " érvénytelen dátium, kihagyás."
 

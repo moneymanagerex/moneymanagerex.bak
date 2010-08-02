@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 12:03+0300\n"
-"PO-Revision-Date: 2010-07-26 12:03+0300\n"
+"POT-Creation-Date: 2010-08-02 12:15+0300\n"
+"PO-Revision-Date: 2010-08-02 15:16+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -16,14 +16,12 @@ msgstr ""
 "X-Poedit-SearchPath-0: src\n"
 
 #: src/aboutdialog.cpp:72
-#, fuzzy
 msgid "About "
-msgstr "Сума"
+msgstr "Про "
 
 #: src/aboutdialog.cpp:139
-#, fuzzy
 msgid "Version: "
-msgstr "Історія версій"
+msgstr "Версія: "
 
 #: src/aboutdialog.cpp:150
 #, fuzzy
@@ -695,9 +693,8 @@ msgid " days remaining"
 msgstr " днів залишилось"
 
 #: src/billsdepositspanel.cpp:358
-#, fuzzy
 msgid " days overdue!"
-msgstr " дні закінчились!"
+msgstr " днів прострочено!"
 
 #: src/billsdepositspanel.cpp:411
 msgid "&New Bills && Deposit Series"
@@ -864,9 +861,8 @@ msgid "Budget Year already exists"
 msgstr "Бюджетний рік вже існує"
 
 #: src/categdialog.cpp:77
-#, fuzzy
 msgid "Categories"
-msgstr "Категорія"
+msgstr "Категорії"
 
 #: src/categdialog.cpp:144
 msgid "Enter the name of the category to add or edit here"
@@ -1007,87 +1003,84 @@ msgstr "Курс відносно бази має бути більший за 0
 
 #: src/dbwrapper.cpp:177
 msgid "Telephone"
-msgstr ""
+msgstr "Телефон"
 
 #: src/dbwrapper.cpp:178
 msgid "Electricity"
-msgstr ""
+msgstr "Електрика"
 
 #: src/dbwrapper.cpp:179
 #: src/dbwrapper.cpp:214
 msgid "Gas"
-msgstr ""
+msgstr "Газ"
 
 #: src/dbwrapper.cpp:180
-#, fuzzy
 msgid "Internet"
-msgstr "Інвестиційний"
+msgstr "Інтернет"
 
 #: src/dbwrapper.cpp:181
-#, fuzzy
 msgid "Rent"
-msgstr "Звіти"
+msgstr "Оренда"
 
 #: src/dbwrapper.cpp:182
 msgid "Cable TV"
-msgstr ""
+msgstr "Кабельне ТБ"
 
 #: src/dbwrapper.cpp:183
-#, fuzzy
 msgid "Water"
-msgstr "Дата"
+msgstr "Вода"
 
 #: src/dbwrapper.cpp:187
 msgid "Bills"
-msgstr ""
+msgstr "Векселів"
 
 #: src/dbwrapper.cpp:192
 msgid "Groceries"
-msgstr ""
+msgstr "Бакалійні товари"
 
 #: src/dbwrapper.cpp:193
 msgid "Dining out"
-msgstr ""
+msgstr "Вечеряти не вдома"
 
 #: src/dbwrapper.cpp:197
 msgid "Food"
-msgstr ""
+msgstr "Продовольство"
 
 #: src/dbwrapper.cpp:202
 msgid "Movies"
-msgstr ""
+msgstr "Прожекторист"
 
 #: src/dbwrapper.cpp:203
 msgid "Video Rental"
-msgstr ""
+msgstr "Відеопрокат"
 
 #: src/dbwrapper.cpp:204
 msgid "Magazines"
-msgstr ""
+msgstr "Журнали"
 
 #: src/dbwrapper.cpp:208
 msgid "Leisure"
-msgstr ""
+msgstr "Дозвілля"
 
 #: src/dbwrapper.cpp:213
 msgid "Maintenance"
-msgstr ""
+msgstr "Ремонт"
 
 #: src/dbwrapper.cpp:215
 msgid "Parking"
-msgstr ""
+msgstr "Паркування"
 
 #: src/dbwrapper.cpp:216
 msgid "Registration"
-msgstr ""
+msgstr "Реєстрація"
 
 #: src/dbwrapper.cpp:225
 msgid "Books"
-msgstr ""
+msgstr "Книжки"
 
 #: src/dbwrapper.cpp:226
 msgid "Tuition"
-msgstr ""
+msgstr "Навчання"
 
 #: src/dbwrapper.cpp:227
 #: src/dbwrapper.cpp:238
@@ -1097,7 +1090,7 @@ msgstr "Інше"
 
 #: src/dbwrapper.cpp:231
 msgid "Education"
-msgstr ""
+msgstr "Освіта"
 
 #: src/dbwrapper.cpp:236
 #, fuzzy
@@ -1106,7 +1099,7 @@ msgstr "Чековий"
 
 #: src/dbwrapper.cpp:237
 msgid "Furnishing"
-msgstr ""
+msgstr "Обладнання"
 
 #: src/dbwrapper.cpp:242
 msgid "Homeneeds"
@@ -1114,18 +1107,16 @@ msgstr ""
 
 #: src/dbwrapper.cpp:247
 #: src/dbwrapper.cpp:263
-#, fuzzy
 msgid "Health"
-msgstr "Зберігаються в "
+msgstr "Здоров'я"
 
 #: src/dbwrapper.cpp:248
-#, fuzzy
 msgid "Dental"
-msgstr "Загальні"
+msgstr "Стоматологія"
 
 #: src/dbwrapper.cpp:249
 msgid "Eyecare"
-msgstr ""
+msgstr "Очної"
 
 #: src/dbwrapper.cpp:250
 msgid "Physician"
@@ -1141,13 +1132,12 @@ msgid "Healthcare"
 msgstr ""
 
 #: src/dbwrapper.cpp:260
-#, fuzzy
 msgid "Auto"
-msgstr "Сума"
+msgstr "Авто"
 
 #: src/dbwrapper.cpp:261
 msgid "Life"
-msgstr ""
+msgstr "Життя"
 
 #: src/dbwrapper.cpp:262
 #, fuzzy
@@ -1156,25 +1146,23 @@ msgstr "Домашня сторінка"
 
 #: src/dbwrapper.cpp:267
 msgid "Insurance"
-msgstr ""
+msgstr "Страхування"
 
 #: src/dbwrapper.cpp:272
 msgid "Travel"
-msgstr ""
+msgstr "Подорож"
 
 #: src/dbwrapper.cpp:273
-#, fuzzy
 msgid "Lodging"
-msgstr "Бюджетування"
+msgstr "Подорожі"
 
 #: src/dbwrapper.cpp:274
 msgid "Sightseeing"
-msgstr ""
+msgstr "Огляд визначних місць"
 
 #: src/dbwrapper.cpp:278
-#, fuzzy
 msgid "Vacation"
-msgstr "Список транзакцій"
+msgstr "Відпустка"
 
 #: src/dbwrapper.cpp:283
 #, fuzzy
@@ -1191,24 +1179,23 @@ msgstr ""
 
 #: src/dbwrapper.cpp:290
 msgid "Taxes"
-msgstr ""
+msgstr "Податки"
 
 #: src/dbwrapper.cpp:294
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Різне"
 
 #: src/dbwrapper.cpp:295
 msgid "Gifts"
-msgstr ""
+msgstr "Подарунки"
 
 #: src/dbwrapper.cpp:300
-#, fuzzy
 msgid "Salary"
-msgstr "Підсумок"
+msgstr "Зарплата"
 
 #: src/dbwrapper.cpp:301
 msgid "Reimbursement/Refunds"
-msgstr ""
+msgstr "Відшкодування / Повернення"
 
 #: src/dbwrapper.cpp:302
 #, fuzzy
@@ -1255,39 +1242,34 @@ msgid "Specify Status"
 msgstr "Вкажіть Статус"
 
 #: src/filtertransdialog.cpp:266
-#, fuzzy
 msgid "Duplicate"
-msgstr "Дата"
+msgstr "Задвоеніе"
 
 #: src/filtertransdialog.cpp:277
 msgid "Specify Type"
 msgstr "Вкажіть Тип"
 
 #: src/filtertransdialog.cpp:292
-#, fuzzy
 msgid "Specify the type of transaction."
-msgstr "Вкажіть дату транзакції"
+msgstr "Вкажіть тип транзакції"
 
 #: src/filtertransdialog.cpp:297
 msgid "Specify Amount Range"
 msgstr "Вкажіть Діапазон Суми"
 
 #: src/filtertransdialog.cpp:311
-#, fuzzy
 msgid "Specify Number"
-msgstr "Вкажіть Нотатки"
+msgstr "Вкажіть номер"
 
 #: src/filtertransdialog.cpp:322
 msgid "Specify Notes"
 msgstr "Вкажіть Нотатки"
 
 #: src/htmlbuilder.cpp:41
-#, fuzzy
 msgid "Report"
-msgstr "Звіти"
+msgstr "Звіт"
 
 #: src/maincurrencydialog.cpp:109
-#, fuzzy
 msgid "Currency List"
 msgstr "Валюта"
 
@@ -1613,7 +1595,7 @@ msgstr ""
 
 #: src/mmex.cpp:774
 msgid "Navigation"
-msgstr ""
+msgstr "Навігація"
 
 #: src/mmex.cpp:789
 msgid "Home Page"
@@ -2213,14 +2195,12 @@ msgid "portable mode"
 msgstr ""
 
 #: src/mmex.cpp:2617
-#, fuzzy
 msgid "Choose database file to create"
-msgstr "Вкажіть файл данних QIF для імпорту"
+msgstr "Вибрати файл бази даних для створення"
 
 #: src/mmex.cpp:2640
-#, fuzzy
 msgid "Choose database file to open"
-msgstr "Вкажіть файл данних QIF для імпорту"
+msgstr "Вибрати файл бази даних, щоб відкрити"
 
 #: src/mmex.cpp:2655
 #, fuzzy
@@ -3092,52 +3072,51 @@ msgstr "Ефективність бюджету за Рік :"
 
 #: src/reportbudgetingperf.cpp:49
 msgid "Jan"
-msgstr ""
+msgstr "Січ"
 
 #: src/reportbudgetingperf.cpp:50
 msgid "Feb"
-msgstr ""
+msgstr "Лют"
 
 #: src/reportbudgetingperf.cpp:51
 msgid "Mar"
-msgstr ""
+msgstr "Бер"
 
 #: src/reportbudgetingperf.cpp:52
-#, fuzzy
 msgid "Apr"
-msgstr "Мистецтво"
+msgstr "Кві"
 
 #: src/reportbudgetingperf.cpp:53
 msgid "May"
-msgstr ""
+msgstr "Тра"
 
 #: src/reportbudgetingperf.cpp:54
 msgid "Jun"
-msgstr ""
+msgstr "Чер"
 
 #: src/reportbudgetingperf.cpp:55
 msgid "Jul"
-msgstr ""
+msgstr "Лип"
 
 #: src/reportbudgetingperf.cpp:56
 msgid "Aug"
-msgstr ""
+msgstr "Сер"
 
 #: src/reportbudgetingperf.cpp:57
 msgid "Sep"
-msgstr ""
+msgstr "Вер"
 
 #: src/reportbudgetingperf.cpp:58
 msgid "Oct"
-msgstr ""
+msgstr "Жов"
 
 #: src/reportbudgetingperf.cpp:59
 msgid "Nov"
-msgstr ""
+msgstr "Лис"
 
 #: src/reportbudgetingperf.cpp:60
 msgid "Dec"
-msgstr ""
+msgstr "Гру"
 
 #: src/reportbudgetingperf.cpp:61
 #: src/reportcategovertimeperf.cpp:190
@@ -3593,11 +3572,11 @@ msgstr "Поле CSV"
 
 #: src/univcsvdialog.cpp:337
 msgid "Unable to open file."
-msgstr ""
+msgstr "Не вдається відкрити файл."
 
 #: src/univcsvdialog.cpp:375
 msgid "Unable to write to file."
-msgstr ""
+msgstr "Неможливо записати у файл."
 
 #: src/univcsvdialog.cpp:398
 #: src/univcsvdialog.cpp:410
@@ -3606,13 +3585,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "Невірні поля вказано для CSV-імпорту ! Потрібно якнайменше дата, сума, та одержувач"
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr "Імпорт з CSV"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Виберість файл MM.NET CSV для імпорту"
 
@@ -3627,13 +3606,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr "Одне з наступних полів : дата, одержувач, сума, тип відсутнє, пропускаємо"
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr "Іморт успішний."
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3651,87 +3630,87 @@ msgstr ""
 "Імпортовані транзакції було відмічено, можете їх переглянути"
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "Імпорт з CSV"
 
 #: src/util.cpp:374
 msgid "January"
-msgstr ""
+msgstr "Січень"
 
 #: src/util.cpp:374
 msgid "February"
-msgstr ""
+msgstr "Лютий"
 
 #: src/util.cpp:374
 msgid "March"
-msgstr ""
+msgstr "Березень"
 
 #: src/util.cpp:374
 msgid "April"
-msgstr ""
+msgstr "Квітень"
+
+#: src/util.cpp:374
+msgid "May "
+msgstr "Червень"
 
 #: src/util.cpp:374
 msgid "June"
-msgstr ""
+msgstr "Травень"
 
 #: src/util.cpp:375
 msgid "July"
-msgstr ""
+msgstr "Липень"
 
 #: src/util.cpp:375
 msgid "August"
-msgstr ""
+msgstr "Серпень"
 
 #: src/util.cpp:375
 msgid "September"
-msgstr ""
+msgstr "Вересень"
 
 #: src/util.cpp:375
-#, fuzzy
 msgid "October"
-msgstr "Інше"
+msgstr "Жовтень"
 
 #: src/util.cpp:375
-#, fuzzy
 msgid "November"
-msgstr "Номер"
+msgstr "Листопад"
 
 #: src/util.cpp:375
 msgid "December"
-msgstr ""
+msgstr "Грудень"
 
 #: src/util.cpp:396
-#, fuzzy
 msgid "Sunday"
-msgstr "Підсумок"
+msgstr "Неділя"
 
 #: src/util.cpp:396
-#, fuzzy
 msgid "Monday"
-msgstr "Щомісячно"
+msgstr "Понеділок"
 
 #: src/util.cpp:396
 msgid "Tuesday"
-msgstr ""
+msgstr "Вівторок"
 
 #: src/util.cpp:396
 msgid "Wednesday"
-msgstr ""
+msgstr "Середа"
 
 #: src/util.cpp:397
 msgid "Thursday"
-msgstr ""
+msgstr "Четвер"
 
 #: src/util.cpp:397
 msgid "Friday"
-msgstr ""
+msgstr "П'ятниця"
 
 #: src/util.cpp:397
 msgid "Saturday"
-msgstr ""
+msgstr "Субота"
 
 #: src/util.cpp:423
 msgid "Entry "
@@ -3773,39 +3752,39 @@ msgstr "Імпорт з QIF"
 msgid "Choose QIF data file to Export"
 msgstr "Вкажіть файл данних QIF для імпорту"
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr " немає дати, пропускаємо."
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr " немає одержувача, пропускаємо."
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr " немає типу транзакції, пропускаємо."
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr " немає суми, пропускаємо."
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "одне з наступних полів: дата, одержувач, тип транзакції, сума пусте, пропускаємо"
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr " невідомий тип транзакції, пропускаємо."
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 #, fuzzy
 msgid " transfer transaction not imported."
 msgstr " транзакцій імпортовано з  QIF"
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3820,19 +3799,19 @@ msgstr ""
 "\n"
 "Імпортовані транзакції було відмічено, можете їх переглянути"
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Будь-ласка впевніться, що файл CSV з MMEX.NET містить лише один рахунок !"
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr " відсутня категорія, пропускаємо."
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr "Одне з наступних полів: дата, отриммувач, тип транзакції, кількість, назва категорії пусте, пропускаємо"
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr " невірна дата, пропускаємо."
 

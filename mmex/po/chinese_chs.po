@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 10:51+0300\n"
-"PO-Revision-Date: 2010-07-26 10:51+0300\n"
+"POT-Creation-Date: 2010-08-02 15:37+0300\n"
+"PO-Revision-Date: 2010-08-02 15:37+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software <Kyosuketam>\n"
 "MIME-Version: 1.0\n"
@@ -3446,13 +3446,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "不正确的 CSV 导入字段！至少需要 Date，Amount，Payee 三个字段。"
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr "由CSV导入"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "选择要导出的MM.NET CSV 文件"
 
@@ -3465,13 +3465,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr "下列字段之一： Date, Payee, Amount, Type is missing, skipping"
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr "导入成功"
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3489,9 +3489,9 @@ msgstr ""
 "导入的交易已被标记，以便您查看"
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "从CSV文件导入"
 
@@ -3510,6 +3510,10 @@ msgstr "三月"
 #: src/util.cpp:374
 msgid "April"
 msgstr "四月"
+
+#: src/util.cpp:374
+msgid "May "
+msgstr "五月"
 
 #: src/util.cpp:374
 msgid "June"
@@ -3605,38 +3609,38 @@ msgstr "QIF 导出"
 msgid "Choose QIF data file to Export"
 msgstr "选择QIF数据文件导出"
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr "缺少date字段，跳过。"
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr "缺少payee字段，跳过。"
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr "缺少transation type字段，跳过。"
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr "缺少amount字段，跳过。"
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "下列字段为空并跳过：date，payee，amount，type"
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr "不能辨别的交易类型，跳过。"
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 msgid " transfer transaction not imported."
 msgstr "转移交易未导入。"
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3652,19 +3656,19 @@ msgstr ""
 "\n"
 "导入的交易已被标记，以便您查看"
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "MMEX.NET上的CSV文件只有一个账户，请核查！"
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr "分类缺失，跳过"
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr "下列字段的某个为空：date, payee, transaction type, amount, category，跳过"
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr "日期错误，跳过"
 

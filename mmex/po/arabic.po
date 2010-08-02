@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 11:19+0300\n"
-"PO-Revision-Date: 2010-07-26 11:19+0300\n"
+"POT-Creation-Date: 2010-08-02 15:35+0300\n"
+"PO-Revision-Date: 2010-08-02 15:35+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: hasan almemar\n"
 "MIME-Version: 1.0\n"
@@ -3448,13 +3448,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr ""
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr "استيراد CSV"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "اختر ملفا بيانات MM.NET CSV ﻻستيراده"
 
@@ -3467,13 +3467,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr ""
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr "تم الاستيراد."
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3485,9 +3485,9 @@ msgid ""
 msgstr ""
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "استيراد من CSV"
 
@@ -3506,6 +3506,10 @@ msgstr "مارس"
 #: src/util.cpp:374
 msgid "April"
 msgstr "ابريل"
+
+#: src/util.cpp:374
+msgid "May "
+msgstr "مايو"
 
 #: src/util.cpp:374
 msgid "June"
@@ -3603,38 +3607,38 @@ msgstr "استيراد QIF"
 msgid "Choose QIF data file to Export"
 msgstr "اختيار ملفا بيانات QIF ﻻستيراده"
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr "بيانات مفقودة, تجاوز."
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr "المستفيد مفقود, تجاوز."
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr "نوع المعاملة مفقود, تجاوز."
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr "المبلغ مفقود, تجاوز."
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr ""
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr ""
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 msgid " transfer transaction not imported."
 msgstr "لم يتم استيراد معاملة الحوالة."
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3644,19 +3648,19 @@ msgid ""
 "Imported transactions have been flagged so you can review them."
 msgstr ""
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr ""
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr "الصنف مفقود, تجاوز."
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr "واحد من المجالات التالية : التاريخ ، المستفيد ونوع المعاملة ، المبلغ ، وسلاسل فئة فارغة ، تم تخطيه"
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr "بيانات غير صالحة, تجاوز."
 

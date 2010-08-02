@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 11:09+0300\n"
-"PO-Revision-Date: 2010-07-26 11:09+0300\n"
+"POT-Creation-Date: 2010-08-02 15:36+0300\n"
+"PO-Revision-Date: 2010-08-02 15:36+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -3454,13 +3454,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "Navedeno je napačno polje za CSV uvoz! Potrebni so vsaj datum, znesek in prejemnik..."
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr "CSV uvoz"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Izberi MM.NET CSV datoteko za uvoz"
 
@@ -3473,13 +3473,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr " Eno od sledečih polj: datum, prejemnik, znesek, tip manjka, preskočim"
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr " uvoženo OK."
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3497,9 +3497,9 @@ msgstr ""
 "Uvožene transakcije so označene da jih boste lahko preverili."
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "Uvoz iz CSV"
 
@@ -3518,6 +3518,10 @@ msgstr "Marec"
 #: src/util.cpp:374
 msgid "April"
 msgstr "April"
+
+#: src/util.cpp:374
+msgid "May "
+msgstr "Maj"
 
 #: src/util.cpp:374
 msgid "June"
@@ -3615,38 +3619,38 @@ msgstr "QIF Uvoz"
 msgid "Choose QIF data file to Export"
 msgstr "Izberite QIF datoteko za uvoz"
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr " manjka datum, preskočim."
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr " manjka prejemnik, preskočim."
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr " manjka tip transakcije, preskočim."
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr " manjka znesek, preskočim."
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "eno od naslednjih polj: datum, prejemnik, tip transakcije, znesek je prazno, preskočim."
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr " neznan tip transakcije, preskočim."
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 msgid " transfer transaction not imported."
 msgstr " transferne transakcije niso uvožene."
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3661,19 +3665,19 @@ msgstr ""
 "\n"
 "Uvožene transakcije so označene, da jih lahko preverite."
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Prosim preverite da je v CSV datoteki iz MMEX.NET samo en račun!"
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr " manjka kategorija, preskočim."
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr " Eno od naslednjih polj: datum, prejemnik, tip transakcije, znesek, kategorija je prazno, preskočim."
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr " napačen datum, preskočim."
 
