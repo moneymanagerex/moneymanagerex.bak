@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 12:04+0300\n"
-"PO-Revision-Date: 2010-07-26 12:04+0300\n"
+"POT-Creation-Date: 2010-08-02 12:13+0300\n"
+"PO-Revision-Date: 2010-08-02 12:14+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -3038,7 +3038,7 @@ msgstr "T.04"
 
 #: src/reportbudgetingperf.cpp:53
 msgid "May"
-msgstr "Tháng 5"
+msgstr "T.05"
 
 #: src/reportbudgetingperf.cpp:54
 msgid "Jun"
@@ -3532,13 +3532,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "Vùng được xác định cho việc nhập CSV không chính xác! Cần có ít nhất ngày, số tiền và người giao dịch"
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr "Nhập file CSV"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Chọn file dữ liệu CSV của MM.NET để nhập"
 
@@ -3551,13 +3551,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr " Bỏ qua vì thiếu một trong các dữ liệu sau: Ngày, Người giao dịch, Số tiền, Loại "
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr "đã nhập xong."
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3575,9 +3575,9 @@ msgstr ""
 "Các giao dịch được nhập được đánh dấu để bạn có thể xem xét sau."
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "Nhập từ CSV"
 
@@ -3596,6 +3596,10 @@ msgstr "Tháng 3"
 #: src/util.cpp:374
 msgid "April"
 msgstr "Tháng 4"
+
+#: src/util.cpp:374
+msgid "May "
+msgstr "Tháng 5"
 
 #: src/util.cpp:374
 msgid "June"
@@ -3693,38 +3697,38 @@ msgstr "Nhập file định dạng QIF"
 msgid "Choose QIF data file to Export"
 msgstr "Chọn file dữ liệu QIF để nhập thông tin"
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr " thiếu ngày, bỏ qua."
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr " thiếu người giao dịch, bỏ qua."
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr " thiếu loại giao dịch, bỏ qua."
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr " thiếu số tiền, bỏ qua."
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "một trong những vùng sau: ngày, người giao dịch, loại giao dịch, số tiền bị bỏ trống, bỏ qua"
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr " loại giao dịch không xác định, bỏ qua."
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 msgid " transfer transaction not imported."
 msgstr " giao dịch chuyển tiền không được nhập."
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3739,19 +3743,19 @@ msgstr ""
 "\n"
 "Các giao dịch được nhập đã được đánh dấu để bạn có thể xem xét."
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Kiểm tra xem file CSV từ MMEX.NET chỉ chứa một tài khoản!"
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr " thiếu danh mục, bỏ qua."
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr " Một trong các vùng: ngày, người giao dịch, loại giao dịch, số tiền, danh mục bị bỏ trống, bỏ qua"
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr " ngày không hợp lệ, bỏ qua."
 

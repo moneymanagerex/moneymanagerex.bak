@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 11:50+0300\n"
-"PO-Revision-Date: 2010-07-26 11:50+0300\n"
+"POT-Creation-Date: 2010-08-02 15:31+0300\n"
+"PO-Revision-Date: 2010-08-02 15:31+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software <Bergarath>\n"
 "MIME-Version: 1.0\n"
@@ -3521,13 +3521,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "Champs incorrects pour l'importation CSV! La date, le montant,et le tiers sont le minimum requis."
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr "Importer un fichier CSV"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Sélectionner un fichier MM.NET CSV à importer "
 
@@ -3540,13 +3540,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr " Un des champs suivants: Date, Tiers, Montant, Type est manquant, sauter."
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr " importé - OK "
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3564,9 +3564,9 @@ msgstr ""
 "Les opérations importées ont été marquées pour que vous puissiez les passer en revue.  "
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "Import from CSV"
 
@@ -3585,6 +3585,10 @@ msgstr "Mars"
 #: src/util.cpp:374
 msgid "April"
 msgstr "Avril"
+
+#: src/util.cpp:374
+msgid "May "
+msgstr "Mai"
 
 #: src/util.cpp:374
 msgid "June"
@@ -3682,38 +3686,38 @@ msgstr "Importer un fichier QIF"
 msgid "Choose QIF data file to Export"
 msgstr "Sélectionner le fichier QIF à importer "
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr "Date manquante, sauter."
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr "Tiers manquant, sauter."
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr "Type d'Opération manquante, sauter."
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr "Montant manquant, sauter."
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "un des champs suivants : date, tiers, type d'opération, montant est vide, sauter"
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr "Type d'Opération non reconnu, sauter."
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 msgid " transfer transaction not imported."
 msgstr " Opérations non importées."
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3728,19 +3732,19 @@ msgstr ""
 "\n"
 "Les opérations importées ont été marquées; ainsi vous pouvez les passer en revue."
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Veuillez vérifier que le fichier CSV de MMEX.NET ne contient qu'un seul compte!"
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr "Catégorie manquante, sauter."
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr " Un des champs suivants : Date, Tiers, Type d'opération, Montant, Catégorie est vide, sauter."
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr " date non valable, sauter."
 

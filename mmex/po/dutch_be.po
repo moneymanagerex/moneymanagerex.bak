@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 12:05+0300\n"
-"PO-Revision-Date: 2010-07-26 12:05+0300\n"
+"POT-Creation-Date: 2010-08-02 12:08+0300\n"
+"PO-Revision-Date: 2010-08-02 12:09+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -3521,13 +3521,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "Onjuiste velden opgegeven voor CSV import! Minimum datum, bedrag en begunstigde nodig."
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr "Importeer CSV"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Kies het MM.NET CSV bestand om te importeren"
 
@@ -3540,13 +3540,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr "Een v/d velden: datum,begunstigde,bedrag of type ontbreekt, overslaan"
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr "Import OK."
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3564,9 +3564,9 @@ msgstr ""
 "Geimporteerde transacties zijn gemerkt, zodat u ze kunt bekijken. "
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "Importeer uit CSV"
 
@@ -3585,6 +3585,10 @@ msgstr "Maart"
 #: src/util.cpp:374
 msgid "April"
 msgstr "April"
+
+#: src/util.cpp:374
+msgid "May "
+msgstr "Mei"
 
 #: src/util.cpp:374
 msgid "June"
@@ -3682,38 +3686,38 @@ msgstr "QIF import"
 msgid "Choose QIF data file to Export"
 msgstr "Kies het QIF data bestand om te importer"
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr " ontbreek datum, Overslaan."
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr " Ontbreek begunstigde, overslaan."
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr " Ontbreek transactie type, overslaan."
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr " Ontbreek bedrag, overslaan."
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "Eén v/d volgende velden: datum, begunstigde, transactie type, werd niet ingevuld, verslaan"
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr "Niet herkende transactie type, overslaan."
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 msgid " transfer transaction not imported."
 msgstr " Overdracht/transfer niet uitgevoerd."
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3728,19 +3732,19 @@ msgstr ""
 "\n"
 "Geimporteerde transacties zijn gemerkt, zodat u ze kunt bekijken. "
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Controleer a.u.b dat het CSV bestand v. MMEX.NET enkel één rekening bevat!"
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr " Categorie ontbreekt, overslaan. "
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr " Eén v/d velden: datum, begunstigde, Type transactie, bedrag, categorie-veld leeg, overslaan"
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr "Datum Fout, overslaan."
 

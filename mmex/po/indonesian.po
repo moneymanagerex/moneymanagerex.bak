@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 11:55+0300\n"
-"PO-Revision-Date: 2010-07-26 11:55+0300\n"
+"POT-Creation-Date: 2010-08-02 15:29+0300\n"
+"PO-Revision-Date: 2010-08-02 15:29+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -3531,13 +3531,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "Field untuk impor file CSV tidak benar ! Minimal dibutuhkan field tanggal, jumlah dan penerima/penyetor."
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr "Impor CSV"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Pilih file CSV MM.NET yang akan diimpor"
 
@@ -3550,13 +3550,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr "Salah satu dari field tanggal, pemberi/penerima, tipe transaksi, jumlah tidak ditemukan, dilewat"
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr "Telah di-Impor."
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3573,9 +3573,9 @@ msgstr ""
 "Transaksi yang di-impor diberi tanda khusus agar memudahkan dalam pemeriksaan."
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "Impor dari CSV"
 
@@ -3594,6 +3594,10 @@ msgstr "Maret"
 #: src/util.cpp:374
 msgid "April"
 msgstr "April"
+
+#: src/util.cpp:374
+msgid "May "
+msgstr "Mei"
 
 #: src/util.cpp:374
 msgid "June"
@@ -3691,38 +3695,38 @@ msgstr "Impor File QIF"
 msgid "Choose QIF data file to Export"
 msgstr "Pilih file QIF yang akan diimpor"
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr "tanggal tidak ditemukan, dilewat"
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr "Pemberi/penerima tidak ditemukan, dilewat"
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr "Tipe transaksi tidak ditemukan, dilewat"
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr "Jumlah tidak ditemukan, dilewat"
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "salah satu dari tanggal, pemberi/penerima, tipe transaksi, jumlah tidak diisi, dilewat"
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr "Transaksi tidak dikenal, dilewat"
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 msgid " transfer transaction not imported."
 msgstr "transaksi pemindahbukuan tidak di-impor"
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3737,19 +3741,19 @@ msgstr ""
 "\n"
 "Transaksi yang di-impor diberi tanda khusus agar memudahkan dalam pemeriksaan."
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Periksa kembali apakah file CSV MMEX.NET hanya memuat satu rekening saja"
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr "kategori tidak ada, dilewat"
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr "salah satu dari tanggal, pemberi/penerima, tipe transaksi, jumlah tidak diisi, dilewat"
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr "tanggal tidak benar, dilewat"
 

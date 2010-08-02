@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 11:56+0300\n"
-"PO-Revision-Date: 2010-07-26 11:56+0300\n"
+"POT-Creation-Date: 2010-08-02 15:23+0300\n"
+"PO-Revision-Date: 2010-08-02 15:23+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -3588,13 +3588,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "Feil felt angitt for CVS importering! Må minst ha dato, beløp og mottaker"
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr "CVS Import"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Velg MM.NET CVS fil som skal importeres"
 
@@ -3608,13 +3608,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr "Ett av feltene: dato, mottaker, beløp, type mangler, hopper over"
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr "Importering OK."
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3632,9 +3632,9 @@ msgstr ""
 "Importerte transaksjoner har blitt merktet så du kan gå igjenom dem."
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "Importer fra CVS"
 
@@ -3653,6 +3653,11 @@ msgstr ""
 #: src/util.cpp:374
 msgid "April"
 msgstr ""
+
+#: src/util.cpp:374
+#, fuzzy
+msgid "May "
+msgstr "Mottaker"
 
 #: src/util.cpp:374
 msgid "June"
@@ -3754,39 +3759,39 @@ msgstr "QIF import"
 msgid "Choose QIF data file to Export"
 msgstr "Velg en QIF fil for å importere"
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr "mangler dato, hopper over."
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr "mangler mottaker, hopper over."
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr "mangler transaksjonstype, hopper over."
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr "mangler beløp, hopper over."
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "Ett av feltene mangler: dato, mottaker, type, beløp  feltet er blankt, hopper over."
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr "Ukjent transaksjonstype, hopper over."
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 #, fuzzy
 msgid " transfer transaction not imported."
 msgstr "Transaksjoner importert fra QIF"
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3801,19 +3806,19 @@ msgstr ""
 "\n"
 "Importerte transaksjoner har blit merket slik at du kan se over dem."
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Vennligst sjekk at CVS filen fra MMEX.NET innheloder bare en konto!"
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr "mangler kategori, hopper over."
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr "Ett av følgende felt: dato, mottaker, transaksjonstype, beløp er blankt, hopper over."
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr "ugyldig dato, hopper over."
 

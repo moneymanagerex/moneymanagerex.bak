@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-26 11:57+0300\n"
-"PO-Revision-Date: 2010-07-26 11:57+0300\n"
+"POT-Creation-Date: 2010-08-02 15:22+0300\n"
+"PO-Revision-Date: 2010-08-02 15:22+0300\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: Portuguese/Portuguese <hugo.fatela@netcabo.pt>\n"
 "MIME-Version: 1.0\n"
@@ -3031,7 +3031,7 @@ msgstr "Abr"
 
 #: src/reportbudgetingperf.cpp:53
 msgid "May"
-msgstr "Maio"
+msgstr "Mai"
 
 #: src/reportbudgetingperf.cpp:54
 msgid "Jun"
@@ -3522,13 +3522,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "Campos CSV especificados para a importação estão incorrectos! Especifique pelo menos  a data, Montante e o Favorecido."
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:784
-#: src/util.cpp:1022
+#: src/util.cpp:785
+#: src/util.cpp:1023
 msgid "CSV Import"
 msgstr "Importar de CSV"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1031
+#: src/util.cpp:1032
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Escolha o ficheiro MM.NET CSV para importar"
 
@@ -3541,13 +3541,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr " Um destes tipos de campos: data, favorecido, montante ou tipo está em falta, ignorando."
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:981
-#: src/util.cpp:1199
+#: src/util.cpp:982
+#: src/util.cpp:1200
 msgid " imported OK."
 msgstr " importação OK."
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1202
+#: src/util.cpp:1203
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3565,9 +3565,9 @@ msgstr ""
 "As transacções importadas foram marcadas para que possa revê-las mais tarde."
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:986
-#: src/util.cpp:1001
-#: src/util.cpp:1203
+#: src/util.cpp:987
+#: src/util.cpp:1002
+#: src/util.cpp:1204
 msgid "Import from CSV"
 msgstr "Importar de CSV"
 
@@ -3586,6 +3586,10 @@ msgstr "Março"
 #: src/util.cpp:374
 msgid "April"
 msgstr "Abril"
+
+#: src/util.cpp:374
+msgid "May "
+msgstr "Maio"
 
 #: src/util.cpp:374
 msgid "June"
@@ -3683,38 +3687,38 @@ msgstr "Importar QIF"
 msgid "Choose QIF data file to Export"
 msgstr "Escolha o ficheiro QIF a importar"
 
-#: src/util.cpp:835
-#: src/util.cpp:1072
+#: src/util.cpp:836
+#: src/util.cpp:1073
 msgid " missing date, skipping."
 msgstr " data ausente,  ignorando."
 
-#: src/util.cpp:843
-#: src/util.cpp:1080
+#: src/util.cpp:844
+#: src/util.cpp:1081
 msgid " missing payee, skipping."
 msgstr " beneficiário ausente,  ignorando."
 
-#: src/util.cpp:851
+#: src/util.cpp:852
 msgid " missing transaction type, skipping."
 msgstr " tipo da transaccão ausente, ignorando."
 
-#: src/util.cpp:859
-#: src/util.cpp:1088
+#: src/util.cpp:860
+#: src/util.cpp:1089
 msgid " missing amount, skipping."
 msgstr " montante ausente, ignorando."
 
-#: src/util.cpp:881
+#: src/util.cpp:882
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "um destes campos: data, beneficiário, tipo da transacção ou montante está vazio, ignorando."
 
-#: src/util.cpp:887
+#: src/util.cpp:888
 msgid " unrecognized transaction type, skipping."
 msgstr " tipo da transacção não reconhecido, ignorando."
 
-#: src/util.cpp:911
+#: src/util.cpp:912
 msgid " transfer transaction not imported."
 msgstr " Transacção de Transferência não foi importada."
 
-#: src/util.cpp:984
+#: src/util.cpp:985
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -3729,19 +3733,19 @@ msgstr ""
 "\n"
 "As transacções importadas foram marcadas para que possa revê-las mais tarde."
 
-#: src/util.cpp:1000
+#: src/util.cpp:1001
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Por favor verifique que o ficheiro CSV do MMEX.NET contém apenas uma conta!"
 
-#: src/util.cpp:1102
+#: src/util.cpp:1103
 msgid " missing category, skipping."
 msgstr " categoria ausente, ignorando."
 
-#: src/util.cpp:1130
+#: src/util.cpp:1131
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr " Um destes campos: data, beneficiário, tipo de transacção, montante ou categoria está vazio, ignorando."
 
-#: src/util.cpp:1139
+#: src/util.cpp:1140
 msgid " invalid date, skipping."
 msgstr " data inválida, ignorando."
 
