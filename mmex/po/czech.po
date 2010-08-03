@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-02 11:43+0300\n"
-"PO-Revision-Date: 2010-08-02 11:48+0300\n"
+"POT-Creation-Date: 2010-08-03 10:23+0200\n"
+"PO-Revision-Date: 2010-08-03 10:25+0200\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: Geralt <geraltcz@centrum.cz>\n"
 "MIME-Version: 1.0\n"
@@ -2949,23 +2949,23 @@ msgstr "Úno"
 
 #: src/reportbudgetingperf.cpp:51
 msgid "Mar"
-msgstr "Březen"
+msgstr "Bře"
 
 #: src/reportbudgetingperf.cpp:52
 msgid "Apr"
-msgstr "Duben"
+msgstr "Dub"
 
 #: src/reportbudgetingperf.cpp:53
 msgid "May"
-msgstr "Květen"
+msgstr "Kvě"
 
 #: src/reportbudgetingperf.cpp:54
 msgid "Jun"
-msgstr "Červen"
+msgstr "Čen"
 
 #: src/reportbudgetingperf.cpp:55
 msgid "Jul"
-msgstr "Červenec"
+msgstr "Čec"
 
 #: src/reportbudgetingperf.cpp:56
 msgid "Aug"
