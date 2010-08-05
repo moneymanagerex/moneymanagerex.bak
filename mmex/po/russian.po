@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-01 13:41+0300\n"
-"PO-Revision-Date: 2010-08-01 13:43+0300\n"
+"PO-Revision-Date: 2010-08-05 10:13+0200\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: English\n"
-"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: src\n"
@@ -2287,7 +2287,7 @@ msgstr "Имя пользователя"
 
 #: src/mmex.cpp:3563
 msgid "(Optional)Specify your name. Mainly used for reporting and in printing reports.\n"
-msgstr "(Необязательно) Укажите свое имя. В основном будет использоваться в отчётов. \n"
+msgstr "(Необязательно) Укажите свое имя. В основном будет использоваться в отчётах.\n"
 
 #: src/mmex.cpp:3576
 msgid "Base Currency Not Set"
@@ -3409,11 +3409,11 @@ msgstr "Проводка №"
 
 #: src/univcsvdialog.cpp:267
 msgid "Don't Care"
-msgstr "Не важно"
+msgstr "Неважно"
 
 #: src/univcsvdialog.cpp:279
 msgid "Unknown"
-msgstr "Не известно"
+msgstr "Неизвестно"
 
 #: src/univcsvdialog.cpp:303
 msgid "Add CSV field"
@@ -3771,11 +3771,11 @@ msgstr "Импорт Universal CSV"
 
 #: src/yahoosettingsdialog.h:108
 msgid "Options"
-msgstr "Настройrки"
+msgstr "Настройки"
 
 #~ msgid "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle), Boost C++"
 #~ msgstr ""
-#~ "С использованием wxWidgets, SQLite, wxSQLite(by Ulrich Telle) , Boost C++"
+#~ "С использованием wxWidgets, SQLite, wxSQLite(by Ulrich Telle), Boost C++"
 #~ msgid "Years to Forecast:"
 #~ msgstr "Кол-во лет для прогноза:"
 #~ msgid "1"
@@ -3919,7 +3919,7 @@ msgstr "Настройrки"
 #~ msgid "Repeating Transactions-menu"
 #~ msgstr "Планирование"
 #~ msgid "Select From Account"
-#~ msgstr "Из счёта"
+#~ msgstr "Со счёта"
 #~ msgid "Web Page"
 #~ msgstr "Web-страница"
 #~ msgid "Invalid current price entered "
