@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-02 12:15+0300\n"
-"PO-Revision-Date: 2010-08-02 15:16+0300\n"
+"PO-Revision-Date: 2010-08-04 09:34+0200\n"
 "Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "Історія версій"
 
 #: src/aboutdialog.cpp:176
 msgid "Contributors"
-msgstr ""
+msgstr "Учасники"
 
 #: src/aboutdialog.cpp:183
 msgid "Using Language : "
@@ -162,7 +162,7 @@ msgstr "Дорогоцінності"
 
 #: src/assetdialog.cpp:226
 msgid "Cash"
-msgstr ""
+msgstr "Гроші"
 
 #: src/assetdialog.cpp:227
 msgid "Other"
@@ -425,7 +425,7 @@ msgstr "Чотири тижні"
 
 #: src/billsdepositsdialog.cpp:315
 msgid "Daily"
-msgstr ""
+msgstr "Щодня"
 
 #: src/billsdepositsdialog.cpp:324
 msgid "Times Repeated"
@@ -532,7 +532,7 @@ msgstr "Вкажіть категорію для цієї транзакції"
 
 #: src/billsdepositsdialog.cpp:433
 msgid "Split"
-msgstr ""
+msgstr "Розділити"
 
 #: src/billsdepositsdialog.cpp:439
 msgid "Status"
@@ -1712,7 +1712,7 @@ msgstr "Эфективність бюджетування"
 #: src/mmex.cpp:1064
 #: src/mmex.cpp:2919
 msgid "Cash Flow"
-msgstr ""
+msgstr "Грошовий потік"
 
 #: src/mmex.cpp:1068
 #, fuzzy
@@ -1947,7 +1947,7 @@ msgstr ""
 
 #: src/mmex.cpp:2248
 msgid "&Navigation"
-msgstr ""
+msgstr "&Навігація"
 
 #: src/mmex.cpp:2248
 msgid "Show/Hide the Navigation tree control"
@@ -2192,7 +2192,7 @@ msgstr "Відкриття файла бази даних та перевірк�
 
 #: src/mmex.cpp:2568
 msgid "portable mode"
-msgstr ""
+msgstr "портативний режим"
 
 #: src/mmex.cpp:2617
 msgid "Choose database file to create"
@@ -2251,7 +2251,7 @@ msgstr "Виберіть рахунок для редагування"
 #: src/mmex.cpp:2977
 #: src/mmex.cpp:3066
 msgid "Unable to connect!"
-msgstr ""
+msgstr "Не вдається підключитися!"
 
 #: src/mmex.cpp:2977
 #: src/mmex.cpp:3035
@@ -2270,9 +2270,8 @@ msgid "You have the latest version installed!"
 msgstr ""
 
 #: src/mmex.cpp:3057
-#, fuzzy
 msgid "No database!"
-msgstr "Майстер Нової Бази Даних"
+msgstr "Немає даних!"
 
 #: src/mmex.cpp:3057
 #: src/mmex.cpp:3066
@@ -2379,9 +2378,8 @@ msgstr ""
 "що асоційована з кожним рахунком при необхідності.\n"
 
 #: src/mmex.cpp:3553
-#, fuzzy
 msgid "User Name"
-msgstr "Назва"
+msgstr "Ім'я користувача"
 
 #: src/mmex.cpp:3563
 msgid "(Optional)Specify your name. Mainly used for reporting and in printing reports.\n"
@@ -2468,7 +2466,6 @@ msgid "Expenses"
 msgstr "Витрати"
 
 #: src/mmhelppanel.cpp:81
-#, fuzzy
 msgid " Help"
 msgstr "Допомога"
 
@@ -2493,7 +2490,6 @@ msgid "Currency"
 msgstr "Валюта"
 
 #: src/mmhomepagepanel.cpp:284
-#, fuzzy
 msgid "Total of Accounts:"
 msgstr "Всього по рахункам:"
 
@@ -2502,23 +2498,20 @@ msgid "Income vs Expenses: Current Month"
 msgstr "Дохід проти Витрат: Поточний місяць"
 
 #: src/mmhomepagepanel.cpp:448
-#, fuzzy
 msgid "Upcoming Transactions"
-msgstr "Показуються всі транзакції"
+msgstr "Майбутні проводки"
 
 #: src/mmhomepagepanel.cpp:511
 msgid "Follow Up On "
 msgstr "Заплановано на "
 
 #: src/mmhomepagepanel.cpp:515
-#, fuzzy
 msgid "Transactions"
-msgstr "Список транзакцій"
+msgstr "Проведення"
 
 #: src/mmhomepagepanel.cpp:520
-#, fuzzy
 msgid "Total Transactions"
-msgstr "Редагувати транзакцію"
+msgstr "Проводок за все"
 
 #: src/mmreportspanel.cpp:80
 msgid "REPORTS"
@@ -2641,9 +2634,8 @@ msgid "Init Balance "
 msgstr "Початковий баланс"
 
 #: src/optionsdialog.cpp:267
-#, fuzzy
 msgid " : Restart"
-msgstr "Статус"
+msgstr ""
 
 #: src/optionsdialog.cpp:341
 msgid "General Settings"
@@ -2688,7 +2680,7 @@ msgstr "Вкажіть розділяючий символ що буде вик�
 
 #: src/optionsdialog.cpp:434
 msgid "Display"
-msgstr ""
+msgstr "Вияв"
 
 #: src/optionsdialog.cpp:447
 #, fuzzy
@@ -2733,24 +2725,24 @@ msgstr "як Непроведену"
 
 #: src/optionsdialog.cpp:523
 msgid "View Today"
-msgstr ""
+msgstr "Показати сьогодні"
 
 #: src/optionsdialog.cpp:524
 msgid "View 30 days"
-msgstr ""
+msgstr "Показати 30 днів"
 
 #: src/optionsdialog.cpp:525
 msgid "View 90 days"
-msgstr ""
+msgstr "Показати 90 днів"
 
 #: src/optionsdialog.cpp:526
 msgid "View Last Month"
-msgstr ""
+msgstr "Показати минулий місяць"
 
 #: src/optionsdialog.cpp:527
 #, fuzzy
 msgid "View Current Month"
-msgstr "Поточний місяць"
+msgstr "Показати поточний місяць"
 
 #: src/optionsdialog.cpp:555
 #, fuzzy
@@ -3052,14 +3044,12 @@ msgid " type "
 msgstr "Тип"
 
 #: src/qifimport.cpp:680
-#, fuzzy
 msgid " amount "
-msgstr "Сума"
+msgstr " сума"
 
 #: src/qifimport.cpp:680
-#, fuzzy
 msgid " date "
-msgstr "Оновити"
+msgstr " дата"
 
 #: src/qifimport.cpp:709
 msgid " transactions imported from QIF"
@@ -3122,11 +3112,11 @@ msgstr "Гру"
 #: src/reportcategovertimeperf.cpp:190
 #: src/reportcategovertimeperf.cpp:272
 msgid "Overall"
-msgstr ""
+msgstr "Cумарно"
 
 #: src/reportbudgetingperf.cpp:62
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/reportbudgetsetup.cpp:24
 #, fuzzy
@@ -3173,7 +3163,7 @@ msgstr "Витрати"
 
 #: src/reportincexpenses.cpp:96
 msgid "Difference:"
-msgstr ""
+msgstr "Баланс:"
 
 #: src/reportincexpesestime.cpp:25
 #, fuzzy
@@ -3187,7 +3177,7 @@ msgstr "Місяць"
 
 #: src/reportincexpesestime.cpp:43
 msgid "Difference"
-msgstr ""
+msgstr "Баланс"
 
 #: src/reportsummary.cpp:124
 #, fuzzy
