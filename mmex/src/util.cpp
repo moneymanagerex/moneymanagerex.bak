@@ -371,7 +371,7 @@ wxString mmUnCleanString( const wxString& orig )
 wxString mmGetNiceMonthName( int month )
 {
         static const wxString mon[12] = {
-                _( "January" ), _( "February" ), _( "March" ), _( "April" ), _( "May" ), _( "June" ),
+                _( "January" ), _( "February" ), _( "March" ), _( "April" ), _( "May " ), _( "June" ),
                 _( "July" ), _( "August" ), _( "September" ), _( "October" ), _( "November" ), _( "December" )
         };
 
