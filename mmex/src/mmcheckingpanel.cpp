@@ -1240,6 +1240,9 @@ void MyListCtrl::OnMarkTransaction(wxCommandEvent& event)
      }
       
     OnMarkTransactionDB(status);
+    SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+	SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+
 }
 //----------------------------------------------------------------------------
 
@@ -1269,13 +1272,16 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
         m_cp->m_trans[i]->status_ = status;
      }
 
-     if (m_cp->m_currentView != wxT("View All Transactions"))
+//     if (m_cp->m_currentView != wxT("View All Transactions"))
      {
          DeleteAllItems();
          m_cp->initVirtualListControl();
          RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
      }
      m_cp->setAccountSummary();
+     SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+     SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+
 }
 //----------------------------------------------------------------------------
 
@@ -1483,11 +1489,13 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 
 void MyListCtrl::OnListKeyDown(wxListEvent& event)
 {
-	if (!wxGetKeyState(WXK_COMMAND) && !wxGetKeyState(WXK_ALT))
+	if (!wxGetKeyState(WXK_COMMAND) && !wxGetKeyState(WXK_ALT) && !wxGetKeyState(WXK_CONTROL))
 	{
   switch ( event.GetKeyCode() )
     {
         case WXK_DELETE:
+        case WXK_NUMPAD_DELETE:
+
             {
                 wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
                 OnDeleteTransaction(evt);
