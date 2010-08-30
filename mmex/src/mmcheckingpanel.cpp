@@ -679,16 +679,21 @@ void mmCheckingPanel::CreateControls()
     itemPanel12->SetBackgroundColour(mmColors::listDetailsPanelColor);
 
     itemSplitterWindow10->SplitHorizontally(m_listCtrlAccount, itemPanel12);
-    itemSplitterWindow10->SetMinimumPaneSize(itemPanel12->GetSize().GetHeight());
+//    itemSplitterWindow10->SetMinimumPaneSize(itemPanel12->GetSize().GetHeight());
+	itemSplitterWindow10->SetMinimumPaneSize(100);
     itemSplitterWindow10->SetSashGravity(1.0);
 
     itemBoxSizer9->Add(itemSplitterWindow10, 1, wxGROW|wxALL, 1);
 
+	wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
+    itemPanel12->SetSizer(itemBoxSizer4);
+    itemPanel12->SetBackgroundColour(mmColors::listDetailsPanelColor);
+
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemPanel12->SetSizer(itemBoxSizer5);
+    itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxSizerFlags flags;
-    flags.Center().Border().Expand().Proportion(1);
+    flags.Border();
 
     wxButton* itemButton6 = new wxButton(itemPanel12, ID_BUTTON_NEW_TRANS, _("&New"));
     itemButton6->SetToolTip(_("New Transaction"));
@@ -714,6 +719,11 @@ void mmCheckingPanel::CreateControls()
     itemButton8->SetForegroundColour(wxColour(wxT("ORANGE"))); // FIREBRICK
     itemBoxSizer5->Add(itemButton8, flags);
     itemButton8->Enable(false);
+
+    wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12, 
+    ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
+    itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
+
 }
 //----------------------------------------------------------------------------
 
@@ -728,7 +738,23 @@ void mmCheckingPanel::enableEditDeleteButtons(bool en)
 
 void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
-        enableEditDeleteButtons(selIndex >= 0);
+    // Get the items we need to change
+	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);	
+	wxString text;
+	if (selIndex!=-1)
+	{
+		enableEditDeleteButtons(true);
+		//wxString notes = getItem(selIndex, 4); // Category:Subcategory 
+		//notes = notes + wxT("\n");
+		wxString notes = getItem(selIndex, 8); //Notes 
+		text = notes;
+	}
+	else
+	{
+		enableEditDeleteButtons(false);
+		text = wxT("");
+	}
+    st->SetLabel(text);
 }
 //----------------------------------------------------------------------------
 
