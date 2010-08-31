@@ -699,8 +699,8 @@ void mmCheckingPanel::CreateControls()
     itemButton6->SetToolTip(_("New Transaction"));
 
     wxFont fnt = itemButton6->GetFont();
-    fnt.SetWeight(wxFONTWEIGHT_BOLD);
-    fnt.SetPointSize(fnt.GetPointSize()*3/2);
+    fnt.SetWeight(wxFONTWEIGHT_NORMAL);
+    fnt.SetPointSize(fnt.GetPointSize());
 
     itemButton6->SetFont(fnt);
     itemButton6->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
@@ -744,9 +744,9 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 	if (selIndex!=-1)
 	{
 		enableEditDeleteButtons(true);
-		//wxString notes = getItem(selIndex, 4); // Category:Subcategory 
+		//wxString notes = getItem(selIndex, COL_CATEGORY); // Category:Subcategory 
 		//notes = notes + wxT("\n");
-		wxString notes = getItem(selIndex, 8); //Notes 
+		wxString notes = getItem(selIndex, COL_NOTES); //Notes 
 		text = notes;
 	}
 	else
