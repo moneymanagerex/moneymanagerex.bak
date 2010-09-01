@@ -186,22 +186,29 @@ void mmAssetsPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxButton* itemButton6 = new wxButton( itemPanel12, IDC_BUTTON_NEW_ASSET, _("&New"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemButton6->SetToolTip(_("New Asset"));
-    itemBoxSizer5->Add(itemButton6, 0, wxGROW|wxALL, 1);
+    wxSizerFlags flags;
+    flags.Border();
 
-    wxButton* itemButton81 = new wxButton( itemPanel12, IDC_BUTTON_EDIT_ASSET, _("&Edit"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton6 = new wxButton( itemPanel12, IDC_BUTTON_NEW_ASSET, _("&New"));
+    itemButton6->SetToolTip(_("New Asset"));
+    wxFont fnt = itemButton6->GetFont();
+    itemButton6->SetFont(fnt);
+    itemButton6->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
+    itemBoxSizer5->Add(itemButton6, flags);
+
+    wxButton* itemButton81 = new wxButton( itemPanel12, IDC_BUTTON_EDIT_ASSET, _("&Edit"));
     itemButton81->SetToolTip(_("Edit Asset"));
-    itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemButton81->SetFont(fnt);
+    itemButton81->SetForegroundColour(wxColour(wxT("SALMON")));
+    itemBoxSizer5->Add(itemButton81, flags);
 	itemButton81->Enable(false);
 	
-    wxButton* itemButton7 = new wxButton( itemPanel12, IDC_BUTTON_DELETE_ASSET, _("&Delete"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton7 = new wxButton( itemPanel12, IDC_BUTTON_DELETE_ASSET, _("&Delete"));
     itemButton7->SetToolTip(_("Delete Asset"));
-    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-	itemButton7->Enable(false);
+    itemButton7->SetFont(fnt);
+    itemButton7->SetForegroundColour(wxColour(wxT("ORANGE"))); // FIREBRICK
+    itemBoxSizer5->Add(itemButton7, flags);
+    itemButton7->Enable(false);
 }
 
 void mmAssetsPanel::initVirtualListControl()
