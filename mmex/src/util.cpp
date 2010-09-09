@@ -798,7 +798,7 @@ int mmImportCSV( mmCoreDB* core )
 
                         wxFileName logFile = mmex::GetLogDir( true );
                         logFile.SetFullName( fileName );
-                        logFile.SetExt( wxT( ".txt" ) );
+                        logFile.SetExt( wxT( "txt" ) );
 
                         wxFileOutputStream outputLog( logFile.GetFullPath() );
                         wxTextOutputStream log( outputLog );
