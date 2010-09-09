@@ -39,6 +39,14 @@ enum {
   MENU_TREEPOPUP_EDIT,
   MENU_TREEPOPUP_DELETE
 };
+enum EColumn
+{ 
+    COL_NAME, 
+    COL_TYPE, 
+    COL_VALUE,
+    COL_NOTES,
+    COL_MAX, // number of columns
+};
 
 } // namespace
 
@@ -147,30 +155,36 @@ void mmAssetsPanel::CreateControls()
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     m_listCtrlAssets->SetBackgroundColour(mmColors::listBackColor);
     m_listCtrlAssets->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
-    m_listCtrlAssets->InsertColumn(0, _("Name"));
+    m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"));
     wxListItem itemCol;
     itemCol.SetImage(-1);
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     itemCol.SetText(_("Type"));
-    m_listCtrlAssets->InsertColumn(1, itemCol);
+    m_listCtrlAssets->InsertColumn(COL_TYPE, itemCol);
 	
     itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
     itemCol.SetText(_("Value"));
-    
-    m_listCtrlAssets->InsertColumn(2, itemCol);
+    m_listCtrlAssets->InsertColumn(COL_VALUE, itemCol);
+
+    itemCol.SetAlign(wxLIST_FORMAT_LEFT);
+    itemCol.SetText(_("Notes"));
+    m_listCtrlAssets->InsertColumn(COL_NOTES, itemCol);
 
     /* See if we can get data from inidb */
-     long col0, col1, col2;
+     long col0, col1, col2, col3;
      mmDBWrapper::getINISettingValue(m_inidb, 
         wxT("ASSETS_COL0_WIDTH"), wxT("150")).ToLong(&col0); 
      mmDBWrapper::getINISettingValue(m_inidb, 
          wxT("ASSETS_COL1_WIDTH"), wxT("-2")).ToLong(&col1); 
      mmDBWrapper::getINISettingValue(m_inidb, 
          wxT("ASSETS_COL2_WIDTH"), wxT("-2")).ToLong(&col2); 
+     mmDBWrapper::getINISettingValue(m_inidb, 
+         wxT("ASSETS_COL3_WIDTH"), wxT("450")).ToLong(&col3); 
      
-    m_listCtrlAssets->SetColumnWidth(0, col0);
-    m_listCtrlAssets->SetColumnWidth(1, col1);
-    m_listCtrlAssets->SetColumnWidth(2, col2);
+    m_listCtrlAssets->SetColumnWidth(COL_NAME, col0);
+    m_listCtrlAssets->SetColumnWidth(COL_TYPE, col1);
+    m_listCtrlAssets->SetColumnWidth(COL_VALUE, col2);
+    m_listCtrlAssets->SetColumnWidth(COL_NOTES, col3);
     
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
 
@@ -229,7 +243,8 @@ void mmAssetsPanel::initVirtualListControl()
     static const char sql[] = 
     "select ASSETID, "
            "ASSETNAME, "
-           "ASSETTYPE "
+           "ASSETTYPE, "
+           "NOTES "
     "from ASSETS_V1";
 
     wxSQLite3ResultSet q1 = m_db->ExecuteQuery(sql);
@@ -245,6 +260,9 @@ void mmAssetsPanel::initVirtualListControl()
 
         wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
         th.assetType_ =  wxGetTranslation(assetTypeStr); // string should be marked for translation
+
+//        wxString assetNotes = q1.GetString(wxT("NOTES"));
+        th.assetNotes_ = q1.GetString(wxT("NOTES"));
 
         mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
         m_trans.push_back(th);
@@ -285,14 +303,17 @@ void assetsListCtrl::OnItemRightClick(wxListEvent& event)
 
 wxString mmAssetsPanel::getItem(long item, long column)
 {
-    if (column == 0)
+    if (column == COL_NAME)
         return m_trans[item].assetName_;
 
-    if (column == 1)
+    if (column == COL_TYPE)
         return m_trans[item].assetType_;
 
-    if (column == 2)
+    if (column == COL_VALUE)
         return m_trans[item].valueStr_;
+
+    if (column == COL_NOTES)
+        return m_trans[item].assetNotes_;
 
     return wxGetEmptyString();
 }

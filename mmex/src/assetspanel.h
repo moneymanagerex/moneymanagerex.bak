@@ -76,6 +76,7 @@ public:
     wxString assetName_;
     wxString assetType_;
     wxString valueStr_;
+    wxString assetNotes_;
 
     double value_;
 };
