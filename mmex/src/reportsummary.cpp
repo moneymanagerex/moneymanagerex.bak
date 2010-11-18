@@ -34,90 +34,127 @@ mmReportSummary::mmReportSummary(mmCoreDB* core) :
 
 wxString mmReportSummary::getHTMLText()
 {
-        mmHTMLBuilder hb;
-        hb.init();
-        hb.addHeader(3, _("Summary of Accounts"));
+    mmHTMLBuilder hb;
+    hb.init();
+    hb.addHeader(3, _("Summary of Accounts"));
 
-        wxDateTime now = wxDateTime::Now();
-        wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
-        hb.addHeader(7, dt);
-        hb.addLineBreak();
-        hb.addLineBreak();
-        hb.addLineBreak();
+    wxDateTime now = wxDateTime::Now();
+    wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
+    hb.addHeader(7, dt);
+    hb.addLineBreak();
+    hb.addLineBreak();
+    hb.addLineBreak();
 
-        double tBalance = 0.0;
+    double tBalance = 0.0;
 
-		hb.startCenter();
+    hb.startCenter();
 
-		hb.startTable(wxT("50%"));
-		hb.startTableRow();
-		hb.addTableHeaderCell(_("Account Name"));
-		hb.addTableHeaderCell(_("Balance"));
-		hb.endTableRow();
+    hb.startTable(wxT("50%"));
+    hb.startTableRow();
+    hb.addTableHeaderCell(_("Account Name"));
+    hb.addTableHeaderCell(_("Balance"));
+    hb.endTableRow();
 
-        for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
+    /* Checking */
+    for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
+    {
+        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
+        if (pCA && pCA->status_== mmAccount::MMEX_Open)
         {
-           mmCheckingAccount* pCA 
-              = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
-           if (pCA && pCA->status_== mmAccount::MMEX_Open)
-           {
-              double bal = pCA->initialBalance_ 
-                  + core_->bTransactionList_.getBalance(pCA->accountID_);
+            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_);
               
-              boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
-              wxASSERT(pCurrencyPtr);
-              mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-              double rate = pCurrencyPtr->baseConv_;
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
+            wxASSERT(pCurrencyPtr);
+            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+            double rate = pCurrencyPtr->baseConv_;
 
-              tBalance += bal * rate;;
+            tBalance += bal * rate;;
 
-              wxString balance;
-              mmex::formatDoubleToCurrency(bal, balance);
+            wxString balance;
+            mmex::formatDoubleToCurrency(bal, balance);
 
-			  hb.startTableRow();
-			  hb.addTableCell(pCA->accountName_, false, true);
-			  hb.addTableCell(balance, true);
-			  hb.endTableRow();
-           }
+		    hb.startTableRow();
+		    hb.addTableCell(pCA->accountName_, false, true);
+		    hb.addTableCell(balance, true);
+		    hb.endTableRow();
         }
+    }
 
-        // all sums below will be in base currency!
-        mmDBWrapper::loadBaseCurrencySettings(db_);
+    // all sums below will be in base currency!
+    mmDBWrapper::loadBaseCurrencySettings(db_);
 
-        wxString tBalanceStr;
+    wxString tBalanceStr;
 	mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
-	hb.startTableRow();
-	hb.addTotalRow(_("Total:"), 2, tBalanceStr);
+    hb.startTableRow();
+	hb.addTotalRow(_("Bank Accounts Total:"), 2, tBalanceStr);
 	hb.endTableRow();
 
 	hb.addRowSeparator(2);
 
-        /* Stocks */
-        double invested;
-        double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);
-        wxString stockBalanceStr;
-        mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
-        wxString dispStr =  + stockBalanceStr; 
+    /* Terms */
+    double tTBalance = 0.0;
+
+    for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
+    {
+        mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(core_->accountList_.accounts_[iAdx].get());
+        if (pTA && pTA->status_== mmAccount::MMEX_Open)
+        {
+            double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_);
+              
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pTA->accountID_).lock();
+            wxASSERT(pCurrencyPtr);
+            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+            double rate = pCurrencyPtr->baseConv_;
+
+            tTBalance += bal * rate;;
+
+            wxString balance;
+            mmex::formatDoubleToCurrency(bal, balance);
+
+		    hb.startTableRow();
+		    hb.addTableCell(pTA->accountName_, false, true);
+		    hb.addTableCell(balance, true);
+		    hb.endTableRow();
+        }
+    }
+
+    wxString tTBalanceStr;
+	mmex::formatDoubleToCurrency(tTBalance, tTBalanceStr);
+
+	hb.startTableRow();
+	hb.addTotalRow(_("Term Accounts Total:"), 2, tTBalanceStr);
+	hb.endTableRow();
+
+	hb.addRowSeparator(2);
+
+    tBalance += tTBalance;
+
+    /* Stocks */
+    double invested;
+    double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);
+    wxString stockBalanceStr;
+    mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
+    wxString dispStr =  + stockBalanceStr; 
 
 	hb.startTableRow();
 	hb.addTableCell(_("Stock Investments"));
 	hb.addTableCell(stockBalanceStr, true);
 	hb.endTableRow();
 
-        /* Assets */
-        double assetBalance = mmDBWrapper::getAssetBalance(db_);
-        wxString assetBalanceStr;
-        mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
+    /* Assets */
+    double assetBalance = mmDBWrapper::getAssetBalance(db_);
+    wxString assetBalanceStr;
+    mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
 	hb.startTableRow();
 	hb.addTableCell(_("Assets"));
 	hb.addTableCell(assetBalanceStr, true);
 	hb.endTableRow();
 
-        tBalance += stockBalance;
-        tBalance += assetBalance;
-        mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
+    tBalance += stockBalance;
+    tBalance += assetBalance;
+    mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
 	hb.addRowSeparator(2);
 
@@ -126,7 +163,7 @@ wxString mmReportSummary::getHTMLText()
 
 	hb.endCenter();
 
-        hb.end();
+    hb.end();
 
-        return hb.getHTMLText();
+    return hb.getHTMLText();
 }

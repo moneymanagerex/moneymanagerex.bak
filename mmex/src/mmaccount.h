@@ -69,9 +69,8 @@ public:
 class mmCheckingAccount : public mmAccount
 {
 public: 
-    mmCheckingAccount(boost::shared_ptr<wxSQLite3Database> db, 
-        wxSQLite3ResultSet& q1);
-    mmCheckingAccount(boost::shared_ptr<wxSQLite3Database> db)  : mmAccount(db) { }
+    mmCheckingAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1);
+    mmCheckingAccount(boost::shared_ptr<wxSQLite3Database> db) : mmAccount(db) { }
     
     virtual ~mmCheckingAccount() {}
 
@@ -91,6 +90,17 @@ public:
    double balance();
 };
 
+class mmTermAccount : public mmAccount
+{
+public: 
+    mmTermAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1);
+    mmTermAccount(boost::shared_ptr<wxSQLite3Database> db) : mmAccount(db) { }
+    
+    virtual ~mmTermAccount() {}
+    
+public:
+    double balance();
+};
 
 class mmAccountList
 {

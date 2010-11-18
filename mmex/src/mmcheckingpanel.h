@@ -124,6 +124,7 @@ private:
     void OnNewTransaction(wxCommandEvent& event);
     void OnDeleteTransaction(wxCommandEvent& event);
     void OnEditTransaction(wxCommandEvent& event);
+    void OnMoveTransaction(wxCommandEvent& event);
     void OnMouseLeftDown( wxMouseEvent& event );
     void OnViewPopupSelected(wxCommandEvent& event);
 

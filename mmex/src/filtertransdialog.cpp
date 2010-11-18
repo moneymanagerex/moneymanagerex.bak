@@ -202,7 +202,7 @@ void mmFilterTransactionsDialog::CreateControls()
     static const char sql[] = 
     "select ACCOUNTNAME "
     "from ACCOUNTLIST_V1 "
-    "where ACCOUNTTYPE = 'Checking' "
+   	"where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
     "order by ACCOUNTNAME";
 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);

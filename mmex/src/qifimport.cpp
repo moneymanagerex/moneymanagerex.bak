@@ -226,7 +226,7 @@ namespace
 const char g_AccountNameSQL[] = 
     "select ACCOUNTNAME "
     "from ACCOUNTLIST_V1 "
-    "where ACCOUNTTYPE='Checking' "
+    "where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
     "order by ACCOUNTNAME";
 };
 enum qifAccountInfoType 

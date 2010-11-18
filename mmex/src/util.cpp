@@ -36,7 +36,7 @@ namespace
 const char g_AccountNameSQL[] =
 "select ACCOUNTNAME "
 "from ACCOUNTLIST_V1 "
-"where ACCOUNTTYPE = 'Checking' "
+"where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
 "order by ACCOUNTNAME";
 
 //----------------------------------------------------------------------------
@@ -398,8 +398,28 @@ wxString mmGetNiceDateString( const wxDateTime &dt )
         };
 
         wxString dts( gDaysInWeek[dt.GetWeekDay()] + wxString( wxT( ", " ) ) );
-        dts += mmGetNiceMonthName( dt.GetMonth() ) + wxString( wxT( " " ) );
-        dts += wxString::Format( wxT( "%d" ), dt.GetDay() ) + wxT( ", " ) + wxString::Format( wxT( "%d" ), dt.GetYear() );
+
+//      Discover the date format set by the user
+        wxString dateFmt = mmOptions::dateFormat.Mid(1,1).MakeUpper();
+
+//      Format date as: DDD, DD MMM YYYY
+        if ( dateFmt == wxT("D")) {
+            dts += wxString::Format( wxT( "%d" ), dt.GetDay() ) + wxString( wxT( " " ) );
+            dts += mmGetNiceMonthName( dt.GetMonth() ) + wxT( " " );
+            dts += wxString::Format( wxT( "%d" ), dt.GetYear() );
+
+//      Format date as: DDD, YYYY MMM DD
+        } else if ( dateFmt == wxT("Y")) {
+            dts += wxString::Format( wxT( "%d" ), dt.GetYear() ) + wxString( wxT( " " ) );
+            dts += mmGetNiceMonthName( dt.GetMonth() ) + wxT( " " );
+            dts += wxString::Format( wxT( "%d" ), dt.GetDay() );
+
+//      Format date as: DDD, MMM DD, YYYY
+        } else {
+            dts += mmGetNiceMonthName( dt.GetMonth() ) + wxString( wxT( " " ) );
+            dts += wxString::Format( wxT( "%d" ), dt.GetDay() ) + wxT( ", " )
+                 + wxString::Format( wxT( "%d" ), dt.GetYear() );
+        }
 
         return dts;
 }
@@ -407,8 +427,27 @@ wxString mmGetNiceDateString( const wxDateTime &dt )
 wxString mmGetNiceDateSimpleString( const wxDateTime &dt )
 {
         wxString dts = mmGetNiceMonthName( dt.GetMonth() ) + wxString( wxT( " " ) );
-        dts += wxString::Format( wxT( "%d" ), dt.GetDay() ) + wxT( ", " )
-               + wxString::Format( wxT( "%d" ), dt.GetYear() );
+
+//      Discover the date format set by the user
+        wxString dateFmt = mmOptions::dateFormat.Mid(1,1).MakeUpper();
+//      Format date as: DD MMM YYYY
+        if ( dateFmt == wxT("D")) {
+            dts = wxString::Format( wxT( "%d" ), dt.GetDay() ) + wxString( wxT( " " ) )
+            + dts
+            + wxString::Format( wxT( "%d" ), dt.GetYear() );
+
+//      Format date as: YYYY MMM DD
+        } else if ( dateFmt == wxT("Y")) {
+            dts = wxString::Format( wxT( "%d" ), dt.GetYear() ) + wxString( wxT( " " ) )
+                + dts
+                + wxString::Format( wxT( "%d" ), dt.GetDay() );
+
+//      Format date as: MMM DD, YYYY
+        } else {
+            dts += wxString::Format( wxT( "%d" ), dt.GetDay() ) + wxT( ", " )
+                 + wxString::Format( wxT( "%d" ), dt.GetYear() );
+        }
+
         return dts;
 }
 

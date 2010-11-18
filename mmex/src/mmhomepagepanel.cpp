@@ -148,6 +148,7 @@ void mmHomePagePanel::updateAccounts()
     balances_t tBalances;
     bool print_bal4cur = false;
 
+    /* Checking Accounts */
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
     for (size_t iAdx = 0; iAdx < core_->accountList_.accounts_.size(); ++iAdx)
     {
@@ -179,14 +180,17 @@ void mmHomePagePanel::updateAccounts()
            core_->bTransactionList_.getExpensesIncome(pCA->accountID_, expenses, income, 
               false,dtBegin, dtEnd);
 
-           if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
-               (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
-               (vAccts == wxT("ALL")))
+           if ( frame_->expandedBankAccounts() ) 
            {
-               hb.startTableRow();
-               hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->accountID_), pCA->accountName_, false, true);
-               hb.addTableCell(balance, true);
-               hb.endTableRow();
+               if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
+                   (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
+                   (vAccts == wxT("ALL")))
+               {
+                   hb.startTableRow();
+                   hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->accountID_), pCA->accountName_, false, true);
+                   hb.addTableCell(balance, true);
+                   hb.endTableRow();
+               }
            }
 
            tincome += income;
@@ -200,8 +204,74 @@ void mmHomePagePanel::updateAccounts()
     mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
     hb.startTableRow();
-	hb.addTotalRow(_("Total:"), 2, tBalanceStr);
+	hb.addTotalRow(_("Bank Accounts Total:"), 2, tBalanceStr);
     hb.endTableRow();
+
+    double tTermBalance = 0.0;
+    balances_t tTermBalances;
+    hb.addRowSeparator(2);
+
+    /* Term Accounts */
+    for (size_t iAdx = 0; iAdx < core_->accountList_.accounts_.size(); ++iAdx)
+    {
+        mmTermAccount* pTA 
+           = dynamic_cast<mmTermAccount*>(core_->accountList_.accounts_[iAdx].get());
+        if (pTA && pTA->status_== mmAccount::MMEX_Open)
+        {
+          
+           boost::shared_ptr<mmCurrency> pCurrencyPtr 
+			   = core_->accountList_.getCurrencyWeakPtr(pTA->accountID_).lock();
+           wxASSERT(pCurrencyPtr);
+           mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+
+           double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_);
+           double rate = pCurrencyPtr->baseConv_;
+
+           tTermBalance += bal * rate; // actual amount in that account in the original rate
+
+           // show the actual amount in that account
+           print_bal4cur |= (bal != 0.0 && tTermBalances[pCurrencyPtr] != 0.0);
+           tTermBalances[pCurrencyPtr] += bal;
+           wxString balance;
+           mmex::formatDoubleToCurrency(bal, balance);
+
+           double income = 0;
+           double expenses = 0;
+
+           core_->bTransactionList_.getExpensesIncome(pTA->accountID_, expenses, income, 
+              false,dtBegin, dtEnd);
+
+           if ( frame_->expandedTermAccounts() )
+           {
+              if ((vAccts == wxT("Open") && pTA->status_ == mmAccount::MMEX_Open) ||
+                  (vAccts == wxT("Favorites") && pTA->favoriteAcct_) ||
+                  (vAccts == wxT("ALL")))
+               {
+                  hb.startTableRow();
+                  hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pTA->accountID_), pTA->accountName_, false, true);
+                  hb.addTableCell(balance, true);
+                  hb.endTableRow();
+               }
+           }
+
+           tincome += income;
+           texpenses += expenses;
+
+        }
+
+	}
+
+
+    mmDBWrapper::loadBaseCurrencySettings(db_);
+    wxString tTermBalanceStr;
+    mmex::formatDoubleToCurrency(tTermBalance, tTermBalanceStr);
+
+    hb.startTableRow();
+	hb.addTotalRow(_("Term Accounts Total:"), 2, tTermBalanceStr);
+    hb.endTableRow();
+
+    // Add Term balance to total account balances
+    tBalance += tTermBalance;
 
     const int BaseCurrencyID = mmDBWrapper::getBaseCurrencySettings(db_);
     boost::shared_ptr<mmCurrency> BaseCurrency(BaseCurrencyID != -1 ? getCurrency(core_, BaseCurrencyID) : boost::shared_ptr<mmCurrency>());

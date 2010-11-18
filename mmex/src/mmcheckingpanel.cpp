@@ -355,6 +355,7 @@ public:
     void OnNewTransaction(wxCommandEvent& event);
     void OnDeleteTransaction(wxCommandEvent& event);
     void OnEditTransaction(wxCommandEvent& event);
+    void OnMoveTransaction(wxCommandEvent& event);
 
 private:
     DECLARE_NO_COPY_CLASS(MyListCtrl)
@@ -391,6 +392,10 @@ private:
 
     /* Sort Columns */
     void OnColClick(wxListEvent& event);
+
+    //  Returns the account ID by user selection
+    int destinationAccountID(wxString accName);
+    void refreshVisualList();
 };
 //----------------------------------------------------------------------------
 
@@ -399,6 +404,7 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_BUTTON(ID_BUTTON_NEW_TRANS,         mmCheckingPanel::OnNewTransaction)
     EVT_BUTTON(ID_BUTTON_EDIT_TRANS,        mmCheckingPanel::OnEditTransaction)
     EVT_BUTTON(ID_BUTTON_DELETE_TRANS,      mmCheckingPanel::OnDeleteTransaction)
+    EVT_BUTTON(ID_BUTTON_MOVE_TRANS,        mmCheckingPanel::OnMoveTransaction)
     EVT_LEFT_DOWN( mmCheckingPanel::OnMouseLeftDown ) 
 
     EVT_MENU(MENU_VIEW_ALLTRANSACTIONS, mmCheckingPanel::OnViewPopupSelected)
@@ -441,6 +447,7 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
     EVT_MENU(MENU_TREEPOPUP_NEW,              MyListCtrl::OnNewTransaction)
     EVT_MENU(MENU_TREEPOPUP_DELETE,           MyListCtrl::OnDeleteTransaction)
     EVT_MENU(MENU_TREEPOPUP_EDIT,             MyListCtrl::OnEditTransaction)
+    EVT_MENU(MENU_TREEPOPUP_MOVE,             MyListCtrl::OnMoveTransaction)
 
     EVT_LIST_COL_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnColClick)
     EVT_LIST_KEY_DOWN(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListKeyDown)
@@ -707,18 +714,25 @@ void mmCheckingPanel::CreateControls()
     itemBoxSizer5->Add(itemButton6, flags);
 
     wxButton* itemButton7 = new wxButton(itemPanel12, ID_BUTTON_EDIT_TRANS, _("&Edit"));
-    itemButton7->SetToolTip(_("Edit Transaction"));
+    itemButton7->SetToolTip(_("Edit selected transaction"));
     itemButton7->SetFont(fnt);
     itemButton7->SetForegroundColour(wxColour(wxT("SALMON")));
     itemBoxSizer5->Add(itemButton7, flags);
     itemButton7->Enable(false);
 
     wxButton* itemButton8 = new wxButton(itemPanel12, ID_BUTTON_DELETE_TRANS, _("&Delete"));
-    itemButton8->SetToolTip(_("Delete Transaction"));
+    itemButton8->SetToolTip(_("Delete selected transaction"));
     itemButton8->SetFont(fnt);
     itemButton8->SetForegroundColour(wxColour(wxT("ORANGE"))); // FIREBRICK
     itemBoxSizer5->Add(itemButton8, flags);
     itemButton8->Enable(false);
+
+    wxButton* itemButton9 = new wxButton(itemPanel12, ID_BUTTON_MOVE_TRANS, _("&Move"));
+    itemButton9->SetToolTip(_("Move selected transaction to another account"));
+    itemButton9->SetFont(fnt);
+    itemButton9->SetForegroundColour(wxColour(wxT("BLUE")));
+    itemBoxSizer5->Add(itemButton9, flags);
+    itemButton9->Enable(false);
 
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12, 
     ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
@@ -731,8 +745,10 @@ void mmCheckingPanel::enableEditDeleteButtons(bool en)
 {
 	wxButton* bE = (wxButton*)FindWindow(ID_BUTTON_EDIT_TRANS);
 	wxButton* bD = (wxButton*)FindWindow(ID_BUTTON_DELETE_TRANS);
+	wxButton* bM = (wxButton*)FindWindow(ID_BUTTON_MOVE_TRANS);
 	bE->Enable(en);
 	bD->Enable(en);
+	bM->Enable(en);
 }
 //----------------------------------------------------------------------------
 
@@ -1036,6 +1052,13 @@ void mmCheckingPanel::OnEditTransaction(wxCommandEvent& event)
 }
 //----------------------------------------------------------------------------
 
+void mmCheckingPanel::OnMoveTransaction(wxCommandEvent& event)
+{
+    m_listCtrlAccount->OnMoveTransaction(event);
+}
+
+//----------------------------------------------------------------------------
+
 void mmCheckingPanel::initViewTransactionsHeader()
 {
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_PANELVIEW);
@@ -1207,6 +1230,7 @@ void MyListCtrl::OnItemRightClick(wxListEvent& event)
     menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Transaction"));
     menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Transaction"));
     menu.Append(MENU_ON_COPY_TRANSACTION, _("&Copy Transaction"));
+    menu.Append(MENU_TREEPOPUP_MOVE, _("&Move Transaction"));
     if (m_selectedForCopy != -1)
         menu.Append(MENU_ON_PASTE_TRANSACTION, _("&Paste Transaction"));
     menu.AppendSeparator();
@@ -1647,13 +1671,86 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 		   m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->m_inidb, this);
 		if ( dlg.ShowModal() == wxID_OK )
 		{
-			m_cp->initVirtualListControl();
-			RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
-			SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-			SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-			EnsureVisible(m_selectedIndex);
+            refreshVisualList();
+//  moved to a function. 
+//			m_cp->initVirtualListControl();
+//			RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
+//			SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+//			SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+//			EnsureVisible(m_selectedIndex);
 		}
 	}
+}
+//----------------------------------------------------------------------------
+
+void MyListCtrl::refreshVisualList()
+{
+    m_cp->initVirtualListControl();
+	RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
+	SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+	SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+    EnsureVisible(m_selectedIndex);
+}
+
+//  Called only when moving a deposit/withdraw transaction to a new account.
+int MyListCtrl::destinationAccountID(wxString accName)
+{
+    static const char sql[] = 
+    "select ACCOUNTNAME "
+    "from ACCOUNTLIST_V1 "
+    "where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
+    "order by ACCOUNTNAME";
+    wxSQLite3ResultSet q1 = m_cp->getDb()->ExecuteQuery(sql);
+
+    wxArrayString as;
+    while (q1.NextRow())
+    {
+        as.Add(q1.GetString(wxT("ACCOUNTNAME")));
+    }
+    q1.Finalize();
+
+    wxString headerMsg = _("Moving Transaction from ") + accName + _(" to...");
+    wxSingleChoiceDialog scd(0, _("Select the destination Account "), headerMsg , as);
+
+    int accountID = -1;
+    if (scd.ShowModal() == wxID_OK)
+    {
+        wxString acctName = scd.GetStringSelection();
+        accountID = mmDBWrapper::getAccountID( m_cp->getDb().get(), acctName);
+    }
+
+    return accountID;
+}
+
+void MyListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
+{
+    if (m_selectedIndex != -1)
+	{
+        if ( m_cp->m_trans[m_selectedIndex]->transType_ == _("Transfer") )
+        {
+            mmTransDialog dlg(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 
+                              m_cp->m_trans[m_selectedIndex]->transactionID(), true, 
+                              m_cp->m_inidb, this);
+            if ( dlg.ShowModal() == wxID_OK )
+            {
+                refreshVisualList();
+            }
+        } 
+        else
+        {
+            int toAccountID = destinationAccountID(m_cp->m_trans[m_selectedIndex]->fromAccountStr_);
+            if ( toAccountID != -1 )
+            {
+                boost::shared_ptr<mmBankTransaction> pTransaction;
+                pTransaction = m_cp->m_core->bTransactionList_.getBankTransactionPtr(m_cp->accountID(),
+                                      m_cp->m_trans[m_selectedIndex]->transactionID() );
+                
+                pTransaction->accountID_ = toAccountID;
+                m_cp->m_core->bTransactionList_.updateTransaction(pTransaction);
+                refreshVisualList();
+            }
+        }
+    }
 }
 //----------------------------------------------------------------------------
 
