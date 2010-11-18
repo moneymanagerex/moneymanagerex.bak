@@ -23,7 +23,7 @@
 #include "util.h"
 #include "paths.h"
 
-enum { ACCT_TYPE_CHECKING, ACCT_TYPE_INVESTMENT };
+enum { ACCT_TYPE_CHECKING, ACCT_TYPE_INVESTMENT, ACCT_TYPE_TERM };
 enum { ACCT_STATUS_OPEN, ACCT_STATUS_CLOSED };
 
 
@@ -102,6 +102,8 @@ void mmNewAcctDialog::fillControlsWithData()
 	wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
     if (pAccount->acctType_ == wxT("Checking"))
        itemAcctType->SetSelection(ACCT_TYPE_CHECKING);
+    else if (pAccount->acctType_ == wxT("Term"))
+       itemAcctType->SetSelection(ACCT_TYPE_TERM);
     else
        itemAcctType->SetSelection(ACCT_TYPE_INVESTMENT);
     itemAcctType->Enable(false);
@@ -159,9 +161,10 @@ void mmNewAcctDialog::CreateControls()
     {
        _("Checking"),
        _("Investment"),
+       _("Term"),
     };
     wxChoice* itemChoice61 = new wxChoice( itemDialog1, ID_DIALOG_NEWACCT_COMBO_ACCTTYPE, 
-        wxDefaultPosition, wxDefaultSize, 2, itemAcctTypeStrings, 0 );
+        wxDefaultPosition, wxDefaultSize, 3, itemAcctTypeStrings, 0 );
     itemGridSizer2->Add(itemChoice61, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
     itemChoice61->SetSelection(ACCT_TYPE_CHECKING);
     itemChoice61->SetToolTip(_("Specify the type of account to be created."));
@@ -355,6 +358,8 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     pAccount->acctType_ = wxT("Checking");
     if (acctType == ACCT_TYPE_INVESTMENT)
         pAccount->acctType_ = wxT("Investment");
+    if (acctType == ACCT_TYPE_TERM)
+        pAccount->acctType_ = wxT("Term");
 
     wxTextCtrl* textCtrlAcctNumber = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER);
     wxTextCtrl* textCtrlHeldAt = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_HELDAT);

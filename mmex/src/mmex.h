@@ -88,6 +88,8 @@ public:
 
     void setGotoAccountID(int account_id) { gotoAccountID_ = account_id; }
     void unselectNavTree();
+    bool expandedBankAccounts();
+    bool expandedTermAccounts();
 
 private:
     /* handles to the DB Abstraction */
@@ -172,11 +174,12 @@ private:
     void OnViewToolbar(wxCommandEvent &event);
     void OnViewStatusbar(wxCommandEvent &event);
     void OnViewLinks(wxCommandEvent &event);
+    void OnViewBankAccounts(wxCommandEvent &event);
+    void OnViewTermAccounts(wxCommandEvent &event);
     void OnViewToolbarUpdateUI(wxUpdateUIEvent &event);
     void OnViewStatusbarUpdateUI(wxUpdateUIEvent &event);
     void OnViewLinksUpdateUI(wxUpdateUIEvent &event);
     void OnOnlineUpdateCurRate(wxCommandEvent& event);
-
     void OnNewAccount(wxCommandEvent& event);
     void OnAccountList(wxCommandEvent& event);
     void OnEditAccount(wxCommandEvent& event);

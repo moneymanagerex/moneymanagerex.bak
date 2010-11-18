@@ -139,6 +139,8 @@ void loadAccounts(boost::shared_ptr<wxSQLite3Database> db_,
 
         if (q1.GetString(wxT("ACCOUNTTYPE")) == wxT("Checking"))
             ptrBase = new mmCheckingAccount(db_, q1);
+        else if (q1.GetString(wxT("ACCOUNTTYPE")) == wxT("Term"))
+            ptrBase = new mmTermAccount(db_, q1);
         else
             ptrBase = new mmInvestmentAccount(db_, q1);
 

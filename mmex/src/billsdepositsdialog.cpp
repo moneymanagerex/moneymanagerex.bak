@@ -284,6 +284,7 @@ void mmBDDialog::CreateControls()
         _("Select Account"), wxDefaultPosition, wxSize(100, -1), 0 );
     itemFlexGridSizer5->Add(itemAccountName_, 0, 
         wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemAccountName_->SetToolTip(_("Specify the Account that will own the repeating transaction"));
 
     wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
         wxID_STATIC, _("Next Occurrence"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -361,7 +362,8 @@ void mmBDDialog::CreateControls()
         wxDefaultPosition, wxSize(100, -1), 0 );
     bAdvanced_->Enable(false);
     itemBoxSizer4->Add(bAdvanced_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    bAdvanced_->SetToolTip(_("Specify advanced settings for transaction"));
+//    bAdvanced_->SetToolTip(_("Specify advanced settings for transaction"));
+    bAdvanced_->SetToolTip(_("Specify the transfer amount in the To Account"));
 
     wxPanel* itemPanel7 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, 
         wxDefaultSize, wxTAB_TRAVERSAL );
@@ -400,7 +402,8 @@ void mmBDDialog::CreateControls()
         wxDefaultPosition, wxSize(200, -1), 0 );
     itemFlexGridSizer8->Add(bTo_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     bTo_->Show(false);
-    bTo_->SetToolTip(_("Specify the transfer account"));
+//    bTo_->SetToolTip(_("Specify the transfer account"));
+    bTo_->SetToolTip(_("Specify which account the transfer is going to"));
 
     wxStaticText* itemStaticText15 = new wxStaticText( itemPanel7, wxID_STATIC, _("Date"), 
         wxDefaultPosition, wxDefaultSize, 0 );
@@ -497,11 +500,10 @@ void mmBDDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmBDDialog::OnAccountName(wxCommandEvent& /*event*/)
 {
-
 	    static const char sql[] = 
     	"select ACCOUNTNAME "
     	"from ACCOUNTLIST_V1 "
-    	"where ACCOUNTTYPE = 'Checking' "
+       	"where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
     	"order by ACCOUNTNAME";
 	
     	wxArrayString as;
@@ -513,11 +515,12 @@ void mmBDDialog::OnAccountName(wxCommandEvent& /*event*/)
     	}
     	q1.Finalize();
     	
-    	wxSingleChoiceDialog scd(this, _("Choose Bank Account"), _("Select Account"), as);
-    	if (scd.ShowModal() == wxID_OK) {
-		wxString acctName = scd.GetStringSelection();
-		accountID_ = mmDBWrapper::getAccountID(db_, acctName);
-		itemAccountName_->SetLabel(acctName);
+    	wxSingleChoiceDialog scd(this, _("Choose Bank Account or Term Account"), _("Select Account"), as);
+    	if (scd.ShowModal() == wxID_OK)
+        {
+            wxString acctName = scd.GetStringSelection();
+            accountID_ = mmDBWrapper::getAccountID(db_, acctName);
+            itemAccountName_->SetLabel(acctName);
     	}
 }
 
@@ -528,7 +531,7 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 	    static const char sql[] = 
     	"select ACCOUNTNAME "
     	"from ACCOUNTLIST_V1 "
-    	"where ACCOUNTTYPE = 'Checking' "
+       	"where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
     	"order by ACCOUNTNAME";
 	
     	wxArrayString as;
@@ -540,68 +543,72 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
     	}
     	q1.Finalize();
     	
-    	wxSingleChoiceDialog scd(this, _("Choose Bank Account"), _("Select Account"), as);
-    	if (scd.ShowModal() == wxID_OK) {
-		wxString acctName = scd.GetStringSelection();
-		payeeID_ = mmDBWrapper::getAccountID(db_, acctName);
-		bPayee_->SetLabel(acctName);
-    	} else {
-	        wxString acctName = mmDBWrapper::getAccountName(db_, payeeID_);
-	        if (acctName.IsEmpty())
-	        {
-	            payeeID_ = -1;
-	            categID_ = -1;
-	            subcategID_ = -1;
-	            bCategory_->SetLabel(_("Select Category"));
-	            bPayee_->SetLabel(_("Select Payee"));
-	        }
-	        else
-	        {
-	            bPayee_->SetLabel(acctName);
-	        }  
-	    }
+    	wxSingleChoiceDialog scd(this, _("Choose Bank Account or Term Account"), _("Select Account"), as);
+    	if (scd.ShowModal() == wxID_OK) 
+        {
+            wxString acctName = scd.GetStringSelection();
+		    payeeID_ = mmDBWrapper::getAccountID(db_, acctName);
+		    bPayee_->SetLabel(acctName);
+    	}
+//      Do nothing if Cancelling Dialog. This code removed: Was Causing confusion in host Dialog
+//      else 
+//      {
+//          wxString acctName = mmDBWrapper::getAccountName(db_, payeeID_);
+//	        if (acctName.IsEmpty())
+//	        {
+//	            payeeID_ = -1;
+//	            categID_ = -1;
+//	            subcategID_ = -1;
+//	            bCategory_->SetLabel(_("Select Category"));
+//	            bPayee_->SetLabel(_("Select Payee"));
+//	        }
+//	        else
+//	        {
+//	            bPayee_->SetLabel(acctName);
+//	        }  
+//	    }
 
 	} else {
 	    mmPayeeDialog dlg(this, core_);    
 	    if ( dlg.ShowModal() == wxID_OK )
 	    {
-	            payeeID_ = dlg.getPayeeId();
-	            if (payeeID_ == -1)
-            	{
-	                bPayee_->SetLabel(wxT("Select Payee"));
-	                return;
-            	}
+            payeeID_ = dlg.getPayeeId();
+	        if (payeeID_ == -1)
+            {
+	            bPayee_->SetLabel(wxT("Select Payee"));
+                return;
+            }
 	            
-	            // ... If this is a Split Transaction, ignore the Payee change
-	            if (split_->numEntries())
-	                return;
+            // ... If this is a Split Transaction, ignore the Payee change
+            if (split_->numEntries())
+                return;
 	
-            	int tempCategID = -1;
-	            int tempSubCategID = -1;
-	            wxString payeeName = mmDBWrapper::getPayee(db_, 
-                	payeeID_, tempCategID, tempSubCategID);
+            int tempCategID = -1;
+            int tempSubCategID = -1;
+            wxString payeeName = mmDBWrapper::getPayee(db_, 
+            	payeeID_, tempCategID, tempSubCategID);
 	            bPayee_->SetLabel(mmReadyDisplayString(payeeName));
 
-    	        if (tempCategID == -1)
-	            {
-	                return;
-	            }
+    	    if (tempCategID == -1)
+	        {
+                return;
+            }
 	
-	            wxString catName = mmDBWrapper::getCategoryName(db_, tempCategID);
-	            wxString categString = catName;
+            wxString catName = mmDBWrapper::getCategoryName(db_, tempCategID);
+            wxString categString = catName;
 	
-	            if (tempSubCategID != -1)
-	            {
-	                wxString subcatName = mmDBWrapper::getSubCategoryName(db_,
-	                    tempCategID, tempSubCategID);
-	                categString += wxT(" : ");
-	                categString += subcatName;
-	            }
+            if (tempSubCategID != -1)
+            {
+                wxString subcatName = mmDBWrapper::getSubCategoryName(db_,
+                    tempCategID, tempSubCategID);
+                categString += wxT(" : ");
+                categString += subcatName;
+            }
 	
-	            categID_ = tempCategID;
-	            subcategID_ = tempSubCategID;
-	            bCategory_->SetLabel(categString);
-	    }
+            categID_ = tempCategID;
+            subcategID_ = tempSubCategID;
+            bCategory_->SetLabel(categString);
+        }
 	    else
 	    {
 	        wxString payeeName = mmDBWrapper::getPayee(db_, payeeID_, categID_, subcategID_);
@@ -624,44 +631,44 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 
 void mmBDDialog::OnTo(wxCommandEvent& /*event*/)
 {	
-	// This should only get called if we are in a transfer
-
-	    static const char sql[] = 
-    	"select ACCOUNTNAME "
-    	"from ACCOUNTLIST_V1 "
-    	"where ACCOUNTTYPE = 'Checking' "
-    	"order by ACCOUNTNAME";
+    // This should only get called if we are in a transfer
+    static const char sql[] = 
+    "select ACCOUNTNAME "
+    "from ACCOUNTLIST_V1 "
+    "where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
+    "order by ACCOUNTNAME";
 	
-    	wxArrayString as;
+    wxArrayString as;
     	
-    	wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-    	while (q1.NextRow())
-    	{
-    	    as.Add(q1.GetString(wxT("ACCOUNTNAME")));
-    	}
-    	q1.Finalize();
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+    while (q1.NextRow())
+    {
+        as.Add(q1.GetString(wxT("ACCOUNTNAME")));
+    }
+    q1.Finalize();
     	
-    	wxSingleChoiceDialog scd(this, _("Choose Bank Account"), _("Select Account"), as);
-    	if (scd.ShowModal() == wxID_OK)
-    	{
-			wxString acctName = scd.GetStringSelection();
-            toID_ = mmDBWrapper::getAccountID(db_, acctName);
-            bTo_->SetLabel(acctName);
-    	}
-		else
-	    {
-	        wxString acctName = mmDBWrapper::getAccountName(db_, toID_);
-	        if (acctName.IsEmpty())
-	        {
-	            toID_ = -1;
-	            bCategory_->SetLabel(_("Select Category"));
-	            bPayee_->SetLabel(_("Select To"));
-	        }
-	        else
-	        {
-	            bPayee_->SetLabel(acctName);
-	        }  
-	    }
+    wxSingleChoiceDialog scd(this, _("Choose Bank Account or Term Account"), _("Select Account"), as);
+    if (scd.ShowModal() == wxID_OK)
+    {
+	    wxString acctName = scd.GetStringSelection();
+        toID_ = mmDBWrapper::getAccountID(db_, acctName);
+        bTo_->SetLabel(acctName);
+    }
+//  Do nothing if Cancelling Dialog. This code removed: Was Causing confusion in host Dialog
+//  else
+//  {
+//      wxString acctName = mmDBWrapper::getAccountName(db_, toID_);
+//      if (acctName.IsEmpty())
+//      {
+//          toID_ = -1;
+//          bCategory_->SetLabel(_("Select Category"));
+//          bPayee_->SetLabel(_("Select To"));
+//      }
+//      else
+//      {
+//          bPayee_->SetLabel(acctName);
+//      }  
+//  }
 }
 
 void mmBDDialog::OnDateChanged(wxDateEvent& /*event*/)
@@ -786,6 +793,8 @@ void mmBDDialog::updateControlsForTransType()
         payeeID_ = -1;
         toID_    = -1;
         bAdvanced_->Enable(false);
+        bPayee_->SetToolTip(_("Specify where the transaction is going to or coming from "));
+        textAmount_->SetToolTip(_("Specify the amount for this transaction"));
      }
      else if (choiceTrans_->GetSelection() == DEF_DEPOSIT)
     {
@@ -797,6 +806,8 @@ void mmBDDialog::updateControlsForTransType()
         payeeID_ = -1;
         toID_    = -1;
         bAdvanced_->Enable(false);
+        bPayee_->SetToolTip(_("Specify where the transaction is going to or coming from "));
+        textAmount_->SetToolTip(_("Specify the amount for this transaction"));
     }
     else if (choiceTrans_->GetSelection() == DEF_TRANSFER)
     {
@@ -809,6 +820,8 @@ void mmBDDialog::updateControlsForTransType()
         st->Show(true);
         stp->SetLabel(_("From"));   
         bAdvanced_->Enable(true);
+        bPayee_->SetToolTip(_("Specify which account the transfer is comming from"));
+        textAmount_->SetToolTip(_("Specify the transfer amount in the From and To Account"));
     }
 }
 

@@ -35,6 +35,7 @@
 #include "reportincexpenses.h"
 #include "reportbudgetingperf.h"
 #include "reportincexpesestime.h"
+#include "reportincexpensesfinancialperiod.h"
 #include "reportsummarystocks.h"
 #include "reportsummaryassets.h"
 #include "reporttransactions.h"
@@ -359,10 +360,11 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_TREEPOPUP_LAUNCHWEBSITE, mmGUIFrame::OnLaunchAccountWebsite)
 	EVT_MENU(MENU_VIEW_TOOLBAR, mmGUIFrame::OnViewToolbar)
 	EVT_MENU(MENU_VIEW_LINKS, mmGUIFrame::OnViewLinks)
+	EVT_MENU(MENU_VIEW_BANKACCOUNTS, mmGUIFrame::OnViewBankAccounts)
+	EVT_MENU(MENU_VIEW_TERMACCOUNTS, mmGUIFrame::OnViewTermAccounts)
     EVT_MENU(MENU_ONLINE_UPD_CURRENCY_RATE, mmGUIFrame::OnOnlineUpdateCurRate)
 	EVT_UPDATE_UI(MENU_VIEW_TOOLBAR, mmGUIFrame::OnViewToolbarUpdateUI)
 	EVT_UPDATE_UI(MENU_VIEW_LINKS, mmGUIFrame::OnViewLinksUpdateUI)
-    
     EVT_MENU(MENU_TREEPOPUP_EDIT, mmGUIFrame::OnPopupEditAccount)
     EVT_MENU(MENU_TREEPOPUP_DELETE, mmGUIFrame::OnPopupDeleteAccount)
 
@@ -781,6 +783,16 @@ void mmGUIFrame::createControls()
 }
 //----------------------------------------------------------------------------
 
+bool mmGUIFrame::expandedBankAccounts()
+{
+      return menuBar_->IsChecked(MENU_VIEW_BANKACCOUNTS);
+}
+
+bool mmGUIFrame::expandedTermAccounts()
+{
+      return menuBar_->IsChecked(MENU_VIEW_TERMACCOUNTS);
+}
+
 void mmGUIFrame::updateNavTreeControl()
 {
     navTreeCtrl_->DeleteAllItems();
@@ -793,6 +805,11 @@ void mmGUIFrame::updateNavTreeControl()
     wxTreeItemId accounts = navTreeCtrl_->AppendItem(root, _("Bank Accounts"), 1, 1);
     navTreeCtrl_->SetItemData(accounts, new mmTreeItemData(wxT("Bank Accounts")));
     navTreeCtrl_->SetItemBold(accounts, true);
+
+//  Positioning for new new type of accounts: Term Accounts        
+    wxTreeItemId termAccount = navTreeCtrl_->AppendItem(root, _("Term Accounts"), 2, 2);
+    navTreeCtrl_->SetItemData(termAccount, new mmTreeItemData(wxT("Term Accounts")));
+    navTreeCtrl_->SetItemBold(termAccount, true);
 
     wxTreeItemId stocks;
     if (mmIniOptions::enableStocks_)
@@ -881,6 +898,16 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(categsOverTimeCurrentYear, 
         new mmTreeItemData(wxT("Where the Money Goes - Current Year")));
 
+    wxTreeItemId categsOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(categsOverTime, 
+        _("Last Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(categsOverTimeLastFinancialYear,
+        new mmTreeItemData(wxT("Where the Money Goes - Last Financial Year")));
+
+    wxTreeItemId categsOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(categsOverTime,
+        _("Current Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(categsOverTimeCurrentFinancialYear,
+        new mmTreeItemData(wxT("Where the Money Goes - Current Financial Year")));
+
     ///////////////////////////////////////////////////////////
 
     wxTreeItemId posCategs = navTreeCtrl_->AppendItem(reports, 
@@ -913,6 +940,16 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(posCategsTimeCurrentYear, 
         new mmTreeItemData(wxT("Where the Money Comes From - Current Year")));
  
+	wxTreeItemId posCategsTimeLastFinancialYear = navTreeCtrl_->AppendItem(posCategs, 
+        _("Last Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(posCategsTimeLastFinancialYear, 
+        new mmTreeItemData(wxT("Where the Money Comes From - Last Financial Year")));
+
+    wxTreeItemId posCategsTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(posCategs,
+        _("Current Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(posCategsTimeCurrentFinancialYear, 
+        new mmTreeItemData(wxT("Where the Money Comes From - Current Financial Year")));
+	
     ///////////////////////////////////////////////////////////
 
     wxTreeItemId categs = navTreeCtrl_->AppendItem(reports, 
@@ -944,9 +981,20 @@ void mmGUIFrame::updateNavTreeControl()
         _("Current Year"), 4, 4);
     navTreeCtrl_->SetItemData(categsTimeCurrentYear, 
         new mmTreeItemData(wxT("Categories - Current Year")));
-    ///////////////////////////////////////////////////////////
 
-     wxTreeItemId payeesOverTime = navTreeCtrl_->AppendItem(reports, 
+	wxTreeItemId categsTimeLastFinancialYear = navTreeCtrl_->AppendItem(categs, 
+        _("Last Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(categsTimeLastFinancialYear, 
+        new mmTreeItemData(wxT("Categories - Last Financial Year")));
+
+    wxTreeItemId categsTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(categs,
+        _("Current Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(categsTimeCurrentFinancialYear, 
+        new mmTreeItemData(wxT("Categories - Current Financial Year")));
+	
+	///////////////////////////////////////////////////////////
+
+    wxTreeItemId payeesOverTime = navTreeCtrl_->AppendItem(reports, 
         _("To Whom the Money Goes"), 4, 4);
     navTreeCtrl_->SetItemData(payeesOverTime, 
         new mmTreeItemData(wxT("To Whom the Money Goes")));
@@ -975,6 +1023,16 @@ void mmGUIFrame::updateNavTreeControl()
         _("Current Year"), 4, 4);
     navTreeCtrl_->SetItemData(payeesOverTimeCurrentYear, 
         new mmTreeItemData(wxT("To Whom the Money Goes - Current Year")));
+
+    wxTreeItemId payeesOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime, 
+        _("Last Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTimeLastFinancialYear, 
+        new mmTreeItemData(wxT("To Whom the Money Goes - Last Financial Year")));
+
+    wxTreeItemId payeesOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime,
+        _("Current Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTimeCurrentFinancialYear, 
+        new mmTreeItemData(wxT("To Whom the Money Goes - Current Financial Year")));
 
     ///////////////////////////////////////////////////////////////////
 
@@ -1008,13 +1066,23 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(incexpOverTimeCurrentYear, 
         new mmTreeItemData(wxT("Income vs Expenses - Current Year")));
 
+    wxTreeItemId incexpOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(incexpOverTime, 
+        _("Last Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(incexpOverTimeLastFinancialYear, 
+        new mmTreeItemData(wxT("Income vs Expenses - Last Financial Year")));
+
+    wxTreeItemId incexpOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(incexpOverTime,
+        _("Current Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(incexpOverTimeCurrentFinancialYear, 
+        new mmTreeItemData(wxT("Income vs Expenses - Current Financial Year")));
+
     wxTreeItemId incexpmonthly = navTreeCtrl_->AppendItem(incexpOverTime, 
         _("Income vs Expenses - All Time"), 4, 4);
     navTreeCtrl_->SetItemData(incexpmonthly, 
         new mmTreeItemData(wxT("Income vs Expenses - All Time")));
 
     //////////////////////////////////////////////////////////////////
-   wxTreeItemId transactionList = navTreeCtrl_->AppendItem(reports, 
+    wxTreeItemId transactionList = navTreeCtrl_->AppendItem(reports, 
         _("Transaction Report"), 4, 4);
     navTreeCtrl_->SetItemData(transactionList, 
         new mmTreeItemData(wxT("Transaction Report")));
@@ -1107,6 +1175,19 @@ void mmGUIFrame::updateNavTreeControl()
             }
         }
 
+//      This is where we load up the term accounts
+        mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(m_core->accountList_.accounts_[iAdx].get());
+        if (pTA)
+        {
+            if ((vAccts == wxT("Open") && pTA->status_ == mmAccount::MMEX_Open) ||
+                (vAccts == wxT("Favorites") && pTA->favoriteAcct_) ||
+                (vAccts == wxT("ALL")))
+            {
+                wxTreeItemId tacct = navTreeCtrl_->AppendItem(termAccount, pTA->accountName_, 2, 2);
+                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pTA->accountID_, false));
+            }
+        }
+        
         if (mmIniOptions::enableStocks_)
         {
             mmInvestmentAccount* pIA = dynamic_cast<mmInvestmentAccount*>(m_core->accountList_.accounts_[iAdx].get());
@@ -1272,6 +1353,12 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                  wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
                  GetEventHandler()->AddPendingEvent(evt);
               }
+              else if (acctType == wxT("Term"))
+              {
+                 gotoAccountID_ = data;
+                 wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
+                 GetEventHandler()->AddPendingEvent(evt);
+              }
               else
               {
                  Freeze();
@@ -1355,7 +1442,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
-            wxString title = _("Categories");
+            wxString title = _("Categories - Last Calendar Month");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, 
                 title, 0);
             menuPrintingEnable(true);
@@ -1368,7 +1455,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today;
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            wxString title = _("Categories");
+            wxString title = _("Categories - Last 30 Days");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd,
                 title, 0);
             menuPrintingEnable(true);
@@ -1381,7 +1468,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
-            wxString title = _("Categories");
+            wxString title = _("Categories - Current Month");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd,
                title, 0);
             menuPrintingEnable(true);
@@ -1398,7 +1485,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             prevYearEnd.SetDay(31);
             wxDateTime dtEnd = prevYearEnd;
             wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-            wxString title = _("Categories");
+            wxString title = _("Categories - Last Year");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, 
                title, 0);
             menuPrintingEnable(true);
@@ -1415,15 +1502,57 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             yearBegin.SetDay(31);
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = yearBegin;
-            wxString title = _("Categories");
+            wxString title = _("Categories - Current Year");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, 
                 title, 0);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
 
-        //////////////////////////////////////////////////
-        else if (iData->getString() == wxT("Where the Money Comes From"))
+        else if (iData->getString() == wxT("Categories - Last Financial Year"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            int year = today.GetYear();
+			if (today.GetMonth() < wxDateTime::Jul) {
+				year -- ;
+			}
+            wxDateTime prevYearEnd = wxDateTime(today);
+//  Found that on 31/10/2010 having days set as above would cause wxWidgets error
+            prevYearEnd.SetDay(30);
+            prevYearEnd.SetMonth(wxDateTime::Jun);
+            prevYearEnd.SetYear(year);
+            wxDateTime dtEnd = prevYearEnd;
+            wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
+            wxString title = _("Categories - Last Financial Year");
+            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, 
+               title, 0);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+
+        else if (iData->getString() == wxT("Categories - Current Financial Year"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            int year = today.GetYear();
+			if (today.GetMonth() < wxDateTime::Jul) {
+				year -- ;
+			}
+            wxDateTime yearBegin = wxDateTime(today);
+            yearBegin.SetDay(30);
+            yearBegin.SetMonth(wxDateTime::Jun);
+            yearBegin.SetYear(year);
+            wxDateTime dtEnd = today;
+            wxDateTime dtBegin = yearBegin;
+            wxString title = _("Categories - Current Financial Year");
+            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, 
+                title, 0);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+
+		//////////////////////////////////////////////////
+
+		else if (iData->getString() == wxT("Where the Money Comes From"))
         {
             wxDateTime dtEnd =  wxDateTime::Now();
             wxDateTime dtBegin =  wxDateTime::Now();
@@ -1514,8 +1643,49 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
+        else if (iData->getString() == wxT("Where the Money Comes From - Last Financial Year"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            int year = today.GetYear();
+			if (today.GetMonth() < wxDateTime::Jul) {
+				year -- ;
+			}
+            wxDateTime prevYearEnd = wxDateTime(today);
+            prevYearEnd.SetDay(30);
+            prevYearEnd.SetMonth(wxDateTime::Jun);
+            prevYearEnd.SetYear(year);
+            wxDateTime dtEnd = prevYearEnd;
+            wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
+            wxString title = _("Where the Money Comes From");
+            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, 
+               title, 1);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+
+        else if (iData->getString() == wxT("Where the Money Comes From - Current Financial Year"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            int year = today.GetYear();
+			if (today.GetMonth() < wxDateTime::Jul) {
+				year -- ;
+			}
+            wxDateTime yearBegin = wxDateTime(today);
+            yearBegin.SetDay(30);
+            yearBegin.SetMonth(wxDateTime::Jun);
+            yearBegin.SetYear(year);
+            wxDateTime dtEnd = today;
+            wxDateTime dtBegin = yearBegin;
+            wxString title = _("Where the Money Comes From");
+            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, 
+                title, 1);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+
         //////////////////////////////////////////////////
-        else if (iData->getString() == wxT("Where the Money Goes"))
+
+		else if (iData->getString() == wxT("Where the Money Goes"))
         {
             wxDateTime dtEnd = wxDateTime::Now();
             wxDateTime dtBegin = wxDateTime::Now();
@@ -1605,8 +1775,48 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
+        else if (iData->getString() == wxT("Where the Money Goes - Last Financial Year"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            int year = today.GetYear();
+			if (today.GetMonth() < wxDateTime::Jul) {
+				year -- ;
+			}
+            wxDateTime prevYearEnd = wxDateTime(today);
+            prevYearEnd.SetDay(30);
+            prevYearEnd.SetMonth(wxDateTime::Jun);
+            prevYearEnd.SetYear(year);
+            wxDateTime dtEnd = prevYearEnd;
+            wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
+            wxString title = _("Where the Money Goes");
+            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, 
+               title, 2);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+
+        else if (iData->getString() == wxT("Where the Money Goes - Current Financial Year"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            int year = today.GetYear();
+			if (today.GetMonth() < wxDateTime::Jul) {
+				year -- ;
+			}
+            wxDateTime yearBegin = wxDateTime(today);
+            yearBegin.SetDay(30);
+            yearBegin.SetMonth(wxDateTime::Jun);
+            yearBegin.SetYear(year);
+            wxDateTime dtEnd = today;
+            wxDateTime dtBegin = yearBegin;
+            wxString title = _("Where the Money Goes");
+            mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, 
+                title, 2);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+
         /////////////////////////////////////////////////////////////////
-        
+
         else if (iData->getString() == wxT("Transaction Statistics"))
         {
             wxDateTime today = wxDateTime::Now();
@@ -1682,6 +1892,30 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear();
             mmPrintableBase* rs = new mmReportIncExpensesOverTime(m_core.get(), year);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+
+        else if (iData->getString() == wxT("Income vs Expenses - Last Financial Year"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            int year = today.GetYear()-1;
+			if (today.GetMonth() < wxDateTime::Jul) {
+				year -- ;
+			}
+            mmPrintableBase* rs = new mmReportIncExpensesOverFinancialPeriod(m_core.get(), year);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+
+        else if (iData->getString() == wxT("Income vs Expenses - Current Financial Year"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            int year = today.GetYear();
+			if (today.GetMonth() < wxDateTime::Jul) {
+				year -- ;
+			}
+            mmPrintableBase* rs = new mmReportIncExpensesOverFinancialPeriod(m_core.get(), year);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1775,7 +2009,43 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createReportsPage(rs);
         }
 
-        else if (iData->getString() == wxT("Cash Flow"))
+        else if (iData->getString() == wxT("To Whom the Money Goes - Last Financial Year"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            int year = today.GetYear();
+			if (today.GetMonth() < wxDateTime::Jul) {
+				year -- ;
+			}
+            wxDateTime prevYearEnd = wxDateTime(today);
+            prevYearEnd.SetDay(30);
+            prevYearEnd.SetMonth(wxDateTime::Jun);
+            prevYearEnd.SetYear(year);
+            wxDateTime dtEnd = prevYearEnd;
+            wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
+            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+
+        else if (iData->getString() == wxT("To Whom the Money Goes - Current Financial Year"))
+        {
+            wxDateTime today = wxDateTime::Now();
+            int year = today.GetYear();
+			if (today.GetMonth() < wxDateTime::Jul) {
+				year -- ;
+			}
+            wxDateTime yearBegin = wxDateTime(today);
+            yearBegin.SetDay(30);
+            yearBegin.SetMonth(wxDateTime::Jun);
+            yearBegin.SetYear(year);
+            wxDateTime dtEnd = today;
+            wxDateTime dtBegin = yearBegin;
+            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd);
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
+
+		else if (iData->getString() == wxT("Cash Flow"))
         {
             mmPrintableBase* rs = new mmReportCashFlow(m_core.get());
             menuPrintingEnable(true);
@@ -1789,7 +2059,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             OnCashFlowSpecificAccounts();
         }
 
-         ///////////////////////////////////////////////
+        ///////////////////////////////////////////////
         else if (iData->getString() == wxT("Transaction Report"))
         {
            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TRANSACTIONREPORT);
@@ -1859,7 +2129,7 @@ void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& /*event*/)
         if (pAccount)
         {
            wxString acctType = pAccount->acctType_;
-           if (acctType == wxT("Checking") || acctType == wxT("Investment"))
+           if (acctType == wxT("Checking") || acctType == wxT("Investment") || acctType == wxT("Term"))
            {
               mmNewAcctDialog dlg(m_core.get(), false, data, this);
               if ( dlg.ShowModal() == wxID_OK )
@@ -1942,7 +2212,7 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
                  menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
                  PopupMenu(&menu, pt);
               }
-              else if (acctType == wxT("Investment"))
+              else if (acctType == wxT("Investment") || acctType == wxT("Term"))
               {
                  wxMenu menu;
                  menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
@@ -2247,8 +2517,17 @@ void mmGUIFrame::createMenu()
 	wxMenuItem* menuItemLinks = new wxMenuItem(menuView, MENU_VIEW_LINKS, 
 		_("&Navigation"), _("Show/Hide the Navigation tree control"), wxITEM_CHECK);
 
+    wxMenuItem* menuItemBankAccount = new wxMenuItem(menuView, MENU_VIEW_BANKACCOUNTS, 
+		_("&Bank Accounts"), _("Show/Hide Bank Accounts on Summary page"), wxITEM_CHECK);
+	wxMenuItem* menuItemTermAccount = new wxMenuItem(menuView, MENU_VIEW_TERMACCOUNTS, 
+		_("Term &Accounts"), _("Show/Hide Term Accounts on Summary page"), wxITEM_CHECK);
+
 	menuView->Append(menuItemToolbar);
 	menuView->Append(menuItemLinks);
+
+    menuView->AppendSeparator();
+    menuView->Append(menuItemBankAccount);
+    menuView->Append(menuItemTermAccount);
 
 	wxMenu *menuAccounts = new wxMenu;
 
@@ -2408,6 +2687,9 @@ void mmGUIFrame::createMenu()
     menuBar_->Append(menuHelp, _("&Help"));
 
     SetMenuBar(menuBar_);
+
+    menuBar_->Check(MENU_VIEW_BANKACCOUNTS,true);
+    menuBar_->Check(MENU_VIEW_TERMACCOUNTS,false);
 }
 //----------------------------------------------------------------------------
 
@@ -3433,8 +3715,10 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
         int choice = scd.GetSelection();
         int acctID = arrAcctID[choice];
 
-        wxMessageDialog msgDlg(this, 
-            _("Do you really want to delete the account?"),
+        wxString deletingAccountName = _("Are you sure you want to delete ") + m_core->accountList_.accounts_[choice]->acctType_ +
+                                       _(" account: ") + m_core->accountList_.accounts_[choice]->accountName_ + _(" ?");
+        wxMessageDialog msgDlg(this, deletingAccountName,
+//          _("Do you really want to delete the account?")  
             _("Confirm Account Deletion"),
             wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
@@ -3484,6 +3768,32 @@ void mmGUIFrame::OnViewLinksUpdateUI(wxUpdateUIEvent &event)
 		event.Check(true);
 	else
 		event.Check(false);
+}
+//----------------------------------------------------------------------------
+
+void mmGUIFrame::OnViewBankAccounts(wxCommandEvent &event)
+{
+	m_mgr.GetPane(wxT("Bank Accounts")).Show(event.IsChecked());
+	m_mgr.Update();
+
+    if (!refreshRequested_)
+    {
+        refreshRequested_ = true;
+        createHomePage();
+    }
+}
+//----------------------------------------------------------------------------
+
+void mmGUIFrame::OnViewTermAccounts(wxCommandEvent &event)
+{
+	m_mgr.GetPane(wxT("Term Accounts")).Show(event.IsChecked());
+	m_mgr.Update();
+
+    if (!refreshRequested_)
+    {
+        refreshRequested_ = true;
+        createHomePage();
+    }
 }
 //----------------------------------------------------------------------------
 
@@ -3644,9 +3954,10 @@ wxAddAccountPage2::wxAddAccountPage2(mmAddAccountWizard *parent) :
     {
         _("Checking/Savings"),
         _("Investment"),
+        _("Term"),
     };
     itemChoiceType_ = new wxChoice( this, wxID_ANY, 
-        wxDefaultPosition, wxDefaultSize, 2, itemAcctTypeStrings, 0 );
+        wxDefaultPosition, wxDefaultSize, 3, itemAcctTypeStrings, 0 );
     itemChoiceType_->SetSelection(0); // Checking
     itemChoiceType_->SetToolTip(_("Specify the type of account to be created."));
 
@@ -3669,13 +3980,19 @@ wxAddAccountPage2::wxAddAccountPage2(mmAddAccountWizard *parent) :
 
     mainSizer->Add(
         new wxStaticText(this, wxID_ANY,
-        _("\nSelect the type of account you want to create:\n\nGeneral bank accounts cover a wide variety of account\n types like Checking, Savings and Credit card type accounts.")), 0,
+        _("\nSelect the type of account you want to create:\n\nGeneral bank accounts cover a wide variety of account\ntypes like Checking, Savings and Credit card type accounts.")), 0,
         wxALL,
         5);
 
     mainSizer->Add(
         new wxStaticText(this, wxID_ANY,
-        _("\nInvestment accounts are specialized accounts that only \nhave stock/mutual fund investments associated \nwith them.\n")), 0,
+        _("\nInvestment accounts are specialized accounts that only \nhave stock/mutual fund investments associated with them.\n")), 0,
+        wxALL,
+        5);
+
+    mainSizer->Add(
+        new wxStaticText(this, wxID_ANY,
+        _("Term accounts are specialized bank accounts. Intended for asset\ntype accounts such as Term Deposits and Bonds. These accounts\ncan have regular money comming in and out, being outside the\ngeneral income stream.")), 0,
         wxALL,
         5);
 
@@ -3690,6 +4007,8 @@ bool wxAddAccountPage2::TransferDataFromWindow()
     wxString acctTypeStr = wxT("Checking");
     if (acctType == 1)
         acctTypeStr = wxT("Investment");
+    if (acctType == 2)
+        acctTypeStr = wxT("Term");
 
     int currencyID = parent_->m_core->currencyList_.getBaseCurrencySettings();
     if (currencyID == -1)
@@ -3701,6 +4020,8 @@ bool wxAddAccountPage2::TransferDataFromWindow()
     mmAccount* ptrBase;
     if (acctTypeStr == wxT("Checking"))
         ptrBase = new mmCheckingAccount(parent_->m_core->db_);
+    else if (acctTypeStr == wxT("Term"))
+        ptrBase = new mmTermAccount(parent_->m_core->db_);
     else
         ptrBase = new mmInvestmentAccount(parent_->m_core->db_);
 

@@ -75,6 +75,7 @@ mmCheckingAccount::mmCheckingAccount(
     
 }
 
+
 #if 0
 void mmCheckingAccount::deleteTransactions(int accountID)
 {
@@ -133,6 +134,23 @@ double mmCheckingAccount::balance()
    return mmDBWrapper::getTotalBalanceOnAccount(db_.get(), this->accountID_);
 }
 
+//----------------------------------------------------------------------------------
+
+mmTermAccount::mmTermAccount(
+               boost::shared_ptr<wxSQLite3Database> db, 
+               wxSQLite3ResultSet& q1) 
+             : mmAccount(db, q1) 
+{
+    
+}
+
+double mmTermAccount::balance()
+{
+   return mmDBWrapper::getTotalBalanceOnAccount(db_.get(), this->accountID_);
+}
+
+//----------------------------------------------------------------------------------
+
 /* mmInvestmentAccount */
 double mmInvestmentAccount::balance()
 {
@@ -147,7 +165,7 @@ mmAccountList::mmAccountList(boost::shared_ptr<wxSQLite3Database> db)
 bool mmAccountList::deleteAccount(int accountID)
 {
     wxString acctType = getAccountType(accountID);
-    if (acctType == wxT("Checking"))
+    if (acctType == wxT("Checking") || acctType == wxT("Term"))
     {
         mmDBWrapper::removeSplitsForAccount(db_.get(), accountID);
 
