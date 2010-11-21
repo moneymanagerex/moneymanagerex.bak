@@ -2650,11 +2650,27 @@ double mmDBWrapper::getAssetValue(wxSQLite3Database* db, int assetID)
 			if (todayDate > startDate)
 			{
 				int numYears = todayDate.GetYear() - startDate.GetYear();
+
+//              improve the accuracy of number of years calculation
+                int numMonths = todayDate.GetMonth() - startDate.GetMonth();
+                int numDays   = todayDate.GetDay() - startDate.GetDay();
+                if ( (numMonths >= 0 ) && (numDays < 0) )   numMonths --;
+                if ( (numYears > 0 )   && (numMonths < 0 )) numYears -- ;
+
 				if (numYears > 0)
 				{
-					double appreciation = numYears * valueChangeRate * value / 100;
-					assetValue = value + appreciation;
-				}
+//					double appreciation = numYears * valueChangeRate * value / 100;
+//					assetValue = value + appreciation;
+
+//                  Calculation changed to compound interest. 
+                    while (numYears > 0)
+                    {
+                        double appreciation = valueChangeRate * value / 100;
+        				assetValue = value + appreciation;
+                        value = assetValue;
+                        numYears --;
+                    }
+                }
                 else
                      assetValue = value;
 			}
@@ -2668,9 +2684,18 @@ double mmDBWrapper::getAssetValue(wxSQLite3Database* db, int assetID)
 				int numYears = todayDate.GetYear() - startDate.GetYear();
 				if (numYears > 0)
 				{
-					double depreciation = numYears * valueChangeRate * value / 100;
-					assetValue = value - depreciation;
-				}
+//					double depreciation = numYears * valueChangeRate * value / 100;
+//					assetValue = value - depreciation;
+
+//                  Calculation changed to compound interest. 
+                    while (numYears > 0)
+                    {
+                        double depreciation = valueChangeRate * value / 100;
+        				assetValue = value - depreciation;
+                        value = assetValue;
+                        numYears --;
+                    }
+                }
                 else
                     assetValue = value;
 			}
