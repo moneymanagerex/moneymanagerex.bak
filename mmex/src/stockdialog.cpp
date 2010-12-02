@@ -261,6 +261,10 @@ void mmStockDialog::CreateControls()
     wxBoxSizer* itemBoxSizer28 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel27->SetSizer(itemBoxSizer28);
 
+    wxButton* itemButton31 = new wxButton( itemPanel27, ID_BUTTON_STOCK_WEBPRICE, 
+        _("Stock Price Web Page"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer28->Add(itemButton31, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+
     wxButton* itemButton29 = new wxButton( itemPanel27, ID_BUTTON_STOCK_OK, 
         _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer28->Add(itemButton29, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
@@ -268,10 +272,6 @@ void mmStockDialog::CreateControls()
     wxButton* itemButton30 = new wxButton( itemPanel27, ID_BUTTON_STOCK_CANCEL, 
         _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer28->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-
-	 wxButton* itemButton31 = new wxButton( itemPanel27, ID_BUTTON_STOCK_WEBPRICE, 
-        _("Stock Price Web Page"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer28->Add(itemButton31, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 }
 
 void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
