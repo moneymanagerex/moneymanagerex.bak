@@ -264,6 +264,9 @@ void mmTransDialog::CreateControls()
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer3->Add(itemBoxSizer4, 0, wxALIGN_LEFT|wxALL, 5);
 
+    wxSizerFlags flags;
+    flags.Border();
+
     wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC,
         _("Transaction Type"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer4->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
@@ -281,10 +284,10 @@ void mmTransDialog::CreateControls()
     choiceTrans_->SetSelection(0);
     choiceTrans_->SetToolTip(_("Specify the type of transactions to be created."));
 
-    bAdvanced_ = new wxButton( itemDialog1, ID_DIALOG_TRANS_BUTTONADVANCED, _("Advanced"), 
-        wxDefaultPosition, wxSize(100, -1), 0 );
+    bAdvanced_ = new wxButton( itemDialog1, ID_DIALOG_TRANS_BUTTONADVANCED, _("Advanced"));
     bAdvanced_->Enable(false);
-    itemBoxSizer4->Add(bAdvanced_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxFont fnt = itemDialog1->GetFont();
+    itemBoxSizer4->Add(bAdvanced_, flags);
 //    bAdvanced_->SetToolTip(_("Specify advanced settings for transaction"));
     bAdvanced_->SetToolTip(_("Specify the transfer amount in the To Account"));
 
@@ -386,7 +389,7 @@ void mmTransDialog::CreateControls()
         _("Reconciled"),
         _("Void"),
         _("Follow up"),
-		_("Duplicate")
+	_("Duplicate")
     };  
     
     choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, 
@@ -411,26 +414,39 @@ void mmTransDialog::CreateControls()
 
     textAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, 
         wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer8->Add(textAmount_, 0, 
+    itemFlexGridSizer8->Add(textAmount_, 0,
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     textAmount_->SetToolTip(_("Specify the amount for this transaction"));
 
-    wxPanel* itemPanel25 = new wxPanel( itemDialog1, wxID_ANY, 
+    wxPanel* itemPanel25 = new wxPanel( itemDialog1, wxID_ANY,
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemBoxSizer3->Add(itemPanel25, 0, wxALIGN_RIGHT|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer26 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel25->SetSizer(itemBoxSizer26);
 
-    wxButton* itemButton27 = new wxButton( itemPanel25, 
-        ID_DIALOG_TRANS_BUTTON_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer26->Add(itemButton27, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxButton* itemButton27 = new wxButton( itemPanel25, ID_DIALOG_TRANS_BUTTON_OK, _("OK"));
+    fnt.SetWeight(wxFONTWEIGHT_NORMAL);
+    fnt.SetPointSize(fnt.GetPointSize());
+    itemButton27->SetFont(fnt);
+    itemButton27->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
+    itemBoxSizer26->Add(itemButton27, flags);
 
+<<<<<<< .mine
+    wxButton* itemButton28 = new wxButton( itemPanel25, ID_DIALOG_TRANS_BUTTON_CANCEL, _("Cancel"));
+    fnt.SetWeight(wxFONTWEIGHT_NORMAL);
+    fnt.SetPointSize(fnt.GetPointSize());
+    itemButton28->SetFont(fnt);
+    itemButton28->SetForegroundColour(wxColour(wxT("RED")));
+    itemBoxSizer26->Add(itemButton28, flags);
+    
+=======
     wxButton* itemButton28 = new wxButton( itemPanel25, 
     // Do not close window when Escape button pressed
     //    wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
     ID_DIALOG_TRANS_BUTTON_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer26->Add(itemButton28, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+>>>>>>> .r1014
 }
 
 void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
@@ -963,4 +979,5 @@ void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
     textAmount_->SetValue(dispAmount);
   }
 }
+
 
