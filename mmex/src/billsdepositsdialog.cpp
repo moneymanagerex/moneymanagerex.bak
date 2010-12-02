@@ -484,12 +484,12 @@ void mmBDDialog::CreateControls()
     wxBoxSizer* itemBoxSizer26 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel25->SetSizer(itemBoxSizer26);
 
-    wxButton* itemButton27 = new wxButton( itemPanel25, ID_DIALOG_TRANS_BUTTON_OK, 
-        _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton27 = new wxButton( itemPanel25, ID_DIALOG_TRANS_BUTTON_OK, _("OK"));
+    itemButton27->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
     itemBoxSizer26->Add(itemButton27, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton28 = new wxButton( itemPanel25, 
-        wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton28 = new wxButton( itemPanel25, wxID_CANCEL, _("Cancel"));
+    itemButton28->SetForegroundColour(wxColour(wxT("RED")));
     itemBoxSizer26->Add(itemButton28, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 }
 
