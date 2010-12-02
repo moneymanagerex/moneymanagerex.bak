@@ -266,19 +266,19 @@ void mmStocksPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_NEW_STOCK, _("&New"),
-                                          wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_NEW_STOCK, _("&New"));
+    itemButton6->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
     itemButton6->SetToolTip(_("New Stock Investment"));
     itemBoxSizer5->Add(itemButton6, 0, wxGROW|wxALL, 1);
 
-    wxButton* itemButton81 = new wxButton( itemPanel12, ID_BUTTON_EDIT_STOCK, _("&Edit"),
-                                           wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton81 = new wxButton( itemPanel12, ID_BUTTON_EDIT_STOCK, _("&Edit"));
+    itemButton81->SetForegroundColour(wxColour(wxT("ORANGE")));
     itemButton81->SetToolTip(_("Edit Stock Investment"));
     itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 	itemButton81->Enable(false);
 
-    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_DELETE_STOCK, _("&Delete"),
-                                          wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_DELETE_STOCK, _("&Delete"));
+    itemButton7->SetForegroundColour(wxColour(wxT("RED")));
     itemButton7->SetToolTip(_("Delete Stock Investment"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 	itemButton7->Enable(false);
