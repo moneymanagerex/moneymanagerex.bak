@@ -716,14 +716,14 @@ void mmCheckingPanel::CreateControls()
     wxButton* itemButton7 = new wxButton(itemPanel12, ID_BUTTON_EDIT_TRANS, _("&Edit"));
     itemButton7->SetToolTip(_("Edit selected transaction"));
     itemButton7->SetFont(fnt);
-    itemButton7->SetForegroundColour(wxColour(wxT("SALMON")));
+    itemButton7->SetForegroundColour(wxColour(wxT("ORANGE")));
     itemBoxSizer5->Add(itemButton7, flags);
     itemButton7->Enable(false);
 
     wxButton* itemButton8 = new wxButton(itemPanel12, ID_BUTTON_DELETE_TRANS, _("&Delete"));
     itemButton8->SetToolTip(_("Delete selected transaction"));
     itemButton8->SetFont(fnt);
-    itemButton8->SetForegroundColour(wxColour(wxT("ORANGE"))); // FIREBRICK
+    itemButton8->SetForegroundColour(wxColour(wxT("RED"))); 
     itemBoxSizer5->Add(itemButton8, flags);
     itemButton8->Enable(false);
 
