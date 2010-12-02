@@ -265,12 +265,12 @@ void mmStockDialog::CreateControls()
         _("Stock Price Web Page"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer28->Add(itemButton31, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
-    wxButton* itemButton29 = new wxButton( itemPanel27, ID_BUTTON_STOCK_OK, 
-        _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton29 = new wxButton( itemPanel27, ID_BUTTON_STOCK_OK, _("OK"));
+    itemButton29->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
     itemBoxSizer28->Add(itemButton29, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
-    wxButton* itemButton30 = new wxButton( itemPanel27, ID_BUTTON_STOCK_CANCEL, 
-        _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton30 = new wxButton( itemPanel27, ID_BUTTON_STOCK_CANCEL, _("Cancel"));
+    itemButton30->SetForegroundColour(wxColour(wxT("RED")));
     itemBoxSizer28->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 }
 
