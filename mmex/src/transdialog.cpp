@@ -432,21 +432,13 @@ void mmTransDialog::CreateControls()
     itemButton27->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
     itemBoxSizer26->Add(itemButton27, flags);
 
-<<<<<<< .mine
     wxButton* itemButton28 = new wxButton( itemPanel25, ID_DIALOG_TRANS_BUTTON_CANCEL, _("Cancel"));
     fnt.SetWeight(wxFONTWEIGHT_NORMAL);
     fnt.SetPointSize(fnt.GetPointSize());
     itemButton28->SetFont(fnt);
     itemButton28->SetForegroundColour(wxColour(wxT("RED")));
     itemBoxSizer26->Add(itemButton28, flags);
-    
-=======
-    wxButton* itemButton28 = new wxButton( itemPanel25, 
-    // Do not close window when Escape button pressed
-    //    wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-    ID_DIALOG_TRANS_BUTTON_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer26->Add(itemButton28, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
->>>>>>> .r1014
+
 }
 
 void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
