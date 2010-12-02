@@ -213,14 +213,14 @@ void mmAssetsPanel::CreateControls()
     wxButton* itemButton81 = new wxButton( itemPanel12, IDC_BUTTON_EDIT_ASSET, _("&Edit"));
     itemButton81->SetToolTip(_("Edit Asset"));
     itemButton81->SetFont(fnt);
-    itemButton81->SetForegroundColour(wxColour(wxT("SALMON")));
+    itemButton81->SetForegroundColour(wxColour(wxT("ORANGE")));
     itemBoxSizer5->Add(itemButton81, flags);
 	itemButton81->Enable(false);
 	
     wxButton* itemButton7 = new wxButton( itemPanel12, IDC_BUTTON_DELETE_ASSET, _("&Delete"));
     itemButton7->SetToolTip(_("Delete Asset"));
     itemButton7->SetFont(fnt);
-    itemButton7->SetForegroundColour(wxColour(wxT("ORANGE"))); // FIREBRICK
+    itemButton7->SetForegroundColour(wxColour(wxT("RED"))); // FIREBRICK
     itemBoxSizer5->Add(itemButton7, flags);
     itemButton7->Enable(false);
 }
