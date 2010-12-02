@@ -265,15 +265,13 @@ void mmAssetDialog::CreateControls()
     itemFlexGridSizer6->Add(m_valueChangeRate, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     enableDisableRate(false);
 
-    wxStaticText* itemStaticText19 = new wxStaticText( itemPanel5, wxID_STATIC, 
-        _("Notes"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText19, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText19 = new wxStaticText( itemPanel5, wxID_STATIC, _("Notes"));
+    itemFlexGridSizer6->Add(itemStaticText19, 0, 5);
 
-    m_notes = new wxTextCtrl( itemPanel5, wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxSize(-1, 75), wxTE_MULTILINE );
+    m_notes = new wxTextCtrl( itemPanel5, wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxSize(300, 120), wxTE_MULTILINE );
     m_notes->SetToolTip(_("Enter notes associated with this asset"));
     itemFlexGridSizer6->Add(m_notes, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-  
     wxPanel* itemPanel27 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemBoxSizer3->Add(itemPanel27, 0, wxALIGN_RIGHT|wxALL, 5);
 
@@ -281,9 +279,11 @@ void mmAssetDialog::CreateControls()
     itemPanel27->SetSizer(itemBoxSizer28);
 
     wxButton* itemButton29 = new wxButton( itemPanel27, IDC_BUTTON_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemButton29->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
     itemBoxSizer28->Add(itemButton29, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
     wxButton* itemButton30 = new wxButton( itemPanel27, IDC_BUTTON_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemButton30->SetForegroundColour(wxColour(wxT("RED")));
     itemBoxSizer28->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 }
