@@ -334,12 +334,12 @@ void mmFilterTransactionsDialog::CreateControls()
     wxBoxSizer* itemBoxSizer29 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel28->SetSizer(itemBoxSizer29);
 
-    wxButton* itemButton30 = new wxButton( itemPanel28, ID_BUTTONOK, _("OK"), 
-       wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton30 = new wxButton( itemPanel28, ID_BUTTONOK, _("OK"));
+    itemButton30->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
     itemBoxSizer29->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton31 = new wxButton( itemPanel28, ID_BUTTONCANCEL, _("Cancel"), 
-       wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton31 = new wxButton( itemPanel28, ID_BUTTONCANCEL, _("Cancel"));
+    itemButton31->SetForegroundColour(wxColour(wxT("RED")));
     itemBoxSizer29->Add(itemButton31, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 ////@end mmFilterTransactionsDialog content construction
