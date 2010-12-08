@@ -564,11 +564,11 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
             menu.Append(MENU_VIEW_FLAGGED, _("View Flagged Transactions"));
 			menu.Append(MENU_VIEW_DUPLICATE, _("View Duplicate Transactions"));
             menu.AppendSeparator();
-            menu.Append(MENU_VIEW_TODAY, _("View Transactions from today"));
-            menu.Append(MENU_VIEW_LAST30, _("View Transactions from last 30 days"));
-            menu.Append(MENU_VIEW_CURRENTMONTH, _("View Transactions from current month"));
-            menu.Append(MENU_VIEW_LASTMONTH, _("View Transactions from last month"));
-            menu.Append(MENU_VIEW_LAST3MONTHS, _("View Transactions from last 3 months"));
+            menu.Append(MENU_VIEW_TODAY, _("View Transactions for today"));
+            menu.Append(MENU_VIEW_LAST30, _("View Transactions for last 30 days"));
+            menu.Append(MENU_VIEW_CURRENTMONTH, _("View Transactions for current month"));
+            menu.Append(MENU_VIEW_LASTMONTH, _("View Transactions for last month"));
+            menu.Append(MENU_VIEW_LAST3MONTHS, _("View Transactions for last 3 months"));
             menu.AppendSeparator();
             menu.Append(MENU_VIEW_DELETE_TRANS, _("Delete all transactions in current view"));
             menu.Append(MENU_VIEW_DELETE_FLAGGED, _("Delete all flagged transactions"));
@@ -849,7 +849,7 @@ const TransactionMatchMap& initTransactionMatchMap()
 	map[wxT("View 30 days")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<30> >()), true);
 	map[wxT("View 90 days")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<90> >()), true);
 	map[wxT("View Current Month")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::CurrentMonth<> >()), true);
-	map[wxT("View Last Month")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<1, 1> >()), true);
+	map[wxT("View Last Month")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<1, 0> >()), true);
 	map[wxT("View Last 3 Months")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<2> >()), true);
 
 	return map;
@@ -909,6 +909,18 @@ void mmCheckingPanel::initVirtualListControl()
 				getBal = data.second;
 			}
 		}
+
+        if ( m_currentView == wxT("View Last Month") )
+        {
+            if (toAdd)
+            {
+                if ( pBankTransaction->date_.GetMonth() == wxDateTime::Now().GetMonth() )
+                {
+                    toAdd  = false;  // remove the current months transaction from the list.
+                    getBal = false;  // do not add these to the unseenBalance
+                }
+            }
+        }
 
         if (toAdd)
         {
@@ -1076,23 +1088,23 @@ void mmCheckingPanel::initViewTransactionsHeader()
     }
     else if (m_currentView == wxT("View Today"))
     {
-       header->SetLabel(_("Viewing transactions from today"));
+       header->SetLabel(_("Viewing transactions for today"));
     }
     else if (m_currentView == wxT("View 30 days"))
     {
-        header->SetLabel(_("Viewing transactions from last 30 days"));
+        header->SetLabel(_("Viewing transactions for last 30 days"));
     }
     else if (m_currentView == wxT("View 90 days"))
     {
-        header->SetLabel(_("Viewing transactions from last 3 months"));
+        header->SetLabel(_("Viewing transactions for last 3 months"));
     }
     else if (m_currentView == wxT("View Current Month"))
     {
-        header->SetLabel(_("Viewing transactions from current month"));
+        header->SetLabel(_("Viewing transactions for current month"));
     }
     else if (m_currentView == wxT("View Last Month"))
     {
-        header->SetLabel(_("Viewing transactions from last month"));
+        header->SetLabel(_("Viewing transactions for last month"));
     }
     else if (m_currentView == wxT("View Not-Reconciled"))
     {
@@ -1132,27 +1144,27 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     }
     else if (evt == MENU_VIEW_TODAY)
     {
-        header->SetLabel(_("Viewing transactions from today"));
+        header->SetLabel(_("Viewing transactions for today"));
         m_currentView = wxT("View Today");
     }
     else if (evt == MENU_VIEW_LAST30)
     {
-        header->SetLabel(_("Viewing transactions from last 30 days"));
+        header->SetLabel(_("Viewing transactions for last 30 days"));
         m_currentView = wxT("View 30 days");
     }
     else if (evt == MENU_VIEW_LAST3MONTHS)
     {
-        header->SetLabel(_("Viewing transactions from last 3 months"));
+        header->SetLabel(_("Viewing transactions for last 3 months"));
         m_currentView = wxT("View 90 days");
     }
     else if (evt == MENU_VIEW_CURRENTMONTH)
     {
-        header->SetLabel(_("Viewing transactions from current month"));
+        header->SetLabel(_("Viewing transactions for current month"));
         m_currentView = wxT("View Current Month");
     }
     else if (evt == MENU_VIEW_LASTMONTH)
     {
-        header->SetLabel(_("Viewing transactions from last month"));
+        header->SetLabel(_("Viewing transactions for last month"));
         m_currentView = wxT("View Last Month");
     }
 	else if (evt == MENU_VIEW_DUPLICATE)
