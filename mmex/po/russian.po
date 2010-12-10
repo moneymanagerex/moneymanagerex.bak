@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-26 14:21+0300\n"
-"PO-Revision-Date: 2010-11-29 11:32+0300\n"
+"POT-Creation-Date: 2010-12-10 17:08+0300\n"
+"PO-Revision-Date: 2010-12-10 17:14+0300\n"
 "Last-Translator: Nikolay <vomikan@mail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -197,33 +197,33 @@ msgid "Specify if the value of the asset changes over time"
 msgstr "Выберите, если происходит изменение стоимости актива со временем"
 
 #: src/assetdialog.cpp:260
-msgid "Rate of Change"
-msgstr "Процент изменения стоимости"
+msgid "% Rate"
+msgstr "% изменения"
 
 #: src/assetdialog.cpp:264
 msgid "Enter the rate at which the asset changes its value in % per year"
 msgstr "Введите ежегодное изменение стоимости имущества в % "
 
-#: src/assetdialog.cpp:269
+#: src/assetdialog.cpp:268
 #: src/assetspanel.cpp:170
 #: src/billsdepositsdialog.cpp:461
 #: src/billsdepositspanel.cpp:178
 msgid "Notes"
 msgstr "Примечания"
 
-#: src/assetdialog.cpp:273
+#: src/assetdialog.cpp:272
 msgid "Enter notes associated with this asset"
 msgstr "Введите примечания для этого актива"
 
-#: src/assetdialog.cpp:283
-#: src/billsdepositsdialog.cpp:488
+#: src/assetdialog.cpp:281
+#: src/billsdepositsdialog.cpp:487
 #: src/budgetentrydialog.cpp:180
 #: src/budgetyearentrydialog.cpp:121
 msgid "OK"
 msgstr "OK"
 
-#: src/assetdialog.cpp:286
-#: src/billsdepositsdialog.cpp:492
+#: src/assetdialog.cpp:285
+#: src/billsdepositsdialog.cpp:491
 #: src/budgetentrydialog.cpp:184
 #: src/budgetyearentrydialog.cpp:126
 msgid "Cancel"
@@ -1182,7 +1182,7 @@ msgstr "Прочие доходы"
 msgid "Other Expenses"
 msgstr "Прочие расходы"
 
-#: src/dbwrapper.cpp:2813
+#: src/dbwrapper.cpp:2838
 #, c-format
 msgid ""
 "\n"
@@ -1300,23 +1300,23 @@ msgid "View Duplicate Transactions"
 msgstr "Показать повторяющиеся проводки"
 
 #: src/mmcheckingpanel.cpp:567
-msgid "View Transactions from today"
+msgid "View Transactions for today"
 msgstr "Показать проводки за сегодня"
 
 #: src/mmcheckingpanel.cpp:568
-msgid "View Transactions from last 30 days"
+msgid "View Transactions for last 30 days"
 msgstr "Показать проводки за последние 30 дней"
 
 #: src/mmcheckingpanel.cpp:569
-msgid "View Transactions from current month"
+msgid "View Transactions for current month"
 msgstr "Показать проводки за текущий месяц"
 
 #: src/mmcheckingpanel.cpp:570
-msgid "View Transactions from last month"
+msgid "View Transactions for last month"
 msgstr "Показать проводки за предыдущий месяц"
 
 #: src/mmcheckingpanel.cpp:571
-msgid "View Transactions from last 3 months"
+msgid "View Transactions for last 3 months"
 msgstr "Показать проводки за последние 3 месяца"
 
 #: src/mmcheckingpanel.cpp:573
@@ -1369,164 +1369,164 @@ msgstr "Обращение к Базе данных"
 msgid "Account View : "
 msgstr "Просмотр счёта: "
 
-#: src/mmcheckingpanel.cpp:1067
-#: src/mmcheckingpanel.cpp:1110
+#: src/mmcheckingpanel.cpp:1079
+#: src/mmcheckingpanel.cpp:1122
 msgid "Viewing all transactions"
 msgstr "Просмотр всех проводок"
 
-#: src/mmcheckingpanel.cpp:1071
-#: src/mmcheckingpanel.cpp:1115
+#: src/mmcheckingpanel.cpp:1083
+#: src/mmcheckingpanel.cpp:1127
 msgid "Viewing Reconciled transactions"
 msgstr "Просмотр выверенных проводок"
 
-#: src/mmcheckingpanel.cpp:1075
-#: src/mmcheckingpanel.cpp:1125
+#: src/mmcheckingpanel.cpp:1087
+#: src/mmcheckingpanel.cpp:1137
 msgid "Viewing Un-Reconciled transactions"
 msgstr "Просмотр не выверенных проводок"
 
-#: src/mmcheckingpanel.cpp:1079
-#: src/mmcheckingpanel.cpp:1135
-msgid "Viewing transactions from today"
+#: src/mmcheckingpanel.cpp:1091
+#: src/mmcheckingpanel.cpp:1147
+msgid "Viewing transactions for today"
 msgstr "Просмотр проводок за сегодня"
 
-#: src/mmcheckingpanel.cpp:1083
-#: src/mmcheckingpanel.cpp:1140
-msgid "Viewing transactions from last 30 days"
+#: src/mmcheckingpanel.cpp:1095
+#: src/mmcheckingpanel.cpp:1152
+msgid "Viewing transactions for last 30 days"
 msgstr "Просмотр проводок за последние 30 дней"
 
-#: src/mmcheckingpanel.cpp:1087
-#: src/mmcheckingpanel.cpp:1145
-msgid "Viewing transactions from last 3 months"
+#: src/mmcheckingpanel.cpp:1099
+#: src/mmcheckingpanel.cpp:1157
+msgid "Viewing transactions for last 3 months"
 msgstr "Просмотр проводок за последние 3 месяца"
 
-#: src/mmcheckingpanel.cpp:1091
-#: src/mmcheckingpanel.cpp:1150
-msgid "Viewing transactions from current month"
+#: src/mmcheckingpanel.cpp:1103
+#: src/mmcheckingpanel.cpp:1162
+msgid "Viewing transactions for current month"
 msgstr "Просмотр проводок за текущий месяц"
 
-#: src/mmcheckingpanel.cpp:1095
-#: src/mmcheckingpanel.cpp:1155
-msgid "Viewing transactions from last month"
+#: src/mmcheckingpanel.cpp:1107
+#: src/mmcheckingpanel.cpp:1167
+msgid "Viewing transactions for last month"
 msgstr "Просмотр проводок за прошлый месяц"
 
-#: src/mmcheckingpanel.cpp:1099
+#: src/mmcheckingpanel.cpp:1111
 msgid "Viewing All Except Reconciled Transactions"
 msgstr "Просмотр всех проводок, кроме выверенных"
 
-#: src/mmcheckingpanel.cpp:1120
+#: src/mmcheckingpanel.cpp:1132
 msgid "Viewing Void transactions"
 msgstr "Просмотр неучтённых проводок"
 
-#: src/mmcheckingpanel.cpp:1130
+#: src/mmcheckingpanel.cpp:1142
 msgid "Viewing Flagged transactions"
 msgstr "Просмотр отмеченных проводок"
 
-#: src/mmcheckingpanel.cpp:1160
+#: src/mmcheckingpanel.cpp:1172
 msgid "Viewing duplicate transactions"
 msgstr "Просмотр повторяющихся проводок"
 
-#: src/mmcheckingpanel.cpp:1165
+#: src/mmcheckingpanel.cpp:1177
 msgid "Viewing All except Reconciled Transactions"
 msgstr "Просмотр всех проводок, кроме выверенных"
 
-#: src/mmcheckingpanel.cpp:1170
+#: src/mmcheckingpanel.cpp:1182
 msgid "Do you really want to delete all the transactions shown?"
 msgstr "Вы действительно хотите удалить все показанные проводки?"
 
-#: src/mmcheckingpanel.cpp:1171
-#: src/mmcheckingpanel.cpp:1185
+#: src/mmcheckingpanel.cpp:1183
+#: src/mmcheckingpanel.cpp:1197
 msgid "Confirm Transaction Deletion"
 msgstr "Подтверждение удаления проводки"
 
-#: src/mmcheckingpanel.cpp:1184
+#: src/mmcheckingpanel.cpp:1196
 msgid "Do you really want to delete all the flagged transactions?"
 msgstr "Вы действительно хотите удалить все отмеченные проводки?"
 
-#: src/mmcheckingpanel.cpp:1228
+#: src/mmcheckingpanel.cpp:1240
 msgid "&New Transaction"
 msgstr "Новая проводка"
 
-#: src/mmcheckingpanel.cpp:1230
+#: src/mmcheckingpanel.cpp:1242
 msgid "&Edit Transaction"
 msgstr "&Редактировать"
 
-#: src/mmcheckingpanel.cpp:1231
+#: src/mmcheckingpanel.cpp:1243
 msgid "&Delete Transaction"
 msgstr "&Удалить"
 
-#: src/mmcheckingpanel.cpp:1232
+#: src/mmcheckingpanel.cpp:1244
 msgid "&Copy Transaction"
 msgstr "&Копировать"
 
-#: src/mmcheckingpanel.cpp:1233
+#: src/mmcheckingpanel.cpp:1245
 msgid "&Move Transaction"
 msgstr "Пере&местить"
 
-#: src/mmcheckingpanel.cpp:1235
+#: src/mmcheckingpanel.cpp:1247
 msgid "&Paste Transaction"
 msgstr "Встав&ить"
 
-#: src/mmcheckingpanel.cpp:1237
+#: src/mmcheckingpanel.cpp:1249
 msgid "Mark As &Reconciled"
 msgstr "Выверен&о"
 
-#: src/mmcheckingpanel.cpp:1238
+#: src/mmcheckingpanel.cpp:1250
 msgid "Mark As &Unreconciled"
 msgstr "&Не выверено"
 
-#: src/mmcheckingpanel.cpp:1239
+#: src/mmcheckingpanel.cpp:1251
 msgid "Mark As &Void"
 msgstr "Не у&читывать "
 
-#: src/mmcheckingpanel.cpp:1240
+#: src/mmcheckingpanel.cpp:1252
 msgid "Mark For &Followup"
 msgstr "&Отслеживать"
 
-#: src/mmcheckingpanel.cpp:1241
+#: src/mmcheckingpanel.cpp:1253
 msgid "Mark As &Duplicate"
 msgstr "&Повтор"
 
-#: src/mmcheckingpanel.cpp:1245
+#: src/mmcheckingpanel.cpp:1257
 msgid "as Reconciled"
 msgstr "Выверено"
 
-#: src/mmcheckingpanel.cpp:1246
+#: src/mmcheckingpanel.cpp:1258
 msgid "as Unreconciled"
 msgstr "Не выверено"
 
-#: src/mmcheckingpanel.cpp:1247
+#: src/mmcheckingpanel.cpp:1259
 msgid "as Void"
 msgstr "Не учитывать"
 
-#: src/mmcheckingpanel.cpp:1248
+#: src/mmcheckingpanel.cpp:1260
 msgid "as needing Followup"
 msgstr "Отслеживать"
 
-#: src/mmcheckingpanel.cpp:1249
+#: src/mmcheckingpanel.cpp:1261
 msgid "as Duplicate"
 msgstr "Повтор"
 
-#: src/mmcheckingpanel.cpp:1250
+#: src/mmcheckingpanel.cpp:1262
 msgid "Mark all "
 msgstr "Отметить все как"
 
-#: src/mmcheckingpanel.cpp:1627
+#: src/mmcheckingpanel.cpp:1639
 msgid "Do you really want to delete the transaction?"
 msgstr "Вы действительно хотите удалить проводку?"
 
-#: src/mmcheckingpanel.cpp:1628
+#: src/mmcheckingpanel.cpp:1640
 msgid "Delete Transaction"
 msgstr "Удаление проводки"
 
-#: src/mmcheckingpanel.cpp:1712
+#: src/mmcheckingpanel.cpp:1724
 msgid "Moving Transaction from "
 msgstr "Перемещение проводок из "
 
-#: src/mmcheckingpanel.cpp:1712
+#: src/mmcheckingpanel.cpp:1724
 msgid " to..."
 msgstr "в..."
 
-#: src/mmcheckingpanel.cpp:1713
+#: src/mmcheckingpanel.cpp:1725
 msgid "Select the destination Account "
 msgstr "Выберите счёт назначения "
 
@@ -2068,7 +2068,7 @@ msgstr "&Фильтр проводок"
 #: src/mmex.cpp:2614
 #: src/mmex.cpp:2724
 msgid "Transaction Filter"
-msgstr "&Фильтр проводок"
+msgstr "Фильтр проводок"
 
 #: src/mmex.cpp:2621
 msgid "&Options"
@@ -2378,7 +2378,7 @@ msgstr " счёт: "
 
 #: src/mmex.cpp:3719
 msgid " ?"
-msgstr ""
+msgstr "?"
 
 #: src/mmex.cpp:3826
 msgid "Set Currency"
@@ -3335,7 +3335,7 @@ msgstr "Введите текущий курс акций"
 msgid "Enter notes associated with this investment"
 msgstr "Введите примечания, связанные с этими инвестициями"
 
-#: src/stockdialog.cpp:273
+#: src/stockdialog.cpp:265
 msgid "Stock Price Web Page"
 msgstr "Web-страница котировок"
 
@@ -3501,17 +3501,17 @@ msgstr "Вы действительно хотите удалить эту ин�
 msgid "Confirm Stock Investment Deletion"
 msgstr "Подтвердите удаление инвестиции"
 
-#: src/transdialog.cpp:307
-#: src/transdialog.cpp:720
-#: src/transdialog.cpp:736
+#: src/transdialog.cpp:311
+#: src/transdialog.cpp:731
+#: src/transdialog.cpp:747
 msgid "Specify to whom the transaction is going to or coming from "
 msgstr "Выберите к кому или от кого исходит проводка"
 
-#: src/transdialog.cpp:328
+#: src/transdialog.cpp:332
 msgid "Populate Transaction #"
 msgstr "Присвоить номер"
 
-#: src/transdialog.cpp:741
+#: src/transdialog.cpp:752
 msgid "Select To Account"
 msgstr "На счёт"
 
@@ -3916,6 +3916,9 @@ msgstr "Импорт Universal CSV"
 #: src/yahoosettingsdialog.h:108
 msgid "Options"
 msgstr "Настройки"
+
+#~ msgid "Rate of Change"
+#~ msgstr "Процент изменения стоимости"
 
 #~ msgid "Specify advanced settings for transaction"
 #~ msgstr "Укажите дополнительные параметры проводки"
