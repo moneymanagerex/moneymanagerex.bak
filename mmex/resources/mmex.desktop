@@ -29,5 +29,5 @@ Comment[tr]=Ücretsiz, açık kaynak, çapraz platform, kolay kişisel finans ya
 Comment[uk]=A free, open-source, cross-platform, easy-to-use personal finance software
 Icon=/usr/share/icons/hicolor/scalable/apps/mmex.svg
 Terminal=false
-DocPath=mmex/mmex.html
-Categories=Application;Finance;Office;
+DocPath=mmex/help/index.html
+Categories=Finance;Office;
