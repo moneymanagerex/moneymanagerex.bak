@@ -6,7 +6,8 @@ make install
 mkdir ~/build/mmex/DEBIAN
 cp setup/linux/debian/control setup/linux/debian/debian-binary  ~/build/mmex/DEBIAN
 cd ~/build
-dpkg-deb -b mmex
+fakeroot dpkg-deb -b mmex
+lintian mmex.deb
 
 dpkg -i mmex.deb
 mmex&
