@@ -1,5 +1,15 @@
 Version History of Money Manager Ex
 
+0.9.7.0 (December 20, 2010)
+- wxSQLite3 updated to v 2.0.0 (sqlite3 v.3.7.0)
+- Notes field added on the bottom of the main screen
+- Move functionality for transactions added
+- New type of accounts - Term account added
+- Escape button will not close the New/Edit transaction window (for Chinese typing support)
+- Notes colums for Assets added
+- Logo in SVG format added. Created by zhart http://forum.ubuntu.ru.
+- and bugfixes
+
 0.9.6.0 (May 11, 2010)
 - wxSQLite3 updated to v.1.9.9 (sqlite3 v.3.6.23.1).
 - CurrencyFormatter refactoring, bugfix for huge amounts (like a 1000000000000)
