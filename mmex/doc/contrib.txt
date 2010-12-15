@@ -1,5 +1,6 @@
 Active developers
 ==================
+Stefano
 Vadim
 Nikolay
 Alex Ukhov
