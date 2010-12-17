@@ -3992,7 +3992,7 @@ wxAddAccountPage2::wxAddAccountPage2(mmAddAccountWizard *parent) :
 
     mainSizer->Add(
         new wxStaticText(this, wxID_ANY,
-        _("Term accounts are specialized bank accounts. Intended for asset\ntype accounts such as Term Deposits and Bonds. These accounts\ncan have regular money comming in and out, being outside the\ngeneral income stream.")), 0,
+        _("Term accounts are specialized bank accounts. Intended for asset\ntype accounts such as Term Deposits and Bonds. These accounts\ncan have regular money coming in and out, being outside the\ngeneral income stream.")), 0,
         wxALL,
         5);
 
