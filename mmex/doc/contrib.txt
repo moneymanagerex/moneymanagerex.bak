@@ -1,12 +1,12 @@
 Active developers
 ==================
-Stefano
-Vadim
-Nikolay
-Alex Ukhov
+Stefano [stef145g]
+Nikolay [Nikolay]
 
 Code Fixes/Patches
 ==================
+Vadim
+Alex Ukhov
 Priyank Bolia
 jblough
 Stuart
@@ -29,62 +29,62 @@ http://www.famfamfam.com/lab/icons/silk/
 
 Translations
 ============
-Italian
--- Claudio
-French
--- Berry As, Jean-Christophe, bipop, drambeau, Ben, Ghislain Baudichaud
-Greek
--- Panagiotis Pentzeridis
-Czech
--- Josef Remes
-Russian
--- KarmaSV, Nikolay Akimov, Churzzz, Vadim
 Brazilian Portuguese
 -- Jose Carlos
-German
--- Schrempfi, goe, STiGMaTa_ch, Kai Kajus Noack
-Simple Chinese
--- Liu Ming
-Tr. Chinese
--- Kysouke
-Hebrew
--- Ykpui
-Tamil
--- Gopi Gopalakrishnan, Muguntharaj Subramanian
-Croatian
--- Goran Bobanovic
-Polish
--- Andrzej, Damian_pl
-Ukrainian
--- Leonid Shturma
-Spanish
--- Javier, Roberto
-Hungarian
--- Csaba
-Slovak
--- Abadyba, Misko B
-Turkish
--- Murat Bilgen
-Vietnamese
--- Nicky, Luu Cong Thanh
-Norwegian
--- Fredrik Strand, Torbjorn Kvande
-Romanian
--- Munteanu & Florin
-Indonesian Translation 
--- Dindin
-Swedish
--- Tomplast
-Dutch
--- Theo Kamphuis
 Bulgarian
 -- Ivan Gyokov
-Portuguese (Portugal)
--- Fatela
+Croatian
+-- Goran Bobanovic
+Czech
+-- Josef Remes
+Dutch
+-- Theo Kamphuis
 Dutch (Belgian)
 -- Rol
 Englsh (UK)
 - mcrossley
+French
+-- Berry As, Jean-Christophe, bipop, drambeau, Ben, Ghislain Baudichaud
+German
+-- Schrempfi, goe, STiGMaTa_ch, Kai Kajus Noack
+Greek
+-- Panagiotis Pentzeridis
+Hebrew
+-- Ykpui
+Hungarian
+-- Csaba
+Indonesian Translation 
+-- Dindin
+Italian
+-- Claudio
+Norwegian
+-- Fredrik Strand, Torbjorn Kvande
+Polish
+-- Andrzej, Damian_pl
+Portuguese (Portugal)
+-- Fatela
+Romanian
+-- Munteanu & Florin
+Russian
+-- KarmaSV, Nikolay, Churzzz, Vadim
+Simple Chinese
+-- Liu Ming
+Slovak
+-- Abadyba, Misko B
+Spanish
+-- Javier, Roberto
+Swedish
+-- Tomplast
+Tr. Chinese
+-- Kysouke
+Tamil
+-- Gopi Gopalakrishnan, Muguntharaj Subramanian
+Turkish
+-- Murat Bilgen
+Ukrainian
+-- Leonid Shturma
+Vietnamese
+-- Nicky, Luu Cong Thanh
 
 User Manual
 ===========
@@ -114,3 +114,4 @@ Michelle Sarkis
 Gabriele Falistocco
 jchalmers
 willmetz
+

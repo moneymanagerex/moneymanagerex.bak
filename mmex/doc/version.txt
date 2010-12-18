@@ -8,6 +8,9 @@ Version History of Money Manager Ex
 - Escape button will not close the New/Edit transaction window (for Chinese typing support)
 - Notes colums for Assets added
 - Logo in SVG format added. Created by zhart http://forum.ubuntu.ru.
+- New Financial Reports covering 1 July to 30 June.
+- New Menu Items in View
+- Assets: Value calculation changed to compound interest.
 - and bugfixes
 
 0.9.6.0 (May 11, 2010)
