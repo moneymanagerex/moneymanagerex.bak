@@ -795,6 +795,16 @@ bool mmGUIFrame::expandedTermAccounts()
 
 void mmGUIFrame::updateNavTreeControl()
 {
+    bool activateTermAccounts = false;
+    int numAccounts = (int) m_core->accountList_.accounts_.size();
+    
+    for (int iAdx = 0; iAdx < numAccounts; iAdx++)
+    {
+        mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(m_core->accountList_.accounts_[iAdx].get());
+        if (pTA)
+            activateTermAccounts = true;
+    }
+
     navTreeCtrl_->DeleteAllItems();
     navTreeCtrl_->SetBackgroundColour(mmColors::navTreeBkColor);
 
@@ -806,10 +816,14 @@ void mmGUIFrame::updateNavTreeControl()
     navTreeCtrl_->SetItemData(accounts, new mmTreeItemData(wxT("Bank Accounts")));
     navTreeCtrl_->SetItemBold(accounts, true);
 
-//  Positioning for new new type of accounts: Term Accounts        
-    wxTreeItemId termAccount = navTreeCtrl_->AppendItem(root, _("Term Accounts"), 2, 2);
-    navTreeCtrl_->SetItemData(termAccount, new mmTreeItemData(wxT("Term Accounts")));
-    navTreeCtrl_->SetItemBold(termAccount, true);
+    wxTreeItemId termAccount;
+    if (activateTermAccounts)
+    {
+    //  Positioning for new new type of accounts: Term Accounts        
+        termAccount = navTreeCtrl_->AppendItem(root, _("Term Accounts"), 2, 2);
+        navTreeCtrl_->SetItemData(termAccount, new mmTreeItemData(wxT("Term Accounts")));
+        navTreeCtrl_->SetItemBold(termAccount, true);
+    }
 
     wxTreeItemId stocks;
     if (mmIniOptions::enableStocks_)
@@ -1160,7 +1174,7 @@ void mmGUIFrame::updateNavTreeControl()
 
     wxString vAccts = mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("VIEWACCOUNTS"), wxT("ALL"));
 
-    int numAccounts = (int) m_core->accountList_.accounts_.size();
+//  int numAccounts = (int) m_core->accountList_.accounts_.size();
     for (int iAdx = 0; iAdx < numAccounts; iAdx++)
     {
         mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.accounts_[iAdx].get());
@@ -1200,6 +1214,13 @@ void mmGUIFrame::updateNavTreeControl()
     }
 
     navTreeCtrl_->Expand(accounts);
+    if (activateTermAccounts)
+    {
+        navTreeCtrl_->Expand(termAccount);
+        menuBar_->FindItem(MENU_VIEW_TERMACCOUNTS)->Enable(true);
+    } else 
+        menuBar_->FindItem(MENU_VIEW_TERMACCOUNTS)->Enable(false);
+
 }
 //----------------------------------------------------------------------------
 
