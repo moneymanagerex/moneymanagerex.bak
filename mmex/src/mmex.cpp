@@ -796,13 +796,16 @@ bool mmGUIFrame::expandedTermAccounts()
 void mmGUIFrame::updateNavTreeControl()
 {
     bool activateTermAccounts = false;
-    int numAccounts = (int) m_core->accountList_.accounts_.size();
-    
-    for (int iAdx = 0; iAdx < numAccounts; iAdx++)
+    // if no database is present yet, ignore testing for Term Accounts
+    if (m_db)
     {
-        mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(m_core->accountList_.accounts_[iAdx].get());
-        if (pTA)
-            activateTermAccounts = true;
+        int numAccounts = (int) m_core->accountList_.accounts_.size();
+        for (int iAdx = 0; iAdx < numAccounts; iAdx++)
+        {
+            mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(m_core->accountList_.accounts_[iAdx].get());
+            if (pTA)
+                activateTermAccounts = true;
+        }
     }
 
     navTreeCtrl_->DeleteAllItems();
@@ -1174,7 +1177,7 @@ void mmGUIFrame::updateNavTreeControl()
 
     wxString vAccts = mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("VIEWACCOUNTS"), wxT("ALL"));
 
-//  int numAccounts = (int) m_core->accountList_.accounts_.size();
+    int numAccounts = (int) m_core->accountList_.accounts_.size();
     for (int iAdx = 0; iAdx < numAccounts; iAdx++)
     {
         mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.accounts_[iAdx].get());
