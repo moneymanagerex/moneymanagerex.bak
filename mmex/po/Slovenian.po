@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-02 15:36+0300\n"
-"PO-Revision-Date: 2010-08-02 15:36+0300\n"
-"Last-Translator: Nikolay Akimov <nikolay.akimov@gmail.ru>\n"
+"PO-Revision-Date: 2010-12-22 23:40+0100\n"
+"Last-Translator: Gregor Meglič <gregor.meglic@gmail.com>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,9 +25,8 @@ msgid "Version: "
 msgstr "Verzija:"
 
 #: src/aboutdialog.cpp:150
-#, fuzzy
 msgid "  and contributors from around the world"
-msgstr "  in sodelavci iz celega sveta."
+msgstr "  in sodelavci iz celega sveta"
 
 #: src/aboutdialog.cpp:155
 msgid "Released under the GNU GPL License"
@@ -38,7 +37,6 @@ msgid "Version History"
 msgstr "Zgodovina verzije"
 
 #: src/aboutdialog.cpp:176
-#, fuzzy
 msgid "Contributors"
 msgstr "Sodelavci"
 
@@ -87,14 +85,12 @@ msgid "Visit Website for more information"
 msgstr "Za več informacij obiščite spletno stran"
 
 #: src/appstartdialog.cpp:154
-#, fuzzy
 msgid "Open the "
-msgstr "Odpri bazo podatkov"
+msgstr "Odpri"
 
 #: src/appstartdialog.cpp:156
-#, fuzzy
 msgid " website for latest news, updates etc"
-msgstr "Odprite Money Manager Ex spletno stran za zadnje novice, update ipd."
+msgstr " spletno stran z zadnjimi novicami, posodobitvami ipd."
 
 #: src/appstartdialog.cpp:165
 msgid "Show this window next time "
@@ -206,9 +202,9 @@ msgid "Rate of Change"
 msgstr "Stopnja spremembe"
 
 #: src/assetdialog.cpp:264
-#, fuzzy, c-format
+#, c-format
 msgid "Enter the rate at which the asset changes its value in % per year"
-msgstr "Vnesite stopnjo spremembe vrednosti premoženja v % letno"
+msgstr "Enter the rate at which the asset changes its value in % per year"
 
 #: src/assetdialog.cpp:269
 #: src/billsdepositsdialog.cpp:458
@@ -560,9 +556,8 @@ msgstr "Določi znesek te transakcije"
 #: src/billsdepositsdialog.cpp:516
 #: src/billsdepositsdialog.cpp:543
 #: src/billsdepositsdialog.cpp:644
-#, fuzzy
 msgid "Choose Bank Account"
-msgstr "Izberite račune"
+msgstr "Izberi bančni račun"
 
 #: src/billsdepositsdialog.cpp:658
 #: src/billsdepositsdialog.cpp:804
@@ -965,14 +960,12 @@ msgid "&Close"
 msgstr "&Zapri"
 
 #: src/currencydialog.cpp:346
-#, fuzzy
 msgid "Scale should be greater than zero"
-msgstr "Tečaj glede na glavno valuto bi moral biti večji od 0.0"
+msgstr "Tečajbi moral biti večji od nič"
 
 #: src/currencydialog.cpp:354
-#, fuzzy
 msgid "Base Conversion Rate should be greater than zero"
-msgstr "Tečaj glede na glavno valuto bi moral biti večji od 0.0"
+msgstr "Osnovno menjalno razmerje bi moralo biti večji od nič"
 
 #: src/dbwrapper.cpp:177
 msgid "Telephone"
@@ -1186,6 +1179,10 @@ msgid ""
 "Not a writeable database\n"
 "You must have write permission to that file"
 msgstr ""
+"\n"
+"%s\n"
+"Ni možno pisati v podatkovno bazo\n"
+"Imeti morate dovoljenje za pisanje v datoteko"
 
 #: src/filtertransdialog.cpp:196
 msgid "Specify Account"
@@ -1500,6 +1497,8 @@ msgid ""
 "Fatal error occured.\n"
 "Application will be terminated."
 msgstr ""
+"Prišlo je do precej hude napake.\n"
+"Program se bo zaprl."
 
 #: src/mmex.cpp:449
 msgid "Add Account Wizard"
@@ -1806,9 +1805,8 @@ msgid "Export to CSV"
 msgstr "Izvoz v CSV"
 
 #: src/mmex.cpp:2202
-#, fuzzy
 msgid "Export to QIF"
-msgstr "Izvoz v CSV"
+msgstr "Izvoz v QIF"
 
 #: src/mmex.cpp:2203
 msgid "&Report to HTML"
@@ -2083,7 +2081,7 @@ msgstr "Prikaži okno za urejanje valut"
 
 #: src/mmex.cpp:2466
 msgid "Enter database's password"
-msgstr ""
+msgstr "Vnesi geslo podatkovne baze"
 
 #: src/mmex.cpp:2487
 #: src/mmex.cpp:2536
@@ -2113,31 +2111,27 @@ msgstr "Odpiranje baze podatkov && Verifikacija"
 
 #: src/mmex.cpp:2568
 msgid "portable mode"
-msgstr ""
+msgstr "prenosni način"
 
 #: src/mmex.cpp:2617
-#, fuzzy
 msgid "Choose database file to create"
-msgstr "Izberite in odprite kodirano podatkovno bazo"
+msgstr "Izberite datoteko podatkovne baze"
 
 #: src/mmex.cpp:2640
-#, fuzzy
 msgid "Choose database file to open"
-msgstr "Izberite in odprite kodirano podatkovno bazo"
+msgstr "Izberite in odprite datoteko podatkovne baze"
 
 #: src/mmex.cpp:2655
 msgid "Choose Encrypted database file to open"
 msgstr "Izberite in odprite kodirano podatkovno bazo"
 
 #: src/mmex.cpp:2665
-#, fuzzy
 msgid "Enter password for database"
-msgstr "Money Manager Ex: Vnesi geslo za podatkovno bazo.."
+msgstr "Vnesi geslo za podatkovno bazo"
 
 #: src/mmex.cpp:2670
-#, fuzzy
 msgid "Choose database file to Save As"
-msgstr "Izberite in odprite kodirano podatkovno bazo"
+msgstr "Izberi datoteko podatkovne baze"
 
 #: src/mmex.cpp:2692
 msgid "Converted DB!"
@@ -2148,18 +2142,16 @@ msgid "MMEX message"
 msgstr "MMEX sporočilo"
 
 #: src/mmex.cpp:2706
-#, fuzzy
 msgid "Save database file as"
-msgstr "Shrani bazo podatkov kot"
+msgstr "Shrani datoteko podatkovne baze kot"
 
 #: src/mmex.cpp:2724
 msgid "Can't copy file to itself"
-msgstr ""
+msgstr "Ne morem kopirati datoteke same vase"
 
 #: src/mmex.cpp:2737
-#, fuzzy
 msgid "Enter password for new database"
-msgstr "Money Manager Ex: Vnesi geslo za podatkovno bazo.."
+msgstr "Vnesi geslo za novo podatkovno bazo"
 
 #: src/mmex.cpp:2803
 msgid "No Account available! Cannot Import! Create a new account first!"
@@ -2249,12 +2241,11 @@ msgstr "Stopnja valute osvežena"
 
 #: src/mmex.cpp:3348
 msgid "No investment accounts found. You can create one using the Accounts menu."
-msgstr ""
+msgstr "Ni nobenega investicijskega računa. Kreiraš lahko nov račun v menu-ju Računi"
 
 #: src/mmex.cpp:3349
-#, fuzzy
 msgid "Investment Accounts"
-msgstr "Izberite investicijski račun"
+msgstr "Investicijski računi"
 
 #: src/mmex.cpp:3379
 #: src/mmex.cpp:3417
@@ -2792,14 +2783,13 @@ msgid "Find Payee: "
 msgstr "Poišči prejemnika"
 
 #: src/payeedialog.cpp:108
-#, fuzzy
 msgid "Filter Payees: "
-msgstr "Poišči prejemnika"
+msgstr "Filtriraj prejemnike:"
 
 #: src/payeedialog.cpp:115
 #, c-format
 msgid "Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."
-msgstr ""
+msgstr "Vnesi iskalno geslo.  You can use % as a wildcard to match zero or more characters or _ to match a single character."
 
 #: src/payeedialog.cpp:123
 msgid "Add a new payee name"
@@ -2818,14 +2808,12 @@ msgid "Select the currently selected payee as the selected payee for the transac
 msgstr "Izberite trenutno označenega prejemnika za transakcijo"
 
 #: src/payeedialog.cpp:201
-#, fuzzy
 msgid "Enter the name of the payee to add:"
-msgstr "Vnesi naziv Premoženja"
+msgstr "Vnesi naziv prejemnika ki ga dodajaš:"
 
 #: src/payeedialog.cpp:201
-#, fuzzy
 msgid "Add Payee"
-msgstr "Dodajanje prejemnika"
+msgstr "Dodaj prejemnika"
 
 #: src/payeedialog.cpp:208
 msgid "Payee with same name exists"
@@ -2836,14 +2824,13 @@ msgid "Payee is in use"
 msgstr "Prejemnik je aktiven"
 
 #: src/payeedialog.cpp:253
-#, fuzzy, c-format
+#, c-format
 msgid "Enter a new name for %s"
-msgstr "Vnesi naziv Premoženja"
+msgstr "Vnesi nov naziv za %s"
 
 #: src/payeedialog.cpp:254
-#, fuzzy
 msgid "Edit Payee Name"
-msgstr "Dodaj/Uredi prejemnika:"
+msgstr "Uredi naziv prejemnika"
 
 #: src/qifimport.cpp:371
 msgid ""
@@ -3039,9 +3026,9 @@ msgid " To: "
 msgstr " Na:"
 
 #: src/reportcategovertimeperf.cpp:238
-#, fuzzy, c-format
+#, c-format
 msgid "Category Income/Expenses Over Last %d Months "
-msgstr "Kategorije Prihodkov/Izdatkov tekom zadnjih 12 mesecev"
+msgstr "Kategorije Prihodkov/Izdatkov tekom zadnjih %ih mesecev"
 
 #: src/reportincexpenses.cpp:78
 msgid "Income:"
@@ -3610,14 +3597,12 @@ msgid "Choose CSV data file to Export"
 msgstr "Izberite CSV datoteko za izvoz"
 
 #: src/util.cpp:611
-#, fuzzy
 msgid "QIF Export"
-msgstr "QIF Uvoz"
+msgstr "QIF izvoz"
 
 #: src/util.cpp:623
-#, fuzzy
 msgid "Choose QIF data file to Export"
-msgstr "Izberite QIF datoteko za uvoz"
+msgstr "Izberite QIF datoteko za izvoz"
 
 #: src/util.cpp:836
 #: src/util.cpp:1073
@@ -3795,71 +3780,102 @@ msgstr "Opcije"
 
 #~ msgid "Powered by wxWidgets, SQLite, wxSQLite(by Ulrich Telle)"
 #~ msgstr "Powered by wxWidgets, SQLite, wxSQLite (by Urlich Telle-a)"
+
 #~ msgid "Custom SQL Query"
 #~ msgstr "Privzeta SQL poizvedba"
+
 #~ msgid "&Load SQL"
 #~ msgstr "&Naloži SQL"
+
 #~ msgid "&Save SQL"
 #~ msgstr "&Shrani SQL"
+
 #~ msgid "&Run Query"
 #~ msgstr "&Zaženi poizvedbo"
+
 #~ msgid "SQL Query will modify your Data. Proceed??"
 #~ msgstr "SQL poizvedba bo spremenila vaše podatke. Nadaljujem?"
+
 #~ msgid "Warning"
 #~ msgstr "Opozorilo"
+
 #~ msgid "Category         : "
 #~ msgstr "Kategorija         :"
+
 #~ msgid "Sub Category  : "
 #~ msgstr "Podkategorija  :"
+
 #~ msgid "Notes               : "
 #~ msgstr "Opombe               :"
+
 #~ msgid "Category: \n"
 #~ msgstr "Kategorija: \n"
+
 #~ msgid "Sub Category: \n"
 #~ msgstr "Podkategorija: \n"
+
 #~ msgid "Notes: \n"
 #~ msgstr "Opombe: \n"
+
 #~ msgid "Custom SQL Report"
 #~ msgstr "SQL poročilo po meri"
+
 #~ msgid "Unable to convert db successfully. Check Password!"
 #~ msgstr "Neuspela pretvorba PB. Preverite geslo!"
+
 #~ msgid "QFX Import"
 #~ msgstr "QFX Uvoz"
+
 #~ msgid ""
 #~ "Enter the payee name to be added or make edits to an existing payee name"
 #~ msgstr ""
 #~ "Vnesite naziv prejemnika katerega dodajate ali uredite naziv obstoječega "
 #~ "prejemnika"
+
 #~ msgid "Type a Payee Name in the Text Box and then press Add."
 #~ msgstr "Vpišite ime prejemnika v okvirček za besedilo in pritisnite Dodaj."
+
 #~ msgid "Custom SQL Dialog"
 #~ msgstr "Po meri SQL okno"
+
 #~ msgid "Custom SQL Report "
 #~ msgstr "Po meri SQL poročilo"
+
 #~ msgid "Delete Account"
 #~ msgstr "Izbriši račun"
+
 #~ msgid "Select From Account"
 #~ msgstr "Izberite iz katerega računa"
+
 #~ msgid "No Database opened"
 #~ msgstr "Ni odprte podatkovne baze"
+
 #~ msgid "Statement not accessible"
 #~ msgstr "Navedba ni dostopna"
+
 #~ msgid "Out of memory"
 #~ msgstr "Zmanjkalo spomina"
+
 #~ msgid "Cannot decode binary"
 #~ msgstr "Ni možno dekodiranje binarne kode"
+
 #~ msgid "Invalid field index"
 #~ msgstr "Napačno polje kazala"
+
 #~ msgid "Invalid field name"
 #~ msgstr "Napačno ime polja"
+
 #~ msgid "Invalid row index"
 #~ msgstr "Napačen indeks vrstice"
+
 #~ msgid "Invalid scalar query"
 #~ msgstr "Napačna številčna poizvedba"
+
 #~ msgid "Error clearing bindings"
 #~ msgstr "Napaka pri brisanju povezav"
+
 #~ msgid "Web Page"
 #~ msgstr "Domača stran"
+
 #~ msgid "Invalid current price entered "
 #~ msgstr "Vnešena napačna trenutna cena"
-
