@@ -8,21 +8,20 @@
 
 mmReportTransactionStats::mmReportTransactionStats(mmCoreDB* core, int year)  : 
         core_(core),
-        year_(year)
+        year_(year+1)
 {
 }
 
 wxString mmReportTransactionStats::getHTMLText()
 {
+int yearsHist = 5; //How many years should show the report 
         core_->currencyList_.loadBaseCurrencySettings();
 
-        wxString yearStr = wxString::Format(wxT("%d - %d"), year_, year_+1);
-        wxString lastYearStr = wxString::Format(wxT("%d"), year_);
-        wxString thisYearStr = wxString::Format(wxT("%d"), year_+1);
+        wxString rangeStr = wxString::Format(wxT("%d - %d"), year_- yearsHist+1, year_);
 
         mmHTMLBuilder hb;
         hb.init();
-        hb.addHeader(3, _("Transaction Statistics for ") + yearStr );
+        hb.addHeader(3, _("Transaction Statistics for ") + rangeStr );
 
         wxDateTime now = wxDateTime::Now();
         wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
@@ -30,48 +29,50 @@ wxString mmReportTransactionStats::getHTMLText()
         hb.addLineBreak();
         hb.addLineBreak();
 
-        wxDateTime yearBegin(1, wxDateTime::Jan, year_);
-        wxDateTime yearEnd(31, wxDateTime::Dec, year_);
+        wxDateTime yearBegin(1, wxDateTime::Jan, year_ - yearsHist);
+        wxDateTime yearEnd(31, wxDateTime::Dec, year_ - yearsHist);
 
-		hb.startCenter();
+	hb.startCenter();
         hb.startTable(wxT("50%"));
-
+        //Header 
+        // Month 2011 2010 2009.....
 		hb.startTableRow();
 		hb.addTableHeaderCell(_("Month"));
-		hb.addTableHeaderCell(lastYearStr);
-		hb.addTableHeaderCell(thisYearStr);
+         for (int y = 1; y <= yearsHist; y++) 
+                {
+                hb.addTableHeaderCell(wxString::Format(wxT("%d"), year_ - y +1));
+                }
 		hb.endTableRow();
-
+        //Table
         for (int yidx = 0; yidx < 12; yidx++)
         {
             wxString monName = mmGetNiceMonthName(yidx);
-
-            wxDateTime dtPrevBegin(1, (wxDateTime::Month)yidx, year_);
-            wxDateTime dtPrevEnd = dtPrevBegin.GetLastMonthDay((wxDateTime::Month)yidx, year_);
-            
-            wxDateTime dtThisBegin(1, (wxDateTime::Month)yidx, year_+1);
-            wxDateTime dtThisEnd  = dtThisBegin.GetLastMonthDay((wxDateTime::Month)yidx, year_+1);
-            
-
-            bool ignoreDate = false;
-            int numPrev = 0;
-            int numThis = 0;
-            core_->bTransactionList_.getTransactionStats(-1, numPrev,  ignoreDate, dtPrevBegin, dtPrevEnd);
-            core_->bTransactionList_.getTransactionStats(-1, numThis,  ignoreDate, dtThisBegin, dtThisEnd);
-            
-            wxString numPrevStr = wxString::Format(wxT("%d"), numPrev);
-            wxString numThisStr = wxString::Format(wxT("%d"), numThis);
-
+            //
 			hb.startTableRow();
 			hb.addTableCell(monName, false, true);
-			hb.addTableCell(numPrevStr, true);
-			hb.addTableCell(numThisStr, true);
+            // Totals for monthes
+            for (int y = 1; y <= yearsHist; y++) 
+                {
+            wxDateTime dtThisBegin(1, (wxDateTime::Month)yidx, year_- y +1);
+            wxDateTime dtThisEnd  = dtThisBegin.GetLastMonthDay((wxDateTime::Month)yidx, year_-y +1);
+
+            bool ignoreDate = false;
+            int numThis = 0;
+            core_->bTransactionList_.getTransactionStats(-1, numThis,  ignoreDate, dtThisBegin, dtThisEnd);
+			hb.addTableCell(wxString::Format(wxT("%d"), numThis), true);
+               }
 			hb.endTableRow();
         }
+ 	hb.addRowSeparator(yearsHist+1);
+	hb.startTableRow();
+	hb.addTableCell(_("Total"));
 
-        wxDateTime today = wxDateTime::Now();
-        wxDateTime prevYearEnd = wxDateTime(today);
-        prevYearEnd.SetYear(year_);
+        //Grand Totals
+        wxDateTime prevYearEnd = wxDateTime(now);
+
+        for (int y = 1; y <= yearsHist; y++)
+        {
+        prevYearEnd.SetYear(year_-y+1);
         prevYearEnd.SetMonth(wxDateTime::Dec);
         prevYearEnd.SetDay(31);
         
@@ -81,31 +82,11 @@ wxString mmReportTransactionStats::getHTMLText()
         int numLastYear = 0;
         core_->bTransactionList_.getTransactionStats(-1, numLastYear,  false, dtBegin, dtEnd);
         
-        std::vector<wxString> data;
-
-        wxString numLastYearStr = wxString::Format(wxT("%d"), numLastYear);
-        data.push_back(numLastYearStr);
-
-        wxDateTime thisYearEnd = wxDateTime(today);
-        thisYearEnd.SetYear(year_+1);
-        thisYearEnd.SetMonth(wxDateTime::Dec);
-        thisYearEnd.SetDay(31);
-        
-        wxDateTime dtThisEnd = thisYearEnd;
-        wxDateTime dtThisBegin = thisYearEnd.Subtract(wxDateSpan::Year());
-        
-        int numThisYear = 0;
-        core_->bTransactionList_.getTransactionStats(-1, numThisYear,  false, dtThisBegin, dtThisEnd);
-
-        wxString numThisYearStr = wxString::Format(wxT("%d"), numThisYear);
-        data.push_back(numThisYearStr);
-		
-	hb.addRowSeparator(3);
-	hb.addTotalRow(_("Total"), 3, data);
-          
+	hb.addTableCell(wxString::Format(wxT("%d"), numLastYear), true);
+        } 
+       //------------
         hb.endTable();
 	hb.endCenter();
-
         hb.end();
 
         return hb.getHTMLText();
