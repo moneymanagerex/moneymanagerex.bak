@@ -98,6 +98,10 @@ bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
         dataToControls();
     }
     
+    if (advancedToTransAmountSet_)
+        staticTextAdvancedActive_->Show();
+    else
+        staticTextAdvancedActive_->Show(false);
    
     Centre();
     return TRUE;
@@ -239,7 +243,11 @@ void mmTransDialog::dataToControls()
         {
             bPayee_->SetLabel(q1.GetString(wxT("ACCOUNTNAME")));
             bTo_->SetLabel(q1.GetString(wxT("TOACCOUNTNAME")));
-            payeeID_ = accountID_;            
+            payeeID_ = accountID_;   
+
+            // When editing an advanced transaction record, we do not reset the toTransAmount_
+            if (edit_ && (toTransAmount_ != transAmount))
+                advancedToTransAmountSet_ = true;
         }
     }
     
@@ -288,8 +296,11 @@ void mmTransDialog::CreateControls()
     bAdvanced_->Enable(false);
     wxFont fnt = itemDialog1->GetFont();
     itemBoxSizer4->Add(bAdvanced_, flags);
-//    bAdvanced_->SetToolTip(_("Specify advanced settings for transaction"));
     bAdvanced_->SetToolTip(_("Specify the transfer amount in the To Account"));
+
+    staticTextAdvancedActive_ = new wxStaticText( itemDialog1, wxID_STATIC,
+        _(" is active!"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer4->Add(staticTextAdvancedActive_, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
     wxPanel* itemPanel7 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, 
         wxDefaultSize, wxTAB_TRAVERSAL );
@@ -343,7 +354,6 @@ void mmTransDialog::CreateControls()
         wxDefaultPosition, wxSize(200, -1), 0 );
     itemFlexGridSizer8->Add(bTo_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     bTo_->Show(false);
-//    bTo_->SetToolTip(_("Specify the transfer account"));
     bTo_->SetToolTip(_("Specify which account the transfer is going to"));
 
     wxStaticText* itemStaticText15 = new wxStaticText( itemPanel7, wxID_STATIC, _("Date"), 
@@ -472,23 +482,6 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
             payeeID_ = mmDBWrapper::getAccountID(db_.get(), acctName);
             bPayee_->SetLabel(acctName);
     	}
-//      Do nothing if Cancelling Dialog. This code removed: Was Causing confusion in host Dialog
-//      else
-//      {
-//          wxString acctName = mmDBWrapper::getAccountName(db_.get(), payeeID_);
-//          if (acctName.IsEmpty())
-//          {
-//              payeeID_ = -1;
-//              categID_ = -1;
-//              subcategID_ = -1;
-//              bCategory_->SetLabel(_("Select Category"));
-//              bPayee_->SetLabel(_("Select Payee"));
-//          }
-//          else
-//          {
-//              bPayee_->SetLabel(acctName);
-//          }  
-//      }
 	}
 	else
 	{
@@ -586,21 +579,6 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
         toID_ = mmDBWrapper::getAccountID(db_.get(), acctName);
         bTo_->SetLabel(acctName);
     }
-//  Do nothing if Cancelling Dialog. This code removed: Was Causing confusion in host Dialog
-//	else
-//	{
-//      wxString acctName = mmDBWrapper::getAccountName(db_.get(), toID_);
-//      if (acctName.IsEmpty())
-//      {
-//          toID_ = -1;
-//          bCategory_->SetLabel(_("Select Category"));
-//          bPayee_->SetLabel(_("Select To"));
-//      }
-//      else
-//      {
-//          bPayee_->SetLabel(acctName);
-//      }  
-//	 }
 }
 
 void mmTransDialog::OnDateChanged(wxDateEvent& /*event*/)
@@ -611,7 +589,7 @@ void mmTransDialog::OnDateChanged(wxDateEvent& /*event*/)
 void mmTransDialog::OnAdvanced(wxCommandEvent& /*event*/)
 {
     wxString dispString = textAmount_->GetValue();
-    if (toTransAmount_ > 0.0)
+    if (toTransAmount_ >= 0.0)
     {
         mmex::formatDoubleToCurrencyEdit(toTransAmount_, dispString);
     }
@@ -630,6 +608,7 @@ void mmTransDialog::OnAdvanced(wxCommandEvent& /*event*/)
             {
                 toTransAmount_ = amount;
                 advancedToTransAmountSet_ = true;
+                staticTextAdvancedActive_->Show();
             }
         }
     }

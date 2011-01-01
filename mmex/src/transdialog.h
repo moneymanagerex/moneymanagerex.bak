@@ -95,6 +95,7 @@ private:
     wxButton* bAdvanced_;
     wxCheckBox* cSplit_;
     wxButton* bAuto_;
+    wxStaticText* staticTextAdvancedActive_;
 
     wxChoice* choiceStatus_;
     wxChoice* choiceTrans_;
