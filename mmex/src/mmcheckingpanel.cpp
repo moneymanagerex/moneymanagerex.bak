@@ -737,6 +737,8 @@ void mmCheckingPanel::CreateControls()
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12, 
     ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
     itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
+    //Show tips when no transaction selected 
+    Tips();
 
 }
 //----------------------------------------------------------------------------
@@ -746,34 +748,32 @@ void mmCheckingPanel::enableEditDeleteButtons(bool en)
 	wxButton* bE = (wxButton*)FindWindow(ID_BUTTON_EDIT_TRANS);
 	wxButton* bD = (wxButton*)FindWindow(ID_BUTTON_DELETE_TRANS);
 	wxButton* bM = (wxButton*)FindWindow(ID_BUTTON_MOVE_TRANS);
+        {
 	bE->Enable(en);
 	bD->Enable(en);
 	bM->Enable(en);
+        }
 }
 //----------------------------------------------------------------------------
 
 void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
-    // Get the items we need to change
+	{enableEditDeleteButtons(true);}
 	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);	
-	wxString text;
-	if (selIndex!=-1)
-	{
-		enableEditDeleteButtons(true);
-		//wxString notes = getItem(selIndex, COL_CATEGORY); // Category:Subcategory 
-		//notes = notes + wxT("\n");
-		wxString notes = getItem(selIndex, COL_NOTES); //Notes 
-		text = notes;
-	}
-	else
-	{
-		enableEditDeleteButtons(false);
-		text = wxT("");
-	}
-    st->SetLabel(text);
+        if  (selIndex!=-1){
+        st->SetLabel(getItem(selIndex, COL_NOTES));}
+        else {st->SetLabel(wxT ("--"));}
+
 }
 //----------------------------------------------------------------------------
 
+void mmCheckingPanel::Tips()
+{
+	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);	
+        //FIXME I don't know how to realise it
+        st->SetLabel(wxT(""));
+}
+//----------------------------------------------------------------------------
 void mmCheckingPanel::setAccountSummary()
 {
     double total = m_core->accountList_.getAccountSharedPtr(m_AccountID)->balance();
@@ -1551,6 +1551,11 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 
 void MyListCtrl::OnListKeyDown(wxListEvent& event)
 {
+        if (m_selectedIndex == -1) //check if a transaction is selected
+        return;
+        //Read status of the selected transaction first
+        wxString status = m_cp->m_trans[m_selectedIndex]->status_;
+
 	if (!wxGetKeyState(WXK_COMMAND) && !wxGetKeyState(WXK_ALT) && !wxGetKeyState(WXK_CONTROL))
 	{
   switch ( event.GetKeyCode() )
@@ -1567,39 +1572,44 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
         case 'v':
         case 'V':
             {
+                if (status != wxT("V")) { //Do not update status if it's already the same
                 wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKVOID);
-                OnMarkTransaction(evt);
+                OnMarkTransaction(evt);  }
             }
             break;
 
         case 'r':
         case 'R':
             {
+                if (status != wxT("R")) {
                 wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKRECONCILED);
-                OnMarkTransaction(evt);
+                OnMarkTransaction(evt); }
             }
             break;
 
         case 'u':
         case 'U':
             {
+                 if (status != wxT("U")) {
                  wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKUNRECONCILED);
-                 OnMarkTransaction(evt);
+                 OnMarkTransaction(evt); } 
             }
             break;
 
         case 'f':
         case 'F':
             {
+                 if (status != wxT("F")) {
                  wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP);
-                 OnMarkTransaction(evt);
+                 OnMarkTransaction(evt); }
             }
             break;
-		case 'd':
+	case 'd':
         case 'D':
             {
+                 if (status != wxT("D")) {
                  wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKDUPLICATE);
-                 OnMarkTransaction(evt);
+                 OnMarkTransaction(evt); }
             }
             break;
         

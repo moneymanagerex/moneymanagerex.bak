@@ -130,6 +130,7 @@ private:
 
     /* updates the checking panel data */
     void initVirtualListControl();
+    void Tips();
     void updateExtraTransactionData(int selIndex);
     void saveSettings();
 
