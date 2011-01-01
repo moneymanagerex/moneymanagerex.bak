@@ -543,9 +543,11 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int 
    return pCopyTransaction;
 }
 
-void mmBankTransactionList::updateTransaction(
-   boost::shared_ptr<mmBankTransaction> pBankTransaction)
+void mmBankTransactionList::updateTransaction(boost::shared_ptr<mmBankTransaction> pBankTransaction)
 {
+    if (pBankTransaction->transType_ == wxT("Transfer"))
+        pBankTransaction->payeeID_ = -1;
+
     static const char sql[] =    
     "update CHECKINGACCOUNT_V1 "
     "SET ACCOUNTID=?, TOACCOUNTID=?, PAYEEID=?, TRANSCODE=?, "
