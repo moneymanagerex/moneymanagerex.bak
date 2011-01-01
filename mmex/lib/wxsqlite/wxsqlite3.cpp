@@ -121,11 +121,13 @@ const char* wxERRMSG_BIND_DATETIME = wxTRANSLATE("Error binding date/time param"
 const char* wxERRMSG_BIND_NULL     = wxTRANSLATE("Error binding NULL param");
 const char* wxERRMSG_BIND_ZEROBLOB = wxTRANSLATE("Error binding zero blob param");
 const char* wxERRMSG_BIND_CLEAR    = wxTRANSLATE("Error clearing bindings");
+const char* wxERRMSG_NOTOWNED      = wxTRANSLATE("Transfer of statement ownership not possible");
 
 const char* wxERRMSG_NOMETADATA    = wxTRANSLATE("Meta data support not available");
 const char* wxERRMSG_NOCODEC       = wxTRANSLATE("Encryption support not available");
 const char* wxERRMSG_NOLOADEXT     = wxTRANSLATE("Loadable extension support not available");
 const char* wxERRMSG_NOINCBLOB     = wxTRANSLATE("Incremental BLOB support not available");
+const char* wxERRMSG_NOBLOBREBIND  = wxTRANSLATE("Rebind BLOB support not available");
 const char* wxERRMSG_NOSAVEPOINT   = wxTRANSLATE("Savepoint support not available");
 const char* wxERRMSG_NOBACKUP      = wxTRANSLATE("Backup/restore support not available");
 const char* wxERRMSG_NOWAL         = wxTRANSLATE("Write Ahead Log support not available");
@@ -160,11 +162,13 @@ const wxChar* wxERRMSG_BIND_DATETIME = wxTRANSLATE("Error binding date/time para
 const wxChar* wxERRMSG_BIND_NULL     = wxTRANSLATE("Error binding NULL param");
 const wxChar* wxERRMSG_BIND_ZEROBLOB = wxTRANSLATE("Error binding zero blob param");
 const wxChar* wxERRMSG_BIND_CLEAR    = wxTRANSLATE("Error clearing bindings");
+const wxChar* wxERRMSG_NOTOWNED      = wxTRANSLATE("Transfer of statement ownership not possible");
 
 const wxChar* wxERRMSG_NOMETADATA    = wxTRANSLATE("Meta data support not available");
 const wxChar* wxERRMSG_NOCODEC       = wxTRANSLATE("Encryption support not available");
 const wxChar* wxERRMSG_NOLOADEXT     = wxTRANSLATE("Loadable extension support not available");
 const wxChar* wxERRMSG_NOINCBLOB     = wxTRANSLATE("Incremental BLOB support not available");
+const wxChar* wxERRMSG_NOBLOBREBIND  = wxTRANSLATE("Rebind BLOB support not available");
 const wxChar* wxERRMSG_NOSAVEPOINT   = wxTRANSLATE("Savepoint support not available");
 const wxChar* wxERRMSG_NOBACKUP      = wxTRANSLATE("Backup/restore support not available");
 const wxChar* wxERRMSG_NOWAL         = wxTRANSLATE("Write Ahead Log support not available");
@@ -212,7 +216,7 @@ inline wxLongLong ConvertStringToLongLong(const wxString& str, wxLongLong defVal
 }
 
 // ----------------------------------------------------------------------------
-// wxSQLite3Exception: class 
+// wxSQLite3Exception: class
 // ----------------------------------------------------------------------------
 
 wxSQLite3Exception::wxSQLite3Exception(int errorCode, const wxString& errorMsg)
@@ -1375,20 +1379,23 @@ wxSQLite3Statement::wxSQLite3Statement()
 {
   m_db = 0;
   m_stmt = 0;
+  m_hasOwnership = false;
 }
 
 wxSQLite3Statement::wxSQLite3Statement(const wxSQLite3Statement& statement)
 {
   m_db = statement.m_db;
   m_stmt = statement.m_stmt;
+  m_hasOwnership = statement.m_hasOwnership;
   // Only one object can own prepared statement
-  const_cast<wxSQLite3Statement&>(statement).m_stmt = 0;
+  const_cast<wxSQLite3Statement&>(statement).m_hasOwnership = false;
 }
 
 wxSQLite3Statement::wxSQLite3Statement(void* db, void* stmt)
 {
   m_db = db;
   m_stmt = stmt;
+  m_hasOwnership = true;
 }
 
 wxSQLite3Statement::~wxSQLite3Statement()
@@ -1415,8 +1422,9 @@ wxSQLite3Statement& wxSQLite3Statement::operator=(const wxSQLite3Statement& stat
     }
     m_db = statement.m_db;
     m_stmt = statement.m_stmt;
+    m_hasOwnership = statement.m_hasOwnership;
     // Only one object can own prepared statement
-    const_cast<wxSQLite3Statement&>(statement).m_stmt = 0;
+    const_cast<wxSQLite3Statement&>(statement).m_hasOwnership = false;
   }
   return *this;
 }
@@ -1452,20 +1460,31 @@ int wxSQLite3Statement::ExecuteUpdate()
   }
 }
 
-wxSQLite3ResultSet wxSQLite3Statement::ExecuteQuery()
+wxSQLite3ResultSet wxSQLite3Statement::ExecuteQuery(bool transferStatementOwnership)
 {
   CheckDatabase();
   CheckStmt();
+  if (transferStatementOwnership)
+  {
+    if (m_hasOwnership)
+    {
+      m_hasOwnership = false;
+    }
+    else
+    {
+      throw wxSQLite3Exception(WXSQLITE_ERROR, wxERRMSG_NOTOWNED);
+    }
+  }
 
   int rc = sqlite3_step((sqlite3_stmt*) m_stmt);
 
   if (rc == SQLITE_DONE)  // no more rows
   {
-    return wxSQLite3ResultSet(m_db, m_stmt, true/*eof*/, true/*first*/, false);
+    return wxSQLite3ResultSet(m_db, m_stmt, true/*eof*/, true/*first*/, transferStatementOwnership);
   }
   else if (rc == SQLITE_ROW)  // one or more rows
   {
-    return wxSQLite3ResultSet(m_db, m_stmt, false/*eof*/, true/*first*/, false);
+    return wxSQLite3ResultSet(m_db, m_stmt, false/*eof*/, true/*first*/, transferStatementOwnership);
   }
   else
   {
@@ -1484,7 +1503,7 @@ int wxSQLite3Statement::GetParamCount()
 int wxSQLite3Statement::GetParamIndex(const wxString& paramName)
 {
   CheckStmt();
-  
+
   wxCharBuffer strParamName = paramName.ToUTF8();
   const char* localParamName = strParamName;
 
@@ -1729,12 +1748,23 @@ void wxSQLite3Statement::Reset()
   }
 }
 
+bool wxSQLite3Statement::IsReadOnly()
+{
+#if SQLITE_VERSION_NUMBER >= 3007004
+  CheckStmt();
+  return sqlite3_stmt_readonly((sqlite3_stmt*) m_stmt) != 0;
+#else
+  return false;
+#endif
+}
+
 void wxSQLite3Statement::Finalize()
 {
-  if (m_stmt)
+  if (m_stmt && m_hasOwnership)
   {
     int rc = sqlite3_finalize((sqlite3_stmt*) m_stmt);
     m_stmt = 0;
+    m_hasOwnership = false;
 
     if (rc != SQLITE_OK)
     {
@@ -1891,6 +1921,22 @@ int wxSQLite3Blob::GetSize()
 #else
   throw wxSQLite3Exception(WXSQLITE_ERROR, wxERRMSG_NOINCBLOB);
   return 0;
+#endif
+}
+
+void wxSQLite3Blob::Rebind(wxLongLong rowid)
+{
+#if SQLITE_VERSION_NUMBER >= 3007004
+  CheckBlob();
+  int rc = sqlite3_blob_reopen((sqlite3_blob*) m_blob, rowid.GetValue());
+  if (rc != SQLITE_OK)
+  {
+    const char* localError = sqlite3_errmsg((sqlite3*) m_db);
+    throw wxSQLite3Exception(rc, wxString::FromUTF8(localError));
+  }
+#else
+  wxUnusedVar(rowid);
+  throw wxSQLite3Exception(WXSQLITE_ERROR, wxERRMSG_NOBLOBREBIND);
 #endif
 }
 
@@ -2205,7 +2251,7 @@ void wxSQLite3Database::Backup(const wxString& targetFileName, const wxMemoryBuf
     sqlite3_close(pDest);
     throw wxSQLite3Exception(rc, wxString::FromUTF8(localError));
   }
-  
+
   do
   {
     rc = sqlite3_backup_step(pBackup, 10);
@@ -2285,7 +2331,7 @@ void wxSQLite3Database::Restore(const wxString& sourceFileName, const wxMemoryBu
 #else
   wxUnusedVar(key);
 #endif
-  
+
   pBackup = sqlite3_backup_init((sqlite3*) m_db, localTargetDatabaseName, pSrc, "main");
   if (pBackup == 0)
   {
@@ -2716,25 +2762,25 @@ wxLongLong wxSQLite3Database::GetLastRowId()
   return wxLongLong(sqlite3_last_insert_rowid((sqlite3*) m_db));
 }
 
-wxSQLite3Blob wxSQLite3Database::GetReadOnlyBlob(wxLongLong rowId, 
-                                                 const wxString& columnName, 
-                                                 const wxString& tableName, 
+wxSQLite3Blob wxSQLite3Database::GetReadOnlyBlob(wxLongLong rowId,
+                                                 const wxString& columnName,
+                                                 const wxString& tableName,
                                                  const wxString& dbName)
 {
   return GetBlob(rowId, columnName, tableName, dbName, false);
 }
 
-wxSQLite3Blob wxSQLite3Database::GetWritableBlob(wxLongLong rowId, 
-                                                 const wxString& columnName, 
-                                                 const wxString& tableName, 
+wxSQLite3Blob wxSQLite3Database::GetWritableBlob(wxLongLong rowId,
+                                                 const wxString& columnName,
+                                                 const wxString& tableName,
                                                  const wxString& dbName)
 {
   return GetBlob(rowId, columnName, tableName, dbName, true);
 }
 
-wxSQLite3Blob wxSQLite3Database::GetBlob(wxLongLong rowId, 
-                                         const wxString& columnName, 
-                                         const wxString& tableName, 
+wxSQLite3Blob wxSQLite3Database::GetBlob(wxLongLong rowId,
+                                         const wxString& columnName,
+                                         const wxString& tableName,
                                          const wxString& dbName,
                                          bool writable)
 {
@@ -2837,8 +2883,8 @@ bool wxSQLite3Database::CreateFunction(const wxString& funcName, int argCount, w
   const char* localFuncName = strFuncName;
   int rc = sqlite3_create_function((sqlite3*) m_db, localFuncName, argCount,
                                    SQLITE_UTF8, &function,
-                                   NULL, 
-                                   (void (*)(sqlite3_context*,int,sqlite3_value**)) wxSQLite3FunctionContext::ExecAggregateStep, 
+                                   NULL,
+                                   (void (*)(sqlite3_context*,int,sqlite3_value**)) wxSQLite3FunctionContext::ExecAggregateStep,
                                    (void (*)(sqlite3_context*)) wxSQLite3FunctionContext::ExecAggregateFinalize);
   return rc == SQLITE_OK;
 }
@@ -3222,7 +3268,7 @@ bool wxSQLite3Database::Randomness(int n, wxMemoryBuffer& random)
 }
 
 // ----------------------------------------------------------------------------
-// wxSQLite3FunctionContext: class providing the function context 
+// wxSQLite3FunctionContext: class providing the function context
 //                           for user defined functions
 // ----------------------------------------------------------------------------
 
@@ -3483,8 +3529,8 @@ void wxSQLite3FunctionContext::ExecRollbackHook(void* hook)
 }
 
 /* static */
-void wxSQLite3FunctionContext::ExecUpdateHook(void* hook, int type, 
-                                              const char* database, const char* table, 
+void wxSQLite3FunctionContext::ExecUpdateHook(void* hook, int type,
+                                              const char* database, const char* table,
                                               wxsqlite_int64 rowid)
 {
   wxString locDatabase = wxString::FromUTF8(database);
@@ -3500,7 +3546,7 @@ wxSQLite3FunctionContext::wxSQLite3FunctionContext(void* ctx, bool isAggregate, 
 }
 
 /* static */
-int wxSQLite3FunctionContext::ExecWriteAheadLogHook(void* hook, void* dbHandle, 
+int wxSQLite3FunctionContext::ExecWriteAheadLogHook(void* hook, void* dbHandle,
                                                     const char* database, int numPages)
 {
   wxString locDatabase = wxString::FromUTF8(database);
@@ -3512,13 +3558,13 @@ static const wxChar* authCodeString[] =
 { wxT("SQLITE_COPY"),              wxT("SQLITE_CREATE_INDEX"),      wxT("SQLITE_CREATE_TABLE"),
   wxT("SQLITE_CREATE_TEMP_INDEX"), wxT("SQLITE_CREATE_TEMP_TABLE"), wxT("SQLITE_CREATE_TEMP_TRIGGER"),
   wxT("SQLITE_CREATE_TEMP_VIEW"),  wxT("SQLITE_CREATE_TRIGGER"),    wxT("SQLITE_CREATE_VIEW"),
-  wxT("SQLITE_DELETE"),            wxT("SQLITE_DROP_INDEX"),        wxT("SQLITE_DROP_TABLE"), 
-  wxT("SQLITE_DROP_TEMP_INDEX"),   wxT("SQLITE_DROP_TEMP_TABLE"),   wxT("SQLITE_DROP_TEMP_TRIGGER"), 
-  wxT("SQLITE_DROP_TEMP_VIEW"),    wxT("SQLITE_DROP_TRIGGER"),      wxT("SQLITE_DROP_VIEW"), 
-  wxT("SQLITE_INSERT"),            wxT("SQLITE_PRAGMA"),            wxT("SQLITE_READ"), 
-  wxT("SQLITE_SELECT"),            wxT("SQLITE_TRANSACTION"),       wxT("SQLITE_UPDATE"), 
-  wxT("SQLITE_ATTACH"),            wxT("SQLITE_DETACH"),            wxT("SQLITE_ALTER_TABLE"), 
-  wxT("SQLITE_REINDEX"),           wxT("SQLITE_ANALYZE"),           wxT("SQLITE_CREATE_VTABLE"), 
+  wxT("SQLITE_DELETE"),            wxT("SQLITE_DROP_INDEX"),        wxT("SQLITE_DROP_TABLE"),
+  wxT("SQLITE_DROP_TEMP_INDEX"),   wxT("SQLITE_DROP_TEMP_TABLE"),   wxT("SQLITE_DROP_TEMP_TRIGGER"),
+  wxT("SQLITE_DROP_TEMP_VIEW"),    wxT("SQLITE_DROP_TRIGGER"),      wxT("SQLITE_DROP_VIEW"),
+  wxT("SQLITE_INSERT"),            wxT("SQLITE_PRAGMA"),            wxT("SQLITE_READ"),
+  wxT("SQLITE_SELECT"),            wxT("SQLITE_TRANSACTION"),       wxT("SQLITE_UPDATE"),
+  wxT("SQLITE_ATTACH"),            wxT("SQLITE_DETACH"),            wxT("SQLITE_ALTER_TABLE"),
+  wxT("SQLITE_REINDEX"),           wxT("SQLITE_ANALYZE"),           wxT("SQLITE_CREATE_VTABLE"),
   wxT("SQLITE_DROP_VTABLE"),       wxT("SQLITE_FUNCTION"),          wxT("SQLITE_SAVEPOINT")
 };
 
@@ -3545,7 +3591,7 @@ wxSQLite3Transaction::wxSQLite3Transaction(wxSQLite3Database* db, wxSQLite3Trans
   try
   {
     m_database->Begin(transactionType);
-  } 
+  }
   catch (...)
   {
     m_database = NULL; // Flag that transaction is not active
@@ -3760,7 +3806,7 @@ static int intarrayNext(sqlite3_vtab_cursor* cur)
 }
 
 // Reset a intarray table cursor.
-static int intarrayFilter(sqlite3_vtab_cursor* pVtabCursor, 
+static int intarrayFilter(sqlite3_vtab_cursor* pVtabCursor,
                           int /*idxNum*/, const char* /*idxStr*/,
                           int /*argc*/, sqlite3_value** /*argv*/)
 {
@@ -3928,7 +3974,7 @@ static int chararrayNext(sqlite3_vtab_cursor* cur)
 }
 
 // Reset a chararray table cursor.
-static int chararrayFilter(sqlite3_vtab_cursor* pVtabCursor, 
+static int chararrayFilter(sqlite3_vtab_cursor* pVtabCursor,
                            int /*idxNum*/, const char* /*idxStr*/,
                            int /*argc*/, sqlite3_value** /*argv*/)
 {
@@ -4017,7 +4063,7 @@ wxSQLite3IntegerCollection::operator=(const wxSQLite3IntegerCollection& collecti
 {
   if (this != &collection)
   {
-		wxSQLite3NamedCollection::operator=(collection);
+    wxSQLite3NamedCollection::operator=(collection);
   }
   return *this;
 }
@@ -4110,9 +4156,9 @@ wxSQLite3Database::CreateIntegerCollection(const wxString& collectionName)
   rc = sqlite3_create_module_v2((sqlite3*)m_db, zName, &intarrayModule, p, (void(*)(void*))intarrayFree);
   if (rc == SQLITE_OK)
   {
-    char* zSql = sqlite3_mprintf("CREATE VIRTUAL TABLE temp.%Q USING %Q", zName, zName);
+    wxSQLite3StatementBuffer zBuffer;
+    const char* zSql = zBuffer.Format("CREATE VIRTUAL TABLE temp.%Q USING %Q", zName, zName);
     rc = sqlite3_exec((sqlite3*)m_db, zSql, 0, 0, 0);
-    sqlite3_free(zSql);
   }
   if (rc != SQLITE_OK)
   {
@@ -4141,7 +4187,7 @@ wxSQLite3StringCollection::operator=(const wxSQLite3StringCollection& collection
 {
   if (this != &collection)
   {
-		wxSQLite3StringCollection::operator=(collection);
+    wxSQLite3StringCollection::operator=(collection);
   }
   return *this;
 }
@@ -4208,9 +4254,9 @@ wxSQLite3Database::CreateStringCollection(const wxString& collectionName)
   rc = sqlite3_create_module_v2((sqlite3*)m_db, zName, &chararrayModule, p, (void(*)(void*))chararrayFree);
   if (rc == SQLITE_OK)
   {
-    char* zSql = sqlite3_mprintf("CREATE VIRTUAL TABLE temp.%Q USING %Q", zName, zName);
+    wxSQLite3StatementBuffer zBuffer;
+    const char* zSql = zBuffer.Format("CREATE VIRTUAL TABLE temp.%Q USING %Q", zName, zName);
     rc = sqlite3_exec((sqlite3*)m_db, zSql, 0, 0, 0);
-    sqlite3_free(zSql);
   }
   if (rc != SQLITE_OK)
   {
