@@ -1,6 +1,6 @@
 /*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
-
+ 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
@@ -196,7 +196,6 @@ void mmHomePagePanel::updateAccounts()
            tincome += income;
            texpenses += expenses;
         }
-
 	}
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
@@ -206,10 +205,10 @@ void mmHomePagePanel::updateAccounts()
     hb.startTableRow();
 	hb.addTotalRow(_("Bank Accounts Total:"), 2, tBalanceStr);
     hb.endTableRow();
+    hb.addRowSeparator(2);
 
     double tTermBalance = 0.0;
     balances_t tTermBalances;
-    hb.addRowSeparator(2);
 
     /* Term Accounts */
     for (size_t iAdx = 0; iAdx < core_->accountList_.accounts_.size(); ++iAdx)
@@ -256,19 +255,20 @@ void mmHomePagePanel::updateAccounts()
 
            tincome += income;
            texpenses += expenses;
-
         }
-
 	}
-
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
     wxString tTermBalanceStr;
     mmex::formatDoubleToCurrency(tTermBalance, tTermBalanceStr);
 
-    hb.startTableRow();
-	hb.addTotalRow(_("Term Accounts Total:"), 2, tTermBalanceStr);
-    hb.endTableRow();
+    if ( frame_->hasActiveTermAccounts() )
+    {
+        hb.startTableRow();
+	    hb.addTotalRow(_("Term Accounts Total:"), 2, tTermBalanceStr);
+        hb.endTableRow();
+   		hb.addRowSeparator(2);
+    }
 
     // Add Term balance to total account balances
     tBalance += tTermBalance;
@@ -285,11 +285,11 @@ void mmHomePagePanel::updateAccounts()
         mmDBWrapper::loadBaseCurrencySettings(db_);
         mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
 
-		hb.addRowSeparator(2);
 		hb.startTableRow();
 		hb.addTableCellLink(wxT("Stocks"), _("Stock Investments"), false, true);
 		hb.addTableCell(stockBalanceStr, true);
 		hb.endTableRow();
+		hb.addRowSeparator(2);
 
         tBalance += stockBalance;
         
@@ -308,11 +308,11 @@ void mmHomePagePanel::updateAccounts()
         mmDBWrapper::loadBaseCurrencySettings(db_);
         mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
-		hb.addRowSeparator(2);
 		hb.startTableRow();
 		hb.addTableCellLink(wxT("Assets"), _("Assets"), false, true);
 		hb.addTableCell(assetBalanceStr, true);
 		hb.endTableRow();
+		hb.addRowSeparator(2);
 
         tBalance += assetBalance;
 
@@ -325,8 +325,6 @@ void mmHomePagePanel::updateAccounts()
     
     if (print_bal4cur && tBalances.size() > 1) // print total balance for every currency
     {
-            hb.addRowSeparator(2);
-
             hb.startTableRow();
             hb.addTableHeaderCell(_("Currency"));
             hb.addTableHeaderCell(_("Summary"));
@@ -350,8 +348,8 @@ void mmHomePagePanel::updateAccounts()
     mmDBWrapper::loadBaseCurrencySettings(db_);
     mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
-	hb.addRowSeparator(2);
 	hb.addTotalRow(_("Total of Accounts:"), 2, tBalanceStr);
+	hb.addRowSeparator(2);
     hb.endTable();
 
 	hb.endTableCell();
