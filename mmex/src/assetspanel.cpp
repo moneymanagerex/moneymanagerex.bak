@@ -37,7 +37,8 @@ enum {
   IDC_PANEL_CHECKING_STATIC_BALHEADER,
   MENU_TREEPOPUP_NEW,
   MENU_TREEPOPUP_EDIT,
-  MENU_TREEPOPUP_DELETE
+  MENU_TREEPOPUP_DELETE,
+  IDC_PANEL_ASSET_STATIC_DETAILS
 };
 enum EColumn
 { 
@@ -215,7 +216,7 @@ void mmAssetsPanel::CreateControls()
     itemButton81->SetFont(fnt);
     itemButton81->SetForegroundColour(wxColour(wxT("ORANGE")));
     itemBoxSizer5->Add(itemButton81, flags);
-	itemButton81->Enable(false);
+    itemButton81->Enable(false);
 	
     wxButton* itemButton7 = new wxButton( itemPanel12, IDC_BUTTON_DELETE_ASSET, _("&Delete"));
     itemButton7->SetToolTip(_("Delete Asset"));
@@ -223,6 +224,12 @@ void mmAssetsPanel::CreateControls()
     itemButton7->SetForegroundColour(wxColour(wxT("RED"))); // FIREBRICK
     itemBoxSizer5->Add(itemButton7, flags);
     itemButton7->Enable(false);
+
+    wxStaticText* itemStaticText33 = new wxStaticText( itemPanel12, 
+    IDC_PANEL_ASSET_STATIC_DETAILS, wxT(""), 
+    wxPoint(-1,-1), wxSize(350, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
+    itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxALL, 5);
+
 }
 
 void mmAssetsPanel::initVirtualListControl()
@@ -326,13 +333,29 @@ wxString assetsListCtrl::OnGetItemText(long item, long column) const
 void assetsListCtrl::OnListItemSelected(wxListEvent& event)
 {
 	m_selectedIndex = event.GetIndex();
-	m_cp->enableEditDeleteButtons(true);
+        m_cp->updateExtraAssetData(m_selectedIndex);
+
 }
 
 void assetsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 {
 	m_selectedIndex = -1;
-	m_cp->enableEditDeleteButtons(false);
+        m_cp->updateExtraAssetData(m_selectedIndex);
+}
+//----------------------------------------------------------------------------
+
+void mmAssetsPanel::updateExtraAssetData(int selIndex)
+{
+	wxStaticText* st = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS);	
+	if (selIndex!=-1) { 
+        enableEditDeleteButtons(true);
+        st->SetLabel(getItem(selIndex, COL_NOTES));
+        }
+        else
+        {
+        st->SetLabel(wxT (""));
+        enableEditDeleteButtons(false);
+        }
 }
 
 void mmAssetsPanel::enableEditDeleteButtons(bool enable)
@@ -396,8 +419,10 @@ void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
         mmDBWrapper::deleteAsset(m_cp->getDb(), m_cp->getTrans()[m_selectedIndex].assetID_);
         DeleteItem(m_selectedIndex);
         m_cp->initVirtualListControl();
-        if (m_cp->getTrans().empty()) {
+        //if (m_cp->getTrans().empty()) //after delition of asset - index and extra panel should be erased
+        {
             m_selectedIndex = -1;
+            m_cp->updateExtraAssetData(m_selectedIndex);
         }
     }
 }

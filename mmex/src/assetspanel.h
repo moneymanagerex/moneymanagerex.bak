@@ -95,6 +95,8 @@ public:
     wxString getItem(long item, long column);
     wxSQLite3Database* getDb() const { return m_db; }
     const std::vector<mmAssetHolder>& getTrans() const { return m_trans; }
+    void updateExtraAssetData(int selIndex);
+
 
 private:
     wxSQLite3Database* m_db;
@@ -114,6 +116,7 @@ private:
     void OnViewPopupSelected(wxCommandEvent& event);
     void sortTable();
     void destroy();
+
 };
 
 #endif
