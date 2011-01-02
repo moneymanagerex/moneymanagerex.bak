@@ -112,7 +112,7 @@ void mmPayeeDialog::CreateControls()
     textCtrl = new wxTextCtrl( this, IDD_TEXTCTRL_PAYEENAME, 
         wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(textCtrl, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    textCtrl->SetToolTip(_("Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."));
+    textCtrl->SetToolTip(_("Enter a search string.  You can use \% as a wildcard to match zero or more characters or _ to match a single character."));
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
