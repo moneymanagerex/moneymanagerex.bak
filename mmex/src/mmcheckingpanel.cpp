@@ -692,7 +692,7 @@ void mmCheckingPanel::CreateControls()
 
     itemBoxSizer9->Add(itemSplitterWindow10, 1, wxGROW|wxALL, 1);
 
-	wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemPanel12->SetSizer(itemBoxSizer4);
     itemPanel12->SetBackgroundColour(mmColors::listDetailsPanelColor);
 
@@ -704,11 +704,9 @@ void mmCheckingPanel::CreateControls()
 
     wxButton* itemButton6 = new wxButton(itemPanel12, ID_BUTTON_NEW_TRANS, _("&New"));
     itemButton6->SetToolTip(_("New Transaction"));
-
     wxFont fnt = itemButton6->GetFont();
     fnt.SetWeight(wxFONTWEIGHT_NORMAL);
     fnt.SetPointSize(fnt.GetPointSize());
-
     itemButton6->SetFont(fnt);
     itemButton6->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
     itemBoxSizer5->Add(itemButton6, flags);
@@ -758,9 +756,17 @@ void mmCheckingPanel::enableEditDeleteButtons(bool en)
 
 void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
-	enableEditDeleteButtons(true);
 	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);	
+	if (selIndex!=-1) { 
+        enableEditDeleteButtons(true);
         st->SetLabel(getItem(selIndex, COL_NOTES));
+        }
+        else
+        {
+        st->SetLabel(wxT (""));
+        enableEditDeleteButtons(false);
+        Tips () ;
+        }
 }
 //----------------------------------------------------------------------------
 
@@ -1249,6 +1255,7 @@ void MyListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 {
 	m_selectedIndex = -1;
 	m_cp->updateExtraTransactionData(m_selectedIndex);
+        //m_cp->enableEditDeleteButtons(false);
 }
 
 void MyListCtrl::OnItemRightClick(wxListEvent& event)
@@ -1700,6 +1707,7 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
         SetItemCount(0);
         DeleteAllItems();
         m_selectedIndex = -1;
+        m_cp->updateExtraTransactionData(m_selectedIndex);
     }
 }
 //----------------------------------------------------------------------------
