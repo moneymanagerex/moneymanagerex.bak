@@ -48,6 +48,7 @@ mmNewAcctDialog::mmNewAcctDialog( mmCoreDB* core, bool newAcct, int accountID,
     accountID_ = accountID;
     currencyID_ = -1;
     Create(parent, id, caption, pos, size, style);
+    termAccount_ = false;
 }
 
 bool mmNewAcctDialog::Create( wxWindow* parent, wxWindowID id, 
@@ -314,6 +315,11 @@ void mmNewAcctDialog::OnCurrency(wxCommandEvent& /*event*/)
     }
 }
 
+bool mmNewAcctDialog::termAccountActivated()
+{
+    return termAccount_;
+}
+
 void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
 {
     wxString acctName = textAccountName_->GetValue().Trim();
@@ -359,7 +365,10 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     if (acctType == ACCT_TYPE_INVESTMENT)
         pAccount->acctType_ = wxT("Investment");
     if (acctType == ACCT_TYPE_TERM)
+    {
         pAccount->acctType_ = wxT("Term");
+        termAccount_ = true;
+    }
 
     wxTextCtrl* textCtrlAcctNumber = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER);
     wxTextCtrl* textCtrlHeldAt = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_HELDAT);

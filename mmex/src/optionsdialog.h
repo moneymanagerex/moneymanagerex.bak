@@ -73,6 +73,13 @@ public:
 	void OnFontSizeChanged(wxCommandEvent& event);
     void OnUpdCurrencyChecked(wxCommandEvent& event);
 
+    void OnExpandBankHome(wxCommandEvent& event);
+    void OnExpandTermHome(wxCommandEvent& event);
+    void OnExpandBankTree(wxCommandEvent& event);
+    void OnExpandTermTree(wxCommandEvent& event);
+
+    void OnFYSMonthChange(wxCommandEvent& event); // FinancialYearStartMonth
+
     wxString DisplayDate2FormatDate(wxString strDate);
     wxString FormatDate2DisplayDate(wxString strDate);
 
@@ -82,6 +89,7 @@ private:
     wxChoice* choiceVisible_;
     wxChoice* choiceTransVisible_;
 	wxChoice* choiceFontSize_;
+    wxChoice* monthSelection_;
     mmCoreDB* core_;
     wxSQLite3Database* db_;
     wxSQLite3Database* inidb_;

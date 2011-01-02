@@ -26,8 +26,9 @@
 #include "mmcoredb.h"
 
 
-mmReportSummary::mmReportSummary(mmCoreDB* core) : 
-	core_(core), 
+mmReportSummary::mmReportSummary(mmCoreDB* core, mmGUIFrame* frame) : 
+	core_(core),
+    frame_(frame),
 	db_(core_->db_.get()) 
 {
 }
@@ -122,11 +123,13 @@ wxString mmReportSummary::getHTMLText()
     wxString tTBalanceStr;
 	mmex::formatDoubleToCurrency(tTBalance, tTBalanceStr);
 
-	hb.startTableRow();
-	hb.addTotalRow(_("Term Accounts Total:"), 2, tTBalanceStr);
-	hb.endTableRow();
-
-	hb.addRowSeparator(2);
+    if ( frame_->hasActiveTermAccounts() )
+    {
+	    hb.startTableRow();
+	    hb.addTotalRow(_("Term Accounts Total:"), 2, tTBalanceStr);
+	    hb.endTableRow();
+	    hb.addRowSeparator(2);
+    }
 
     tBalance += tTBalance;
 

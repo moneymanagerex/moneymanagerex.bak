@@ -1,6 +1,6 @@
 /*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
-
+ 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
@@ -242,43 +242,64 @@ wxString mmIniOptions::userNameString_;
 bool mmIniOptions::enableCustomTemplateDB_ = false;
 wxString mmIniOptions::customTemplateDB_;
 wxString mmIniOptions::fontSize_ = wxT( "3" );
+
+bool mmIniOptions::expandBankHome_ = true;
+bool mmIniOptions::expandTermHome_ = false;
+bool mmIniOptions::expandBankTree_ = true;
+bool mmIniOptions::expandTermTree_ = false;
+
 //----------------------------------------------------------------------------
 wxString mmOptions::dateFormat = mmex::DEFDATEFORMAT;
 wxString mmOptions::language = wxT( "english" );
+wxString mmOptions::financialYearStartDayString_;
+wxString mmOptions::financialYearStartMonthString_;
 //----------------------------------------------------------------------------
 
 void mmOptions::loadOptions( wxSQLite3Database* db )
 {
-        dateFormat = mmDBWrapper::getInfoSettingValue( db, wxT( "DATEFORMAT" ), mmex::DEFDATEFORMAT );
+    dateFormat = mmDBWrapper::getInfoSettingValue( db, wxT( "DATEFORMAT" ), mmex::DEFDATEFORMAT );
+
+    financialYearStartDayString_   = mmDBWrapper::getInfoSettingValue(db, wxT("FINANCIAL_YEAR_START_DAY"), wxT("1"));
+    financialYearStartMonthString_ = mmDBWrapper::getInfoSettingValue(db, wxT("FINANCIAL_YEAR_START_MONTH"), wxT("Jul"));
+
 }
 //----------------------------------------------------------------------------
 
 void mmOptions::saveOptions( wxSQLite3Database* db )
 {
-        mmDBWrapper::setInfoSettingValue( db, wxT( "DATEFORMAT" ), dateFormat );
+    mmDBWrapper::setInfoSettingValue( db, wxT( "DATEFORMAT" ), dateFormat );
 }
 // --------------------------------------------------------------------------
 
 void mmIniOptions::loadOptions( wxSQLite3Database* db )
 {
-        if ( mmDBWrapper::getINISettingValue( db, wxT( "ENABLESTOCKS" ), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
-                enableStocks_ = false;
+    if ( mmDBWrapper::getINISettingValue( db, wxT( "ENABLESTOCKS" ), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
+        enableStocks_ = false;
 
-        if ( mmDBWrapper::getINISettingValue( db, wxT( "ENABLEASSETS" ), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
-                enableAssets_ = false;
+    if ( mmDBWrapper::getINISettingValue( db, wxT( "ENABLEASSETS" ), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
+        enableAssets_ = false;
 
-        if ( mmDBWrapper::getINISettingValue( db, wxT( "ENABLEBUDGET" ), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
-                enableBudget_ = false;
+    if ( mmDBWrapper::getINISettingValue( db, wxT( "ENABLEBUDGET" ), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
+        enableBudget_ = false;
 
-        if ( mmDBWrapper::getINISettingValue( db, wxT( "ENABLEGRAPHS" ), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
-                enableGraphs_ = false;
+    if ( mmDBWrapper::getINISettingValue( db, wxT( "ENABLEGRAPHS" ), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
+        enableGraphs_ = false;
 
-        mmIniOptions::fontSize_ = mmDBWrapper::getINISettingValue( db, wxT( "HTMLFONTSIZE" ), wxT( "3" ) );
+    mmIniOptions::fontSize_ = mmDBWrapper::getINISettingValue( db, wxT( "HTMLFONTSIZE" ), wxT( "3" ) );
+
+    if ( mmDBWrapper::getINISettingValue( db, wxT("EXPAND_BANK_HOME"), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
+        expandBankHome_ = false;
+    if ( mmDBWrapper::getINISettingValue( db, wxT("EXPAND_TERM_HOME"), wxT( "FALSE" ) ) != wxT( "FALSE" ) )
+        expandTermHome_ = true;
+    if ( mmDBWrapper::getINISettingValue( db, wxT("EXPAND_BANK_TREE"), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
+        expandBankTree_ = false;
+    if ( mmDBWrapper::getINISettingValue( db, wxT("EXPAND_TERM_TREE"), wxT( "FALSE" ) ) != wxT( "FALSE" ) )
+        expandTermTree_ = true;
 }
 
 void mmIniOptions::loadInfoOptions( wxSQLite3Database* db )
 {
-        mmIniOptions::userNameString_ = mmDBWrapper::getInfoSettingValue( db, wxT( "USERNAME" ), wxT( "" ) );
+    mmIniOptions::userNameString_ = mmDBWrapper::getInfoSettingValue( db, wxT( "USERNAME" ), wxT( "" ) );
 }
 
 void mmIniOptions::saveOptions( wxSQLite3Database* /*db*/ )

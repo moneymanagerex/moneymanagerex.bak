@@ -1,6 +1,6 @@
 /*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
-
+ 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
@@ -77,6 +77,8 @@ public:
 
         static wxString dateFormat;
         static wxString language;
+        static wxString financialYearStartDayString_;
+        static wxString financialYearStartMonthString_;
 };
 
 class mmIniOptions
@@ -108,6 +110,11 @@ public:
         static wxString userNameString_;
         static bool enableCustomTemplateDB_;
         static wxString customTemplateDB_;
+
+        static bool expandBankHome_;
+        static bool expandTermHome_;
+        static bool expandBankTree_;
+        static bool expandTermTree_;
 };
 
 class mmColors

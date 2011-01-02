@@ -20,6 +20,7 @@
 #define _MM_EX_REPORTSUMMARY_H_
 
 #include "reportbase.h"
+#include "mmex.h"
 
 class mmCoreDB;
 class wxSQLite3Database;
@@ -27,11 +28,12 @@ class wxSQLite3Database;
 class mmReportSummary : public mmPrintableBase 
 {
 public:
-    mmReportSummary(mmCoreDB* core);
+    mmReportSummary(mmCoreDB* core, mmGUIFrame* frame);
     wxString getHTMLText();
 
 private:
     mmCoreDB* core_;
+    mmGUIFrame* frame_;
     wxSQLite3Database* db_;
 };
 

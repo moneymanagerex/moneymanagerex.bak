@@ -58,6 +58,7 @@ public:
     void OnCancel(wxCommandEvent& event);
     void OnCurrency(wxCommandEvent& event);
     void fillControlsWithData(void);
+    bool termAccountActivated();
 
 private:
     mmCoreDB* core_;
@@ -65,6 +66,7 @@ private:
     bool newAcct_;
     int accountID_;
     int currencyID_;
+    bool termAccount_;
 };
 
 #endif

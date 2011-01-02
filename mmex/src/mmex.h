@@ -90,6 +90,8 @@ public:
     void unselectNavTree();
     bool expandedBankAccounts();
     bool expandedTermAccounts();
+    bool hasActiveTermAccounts();
+    wxDateTime getUserDefinedFinancialYear(bool prevDayRequired = false);
 
 private:
     /* handles to the DB Abstraction */
@@ -126,6 +128,7 @@ private:
 
     /* Homepage panel logic */
     wxString m_topCategories;
+    bool activeTermAccounts_;
 
     void cleanup();
     wxSizer* cleanupHomePanel(bool new_sizer = true);
@@ -145,7 +148,7 @@ private:
     void saveConfigFile();
     void menuEnableItems(bool enable);
     void menuPrintingEnable(bool enable);
-    void updateNavTreeControl();
+    void updateNavTreeControl(bool expandTermAccounts = false);
     void showTreePopupMenu(wxTreeItemId id, const wxPoint& pt);
     void showBeginAppDialog();
     void openDataBase(const wxString& fileName);

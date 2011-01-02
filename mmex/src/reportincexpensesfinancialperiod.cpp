@@ -1,9 +1,29 @@
-///////////////////////////////////////////////////////////////////////////////
-///     This class tabulates the income and expense for a 12 month period.
-///     It is similar to the class: mmReportIncExpensesOverTime except that it
-///     covers a financial year from 1 July YYYY to 30 June YYYY over 2 years.
-///
-///////////////////////////////////////////////////////////////////////////////
+/*************************************************************************
+ Copyright (C) 2006 Madhan Kanagavel
+ Modified: Copyright (C) 2010 Stefano Giorgio      
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+ Purpose:
+ This class tabulates the income and expense for a 12 month period.
+ It is similar to the class: mmReportIncExpensesOverTime except that it
+ covers a financial year period defined by the user.
+ Typically from 1 July YYYY to 30 June YYYY over 2 years but can be any
+ period within year.
+*************************************************************************/
+
 #include "reportincexpensesfinancialperiod.h"
 
 #include "defs.h"
@@ -14,7 +34,8 @@
 #include "budgetingpanel.h"
 #include "mmcoredb.h"
 
-mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmCoreDB* core, int year):
+mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmGUIFrame* frame, mmCoreDB* core, int year):
+        frame_(frame),
         core_(core),
         year_(year)
 {
@@ -27,18 +48,24 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
         wxString yearStr = wxString::Format(wxT("%d"), year_);
         wxString finYearStr = yearStr + wxT(" - ") + wxString::Format(wxT("%d"), (year_ + 1));
 
+        wxDateTime sofy = wxDateTime( frame_->getUserDefinedFinancialYear() );
+        int startDay = sofy.GetDay();
+
+        wxDateTime yearBegin(sofy.GetDay(), sofy.GetMonth(), year_);
+        wxDateTime yearEnd(sofy.GetDay(), sofy.GetMonth(), (year_ + 1));
+        yearEnd.Subtract(wxDateSpan::Day());
+
         mmHTMLBuilder hb;
         hb.init();
         hb.addHeader(3, _("Income vs Expenses for Financial Year: ") + finYearStr );
 
         wxDateTime now = wxDateTime::Now();
-        wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
+        wxString dt = _("Today's Date: <b>") + mmGetNiceDateString(now) + _("</b> &nbsp &nbsp") +
+                      _(" &nbsp &nbsp Showing period: ") + mmGetNiceDateSimpleString(yearBegin) + 
+                      _("&nbsp to: ") + mmGetNiceDateSimpleString(yearEnd);
         hb.addHeader(7, dt);
         hb.addLineBreak();
         hb.addLineBreak();
-
-        wxDateTime yearBegin(1, wxDateTime::Jul, year_);
-        wxDateTime yearEnd(30, wxDateTime::Jun, (year_ + 1));
 
         hb.startCenter();
 
@@ -54,10 +81,15 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
         double expenses = 0.0;
         double balance = 0.0;
 
-        int yidx = wxDateTime::Jun;
-        for (int yearIndex = wxDateTime::Jan; yearIndex < wxDateTime::Dec + 1; yearIndex++)
+        int yidx = sofy.GetMonth() -1 ;
+        int monthCorrection = 1;    
+        if ( sofy.GetDay() != 1)    // allow to display 13 months - first and last are part months
+            monthCorrection ++;     
+
+        int dayStart = 1;           // correct day for when not first of month
+        for (int yearIndex = wxDateTime::Jan; yearIndex < wxDateTime::Dec + monthCorrection; yearIndex++)
         {
-            yidx++;				// Set month to July
+            yidx++;
             if (yidx > wxDateTime::Dec)
             {
                 yidx = wxDateTime::Jan;
@@ -67,8 +99,17 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
 
             wxString monName = mmGetNiceMonthName(yidx) + wxT(" ") + yearStr;
 
-            wxDateTime dtBegin(1, (wxDateTime::Month)yidx, year_);
-            wxDateTime dtEnd = dtBegin.GetLastMonthDay((wxDateTime::Month)yidx, year_);
+            if (yearIndex == 0)
+                dayStart = startDay;
+            else
+                dayStart = 1;
+
+            wxDateTime dtBegin(dayStart, (wxDateTime::Month)yidx, year_);
+            wxDateTime dtEnd;
+            if (yearIndex > 11)
+                dtEnd = yearEnd;
+            else
+                dtEnd = dtBegin.GetLastMonthDay((wxDateTime::Month)yidx, year_);
 
             bool ignoreDate = false;
             income = 0.0;
@@ -103,19 +144,10 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
             hb.endTableRow();
         }
 
-        wxDateTime today = wxDateTime::Now();
-        wxDateTime prevYearEnd = wxDateTime(today);
-        // Date setting needs to be in Day/Month/Year else error will occure in wxWidgets
-        prevYearEnd.SetDay(30);
-        prevYearEnd.SetMonth(wxDateTime::Jun);
-        prevYearEnd.SetYear(year_);
-
-        wxDateTime dtEnd = prevYearEnd;
-        wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-
+        // Now we get the totals for the financial year period
         expenses = 0.0;
         income = 0.0;
-        core_->bTransactionList_.getExpensesIncome(-1, expenses, income,  false, dtBegin, dtEnd);
+        core_->bTransactionList_.getExpensesIncome(-1, expenses, income,  false, yearBegin, yearEnd);
 
         wxString actualExpStr;
         mmex::formatDoubleToCurrencyEdit(expenses, actualExpStr);
