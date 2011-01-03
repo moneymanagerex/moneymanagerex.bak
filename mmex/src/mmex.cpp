@@ -3219,13 +3219,13 @@ void mmGUIFrame::OnCashFlowSpecificAccounts()
     {
         wxArrayInt arraySel = mcd.GetSelections();
 
-        wxArrayString selections;
+        wxArrayString* selections = new wxArrayString();
         for (size_t i = 0; i < arraySel.size(); ++i)
         {
-            selections.Add(accountArray.Item(arraySel[i]));
+            selections->Add(accountArray.Item(arraySel[i]));
         }
 
-        mmPrintableBase* rs = new mmReportCashFlow(m_core.get(), &selections);
+        mmPrintableBase* rs = new mmReportCashFlow(m_core.get(), selections);
         menuPrintingEnable(true);
         createReportsPage(rs);
     }
