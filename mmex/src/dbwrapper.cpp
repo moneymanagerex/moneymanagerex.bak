@@ -1630,11 +1630,13 @@ bool mmDBWrapper::updatePayee(wxSQLite3Database* db, const wxString& payeeName,
 
 bool mmDBWrapper::deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID)
 {
-    wxSQLite3Statement st = db->PrepareStatement("select 1 "
-                                                 "from CHECKINGACCOUNT_V1 "
-                                                 "where PAYEEID = ? "
-                                                 "limit 1" // return just one row
-                                                );
+    static const char sql[] = 
+    "select 1 "
+    "from CHECKINGACCOUNT_V1 "
+    "where transcode <> 'Transfer' " //for transfer transactions payee id should be null. if not null jast ignore it
+          "and PAYEEID = ? "
+    "limit 1";
+    wxSQLite3Statement st = db->PrepareStatement(sql);
 
     st.Bind(1, payeeID);
 
@@ -1675,8 +1677,8 @@ wxString mmDBWrapper::getPayee(wxSQLite3Database* db, int payeeID, int& categID,
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
     if (q1.NextRow())
     {
-        payeeName = q1.GetString(wxT("PAYEENAME"));
-        categID = q1.GetInt(wxT("CATEGID"));
+        payeeName  = q1.GetString(wxT("PAYEENAME"));
+        categID    = q1.GetInt(wxT("CATEGID"));
         subcategID = q1.GetInt(wxT("SUBCATEGID"));
     }
     st.Finalize();
