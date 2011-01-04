@@ -2747,15 +2747,19 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
 
 	wxFileName checkExt(fileName);
 	wxString password;
+    bool passwordCheckPassed = true;
 	if (checkExt.GetExt().Lower() == wxT("emb") && wxFileName::FileExists(fileName))
 	{
         password = !pwd.empty() ? pwd : wxGetPasswordFromUser(_("Enter database's password"));
+        if (password.IsEmpty())
+            passwordCheckPassed = false;
 	}
 
     // Existing Database
     if (!openingNew 
         && !fileName.IsEmpty() 
-        && wxFileName::FileExists(fileName))
+        && wxFileName::FileExists(fileName)
+        && passwordCheckPassed)
     {    
         /* Do a backup before opening */
         wxString backupDBState =  mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB"), wxT("FALSE"));
@@ -2819,10 +2823,14 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
     }
     else // open of existing database failed
     {
-       wxString note = mmex::getProgramName() + _(" - No File opened ");
-       this->SetTitle(note);   
+        wxString note = mmex::getProgramName() + _(" - No File opened ");
+        this->SetTitle(note);   
         
-        wxMessageDialog msgDlg(this, _("Cannot locate previously opened database.\nDo you want to browse to locate the file?"), 
+        wxString msgStr = _("Cannot locate previously opened database.\n");
+        if (!passwordCheckPassed)
+            msgStr = _("Password not entered for encrypted Database.\n");
+
+        wxMessageDialog msgDlg(this, msgStr + _("Do you want to browse to locate another file?"), 
                                 _("Error opening database"), wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
         {
