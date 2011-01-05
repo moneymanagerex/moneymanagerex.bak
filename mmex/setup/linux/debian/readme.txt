@@ -9,6 +9,7 @@ cp resources/mmex.desktop ~/build/mmex/usr/share/applications
 cp graphics/mmex.svg ~/build/mmex/usr/share/icons/hicolor/scalable/apps
 cp doc/mmex.1.gz ~/build/mmex/usr/share/man/man1
 cd ~/build
+strip build/mmex/usr/bin/mmex
 fakeroot dpkg-deb -b mmex
 lintian mmex.deb
 
