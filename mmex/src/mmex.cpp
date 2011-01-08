@@ -1155,6 +1155,14 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId cashFlow = navTreeCtrl_->AppendItem(reports, _("Cash Flow"), 4, 4);
     navTreeCtrl_->SetItemData(cashFlow, new mmTreeItemData(wxT("Cash Flow")));
 
+    if ( hasActiveTermAccounts() )
+    {
+        wxTreeItemId cashflowWithTermAccounts = navTreeCtrl_->AppendItem(cashFlow, 
+            _("Cash Flow - With Term Accounts"), 4, 4);
+        navTreeCtrl_->SetItemData(cashflowWithTermAccounts, 
+            new mmTreeItemData(wxT("Cash Flow - With Term Accounts")));
+    }
+
     wxTreeItemId cashflowSpecificAccounts = navTreeCtrl_->AppendItem(cashFlow, 
         _("Cash Flow - Specific Accounts"), 4, 4);
     navTreeCtrl_->SetItemData(cashflowSpecificAccounts, 
@@ -2051,12 +2059,26 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
 		else if (iData->getString() == wxT("Cash Flow"))
         {
-            mmPrintableBase* rs = new mmReportCashFlow(m_core.get());
+            // mmReportCashFlow is a mmPrintableBase
+            mmReportCashFlow* rs = new mmReportCashFlow(m_core.get());
+            if ( hasActiveTermAccounts() )
+                rs->showTermAccountsHeading();
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
         
        // Thaw();
+
+        else if (iData->getString() == wxT("Cash Flow - With Term Accounts"))
+        {
+            // will be accessed only if term accounts are active
+            // mmReportCashFlow is a mmPrintableBase
+            mmReportCashFlow* rs = new mmReportCashFlow(m_core.get());
+            rs->activateTermAccounts();
+            rs->showTermAccountsHeading();
+            menuPrintingEnable(true);
+            createReportsPage(rs);
+        }
 
         else if (iData->getString() == wxT("Cash Flow - Specific Accounts"))
         {
@@ -3204,24 +3226,42 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
+wxArrayString mmGUIFrame::getAccountsArray( bool withTermAccounts )
+{
+    wxArrayString accountArray;
+
+    for (int iAdx = 0; iAdx < (int) m_core->accountList_.accounts_.size(); iAdx++)
+    {
+//      Add Check/Savings Accounts to Cash Flows
+        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.accounts_[iAdx].get());
+        if (pCA)
+        {
+            accountArray.Add(pCA->accountName_);
+        }
+
+        if (withTermAccounts) // Add Term accounts to Cash Flows as well.
+        {
+            mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(m_core->accountList_.accounts_[iAdx].get());
+            if (pTA)
+            {
+                accountArray.Add(pTA->accountName_);
+            }
+        }
+    }
+
+    return accountArray;
+}
+
 void mmGUIFrame::OnCashFlowSpecificAccounts()
 {
     if (!m_db.get())
        return;
 
-     if (mmDBWrapper::getNumAccounts(m_db.get()) == 0)
-         return;
+    if (mmDBWrapper::getNumAccounts(m_db.get()) == 0)
+        return;
 
-     wxArrayString accountArray;
-     for (int iAdx = 0; iAdx < (int) m_core->accountList_.accounts_.size(); iAdx++)
-     {
-         mmCheckingAccount* pCA 
-             = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.accounts_[iAdx].get());
-         if (pCA)
-         {
-             accountArray.Add(pCA->accountName_);
-         }
-     }
+    wxArrayString accountArray = getAccountsArray(true);
+
     wxMultiChoiceDialog mcd(this, _("Choose Accounts"), _("Cash Flow"), accountArray);
     if (mcd.ShowModal() == wxID_OK)
     {
@@ -3232,8 +3272,14 @@ void mmGUIFrame::OnCashFlowSpecificAccounts()
         {
             selections->Add(accountArray.Item(arraySel[i]));
         }
-
-        mmPrintableBase* rs = new mmReportCashFlow(m_core.get(), selections);
+        
+        // mmReportCashFlow is a mmPrintableBase
+        mmReportCashFlow* rs = new mmReportCashFlow(m_core.get(), selections);
+        if (this->hasActiveTermAccounts())
+        {
+            rs->activateTermAccounts();
+            rs->showTermAccountsHeading();
+        }
         menuPrintingEnable(true);
         createReportsPage(rs);
     }

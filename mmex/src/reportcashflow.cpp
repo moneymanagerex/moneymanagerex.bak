@@ -11,6 +11,18 @@ mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, const wxArrayString* accountA
     core_(core), 
     accountArray_(accountArray)
 {
+    activeTermAccounts_  = false;
+    termAccountsHeading_ = false;
+}
+
+void mmReportCashFlow::activateTermAccounts() 
+{
+    activeTermAccounts_ = true;
+}
+
+void mmReportCashFlow::showTermAccountsHeading()
+{
+    termAccountsHeading_ = true;
 }
 
 wxString mmReportCashFlow::getHTMLText()
@@ -20,8 +32,16 @@ wxString mmReportCashFlow::getHTMLText()
     mmHTMLBuilder hb;
     hb.init();
 
-    if (accountArray_ == NULL) {
-        hb.addHeader(3, _("Cash Flow Forecast For All Accounts - A Year Ahead"));
+    wxString headerMsg = _("Cash Flow Forecast A Year Ahead - For ");
+    if (accountArray_ == NULL) 
+    {
+        if ( !(termAccountsHeading_ == activeTermAccounts_ ) &&
+              (termAccountsHeading_ || activeTermAccounts_) )
+            headerMsg = headerMsg + _("All Bank Accounts");
+        else 
+            headerMsg = headerMsg + _("All Accounts");
+
+        hb.addHeader(3, headerMsg );
     } else {
         int arrIdx = 0;
         wxString msgString = wxT(": ");
@@ -42,7 +62,7 @@ wxString mmReportCashFlow::getHTMLText()
             arrIdx ++;
         }
 
-        hb.addHeader(3, _("Cash Flow Forecast - A Year Ahead For Account" + msgString));
+        hb.addHeader(3, headerMsg + _("Account" + msgString));
     }
 
     wxDateTime now = wxDateTime::Now();
@@ -82,17 +102,44 @@ wxString mmReportCashFlow::getHTMLText()
                     continue; // skip account
             }
 
-            double bal = pCA->initialBalance_ 
-                + core_->bTransactionList_.getBalance(pCA->accountID_);
-              
-            boost::shared_ptr<mmCurrency> pCurrencyPtr 
-                = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
+            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_);
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
             wxASSERT(pCurrencyPtr);
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
             double rate = pCurrencyPtr->baseConv_;
 
-            tBalance += bal * rate;;
+            tBalance += bal * rate;
+        }
 
+        if (activeTermAccounts_) // Add Term accounts to cashflows as well
+        {
+            mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(core_->accountList_.accounts_[iAdx].get());
+            if (pTA)
+            {
+                // Check if this account belongs in our list
+                if (accountArray_ != NULL)
+                {
+                    bool isFound = false;
+                    for (int arrIdx = 0; arrIdx < (int)accountArray_->size(); arrIdx++)
+                    {
+                        if (pTA->accountName_ == accountArray_->Item(arrIdx))
+                        {
+                            isFound = true;
+                            break;
+                        }
+                    }
+                    if (!isFound)
+                        continue; // skip account
+                }
+
+                double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_);
+                boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pTA->accountID_).lock();
+                wxASSERT(pCurrencyPtr);
+                mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+                double rate = pCurrencyPtr->baseConv_;
+
+                tBalance += bal * rate;
+            }
         }
     }
 
