@@ -456,6 +456,10 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
     EVT_MENU(MENU_ON_PASTE_TRANSACTION, MyListCtrl::OnPaste) 
     EVT_MENU(MENU_ON_NEW_TRANSACTION, MyListCtrl::OnNewTransaction) 
 
+   //EVT_KEY_UP(MyListCtrl::OnChar)
+    // If we use EVT_KEY_DOWN instead of EVT_CHAR, capital versions
+    // of all characters are always returned.  EVT_CHAR also performs
+    // other necessary keyboard-dependent translations.
     EVT_CHAR(MyListCtrl::OnChar)
 
 END_EVENT_TABLE()
@@ -597,10 +601,8 @@ void mmCheckingPanel::CreateControls()
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
 
-    wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_HEADER, 
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, 
-        wxT("")));
+    wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_HEADER, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 5);
 
      wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
@@ -613,8 +615,7 @@ void mmCheckingPanel::CreateControls()
     itemBoxSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemStaticBitmap3->SetEventHandler( this ); 
 
-     wxStaticText* itemStaticText18 = new wxStaticText( headerPanel, 
-            ID_PANEL_CHECKING_STATIC_PANELVIEW, 
+     wxStaticText* itemStaticText18 = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW, 
             _("Viewing All Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerHHeader2->Add(itemStaticText18, 0, wxALL, 1);
 
@@ -626,8 +627,7 @@ void mmCheckingPanel::CreateControls()
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader, 0, wxALL, 1);
 
     wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, 
-            ID_PANEL_CHECKING_STATIC_BALHEADER, 
-            wxT(""), wxDefaultPosition, wxSize(500, 20), 0 );
+            ID_PANEL_CHECKING_STATIC_BALHEADER, wxT(""), wxDefaultPosition, wxSize(500, 20), 0 );
     itemBoxSizerHHeader->Add(itemStaticText10, 0, wxALL | wxEXPAND , 5);
     
     /* ---------------------- */
@@ -1546,7 +1546,7 @@ void MyListCtrl::OnChar(wxKeyEvent& event)
 		wxGetKeyState(WXK_DELETE) ||
 		wxGetKeyState(WXK_NUMPAD_DELETE)
 		)
-	event.Skip();
+	{event.Skip();}
   }
 //----------------------------------------------------------------------------
 
@@ -1584,17 +1584,19 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
 
 	if (!wxGetKeyState(WXK_COMMAND) && !wxGetKeyState(WXK_ALT) && !wxGetKeyState(WXK_CONTROL))
 	{
-  switch ( event.GetKeyCode() )
+
+    // new style
+  int keycode = event.GetKeyCode();
+  char key = '\0';
+  if (keycode < 256)
+  {
+    // TODO: Unicode in non-Unicode mode ??
+    key = (char)keycode;
+  }
+
+
+  switch ( key )
     {
-        case WXK_DELETE:
-        case WXK_NUMPAD_DELETE:
-
-            {
-                wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
-                OnDeleteTransaction(evt);
-            }
-            break;
-
         case 'v':
         case 'V':
             {
@@ -1616,7 +1618,7 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
         case 'u':
         case 'U':
             {
-                 if (status != wxT("U")) {
+                 if (status != wxT("")) {
                  wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKUNRECONCILED);
                  OnMarkTransaction(evt); } 
             }
@@ -1638,12 +1640,23 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
                  OnMarkTransaction(evt); }
             }
             break;
+
+/*        case WXK_DELETE:
+        case WXK_NUMPAD_DELETE:
+
+            {
+                wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
+                OnDeleteTransaction(evt);
+            }
+            break;*/
+    }
         
       
-        default:
-            event.Skip();
-    }
-	}
+//        default:
+        if (key == WXK_DELETE || key == WXK_NUMPAD_DELETE)
+        {wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
+        OnDeleteTransaction(evt);}
+	} else {            event.Skip();}
 }
 //----------------------------------------------------------------------------
 
