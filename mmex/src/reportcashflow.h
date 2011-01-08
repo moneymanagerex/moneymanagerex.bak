@@ -15,6 +15,8 @@ public:
     mmReportCashFlow(mmCoreDB* core, const wxArrayString* accountArray = 0);
 
     wxString getHTMLText();
+    void activateTermAccounts(); 
+    void showTermAccountsHeading(); 
 
 private:
    
@@ -29,6 +31,8 @@ private:
    std::vector<forecastVec> bdForecastVec;
 
    const wxArrayString* accountArray_;
+   bool activeTermAccounts_;
+   bool termAccountsHeading_;
 };
 
 #endif // _MM_EX_REPORTCASHFLOW_H_

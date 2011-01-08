@@ -129,6 +129,7 @@ private:
     /* Homepage panel logic */
     wxString m_topCategories;
     bool activeTermAccounts_;
+    wxArrayString getAccountsArray(bool withTermAccounts = false);
 
     void cleanup();
     wxSizer* cleanupHomePanel(bool new_sizer = true);
