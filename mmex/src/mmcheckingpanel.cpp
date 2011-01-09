@@ -207,7 +207,14 @@ bool sortTransByNum(const mmBankTransaction *t1, const mmBankTransaction *t2, bo
 */
 bool sortTransByPayee(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
 {
-    return sort(t1->payeeStr_, t2->payeeStr_, asc);
+//  Primary sort by Payee, secondary sort by Date.
+    bool res = false;
+    if (t1->payeeStr_ == t2->payeeStr_)
+        res = sort(t1->date_, t2->date_, asc);
+    else 
+        res = sort(t1->payeeStr_, t2->payeeStr_, asc);
+
+    return res;
 }
 //----------------------------------------------------------------------------
 
@@ -216,7 +223,14 @@ bool sortTransByPayee(const mmBankTransaction *t1, const mmBankTransaction *t2, 
 */
 bool sortTransByStatus(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
 {
-    return sort(t1->status_, t2->status_, asc);
+//  Primary sort by Status, Secondary sort by Date.
+    bool res = false;
+    if (t1->status_ == t2->status_)
+        res = sort(t1->date_, t2->date_, asc);
+    else 
+        res = sort(t1->status_, t2->status_, asc);
+
+    return res;
 }
 //----------------------------------------------------------------------------
 
@@ -225,7 +239,14 @@ bool sortTransByStatus(const mmBankTransaction *t1, const mmBankTransaction *t2,
 */
 bool sortTransByCateg(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
 {
-    return sort(t1->fullCatStr_, t2->fullCatStr_, asc);
+//  Primary sort by Category, Secondary sort by Date.
+    bool res = false;
+    if (t1->fullCatStr_ == t2->fullCatStr_)
+        res = sort(t1->date_, t2->date_, asc);
+    else 
+        res = sort(t1->fullCatStr_, t2->fullCatStr_, asc);
+
+    return res;
 }
 //----------------------------------------------------------------------------
 
