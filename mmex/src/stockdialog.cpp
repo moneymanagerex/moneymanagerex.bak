@@ -272,6 +272,7 @@ void mmStockDialog::CreateControls()
     wxButton* itemButton30 = new wxButton( itemPanel27, ID_BUTTON_STOCK_CANCEL, _("Cancel"));
     itemButton30->SetForegroundColour(wxColour(wxT("RED")));
     itemBoxSizer28->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemButton30->SetFocus();
 }
 
 void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
