@@ -416,7 +416,7 @@ void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
     if (m_cp->getTrans().empty())
         return;
 
-    wxMessageDialog msgDlg(this, _("Do you really want to delete the Asset?"), _("Confirm Asset Deletion"), wxYES_NO);
+    wxMessageDialog msgDlg(this, _("Do you really want to delete the Asset?"), _("Confirm Asset Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES) {
         mmDBWrapper::deleteAsset(m_cp->getDb(), m_cp->getTrans()[m_selectedIndex].assetID_);
         DeleteItem(m_selectedIndex);

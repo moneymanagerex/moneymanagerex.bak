@@ -769,6 +769,7 @@ void mmCheckingPanel::enableEditDeleteButtons(bool en)
 	wxButton* bM = (wxButton*)FindWindow(ID_BUTTON_MOVE_TRANS);
         {
 	bE->Enable(en);
+        //bE->SetFocus();
 	bD->Enable(en);
 	bM->Enable(en);
         }

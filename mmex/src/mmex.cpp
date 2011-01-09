@@ -2185,7 +2185,7 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
            wxMessageDialog msgDlg(this, 
               _("Do you really want to delete the account?"),
               _("Confirm Account Deletion"),
-              wxYES_NO);
+              wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
            if (msgDlg.ShowModal() == wxID_YES)
            {
               m_core->accountList_.deleteAccount(pAccount->accountID_);
@@ -2853,7 +2853,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
             msgStr = _("Password not entered for encrypted Database.\n");
 
         wxMessageDialog msgDlg(this, msgStr + _("Do you want to browse to locate another file?"), 
-                                _("Error opening database"), wxYES_NO);
+                                _("Error opening database"), wxYES_NO | wxYES_DEFAULT);
         if (msgDlg.ShowModal() == wxID_YES)
         {
             wxCommandEvent evt;
@@ -3790,7 +3790,7 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
         wxMessageDialog msgDlg(this, deletingAccountName,
 //          _("Do you really want to delete the account?")  
             _("Confirm Account Deletion"),
-            wxYES_NO);
+            wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
         if (msgDlg.ShowModal() == wxID_YES)
         {
             m_core->accountList_.deleteAccount(acctID);
