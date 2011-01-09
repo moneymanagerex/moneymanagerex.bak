@@ -724,7 +724,8 @@ void mmExportQIF( wxSQLite3Database* db_ )
                 wxString type = q1.GetString( wxT( "TRANSACTIONTYPE" ) );
                 wxString amount = q1.GetString( wxT( "AMOUNT" ) );
                 //Amount should be formated
-                double value = 0;
+//FIXME
+                double value = 0.0;
                 mmex::formatCurrencyToDouble( amount, value );
                 mmex::formatDoubleToCurrencyEdit( value, amount );
                 wxString transNum = q1.GetString( wxT( "TRANSACTIONNUMBER" ) );
