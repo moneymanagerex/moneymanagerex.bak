@@ -104,15 +104,14 @@ void mmPayeeDialog::CreateControls()
         wxDefaultPosition, wxSize(100, 200), wxArrayString(), wxLB_SINGLE);
     itemBoxSizer3->Add(listBox_, 1, wxGROW|wxALL, 1);
 
-    wxStaticText* itemStaticTextName2 = new wxStaticText( this, wxID_STATIC, 
-            _("Filter Payees: "), wxDefaultPosition, wxDefaultSize, 0 );
-        itemBoxSizer2->Add(itemStaticTextName2, 0,
-            wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticText* itemStaticTextName2 = new wxStaticText( this, wxID_STATIC, _("Filter Payees: "), wxDefaultPosition, wxDefaultSize, 0 );
+        itemBoxSizer2->Add(itemStaticTextName2, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     textCtrl = new wxTextCtrl( this, IDD_TEXTCTRL_PAYEENAME, 
         wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(textCtrl, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     textCtrl->SetToolTip(_("Enter a search string.  You can use \% as a wildcard to match zero or more characters or _ to match a single character."));
+    textCtrl->SetFocus();
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
