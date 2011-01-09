@@ -526,7 +526,7 @@ void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& /*event*/)
 
     wxMessageDialog msgDlg(this, _("Do you really want to delete the series?"),
                                         _("Confirm Series Deletion"),
-                                        wxYES_NO);
+                                        wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES)
     {
         mmDBWrapper::deleteBDSeries(cp_->db_, cp_->trans_[selectedIndex_].bdID_);

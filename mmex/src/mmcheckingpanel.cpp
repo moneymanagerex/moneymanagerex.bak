@@ -1228,7 +1228,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     {
         wxMessageDialog msgDlg(this, _("Do you really want to delete all the transactions shown?"),
             _("Confirm Transaction Deletion"),
-            wxYES_NO);
+            wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
         if (msgDlg.ShowModal() == wxID_YES)
         {
            //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.getAccountSharedPtr(m_AccountID).get());
@@ -1240,9 +1240,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     }
     else if (evt == MENU_VIEW_DELETE_FLAGGED)
     {
-        wxMessageDialog msgDlg(this, _("Do you really want to delete all the flagged transactions?"),
-            _("Confirm Transaction Deletion"),
-            wxYES_NO);
+        wxMessageDialog msgDlg(this, _("Do you really want to delete all the flagged transactions?"), _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
         if (msgDlg.ShowModal() == wxID_YES)
         {
            //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.getAccountSharedPtr(m_AccountID).get());
