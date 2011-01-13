@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-01-03 02:21+0300\n"
-"PO-Revision-Date: 2011-01-08 00:24+0300\n"
+"PO-Revision-Date: 2011-01-13 09:09+0300\n"
 "Last-Translator: Nikolay <vomikan@mail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -201,9 +201,8 @@ msgid "\\% Rate"
 msgstr "\\% изменения"
 
 #: src/assetdialog.cpp:264
-#, fuzzy, c-format
 msgid "Enter the rate at which the asset changes its value in \\% per year"
-msgstr "Введите ежегодное изменение стоимости имущества в \\% "
+msgstr "Введите ежегодное изменение стоимости имущества в \\%"
 
 #: src/assetdialog.cpp:268
 #: src/assetspanel.cpp:171
@@ -318,7 +317,7 @@ msgstr "Удалить актив"
 
 #: src/assetspanel.cpp:358
 msgid "MMEX allows you to track fixed assets like cars, houses, land and others. Each asset can have its value appreciate by a certain rate per year, depreciate by a certain rate per year, or not change in value. The total assets are added to your total financial worth."
-msgstr ""
+msgstr "MMEX позволяет отслеживать активы (и пассивы), такие как автомобили, дома, земельные участки и прочее. Каждый объект может иметь начальную стоимость и определённое её изменение в год. Суммарная стоимость активов будет добавлена финансовую сводку."
 
 #: src/assetspanel.cpp:419
 msgid "Do you really want to delete the Asset?"
@@ -1362,7 +1361,7 @@ msgstr "Совет: Регулярно сохраняйте резервную �
 
 #: src/mmcheckingpanel.cpp:777
 msgid "Recommendation: If upgrading to a new version of MMEX, make sure you backup your .mmb database file before doing so."
-msgstr ""
+msgstr "Рекомендация: При обновлении до новой версии MMEX, убедитесь, что вы сделали резервное копирование .mmb файла базы данных, прежде чем продолжать.."
 
 #: src/mmcheckingpanel.cpp:778
 msgid "Recommendation: Use copy (Ctrl+С) and paste (Ctrl+V) for frequently used transactions."
@@ -1378,48 +1377,47 @@ msgstr "Заметка: Файл базы данных ,mmb не зашифро�
 
 #: src/mmcheckingpanel.cpp:781
 msgid "Tip: To mark a transaction as reconciled, just select the transaction and hit the 'r' or 'R' key. To mark a transaction as unreconciled, just select the transaction and hit the 'u' or 'U' key."
-msgstr ""
+msgstr "Подсказка: Чтобы отметить проводку как проверенную, просто выделети её и нажать клавишу 'R'. Снять пометку можно нажатием клавиши 'U'."
 
 #: src/mmcheckingpanel.cpp:782
-msgid "Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f or 'F' key."
-msgstr ""
+msgid "Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f' or 'F' key."
+msgstr "Подсказка: Чтобы отметить проводку требующую проработки, просто выделети её и нажать клавишу 'F'."
 
 #: src/mmcheckingpanel.cpp:783
 msgid "Tip: MMEX supports printing of all reports that can be viewed. The print options are available under the menu, File->Print."
-msgstr ""
+msgstr "Подсказка: MMEX поддерживает печать отчетов после просмотра. Параметры печати можно задать в меню, Файл-> Настройка печати."
 
 #: src/mmcheckingpanel.cpp:784
 msgid "Tip: You can modify some runtime behavior of MMEX by changing the options in the Options Dialog. "
-msgstr ""
+msgstr "Подсказка: Вы можете изменить поведение MMEX путем изменения параметров в диалоговом окне Настройки."
 
 #: src/mmcheckingpanel.cpp:785
 msgid "Tip: To print a statement with transactions from any arbitary set of criteria, use the transaction filter to select the transactions you want and then do a print from the menu."
-msgstr ""
+msgstr "Подсказка: Чтобы распечатать сводку по проводкам исходя из определённых критериев, используйте фильтр проводок,а затем выполните печать из основного меню."
 
 #: src/mmcheckingpanel.cpp:786
 msgid "Tip: Set exchange rate for currencies in case if you have accounts with different currencies."
-msgstr ""
+msgstr "Совет: Если ведёте счета в разных валютах, установите курс обмена."
 
 #: src/mmcheckingpanel.cpp:788
-#, c-format
 msgid "Tip to get out of debt: Pay yourself 10\\% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses."
-msgstr "Совет как избегать долгов: "
+msgstr "Как избегать долгов: Платите себе 10% от вашего дохода. Разместите эти средства на счёте, который труднодоступен и используйте его только для крупных целевых расходов."
 
 #: src/mmcheckingpanel.cpp:789
 msgid "Tip to get out of debt: Establish an emergency fund."
-msgstr "Совет как избегать долгов"
+msgstr "Как избегать долгов: Установите резервный фонд."
 
 #: src/mmcheckingpanel.cpp:790
 msgid "Tip to get out of debt: Stop acquiring new debt."
-msgstr "Совет как избегать долгов"
+msgstr "Как избегать долгов: Не одалживайте."
 
 #: src/mmcheckingpanel.cpp:791
 msgid "Tip to get out of debt: Create a realistic budget for your expenses."
-msgstr "Совет как избегать долгов"
+msgstr "Как избегать долгов: Постройте реалистичный бюджет для всех расходов."
 
 #: src/mmcheckingpanel.cpp:792
 msgid "Tip to get out of debt: Spend less than you earn."
-msgstr "Совет как избегать долгов"
+msgstr "Как избегать долгов: Тратьте меньше чем зарабатываете."
 
 #: src/mmcheckingpanel.cpp:793
 msgid "Tip to get out of debt: Pay more than the minimum."
@@ -2348,11 +2346,17 @@ msgid ""
 "\n"
 "This message will not be displayed in future."
 msgstr ""
+"Отображение счетов вкладов временно включено.\n"
+"Это можно изменить в настройках:\n"
+"\n"
+"Инструменты -> Настройки программы\n"
+"Вид\n"
+"\n"
+"Это сообщение не будет отображаться в дальнейшем"
 
 #: src/mmex.cpp:3130
-#, fuzzy
 msgid "Initial Term Account Activation"
-msgstr "Подтверждение удаления счёта"
+msgstr "Активировация счетов вкладов"
 
 #: src/mmex.cpp:3217
 msgid "Choose Accounts"
@@ -2952,29 +2956,26 @@ msgid "Specify which font size is used on the report tables"
 msgstr "Определите, какой размер шрифта использовать для таблиц отчётов"
 
 #: src/optionsdialog.cpp:622
-#, fuzzy
 msgid "Tree View Options"
-msgstr "Вид"
+msgstr "Вид в навигаторе"
 
 #: src/optionsdialog.cpp:629
 #: src/optionsdialog.cpp:653
-#, fuzzy
 msgid "Expand Bank Accounts"
-msgstr "Счета"
+msgstr "Счета развернуть"
 
 #: src/optionsdialog.cpp:634
 msgid "Expand Bank Accounts in Trew View when tree is refreshed"
-msgstr ""
+msgstr "Отображать счета в панели навигации"
 
 #: src/optionsdialog.cpp:638
 #: src/optionsdialog.cpp:662
-#, fuzzy
 msgid "Expand Term Accounts"
-msgstr "Счета вкладов"
+msgstr "Счета вкладов развернуть"
 
 #: src/optionsdialog.cpp:643
 msgid "Expand Term Accounts in Trew View when tree is refreshed"
-msgstr ""
+msgstr "Отображать счета вкладов в панели навигации"
 
 #: src/optionsdialog.cpp:646
 msgid "Home Page Options"
@@ -2982,11 +2983,11 @@ msgstr "Параметры начальной страницы"
 
 #: src/optionsdialog.cpp:658
 msgid "Expand Bank Accounts on home page when page is refreshed"
-msgstr ""
+msgstr "Отобразать счета на начальной странице"
 
 #: src/optionsdialog.cpp:667
 msgid "Expand Term Accounts on home page when page is refreshed"
-msgstr ""
+msgstr "Отобразать счета вкладов на начальной странице"
 
 #: src/optionsdialog.cpp:676
 msgid "Restore Defaults"
@@ -3137,7 +3138,6 @@ msgid "Filter Payees: "
 msgstr "Фильтр плательщиков:"
 
 #: src/payeedialog.cpp:115
-#, c-format
 msgid "Enter a search string.  You can use \\% as a wildcard to match zero or more characters or \\_ to match a single character."
 msgstr "Введите строку поиска. Вы можете использовать \\% как маску, 0 или более символов или \\_ как маску одного символа."
 
@@ -3358,11 +3358,11 @@ msgstr ""
 
 #: src/reportincexpensesfinancialperiod.cpp:64
 msgid " &nbsp &nbsp Showing period: "
-msgstr ""
+msgstr " &nbsp &nbsp Паказывать период: "
 
 #: src/reportincexpensesfinancialperiod.cpp:65
 msgid "&nbsp to: "
-msgstr ""
+msgstr "&nbsp по: "
 
 #: src/reportincexpensesfinancialperiod.cpp:74
 #: src/reportincexpesestime.cpp:40
@@ -3683,7 +3683,7 @@ msgstr "Подтвердите удаление инвестиции"
 
 #: src/transdialog.cpp:302
 msgid " is active!"
-msgstr ""
+msgstr " используется"
 
 #: src/transdialog.cpp:322
 #: src/transdialog.cpp:710
