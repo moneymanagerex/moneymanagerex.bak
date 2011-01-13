@@ -1419,17 +1419,27 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
            if (pAccount)
            {
               wxString acctType = pAccount->acctType_;
-              if (acctType == wxT("Checking"))
+
+              if ((acctType == wxT("Checking")) || acctType == wxT("Term") )
               {
                  gotoAccountID_ = data;
-                 wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
-                 GetEventHandler()->AddPendingEvent(evt);
-              }
-              else if (acctType == wxT("Term"))
-              {
-                 gotoAccountID_ = data;
-                 wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
-                 GetEventHandler()->AddPendingEvent(evt);
+                 if (gotoAccountID_ != -1)    
+                 {
+                    createCheckingAccountPage(gotoAccountID_);
+                 }
+                 navTreeCtrl_->SetFocus();
+
+              //if (acctType == wxT("Checking"))
+              //{
+              //   gotoAccountID_ = data;
+              //   wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
+              //   GetEventHandler()->AddPendingEvent(evt);
+              //}
+              //else if (acctType == wxT("Term"))
+              //{
+              //   gotoAccountID_ = data;
+              //   wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
+              //   GetEventHandler()->AddPendingEvent(evt);
               }
               else
               {
@@ -2224,29 +2234,29 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
         int data = iData->getData();
         if (!iData->isBudgetingNode())
         {
-           boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(data); 
-           if (pAccount)
-           {
-              wxString acctType = pAccount->acctType_;
-              if (acctType == wxT("Checking"))
-              {
-                 wxMenu menu;
-                 menu.Append(MENU_TREEPOPUP_GOTO, _("&Go To.."));
-                 menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
-                 menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
-                 menu.AppendSeparator();
-                 menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
-                 PopupMenu(&menu, pt);
-              }
-              else if (acctType == wxT("Investment") || acctType == wxT("Term"))
-              {
-                 wxMenu menu;
-                 menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
-                 menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
-                 menu.AppendSeparator();
-                 menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
-                 PopupMenu(&menu, pt);
-              }
+            boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(data); 
+            if (pAccount)
+            {
+                wxString acctType = pAccount->acctType_;
+                if (acctType == wxT("Checking") || acctType == wxT("Term") || acctType == wxT("Investment"))
+                {
+                    wxMenu menu;
+//                  menu.Append(MENU_TREEPOPUP_GOTO, _("&Go To.."));
+                    menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
+                    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
+                    menu.AppendSeparator();
+                    menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
+                    PopupMenu(&menu, pt);
+                }
+              //else if (acctType == wxT("Investment") || acctType == wxT("Term"))
+              //{
+              //   wxMenu menu;
+              //   menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
+              //   menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
+              //   menu.AppendSeparator();
+              //   menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
+              //   PopupMenu(&menu, pt);
+              //}
             }
             else
             {
@@ -2255,10 +2265,11 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
             }
         }
     }
-		else 
-	{
-       if (iData->getString() == wxT("Bank Accounts"))
-		{
+    else 
+    {
+        if ( iData->getString() == wxT("Bank Accounts") || 
+             iData->getString() == wxT("Term Accounts"))
+        { // Create for both Bank & Term Accounts
 
          //wxMenu menu;
 			/*Popup Menu for Bank Accounts*/
@@ -2278,36 +2289,39 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
 			//Favorite //
 			//Open     //
 
+		    wxMenu *menu = new wxMenu;
+            menu->Append(MENU_TREEPOPUP_ACCOUNT_NEW, _("New &Account"));
+            menu->Append(MENU_TREEPOPUP_ACCOUNT_DELETE, _("&Delete Account"));
+            menu->Append(MENU_TREEPOPUP_ACCOUNT_EDIT, _("&Edit Account"));
+            menu->Append(MENU_TREEPOPUP_ACCOUNT_LIST, _("Account &List"));
+		    menu->AppendSeparator();
+            // menu->Append(menuItemOnlineUpdateCurRate_);
+            // menu->AppendSeparator();
 
-		 wxMenu *menu = new wxMenu;
-         menu->Append(MENU_TREEPOPUP_ACCOUNT_NEW, _("New &Account"));
-         menu->Append(MENU_TREEPOPUP_ACCOUNT_DELETE, _("&Delete Account"));
-         menu->Append(MENU_TREEPOPUP_ACCOUNT_EDIT, _("&Edit Account"));
-         menu->Append(MENU_TREEPOPUP_ACCOUNT_LIST, _("Account &List"));
-         
-		 menu->AppendSeparator();
-		// menu->Append(menuItemOnlineUpdateCurRate_);
-		// menu->AppendSeparator();
+            // Create only for Bank Accounts
+            if (iData->getString() != wxT("Term Accounts"))
+            {
+                wxMenu *exportTo = new wxMenu;
+		        exportTo->Append(MENU_TREEPOPUP_ACCOUNT_EXPORT2CSV, _("&CSV Files"));
+		        exportTo->Append(MENU_TREEPOPUP_ACCOUNT_EXPORT2QIF, _("&QIF Files"));
+		        menu->AppendSubMenu(exportTo,  _("&Export"));
+		        wxMenu *importFrom = new wxMenu;
+		        importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTUNIVCSV, _("&Universal CSV Files"));
+		        importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTQIF, _("&QIF Files"));
+		        importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTCSV, _("&MMEX CSV Files"));
+		        importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTMMNET, _("MM.&NET CSV Files"));
+		        menu->AppendSubMenu(importFrom,  _("&Import"));
+		        menu->AppendSeparator();
+            }
 
-		 wxMenu *exportTo = new wxMenu;
-		 exportTo->Append(MENU_TREEPOPUP_ACCOUNT_EXPORT2CSV, _("&CSV Files"));
-		 exportTo->Append(MENU_TREEPOPUP_ACCOUNT_EXPORT2QIF, _("&QIF Files"));
-		 menu->AppendSubMenu(exportTo,  _("&Export"));
-		 wxMenu *importFrom = new wxMenu;
-		 importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTUNIVCSV, _("&Universal CSV Files"));
-		 importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTQIF, _("&QIF Files"));
-		 importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTCSV, _("&MMEX CSV Files"));
-		 importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTMMNET, _("MM.&NET CSV Files"));
-		 menu->AppendSubMenu(importFrom,  _("&Import"));
-		 menu->AppendSeparator();
-		 wxMenu *viewAccounts = new wxMenu;
-		 viewAccounts->Append(MENU_TREEPOPUP_ACCOUNT_VIEWALL, _("All"));
-		 viewAccounts->Append(MENU_TREEPOPUP_ACCOUNT_VIEWOPEN, _("Open"));
-		 viewAccounts->Append(MENU_TREEPOPUP_ACCOUNT_VIEWFAVORITE, _("Favorites"));
-		 menu->AppendSubMenu(viewAccounts, _("Accounts Visible"));
-         PopupMenu(&*menu, pt);
-		}
-	}
+            wxMenu *viewAccounts = new wxMenu;
+		    viewAccounts->Append(MENU_TREEPOPUP_ACCOUNT_VIEWALL, _("All"));
+		    viewAccounts->Append(MENU_TREEPOPUP_ACCOUNT_VIEWOPEN, _("Open"));
+		    viewAccounts->Append(MENU_TREEPOPUP_ACCOUNT_VIEWFAVORITE, _("Favorites"));
+		    menu->AppendSubMenu(viewAccounts, _("Accounts Visible"));
+            PopupMenu(&*menu, pt);
+        }
+    }
 }
 //----------------------------------------------------------------------------
 
