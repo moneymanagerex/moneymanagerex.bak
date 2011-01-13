@@ -801,7 +801,7 @@ void mmCheckingPanel::Tips()
            _("Tip: Remember to make backups of your .mmb."),
            _("Tip: The .mmb file is not encrypted. That means anyone else having the proper know how can actually open the file and read the contents. So make sure that if you are storing any sensitive financial information it is properly guarded."),
            _("Tip: To mark a transaction as reconciled, just select the transaction and hit the 'r' or 'R' key. To mark a transaction as unreconciled, just select the transaction and hit the 'u' or 'U' key."), 
-           _("Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f or 'F' key."),
+           _("Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f' or 'F' key."),
            _("Tip: MMEX supports printing of all reports that can be viewed. The print options are available under the menu, File->Print."),
            _("Tip: You can modify some runtime behavior of MMEX by changing the options in the Options Dialog. "),
            _("Tip: To print a statement with transactions from any arbitary set of criteria, use the transaction filter to select the transactions you want and then do a print from the menu."),
