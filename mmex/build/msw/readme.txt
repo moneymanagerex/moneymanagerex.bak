@@ -3,12 +3,12 @@
 
 You can build MMEx on Windows using VisualC++ 2003 or later, or MinGW with GCC.
 Firstly you can run mmex/bootstrap.bat which will refresh makefiles and projects.
-Bakefile must be installed to do that. But you can skip this step if you just want 
+Bakefile must be installed to do that. But you can skip this step if you just want
 to build sources.
 
 
-WARNING: all files in this directory generated from bakefile's scripts (..\bakefiles). 
-         Do not modify these files and never commit them to svn. All changes will be lost 
+WARNING: all files in this directory generated from bakefile's scripts (..\bakefiles).
+         Do not modify these files and never commit them to svn. All changes will be lost
          if bootstrap.bat will rerun!!! These files should be commited only if you changed
          some bakefile scripts and run bootstrap.bat to refresh content of this directory.
 
@@ -17,7 +17,7 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
 	*** Prerequisites ***
 
 
-1. Install wxWidgets 2.8.10 and above in a directory like C:\wxWidgets-2.8.10 
+1. Install wxWidgets 2.8.10 and above in a directory like C:\wxWidgets-2.8.10
    and then create an environment variable WXWIN to point to that directory.
 
 2. Follow the instructions given by WxWidgets install on how to build it.
@@ -27,24 +27,24 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
 3. Install Boost C++ Libraries and create an environment variable BOOSTDIR
    that points to directory where Boost were installed.
 
-4. Install GNU GetText for Windows, http://gnuwin32.sourceforge.net/packages/gettext.htm. 
+4. Install GNU GetText for Windows, http://gnuwin32.sourceforge.net/packages/gettext.htm.
    This software requires to generate binary translation files from .po files.
    Append path to bin folder of installed software to PATH environment variable
    (usually "C:\Program Files\GnuWin32\bin").
 
 5. To build installation (setup) of MMEX download and install InnoSetup Quick Start Pack
-   (which includes InnoSetup itself and Inno Setup Preprocessor). Append path to folder 
+   (which includes InnoSetup itself and Inno Setup Preprocessor). Append path to folder
    of installed software (something like a "C:\Program Files\Inno Setup 5")
    to PATH environment variable.
 
 
 
-	*** Compiling using VisualC++ command prompt *** 
+	*** Compiling using VisualC++ command prompt ***
 
 
 1.Open "Visual Studio 200X Command Prompt".
 2.Change working directory to mmex\build\msw.
-3.Edit config.vc to select build options. You must always set these options: 
+3.Edit config.vc to select build options. You must always set these options:
   BOOST_DIR, WX_DIR, VSTUDIO_VER (for Visual Studio only).
 4.Type in command prompt
   nmake -f makefile.vc
@@ -59,22 +59,52 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
   This is the most preferable way to build MMEX using VC++.
 
 
+********************************************************************************
+NOTE: The file: build\msw\mmex.sln under mmex directory has been updated to use
+      Microsoft Visual C++ 2010 Express. In case this file does not work using
+      previous versions of VC++ do the following:
+      Rename the file: mmex.sln      to mmex-2010.sln
+      Rename the file: mmex.sln.old  to mmex.sln
 
-	*** Compiling using VisualStudio IDE *** 
+      Remember that 2 new files have been added to the project which will need
+      to be added to the old solution for a successful build.
+      Proceed with next section: *** Compiling using VisualStudio IDE ***
+********************************************************************************
+
+
+
+  	*** Compiling using Microsoft Visual C++ 2010 Express IDE ***
+
+1. Ensure Prerequisites are complete with a build of wxWidgets 2.8.11 or greater
+   using "Unicode Release" and/or "Unicode Debug" depending on preferences below.
+
+2. Open build\msw\mmex.sln under mmex directory.
+   In the Solution Explorer set the mmex project as the Startup Project
+
+3. Using the Build ->Configutration Manager...
+   Select one of following configurations to build (accordingly to wxWidgets builds):
+   "Unicode Release Multilib WX_PYTHON_0" <-- choice number one for most people
+   "Unicode Debug Multilib WX_PYTHON_0"
+
+4. Build the solution...
+
+
+
+	*** Compiling using VisualStudio IDE ***
 
 
 1. Open build\msw\mmex.sln under mmex directory.
    Select one of following configurations to build (accordingly to wxWidgets builds):
-   
+
    Unicode builds, for Windows 2000 or later
    "Unicode Release Multilib WX_PYTHON_0" <-- choice number one for most people
    "Unicode Debug Multilib WX_PYTHON_0"
 
    Ansi builds, for Windows 95/98/Me.
-   "Release Multilib WX_PYTHON_0" 
+   "Release Multilib WX_PYTHON_0"
    "Debug Multilib WX_PYTHON_0"
 
-   To build unit tests use solution build\msw\tests\mmex_tests.sln. Build tests, 
+   To build unit tests use solution build\msw\tests\mmex_tests.sln. Build tests,
    copy mmex_tests.exe to mmex\runtime and run one.
 
 2. IDE cannot translate files from mmex\runtime\en\*.po. You should use one of makefiles
@@ -84,7 +114,7 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
 
 
 
-	*** Compiling using MinGW *** 
+	*** Compiling using MinGW ***
 
 
 1.Install the latest version of MinGW, GCC compiler and mingw-make for it.
