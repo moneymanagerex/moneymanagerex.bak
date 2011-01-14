@@ -73,6 +73,7 @@ mmTransDialog::mmTransDialog(
     advancedToTransAmountSet_(false),
     edit_currency_rate(1.0)
 {
+    referenceAccountID_ = accountID_;   // remember where dialog initiated from.
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -350,21 +351,21 @@ void mmTransDialog::CreateControls()
         //if some values is missing - set defaults
         if (payeeName == wxT(""))
         {
-         payeeName = _("Select Payee");
-         payeeID_ = -1;
+            payeeName = _("Select Payee");
+            payeeID_ = -1;
         } 
         if (categString == wxT(""))
-           {
+        {
             categString = _("Select Category");
-           }
+        }
         else 
-           {
+        {
             if (subcategName != wxT(""))
             {
                 categString += wxT(" : ");
                 categString += subcategName;
             }
-           }
+        }
 
     st.Finalize();
     bPayee_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONPAYEE, payeeName, wxDefaultPosition, wxSize(200, -1), 0 );
@@ -440,7 +441,7 @@ void mmTransDialog::CreateControls()
         _("Reconciled"),
         _("Void"),
         _("Follow up"),
-	_("Duplicate"),
+    	_("Duplicate"),
         _("None"),
     };  
     
@@ -728,57 +729,52 @@ void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
 
 void mmTransDialog::updateControlsForTransType()
 {
-    wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_STATIC_FROM);
     wxStaticText* stp = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_STATIC_PAYEE);
     
-     if (choiceTrans_->GetSelection() == DEF_WITHDRAWAL)
-     {
+    if (choiceTrans_->GetSelection() == DEF_WITHDRAWAL) {
         
         fillControls();
-        st->Show(false);
-        bTo_->Show(false);
+        displayControlsToolTips(DEF_WITHDRAWAL);
         stp->SetLabel(_("Payee"));
-
         bPayee_->SetLabel(_("Select Payee"));
         payeeID_ = -1;
         toID_    = -1;
-       
-        bAdvanced_->Enable(false);
-        bPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
-        textAmount_->SetToolTip(_("Specify the amount for this transaction"));
-     }
-     else if (choiceTrans_->GetSelection() == DEF_DEPOSIT)
-    {
-       
+
+    } else if (choiceTrans_->GetSelection() == DEF_DEPOSIT) {
+
         fillControls();
-        bTo_->Show(false);
-        st->Show(false);    
-
+        displayControlsToolTips(DEF_DEPOSIT);
         stp->SetLabel(_("From"));
-
         bPayee_->SetLabel(_("Select Payee"));
         payeeID_ = -1;
         toID_    = -1;
-        bAdvanced_->Enable(false);
-        bPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
-        textAmount_->SetToolTip(_("Specify the amount for this transaction"));
-    }
-    else if (choiceTrans_->GetSelection() == DEF_TRANSFER)
-    {
+
+    } else if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
+
+        displayControlsToolTips(DEF_TRANSFER, true);
+        stp->SetLabel(_("From"));   
         bTo_->SetLabel(_("Select To Account"));
         toID_    = -1;
-        
-        bTo_->Show(true);
-        st->Show(true);
-        stp->SetLabel(_("From"));   
-        bAdvanced_->Enable(true);
 
         wxString acctName = mmDBWrapper::getAccountName(db_.get(), accountID_);
         bPayee_->SetLabel(acctName);
         payeeID_ = accountID_;
 
+    }
+}
+
+void mmTransDialog::displayControlsToolTips(int transType, bool enableAdvanced /* = false */)
+{
+    wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_STATIC_FROM);
+    st->Show(enableAdvanced);
+    bTo_->Show(enableAdvanced);
+    bAdvanced_->Enable(enableAdvanced);
+    if (transType == DEF_TRANSFER) {
         bPayee_->SetToolTip(_("Specify which account the transfer is comming from"));
         textAmount_->SetToolTip(_("Specify the transfer amount in the From and To Account"));
+    } else {
+        bPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
+        textAmount_->SetToolTip(_("Specify the amount for this transaction"));
     }
 }
 
@@ -787,7 +783,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     wxString transCode = wxT("");
     int tCode = choiceTrans_->GetSelection();
     if (tCode == DEF_WITHDRAWAL)
-       transCode = wxT("Withdrawal");
+        transCode = wxT("Withdrawal");
     else if (tCode == DEF_DEPOSIT)
         transCode = wxT("Deposit");
     else if (tCode == DEF_TRANSFER)
@@ -864,6 +860,11 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         int catID, subcatID;
         wxString payeeName = mmDBWrapper::getPayee(db_.get(), payeeID_, catID, subcatID );
         mmDBWrapper::updatePayee(db_.get(), payeeName, payeeID_, categID_, subcategID_);
+
+        if (referenceAccountID_ != accountID_) // Transfer transaction has defected to other side.
+        {
+            fromAccountID = referenceAccountID_;
+        }
     }
 
     if (!advancedToTransAmountSet_ || toTransAmount_ < 0)
