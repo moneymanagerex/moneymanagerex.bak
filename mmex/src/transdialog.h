@@ -73,6 +73,7 @@ public:
     void fillControls();
     void dataToControls();
     void updateControlsForTransType();
+    void mmTransDialog::displayControlsToolTips(int transType, bool enableAdvanced = false);
     bool getPayeeID(wxString payee, int& payeeID, int& categID, int& subcategID );
     void addPayee(wxString payee, int categID, int subcategID );
     void OnAdvanced(wxCommandEvent& event);
@@ -84,6 +85,7 @@ private:
     mmCoreDB* core_;
     int transID_;
     int accountID_;
+    int referenceAccountID_;    // used for transfer transactions 
     wxTextCtrl *textNumber_;
     wxTextCtrl *textAmount_;
     wxTextCtrl *textNotes_;
