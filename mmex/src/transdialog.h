@@ -73,7 +73,7 @@ public:
     void fillControls();
     void dataToControls();
     void updateControlsForTransType();
-    void mmTransDialog::displayControlsToolTips(int transType, bool enableAdvanced = false);
+    void displayControlsToolTips(int transType, bool enableAdvanced = false);
     bool getPayeeID(wxString payee, int& payeeID, int& categID, int& subcategID );
     void addPayee(wxString payee, int categID, int subcategID );
     void OnAdvanced(wxCommandEvent& event);
