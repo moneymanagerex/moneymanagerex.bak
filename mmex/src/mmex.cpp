@@ -820,6 +820,8 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId root = navTreeCtrl_->AddRoot(_("Home Page"), 0, 0);
     navTreeCtrl_->SetItemData(root, new mmTreeItemData(wxT("Home Page")));
     navTreeCtrl_->SetItemBold(root, true);
+    navTreeCtrl_->SetFocus();
+
 
     wxTreeItemId accounts = navTreeCtrl_->AppendItem(root, _("Bank Accounts"), 1, 1);
     navTreeCtrl_->SetItemData(accounts, new mmTreeItemData(wxT("Bank Accounts")));
