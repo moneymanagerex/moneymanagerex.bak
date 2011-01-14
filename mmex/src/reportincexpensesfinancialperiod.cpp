@@ -61,9 +61,7 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
 
         wxDateTime now = wxDateTime::Now();
         wxString dt = _("Today's Date: ");
-                 dt<< wxT ("<b>") << mmGetNiceDateString(now) << wxT ("</b> &nbsp &nbsp &nbsp &nbsp ")
-                   << _ ("Showing period: ") << wxT ("<b>") << mmGetNiceDateSimpleString(yearBegin) <<  wxT("</b> ")
-                   << _("to: ") << wxT ("<b>") << mmGetNiceDateSimpleString(yearEnd) << wxT ("</b>");
+                 dt<< wxT ("<b>") << mmGetNiceDateString(now) << wxT ("</b> &nbsp &nbsp &nbsp &nbsp ") << _ ("Showing period: ") << wxT ("<b>") << mmGetNiceDateSimpleString(yearBegin) <<  wxT("</b> ") << _("to: ") << wxT ("<b>") << mmGetNiceDateSimpleString(yearEnd) << wxT ("</b>");
 
         hb.addHeader(7, dt);
         hb.addLineBreak();
