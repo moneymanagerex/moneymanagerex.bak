@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-14 13:00+0300\n"
-"PO-Revision-Date: 2011-01-14 13:00+0300\n"
+"POT-Creation-Date: 2011-01-23 01:43+0300\n"
+"PO-Revision-Date: 2011-01-23 01:43+0300\n"
 "Last-Translator: Nikolay <vomikan@mail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -218,12 +218,12 @@ msgstr "Δηλώστε την ημερομηνία της κίνησης"
 
 #: src/assetdialog.cpp:259
 #, fuzzy
-msgid "\\% Rate"
+msgid "% Rate"
 msgstr "Διόρθωση"
 
 #: src/assetdialog.cpp:263
 #, c-format
-msgid "Enter the rate at which the asset changes its value in \\% per year"
+msgid "Enter the rate at which the asset changes its value in % per year"
 msgstr ""
 
 #: src/assetdialog.cpp:267
@@ -1347,366 +1347,366 @@ msgstr "Εισάγετε νόμισμα"
 msgid "Currency name already exists!"
 msgstr "Το νόμισμα ήδη υπάρχει"
 
-#: src/mmcheckingpanel.cpp:94
+#: src/mmcheckingpanel.cpp:96
 msgid "Date  "
 msgstr "Ημερομηνία"
 
-#: src/mmcheckingpanel.cpp:97
+#: src/mmcheckingpanel.cpp:99
 msgid "C  "
 msgstr "C  "
 
-#: src/mmcheckingpanel.cpp:101
+#: src/mmcheckingpanel.cpp:103
 #, fuzzy
 msgid "Balance"
 msgstr "Υπόλοιπο"
 
-#: src/mmcheckingpanel.cpp:584
+#: src/mmcheckingpanel.cpp:586
 msgid "View All Transactions"
 msgstr "Δείτε όλες τις κινήσεις"
 
-#: src/mmcheckingpanel.cpp:585
+#: src/mmcheckingpanel.cpp:587
 msgid "View Reconciled Transactions"
 msgstr "Δείτε όλες τις διευθετημένες κινήσεις"
 
-#: src/mmcheckingpanel.cpp:586
+#: src/mmcheckingpanel.cpp:588
 msgid "View Un-Reconciled Transactions"
 msgstr "Δείτε τις μη διευθετημένες κινήσεις"
 
-#: src/mmcheckingpanel.cpp:587
+#: src/mmcheckingpanel.cpp:589
 #, fuzzy
 msgid "View All Except Reconciled Transactions"
 msgstr "Δείτε όλες τις διευθετημένες κινήσεις"
 
-#: src/mmcheckingpanel.cpp:588
+#: src/mmcheckingpanel.cpp:590
 msgid "View Void Transactions"
 msgstr "Δείτε τις άκυρες κινήσεις"
 
-#: src/mmcheckingpanel.cpp:589
+#: src/mmcheckingpanel.cpp:591
 msgid "View Flagged Transactions"
-msgstr "Δείτε τις μαρκαρισμένες κινήσεις"
-
-#: src/mmcheckingpanel.cpp:590
-#, fuzzy
-msgid "View Duplicate Transactions"
 msgstr "Δείτε τις μαρκαρισμένες κινήσεις"
 
 #: src/mmcheckingpanel.cpp:592
 #, fuzzy
+msgid "View Duplicate Transactions"
+msgstr "Δείτε τις μαρκαρισμένες κινήσεις"
+
+#: src/mmcheckingpanel.cpp:594
+#, fuzzy
 msgid "View Transactions for today"
 msgstr "Δείτε τις κινήσεις που έχουν γίνει τις 30 τελευταίες ημέρες"
 
-#: src/mmcheckingpanel.cpp:593
+#: src/mmcheckingpanel.cpp:595
 #, fuzzy
 msgid "View Transactions for last 30 days"
 msgstr "Δείτε τις κινήσεις που έχουν γίνει τις 30 τελευταίες ημέρες"
 
-#: src/mmcheckingpanel.cpp:594
+#: src/mmcheckingpanel.cpp:596
 #, fuzzy
 msgid "View Transactions for current month"
 msgstr "Δείτε τις κινήσεις των τελευταίων 3 μηνών"
 
-#: src/mmcheckingpanel.cpp:595
+#: src/mmcheckingpanel.cpp:597
 #, fuzzy
 msgid "View Transactions for last month"
 msgstr "Δείτε τις κινήσεις των τελευταίων 3 μηνών"
 
-#: src/mmcheckingpanel.cpp:596
+#: src/mmcheckingpanel.cpp:598
 #, fuzzy
 msgid "View Transactions for last 3 months"
 msgstr "Δείτε τις κινήσεις των τελευταίων 3 μηνών"
 
-#: src/mmcheckingpanel.cpp:598
+#: src/mmcheckingpanel.cpp:600
 msgid "Delete all transactions in current view"
 msgstr "Διαγράψτε όλες τις κινήσεις που εμφανίζονται τώρα"
 
-#: src/mmcheckingpanel.cpp:599
+#: src/mmcheckingpanel.cpp:601
 msgid "Delete all flagged transactions"
 msgstr "Διαγράψτε όλες τις μαρκαρισμένες κινήσεις"
 
-#: src/mmcheckingpanel.cpp:640
+#: src/mmcheckingpanel.cpp:642
 msgid "Viewing All Transactions"
 msgstr "Δείτε όλες τις κινήσεις"
 
-#: src/mmcheckingpanel.cpp:727
+#: src/mmcheckingpanel.cpp:729
 msgid "New Transaction"
 msgstr "Νέα κίνηση"
 
-#: src/mmcheckingpanel.cpp:736
+#: src/mmcheckingpanel.cpp:738
 #, fuzzy
 msgid "Edit selected transaction"
 msgstr "Διαγραφή κίνησης"
 
-#: src/mmcheckingpanel.cpp:743
+#: src/mmcheckingpanel.cpp:745
 #, fuzzy
 msgid "Delete selected transaction"
 msgstr "Διαγράψτε όλες τις μαρκαρισμένες κινήσεις"
 
-#: src/mmcheckingpanel.cpp:749
+#: src/mmcheckingpanel.cpp:751
 msgid "&Move"
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:750
+#: src/mmcheckingpanel.cpp:752
 msgid "Move selected transaction to another account"
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:798
+#: src/mmcheckingpanel.cpp:800
 msgid "Recommendation: Always backup your .mmb database file regularly."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:799
+#: src/mmcheckingpanel.cpp:801
 msgid "Recommendation: If upgrading to a new version of MMEX, make sure you backup your .mmb database file before doing so."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:800
+#: src/mmcheckingpanel.cpp:802
 msgid "Recommendation: Use copy (Ctrl+С) and paste (Ctrl+V) for frequently used transactions."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:801
+#: src/mmcheckingpanel.cpp:803
 msgid "Tip: Remember to make backups of your .mmb."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:802
+#: src/mmcheckingpanel.cpp:804
 msgid "Tip: The .mmb file is not encrypted. That means anyone else having the proper know how can actually open the file and read the contents. So make sure that if you are storing any sensitive financial information it is properly guarded."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:803
+#: src/mmcheckingpanel.cpp:805
 msgid "Tip: To mark a transaction as reconciled, just select the transaction and hit the 'r' or 'R' key. To mark a transaction as unreconciled, just select the transaction and hit the 'u' or 'U' key."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:804
+#: src/mmcheckingpanel.cpp:806
 msgid "Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f' or 'F' key."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:805
+#: src/mmcheckingpanel.cpp:807
 msgid "Tip: MMEX supports printing of all reports that can be viewed. The print options are available under the menu, File->Print."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:806
+#: src/mmcheckingpanel.cpp:808
 msgid "Tip: You can modify some runtime behavior of MMEX by changing the options in the Options Dialog. "
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:807
+#: src/mmcheckingpanel.cpp:809
 msgid "Tip: To print a statement with transactions from any arbitary set of criteria, use the transaction filter to select the transactions you want and then do a print from the menu."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:808
+#: src/mmcheckingpanel.cpp:810
 msgid "Tip: Set exchange rate for currencies in case if you have accounts with different currencies."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:810
-#, c-format
-msgid "Tip to get out of debt: Pay yourself 10\\% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses."
-msgstr ""
-
-#: src/mmcheckingpanel.cpp:811
-msgid "Tip to get out of debt: Establish an emergency fund."
-msgstr ""
-
 #: src/mmcheckingpanel.cpp:812
-msgid "Tip to get out of debt: Stop acquiring new debt."
+#, c-format
+msgid "Tip to get out of debt: Pay yourself 10% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses."
 msgstr ""
 
 #: src/mmcheckingpanel.cpp:813
-msgid "Tip to get out of debt: Create a realistic budget for your expenses."
+msgid "Tip to get out of debt: Establish an emergency fund."
 msgstr ""
 
 #: src/mmcheckingpanel.cpp:814
-msgid "Tip to get out of debt: Spend less than you earn."
+msgid "Tip to get out of debt: Stop acquiring new debt."
 msgstr ""
 
 #: src/mmcheckingpanel.cpp:815
+msgid "Tip to get out of debt: Create a realistic budget for your expenses."
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:816
+msgid "Tip to get out of debt: Spend less than you earn."
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:817
 msgid "Tip to get out of debt: Pay more than the minimum."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:838
+#: src/mmcheckingpanel.cpp:840
 #, c-format
 msgid "Account Balance : %s      Reconciled Balance : %s"
 msgstr "Υπόλοιπο Λογαριασμού : %s     Τακτοποιημένο υπόλοιπο : %s"
 
-#: src/mmcheckingpanel.cpp:912
+#: src/mmcheckingpanel.cpp:914
 #: src/mmex.cpp:2889
 msgid "Please Wait"
 msgstr "Παρακαλώ περιμένετε"
 
-#: src/mmcheckingpanel.cpp:913
+#: src/mmcheckingpanel.cpp:915
 msgid "Accessing Database"
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:926
+#: src/mmcheckingpanel.cpp:928
 msgid "Account View : "
 msgstr "Εμφάνιση Λογαριασμού :"
 
-#: src/mmcheckingpanel.cpp:1126
-#: src/mmcheckingpanel.cpp:1169
+#: src/mmcheckingpanel.cpp:1128
+#: src/mmcheckingpanel.cpp:1171
 msgid "Viewing all transactions"
 msgstr "Εμφάνιση όλων των κινήσεων"
 
-#: src/mmcheckingpanel.cpp:1130
-#: src/mmcheckingpanel.cpp:1174
+#: src/mmcheckingpanel.cpp:1132
+#: src/mmcheckingpanel.cpp:1176
 msgid "Viewing Reconciled transactions"
 msgstr "Εμφάνιση διευθετημένων κινήσεων"
 
-#: src/mmcheckingpanel.cpp:1134
-#: src/mmcheckingpanel.cpp:1184
+#: src/mmcheckingpanel.cpp:1136
+#: src/mmcheckingpanel.cpp:1186
 msgid "Viewing Un-Reconciled transactions"
 msgstr "Εμφάνιση Μη διευθετημένων κινήσεων"
 
-#: src/mmcheckingpanel.cpp:1138
-#: src/mmcheckingpanel.cpp:1194
+#: src/mmcheckingpanel.cpp:1140
+#: src/mmcheckingpanel.cpp:1196
 #, fuzzy
 msgid "Viewing transactions for today"
 msgstr "Εμφάνιση κινήσεων πραγματοποιημένων μέσα στις 30 τελευταίες ημέρες"
 
-#: src/mmcheckingpanel.cpp:1142
-#: src/mmcheckingpanel.cpp:1199
+#: src/mmcheckingpanel.cpp:1144
+#: src/mmcheckingpanel.cpp:1201
 #, fuzzy
 msgid "Viewing transactions for last 30 days"
 msgstr "Εμφάνιση κινήσεων πραγματοποιημένων μέσα στις 30 τελευταίες ημέρες"
 
-#: src/mmcheckingpanel.cpp:1146
-#: src/mmcheckingpanel.cpp:1204
+#: src/mmcheckingpanel.cpp:1148
+#: src/mmcheckingpanel.cpp:1206
 #, fuzzy
 msgid "Viewing transactions for last 3 months"
 msgstr "Εμφάνιση πραγματοπιημένων κινήσεων μέσα στους τελευταίους 3 μήνες"
 
-#: src/mmcheckingpanel.cpp:1150
-#: src/mmcheckingpanel.cpp:1209
+#: src/mmcheckingpanel.cpp:1152
+#: src/mmcheckingpanel.cpp:1211
 #, fuzzy
 msgid "Viewing transactions for current month"
 msgstr "Εμφάνιση πραγματοπιημένων κινήσεων μέσα στους τελευταίους 3 μήνες"
 
-#: src/mmcheckingpanel.cpp:1154
-#: src/mmcheckingpanel.cpp:1214
+#: src/mmcheckingpanel.cpp:1156
+#: src/mmcheckingpanel.cpp:1216
 #, fuzzy
 msgid "Viewing transactions for last month"
 msgstr "Εμφάνιση πραγματοπιημένων κινήσεων μέσα στους τελευταίους 3 μήνες"
 
-#: src/mmcheckingpanel.cpp:1158
+#: src/mmcheckingpanel.cpp:1160
 #, fuzzy
 msgid "Viewing All Except Reconciled Transactions"
 msgstr "Εμφάνιση διευθετημένων κινήσεων"
 
-#: src/mmcheckingpanel.cpp:1179
+#: src/mmcheckingpanel.cpp:1181
 msgid "Viewing Void transactions"
 msgstr "Εμφάνιση ακύρων κινήσεων"
 
-#: src/mmcheckingpanel.cpp:1189
+#: src/mmcheckingpanel.cpp:1191
 msgid "Viewing Flagged transactions"
 msgstr "Εμφάνιση μαρκαρισμένων κινήσεων"
 
-#: src/mmcheckingpanel.cpp:1219
+#: src/mmcheckingpanel.cpp:1221
 #, fuzzy
 msgid "Viewing duplicate transactions"
 msgstr "Εμφάνιση μαρκαρισμένων κινήσεων"
 
-#: src/mmcheckingpanel.cpp:1224
+#: src/mmcheckingpanel.cpp:1226
 #, fuzzy
 msgid "Viewing All except Reconciled Transactions"
 msgstr "Εμφάνιση διευθετημένων κινήσεων"
 
-#: src/mmcheckingpanel.cpp:1229
+#: src/mmcheckingpanel.cpp:1231
 msgid "Do you really want to delete all the transactions shown?"
 msgstr "Θέτε πραγματικά να διαγράψετε όλες τις κινήσεις που έχουν εμφανισθεί;"
 
-#: src/mmcheckingpanel.cpp:1230
-#: src/mmcheckingpanel.cpp:1243
+#: src/mmcheckingpanel.cpp:1232
+#: src/mmcheckingpanel.cpp:1245
 msgid "Confirm Transaction Deletion"
 msgstr "Επικυρώστε την διαγραφή της κίνησης"
 
-#: src/mmcheckingpanel.cpp:1243
+#: src/mmcheckingpanel.cpp:1245
 msgid "Do you really want to delete all the flagged transactions?"
 msgstr "Θέλετε πραγραματικά να διαγράψετε όλες τις μαρκαρισμένες κινήσεις;"
 
-#: src/mmcheckingpanel.cpp:1286
+#: src/mmcheckingpanel.cpp:1288
 msgid "&New Transaction"
 msgstr "&Νέα κίνηση"
 
-#: src/mmcheckingpanel.cpp:1288
+#: src/mmcheckingpanel.cpp:1290
 msgid "&Edit Transaction"
 msgstr "&Επεξεργασία κίνησης"
 
-#: src/mmcheckingpanel.cpp:1289
+#: src/mmcheckingpanel.cpp:1291
 msgid "&Delete Transaction"
 msgstr "&Διαγραφή κίνησης"
 
-#: src/mmcheckingpanel.cpp:1290
+#: src/mmcheckingpanel.cpp:1292
 #, fuzzy
 msgid "&Copy Transaction"
 msgstr "&Νέα κίνηση"
 
-#: src/mmcheckingpanel.cpp:1291
+#: src/mmcheckingpanel.cpp:1293
 #, fuzzy
 msgid "&Move Transaction"
 msgstr "&Νέα κίνηση"
 
-#: src/mmcheckingpanel.cpp:1293
+#: src/mmcheckingpanel.cpp:1295
 #, fuzzy
 msgid "&Paste Transaction"
 msgstr "&Νέα κίνηση"
 
-#: src/mmcheckingpanel.cpp:1295
+#: src/mmcheckingpanel.cpp:1297
 msgid "Mark As &Reconciled"
 msgstr "Μαρκαρισμένο ως &Εναρμονιζμένο"
 
-#: src/mmcheckingpanel.cpp:1296
+#: src/mmcheckingpanel.cpp:1298
 msgid "Mark As &Unreconciled"
 msgstr "Μαρκαρισμένο ως  &Μη Εναρμονισμένο"
 
-#: src/mmcheckingpanel.cpp:1297
+#: src/mmcheckingpanel.cpp:1299
 msgid "Mark As &Void"
 msgstr "Μαρκαρισμένο ως &Ακυρο"
 
-#: src/mmcheckingpanel.cpp:1298
+#: src/mmcheckingpanel.cpp:1300
 msgid "Mark For &Followup"
 msgstr "Μαρκάρισμα για &Παρακολούθηση"
 
-#: src/mmcheckingpanel.cpp:1299
+#: src/mmcheckingpanel.cpp:1301
 #, fuzzy
 msgid "Mark As &Duplicate"
 msgstr "Μαρκαρισμένο ως &Ακυρο"
 
-#: src/mmcheckingpanel.cpp:1303
+#: src/mmcheckingpanel.cpp:1305
 msgid "as Reconciled"
 msgstr "ως Εναρμονισμένο"
 
-#: src/mmcheckingpanel.cpp:1304
+#: src/mmcheckingpanel.cpp:1306
 msgid "as Unreconciled"
 msgstr "ως Μη Εναρμονισμένο"
 
-#: src/mmcheckingpanel.cpp:1305
+#: src/mmcheckingpanel.cpp:1307
 msgid "as Void"
 msgstr "ως Ακυρο"
 
-#: src/mmcheckingpanel.cpp:1306
+#: src/mmcheckingpanel.cpp:1308
 msgid "as needing Followup"
 msgstr "ως να χρειάζεται παρακολούθηση"
 
-#: src/mmcheckingpanel.cpp:1307
+#: src/mmcheckingpanel.cpp:1309
 msgid "as Duplicate"
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:1308
+#: src/mmcheckingpanel.cpp:1310
 msgid "Mark all "
 msgstr "Ολικό μαρκάρισμα"
 
-#: src/mmcheckingpanel.cpp:1708
+#: src/mmcheckingpanel.cpp:1710
 msgid "Do you really want to delete the transaction?"
 msgstr "Θέλετε πραγραματικά να διαγράψετε την κίνηση;"
 
-#: src/mmcheckingpanel.cpp:1709
+#: src/mmcheckingpanel.cpp:1711
 msgid "Delete Transaction"
 msgstr "Διαγραφή κίνησης"
 
-#: src/mmcheckingpanel.cpp:1794
+#: src/mmcheckingpanel.cpp:1796
 #, fuzzy
 msgid "Moving Transaction from "
 msgstr "Δείτε τις κινήσεις που έχουν γίνει τις 30 τελευταίες ημέρες"
 
-#: src/mmcheckingpanel.cpp:1794
+#: src/mmcheckingpanel.cpp:1796
 msgid " to..."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:1795
+#: src/mmcheckingpanel.cpp:1797
 #, fuzzy
 msgid "Select the destination Account "
 msgstr "Επιλέξτε Λογαριασμό Προορισμού"
@@ -3341,7 +3341,7 @@ msgstr "Πληρωμή"
 
 #: src/payeedialog.cpp:113
 #, c-format
-msgid "Enter a search string.  You can use \\% as a wildcard to match zero or more characters or \\_ to match a single character."
+msgid "Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."
 msgstr ""
 
 #: src/payeedialog.cpp:122
@@ -3579,25 +3579,23 @@ msgstr ""
 msgid "Income vs Expenses for Financial Year: "
 msgstr "Λόγος Εσόδων - Εξόδων"
 
-#: src/reportincexpensesfinancialperiod.cpp:69
-#: src/reportincexpensesfinancialperiod.cpp:75
+#: src/reportincexpensesfinancialperiod.cpp:64
 msgid "Showing period: "
 msgstr ""
 
-#: src/reportincexpensesfinancialperiod.cpp:70
-#: src/reportincexpensesfinancialperiod.cpp:76
+#: src/reportincexpensesfinancialperiod.cpp:64
 #, fuzzy
 msgid "to: "
 msgstr "Σε :"
 
-#: src/reportincexpensesfinancialperiod.cpp:87
+#: src/reportincexpensesfinancialperiod.cpp:74
 #: src/reportincexpesestime.cpp:40
 #: src/reporttransstats.cpp:40
 #, fuzzy
 msgid "Month"
 msgstr "Μηνιαίως"
 
-#: src/reportincexpensesfinancialperiod.cpp:90
+#: src/reportincexpensesfinancialperiod.cpp:77
 #: src/reportincexpesestime.cpp:43
 msgid "Difference"
 msgstr ""
@@ -4006,13 +4004,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr ""
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:845
-#: src/util.cpp:1083
+#: src/util.cpp:844
+#: src/util.cpp:1082
 msgid "CSV Import"
 msgstr "Εισαγωγή CSV αρχείου"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1092
+#: src/util.cpp:1091
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Διάλεξε ένα αρχείο MM.NET CSV  προς εισαγωγή"
 
@@ -4026,13 +4024,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr "Ενα από τα επόμενα πεδία είναι κενά : Ημερομηνία, πληρωνόμενος,τύπος κίνησης, ποσό, κατηγορία, παραλείπεται"
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:1042
-#: src/util.cpp:1260
+#: src/util.cpp:1041
+#: src/util.cpp:1259
 msgid " imported OK."
 msgstr "Η εισαγωγή είναι OK"
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1263
+#: src/util.cpp:1262
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -4050,9 +4048,9 @@ msgstr ""
 "Οι κινήσεις έχουν μαρκαρισθεί και μπορούν να ξαναεπεξεργασθούν. "
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:1047
-#: src/util.cpp:1062
-#: src/util.cpp:1264
+#: src/util.cpp:1046
+#: src/util.cpp:1061
+#: src/util.cpp:1263
 msgid "Import from CSV"
 msgstr "Εισαγωγή από αρχείο CSV"
 
@@ -4177,39 +4175,39 @@ msgstr "Εισαγωγή"
 msgid "Choose QIF data file to Export"
 msgstr "Επιλέξτε ένα αρχείο CSV για να εξαχθούν τα δεδομένα"
 
-#: src/util.cpp:896
-#: src/util.cpp:1133
+#: src/util.cpp:895
+#: src/util.cpp:1132
 msgid " missing date, skipping."
 msgstr "Μη υπαρκτή ημερομηνία, παραλείπεται."
 
-#: src/util.cpp:904
-#: src/util.cpp:1141
+#: src/util.cpp:903
+#: src/util.cpp:1140
 msgid " missing payee, skipping."
 msgstr "Μη υπαρκτός πληρωνόμενος, παραλείπεται."
 
-#: src/util.cpp:912
+#: src/util.cpp:911
 msgid " missing transaction type, skipping."
 msgstr "Μη υπαρκτός τύπο κίνησης, παραλείπεται."
 
-#: src/util.cpp:920
-#: src/util.cpp:1149
+#: src/util.cpp:919
+#: src/util.cpp:1148
 msgid " missing amount, skipping."
 msgstr "Δεν υπάρχει ποσό, παραλείπεται."
 
-#: src/util.cpp:942
+#: src/util.cpp:941
 #, fuzzy
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "Ενα από τα επόμενα πεδία είναι κενά : Ημερομηνία, πληρωνόμενος,τύπος κίνησης, ποσό, κατηγορία, παραλείπεται"
 
-#: src/util.cpp:948
+#: src/util.cpp:947
 msgid " unrecognized transaction type, skipping."
 msgstr "Μη αναγνωρισμένος τύπος κίνησης παραλείπεται."
 
-#: src/util.cpp:972
+#: src/util.cpp:971
 msgid " transfer transaction not imported."
 msgstr ""
 
-#: src/util.cpp:1045
+#: src/util.cpp:1044
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -4225,19 +4223,19 @@ msgstr ""
 "\n"
 "Οι κινήσεις έχουν μαρκαρισθεί και μπορούν να ξαναεπεξεργασθούν. "
 
-#: src/util.cpp:1061
+#: src/util.cpp:1060
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "παρεακαλώ επιβεβαιώστε ότι το αρχείο CSV από MMEX.NET περιέχει ένα μόνο λογαριασμό"
 
-#: src/util.cpp:1163
+#: src/util.cpp:1162
 msgid " missing category, skipping."
 msgstr "Η κατηγορία δεν υπάρχει, παραλείπεται."
 
-#: src/util.cpp:1191
+#: src/util.cpp:1190
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr "Ενα από τα επόμενα πεδία είναι κενά : Ημερομηνία, πληρωνόμενος,τύπος κίνησης, ποσό, κατηγορία, παραλείπεται"
 
-#: src/util.cpp:1200
+#: src/util.cpp:1199
 msgid " invalid date, skipping."
 msgstr " Λάνθασμένη ημερομηνία, παραλείπεται."
 

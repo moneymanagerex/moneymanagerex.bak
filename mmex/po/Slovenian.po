@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-14 13:05+0300\n"
-"PO-Revision-Date: 2011-01-14 13:05+0300\n"
+"POT-Creation-Date: 2011-01-23 01:48+0300\n"
+"PO-Revision-Date: 2011-01-23 01:48+0300\n"
 "Last-Translator: Nikolay <vomikan@mail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -199,12 +199,12 @@ msgstr "Navedite ali se vrednost premoženja s časom spreminja"
 
 #: src/assetdialog.cpp:259
 #, fuzzy
-msgid "\\% Rate"
+msgid "% Rate"
 msgstr "Datum"
 
 #: src/assetdialog.cpp:263
 #, fuzzy, c-format
-msgid "Enter the rate at which the asset changes its value in \\% per year"
+msgid "Enter the rate at which the asset changes its value in % per year"
 msgstr "Enter the rate at which the asset changes its value in % per year"
 
 #: src/assetdialog.cpp:267
@@ -1272,358 +1272,358 @@ msgstr "Dodaj valuto"
 msgid "Currency name already exists!"
 msgstr "Ime valute že obstaja!"
 
-#: src/mmcheckingpanel.cpp:94
+#: src/mmcheckingpanel.cpp:96
 msgid "Date  "
 msgstr "Datum"
 
-#: src/mmcheckingpanel.cpp:97
+#: src/mmcheckingpanel.cpp:99
 msgid "C  "
 msgstr "C"
 
-#: src/mmcheckingpanel.cpp:101
+#: src/mmcheckingpanel.cpp:103
 msgid "Balance"
 msgstr "Bilanca"
 
-#: src/mmcheckingpanel.cpp:584
+#: src/mmcheckingpanel.cpp:586
 msgid "View All Transactions"
 msgstr "Prikaži vse transakcije"
 
-#: src/mmcheckingpanel.cpp:585
+#: src/mmcheckingpanel.cpp:587
 msgid "View Reconciled Transactions"
 msgstr "Prikaži vse usklajene transakcije"
 
-#: src/mmcheckingpanel.cpp:586
+#: src/mmcheckingpanel.cpp:588
 msgid "View Un-Reconciled Transactions"
 msgstr "Prikaži vse neusklajene transakcije"
 
-#: src/mmcheckingpanel.cpp:587
+#: src/mmcheckingpanel.cpp:589
 msgid "View All Except Reconciled Transactions"
 msgstr "Prikaži vse razen usklajenih transakcij"
 
-#: src/mmcheckingpanel.cpp:588
+#: src/mmcheckingpanel.cpp:590
 msgid "View Void Transactions"
 msgstr "Prikaži prazne transakcije"
 
-#: src/mmcheckingpanel.cpp:589
+#: src/mmcheckingpanel.cpp:591
 msgid "View Flagged Transactions"
 msgstr "Prikaži označene transakcije"
 
-#: src/mmcheckingpanel.cpp:590
+#: src/mmcheckingpanel.cpp:592
 msgid "View Duplicate Transactions"
 msgstr "Prikaži podvojene transakcije"
 
-#: src/mmcheckingpanel.cpp:592
+#: src/mmcheckingpanel.cpp:594
 #, fuzzy
 msgid "View Transactions for today"
 msgstr "Prikaži današnje transakcije"
 
-#: src/mmcheckingpanel.cpp:593
+#: src/mmcheckingpanel.cpp:595
 #, fuzzy
 msgid "View Transactions for last 30 days"
 msgstr "Prikaži transakcije zadnjih 30 dni"
 
-#: src/mmcheckingpanel.cpp:594
+#: src/mmcheckingpanel.cpp:596
 #, fuzzy
 msgid "View Transactions for current month"
 msgstr "Prikaži transakcije tekočega meseca"
 
-#: src/mmcheckingpanel.cpp:595
+#: src/mmcheckingpanel.cpp:597
 #, fuzzy
 msgid "View Transactions for last month"
 msgstr "Prikaži transakcije preteklega meseca"
 
-#: src/mmcheckingpanel.cpp:596
+#: src/mmcheckingpanel.cpp:598
 #, fuzzy
 msgid "View Transactions for last 3 months"
 msgstr "Prikaži transakcije zadnjih 3 mesecev"
 
-#: src/mmcheckingpanel.cpp:598
+#: src/mmcheckingpanel.cpp:600
 msgid "Delete all transactions in current view"
 msgstr "Izbriši vse transakcije v trenutnem pogledu."
 
-#: src/mmcheckingpanel.cpp:599
+#: src/mmcheckingpanel.cpp:601
 msgid "Delete all flagged transactions"
 msgstr "Izbriši vse označene transakcije"
 
-#: src/mmcheckingpanel.cpp:640
+#: src/mmcheckingpanel.cpp:642
 msgid "Viewing All Transactions"
 msgstr "Prikaži vse transakcije"
 
-#: src/mmcheckingpanel.cpp:727
+#: src/mmcheckingpanel.cpp:729
 msgid "New Transaction"
 msgstr "Nova transakcija"
 
-#: src/mmcheckingpanel.cpp:736
+#: src/mmcheckingpanel.cpp:738
 #, fuzzy
 msgid "Edit selected transaction"
 msgstr "Izbriši transakcijo"
 
-#: src/mmcheckingpanel.cpp:743
+#: src/mmcheckingpanel.cpp:745
 #, fuzzy
 msgid "Delete selected transaction"
 msgstr "Izbriši vse označene transakcije"
 
-#: src/mmcheckingpanel.cpp:749
+#: src/mmcheckingpanel.cpp:751
 #, fuzzy
 msgid "&Move"
 msgstr "Filmi"
 
-#: src/mmcheckingpanel.cpp:750
+#: src/mmcheckingpanel.cpp:752
 msgid "Move selected transaction to another account"
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:798
+#: src/mmcheckingpanel.cpp:800
 msgid "Recommendation: Always backup your .mmb database file regularly."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:799
+#: src/mmcheckingpanel.cpp:801
 msgid "Recommendation: If upgrading to a new version of MMEX, make sure you backup your .mmb database file before doing so."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:800
+#: src/mmcheckingpanel.cpp:802
 msgid "Recommendation: Use copy (Ctrl+С) and paste (Ctrl+V) for frequently used transactions."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:801
+#: src/mmcheckingpanel.cpp:803
 msgid "Tip: Remember to make backups of your .mmb."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:802
+#: src/mmcheckingpanel.cpp:804
 msgid "Tip: The .mmb file is not encrypted. That means anyone else having the proper know how can actually open the file and read the contents. So make sure that if you are storing any sensitive financial information it is properly guarded."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:803
+#: src/mmcheckingpanel.cpp:805
 msgid "Tip: To mark a transaction as reconciled, just select the transaction and hit the 'r' or 'R' key. To mark a transaction as unreconciled, just select the transaction and hit the 'u' or 'U' key."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:804
+#: src/mmcheckingpanel.cpp:806
 msgid "Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f' or 'F' key."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:805
+#: src/mmcheckingpanel.cpp:807
 msgid "Tip: MMEX supports printing of all reports that can be viewed. The print options are available under the menu, File->Print."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:806
+#: src/mmcheckingpanel.cpp:808
 msgid "Tip: You can modify some runtime behavior of MMEX by changing the options in the Options Dialog. "
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:807
+#: src/mmcheckingpanel.cpp:809
 msgid "Tip: To print a statement with transactions from any arbitary set of criteria, use the transaction filter to select the transactions you want and then do a print from the menu."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:808
+#: src/mmcheckingpanel.cpp:810
 msgid "Tip: Set exchange rate for currencies in case if you have accounts with different currencies."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:810
-#, c-format
-msgid "Tip to get out of debt: Pay yourself 10\\% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses."
-msgstr ""
-
-#: src/mmcheckingpanel.cpp:811
-msgid "Tip to get out of debt: Establish an emergency fund."
-msgstr ""
-
 #: src/mmcheckingpanel.cpp:812
-msgid "Tip to get out of debt: Stop acquiring new debt."
+#, c-format
+msgid "Tip to get out of debt: Pay yourself 10% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses."
 msgstr ""
 
 #: src/mmcheckingpanel.cpp:813
-msgid "Tip to get out of debt: Create a realistic budget for your expenses."
+msgid "Tip to get out of debt: Establish an emergency fund."
 msgstr ""
 
 #: src/mmcheckingpanel.cpp:814
-msgid "Tip to get out of debt: Spend less than you earn."
+msgid "Tip to get out of debt: Stop acquiring new debt."
 msgstr ""
 
 #: src/mmcheckingpanel.cpp:815
+msgid "Tip to get out of debt: Create a realistic budget for your expenses."
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:816
+msgid "Tip to get out of debt: Spend less than you earn."
+msgstr ""
+
+#: src/mmcheckingpanel.cpp:817
 msgid "Tip to get out of debt: Pay more than the minimum."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:838
+#: src/mmcheckingpanel.cpp:840
 #, c-format
 msgid "Account Balance : %s      Reconciled Balance : %s"
 msgstr "Bilanca računa : %s      Usklajena bilanca : %s"
 
-#: src/mmcheckingpanel.cpp:912
+#: src/mmcheckingpanel.cpp:914
 #: src/mmex.cpp:2889
 msgid "Please Wait"
 msgstr "Prosim počakajte"
 
-#: src/mmcheckingpanel.cpp:913
+#: src/mmcheckingpanel.cpp:915
 msgid "Accessing Database"
 msgstr "Dostopam v bazo podatkov"
 
-#: src/mmcheckingpanel.cpp:926
+#: src/mmcheckingpanel.cpp:928
 msgid "Account View : "
 msgstr "Pogled računa: "
 
-#: src/mmcheckingpanel.cpp:1126
-#: src/mmcheckingpanel.cpp:1169
+#: src/mmcheckingpanel.cpp:1128
+#: src/mmcheckingpanel.cpp:1171
 msgid "Viewing all transactions"
 msgstr "Pregled vseh transakcij"
 
-#: src/mmcheckingpanel.cpp:1130
-#: src/mmcheckingpanel.cpp:1174
+#: src/mmcheckingpanel.cpp:1132
+#: src/mmcheckingpanel.cpp:1176
 msgid "Viewing Reconciled transactions"
 msgstr "Pregled usklajenih transakcij"
 
-#: src/mmcheckingpanel.cpp:1134
-#: src/mmcheckingpanel.cpp:1184
+#: src/mmcheckingpanel.cpp:1136
+#: src/mmcheckingpanel.cpp:1186
 msgid "Viewing Un-Reconciled transactions"
 msgstr "Pregled neusklajenih transakcij"
 
-#: src/mmcheckingpanel.cpp:1138
-#: src/mmcheckingpanel.cpp:1194
+#: src/mmcheckingpanel.cpp:1140
+#: src/mmcheckingpanel.cpp:1196
 #, fuzzy
 msgid "Viewing transactions for today"
 msgstr "Pregled današnjih transakcij"
 
-#: src/mmcheckingpanel.cpp:1142
-#: src/mmcheckingpanel.cpp:1199
+#: src/mmcheckingpanel.cpp:1144
+#: src/mmcheckingpanel.cpp:1201
 #, fuzzy
 msgid "Viewing transactions for last 30 days"
 msgstr "Pregled transakcij zadnjih 30 dni"
 
-#: src/mmcheckingpanel.cpp:1146
-#: src/mmcheckingpanel.cpp:1204
+#: src/mmcheckingpanel.cpp:1148
+#: src/mmcheckingpanel.cpp:1206
 #, fuzzy
 msgid "Viewing transactions for last 3 months"
 msgstr "Pregled transakcij zadnjih 3 mesecev"
 
-#: src/mmcheckingpanel.cpp:1150
-#: src/mmcheckingpanel.cpp:1209
+#: src/mmcheckingpanel.cpp:1152
+#: src/mmcheckingpanel.cpp:1211
 #, fuzzy
 msgid "Viewing transactions for current month"
 msgstr "Pregled transakcij tekočega meseca"
 
-#: src/mmcheckingpanel.cpp:1154
-#: src/mmcheckingpanel.cpp:1214
+#: src/mmcheckingpanel.cpp:1156
+#: src/mmcheckingpanel.cpp:1216
 #, fuzzy
 msgid "Viewing transactions for last month"
 msgstr "Pregled transakcj preteklega meseca"
 
-#: src/mmcheckingpanel.cpp:1158
+#: src/mmcheckingpanel.cpp:1160
 msgid "Viewing All Except Reconciled Transactions"
 msgstr "Pregled vseh razen usklajenih transakcij"
 
-#: src/mmcheckingpanel.cpp:1179
+#: src/mmcheckingpanel.cpp:1181
 msgid "Viewing Void transactions"
 msgstr "Pregled praznih transakcij"
 
-#: src/mmcheckingpanel.cpp:1189
+#: src/mmcheckingpanel.cpp:1191
 msgid "Viewing Flagged transactions"
 msgstr "Pregled označenih transakcij"
 
-#: src/mmcheckingpanel.cpp:1219
+#: src/mmcheckingpanel.cpp:1221
 msgid "Viewing duplicate transactions"
 msgstr "Pregled podvojenih transakcij"
 
-#: src/mmcheckingpanel.cpp:1224
+#: src/mmcheckingpanel.cpp:1226
 msgid "Viewing All except Reconciled Transactions"
 msgstr "Pregled vseh razen usklajenih transakcij"
 
-#: src/mmcheckingpanel.cpp:1229
+#: src/mmcheckingpanel.cpp:1231
 msgid "Do you really want to delete all the transactions shown?"
 msgstr "Ali zres želite izbrisati vse prikazane transakcije?"
 
-#: src/mmcheckingpanel.cpp:1230
-#: src/mmcheckingpanel.cpp:1243
+#: src/mmcheckingpanel.cpp:1232
+#: src/mmcheckingpanel.cpp:1245
 msgid "Confirm Transaction Deletion"
 msgstr "Potrdi brisanje transakcije"
 
-#: src/mmcheckingpanel.cpp:1243
+#: src/mmcheckingpanel.cpp:1245
 msgid "Do you really want to delete all the flagged transactions?"
 msgstr "Ali zares želite izbrisati vse označene transakcije?"
 
-#: src/mmcheckingpanel.cpp:1286
+#: src/mmcheckingpanel.cpp:1288
 msgid "&New Transaction"
 msgstr "&Nova transakcija"
 
-#: src/mmcheckingpanel.cpp:1288
+#: src/mmcheckingpanel.cpp:1290
 msgid "&Edit Transaction"
 msgstr "&Uredi transakcijo"
 
-#: src/mmcheckingpanel.cpp:1289
+#: src/mmcheckingpanel.cpp:1291
 msgid "&Delete Transaction"
 msgstr "&Izbriši transakcijo"
 
-#: src/mmcheckingpanel.cpp:1290
+#: src/mmcheckingpanel.cpp:1292
 msgid "&Copy Transaction"
 msgstr "&Kopiraj transakcijo"
 
-#: src/mmcheckingpanel.cpp:1291
+#: src/mmcheckingpanel.cpp:1293
 #, fuzzy
 msgid "&Move Transaction"
 msgstr "&Nova transakcija"
 
-#: src/mmcheckingpanel.cpp:1293
+#: src/mmcheckingpanel.cpp:1295
 msgid "&Paste Transaction"
 msgstr "&Prilepi transakcijo"
 
-#: src/mmcheckingpanel.cpp:1295
+#: src/mmcheckingpanel.cpp:1297
 msgid "Mark As &Reconciled"
 msgstr "Označi kot &Usklajeno"
 
-#: src/mmcheckingpanel.cpp:1296
+#: src/mmcheckingpanel.cpp:1298
 msgid "Mark As &Unreconciled"
 msgstr "Označi kot &Neusklajeno"
 
-#: src/mmcheckingpanel.cpp:1297
+#: src/mmcheckingpanel.cpp:1299
 msgid "Mark As &Void"
 msgstr "Označi kot &Prazno"
 
-#: src/mmcheckingpanel.cpp:1298
+#: src/mmcheckingpanel.cpp:1300
 msgid "Mark For &Followup"
 msgstr "Označi kot &Sledeč"
 
-#: src/mmcheckingpanel.cpp:1299
+#: src/mmcheckingpanel.cpp:1301
 msgid "Mark As &Duplicate"
 msgstr "Označi kot &Duplikat"
 
-#: src/mmcheckingpanel.cpp:1303
+#: src/mmcheckingpanel.cpp:1305
 msgid "as Reconciled"
 msgstr "kot usklajeno"
 
-#: src/mmcheckingpanel.cpp:1304
+#: src/mmcheckingpanel.cpp:1306
 msgid "as Unreconciled"
 msgstr "kot neusklajeno"
 
-#: src/mmcheckingpanel.cpp:1305
+#: src/mmcheckingpanel.cpp:1307
 msgid "as Void"
 msgstr "kot Prazno"
 
-#: src/mmcheckingpanel.cpp:1306
+#: src/mmcheckingpanel.cpp:1308
 msgid "as needing Followup"
 msgstr "kot potreben sledeč"
 
-#: src/mmcheckingpanel.cpp:1307
+#: src/mmcheckingpanel.cpp:1309
 msgid "as Duplicate"
 msgstr "kot duplikat"
 
-#: src/mmcheckingpanel.cpp:1308
+#: src/mmcheckingpanel.cpp:1310
 msgid "Mark all "
 msgstr "Označi vse"
 
-#: src/mmcheckingpanel.cpp:1708
+#: src/mmcheckingpanel.cpp:1710
 msgid "Do you really want to delete the transaction?"
 msgstr "Ali zares želiš izrisati transakcijo?"
 
-#: src/mmcheckingpanel.cpp:1709
+#: src/mmcheckingpanel.cpp:1711
 msgid "Delete Transaction"
 msgstr "Izbriši transakcijo"
 
-#: src/mmcheckingpanel.cpp:1794
+#: src/mmcheckingpanel.cpp:1796
 #, fuzzy
 msgid "Moving Transaction from "
 msgstr "Prikaži današnje transakcije"
 
-#: src/mmcheckingpanel.cpp:1794
+#: src/mmcheckingpanel.cpp:1796
 msgid " to..."
 msgstr ""
 
-#: src/mmcheckingpanel.cpp:1795
+#: src/mmcheckingpanel.cpp:1797
 #, fuzzy
 msgid "Select the destination Account "
 msgstr "Določite na kateri račun"
@@ -3187,7 +3187,7 @@ msgstr "Filtriraj prejemnike:"
 
 #: src/payeedialog.cpp:113
 #, fuzzy, c-format
-msgid "Enter a search string.  You can use \\% as a wildcard to match zero or more characters or \\_ to match a single character."
+msgid "Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."
 msgstr "Vnesi iskalno geslo.  You can use % as a wildcard to match zero or more characters or _ to match a single character."
 
 #: src/payeedialog.cpp:122
@@ -3409,24 +3409,22 @@ msgstr "Razlika:"
 msgid "Income vs Expenses for Financial Year: "
 msgstr "Prihodki vs Izdatki za leto: "
 
-#: src/reportincexpensesfinancialperiod.cpp:69
-#: src/reportincexpensesfinancialperiod.cpp:75
+#: src/reportincexpensesfinancialperiod.cpp:64
 msgid "Showing period: "
 msgstr ""
 
-#: src/reportincexpensesfinancialperiod.cpp:70
-#: src/reportincexpensesfinancialperiod.cpp:76
+#: src/reportincexpensesfinancialperiod.cpp:64
 #, fuzzy
 msgid "to: "
 msgstr " Na:"
 
-#: src/reportincexpensesfinancialperiod.cpp:87
+#: src/reportincexpensesfinancialperiod.cpp:74
 #: src/reportincexpesestime.cpp:40
 #: src/reporttransstats.cpp:40
 msgid "Month"
 msgstr "Mesec"
 
-#: src/reportincexpensesfinancialperiod.cpp:90
+#: src/reportincexpensesfinancialperiod.cpp:77
 #: src/reportincexpesestime.cpp:43
 msgid "Difference"
 msgstr "Razlika"
@@ -3820,13 +3818,13 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "Navedeno je napačno polje za CSV uvoz! Potrebni so vsaj datum, znesek in prejemnik..."
 
 #: src/univcsvdialog.cpp:433
-#: src/util.cpp:845
-#: src/util.cpp:1083
+#: src/util.cpp:844
+#: src/util.cpp:1082
 msgid "CSV Import"
 msgstr "CSV uvoz"
 
 #: src/univcsvdialog.cpp:443
-#: src/util.cpp:1092
+#: src/util.cpp:1091
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Izberi MM.NET CSV datoteko za uvoz"
 
@@ -3839,13 +3837,13 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr " Eno od sledečih polj: datum, prejemnik, znesek, tip manjka, preskočim"
 
 #: src/univcsvdialog.cpp:564
-#: src/util.cpp:1042
-#: src/util.cpp:1260
+#: src/util.cpp:1041
+#: src/util.cpp:1259
 msgid " imported OK."
 msgstr " uvoženo OK."
 
 #: src/univcsvdialog.cpp:567
-#: src/util.cpp:1263
+#: src/util.cpp:1262
 #, c-format
 msgid ""
 "Total Lines : %d \n"
@@ -3863,9 +3861,9 @@ msgstr ""
 "Uvožene transakcije so označene da jih boste lahko preverili."
 
 #: src/univcsvdialog.cpp:568
-#: src/util.cpp:1047
-#: src/util.cpp:1062
-#: src/util.cpp:1264
+#: src/util.cpp:1046
+#: src/util.cpp:1061
+#: src/util.cpp:1263
 msgid "Import from CSV"
 msgstr "Uvoz iz CSV"
 
@@ -3983,38 +3981,38 @@ msgstr "QIF izvoz"
 msgid "Choose QIF data file to Export"
 msgstr "Izberite QIF datoteko za izvoz"
 
-#: src/util.cpp:896
-#: src/util.cpp:1133
+#: src/util.cpp:895
+#: src/util.cpp:1132
 msgid " missing date, skipping."
 msgstr " manjka datum, preskočim."
 
-#: src/util.cpp:904
-#: src/util.cpp:1141
+#: src/util.cpp:903
+#: src/util.cpp:1140
 msgid " missing payee, skipping."
 msgstr " manjka prejemnik, preskočim."
 
-#: src/util.cpp:912
+#: src/util.cpp:911
 msgid " missing transaction type, skipping."
 msgstr " manjka tip transakcije, preskočim."
 
-#: src/util.cpp:920
-#: src/util.cpp:1149
+#: src/util.cpp:919
+#: src/util.cpp:1148
 msgid " missing amount, skipping."
 msgstr " manjka znesek, preskočim."
 
-#: src/util.cpp:942
+#: src/util.cpp:941
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "eno od naslednjih polj: datum, prejemnik, tip transakcije, znesek je prazno, preskočim."
 
-#: src/util.cpp:948
+#: src/util.cpp:947
 msgid " unrecognized transaction type, skipping."
 msgstr " neznan tip transakcije, preskočim."
 
-#: src/util.cpp:972
+#: src/util.cpp:971
 msgid " transfer transaction not imported."
 msgstr " transferne transakcije niso uvožene."
 
-#: src/util.cpp:1045
+#: src/util.cpp:1044
 #, c-format
 msgid ""
 "Total Lines : %d.\n"
@@ -4029,19 +4027,19 @@ msgstr ""
 "\n"
 "Uvožene transakcije so označene, da jih lahko preverite."
 
-#: src/util.cpp:1061
+#: src/util.cpp:1060
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Prosim preverite da je v CSV datoteki iz MMEX.NET samo en račun!"
 
-#: src/util.cpp:1163
+#: src/util.cpp:1162
 msgid " missing category, skipping."
 msgstr " manjka kategorija, preskočim."
 
-#: src/util.cpp:1191
+#: src/util.cpp:1190
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr " Eno od naslednjih polj: datum, prejemnik, tip transakcije, znesek, kategorija je prazno, preskočim."
 
-#: src/util.cpp:1200
+#: src/util.cpp:1199
 msgid " invalid date, skipping."
 msgstr " napačen datum, preskočim."
 
