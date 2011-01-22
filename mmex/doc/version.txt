@@ -6,8 +6,8 @@ Version History of Money Manager Ex
 - New type of accounts - Term account added.
 - Infobar added on the bottom of the checking accounts and assets panel.
 - Random tips for checking panel added.
-- Escape button will not close the New/Edit transaction window (for Chinese typing support).
-- Notes colums for Assets added.
+- Escape key will not close the New/Edit transaction window (for Chinese typing support).
+- Notes column for Assets added.
 - Logo in SVG format added. Created by zhart http://forum.ubuntu.ru.
 - New parameters for begin of financial year added.
 - New Financial Reports covering 1 July to 30 June.
