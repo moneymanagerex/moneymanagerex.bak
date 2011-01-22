@@ -1,16 +1,22 @@
 Version History of Money Manager Ex
 
-0.9.7.0 (December 20, 2010)
-- wxSQLite3 updated to v 2.0.0 (sqlite3 v.3.7.0)
-- Notes field added on the bottom of the main screen
-- Move functionality for transactions added
-- New type of accounts - Term account added
-- Escape button will not close the New/Edit transaction window (for Chinese typing support)
-- Notes colums for Assets added
+0.9.7.0 (January 26, 2011)
+- wxSQLite3 updated to v 2.0.2 (sqlite3 v.3.7.4)
+- Move functionality for transactions added.
+- New type of accounts - Term account added.
+- Infobar added on the bottom of the checking accounts and assets panel.
+- Random tips for checking panel added.
+- Escape button will not close the New/Edit transaction window (for Chinese typing support).
+- Notes colums for Assets added.
 - Logo in SVG format added. Created by zhart http://forum.ubuntu.ru.
+- New parameters for begin of financial year added.
+- New Financial Reports covering 1 July to 30 June.
 - New Financial Year Reports: Start date user definable, Default: 1 July - 30 June.
-- New Menu Items in View
+- New Menu Items in View.
 - Assets: Value calculation changed to compound interest.
+- Transaction Statistics report now displays 5 years. 
+- Help file has been updated.
+- and bugfixes.
 - Help file updated.
 - and bugfixes
 
