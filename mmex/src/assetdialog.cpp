@@ -256,11 +256,11 @@ void mmAssetDialog::CreateControls()
     m_valueChange->SetSelection(DEF_CHANGE_NONE);
     itemFlexGridSizer6->Add(m_valueChange, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_valueChangeRateLabel = new wxStaticText( itemPanel5, wxID_STATIC, _("\% Rate"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_valueChangeRateLabel = new wxStaticText( itemPanel5, wxID_STATIC, _("% Rate"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(m_valueChangeRateLabel, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     m_valueChangeRate = new wxTextCtrl( itemPanel5, wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
-    m_valueChangeRate->SetToolTip(_("Enter the rate at which the asset changes its value in \% per year"));
+    m_valueChangeRate->SetToolTip(_("Enter the rate at which the asset changes its value in % per year"));
     itemFlexGridSizer6->Add(m_valueChangeRate, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     enableDisableRate(false);
 
