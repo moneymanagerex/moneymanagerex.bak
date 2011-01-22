@@ -16,7 +16,6 @@ Version History of Money Manager Ex
 - Assets: Value calculation changed to compound interest.
 - Transaction Statistics report now displays 5 years. 
 - Help file has been updated.
-- Help file updated.
 - and bugfixes.
 
 0.9.6.0 (May 11, 2010)
