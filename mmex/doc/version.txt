@@ -9,8 +9,6 @@ Version History of Money Manager Ex
 - Escape key will not close the New/Edit transaction window (for Chinese typing support).
 - Notes column for Assets added.
 - Logo in SVG format added. Created by zhart http://forum.ubuntu.ru.
-- New parameters for begin of financial year added.
-- New Financial Reports covering 1 July to 30 June.
 - New Financial Year Reports: Start date user definable, Default: 1 July - 30 June.
 - New Menu Items in View.
 - Assets: Value calculation changed to compound interest.
