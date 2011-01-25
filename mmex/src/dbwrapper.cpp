@@ -439,7 +439,7 @@ void mmDBWrapper::createBudgetingV1Table(wxSQLite3Database* db)
     if (!valid)
     {
         db->ExecuteUpdate(wxT("create table BUDGETTABLE_V1(BUDGETENTRYID integer primary key, \
-                             BUDGETYEARID numeric, CATEGID numeric, SUBCATEGID numeric,     \
+                             BUDGETYEARID integer, CATEGID integer, SUBCATEGID integer,     \
                              PERIOD TEXT NOT NULL, AMOUNT numeric NOT NULL);"));
         valid = db->TableExists(wxT("BUDGETTABLE_V1"));
         wxASSERT(valid);
@@ -481,9 +481,9 @@ void mmDBWrapper::createBillsDepositsV1Table(wxSQLite3Database* db)
     if (!valid)
     {
         db->ExecuteUpdate(wxT("create table BILLSDEPOSITS_V1(BDID integer primary key, \
-               ACCOUNTID numeric NOT NULL, TOACCOUNTID numeric, PAYEEID numeric NOT NULL, TRANSCODE TEXT NOT NULL, \
+               ACCOUNTID integer NOT NULL, TOACCOUNTID integer, PAYEEID integer NOT NULL, TRANSCODE TEXT NOT NULL, \
                TRANSAMOUNT numeric NOT NULL, STATUS TEXT, TRANSACTIONNUMBER TEXT, NOTES TEXT,       \
-               CATEGID numeric, SUBCATEGID numeric, TRANSDATE TEXT, FOLLOWUPID numeric, TOTRANSAMOUNT numeric, \
+               CATEGID integer, SUBCATEGID integer, TRANSDATE TEXT, FOLLOWUPID integer, TOTRANSAMOUNT numeric, \
                REPEATS numeric, NEXTOCCURRENCEDATE TEXT, NUMOCCURRENCES numeric);"));
         valid = db->TableExists(wxT("BILLSDEPOSITS_V1"));
         wxASSERT(valid);
@@ -522,7 +522,7 @@ void mmDBWrapper::createAccountListV1Table(wxSQLite3Database* db)
                               STATUS TEXT NOT NULL, \
                               NOTES TEXT, HELDAT TEXT, WEBSITE TEXT, CONTACTINFO TEXT,       \
                               ACCESSINFO TEXT, INITIALBAL numeric, FAVORITEACCT TEXT NOT NULL, \
-                              CURRENCYID numeric NOT NULL);"));
+                              CURRENCYID integer NOT NULL);"));
         exists = db->TableExists(wxT("ACCOUNTLIST_V1"));
         wxASSERT(exists);
     }
@@ -541,9 +541,9 @@ void mmDBWrapper::createCheckingAccountV1Table(wxSQLite3Database* db)
     if (!exists)
     {
         db->ExecuteUpdate(wxT("create table CHECKINGACCOUNT_V1(TRANSID integer primary key, \
-                              ACCOUNTID numeric NOT NULL, TOACCOUNTID numeric, PAYEEID numeric NOT NULL, TRANSCODE TEXT NOT NULL, \
+                              ACCOUNTID integer NOT NULL, TOACCOUNTID integer, PAYEEID integer NOT NULL, TRANSCODE TEXT NOT NULL, \
                               TRANSAMOUNT numeric NOT NULL, STATUS TEXT, TRANSACTIONNUMBER TEXT, NOTES TEXT,       \
-                              CATEGID numeric, SUBCATEGID numeric, TRANSDATE TEXT, FOLLOWUPID numeric, TOTRANSAMOUNT numeric);"));
+                              CATEGID integer, SUBCATEGID integer, TRANSDATE TEXT, FOLLOWUPID integer, TOTRANSAMOUNT numeric);"));
         exists = db->TableExists(wxT("CHECKINGACCOUNT_V1"));
         wxASSERT(exists);
     }
@@ -555,7 +555,7 @@ void mmDBWrapper::createSplitTransactionsV1Table(wxSQLite3Database* db)
     if (!exists)
     {
         db->ExecuteUpdate(wxT("create table SPLITTRANSACTIONS_V1(SPLITTRANSID integer primary key, \
-                              TRANSID numeric NOT NULL, CATEGID numeric, SUBCATEGID numeric, SPLITTRANSAMOUNT numeric);"));
+                              TRANSID numeric NOT NULL, CATEGID integer, SUBCATEGID integer, SPLITTRANSAMOUNT numeric);"));
         exists = db->TableExists(wxT("SPLITTRANSACTIONS_V1"));
         wxASSERT(exists);
     }
@@ -564,7 +564,7 @@ void mmDBWrapper::createSplitTransactionsV1Table(wxSQLite3Database* db)
     if (!exists)
     {
         db->ExecuteUpdate(wxT("create table BUDGETSPLITTRANSACTIONS_V1(SPLITTRANSID integer primary key, \
-                              TRANSID numeric NOT NULL, CATEGID numeric, SUBCATEGID numeric, SPLITTRANSAMOUNT numeric);"));
+                              TRANSID integer NOT NULL, CATEGID integer, SUBCATEGID integer, SPLITTRANSAMOUNT numeric);"));
         exists = db->TableExists(wxT("BUDGETSPLITTRANSACTIONS_V1"));
         wxASSERT(exists);
     }
@@ -576,7 +576,7 @@ void mmDBWrapper::createPayeeV1Table(wxSQLite3Database* db)
     if (!exists)
     {
         db->ExecuteUpdate(wxT("create table PAYEE_V1(PAYEEID integer primary key, \
-                             PAYEENAME TEXT NOT NULL, CATEGID numeric, SUBCATEGID numeric);"));
+                             PAYEENAME TEXT NOT NULL, CATEGID integer, SUBCATEGID integer);"));
         exists = db->TableExists(wxT("PAYEE_V1"));
         wxASSERT(exists);
     }
@@ -603,7 +603,7 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
     {
         /* Create SUBCATEGORY_V1 Tables */
         db->ExecuteUpdate(wxT("create table SUBCATEGORY_V1(SUBCATEGID integer primary key, \
-                             SUBCATEGNAME TEXT NOT NULL, CATEGID numeric NOT NULL);"));
+                             SUBCATEGNAME TEXT NOT NULL, CATEGID integer NOT NULL);"));
         existsSubCat = db->TableExists(wxT("SUBCATEGORY_V1"));
         wxASSERT(existsSubCat);
     }
@@ -646,107 +646,34 @@ void mmDBWrapper::createAllDataView(wxSQLite3Database* db)
 
     static const char sql[] = 
 "create view alldata as "
-"select CANS.TransID as ID, "
-       "CANS.TransCode as TransactionType, "
-       "CANS.TransDate as Date, "
-       "round(strftime('%Y', CANS.TransDate)) as Year, "
-       "round(strftime('%m', CANS.TransDate)) as Month, "
-       "round(strftime('%d', CANS.TransDate)) as Day, "
-       "CAT.CategName as Category, "
-       "SUBCAT.SubCategName as Subcategory, "
-       "ROUND(case CANS.TRANSCODE when 'Withdrawal' then -1*CANS.TRANSAMOUNT  else CANS.TRANSAMOUNT end,2) as Amount, "
-
-       "( select cf.BaseConvRate "
-         "from currencyformats_v1 cf "
-         "where cf.currencyid=FROMACC.CURRENCYID "
-       ") as BaseConvRate, "
-
-    "FROMACC.CurrencyID as CurrencyID, "
-    "FROMACC.AccountName as AccountName,  "
-    "FROMACC.AccountID as AccountID, "
-    "TOACC.AccountName as ToAccountName, "
-    "TOACC.ACCOUNTId as ToAccountID, "
-    "CANS.ToTransAmount ToTransAmount, "
-    "TOACC.CURRENCYID as ToCurrencyID, "
-    "0 as Splitted, "
-    "CAT.CategID as CategID, "
-    "SUBCAT.SubCategID as SubCategID, "
-    "PAYEE.PayeeName as Payee, "
-    "PAYEE.PayeeID as PayeeID, "
-    "CANS.TRANSACTIONNUMBER as TransactionNumber, "
-    "CANS.Status as Status, "
-    "CANS.NOTES as Notes "
-
-"from  CHECKINGACCOUNT_V1 CANS "
-
-"join CATEGORY_V1 CAT "
-"on CAT.CATEGID = CANS.CATEGID "
-
-"left join SUBCATEGORY_V1 SUBCAT "
-"on SUBCAT.SUBCATEGID = CANS.SUBCATEGID "
-
-"left join PAYEE_V1 PAYEE "
-"on PAYEE.PAYEEID = CANS.PAYEEID "
-
-"left join ACCOUNTLIST_V1 FROMACC "
-"on FROMACC.ACCOUNTID = CANS.ACCOUNTID "
-
-"left join ACCOUNTLIST_V1 TOACC "
-"on TOACC.ACCOUNTID = CANS.TOACCOUNTID "
-
-"UNION ALL "
-
-"SELECT CASS.TRANSID, "
-       "CASS.TRANSCODE, "
-       "CASS.TransDate, "
-       "round(strftime('%Y', CASS.TransDate)) as Year, "
-       "round(strftime('%m', CASS.TransDate)) as Month, "
-       "round(strftime('%d', CASS.TransDate)) as Day,"
-       "CAT.CATEGNAME, "
-       "SUBCAT.SUBCATEGNAME,"
-       "ROUND(SPLIT.SPLITTRANSAMOUNT, 2)*(case when CASS.TRANSCODE='Withdrawal' then -1 else 1 end) as Amount, "
-
-       "( select cf.BaseConvRate "
-         "from currencyformats_v1 cf "
-         "where cf.currencyid = FROMACC.CURRENCYID "
-       ") as BaseConvRate, "
-
-       "FROMACC.CURRENCYID, "
-       "FROMACC.ACCOUNTNAME, "
-       "FROMACC.ACCOUNTId,"
-       "TOACC.ACCOUNTNAME, "
-       "TOACC.ACCOUNTId, "
-       "CASS.totransamount, "
-       "TOACC.CURRENCYID, "
-       "1 as Splitted, "
-       "CAT.CATEGId, "
-       "SUBCAT.SUBCATEGId, "
-       "PAYEE.PAYEENAME, "
-       "PAYEE.PAYEEID, "
-       "CASS.TRANSACTIONNUMBER, "
-       "CASS.Status, "
-       "CASS.NOTES "
-
-"from CHECKINGACCOUNT_V1 CASS "
-
-"join SPLITTRANSACTIONS_V1 SPLIT "
-"on SPLIT.TRANSID = CASS.TRANSID "
-
-"join CATEGORY_V1 CAT "
-"on CAT.CATEGID = SPLIT.CATEGID "
-
-"left join SUBCATEGORY_V1 SUBCAT "
-"on SUBCAT.SUBCATEGID = SPLIT.SUBCATEGID "
-
-"left join PAYEE_V1 PAYEE "
-"on PAYEE.PAYEEID = CASS.PAYEEID "
-
-"left join ACCOUNTLIST_V1 FROMACC "
-"on FROMACC.ACCOUNTID = CASS.ACCOUNTID "
-
-"left join ACCOUNTLIST_V1 TOACC "
-"on TOACC.ACCOUNTID = CASS.TOACCOUNTID "
-
+"select CANS.TransID as ID, CANS.TransCode as TransactionType, CANS.TransDate as Date, \n"
+"coalesce(CAT.CategName, SCAT.CategName) as Category, \n"
+"coalesce(SUBCAT.SUBCategName, SSCAT.SUBCategName) as Subcategory, \n"
+"ROUND((case CANS.TRANSCODE when 'Withdrawal' then -1 else 1 end)*(case CANS.CATEGID when -1 then st.splittransamount else CANS.TRANSAMOUNT end),2) as Amount, \n"
+"cf.currency_symbol as currency, \n"
+"CANS.Status as Status, CANS.NOTES as Notes, \n"
+"cf.BaseConvRate as BaseConvRate, \n"
+"FROMACC.CurrencyID as CurrencyID, \n"
+"FROMACC.AccountName as AccountName, FROMACC.AccountID as AccountID, TOACC.AccountName as ToAccountName, \n"
+"TOACC.ACCOUNTId as ToAccountID, CANS.ToTransAmount ToTransAmount, TOACC.CURRENCYID as ToCurrencyID, \n"
+"(case ifnull(CANS.CATEGID,-1) when -1 then 1 else 0 end) as Splitted, \n"
+"ifnull(CAT.CategId,st.CategId) as CategID, \n"
+"ifnull(SUBCAT.SubCategID,st.subCategId) as SubCategID, \n"
+"PAYEE.PayeeName as Payee, PAYEE.PayeeID as PayeeID, \n"
+"CANS.TRANSACTIONNUMBER as TransactionNumber, \n"
+"round(strftime('%Y', CANS.TransDate)) as Year, \n"
+"round(strftime('%m', CANS.TransDate)) as Month, \n" 
+"round(strftime('%d', CANS.TransDate)) as Day \n"
+"from  CHECKINGACCOUNT_V1 CANS \n"
+"left join CATEGORY_V1 CAT on CAT.CATEGID = CANS.CATEGID \n"
+"left join SUBCATEGORY_V1 SUBCAT on SUBCAT.SUBCATEGID = CANS.SUBCATEGID and SUBCAT.CATEGID = CANS.CATEGID \n"
+"left join PAYEE_V1 PAYEE on PAYEE.PAYEEID = CANS.PAYEEID \n"
+"left join ACCOUNTLIST_V1 FROMACC on FROMACC.ACCOUNTID = CANS.ACCOUNTID \n"
+"left join ACCOUNTLIST_V1 TOACC on TOACC.ACCOUNTID = CANS.TOACCOUNTID \n"
+"left join splittransactions_v1 st on CANS.transid=st.transid \n"
+"left join CATEGORY_V1 SCAT on SCAT.CATEGID = st.CATEGID and CANS.TransId=st.transid \n"
+"left join SUBCATEGORY_V1 SSCAT on SSCAT.SUBCATEGID = st.SUBCATEGID and SSCAT.CATEGID = st.CATEGID and CANS.TransId=st.transid \n"
+"left join currencyformats_v1 cf on cf.currencyid=FROMACC.currencyid \n"
 "order by CANS.transid";
 
     bool exists = ViewExists(db, view_name);
@@ -1040,12 +967,12 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
 
     st.Finalize();
 }
-
-double mmDBWrapper::getReconciledBalanceOnAccount(wxSQLite3Database* db, int accountID)
-{
-    double balance = 0.0;
-
-    wxSQLite3Statement st = db->PrepareStatement("select INITIALBAL "
+#if 0
+//double mmDBWrapper::getReconciledBalanceOnAccount(wxSQLite3Database* db, int accountID)
+//{
+//    double balance = 0.0;
+//
+  /*  wxSQLite3Statement st = db->PrepareStatement("select INITIALBAL "
                                                  "from ACCOUNTLIST_V1 "
                                                  "where ACCOUNTID = ?"
                                                 );
@@ -1110,10 +1037,11 @@ double mmDBWrapper::getReconciledBalanceOnAccount(wxSQLite3Database* db, int acc
             wxASSERT(false);
         }
     }
-    st.Finalize();
+    st.Finalize();*/
 
-    return balance;
-}
+//    return balance;
+//}
+#endif
 
 double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountID, bool ignoreFuture)
 {
@@ -1122,7 +1050,7 @@ double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountI
     "from ACCOUNTLIST_V1 "
     "where ACCOUNTID = ?";
         
-    double balance = 0.0;
+    double balance = 0.0; 
 
     wxSQLite3Statement st = db->PrepareStatement(sql);
     st.Bind(1, accountID);
@@ -1193,7 +1121,7 @@ double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountI
             wxASSERT(false);
         }
     }
-    st.Finalize();
+    st.Finalize(); 
 
     return balance;
 }
