@@ -85,11 +85,11 @@ void relocateCategoryDialog::CreateControls()
         _("Relocate all source categories to the destination category"), 
         wxDefaultPosition, wxDefaultSize, 0);
     wxStaticLine* lineTop = new wxStaticLine(this,wxID_STATIC,wxDefaultPosition, wxDefaultSize,wxLI_HORIZONTAL); 
-    wxStaticText* staticText_1 = new wxStaticText( this, wxID_STATIC,_("Select:"),
+    wxStaticText* staticText_1 = new wxStaticText( this, wxID_STATIC,_("Relocate:"),
         wxDefaultPosition, wxDefaultSize, 0 );
     sourceBtn_ = new wxButton( this, ID_DIALOG_CATEG_SELECT_BUTTON_SOURCE,_("Source Category"),
         wxDefaultPosition, btnSize, 0 );
-    wxStaticText* staticText_2 = new wxStaticText( this, wxID_STATIC,_("Select:"),
+    wxStaticText* staticText_2 = new wxStaticText( this, wxID_STATIC,_("to:"),
         wxDefaultPosition, wxDefaultSize, 0 );
     destBtn_ = new wxButton( this, ID_DIALOG_CATEG_SELECT_BUTTON_DEST,_("Destination Category"),
         wxDefaultPosition, btnSize, 0 );
@@ -115,6 +115,7 @@ void relocateCategoryDialog::CreateControls()
 
     wxButton* okButton = new wxButton(this,ID_DIALOG_CATEG_RELOCATE_BUTTON_OK,_("OK"),wxDefaultPosition,wxDefaultSize);
     wxButton* cancelButton = new wxButton(this,wxID_CANCEL,_("Cancel"),wxDefaultPosition,wxDefaultSize);
+    cancelButton-> SetFocus () ;
     wxBoxSizer* buttonBoxSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonBoxSizer->Add(okButton,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
     buttonBoxSizer->Add(cancelButton,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
@@ -134,7 +135,7 @@ void relocateCategoryDialog::OnSelectSource(wxCommandEvent& /*event*/)
             catName = mmDBWrapper::getCategoryName(db_ , sourceCatID_);
         if (sourceSubCatID_ != -1 )
             catName << _(":") << mmDBWrapper::getSubCategoryName(db_, sourceCatID_ , sourceSubCatID_ );
-        if (catName != _(""))
+        if (catName != wxT(""))
             sourceBtn_->SetLabel(catName);
     }
 }
@@ -152,7 +153,7 @@ void relocateCategoryDialog::OnSelectDest(wxCommandEvent& /*event*/)
             catName = mmDBWrapper::getCategoryName(db_ , destCatID_);
         if (destSubCatID_ != -1 )
             catName << _(":") << mmDBWrapper::getSubCategoryName(db_, destCatID_ , destSubCatID_ );
-        if (catName != _(""))
+        if (catName != wxT(""))
             destBtn_->SetLabel(catName);
     }
 }
@@ -169,8 +170,8 @@ void relocateCategoryDialog::OnOk(wxCommandEvent& /*event*/)
 {
     if ((sourceCatID_ > 0) &&  (destCatID_ > 0) ) 
     {
-        wxString msgStr = _("Please Confirm:\n\nChanging all categories of: ");
-        msgStr << sourceBtn_->GetLabelText() << _("\n\nto category: ") << destBtn_->GetLabelText();
+        wxString msgStr = _("Please Confirm:");
+        msgStr << wxT("\n\n") << _("Changing all categories of: ") << sourceBtn_->GetLabelText() << wxT("\n\n") << _("to category: ") << destBtn_->GetLabelText();
 
         int ans = wxMessageBox(msgStr,_("Category Relocation Confirmation"),wxOK|wxCANCEL|wxICON_QUESTION);
         if (ans == wxOK)
