@@ -171,6 +171,7 @@ wxString mmOptionsDialog::DisplayDate2FormatDate(wxString strDate)
         wxT("%d.%m.%Y"),
         wxT("%Y-%m-%d"),
         wxT("%Y.%m.%d"),
+        wxT("%Y%m%d"),
 		wxT("%d,%m,%y"),
 		wxT("%d/%m %Y"),
 	};
@@ -192,6 +193,7 @@ wxString mmOptionsDialog::DisplayDate2FormatDate(wxString strDate)
         wxT("DD.MM.YYYY"),
         wxT("YYYY-MM-DD"),
         wxT("YYYY.MM.DD"),
+        wxT("YYYYMMDD"),
 		wxT("DD,MM,YY"),
 		wxT("DD/MM YYYY"),
     };
@@ -224,6 +226,7 @@ wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
         wxT("%d.%m.%Y"),
 		wxT("%Y-%m-%d"),
         wxT("%Y.%m.%d"),
+        wxT("%Y%m%d"),
 		wxT("%d,%m,%y"),
         wxT("%d/%m %Y"),
     };
@@ -245,6 +248,7 @@ wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
         wxT("DD.MM.YYYY"),
 	    wxT("YYYY-MM-DD"),
         wxT("YYYY.MM.DD"),
+        wxT("YYYYMMDD"),
 		wxT("DD,MM,YY"),
 		wxT("DD/MM YYYY"),
     };
@@ -408,6 +412,7 @@ void mmOptionsDialog::CreateControls()
         wxT("DD.MM.YYYY"),
         wxT("YYYY-MM-DD"),
         wxT("YYYY.MM.DD"),
+        wxT("YYYYMMDD"),
 		wxT("DD,MM,YY"),
 		wxT("DD/MM YYYY"),
     };
