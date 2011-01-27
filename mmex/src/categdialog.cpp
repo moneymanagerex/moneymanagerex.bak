@@ -180,7 +180,10 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
     wxString text = textCtrl->GetValue();
     if (text == wxT(""))
     {
-        mmShowErrorMessage(this, _("Category cannot be empty"), _("Error"));
+        wxString errMsg = _("Category cannot be empty");
+        errMsg << _("          ");  // added to adjust dialog size
+        wxMessageBox(errMsg, _("Organise Categories: Adding Error"),wxOK|wxICON_ERROR);
+//      mmShowErrorMessage(this, _("Category cannot be empty"), _("Error"));
         return;
     }
 
@@ -188,7 +191,10 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
     {
         if (core_->categoryList_.categoryExists(text))
         {
-            mmShowErrorMessage(this, _("Category with same name exists"), _("Error"));
+            wxString errMsg = _("Category with same name exists");
+            errMsg << wxT("\n\n") << _("Tip: If category added now, check bottom of list.\nCategory will be in sorted order next time dialog appears");
+            wxMessageBox(errMsg, _("Organise Categories: Adding Error"),wxOK|wxICON_ERROR);
+//          mmShowErrorMessage(this, _("Category with same name exists"), _("Error"));
             return;
         }
         int categID = core_->categoryList_.addCategory(text);
@@ -207,7 +213,9 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
     {
         if (core_->categoryList_.getSubCategoryID(categID, text) != -1)
         {   
-            mmShowErrorMessage(this, _("Sub Category with same name exists"), _("Error"));
+            wxMessageBox(_("Sub Category with same name exists"),
+                _("Organise Categories: Adding Error"),wxOK|wxICON_ERROR);
+//          mmShowErrorMessage(this, _("Sub Category with same name exists"), _("Error"));
             return;
         }
         int subcategID = core_->categoryList_.addSubCategory(categID, text);
@@ -218,9 +226,34 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
         return;
     }
     
-    mmShowErrorMessage(this, _("Invalid Parent Category. Choose Root or Main Category node."),
-                             _("Error adding Category"));
+    wxMessageBox(_("Invalid Parent Category. Choose Root or Main Category node."),
+        _("Organise Categories: Adding Error"),wxOK|wxICON_ERROR);
+//  mmShowErrorMessage(this, _("Invalid Parent Category. Choose Root or Main Category node."),
+//                             _("Error adding Category"));
  }
+ 
+void mmCategDialog::showCategDialogDeleteError(wxString deleteCategoryErrMsg, bool category)
+{
+    deleteCategoryErrMsg << wxT("\n\n") << _("Tip: Change all transactions using this ");
+    wxString categoryStr    = _("Category");
+    wxString subCategoryStr = _("Sub-Category");
+
+    if (category)
+        deleteCategoryErrMsg << categoryStr;
+    else
+        deleteCategoryErrMsg << subCategoryStr;
+
+    deleteCategoryErrMsg << _(" to\nanother ");
+
+    if (category)
+        deleteCategoryErrMsg << categoryStr;
+    else
+        deleteCategoryErrMsg << subCategoryStr;
+    
+    deleteCategoryErrMsg << _(" using the relocate command:") << wxT("\n\n") << _("Tools -> Relocation of -> Categories");
+
+    wxMessageBox(deleteCategoryErrMsg,_("Organise Categories: Delete Error"),wxOK|wxICON_ERROR);
+}
  
 void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
 {
@@ -241,7 +274,7 @@ void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
     {
         if (!core_->categoryList_.deleteCategory(categID))
         {
-            mmShowErrorMessage(this, _("Category is in use"), _("Error"));
+            showCategDialogDeleteError(_("Category in use."));
             return;
         }
     }
@@ -249,14 +282,14 @@ void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
     {
         if (!core_->categoryList_.deleteSubCategory(categID, subcategID))
         {
-            mmShowErrorMessage(this, _("Sub-Category is in use"), _("Error"));
+            showCategDialogDeleteError(_("Sub-Category in use."), false);
             return;
         }
     }
 
     treeCtrl_->Delete(selectedItemId_);
 }
- 
+
 void mmCategDialog::OnBSelect(wxCommandEvent& /*event*/)
 {
     if (selectedItemId_ == root_)
@@ -358,8 +391,11 @@ void mmCategDialog::OnEdit(wxCommandEvent& /*event*/)
     
     if (!core_->categoryList_.updateCategory(categID, subcategID, text))
     {
-         mmShowErrorMessage(this, _("Update Failed"), _("Error"));
-         return;
+        wxString errMsg = _("Update Failed");
+        errMsg << _("          ");  // added to adjust dialog size
+        wxMessageBox(errMsg, _("Organise Categories"),wxOK|wxICON_ERROR);
+//      mmShowErrorMessage(this, _("Update Failed"), _("Error"));
+        return;
     }
 
     core_->bTransactionList_.updateAllTransactionsForCategory(core_, categID, subcategID);

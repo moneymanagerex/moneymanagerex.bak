@@ -85,6 +85,8 @@ private:
     wxTreeItemId selectedItemId_;
     wxTreeItemId root_;
     bool bEnableSelect_;
+    void showCategDialogDeleteError(wxString deleteCategoryErrMsg, bool category = true);
+
 
 public:
     int categID_;
