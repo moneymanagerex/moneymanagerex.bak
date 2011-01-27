@@ -197,14 +197,15 @@ void mmPayeeDialog::OnSelChanged(wxCommandEvent& /*event*/)
 
 void mmPayeeDialog::OnAdd(wxCommandEvent& event)
 {
-    wxString text = wxGetTextFromUser(_("Enter the name of the payee to add:"), _("Add Payee"), textCtrl->GetValue());
+    wxString text = wxGetTextFromUser(_("Enter the name for the new payee:"), _("Organize Payees: Add Payee"), textCtrl->GetValue());
     if (text.IsEmpty()) {
         //mmShowErrorMessage(this, _("Type a Payee Name in the Text Box and then press Add."), _("Error"));
         return;
     }
     if (m_core->payeeList_.payeeExists(text))
     {
-        mmShowErrorMessage(this, _("Payee with same name exists"), _("Error"));
+        wxMessageBox(_("Payee with same name exists"), _("Organize Payees: Add Payee"),wxOK|wxICON_ERROR);
+//      mmShowErrorMessage(this, _("Payee with same name exists"), _("Error"));
     }
     else
     {
@@ -224,7 +225,12 @@ void mmPayeeDialog::OnDelete(wxCommandEvent& event)
 {
     if (!m_core->payeeList_.deletePayee(m_payee_id))
     {
-        mmShowErrorMessage(this, _("Payee is in use"), _("Error"));
+        wxString deletePayeeErrMsg = _("Payee in use.");
+        deletePayeeErrMsg 
+            << wxT("\n\n")
+            << _("Tip: Change all transactions using this Payee to another Payee\nusing the relocate command:")
+            << _("\n\n") << _("Tools -> Relocation of -> Payees");
+        wxMessageBox(deletePayeeErrMsg,_("Organize Payees: Delete Error"),wxOK|wxICON_ERROR);
         return;
     }
 	textCtrl->Clear();
