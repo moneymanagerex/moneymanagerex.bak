@@ -77,11 +77,11 @@ void relocatePayeeDialog::CreateControls()
         _("Relocate all source payees to the destination payee"), 
         wxDefaultPosition, wxDefaultSize, 0);
     wxStaticLine* lineTop = new wxStaticLine(this,wxID_STATIC,wxDefaultPosition, wxDefaultSize,wxLI_HORIZONTAL); 
-    wxStaticText* staticText_1 = new wxStaticText( this, wxID_STATIC,_("Select:"),
+    wxStaticText* staticText_1 = new wxStaticText( this, wxID_STATIC,_("Relocate:"),
         wxDefaultPosition, wxDefaultSize, 0 );
     sourceBtn_ = new wxButton( this, ID_DIALOG_PAYEE_SELECT_BUTTON_SOURCE,_("Source Payee"),
         wxDefaultPosition, btnSize, 0 );
-    wxStaticText* staticText_2 = new wxStaticText( this, wxID_STATIC,_("Select:"),
+    wxStaticText* staticText_2 = new wxStaticText( this, wxID_STATIC,_("to:"),
         wxDefaultPosition, wxDefaultSize, 0 );
     destBtn_ = new wxButton( this, ID_DIALOG_PAYEE_SELECT_BUTTON_DEST,_("Destination Payee"),
         wxDefaultPosition, btnSize, 0 );
@@ -107,6 +107,7 @@ void relocatePayeeDialog::CreateControls()
 
     wxButton* okButton = new wxButton(this,ID_DIALOG_PAYEE_RELOCATE_BUTTON_OK,_("OK"),wxDefaultPosition,wxDefaultSize);
     wxButton* cancelButton = new wxButton(this,wxID_CANCEL,_("Cancel"),wxDefaultPosition,wxDefaultSize);
+    cancelButton-> SetFocus () ;
     wxBoxSizer* buttonBoxSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonBoxSizer->Add(okButton,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
     buttonBoxSizer->Add(cancelButton,0,wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL,5);
@@ -126,7 +127,7 @@ void relocatePayeeDialog::OnSelectSource(wxCommandEvent& /*event*/)
         if (sourcePayeeID_ != -1 )
             payeeName = mmDBWrapper::getPayee(db_, sourcePayeeID_, catID, subCatID);
 
-        if (payeeName != _(""))
+        if (payeeName != wxT(""))
             sourceBtn_->SetLabel(payeeName);
     }
 }
@@ -143,7 +144,7 @@ void relocatePayeeDialog::OnSelectDest(wxCommandEvent& /*event*/)
         wxString payeeName; 
         if (destPayeeID_ != -1 )
             payeeName = mmDBWrapper::getPayee(db_, destPayeeID_, catID, subCatID);
-        if (payeeName != _(""))
+        if (payeeName != wxT(""))
             destBtn_->SetLabel(payeeName);
     }
 }
@@ -160,8 +161,8 @@ void relocatePayeeDialog::OnOk(wxCommandEvent& /*event*/)
 {
     if ((sourcePayeeID_ > 0) &&  (destPayeeID_ > 0) ) 
     {
-        wxString msgStr = _("Please Confirm:\n\nChanging all payees of: ");
-        msgStr << sourceBtn_->GetLabelText() << _("\n\nto payee: ") << destBtn_->GetLabelText();
+        wxString msgStr = _("Please Confirm:") ;
+        msgStr << wxT("\n\n") << _ ("Changing all payees of: ") << sourceBtn_->GetLabelText() << wxT("\n\n") << _("to payee: ") << destBtn_->GetLabelText();
 
         int ans = wxMessageBox(msgStr,_("Payee Relocation Confirmation"),wxOK|wxCANCEL|wxICON_QUESTION);
         if (ans == wxOK)
