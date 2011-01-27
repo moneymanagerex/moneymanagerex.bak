@@ -153,6 +153,7 @@ Name: "lang\portuguese_portugal"; Description: "Portuguese Portugal"; Types: ful
 Name: "lang\romanian"; Description: "Romanian"; Types: full
 Name: "lang\ru"; Description: "Russian"; Types: full
 Name: "lang\serbo_croatian"; Description: "Serbo Croatian"; Types: full
+Name: "lang\serbian"; Description: "Serbian"; Types: full
 Name: "lang\sk"; Description: "Slovak"; Types: full
 Name: "lang\sl"; Description: "Slovenian"; Types: full
 Name: "lang\es"; Description: "Spanish"; Types: full
@@ -200,7 +201,7 @@ Source: "{#lang_src}\romanian.*";         DestDir: {#lang_dst}; Components: "lan
 Source: "{#lang_src}\russian.*";          DestDir: {#lang_dst}; Components: "lang\ru";             Flags: ignoreversion
 Source: "{#lang_src}\serbo-croatian.*";   DestDir: {#lang_dst}; Components: "lang\serbo_croatian"; Flags: ignoreversion
 Source: "{#lang_src}\slovak.*";           DestDir: {#lang_dst}; Components: "lang\sk";             Flags: ignoreversion
-Source: "{#lang_src}\Slovenian.*";        DestDir: {#lang_dst}; Components: "lang\sl";             Flags: ignoreversion
+Source: "{#lang_src}\slovenian.*";        DestDir: {#lang_dst}; Components: "lang\sl";             Flags: ignoreversion
 Source: "{#lang_src}\spanish.*";          DestDir: {#lang_dst}; Components: "lang\es";             Flags: ignoreversion
 Source: "{#lang_src}\swedish.*";          DestDir: {#lang_dst}; Components: "lang\swedish";       Flags: ignoreversion
 Source: "{#lang_src}\tamil.*";            DestDir: {#lang_dst}; Components: "lang\tamil";         Flags: ignoreversion
