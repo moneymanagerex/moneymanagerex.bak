@@ -340,32 +340,32 @@ void mmTransDialog::CreateControls()
 
     wxSQLite3Statement st = db_->PrepareStatement(sql);
     st.Bind(1, accountID_);
-    wxSQLite3ResultSet q1 = st.ExecuteQuery(sql);
-        wxString payeeName = q1.GetString(wxT("PAYEENAME"));
-        payeeID_ = q1.GetInt(wxT("PAYEEID"));
-        wxString categString = q1.GetString(wxT("CATEGNAME"));
-        wxString subcategName = q1.GetString(wxT("SUBCATEGNAME"));
-        categID_ = q1.GetInt(wxT("CATEGID"));
-        subcategID_ = q1.GetInt(wxT("SUBCATEGID"));
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    wxString payeeName = q1.GetString(wxT("PAYEENAME"));
+    payeeID_ = q1.GetInt(wxT("PAYEEID"));
+    wxString categString = q1.GetString(wxT("CATEGNAME"));
+    wxString subcategName = q1.GetString(wxT("SUBCATEGNAME"));
+    categID_ = q1.GetInt(wxT("CATEGID"));
+    subcategID_ = q1.GetInt(wxT("SUBCATEGID"));
 
-        //if some values is missing - set defaults
-        if (payeeName == wxT(""))
+    //if some values is missing - set defaults
+    if (payeeName == wxT(""))
+    {
+        payeeName = _("Select Payee");
+        payeeID_ = -1;
+    } 
+    if (categString == wxT(""))
+    {
+        categString = _("Select Category");
+    }
+    else 
+    {
+        if (subcategName != wxT(""))
         {
-            payeeName = _("Select Payee");
-            payeeID_ = -1;
-        } 
-        if (categString == wxT(""))
-        {
-            categString = _("Select Category");
+            categString += wxT(" : ");
+            categString += subcategName;
         }
-        else 
-        {
-            if (subcategName != wxT(""))
-            {
-                categString += wxT(" : ");
-                categString += subcategName;
-            }
-        }
+    }
 
     st.Finalize();
     bPayee_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONPAYEE, payeeName, wxDefaultPosition, wxSize(200, -1), 0 );
