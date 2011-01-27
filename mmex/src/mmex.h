@@ -116,6 +116,8 @@ private:
     wxTreeCtrl* navTreeCtrl_;
     wxMenuBar *menuBar_;
     wxToolBar* toolBar_;
+    wxStatusBar* statusBar_;
+
     mmTreeItemData* selectedItemData_;
     wxMenuItem* menuItemOnlineUpdateCurRate_; // Menu Item for Disabling Item
 	
@@ -191,6 +193,9 @@ private:
 
     void OnOrgCategories(wxCommandEvent& event);
     void OnOrgPayees(wxCommandEvent& event);
+    void OnCategoryRelocation(wxCommandEvent& event);
+    void OnPayeeRelocation(wxCommandEvent& event);
+
     void OnOptions(wxCommandEvent& event);
     void OnBudgetSetupDialog(wxCommandEvent& event);
     void OnCurrency(wxCommandEvent& event);

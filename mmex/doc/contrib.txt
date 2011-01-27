@@ -53,7 +53,7 @@ Hebrew
 -- Ykpui
 Hungarian
 -- Csaba
-Indonesian Translation 
+Indonesian Translation
 -- Dindin
 Italian
 -- Claudio
@@ -88,10 +88,11 @@ Vietnamese
 
 User Manual
 ===========
+Stefano [stef145g]
 Tina P
 Terry Wick
 Italian - Claudio
-French - catacotox 
+French - catacotox
 Russian - Nikolay
 
 Sponsors

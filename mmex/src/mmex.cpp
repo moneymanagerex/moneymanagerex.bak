@@ -49,6 +49,8 @@
 #include "newacctdialog.h"
 #include "categdialog.h"
 #include "payeedialog.h"
+#include "relocatecategorydialog.h"
+#include "relocatepayeedialog.h"
 #include "budgetyeardialog.h"
 #include "optionsdialog.h"
 #include "currencydialog.h"
@@ -362,6 +364,9 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
 	EVT_MENU(MENU_VIEW_LINKS, mmGUIFrame::OnViewLinks)
 	EVT_MENU(MENU_VIEW_BANKACCOUNTS, mmGUIFrame::OnViewBankAccounts)
 	EVT_MENU(MENU_VIEW_TERMACCOUNTS, mmGUIFrame::OnViewTermAccounts)
+    EVT_MENU(MENU_CATEGORY_RELOCATION, mmGUIFrame::OnCategoryRelocation)
+    EVT_MENU(MENU_PAYEE_RELOCATION, mmGUIFrame::OnPayeeRelocation)
+
     EVT_MENU(MENU_ONLINE_UPD_CURRENCY_RATE, mmGUIFrame::OnOnlineUpdateCurRate)
 	EVT_UPDATE_UI(MENU_VIEW_TOOLBAR, mmGUIFrame::OnViewToolbarUpdateUI)
 	EVT_UPDATE_UI(MENU_VIEW_LINKS, mmGUIFrame::OnViewLinksUpdateUI)
@@ -2600,25 +2605,38 @@ void mmGUIFrame::createMenu()
     menuAccounts->Append(menuItemAcctList); 
     menuAccounts->Append(menuItemAcctEdit); 
     
-
+    // Tools Menu
     wxMenu *menuTools = new wxMenu;
     
-    wxMenuItem* menuItemCateg = new wxMenuItem(menuTools, MENU_ORGCATEGS, 
-		  _("Organize &Categories"), _("Organize Categories"));
+    wxMenuItem* menuItemCateg = new wxMenuItem(menuTools,
+        MENU_ORGCATEGS, _("Organize &Categories..."), _("Organize Categories"));
 	menuItemCateg->SetBitmap(wxBitmap(categoryedit_xpm));
     menuTools->Append(menuItemCateg);
 
-    wxMenuItem* menuItemPayee = new wxMenuItem(menuTools, MENU_ORGPAYEE, 
-		  _("Organize &Payees"), _("Organize Payees"));
+    wxMenuItem* menuItemPayee = new wxMenuItem(menuTools,
+        MENU_ORGPAYEE, _("Organize &Payees..."), _("Organize Payees"));
 	menuItemPayee->SetBitmap(wxBitmap(user_edit_xpm));
     menuTools->Append(menuItemPayee); 
 
     wxMenuItem* menuItemCurrency = new wxMenuItem(menuTools, MENU_CURRENCY, 
-		 _("Or&ganize Currency"), _("Organize Currency"));
+        _("Or&ganize Currency..."), _("Organize Currency"));
 	menuItemCurrency->SetBitmap(wxBitmap(money_dollar_xpm));
     menuTools->Append(menuItemCurrency);
 
-	if (mmIniOptions::enableBudget_)
+    wxMenu *menuRelocation = new wxMenu;
+    wxMenuItem* menuItemCategoryRelocation = new wxMenuItem(menuRelocation, 
+        MENU_CATEGORY_RELOCATION,_("&Categories..."),_("Reassign all categories to another category"));
+   	menuItemCategoryRelocation->SetBitmap(wxBitmap(wrench_xpm));
+    wxMenuItem* menuItemPayeeRelocation = new wxMenuItem(menuRelocation,
+        MENU_PAYEE_RELOCATION,_("&Payees..."),_("Reassign all payees to another payee"));
+    menuItemPayeeRelocation->SetBitmap(wxBitmap(wrench_xpm));
+    menuRelocation->Append(menuItemCategoryRelocation);
+    menuRelocation->Append(menuItemPayeeRelocation);
+    menuTools->AppendSubMenu(menuRelocation,_("Relocation of..."),_("Relocate Categories && Payees"));
+
+    menuTools->AppendSeparator();
+    
+    if (mmIniOptions::enableBudget_)
     {
         wxMenuItem* menuItemBudgeting = new wxMenuItem(menuTools, MENU_BUDGETSETUPDIALOG, 
             _("&Budget Setup"), _("Budget Setup"));
@@ -2664,18 +2682,6 @@ void mmGUIFrame::createMenu()
 	menuItemOptions->SetBitmap(wxBitmap(wrench_xpm));
     menuTools->Append(menuItemOptions);
 
-    wxMenu *menuHelp = new wxMenu;
-
-    wxMenuItem* menuItemHelp = new wxMenuItem(menuTools, wxID_HELP, 
-		 _("&Help\tCtrl-F1"), _("Show the Help file"));
-	menuItemHelp->SetBitmap(wxBitmap(help_xpm));
-    menuHelp->Append(menuItemHelp);
-
-    wxMenuItem* menuItemAppStart = new wxMenuItem(menuTools, MENU_SHOW_APPSTART, 
-		 _("&Show App Start Dialog"), _("App Start Dialog"));
-	menuItemAppStart->SetBitmap(wxBitmap(appstart_xpm));
-    menuHelp->Append(menuItemAppStart);
-
     menuTools->AppendSeparator();
 
     wxMenuItem* menuItemConvertDB = new wxMenuItem(menuTools, MENU_CONVERT_ENC_DB, 
@@ -2689,6 +2695,19 @@ void mmGUIFrame::createMenu()
         _("Online &Update Currency Rate"), 
         _("Online update currency rate"));
     menuTools->Append(menuItemOnlineUpdateCurRate_);
+
+    // Help Menu
+    wxMenu *menuHelp = new wxMenu;
+
+    wxMenuItem* menuItemHelp = new wxMenuItem(menuTools, wxID_HELP, 
+		 _("&Help\tCtrl-F1"), _("Show the Help file"));
+	menuItemHelp->SetBitmap(wxBitmap(help_xpm));
+    menuHelp->Append(menuItemHelp);
+
+    wxMenuItem* menuItemAppStart = new wxMenuItem(menuTools, MENU_SHOW_APPSTART, 
+		 _("&Show App Start Dialog"), _("App Start Dialog"));
+	menuItemAppStart->SetBitmap(wxBitmap(appstart_xpm));
+    menuHelp->Append(menuItemAppStart);
 
     menuHelp->AppendSeparator();
 
@@ -3879,6 +3898,32 @@ void mmGUIFrame::OnViewTermAccounts(wxCommandEvent &event)
     {
         refreshRequested_ = true;
         createHomePage();
+    }
+}
+//----------------------------------------------------------------------------
+
+void mmGUIFrame::OnCategoryRelocation(wxCommandEvent& /*event*/)
+{
+    relocateCategoryDialog* dlg = new relocateCategoryDialog(m_core.get(), m_db.get(), this);
+    if (dlg->ShowModal() == wxID_OK)
+    {
+        wxString msgStr = _("Category Relocation Completed.\n\n" );
+        msgStr << dlg->updatedCategoriesCount() << _(" records have been updated in the database.\n");
+        msgStr << _("\nMMEX must be shutdown and restarted for all the changes to be seen.");
+        wxMessageBox(msgStr,_("Category Relocation Result"));
+    }
+}
+//----------------------------------------------------------------------------
+
+void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
+{
+    relocatePayeeDialog* dlg = new relocatePayeeDialog(m_core.get(), m_db.get(), this);
+    if (dlg->ShowModal() == wxID_OK)
+    {
+        wxString msgStr = _("Payee Relocation Completed.\n\n" );
+        msgStr << dlg->updatedPayeesCount() << _(" records have been updated in the database.\n");
+        msgStr << _("\nMMEX must be shutdown and restarted for all the changes to be seen.");
+        wxMessageBox(msgStr,_("Payee Relocation Result"));
     }
 }
 //----------------------------------------------------------------------------
