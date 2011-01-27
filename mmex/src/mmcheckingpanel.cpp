@@ -807,7 +807,7 @@ void mmCheckingPanel::Tips()
            _("Tip: To print a statement with transactions from any arbitary set of criteria, use the transaction filter to select the transactions you want and then do a print from the menu."),
            _("Tip: Set exchange rate for currencies in case if you have accounts with different currencies."),
 
-           _("Tip to get out of debt: Pay yourself 10\% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses.") ,
+           _("Tip to get out of debt: Pay yourself 10% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses.") ,
            _("Tip to get out of debt: Establish an emergency fund."), 
            _("Tip to get out of debt: Stop acquiring new debt."), 
            _("Tip to get out of debt: Create a realistic budget for your expenses.") ,
