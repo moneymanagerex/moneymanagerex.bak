@@ -576,21 +576,15 @@ void mmHomePagePanel::updateAccounts()
 
     if (countFollowUp > 0)
     {
-        wxString fup = _("Follow Up On ");
-        wxString fullStr = wxT("<i>") + fup;
-        wxString str = wxString::Format(wxT("<b>%d</b> "), countFollowUp);
-        str = fullStr + str;
-        str += _("Transactions");
-        str += wxT("</i>");
+        wxString str = wxT("<i>");
+        str << _("Follow Up On Transactions: ") << wxString::Format(wxT("<b>%d</b> "), countFollowUp) << wxT("</i><br>");
         hb.addHTML(str);
     }
 
-    wxString tup = _("Total Transactions");
-    wxString tullStr = tup + wxT("</i>");
-    wxString tstr = wxString::Format(wxT("<br><i><b>%d</b> "), 
-        core_->bTransactionList_.transactions_.size());
-    tstr = tstr + tullStr;
-    hb.addHTML(tstr);
+    wxString tup = wxT("<i>");
+    tup << _("Total Transactions: ") << wxString::Format(wxT("<b>%d</b> "), 
+        core_->bTransactionList_.transactions_.size()) << wxT("</i>");
+    hb.addHTML(tup);
 
 	hb.endTableCell();
 	hb.endTableRow();
