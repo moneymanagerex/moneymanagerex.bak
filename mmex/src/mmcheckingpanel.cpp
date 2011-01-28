@@ -764,61 +764,63 @@ void mmCheckingPanel::CreateControls()
 
 void mmCheckingPanel::enableEditDeleteButtons(bool en)
 {
-	wxButton* bE = (wxButton*)FindWindow(ID_BUTTON_EDIT_TRANS);
-	wxButton* bD = (wxButton*)FindWindow(ID_BUTTON_DELETE_TRANS);
-	wxButton* bM = (wxButton*)FindWindow(ID_BUTTON_MOVE_TRANS);
-        {
-	bE->Enable(en);
-        //bE->SetFocus();
+    wxButton* bE = (wxButton*)FindWindow(ID_BUTTON_EDIT_TRANS);
+    wxButton* bD = (wxButton*)FindWindow(ID_BUTTON_DELETE_TRANS);
+    wxButton* bM = (wxButton*)FindWindow(ID_BUTTON_MOVE_TRANS);
+
+    bE->Enable(en);
+    //bE->SetFocus();
 	bD->Enable(en);
 	bM->Enable(en);
-        }
+   
 }
 //----------------------------------------------------------------------------
 
 void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
-	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);	
+    wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);	
 	if (selIndex!=-1) { 
         enableEditDeleteButtons(true);
         st->SetLabel(getItem(selIndex, COL_NOTES));
-        }
-        else
-        {
+    } else {
         st->SetLabel(wxT (""));
         enableEditDeleteButtons(false);
         Tips () ;
-        }
+    }
 }
 //----------------------------------------------------------------------------
 
 void mmCheckingPanel::Tips()
 {
-	   const wxString tips[] = {
-           _("Recommendation: Always backup your .mmb database file regularly."),
-           _("Recommendation: If upgrading to a new version of MMEX, make sure you backup your .mmb database file before doing so."),
-           _("Recommendation: Use copy (Ctrl+С) and paste (Ctrl+V) for frequently used transactions."),
-           _("Tip: Remember to make backups of your .mmb."),
-           _("Tip: The .mmb file is not encrypted. That means anyone else having the proper know how can actually open the file and read the contents. So make sure that if you are storing any sensitive financial information it is properly guarded."),
-           _("Tip: To mark a transaction as reconciled, just select the transaction and hit the 'r' or 'R' key. To mark a transaction as unreconciled, just select the transaction and hit the 'u' or 'U' key."), 
-           _("Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f' or 'F' key."),
-           _("Tip: MMEX supports printing of all reports that can be viewed. The print options are available under the menu, File->Print."),
-           _("Tip: You can modify some runtime behavior of MMEX by changing the options in the Options Dialog. "),
-           _("Tip: To print a statement with transactions from any arbitary set of criteria, use the transaction filter to select the transactions you want and then do a print from the menu."),
-           _("Tip: Set exchange rate for currencies in case if you have accounts with different currencies."),
+    const wxString tips[] = {
+        _("Recommendation: Always backup your .mmb database file regularly."),
+        _("Recommendation: If upgrading to a new version of MMEX, make sure you backup your .mmb database file before doing so."),
+        _("Recommendation: Use copy (Ctrl+С) and paste (Ctrl+V) for frequently used transactions."),
+        _("Tip: Remember to make backups of your .mmb."),
+        _("Tip: The .mmb file is not encrypted. That means anyone else having the proper know how can actually open the file and read the contents. So make sure that if you are storing any sensitive financial information it is properly guarded."),
+        _("Tip: To mark a transaction as reconciled, just select the transaction and hit the 'r' or 'R' key. To mark a transaction as unreconciled, just select the transaction and hit the 'u' or 'U' key."), 
+        _("Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f' or 'F' key."),
+        _("Tip: MMEX supports printing of all reports that can be viewed. The print options are available under the menu, File->Print."),
+        _("Tip: You can modify some runtime behavior of MMEX by changing the options in the Options Dialog. "),
+        _("Tip: To print a statement with transactions from any arbitary set of criteria, use the transaction filter to select the transactions you want and then do a print from the menu."),
+        _("Tip: Set exchange rate for currencies in case if you have accounts with different currencies."),
 
-           _("Tip to get out of debt: Pay yourself 10% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses.") ,
-           _("Tip to get out of debt: Establish an emergency fund."), 
-           _("Tip to get out of debt: Stop acquiring new debt."), 
-           _("Tip to get out of debt: Create a realistic budget for your expenses.") ,
-           _("Tip to get out of debt: Spend less than you earn."),
-           _("Tip to get out of debt: Pay more than the minimum.")
+        _("Organize Categories Dialog Tip: Pressing the h key will cycle through all categories starting with the letter h"),
+        _("Organize Categories Dialog Tip: Pressing 2 key combination will cycle through all categories starting with that key combination. Example: Pressing ho will select Homeneeds, Home, House Tax, etc..."),
+        _("Organize Payees Dialog Tip: Using the % key as a wildcard when using the filter. Example: %c shows Chemist and Doctor, %c%m shows Chemist only."),
+           
+        _("Tip to get out of debt: Pay yourself 10% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses.") ,
+        _("Tip to get out of debt: Establish an emergency fund."), 
+        _("Tip to get out of debt: Stop acquiring new debt."), 
+        _("Tip to get out of debt: Create a realistic budget for your expenses.") ,
+        _("Tip to get out of debt: Spend less than you earn."),
+        _("Tip to get out of debt: Pay more than the minimum.")
 
-                                     };
-        wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);	
-        int pos = rand() % 17;
-        // Randomly prints one of the above tips
-        st->SetLabel(tips[pos]);
+    };
+    wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);	
+    int pos = rand() % 20;
+    // Randomly prints one of the above tips
+    st->SetLabel(tips[pos]);
 }
 //----------------------------------------------------------------------------
 void mmCheckingPanel::setAccountSummary()
