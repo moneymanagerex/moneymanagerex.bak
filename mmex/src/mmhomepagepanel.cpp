@@ -152,49 +152,46 @@ void mmHomePagePanel::updateAccounts()
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
     for (size_t iAdx = 0; iAdx < core_->accountList_.accounts_.size(); ++iAdx)
     {
-        mmCheckingAccount* pCA 
-           = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
+        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pCA && pCA->status_== mmAccount::MMEX_Open)
         {
-          
-           boost::shared_ptr<mmCurrency> pCurrencyPtr 
-			   = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
-           wxASSERT(pCurrencyPtr);
-           mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
+            wxASSERT(pCurrencyPtr);
+            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
-           double bal = pCA->initialBalance_ 
-              + core_->bTransactionList_.getBalance(pCA->accountID_);
-           double rate = pCurrencyPtr->baseConv_;
+            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_);
+            double rate = pCurrencyPtr->baseConv_;
 
-           tBalance += bal * rate; // actual amount in that account in the original rate
+            tBalance += bal * rate; // actual amount in that account in the original rate
 
-           // show the actual amount in that account
-           print_bal4cur |= (bal != 0.0 && tBalances[pCurrencyPtr] != 0.0);
-           tBalances[pCurrencyPtr] += bal;
-           wxString balance;
-           mmex::formatDoubleToCurrency(bal, balance);
+            // Add account to currency differences
+            tBalances[pCurrencyPtr] += bal;
+            print_bal4cur |= (bal != 0.0 && tBalances[pCurrencyPtr] != 0.0);
 
-           double income = 0;
-           double expenses = 0;
+            // show the actual amount in that account
+            wxString balance;
+            mmex::formatDoubleToCurrency(bal, balance);
 
-           core_->bTransactionList_.getExpensesIncome(pCA->accountID_, expenses, income, 
-              false,dtBegin, dtEnd);
+            double income = 0;
+            double expenses = 0;
 
-           if ( frame_->expandedBankAccounts() ) 
-           {
-               if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
-                   (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
-                   (vAccts == wxT("ALL")))
-               {
-                   hb.startTableRow();
-                   hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->accountID_), pCA->accountName_, false, true);
-                   hb.addTableCell(balance, true);
-                   hb.endTableRow();
-               }
-           }
+            core_->bTransactionList_.getExpensesIncome(pCA->accountID_, expenses, income, false,dtBegin, dtEnd);
 
-           tincome += income;
-           texpenses += expenses;
+            if ( frame_->expandedBankAccounts() ) 
+            {
+                if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
+                    (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
+                    (vAccts == wxT("ALL")))
+                {
+                    hb.startTableRow();
+                    hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->accountID_), pCA->accountName_, false, true);
+                    hb.addTableCell(balance, true);
+                    hb.endTableRow();
+                }
+            }
+
+            tincome += income;
+            texpenses += expenses;
         }
 	}
 
@@ -208,53 +205,50 @@ void mmHomePagePanel::updateAccounts()
     hb.addRowSeparator(2);
 
     double tTermBalance = 0.0;
-    balances_t tTermBalances;
 
     /* Term Accounts */
     for (size_t iAdx = 0; iAdx < core_->accountList_.accounts_.size(); ++iAdx)
     {
-        mmTermAccount* pTA 
-           = dynamic_cast<mmTermAccount*>(core_->accountList_.accounts_[iAdx].get());
+        mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pTA && pTA->status_== mmAccount::MMEX_Open)
         {
-          
-           boost::shared_ptr<mmCurrency> pCurrencyPtr 
-			   = core_->accountList_.getCurrencyWeakPtr(pTA->accountID_).lock();
-           wxASSERT(pCurrencyPtr);
-           mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pTA->accountID_).lock();
+            wxASSERT(pCurrencyPtr);
+            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
-           double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_);
-           double rate = pCurrencyPtr->baseConv_;
+            double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_);
+            double rate = pCurrencyPtr->baseConv_;
 
-           tTermBalance += bal * rate; // actual amount in that account in the original rate
+            tTermBalance += bal * rate; // actual amount in that account in the original rate
 
-           // show the actual amount in that account
-           print_bal4cur |= (bal != 0.0 && tTermBalances[pCurrencyPtr] != 0.0);
-           tTermBalances[pCurrencyPtr] += bal;
-           wxString balance;
-           mmex::formatDoubleToCurrency(bal, balance);
+            // Add account to currency differences
+            tBalances[pCurrencyPtr] += bal;
+            print_bal4cur |= (bal != 0.0 && tBalances[pCurrencyPtr] != 0.0);
 
-           double income = 0;
-           double expenses = 0;
+            // show the actual amount in that account
+            wxString balance;
+            mmex::formatDoubleToCurrency(bal, balance);
 
-           core_->bTransactionList_.getExpensesIncome(pTA->accountID_, expenses, income, 
-              false,dtBegin, dtEnd);
+            double income = 0;
+            double expenses = 0;
 
-           if ( frame_->expandedTermAccounts() )
-           {
-              if ((vAccts == wxT("Open") && pTA->status_ == mmAccount::MMEX_Open) ||
-                  (vAccts == wxT("Favorites") && pTA->favoriteAcct_) ||
-                  (vAccts == wxT("ALL")))
-               {
-                  hb.startTableRow();
-                  hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pTA->accountID_), pTA->accountName_, false, true);
-                  hb.addTableCell(balance, true);
-                  hb.endTableRow();
-               }
-           }
+            core_->bTransactionList_.getExpensesIncome(pTA->accountID_, expenses, income, false,dtBegin, dtEnd);
 
-           tincome += income;
-           texpenses += expenses;
+            if ( frame_->expandedTermAccounts() )
+            {
+                if ((vAccts == wxT("Open") && pTA->status_ == mmAccount::MMEX_Open) ||
+                    (vAccts == wxT("Favorites") && pTA->favoriteAcct_) ||
+                    (vAccts == wxT("ALL")))
+                {
+                    hb.startTableRow();
+                    hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pTA->accountID_), pTA->accountName_, false, true);
+                    hb.addTableCell(balance, true);
+                    hb.endTableRow();
+                }
+            }
+
+            tincome += income;
+            texpenses += expenses;
         }
 	}
 
@@ -295,8 +289,8 @@ void mmHomePagePanel::updateAccounts()
         
         if (BaseCurrency)
         {
-                print_bal4cur |= (stockBalance != 0.0 && tBalances[BaseCurrency] != 0.0);
-                tBalances[BaseCurrency] += stockBalance;
+            print_bal4cur |= (stockBalance != 0.0 && tBalances[BaseCurrency] != 0.0);
+            tBalances[BaseCurrency] += stockBalance;
         }
     }
 
@@ -318,29 +312,29 @@ void mmHomePagePanel::updateAccounts()
 
         if (BaseCurrency)
         {
-                print_bal4cur |= (assetBalance != 0.0 && tBalances[BaseCurrency] != 0.0);
-                tBalances[BaseCurrency] += assetBalance;
+            print_bal4cur |= (assetBalance != 0.0 && tBalances[BaseCurrency] != 0.0);
+            tBalances[BaseCurrency] += assetBalance;
         }
     }
     
     if (print_bal4cur && tBalances.size() > 1) // print total balance for every currency
     {
+        hb.startTableRow();
+        hb.addTableHeaderCell(_("Currency"));
+        hb.addTableHeaderCell(_("Summary"));
+        hb.endTableRow();
+
+        for (balances_t::const_iterator i = tBalances.begin(); i != tBalances.end(); ++i)
+        {
+            wxString tBalanceStr;
+            mmex::CurrencyFormatter::instance().loadSettings(*i->first);
+            mmex::formatDoubleToCurrency(i->second, tBalanceStr);
+
             hb.startTableRow();
-            hb.addTableHeaderCell(_("Currency"));
-            hb.addTableHeaderCell(_("Summary"));
+            hb.addTableCell(i->first->currencyName_);
+            hb.addTableCell(tBalanceStr, true);
             hb.endTableRow();
-
-            for (balances_t::const_iterator i = tBalances.begin(); i != tBalances.end(); ++i)
-            {
-                    wxString tBalanceStr;
-                    mmex::CurrencyFormatter::instance().loadSettings(*i->first);
-                    mmex::formatDoubleToCurrency(i->second, tBalanceStr);
-
-                    hb.startTableRow();
-                    hb.addTableCell(i->first->currencyName_);
-                    hb.addTableCell(tBalanceStr, true);
-                    hb.endTableRow();
-            }
+        }
     } 
 
     tBalances.clear();
@@ -414,7 +408,7 @@ void mmHomePagePanel::updateAccounts()
         }
         else if (repeats == 1)
         {
-           th.repeatsStr_ = _("Weekly");
+            th.repeatsStr_ = _("Weekly");
         }
         else if (repeats == 2)
         {
@@ -434,15 +428,15 @@ void mmHomePagePanel::updateAccounts()
         }
         else if (repeats == 6)
         {
-             th.repeatsStr_ = _("Half-Yearly");
+            th.repeatsStr_ = _("Half-Yearly");
         }
         else if (repeats == 7)
         {
-           th.repeatsStr_ = _("Yearly");
+            th.repeatsStr_ = _("Yearly");
         }
         else if (repeats == 8)
         {
-           th.repeatsStr_ = _("Four Months");
+            th.repeatsStr_ = _("Four Months");
         }
         else if (repeats == 9)
         {
