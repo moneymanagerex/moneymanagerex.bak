@@ -570,7 +570,7 @@ void mmHomePagePanel::updateAccounts()
 
     if (countFollowUp > 0)
     {
-        wxString str = wxT("<i>");
+        wxString str = wxT("<br><i>");
         str << _("Follow Up On Transactions: ") << wxString::Format(wxT("<b>%d</b> "), countFollowUp) << wxT("</i><br>");
         hb.addHTML(str);
     }
@@ -636,5 +636,65 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
     frame_->unselectNavTree();
 }
 
+//----------------------------------------------------------------------------
 
+wxString mmGUIFrame::createCategoryList()
+{
+    m_core->currencyList_.loadBaseCurrencySettings();
+
+    static const char sql[] = 
+        "select "
+        "CATEG|| (Case SUBCATEG when '' then '' else ':' end )||  SUBCATEG as SUBCATEGORY"
+        ", AMOUNT "
+        "from ( "
+        "select coalesce(CAT.CATEGNAME, SCAT.CATEGNAME) as CATEG, "
+        "coalesce(SUBCAT.SUBCATEGNAME, SSCAT.SUBCATEGNAME,'') as SUBCATEG, "
+        "SUM(ROUND((case CANS.TRANSCODE when 'Withdrawal' then 1 else -1 end) "
+        "* (case CANS.CATEGID when -1 then ST.SPLITTRANSAMOUNT else CANS.TRANSAMOUNT end),2) "
+        "* CF.BASECONVRATE "
+        ") as AMOUNT "
+        "from  CHECKINGACCOUNT_V1 CANS "
+        "left join CATEGORY_V1 CAT on CAT.CATEGID = CANS.CATEGID "
+        "left join SUBCATEGORY_V1 SUBCAT on SUBCAT.SUBCATEGID = CANS.SUBCATEGID and SUBCAT.CATEGID = CANS.CATEGID "
+        "left join ACCOUNTLIST_V1 ACC on ACC.ACCOUNTID = CANS.ACCOUNTID "
+        "left join SPLITTRANSACTIONS_V1 ST on CANS.TRANSID = ST.TRANSID "
+        "left join CATEGORY_V1 SCAT on SCAT.CATEGID = ST.CATEGID and CANS.TRANSID=ST.TRANSID "
+        "left join SUBCATEGORY_V1 SSCAT on SSCAT.SUBCATEGID = ST.SUBCATEGID and SSCAT.CATEGID = ST.CATEGID and CANS.TRANSID=ST.TRANSID "
+        "left join CURRENCYFORMATS_V1 CF on CF.CURRENCYID = ACC.CURRENCYID "
+        "where  CANS.TRANSCODE<>'Transfer' and CANS.TRANSDATE > date('now', '-1 month') "
+        "group by CATEG, SUBCATEG "
+        "order by AMOUNT  desc "
+        "limit 10 "
+        ") where AMOUNT >0" ;
+
+    wxSQLite3ResultSet q1 = m_db->ExecuteQuery(sql);
+
+        if (!m_db)
+        return wxGetEmptyString();
+ 
+    mmHTMLBuilder hb;
+    std::vector<CategInfo> categList;
+	hb.startTable(wxT("95%"));
+	hb.addTableHeaderRow(_("Top Categories Last 30 Days"), 2);
+
+        while(q1.NextRow())
+        {
+            int categBalance = q1.GetInt(wxT("AMOUNT"));
+            wxString subcategString = q1.GetString(wxT("SUBCATEGORY"));
+
+            wxString categBalanceStr;
+            mmex::formatDoubleToCurrency(categBalance, categBalanceStr);
+
+		hb.startTableRow();
+		hb.addTableCell(subcategString, false, true);
+		hb.addTableCell(categBalanceStr, true);
+		hb.endTableRow();
+       
+       }
+    q1.Finalize();
+ 
+    hb.endTable();
+
+    return hb.getHTMLText();
+}
 

@@ -199,12 +199,6 @@ private:
 };
 //----------------------------------------------------------------------------
 
-inline bool sortCategs(const CategInfo &elem1, const CategInfo &elem2)
-{
-    return elem1.amount < elem2.amount;
-}
-//----------------------------------------------------------------------------
-
 /*
     See also: wxStackWalker, wxDebugReportUpload.
 */
@@ -1248,106 +1242,6 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     } else 
         menuBar_->FindItem(MENU_VIEW_TERMACCOUNTS)->Enable(false);
 
-}
-//----------------------------------------------------------------------------
-
-wxString mmGUIFrame::createCategoryList()
-{
-    if (!m_db)
-        return wxGetEmptyString();
-
-    mmHTMLBuilder hb;
-
-    std::vector<CategInfo> categList;
-	hb.startTable(wxT("95%"));
-	hb.addTableHeaderRow(_("Top Categories Last 30 Days"), 2);
-
-    m_core->currencyList_.loadBaseCurrencySettings();
-
-    static const char sql[] = 
-    "select SUBCATEGID, SUBCATEGNAME "
-    "from SUBCATEGORY_V1 "
-    "where CATEGID = ?";
-
-    wxSQLite3Statement st = m_db->PrepareStatement(sql);
-
-    wxSQLite3ResultSet q1 = m_db->ExecuteQuery("select CATEGID, CATEGNAME "
-                                              "from CATEGORY_V1 "
-                                              "order by CATEGNAME"
-                                             );
-
-    while (q1.NextRow())
-    {
-        wxDateTime today = wxDateTime::Now();
-        wxDateTime prevMonthEnd = today;
-        wxDateTime dtEnd = today;
-        wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-
-        int categID          = q1.GetInt(wxT("CATEGID"));
-        wxString categString = q1.GetString(wxT("CATEGNAME"));
-        wxString balance;
-        double amt = m_core->bTransactionList_.getAmountForCategory(categID, -1, false, 
-            dtBegin, dtEnd);
-        mmex::formatDoubleToCurrency(amt, balance);
-
-        if (amt != 0.0)
-        {
-            CategInfo info;
-            info.categ = categString;
-            info.amountStr = balance;
-            info.amount = amt;
-            categList.push_back(info);
-        }
-        
-        // --
-
-        st.Bind(1, categID);
-        wxSQLite3ResultSet q2 = st.ExecuteQuery(); 
-
-        while(q2.NextRow())
-        {
-            int subcategID = q2.GetInt(wxT("SUBCATEGID"));
-            wxString subcategString = q2.GetString(wxT("SUBCATEGNAME"));
-
-            amt = m_core->bTransactionList_.getAmountForCategory(categID, subcategID, 
-                false,  dtBegin, dtEnd);
-            mmex::formatDoubleToCurrency(amt, balance);
-
-            if (amt != 0.0)
-            {
-                CategInfo infoSC;
-                infoSC.categ = categString + wxT(" : ") + subcategString;
-                infoSC.amountStr = balance;
-                infoSC.amount = amt;
-                categList.push_back(infoSC);
-            }
-        }
-        
-        q2.Finalize();
-        st.Reset();
-
-    }
-    q1.Finalize();
-
-    std::sort(categList.begin(), categList.end(), sortCategs);
-
-    for (size_t i = 0; i < std::min(categList.size(), size_t(10)); ++i) {
-
-        if (categList[i].amount < 0) {
-		hb.startTableRow();
-		hb.addTableCell(categList[i].categ, false, true);
-		hb.addTableCell(categList[i].amountStr, true);
-		hb.endTableRow();
-        }
-    }
-
-    hb.endTable();
-
-    mmGraphTopCategories gtp;
-    gtp.init(categList);
-    gtp.Generate(_("Top Categories Last 30 Days"));
-
-    return hb.getHTMLText();
 }
 //----------------------------------------------------------------------------
 
