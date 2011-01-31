@@ -653,7 +653,7 @@ void mmGUIFrame::cleanup()
 void mmGUIFrame::unselectNavTree()
 { 
     wxASSERT(navTreeCtrl_);
-    navTreeCtrl_->Unselect(); 
+    navTreeCtrl_->UnselectAll(); 
 }
 //----------------------------------------------------------------------------
 
