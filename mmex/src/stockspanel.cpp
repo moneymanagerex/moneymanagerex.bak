@@ -377,13 +377,14 @@ void mmStocksPanel::initVirtualListControl()
         th.purchasePrice_      = q1.GetDouble(wxT("PURCHASEPRICE"));
 
         th.value_             = q1.GetDouble(wxT("VALUE"));
-        th.valueStr_          = wxString::Format(wxT("%.2f"), th.value_);
+        //th.valueStr_          = wxString::Format(wxT("%.2f"), th.value_);
 
         double commission     = q1.GetDouble(wxT("COMMISSION"));
 
         th.gainLoss_        = th.value_ - ((th.numShares_ * th.purchasePrice_) + commission);
 
         mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
+        mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
         mmex::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
 
         trans_.push_back(th);
