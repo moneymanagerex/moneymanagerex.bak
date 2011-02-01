@@ -507,7 +507,7 @@ void mmHomePagePanel::updateAccounts()
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
     
-        static const char sql30[] = 
+        static const char sql[] = 
         "select "
         "CATEG|| (Case SUBCATEG when '' then '' else ':' end )||  SUBCATEG as SUBCATEGORY "
         ", AMOUNT "
@@ -532,7 +532,7 @@ void mmHomePagePanel::updateAccounts()
         "limit 10 "
         ") where AMOUNT < 0" ;
 
-    wxSQLite3ResultSet q30 = db_->ExecuteQuery(sql30);
+    wxSQLite3ResultSet q30 = db_->ExecuteQuery(sql);
 
     if (db_)
     {
@@ -548,15 +548,14 @@ void mmHomePagePanel::updateAccounts()
 	        isHeaderAdded = true;
             }
         
-            int categBalance = q30.GetInt(wxT("AMOUNT"));
+            tBalance = q30.GetDouble(wxT("AMOUNT"));
             wxString subcategString = q30.GetString(wxT("SUBCATEGORY"));
 
-            wxString categBalanceStr;
-            mmex::formatDoubleToCurrency(categBalance, categBalanceStr);
+            mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
 		hb.startTableRow();
 		hb.addTableCell(subcategString, false, true);
-		hb.addTableCell(categBalanceStr, true);
+		hb.addTableCell(tBalanceStr, true);
 		hb.endTableRow();
        
        }
