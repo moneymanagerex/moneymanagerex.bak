@@ -505,11 +505,61 @@ void mmHomePagePanel::updateAccounts()
 
     mmex::CurrencyFormatter::instance().loadDefaultSettings();
 
-    // update category List
-
-    topCategories_ = frame_->createCategoryList();
-    hb.addHTML(topCategories_);
+    mmDBWrapper::loadBaseCurrencySettings(db_);
     
+        static const char sql30[] = 
+        "select "
+        "CATEG|| (Case SUBCATEG when '' then '' else ':' end )||  SUBCATEG as SUBCATEGORY "
+        ", AMOUNT "
+        "from ( "
+        "select coalesce(CAT.CATEGNAME, SCAT.CATEGNAME) as CATEG, "
+        "coalesce(SUBCAT.SUBCATEGNAME, SSCAT.SUBCATEGNAME,'') as SUBCATEG, "
+        "SUM(ROUND((case CANS.TRANSCODE when 'Withdrawal' then -1 else 1 end) "
+        "* (case CANS.CATEGID when -1 then ST.SPLITTRANSAMOUNT else CANS.TRANSAMOUNT end),2) "
+        "* CF.BASECONVRATE "
+        ") as AMOUNT "
+        "from  CHECKINGACCOUNT_V1 CANS "
+        "left join CATEGORY_V1 CAT on CAT.CATEGID = CANS.CATEGID "
+        "left join SUBCATEGORY_V1 SUBCAT on SUBCAT.SUBCATEGID = CANS.SUBCATEGID and SUBCAT.CATEGID = CANS.CATEGID "
+        "left join ACCOUNTLIST_V1 ACC on ACC.ACCOUNTID = CANS.ACCOUNTID "
+        "left join SPLITTRANSACTIONS_V1 ST on CANS.TRANSID = ST.TRANSID "
+        "left join CATEGORY_V1 SCAT on SCAT.CATEGID = ST.CATEGID and CANS.TRANSID=ST.TRANSID "
+        "left join SUBCATEGORY_V1 SSCAT on SSCAT.SUBCATEGID = ST.SUBCATEGID and SSCAT.CATEGID = ST.CATEGID and CANS.TRANSID=ST.TRANSID "
+        "left join CURRENCYFORMATS_V1 CF on CF.CURRENCYID = ACC.CURRENCYID "
+        "where  CANS.TRANSCODE<>'Transfer' and CANS.TRANSDATE > date('now', '-1 month') and CANS.TRANSDATE <= date('now') "
+        "group by CATEG, SUBCATEG "
+        "order by AMOUNT "
+        "limit 10 "
+        ") where AMOUNT < 0" ;
+
+    wxSQLite3ResultSet q30 = db_->ExecuteQuery(sql30);
+
+        //if (db_)
+ 
+    std::vector<CategInfo> categList;
+	hb.startTable(wxT("95%"));
+	hb.addTableHeaderRow(_("Top Categories Last 30 Days"), 2);
+
+        while(q30.NextRow())
+        {
+            int categBalance = q30.GetInt(wxT("AMOUNT"));
+            wxString subcategString = q30.GetString(wxT("SUBCATEGORY"));
+
+            wxString categBalanceStr;
+            mmex::formatDoubleToCurrency(categBalance, categBalanceStr);
+
+		hb.startTableRow();
+		hb.addTableCell(subcategString, false, true);
+		hb.addTableCell(categBalanceStr, true);
+		hb.endTableRow();
+       
+       }
+    q30.Finalize();
+ 
+    hb.endTable();
+
+    hb.getHTMLText();
+
 /*
     // Commented because there is not enough vertical space to show main page
     // without vertical scrollbar on 19-20" monitors.
@@ -591,64 +641,3 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
 }
 
 //----------------------------------------------------------------------------
-
-wxString mmGUIFrame::createCategoryList()
-{
-    m_core->currencyList_.loadBaseCurrencySettings();
-
-    static const char sql[] = 
-        "select "
-        "CATEG|| (Case SUBCATEG when '' then '' else ':' end )||  SUBCATEG as SUBCATEGORY "
-        ", AMOUNT "
-        "from ( "
-        "select coalesce(CAT.CATEGNAME, SCAT.CATEGNAME) as CATEG, "
-        "coalesce(SUBCAT.SUBCATEGNAME, SSCAT.SUBCATEGNAME,'') as SUBCATEG, "
-        "SUM(ROUND((case CANS.TRANSCODE when 'Withdrawal' then 1 else -1 end) "
-        "* (case CANS.CATEGID when -1 then ST.SPLITTRANSAMOUNT else CANS.TRANSAMOUNT end),2) "
-        "* CF.BASECONVRATE "
-        ") as AMOUNT "
-        "from  CHECKINGACCOUNT_V1 CANS "
-        "left join CATEGORY_V1 CAT on CAT.CATEGID = CANS.CATEGID "
-        "left join SUBCATEGORY_V1 SUBCAT on SUBCAT.SUBCATEGID = CANS.SUBCATEGID and SUBCAT.CATEGID = CANS.CATEGID "
-        "left join ACCOUNTLIST_V1 ACC on ACC.ACCOUNTID = CANS.ACCOUNTID "
-        "left join SPLITTRANSACTIONS_V1 ST on CANS.TRANSID = ST.TRANSID "
-        "left join CATEGORY_V1 SCAT on SCAT.CATEGID = ST.CATEGID and CANS.TRANSID=ST.TRANSID "
-        "left join SUBCATEGORY_V1 SSCAT on SSCAT.SUBCATEGID = ST.SUBCATEGID and SSCAT.CATEGID = ST.CATEGID and CANS.TRANSID=ST.TRANSID "
-        "left join CURRENCYFORMATS_V1 CF on CF.CURRENCYID = ACC.CURRENCYID "
-        "where  CANS.TRANSCODE<>'Transfer' and CANS.TRANSDATE > date('now', '-1 month') "
-        "group by CATEG, SUBCATEG "
-        "order by AMOUNT  desc "
-        "limit 10 "
-        ") where AMOUNT >0" ;
-
-    wxSQLite3ResultSet q1 = m_db->ExecuteQuery(sql);
-
-        if (!m_db)
-        return wxGetEmptyString();
- 
-    mmHTMLBuilder hb;
-    std::vector<CategInfo> categList;
-	hb.startTable(wxT("95%"));
-	hb.addTableHeaderRow(_("Top Categories Last 30 Days"), 2);
-
-        while(q1.NextRow())
-        {
-            int categBalance = q1.GetInt(wxT("AMOUNT"));
-            wxString subcategString = q1.GetString(wxT("SUBCATEGORY"));
-
-            wxString categBalanceStr;
-            mmex::formatDoubleToCurrency(categBalance, categBalanceStr);
-
-		hb.startTableRow();
-		hb.addTableCell(subcategString, false, true);
-		hb.addTableCell(categBalanceStr, true);
-		hb.endTableRow();
-       
-       }
-    q1.Finalize();
- 
-    hb.endTable();
-
-    return hb.getHTMLText();
-}
-

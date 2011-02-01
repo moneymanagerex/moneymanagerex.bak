@@ -2317,10 +2317,6 @@ void mmGUIFrame::createHomePage()
 {
     wxSizer *sizer = cleanupHomePanel();
     
-    if (m_topCategories.empty()) {
-       m_topCategories = createCategoryList();
-    }
-
     if (panelCurrent_)
     {
         //panelCurrent_->DestroyChildren();

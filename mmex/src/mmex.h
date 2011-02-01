@@ -84,7 +84,6 @@ public:
     ~mmGUIFrame();
 
     void OnWizardCancel(wxWizardEvent& event);
-    wxString createCategoryList();
 
     void setGotoAccountID(int account_id) { gotoAccountID_ = account_id; }
     void unselectNavTree();
