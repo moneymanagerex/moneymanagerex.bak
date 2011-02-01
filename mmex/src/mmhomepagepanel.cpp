@@ -400,48 +400,6 @@ void mmHomePagePanel::updateAccounts()
         th.bdID_           = q1.GetInt(wxT("BDID"));
         th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
         th.nextOccurStr_   = mmGetDateForDisplay(db_, th.nextOccurDate_);
-        int repeats        = q1.GetInt(wxT("REPEATS"));
-
-        if (repeats == 0)
-        {
-            th.repeatsStr_ = _("None");
-        }
-        else if (repeats == 1)
-        {
-            th.repeatsStr_ = _("Weekly");
-        }
-        else if (repeats == 2)
-        {
-            th.repeatsStr_ = _("Bi-Weekly");
-        }
-        else if (repeats == 3)
-        {
-            th.repeatsStr_ = _("Monthly");
-        }
-        else if (repeats == 4)
-        {
-            th.repeatsStr_ = _("Bi-Monthly");
-        }
-        else if (repeats == 5)
-        {
-            th.repeatsStr_ = _("Quarterly");
-        }
-        else if (repeats == 6)
-        {
-            th.repeatsStr_ = _("Half-Yearly");
-        }
-        else if (repeats == 7)
-        {
-            th.repeatsStr_ = _("Yearly");
-        }
-        else if (repeats == 8)
-        {
-            th.repeatsStr_ = _("Four Months");
-        }
-        else if (repeats == 9)
-        {
-            th.repeatsStr_ = _("Four Weeks");
-        }
 
         wxDateTime today = wxDateTime::Now();
         wxTimeSpan ts = th.nextOccurDate_.Subtract(today);
@@ -484,10 +442,6 @@ void mmHomePagePanel::updateAccounts()
             th.payeeStr_ = toAccount;
         }
 	
-		//th.payeeStr_ += wxT("[");
-		//th.payeeStr_ += displayBDAmtString;
-		//th.payeeStr_ += wxT("]");
-
         trans_.push_back(th);
     }
     q1.Finalize();
@@ -644,7 +598,7 @@ wxString mmGUIFrame::createCategoryList()
 
     static const char sql[] = 
         "select "
-        "CATEG|| (Case SUBCATEG when '' then '' else ':' end )||  SUBCATEG as SUBCATEGORY"
+        "CATEG|| (Case SUBCATEG when '' then '' else ':' end )||  SUBCATEG as SUBCATEGORY "
         ", AMOUNT "
         "from ( "
         "select coalesce(CAT.CATEGNAME, SCAT.CATEGNAME) as CATEG, "
