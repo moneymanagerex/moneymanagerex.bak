@@ -534,14 +534,20 @@ void mmHomePagePanel::updateAccounts()
 
     wxSQLite3ResultSet q30 = db_->ExecuteQuery(sql30);
 
-        //if (db_)
- 
-    std::vector<CategInfo> categList;
-	hb.startTable(wxT("95%"));
-	hb.addTableHeaderRow(_("Top Categories Last 30 Days"), 2);
-
+    if (db_)
+    {
+            std::vector<CategInfo> categList;
+	        hb.startTable(wxT("95%"));
+            isHeaderAdded = false;
+        
         while(q30.NextRow())
         {
+        if (!isHeaderAdded)
+            {
+	        hb.addTableHeaderRow(_("Top Categories Last 30 Days"), 2);
+	        isHeaderAdded = true;
+            }
+        
             int categBalance = q30.GetInt(wxT("AMOUNT"));
             wxString subcategString = q30.GetString(wxT("SUBCATEGORY"));
 
@@ -554,12 +560,11 @@ void mmHomePagePanel::updateAccounts()
 		hb.endTableRow();
        
        }
-    q30.Finalize();
- 
-    hb.endTable();
-
-    hb.getHTMLText();
-
+        q30.Finalize();
+        hb.endTable();
+        hb.getHTMLText();
+    }
+        
 /*
     // Commented because there is not enough vertical space to show main page
     // without vertical scrollbar on 19-20" monitors.
@@ -572,17 +577,19 @@ void mmHomePagePanel::updateAccounts()
     hb.addLineBreak();
     int countFollowUp = core_->bTransactionList_.countFollowupTransactions();
 
+    wxString str = wxT("<br>");
+    hb.addHTML(str);
     if (countFollowUp > 0)
     {
-        wxString str = wxT("<br><i>");
+        str = wxT("<i>");
         str << _("Follow Up On Transactions: ") << wxString::Format(wxT("<b>%d</b> "), countFollowUp) << wxT("</i><br>");
         hb.addHTML(str);
     }
 
-    wxString tup = wxT("<i>");
-    tup << _("Total Transactions: ") << wxString::Format(wxT("<b>%d</b> "), 
+    str = wxT("<i>");
+    str << _("Total Transactions: ") << wxString::Format(wxT("<b>%d</b> "), 
         core_->bTransactionList_.transactions_.size()) << wxT("</i>");
-    hb.addHTML(tup);
+    hb.addHTML(str);
 
 	hb.endTableCell();
 	hb.endTableRow();
