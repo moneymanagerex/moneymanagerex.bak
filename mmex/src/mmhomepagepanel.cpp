@@ -126,7 +126,7 @@ void mmHomePagePanel::updateAccounts()
     hb.addLineBreak();
 
 	hb.startCenter();
-	hb.startTable(wxT("75%"), wxT("top"));
+	hb.startTable(wxT("95%"), wxT("top"));
 	hb.startTableRow();
 	hb.startTableCell();
 
@@ -349,41 +349,52 @@ void mmHomePagePanel::updateAccounts()
 	hb.endTableCell();
 	hb.startTableCell();
 
-	hb.startTable(wxT("95%"));
+	hb.startTable(wxT("90%"));
 
-    wxString incStr, expStr;
+    wxString incStr, expStr, difStr, colorStr;
     mmex::formatDoubleToCurrency(tincome, incStr); // must use loadBaseCurrencySettings (called above)
     mmex::formatDoubleToCurrency(texpenses, expStr);
-
-    wxString baseInc = _("Income");
-    wxString baseExp = _("Expense");
-    wxString income = baseInc + incStr;
-    wxString expense = baseExp + expStr;
-
+    mmex::formatDoubleToCurrency(tincome-texpenses, difStr);
+    if (tincome-texpenses<0)
+    {
+    colorStr = wxT("#FF6600");
+    }
     mmGraphIncExpensesMonth gg;
     gg.init(tincome, texpenses);
     gg.Generate(wxT(""));
 
 	hb.addTableHeaderRow(_("Income vs Expenses: Current Month"), 2);
 	hb.startTableRow();
-	hb.addTableCell(baseInc, false, true);
+	hb.addTableCell(_("Income:"), false, true);
 	hb.addTableCell(incStr, true);
 	hb.endTableRow();
     
 	hb.startTableRow();
-	hb.addTableCell(baseExp, false, true);
+	hb.addTableCell(_("Expenses:"), false, true);
 	hb.addTableCell(expStr, true);
 	hb.endTableRow();
 
-    hb.endTable();
+	hb.addRowSeparator(2);
+	hb.startTableRow();
+	hb.addTableCell(_("Difference:"), false, true, true);
+	hb.addTableCell(difStr, true, true, true, colorStr);
+	hb.endTableRow();
+	//hb.endTableCell(); 
 
+	//hb.startTableRow();
     // Add the graph
     hb.addImage(gg.getOutputFileName());
+	
+	//hb.endTableRow();
 
-	hb.endTableCell();
+	hb.endTableCell(); 
 	hb.endTableRow();
+	
 	hb.startTableRow();
 	hb.startTableCell();
+
+    hb.endTable();
+
 
     // bills & deposits
     bool isHeaderAdded = false;
@@ -466,7 +477,7 @@ void mmHomePagePanel::updateAccounts()
             }            
             
             wxString daysRemainingStr_;
-            wxString colorStr = wxT("#9999FF");
+            colorStr = wxT("#9999FF");
            		
             daysRemainingStr_ = trans_[bdidx].daysRemainingStr_;
             if (trans_[bdidx].daysRemaining_ > 0)
@@ -537,7 +548,7 @@ void mmHomePagePanel::updateAccounts()
     if (db_)
     {
             std::vector<CategInfo> categList;
-	        hb.startTable(wxT("95%"));
+	        hb.startTable(wxT("90%"));
             isHeaderAdded = false;
         
         while(q30.NextRow())
