@@ -724,7 +724,6 @@ void mmExportQIF( wxSQLite3Database* db_ )
                 wxString type = q1.GetString( wxT( "TRANSACTIONTYPE" ) );
                 wxString amount = q1.GetString( wxT( "AMOUNT" ) );
                 //Amount should be formated
-//FIXME
                 double value = 0.0;
                 mmex::formatCurrencyToDouble( amount, value );
                 mmex::formatDoubleToCurrencyEdit( value, amount );
@@ -773,11 +772,17 @@ void mmExportQIF( wxSQLite3Database* db_ )
 
                         while ( q2.NextRow() ) {
                                 wxString splitamount = q2.GetString( wxT( "SPLITTRANSAMOUNT" ) );
+                                //Amount should be formated
+                                value = 0.0;
+                                mmex::formatCurrencyToDouble( splitamount, value );
+                                mmex::formatDoubleToCurrencyEdit( value, splitamount );
                                 wxString splitcateg = mmDBWrapper::getCategoryName( db_, q2.GetInt( wxT( "CATEGID" ) ) );
                                 wxString splitsubcateg = mmDBWrapper::getSubCategoryName( db_,
                                                          q2.GetInt( wxT( "CATEGID" ) ), q2.GetInt( wxT( "SUBCATEGID" ) ) );
                                 text << wxT( 'S' ) << splitcateg << ( splitsubcateg != wxT( "" ) ? wxT( ":" ) : wxT( "" ) ) << splitsubcateg << endl
-                                << wxT( '$' ) << ( type == wxT( "Withdrawal" ) ? wxT( "-" ) : wxT( "" ) ) << splitamount << endl;
+                                << wxT( '$' ) << ( type == wxT( "Withdrawal" ) ? wxT( "-" ) : wxT( "" ) ) << splitamount << endl
+                                // E Split memo — any text to go with this split item. I saggest Category:Subcategory = Amount for earch line
+                                << wxT( 'E' ) << splitcateg << ( splitsubcateg != wxT( "" ) ? wxT( ":" ) : wxT( "" ) ) << splitsubcateg << ( type == wxT( "Withdrawal" ) ? wxT( " -" ) : wxT( " " ) ) << splitamount << endl;
                         }
 
                         q2.Finalize();
@@ -1097,7 +1102,7 @@ int mmImportCSVMMNET( mmCoreDB* core )
 
                         wxFileName logFile = mmex::GetLogDir( true );
                         logFile.SetFullName( fileName );
-                        logFile.SetExt( wxT( ".txt" ) );
+                        logFile.SetExt( wxT( "txt" ) );
 
                         wxFileOutputStream outputLog( logFile.GetFullPath() );
                         wxTextOutputStream log( outputLog );

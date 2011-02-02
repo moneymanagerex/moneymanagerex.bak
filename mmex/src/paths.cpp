@@ -90,7 +90,8 @@ wxFileName mmex::GetLogDir(bool create)
 
         if (!fname.IsOk()) {
                 fname = GetUserDir(create);
-                fname.AppendDir(wxT("logs"));
+                //FIXME: file not found ERROR
+                //fname.AppendDir(wxT("logs"));
         }
         
         return fname;
