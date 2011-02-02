@@ -407,7 +407,7 @@ Are you are sure you want to proceed with the import?"),
 
         wxFileName logFile = mmex::GetLogDir(true);
         logFile.SetFullName(fileName);
-        logFile.SetExt(wxT(".txt"));
+        logFile.SetExt(wxT("txt"));
 
         wxFileOutputStream outputLog(logFile.GetFullPath());
         wxTextOutputStream log(outputLog);
@@ -578,9 +578,9 @@ Are you are sure you want to proceed with the import?"),
                 continue;
             }
 
-            if (lineType(readLine) == Memo)
+            if (lineType(readLine) == Memo || lineType(readLine) == MemoSplit )
             {
-                notes = getLineData(readLine);
+                notes << getLineData(readLine) << wxT("\n"); //FIXME: \n not needed for every line 
                 continue;
             }
 
@@ -701,6 +701,7 @@ Are you are sure you want to proceed with the import?"),
 
                core->bTransactionList_.addTransaction(core, pTransaction);
 
+                notes = wxT("");
                 numImported++;
                 continue;
 			}
