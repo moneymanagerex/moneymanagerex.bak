@@ -581,7 +581,8 @@ void mmExportCSV( wxSQLite3Database* db_ )
                 wxString notes = mmNotes4ExportString( q1.GetString( wxT( "NOTES" ) ) );
                 wxString origtype = type;
 
-                if ( type == wxT( "Transfer" ) ) {
+                if ( type == wxT( "Transfer" ) ) 
+                {
                         int tAccountID = q1.GetInt( wxT( "TOACCOUNTID" ) );
                         int fAccountID = q1.GetInt( wxT( "ACCOUNTID" ) );
 
@@ -692,7 +693,8 @@ void mmExportQIF( wxSQLite3Database* db_ )
 
         static const char sql[] =
                 "SELECT transid, transdate as DATE, "
-                "transcode as TRANSACTIONTYPE, transamount as AMOUNT,  SUBCATEGID, "
+                "transcode as TRANSACTIONTYPE, transamount as AMOUNT, totransamount as TOAMOUNT, "
+                " SUBCATEGID, "
                 "CATEGID, PAYEEID, "
                 "TRANSACTIONNUMBER, NOTES, TOACCOUNTID, ACCOUNTID "
                 "FROM checkingaccount_v1 "
@@ -722,19 +724,33 @@ void mmExportQIF( wxSQLite3Database* db_ )
                 int sid, cid;
                 wxString payee = mmDBWrapper::getPayee( db_, q1.GetInt( wxT( "PAYEEID" ) ), sid, cid );
                 wxString type = q1.GetString( wxT( "TRANSACTIONTYPE" ) );
+                
                 wxString amount = q1.GetString( wxT( "AMOUNT" ) );
                 //Amount should be formated
                 double value = 0.0;
                 mmex::formatCurrencyToDouble( amount, value );
                 mmex::formatDoubleToCurrencyEdit( value, amount );
+                
+                wxString toamount = q1.GetString( wxT( "TOAMOUNT" ) );
+                //Amount should be formated
+                value = 0.0;
+                mmex::formatCurrencyToDouble( toamount, value );
+                mmex::formatDoubleToCurrencyEdit( value, toamount );
+                
+                
                 wxString transNum = q1.GetString( wxT( "TRANSACTIONNUMBER" ) );
                 wxString categ = mmDBWrapper::getCategoryName( db_, q1.GetInt( wxT( "CATEGID" ) ) );
                 wxString subcateg = mmDBWrapper::getSubCategoryName( db_,
                                     q1.GetInt( wxT( "CATEGID" ) ), q1.GetInt( wxT( "SUBCATEGID" ) ) );
                 wxString notes = mmUnCleanString( q1.GetString( wxT( "NOTES" ) ) );
+                
+                //
                 notes.Replace( wxT( "\n" ), wxT( " " ) );
+                wxString subcategStr = wxT ("") ;
 
-                if ( type == wxT( "Transfer" ) ) {
+                if ( type == wxT( "Transfer" ) ) 
+                {
+                        subcategStr = type;
                         int tAccountID = q1.GetInt( wxT( "TOACCOUNTID" ) );
                         int fAccountID = q1.GetInt( wxT( "ACCOUNTID" ) );
 
@@ -742,21 +758,30 @@ void mmExportQIF( wxSQLite3Database* db_ )
                         wxString toAccount = mmDBWrapper::getAccountName( db_,  tAccountID );
 
                         if ( tAccountID == fromAccountID ) {
-                                type = wxT( "Deposit" );
-                                payee = fromAccount;
+                                 payee = fromAccount;
+                                 amount = toamount;
                         } else if ( fAccountID == fromAccountID ) {
-                                type = wxT( "Withdrawal" );
                                 payee = toAccount;
-                                //    transfer = wxT("T");
+                                amount = wxT ('-') + amount;
                         }
+                }
+                else
+                {
+	             subcategStr << categ << ( subcateg != wxT( "" ) ? wxT( ":" ) : wxT( "" ) ) << subcateg;    
                 }
 
                 text << wxT( 'D' ) << dateString << endl
-                << wxT( 'T' ) << ( type == wxT( "Withdrawal" ) ? wxT( "-" ) : wxT( "" ) ) << amount << endl
+                << wxT( 'T' ) << ( type == wxT( "Withdrawal" ) ? wxT( "-" ) : wxT( "" ) ) << amount << endl //FIXME: is T needed when Transfer?
                 << wxT( 'P' ) << payee << endl
                 << wxT( 'N' ) << transNum << endl
-                << wxT( 'L' ) << ( !categ.IsEmpty() ? categ : wxT( "Split" ) ) << ( !subcateg.IsEmpty() ? wxT( ":" ) : wxT( "" ) ) << subcateg << endl
+                //Category or Transfer
+                << wxT( 'L' ) << subcategStr << endl
                 << wxT( 'M' ) << notes << endl;
+                if ( type == wxT( "Transfer" ) ) 
+                {
+	                text << wxT('$') << amount << endl;
+                }
+                
 
                 //if categ id is empty the transaction has been splited
                 if ( categ.IsEmpty() && subcateg.IsEmpty() ) {
