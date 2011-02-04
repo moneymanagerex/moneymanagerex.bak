@@ -89,6 +89,7 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_EXPAND_TERM_TREE, mmOptionsDialog::OnExpandTermTree)
 
     EVT_CHOICE(ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_MONTH, mmOptionsDialog::OnFYSMonthChange)
+    EVT_CHECKBOX(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS, mmOptionsDialog::OnTransactionStatusChecked)
 
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_USE_SOUND, mmOptionsDialog::OnUseSoundChecked)
 	EVT_CHOICE(ID_DIALOG_OPTIONS_FONT_SIZE, mmOptionsDialog::OnFontSizeChanged)  
@@ -816,6 +817,15 @@ void mmOptionsDialog::CreateControls()
         wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemCheckBoxOnlineCurrencyUpd->SetToolTip(_("Enable or disable get data from European Central Bank to update currency rate"));
 
+    wxString transactionStatusReconciled =  mmDBWrapper::getINISettingValue(inidb_, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("FALSE"));
+    wxCheckBox* itemCheckBoxTransStatus = new wxCheckBox( itemPanelMisc, 
+        ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS, _("Set New Transactions Dialog status to Reconciled"),
+        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    itemCheckBoxTransStatus->SetValue(FALSE);
+    if (transactionStatusReconciled == wxT("TRUE"))
+        itemCheckBoxTransStatus->SetValue(TRUE);
+    itemBoxSizerMisc->Add(itemCheckBoxTransStatus, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemCheckBoxTransStatus->SetToolTip(_("New Transactions: Default to None. Select to sets the default status to Reconciled"));
 
     // -------------------------------------------
 
@@ -1100,4 +1110,15 @@ void mmOptionsDialog::OnFontSizeChanged(wxCommandEvent& /*event*/)
    mmDBWrapper::setINISettingValue(inidb_, wxT("HTMLFONTSIZE"), mmIniOptions::fontSize_);
    // resize dialog window
    Fit();
+}
+
+void mmOptionsDialog::OnTransactionStatusChecked(wxCommandEvent& /*event*/)
+{
+    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS);
+    bool state = itemCheckBox->GetValue();
+    if (state)
+        mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("TRUE"));
+    else
+        mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("FALSE"));
+    mmIniOptions::transactionStatusReconciled_ = state;
 }

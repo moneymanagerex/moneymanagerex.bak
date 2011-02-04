@@ -1,8 +1,9 @@
 Version History of Money Manager Ex
 
 0.9.8.0 (TBA)
-- Relocation of Categories and Payees for Database Management
-- Adition of new date format: YYYYMMDD
+- New Tools: Relocation of Categories and Payees for Database Management.
+- New date format: YYYYMMDD
+- New User option to set status in Transaction dialog to Reconciled.
 
 - and bugfixes.
 
