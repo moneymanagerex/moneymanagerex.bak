@@ -524,19 +524,19 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
     	q1.Finalize();
     	
     	wxSingleChoiceDialog scd(0, _("Choose Bank Account or Term Account"), _("Select Account"), as);
-    	if (scd.ShowModal() == wxID_OK)
+        if (scd.ShowModal() == wxID_OK)
     	{
-	    wxString acctName = scd.GetStringSelection();
+            wxString acctName = scd.GetStringSelection();
             payeeID_ = mmDBWrapper::getAccountID(db_.get(), acctName);
             bPayee_->SetLabel(acctName);
-    	}
-	}
-	else
-	{
-	    mmPayeeDialog dlg(this, core_);
+        }
+    }
+    else
+    {
+        mmPayeeDialog dlg(this, core_);
 
-	    if ( dlg.ShowModal() == wxID_OK )
-	    {
+        if ( dlg.ShowModal() == wxID_OK )
+        {
             payeeID_ = dlg.getPayeeId();
             if (payeeID_ == -1)
             {
@@ -544,28 +544,25 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 	            return;
             }
 	            
-            // ... If this is a Split Transaction, ignore the Payee change
-            if (split_->numEntries())
-                return;
-	
            	int tempCategID = -1;
             int tempSubCategID = -1;
-            wxString payeeName = mmDBWrapper::getPayee(db_.get(), 
-               	payeeID_, tempCategID, tempSubCategID);
+            wxString payeeName = mmDBWrapper::getPayee(db_.get(), payeeID_, tempCategID, tempSubCategID);
             bPayee_->SetLabel(mmReadyDisplayString(payeeName));
 
-   	        if (tempCategID == -1)
-            {
+            // If this is a Split Transaction, ignore displaying last category for payee
+            if (split_->numEntries())
                 return;
-            }
-	
+
+            // if payee has no memory of category then ignore displaying last category for payee   
+            if (tempCategID == -1)
+                return;
+
             wxString catName = mmDBWrapper::getCategoryName(db_.get(), tempCategID);
             wxString categString = catName;
 	
             if (tempSubCategID != -1)
             {
-                wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(),
-                    tempCategID, tempSubCategID);
+                wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(), tempCategID, tempSubCategID);
                 categString += wxT(" : ");
                 categString += subcatName;
             }
@@ -576,8 +573,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
         }
         else
         {
-            wxString payeeName = mmDBWrapper::getPayee(db_.get(), 
-                payeeID_, categID_, subcategID_);
+            wxString payeeName = mmDBWrapper::getPayee(db_.get(), payeeID_, categID_, subcategID_);
             if (payeeName.IsEmpty())
             {
                 payeeID_ = -1;
