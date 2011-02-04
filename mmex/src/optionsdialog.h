@@ -72,6 +72,7 @@ public:
     void OnListFutureDates(wxCommandEvent& event);
 	void OnFontSizeChanged(wxCommandEvent& event);
     void OnUpdCurrencyChecked(wxCommandEvent& event);
+    void OnTransactionStatusChecked(wxCommandEvent& event);
 
     void OnExpandBankHome(wxCommandEvent& event);
     void OnExpandTermHome(wxCommandEvent& event);

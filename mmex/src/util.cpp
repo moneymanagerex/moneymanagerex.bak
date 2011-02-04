@@ -247,6 +247,7 @@ bool mmIniOptions::expandBankHome_ = true;
 bool mmIniOptions::expandTermHome_ = false;
 bool mmIniOptions::expandBankTree_ = true;
 bool mmIniOptions::expandTermTree_ = false;
+bool mmIniOptions::transactionStatusReconciled_ = false;
 
 //----------------------------------------------------------------------------
 wxString mmOptions::dateFormat = mmex::DEFDATEFORMAT;
@@ -295,6 +296,9 @@ void mmIniOptions::loadOptions( wxSQLite3Database* db )
         expandBankTree_ = false;
     if ( mmDBWrapper::getINISettingValue( db, wxT("EXPAND_TERM_TREE"), wxT( "FALSE" ) ) != wxT( "FALSE" ) )
         expandTermTree_ = true;
+
+    if ( mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("FALSE") ) != wxT( "FALSE" ) )
+        transactionStatusReconciled_ = true;
 }
 
 void mmIniOptions::loadInfoOptions( wxSQLite3Database* db )

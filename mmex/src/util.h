@@ -115,6 +115,8 @@ public:
         static bool expandTermHome_;
         static bool expandBankTree_;
         static bool expandTermTree_;
+
+        static bool transactionStatusReconciled_;
 };
 
 class mmColors

@@ -136,10 +136,14 @@ void mmBDDialog::dataToControls()
         if (statusString == wxT(""))
         {
             choiceStatus_->SetSelection(DEF_STATUS_NONE);
+            if (mmIniOptions::transactionStatusReconciled_)   // This changed the selection order
+                choiceStatus_->SetSelection(DEF_STATUS_RECONCILED);
         }
         else if (statusString == wxT("R"))
         {
-             choiceStatus_->SetSelection(DEF_STATUS_RECONCILED);
+            choiceStatus_->SetSelection(DEF_STATUS_RECONCILED);
+            if (mmIniOptions::transactionStatusReconciled_)   // This changed the selection order
+                choiceStatus_->SetSelection(DEF_STATUS_NONE);
         }
         else if (statusString == wxT("V"))
         {
@@ -451,6 +455,12 @@ void mmBDDialog::CreateControls()
         _("Follow up")
     };  
     
+    if (mmIniOptions::transactionStatusReconciled_)
+    {
+        itemChoice7Strings[0] = _("Reconciled");
+        itemChoice7Strings[1] = _("None");
+    }
+
     choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, 
         wxSize(100, -1), 4, itemChoice7Strings, 0 );
     itemFlexGridSizer8->Add(choiceStatus_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -961,10 +971,14 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
     if (choiceStatus_->GetSelection() == DEF_STATUS_NONE)
     {
         status = wxT(""); // nothing yet
+        if (mmIniOptions::transactionStatusReconciled_)   // This changed the selection order
+            status = wxT("R"); 
     }
     else if (choiceStatus_->GetSelection() == DEF_STATUS_RECONCILED)
     {
         status = wxT("R"); 
+        if (mmIniOptions::transactionStatusReconciled_)   // This changed the selection order
+            status = wxT(""); // nothing yet
     }
     else if (choiceStatus_->GetSelection() == DEF_STATUS_VOID)
     {

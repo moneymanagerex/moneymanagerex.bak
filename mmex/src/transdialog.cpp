@@ -32,7 +32,7 @@
 enum { DEF_WITHDRAWAL, DEF_DEPOSIT, DEF_TRANSFER };
 
 // Defines for Transaction Status
-enum { DEF_STATUS_RECONCILED, DEF_STATUS_VOID, DEF_STATUS_FOLLOWUP, DEF_STATUS_DUPLICATE, DEF_STATUS_NONE };
+enum { DEF_STATUS_NONE, DEF_STATUS_RECONCILED, DEF_STATUS_VOID, DEF_STATUS_FOLLOWUP, DEF_STATUS_DUPLICATE };
 
 
 IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
@@ -177,10 +177,14 @@ void mmTransDialog::dataToControls()
         if (statusString == wxT(""))
         {
             choiceStatus_->SetSelection(DEF_STATUS_NONE);
+            if (mmIniOptions::transactionStatusReconciled_)   // This changed the selection order
+                choiceStatus_->SetSelection(DEF_STATUS_RECONCILED);
         }
         else if (statusString == wxT("R"))
         {
-             choiceStatus_->SetSelection(DEF_STATUS_RECONCILED);
+            choiceStatus_->SetSelection(DEF_STATUS_RECONCILED);
+            if (mmIniOptions::transactionStatusReconciled_)   // This changed the selection order
+                choiceStatus_->SetSelection(DEF_STATUS_NONE);
         }
         else if (statusString == wxT("V"))
         {
@@ -438,13 +442,19 @@ void mmTransDialog::CreateControls()
 
     wxString itemChoice7Strings[] = 
     {
+        _("None"),
         _("Reconciled"),
         _("Void"),
         _("Follow up"),
     	_("Duplicate"),
-        _("None"),
     };  
-    
+
+    if (mmIniOptions::transactionStatusReconciled_)
+    {
+        itemChoice7Strings[0] = _("Reconciled");
+        itemChoice7Strings[1] = _("None");
+    }
+
     choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, 
         wxSize(100, -1), 5, itemChoice7Strings, 0 );
     itemFlexGridSizer8->Add(choiceStatus_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -900,10 +910,14 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     if (choiceStatus_->GetSelection() == DEF_STATUS_NONE)
     {
         status = wxT(""); // nothing yet
+        if (mmIniOptions::transactionStatusReconciled_)   // This changed the selection order
+            status = wxT("R"); 
     }
     else if (choiceStatus_->GetSelection() == DEF_STATUS_RECONCILED)
     {
         status = wxT("R"); 
+        if (mmIniOptions::transactionStatusReconciled_)   // This changed the selection order
+            status = wxT(""); 
     }
     else if (choiceStatus_->GetSelection() == DEF_STATUS_VOID)
     {
