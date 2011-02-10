@@ -80,6 +80,7 @@ public:
 
     wxString heldAt_;
     wxString shareName_;
+    wxString shareNotes_;
     wxString numSharesStr_;
     wxString gainLossStr_;
     wxString valueStr_;
@@ -131,6 +132,7 @@ public:
     void OnRefreshQuotes(wxCommandEvent& event);
     void OnHTTPSettings(wxCommandEvent& event);
 	void enableEditDeleteButtons(bool en);
+    void updateExtraStocksData(int selIndex);
 
     void OnViewPopupSelected(wxCommandEvent& event);
 

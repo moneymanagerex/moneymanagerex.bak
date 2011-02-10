@@ -31,6 +31,24 @@
 #include "../resources/downarrow.xpm"
 
 /*******************************************************/
+namespace
+{
+	enum
+	{
+ID_PANEL_STOCKS_STATIC_DETAILS
+	};
+enum EColumn
+{ 
+    COL_HELDAT,
+    COL_NAME, 
+    COL_NUMBER, 
+    COL_GAIN_LOSS,
+    COL_VALUE,
+    COL_CURRENT,
+    COL_NOTES,
+    COL_MAX, // number of columns
+};
+}
 BEGIN_EVENT_TABLE(mmStocksPanel, wxPanel)
     EVT_BUTTON(ID_BUTTON_NEW_STOCK,         mmStocksPanel::OnNewStocks)
     EVT_BUTTON(ID_BUTTON_EDIT_STOCK,        mmStocksPanel::OnEditStocks)
@@ -125,13 +143,14 @@ mmStocksPanel::~mmStocksPanel()
     if (m_LED)
         delete m_LED;
 
-    long col0, col1, col2, col3, col4, col5;
-    col0 = listCtrlAccount_->GetColumnWidth(0);
-    col1 = listCtrlAccount_->GetColumnWidth(1);
-    col2 = listCtrlAccount_->GetColumnWidth(2);
-    col3 = listCtrlAccount_->GetColumnWidth(3);
-    col4 = listCtrlAccount_->GetColumnWidth(4);
-    col5 = listCtrlAccount_->GetColumnWidth(5);
+    long col0, col1, col2, col3, col4, col5, col6;
+    col0 = listCtrlAccount_->GetColumnWidth(COL_HELDAT);
+    col1 = listCtrlAccount_->GetColumnWidth(COL_NAME);
+    col2 = listCtrlAccount_->GetColumnWidth(COL_NUMBER);
+    col3 = listCtrlAccount_->GetColumnWidth(COL_GAIN_LOSS);
+    col4 = listCtrlAccount_->GetColumnWidth(COL_VALUE);
+    col5 = listCtrlAccount_->GetColumnWidth(COL_CURRENT);
+    col6 = listCtrlAccount_->GetColumnWidth(COL_NOTES);
 
     wxString col0Str = wxString::Format(wxT("%d"), col0);
     wxString col1Str = wxString::Format(wxT("%d"), col1);
@@ -139,6 +158,7 @@ mmStocksPanel::~mmStocksPanel()
     wxString col3Str = wxString::Format(wxT("%d"), col3);
     wxString col4Str = wxString::Format(wxT("%d"), col4);
     wxString col5Str = wxString::Format(wxT("%d"), col5);
+    wxString col6Str = wxString::Format(wxT("%d"), col6);
 
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL0_WIDTH"), col0Str);
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL1_WIDTH"), col1Str);
@@ -146,6 +166,7 @@ mmStocksPanel::~mmStocksPanel()
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL3_WIDTH"), col3Str);
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL4_WIDTH"), col4Str);
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL5_WIDTH"), col5Str);
+    mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL6_WIDTH"), col6Str);
 }
 
 void mmStocksPanel::CreateControls()
@@ -165,8 +186,7 @@ void mmStocksPanel::CreateControls()
 
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_BD_STATIC_HEADER,
                                     _("Stock Investments"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE,
-                                    wxT("")));
+    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
 
     wxStaticText* itemStaticText10 = new wxStaticText( headerPanel,
                                      ID_PANEL_CHECKING_STATIC_BALHEADER,
@@ -202,35 +222,37 @@ void mmStocksPanel::CreateControls()
                                            wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
-    listCtrlAccount_->InsertColumn(0, _("Held At"));
+    listCtrlAccount_->InsertColumn(COL_HELDAT, _("Held At"));
     wxListItem itemCol;
     itemCol.SetImage(-1);
     //itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     itemCol.SetText(_("Share Name"));
-    listCtrlAccount_->InsertColumn(1, itemCol);
+    listCtrlAccount_->InsertColumn(COL_NAME, itemCol);
 
     itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
     itemCol.SetText(_("Number of Shares"));
 
-    listCtrlAccount_->InsertColumn(2, itemCol);
+    listCtrlAccount_->InsertColumn(COL_NUMBER, itemCol);
 
     itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
     itemCol.SetText(_("Gain/Loss"));
 
-    listCtrlAccount_->InsertColumn(3, itemCol);
+    listCtrlAccount_->InsertColumn(COL_GAIN_LOSS, itemCol);
 
     itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
     itemCol.SetText(_("Value"));
-
-    listCtrlAccount_->InsertColumn(4, itemCol);
+    listCtrlAccount_->InsertColumn(COL_VALUE, itemCol);
 
     itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
     itemCol.SetText(_("Current"));
+    listCtrlAccount_->InsertColumn(COL_CURRENT, itemCol);
 
-    listCtrlAccount_->InsertColumn(5, itemCol);
+    itemCol.SetAlign(wxLIST_FORMAT_LEFT);
+    itemCol.SetText(_("Notes"));
+    listCtrlAccount_->InsertColumn(COL_NOTES, itemCol);
 
     /* See if we can get data from inidb */
-    long col0, col1, col2, col3, col4, col5;
+    long col0, col1, col2, col3, col4, col5, col6;
     mmDBWrapper::getINISettingValue(inidb_,
                                     wxT("STOCKS_COL0_WIDTH"), wxT("150")).ToLong(&col0);
     mmDBWrapper::getINISettingValue(inidb_,
@@ -243,13 +265,16 @@ void mmStocksPanel::CreateControls()
                                     wxT("STOCKS_COL4_WIDTH"), wxT("-2")).ToLong(&col4);
     mmDBWrapper::getINISettingValue(inidb_,
                                     wxT("STOCKS_COL5_WIDTH"), wxT("-2")).ToLong(&col5);
+    mmDBWrapper::getINISettingValue(inidb_,
+                                    wxT("STOCKS_COL6_WIDTH"), wxT("-2")).ToLong(&col6);
 
-    listCtrlAccount_->SetColumnWidth(0, col0);
-    listCtrlAccount_->SetColumnWidth(1, col1);
-    listCtrlAccount_->SetColumnWidth(2, col2);
-    listCtrlAccount_->SetColumnWidth(3, col3);
-    listCtrlAccount_->SetColumnWidth(4, col4);
-    listCtrlAccount_->SetColumnWidth(5, col5);
+    listCtrlAccount_->SetColumnWidth(COL_HELDAT, col0);
+    listCtrlAccount_->SetColumnWidth(COL_NAME, col1);
+    listCtrlAccount_->SetColumnWidth(COL_NUMBER, col2);
+    listCtrlAccount_->SetColumnWidth(COL_GAIN_LOSS, col3);
+    listCtrlAccount_->SetColumnWidth(COL_VALUE, col4);
+    listCtrlAccount_->SetColumnWidth(COL_CURRENT, col5);
+    listCtrlAccount_->SetColumnWidth(COL_NOTES, col6);
 
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, ID_PANEL1,
                                         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
@@ -292,6 +317,15 @@ void mmStocksPanel::CreateControls()
                                           wxDefaultPosition, wxDefaultSize, 0 );
     itemButton9->SetToolTip(_("Change settings for automatic refresh"));
     itemBoxSizer5->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    
+    //Infobar 
+    wxStaticText* itemStaticText33 = new wxStaticText( itemPanel12, 
+    ID_PANEL_STOCKS_STATIC_DETAILS, _("Using MMEX it is possible to track stocks/mutual funds investments."), 
+    wxPoint(-1,-1), wxSize(350, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
+    itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxALL, 5);
+    
+    //updateExtraStocksData(-1);
+
 }
 
 void mmStocksPanel::initVirtualListControl()
@@ -299,66 +333,54 @@ void mmStocksPanel::initVirtualListControl()
     /* Clear all the records */
     trans_.clear();
 
-    if (accountID_ != -1)
-    {
         wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_BD_STATIC_HEADER);
         wxString str = mmDBWrapper::getAccountName(db_, accountID_);
         header->SetLabel(_("Stock Investments: ") + str);
-    }
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
     double originalVal = 0.0;
-    double total = mmDBWrapper::getStockInvestmentBalance(db_, originalVal);
+    double value = 0.0;
+    
+    mmDBWrapper::loadSettings(accountID_, db_);
+        
+    //Get Init Value of the account
+    double initVal = mmDBWrapper::getInitBalanceOnAccount(db_, accountID_);
 
-    if (accountID_ != -1)
-    {
-        wxSQLite3Statement st = db_->PrepareStatement("select CURRENCYID from ACCOUNTLIST_V1 where ACCOUNTID=?");
-        st.Bind(1, accountID_);
-
-        wxSQLite3ResultSet q2 = st.ExecuteQuery();
-        if (q2.NextRow())
-        {
-            int currencyID = q2.GetInt(wxT("CURRENCYID"));
-            mmDBWrapper::loadSettings(db_, currencyID);
-        }
-        st.Finalize();
-        total = mmDBWrapper::getStockInvestmentBalance(db_, accountID_, false, originalVal);
-    }
-
+    //Get Stock Investment Account Balance as Init Amount + sum (Value) - sum (Purchase Price)
+    // + Transfered from other accounts - Transfered to other accounts
+    double total = mmDBWrapper::getStockInvestmentBalance(db_, accountID_, false, originalVal);
     wxString balance;
-    mmex::formatDoubleToCurrency(total, balance);
-
+    mmex::formatDoubleToCurrency(total+initVal-originalVal, balance);
+    
     wxString original;
     mmex::formatDoubleToCurrency(originalVal, original);
 
-    double diff = 0.0;
-    if (total > originalVal)
-        diff = total - originalVal;
-    else
-        diff = originalVal - total;
-
+    //
     wxString diffStr;
-    mmex::formatDoubleToCurrency(diff, diffStr);
-
-    wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
+    mmex::formatDoubleToCurrency((total > originalVal ? total - originalVal : originalVal - total ), diffStr);
+    //Percent
+    wxString diffStrPercents;
+    double diffPercents = (total > originalVal ? total/originalVal*100.0-100.0 : -(total/originalVal*100.0-100.0) );
+    mmex::formatDoubleToCurrencyEdit(diffPercents, diffStrPercents);
+    
+    header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
     wxString lbl;
     if (total > originalVal)
-        lbl  = wxString::Format(_("Total: %s Invested: %s Gain: %s "), balance.c_str(), original.c_str(), diffStr.c_str());
+        lbl  = wxString::Format(_("Balance: %s Invested: %s Gain: %s (%s %) "), balance.c_str(), original.c_str(), diffStr.c_str(), diffStrPercents.c_str() );
     else
-        lbl  = wxString::Format(_("Total: %s Invested: %s Loss: %s "), balance.c_str(), original.c_str(), diffStr.c_str());
+        lbl  = wxString::Format(_("Balance: %s Invested: %s Loss: %s (%s %) "), balance.c_str(), original.c_str(), diffStr.c_str(), diffStrPercents.c_str() );
     header->SetLabel(lbl);
 
     // --
 
-    wxSQLite3Statement st;
-
-    if (accountID_ == -1) {
-        st = db_->PrepareStatement("select * from STOCK_V1");
-    } else {
-        st = db_->PrepareStatement("select * from STOCK_V1 where HELDAT = ?");
+    static const char sql[] =
+    "select STOCKID, HELDAT, PURCHASEDATE, STOCKNAME, SYMBOL, NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, VALUE, COMMISSION "
+    "from STOCK_V1 where HELDAT = ? "
+    "order by PURCHASEDATE, STOCKNAME ";
+    
+        wxSQLite3Statement st = db_->PrepareStatement(sql);
         st.Bind(1, accountID_);
-    }
-
+ 
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
     int cnt = 0;
 
@@ -370,6 +392,7 @@ void mmStocksPanel::initVirtualListControl()
         int accountID         = q1.GetInt(wxT("HELDAT"));
         th.heldAt_            = mmDBWrapper::getAccountName(db_, accountID);
         th.shareName_         = q1.GetString(wxT("STOCKNAME"));
+        th.shareNotes_         = q1.GetString(wxT("NOTES"));
         th.numSharesStr_      = q1.GetString(wxT("NUMSHARES"));
         th.numShares_         = q1.GetDouble(wxT("NUMSHARES"));
 
@@ -386,6 +409,7 @@ void mmStocksPanel::initVirtualListControl()
         mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
         mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
         mmex::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
+        mmex::formatDoubleToCurrencyEdit(th.numShares_, th.numSharesStr_);
 
         trans_.push_back(th);
     }
@@ -785,23 +809,27 @@ void stocksListCtrl::OnItemRightClick(wxListEvent& event)
 
 wxString mmStocksPanel::getItem(long item, long column)
 {
-    if (column == 0)
+    if (column == COL_HELDAT)
         return trans_[item].heldAt_;
 
-    if (column == 1)
+    if (column == COL_NAME)
         return trans_[item].shareName_;
 
-    if (column == 2)
+    if (column == COL_NUMBER)
         return trans_[item].numSharesStr_;
 
-    if (column == 3)
+    if (column == COL_GAIN_LOSS)
         return trans_[item].gainLossStr_;
 
-    if (column == 4)
+    if (column == COL_VALUE)
         return trans_[item].valueStr_;
 
-    if (column == 5)
+    if (column == COL_CURRENT)
         return trans_[item].cPriceStr_;
+
+    if (column == COL_NOTES)
+        return trans_[item].shareNotes_;
+        
 
     return wxT("");
 }
@@ -814,12 +842,27 @@ wxString stocksListCtrl::OnGetItemText(long item, long column) const
 void stocksListCtrl::OnListItemSelected(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
-	cp_->enableEditDeleteButtons(true);
+    cp_->updateExtraStocksData(selectedIndex_);
+	cp_->enableEditDeleteButtons(true); //Unhide the Edit and Delete buttons if any record selected
 }
+
 void stocksListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 {
     selectedIndex_ = -1;
-	cp_->enableEditDeleteButtons(false);
+    cp_->enableEditDeleteButtons(false); //Hide the Edit and Delete buttons if no records selected
+    cp_->updateExtraStocksData(selectedIndex_);
+}
+
+void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
+{
+	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS);	
+	if (selectedIndex_!=-1) { 
+        st->SetLabel(getItem(selectedIndex_, COL_NOTES));
+        }
+        else
+        {
+        st->SetLabel(_("Using MMEX it is possible to track stocks/mutual funds investments."));
+        }
 }
 
 void mmStocksPanel::enableEditDeleteButtons(bool en)

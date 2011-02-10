@@ -2017,11 +2017,12 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             AddPendingEvent(evt);
         }
 
-        else if (iData->getString() == wxT("Stocks"))
-        {
-            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
-            AddPendingEvent(evt);
-        }
+        //It should be visible only selected account stocks
+        //else if (iData->getString() == wxT("Stocks"))
+        //{
+        //    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
+        //    AddPendingEvent(evt);
+        //}
 
         else if (iData->getString() == wxT("Assets"))
         {

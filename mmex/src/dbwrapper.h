@@ -73,7 +73,8 @@ wxString getAccountName(wxSQLite3Database* db, int accountID);
 wxString getAccountType(wxSQLite3Database* db, int accountID);
 int getAccountID(wxSQLite3Database* db, const wxString& accountName);
 double getTotalBalanceOnAccount(wxSQLite3Database* db, int accountID, bool ignoreFuture=false);
-double getReconciledBalanceOnAccount(wxSQLite3Database* db, int accountID);
+double getInitBalanceOnAccount(wxSQLite3Database* db, int accountID);
+//double getReconciledBalanceOnAccount(wxSQLite3Database* db, int accountID);
 bool getExpensesIncome(wxSQLite3Database* db, int accountID, double& expenses, double& income, bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
 void removeSplitsForAccount(wxSQLite3Database* db, int accountID);
 
