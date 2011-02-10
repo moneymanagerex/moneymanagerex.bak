@@ -967,85 +967,10 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
 
     st.Finalize();
 }
-#if 0
-//double mmDBWrapper::getReconciledBalanceOnAccount(wxSQLite3Database* db, int accountID)
-//{
-//    double balance = 0.0;
-//
-  /*  wxSQLite3Statement st = db->PrepareStatement("select INITIALBAL "
-                                                 "from ACCOUNTLIST_V1 "
-                                                 "where ACCOUNTID = ?"
-                                                );
 
-    st.Bind(1, accountID);
-    
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow()) 
-    {
-        balance = q1.GetDouble(wxT("INITIALBAL"));
-    }
-
-    st.Finalize();
-    
-    // --
-
-    static const char sql[] =
-    "select TRANSCODE, "
-           "STATUS, "  
-           "ACCOUNTID, "
-           "TOACCOUNTID, "
-           "TRANSAMOUNT, "
-           "TOTRANSAMOUNT "
-    "from CHECKINGACCOUNT_V1 "
-    "where ACCOUNTID = ? OR TOACCOUNTID = ?";
-
-    st = db->PrepareStatement(sql);
-    st.Bind(1, accountID);
-    st.Bind(2, accountID);
-
-    q1 = st.ExecuteQuery();
-    while (q1.NextRow())
-    {
-        wxString transTypeString = q1.GetString(wxT("TRANSCODE"));
-        wxString transStatus     = q1.GetString(wxT("STATUS"));
-        int transactionFromID = q1.GetInt(wxT("ACCOUNTID"));
-        int transactionToID = q1.GetInt(wxT("TOACCOUNTID"));
-        double transAmount = q1.GetDouble(wxT("TRANSAMOUNT"));
-        double toTransAmount = q1.GetDouble(wxT("TOTRANSAMOUNT"));
-
-        // we want only reconciled transactions
-        if (transStatus != wxT("R"))
-            continue; // skip
-
-        if (transTypeString == wxT("Deposit"))
-            balance += transAmount;
-        else if (transTypeString == wxT("Withdrawal"))
-            balance -= transAmount;
-        else if (transTypeString == wxT("Transfer"))
-        {
-            if (transactionFromID == accountID)
-            {
-                balance -= transAmount;
-            }
-            else if (transactionToID == accountID)
-            {
-                balance += toTransAmount;
-            }
-        }
-        else
-        {
-            wxASSERT(false);
-        }
-    }
-    st.Finalize();*/
-
-//    return balance;
-//}
-#endif
-
-double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountID, bool ignoreFuture)
+double mmDBWrapper::getInitBalanceOnAccount(wxSQLite3Database* db, int accountID)
 {
-    static const char sql[] =
+	static const char sql[] =
     "select INITIALBAL "
     "from ACCOUNTLIST_V1 "
     "where ACCOUNTID = ?";
@@ -1060,12 +985,16 @@ double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountI
     {
         balance = q1.GetDouble(wxT("INITIALBAL"));
     }
-
     st.Finalize();
+    return balance;
+}
 
-    // --
+double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountID, bool ignoreFuture)
+{
+    double balance = 0.0; 
+    balance = getInitBalanceOnAccount(db, accountID);
 
-    static const char sql2[] =
+    static const char sql[] =
     "select TRANSCODE, "
            "STATUS, " 
            "ACCOUNTID, "
@@ -1076,11 +1005,11 @@ double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountI
     "from CHECKINGACCOUNT_V1 "
     "where ACCOUNTID = ? OR TOACCOUNTID = ?";
 
-    st = db->PrepareStatement(sql2);
+    wxSQLite3Statement st = db->PrepareStatement(sql);
     st.Bind(1, accountID);
     st.Bind(2, accountID);
 
-    q1 = st.ExecuteQuery();
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
     while (q1.NextRow())
     {
         wxString transTypeString = q1.GetString(wxT("TRANSCODE"));
@@ -2468,25 +2397,8 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int account
 {
    wxASSERT(accountID != -1);
 
-   double balance = 0.0;
+   double balance = 0.0; 
    originalVal = 0.0;
-
-   {
-	   wxSQLite3Statement st = db->PrepareStatement("select INITIALBAL "
-                                                    "from ACCOUNTLIST_V1 "
-                                                    "where ACCOUNTID = ?"
-                                                   );
-
-	   st.Bind(1, accountID);
-
-       wxSQLite3ResultSet q1 = st.ExecuteQuery();
-	   if (q1.NextRow())
-       {
-            balance = q1.GetDouble(wxT("INITIALBAL"));
-       }
-	   
-       st.Finalize();
-   }
 
 	static const char sql[] = 
 	"select VALUE, "
