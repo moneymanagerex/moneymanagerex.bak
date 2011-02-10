@@ -177,13 +177,13 @@ void mmTransDialog::dataToControls()
         if (statusString == wxT(""))
         {
             choiceStatus_->SetSelection(DEF_STATUS_NONE);
-            if (mmIniOptions::transactionStatusReconciled_)   // This changed the selection order
+            if (mmIniOptions::transStatusReconciled_)   // This changed the selection order
                 choiceStatus_->SetSelection(DEF_STATUS_RECONCILED);
         }
         else if (statusString == wxT("R"))
         {
             choiceStatus_->SetSelection(DEF_STATUS_RECONCILED);
-            if (mmIniOptions::transactionStatusReconciled_)   // This changed the selection order
+            if (mmIniOptions::transStatusReconciled_)   // This changed the selection order
                 choiceStatus_->SetSelection(DEF_STATUS_NONE);
         }
         else if (statusString == wxT("V"))
@@ -321,57 +321,65 @@ void mmTransDialog::CreateControls()
     itemFlexGridSizer8->Add(itemStaticText9, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    // Determine most frequently used payee name for current account
-    static const char sql[] = 
-        "select count (*) c, "
-        "cat.categname CATEGNAME, sc.subcategname SUBCATEGNAME, "
-        "ca.categid, ca.subcategid, "
-        "ca.payeeid, p.payeename PAYEENAME "
-        "from CHECKINGACCOUNT_V1 ca, payee_v1 p "
-        "left join CATEGORY_V1 cat "
-        "on cat.CATEGID = ca.CATEGID "
+    wxString defaultPayeeName = _("Select Payee");
+    wxString defaultCategName = _("Select Category");
 
-        "left join SUBCATEGORY_V1 sc "
-        "on sc.CATEGID = ca.CATEGID and "
-        "sc.SUBCATEGID = ca.SUBCATEGID "
+    wxString payeeName   = defaultPayeeName;
+    wxString categString = defaultCategName;
+    if ( ! mmIniOptions::transPayeeSelectionNone_ )
+    {
+        // Determine most frequently used payee name for current account
+        static const char sql[] = 
+            "select count (*) c, "
+            "cat.categname CATEGNAME, sc.subcategname SUBCATEGNAME, "
+            "ca.categid, ca.subcategid, "
+            "ca.payeeid, p.payeename PAYEENAME "
+            "from CHECKINGACCOUNT_V1 ca, payee_v1 p "
+            "left join CATEGORY_V1 cat "
+            "on cat.CATEGID = ca.CATEGID "
+
+            "left join SUBCATEGORY_V1 sc "
+            "on sc.CATEGID = ca.CATEGID and "
+            "sc.SUBCATEGID = ca.SUBCATEGID "
  
-        "where ca.payeeid=p.payeeid " 
-        "and ca.transcode<>'Transfer' "
-        "and ca.accountid = ? "
-        "group by ca.payeeid, ca.transdate, ca.categid, ca.subcategid "
-        "order by ca.transdate desc, ca.transid desc, c desc "
-        "limit 1";
+            "where ca.payeeid=p.payeeid " 
+            "and ca.transcode<>'Transfer' "
+            "and ca.accountid = ? "
+            "group by ca.payeeid, ca.transdate, ca.categid, ca.subcategid "
+            "order by ca.transdate desc, ca.transid desc, c desc "
+            "limit 1";
 
-    wxSQLite3Statement st = db_->PrepareStatement(sql);
-    st.Bind(1, accountID_);
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    wxString payeeName = q1.GetString(wxT("PAYEENAME"));
-    payeeID_ = q1.GetInt(wxT("PAYEEID"));
-    wxString categString = q1.GetString(wxT("CATEGNAME"));
-    wxString subcategName = q1.GetString(wxT("SUBCATEGNAME"));
-    categID_ = q1.GetInt(wxT("CATEGID"));
-    subcategID_ = q1.GetInt(wxT("SUBCATEGID"));
+        wxSQLite3Statement st = db_->PrepareStatement(sql);
+        st.Bind(1, accountID_);
+        wxSQLite3ResultSet q1 = st.ExecuteQuery();
+        payeeName = q1.GetString(wxT("PAYEENAME"));
+        payeeID_ = q1.GetInt(wxT("PAYEEID"));
+        categString = q1.GetString(wxT("CATEGNAME"));
+        wxString subcategName = q1.GetString(wxT("SUBCATEGNAME"));
+        categID_ = q1.GetInt(wxT("CATEGID"));
+        subcategID_ = q1.GetInt(wxT("SUBCATEGID"));
 
-    //if some values is missing - set defaults
-    if (payeeName == wxT(""))
-    {
-        payeeName = _("Select Payee");
-        payeeID_ = -1;
-    } 
-    if (categString == wxT(""))
-    {
-        categString = _("Select Category");
-    }
-    else 
-    {
-        if (subcategName != wxT(""))
+        //if some values is missing - set defaults
+        if (payeeName == wxT(""))
         {
-            categString += wxT(" : ");
-            categString += subcategName;
+            payeeName = defaultPayeeName;
+            payeeID_ = -1;
+        } 
+        if (categString == wxT(""))
+        {
+            categString = defaultCategName;
         }
-    }
+        else 
+        {
+            if (subcategName != wxT(""))
+            {
+                categString += wxT(" : ");
+                categString += subcategName;
+            }
+        }
 
-    st.Finalize();
+        st.Finalize();
+    }
     bPayee_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONPAYEE, payeeName, wxDefaultPosition, wxSize(200, -1), 0 );
     itemFlexGridSizer8->Add(bPayee_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     bPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
@@ -383,14 +391,14 @@ void mmTransDialog::CreateControls()
     itemFlexGridSizer8->Add(itemStaticText11, 0,
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-     wxBoxSizer* itemBoxSizer550 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* itemBoxSizer550 = new wxBoxSizer(wxHORIZONTAL);
     itemFlexGridSizer8->Add(itemBoxSizer550, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     
     textNumber_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTNUMBER, wxT(""), wxDefaultPosition, wxSize(50, -1), 0 );
     itemBoxSizer550->Add(textNumber_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     textNumber_->SetToolTip(_("Specify any associated check number or transaction number"));
 
-     bAuto_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONTRANSNUM, wxT(".."), wxDefaultPosition, wxSize(30, -1), 0 );
+    bAuto_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONTRANSNUM, wxT(".."), wxDefaultPosition, wxSize(30, -1), 0 );
     itemBoxSizer550->Add(bAuto_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     bAuto_->SetToolTip(_("Populate Transaction #"));
 
@@ -417,6 +425,9 @@ void mmTransDialog::CreateControls()
     dpc_->SetToolTip(_("Specify the date of the transaction"));
 
     // Category ******************************** begin //
+    if ( mmIniOptions::transCategorySelectionNone_ )
+        categString = defaultCategName;
+
     wxStaticText* itemStaticText17 = new wxStaticText( itemPanel7, wxID_STATIC, _("Category"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer8->Add(itemStaticText17, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -449,7 +460,7 @@ void mmTransDialog::CreateControls()
     	_("Duplicate"),
     };  
 
-    if (mmIniOptions::transactionStatusReconciled_)
+    if (mmIniOptions::transStatusReconciled_)
     {
         itemChoice7Strings[0] = _("Reconciled");
         itemChoice7Strings[1] = _("None");
@@ -566,10 +577,11 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
                 categString += wxT(" : ");
                 categString += subcatName;
             }
-	
+
             categID_ = tempCategID;
             subcategID_ = tempSubCategID;
-            bCategory_->SetLabel(categString);
+            if ( ! mmIniOptions::transCategorySelectionNone_ )
+                bCategory_->SetLabel(categString);
         }
         else
         {
@@ -906,13 +918,13 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     if (choiceStatus_->GetSelection() == DEF_STATUS_NONE)
     {
         status = wxT(""); // nothing yet
-        if (mmIniOptions::transactionStatusReconciled_)   // This changed the selection order
+        if (mmIniOptions::transStatusReconciled_)   // This changed the selection order
             status = wxT("R"); 
     }
     else if (choiceStatus_->GetSelection() == DEF_STATUS_RECONCILED)
     {
         status = wxT("R"); 
-        if (mmIniOptions::transactionStatusReconciled_)   // This changed the selection order
+        if (mmIniOptions::transStatusReconciled_)   // This changed the selection order
             status = wxT(""); 
     }
     else if (choiceStatus_->GetSelection() == DEF_STATUS_VOID)
