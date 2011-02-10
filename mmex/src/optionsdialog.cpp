@@ -88,8 +88,11 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_EXPAND_BANK_TREE, mmOptionsDialog::OnExpandBankTree)
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_EXPAND_TERM_TREE, mmOptionsDialog::OnExpandTermTree)
 
-    EVT_CHOICE(ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_MONTH, mmOptionsDialog::OnFYSMonthChange)
+    EVT_CHECKBOX(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE, mmOptionsDialog::OnTransactionPayeeChecked)
+    EVT_CHECKBOX(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY, mmOptionsDialog::OnTransactionCategoryChecked)
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS, mmOptionsDialog::OnTransactionStatusChecked)
+
+    EVT_CHOICE(ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_MONTH, mmOptionsDialog::OnFYSMonthChange)
 
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_USE_SOUND, mmOptionsDialog::OnUseSoundChecked)
 	EVT_CHOICE(ID_DIALOG_OPTIONS_FONT_SIZE, mmOptionsDialog::OnFontSizeChanged)  
@@ -731,18 +734,18 @@ void mmOptionsDialog::CreateControls()
    
     // ------------------------------------------------------------------------
     // Miscellaneous Panel
+    // ------------------------------------------------------------------------
     wxPanel* itemPanelMisc = new wxPanel( newBook, ID_BOOK_PANELMISC, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizerMisc = new wxBoxSizer(wxVERTICAL);
     itemPanelMisc->SetSizer(itemBoxSizerMisc);
 
-    wxStaticBox* itemStaticBoxSizerFinancialYearSetting = new wxStaticBox(itemPanelMisc, wxID_ANY, _("Financial Year Settings"));
-    wxStaticBoxSizer* itemStaticBoxSizerFinancialYear = new wxStaticBoxSizer(itemStaticBoxSizerFinancialYearSetting, wxHORIZONTAL);
+    //----------------------------------------------
+    wxStaticBox* itemStaticBoxFinancialYearSetting = new wxStaticBox(itemPanelMisc, wxID_ANY, _("Financial Year Settings"));
+    wxStaticBoxSizer* itemStaticBoxSizerFinancialYear = new wxStaticBoxSizer(itemStaticBoxFinancialYearSetting, wxHORIZONTAL);
     itemBoxSizerMisc->Add(itemStaticBoxSizerFinancialYear, 0, wxGROW|wxALL, 5);
 
     wxStaticText* itemStaticTextFYSDay = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Start Day"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticBoxSizerFinancialYear->Add(itemStaticTextFYSDay, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-
-    //------------------------------
 
     wxString financialPeriodStartDay = mmDBWrapper::getInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_DAY"), wxT("1"));
     wxTextCtrl* textFPSDay = new wxTextCtrl( itemPanelMisc, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY, 
@@ -750,7 +753,6 @@ void mmOptionsDialog::CreateControls()
     textFPSDay->SetToolTip(_("Specify Day for start of financial year"));
     itemStaticBoxSizerFinancialYear->Add(textFPSDay, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    //------------------------------
     wxStaticText* itemStaticTextSmonth = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Start Month"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticBoxSizerFinancialYear->Add(itemStaticTextSmonth, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -762,6 +764,32 @@ void mmOptionsDialog::CreateControls()
     int monthItem = itemMonthSelectionString.Find(financialPeriodStartMonth);
     monthSelection_->SetSelection(monthItem/3);
     monthSelection_->SetToolTip(_("Specify month for start of financial year"));
+
+    //----------------------------------------------
+    wxStaticBox* itemStaticBoxNewTransactionSettings = new wxStaticBox(itemPanelMisc, wxID_ANY, _("New Transaction Dialog Settings"));
+    wxStaticBoxSizer* itemStaticBoxSizerNewTransactionSettings = new wxStaticBoxSizer(itemStaticBoxNewTransactionSettings, wxVERTICAL);
+    itemBoxSizerMisc->Add(itemStaticBoxSizerNewTransactionSettings, 0, wxGROW|wxALL, 5);
+
+    wxCheckBox* itemCheckBoxTransPayee = new wxCheckBox( itemPanelMisc, 
+        ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE, _("Payee Default: Set to Select"),
+        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    itemCheckBoxTransPayee->SetValue(mmIniOptions::transPayeeSelectionNone_);
+    itemStaticBoxSizerNewTransactionSettings->Add(itemCheckBoxTransPayee, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemCheckBoxTransPayee->SetToolTip(_("When not selected, the payee default is set to the most frequently used payee for the current account."));
+
+    wxCheckBox* itemCheckBoxTransCategory = new wxCheckBox( itemPanelMisc, 
+        ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY, _("Category Default: Set to Select"),
+        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    itemCheckBoxTransCategory->SetValue(mmIniOptions::transCategorySelectionNone_);
+    itemStaticBoxSizerNewTransactionSettings->Add(itemCheckBoxTransCategory, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+//    itemCheckBoxTransCategory->SetToolTip(_("Select to sets the default category to the last category used"));
+
+    wxCheckBox* itemCheckBoxTransStatus = new wxCheckBox( itemPanelMisc, 
+        ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS, _("Status Default: Set to Reconciled"),
+        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    itemCheckBoxTransStatus->SetValue(mmIniOptions::transStatusReconciled_);
+    itemStaticBoxSizerNewTransactionSettings->Add(itemCheckBoxTransStatus, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+//    itemCheckBoxTransStatus->SetToolTip(_("Select to sets the default status to Reconciled"));
 
     //----------------------------------------------
     wxString backupDBState =  mmDBWrapper::getINISettingValue(inidb_, wxT("BACKUPDB"), wxT("FALSE"));
@@ -795,40 +823,28 @@ void mmOptionsDialog::CreateControls()
     itemBoxSizerMisc->Add(itemCheckBoxOrigDate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemCheckBoxOrigDate->SetToolTip(_("Select whether to use the original transaction date or current date when copying/pasting transactions"));
 
-
     wxString useSound =  mmDBWrapper::getINISettingValue(inidb_, wxT("USETRANSSOUND"), wxT("TRUE"));
     wxCheckBox* itemCheckBoxUseSound = new wxCheckBox( itemPanelMisc, 
         ID_DIALOG_OPTIONS_CHK_USE_SOUND, _("Use Transaction Sound"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemCheckBoxUseSound->SetValue(FALSE);
     if (useSound == wxT("TRUE"))
         itemCheckBoxUseSound->SetValue(TRUE);
-    itemBoxSizerMisc->Add(itemCheckBoxUseSound, 0, 
-        wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizerMisc->Add(itemCheckBoxUseSound, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemCheckBoxUseSound->SetToolTip(_("Select whether to use sounds when entering transactions"));
 
     wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(inidb_, wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
     wxCheckBox* itemCheckBoxOnlineCurrencyUpd = new wxCheckBox( itemPanelMisc, 
         ID_DIALOG_OPTIONS_UPD_CURRENCY, _("Enable online currency update (Get data from European Central Bank)"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemCheckBoxOnlineCurrencyUpd->SetValue(FALSE);
-    if(enableCurrencyUpd == wxT("TRUE")) {
+    if(enableCurrencyUpd == wxT("TRUE"))
+    {
         itemCheckBoxOnlineCurrencyUpd->SetValue(TRUE);
     }
-    itemBoxSizerMisc->Add(itemCheckBoxOnlineCurrencyUpd, 0, 
-        wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizerMisc->Add(itemCheckBoxOnlineCurrencyUpd, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemCheckBoxOnlineCurrencyUpd->SetToolTip(_("Enable or disable get data from European Central Bank to update currency rate"));
 
-    wxString transactionStatusReconciled =  mmDBWrapper::getINISettingValue(inidb_, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("FALSE"));
-    wxCheckBox* itemCheckBoxTransStatus = new wxCheckBox( itemPanelMisc, 
-        ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS, _("Set New Transactions Dialog status to Reconciled"),
-        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    itemCheckBoxTransStatus->SetValue(FALSE);
-    if (transactionStatusReconciled == wxT("TRUE"))
-        itemCheckBoxTransStatus->SetValue(TRUE);
-    itemBoxSizerMisc->Add(itemCheckBoxTransStatus, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemCheckBoxTransStatus->SetToolTip(_("New Transactions: Default to None. Select to sets the default status to Reconciled"));
-
-    // -------------------------------------------
-
+   //----------------------------------------------
+ 
     newBook->SetImageList(m_imageList);
 
     newBook->InsertPage(0, itemPanelGeneral, _("General"), true, 2);
@@ -1015,110 +1031,92 @@ void mmOptionsDialog::OnRestoreDefaultColors(wxCommandEvent& /*event*/)
     mmRestoreDefaultColors();
 }
 
+void mmOptionsDialog::SetIniDatabaseCheckboxValue(wxString dbField, bool dbState)
+{
+    if (dbState)
+        mmDBWrapper::setINISettingValue(inidb_, dbField, wxT("TRUE"));
+    else
+        mmDBWrapper::setINISettingValue(inidb_, dbField, wxT("FALSE"));
+}
+
 void mmOptionsDialog::OnExpandBankHome(wxCommandEvent& /*event*/)
 {
-    wxString dbStringValue = wxT("EXPAND_BANK_HOME");
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_BANK_HOME);
-    bool state = itemCheckBox->GetValue();
-    if (state)
-        mmDBWrapper::setINISettingValue(inidb_, dbStringValue, wxT("TRUE"));
-    else
-        mmDBWrapper::setINISettingValue(inidb_, dbStringValue, wxT("FALSE"));
-    mmIniOptions::expandBankHome_ = state;
+    mmIniOptions::expandBankHome_ = itemCheckBox->GetValue();
+    SetIniDatabaseCheckboxValue(wxT("EXPAND_BANK_HOME"),mmIniOptions::expandBankHome_);
 }
 
 void mmOptionsDialog::OnExpandTermHome(wxCommandEvent& /*event*/)
 {
-    wxString dbStringValue = wxT("EXPAND_TERM_HOME");
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_TERM_HOME);
-    bool state = itemCheckBox->GetValue();
-    if (state)
-        mmDBWrapper::setINISettingValue(inidb_, dbStringValue, wxT("TRUE"));
-    else
-        mmDBWrapper::setINISettingValue(inidb_, dbStringValue, wxT("FALSE"));
-    mmIniOptions::expandTermHome_ = state;
+    mmIniOptions::expandTermHome_ = itemCheckBox->GetValue();
+    SetIniDatabaseCheckboxValue(wxT("EXPAND_TERM_HOME"),mmIniOptions::expandTermHome_);
 }
 
 void mmOptionsDialog::OnExpandBankTree(wxCommandEvent& /*event*/)
 {
-    wxString dbStringValue = wxT("EXPAND_BANK_TREE");
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_BANK_TREE);
-    bool state = itemCheckBox->GetValue();
-    if (state)
-        mmDBWrapper::setINISettingValue(inidb_, dbStringValue, wxT("TRUE"));
-    else
-        mmDBWrapper::setINISettingValue(inidb_, dbStringValue, wxT("FALSE"));
-    mmIniOptions::expandBankTree_ = state;
+    mmIniOptions::expandBankTree_ = itemCheckBox->GetValue();
+    SetIniDatabaseCheckboxValue(wxT("EXPAND_BANK_TREE"),mmIniOptions::expandBankTree_);
 }
 
 void mmOptionsDialog::OnExpandTermTree(wxCommandEvent& /*event*/)
 {
-    wxString dbStringValue = wxT("EXPAND_TERM_TREE");
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_TERM_TREE);
-    bool state = itemCheckBox->GetValue();
-    if (state) 
-        mmDBWrapper::setINISettingValue(inidb_, dbStringValue, wxT("TRUE"));
-    else 
-        mmDBWrapper::setINISettingValue(inidb_, dbStringValue, wxT("FALSE"));
-    mmIniOptions::expandTermTree_ = state;
+    mmIniOptions::expandTermTree_ = itemCheckBox->GetValue();
+    SetIniDatabaseCheckboxValue(wxT("EXPAND_TERM_TREE"),mmIniOptions::expandTermTree_);
 }
 
 void mmOptionsDialog::OnBackupDBChecked(wxCommandEvent& /*event*/)
 {
-  wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_BACKUP);
-  bool state = itemCheckBox->GetValue();
-  if (state)
-     mmDBWrapper::setINISettingValue(inidb_, wxT("BACKUPDB"), wxT("TRUE"));
-  else
-    mmDBWrapper::setINISettingValue(inidb_, wxT("BACKUPDB"), wxT("FALSE"));
+    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_BACKUP);
+    SetIniDatabaseCheckboxValue(wxT("BACKUPDB"), itemCheckBox->GetValue() );
 }
 
 void mmOptionsDialog::OnOriginalDateChecked(wxCommandEvent& /*event*/)
 {
-  wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_ORIG_DATE);
-  bool state = itemCheckBox->GetValue();
-  if (state)
-     mmDBWrapper::setINISettingValue(inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("TRUE"));
-  else
-    mmDBWrapper::setINISettingValue(inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
+    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_ORIG_DATE);
+    SetIniDatabaseCheckboxValue(wxT("USEORIGDATEONCOPYPASTE"), itemCheckBox->GetValue() );
 }
 
 void mmOptionsDialog::OnUseSoundChecked(wxCommandEvent& /*event*/)
 {
-  wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_USE_SOUND);
-  bool state = itemCheckBox->GetValue();
-  if (state)
-     mmDBWrapper::setINISettingValue(inidb_, wxT("USETRANSSOUND"), wxT("TRUE"));
-  else
-    mmDBWrapper::setINISettingValue(inidb_, wxT("USETRANSSOUND"), wxT("FALSE"));
+    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_USE_SOUND);
+    SetIniDatabaseCheckboxValue(wxT("USETRANSSOUND"), itemCheckBox->GetValue() );
 }
 
 void mmOptionsDialog::OnUpdCurrencyChecked(wxCommandEvent& /*event*/)
 {
-  wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_UPD_CURRENCY);
-  bool state = itemCheckBox->GetValue();
-  if (state)
-     mmDBWrapper::setINISettingValue(inidb_, wxT("UPDATECURRENCYRATE"), wxT("TRUE"));
-  else
-     mmDBWrapper::setINISettingValue(inidb_, wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
+    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_UPD_CURRENCY);
+    SetIniDatabaseCheckboxValue(wxT("UPDATECURRENCYRATE"), itemCheckBox->GetValue() );
 }
 
 void mmOptionsDialog::OnFontSizeChanged(wxCommandEvent& /*event*/)
 {
-   int size = choiceFontSize_->GetCurrentSelection() + 1;
-   mmIniOptions::fontSize_ = wxString::Format(wxT("%d"), size);
-   mmDBWrapper::setINISettingValue(inidb_, wxT("HTMLFONTSIZE"), mmIniOptions::fontSize_);
-   // resize dialog window
-   Fit();
+    int size = choiceFontSize_->GetCurrentSelection() + 1;
+    mmIniOptions::fontSize_ = wxString::Format(wxT("%d"), size);
+    mmDBWrapper::setINISettingValue(inidb_, wxT("HTMLFONTSIZE"), mmIniOptions::fontSize_);
+    // resize dialog window
+    Fit();
+}
+
+void mmOptionsDialog::OnTransactionPayeeChecked(wxCommandEvent& /*event*/)
+{
+    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE);
+    mmIniOptions::transPayeeSelectionNone_ = itemCheckBox->GetValue();
+    SetIniDatabaseCheckboxValue(wxT("TRANSACTION_PAYEE_NONE"),mmIniOptions::transPayeeSelectionNone_);
+}
+
+void mmOptionsDialog::OnTransactionCategoryChecked(wxCommandEvent& /*event*/)
+{
+    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY);
+    mmIniOptions::transCategorySelectionNone_ = itemCheckBox->GetValue();
+    SetIniDatabaseCheckboxValue(wxT("TRANSACTION_CATEGORY_NONE"),mmIniOptions::transCategorySelectionNone_);
 }
 
 void mmOptionsDialog::OnTransactionStatusChecked(wxCommandEvent& /*event*/)
 {
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS);
-    bool state = itemCheckBox->GetValue();
-    if (state)
-        mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("TRUE"));
-    else
-        mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("FALSE"));
-    mmIniOptions::transactionStatusReconciled_ = state;
+    mmIniOptions::transStatusReconciled_ = itemCheckBox->GetValue();
+    SetIniDatabaseCheckboxValue(wxT("TRANSACTION_STATUS_RECONCILED"),mmIniOptions::transStatusReconciled_);
 }

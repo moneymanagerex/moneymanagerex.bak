@@ -247,7 +247,10 @@ bool mmIniOptions::expandBankHome_ = true;
 bool mmIniOptions::expandTermHome_ = false;
 bool mmIniOptions::expandBankTree_ = true;
 bool mmIniOptions::expandTermTree_ = false;
-bool mmIniOptions::transactionStatusReconciled_ = false;
+
+bool mmIniOptions::transPayeeSelectionNone_     = false;
+bool mmIniOptions::transCategorySelectionNone_  = false;
+bool mmIniOptions::transStatusReconciled_       = false;
 
 //----------------------------------------------------------------------------
 wxString mmOptions::dateFormat = mmex::DEFDATEFORMAT;
@@ -297,8 +300,12 @@ void mmIniOptions::loadOptions( wxSQLite3Database* db )
     if ( mmDBWrapper::getINISettingValue( db, wxT("EXPAND_TERM_TREE"), wxT( "FALSE" ) ) != wxT( "FALSE" ) )
         expandTermTree_ = true;
 
-    if ( mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("FALSE") ) != wxT( "FALSE" ) )
-        transactionStatusReconciled_ = true;
+    if ( mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_PAYEE_NONE"), wxT("FALSE") ) != wxT("FALSE") )
+        transPayeeSelectionNone_ = true;
+    if ( mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_CATEGORY_NONE"), wxT("FALSE") ) != wxT("FALSE") )
+        transCategorySelectionNone_ = true;
+    if ( mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("FALSE") ) != wxT("FALSE") )
+        transStatusReconciled_ = true;
 }
 
 void mmIniOptions::loadInfoOptions( wxSQLite3Database* db )

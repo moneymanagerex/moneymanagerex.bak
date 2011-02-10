@@ -266,7 +266,7 @@ void mmFilterTransactionsDialog::CreateControls()
         _("Duplicate")
     };  
 
-    if (mmIniOptions::transactionStatusReconciled_)
+    if (mmIniOptions::transStatusReconciled_)
     {
         choiceStatusStrings[0] = _("Reconciled");
         choiceStatusStrings[1] = _("None");
@@ -497,13 +497,13 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
             if (choiceStatus->GetSelection()      == DEF_STATUS_NONE)
             {
                 status = wxT(""); // nothing yet
-                if (mmIniOptions::transactionStatusReconciled_)   // This changed the selection order
+                if (mmIniOptions::transStatusReconciled_)   // This changed the selection order
                     status = wxT("R"); 
             }
             else if (choiceStatus->GetSelection() == DEF_STATUS_RECONCILED)
             {
                 status = wxT("R"); 
-                if (mmIniOptions::transactionStatusReconciled_)   // This changed the selection order
+                if (mmIniOptions::transStatusReconciled_)   // This changed the selection order
                     status = wxT(""); // nothing yet
             }
             else if (choiceStatus->GetSelection() == DEF_STATUS_VOID)

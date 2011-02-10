@@ -72,6 +72,11 @@ public:
     void OnListFutureDates(wxCommandEvent& event);
 	void OnFontSizeChanged(wxCommandEvent& event);
     void OnUpdCurrencyChecked(wxCommandEvent& event);
+
+    void SetIniDatabaseCheckboxValue(wxString dbField, bool dbState);
+
+    void OnTransactionPayeeChecked(wxCommandEvent& event);
+    void OnTransactionCategoryChecked(wxCommandEvent& event);
     void OnTransactionStatusChecked(wxCommandEvent& event);
 
     void OnExpandBankHome(wxCommandEvent& event);
