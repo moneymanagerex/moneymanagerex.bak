@@ -519,10 +519,11 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 {
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
 	{
+	    //It's should be passible transfer from or to Investment accounts too
 	    static const char sql[] = 
     	"select ACCOUNTNAME "
     	"from ACCOUNTLIST_V1 "
-    	"where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
+    	"where /*(ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and*/ STATUS <> 'Closed' "
     	"order by ACCOUNTNAME";
 	
     	wxArrayString as;
@@ -534,7 +535,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
     	}
     	q1.Finalize();
     	
-    	wxSingleChoiceDialog scd(0, _("Choose Bank Account or Term Account"), _("Select Account"), as);
+    	wxSingleChoiceDialog scd(0, _("Account name"), _("Select Account"), as);
         if (scd.ShowModal() == wxID_OK)
     	{
             wxString acctName = scd.GetStringSelection();
@@ -616,7 +617,7 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
     static const char sql[] = 
         "select ACCOUNTNAME "
         "from ACCOUNTLIST_V1 "
-        "where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
+        "where STATUS <> 'Closed' "
         "order by ACCOUNTNAME";
 	
     wxArrayString as;
@@ -628,7 +629,7 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
     }
     q1.Finalize();
     	
-    wxSingleChoiceDialog scd(0, _("Choose Bank Account or Term Account"), _("Select Account"), as);
+    wxSingleChoiceDialog scd(0, _("Account name"), _("Select Account"), as);
     if (scd.ShowModal() == wxID_OK)
     {
         wxString acctName = scd.GetStringSelection();

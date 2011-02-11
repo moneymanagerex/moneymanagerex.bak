@@ -199,10 +199,10 @@ void mmHomePagePanel::updateAccounts()
     wxString tBalanceStr;
     mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
+    hb.addRowSeparator(2);
     hb.startTableRow();
 	hb.addTotalRow(_("Bank Accounts Total:"), 2, tBalanceStr);
     hb.endTableRow();
-    hb.addRowSeparator(2);
 
     double tTermBalance = 0.0;
 
@@ -258,10 +258,10 @@ void mmHomePagePanel::updateAccounts()
 
     if ( frame_->hasActiveTermAccounts() )
     {
+   		hb.addRowSeparator(2);
         hb.startTableRow();
 	    hb.addTotalRow(_("Term Accounts Total:"), 2, tTermBalanceStr);
         hb.endTableRow();
-   		hb.addRowSeparator(2);
     }
 
     // Add Term balance to total account balances
@@ -270,10 +270,84 @@ void mmHomePagePanel::updateAccounts()
     const int BaseCurrencyID = mmDBWrapper::getBaseCurrencySettings(db_);
     boost::shared_ptr<mmCurrency> BaseCurrency(BaseCurrencyID != -1 ? getCurrency(core_, BaseCurrencyID) : boost::shared_ptr<mmCurrency>());
 
+//* Stocks *//-----------------------------------------------------begin
+    
+    bool isHeaderAdded = false;
+
+    static const char sql[] = 
+        "select t.accountid as ACCOUNTID, a.accountname as ACCOUNTNAME, "
+        "sum (t.BALANCE) as BALANCE from ( "
+        "select  acc.accountid as ACCOUNTID, acc.INITIALBAL as BALANCE "
+        "from ACCOUNTLIST_V1 ACC "
+        "where ACC.ACCOUNTTYPE = 'Investment' and ACC.STATUS='Open' "
+        "group by acc.accountid " 
+        "union all "
+        "select  "
+        "st.heldat as ACCOUNTID, "
+        "total((st.CURRENTPRICE-st.PURCHASEPRICE)*st.NUMSHARES-st.COMMISSION) as BALANCE "
+        "from  stock_v1 st "
+        "group by st.heldat "	
+        "union all "
+        "select ca.toaccountid,  total(ca.totransamount)  "
+        "from checkingaccount_v1 ca "
+        "inner join  accountlist_v1 acc on acc.accountid=ca.toaccountid "
+        "where ca.transcode ='Transfer' and ca.STATUS<>'V' "
+        "and acc.accounttype='Investment' "
+        "group by ca.toaccountid "
+        "union all "
+        "select ca.accountid,  total(-ca.transamount)  "
+        "from checkingaccount_v1 ca "
+        "inner join  accountlist_v1 acc on acc.accountid=ca.accountid "
+        "where ca.transcode ='Transfer' and ca.STATUS<>'V' "
+        "and acc.accounttype='Investment' "
+        "group by ca.accountid) t "
+        "left join accountlist_v1 a on a.accountid=t.accountid "
+        "where a.status='Open' "
+        "group by t.accountid	" ;
+
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+
     if (mmIniOptions::enableStocks_)
     {
-        /* Stocks */
-        double invested;
+
+    if (db_)
+    {
+        while(q1.NextRow())
+        {
+        if (!isHeaderAdded)
+            {
+     		hb.startTableRow();
+            hb.addTableHeaderCell(_("Stocks"));
+            hb.addTableHeaderCell(_("Summary"));
+  	        isHeaderAdded = true;
+            }
+        
+            int stockaccountId = q1.GetInt(wxT("ACCOUNTID"));
+            double stockBalance = q1.GetDouble(wxT("BALANCE"));
+            wxString stocknameStr = q1.GetString(wxT("ACCOUNTNAME"));
+            //wxString curStr = q1.GetString(wxT("CURRENCYNAME"));
+
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(stockaccountId).lock();
+            wxASSERT(pCurrencyPtr);
+            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+
+            mmex::formatDoubleToCurrency(stockBalance, tBalanceStr);
+
+		hb.startTableRow();
+        hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
+		hb.addTableCell(tBalanceStr, true);
+		hb.endTableRow();
+       
+       }
+        if (isHeaderAdded)
+            {
+		hb.addRowSeparator(2);
+            }
+       
+        q1.Finalize();
+    }
+        
+        /*double invested;
         double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);
         wxString stockBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
@@ -291,12 +365,13 @@ void mmHomePagePanel::updateAccounts()
         {
             print_bal4cur |= (stockBalance != 0.0 && tBalances[BaseCurrency] != 0.0);
             tBalances[BaseCurrency] += stockBalance;
-        }
+        }*/
     }
+//* Stocks *//-----------------------------------------------------end
+//* Assets *//-----------------------------------------------------begin
 
     if (mmIniOptions::enableAssets_)
     {
-        /* Assets */
         double assetBalance = mmDBWrapper::getAssetBalance(db_);
         wxString assetBalanceStr;
         mmDBWrapper::loadBaseCurrencySettings(db_);
@@ -316,6 +391,8 @@ void mmHomePagePanel::updateAccounts()
             tBalances[BaseCurrency] += assetBalance;
         }
     }
+
+//* Currencies *//-----------------------------------------------------begin
     
     if (print_bal4cur && tBalances.size() > 1) // print total balance for every currency
     {
@@ -336,6 +413,8 @@ void mmHomePagePanel::updateAccounts()
             hb.endTableRow();
         }
     } 
+    
+//* Currencies *//-----------------------------------------------------end
 
     tBalances.clear();
 
@@ -343,7 +422,6 @@ void mmHomePagePanel::updateAccounts()
     mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
 	hb.addTotalRow(_("Total of Accounts:"), 2, tBalanceStr);
-	hb.addRowSeparator(2);
     hb.endTable();
 
 	hb.endTableCell();
@@ -397,12 +475,12 @@ void mmHomePagePanel::updateAccounts()
 
 
     // bills & deposits
-    bool isHeaderAdded = false;
+    isHeaderAdded = false;
 
     /////////////////////////////////////
     std::vector<mmBDTransactionHolder> trans_;
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from BILLSDEPOSITS_V1");
+    q1 = db_->ExecuteQuery("select * from BILLSDEPOSITS_V1");
 
     while (q1.NextRow())
     {
@@ -517,8 +595,9 @@ void mmHomePagePanel::updateAccounts()
     mmex::CurrencyFormatter::instance().loadDefaultSettings();
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
+    isHeaderAdded = false;
     
-        static const char sql[] = 
+        static const char sql2[] = 
         "select "
         "CATEG|| (Case SUBCATEG when '' then '' else ':' end )||  SUBCATEG as SUBCATEGORY "
         ", AMOUNT "
@@ -543,7 +622,7 @@ void mmHomePagePanel::updateAccounts()
         "limit 10 "
         ") where AMOUNT < 0" ;
 
-    wxSQLite3ResultSet q30 = db_->ExecuteQuery(sql);
+    q1 = db_->ExecuteQuery(sql2);
 
     if (db_)
     {
@@ -551,7 +630,7 @@ void mmHomePagePanel::updateAccounts()
 	        hb.startTable(wxT("90%"));
             isHeaderAdded = false;
         
-        while(q30.NextRow())
+        while(q1.NextRow())
         {
         if (!isHeaderAdded)
             {
@@ -559,8 +638,8 @@ void mmHomePagePanel::updateAccounts()
 	        isHeaderAdded = true;
             }
         
-            tBalance = q30.GetDouble(wxT("AMOUNT"));
-            wxString subcategString = q30.GetString(wxT("SUBCATEGORY"));
+            tBalance = q1.GetDouble(wxT("AMOUNT"));
+            wxString subcategString = q1.GetString(wxT("SUBCATEGORY"));
 
             mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
@@ -570,7 +649,7 @@ void mmHomePagePanel::updateAccounts()
 		hb.endTableRow();
        
        }
-        q30.Finalize();
+        q1.Finalize();
         hb.endTable();
         hb.getHTMLText();
     }
