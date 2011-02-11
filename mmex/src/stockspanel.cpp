@@ -35,7 +35,8 @@ namespace
 {
 	enum
 	{
-ID_PANEL_STOCKS_STATIC_DETAILS
+ID_PANEL_STOCKS_STATIC_DETAILS,
+ID_PANEL_STOCKS_STATIC_DETAILS_MINI
 	};
 enum EColumn
 { 
@@ -318,6 +319,11 @@ void mmStocksPanel::CreateControls()
     itemButton9->SetToolTip(_("Change settings for automatic refresh"));
     itemBoxSizer5->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     
+    //Infobar-mini 
+    wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, 
+    ID_PANEL_STOCKS_STATIC_DETAILS_MINI, _(""), 
+    wxPoint(-1,-1), wxSize(350, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
+    itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxALL, 5);
     //Infobar 
     wxStaticText* itemStaticText33 = new wxStaticText( itemPanel12, 
     ID_PANEL_STOCKS_STATIC_DETAILS, _("Using MMEX it is possible to track stocks/mutual funds investments."), 
@@ -344,10 +350,11 @@ void mmStocksPanel::initVirtualListControl()
     mmDBWrapper::loadSettings(accountID_, db_);
         
     //Get Init Value of the account
-    double initVal = mmDBWrapper::getInitBalanceOnAccount(db_, accountID_);
+    //double initVal = mmDBWrapper::getInitBalanceOnAccount(db_, accountID_);
+    // + Transfered from other accounts - Transfered to other accounts
+    double initVal = mmDBWrapper::getTotalBalanceOnAccount(db_, accountID_, true);
 
     //Get Stock Investment Account Balance as Init Amount + sum (Value) - sum (Purchase Price)
-    // + Transfered from other accounts - Transfered to other accounts
     double total = mmDBWrapper::getStockInvestmentBalance(db_, accountID_, false, originalVal);
     wxString balance;
     mmex::formatDoubleToCurrency(total+initVal-originalVal, balance);
@@ -365,10 +372,13 @@ void mmStocksPanel::initVirtualListControl()
     
     header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
     wxString lbl;
+    lbl << _("Balance: ") << balance << _("     Invested: ") << original;
     if (total > originalVal)
-        lbl  = wxString::Format(_("Balance: %s Invested: %s Gain: %s (%s %) "), balance.c_str(), original.c_str(), diffStr.c_str(), diffStrPercents.c_str() );
+        lbl << _("     Gain: "); 
     else
-        lbl  = wxString::Format(_("Balance: %s Invested: %s Loss: %s (%s %) "), balance.c_str(), original.c_str(), diffStr.c_str(), diffStrPercents.c_str() );
+        lbl << _("     Loss: ");
+    lbl << diffStr << wxT("  ( ") << diffStrPercents << wxT(" %)");
+
     header->SetLabel(lbl);
 
     // --
@@ -855,13 +865,17 @@ void stocksListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 
 void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
 {
-	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS);	
+	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS);
+	wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS_MINI);
 	if (selectedIndex_!=-1) { 
+        //FIXME: Here should be the SYMBOL and Gain/Loss in percent
+        //stm->SetLabel(getItem(selectedIndex_, COL_NAME));
         st->SetLabel(getItem(selectedIndex_, COL_NOTES));
         }
         else
         {
         st->SetLabel(_("Using MMEX it is possible to track stocks/mutual funds investments."));
+        stm->SetLabel(wxT(""));
         }
 }
 
