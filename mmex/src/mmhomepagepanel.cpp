@@ -291,17 +291,17 @@ void mmHomePagePanel::updateAccounts()
         "st.heldat as ACCOUNTID, "
         "total((st.CURRENTPRICE-st.PURCHASEPRICE)*st.NUMSHARES-st.COMMISSION) as BALANCE "
         "from  stock_v1 st "
-	    "where st.purchasedate<=date ('now') "
+	    "where st.purchasedate<=date ('now','localtime') "
         "group by st.heldat 	"
         "union all "
         "select ca.toaccountid,  total(ca.totransamount) "
         "from checkingaccount_v1 ca "
-        "where ca.transcode ='Transfer' and ca.STATUS<>'V' and ca.transdate<=date ('now') "
+        "where ca.transcode ='Transfer' and ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
         "group by ca.toaccountid "
         "union all "
         "select ca.accountid,  total(case ca.transcode when 'Deposit' then ca.transamount else -ca.transamount end)  "
         "from checkingaccount_v1 ca "
-        "where ca.STATUS<>'V' and ca.transdate<=date ('now') "
+        "where ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
         "group by ca.accountid) t "
 	    "left join accountlist_v1 a on a.accountid=t.accountid "
         "left join  currencyformats_v1 c on c.currencyid=a.currencyid "
@@ -406,36 +406,40 @@ void mmHomePagePanel::updateAccounts()
     isHeaderAdded = false;
 
     static const char sql3[] = 
-        "select t.accountid as ACCOUNTID, a.accountname as ACCOUNTNAME, "
-        "sum (t.BALANCE) as BALANCE from ( "
-        "select  acc.accountid as ACCOUNTID, acc.INITIALBAL as BALANCE "
+        "select INCOME, EXPENCES, t.accountid as ACCOUNTID, a.accountname as ACCOUNTNAME, "
+        "sum (t.BALANCE) as BALANCE, c.BASECONVRATE as BASECONVRATE "
+	    "from (  "
+        "select 0 as INCOME,0 as EXPENCES, acc.accountid as ACCOUNTID, acc.INITIALBAL as BALANCE "
         "from ACCOUNTLIST_V1 ACC "
         "where ACC.ACCOUNTTYPE = 'Investment' and ACC.STATUS='Open' "
-        "group by acc.accountid " 
+        "group by acc.accountid  "
         "union all "
-        "select  "
-        "st.heldat as ACCOUNTID, "
+        "select  0, 0, "
+        "st.heldat as ACCOUNTID,  "
         "total((st.CURRENTPRICE-st.PURCHASEPRICE)*st.NUMSHARES-st.COMMISSION) as BALANCE "
         "from  stock_v1 st "
-        "where st.purchasedate<=date ('now') "
-        "group by st.heldat "	
+        "where st.purchasedate<=date ('now','localtime') "
+        "group by st.heldat "
         "union all "
-        "select ca.toaccountid,  total(ca.totransamount)  "
+        "select ca.toaccountid, 0, ca.toaccountid,  total(ca.totransamount)  "
         "from checkingaccount_v1 ca "
         "inner join  accountlist_v1 acc on acc.accountid=ca.toaccountid "
-        "where ca.transcode ='Transfer' and ca.STATUS<>'V' and ca.transdate<=date ('now') "
+        "where ca.transcode ='Transfer' and ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
         "and acc.accounttype='Investment' "
         "group by ca.toaccountid "
         "union all "
-        "select ca.accountid,  total(-ca.transamount)  "
+        "select total(case ca.transcode when 'Deposit' then ca.transamount else 0 end), "
+	    "total(case ca.transcode when 'Withdrawal' then ca.transamount else 0 end) , "
+	    "ca.accountid,  total(case ca.transcode when 'Deposit' then ca.transamount else -ca.transamount end)  "
         "from checkingaccount_v1 ca "
         "inner join  accountlist_v1 acc on acc.accountid=ca.accountid "
-        "where ca.transcode ='Transfer' and ca.STATUS<>'V' and ca.transdate<=date ('now') "
+        "where ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
         "and acc.accounttype='Investment' "
         "group by ca.accountid) t "
         "left join accountlist_v1 a on a.accountid=t.accountid "
+	    "left join currencyformats_v1 c on c.currencyid=a.currencyid "
         "where a.status='Open' "
-        "group by t.accountid	" ;
+        "group by t.accountid ";
 
     q1 = db_->ExecuteQuery(sql3);
 
@@ -457,7 +461,9 @@ void mmHomePagePanel::updateAccounts()
             int stockaccountId = q1.GetInt(wxT("ACCOUNTID"));
             double stockBalance = q1.GetDouble(wxT("BALANCE"));
             wxString stocknameStr = q1.GetString(wxT("ACCOUNTNAME"));
-            //wxString curStr = q1.GetString(wxT("CURRENCYNAME"));
+            double income = q1.GetDouble(wxT("INCOME"));
+            double expenses = q1.GetDouble(wxT("EXPENCES"));
+            double baseconvrate = q1.GetDouble(wxT("BASECONVRATE"));
 
             boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(stockaccountId).lock();
             wxASSERT(pCurrencyPtr);
@@ -469,6 +475,9 @@ void mmHomePagePanel::updateAccounts()
         hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
 		hb.addTableCell(tBalanceStr, true);
 		hb.endTableRow();
+		
+		tincome += income * baseconvrate;
+        texpenses += expenses * baseconvrate;
        
        }
         if (isHeaderAdded)
@@ -512,7 +521,7 @@ void mmHomePagePanel::updateAccounts()
 	hb.endTableCell();
 	hb.startTableCell();
 
-/////////////////////////////////////////////////////////
+//Income vs Expenses-----------------------------------------------begin
 	hb.startTable(wxT("90%"));
 
     wxString incStr, expStr, difStr, colorStr;
@@ -566,7 +575,7 @@ void mmHomePagePanel::updateAccounts()
     /////////////////////////////////////
     std::vector<mmBDTransactionHolder> trans_;
 
-    q1 = db_->ExecuteQuery("select * from BILLSDEPOSITS_V1");
+    q1 = db_->ExecuteQuery("select BDID, NEXTOCCURRENCEDATE, PAYEEID, TRANSCODE, ACCOUNTID, TOACCOUNTID, TRANSAMOUNT, TOTRANSAMOUNT from BILLSDEPOSITS_V1");
 
     while (q1.NextRow())
     {
@@ -684,13 +693,14 @@ void mmHomePagePanel::updateAccounts()
     isHeaderAdded = false;
     
         static const char sql2[] = 
-        "select "
+        "select ACCOUNTNAME, "
         "CATEG|| (Case SUBCATEG when '' then '' else ':' end )||  SUBCATEG as SUBCATEGORY "
         ", AMOUNT "
         "from ( "
         "select coalesce(CAT.CATEGNAME, SCAT.CATEGNAME) as CATEG, "
         "coalesce(SUBCAT.SUBCATEGNAME, SSCAT.SUBCATEGNAME,'') as SUBCATEG, "
-        "SUM(ROUND((case CANS.TRANSCODE when 'Withdrawal' then -1 else 1 end) "
+        "ACC.ACCOUNTNAME as ACCOUNTNAME, "
+        "(ROUND((case CANS.TRANSCODE when 'Withdrawal' then -1 else 1 end) "
         "* (case CANS.CATEGID when -1 then ST.SPLITTRANSAMOUNT else CANS.TRANSAMOUNT end),2) "
         "* CF.BASECONVRATE "
         ") as AMOUNT "
@@ -702,11 +712,11 @@ void mmHomePagePanel::updateAccounts()
         "left join CATEGORY_V1 SCAT on SCAT.CATEGID = ST.CATEGID and CANS.TRANSID=ST.TRANSID "
         "left join SUBCATEGORY_V1 SSCAT on SSCAT.SUBCATEGID = ST.SUBCATEGID and SSCAT.CATEGID = ST.CATEGID and CANS.TRANSID=ST.TRANSID "
         "left join CURRENCYFORMATS_V1 CF on CF.CURRENCYID = ACC.CURRENCYID "
-        "where  CANS.TRANSCODE<>'Transfer' and CANS.TRANSDATE > date('now', '-1 month') and CANS.TRANSDATE <= date('now') "
-        "group by CATEG, SUBCATEG "
-        "order by AMOUNT "
+        "where  CANS.TRANSCODE<>'Transfer' and CANS.TRANSDATE > date('now','localtime', '-1 month') and CANS.TRANSDATE <= date('now','localtime') "
+        //"group by CATEG, SUBCATEG "
+        "order by ABS (AMOUNT) DESC, ACCOUNTNAME, CATEG, SUBCATEG, AMOUNT "
         "limit 10 "
-        ") where AMOUNT < 0" ;
+        ") where AMOUNT <> 0" ;
 
     q1 = db_->ExecuteQuery(sql2);
 
@@ -720,16 +730,18 @@ void mmHomePagePanel::updateAccounts()
         {
         if (!isHeaderAdded)
             {
-	        hb.addTableHeaderRow(_("Top Categories Last 30 Days"), 2);
+	        hb.addTableHeaderRow(_("Top Transactions Last 30 Days"), 3);
 	        isHeaderAdded = true;
             }
         
             tBalance = q1.GetDouble(wxT("AMOUNT"));
             wxString subcategString = q1.GetString(wxT("SUBCATEGORY"));
+            wxString accountString = q1.GetString(wxT("ACCOUNTNAME"));
 
             mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
 		hb.startTableRow();
+		hb.addTableCell(accountString, false, true);
 		hb.addTableCell(subcategString, false, true);
 		hb.addTableCell(tBalanceStr, true);
 		hb.endTableRow();
