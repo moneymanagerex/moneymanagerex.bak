@@ -147,7 +147,7 @@ void mmHomePagePanel::updateAccounts()
     typedef std::map<boost::shared_ptr<mmCurrency>, double, CurrencyCompare> balances_t;
     balances_t tBalances;
     //FIXME: Do not need anymore
-    bool print_bal4cur = false;
+//  bool print_bal4cur = false;
 
     /* Checking Accounts */
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
@@ -190,10 +190,10 @@ void mmHomePagePanel::updateAccounts()
                     hb.addTableCell(balance, true);
                     hb.endTableRow();
                 }
+                // Include income/expense on home page only if bank accounts being displayed.
+                tincome += income;
+                texpenses += expenses;
             }
-
-            tincome += income;
-            texpenses += expenses;
         }
 	}
 
@@ -247,10 +247,10 @@ void mmHomePagePanel::updateAccounts()
                     hb.addTableCell(balance, true);
                     hb.endTableRow();
                 }
+                // Include income/expense on home page only if term accounts being displayed.
+                tincome += income;
+                texpenses += expenses;
             }
-
-            tincome += income;
-            texpenses += expenses;
         }
 	}
 
