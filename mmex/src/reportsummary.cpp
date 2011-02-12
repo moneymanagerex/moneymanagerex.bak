@@ -69,7 +69,7 @@ wxString mmReportSummary::getHTMLText()
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
             double rate = pCurrencyPtr->baseConv_;
 
-            tBalance += bal * rate;;
+            tBalance += bal * rate;
 
             wxString balance;
             mmex::formatDoubleToCurrency(bal, balance);
@@ -108,7 +108,7 @@ wxString mmReportSummary::getHTMLText()
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
             double rate = pCurrencyPtr->baseConv_;
 
-            tTBalance += bal * rate;;
+            tTBalance += bal * rate;
 
             wxString balance;
             mmex::formatDoubleToCurrency(bal, balance);
@@ -119,6 +119,9 @@ wxString mmReportSummary::getHTMLText()
 		    hb.endTableRow();
         }
     }
+
+    // all sums below will be in base currency!
+    mmDBWrapper::loadBaseCurrencySettings(db_);
 
     wxString tTBalanceStr;
 	mmex::formatDoubleToCurrency(tTBalance, tTBalanceStr);
