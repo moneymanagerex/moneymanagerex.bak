@@ -345,7 +345,7 @@ void mmStocksPanel::initVirtualListControl()
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
     double originalVal = 0.0;
-    double value = 0.0;
+//    double value = 0.0;
     
     mmDBWrapper::loadSettings(accountID_, db_);
         
