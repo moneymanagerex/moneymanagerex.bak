@@ -23,5 +23,10 @@ const int mmex::MIN_DATAVERSION = 2;
 const wxChar * const mmex::DATAVERSION = wxT("2");
 const wxChar *const mmex::DEFDATEFORMAT = wxT("%m/%d/%y");
 const wxChar *const mmex::DEFDELIMTER = wxT(",");
-const wxChar *const mmex::DEFSTOCKURL = wxT("http://www.google.com/finance?q=%s");
+//const wxChar *const mmex::DEFSTOCKURL = wxT("http://www.google.com/finance?q=%s");
+const wxChar *const mmex::DEFSTOCKURL = wxT("http://finance.yahoo.com/echarts?s=%s");
+
+//US Dollar (USD) in Euro (EUR) Chart
+//http://www.google.com/finance?q=CURRENCY%3AUSD
+
 //----------------------------------------------------------------------------
