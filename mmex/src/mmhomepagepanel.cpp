@@ -278,6 +278,7 @@ void mmHomePagePanel::updateAccounts()
     tBalance = 0.0;
 
     static const char sql[] = 
+        "select ACCOUNTID, CURRENCYNAME, BALANCE, BASECONVRATE from ( "
         "select t.accountid as ACCOUNTID, c.currencyname as CURRENCYNAME, "
         "total (t.BALANCE) as BALANCE, "
         "c.BASECONVRATE as BASECONVRATE "
@@ -306,25 +307,21 @@ void mmHomePagePanel::updateAccounts()
 	    "left join accountlist_v1 a on a.accountid=t.accountid "
         "left join  currencyformats_v1 c on c.currencyid=a.currencyid "
         "where a.status='Open' and balance<>0 "
-        "group by c.currencyid	";
+        "group by c.currencyid) order by CURRENCYNAME ";
 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-
-    //if (mmIniOptions::enableStocks_)
-    //{
+        
+        //How many currencies used
+        int curnumber = 0.0;
+        while(q1.NextRow())
+        {
+	     curnumber+=1;   
+        }
 
     if (db_)
     {
         while(q1.NextRow())
         {
-        if (!isHeaderAdded)
-            {
-     		hb.startTableRow();
-            hb.addTableHeaderCell(_("Currency"));
-            hb.addTableHeaderCell(_("Summary"));
-  	        isHeaderAdded = true;
-            }
-        
             int accountId = q1.GetInt(wxT("ACCOUNTID"));
             double currBalance = q1.GetDouble(wxT("BALANCE"));
             wxString currencyStr = q1.GetString(wxT("CURRENCYNAME"));
@@ -336,19 +333,31 @@ void mmHomePagePanel::updateAccounts()
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
             mmex::formatDoubleToCurrency(currBalance, tBalanceStr);
 
-		hb.startTableRow();
-        hb.addTableCell(currencyStr);
-		hb.addTableCell(tBalanceStr, true);
-		hb.endTableRow();
-		
 		tBalance += currBalance * convRate;
        
-       }
+        //Show nothing if used currencies less then 2
+        if (curnumber >1)
+        {       
+            if (!isHeaderAdded)
+            {
+     		hb.startTableRow();
+            hb.addTableHeaderCell(_("Currency"));
+            hb.addTableHeaderCell(_("Summary"));
+  	        isHeaderAdded = true;
+            }
+		
+		    hb.startTableRow();
+            hb.addTableCell(currencyStr);
+		    hb.addTableCell(tBalanceStr, true);
+		    hb.endTableRow();
+		
+            }
+        }
         if (isHeaderAdded)
             {
 		hb.addRowSeparator(2);
             }
-       
+        
         q1.Finalize();
     }
     //}
