@@ -312,7 +312,7 @@ void mmHomePagePanel::updateAccounts()
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
         
         //How many currencies used
-        int curnumber = 0.0;
+        int curnumber = 0;
         while(q1.NextRow())
         {
 	     curnumber+=1;   
@@ -386,33 +386,27 @@ void mmHomePagePanel::updateAccounts()
 
 //* Assets *//-----------------------------------------------------begin
 
+    double assetBalance = mmDBWrapper::getAssetBalance(db_);
+    wxString assetBalanceStr;
+    mmDBWrapper::loadBaseCurrencySettings(db_);
+    mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
+
     if (mmIniOptions::enableAssets_)
     {
-        double assetBalance = mmDBWrapper::getAssetBalance(db_);
-        wxString assetBalanceStr;
-        mmDBWrapper::loadBaseCurrencySettings(db_);
-        mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
-
 		hb.startTableRow();
 		hb.addTableCellLink(wxT("Assets"), _("Assets"), false, true);
 		hb.addTableCell(assetBalanceStr, true);
 		hb.endTableRow();
 		hb.addRowSeparator(2);
-
-        tBalance += assetBalance;
-
-        //if (BaseCurrency)
-        //{
-        //    print_bal4cur |= (assetBalance != 0.0 && tBalances[BaseCurrency] != 0.0);
-        //    tBalances[BaseCurrency] += assetBalance;
-        //}
     }
+
+    tBalance += assetBalance;
     
 //* Assets *//---------------------------------------------------------end
 
 //* Stocks *//-----------------------------------------------------begin
-    
-    isHeaderAdded = false;
+   
+isHeaderAdded = false;
 
     static const char sql3[] = 
         "select INCOME, EXPENCES, t.accountid as ACCOUNTID, a.accountname as ACCOUNTNAME, "
@@ -450,73 +444,56 @@ void mmHomePagePanel::updateAccounts()
         "where a.status='Open' "
         "group by t.accountid ";
 
-    q1 = db_->ExecuteQuery(sql3);
+q1 = db_->ExecuteQuery(sql3);
 
-    if (mmIniOptions::enableStocks_)
+if (db_)
+{
+    while(q1.NextRow())
     {
+        int stockaccountId = q1.GetInt(wxT("ACCOUNTID"));
+        double stockBalance = q1.GetDouble(wxT("BALANCE"));
+        wxString stocknameStr = q1.GetString(wxT("ACCOUNTNAME"));
+        double income = q1.GetDouble(wxT("INCOME"));
+        double expenses = q1.GetDouble(wxT("EXPENCES"));
+        double baseconvrate = q1.GetDouble(wxT("BASECONVRATE"));
 
-    if (db_)
-    {
-        while(q1.NextRow())
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(stockaccountId).lock();
+        wxASSERT(pCurrencyPtr);
+        mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+
+        mmex::formatDoubleToCurrency(stockBalance, tBalanceStr);
+        // Accumulate income and expences for stocks or not
+        if (mmIniOptions::enableStocks_)		
         {
-        if (!isHeaderAdded)
-            {
-     		hb.startTableRow();
-            hb.addTableHeaderCell(_("Stocks"));
-            hb.addTableHeaderCell(_("Summary"));
-  	        isHeaderAdded = true;
-            }
-        
-            int stockaccountId = q1.GetInt(wxT("ACCOUNTID"));
-            double stockBalance = q1.GetDouble(wxT("BALANCE"));
-            wxString stocknameStr = q1.GetString(wxT("ACCOUNTNAME"));
-            double income = q1.GetDouble(wxT("INCOME"));
-            double expenses = q1.GetDouble(wxT("EXPENCES"));
-            double baseconvrate = q1.GetDouble(wxT("BASECONVRATE"));
-
-            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(stockaccountId).lock();
-            wxASSERT(pCurrencyPtr);
-            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-
-            mmex::formatDoubleToCurrency(stockBalance, tBalanceStr);
-
-		hb.startTableRow();
-        hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
-		hb.addTableCell(tBalanceStr, true);
-		hb.endTableRow();
-		
 		tincome += income * baseconvrate;
         texpenses += expenses * baseconvrate;
-       
-       }
+        }
+
+		//We cat hide or show Stocks on Home Page
+        if (mmIniOptions::enableStocks_)		
+        {
+            if (!isHeaderAdded)
+            {
+     		    hb.startTableRow();
+                hb.addTableHeaderCell(_("Stocks"));
+                hb.addTableHeaderCell(_("Summary"));
+  	            isHeaderAdded = true;
+            }
+		
+		    hb.startTableRow();
+            hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
+		    hb.addTableCell(tBalanceStr, true);
+		    hb.endTableRow();
+        }  
+    }
         if (isHeaderAdded)
             {
 		hb.addRowSeparator(2);
             }
        
-        q1.Finalize();
-    }
-        
-        /*double invested;
-        double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);
-        wxString stockBalanceStr;
-        mmDBWrapper::loadBaseCurrencySettings(db_);
-        mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
+    q1.Finalize();
+}   
 
-		hb.startTableRow();
-		hb.addTableCellLink(wxT("Stocks"), _("Stock Investments"), false, true);
-		hb.addTableCell(stockBalanceStr, true);
-		hb.endTableRow();
-		hb.addRowSeparator(2);
-
-        tBalance += stockBalance;
-        
-        if (BaseCurrency)
-        {
-            print_bal4cur |= (stockBalance != 0.0 && tBalances[BaseCurrency] != 0.0);
-            tBalances[BaseCurrency] += stockBalance;
-        }*/
-    }
 //* Stocks *//-----------------------------------------------------end
 
     tBalances.clear();
