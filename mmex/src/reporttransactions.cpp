@@ -58,6 +58,7 @@ wxString mmReportTransactions::getHTMLText()
 
 		hb.startTableRow();
 		hb.addTableHeaderCell(_("Date"));
+		hb.addTableHeaderCell(_("Number"));
 		hb.addTableHeaderCell(_("Account"));
 		hb.addTableHeaderCell(_("Payee"));
 		hb.addTableHeaderCell(_("Type"));
@@ -75,6 +76,7 @@ wxString mmReportTransactions::getHTMLText()
 
 			hb.startTableRow();
 			hb.addTableCell(refTrans[index]->dateStr_);
+			hb.addTableCell(refTrans[index]->transNum_);
 			hb.addTableCell(refTrans[index]->fromAccountStr_, false, true);
 			hb.addTableCell(refTrans[index]->payeeStr_, false, true);
 			if (refTrans[index]->transType_ == wxT("Deposit"))
@@ -118,12 +120,19 @@ wxString mmReportTransactions::getHTMLText()
         core_->currencyList_.loadBaseCurrencySettings();
         mmex::formatDoubleToCurrency(total, balanceStr);
 
-	hb.addRowSeparator(8);
-	hb.addTotalRow(_("Total Amount: "), 8, balanceStr);
+	hb.addRowSeparator(9);
+	hb.addTotalRow(_("Total Amount: "), 9, balanceStr);
         hb.endTable();
 
 	hb.endCenter();
         hb.end();
+
+//TODO: We want to know what parameters have been selected
+        //dt = _("Filter: ");
+
+        //hb.addLineBreak();
+        //hb.addLineBreak();
+        //hb.addHeader(7, dt);
 
         return hb.getHTMLText();
 }
