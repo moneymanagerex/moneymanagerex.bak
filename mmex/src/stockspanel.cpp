@@ -383,10 +383,13 @@ void mmStocksPanel::initVirtualListControl()
     header->SetLabel(lbl);
 
     // --
-
+    //TODO: SQLite can't year format like yy can only yyyy
+    //Convertion should be easy
     static const char sql[] =
     "select STOCKID, HELDAT,  STOCKNAME, SYMBOL, NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, VALUE, COMMISSION, "
-    "strftime(INFOVALUE,PURCHASEDATE) as PURCHDATE "
+    "coalesce ( strftime(INFOVALUE,PURCHASEDATE), replace (replace (replace (INFOVALUE, '%y', "
+    "(replace(strftime('%Y',PURCHASEDATE)-(round(strftime('%Y',PURCHASEDATE)/100)*100),'.0',''))) , '%m' , strftime('%m',PURCHASEDATE)) "
+    ", '%d', strftime('%d',PURCHASEDATE))) as PURCHDATE "
     "from STOCK_V1 "
     "left join infotable_v1 i on i.INFONAME='DATEFORMAT' "
     "where HELDAT = ? "
