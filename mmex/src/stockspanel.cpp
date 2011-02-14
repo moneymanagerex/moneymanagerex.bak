@@ -40,11 +40,12 @@ ID_PANEL_STOCKS_STATIC_DETAILS_MINI
 	};
 enum EColumn
 { 
-    COL_HELDAT,
+    //COL_HELDAT,
+    COL_DATE,
     COL_NAME, 
     COL_NUMBER, 
-    COL_GAIN_LOSS,
     COL_VALUE,
+    COL_GAIN_LOSS,
     COL_CURRENT,
     COL_NOTES,
     COL_MAX, // number of columns
@@ -145,11 +146,11 @@ mmStocksPanel::~mmStocksPanel()
         delete m_LED;
 
     long col0, col1, col2, col3, col4, col5, col6;
-    col0 = listCtrlAccount_->GetColumnWidth(COL_HELDAT);
+    col0 = listCtrlAccount_->GetColumnWidth(COL_DATE);
     col1 = listCtrlAccount_->GetColumnWidth(COL_NAME);
     col2 = listCtrlAccount_->GetColumnWidth(COL_NUMBER);
-    col3 = listCtrlAccount_->GetColumnWidth(COL_GAIN_LOSS);
-    col4 = listCtrlAccount_->GetColumnWidth(COL_VALUE);
+    col3 = listCtrlAccount_->GetColumnWidth(COL_VALUE);
+    col4 = listCtrlAccount_->GetColumnWidth(COL_GAIN_LOSS);
     col5 = listCtrlAccount_->GetColumnWidth(COL_CURRENT);
     col6 = listCtrlAccount_->GetColumnWidth(COL_NOTES);
 
@@ -223,7 +224,7 @@ void mmStocksPanel::CreateControls()
                                            wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
-    listCtrlAccount_->InsertColumn(COL_HELDAT, _("Held At"));
+    listCtrlAccount_->InsertColumn(COL_DATE, _("Purchase Date"));
     wxListItem itemCol;
     itemCol.SetImage(-1);
     //itemCol.SetAlign(wxLIST_FORMAT_LEFT);
@@ -269,11 +270,11 @@ void mmStocksPanel::CreateControls()
     mmDBWrapper::getINISettingValue(inidb_,
                                     wxT("STOCKS_COL6_WIDTH"), wxT("-2")).ToLong(&col6);
 
-    listCtrlAccount_->SetColumnWidth(COL_HELDAT, col0);
+    listCtrlAccount_->SetColumnWidth(COL_DATE, col0);
     listCtrlAccount_->SetColumnWidth(COL_NAME, col1);
     listCtrlAccount_->SetColumnWidth(COL_NUMBER, col2);
-    listCtrlAccount_->SetColumnWidth(COL_GAIN_LOSS, col3);
-    listCtrlAccount_->SetColumnWidth(COL_VALUE, col4);
+    listCtrlAccount_->SetColumnWidth(COL_VALUE, col3);
+    listCtrlAccount_->SetColumnWidth(COL_GAIN_LOSS, col4);
     listCtrlAccount_->SetColumnWidth(COL_CURRENT, col5);
     listCtrlAccount_->SetColumnWidth(COL_NOTES, col6);
 
@@ -384,9 +385,12 @@ void mmStocksPanel::initVirtualListControl()
     // --
 
     static const char sql[] =
-    "select STOCKID, HELDAT, PURCHASEDATE, STOCKNAME, SYMBOL, NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, VALUE, COMMISSION "
-    "from STOCK_V1 where HELDAT = ? "
-    "order by PURCHASEDATE, STOCKNAME ";
+    "select STOCKID, HELDAT,  STOCKNAME, SYMBOL, NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, VALUE, COMMISSION, "
+    "strftime(INFOVALUE,PURCHASEDATE) as PURCHDATE "
+    "from STOCK_V1 "
+    "left join infotable_v1 i on i.INFONAME='DATEFORMAT' "
+    "where HELDAT = ? "
+    "order by julianday(PURCHASEDATE), STOCKNAME ";
     
         wxSQLite3Statement st = db_->PrepareStatement(sql);
         st.Bind(1, accountID_);
@@ -399,6 +403,7 @@ void mmStocksPanel::initVirtualListControl()
         mmStockTransactionHolder th;
 
         th.stockID_           = q1.GetInt(wxT("STOCKID"));
+        th.stockPDate_        = q1.GetString(wxT("PURCHDATE"));
         int accountID         = q1.GetInt(wxT("HELDAT"));
         th.heldAt_            = mmDBWrapper::getAccountName(db_, accountID);
         th.shareName_         = q1.GetString(wxT("STOCKNAME"));
@@ -419,6 +424,7 @@ void mmStocksPanel::initVirtualListControl()
         mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
         mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
         mmex::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
+        if ((th.numShares_ - round(th.numShares_)) != 0.0 )
         mmex::formatDoubleToCurrencyEdit(th.numShares_, th.numSharesStr_);
 
         trans_.push_back(th);
@@ -819,8 +825,8 @@ void stocksListCtrl::OnItemRightClick(wxListEvent& event)
 
 wxString mmStocksPanel::getItem(long item, long column)
 {
-    if (column == COL_HELDAT)
-        return trans_[item].heldAt_;
+    if (column == COL_DATE)
+        return trans_[item].stockPDate_;
 
     if (column == COL_NAME)
         return trans_[item].shareName_;

@@ -79,6 +79,7 @@ public:
     int stockID_;
 
     wxString heldAt_;
+    wxString stockPDate_;
     wxString shareName_;
     wxString shareNotes_;
     wxString numSharesStr_;
@@ -119,7 +120,7 @@ public:
 
     void CreateControls();
 
-    /* updates the checking panel data */
+    /* updates thstockide checking panel data */
     void initVirtualListControl();
 
     /* Getter for Virtual List Control */
