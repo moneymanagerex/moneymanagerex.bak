@@ -427,7 +427,7 @@ void mmStocksPanel::initVirtualListControl()
         mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
         mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
         mmex::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
-        if ((th.numShares_ - round(th.numShares_)) != 0.0 )
+        if ((th.numShares_ - static_cast<int>(th.numShares_)) != 0.0 )
         mmex::formatDoubleToCurrencyEdit(th.numShares_, th.numSharesStr_);
 
         trans_.push_back(th);
