@@ -76,7 +76,7 @@ bool mmStockDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
 void mmStockDialog::dataToControls()
 {
     static const char sql[] = 
-    "select * "
+    "select HELDAT, STOCKNAME, SYMBOL, NOTES, PURCHASEDATE, NUMSHARES, VALUE, PURCHASEPRICE, CURRENTPRICE, COMMISSION "
     "from STOCK_V1 "
     "where STOCKID = ?";
 
@@ -98,25 +98,20 @@ void mmStockDialog::dataToControls()
         dpc_->SetValue(dtdt);
 
 		wxString numShares;
-		mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("NUMSHARES")), 
-            numShares);
+		mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("NUMSHARES")), numShares);
 		numShares_->SetValue(numShares);
 
         wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUE")), 
-            dispAmount);
+        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUE")), dispAmount);
         valueInvestment_->SetLabel(dispAmount);
     
-        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("PURCHASEPRICE")), 
-            dispAmount);
+        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("PURCHASEPRICE")), dispAmount);
         purchasePrice_->SetValue(dispAmount);
 
-        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("CURRENTPRICE")), 
-            dispAmount);
+        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("CURRENTPRICE")), dispAmount);
         currentPrice_->SetValue(dispAmount);
 
-        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("COMMISSION")), 
-            dispAmount);
+        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("COMMISSION")), dispAmount);
         commission_->SetValue(dispAmount);
     }
     st.Finalize();
@@ -193,14 +188,12 @@ void mmStockDialog::CreateControls()
 
     wxStaticText* itemStaticText15 = new wxStaticText( itemPanel5, wxID_STATIC,
         _("Number of Shares"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText15, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemFlexGridSizer6->Add(itemStaticText15, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     numShares_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_NUMBER_SHARES, 
-        wxT(""), wxDefaultPosition, wxSize(200, -1), 0 );
+        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
     numShares_->SetToolTip(_("Enter number of shares held"));
-    itemFlexGridSizer6->Add(numShares_, 0, 
-        wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer6->Add(numShares_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText17 = new wxStaticText( itemPanel5, wxID_STATIC, 
         _("Purchase Price"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -215,11 +208,10 @@ void mmStockDialog::CreateControls()
 
     wxStaticText* itemStaticText211 = new wxStaticText( itemPanel5, wxID_STATIC, 
         _("Commission"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText211, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemFlexGridSizer6->Add(itemStaticText211, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     commission_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_COMMISSION, 
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+        wxT("0"), wxDefaultPosition, wxDefaultSize, 0 );
     commission_->SetToolTip(_("Enter any commission paid"));
     itemFlexGridSizer6->Add(commission_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
