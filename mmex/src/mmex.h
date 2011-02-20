@@ -38,6 +38,7 @@ class mmCoreDB;
 class mmPrintableBase;
 class mmPanelBase;
 class mmTreeItemData;
+class customSQLReportIndex;
 //----------------------------------------------------------------------------
 
 struct CategInfo
@@ -119,7 +120,10 @@ private:
 
     mmTreeItemData* selectedItemData_;
     wxMenuItem* menuItemOnlineUpdateCurRate_; // Menu Item for Disabling Item
-	
+
+    /* Custom Reports */
+    customSQLReportIndex* custRepIndex_;
+
     /* printing */
     boost::scoped_ptr<wxHtmlEasyPrinting> printer_;
 
@@ -131,6 +135,8 @@ private:
     wxString m_topCategories;
     bool activeTermAccounts_;
     wxArrayString getAccountsArray(bool withTermAccounts = false);
+
+    void createCustomReport(int index);
 
     void cleanup();
     wxSizer* cleanupHomePanel(bool new_sizer = true);
@@ -194,6 +200,10 @@ private:
     void OnOrgPayees(wxCommandEvent& event);
     void OnCategoryRelocation(wxCommandEvent& event);
     void OnPayeeRelocation(wxCommandEvent& event);
+
+    void OnNewCustomSqlReport(wxCommandEvent& event);
+    void OnEditCustomSqlReport(wxCommandEvent& event);
+    void OnDeleteCustomSqlReport(wxCommandEvent& event);
 
     void OnOptions(wxCommandEvent& event);
     void OnBudgetSetupDialog(wxCommandEvent& event);
