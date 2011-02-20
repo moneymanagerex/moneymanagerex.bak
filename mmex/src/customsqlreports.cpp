@@ -43,7 +43,7 @@ wxString mmCustomSQLReport::getHTMLText()
 	hb.startCenter();
     hb.startTable(wxT("90%"));
 
-    wxSQLite3ResultSet sqlQueryResult = core_->db_->ExecuteQuery(sqlQuery_.c_str());
+    wxSQLite3ResultSet sqlQueryResult = core_->db_->ExecuteQuery(sqlQuery_);
 
     int columnCount = sqlQueryResult.GetColumnCount();
     hb.startTableRow();

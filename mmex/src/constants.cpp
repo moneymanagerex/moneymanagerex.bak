@@ -36,5 +36,5 @@ wxString mmex::getProgramVersion()
 
 wxString mmex::getCustomReportIndexFilename()
 {
-    return wxString() << wxGetCwd() << wxT("\\") << wxT("CustomSQLReportIndex.txt");
+    return wxString() << wxGetCwd() << wxT("/") << wxT("CustomSQLReportIndex.txt");
 }
