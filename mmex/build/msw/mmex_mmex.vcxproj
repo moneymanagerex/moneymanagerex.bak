@@ -1677,6 +1677,7 @@
     <ClCompile Include="..\..\src\chart.cpp" />
     <ClCompile Include="..\..\src\constants.cpp" />
     <ClCompile Include="..\..\src\currencydialog.cpp" />
+    <ClCompile Include="..\..\src\customsqlreports.cpp" />
     <ClCompile Include="..\..\src\dbwrapper.cpp" />
     <ClCompile Include="..\..\src\fileviewerdialog.cpp" />
     <ClCompile Include="..\..\src\filtertransdialog.cpp" />
@@ -1746,6 +1747,7 @@
     <ClInclude Include="..\..\src\chart.h" />
     <ClInclude Include="..\..\src\constants.h" />
     <ClInclude Include="..\..\src\currencydialog.h" />
+    <ClInclude Include="..\..\src\customsqlreports.h" />
     <ClInclude Include="..\..\src\dbwrapper.h" />
     <ClInclude Include="..\..\src\defs.h" />
     <ClInclude Include="..\..\src\fileviewerdialog.h" />

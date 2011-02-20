@@ -62,6 +62,7 @@
 #include "paths.h"
 #include "constants.h"
 #include "platfdep.h"
+#include "customsqlreports.h"
 //----------------------------------------------------------------------------
 
 /* Include XPM Support */
@@ -361,6 +362,10 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_CATEGORY_RELOCATION, mmGUIFrame::OnCategoryRelocation)
     EVT_MENU(MENU_PAYEE_RELOCATION, mmGUIFrame::OnPayeeRelocation)
 
+    EVT_MENU(MENU_CUSTOM_SQL_NEW, mmGUIFrame::OnNewCustomSqlReport)
+    EVT_MENU(MENU_CUSTOM_SQL_EDIT, mmGUIFrame::OnEditCustomSqlReport)
+    EVT_MENU(MENU_CUSTOM_SQL_DELETE, mmGUIFrame::OnDeleteCustomSqlReport)
+
     EVT_MENU(MENU_ONLINE_UPD_CURRENCY_RATE, mmGUIFrame::OnOnlineUpdateCurRate)
 	EVT_UPDATE_UI(MENU_VIEW_TOOLBAR, mmGUIFrame::OnViewToolbarUpdateUI)
 	EVT_UPDATE_UI(MENU_VIEW_LINKS, mmGUIFrame::OnViewLinksUpdateUI)
@@ -558,7 +563,8 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     printer_-> SetHeader( printHeaderBase + wxT("(@PAGENUM@/@PAGESCNT@)<hr>"), wxPAGE_ALL);
 
     loadConfigFile(); // load from Settings DB
-	
+    custRepIndex_ = new customSQLReportIndex();
+
     /* Create the Controls for the frame */
     createMenu();
     createToolBar();
@@ -865,16 +871,92 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         navTreeCtrl_->SetItemBold(budgeting, true);
     }
 
-    wxTreeItemId reports = navTreeCtrl_->AppendItem(root, 
-        _("Reports"), 4, 4);
+    wxTreeItemId reports = navTreeCtrl_->AppendItem(root, _("Reports"), 4, 4);
     navTreeCtrl_->SetItemBold(reports, true);
-    navTreeCtrl_->SetItemData(reports, 
-        new mmTreeItemData(wxT("Reports")));
+    navTreeCtrl_->SetItemData(reports, new mmTreeItemData(wxT("Reports")));
 
-    wxTreeItemId reportsSummary = navTreeCtrl_->AppendItem(reports, 
-        _("Summary of Accounts"), 4, 4);
-    navTreeCtrl_->SetItemData(reportsSummary, 
-        new mmTreeItemData(wxT("Summary of Accounts")));
+    /* ================================================================================================= */
+    if (custRepIndex_->hasActiveSQLReports())
+    {
+        wxTreeItemId customSqlReports = navTreeCtrl_->AppendItem(root, _("Custom SQL Reports"), 4, 4);
+        navTreeCtrl_->SetItemBold(customSqlReports, true);
+        navTreeCtrl_->SetItemData(customSqlReports, new mmTreeItemData(wxT("Custom_Reports")));
+
+        custRepIndex_->resetReportsIndex();
+
+        wxString reportTitle = custRepIndex_->nextReportTitle();
+        if (custRepIndex_->validTitle())
+        {
+            wxTreeItemId customSqlReport_0 = navTreeCtrl_->AppendItem(customSqlReports,reportTitle, 4, 4);
+            navTreeCtrl_->SetItemData(customSqlReport_0, new mmTreeItemData(wxT("Custom_Report_0")));
+        }
+
+        reportTitle = custRepIndex_->nextReportTitle();
+        if (custRepIndex_->validTitle())
+        {
+            wxTreeItemId customSqlReport_1 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 4, 4);
+            navTreeCtrl_->SetItemData(customSqlReport_1, new mmTreeItemData(wxT("Custom_Report_1")));
+        }
+
+        reportTitle = custRepIndex_->nextReportTitle();
+        if (custRepIndex_->validTitle())
+        {
+            wxTreeItemId customSqlReport_2 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 4, 4);
+            navTreeCtrl_->SetItemData(customSqlReport_2, new mmTreeItemData(wxT("Custom_Report_2")));
+        }
+
+        reportTitle = custRepIndex_->nextReportTitle();
+        if (custRepIndex_->validTitle())
+        {
+            wxTreeItemId customSqlReport_3 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 4, 4);
+            navTreeCtrl_->SetItemData(customSqlReport_3, new mmTreeItemData(wxT("Custom_Report_3")));
+        }
+
+        reportTitle = custRepIndex_->nextReportTitle();
+        if (custRepIndex_->validTitle())
+        {
+            wxTreeItemId customSqlReport_4 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 4, 4);
+            navTreeCtrl_->SetItemData(customSqlReport_4, new mmTreeItemData(wxT("Custom_Report_4")));
+        }
+        reportTitle = custRepIndex_->nextReportTitle();
+        if (custRepIndex_->validTitle())
+        {
+            wxTreeItemId customSqlReport_5 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 4, 4);
+            navTreeCtrl_->SetItemData(customSqlReport_5, new mmTreeItemData(wxT("Custom_Report_5")));
+        }
+        reportTitle = custRepIndex_->nextReportTitle();
+        if (custRepIndex_->validTitle())
+        {
+            wxTreeItemId customSqlReport_6 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 4, 4);
+            navTreeCtrl_->SetItemData(customSqlReport_6, new mmTreeItemData(wxT("Custom_Report_6")));
+        }
+
+        reportTitle = custRepIndex_->nextReportTitle();
+        if (custRepIndex_->validTitle())
+        {
+            wxTreeItemId customSqlReport_7 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 4, 4);
+            navTreeCtrl_->SetItemData(customSqlReport_7, new mmTreeItemData(wxT("Custom_Report_7")));
+        }
+
+        reportTitle = custRepIndex_->nextReportTitle();
+        if (custRepIndex_->validTitle())
+        {
+            wxTreeItemId customSqlReport_8 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 4, 4);
+            navTreeCtrl_->SetItemData(customSqlReport_8, new mmTreeItemData(wxT("Custom_Report_8")));
+        }
+
+        reportTitle = custRepIndex_->nextReportTitle();
+        if (custRepIndex_->validTitle())
+        {
+            wxTreeItemId customSqlReport_9 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 4, 4);
+            navTreeCtrl_->SetItemData(customSqlReport_9, new mmTreeItemData(wxT("Custom_Report_9")));
+        }
+    }
+
+    /* ================================================================================================= */
+
+    wxTreeItemId reportsSummary = navTreeCtrl_->AppendItem(reports, _("Summary of Accounts"), 4, 4);
+    navTreeCtrl_->SetItemData(reportsSummary, new mmTreeItemData(wxT("Summary of Accounts")));
 
     if (mmIniOptions::enableStocks_)
     {
@@ -1276,6 +1358,31 @@ wxDateTime mmGUIFrame::getUserDefinedFinancialYear(bool prevDayRequired)
     return financialYear;
 }
 
+void mmGUIFrame::createCustomReport(int index)
+{
+    wxString rfn = custRepIndex_->reportFileName(index);
+    wxTextFile sqlFile(rfn);  
+    if ( sqlFile.Exists() )
+    {
+        wxString sqlStr;
+        sqlFile.Open();
+        sqlStr << sqlFile.GetFirstLine();
+        while (! sqlFile.Eof())
+        {
+            sqlStr << sqlFile.GetNextLine();
+        }
+
+        mmCustomSQLReport* csr = new mmCustomSQLReport(m_core.get(), custRepIndex_->reportTitle(), sqlStr);
+        menuPrintingEnable(true);
+        createReportsPage(csr);
+    }
+    else
+    {
+        wxString msg = wxString() << _("Cannot locate file: ") << rfn << wxT("\n\n");
+        wxMessageBox(msg,_("Custom SQL Reports"),wxOK|wxICON_ERROR);
+    }
+}
+
 void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 {
     menuPrintingEnable(false);
@@ -1398,6 +1505,31 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
+//===============================================================================================
+
+//        else if (iData->getString() == wxT("Custom_Reports") )
+//            updateNavTreeControl();
+        else if (iData->getString() == wxT("Custom_Report_0") )
+            createCustomReport(0);
+        else if (iData->getString() == wxT("Custom_Report_1") )
+            createCustomReport(1);
+        else if (iData->getString() == wxT("Custom_Report_2") )
+            createCustomReport(2);
+        else if (iData->getString() == wxT("Custom_Report_3") )
+            createCustomReport(3);
+        else if (iData->getString() == wxT("Custom_Report_4") )
+            createCustomReport(4);
+        else if (iData->getString() == wxT("Custom_Report_5") )
+            createCustomReport(5);
+        else if (iData->getString() == wxT("Custom_Report_6") )
+            createCustomReport(6);
+        else if (iData->getString() == wxT("Custom_Report_7") )
+            createCustomReport(7);
+        else if (iData->getString() == wxT("Custom_Report_8") )
+            createCustomReport(8);
+        else if (iData->getString() == wxT("Custom_Report_9") )
+            createCustomReport(9);
+//========================================================================
 
         else if (iData->getString() == wxT("Summary of Assets"))
         {
@@ -2562,14 +2694,32 @@ void mmGUIFrame::createMenu()
     menuTools->AppendSeparator();
 
     wxMenuItem* menuItemTransactions = new wxMenuItem(menuTools, MENU_TRANSACTIONREPORT, 
-		_("&Transaction Filter"), _("Transaction Filter"));
+		_("&Transaction Filter..."), _("Transaction Filter"));
 	menuItemTransactions->SetBitmap(wxBitmap(filter_xpm));
     menuTools->Append(menuItemTransactions);
 
     menuTools->AppendSeparator();
 
+    // Create the head menu
+    wxMenu *menuCustomSqlReports = new wxMenu;
+    // create the menu items 
+    wxMenuItem* menuItemCustomReportNew = new wxMenuItem(menuCustomSqlReports, 
+        MENU_CUSTOM_SQL_NEW, _("New..."),_("Create a new SQL report"));
+    wxMenuItem* menuItemCustomReportEdit = new wxMenuItem(menuCustomSqlReports, 
+        MENU_CUSTOM_SQL_EDIT, _("Edit..."),_("Edit an existing SQL report"));
+    wxMenuItem* menuItemCustomReportDelete = new wxMenuItem(menuCustomSqlReports, 
+        MENU_CUSTOM_SQL_DELETE, _("Delete..."),_("Remove a file from the Custom SQL Reports menu"));
+    // Add menu items to the Custom SQL Reports menu
+    menuCustomSqlReports->Append(menuItemCustomReportNew);
+    menuCustomSqlReports->Append(menuItemCustomReportEdit);
+    menuCustomSqlReports->Append(menuItemCustomReportDelete);
+    // Add menu to Tools menu
+    menuTools->AppendSubMenu(menuCustomSqlReports,_("Custom SQL Reports..."),_("Create or modify SQL reports for the Reports section"));
+
+    menuTools->AppendSeparator();
+
     wxMenuItem* menuItemOptions = new wxMenuItem(menuTools, wxID_PREFERENCES, 
-		  _("&Options"), _("Show the Options Dialog"));
+		  _("&Options..."), _("Show the Options Dialog"));
 	menuItemOptions->SetBitmap(wxBitmap(wrench_xpm));
     menuTools->Append(menuItemOptions);
 
@@ -3817,6 +3967,34 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
         wxMessageBox(msgStr,_("Payee Relocation Result"));
     }
 }
+
+//----------------------------------------------------------------------------
+void mmGUIFrame::OnNewCustomSqlReport(wxCommandEvent& /*event*/)
+{
+    custRepIndex_->initIndexFileHeader();
+    updateNavTreeControl();
+
+    wxString msg = wxString() 
+        << _("New Custom SQL report: Stage 1:")             << wxT("\n\n")
+        << _("Add Report name and Filename to index file: ")<< wxT("\n")
+        << mmex::getCustomReportIndexFilename()             << wxT("\n\n")
+        << _("Add report file same directory: ")            << wxT("\n\n")
+        << _("Waiting Stage 2 Implementation");
+    wxMessageBox(msg,_("Custom SQL Reports"));
+}
+
+//----------------------------------------------------------------------------
+void mmGUIFrame::OnEditCustomSqlReport(wxCommandEvent& /*event*/)
+{
+    wxMessageBox(_("Edit Custom SQL report - Waiting Stage 2 Implementation"),_("Custom SQL Reports"));
+}
+
+//----------------------------------------------------------------------------
+void mmGUIFrame::OnDeleteCustomSqlReport(wxCommandEvent& /*event*/)
+{
+    wxMessageBox(_("Delete Custom SQL report - Waiting Stage 2 Implementation"),_("Custom SQL Reports"));
+}
+
 //----------------------------------------------------------------------------
 
 void wxNewDatabaseWizardPage1::OnCurrency(wxCommandEvent& /*event*/)

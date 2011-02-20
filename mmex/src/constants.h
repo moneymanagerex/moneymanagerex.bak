@@ -33,6 +33,8 @@ wxString getProgramName();
 
 wxString getProgramVersion();
 
+wxString getCustomReportIndexFilename();
+
 } // namespace mmex
 
 //----------------------------------------------------------------------------

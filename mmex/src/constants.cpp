@@ -18,16 +18,23 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "constants.h"
 #include <wx/string.h>
+#include <wx/filefn.h>
+
 //----------------------------------------------------------------------------
 
 wxString mmex::getProgramName()
 {
-        return wxString(wxT("MoneyManagerEx"));
+    return wxString(wxT("MoneyManagerEx"));
 }
 //----------------------------------------------------------------------------
 
 wxString mmex::getProgramVersion()
 {
-        return wxString(wxT("0.9.8.0"));
+    return wxString(wxT("0.9.8.0"));
 }
 //----------------------------------------------------------------------------
+
+wxString mmex::getCustomReportIndexFilename()
+{
+    return wxString() << wxGetCwd() << wxT("\\") << wxT("CustomSQLReportIndex.txt");
+}
