@@ -43,7 +43,7 @@ const wxIcon& getProgramIcon();
 enum ESharedFile { LANG_DIR, SHARED_FILES_MAX };
 wxString getPathShared(ESharedFile f);
 
-enum EUserFile { SETTINGS, USER_FILES_MAX };
+enum EUserFile { SETTINGS, CUSTOM_REPORTS, DIRECTORY, USER_FILES_MAX };
 wxString getPathUser(EUserFile f);
 
 bool isPortableMode();

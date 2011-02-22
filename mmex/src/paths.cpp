@@ -34,6 +34,18 @@ inline const wxChar* getSettingsFileName()
 }
 //----------------------------------------------------------------------------
 
+inline const wxChar* getCustomReportIndexFilename()
+{
+        return wxT("CustomSQLReportIndex.txt");
+}
+//----------------------------------------------------------------------------
+
+inline const wxChar* getDirectory()
+{
+        return wxT("");
+}
+//----------------------------------------------------------------------------
+
 wxFileName getSettingsPathPortable()
 {
         wxFileName f = mmex::GetSharedDir();
@@ -164,7 +176,9 @@ wxString mmex::getPathShared(ESharedFile f)
 wxString mmex::getPathUser(EUserFile f)
 {
         static const wxChar* files[USER_FILES_MAX] = { 
-          getSettingsFileName()
+          getSettingsFileName(),
+          getCustomReportIndexFilename(),
+          getDirectory()
         };
 
         wxASSERT(f >= 0 && f < USER_FILES_MAX);

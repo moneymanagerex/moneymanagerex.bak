@@ -19,7 +19,7 @@
 #include "customsqlreports.h"
 #include "htmlbuilder.h"
 #include "util.h"
-#include "constants.h"
+#include "paths.h"
 #include <wx/tokenzr.h>
 
 mmCustomSQLReport::mmCustomSQLReport(mmCoreDB* core, const wxString& reportTitle, const wxString& sqlQuery):
@@ -80,7 +80,7 @@ customSQLReportIndex::customSQLReportIndex()
 {
     validTitle_ = false;      
     activeSqlReports_ = false;
-    indexFile_  = new wxTextFile(mmex::getCustomReportIndexFilename());  
+    indexFile_  = new wxTextFile(mmex::getPathUser(mmex::CUSTOM_REPORTS));  
     if (indexFile_->Exists())
     {
         indexFile_ ->Open();
@@ -144,7 +144,7 @@ wxString customSQLReportIndex::reportFileName(int index)
         nextReportTitle();
         currentLine ++;
     }
-    return currentFileName_;
+    return wxString() << mmex::getPathUser(mmex::DIRECTORY) << currentFileName_;
 }
 
 bool customSQLReportIndex::initIndexFileHeader()

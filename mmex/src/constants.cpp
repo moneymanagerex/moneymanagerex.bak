@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "constants.h"
 #include <wx/string.h>
 #include <wx/filefn.h>
+#include "paths.h"
 
 //----------------------------------------------------------------------------
 
@@ -34,7 +35,3 @@ wxString mmex::getProgramVersion()
 }
 //----------------------------------------------------------------------------
 
-wxString mmex::getCustomReportIndexFilename()
-{
-    return wxString() << wxGetCwd() << wxT("/") << wxT("CustomSQLReportIndex.txt");
-}
