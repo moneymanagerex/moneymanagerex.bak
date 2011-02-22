@@ -1366,10 +1366,13 @@ void mmGUIFrame::createCustomReport(int index)
     {
         wxString sqlStr;
         sqlFile.Open();
-        sqlStr << sqlFile.GetFirstLine();
+        sqlStr << sqlFile.GetFirstLine() << wxT("\n"); 
         while (! sqlFile.Eof())
         {
-            sqlStr << sqlFile.GetNextLine();
+            wxString nextLine = sqlFile.GetNextLine();
+            wxString line = nextLine.Trim(false);
+            if (line.Mid(1,2) != wxT("--"))
+                sqlStr << nextLine << wxT("\n");
         }
 
         mmCustomSQLReport* csr = new mmCustomSQLReport(m_core.get(), custRepIndex_->reportTitle(), sqlStr);
@@ -3975,10 +3978,10 @@ void mmGUIFrame::OnNewCustomSqlReport(wxCommandEvent& /*event*/)
     updateNavTreeControl();
 
     wxString msg = wxString() 
-        << _("New Custom SQL report: Stage 1:")             << wxT("\n\n")
-        << _("Add Report name and Filename to index file: ")<< wxT("\n")
-        << mmex::getCustomReportIndexFilename()             << wxT("\n\n")
-        << _("Add report file same directory: ")            << wxT("\n\n")
+        << _("New Custom SQL report: Stage 1:")                 << wxT("\n\n")
+        << _("Add the report Name:Filename to the index file: ")<< wxT("\n")
+        << mmex::getPathUser(mmex::CUSTOM_REPORTS)              << wxT("\n\n")
+        << _("Add report files to directory: ") << mmex::getPathUser(mmex::DIRECTORY) << wxT("\n\n")
         << _("Waiting Stage 2 Implementation");
     wxMessageBox(msg,_("Custom SQL Reports"));
 }
