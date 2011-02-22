@@ -35,11 +35,11 @@ mmHTMLBuilder::mmHTMLBuilder() {
 
 void mmHTMLBuilder::init()
 {
-    html += wxT("<html><head><meta http-equiv=\"content-type\" content=\"text/html;charset=UTF-8\"><title>");  
+    html += wxT("<html>\n<head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=UTF-8\"><title>");  
     html += mmex::getProgramName();
     html += wxT(" - ");
 	html += _("Report");
-	html += wxT("</title></head><body bgcolor=\"#ffffff\" text=\"#000000\" link=\"#0000cc\" vlink=\"#551a8b\" alink=\"#ff0000\">");
+	html += wxT("</title>\n</head><body bgcolor=\"#ffffff\" text=\"#000000\" link=\"#0000cc\" vlink=\"#551a8b\" alink=\"#ff0000\">");
 
     int cols = 1;
     startTable(wxT("100%"));
@@ -61,7 +61,7 @@ void mmHTMLBuilder::init()
 
 void mmHTMLBuilder::end()
 {
-    html += wxT("</body></html>");
+    html += wxT("\n</body>\n</html>\n");
 }
 
 void mmHTMLBuilder::addHeader(int level, const wxString& header)
@@ -72,7 +72,7 @@ void mmHTMLBuilder::addHeader(int level, const wxString& header)
     html += header;
     html += wxT("</h");
     html += wxString::Format(wxT("%d"), level);
-    html += wxT(">");
+    html += wxT(">\n");
 }
 
 void mmHTMLBuilder::addParaText(const wxString& text)
@@ -81,12 +81,12 @@ void mmHTMLBuilder::addParaText(const wxString& text)
 	html += mmIniOptions::fontSize_;
 	html += wxT("\">");
     html += text;
-    html += wxT("</font></p>");
+    html += wxT("</font></p>\n");
 }
 
 void mmHTMLBuilder::addLineBreak()
 {
-    html += wxT("<br>");
+    html += wxT("<br>\n");
 }
 
 void mmHTMLBuilder::addHorizontalLine(int size)
@@ -96,7 +96,7 @@ void mmHTMLBuilder::addHorizontalLine(int size)
 	{
 		html += wxT(" size=\"") + wxString::Format(wxT("%d"), size) + wxT("\"");
 	}
-    html += wxT(">");
+    html += wxT(">\n");
 }
 
 void mmHTMLBuilder::addImage(const wxString& src)
@@ -134,7 +134,7 @@ void mmHTMLBuilder::startTable(const wxString& width, const wxString& valign)
 		html += valign;
 		html += wxT("\"");
 	}
-	html += wxT(">");
+	html += wxT(">\n");
 	bgswitch = true;
 }
 
@@ -163,7 +163,7 @@ void mmHTMLBuilder::addRowSeparator(int cols) {
 		html += wxT("\" colspan=\"");
 		html += wxString::Format(wxT("%d"), cols);
 	}
-    html += wxT("\"></td></tr>");
+    html += wxT("\"></td></tr>\n");
 	bgswitch = true;
 }
 
@@ -182,7 +182,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, const wxStrin
 	html += mmIniOptions::fontSize_;
 	html += wxT("\"><b><i>");
 	html += value;
-	html += wxT("</i></b></font></td></tr>");
+	html += wxT("</i></b></font></td></tr>\n");
 }
 
 void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, std::vector<wxString>& data) {
@@ -206,7 +206,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, std::vector<w
 		html += data[idx];
 		html += wxT("</i></b></font>");
 	}
-	html += wxT("</td></tr>");
+	html += wxT("</td></tr>\n");
 }
 
 void mmHTMLBuilder::addTableHeaderRow(const wxString& value, int cols) {
@@ -221,7 +221,7 @@ void mmHTMLBuilder::addTableHeaderRow(const wxString& value, int cols) {
 	html += mmIniOptions::fontSize_;
 	html += wxT("\"><b>&nbsp;");
     html += value;
-	html += wxT("</b></font></th></tr>");
+	html += wxT("</b></font></th></tr>\n");
 	bgswitch = true;
 }
 
@@ -230,7 +230,7 @@ void mmHTMLBuilder::addTableHeaderCell(const wxString& value) {
 	html += mmIniOptions::fontSize_;
 	html += wxT("\"><b>&nbsp;");
     html += value;
-	html += wxT("</b></font></th>");
+	html += wxT("</b></font></th>\n");
 	bgswitch = false;
 }
 
@@ -291,35 +291,35 @@ void mmHTMLBuilder::addTableCell(const wxString& value, bool numeric, bool itali
 	}
 	html += wxT("</font>");
 
-	html += wxT("</td>");
+	html += wxT("</td>\n");
 }
 
 void mmHTMLBuilder::addTableCellLink(const wxString& href, const wxString& value, bool numeric, bool italic, bool bold, const wxString& fontColor)
 {
-	addTableCell(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>"), numeric, italic, bold, fontColor);
+	addTableCell(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"), numeric, italic, bold, fontColor);
 }
 
 void mmHTMLBuilder::addTableHeaderCellLink(const wxString& href, const wxString& value) {
-	addTableHeaderCell(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>"));
+	addTableHeaderCell(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"));
 }
 
 void mmHTMLBuilder::addTableHeaderRowLink(const wxString& href, const wxString& value, int cols) {
-	addTableHeaderRow(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>"), cols);
+	addTableHeaderRow(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"), cols);
 }
 
 void mmHTMLBuilder::endTable()
 {
-	html += wxT("</table>");
+	html += wxT("</table>\n");
 }
 
 void mmHTMLBuilder::endTableRow()
 {
-	html += wxT("</tr>");
+	html += wxT("</tr>\n");
 	bgswitch = !bgswitch;
 }
 
 void mmHTMLBuilder::endTableCell()
 {
-	html += wxT("</td>");
+	html += wxT("</td>\n");
 }
 
