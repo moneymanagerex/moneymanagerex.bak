@@ -132,10 +132,6 @@ void mmHomePagePanel::updateAccounts()
 
 	hb.startTable(wxT("95%"));
 
-	hb.startTableRow();
-	hb.addTableHeaderCell(_("Account"));
-	hb.addTableHeaderCell(_("Summary"));
-	hb.endTableRow();
 
     /////////////////   
 
@@ -148,6 +144,7 @@ void mmHomePagePanel::updateAccounts()
     balances_t tBalances;
     //FIXME: Do not need anymore
 //  bool print_bal4cur = false;
+    bool isHeaderAdded = false;
 
     /* Checking Accounts */
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
@@ -185,6 +182,14 @@ void mmHomePagePanel::updateAccounts()
                     (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
                     (vAccts == wxT("ALL")))
                 {
+	if (!isHeaderAdded)
+	{
+	hb.startTableRow();
+	hb.addTableHeaderCell(_("Bank Account"));
+	hb.addTableHeaderCell(_("Summary"));
+	hb.endTableRow();
+	isHeaderAdded=true;
+	}
                     hb.startTableRow();
                     hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->accountID_), pCA->accountName_, false, true);
                     hb.addTableCell(balance, true);
@@ -201,14 +206,16 @@ void mmHomePagePanel::updateAccounts()
     wxString tBalanceStr;
     mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
+    if(isHeaderAdded)
     hb.addRowSeparator(2);
     hb.startTableRow();
-	hb.addTotalRow(_("Bank Accounts Total:"), 2, tBalanceStr);
+    hb.addTotalRow(_("Bank Accounts Total:"), 2, tBalanceStr);
     hb.endTableRow();
 
     double tTermBalance = 0.0;
 
     /* Term Accounts */
+    isHeaderAdded=false;
     for (size_t iAdx = 0; iAdx < core_->accountList_.accounts_.size(); ++iAdx)
     {
         mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(core_->accountList_.accounts_[iAdx].get());
@@ -242,6 +249,14 @@ void mmHomePagePanel::updateAccounts()
                     (vAccts == wxT("Favorites") && pTA->favoriteAcct_) ||
                     (vAccts == wxT("ALL")))
                 {
+	if (!isHeaderAdded)
+	{
+		hb.startTableRow();
+		hb.addTableHeaderCell(_("Term Account")); 
+		hb.addTableHeaderCell(_("Summary"));
+		hb.endTableRow();
+		isHeaderAdded=true;
+	}
                     hb.startTableRow();
                     hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pTA->accountID_), pTA->accountName_, false, true);
                     hb.addTableCell(balance, true);
@@ -269,123 +284,24 @@ void mmHomePagePanel::updateAccounts()
     // Add Term balance to total account balances
     tBalance += tTermBalance;
 
+
+    //if ( frame_->expandedTermAccounts() && frame_->expandedBankAccounts())
+//    if ( frame_->hasActiveTermAccounts() && frame_->expandedBankAccounts())
+//        {
+//        hb.addRowSeparator(2);
+//        hb.startTableRow();
+//        mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
+//        hb.addTotalRow(_("Accounts Total:"), 2, tBalanceStr);
+//        hb.endTableRow();
+//        }
+
+
+
     const int BaseCurrencyID = mmDBWrapper::getBaseCurrencySettings(db_);
     boost::shared_ptr<mmCurrency> BaseCurrency(BaseCurrencyID != -1 ? getCurrency(core_, BaseCurrencyID) : boost::shared_ptr<mmCurrency>());
 
-//* Currencies *//-----------------------------------------------------begin
-    
-    bool isHeaderAdded = false;
-    tBalance = 0.0;
-
-    static const char sql[] = 
-        "select ACCOUNTID, CURRENCYNAME, BALANCE, BASECONVRATE from ( "
-        "select t.accountid as ACCOUNTID, c.currencyname as CURRENCYNAME, "
-        "total (t.BALANCE) as BALANCE, "
-        "c.BASECONVRATE as BASECONVRATE "
-        "from ( "
-        "select  acc.accountid as ACCOUNTID, acc.INITIALBAL as BALANCE "
-        "from ACCOUNTLIST_V1 ACC "
-        "where ACC.STATUS='Open' "
-        "group by acc.accountid  "
-        "union all "
-        "select  "
-        "st.heldat as ACCOUNTID, "
-        "total((st.CURRENTPRICE-st.PURCHASEPRICE)*st.NUMSHARES-st.COMMISSION) as BALANCE "
-        "from  stock_v1 st "
-	    "where st.purchasedate<=date ('now','localtime') "
-        "group by st.heldat 	"
-        "union all "
-        "select ca.toaccountid,  total(ca.totransamount) "
-        "from checkingaccount_v1 ca "
-        "where ca.transcode ='Transfer' and ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
-        "group by ca.toaccountid "
-        "union all "
-        "select ca.accountid,  total(case ca.transcode when 'Deposit' then ca.transamount else -ca.transamount end)  "
-        "from checkingaccount_v1 ca "
-        "where ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
-        "group by ca.accountid) t "
-	    "left join accountlist_v1 a on a.accountid=t.accountid "
-        "left join  currencyformats_v1 c on c.currencyid=a.currencyid "
-        "where a.status='Open' and balance<>0 "
-        "group by c.currencyid) order by CURRENCYNAME ";
-
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-        
-        //How many currencies used
-        int curnumber = 0;
-        while(q1.NextRow())
-        {
-	     curnumber+=1;   
-        }
-
-    if (db_)
-    {
-        while(q1.NextRow())
-        {
-            int accountId = q1.GetInt(wxT("ACCOUNTID"));
-            double currBalance = q1.GetDouble(wxT("BALANCE"));
-            wxString currencyStr = q1.GetString(wxT("CURRENCYNAME"));
-            double convRate = q1.GetDouble(wxT("BASECONVRATE"));
-
-            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
-            wxASSERT(pCurrencyPtr);
-            
-            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-            mmex::formatDoubleToCurrency(currBalance, tBalanceStr);
-
-		tBalance += currBalance * convRate;
-       
-        //Show nothing if used currencies less then 2
-        if (curnumber >1)
-        {       
-            if (!isHeaderAdded)
-            {
-     		hb.startTableRow();
-            hb.addTableHeaderCell(_("Currency"));
-            hb.addTableHeaderCell(_("Summary"));
-  	        isHeaderAdded = true;
-            }
-		
-		    hb.startTableRow();
-            hb.addTableCell(currencyStr);
-		    hb.addTableCell(tBalanceStr, true);
-		    hb.endTableRow();
-		
-            }
-        }
-        if (isHeaderAdded)
-            {
-		hb.addRowSeparator(2);
-            }
-        
-        q1.Finalize();
-    }
-    //}
-    
-    /*if (print_bal4cur && tBalances.size() > 1) // print total balance for every currency
-    {
-        hb.startTableRow();
-        hb.addTableHeaderCell(_("Currency"));
-        hb.addTableHeaderCell(_("Summary"));
-        hb.endTableRow();
-
-        for (balances_t::const_iterator i = tBalances.begin(); i != tBalances.end(); ++i)
-        {
-            wxString tBalanceStr;
-            mmex::CurrencyFormatter::instance().loadSettings(*i->first);
-            mmex::formatDoubleToCurrency(i->second, tBalanceStr);
-
-            hb.startTableRow();
-            hb.addTableCell(i->first->currencyName_);
-            hb.addTableCell(tBalanceStr, true);
-            hb.endTableRow();
-        }
-    } */
-    
-//* Currencies *//-----------------------------------------------------end
-
 //* Assets *//-----------------------------------------------------begin
-
+    hb.addRowSeparator(2);
     double assetBalance = mmDBWrapper::getAssetBalance(db_);
     wxString assetBalanceStr;
     mmDBWrapper::loadBaseCurrencySettings(db_);
@@ -444,7 +360,7 @@ isHeaderAdded = false;
         "where a.status='Open' "
         "group by t.accountid ";
 
-q1 = db_->ExecuteQuery(sql3);
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql3);
 
 if (db_)
 {
@@ -465,50 +381,134 @@ if (db_)
         // Accumulate income and expences for stocks or not
         if (mmIniOptions::enableStocks_)		
         {
-		tincome += income * baseconvrate;
+        tincome += income * baseconvrate;
         texpenses += expenses * baseconvrate;
         }
 
-		//We cat hide or show Stocks on Home Page
-        if (mmIniOptions::enableStocks_)		
+        //We can hide or show Stocks on Home Page
+        if (mmIniOptions::enableStocks_)
         {
             if (!isHeaderAdded)
             {
-     		    hb.startTableRow();
+                hb.startTableRow();
                 hb.addTableHeaderCell(_("Stocks"));
                 hb.addTableHeaderCell(_("Summary"));
-  	            isHeaderAdded = true;
+                isHeaderAdded = true;
             }
-		
-		    hb.startTableRow();
-            hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
-		    hb.addTableCell(tBalanceStr, true);
-		    hb.endTableRow();
+                hb.startTableRow();
+                hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
+                hb.addTableCell(tBalanceStr, true);
+                hb.endTableRow();
+                hb.addRowSeparator(2);
         }  
     }
-        if (isHeaderAdded)
-            {
-		hb.addRowSeparator(2);
-            }
-       
+//    hb.addTotalRow(_("Stocks Total:"), 2, tBalanceStr);
     q1.Finalize();
 }   
 
-//* Stocks *//-----------------------------------------------------end
+//* Stocks *//-----------------------------------------------------------end
+//* Currencies *//-----------------------------------------------------begin
+    
+    isHeaderAdded = false;
+    tBalance = 0.0;
+
+    static const char sql[] = 
+        "select ACCOUNTID, CURRENCYNAME, BALANCE, BASECONVRATE from ( "
+        "select t.accountid as ACCOUNTID, c.currencyname as CURRENCYNAME, "
+        "total (t.BALANCE) as BALANCE, "
+        "c.BASECONVRATE as BASECONVRATE "
+        "from ( "
+        "select  acc.accountid as ACCOUNTID, acc.INITIALBAL as BALANCE "
+        "from ACCOUNTLIST_V1 ACC "
+        "where ACC.STATUS='Open' "
+        "group by acc.accountid  "
+        "union all "
+        "select  "
+        "st.heldat as ACCOUNTID, "
+        "total((st.CURRENTPRICE-st.PURCHASEPRICE)*st.NUMSHARES-st.COMMISSION) as BALANCE "
+        "from  stock_v1 st "
+	    "where st.purchasedate<=date ('now','localtime') "
+        "group by st.heldat 	"
+        "union all "
+        "select ca.toaccountid,  total(ca.totransamount) "
+        "from checkingaccount_v1 ca "
+        "where ca.transcode ='Transfer' and ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
+        "group by ca.toaccountid "
+        "union all "
+        "select ca.accountid,  total(case ca.transcode when 'Deposit' then ca.transamount else -ca.transamount end)  "
+        "from checkingaccount_v1 ca "
+        "where ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
+        "group by ca.accountid) t "
+	    "left join accountlist_v1 a on a.accountid=t.accountid "
+        "left join  currencyformats_v1 c on c.currencyid=a.currencyid "
+        "where a.status='Open' and balance<>0 "
+        "group by c.currencyid) order by CURRENCYNAME ";
+
+q1 = db_->ExecuteQuery(sql);
+        
+        //How many currencies used
+        int curnumber = 0;
+        while(q1.NextRow())
+        {
+	     curnumber+=1;   
+        }
+
+    if (db_)
+    {
+        while(q1.NextRow())
+        {
+            int accountId = q1.GetInt(wxT("ACCOUNTID"));
+            double currBalance = q1.GetDouble(wxT("BALANCE"));
+            wxString currencyStr = q1.GetString(wxT("CURRENCYNAME"));
+            double convRate = q1.GetDouble(wxT("BASECONVRATE"));
+
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
+            wxASSERT(pCurrencyPtr);
+            
+            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+            mmex::formatDoubleToCurrency(currBalance, tBalanceStr);
+
+		tBalance += currBalance * convRate;
+       
+        //Show nothing if used currencies less then 2
+        if (curnumber >1)
+        {       
+            if (!isHeaderAdded)
+            {
+     		hb.startTableRow();
+            hb.addTableHeaderCell(_("Currency"));
+            hb.addTableHeaderCell(_("Summary"));
+  	        isHeaderAdded = true;
+            }
+            hb.startTableRow();
+            hb.addTableCell(currencyStr);
+            hb.addTableCell(tBalanceStr, true);
+            hb.endTableRow();
+            }
+        }
+        if (isHeaderAdded)
+            {
+             hb.addRowSeparator(2);
+            }
+        
+        q1.Finalize();
+    }
+    
+//* Currencies *//-----------------------------------------------------end
 
     tBalances.clear();
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
     mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
 
-	hb.addTotalRow(_("Total of Accounts:"), 2, tBalanceStr);
+    hb.addTotalRow(_("Grand Total:"), 2, tBalanceStr);
     hb.endTable();
 
-	hb.endTableCell();
-	hb.startTableCell();
+    hb.endTableCell();
+    hb.startTableCell();
 
 //Income vs Expenses-----------------------------------------------begin
-	hb.startTable(wxT("90%"));
+    hb.startTable(wxT("90%"));
 
     wxString incStr, expStr, difStr, colorStr;
     mmex::formatDoubleToCurrency(tincome, incStr); // must use loadBaseCurrencySettings (called above)
@@ -538,22 +538,15 @@ if (db_)
 	hb.addTableCell(_("Difference:"), false, true, true);
 	hb.addTableCell(difStr, true, true, true, colorStr);
 	hb.endTableRow();
-	//hb.endTableCell(); 
-
-	//hb.startTableRow();
-    // Add the graph
-    hb.addImage(gg.getOutputFileName());
-	
-	//hb.endTableRow();
+        // Add the graph
+        hb.addImage(gg.getOutputFileName());
 
 	hb.endTableCell(); 
 	hb.endTableRow();
-	
 	hb.startTableRow();
 	hb.startTableCell();
 
     hb.endTable();
-
 
     // bills & deposits
     isHeaderAdded = false;
@@ -611,7 +604,7 @@ if (db_)
 
             th.payeeStr_ = toAccount;
         }
-	
+
         trans_.push_back(th);
     }
     q1.Finalize();
@@ -630,31 +623,24 @@ if (db_)
         {
             if (!isHeaderAdded)
             {
-				hb.startTable(wxT("95%"));
-				hb.addTableHeaderRowLink(wxT("billsdeposits"), _("Upcoming Transactions"), 3);
+                hb.startTable(wxT("95%"));
+                hb.addTableHeaderRowLink(wxT("billsdeposits"), _("Upcoming Transactions"), 3);
                 isHeaderAdded = true;
             }            
             
             wxString daysRemainingStr_;
             colorStr = wxT("#9999FF");
-           		
+
             daysRemainingStr_ = trans_[bdidx].daysRemainingStr_;
-            if (trans_[bdidx].daysRemaining_ > 0)
-            {
-            }
-            else 
-            {
+            if (trans_[bdidx].daysRemaining_ < 0)
                 colorStr = wxT("#FF6600");
-            }
 
             // Load the currency for this BD
             boost::weak_ptr<mmCurrency> wpCurrency = core_->accountList_.getCurrencyWeakPtr(trans_[bdidx].accountID_);
             boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
             wxASSERT(pCurrency);
             if (pCurrency)
-            {
                  pCurrency->loadCurrencySettings();
-            }
 
 			wxString displayBDAmtString;
 			mmex::formatDoubleToCurrency(trans_[bdidx].amt_, displayBDAmtString);
@@ -662,7 +648,8 @@ if (db_)
 			hb.startTableRow();
 			hb.addTableCell(trans_[bdidx].payeeStr_, false, true);
 			hb.addTableCell(displayBDAmtString, true);
-			hb.addTableCell(wxT("&nbsp;&nbsp;&nbsp;&nbsp;") + daysRemainingStr_, false, false, false, colorStr);
+			//Draw it as numeric that mean align right
+			hb.addTableCell(daysRemainingStr_, true, false, false, colorStr);
 			hb.endTableRow();
         }
     }
@@ -750,20 +737,23 @@ if (db_)
     hb.addLineBreak();
     int countFollowUp = core_->bTransactionList_.countFollowupTransactions();
 
-    wxString str = wxT("<br>");
-    hb.addHTML(str);
+    hb.addHTML(wxT("<br>"));
+    hb.startTable(wxT("90%"), wxT("top"));
     if (countFollowUp > 0)
     {
-        str = wxT("<i>");
-        str << _("Follow Up On Transactions: ") << wxString::Format(wxT("<b>%d</b> "), countFollowUp) << wxT("</i><br>");
-        hb.addHTML(str);
+    hb.startTableRow();
+    hb.addTableCell(_("Follow Up On Transactions: "));
+    //Draw it as numeric that mean align right
+    hb.addTableCell(wxString::Format(wxT("<b>%d</b> "), countFollowUp), true);
+    hb.endTableRow();
     }
 
-    str = wxT("<i>");
-    str << _("Total Transactions: ") << wxString::Format(wxT("<b>%d</b> "), 
-        core_->bTransactionList_.transactions_.size()) << wxT("</i>");
-    hb.addHTML(str);
-
+    hb.startTableRow();
+    hb.addTableCell( _("Total Transactions: "));  
+    hb.addTableCell(wxString::Format(wxT("<b>%d</b> "), core_->bTransactionList_.transactions_.size()), true);
+    hb.endTableRow();
+    hb.endTable();
+  
 	hb.endTableCell();
 	hb.endTableRow();
 	hb.endTable();
