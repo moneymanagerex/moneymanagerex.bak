@@ -80,11 +80,12 @@ customSQLReportIndex::customSQLReportIndex()
 {
     validTitle_ = false;      
     activeSqlReports_ = false;
+    userSelectedFileIndex_ = 0;
     indexFile_  = new wxTextFile(mmex::getPathUser(mmex::CUSTOM_REPORTS));  
     if (indexFile_->Exists())
     {
         indexFile_ ->Open();
-        if (indexFile_->GetLineCount() > 4 )
+        if (indexFile_->GetLineCount() >= 4 )
             setSQLReportsActive();
     }
 }
@@ -101,10 +102,13 @@ void customSQLReportIndex::setSQLReportsActive()
 
 void customSQLReportIndex::resetReportsIndex()
 {
-    indexFile_->GetFirstLine(); // File Heading line
-    indexFile_->GetNextLine();  // Blank Line
-    indexFile_->GetNextLine();  // Headings Line
-    indexFile_->GetNextLine();  // Separator line
+    if (hasActiveSQLReports())
+    {
+        indexFile_->GetFirstLine(); // File Heading line
+        indexFile_->GetNextLine();  // Blank Line
+        indexFile_->GetNextLine();  // Headings Line
+        indexFile_->GetNextLine();  // Separator line
+    }
 }
 
 bool customSQLReportIndex::validTitle()
@@ -121,17 +125,22 @@ wxString customSQLReportIndex::nextReportTitle()
         if (line != wxT(""))
         {
             wxStringTokenizer tk(wxStringTokenizer(line, wxT(":")));
-            currentReportName_ = tk.GetNextToken();
-            currentFileName_ = tk.GetNextToken();
+            currentReportTitle_ = tk.GetNextToken();
+            currentReportFileName_ = tk.GetNextToken();
             validTitle_ = true;
         }
     }
-    return currentReportName_;
+    return currentReportTitle_;
 }
 
-wxString customSQLReportIndex::reportTitle()
+wxString customSQLReportIndex::currentReportTitle()
 {
-    return currentReportName_;
+    return currentReportTitle_;
+}
+
+wxString customSQLReportIndex::currentReportFileName()
+{
+    return wxString() << mmex::getPathUser(mmex::DIRECTORY) << currentReportFileName_;
 }
 
 wxString customSQLReportIndex::reportFileName(int index)
@@ -144,7 +153,7 @@ wxString customSQLReportIndex::reportFileName(int index)
         nextReportTitle();
         currentLine ++;
     }
-    return wxString() << mmex::getPathUser(mmex::DIRECTORY) << currentFileName_;
+    return currentReportFileName();
 }
 
 bool customSQLReportIndex::initIndexFileHeader()
@@ -166,4 +175,64 @@ bool customSQLReportIndex::initIndexFileHeader()
         }
     }
     return result;
+}
+
+void customSQLReportIndex::LoadArrays(wxArrayString& titleArray, wxArrayString& fileNameArray)
+{
+    resetReportsIndex();
+    nextReportTitle();
+    while (validTitle())
+    {
+        titleArray.Add(currentReportTitle_);
+        fileNameArray.Add(currentReportFileName_);
+        nextReportTitle();
+    }
+}
+
+wxString customSQLReportIndex::UserDialogHeading()
+{
+    return _("Custom SQL Reports");
+}
+
+void customSQLReportIndex::getUserTitleSelection(wxString description)
+{
+    wxArrayString reportTitles;
+    wxArrayString reportFileNames;
+    LoadArrays(reportTitles, reportFileNames);
+
+    validTitle_ = false;
+    wxString msgStr = wxString() << _("Select the Custom SQL Report")<< description;
+    wxSingleChoiceDialog reportTitleSelectionDlg(0,msgStr, UserDialogHeading(), reportTitles);
+    if (reportTitleSelectionDlg.ShowModal() == wxID_OK)
+    {
+        int selectionIndex_    = reportTitleSelectionDlg.GetSelection();
+        if (selectionIndex_ > -1 )
+        {
+            currentReportTitle_    = reportTitles.Item(selectionIndex_);
+            currentReportFileName_ = reportFileNames.Item(selectionIndex_);
+            userSelectedFileIndex_ = selectionIndex_ + 4;  // Add number of header lines in file.
+            validTitle_ = true;
+        }
+    }
+}
+
+void customSQLReportIndex::setUserTitleSelection(wxString titleIndex)
+{
+    long index; 
+    wxString indexStr = titleIndex.Right(1);
+    indexStr.ToLong(&index);
+
+    wxArrayString reportTitles;
+    wxArrayString reportFileNames;
+    LoadArrays(reportTitles, reportFileNames);
+
+    currentReportTitle_    = reportTitles.Item(index);
+    currentReportFileName_ = reportFileNames.Item(index);
+    userSelectedFileIndex_ = index + 4;  // Add number of header lines in file.
+}
+
+void customSQLReportIndex::deleteSelectedReportTitle()
+{
+    indexFile_->RemoveLine(userSelectedFileIndex_);
+    indexFile_->Write();
 }

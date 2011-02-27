@@ -362,10 +362,6 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_CATEGORY_RELOCATION, mmGUIFrame::OnCategoryRelocation)
     EVT_MENU(MENU_PAYEE_RELOCATION, mmGUIFrame::OnPayeeRelocation)
 
-    EVT_MENU(MENU_CUSTOM_SQL_NEW, mmGUIFrame::OnNewCustomSqlReport)
-    EVT_MENU(MENU_CUSTOM_SQL_EDIT, mmGUIFrame::OnEditCustomSqlReport)
-    EVT_MENU(MENU_CUSTOM_SQL_DELETE, mmGUIFrame::OnDeleteCustomSqlReport)
-
     EVT_MENU(MENU_ONLINE_UPD_CURRENCY_RATE, mmGUIFrame::OnOnlineUpdateCurRate)
 	EVT_UPDATE_UI(MENU_VIEW_TOOLBAR, mmGUIFrame::OnViewToolbarUpdateUI)
 	EVT_UPDATE_UI(MENU_VIEW_LINKS, mmGUIFrame::OnViewLinksUpdateUI)
@@ -394,6 +390,14 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWALL, mmGUIFrame::OnViewAllAccounts)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWFAVORITE, mmGUIFrame::OnViewFavoriteAccounts)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_VIEWOPEN, mmGUIFrame::OnViewOpenAccounts)
+
+    /* Custom Sql Reports */
+    EVT_MENU(MENU_CUSTOM_SQL_REPORT_NEW, mmGUIFrame::OnNewCustomSqlReport)
+    EVT_MENU(MENU_CUSTOM_SQL_REPORT_EDIT, mmGUIFrame::OnEditCustomSqlReport)
+    EVT_MENU(MENU_CUSTOM_SQL_REPORT_DELETE, mmGUIFrame::OnDeleteCustomSqlReport)
+
+    EVT_MENU(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_EDIT, mmGUIFrame::OnPopupEditCustomSqlReport)
+    EVT_MENU(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_DELETE, mmGUIFrame::OnPopupDeleteCustomSqlReport)
 
 END_EVENT_TABLE()
 //----------------------------------------------------------------------------
@@ -1370,12 +1374,13 @@ void mmGUIFrame::createCustomReport(int index)
         while (! sqlFile.Eof())
         {
             wxString nextLine = sqlFile.GetNextLine();
-            wxString line = nextLine.Trim(false);
+            wxString line = nextLine;
+            line.Trim(false);
             if (line.Mid(1,2) != wxT("--"))
                 sqlStr << nextLine << wxT("\n");
         }
 
-        mmCustomSQLReport* csr = new mmCustomSQLReport(m_core.get(), custRepIndex_->reportTitle(), sqlStr);
+        mmCustomSQLReport* csr = new mmCustomSQLReport(m_core.get(), custRepIndex_->currentReportTitle(), sqlStr);
         menuPrintingEnable(true);
         createReportsPage(csr);
     }
@@ -2304,8 +2309,7 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
     }
     else 
     {
-        if ( iData->getString() == wxT("Bank Accounts") || 
-             iData->getString() == wxT("Term Accounts"))
+        if (iData->getString() == wxT("Bank Accounts") || iData->getString() == wxT("Term Accounts"))
         { // Create for both Bank & Term Accounts
 
          //wxMenu menu;
@@ -2357,6 +2361,19 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
 		    viewAccounts->Append(MENU_TREEPOPUP_ACCOUNT_VIEWFAVORITE, _("Favorites"));
 		    menu->AppendSubMenu(viewAccounts, _("Accounts Visible"));
             PopupMenu(&*menu, pt);
+        }
+        else
+        {
+            // Bring up popup menu to edit or delete the correct Custom SQL Report
+            customSqlReportSelectedItem_ = iData->getString();
+            wxString field = customSqlReportSelectedItem_.Mid(6,8);
+            if (field == wxT("_Report_"))
+            {
+                wxMenu* customReportMenu = new wxMenu;
+                customReportMenu->Append(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_EDIT, _("Edit Custom Report"));
+                customReportMenu->Append(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_DELETE, _("Delete Custom Report"));
+                PopupMenu(&*customReportMenu, pt);
+            }
         }
     }
 }
@@ -2707,11 +2724,11 @@ void mmGUIFrame::createMenu()
     wxMenu *menuCustomSqlReports = new wxMenu;
     // create the menu items 
     wxMenuItem* menuItemCustomReportNew = new wxMenuItem(menuCustomSqlReports, 
-        MENU_CUSTOM_SQL_NEW, _("New..."),_("Create a new SQL report"));
+        MENU_CUSTOM_SQL_REPORT_NEW, _("New..."),_("Create a new SQL report"));
     wxMenuItem* menuItemCustomReportEdit = new wxMenuItem(menuCustomSqlReports, 
-        MENU_CUSTOM_SQL_EDIT, _("Edit..."),_("Edit an existing SQL report"));
+        MENU_CUSTOM_SQL_REPORT_EDIT, _("Edit..."),_("Edit an existing SQL report"));
     wxMenuItem* menuItemCustomReportDelete = new wxMenuItem(menuCustomSqlReports, 
-        MENU_CUSTOM_SQL_DELETE, _("Delete..."),_("Remove a file from the Custom SQL Reports menu"));
+        MENU_CUSTOM_SQL_REPORT_DELETE, _("Delete..."),_("Remove a file from the Custom SQL Reports menu"));
     // Add menu items to the Custom SQL Reports menu
     menuCustomSqlReports->Append(menuItemCustomReportNew);
     menuCustomSqlReports->Append(menuItemCustomReportEdit);
@@ -3989,13 +4006,71 @@ void mmGUIFrame::OnNewCustomSqlReport(wxCommandEvent& /*event*/)
 //----------------------------------------------------------------------------
 void mmGUIFrame::OnEditCustomSqlReport(wxCommandEvent& /*event*/)
 {
+    custRepIndex_->getUserTitleSelection(_(" to Edit:"));
+    if (custRepIndex_->validTitle())
+    {
+        EditCustomSqlReport();
+    }
+}
+
+void mmGUIFrame::OnPopupEditCustomSqlReport(wxCommandEvent&)
+{
+    custRepIndex_->setUserTitleSelection(customSqlReportSelectedItem_);
+    EditCustomSqlReport();
+}
+
+void mmGUIFrame::EditCustomSqlReport()
+{
+    /*  To Do
+        pass the details to a dialog box (yet to be created).
+        dlg to open selected file and place in editor.
+        dlg be able to Clear, Load, Save and Run SQL file, 
+    */
+    
+    wxMessageBox(wxString() << wxT("Popup Index: ") << customSqlReportSelectedItem_, _("Edit"));
+ 
+    wxString msg = wxString() << _("Title: ") << custRepIndex_->currentReportTitle() 
+                              << wxT("\n")
+                              << _("Filename: ") << custRepIndex_->currentReportFileName();
+    wxMessageBox(msg ,custRepIndex_->UserDialogHeading()); 
+ 
     wxMessageBox(_("Edit Custom SQL report - Waiting Stage 2 Implementation"),_("Custom SQL Reports"));
 }
 
 //----------------------------------------------------------------------------
 void mmGUIFrame::OnDeleteCustomSqlReport(wxCommandEvent& /*event*/)
 {
-    wxMessageBox(_("Delete Custom SQL report - Waiting Stage 2 Implementation"),_("Custom SQL Reports"));
+    custRepIndex_->getUserTitleSelection(_(" to Delete:"));
+    if (custRepIndex_->validTitle())
+    {
+        DeleteCustomSqlReport();
+    }
+}
+
+void mmGUIFrame::OnPopupDeleteCustomSqlReport(wxCommandEvent& /*event*/)
+{
+    custRepIndex_->setUserTitleSelection(customSqlReportSelectedItem_);
+    DeleteCustomSqlReport();
+}
+
+void mmGUIFrame::DeleteCustomSqlReport()
+{
+    wxString msg = wxString() << _("Delete the Custom Report Title:")
+                              << wxT("\n\n")  
+                              << custRepIndex_->currentReportTitle();
+    if ( wxMessageBox(msg ,custRepIndex_->UserDialogHeading(),wxYES_NO|wxICON_QUESTION) == wxYES )
+    {
+        custRepIndex_->deleteSelectedReportTitle();
+        msg = wxString() << _("Do you want to delete the SQL file as well?\n"); 
+        if ( wxMessageBox(msg, custRepIndex_->UserDialogHeading(), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION) == wxYES)
+        {
+            if (wxFileExists(custRepIndex_->currentReportFileName()))
+            {
+                wxRemoveFile(custRepIndex_->currentReportFileName());
+            }
+        }
+        updateNavTreeControl();
+    }
 }
 
 //----------------------------------------------------------------------------

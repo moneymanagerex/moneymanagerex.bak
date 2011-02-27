@@ -42,23 +42,32 @@ class customSQLReportIndex
 {
 public:
     customSQLReportIndex();
+
     bool hasActiveSQLReports();
     void setSQLReportsActive();
 
+    bool initIndexFileHeader();
     void resetReportsIndex();
     bool validTitle();
     wxString nextReportTitle();
-    wxString reportTitle();
     wxString reportFileName(int index);
+    wxString currentReportTitle();
+    wxString currentReportFileName();
 
-    bool initIndexFileHeader();
+    wxString UserDialogHeading(); 
+    void getUserTitleSelection(wxString description = wxT(":"));
+    void setUserTitleSelection(wxString titleIndex);
+    void deleteSelectedReportTitle();
 
 private:
     bool activeSqlReports_;
     wxTextFile* indexFile_; 
     bool validTitle_;
-    wxString currentReportName_;
-    wxString currentFileName_;
+    wxString currentReportTitle_;
+    wxString currentReportFileName_;
+    int userSelectedFileIndex_;
+
+    void LoadArrays(wxArrayString& titleArray, wxArrayString& fileNameArray);
 
 };
 
