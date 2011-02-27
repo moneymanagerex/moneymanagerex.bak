@@ -123,6 +123,7 @@ private:
 
     /* Custom Reports */
     customSQLReportIndex* custRepIndex_;
+    wxString customSqlReportSelectedItem_;
 
     /* printing */
     boost::scoped_ptr<wxHtmlEasyPrinting> printer_;
@@ -201,10 +202,6 @@ private:
     void OnCategoryRelocation(wxCommandEvent& event);
     void OnPayeeRelocation(wxCommandEvent& event);
 
-    void OnNewCustomSqlReport(wxCommandEvent& event);
-    void OnEditCustomSqlReport(wxCommandEvent& event);
-    void OnDeleteCustomSqlReport(wxCommandEvent& event);
-
     void OnOptions(wxCommandEvent& event);
     void OnBudgetSetupDialog(wxCommandEvent& event);
     void OnCurrency(wxCommandEvent& event);
@@ -226,6 +223,16 @@ private:
     void OnViewAllAccounts(wxCommandEvent& event);
     void OnViewFavoriteAccounts(wxCommandEvent& event);
     void OnViewOpenAccounts(wxCommandEvent& event);
+
+    /* Custom SQL Report*/
+    void OnNewCustomSqlReport(wxCommandEvent& event);
+    void OnEditCustomSqlReport(wxCommandEvent& event);
+    void OnPopupEditCustomSqlReport(wxCommandEvent& event);
+    void EditCustomSqlReport();
+
+    void OnDeleteCustomSqlReport(wxCommandEvent& event);
+    void OnPopupDeleteCustomSqlReport(wxCommandEvent& event);
+    void DeleteCustomSqlReport();
 
     // any class wishing to process wxWindows events must use this macro
     DECLARE_EVENT_TABLE()
