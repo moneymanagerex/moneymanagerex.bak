@@ -321,9 +321,8 @@ void mmStocksPanel::CreateControls()
     itemBoxSizer5->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     
     //Infobar-mini 
-    wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, 
-    ID_PANEL_STOCKS_STATIC_DETAILS_MINI, _(""), 
-    wxPoint(-1,-1), wxSize(350, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
+    wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, ID_PANEL_STOCKS_STATIC_DETAILS_MINI, wxT(""), 
+    wxPoint(-1,-1), wxSize(450, -1), wxNO_BORDER|wxST_NO_AUTORESIZE);
     itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxALL, 5);
     //Infobar 
     wxStaticText* itemStaticText33 = new wxStaticText( itemPanel12, 
@@ -373,11 +372,11 @@ void mmStocksPanel::initVirtualListControl()
     
     header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
     wxString lbl;
-    lbl << _("Balance: ") << balance << _("     Invested: ") << original;
+    lbl << _("Balance: ") << balance << wxT ("     ") << _("Invested: ") << original;
     if (total > originalVal)
-        lbl << _("     Gain: "); 
+        lbl << wxT ("     ") << _("Gain: "); 
     else
-        lbl << _("     Loss: ");
+        lbl << wxT ("     ") << _("Loss: ");
     lbl << diffStr << wxT("  ( ") << diffStrPercents << wxT(" %)");
 
     header->SetLabel(lbl);
@@ -385,11 +384,13 @@ void mmStocksPanel::initVirtualListControl()
     // --
     //TODO: SQLite can't year format like yy can only yyyy
     //Convertion should be easy
-    static const char sql[] =
+    //But it's feature - mmex not need to be restarted when date format changed
+    char sql[] =
     "select STOCKID, HELDAT,  STOCKNAME, SYMBOL, NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, VALUE, COMMISSION, "
     "coalesce ( strftime(INFOVALUE,PURCHASEDATE), replace (replace (replace (INFOVALUE, '%y', "
     "(replace(strftime('%Y',PURCHASEDATE)-(round(strftime('%Y',PURCHASEDATE)/100)*100),'.0',''))) , '%m' , strftime('%m',PURCHASEDATE)) "
-    ", '%d', strftime('%d',PURCHASEDATE))) as PURCHDATE "
+    ", '%d', strftime('%d',PURCHASEDATE))) as PURCHDATE, "
+    "julianday('now', 'localtime')-julianday (PURCHASEDATE) as DAYSOWN "
     "from STOCK_V1 "
     "left join infotable_v1 i on i.INFONAME='DATEFORMAT' "
     "where HELDAT = ? "
@@ -408,21 +409,21 @@ void mmStocksPanel::initVirtualListControl()
         th.stockID_           = q1.GetInt(wxT("STOCKID"));
         th.stockPDate_        = q1.GetString(wxT("PURCHDATE"));
         int accountID         = q1.GetInt(wxT("HELDAT"));
+        th.stockSymbol_       = q1.GetString (wxT ("SYMBOL")) ;
         th.heldAt_            = mmDBWrapper::getAccountName(db_, accountID);
         th.shareName_         = q1.GetString(wxT("STOCKNAME"));
-        th.shareNotes_         = q1.GetString(wxT("NOTES"));
+        th.shareNotes_        = q1.GetString(wxT("NOTES"));
         th.numSharesStr_      = q1.GetString(wxT("NUMSHARES"));
         th.numShares_         = q1.GetDouble(wxT("NUMSHARES"));
 
         th.currentPrice_      = q1.GetDouble(wxT("CURRENTPRICE"));
-        th.purchasePrice_      = q1.GetDouble(wxT("PURCHASEPRICE"));
-
+        th.purchasePrice_     = q1.GetDouble(wxT("PURCHASEPRICE"));
         th.value_             = q1.GetDouble(wxT("VALUE"));
-        //th.valueStr_          = wxString::Format(wxT("%.2f"), th.value_);
-
         double commission     = q1.GetDouble(wxT("COMMISSION"));
+        double stockDays_     = q1.GetDouble (wxT ("DAYSOWN"));
 
-        th.gainLoss_        = th.value_ - ((th.numShares_ * th.purchasePrice_) + commission);
+        th.gainLoss_          = th.value_ - ((th.numShares_ * th.purchasePrice_) + commission);
+        mmex::formatDoubleToCurrencyEdit(((th.value_ / ((th.numShares_ * th.purchasePrice_) + commission)-1.0)*100.0 * stockDays_ /365.0 ), th.stockDaysStr_);
 
         mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
         mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
@@ -878,7 +879,10 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
 	wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS_MINI);
 	if (selectedIndex_!=-1) { 
         //FIXME: Here should be the SYMBOL and Gain/Loss in percent
-        //stm->SetLabel(getItem(selectedIndex_, COL_NAME));
+        wxString miniInfo;
+        miniInfo << wxT ("         ") << _("Info: ") << _("Symbol: ") << trans_[selectedIndex_].stockSymbol_ 
+                 << wxT ("         ") << _("Percent/Year: ") << trans_[selectedIndex_].stockDaysStr_;
+        stm->SetLabel(miniInfo);
         st->SetLabel(getItem(selectedIndex_, COL_NOTES));
         }
         else
