@@ -81,6 +81,8 @@ public:
     wxString heldAt_;
     wxString stockPDate_;
     wxString shareName_;
+    wxString stockSymbol_;
+    wxString stockDaysStr_;
     wxString shareNotes_;
     wxString numSharesStr_;
     wxString gainLossStr_;
