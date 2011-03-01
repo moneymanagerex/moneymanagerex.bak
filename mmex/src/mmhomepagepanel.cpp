@@ -164,8 +164,8 @@ void mmHomePagePanel::updateAccounts()
             wxString balance;
             mmex::formatDoubleToCurrency(bal, balance);
 
-            double income = 0;
-            double expenses = 0;
+            double income = 0.0;
+            double expenses = 0.0;
 
             core_->bTransactionList_.getExpensesIncome(pCA->accountID_, expenses, income, false,dtBegin, dtEnd);
 
@@ -303,7 +303,7 @@ void mmHomePagePanel::updateAccounts()
    
 isHeaderAdded = false;
 
-    static const char sql3[] = 
+    char sql[] = 
         "select INCOME, EXPENCES, t.accountid as ACCOUNTID, a.accountname as ACCOUNTNAME, "
         "sum (t.BALANCE) as BALANCE, c.BASECONVRATE as BASECONVRATE "
         "from (  "
@@ -319,7 +319,7 @@ isHeaderAdded = false;
         "where st.purchasedate<=date ('now','localtime') "
         "group by st.heldat "
         "union all "
-        "select ca.toaccountid, 0, ca.toaccountid,  total(ca.totransamount)  "
+        "select 0, 0, ca.toaccountid,  total(ca.totransamount)  "
         "from checkingaccount_v1 ca "
         "inner join  accountlist_v1 acc on acc.accountid=ca.toaccountid "
         "where ca.transcode ='Transfer' and ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
@@ -339,10 +339,11 @@ isHeaderAdded = false;
         "where a.status='Open' "
         "group by t.accountid ";
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql3);
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
 
 if (db_)
 {
+    double stTotalBalance =0.0;
     while(q1.NextRow())
     {
         int stockaccountId = q1.GetInt(wxT("ACCOUNTID"));
@@ -362,6 +363,7 @@ if (db_)
         {
         tincome += income * baseconvrate;
         texpenses += expenses * baseconvrate;
+        stTotalBalance +=stockBalance * baseconvrate; 
         }
 
         //We can hide or show Stocks on Home Page
@@ -378,10 +380,15 @@ if (db_)
                 hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
                 hb.addTableCell(tBalanceStr, true);
                 hb.endTableRow();
-                hb.addRowSeparator(2);
         }  
     }
-//    hb.addTotalRow(_("Stocks Total:"), 2, tBalanceStr);
+    if (isHeaderAdded)
+    hb.addRowSeparator(2);
+
+    mmex::CurrencyFormatter::instance().loadDefaultSettings();
+    mmDBWrapper::loadBaseCurrencySettings(db_);
+    mmex::formatDoubleToCurrency(stTotalBalance, tBalanceStr);
+    hb.addTotalRow(_("Stocks Total:"), 2, tBalanceStr);
     q1.Finalize();
 }   
 
@@ -392,7 +399,7 @@ hb.endTable();
     isHeaderAdded = false;
     tBalance = 0.0;
 
-    static const char sql[] = 
+    char sql2[] = 
         "select ACCOUNTID, CURRENCYNAME, BALANCE, BASECONVRATE from ( "
         "select t.accountid as ACCOUNTID, c.currencyname as CURRENCYNAME, "
         "total (t.BALANCE) as BALANCE, "
@@ -424,7 +431,7 @@ hb.endTable();
         "where a.status='Open' and balance<>0 "
         "group by c.currencyid) order by CURRENCYNAME ";
 
-q1 = db_->ExecuteQuery(sql);
+q1 = db_->ExecuteQuery(sql2);
         
         //How many currencies used
         int curnumber = 0;
@@ -659,7 +666,7 @@ q1 = db_->ExecuteQuery(sql);
     mmDBWrapper::loadBaseCurrencySettings(db_);
     isHeaderAdded = false;
     
-        static const char sql2[] = 
+    char sql3[] = 
         "select ACCOUNTNAME, "
         "CATEG|| (Case SUBCATEG when '' then '' else ':' end )||  SUBCATEG as SUBCATEGORY "
         ", AMOUNT "
@@ -685,7 +692,7 @@ q1 = db_->ExecuteQuery(sql);
         "limit 10 "
         ") where AMOUNT <> 0" ;
 
-    q1 = db_->ExecuteQuery(sql2);
+    q1 = db_->ExecuteQuery(sql3);
 
     if (db_)
     {
