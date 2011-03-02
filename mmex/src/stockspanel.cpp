@@ -875,11 +875,10 @@ void stocksListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 
 void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
 {
-	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS);
-	wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS_MINI);
-	if (selectedIndex_!=-1) { 
+        wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS);
+        wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS_MINI);
+        if (selectedIndex_!=-1) { 
 
-        mmDBWrapper::loadBaseCurrencySettings(db_);
         wxString stockPurchasePriceStr;
         wxString stockCurrentPriceStr;
         wxString stockDifferenceStr;
@@ -908,7 +907,7 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
         
         additionInfo << trans_[selectedIndex_].stockSymbol_ << wxT(" : ") << stockPurchasePriceStr
         << wxT(" - ") << stockCurrentPriceStr << wxT(" = ") << stockDifferenceStr << wxT (" ( ") << stockPercentageStr << wxT ('%')
-        << wxT (" | ")<< stockPercentagePerYearStr << wxT("% ") << _ ("Yearly") << wxT (" )")
+        << wxT (" | ")<< stockPercentagePerYearStr << wxT("% ") << _("Yearly") << wxT (" )")
         << wxT ("\n") << getItem(selectedIndex_, COL_NOTES);
         st->SetLabel(additionInfo);
         }
@@ -979,8 +978,7 @@ void stocksListCtrl::OnDeleteStocks(wxCommandEvent& /*event*/)
     }
 
     wxMessageDialog msgDlg(this, _("Do you really want to delete the stock investment?"),
-                           _("Confirm Stock Investment Deletion"),
-                           wxYES_NO);
+                           _("Confirm Stock Investment Deletion"),wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES)
     {
         mmDBWrapper::deleteStockInvestment(cp_->db_, cp_->trans_[selectedIndex_].stockID_);
