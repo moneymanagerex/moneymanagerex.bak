@@ -181,7 +181,7 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
     if (text == wxT(""))
     {
         wxString errMsg = _("Category cannot be empty");
-        errMsg << _("          ");  // added to adjust dialog size
+        errMsg << wxT("          ");  // added to adjust dialog size
         wxMessageBox(errMsg, _("Organise Categories: Adding Error"),wxOK|wxICON_ERROR);
 //      mmShowErrorMessage(this, _("Category cannot be empty"), _("Error"));
         return;
@@ -392,7 +392,7 @@ void mmCategDialog::OnEdit(wxCommandEvent& /*event*/)
     if (!core_->categoryList_.updateCategory(categID, subcategID, text))
     {
         wxString errMsg = _("Update Failed");
-        errMsg << _("          ");  // added to adjust dialog size
+        errMsg << wxT("          ");  // added to adjust dialog size
         wxMessageBox(errMsg, _("Organise Categories"),wxOK|wxICON_ERROR);
 //      mmShowErrorMessage(this, _("Update Failed"), _("Error"));
         return;
