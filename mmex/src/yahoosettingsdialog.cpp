@@ -170,8 +170,9 @@ m_yahoopointer(myp)
     bSizer1000->Add(bSizer1100, 1, wxEXPAND | wxALL, 5);
 
 	m_sdbSettings = new wxStdDialogButtonSizer();
-	m_sdbSettings->AddButton( new wxButton( this, wxID_OK ) );
-	m_sdbSettings->AddButton( new wxButton( this, wxID_CANCEL ) );
+	m_sdbSettings->AddButton( new wxButton( this, wxID_OK , _ ("OK")) );
+	
+	m_sdbSettings-> AddButton( new wxButton( this, wxID_CANCEL , _("Cancel")) ); 
 	m_sdbSettings->Realize();
 	bSizer1000->Add( m_sdbSettings, 0, wxEXPAND, 10 );
 
