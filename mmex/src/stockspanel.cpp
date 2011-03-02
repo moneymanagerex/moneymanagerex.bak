@@ -420,10 +420,10 @@ void mmStocksPanel::initVirtualListControl()
         th.purchasePrice_     = q1.GetDouble(wxT("PURCHASEPRICE"));
         th.value_             = q1.GetDouble(wxT("VALUE"));
         double commission     = q1.GetDouble(wxT("COMMISSION"));
-        double stockDays_     = q1.GetDouble (wxT ("DAYSOWN"));
+        th.stockDays_         = q1.GetDouble (wxT ("DAYSOWN"));
 
         th.gainLoss_          = th.value_ - ((th.numShares_ * th.purchasePrice_) + commission);
-        mmex::formatDoubleToCurrencyEdit(((th.value_ / ((th.numShares_ * th.purchasePrice_) + commission)-1.0)*100.0 * stockDays_ /365.0 ), th.stockDaysStr_);
+        mmex::formatDoubleToCurrencyEdit(((th.value_ / ((th.numShares_ * th.purchasePrice_) + commission)-1.0)*100.0 * th.stockDays_ /365.0 ), th.stockPercentagePerYearStr_);
 
         mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
         mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
@@ -878,12 +878,39 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
 	wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS);
 	wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS_MINI);
 	if (selectedIndex_!=-1) { 
-        //FIXME: Here should be the SYMBOL and Gain/Loss in percent
+
+        mmDBWrapper::loadBaseCurrencySettings(db_);
+        wxString stockPurchasePriceStr;
+        wxString stockCurrentPriceStr;
+        wxString stockDifferenceStr;
+        wxString stockPercentageStr;
+        wxString stockPercentagePerYearStr;
+        double stockPurchasePrice = trans_[selectedIndex_].purchasePrice_;
+        double stockCurrentPrice = trans_[selectedIndex_].currentPrice_;
+        double stockDifference = stockCurrentPrice - stockPurchasePrice;
+        double stockDaysOwn = trans_[selectedIndex_].stockDays_;
+        //Commision don't calculates here
+        double stockPercentage = (stockCurrentPrice/stockPurchasePrice-1.0)*100.0;
+        double stockPercentagePerYear = stockPercentage * stockDaysOwn /365.0;
+
+        mmex::formatDoubleToCurrencyEdit(stockPurchasePrice, stockPurchasePriceStr);
+        mmex::formatDoubleToCurrencyEdit(stockCurrentPrice, stockCurrentPriceStr);
+        mmex::formatDoubleToCurrency(stockDifference , stockDifferenceStr);
+        mmex::formatDoubleToCurrencyEdit(stockPercentage, stockPercentageStr);
+        mmex::formatDoubleToCurrencyEdit(stockPercentagePerYear, stockPercentagePerYearStr);
+        
+
         wxString miniInfo;
-        miniInfo << wxT ("         ") << _("Info: ") << _("Symbol: ") << trans_[selectedIndex_].stockSymbol_ 
-                 << wxT ("         ") << _("Percent/Year: ") << trans_[selectedIndex_].stockDaysStr_;
+        miniInfo << wxT ("\t") << _("Symbol: ") << trans_[selectedIndex_].stockSymbol_ 
+                 << wxT ("\t\t") << _("Percent/Year: ") << trans_[selectedIndex_].stockPercentagePerYearStr_;
         stm->SetLabel(miniInfo);
-        st->SetLabel(getItem(selectedIndex_, COL_NOTES));
+        wxString additionInfo;
+        
+        additionInfo << trans_[selectedIndex_].stockSymbol_ << wxT(" : ") << stockPurchasePriceStr
+        << wxT(" - ") << stockCurrentPriceStr << wxT(" = ") << stockDifferenceStr << wxT (" ( ") << stockPercentageStr << wxT ('%')
+        << wxT (" | ")<< stockPercentagePerYearStr << wxT("% ") << _ ("Yearly") << wxT (" )")
+        << wxT ("\n") << getItem(selectedIndex_, COL_NOTES);
+        st->SetLabel(additionInfo);
         }
         else
         {
