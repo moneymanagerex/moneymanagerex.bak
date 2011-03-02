@@ -58,7 +58,9 @@ wxString mmCustomSQLReport::getHTMLText()
         hb.startTableRow();
         for (int index = 0; index < columnCount; index ++)
         {
-            hb.addTableCell(sqlQueryResult.GetAsString(index));
+            hb.addTableCell(sqlQueryResult.GetAsString(index), 
+            //if result is integer or double align right 
+            (sqlQueryResult.GetColumnType(index)==1 || sqlQueryResult.GetColumnType(index)==2));
         }
         hb.endTableRow();
     }
