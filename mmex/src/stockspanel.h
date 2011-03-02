@@ -82,7 +82,7 @@ public:
     wxString stockPDate_;
     wxString shareName_;
     wxString stockSymbol_;
-    wxString stockDaysStr_;
+    wxString stockPercentagePerYearStr_;
     wxString shareNotes_;
     wxString numSharesStr_;
     wxString gainLossStr_;
@@ -96,6 +96,7 @@ public:
     double value_;
     double gainLoss_;
     double numShares_;
+    double stockDays_;
 };
 
 class mmStocksPanel : public mmPanelBase
