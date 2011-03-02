@@ -76,6 +76,7 @@ void mmCategDialog::fillControls()
 {
     root_ = treeCtrl_->AddRoot(_("Categories"));
     treeCtrl_->SetItemBold(root_, true);
+    treeCtrl_->SetFocus ();
 
     if (!core_)
         return;
@@ -96,7 +97,9 @@ void mmCategDialog::fillControls()
         }
 
         treeCtrl_->SortChildren(maincat);
-        treeCtrl_->Expand(maincat);
+        //Do not expand categories is nice
+        //TODO: May be users will want parameter for this  
+        //treeCtrl_->Expand(maincat);
     }
 
     treeCtrl_->Expand(root_);
