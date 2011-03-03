@@ -46,10 +46,13 @@ wxString mmCustomSQLReport::getHTMLText()
     wxSQLite3ResultSet sqlQueryResult = core_->db_->ExecuteQuery(sqlQuery_);
 
     int columnCount = sqlQueryResult.GetColumnCount();
+    bool alignRight[columnCount];
     hb.startTableRow();
     for (int index = 0; index < columnCount; index ++)
     {
     	hb.addTableHeaderCell(sqlQueryResult.GetColumnName(index));
+    	//if column type is integer or double align right all data rows
+    	alignRight[index] = (sqlQueryResult.GetColumnType(index)==1 || sqlQueryResult.GetColumnType(index)==2);
     }
     hb.endTableRow();
 
@@ -58,9 +61,7 @@ wxString mmCustomSQLReport::getHTMLText()
         hb.startTableRow();
         for (int index = 0; index < columnCount; index ++)
         {
-            hb.addTableCell(sqlQueryResult.GetAsString(index), 
-            //if result is integer or double align right 
-            (sqlQueryResult.GetColumnType(index)==1 || sqlQueryResult.GetColumnType(index)==2));
+            hb.addTableCell( sqlQueryResult.GetAsString(index), alignRight[index]);
         }
         hb.endTableRow();
     }
