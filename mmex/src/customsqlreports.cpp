@@ -21,6 +21,7 @@
 #include "util.h"
 #include "paths.h"
 #include <wx/tokenzr.h>
+#include <vector>
 
 mmCustomSQLReport::mmCustomSQLReport(mmCoreDB* core, const wxString& reportTitle, const wxString& sqlQuery):
     core_(core), reportTitle_(reportTitle), sqlQuery_(sqlQuery)
@@ -46,7 +47,7 @@ wxString mmCustomSQLReport::getHTMLText()
     wxSQLite3ResultSet sqlQueryResult = core_->db_->ExecuteQuery(sqlQuery_);
 
     int columnCount = sqlQueryResult.GetColumnCount();
-    bool alignRight[columnCount];
+    std::vector<bool> alignRight(columnCount); 
     hb.startTableRow();
     for (int index = 0; index < columnCount; index ++)
     {
