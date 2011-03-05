@@ -170,9 +170,24 @@ m_yahoopointer(myp)
     bSizer1000->Add(bSizer1100, 1, wxEXPAND | wxALL, 5);
 
 	m_sdbSettings = new wxStdDialogButtonSizer();
-	m_sdbSettings->AddButton( new wxButton( this, wxID_OK , _ ("OK")) );
 	
-	m_sdbSettings-> AddButton( new wxButton( this, wxID_CANCEL , _("Cancel")) ); 
+	//m_sdbSettings->AddButton( new wxButton( this, wxID_OK , _ ("OK")) );
+	
+	//m_sdbSettings-> AddButton( new wxButton( this, wxID_CANCEL , _("Cancel")) ); 
+	
+
+	wxButton* itemButton7 = new wxButton( this, wxID_OK , _("OK"), wxDefaultPosition, wxDefaultSize, 0);
+	itemButton7->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
+	itemButton7->SetFocus();
+
+	//TODO: How to make the buttons placed aligned ritht?
+	//wxButton* itemButton8 = new wxButton( this, wxID_CANCEL , _("Cancel"), wxDefaultPosition, wxDefaultSize, 0);
+	//itemButton8->SetForegroundColour(wxColour(wxT("RED")));
+	//itemButton8->SetFocus();
+	//bSizer1100->Add(itemButton8, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	bSizer1100->Add(itemButton7, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	
+
 	m_sdbSettings->Realize();
 	bSizer1000->Add( m_sdbSettings, 0, wxEXPAND, 10 );
 
