@@ -62,7 +62,8 @@
 #include "paths.h"
 #include "constants.h"
 #include "platfdep.h"
-#include "customsqlreports.h"
+#include "customreportdisplay.h"
+#include "customreportindex.h"
 //----------------------------------------------------------------------------
 
 /* Include XPM Support */
@@ -4027,7 +4028,7 @@ void mmGUIFrame::EditCustomSqlReport()
         dlg be able to Clear, Load, Save and Run SQL file, 
     */
     
-    wxMessageBox(wxString() << wxT("Popup Index: ") << customSqlReportSelectedItem_, _("Edit"));
+//    wxMessageBox(wxString() << wxT("Popup Index: ") << customSqlReportSelectedItem_, _("Edit"));
  
     wxString msg = wxString() << _("Title: ") << custRepIndex_->currentReportTitle() 
                               << wxT("\n")

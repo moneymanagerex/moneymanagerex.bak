@@ -15,24 +15,11 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *************************************************************************/
-#ifndef _MM_EX_CUSTOMSQLREPORTS_H_
-#define _MM_EX_CUSTOMSQLREPORTS_H_
+#ifndef _MM_EX_CUSTOMREPORTINDEX_H_
+#define _MM_EX_CUSTOMREPORTINDEX_H_
 
 #include "reportbase.h"
 #include "mmcoredb.h"
-
-class mmCustomSQLReport : public mmPrintableBase
-{
-public:
-    mmCustomSQLReport(mmCoreDB* core, const wxString& reportTitle, const wxString& sqlQuery);
-
-    wxString getHTMLText();
-
-private:
-    mmCoreDB* core_;
-    wxString reportTitle_;
-    wxString sqlQuery_;
-};
 
 //===============================================================
 // Class: customSQLReportIndex
