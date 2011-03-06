@@ -16,65 +16,9 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *************************************************************************/
 
-#include "customsqlreports.h"
-#include "htmlbuilder.h"
-#include "util.h"
+#include "customreportindex.h"
 #include "paths.h"
 #include <wx/tokenzr.h>
-#include <vector>
-
-mmCustomSQLReport::mmCustomSQLReport(mmCoreDB* core, const wxString& reportTitle, const wxString& sqlQuery):
-    core_(core), reportTitle_(reportTitle), sqlQuery_(sqlQuery)
-{
-}
-
-wxString mmCustomSQLReport::getHTMLText()
-{
-    mmHTMLBuilder hb;
-    hb.init();
-    wxString title = wxString() << _("Custom SQL Report: ") << reportTitle_; 
-    hb.addHeader(3, title);
-
-    wxDateTime now = wxDateTime::Now();
-    wxString dt = wxT("Today's Date: ") + mmGetNiceDateString(now);
-    hb.addHeader(7, dt);
-    hb.addLineBreak();
-    hb.addLineBreak();
-
-	hb.startCenter();
-    hb.startTable(wxT("90%"));
-
-    wxSQLite3ResultSet sqlQueryResult = core_->db_->ExecuteQuery(sqlQuery_);
-
-    int columnCount = sqlQueryResult.GetColumnCount();
-    std::vector<bool> alignRight(columnCount); 
-    hb.startTableRow();
-    for (int index = 0; index < columnCount; index ++)
-    {
-    	hb.addTableHeaderCell(sqlQueryResult.GetColumnName(index));
-    	//if column type is integer or double align right all data rows
-    	alignRight[index] = (sqlQueryResult.GetColumnType(index)==1 || sqlQueryResult.GetColumnType(index)==2);
-    }
-    hb.endTableRow();
-
-    while (sqlQueryResult.NextRow())
-    {
-        hb.startTableRow();
-        for (int index = 0; index < columnCount; index ++)
-        {
-            hb.addTableCell( sqlQueryResult.GetAsString(index), alignRight[index]);
-        }
-        hb.endTableRow();
-    }
-
-    sqlQueryResult.Finalize();
-
-    hb.endTable();
-	hb.endCenter();
-
-    hb.end();
-    return hb.getHTMLText();
-}
 
 //===============================================================
 // Methods for Class: customSQLReportIndex

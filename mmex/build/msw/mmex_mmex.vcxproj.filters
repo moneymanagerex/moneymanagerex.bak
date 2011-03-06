@@ -216,7 +216,10 @@
     <ClCompile Include="..\..\src\relocatepayeedialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\customsqlreports.cpp">
+    <ClCompile Include="..\..\src\customreportdisplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\customreportindex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -431,7 +434,10 @@
     <ClInclude Include="..\..\src\relocatepayeedialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\customsqlreports.h">
+    <ClInclude Include="..\..\src\customreportdisplay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\customreportindex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
