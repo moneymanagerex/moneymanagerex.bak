@@ -248,7 +248,7 @@ void mmBillsDepositsPanel::CreateControls()
 void mmBillsDepositsPanel::initVirtualListControl()
 {
     static const char sql[] = 
-"select c.categname, "
+       "select c.categname, "
        "sc.subcategname, "
        "b.BDID, "
        "b.NEXTOCCURRENCEDATE, "
@@ -263,13 +263,13 @@ void mmBillsDepositsPanel::initVirtualListControl()
        "b.CATEGID, "
        "b.SUBCATEGID "
 
-"from BILLSDEPOSITS_V1 b "
+        "from BILLSDEPOSITS_V1 b "
 
-"left join category_v1 c "
-"on c.categid = b.categid "
+        "left join category_v1 c "
+        "on c.categid = b.categid "
 
-"left join subcategory_v1 sc "
-"on sc.subcategid = b.subcategid";
+        "left join subcategory_v1 sc "
+        "on sc.subcategid = b.subcategid";
 
     trans_.clear();
 
@@ -297,6 +297,10 @@ void mmBillsDepositsPanel::initVirtualListControl()
 		th.categoryStr_	   = q1.GetString(wxT("CATEGNAME"));
 		th.subcategID_	   = q1.GetInt(wxT("SUBCATEGID"));
 		th.subcategoryStr_ = q1.GetString(wxT("SUBCATEGNAME"));
+
+        // DeMultiplex the Auto Executable field. if repeats > 99 transaction is Auto executable. 
+        if (repeats > 99)
+            repeats -= 100;
 
         if (repeats == 0)
         {
@@ -337,6 +341,10 @@ void mmBillsDepositsPanel::initVirtualListControl()
         else if (repeats == 9)
         {
            th.repeatsStr_ = _("Four Weeks");
+        }
+        else if (repeats == 10)
+        {
+           th.repeatsStr_ = _("Daily");
         }
 
         wxDateTime today = wxDateTime::Now();
