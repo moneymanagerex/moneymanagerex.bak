@@ -75,6 +75,8 @@ public:
     void OnAdvanced(wxCommandEvent& event);
     void OnAccountName(wxCommandEvent& event);
     void OnSplitChecked(wxCommandEvent& event);
+    void OnAutoExecutionUserAckChecked(wxCommandEvent& event);
+    void OnAutoExecutionSilentChecked(wxCommandEvent& event);
 
 private:
     wxSQLite3Database* db_;
@@ -102,6 +104,10 @@ private:
     wxDatePickerCtrl* dpc_;
     wxDatePickerCtrl* dpcbd_;
     wxChoice* itemRepeats_;
+    wxCheckBox* itemCheckBoxAutoExeUserAck_;
+    wxCheckBox* itemCheckBoxAutoExeSilent_;
+    bool autoExecuteUserAck_;
+    bool autoExecuteSilent_;
 
     int categID_;
     int subcategID_;

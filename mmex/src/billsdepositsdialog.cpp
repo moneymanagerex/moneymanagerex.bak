@@ -41,6 +41,8 @@ BEGIN_EVENT_TABLE( mmBDDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONADVANCED, mmBDDialog::OnAdvanced)
     EVT_BUTTON(ID_DIALOG_BD_COMBOBOX_ACCOUNTNAME, mmBDDialog::OnAccountName)
     EVT_CHECKBOX(ID_DIALOG_TRANS_SPLITCHECKBOX, mmBDDialog::OnSplitChecked)
+    EVT_CHECKBOX(ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_USERACK, mmBDDialog::OnAutoExecutionUserAckChecked)
+    EVT_CHECKBOX(ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_SILENT, mmBDDialog::OnAutoExecutionSilentChecked)
 END_EVENT_TABLE()
 
 // Defines for Transaction Type
@@ -54,6 +56,7 @@ END_EVENT_TABLE()
 #define DEF_STATUS_VOID       2
 #define DEF_STATUS_FOLLOWUP   3
 
+#define DEF_AUTO_EXECUTE 100
 
 mmBDDialog::mmBDDialog( )
 {
@@ -75,6 +78,8 @@ mmBDDialog::mmBDDialog(wxSQLite3Database* db, mmCoreDB* core, int bdID, bool edi
     toTransAmount_ = -1;
     enterOccur_ = enterOccur;
     advancedToTransAmountSet_ = false;
+    autoExecuteUserAck_ = false;
+    autoExecuteSilent_  = false;
 
     Create(parent, id, caption, pos, size, style);
 }
@@ -165,6 +170,22 @@ void mmBDDialog::dataToControls()
         dpc_->SetValue(dtno);
 
         int repeatSel = q1.GetInt(wxT("REPEATS"));
+        // Have used repeatSel to multiplex auto repeat fields.
+        if (repeatSel >= DEF_AUTO_EXECUTE)
+        {
+            repeatSel -= DEF_AUTO_EXECUTE;
+            autoExecuteUserAck_ = true;
+            itemCheckBoxAutoExeUserAck_->SetValue(true);
+            itemCheckBoxAutoExeSilent_->Enable(true);
+
+            if (repeatSel >= DEF_AUTO_EXECUTE)
+            {
+                repeatSel -= DEF_AUTO_EXECUTE;
+                autoExecuteSilent_ = true;
+                itemCheckBoxAutoExeSilent_->SetValue(true);
+            }
+        }
+
         itemRepeats_->SetSelection(repeatSel);
         if (repeatSel == 0) // if none
             textNumRepeats_->SetValue(wxT(""));
@@ -334,6 +355,18 @@ void mmBDDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer5->Add(textNumRepeats_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     textNumRepeats_->SetToolTip(_("Specify the number of times this series repeats. Leave blank if this series continues forever."));
+
+    /* Auto Execution Status */
+    itemCheckBoxAutoExeUserAck_ = new wxCheckBox( itemDialog1, 
+        ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_USERACK, _("Set to 'Auto Execute' on the 'Next Occurrence' date."),
+        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    itemBoxSizer3->Add(itemCheckBoxAutoExeUserAck_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    itemCheckBoxAutoExeSilent_ = new wxCheckBox( itemDialog1, 
+        ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_SILENT, _("Set 'Auto Execute' without user acknowlegement."),
+        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    itemCheckBoxAutoExeSilent_->Enable(false);
+    itemBoxSizer3->Add(itemCheckBoxAutoExeSilent_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     /* Transaction Details */
     wxStaticBox* itemStaticBoxSizer14Static = new wxStaticBox(itemDialog1, 
@@ -560,25 +593,8 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 		    payeeID_ = mmDBWrapper::getAccountID(db_, acctName);
 		    bPayee_->SetLabel(acctName);
     	}
-//      Do nothing if Cancelling Dialog. This code removed: Was Causing confusion in host Dialog
-//      else 
-//      {
-//          wxString acctName = mmDBWrapper::getAccountName(db_, payeeID_);
-//	        if (acctName.IsEmpty())
-//	        {
-//	            payeeID_ = -1;
-//	            categID_ = -1;
-//	            subcategID_ = -1;
-//	            bCategory_->SetLabel(_("Select Category"));
-//	            bPayee_->SetLabel(_("Select Payee"));
-//	        }
-//	        else
-//	        {
-//	            bPayee_->SetLabel(acctName);
-//	        }  
-//	    }
 
-	} else {
+    } else {
 	    mmPayeeDialog dlg(this, core_);    
 	    if ( dlg.ShowModal() == wxID_OK )
 	    {
@@ -664,21 +680,6 @@ void mmBDDialog::OnTo(wxCommandEvent& /*event*/)
         toID_ = mmDBWrapper::getAccountID(db_, acctName);
         bTo_->SetLabel(acctName);
     }
-//  Do nothing if Cancelling Dialog. This code removed: Was Causing confusion in host Dialog
-//  else
-//  {
-//      wxString acctName = mmDBWrapper::getAccountName(db_, toID_);
-//      if (acctName.IsEmpty())
-//      {
-//          toID_ = -1;
-//          bCategory_->SetLabel(_("Select Category"));
-//          bPayee_->SetLabel(_("Select To"));
-//      }
-//      else
-//      {
-//          bPayee_->SetLabel(acctName);
-//      }  
-//  }
 }
 
 void mmBDDialog::OnDateChanged(wxDateEvent& /*event*/)
@@ -952,7 +953,12 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
     wxString notes = textNotes_->GetValue();
     wxString status = wxT(""); // nothing yet
     int repeats = itemRepeats_->GetSelection();
-    
+    // Multiplex Auto executable onto the repeat field of the database. 
+    if (autoExecuteUserAck_)
+        repeats += DEF_AUTO_EXECUTE;
+    if (autoExecuteSilent_)
+        repeats += DEF_AUTO_EXECUTE;
+
     wxString numRepeatStr = textNumRepeats_->GetValue();
     int numRepeats = -1;
     
@@ -1170,4 +1176,41 @@ void mmBDDialog::OnSplitChecked(wxCommandEvent& /*event*/)
     mmex::formatDoubleToCurrencyEdit(0.0, dispAmount);
     textAmount_->SetValue(dispAmount);
   }
+}
+
+void mmBDDialog::OnAutoExecutionUserAckChecked(wxCommandEvent& /*event*/)
+{
+    autoExecuteUserAck_ = ! autoExecuteUserAck_;
+    wxString msg;
+    if (autoExecuteUserAck_) 
+        msg = _("Auto Execution Set with required user acknowledgement."); 
+
+    if (autoExecuteUserAck_)
+    {
+        itemCheckBoxAutoExeSilent_->Enable(true);
+    }
+    else
+    {
+        itemCheckBoxAutoExeSilent_->Enable(false);
+        autoExecuteSilent_ = false;
+    }
+
+    // message will be modified when implementation complete.
+    msg << wxT("\n\n") 
+        << _("The Auto Execution feature not fully implemented yet.");
+    wxMessageBox(msg ,_("Repeat Transaction - Auto Execution"));
+}
+
+
+void mmBDDialog::OnAutoExecutionSilentChecked(wxCommandEvent& /*event*/)
+{
+    autoExecuteSilent_ = ! autoExecuteSilent_;
+// message will be removed when implementation complete.
+    wxString msg;
+    if (autoExecuteSilent_) 
+        msg = _("Auto Execution Silent"); 
+
+    msg << wxT("\n\n") 
+        << _("The Auto Execution feature not fully implemented yet.");
+    wxMessageBox(msg ,_("Repeat Transaction - Auto Execution"));
 }
