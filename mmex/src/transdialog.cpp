@@ -519,22 +519,24 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 {
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
 	{
-	    //It's should be passible transfer from or to Investment accounts too
-	    static const char sql[] = 
+	    //It should be possible to transfer from or to Investment accounts as too.
+	    static const char sql[] =
     	"select ACCOUNTNAME "
     	"from ACCOUNTLIST_V1 "
-    	"where /*(ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and*/ STATUS <> 'Closed' "
+//    	"where /*(ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and*/ STATUS <> 'Closed' "
+// restored to previous order until a proper solution is found.
+    	"where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS <> 'Closed' "
     	"order by ACCOUNTNAME";
-	
+
     	wxArrayString as;
-    	
+
     	wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     	while (q1.NextRow())
     	{
     	    as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     	}
     	q1.Finalize();
-    	
+
     	wxSingleChoiceDialog scd(0, _("Account name"), _("Select Account"), as);
         if (scd.ShowModal() == wxID_OK)
     	{
@@ -555,7 +557,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 	            bPayee_->SetLabel(wxT("Select Payee"));
 	            return;
             }
-	            
+
            	int tempCategID = -1;
             int tempSubCategID = -1;
             wxString payeeName = mmDBWrapper::getPayee(db_.get(), payeeID_, tempCategID, tempSubCategID);
@@ -565,13 +567,13 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
             if (split_->numEntries())
                 return;
 
-            // if payee has no memory of category then ignore displaying last category for payee   
+            // if payee has no memory of category then ignore displaying last category for payee
             if (tempCategID == -1)
                 return;
 
             wxString catName = mmDBWrapper::getCategoryName(db_.get(), tempCategID);
             wxString categString = catName;
-	
+
             if (tempSubCategID != -1)
             {
                 wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(), tempCategID, tempSubCategID);
@@ -599,7 +601,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
             {
                 bPayee_->SetLabel(payeeName);
             }
-	        
+
     	}
 	}
 }
@@ -607,28 +609,30 @@ void mmTransDialog::OnAutoTransNum(wxCommandEvent& /*event*/)
 {
     int mID = mmDBWrapper::getTransIDByDate(db_.get(), dpc_->GetValue().FormatISODate(), accountID_);
     wxString wxIDstr = wxString::Format(wxT( "%d" ), (int) mID);
-    textNumber_->SetValue( wxIDstr );	
+    textNumber_->SetValue( wxIDstr );
 }
 
 void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
-{	
+{
     // This should only get called if we are in a transfer
 
-    static const char sql[] = 
+    static const char sql[] =
         "select ACCOUNTNAME "
         "from ACCOUNTLIST_V1 "
-        "where STATUS <> 'Closed' "
+//      "where STATUS <> 'Closed' "
+// restored to previous order until a proper solution is found.
+    	"where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS <> 'Closed' "
         "order by ACCOUNTNAME";
-	
+
     wxArrayString as;
-    	
+
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     while (q1.NextRow())
     {
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
     q1.Finalize();
-    	
+
     wxSingleChoiceDialog scd(0, _("Account name"), _("Select Account"), as);
     if (scd.ShowModal() == wxID_OK)
     {
@@ -749,9 +753,9 @@ void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
 void mmTransDialog::updateControlsForTransType()
 {
     wxStaticText* stp = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_STATIC_PAYEE);
-    
+
     if (choiceTrans_->GetSelection() == DEF_WITHDRAWAL) {
-        
+
         fillControls();
         displayControlsToolTips(DEF_WITHDRAWAL);
         stp->SetLabel(_("Payee"));
@@ -771,7 +775,7 @@ void mmTransDialog::updateControlsForTransType()
     } else if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
 
         displayControlsToolTips(DEF_TRANSFER, true);
-        stp->SetLabel(_("From"));   
+        stp->SetLabel(_("From"));
         bTo_->SetLabel(_("Select To Account"));
         toID_    = -1;
 
@@ -863,7 +867,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
             mmShowErrorMessageInvalid(this, _("To Account "));
             return;
         }
-        
+
         if (payeeID_ == toID_)
         {
             mmShowErrorMessage(this, _("From and To Account cannot be the same."), _("Error"));
@@ -905,13 +909,13 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         }
         else
         {
-            // Since to trans amount is not set, 
+            // Since to trans amount is not set,
             // we use the original currency rate to calculate
             // toTransAmount
             toTransAmount_ = edit_currency_rate * amount;
         }
     }
-    
+
     wxString transNum = textNumber_->GetValue();
     wxString notes = textNotes_->GetValue();
     wxString status = wxT(""); // nothing yet
@@ -920,27 +924,27 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     {
         status = wxT(""); // nothing yet
         if (mmIniOptions::transStatusReconciled_)   // This changed the selection order
-            status = wxT("R"); 
+            status = wxT("R");
     }
     else if (choiceStatus_->GetSelection() == DEF_STATUS_RECONCILED)
     {
-        status = wxT("R"); 
+        status = wxT("R");
         if (mmIniOptions::transStatusReconciled_)   // This changed the selection order
-            status = wxT(""); 
+            status = wxT("");
     }
     else if (choiceStatus_->GetSelection() == DEF_STATUS_VOID)
     {
-        status = wxT("V"); 
+        status = wxT("V");
     }
     else if (choiceStatus_->GetSelection() == DEF_STATUS_FOLLOWUP)
     {
-        status = wxT("F"); 
+        status = wxT("F");
     }
 	else if (choiceStatus_->GetSelection() == DEF_STATUS_DUPLICATE)
     {
-        status = wxT("D"); 
+        status = wxT("D");
     }
-        
+
     wxString date1 = dpc_->GetValue().FormatISODate();
 
     boost::shared_ptr<mmBankTransaction> pTransaction;
@@ -956,7 +960,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 
     boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
     wxASSERT(pCurrencyPtr);
-     
+
     pTransaction->accountID_ = fromAccountID;
     pTransaction->toAccountID_ = toAccountID;
     pTransaction->payee_ = core_->payeeList_.getPayeeSharedPtr(payeeID_);
@@ -971,7 +975,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 
     *pTransaction->splitEntries_.get() = *split_.get();
     pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr, true);
- 
+
     if (!edit_)
     {
        core_->bTransactionList_.addTransaction(core_, pTransaction);
@@ -981,7 +985,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     {
        core_->bTransactionList_.updateTransaction(pTransaction);
     }
-    
+
 
     EndModal(wxID_OK);
 }
