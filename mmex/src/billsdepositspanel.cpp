@@ -27,6 +27,8 @@
 /* Include XPM Support */
 #include "../resources/error.xpm"
 
+#define DEF_AUTO_EXECUTE 100
+
 /*******************************************************/
 BEGIN_EVENT_TABLE(mmBillsDepositsPanel, wxPanel)
     EVT_BUTTON(ID_BUTTON_NEW_BD,         mmBillsDepositsPanel::OnNewBDSeries)
@@ -298,9 +300,11 @@ void mmBillsDepositsPanel::initVirtualListControl()
 		th.subcategID_	   = q1.GetInt(wxT("SUBCATEGID"));
 		th.subcategoryStr_ = q1.GetString(wxT("SUBCATEGNAME"));
 
-        // DeMultiplex the Auto Executable field. if repeats > 99 transaction is Auto executable. 
-        if (repeats > 99)
-            repeats -= 100;
+        // DeMultiplex the Auto Executable fields.
+        if (repeats >= DEF_AUTO_EXECUTE)    // Auto Execute User Acknowlegement required
+            repeats -= DEF_AUTO_EXECUTE;
+        if (repeats >= DEF_AUTO_EXECUTE)    // Auto Execute Silent mode
+            repeats -= DEF_AUTO_EXECUTE;
 
         if (repeats == 0)
         {
