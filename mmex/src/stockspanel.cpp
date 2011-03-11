@@ -28,7 +28,7 @@
 
 /* Include XPM Support */
 #include "../resources/uparrow.xpm"
-#include "../resources/downarrow.xpm"
+#include "../resources/downarrow_red.xpm"
 
 /*******************************************************/
 namespace
