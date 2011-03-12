@@ -90,7 +90,9 @@ public:
     void unselectNavTree();
     bool expandedBankAccounts();
     bool expandedTermAccounts();
+    bool expandedStockAccounts();
     bool hasActiveTermAccounts();
+
     wxDateTime getUserDefinedFinancialYear(bool prevDayRequired = false);
 
 private:
@@ -188,6 +190,7 @@ private:
     void OnViewLinks(wxCommandEvent &event);
     void OnViewBankAccounts(wxCommandEvent &event);
     void OnViewTermAccounts(wxCommandEvent &event);
+    void OnViewStockAccounts(wxCommandEvent &event);
     void OnViewToolbarUpdateUI(wxUpdateUIEvent &event);
     void OnViewStatusbarUpdateUI(wxUpdateUIEvent &event);
     void OnViewLinksUpdateUI(wxUpdateUIEvent &event);

@@ -27,6 +27,7 @@
 class wxListView;
 class mmGUIFrame;
 class wxListEvent;
+class mmHTMLBuilder;
 
 class mmHtmlWindow: public wxHtmlWindow
 {
@@ -83,6 +84,15 @@ private:
     mmGUIFrame* frame_;
     mmHtmlWindow* htmlWindow_;
     wxString topCategories_;
+
+    void displaySummaryHeader(mmHTMLBuilder& hb, wxString summaryTitle );
+    void displaySectionTotal(mmHTMLBuilder& hb, wxString totalsTitle, double& tBalance, bool showSeparator = true );
+
+    void displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, wxDateTime& dtBegin, wxDateTime& dtEnd);
+    void displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, wxDateTime& dtBegin, wxDateTime& dtEnd);
+    void displayStocks(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses);
+    void displayAssets(mmHTMLBuilder& hb, double& tBalance);
+    void displayCurrencies(mmHTMLBuilder& hb, double& tBalance);
 };
 
 #endif
