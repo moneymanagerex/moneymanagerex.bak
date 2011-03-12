@@ -363,6 +363,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
 	EVT_MENU(MENU_VIEW_LINKS, mmGUIFrame::OnViewLinks)
 	EVT_MENU(MENU_VIEW_BANKACCOUNTS, mmGUIFrame::OnViewBankAccounts)
 	EVT_MENU(MENU_VIEW_TERMACCOUNTS, mmGUIFrame::OnViewTermAccounts)
+	EVT_MENU(MENU_VIEW_STOCKACCOUNTS, mmGUIFrame::OnViewStockAccounts)
     EVT_MENU(MENU_CATEGORY_RELOCATION, mmGUIFrame::OnCategoryRelocation)
     EVT_MENU(MENU_PAYEE_RELOCATION, mmGUIFrame::OnPayeeRelocation)
 
@@ -806,6 +807,11 @@ bool mmGUIFrame::expandedBankAccounts()
 bool mmGUIFrame::expandedTermAccounts()
 {
     return menuBar_->IsChecked(MENU_VIEW_TERMACCOUNTS);
+}
+
+bool mmGUIFrame::expandedStockAccounts()
+{
+    return menuBar_->IsChecked(MENU_VIEW_STOCKACCOUNTS);
 }
 
 bool mmGUIFrame::hasActiveTermAccounts()
@@ -2616,6 +2622,8 @@ void mmGUIFrame::createMenu()
 		_("&Bank Accounts"), _("Show/Hide Bank Accounts on Summary page"), wxITEM_CHECK);
 	wxMenuItem* menuItemTermAccount = new wxMenuItem(menuView, MENU_VIEW_TERMACCOUNTS, 
 		_("Term &Accounts"), _("Show/Hide Term Accounts on Summary page"), wxITEM_CHECK);
+    wxMenuItem* menuItemStockAccount = new wxMenuItem(menuView, MENU_VIEW_STOCKACCOUNTS, 
+		_("&Stock Accounts"), _("Show/Hide Stock Accounts on Summary page"), wxITEM_CHECK);
 
 	menuView->Append(menuItemToolbar);
 	menuView->Append(menuItemLinks);
@@ -2623,6 +2631,7 @@ void mmGUIFrame::createMenu()
     menuView->AppendSeparator();
     menuView->Append(menuItemBankAccount);
     menuView->Append(menuItemTermAccount);
+    menuView->Append(menuItemStockAccount);
 
 	wxMenu *menuAccounts = new wxMenu;
 
@@ -2817,6 +2826,7 @@ void mmGUIFrame::createMenu()
 
     menuBar_->Check(MENU_VIEW_BANKACCOUNTS,mmIniOptions::expandBankHome_);
     menuBar_->Check(MENU_VIEW_TERMACCOUNTS,mmIniOptions::expandTermHome_);
+    menuBar_->Check(MENU_VIEW_STOCKACCOUNTS,mmIniOptions::enableStocks_);
 }
 //----------------------------------------------------------------------------
 
@@ -3967,6 +3977,17 @@ void mmGUIFrame::OnViewTermAccounts(wxCommandEvent &event)
     }
 }
 //----------------------------------------------------------------------------
+void mmGUIFrame::OnViewStockAccounts(wxCommandEvent &event)
+{
+	m_mgr.GetPane(wxT("Stock Accounts")).Show(event.IsChecked());
+	m_mgr.Update();
+
+    if (!refreshRequested_)
+    {
+        refreshRequested_ = true;
+        createHomePage();
+    }
+}
 
 void mmGUIFrame::OnCategoryRelocation(wxCommandEvent& /*event*/)
 {
