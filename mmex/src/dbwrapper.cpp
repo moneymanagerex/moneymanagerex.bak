@@ -2650,7 +2650,7 @@ int mmDBWrapper::isReadOnly(wxSQLite3Database &db)
 	} catch (wxSQLite3Exception &e) {
 	
 		err = e.GetExtendedErrorCode();
-		if (err != SQLITE_CANTOPEN && err != SQLITE_READONLY) {
+		if (err != SQLITE_CANTOPEN && err != SQLITE_READONLY && err != SQLITE_NOTADB) {
 			throw;
 		}
 	}
@@ -2667,8 +2667,8 @@ int mmDBWrapper::isReadOnly(wxSQLite3Database &db)
 */
 boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, const wxString &key)
 {
-        boost::shared_ptr<wxSQLite3Database> db(new wxSQLite3Database);
-        db->Open(dbpath, key);
+    boost::shared_ptr<wxSQLite3Database> db(new wxSQLite3Database);
+    db->Open(dbpath, key);
 
 	int err = isReadOnly(*db);
 	if (err == SQLITE_OK) {
@@ -2677,9 +2677,16 @@ boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, c
 	
 	db->Close();
 
-        wxString s = wxString::Format(_("\n%s\nNot a writeable database\nYou must have write permission to that file"), 
+    /*  SQLite returns a code: SQLITE_NOTADB (File opened that is not a database file) 
+        when the password for an encrypted file is incorrect. */
+	if (err == SQLITE_NOTADB) { 
+        db.reset();
+        return db;      // return a NULL database pointer 
+	}	
+
+    wxString s = wxString::Format(_("\n%s\nNot a writeable database\nYou must have write permission to that file"), 
         			         dbpath.c_str());
 
-        throw wxSQLite3Exception(err, s);
+    throw wxSQLite3Exception(err, s);
 }
 //----------------------------------------------------------------------------

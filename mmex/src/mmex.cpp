@@ -2888,6 +2888,8 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
             passwordCheckPassed = false;
 	}
 
+    wxString dialogErrorMessageHeading = _("Opening MMEX Database - Error");
+
     // Existing Database
     if (!openingNew 
         && !fileName.IsEmpty() 
@@ -2904,14 +2906,23 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
         }
 
         m_db = mmDBWrapper::Open(fileName, password);
+        // if the database pointer has been reset, the password is possibly incorrect
+        if (!m_db)
+        {
+            wxString msgStr = wxString() << _("An incorrect password given for an encrypted file")
+                                         << wxT("\n\n") << _("or") << wxT("\n\n")
+                                         << _("Attempt to open a File that is not a database file");
+            wxMessageBox(msgStr,dialogErrorMessageHeading ,wxICON_EXCLAMATION); 
+            return ;
+        }
+
         // we need to check the db whether it is the right version
         if (!mmDBWrapper::checkDBVersion(m_db.get()))
         {
            wxString note = mmex::getProgramName() + _(" - No File opened ");
            this->SetTitle(note);   
-           mmShowErrorMessage(this, 
-                _("Sorry. The Database version is too old or Database password is incorrect"), 
-                _("Error opening database"));
+           wxMessageBox(_("Sorry. The Database version is too old or Database password is incorrect"),
+                        dialogErrorMessageHeading, wxICON_EXCLAMATION);
 
            m_db->Close();
            m_db.reset();
@@ -2964,7 +2975,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
             msgStr = _("Password not entered for encrypted Database.\n");
 
         wxMessageDialog msgDlg(this, msgStr + _("Do you want to browse to locate another file?"), 
-                                _("Error opening database"), wxYES_NO | wxYES_DEFAULT);
+                                dialogErrorMessageHeading, wxYES_NO | wxYES_DEFAULT);
         if (msgDlg.ShowModal() == wxID_YES)
         {
             wxCommandEvent evt;
