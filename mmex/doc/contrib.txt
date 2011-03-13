@@ -1,10 +1,11 @@
-Active developers
-==================
+Active Developers
+==========================================
 Stefano [stef145g]
 Nikolay [Nikolay]
 
-Code Fixes/Patches
-==================
+Code Builds/Fixes/Patches
+==========================================
+Mike      [u4ear]
 Vadim
 Alex Ukhov
 Priyank Bolia
@@ -24,11 +25,11 @@ Wesley Ellis
 Pat
 
 Silk Icons
-===========
+==========================================
 http://www.famfamfam.com/lab/icons/silk/
 
 Translations
-============
+==========================================
 Brazilian Portuguese
 -- Jose Carlos
 Bulgarian
@@ -44,9 +45,11 @@ Dutch (Belgian)
 Englsh (UK)
 - mcrossley
 French
--- Berry As, Jean-Christophe, bipop, drambeau, Ben, Ghislain Baudichaud
+-- Berry As, Jean-Christophe, bipop,
+-- drambeau, Ben, Ghislain Baudichaud
 German
--- Schrempfi, goe, STiGMaTa_ch, Kai Kajus Noack
+-- Schrempfi, goe, STiGMaTa_ch,
+-- Kai Kajus Noack
 Greek
 -- Panagiotis Pentzeridis
 Hebrew
@@ -78,7 +81,8 @@ Swedish
 Tr. Chinese
 -- Kysouke
 Tamil
--- Gopi Gopalakrishnan, Muguntharaj Subramanian
+-- Gopi Gopalakrishnan,
+-- Muguntharaj Subramanian
 Turkish
 -- Murat Bilgen
 Ukrainian
@@ -87,7 +91,7 @@ Vietnamese
 -- Nicky, Luu Cong Thanh
 
 User Manual
-===========
+==========================================
 Stefano [stef145g]
 Tina P
 Terry Wick
@@ -96,7 +100,7 @@ French - catacotox
 Russian - Nikolay
 
 Sponsors
-========
+==========================================
 William Thompson
 Robert Gumpright
 Jason McWhorter
