@@ -354,7 +354,12 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_SHOW_APPSTART, mmGUIFrame::OnShowAppStartDialog)
     EVT_MENU(MENU_EXPORT_HTML, mmGUIFrame::OnExportToHtml)
     EVT_MENU(MENU_BILLSDEPOSITS, mmGUIFrame::OnBillsDeposits)
-    EVT_MENU(MENU_STOCKS, mmGUIFrame::OnStocks)
+
+//  Fix me: Stock Code Broken - Getting exceptions in Debug Mode. Causes assert error.
+//          temporarily removed to prevent code execution.
+//          Something is not correct. Code being called when no an accountID present.
+//          Unexpected behavior Possible missing code somewhere ???
+//  EVT_MENU(MENU_STOCKS, mmGUIFrame::OnStocks)
     EVT_MENU(MENU_ASSETS, mmGUIFrame::OnAssets)
     EVT_MENU(MENU_CURRENCY, mmGUIFrame::OnCurrency)
 	EVT_MENU(MENU_TRANSACTIONREPORT, mmGUIFrame::OnTransactionReport)
