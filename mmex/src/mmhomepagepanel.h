@@ -93,6 +93,9 @@ private:
     void displayStocks(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses);
     void displayAssets(mmHTMLBuilder& hb, double& tBalance);
     void displayCurrencies(mmHTMLBuilder& hb, double& tBalance);
+    void displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome, double& texpenses);
+    void displayBillsAndDeposits(mmHTMLBuilder& hb);
+    void displayTopTransactions(mmHTMLBuilder& hb);
 };
 
 #endif
