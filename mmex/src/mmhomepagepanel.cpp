@@ -487,14 +487,10 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
 //* bills & deposits *//
 void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
 {
-    hb.startTable(wxT("95%"));
-
-    hb.addTableHeaderRowLink(wxT("billsdeposits"), _("Upcoming Transactions"), 3);
-    wxString colorStr;
-
     std::vector<mmBDTransactionHolder> trans_;
     wxSQLite3ResultSet q1 = db_->ExecuteQuery("select BDID, NEXTOCCURRENCEDATE, PAYEEID, TRANSCODE, ACCOUNTID, TOACCOUNTID, TRANSAMOUNT, TOTRANSAMOUNT from BILLSDEPOSITS_V1");
 
+    bool visibleEntries = false;
     while (q1.NextRow())
     {
         mmBDTransactionHolder th;
@@ -544,49 +540,60 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
             th.payeeStr_ = toAccount;
         }
 
+        if (th.daysRemaining_ <= 14)
+            visibleEntries = true;
+
         trans_.push_back(th);
     }
     q1.Finalize();
     std::sort(trans_.begin(), trans_.end(), sortTransactionsByRemainingDaysHP);
 
     ////////////////////////////////////
-    std::vector<wxString> data4;
-    for (size_t bdidx = 0; bdidx < trans_.size(); ++bdidx)
+    if ( visibleEntries )
     {
-        data4.clear();
-        wxDateTime today = wxDateTime::Now();
-        wxTimeSpan ts = trans_[bdidx].nextOccurDate_.Subtract(today);
-        //int hoursRemaining_ = ts.GetHours();
+        wxString colorStr;
 
-        if (trans_[bdidx].daysRemaining_ <= 14)
+        hb.startTable(wxT("95%"));
+        hb.addTableHeaderRowLink(wxT("billsdeposits"), _("Upcoming Transactions"), 3);
+
+        std::vector<wxString> data4;
+        for (size_t bdidx = 0; bdidx < trans_.size(); ++bdidx)
         {
-            wxString daysRemainingStr_;
-            colorStr = wxT("#9999FF");
+            data4.clear();
+            wxDateTime today = wxDateTime::Now();
+            wxTimeSpan ts = trans_[bdidx].nextOccurDate_.Subtract(today);
+            //int hoursRemaining_ = ts.GetHours();
 
-            daysRemainingStr_ = trans_[bdidx].daysRemainingStr_;
-            if (trans_[bdidx].daysRemaining_ < 0)
+            if (trans_[bdidx].daysRemaining_ <= 14)
+            {
+                wxString daysRemainingStr_;
+                colorStr = wxT("#9999FF");
+
+                daysRemainingStr_ = trans_[bdidx].daysRemainingStr_;
+                if (trans_[bdidx].daysRemaining_ < 0)
                 colorStr = wxT("#FF6600");
 
-            // Load the currency for this BD
-            boost::weak_ptr<mmCurrency> wpCurrency = core_->accountList_.getCurrencyWeakPtr(trans_[bdidx].accountID_);
-            boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
-            wxASSERT(pCurrency);
-            if (pCurrency)
-                pCurrency->loadCurrencySettings();
+                // Load the currency for this BD
+                boost::weak_ptr<mmCurrency> wpCurrency = core_->accountList_.getCurrencyWeakPtr(trans_[bdidx].accountID_);
+                boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
+                wxASSERT(pCurrency);
+                if (pCurrency)
+                    pCurrency->loadCurrencySettings();
 
-			wxString displayBDAmtString;
-			mmex::formatDoubleToCurrency(trans_[bdidx].amt_, displayBDAmtString);
+			    wxString displayBDAmtString;
+			    mmex::formatDoubleToCurrency(trans_[bdidx].amt_, displayBDAmtString);
            
-			hb.startTableRow();
-			hb.addTableCell(trans_[bdidx].payeeStr_, false, true);
-			hb.addTableCell(displayBDAmtString, true);
-			//Draw it as numeric that mean align right
-			hb.addTableCell(daysRemainingStr_, true, false, false, colorStr);
-			hb.endTableRow();
+			    hb.startTableRow();
+			    hb.addTableCell(trans_[bdidx].payeeStr_, false, true);
+			    hb.addTableCell(displayBDAmtString, true);
+			    //Draw it as numeric that mean align right
+			    hb.addTableCell(daysRemainingStr_, true, false, false, colorStr);
+			    hb.endTableRow();
+            }
         }
-    }
 
-    hb.endTable();
+        hb.endTable();
+    }
 }
 
 void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
