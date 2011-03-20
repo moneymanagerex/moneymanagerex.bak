@@ -130,6 +130,8 @@
 namespace
 {
 
+const int REPEAT_TRANS_DELAY_TIME = 7000; // 7 seconds
+
 class mmNewDatabaseWizard : public wxWizard
 {
 public:
@@ -386,7 +388,6 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_TRANSACTIONREPORT, mmGUIFrame::OnTransactionReport)
 
     /* Navigation Panel */
-
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_NEW, mmGUIFrame::OnNewAccount)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_DELETE, mmGUIFrame::OnDeleteAccount)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_EDIT, mmGUIFrame::OnEditAccount)
@@ -405,10 +406,11 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_CUSTOM_SQL_REPORT_NEW, mmGUIFrame::OnNewCustomSqlReport)
     EVT_MENU(MENU_CUSTOM_SQL_REPORT_EDIT, mmGUIFrame::OnEditCustomSqlReport)
     EVT_MENU(MENU_CUSTOM_SQL_REPORT_DELETE, mmGUIFrame::OnDeleteCustomSqlReport)
-
     EVT_MENU(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_EDIT, mmGUIFrame::OnPopupEditCustomSqlReport)
     EVT_MENU(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_DELETE, mmGUIFrame::OnPopupDeleteCustomSqlReport)
-
+    
+    /*Automatic processing of repeat transactions*/
+    EVT_TIMER(AUTO_REPEAT_TRANSACTIONS_TIMER_ID, mmGUIFrame::OnAutoRepeatTransactionsTimer)
 END_EVENT_TABLE()
 //----------------------------------------------------------------------------
 IMPLEMENT_APP(mmGUIApp)
@@ -564,7 +566,9 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     toolBar_(),
     selectedItemData_(),
     menuItemOnlineUpdateCurRate_(),
-    activeTermAccounts_(false)
+    activeTermAccounts_(false),
+    autoRepeatTransactionsTimer_(this, AUTO_REPEAT_TRANSACTIONS_TIMER_ID),
+    activeHomePage_(false)
 {
 	// tell wxAuiManager to manage this frame
 	m_mgr.SetManagedWindow(this);
@@ -624,7 +628,6 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 
     wxFileName dbpath = from_scratch ? wxGetEmptyString() : mmDBWrapper::getLastDbPath(m_inidb.get());
  
-
     if (from_scratch || !dbpath.IsOk()) {
         menuEnableItems(false);
         createHomePage();
@@ -674,6 +677,189 @@ void mmGUIFrame::unselectNavTree()
 { 
     wxASSERT(navTreeCtrl_);
     navTreeCtrl_->UnselectAll(); 
+}
+//----------------------------------------------------------------------------
+
+void mmGUIFrame::setHomePageActive(bool active)
+{
+    if (active)
+        activeHomePage_ = true;
+    else
+        activeHomePage_ = false;
+}
+//----------------------------------------------------------------------------
+
+void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
+{
+    /*To Do
+        reorganise code to allow code to be reused.
+        Code duplicated from billsdepositspanel.cpp
+
+        Code in dialog to be reorganised as well as bill deposits and dialog are currently linked.
+    */
+
+    static const char sql[] = 
+       "select c.categname, "
+       "sc.subcategname, "
+       "b.BDID, "
+       "b.NEXTOCCURRENCEDATE, "
+       "b.REPEATS, "
+       "b.PAYEEID, "
+       "b.TRANSCODE, "
+       "b.ACCOUNTID, "
+       "b.TOACCOUNTID, "
+       "b.TRANSAMOUNT, "
+       "b.TOTRANSAMOUNT, "
+       "b.NOTES, "
+       "b.CATEGID, "
+       "b.SUBCATEGID "
+
+        "from BILLSDEPOSITS_V1 b "
+
+        "left join category_v1 c "
+        "on c.categid = b.categid "
+
+        "left join subcategory_v1 sc "
+        "on sc.subcategid = b.subcategid";
+
+    mmDBWrapper::loadBaseCurrencySettings(m_db.get());
+
+    wxSQLite3ResultSet q1 = m_db.get()->ExecuteQuery(sql);
+
+    bool autoExecuteManual = false;
+    bool autoExecuteSilent = false;
+    bool requireExecution = false;
+    while (q1.NextRow())
+    {
+        mmBDTransactionHolder th;
+
+        th.bdID_           = q1.GetInt(wxT("BDID"));
+        th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
+        
+        th.nextOccurStr_   = mmGetDateForDisplay(m_db.get(), th.nextOccurDate_);
+        int repeats        = q1.GetInt(wxT("REPEATS"));
+        th.payeeID_        = q1.GetInt(wxT("PAYEEID"));
+        th.transType_      = q1.GetString(wxT("TRANSCODE"));
+        th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
+        th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
+
+		th.accountStr_     = mmDBWrapper::getAccountName(m_db.get(), th.accountID_);
+        th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
+        th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
+		th.notesStr_	   = q1.GetString(wxT("NOTES"));
+		th.categID_		   = q1.GetInt(wxT("CATEGID"));
+		th.categoryStr_	   = q1.GetString(wxT("CATEGNAME"));
+		th.subcategID_	   = q1.GetInt(wxT("SUBCATEGID"));
+		th.subcategoryStr_ = q1.GetString(wxT("SUBCATEGNAME"));
+
+        autoExecuteManual = false;
+        autoExecuteSilent = false;
+        // DeMultiplex the Auto Executable fields.
+        if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
+        {
+            autoExecuteManual = true;
+            repeats -= BD_REPEATS_MULTIPLEX_BASE;
+        }
+        if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute Silent mode
+        {
+            autoExecuteManual = false;               // Can only be manual or auto. Not both   
+            autoExecuteSilent = true;
+            repeats -= BD_REPEATS_MULTIPLEX_BASE;
+        }
+        if (repeats == 0)
+        {
+           th.repeatsStr_ = _("None");
+        }
+        else if (repeats == 1)
+        {
+           th.repeatsStr_ = _("Weekly");
+        }
+        else if (repeats == 2)
+        {
+           th.repeatsStr_ = _("Bi-Weekly");
+        }
+        else if (repeats == 3)
+        {
+           th.repeatsStr_ = _("Monthly");
+        }
+        else if (repeats == 4)
+        {
+           th.repeatsStr_ = _("Bi-Monthly");
+        }
+        else if (repeats == 5)
+        {
+           th.repeatsStr_ = _("Quarterly");
+        }
+        else if (repeats == 6)
+        {
+           th.repeatsStr_ = _("Half-Yearly");
+        }
+        else if (repeats == 7)
+        {
+           th.repeatsStr_ = _("Yearly");
+        }
+        else if (repeats == 8)
+        {
+           th.repeatsStr_ = _("Four Months");
+        }
+        else if (repeats == 9)
+        {
+           th.repeatsStr_ = _("Four Weeks");
+        }
+        else if (repeats == 10)
+        {
+           th.repeatsStr_ = _("Daily");
+        }
+
+        wxDateTime today = wxDateTime::Now();
+        wxTimeSpan ts = th.nextOccurDate_.Subtract(today);
+        th.daysRemaining_ = ts.GetDays();
+        int hoursRemaining_ = ts.GetHours();
+
+        requireExecution = false;
+        if (hoursRemaining_ > 0)
+            th.daysRemaining_ += 1;
+
+        if (th.daysRemaining_ > 0)
+        {
+            th.daysRemainingStr_ = wxString::Format(wxT("%d"), th.daysRemaining_) + _(" days remaining");
+        }
+        else
+        {
+            requireExecution = true;
+            th.daysRemainingStr_ = wxString::Format(wxT("%d"), abs(th.daysRemaining_)) + _(" days overdue!");
+        }
+
+        mmex::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
+        mmex::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
+
+        int cid = 0, sid = 0;
+        th.payeeStr_ = mmDBWrapper::getPayee(m_db.get(), th.payeeID_, cid, sid);
+
+        if (th.transType_ == wxT("Transfer"))
+        {
+            wxString fromAccount = mmDBWrapper::getAccountName(m_db.get(),  th.accountID_);
+            wxString toAccount = mmDBWrapper::getAccountName(m_db.get(),  th.toAccountID_ );
+
+            th.payeeStr_ = toAccount;
+        }
+
+        if (autoExecuteManual && requireExecution )
+        {
+            wxMessageBox(_("Manual Auto Execution of Repeat Transactions will occur.\n\nWaiting Implementation"),_(" Auto Repeat Transactions"));
+            if (activeHomePage_)
+                createHomePage(); // Update home page details only if it is being displayed
+        }
+
+        if (autoExecuteSilent && requireExecution)
+        {
+            wxMessageBox(_("Silent Auto Execution of Repeat Transactions will occur.\n\nWaiting Implementation"),_(" Auto Repeat Transactions"));
+            if (activeHomePage_)
+                createHomePage(); // Update home page details only if it is being displayed
+        }
+    }
+
+    q1.Finalize();
 }
 //----------------------------------------------------------------------------
 
@@ -3038,6 +3224,7 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew, const wxStr
     if (m_db) {
         menuEnableItems(true);
         menuPrintingEnable(false);
+        autoRepeatTransactionsTimer_.Start(REPEAT_TRANS_DELAY_TIME, wxTIMER_ONE_SHOT); 
     }
     
     updateNavTreeControl();

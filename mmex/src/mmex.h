@@ -88,6 +88,7 @@ public:
 
     void setGotoAccountID(int account_id) { gotoAccountID_ = account_id; }
     void unselectNavTree();
+    void setHomePageActive(bool active = true);
     bool expandedBankAccounts();
     bool expandedTermAccounts();
     bool expandedStockAccounts();
@@ -111,6 +112,11 @@ private:
 
     /* Cannot process home page recursively */
     bool refreshRequested_;
+
+    /* Repeat Transactions automatic processing delay */
+    wxTimer autoRepeatTransactionsTimer_;
+    void OnAutoRepeatTransactionsTimer(wxTimerEvent& event);
+    bool activeHomePage_;
 
     /* controls */
     mmPanelBase* panelCurrent_;

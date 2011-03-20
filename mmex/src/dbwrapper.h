@@ -25,6 +25,8 @@
 #include <boost/shared_ptr.hpp>
 //----------------------------------------------------------------------------
 
+const int BD_REPEATS_MULTIPLEX_BASE = 100;
+
 namespace mmDBWrapper
 {
 

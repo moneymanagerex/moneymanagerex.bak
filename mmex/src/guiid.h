@@ -401,6 +401,7 @@ enum
 	MENU_TREEPOPUP_ACCOUNT_VIEWFAVORITE,
 	MENU_TREEPOPUP_ACCOUNT_VIEWOPEN,
 
+    AUTO_REPEAT_TRANSACTIONS_TIMER_ID,
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_GUIID_H_

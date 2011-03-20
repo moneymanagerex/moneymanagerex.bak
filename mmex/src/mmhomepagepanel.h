@@ -76,7 +76,7 @@ public:
     void CreateControls();
    
     void updateAccounts();
-
+    ~mmHomePagePanel();
 private:
     wxSQLite3Database* db_;
     wxSQLite3Database* inidb_;

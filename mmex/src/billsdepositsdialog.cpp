@@ -56,7 +56,7 @@ END_EVENT_TABLE()
 #define DEF_STATUS_VOID       2
 #define DEF_STATUS_FOLLOWUP   3
 
-#define DEF_AUTO_EXECUTE 100
+const wxString REPEAT_TRANSACTIONS_MSGBOX_HEADING = _("Repeat Transaction - Auto Execution Checking");
 
 mmBDDialog::mmBDDialog( )
 {
@@ -171,16 +171,16 @@ void mmBDDialog::dataToControls()
 
         int repeatSel = q1.GetInt(wxT("REPEATS"));
         // Have used repeatSel to multiplex auto repeat fields.
-        if (repeatSel >= DEF_AUTO_EXECUTE)
+        if (repeatSel >= BD_REPEATS_MULTIPLEX_BASE)
         {
-            repeatSel -= DEF_AUTO_EXECUTE;
+            repeatSel -= BD_REPEATS_MULTIPLEX_BASE;
             autoExecuteUserAck_ = true;
             itemCheckBoxAutoExeUserAck_->SetValue(true);
             itemCheckBoxAutoExeSilent_->Enable(true);
 
-            if (repeatSel >= DEF_AUTO_EXECUTE)
+            if (repeatSel >= BD_REPEATS_MULTIPLEX_BASE)
             {
-                repeatSel -= DEF_AUTO_EXECUTE;
+                repeatSel -= BD_REPEATS_MULTIPLEX_BASE;
                 autoExecuteSilent_ = true;
                 itemCheckBoxAutoExeSilent_->SetValue(true);
             }
@@ -955,9 +955,9 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
     int repeats = itemRepeats_->GetSelection();
     // Multiplex Auto executable onto the repeat field of the database. 
     if (autoExecuteUserAck_)
-        repeats += DEF_AUTO_EXECUTE;
+        repeats += BD_REPEATS_MULTIPLEX_BASE;
     if (autoExecuteSilent_)
-        repeats += DEF_AUTO_EXECUTE;
+        repeats += BD_REPEATS_MULTIPLEX_BASE;
 
     wxString numRepeatStr = textNumRepeats_->GetValue();
     int numRepeats = -1;
@@ -1182,35 +1182,34 @@ void mmBDDialog::OnAutoExecutionUserAckChecked(wxCommandEvent& /*event*/)
 {
     autoExecuteUserAck_ = ! autoExecuteUserAck_;
     wxString msg;
-    if (autoExecuteUserAck_) 
-        msg = _("Auto Execution Set with required user acknowledgement."); 
 
     if (autoExecuteUserAck_)
     {
         itemCheckBoxAutoExeSilent_->Enable(true);
+        msg = _("Automatic Execution with required user acknowledgement."); 
     }
     else
     {
+        itemCheckBoxAutoExeSilent_->SetValue(false);
         itemCheckBoxAutoExeSilent_->Enable(false);
         autoExecuteSilent_ = false;
     }
 
-    // message will be modified when implementation complete.
-    msg << wxT("\n\n") 
-        << _("The Auto Execution feature not fully implemented yet.");
-    wxMessageBox(msg ,_("Repeat Transaction - Auto Execution"));
+    if (msg != wxT(""))
+        wxMessageBox(msg ,REPEAT_TRANSACTIONS_MSGBOX_HEADING);
 }
-
 
 void mmBDDialog::OnAutoExecutionSilentChecked(wxCommandEvent& /*event*/)
 {
     autoExecuteSilent_ = ! autoExecuteSilent_;
-// message will be removed when implementation complete.
     wxString msg;
-    if (autoExecuteSilent_) 
-        msg = _("Auto Execution Silent"); 
-
-    msg << wxT("\n\n") 
-        << _("The Auto Execution feature not fully implemented yet.");
-    wxMessageBox(msg ,_("Repeat Transaction - Auto Execution"));
+    if (autoExecuteSilent_)
+    {
+        if (autoExecuteUserAck_)
+        {
+            msg = _("Execution changed to occur without user interaction");
+        }
+    }
+    if (msg != wxT(""))
+    wxMessageBox(msg ,REPEAT_TRANSACTIONS_MSGBOX_HEADING);
 }
