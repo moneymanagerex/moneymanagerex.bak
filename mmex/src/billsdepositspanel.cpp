@@ -27,8 +27,6 @@
 /* Include XPM Support */
 #include "../resources/error.xpm"
 
-#define DEF_AUTO_EXECUTE 100
-
 /*******************************************************/
 BEGIN_EVENT_TABLE(mmBillsDepositsPanel, wxPanel)
     EVT_BUTTON(ID_BUTTON_NEW_BD,         mmBillsDepositsPanel::OnNewBDSeries)
@@ -301,10 +299,10 @@ void mmBillsDepositsPanel::initVirtualListControl()
 		th.subcategoryStr_ = q1.GetString(wxT("SUBCATEGNAME"));
 
         // DeMultiplex the Auto Executable fields.
-        if (repeats >= DEF_AUTO_EXECUTE)    // Auto Execute User Acknowlegement required
-            repeats -= DEF_AUTO_EXECUTE;
-        if (repeats >= DEF_AUTO_EXECUTE)    // Auto Execute Silent mode
-            repeats -= DEF_AUTO_EXECUTE;
+        if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
+            repeats -= BD_REPEATS_MULTIPLEX_BASE;
+        if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute Silent mode
+            repeats -= BD_REPEATS_MULTIPLEX_BASE;
 
         if (repeats == 0)
         {
@@ -420,12 +418,12 @@ void billsDepositsListCtrl::OnItemRightClick(wxListEvent& event)
     selectedIndex_ = event.GetIndex();
 
     wxMenu menu;
+    menu.Append(MENU_TREEPOPUP_ENTEROCCUR, _("Enter next Occurrence"));
+    menu.AppendSeparator();
     menu.Append(MENU_TREEPOPUP_NEW, _("&New Bills && Deposit Series"));
     menu.AppendSeparator();
     menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Bills && Deposit Series"));
     menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Bills && Deposit Series"));
-    menu.AppendSeparator();
-    menu.Append(MENU_TREEPOPUP_ENTEROCCUR, _("Enter next Occurrence"));
     PopupMenu(&menu, event.GetPoint());
 }
 

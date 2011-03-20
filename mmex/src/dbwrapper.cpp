@@ -29,8 +29,6 @@
 #include <sqlite3.h>
 //----------------------------------------------------------------------------
 
-#define DEF_AUTO_EXECUTE 100
-
 namespace
 {
 
@@ -2296,10 +2294,10 @@ bool mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearNa
         updateOccur = dtno;
 
         // DeMultiplex the Auto Executable fields.
-        if (repeats >= DEF_AUTO_EXECUTE)    // Auto Execute User Acknowlegement required
-            repeats -= DEF_AUTO_EXECUTE;
-        if (repeats >= DEF_AUTO_EXECUTE)    // Auto Execute Silent mode
-            repeats -= DEF_AUTO_EXECUTE;
+        if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
+            repeats -= BD_REPEATS_MULTIPLEX_BASE;
+        if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute Silent mode
+            repeats -= BD_REPEATS_MULTIPLEX_BASE;
         
         if (repeats == 0)
         {

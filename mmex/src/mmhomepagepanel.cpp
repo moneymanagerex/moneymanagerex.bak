@@ -80,7 +80,13 @@ mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame,
     core_ = core;
     frame_ = frame;
     topCategories_ = topCategories;
+    frame_->setHomePageActive();
     Create(parent, winid, pos, size, style, name);
+}
+
+mmHomePagePanel::~mmHomePagePanel()
+{
+    frame_->setHomePageActive(false);
 }
 
 bool mmHomePagePanel::Create( wxWindow *parent,
