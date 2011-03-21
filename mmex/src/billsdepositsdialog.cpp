@@ -117,7 +117,11 @@ void mmBDDialog::dataToControls()
         dpcbd_->Disable();
         itemRepeats_->Disable();
         itemAccountName_->Disable();
+        textAmount_->SetFocus();
     }
+
+    if (edit_)        // Disabled on Edit because changing this date has no effect except to confuse user.
+        dpc_->Disable();
 
     wxSQLite3Statement st_payee = db_->PrepareStatement("select PAYEENAME from PAYEE_V1 where PAYEEID = ?");
 
