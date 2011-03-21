@@ -691,53 +691,34 @@ void mmGUIFrame::setHomePageActive(bool active)
 
 void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 {
-    /*To Do
-        reorganise code to allow code to be reused.
-        Code duplicated from billsdepositspanel.cpp
-
-        Code in dialog to be reorganised as well as bill deposits and dialog are currently linked.
-    */
+    bool autoExecuteManual; // Used when decoding: REPEATS
+    bool autoExecuteSilent;
+    bool requireExecution;
 
     static const char sql[] = 
-       "select c.categname, "
-       "sc.subcategname, "
-       "b.BDID, "
-       "b.NEXTOCCURRENCEDATE, "
-       "b.REPEATS, "
-       "b.PAYEEID, "
-       "b.TRANSCODE, "
-       "b.ACCOUNTID, "
-       "b.TOACCOUNTID, "
-       "b.TRANSAMOUNT, "
-       "b.TOTRANSAMOUNT, "
-       "b.NOTES, "
-       "b.CATEGID, "
-       "b.SUBCATEGID "
-
-        "from BILLSDEPOSITS_V1 b "
-
-        "left join category_v1 c "
-        "on c.categid = b.categid "
-
-        "left join subcategory_v1 sc "
-        "on sc.subcategid = b.subcategid";
+    "select "
+        "b.BDID, "
+        "b.ACCOUNTID, b.TOACCOUNTID, "
+        "b.PAYEEID, b.TRANSCODE, b.TRANSAMOUNT, "
+        "b.STATUS, b.TRANSACTIONNUMBER, "
+        "b.NOTES, b.CATEGID, b.SUBCATEGID, "
+        "b.TOTRANSAMOUNT, "
+        "c.categname, sc.subcategname, "
+        "b.REPEATS, "
+        "b.NEXTOCCURRENCEDATE "
+    "from BILLSDEPOSITS_V1 b "
+        "left join category_v1 c on c.categid = b.categid "
+        "left join subcategory_v1 sc on sc.subcategid = b.subcategid";
 
     mmDBWrapper::loadBaseCurrencySettings(m_db.get());
-
     wxSQLite3ResultSet q1 = m_db.get()->ExecuteQuery(sql);
-
-    bool autoExecuteManual = false;
-    bool autoExecuteSilent = false;
-    bool requireExecution = false;
     while (q1.NextRow())
     {
         mmBDTransactionHolder th;
-
         th.bdID_           = q1.GetInt(wxT("BDID"));
         th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
         
         th.nextOccurStr_   = mmGetDateForDisplay(m_db.get(), th.nextOccurDate_);
-        int repeats        = q1.GetInt(wxT("REPEATS"));
         th.payeeID_        = q1.GetInt(wxT("PAYEEID"));
         th.transType_      = q1.GetString(wxT("TRANSCODE"));
         th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
@@ -752,63 +733,21 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 		th.subcategID_	   = q1.GetInt(wxT("SUBCATEGID"));
 		th.subcategoryStr_ = q1.GetString(wxT("SUBCATEGNAME"));
 
+        // DeMultiplex the Auto Executable fields from the db entry: REPEATS
+        int repeats        = q1.GetInt(wxT("REPEATS"));
         autoExecuteManual = false;
         autoExecuteSilent = false;
-        // DeMultiplex the Auto Executable fields.
         if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
         {
             autoExecuteManual = true;
             repeats -= BD_REPEATS_MULTIPLEX_BASE;
         }
+
         if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute Silent mode
         {
             autoExecuteManual = false;               // Can only be manual or auto. Not both   
             autoExecuteSilent = true;
             repeats -= BD_REPEATS_MULTIPLEX_BASE;
-        }
-        if (repeats == 0)
-        {
-           th.repeatsStr_ = _("None");
-        }
-        else if (repeats == 1)
-        {
-           th.repeatsStr_ = _("Weekly");
-        }
-        else if (repeats == 2)
-        {
-           th.repeatsStr_ = _("Bi-Weekly");
-        }
-        else if (repeats == 3)
-        {
-           th.repeatsStr_ = _("Monthly");
-        }
-        else if (repeats == 4)
-        {
-           th.repeatsStr_ = _("Bi-Monthly");
-        }
-        else if (repeats == 5)
-        {
-           th.repeatsStr_ = _("Quarterly");
-        }
-        else if (repeats == 6)
-        {
-           th.repeatsStr_ = _("Half-Yearly");
-        }
-        else if (repeats == 7)
-        {
-           th.repeatsStr_ = _("Yearly");
-        }
-        else if (repeats == 8)
-        {
-           th.repeatsStr_ = _("Four Months");
-        }
-        else if (repeats == 9)
-        {
-           th.repeatsStr_ = _("Four Weeks");
-        }
-        else if (repeats == 10)
-        {
-           th.repeatsStr_ = _("Daily");
         }
 
         wxDateTime today = wxDateTime::Now();
@@ -820,14 +759,9 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
         if (hoursRemaining_ > 0)
             th.daysRemaining_ += 1;
 
-        if (th.daysRemaining_ > 0)
-        {
-            th.daysRemainingStr_ = wxString::Format(wxT("%d"), th.daysRemaining_) + _(" days remaining");
-        }
-        else
+        if (th.daysRemaining_ < 1)
         {
             requireExecution = true;
-            th.daysRemainingStr_ = wxString::Format(wxT("%d"), abs(th.daysRemaining_)) + _(" days overdue!");
         }
 
         mmex::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
@@ -846,19 +780,49 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 
         if (autoExecuteManual && requireExecution )
         {
-            wxMessageBox(_("Manual Auto Execution of Repeat Transactions will occur.\n\nWaiting Implementation"),_(" Auto Repeat Transactions"));
-            if (activeHomePage_)
-                createHomePage(); // Update home page details only if it is being displayed
+            mmBDDialog repeatTransactionsDlg(m_db.get(), m_core.get(), th.bdID_ ,false ,true , this, SYMBOL_BDDIALOG_IDNAME , _(" Auto Repeat Transactions"));
+            if ( repeatTransactionsDlg.ShowModal() == wxID_OK )
+            {
+                if (activeHomePage_)
+                    createHomePage(); // Update home page details only if it is being displayed
+            }
         }
 
         if (autoExecuteSilent && requireExecution)
         {
-            wxMessageBox(_("Silent Auto Execution of Repeat Transactions will occur.\n\nWaiting Implementation"),_(" Auto Repeat Transactions"));
+            boost::shared_ptr<mmBankTransaction> pTransaction;
+            boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(m_core.get()->db_));
+            pTransaction = pTemp;
+
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencyWeakPtr(th.accountID_).lock();
+            wxASSERT(pCurrencyPtr);
+
+            pTransaction->accountID_ = th.accountID_;
+            pTransaction->toAccountID_ = th.toAccountID_;
+            pTransaction->payee_ = m_core.get()->payeeList_.getPayeeSharedPtr(th.payeeID_);
+            pTransaction->transType_ = th.transType_;
+            pTransaction->amt_ = th.amt_;
+            pTransaction->status_ = q1.GetString(wxT("STATUS"));
+            pTransaction->transNum_ = q1.GetString(wxT("TRANSACTIONNUMBER"));
+            pTransaction->notes_ = th.notesStr_;
+            pTransaction->category_ = m_core.get()->categoryList_.getCategorySharedPtr(th.categID_, th.subcategID_);
+            pTransaction->date_ = th.nextOccurDate_;
+            pTransaction->toAmt_ = th.toAmt_;
+
+            boost::shared_ptr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
+            split->loadFromBDDB(m_core.get(),th.bdID_);
+		    *pTransaction->splitEntries_.get() = *split.get();
+
+            pTransaction->updateAllData(m_core.get(), th.accountID_, pCurrencyPtr);
+            m_core.get()->bTransactionList_.addTransaction(m_core.get(), pTransaction);
+            mmDBWrapper::completeBDInSeries(m_db.get(), th.bdID_);
+
             if (activeHomePage_)
+            {
                 createHomePage(); // Update home page details only if it is being displayed
+            }
         }
     }
-
     q1.Finalize();
 }
 //----------------------------------------------------------------------------
