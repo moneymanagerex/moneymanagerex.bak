@@ -2,8 +2,15 @@ Version History of Money Manager Ex
 
 0.9.8.0 (TBA)
 - New Tools: Relocation of Categories and Payees for Database Management.
-- New date format: YYYYMMDD
-- New User option to set status in Transaction dialog to Reconciled.
+- New: Date format: YYYYMMDD
+- New: Transaction dialog User options to change Payee, Category and Status behavior.
+- New: Reintroduction of Custom Reports as installable reports.
+- New: Auto execution of Repeating Transactions with user interaction or Silent Running.
+- New: AMD64 Build Instructions
+- Change: Home Page Income/Expenses reflect calculations of visible accounts.
+
+- New Tool: Creation of Custom Reports.
+
 
 - and bugfixes.
 
