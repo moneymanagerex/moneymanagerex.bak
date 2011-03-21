@@ -132,10 +132,10 @@ void mmCategDialog::CreateControls()
 
 #if defined (__WXGTK__) || defined (__WXMAC__)
     treeCtrl_ = new wxTreeCtrl( itemDialog1, ID_DIALOG_CATEG_TREECTRL_CATS, 
-        wxDefaultPosition, wxSize(100, 200));
+        wxDefaultPosition, wxSize(200, 380));
 #else
     treeCtrl_ = new wxTreeCtrl( itemDialog1, ID_DIALOG_CATEG_TREECTRL_CATS, 
-        wxDefaultPosition, wxSize(100, 200), wxTR_SINGLE 
+        wxDefaultPosition, wxSize(200, 380), wxTR_SINGLE 
         | wxTR_HAS_BUTTONS 
         | wxTR_ROW_LINES );
 #endif
