@@ -274,7 +274,7 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance, double&
             "union all "
             "select  0, 0, "
             "st.heldat as ACCOUNTID,  "
-            "total((st.CURRENTPRICE-st.PURCHASEPRICE)*st.NUMSHARES-st.COMMISSION) as BALANCE "
+            "total((st.CURRENTPRICE)*st.NUMSHARES-st.COMMISSION) as BALANCE "
             "from  stock_v1 st "
             "where st.purchasedate<=date ('now','localtime') "
             "group by st.heldat "
