@@ -350,14 +350,14 @@ void mmStocksPanel::initVirtualListControl()
     mmDBWrapper::loadSettings(accountID_, db_);
         
     //Get Init Value of the account
-    //double initVal = mmDBWrapper::getInitBalanceOnAccount(db_, accountID_);
+    double initVal = mmDBWrapper::getInitBalanceOnAccount(db_, accountID_);
     // + Transfered from other accounts - Transfered to other accounts
-    double initVal = mmDBWrapper::getTotalBalanceOnAccount(db_, accountID_, true);
+    //double initVal = mmDBWrapper::getTotalBalanceOnAccount(db_, accountID_, true);
 
     //Get Stock Investment Account Balance as Init Amount + sum (Value) - sum (Purchase Price)
     double total = mmDBWrapper::getStockInvestmentBalance(db_, accountID_, false, originalVal);
     wxString balance;
-    mmex::formatDoubleToCurrency(total+initVal-originalVal, balance);
+    mmex::formatDoubleToCurrency(total+initVal, balance);
     
     wxString original;
     mmex::formatDoubleToCurrency(originalVal, original);
@@ -372,7 +372,7 @@ void mmStocksPanel::initVirtualListControl()
     
     header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
     wxString lbl;
-    lbl << _("Balance: ") << balance << wxT ("     ") << _("Invested: ") << original;
+    lbl << _("Total: ") << balance << wxT ("     ") << _("Invested: ") << original;
     if (total > originalVal)
         lbl << wxT ("     ") << _("Gain: "); 
     else
