@@ -258,75 +258,75 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance, double&
     double stTotalBalance = 0.0;
     wxString tBalanceStr;
 
-    //We can hide or show Stocks on Home Page
     if (frame_->expandedStockAccounts())
-    {
         displaySummaryHeader(hb,_("Stocks"));
 
-        char sql[] = 
-            "select INCOME, EXPENCES, t.accountid as ACCOUNTID, a.accountname as ACCOUNTNAME, "
-            "sum (t.BALANCE) as BALANCE, c.BASECONVRATE as BASECONVRATE "
-            "from (  "
-            "select 0 as INCOME,0 as EXPENCES, acc.accountid as ACCOUNTID, acc.INITIALBAL as BALANCE "
-            "from ACCOUNTLIST_V1 ACC "
-            "where ACC.ACCOUNTTYPE = 'Investment' and ACC.STATUS='Open' "
-            "group by acc.accountid  "
-            "union all "
-            "select  0, 0, "
-            "st.heldat as ACCOUNTID,  "
-            "total((st.CURRENTPRICE)*st.NUMSHARES-st.COMMISSION) as BALANCE "
-            "from  stock_v1 st "
-            "where st.purchasedate<=date ('now','localtime') "
-            "group by st.heldat "
-            "union all "
-            "select 0, 0, ca.toaccountid,  total(ca.totransamount)  "
-            "from checkingaccount_v1 ca "
-            "inner join  accountlist_v1 acc on acc.accountid=ca.toaccountid "
-            "where ca.transcode ='Transfer' and ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
-            "and acc.accounttype='Investment' "
-            "group by ca.toaccountid "
-            "union all "
-            "select total(case ca.transcode when 'Deposit' then ca.transamount else 0 end), "
-            "total(case ca.transcode when 'Withdrawal' then ca.transamount else 0 end) , "
-            "ca.accountid,  total(case ca.transcode when 'Deposit' then ca.transamount else -ca.transamount end)  "
-            "from checkingaccount_v1 ca "
-            "inner join  accountlist_v1 acc on acc.accountid=ca.accountid "
-            "where ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
-            "and acc.accounttype='Investment' "
-            "group by ca.accountid) t "
-            "left join accountlist_v1 a on a.accountid=t.accountid "
-            "left join currencyformats_v1 c on c.currencyid=a.currencyid "
-            "where a.status='Open' "
-            "group by t.accountid ";
+    char sql[] = 
+        "select INCOME, EXPENCES, t.accountid as ACCOUNTID, a.accountname as ACCOUNTNAME, "
+        "sum (t.BALANCE) as BALANCE, c.BASECONVRATE as BASECONVRATE "
+        "from (  "
+        "select 0 as INCOME,0 as EXPENCES, acc.accountid as ACCOUNTID, acc.INITIALBAL as BALANCE "
+        "from ACCOUNTLIST_V1 ACC "
+        "where ACC.ACCOUNTTYPE = 'Investment' and ACC.STATUS='Open' "
+        "group by acc.accountid  "
+        "union all "
+        "select  0, 0, "
+        "st.heldat as ACCOUNTID,  "
+        "total((st.CURRENTPRICE)*st.NUMSHARES-st.COMMISSION) as BALANCE "
+        "from  stock_v1 st "
+        "where st.purchasedate<=date ('now','localtime') "
+        "group by st.heldat "
+        "union all "
+        "select 0, 0, ca.toaccountid,  total(ca.totransamount)  "
+        "from checkingaccount_v1 ca "
+        "inner join  accountlist_v1 acc on acc.accountid=ca.toaccountid "
+        "where ca.transcode ='Transfer' and ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
+        "and acc.accounttype='Investment' "
+        "group by ca.toaccountid "
+        "union all "
+        "select total(case ca.transcode when 'Deposit' then ca.transamount else 0 end), "
+        "total(case ca.transcode when 'Withdrawal' then ca.transamount else 0 end) , "
+        "ca.accountid,  total(case ca.transcode when 'Deposit' then ca.transamount else -ca.transamount end)  "
+        "from checkingaccount_v1 ca "
+        "inner join  accountlist_v1 acc on acc.accountid=ca.accountid "
+        "where ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
+        "and acc.accounttype='Investment' "
+        "group by ca.accountid) t "
+        "left join accountlist_v1 a on a.accountid=t.accountid "
+        "left join currencyformats_v1 c on c.currencyid=a.currencyid "
+        "where a.status='Open' "
+        "group by t.accountid ";
 
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-        while(q1.NextRow())
-        {
-            int stockaccountId = q1.GetInt(wxT("ACCOUNTID"));
-            double stockBalance = q1.GetDouble(wxT("BALANCE"));
-            wxString stocknameStr = q1.GetString(wxT("ACCOUNTNAME"));
-            double income = q1.GetDouble(wxT("INCOME"));
-            double expenses = q1.GetDouble(wxT("EXPENCES"));
-            double baseconvrate = q1.GetDouble(wxT("BASECONVRATE"));
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+    while(q1.NextRow())
+    {
+        int stockaccountId = q1.GetInt(wxT("ACCOUNTID"));
+        double stockBalance = q1.GetDouble(wxT("BALANCE"));
+        wxString stocknameStr = q1.GetString(wxT("ACCOUNTNAME"));
+        double income = q1.GetDouble(wxT("INCOME"));
+        double expenses = q1.GetDouble(wxT("EXPENCES"));
+        double baseconvrate = q1.GetDouble(wxT("BASECONVRATE"));
 
-            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(stockaccountId).lock();
-            wxASSERT(pCurrencyPtr);
-            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(stockaccountId).lock();
+        wxASSERT(pCurrencyPtr);
+        mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
-            mmex::formatDoubleToCurrency(stockBalance, tBalanceStr);
+        mmex::formatDoubleToCurrency(stockBalance, tBalanceStr);
         
-            // if Stock accounts being displayed, include income/expense totals on home page.
-            tIncome += income * baseconvrate;
-            tExpenses += expenses * baseconvrate;
-            stTotalBalance += stockBalance * baseconvrate; 
-
+        // if Stock accounts being displayed, include income/expense totals on home page.
+        tIncome += income * baseconvrate;
+        tExpenses += expenses * baseconvrate;
+        stTotalBalance += stockBalance * baseconvrate; 
+        //We can hide or show Stocks on Home Page
+        if (frame_->expandedStockAccounts())
+        {
             hb.startTableRow();
             hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
             hb.addTableCell(tBalanceStr, true);
             hb.endTableRow();
         }
-        q1.Finalize();
-    }   
+    }
+    q1.Finalize();
 
     displaySectionTotal(hb, _("Stocks Total:"), stTotalBalance, frame_->expandedStockAccounts());
 
