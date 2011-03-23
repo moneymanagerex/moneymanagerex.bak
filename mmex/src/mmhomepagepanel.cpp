@@ -321,7 +321,7 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance, double&
         if (frame_->expandedStockAccounts())
         {
             hb.startTableRow();
-            hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
+            hb.addTableCellLink(wxT("STOCK:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
             hb.addTableCell(tBalanceStr, true);
             hb.endTableRow();
         }
@@ -779,6 +779,7 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
     wxString href = link.GetHref();
     wxString number;
     bool isAcct = href.StartsWith(wxT("ACCT:"), &number);
+    bool isStock = href.StartsWith(wxT("STOCK:"), &number);
     if (href == wxT("billsdeposits"))
     {
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BILLSDEPOSITS);
@@ -791,6 +792,14 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
         frame_->setGotoAccountID(id);
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
         frame_->GetEventHandler()->AddPendingEvent(evt);
+    }
+    else if (isStock)
+    {
+        wxString msgStr =
+            wxString()  << _("Please use the stock link on the Navigation Tree") 
+                        << _("\n\n") 
+                        << _("Waiting Correct Implementation");
+        wxMessageBox(msgStr,_("Stock Investment Page Selection"));
     }
     else if (href == wxT("Assets"))
     {
