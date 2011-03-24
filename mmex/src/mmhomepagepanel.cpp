@@ -321,7 +321,9 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance, double&
         if (frame_->expandedStockAccounts())
         {
             hb.startTableRow();
-            hb.addTableCellLink(wxT("STOCK:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
+            //////
+            hb.addTableCell(stocknameStr, false,true);
+            //hb.addTableCellLink(wxT("STOCK:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
             hb.addTableCell(tBalanceStr, true);
             hb.endTableRow();
         }
