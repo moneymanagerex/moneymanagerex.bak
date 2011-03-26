@@ -1,13 +1,15 @@
 Version History of Money Manager Ex
 
 0.9.8.0 (TBA)
-- New Tools: Relocation of Categories and Payees for Database Management.
+- New: Commands in Tools Menu for the Relocation of Categories and Payees.
 - New: Date format: YYYYMMDD
-- New: Transaction dialog User options to change Payee, Category and Status behavior.
+- New: User options for Payee, Category and Status for Transaction dialog behavior.
 - New: Reintroduction of Custom Reports as installable reports.
 - New: Auto execution of Repeating Transactions with user interaction or Silent Running.
+- New: Skip Transaction command in Repeating Transactions included.
 - New: AMD64 Build Instructions
 - Change: Home Page Income/Expenses reflect calculations of visible accounts.
+- Change: Stocks Summary Display Home Page with new item in View Menu and Options
 
 - New Tool: Creation of Custom Reports.
 
