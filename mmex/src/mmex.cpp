@@ -887,7 +887,7 @@ void mmGUIFrame::menuEnableItems(bool enable)
     menuBar_->FindItem(wxID_PREFERENCES)->Enable(enable);
     if (mmIniOptions::enableRepeatingTransactions_)
         menuBar_->FindItem(MENU_BILLSDEPOSITS)->Enable(enable);
-    menuBar_->FindItem(MENU_STOCKS)->Enable(enable);
+//    menuBar_->FindItem(MENU_STOCKS)->Enable(enable);
     menuBar_->FindItem(MENU_CURRENCY)->Enable(enable);
     if (mmIniOptions::enableAssets_)
         menuBar_->FindItem(MENU_ASSETS)->Enable(enable);
@@ -2746,9 +2746,9 @@ void mmGUIFrame::createMenu()
        menuTools->Append(menuItemBillsDeposits); 
     }
 
-    wxMenuItem* menuItemStocks = new wxMenuItem(menuTools, MENU_STOCKS, _("&Stock Investments"), _("Stock Investments"));
-    menuItemStocks->SetBitmap(wxBitmap(stock_curve_xpm));
-    menuTools->Append(menuItemStocks);
+//    wxMenuItem* menuItemStocks = new wxMenuItem(menuTools, MENU_STOCKS, _("&Stock Investments"), _("Stock Investments"));
+//    menuItemStocks->SetBitmap(wxBitmap(stock_curve_xpm));
+//    menuTools->Append(menuItemStocks);
 
     if (mmIniOptions::enableAssets_)
     {
