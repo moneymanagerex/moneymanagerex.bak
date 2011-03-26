@@ -81,6 +81,8 @@ public:
 
     void OnExpandBankHome(wxCommandEvent& event);
     void OnExpandTermHome(wxCommandEvent& event);
+    void OnExpandStockHome(wxCommandEvent& event);
+
     void OnExpandBankTree(wxCommandEvent& event);
     void OnExpandTermTree(wxCommandEvent& event);
 

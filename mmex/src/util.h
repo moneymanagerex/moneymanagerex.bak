@@ -88,7 +88,6 @@ public:
         static void loadInfoOptions( wxSQLite3Database* db );
         static void saveOptions( wxSQLite3Database* db );
 
-        static bool enableStocks_;
         static bool enableAssets_;
         static bool enableBudget_;
         static bool enableGraphs_;
@@ -113,6 +112,7 @@ public:
 
         static bool expandBankHome_;
         static bool expandTermHome_;
+        static bool expandStocksHome_;
         static bool expandBankTree_;
         static bool expandTermTree_;
 

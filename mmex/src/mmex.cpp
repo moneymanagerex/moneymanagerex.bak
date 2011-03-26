@@ -116,6 +116,7 @@
 #include "../resources/wrench.xpm"
 // 
 #include "../resources/customsql.xpm"
+#include "../resources/termaccount.xpm"
 
 //----------------------------------------------------------------------------
 #include <wx/debugrpt.h>
@@ -873,7 +874,7 @@ void mmGUIFrame::menuEnableItems(bool enable)
     menuBar_->FindItem(MENU_SAVE_AS)->Enable(enable);
     menuBar_->FindItem(MENU_EXPORT)->Enable(enable);
     if (mmIniOptions::enableAddAccount_)
-      menuBar_->FindItem(MENU_NEWACCT)->Enable(enable);
+        menuBar_->FindItem(MENU_NEWACCT)->Enable(enable);
     menuBar_->FindItem(MENU_ACCTLIST)->Enable(enable);
     menuBar_->FindItem(MENU_ACCTEDIT)->Enable(enable);
     if (mmIniOptions::enableDeleteAccount_)
@@ -885,18 +886,17 @@ void mmGUIFrame::menuEnableItems(bool enable)
     menuBar_->FindItem(MENU_PRINT)->Enable(enable);
     menuBar_->FindItem(wxID_PREFERENCES)->Enable(enable);
     if (mmIniOptions::enableRepeatingTransactions_)
-      menuBar_->FindItem(MENU_BILLSDEPOSITS)->Enable(enable);
-    if (mmIniOptions::enableStocks_)
-      menuBar_->FindItem(MENU_STOCKS)->Enable(enable);
+        menuBar_->FindItem(MENU_BILLSDEPOSITS)->Enable(enable);
+    menuBar_->FindItem(MENU_STOCKS)->Enable(enable);
     menuBar_->FindItem(MENU_CURRENCY)->Enable(enable);
     if (mmIniOptions::enableAssets_)
-      menuBar_->FindItem(MENU_ASSETS)->Enable(enable);
+        menuBar_->FindItem(MENU_ASSETS)->Enable(enable);
     if (mmIniOptions::enableBudget_)
-      menuBar_->FindItem(MENU_BUDGETSETUPDIALOG)->Enable(enable);
+        menuBar_->FindItem(MENU_BUDGETSETUPDIALOG)->Enable(enable);
     menuBar_->FindItem(MENU_TRANSACTIONREPORT)->Enable(enable);
     
     if (mmIniOptions::enableAddAccount_)
-      toolBar_->EnableTool(MENU_NEWACCT, enable);
+        toolBar_->EnableTool(MENU_NEWACCT, enable);
     toolBar_->EnableTool(MENU_ACCTLIST, enable);
     toolBar_->EnableTool(MENU_ORGPAYEE, enable);
     toolBar_->EnableTool(MENU_ORGCATEGS, enable);
@@ -926,8 +926,7 @@ void mmGUIFrame::createControls()
     navTreeCtrl_->SetBackgroundColour(mmColors::navTreeBkColor);
     
     wxSize imageSize(16, 16);
-    wxImageList* imageList_ = new wxImageList( imageSize.GetWidth(), 
-        imageSize.GetHeight() );
+    wxImageList* imageList_ = new wxImageList( imageSize.GetWidth(), imageSize.GetHeight() );
     imageList_->Add(wxBitmap(house_xpm));
     imageList_->Add(wxBitmap(moneyaccount_xpm));
     imageList_->Add(wxBitmap(clock_xpm));
@@ -937,6 +936,7 @@ void mmGUIFrame::createControls()
     imageList_->Add(wxBitmap(stock_curve_xpm));
     imageList_->Add(wxBitmap(car_xpm));
     imageList_->Add(wxBitmap(customsql_xpm));
+    imageList_->Add(wxBitmap(termaccount_xpm));
 
     navTreeCtrl_->AssignImageList(imageList_);
 
@@ -1006,18 +1006,15 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     if ( hasActiveTermAccounts() )
     {
     //  Positioning for new new type of accounts: Term Accounts        
-        termAccount = navTreeCtrl_->AppendItem(root, _("Term Accounts"), 2, 2);
+        termAccount = navTreeCtrl_->AppendItem(root, _("Term Accounts"), 9, 9);
         navTreeCtrl_->SetItemData(termAccount, new mmTreeItemData(wxT("Term Accounts")));
         navTreeCtrl_->SetItemBold(termAccount, true);
     }
 
     wxTreeItemId stocks;
-    if (mmIniOptions::enableStocks_)
-    {
-        stocks = navTreeCtrl_->AppendItem(root, _("Stocks"), 6, 6);
-        navTreeCtrl_->SetItemData(stocks, new mmTreeItemData(wxT("Stocks")));
-        navTreeCtrl_->SetItemBold(stocks, true);
-    }
+    stocks = navTreeCtrl_->AppendItem(root, _("Stocks"), 6, 6);
+    navTreeCtrl_->SetItemData(stocks, new mmTreeItemData(wxT("Stocks")));
+    navTreeCtrl_->SetItemBold(stocks, true);
 
     if (mmIniOptions::enableAssets_)
     {
@@ -1128,240 +1125,150 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId reportsSummary = navTreeCtrl_->AppendItem(reports, _("Summary of Accounts"), 4, 4);
     navTreeCtrl_->SetItemData(reportsSummary, new mmTreeItemData(wxT("Summary of Accounts")));
 
-    if (mmIniOptions::enableStocks_)
-    {
-        wxTreeItemId reportsStocks = navTreeCtrl_->AppendItem(reportsSummary, 
-            _("Stocks"), 4, 4);
-        navTreeCtrl_->SetItemData(reportsStocks, 
-            new mmTreeItemData(wxT("Summary of Stocks")));
-    }
+    wxTreeItemId reportsStocks = navTreeCtrl_->AppendItem(reportsSummary, _("Stocks"), 4, 4);
+    navTreeCtrl_->SetItemData(reportsStocks, new mmTreeItemData(wxT("Summary of Stocks")));
 
     if (mmIniOptions::enableAssets_)
     {
-        wxTreeItemId reportsAssets = navTreeCtrl_->AppendItem(reportsSummary, 
-            _("Assets"), 4, 4);
-        navTreeCtrl_->SetItemData(reportsAssets, 
-            new mmTreeItemData(wxT("Summary of Assets")));
+        wxTreeItemId reportsAssets = navTreeCtrl_->AppendItem(reportsSummary, _("Assets"), 4, 4);
+        navTreeCtrl_->SetItemData(reportsAssets, new mmTreeItemData(wxT("Summary of Assets")));
     }
 
-    wxTreeItemId categsOverTime = navTreeCtrl_->AppendItem(reports, 
-        _("Where the Money Goes"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTime, 
-        new mmTreeItemData(wxT("Where the Money Goes")));
+    wxTreeItemId categsOverTime = navTreeCtrl_->AppendItem(reports, _("Where the Money Goes"), 4, 4);
+    navTreeCtrl_->SetItemData(categsOverTime, new mmTreeItemData(wxT("Where the Money Goes")));
     
-    wxTreeItemId categsOverTimeCalMonth = navTreeCtrl_->AppendItem(categsOverTime, 
-        _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTimeCalMonth, 
-        new mmTreeItemData(wxT("Where the Money Goes - Month")));
+    wxTreeItemId categsOverTimeCalMonth = navTreeCtrl_->AppendItem(categsOverTime, _("Last Calendar Month"), 4, 4);
+    navTreeCtrl_->SetItemData(categsOverTimeCalMonth, new mmTreeItemData(wxT("Where the Money Goes - Month")));
 
-    wxTreeItemId categsOverTimeCurrentMonth = navTreeCtrl_->AppendItem(categsOverTime, 
-        _("Current Month"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTimeCurrentMonth, 
-        new mmTreeItemData(wxT("Where the Money Goes - Current Month")));
+    wxTreeItemId categsOverTimeCurrentMonth = navTreeCtrl_->AppendItem(categsOverTime, _("Current Month"), 4, 4);
+    navTreeCtrl_->SetItemData(categsOverTimeCurrentMonth, new mmTreeItemData(wxT("Where the Money Goes - Current Month")));
 
-    wxTreeItemId categsOverTimeLast30 = navTreeCtrl_->AppendItem(categsOverTime, 
-        _("Last 30 Days"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTimeLast30, 
-        new mmTreeItemData(wxT("Where the Money Goes - 30 Days")));
+    wxTreeItemId categsOverTimeLast30 = navTreeCtrl_->AppendItem(categsOverTime, _("Last 30 Days"), 4, 4);
+    navTreeCtrl_->SetItemData(categsOverTimeLast30, new mmTreeItemData(wxT("Where the Money Goes - 30 Days")));
     
-    wxTreeItemId categsOverTimeLastYear = navTreeCtrl_->AppendItem(categsOverTime, 
-        _("Last Year"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTimeLastYear, 
-        new mmTreeItemData(wxT("Where the Money Goes - Last Year")));
+    wxTreeItemId categsOverTimeLastYear = navTreeCtrl_->AppendItem(categsOverTime, _("Last Year"), 4, 4);
+    navTreeCtrl_->SetItemData(categsOverTimeLastYear, new mmTreeItemData(wxT("Where the Money Goes - Last Year")));
 
-    wxTreeItemId categsOverTimeCurrentYear = navTreeCtrl_->AppendItem(categsOverTime,
-        _("Current Year"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTimeCurrentYear, 
-        new mmTreeItemData(wxT("Where the Money Goes - Current Year")));
+    wxTreeItemId categsOverTimeCurrentYear = navTreeCtrl_->AppendItem(categsOverTime, _("Current Year"), 4, 4);
+    navTreeCtrl_->SetItemData(categsOverTimeCurrentYear, new mmTreeItemData(wxT("Where the Money Goes - Current Year")));
 
-    wxTreeItemId categsOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(categsOverTime, 
-        _("Last Financial Year"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTimeLastFinancialYear,
-        new mmTreeItemData(wxT("Where the Money Goes - Last Financial Year")));
+    wxTreeItemId categsOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(categsOverTime, _("Last Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(categsOverTimeLastFinancialYear, new mmTreeItemData(wxT("Where the Money Goes - Last Financial Year")));
 
-    wxTreeItemId categsOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(categsOverTime,
-        _("Current Financial Year"), 4, 4);
-    navTreeCtrl_->SetItemData(categsOverTimeCurrentFinancialYear,
-        new mmTreeItemData(wxT("Where the Money Goes - Current Financial Year")));
+    wxTreeItemId categsOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(categsOverTime, _("Current Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(categsOverTimeCurrentFinancialYear, new mmTreeItemData(wxT("Where the Money Goes - Current Financial Year")));
 
     ///////////////////////////////////////////////////////////
 
-    wxTreeItemId posCategs = navTreeCtrl_->AppendItem(reports, 
-        _("Where the Money Comes From"), 4, 4);
-    navTreeCtrl_->SetItemData(posCategs, 
-        new mmTreeItemData(wxT("Where the Money Comes From")));
+    wxTreeItemId posCategs = navTreeCtrl_->AppendItem(reports, _("Where the Money Comes From"), 4, 4);
+    navTreeCtrl_->SetItemData(posCategs, new mmTreeItemData(wxT("Where the Money Comes From")));
 
-    wxTreeItemId posCategsCalMonth = navTreeCtrl_->AppendItem(posCategs, 
-        _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(posCategsCalMonth, 
-        new mmTreeItemData(wxT("Where the Money Comes From - Month")));
+    wxTreeItemId posCategsCalMonth = navTreeCtrl_->AppendItem(posCategs, _("Last Calendar Month"), 4, 4);
+    navTreeCtrl_->SetItemData(posCategsCalMonth, new mmTreeItemData(wxT("Where the Money Comes From - Month")));
 
-    wxTreeItemId posCategsCurrentMonth = navTreeCtrl_->AppendItem(posCategs, 
-        _("Current Month"), 4, 4);
-    navTreeCtrl_->SetItemData(posCategsCurrentMonth, 
-        new mmTreeItemData(wxT("Where the Money Comes From - Current Month")));
+    wxTreeItemId posCategsCurrentMonth = navTreeCtrl_->AppendItem(posCategs, _("Current Month"), 4, 4);
+    navTreeCtrl_->SetItemData(posCategsCurrentMonth, new mmTreeItemData(wxT("Where the Money Comes From - Current Month")));
 
-    wxTreeItemId posCategsTimeLast30 = navTreeCtrl_->AppendItem(posCategs, 
-        _("Last 30 Days"), 4, 4);
-    navTreeCtrl_->SetItemData(posCategsTimeLast30, 
-        new mmTreeItemData(wxT("Where the Money Comes From - 30 Days")));
+    wxTreeItemId posCategsTimeLast30 = navTreeCtrl_->AppendItem(posCategs, _("Last 30 Days"), 4, 4);
+    navTreeCtrl_->SetItemData(posCategsTimeLast30, new mmTreeItemData(wxT("Where the Money Comes From - 30 Days")));
     
-    wxTreeItemId posCategsTimeLastYear = navTreeCtrl_->AppendItem(posCategs, 
-        _("Last Year"), 4, 4);
-    navTreeCtrl_->SetItemData(posCategsTimeLastYear, 
-        new mmTreeItemData(wxT("Where the Money Comes From - Last Year")));
+    wxTreeItemId posCategsTimeLastYear = navTreeCtrl_->AppendItem(posCategs, _("Last Year"), 4, 4);
+    navTreeCtrl_->SetItemData(posCategsTimeLastYear, new mmTreeItemData(wxT("Where the Money Comes From - Last Year")));
 
-    wxTreeItemId posCategsTimeCurrentYear = navTreeCtrl_->AppendItem(posCategs,
-        _("Current Year"), 4, 4);
-    navTreeCtrl_->SetItemData(posCategsTimeCurrentYear, 
-        new mmTreeItemData(wxT("Where the Money Comes From - Current Year")));
+    wxTreeItemId posCategsTimeCurrentYear = navTreeCtrl_->AppendItem(posCategs, _("Current Year"), 4, 4);
+    navTreeCtrl_->SetItemData(posCategsTimeCurrentYear, new mmTreeItemData(wxT("Where the Money Comes From - Current Year")));
  
-	wxTreeItemId posCategsTimeLastFinancialYear = navTreeCtrl_->AppendItem(posCategs, 
-        _("Last Financial Year"), 4, 4);
-    navTreeCtrl_->SetItemData(posCategsTimeLastFinancialYear, 
-        new mmTreeItemData(wxT("Where the Money Comes From - Last Financial Year")));
+	wxTreeItemId posCategsTimeLastFinancialYear = navTreeCtrl_->AppendItem(posCategs, _("Last Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(posCategsTimeLastFinancialYear, new mmTreeItemData(wxT("Where the Money Comes From - Last Financial Year")));
 
-    wxTreeItemId posCategsTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(posCategs,
-        _("Current Financial Year"), 4, 4);
-    navTreeCtrl_->SetItemData(posCategsTimeCurrentFinancialYear, 
-        new mmTreeItemData(wxT("Where the Money Comes From - Current Financial Year")));
+    wxTreeItemId posCategsTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(posCategs, _("Current Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(posCategsTimeCurrentFinancialYear, new mmTreeItemData(wxT("Where the Money Comes From - Current Financial Year")));
 	
     ///////////////////////////////////////////////////////////
 
-    wxTreeItemId categs = navTreeCtrl_->AppendItem(reports, 
-        _("Categories"), 4, 4);
-    navTreeCtrl_->SetItemData(categs, 
-        new mmTreeItemData(wxT("Categories - Over Time")));
+    wxTreeItemId categs = navTreeCtrl_->AppendItem(reports, _("Categories"), 4, 4);
+    navTreeCtrl_->SetItemData(categs, new mmTreeItemData(wxT("Categories - Over Time")));
     
-    wxTreeItemId categsCalMonth = navTreeCtrl_->AppendItem(categs, 
-        _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(categsCalMonth, 
-        new mmTreeItemData(wxT("Categories - Month")));
+    wxTreeItemId categsCalMonth = navTreeCtrl_->AppendItem(categs, _("Last Calendar Month"), 4, 4);
+    navTreeCtrl_->SetItemData(categsCalMonth, new mmTreeItemData(wxT("Categories - Month")));
 
-    wxTreeItemId categsCurrentMonth = navTreeCtrl_->AppendItem(categs, 
-        _("Current Month"), 4, 4);
-    navTreeCtrl_->SetItemData(categsCurrentMonth, 
-        new mmTreeItemData(wxT("Categories - Current Month")));
+    wxTreeItemId categsCurrentMonth = navTreeCtrl_->AppendItem(categs, _("Current Month"), 4, 4);
+    navTreeCtrl_->SetItemData(categsCurrentMonth, new mmTreeItemData(wxT("Categories - Current Month")));
 
-    wxTreeItemId categsTimeLast30 = navTreeCtrl_->AppendItem(categs, 
-        _("Last 30 Days"), 4, 4);
-    navTreeCtrl_->SetItemData(categsTimeLast30, 
-        new mmTreeItemData(wxT("Categories - 30 Days")));
+    wxTreeItemId categsTimeLast30 = navTreeCtrl_->AppendItem(categs, _("Last 30 Days"), 4, 4);
+    navTreeCtrl_->SetItemData(categsTimeLast30, new mmTreeItemData(wxT("Categories - 30 Days")));
     
-    wxTreeItemId categsTimeLastYear = navTreeCtrl_->AppendItem(categs, 
-        _("Last Year"), 4, 4);
-    navTreeCtrl_->SetItemData(categsTimeLastYear, 
-        new mmTreeItemData(wxT("Categories - Last Year")));
+    wxTreeItemId categsTimeLastYear = navTreeCtrl_->AppendItem(categs, _("Last Year"), 4, 4);
+    navTreeCtrl_->SetItemData(categsTimeLastYear, new mmTreeItemData(wxT("Categories - Last Year")));
 
-    wxTreeItemId categsTimeCurrentYear = navTreeCtrl_->AppendItem(categs,
-        _("Current Year"), 4, 4);
-    navTreeCtrl_->SetItemData(categsTimeCurrentYear, 
-        new mmTreeItemData(wxT("Categories - Current Year")));
+    wxTreeItemId categsTimeCurrentYear = navTreeCtrl_->AppendItem(categs, _("Current Year"), 4, 4);
+    navTreeCtrl_->SetItemData(categsTimeCurrentYear, new mmTreeItemData(wxT("Categories - Current Year")));
 
-	wxTreeItemId categsTimeLastFinancialYear = navTreeCtrl_->AppendItem(categs, 
-        _("Last Financial Year"), 4, 4);
-    navTreeCtrl_->SetItemData(categsTimeLastFinancialYear, 
-        new mmTreeItemData(wxT("Categories - Last Financial Year")));
+	wxTreeItemId categsTimeLastFinancialYear = navTreeCtrl_->AppendItem(categs, _("Last Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(categsTimeLastFinancialYear, new mmTreeItemData(wxT("Categories - Last Financial Year")));
 
-    wxTreeItemId categsTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(categs,
-        _("Current Financial Year"), 4, 4);
-    navTreeCtrl_->SetItemData(categsTimeCurrentFinancialYear, 
-        new mmTreeItemData(wxT("Categories - Current Financial Year")));
+    wxTreeItemId categsTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(categs, _("Current Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(categsTimeCurrentFinancialYear, new mmTreeItemData(wxT("Categories - Current Financial Year")));
 	
 	///////////////////////////////////////////////////////////
 
-    wxTreeItemId payeesOverTime = navTreeCtrl_->AppendItem(reports, 
-        _("To Whom the Money Goes"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTime, 
-        new mmTreeItemData(wxT("To Whom the Money Goes")));
+    wxTreeItemId payeesOverTime = navTreeCtrl_->AppendItem(reports, _("To Whom the Money Goes"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTime, new mmTreeItemData(wxT("To Whom the Money Goes")));
 
-    wxTreeItemId payeesOverTimeCalMonth = navTreeCtrl_->AppendItem(payeesOverTime, 
-        _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCalMonth, 
-        new mmTreeItemData(wxT("To Whom the Money Goes - Month")));
+    wxTreeItemId payeesOverTimeCalMonth = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Calendar Month"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTimeCalMonth, new mmTreeItemData(wxT("To Whom the Money Goes - Month")));
 
-    wxTreeItemId payeesOverTimeCurrentMonth = navTreeCtrl_->AppendItem(payeesOverTime, 
-        _("Current Month"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCurrentMonth, 
-        new mmTreeItemData(wxT("To Whom the Money Goes - Current Month")));
+    wxTreeItemId payeesOverTimeCurrentMonth = navTreeCtrl_->AppendItem(payeesOverTime, _("Current Month"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTimeCurrentMonth, new mmTreeItemData(wxT("To Whom the Money Goes - Current Month")));
 
-    wxTreeItemId payeesOverTimeLast30 = navTreeCtrl_->AppendItem(payeesOverTime, 
-        _("Last 30 Days"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeLast30, 
-        new mmTreeItemData(wxT("To Whom the Money Goes - 30 Days")));
+    wxTreeItemId payeesOverTimeLast30 = navTreeCtrl_->AppendItem(payeesOverTime, _("Last 30 Days"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTimeLast30, new mmTreeItemData(wxT("To Whom the Money Goes - 30 Days")));
     
-    wxTreeItemId payeesOverTimeLastYear = navTreeCtrl_->AppendItem(payeesOverTime, 
-        _("Last Year"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeLastYear, 
-        new mmTreeItemData(wxT("To Whom the Money Goes - Last Year")));
+    wxTreeItemId payeesOverTimeLastYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Year"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTimeLastYear, new mmTreeItemData(wxT("To Whom the Money Goes - Last Year")));
 
-    wxTreeItemId payeesOverTimeCurrentYear = navTreeCtrl_->AppendItem(payeesOverTime,
-        _("Current Year"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCurrentYear, 
-        new mmTreeItemData(wxT("To Whom the Money Goes - Current Year")));
+    wxTreeItemId payeesOverTimeCurrentYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Current Year"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTimeCurrentYear, new mmTreeItemData(wxT("To Whom the Money Goes - Current Year")));
 
-    wxTreeItemId payeesOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime, 
-        _("Last Financial Year"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeLastFinancialYear, 
-        new mmTreeItemData(wxT("To Whom the Money Goes - Last Financial Year")));
+    wxTreeItemId payeesOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTimeLastFinancialYear, new mmTreeItemData(wxT("To Whom the Money Goes - Last Financial Year")));
 
-    wxTreeItemId payeesOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime,
-        _("Current Financial Year"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCurrentFinancialYear, 
-        new mmTreeItemData(wxT("To Whom the Money Goes - Current Financial Year")));
+    wxTreeItemId payeesOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Current Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTimeCurrentFinancialYear, new mmTreeItemData(wxT("To Whom the Money Goes - Current Financial Year")));
 
     ///////////////////////////////////////////////////////////////////
 
-     wxTreeItemId incexpOverTime = navTreeCtrl_->AppendItem(reports, 
-        _("Income vs Expenses"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTime, 
-        new mmTreeItemData(wxT("Income vs Expenses")));
+    wxTreeItemId incexpOverTime = navTreeCtrl_->AppendItem(reports, _("Income vs Expenses"), 4, 4);
+    navTreeCtrl_->SetItemData(incexpOverTime, new mmTreeItemData(wxT("Income vs Expenses")));
 
-    wxTreeItemId incexpOverTimeCalMonth = navTreeCtrl_->AppendItem(incexpOverTime, 
-        _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTimeCalMonth, 
-        new mmTreeItemData(wxT("Income vs Expenses - Month")));
+    wxTreeItemId incexpOverTimeCalMonth = navTreeCtrl_->AppendItem(incexpOverTime, _("Last Calendar Month"), 4, 4);
+    navTreeCtrl_->SetItemData(incexpOverTimeCalMonth, new mmTreeItemData(wxT("Income vs Expenses - Month")));
 
-    wxTreeItemId incexpOverTimeCurrentMonth = navTreeCtrl_->AppendItem(incexpOverTime, 
-        _("Current Month"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTimeCurrentMonth, 
-        new mmTreeItemData(wxT("Income vs Expenses - Current Month")));
+    wxTreeItemId incexpOverTimeCurrentMonth = navTreeCtrl_->AppendItem(incexpOverTime, _("Current Month"), 4, 4);
+    navTreeCtrl_->SetItemData(incexpOverTimeCurrentMonth, new mmTreeItemData(wxT("Income vs Expenses - Current Month")));
 
-    wxTreeItemId incexpOverTimeLast30 = navTreeCtrl_->AppendItem(incexpOverTime, 
-        _("Last 30 Days"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTimeLast30, 
-        new mmTreeItemData(wxT("Income vs Expenses - 30 Days")));
+    wxTreeItemId incexpOverTimeLast30 = navTreeCtrl_->AppendItem(incexpOverTime, _("Last 30 Days"), 4, 4);
+    navTreeCtrl_->SetItemData(incexpOverTimeLast30, new mmTreeItemData(wxT("Income vs Expenses - 30 Days")));
     
-    wxTreeItemId incexpOverTimeLastYear = navTreeCtrl_->AppendItem(incexpOverTime, 
-        _("Last Year"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTimeLastYear, 
-        new mmTreeItemData(wxT("Income vs Expenses - Last Year")));
+    wxTreeItemId incexpOverTimeLastYear = navTreeCtrl_->AppendItem(incexpOverTime, _("Last Year"), 4, 4);
+    navTreeCtrl_->SetItemData(incexpOverTimeLastYear, new mmTreeItemData(wxT("Income vs Expenses - Last Year")));
 
-    wxTreeItemId incexpOverTimeCurrentYear = navTreeCtrl_->AppendItem(incexpOverTime,
-        _("Current Year"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTimeCurrentYear, 
-        new mmTreeItemData(wxT("Income vs Expenses - Current Year")));
+    wxTreeItemId incexpOverTimeCurrentYear = navTreeCtrl_->AppendItem(incexpOverTime, _("Current Year"), 4, 4);
+    navTreeCtrl_->SetItemData(incexpOverTimeCurrentYear, new mmTreeItemData(wxT("Income vs Expenses - Current Year")));
 
-    wxTreeItemId incexpOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(incexpOverTime, 
-        _("Last Financial Year"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTimeLastFinancialYear, 
-        new mmTreeItemData(wxT("Income vs Expenses - Last Financial Year")));
+    wxTreeItemId incexpOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(incexpOverTime, _("Last Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(incexpOverTimeLastFinancialYear, new mmTreeItemData(wxT("Income vs Expenses - Last Financial Year")));
 
-    wxTreeItemId incexpOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(incexpOverTime,
-        _("Current Financial Year"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpOverTimeCurrentFinancialYear, 
-        new mmTreeItemData(wxT("Income vs Expenses - Current Financial Year")));
+    wxTreeItemId incexpOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(incexpOverTime, _("Current Financial Year"), 4, 4);
+    navTreeCtrl_->SetItemData(incexpOverTimeCurrentFinancialYear, new mmTreeItemData(wxT("Income vs Expenses - Current Financial Year")));
 
-    wxTreeItemId incexpmonthly = navTreeCtrl_->AppendItem(incexpOverTime, 
-        _("Income vs Expenses - All Time"), 4, 4);
-    navTreeCtrl_->SetItemData(incexpmonthly, 
-        new mmTreeItemData(wxT("Income vs Expenses - All Time")));
+    wxTreeItemId incexpmonthly = navTreeCtrl_->AppendItem(incexpOverTime, _("Income vs Expenses - All Time"), 4, 4);
+    navTreeCtrl_->SetItemData(incexpmonthly, new mmTreeItemData(wxT("Income vs Expenses - All Time")));
 
     //////////////////////////////////////////////////////////////////
-    wxTreeItemId transactionList = navTreeCtrl_->AppendItem(reports, 
-        _("Transaction Report"), 4, 4);
-    navTreeCtrl_->SetItemData(transactionList, 
-        new mmTreeItemData(wxT("Transaction Report")));
+    wxTreeItemId transactionList = navTreeCtrl_->AppendItem(reports, _("Transaction Report"), 4, 4);
+    navTreeCtrl_->SetItemData(transactionList, new mmTreeItemData(wxT("Transaction Report")));
+
     ///////////////////////////////////////////////////////////////////
     
     if (m_db && mmIniOptions::enableBudget_)
@@ -1410,22 +1317,16 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 
     if ( hasActiveTermAccounts() )
     {
-        wxTreeItemId cashflowWithTermAccounts = navTreeCtrl_->AppendItem(cashFlow, 
-            _("Cash Flow - With Term Accounts"), 4, 4);
-        navTreeCtrl_->SetItemData(cashflowWithTermAccounts, 
-            new mmTreeItemData(wxT("Cash Flow - With Term Accounts")));
+        wxTreeItemId cashflowWithTermAccounts = navTreeCtrl_->AppendItem(cashFlow, _("Cash Flow - With Term Accounts"), 4, 4);
+        navTreeCtrl_->SetItemData(cashflowWithTermAccounts, new mmTreeItemData(wxT("Cash Flow - With Term Accounts")));
     }
 
-    wxTreeItemId cashflowSpecificAccounts = navTreeCtrl_->AppendItem(cashFlow, 
-        _("Cash Flow - Specific Accounts"), 4, 4);
-    navTreeCtrl_->SetItemData(cashflowSpecificAccounts, 
-        new mmTreeItemData(wxT("Cash Flow - Specific Accounts")));
+    wxTreeItemId cashflowSpecificAccounts = navTreeCtrl_->AppendItem(cashFlow, _("Cash Flow - Specific Accounts"), 4, 4);
+    navTreeCtrl_->SetItemData(cashflowSpecificAccounts, new mmTreeItemData(wxT("Cash Flow - Specific Accounts")));
 
     ///////////////////////////////////////////////////////
-    wxTreeItemId transactionStats = navTreeCtrl_->AppendItem(reports, 
-        _("Transaction Statistics"), 4, 4);
-    navTreeCtrl_->SetItemData(transactionStats, 
-        new mmTreeItemData(wxT("Transaction Statistics")));
+    wxTreeItemId transactionStats = navTreeCtrl_->AppendItem(reports, _("Transaction Statistics"), 4, 4);
+    navTreeCtrl_->SetItemData(transactionStats, new mmTreeItemData(wxT("Transaction Statistics")));
 
      ///////////////////////////////////////////////////////////////////
 
@@ -1447,6 +1348,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     int numAccounts = (int) m_core->accountList_.accounts_.size();
     for (int iAdx = 0; iAdx < numAccounts; iAdx++)
     {
+        // Checking/Bank Accounts
         mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.accounts_[iAdx].get());
         if (pCA)
         {
@@ -1459,7 +1361,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
             }
         }
 
-//      This is where we load up the term accounts
+        // Term Accounts
         mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(m_core->accountList_.accounts_[iAdx].get());
         if (pTA)
         {
@@ -1467,20 +1369,24 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
                 (vAccts == wxT("Favorites") && pTA->favoriteAcct_) ||
                 (vAccts == wxT("ALL")))
             {
-                wxTreeItemId tacct = navTreeCtrl_->AppendItem(termAccount, pTA->accountName_, 2, 2);
+                wxTreeItemId tacct = navTreeCtrl_->AppendItem(termAccount, pTA->accountName_, 9, 9);
                 navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pTA->accountID_, false));
             }
         }
         
-        if (mmIniOptions::enableStocks_)
+        // Stock Accounts
+        mmInvestmentAccount* pIA = dynamic_cast<mmInvestmentAccount*>(m_core->accountList_.accounts_[iAdx].get());
+        if (pIA)
         {
-            mmInvestmentAccount* pIA = dynamic_cast<mmInvestmentAccount*>(m_core->accountList_.accounts_[iAdx].get());
-            if (pIA)
+            if ((vAccts == wxT("Open") && pIA->status_ == mmAccount::MMEX_Open) ||
+                (vAccts == wxT("Favorites") && pIA->favoriteAcct_) ||
+                (vAccts == wxT("ALL")))
             {
                 wxTreeItemId tacct = navTreeCtrl_->AppendItem(stocks, pIA->accountName_, 6, 6);
                 navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pIA->accountID_, false));
             }
         }
+
     }
 
     if (mmIniOptions::expandBankTree_)
@@ -1611,17 +1517,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                  }
                  navTreeCtrl_->SetFocus();
 
-              //if (acctType == wxT("Checking"))
-              //{
-              //   gotoAccountID_ = data;
-              //   wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
-              //   GetEventHandler()->AddPendingEvent(evt);
-              //}
-              //else if (acctType == wxT("Term"))
-              //{
-              //   gotoAccountID_ = data;
-              //   wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
-              //   GetEventHandler()->AddPendingEvent(evt);
               }
               else
               {
@@ -2456,15 +2351,6 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
                     menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
                     PopupMenu(&menu, pt);
                 }
-              //else if (acctType == wxT("Investment") || acctType == wxT("Term"))
-              //{
-              //   wxMenu menu;
-              //   menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
-              //   menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
-              //   menu.AppendSeparator();
-              //   menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
-              //   PopupMenu(&menu, pt);
-              //}
             }
             else
             {
@@ -2475,8 +2361,10 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
     }
     else 
     {
-        if (iData->getString() == wxT("Bank Accounts") || iData->getString() == wxT("Term Accounts"))
-        { // Create for both Bank & Term Accounts
+        if (iData->getString() == wxT("Bank Accounts") || 
+            iData->getString() == wxT("Term Accounts") || 
+            iData->getString() == wxT("Stocks"))
+        { // Create for Bank Term & Stock Accounts
 
          //wxMenu menu;
 			/*Popup Menu for Bank Accounts*/
@@ -2500,13 +2388,13 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
             menu->Append(MENU_TREEPOPUP_ACCOUNT_NEW, _("New &Account"));
             menu->Append(MENU_TREEPOPUP_ACCOUNT_DELETE, _("&Delete Account"));
             menu->Append(MENU_TREEPOPUP_ACCOUNT_EDIT, _("&Edit Account"));
-            menu->Append(MENU_TREEPOPUP_ACCOUNT_LIST, _("Account &List"));
+            menu->Append(MENU_TREEPOPUP_ACCOUNT_LIST, _("Account &List (Home)"));
 		    menu->AppendSeparator();
             // menu->Append(menuItemOnlineUpdateCurRate_);
             // menu->AppendSeparator();
 
             // Create only for Bank Accounts
-            if (iData->getString() != wxT("Term Accounts"))
+            if ( (iData->getString() != wxT("Term Accounts")) && (iData->getString() != wxT("Stocks")) )
             {
                 wxMenu *exportTo = new wxMenu;
 		        exportTo->Append(MENU_TREEPOPUP_ACCOUNT_EXPORT2CSV, _("&CSV Files"));
@@ -2702,22 +2590,16 @@ void mmGUIFrame::createMenu()
 
    wxMenu *menu_file = new wxMenu;
 
-   wxMenuItem* menuItemNew = new wxMenuItem(menu_file, MENU_NEW, 
-      _("&New Database\tCtrl-N"), 
-      _("New Database"));
+   wxMenuItem* menuItemNew = new wxMenuItem(menu_file, MENU_NEW,_("&New Database\tCtrl-N"),_("New Database"));
    menuItemNew->SetBitmap(toolBarBitmaps[0]);
 
-   wxMenuItem* menuItemOpen = new wxMenuItem(menu_file, MENU_OPEN, 
-      _("&Open Database\tCtrl-O"), 
-      _("Open Database"));
+   wxMenuItem* menuItemOpen = new wxMenuItem(menu_file, MENU_OPEN,_("&Open Database\tCtrl-O"),_("Open Database"));
    menuItemOpen->SetBitmap(toolBarBitmaps[1]);
 
    menu_file->Append(menuItemNew);
    menu_file->Append(menuItemOpen);
 
-   wxMenuItem* menuItemSaveAs = new wxMenuItem(menu_file, MENU_SAVE_AS, 
-      _("Save Database &As"), 
-      _("Save Database As"));
+   wxMenuItem* menuItemSaveAs = new wxMenuItem(menu_file, MENU_SAVE_AS,_("Save Database &As"),_("Save Database As"));
    menuItemSaveAs->SetBitmap(wxBitmap(saveas_xpm));
    menu_file->Append(menuItemSaveAs);
 
@@ -2864,18 +2746,13 @@ void mmGUIFrame::createMenu()
        menuTools->Append(menuItemBillsDeposits); 
     }
 
-    if (mmIniOptions::enableStocks_)
-    {
-        wxMenuItem* menuItemStocks = new wxMenuItem(menuTools, MENU_STOCKS, 
-            _("&Stock Investments"), _("Stock Investments"));
-        menuItemStocks->SetBitmap(wxBitmap(stock_curve_xpm));
-        menuTools->Append(menuItemStocks);
-    }
+    wxMenuItem* menuItemStocks = new wxMenuItem(menuTools, MENU_STOCKS, _("&Stock Investments"), _("Stock Investments"));
+    menuItemStocks->SetBitmap(wxBitmap(stock_curve_xpm));
+    menuTools->Append(menuItemStocks);
 
     if (mmIniOptions::enableAssets_)
     {
-        wxMenuItem* menuItemAssets = new wxMenuItem(menuTools, MENU_ASSETS, 
-            _("&Assets"), _("Assets"));
+        wxMenuItem* menuItemAssets = new wxMenuItem(menuTools, MENU_ASSETS, _("&Assets"), _("Assets"));
         menuItemAssets->SetBitmap(wxBitmap(car_xpm));
         menuTools->Append(menuItemAssets);
     }
@@ -2981,14 +2858,13 @@ void mmGUIFrame::createMenu()
 
     menuBar_->Check(MENU_VIEW_BANKACCOUNTS,mmIniOptions::expandBankHome_);
     menuBar_->Check(MENU_VIEW_TERMACCOUNTS,mmIniOptions::expandTermHome_);
-    menuBar_->Check(MENU_VIEW_STOCKACCOUNTS,mmIniOptions::enableStocks_);
+    menuBar_->Check(MENU_VIEW_STOCKACCOUNTS,mmIniOptions::expandStocksHome_);
 }
 //----------------------------------------------------------------------------
 
 void mmGUIFrame::createToolBar()
 {
-	toolBar_ = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
-		wxTB_FLAT | wxTB_NODIVIDER);
+	toolBar_ = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_FLAT | wxTB_NODIVIDER);
     wxBitmap toolBarBitmaps[9];
     toolBarBitmaps[0] = wxBitmap(new_xpm);
     toolBarBitmaps[1] = wxBitmap(open_xpm);
