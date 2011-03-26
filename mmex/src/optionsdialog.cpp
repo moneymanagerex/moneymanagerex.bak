@@ -85,6 +85,8 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
 
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_EXPAND_BANK_HOME, mmOptionsDialog::OnExpandBankHome)
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_EXPAND_TERM_HOME, mmOptionsDialog::OnExpandTermHome)
+    EVT_CHECKBOX(ID_DIALOG_OPTIONS_EXPAND_STOCK_HOME, mmOptionsDialog::OnExpandStockHome)
+
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_EXPAND_BANK_TREE, mmOptionsDialog::OnExpandBankTree)
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_EXPAND_TERM_TREE, mmOptionsDialog::OnExpandTermTree)
 
@@ -628,14 +630,14 @@ void mmOptionsDialog::CreateControls()
 	itemStaticBoxSizerFontSize->Add(choiceFontSize_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 //  Tree View Options
-    wxStaticBox* itemStaticBoxSizerTreeViewOption = new wxStaticBox(itemPanelViews, wxID_ANY, _("Tree View Options"));
+    wxStaticBox* itemStaticBoxSizerTreeViewOption = new wxStaticBox(itemPanelViews, wxID_ANY, _("Tree View Options: Expand Section"));
     wxStaticBoxSizer* itemStaticBoxSizerTreeView = new wxStaticBoxSizer(itemStaticBoxSizerTreeViewOption, wxHORIZONTAL);
     itemBoxSizer7->Add(itemStaticBoxSizerTreeView, 0, wxGROW|wxALL, 5);
 
 // Check boxes for Tree View Options
     wxString expandBankTree =  mmDBWrapper::getINISettingValue(inidb_, wxT("EXPAND_BANK_TREE"), wxT("TRUE"));
     wxCheckBox* itemCheckBoxExpandBankTree = new wxCheckBox( itemPanelViews, ID_DIALOG_OPTIONS_EXPAND_BANK_TREE, 
-        _("Expand Bank Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+        _("Bank Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemCheckBoxExpandBankTree->SetValue(FALSE);
     if (expandBankTree == wxT("TRUE"))
         itemCheckBoxExpandBankTree->SetValue(TRUE);
@@ -644,7 +646,7 @@ void mmOptionsDialog::CreateControls()
 
     wxString expandTermTree =  mmDBWrapper::getINISettingValue(inidb_, wxT("EXPAND_TERM_TREE"), wxT("FALSE"));
     wxCheckBox* itemCheckBoxExpandTermTree = new wxCheckBox( itemPanelViews, ID_DIALOG_OPTIONS_EXPAND_TERM_TREE, 
-        _("Expand Term Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+        _("Term Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemCheckBoxExpandTermTree->SetValue(FALSE);
     if (expandTermTree == wxT("TRUE"))
         itemCheckBoxExpandTermTree->SetValue(TRUE);
@@ -652,14 +654,14 @@ void mmOptionsDialog::CreateControls()
     itemCheckBoxExpandTermTree->SetToolTip(_("Expand Term Accounts in Trew View when tree is refreshed"));
     
 //  Home Page Options
-    wxStaticBox* itemStaticBoxSizerHomePageOption = new wxStaticBox(itemPanelViews, wxID_ANY, _("Home Page Options"));
+    wxStaticBox* itemStaticBoxSizerHomePageOption = new wxStaticBox(itemPanelViews, wxID_ANY, _("Home Page Options: Expand Section"));
     wxStaticBoxSizer* itemStaticBoxSizerHomePage = new wxStaticBoxSizer(itemStaticBoxSizerHomePageOption, wxHORIZONTAL);
     itemBoxSizer7->Add(itemStaticBoxSizerHomePage, 0, wxGROW|wxALL, 5);
 
 //  Check boxes for Home Page Options
     wxString expandBankHome =  mmDBWrapper::getINISettingValue(inidb_, wxT("EXPAND_BANK_HOME"), wxT("TRUE"));
     wxCheckBox* itemCheckBoxExpandBankHome = new wxCheckBox( itemPanelViews, ID_DIALOG_OPTIONS_EXPAND_BANK_HOME, 
-        _("Expand Bank Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+        _("Bank Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemCheckBoxExpandBankHome->SetValue(FALSE);
     if (expandBankHome == wxT("TRUE"))
         itemCheckBoxExpandBankHome->SetValue(TRUE);
@@ -668,13 +670,21 @@ void mmOptionsDialog::CreateControls()
 
     wxString expandTermHome =  mmDBWrapper::getINISettingValue(inidb_, wxT("EXPAND_TERM_HOME"), wxT("FALSE"));
     wxCheckBox* itemCheckBoxExpandTermHome = new wxCheckBox( itemPanelViews, ID_DIALOG_OPTIONS_EXPAND_TERM_HOME, 
-        _("Expand Term Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+        _("Term Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemCheckBoxExpandTermHome->SetValue(FALSE);
     if (expandTermHome == wxT("TRUE"))
         itemCheckBoxExpandTermHome->SetValue(TRUE);
     itemStaticBoxSizerHomePage->Add(itemCheckBoxExpandTermHome, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemCheckBoxExpandTermHome->SetToolTip(_("Expand Term Accounts on home page when page is refreshed"));
 
+    wxString expandStockHome =  mmDBWrapper::getINISettingValue(inidb_, wxT("ENABLESTOCKS"), wxT("TRUE"));
+    wxCheckBox* itemCheckBoxExpandStockHome = new wxCheckBox( itemPanelViews, ID_DIALOG_OPTIONS_EXPAND_STOCK_HOME, 
+        _("Stock Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    itemCheckBoxExpandStockHome->SetValue(FALSE);
+    if (expandStockHome == wxT("TRUE"))
+        itemCheckBoxExpandStockHome->SetValue(TRUE);
+    itemStaticBoxSizerHomePage->Add(itemCheckBoxExpandStockHome, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemCheckBoxExpandStockHome->SetToolTip(_("Expand Stock Accounts on home page when page is refreshed"));
     // ------------------------------------------------------------------------
     // Colours Panel
     wxPanel* itemPanelColors = new wxPanel( newBook, ID_BOOK_PANELCOLORS, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
@@ -1051,6 +1061,13 @@ void mmOptionsDialog::OnExpandTermHome(wxCommandEvent& /*event*/)
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_TERM_HOME);
     mmIniOptions::expandTermHome_ = itemCheckBox->GetValue();
     SetIniDatabaseCheckboxValue(wxT("EXPAND_TERM_HOME"),mmIniOptions::expandTermHome_);
+}
+
+void mmOptionsDialog::OnExpandStockHome(wxCommandEvent& /*event*/)
+{
+    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_STOCK_HOME);
+    mmIniOptions::expandStocksHome_ = itemCheckBox->GetValue();
+    SetIniDatabaseCheckboxValue(wxT("ENABLESTOCKS"),mmIniOptions::expandStocksHome_);
 }
 
 void mmOptionsDialog::OnExpandBankTree(wxCommandEvent& /*event*/)

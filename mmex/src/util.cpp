@@ -222,7 +222,6 @@ void DoubleToCurrency(const mmex::CurrencyFormatter &fmt, double val, wxString& 
 //----------------------------------------------------------------------------
 bool mmIniOptions::enableAssets_ = true;
 bool mmIniOptions::enableBudget_ = true;
-bool mmIniOptions::enableStocks_ = true;
 bool mmIniOptions::enableGraphs_ = true;
 bool mmIniOptions::enableCustomLogo_ = false;
 wxString mmIniOptions::logoName_;
@@ -245,6 +244,7 @@ wxString mmIniOptions::fontSize_ = wxT( "3" );
 
 bool mmIniOptions::expandBankHome_ = true;
 bool mmIniOptions::expandTermHome_ = false;
+bool mmIniOptions::expandStocksHome_ = true;
 bool mmIniOptions::expandBankTree_ = true;
 bool mmIniOptions::expandTermTree_ = false;
 
@@ -278,7 +278,7 @@ void mmOptions::saveOptions( wxSQLite3Database* db )
 void mmIniOptions::loadOptions( wxSQLite3Database* db )
 {
     if ( mmDBWrapper::getINISettingValue( db, wxT( "ENABLESTOCKS" ), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
-        enableStocks_ = false;
+        expandStocksHome_ = false;
 
     if ( mmDBWrapper::getINISettingValue( db, wxT( "ENABLEASSETS" ), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
         enableAssets_ = false;
