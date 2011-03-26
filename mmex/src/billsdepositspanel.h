@@ -62,9 +62,11 @@ public:
     void OnListItemDeselected(wxListEvent& event);
 
     void OnNewBDSeries(wxCommandEvent& event);
-    void OnDeleteBDSeries(wxCommandEvent& event);
     void OnEditBDSeries(wxCommandEvent& event);
-    void OnEnterBDSeriesOccurrence(wxCommandEvent& event);
+    void OnDeleteBDSeries(wxCommandEvent& event);
+
+    void OnEnterBDTransaction(wxCommandEvent& event);
+    void OnSkipBDTransaction(wxCommandEvent& event);
 
 private:
     wxListItemAttr attr1_; // style1
@@ -141,10 +143,13 @@ public:
   
     /* Event handlers for Buttons */
     void OnNewBDSeries(wxCommandEvent& event);
-    void OnDeleteBDSeries(wxCommandEvent& event);
     void OnEditBDSeries(wxCommandEvent& event);
-    void OnEnterBDSeriesOccurrence(wxCommandEvent& event);
-	void enableEditDeleteButtons(bool en);
+    void OnDeleteBDSeries(wxCommandEvent& event);
+
+    void OnEnterBDTransaction(wxCommandEvent& event);
+    void OnSkipBDTransaction(wxCommandEvent& event);
+
+    void enableEditDeleteButtons(bool en);
 
     void OnViewPopupSelected(wxCommandEvent& event);
 

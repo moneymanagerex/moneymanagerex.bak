@@ -29,10 +29,11 @@
 
 /*******************************************************/
 BEGIN_EVENT_TABLE(mmBillsDepositsPanel, wxPanel)
-    EVT_BUTTON(ID_BUTTON_NEW_BD,         mmBillsDepositsPanel::OnNewBDSeries)
-    EVT_BUTTON(ID_BUTTON_EDIT_BD,        mmBillsDepositsPanel::OnEditBDSeries)
-    EVT_BUTTON(ID_BUTTON_DELETE_BD,      mmBillsDepositsPanel::OnDeleteBDSeries)
-    EVT_BUTTON(ID_BUTTON_ENTEROCCUR_BD,  mmBillsDepositsPanel::OnEnterBDSeriesOccurrence)
+    EVT_BUTTON(ID_BUTTON_BD_NEW,         mmBillsDepositsPanel::OnNewBDSeries)
+    EVT_BUTTON(ID_BUTTON_BD_EDIT,        mmBillsDepositsPanel::OnEditBDSeries)
+    EVT_BUTTON(ID_BUTTON_BD_DELETE,      mmBillsDepositsPanel::OnDeleteBDSeries)
+    EVT_BUTTON(ID_BUTTON_BD_ENTER_OCCUR, mmBillsDepositsPanel::OnEnterBDTransaction)
+    EVT_BUTTON(ID_BUTTON_BD_SKIP_OCCUR,  mmBillsDepositsPanel::OnSkipBDTransaction)
 END_EVENT_TABLE()
 /*******************************************************/
 BEGIN_EVENT_TABLE(billsDepositsListCtrl, wxListCtrl)
@@ -44,7 +45,8 @@ BEGIN_EVENT_TABLE(billsDepositsListCtrl, wxListCtrl)
     EVT_MENU(MENU_TREEPOPUP_NEW,              billsDepositsListCtrl::OnNewBDSeries)
     EVT_MENU(MENU_TREEPOPUP_EDIT,             billsDepositsListCtrl::OnEditBDSeries)
     EVT_MENU(MENU_TREEPOPUP_DELETE,           billsDepositsListCtrl::OnDeleteBDSeries)
-    EVT_MENU(MENU_TREEPOPUP_ENTEROCCUR,       billsDepositsListCtrl::OnEnterBDSeriesOccurrence)
+    EVT_MENU(MENU_POPUP_BD_ENTER_OCCUR,       billsDepositsListCtrl::OnEnterBDTransaction)
+    EVT_MENU(MENU_POPUP_BD_SKIP_OCCUR,        billsDepositsListCtrl::OnSkipBDTransaction)
     
     EVT_LIST_KEY_DOWN(ID_PANEL_BD_LISTCTRL,   billsDepositsListCtrl::OnListKeyDown)
 END_EVENT_TABLE()
@@ -221,28 +223,34 @@ void mmBillsDepositsPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_NEW_BD, _("&New Series"));
+    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_BD_NEW, _("&New Series"));
     itemButton6->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
     itemButton6->SetToolTip(_("New Bills && Deposit Series"));
     itemBoxSizer5->Add(itemButton6, 0, wxGROW|wxALL, 1);
 
-    wxButton* itemButton81 = new wxButton( itemPanel12, ID_BUTTON_EDIT_BD, _("&Edit Series"));
+    wxButton* itemButton81 = new wxButton( itemPanel12, ID_BUTTON_BD_EDIT, _("&Edit Series"));
     itemButton81->SetForegroundColour(wxColour(wxT("ORANGE")));
     itemButton81->SetToolTip(_("Edit Bills && Deposit Series"));
     itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 	itemButton81->Enable(false);
 	
-    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_DELETE_BD, _("&Delete Series"));
+    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_BD_DELETE, _("&Delete Series"));
     itemButton7->SetForegroundColour(wxColour(wxT("RED")));
     itemButton7->SetToolTip(_("Delete Bills && Deposit Series"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 	itemButton7->Enable(false);
 	
-    wxButton* itemButton8 = new wxButton( itemPanel12, ID_BUTTON_ENTEROCCUR_BD, _("Enter &Transaction"), 
+    wxButton* itemButton8 = new wxButton( itemPanel12, ID_BUTTON_BD_ENTER_OCCUR, _("Enter &Transaction"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton8->SetToolTip(_("Enter Next Bills && Deposit Occurrence"));
     itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 	itemButton8->Enable(false);
+
+    wxButton* buttonSkipTrans = new wxButton( itemPanel12, ID_BUTTON_BD_SKIP_OCCUR, _("&Skip Transaction"));
+    buttonSkipTrans->SetForegroundColour(wxColour(wxT("BLUE")));
+    buttonSkipTrans->SetToolTip(_("Skip Next Bills && Deposit Occurrence"));
+    itemBoxSizer5->Add(buttonSkipTrans, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	buttonSkipTrans->Enable(false);
 }
 
 void mmBillsDepositsPanel::initVirtualListControl()
@@ -391,16 +399,6 @@ void mmBillsDepositsPanel::initVirtualListControl()
     listCtrlAccount_->SetItemCount(static_cast<long>(trans_.size()));
 }
 
-void mmBillsDepositsPanel::OnDeleteBDSeries(wxCommandEvent& event)
-{
-    listCtrlAccount_->OnDeleteBDSeries(event);
-}
-
-void mmBillsDepositsPanel::OnEnterBDSeriesOccurrence(wxCommandEvent& event)
-{
-    listCtrlAccount_->OnEnterBDSeriesOccurrence(event);
-}
-
 void mmBillsDepositsPanel::OnNewBDSeries(wxCommandEvent& event)
 {
   listCtrlAccount_->OnNewBDSeries(event);
@@ -411,6 +409,22 @@ void mmBillsDepositsPanel::OnEditBDSeries(wxCommandEvent& event)
     listCtrlAccount_->OnEditBDSeries(event);
 }
 
+void mmBillsDepositsPanel::OnDeleteBDSeries(wxCommandEvent& event)
+{
+    listCtrlAccount_->OnDeleteBDSeries(event);
+}
+
+void mmBillsDepositsPanel::OnEnterBDTransaction(wxCommandEvent& event)
+{
+    listCtrlAccount_->OnEnterBDTransaction(event);
+}
+
+void mmBillsDepositsPanel::OnSkipBDTransaction(wxCommandEvent& event)
+{
+    listCtrlAccount_->OnSkipBDTransaction(event);
+    listCtrlAccount_->SetFocus();
+}
+
 /*******************************************************/
 
 void billsDepositsListCtrl::OnItemRightClick(wxListEvent& event)
@@ -418,12 +432,13 @@ void billsDepositsListCtrl::OnItemRightClick(wxListEvent& event)
     selectedIndex_ = event.GetIndex();
 
     wxMenu menu;
-    menu.Append(MENU_TREEPOPUP_ENTEROCCUR, _("Enter next Occurrence"));
+    menu.Append(MENU_POPUP_BD_ENTER_OCCUR, _("Enter next Occurrence..."));
     menu.AppendSeparator();
-    menu.Append(MENU_TREEPOPUP_NEW, _("&New Bills && Deposit Series"));
+    menu.Append(MENU_POPUP_BD_SKIP_OCCUR, _("Skip next Occurrence"));
     menu.AppendSeparator();
-    menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Bills && Deposit Series"));
-    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Bills && Deposit Series"));
+    menu.Append(MENU_TREEPOPUP_NEW, _("&New Bills && Deposit Series..."));
+    menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Bills && Deposit Series..."));
+    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Bills && Deposit Series..."));
     PopupMenu(&menu, event.GetPoint());
 }
 
@@ -523,6 +538,22 @@ void billsDepositsListCtrl::OnNewBDSeries(wxCommandEvent& /*event*/)
     }
 }
 
+void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& /*event*/)
+{
+    if (selectedIndex_ == -1)
+        return;
+
+    if (!cp_->db_)
+        return;
+
+    mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].bdID_, true, false, this );
+    if ( dlg.ShowModal() == wxID_OK )
+    {
+        cp_->initVirtualListControl();
+        RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+    }
+}
+
 void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ == -1)
@@ -549,7 +580,7 @@ void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& /*event*/)
     }
 }
 
-void billsDepositsListCtrl::OnEnterBDSeriesOccurrence(wxCommandEvent& /*event*/)
+void billsDepositsListCtrl::OnEnterBDTransaction(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ == -1)
         return;
@@ -565,20 +596,14 @@ void billsDepositsListCtrl::OnEnterBDSeriesOccurrence(wxCommandEvent& /*event*/)
     }
 }
 
-void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& /*event*/)
+void billsDepositsListCtrl::OnSkipBDTransaction(wxCommandEvent& /*event*/)
 {
-    if (selectedIndex_ == -1)
+    if (selectedIndex_ == -1 || !cp_->db_)
         return;
 
-    if (!cp_->db_)
-        return;
-
-    mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].bdID_, true, false, this );
-    if ( dlg.ShowModal() == wxID_OK )
-    {
-        cp_->initVirtualListControl();
-        RefreshItems(0, ((int)cp_->trans_.size()) - 1);
-    }
+    mmDBWrapper::completeBDInSeries(cp_->db_, cp_->trans_[selectedIndex_].bdID_);
+    cp_->initVirtualListControl();
+    RefreshItems(0, ((int)cp_->trans_.size()) -1);
 }
 
 void billsDepositsListCtrl::OnListItemActivated(wxListEvent& event)
@@ -606,11 +631,13 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
 
 void mmBillsDepositsPanel::enableEditDeleteButtons(bool en)
 {
-	wxButton* bE = (wxButton*)FindWindow(ID_BUTTON_EDIT_BD);
-	wxButton* bD = (wxButton*)FindWindow(ID_BUTTON_DELETE_BD);
-	wxButton* bN = (wxButton*)FindWindow(ID_BUTTON_ENTEROCCUR_BD);
+	wxButton* bE = (wxButton*)FindWindow(ID_BUTTON_BD_EDIT);
+	wxButton* bD = (wxButton*)FindWindow(ID_BUTTON_BD_DELETE);
+	wxButton* bN = (wxButton*)FindWindow(ID_BUTTON_BD_ENTER_OCCUR);
+	wxButton* bS = (wxButton*)FindWindow(ID_BUTTON_BD_SKIP_OCCUR);
 	bE->Enable(en);
 	bD->Enable(en);
 	bN->Enable(en);
+	bS->Enable(en);
 }
 
