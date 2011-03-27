@@ -1599,26 +1599,29 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 
 void MyListCtrl::OnListKeyDown(wxListEvent& event)
 {
-        if (m_selectedIndex == -1) //check if a transaction is selected
+    if (m_selectedIndex == -1) //check if a transaction is selected
         return;
-        //Read status of the selected transaction first
-        wxString status = m_cp->m_trans[m_selectedIndex]->status_;
+
+    //find the topmost visible item - this will be used to set
+    // where to display the list again after refresh
+    long topItemIndex = GetTopItem();
+
+    //Read status of the selected transaction first
+    wxString status = m_cp->m_trans[m_selectedIndex]->status_;
 
 	if (!wxGetKeyState(WXK_COMMAND) && !wxGetKeyState(WXK_ALT) && !wxGetKeyState(WXK_CONTROL))
 	{
+        // new style
+        int keycode = event.GetKeyCode();
+        char key = '\0';
+        if (keycode < 256)
+        {
+        // TODO: Unicode in non-Unicode mode ??
+            key = (char)keycode;
+        }
 
-    // new style
-  int keycode = event.GetKeyCode();
-  char key = '\0';
-  if (keycode < 256)
-  {
-    // TODO: Unicode in non-Unicode mode ??
-    key = (char)keycode;
-  }
-
-
-  switch ( key )
-    {
+        switch ( key )
+        {
         case 'v':
         case 'V':
             {
@@ -1654,7 +1657,8 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
                  OnMarkTransaction(evt); }
             }
             break;
-	case 'd':
+
+        case 'd':
         case 'D':
             {
                  if (status != wxT("D")) {
@@ -1663,7 +1667,7 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
             }
             break;
 
-/*        case WXK_DELETE:
+/*      case WXK_DELETE:
         case WXK_NUMPAD_DELETE:
 
             {
@@ -1671,14 +1675,27 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
                 OnDeleteTransaction(evt);
             }
             break;*/
-    }
+
+        } // end switch
         
-      
-//        default:
+//      default:
         if (key == WXK_DELETE || key == WXK_NUMPAD_DELETE)
-        {wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
-        OnDeleteTransaction(evt);}
-	} else {            event.Skip();}
+        {
+            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
+            OnDeleteTransaction(evt);
+        }
+    } 
+    else 
+    {
+        event.Skip();
+    }
+
+    //set the deleted transaction index to the new selection and focus on it
+    SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, 
+        wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED);
+    //make sure the topmost item before transaction deletion is visible, otherwise
+    // the control will go back to the very top or bottom when refreshed
+    EnsureVisible(topItemIndex);
 }
 //----------------------------------------------------------------------------
 
