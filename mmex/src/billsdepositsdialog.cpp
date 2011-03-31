@@ -78,6 +78,8 @@ mmBDDialog::mmBDDialog(wxSQLite3Database* db, mmCoreDB* core, int bdID, bool edi
     toTransAmount_ = -1;
     enterOccur_ = enterOccur;
     advancedToTransAmountSet_ = false;
+    payeeUnknown_ = true;
+
     autoExecuteUserAck_ = false;
     autoExecuteSilent_  = false;
 
@@ -104,6 +106,11 @@ bool mmBDDialog::Create( wxWindow* parent, wxWindowID id, const wxString& captio
     {
         dataToControls();
     }
+
+    if (advancedToTransAmountSet_)
+        staticTextAdvancedActive_->Show();
+    else
+        staticTextAdvancedActive_->Show(false);
 
     Centre();
     return TRUE;
@@ -271,6 +278,10 @@ void mmBDDialog::dataToControls()
             bPayee_->SetLabel(fromAccount);
             bTo_->SetLabel(toAccount);
             payeeID_ = accountID_;
+
+            // When editing an advanced transaction record, we do not reset the toTransAmount_
+            if ((edit_ || enterOccur_) && (toTransAmount_ != transAmount))
+                advancedToTransAmountSet_ = true;
         }
 
     }
@@ -405,6 +416,10 @@ void mmBDDialog::CreateControls()
     itemBoxSizer4->Add(bAdvanced_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 //    bAdvanced_->SetToolTip(_("Specify advanced settings for transaction"));
     bAdvanced_->SetToolTip(_("Specify the transfer amount in the To Account"));
+
+    staticTextAdvancedActive_ = new wxStaticText( itemDialog1, wxID_STATIC,
+        _(" is active!"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer4->Add(staticTextAdvancedActive_, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
     wxPanel* itemPanel7 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, 
         wxDefaultSize, wxTAB_TRAVERSAL );
@@ -598,14 +613,18 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 		    bPayee_->SetLabel(acctName);
     	}
 
-    } else {
-	    mmPayeeDialog dlg(this, core_);    
-	    if ( dlg.ShowModal() == wxID_OK )
+    } 
+    else 
+    {
+        mmPayeeDialog dlg(this, core_);
+        
+        if ( dlg.ShowModal() == wxID_OK )
 	    {
             payeeID_ = dlg.getPayeeId();
 	        if (payeeID_ == -1)
             {
 	            bPayee_->SetLabel(wxT("Select Payee"));
+                payeeUnknown_ = true;
                 return;
             }
 	            
@@ -615,9 +634,9 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 	
             int tempCategID = -1;
             int tempSubCategID = -1;
-            wxString payeeName = mmDBWrapper::getPayee(db_, 
-            	payeeID_, tempCategID, tempSubCategID);
-	            bPayee_->SetLabel(mmReadyDisplayString(payeeName));
+            wxString payeeName = mmDBWrapper::getPayee(db_,	payeeID_, tempCategID, tempSubCategID);
+            bPayee_->SetLabel(mmReadyDisplayString(payeeName));
+            payeeUnknown_ = false;
 
     	    if (tempCategID == -1)
 	        {
@@ -641,18 +660,20 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
         }
 	    else
 	    {
-	        wxString payeeName = mmDBWrapper::getPayee(db_, payeeID_, categID_, subcategID_);
-	        if (payeeName.IsEmpty())
+            wxString payeeName = mmDBWrapper::getPayee(db_, payeeID_, categID_, subcategID_);
+            if (payeeName.IsEmpty())
 	        {
 	            payeeID_ = -1;
 	            categID_ = -1;
 	            subcategID_ = -1;
 	            bCategory_->SetLabel(_("Select Category"));
 	            bPayee_->SetLabel(_("Select Payee"));
+                payeeUnknown_ = true;
 	        }
 	        else
 	        {
 	            bPayee_->SetLabel(payeeName);
+                payeeUnknown_ = false;
 	        }
 	        
 	    }
@@ -694,19 +715,18 @@ void mmBDDialog::OnDateChanged(wxDateEvent& /*event*/)
 void mmBDDialog::OnAdvanced(wxCommandEvent& /*event*/)
 {
     wxString dispString = textAmount_->GetValue();
-    if (toTransAmount_ > 0.0)
+    if (toTransAmount_ >= 0.0)
     {
         mmex::formatDoubleToCurrencyEdit(toTransAmount_, dispString);
     }
-    wxTextEntryDialog dlg(this, _("To Account Amount Entry"), _("Amount to be recorded in To Account"),  dispString);
+    wxTextEntryDialog dlg(this, _("Amount to be recorded in To Account"), _("To Account Amount Entry"),  dispString);
     if ( dlg.ShowModal() == wxID_OK )
     {
         wxString currText = dlg.GetValue().Trim();
         if (!currText.IsEmpty())
         {
             double amount;
-            if (!mmex::formatCurrencyToDouble(currText, amount) 
-                 || (amount < 0.0))
+            if (!mmex::formatCurrencyToDouble(currText, amount) || (amount < 0.0))
             {
                 mmShowErrorMessage(this, _("Invalid To Amount Entered "), _("Error"));
             }
@@ -714,6 +734,7 @@ void mmBDDialog::OnAdvanced(wxCommandEvent& /*event*/)
             {
                 toTransAmount_ = amount;
                 advancedToTransAmountSet_ = true;
+                staticTextAdvancedActive_->Show();
             }
         }
     }
@@ -800,37 +821,53 @@ void mmBDDialog::updateControlsForTransType()
     
      if (choiceTrans_->GetSelection() == DEF_WITHDRAWAL)
      {
-        bPayee_->SetLabel(_("Select Payee"));
         fillControls();
         st->Show(false);
         bTo_->Show(false);
         stp->SetLabel(_("Payee"));
-        payeeID_ = -1;
-        toID_    = -1;
+        if (payeeUnknown_)
+        {
+            bPayee_->SetLabel(_("Select Payee"));
+            payeeID_ = -1;
+            toID_    = -1;
+        }
         bAdvanced_->Enable(false);
         bPayee_->SetToolTip(_("Specify where the transaction is going to or coming from "));
         textAmount_->SetToolTip(_("Specify the amount for this transaction"));
      }
      else if (choiceTrans_->GetSelection() == DEF_DEPOSIT)
     {
-        bPayee_->SetLabel(_("Select Payee"));
         fillControls();
         bTo_->Show(false);
         st->Show(false);    
         stp->SetLabel(_("From"));
-        payeeID_ = -1;
-        toID_    = -1;
+        if (payeeUnknown_)
+        {
+            bPayee_->SetLabel(_("Select Payee"));
+            payeeID_ = -1;
+            toID_    = -1;
+        }
         bAdvanced_->Enable(false);
         bPayee_->SetToolTip(_("Specify where the transaction is going to or coming from "));
         textAmount_->SetToolTip(_("Specify the amount for this transaction"));
     }
     else if (choiceTrans_->GetSelection() == DEF_TRANSFER)
     {
-        bPayee_->SetLabel(_("Select From"));
+        if (accountID_ < 0 )
+        {
+            bPayee_->SetLabel(_("Select From"));
+            payeeID_ = -1;
+        } 
+        else
+        {
+            bPayee_->SetLabel(itemAccountName_->GetLabel());
+            payeeID_ = accountID_;
+        }
+
         bTo_->SetLabel(_("Select To"));
-        payeeID_ = -1;
         toID_    = -1;
-        
+        payeeUnknown_ = true;
+
         bTo_->Show(true);
         st->Show(true);
         stp->SetLabel(_("From"));   
