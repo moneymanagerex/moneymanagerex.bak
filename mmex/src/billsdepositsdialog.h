@@ -93,6 +93,8 @@ private:
     mmAdvancedPopup* m_simplePopup_;
     wxButton* bAdvanced_;
     wxCheckBox* cSplit_;
+    wxStaticText* staticTextAdvancedActive_;
+    bool payeeUnknown_;
 
     wxChoice* choiceStatus_;
     wxChoice* choiceTrans_;
