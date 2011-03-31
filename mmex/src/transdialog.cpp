@@ -71,6 +71,7 @@ mmTransDialog::mmTransDialog(
     toID_(-1),
     toTransAmount_(-1),
     advancedToTransAmountSet_(false),
+    payeeUnknown_(true),
     edit_currency_rate(1.0)
 {
     referenceAccountID_ = accountID_;   // remember where dialog initiated from.
@@ -209,7 +210,8 @@ void mmTransDialog::dataToControls()
 
         payeeID_ = q1.GetInt(wxT("PAYEEID"));
         toID_ = q1.GetInt(wxT("TOACCOUNTID"));
-        
+        payeeUnknown_ = false;
+
         *split_.get() = *core_->bTransactionList_.getBankTransactionPtr(transID_)->splitEntries_.get();
 
         if (split_->numEntries() > 0)
@@ -555,6 +557,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
             if (payeeID_ == -1)
             {
 	            bPayee_->SetLabel(wxT("Select Payee"));
+                payeeUnknown_ = true;
 	            return;
             }
 
@@ -562,6 +565,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
             int tempSubCategID = -1;
             wxString payeeName = mmDBWrapper::getPayee(db_.get(), payeeID_, tempCategID, tempSubCategID);
             bPayee_->SetLabel(mmReadyDisplayString(payeeName));
+            payeeUnknown_ = false;
 
             // If this is a Split Transaction, ignore displaying last category for payee
             if (split_->numEntries())
@@ -596,10 +600,12 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
                 subcategID_ = -1;
                 bCategory_->SetLabel(_("Select Category"));
                 bPayee_->SetLabel(_("Select Payee"));
+                payeeUnknown_ = true;
             }
             else
             {
                 bPayee_->SetLabel(payeeName);
+                payeeUnknown_ = false;
             }
 
     	}
@@ -759,18 +765,24 @@ void mmTransDialog::updateControlsForTransType()
         fillControls();
         displayControlsToolTips(DEF_WITHDRAWAL);
         stp->SetLabel(_("Payee"));
-        bPayee_->SetLabel(_("Select Payee"));
-        payeeID_ = -1;
-        toID_    = -1;
+        if (payeeUnknown_) 
+        {
+            bPayee_->SetLabel(_("Select Payee"));
+            payeeID_ = -1;
+            toID_    = -1;
+        } 
 
     } else if (choiceTrans_->GetSelection() == DEF_DEPOSIT) {
 
         fillControls();
         displayControlsToolTips(DEF_DEPOSIT);
         stp->SetLabel(_("From"));
-        bPayee_->SetLabel(_("Select Payee"));
-        payeeID_ = -1;
-        toID_    = -1;
+        if (payeeUnknown_) 
+        {
+            bPayee_->SetLabel(_("Select Payee"));
+            payeeID_ = -1;
+            toID_    = -1;
+        } 
 
     } else if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
 
@@ -778,6 +790,7 @@ void mmTransDialog::updateControlsForTransType()
         stp->SetLabel(_("From"));
         bTo_->SetLabel(_("Select To Account"));
         toID_    = -1;
+        payeeUnknown_ = true;
 
         wxString acctName = mmDBWrapper::getAccountName(db_.get(), accountID_);
         bPayee_->SetLabel(acctName);

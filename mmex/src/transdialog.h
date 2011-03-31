@@ -98,10 +98,10 @@ private:
     wxCheckBox* cSplit_;
     wxButton* bAuto_;
     wxStaticText* staticTextAdvancedActive_;
+    bool payeeUnknown_;
 
     wxChoice* choiceStatus_;
     wxChoice* choiceTrans_;
-
     bool edit_;
 
     wxDatePickerCtrl* dpc_;
