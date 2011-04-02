@@ -372,7 +372,7 @@ void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb, double& tBalance)
         "union all "
         "select  "
         "st.heldat as ACCOUNTID, "
-        "total((st.CURRENTPRICE-st.PURCHASEPRICE)*st.NUMSHARES-st.COMMISSION) as BALANCE "
+        "total((st.CURRENTPRICE)*st.NUMSHARES-st.COMMISSION) as BALANCE "
         "from  stock_v1 st "
         "where st.purchasedate<=date ('now','localtime') "
         "group by st.heldat "
@@ -428,7 +428,8 @@ void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb, double& tBalance)
             mmex::formatDoubleToCurrency(currBalance, tBalanceStr);
             mmex::formatDoubleToCurrencyEdit(convRate, convRateStr);
 
-            tBalance += currBalance * convRate;
+            // It should not be added here
+            //tBalance += currBalance * convRate;
        
             hb.startTableRow();
             hb.addTableCell(currencyStr);
