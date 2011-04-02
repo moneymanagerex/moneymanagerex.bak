@@ -879,22 +879,30 @@ void mmGUIFrame::menuEnableItems(bool enable)
     menuBar_->FindItem(MENU_ACCTEDIT)->Enable(enable);
     if (mmIniOptions::enableDeleteAccount_)
         menuBar_->FindItem(MENU_ACCTDELETE)->Enable(enable);
+
     menuBar_->FindItem(MENU_ORGCATEGS)->Enable(enable);
     menuBar_->FindItem(MENU_ORGPAYEE)->Enable(enable);
+    menuBar_->FindItem(MENU_CATEGORY_RELOCATION)->Enable(enable);
+    menuBar_->FindItem(MENU_PAYEE_RELOCATION)->Enable(enable);
+    menuBar_->FindItem(MENU_CUSTOM_SQL_REPORT_NEW)->Enable(enable);
+    menuBar_->FindItem(MENU_CUSTOM_SQL_REPORT_EDIT)->Enable(enable);
+    menuBar_->FindItem(MENU_CUSTOM_SQL_REPORT_DELETE)->Enable(enable);
+    menuBar_->FindItem(MENU_CONVERT_ENC_DB)->Enable(enable);
+
     menuBar_->FindItem(MENU_IMPORT)->Enable(enable);
     menuBar_->FindItem(MENU_PRINT_PREVIEW)->Enable(enable);
     menuBar_->FindItem(MENU_PRINT)->Enable(enable);
     menuBar_->FindItem(wxID_PREFERENCES)->Enable(enable);
     if (mmIniOptions::enableRepeatingTransactions_)
         menuBar_->FindItem(MENU_BILLSDEPOSITS)->Enable(enable);
-//    menuBar_->FindItem(MENU_STOCKS)->Enable(enable);
+//  menuBar_->FindItem(MENU_STOCKS)->Enable(enable);
     menuBar_->FindItem(MENU_CURRENCY)->Enable(enable);
     if (mmIniOptions::enableAssets_)
         menuBar_->FindItem(MENU_ASSETS)->Enable(enable);
     if (mmIniOptions::enableBudget_)
         menuBar_->FindItem(MENU_BUDGETSETUPDIALOG)->Enable(enable);
     menuBar_->FindItem(MENU_TRANSACTIONREPORT)->Enable(enable);
-    
+
     if (mmIniOptions::enableAddAccount_)
         toolBar_->EnableTool(MENU_NEWACCT, enable);
     toolBar_->EnableTool(MENU_ACCTLIST, enable);
@@ -2323,7 +2331,10 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnItemRightClick(wxTreeEvent& event)
 {
-    showTreePopupMenu(event.GetItem(), event.GetPoint());
+    if (menuBar_->FindItem(MENU_ORGCATEGS)->IsEnabled() )
+        showTreePopupMenu(event.GetItem(), event.GetPoint());
+    else
+        wxMessageBox(_("MMEX has been opened without an active database."),_("MMEX: Menu Popup Error"),wxICON_EXCLAMATION);
 }
 //----------------------------------------------------------------------------
 
