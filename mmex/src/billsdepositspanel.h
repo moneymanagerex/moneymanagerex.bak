@@ -108,6 +108,8 @@ public:
     int subcategID_;
 	wxString subcategoryStr_;
 
+    bool bd_repeat_user_;
+    bool bd_repeat_auto_;
 };
 
 class mmBillsDepositsPanel : public mmPanelBase
