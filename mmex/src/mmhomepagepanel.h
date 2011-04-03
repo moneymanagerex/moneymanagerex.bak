@@ -92,7 +92,7 @@ private:
     void displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, wxDateTime& dtBegin, wxDateTime& dtEnd);
     void displayStocks(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses);
     void displayAssets(mmHTMLBuilder& hb, double& tBalance);
-    void displayCurrencies(mmHTMLBuilder& hb, double& tBalance);
+    void displayCurrencies(mmHTMLBuilder& hb);
     void displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome, double& texpenses);
     void displayBillsAndDeposits(mmHTMLBuilder& hb);
     void displayTopTransactions(mmHTMLBuilder& hb);
