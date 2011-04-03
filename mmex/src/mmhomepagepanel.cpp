@@ -357,7 +357,7 @@ void mmHomePagePanel::displayAssets(mmHTMLBuilder& hb, double& tBalance)
 }
 
 //* Currencies *//
-void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb, double& tBalance)
+void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb)
 {
     char sql2[] = 
         "select ACCOUNTID, CURRENCYNAME, BALANCE, BASECONVRATE from ( "
@@ -427,9 +427,6 @@ void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb, double& tBalance)
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
             mmex::formatDoubleToCurrency(currBalance, tBalanceStr);
             mmex::formatDoubleToCurrencyEdit(convRate, convRateStr);
-
-            // It should not be added here
-            //tBalance += currBalance * convRate;
        
             hb.startTableRow();
             hb.addTableCell(currencyStr);
@@ -730,7 +727,7 @@ void mmHomePagePanel::updateAccounts()
     displayAssets(hb, tBalance);
     hb.endTable();
  
-    displayCurrencies(hb, tBalance); // Will display Currency summary when more than one currency is used.
+    displayCurrencies(hb); // Will display Currency summary when more than one currency is used.
 
 //  Display the grand total from all sections
     wxString tBalanceStr;

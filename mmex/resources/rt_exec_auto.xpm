@@ -1,5 +1,5 @@
 /* XPM */
-static char * rt_exec_auto_xpm[] = {
+static const char * rt_exec_auto_xpm[] = {
 "16 16 100 2",
 "  	c None",
 ". 	c #30D052",
