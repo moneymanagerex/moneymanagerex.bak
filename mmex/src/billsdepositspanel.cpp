@@ -26,6 +26,8 @@
 
 /* Include XPM Support */
 #include "../resources/error.xpm"
+#include "../resources/rt_exec_auto.xpm"
+#include "../resources/rt_exec_user.xpm"
 
 /*******************************************************/
 BEGIN_EVENT_TABLE(mmBillsDepositsPanel, wxPanel)
@@ -157,9 +159,10 @@ void mmBillsDepositsPanel::CreateControls()
         wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
     wxSize imageSize(16, 16);
-    m_imageList = new wxImageList( imageSize.GetWidth(), 
-        imageSize.GetHeight() );
+    m_imageList = new wxImageList( imageSize.GetWidth(), imageSize.GetHeight() );
     m_imageList->Add(wxBitmap(error_xpm));
+    m_imageList->Add(wxBitmap(rt_exec_auto_xpm));
+    m_imageList->Add(wxBitmap(rt_exec_user_xpm));
 
     listCtrlAccount_ = new billsDepositsListCtrl( this, itemSplitterWindow10, 
         ID_PANEL_BD_LISTCTRL, wxDefaultPosition, wxDefaultSize, 
@@ -180,23 +183,15 @@ void mmBillsDepositsPanel::CreateControls()
 	listCtrlAccount_->InsertColumn(7, _("Notes"));
     
     /* See if we can get data from inidb */
-     long col0, col1, col2, col3, col4, col5, col6, col7;
-     mmDBWrapper::getINISettingValue(inidb_, 
-        wxT("BD_COL0_WIDTH"), wxT("150")).ToLong(&col0); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("BD_COL1_WIDTH"), wxT("-2")).ToLong(&col1); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("BD_COL2_WIDTH"), wxT("-2")).ToLong(&col2); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("BD_COL3_WIDTH"), wxT("-2")).ToLong(&col3); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("BD_COL4_WIDTH"), wxT("-2")).ToLong(&col4); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("BD_COL5_WIDTH"), wxT("-2")).ToLong(&col5); 
-	 mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("BD_COL6_WIDTH"), wxT("-2")).ToLong(&col6); 
-	mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("BD_COL7_WIDTH"), wxT("-2")).ToLong(&col7);
+    long col0, col1, col2, col3, col4, col5, col6, col7;
+    mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL0_WIDTH"), wxT("150")).ToLong(&col0); 
+    mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL1_WIDTH"), wxT("-2")).ToLong(&col1); 
+    mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL2_WIDTH"), wxT("-2")).ToLong(&col2); 
+    mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL3_WIDTH"), wxT("-2")).ToLong(&col3); 
+    mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL4_WIDTH"), wxT("-2")).ToLong(&col4); 
+    mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL5_WIDTH"), wxT("-2")).ToLong(&col5); 
+	mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL6_WIDTH"), wxT("-2")).ToLong(&col6); 
+    mmDBWrapper::getINISettingValue(inidb_,  wxT("BD_COL7_WIDTH"), wxT("-2")).ToLong(&col7);
      
      
     listCtrlAccount_->SetColumnWidth(0, col0);
@@ -306,11 +301,21 @@ void mmBillsDepositsPanel::initVirtualListControl()
 		th.subcategID_	   = q1.GetInt(wxT("SUBCATEGID"));
 		th.subcategoryStr_ = q1.GetString(wxT("SUBCATEGNAME"));
 
+        th.bd_repeat_user_ = false;
+        th.bd_repeat_auto_ = false;
+
         // DeMultiplex the Auto Executable fields.
         if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
+        {
             repeats -= BD_REPEATS_MULTIPLEX_BASE;
+            th.bd_repeat_user_ = true; 
+        }
+
         if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute Silent mode
+        {
             repeats -= BD_REPEATS_MULTIPLEX_BASE;
+            th.bd_repeat_auto_ = true;
+        }
 
         if (repeats == 0)
         {
@@ -498,11 +503,15 @@ void billsDepositsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 
 int billsDepositsListCtrl::OnGetItemImage(long item) const
 {
-   /* Returns the icon to be shown for each entry */
-   if (cp_->trans_[item].daysRemaining_ < 0)
-       return 0;
+    /* Returns the icon to be shown for each entry */
+    if (cp_->trans_[item].daysRemaining_ < 0)
+        return 0;
+    if (cp_->trans_[item].bd_repeat_auto_)
+        return 1;
+    if (cp_->trans_[item].bd_repeat_user_)
+        return 2;
 
-   return -1;
+    return -1;
 }
 
 wxListItemAttr* billsDepositsListCtrl::OnGetItemAttr(long item) const
