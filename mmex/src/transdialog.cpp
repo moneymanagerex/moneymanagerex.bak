@@ -527,7 +527,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
     	"from ACCOUNTLIST_V1 "
 //    	"where /*(ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and*/ STATUS <> 'Closed' "
 // restored to previous order until a proper solution is found.
-    	"where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS <> 'Closed' "
+    	"where ACCOUNTTYPE IN ('Checking', 'Term') and STATUS <> 'Closed' "
     	"order by ACCOUNTNAME";
 
     	wxArrayString as;
@@ -795,6 +795,57 @@ void mmTransDialog::updateControlsForTransType()
         wxString acctName = mmDBWrapper::getAccountName(db_.get(), accountID_);
         bPayee_->SetLabel(acctName);
         payeeID_ = accountID_;
+
+////////////////////
+        // Determine most frequently used category name for current account for transfer
+        static const char sql[] = 
+            "select count (*) c, "
+            "cat.categname CATEGNAME, sc.subcategname SUBCATEGNAME, "
+            "ca.categid, ca.subcategid "
+            "from CHECKINGACCOUNT_V1 ca "
+            "left join CATEGORY_V1 cat "
+            "on cat.CATEGID = ca.CATEGID "
+
+            "left join SUBCATEGORY_V1 sc "
+            "on sc.CATEGID = ca.CATEGID and "
+            "sc.SUBCATEGID = ca.SUBCATEGID "
+ 
+            "where ca.transcode = 'Transfer' "
+            "and ca.accountid = ? "
+            "group by ca.payeeid, ca.transdate, ca.categid, ca.subcategid "
+            "order by ca.transdate desc, ca.transid desc, c desc "
+            "limit 1";
+
+        wxSQLite3Statement st = db_->PrepareStatement(sql);
+        st.Bind(1, accountID_);
+        wxSQLite3ResultSet q1 = st.ExecuteQuery();
+        wxString categString = q1.GetString(wxT("CATEGNAME"));
+        wxString subcategName = q1.GetString(wxT("SUBCATEGNAME"));
+        categID_ = q1.GetInt(wxT("CATEGID"));
+        subcategID_ = q1.GetInt(wxT("SUBCATEGID"));
+
+        //if some values is missing - set defaults
+        if (categString == wxT(""))
+        {
+            categString = _("Select Category");
+            categID_ = -1;
+            subcategID_ = -1;
+
+        }
+        else 
+        {
+            if (subcategName != wxT(""))
+            {
+                categString += wxT(" : ");
+                categString += subcategName;
+            }
+        }
+
+        st.Finalize();
+
+        wxStaticText* stc = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_BUTTONCATEGS);
+        stc->SetLabel(categString);
+
 
     }
 }
