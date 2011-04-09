@@ -796,7 +796,6 @@ void mmTransDialog::updateControlsForTransType()
         bPayee_->SetLabel(acctName);
         payeeID_ = accountID_;
 
-////////////////////
         // Determine most frequently used category name for current account for transfer
         static const char sql[] = 
             "select count (*) c, "
@@ -811,13 +810,14 @@ void mmTransDialog::updateControlsForTransType()
             "sc.SUBCATEGID = ca.SUBCATEGID "
  
             "where ca.transcode = 'Transfer' "
-            "and ca.accountid = ? "
+            "and ca.accountid = ? or ca.toaccountid = ?"
             "group by ca.payeeid, ca.transdate, ca.categid, ca.subcategid "
             "order by ca.transdate desc, ca.transid desc, c desc "
             "limit 1";
 
         wxSQLite3Statement st = db_->PrepareStatement(sql);
         st.Bind(1, accountID_);
+        st.Bind(2, accountID_);
         wxSQLite3ResultSet q1 = st.ExecuteQuery();
         wxString categString = q1.GetString(wxT("CATEGNAME"));
         wxString subcategName = q1.GetString(wxT("SUBCATEGNAME"));
