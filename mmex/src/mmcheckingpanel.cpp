@@ -36,10 +36,17 @@
 #include "../resources/downarrow.xpm"
 #include "../resources/rightarrow.xpm"
 #include "../resources/duplicate.xpm"
+#include "../resources/trans_withdrawal.xpm"
+#include "../resources/trans_deposit.xpm"
+#include "../resources/trans_transfer.xpm"
 //----------------------------------------------------------------------------
 
 namespace
 {
+
+const wxString TRANS_TYPE_WITHDRAWAL = wxT("Withdrawal");
+const wxString TRANS_TYPE_DEPOSIT = wxT("Deposit");
+const wxString TRANS_TYPE_TRANSFER = wxT("Transfer");
 
 enum EColumn
 { 
@@ -65,7 +72,10 @@ enum EIcons
     ICON_NONE,
     ICON_DESC,
     ICON_ASC,
-    ICON_DUPLICATE
+    ICON_DUPLICATE,
+    ICON_TRANS_WITHDRAWAL,
+    ICON_TRANS_DEPOSIT,
+    ICON_TRANS_TRANSFER
 };
 //----------------------------------------------------------------------------
 EColumn g_sortcol = COL_DEF_SORT; // index of column to sort
@@ -94,7 +104,7 @@ void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
     lst.InsertColumn(COL_DATE_OR_TRANSACTION_ID, _("Date  "));
     lst.InsertColumn(COL_TRANSACTION_NUMBER, _("Number"), wxLIST_FORMAT_RIGHT);
     lst.InsertColumn(COL_PAYEE_STR, _("Payee"));
-    lst.InsertColumn(COL_STATUS, _("C  "));
+    lst.InsertColumn(COL_STATUS, _("Status"));
     lst.InsertColumn(COL_CATEGORY, _("Category"));
     lst.InsertColumn(COL_WITHDRAWAL, _("Withdrawal"), wxLIST_FORMAT_RIGHT);
     lst.InsertColumn(COL_DEPOSIT, _("Deposit"), wxLIST_FORMAT_RIGHT);
@@ -396,7 +406,8 @@ private:
 
     /* required overrides for virtual style list control */
     wxString OnGetItemText(long item, long column) const;
-    int OnGetItemImage(long item) const;
+//    int OnGetItemImage(long item) const;
+    int OnGetItemColumnImage(long item, long column) const;
     wxListItemAttr *OnGetItemAttr(long item) const;
 
     void OnItemRightClick(wxListEvent& event);
@@ -457,13 +468,13 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
     EVT_MENU(MENU_TREEPOPUP_MARKUNRECONCILED, MyListCtrl::OnMarkTransaction)
     EVT_MENU(MENU_TREEPOPUP_MARKVOID,         MyListCtrl::OnMarkTransaction)
     EVT_MENU(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP, MyListCtrl::OnMarkTransaction)
-    EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE,         MyListCtrl::OnMarkTransaction)
+    EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE,          MyListCtrl::OnMarkTransaction)
 
     EVT_MENU(MENU_TREEPOPUP_MARKRECONCILED_ALL,   MyListCtrl::OnMarkAllTransactions)
     EVT_MENU(MENU_TREEPOPUP_MARKUNRECONCILED_ALL, MyListCtrl::OnMarkAllTransactions)
     EVT_MENU(MENU_TREEPOPUP_MARKVOID_ALL,         MyListCtrl::OnMarkAllTransactions)
     EVT_MENU(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL, MyListCtrl::OnMarkAllTransactions)
-    EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE_ALL,         MyListCtrl::OnMarkAllTransactions)
+    EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE_ALL,          MyListCtrl::OnMarkAllTransactions)
 
     EVT_MENU(MENU_TREEPOPUP_NEW,              MyListCtrl::OnNewTransaction)
     EVT_MENU(MENU_TREEPOPUP_DELETE,           MyListCtrl::OnDeleteTransaction)
@@ -666,6 +677,9 @@ void mmCheckingPanel::CreateControls()
     m_imageList->Add(wxBitmap(uparrow_xpm));
     m_imageList->Add(wxBitmap(downarrow_xpm));
 	m_imageList->Add(wxBitmap(duplicate_xpm));
+	m_imageList->Add(wxBitmap(trans_withdrawal_xpm));
+	m_imageList->Add(wxBitmap(trans_deposit_xpm));
+	m_imageList->Add(wxBitmap(trans_transfer_xpm));
 
     m_listCtrlAccount = new MyListCtrl( this, itemSplitterWindow10, 
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 
@@ -769,7 +783,6 @@ void mmCheckingPanel::enableEditDeleteButtons(bool en)
     wxButton* bM = (wxButton*)FindWindow(ID_BUTTON_MOVE_TRANS);
 
     bE->Enable(en);
-    //bE->SetFocus();
 	bD->Enable(en);
 	bM->Enable(en);
    
@@ -982,15 +995,15 @@ void mmCheckingPanel::initVirtualListControl()
 		   {
 			   if (pBankTransaction->status_ != wxT("V"))
 			   {
-				   if (pBankTransaction->transType_ == wxT("Deposit"))
+				   if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT)
 				   {
 					   unseenBalance += pBankTransaction->amt_;
 				   }
-				   else if (pBankTransaction->transType_ == wxT("Withdrawal"))
+				   else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL)
 				   {
 					   unseenBalance -= pBankTransaction->amt_;
 				   }
-				   else if (pBankTransaction->transType_ == wxT("Transfer"))
+				   else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER)
 				   {
 					   if (pBankTransaction->accountID_ == m_AccountID)
 					   {
@@ -1036,15 +1049,15 @@ void mmCheckingPanel::initVirtualListControl()
 
         if (tr.status_ != wxT("V"))
         {
-            if (tr.transType_ == wxT("Deposit"))
+            if (tr.transType_ == TRANS_TYPE_DEPOSIT)
             {
                 initBalance += tr.amt_;
             }
-            else if (tr.transType_ == wxT("Withdrawal"))
+            else if (tr.transType_ == TRANS_TYPE_WITHDRAWAL)
             {
                 initBalance -= tr.amt_;
             }
-            else if (tr.transType_ == wxT("Transfer"))
+            else if (tr.transType_ == TRANS_TYPE_TRANSFER)
             {
                 if (tr.accountID_ == m_AccountID)
                 {
@@ -1492,29 +1505,76 @@ wxString MyListCtrl::OnGetItemText(long item, long column) const
 /* 
     Returns the icon to be shown for each transaction
 */
-int MyListCtrl::OnGetItemImage(long item) const
+//int MyListCtrl::OnGetItemImage(long item) const
+//{
+//    wxString status = m_cp->getItem(item, COL_STATUS);
+//
+//    int res = ICON_NONE;
+//
+//    if (status == wxT("F"))
+//    {
+//        res = ICON_FOLLOWUP;
+//    }
+//    else if (status == wxT("R"))
+//    {
+//        res = ICON_RECONCILED;
+//    }
+//    else if (status == wxT("V"))
+//    {
+//        res = ICON_VOID;
+//    }
+//    else if (status == wxT("D"))
+//    {
+//        res = ICON_DUPLICATE;
+//    }
+//
+//    return res;
+//}
+//----------------------------------------------------------------------------
+
+/* 
+    Returns the icon to be shown for each transaction for the required column
+*/
+int MyListCtrl::OnGetItemColumnImage(long item, long column) const
 {
-    wxString status = m_cp->getItem(item, COL_STATUS);
+    int res = -1;
 
-    int res = ICON_NONE;
+//  if(column == COL_STATUS)
+    if(column == COL_DATE_OR_TRANSACTION_ID)
+    {
+        res = ICON_NONE;
+        wxString status = m_cp->getItem(item, COL_STATUS);
+        if ( status == wxT("F"))       {
+            res = ICON_FOLLOWUP;
+        
+        } else if (status == wxT("R")) {
+            res = ICON_RECONCILED;
+        
+        } else if (status == wxT("V")) {
+            res = ICON_VOID;
+        
+        } else if (status == wxT("D")) {
+            res = ICON_DUPLICATE;
+        }
+    }
 
-    if (status == wxT("F"))
+//  if(column == COL_WITHDRAWAL)
+    if(column == COL_CATEGORY)
     {
-        res = ICON_FOLLOWUP;
-    }
-    else if (status == wxT("R"))
-    {
-        res = ICON_RECONCILED;
-    }
-    else if (status == wxT("V"))
-    {
-        res = ICON_VOID;
-    }
-    else if (status == wxT("D"))
-    {
-        res = ICON_DUPLICATE;
-    }
+        size_t index = item;
+        bool ok = m_cp && index < m_cp->m_trans.size();
+        mmBankTransaction *tr = ok ? m_cp->m_trans[index] : 0;
+        
+        if (tr->transType_ == TRANS_TYPE_WITHDRAWAL) {
+            res = ICON_TRANS_WITHDRAWAL;
 
+        } else if (tr->transType_ == TRANS_TYPE_DEPOSIT)  {
+            res = ICON_TRANS_DEPOSIT;
+
+        } else if (tr->transType_ == TRANS_TYPE_TRANSFER) {
+            res = ICON_TRANS_TRANSFER;
+        }
+    }
     return res;
 }
 //----------------------------------------------------------------------------
@@ -1540,7 +1600,7 @@ wxListItemAttr* MyListCtrl::OnGetItemAttr(long item) const
     {
         return item % 2 ? &self.m_attr3 : &self.m_attr4;
     }
-
+  
     return item % 2 ? &self.m_attr1 : &self.m_attr2;
 
 }
@@ -1773,12 +1833,6 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 		if ( dlg.ShowModal() == wxID_OK )
 		{
             refreshVisualList();
-//  moved to a function. 
-//			m_cp->initVirtualListControl();
-//			RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
-//			SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-//			SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-//			EnsureVisible(m_selectedIndex);
 		}
 	}
 }
@@ -1827,7 +1881,7 @@ void MyListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex != -1)
 	{
-        if ( m_cp->m_trans[m_selectedIndex]->transType_ == _("Transfer") )
+        if ( m_cp->m_trans[m_selectedIndex]->transType_ == TRANS_TYPE_TRANSFER )
         {
             mmTransDialog dlg(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 
                               m_cp->m_trans[m_selectedIndex]->transactionID(), true, 
