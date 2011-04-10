@@ -11,6 +11,8 @@ Version History of Money Manager Ex
 - New: AMD64 Build Instructions
 - Change: Home Page Income/Expenses reflect calculations of visible accounts.
 - Change: Stocks Summary Display Home Page with new item in View Menu and Options
+- New: Icons in accounts to highlight transfer transactions
+- New: Determine most used category for transfer (user selectable)
 
 - New Tool: Creation of Custom Reports.
 
