@@ -36,8 +36,6 @@
 #include "../resources/downarrow.xpm"
 #include "../resources/rightarrow.xpm"
 #include "../resources/duplicate.xpm"
-#include "../resources/trans_withdrawal.xpm"
-#include "../resources/trans_deposit.xpm"
 #include "../resources/trans_transfer.xpm"
 //----------------------------------------------------------------------------
 
@@ -57,7 +55,7 @@ enum EColumn
     COL_CATEGORY, 
     COL_WITHDRAWAL, 
     COL_DEPOSIT,
-    COL_BALANSE,
+    COL_BALANCE,
     COL_NOTES,
     COL_MAX, // number of columns
     COL_DEF_SORT = COL_DATE_OR_TRANSACTION_ID
@@ -73,8 +71,6 @@ enum EIcons
     ICON_DESC,
     ICON_ASC,
     ICON_DUPLICATE,
-    ICON_TRANS_WITHDRAWAL,
-    ICON_TRANS_DEPOSIT,
     ICON_TRANS_TRANSFER
 };
 //----------------------------------------------------------------------------
@@ -108,7 +104,7 @@ void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
     lst.InsertColumn(COL_CATEGORY, _("Category"));
     lst.InsertColumn(COL_WITHDRAWAL, _("Withdrawal"), wxLIST_FORMAT_RIGHT);
     lst.InsertColumn(COL_DEPOSIT, _("Deposit"), wxLIST_FORMAT_RIGHT);
-    lst.InsertColumn(COL_BALANSE, _("Balance"), wxLIST_FORMAT_RIGHT);
+    lst.InsertColumn(COL_BALANCE, _("Balance"), wxLIST_FORMAT_RIGHT);
     lst.InsertColumn(COL_NOTES, _("Notes"));
 
     const int col_cnt = lst.GetColumnCount();
@@ -332,7 +328,7 @@ sort_fun_t getSortFx(EColumn col)
         fx[COL_CATEGORY] = sortTransByCateg;
         fx[COL_WITHDRAWAL] = sortTransByWithdrowal;
         fx[COL_DEPOSIT] = sortTransByDeposit;
-        fx[COL_BALANSE] = sortTransByBalanse;
+        fx[COL_BALANCE] = sortTransByBalanse;
         fx[COL_NOTES] = sortTransByNotes;
     }
 
@@ -406,7 +402,6 @@ private:
 
     /* required overrides for virtual style list control */
     wxString OnGetItemText(long item, long column) const;
-//    int OnGetItemImage(long item) const;
     int OnGetItemColumnImage(long item, long column) const;
     wxListItemAttr *OnGetItemAttr(long item) const;
 
@@ -677,8 +672,6 @@ void mmCheckingPanel::CreateControls()
     m_imageList->Add(wxBitmap(uparrow_xpm));
     m_imageList->Add(wxBitmap(downarrow_xpm));
 	m_imageList->Add(wxBitmap(duplicate_xpm));
-	m_imageList->Add(wxBitmap(trans_withdrawal_xpm));
-	m_imageList->Add(wxBitmap(trans_deposit_xpm));
 	m_imageList->Add(wxBitmap(trans_transfer_xpm));
 
     m_listCtrlAccount = new MyListCtrl( this, itemSplitterWindow10, 
@@ -1479,7 +1472,7 @@ wxString mmCheckingPanel::getItem(long item, long column)
             s = t.depositStr_; 
             break;
 
-        case COL_BALANSE:
+        case COL_BALANCE:
             s = t.balanceStr_;
             break;
 
@@ -1503,43 +1496,11 @@ wxString MyListCtrl::OnGetItemText(long item, long column) const
 //----------------------------------------------------------------------------
 
 /* 
-    Returns the icon to be shown for each transaction
-*/
-//int MyListCtrl::OnGetItemImage(long item) const
-//{
-//    wxString status = m_cp->getItem(item, COL_STATUS);
-//
-//    int res = ICON_NONE;
-//
-//    if (status == wxT("F"))
-//    {
-//        res = ICON_FOLLOWUP;
-//    }
-//    else if (status == wxT("R"))
-//    {
-//        res = ICON_RECONCILED;
-//    }
-//    else if (status == wxT("V"))
-//    {
-//        res = ICON_VOID;
-//    }
-//    else if (status == wxT("D"))
-//    {
-//        res = ICON_DUPLICATE;
-//    }
-//
-//    return res;
-//}
-//----------------------------------------------------------------------------
-
-/* 
     Returns the icon to be shown for each transaction for the required column
 */
 int MyListCtrl::OnGetItemColumnImage(long item, long column) const
 {
     int res = -1;
-
-//  if(column == COL_STATUS)
     if(column == COL_DATE_OR_TRANSACTION_ID)
     {
         res = ICON_NONE;
@@ -1558,20 +1519,13 @@ int MyListCtrl::OnGetItemColumnImage(long item, long column) const
         }
     }
 
-//  if(column == COL_WITHDRAWAL)
-    if(column == COL_CATEGORY)
+    if(column == COL_BALANCE)
     {
         size_t index = item;
         bool ok = m_cp && index < m_cp->m_trans.size();
         mmBankTransaction *tr = ok ? m_cp->m_trans[index] : 0;
         
-        if (tr->transType_ == TRANS_TYPE_WITHDRAWAL) {
-            res = ICON_TRANS_WITHDRAWAL;
-
-        } else if (tr->transType_ == TRANS_TYPE_DEPOSIT)  {
-            res = ICON_TRANS_DEPOSIT;
-
-        } else if (tr->transType_ == TRANS_TYPE_TRANSFER) {
+        if (tr->transType_ == TRANS_TYPE_TRANSFER) {
             res = ICON_TRANS_TRANSFER;
         }
     }
