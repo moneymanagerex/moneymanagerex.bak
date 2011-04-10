@@ -401,9 +401,9 @@ private:
     bool m_asc;
 
     /* required overrides for virtual style list control */
-    wxString OnGetItemText(long item, long column) const;
-    int OnGetItemColumnImage(long item, long column) const;
-    wxListItemAttr *OnGetItemAttr(long item) const;
+    virtual wxString OnGetItemText(long item, long column) const;
+    virtual int OnGetItemColumnImage(long item, long column) const;
+    virtual wxListItemAttr *OnGetItemAttr(long item) const;
 
     void OnItemRightClick(wxListEvent& event);
     void OnListItemSelected(wxListEvent& event);
@@ -602,7 +602,7 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
             menu.Append(MENU_VIEW_LAST3MONTHS, _("View Transactions for last 3 months"));
             menu.AppendSeparator();
             menu.Append(MENU_VIEW_DELETE_TRANS, _("Delete all transactions in current view"));
-            menu.Append(MENU_VIEW_DELETE_FLAGGED, _("Delete all flagged transactions"));
+            menu.Append(MENU_VIEW_DELETE_FLAGGED, _("Delete all \"Follow Up\" transactions"));
 
             PopupMenu(&menu, event.GetPosition());
 
@@ -1248,7 +1248,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     }
     else if (evt == MENU_VIEW_DELETE_FLAGGED)
     {
-        wxMessageDialog msgDlg(this, _("Do you really want to delete all the flagged transactions?"), _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
+        wxMessageDialog msgDlg(this, _("Do you really want to delete all the \"Follow Up\" transactions?"), _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
         if (msgDlg.ShowModal() == wxID_YES)
         {
            //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.getAccountSharedPtr(m_AccountID).get());
