@@ -18,6 +18,10 @@
 #include "util.h"
 #include "mmcoredb.h"
 
+const wxString TRANS_TYPE_WITHDRAWAL = wxT("Withdrawal");
+const wxString TRANS_TYPE_DEPOSIT    = wxT("Deposit");
+const wxString TRANS_TYPE_TRANSFER   = wxT("Transfer");
+
 void mmSplitTransactionEntries::addSplit(boost::shared_ptr<mmSplitTransactionEntry> split)
 {
     total_ += split->splitAmount_;
@@ -164,7 +168,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
                                       bool forceUpdate
                                       )
 {
-   if ((isInited_) && (transType_ != wxT("Transfer")) && !forceUpdate)
+   if ((isInited_) && (transType_ != TRANS_TYPE_TRANSFER) && !forceUpdate)
    {
       return;
    }
@@ -182,7 +186,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
    mmex::formatDoubleToCurrencyEdit(toAmt_, displayToTransAmtString);
    transToAmtString_ = displayToTransAmtString;
 
-   if (transType_ != wxT("Transfer"))
+   if (transType_ != TRANS_TYPE_TRANSFER)
    {
       boost::shared_ptr<mmPayee> pPayee = payee_.lock();
       wxASSERT(pPayee);
@@ -192,15 +196,15 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
 
    depositStr_ = wxT("");
    withdrawalStr_ = wxT("");
-   if (transType_ == wxT("Deposit"))
+   if (transType_ == TRANS_TYPE_DEPOSIT)
    {
       depositStr_ = displayTransAmtString;
    }
-   else if (transType_== wxT("Withdrawal"))
+   else if (transType_== TRANS_TYPE_WITHDRAWAL)
    {
       withdrawalStr_ = displayTransAmtString;
    }
-   else if (transType_ == wxT("Transfer"))
+   else if (transType_ == TRANS_TYPE_TRANSFER)
    {
       wxString fromAccount = core->accountList_.getAccountSharedPtr(accountID_)->accountName_;
       wxString toAccount = core->accountList_.getAccountSharedPtr(toAccountID_)->accountName_;
@@ -269,15 +273,15 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
 double mmBankTransaction::value(int accountID)
 {
    double balance = 0.0;
-   if (transType_ == wxT("Deposit"))
+   if (transType_ == TRANS_TYPE_DEPOSIT)
    {
       balance = amt_;
    }
-   else if (transType_== wxT("Withdrawal"))
+   else if (transType_== TRANS_TYPE_WITHDRAWAL)
    {
       balance -= amt_;
    }
-   else if (transType_ == wxT("Transfer"))
+   else if (transType_ == TRANS_TYPE_TRANSFER)
    {
 
       if (accountID_ == accountID)
@@ -545,7 +549,7 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int 
 
 void mmBankTransactionList::updateTransaction(boost::shared_ptr<mmBankTransaction> pBankTransaction)
 {
-    if (pBankTransaction->transType_ == wxT("Transfer"))
+    if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER)
         pBankTransaction->payeeID_ = -1;
 
     static const char sql[] =    
@@ -687,7 +691,7 @@ void mmBankTransactionList::updateAllTransactionsForPayee(mmCoreDB* core,
         if (pBankTransaction && (pBankTransaction->payeeID_ == payeeID))
         {
             pBankTransaction->payee_ = core->payeeList_.getPayeeSharedPtr(payeeID);
-            if (pBankTransaction->transType_ != wxT("Transfer"))
+            if (pBankTransaction->transType_ != TRANS_TYPE_TRANSFER)
             {
                 boost::shared_ptr<mmPayee> pPayee = pBankTransaction->payee_.lock();
                 wxASSERT(pPayee);
@@ -730,11 +734,11 @@ void mmBankTransactionList::getExpensesIncome(int accountID, double& expenses, d
             // We got this far, get the currency conversion rate for this account
             double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), pBankTransaction->accountID_);
 
-            if (pBankTransaction->transType_ == wxT("Deposit"))
+            if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT)
                 income += pBankTransaction->amt_ * convRate;
-            else if (pBankTransaction->transType_ == wxT("Withdrawal"))
+            else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL)
                 expenses += pBankTransaction->amt_ * convRate;
-            else if (pBankTransaction->transType_ == wxT("Transfer"))
+            else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER)
             {
                 // transfers are not considered in income/expenses calculations
             }
@@ -776,11 +780,11 @@ void mmBankTransactionList::getTransactionStats(int accountID, int& number,
                     continue; //skip
             }
 
-            if (pBankTransaction->transType_ == wxT("Deposit"))
+            if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT)
                 ++number;
-            else if (pBankTransaction->transType_ == wxT("Withdrawal"))
+            else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL)
                 ++number;
-            else if (pBankTransaction->transType_ == wxT("Transfer"))
+            else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER)
             {
                 ++number;
             }
@@ -810,14 +814,14 @@ double mmBankTransactionList::getAmountForPayee(int payeeID, bool ignoreDate,
                     continue; //skip
               }
 
-              if (pBankTransaction->transType_ == wxT("Transfer"))
+              if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER)
                   continue;
 
               double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), pBankTransaction->accountID_);
 
-              if (pBankTransaction->transType_ == wxT("Withdrawal"))
+              if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL)
                  amt -= pBankTransaction->amt_ * convRate;
-              else if (pBankTransaction->transType_ == wxT("Deposit"))
+              else if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT)
                  amt += pBankTransaction->amt_ * convRate;
            }
         }
@@ -855,14 +859,14 @@ double mmBankTransactionList::getAmountForCategory(
              continue; //skip
         }
 
-        if (pBankTransaction->transType_ == wxT("Transfer"))
+        if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER)
           continue;
 
         double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), pBankTransaction->accountID_);
 
-        if (pBankTransaction->transType_ == wxT("Withdrawal")) {
+        if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL) {
           amt -= pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
-        } else if (pBankTransaction->transType_ == wxT("Deposit")) {
+        } else if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT) {
           amt += pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
         }
     }
@@ -896,11 +900,11 @@ double mmBankTransactionList::getBalance(int accountID, bool ignoreFuture)
                     continue; //skip future dated transactions
             }
 
-            if (pBankTransaction->transType_ == wxT("Deposit"))
+            if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT)
                 balance += pBankTransaction->amt_;
-            else if (pBankTransaction->transType_ == wxT("Withdrawal"))
+            else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL)
                 balance -= pBankTransaction->amt_;
-            else if (pBankTransaction->transType_ == wxT("Transfer"))
+            else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER)
             {
                 if (pBankTransaction->accountID_ == accountID)
                 {
@@ -941,11 +945,11 @@ double mmBankTransactionList::getReconciledBalance(int accountID)
             if (pBankTransaction->status_ != wxT("R"))
                 continue; // skip
 
-            if (pBankTransaction->transType_ == wxT("Deposit"))
+            if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT)
                 balance += pBankTransaction->amt_;
-            else if (pBankTransaction->transType_ == wxT("Withdrawal"))
+            else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL)
                 balance -= pBankTransaction->amt_;
-            else if (pBankTransaction->transType_ == wxT("Transfer"))
+            else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER)
             {
                 if (pBankTransaction->accountID_ == accountID)
                 {
