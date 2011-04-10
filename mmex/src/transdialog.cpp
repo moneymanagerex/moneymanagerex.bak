@@ -34,6 +34,8 @@ enum { DEF_WITHDRAWAL, DEF_DEPOSIT, DEF_TRANSFER };
 // Defines for Transaction Status
 enum { DEF_STATUS_NONE, DEF_STATUS_RECONCILED, DEF_STATUS_VOID, DEF_STATUS_FOLLOWUP, DEF_STATUS_DUPLICATE };
 
+const wxString DEF_PAYEE_NAME_STR    = _("Select Payee");
+const wxString DEF_CATEGORY_NAME_STR = _("Select Category");
 
 IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
 
@@ -323,8 +325,8 @@ void mmTransDialog::CreateControls()
     itemFlexGridSizer8->Add(itemStaticText9, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxString defaultPayeeName = _("Select Payee");
-    wxString defaultCategName = _("Select Category");
+    wxString defaultPayeeName = DEF_PAYEE_NAME_STR;
+    wxString defaultCategName = DEF_CATEGORY_NAME_STR;
 
     wxString payeeName   = defaultPayeeName;
     wxString categString = defaultCategName;
@@ -598,8 +600,8 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
                 payeeID_ = -1;
                 categID_ = -1;
                 subcategID_ = -1;
-                bCategory_->SetLabel(_("Select Category"));
-                bPayee_->SetLabel(_("Select Payee"));
+                bCategory_->SetLabel(DEF_CATEGORY_NAME_STR);
+                bPayee_->SetLabel(DEF_PAYEE_NAME_STR);
                 payeeUnknown_ = true;
             }
             else
@@ -707,7 +709,7 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
                     // cannot find category
                     categID_ = -1;
                     subcategID_ = -1;
-                    bCategory_->SetLabel(_("Select Category"));
+                    bCategory_->SetLabel(DEF_CATEGORY_NAME_STR);
                     return;
                 }
 
@@ -767,7 +769,7 @@ void mmTransDialog::updateControlsForTransType()
         stp->SetLabel(_("Payee"));
         if (payeeUnknown_) 
         {
-            bPayee_->SetLabel(_("Select Payee"));
+            bPayee_->SetLabel(DEF_PAYEE_NAME_STR);
             payeeID_ = -1;
             toID_    = -1;
         } 
@@ -779,7 +781,7 @@ void mmTransDialog::updateControlsForTransType()
         stp->SetLabel(_("From"));
         if (payeeUnknown_) 
         {
-            bPayee_->SetLabel(_("Select Payee"));
+            bPayee_->SetLabel(DEF_PAYEE_NAME_STR);
             payeeID_ = -1;
             toID_    = -1;
         } 
@@ -796,57 +798,64 @@ void mmTransDialog::updateControlsForTransType()
         bPayee_->SetLabel(acctName);
         payeeID_ = accountID_;
 
-        // Determine most frequently used category name for current account for transfer
-        static const char sql[] = 
-            "select count (*) c, "
-            "cat.categname CATEGNAME, sc.subcategname SUBCATEGNAME, "
-            "ca.categid, ca.subcategid "
-            "from CHECKINGACCOUNT_V1 ca "
-            "left join CATEGORY_V1 cat "
-            "on cat.CATEGID = ca.CATEGID "
-
-            "left join SUBCATEGORY_V1 sc "
-            "on sc.CATEGID = ca.CATEGID and "
-            "sc.SUBCATEGID = ca.SUBCATEGID "
- 
-            "where ca.transcode = 'Transfer' "
-            "and ca.accountid = ? or ca.toaccountid = ?"
-            "group by ca.payeeid, ca.transdate, ca.categid, ca.subcategid "
-            "order by ca.transdate desc, ca.transid desc, c desc "
-            "limit 1";
-
-        wxSQLite3Statement st = db_->PrepareStatement(sql);
-        st.Bind(1, accountID_);
-        st.Bind(2, accountID_);
-        wxSQLite3ResultSet q1 = st.ExecuteQuery();
-        wxString categString = q1.GetString(wxT("CATEGNAME"));
-        wxString subcategName = q1.GetString(wxT("SUBCATEGNAME"));
-        categID_ = q1.GetInt(wxT("CATEGID"));
-        subcategID_ = q1.GetInt(wxT("SUBCATEGID"));
-
-        //if some values is missing - set defaults
-        if (categString == wxT(""))
+        wxString categString;
+        if ( mmIniOptions::transCategorySelectionNone_ )
         {
-            categString = _("Select Category");
+            categString = DEF_CATEGORY_NAME_STR;
             categID_ = -1;
             subcategID_ = -1;
-
-        }
-        else 
+        } 
+        else
         {
-            if (subcategName != wxT(""))
-            {
-                categString += wxT(" : ");
-                categString += subcategName;
-            }
-        }
+            // Determine most frequently used category name for current account for transfer
+            static const char sql[] = 
+                "select count (*) c, "
+                "cat.categname CATEGNAME, sc.subcategname SUBCATEGNAME, "
+                "ca.categid, ca.subcategid "
+                "from CHECKINGACCOUNT_V1 ca "
+                "left join CATEGORY_V1 cat "
+                "on cat.CATEGID = ca.CATEGID "
+                
+                "left join SUBCATEGORY_V1 sc "
+                "on sc.CATEGID = ca.CATEGID and "
+                "sc.SUBCATEGID = ca.SUBCATEGID "
+                 
+                "where ca.transcode = 'Transfer' "
+                "and ca.accountid = ? or ca.toaccountid = ?"
+                "group by ca.payeeid, ca.transdate, ca.categid, ca.subcategid "
+                "order by ca.transdate desc, ca.transid desc, c desc "
+                "limit 1";
 
-        st.Finalize();
+            wxSQLite3Statement st = db_->PrepareStatement(sql);
+            st.Bind(1, accountID_);
+            st.Bind(2, accountID_);
+            wxSQLite3ResultSet q1 = st.ExecuteQuery();
+            categString = q1.GetString(wxT("CATEGNAME"));
+            wxString subcategName = q1.GetString(wxT("SUBCATEGNAME"));
+            categID_ = q1.GetInt(wxT("CATEGID"));
+            subcategID_ = q1.GetInt(wxT("SUBCATEGID"));
+
+            //if some values is missing - set defaults
+            if (categString == wxT(""))
+            {
+                categString = DEF_CATEGORY_NAME_STR;
+                categID_ = -1;
+                subcategID_ = -1;
+            }
+            else 
+            {
+                if (subcategName != wxT(""))
+                {
+                    categString += wxT(" : ");
+                    categString += subcategName;
+                }
+            }
+
+            st.Finalize();
+        }
 
         wxStaticText* stc = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_BUTTONCATEGS);
         stc->SetLabel(categString);
-
-
     }
 }
 
@@ -1072,7 +1081,7 @@ void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
   }
   else
   {
-    bCategory_->SetLabel(_("Select Category"));
+    bCategory_->SetLabel(DEF_CATEGORY_NAME_STR);
     textAmount_->Enable(true);
     wxString dispAmount;
     mmex::formatDoubleToCurrencyEdit(0.0, dispAmount);
