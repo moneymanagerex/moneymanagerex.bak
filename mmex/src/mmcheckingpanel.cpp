@@ -36,6 +36,8 @@
 #include "../resources/downarrow.xpm"
 #include "../resources/rightarrow.xpm"
 #include "../resources/duplicate.xpm"
+#include "../resources/trans_withdrawal.xpm"
+#include "../resources/trans_deposit.xpm"
 #include "../resources/trans_transfer.xpm"
 //----------------------------------------------------------------------------
 
@@ -71,6 +73,8 @@ enum EIcons
     ICON_DESC,
     ICON_ASC,
     ICON_DUPLICATE,
+    ICON_TRANS_WITHDRAWAL,
+    ICON_TRANS_DEPOSIT,
     ICON_TRANS_TRANSFER
 };
 //----------------------------------------------------------------------------
@@ -672,6 +676,8 @@ void mmCheckingPanel::CreateControls()
     m_imageList->Add(wxBitmap(uparrow_xpm));
     m_imageList->Add(wxBitmap(downarrow_xpm));
 	m_imageList->Add(wxBitmap(duplicate_xpm));
+	m_imageList->Add(wxBitmap(trans_withdrawal_xpm));
+	m_imageList->Add(wxBitmap(trans_deposit_xpm));
 	m_imageList->Add(wxBitmap(trans_transfer_xpm));
 
     m_listCtrlAccount = new MyListCtrl( this, itemSplitterWindow10, 
@@ -1519,14 +1525,17 @@ int MyListCtrl::OnGetItemColumnImage(long item, long column) const
         }
     }
 
-    if(column == COL_BALANCE)
+    if(column == COL_PAYEE_STR)
     {
         size_t index = item;
         bool ok = m_cp && index < m_cp->m_trans.size();
         mmBankTransaction *tr = ok ? m_cp->m_trans[index] : 0;
         
         if (tr->transType_ == TRANS_TYPE_TRANSFER) {
-            res = ICON_TRANS_TRANSFER;
+            if ( tr->accountID_ == m_cp->accountID() )
+                res = ICON_TRANS_WITHDRAWAL;
+            else
+                res = ICON_TRANS_DEPOSIT;
         }
     }
     return res;
