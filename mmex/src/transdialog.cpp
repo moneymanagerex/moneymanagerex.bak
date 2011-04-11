@@ -34,9 +34,6 @@ enum { DEF_WITHDRAWAL, DEF_DEPOSIT, DEF_TRANSFER };
 // Defines for Transaction Status
 enum { DEF_STATUS_NONE, DEF_STATUS_RECONCILED, DEF_STATUS_VOID, DEF_STATUS_FOLLOWUP, DEF_STATUS_DUPLICATE };
 
-const wxString DEF_PAYEE_NAME_STR    = _("Select Payee");
-const wxString DEF_CATEGORY_NAME_STR = _("Select Category");
-
 IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
@@ -325,8 +322,8 @@ void mmTransDialog::CreateControls()
     itemFlexGridSizer8->Add(itemStaticText9, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxString defaultPayeeName = DEF_PAYEE_NAME_STR;
-    wxString defaultCategName = DEF_CATEGORY_NAME_STR;
+    wxString defaultPayeeName = _("Select Payee");
+    wxString defaultCategName = _("Select Category");
 
     wxString payeeName   = defaultPayeeName;
     wxString categString = defaultCategName;
@@ -600,8 +597,8 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
                 payeeID_ = -1;
                 categID_ = -1;
                 subcategID_ = -1;
-                bCategory_->SetLabel(DEF_CATEGORY_NAME_STR);
-                bPayee_->SetLabel(DEF_PAYEE_NAME_STR);
+                bCategory_->SetLabel(_("Select Category"));
+                bPayee_->SetLabel(_("Select Payee"));
                 payeeUnknown_ = true;
             }
             else
@@ -709,7 +706,7 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
                     // cannot find category
                     categID_ = -1;
                     subcategID_ = -1;
-                    bCategory_->SetLabel(DEF_CATEGORY_NAME_STR);
+                    bCategory_->SetLabel(_("Select Category"));
                     return;
                 }
 
@@ -769,7 +766,7 @@ void mmTransDialog::updateControlsForTransType()
         stp->SetLabel(_("Payee"));
         if (payeeUnknown_) 
         {
-            bPayee_->SetLabel(DEF_PAYEE_NAME_STR);
+            bPayee_->SetLabel(_("Select Payee"));
             payeeID_ = -1;
             toID_    = -1;
         } 
@@ -781,7 +778,7 @@ void mmTransDialog::updateControlsForTransType()
         stp->SetLabel(_("From"));
         if (payeeUnknown_) 
         {
-            bPayee_->SetLabel(DEF_PAYEE_NAME_STR);
+            bPayee_->SetLabel(_("Select Payee"));
             payeeID_ = -1;
             toID_    = -1;
         } 
@@ -801,7 +798,7 @@ void mmTransDialog::updateControlsForTransType()
         wxString categString;
         if ( mmIniOptions::transCategorySelectionNone_ )
         {
-            categString = DEF_CATEGORY_NAME_STR;
+            categString = _("Select Category");
             categID_ = -1;
             subcategID_ = -1;
         } 
@@ -838,7 +835,7 @@ void mmTransDialog::updateControlsForTransType()
             //if some values is missing - set defaults
             if (categString == wxT(""))
             {
-                categString = DEF_CATEGORY_NAME_STR;
+                categString = _("Select Category");
                 categID_ = -1;
                 subcategID_ = -1;
             }
@@ -1081,7 +1078,7 @@ void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
   }
   else
   {
-    bCategory_->SetLabel(DEF_CATEGORY_NAME_STR);
+    bCategory_->SetLabel(_("Select Category"));
     textAmount_->Enable(true);
     wxString dispAmount;
     mmex::formatDoubleToCurrencyEdit(0.0, dispAmount);
