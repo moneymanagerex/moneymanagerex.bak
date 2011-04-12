@@ -229,5 +229,8 @@ void mmMainCurrencyDialog::OnSelect(wxCommandEvent& /*event*/)
 
 void mmMainCurrencyDialog::OnDoubleClicked(wxCommandEvent& event)
 {
-    OnSelect(event);
+    if (bEnableSelect_)
+        OnSelect(event);
+    else
+        OnEdit(event);
 }
