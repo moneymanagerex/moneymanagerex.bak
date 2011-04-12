@@ -60,7 +60,7 @@ namespace
 inline bool sortTransactionsByRemainingDays(const mmBDTransactionHolder &p1, const mmBDTransactionHolder &p2)
 {
     return p1.daysRemaining_ < p2.daysRemaining_;
-}
+};
 
 } // namespace
 
@@ -217,35 +217,50 @@ void mmBillsDepositsPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
+    
+    wxSizerFlags flags;
+    flags.Border();
 
-    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_BD_NEW, _("&New Series"));
+    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_BD_NEW, _("&New"));
     itemButton6->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
     itemButton6->SetToolTip(_("New Bills && Deposit Series"));
-    itemBoxSizer5->Add(itemButton6, 0, wxGROW|wxALL, 1);
+    itemBoxSizer5->Add(itemButton6, flags);
 
-    wxButton* itemButton81 = new wxButton( itemPanel12, ID_BUTTON_BD_EDIT, _("&Edit Series"));
+    wxButton* itemButton81 = new wxButton( itemPanel12, ID_BUTTON_BD_EDIT, _("&Edit"));
     itemButton81->SetForegroundColour(wxColour(wxT("ORANGE")));
     itemButton81->SetToolTip(_("Edit Bills && Deposit Series"));
-    itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemBoxSizer5->Add(itemButton81, flags);
 	itemButton81->Enable(false);
 	
-    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_BD_DELETE, _("&Delete Series"));
+    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_BD_DELETE, _("&Delete"));
     itemButton7->SetForegroundColour(wxColour(wxT("RED")));
     itemButton7->SetToolTip(_("Delete Bills && Deposit Series"));
-    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemBoxSizer5->Add(itemButton7, flags);
 	itemButton7->Enable(false);
 	
-    wxButton* itemButton8 = new wxButton( itemPanel12, ID_BUTTON_BD_ENTER_OCCUR, _("Enter &Transaction"), 
+    wxButton* itemButton8 = new wxButton( itemPanel12, ID_BUTTON_BD_ENTER_OCCUR, _("En&ter"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton8->SetToolTip(_("Enter Next Bills && Deposit Occurrence"));
-    itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemBoxSizer5->Add(itemButton8, flags);
 	itemButton8->Enable(false);
 
-    wxButton* buttonSkipTrans = new wxButton( itemPanel12, ID_BUTTON_BD_SKIP_OCCUR, _("&Skip Transaction"));
+    wxButton* buttonSkipTrans = new wxButton( itemPanel12, ID_BUTTON_BD_SKIP_OCCUR, _("&Skip"));
     buttonSkipTrans->SetForegroundColour(wxColour(wxT("BLUE")));
     buttonSkipTrans->SetToolTip(_("Skip Next Bills && Deposit Occurrence"));
-    itemBoxSizer5->Add(buttonSkipTrans, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-	buttonSkipTrans->Enable(false);
+    itemBoxSizer5->Add(buttonSkipTrans, flags);
+    buttonSkipTrans->Enable(false);
+
+    //Infobar-mini 
+    wxStaticText* itemStaticText444 = new wxStaticText( itemPanel12, ID_PANEL_BD_STATIC_MINI, wxT(""), 
+    wxPoint(-1,-1), wxSize(450, -1), wxNO_BORDER|wxST_NO_AUTORESIZE);
+    itemBoxSizer5->Add(itemStaticText444, 1, wxGROW|wxALL, 12);
+    //Infobar 
+    
+    wxStaticText* text = new wxStaticText( itemPanel12, ID_PANEL_BD_STATIC_DETAILS, 
+    _("MMEX allows regular payments to be set up as transactions. These transactions can also be regular deposits, or transfers that will occur at some future time. These transactions act a reminder that an event is about to occur, and appears on the Home Page 14 days before the transaction is due. "), 
+    wxPoint(-1,-1), wxSize(350, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
+    itemBoxSizer4->Add(text, 1, wxGROW|wxALL, 5);
+
 }
 
 void mmBillsDepositsPanel::initVirtualListControl()
@@ -585,6 +600,7 @@ void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& /*event*/)
         if (cp_->trans_.size() == 0)
         {
             selectedIndex_ = -1;
+            cp_->updateBottomPanelData(selectedIndex_);
         }
     }
 }
@@ -636,6 +652,21 @@ void billsDepositsListCtrl::OnListItemActivated(wxListEvent& event)
 void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
 {
         enableEditDeleteButtons(selIndex >= 0);
+        wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_BD_STATIC_DETAILS);
+        wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_BD_STATIC_MINI);
+        
+        if (selIndex !=-1) 
+        {
+        wxString addInfo;
+        addInfo << trans_[selIndex].categoryStr_ << (trans_[selIndex].subcategoryStr_ == wxT ("") ? wxT ("") : wxT (":") + trans_[selIndex].subcategoryStr_);
+        stm->SetLabel(addInfo);
+        st ->SetLabel (trans_[selIndex].notesStr_ ); 
+        }
+        else 
+        {
+        st-> SetLabel(wxT(""));
+        stm-> SetLabel(wxT(""));
+        }
 }
 
 void mmBillsDepositsPanel::enableEditDeleteButtons(bool en)
