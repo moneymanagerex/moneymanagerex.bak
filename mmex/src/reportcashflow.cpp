@@ -170,6 +170,12 @@ wxString mmReportCashFlow::getHTMLText()
         wxString transType      = q1.GetString(wxT("TRANSCODE"));
         double amt              = q1.GetDouble(wxT("TRANSAMOUNT"));
 
+        // DeMultiplex the Auto Executable fields from the db entry: REPEATS
+        if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
+            repeats -= BD_REPEATS_MULTIPLEX_BASE;
+        if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute Silent mode
+            repeats -= BD_REPEATS_MULTIPLEX_BASE;
+
         bool processNumRepeats = false;
         if (numRepeats != -1)
             processNumRepeats = true;
