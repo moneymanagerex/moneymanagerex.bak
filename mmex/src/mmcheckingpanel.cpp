@@ -766,6 +766,12 @@ void mmCheckingPanel::CreateControls()
     itemBoxSizer5->Add(itemButton9, flags);
     itemButton9->Enable(false);
 
+    //Infobar-mini 
+    wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, ID_PANEL_CHECKING_STATIC_MINI, wxT(""), 
+    wxPoint(-1,-1), wxSize(450, -1), wxNO_BORDER|wxST_NO_AUTORESIZE);
+    itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxALL, 12);
+    //Infobar 
+
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12, 
     ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxPoint(-1,-1), wxSize(150, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
     itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
@@ -791,11 +797,13 @@ void mmCheckingPanel::enableEditDeleteButtons(bool en)
 void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS);	
+    wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_MINI);
 	if (selIndex!=-1) { 
         enableEditDeleteButtons(true);
         st->SetLabel(getItem(selIndex, COL_NOTES));
     } else {
-        st->SetLabel(wxT (""));
+        //st->SetLabel(wxT (""));
+        stm->SetLabel(wxT (""));
         enableEditDeleteButtons(false);
         Tips () ;
     }
@@ -1363,7 +1371,7 @@ void MyListCtrl::OnMarkTransaction(wxCommandEvent& event)
       
     OnMarkTransactionDB(status);
     SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-	SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+    SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
 
 }
 //----------------------------------------------------------------------------
@@ -1816,7 +1824,7 @@ int MyListCtrl::destinationAccountID(wxString accName)
     static const char sql[] = 
     "select ACCOUNTNAME "
     "from ACCOUNTLIST_V1 "
-    "where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
+    "where ACCOUNTTYPE IN ('Checking', 'Term') and STATUS <> 'Closed' "
     "order by ACCOUNTNAME";
     wxSQLite3ResultSet q1 = m_cp->getDb()->ExecuteQuery(sql);
 
