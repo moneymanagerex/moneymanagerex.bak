@@ -25,10 +25,12 @@
 IMPLEMENT_DYNAMIC_CLASS( mmMainCurrencyDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmMainCurrencyDialog, wxDialog )
-    EVT_BUTTON(ID_MAINCURRENCYBUTTON_ADD, mmMainCurrencyDialog::OnAdd)
-    EVT_BUTTON(ID_MAINCURRENCYBUTTON_EDIT, mmMainCurrencyDialog::OnEdit)
-    EVT_BUTTON(ID_MAINCURRENCYBUTTON_SELECT, mmMainCurrencyDialog::OnSelect)
-    EVT_LISTBOX_DCLICK(ID_LISTBOX, mmMainCurrencyDialog::OnDoubleClicked)
+    EVT_BUTTON(ID_MAINCURRENCYBUTTON_ADD, mmMainCurrencyDialog::OnBtnAdd)
+    EVT_BUTTON(ID_MAINCURRENCYBUTTON_EDIT, mmMainCurrencyDialog::OnBtnEdit)
+    EVT_BUTTON(ID_MAINCURRENCYBUTTON_SELECT, mmMainCurrencyDialog::OnBtnSelect)
+    EVT_BUTTON(ID_MAINCURRENCYBUTTON_DELETE, mmMainCurrencyDialog::OnBtnDelete)
+    EVT_LISTBOX(ID_LISTBOX, mmMainCurrencyDialog::OnlistBoxSelection)
+    EVT_LISTBOX_DCLICK(ID_LISTBOX, mmMainCurrencyDialog::OnlistBoxDoubleClicked)
 END_EVENT_TABLE()
 
 
@@ -128,16 +130,22 @@ void mmMainCurrencyDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, 5 );
     itemBoxSizer6->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton8 = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_EDIT, _("&Edit"), 
+    itemButtonEdit_ = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_EDIT, _("&Edit"), 
         wxDefaultPosition, wxDefaultSize, 5 );
-    itemBoxSizer6->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer6->Add(itemButtonEdit_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButtonEdit_->Disable();
 
-    wxButton* itemButton9 = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_SELECT, _("&Select"), 
+    itemButtonDelete_ = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_DELETE, _("&Delete"), 
         wxDefaultPosition, wxDefaultSize, 5 );
-    itemBoxSizer6->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer6->Add(itemButtonDelete_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButtonDelete_->Disable();
+
+    wxButton* itemButtonSelect = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_SELECT, _("&Select"), 
+        wxDefaultPosition, wxDefaultSize, 5 );
+    itemBoxSizer6->Add(itemButtonSelect, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     if(bEnableSelect_ == false) {
-        itemButton9->Disable();
+        itemButtonSelect->Disable();
     }
 
 ////@end MyDialog content construction
@@ -173,10 +181,9 @@ wxIcon mmMainCurrencyDialog::GetIconResource( const wxString& /*name*/ )
     return wxNullIcon;
 }
 
-void mmMainCurrencyDialog::OnAdd(wxCommandEvent& /*event*/)
+void mmMainCurrencyDialog::OnBtnAdd(wxCommandEvent& /*event*/)
 {
-   wxTextEntryDialog dlg(this, _("Name of Currency to Add"), 
-      _("Add Currency"));
+   wxTextEntryDialog dlg(this, _("Name of Currency to Add"), _("Add Currency"));
    if ( dlg.ShowModal() == wxID_OK )
    {
       wxString currText = dlg.GetValue().Trim();
@@ -185,24 +192,22 @@ void mmMainCurrencyDialog::OnAdd(wxCommandEvent& /*event*/)
          int currID = mmDBWrapper::getCurrencyID(core_->db_.get(), currText);
          if (currID == -1)
          {
-
             boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency());
             pCurrency->currencyName_ = currText;
             core_->currencyList_.addCurrency(pCurrency);
             fillControls();
-
+            currencyID_ = core_->currencyList_.getCurrencyID(currText);
+            mmCurrencyDialog(core_, currencyID_, this).ShowModal();
          }
          else
          {
-            mmShowErrorMessage(this, _("Currency name already exists!"), _("Error"));
-
+            displayCurrencyDialogErrorMessage(_("Attempt to Add a currency which already exists!"));
          }
       }
    }
 }
 
-
-void mmMainCurrencyDialog::OnEdit(wxCommandEvent& /*event*/)
+void mmMainCurrencyDialog::OnBtnEdit(wxCommandEvent& /*event*/)
 {
    int selIndex = currencyListBox_->GetSelection();
     if (selIndex != wxNOT_FOUND)
@@ -215,7 +220,7 @@ void mmMainCurrencyDialog::OnEdit(wxCommandEvent& /*event*/)
     }
 }
 
-void mmMainCurrencyDialog::OnSelect(wxCommandEvent& /*event*/)
+void mmMainCurrencyDialog::OnBtnSelect(wxCommandEvent& /*event*/)
 {
     int selIndex = currencyListBox_->GetSelection();
     if (selIndex != wxNOT_FOUND)
@@ -227,10 +232,49 @@ void mmMainCurrencyDialog::OnSelect(wxCommandEvent& /*event*/)
     }
 }
 
-void mmMainCurrencyDialog::OnDoubleClicked(wxCommandEvent& event)
+void mmMainCurrencyDialog::OnlistBoxSelection(wxCommandEvent& /*event*/)
+{
+    itemButtonEdit_->Enable();
+    if (!bEnableSelect_)    // prevent user deleting currencies when editing accounts.
+        itemButtonDelete_->Enable();
+}
+
+void mmMainCurrencyDialog::OnlistBoxDoubleClicked(wxCommandEvent& event)
 {
     if (bEnableSelect_)
-        OnSelect(event);
+        OnBtnSelect(event);
     else
-        OnEdit(event);
+        OnBtnEdit(event);
+}
+
+void mmMainCurrencyDialog::OnBtnDelete(wxCommandEvent& /*event*/)
+{
+    int selIndex = currencyListBox_->GetSelection();
+    if (selIndex != wxNOT_FOUND)
+    {
+        if (wxMessageBox(_("Please confirm deletion of a selected Currency"),
+                     _("Currency Dialog"),wxICON_QUESTION|wxOK|wxCANCEL) 
+            == wxOK)
+        {
+            mmCurrencyListBoxItem* pItem = (mmCurrencyListBoxItem*) currencyListBox_->GetClientObject(selIndex);
+            currencyID_ = pItem->getListIndex();
+            wxASSERT(currencyID_ != -1);
+        
+            if (core_->currencyList_.currencyInUse(currencyID_))
+            {
+                displayCurrencyDialogErrorMessage(_("Attempt to delete a currency which is being used."));
+            }
+            else
+            {
+                core_->currencyList_.deleteCurrency(currencyID_);
+                fillControls();
+            }
+        }
+    }
+}
+
+// using this error message for efficient code usage with translations.
+void mmMainCurrencyDialog::displayCurrencyDialogErrorMessage(wxString msg)
+{
+    wxMessageBox(msg,_("Currency Dialog Error"),wxICON_ERROR);
 }
