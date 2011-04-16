@@ -35,6 +35,7 @@
 #define ID_MAINCURRENCYBUTTON_ADD 10092
 #define ID_MAINCURRENCYBUTTON_EDIT 10093
 #define ID_MAINCURRENCYBUTTON_SELECT 10094
+#define ID_MAINCURRENCYBUTTON_DELETE 10199
 ////@end control identifiers
 
 /*!
@@ -91,10 +92,12 @@ public:
 
     /// Creates the controls and sizers
     void CreateControls();
-    void OnAdd(wxCommandEvent& event);
-    void OnEdit(wxCommandEvent& event);
-    void OnSelect(wxCommandEvent& event);
-    void OnDoubleClicked(wxCommandEvent& event);
+    void OnBtnAdd(wxCommandEvent& event);
+    void OnBtnEdit(wxCommandEvent& event);
+    void OnBtnSelect(wxCommandEvent& event);
+    void OnBtnDelete(wxCommandEvent& event);
+    void OnlistBoxSelection(wxCommandEvent& event);
+    void OnlistBoxDoubleClicked(wxCommandEvent& event);
     void fillControls();
     
     wxBitmap GetBitmapResource( const wxString& name );
@@ -109,6 +112,12 @@ private:
     mmCoreDB* core_;
     wxListBox* currencyListBox_;
     bool bEnableSelect_;
+
+    wxButton* itemButtonEdit_;
+    wxButton* itemButtonDelete_;
+
+    void displayCurrencyDialogErrorMessage(wxString msg);
+
 };
 
 #endif // _MM_EX_MAINCURRENCY_DIALOG_H_

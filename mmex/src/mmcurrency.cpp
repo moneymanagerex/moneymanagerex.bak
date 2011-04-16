@@ -18,8 +18,7 @@
 #include "util.h"
 #include "dbwrapper.h"
 
-mmCurrency::mmCurrency(boost::shared_ptr<wxSQLite3Database> db, 
-                       wxSQLite3ResultSet& q1)
+mmCurrency::mmCurrency(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1)
 : db_ (db)
 {
    currencyID_       = q1.GetInt(wxT("CURRENCYID"));
@@ -101,9 +100,9 @@ int mmCurrencyList::addCurrency(boost::shared_ptr<mmCurrency> pCurrency)
 {
     static const char sql[] = 
     "insert into CURRENCYFORMATS_V1 ( "
-      "CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT, "
-      "GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL "
-    " ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+        "CURRENCYNAME, PFX_SYMBOL, SFX_SYMBOL, DECIMAL_POINT, "
+        "GROUP_SEPARATOR, UNIT_NAME, CENT_NAME, SCALE, BASECONVRATE, CURRENCY_SYMBOL "
+        " ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
     wxSQLite3Statement st = db_->PrepareStatement(sql);
     const mmCurrency &r = *pCurrency;
@@ -130,12 +129,6 @@ int mmCurrencyList::addCurrency(boost::shared_ptr<mmCurrency> pCurrency)
 
     return pCurrency->currencyID_;
 }
-
-//bool mmCurrencyList::deleteCurrency(int currencyID)
-//{
-//
-//   return true;
-//}
 
 void mmCurrencyList::updateCurrency(boost::shared_ptr<mmCurrency> pCurrency)
 {
@@ -169,17 +162,70 @@ void mmCurrencyList::updateCurrency(boost::shared_ptr<mmCurrency> pCurrency)
     st.Finalize();
 }
 
+
+///  Checks the database directly to determine if the currencyID is used in Accounts List
+bool mmCurrencyList::currencyInUse(int currencyID)
+{
+    wxASSERT(currencyID > 0);
+
+    static const char sql[] = 
+        "select CURRENCYID from ACCOUNTLIST_V1 "
+        "where CURRENCYID = ?";
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    st.Bind(1, currencyID);
+
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    bool found = q1.NextRow();
+
+    st.Finalize();
+
+    return found;
+}
+
+void mmCurrencyList::deleteCurrency(int currencyID)
+{
+    wxASSERT(currencyID > 0);
+
+    static const char sql[] = 
+        "delete from CURRENCYFORMATS_V1 "
+        "where CURRENCYID = ?";
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    st.Bind(1, currencyID);
+    st.ExecuteUpdate();
+    st.Finalize();
+
+    std::vector <boost::shared_ptr<mmCurrency> >::iterator Iter;
+    for ( Iter = currencies_.begin( ) ; Iter != currencies_.end( ) ; Iter++ )
+    {
+        if ((*Iter)->currencyID_ == currencyID)
+        {
+            currencies_.erase(Iter);
+            break;
+        }
+    }
+}
+
 //bool mmCurrencyList::currencyExists(const wxString& currencyName)
 //{
 //
-//   return true;
+//    return true;
 //}
 
-//int mmCurrencyList::getCurrencyID(const wxString& currencyName)
-//{
-//   
-//   return -1;
-//}
+int mmCurrencyList::getCurrencyID(const wxString& currencyName)
+{
+    int currencyID = -1;
+    std::vector <boost::shared_ptr<mmCurrency> >::iterator Iter;
+    for ( Iter = currencies_.begin( ) ; Iter != currencies_.end( ) ; Iter++ )
+    {
+        if ((*Iter)->currencyName_ == currencyName)
+        {
+            currencyID = (*Iter)->currencyID_ ;
+            break;
+        }
+    }
+   
+   return currencyID;
+}
 
 boost::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(int currencyID)
 {

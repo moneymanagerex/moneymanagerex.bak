@@ -59,10 +59,11 @@ public:
 
     /* Currency Functions */
     int addCurrency(boost::shared_ptr<mmCurrency> pCurrency);
-    //bool deleteCurrency(int currencyID);
+    void deleteCurrency(int currencyID);
+    bool currencyInUse(int currencyID);
     void updateCurrency(boost::shared_ptr<mmCurrency> pCurrency);
     //bool currencyExists(const wxString& currencyName);
-    //int getCurrencyID(const wxString& currencyName);
+    int getCurrencyID(const wxString& currencyName);
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID);
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName);
 
