@@ -596,7 +596,7 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
             menu.Append(MENU_VIEW_UNRECONCILED, _("View Un-Reconciled Transactions"));
             menu.Append(MENU_VIEW_NOTRECONCILED, _("View All Except Reconciled Transactions"));
             menu.Append(MENU_VIEW_VOID, _("View Void Transactions"));
-            menu.Append(MENU_VIEW_FLAGGED, _("View Flagged Transactions"));
+            menu.Append(MENU_VIEW_FLAGGED, _("View \"Follow Up\" Transactions"));
 			menu.Append(MENU_VIEW_DUPLICATE, _("View Duplicate Transactions"));
             menu.AppendSeparator();
             menu.Append(MENU_VIEW_TODAY, _("View Transactions for today"));
