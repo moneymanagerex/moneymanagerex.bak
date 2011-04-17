@@ -79,7 +79,7 @@ wxString customSQLReportIndex::nextReportTitle()
         wxString line = indexFile_->GetNextLine();
         if (line != wxT(""))
         {
-            wxStringTokenizer tk(wxStringTokenizer(line, wxT(":")));
+            wxStringTokenizer tk(line, wxT(":"));
             currentReportTitle_ = tk.GetNextToken();
             currentReportFileName_ = tk.GetNextToken();
             if (tk.HasMoreTokens())
@@ -178,7 +178,11 @@ void customSQLReportIndex::getUserTitleSelection(wxString description)
 void customSQLReportIndex::setUserTitleSelection(wxString titleIndex)
 {
     long index; 
-    wxString indexStr = titleIndex.Right(1);
+    wxStringTokenizer tk(titleIndex, wxT("_"));
+    // get the 3rd token
+    tk.GetNextToken();
+    tk.GetNextToken();
+    wxString indexStr = tk.GetNextToken();
     indexStr.ToLong(&index);
 
     wxArrayString reportTitles;
