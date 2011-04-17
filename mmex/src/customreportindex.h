@@ -32,6 +32,7 @@ public:
 
     bool hasActiveSQLReports();
     void setSQLReportsActive();
+    bool reportIsSubReport();
 
     bool initIndexFileHeader();
     void resetReportsIndex();
@@ -50,6 +51,7 @@ private:
     bool activeSqlReports_;
     wxTextFile* indexFile_; 
     bool validTitle_;
+    bool reportIsSubReport_;
     wxString currentReportTitle_;
     wxString currentReportFileName_;
     int userSelectedFileIndex_;
