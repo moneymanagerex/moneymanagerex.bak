@@ -1057,74 +1057,27 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
         navTreeCtrl_->SetItemBold(customSqlReports, true);
         navTreeCtrl_->SetItemData(customSqlReports, new mmTreeItemData(wxT("Custom_Reports")));
 
+        int reportNumber = -1;
+        wxString reportNumberStr;
+        wxTreeItemId customSqlReportRootItem;
         custRepIndex_->resetReportsIndex();
 
         wxString reportTitle = custRepIndex_->nextReportTitle();
-        if (custRepIndex_->validTitle())
+        while (custRepIndex_->validTitle())
         {
-            wxTreeItemId customSqlReport_0 = navTreeCtrl_->AppendItem(customSqlReports,reportTitle, 8, 8);
-            navTreeCtrl_->SetItemData(customSqlReport_0, new mmTreeItemData(wxT("Custom_Report_0")));
-        }
-
-        reportTitle = custRepIndex_->nextReportTitle();
-        if (custRepIndex_->validTitle())
-        {
-            wxTreeItemId customSqlReport_1 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 8, 8);
-            navTreeCtrl_->SetItemData(customSqlReport_1, new mmTreeItemData(wxT("Custom_Report_1")));
-        }
-
-        reportTitle = custRepIndex_->nextReportTitle();
-        if (custRepIndex_->validTitle())
-        {
-            wxTreeItemId customSqlReport_2 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 8, 8);
-            navTreeCtrl_->SetItemData(customSqlReport_2, new mmTreeItemData(wxT("Custom_Report_2")));
-        }
-
-        reportTitle = custRepIndex_->nextReportTitle();
-        if (custRepIndex_->validTitle())
-        {
-            wxTreeItemId customSqlReport_3 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 8, 8);
-            navTreeCtrl_->SetItemData(customSqlReport_3, new mmTreeItemData(wxT("Custom_Report_3")));
-        }
-
-        reportTitle = custRepIndex_->nextReportTitle();
-        if (custRepIndex_->validTitle())
-        {
-            wxTreeItemId customSqlReport_4 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 8, 8);
-            navTreeCtrl_->SetItemData(customSqlReport_4, new mmTreeItemData(wxT("Custom_Report_4")));
-        }
-        reportTitle = custRepIndex_->nextReportTitle();
-        if (custRepIndex_->validTitle())
-        {
-            wxTreeItemId customSqlReport_5 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 8, 8);
-            navTreeCtrl_->SetItemData(customSqlReport_5, new mmTreeItemData(wxT("Custom_Report_5")));
-        }
-        reportTitle = custRepIndex_->nextReportTitle();
-        if (custRepIndex_->validTitle())
-        {
-            wxTreeItemId customSqlReport_6 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 8, 8);
-            navTreeCtrl_->SetItemData(customSqlReport_6, new mmTreeItemData(wxT("Custom_Report_6")));
-        }
-
-        reportTitle = custRepIndex_->nextReportTitle();
-        if (custRepIndex_->validTitle())
-        {
-            wxTreeItemId customSqlReport_7 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 8, 8);
-            navTreeCtrl_->SetItemData(customSqlReport_7, new mmTreeItemData(wxT("Custom_Report_7")));
-        }
-
-        reportTitle = custRepIndex_->nextReportTitle();
-        if (custRepIndex_->validTitle())
-        {
-            wxTreeItemId customSqlReport_8 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 8, 8);
-            navTreeCtrl_->SetItemData(customSqlReport_8, new mmTreeItemData(wxT("Custom_Report_8")));
-        }
-
-        reportTitle = custRepIndex_->nextReportTitle();
-        if (custRepIndex_->validTitle())
-        {
-            wxTreeItemId customSqlReport_9 = navTreeCtrl_->AppendItem(customSqlReports, reportTitle, 8, 8);
-            navTreeCtrl_->SetItemData(customSqlReport_9, new mmTreeItemData(wxT("Custom_Report_9")));
+            wxTreeItemId customSqlReportItem;
+            if (custRepIndex_->reportIsSubReport() && reportNumber >= 0 )
+            {
+                customSqlReportItem = navTreeCtrl_->AppendItem(customSqlReportRootItem,reportTitle, 8, 8);
+            }
+            else
+            {
+                customSqlReportItem = navTreeCtrl_->AppendItem(customSqlReports,reportTitle, 8, 8);
+                customSqlReportRootItem = customSqlReportItem;
+            }
+            reportNumberStr.Printf(wxT("Custom_Report_%d"), ++reportNumber);
+            navTreeCtrl_->SetItemData(customSqlReportItem, new mmTreeItemData(reportNumberStr));
+            reportTitle = custRepIndex_->nextReportTitle();
         }
     }
 
@@ -1471,6 +1424,30 @@ void mmGUIFrame::createCustomReport(int index)
     }
 }
 
+bool mmGUIFrame::CustomSQLReportSelected( int& customSqlReportID, mmTreeItemData* iData )
+{
+    int reportNumber = -1;
+    wxString reportNumberStr;
+    custRepIndex_->resetReportsIndex();
+    bool result = false;
+
+    custRepIndex_->nextReportTitle();
+    while (custRepIndex_->validTitle())
+    {
+        reportNumberStr.Printf(wxT("Custom_Report_%d"), ++reportNumber);
+        if (iData->getString() == reportNumberStr )
+        {
+            customSqlReportID = reportNumber;
+            result = true;
+            break;
+        }
+        custRepIndex_->nextReportTitle();
+    }
+
+    return result;
+}
+
+
 void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 {
     menuPrintingEnable(false);
@@ -1569,6 +1546,10 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
         //Freeze();
 
+        //========================================================================
+        int customSqlReportID;      // Define before all the if...else statements
+        //========================================================================
+        
         if (iData->getString() == wxT("Summary of Accounts"))
         {
             mmPrintableBase* rs = new mmReportSummary(m_core.get(), this);
@@ -1582,32 +1563,10 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-//===============================================================================================
-
-//        else if (iData->getString() == wxT("Custom_Reports") )
-//            updateNavTreeControl();
-        else if (iData->getString() == wxT("Custom_Report_0") )
-            createCustomReport(0);
-        else if (iData->getString() == wxT("Custom_Report_1") )
-            createCustomReport(1);
-        else if (iData->getString() == wxT("Custom_Report_2") )
-            createCustomReport(2);
-        else if (iData->getString() == wxT("Custom_Report_3") )
-            createCustomReport(3);
-        else if (iData->getString() == wxT("Custom_Report_4") )
-            createCustomReport(4);
-        else if (iData->getString() == wxT("Custom_Report_5") )
-            createCustomReport(5);
-        else if (iData->getString() == wxT("Custom_Report_6") )
-            createCustomReport(6);
-        else if (iData->getString() == wxT("Custom_Report_7") )
-            createCustomReport(7);
-        else if (iData->getString() == wxT("Custom_Report_8") )
-            createCustomReport(8);
-        else if (iData->getString() == wxT("Custom_Report_9") )
-            createCustomReport(9);
-//========================================================================
-
+        //========================================================================
+        else if ( CustomSQLReportSelected(customSqlReportID, iData) )
+            createCustomReport(customSqlReportID);
+        //========================================================================
         else if (iData->getString() == wxT("Summary of Assets"))
         {
             mmPrintableBase* rs = new mmReportSummaryAssets(m_db.get());

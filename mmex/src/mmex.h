@@ -238,6 +238,7 @@ private:
     void OnEditCustomSqlReport(wxCommandEvent& event);
     void OnPopupEditCustomSqlReport(wxCommandEvent& event);
     void EditCustomSqlReport();
+    bool CustomSQLReportSelected(int& customSqlReportID, mmTreeItemData* iData );
 
     void OnDeleteCustomSqlReport(wxCommandEvent& event);
     void OnPopupDeleteCustomSqlReport(wxCommandEvent& event);

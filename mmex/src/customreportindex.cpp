@@ -64,9 +64,16 @@ bool customSQLReportIndex::validTitle()
     return validTitle_;
 }
 
+bool customSQLReportIndex::reportIsSubReport()
+{
+    return reportIsSubReport_;
+}
+
 wxString customSQLReportIndex::nextReportTitle()
 {
-    validTitle_ = false;
+    validTitle_         = false;
+    reportIsSubReport_  = false;
+
     if (! indexFile_->Eof() )
     {
         wxString line = indexFile_->GetNextLine();
@@ -75,6 +82,10 @@ wxString customSQLReportIndex::nextReportTitle()
             wxStringTokenizer tk(wxStringTokenizer(line, wxT(":")));
             currentReportTitle_ = tk.GetNextToken();
             currentReportFileName_ = tk.GetNextToken();
+            if (tk.HasMoreTokens())
+            {
+                reportIsSubReport_ = true;
+            }
             validTitle_ = true;
         }
     }
@@ -112,9 +123,9 @@ bool customSQLReportIndex::initIndexFileHeader()
         result = indexFile_->Create();
         if (result)
         {
-            indexFile_->AddLine(_("Custom SQL Reports - Current limit: 10"));
+            indexFile_->AddLine(_("Custom SQL Reports"));
             indexFile_->AddLine(wxT(""));
-            indexFile_->AddLine(_("Report Name:Report Filename.sql"));
+            indexFile_->AddLine(_("Report Name:Report Filename.sql[:SUB]"));
             indexFile_->AddLine(wxT("========================================"));
             indexFile_->AddLine(wxT("My First Report:My First Report.sql"));
             indexFile_->Write();
