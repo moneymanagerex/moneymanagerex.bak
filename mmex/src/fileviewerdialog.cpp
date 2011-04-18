@@ -58,7 +58,7 @@ void fileviewer::CreateControls()
 
     wxTextCtrl* itemTextCtrl3 = new wxTextCtrl( itemDialog1, 
         ID_TEXTCTRL_FILEVIEWER, wxT(""), 
-        wxDefaultPosition, wxSize(400, 300), 
+        SYMBOL_FILEVIEWER_POSITION, SYMBOL_FILEVIEWER_SIZE, 
         wxTE_MULTILINE|wxTE_READONLY );
      
     itemBoxSizer2->Add(itemTextCtrl3, 1, 
