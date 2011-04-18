@@ -424,167 +424,165 @@ void mmFilterTransactionsDialog::OnCheckboxTransNumberClick( wxCommandEvent& /*e
 
 void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
 {
-   std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
-   for (i = core_->bTransactionList_.transactions_.begin(); 
-        i != core_->bTransactionList_.transactions_.end(); i++ )
-   {
-      boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
-      if (pBankTransaction)
-      {
-         /* START FILTERING TRANSACTIONS */
-         if (accountCheckBox->GetValue())
-         {
-            wxString acctName = accountDropDown->GetStringSelection();
-            int fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
-
-            if ((pBankTransaction->accountID_ != fromAccountID) 
-               && (pBankTransaction->toAccountID_ != fromAccountID))
-               continue; // skip
-         }
-
-         if (dateRangeCheckBox->GetValue())
-         {
-            wxDateTime dtBegin = fromDateCtrl->GetValue();
-            wxDateTime dtEnd = toDateControl->GetValue();
-
-            if ((dtBegin == dtEnd) && (dtBegin.IsSameDate(pBankTransaction->date_)))
+    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    for (i = core_->bTransactionList_.transactions_.begin(); i != core_->bTransactionList_.transactions_.end(); i++ )
+    {
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+        if (pBankTransaction)
+        {
+            /* START FILTERING TRANSACTIONS */
+            if (accountCheckBox->GetValue())
             {
+                wxString acctName = accountDropDown->GetStringSelection();
+                int fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
 
-            }
-            else
-            {
-                if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                if ((pBankTransaction->accountID_ != fromAccountID) && (pBankTransaction->toAccountID_ != fromAccountID))
                     continue; // skip
             }
-         }
 
-        if (payeeCheckBox->GetValue() && (payeeID_ != -1))
-        {
-            if (pBankTransaction->payeeID_ != payeeID_)
-                continue; // skip
-        }
-
-        if (categoryCheckBox->GetValue() && (categID_ != -1))
-        {
-            bool ignoreSubCateg = false;
-            if (subcategID_ == -1)
-                ignoreSubCateg = true;
-            if (!pBankTransaction->containsCategory(categID_, subcategID_, ignoreSubCateg))
+            if (dateRangeCheckBox->GetValue())
             {
-                pBankTransaction->reportCategAmountStr_ = wxT("");
-                continue;
+                wxDateTime dtBegin = fromDateCtrl->GetValue();
+                wxDateTime dtEnd = toDateControl->GetValue();
+
+                if ((dtBegin == dtEnd) && (dtBegin.IsSameDate(pBankTransaction->date_)))
+                {
+
+                }
+                else
+                {
+                    if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                        continue; // skip
+                }
             }
 
-            if (pBankTransaction->splitEntries_->numEntries() > 0)
+            if (payeeCheckBox->GetValue() && (payeeID_ != -1))
             {
-                pBankTransaction->reportCategAmount_ 
-                    =  fabs(pBankTransaction->getAmountForSplit(categID_, subcategID_));
+                if (pBankTransaction->payeeID_ != payeeID_)
+                    continue; // skip
+            }
 
-                boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pBankTransaction->accountID_).lock();
-                wxASSERT(pCurrencyPtr);
-                mmex::formatDoubleToCurrencyEdit(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
-            }
-            else
+            if (categoryCheckBox->GetValue() && (categID_ != -1))
             {
-                pBankTransaction->reportCategAmount_ = -1;
-                pBankTransaction->reportCategAmountStr_.clear();
-            }
-        }
+                bool ignoreSubCateg = false;
+                if (subcategID_ == -1)
+                    ignoreSubCateg = true;
+                if (!pBankTransaction->containsCategory(categID_, subcategID_, ignoreSubCateg))
+                {
+                    pBankTransaction->reportCategAmountStr_ = wxT("");
+                    continue;
+                }
 
-        if (statusCheckBox->GetValue())
-        {
-            wxString status;
-            if (choiceStatus->GetSelection()      == DEF_STATUS_NONE)
-            {
-                status = wxT(""); // nothing yet
-                if (mmIniOptions::transStatusReconciled_)   // This changed the selection order
-                    status = wxT("R"); 
+                if (pBankTransaction->splitEntries_->numEntries() > 0)
+                {
+                    pBankTransaction->reportCategAmount_ = fabs(pBankTransaction->getAmountForSplit(categID_, subcategID_));
+
+                    boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pBankTransaction->accountID_).lock();
+                    wxASSERT(pCurrencyPtr);
+                    mmex::formatDoubleToCurrencyEdit(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
+                }
+                else
+                {
+                    pBankTransaction->reportCategAmount_ = -1;
+                    pBankTransaction->reportCategAmountStr_.clear();
+                }
             }
-            else if (choiceStatus->GetSelection() == DEF_STATUS_RECONCILED)
+
+            if (statusCheckBox->GetValue())
             {
-                status = wxT("R"); 
-                if (mmIniOptions::transStatusReconciled_)   // This changed the selection order
+                wxString status;
+                if (choiceStatus->GetSelection()      == DEF_STATUS_NONE)
+                {
                     status = wxT(""); // nothing yet
-            }
-            else if (choiceStatus->GetSelection() == DEF_STATUS_VOID)
-            {
-                status = wxT("V"); 
-            }
-            else if (choiceStatus->GetSelection() == DEF_STATUS_FOLLOWUP)
-            {
-                status = wxT("F"); 
-            }
-            else if (choiceStatus->GetSelection() == DEF_STATUS_DUPLICATE)
-            {
-                status = wxT("D"); 
-            }
-            if (status != pBankTransaction->status_)
-                continue; //skip
-        }
-
-        if (typeCheckBox->GetValue())
-        {
-            wxString transCode;
-            int tCode = choiceType->GetSelection();
-            if (tCode == DEF_WITHDRAWAL)
-                transCode = wxT("Withdrawal");
-            else if (tCode == DEF_DEPOSIT)
-                transCode = wxT("Deposit");
-            else if (tCode == DEF_TRANSFER)
-                transCode = wxT("Transfer");
-
-            if (transCode != pBankTransaction->transType_)
-                continue; // skip
-        }
-
-        if (amountRangeCheckBox->GetValue())
-        {
-            wxString minamt = amountMinEdit->GetValue();
-            wxString maxamt = amountMaxEdit->GetValue();
-            if (!minamt.IsEmpty())
-            {
-                double amount;
-                if (!mmex::formatCurrencyToDouble(minamt, amount) || (amount < 0.0))
+                    if (mmIniOptions::transStatusReconciled_)   // This changed the selection order
+                        status = wxT("R"); 
+                }
+                else if (choiceStatus->GetSelection() == DEF_STATUS_RECONCILED)
                 {
-                    mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
-                    return;
+                    status = wxT("R"); 
+                    if (mmIniOptions::transStatusReconciled_)   // This changed the selection order
+                        status = wxT(""); // nothing yet
+                }
+                else if (choiceStatus->GetSelection() == DEF_STATUS_VOID)
+                {
+                    status = wxT("V"); 
+                }
+                else if (choiceStatus->GetSelection() == DEF_STATUS_FOLLOWUP)
+                {
+                    status = wxT("F"); 
+                }
+                else if (choiceStatus->GetSelection() == DEF_STATUS_DUPLICATE)
+                {
+                    status = wxT("D"); 
                 }
 
-                if (pBankTransaction->amt_ < amount)
+                if (status != pBankTransaction->status_)
+                    continue; //skip
+            }
+
+            if (typeCheckBox->GetValue())
+            {
+                wxString transCode;
+                int tCode = choiceType->GetSelection();
+                if (tCode == DEF_WITHDRAWAL)
+                    transCode = wxT("Withdrawal");
+                else if (tCode == DEF_DEPOSIT)
+                    transCode = wxT("Deposit");
+                else if (tCode == DEF_TRANSFER)
+                    transCode = wxT("Transfer");
+
+                if (transCode != pBankTransaction->transType_)
                     continue; // skip
             }
 
-            if (!maxamt.IsEmpty())
+            if (amountRangeCheckBox->GetValue())
             {
-                double amount;
-                if (!mmex::formatCurrencyToDouble(maxamt, amount) || (amount < 0.0))
+                wxString minamt = amountMinEdit->GetValue();
+                wxString maxamt = amountMaxEdit->GetValue();
+                if (!minamt.IsEmpty())
                 {
-                    mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
-                    return;
+                    double amount;
+                    if (!mmex::formatCurrencyToDouble(minamt, amount) || (amount < 0.0))
+                    {
+                        mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
+                        return;
+                    }
+
+                    if (pBankTransaction->amt_ < amount)
+                        continue; // skip
                 }
 
-                if (pBankTransaction->amt_ > amount)
-                    continue; // skip
-            }
-        }
+                if (!maxamt.IsEmpty())
+                {
+                    double amount;
+                    if (!mmex::formatCurrencyToDouble(maxamt, amount) || (amount < 0.0))
+                    {
+                        mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
+                        return;
+                    }
 
-        if (notesCheckBox->GetValue())
-        {
-            wxString notes = notesEdit->GetValue().Trim().Lower();
-            wxString orig = pBankTransaction->notes_.Lower();
-            if (!orig.Contains(notes))
-                continue;
-        }
+                    if (pBankTransaction->amt_ > amount)
+                        continue; // skip
+                }
+            }
+
+            if (notesCheckBox->GetValue())
+            {
+                wxString notes = notesEdit->GetValue().Trim().Lower();
+                wxString orig = pBankTransaction->notes_.Lower();
+                if (!orig.Contains(notes))
+                    continue;
+            }
         
-         if (transNumberCheckBox->GetValue())
-        {
-            wxString transNumber = transNumberEdit->GetValue().Trim().Lower();
-            wxString orig = pBankTransaction->transNum_.Lower();
-            if (!orig.Contains(transNumber))
-                continue;
-        }
+            if (transNumberCheckBox->GetValue())
+            {
+                wxString transNumber = transNumberEdit->GetValue().Trim().Lower();
+                wxString orig = pBankTransaction->transNum_.Lower();
+                if (!orig.Contains(transNumber))
+                    continue;
+            }
 
-        (*trans_).push_back(pBankTransaction);
+            (*trans_).push_back(pBankTransaction);
         }
     }
 
