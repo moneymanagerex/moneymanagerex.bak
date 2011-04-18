@@ -67,6 +67,7 @@ public:
     void OnRestoreDefaultColors(wxCommandEvent& event);
     void OnListDetailsColors(wxCommandEvent& event);
     void OnBackupDBChecked(wxCommandEvent& event);
+    void OnBackupDBUpdateChecked(wxCommandEvent& event);
     void OnOriginalDateChecked(wxCommandEvent& event);
     void OnUseSoundChecked(wxCommandEvent& event);
     void OnListFutureDates(wxCommandEvent& event);

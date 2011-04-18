@@ -2901,12 +2901,19 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
         && passwordCheckPassed)
     {    
         /* Do a backup before opening */
-        wxString backupDBState =  mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB"), wxT("FALSE"));
+        wxString backupDBState   =  mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB"), wxT("FALSE"));
+        wxString backupUpdate =  mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB_UPDATE"), wxT("FALSE"));
         if (backupDBState == wxT("TRUE"))
         {
             wxFileName fn(fileName);
-            wxString bkupName = fn.GetPath() + wxT("/") + fn.GetName() + wxT(".bak");
-            wxCopyFile(fileName, bkupName, true);
+            wxString fileDate = wxT("_")+ wxDateTime().Today().FormatISODate();
+            wxString bkupName = fn.GetPath() + wxT("/") + fn.GetName() + fileDate + wxT(".bak");
+            if (backupUpdate == wxT("FALSE"))
+            {
+                if ( ! wxFileExists(bkupName) )
+                    wxCopyFile(fileName, bkupName, true);
+            } else
+                wxCopyFile(fileName, bkupName, true);
         }
 
         m_db = mmDBWrapper::Open(fileName, password);
