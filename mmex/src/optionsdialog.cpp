@@ -81,6 +81,7 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES, mmOptionsDialog::OnListFutureDates)
 
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_BACKUP, mmOptionsDialog::OnBackupDBChecked)
+    EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_BACKUP_UPDATE, mmOptionsDialog::OnBackupDBUpdateChecked)
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_ORIG_DATE, mmOptionsDialog::OnOriginalDateChecked)
 
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_EXPAND_BANK_HOME, mmOptionsDialog::OnExpandBankHome)
@@ -802,15 +803,32 @@ void mmOptionsDialog::CreateControls()
 //    itemCheckBoxTransStatus->SetToolTip(_("Select to sets the default status to Reconciled"));
 
     //----------------------------------------------
+    wxStaticBox* itemStaticBoxBackupSetting = 
+        new wxStaticBox(itemPanelMisc, wxID_ANY, _("Database Backup Settings"));
+    wxStaticBoxSizer* itemStaticBoxSizerBackup = 
+        new wxStaticBoxSizer(itemStaticBoxBackupSetting, wxHORIZONTAL);
+    itemBoxSizerMisc->Add(itemStaticBoxSizerBackup, 0, wxGROW|wxALL, 5);
+
     wxString backupDBState =  mmDBWrapper::getINISettingValue(inidb_, wxT("BACKUPDB"), wxT("FALSE"));
-    wxCheckBox* itemCheckBoxBackup = new wxCheckBox( itemPanelMisc, ID_DIALOG_OPTIONS_CHK_BACKUP, 
-        _("Backup database before opening"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    wxCheckBox* itemCheckBoxBackup = 
+        new wxCheckBox(itemPanelMisc,ID_DIALOG_OPTIONS_CHK_BACKUP,_("Backup before opening"),wxDefaultPosition,wxDefaultSize,wxCHK_2STATE );
     itemCheckBoxBackup->SetValue(FALSE);
     if (backupDBState == wxT("TRUE"))
         itemCheckBoxBackup->SetValue(TRUE);
-    itemBoxSizerMisc->Add(itemCheckBoxBackup, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemCheckBoxBackup->SetToolTip(_("Select whether to create a .bak file when opening the database file"));
+    itemStaticBoxSizerBackup->Add(itemCheckBoxBackup, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemCheckBoxBackup->SetToolTip(_("Select whether to create a _YYYY-MM-DD.bak file before opening the database"));
 
+    wxString backupDBUpdate =  mmDBWrapper::getINISettingValue(inidb_, wxT("BACKUPDB_UPDATE"), wxT("FALSE"));
+    wxCheckBox* itemCheckBoxBackupUpdate = 
+        new wxCheckBox(itemPanelMisc,ID_DIALOG_OPTIONS_CHK_BACKUP_UPDATE,_("Daily Update, before opening"),wxDefaultPosition,wxDefaultSize,wxCHK_2STATE );
+    itemCheckBoxBackupUpdate->SetValue(FALSE);
+    if (backupDBUpdate == wxT("TRUE"))
+        itemCheckBoxBackupUpdate->SetValue(TRUE);
+    itemCheckBoxBackupUpdate->Enable(itemCheckBoxBackup->GetValue());
+    itemStaticBoxSizerBackup->Add(itemCheckBoxBackupUpdate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemCheckBoxBackupUpdate->SetToolTip(_("For same day, select to update the backup before opening the database."));
+    //----------------------------------------------
+    
     wxBoxSizer* itemBoxSizerStockURL = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizerMisc->Add(itemBoxSizerStockURL, 0, wxGROW|wxALIGN_LEFT|wxALL, 5);
 
@@ -1088,6 +1106,15 @@ void mmOptionsDialog::OnBackupDBChecked(wxCommandEvent& /*event*/)
 {
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_BACKUP);
     SetIniDatabaseCheckboxValue(wxT("BACKUPDB"), itemCheckBox->GetValue() );
+
+    wxCheckBox* itemCheckBox_u = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_BACKUP_UPDATE);
+    itemCheckBox_u->Enable(itemCheckBox->GetValue());
+}
+
+void mmOptionsDialog::OnBackupDBUpdateChecked(wxCommandEvent& /*event*/)
+{
+    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_BACKUP_UPDATE);
+    SetIniDatabaseCheckboxValue(wxT("BACKUPDB_UPDATE"), itemCheckBox->GetValue() );
 }
 
 void mmOptionsDialog::OnOriginalDateChecked(wxCommandEvent& /*event*/)

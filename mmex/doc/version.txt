@@ -14,6 +14,7 @@ Version History of Money Manager Ex
 - New: Icons in accounts to highlight transfer transactions
 - New: Determine most used category for transfer (user selectable)
 - Currency dialogs updated - Now allows deletion of a currency.
+  Improved Backup options on Startup.
 
 - New Tool: Creation of Custom Reports.
 
