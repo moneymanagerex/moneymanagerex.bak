@@ -99,7 +99,10 @@ wxString customSQLReportIndex::currentReportTitle()
 
 wxString customSQLReportIndex::currentReportFileName()
 {
-    return wxString() << mmex::getPathUser(mmex::DIRECTORY) << currentReportFileName_;
+    wxString returnStr;
+    if (currentReportFileName_ != wxT(""))
+        returnStr = wxString() << mmex::getPathUser(mmex::DIRECTORY) << currentReportFileName_;
+    return returnStr;
 }
 
 wxString customSQLReportIndex::reportFileName(int index)
@@ -125,9 +128,11 @@ bool customSQLReportIndex::initIndexFileHeader()
         {
             indexFile_->AddLine(_("Custom SQL Reports"));
             indexFile_->AddLine(wxT(""));
-            indexFile_->AddLine(_("Report Name:Report Filename.sql[:SUB]"));
+            indexFile_->AddLine(_("Report Name[:Report Filename.sql[:SUB]]"));
             indexFile_->AddLine(wxT("========================================"));
             indexFile_->AddLine(wxT("My First Report:My First Report.sql"));
+            indexFile_->AddLine(wxT("My Report Heading"));
+            indexFile_->AddLine(wxT("My Second Report:My Second Report.sql:SUB"));
             indexFile_->Write();
             resetReportsIndex();
             setSQLReportsActive();

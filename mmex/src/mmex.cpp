@@ -1398,29 +1398,32 @@ wxDateTime mmGUIFrame::getUserDefinedFinancialYear(bool prevDayRequired)
 void mmGUIFrame::createCustomReport(int index)
 {
     wxString rfn = custRepIndex_->reportFileName(index);
-    wxTextFile sqlFile(rfn);  
-    if ( sqlFile.Exists() )
+    if (rfn != wxT(""))
     {
-        wxString sqlStr;
-        sqlFile.Open();
-        sqlStr << sqlFile.GetFirstLine() << wxT("\n"); 
-        while (! sqlFile.Eof())
+        wxTextFile sqlFile(rfn);  
+        if ( sqlFile.Exists() )
         {
-            wxString nextLine = sqlFile.GetNextLine();
-            wxString line = nextLine;
-            line.Trim(false);
-            if (line.Mid(1,2) != wxT("--"))
-                sqlStr << nextLine << wxT("\n");
-        }
+            wxString sqlStr;
+            sqlFile.Open();
+            sqlStr << sqlFile.GetFirstLine() << wxT("\n"); 
+            while (! sqlFile.Eof())
+            {
+                wxString nextLine = sqlFile.GetNextLine();
+                wxString line = nextLine;
+                line.Trim(false);
+                if (line.Mid(1,2) != wxT("--"))
+                    sqlStr << nextLine << wxT("\n");
+            }
 
-        mmCustomSQLReport* csr = new mmCustomSQLReport(m_core.get(), custRepIndex_->currentReportTitle(), sqlStr);
-        menuPrintingEnable(true);
-        createReportsPage(csr);
-    }
-    else
-    {
-        wxString msg = wxString() << _("Cannot locate file: ") << rfn << wxT("\n\n");
-        wxMessageBox(msg,_("Custom SQL Reports"),wxOK|wxICON_ERROR);
+            mmCustomSQLReport* csr = new mmCustomSQLReport(m_core.get(), custRepIndex_->currentReportTitle(), sqlStr);
+            menuPrintingEnable(true);
+            createReportsPage(csr);
+        }
+        else
+        {
+            wxString msg = wxString() << _("Cannot locate file: ") << rfn << wxT("\n\n");
+            wxMessageBox(msg,_("Custom SQL Reports"),wxOK|wxICON_ERROR);
+        }
     }
 }
 
