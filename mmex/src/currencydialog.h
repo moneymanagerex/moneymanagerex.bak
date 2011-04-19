@@ -63,13 +63,11 @@ public:
     
     // utility functions
     void OnCancel(wxCommandEvent& event);
-    void OnBSelect(wxCommandEvent& event);
-    void OnEdit(wxCommandEvent& event);
+    void OnUpdate(wxCommandEvent& event);
     void OnCurrencyTypeChanged(wxCommandEvent& event);
+
     void updateControls();
-    
     void fillControls();
-    void OnSelChanged(wxCommandEvent& event);
 
 private:
     mmCoreDB* core_;
