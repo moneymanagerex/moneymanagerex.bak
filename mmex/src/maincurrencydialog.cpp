@@ -252,19 +252,21 @@ void mmMainCurrencyDialog::OnBtnDelete(wxCommandEvent& /*event*/)
     int selIndex = currencyListBox_->GetSelection();
     if (selIndex != wxNOT_FOUND)
     {
-        if (wxMessageBox(_("Please confirm deletion of a selected Currency"),
-                     _("Currency Dialog"),wxICON_QUESTION|wxOK|wxCANCEL) 
-            == wxOK)
+        mmCurrencyListBoxItem* pItem = (mmCurrencyListBoxItem*) currencyListBox_->GetClientObject(selIndex);
+        currencyID_ = pItem->getListIndex();
+        wxASSERT(currencyID_ != -1);
+
+        int baseCurrencyID = mmDBWrapper::getBaseCurrencySettings(db_);
+        bool usedAsBase = currencyID_ == baseCurrencyID;
+
+        if (core_->currencyList_.currencyInUse(currencyID_) || usedAsBase)
         {
-            mmCurrencyListBoxItem* pItem = (mmCurrencyListBoxItem*) currencyListBox_->GetClientObject(selIndex);
-            currencyID_ = pItem->getListIndex();
-            wxASSERT(currencyID_ != -1);
-        
-            if (core_->currencyList_.currencyInUse(currencyID_))
-            {
-                displayCurrencyDialogErrorMessage(_("Attempt to delete a currency which is being used."));
-            }
-            else
+            displayCurrencyDialogErrorMessage(_("Attempt to delete a currency being used by an account\n or as the base currency."));
+        }
+        else
+        {
+            if (wxMessageBox(_("Please confirm deletion of a selected Currency"),
+                             _("Currency Dialog"),wxICON_QUESTION|wxOK|wxCANCEL) == wxOK)
             {
                 core_->currencyList_.deleteCurrency(currencyID_);
                 fillControls();
@@ -273,8 +275,7 @@ void mmMainCurrencyDialog::OnBtnDelete(wxCommandEvent& /*event*/)
     }
 }
 
-// using this error message for efficient code usage with translations.
 void mmMainCurrencyDialog::displayCurrencyDialogErrorMessage(wxString msg)
 {
-    wxMessageBox(msg,_("Currency Dialog Error"),wxICON_ERROR);
+    wxMessageBox(msg,_("Currency Dialog"),wxICON_ERROR);
 }
