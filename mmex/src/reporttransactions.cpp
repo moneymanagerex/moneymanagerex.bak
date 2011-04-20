@@ -74,6 +74,7 @@ wxString mmReportTransactions::getHTMLText()
 
     // Display the data for each row
     bool unknownnReferenceAccount = true;
+    bool transferTransactionFound = false;
     double total = 0;
     for (unsigned int index = 0; index < trans_->size(); index++)
     {
@@ -137,6 +138,7 @@ wxString mmReportTransactions::getHTMLText()
         }
         else if (refTrans[index]->transType_ == wxT("Transfer"))
         {
+            transferTransactionFound = true;
             if (negativeTransAmount)
                 total -= transAmount;
             else
@@ -156,7 +158,7 @@ wxString mmReportTransactions::getHTMLText()
     hb.endTable();
 	hb.endCenter();
 
-    if (unknownnReferenceAccount)
+    if (unknownnReferenceAccount && transferTransactionFound)
     {
         hb.addHorizontalLine();
         hb.addHeader(7, _("<b>Note:</b> Total Amount may be incorrect as <b>transfers</B> have been added to the total."));
