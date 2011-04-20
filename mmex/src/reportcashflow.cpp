@@ -86,35 +86,7 @@ wxString mmReportCashFlow::getHTMLText()
         mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pCA)
         {
-            // Check if this account belongs in our list
-            if (accountArray_ != NULL)
-            {
-                bool isFound = false;
-                for (int arrIdx = 0; arrIdx < (int)accountArray_->size(); arrIdx++)
-                {
-                    if (pCA->accountName_ == accountArray_->Item(arrIdx))
-                    {
-                        isFound = true;
-                        break;
-                    }
-                }
-                if (!isFound)
-                    continue; // skip account
-            }
-
-            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_);
-            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
-            wxASSERT(pCurrencyPtr);
-            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-            double rate = pCurrencyPtr->baseConv_;
-
-            tBalance += bal * rate;
-        }
-
-        if (activeTermAccounts_) // Add Term accounts to cashflows as well
-        {
-            mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(core_->accountList_.accounts_[iAdx].get());
-            if (pTA)
+            if (pCA->status_ != pCA->MMEX_Closed)
             {
                 // Check if this account belongs in our list
                 if (accountArray_ != NULL)
@@ -122,7 +94,7 @@ wxString mmReportCashFlow::getHTMLText()
                     bool isFound = false;
                     for (int arrIdx = 0; arrIdx < (int)accountArray_->size(); arrIdx++)
                     {
-                        if (pTA->accountName_ == accountArray_->Item(arrIdx))
+                        if (pCA->accountName_ == accountArray_->Item(arrIdx))
                         {
                             isFound = true;
                             break;
@@ -132,13 +104,47 @@ wxString mmReportCashFlow::getHTMLText()
                         continue; // skip account
                 }
 
-                double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_);
-                boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pTA->accountID_).lock();
+                double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_);
+                boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
                 wxASSERT(pCurrencyPtr);
                 mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
                 double rate = pCurrencyPtr->baseConv_;
 
                 tBalance += bal * rate;
+            }
+        }
+
+        if (activeTermAccounts_) // Add Term accounts to cashflows as well
+        {
+            mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(core_->accountList_.accounts_[iAdx].get());
+            if (pTA)
+            {
+                if (pTA->status_ != pTA->MMEX_Closed)
+                {
+                    // Check if this account belongs in our list
+                    if (accountArray_ != NULL)
+                    {
+                        bool isFound = false;
+                        for (int arrIdx = 0; arrIdx < (int)accountArray_->size(); arrIdx++)
+                        {
+                            if (pTA->accountName_ == accountArray_->Item(arrIdx))
+                            {
+                                isFound = true;
+                                break;
+                            }
+                        }
+                        if (!isFound)
+                            continue; // skip account
+                    }
+
+                    double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_);
+                    boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pTA->accountID_).lock();
+                    wxASSERT(pCurrencyPtr);
+                    mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+                    double rate = pCurrencyPtr->baseConv_;
+
+                    tBalance += bal * rate;
+                }
             }
         }
     }
