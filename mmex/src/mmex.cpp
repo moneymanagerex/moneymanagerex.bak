@@ -386,8 +386,6 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
 
     EVT_MENU(MENU_GOTOACCOUNT, mmGUIFrame::OnGotoAccount)
 
-    EVT_MENU(MENU_TRANSACTIONREPORT, mmGUIFrame::OnTransactionReport)
-
     /* Navigation Panel */
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_NEW, mmGUIFrame::OnNewAccount)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_DELETE, mmGUIFrame::OnDeleteAccount)
@@ -3337,26 +3335,26 @@ void mmGUIFrame::OnBudgetSetupDialog(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 {
-   if (!m_db)
-      return;
+    if (!m_db)
+        return;
 
-   if (mmDBWrapper::getNumAccounts(m_db.get()) == 0)
-      return;
+    if (mmDBWrapper::getNumAccounts(m_db.get()) == 0)
+        return;
 
-   std::vector< boost::shared_ptr<mmBankTransaction> >* trans 
-      = new std::vector< boost::shared_ptr<mmBankTransaction> >;
+    std::vector< boost::shared_ptr<mmBankTransaction> >* trans 
+        = new std::vector< boost::shared_ptr<mmBankTransaction> >;
 
-   mmFilterTransactionsDialog dlg(trans, m_core.get(), this);
-   if (dlg.ShowModal() == wxID_OK)
-   {
-      mmPrintableBase* rs = new mmReportTransactions(trans, m_core.get());
-      menuPrintingEnable(true);
-      createReportsPage(rs);
-   }
-   else
-   {
-      delete trans;
-   }
+    mmFilterTransactionsDialog dlg(trans, m_core.get(), this);
+    if (dlg.ShowModal() == wxID_OK)
+    {
+        mmPrintableBase* rs = new mmReportTransactions(trans, m_core.get(), dlg.refAccountID_, dlg.refAccountStr_);
+        menuPrintingEnable(true);
+        createReportsPage(rs);
+    }
+    else
+    {
+        delete trans;
+    }
 }
 //----------------------------------------------------------------------------
 

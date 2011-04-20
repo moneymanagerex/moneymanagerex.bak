@@ -31,7 +31,8 @@ class mmCoreDB;
 class mmReportTransactions : public mmPrintableBase 
 {
 public:
-    mmReportTransactions(std::vector< boost::shared_ptr<mmBankTransaction> >* trans, mmCoreDB* core);
+    mmReportTransactions(std::vector< boost::shared_ptr<mmBankTransaction> >* trans, 
+        mmCoreDB* core, int refAccountID, wxString refAccountStr);
    ~mmReportTransactions();
 
     wxString getHTMLText();
@@ -42,6 +43,8 @@ private:
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;
     bool ignoreDate_;
+    int refAccountID_;
+    wxString refAccountStr_;
 };
 
 #endif // _MM_EX_REPORTTRANSACT_H_

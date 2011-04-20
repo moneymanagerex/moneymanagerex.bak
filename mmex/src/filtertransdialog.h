@@ -186,6 +186,8 @@ public:
     int categID_;
     int subcategID_;
     int payeeID_;
+    int refAccountID_;
+    wxString refAccountStr_;
 ////@end mmFilterTransactionsDialog member variables
 };
 
