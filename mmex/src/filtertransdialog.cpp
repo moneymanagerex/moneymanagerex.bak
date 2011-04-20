@@ -128,6 +128,7 @@ mmFilterTransactionsDialog::mmFilterTransactionsDialog(std::vector< boost::share
     categID_ = -1;
     subcategID_ = -1;
     payeeID_ = -1;
+    refAccountID_ = -1;
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -435,6 +436,8 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
             {
                 wxString acctName = accountDropDown->GetStringSelection();
                 int fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+                refAccountID_ = fromAccountID;
+                refAccountStr_ = acctName;
 
                 if ((pBankTransaction->accountID_ != fromAccountID) && (pBankTransaction->toAccountID_ != fromAccountID))
                     continue; // skip

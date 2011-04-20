@@ -29,8 +29,9 @@
 
 #include <algorithm>
 
-mmReportTransactions::mmReportTransactions(std::vector< boost::shared_ptr<mmBankTransaction> >* trans, mmCoreDB* core)
-:trans_(trans), core_(core)
+mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBankTransaction> >* trans, 
+    mmCoreDB* core, int refAccountID, wxString refAccountStr)
+:trans_(trans), core_(core), refAccountID_(refAccountID), refAccountStr_(refAccountStr)
 {
 }
 
@@ -43,7 +44,11 @@ wxString mmReportTransactions::getHTMLText()
 {
     mmHTMLBuilder hb;
     hb.init();
-    hb.addHeader(3, _("Transaction List"));
+
+    wxString transHeading = _("Transaction List ");
+    if (refAccountID_ > -1)
+        transHeading += wxString() << _("for Account: ") << refAccountStr_;
+    hb.addHeader(3, transHeading);
 
     wxDateTime now = wxDateTime::Now();
     wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
@@ -68,13 +73,15 @@ wxString mmReportTransactions::getHTMLText()
     hb.endTableRow();
 
     // Display the data for each row
-    bool hasTransferTransaction = false;
+    bool unknownnReferenceAccount = true;
     double total = 0;
     for (unsigned int index = 0; index < trans_->size(); index++)
     {
         std::vector<wxString> data;
         std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = *trans_;
-    
+
+        bool negativeTransAmount = false;   // this can be either a transfer or withdrawl
+
         // Display the data for the selected row
         hb.startTableRow();
         hb.addTableCell(refTrans[index]->dateStr_);
@@ -82,20 +89,36 @@ wxString mmReportTransactions::getHTMLText()
         hb.addTableCell(refTrans[index]->fromAccountStr_, false, true);
         hb.addTableCell(refTrans[index]->payeeStr_, false, true);
         if (refTrans[index]->transType_ == wxT("Deposit"))
+        {
             hb.addTableCell(_("Deposit"));
+        }
         else if (refTrans[index]->transType_ == wxT("Withdrawal"))
+        {
             hb.addTableCell(_("Withdrawal"));
+            negativeTransAmount = true;
+        }
         else if (refTrans[index]->transType_ == wxT("Transfer"))
+        {
             hb.addTableCell(_("Transfer"));
+            if (refAccountID_ >= 0 )
+            {
+                unknownnReferenceAccount = false;
+                if (refTrans[index]->accountID_ == refAccountID_)
+                    negativeTransAmount   = true;  // transfer is a withdrawl from account
+            }
+        }
+
+        wxString amtColour = wxT("#000000"); // black
+        if (negativeTransAmount)
+            amtColour = wxT("#ff0000");      //  red
+
         hb.addTableCell(refTrans[index]->fullCatStr_, false, true);
         hb.addTableCell(refTrans[index]->notes_, false, true);
         hb.addTableCell(refTrans[index]->status_);
-
-        if (refTrans[index]->reportCategAmountStr_ == wxT(""))  
-            hb.addTableCell(refTrans[index]->transAmtString_, true);
+        if (refTrans[index]->reportCategAmountStr_ == wxT(""))
+            hb.addTableCell(refTrans[index]->transAmtString_, true, false,false, amtColour);
         else
-            hb.addTableCell(refTrans[index]->reportCategAmountStr_, true);
-        
+            hb.addTableCell(refTrans[index]->reportCategAmountStr_, true, false,false, amtColour);
         hb.endTableRow();
 
         // Get the exchange rate for the selected account
@@ -114,8 +137,10 @@ wxString mmReportTransactions::getHTMLText()
         }
         else if (refTrans[index]->transType_ == wxT("Transfer"))
         {
-            total += transAmount;
-            hasTransferTransaction = true;
+            if (negativeTransAmount)
+                total -= transAmount;
+            else
+                total += transAmount;
         }
     }
 
@@ -131,7 +156,7 @@ wxString mmReportTransactions::getHTMLText()
     hb.endTable();
 	hb.endCenter();
 
-    if (hasTransferTransaction)
+    if (unknownnReferenceAccount)
     {
         hb.addHorizontalLine();
         hb.addHeader(7, _("<b>Note:</b> Total Amount may be incorrect as <b>transfers</B> have been added to the total."));
