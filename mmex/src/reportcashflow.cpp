@@ -32,7 +32,8 @@ wxString mmReportCashFlow::getHTMLText()
     mmHTMLBuilder hb;
     hb.init();
 
-    wxString headerMsg = _("Cash Flow Forecast A Year Ahead - For ");
+    int years = 3;
+    wxString headerMsg = wxString::Format (_("Cash Flow Forecast for %d Years Ahead - For "), years);
     if (accountArray_ == NULL) 
     {
         if ( !(termAccountsHeading_ == activeTermAccounts_ ) &&
@@ -161,7 +162,7 @@ wxString mmReportCashFlow::getHTMLText()
             "ACCOUNTID "
     "from BILLSDEPOSITS_V1";
 
-    wxDateTime yearFromNow = wxDateTime::Now().Add(wxDateSpan::Year());
+    wxDateTime yearFromNow = wxDateTime::Now().Add(wxDateSpan::Years(years));
     forecastVec fvec;
 
     wxSQLite3ResultSet q1 = core_->db_.get()->ExecuteQuery(sql);
@@ -288,8 +289,8 @@ wxString mmReportCashFlow::getHTMLText()
     // Need to use different month ranges to figure out cash flow
 
     std::vector<double> forecastOver12Months;
-    forecastOver12Months.resize(12, 0.0);
-    for (int idx = 0; idx < 12; idx++)
+    forecastOver12Months.resize(12*years, 0.0);
+    for (int idx = 0; idx < 12*years; idx++)
     {
         wxDateTime dtBegin = wxDateTime::Now();
         wxDateTime dtEnd   = wxDateTime::Now().Add(wxDateSpan::Months(idx+1));
@@ -317,7 +318,7 @@ wxString mmReportCashFlow::getHTMLText()
 		hb.addTableCell(dtStr, false, true);
 		if(forecastOver12Months[idx] + tBalance < 0)
 		{
-			hb.addTableCell(balance, true, true, true, wxT("#ff0000"));
+			hb.addTableCell(balance, true, true, true, wxT("RED"));
 		}
 		else
 		{
