@@ -32,7 +32,7 @@ wxString mmReportCashFlow::getHTMLText()
     mmHTMLBuilder hb;
     hb.init();
 
-    int years = 3;
+    int years = 10;
     wxString headerMsg = wxString::Format (_("Cash Flow Forecast for %d Years Ahead - For "), years);
     if (accountArray_ == NULL) 
     {
@@ -78,6 +78,7 @@ wxString mmReportCashFlow::getHTMLText()
 	hb.startTableRow();
 	hb.addTableHeaderCell(_("Date"));
 	hb.addTableHeaderCell(_("Total"));
+	hb.addTableHeaderCell(_("Difference"));
 	hb.endTableRow();
 
     double tBalance = 0.0;
@@ -311,19 +312,15 @@ wxString mmReportCashFlow::getHTMLText()
            
         wxString balance;
         mmex::formatDoubleToCurrency(forecastOver12Months[idx] + tBalance, balance);
+        wxString diff;
+        mmex::formatDoubleToCurrency(forecastOver12Months[idx]-forecastOver12Months[idx-1], diff);
 
         wxString dtStr = mmGetDateForDisplay(core_->db_.get(), dtEnd);
 
 		hb.startTableRow();
 		hb.addTableCell(dtStr, false, true);
-		if(forecastOver12Months[idx] + tBalance < 0)
-		{
-			hb.addTableCell(balance, true, true, true, wxT("RED"));
-		}
-		else
-		{
-			hb.addTableCell(balance, true, false, true);
-		}
+                hb.addTableCell(balance, true, true, true, ((forecastOver12Months[idx] + tBalance < 0) ? wxT("RED") : wxT("BLACK")));
+                hb.addTableCell((idx==0 ? wxT ("") : diff), true, true, true, (forecastOver12Months[idx]-forecastOver12Months[idx-1] < 0 ? wxT("RED") : wxT("BLACK"))) ;
 		hb.endTableRow();
     }
 
