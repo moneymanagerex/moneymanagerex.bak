@@ -107,6 +107,11 @@ wxString mmReportTransactions::getHTMLText()
                 if (refTrans[index]->accountID_ == refAccountID_)
                     negativeTransAmount   = true;  // transfer is a withdrawl from account
             }
+
+            if (refTrans[index]->fromAccountStr_ == refTrans[index]->payeeStr_)
+            {
+                negativeTransAmount = true;
+            }
         }
 
         wxString amtColour = wxT("#000000"); // black
@@ -161,7 +166,7 @@ wxString mmReportTransactions::getHTMLText()
     if (unknownnReferenceAccount && transferTransactionFound)
     {
         hb.addHorizontalLine();
-        hb.addHeader(7, _("<b>Note:</b> Total Amount may be incorrect as <b>transfers</B> have been added to the total."));
+        hb.addHeader(7, _("<b>Note:</b> Transactions contain <b>'transfers'</B> that may be either added or subtracted in the Total Amount."));
     }
     hb.end();
 
