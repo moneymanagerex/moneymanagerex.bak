@@ -33,38 +33,38 @@ wxString mmReportCashFlow::getHTMLText()
     hb.init();
 
     int years = 10;
-    wxString headerMsg = wxString::Format (_("Cash Flow Forecast for %d Years Ahead - For "), years);
+    wxString headerMsg = wxString::Format (_("Cash Flow Forecast for %d Years Ahead"), years);
+        hb.addHeader(3, headerMsg );
+    headerMsg = _("Accounts: ");
     if (accountArray_ == NULL) 
     {
         if ( !(termAccountsHeading_ == activeTermAccounts_ ) &&
               (termAccountsHeading_ || activeTermAccounts_) )
-            headerMsg = headerMsg + _("All Bank Accounts");
+            headerMsg << _("All Bank Accounts");
         else 
-            headerMsg = headerMsg + _("All Accounts");
+            headerMsg << _("All Accounts");
 
-        hb.addHeader(3, headerMsg );
     } else {
         int arrIdx = 0;
-        wxString msgString = wxT(": ");
  
         if ( (int)accountArray_->size() == 0 )
-            msgString = msgString + wxT("?");
-        else if ( (int)accountArray_->size() > 1 )
-            msgString = wxT("s") + msgString;
+            headerMsg << wxT("?");
+        //else if ( (int)accountArray_->size() > 1 )
+        //    msgString = wxT("s") + msgString; //<-- we can't translate it to other languages
 
         if ( (int)accountArray_->size() > 0 )
         {
-            msgString = msgString + accountArray_->Item(arrIdx);
+            headerMsg << accountArray_->Item(arrIdx);
             arrIdx ++;
         }
         while ( arrIdx < (int)accountArray_->size() )
         {
-            msgString = msgString + wxT(", ") + accountArray_->Item(arrIdx);
+            headerMsg << wxT(", ") << accountArray_->Item(arrIdx);
             arrIdx ++;
         }
 
-        hb.addHeader(3, headerMsg + _("Account" + msgString));
     }
+        hb.addHeader(6, headerMsg);
 
     wxDateTime now = wxDateTime::Now();
     wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
@@ -230,7 +230,6 @@ wxString mmReportCashFlow::getHTMLText()
 
             mmRepeatForecast rf;
             rf.date = nextOccurDate;
-            wxString dtStr = mmGetDateForDisplay(core_->db_.get(), nextOccurDate);
 
             if (transType == wxT("Withdrawal"))
                 rf.amount = -amt * convRate;
@@ -310,17 +309,22 @@ wxString mmReportCashFlow::getHTMLText()
     {
         wxDateTime dtEnd   = wxDateTime::Now().Add(wxDateSpan::Months(idx+1));
            
-        wxString balance;
-        mmex::formatDoubleToCurrency(forecastOver12Months[idx] + tBalance, balance);
-        wxString diff;
-        mmex::formatDoubleToCurrency(forecastOver12Months[idx]-forecastOver12Months[idx-1], diff);
+        wxString balanceStr;
+        double balance = forecastOver12Months[idx] + tBalance;
+        mmex::formatDoubleToCurrency(balance, balanceStr);
+        wxString diffStr;
+        double diff;
+        diff = (idx==0 ? 0 : forecastOver12Months[idx]-forecastOver12Months[idx-1]) ;
+        mmex::formatDoubleToCurrency(diff, diffStr);
 
-        wxString dtStr = mmGetDateForDisplay(core_->db_.get(), dtEnd);
+        wxString dtStr ; 
+        //dtStr << mmGetNiceShortMonthName(dtEnd.GetMonth()) << wxT(" ") << dtEnd.GetYear();
+        dtStr << mmGetDateForDisplay(core_->db_.get(), dtEnd); 
 
 		hb.startTableRow();
 		hb.addTableCell(dtStr, false, true);
-                hb.addTableCell(balance, true, true, true, ((forecastOver12Months[idx] + tBalance < 0) ? wxT("RED") : wxT("BLACK")));
-                hb.addTableCell((idx==0 ? wxT ("") : diff), true, true, true, (forecastOver12Months[idx]-forecastOver12Months[idx-1] < 0 ? wxT("RED") : wxT("BLACK"))) ;
+                hb.addTableCell(balanceStr, true, true, true, ((balance < 0) ? wxT("RED") : wxT("BLACK")));
+                hb.addTableCell((idx==0 ? wxT ("") : diffStr), true, true, true, (diff < 0 ? wxT("RED") : wxT("BLACK"))) ;
 		hb.endTableRow();
     }
 
