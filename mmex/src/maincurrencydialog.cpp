@@ -127,22 +127,25 @@ void mmMainCurrencyDialog::CreateControls()
     itemPanel5->SetSizer(itemBoxSizer6);
 
     wxButton* itemButton7 = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_ADD, _("&Add"), 
-        wxDefaultPosition, wxDefaultSize, 5 );
-    itemBoxSizer6->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        wxDefaultPosition, wxDefaultSize, 4 );
+    itemBoxSizer6->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
     itemButtonEdit_ = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_EDIT, _("&Edit"), 
-        wxDefaultPosition, wxDefaultSize, 5 );
-    itemBoxSizer6->Add(itemButtonEdit_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        wxDefaultPosition, wxDefaultSize, 4 );
+    itemBoxSizer6->Add(itemButtonEdit_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     itemButtonEdit_->Disable();
 
     itemButtonDelete_ = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_DELETE, _("&Delete"), 
-        wxDefaultPosition, wxDefaultSize, 5 );
-    itemBoxSizer6->Add(itemButtonDelete_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        wxDefaultPosition, wxDefaultSize, 4 );
+    itemBoxSizer6->Add(itemButtonDelete_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     itemButtonDelete_->Disable();
 
-    wxButton* itemButtonSelect = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_SELECT, _("&Select"), 
-        wxDefaultPosition, wxDefaultSize, 5 );
-    itemBoxSizer6->Add(itemButtonSelect, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 4);
+
+    wxButton* itemButtonSelect = new wxButton( this, ID_MAINCURRENCYBUTTON_SELECT, _("&Select"));
+    itemBoxSizer9->Add(itemButtonSelect,  1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    //itemButtonSelect->SetToolTip(_("Select the currently selected currency as the selected currency for the account"));
 
     if(bEnableSelect_ == false) {
         itemButtonSelect->Disable();
