@@ -107,8 +107,7 @@ wxString mmReportTransactions::getHTMLText()
                 if (refTrans[index]->accountID_ == refAccountID_)
                     negativeTransAmount   = true;  // transfer is a withdrawl from account
             }
-
-            if (refTrans[index]->fromAccountStr_ == refTrans[index]->payeeStr_)
+            else if (refTrans[index]->fromAccountStr_ == refTrans[index]->payeeStr_)
             {
                 negativeTransAmount = true;
             }
