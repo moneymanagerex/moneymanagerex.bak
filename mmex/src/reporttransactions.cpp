@@ -58,6 +58,7 @@ wxString mmReportTransactions::getHTMLText()
     
     hb.startCenter();
     hb.startTable();
+    hb.startTable(wxT("92%"));
 
     // Display the data Headings
     hb.startTableRow();
@@ -80,6 +81,18 @@ wxString mmReportTransactions::getHTMLText()
     {
         std::vector<wxString> data;
         std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = *trans_;
+
+        // For transfer transactions, we need to fix the data reference point first.
+        if ( refAccountID_ > -1 && refTrans[index]->transType_ == wxT("Transfer") && 
+             (refAccountID_ == refTrans[index]->accountID_ || refAccountID_ == refTrans[index]->toAccountID_) )
+        {
+            boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(refAccountID_);
+            boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
+            wxASSERT(pCurrency);
+            pCurrency->loadCurrencySettings();
+
+            refTrans[index]->updateAllData(core_,refAccountID_,pCurrency);
+        }
 
         bool negativeTransAmount = false;   // this can be either a transfer or withdrawl
 
@@ -165,7 +178,7 @@ wxString mmReportTransactions::getHTMLText()
     if (unknownnReferenceAccount && transferTransactionFound)
     {
         hb.addHorizontalLine();
-        hb.addHeader(7, _("<b>Note:</b> Transactions contain <b>'transfers'</B> that may be either added or subtracted in the Total Amount."));
+        hb.addHeader(7, _("<b>Note:</b> Transactions contain <b>'transfers'</B> may either be added or subtracted to the <b>'Total Amount'</b> depending on last selected account."));
     }
     hb.end();
 
