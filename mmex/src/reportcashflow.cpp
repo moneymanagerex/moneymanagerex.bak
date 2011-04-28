@@ -74,7 +74,7 @@ wxString mmReportCashFlow::getHTMLText()
 
 	hb.startCenter();
 
-    hb.startTable(wxT("50%"));
+    hb.startTable(wxT("65%"));
 	hb.startTableRow();
 	hb.addTableHeaderCell(_("Date"));
 	hb.addTableHeaderCell(_("Total"));
