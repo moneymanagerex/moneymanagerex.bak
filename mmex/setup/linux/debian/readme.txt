@@ -1,5 +1,26 @@
-#!/bin/bash
-# How to build (and install) .deb package
+#How to prepare system to build mmex
+
+sudo apt-get install subversion
+
+mkdir ~/Development
+cd ~/Development
+svn co https://moneymanagerex.svn.sourceforge.net/svnroot/moneymanagerex/trunk/mmex/ mmex
+
+#Install wx libs
+sudo apt-get install libwxgtk2.8-dev libwxgtk2.8 libboost-dev
+
+#Installing Bakefile On Ubuntu 11.04
+
+sudo apt-get install python-dev
+
+#Download archive from link below then unpack it and build
+http://sourceforge.net/projects/bakefile/files/bakefile/0.2.9/bakefile-0.2.9.tar.gz/download
+./configure && make 
+sudo make install
+
+sudo apt-get install automake
+
+# How to build (and install) mmex.deb package
 #
 # Note: Build support for 32 bit and 64 bit.
 #
@@ -7,41 +28,21 @@
 #       32bit:= Architecture: i386
 #       64bit:= Architecture: amd64
 #
-# To build the amd64 (64 bit version), set varianle below to x64
+# To build the amd64 (64 bit version), set varianle in build.sh file to x64
 #
 ARCHITECTURE="x86"
 
-# The corresponding version of mmex must be specified below
+# The corresponding version of mmex must be specified:
 MMEX_VERSION="0.9.8.0"
 
-cd ../../../
-./configure --prefix=$HOME/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr
-make install
+#Then start ./build.sh file
 
-mkdir ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/DEBIAN
-cp setup/linux/debian/control.$ARCHITECTURE ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/DEBIAN/control
-cp setup/linux/debian/debian-binary  ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/DEBIAN/
-
-mkdir -p ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/applications
-cp resources/mmex.desktop ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/applications/
-
-mkdir -p ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/icons/hicolor/scalable/apps
-cp graphics/mmex.svg ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/icons/hicolor/scalable/apps/
-
-mkdir -p ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/man/man1
-cp doc/mmex.1.gz ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/man/man1/
-
-rm ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/mmex/po/*.po
-
-cd ~/build
-
-strip mmex-$MMEX_VERSION-$ARCHITECTURE/usr/bin/mmex
-fakeroot dpkg-deb -b mmex-$MMEX_VERSION-$ARCHITECTURE
-
-lintian mmex.deb
+#Check ~/build/mmex-xXX.deb file
+lintian mmex-xXX.deb
 # check errorrs against other lintian deb 
 
 # install the package (Have you backed up your databases?)
-
 #dpkg -i mmex.deb
+
+#Then run it
 #mmex&
