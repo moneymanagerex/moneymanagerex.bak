@@ -48,6 +48,7 @@ const wxString TRANS_TYPE_WITHDRAWAL = wxT("Withdrawal");
 const wxString TRANS_TYPE_DEPOSIT = wxT("Deposit");
 const wxString TRANS_TYPE_TRANSFER = wxT("Transfer");
 
+
 enum EColumn
 { 
     COL_DATE_OR_TRANSACTION_ID, 
@@ -801,6 +802,9 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 	if (selIndex!=-1) { 
         enableEditDeleteButtons(true);
         st->SetLabel(getItem(selIndex, COL_NOTES));
+        wxString miniStr;
+        miniStr = getTransferInfoStr(selIndex);
+        stm->SetLabel(miniStr);
     } else {
         //st->SetLabel(wxT (""));
         stm->SetLabel(wxT (""));
@@ -809,7 +813,82 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
     }
 }
 //----------------------------------------------------------------------------
+wxString mmCheckingPanel::getTransferInfoStr(int selIndex)
+{
+    char sql[] =
+    "select  c.transcode as TRANSCODE, "
+    "c.TRANSAMOUNT as TRANSAMOUNT,  TOTRANSAMOUNT, "
+    "cf.CURRENCYNAME as CURRENCYNAME,  tcf.CURRENCYNAME as TOCURRENCYNAME, "
+    "cf.CURRENCYID as CURRENCYID,  tcf.CURRENCYID as TOCURRENCYID, "
+    "tcf.BASECONVRATE as ToCurrecyRate, "
+    "c.ACCOUNTID as ACCOUNTID, "
+    "c.TOACCOUNTID as TOACCOUNTID, "
+    "i.infovalue as BASECURRENCYID "
+    "from  checkingaccount_v1 c "
+    "left join  accountlist_v1  ta on ta.ACCOUNTID=c.TOACCOUNTID "
+    "left join  accountlist_v1  a on a.ACCOUNTID=c.ACCOUNTID "
+    "left join currencyformats_v1 tcf on tcf.currencyid=ta.currencyid "
+    "left join currencyformats_v1 cf on cf.currencyid=a.currencyid "
+    "left join infotable_v1 i on i.infoname='BASECURRENCYID' "
+    "where c.transid = ? ";
+    
+    wxSQLite3Statement st = m_core->db_.get()->PrepareStatement(sql);
+    st.Bind(1, m_trans[selIndex]->transactionID());
 
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+
+    int basecurrencyid = q1.GetInt(wxT("BASECURRENCYID"));
+    wxString transcodeStr = q1.GetString(wxT("TRANSCODE"));
+    wxString currencynameStr = q1.GetString(wxT("CURRENCYNAME"));
+    wxString tocurrencynameStr = q1.GetString(wxT("TOCURRENCYNAME"));
+
+    wxString infoStr = wxT("");
+    if (transcodeStr == wxT("Transfer"))
+    {
+    int currencyid = q1.GetInt(wxT("CURRENCYID"));
+    int tocurrencyid = q1.GetInt(wxT("TOCURRENCYID"));
+    double amount = q1.GetDouble(wxT("TRANSAMOUNT"));
+    wxString amountStr;
+    double toamount = q1.GetDouble(wxT("TOTRANSAMOUNT"));
+    wxString toamountStr;
+    double convertion = (tocurrencyid == basecurrencyid ? toamount/amount : amount/toamount);
+    wxString convertionStr;
+
+
+    int accountId = q1.GetInt(wxT("ACCOUNTID"));
+    boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core->accountList_.getCurrencyWeakPtr(accountId).lock();
+    wxASSERT(pCurrencyPtr);
+    mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+
+    mmex::formatDoubleToCurrency(amount, amountStr);
+    infoStr << amountStr << wxT(" -> ");
+    mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
+
+    int toaccountId = q1.GetInt(wxT("TOACCOUNTID"));
+    pCurrencyPtr = m_core->accountList_.getCurrencyWeakPtr(toaccountId).lock();
+    wxASSERT(pCurrencyPtr);
+    mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+
+    mmex::formatDoubleToCurrency(toamount, toamountStr);
+    infoStr << toamountStr ;
+
+    if (tocurrencyid != currencyid)
+        {
+        infoStr << wxT(" ("); 
+        if (currencyid == basecurrencyid)
+        {infoStr << wxT("1") << tocurrencynameStr << wxT(" = ") << convertionStr << currencynameStr;}
+        else if (tocurrencyid == basecurrencyid)
+        {infoStr << wxT("1") << currencynameStr << wxT(" = ") << convertionStr << tocurrencynameStr;} 
+        else 
+        {infoStr << wxT("1") << tocurrencynameStr << wxT(" = ") << convertionStr << currencynameStr;} 
+        infoStr << wxT(")");
+        }
+    }
+
+
+return infoStr;
+}
+//---------------------------
 void mmCheckingPanel::Tips()
 {
     const wxString tips[] = {
