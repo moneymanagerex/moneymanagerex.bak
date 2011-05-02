@@ -76,10 +76,13 @@ public:
     wxString assetName_;
     wxString assetType_;
     wxString valueStr_;
+    wxString valueChangeStr_;
     wxString assetDate_;
     wxString assetNotes_;
+    wxString assetValueChange_;
 
     double value_;
+    double valueChange_;
 };
 
 class mmAssetsPanel : public mmPanelBase
