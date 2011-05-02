@@ -38,7 +38,8 @@ enum {
   MENU_TREEPOPUP_NEW,
   MENU_TREEPOPUP_EDIT,
   MENU_TREEPOPUP_DELETE,
-  IDC_PANEL_ASSET_STATIC_DETAILS
+  IDC_PANEL_ASSET_STATIC_DETAILS,
+  IDC_PANEL_ASSET_STATIC_DETAILS_MINI
 };
 enum EColumn
 { 
@@ -207,7 +208,7 @@ void mmAssetsPanel::CreateControls()
     itemPanel12->SetBackgroundColour(mmColors::listDetailsPanelColor);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
+    itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 3);
 
     wxSizerFlags flags;
     flags.Border();
@@ -233,10 +234,17 @@ void mmAssetsPanel::CreateControls()
     itemBoxSizer5->Add(itemButton7, flags);
     itemButton7->Enable(false);
 
+
+    //Infobar-mini 
+    wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, IDC_PANEL_ASSET_STATIC_DETAILS_MINI, wxT(""), 
+    wxPoint(-1,-1), wxSize(450, -1), wxNO_BORDER|wxST_NO_AUTORESIZE);
+    itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxALL, 10);
+
+    //Infobar 
     wxStaticText* itemStaticText33 = new wxStaticText( itemPanel12, 
     IDC_PANEL_ASSET_STATIC_DETAILS, wxT(""), 
     wxPoint(-1,-1), wxSize(350, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
-    itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxALL, 5);
+    itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxALL, 0);
             
             updateExtraAssetData(-1);
 
@@ -263,7 +271,9 @@ void mmAssetsPanel::initVirtualListControl()
            "a.ASSETTYPE as ASSETTYPE, "
            "a.STARTDATE as STARTDATE, "
            "strftime(INFOVALUE, a.STARTDATE) as BEGINDATE, "
-           "a.NOTES as NOTES "
+           "a.NOTES as NOTES, "
+           "VALUECHANGE as VALUECHANGE, "
+           "VALUECHANGERATE as VALUECHANGERATE "
     "from ASSETS_V1 a "
     "left join infotable_v1 i on i.INFONAME='DATEFORMAT' "
     "order by a.STARTDATE " ;
@@ -287,12 +297,18 @@ void mmAssetsPanel::initVirtualListControl()
             th.assetDate_ = mmGetDateForDisplay(m_db, dtdt);
             }
      
-        wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
-        th.assetType_ =  wxGetTranslation(assetTypeStr); // string should be marked for translation
+        wxString assetStr = q1.GetString(wxT("ASSETTYPE"));
+        th.assetType_ =  wxGetTranslation(assetStr); // string should be marked for translation
+        assetStr = q1.GetString(wxT("VALUECHANGE"));
+        th.assetValueChange_ =  wxGetTranslation(assetStr); 
 
         th.assetNotes_ = q1.GetString(wxT("NOTES"));
 
+        th.valueChange_ = q1.GetDouble(wxT("VALUECHANGERATE"));
+
         mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
+        mmex::formatDoubleToCurrencyEdit(th.valueChange_, th.valueChangeStr_);
+
         m_trans.push_back(th);
     }
 
@@ -371,12 +387,19 @@ void assetsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 void mmAssetsPanel::updateExtraAssetData(int selIndex)
 {
 	wxStaticText* st = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS);	
+        wxStaticText* stm = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS_MINI);
 	if (selIndex!=-1) { 
         enableEditDeleteButtons(true);
-        st->SetLabel(getItem(selIndex, COL_NOTES));
+        wxString miniInfo;
+        wxString infoStr;
+        infoStr = getItem(selIndex, COL_NOTES);
+        miniInfo << wxT("\t") << _("Change in Value") << wxT(": ") << m_trans[selIndex].assetValueChange_ << wxT(" = ") << m_trans[selIndex].valueChange_ << wxT("%");
+        st->SetLabel(infoStr);
+        stm->SetLabel(miniInfo);
         }
         else
         {
+        stm -> SetLabel(wxT(""));
         st->SetLabel(_("MMEX allows you to track fixed assets like cars, houses, land and others. Each asset can have its value appreciate by a certain rate per year, depreciate by a certain rate per year, or not change in value. The total assets are added to your total financial worth."));
         enableEditDeleteButtons(false);
         }
