@@ -381,15 +381,10 @@ void mmStocksPanel::initVirtualListControl()
 
     header->SetLabel(lbl);
 
-    // --
-    //TODO: SQLite can't year format like yy can only yyyy
-    //Convertion should be easy
-    //But it's feature - mmex not need to be restarted when date format changed
     char sql[] =
     "select STOCKID, HELDAT,  STOCKNAME, SYMBOL, NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, VALUE, COMMISSION, "
-    "coalesce ( strftime(INFOVALUE,PURCHASEDATE), replace (replace (replace (INFOVALUE, '%y', "
-    "(replace(strftime('%Y',PURCHASEDATE)-(round(strftime('%Y',PURCHASEDATE)/100)*100),'.0',''))) , '%m' , strftime('%m',PURCHASEDATE)) "
-    ", '%d', strftime('%d',PURCHASEDATE))) as PURCHDATE, "
+    " strftime(INFOVALUE,PURCHASEDATE) as PURCHDATE, "
+    "PURCHASEDATE, "
     "julianday('now', 'localtime')-julianday (PURCHASEDATE) as DAYSOWN "
     "from STOCK_V1 "
     "left join infotable_v1 i on i.INFONAME='DATEFORMAT' "
@@ -430,6 +425,14 @@ void mmStocksPanel::initVirtualListControl()
         mmex::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
         if ((th.numShares_ - static_cast<int>(th.numShares_)) != 0.0 )
         mmex::formatDoubleToCurrencyEdit(th.numShares_, th.numSharesStr_);
+
+        //sqlite does not support %y date mask therefore null value should be replaces
+        if (th.stockPDate_ == wxT(""))
+        {
+            wxString dateString = q1.GetString(wxT("PURCHASEDATE"));
+            wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
+            th.stockPDate_ = mmGetDateForDisplay(db_, dtdt);
+        }
 
         trans_.push_back(th);
     }
