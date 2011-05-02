@@ -279,7 +279,7 @@ void mmAssetsPanel::initVirtualListControl()
         th.value_ = mmDBWrapper::getAssetValue(m_db, th.assetID_);
         th.assetName_ = q1.GetString(wxT("ASSETNAME"));
         th.assetDate_ = q1.GetString(wxT("BEGINDATE"));
-        //sqlite does not support %Y date mask therefore null value should be replaces
+        //sqlite does not support %y date mask therefore null value should be replaces
         if (th.assetDate_ == wxT(""))
             {
             wxString dateString = q1.GetString(wxT("STARTDATE"));
@@ -290,7 +290,6 @@ void mmAssetsPanel::initVirtualListControl()
         wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
         th.assetType_ =  wxGetTranslation(assetTypeStr); // string should be marked for translation
 
-//        wxString assetNotes = q1.GetString(wxT("NOTES"));
         th.assetNotes_ = q1.GetString(wxT("NOTES"));
 
         mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
