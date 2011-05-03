@@ -803,7 +803,7 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
         enableEditDeleteButtons(true);
         st->SetLabel(getItem(selIndex, COL_NOTES));
         wxString miniStr;
-        miniStr = getTransferInfoStr(selIndex);
+        miniStr = getMiniInfoStr(selIndex);
         stm->SetLabel(miniStr);
     } else {
         //st->SetLabel(wxT (""));
@@ -813,14 +813,14 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
     }
 }
 //----------------------------------------------------------------------------
-wxString mmCheckingPanel::getTransferInfoStr(int selIndex)
+wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
 {
     char sql[] =
     "select  c.transcode as TRANSCODE, "
     "c.TRANSAMOUNT as TRANSAMOUNT,  TOTRANSAMOUNT, "
     "cf.CURRENCYNAME as CURRENCYNAME,  tcf.CURRENCYNAME as TOCURRENCYNAME, "
     "cf.CURRENCYID as CURRENCYID,  tcf.CURRENCYID as TOCURRENCYID, "
-    "tcf.BASECONVRATE as ToCurrecyRate, "
+    "cf.BASECONVRATE as BASECONVRATE, "
     "c.ACCOUNTID as ACCOUNTID, "
     "c.TOACCOUNTID as TOACCOUNTID, "
     "i.infovalue as BASECURRENCYID "
@@ -841,36 +841,37 @@ wxString mmCheckingPanel::getTransferInfoStr(int selIndex)
     wxString transcodeStr = q1.GetString(wxT("TRANSCODE"));
     wxString currencynameStr = q1.GetString(wxT("CURRENCYNAME"));
     wxString tocurrencynameStr = q1.GetString(wxT("TOCURRENCYNAME"));
+    int currencyid = q1.GetInt(wxT("CURRENCYID"));
+    double amount = q1.GetDouble(wxT("TRANSAMOUNT"));
+    wxString amountStr;
+    double convrate = q1.GetDouble(wxT("BASECONVRATE"));
 
     wxString infoStr = wxT("");
     if (transcodeStr == wxT("Transfer"))
     {
-    int currencyid = q1.GetInt(wxT("CURRENCYID"));
     int tocurrencyid = q1.GetInt(wxT("TOCURRENCYID"));
-    double amount = q1.GetDouble(wxT("TRANSAMOUNT"));
-    wxString amountStr;
     double toamount = q1.GetDouble(wxT("TOTRANSAMOUNT"));
     wxString toamountStr;
     double convertion = (tocurrencyid == basecurrencyid ? toamount/amount : amount/toamount);
     wxString convertionStr;
 
-
-    int accountId = q1.GetInt(wxT("ACCOUNTID"));
-    boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core->accountList_.getCurrencyWeakPtr(accountId).lock();
+    int toaccountId = q1.GetInt(wxT("TOACCOUNTID"));
+    boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core->accountList_.getCurrencyWeakPtr(toaccountId).lock();
     wxASSERT(pCurrencyPtr);
     mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-
-    mmex::formatDoubleToCurrency(amount, amountStr);
-    infoStr << amountStr << wxT(" -> ");
+    mmex::formatDoubleToCurrency(toamount, toamountStr);
+    if (tocurrencyid == basecurrencyid)
     mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
 
-    int toaccountId = q1.GetInt(wxT("TOACCOUNTID"));
-    pCurrencyPtr = m_core->accountList_.getCurrencyWeakPtr(toaccountId).lock();
+    int accountId = q1.GetInt(wxT("ACCOUNTID"));
+    pCurrencyPtr = m_core->accountList_.getCurrencyWeakPtr(accountId).lock();
     wxASSERT(pCurrencyPtr);
     mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+    mmex::formatDoubleToCurrency(amount, amountStr);
+    if (currencyid == basecurrencyid)
+    mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
 
-    mmex::formatDoubleToCurrency(toamount, toamountStr);
-    infoStr << toamountStr ;
+    infoStr << amountStr << wxT(" -> ") << toamountStr ;
 
     if (tocurrencyid != currencyid)
         {
@@ -884,7 +885,21 @@ wxString mmCheckingPanel::getTransferInfoStr(int selIndex)
         infoStr << wxT(")");
         }
     }
-
+    else //For deposits and withdrawals calculates amount in base currency
+    {
+        if (currencyid != basecurrencyid) //Show nothing if account currency is base
+        {
+            double convrate = q1.GetDouble(wxT("BASECONVRATE"));
+            //load settings for base currency
+            wxString currencyName = mmDBWrapper::getCurrencyName(m_core->db_.get(), basecurrencyid);
+            boost::shared_ptr<mmCurrency> pCurrency = m_core->currencyList_.getCurrencySharedPtr(currencyName);
+            wxASSERT(pCurrency);
+            mmDBWrapper::loadSettings(m_core->db_.get(), pCurrency->currencyID_);
+            mmex::formatDoubleToCurrency(amount*convrate, amountStr);
+            //output
+            infoStr << _("Amount in the base currency:") << wxT(" ") << amountStr;
+        }
+    }
 
 return infoStr;
 }
