@@ -821,6 +821,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
     "cf.CURRENCYNAME as CURRENCYNAME,  tcf.CURRENCYNAME as TOCURRENCYNAME, "
     "cf.CURRENCYID as CURRENCYID,  tcf.CURRENCYID as TOCURRENCYID, "
     "cf.BASECONVRATE as BASECONVRATE, "
+    "tcf.BASECONVRATE as TOBASECONVRATE, "
     "c.ACCOUNTID as ACCOUNTID, "
     "c.TOACCOUNTID as TOACCOUNTID, "
     "i.infovalue as BASECURRENCYID "
@@ -844,6 +845,8 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
     int currencyid = q1.GetInt(wxT("CURRENCYID"));
     double amount = q1.GetDouble(wxT("TRANSAMOUNT"));
     wxString amountStr;
+    double convrate = q1.GetDouble(wxT("BASECONVRATE"));
+    double toconvrate = q1.GetDouble(wxT("TOBASECONVRATE"));
 
     wxString infoStr = wxT("");
     if (transcodeStr == wxT("Transfer"))
@@ -851,7 +854,8 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
     int tocurrencyid = q1.GetInt(wxT("TOCURRENCYID"));
     double toamount = q1.GetDouble(wxT("TOTRANSAMOUNT"));
     wxString toamountStr;
-    double convertion = (tocurrencyid == basecurrencyid ? toamount/amount : amount/toamount);
+    double convertion;
+    convertion = ( convrate < toconvrate ? amount/toamount : toamount/amount);
     wxString convertionStr;
 
     int toaccountId = q1.GetInt(wxT("TOACCOUNTID"));
@@ -859,7 +863,6 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
     wxASSERT(pCurrencyPtr);
     mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
     mmex::formatDoubleToCurrency(toamount, toamountStr);
-    if (tocurrencyid == basecurrencyid)
     mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
 
     int accountId = q1.GetInt(wxT("ACCOUNTID"));
@@ -872,15 +875,15 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
 
     infoStr << amountStr << wxT(" -> ") << toamountStr ;
 
-    if (tocurrencyid != currencyid)
+        if (tocurrencyid != currencyid)
         {
         infoStr << wxT(" ("); 
-        if (currencyid == basecurrencyid)
-        {infoStr << wxT("1") << tocurrencynameStr << wxT(" = ") << convertionStr << currencynameStr;}
+        if (currencyid != basecurrencyid && tocurrencyid != basecurrencyid)
+        {infoStr << wxT("1") << tocurrencynameStr << wxT(" 1= ") << convertionStr << currencynameStr;}
         else if (tocurrencyid == basecurrencyid)
-        {infoStr << wxT("1") << currencynameStr << wxT(" = ") << convertionStr << tocurrencynameStr;} 
+        {infoStr << wxT("1") << currencynameStr << wxT(" 2= ") << convertionStr << tocurrencynameStr;} 
         else 
-        {infoStr << wxT("1") << tocurrencynameStr << wxT(" = ") << convertionStr << currencynameStr;} 
+        {infoStr << wxT("1") << tocurrencynameStr << wxT(" 3= ") << convertionStr << currencynameStr;} 
         infoStr << wxT(")");
         }
     }
@@ -888,7 +891,6 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
     {
         if (currencyid != basecurrencyid) //Show nothing if account currency is base
         {
-            double convrate = q1.GetDouble(wxT("BASECONVRATE"));
             //load settings for base currency
             wxString currencyName = mmDBWrapper::getCurrencyName(m_core->db_.get(), basecurrencyid);
             boost::shared_ptr<mmCurrency> pCurrency = m_core->currencyList_.getCurrencySharedPtr(currencyName);
