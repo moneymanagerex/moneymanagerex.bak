@@ -137,6 +137,8 @@ private:
     /* Getter for Virtual List Control */
     wxString getItem(long item, long column);
 
+    wxString getMiniInfoStr(int selIndex);
+
     int accountID() const { return m_AccountID; }
 };
 //----------------------------------------------------------------------------
