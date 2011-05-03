@@ -844,7 +844,6 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
     int currencyid = q1.GetInt(wxT("CURRENCYID"));
     double amount = q1.GetDouble(wxT("TRANSAMOUNT"));
     wxString amountStr;
-    double convrate = q1.GetDouble(wxT("BASECONVRATE"));
 
     wxString infoStr = wxT("");
     if (transcodeStr == wxT("Transfer"))
