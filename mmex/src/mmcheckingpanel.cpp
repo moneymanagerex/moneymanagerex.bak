@@ -902,7 +902,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
             mmex::formatDoubleToCurrency(amount*convrate, basecuramountStr);
 
             pCurrency = m_core->accountList_.getCurrencyWeakPtr(accountId).lock();
-            wxASSERT(pCurrencyPtr);
+            wxASSERT(pCurrency);
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrency);
             mmex::formatDoubleToCurrency(amount, amountStr);
 
