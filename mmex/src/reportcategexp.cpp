@@ -103,7 +103,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
         while (q1.NextRow())
         {
             int categs = 0;
-            grandtotalseparator = true;
+            //grandtotalseparator = true;
             double categtotal = 0.0;
             int categID          = q1.GetInt(wxT("CATEGID"));
             wxString categString = q1.GetString(wxT("CATEGNAME"));
@@ -174,8 +174,9 @@ wxString mmReportCategoryExpenses::getHTMLText()
                 mmex::formatDoubleToCurrency(categtotal, categtotalStr);hb.startTableRow();
                 hb.addTableCell(_("Category Total: "),false, true, true, wxT("GRAY"));
                 hb.addTableCell(categtotalStr, true, false, true, wxT("GRAY"));
-                hb.addRowSeparator(2);
             }
+            if (categs>0)
+            hb.addRowSeparator(2);
 
             st.Reset();
         }
