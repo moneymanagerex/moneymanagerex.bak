@@ -68,17 +68,17 @@ wxString mmReportCategoryExpenses::getHTMLText()
             hb.addLineBreak();
         }
 
-		hb.startCenter();
+        hb.startCenter();
 
         // Add the graph
         mmGraphPie gg;
         hb.addImage(gg.getOutputFileName());
 
-		hb.startTable(wxT("50%"));
-		hb.startTableRow();
-		hb.addTableHeaderCell(_("Category"));
-		hb.addTableHeaderCell(_("Amount"));
-		hb.endTableRow();
+        hb.startTable(wxT("50%"));
+        hb.startTableRow();
+        hb.addTableHeaderCell(_("Category"));
+        hb.addTableHeaderCell(_("Amount"));
+        hb.endTableRow();
 
         core_->currencyList_.loadBaseCurrencySettings();
 
@@ -93,15 +93,18 @@ wxString mmReportCategoryExpenses::getHTMLText()
         "select SUBCATEGID, SUBCATEGNAME "
         "from SUBCATEGORY_V1 "
         "where CATEGID = ?"
-		"order by SUBCATEGNAME";
+        "order by SUBCATEGNAME";
 
         wxSQLite3Statement st = db_->PrepareStatement(sql_sub);
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
 
-
         double grandtotal = 0.0;
+        bool grandtotalseparator = true;
         while (q1.NextRow())
         {
+            int categs = 0;
+            grandtotalseparator = true;
+            double categtotal = 0.0;
             int categID          = q1.GetInt(wxT("CATEGID"));
             wxString categString = q1.GetString(wxT("CATEGNAME"));
             wxString balance;
@@ -117,6 +120,8 @@ wxString mmReportCategoryExpenses::getHTMLText()
                     vp.label = categString;
                     vp.amount = amt;
                     grandtotal += amt;
+                    categtotal += amt;
+                    categs++;
                     valueList.push_back(vp);
 
                     hb.startTableRow();
@@ -152,13 +157,24 @@ wxString mmReportCategoryExpenses::getHTMLText()
                     vp.label = categString + wxT(" : ") + subcategString;
                     vp.amount = amt;
                     grandtotal += amt;
+                    categtotal += amt;
+                    categs++;
                     valueList.push_back(vp);
 
-					hb.startTableRow();
-					hb.addTableCell(categString + wxT(": ") + subcategString, false, true);
-					hb.addTableCell(balance, true, false, true);
-					hb.endTableRow();
+                    hb.startTableRow();
+                    hb.addTableCell(categString + wxT(" : ") + subcategString, false, true);
+                    hb.addTableCell(balance, true, false, true);
+                    hb.endTableRow();
                 }
+            }
+            if (categs>1)
+            {
+                grandtotalseparator = false;
+                wxString categtotalStr;
+                mmex::formatDoubleToCurrency(categtotal, categtotalStr);hb.startTableRow();
+                hb.addTableCell(_("Category Total: "),false, true, true, wxT("GRAY"));
+                hb.addTableCell(categtotalStr, true, false, true, wxT("GRAY"));
+                hb.addRowSeparator(2);
             }
 
             st.Reset();
@@ -167,6 +183,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
         q1.Finalize();
         st.Finalize();
 
+        if (grandtotalseparator)
         hb.addRowSeparator(2);
         wxString grandtotalStr;
         mmex::formatDoubleToCurrency(grandtotal, grandtotalStr);
