@@ -98,13 +98,14 @@ wxString mmReportCategoryExpenses::getHTMLText()
         wxSQLite3Statement st = db_->PrepareStatement(sql_sub);
         wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
 
+
+        double grandtotal = 0.0;
         while (q1.NextRow())
         {
             int categID          = q1.GetInt(wxT("CATEGID"));
             wxString categString = q1.GetString(wxT("CATEGNAME"));
             wxString balance;
-            double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignoreDate_, 
-                dtBegin_, dtEnd_);
+            double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignoreDate_, dtBegin_, dtEnd_);
             mmex::formatDoubleToCurrency(amt, balance);
 
             if ((type_ == 0) || ((type_ == 1 && amt > 0.0) ||
@@ -115,6 +116,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
                     ValuePair vp;
                     vp.label = categString;
                     vp.amount = amt;
+                    grandtotal += amt;
                     valueList.push_back(vp);
 
                     hb.startTableRow();
@@ -146,10 +148,11 @@ wxString mmReportCategoryExpenses::getHTMLText()
 
                 if (amt != 0.0)
                 {
-                   ValuePair vp;
-                   vp.label = categString + wxT(" : ") + subcategString;
-                   vp.amount = amt;
-                   valueList.push_back(vp);
+                    ValuePair vp;
+                    vp.label = categString + wxT(" : ") + subcategString;
+                    vp.amount = amt;
+                    grandtotal += amt;
+                    valueList.push_back(vp);
 
 					hb.startTableRow();
 					hb.addTableCell(categString + wxT(": ") + subcategString, false, true);
@@ -164,8 +167,16 @@ wxString mmReportCategoryExpenses::getHTMLText()
         q1.Finalize();
         st.Finalize();
 
+        hb.addRowSeparator(2);
+        wxString grandtotalStr;
+        mmex::formatDoubleToCurrency(grandtotal, grandtotalStr);
+        hb.startTableRow();
+        hb.addTableCell(_("Grand Total: "),false, true, true);
+        hb.addTableCell(grandtotalStr, true, false, true);
+        hb.endTableRow();
+        
         hb.endTable();
-	hb.endCenter();
+        hb.endCenter();
 
         hb.end();
 
