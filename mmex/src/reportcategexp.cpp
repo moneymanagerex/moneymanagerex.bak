@@ -169,14 +169,16 @@ wxString mmReportCategoryExpenses::getHTMLText()
             }
             if (categs>1)
             {
-                grandtotalseparator = false;
                 wxString categtotalStr;
                 mmex::formatDoubleToCurrency(categtotal, categtotalStr);hb.startTableRow();
                 hb.addTableCell(_("Category Total: "),false, true, true, wxT("GRAY"));
                 hb.addTableCell(categtotalStr, true, false, true, wxT("GRAY"));
             }
             if (categs>0)
+            {
+            grandtotalseparator = false;
             hb.addRowSeparator(2);
+            }
 
             st.Reset();
         }
