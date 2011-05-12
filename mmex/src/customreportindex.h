@@ -18,7 +18,6 @@
 #ifndef _MM_EX_CUSTOMREPORTINDEX_H_
 #define _MM_EX_CUSTOMREPORTINDEX_H_
 
-#include "reportbase.h"
 #include "mmcoredb.h"
 
 //===============================================================
@@ -29,37 +28,77 @@ class customSQLReportIndex
 {
 public:
     customSQLReportIndex();
+    
+//    virtual ~customSQLReportIndex();
 
+    /** Create the index file if the file does not exist.
+        sets hasActiveSQLReports() to true if successful. */
+    void initIndexFileHeader();
+    
+    /** Returns true if file is initialised and open */
     bool hasActiveSQLReports();
-    void setSQLReportsActive();
+
+    /**  Sets the index file pointer at beginning of file */ 
+    void resetReportsIndex();
+
+    /** Sets and Returns the report title. Reads one line of the index file.
+        Sets: validTitle_ currentReportTitle_ currentReportFileName_ reportIsSubReport_ */
+    wxString nextReportTitle();
+    
+    /** Sets and Returns the filename for the given index.  */
+    wxString reportFileName(int index);
+
+    /** Valid after calling: nextReportTitle() */
+    bool validTitle();
+
+    /** Returns the report title.
+        Valid after calling: : nextReportTitle() or reportFileName() */
+    wxString currentReportTitle();
+
+    /** Returns true if report is a subreport title.
+        Valid after calling: : nextReportTitle() or reportFileName() */
     bool reportIsSubReport();
 
-    bool initIndexFileHeader();
-    void resetReportsIndex();
-    bool validTitle();
-    wxString nextReportTitle();
-    wxString reportFileName(int index);
-    wxString currentReportTitle();
-    wxString currentReportFileName();
+    /** Returns the report filename.
+        Valid after calling: : nextReportTitle() or reportFileName() */
+    wxString currentReportFileName(bool withfilePath = true);
 
-    wxString UserDialogHeading(); 
-    void getUserTitleSelection(wxString description = wxT(":"));
-    void setUserTitleSelection(wxString titleIndex);
+    /** Return index of user selected report title as ID: Custom_Report_xxx.
+        sets: validTitle_ currentReportTitle_ currentReportFileName_ currentReportFileIndex_ */
+    wxString getUserTitleSelection(wxString description = wxT(":"));
+
+    /** Gets the report title from the given ID: Custom_Report_xxx.
+        sets: currentReportTitle_ currentReportFileName_ currentReportFileIndex_  */
+    void getSelectedTitleSelection(wxString titleIndex);
+
+    /** Adds a new listing to the index file at the currentReportFileIndex_
+        call getUserTitleSelection() or getSelectedTitleSelection() first. */
+    void addReportTitle(wxString reportTitle, bool updateIndex, wxString reportFileName = wxT(""), bool isSub = false);
+
+    /** Returns true if the report list is not empty */
+    bool ReportListHasItems();
+
+    /** Removes the listing from the index file at location: currentReportFileIndex_  */
     void deleteSelectedReportTitle();
+
+    /** Returns the title header string for User Dialog */
+    wxString UserDialogHeading(); 
+
+    /** Returns the file contents if the .SQL file */ 
+    bool getSqlFileData(wxString& sqlText);
 
 private:
     bool activeSqlReports_;
-    wxTextFile* indexFile_; 
     bool validTitle_;
     bool reportIsSubReport_;
+    int  currentReportFileIndex_;
+
+    wxTextFile* indexFile_; 
     wxString currentReportTitle_;
     wxString currentReportFileName_;
-    int userSelectedFileIndex_;
 
-    void LoadArrays(wxArrayString& titleArray, wxArrayString& fileNameArray);
-
+    void LoadArrays(wxArrayString& titleArray, wxArrayString& fileNameArray, wxArrayString& subArray);
 };
-
 
 #endif
 

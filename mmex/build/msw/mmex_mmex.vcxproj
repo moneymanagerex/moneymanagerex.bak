@@ -1677,6 +1677,7 @@
     <ClCompile Include="..\..\src\chart.cpp" />
     <ClCompile Include="..\..\src\constants.cpp" />
     <ClCompile Include="..\..\src\currencydialog.cpp" />
+    <ClCompile Include="..\..\src\customreportdialog.cpp" />
     <ClCompile Include="..\..\src\customreportdisplay.cpp" />
     <ClCompile Include="..\..\src\customreportindex.cpp" />
     <ClCompile Include="..\..\src\dbwrapper.cpp" />
@@ -1748,6 +1749,7 @@
     <ClInclude Include="..\..\src\chart.h" />
     <ClInclude Include="..\..\src\constants.h" />
     <ClInclude Include="..\..\src\currencydialog.h" />
+    <ClInclude Include="..\..\src\customreportdialog.h" />
     <ClInclude Include="..\..\src\customreportdisplay.h" />
     <ClInclude Include="..\..\src\customreportindex.h" />
     <ClInclude Include="..\..\src\dbwrapper.h" />

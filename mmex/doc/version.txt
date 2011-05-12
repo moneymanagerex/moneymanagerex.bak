@@ -2,21 +2,28 @@ Version History of Money Manager Ex
 
 0.9.8.0 (TBA)
 - wxSQLite3 updated to v.2.1.0 (sqlite3 v.3.7.5)
-- New: Commands in Tools Menu for the Relocation of Categories and Payees.
-- New: Date format: YYYYMMDD
-- New: User options for Payee, Category and Status for Transaction dialog behavior.
-- New: Reintroduction of Custom Reports as installable reports.
-- New: Auto execution of Repeating Transactions with user interaction or Silent Running.
-- New: Skip Transaction command in Repeating Transactions included.
-- New: AMD64 Build Instructions
-- Change: Home Page Income/Expenses reflect calculations of visible accounts.
-- Change: Stocks Summary Display Home Page with new item in View Menu and Options
-- New: Icons in accounts to highlight transfer transactions
-- New: Determine most used category for transfer (user selectable)
+- New commands in Tools Menu for the Relocation of Categories and Payees.
+- New date format: YYYYMMDD
+- New user options for 'Transaction Dialog' behavior.
+  - Auto payee inclusion for transactions (user selectable)
+  - Auto category inclusion for transfer transactions (user selectable)
+  - Allow Status to be set to 'Reconciled' (user selectable)
+- Reintroduction of Custom Reports as installable reports.
+- Repeating Transactions:
+  - Allow transactions to be automatically entered with user control.
+  - Allow transactions to be automatically entered without user control.
+  - new 'Skip' transaction command.
+- New AMD64 build instructions.
+- Change to Home Page Income/Expenses reflect calculations of visible accounts.
+- Stocks Summary now displayed on Home Page with new Option and Menu:View item.   
+- New icons in Accounts to highlight a transfer and direction for a transaction.
 - Currency dialogs updated - Now allows deletion of a currency.
-  Improved Backup options on Startup.
-
-- New Tool: Creation of Custom Reports.
+- Improved Backup options on Startup.
+- Improved functionality of Transaction Report.
+- Expanded periods for Cash Flow Reports.
+- Improved Categories: Sub Reports
+- Hide Financial Year reports when same Year Reports
+- New Tools for the maintenance of Custom Reports.
 
 
 - and bugfixes.
