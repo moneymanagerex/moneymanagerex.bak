@@ -145,8 +145,6 @@ private:
     bool activeTermAccounts_;
     wxArrayString getAccountsArray(bool withTermAccounts = false);
 
-    void createCustomReport(int index);
-
     void cleanup();
     wxSizer* cleanupHomePanel(bool new_sizer = true);
     void openFile(const wxString& fileName, bool openingNew, const wxString &password = wxGetEmptyString());
@@ -234,15 +232,24 @@ private:
     void OnViewOpenAccounts(wxCommandEvent& event);
 
     /* Custom SQL Report*/
+    bool CustomSQLReportSelected(int& customSqlReportID, mmTreeItemData* iData );
+    void CreateCustomReport(int index);
+    void EditCustomSqlReport();
+    void DeleteCustomSqlReport();
+    void RunCustomSqlDialog(bool forEdit = false);
+    bool expandedReportNavTree_;
+    bool expandedCustomSqlReportNavTree_;
+
+    void OnTreeItemExpanded(wxTreeEvent& event);
+    void OnTreeItemCollapsed(wxTreeEvent& event);
+
     void OnNewCustomSqlReport(wxCommandEvent& event);
     void OnEditCustomSqlReport(wxCommandEvent& event);
     void OnPopupEditCustomSqlReport(wxCommandEvent& event);
-    void EditCustomSqlReport();
-    bool CustomSQLReportSelected(int& customSqlReportID, mmTreeItemData* iData );
-
     void OnDeleteCustomSqlReport(wxCommandEvent& event);
     void OnPopupDeleteCustomSqlReport(wxCommandEvent& event);
-    void DeleteCustomSqlReport();
+
+    bool financialYearIsDifferent();
 
     // any class wishing to process wxWindows events must use this macro
     DECLARE_EVENT_TABLE()

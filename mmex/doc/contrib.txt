@@ -1,28 +1,31 @@
 Active Developers
 ==========================================
-Stefano [stef145g]
-Nikolay [Nikolay]
+Stefano         [stef145g]
+Nikolay         [Nikolay]
+Pat             [omalleypat]
 
 Code Builds/Fixes/Patches
 ==========================================
-Mike      [u4ear]
-Vadim
 Alex Ukhov
-Priyank Bolia
-jblough
-Stuart
-Greg Newton
-Paulo Lopes
-Igor
 Bettega Stefano
-Vat
-hykwok
-Pieter
-Rohit Kumar
+Greg Newton
 Ho Yin Kwok
+hykwok
+Igor
+jblough
 Jeancf
+Mike            [u4ear]
+Nikolay         [Nikolay]
+Pat             [omalleypat]
+Paulo Lopes
+Pieter
+Priyank Bolia
+Rohit Kumar
+Stefano         [stef145g]
+Stuart
+Vadim
+Vat
 Wesley Ellis
-Pat
 
 Silk Icons
 ==========================================
