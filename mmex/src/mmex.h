@@ -250,6 +250,7 @@ private:
     void OnPopupDeleteCustomSqlReport(wxCommandEvent& event);
 
     bool financialYearIsDifferent();
+    bool IsUpdateAvailable(wxString page);
 
     // any class wishing to process wxWindows events must use this macro
     DECLARE_EVENT_TABLE()

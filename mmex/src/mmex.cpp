@@ -3393,31 +3393,15 @@ void mmGUIFrame::OnHelp(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
  
-void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
+bool mmGUIFrame::IsUpdateAvailable(wxString page)
 {
-    wxString site = wxT("http://www.codelathe.com/mmex/version.html");
-    wxURL url(site);
-
-    unsigned char buf[1024];
-    boost::scoped_ptr<wxInputStream> in_stream(url.GetInputStream());
-	if (!in_stream)
-	{
-		mmShowErrorMessage(this, _("Unable to connect!"), _("Check Update"));
-		return;
-	}
-    in_stream->Read(buf, 1024);
-    //size_t bytes_read=in_stream->LastRead();
-    in_stream.reset();
-    buf[7] = '\0';
-
-    wxString page = wxString::FromAscii((const char *)buf);
     wxStringTokenizer tkz(page, wxT('.'), wxTOKEN_RET_EMPTY_ALL);  
     int numTokens = (int)tkz.CountTokens();
     if (numTokens != 4)
     {
         wxString url = wxT("http://www.codelathe.com/mmex");
         wxLaunchDefaultBrowser(url);
-        return;
+        return false;
     }
     
     wxString maj = tkz.GetNextToken();
@@ -3458,7 +3442,54 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
         }
     }
 
-    if (isUpdateAvailable)
+    return isUpdateAvailable;
+}
+
+void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
+{
+    wxString site = wxT("http://www.codelathe.com/mmex/version.html");
+    wxURL url(site);
+
+    unsigned char buf[1024];
+    boost::scoped_ptr<wxInputStream> in_stream(url.GetInputStream());
+	if (!in_stream)
+	{
+		mmShowErrorMessage(this, _("Unable to connect!"), _("Check Update"));
+		return;
+	}
+    in_stream->Read(buf, 1024);
+    //size_t bytes_read=in_stream->LastRead();
+    in_stream.reset();
+    buf[7] = '\0';
+
+    wxString page = wxString::FromAscii((const char *)buf);
+
+    /**********************************************************
+        Follow up:
+        fix when internet has been updated
+    ***********************************************************/
+    page = wxT("Win: 0.9.8.0 - Unix: 0.9.7.0 - MAC: 0.9.5.1");
+
+    wxStringTokenizer sysTokens(page,wxT("-"));
+    wxString winSys  = sysTokens.GetNextToken().Trim(false);
+    wxString unixSys = sysTokens.GetNextToken().Trim(false);
+    wxString macSys  = sysTokens.GetNextToken().Trim(false);
+
+    wxString mySys =  wxPlatformInfo::Get().GetOperatingSystemFamilyName();
+
+    wxStringTokenizer mySysToken;
+    if (mySys == wxT("Windows")) {
+        mySysToken.SetString(winSys,wxT(":"));
+    } else if (mySys == wxT("Unix")) {
+        mySysToken.SetString(unixSys,wxT(":"));
+    } else if (mySys == wxT("Macintosh")) {
+        mySysToken.SetString(macSys,wxT(":"));
+    }
+    
+    page = mySysToken.GetNextToken();          // the system
+    page = mySysToken.GetNextToken().Trim();   // the version  
+
+    if (IsUpdateAvailable(page))
     {
         mmShowErrorMessage(this, _("New update available!"), _("Check Update"));
         wxString url = wxT("http://www.codelathe.com/mmex");
@@ -3468,7 +3499,6 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
     {
         mmShowErrorMessage(this, _("You have the latest version installed!"), _("Check Update"));
     }
-
 }
 //----------------------------------------------------------------------------
 
