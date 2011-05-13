@@ -4,7 +4,7 @@ Section: misc
 Priority: optional
 Architecture: i386
 Depends: libc6 (>= 2.3.5-1), libwxgtk2.8-0 (>=2.8.0)
-Installed-Size: 8600
+Installed-Size: 8200
 Maintainer: Nikolay Akimov <vomikan@mail.ru>
 Description: Simple to use financial management software
  Money  Manager  Ex (MMEX) is a free, open-source,
