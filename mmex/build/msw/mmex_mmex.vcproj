@@ -2084,6 +2084,12 @@
 				RelativePath="..\..\src\currencydialog.cpp">
 			</File>
 			<File
+				RelativePath="..\..\src\customreportdisplay.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\customreportindex.cpp">
+			</File>
+			<File
 				RelativePath="..\..\src\dbwrapper.cpp">
 			</File>
 			<File
@@ -2171,6 +2177,12 @@
 				RelativePath="..\..\src\qifimport.cpp">
 			</File>
 			<File
+				RelativePath="..\..\src\relocatecategorydialog.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\relocatepayeedialog.cpp">
+			</File>
+			<File
 				RelativePath="..\..\src\reportbudgetingperf.cpp">
 			</File>
 			<File
@@ -2187,6 +2199,9 @@
 			</File>
 			<File
 				RelativePath="..\..\src\reportincexpenses.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\reportincexpensesfinancialperiod.cpp">
 			</File>
 			<File
 				RelativePath="..\..\src\reportincexpesestime.cpp">
@@ -2281,6 +2296,12 @@
 				RelativePath="..\..\src\currencydialog.h">
 			</File>
 			<File
+				RelativePath="..\..\src\customreportdisplay.h">
+			</File>
+			<File
+				RelativePath="..\..\src\customreportindex.h">
+			</File>
+			<File
 				RelativePath="..\..\src\dbwrapper.h">
 			</File>
 			<File
@@ -2371,6 +2392,12 @@
 				RelativePath="..\..\src\platfdep.h">
 			</File>
 			<File
+				RelativePath="..\..\src\relocatecategorydialog.h">
+			</File>
+			<File
+				RelativePath="..\..\src\relocatepayeedialog.h">
+			</File>
+			<File
 				RelativePath="..\..\src\reportbase.h">
 			</File>
 			<File
@@ -2390,6 +2417,9 @@
 			</File>
 			<File
 				RelativePath="..\..\src\reportincexpenses.h">
+			</File>
+			<File
+				RelativePath="..\..\src\reportincexpensesfinancialperiod.h">
 			</File>
 			<File
 				RelativePath="..\..\src\reportincexpesestime.h">
