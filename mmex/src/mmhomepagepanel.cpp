@@ -483,11 +483,6 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
     hb.endTableCell();
 	hb.endTableRow();
     hb.endTable();
-
-	hb.endTableCell(); 
-	hb.endTableRow();
-	hb.startTableRow();
-	hb.startTableCell(wxT("50%\" align=\"center"));
 }
 
 //* bills & deposits *//
@@ -645,7 +640,6 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
     wxString catAmountStr;
     std::vector<CategInfo> categList;
 
-	hb.startTableCell(wxT("50%\" align=\"center"));
     hb.startTable(wxT("95%"));
     hb.addTableHeaderRow(_("Top Transactions Last 30 Days"), 3);
     while(q1.NextRow())
@@ -678,7 +672,7 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
     int countFollowUp = core_->bTransactionList_.countFollowupTransactions();
 
 //	hb.addRowSeparator(2);
-    hb.addHTML(wxT("<br>"));
+    hb.addLineBreak();
     hb.addLineBreak();
     hb.startTable(wxT("95%"));
 
@@ -699,7 +693,21 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
     hb.addTableCell(wxString::Format(wxT("<b>%d</b> "), core_->bTransactionList_.transactions_.size()), true);
     hb.endTableRow();
     hb.endTable();
-	hb.endTableCell();
+}
+
+void mmHomePagePanel::displayGrandTotals(mmHTMLBuilder& hb, double& tBalance)
+{
+//  Display the grand total from all sections
+    wxString tBalanceStr;
+    mmDBWrapper::loadBaseCurrencySettings(db_);
+    mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
+
+    hb.startTable(wxT("95%"));
+    hb.addTotalRow(_("Grand Total:"), 2, tBalanceStr);
+    //hb.addRowSeparator(2);
+    hb.endTable();
+    hb.addLineBreak();
+    hb.addLineBreak();
 }
 
 void mmHomePagePanel::updateAccounts()
@@ -720,50 +728,42 @@ void mmHomePagePanel::updateAccounts()
     hb.addLineBreak();
 
 	hb.startCenter();
-	hb.startTable(wxT("98%"), wxT("top"));
+	hb.startTable(wxT("98%"), wxT("top")); 
 	hb.startTableRow();
 
     double tBalance = 0.0;
     double tIncome = 0.0;
     double tExpenses = 0.0;
 
-    hb.startTableCell(wxT("50%\" align=\"center"));
+    hb.startTableCell(wxT("50%\" align=\"center")); 
+    hb.startTable(wxT("95%")); 
 
-    hb.startTable(wxT("95%"));
     displayCheckingAccounts(hb,tBalance,tIncome,tExpenses, dtBegin, dtEnd);
+
     if ( frame_->hasActiveTermAccounts() )
         displayTermAccounts(hb,tBalance,tIncome,tExpenses, dtBegin, dtEnd);
+
     displayStocks(hb,tBalance,tIncome,tExpenses);
+
     displayAssets(hb, tBalance);
-    hb.endTable();
+    hb.endTable(); 
  
     displayCurrencies(hb); // Will display Currency summary when more than one currency is used.
 
-//  Display the grand total from all sections
-    wxString tBalanceStr;
-    mmDBWrapper::loadBaseCurrencySettings(db_);
-    mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
-
-    hb.startTable(wxT("95%"));
-    hb.addTotalRow(_("Grand Total:"), 2, tBalanceStr);
-    hb.addRowSeparator(2);
-    hb.endTable();
+    displayGrandTotals(hb, tBalance);
  
-    hb.endTableCell();
+    displayBillsAndDeposits(hb); 
 
-    hb.startTableCell(wxT("50%\" align=\"center"));
+    hb.endTableCell();
+    hb.startTableCell(wxT("50%\" align=\"center")); 
 
     displayIncomeVsExpenses(hb, tIncome, tExpenses); //Also displays the Income vs Expenses graph.
 
-    displayBillsAndDeposits(hb);
+    displayTopTransactions(hb); 
 
     hb.endTableCell();
-
-    displayTopTransactions(hb);
-
     hb.endTableRow();
 	hb.endTable();
-    
     hb.end();
 
     wxString htmlText = hb.getHTMLText();

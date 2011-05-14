@@ -118,6 +118,8 @@ void mmHTMLBuilder::endCenter()
 void mmHTMLBuilder::startTable(const wxString& width, const wxString& valign)
 {
 	html += wxT("<table cellspacing=\"1\"");
+	//Comment line above then uncomment line below for debug homepage 
+	//html += wxT("<table border=\"2\" cellspacing=\"1\"");
 	if(!width.empty())
 	html += wxT(" width=\"") + width + wxT("\"");
 	if(!valign.empty()) 
