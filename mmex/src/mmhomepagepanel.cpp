@@ -533,6 +533,13 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
         th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
 
         mmex::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
+        //for Withdrawal amount should be negative
+		if (th.transType_== wxT("Withdrawal"))
+		{
+			th.transAmtString_= wxT ("-") + th.transAmtString_;
+			th.amt_ = -th.amt_;
+		}
+
         mmex::formatDoubleToCurrencyEdit(th.toAmt_, th.transToAmtString_);
 
         int cid = 0, sid = 0;
@@ -668,12 +675,15 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
     hb.addImage(gtp.getOutputFileName());
 */
 
-//    hb.addLineBreak();
     int countFollowUp = core_->bTransactionList_.countFollowupTransactions();
 
+//	hb.addRowSeparator(2);
     hb.addHTML(wxT("<br>"));
+    hb.addLineBreak();
     hb.startTable(wxT("95%"));
-	hb.addRowSeparator(2);
+
+
+    hb.addTableHeaderRow(_("Transaction Statistics"), 2);
 
     if (countFollowUp > 0)
     {
