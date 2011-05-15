@@ -1,7 +1,7 @@
 		*** Build instructions for MS Windows platform ***
 
 
-You can build MMEx on Windows using VisualC++ 2003 or later, or MinGW with GCC.
+You can build MMEx on Windows using Visual C++ 2003 or later, or MinGW with GCC.
 Firstly you can run mmex/bootstrap.bat which will refresh makefiles and projects.
 Bakefile must be installed to do that. But you can skip this step if you just want
 to build sources.
@@ -39,7 +39,7 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
 
 
 
-	*** Compiling using VisualC++ command prompt ***
+	*** Compiling using Visual C++ command prompt ***
 
 
 1.Open "Visual Studio 200X Command Prompt".
@@ -59,35 +59,25 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
   This is the most preferable way to build MMEX using VC++.
 
 
-********************************************************************************
-NOTE: The file: build\msw\mmex.sln under mmex directory has been updated to use
-      Microsoft Visual C++ 2010 Express. In case this file does not work using
-      previous versions of VC++ do the following:
-      Rename the file: mmex.sln      to mmex-2010.sln
-      Rename the file: mmex.sln.old  to mmex.sln
-
-      Remember that 2 new files have been added to the project which will need
-      to be added to the old solution for a successful build.
-      Proceed with next section: *** Compiling using VisualStudio IDE ***
-********************************************************************************
-
-
-
   	*** Compiling using Microsoft Visual C++ 2010 Express IDE ***
 
 1. Ensure Prerequisites are complete with a build of wxWidgets 2.8.11 or greater
    using "Unicode Release" and/or "Unicode Debug" depending on preferences below.
+   
+2  Copy the mmex/build/msw directory to mmex/build/msw-vc-2010e
 
-2. Open build\msw\mmex.sln under mmex directory.
-   In the Solution Explorer set the mmex project as the Startup Project
-
-3. Using the Build ->Configutration Manager...
+3  Open the project file mmex/build/msw-vc-2010e/mmex.sln.
+   MS VC++ 2010e will convert the project files to the new compiler version.
+   
+4  In the Solution Explorer set the mmex project as the Startup Project
+   Add any missing files to the projects header and source structure.
+   
+3. Using the Build ->configurations Manager...
    Select one of following configurations to build (accordingly to wxWidgets builds):
    "Unicode Release Multilib WX_PYTHON_0" <-- choice number one for most people
    "Unicode Debug Multilib WX_PYTHON_0"
 
 4. Build the solution...
-
 
 
 	*** Compiling using VisualStudio IDE ***
