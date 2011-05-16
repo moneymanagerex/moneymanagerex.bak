@@ -102,7 +102,7 @@ bool mmStocksPanel::Create( wxWindow *parent,
         listCtrlAccount_->EnsureVisible(((int)trans_.size()) - 1);
 
     // Greg Newton
-    yahoo_ = new mmYahoo(inidb_);
+    yahoo_ = new mmYahoo(inidb_, db_);
 
     DownloadScheduleTimer_=NULL;
     StatusRefreshTimer_=NULL;

@@ -26,7 +26,7 @@ class wxSQLite3Database;
 class mmYahoo
 {
 public:
-    mmYahoo( wxSQLite3Database* inidb );
+    mmYahoo( wxSQLite3Database* inidb, wxSQLite3Database* db );
     ~mmYahoo();
 
 private:
@@ -42,6 +42,7 @@ public:  /// Really should change these to private and use accessors. One day.
     }  StocksRefreshStatus_;
 
     wxSQLite3Database*  inidb_;
+    wxSQLite3Database*  db_;
     wxString            Suffix_;
     wxString            OpenTimeStr_;
     wxString            CloseTimeStr_;

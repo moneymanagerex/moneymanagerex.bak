@@ -22,7 +22,7 @@
 #include "mmyahoo.h"
 
 /** There is NO default constructor - we need a settings database to talk to **/
-mmYahoo::mmYahoo(wxSQLite3Database* inidb) : inidb_(inidb)
+mmYahoo::mmYahoo(wxSQLite3Database* inidb, wxSQLite3Database* db) : inidb_(inidb), db_(db)
 {
     ReadSettings();
 }
@@ -36,28 +36,25 @@ mmYahoo::~mmYahoo()
 /// ------------------------------------------------------------------
 void mmYahoo::ReadSettings()
 {
-    mmDBWrapper::getINISettingValue(inidb_, 
-        wxT("STOCKS_REFRESH_ENABLED"), 
-        wxT("0")).ToLong(&UpdatingEnabled_);
-    OpenTimeStr_ = mmDBWrapper::getINISettingValue(inidb_,
-                   wxT("STOCKS_MARKET_OPEN_TIME"), 
-                   wxT("10:15:00")).GetData() ;
-    CloseTimeStr_ = mmDBWrapper::getINISettingValue(inidb_,
-                    wxT("STOCKS_MARKET_CLOSE_TIME"), 
-                    wxT("16:40:00")).GetData() ;
-    
-    // Get time of last update
-    if ( NULL == LastRefreshDT_.ParseDateTime( mmDBWrapper::getINISettingValue(inidb_,
-            wxT("STOCKS_LAST_REFRESH_DATETIME"), wxT("")).GetData() ) )
+    // Get values from mmexini.db3
+    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_REFRESH_ENABLED"), 
+                                            wxT("0")).ToLong(&UpdatingEnabled_);
+    // Get values from user database
+    OpenTimeStr_  = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKS_MARKET_OPEN_TIME"), 
+                                                          wxT("10:15:00")).GetData() ;
+    CloseTimeStr_ = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKS_MARKET_CLOSE_TIME"), 
+                                                          wxT("16:40:00")).GetData() ;
+    // Get time of last update from user database
+    if ( NULL == LastRefreshDT_.ParseDateTime( 
+                 mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKS_LAST_REFRESH_DATETIME"), wxT("")).GetData())
+       )
         LastRefreshDT_ = wxInvalidDateTime;
 
-    mmDBWrapper::getINISettingValue(inidb_,
-                                    wxT("STOCKS_REFRESH_MINUTES"), 
-                                    wxT("30")).ToLong(&UpdateIntervalMinutes_);
+    mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKS_REFRESH_MINUTES"), wxT("30")).ToLong(&UpdateIntervalMinutes_);
 
     // Server
-    Server_ = mmDBWrapper::getINISettingValue(inidb_,wxT("HTTP_YAHOO_SERVER"),wxT("download.finance.yahoo.com"));
-    Suffix_ = mmDBWrapper::getINISettingValue(inidb_,wxT("HTTP_YAHOO_SUFFIX"), wxT(""));
+    Server_ = mmDBWrapper::getInfoSettingValue(db_,wxT("HTTP_YAHOO_SERVER"),wxT("download.finance.yahoo.com"));
+    Suffix_ = mmDBWrapper::getInfoSettingValue(db_,wxT("HTTP_YAHOO_SUFFIX"), wxT(""));
 
     //TODO:Store CSVColumns_ in config / INI item
     // CSVColumns_ = wxT("snghl1c1vd1t1");
@@ -66,9 +63,7 @@ void mmYahoo::ReadSettings()
 
     // Proxy
     long LongTemp;
-    mmDBWrapper::getINISettingValue(inidb_,
-                                    wxT("HTTP_USE_PROXY"), 
-                                    wxT("0")).ToLong(&LongTemp);
+    mmDBWrapper::getINISettingValue(inidb_, wxT("HTTP_USE_PROXY"), wxT("0")).ToLong(&LongTemp);
 }
 
 /// ------------------------------------------------------------------
@@ -76,19 +71,21 @@ void mmYahoo::ReadSettings()
 /// ------------------------------------------------------------------
 void mmYahoo::WriteSettings()
 {
-    // Status
+    // Status - Save to mmexini.db3
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_REFRESH_ENABLED"), wxString::Format(wxT("%d"),UpdatingEnabled_));
-    mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_MARKET_OPEN_TIME"), OpenTimeStr_) ;
-    mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_MARKET_CLOSE_TIME"), CloseTimeStr_) ;
+    
+    // Save to user database
+    mmDBWrapper::setInfoSettingValue(db_, wxT("STOCKS_MARKET_OPEN_TIME"), OpenTimeStr_) ;
+    mmDBWrapper::setInfoSettingValue(db_, wxT("STOCKS_MARKET_CLOSE_TIME"), CloseTimeStr_) ;
     if (LastRefreshDT_.IsValid() )
     {
-      mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_LAST_REFRESH_DATETIME"), wxString::Format(wxT("%s %s"),
-                                    LastRefreshDT_.FormatISODate().c_str(),LastRefreshDT_.FormatISOTime().c_str()));
+        mmDBWrapper::setInfoSettingValue(db_, wxT("STOCKS_LAST_REFRESH_DATETIME"), wxString::Format(wxT("%s %s"),
+                                              LastRefreshDT_.FormatISODate().c_str(),LastRefreshDT_.FormatISOTime().c_str()));
     }
-    mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_REFRESH_MINUTES"),wxString::Format(wxT("%d"),UpdateIntervalMinutes_));
+    mmDBWrapper::setInfoSettingValue(db_, wxT("STOCKS_REFRESH_MINUTES"),wxString::Format(wxT("%d"),UpdateIntervalMinutes_));
     // Server
-    mmDBWrapper::setINISettingValue(inidb_,wxT("HTTP_YAHOO_SERVER"),Server_);
-    mmDBWrapper::setINISettingValue(inidb_,wxT("HTTP_YAHOO_SUFFIX"),Suffix_);
+    mmDBWrapper::setInfoSettingValue(db_,wxT("HTTP_YAHOO_SERVER"),Server_);
+    mmDBWrapper::setInfoSettingValue(db_,wxT("HTTP_YAHOO_SUFFIX"),Suffix_);
 }
 
 
