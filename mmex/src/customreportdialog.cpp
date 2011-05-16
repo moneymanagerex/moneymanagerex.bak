@@ -272,7 +272,7 @@ void mmCustomSQLDialog::OnRun(wxCommandEvent& /*event*/)
 		wxMessageDialog msgDlg(this, _("SQL Query will modify your Data. Proceed??"), _("Warning"), wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
 		{
-            sqlQuery_ = reportTitleTxtCtrl_->GetValue();
+            sqlQuery_ = sqlSourceTxtCtrl_->GetValue();
             EndModal(wxID_MORE);
         }
         else
