@@ -264,14 +264,13 @@ bool customSQLReportIndex::getSqlFileData(wxString& sqlText)
     if ( sqlFile.Exists() )
     {
         sqlFile.Open();
-        sqlText << sqlFile.GetFirstLine() << wxT("\n"); 
+        sqlText << sqlFile.GetFirstLine(); 
         while (! sqlFile.Eof())
         {
             wxString nextLine = sqlFile.GetNextLine();
-            wxString line = nextLine;
-            line.Trim(false);
-            if (line.Mid(1,2) != wxT("--"))
-                sqlText << nextLine << wxT("\n");
+            if (! nextLine.IsEmpty())
+                sqlText << wxT("\n"); 
+            sqlText << nextLine;
         }
         result = true;
     }
