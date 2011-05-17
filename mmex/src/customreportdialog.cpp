@@ -181,12 +181,13 @@ void mmCustomSQLDialog::OnLoad(wxCommandEvent& /*event*/)
         wxTextFile sqlFile(sqlScriptFileName);  
         if (sqlFile.Open())
         {
-            sqlText << sqlFile.GetFirstLine() << wxT("\n"); 
+            sqlText << sqlFile.GetFirstLine(); 
             while (! sqlFile.Eof())
             {
                 wxString nextLine = sqlFile.GetNextLine();
-                wxString line = nextLine;
-                sqlText << nextLine << wxT("\n");
+                if (! nextLine.IsEmpty())
+                    sqlText << wxT("\n"); 
+                sqlText << nextLine;
             }
             sqlSourceTxtCtrl_->SetValue(sqlText);
             newFileCreated_ = false;
