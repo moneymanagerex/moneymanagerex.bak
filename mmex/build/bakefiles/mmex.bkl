@@ -75,6 +75,23 @@
 	    <files>*</files>
 	</data-files>
 
+        <data-files>
+	    <install-to>$(DATADIR)/applications</install-to>
+	    <srcdir>$(SRCDIR)/resources</srcdir>
+	    <files>mmex.desktop</files>
+	</data-files>
+
+        <data-files>
+	    <install-to>$(DATADIR)/icons/hicolor/scalable/apps</install-to>
+	    <srcdir>$(SRCDIR)/graphics</srcdir>
+	    <files>mmex.svg</files>
+	</data-files>
+
+        <data-files>
+	    <install-to>$(DATADIR)/man/man1</install-to>
+	    <srcdir>$(SRCDIR)/doc</srcdir>
+	    <files>mmex.1.gz</files>
+	</data-files>
     </if>
 
     <if cond="FORMAT!='autoconf'">
