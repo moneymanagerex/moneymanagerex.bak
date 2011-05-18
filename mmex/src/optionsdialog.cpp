@@ -129,8 +129,12 @@ mmOptionsDialog::~mmOptionsDialog( )
 
     wxTextCtrl* url = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL);
     wxString stockURL = url->GetValue();
-    if (!stockURL.IsEmpty())
+    if (!stockURL.IsEmpty()) {
         mmDBWrapper::setInfoSettingValue(db_, wxT("STOCKURL"), stockURL); 
+    } else {
+        // Clear database record: Allows value to reset to system default.
+        db_->ExecuteUpdate("delete from INFOTABLE_V1 where INFONAME = \"STOCKURL\";");
+    }
 
     wxTextCtrl* fysDay = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY);
     wxString fysDayVal = fysDay->GetValue();
@@ -837,10 +841,10 @@ void mmOptionsDialog::CreateControls()
     itemBoxSizerStockURL->Add(itemStaticTextURL, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
 
     wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), mmex::DEFSTOCKURL);
-    wxTextCtrl* itemTextCtrURL = new wxTextCtrl( itemPanelMisc, 
-        ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL, stockURL, 
+    wxTextCtrl* itemTextCtrURL = new wxTextCtrl( itemPanelMisc, ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL, stockURL, 
         wxDefaultPosition, wxSize(250, -1), 0 );
     itemBoxSizerStockURL->Add(itemTextCtrURL, 1, wxGROW|wxALIGN_TOP|wxALL, 5);
+    itemTextCtrURL->SetToolTip(_("Clear the field to Reset the value to system default."));
 
     wxString useOriginalDate =  mmDBWrapper::getINISettingValue(inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
     wxCheckBox* itemCheckBoxOrigDate = new wxCheckBox( itemPanelMisc, 

@@ -132,138 +132,106 @@ void mmStockDialog::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer2->Add(itemBoxSizer3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(itemDialog1, wxID_ANY, 
-        _("Stock Investment Details"));
-    wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, 
-        wxVERTICAL);
+    wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(itemDialog1, wxID_ANY, _("Stock Investment Details"));
+    wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, wxVERTICAL);
     itemBoxSizer3->Add(itemStaticBoxSizer4, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxPanel* itemPanel5 = new wxPanel( itemDialog1, ID_PANEL3, wxDefaultPosition, 
-        wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* itemPanel5 = new wxPanel( itemDialog1, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemStaticBoxSizer4->Add(itemPanel5, 1, wxGROW|wxALL, 5);
 
     wxFlexGridSizer* itemFlexGridSizer6 = new wxFlexGridSizer(4, 4, 0, 0);
     itemPanel5->SetSizer(itemFlexGridSizer6);
 
-    wxStaticText* itemStaticText7 = new wxStaticText( itemPanel5, wxID_STATIC, 
-        _("Held At"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText7, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText7 = new wxStaticText( itemPanel5, wxID_STATIC, _("Held At"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(itemStaticText7, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    heldAt_ = new wxButton( itemPanel5, ID_BUTTON_STOCKS_HELDAT, _("Select Account"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    heldAt_->SetToolTip(_("Enter the name of the financial institution where the investment is held"));
+    heldAt_ = new wxButton( itemPanel5, ID_BUTTON_STOCKS_HELDAT, _("Select Account"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(heldAt_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    wxStaticText* itemStaticText9 = new wxStaticText( itemPanel5, wxID_STATIC, 
-        _("Date"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText9, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    heldAt_->SetToolTip(_("Enter the name of the financial institution where the investment is held"));
     
-    dpc_ = new wxDatePickerCtrl( itemPanel5, ID_DPC_STOCK_PDATE, wxDefaultDateTime, 
-              wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
+    wxStaticText* itemStaticText9 = new wxStaticText( itemPanel5, wxID_STATIC, _("Date"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(itemStaticText9, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    
+    dpc_ = new wxDatePickerCtrl( itemPanel5, ID_DPC_STOCK_PDATE, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
     itemFlexGridSizer6->Add(dpc_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     dpc_->SetToolTip(_("Specify the purchase date of the stock investment"));
 
-    wxStaticText* itemStaticText11 = new wxStaticText( itemPanel5, wxID_STATIC, 
-        _("Stock Name"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText11, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText11 = new wxStaticText( itemPanel5, wxID_STATIC, _("Stock Name"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(itemStaticText11, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    stockName_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCKNAME, wxT(""), 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    stockName_->SetToolTip(_("Enter the stock company name"));
+    stockName_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCKNAME, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(stockName_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    stockName_->SetToolTip(_("Enter the stock company name"));
 
-    wxStaticText* itemStaticText13 = new wxStaticText( itemPanel5, 
-        wxID_STATIC, _("Symbol"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText13, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText13 = new wxStaticText( itemPanel5, wxID_STATIC, _("Symbol"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(itemStaticText13, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    stockSymbol_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_SYMBOL, wxT(""), 
+    stockSymbol_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_SYMBOL, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(stockSymbol_, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    stockSymbol_->SetToolTip(_("Enter the stock symbol. (Optional) Include exchange. eg: IBM.BE"));
+
+    wxStaticText* itemStaticText15 = new wxStaticText( itemPanel5, wxID_STATIC, _("Number of Shares"), 
         wxDefaultPosition, wxDefaultSize, 0 );
-    stockSymbol_->SetToolTip(_("Enter the stock symbol (optional)"));
-    itemFlexGridSizer6->Add(stockSymbol_, 0, 
-        wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    wxStaticText* itemStaticText15 = new wxStaticText( itemPanel5, wxID_STATIC,
-        _("Number of Shares"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText15, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    numShares_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_NUMBER_SHARES, 
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    numShares_->SetToolTip(_("Enter number of shares held"));
+    numShares_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_NUMBER_SHARES, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(numShares_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    numShares_->SetToolTip(_("Enter number of shares held"));
 
-    wxStaticText* itemStaticText17 = new wxStaticText( itemPanel5, wxID_STATIC, 
-        _("Purchase Price"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText17, 0, 
-        wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-
-    purchasePrice_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_PP, wxT(""), 
+    wxStaticText* itemStaticText17 = new wxStaticText( itemPanel5, wxID_STATIC, _("Purchase Price"),
         wxDefaultPosition, wxDefaultSize, 0 );
-    purchasePrice_->SetToolTip(_("Enter purchase price for each stock"));
-    itemFlexGridSizer6->Add(purchasePrice_, 0, 
-        wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer6->Add(itemStaticText17, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxStaticText* itemStaticText211 = new wxStaticText( itemPanel5, wxID_STATIC, 
-        _("Commission"), wxDefaultPosition, wxDefaultSize, 0 );
+    purchasePrice_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_PP, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(purchasePrice_, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    purchasePrice_->SetToolTip(_("Enter purchase price for each stock"));
+
+    wxStaticText* itemStaticText211 = new wxStaticText( itemPanel5, wxID_STATIC, _("Commission"), 
+        wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText211, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    commission_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_COMMISSION, 
-        wxT("0"), wxDefaultPosition, wxDefaultSize, 0 );
-    commission_->SetToolTip(_("Enter any commission paid"));
+    commission_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_COMMISSION, wxT("0"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(commission_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    commission_->SetToolTip(_("Enter any commission paid"));
 
-    wxStaticText* itemStaticText21 = new wxStaticText( itemPanel5, 
-        wxID_STATIC, _("Current Price"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText21, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-
-    currentPrice_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_CP, wxT(""), 
+    wxStaticText* itemStaticText21 = new wxStaticText( itemPanel5, wxID_STATIC, _("Current Price"), 
         wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(itemStaticText21, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+    currentPrice_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_CP, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(currentPrice_, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     currentPrice_->SetToolTip(_("Enter current stock price"));
-    itemFlexGridSizer6->Add(currentPrice_, 0, 
-        wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticText19 = new wxStaticText( itemPanel5, wxID_STATIC, 
-        _("Notes"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText19, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText19 = new wxStaticText( itemPanel5, wxID_STATIC, _("Notes"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(itemStaticText19, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    notes_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_NOTES, wxT(""), 
-        wxDefaultPosition, wxSize(200, 75), wxTE_MULTILINE );
-    notes_->SetToolTip(_("Enter notes associated with this investment"));
+    notes_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_NOTES, wxT(""), wxDefaultPosition, wxSize(200, 75), wxTE_MULTILINE );
     itemFlexGridSizer6->Add(notes_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    notes_->SetToolTip(_("Enter notes associated with this investment"));
 
-    wxStaticText* itemStaticText25 = new wxStaticText( itemPanel5, wxID_STATIC, 
-        _("Value"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(itemStaticText25, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText25 = new wxStaticText( itemPanel5, wxID_STATIC, _("Value"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(itemStaticText25, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    valueInvestment_ = new wxStaticText( itemPanel5, ID_STATIC_STOCK_VALUE, 
-        wxT("--"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer6->Add(valueInvestment_, 0, 
-        wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    valueInvestment_ = new wxStaticText( itemPanel5, ID_STATIC_STOCK_VALUE, wxT("--"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer6->Add(valueInvestment_, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
     
-    wxPanel* itemPanel27 = new wxPanel( itemDialog1, wxID_ANY, 
-        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* itemPanel27 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemBoxSizer3->Add(itemPanel27, 0, wxALIGN_RIGHT|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer28 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel27->SetSizer(itemBoxSizer28);
 
-    wxButton* itemButton31 = new wxButton( itemPanel27, ID_BUTTON_STOCK_WEBPRICE, 
-        _("Stock Price Web Page"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton31 = new wxButton( itemPanel27, ID_BUTTON_STOCK_WEBPRICE, _("Display Stock Web Page"));
     itemBoxSizer28->Add(itemButton31, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemButton31->SetToolTip(_("Will display the web page for the specified Stock symbol"));
 
     wxButton* itemButton29 = new wxButton( itemPanel27, ID_BUTTON_STOCK_OK, _("OK"));
-    itemButton29->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
     itemBoxSizer28->Add(itemButton29, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemButton29->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
 
     wxButton* itemButton30 = new wxButton( itemPanel27, ID_BUTTON_STOCK_CANCEL, _("Cancel"));
-    itemButton30->SetForegroundColour(wxColour(wxT("RED")));
     itemBoxSizer28->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemButton30->SetForegroundColour(wxColour(wxT("RED")));
     itemButton30->SetFocus();
 }
 
@@ -301,6 +269,7 @@ void mmStockDialog::OnCancel(wxCommandEvent& /*event*/)
 void mmStockDialog::OnStockPriceButton(wxCommandEvent& /*event*/)
 {
 	wxString stockSymbol = stockSymbol_->GetValue().Trim();
+
 	if (!stockSymbol.IsEmpty())
 	{
 		// Use Google for stock quotes
@@ -308,7 +277,18 @@ void mmStockDialog::OnStockPriceButton(wxCommandEvent& /*event*/)
         //wxString paddedURL = wxT("\"") + stockURL + wxT("\"");
 		//wxString httpString = wxString::Format(paddedURL, stockSymbol);
         //wxExecute(_T("explorer ") + httpString, wxEXEC_ASYNC, NULL ); 
-
+    
+        int yahooSite = stockURL.Find(wxT("yahoo"));
+        if ( yahooSite != wxNOT_FOUND )
+        {
+            int hasSuffix = stockSymbol.Find(wxT("."));
+            if ( hasSuffix == wxNOT_FOUND)
+            {
+                wxString stockSuffix = mmDBWrapper::getInfoSettingValue(db_,wxT("HTTP_YAHOO_SUFFIX"), wxT(""));
+                if (! stockSuffix.IsEmpty() )
+                    stockSymbol << stockSuffix;
+            }
+        }
         wxString httpString = wxString::Format(stockURL.c_str(), stockSymbol.c_str());
 		wxLaunchDefaultBrowser(httpString);
 	}
