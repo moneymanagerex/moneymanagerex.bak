@@ -532,6 +532,7 @@ void mmExportCSV( wxSQLite3Database* db_ )
         }
 
         wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
+        wxString q =  wxT("\"");
 
         wxSingleChoiceDialog scd( 0, _( "Choose Account to Export from:" ), _( "CSV Export" ), as);
 
@@ -573,7 +574,7 @@ void mmExportCSV( wxSQLite3Database* db_ )
                 wxString dateString = mmGetDateForDisplay( db_, dtdt );
 
                 int sid, cid;
-                wxString payee = mmNotes4ExportString(mmDBWrapper::getPayee( db_, q1.GetInt( wxT( "PAYEEID" ) ), sid, cid ));
+                wxString payee = mmDBWrapper::getPayee( db_, q1.GetInt( wxT( "PAYEEID" ) ), sid, cid );
                 wxString type = q1.GetString( wxT( "TRANSCODE" ) );
                 wxString sign = wxT( "" );
                 wxString amount = q1.GetString( wxT( "TRANSAMOUNT" ) );
@@ -585,11 +586,11 @@ void mmExportCSV( wxSQLite3Database* db_ )
                         mmex::formatDoubleToCurrencyEdit( value, amount );
                 }
 
-                wxString categ = mmNotes4ExportString(mmDBWrapper::getCategoryName( db_, q1.GetInt( wxT( "CATEGID" ))));
-                wxString subcateg = mmNotes4ExportString(mmDBWrapper::getSubCategoryName( db_,
-                                    q1.GetInt( wxT( "CATEGID" ) ), q1.GetInt( wxT( "SUBCATEGID" ))));
-                wxString transNum = mmNotes4ExportString( q1.GetString( wxT( "TRANSACTIONNUMBER" ) ) );
-                wxString notes = mmNotes4ExportString( q1.GetString( wxT( "NOTES" ) ) );
+                wxString categ = mmDBWrapper::getCategoryName( db_, q1.GetInt( wxT( "CATEGID" )));
+                wxString subcateg = mmDBWrapper::getSubCategoryName( db_,
+                                    q1.GetInt( wxT( "CATEGID" ) ), q1.GetInt( wxT( "SUBCATEGID" )));
+                wxString transNum =  q1.GetString( wxT( "TRANSACTIONNUMBER" ) ) ;
+                wxString notes = q1.GetString( wxT( "NOTES" ) );
                 wxString origtype = type;
 
                 if ( type == wxT( "Transfer" ) ) 
@@ -611,9 +612,8 @@ void mmExportCSV( wxSQLite3Database* db_ )
                 }
 
                 //It should be negative amounts for withdrwal
-                if ( type == wxT( "Withdrawal" ) ) {
-                        sign = wxT( "-" );
-                }
+                //if ( type == wxT( "Withdrawal" ) ) 
+                //        sign = wxT( "-" );
 
                 if ( categ.IsEmpty() && subcateg.IsEmpty() ) {
                         static const char sql4splitedtrx[] =
@@ -636,20 +636,31 @@ void mmExportCSV( wxSQLite3Database* db_ )
                                         mmex::formatDoubleToCurrencyEdit( value, splitamount );
                                 }
 
-                                wxString splitcateg = mmNotes4ExportString(mmDBWrapper::getCategoryName( db_, q2.GetInt( wxT( "CATEGID" ) ) ));
-                                wxString splitsubcateg = mmNotes4ExportString(mmDBWrapper::getSubCategoryName( db_, q2.GetInt( wxT( "CATEGID" ) ), q2.GetInt( wxT( "SUBCATEGID" ) ) ));
-
-                                text << wxT("\"") << dateString << wxT("\"") << delimit << payee << delimit << wxT("\"") << sign << splitamount << wxT("\"") << delimit
-                                << splitcateg << delimit << splitsubcateg << delimit << transNum << delimit
-                                << notes << delimit << wxT("\"") << origtype << wxT("\"") << endl;
+                                wxString splitcateg = mmDBWrapper::getCategoryName( db_, q2.GetInt( wxT( "CATEGID" ) ) );
+                                wxString splitsubcateg = mmDBWrapper::getSubCategoryName( db_, q2.GetInt( wxT( "CATEGID" ) ), q2.GetInt( wxT( "SUBCATEGID" ) ) );
+								// We have a fixed format for now
+								// date, payeename, "withdrawal/deposit", amount, category, subcategory, transactionnumber, notes
+                                text << dateString << delimit 
+                                << payee << delimit 
+                                << origtype << delimit
+                                << splitamount << delimit
+                                << splitcateg << delimit 
+                                << splitsubcateg << delimit 
+                                << transNum << delimit
+                                << notes << endl;
 
                         }
 
                         st2.Finalize();
                 } else {
-                        text << wxT("\"") << dateString << wxT("\"") << delimit << payee << delimit
-                        << wxT("\"") << sign << amount << wxT("\"") << delimit << categ << delimit << subcateg << delimit 
-						<< transNum << delimit << notes << delimit << wxT("\"") << origtype << wxT("\"") << endl;
+                        text << dateString << delimit 
+                        << payee << delimit 
+                        << origtype << delimit
+                        << amount << delimit
+                        << categ << delimit 
+                        << subcateg << delimit 
+                        << transNum << delimit
+                        << notes << endl;
                 }
 
                 numRecords++;
@@ -679,6 +690,7 @@ void mmExportQIF( wxSQLite3Database* db_ )
         q3.Finalize();
 
         wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
+        wxString q =  wxT("\"");
 
         wxSingleChoiceDialog scd( 0, _( "Choose Account to Export from:" ),_( "QIF Export" ), as );
 
@@ -882,6 +894,7 @@ int mmImportCSV( mmCoreDB* core )
         q1.Finalize();
 
         wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
+        wxString q =  wxT("\"");
 
         wxSingleChoiceDialog scd( 0, _( "Choose Account to import to:" ), _( "CSV Import" ), as );
 
@@ -1128,6 +1141,7 @@ int mmImportCSVMMNET( mmCoreDB* core )
         q1.Finalize();
 
         wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
+        wxString q =  wxT("\"");
 
         wxSingleChoiceDialog scd( 0, _( "Choose Account to import to:" ),_( "CSV Import" ), as );
 
