@@ -1874,7 +1874,6 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
     //initialize the transaction list to redo balances and images
     m_cp->initVirtualListControl(false);
 
-return;
     if (!m_cp->m_trans.empty()) {
         //refresh the items showing from the point of the transaction delete down
         //the transactions above the deleted transaction won't change so they 
