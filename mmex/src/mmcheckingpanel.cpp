@@ -547,7 +547,9 @@ bool mmCheckingPanel::Create(
         GetSizer()->Fit(this);
         GetSizer()->SetSizeHints(this);
 
-        initVirtualListControl();
+		//show progress bar only when panel created 
+		wxProgressDialog dlg(_("Please Wait"), _("Accessing Database"), 100, this, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
+        initVirtualListControl(&dlg);
         Thaw();
     }
 
@@ -1029,27 +1031,13 @@ const TransactionMatchMap& initTransactionMatchMap()
 }
 static const TransactionMatchMap& s_transactionMatchers_Map = initTransactionMatchMap();
 
-void mmCheckingPanel::initVirtualListControl()
+void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
 {
     // clear everything
     m_trans.clear();
 
-//#if defined (__WXMSW__)
-
-//    wxProgressDialog dlg(_("Please Wait"), 
-//        _("Opening Database File && Verifying Integrity"), 100, this, 
-//        wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
-
-//    dlg.Update(100);
-//    dlg.Destroy();
-
-    wxProgressDialog* pgd = new wxProgressDialog(_("Please Wait"), 
-        _("Accessing Database"), 100, this, 
-        wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
-
+    if (pgd)
     pgd->Update(20);
-    //pgd->Destroy();
-//#endif
    
 	boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(m_AccountID);
     double acctInitBalance = pAccount->initialBalance_;
@@ -1139,9 +1127,8 @@ void mmCheckingPanel::initVirtualListControl()
         }
     }
 
-//#if defined (__WXMSW__)
+    if (pgd)
     pgd->Update(40);
-//#endif
 
     // sort m_trans by date
     double initBalance = acctInitBalance + unseenBalance;
@@ -1152,9 +1139,8 @@ void mmCheckingPanel::initVirtualListControl()
 
     std::sort(m_trans.begin(), m_trans.end(), sortTransByDateAsc);
 
-//#if defined (__WXMSW__)
+    if (pgd)
     pgd->Update(60);
-//#endif
 
     for (size_t i = 0; i < m_trans.size(); ++i)
     {
@@ -1196,9 +1182,8 @@ void mmCheckingPanel::initVirtualListControl()
         tr.balanceStr_ = balanceStr;
     }
 
-//#if defined (__WXMSW__)
+    if (pgd)
     pgd->Update(80);
-//#endif
 
     /* Setup the Sorting */
      // decide whether top or down icon needs to be shown
@@ -1221,10 +1206,11 @@ void mmCheckingPanel::initVirtualListControl()
 		}
     }
 
-//#if defined (__WXMSW__)
-    pgd->Update(100);
-    pgd->Destroy();
-//#endif
+    if (pgd)
+    {
+		pgd->Update(100);
+		pgd->Destroy();
+	}
 }
 //----------------------------------------------------------------------------
 
@@ -1394,7 +1380,8 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     }
 
     m_listCtrlAccount->DeleteAllItems();
-    initVirtualListControl();
+
+    initVirtualListControl(false);
     m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
 }
 //----------------------------------------------------------------------------
@@ -1459,7 +1446,8 @@ void MyListCtrl::OnMarkTransactionDB(const wxString& status)
 	//  the register needs to be updated so the balance col is correct (eg a trans
 	//  was changed from unreconciled to void).
 	DeleteAllItems();
-	m_cp->initVirtualListControl();
+
+	m_cp->initVirtualListControl(false);
 }
 //----------------------------------------------------------------------------
 
@@ -1517,9 +1505,10 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
 
 //     if (m_cp->m_currentView != wxT("View All Transactions"))
      {
-         DeleteAllItems();
-         m_cp->initVirtualListControl();
-         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
+        DeleteAllItems();
+
+        m_cp->initVirtualListControl(false);
+        RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
      }
      m_cp->setAccountSummary();
      SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
@@ -1735,7 +1724,7 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
         boost::shared_ptr<mmBankTransaction> pCopiedTrans = m_cp->m_core->bTransactionList_.copyTransaction(m_selectedForCopy, useOriginal);
         boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->m_core->accountList_.getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
         pCopiedTrans->updateAllData(m_cp->m_core, pCopiedTrans->accountID_, pCurrencyPtr, true);
-        m_cp->initVirtualListControl();
+        m_cp->initVirtualListControl(false);
         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
     }
 }
@@ -1769,56 +1758,57 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
         case 'v':
         case 'V':
             {
-                if (status != wxT("V")) { //Do not update status if it's already the same
-                wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKVOID);
-                OnMarkTransaction(evt);  }
+                if (status != wxT("V")) 
+				{ //Do not update status if it's already the same
+					wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKVOID);
+					OnMarkTransaction(evt);  
+                }
             }
             break;
 
         case 'r':
         case 'R':
             {
-                if (status != wxT("R")) {
-                wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKRECONCILED);
-                OnMarkTransaction(evt); }
+                if (status != wxT("R")) 
+                {
+					wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKRECONCILED);
+					OnMarkTransaction(evt); 
+				}
             }
             break;
 
         case 'u':
         case 'U':
             {
-                 if (status != wxT("")) {
-                 wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKUNRECONCILED);
-                 OnMarkTransaction(evt); } 
+				if (status != wxT("")) 
+				{
+					wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKUNRECONCILED);
+					OnMarkTransaction(evt); 
+				} 
             }
             break;
 
         case 'f':
         case 'F':
             {
-                 if (status != wxT("F")) {
-                 wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP);
-                 OnMarkTransaction(evt); }
+                if (status != wxT("F")) 
+                {
+					wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP);
+					OnMarkTransaction(evt); 
+				}
             }
             break;
 
         case 'd':
         case 'D':
             {
-                 if (status != wxT("D")) {
-                 wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKDUPLICATE);
-                 OnMarkTransaction(evt); }
+                if (status != wxT("D")) 
+                {
+					wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKDUPLICATE);
+					OnMarkTransaction(evt); 
+				}
             }
             break;
-
-/*      case WXK_DELETE:
-        case WXK_NUMPAD_DELETE:
-
-            {
-                wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
-                OnDeleteTransaction(evt);
-            }
-            break;*/
 
         } // end switch
         
@@ -1835,8 +1825,7 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
     }
 
     //set the deleted transaction index to the new selection and focus on it
-    SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, 
-        wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED);
+    SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED);
     //make sure the topmost item before transaction deletion is visible, otherwise
     // the control will go back to the very top or bottom when refreshed
     EnsureVisible(topItemIndex);
@@ -1849,7 +1838,7 @@ void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 
     if ( dlg.ShowModal() == wxID_OK )
     {
-        m_cp->initVirtualListControl();
+        m_cp->initVirtualListControl(false);
         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
         if (m_selectedIndex != -1)
         {
@@ -1875,7 +1864,6 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
                           
     if (msgDlg.ShowModal() != wxID_YES)
         return;
-
     //find the topmost visible item - this will be used to set 
     // where to display the list again after refresh
     long topItemIndex = GetTopItem();
@@ -1884,8 +1872,9 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
     m_cp->m_core->bTransactionList_.deleteTransaction(m_cp->accountID(), m_cp->m_trans[m_selectedIndex]->transactionID());
 
     //initialize the transaction list to redo balances and images
-    m_cp->initVirtualListControl();
+    m_cp->initVirtualListControl(false);
 
+return;
     if (!m_cp->m_trans.empty()) {
         //refresh the items showing from the point of the transaction delete down
         //the transactions above the deleted transaction won't change so they 
@@ -1924,7 +1913,7 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 
 void MyListCtrl::refreshVisualList()
 {
-    m_cp->initVirtualListControl();
+    m_cp->initVirtualListControl(false);
 	RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
 	SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
 	SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
@@ -1987,6 +1976,7 @@ void MyListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
                 pTransaction->accountID_ = toAccountID;
                 m_cp->m_core->bTransactionList_.updateTransaction(pTransaction);
                 refreshVisualList();
+                
             }
         }
     }
@@ -2002,7 +1992,7 @@ void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
             m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->m_inidb, this);
         if ( dlg.ShowModal() == wxID_OK )
         {
-            m_cp->initVirtualListControl();
+            m_cp->initVirtualListControl(false);
             RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
             if (m_selectedIndex != -1)
             {

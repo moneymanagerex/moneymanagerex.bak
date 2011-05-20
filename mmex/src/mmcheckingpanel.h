@@ -129,7 +129,7 @@ private:
     void OnViewPopupSelected(wxCommandEvent& event);
 
     /* updates the checking panel data */
-    void initVirtualListControl();
+    void initVirtualListControl(wxProgressDialog* pgd);
     void Tips();
     void updateExtraTransactionData(int selIndex);
     void saveSettings();
