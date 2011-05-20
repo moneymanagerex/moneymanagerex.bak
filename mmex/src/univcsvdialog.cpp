@@ -564,7 +564,15 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
                log << _("Line : " ) << countNumTotal << _(" imported OK.") << endl;
             }
 
-            wxString msg = wxString::Format(_("Total Lines : %d \nTotal Imported : %d\n\nLog file written to : %s.\n\nImported transactions have been flagged so you can review them. "), countNumTotal, countImported, logFile.GetFullPath().c_str());
+            //wxString msg = wxString::Format(_("Total Lines : %d \nTotal Imported : %d\n\nLog file written to : %s.\n\nImported transactions have been flagged so you can review them. "), countNumTotal, countImported, logFile.GetFullPath().c_str());
+            wxString msg = wxString::Format(_("Total Lines : %d"),countNumTotal); 
+            msg << wxT ("\n");
+            msg << wxString::Format(_("Total Imported : %d") ,countImported) ; 
+            msg << wxT ("\n\n");
+            msg << wxString::Format(_("Log file written to : %s."), logFile.GetFullPath().c_str());
+            msg << wxT ("\n\n");
+            if (countImported > 0)
+            msg << _ ("Imported transactions have been flagged so you can review them.") ;            
             mmShowErrorMessage(0, msg, _("Import from CSV"));
             outputLog.Close();
 
