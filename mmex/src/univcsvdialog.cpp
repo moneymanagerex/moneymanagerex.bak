@@ -569,7 +569,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
             msg << wxT ("\n");
             msg << wxString::Format(_("Total Imported : %d") ,countImported) ; 
             msg << wxT ("\n\n");
-            msg << wxString::Format(_("Log file written to : %s."), logFile.GetFullPath().c_str());
+            msg << wxString::Format(_("Log file written to : %s"), logFile.GetFullPath().c_str());
             msg << wxT ("\n\n");
             if (countImported > 0)
             msg << _ ("Imported transactions have been flagged so you can review them.") ;            
