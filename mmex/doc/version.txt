@@ -1,7 +1,7 @@
 Version History of Money Manager Ex
 
 0.9.8.0 (TBA)
-- wxSQLite3 updated to v.2.1.0 (sqlite3 v.3.7.5)
+- Externals updated to wxSQLite3 V: 2.1.1 (sqlite3 V: 3.7.6.1)
 - New commands in Tools Menu for the Relocation of Categories and Payees.
 - New date format: YYYYMMDD
 - New user options for 'Transaction Dialog' behavior.
