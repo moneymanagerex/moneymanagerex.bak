@@ -15,6 +15,9 @@ Copy all files From: wxsqlite3\include\wx
 
 Copy all files from: wxsqlite3\sqlite3\secure\src\codec-c
                to  : MoneyManagerEX\trunk\mmex\lib\sqlite
+
+Copy file from: wxsqlite3\sqlite3\secure\sqlite3.def
+          to  : MoneyManagerEX\trunk\mmex\lib\sqlite\sqlite3.def
                 
 Copy file from: wxsqlite3\Readme.txt
           to  : MoneyManagerEX\trunk\mmex\lib\wxsqlite\wx\Readme.txt 
