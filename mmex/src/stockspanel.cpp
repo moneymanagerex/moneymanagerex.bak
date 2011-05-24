@@ -385,7 +385,7 @@ void mmStocksPanel::initVirtualListControl()
     "select STOCKID, HELDAT,  STOCKNAME, SYMBOL, NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, VALUE, COMMISSION, "
     " strftime(INFOVALUE,PURCHASEDATE) as PURCHDATE, "
     "PURCHASEDATE, "
-    "julianday('now', 'localtime')-julianday (PURCHASEDATE) as DAYSOWN "
+    "julianday('now', 'localtime')-julianday (PURCHASEDATE, 'localtime') as DAYSOWN "
     "from STOCK_V1 "
     "left join infotable_v1 i on i.INFONAME='DATEFORMAT' "
     "where HELDAT = ? "
@@ -418,7 +418,7 @@ void mmStocksPanel::initVirtualListControl()
         th.stockDays_         = q1.GetDouble (wxT ("DAYSOWN"));
 
         th.gainLoss_          = th.value_ - ((th.numShares_ * th.purchasePrice_) + commission);
-        mmex::formatDoubleToCurrencyEdit(((th.value_ / ((th.numShares_ * th.purchasePrice_) + commission)-1.0)*100.0 * th.stockDays_ /365.0 ), th.stockPercentagePerYearStr_);
+        mmex::formatDoubleToCurrencyEdit(((th.value_ / ((th.numShares_ * th.purchasePrice_) + commission)-1.0)*100.0 * 365.0 / th.stockDays_  ), th.stockPercentagePerYearStr_);
 
         mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
         mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
@@ -893,7 +893,7 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
         double stockDaysOwn = trans_[selectedIndex_].stockDays_;
         //Commision don't calculates here
         double stockPercentage = (stockCurrentPrice/stockPurchasePrice-1.0)*100.0;
-        double stockPercentagePerYear = stockPercentage * stockDaysOwn /365.0;
+        double stockPercentagePerYear = stockPercentage * 365.0 / stockDaysOwn;
 
         mmex::formatDoubleToCurrencyEdit(stockPurchasePrice, stockPurchasePriceStr);
         mmex::formatDoubleToCurrencyEdit(stockCurrentPrice, stockCurrentPriceStr);
@@ -902,14 +902,16 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
         mmex::formatDoubleToCurrencyEdit(stockPercentagePerYear, stockPercentagePerYearStr);
         
 
-        wxString miniInfo;
-        miniInfo << wxT ("\t") << _("Symbol: ") << trans_[selectedIndex_].stockSymbol_ 
-                 << wxT ("\t\t") << _("Percent/Year: ") << trans_[selectedIndex_].stockPercentagePerYearStr_;
+        wxString miniInfo = wxT("");
+        if (trans_[selectedIndex_].stockSymbol_ != wxT(""))
+        miniInfo << wxT("\t") << _("Symbol: ") << trans_[selectedIndex_].stockSymbol_; 
+        miniInfo << wxT ("\t\t") << _("Percent/Year: ") << trans_[selectedIndex_].stockPercentagePerYearStr_;
         stm->SetLabel(miniInfo);
-        wxString additionInfo;
-        
-        additionInfo << trans_[selectedIndex_].stockSymbol_ << wxT(" : ") << stockPurchasePriceStr
-        << wxT(" - ") << stockCurrentPriceStr << wxT(" = ") << stockDifferenceStr << wxT (" ( ") << stockPercentageStr << wxT ('%')
+        wxString additionInfo =wxT("");
+        if (trans_[selectedIndex_].stockSymbol_ != wxT(""))
+        additionInfo << trans_[selectedIndex_].stockSymbol_<< wxT(" : ");
+        additionInfo << wxT("|") << stockPurchasePriceStr << wxT(" - ") << stockCurrentPriceStr << wxT("|") << wxT(" = ") << stockDifferenceStr 
+        << wxT (" ( ") << stockPercentageStr << wxT ('%')
         << wxT (" | ")<< stockPercentagePerYearStr << wxT("% ") << _("Yearly") << wxT (" )")
         << wxT ("\n") << getItem(selectedIndex_, COL_NOTES);
         st->SetLabel(additionInfo);
