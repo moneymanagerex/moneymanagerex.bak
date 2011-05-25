@@ -382,17 +382,28 @@ void mmStocksPanel::initVirtualListControl()
     header->SetLabel(lbl);
 
     char sql[] =
-    "select STOCKID, HELDAT,  STOCKNAME, SYMBOL, NUMSHARES, PURCHASEPRICE, NOTES, CURRENTPRICE, VALUE, COMMISSION, "
-    " strftime(INFOVALUE,PURCHASEDATE) as PURCHDATE, "
-    "PURCHASEDATE, "
-    "julianday('now', 'localtime')-julianday (PURCHASEDATE, 'localtime') as DAYSOWN "
+    "select STOCKID, HELDAT,  STOCKNAME, SYMBOL, "
+    "total (NUMSHARES) as NUMSHARES, "
+    "avg (PURCHASEPRICE) as PURCHASEPRICE, "
+    "avg (CURRENTPRICE) as CURRENTPRICE, "
+    "total (VALUE) as VALUE, total (COMMISSION) as COMMISSION, "
+    " strftime(INFOVALUE, min (PURCHASEDATE)) as PURCHDATE, "
+    "min (PURCHASEDATE) as PURCHASEDATE, "
+    "avg (julianday('now', 'localtime')-julianday (PURCHASEDATE, 'localtime')) as DAYSOWN, "
+    "NOTES "
     "from STOCK_V1 "
     "left join infotable_v1 i on i.INFONAME='DATEFORMAT' "
     "where HELDAT = ? "
-    "order by julianday(PURCHASEDATE), STOCKNAME ";
+    "group by HELDAT, SYMBOL, STOCKID "
+    "order by julianday(min (PURCHASEDATE),'localtime'), SYMBOL, STOCKNAME ";
     
         wxSQLite3Statement st = db_->PrepareStatement(sql);
         st.Bind(1, accountID_);
+
+        //TODO: All records with the same Symbol may be groupped
+        // This may be necessary in case the records are many.
+        // Addition user parameter and button or view option should be provided
+		//st.Bind(2, wxT ("STOCKID")); //<--It's does not work
  
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
     int cnt = 0;
@@ -408,7 +419,7 @@ void mmStocksPanel::initVirtualListControl()
         th.heldAt_            = mmDBWrapper::getAccountName(db_, accountID);
         th.shareName_         = q1.GetString(wxT("STOCKNAME"));
         th.shareNotes_        = q1.GetString(wxT("NOTES"));
-        th.numSharesStr_      = q1.GetString(wxT("NUMSHARES"));
+        th.numSharesStr_      = wxT("");
         th.numShares_         = q1.GetDouble(wxT("NUMSHARES"));
 
         th.currentPrice_      = q1.GetDouble(wxT("CURRENTPRICE"));
@@ -423,8 +434,12 @@ void mmStocksPanel::initVirtualListControl()
         mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
         mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
         mmex::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
-        if ((th.numShares_ - static_cast<int>(th.numShares_)) != 0.0 )
+        //I wish see integer if it integer else double
+        if ((th.numShares_ - static_cast<long>(th.numShares_)) != 0.0 )
         mmex::formatDoubleToCurrencyEdit(th.numShares_, th.numSharesStr_);
+        else 
+        th.numSharesStr_ <<  static_cast<long>(th.numShares_);
+        
 
         //sqlite does not support %y date mask therefore null value should be replaces
         if (th.stockPDate_ == wxT(""))
@@ -1016,5 +1031,7 @@ void stocksListCtrl::OnListItemActivated(wxListEvent& event)
     {
         cp_->initVirtualListControl();
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
+        cp_->updateExtraStocksData(selectedIndex_);
+
     }
 }
