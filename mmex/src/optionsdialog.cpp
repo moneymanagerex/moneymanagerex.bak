@@ -1166,5 +1166,5 @@ void mmOptionsDialog::OnTransactionStatusChecked(wxCommandEvent& /*event*/)
 {
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS);
     mmIniOptions::transStatusReconciled_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(wxT("TRANSACTION_STATUS_RECONCILED"),mmIniOptions::transStatusReconciled_);
+    mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_STATUS_RECONCILED"), wxString::Format(wxT("%d"), (int)mmIniOptions::transStatusReconciled_)); 
 }
