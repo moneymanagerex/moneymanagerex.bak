@@ -267,16 +267,18 @@ void mmFilterTransactionsDialog::CreateControls()
         _("Duplicate")
     };  
 
-    if (mmIniOptions::transStatusReconciled_)
-    {
-        choiceStatusStrings[0] = _("Reconciled");
-        choiceStatusStrings[1] = _("None");
-    }
-
     choiceStatus = new wxChoice( itemPanel3, ID_CHOICE7, wxDefaultPosition, 
        wxDefaultSize, 5, choiceStatusStrings, 0 );
     itemFlexGridSizer4->Add(choiceStatus, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    choiceStatus->SetSelection(0);
+	if (mmIniOptions::transStatusReconciled_)
+    {
+		choiceStatus->SetSelection(1);
+    }
+	else {
+		choiceStatus->SetSelection(0);
+	}
+
+	
     choiceStatus->SetToolTip(_("Specify the status for the transaction"));
 
     itemFlexGridSizer4->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -497,14 +499,10 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
                 if (choiceStatus->GetSelection()      == DEF_STATUS_NONE)
                 {
                     status = wxT(""); // nothing yet
-                    if (mmIniOptions::transStatusReconciled_)   // This changed the selection order
-                        status = wxT("R"); 
                 }
                 else if (choiceStatus->GetSelection() == DEF_STATUS_RECONCILED)
                 {
                     status = wxT("R"); 
-                    if (mmIniOptions::transStatusReconciled_)   // This changed the selection order
-                        status = wxT(""); // nothing yet
                 }
                 else if (choiceStatus->GetSelection() == DEF_STATUS_VOID)
                 {

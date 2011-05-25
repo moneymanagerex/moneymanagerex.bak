@@ -118,7 +118,7 @@ public:
 
         static bool transPayeeSelectionNone_;
         static bool transCategorySelectionNone_;
-        static bool transStatusReconciled_;
+        static int transStatusReconciled_;
 };
 
 class mmColors

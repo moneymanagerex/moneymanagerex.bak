@@ -251,7 +251,7 @@ bool mmIniOptions::expandTermTree_ = false;
 
 bool mmIniOptions::transPayeeSelectionNone_     = false;
 bool mmIniOptions::transCategorySelectionNone_  = false;
-bool mmIniOptions::transStatusReconciled_       = false;
+int mmIniOptions::transStatusReconciled_       = 0;
 
 //----------------------------------------------------------------------------
 wxString mmOptions::dateFormat = mmex::DEFDATEFORMAT;
@@ -305,8 +305,8 @@ void mmIniOptions::loadOptions( wxSQLite3Database* db )
         transPayeeSelectionNone_ = true;
     if ( mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_CATEGORY_NONE"), wxT("FALSE") ) != wxT("FALSE") )
         transCategorySelectionNone_ = true;
-    if ( mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("FALSE") ) != wxT("FALSE") )
-        transStatusReconciled_ = true;
+    // Read the preference as a string and convert to int
+	transStatusReconciled_ = wxAtoi(mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("0") ));
 }
 
 void mmIniOptions::loadInfoOptions( wxSQLite3Database* db )
