@@ -115,6 +115,11 @@ private:
 
     // store the original currency rate for transaction editing
     double  edit_currency_rate;
+
+    wxString getMostFrequentlyUsedPayee(wxString& categString);
+    wxString resetPayeeString(bool normal = true);
+    wxString getMostFrequentlyUsedCategory();
+    wxString resetCategoryString();
 };
 
 #endif
