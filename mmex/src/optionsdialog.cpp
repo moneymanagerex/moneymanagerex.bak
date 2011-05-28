@@ -57,9 +57,6 @@ enum HtmlFontEnum
   HTML_FONT_MAX // number of elements, must be last
 };
 
-const wxString financialMonthsSelection[12] = {  _("Jan"), _("Feb"), _("Mar"), _("Apr"), _("May"), _("Jun"),
-                                                 _("Jul"), _("Aug"), _("Sep"), _("Oct"), _("Nov"), _("Dec") };
-
 IMPLEMENT_DYNAMIC_CLASS( mmOptionsDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
@@ -336,7 +333,7 @@ void mmOptionsDialog::OnViewTransChanged(wxCommandEvent& /*event*/)
 
 void mmOptionsDialog::OnFYSMonthChange(wxCommandEvent& /*event*/)
 {
-    wxString fysMonthVal = financialMonthsSelection[monthSelection_->GetSelection()];
+    wxString fysMonthVal = wxString() << monthSelection_->GetSelection() + 1;
     mmDBWrapper::setInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_MONTH"), fysMonthVal); 
     mmOptions::financialYearStartMonthString_ = fysMonthVal;
 }
@@ -771,13 +768,15 @@ void mmOptionsDialog::CreateControls()
     wxStaticText* itemStaticTextSmonth = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Start Month"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticBoxSizerFinancialYear->Add(itemStaticTextSmonth, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
+    const wxString financialMonthsSelection[12] = {  _("Jan"), _("Feb"), _("Mar"), _("Apr"), _("May"), _("Jun"),
+                                                     _("Jul"), _("Aug"), _("Sep"), _("Oct"), _("Nov"), _("Dec") };
     monthSelection_ = new wxChoice( itemPanelMisc, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_MONTH, wxDefaultPosition, 
                                     wxSize(100, -1), 12, financialMonthsSelection, 0 );
     itemStaticBoxSizerFinancialYear->Add(monthSelection_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    wxString financialPeriodStartMonth = mmDBWrapper::getInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_MONTH"), wxT("Jul"));
-    const wxString itemMonthSelectionString = _("JanFebMarAprMayJunJulAugSepOctNovDec");
-    int monthItem = itemMonthSelectionString.Find(financialPeriodStartMonth);
-    monthSelection_->SetSelection(monthItem/3);
+    wxString financialPeriodStartMonth = mmDBWrapper::getInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_MONTH"), wxT("7"));
+    long monthItem;
+    financialPeriodStartMonth.ToLong(&monthItem);
+    monthSelection_->SetSelection(monthItem - 1);
     monthSelection_->SetToolTip(_("Specify month for start of financial year"));
 
     //----------------------------------------------

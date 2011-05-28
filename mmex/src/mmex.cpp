@@ -1392,8 +1392,11 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 
 wxDateTime mmGUIFrame::getUserDefinedFinancialYear(bool prevDayRequired)
 {
-    const wxString itemMonthSelectionString = _("JanFebMarAprMayJunJulAugSepOctNovDec");
-    int monthNum = itemMonthSelectionString.Find(mmOptions::financialYearStartMonthString_) /3;
+    long monthNum;
+    mmOptions::financialYearStartMonthString_.ToLong(&monthNum);
+
+    if (monthNum > 0) //Test required for compatability with previous version
+        monthNum --;
 
     wxDateTime today = wxDateTime::Now();
     int year = today.GetYear();
