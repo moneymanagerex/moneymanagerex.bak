@@ -288,8 +288,7 @@ void mmTransDialog::CreateControls()
         _("Transfer")
     };  
     
-    choiceTrans_ = new wxChoice( itemDialog1, ID_DIALOG_TRANS_TYPE, wxDefaultPosition, 
-        wxDefaultSize, 3, itemChoice6Strings, 0 );
+    choiceTrans_ = new wxChoice(itemDialog1,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxDefaultSize,3,itemChoice6Strings,0);
     itemBoxSizer4->Add(choiceTrans_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     choiceTrans_->SetSelection(0);
     choiceTrans_->SetToolTip(_("Specify the type of transactions to be created."));
@@ -300,12 +299,11 @@ void mmTransDialog::CreateControls()
     itemBoxSizer4->Add(bAdvanced_, flags);
     bAdvanced_->SetToolTip(_("Specify the transfer amount in the To Account"));
 
-    staticTextAdvancedActive_ = new wxStaticText( itemDialog1, wxID_STATIC,
-        _(" is active!"), wxDefaultPosition, wxDefaultSize, 0 );
+    staticTextAdvancedActive_ = new wxStaticText(itemDialog1,wxID_STATIC, _(" is active!"),
+        wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer4->Add(staticTextAdvancedActive_, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
-    wxPanel* itemPanel7 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, 
-        wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* itemPanel7 = new wxPanel(itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemBoxSizer3->Add(itemPanel7, 1, wxGROW|wxALL, 5);
 
     wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(4, 4, 0, 0);
@@ -313,70 +311,22 @@ void mmTransDialog::CreateControls()
 
     // Payee button ----------------------------------- begin
     
-    wxStaticText* itemStaticText9 = new wxStaticText( itemPanel7, ID_DIALOG_TRANS_STATIC_PAYEE, 
-        _("Payee"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer8->Add(itemStaticText9, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText9 = new wxStaticText(itemPanel7, ID_DIALOG_TRANS_STATIC_PAYEE, _("Payee"),
+        wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer8->Add(itemStaticText9, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxString defaultPayeeName = _("Select Payee");
-    wxString defaultCategName = _("Select Category");
-
-    wxString payeeName   = defaultPayeeName;
-    wxString categString = defaultCategName;
-    if ( ! mmIniOptions::transPayeeSelectionNone_ )
+    wxString payeeName = resetPayeeString();
+    wxString categString;
+    if (!edit_ && ! mmIniOptions::transPayeeSelectionNone_ )
     {
-        // Determine most frequently used payee name for current account
-        static const char sql[] = 
-            "select count (*) c, "
-            "cat.categname CATEGNAME, sc.subcategname SUBCATEGNAME, "
-            "ca.categid, ca.subcategid, "
-            "ca.payeeid, p.payeename PAYEENAME "
-            "from CHECKINGACCOUNT_V1 ca, payee_v1 p "
-            "left join CATEGORY_V1 cat "
-            "on cat.CATEGID = ca.CATEGID "
-
-            "left join SUBCATEGORY_V1 sc "
-            "on sc.CATEGID = ca.CATEGID and "
-            "sc.SUBCATEGID = ca.SUBCATEGID "
- 
-            "where ca.payeeid=p.payeeid " 
-            "and ca.transcode<>'Transfer' "
-            "and ca.accountid = ? "
-            "group by ca.payeeid, ca.transdate, ca.categid, ca.subcategid "
-            "order by ca.transdate desc, ca.transid desc, c desc "
-            "limit 1";
-
-        wxSQLite3Statement st = db_->PrepareStatement(sql);
-        st.Bind(1, accountID_);
-        wxSQLite3ResultSet q1 = st.ExecuteQuery();
-        payeeName = q1.GetString(wxT("PAYEENAME"));
-        payeeID_ = q1.GetInt(wxT("PAYEEID"));
-        categString = q1.GetString(wxT("CATEGNAME"));
-        wxString subcategName = q1.GetString(wxT("SUBCATEGNAME"));
-        categID_ = q1.GetInt(wxT("CATEGID"));
-        subcategID_ = q1.GetInt(wxT("SUBCATEGID"));
-
-        //if some values is missing - set defaults
-        if (payeeName == wxT(""))
-        {
-            payeeName = defaultPayeeName;
-            payeeID_ = -1;
-        } 
-        if (categString == wxT(""))
-        {
-            categString = defaultCategName;
-        }
-        else 
-        {
-            if (subcategName != wxT(""))
-            {
-                categString += wxT(" : ");
-                categString += subcategName;
-            }
-        }
-
-        st.Finalize();
+        payeeName = getMostFrequentlyUsedPayee(categString);
     }
+
+    if (!edit_ && (mmIniOptions::transCategorySelectionNone_ || categString.IsEmpty()) )
+    {
+        categString = resetCategoryString();
+    }
+
     bPayee_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONPAYEE, payeeName, wxDefaultPosition, wxSize(200, -1), 0 );
     itemFlexGridSizer8->Add(bPayee_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     bPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
@@ -401,8 +351,7 @@ void mmTransDialog::CreateControls()
 
     //===========================================================
     
-    wxStaticText* itemStaticText13 = new wxStaticText( itemPanel7,
-        ID_DIALOG_TRANS_STATIC_FROM, _("To"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText13 = new wxStaticText( itemPanel7, ID_DIALOG_TRANS_STATIC_FROM, _("To") );
     itemFlexGridSizer8->Add(itemStaticText13, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
     itemStaticText13->Show(false);
 
@@ -412,27 +361,21 @@ void mmTransDialog::CreateControls()
     bTo_->Show(false);
     bTo_->SetToolTip(_("Specify which account the transfer is going to"));
 
-    wxStaticText* itemStaticText15 = new wxStaticText( itemPanel7, wxID_STATIC, _("Date"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer8->Add(itemStaticText15, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText15 = new wxStaticText( itemPanel7, wxID_STATIC, _("Date"));
+    itemFlexGridSizer8->Add(itemStaticText15, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime, wxDefaultPosition, wxSize(100, -1), wxDP_DROPDOWN);
     itemFlexGridSizer8->Add(dpc_, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
 
     // Category ******************************** begin //
-    if ( mmIniOptions::transCategorySelectionNone_ )
-        categString = defaultCategName;
-
-    wxStaticText* itemStaticText17 = new wxStaticText( itemPanel7, wxID_STATIC, _("Category"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText17 = new wxStaticText( itemPanel7, wxID_STATIC, _("Category") );
     itemFlexGridSizer8->Add(itemStaticText17, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     wxBoxSizer* itemBoxSizer18 = new wxBoxSizer(wxHORIZONTAL);
     itemFlexGridSizer8->Add(itemBoxSizer18, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     
-    bCategory_ = new wxButton( itemPanel7, 
-        ID_DIALOG_TRANS_BUTTONCATEGS, categString, wxDefaultPosition, wxSize(200, -1), 0 );
+    bCategory_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONCATEGS, categString, wxDefaultPosition, wxSize(200, -1), 0 );
     itemBoxSizer18->Add(bCategory_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     bCategory_->SetToolTip(_("Specify the category for this transaction"));
     // Category ******************************** end //
@@ -444,7 +387,7 @@ void mmTransDialog::CreateControls()
 
     ////////////////////////////////////////////
 
-    wxStaticText* itemStaticText51 = new wxStaticText( itemPanel7, wxID_STATIC, _("Status"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText51 = new wxStaticText( itemPanel7, wxID_STATIC, _("Status"));
     itemFlexGridSizer8->Add(itemStaticText51, 0, 
         wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -458,8 +401,7 @@ void mmTransDialog::CreateControls()
     };  
 
 
-    choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, 
-        wxSize(100, -1), 5, itemChoice7Strings, 0 );
+    choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, wxSize(100, -1), 5, itemChoice7Strings, 0 );
     itemFlexGridSizer8->Add(choiceStatus_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     if (mmIniOptions::transStatusReconciled_)
     {
@@ -478,10 +420,10 @@ void mmTransDialog::CreateControls()
     itemFlexGridSizer8->Add(textNotes_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     textNotes_->SetToolTip(_("Specify any text notes you want to add to this transaction."));
     
-    wxStaticText* itemStaticText23 = new wxStaticText( itemPanel7, wxID_STATIC, _("Amount"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText23 = new wxStaticText( itemPanel7, wxID_STATIC, _("Amount") );
     itemFlexGridSizer8->Add(itemStaticText23, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
     
-    textAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+    textAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT("") );
     itemFlexGridSizer8->Add(textAmount_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     textAmount_->SetToolTip(_("Specify the amount for this transaction"));
     textAmount_->SetFocus();
@@ -552,7 +494,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
             payeeID_ = dlg.getPayeeId();
             if (payeeID_ == -1)
             {
-	            bPayee_->SetLabel(wxT("Select Payee"));
+	            bPayee_->SetLabel(resetPayeeString());
                 payeeUnknown_ = true;
 	            return;
             }
@@ -592,18 +534,14 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
             if (payeeName.IsEmpty())
             {
                 payeeID_ = -1;
-                categID_ = -1;
-                subcategID_ = -1;
-                bCategory_->SetLabel(_("Select Category"));
-                bPayee_->SetLabel(_("Select Payee"));
                 payeeUnknown_ = true;
+                bCategory_->SetLabel(resetCategoryString());
             }
             else
             {
                 bPayee_->SetLabel(payeeName);
                 payeeUnknown_ = false;
             }
-
     	}
 	}
 }
@@ -762,11 +700,7 @@ void mmTransDialog::updateControlsForTransType()
         displayControlsToolTips(DEF_WITHDRAWAL);
         stp->SetLabel(_("Payee"));
         if (payeeUnknown_) 
-        {
-            bPayee_->SetLabel(_("Select Payee"));
-            payeeID_ = -1;
-            toID_    = -1;
-        } 
+            bPayee_->SetLabel(resetPayeeString());
 
     } else if (choiceTrans_->GetSelection() == DEF_DEPOSIT) {
 
@@ -774,11 +708,7 @@ void mmTransDialog::updateControlsForTransType()
         displayControlsToolTips(DEF_DEPOSIT);
         stp->SetLabel(_("From"));
         if (payeeUnknown_) 
-        {
-            bPayee_->SetLabel(_("Select Payee"));
-            payeeID_ = -1;
-            toID_    = -1;
-        } 
+            bPayee_->SetLabel(resetPayeeString());
 
     } else if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
 
@@ -792,65 +722,136 @@ void mmTransDialog::updateControlsForTransType()
         bPayee_->SetLabel(acctName);
         payeeID_ = accountID_;
 
-        wxString categString;
-        if ( mmIniOptions::transCategorySelectionNone_ )
+        if (!edit_)
         {
-            categString = _("Select Category");
-            categID_ = -1;
-            subcategID_ = -1;
-        } 
-        else
-        {
-            // Determine most frequently used category name for current account for transfer
-            static const char sql[] = 
-                "select count (*) c, "
-                "cat.categname CATEGNAME, sc.subcategname SUBCATEGNAME, "
-                "ca.categid, ca.subcategid "
-                "from CHECKINGACCOUNT_V1 ca "
-                "left join CATEGORY_V1 cat "
-                "on cat.CATEGID = ca.CATEGID "
-                
-                "left join SUBCATEGORY_V1 sc "
-                "on sc.CATEGID = ca.CATEGID and "
-                "sc.SUBCATEGID = ca.SUBCATEGID "
-                 
-                "where ca.transcode = 'Transfer' "
-                "and ca.accountid = ? or ca.toaccountid = ?"
-                "group by ca.payeeid, ca.transdate, ca.categid, ca.subcategid "
-                "order by ca.transdate desc, ca.transid desc, c desc "
-                "limit 1";
+            wxString categString;
+            if (  mmIniOptions::transCategorySelectionNone_ )
+                categString = resetCategoryString();
+            else
+                categString = getMostFrequentlyUsedCategory();
 
-            wxSQLite3Statement st = db_->PrepareStatement(sql);
-            st.Bind(1, accountID_);
-            st.Bind(2, accountID_);
-            wxSQLite3ResultSet q1 = st.ExecuteQuery();
-            categString = q1.GetString(wxT("CATEGNAME"));
-            wxString subcategName = q1.GetString(wxT("SUBCATEGNAME"));
-            categID_ = q1.GetInt(wxT("CATEGID"));
-            subcategID_ = q1.GetInt(wxT("SUBCATEGID"));
-
-            //if some values is missing - set defaults
-            if (categString == wxT(""))
-            {
-                categString = _("Select Category");
-                categID_ = -1;
-                subcategID_ = -1;
-            }
-            else 
-            {
-                if (subcategName != wxT(""))
-                {
-                    categString += wxT(" : ");
-                    categString += subcategName;
-                }
-            }
-
-            st.Finalize();
+            wxStaticText* stc = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_BUTTONCATEGS);
+            stc->SetLabel(categString);
         }
-
-        wxStaticText* stc = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_BUTTONCATEGS);
-        stc->SetLabel(categString);
     }
+}
+
+wxString mmTransDialog::resetPayeeString(bool normal) //normal is deposits or withdrawls
+{
+    wxString payeeStr = _("Select Payee");
+    payeeID_ = -1;
+
+    if (normal)
+        toID_    = -1;
+
+    return payeeStr;
+}
+
+wxString mmTransDialog::resetCategoryString()
+{
+    wxString catStr = _("Select Category");
+    categID_ = -1;
+    subcategID_ = -1;
+    return catStr; 
+}
+
+wxString mmTransDialog::getMostFrequentlyUsedCategory()
+{
+    // Determine most frequently used category name for current account for transfer
+    static const char sql[] = 
+        "select count (*) c,"
+              " cat.categname CATEGNAME,"
+              " sc.subcategname SUBCATEGNAME,"
+              " ca.categid, ca.subcategid "
+        "from CHECKINGACCOUNT_V1 ca "
+            " left join CATEGORY_V1 cat on cat.CATEGID = ca.CATEGID"
+            " left join SUBCATEGORY_V1 sc"
+            " on sc.CATEGID = ca.CATEGID and sc.SUBCATEGID = ca.SUBCATEGID "
+        "where ca.transcode = 'Transfer' and ca.accountid = ? or ca.toaccountid = ? "
+        "group by ca.payeeid, ca.transdate, ca.categid, ca.subcategid "
+        "order by ca.transdate desc, ca.transid desc, c desc "
+        "limit 1";
+
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    st.Bind(1, accountID_);
+    st.Bind(2, accountID_);
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    wxString categString = q1.GetString(wxT("CATEGNAME"));
+    wxString subcategName = q1.GetString(wxT("SUBCATEGNAME"));
+    categID_ = q1.GetInt(wxT("CATEGID"));
+    subcategID_ = q1.GetInt(wxT("SUBCATEGID"));
+    st.Finalize();
+
+    //if some values is missing - set defaults
+    if (categString.IsEmpty())
+    {
+        categString = resetCategoryString();
+    }
+    else 
+    {
+        if ( !subcategName.IsEmpty() )
+        {
+            categString += wxT(" : ");
+            categString += subcategName;
+        }
+    }
+
+    return categString;
+}
+
+wxString mmTransDialog::getMostFrequentlyUsedPayee(wxString& categString)
+{
+    // Determine most frequently used payee name for current account
+    static const char sql[] = 
+        "select count (*) c, "
+              " cat.categname CATEGNAME, "
+              " sc.subcategname SUBCATEGNAME, "
+              " ca.categid, ca.subcategid, "
+              " ca.payeeid, p.payeename PAYEENAME "
+        "from CHECKINGACCOUNT_V1 ca, payee_v1 p "
+            " left join CATEGORY_V1 cat on cat.CATEGID = ca.CATEGID "
+            " left join SUBCATEGORY_V1 sc on "
+                " sc.CATEGID = ca.CATEGID and sc.SUBCATEGID = ca.SUBCATEGID "
+        "where ca.payeeid=p.payeeid and "
+             " ca.transcode<>'Transfer' and "
+             " ca.accountid = ? "
+        "group by ca.payeeid, ca.transdate, ca.categid, ca.subcategid "
+        "order by ca.transdate desc, ca.transid desc, c desc "
+        "limit 1";
+
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    st.Bind(1, accountID_);
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    wxString payeeName = q1.GetString(wxT("PAYEENAME"));
+    payeeID_ = q1.GetInt(wxT("PAYEEID"));
+
+    // get category info
+    categString = q1.GetString(wxT("CATEGNAME"));
+    wxString subcategName = q1.GetString(wxT("SUBCATEGNAME"));
+    categID_    = q1.GetInt(wxT("CATEGID"));
+    subcategID_ = q1.GetInt(wxT("SUBCATEGID"));
+    st.Finalize();
+
+    //if some values is missing - set defaults
+    if (payeeName.IsEmpty())
+    {
+        payeeName = resetPayeeString(false);
+    } 
+
+    if ( categString.IsEmpty() )
+    {
+        categString = resetCategoryString();
+    } 
+    else 
+    {
+        if (!subcategName.IsEmpty())
+        {
+            categString += wxT(" : ");
+            categString += subcategName;
+        }
+    }
+
+    return payeeName;
 }
 
 void mmTransDialog::displayControlsToolTips(int transType, bool enableAdvanced /* = false */)
