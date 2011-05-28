@@ -265,7 +265,7 @@ void mmOptions::loadOptions( wxSQLite3Database* db )
     dateFormat = mmDBWrapper::getInfoSettingValue( db, wxT( "DATEFORMAT" ), mmex::DEFDATEFORMAT );
 
     financialYearStartDayString_   = mmDBWrapper::getInfoSettingValue(db, wxT("FINANCIAL_YEAR_START_DAY"), wxT("1"));
-    financialYearStartMonthString_ = mmDBWrapper::getInfoSettingValue(db, wxT("FINANCIAL_YEAR_START_MONTH"), wxT("Jul"));
+    financialYearStartMonthString_ = mmDBWrapper::getInfoSettingValue(db, wxT("FINANCIAL_YEAR_START_MONTH"), wxT("7"));
 
 }
 //----------------------------------------------------------------------------
