@@ -430,11 +430,17 @@ Are you are sure you want to proceed with the import?"),
         subCategID = -1;
         double val = 0.0;
 
-		wxProgressDialog dlg(_("Please Wait"), _("Importing data from file"), 100, false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
+		wxProgressDialog dlg(_("Please Wait"), _(" transactions imported from QIF"), 101, false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
         while(!input.Eof())
         {   
-			dlg.Update((static_cast<double>(numLines)/1000.0 - numLines/1000) *100);
-			
+			notes = wxT("");
+			notes << numImported << _(" transactions imported from QIF");
+            dlg.Update(static_cast<int>((static_cast<double>(numImported)/100.0 - numImported/100) *100), notes);
+            notes = wxT("");
+
+			if (!dlg.Update(-1)) // if cancel clicked
+			return -1; // abort processing
+
             readLine = text.ReadLine();
             numLines++;
             if (readLine.Length() == 0)
@@ -705,16 +711,16 @@ Are you are sure you want to proceed with the import?"),
 
                core->bTransactionList_.addTransaction(core, pTransaction);
 
-                notes = wxT("");
                 numImported++;
-                continue;
+                notes = wxT("");
+				continue;
 			}
         }
         log << numImported << _(" transactions imported from QIF") << endl;
 
         outputLog.Close();
 
-        dlg.Update(100);
+        dlg.Update(101);
 		dlg.Destroy();
     }
     if ( !fileName.IsEmpty() )
