@@ -400,14 +400,14 @@ Are you are sure you want to proceed with the import?"),
 
     wxString fileName = wxFileSelector(_("Choose QIF data file to import"), 
         wxT(""), wxT(""), wxT(""), wxT("*.qif"), wxFILE_MUST_EXIST);
+    wxFileName logFile = mmex::GetLogDir(true);
+    logFile.SetFullName(fileName);
+    logFile.SetExt(wxT("txt"));
+
     if ( !fileName.IsEmpty() )
     {
         wxFileInputStream input(fileName);
         wxTextInputStream text(input);
-
-        wxFileName logFile = mmex::GetLogDir(true);
-        logFile.SetFullName(fileName);
-        logFile.SetExt(wxT("txt"));
 
         wxFileOutputStream outputLog(logFile.GetFullPath());
         wxTextOutputStream log(outputLog);
@@ -429,8 +429,12 @@ Are you are sure you want to proceed with the import?"),
         int payeeID = -1, categID = -1, subCategID = -1;
         subCategID = -1;
         double val = 0.0;
+
+		wxProgressDialog dlg(_("Please Wait"), _("Importing data from file"), 100, false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
         while(!input.Eof())
-        {              
+        {   
+			dlg.Update((static_cast<double>(numLines)/1000.0 - numLines/1000) *100);
+			
             readLine = text.ReadLine();
             numLines++;
             if (readLine.Length() == 0)
@@ -706,13 +710,15 @@ Are you are sure you want to proceed with the import?"),
                 continue;
 			}
         }
-
         log << numImported << _(" transactions imported from QIF") << endl;
 
         outputLog.Close();
 
-        fileviewer(logFile.GetFullPath(), 0).ShowModal();
+        dlg.Update(100);
+		dlg.Destroy();
     }
+    if ( !fileName.IsEmpty() )
+    fileviewer(logFile.GetFullPath(), 0).ShowModal();
    
     return fromAccountID;
 }
