@@ -1441,17 +1441,39 @@ bool mmDBWrapper::deleteTransaction(wxSQLite3Database* db, int transID)
         st.ExecuteUpdate();
         st.Finalize();
     }
-
     return true;
 }
 
+bool mmDBWrapper::begin(wxSQLite3Database* db)
+{
+        wxSQLite3Statement st = db->PrepareStatement("BEGIN");
+        st.ExecuteUpdate();
+        st.Finalize();
+        return true;
+}
+
+bool mmDBWrapper::commit(wxSQLite3Database* db)
+{
+        wxSQLite3Statement st = db->PrepareStatement("COMMIT");
+        st.ExecuteUpdate();
+        st.Finalize();
+        return true;
+}
+
+bool mmDBWrapper::rollback(wxSQLite3Database* db)
+{
+        wxSQLite3Statement st = db->PrepareStatement("ROLLBACK");
+        st.ExecuteUpdate();
+        st.Finalize();
+        return true;
+}
 
 bool mmDBWrapper::deleteFlaggedTransactions(wxSQLite3Database* db, int accountID)
 {
     static const char sql[] = 
     "delete from CHECKINGACCOUNT_V1 "
     "where STATUS = 'F' and "
-         "(ACCOUNTID = ? OR TOACCOUNTID = ?)";
+    "(ACCOUNTID = ? OR TOACCOUNTID = ?)";
 
     wxSQLite3Statement st = db->PrepareStatement(sql);
     st.Bind(1, accountID);
@@ -1469,8 +1491,8 @@ bool mmDBWrapper::updatePayee(wxSQLite3Database* db, const wxString& payeeName,
     static const char sql[] = 
     "update PAYEE_V1 "
     "SET PAYEENAME = ?, "
-        "CATEGID = ?, "
-        "SUBCATEGID = ? "
+    "CATEGID = ?, "
+    "SUBCATEGID = ? "
     "WHERE PAYEEID = ?";
 
     wxSQLite3Statement st = db->PrepareStatement(sql);
@@ -1491,7 +1513,7 @@ bool mmDBWrapper::deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID)
     "select 1 "
     "from CHECKINGACCOUNT_V1 "
     "where transcode <> 'Transfer' " //for transfer transactions payee id should be null. if not null jast ignore it
-          "and PAYEEID = ? "
+    "and PAYEEID = ? "
     "limit 1";
     wxSQLite3Statement st = db->PrepareStatement(sql);
 
@@ -1521,8 +1543,8 @@ wxString mmDBWrapper::getPayee(wxSQLite3Database* db, int payeeID, int& categID,
 {
     static const char sql[] = 
     "select PAYEENAME, "
-           "CATEGID, "   
-           "SUBCATEGID "
+    "CATEGID, "   
+    "SUBCATEGID "
     "from PAYEE_V1 "
     "where PAYEEID = ?";
     

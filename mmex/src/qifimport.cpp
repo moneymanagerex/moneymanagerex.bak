@@ -403,6 +403,7 @@ Are you are sure you want to proceed with the import?"),
     wxFileName logFile = mmex::GetLogDir(true);
     logFile.SetFullName(fileName);
     logFile.SetExt(wxT("txt"));
+    bool canceledbyuser = false;
 
     if ( !fileName.IsEmpty() )
     {
@@ -430,16 +431,20 @@ Are you are sure you want to proceed with the import?"),
         subCategID = -1;
         double val = 0.0;
 
-		wxProgressDialog dlg(_("Please Wait"), _(" transactions imported from QIF"), 101, false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
+		mmDBWrapper::begin(core->db_.get());
+		wxProgressDialog dlg(_("Please Wait"), _("Transactions imported from QIF: "), 101, false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
         while(!input.Eof())
         {   
 			notes = wxT("");
-			notes << numImported << _(" transactions imported from QIF");
+			notes << _("Transactions imported from QIF: ") << numImported;
             dlg.Update(static_cast<int>((static_cast<double>(numImported)/100.0 - numImported/100) *100), notes);
             notes = wxT("");
 
 			if (!dlg.Update(-1)) // if cancel clicked
-			return -1; // abort processing
+			{
+				canceledbyuser = true;
+				break; // abort processing
+			}
 
             readLine = text.ReadLine();
             numLines++;
@@ -663,7 +668,6 @@ Are you are sure you want to proceed with the import?"),
                     }
                 }
                 
-                
                 if (categ.Trim().IsEmpty())
                 {
                     // check if category exists for this payee.
@@ -680,8 +684,6 @@ Are you are sure you want to proceed with the import?"),
                         }
                     }
                 }
-                
-                
 
                 if(dt.Trim().IsEmpty()  || type.Trim().IsEmpty() || amount.Trim().IsEmpty())
                 {
@@ -716,16 +718,28 @@ Are you are sure you want to proceed with the import?"),
 				continue;
 			}
         }
-        log << numImported << _(" transactions imported from QIF") << endl;
-
+        if (!canceledbyuser)
+        {
+			mmDBWrapper::commit(core->db_.get());
+			log << _("Transactions imported from QIF: ") << numImported << endl;
+		}
+		else 
+		{
+			//mmDBWrapper::rollback(core->db_.get());
+			mmDBWrapper::commit(core->db_.get());
+			log << _("Transactions imported from QIF: ") << numImported << endl;
+			log  << endl << _("Import interrupted by user!") << endl;
+		}
+		        
         outputLog.Close();
 
         dlg.Update(101);
-		dlg.Destroy();
+		//dlg.Destroy();
     }
+
     if ( !fileName.IsEmpty() )
     fileviewer(logFile.GetFullPath(), 0).ShowModal();
-   
+    
     return fromAccountID;
 }
 
