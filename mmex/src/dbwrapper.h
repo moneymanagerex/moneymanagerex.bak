@@ -105,6 +105,10 @@ double getAmountForCategory(wxSQLite3Database* db, int categID, int subcategID, 
 void updateTransactionWithStatus(wxSQLite3Database &db, int transID, 
 	const wxString& status);
 bool deleteTransaction(wxSQLite3Database* db, int transID);
+bool commit(wxSQLite3Database* db);
+bool begin(wxSQLite3Database* db);
+bool rollback(wxSQLite3Database* db);
+
 bool deleteFlaggedTransactions(wxSQLite3Database* db, int accountID);
 
 /* Bills & Deposits API */
