@@ -470,16 +470,16 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
     EVT_MENU(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP, MyListCtrl::OnMarkTransaction)
     EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE,          MyListCtrl::OnMarkTransaction)
 
-    EVT_MENU(MENU_TREEPOPUP_MARKRECONCILED_ALL,   MyListCtrl::OnMarkAllTransactions)
-    EVT_MENU(MENU_TREEPOPUP_MARKUNRECONCILED_ALL, MyListCtrl::OnMarkAllTransactions)
-    EVT_MENU(MENU_TREEPOPUP_MARKVOID_ALL,         MyListCtrl::OnMarkAllTransactions)
+    EVT_MENU(MENU_TREEPOPUP_MARKRECONCILED_ALL,   		MyListCtrl::OnMarkAllTransactions)
+    EVT_MENU(MENU_TREEPOPUP_MARKUNRECONCILED_ALL, 		MyListCtrl::OnMarkAllTransactions)
+    EVT_MENU(MENU_TREEPOPUP_MARKVOID_ALL,         		MyListCtrl::OnMarkAllTransactions)
     EVT_MENU(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL, MyListCtrl::OnMarkAllTransactions)
     EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE_ALL,          MyListCtrl::OnMarkAllTransactions)
 
-    EVT_MENU(MENU_TREEPOPUP_NEW,              MyListCtrl::OnNewTransaction)
-    EVT_MENU(MENU_TREEPOPUP_DELETE,           MyListCtrl::OnDeleteTransaction)
-    EVT_MENU(MENU_TREEPOPUP_EDIT,             MyListCtrl::OnEditTransaction)
-    EVT_MENU(MENU_TREEPOPUP_MOVE,             MyListCtrl::OnMoveTransaction)
+    EVT_MENU(MENU_TREEPOPUP_NEW,              	MyListCtrl::OnNewTransaction)
+    EVT_MENU(MENU_TREEPOPUP_DELETE,           	MyListCtrl::OnDeleteTransaction)
+    EVT_MENU(MENU_TREEPOPUP_EDIT,             	MyListCtrl::OnEditTransaction)
+    EVT_MENU(MENU_TREEPOPUP_MOVE,             	MyListCtrl::OnMoveTransaction)
 
     EVT_LIST_COL_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnColClick)
     EVT_LIST_KEY_DOWN(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListKeyDown)
@@ -655,8 +655,8 @@ void mmCheckingPanel::CreateControls()
 
     m_currentView = mmDBWrapper::getINISettingValue(m_inidb, 
        wxT("VIEWTRANSACTIONS"), wxT("View All Transactions"));
-    initViewTransactionsHeader();
-
+    
+	initViewTransactionsHeader();
     wxBoxSizer* itemBoxSizerHHeader = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader, 0, wxALL, 1);
 
@@ -1352,11 +1352,13 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
             wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
         if (msgDlg.ShowModal() == wxID_YES)
         {
-           //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.getAccountSharedPtr(m_AccountID).get());
-            for (size_t i = 0; i < m_trans.size(); ++i)
+			//mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.getAccountSharedPtr(m_AccountID).get());
+			mmDBWrapper::begin(m_core->db_.get());
+			for (size_t i = 0; i < m_trans.size(); ++i)
             {
                m_core->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
             }
+            mmDBWrapper::commit(m_core->db_.get());
         }
     }
     else if (evt == MENU_VIEW_DELETE_FLAGGED)
@@ -1365,6 +1367,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         if (msgDlg.ShowModal() == wxID_YES)
         {
            //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.getAccountSharedPtr(m_AccountID).get());
+			mmDBWrapper::begin(m_core->db_.get());
             for (size_t i = 0; i < m_trans.size(); ++i)
             {
                if (m_trans[i]->status_ == wxT("F"))
@@ -1372,6 +1375,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
                   m_core->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
                }
             }
+			mmDBWrapper::commit(m_core->db_.get());
         }
     }
     else
@@ -1408,12 +1412,20 @@ void MyListCtrl::OnItemRightClick(wxListEvent& event)
     menu.Append(MENU_TREEPOPUP_NEW, _("&New Transaction"));
     menu.AppendSeparator();
     menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Transaction"));
-    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Transaction"));
     menu.Append(MENU_ON_COPY_TRANSACTION, _("&Copy Transaction"));
     menu.Append(MENU_TREEPOPUP_MOVE, _("&Move Transaction"));
     if (m_selectedForCopy != -1)
         menu.Append(MENU_ON_PASTE_TRANSACTION, _("&Paste Transaction"));
     menu.AppendSeparator();
+    
+    wxMenu* subGlobalOpMenuDelete = new wxMenu;
+    subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE, _("&Delete Transaction"));
+	//subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_VIEWED, _("Delete all transactions in current view"));
+	//subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_FLAGGED, _("Delete all \"Follow Up\" transactions"));
+    menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete"), subGlobalOpMenuDelete);
+    
+    menu.AppendSeparator();
+    
     menu.Append(MENU_TREEPOPUP_MARKRECONCILED, _("Mark As &Reconciled"));
     menu.Append(MENU_TREEPOPUP_MARKUNRECONCILED, _("Mark As &Unreconciled"));
     menu.Append(MENU_TREEPOPUP_MARKVOID, _("Mark As &Void"));
