@@ -544,7 +544,7 @@ Are you are sure you want to proceed with the import?"),
 
                 if (!core->payeeList_.payeeExists(payee))
                 {
-                    log << _("Adding payee ") << payee << endl;   
+                    log << _("Payee Added: ") << payee << endl;   
                     payeeID = core->payeeList_.addPayee(payee);
                 }
                 else
@@ -660,7 +660,7 @@ Are you are sure you want to proceed with the import?"),
                     if (!core->payeeList_.payeeExists(payee))
                     {
                         payeeID = core->payeeList_.addPayee(payee);
-                        log << _("Adding payee ") << payee << endl;    
+                        log << _("Payee Added: ") << payee << endl;    
                     }
                     else
                     {
