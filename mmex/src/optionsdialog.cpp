@@ -88,9 +88,9 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_EXPAND_BANK_TREE, mmOptionsDialog::OnExpandBankTree)
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_EXPAND_TERM_TREE, mmOptionsDialog::OnExpandTermTree)
 
-    EVT_CHECKBOX(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE, mmOptionsDialog::OnTransactionPayeeChecked)
-    EVT_CHECKBOX(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY, mmOptionsDialog::OnTransactionCategoryChecked)
-    EVT_CHECKBOX(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS, mmOptionsDialog::OnTransactionStatusChecked)
+    EVT_CHOICE(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE, mmOptionsDialog::OnDefaultTransactionPayeeChanged)
+    EVT_CHOICE(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY, mmOptionsDialog::OnTransactionCategoryChanged)
+    EVT_CHOICE(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS, mmOptionsDialog::OnDefaultTransactionStatusChanged)
 
     EVT_CHOICE(ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_MONTH, mmOptionsDialog::OnFYSMonthChange)
 
@@ -780,30 +780,60 @@ void mmOptionsDialog::CreateControls()
     monthSelection_->SetToolTip(_("Specify month for start of financial year"));
 
     //----------------------------------------------
-    wxStaticBox* itemStaticBoxNewTransactionSettings = new wxStaticBox(itemPanelMisc, wxID_ANY, _("New Transaction Dialog Settings"));
+    
+	// New transaction dialog settings
+	wxStaticBox* itemStaticBoxNewTransactionSettings = new wxStaticBox(itemPanelMisc, wxID_ANY, _("New Transaction Dialog Settings"));
     wxStaticBoxSizer* itemStaticBoxSizerNewTransactionSettings = new wxStaticBoxSizer(itemStaticBoxNewTransactionSettings, wxVERTICAL);
     itemBoxSizerMisc->Add(itemStaticBoxSizerNewTransactionSettings, 0, wxGROW|wxALL, 5);
 
-    wxCheckBox* itemCheckBoxTransPayee = new wxCheckBox( itemPanelMisc, 
-        ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE, _("Payee Default: Set to Select"),
-        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    itemCheckBoxTransPayee->SetValue(mmIniOptions::transPayeeSelectionNone_);
-    itemStaticBoxSizerNewTransactionSettings->Add(itemCheckBoxTransPayee, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemCheckBoxTransPayee->SetToolTip(_("When not selected, the payee default is set to the most frequently used payee for the current account."));
+	//	Default Payee
+	wxStaticText* itemStaticText52 = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Payee:"));
+    itemStaticBoxSizerNewTransactionSettings->Add(itemStaticText52, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+	
+	wxString itemChoiceDefaultTransPayeeStrings[] = 
+    {
+        _("None"),
+        _("Last Used"),
+    };
+	
+    wxChoice* itemChoiceDefaultTransPayee = new wxChoice( itemPanelMisc, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE,
+													wxDefaultPosition, wxSize(100, -1), 2, itemChoiceDefaultTransPayeeStrings, 0 );	
+	itemChoiceDefaultTransPayee->SetSelection(mmIniOptions::transPayeeSelectionNone_);
+    itemStaticBoxSizerNewTransactionSettings->Add(itemChoiceDefaultTransPayee, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	
+	//	Default Category
+	wxStaticText* itemStaticText53 = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Category:"));
+    itemStaticBoxSizerNewTransactionSettings->Add(itemStaticText53, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+	
+	
+	wxString itemChoiceDefaultTransCategoryStrings[] = 
+    {
+        _("None"),
+        _("Last used for payee"),
+    };
+	
+    wxChoice* itemChoiceDefaultTransCategory = new wxChoice( itemPanelMisc, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY,
+														 wxDefaultPosition, wxSize(100, -1), 2, itemChoiceDefaultTransCategoryStrings, 0 );	
+	itemChoiceDefaultTransCategory->SetSelection(mmIniOptions::transCategorySelectionNone_);
+    itemStaticBoxSizerNewTransactionSettings->Add(itemChoiceDefaultTransCategory, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxCheckBox* itemCheckBoxTransCategory = new wxCheckBox( itemPanelMisc, 
-        ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY, _("Category Default: Set to Select"),
-        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    itemCheckBoxTransCategory->SetValue(mmIniOptions::transCategorySelectionNone_);
-    itemStaticBoxSizerNewTransactionSettings->Add(itemCheckBoxTransCategory, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-//    itemCheckBoxTransCategory->SetToolTip(_("Select to sets the default category to the last category used"));
-
-    wxCheckBox* itemCheckBoxTransStatus = new wxCheckBox( itemPanelMisc, 
-        ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS, _("Status Default: Set to Reconciled"),
-        wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    itemCheckBoxTransStatus->SetValue(mmIniOptions::transStatusReconciled_);
-    itemStaticBoxSizerNewTransactionSettings->Add(itemCheckBoxTransStatus, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-//    itemCheckBoxTransStatus->SetToolTip(_("Select to sets the default status to Reconciled"));
+	//	Default Status
+	wxStaticText* itemStaticText51 = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Status:"));
+    itemStaticBoxSizerNewTransactionSettings->Add(itemStaticText51, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+	
+	wxString itemChoiceDefaultTransStatusStrings[] = 
+    {
+        _("None"),
+        _("Reconciled"),
+        _("Void"),
+        _("Follow up"),
+    	_("Duplicate"),
+    };
+	
+    wxChoice* itemChoiceDefaultTransStatus = new wxChoice( itemPanelMisc, 
+        ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS, wxDefaultPosition, wxSize(100, -1), 5, itemChoiceDefaultTransStatusStrings, 0 );
+    itemChoiceDefaultTransStatus->SetSelection(mmIniOptions::transStatusReconciled_);
+    itemStaticBoxSizerNewTransactionSettings->Add(itemChoiceDefaultTransStatus, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     //----------------------------------------------
     wxStaticBox* itemStaticBoxBackupSetting = 
@@ -1147,23 +1177,23 @@ void mmOptionsDialog::OnFontSizeChanged(wxCommandEvent& /*event*/)
     Fit();
 }
 
-void mmOptionsDialog::OnTransactionPayeeChecked(wxCommandEvent& /*event*/)
+void mmOptionsDialog::OnDefaultTransactionPayeeChanged(wxCommandEvent& /*event*/)
 {
-    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE);
-    mmIniOptions::transPayeeSelectionNone_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(wxT("TRANSACTION_PAYEE_NONE"),mmIniOptions::transPayeeSelectionNone_);
+    wxChoice* itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE);
+    mmIniOptions::transPayeeSelectionNone_ = itemChoice->GetSelection();
+    mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_PAYEE_NONE"), wxString::Format(wxT("%d"), (int)mmIniOptions::transPayeeSelectionNone_)); 
 }
 
-void mmOptionsDialog::OnTransactionCategoryChecked(wxCommandEvent& /*event*/)
+void mmOptionsDialog::OnTransactionCategoryChanged(wxCommandEvent& /*event*/)
 {
-    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY);
-    mmIniOptions::transCategorySelectionNone_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(wxT("TRANSACTION_CATEGORY_NONE"),mmIniOptions::transCategorySelectionNone_);
+    wxChoice* itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY);
+    mmIniOptions::transCategorySelectionNone_ = itemChoice->GetSelection();
+	mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_CATEGORY_NONE"), wxString::Format(wxT("%d"), (int)mmIniOptions::transCategorySelectionNone_)); 
 }
 
-void mmOptionsDialog::OnTransactionStatusChecked(wxCommandEvent& /*event*/)
+void mmOptionsDialog::OnDefaultTransactionStatusChanged(wxCommandEvent& /*event*/)
 {
-    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS);
-    mmIniOptions::transStatusReconciled_ = itemCheckBox->GetValue();
+    wxChoice* itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS);
+    mmIniOptions::transStatusReconciled_ = itemChoice->GetSelection();
     mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_STATUS_RECONCILED"), wxString::Format(wxT("%d"), (int)mmIniOptions::transStatusReconciled_)); 
 }

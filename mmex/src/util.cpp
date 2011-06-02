@@ -250,8 +250,8 @@ bool mmIniOptions::expandStocksHome_ = true;
 bool mmIniOptions::expandBankTree_ = true;
 bool mmIniOptions::expandTermTree_ = false;
 
-bool mmIniOptions::transPayeeSelectionNone_     = false;
-bool mmIniOptions::transCategorySelectionNone_  = false;
+int mmIniOptions::transPayeeSelectionNone_     = 0;
+int mmIniOptions::transCategorySelectionNone_  = 0;
 int mmIniOptions::transStatusReconciled_       = 0;
 
 //----------------------------------------------------------------------------
@@ -302,11 +302,11 @@ void mmIniOptions::loadOptions( wxSQLite3Database* db )
     if ( mmDBWrapper::getINISettingValue( db, wxT("EXPAND_TERM_TREE"), wxT( "FALSE" ) ) != wxT( "FALSE" ) )
         expandTermTree_ = true;
 
-    if ( mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_PAYEE_NONE"), wxT("FALSE") ) != wxT("FALSE") )
-        transPayeeSelectionNone_ = true;
-    if ( mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_CATEGORY_NONE"), wxT("FALSE") ) != wxT("FALSE") )
-        transCategorySelectionNone_ = true;
     // Read the preference as a string and convert to int
+    transPayeeSelectionNone_ = wxAtoi(mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_PAYEE_NONE"), wxT("0") ));
+	// For the category selection, default behavior should remain that the last category used for the payee is selected.
+	//  This is item 1 (0-indexed) in the list.
+	transCategorySelectionNone_ = wxAtoi(mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_CATEGORY_NONE"), wxT("1") ));
 	transStatusReconciled_ = wxAtoi(mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("0") ));
 }
 
