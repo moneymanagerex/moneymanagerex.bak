@@ -116,8 +116,8 @@ public:
         static bool expandBankTree_;
         static bool expandTermTree_;
 
-        static bool transPayeeSelectionNone_;
-        static bool transCategorySelectionNone_;
+        static int transPayeeSelectionNone_;
+        static int transCategorySelectionNone_;
         static int transStatusReconciled_;
 };
 

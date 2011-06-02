@@ -317,12 +317,12 @@ void mmTransDialog::CreateControls()
 
     wxString payeeName = resetPayeeString();
     wxString categString;
-    if (!edit_ && ! mmIniOptions::transPayeeSelectionNone_ )
+    if (!edit_ && mmIniOptions::transPayeeSelectionNone_==1 )
     {
         payeeName = getMostFrequentlyUsedPayee(categString);
     }
 
-    if (!edit_ && (mmIniOptions::transCategorySelectionNone_ || categString.IsEmpty()) )
+    if (!edit_ && (mmIniOptions::transCategorySelectionNone_==0 || categString.IsEmpty()) )
     {
         categString = resetCategoryString();
     }
@@ -403,13 +403,7 @@ void mmTransDialog::CreateControls()
 
     choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, wxSize(100, -1), 5, itemChoice7Strings, 0 );
     itemFlexGridSizer8->Add(choiceStatus_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    if (mmIniOptions::transStatusReconciled_)
-    {
-        choiceStatus_->SetSelection(1);
-	}
-	else {
-        choiceStatus_->SetSelection(0);
-    }
+    choiceStatus_->SetSelection(mmIniOptions::transStatusReconciled_);
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
 
     wxStaticText* itemStaticText21 = new wxStaticText( itemPanel7,
@@ -525,7 +519,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 
             categID_ = tempCategID;
             subcategID_ = tempSubCategID;
-            if ( ! mmIniOptions::transCategorySelectionNone_ )
+            if ( mmIniOptions::transCategorySelectionNone_==1 ) // "Last used for payee"
                 bCategory_->SetLabel(categString);
         }
         else
@@ -725,7 +719,7 @@ void mmTransDialog::updateControlsForTransType()
         if (!edit_)
         {
             wxString categString;
-            if (  mmIniOptions::transCategorySelectionNone_ )
+            if (  mmIniOptions::transCategorySelectionNone_==0 ) // Default Category = "None"
                 categString = resetCategoryString();
             else
                 categString = getMostFrequentlyUsedCategory();

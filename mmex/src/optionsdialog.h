@@ -76,9 +76,9 @@ public:
 
     void SetIniDatabaseCheckboxValue(wxString dbField, bool dbState);
 
-    void OnTransactionPayeeChecked(wxCommandEvent& event);
-    void OnTransactionCategoryChecked(wxCommandEvent& event);
-    void OnTransactionStatusChecked(wxCommandEvent& event);
+    void OnDefaultTransactionPayeeChanged(wxCommandEvent& event);
+    void OnTransactionCategoryChanged(wxCommandEvent& event);
+    void OnDefaultTransactionStatusChanged(wxCommandEvent& event);
 
     void OnExpandBankHome(wxCommandEvent& event);
     void OnExpandTermHome(wxCommandEvent& event);

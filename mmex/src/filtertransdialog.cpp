@@ -270,15 +270,7 @@ void mmFilterTransactionsDialog::CreateControls()
     choiceStatus = new wxChoice( itemPanel3, ID_CHOICE7, wxDefaultPosition, 
        wxDefaultSize, 5, choiceStatusStrings, 0 );
     itemFlexGridSizer4->Add(choiceStatus, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	if (mmIniOptions::transStatusReconciled_)
-    {
-		choiceStatus->SetSelection(1);
-    }
-	else {
-		choiceStatus->SetSelection(0);
-	}
-
-	
+	choiceStatus->SetSelection(mmIniOptions::transStatusReconciled_);
     choiceStatus->SetToolTip(_("Specify the status for the transaction"));
 
     itemFlexGridSizer4->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);

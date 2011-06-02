@@ -507,13 +507,7 @@ void mmBDDialog::CreateControls()
     choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, 
         wxSize(100, -1), 4, itemChoice7Strings, 0 );
     itemFlexGridSizer8->Add(choiceStatus_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	if (mmIniOptions::transStatusReconciled_)
-    {
-        choiceStatus_->SetSelection(1);
-    }
-	else {
-		choiceStatus_->SetSelection(0);
-	}
+	choiceStatus_->SetSelection(mmIniOptions::transStatusReconciled_);
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
 
     wxStaticText* itemStaticText21 = new wxStaticText( itemPanel7, wxID_STATIC, 
