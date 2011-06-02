@@ -91,7 +91,7 @@ void loadCurrencies(wxSQLite3Database* db)
 
     wxSQLite3ResultSet rs = currencies.ExecuteQuery(sql);
     wxSQLite3Statement st = db->PrepareStatement(sql2);
-    
+
     while(rs.NextRow())
     {
         int i = 0;
@@ -312,7 +312,6 @@ void createDefaultCategories(wxSQLite3Database* db)
     insertCategoryTree(db, st_cat, st_subcat, _("Transfer"), 0);
 
     // cleanup
-
     st_subcat.Finalize();
     st_cat.Finalize();
 }
@@ -379,7 +378,6 @@ void mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
             st.ExecuteUpdate();
             st.Reset();
         }
-
         st.Finalize();
     }
 }
@@ -723,6 +721,7 @@ void removeCruft(wxSQLite3Database* db)
 void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd)
 {
     /* Create INFOTABLE_V1 Tables */
+    mmDBWrapper::begin(db);
     createInfoV1Table(db);
     if (pgd)
         pgd->Update(10);
@@ -784,6 +783,7 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd)
 
     /* Remove Any cruft */
     removeCruft(db);
+    mmDBWrapper::commit(db);
 }
 
 int mmDBWrapper::getNumAccounts(wxSQLite3Database* db)
