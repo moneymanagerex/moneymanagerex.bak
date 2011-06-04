@@ -144,7 +144,26 @@ void mmPayeeDialog::CreateControls()
 
 void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
 {
-    long keycode = event.GetKeyCode();
+	
+	long keycode = event.GetKeyCode();
+	
+	// Check to see if the up or down arrow is pressed while text control has focus
+	wxWindow *win = wxWindow::FindFocus();
+    wxTextCtrl *text = wxDynamicCast(win, wxTextCtrl);
+    // if text, then text control has focus
+	if ( text && (keycode == WXK_DOWN) && ( listBox_->GetSelection() < listBox_->GetCount()-1) )
+    {
+		listBox_->Select(listBox_->GetSelection()+1);
+    }
+    else if ( text && (keycode == WXK_UP) && ( listBox_->GetSelection() > 0) )
+	{
+		listBox_->Select(listBox_->GetSelection()-1);
+	}
+	else
+	{
+        // text control doesn't have focus OR up/down not pressed OR up/down not possible
+    }
+	    
 
     if(keycode == 13 && showSelectButton_) {
         wxCommandEvent event;
