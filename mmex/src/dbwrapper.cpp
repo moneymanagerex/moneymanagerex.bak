@@ -2013,7 +2013,7 @@ wxArrayString mmDBWrapper::filterPayees(wxSQLite3Database* db, const wxString& p
 {
 	
 	wxSQLite3Statement st = db->PrepareStatement("select PAYEENAME from PAYEE_V1 where PAYEENAME LIKE ? ORDER BY PAYEENAME");
-    st.Bind(1, patt+wxT("%"));
+    st.Bind(1, wxT("%")+patt+wxT("%"));
 	wxSQLite3ResultSet q1 = st.ExecuteQuery();
 	
 	wxArrayString flist;
