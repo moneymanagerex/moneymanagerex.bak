@@ -317,15 +317,20 @@ void mmTransDialog::CreateControls()
 
     wxString payeeName = resetPayeeString();
     wxString categString;
-    if (!edit_ && mmIniOptions::transPayeeSelectionNone_==1 )
-    {
-        payeeName = getMostFrequentlyUsedPayee(categString);
-    }
 
-    if (!edit_ && (mmIniOptions::transCategorySelectionNone_==0 || categString.IsEmpty()) )
+    if (!edit_)
     {
-        categString = resetCategoryString();
-    }
+        //If user does not want payee to be auto filled for the new transaction
+        if ( mmIniOptions::transPayeeSelectionNone_ == 0)
+            payeeName = resetPayeeString();
+        else // determine the payee for this account
+            payeeName = getMostFrequentlyUsedPayee(categString);
+
+        if ( mmIniOptions::transCategorySelectionNone_== 0 || categString.IsEmpty() )
+        {
+            categString = resetCategoryString();
+        }
+	}
 
     bPayee_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONPAYEE, payeeName, wxDefaultPosition, wxSize(200, -1), 0 );
     itemFlexGridSizer8->Add(bPayee_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -453,12 +458,9 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 {
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
 	{
-	    //It should be possible to transfer from or to Investment accounts as too.
 	    static const char sql[] =
     	"select ACCOUNTNAME "
     	"from ACCOUNTLIST_V1 "
-//    	"where /*(ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and*/ STATUS <> 'Closed' "
-// restored to previous order until a proper solution is found.
     	"where ACCOUNTTYPE IN ('Checking', 'Term') and STATUS <> 'Closed' "
     	"order by ACCOUNTNAME";
 
@@ -503,40 +505,27 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
             if (split_->numEntries())
                 return;
 
-            // if payee has no memory of category then ignore displaying last category for payee
-            if (tempCategID == -1)
-                return;
-
-            wxString catName = mmDBWrapper::getCategoryName(db_.get(), tempCategID);
-            wxString categString = catName;
-
-            if (tempSubCategID != -1)
+            // if user want to autofill last category used for payee
+            if ( mmIniOptions::transCategorySelectionNone_ == 1)
             {
-                wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(), tempCategID, tempSubCategID);
-                categString += wxT(" : ");
-                categString += subcatName;
-            }
+                // if payee has memory of last category used then display last category for payee
+                if (tempCategID != -1)
+                {
+                    wxString categString = mmDBWrapper::getCategoryName(db_.get(), tempCategID);
+   
+                    if (tempSubCategID != -1)
+                    {
+                        wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(), tempCategID, tempSubCategID);
+                        categString += wxT(" : ");
+                        categString += subcatName;
+                    }
 
-            categID_ = tempCategID;
-            subcategID_ = tempSubCategID;
-            if ( mmIniOptions::transCategorySelectionNone_==1 ) // "Last used for payee"
-                bCategory_->SetLabel(categString);
+                    categID_ = tempCategID;
+                    subcategID_ = tempSubCategID;
+                    bCategory_->SetLabel(categString);
+                }
+            }
         }
-        else
-        {
-            wxString payeeName = mmDBWrapper::getPayee(db_.get(), payeeID_, categID_, subcategID_);
-            if (payeeName.IsEmpty())
-            {
-                payeeID_ = -1;
-                payeeUnknown_ = true;
-                bCategory_->SetLabel(resetCategoryString());
-            }
-            else
-            {
-                bPayee_->SetLabel(payeeName);
-                payeeUnknown_ = false;
-            }
-    	}
 	}
 }
 void mmTransDialog::OnAutoTransNum(wxCommandEvent& /*event*/)
@@ -553,8 +542,6 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
     static const char sql[] =
         "select ACCOUNTNAME "
         "from ACCOUNTLIST_V1 "
-//      "where STATUS <> 'Closed' "
-// restored to previous order until a proper solution is found.
     	"where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS <> 'Closed' "
         "order by ACCOUNTNAME";
 
@@ -1008,12 +995,12 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     boost::shared_ptr<mmBankTransaction> pTransaction;
     if (!edit_)
     {
-       boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(core_->db_));
-       pTransaction = pTemp;
+        boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(core_->db_));
+        pTransaction = pTemp;
     }
     else
     {
-       pTransaction = core_->bTransactionList_.getBankTransactionPtr(accountID_, transID_);
+        pTransaction = core_->bTransactionList_.getBankTransactionPtr(accountID_, transID_);
     }
 
     boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
@@ -1036,12 +1023,12 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 
     if (!edit_)
     {
-       core_->bTransactionList_.addTransaction(core_, pTransaction);
-       mmPlayTransactionSound(inidb_);
+        core_->bTransactionList_.addTransaction(core_, pTransaction);
+        mmPlayTransactionSound(inidb_);
     }
     else
     {
-       core_->bTransactionList_.updateTransaction(pTransaction);
+        core_->bTransactionList_.updateTransaction(pTransaction);
     }
 
 
@@ -1050,28 +1037,26 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 
 void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
 {
-  /* Reset Category */
-  categID_ = -1;
-  subcategID_ = -1;
-  split_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
+    /* Reset Category */
+    categID_ = -1;
+    subcategID_ = -1;
+    split_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
 
-  bool state = cSplit_->GetValue();
-  if (state)
-  {
-    bCategory_->SetLabel(_("Split Category"));
-    textAmount_->Enable(false);
-    wxString dispAmount;
-    mmex::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
-    textAmount_->SetValue(dispAmount);
-  }
-  else
-  {
-    bCategory_->SetLabel(_("Select Category"));
-    textAmount_->Enable(true);
-    wxString dispAmount;
-    mmex::formatDoubleToCurrencyEdit(0.0, dispAmount);
-    textAmount_->SetValue(dispAmount);
-  }
+    bool state = cSplit_->GetValue();
+    if (state)
+    {
+        bCategory_->SetLabel(_("Split Category"));
+        textAmount_->Enable(false);
+        wxString dispAmount;
+        mmex::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
+        textAmount_->SetValue(dispAmount);
+    }
+    else
+    {
+        bCategory_->SetLabel(_("Select Category"));
+        textAmount_->Enable(true);
+        wxString dispAmount;
+        mmex::formatDoubleToCurrencyEdit(0.0, dispAmount);
+        textAmount_->SetValue(dispAmount);
+    }
 }
-
-
