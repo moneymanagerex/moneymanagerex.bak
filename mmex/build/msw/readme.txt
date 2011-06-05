@@ -61,6 +61,9 @@ WARNING: all files in this directory generated from bakefile's scripts (..\bakef
 
   	*** Compiling using Microsoft Visual C++ 2010 Express IDE ***
 
+    Use the pre built files in the mmex/build/msw-vc-2010e directory.
+    To use this directory, continue...
+    
 1. Ensure Prerequisites are complete with a build of wxWidgets 2.8.11 or greater
    using "Unicode Release" and/or "Unicode Debug" depending on preferences below.
    
