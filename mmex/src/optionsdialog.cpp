@@ -787,41 +787,40 @@ void mmOptionsDialog::CreateControls()
     itemBoxSizerMisc->Add(itemStaticBoxSizerNewTransactionSettings, 0, wxGROW|wxALL, 5);
 
 	//	Default Payee
-	wxStaticText* itemStaticText52 = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Payee:"));
-    itemStaticBoxSizerNewTransactionSettings->Add(itemStaticText52, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-	
-	wxString itemChoiceDefaultTransPayeeStrings[] = 
+	wxStaticText* payeeStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Payee:"));
+//    itemStaticBoxSizerNewTransactionSettings->Add(payeeStaticText, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+    wxString itemChoiceDefaultTransPayeeStrings[] = 
     {
         _("None"),
         _("Last Used"),
     };
 	
     wxChoice* itemChoiceDefaultTransPayee = new wxChoice( itemPanelMisc, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE,
-													wxDefaultPosition, wxSize(100, -1), 2, itemChoiceDefaultTransPayeeStrings, 0 );	
+        wxDefaultPosition, wxSize(90, -1), 2, itemChoiceDefaultTransPayeeStrings, 0 );	
 	itemChoiceDefaultTransPayee->SetSelection(mmIniOptions::transPayeeSelectionNone_);
-    itemStaticBoxSizerNewTransactionSettings->Add(itemChoiceDefaultTransPayee, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+//    itemStaticBoxSizerNewTransactionSettings->Add(itemChoiceDefaultTransPayee, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	
 	//	Default Category
-	wxStaticText* itemStaticText53 = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Category:"));
-    itemStaticBoxSizerNewTransactionSettings->Add(itemStaticText53, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-	
-	
-	wxString itemChoiceDefaultTransCategoryStrings[] = 
+	wxStaticText* categoryStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Category:"));
+//    itemStaticBoxSizerNewTransactionSettings->Add(categoryStaticText, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+    wxString itemChoiceDefaultTransCategoryStrings[] = 
     {
         _("None"),
         _("Last used for payee"),
     };
 	
     wxChoice* itemChoiceDefaultTransCategory = new wxChoice( itemPanelMisc, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY,
-														 wxDefaultPosition, wxSize(100, -1), 2, itemChoiceDefaultTransCategoryStrings, 0 );	
+        wxDefaultPosition, wxSize(120, -1), 2, itemChoiceDefaultTransCategoryStrings, 0 );	
 	itemChoiceDefaultTransCategory->SetSelection(mmIniOptions::transCategorySelectionNone_);
-    itemStaticBoxSizerNewTransactionSettings->Add(itemChoiceDefaultTransCategory, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+//    itemStaticBoxSizerNewTransactionSettings->Add(itemChoiceDefaultTransCategory, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	//	Default Status
-	wxStaticText* itemStaticText51 = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Status:"));
-    itemStaticBoxSizerNewTransactionSettings->Add(itemStaticText51, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-	
-	wxString itemChoiceDefaultTransStatusStrings[] = 
+	wxStaticText* statusStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Status:"));
+//    itemStaticBoxSizerNewTransactionSettings->Add(statusStaticText, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+    wxString itemChoiceDefaultTransStatusStrings[] = 
     {
         _("None"),
         _("Reconciled"),
@@ -830,10 +829,19 @@ void mmOptionsDialog::CreateControls()
     	_("Duplicate"),
     };
 	
-    wxChoice* itemChoiceDefaultTransStatus = new wxChoice( itemPanelMisc, 
-        ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS, wxDefaultPosition, wxSize(100, -1), 5, itemChoiceDefaultTransStatusStrings, 0 );
+    wxChoice* itemChoiceDefaultTransStatus = new wxChoice( itemPanelMisc, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS,
+        wxDefaultPosition, wxSize(90, -1), 5, itemChoiceDefaultTransStatusStrings, 0 );
     itemChoiceDefaultTransStatus->SetSelection(mmIniOptions::transStatusReconciled_);
-    itemStaticBoxSizerNewTransactionSettings->Add(itemChoiceDefaultTransStatus, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+//    itemStaticBoxSizerNewTransactionSettings->Add(itemChoiceDefaultTransStatus, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxFlexGridSizer* newTransflexGridSizer = new wxFlexGridSizer(2,3,0,0);
+    itemStaticBoxSizerNewTransactionSettings->Add(newTransflexGridSizer);
+    newTransflexGridSizer->Add(payeeStaticText,0, wxALIGN_CENTER_VERTICAL|wxTOP|wxLEFT|wxRIGHT, 5);
+    newTransflexGridSizer->Add(categoryStaticText,0, wxALIGN_CENTER_VERTICAL|wxTOP|wxLEFT|wxRIGHT, 5);
+    newTransflexGridSizer->Add(statusStaticText,0, wxALIGN_CENTER_VERTICAL|wxTOP|wxLEFT|wxRIGHT, 5);
+    newTransflexGridSizer->Add(itemChoiceDefaultTransPayee,0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(itemChoiceDefaultTransCategory,0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(itemChoiceDefaultTransStatus,0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     //----------------------------------------------
     wxStaticBox* itemStaticBoxBackupSetting = 
