@@ -29,12 +29,12 @@ namespace
 {
 
 enum {
-  IDD_BUTTON_SELECT = wxID_OK,
-  IDD_TEXTCTRL_PAYEENAME = wxID_HIGHEST + 1,
-  IDD_LISTBOX_PAYEES,
-  IDD_BUTTON_ADD,
-  IDD_BUTTON_DELETE,
-  IDD_BUTTON_EDIT
+    IDD_BUTTON_SELECT = wxID_OK,
+    IDD_TEXTCTRL_PAYEENAME = wxID_HIGHEST + 1,
+    IDD_LISTBOX_PAYEES,
+    IDD_BUTTON_ADD,
+    IDD_BUTTON_DELETE,
+    IDD_BUTTON_EDIT
 };
 
 } // namespace
@@ -87,28 +87,23 @@ void mmPayeeDialog::do_create(wxWindow* parent)
 }
 
 void mmPayeeDialog::CreateControls()
-{    
+{
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     SetSizer(itemBoxSizer2);
 
-        wxStaticText* itemStaticTextName = new wxStaticText( this, wxID_STATIC, 
-            _("Find Payee: "), wxDefaultPosition, wxDefaultSize, 0 );
-        itemBoxSizer2->Add(itemStaticTextName, 0,
-            wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticText* itemStaticTextName = new wxStaticText( this, wxID_STATIC, _("Find Payee: "), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer2->Add(itemStaticTextName, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-
-     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
-   
-    listBox_ = new wxListBox( this, IDD_LISTBOX_PAYEES, 
-        wxDefaultPosition, wxSize(100, 200), wxArrayString(), wxLB_SINGLE);
+
+    listBox_ = new wxListBox( this, IDD_LISTBOX_PAYEES, wxDefaultPosition, wxSize(100, 200), wxArrayString(), wxLB_SINGLE);
     itemBoxSizer3->Add(listBox_, 1, wxGROW|wxALL, 1);
 
     wxStaticText* itemStaticTextName2 = new wxStaticText( this, wxID_STATIC, _("Filter Payees: "), wxDefaultPosition, wxDefaultSize, 0 );
-        itemBoxSizer2->Add(itemStaticTextName2, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer2->Add(itemStaticTextName2, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    textCtrl = new wxTextCtrl( this, IDD_TEXTCTRL_PAYEENAME, 
-        wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
+    textCtrl = new wxTextCtrl( this, IDD_TEXTCTRL_PAYEENAME, wxGetEmptyString(), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(textCtrl, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     textCtrl->SetToolTip(_("Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."));
     textCtrl->SetFocus();
@@ -116,14 +111,12 @@ void mmPayeeDialog::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
 
-    addButton = new wxButton( this, IDD_BUTTON_ADD, 
-        _("&Add"), wxDefaultPosition, wxDefaultSize, 0 );
+    addButton = new wxButton( this, IDD_BUTTON_ADD, _("&Add"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(addButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     addButton->SetToolTip(_("Add a new payee name"));
 	addButton->Disable();
 
-    editButton = new wxButton( this, IDD_BUTTON_EDIT, 
-        _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
+    editButton = new wxButton( this, IDD_BUTTON_EDIT, _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(editButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     editButton->SetToolTip(_("Change the name of an existing payee"));
     editButton->Disable();
@@ -144,26 +137,28 @@ void mmPayeeDialog::CreateControls()
 
 void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
 {
+    long keycode = event.GetKeyCode();
 	
-	long keycode = event.GetKeyCode();
-	
-	// Check to see if the up or down arrow is pressed while text control has focus
-	wxWindow *win = wxWindow::FindFocus();
+    // Check to see if the up or down arrow is pressed while text control has focus
+    wxWindow *win = wxWindow::FindFocus();
     wxTextCtrl *text = wxDynamicCast(win, wxTextCtrl);
     // if text, then text control has focus
-	if ( text && (keycode == WXK_DOWN) && ( listBox_->GetSelection() < listBox_->GetCount()-1) )
+    if ( text && (keycode == WXK_DOWN) && ( listBox_->GetSelection() < (int)listBox_->GetCount()-1) )
     {
-		listBox_->Select(listBox_->GetSelection()+1);
+        listBox_->Select(listBox_->GetSelection()+1);
+        wxCommandEvent event;
+        OnSelChanged(event);
     }
     else if ( text && (keycode == WXK_UP) && ( listBox_->GetSelection() > 0) )
-	{
-		listBox_->Select(listBox_->GetSelection()-1);
+    {
+        listBox_->Select(listBox_->GetSelection()-1);
+        wxCommandEvent event;
+        OnSelChanged(event);
 	}
 	else
 	{
         // text control doesn't have focus OR up/down not pressed OR up/down not possible
     }
-	    
 
     if(keycode == 13 && showSelectButton_) {
         wxCommandEvent event;
@@ -218,18 +213,17 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
 {
     wxString text = wxGetTextFromUser(_("Enter the name for the new payee:"), _("Organize Payees: Add Payee"), textCtrl->GetValue());
     if (text.IsEmpty()) {
-        //mmShowErrorMessage(this, _("Type a Payee Name in the Text Box and then press Add."), _("Error"));
         return;
     }
+
     if (m_core->payeeList_.payeeExists(text))
     {
         wxMessageBox(_("Payee with same name exists"), _("Organize Payees: Add Payee"),wxOK|wxICON_ERROR);
-//      mmShowErrorMessage(this, _("Payee with same name exists"), _("Error"));
     }
     else
     {
         m_core->payeeList_.addPayee(text);
-	textCtrl->Clear();
+        textCtrl->Clear();
         fillControls();
 
         listBox_->SetStringSelection(text);
