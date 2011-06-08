@@ -242,22 +242,22 @@ enum qifAccountInfoType
 };
 
 enum qifLineType 
- {
-     AcctType = 1, // !
-     Date        = 2, // D
-     Amount      = 3, // T
-     Address     = 4, // A
-     Payee       = 5, // P
-     EOTLT         = 6, // ^
-     TransNumber = 7, // N
-     Status      = 8, // C
-     UnknownType = 9, 
-     Memo        = 10, // M
-     Category    = 11,  // L 
-     CategorySplit  = 12,  // S 
-     MemoSplit      = 13,  // E 
-     AmountSplit    = 14   // '$' 
- };
+{
+    AcctType    = 1, // !
+    Date        = 2, // D
+    Amount      = 3, // T
+    Address     = 4, // A
+    Payee       = 5, // P
+    EOTLT       = 6, // ^
+    TransNumber = 7, // N
+    Status      = 8, // C
+    UnknownType = 9, 
+    Memo        = 10, // M
+    Category    = 11,  // L 
+    CategorySplit  = 12,  // S 
+    MemoSplit      = 13,  // E 
+    AmountSplit    = 14   // '$' 
+};
 
 qifAccountInfoType accountInfoType(const wxString& line)
 {
@@ -359,19 +359,11 @@ wxString getLineData(const wxString& line)
 
 int mmImportQIF(mmCoreDB* core)
 {
-    wxSQLite3Database* db_ = core->db_.get();
-    if (mmDBWrapper::getNumAccounts(db_) == 0)
-    {
-        mmShowErrorMessage(0, _("No Account available! Cannot Import! Create a new account first!"), 
-            _("Error"));
-        return -1;
-    }
-
-    wxMessageDialog msgDlg(NULL, 
-_("To import QIF files correctly, the date option set in MMEX \n must match the format of the date in the QIF file.\n\
-Are you are sure you want to proceed with the import?"),
-                                 _("Confirm QIF import"),
-                                        wxYES_NO);
+    wxString msgStr;
+    msgStr << _("To import QIF files correctly, the date format in the QIF file") << wxT("\n")
+           << _("must match the date option set in MMEX.") << wxT("\n\n") 
+           << _("Are you are sure you want to proceed with the import?");
+    wxMessageDialog msgDlg(NULL, msgStr, _("QIF Import"), wxYES_NO|wxICON_QUESTION);
     if (msgDlg.ShowModal() != wxID_YES)
     {
         return -1;
@@ -379,6 +371,7 @@ Are you are sure you want to proceed with the import?"),
     
     wxArrayString as;
     int fromAccountID = -1;
+    wxSQLite3Database* db_ = core->db_.get();
 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
     while (q1.NextRow())
@@ -387,6 +380,15 @@ Are you are sure you want to proceed with the import?"),
     }
     q1.Finalize();
     
+    if (as.GetCount() == 0)
+    {
+        wxString errorMsg;
+        errorMsg << _("No suitable account available to import to!") << wxT("\n\n")
+                 << _("Create a suitable account first!");
+        wxMessageBox(errorMsg, _("QIF Import"), wxICON_ERROR);
+        return -1;
+    }
+
     wxSingleChoiceDialog scd(0, _("Choose Account to import to:"), _("QIF Import"), as);
     if (scd.ShowModal() != wxID_OK)
         return -1;
@@ -402,7 +404,7 @@ Are you are sure you want to proceed with the import?"),
         wxT(""), wxT(""), wxT(""), wxT("*.qif"), wxFILE_MUST_EXIST);
     wxFileName logFile = mmex::GetLogDir(true);
     logFile.SetFullName(fileName);
-    logFile.SetExt(wxT("txt"));
+    logFile.SetExt(wxT("log"));
     bool canceledbyuser = false;
 
     if ( !fileName.IsEmpty() )
@@ -431,12 +433,14 @@ Are you are sure you want to proceed with the import?"),
         subCategID = -1;
         double val = 0.0;
 
+        std::vector<int> QIF_transID;
 		mmDBWrapper::begin(core->db_.get());
+
 		wxProgressDialog dlg(_("Please Wait"), _("Transactions imported from QIF: "), 101, false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
         while(!input.Eof())
         {   
 			notes = wxT("");
-			notes << _("Transactions imported from QIF: ") << numImported;
+			notes << _("Transactions imported from QIF\nto account ") << acctName << wxT(": ") << numImported;
             dlg.Update(static_cast<int>((static_cast<double>(numImported)/100.0 - numImported/100) *100), notes);
             notes = wxT("");
 
@@ -529,8 +533,7 @@ Are you are sure you want to proceed with the import?"),
 
                 // we do not know how to process this type yet
                 log << _(" cannot process Account Types yet ") << endl;    
-                mmShowErrorMessage(0, _("Cannot process these QIF Account Types yet"), 
-                    _("Error"));
+                wxMessageBox(_("Cannot process these QIF Account Types yet"), _("QIF Import"), wxICON_ERROR);
                 return -1;
             }
 
@@ -689,7 +692,7 @@ Are you are sure you want to proceed with the import?"),
                 {
                     log << _("Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had ");
                     log << _(" payee ") << payee << _(" type ") << type 
-                       << _(" amount ") << amount << _(" date ") << convDate 
+                        << _(" amount ") << amount << _(" date ") << convDate 
                         << endl;
 
                     continue;
@@ -697,39 +700,50 @@ Are you are sure you want to proceed with the import?"),
 
                 int toAccountID = -1;
 
-               boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core->db_));
-               pTransaction->accountID_ = fromAccountID;
-               pTransaction->toAccountID_ = toAccountID;
-               pTransaction->payee_ = core->payeeList_.getPayeeSharedPtr(payeeID);
-               pTransaction->transType_ = type;
-               pTransaction->amt_ = val;
-               pTransaction->status_ = status;
-               pTransaction->transNum_ = transNum;
-               pTransaction->notes_ = notes;
-               pTransaction->category_ = core->categoryList_.getCategorySharedPtr(categID, subCategID);
-               pTransaction->date_ = dtdt;
-               pTransaction->toAmt_ = 0.0;
-               pTransaction->updateAllData(core, fromAccountID, pCurrencyPtr);
+                boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core->db_));
+                pTransaction->accountID_ = fromAccountID;
+                pTransaction->toAccountID_ = toAccountID;
+                pTransaction->payee_ = core->payeeList_.getPayeeSharedPtr(payeeID);
+                pTransaction->transType_ = type;
+                pTransaction->amt_ = val;
+                pTransaction->status_ = status;
+                pTransaction->transNum_ = transNum;
+                pTransaction->notes_ = notes;
+                pTransaction->category_ = core->categoryList_.getCategorySharedPtr(categID, subCategID);
+                pTransaction->date_ = dtdt;
+                pTransaction->toAmt_ = 0.0;
+                pTransaction->updateAllData(core, fromAccountID, pCurrencyPtr);
 
-               core->bTransactionList_.addTransaction(core, pTransaction);
+                int transID = core->bTransactionList_.addTransaction(core, pTransaction);
+                QIF_transID.push_back(transID);
 
                 numImported++;
                 notes = wxT("");
 				continue;
 			}
         }
+
+        log << _("Transactions imported from QIF: ") << numImported << endl;
+        // Since all database transactions are only in memory,
         if (!canceledbyuser)
         {
-			mmDBWrapper::commit(core->db_.get());
-			log << _("Transactions imported from QIF: ") << numImported << endl;
+            // we need to save them to the database. 
+            mmDBWrapper::commit(core->db_.get());
+            log << endl << _("Transactions saved to database in account: ") << acctName << endl;
 		}
 		else 
 		{
-			//mmDBWrapper::rollback(core->db_.get());
-			mmDBWrapper::commit(core->db_.get());
-			log << _("Transactions imported from QIF: ") << numImported << endl;
-			log  << endl << _("Import interrupted by user!") << endl;
-		}
+            // we need to remove the transactions from the transaction list
+            while (numImported > 0)
+            {
+                numImported --;
+                int transID = QIF_transID[numImported];
+                core->bTransactionList_.removeTransaction(fromAccountID,transID);
+            }
+            // and discard the database changes.
+            mmDBWrapper::rollback(core->db_.get());
+			log  << endl << _("Imported transactions discarded by user!") << endl;
+        }
 		        
         outputLog.Close();
 

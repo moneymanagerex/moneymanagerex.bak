@@ -988,7 +988,8 @@ int mmBankTransactionList::countFollowupTransactions()
     return numFollowup;
 }
 
-void mmBankTransactionList::deleteTransaction(int accountID, int transactionID)
+/** removes the transaction from memory */
+bool mmBankTransactionList::removeTransaction(int accountID, int transactionID)
 {
     std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
     for (i = transactions_.begin(); i!= transactions_.end(); ++i)
@@ -1001,14 +1002,41 @@ void mmBankTransactionList::deleteTransaction(int accountID, int transactionID)
                 if (pBankTransaction->transactionID() == transactionID)
                 {
                     i = transactions_.erase(i);
-                    mmDBWrapper::deleteTransaction(db_.get(), transactionID);
-                    return;
+                    return true;
                 }
             }
         }
     }
     // didn't find the transaction
     wxASSERT(false);
+    return false;
+}
+
+/** removes the transaction from memory and the database */
+void mmBankTransactionList::deleteTransaction(int accountID, int transactionID)
+{
+    if ( removeTransaction( accountID, transactionID) )
+        mmDBWrapper::deleteTransaction(db_.get(), transactionID);
+
+    //std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    //for (i = transactions_.begin(); i!= transactions_.end(); ++i)
+    //{
+    //    boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
+    //    if (pBankTransaction)
+    //    {
+    //        if ((pBankTransaction->accountID_ == accountID) || (pBankTransaction->toAccountID_ == accountID))
+    //        {
+    //            if (pBankTransaction->transactionID() == transactionID)
+    //            {
+    //                i = transactions_.erase(i);
+    //                mmDBWrapper::deleteTransaction(db_.get(), transactionID);
+    //                return;
+    //            }
+    //        }
+    //    }
+    //}
+    //// didn't find the transaction
+    //wxASSERT(false);
 }
 
 void mmBankTransactionList::deleteTransactions(int accountID)
