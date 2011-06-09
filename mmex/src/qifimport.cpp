@@ -742,6 +742,8 @@ int mmImportQIF(mmCoreDB* core)
             }
             // and discard the database changes.
             mmDBWrapper::rollback(core->db_.get());
+            //we should to clear the vector to avoid leak of memory
+            QIF_transID.clear();
 			log  << endl << _("Imported transactions discarded by user!") << endl;
         }
 		        
