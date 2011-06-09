@@ -128,6 +128,9 @@ private:
     void OnMouseLeftDown( wxMouseEvent& event );
     void OnViewPopupSelected(wxCommandEvent& event);
 
+    void DeleteViewedTransactions();
+    void DeleteFlaggedTransactions();
+
     /* updates the checking panel data */
     void initVirtualListControl(wxProgressDialog* pgd);
     void Tips();

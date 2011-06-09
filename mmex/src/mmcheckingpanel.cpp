@@ -451,6 +451,10 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_MENU(MENU_VIEW_DUPLICATE, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_DELETE_TRANS, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_DELETE_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
+
+    EVT_MENU(MENU_TREEPOPUP_DELETE_VIEWED, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_TREEPOPUP_DELETE_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
+
     EVT_MENU(MENU_VIEW_CURRENTMONTH, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_LASTMONTH, mmCheckingPanel::OnViewPopupSelected)
 
@@ -564,19 +568,23 @@ void mmCheckingPanel::saveSettings()
 {
     int cols = m_listCtrlAccount->GetColumnCount();
 
-    for (int i = 0; i < cols; ++i)
+    mmDBWrapper::begin(m_inidb);
     {
-        wxString name = wxString::Format(wxT("CHECK_COL%d_WIDTH"), i);
-        int width = m_listCtrlAccount->GetColumnWidth(i);
+        for (int i = 0; i < cols; ++i)
+        {
+            wxString name = wxString::Format(wxT("CHECK_COL%d_WIDTH"), i);
+            int width = m_listCtrlAccount->GetColumnWidth(i);
 
-        mmDBWrapper::setINISettingValue(m_inidb, name, wxString() << width); 
+            mmDBWrapper::setINISettingValue(m_inidb, name, wxString() << width); 
+        }
+
+        // sorting column index
+        mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_SORT_COL"), wxString() << g_sortcol); 
+
+        // asc\desc sorting flag
+        mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_ASC"), wxString() << g_asc);
     }
-
-    // sorting column index
-    mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_SORT_COL"), wxString() << g_sortcol); 
-
-    // asc\desc sorting flag
-    mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_ASC"), wxString() << g_asc);
+    mmDBWrapper::commit(m_inidb);
 }
 //----------------------------------------------------------------------------
 
@@ -1345,38 +1353,13 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         header->SetLabel(_("Viewing All except Reconciled Transactions"));
         m_currentView = wxT("View Not-Reconciled");
     }
-    else if (evt == MENU_VIEW_DELETE_TRANS)
+    else if (evt == MENU_VIEW_DELETE_TRANS || evt == MENU_TREEPOPUP_DELETE_VIEWED)
     {
-        wxMessageDialog msgDlg(this, _("Do you really want to delete all the transactions shown?"),
-            _("Confirm Transaction Deletion"),
-            wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
-        if (msgDlg.ShowModal() == wxID_YES)
-        {
-			//mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.getAccountSharedPtr(m_AccountID).get());
-			mmDBWrapper::begin(m_core->db_.get());
-			for (size_t i = 0; i < m_trans.size(); ++i)
-            {
-               m_core->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
-            }
-            mmDBWrapper::commit(m_core->db_.get());
-        }
+        DeleteViewedTransactions();
     }
-    else if (evt == MENU_VIEW_DELETE_FLAGGED)
+    else if (evt == MENU_VIEW_DELETE_FLAGGED || evt == MENU_TREEPOPUP_DELETE_FLAGGED)
     {
-        wxMessageDialog msgDlg(this, _("Do you really want to delete all the \"Follow Up\" transactions?"), _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
-        if (msgDlg.ShowModal() == wxID_YES)
-        {
-           //mmCheckingAccount* pAccount = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.getAccountSharedPtr(m_AccountID).get());
-			mmDBWrapper::begin(m_core->db_.get());
-            for (size_t i = 0; i < m_trans.size(); ++i)
-            {
-               if (m_trans[i]->status_ == wxT("F"))
-               {
-                  m_core->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
-               }
-            }
-			mmDBWrapper::commit(m_core->db_.get());
-        }
+        DeleteFlaggedTransactions();
     }
     else
     {
@@ -1388,6 +1371,40 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     initVirtualListControl(false);
     m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
 }
+
+void mmCheckingPanel::DeleteViewedTransactions()
+{
+    wxMessageDialog msgDlg(this,_("Do you really want to delete all the transactions shown?"),
+                                _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
+    if (msgDlg.ShowModal() == wxID_YES)
+    {
+        mmDBWrapper::begin(m_core->db_.get());
+        for (size_t i = 0; i < m_trans.size(); ++i)
+        {
+            m_core->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
+        }
+        mmDBWrapper::commit(m_core->db_.get());
+    }
+}
+
+void mmCheckingPanel::DeleteFlaggedTransactions()
+{
+    wxMessageDialog msgDlg(this,_("Do you really want to delete all the \"Follow Up\" transactions?"),
+                                _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
+    if (msgDlg.ShowModal() == wxID_YES)
+    {
+        mmDBWrapper::begin(m_core->db_.get());
+        for (size_t i = 0; i < m_trans.size(); ++i)
+        {
+            if (m_trans[i]->status_ == wxT("F"))
+            {
+                m_core->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
+            }
+        }
+        mmDBWrapper::commit(m_core->db_.get());
+    }
+}
+
 //----------------------------------------------------------------------------
 
 void MyListCtrl::OnListItemSelected(wxListEvent& event)
@@ -1420,8 +1437,9 @@ void MyListCtrl::OnItemRightClick(wxListEvent& event)
     
     wxMenu* subGlobalOpMenuDelete = new wxMenu;
     subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE, _("&Delete Transaction"));
-	//subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_VIEWED, _("Delete all transactions in current view"));
-	//subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_FLAGGED, _("Delete all \"Follow Up\" transactions"));
+	subGlobalOpMenuDelete->AppendSeparator();
+	subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_VIEWED, _("Delete all transactions in current view"));
+	subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_FLAGGED, _("Delete all \"Follow Up\" transactions"));
     menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete"), subGlobalOpMenuDelete);
     
     menu.AppendSeparator();
@@ -1439,7 +1457,7 @@ void MyListCtrl::OnItemRightClick(wxListEvent& event)
     subGlobalOpMenu->Append(MENU_TREEPOPUP_MARKVOID_ALL, _("as Void"));
     subGlobalOpMenu->Append(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL, _("as needing Followup"));
 	subGlobalOpMenu->Append(MENU_TREEPOPUP_MARKDUPLICATE_ALL, _("as Duplicate"));
-    menu.Append(MENU_SUBMENU_MARK_ALL, _("Mark all "), subGlobalOpMenu);
+    menu.Append(MENU_SUBMENU_MARK_ALL, _("Mark all being viewed"), subGlobalOpMenu);
 
     PopupMenu(&menu, event.GetPoint());
 }
@@ -1507,7 +1525,9 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
      {
         wxASSERT(false);
      }
-         
+
+     mmDBWrapper::begin(m_cp->m_core->db_.get());
+
      for (size_t i = 0; i < m_cp->m_trans.size(); ++i)
      {
         int transID = m_cp->m_trans[i]->transactionID();
@@ -1522,6 +1542,9 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
         m_cp->initVirtualListControl(false);
         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
      }
+
+     mmDBWrapper::commit(m_cp->m_core->db_.get());
+
      m_cp->setAccountSummary();
      SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
      SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
@@ -1868,11 +1891,8 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
         return;
 
     //ask if they really want to delete
-    wxMessageDialog msgDlg(this, 
-                           _("Do you really want to delete the transaction?"),
-                           _("Delete Transaction"),
-                           wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION
-                          );
+    wxMessageDialog msgDlg(this,_("Do you really want to delete the selected transaction?"),
+                                _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
                           
     if (msgDlg.ShowModal() != wxID_YES)
         return;
