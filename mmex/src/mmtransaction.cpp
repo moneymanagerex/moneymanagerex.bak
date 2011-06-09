@@ -188,10 +188,23 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
 
    if (transType_ != TRANS_TYPE_TRANSFER)
    {
-      boost::shared_ptr<mmPayee> pPayee = payee_.lock();
-      wxASSERT(pPayee);
-      payeeStr_ = pPayee->payeeName_;
-      payeeID_ = pPayee->payeeID_;
+      // needed to correct possible crash if database becomes corrupt.
+      if (payee_.lock() == 0 )
+      {
+         wxString errMsg = _("Payee not found in database for Account ID:");
+         errMsg << accountID_;
+         wxMessageBox(errMsg,_("MMEX DATABASE ERROR"),wxICON_ERROR);
+         payeeID_  = -1;
+         payeeStr_ = wxT("Payee Error");
+		 status_ = wxT("V");
+      }
+      else
+      {
+         boost::shared_ptr<mmPayee> pPayee = payee_.lock();
+         wxASSERT(pPayee);
+         payeeStr_ = pPayee->payeeName_;
+         payeeID_ = pPayee->payeeID_;
+      }
    }
 
    depositStr_ = wxT("");
