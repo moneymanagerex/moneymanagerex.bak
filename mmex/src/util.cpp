@@ -1424,20 +1424,15 @@ void mmLoadColorsFromDatabase( wxSQLite3Database* db_ )
 
 void mmSaveColorsToDatabase( wxSQLite3Database* db_ )
 {
-    mmDBWrapper::setINISettingValue( db_, wxT( "LISTALT0" ),
-                                     mmGetStringFromColour( mmColors::listAlternativeColor0 ) );
-    mmDBWrapper::setINISettingValue( db_, wxT( "LISTALT1" ),
-                                     mmGetStringFromColour( mmColors::listAlternativeColor1 ) );
-    mmDBWrapper::setINISettingValue( db_, wxT( "LISTBACK" ),
-                                     mmGetStringFromColour( mmColors::listBackColor ) );
-    mmDBWrapper::setINISettingValue( db_, wxT( "NAVTREE" ),
-                                     mmGetStringFromColour( mmColors::navTreeBkColor ) );
-    mmDBWrapper::setINISettingValue( db_, wxT( "LISTBORDER" ),
-                                     mmGetStringFromColour( mmColors::listBorderColor ) );
-    mmDBWrapper::setINISettingValue( db_, wxT( "LISTDETAILSPANEL" ),
-                                     mmGetStringFromColour( mmColors::listDetailsPanelColor ) );
-    mmDBWrapper::setINISettingValue( db_, wxT( "LISTFUTUREDATES" ),
-                                     mmGetStringFromColour( mmColors::listFutureDateColor ) );
+    mmDBWrapper::begin(db_);
+    mmDBWrapper::setINISettingValue(db_, wxT("LISTALT0"), mmGetStringFromColour( mmColors::listAlternativeColor0 ) );
+    mmDBWrapper::setINISettingValue(db_, wxT("LISTALT1"), mmGetStringFromColour( mmColors::listAlternativeColor1 ) );
+    mmDBWrapper::setINISettingValue(db_, wxT("LISTBACK"), mmGetStringFromColour( mmColors::listBackColor ) );
+    mmDBWrapper::setINISettingValue(db_, wxT("NAVTREE"),  mmGetStringFromColour( mmColors::navTreeBkColor ) );
+    mmDBWrapper::setINISettingValue(db_, wxT("LISTBORDER"), mmGetStringFromColour( mmColors::listBorderColor ) );
+    mmDBWrapper::setINISettingValue(db_, wxT("LISTDETAILSPANEL"),  mmGetStringFromColour( mmColors::listDetailsPanelColor ) );
+    mmDBWrapper::setINISettingValue( db_, wxT( "LISTFUTUREDATES" ),mmGetStringFromColour( mmColors::listFutureDateColor ) );
+    mmDBWrapper::commit(db_);
 }
 
 void mmRestoreDefaultColors()
