@@ -101,12 +101,14 @@ mmBudgetingPanel::~mmBudgetingPanel()
     wxString col4Str = wxString::Format(wxT("%d"), col4);
     wxString col5Str = wxString::Format(wxT("%d"), col5);
 
+    mmDBWrapper::begin(inidb_);
     mmDBWrapper::setINISettingValue(inidb_, wxT("BUDGET_COL0_WIDTH"), col0Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("BUDGET_COL1_WIDTH"), col1Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("BUDGET_COL2_WIDTH"), col2Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("BUDGET_COL3_WIDTH"), col3Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("BUDGET_COL4_WIDTH"), col4Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("BUDGET_COL5_WIDTH"), col5Str); 
+    mmDBWrapper::commit(inidb_);
 }
 
 void mmBudgetingPanel::OnViewPopupSelected(wxCommandEvent& event)

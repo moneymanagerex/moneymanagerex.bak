@@ -121,6 +121,7 @@ mmBillsDepositsPanel::~mmBillsDepositsPanel()
 	wxString col6Str = wxString::Format(wxT("%d"), col6);
 	wxString col7Str = wxString::Format(wxT("%d"), col7);
 
+    mmDBWrapper::begin(inidb_);
     mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL0_WIDTH"), col0Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL1_WIDTH"), col1Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL2_WIDTH"), col2Str); 
@@ -129,6 +130,7 @@ mmBillsDepositsPanel::~mmBillsDepositsPanel()
     mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL5_WIDTH"), col5Str); 
 	mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL6_WIDTH"), col6Str);
 	mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL7_WIDTH"), col7Str);
+    mmDBWrapper::commit(inidb_);
 }
 
 void mmBillsDepositsPanel::CreateControls()

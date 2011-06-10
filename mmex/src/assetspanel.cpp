@@ -114,10 +114,12 @@ mmAssetsPanel::~mmAssetsPanel()
 
 void mmAssetsPanel::destroy()
 {
-	for (int i = 0; i < COL_MAX-1; ++i) {
-		int width = m_listCtrlAssets->GetColumnWidth(i);
-		mmDBWrapper::setINISettingValue(m_inidb, wxString::Format(wxT("ASSETS_COL%d_WIDTH"), i), wxString() << width); 
-	}
+    mmDBWrapper::begin(m_inidb);
+    for (int i = 0; i < COL_MAX-1; ++i) {
+        int width = m_listCtrlAssets->GetColumnWidth(i);
+        mmDBWrapper::setINISettingValue(m_inidb, wxString::Format(wxT("ASSETS_COL%d_WIDTH"), i), wxString() << width); 
+    }
+    mmDBWrapper::commit(m_inidb);
 }
 
 void mmAssetsPanel::CreateControls()
