@@ -58,7 +58,7 @@ Greek
 Hebrew
 -- Ykpui
 Hungarian
--- Csaba
+-- Csaba, Zoltan Levardy [zlevardy]
 Indonesian Translation
 -- Dindin
 Italian
