@@ -3470,17 +3470,17 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
     in_stream->Read(buf, 1024);
     //size_t bytes_read=in_stream->LastRead();
     in_stream.reset();
-    buf[7] = '\0';
+    buf[53] = '\0';
 
     wxString page = wxString::FromAscii((const char *)buf);
-
-    /**********************************************************
-        Follow up:
-        fix when internet has been updated
-    ***********************************************************/
-    page = wxT("Win: 0.9.8.0 - Unix: 0.9.7.0 - MAC: 0.9.5.1");
-
+    /*************************************************************************
+        Expected format of the string from the internet. Version: 0.9.8.0
+        page = wxT("x.x.x.x - Win: w.w.w.w - Unix: u.u.u.u - Mac: m.m.m.m");
+        string length = 53 characters
+    **************************************************************************/
     wxStringTokenizer sysTokens(page,wxT("-"));
+    // Ignored the first token. Added for compatibility for pre 0.9.8.0
+    wxString oldSys  = sysTokens.GetNextToken(); 
     wxString winSys  = sysTokens.GetNextToken().Trim(false);
     wxString unixSys = sysTokens.GetNextToken().Trim(false);
     wxString macSys  = sysTokens.GetNextToken().Trim(false);
@@ -3496,8 +3496,8 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
         mySysToken.SetString(macSys,wxT(":"));
     }
     
-    page = mySysToken.GetNextToken();          // the system
-    page = mySysToken.GetNextToken().Trim();   // the version  
+    page = mySysToken.GetNextToken();                       // the system
+    page = mySysToken.GetNextToken().Trim(false).Trim();    // the version  
 
     if (IsUpdateAvailable(page))
     {
