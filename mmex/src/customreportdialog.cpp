@@ -225,7 +225,12 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
                                           mmex::getPathUser(mmex::DIRECTORY),
                                           wxT(""),wxT("SQL File(*.sql)|*.sql"),wxSAVE);
             if (fileDialog.ShowModal() == wxID_OK)
+            {
                 reportfileName = fileDialog.GetFilename();
+                wxFileName tempFileName(reportfileName);
+                if (tempFileName.GetExt() == wxT(""))
+                    reportfileName << wxT(".sql");
+            }
         }
         else
         {
