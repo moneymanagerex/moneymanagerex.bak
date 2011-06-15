@@ -21,11 +21,14 @@ Version History of Money Manager Ex
 - Improved Backup options on Startup.
 - Improved functionality of Transaction Report.
 - Expanded periods for Cash Flow Reports.
-- Improved Categories: Sub Reports
-- Hide Financial Year reports when same Year Reports
+- Improved sub reports in the reports section of Categories.
+- Hide Financial Year reports when they are the same as the Year Reports.
 - New Tools for the maintenance of Custom Reports.
-
-
+- Improved file import for CVS and QIF formats
+- Help files now will be displayed in the selected language if they exist.
+- Changed loading order of accounts. Now displayed in alphabetical order.
+- Improved performance of displays.
+- Rearrangement of: Delete Transaction(s) popup menu items.
 - and bugfixes.
 
 0.9.7.0 (January 26, 2011)
