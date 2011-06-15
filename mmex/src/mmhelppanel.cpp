@@ -81,15 +81,28 @@ void mmHelpPanel::CreateControls()
     wxString helpHeader = mmex::getProgramName() + _(" Help");
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, ID_PANEL_REPORTS_STATIC_HEADER, 
         helpHeader, wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, 
-        wxT("")));
+    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
 
     htmlWindow_ = new wxHtmlWindow( itemDialog1, ID_PANEL_REPORTS_HTMLWINDOW, 
         wxDefaultPosition, wxDefaultSize, 
         wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     itemBoxSizer2->Add(htmlWindow_, 1, wxGROW|wxALL, 1);
-
-    htmlWindow_ ->LoadPage(mmex::getPathDoc(mmex::HTML_INDEX));
+    
+    /**************************************************************************
+    Allows language seting to set Help language files.
+    Default filename name: index.html
+            is changed to: index_language.html
+    The language specified help file will be used if found in help directory.
+    **************************************************************************/
+    wxFileName helpIndexFile(mmex::getPathDoc(mmex::HTML_INDEX));
+    wxString foreignHelpFileName = helpIndexFile.GetPath(wxPATH_GET_VOLUME|wxPATH_GET_SEPARATOR) +
+                                   helpIndexFile.GetName() + wxT("_") + mmOptions::language + wxT(".") +
+                                   helpIndexFile.GetExt();
+    wxFileName foreignHelpFile(foreignHelpFileName);
+    if (foreignHelpFile.FileExists())
+        htmlWindow_ ->LoadPage(foreignHelpFileName);
+    else
+       htmlWindow_ ->LoadPage(mmex::getPathDoc(mmex::HTML_INDEX));
 }
 
