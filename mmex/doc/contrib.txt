@@ -101,6 +101,7 @@ Terry Wick
 Italian - Claudio
 French - catacotox
 Russian - Nikolay
+Polish - Damian_pl
 
 Sponsors
 ==========================================
