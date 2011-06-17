@@ -362,31 +362,32 @@ void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
 //Saves the field order to a template file
 void mmUnivCSVImportDialog::OnSave(wxCommandEvent& /*event*/)
 {
-     wxString fileName = wxFileSelector(wxT("Choose Universal CSV format file to save"), 
+    wxString fileName = wxFileSelector(wxT("Choose Universal CSV format file to save"), 
                 wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), wxT("CSV Template(*.mcv)|*.mcv"), wxSAVE);
     if ( !fileName.empty() )
     {
-         wxTextFile tFile(fileName);
-		 //if the file does not exist and cannot be created, throw an error
-		 //if the file does exist, then skip to else section
-         if ( !tFile.Exists() && !tFile.Create() )
-         {
-            mmShowErrorMessage(0, 
-               _("Unable to write to file."),
-               _("Error"));
+        correctEmptyFileExt(wxT("mcv"),fileName);
+
+        wxTextFile tFile(fileName);
+		//if the file does not exist and cannot be created, throw an error
+		//if the file does exist, then skip to else section
+        if ( !tFile.Exists() && !tFile.Create() )
+        {
+            mmShowErrorMessage(0, _("Unable to write to file."), _("Error"));
             return;
-         }
-		 else{
-			 //clear the contents of the current file
-			 tFile.Clear();
-			 for (int idx = 0; idx < (int) csvFieldOrder_.size(); idx++)
-			 {
-				wxString line = wxString::Format(wxT("%d"), csvFieldOrder_[idx]);
-				tFile.AddLine(line);
-			 }
-		 }
-         tFile.Write();
-         tFile.Close();
+        }
+		else
+        {
+            //clear the contents of the current file
+            tFile.Clear();
+            for (int idx = 0; idx < (int) csvFieldOrder_.size(); idx++)
+            {
+                wxString line = wxString::Format(wxT("%d"), csvFieldOrder_[idx]);
+                tFile.AddLine(line);
+            }
+        }
+        tFile.Write();
+        tFile.Close();
     }
 }
 

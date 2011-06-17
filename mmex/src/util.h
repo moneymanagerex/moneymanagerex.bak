@@ -55,6 +55,8 @@ int mmImportCSV( mmCoreDB* core );
 int mmImportCSVMMNET( mmCoreDB* core );
 int mmImportQIF( mmCoreDB* core );
 
+void correctEmptyFileExt(wxString ext, wxString & fileName );
+
 void mmLoadColorsFromDatabase( wxSQLite3Database* db_ );
 wxColour mmGetColourFromString( const wxString& str );
 void mmRestoreDefaultColors();
