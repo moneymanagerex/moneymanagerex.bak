@@ -18,6 +18,7 @@
 
 #include "customreportdialog.h"
 #include "paths.h"
+#include "util.h"
 
 const int titleTextWidth   = 350; // Determines width of Headings Textbox.
 const int sourceTextHeight = 200; // Determines height of Source Textbox.
@@ -227,9 +228,7 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
             if (fileDialog.ShowModal() == wxID_OK)
             {
                 reportfileName = fileDialog.GetFilename();
-                wxFileName tempFileName(reportfileName);
-                if (tempFileName.GetExt() == wxT(""))
-                    reportfileName << wxT(".sql");
+                correctEmptyFileExt(wxT("sql"),reportfileName);
             }
         }
         else

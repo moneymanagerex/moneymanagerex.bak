@@ -3778,6 +3778,7 @@ void mmGUIFrame::OnExportToHtml(wxCommandEvent& WXUNUSED(event))
             wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), wxT("*.html"), wxSAVE | wxOVERWRITE_PROMPT);
         if ( !fileName.empty() )
         {
+            correctEmptyFileExt(wxT("html"),fileName);
             wxFileOutputStream output( fileName );
             wxTextOutputStream text( output );
             text << rp->getReportText();

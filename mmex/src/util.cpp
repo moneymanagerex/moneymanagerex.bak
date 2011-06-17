@@ -261,6 +261,14 @@ wxString mmOptions::financialYearStartDayString_;
 wxString mmOptions::financialYearStartMonthString_;
 //----------------------------------------------------------------------------
 
+void correctEmptyFileExt(wxString ext, wxString & fileName )
+{
+    wxFileName tempFileName(fileName);
+    if (tempFileName.GetExt().IsEmpty())
+        fileName << wxT(".") << ext;
+}
+//----------------------------------------------------------------------------
+
 void mmOptions::loadOptions( wxSQLite3Database* db )
 {
     dateFormat = mmDBWrapper::getInfoSettingValue( db, wxT( "DATEFORMAT" ), mmex::DEFDATEFORMAT );
@@ -545,10 +553,12 @@ void mmExportCSV( wxSQLite3Database* db_ )
     int fromAccountID = mmDBWrapper::getAccountID( db_, acctName );
 
     wxString fileName = wxFileSelector( _( "Choose CSV data file to Export" ),
-                                        wxT( "" ), wxT( "" ), wxT( "" ), wxT( "*.csv" ), wxSAVE | wxOVERWRITE_PROMPT );
+                        wxT( "" ), wxT( "" ), wxT( "" ), wxT( "*.csv" ), wxSAVE | wxOVERWRITE_PROMPT );
 
     if ( fileName.empty() )
         return;
+    
+    correctEmptyFileExt(wxT("csv"),fileName);
 
     wxFileOutputStream output( fileName );
     wxTextOutputStream text( output );
@@ -706,11 +716,14 @@ void mmExportQIF( wxSQLite3Database* db_ )
         return;
     }
 
-    wxString fileName = wxFileSelector( _( "Choose QIF data file to Export" ), wxT( "" ), wxT( "" ), wxT( "" ), wxT( "*.qif" ), wxSAVE | wxOVERWRITE_PROMPT );
+    wxString fileName = wxFileSelector( _( "Choose QIF data file to Export" ),
+                        wxT( "" ), wxT( "" ), wxT( "" ), wxT( "*.qif" ), wxSAVE | wxOVERWRITE_PROMPT );
 
     if ( fileName.IsEmpty() ) {
         return;
     }
+
+    correctEmptyFileExt(wxT("qif"),fileName);
 
     wxFileOutputStream output( fileName );
     wxTextOutputStream text( output );
