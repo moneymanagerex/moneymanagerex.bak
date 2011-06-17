@@ -522,6 +522,11 @@ wxString mmNotes4ExportString( const wxString& orig )
     return toReturn;
 }
 
+wxString inQuotes(wxString label)
+{
+    return wxString() << wxT( "\"" ) << label << wxT( "\"" );
+}
+
 void mmExportCSV( wxSQLite3Database* db_ )
 {
     if ( mmDBWrapper::getNumAccounts( db_ ) == 0 ) {
@@ -652,27 +657,27 @@ void mmExportCSV( wxSQLite3Database* db_ )
                 wxString splitsubcateg = mmDBWrapper::getSubCategoryName( db_, q2.GetInt( wxT( "CATEGID" ) ), q2.GetInt( wxT( "SUBCATEGID" ) ) );
 				// We have a fixed format for now
 				// date, payeename, "withdrawal/deposit", amount, category, subcategory, transactionnumber, notes
-                text << dateString << delimit 
-                     << payee << delimit 
+                text << inQuotes(dateString) << delimit 
+                     << inQuotes(payee) << delimit 
                      << origtype << delimit
-                     << splitamount << delimit
-                     << splitcateg << delimit 
-                     << splitsubcateg << delimit 
-                     << transNum << delimit
-                     << notes << endl;
+                     << inQuotes(splitamount) << delimit
+                     << inQuotes(splitcateg) << delimit 
+                     << inQuotes(splitsubcateg) << delimit 
+                     << inQuotes(transNum) << delimit
+                     << inQuotes(notes) << endl;
 
             }
 
             st2.Finalize();
         } else {
-            text << dateString << delimit 
-                 << payee << delimit 
+            text << inQuotes(dateString) << delimit 
+                 << inQuotes(payee) << delimit 
                  << origtype << delimit
-                 << amount << delimit
-                 << categ << delimit 
-                 << subcateg << delimit 
-                 << transNum << delimit
-                 << notes << endl;
+                 << inQuotes(amount) << delimit
+                 << inQuotes(categ) << delimit 
+                 << inQuotes(subcateg) << delimit 
+                 << inQuotes(transNum) << delimit
+                 << inQuotes(notes) << endl;
         }
 
         numRecords++;
