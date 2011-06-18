@@ -1053,11 +1053,14 @@ int mmImportCSV( mmCoreDB* core )
                 }
 
                 double val = 0.0;
-
-                if ( !amount.ToDouble( &val ) || val < 0 ) {
-                    log << _( "Line : " ) << countNumTotal << _( " invalid amount, skipping." ) << endl;
-                    continue;
-                }
+				if ( !mmex::formatCurrencyToDouble(amount, val) )
+				{
+					if ( !amount.ToDouble( &val ) || val < 0.0 ) 
+					{
+						log << _( "Line : " ) << countNumTotal << _( " invalid amount, skipping." ) << endl;
+						continue;
+					}
+				}
 
                 bool isTransfer = false;
                 int toAccountID = -1;
