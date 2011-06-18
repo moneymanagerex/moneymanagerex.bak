@@ -121,7 +121,7 @@ public:
     bool accountExists(const wxString& accountName);
     boost::weak_ptr<mmCurrency> getCurrencyWeakPtr(int accountID);
     double getAccountBaseCurrencyConvRate(int accountID);
-
+    wxString getAccountName(int accountID);
     account_v accounts_;
     
 private:

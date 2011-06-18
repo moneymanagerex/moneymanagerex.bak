@@ -134,8 +134,7 @@ mmBankTransaction::mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db) :
     splitEntries_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
 }
 
-mmBankTransaction::mmBankTransaction(mmCoreDB* core, 
-                                     wxSQLite3ResultSet& q1)
+mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
  : mmTransaction(q1.GetInt(wxT("TRANSID"))),
                  db_(core->db_), 
                  isInited_(false), 
@@ -191,9 +190,15 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
       // needed to correct possible crash if database becomes corrupt.
       if (payee_.lock() == 0 )
       {
-         wxString errMsg = _("Payee not found in database for Account ID:");
-         errMsg << accountID_;
-         wxMessageBox(errMsg,_("MMEX DATABASE ERROR"),wxICON_ERROR);
+         if (core->displayDatabaseError_)
+         {
+             wxString errMsg = _("Payee not found in database for Account: ");
+             errMsg << core->accountList_.getAccountName(accountID_)
+                    << wxT("\n\n")
+                    << _("Subsequent errors not displayed.");
+             wxMessageBox(errMsg,_("MMEX DATABASE ERROR"),wxICON_ERROR);
+             core->displayDatabaseError_ = false;
+         }
          payeeID_  = -1;
          payeeStr_ = wxT("Payee Error");
 		 status_ = wxT("V");
