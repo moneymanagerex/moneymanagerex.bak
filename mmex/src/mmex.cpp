@@ -3123,7 +3123,7 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
     wxFileName oldFileName(fileName_); // opened db's file
 
     if (newFileName == oldFileName) { // on case-sensitive FS uses case-sensitive comparison
-        wxMessageDialog dlg(this, _("Can't copy file to itself"), _("Error"), wxICON_ERROR);
+        wxMessageDialog dlg(this, _("Can't copy file to itself"), _("Save database file as"), wxICON_WARNING);
         dlg.ShowModal();
         return;
     }
@@ -3202,8 +3202,7 @@ void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& /*event*/)
 {
     if (mmDBWrapper::getNumAccounts(m_db.get()) == 0)
     {
-        mmShowErrorMessage(0, _("No Account available! Cannot Import! Create a new account first!"), 
-            _("Error"));
+        wxMessageBox(_("No account available to import"),_("Universal CSV Import"), wxICON_WARNING );
         return;
     }
 
@@ -3242,8 +3241,13 @@ void mmGUIFrame::OnNewAccount(wxCommandEvent& /*event*/)
             menuBar_->FindItem(MENU_VIEW_TERMACCOUNTS)->Check(true);
             if (firstTermAccount)
             {
-                wxMessageBox(_("Term Account views have been temporarly turned on.\nTo maintain this view, change the defaults by using:\n\nTools -> Options\nView Options\n\nThis message will not be displayed in future."),
-                             _("Initial Term Account Activation"),wxICON_INFORMATION);
+                wxString msgStr;
+                msgStr << _("Term Account views have been temporarly turned on.") << wxT("\n")
+                       << _("To maintain this view, change the defaults by using:") << wxT("\n\n")
+                       << _("Tools -> Options") << wxT("\n")
+                       << _("View Options") << wxT("\n\n")
+                       << _("This message will not be displayed in future.");
+                wxMessageBox(msgStr, _("Initial Term Account Activation"),wxICON_INFORMATION);
             }
         } else
             updateNavTreeControl(); 
@@ -3522,7 +3526,7 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     wxString site = wxT("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
 
     if (!m_core) {
-       mmShowErrorMessage(this, _("No database!"), _("Update Currency Rate"));
+       wxMessageBox(_("No database!"), _("Update Currency Rate"), wxICON_WARNING);
        return;
     }
 
@@ -3531,20 +3535,20 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     wxInputStream* in_stream = url.GetInputStream();
 
     if (!in_stream) {
-        mmShowErrorMessage(this, _("Unable to connect!"), _("Update Currency Rate"));
+        wxMessageBox(_("Unable to connect!"), _("Update Currency Rate"), wxICON_WARNING);
         return;
     }
     
     wxXmlDocument doc;
 
     if(!doc.Load(*in_stream)) {
-        mmShowErrorMessage(this, _("Cannot get data from WWW!"), _("Update Currency Rate"));
+        wxMessageBox(_("Cannot get data from WWW!"), _("Update Currency Rate"), wxICON_WARNING);
         return;
     }
 
     // decode received XML data
     if(doc.GetRoot()->GetName() != wxT("gesmes:Envelope")) {
-        mmShowErrorMessage(this, _("Incorrect XML data (#1)!"), _("Update Currency Rate"));
+        wxMessageBox(_("Incorrect XML data (#1)!"), _("Update Currency Rate"), wxICON_WARNING);
         return;
     }
 
@@ -3553,36 +3557,36 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     while(root_child) {
         if(root_child->GetName() == wxT("gesmes:subject")) {
             if(root_child->GetNodeContent() != wxT("Reference rates")) {
-                mmShowErrorMessage(this, _("Incorrect XML data (#2)!"), _("Update Currency Rate"));
+                wxMessageBox(_("Incorrect XML data (#2)!"), _("Update Currency Rate"), wxICON_WARNING);
                 return;
             }
         } else if (root_child->GetName() == wxT("gesmes:Sender")) {
             wxXmlNode *sender_child = root_child->GetChildren();
 
             if(!sender_child) {
-                mmShowErrorMessage(this, _("Incorrect XML data (#3)!"), _("Update Currency Rate"));
+                wxMessageBox(_("Incorrect XML data (#3)!"), _("Update Currency Rate"), wxICON_WARNING);
                 return;
             }
 
             if(sender_child->GetName() != wxT("gesmes:name")) {
-                mmShowErrorMessage(this, _("Incorrect XML data (#4)!"), _("Update Currency Rate"));
+                wxMessageBox(_("Incorrect XML data (#4)!"), _("Update Currency Rate"), wxICON_WARNING);
                 return;
             }
 
             if(sender_child->GetNodeContent() != wxT("European Central Bank")) {
-                mmShowErrorMessage(this, _("Incorrect XML data (#5)!"), _("Update Currency Rate"));
+                wxMessageBox(_("Incorrect XML data (#5)!"), _("Update Currency Rate"), wxICON_WARNING);
                 return;
             }            
         } else if (root_child->GetName() == wxT("Cube")) {
             wxXmlNode *cube_lv1_child = root_child->GetChildren();
 
             if(!cube_lv1_child) {
-                mmShowErrorMessage(this, _("Incorrect XML data (#6)!"), _("Update Currency Rate"));
+                wxMessageBox(_("Incorrect XML data (#6)!"), _("Update Currency Rate"), wxICON_WARNING);
                 return;
             }
 
             if(cube_lv1_child->GetName() != wxT("Cube")) {
-                mmShowErrorMessage(this, _("Incorrect XML data (#7)!"), _("Update Currency Rate"));
+                wxMessageBox(_("Incorrect XML data (#7)!"), _("Update Currency Rate"), wxICON_WARNING);
                 return;
             }
 
@@ -3625,7 +3629,7 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     }
 
     if(base_rate == 0) {
-        mmShowErrorMessage(this, _("Could not find base currency symbol!"), _("Update Currency Rate"));
+        wxMessageBox(_("Could not find base currency symbol!"), _("Update Currency Rate"), wxICON_WARNING);
         return;
     }
 
@@ -3815,7 +3819,7 @@ void mmGUIFrame::OnStocks(wxCommandEvent& /*event*/)
 		homePanel->Layout();		
 	} else {
 		wxMessageBox(_("No investment accounts found. You can create one using the Accounts menu."),
-			     _("Investment Accounts"));
+                     _("Investment Accounts"));
 	}
 }
 //----------------------------------------------------------------------------
@@ -3845,7 +3849,7 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& /*event*/)
 {
     if (m_core->accountList_.accounts_.size() == 0)
     {
-        mmShowErrorMessage(0, _("No Account available!"), _("Error"));
+        wxMessageBox(_("No account available to edit!"), _("Accounts"), wxICON_WARNING);
         return;
     }
   
@@ -3873,7 +3877,6 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& /*event*/)
                 wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
                 GetEventHandler()->AddPendingEvent(ev);
             }
-            
         }
     }
 }
@@ -3883,7 +3886,7 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
 {
     if (m_core->accountList_.accounts_.size() == 0)
     {
-        mmShowErrorMessage(0, _("No Account available!"), _("Error"));
+        wxMessageBox(_("No account available to delete!"), _("Accounts"), wxICON_WARNING);
         return;
     }
 
@@ -3903,10 +3906,8 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
         int acctID = arrAcctID[choice];
 
         wxString deletingAccountName = _("Are you sure you want to delete\n") + m_core->accountList_.accounts_[choice]->acctType_ +
-                                       _(" account: ") + m_core->accountList_.accounts_[choice]->accountName_ + _(" ?");
-        wxMessageDialog msgDlg(this, deletingAccountName,
-//          _("Do you really want to delete the account?")  
-            _("Confirm Account Deletion"),
+                                       _(" account: ") + m_core->accountList_.accounts_[choice]->accountName_ + wxT(" ?");
+        wxMessageDialog msgDlg(this, deletingAccountName, _("Confirm Account Deletion"),
             wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
         if (msgDlg.ShowModal() == wxID_YES)
         {
@@ -4000,9 +4001,10 @@ void mmGUIFrame::OnCategoryRelocation(wxCommandEvent& /*event*/)
     relocateCategoryDialog* dlg = new relocateCategoryDialog(m_core.get(), m_db.get(), this);
     if (dlg->ShowModal() == wxID_OK)
     {
-        wxString msgStr = _("Category Relocation Completed.\n\n" );
-        msgStr << dlg->updatedCategoriesCount() << _(" records have been updated in the database.\n");
-        msgStr << _("\nMMEX must be shutdown and restarted for all the changes to be seen.");
+        wxString msgStr;
+        msgStr << _("Category Relocation Completed.") << wxT("\n\n")
+               << dlg->updatedCategoriesCount() << _(" records have been updated in the database.") << wxT("\n\n")
+               << _("MMEX must be shutdown and restarted for all the changes to be seen.");
         wxMessageBox(msgStr,_("Category Relocation Result"));
     }
 }
@@ -4013,9 +4015,10 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
     relocatePayeeDialog* dlg = new relocatePayeeDialog(m_core.get(), m_db.get(), this);
     if (dlg->ShowModal() == wxID_OK)
     {
-        wxString msgStr = _("Payee Relocation Completed.\n\n" );
-        msgStr << dlg->updatedPayeesCount() << _(" records have been updated in the database.\n");
-        msgStr << _("\nMMEX must be shutdown and restarted for all the changes to be seen.");
+        wxString msgStr;
+        msgStr << _("Payee Relocation Completed.") << wxT("\n\n")
+               << dlg->updatedPayeesCount() << _(" records have been updated in the database.") << wxT("\n\n")
+               << _("MMEX must be shutdown and restarted for all the changes to be seen.");
         wxMessageBox(msgStr,_("Payee Relocation Result"));
     }
 }
@@ -4099,7 +4102,7 @@ void mmGUIFrame::DeleteCustomSqlReport()
 
         if (! custRepIndex_->currentReportFileName(false).IsEmpty())
         {
-            msg = wxString() << _("Do you want to delete the SQL file as well?\n"); 
+            msg = wxString() << _("Do you want to delete the SQL file as well?") << wxT("\n"); 
             if ( wxMessageBox(msg, custRepIndex_->UserDialogHeading(), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION) == wxYES)
             {
                 if (wxFileExists(custRepIndex_->currentReportFileName()))
@@ -4246,17 +4249,24 @@ wxAddAccountPage2::wxAddAccountPage2(mmAddAccountWizard *parent) :
     mainSizer->Add( new wxStaticText(this, wxID_ANY, _("Type of Account")), 0, wxALL, 5 );
     mainSizer->Add( itemChoiceType_, 0 /* No stretching*/, wxALL, 5 /* Border Size */);
 
-    mainSizer->Add( new wxStaticText(this, wxID_ANY,
-        _("\nSelect the type of account you want to create:\n\nGeneral bank accounts cover a wide variety of account\ntypes like Checking, Savings and Credit card type accounts.")), 0,
-        wxALL, 5);
+    wxString textMsg;
+    textMsg << wxT("\n") 
+            << _("Select the type of account you want to create:") << wxT("\n\n")
+            << _("General bank accounts cover a wide variety of account") << wxT("\n")
+            << _("types like Checking, Savings and Credit card type accounts.");
+    mainSizer->Add( new wxStaticText(this, wxID_ANY,textMsg), 0, wxALL, 5);
 
-    mainSizer->Add( new wxStaticText(this, wxID_ANY,
-        _("\nInvestment accounts are specialized accounts that only \nhave stock/mutual fund investments associated with them.\n")), 0,
-        wxALL, 5);
+    textMsg = wxT("\n");
+    textMsg << _("Investment accounts are specialized accounts that only") << wxT("\n")
+            << _("have stock/mutual fund investments associated with them.");
+    mainSizer->Add( new wxStaticText(this, wxID_ANY,textMsg), 0, wxALL, 5);
 
-    mainSizer->Add( new wxStaticText(this, wxID_ANY,
-        _("Term accounts are specialized bank accounts. Intended for asset\ntype accounts such as Term Deposits and Bonds. These accounts\ncan have regular money coming in and out, being outside the\ngeneral income stream.")), 0,
-        wxALL, 5);
+    textMsg = wxT("\n");
+    textMsg << _("Term accounts are specialized bank accounts. Intended for asset") << wxT("\n")
+            << _("type accounts such as Term Deposits and Bonds. These accounts") << wxT("\n")
+            << _("can have regular money coming in and out, being outside the") << wxT("\n")
+            << _("general income stream.");
+    mainSizer->Add( new wxStaticText(this, wxID_ANY,textMsg), 0, wxALL, 5);
 
     SetSizer(mainSizer);
     mainSizer->Fit(this);
