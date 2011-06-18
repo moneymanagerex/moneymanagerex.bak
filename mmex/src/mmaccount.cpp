@@ -311,7 +311,12 @@ bool mmAccountList::accountExists(const wxString& accountName)
 
 int mmAccountList::getAccountID(const wxString& accountName)
 {
-   return mmDBWrapper::getAccountID(db_.get(), accountName);
+    return mmDBWrapper::getAccountID(db_.get(), accountName);
+}
+
+wxString mmAccountList::getAccountName(int accountID)
+{
+    return mmDBWrapper::getAccountName(db_.get(),accountID);
 }
 
 wxString mmAccountList::getAccountType(int accountID)

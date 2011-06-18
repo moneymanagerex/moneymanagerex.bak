@@ -186,7 +186,8 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db) :
     categoryList_(db),
     accountList_(db),
     currencyList_(db),
-    bTransactionList_(db)
+    bTransactionList_(db),
+    displayDatabaseError_(true)
 {
     if (!db_)
         throw wxSQLite3Exception(WXSQLITE_ERROR, wxT("Null pointer to database"));

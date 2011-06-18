@@ -48,7 +48,8 @@ public:
    mmAccountList accountList_;
    mmCurrencyList currencyList_;
    mmBankTransactionList bTransactionList_;
-   
+
+   bool displayDatabaseError_;
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_COREDB_H_
