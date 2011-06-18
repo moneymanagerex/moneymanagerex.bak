@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TheZeal Software\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-11 14:09+1000\n"
+"POT-Creation-Date: 2011-06-19 00:53+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Stefano Giorgio <stef145g@gmail.com>\n"
 "Language-Team: Avi Markovitz\n"
@@ -1106,91 +1106,91 @@ msgstr "שער המרה בסיסי צריך להיות גדול מ 0.0"
 msgid "Base Conversion Rate should be greater than zero"
 msgstr "שער המרה בסיסי צריך להיות גדול מ 0.0"
 
-#: src/customreportdialog.cpp:78
+#: src/customreportdialog.cpp:79
 #, fuzzy
 msgid "Report Title:"
 msgstr "יבא קובץ&"
 
-#: src/customreportdialog.cpp:84
+#: src/customreportdialog.cpp:85
 msgid "Heading"
 msgstr ""
 
-#: src/customreportdialog.cpp:87
+#: src/customreportdialog.cpp:88
 msgid "Sub-Menu"
 msgstr ""
 
-#: src/customreportdialog.cpp:93
+#: src/customreportdialog.cpp:94
 msgid "SQL Source Script:"
 msgstr ""
 
-#: src/customreportdialog.cpp:118
+#: src/customreportdialog.cpp:119
 #, fuzzy
 msgid "&Load"
 msgstr "טען SQL&"
 
-#: src/customreportdialog.cpp:120
+#: src/customreportdialog.cpp:121
 msgid "Locate and load an SQL script file."
 msgstr ""
 
-#: src/customreportdialog.cpp:122
+#: src/customreportdialog.cpp:123
 #, fuzzy
 msgid "&Save"
 msgstr "שמור SQL&"
 
-#: src/customreportdialog.cpp:124
+#: src/customreportdialog.cpp:125
 msgid "Save Heading details to the Index File, and SQL script file as required."
 msgstr ""
 
-#: src/customreportdialog.cpp:126
+#: src/customreportdialog.cpp:127
 msgid "&Run"
 msgstr ""
 
-#: src/customreportdialog.cpp:128
+#: src/customreportdialog.cpp:129
 msgid "Test script. Save before running. SQL errors will result in loss of script details."
 msgstr ""
 
-#: src/customreportdialog.cpp:130
+#: src/customreportdialog.cpp:131
 msgid "C&lear"
 msgstr ""
 
-#: src/customreportdialog.cpp:132
+#: src/customreportdialog.cpp:133
 msgid "Clear the SQL Source script area"
 msgstr ""
 
-#: src/customreportdialog.cpp:136
+#: src/customreportdialog.cpp:137
 msgid "Save changes before closing. Changes without Saving will be lost."
 msgstr ""
 
-#: src/customreportdialog.cpp:172
+#: src/customreportdialog.cpp:173
 #, fuzzy
 msgid "Load Custom SQL file:"
 msgstr "חלון שאילתות SQL מותאמות אישית"
 
-#: src/customreportdialog.cpp:198
+#: src/customreportdialog.cpp:199
 msgid "Unable to open file."
 msgstr "לא ניתן לפתוח קובץ."
 
-#: src/customreportdialog.cpp:211
+#: src/customreportdialog.cpp:212
 msgid ""
 " entry location:\n"
 "OK....: Insert before selected entry\n"
 "Cancel: Add at bottom of List."
 msgstr ""
 
-#: src/customreportdialog.cpp:224
+#: src/customreportdialog.cpp:225
 #, fuzzy
 msgid "Save Custom SQL file:"
 msgstr "חלון שאילתות SQL מותאמות אישית"
 
-#: src/customreportdialog.cpp:244
+#: src/customreportdialog.cpp:248
 msgid "Unable to write to file."
 msgstr "לא ניתן לכתוב לקובץ."
 
-#: src/customreportdialog.cpp:273
+#: src/customreportdialog.cpp:277
 msgid "SQL Query will modify your Data. Proceed??"
 msgstr "שאילתת SQL תעדכן את הנתונים, להמשיך??"
 
-#: src/customreportdialog.cpp:273
+#: src/customreportdialog.cpp:277
 msgid "Warning"
 msgstr "אזהרה"
 
@@ -2085,7 +2085,7 @@ msgid "Budget Setup and Performance"
 msgstr "הגדרות ובצועי תקציב"
 
 #: src/mmex.cpp:1308
-#: src/mmex.cpp:3351
+#: src/mmex.cpp:3355
 msgid "Cash Flow"
 msgstr "תזרים מזומנים"
 
@@ -2145,7 +2145,7 @@ msgid "Do you really want to delete the account?"
 msgstr "האם למחוק את החשבון?"
 
 #: src/mmex.cpp:2219
-#: src/mmex.cpp:3908
+#: src/mmex.cpp:3910
 msgid "Confirm Account Deletion"
 msgstr "אשר מחיקת חשבון"
 
@@ -2253,7 +2253,7 @@ msgstr "מס&ד נתונים חדש\tCtrl-N"
 
 #: src/mmex.cpp:2515
 #: src/mmex.cpp:2802
-#: src/mmex.cpp:4186
+#: src/mmex.cpp:4190
 msgid "New Database"
 msgstr "מסד נתונים חדש"
 
@@ -2389,8 +2389,8 @@ msgstr ""
 
 #: src/mmex.cpp:2600
 #: src/mmex.cpp:2807
-#: src/mmex.cpp:4221
-#: src/mmex.cpp:4280
+#: src/mmex.cpp:4225
+#: src/mmex.cpp:4291
 msgid "New Account"
 msgstr "חשבון חדש"
 
@@ -2745,6 +2745,7 @@ msgid "MMEX message"
 msgstr "הודעת MMEX"
 
 #: src/mmex.cpp:3108
+#: src/mmex.cpp:3126
 #, fuzzy
 msgid "Save database file as"
 msgstr "שמור מסד נתונים כ"
@@ -2759,322 +2760,348 @@ msgid "Enter password for new database"
 msgstr "Money Manager Ex: הזן סיסמת מסד נתונים..."
 
 #: src/mmex.cpp:3205
-msgid "No Account available! Cannot Import! Create a new account first!"
-msgstr "החשבון אינו זמין! לא ניתן ליבא! צור חשבון חדש תחילה!"
+#, fuzzy
+msgid "No account available to import"
+msgstr "!חשבון לא זמין! לא ניתן לייצא"
+
+#: src/mmex.cpp:3205
+#, fuzzy
+msgid "Universal CSV Import"
+msgstr "חלון ייבוא CSV אוניברסלי"
 
 #: src/mmex.cpp:3245
-msgid ""
-"Term Account views have been temporarly turned on.\n"
-"To maintain this view, change the defaults by using:\n"
-"\n"
-"Tools -> Options\n"
-"View Options\n"
-"\n"
-"This message will not be displayed in future."
+msgid "Term Account views have been temporarly turned on."
 msgstr ""
 
 #: src/mmex.cpp:3246
+msgid "To maintain this view, change the defaults by using:"
+msgstr ""
+
+#: src/mmex.cpp:3247
+#, fuzzy
+msgid "Tools -> Options"
+msgstr "אפשרויות"
+
+#: src/mmex.cpp:3248
+msgid "View Options"
+msgstr "הצג אפשרויות"
+
+#: src/mmex.cpp:3249
+msgid "This message will not be displayed in future."
+msgstr ""
+
+#: src/mmex.cpp:3250
 #, fuzzy
 msgid "Initial Term Account Activation"
 msgstr "אשר מחיקת חשבון"
 
-#: src/mmex.cpp:3351
+#: src/mmex.cpp:3355
 msgid "Choose Accounts"
 msgstr "בחר חשבונות"
 
-#: src/mmex.cpp:3467
-#: src/mmex.cpp:3534
+#: src/mmex.cpp:3471
+#: src/mmex.cpp:3538
 msgid "Unable to connect!"
 msgstr "!לא היתה אפשרות להתחבר לשרת"
 
-#: src/mmex.cpp:3467
-#: src/mmex.cpp:3504
-#: src/mmex.cpp:3510
+#: src/mmex.cpp:3471
+#: src/mmex.cpp:3508
+#: src/mmex.cpp:3514
 msgid "Check Update"
 msgstr "בדוק עדכונים"
 
-#: src/mmex.cpp:3504
+#: src/mmex.cpp:3508
 msgid "New update available!"
 msgstr "גרסה חדשה זמינה!"
 
-#: src/mmex.cpp:3510
+#: src/mmex.cpp:3514
 msgid "You have the latest version installed!"
 msgstr "יש לך את הגרסה האחרונה"
 
-#: src/mmex.cpp:3525
+#: src/mmex.cpp:3529
 msgid "No database!"
 msgstr "אין מסד נתונים!"
 
-#: src/mmex.cpp:3525
-#: src/mmex.cpp:3534
-#: src/mmex.cpp:3541
-#: src/mmex.cpp:3547
-#: src/mmex.cpp:3556
-#: src/mmex.cpp:3563
-#: src/mmex.cpp:3568
-#: src/mmex.cpp:3573
-#: src/mmex.cpp:3580
-#: src/mmex.cpp:3585
-#: src/mmex.cpp:3628
-#: src/mmex.cpp:3655
+#: src/mmex.cpp:3529
+#: src/mmex.cpp:3538
+#: src/mmex.cpp:3545
+#: src/mmex.cpp:3551
+#: src/mmex.cpp:3560
+#: src/mmex.cpp:3567
+#: src/mmex.cpp:3572
+#: src/mmex.cpp:3577
+#: src/mmex.cpp:3584
+#: src/mmex.cpp:3589
+#: src/mmex.cpp:3632
+#: src/mmex.cpp:3659
 msgid "Update Currency Rate"
 msgstr "עדכן שערי מטח"
 
-#: src/mmex.cpp:3541
+#: src/mmex.cpp:3545
 msgid "Cannot get data from WWW!"
 msgstr "לא מצליח לקבל נתונים נהאיטרנט!"
 
-#: src/mmex.cpp:3547
+#: src/mmex.cpp:3551
 msgid "Incorrect XML data (#1)!"
 msgstr "נתוני XML שגויים (#1)!"
 
-#: src/mmex.cpp:3556
+#: src/mmex.cpp:3560
 msgid "Incorrect XML data (#2)!"
 msgstr "נתוני XML שגויים (#2)!"
 
-#: src/mmex.cpp:3563
+#: src/mmex.cpp:3567
 msgid "Incorrect XML data (#3)!"
 msgstr "נתוני XML שגויים (#3)!"
 
-#: src/mmex.cpp:3568
+#: src/mmex.cpp:3572
 msgid "Incorrect XML data (#4)!"
 msgstr "נתוני XML שגויים (#4)!"
 
-#: src/mmex.cpp:3573
+#: src/mmex.cpp:3577
 msgid "Incorrect XML data (#5)!"
 msgstr "נתוני XML שגויים (#5)!"
 
-#: src/mmex.cpp:3580
+#: src/mmex.cpp:3584
 msgid "Incorrect XML data (#6)!"
 msgstr "נתוני XML שגויים (#6)!"
 
-#: src/mmex.cpp:3585
+#: src/mmex.cpp:3589
 msgid "Incorrect XML data (#7)!"
 msgstr "נתוני XML שגויים (#7)!"
 
-#: src/mmex.cpp:3628
+#: src/mmex.cpp:3632
 msgid "Could not find base currency symbol!"
 msgstr "סמל מטבע הבסיס לא נמצא!"
 
-#: src/mmex.cpp:3655
+#: src/mmex.cpp:3659
 msgid "Currency rate updated"
 msgstr "עדכון שערי מט\"ח"
 
-#: src/mmex.cpp:3816
+#: src/mmex.cpp:3821
 msgid "No investment accounts found. You can create one using the Accounts menu."
 msgstr ""
 
-#: src/mmex.cpp:3817
+#: src/mmex.cpp:3822
 #, fuzzy
 msgid "Investment Accounts"
 msgstr "בחר חשבון השקעות"
 
-#: src/mmex.cpp:3847
-#: src/mmex.cpp:3885
-msgid "No Account available!"
+#: src/mmex.cpp:3852
+#, fuzzy
+msgid "No account available to edit!"
 msgstr "חשבון לא זמין!"
 
-#: src/mmex.cpp:3860
-msgid "Choose Account to Edit"
-msgstr "בחר חשבוון לעריכה"
-
-#: src/mmex.cpp:3860
-#: src/mmex.cpp:3898
+#: src/mmex.cpp:3852
+#: src/mmex.cpp:3865
+#: src/mmex.cpp:3889
+#: src/mmex.cpp:3902
 msgid "Accounts"
 msgstr "חשבונות"
 
-#: src/mmex.cpp:3898
+#: src/mmex.cpp:3865
+msgid "Choose Account to Edit"
+msgstr "בחר חשבוון לעריכה"
+
+#: src/mmex.cpp:3889
+#, fuzzy
+msgid "No account available to delete!"
+msgstr "חשבון לא זמין!"
+
+#: src/mmex.cpp:3902
 msgid "Choose Account to Delete"
 msgstr "בחר חשבון למחיקה"
 
-#: src/mmex.cpp:3904
+#: src/mmex.cpp:3908
 #, fuzzy
 msgid "Are you sure you want to delete\n"
 msgstr "האם למחוק את הנכס?"
 
-#: src/mmex.cpp:3905
+#: src/mmex.cpp:3909
 #, fuzzy
 msgid " account: "
 msgstr "סכום"
 
-#: src/mmex.cpp:3905
-msgid " ?"
-msgstr ""
-
-#: src/mmex.cpp:4002
-msgid ""
-"Category Relocation Completed.\n"
-"\n"
-msgstr ""
-
-#: src/mmex.cpp:4003
-#: src/mmex.cpp:4016
-msgid " records have been updated in the database.\n"
-msgstr ""
-
-#: src/mmex.cpp:4004
-#: src/mmex.cpp:4017
-msgid ""
-"\n"
-"MMEX must be shutdown and restarted for all the changes to be seen."
-msgstr ""
-
 #: src/mmex.cpp:4005
+#, fuzzy
+msgid "Category Relocation Completed."
+msgstr "שדה קטגוריה חיב להכיל ערכים"
+
+#: src/mmex.cpp:4006
+#: src/mmex.cpp:4020
+msgid " records have been updated in the database."
+msgstr ""
+
+#: src/mmex.cpp:4007
+#: src/mmex.cpp:4021
+msgid "MMEX must be shutdown and restarted for all the changes to be seen."
+msgstr ""
+
+#: src/mmex.cpp:4008
 #, fuzzy
 msgid "Category Relocation Result"
 msgstr "שדה קטגוריה חיב להכיל ערכים"
 
-#: src/mmex.cpp:4015
-msgid ""
-"Payee Relocation Completed.\n"
-"\n"
-msgstr ""
+#: src/mmex.cpp:4019
+#, fuzzy
+msgid "Payee Relocation Completed."
+msgstr "שדה קטגוריה חיב להכיל ערכים"
 
-#: src/mmex.cpp:4018
+#: src/mmex.cpp:4022
 msgid "Payee Relocation Result"
 msgstr ""
 
-#: src/mmex.cpp:4056
+#: src/mmex.cpp:4060
 msgid " to Edit:"
 msgstr ""
 
-#: src/mmex.cpp:4077
+#: src/mmex.cpp:4081
 #, fuzzy
 msgid " to Delete:"
 msgstr "מחק&"
 
-#: src/mmex.cpp:4092
+#: src/mmex.cpp:4096
 msgid "Delete the Custom Report Title:"
 msgstr ""
 
-#: src/mmex.cpp:4101
+#: src/mmex.cpp:4105
 #, fuzzy
-msgid "Do you want to delete the SQL file as well?\n"
+msgid "Do you want to delete the SQL file as well?"
 msgstr "האם למחוק את הסדרה?"
 
-#: src/mmex.cpp:4142
+#: src/mmex.cpp:4146
 msgid "Set Currency"
 msgstr "קבע מטבע"
 
-#: src/mmex.cpp:4152
+#: src/mmex.cpp:4156
 msgid "Base Currency for account"
 msgstr "מטבע בסיס לחשבון"
 
-#: src/mmex.cpp:4156
+#: src/mmex.cpp:4160
 #, fuzzy
 msgid "Specify the base (or default) currency to be used for the"
 msgstr "הזן את מטבע החשבון."
 
-#: src/mmex.cpp:4157
+#: src/mmex.cpp:4161
 msgid "database. The base currency can later be changed by using"
 msgstr ""
 
-#: src/mmex.cpp:4158
+#: src/mmex.cpp:4162
 msgid "the options dialog. New accounts, will use this currency by"
 msgstr ""
 
-#: src/mmex.cpp:4159
+#: src/mmex.cpp:4163
 msgid "default, and can be changed when editing account details."
 msgstr ""
 
-#: src/mmex.cpp:4166
+#: src/mmex.cpp:4170
 msgid "User Name"
 msgstr "שם משתמש"
 
-#: src/mmex.cpp:4173
+#: src/mmex.cpp:4177
 msgid "(Optional) Specify a title or your name."
 msgstr ""
 
-#: src/mmex.cpp:4174
+#: src/mmex.cpp:4178
 msgid "Used as a database title for displayed and printed reports."
 msgstr ""
 
-#: src/mmex.cpp:4186
+#: src/mmex.cpp:4190
 msgid "Base Currency Not Set"
 msgstr "לא נקבע מטבע בסיס"
 
-#: src/mmex.cpp:4203
+#: src/mmex.cpp:4207
 msgid "Name of the Account"
 msgstr "שם החשבון"
 
-#: src/mmex.cpp:4207
+#: src/mmex.cpp:4211
 #, fuzzy
 msgid "Specify a descriptive name for the account."
 msgstr "ציין את הסטאטוס של התנועה"
 
-#: src/mmex.cpp:4208
+#: src/mmex.cpp:4212
 #, fuzzy
 msgid "This is generally the name of a financial institution"
 msgstr "הזן פרטי קשר של המוסד הכספי."
 
-#: src/mmex.cpp:4209
+#: src/mmex.cpp:4213
 msgid "where the account is held. For example: 'ABC Bank'."
 msgstr ""
 
-#: src/mmex.cpp:4221
+#: src/mmex.cpp:4225
 msgid "Account Name Invalid"
 msgstr "שם חשבון לא חוקי"
 
-#: src/mmex.cpp:4235
+#: src/mmex.cpp:4239
 msgid "Checking/Savings"
 msgstr "עו\"ש/חיסכון"
 
-#: src/mmex.cpp:4236
+#: src/mmex.cpp:4240
 msgid "Investment"
 msgstr "השקעה"
 
-#: src/mmex.cpp:4237
+#: src/mmex.cpp:4241
 msgid "Term"
 msgstr ""
 
-#: src/mmex.cpp:4241
+#: src/mmex.cpp:4245
 msgid "Specify the type of account to be created."
 msgstr "הגדר את סוג החשבון שיוצר."
 
-#: src/mmex.cpp:4245
+#: src/mmex.cpp:4249
 msgid "Type of Account"
 msgstr "סוג חשבון"
 
-#: src/mmex.cpp:4249
+#: src/mmex.cpp:4254
 #, fuzzy
-msgid ""
-"\n"
-"Select the type of account you want to create:\n"
-"\n"
-"General bank accounts cover a wide variety of account\n"
-"types like Checking, Savings and Credit card type accounts."
-msgstr ""
-"\n"
-"בחר את סוג החשבון שברצונך ליצור:\n"
-"\n"
-"חשבון בנק כללי מכסה טווח רחב של סוגי חשבונות\n"
-"כגון עובר ושב, חיסכון, גמל, בטוחי מנהלים ועוד."
+msgid "Select the type of account you want to create:"
+msgstr "הגדר את סוג החשבון שיוצר."
 
-#: src/mmex.cpp:4253
+#: src/mmex.cpp:4255
+msgid "General bank accounts cover a wide variety of account"
+msgstr ""
+
+#: src/mmex.cpp:4256
+msgid "types like Checking, Savings and Credit card type accounts."
+msgstr ""
+
+#: src/mmex.cpp:4260
 #, fuzzy
-msgid ""
-"\n"
-"Investment accounts are specialized accounts that only \n"
-"have stock/mutual fund investments associated with them.\n"
+msgid "Investment accounts are specialized accounts that only"
 msgstr ""
 "\n"
 "חשבון השקעות הם חשבונות יעודיים לניהול תיקי נירות ערך\n"
 "ומשויכים אליו קרנות, נירות ערך, אגרות חוב ומכשירים פיננסיים.\n"
 
-#: src/mmex.cpp:4257
-msgid ""
-"Term accounts are specialized bank accounts. Intended for asset\n"
-"type accounts such as Term Deposits and Bonds. These accounts\n"
-"can have regular money coming in and out, being outside the\n"
-"general income stream."
+#: src/mmex.cpp:4261
+#, fuzzy
+msgid "have stock/mutual fund investments associated with them."
+msgstr ""
+"\n"
+"חשבון השקעות הם חשבונות יעודיים לניהול תיקי נירות ערך\n"
+"ומשויכים אליו קרנות, נירות ערך, אגרות חוב ומכשירים פיננסיים.\n"
+
+#: src/mmex.cpp:4265
+msgid "Term accounts are specialized bank accounts. Intended for asset"
 msgstr ""
 
-#: src/mmex.cpp:4278
+#: src/mmex.cpp:4266
+msgid "type accounts such as Term Deposits and Bonds. These accounts"
+msgstr ""
+
+#: src/mmex.cpp:4267
+msgid "can have regular money coming in and out, being outside the"
+msgstr ""
+
+#: src/mmex.cpp:4268
+msgid "general income stream."
+msgstr ""
+
+#: src/mmex.cpp:4289
 #, fuzzy
 msgid "Base Account Currency Not set."
 msgstr "לא נקבע מטבע בסיס"
 
-#: src/mmex.cpp:4279
+#: src/mmex.cpp:4290
 #, fuzzy
 msgid "Set that first using Tools->Options menu and then add a new account."
 msgstr ""
@@ -3196,11 +3223,15 @@ msgstr "אשר מחיקת ניר ערך"
 msgid "REPORTS"
 msgstr "דוחות"
 
-#: src/mmtransaction.cpp:194
-msgid "Payee not found in database for Account ID:"
+#: src/mmtransaction.cpp:195
+msgid "Payee not found in database for Account: "
 msgstr ""
 
-#: src/mmtransaction.cpp:196
+#: src/mmtransaction.cpp:198
+msgid "Subsequent errors not displayed."
+msgstr ""
+
+#: src/mmtransaction.cpp:199
 msgid "MMEX DATABASE ERROR"
 msgstr ""
 
@@ -3619,97 +3650,93 @@ msgstr "חלון פיצול תנועה"
 msgid "Default Payee:"
 msgstr "בחר מוטב"
 
-#: src/optionsdialog.cpp:796
+#: src/optionsdialog.cpp:795
 #, fuzzy
 msgid "Last Used"
 msgstr "שנה קודמת"
 
-#: src/optionsdialog.cpp:805
+#: src/optionsdialog.cpp:803
 #, fuzzy
 msgid "Default Category:"
 msgstr "בחר קטגוריה"
 
-#: src/optionsdialog.cpp:811
+#: src/optionsdialog.cpp:808
 msgid "Last used for payee"
 msgstr ""
 
-#: src/optionsdialog.cpp:820
+#: src/optionsdialog.cpp:816
 #, fuzzy
 msgid "Default Status:"
 msgstr "סטאטוס חשבון:"
 
-#: src/optionsdialog.cpp:848
+#: src/optionsdialog.cpp:842
 msgid "Database Backup Settings"
 msgstr ""
 
-#: src/optionsdialog.cpp:855
+#: src/optionsdialog.cpp:849
 #, fuzzy
 msgid "Backup before opening"
 msgstr "גבה מסד נתונים לפני פתיחתו"
 
-#: src/optionsdialog.cpp:860
+#: src/optionsdialog.cpp:854
 #, fuzzy
 msgid "Select whether to create a _YYYY-MM-DD.bak file before opening the database"
 msgstr "הגדר האם לגבות את מסד הנתונים אם פתיחתו קובץ עם סיומת bak."
 
-#: src/optionsdialog.cpp:864
+#: src/optionsdialog.cpp:858
 #, fuzzy
 msgid "Daily Update, before opening"
 msgstr "גבה מסד נתונים לפני פתיחתו"
 
-#: src/optionsdialog.cpp:870
+#: src/optionsdialog.cpp:864
 msgid "For same day, select to update the backup before opening the database."
 msgstr ""
 
-#: src/optionsdialog.cpp:877
+#: src/optionsdialog.cpp:871
 msgid "Stock Quote Web Page"
 msgstr "אתר בית של שערי נ\"ע"
 
-#: src/optionsdialog.cpp:884
+#: src/optionsdialog.cpp:878
 msgid "Clear the field to Reset the value to system default."
 msgstr ""
 
-#: src/optionsdialog.cpp:888
+#: src/optionsdialog.cpp:882
 msgid "Use Original Date when Pasting Transactions"
 msgstr "השתמש בתאריך מקורי בזמן רישום תנועה"
 
-#: src/optionsdialog.cpp:893
+#: src/optionsdialog.cpp:887
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
 msgstr "הגדר האם להשתמש בתאריך מקורי או תאריך היום בזמן העתקה והדבקה של תנועה"
 
-#: src/optionsdialog.cpp:897
+#: src/optionsdialog.cpp:891
 msgid "Use Transaction Sound"
 msgstr "השתמש בצליל תנועה"
 
-#: src/optionsdialog.cpp:902
+#: src/optionsdialog.cpp:896
 msgid "Select whether to use sounds when entering transactions"
 msgstr "הגדר האם להשתמש בצליל בעת קליטת תנועה"
 
-#: src/optionsdialog.cpp:906
+#: src/optionsdialog.cpp:900
 msgid "Enable online currency update (Get data from European Central Bank)"
 msgstr "אפשר עדכון שערים מקוונת (קבל מידע מ European Central Bank) "
 
-#: src/optionsdialog.cpp:913
+#: src/optionsdialog.cpp:907
 msgid "Enable or disable get data from European Central Bank to update currency rate"
 msgstr "אפשר או הפסק עדכוני שערי מטבע מ European Central Bank"
 
-#: src/optionsdialog.cpp:919
+#: src/optionsdialog.cpp:913
 msgid "General"
 msgstr "כללי"
 
-#: src/optionsdialog.cpp:920
-msgid "View Options"
-msgstr "הצג אפשרויות"
-
-#: src/optionsdialog.cpp:921
+#: src/optionsdialog.cpp:915
 msgid "Colors"
 msgstr "צבעים"
 
-#: src/optionsdialog.cpp:946
+#: src/optionsdialog.cpp:940
 msgid "Remember to update currency rate"
 msgstr "זכור את שער ההמרה המעודכן"
 
-#: src/optionsdialog.cpp:946
+#: src/optionsdialog.cpp:940
 msgid "Important note"
 msgstr "הערה חשובה"
 
@@ -3788,137 +3815,152 @@ msgstr "הזן את שם הנכס"
 msgid "Edit Payee Name"
 msgstr "ערוך/הוסף מוטב"
 
-#: src/qifimport.cpp:363
+#: src/qifimport.cpp:365
+#, fuzzy
+msgid "No account available for import"
+msgstr "!חשבון לא זמין! לא ניתן לייצא"
+
+#: src/qifimport.cpp:365
+#: src/qifimport.cpp:373
+#: src/qifimport.cpp:389
+#: src/qifimport.cpp:436
+#: src/qifimport.cpp:534
+#: src/qifimport.cpp:731
+msgid "QIF Import"
+msgstr "יבוא QIF"
+
+#: src/qifimport.cpp:370
 msgid "To import QIF files correctly, the date format in the QIF file"
 msgstr ""
 
-#: src/qifimport.cpp:364
+#: src/qifimport.cpp:371
 msgid "must match the date option set in MMEX."
 msgstr ""
 
-#: src/qifimport.cpp:365
+#: src/qifimport.cpp:372
 #, fuzzy
 msgid "Are you are sure you want to proceed with the import?"
 msgstr "האם למחוק את הנכס?"
 
-#: src/qifimport.cpp:366
-#: src/qifimport.cpp:388
-#: src/qifimport.cpp:392
-#: src/qifimport.cpp:536
-msgid "QIF Import"
-msgstr "יבוא QIF"
-
-#: src/qifimport.cpp:386
-#, fuzzy
-msgid "No suitable account available to import to!"
-msgstr "!חשבון לא זמין! לא ניתן לייצא"
-
-#: src/qifimport.cpp:387
-msgid "Create a suitable account first!"
-msgstr ""
-
-#: src/qifimport.cpp:392
+#: src/qifimport.cpp:389
 msgid "Choose Account to import to:"
 msgstr "בחר חשבון יעד לייבוא:"
 
-#: src/qifimport.cpp:403
+#: src/qifimport.cpp:400
 msgid "Choose QIF data file to import"
 msgstr "בחר קובץ נתוני QIF ליבוא"
 
-#: src/qifimport.cpp:439
+#: src/qifimport.cpp:436
 #: src/qifimport.cpp:726
 #, fuzzy
 msgid "Transactions imported from QIF: "
 msgstr "תנועות יובאו מ QIF"
 
-#: src/qifimport.cpp:443
+#: src/qifimport.cpp:441
 #, fuzzy
-msgid ""
-"Transactions imported from QIF\n"
-"to account "
+msgid "Transactions imported from QIF"
 msgstr "תנועות יובאו מ QIF"
 
-#: src/qifimport.cpp:461
-#: src/qifimport.cpp:496
-#: src/qifimport.cpp:565
+#: src/qifimport.cpp:442
+#, fuzzy
+msgid "to account "
+msgstr "סכום"
+
+#: src/qifimport.cpp:459
+#: src/qifimport.cpp:494
+#: src/qifimport.cpp:563
 msgid "Line : "
 msgstr "שורה:"
 
-#: src/qifimport.cpp:462
+#: src/qifimport.cpp:460
 msgid " incorrect QIF line type"
 msgstr "סוג שורת QIF שגויה"
 
-#: src/qifimport.cpp:473
+#: src/qifimport.cpp:471
 msgid "Importing account type : "
 msgstr "מיבא סוגי חשבון:"
 
-#: src/qifimport.cpp:496
+#: src/qifimport.cpp:494
 msgid " : "
 msgstr ":"
 
-#: src/qifimport.cpp:497
+#: src/qifimport.cpp:495
 msgid " account name "
 msgstr "שם חשבון"
 
-#: src/qifimport.cpp:535
+#: src/qifimport.cpp:533
 msgid " cannot process Account Types yet "
 msgstr "לא ניתן לעבד סוגי חשבון"
 
-#: src/qifimport.cpp:536
+#: src/qifimport.cpp:534
 msgid "Cannot process these QIF Account Types yet"
 msgstr "לא ניתן לעבד סוגי חשבון QIF "
 
-#: src/qifimport.cpp:550
-#: src/qifimport.cpp:666
+#: src/qifimport.cpp:548
+#: src/qifimport.cpp:664
 #, fuzzy
 msgid "Payee Added: "
 msgstr "מוטב"
 
-#: src/qifimport.cpp:566
+#: src/qifimport.cpp:564
 msgid " invalid amount, skipping."
 msgstr "סכום לא חוקי, מדלג."
 
-#: src/qifimport.cpp:645
+#: src/qifimport.cpp:643
 msgid "Date is empty, "
 msgstr "שדה תאריך ריק,"
 
-#: src/qifimport.cpp:649
+#: src/qifimport.cpp:647
 msgid "Transaction Type is empty"
 msgstr "סוג תנועה ריק שדה"
 
-#: src/qifimport.cpp:653
+#: src/qifimport.cpp:651
 msgid "Amount is empty"
 msgstr "שדה סכום ריק,"
 
-#: src/qifimport.cpp:681
+#: src/qifimport.cpp:679
 msgid "Category is empty, marking transaction as Unknown category"
 msgstr "שדה קטגוריה ריק, התנועה הנוכחית תרשם לקטגוריה: Unknown "
 
-#: src/qifimport.cpp:693
+#: src/qifimport.cpp:691
 msgid "Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had "
 msgstr "מדלג על תנועות QIF בגלל תאריך,סוג, סכום חסרים, או, שגויים"
 
-#: src/qifimport.cpp:694
+#: src/qifimport.cpp:692
 msgid " payee "
 msgstr "מוטב"
 
-#: src/qifimport.cpp:694
+#: src/qifimport.cpp:692
 msgid " type "
 msgstr "סוג"
 
-#: src/qifimport.cpp:695
+#: src/qifimport.cpp:693
 msgid " amount "
 msgstr "סכום"
 
-#: src/qifimport.cpp:695
+#: src/qifimport.cpp:693
 msgid " date "
 msgstr "תאריך"
 
-#: src/qifimport.cpp:732
+#: src/qifimport.cpp:728
+#, fuzzy
+msgid "Total Imported : "
+msgstr "סכום כולל:"
+
+#: src/qifimport.cpp:729
+msgid "Log file written to : "
+msgstr ""
+
+#: src/qifimport.cpp:730
+#, fuzzy
+msgid "Please confirm saving..."
+msgstr "נא המתן"
+
+#: src/qifimport.cpp:739
 msgid "Transactions saved to database in account: "
 msgstr ""
 
-#: src/qifimport.cpp:747
+#: src/qifimport.cpp:754
 msgid "Imported transactions discarded by user!"
 msgstr ""
 
@@ -4511,59 +4553,90 @@ msgstr "הוסף שדה CSV"
 msgid "CSV Field"
 msgstr "שדה CSV"
 
-#: src/univcsvdialog.cpp:398
-#: src/univcsvdialog.cpp:410
+#: src/univcsvdialog.cpp:329
+#, fuzzy
+msgid "Choose Universal CSV format file to load"
+msgstr "בחר קובץ נתונים CSV ליצא"
+
+#: src/univcsvdialog.cpp:361
+#, fuzzy
+msgid "Choose Universal CSV format file to save"
+msgstr "בחר קובץ נתונים CSV ליצא"
+
+#: src/univcsvdialog.cpp:394
+#: src/univcsvdialog.cpp:405
 msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."
 msgstr "לא הוגדרו השדות הנחוצים ליבוא קובץ CSV! השדות המינימליים הדרושים הם: תאריך, סכום ומוטב."
 
-#: src/univcsvdialog.cpp:433
-#: src/util.cpp:1148
-msgid "CSV Import"
-msgstr "יבא CSV"
-
-#: src/univcsvdialog.cpp:443
-#: src/util.cpp:1157
+#: src/univcsvdialog.cpp:438
+#: src/util.cpp:1232
 msgid "Choose MM.NET CSV data file to import"
 msgstr "בחר קובץ MM.NET CSV  ליבוא"
 
-#: src/univcsvdialog.cpp:487
+#: src/univcsvdialog.cpp:459
+#: src/util.cpp:953
+#: src/util.cpp:1253
+#, fuzzy
+msgid "Transactions imported from CSV: "
+msgstr "תנועות יובאו מ QIF"
+
+#: src/univcsvdialog.cpp:466
+#: src/util.cpp:1260
+#, fuzzy
+msgid ""
+"Transactions imported from CSV\n"
+"to account "
+msgstr "תנועות יובאו מ QIF"
+
+#: src/univcsvdialog.cpp:499
 msgid " file contains insufficient number of tokens"
 msgstr ""
 
-#: src/univcsvdialog.cpp:510
+#: src/univcsvdialog.cpp:522
 msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipping"
 msgstr "אחד השדות הבאים חסר: תאריך, מוטב, סכום. מדלג"
 
-#: src/univcsvdialog.cpp:564
-#: src/util.cpp:1098
-#: src/util.cpp:1320
+#: src/univcsvdialog.cpp:577
+#: src/util.cpp:1141
+#: src/util.cpp:1413
 msgid " imported OK."
 msgstr "יובא בהצלחה."
 
-#: src/univcsvdialog.cpp:568
-#: src/util.cpp:1102
-#: src/util.cpp:1324
+#: src/univcsvdialog.cpp:583
+#: src/util.cpp:1147
+#: src/util.cpp:1418
 #, fuzzy, c-format
 msgid "Total Lines : %d"
 msgstr "סה\"כ נכסים:"
 
-#: src/univcsvdialog.cpp:570
-#: src/util.cpp:1104
-#: src/util.cpp:1326
+#: src/univcsvdialog.cpp:585
+#: src/util.cpp:1149
+#: src/util.cpp:1420
 #, fuzzy, c-format
 msgid "Total Imported : %d"
 msgstr "סכום כולל:"
 
-#: src/univcsvdialog.cpp:572
-#: src/util.cpp:1106
-#: src/util.cpp:1328
+#: src/univcsvdialog.cpp:587
+#: src/util.cpp:1151
+#: src/util.cpp:1422
 #, c-format
 msgid "Log file written to : %s"
 msgstr ""
 
-#: src/univcsvdialog.cpp:575
-#: src/util.cpp:1109
-#: src/util.cpp:1331
+#: src/univcsvdialog.cpp:591
+#: src/util.cpp:1199
+#: src/util.cpp:1204
+#: src/util.cpp:1223
+#: src/util.cpp:1253
+#: src/util.cpp:1426
+#: src/util.cpp:1455
+#, fuzzy
+msgid "Importing CSV MM.NET"
+msgstr "יבא מ MM.NET CSV"
+
+#: src/univcsvdialog.cpp:595
+#: src/util.cpp:1159
+#: src/util.cpp:1430
 #, fuzzy
 msgid "Imported transactions have been flagged so you can review them."
 msgstr ""
@@ -4573,184 +4646,211 @@ msgstr ""
 "\n"
 "תנועות שיובאו סומנו כך שתוכל לבקרן."
 
-#: src/univcsvdialog.cpp:576
-#: src/util.cpp:881
-#: src/util.cpp:899
-#: src/util.cpp:1111
-#: src/util.cpp:1126
-#: src/util.cpp:1333
-msgid "Import from CSV"
-msgstr "יבא מקובץ CSV"
-
-#: src/util.cpp:408
+#: src/util.cpp:416
 msgid "January"
 msgstr "ינואר"
 
-#: src/util.cpp:408
+#: src/util.cpp:416
 msgid "February"
 msgstr "פברואר"
 
-#: src/util.cpp:408
+#: src/util.cpp:416
 msgid "March"
 msgstr "מרץ"
 
-#: src/util.cpp:408
+#: src/util.cpp:416
 msgid "April"
 msgstr "אפריל"
 
-#: src/util.cpp:408
+#: src/util.cpp:416
 msgid "May "
 msgstr "מאי"
 
-#: src/util.cpp:408
+#: src/util.cpp:416
 msgid "June"
 msgstr "יוני"
 
-#: src/util.cpp:409
+#: src/util.cpp:417
 msgid "July"
 msgstr "יולי"
 
-#: src/util.cpp:409
+#: src/util.cpp:417
 msgid "August"
 msgstr "אוגוסט"
 
-#: src/util.cpp:409
+#: src/util.cpp:417
 msgid "September"
 msgstr "ספטמבר"
 
-#: src/util.cpp:409
+#: src/util.cpp:417
 msgid "October"
 msgstr "אוקטובר"
 
-#: src/util.cpp:409
+#: src/util.cpp:417
 msgid "November"
 msgstr "נובמבר"
 
-#: src/util.cpp:409
+#: src/util.cpp:417
 msgid "December"
 msgstr "דצמבר"
 
-#: src/util.cpp:430
+#: src/util.cpp:438
 msgid "Sunday"
 msgstr "ראשון"
 
-#: src/util.cpp:430
+#: src/util.cpp:438
 msgid "Monday"
 msgstr "שני"
 
-#: src/util.cpp:430
+#: src/util.cpp:438
 msgid "Tuesday"
 msgstr "שלישי"
 
-#: src/util.cpp:430
+#: src/util.cpp:438
 msgid "Wednesday"
 msgstr "רביעי"
 
-#: src/util.cpp:431
+#: src/util.cpp:439
 msgid "Thursday"
 msgstr "חמישי"
 
-#: src/util.cpp:431
+#: src/util.cpp:439
 msgid "Friday"
 msgstr "שישי"
 
-#: src/util.cpp:431
+#: src/util.cpp:439
 msgid "Saturday"
 msgstr "שבת"
 
-#: src/util.cpp:496
+#: src/util.cpp:504
 msgid "Entry "
 msgstr "תנועה"
 
-#: src/util.cpp:496
+#: src/util.cpp:504
 msgid " is invalid."
 msgstr "לא חוקי.  "
 
-#: src/util.cpp:497
+#: src/util.cpp:505
 msgid "Invalid Entry"
 msgstr "תנועה לא חוקית"
 
-#: src/util.cpp:520
-#: src/util.cpp:680
-msgid "No Account available! Cannot Export!"
+#: src/util.cpp:540
+#, fuzzy
+msgid "No account available for export!"
 msgstr "!חשבון לא זמין! לא ניתן לייצא"
 
-#: src/util.cpp:539
-#: src/util.cpp:697
-msgid "Choose Account to Export from:"
-msgstr "בחר חשבון ליצא:"
-
-#: src/util.cpp:539
+#: src/util.cpp:540
+#: src/util.cpp:558
 msgid "CSV Export"
 msgstr "יצא CSV"
 
-#: src/util.cpp:547
+#: src/util.cpp:558
+#: src/util.cpp:718
+msgid "Choose Account to Export from:"
+msgstr "בחר חשבון ליצא:"
+
+#: src/util.cpp:566
 msgid "Choose CSV data file to Export"
 msgstr "בחר קובץ נתונים CSV ליצא"
 
-#: src/util.cpp:697
+#: src/util.cpp:701
+#, fuzzy
+msgid "No Account available for export"
+msgstr "!חשבון לא זמין! לא ניתן לייצא"
+
+#: src/util.cpp:701
+#: src/util.cpp:718
 #, fuzzy
 msgid "QIF Export"
 msgstr "יבוא QIF"
 
-#: src/util.cpp:709
+#: src/util.cpp:730
 #, fuzzy
 msgid "Choose QIF data file to Export"
 msgstr "בחר קובץ נתוני QIF ליבוא"
 
-#: src/util.cpp:949
-#: src/util.cpp:1197
+#: src/util.cpp:905
+#: src/util.cpp:1199
+#, fuzzy
+msgid "No account available for import."
+msgstr "!חשבון לא זמין! לא ניתן לייצא"
+
+#: src/util.cpp:905
+#: src/util.cpp:923
+#: src/util.cpp:953
+#: src/util.cpp:1184
+msgid "Import from CSV"
+msgstr "יבא מקובץ CSV"
+
+#: src/util.cpp:923
+#, fuzzy
+msgid "Choose account to import to:"
+msgstr "בחר חשבון יעד לייבוא:"
+
+#: src/util.cpp:960
+#, fuzzy
+msgid "Transactions imported from CSV"
+msgstr "תנועות יובאו מ QIF"
+
+#: src/util.cpp:991
+#: src/util.cpp:1290
 msgid " missing date, skipping."
 msgstr "חסר תאריך, מדלג."
 
-#: src/util.cpp:956
-#: src/util.cpp:1204
+#: src/util.cpp:998
+#: src/util.cpp:1297
 msgid " missing payee, skipping."
 msgstr "חסר מוטב, מדלג."
 
-#: src/util.cpp:963
+#: src/util.cpp:1005
 msgid " missing transaction type, skipping."
 msgstr "חסר סוג תנועה, מדלג."
 
-#: src/util.cpp:970
-#: src/util.cpp:1211
+#: src/util.cpp:1012
+#: src/util.cpp:1304
 msgid " missing amount, skipping."
 msgstr "חסר סכום, מדלג."
 
-#: src/util.cpp:979
+#: src/util.cpp:1021
 #, fuzzy
 msgid " check delimiters. Possible amount error, skipping."
 msgstr "חסר סכום, מדלג."
 
-#: src/util.cpp:997
-msgid " has excessive items. Check delimiters in mumbers, skipping."
-msgstr ""
+#: src/util.cpp:1039
+#, fuzzy
+msgid " has excessive items. Check delimiters in numbers, skipping."
+msgstr "חסר סכום, מדלג."
 
-#: src/util.cpp:1003
+#: src/util.cpp:1045
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "אחד השדות הבאים ריקים: תאריך, מוטב, סוג תנועה, סכום. מדלג"
 
-#: src/util.cpp:1009
+#: src/util.cpp:1051
 msgid " unrecognized transaction type, skipping."
 msgstr "סוג תנועה לא מזוהה, מדלג."
 
-#: src/util.cpp:1030
+#: src/util.cpp:1072
 msgid " transfer transaction not imported."
 msgstr "תנועות מסוג העברה לא יובאו."
 
-#: src/util.cpp:1125
+#: src/util.cpp:1155
+#, fuzzy
+msgid "Importing from CSV"
+msgstr "יבא מקובץ CSV"
+
+#: src/util.cpp:1203
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "אנא ודא כי קובץ ה CSV, מ MMEX.NET מכיל רק חשבון אחד!"
 
-#: src/util.cpp:1224
+#: src/util.cpp:1317
 msgid " missing category, skipping."
 msgstr "חסר קטגוריה, מדלג."
 
-#: src/util.cpp:1251
+#: src/util.cpp:1343
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr "אחד השדות הבאים ריק: תאריך, מוטב, סוג תנועה, סכום. מדלג"
 
-#: src/util.cpp:1260
+#: src/util.cpp:1352
 msgid " invalid date, skipping."
 msgstr "תאריך לא חוקי, מדלג."
 
@@ -4871,6 +4971,26 @@ msgstr "חלון ייבוא CSV אוניברסלי"
 #: src/yahoosettingsdialog.h:108
 msgid "Options"
 msgstr "אפשרויות"
+
+#~ msgid "No Account available! Cannot Import! Create a new account first!"
+#~ msgstr "החשבון אינו זמין! לא ניתן ליבא! צור חשבון חדש תחילה!"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "Select the type of account you want to create:\n"
+#~ "\n"
+#~ "General bank accounts cover a wide variety of account\n"
+#~ "types like Checking, Savings and Credit card type accounts."
+#~ msgstr ""
+#~ "\n"
+#~ "בחר את סוג החשבון שברצונך ליצור:\n"
+#~ "\n"
+#~ "חשבון בנק כללי מכסה טווח רחב של סוגי חשבונות\n"
+#~ "כגון עובר ושב, חיסכון, גמל, בטוחי מנהלים ועוד."
+
+#~ msgid "CSV Import"
+#~ msgstr "יבא CSV"
 
 #~ msgid ""
 #~ "Total Lines : %d \n"
