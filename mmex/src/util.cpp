@@ -527,23 +527,29 @@ wxString inQuotes(wxString label)
     return wxString() << wxT( "\"" ) << label << wxT( "\"" );
 }
 
+wxString withoutQuotes(wxString label)
+{
+    wxString result = label;
+    result.Replace( wxT( "\"" ), wxT( "" ) );
+    return result;
+}
+
 void mmExportCSV( wxSQLite3Database* db_ )
 {
     if ( mmDBWrapper::getNumAccounts( db_ ) == 0 ) {
-        mmShowErrorMessage( 0, _( "No Account available! Cannot Export!" ), _( "Error" ) );
+        wxMessageBox(_( "No account available for export!" ), _( "CSV Export" ), wxICON_WARNING );
         return;
     }
 
     wxArrayString as;
-
     {
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery( g_AccountNameSQL );
+        wxSQLite3ResultSet q1 = db_->ExecuteQuery( g_AccountNameSQL );
 
-    while ( q1.NextRow() ) {
-        as.Add( q1.GetString( wxT( "ACCOUNTNAME" ) ) );
-    }
+        while ( q1.NextRow() ) {
+            as.Add( q1.GetString( wxT( "ACCOUNTNAME" ) ) );
+        }
 
-    q1.Finalize();
+        q1.Finalize();
     }
 
     wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
@@ -692,7 +698,7 @@ void mmExportCSV( wxSQLite3Database* db_ )
 void mmExportQIF( wxSQLite3Database* db_ )
 {
     if ( mmDBWrapper::getNumAccounts( db_ ) == 0 ) {
-        mmShowErrorMessage( 0, _( "No Account available! Cannot Export!" ), _( "Error" ) );
+        wxMessageBox(_( "No Account available for export" ), _( "QIF Export" ), wxICON_WARNING );
         return;
     }
 
@@ -896,7 +902,7 @@ int mmImportCSV( mmCoreDB* core )
     wxSQLite3Database* db_ = core->db_.get();
 
     if ( mmDBWrapper::getNumAccounts( db_ ) == 0 ) {
-        wxMessageBox(_("No Account available! Cannot Import! Create a new account first!" ), _( "Import from CSV" ),wxICON_ERROR);
+        wxMessageBox(_("No account available for import." ), _( "Import from CSV" ), wxICON_WARNING);
         return -1;
     }
 
@@ -914,7 +920,7 @@ int mmImportCSV( mmCoreDB* core )
     wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
     wxString q =  wxT("\"");
 
-    wxSingleChoiceDialog scd( 0, _( "Choose Account to import to:" ), _( "Import from CSV" ), as );
+    wxSingleChoiceDialog scd( 0, _("Choose account to import to:"), _("Import from CSV"), as );
 
     if ( scd.ShowModal() == wxID_OK ) {
         wxString acctName = scd.GetStringSelection();
@@ -941,7 +947,25 @@ int mmImportCSV( mmCoreDB* core )
             int countNumTotal = 0;
             int countImported = 0;
 
+            bool canceledbyuser = false;
+            std::vector<int> CSV_transID;
+
+    		wxProgressDialog progressDlg(_("Import from CSV"), _("Transactions imported from CSV: "), 101,
+                false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
+    		mmDBWrapper::begin(db_);
+
             while ( !input.Eof() ) {
+
+                wxString progressMsg;
+                progressMsg << _("Transactions imported from CSV") << wxT("\n") << _("to account ") << acctName << wxT(": ") << countImported;
+                progressDlg.Update(static_cast<int>((static_cast<double>(countImported)/100.0 - countNumTotal/100) *100), progressMsg);
+
+                if (!progressDlg.Update(-1)) // if cancel clicked
+                {
+                    canceledbyuser = true;
+                    break; // abort processing
+                }
+
                 wxString line = text.ReadLine();
 
                 if ( !line.IsEmpty() )
@@ -1012,7 +1036,7 @@ int mmImportCSV( mmCoreDB* core )
 
                 // all tokens have been read. If we have more tokens, something is wrong.
                 if ( tkz.HasMoreTokens() ){
-                    log << _( "Line : " ) << countNumTotal << _( " has excessive items. Check delimiters in mumbers, skipping." ) << endl;
+                    log << _( "Line : " ) << countNumTotal << _( " has excessive items. Check delimiters in numbers, skipping." ) << endl;
                     continue;
                 }
 
@@ -1110,11 +1134,14 @@ int mmImportCSV( mmCoreDB* core )
                 pTransaction->toAmt_ = 0.0;
                 pTransaction->updateAllData( core, fromAccountID, pCurrencyPtr );
 
-                core->bTransactionList_.addTransaction( core, pTransaction );
+                int transID = core->bTransactionList_.addTransaction( core, pTransaction );
+                CSV_transID.push_back(transID);
 
                 countImported++;
                 log << _( "Line : " ) << countNumTotal << _( " imported OK." ) << endl;
             } // while EOF
+
+            progressDlg.Update(101);       
 
             //wxString msg = wxString::Format( _( "Total Lines : %d.\nTotal Imported : %d\nLog file written to : %s.\n\nImported transactions have been flagged so you can review them." ),countNumTotal, countImported, logFile.GetFullPath().c_str() );
 			wxString msg = wxString::Format(_("Total Lines : %d"),countNumTotal); 
@@ -1123,9 +1150,37 @@ int mmImportCSV( mmCoreDB* core )
 			msg << wxT ("\n\n");
 			msg << wxString::Format(_("Log file written to : %s"), logFile.GetFullPath().c_str());
 			msg << wxT ("\n\n");
+
+            wxString confirmMsg = msg + _("Please confirm saving...");
+            if (!canceledbyuser && wxMessageBox(confirmMsg, _("Importing from CSV"),wxOK|wxCANCEL|wxICON_INFORMATION) == wxCANCEL)
+                canceledbyuser = true;
+
 			if (countImported > 0)
-                msg << _ ("Imported transactions have been flagged so you can review them.") ;            
-                   
+                msg << _ ("Imported transactions have been flagged so you can review them.") << wxT("\n") ;            
+
+            // Since all database transactions are only in memory,
+            if (!canceledbyuser)
+            {
+                // we need to save them to the database. 
+                mmDBWrapper::commit(db_);
+                msg << _("Transactions saved to database in account: ") << acctName;
+		    }
+		    else 
+		    {
+                // we need to remove the transactions from the transaction list
+                while (countImported > 0)
+                {
+                    countImported --;
+                    int transID = CSV_transID[countImported];
+                    core->bTransactionList_.removeTransaction(fromAccountID,transID);
+                }
+                // and discard the database changes.
+                mmDBWrapper::rollback(db_);
+                //we should to clear the vector to avoid leak of memory
+                CSV_transID.clear();
+			    msg  << _("Imported transactions discarded by user!");
+            }
+
             wxMessageBox(msg, _( "Import from CSV" ), wxICON_INFORMATION);
             outputLog.Close();
 
@@ -1139,13 +1194,15 @@ int mmImportCSV( mmCoreDB* core )
 int mmImportCSVMMNET( mmCoreDB* core )
 {
     wxSQLite3Database* db_ = core->db_.get();
-    mmShowErrorMessage( 0,
-                        _( "Please verify that the CSV file from MMEX.NET contains only one account!" ),
-                        _( "Import from CSV" ) );
 
     if ( mmDBWrapper::getNumAccounts( db_ ) == 0 ) {
-        mmShowErrorMessage( 0, _( "No Account available! Cannot Import! Create a new account first!" ),
-                            _( "Error" ) );
+        wxMessageBox(_( "No account available for import."), _("Importing CSV MM.NET"), wxICON_WARNING );
+        return -1;
+    }
+
+    if (wxMessageBox( _( "Please verify that the CSV file from MMEX.NET contains only one account!" ),
+                      _("Importing CSV MM.NET"),wxOK|wxCANCEL|wxICON_INFORMATION ) == wxCANCEL )
+    {
         return -1;
     }
 
@@ -1163,7 +1220,7 @@ int mmImportCSVMMNET( mmCoreDB* core )
     wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
     wxString q =  wxT("\"");
 
-    wxSingleChoiceDialog scd( 0, _( "Choose Account to import to:" ),_( "CSV Import" ), as );
+    wxSingleChoiceDialog scd( 0, _( "Choose Account to import to:" ),_("Importing CSV MM.NET"), as );
 
     if ( scd.ShowModal() == wxID_OK ) {
         wxString acctName = scd.GetStringSelection();
@@ -1190,7 +1247,25 @@ int mmImportCSVMMNET( mmCoreDB* core )
             int countNumTotal = 0;
             int countImported = 0;
 
+            bool canceledbyuser = false;
+            std::vector<int> CSV_transID;
+
+    		wxProgressDialog progressDlg(_("Importing CSV MM.NET"), _("Transactions imported from CSV: "), 101,
+                false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
+    		mmDBWrapper::begin(db_);
+
             while ( !input.Eof() ) {
+
+                wxString progressMsg;
+                progressMsg << _("Transactions imported from CSV\nto account ") << acctName << wxT(": ") << countImported;
+                progressDlg.Update(static_cast<int>((static_cast<double>(countImported)/100.0 - countNumTotal/100) *100), progressMsg);
+
+                if (!progressDlg.Update(-1)) // if cancel clicked
+                {
+                    canceledbyuser = true;
+                    break; // abort processing
+                }
+
                 wxString line = text.ReadLine();
 
                 if ( !line.IsEmpty() )
@@ -1210,42 +1285,41 @@ int mmImportCSVMMNET( mmCoreDB* core )
                 wxStringTokenizer tkz( line, delimit, wxTOKEN_RET_EMPTY_ALL );
 
                 if ( tkz.HasMoreTokens() )
-                    dt = tkz.GetNextToken();
+                    dt = withoutQuotes(tkz.GetNextToken());
                 else {
                     log << _( "Line : " ) << countNumTotal << _( " missing date, skipping." ) << endl;
                     continue;
                 }
 
                 if ( tkz.HasMoreTokens() )
-                    payee = tkz.GetNextToken();
+                    payee = withoutQuotes(tkz.GetNextToken());
                 else {
                     log << _( "Line : " ) << countNumTotal << _( " missing payee, skipping." ) << endl;
                     continue;
                 }
 
                 if ( tkz.HasMoreTokens() )
-                        amount = tkz.GetNextToken();
+                    amount = withoutQuotes(tkz.GetNextToken());
                 else {
                     log << _( "Line : " ) << countNumTotal << _( " missing amount, skipping." ) << endl;
                     continue;
                 }
 
                 if ( tkz.HasMoreTokens() )
-                    transNum = tkz.GetNextToken();
+                    transNum = withoutQuotes(tkz.GetNextToken());
 
                 if ( tkz.HasMoreTokens() )
-                    wxString status = tkz.GetNextToken();
+                    wxString status = withoutQuotes(tkz.GetNextToken());
 
                 if ( tkz.HasMoreTokens() )
-                    categ = tkz.GetNextToken();
+                    categ = withoutQuotes(tkz.GetNextToken());
                 else {
                     log << _( "Line : " ) << countNumTotal << _( " missing category, skipping." ) << endl;
                     continue;
                 }
 
-
                 if ( tkz.HasMoreTokens() )
-                    notes = tkz.GetNextToken();
+                    notes = withoutQuotes(tkz.GetNextToken());
 
                 double val = 0.0;
 
@@ -1332,23 +1406,53 @@ int mmImportCSVMMNET( mmCoreDB* core )
                 pTransaction->toAmt_ = 0.0;
                 pTransaction->updateAllData( core, fromAccountID, pCurrencyPtr );
 
-                core->bTransactionList_.addTransaction( core, pTransaction );
+                int transID = core->bTransactionList_.addTransaction( core, pTransaction );
+                CSV_transID.push_back(transID);
 
                 countImported++;
                 log << _( "Line : " ) << countNumTotal << _( " imported OK." ) << endl;
             } // while EOF
 
+            progressDlg.Update(101);       
             //wxString msg = wxString::Format( _( "Total Lines : %d \nTotal Imported : %d\n\nLog file written to : %s.\n\nImported transactions have been flagged so you can review them. " ), countNumTotal, countImported, logFile.GetFullPath().c_str() );
 			wxString msg = wxString::Format(_("Total Lines : %d"),countNumTotal); 
-			msg << wxT ("\n");
+			msg << wxT("\n");
 			msg << wxString::Format(_("Total Imported : %d") ,countImported) ; 
-			msg << wxT ("\n\n");
+			msg << wxT("\n\n");
 			msg << wxString::Format(_("Log file written to : %s"), logFile.GetFullPath().c_str());
-			msg << wxT ("\n\n");
-			if (countImported > 0)
-			msg << _ ("Imported transactions have been flagged so you can review them.") ;            
+			msg << wxT("\n\n");
 
-            mmShowErrorMessage( 0, msg, _( "Import from CSV" ) );
+            wxString confirmMsg = msg + _("Please confirm saving...");
+            if (!canceledbyuser && wxMessageBox(confirmMsg, _("Importing CSV MM.NET"),wxOK|wxCANCEL|wxICON_INFORMATION) == wxCANCEL)
+                canceledbyuser = true;
+            
+			if (countImported > 0)
+			    msg << _("Imported transactions have been flagged so you can review them.") << wxT("\n") ;            
+
+            // Since all database transactions are only in memory,
+            if (!canceledbyuser)
+            {
+                // we need to save them to the database. 
+                mmDBWrapper::commit(db_);
+                msg << _("Transactions saved to database in account: ") << acctName;
+		    }
+		    else 
+		    {
+                // we need to remove the transactions from the transaction list
+                while (countImported > 0)
+                {
+                    countImported --;
+                    int transID = CSV_transID[countImported];
+                    core->bTransactionList_.removeTransaction(fromAccountID,transID);
+                }
+                // and discard the database changes.
+                mmDBWrapper::rollback(db_);
+                //we should to clear the vector to avoid leak of memory
+                CSV_transID.clear();
+			    msg  << _("Imported transactions discarded by user!");
+            }
+
+            wxMessageBox(msg, _("Importing CSV MM.NET"), wxICON_INFORMATION);
             outputLog.Close();
 
             fileviewer( logFile.GetFullPath(), 0 ).ShowModal();

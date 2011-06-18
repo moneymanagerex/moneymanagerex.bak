@@ -359,6 +359,13 @@ wxString getLineData(const wxString& line)
 
 int mmImportQIF(mmCoreDB* core)
 {
+    wxSQLite3Database* db_ = core->db_.get();
+
+    if ( mmDBWrapper::getNumAccounts( db_ ) == 0 ) {
+        wxMessageBox(_( "No account available for import"), _("QIF Import"), wxICON_WARNING );
+        return -1;
+    }
+
     wxString msgStr;
     msgStr << _("To import QIF files correctly, the date format in the QIF file") << wxT("\n")
            << _("must match the date option set in MMEX.") << wxT("\n\n") 
@@ -371,7 +378,6 @@ int mmImportQIF(mmCoreDB* core)
     
     wxArrayString as;
     int fromAccountID = -1;
-    wxSQLite3Database* db_ = core->db_.get();
 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
     while (q1.NextRow())
@@ -379,15 +385,6 @@ int mmImportQIF(mmCoreDB* core)
         as.Add(q1.GetString(wxT("ACCOUNTNAME")));
     }
     q1.Finalize();
-    
-    if (as.GetCount() == 0)
-    {
-        wxString errorMsg;
-        errorMsg << _("No suitable account available to import to!") << wxT("\n\n")
-                 << _("Create a suitable account first!");
-        wxMessageBox(errorMsg, _("QIF Import"), wxICON_ERROR);
-        return -1;
-    }
 
     wxSingleChoiceDialog scd(0, _("Choose Account to import to:"), _("QIF Import"), as);
     if (scd.ShowModal() != wxID_OK)
@@ -436,13 +433,14 @@ int mmImportQIF(mmCoreDB* core)
         std::vector<int> QIF_transID;
 		mmDBWrapper::begin(core->db_.get());
 
-		wxProgressDialog dlg(_("Please Wait"), _("Transactions imported from QIF: "), 101, false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
+		wxProgressDialog dlg(_("QIF Import"), _("Transactions imported from QIF: "), 101, 
+            false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
         while(!input.Eof())
         {   
-			notes = wxT("");
-			notes << _("Transactions imported from QIF\nto account ") << acctName << wxT(": ") << numImported;
-            dlg.Update(static_cast<int>((static_cast<double>(numImported)/100.0 - numImported/100) *100), notes);
-            notes = wxT("");
+			wxString progressMsg;
+			progressMsg << _("Transactions imported from QIF") << wxT("\n") 
+                        << _("to account ") << acctName << wxT(": ") << numImported;
+            dlg.Update(static_cast<int>((static_cast<double>(numImported)/100.0 - numImported/100) *100), progressMsg);
 
 			if (!dlg.Update(-1)) // if cancel clicked
 			{
@@ -723,7 +721,16 @@ int mmImportQIF(mmCoreDB* core)
 			}
         }
 
+        dlg.Update(101);
+
         log << _("Transactions imported from QIF: ") << numImported << endl;
+        wxString confirmMsg; 
+        confirmMsg  << _("Total Imported : ") << numImported << wxT ("\n\n")
+                    << _("Log file written to : ") << logFile.GetFullPath() << wxT ("\n\n")
+                    << _("Please confirm saving...");
+        if (!canceledbyuser && wxMessageBox(confirmMsg, _("QIF Import"),wxOK|wxCANCEL|wxICON_INFORMATION) == wxCANCEL)
+            canceledbyuser = true;
+
         // Since all database transactions are only in memory,
         if (!canceledbyuser)
         {
@@ -748,9 +755,6 @@ int mmImportQIF(mmCoreDB* core)
         }
 		        
         outputLog.Close();
-
-        dlg.Update(101);
-		//dlg.Destroy();
     }
 
     if ( !fileName.IsEmpty() )
