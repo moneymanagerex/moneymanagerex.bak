@@ -326,16 +326,14 @@ bool mmUnivCSVImportDialog::isIndexPresent(int index)
 
 void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
 {
-   wxString fileName = wxFileSelector(wxT("Choose Universal CSV format file to load"), 
+   wxString fileName = wxFileSelector(_("Choose Universal CSV format file to load"), 
       wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(),  wxT("CSV Template(*.mcv)|*.mcv"), wxFILE_MUST_EXIST);
    if ( !fileName.empty() )
    {
       wxTextFile tFile(fileName);
       if (!tFile.Open())
       {
-         mmShowErrorMessage(0, 
-            _("Unable to open file."),
-            _("Error"));
+         wxMessageBox(_("Unable to open file."), _("Universal CSV Import"), wxICON_WARNING);
          return;
       }
       csvFieldOrder_.clear();
@@ -347,9 +345,7 @@ void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
          long num = 0;
          if (str.ToLong(&num))
          {
-            csvListBox_->Insert(getCSVFieldName(num), 
-               (int)csvFieldOrder_.size(), 
-               new mmCSVListBoxItem(num));
+            csvListBox_->Insert(getCSVFieldName(num), (int)csvFieldOrder_.size(), new mmCSVListBoxItem(num));
             csvFieldOrder_.push_back(num);
          }
       }
@@ -362,7 +358,7 @@ void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
 //Saves the field order to a template file
 void mmUnivCSVImportDialog::OnSave(wxCommandEvent& /*event*/)
 {
-    wxString fileName = wxFileSelector(wxT("Choose Universal CSV format file to save"), 
+    wxString fileName = wxFileSelector(_("Choose Universal CSV format file to save"), 
                 wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), wxT("CSV Template(*.mcv)|*.mcv"), wxSAVE);
     if ( !fileName.empty() )
     {
@@ -373,7 +369,7 @@ void mmUnivCSVImportDialog::OnSave(wxCommandEvent& /*event*/)
 		//if the file does exist, then skip to else section
         if ( !tFile.Exists() && !tFile.Create() )
         {
-            mmShowErrorMessage(0, _("Unable to write to file."), _("Error"));
+            wxMessageBox(_("Unable to write to file."), _("Universal CSV Import"), wxICON_WARNING);
             return;
         }
 		else
@@ -395,9 +391,8 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
 {
     if (csvFieldOrder_.size() < 3)
     {
-         mmShowErrorMessage(0, 
-            _("Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."),
-            _("Error"));
+         wxMessageBox(_("Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."),
+                      _("Universal CSV Import"), wxICON_WARNING);
          return;
     }
 
@@ -407,9 +402,8 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
         (!isIndexPresent(UNIV_CSV_AMOUNT) && (!isIndexPresent(UNIV_CSV_WITHDRAWAL) || 
         !isIndexPresent(UNIV_CSV_DEPOSIT))))
     {
-         mmShowErrorMessage(0, 
-            _("Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."),
-            _("Error"));
+         wxMessageBox(_("Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."),
+                      _("Universal CSV Import"), wxICON_WARNING);
          return;
     }
 
@@ -431,7 +425,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
 
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     
-    wxSingleChoiceDialog scd(0, _("Choose Account to import to:"), _("CSV Import"), as);
+    wxSingleChoiceDialog scd(0, _("Choose Account to import to:"), _("Universal CSV Import"), as);
     if (scd.ShowModal() == wxID_OK)
     {
         wxString acctName = scd.GetStringSelection();
@@ -454,13 +448,30 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
 
             wxFileOutputStream outputLog(logFile.GetFullPath());
             wxTextOutputStream log(outputLog);
-
             
             /* date, payeename, amount(+/-), Number, status, category : subcategory, notes */
             int countNumTotal = 0;
             int countImported = 0;
+
+            bool canceledbyuser = false;
+            std::vector<int> CSV_transID;
+
+    		wxProgressDialog progressDlg(_("Universal CSV Import"), _("Transactions imported from CSV: "), 101,
+                false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
+    		mmDBWrapper::begin(db_);
+
             while ( !input.Eof() )
             {
+                wxString progressMsg;
+                progressMsg << _("Transactions imported from CSV\nto account ") << acctName << wxT(": ") << countImported;
+                progressDlg.Update(static_cast<int>((static_cast<double>(countImported)/100.0 - countNumTotal/100) *100), progressMsg);
+
+                if (!progressDlg.Update(-1)) // if cancel clicked
+                {
+                    canceledbyuser = true;
+                    break; // abort processing
+                }
+
                 wxString line = text.ReadLine();
                 if (!line.IsEmpty())
                     ++countNumTotal;
@@ -559,11 +570,14 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
                pTransaction->toAmt_ = 0.0;
                pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr);
 
-               core_->bTransactionList_.addTransaction(core_, pTransaction);
+               int transID = core_->bTransactionList_.addTransaction(core_, pTransaction);
+               CSV_transID.push_back(transID);
 
                countImported++;
                log << _("Line : " ) << countNumTotal << _(" imported OK.") << endl;
             }
+
+            progressDlg.Update(101);       
 
             //wxString msg = wxString::Format(_("Total Lines : %d \nTotal Imported : %d\n\nLog file written to : %s.\n\nImported transactions have been flagged so you can review them. "), countNumTotal, countImported, logFile.GetFullPath().c_str());
             wxString msg = wxString::Format(_("Total Lines : %d"),countNumTotal); 
@@ -572,9 +586,38 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
             msg << wxT ("\n\n");
             msg << wxString::Format(_("Log file written to : %s"), logFile.GetFullPath().c_str());
             msg << wxT ("\n\n");
+
+            wxString confirmMsg = msg + _("Please confirm saving...");
+            if (!canceledbyuser && wxMessageBox(confirmMsg, _("Importing CSV MM.NET"),wxOK|wxCANCEL|wxICON_INFORMATION) == wxCANCEL)
+                canceledbyuser = true;
+
             if (countImported > 0)
-            msg << _ ("Imported transactions have been flagged so you can review them.") ;            
-            mmShowErrorMessage(0, msg, _("Import from CSV"));
+                msg << _ ("Imported transactions have been flagged so you can review them.");
+
+            // Since all database transactions are only in memory,
+            if (!canceledbyuser)
+            {
+                // we need to save them to the database. 
+                mmDBWrapper::commit(db_);
+                msg << _("Transactions saved to database in account: ") << acctName;
+		    }
+		    else 
+		    {
+                // we need to remove the transactions from the transaction list
+                while (countImported > 0)
+                {
+                    countImported --;
+                    int transID = CSV_transID[countImported];
+                    core_->bTransactionList_.removeTransaction(fromAccountID,transID);
+                }
+                // and discard the database changes.
+                mmDBWrapper::rollback(db_);
+                //we should to clear the vector to avoid leak of memory
+                CSV_transID.clear();
+			    msg  << _("Imported transactions discarded by user!");
+            }
+
+            wxMessageBox(msg, _("Universal CSV Import"), wxICON_INFORMATION);
             outputLog.Close();
 
             fileviewer(logFile.GetFullPath(), this).ShowModal();
