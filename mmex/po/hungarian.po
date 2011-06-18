@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-11 14:09+1000\n"
-"PO-Revision-Date: 2011-06-11 14:09+1000\n"
+"POT-Creation-Date: 2011-06-19 00:54+1000\n"
+"PO-Revision-Date: 2011-06-19 00:54+1000\n"
 "Last-Translator: Stefano Giorgio <stef145g@gmail.com>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -1128,88 +1128,88 @@ msgstr "Alap átváltási aránynak nagyobbnak kell lennie mint 0.0"
 msgid "Base Conversion Rate should be greater than zero"
 msgstr "Alap átváltási aránynak nagyobbnak kell lennie mint 0.0"
 
-#: src/customreportdialog.cpp:78
+#: src/customreportdialog.cpp:79
 #, fuzzy
 msgid "Report Title:"
 msgstr "Importálás"
 
-#: src/customreportdialog.cpp:84
+#: src/customreportdialog.cpp:85
 msgid "Heading"
 msgstr ""
 
-#: src/customreportdialog.cpp:87
+#: src/customreportdialog.cpp:88
 msgid "Sub-Menu"
 msgstr ""
 
-#: src/customreportdialog.cpp:93
+#: src/customreportdialog.cpp:94
 msgid "SQL Source Script:"
 msgstr ""
 
-#: src/customreportdialog.cpp:118
+#: src/customreportdialog.cpp:119
 msgid "&Load"
 msgstr ""
 
-#: src/customreportdialog.cpp:120
+#: src/customreportdialog.cpp:121
 msgid "Locate and load an SQL script file."
 msgstr ""
 
-#: src/customreportdialog.cpp:122
+#: src/customreportdialog.cpp:123
 msgid "&Save"
 msgstr ""
 
-#: src/customreportdialog.cpp:124
+#: src/customreportdialog.cpp:125
 msgid "Save Heading details to the Index File, and SQL script file as required."
 msgstr ""
 
-#: src/customreportdialog.cpp:126
+#: src/customreportdialog.cpp:127
 msgid "&Run"
 msgstr ""
 
-#: src/customreportdialog.cpp:128
+#: src/customreportdialog.cpp:129
 msgid "Test script. Save before running. SQL errors will result in loss of script details."
 msgstr ""
 
-#: src/customreportdialog.cpp:130
+#: src/customreportdialog.cpp:131
 msgid "C&lear"
 msgstr ""
 
-#: src/customreportdialog.cpp:132
+#: src/customreportdialog.cpp:133
 msgid "Clear the SQL Source script area"
 msgstr ""
 
-#: src/customreportdialog.cpp:136
+#: src/customreportdialog.cpp:137
 msgid "Save changes before closing. Changes without Saving will be lost."
 msgstr ""
 
-#: src/customreportdialog.cpp:172
+#: src/customreportdialog.cpp:173
 msgid "Load Custom SQL file:"
 msgstr ""
 
-#: src/customreportdialog.cpp:198
+#: src/customreportdialog.cpp:199
 #, fuzzy
 msgid "Unable to open file."
 msgstr "Nincs kapcsolat!"
 
-#: src/customreportdialog.cpp:211
+#: src/customreportdialog.cpp:212
 msgid ""
 " entry location:\n"
 "OK....: Insert before selected entry\n"
 "Cancel: Add at bottom of List."
 msgstr ""
 
-#: src/customreportdialog.cpp:224
+#: src/customreportdialog.cpp:225
 msgid "Save Custom SQL file:"
 msgstr ""
 
-#: src/customreportdialog.cpp:244
+#: src/customreportdialog.cpp:248
 msgid "Unable to write to file."
 msgstr ""
 
-#: src/customreportdialog.cpp:273
+#: src/customreportdialog.cpp:277
 msgid "SQL Query will modify your Data. Proceed??"
 msgstr ""
 
-#: src/customreportdialog.cpp:273
+#: src/customreportdialog.cpp:277
 msgid "Warning"
 msgstr ""
 
@@ -2129,7 +2129,7 @@ msgid "Budget Setup and Performance"
 msgstr "Költségvetés működése"
 
 #: src/mmex.cpp:1308
-#: src/mmex.cpp:3351
+#: src/mmex.cpp:3355
 msgid "Cash Flow"
 msgstr "Cash Flow"
 
@@ -2189,7 +2189,7 @@ msgid "Do you really want to delete the account?"
 msgstr "Valóban törli a bankszámlát?"
 
 #: src/mmex.cpp:2219
-#: src/mmex.cpp:3908
+#: src/mmex.cpp:3910
 msgid "Confirm Account Deletion"
 msgstr "Bankszámla törlésének jóváhagyása"
 
@@ -2298,7 +2298,7 @@ msgstr "&Új adatbázis\tCtrl-N"
 
 #: src/mmex.cpp:2515
 #: src/mmex.cpp:2802
-#: src/mmex.cpp:4186
+#: src/mmex.cpp:4190
 #, fuzzy
 msgid "New Database"
 msgstr "Új adatbázis varázsló"
@@ -2442,8 +2442,8 @@ msgstr ""
 
 #: src/mmex.cpp:2600
 #: src/mmex.cpp:2807
-#: src/mmex.cpp:4221
-#: src/mmex.cpp:4280
+#: src/mmex.cpp:4225
+#: src/mmex.cpp:4291
 msgid "New Account"
 msgstr "Új Bankszámla"
 
@@ -2805,6 +2805,7 @@ msgid "MMEX message"
 msgstr ""
 
 #: src/mmex.cpp:3108
+#: src/mmex.cpp:3126
 #, fuzzy
 msgid "Save database file as"
 msgstr "Adatbázis mentése &másként"
@@ -2819,326 +2820,352 @@ msgid "Enter password for new database"
 msgstr "Hiba az adatbázis megnyitásakor"
 
 #: src/mmex.cpp:3205
-msgid "No Account available! Cannot Import! Create a new account first!"
-msgstr "Nincs bankszámla! Nem tudok importálni! Hozzon létre előbb egy új bankszámlát!"
+#, fuzzy
+msgid "No account available to import"
+msgstr "Nincs bankszámla! Nem tudok exportálni!"
+
+#: src/mmex.cpp:3205
+#, fuzzy
+msgid "Universal CSV Import"
+msgstr "CSV importálás"
 
 #: src/mmex.cpp:3245
-msgid ""
-"Term Account views have been temporarly turned on.\n"
-"To maintain this view, change the defaults by using:\n"
-"\n"
-"Tools -> Options\n"
-"View Options\n"
-"\n"
-"This message will not be displayed in future."
+msgid "Term Account views have been temporarly turned on."
 msgstr ""
 
 #: src/mmex.cpp:3246
+msgid "To maintain this view, change the defaults by using:"
+msgstr ""
+
+#: src/mmex.cpp:3247
+#, fuzzy
+msgid "Tools -> Options"
+msgstr "&Beállítások"
+
+#: src/mmex.cpp:3248
+msgid "View Options"
+msgstr "Nézet beállításai"
+
+#: src/mmex.cpp:3249
+msgid "This message will not be displayed in future."
+msgstr ""
+
+#: src/mmex.cpp:3250
 #, fuzzy
 msgid "Initial Term Account Activation"
 msgstr "Bankszámla törlésének jóváhagyása"
 
-#: src/mmex.cpp:3351
+#: src/mmex.cpp:3355
 msgid "Choose Accounts"
 msgstr "Bankszámlák kiválasztása"
 
-#: src/mmex.cpp:3467
-#: src/mmex.cpp:3534
+#: src/mmex.cpp:3471
+#: src/mmex.cpp:3538
 msgid "Unable to connect!"
 msgstr "Nincs kapcsolat!"
 
-#: src/mmex.cpp:3467
-#: src/mmex.cpp:3504
-#: src/mmex.cpp:3510
+#: src/mmex.cpp:3471
+#: src/mmex.cpp:3508
+#: src/mmex.cpp:3514
 msgid "Check Update"
 msgstr "Frissítés keresése"
 
-#: src/mmex.cpp:3504
+#: src/mmex.cpp:3508
 msgid "New update available!"
 msgstr "Van elérhető frissítés!"
 
-#: src/mmex.cpp:3510
+#: src/mmex.cpp:3514
 msgid "You have the latest version installed!"
 msgstr "Ez a legújabb verzió!"
 
-#: src/mmex.cpp:3525
+#: src/mmex.cpp:3529
 #, fuzzy
 msgid "No database!"
 msgstr "Új adatbázis varázsló"
 
-#: src/mmex.cpp:3525
-#: src/mmex.cpp:3534
-#: src/mmex.cpp:3541
-#: src/mmex.cpp:3547
-#: src/mmex.cpp:3556
-#: src/mmex.cpp:3563
-#: src/mmex.cpp:3568
-#: src/mmex.cpp:3573
-#: src/mmex.cpp:3580
-#: src/mmex.cpp:3585
-#: src/mmex.cpp:3628
-#: src/mmex.cpp:3655
+#: src/mmex.cpp:3529
+#: src/mmex.cpp:3538
+#: src/mmex.cpp:3545
+#: src/mmex.cpp:3551
+#: src/mmex.cpp:3560
+#: src/mmex.cpp:3567
+#: src/mmex.cpp:3572
+#: src/mmex.cpp:3577
+#: src/mmex.cpp:3584
+#: src/mmex.cpp:3589
+#: src/mmex.cpp:3632
+#: src/mmex.cpp:3659
 #, fuzzy
 msgid "Update Currency Rate"
 msgstr "Alap pénznem nincs beállítva"
 
-#: src/mmex.cpp:3541
+#: src/mmex.cpp:3545
 msgid "Cannot get data from WWW!"
 msgstr ""
 
-#: src/mmex.cpp:3547
+#: src/mmex.cpp:3551
 msgid "Incorrect XML data (#1)!"
 msgstr ""
 
-#: src/mmex.cpp:3556
+#: src/mmex.cpp:3560
 msgid "Incorrect XML data (#2)!"
 msgstr ""
 
-#: src/mmex.cpp:3563
+#: src/mmex.cpp:3567
 msgid "Incorrect XML data (#3)!"
 msgstr ""
 
-#: src/mmex.cpp:3568
+#: src/mmex.cpp:3572
 msgid "Incorrect XML data (#4)!"
 msgstr ""
 
-#: src/mmex.cpp:3573
+#: src/mmex.cpp:3577
 msgid "Incorrect XML data (#5)!"
 msgstr ""
 
-#: src/mmex.cpp:3580
+#: src/mmex.cpp:3584
 msgid "Incorrect XML data (#6)!"
 msgstr ""
 
-#: src/mmex.cpp:3585
+#: src/mmex.cpp:3589
 msgid "Incorrect XML data (#7)!"
 msgstr ""
 
-#: src/mmex.cpp:3628
+#: src/mmex.cpp:3632
 msgid "Could not find base currency symbol!"
 msgstr ""
 
-#: src/mmex.cpp:3655
+#: src/mmex.cpp:3659
 #, fuzzy
 msgid "Currency rate updated"
 msgstr "Pénznem kezelő"
 
-#: src/mmex.cpp:3816
+#: src/mmex.cpp:3821
 msgid "No investment accounts found. You can create one using the Accounts menu."
 msgstr ""
 
-#: src/mmex.cpp:3817
+#: src/mmex.cpp:3822
 #, fuzzy
 msgid "Investment Accounts"
 msgstr "Válasszon befektetési számlát"
 
-#: src/mmex.cpp:3847
-#: src/mmex.cpp:3885
-msgid "No Account available!"
+#: src/mmex.cpp:3852
+#, fuzzy
+msgid "No account available to edit!"
 msgstr "Nincs bankszámla!"
 
-#: src/mmex.cpp:3860
-msgid "Choose Account to Edit"
-msgstr "Válasszon egy számlát a szerkesztéshez"
-
-#: src/mmex.cpp:3860
-#: src/mmex.cpp:3898
+#: src/mmex.cpp:3852
+#: src/mmex.cpp:3865
+#: src/mmex.cpp:3889
+#: src/mmex.cpp:3902
 msgid "Accounts"
 msgstr "Bankszámlák"
 
-#: src/mmex.cpp:3898
+#: src/mmex.cpp:3865
+msgid "Choose Account to Edit"
+msgstr "Válasszon egy számlát a szerkesztéshez"
+
+#: src/mmex.cpp:3889
+#, fuzzy
+msgid "No account available to delete!"
+msgstr "Nincs bankszámla!"
+
+#: src/mmex.cpp:3902
 msgid "Choose Account to Delete"
 msgstr "Válasszon egy bankszámlát a törléshez"
 
-#: src/mmex.cpp:3904
+#: src/mmex.cpp:3908
 #, fuzzy
 msgid "Are you sure you want to delete\n"
 msgstr "Valóban törli a vagyontárgyat?"
 
-#: src/mmex.cpp:3905
+#: src/mmex.cpp:3909
 #, fuzzy
 msgid " account: "
 msgstr " összeg"
 
-#: src/mmex.cpp:3905
-msgid " ?"
-msgstr ""
-
-#: src/mmex.cpp:4002
-msgid ""
-"Category Relocation Completed.\n"
-"\n"
-msgstr ""
-
-#: src/mmex.cpp:4003
-#: src/mmex.cpp:4016
-msgid " records have been updated in the database.\n"
-msgstr ""
-
-#: src/mmex.cpp:4004
-#: src/mmex.cpp:4017
-msgid ""
-"\n"
-"MMEX must be shutdown and restarted for all the changes to be seen."
-msgstr ""
-
 #: src/mmex.cpp:4005
+#, fuzzy
+msgid "Category Relocation Completed."
+msgstr "A kategória nem lehet üres"
+
+#: src/mmex.cpp:4006
+#: src/mmex.cpp:4020
+msgid " records have been updated in the database."
+msgstr ""
+
+#: src/mmex.cpp:4007
+#: src/mmex.cpp:4021
+msgid "MMEX must be shutdown and restarted for all the changes to be seen."
+msgstr ""
+
+#: src/mmex.cpp:4008
 #, fuzzy
 msgid "Category Relocation Result"
 msgstr "A kategória nem lehet üres"
 
-#: src/mmex.cpp:4015
-msgid ""
-"Payee Relocation Completed.\n"
-"\n"
-msgstr ""
+#: src/mmex.cpp:4019
+#, fuzzy
+msgid "Payee Relocation Completed."
+msgstr "A kategória nem lehet üres"
 
-#: src/mmex.cpp:4018
+#: src/mmex.cpp:4022
 msgid "Payee Relocation Result"
 msgstr ""
 
-#: src/mmex.cpp:4056
+#: src/mmex.cpp:4060
 msgid " to Edit:"
 msgstr ""
 
-#: src/mmex.cpp:4077
+#: src/mmex.cpp:4081
 #, fuzzy
 msgid " to Delete:"
 msgstr "Törlés"
 
-#: src/mmex.cpp:4092
+#: src/mmex.cpp:4096
 msgid "Delete the Custom Report Title:"
 msgstr ""
 
-#: src/mmex.cpp:4101
+#: src/mmex.cpp:4105
 #, fuzzy
-msgid "Do you want to delete the SQL file as well?\n"
+msgid "Do you want to delete the SQL file as well?"
 msgstr "Valóban törölni akarja a sorozatot?"
 
-#: src/mmex.cpp:4142
+#: src/mmex.cpp:4146
 msgid "Set Currency"
 msgstr "Pénznem beállítása"
 
-#: src/mmex.cpp:4152
+#: src/mmex.cpp:4156
 msgid "Base Currency for account"
 msgstr "A számla alap pénzneme"
 
-#: src/mmex.cpp:4156
+#: src/mmex.cpp:4160
 #, fuzzy
 msgid "Specify the base (or default) currency to be used for the"
 msgstr "Adja meg a bankszámla által használt pénznemet."
 
-#: src/mmex.cpp:4157
+#: src/mmex.cpp:4161
 msgid "database. The base currency can later be changed by using"
 msgstr ""
 
-#: src/mmex.cpp:4158
+#: src/mmex.cpp:4162
 msgid "the options dialog. New accounts, will use this currency by"
 msgstr ""
 
-#: src/mmex.cpp:4159
+#: src/mmex.cpp:4163
 msgid "default, and can be changed when editing account details."
 msgstr ""
 
-#: src/mmex.cpp:4166
+#: src/mmex.cpp:4170
 #, fuzzy
 msgid "User Name"
 msgstr "Pénzegység"
 
-#: src/mmex.cpp:4173
+#: src/mmex.cpp:4177
 msgid "(Optional) Specify a title or your name."
 msgstr ""
 
-#: src/mmex.cpp:4174
+#: src/mmex.cpp:4178
 msgid "Used as a database title for displayed and printed reports."
 msgstr ""
 
-#: src/mmex.cpp:4186
+#: src/mmex.cpp:4190
 msgid "Base Currency Not Set"
 msgstr "Alap pénznem nincs beállítva"
 
-#: src/mmex.cpp:4203
+#: src/mmex.cpp:4207
 msgid "Name of the Account"
 msgstr "A bankszámla neve"
 
-#: src/mmex.cpp:4207
+#: src/mmex.cpp:4211
 #, fuzzy
 msgid "Specify a descriptive name for the account."
 msgstr "Adja meg az ügylet állapotát"
 
-#: src/mmex.cpp:4208
+#: src/mmex.cpp:4212
 #, fuzzy
 msgid "This is generally the name of a financial institution"
 msgstr "Írja be a pénzintézet elérhetőségeit"
 
-#: src/mmex.cpp:4209
+#: src/mmex.cpp:4213
 msgid "where the account is held. For example: 'ABC Bank'."
 msgstr ""
 
-#: src/mmex.cpp:4221
+#: src/mmex.cpp:4225
 msgid "Account Name Invalid"
 msgstr "A bankszámla neve érvénytelen"
 
-#: src/mmex.cpp:4235
+#: src/mmex.cpp:4239
 msgid "Checking/Savings"
 msgstr "Folyószámla/Megtakarítási számla"
 
-#: src/mmex.cpp:4236
+#: src/mmex.cpp:4240
 msgid "Investment"
 msgstr "Befektetési számla"
 
-#: src/mmex.cpp:4237
+#: src/mmex.cpp:4241
 msgid "Term"
 msgstr ""
 
-#: src/mmex.cpp:4241
+#: src/mmex.cpp:4245
 msgid "Specify the type of account to be created."
 msgstr "Adja meg a létrehozandó számla típusát."
 
-#: src/mmex.cpp:4245
+#: src/mmex.cpp:4249
 msgid "Type of Account"
 msgstr "Bankszámla típusa"
 
-#: src/mmex.cpp:4249
+#: src/mmex.cpp:4254
 #, fuzzy
-msgid ""
-"\n"
-"Select the type of account you want to create:\n"
-"\n"
-"General bank accounts cover a wide variety of account\n"
-"types like Checking, Savings and Credit card type accounts."
-msgstr ""
-"\n"
-"Adja meg a létrehozandó bankszámla típusát:\n"
-"\n"
-"A bankszámláknak sok féle változata létezik,\n"
-" mint például megtakarítási, hitelkártya és folyószámla."
+msgid "Select the type of account you want to create:"
+msgstr "Adja meg a létrehozandó számla típusát."
 
-#: src/mmex.cpp:4253
+#: src/mmex.cpp:4255
+msgid "General bank accounts cover a wide variety of account"
+msgstr ""
+
+#: src/mmex.cpp:4256
+msgid "types like Checking, Savings and Credit card type accounts."
+msgstr ""
+
+#: src/mmex.cpp:4260
 #, fuzzy
-msgid ""
-"\n"
-"Investment accounts are specialized accounts that only \n"
-"have stock/mutual fund investments associated with them.\n"
+msgid "Investment accounts are specialized accounts that only"
 msgstr ""
 "\n"
 "A befektetési számlák olyan speciális számlák, amelyek  \n"
 "csak értékpapírokat és részvényeket tárolnak\n"
 
-#: src/mmex.cpp:4257
-msgid ""
-"Term accounts are specialized bank accounts. Intended for asset\n"
-"type accounts such as Term Deposits and Bonds. These accounts\n"
-"can have regular money coming in and out, being outside the\n"
-"general income stream."
+#: src/mmex.cpp:4261
+#, fuzzy
+msgid "have stock/mutual fund investments associated with them."
+msgstr ""
+"\n"
+"A befektetési számlák olyan speciális számlák, amelyek  \n"
+"csak értékpapírokat és részvényeket tárolnak\n"
+
+#: src/mmex.cpp:4265
+msgid "Term accounts are specialized bank accounts. Intended for asset"
 msgstr ""
 
-#: src/mmex.cpp:4278
+#: src/mmex.cpp:4266
+msgid "type accounts such as Term Deposits and Bonds. These accounts"
+msgstr ""
+
+#: src/mmex.cpp:4267
+msgid "can have regular money coming in and out, being outside the"
+msgstr ""
+
+#: src/mmex.cpp:4268
+msgid "general income stream."
+msgstr ""
+
+#: src/mmex.cpp:4289
 #, fuzzy
 msgid "Base Account Currency Not set."
 msgstr "Alap pénznem nincs beállítva"
 
-#: src/mmex.cpp:4279
+#: src/mmex.cpp:4290
 #, fuzzy
 msgid "Set that first using Tools->Options menu and then add a new account."
 msgstr ""
@@ -3264,11 +3291,15 @@ msgstr "Befektetés törlésének jóváhagyása"
 msgid "REPORTS"
 msgstr "KIMUTATÁSOK"
 
-#: src/mmtransaction.cpp:194
-msgid "Payee not found in database for Account ID:"
+#: src/mmtransaction.cpp:195
+msgid "Payee not found in database for Account: "
 msgstr ""
 
-#: src/mmtransaction.cpp:196
+#: src/mmtransaction.cpp:198
+msgid "Subsequent errors not displayed."
+msgstr ""
+
+#: src/mmtransaction.cpp:199
 msgid "MMEX DATABASE ERROR"
 msgstr ""
 
@@ -3701,101 +3732,97 @@ msgstr "Ügylet szerkesztése"
 msgid "Default Payee:"
 msgstr "Kedvezményezett választása"
 
-#: src/optionsdialog.cpp:796
+#: src/optionsdialog.cpp:795
 #, fuzzy
 msgid "Last Used"
 msgstr "Múlt év"
 
-#: src/optionsdialog.cpp:805
+#: src/optionsdialog.cpp:803
 #, fuzzy
 msgid "Default Category:"
 msgstr "Kategória választása"
 
-#: src/optionsdialog.cpp:811
+#: src/optionsdialog.cpp:808
 msgid "Last used for payee"
 msgstr ""
 
-#: src/optionsdialog.cpp:820
+#: src/optionsdialog.cpp:816
 #, fuzzy
 msgid "Default Status:"
 msgstr "Bankszámla állapota: "
 
-#: src/optionsdialog.cpp:848
+#: src/optionsdialog.cpp:842
 msgid "Database Backup Settings"
 msgstr ""
 
-#: src/optionsdialog.cpp:855
+#: src/optionsdialog.cpp:849
 #, fuzzy
 msgid "Backup before opening"
 msgstr "Biztonsági mentés megnyitás előtt"
 
-#: src/optionsdialog.cpp:860
+#: src/optionsdialog.cpp:854
 #, fuzzy
 msgid "Select whether to create a _YYYY-MM-DD.bak file before opening the database"
 msgstr "Adja meg, hogy készüljön-e biztonsági másolat az adatbázis megnyitásakor"
 
-#: src/optionsdialog.cpp:864
+#: src/optionsdialog.cpp:858
 #, fuzzy
 msgid "Daily Update, before opening"
 msgstr "Biztonsági mentés megnyitás előtt"
 
-#: src/optionsdialog.cpp:870
+#: src/optionsdialog.cpp:864
 msgid "For same day, select to update the backup before opening the database."
 msgstr ""
 
-#: src/optionsdialog.cpp:877
+#: src/optionsdialog.cpp:871
 msgid "Stock Quote Web Page"
 msgstr "Tőzsdeinformációs weboldal"
 
-#: src/optionsdialog.cpp:884
+#: src/optionsdialog.cpp:878
 msgid "Clear the field to Reset the value to system default."
 msgstr ""
 
-#: src/optionsdialog.cpp:888
+#: src/optionsdialog.cpp:882
 #, fuzzy
 msgid "Use Original Date when Pasting Transactions"
 msgstr "Sorozatos ügyletek"
 
-#: src/optionsdialog.cpp:893
+#: src/optionsdialog.cpp:887
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
 msgstr ""
 
-#: src/optionsdialog.cpp:897
+#: src/optionsdialog.cpp:891
 #, fuzzy
 msgid "Use Transaction Sound"
 msgstr "Új ügylet"
 
-#: src/optionsdialog.cpp:902
+#: src/optionsdialog.cpp:896
 #, fuzzy
 msgid "Select whether to use sounds when entering transactions"
 msgstr "Adja meg az ügylet állapotát"
 
-#: src/optionsdialog.cpp:906
+#: src/optionsdialog.cpp:900
 msgid "Enable online currency update (Get data from European Central Bank)"
 msgstr ""
 
-#: src/optionsdialog.cpp:913
+#: src/optionsdialog.cpp:907
 msgid "Enable or disable get data from European Central Bank to update currency rate"
 msgstr ""
 
-#: src/optionsdialog.cpp:919
+#: src/optionsdialog.cpp:913
 msgid "General"
 msgstr "Általános"
 
-#: src/optionsdialog.cpp:920
-msgid "View Options"
-msgstr "Nézet beállításai"
-
-#: src/optionsdialog.cpp:921
+#: src/optionsdialog.cpp:915
 msgid "Colors"
 msgstr "Színek"
 
-#: src/optionsdialog.cpp:946
+#: src/optionsdialog.cpp:940
 #, fuzzy
 msgid "Remember to update currency rate"
 msgstr "Alap pénznem nincs beállítva"
 
-#: src/optionsdialog.cpp:946
+#: src/optionsdialog.cpp:940
 #, fuzzy
 msgid "Important note"
 msgstr "Importálás"
@@ -3876,138 +3903,153 @@ msgstr "Írja be a vagyontárgy nevét"
 msgid "Edit Payee Name"
 msgstr "Kedvezményezett hozzáadása"
 
-#: src/qifimport.cpp:363
+#: src/qifimport.cpp:365
+#, fuzzy
+msgid "No account available for import"
+msgstr "Nincs bankszámla! Nem tudok exportálni!"
+
+#: src/qifimport.cpp:365
+#: src/qifimport.cpp:373
+#: src/qifimport.cpp:389
+#: src/qifimport.cpp:436
+#: src/qifimport.cpp:534
+#: src/qifimport.cpp:731
+msgid "QIF Import"
+msgstr ""
+
+#: src/qifimport.cpp:370
 msgid "To import QIF files correctly, the date format in the QIF file"
 msgstr ""
 
-#: src/qifimport.cpp:364
+#: src/qifimport.cpp:371
 msgid "must match the date option set in MMEX."
 msgstr ""
 
-#: src/qifimport.cpp:365
+#: src/qifimport.cpp:372
 #, fuzzy
 msgid "Are you are sure you want to proceed with the import?"
 msgstr "Valóban törli a vagyontárgyat?"
 
-#: src/qifimport.cpp:366
-#: src/qifimport.cpp:388
-#: src/qifimport.cpp:392
-#: src/qifimport.cpp:536
-msgid "QIF Import"
-msgstr ""
-
-#: src/qifimport.cpp:386
-#, fuzzy
-msgid "No suitable account available to import to!"
-msgstr "Nincs bankszámla! Nem tudok exportálni!"
-
-#: src/qifimport.cpp:387
-msgid "Create a suitable account first!"
-msgstr ""
-
-#: src/qifimport.cpp:392
+#: src/qifimport.cpp:389
 msgid "Choose Account to import to:"
 msgstr "Válasszon bankszámlát az importáláshoz:"
 
-#: src/qifimport.cpp:403
+#: src/qifimport.cpp:400
 msgid "Choose QIF data file to import"
 msgstr "Válasszon QIF fájlt az importáláshoz"
 
-#: src/qifimport.cpp:439
+#: src/qifimport.cpp:436
 #: src/qifimport.cpp:726
 #, fuzzy
 msgid "Transactions imported from QIF: "
 msgstr " ügyletek importálva QIF-ből"
 
-#: src/qifimport.cpp:443
+#: src/qifimport.cpp:441
 #, fuzzy
-msgid ""
-"Transactions imported from QIF\n"
-"to account "
+msgid "Transactions imported from QIF"
 msgstr " ügyletek importálva QIF-ből"
 
-#: src/qifimport.cpp:461
-#: src/qifimport.cpp:496
-#: src/qifimport.cpp:565
+#: src/qifimport.cpp:442
+#, fuzzy
+msgid "to account "
+msgstr " összeg"
+
+#: src/qifimport.cpp:459
+#: src/qifimport.cpp:494
+#: src/qifimport.cpp:563
 msgid "Line : "
 msgstr "Sor :"
 
-#: src/qifimport.cpp:462
+#: src/qifimport.cpp:460
 msgid " incorrect QIF line type"
 msgstr " helytelen QIF sor típus"
 
-#: src/qifimport.cpp:473
+#: src/qifimport.cpp:471
 msgid "Importing account type : "
 msgstr "Bankszámla típusának importálása"
 
-#: src/qifimport.cpp:496
+#: src/qifimport.cpp:494
 msgid " : "
 msgstr ""
 
-#: src/qifimport.cpp:497
+#: src/qifimport.cpp:495
 msgid " account name "
 msgstr " számla név"
 
-#: src/qifimport.cpp:535
+#: src/qifimport.cpp:533
 msgid " cannot process Account Types yet "
 msgstr " a bankszámla típusa még nincs feldolgozva"
 
-#: src/qifimport.cpp:536
+#: src/qifimport.cpp:534
 #, fuzzy
 msgid "Cannot process these QIF Account Types yet"
 msgstr " a bankszámla típusa még nincs feldolgozva"
 
-#: src/qifimport.cpp:550
-#: src/qifimport.cpp:666
+#: src/qifimport.cpp:548
+#: src/qifimport.cpp:664
 #, fuzzy
 msgid "Payee Added: "
 msgstr "Kedvezményezett"
 
-#: src/qifimport.cpp:566
+#: src/qifimport.cpp:564
 msgid " invalid amount, skipping."
 msgstr " érvénytelen érték, kihagyás."
 
-#: src/qifimport.cpp:645
+#: src/qifimport.cpp:643
 msgid "Date is empty, "
 msgstr "A dátum mező üres,"
 
-#: src/qifimport.cpp:649
+#: src/qifimport.cpp:647
 msgid "Transaction Type is empty"
 msgstr "Ügylet típusa üres"
 
-#: src/qifimport.cpp:653
+#: src/qifimport.cpp:651
 msgid "Amount is empty"
 msgstr "Összeg üres"
 
-#: src/qifimport.cpp:681
+#: src/qifimport.cpp:679
 msgid "Category is empty, marking transaction as Unknown category"
 msgstr "Kategória üres, az ügylet megjelölése ismeretlen kategóriaként"
 
-#: src/qifimport.cpp:693
+#: src/qifimport.cpp:691
 msgid "Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had "
 msgstr "A QIF átvitel kihagyva, mivel a dátum, típus, összeg mező üres, vagy érvénytelen."
 
-#: src/qifimport.cpp:694
+#: src/qifimport.cpp:692
 msgid " payee "
 msgstr " kedvezményezett"
 
-#: src/qifimport.cpp:694
+#: src/qifimport.cpp:692
 msgid " type "
 msgstr " típus"
 
-#: src/qifimport.cpp:695
+#: src/qifimport.cpp:693
 msgid " amount "
 msgstr " összeg"
 
-#: src/qifimport.cpp:695
+#: src/qifimport.cpp:693
 msgid " date "
 msgstr " dátum"
 
-#: src/qifimport.cpp:732
+#: src/qifimport.cpp:728
+#, fuzzy
+msgid "Total Imported : "
+msgstr "Teljes összeg"
+
+#: src/qifimport.cpp:729
+msgid "Log file written to : "
+msgstr ""
+
+#: src/qifimport.cpp:730
+#, fuzzy
+msgid "Please confirm saving..."
+msgstr "Kérem várjon"
+
+#: src/qifimport.cpp:739
 msgid "Transactions saved to database in account: "
 msgstr ""
 
-#: src/qifimport.cpp:747
+#: src/qifimport.cpp:754
 msgid "Imported transactions discarded by user!"
 msgstr ""
 
@@ -4608,61 +4650,92 @@ msgstr "CSV mező hozzáadása"
 msgid "CSV Field"
 msgstr "CSV mező"
 
-#: src/univcsvdialog.cpp:398
-#: src/univcsvdialog.cpp:410
+#: src/univcsvdialog.cpp:329
+#, fuzzy
+msgid "Choose Universal CSV format file to load"
+msgstr "Válasszon CSV fájlt az exportáláshoz"
+
+#: src/univcsvdialog.cpp:361
+#, fuzzy
+msgid "Choose Universal CSV format file to save"
+msgstr "Válasszon CSV fájlt az exportáláshoz"
+
+#: src/univcsvdialog.cpp:394
+#: src/univcsvdialog.cpp:405
 #, fuzzy
 msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."
 msgstr "Érvénytelen mezőket adott meg a CSV importhoz! Legalább a dátum, összeg és kedvezményezett kell!"
 
-#: src/univcsvdialog.cpp:433
-#: src/util.cpp:1148
-msgid "CSV Import"
-msgstr ""
-
-#: src/univcsvdialog.cpp:443
-#: src/util.cpp:1157
+#: src/univcsvdialog.cpp:438
+#: src/util.cpp:1232
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Válasszon MM.NET CSV fájlt az importáláshoz"
 
-#: src/univcsvdialog.cpp:487
+#: src/univcsvdialog.cpp:459
+#: src/util.cpp:953
+#: src/util.cpp:1253
+#, fuzzy
+msgid "Transactions imported from CSV: "
+msgstr " ügyletek importálva QIF-ből"
+
+#: src/univcsvdialog.cpp:466
+#: src/util.cpp:1260
+#, fuzzy
+msgid ""
+"Transactions imported from CSV\n"
+"to account "
+msgstr " ügyletek importálva QIF-ből"
+
+#: src/univcsvdialog.cpp:499
 msgid " file contains insufficient number of tokens"
 msgstr " a fájl elégtelen mennyiségű jelzést tartalmaz"
 
-#: src/univcsvdialog.cpp:510
+#: src/univcsvdialog.cpp:522
 #, fuzzy
 msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipping"
 msgstr " néhány mező: dátum, kedvezményezett, összeg, típus nincs kitöltve, átugrás"
 
-#: src/univcsvdialog.cpp:564
-#: src/util.cpp:1098
-#: src/util.cpp:1320
+#: src/univcsvdialog.cpp:577
+#: src/util.cpp:1141
+#: src/util.cpp:1413
 msgid " imported OK."
 msgstr " Sikeres importálás"
 
-#: src/univcsvdialog.cpp:568
-#: src/util.cpp:1102
-#: src/util.cpp:1324
+#: src/univcsvdialog.cpp:583
+#: src/util.cpp:1147
+#: src/util.cpp:1418
 #, fuzzy, c-format
 msgid "Total Lines : %d"
 msgstr "Teljes vagyon :"
 
-#: src/univcsvdialog.cpp:570
-#: src/util.cpp:1104
-#: src/util.cpp:1326
+#: src/univcsvdialog.cpp:585
+#: src/util.cpp:1149
+#: src/util.cpp:1420
 #, fuzzy, c-format
 msgid "Total Imported : %d"
 msgstr "Teljes összeg"
 
-#: src/univcsvdialog.cpp:572
-#: src/util.cpp:1106
-#: src/util.cpp:1328
+#: src/univcsvdialog.cpp:587
+#: src/util.cpp:1151
+#: src/util.cpp:1422
 #, c-format
 msgid "Log file written to : %s"
 msgstr ""
 
-#: src/univcsvdialog.cpp:575
-#: src/util.cpp:1109
-#: src/util.cpp:1331
+#: src/univcsvdialog.cpp:591
+#: src/util.cpp:1199
+#: src/util.cpp:1204
+#: src/util.cpp:1223
+#: src/util.cpp:1253
+#: src/util.cpp:1426
+#: src/util.cpp:1455
+#, fuzzy
+msgid "Importing CSV MM.NET"
+msgstr "Importálás MM.NET CSV-ből"
+
+#: src/univcsvdialog.cpp:595
+#: src/util.cpp:1159
+#: src/util.cpp:1430
 #, fuzzy
 msgid "Imported transactions have been flagged so you can review them."
 msgstr ""
@@ -4672,185 +4745,212 @@ msgstr ""
 "\n"
 "Az importált ügyletek megjelölve, így ellenőrizheti azokat."
 
-#: src/univcsvdialog.cpp:576
-#: src/util.cpp:881
-#: src/util.cpp:899
-#: src/util.cpp:1111
-#: src/util.cpp:1126
-#: src/util.cpp:1333
-msgid "Import from CSV"
-msgstr "Importálás CSV-ből"
-
-#: src/util.cpp:408
+#: src/util.cpp:416
 msgid "January"
 msgstr "Január"
 
-#: src/util.cpp:408
+#: src/util.cpp:416
 msgid "February"
 msgstr "Február"
 
-#: src/util.cpp:408
+#: src/util.cpp:416
 msgid "March"
 msgstr "Március"
 
-#: src/util.cpp:408
+#: src/util.cpp:416
 msgid "April"
 msgstr "Április"
 
-#: src/util.cpp:408
+#: src/util.cpp:416
 msgid "May "
 msgstr "Május"
 
-#: src/util.cpp:408
+#: src/util.cpp:416
 msgid "June"
 msgstr "Június"
 
-#: src/util.cpp:409
+#: src/util.cpp:417
 msgid "July"
 msgstr "Július"
 
-#: src/util.cpp:409
+#: src/util.cpp:417
 msgid "August"
 msgstr "Augusztus"
 
-#: src/util.cpp:409
+#: src/util.cpp:417
 msgid "September"
 msgstr "Szeptember"
 
-#: src/util.cpp:409
+#: src/util.cpp:417
 msgid "October"
 msgstr "Október"
 
-#: src/util.cpp:409
+#: src/util.cpp:417
 msgid "November"
 msgstr "November"
 
-#: src/util.cpp:409
+#: src/util.cpp:417
 msgid "December"
 msgstr "December"
 
-#: src/util.cpp:430
+#: src/util.cpp:438
 msgid "Sunday"
 msgstr "Vasárnap"
 
-#: src/util.cpp:430
+#: src/util.cpp:438
 msgid "Monday"
 msgstr "Hétfő"
 
-#: src/util.cpp:430
+#: src/util.cpp:438
 msgid "Tuesday"
 msgstr "Kedd"
 
-#: src/util.cpp:430
+#: src/util.cpp:438
 msgid "Wednesday"
 msgstr "Szerda"
 
-#: src/util.cpp:431
+#: src/util.cpp:439
 msgid "Thursday"
 msgstr "Csütörtök"
 
-#: src/util.cpp:431
+#: src/util.cpp:439
 msgid "Friday"
 msgstr "Péntek"
 
-#: src/util.cpp:431
+#: src/util.cpp:439
 msgid "Saturday"
 msgstr "Szombat"
 
-#: src/util.cpp:496
+#: src/util.cpp:504
 msgid "Entry "
 msgstr "Beviteli hiba: "
 
-#: src/util.cpp:496
+#: src/util.cpp:504
 msgid " is invalid."
 msgstr " érvénytelen."
 
-#: src/util.cpp:497
+#: src/util.cpp:505
 msgid "Invalid Entry"
 msgstr "Érvénytelen bejegyzés"
 
-#: src/util.cpp:520
-#: src/util.cpp:680
-msgid "No Account available! Cannot Export!"
+#: src/util.cpp:540
+#, fuzzy
+msgid "No account available for export!"
 msgstr "Nincs bankszámla! Nem tudok exportálni!"
 
-#: src/util.cpp:539
-#: src/util.cpp:697
-msgid "Choose Account to Export from:"
-msgstr "Válasszon bankszámlát az exportáláshoz:"
-
-#: src/util.cpp:539
+#: src/util.cpp:540
+#: src/util.cpp:558
 msgid "CSV Export"
 msgstr ""
 
-#: src/util.cpp:547
+#: src/util.cpp:558
+#: src/util.cpp:718
+msgid "Choose Account to Export from:"
+msgstr "Válasszon bankszámlát az exportáláshoz:"
+
+#: src/util.cpp:566
 msgid "Choose CSV data file to Export"
 msgstr "Válasszon CSV fájlt az exportáláshoz"
 
-#: src/util.cpp:697
+#: src/util.cpp:701
+#, fuzzy
+msgid "No Account available for export"
+msgstr "Nincs bankszámla! Nem tudok exportálni!"
+
+#: src/util.cpp:701
+#: src/util.cpp:718
 #, fuzzy
 msgid "QIF Export"
 msgstr "&Exportálás"
 
-#: src/util.cpp:709
+#: src/util.cpp:730
 #, fuzzy
 msgid "Choose QIF data file to Export"
 msgstr "Válasszon QIF fájlt az importáláshoz"
 
-#: src/util.cpp:949
-#: src/util.cpp:1197
+#: src/util.cpp:905
+#: src/util.cpp:1199
+#, fuzzy
+msgid "No account available for import."
+msgstr "Nincs bankszámla! Nem tudok exportálni!"
+
+#: src/util.cpp:905
+#: src/util.cpp:923
+#: src/util.cpp:953
+#: src/util.cpp:1184
+msgid "Import from CSV"
+msgstr "Importálás CSV-ből"
+
+#: src/util.cpp:923
+#, fuzzy
+msgid "Choose account to import to:"
+msgstr "Válasszon bankszámlát az importáláshoz:"
+
+#: src/util.cpp:960
+#, fuzzy
+msgid "Transactions imported from CSV"
+msgstr " ügyletek importálva QIF-ből"
+
+#: src/util.cpp:991
+#: src/util.cpp:1290
 msgid " missing date, skipping."
 msgstr " hiányzó dátum, kihagyás."
 
-#: src/util.cpp:956
-#: src/util.cpp:1204
+#: src/util.cpp:998
+#: src/util.cpp:1297
 msgid " missing payee, skipping."
 msgstr " hiányzó kedvezményezett, kihagyás."
 
-#: src/util.cpp:963
+#: src/util.cpp:1005
 msgid " missing transaction type, skipping."
 msgstr " hiányzó ügylet típus, kihagyás."
 
-#: src/util.cpp:970
-#: src/util.cpp:1211
+#: src/util.cpp:1012
+#: src/util.cpp:1304
 msgid " missing amount, skipping."
 msgstr " hiányzó összeg, kihagyás"
 
-#: src/util.cpp:979
+#: src/util.cpp:1021
 #, fuzzy
 msgid " check delimiters. Possible amount error, skipping."
 msgstr " hiányzó összeg, kihagyás"
 
-#: src/util.cpp:997
-msgid " has excessive items. Check delimiters in mumbers, skipping."
-msgstr ""
+#: src/util.cpp:1039
+#, fuzzy
+msgid " has excessive items. Check delimiters in numbers, skipping."
+msgstr " hiányzó összeg, kihagyás"
 
-#: src/util.cpp:1003
+#: src/util.cpp:1045
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "néhány mező: dátum, kedvezményezett, ügylet típus, összeg nincs kitöltve, átugrás"
 
-#: src/util.cpp:1009
+#: src/util.cpp:1051
 msgid " unrecognized transaction type, skipping."
 msgstr " ismeretlen ügylet típus, kihagyás."
 
-#: src/util.cpp:1030
+#: src/util.cpp:1072
 #, fuzzy
 msgid " transfer transaction not imported."
 msgstr " ügyletek importálva QIF-ből"
 
-#: src/util.cpp:1125
+#: src/util.cpp:1155
+#, fuzzy
+msgid "Importing from CSV"
+msgstr "Importálás CSV-ből"
+
+#: src/util.cpp:1203
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Ellenőrizze, hogy az MMEX.NET CSV fájl csak egy számlát tartalmaz!"
 
-#: src/util.cpp:1224
+#: src/util.cpp:1317
 msgid " missing category, skipping."
 msgstr " hiányzó kategória, kihagyás."
 
-#: src/util.cpp:1251
+#: src/util.cpp:1343
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr " néhány mező: dátum, kedvezményezett, ügylet típus, összeg kategória nincs kitöltve, átugrás"
 
-#: src/util.cpp:1260
+#: src/util.cpp:1352
 msgid " invalid date, skipping."
 msgstr " érvénytelen dátium, kihagyás."
 
@@ -4971,6 +5071,25 @@ msgstr "CSV importálás"
 #, fuzzy
 msgid "Options"
 msgstr "&Beállítások"
+
+#~ msgid "No Account available! Cannot Import! Create a new account first!"
+#~ msgstr ""
+#~ "Nincs bankszámla! Nem tudok importálni! Hozzon létre előbb egy új "
+#~ "bankszámlát!"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "Select the type of account you want to create:\n"
+#~ "\n"
+#~ "General bank accounts cover a wide variety of account\n"
+#~ "types like Checking, Savings and Credit card type accounts."
+#~ msgstr ""
+#~ "\n"
+#~ "Adja meg a létrehozandó bankszámla típusát:\n"
+#~ "\n"
+#~ "A bankszámláknak sok féle változata létezik,\n"
+#~ " mint például megtakarítási, hitelkártya és folyószámla."
 
 #~ msgid ""
 #~ "Total Lines : %d \n"
