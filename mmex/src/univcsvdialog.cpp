@@ -612,14 +612,13 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
                 }
                 // and discard the database changes.
                 mmDBWrapper::rollback(db_);
-                //we should to clear the vector to avoid leak of memory
-                CSV_transID.clear();
 			    msg  << _("Imported transactions discarded by user!");
             }
 
             wxMessageBox(msg, _("Universal CSV Import"), wxICON_INFORMATION);
             outputLog.Close();
-
+            //clear the vector to avoid memory leak - done at same level created.
+            CSV_transID.clear();
             fileviewer(logFile.GetFullPath(), this).ShowModal();
         }
     }

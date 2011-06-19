@@ -927,6 +927,7 @@ int mmImportCSV( mmCoreDB* core )
         fromAccountID = mmDBWrapper::getAccountID( db_, acctName );
         boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr( fromAccountID ).lock();
         wxASSERT( pCurrencyPtr );
+        wxString amtSeparator =  core->accountList_.getAccountCurrencyDecimalChar(fromAccountID);
 
         wxString fileName = wxFileSelector( wxT( "Choose CSV data file to import" ),
                                             wxT( "" ), wxT( "" ), wxT( "" ), wxT( "*.csv" ), wxFILE_MUST_EXIST );
@@ -1006,9 +1007,10 @@ int mmImportCSV( mmCoreDB* core )
                     continue;
                 }
 
-                if ( tkz.HasMoreTokens() )
+                if ( tkz.HasMoreTokens() ) {
                     amount = mmCleanString( tkz.GetNextToken() );
-                else {
+                    amount.Replace(amtSeparator,wxT("."));               
+                } else {
                     log << _( "Line : " ) << countNumTotal << _( " missing amount, skipping." ) << endl;
                     continue;
                 }
@@ -1179,13 +1181,13 @@ int mmImportCSV( mmCoreDB* core )
                 }
                 // and discard the database changes.
                 mmDBWrapper::rollback(db_);
-                //we should to clear the vector to avoid leak of memory
-                CSV_transID.clear();
 			    msg  << _("Imported transactions discarded by user!");
             }
 
             wxMessageBox(msg, _( "Import from CSV" ), wxICON_INFORMATION);
             outputLog.Close();
+            //clear the vector to avoid memory leak - done at same level created.
+            CSV_transID.clear();
 
             fileviewer( logFile.GetFullPath(), 0 ).ShowModal();
         }  // end: if filename not empty
@@ -1231,6 +1233,7 @@ int mmImportCSVMMNET( mmCoreDB* core )
 
         boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr( fromAccountID ).lock();
         wxASSERT( pCurrencyPtr );
+        wxString amtSeparator =  core->accountList_.getAccountCurrencyDecimalChar(fromAccountID);
 
         wxString fileName = wxFileSelector( _( "Choose MM.NET CSV data file to import" ), wxT( "" ), wxT( "" ), wxT( "" ), wxT( "*.csv" ), wxFILE_MUST_EXIST );
 
@@ -1301,9 +1304,10 @@ int mmImportCSVMMNET( mmCoreDB* core )
                     continue;
                 }
 
-                if ( tkz.HasMoreTokens() )
+                if ( tkz.HasMoreTokens() ) {
                     amount = withoutQuotes(tkz.GetNextToken());
-                else {
+                    amount.Replace(amtSeparator,wxT("."));               
+                } else {
                     log << _( "Line : " ) << countNumTotal << _( " missing amount, skipping." ) << endl;
                     continue;
                 }
@@ -1328,7 +1332,6 @@ int mmImportCSVMMNET( mmCoreDB* core )
 
                 if ( !amount.ToDouble( &val ) ) {
                     log << _( "Line : " ) << countNumTotal << _( " invalid amount, skipping." ) << endl;
-
                     continue;
                 }
 
@@ -1450,13 +1453,13 @@ int mmImportCSVMMNET( mmCoreDB* core )
                 }
                 // and discard the database changes.
                 mmDBWrapper::rollback(db_);
-                //we should to clear the vector to avoid leak of memory
-                CSV_transID.clear();
 			    msg  << _("Imported transactions discarded by user!");
             }
 
             wxMessageBox(msg, _("Importing CSV MM.NET"), wxICON_INFORMATION);
             outputLog.Close();
+            //clear the vector to avoid memory leak - done at same level created.
+            CSV_transID.clear();
 
             fileviewer( logFile.GetFullPath(), 0 ).ShowModal();
         }
