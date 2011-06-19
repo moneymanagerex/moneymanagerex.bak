@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-19 10:30+0300\n"
-"PO-Revision-Date: 2011-06-19 12:05+0300\n"
+"POT-Creation-Date: 2011-06-19 13:47+0300\n"
+"PO-Revision-Date: 2011-06-19 13:50+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "Language: \n"
@@ -203,24 +203,6 @@ msgstr "Всего:"
 #: src/reportbudgetingperf.cpp:27
 msgid "Today's Date: "
 msgstr "Сегодня: "
-
-#: src/mmhomepagepanel.cpp:809
-msgid "Please use the stock link on the Navigation Tree"
-msgstr "Пожалуйста, используйте ссылку на биржу в панели навигации"
-
-#: src/mmhomepagepanel.cpp:810
-msgid ""
-"\n"
-"\n"
-msgstr ""
-
-#: src/mmhomepagepanel.cpp:811
-msgid "Waiting Correct Implementation"
-msgstr "Ожидается правильный реализация"
-
-#: src/mmhomepagepanel.cpp:812
-msgid "Stock Investment Page Selection"
-msgstr "Страница акций"
 
 #: src/categdialog.cpp:77
 msgid "Categories"
@@ -4801,6 +4783,12 @@ msgstr "Разделение проводки"
 msgid "Options Dialog"
 msgstr "Настройки"
 
+#~ msgid "Please use the stock link on the Navigation Tree"
+#~ msgstr "Пожалуйста, используйте ссылку на биржу в панели навигации"
+#~ msgid "Waiting Correct Implementation"
+#~ msgstr "Ожидается правильный реализация"
+#~ msgid "Stock Investment Page Selection"
+#~ msgstr "Страница акций"
 #~ msgid "Tools -> Options"
 #~ msgstr "Инструменты -> Настройки"
 #~ msgid "Specify the base (or default) currency to be used for the"
