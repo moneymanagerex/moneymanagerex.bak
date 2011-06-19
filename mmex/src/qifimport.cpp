@@ -367,8 +367,7 @@ int mmImportQIF(mmCoreDB* core)
     }
 
     wxString msgStr;
-    msgStr << _("To import QIF files correctly, the date format in the QIF file") << wxT("\n")
-           << _("must match the date option set in MMEX.") << wxT("\n\n") 
+    msgStr << _("To import QIF files correctly, the date format in the QIF file must match the date option set in MMEX.") << wxT("\n\n")
            << _("Are you are sure you want to proceed with the import?");
     wxMessageDialog msgDlg(NULL, msgStr, _("QIF Import"), wxYES_NO|wxICON_QUESTION);
     if (msgDlg.ShowModal() != wxID_YES)
@@ -395,7 +394,6 @@ int mmImportQIF(mmCoreDB* core)
 
     boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
     wxASSERT(pCurrencyPtr);
-
 
     wxString fileName = wxFileSelector(_("Choose QIF data file to import"), 
         wxT(""), wxT(""), wxT(""), wxT("*.qif"), wxFILE_MUST_EXIST);
@@ -749,12 +747,12 @@ int mmImportQIF(mmCoreDB* core)
             }
             // and discard the database changes.
             mmDBWrapper::rollback(core->db_.get());
-            //we should to clear the vector to avoid leak of memory
-            QIF_transID.clear();
 			log  << endl << _("Imported transactions discarded by user!") << endl;
         }
 		        
         outputLog.Close();
+        //clear the vector to avoid memory leak - done at same level created.
+        QIF_transID.clear();
     }
 
     if ( !fileName.IsEmpty() )

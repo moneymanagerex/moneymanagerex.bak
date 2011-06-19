@@ -481,7 +481,7 @@ mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, mmCoreDB* core) :
     page1 = new wxWizardPageSimple(this);
 
     wxString noteString = mmex::getProgramName() +
-    _(" models all transactions as belonging to accounts.\n\n The next pages will help you create a new account.\n\nTo help you get started, begin by making a list of all\nfinancial institutions where you hold an account.");
+    _(" models all transactions as belonging to accounts.\n\nThe next pages will help you create a new account.\n\nTo help you get started, begin by making a list of all\nfinancial institutions where you hold an account.");
 
     new wxStaticText(page1, wxID_ANY, noteString);
 
@@ -519,16 +519,27 @@ mmNewDatabaseWizard::mmNewDatabaseWizard(wxFrame *frame, mmCoreDB* core)
                    wxBitmap(addacctwiz_xpm),wxDefaultPosition,
                    wxDEFAULT_DIALOG_STYLE), m_core(core)
 {
+/****************** Message to be displayed******************
+    
+    The next pages will help you create a new database.
+
+    Your database file is stored with an extension of .mmb.
+    
+    As this file contains important financial information,
+    we recommended creating daily backups with the Options
+    setting: 'Backup before opening', and store your backups
+    in a separate location.
+
+    The database can later be encrypted if required, by
+    using the option: 'Save database as' and changing the
+    file type before saving.
+*/
     page1 = new wxWizardPageSimple(this);
     wxString displayMsg;
     displayMsg << _("The next pages will help you create a new database.") << wxT("\n\n")
                << _("Your database file is stored with an extension of .mmb.")<< wxT("\n\n")
-               << _("Make sure to make backups of this file and to store it ")<< wxT("\n")
-               << _("carefully as it contains important financial information.")<< wxT("\n\n")
-               
-               << _("The database can later be encrypted if required, by using")<< wxT("\n")
-               << _("the option: 'Save database as' and changing the file type")<< wxT("\n")
-               << _("before saving.");
+               << _("As this file contains important financial information,\nwe recommended creating daily backups with the Options\nsetting: 'Backup before opening', and store your backups\nin a separate location.")<< wxT("\n\n")
+               << _("The database can later be encrypted if required, by\nusing the option: 'Save database as' and changing the\nfile type before saving.");
     new wxStaticText(page1, wxID_ANY,displayMsg);
 
     wxNewDatabaseWizardPage1* page2 = new wxNewDatabaseWizardPage1(this);
@@ -3241,11 +3252,19 @@ void mmGUIFrame::OnNewAccount(wxCommandEvent& /*event*/)
             menuBar_->FindItem(MENU_VIEW_TERMACCOUNTS)->Check(true);
             if (firstTermAccount)
             {
+            /***************Message to display *************************
+                Term Account views have been temporarly turned on.
+                To maintain this view, change the defaults by using:
+    
+                Tools -> Options
+                View Options
+
+                This message will not be displayed in future.
+            ************************************************************/
                 wxString msgStr;
                 msgStr << _("Term Account views have been temporarly turned on.") << wxT("\n")
-                       << _("To maintain this view, change the defaults by using:") << wxT("\n\n")
-                       << _("Tools -> Options") << wxT("\n")
-                       << _("View Options") << wxT("\n\n")
+                       << _("To maintain this view, change the defaults by using:\n\nTools -> Options\nView Options")
+                       << wxT("\n\n")
                        << _("This message will not be displayed in future.");
                 wxMessageBox(msgStr, _("Initial Term Account Activation"),wxICON_INFORMATION);
             }
@@ -4157,10 +4176,14 @@ wxNewDatabaseWizardPage1::wxNewDatabaseWizardPage1(mmNewDatabaseWizard* parent) 
     mainSizer->Add( itemButtonCurrency_, 0 /* No stretching */, wxALL, 5 /* Border size */ );
 
     wxString helpMsg;
-    helpMsg << _("Specify the base (or default) currency to be used for the") << wxT("\n")
-            << _("database. The base currency can later be changed by using") << wxT("\n")
-            << _("the options dialog. New accounts, will use this currency by") << wxT("\n")
-            << _("default, and can be changed when editing account details.") << wxT("\n");
+/**************************Message to be displayed *************
+    Specify the base (or default) currency to be used for the
+    database. The base currency can later be changed by using
+    the options dialog. New accounts, will use this currency by
+    default, and can be changed when editing account details.
+***************************************************************/
+    helpMsg << _("Specify the base (or default) currency to be used for the\ndatabase. The base currency can later be changed by using\nthe options dialog. New accounts, will use this currency by\ndefault, and can be changed when editing account details.")
+            << wxT("\n");
     mainSizer->Add( new wxStaticText(this, wxID_ANY, helpMsg), 0, wxALL, 5);
 
 
@@ -4209,8 +4232,7 @@ wxAddAccountPage1::wxAddAccountPage1(mmAddAccountWizard* parent) :
 
     wxString helpMsg;
     helpMsg << _("Specify a descriptive name for the account.") << wxT("\n")
-            << _("This is generally the name of a financial institution") << wxT("\n")
-            << _("where the account is held. For example: 'ABC Bank'.");
+            << _("This is generally the name of a financial institution\nwhere the account is held. For example: 'ABC Bank'.");
     mainSizer->Add(new wxStaticText(this, wxID_ANY, helpMsg ), 0, wxALL, 5);
 
     SetSizer(mainSizer);
@@ -4252,20 +4274,15 @@ wxAddAccountPage2::wxAddAccountPage2(mmAddAccountWizard *parent) :
     wxString textMsg;
     textMsg << wxT("\n") 
             << _("Select the type of account you want to create:") << wxT("\n\n")
-            << _("General bank accounts cover a wide variety of account") << wxT("\n")
-            << _("types like Checking, Savings and Credit card type accounts.");
+            << _("General bank accounts cover a wide variety of account\ntypes like Checking, Savings and Credit card type accounts.");
     mainSizer->Add( new wxStaticText(this, wxID_ANY,textMsg), 0, wxALL, 5);
 
     textMsg = wxT("\n");
-    textMsg << _("Investment accounts are specialized accounts that only") << wxT("\n")
-            << _("have stock/mutual fund investments associated with them.");
+    textMsg << _("Investment accounts are specialized accounts that only\nhave stock/mutual fund investments associated with them.");
     mainSizer->Add( new wxStaticText(this, wxID_ANY,textMsg), 0, wxALL, 5);
 
     textMsg = wxT("\n");
-    textMsg << _("Term accounts are specialized bank accounts. Intended for asset") << wxT("\n")
-            << _("type accounts such as Term Deposits and Bonds. These accounts") << wxT("\n")
-            << _("can have regular money coming in and out, being outside the") << wxT("\n")
-            << _("general income stream.");
+    textMsg << _("Term accounts are specialized bank accounts. Intended for asset\ntype accounts such as Term Deposits and Bonds. These accounts\ncan have regular money coming in and out, being outside the\ngeneral income stream.");
     mainSizer->Add( new wxStaticText(this, wxID_ANY,textMsg), 0, wxALL, 5);
 
     SetSizer(mainSizer);
