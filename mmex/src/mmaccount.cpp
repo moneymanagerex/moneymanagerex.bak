@@ -331,6 +331,18 @@ wxString mmAccountList::getAccountType(int accountID)
     return wxT("");
 }
 
+wxString mmAccountList::getAccountCurrencyDecimalChar(int accountID)
+{
+    boost::weak_ptr<mmCurrency> wpCurrency = getCurrencyWeakPtr(accountID);
+    boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
+    wxASSERT(pCurrency);
+
+    if (pCurrency)
+        return pCurrency->decChar_;
+
+    return wxT(".");
+}
+
 boost::weak_ptr<mmCurrency> mmAccountList::getCurrencyWeakPtr(int accountID)
 {
     int len = (int)accounts_.size();
