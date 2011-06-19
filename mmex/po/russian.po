@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-19 13:47+0300\n"
-"PO-Revision-Date: 2011-06-19 13:50+0300\n"
+"PO-Revision-Date: 2011-06-19 15:02+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "Language: \n"
@@ -3546,7 +3546,7 @@ msgstr "Повтор"
 
 #: src/mmcheckingpanel.cpp:1460
 msgid "Mark all being viewed"
-msgstr "Статут показанных"
+msgstr "Статус видимых в"
 
 #: src/mmcheckingpanel.cpp:1894
 msgid "Do you really want to delete the selected transaction?"
