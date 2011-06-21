@@ -31,7 +31,7 @@ wxString mmex::getProgramName()
 
 wxString mmex::getProgramVersion()
 {
-    return wxString(wxT("0.9.8.0"));
+    return wxString(wxT("0.9.8.0 DEV:SVN-1349"));
 }
 //----------------------------------------------------------------------------
 

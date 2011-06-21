@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-19 00:47+1000\n"
-"PO-Revision-Date: 2011-06-19 00:47+1000\n"
+"POT-Creation-Date: 2011-06-21 11:46+1000\n"
+"PO-Revision-Date: 2011-06-21 11:46+1000\n"
 "Last-Translator: Stefano Giorgio <stef145g@gmail.com>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
@@ -1100,6 +1100,7 @@ msgid "Save any changes made"
 msgstr ""
 
 #: src/currencydialog.cpp:320
+#: src/customreportdialog.cpp:135
 #, fuzzy
 msgid "&Close"
 msgstr "Đóng lại"
@@ -1213,7 +1214,7 @@ msgstr "Báo cáo SQL tự chọn"
 
 #: src/customreportindex.cpp:45
 #: src/customreportindex.cpp:156
-#: src/mmex.cpp:1074
+#: src/mmex.cpp:1085
 #, fuzzy
 msgid "Custom SQL Reports"
 msgstr "Báo cáo SQL tự tạo"
@@ -1551,7 +1552,7 @@ msgid "Balance"
 msgstr "Số dư"
 
 #: src/mmcheckingpanel.cpp:555
-#: src/mmex.cpp:2958
+#: src/mmex.cpp:2969
 msgid "Please Wait"
 msgstr "Làm ơn đợi"
 
@@ -1921,10 +1922,11 @@ msgid "Add Account Wizard"
 msgstr "Hỗ trợ tạo tài khoản mới"
 
 #: src/mmex.cpp:484
+#, fuzzy
 msgid ""
 " models all transactions as belonging to accounts.\n"
 "\n"
-" The next pages will help you create a new account.\n"
+"The next pages will help you create a new account.\n"
 "\n"
 "To help you get started, begin by making a list of all\n"
 "financial institutions where you hold an account."
@@ -1940,1220 +1942,1197 @@ msgstr ""
 msgid "New Database Wizard"
 msgstr "Hỗ trở tạo CSDL mới"
 
-#: src/mmex.cpp:524
+#: src/mmex.cpp:539
 msgid "The next pages will help you create a new database."
 msgstr ""
 
-#: src/mmex.cpp:525
+#: src/mmex.cpp:540
 #, fuzzy
 msgid "Your database file is stored with an extension of .mmb."
 msgstr "Mở CSDL đã được tạo với đuôi (*.mmb)"
 
-#: src/mmex.cpp:526
-msgid "Make sure to make backups of this file and to store it "
+#: src/mmex.cpp:541
+msgid ""
+"As this file contains important financial information,\n"
+"we recommended creating daily backups with the Options\n"
+"setting: 'Backup before opening', and store your backups\n"
+"in a separate location."
 msgstr ""
 
-#: src/mmex.cpp:527
-msgid "carefully as it contains important financial information."
+#: src/mmex.cpp:542
+msgid ""
+"The database can later be encrypted if required, by\n"
+"using the option: 'Save database as' and changing the\n"
+"file type before saving."
 msgstr ""
 
-#: src/mmex.cpp:529
-msgid "The database can later be encrypted if required, by using"
-msgstr ""
-
-#: src/mmex.cpp:530
-msgid "the option: 'Save database as' and changing the file type"
-msgstr ""
-
-#: src/mmex.cpp:531
-msgid "before saving."
-msgstr ""
-
-#: src/mmex.cpp:795
+#: src/mmex.cpp:806
 #, fuzzy
 msgid " Auto Repeat Transactions"
 msgstr "Các giao dịch định kỳ"
 
-#: src/mmex.cpp:968
+#: src/mmex.cpp:979
 msgid "Navigation"
 msgstr "Định hướng"
 
-#: src/mmex.cpp:1021
+#: src/mmex.cpp:1032
 msgid "Home Page"
 msgstr "Trang nhà"
 
-#: src/mmex.cpp:1027
+#: src/mmex.cpp:1038
 msgid "Bank Accounts"
 msgstr "Tài khoản ngân hàng"
 
-#: src/mmex.cpp:1035
+#: src/mmex.cpp:1046
 #, fuzzy
 msgid "Term Accounts"
 msgstr "Từ tài khoản"
 
-#: src/mmex.cpp:1041
-#: src/mmex.cpp:1110
+#: src/mmex.cpp:1052
+#: src/mmex.cpp:1121
 msgid "Stocks"
 msgstr "Chứng khoán"
 
-#: src/mmex.cpp:1062
+#: src/mmex.cpp:1073
 msgid "Budgeting"
 msgstr "Làm ngân sách"
 
-#: src/mmex.cpp:1067
+#: src/mmex.cpp:1078
 msgid "Reports"
 msgstr "Báo cáo"
 
-#: src/mmex.cpp:1107
+#: src/mmex.cpp:1118
 msgid "Summary of Accounts"
 msgstr "Tổng kết các tài khoản"
 
-#: src/mmex.cpp:1119
-#: src/mmex.cpp:1813
-#: src/mmex.cpp:1830
+#: src/mmex.cpp:1130
+#: src/mmex.cpp:1824
 #: src/mmex.cpp:1841
 #: src/mmex.cpp:1852
-#: src/mmex.cpp:1867
-#: src/mmex.cpp:1882
-#: src/mmex.cpp:1892
-#: src/mmex.cpp:1901
+#: src/mmex.cpp:1863
+#: src/mmex.cpp:1878
+#: src/mmex.cpp:1893
+#: src/mmex.cpp:1903
+#: src/mmex.cpp:1912
 msgid "Where the Money Goes"
 msgstr "Tiền đi đâu"
 
-#: src/mmex.cpp:1122
-#: src/mmex.cpp:1150
-#: src/mmex.cpp:1178
-#: src/mmex.cpp:1206
-#: src/mmex.cpp:1234
+#: src/mmex.cpp:1133
+#: src/mmex.cpp:1161
+#: src/mmex.cpp:1189
+#: src/mmex.cpp:1217
+#: src/mmex.cpp:1245
 msgid "Last Calendar Month"
 msgstr "Tháng trước"
 
-#: src/mmex.cpp:1125
-#: src/mmex.cpp:1153
-#: src/mmex.cpp:1181
-#: src/mmex.cpp:1209
-#: src/mmex.cpp:1237
+#: src/mmex.cpp:1136
+#: src/mmex.cpp:1164
+#: src/mmex.cpp:1192
+#: src/mmex.cpp:1220
+#: src/mmex.cpp:1248
 msgid "Current Month"
 msgstr "Tháng này"
-
-#: src/mmex.cpp:1128
-#: src/mmex.cpp:1156
-#: src/mmex.cpp:1184
-#: src/mmex.cpp:1212
-#: src/mmex.cpp:1240
-msgid "Last 30 Days"
-msgstr "30 ngày gần nhất"
-
-#: src/mmex.cpp:1131
-#: src/mmex.cpp:1159
-#: src/mmex.cpp:1187
-#: src/mmex.cpp:1215
-#: src/mmex.cpp:1243
-msgid "Last Year"
-msgstr "Năm trước"
-
-#: src/mmex.cpp:1134
-#: src/mmex.cpp:1162
-#: src/mmex.cpp:1190
-#: src/mmex.cpp:1218
-#: src/mmex.cpp:1246
-msgid "Current Year"
-msgstr "Năm nay"
 
 #: src/mmex.cpp:1139
 #: src/mmex.cpp:1167
 #: src/mmex.cpp:1195
 #: src/mmex.cpp:1223
 #: src/mmex.cpp:1251
-#, fuzzy
-msgid "Last Financial Year"
-msgstr "Năm trước"
+msgid "Last 30 Days"
+msgstr "30 ngày gần nhất"
 
 #: src/mmex.cpp:1142
 #: src/mmex.cpp:1170
 #: src/mmex.cpp:1198
 #: src/mmex.cpp:1226
 #: src/mmex.cpp:1254
+msgid "Last Year"
+msgstr "Năm trước"
+
+#: src/mmex.cpp:1145
+#: src/mmex.cpp:1173
+#: src/mmex.cpp:1201
+#: src/mmex.cpp:1229
+#: src/mmex.cpp:1257
+msgid "Current Year"
+msgstr "Năm nay"
+
+#: src/mmex.cpp:1150
+#: src/mmex.cpp:1178
+#: src/mmex.cpp:1206
+#: src/mmex.cpp:1234
+#: src/mmex.cpp:1262
+#, fuzzy
+msgid "Last Financial Year"
+msgstr "Năm trước"
+
+#: src/mmex.cpp:1153
+#: src/mmex.cpp:1181
+#: src/mmex.cpp:1209
+#: src/mmex.cpp:1237
+#: src/mmex.cpp:1265
 #, fuzzy
 msgid "Current Financial Year"
 msgstr "Năm nay"
 
-#: src/mmex.cpp:1147
-#: src/mmex.cpp:1711
-#: src/mmex.cpp:1729
-#: src/mmex.cpp:1741
-#: src/mmex.cpp:1753
-#: src/mmex.cpp:1769
-#: src/mmex.cpp:1784
-#: src/mmex.cpp:1794
-#: src/mmex.cpp:1804
+#: src/mmex.cpp:1158
+#: src/mmex.cpp:1722
+#: src/mmex.cpp:1740
+#: src/mmex.cpp:1752
+#: src/mmex.cpp:1764
+#: src/mmex.cpp:1780
+#: src/mmex.cpp:1795
+#: src/mmex.cpp:1805
+#: src/mmex.cpp:1815
 msgid "Where the Money Comes From"
 msgstr "Tiền từ đâu tới"
 
-#: src/mmex.cpp:1203
+#: src/mmex.cpp:1214
 msgid "To Whom the Money Goes"
 msgstr "Tiền tới tay ai"
 
-#: src/mmex.cpp:1231
+#: src/mmex.cpp:1242
 msgid "Income vs Expenses"
 msgstr "Thu và Chi"
 
-#: src/mmex.cpp:1258
+#: src/mmex.cpp:1269
 msgid "Income vs Expenses - All Time"
 msgstr "Thu và Chi - từ trước đến giờ"
 
-#: src/mmex.cpp:1262
+#: src/mmex.cpp:1273
 msgid "Transaction Report"
 msgstr "Báo cáo giao dịch"
 
-#: src/mmex.cpp:1282
+#: src/mmex.cpp:1293
 msgid "Budget Performance"
 msgstr "Thực hiện ngân sách"
 
-#: src/mmex.cpp:1285
+#: src/mmex.cpp:1296
 #, fuzzy
 msgid "Budget Setup and Performance"
 msgstr "Thực hiện ngân sách"
 
-#: src/mmex.cpp:1308
-#: src/mmex.cpp:3355
+#: src/mmex.cpp:1319
+#: src/mmex.cpp:3374
 msgid "Cash Flow"
 msgstr "Chuyển động tiền mặt"
 
-#: src/mmex.cpp:1313
+#: src/mmex.cpp:1324
 #, fuzzy
 msgid "Cash Flow - With Term Accounts"
 msgstr "Chuyển động tiền - theo tài khoản"
 
-#: src/mmex.cpp:1317
+#: src/mmex.cpp:1328
 msgid "Cash Flow - Specific Accounts"
 msgstr "Chuyển động tiền - theo tài khoản"
 
-#: src/mmex.cpp:1321
+#: src/mmex.cpp:1332
 msgid "Transaction Statistics"
 msgstr "Thống kê giao dịch"
 
-#: src/mmex.cpp:1326
+#: src/mmex.cpp:1337
 msgid "Help"
 msgstr "Trợ giúp"
 
-#: src/mmex.cpp:1629
+#: src/mmex.cpp:1640
 #, fuzzy
 msgid "Categories - Last Calendar Month"
 msgstr "Tháng trước"
 
-#: src/mmex.cpp:1640
+#: src/mmex.cpp:1651
 #, fuzzy
 msgid "Categories - Last 30 Days"
 msgstr "Những danh mục hàng đầu của 30 ngày gần nhất"
 
-#: src/mmex.cpp:1651
+#: src/mmex.cpp:1662
 #, fuzzy
 msgid "Categories - Current Month"
 msgstr "Hiển thị các giao dịch của tháng này"
 
-#: src/mmex.cpp:1666
+#: src/mmex.cpp:1677
 #, fuzzy
 msgid "Categories - Last Year"
 msgstr "Những danh mục hàng đầu của 30 ngày gần nhất"
 
-#: src/mmex.cpp:1681
+#: src/mmex.cpp:1692
 #, fuzzy
 msgid "Categories - Current Year"
 msgstr "Năm nay"
 
-#: src/mmex.cpp:1691
+#: src/mmex.cpp:1702
 #, fuzzy
 msgid "Categories - Last Financial Year"
 msgstr "Những danh mục hàng đầu của 30 ngày gần nhất"
 
-#: src/mmex.cpp:1701
+#: src/mmex.cpp:1712
 msgid "Categories - Current Financial Year"
 msgstr ""
 
-#: src/mmex.cpp:2218
+#: src/mmex.cpp:2229
 msgid "Do you really want to delete the account?"
 msgstr "Bạn thực sự muốn xóa tài khoản?"
 
-#: src/mmex.cpp:2219
-#: src/mmex.cpp:3910
+#: src/mmex.cpp:2230
+#: src/mmex.cpp:3929
 msgid "Confirm Account Deletion"
 msgstr "Xác nhận xóa tài khoản"
 
-#: src/mmex.cpp:2248
+#: src/mmex.cpp:2259
 msgid "MMEX has been opened without an active database."
 msgstr ""
 
-#: src/mmex.cpp:2248
+#: src/mmex.cpp:2259
 msgid "MMEX: Menu Popup Error"
 msgstr ""
 
-#: src/mmex.cpp:2270
-#: src/mmex.cpp:2312
-#: src/mmex.cpp:2610
+#: src/mmex.cpp:2281
+#: src/mmex.cpp:2323
+#: src/mmex.cpp:2621
 msgid "&Edit Account"
 msgstr "&Thay đổi tài khoản"
 
-#: src/mmex.cpp:2271
-#: src/mmex.cpp:2311
-#: src/mmex.cpp:2616
+#: src/mmex.cpp:2282
+#: src/mmex.cpp:2322
+#: src/mmex.cpp:2627
 msgid "&Delete Account"
 msgstr "&Xóa tài khoản"
 
-#: src/mmex.cpp:2273
+#: src/mmex.cpp:2284
 msgid "&Launch Account Website"
 msgstr "Vào trang &web của tài khoản"
 
-#: src/mmex.cpp:2310
-#: src/mmex.cpp:2600
+#: src/mmex.cpp:2321
+#: src/mmex.cpp:2611
 msgid "New &Account"
 msgstr "Tài khoản &mới"
 
-#: src/mmex.cpp:2313
+#: src/mmex.cpp:2324
 #, fuzzy
 msgid "Account &List (Home)"
 msgstr "&Danh sách tài khoản"
 
-#: src/mmex.cpp:2322
-#: src/mmex.cpp:2531
+#: src/mmex.cpp:2333
+#: src/mmex.cpp:2542
 msgid "&CSV Files"
 msgstr "&CSV Files"
 
-#: src/mmex.cpp:2323
-#: src/mmex.cpp:2327
-#: src/mmex.cpp:2532
-#: src/mmex.cpp:2537
+#: src/mmex.cpp:2334
+#: src/mmex.cpp:2338
+#: src/mmex.cpp:2543
+#: src/mmex.cpp:2548
 msgid "&QIF Files"
 msgstr "&QIF Files"
 
-#: src/mmex.cpp:2324
-#: src/mmex.cpp:2534
+#: src/mmex.cpp:2335
+#: src/mmex.cpp:2545
 msgid "&Export"
 msgstr "&Xuất"
 
-#: src/mmex.cpp:2326
-#: src/mmex.cpp:2538
+#: src/mmex.cpp:2337
+#: src/mmex.cpp:2549
 msgid "&Universal CSV Files"
 msgstr "File định dạng &phổ cập CSV"
 
-#: src/mmex.cpp:2328
-#: src/mmex.cpp:2540
+#: src/mmex.cpp:2339
+#: src/mmex.cpp:2551
 msgid "&MMEX CSV Files"
 msgstr "&MMEX CSV Files"
 
-#: src/mmex.cpp:2329
-#: src/mmex.cpp:2542
+#: src/mmex.cpp:2340
+#: src/mmex.cpp:2553
 #, fuzzy
 msgid "MM.&NET CSV Files"
 msgstr "&MM.NET CSV Files"
 
-#: src/mmex.cpp:2330
-#: src/mmex.cpp:2543
+#: src/mmex.cpp:2341
+#: src/mmex.cpp:2554
 #, fuzzy
 msgid "&Import"
 msgstr "Nhập"
 
-#: src/mmex.cpp:2335
+#: src/mmex.cpp:2346
 msgid "All"
 msgstr "Tất cả"
 
-#: src/mmex.cpp:2336
-#: src/mmex.cpp:2803
+#: src/mmex.cpp:2347
+#: src/mmex.cpp:2814
 msgid "Open"
 msgstr "Mở"
 
-#: src/mmex.cpp:2337
+#: src/mmex.cpp:2348
 msgid "Favorites"
 msgstr "Tài khoản ưu tiên"
 
-#: src/mmex.cpp:2338
+#: src/mmex.cpp:2349
 msgid "Accounts Visible"
 msgstr "Các tài khoản được hiển thị"
 
-#: src/mmex.cpp:2349
+#: src/mmex.cpp:2360
 #, fuzzy
 msgid "Edit Custom Report"
 msgstr "Báo cáo SQL tự tạo"
 
-#: src/mmex.cpp:2350
+#: src/mmex.cpp:2361
 #, fuzzy
 msgid "Delete Custom Report"
 msgstr "Báo cáo SQL tự tạo"
 
-#: src/mmex.cpp:2515
+#: src/mmex.cpp:2526
 msgid "&New Database\tCtrl-N"
 msgstr "CSDL &mới\tCtrl-N"
 
-#: src/mmex.cpp:2515
-#: src/mmex.cpp:2802
-#: src/mmex.cpp:4190
+#: src/mmex.cpp:2526
+#: src/mmex.cpp:2813
+#: src/mmex.cpp:4213
 msgid "New Database"
 msgstr "CSDL mới"
 
-#: src/mmex.cpp:2518
+#: src/mmex.cpp:2529
 msgid "&Open Database\tCtrl-O"
 msgstr "Mở &CSDL\tCtrl-O"
 
-#: src/mmex.cpp:2518
-#: src/mmex.cpp:2803
+#: src/mmex.cpp:2529
+#: src/mmex.cpp:2814
 msgid "Open Database"
 msgstr "Mở CSDL"
 
-#: src/mmex.cpp:2524
+#: src/mmex.cpp:2535
 msgid "Save Database &As"
 msgstr "&Ghi mới CSDL"
 
-#: src/mmex.cpp:2524
+#: src/mmex.cpp:2535
 msgid "Save Database As"
 msgstr "Ghi mới CSDL"
 
-#: src/mmex.cpp:2531
+#: src/mmex.cpp:2542
 msgid "Export to CSV"
 msgstr "Xuất ra định dạng CSV"
 
-#: src/mmex.cpp:2532
+#: src/mmex.cpp:2543
 #, fuzzy
 msgid "Export to QIF"
 msgstr "Xuất ra định dạng CSV"
 
-#: src/mmex.cpp:2533
+#: src/mmex.cpp:2544
 msgid "&Report to HTML"
 msgstr "&Báo cáo ở định dạng HTML"
 
-#: src/mmex.cpp:2533
+#: src/mmex.cpp:2544
 msgid "Export to HTML"
 msgstr "Xuất ra định dạng HTML"
 
-#: src/mmex.cpp:2537
+#: src/mmex.cpp:2548
 msgid "Import from QIF"
 msgstr "Nhập từ định dạng QIF"
 
-#: src/mmex.cpp:2538
+#: src/mmex.cpp:2549
 msgid "Import from any CSV file"
 msgstr "Nhập từ file định dạng CSV"
 
-#: src/mmex.cpp:2540
+#: src/mmex.cpp:2551
 msgid "Import from MMEX CSV"
 msgstr "Nhập từ file định dạng CSV của MMEX"
 
-#: src/mmex.cpp:2542
+#: src/mmex.cpp:2553
 msgid "Import from MM.NET CSV"
 msgstr "Nhập từ định dạng CSV của MM.NET"
 
-#: src/mmex.cpp:2549
+#: src/mmex.cpp:2560
 #, fuzzy
 msgid "Page Set&up..."
 msgstr "Định dạng trang giấy..."
 
-#: src/mmex.cpp:2549
+#: src/mmex.cpp:2560
 msgid "Setup page printing options"
 msgstr "Định dạng trang in"
 
-#: src/mmex.cpp:2555
-#: src/mmex.cpp:2561
+#: src/mmex.cpp:2566
+#: src/mmex.cpp:2572
 #, fuzzy
 msgid "Current &View"
 msgstr "Hiển thị hiện tại"
 
-#: src/mmex.cpp:2555
+#: src/mmex.cpp:2566
 msgid "Preview current report"
 msgstr "Xem qua báo cáo hiện tại"
 
-#: src/mmex.cpp:2557
+#: src/mmex.cpp:2568
 #, fuzzy
 msgid "Print Pre&view..."
 msgstr "Xem qua trước khi in..."
 
-#: src/mmex.cpp:2561
+#: src/mmex.cpp:2572
 msgid "Print current report"
 msgstr "In báo cáo này"
 
-#: src/mmex.cpp:2564
+#: src/mmex.cpp:2575
 #, fuzzy
 msgid "&Print..."
 msgstr "In..."
 
-#: src/mmex.cpp:2569
+#: src/mmex.cpp:2580
 msgid "E&xit\tAlt-X"
 msgstr "T&hoát\tAlt-H"
 
-#: src/mmex.cpp:2569
+#: src/mmex.cpp:2580
 msgid "Quit this program"
 msgstr "Ra khỏi chương trình này"
 
-#: src/mmex.cpp:2576
+#: src/mmex.cpp:2587
 msgid "&Toolbar"
 msgstr "&Thanh công cụ"
 
-#: src/mmex.cpp:2576
+#: src/mmex.cpp:2587
 msgid "Show/Hide the toolbar"
 msgstr "Hiển thị/Dấu thanh công cụ"
 
-#: src/mmex.cpp:2578
+#: src/mmex.cpp:2589
 #, fuzzy
 msgid "&Navigation"
 msgstr "Định hướng"
 
-#: src/mmex.cpp:2578
+#: src/mmex.cpp:2589
 msgid "Show/Hide the Navigation tree control"
 msgstr "Hiển thị/Dấu Biểu đồ hình cây"
 
-#: src/mmex.cpp:2581
+#: src/mmex.cpp:2592
 #, fuzzy
 msgid "&Bank Accounts"
 msgstr "Tài khoản ngân hàng"
 
-#: src/mmex.cpp:2581
+#: src/mmex.cpp:2592
 msgid "Show/Hide Bank Accounts on Summary page"
 msgstr ""
 
-#: src/mmex.cpp:2583
+#: src/mmex.cpp:2594
 #, fuzzy
 msgid "Term &Accounts"
 msgstr "Tài &khoản"
 
-#: src/mmex.cpp:2583
+#: src/mmex.cpp:2594
 msgid "Show/Hide Term Accounts on Summary page"
 msgstr ""
 
-#: src/mmex.cpp:2585
+#: src/mmex.cpp:2596
 #, fuzzy
 msgid "&Stock Accounts"
 msgstr "Tài khoản ngân hàng"
 
-#: src/mmex.cpp:2585
+#: src/mmex.cpp:2596
 msgid "Show/Hide Stock Accounts on Summary page"
 msgstr ""
 
-#: src/mmex.cpp:2600
-#: src/mmex.cpp:2807
-#: src/mmex.cpp:4225
-#: src/mmex.cpp:4291
+#: src/mmex.cpp:2611
+#: src/mmex.cpp:2818
+#: src/mmex.cpp:4247
+#: src/mmex.cpp:4308
 msgid "New Account"
 msgstr "Tài khỏan mới"
 
-#: src/mmex.cpp:2606
+#: src/mmex.cpp:2617
 msgid "Account &List"
 msgstr "&Danh sách tài khoản"
 
-#: src/mmex.cpp:2606
-#: src/mmex.cpp:2809
+#: src/mmex.cpp:2617
+#: src/mmex.cpp:2820
 msgid "Show Account List"
 msgstr "Hiển thị danh sách tài khoản"
 
-#: src/mmex.cpp:2610
+#: src/mmex.cpp:2621
 msgid "Edit Account"
 msgstr "Thay đổi tài khoản"
 
-#: src/mmex.cpp:2616
+#: src/mmex.cpp:2627
 msgid "Delete Account from database"
 msgstr "Xóa tài khoản ra khỏi CSDL"
 
-#: src/mmex.cpp:2628
+#: src/mmex.cpp:2639
 #, fuzzy
 msgid "Organize &Categories..."
 msgstr "Tổ chức các &hạng mục thu chi"
 
-#: src/mmex.cpp:2628
-#: src/mmex.cpp:2811
+#: src/mmex.cpp:2639
+#: src/mmex.cpp:2822
 msgid "Organize Categories"
 msgstr "Tổ chức các hạng mục thu chi"
 
-#: src/mmex.cpp:2633
+#: src/mmex.cpp:2644
 #, fuzzy
 msgid "Organize &Payees..."
 msgstr "Tổ chức danh sách người &giao dịch"
 
-#: src/mmex.cpp:2633
-#: src/mmex.cpp:2812
+#: src/mmex.cpp:2644
+#: src/mmex.cpp:2823
 msgid "Organize Payees"
 msgstr "Tổ chức danh sách người giao dịch"
 
-#: src/mmex.cpp:2638
+#: src/mmex.cpp:2649
 #, fuzzy
 msgid "Or&ganize Currency..."
 msgstr "Tổ chức danh sách tiền tệ"
 
-#: src/mmex.cpp:2638
-#: src/mmex.cpp:2813
+#: src/mmex.cpp:2649
+#: src/mmex.cpp:2824
 msgid "Organize Currency"
 msgstr "Tổ chức danh sách tiền tệ"
 
-#: src/mmex.cpp:2644
+#: src/mmex.cpp:2655
 #, fuzzy
 msgid "&Categories..."
 msgstr "Hạng mục"
 
-#: src/mmex.cpp:2644
+#: src/mmex.cpp:2655
 msgid "Reassign all categories to another category"
 msgstr ""
 
-#: src/mmex.cpp:2647
+#: src/mmex.cpp:2658
 #, fuzzy
 msgid "&Payees..."
 msgstr "Người giao dịch"
 
-#: src/mmex.cpp:2647
+#: src/mmex.cpp:2658
 msgid "Reassign all payees to another payee"
 msgstr ""
 
-#: src/mmex.cpp:2651
+#: src/mmex.cpp:2662
 msgid "Relocation of..."
 msgstr ""
 
-#: src/mmex.cpp:2651
+#: src/mmex.cpp:2662
 #, fuzzy
 msgid "Relocate Categories && Payees"
 msgstr "Những danh mục hàng đầu của 30 ngày gần nhất"
 
-#: src/mmex.cpp:2658
+#: src/mmex.cpp:2669
 #, fuzzy
 msgid "&Budget Setup"
 msgstr "Xây dựng ngân sách"
 
-#: src/mmex.cpp:2658
+#: src/mmex.cpp:2669
 msgid "Budget Setup"
 msgstr "Xây dựng ngân sách"
 
-#: src/mmex.cpp:2666
+#: src/mmex.cpp:2677
 #, fuzzy
 msgid "&Repeating Transactions"
 msgstr "Các giao dịch định kỳ"
 
-#: src/mmex.cpp:2666
+#: src/mmex.cpp:2677
 msgid "Bills && Deposits"
 msgstr "Hóa đơn thu && Chi"
 
-#: src/mmex.cpp:2677
+#: src/mmex.cpp:2688
 #, fuzzy
 msgid "&Assets"
 msgstr "Tài sản"
 
-#: src/mmex.cpp:2685
+#: src/mmex.cpp:2696
 #, fuzzy
 msgid "&Transaction Filter..."
 msgstr "Bộ lọc giao dịch"
 
-#: src/mmex.cpp:2685
-#: src/mmex.cpp:2815
+#: src/mmex.cpp:2696
+#: src/mmex.cpp:2826
 msgid "Transaction Filter"
 msgstr "Bộ lọc giao dịch"
 
-#: src/mmex.cpp:2695
+#: src/mmex.cpp:2706
 msgid "New..."
 msgstr ""
 
-#: src/mmex.cpp:2695
+#: src/mmex.cpp:2706
 #, fuzzy
 msgid "Create a new SQL report"
 msgstr "Báo cáo SQL tự tạo"
 
-#: src/mmex.cpp:2697
+#: src/mmex.cpp:2708
 #, fuzzy
 msgid "Edit..."
 msgstr "Thay đổi"
 
-#: src/mmex.cpp:2697
+#: src/mmex.cpp:2708
 #, fuzzy
 msgid "Edit an existing SQL report"
 msgstr "Thay đổi tên hạng mục hiện có"
 
-#: src/mmex.cpp:2699
+#: src/mmex.cpp:2710
 #, fuzzy
 msgid "Delete..."
 msgstr "Xóa"
 
-#: src/mmex.cpp:2699
+#: src/mmex.cpp:2710
 msgid "Remove a file from the Custom SQL Reports menu"
 msgstr ""
 
-#: src/mmex.cpp:2705
+#: src/mmex.cpp:2716
 #, fuzzy
 msgid "Custom SQL Reports..."
 msgstr "Báo cáo SQL tự tạo"
 
-#: src/mmex.cpp:2705
+#: src/mmex.cpp:2716
 msgid "Create or modify SQL reports for the Reports section"
 msgstr ""
 
-#: src/mmex.cpp:2710
+#: src/mmex.cpp:2721
 #, fuzzy
 msgid "&Options..."
 msgstr "&Lựa chọn"
 
-#: src/mmex.cpp:2710
+#: src/mmex.cpp:2721
 msgid "Show the Options Dialog"
 msgstr "Hiển thị bảng hội thoại lựa chọn"
 
-#: src/mmex.cpp:2717
+#: src/mmex.cpp:2728
 msgid "Convert Encrypted &DB"
 msgstr ""
 
-#: src/mmex.cpp:2718
+#: src/mmex.cpp:2729
 msgid "Convert Encrypted DB to Non-Encrypted DB"
 msgstr ""
 
-#: src/mmex.cpp:2724
+#: src/mmex.cpp:2735
 #, fuzzy
 msgid "Online &Update Currency Rate"
 msgstr "Tiền tệ cơ sở chưa được xác định"
 
-#: src/mmex.cpp:2725
+#: src/mmex.cpp:2736
 msgid "Online update currency rate"
 msgstr ""
 
-#: src/mmex.cpp:2732
+#: src/mmex.cpp:2743
 msgid "&Help\tCtrl-F1"
 msgstr "Trợ &giúp\tCtrl-F1"
 
-#: src/mmex.cpp:2732
+#: src/mmex.cpp:2743
 msgid "Show the Help file"
 msgstr "Hiển thị file trợ giúp"
 
-#: src/mmex.cpp:2737
+#: src/mmex.cpp:2748
 #, fuzzy
 msgid "&Show App Start Dialog"
 msgstr "Hiển thị bảng hội thoại khởi động chương trình"
 
-#: src/mmex.cpp:2737
+#: src/mmex.cpp:2748
 msgid "App Start Dialog"
 msgstr "Bảng hội thoại khởi động chương trình"
 
-#: src/mmex.cpp:2746
+#: src/mmex.cpp:2757
 msgid "Check for &Updates"
 msgstr "Kiểm tra &cập nhật"
 
-#: src/mmex.cpp:2746
+#: src/mmex.cpp:2757
 msgid "Check For Updates"
 msgstr "Kiểm tra cập nhật"
 
-#: src/mmex.cpp:2754
+#: src/mmex.cpp:2765
 #, fuzzy
 msgid "&Report Issues or Feedback"
 msgstr "Thông báo lỗi hoặc góp ý"
 
-#: src/mmex.cpp:2754
+#: src/mmex.cpp:2765
 msgid "Send email through the mailing list to report issues with the software."
 msgstr "Gửi email qua mailing-list để thông báo lỗi của phần mềm"
 
-#: src/mmex.cpp:2762
+#: src/mmex.cpp:2773
 #, fuzzy
 msgid "Be &notified of new releases"
 msgstr "Được thông báo về những ấn hành mới"
 
-#: src/mmex.cpp:2762
+#: src/mmex.cpp:2773
 msgid "Sign up for the announcement mailing list"
 msgstr "Đăng ký nhận thông báo qua mailing-list"
 
-#: src/mmex.cpp:2768
+#: src/mmex.cpp:2779
 msgid "&About..."
 msgstr "&Thông tin về phần mềm"
 
-#: src/mmex.cpp:2768
+#: src/mmex.cpp:2779
 msgid "Show about dialog"
 msgstr "Hiển thị thông tin về phần mềm"
 
-#: src/mmex.cpp:2773
+#: src/mmex.cpp:2784
 msgid "&File"
 msgstr "&File"
 
-#: src/mmex.cpp:2774
+#: src/mmex.cpp:2785
 msgid "&Accounts"
 msgstr "Tài &khoản"
 
-#: src/mmex.cpp:2775
+#: src/mmex.cpp:2786
 msgid "&Tools"
 msgstr "&Công cụ"
 
-#: src/mmex.cpp:2776
+#: src/mmex.cpp:2787
 msgid "&View"
 msgstr "&Hiển thị"
 
-#: src/mmex.cpp:2777
+#: src/mmex.cpp:2788
 msgid "&Help"
 msgstr "Trợ &giúp"
 
-#: src/mmex.cpp:2802
+#: src/mmex.cpp:2813
 msgid "New"
 msgstr "Mới"
 
-#: src/mmex.cpp:2809
+#: src/mmex.cpp:2820
 msgid "Account List"
 msgstr "Danh sách tài khoản"
 
-#: src/mmex.cpp:2811
+#: src/mmex.cpp:2822
 msgid "Show Organize Categories Dialog"
 msgstr "Hiển thị hội thoại tổ chức hạng mục"
 
-#: src/mmex.cpp:2812
+#: src/mmex.cpp:2823
 msgid "Show Organize Payees Dialog"
 msgstr "Hiển thị hội thoại tổ chức danh sách người giao dịch"
 
-#: src/mmex.cpp:2813
+#: src/mmex.cpp:2824
 msgid "Show Organize Currency Dialog"
 msgstr "Hiển thị hội thoại tổ chức danh sách tiền tệ"
 
-#: src/mmex.cpp:2817
+#: src/mmex.cpp:2828
 #, fuzzy
 msgid "Custom SQL Manager"
 msgstr "Lệnh SQL tự tạo"
 
-#: src/mmex.cpp:2817
+#: src/mmex.cpp:2828
 #, fuzzy
 msgid "Create new Custom SQL Reports"
 msgstr "Báo cáo SQL tự tạo"
 
-#: src/mmex.cpp:2842
+#: src/mmex.cpp:2853
 msgid "Enter database's password"
 msgstr ""
 
-#: src/mmex.cpp:2847
+#: src/mmex.cpp:2858
 #, fuzzy
 msgid "Opening MMEX Database - Error"
 msgstr "Mở CSDL hiện có"
 
-#: src/mmex.cpp:2875
+#: src/mmex.cpp:2886
 msgid "An incorrect password given for an encrypted file"
 msgstr ""
 
-#: src/mmex.cpp:2876
+#: src/mmex.cpp:2887
 msgid "or"
 msgstr ""
 
-#: src/mmex.cpp:2877
+#: src/mmex.cpp:2888
 msgid "Attempt to open a File that is not a database file"
 msgstr ""
 
-#: src/mmex.cpp:2885
-#: src/mmex.cpp:2933
+#: src/mmex.cpp:2896
+#: src/mmex.cpp:2944
 msgid " - No File opened "
 msgstr " - Không có File nào được mở"
 
-#: src/mmex.cpp:2887
+#: src/mmex.cpp:2898
 #, fuzzy
 msgid "Sorry. The Database version is too old or Database password is incorrect"
 msgstr "Xin lỗi. Cơ sở dữ liệu quá cũ hoặc                 Mật mã của cơ sở dữ liệu không đúng"
 
-#: src/mmex.cpp:2936
+#: src/mmex.cpp:2947
 #, fuzzy
 msgid "Cannot locate previously opened database.\n"
 msgstr "Mở CSDL được mở lần trước"
 
-#: src/mmex.cpp:2938
+#: src/mmex.cpp:2949
 msgid "Password not entered for encrypted Database.\n"
 msgstr ""
 
-#: src/mmex.cpp:2940
+#: src/mmex.cpp:2951
 #, fuzzy
 msgid "Do you want to browse to locate another file?"
 msgstr ""
 "Không thể tìm được nơi lưu giữ CSDL .mmb được mở ra lần trước.\n"
 " Bạn có muốn tìm để xác định lại nơi lưu giữ file?"
 
-#: src/mmex.cpp:2959
+#: src/mmex.cpp:2970
 msgid "Opening Database File && Verifying Integrity"
 msgstr "Mở file CSDL && Kiểm tra sự liên kết"
 
-#: src/mmex.cpp:2969
+#: src/mmex.cpp:2980
 msgid "portable mode"
 msgstr ""
 
-#: src/mmex.cpp:3019
+#: src/mmex.cpp:3030
 #, fuzzy
 msgid "Choose database file to create"
 msgstr "Chọn file dữ liệu QIF để nhập thông tin"
 
-#: src/mmex.cpp:3042
+#: src/mmex.cpp:3053
 #, fuzzy
 msgid "Choose database file to open"
 msgstr "Chọn file dữ liệu QIF để nhập thông tin"
 
-#: src/mmex.cpp:3057
+#: src/mmex.cpp:3068
 #, fuzzy
 msgid "Choose Encrypted database file to open"
 msgstr "Chọn file dữ liệu QIF để nhập thông tin"
 
-#: src/mmex.cpp:3067
+#: src/mmex.cpp:3078
 #, fuzzy
 msgid "Enter password for database"
 msgstr "Có lỗi khi mở cơ sở dữ liệu"
 
-#: src/mmex.cpp:3072
+#: src/mmex.cpp:3083
 #, fuzzy
 msgid "Choose database file to Save As"
 msgstr "Chọn file dữ liệu QIF để nhập thông tin"
 
-#: src/mmex.cpp:3094
+#: src/mmex.cpp:3105
 msgid "Converted DB!"
 msgstr ""
 
-#: src/mmex.cpp:3094
+#: src/mmex.cpp:3105
 msgid "MMEX message"
 msgstr ""
 
-#: src/mmex.cpp:3108
-#: src/mmex.cpp:3126
+#: src/mmex.cpp:3119
+#: src/mmex.cpp:3137
 #, fuzzy
 msgid "Save database file as"
 msgstr "Ghi mới CSDL"
 
-#: src/mmex.cpp:3126
+#: src/mmex.cpp:3137
 msgid "Can't copy file to itself"
 msgstr ""
 
-#: src/mmex.cpp:3139
+#: src/mmex.cpp:3150
 #, fuzzy
 msgid "Enter password for new database"
 msgstr "Có lỗi khi mở cơ sở dữ liệu"
 
-#: src/mmex.cpp:3205
+#: src/mmex.cpp:3216
 #, fuzzy
 msgid "No account available to import"
 msgstr "Không có tài khoản nào! Không thể xuất!"
 
-#: src/mmex.cpp:3205
+#: src/mmex.cpp:3216
 #, fuzzy
 msgid "Universal CSV Import"
 msgstr "Bảng hội thoại nhập dữ liệu CSV tổng hợp"
 
-#: src/mmex.cpp:3245
+#: src/mmex.cpp:3265
 msgid "Term Account views have been temporarly turned on."
 msgstr ""
 
-#: src/mmex.cpp:3246
-msgid "To maintain this view, change the defaults by using:"
+#: src/mmex.cpp:3266
+msgid ""
+"To maintain this view, change the defaults by using:\n"
+"\n"
+"Tools -> Options\n"
+"View Options"
 msgstr ""
 
-#: src/mmex.cpp:3247
-#, fuzzy
-msgid "Tools -> Options"
-msgstr "Lựa chọn"
-
-#: src/mmex.cpp:3248
-msgid "View Options"
-msgstr "Lựa chọn hiển thị"
-
-#: src/mmex.cpp:3249
+#: src/mmex.cpp:3268
 msgid "This message will not be displayed in future."
 msgstr ""
 
-#: src/mmex.cpp:3250
+#: src/mmex.cpp:3269
 #, fuzzy
 msgid "Initial Term Account Activation"
 msgstr "Xác nhận xóa tài khoản"
 
-#: src/mmex.cpp:3355
+#: src/mmex.cpp:3374
 msgid "Choose Accounts"
 msgstr "Chọn tài khoản"
 
-#: src/mmex.cpp:3471
-#: src/mmex.cpp:3538
+#: src/mmex.cpp:3490
+#: src/mmex.cpp:3557
 msgid "Unable to connect!"
 msgstr "Không thể kết nối!"
 
-#: src/mmex.cpp:3471
-#: src/mmex.cpp:3508
-#: src/mmex.cpp:3514
+#: src/mmex.cpp:3490
+#: src/mmex.cpp:3527
+#: src/mmex.cpp:3533
 msgid "Check Update"
 msgstr "Kiểm tra cập nhật"
 
-#: src/mmex.cpp:3508
+#: src/mmex.cpp:3527
 msgid "New update available!"
 msgstr "Có bản cập nhật!"
 
-#: src/mmex.cpp:3514
+#: src/mmex.cpp:3533
 msgid "You have the latest version installed!"
 msgstr "Phiên bản mới nhất đã được cài đặt trên máy bạn!"
 
-#: src/mmex.cpp:3529
+#: src/mmex.cpp:3548
 #, fuzzy
 msgid "No database!"
 msgstr "CSDL mới"
 
-#: src/mmex.cpp:3529
-#: src/mmex.cpp:3538
-#: src/mmex.cpp:3545
-#: src/mmex.cpp:3551
-#: src/mmex.cpp:3560
-#: src/mmex.cpp:3567
-#: src/mmex.cpp:3572
-#: src/mmex.cpp:3577
-#: src/mmex.cpp:3584
-#: src/mmex.cpp:3589
-#: src/mmex.cpp:3632
-#: src/mmex.cpp:3659
+#: src/mmex.cpp:3548
+#: src/mmex.cpp:3557
+#: src/mmex.cpp:3564
+#: src/mmex.cpp:3570
+#: src/mmex.cpp:3579
+#: src/mmex.cpp:3586
+#: src/mmex.cpp:3591
+#: src/mmex.cpp:3596
+#: src/mmex.cpp:3603
+#: src/mmex.cpp:3608
+#: src/mmex.cpp:3651
+#: src/mmex.cpp:3678
 #, fuzzy
 msgid "Update Currency Rate"
 msgstr "Tiền tệ cơ sở chưa được xác định"
 
-#: src/mmex.cpp:3545
+#: src/mmex.cpp:3564
 msgid "Cannot get data from WWW!"
 msgstr ""
 
-#: src/mmex.cpp:3551
+#: src/mmex.cpp:3570
 msgid "Incorrect XML data (#1)!"
 msgstr ""
 
-#: src/mmex.cpp:3560
+#: src/mmex.cpp:3579
 msgid "Incorrect XML data (#2)!"
 msgstr ""
 
-#: src/mmex.cpp:3567
+#: src/mmex.cpp:3586
 msgid "Incorrect XML data (#3)!"
 msgstr ""
 
-#: src/mmex.cpp:3572
+#: src/mmex.cpp:3591
 msgid "Incorrect XML data (#4)!"
 msgstr ""
 
-#: src/mmex.cpp:3577
+#: src/mmex.cpp:3596
 msgid "Incorrect XML data (#5)!"
 msgstr ""
 
-#: src/mmex.cpp:3584
+#: src/mmex.cpp:3603
 msgid "Incorrect XML data (#6)!"
 msgstr ""
 
-#: src/mmex.cpp:3589
+#: src/mmex.cpp:3608
 msgid "Incorrect XML data (#7)!"
 msgstr ""
 
-#: src/mmex.cpp:3632
+#: src/mmex.cpp:3651
 msgid "Could not find base currency symbol!"
 msgstr ""
 
-#: src/mmex.cpp:3659
+#: src/mmex.cpp:3678
 #, fuzzy
 msgid "Currency rate updated"
 msgstr "Quản lý ngoại tệ"
 
-#: src/mmex.cpp:3821
+#: src/mmex.cpp:3840
 msgid "No investment accounts found. You can create one using the Accounts menu."
 msgstr ""
 
-#: src/mmex.cpp:3822
+#: src/mmex.cpp:3841
 #, fuzzy
 msgid "Investment Accounts"
 msgstr "Chọn tài khoản đầu tư"
 
-#: src/mmex.cpp:3852
+#: src/mmex.cpp:3871
 #, fuzzy
 msgid "No account available to edit!"
 msgstr "Không có tài khoản nào!"
 
-#: src/mmex.cpp:3852
-#: src/mmex.cpp:3865
-#: src/mmex.cpp:3889
-#: src/mmex.cpp:3902
+#: src/mmex.cpp:3871
+#: src/mmex.cpp:3884
+#: src/mmex.cpp:3908
+#: src/mmex.cpp:3921
 msgid "Accounts"
 msgstr "Tài khoản"
 
-#: src/mmex.cpp:3865
+#: src/mmex.cpp:3884
 msgid "Choose Account to Edit"
 msgstr "Chọn tài khoản để thay đổi"
 
-#: src/mmex.cpp:3889
+#: src/mmex.cpp:3908
 #, fuzzy
 msgid "No account available to delete!"
 msgstr "Không có tài khoản nào!"
 
-#: src/mmex.cpp:3902
+#: src/mmex.cpp:3921
 msgid "Choose Account to Delete"
 msgstr "Chọn tài khỏan để xóa"
 
-#: src/mmex.cpp:3908
+#: src/mmex.cpp:3927
 #, fuzzy
 msgid "Are you sure you want to delete\n"
 msgstr "Bạn thực sự muốn xóa tài sản?"
 
-#: src/mmex.cpp:3909
+#: src/mmex.cpp:3928
 #, fuzzy
 msgid " account: "
 msgstr " số tiền"
 
-#: src/mmex.cpp:4005
+#: src/mmex.cpp:4024
 #, fuzzy
 msgid "Category Relocation Completed."
 msgstr "Hạng mục không thể để trống"
 
-#: src/mmex.cpp:4006
-#: src/mmex.cpp:4020
+#: src/mmex.cpp:4025
+#: src/mmex.cpp:4039
 msgid " records have been updated in the database."
 msgstr ""
 
-#: src/mmex.cpp:4007
-#: src/mmex.cpp:4021
+#: src/mmex.cpp:4026
+#: src/mmex.cpp:4040
 msgid "MMEX must be shutdown and restarted for all the changes to be seen."
 msgstr ""
 
-#: src/mmex.cpp:4008
+#: src/mmex.cpp:4027
 #, fuzzy
 msgid "Category Relocation Result"
 msgstr "Hạng mục không thể để trống"
 
-#: src/mmex.cpp:4019
+#: src/mmex.cpp:4038
 #, fuzzy
 msgid "Payee Relocation Completed."
 msgstr "Hạng mục không thể để trống"
 
-#: src/mmex.cpp:4022
+#: src/mmex.cpp:4041
 msgid "Payee Relocation Result"
 msgstr ""
 
-#: src/mmex.cpp:4060
+#: src/mmex.cpp:4079
 msgid " to Edit:"
 msgstr ""
 
-#: src/mmex.cpp:4081
+#: src/mmex.cpp:4100
 #, fuzzy
 msgid " to Delete:"
 msgstr "Xóa"
 
-#: src/mmex.cpp:4096
+#: src/mmex.cpp:4115
 msgid "Delete the Custom Report Title:"
 msgstr ""
 
-#: src/mmex.cpp:4105
+#: src/mmex.cpp:4124
 #, fuzzy
 msgid "Do you want to delete the SQL file as well?"
 msgstr "Bạn thực sự muốn xóa serie?"
 
-#: src/mmex.cpp:4146
+#: src/mmex.cpp:4165
 msgid "Set Currency"
 msgstr "Xác lập tiền tệ"
 
-#: src/mmex.cpp:4156
+#: src/mmex.cpp:4175
 msgid "Base Currency for account"
 msgstr "Tiền tệ cơ sở cho tài khoản"
 
-#: src/mmex.cpp:4160
+#: src/mmex.cpp:4185
 #, fuzzy
-msgid "Specify the base (or default) currency to be used for the"
-msgstr "Chọn tiền tệ của tài khoản này."
-
-#: src/mmex.cpp:4161
-msgid "database. The base currency can later be changed by using"
+msgid ""
+"Specify the base (or default) currency to be used for the\n"
+"database. The base currency can later be changed by using\n"
+"the options dialog. New accounts, will use this currency by\n"
+"default, and can be changed when editing account details."
 msgstr ""
+"\n"
+"Xác định tiền tệ cơ sở (hoặc mặc định) để sử dụng \n"
+"với cơ sở dữ liệu. Bạn có thể thay đổi tiền tệ \n"
+"gắn với từng tài khoản nếu cần thiết. \n"
 
-#: src/mmex.cpp:4162
-msgid "the options dialog. New accounts, will use this currency by"
-msgstr ""
-
-#: src/mmex.cpp:4163
-msgid "default, and can be changed when editing account details."
-msgstr ""
-
-#: src/mmex.cpp:4170
+#: src/mmex.cpp:4193
 msgid "User Name"
 msgstr "Tên người dùng"
 
-#: src/mmex.cpp:4177
+#: src/mmex.cpp:4200
 msgid "(Optional) Specify a title or your name."
 msgstr ""
 
-#: src/mmex.cpp:4178
+#: src/mmex.cpp:4201
 msgid "Used as a database title for displayed and printed reports."
 msgstr ""
 
-#: src/mmex.cpp:4190
+#: src/mmex.cpp:4213
 msgid "Base Currency Not Set"
 msgstr "Tiền tệ cơ sở chưa được xác định"
 
-#: src/mmex.cpp:4207
+#: src/mmex.cpp:4230
 msgid "Name of the Account"
 msgstr "Tên gọi tài khoản"
 
-#: src/mmex.cpp:4211
+#: src/mmex.cpp:4234
 #, fuzzy
 msgid "Specify a descriptive name for the account."
 msgstr "Xác định trạng thái giao dịch này"
 
-#: src/mmex.cpp:4212
+#: src/mmex.cpp:4235
 #, fuzzy
-msgid "This is generally the name of a financial institution"
-msgstr "Điền bất kỳ thông tin liên lạc nào của tổ chức tài chính"
-
-#: src/mmex.cpp:4213
-msgid "where the account is held. For example: 'ABC Bank'."
+msgid ""
+"This is generally the name of a financial institution\n"
+"where the account is held. For example: 'ABC Bank'."
 msgstr ""
+"\n"
+"Xác định tên gọi đầy đủ của tài khoản. Thường người ta \n"
+"dùng tên của tổ chức tài chính nơi tài khỏan được mở. \n"
+"Ví dụ 'Ngân hàng ABC'."
 
-#: src/mmex.cpp:4225
+#: src/mmex.cpp:4247
 msgid "Account Name Invalid"
 msgstr "Tên tài khoản không hợp lệ"
 
-#: src/mmex.cpp:4239
+#: src/mmex.cpp:4261
 msgid "Checking/Savings"
 msgstr "Thanh toán/Tiết kiệm"
 
-#: src/mmex.cpp:4240
+#: src/mmex.cpp:4262
 msgid "Investment"
 msgstr "Đầu tư"
 
-#: src/mmex.cpp:4241
+#: src/mmex.cpp:4263
 msgid "Term"
 msgstr ""
 
-#: src/mmex.cpp:4245
+#: src/mmex.cpp:4267
 msgid "Specify the type of account to be created."
 msgstr "Xác định loại tài khoản sắp được tạo"
 
-#: src/mmex.cpp:4249
+#: src/mmex.cpp:4271
 msgid "Type of Account"
 msgstr "Loại tài khoản"
 
-#: src/mmex.cpp:4254
+#: src/mmex.cpp:4276
 #, fuzzy
 msgid "Select the type of account you want to create:"
 msgstr "Xác định loại tài khoản sắp được tạo"
 
-#: src/mmex.cpp:4255
-msgid "General bank accounts cover a wide variety of account"
-msgstr ""
-
-#: src/mmex.cpp:4256
-msgid "types like Checking, Savings and Credit card type accounts."
-msgstr ""
-
-#: src/mmex.cpp:4260
+#: src/mmex.cpp:4277
 #, fuzzy
-msgid "Investment accounts are specialized accounts that only"
+msgid ""
+"General bank accounts cover a wide variety of account\n"
+"types like Checking, Savings and Credit card type accounts."
+msgstr ""
+"\n"
+"Chọn loại tài khoản bạn muốn tạo lập:\n"
+"\n"
+"Các tài khoản ngân hàng thường có nhiều phân loại \n"
+"như thanh toán, tiết kiệm và thẻ tín dụng."
+
+#: src/mmex.cpp:4281
+#, fuzzy
+msgid ""
+"Investment accounts are specialized accounts that only\n"
+"have stock/mutual fund investments associated with them."
 msgstr ""
 "\n"
 "Các tài khoản đầu tư là những tài khoản chuyên dụng \n"
 "chỉ lưu ký chứng khóan/chứng chỉ quỹ liên quan.\n"
 "đến chúng\n"
 
-#: src/mmex.cpp:4261
-#, fuzzy
-msgid "have stock/mutual fund investments associated with them."
-msgstr ""
-"\n"
-"Các tài khoản đầu tư là những tài khoản chuyên dụng \n"
-"chỉ lưu ký chứng khóan/chứng chỉ quỹ liên quan.\n"
-"đến chúng\n"
-
-#: src/mmex.cpp:4265
-msgid "Term accounts are specialized bank accounts. Intended for asset"
+#: src/mmex.cpp:4285
+msgid ""
+"Term accounts are specialized bank accounts. Intended for asset\n"
+"type accounts such as Term Deposits and Bonds. These accounts\n"
+"can have regular money coming in and out, being outside the\n"
+"general income stream."
 msgstr ""
 
-#: src/mmex.cpp:4266
-msgid "type accounts such as Term Deposits and Bonds. These accounts"
-msgstr ""
-
-#: src/mmex.cpp:4267
-msgid "can have regular money coming in and out, being outside the"
-msgstr ""
-
-#: src/mmex.cpp:4268
-msgid "general income stream."
-msgstr ""
-
-#: src/mmex.cpp:4289
+#: src/mmex.cpp:4306
 #, fuzzy
 msgid "Base Account Currency Not set."
 msgstr "Tiền tệ cơ sở chưa được xác định"
 
-#: src/mmex.cpp:4290
+#: src/mmex.cpp:4307
 #, fuzzy
 msgid "Set that first using Tools->Options menu and then add a new account."
 msgstr ""
@@ -3249,27 +3228,9 @@ msgid "Grand Total:"
 msgstr "Tổng cộng:"
 
 #: src/mmhomepagepanel.cpp:726
+#: src/reportbudgetingperf.cpp:27
 msgid "Today's Date: "
 msgstr "Ngày hôm nay:"
-
-#: src/mmhomepagepanel.cpp:809
-msgid "Please use the stock link on the Navigation Tree"
-msgstr ""
-
-#: src/mmhomepagepanel.cpp:810
-msgid ""
-"\n"
-"\n"
-msgstr ""
-
-#: src/mmhomepagepanel.cpp:811
-msgid "Waiting Correct Implementation"
-msgstr ""
-
-#: src/mmhomepagepanel.cpp:812
-#, fuzzy
-msgid "Stock Investment Page Selection"
-msgstr "Xác nhận việc xóa chứng khoán"
 
 #: src/mmreportspanel.cpp:80
 msgid "REPORTS"
@@ -3643,50 +3604,62 @@ msgid "Start Month"
 msgstr "Tháng này"
 
 #: src/optionsdialog.cpp:771
+#: src/reportbudgetingperf.cpp:49
 msgid "Jan"
 msgstr "T.01"
 
 #: src/optionsdialog.cpp:771
+#: src/reportbudgetingperf.cpp:50
 msgid "Feb"
 msgstr "T.02"
 
 #: src/optionsdialog.cpp:771
+#: src/reportbudgetingperf.cpp:51
 msgid "Mar"
 msgstr "T.03"
 
 #: src/optionsdialog.cpp:771
+#: src/reportbudgetingperf.cpp:52
 msgid "Apr"
 msgstr "T.04"
 
 #: src/optionsdialog.cpp:771
+#: src/reportbudgetingperf.cpp:53
 msgid "May"
 msgstr "T.05"
 
 #: src/optionsdialog.cpp:771
+#: src/reportbudgetingperf.cpp:54
 msgid "Jun"
 msgstr "T.06"
 
 #: src/optionsdialog.cpp:772
+#: src/reportbudgetingperf.cpp:55
 msgid "Jul"
 msgstr "T.07"
 
 #: src/optionsdialog.cpp:772
+#: src/reportbudgetingperf.cpp:56
 msgid "Aug"
 msgstr "T.08"
 
 #: src/optionsdialog.cpp:772
+#: src/reportbudgetingperf.cpp:57
 msgid "Sep"
 msgstr "T.09"
 
 #: src/optionsdialog.cpp:772
+#: src/reportbudgetingperf.cpp:58
 msgid "Oct"
 msgstr "T.10"
 
 #: src/optionsdialog.cpp:772
+#: src/reportbudgetingperf.cpp:59
 msgid "Nov"
 msgstr "T.11"
 
 #: src/optionsdialog.cpp:772
+#: src/reportbudgetingperf.cpp:60
 msgid "Dec"
 msgstr "T.12"
 
@@ -3782,6 +3755,10 @@ msgstr ""
 #: src/optionsdialog.cpp:913
 msgid "General"
 msgstr "Chung"
+
+#: src/optionsdialog.cpp:914
+msgid "View Options"
+msgstr "Lựa chọn hiển thị"
 
 #: src/optionsdialog.cpp:915
 msgid "Colors"
@@ -3879,146 +3856,142 @@ msgid "No account available for import"
 msgstr "Không có tài khoản nào! Không thể xuất!"
 
 #: src/qifimport.cpp:365
-#: src/qifimport.cpp:373
-#: src/qifimport.cpp:389
-#: src/qifimport.cpp:436
-#: src/qifimport.cpp:534
-#: src/qifimport.cpp:731
+#: src/qifimport.cpp:372
+#: src/qifimport.cpp:388
+#: src/qifimport.cpp:434
+#: src/qifimport.cpp:532
+#: src/qifimport.cpp:729
 msgid "QIF Import"
 msgstr "Nhập file định dạng QIF"
 
 #: src/qifimport.cpp:370
-msgid "To import QIF files correctly, the date format in the QIF file"
+msgid "To import QIF files correctly, the date format in the QIF file must match the date option set in MMEX."
 msgstr ""
 
 #: src/qifimport.cpp:371
-msgid "must match the date option set in MMEX."
-msgstr ""
-
-#: src/qifimport.cpp:372
 #, fuzzy
 msgid "Are you are sure you want to proceed with the import?"
 msgstr "Bạn thực sự muốn xóa tài sản?"
 
-#: src/qifimport.cpp:389
+#: src/qifimport.cpp:388
 msgid "Choose Account to import to:"
 msgstr "Chọn tài khoản để nhập:"
 
-#: src/qifimport.cpp:400
+#: src/qifimport.cpp:398
 msgid "Choose QIF data file to import"
 msgstr "Chọn file dữ liệu QIF để nhập thông tin"
 
-#: src/qifimport.cpp:436
-#: src/qifimport.cpp:726
+#: src/qifimport.cpp:434
+#: src/qifimport.cpp:724
 #, fuzzy
 msgid "Transactions imported from QIF: "
 msgstr " các giao dịch được nhập từ QIF"
 
-#: src/qifimport.cpp:441
+#: src/qifimport.cpp:439
 #, fuzzy
 msgid "Transactions imported from QIF"
 msgstr " các giao dịch được nhập từ QIF"
 
-#: src/qifimport.cpp:442
+#: src/qifimport.cpp:440
 #, fuzzy
 msgid "to account "
 msgstr " số tiền"
 
-#: src/qifimport.cpp:459
-#: src/qifimport.cpp:494
-#: src/qifimport.cpp:563
+#: src/qifimport.cpp:457
+#: src/qifimport.cpp:492
+#: src/qifimport.cpp:561
 msgid "Line : "
 msgstr "Dòng :"
 
-#: src/qifimport.cpp:460
+#: src/qifimport.cpp:458
 msgid " incorrect QIF line type"
 msgstr " loại dòng trong QIF không chính xác"
 
-#: src/qifimport.cpp:471
+#: src/qifimport.cpp:469
 msgid "Importing account type : "
 msgstr "Nhập loại tài khoản:"
 
-#: src/qifimport.cpp:494
+#: src/qifimport.cpp:492
 msgid " : "
 msgstr " :"
 
-#: src/qifimport.cpp:495
+#: src/qifimport.cpp:493
 msgid " account name "
 msgstr " tên tài khoản"
 
-#: src/qifimport.cpp:533
+#: src/qifimport.cpp:531
 msgid " cannot process Account Types yet "
 msgstr " không thể xử lý loại tài khoản"
 
-#: src/qifimport.cpp:534
+#: src/qifimport.cpp:532
 msgid "Cannot process these QIF Account Types yet"
 msgstr "Không thể xử lý loại tài khoản của file QIF"
 
-#: src/qifimport.cpp:548
-#: src/qifimport.cpp:664
+#: src/qifimport.cpp:546
+#: src/qifimport.cpp:662
 #, fuzzy
 msgid "Payee Added: "
 msgstr "Người giao dịch"
 
-#: src/qifimport.cpp:564
+#: src/qifimport.cpp:562
 msgid " invalid amount, skipping."
 msgstr " số tiền không phù hợp, bỏ qua."
 
-#: src/qifimport.cpp:643
+#: src/qifimport.cpp:641
 msgid "Date is empty, "
 msgstr "Ngày để trống,"
 
-#: src/qifimport.cpp:647
+#: src/qifimport.cpp:645
 msgid "Transaction Type is empty"
 msgstr "Loại giao dịch bỏ trống"
 
-#: src/qifimport.cpp:651
+#: src/qifimport.cpp:649
 msgid "Amount is empty"
 msgstr "Số tiền bỏ trống"
 
-#: src/qifimport.cpp:679
+#: src/qifimport.cpp:677
 msgid "Category is empty, marking transaction as Unknown category"
 msgstr "Hạng mục bỏ trống, đánh dấu giao dịch thuộc danh mục không xác định"
 
-#: src/qifimport.cpp:691
+#: src/qifimport.cpp:689
 msgid "Skipping QIF transaction because date, type, amount is empty/invalid, transaction skipped had "
 msgstr "Bỏ qua giao dịch QIF bởi ngày, loại, số tiền bỏ trống / không phù hợp, giao dịch được bỏ qua có"
 
-#: src/qifimport.cpp:692
+#: src/qifimport.cpp:690
 msgid " payee "
 msgstr " người giao dịch"
 
-#: src/qifimport.cpp:692
+#: src/qifimport.cpp:690
 msgid " type "
 msgstr " loại"
 
-#: src/qifimport.cpp:693
+#: src/qifimport.cpp:691
 msgid " amount "
 msgstr " số tiền"
 
-#: src/qifimport.cpp:693
+#: src/qifimport.cpp:691
 msgid " date "
 msgstr " ngày"
 
-#: src/qifimport.cpp:728
+#: src/qifimport.cpp:726
 #, fuzzy
 msgid "Total Imported : "
 msgstr "Tổng tiền:"
 
-#: src/qifimport.cpp:729
+#: src/qifimport.cpp:727
 msgid "Log file written to : "
 msgstr ""
 
-#: src/qifimport.cpp:730
+#: src/qifimport.cpp:728
 #, fuzzy
 msgid "Please confirm saving..."
 msgstr "Làm ơn đợi"
 
-#: src/qifimport.cpp:739
+#: src/qifimport.cpp:737
 msgid "Transactions saved to database in account: "
 msgstr ""
 
-#: src/qifimport.cpp:754
+#: src/qifimport.cpp:750
 msgid "Imported transactions discarded by user!"
 msgstr ""
 
@@ -4027,6 +4000,7 @@ msgid "Relocate all source categories to the destination category"
 msgstr ""
 
 #: src/relocatecategorydialog.cpp:88
+#: src/relocatepayeedialog.cpp:80
 msgid "Relocate:"
 msgstr ""
 
@@ -4036,6 +4010,7 @@ msgid "Source Category"
 msgstr "Hạng mục phụ"
 
 #: src/relocatecategorydialog.cpp:92
+#: src/relocatepayeedialog.cpp:84
 #, fuzzy
 msgid "to:"
 msgstr " Tới:"
@@ -4051,6 +4026,7 @@ msgid ":"
 msgstr ":"
 
 #: src/relocatecategorydialog.cpp:173
+#: src/relocatepayeedialog.cpp:164
 #, fuzzy
 msgid "Please Confirm:"
 msgstr "Làm ơn đợi"
@@ -4099,8 +4075,6 @@ msgid "Budget Performance for Year : "
 msgstr "Việc thực hiện ngân sách cho năm :"
 
 #: src/reportbudgetingperf.cpp:61
-#: src/reportcategovertimeperf.cpp:190
-#: src/reportcategovertimeperf.cpp:272
 msgid "Overall"
 msgstr "Tất cả"
 
@@ -4227,6 +4201,7 @@ msgid "Company"
 msgstr "Công ty"
 
 #: src/reportsummarystocks.cpp:47
+#: src/stockdialog.cpp:166
 msgid "Symbol"
 msgstr "Ký hiệu"
 
@@ -4239,14 +4214,17 @@ msgid "Purchase Date"
 msgstr "Ngày mua"
 
 #: src/reportsummarystocks.cpp:50
+#: src/stockdialog.cpp:181
 msgid "Purchase Price"
 msgstr "Giá mua"
 
 #: src/reportsummarystocks.cpp:51
+#: src/stockdialog.cpp:197
 msgid "Current Price"
 msgstr "Giá hiện tại"
 
 #: src/reportsummarystocks.cpp:52
+#: src/stockdialog.cpp:189
 msgid "Commission"
 msgstr "Phí giao dịch"
 
@@ -4285,7 +4263,6 @@ msgid "Invalid Category Entered "
 msgstr "Hạng mục điền vào không hợp lệ"
 
 #: src/splittransactionsdialog.cpp:146
-#: src/univcsvdialog.cpp:173
 #, fuzzy
 msgid "&Remove"
 msgstr "Loại bỏ"
@@ -4326,7 +4303,6 @@ msgid "Enter the stock symbol. (Optional) Include exchange. eg: IBM.BE"
 msgstr "Điền ký hiệp chứng khoán (tùy chọn)"
 
 #: src/stockdialog.cpp:173
-#: src/stockspanel.cpp:237
 msgid "Number of Shares"
 msgstr "Số lượng cổ phiếu"
 
@@ -4639,19 +4615,19 @@ msgid "Incorrect fields specified for CSV import! Requires at least Date, Amount
 msgstr "Vùng được xác định cho việc nhập CSV không chính xác! Cần có ít nhất ngày, số tiền và người giao dịch"
 
 #: src/univcsvdialog.cpp:438
-#: src/util.cpp:1232
+#: src/util.cpp:1239
 msgid "Choose MM.NET CSV data file to import"
 msgstr "Chọn file dữ liệu CSV của MM.NET để nhập"
 
 #: src/univcsvdialog.cpp:459
-#: src/util.cpp:953
-#: src/util.cpp:1253
+#: src/util.cpp:954
+#: src/util.cpp:1260
 #, fuzzy
 msgid "Transactions imported from CSV: "
 msgstr " các giao dịch được nhập từ QIF"
 
 #: src/univcsvdialog.cpp:466
-#: src/util.cpp:1260
+#: src/util.cpp:1267
 #, fuzzy
 msgid ""
 "Transactions imported from CSV\n"
@@ -4667,46 +4643,46 @@ msgid " One of the following fields: Date, Payee, Amount, Type is missing, skipp
 msgstr " Bỏ qua vì thiếu một trong các dữ liệu sau: Ngày, Người giao dịch, Số tiền, Loại "
 
 #: src/univcsvdialog.cpp:577
-#: src/util.cpp:1141
-#: src/util.cpp:1413
+#: src/util.cpp:1146
+#: src/util.cpp:1420
 msgid " imported OK."
 msgstr "đã nhập xong."
 
 #: src/univcsvdialog.cpp:583
-#: src/util.cpp:1147
-#: src/util.cpp:1418
+#: src/util.cpp:1152
+#: src/util.cpp:1425
 #, fuzzy, c-format
 msgid "Total Lines : %d"
 msgstr "Tổng cộng các tài sản:"
 
 #: src/univcsvdialog.cpp:585
-#: src/util.cpp:1149
-#: src/util.cpp:1420
+#: src/util.cpp:1154
+#: src/util.cpp:1427
 #, fuzzy, c-format
 msgid "Total Imported : %d"
 msgstr "Tổng tiền:"
 
 #: src/univcsvdialog.cpp:587
-#: src/util.cpp:1151
-#: src/util.cpp:1422
+#: src/util.cpp:1156
+#: src/util.cpp:1429
 #, c-format
 msgid "Log file written to : %s"
 msgstr ""
 
 #: src/univcsvdialog.cpp:591
-#: src/util.cpp:1199
-#: src/util.cpp:1204
-#: src/util.cpp:1223
-#: src/util.cpp:1253
-#: src/util.cpp:1426
-#: src/util.cpp:1455
+#: src/util.cpp:1205
+#: src/util.cpp:1210
+#: src/util.cpp:1229
+#: src/util.cpp:1260
+#: src/util.cpp:1433
+#: src/util.cpp:1460
 #, fuzzy
 msgid "Importing CSV MM.NET"
 msgstr "Nhập từ định dạng CSV của MM.NET"
 
 #: src/univcsvdialog.cpp:595
-#: src/util.cpp:1159
-#: src/util.cpp:1430
+#: src/util.cpp:1164
+#: src/util.cpp:1437
 #, fuzzy
 msgid "Imported transactions have been flagged so you can review them."
 msgstr ""
@@ -4840,15 +4816,15 @@ msgid "Choose QIF data file to Export"
 msgstr "Chọn file dữ liệu QIF để nhập thông tin"
 
 #: src/util.cpp:905
-#: src/util.cpp:1199
+#: src/util.cpp:1205
 #, fuzzy
 msgid "No account available for import."
 msgstr "Không có tài khoản nào! Không thể xuất!"
 
 #: src/util.cpp:905
 #: src/util.cpp:923
-#: src/util.cpp:953
-#: src/util.cpp:1184
+#: src/util.cpp:954
+#: src/util.cpp:1187
 msgid "Import from CSV"
 msgstr "Nhập từ CSV"
 
@@ -4857,70 +4833,70 @@ msgstr "Nhập từ CSV"
 msgid "Choose account to import to:"
 msgstr "Chọn tài khoản để nhập:"
 
-#: src/util.cpp:960
+#: src/util.cpp:961
 #, fuzzy
 msgid "Transactions imported from CSV"
 msgstr " các giao dịch được nhập từ QIF"
 
-#: src/util.cpp:991
-#: src/util.cpp:1290
+#: src/util.cpp:992
+#: src/util.cpp:1297
 msgid " missing date, skipping."
 msgstr " thiếu ngày, bỏ qua."
 
-#: src/util.cpp:998
-#: src/util.cpp:1297
+#: src/util.cpp:999
+#: src/util.cpp:1304
 msgid " missing payee, skipping."
 msgstr " thiếu người giao dịch, bỏ qua."
 
-#: src/util.cpp:1005
+#: src/util.cpp:1006
 msgid " missing transaction type, skipping."
 msgstr " thiếu loại giao dịch, bỏ qua."
 
-#: src/util.cpp:1012
-#: src/util.cpp:1304
+#: src/util.cpp:1014
+#: src/util.cpp:1312
 msgid " missing amount, skipping."
 msgstr " thiếu số tiền, bỏ qua."
 
-#: src/util.cpp:1021
+#: src/util.cpp:1023
 #, fuzzy
 msgid " check delimiters. Possible amount error, skipping."
 msgstr " thiếu số tiền, bỏ qua."
 
-#: src/util.cpp:1039
+#: src/util.cpp:1041
 #, fuzzy
 msgid " has excessive items. Check delimiters in numbers, skipping."
 msgstr " thiếu số tiền, bỏ qua."
 
-#: src/util.cpp:1045
+#: src/util.cpp:1047
 msgid "one of the following fields: date, payee, transaction type, amount strings is empty, skipping"
 msgstr "một trong những vùng sau: ngày, người giao dịch, loại giao dịch, số tiền bị bỏ trống, bỏ qua"
 
-#: src/util.cpp:1051
+#: src/util.cpp:1053
 msgid " unrecognized transaction type, skipping."
 msgstr " loại giao dịch không xác định, bỏ qua."
 
-#: src/util.cpp:1072
+#: src/util.cpp:1077
 msgid " transfer transaction not imported."
 msgstr " giao dịch chuyển tiền không được nhập."
 
-#: src/util.cpp:1155
+#: src/util.cpp:1160
 #, fuzzy
 msgid "Importing from CSV"
 msgstr "Nhập từ CSV"
 
-#: src/util.cpp:1203
+#: src/util.cpp:1209
 msgid "Please verify that the CSV file from MMEX.NET contains only one account!"
 msgstr "Kiểm tra xem file CSV từ MMEX.NET chỉ chứa một tài khoản!"
 
-#: src/util.cpp:1317
+#: src/util.cpp:1325
 msgid " missing category, skipping."
 msgstr " thiếu danh mục, bỏ qua."
 
-#: src/util.cpp:1343
+#: src/util.cpp:1350
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
 msgstr " Một trong các vùng: ngày, người giao dịch, loại giao dịch, số tiền, danh mục bị bỏ trống, bỏ qua"
 
-#: src/util.cpp:1352
+#: src/util.cpp:1359
 msgid " invalid date, skipping."
 msgstr " ngày không hợp lệ, bỏ qua."
 
@@ -5043,23 +5019,33 @@ msgstr "Bảng hội thoại nhập dữ liệu CSV tổng hợp"
 msgid "Options"
 msgstr "Lựa chọn"
 
+#, fuzzy
+#~ msgid "Tools -> Options"
+#~ msgstr "Lựa chọn"
+
+#, fuzzy
+#~ msgid "Specify the base (or default) currency to be used for the"
+#~ msgstr "Chọn tiền tệ của tài khoản này."
+
+#, fuzzy
+#~ msgid "This is generally the name of a financial institution"
+#~ msgstr "Điền bất kỳ thông tin liên lạc nào của tổ chức tài chính"
+
+#, fuzzy
+#~ msgid "Investment accounts are specialized accounts that only"
+#~ msgstr ""
+#~ "\n"
+#~ "Các tài khoản đầu tư là những tài khoản chuyên dụng \n"
+#~ "chỉ lưu ký chứng khóan/chứng chỉ quỹ liên quan.\n"
+#~ "đến chúng\n"
+
+#, fuzzy
+#~ msgid "Stock Investment Page Selection"
+#~ msgstr "Xác nhận việc xóa chứng khoán"
+
 #~ msgid "No Account available! Cannot Import! Create a new account first!"
 #~ msgstr ""
 #~ "Không có tài khoản nào! Không thể nhập! Hãy tạo một tài khoản mới trước!"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Select the type of account you want to create:\n"
-#~ "\n"
-#~ "General bank accounts cover a wide variety of account\n"
-#~ "types like Checking, Savings and Credit card type accounts."
-#~ msgstr ""
-#~ "\n"
-#~ "Chọn loại tài khoản bạn muốn tạo lập:\n"
-#~ "\n"
-#~ "Các tài khoản ngân hàng thường có nhiều phân loại \n"
-#~ "như thanh toán, tiết kiệm và thẻ tín dụng."
 
 #~ msgid "CSV Import"
 #~ msgstr "Nhập file CSV"
@@ -5100,33 +5086,11 @@ msgstr "Lựa chọn"
 #~ "tài chính quan trọng."
 
 #~ msgid ""
-#~ "\n"
-#~ "Specify the base (or default) currency to be used \n"
-#~ "with the database. You can change the \n"
-#~ "currency associated with each account if needed.\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Xác định tiền tệ cơ sở (hoặc mặc định) để sử dụng \n"
-#~ "với cơ sở dữ liệu. Bạn có thể thay đổi tiền tệ \n"
-#~ "gắn với từng tài khoản nếu cần thiết. \n"
-
-#~ msgid ""
 #~ "(Optional)Specify your name. Mainly used for reporting and in printing "
 #~ "reports.\n"
 #~ msgstr ""
 #~ "(tùy chọn)Điền tên của bạn. Chủ yếu dùng cho việc viết báo cáo và in báo "
 #~ "cáo.\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "Specify a descriptive name of the account. This most commonly \n"
-#~ "is the name of the financial institution where the account is held. \n"
-#~ "For example 'ABC Bank'."
-#~ msgstr ""
-#~ "\n"
-#~ "Xác định tên gọi đầy đủ của tài khoản. Thường người ta \n"
-#~ "dùng tên của tổ chức tài chính nơi tài khỏan được mở. \n"
-#~ "Ví dụ 'Ngân hàng ABC'."
 
 #~ msgid ""
 #~ "To import QIF files correctly, the date option set in MMEX \n"
