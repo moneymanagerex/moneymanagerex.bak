@@ -1190,7 +1190,7 @@ int mmImportCSV( mmCoreDB* core )
             CSV_transID.clear();
 
             if (!canceledbyuser)
-            fileviewer( logFile.GetFullPath(), 0 ).ShowModal();
+                fileviewer( logFile.GetFullPath(), 0 ).ShowModal();
         }  // end: if filename not empty
     } // end: if showModal... 
 
@@ -1433,7 +1433,7 @@ int mmImportCSVMMNET( mmCoreDB* core )
             if (!canceledbyuser && wxMessageBox(confirmMsg, _("Importing CSV MM.NET"),wxOK|wxCANCEL|wxICON_INFORMATION) == wxCANCEL)
                 canceledbyuser = true;
             
-			if (countImported > 0)
+			if (countImported > 0 && !canceledbyuser)
 			    msg << _("Imported transactions have been flagged so you can review them.") << wxT("\n") ;            
 
             // Since all database transactions are only in memory,
@@ -1454,7 +1454,7 @@ int mmImportCSVMMNET( mmCoreDB* core )
                 }
                 // and discard the database changes.
                 mmDBWrapper::rollback(db_);
-			    msg  << _("Imported transactions discarded by user!");
+			    msg << wxT("\n") << _("Imported transactions discarded by user!");
             }
 
             wxMessageBox(msg, _("Importing CSV MM.NET"), wxICON_INFORMATION);
@@ -1462,7 +1462,8 @@ int mmImportCSVMMNET( mmCoreDB* core )
             //clear the vector to avoid memory leak - done at same level created.
             CSV_transID.clear();
 
-            fileviewer( logFile.GetFullPath(), 0 ).ShowModal();
+            if (!canceledbyuser)
+                fileviewer( logFile.GetFullPath(), 0 ).ShowModal();
         }
     }
 
