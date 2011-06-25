@@ -43,6 +43,7 @@ private:
     mmGUIFrame* frame_;
     mmCoreDB* core_;
     int year_;
+    int printYear_;
 };
 
 #endif //_MM_EX_REPORTINCEXPENSESFINANCIALPERIOD_H_
