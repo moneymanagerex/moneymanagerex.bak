@@ -123,6 +123,7 @@ public:
     double getAccountBaseCurrencyConvRate(int accountID);
     wxString getAccountName(int accountID);
     wxString getAccountCurrencyDecimalChar(int accountID);
+    wxString getAccountCurrencyGroupChar(int accountID);
     account_v accounts_;
     
 private:

@@ -335,7 +335,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_OPEN, mmGUIFrame::OnOpen)
     EVT_MENU(MENU_SAVE_AS, mmGUIFrame::OnSaveAs)
     EVT_MENU(MENU_CONVERT_ENC_DB, mmGUIFrame::OnConvertEncryptedDB)
-    EVT_MENU(MENU_EXPORT_CSV, mmGUIFrame::OnExport)
+    EVT_MENU(MENU_EXPORT_CSV, mmGUIFrame::OnExportToCSV)
 	EVT_MENU(MENU_EXPORT_QIF, mmGUIFrame::OnExportToQIF)
     EVT_MENU(MENU_IMPORT_CSV, mmGUIFrame::OnImportCSV)
     EVT_MENU(MENU_IMPORT_MMNETCSV, mmGUIFrame::OnImportCSVMMNET)
@@ -397,7 +397,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_DELETE, mmGUIFrame::OnDeleteAccount)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_EDIT, mmGUIFrame::OnEditAccount)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_LIST, mmGUIFrame::OnAccountList)
-	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_EXPORT2CSV, mmGUIFrame::OnExport)
+	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_EXPORT2CSV, mmGUIFrame::OnExportToCSV)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_EXPORT2QIF, mmGUIFrame::OnExportToQIF)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_IMPORTQIF, mmGUIFrame::OnImportQIF)
 	EVT_MENU(MENU_TREEPOPUP_ACCOUNT_IMPORTCSV, mmGUIFrame::OnImportCSV)
@@ -3181,15 +3181,15 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
-void mmGUIFrame::OnExport(wxCommandEvent& /*event*/)
+void mmGUIFrame::OnExportToCSV(wxCommandEvent& /*event*/)
 {
-   mmExportCSV(m_db.get());
+   mmExportCSV(m_core.get(), m_db.get());
 }
 //----------------------------------------------------------------------------
 
 void mmGUIFrame::OnExportToQIF(wxCommandEvent& /*event*/)
 {
-   mmExportQIF(m_db.get());
+   mmExportQIF(m_core.get(), m_db.get());
 }
 //----------------------------------------------------------------------------
  
