@@ -534,7 +534,7 @@ wxString withoutQuotes(wxString label)
     return result;
 }
 
-void mmExportCSV( wxSQLite3Database* db_ )
+void mmExportCSV( mmCoreDB* core, wxSQLite3Database* db_ )
 {
     if ( mmDBWrapper::getNumAccounts( db_ ) == 0 ) {
         wxMessageBox(_( "No account available for export!" ), _( "CSV Export" ), wxICON_WARNING );
@@ -589,6 +589,7 @@ void mmExportCSV( wxSQLite3Database* db_ )
 
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
     int numRecords = 0;
+    wxString amtSeparator =  core->accountList_.getAccountCurrencyDecimalChar(fromAccountID);
 
     while ( q1.NextRow() ) {
         wxString transid = q1.GetString( wxT( "TRANSID" ) );
@@ -600,8 +601,8 @@ void mmExportCSV( wxSQLite3Database* db_ )
         wxString payee = mmDBWrapper::getPayee( db_, q1.GetInt( wxT( "PAYEEID" ) ), sid, cid );
         wxString type = q1.GetString( wxT( "TRANSCODE" ) );
         wxString sign = wxT( "" );
-        wxString amount = q1.GetString( wxT( "TRANSAMOUNT" ) );
-
+        wxString amount = adjustedExportAmount(amtSeparator, q1.GetString( wxT("TRANSAMOUNT")));
+        
         //Amount should be formated if delimiters is not "." or ","
         if ( delimit != wxT( "." ) && delimit != wxT( "," ) ) {
             double value = 0;
@@ -650,8 +651,8 @@ void mmExportCSV( wxSQLite3Database* db_ )
             wxSQLite3ResultSet q2 = st2.ExecuteQuery();
 
             while ( q2.NextRow() ) {
-                wxString splitamount = q2.GetString( wxT( "SPLITTRANSAMOUNT" ) );
-
+                wxString splitamount = adjustedExportAmount(amtSeparator, q2.GetString(wxT("SPLITTRANSAMOUNT")));
+               
                 //Amount should be formated if delimiters is not "." or ","
                 if ( delimit != wxT( "." ) && delimit != wxT( "," ) ) {
                     double value = 0;
@@ -695,7 +696,7 @@ void mmExportCSV( wxSQLite3Database* db_ )
     mmShowErrorMessage( 0, msg, _( "Export to CSV" ) );
 }
 
-void mmExportQIF( wxSQLite3Database* db_ )
+void mmExportQIF( mmCoreDB* core, wxSQLite3Database* db_ )
 {
     if ( mmDBWrapper::getNumAccounts( db_ ) == 0 ) {
         wxMessageBox(_( "No Account available for export" ), _( "QIF Export" ), wxICON_WARNING );
@@ -739,6 +740,7 @@ void mmExportQIF( wxSQLite3Database* db_ )
     wxFileOutputStream output( fileName );
     wxTextOutputStream text( output );
     int fromAccountID = mmDBWrapper::getAccountID( db_, acctName );
+    wxString amtSeparator =  core->accountList_.getAccountCurrencyDecimalChar(fromAccountID);
 
     static const char sql[] =
             "SELECT transid, transdate as DATE, "
@@ -773,7 +775,7 @@ void mmExportQIF( wxSQLite3Database* db_ )
         wxString payee = mmDBWrapper::getPayee( db_, q1.GetInt( wxT( "PAYEEID" ) ), sid, cid );
         wxString type = q1.GetString( wxT( "TRANSACTIONTYPE" ) );
                 
-        wxString amount = q1.GetString( wxT( "AMOUNT" ) );
+        wxString amount = adjustedExportAmount(amtSeparator, q1.GetString( wxT("AMOUNT")));
         //Amount should be formated
         double value = 0.0;
         mmex::formatCurrencyToDouble( amount, value );
@@ -844,7 +846,7 @@ void mmExportQIF( wxSQLite3Database* db_ )
             wxSQLite3ResultSet q2 = st2.ExecuteQuery();
 
             while ( q2.NextRow() ) {
-                wxString splitamount = q2.GetString( wxT( "SPLITTRANSAMOUNT" ) );
+                wxString splitamount = adjustedExportAmount(amtSeparator,q2.GetString(wxT("SPLITTRANSAMOUNT")));
                 //Amount should be formated
                 value = 0.0;
                 mmex::formatCurrencyToDouble( splitamount, value );
@@ -1009,7 +1011,7 @@ int mmImportCSV( mmCoreDB* core )
 
                 if ( tkz.HasMoreTokens() ) {
                     amount = mmCleanString( tkz.GetNextToken() );
-                    amount.Replace(amtSeparator,wxT("."));               
+                    amount.Replace(amtSeparator,wxT("."));   
                 } else {
                     log << _( "Line : " ) << countNumTotal << _( " missing amount, skipping." ) << endl;
                     continue;
@@ -1055,13 +1057,10 @@ int mmImportCSV( mmCoreDB* core )
                 }
 
                 double val = 0.0;
-				if ( !mmex::formatCurrencyToDouble(amount, val) )
+				if ( !amount.ToDouble( &val ) || val < 0.0 ) 
 				{
-					if ( !amount.ToDouble( &val ) || val < 0.0 ) 
-					{
-						log << _( "Line : " ) << countNumTotal << _( " invalid amount, skipping." ) << endl;
-						continue;
-					}
+					log << _( "Line : " ) << countNumTotal << _( " invalid amount, skipping." ) << endl;
+					continue;
 				}
 
                 bool isTransfer = false;
@@ -1307,7 +1306,7 @@ int mmImportCSVMMNET( mmCoreDB* core )
 
                 if ( tkz.HasMoreTokens() ) {
                     amount = withoutQuotes(tkz.GetNextToken());
-                    amount.Replace(amtSeparator,wxT("."));               
+                    amount.Replace(amtSeparator,wxT("."));   
                 } else {
                     log << _( "Line : " ) << countNumTotal << _( " missing amount, skipping." ) << endl;
                     continue;
@@ -1668,6 +1667,7 @@ void mmex::formatDoubleToCurrency(double val, wxString& rdata)
 }
 //----------------------------------------------------------------------------
 
+/*
 bool mmex::formatCurrencyToDouble( const wxString& str, double& val )
 {
     val = 0;
@@ -1691,3 +1691,35 @@ bool mmex::formatCurrencyToDouble( const wxString& str, double& val )
     return !s.empty() && s.ToDouble(&val);
 }
 //----------------------------------------------------------------------------
+
+*/
+/************ Replacement code - better for debugging *********************/
+
+bool mmex::formatCurrencyToDouble( const wxString& str, double& val )
+{
+    val = 0;
+	const CurrencyFormatter &fmt = CurrencyFormatter::instance();
+    wxString s = str;
+    // remove separators from the amount.
+    wxString gs = fmt.getGroupSeparator();
+    s.Replace(gs, wxEmptyString);
+
+    // adjust decimal point char to a decimal point.
+    wxString gdp = fmt.getDecimalPoint();
+    s.Replace(gdp, wxT("."));
+
+    return !s.empty() && s.ToDouble(&val);
+}
+//----------------------------------------------------------------------------
+
+wxString adjustedExportAmount(wxString amtSeparator, wxString strValue)
+{
+    // if number does not have a decimal point, add one to user requirements
+    int dp = strValue.Find(wxT(".")); 
+    if ( dp < 0 )
+        strValue << amtSeparator << wxT("0");
+    else 
+        strValue.Replace(wxT("."),amtSeparator);
+
+    return strValue;
+}
