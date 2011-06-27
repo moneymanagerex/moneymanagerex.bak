@@ -6,7 +6,7 @@
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.1  (Win32)">
 	<META NAME="CREATED" CONTENT="0;0">
 	<META NAME="CHANGEDBY" CONTENT="Damian ">
-	<META NAME="CHANGED" CONTENT="20110210;20420700">
+	<META NAME="CHANGED" CONTENT="20110627;19262800">
 	<META NAME="ProgId" CONTENT="FrontPage.Editor.Document">
 	<META NAME="ProgId" CONTENT="FrontPage.Editor.Document">
 	<STYLE TYPE="text/css">
@@ -44,9 +44,10 @@ użytkowania Money Manager Ex</FONT></H2>
 		<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Verdana"><A HREF="#database">Tworzenie
 		pliku danych</A> </FONT>
 		</P>
-		<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Verdana"><A HREF="#encryptDatabase">Szyfrowanie
-		pliku bazy danych</A> </FONT>
-		</P>
+		<LI><P STYLE="margin-bottom: 0cm"><A HREF="#encryptDatabase"><FONT FACE="Verdana">Szyfrowanie
+		pliku bazy danych</FONT></A></P>
+		<LI><P STYLE="margin-bottom: 0cm"><A HREF="#Dodawanie nowej waluty|outline"><FONT FACE="Verdana">Dodawanie
+		nowej waluty</FONT></A></P>
 		<LI><P STYLE="margin-bottom: 0cm"><A HREF="#accounts"><FONT FACE="Verdana">Tworzenie
 		nowych kont</FONT></A></P>
 		<LI><P STYLE="margin-bottom: 0cm"><A HREF="#accountsetup"><FONT FACE="Verdana">Przykład
@@ -206,7 +207,7 @@ zdarzeniem finansowym, w którym wymieniane są pieniądze / usługi.
 Taką transakcją może być spłacanie raty kredytu, kupno
 samochodu, płatność za posiłek w restauracji itp. Każda
 transakcja jest powiązana z <I>kontem (rachunkiem)</I> i <I>kategorią</I>.</FONT></P>
-<P><IMG SRC="polish/mmex_concept.png" NAME="graphics1" ALIGN=BOTTOM WIDTH=540 HEIGHT=317 BORDER=0>
+<P><IMG SRC="mmex_concept_polish.png" NAME="graphics1" ALIGN=BOTTOM WIDTH=540 HEIGHT=317 BORDER=0>
 </P>
 <P><FONT FACE="Verdana"><B>Konto</B> jest zapisem tego, co albo
 posiadamy, albo jesteśmy winni. <BR>Dla przykładu, Twoje konto
@@ -330,9 +331,9 @@ bazę danych jako</B></FONT></P>
 	<LI><P STYLE="font-weight: normal"><FONT FACE="Verdana">Wskaż
 	lokalizację oraz wybierz Twój plik .mmb lub nadaj nową nazwę
 	plikowi danych.</FONT></P>
-	<LI><P STYLE="font-weight: normal"><FONT FACE="Verdana">Zmień w
-	<B>Zapisz jako typ:</B> na: Szyfrowany plik MMB (*.emb). Wtedy
-	<B>Zapisz</B></FONT></P>
+	<LI><P STYLE="font-weight: normal"><FONT FACE="Verdana">Zmień typ w
+	polu <B>Zapisz jako typ:</B> na: 'Encrypted MMB file (*.emb)' -
+	szyfrowany plik MMB. Wtedy kiliknij <B>Zapisz</B></FONT></P>
 	<LI><P STYLE="font-weight: normal"><FONT FACE="Verdana">Podaj hasło
 	do pliku – <B>Będziesz musiał wpisywać to hasło podczas
 	każdego otwierania pliku bazy.</B></FONT></P>
@@ -343,8 +344,8 @@ bazę danych jako</B></FONT></P>
 	danych .mmb lub .emb. </FONT>
 	</P>
 	<LI><P><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">Jeżeli
-	plik nie jest zaszyfrowany:</SPAN><BR>To znaczy, że każdy, kto
-	posiada odpowiednią wiedzę, może otworzyć plik i odczytać
+	plik nie jest zaszyfrowany:</SPAN><BR>Pamiętaj, że każdy, kto
+	posiada odpowiednią wiedzę, może otworzyć plik i odczytać jego
 	zawartość. Upewnij się więc, że ważne informacje finansowe
 	zawarte w pliku, są bezpieczne.</FONT></P>
 	<LI><P><FONT FACE="Verdana">Dla zaszyfrowanych plików danych:
@@ -353,8 +354,97 @@ bazę danych jako</B></FONT></P>
 <H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Wróć do
 spisu treści</FONT></A></H5>
 <HR>
-<H3 CLASS="western"><A NAME="accounts"></A><FONT FACE="Verdana"><BR>Tworzenie
-nowych kont</FONT></H3>
+<H3 CLASS="western"><A NAME="Dodawanie nowej waluty|outline"></A><FONT FACE="Verdana">Dodawanie
+nowej waluty</FONT></H3>
+<P><FONT FACE="Verdana">MMEX umożliwia zarządzanie kontami
+prowadzonymi w różnych walutach. O wybranie waluty powiązanej z
+danym kontem, program poprosi Cię w czasie tworzenia nowego konta.
+Walutę można także wybrać/zmienić później, korzystając z menu
+<B>Konta -&gt; Edytuj konto</B><SPAN STYLE="font-weight: normal">. </SPAN></FONT>
+</P>
+<P><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">Ponadto
+MMEX umożliwia ustawienie waluty głównej (bazowej) dla całego
+programu przez menu </SPAN><B>Narzędzia - &gt; Opcje</B><SPAN STYLE="font-weight: normal">
+(sekcja </SPAN><B>Ustawienia ogólne - &gt; Waluta bazowa</B><SPAN STYLE="font-weight: normal">).
+W walucie bazowej wyliczana będzie SUMA OGÓLNA wszystkich środków
+zgromadzonych na wszystkich kontach – nawet jeśli te konta
+prowadzone są w różnych walutach.</SPAN></FONT></P>
+<P><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">Jeżeli na
+proponowanej liście nie ma waluty, którą chcesz użyć, możesz ją
+dodać do listy walut. W tym celu wywołaj dialog  „Organizuj
+waluty” za pomocą menu </SPAN><B>Narzędzia -&gt; Organizuj
+waluty.</B> <SPAN STYLE="font-weight: normal">W oknie walut kliknij
+przycisk „Dodaj” - co wywoła okno dialogowe, w którym należy
+podać nazwę nowej waluty – np. POLSKI ZŁOTY. Po potwierdzeniu
+nazwy pokaże się okno ustawień waluty. Tu należy ustalić
+szczegóły:</SPAN></FONT></P>
+<UL>
+	<LI><P STYLE="font-weight: normal"><FONT FACE="Verdana">'Symbol
+	waluty' – wpisz międzynarodowy symbol waluty lub wybierz z listy
+	rozwijanej – np. 'PLN'</FONT></P>
+	<LI><P STYLE="font-weight: normal"><FONT FACE="Verdana">'Nazwa jedn.
+	podstawowej' – wpisz nazwę głównej jednostki waluty – np.
+	'złoty'</FONT></P>
+	<LI><P STYLE="font-weight: normal"><FONT FACE="Verdana">'Nazwa jedn.
+	zdawkowej' – tu należy wpisać nazwę części ułamkowej
+	jednostki głównej – np. 'grosz'</FONT></P>
+	<LI><P><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">'Symbol
+	prefiksu' – określ symbol waluty, który będzie pojawiał się
+	</SPAN></FONT><FONT FACE="Verdana"><B>zawsze</B></FONT><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">
+	</SPAN></FONT><FONT FACE="Verdana"><B>przed </B></FONT><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">kwotą
+	lub pozostaw puste (np. dla złotówek)</SPAN></FONT></P>
+	<LI><P><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">'Symbol
+	postfiksu' – określ symbol waluty, który będzie pojawiał się
+	</SPAN></FONT><FONT FACE="Verdana"><B>zawsze </B></FONT><FONT FACE="Verdana"><B>za
+	</B></FONT><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">kwotą
+	lub pozostaw puste – np. dla złotówek będzie to 'zł' lub ' zł'
+	(wtedy po kwocie, a przed symbolem będzie pożądana przerwa)</SPAN></FONT></P>
+	<LI><P STYLE="font-weight: normal"><FONT FACE="Verdana">'Znak
+	dziesiętny' – określ znak oddzielający część ułamkową
+	kwoty – np. ',' (w Polsce to przecinek)</FONT></P>
+	<LI><P STYLE="font-weight: normal"><FONT FACE="Verdana">'Znak
+	grupowania' – wpisz znak oddzielający każde trzy miejsca kwoty
+	(tysiące) – np. ' ' (spacja)</FONT></P>
+	<LI><P STYLE="font-weight: normal"><FONT FACE="Verdana">'Skala' –
+	ustaw ilość jednostek zdawkowych w jednostce podstawowej –
+	zwykle jest to '100' (1 zł = 100 gr.)</FONT></P>
+	<LI><P><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">'Konwersja
+	do kursu bazowego' – w tym miejscu ustala się kurs wymiany waluty
+	w stosunku do waluty bazowej. Jeżeli waluta jest bazowa (tj.
+	ustawiona w opcjach jako główna), w tym polu powinna być jedynka
+	'1'. Przyjmując, że złoty jest walutą bazową ('1'), to np. dla
+	dolara, w tym polu można wpisać kurs wymiany - np. '2,75' –
+	wtedy pole </SPAN></FONT><FONT FACE="Verdana"><B>SUMA OGÓLNA</B></FONT>
+	<FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">kont na
+	stronie głównej, będzie podawała aktualną wartość wszystkich
+	kont w złotych po przeliczeniu kont w USD na złotówki wg kursu 1
+	USD=2,75 zł.</SPAN></FONT></P>
+</UL>
+<P STYLE="font-weight: normal"><FONT FACE="Verdana">Na dole okna
+będzie przykład jak wyświetlana będzie kwota waluty z danymi
+ustawieniami. Po każdej zmianie ustawień należy odświeżyć ten
+przykładowy widok klikając przycisk 'Uaktualnij'.</FONT></P>
+<P><FONT FACE="Verdana"><B>UWAGA 1:</B></FONT><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">
+Można wpisywać kursy wymiany ręcznie (funkcja 'Edytuj' w oknie
+'Organizuj waluty'), albo skorzystać z wygodnego uaktualniania
+kursów wszystkich walut przez internet, korzystając z menu
+</SPAN></FONT><FONT FACE="Verdana"><B>Narzędzia -&gt; Uaktualnij
+kursy walut online</B></FONT><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">.
+Aby ta funkcja była dostępna, należy najpierw w Opcjach programu,
+w sekcji 'Inne' zaznaczyć pole </SPAN></FONT><FONT FACE="Verdana"><B>Włącz
+odświeżanie waluty online. </B></FONT><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">Ponadto
+należy pamiętać, że aby uaktualnianie online działało
+poprawnie, każda waluta powinna mieć ustawiony prawidłowy
+międzynarodowy symbol (w polu „Symbol waluty') tj. PLN dla
+złotówki, USD dla dolara, GPB dla funta itd.</SPAN></FONT></P>
+<P STYLE="font-weight: normal"><FONT FACE="Verdana"><B>UWAGA 2:</B>
+Kursy walut uaktualniane online są oficjalnymi kursami wymiany walut
+na rynku międzynarodowym. Mogą one różnić się od kursu wymiany
+w lokalnych bankach (tzw. spread) lub kantorach wymiany walut.</FONT></P>
+<H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Wróć do
+spisu treści</FONT></A></H5>
+<HR>
+<H3 CLASS="western"><FONT FACE="Verdana">Tworzenie nowych kont</FONT></H3>
 <P><FONT FACE="Verdana">W czasie tworzenia nowego pliku danych
 zostaniesz automatycznie poproszony o utworzenie nowego konta.</FONT></P>
 <P><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">W celu
@@ -1004,7 +1094,7 @@ jako typ wybierz 'Inwestycyjne'.<BR>- W widoku drzewka panelu
 nawigacyjnego rozwiń węzeł 'Akcje' i wskaż utworzone konto. Wtedy
 kliknij przycisk &quot;Nowy&quot;i podaj szczegóły inwestycji. </FONT>
 </P>
-<P><FONT FACE="Verdana">Zobacz więcej <A HREF="polish/investment.html">szczegółów</A>.<BR><BR>Aby
+<P><FONT FACE="Verdana">Zobacz więcej <A HREF="investment_polish.html">szczegółów</A>.<BR><BR>Aby
 zaktualizować cenę twoich akcji, edytuj zapisane inwestycje i zmień
 cenę na aktualną.</FONT></P>
 <H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Wróć do
