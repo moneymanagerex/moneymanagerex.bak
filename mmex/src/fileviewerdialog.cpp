@@ -86,4 +86,8 @@ void fileviewer::CreateControls()
           }
           itemTextCtrl3->SetValue(fileContents);  
     }
+    
+    wxButton* itemButton1 = new wxButton( itemDialog1, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer2->Add(itemButton1, 0, wxALIGN_RIGHT|wxALL, 4);
+    //itemButton1->SetToolTip(_("OK"));
 }
