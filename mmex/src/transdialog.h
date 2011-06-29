@@ -99,6 +99,7 @@ private:
     wxButton* bAuto_;
     wxStaticText* staticTextAdvancedActive_;
     bool payeeUnknown_;
+    bool categUpdated_;
 
     wxChoice* choiceStatus_;
     wxChoice* choiceTrans_;

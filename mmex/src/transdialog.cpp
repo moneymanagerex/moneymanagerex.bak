@@ -71,6 +71,7 @@ mmTransDialog::mmTransDialog(
     toTransAmount_(-1),
     advancedToTransAmountSet_(false),
     payeeUnknown_(true),
+    categUpdated_(false),
     edit_currency_rate(1.0)
 {
     referenceAccountID_ = accountID_;   // remember where dialog initiated from.
@@ -322,9 +323,15 @@ void mmTransDialog::CreateControls()
     {
         //If user does not want payee to be auto filled for the new transaction
         if ( mmIniOptions::transPayeeSelectionNone_ == 0)
+        {
             payeeName = resetPayeeString();
+            payeeUnknown_ = true;
+        }
         else // determine the payee for this account
+        {
             payeeName = getMostFrequentlyUsedPayee(categString);
+            payeeUnknown_ = false;
+        }
 
         if ( mmIniOptions::transCategorySelectionNone_== 0 || categString.IsEmpty() )
         {
@@ -505,8 +512,8 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
             if (split_->numEntries())
                 return;
 
-            // if user want to autofill last category used for payee
-            if ( mmIniOptions::transCategorySelectionNone_ == 1)
+            // Only for new transactions: if user want to autofill last category used for payee.
+            if ( mmIniOptions::transCategorySelectionNone_ == 1 && ( !edit_ && !categUpdated_ ) )
             {
                 // if payee has memory of last category used then display last category for payee
                 if (tempCategID != -1)
@@ -648,6 +655,7 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
 
             categID_ = dlg.categID_;
             subcategID_ = dlg.subcategID_;
+            categUpdated_ = true;
 
             wxString catName = mmDBWrapper::getCategoryName(db_.get(), dlg.categID_);
             catName.Replace (wxT("&"), wxT("&&"));
