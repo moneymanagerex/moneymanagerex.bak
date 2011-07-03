@@ -77,16 +77,17 @@ public:
     void fillControls();
     void OnSelChanged(wxTreeEvent& event);
     void OnDoubleClicked(wxTreeEvent& event);
+    void setTreeSelection(wxString catName, wxString subCatName);
 
 private:
-    wxSQLite3Database* db_;
+//    wxSQLite3Database* db_;
     mmCoreDB* core_;
     wxTreeCtrl* treeCtrl_; 
     wxTreeItemId selectedItemId_;
     wxTreeItemId root_;
     bool bEnableSelect_;
     void showCategDialogDeleteError(wxString deleteCategoryErrMsg, bool category = true);
-
+    wxTreeItemId getTreeItemFor(wxTreeItemId itemID, wxString itemText);
 
 public:
     int categID_;

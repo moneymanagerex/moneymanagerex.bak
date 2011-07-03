@@ -101,6 +101,9 @@ private:
     bool payeeUnknown_;
     bool categUpdated_;
 
+    wxString categoryName_;
+    wxString subCategoryName_;
+
     wxChoice* choiceStatus_;
     wxChoice* choiceTrans_;
     bool edit_;

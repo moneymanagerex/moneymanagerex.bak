@@ -405,3 +405,39 @@ void mmCategDialog::OnEdit(wxCommandEvent& /*event*/)
     
     treeCtrl_->SetItemText(selectedItemId_, text);
 }
+
+wxTreeItemId mmCategDialog::getTreeItemFor(wxTreeItemId itemID, wxString itemText)
+{
+    wxTreeItemIdValue treeDummyValue;
+
+    bool searching = true;
+    wxTreeItemId catID = treeCtrl_->GetFirstChild(itemID, treeDummyValue);
+    while (catID.IsOk() && searching)
+    {
+        if ( itemText == treeCtrl_->GetItemText(catID))
+            searching = false;
+        else
+            catID = treeCtrl_->GetNextChild(itemID, treeDummyValue);
+    }
+    return catID;
+}
+
+void mmCategDialog::setTreeSelection(wxString catName, wxString subCatName)
+{
+    if ( !catName.IsEmpty() )
+    {
+        wxTreeItemId catID = getTreeItemFor(treeCtrl_->GetRootItem(), catName);
+        if (catID.IsOk() && treeCtrl_->ItemHasChildren(catID))
+        {
+            if (subCatName.IsEmpty()) {
+                treeCtrl_->SelectItem(catID);
+            } else {
+                treeCtrl_->ExpandAllChildren(catID);
+                wxTreeItemId subCatID = getTreeItemFor(catID, subCatName);
+                treeCtrl_->SelectItem(subCatID);
+            }
+        } else {
+            treeCtrl_->SelectItem(catID);
+        }
+    }
+}
