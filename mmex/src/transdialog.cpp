@@ -218,11 +218,12 @@ void mmTransDialog::dataToControls()
         else
         {
             wxString categString = q1.GetString(wxT("CATEGNAME"));
-
+            categoryName_ = categString;
             if (subcategID_ != -1)
             {
+                subCategoryName_ = q1.GetString(wxT("SUBCATEGNAME"));
                 categString += wxT(" : ");
-                categString += q1.GetString(wxT("SUBCATEGNAME"));
+                categString += subCategoryName_;
             }
             bCategory_->SetLabel(categString);
         }
@@ -618,6 +619,7 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
     else
     {
         mmCategDialog dlg(core_, this);
+        dlg.setTreeSelection(categoryName_, subCategoryName_);
         if ( dlg.ShowModal() == wxID_OK )
         {
             if (dlg.categID_ == -1)
@@ -658,15 +660,19 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
             categUpdated_ = true;
 
             wxString catName = mmDBWrapper::getCategoryName(db_.get(), dlg.categID_);
+            categoryName_ = catName;
             catName.Replace (wxT("&"), wxT("&&"));
             wxString categString = catName;
 
             if (dlg.subcategID_ != -1)
             {
                 wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(), dlg.categID_, dlg.subcategID_);
+                subCategoryName_ = subcatName;
                 subcatName.Replace (wxT("&"), wxT("&&"));
                 categString += wxT(" : ");
                 categString += subcatName;
+            } else {
+                subCategoryName_.Empty(); 
             }
 
             bCategory_->SetLabel(categString);
@@ -778,10 +784,12 @@ wxString mmTransDialog::getMostFrequentlyUsedCategory()
     }
     else 
     {
+        categoryName_ = categString;
         if ( !subcategName.IsEmpty() )
         {
             categString += wxT(" : ");
             categString += subcategName;
+            subCategoryName_ = subcategName;
         }
     }
 
@@ -833,10 +841,12 @@ wxString mmTransDialog::getMostFrequentlyUsedPayee(wxString& categString)
     } 
     else 
     {
+        categoryName_ = categString;
         if (!subcategName.IsEmpty())
         {
             categString += wxT(" : ");
             categString += subcategName;
+            subCategoryName_ = subcategName;
         }
     }
 
