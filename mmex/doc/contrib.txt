@@ -62,7 +62,7 @@ Hungarian
 Indonesian Translation
 -- Dindin
 Italian
--- Claudio
+-- Claudio, Maurizio Ballo [Mau13]
 Norwegian
 -- Fredrik Strand, Torbjorn Kvande
 Polish
@@ -98,10 +98,10 @@ User Manual
 Stefano [stef145g]
 Tina P
 Terry Wick
-Italian - Claudio
-French - catacotox
+Italian - Maurizio Ballo [Mau13]
+French  - catacotox
 Russian - Nikolay
-Polish - Damian_pl
+Polish  - Damian_pl
 
 Sponsors
 ==========================================
