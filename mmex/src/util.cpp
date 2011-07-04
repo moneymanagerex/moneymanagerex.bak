@@ -1012,6 +1012,7 @@ int mmImportCSV( mmCoreDB* core )
                 if ( tkz.HasMoreTokens() ) {
                     amount = mmCleanString( tkz.GetNextToken() );
                     amount.Replace(amtSeparator,wxT("."));   
+                    amount.Replace( wxT( " " ), wxEmptyString );
                 } else {
                     log << _( "Line : " ) << countNumTotal << _( " missing amount, skipping." ) << endl;
                     continue;
@@ -1307,6 +1308,7 @@ int mmImportCSVMMNET( mmCoreDB* core )
                 if ( tkz.HasMoreTokens() ) {
                     amount = withoutQuotes(tkz.GetNextToken());
                     amount.Replace(amtSeparator,wxT("."));   
+                    amount.Replace( wxT(" "), wxEmptyString );
                 } else {
                     log << _( "Line : " ) << countNumTotal << _( " missing amount, skipping." ) << endl;
                     continue;

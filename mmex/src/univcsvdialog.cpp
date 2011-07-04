@@ -754,7 +754,8 @@ void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
             if (token.Trim().IsEmpty())
                 return;
            
-            
+            token.Replace( wxT( " " ), wxEmptyString );
+
             if (!mmex::formatCurrencyToDouble(token, val_))
             {
                 return;
