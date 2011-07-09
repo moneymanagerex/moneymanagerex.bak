@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-21 11:51+1000\n"
-"PO-Revision-Date: 2011-06-21 11:51+1000\n"
-"Last-Translator: Stefano Giorgio <stef145g@gmail.com>\n"
+"PO-Revision-Date: 2011-07-10 00:51+0300\n"
+"Last-Translator: Nikolay <vomikan@mail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -688,7 +688,7 @@ msgstr "Удаление запланированной проводки"
 
 #: src/billsdepositspanel.cpp:243
 msgid "En&ter"
-msgstr "Зачислить"
+msgstr "&Зачислить"
 
 #: src/billsdepositspanel.cpp:245
 msgid "Enter Next Bills && Deposit Occurrence"
@@ -696,11 +696,11 @@ msgstr "Зачислить запланированную проводку"
 
 #: src/billsdepositspanel.cpp:249
 msgid "&Skip"
-msgstr "Пропустить"
+msgstr "Пропус&тить"
 
 #: src/billsdepositspanel.cpp:251
 msgid "Skip Next Bills && Deposit Occurrence"
-msgstr "Зачислить запланированную проводку"
+msgstr "Пропустить запланированную проводку"
 
 #: src/billsdepositspanel.cpp:262
 msgid "MMEX allows regular payments to be set up as transactions. These transactions can also be regular deposits, or transfers that will occur at some future time. These transactions act a reminder that an event is about to occur, and appears on the Home Page 14 days before the transaction is due. "
