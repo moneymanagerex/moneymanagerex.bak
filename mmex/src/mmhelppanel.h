@@ -55,6 +55,9 @@ private:
     wxSQLite3Database* db_;
     wxHtmlWindow* htmlWindow_;
     mmGUIFrame* frame_;
+
+    void OnHelpPageBack(wxCommandEvent& event);
+    void OnHelpPageForward(wxCommandEvent& event);
 };
 
 #endif
