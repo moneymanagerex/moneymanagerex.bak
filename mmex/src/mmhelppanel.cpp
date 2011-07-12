@@ -29,6 +29,8 @@
 #include <algorithm>
 
 BEGIN_EVENT_TABLE(mmHelpPanel, wxPanel)
+    EVT_BUTTON(ID_PANEL_REPORTS_HELP_BUTTON_BACK, mmHelpPanel::OnHelpPageBack)
+    EVT_BUTTON(ID_PANEL_REPORTS_HELP_BUTTON_FORWARD, mmHelpPanel::OnHelpPageForward)
 END_EVENT_TABLE()
 
 mmHelpPanel::mmHelpPanel( mmGUIFrame* frame, wxSQLite3Database* db, wxWindow *parent,
@@ -75,14 +77,20 @@ void mmHelpPanel::CreateControls()
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemBoxSizer2->Add(itemPanel3, 0, wxGROW|wxALL, 5);
 
-    wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
-    itemPanel3->SetSizer(itemBoxSizerVHeader);
+    wxBoxSizer* itemBoxSizerHeader = new wxBoxSizer(wxHORIZONTAL);
+    itemPanel3->SetSizer(itemBoxSizerHeader);
+
+    wxButton* buttonBack     = new wxButton(itemPanel3, ID_PANEL_REPORTS_HELP_BUTTON_BACK,    wxT("<"));
+    wxButton* buttonFordward = new wxButton(itemPanel3, ID_PANEL_REPORTS_HELP_BUTTON_FORWARD, wxT(">"));
 
     wxString helpHeader = mmex::getProgramName() + _(" Help");
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, ID_PANEL_REPORTS_STATIC_HEADER, 
         helpHeader, wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
-    itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
+
+    itemBoxSizerHeader->Add(buttonBack, 0, wxALL, 1);
+    itemBoxSizerHeader->Add(buttonFordward, 0, wxRIGHT, 31);
+    itemBoxSizerHeader->Add(itemStaticText9, 0, wxALL, 1);
 
     htmlWindow_ = new wxHtmlWindow( itemDialog1, ID_PANEL_REPORTS_HTMLWINDOW, 
         wxDefaultPosition, wxDefaultSize, 
@@ -106,3 +114,20 @@ void mmHelpPanel::CreateControls()
        htmlWindow_ ->LoadPage(mmex::getPathDoc(mmex::HTML_INDEX));
 }
 
+void mmHelpPanel::OnHelpPageBack(wxCommandEvent& /*event*/)
+{
+    if (htmlWindow_->HistoryCanBack() )
+    {
+        htmlWindow_->HistoryBack();
+        htmlWindow_->SetFocus();
+    }
+}
+
+void mmHelpPanel::OnHelpPageForward(wxCommandEvent& /*event*/)
+{
+    if (htmlWindow_->HistoryCanForward() )
+    {
+        htmlWindow_->HistoryForward();
+        htmlWindow_->SetFocus();
+    }
+}
