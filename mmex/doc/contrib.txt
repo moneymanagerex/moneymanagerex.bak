@@ -78,7 +78,7 @@ Simple Chinese
 Slovak
 -- Abadyba, Misko B
 Spanish
--- Javier, Roberto
+-- Javier, Roberto, User [jorgeb]
 Swedish
 -- Tomplast
 Tr. Chinese
