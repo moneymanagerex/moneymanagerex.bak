@@ -1,0 +1,476 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.3  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Stefano Giorgio">
+	<META NAME="CREATED" CONTENT="20110710;15312700">
+	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
+	<META NAME="CHANGED" CONTENT="20110713;13221578">
+	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H1><A NAME="custom_sql_top"></A><BR><BR>
+</H1>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=4 CELLSPACING=0 STYLE="page-break-inside: avoid">
+	<COL WIDTH=213*>
+	<COL WIDTH=43*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=83%>
+			<H1><FONT FACE="Verdana"><FONT SIZE=6>Custom SQL Reports</FONT></FONT></H1>
+		</TD>
+		<TD WIDTH=17%>
+			<P><A HREF="../index_english.html"><FONT FACE="Verdana"><FONT SIZE=4><B>Home</B></FONT></FONT></A></P>
+		</TD>
+	</TR>
+</TABLE>
+<UL>
+	<LI><P><A HREF="#intro"><FONT FACE="Verdana">Introduction</FONT></A></P>
+	<LI><P><A HREF="#running_reports"><FONT FACE="Verdana">Running
+	Reports via the Navigation Tree</FONT></A></P>
+	<LI><P><A HREF="#database_structure"><FONT FACE="Verdana">MMEX
+	Database Structure</FONT></A></P>
+	<LI><P><A HREF="#sql_scripting_intro"><FONT FACE="Verdana">SQL
+	Scripting (Introduction)</FONT></A></P>
+</UL>
+<P><BR><BR>
+</P>
+<HR>
+<H1><A NAME="intro"></A><FONT FACE="Verdana"><FONT SIZE=3><BR></FONT>Introduction</FONT></H1>
+<P><FONT FACE="Verdana"><FONT SIZE=3>Custom SQL reports allow the
+user to create a unique report to suite the user. This is achieved by
+writing an SQL script which communicates directly with the database.</FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=3>Once the script is created, and
+saved in MMEX, the report can be easily accessed via the MMEX
+Navigation Tree.</FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=3>The creation of a new Custom SQL
+Report is via:</FONT></FONT></P>
+<UL>
+	<LI><P><FONT FACE="Verdana"><FONT SIZE=3>The menu item: Tools &ndash;&gt;
+	Custom SQL Reports</FONT></FONT></P>
+	<LI><P><FONT FACE="Verdana"><FONT SIZE=3>The icon on the toolbar.</FONT></FONT></P>
+</UL>
+<P><FONT FACE="Verdana"><FONT SIZE=3>This action will open the Custom
+SQL Reports Manager dialog, and allows the user to directly write a
+script and save it as a file.</FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=3>Useful Custom SQL Scripts are
+also available from the MMEX Forum on the Internet, which can be
+accessed as follows:</FONT></FONT></P>
+<UL>
+	<LI><P><FONT FACE="Verdana"><FONT SIZE=3>Use the menu option: </FONT></FONT><FONT FACE="Verdana"><FONT SIZE=3><B>Help
+	&ndash;&gt; Report Issues or Feedback</B></FONT></FONT></P>
+	<LI><P><FONT FACE="Verdana"><FONT SIZE=3>Search the forum heading:
+	</FONT></FONT><FONT FACE="Verdana"><FONT SIZE=3><B>Custom SQL Report
+	Scripts</B></FONT></FONT></P>
+</UL>
+<P><FONT FACE="Verdana"><FONT SIZE=3><B>Recommendations</B>:</FONT></FONT></P>
+<UL>
+	<LI><P>For new scripts, use a useful title for your report.</P>
+	<LI><P>Save the script before running in the <FONT FACE="Verdana"><FONT SIZE=3>Custom
+	SQL Reports Manager</FONT></FONT>.<BR><B>Note:</B> Script errors may
+	result in loss of your script if not saved first.</P>
+	<LI><P>Use the pop-up menu on the navigation tree to edit the file
+	if necessary.</P>
+</UL>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=4 CELLSPACING=0 STYLE="page-break-inside: avoid">
+	<COL WIDTH=17*>
+	<COL WIDTH=239*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=7%>
+			<P><B>Note:</B></P>
+		</TD>
+		<TD WIDTH=93%>
+			<P>All script titles are saved in an index file called:
+			<B>CustomSQLReportIndex.txt</B></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=7%>
+			<P><BR>
+			</P>
+		</TD>
+		<TD WIDTH=93%>
+			<P>Custom SQL Reports can be remove by deleting the index file.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=7%>
+			<P><BR>
+			</P>
+		</TD>
+		<TD WIDTH=93%>
+			<P>Reports can be reorganized by directly modifying the index file
+			if necessary.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+	<COL WIDTH=213*>
+	<COL WIDTH=43*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=83%>
+			<P><A HREF="#custom_sql_top"><FONT FACE="Verdana"><B>Back to Top</B></FONT></A></P>
+		</TD>
+		<TD WIDTH=17%>
+			<P><A HREF="../index_english.html"><FONT FACE="Verdana"><B>Home</B></FONT></A></P>
+		</TD>
+	</TR>
+</TABLE>
+<P><BR><BR>
+</P>
+<HR>
+<H1><A NAME="running_reports"></A><FONT FACE="Verdana"><FONT SIZE=3><BR></FONT>Running
+Report via the Navigation Tree</FONT></H1>
+<P><FONT FACE="Verdana">Reports created by the Custom Reports
+Manager, will be permanently recorded in the Navigation Tree. The
+report is given a name when the report is saved. By using the report
+title, the user can:</FONT></P>
+<UL>
+	<LI><P><FONT FACE="Verdana">Run the report</FONT></P>
+	<LI><P><FONT FACE="Verdana">Edit the report</FONT></P>
+	<LI><P><FONT FACE="Verdana">Delete the report.</FONT></P>
+</UL>
+<P><FONT FACE="Verdana">A report title can be saved without an SQL
+script file attached. This is used as a title for grouping scripts
+together. The navigation tree then behaves similar to the standard
+reports. Reports can only be nested one level deep.</FONT></P>
+<P><BR><BR>
+</P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+	<COL WIDTH=213*>
+	<COL WIDTH=43*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=83%>
+			<P><A HREF="#custom_sql_top"><FONT FACE="Verdana"><B>Back to Top</B></FONT></A></P>
+		</TD>
+		<TD WIDTH=17%>
+			<P><A HREF="../index_english.html"><FONT FACE="Verdana"><B>Home</B></FONT></A></P>
+		</TD>
+	</TR>
+</TABLE>
+<P><BR><BR>
+</P>
+<HR>
+<H1><A NAME="database_structure"></A><FONT FACE="Verdana"><FONT SIZE=3><BR></FONT>MMEX
+Database Structure.</FONT></H1>
+<P><FONT FACE="Verdana"><FONT SIZE=3>In order to create script files,
+we need to understand the underlying structure of the database. This
+structure is displayed as follows:<BR></FONT></FONT><BR><BR>
+</P>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=4 CELLSPACING=3>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#e6e6e6">
+			<P STYLE="background: #e6e6e6"><FONT FACE="Verdana"><B>Basic
+			Structure of MMEX</B></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP>
+			<P><IMG SRC="mmex_structure.jpg" NAME="graphics1" ALIGN=LEFT WIDTH=649 HEIGHT=687 BORDER=0><BR CLEAR=LEFT><BR>
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P><FONT FACE="Verdana"><FONT SIZE=3><BR></FONT></FONT><BR><BR>
+</P>
+<P><FONT FACE="Verdana"><FONT SIZE=4><B>Table Information</B></FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=3>This picture shows the table
+names with their associated fields, and the links that connect the
+tables via the table's primary index field.</FONT></FONT></P>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=4 CELLSPACING=3>
+	<COL WIDTH=77*>
+	<COL WIDTH=179*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30% BGCOLOR="#e6e6e6">
+			<P><FONT FACE="Verdana"><FONT SIZE=4><B>Table Names</B></FONT></FONT></P>
+		</TD>
+		<TD WIDTH=70% BGCOLOR="#e6e6e6">
+			<P><FONT FACE="Verdana"><FONT SIZE=4><B>Table Description</B></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30%>
+			<P>InfoTable_V1</P>
+		</TD>
+		<TD WIDTH=70%>
+			<P>This contains settings specific to the database.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30%>
+			<P>CurrencyFormats_V1</P>
+		</TD>
+		<TD WIDTH=70%>
+			<P>Contains the Currency values for the database</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30%>
+			<P>AccountList_V1</P>
+		</TD>
+		<TD WIDTH=70%>
+			<P>Contains all the account names, and data specific to an
+			account.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30%>
+			<P>Payee_V1</P>
+		</TD>
+		<TD WIDTH=70%>
+			<P>Contains all payees, and the last category this payee used.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30%>
+			<P>Category_V1</P>
+		</TD>
+		<TD WIDTH=70%>
+			<P>This is a list of all the categories in the system</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30%>
+			<P>SubCategory_V1</P>
+		</TD>
+		<TD WIDTH=70%>
+			<P>This is a list of all the sub-categories in the system</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30%>
+			<P>CheckingAccount_V1</P>
+		</TD>
+		<TD WIDTH=70%>
+			<P>This is the main table where all the transactions are
+			maintained.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30%>
+			<P>SplitTransactions_V1</P>
+		</TD>
+		<TD WIDTH=70%>
+			<P>Contains the data associated with Split Transactions</P>
+		</TD>
+	</TR>
+</TABLE>
+<P><BR><BR>
+</P>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=4 CELLSPACING=3>
+	<COL WIDTH=77*>
+	<COL WIDTH=179*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30% BGCOLOR="#e6e6e6">
+			<P><FONT FACE="Verdana"><FONT SIZE=4><B>Tables Not Shown<BR>in
+			Diagram</B></FONT></FONT></P>
+		</TD>
+		<TD WIDTH=70% BGCOLOR="#e6e6e6">
+			<P><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30%>
+			<P>Stock_V1</P>
+		</TD>
+		<TD WIDTH=70%>
+			<P>Used for Stocks, and is linked to table: AccountList_V1 using
+			the HeldAt field</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30%>
+			<P>Assets_V1</P>
+		</TD>
+		<TD WIDTH=70%>
+			<P>Contains all asset details</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30%>
+			<P>BudgetYear_V1</P>
+		</TD>
+		<TD WIDTH=70%>
+			<P>The specific year for a budget</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30%>
+			<P>BudgetTable_V1</P>
+		</TD>
+		<TD WIDTH=70%>
+			<P>Budget details</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30%>
+			<P>BudgetSplitTransactions_V1</P>
+		</TD>
+		<TD WIDTH=70%>
+			<P>Split Transactions for budgets</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=30%>
+			<P>BillDeposit_V1</P>
+		</TD>
+		<TD WIDTH=70%>
+			<P>This contains all the details for Repeating Transactions.
+			Similar to table: CheckingAccountV1</P>
+		</TD>
+	</TR>
+</TABLE>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+	<COL WIDTH=213*>
+	<COL WIDTH=43*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=83%>
+			<P><A HREF="#custom_sql_top"><FONT FACE="Verdana"><B>Back to Top</B></FONT></A></P>
+		</TD>
+		<TD WIDTH=17%>
+			<P><A HREF="../index_english.html"><FONT FACE="Verdana"><B>Home</B></FONT></A></P>
+		</TD>
+	</TR>
+</TABLE>
+<P><BR><BR>
+</P>
+<HR>
+<P><A NAME="sql_scripting_intro"></A><FONT FACE="Verdana"><FONT SIZE=3><BR></FONT></FONT><FONT FACE="Verdana"><FONT SIZE=6><B>SQL
+Scripting (Introduction)</B></FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=3>Attempting to teach SQL
+programming is beyond the scope of this help file, but the following
+is a quick guide into understanding scripts, and possibly creating
+your own scripts if required.</FONT></FONT></P>
+<P><FONT SIZE=6><FONT FACE="Verdana"><FONT SIZE=3>In creating
+scripts, the main command we would tend to use is the </FONT></FONT><FONT FACE="Verdana"><FONT SIZE=3><B>SELECT</B></FONT></FONT>
+<FONT FACE="Verdana"><FONT SIZE=3>statement.</FONT></FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=3>The basic format is:</FONT></FONT></P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+	<COL WIDTH=72*>
+	<COL WIDTH=184*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=28% BGCOLOR="#ffffcc">
+			<P><FONT FACE="Verdana"><FONT SIZE=6><FONT SIZE=3><B>SELECT</B></FONT>
+			<FONT SIZE=3>&lt;name&gt; </FONT></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=72% BGCOLOR="#ffffcc">
+			<P><FONT FACE="Verdana"><FONT SIZE=3>&lt;name&gt; represents the
+			field names of the table, or * for all names. </FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=28% BGCOLOR="#ffffcc">
+			<P><FONT FACE="Verdana"><FONT SIZE=6><FONT SIZE=3><B>FROM</B></FONT>
+			<FONT SIZE=3>&lt;table&gt; </FONT></FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=72% BGCOLOR="#ffffcc">
+			<P><FONT FACE="Verdana"><FONT SIZE=3>&lt;table&gt; represents the
+			table or tables the command is aimed at.</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=28% BGCOLOR="#ffffcc">
+			<P><FONT FACE="Verdana"><FONT SIZE=6><FONT SIZE=3><B>WHERE</B></FONT>
+			<FONT SIZE=3>&lt;condition is met&gt;</FONT></FONT></FONT></P>
+		</TD>
+		<TD WIDTH=72% BGCOLOR="#ffffcc">
+			<P><FONT FACE="Verdana"><FONT SIZE=3>[optional] here we test for
+			some condition.</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=28% BGCOLOR="#ffffcc">
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>ORDER BY</B> &lt;parameter&gt;</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=72% BGCOLOR="#ffffcc">
+			<P><FONT FACE="Verdana"><FONT SIZE=3>[optional] sorts the output
+			by this parameter</FONT></FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P><FONT FACE="Verdana"><FONT SIZE=3><BR>Examples:</FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=3><B>SELECT * FROM
+AccountList_V1;</B><BR>* This would display all fields for the table:
+AccountList_V1</FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=3><B>SELECT AccountName, Status
+FROM AccountList_V1 where AccountType = &ldquo;Term&rdquo;;</B></FONT></FONT><FONT FACE="Verdana"><FONT SIZE=3><BR>*
+This would display the Term Account names and the account status from
+table: AccountList_V1</FONT></FONT></P>
+<HR>
+<P><FONT FACE="Verdana"><FONT SIZE=4><B>Here we describe a more
+complex script:<BR></B></FONT></FONT><BR><BR>
+</P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#e6e6e6">
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Although this script is
+			useless, it demonstrates some basic principles.</B></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#ffffcc">
+			<P STYLE="background: #ffffcc"><FONT FACE="Verdana"><FONT SIZE=3><B>select</B>
+			pT.PayeeName payee,<BR>&nbsp;&nbsp;&nbsp;&nbsp;cT.CategName,<BR>&nbsp;&nbsp;&nbsp;&nbsp;scT.SubCategName
+			<BR><B>from</B> payee_v1 pT,<BR>&nbsp;&nbsp;&nbsp;&nbsp;category_v1
+			cT,<BR>&nbsp;&nbsp;&nbsp;&nbsp;subcategory_v1 scT
+			<BR><B>where</B><BR>&nbsp;&nbsp;&nbsp;&nbsp;pT.categID =
+			cT.categID and pT.subCategID = scT.subCategID<BR><B>order
+			by</B><BR>&nbsp;&nbsp;&nbsp;&nbsp;payee</FONT></FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P><FONT FACE="Verdana"><FONT SIZE=3><BR>In this example we see the
+table name is: payee_V1 and the field name is PayeeName</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Verdana"><FONT SIZE=3>In
+the <B>FROM</B> clause we see the table name: payee_V1 <B>pT<BR></B>*
+Here the <B>pT</B> at the end, acts as an alias for the table name.</FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=3>Now in the <B>SELECT</B> we see:
+<B>pT.</B>PayeeName <B>payee</B> <BR>* The <B>pT.</B> is used to
+state the table that owns the field PayeeName<BR>* The <B>payee</B>
+at the end, is an alias for the table.fieldname combination<BR><BR>We
+can separate table names and field names with commas, as we see more
+tables and fields in this example.</FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=3>In the <B>WHERE</B> clause, we
+see: pT.categID = cT.categID<BR>* Here we test to make sure the two
+fields are the same in both tables.</FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=3>Now in the <B>ORDER BY</B>
+clause, we can now use the simplified name of <B>payee</B> we defined
+in the <B>SELECT</B> clause.</FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=3>I hope this short introduction
+takes the mystery out of the script files as seen in the MMEX Forum
+in the Custom SQL Report Scripts section.<BR></FONT></FONT><BR><BR>
+</P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+	<COL WIDTH=213*>
+	<COL WIDTH=43*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=83%>
+			<P><A HREF="#custom_sql_top"><FONT FACE="Verdana"><B>Back to Top</B></FONT></A></P>
+		</TD>
+		<TD WIDTH=17%>
+			<P><A HREF="../index_english.html"><FONT FACE="Verdana"><B>Home</B></FONT></A></P>
+		</TD>
+	</TR>
+</TABLE>
+<P><BR><BR>
+</P>
+<HR>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>
