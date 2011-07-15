@@ -7,7 +7,7 @@
 	<META NAME="AUTHOR" CONTENT="Stefano Giorgio">
 	<META NAME="CREATED" CONTENT="20110710;15312700">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
-	<META NAME="CHANGED" CONTENT="20110713;13221578">
+	<META NAME="CHANGED" CONTENT="20110716;8055567">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
 </HEAD>
 <BODY LANG="en-US" DIR="LTR">
@@ -39,11 +39,113 @@
 <HR>
 <H1><A NAME="intro"></A><FONT FACE="Verdana"><FONT SIZE=3><BR></FONT>Introduction</FONT></H1>
 <P><FONT FACE="Verdana"><FONT SIZE=3>Custom SQL reports allow the
-user to create a unique report to suite the user. This is achieved by
-writing an SQL script which communicates directly with the database.</FONT></FONT></P>
+user to create a unique report to suit the user. This is achieved by
+using the Custom SQL Reports manager to write an SQL script that can
+communicate directly with the database, and added to the navigation
+tree of MMEX.</FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=3>T<B>he Custom SQL Reports
+Manager Interface has the following features:</B></FONT></FONT></P>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=4 CELLSPACING=3>
+	<COL WIDTH=46*>
+	<COL WIDTH=210*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Report Title</B> Text
+			field</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3>This is used to give the
+			script a Title. This is used to access the script in the
+			navigation tree.</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Heading</B> Check Box</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P STYLE="font-weight: normal"><FONT FACE="Verdana"><FONT SIZE=3>A
+			Heading can be added without an associated script. A Menu item has
+			an associated script.</FONT></FONT></P>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>When Checked:</B> Allows a
+			title to be used as a Heading in the navigation tree. </FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Sub-Menu</B> Check Box </FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>When Checked:</B> The
+			navigation tree will set the title as a sub-menu under the
+			previous menu item. The menu item is not necessarily a heading.</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>SQL Source Script</B><BR>Text
+			Field</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3>This is where the script
+			details can be written.</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Load</B> Button</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3>Load an existing script from
+			a file.</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Save</B> Button</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3>Save any changes made to a
+			script. </FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Run</B> Button</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3>Allows the script to be
+			executed without the dialog closing.<BR><B>Warning</B>: Script
+			errors may result in loosing any changes made if not saved first. </FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Clear</B> Button</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3>Clears the SQL Source Script
+			area only.</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Close</B> Button</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3>Closes the dialog without
+			saving. A way of canceling out of the dialog. </FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+</TABLE>
 <P><FONT FACE="Verdana"><FONT SIZE=3>Once the script is created, and
-saved in MMEX, the report can be easily accessed via the MMEX
-Navigation Tree.</FONT></FONT></P>
+saved in MMEX, the report can be easily accessed via the Navigation
+Tree.</FONT></FONT></P>
 <P><FONT FACE="Verdana"><FONT SIZE=3>The creation of a new Custom SQL
 Report is via:</FONT></FONT></P>
 <UL>
@@ -64,7 +166,7 @@ accessed as follows:</FONT></FONT></P>
 	</FONT></FONT><FONT FACE="Verdana"><FONT SIZE=3><B>Custom SQL Report
 	Scripts</B></FONT></FONT></P>
 </UL>
-<P><FONT FACE="Verdana"><FONT SIZE=3><B>Recommendations</B>:</FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=4><B>Recommendations</B>:</FONT></FONT></P>
 <UL>
 	<LI><P>For new scripts, use a useful title for your report.</P>
 	<LI><P>Save the script before running in the <FONT FACE="Verdana"><FONT SIZE=3>Custom
@@ -73,38 +175,15 @@ accessed as follows:</FONT></FONT></P>
 	<LI><P>Use the pop-up menu on the navigation tree to edit the file
 	if necessary.</P>
 </UL>
-<TABLE WIDTH=100% BORDER=0 CELLPADDING=4 CELLSPACING=0 STYLE="page-break-inside: avoid">
-	<COL WIDTH=17*>
-	<COL WIDTH=239*>
-	<TR VALIGN=TOP>
-		<TD WIDTH=7%>
-			<P><B>Note:</B></P>
-		</TD>
-		<TD WIDTH=93%>
-			<P>All script titles are saved in an index file called:
-			<B>CustomSQLReportIndex.txt</B></P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=7%>
-			<P><BR>
-			</P>
-		</TD>
-		<TD WIDTH=93%>
-			<P>Custom SQL Reports can be remove by deleting the index file.</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=7%>
-			<P><BR>
-			</P>
-		</TD>
-		<TD WIDTH=93%>
-			<P>Reports can be reorganized by directly modifying the index file
-			if necessary.</P>
-		</TD>
-	</TR>
-</TABLE>
+<P><FONT SIZE=4><B>Note</B>:</FONT></P>
+<UL>
+	<LI><P>All script titles are saved in an index file called:
+	<B>CustomSQLReportIndex.txt</B></P>
+	<LI><P STYLE="font-weight: normal">Custom SQL Reports can be remove
+	by deleting the index file.</P>
+	<LI><P STYLE="font-weight: normal">Reports can be reorganized by
+	directly modifying the index file if necessary.</P>
+</UL>
 <P><BR><BR>
 </P>
 <P><BR><BR>
