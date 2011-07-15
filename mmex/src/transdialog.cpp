@@ -520,10 +520,11 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
                 if (tempCategID != -1)
                 {
                     wxString categString = mmDBWrapper::getCategoryName(db_.get(), tempCategID);
-   
+                    categoryName_ = categString;
                     if (tempSubCategID != -1)
                     {
                         wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(), tempCategID, tempSubCategID);
+                        subCategoryName_ = subcatName; 
                         categString += wxT(" : ");
                         categString += subcatName;
                     }
