@@ -2870,7 +2870,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
         {
             wxFileName fn(fileName);
             wxString fileDate = wxT("_")+ wxDateTime().Today().FormatISODate();
-            wxString bkupName = fn.GetPath() + wxT("/") + fn.GetName() + fileDate + wxT(".bak");
+            wxString bkupName = fn.GetPath() + wxT("/") + fn.GetName() + wxT(".") + fn.GetExt() + fileDate + wxT(".bak");
             if (backupUpdate == wxT("FALSE"))
             {
                 if ( ! wxFileExists(bkupName) )
