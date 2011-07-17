@@ -28,7 +28,7 @@
 #define SYMBOL_MMOPTIONSDIALOG_SIZE wxSize(500, 400)
 #define SYMBOL_MMOPTIONSDIALOG_POSITION wxDefaultPosition
 
-#define TOTAL_DATEFORMAT    18
+#define TOTAL_DATEFORMAT    19
 
 class mmOptionsDialog: public wxDialog
 {    
