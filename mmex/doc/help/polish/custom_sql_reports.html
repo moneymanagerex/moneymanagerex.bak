@@ -6,8 +6,8 @@
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.1  (Win32)">
 	<META NAME="AUTHOR" CONTENT="Stefano Giorgio">
 	<META NAME="CREATED" CONTENT="20110710;15312700">
-	<META NAME="CHANGEDBY" CONTENT="Damian ">
-	<META NAME="CHANGED" CONTENT="20110716;21143300">
+	<META NAME="CHANGEDBY" CONTENT="Damian">
+	<META NAME="CHANGED" CONTENT="20110718;17103300">
 </HEAD>
 <BODY LANG="pl-PL" DIR="LTR">
 <H1><A NAME="custom_sql_top"></A><BR><BR>
@@ -40,7 +40,107 @@
 <P><FONT FACE="Verdana"><FONT SIZE=3>Własne raporty SQL pozwalają
 użytkownikowi tworzyć unikatowe raporty odpowiadające jego 
 potrzebom. Można to osiągnąć pisząc własny skrypt SQL, który
-komunikuje się wprost z bazą danych.</FONT></FONT></P>
+komunikuje się wprost z bazą danych i jest następnie dodany do drzewka nawigacji
+MMEX.</FONT></FONT></P>
+<P><FONT FACE="Verdana"><FONT SIZE=3><B>Okienko menedżera własnych raportów SQL
+posiada następujące funkcje:</B></FONT></FONT></P>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=4 CELLSPACING=3>
+	<COL WIDTH=46*>
+	<COL WIDTH=210*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Tytuł raportu</B> - Pole
+			tekstowe</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3>Używa się go do nadania skryptowi
+			tytułu, który jest następnie wyświetlany w drzewku nawigacji.</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Nagłówek</B> - Pole wyboru</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P STYLE="font-weight: normal"><FONT FACE="Verdana"><FONT SIZE=3>
+			Nagłówek może być dodany bez powiązanego skryptu. Pozycja menu posiada
+			powiązany skrypt.</FONT></FONT></P>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Kiedy jest zaznaczone:</B> Pozwala
+			na użycie tytułu jako nagłówka w drzewku nawigacji. </FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Podkategoria</B> - Pole wyboru</FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Kiedy jest zaznaczone: </B>Drzewko
+			nawigacji ustawi tytuł jako podkategorię pod poprzednią pozycją menu.
+			Pozycja menu niekoniecznie musi być nagłówkiem.</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Skrypt źródłowy SQL</B><BR> - Pole
+			tekstowe</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3>W tym polu należy wpisać treść
+			skryptu.</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Wczytaj</B> - Przycisk</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3>Wczytuje z pliku wskazany, istniejący
+			skrypt.</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Zapisz</B> - Przycisk</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3>Zachowuje zmiany wprowadzone do
+			skryptu. </FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Uruchom</B> - Przycisk</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3>Pozwala na wykonanie skryptu
+			bez zamykania okna menedżera.<BR><B>Uwaga:</B> Błędy w skrypcie
+			mogą być powodem utraty wszystkich nie zapisanych uprzednio zmian. </FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Wyczyść</B> - Przycisk</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3>Czyści pole wpisywania źródłowego
+			skryptu SQL.</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=18%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3><B>Zamknij</B> - Przycisk</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=82%>
+			<P><FONT FACE="Verdana"><FONT SIZE=3>Zamyka okno menedżera bez
+			zapisywania. To sposób na anulowanie okna menedżera. </FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+</TABLE>
 <P><FONT FACE="Verdana"><FONT SIZE=3>Po utworzeniu skryptu i
 zachowaniu go, odpowiadający mu raport może być łatwo dostępny
 poprzez panel drzewka nawigacji MMEX.</FONT></FONT></P>
@@ -454,10 +554,9 @@ w komendzie <B>SELECT</B> widzimy: <B>pT.</B>PayeeName <B>payee</B>
 <BR>* <B>pT.</B> jest tu użyte do określenia tabeli zawierającej
 pole PayeeName<BR>* <B>payee</B> na końcu komendy, jest aliasem dla
 kombinacji: table.fieldname (tabela.nazwapola)<BR></FONT></FONT><BR>
-</P>
-<P><FONT FACE="Verdana"><FONT SIZE=3>Możemy oddzielić nazwy tabel i
+<FONT FACE="Verdana"><FONT SIZE=3>Możemy oddzielić nazwy tabel i
 pól przecinkami, jeżeli komenda obejmuje więcej tabel i pól –
-jak w przykładzie.<BR></FONT></FONT><BR><BR>
+jak w przykładzie.<BR></FONT></FONT>
 </P>
 <P><FONT FACE="Verdana"><FONT SIZE=3>W poleceniu <B>WHERE</B> widać:
 pT.categID = cT.categID<BR>* Jest to test upewniający nas, że te
