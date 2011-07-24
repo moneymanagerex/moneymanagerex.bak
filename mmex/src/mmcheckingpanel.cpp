@@ -1368,7 +1368,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
 
     m_listCtrlAccount->DeleteAllItems();
 
-    initVirtualListControl(false);
+    initVirtualListControl(NULL);
     m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
 }
 
@@ -1477,7 +1477,7 @@ void MyListCtrl::OnMarkTransactionDB(const wxString& status)
 	//  was changed from unreconciled to void).
 	DeleteAllItems();
 
-	m_cp->initVirtualListControl(false);
+	m_cp->initVirtualListControl(NULL);
 }
 //----------------------------------------------------------------------------
 
@@ -1539,7 +1539,7 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
      {
         DeleteAllItems();
 
-        m_cp->initVirtualListControl(false);
+        m_cp->initVirtualListControl(NULL);
         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
      }
 
@@ -1759,7 +1759,7 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
         boost::shared_ptr<mmBankTransaction> pCopiedTrans = m_cp->m_core->bTransactionList_.copyTransaction(m_selectedForCopy, useOriginal);
         boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->m_core->accountList_.getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
         pCopiedTrans->updateAllData(m_cp->m_core, pCopiedTrans->accountID_, pCurrencyPtr, true);
-        m_cp->initVirtualListControl(false);
+        m_cp->initVirtualListControl(NULL);
         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
     }
 }
@@ -1873,7 +1873,7 @@ void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 
     if ( dlg.ShowModal() == wxID_OK )
     {
-        m_cp->initVirtualListControl(false);
+        m_cp->initVirtualListControl(NULL);
         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
         if (m_selectedIndex != -1)
         {
@@ -1904,7 +1904,7 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
     m_cp->m_core->bTransactionList_.deleteTransaction(m_cp->accountID(), m_cp->m_trans[m_selectedIndex]->transactionID());
 
     //initialize the transaction list to redo balances and images
-    m_cp->initVirtualListControl(false);
+    m_cp->initVirtualListControl(NULL);
 
     if (!m_cp->m_trans.empty()) {
         //refresh the items showing from the point of the transaction delete down
@@ -1944,7 +1944,7 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 
 void MyListCtrl::refreshVisualList()
 {
-    m_cp->initVirtualListControl(false);
+    m_cp->initVirtualListControl(NULL);
 	RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
 	SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
 	SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
@@ -2023,7 +2023,7 @@ void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
             m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->m_inidb, this);
         if ( dlg.ShowModal() == wxID_OK )
         {
-            m_cp->initVirtualListControl(false);
+            m_cp->initVirtualListControl(NULL);
             RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
             if (m_selectedIndex != -1)
             {
