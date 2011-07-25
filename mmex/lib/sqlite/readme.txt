@@ -3,13 +3,13 @@ sqlite3 and wxSQLite3 sources.
 Copy to this folder:
 
 1.Files from archive sqlite-amalgamation-<latest_version>.zip.
-  For current version sqlite3 3.7.6.1:
+  For current version sqlite3 3.7.7.1:
   sqlite3.c
   sqlite3.h
   sqlite3ext.h 
 
 2.Files from "wxsqlite\sqlite3\secure\src\codec-c" of the sources of wxsqlite3.
-  For current version wxsqlite3-2.1.1:
+  For current version wxsqlite3-2.1.2:
   codec.c
   codec.h
   codecext.c
