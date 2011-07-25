@@ -1,7 +1,7 @@
 Version History of Money Manager Ex
 
 0.9.8.0 (August 1, 2011)
-- Externals updated to wxSQLite3 V: 2.1.1 (sqlite3 V: 3.7.6.1)
+- Externals updated to wxSQLite3 V: 2.1.2 (sqlite3 V: 3.7.7.1)
 - New commands in Tools Menu for the Relocation of Categories and Payees.
 - New date format: YYYYMMDD
 - New user options for 'Transaction Dialog' behavior.
