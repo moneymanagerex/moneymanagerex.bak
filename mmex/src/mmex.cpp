@@ -3044,6 +3044,10 @@ void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
         fileName += wxT(".mmb");
     }
     
+    // Ensure database is in a steady state first
+    refreshRequested_ = true;
+    createHomePage();
+
     openFile(fileName, true);
 }
 //----------------------------------------------------------------------------
@@ -3057,7 +3061,12 @@ void mmGUIFrame::OnOpen(wxCommandEvent& /*event*/)
                                        this
                                       );
   
-    if (!fileName.empty()) {
+    if (!fileName.empty())
+    {
+        // Ensure database is in a steady state first
+        refreshRequested_ = true;
+        createHomePage();
+
         openFile(fileName, false);
     }
 }
@@ -3126,6 +3135,10 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
     if (dlg.ShowModal() != wxID_OK) {
         return;
     }
+
+    // Ensure database is in a steady state first
+    refreshRequested_ = true;
+    createHomePage();
 
     bool encrypt = dlg.GetFilterIndex() != 0; // emb -> Encrypted mMB
     wxFileName newFileName(dlg.GetPath());
