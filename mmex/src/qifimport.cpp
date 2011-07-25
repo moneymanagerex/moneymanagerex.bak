@@ -395,10 +395,12 @@ int mmImportQIF(mmCoreDB* core)
     boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
     wxASSERT(pCurrencyPtr);
 
-    wxString chooseExt = _("*.qif");
-    chooseExt << wxT("|*.qif;*.QIF;*.Qif|") << _("*.*") <<  wxT("|*.*");
+//  wxString chooseExt;
+//  chooseExt << _("QIF Files ") << wxT("(*.qif)|*.qif;*.QIF|")
+//            << _("All Files ") << wxT("(*.*)|*.*");
     wxString fileName = wxFileSelector(_("Choose QIF data file to import"), 
-        wxT(""), wxT(""), wxT(""), chooseExt, wxFD_OPEN|wxFD_CHANGE_DIR|wxFD_PREVIEW);
+        wxEmptyString, wxEmptyString, wxEmptyString, wxT("*.qif;*.QIF"), wxFD_CHANGE_DIR|wxFD_FILE_MUST_EXIST);
+//      wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFD_OPEN|wxFD_CHANGE_DIR|wxFD_FILE_MUST_EXIST);
     wxFileName logFile = mmex::GetLogDir(true);
     logFile.SetFullName(fileName);
     logFile.SetExt(wxT("log"));
