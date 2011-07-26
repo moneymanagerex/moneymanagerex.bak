@@ -87,7 +87,6 @@ public:
     void OnWizardCancel(wxWizardEvent& event);
 
     void setGotoAccountID(int account_id) { gotoAccountID_ = account_id; }
-    void unselectNavTree();
     void setHomePageActive(bool active = true);
     bool expandedBankAccounts();
     bool expandedTermAccounts();
@@ -95,6 +94,9 @@ public:
     bool hasActiveTermAccounts();
 
     wxDateTime getUserDefinedFinancialYear(bool prevDayRequired = false);
+
+    void setAccountNavTreeSection(wxString accountName); 
+    bool setNavTreeSection( wxString sectionName);
 
 private:
     /* handles to the DB Abstraction */
@@ -128,6 +130,9 @@ private:
 
     mmTreeItemData* selectedItemData_;
     wxMenuItem* menuItemOnlineUpdateCurRate_; // Menu Item for Disabling Item
+
+    wxTreeItemId getTreeItemfor(wxTreeItemId itemID, wxString accountName);
+    bool setAccountInSection(wxString sectionName, wxString accountName);
 
     /* Custom Reports */
     customSQLReportIndex* custRepIndex_;

@@ -35,11 +35,11 @@ class mmHtmlWindow: public wxHtmlWindow
     DECLARE_EVENT_TABLE()
 
 public:
-    mmHtmlWindow(wxWindow *parent,  mmGUIFrame* frame,
+    mmHtmlWindow(wxWindow *parent,  mmGUIFrame* frame, mmCoreDB* core,
         const wxWindowID id, const wxPoint& pos,
         const wxSize& size, long style)
         : wxHtmlWindow(parent, id, pos, size, style),
-          frame_(frame)
+          frame_(frame), core_(core)
     {}
 
 public:
@@ -48,6 +48,7 @@ public:
 
 private:
      mmGUIFrame* frame_;
+     mmCoreDB* core_;
 };
 
 class mmHomePagePanel : public mmPanelBase
