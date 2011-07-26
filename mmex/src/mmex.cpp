@@ -131,6 +131,8 @@
 
 const wxString NAVTREECTRL_REPORTS = wxT("Reports");
 const wxString NAVTREECTRL_CUSTOM_REPORTS = wxT("Custom_Reports");
+const wxString NAVTREECTRL_BANK_ACCOUNTS = wxT("Bank Accounts");
+const wxString NAVTREECTRL_TERM_ACCOUNTS = wxT("Term Accounts");
 
 namespace
 {
@@ -695,13 +697,60 @@ void mmGUIFrame::cleanup()
     }
 }
 //----------------------------------------------------------------------------
+// returns a wxTreeItemID for the accountName in the navtree section.
+wxTreeItemId mmGUIFrame::getTreeItemfor(wxTreeItemId itemID, wxString accountName)
+{
+    wxTreeItemIdValue treeDummyValue;
+    wxTreeItemId navTreeID = navTreeCtrl_->GetFirstChild(itemID, treeDummyValue);
 
-void mmGUIFrame::unselectNavTree()
-{ 
-    wxASSERT(navTreeCtrl_);
-    navTreeCtrl_->UnselectAll(); 
+    bool searching = true;
+    while (navTreeID.IsOk() && searching)
+    {
+        if ( accountName == navTreeCtrl_->GetItemText(navTreeID))
+            searching = false;
+        else
+            navTreeID = navTreeCtrl_->GetNextChild(itemID, treeDummyValue);
+    }
+    return navTreeID;
 }
-//----------------------------------------------------------------------------
+
+//
+bool mmGUIFrame::setAccountInSection(wxString sectionName, wxString accountName)
+{
+    bool accountNotFound = true;
+    wxTreeItemId rootItem = getTreeItemfor(navTreeCtrl_->GetRootItem(), sectionName );
+    if (rootItem.IsOk() && navTreeCtrl_->ItemHasChildren(rootItem))
+    {
+        navTreeCtrl_->ExpandAllChildren(rootItem);
+        wxTreeItemId accountItem = getTreeItemfor(rootItem, accountName);
+        if (accountItem.IsOk())
+        {
+            navTreeCtrl_->SelectItem(accountItem);
+            accountNotFound = false;
+        }
+    }
+    return accountNotFound;
+}
+
+bool mmGUIFrame::setNavTreeSection( wxString sectionName)
+{
+    bool accountNotFound = true;
+    wxTreeItemId rootItem = getTreeItemfor(navTreeCtrl_->GetRootItem(), sectionName );
+    if (rootItem.IsOk())
+    {
+        navTreeCtrl_->SelectItem(rootItem);
+        accountNotFound = false;
+    }
+    return accountNotFound;
+}
+
+void mmGUIFrame::setAccountNavTreeSection(wxString accountName)
+{
+    if ( setAccountInSection(NAVTREECTRL_BANK_ACCOUNTS, accountName) )
+    {
+        setAccountInSection(NAVTREECTRL_TERM_ACCOUNTS, accountName); 
+    }
+}
 
 void mmGUIFrame::setHomePageActive(bool active)
 {
@@ -807,7 +856,10 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
             if ( repeatTransactionsDlg.ShowModal() == wxID_OK )
             {
                 if (activeHomePage_)
+                {
+                    refreshRequested_ = true;
                     createHomePage(); // Update home page details only if it is being displayed
+                }
             }
         }
 
@@ -842,6 +894,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 
             if (activeHomePage_)
             {
+                refreshRequested_ = true;
                 createHomePage(); // Update home page details only if it is being displayed
             }
         }
@@ -2132,19 +2185,20 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         else if (iData->getString() == wxT("Cash Flow - Specific Accounts"))
         {
             OnCashFlowSpecificAccounts();
-            unselectNavTree(); // Deselect item in navTreeCtrl_, to enable re-selection
+            navTreeCtrl_->Unselect(); // Deselect item in navTreeCtrl_, to enable re-selection
         }
         else if (iData->getString() == wxT("Transaction Report"))
         {
            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TRANSACTIONREPORT);
            AddPendingEvent(evt);
-           unselectNavTree(); // Deselect item in navTreeCtrl_, to enable re-selection
+           navTreeCtrl_->Unselect(); // Deselect item in navTreeCtrl_, to enable re-selection
         }
-        else if (iData->getString() == wxT("Budgeting"))
-        {
-            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BUDGETSETUPDIALOG);
-            AddPendingEvent(evt);
-        }
+//      Moved to act when using right mouse button instead.
+//      else if (iData->getString() == wxT("Budgeting"))
+//      {
+//          wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BUDGETSETUPDIALOG);
+//          AddPendingEvent(evt);
+//      }
         else if (iData->getString() == wxT("Bills & Deposits"))
         {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BILLSDEPOSITS);
@@ -2360,6 +2414,11 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
                 customReportMenu->Append(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_EDIT, _("Edit Custom Report"));
                 customReportMenu->Append(MENU_TREEPOPUP_CUSTOM_SQL_REPORT_DELETE, _("Delete Custom Report"));
                 PopupMenu(&*customReportMenu, pt);
+            }
+            else if (iData->getString() == wxT("Budgeting"))
+            {
+                wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BUDGETSETUPDIALOG);
+                AddPendingEvent(evt);
             }
         }
     }
@@ -3043,11 +3102,13 @@ void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
     if (!fileName.EndsWith(wxT(".mmb"))) {
         fileName += wxT(".mmb");
     }
-    
-    // Ensure database is in a steady state first
-    refreshRequested_ = true;
-    createHomePage();
 
+    // Ensure database is in a steady state first
+    if (!activeHomePage_)
+    {
+        refreshRequested_ = true;
+        createHomePage();
+    }
     openFile(fileName, true);
 }
 //----------------------------------------------------------------------------
@@ -3064,9 +3125,11 @@ void mmGUIFrame::OnOpen(wxCommandEvent& /*event*/)
     if (!fileName.empty())
     {
         // Ensure database is in a steady state first
-        refreshRequested_ = true;
-        createHomePage();
-
+        if (!activeHomePage_)
+        {
+            refreshRequested_ = true;
+            createHomePage();
+        }
         openFile(fileName, false);
     }
 }
@@ -3137,8 +3200,11 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
     }
 
     // Ensure database is in a steady state first
-    refreshRequested_ = true;
-    createHomePage();
+    if (!activeHomePage_)
+    {
+        refreshRequested_ = true;
+        createHomePage();
+    }
 
     bool encrypt = dlg.GetFilterIndex() != 0; // emb -> Encrypted mMB
     wxFileName newFileName(dlg.GetPath());

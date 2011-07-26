@@ -777,7 +777,7 @@ void mmHomePagePanel::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    htmlWindow_ = new mmHtmlWindow( itemDialog1, frame_, 
+    htmlWindow_ = new mmHtmlWindow( itemDialog1, frame_, core_, 
         ID_PANEL_HOMEPAGE_HTMLWINDOW, 
         wxDefaultPosition, wxDefaultSize, 
         wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
@@ -800,8 +800,9 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
         long id = -1;
         number.ToLong(&id);
         frame_->setGotoAccountID(id);
-        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
-        frame_->GetEventHandler()->AddPendingEvent(evt);
+        frame_->setAccountNavTreeSection(core_->accountList_.getAccountName(id));
+//        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
+//        frame_->GetEventHandler()->AddPendingEvent(evt);
     }
     //else if (isStock)
     //{
@@ -813,16 +814,18 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
     //}
     else if (href == wxT("Assets"))
     {
-        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
-        frame_->GetEventHandler()->AddPendingEvent(evt);
+        frame_->setNavTreeSection(wxT("Assets"));
+
+    //  wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
+    //  frame_->GetEventHandler()->AddPendingEvent(evt);
     }
-    else if (href == wxT("Stocks"))
-    {
-        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
-        frame_->GetEventHandler()->AddPendingEvent(evt);
-    }
+    //else if (href == wxT("Stocks"))
+    //{
+    //    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
+    //    frame_->GetEventHandler()->AddPendingEvent(evt);
+    //}
     // Deselect any selections in the tree ctrl, so tree works
-    frame_->unselectNavTree();
+//    frame_->unselectNavTree();
 }
 
 //----------------------------------------------------------------------------
