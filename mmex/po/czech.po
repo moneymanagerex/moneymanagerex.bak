@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-21 11:54+1000\n"
-"PO-Revision-Date: 2011-07-25 12:33+0100\n"
-"Last-Translator: CZtranslators <cztranslators@gmail.com>\n"
+"PO-Revision-Date: 2011-07-27 12:16+0300\n"
+"Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: Geralt <geraltcz@centrum.cz>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -203,7 +203,6 @@ msgid "% Rate"
 msgstr "% sazba"
 
 #: src/assetdialog.cpp:263
-#, c-format
 msgid "Enter the rate at which the asset changes its value in % per year"
 msgstr "Zadejte sazbu v %, která bude ročně zhodnocovat cenu majetku"
 
@@ -1644,7 +1643,6 @@ msgid "Organize Payees Dialog Tip: Using the % key as a wildcard when using the 
 msgstr "Tip pro práci se Správcem příjemců:  Stiskem klávesy % lze vyvolat filtrování přímeců obsahující zadaná písmena. Příklad: %d zobrazí Doprava a Drogerie, %d%e zobrazí pouze Drogerie."
 
 #: src/mmcheckingpanel.cpp:946
-#, c-format
 msgid "Tip to get out of debt: Pay yourself 10% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses."
 msgstr "Tip pro splácení dluhů: Nejdříve uložte 10% částky na vlastní účet ze kterho není možné lehce čásku vybrat. Ujistěte se, že výběr částky z tohoto účtu je nesnadný (např. musíte navštívit banku) a tyto uložené prostředky použijte pouze v případě důležitých a nezbytných výdajů."
 
@@ -2961,9 +2959,8 @@ msgid ""
 "Investment accounts are specialized accounts that only\n"
 "have stock/mutual fund investments associated with them."
 msgstr ""
-"Investiční účty jsou zvláštní typy účtů, kde můžete obchodovat \n"
-"pouze s akciemi a otevřenými podílovými fondy, které jsou \n"
-"účtu přiřazeny.\n"
+"Investiční účty jsou zvláštní typy účtů, kde můžete obchodovat pouze\n"
+"s akciemi a otevřenými podílovými fondy, které jsou účtu přiřazeny."
 
 #: src/mmex.cpp:4285
 msgid ""
@@ -3601,7 +3598,6 @@ msgid "Filter Payees: "
 msgstr "Filtr příjemců: "
 
 #: src/payeedialog.cpp:108
-#, c-format
 msgid "Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."
 msgstr "Zadejte hledaný řetězec.  Jako zástupný znaky můžete použít % (odpovídá žádnému nebo více znakům) nebo _ (odpovídá jednomu znaku)."
 
