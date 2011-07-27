@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex 0.9.8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-21 11:54+1000\n"
-"PO-Revision-Date: 2011-07-13 19:57+0100\n"
+"PO-Revision-Date: 2011-07-27 03:37+0100\n"
 "Last-Translator: Jorge\n"
 "Language-Team: jorgeb\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "Utilizando idioma : "
 
 #: src/appstartdialog.cpp:56
 msgid " Start Page"
-msgstr " Página de Inicio"
+msgstr " Página de inicio"
 
 #: src/appstartdialog.cpp:116
 msgid "Open Last Opened Database"
@@ -570,13 +570,13 @@ msgstr "Especifique cualquier anotación que quiera añadir a esta transacción.
 #: src/billsdepositspanel.cpp:180
 #: src/budgetingpanel.cpp:239
 msgid "Amount"
-msgstr "Cantidad"
+msgstr "Importe"
 
 #: src/billsdepositsdialog.cpp:531
 #: src/billsdepositsdialog.cpp:827
 #: src/billsdepositsdialog.cpp:843
 msgid "Specify the amount for this transaction"
-msgstr "Especifique la cantidad para esta transacción"
+msgstr "Especifique el importe de esta transacción"
 
 #: src/billsdepositsdialog.cpp:571
 #: src/billsdepositsdialog.cpp:599
@@ -586,15 +586,15 @@ msgstr "Seleccionar cuenta bancaria o a plazo"
 
 #: src/billsdepositsdialog.cpp:713
 msgid "Amount to be recorded in To Account"
-msgstr "Cantidad para grabar en cuenta destino"
+msgstr "Importe a registrar en cuenta de abono"
 
 #: src/billsdepositsdialog.cpp:713
 msgid "To Account Amount Entry"
-msgstr "Cantidad a introducir en cuenta destino"
+msgstr "Importe a introducir en cuenta de abono"
 
 #: src/billsdepositsdialog.cpp:722
 msgid "Invalid To Amount Entered "
-msgstr "La cantidad introducida no es válida"
+msgstr "El importe introducido no es válido"
 
 #: src/billsdepositsdialog.cpp:834
 #: src/billsdepositsdialog.cpp:864
@@ -615,7 +615,7 @@ msgstr "Especifique la cuenta de la que viene la transferencia"
 
 #: src/billsdepositsdialog.cpp:867
 msgid "Specify the transfer amount in the From and To Account"
-msgstr "Especifique la cantidad de la transaferencia en la cuenta origen y destino"
+msgstr "Especifique el importe de la transferencia en la cuenta origen y destino"
 
 #: src/billsdepositsdialog.cpp:886
 msgid "Payee "
@@ -634,7 +634,7 @@ msgstr "Categoría"
 #: src/billsdepositsdialog.cpp:925
 #: src/budgetentrydialog.cpp:219
 msgid "Invalid Amount Entered "
-msgstr "La cantidad introducida no es válida"
+msgstr "El importe introducido no es válido"
 
 #: src/billsdepositsdialog.cpp:932
 #: src/billsdepositspanel.cpp:175
@@ -704,7 +704,7 @@ msgstr "Omitir ocurrencia de facturas y abonos"
 
 #: src/billsdepositspanel.cpp:262
 msgid "MMEX allows regular payments to be set up as transactions. These transactions can also be regular deposits, or transfers that will occur at some future time. These transactions act a reminder that an event is about to occur, and appears on the Home Page 14 days before the transaction is due. "
-msgstr "MMEX permite configurar pagos habituales como transacciones. Estas transacciones también pueden ser abonos, o transferencias que se realizarán en algún momento. Actúan como recordatorio de que un evento está a punto de suceder, y aparecen en la Página de Inicio 14 días antes de que la transacción sea efectiva."
+msgstr "MMEX permite configurar pagos habituales como transacciones. Estas transacciones también pueden ser abonos, o transferencias que se realizarán en algún momento. Actúan como recordatorio de que un evento está a punto de suceder, y aparecen en la página de inicio 14 días antes de que la transacción sea efectiva."
 
 #: src/billsdepositspanel.cpp:393
 msgid " days remaining"
@@ -768,7 +768,7 @@ msgstr "Especifique la frecuencia del gasto o abono"
 
 #: src/budgetentrydialog.cpp:166
 msgid "Amount:"
-msgstr "Cantidad:"
+msgstr "Importe:"
 
 #: src/budgetentrydialog.cpp:174
 msgid "Enter the amount budgeted for this category."
@@ -1914,7 +1914,7 @@ msgstr "Navegación"
 
 #: src/mmex.cpp:1032
 msgid "Home Page"
-msgstr "Página de Inicio"
+msgstr "Página de inicio"
 
 #: src/mmex.cpp:1038
 msgid "Bank Accounts"
@@ -2043,7 +2043,7 @@ msgstr "Cumplimiento del presupuesto"
 
 #: src/mmex.cpp:1296
 msgid "Budget Setup and Performance"
-msgstr "Configuración y cumplimiento del presupuesto"
+msgstr "Organización y cumplimiento del presupuesto"
 
 #: src/mmex.cpp:1319
 #: src/mmex.cpp:3374
@@ -2411,11 +2411,11 @@ msgstr "Reorganizar categorías y beneficiarios"
 
 #: src/mmex.cpp:2669
 msgid "&Budget Setup"
-msgstr "Configurar presupuesto"
+msgstr "Organizar presupuesto"
 
 #: src/mmex.cpp:2669
 msgid "Budget Setup"
-msgstr "Configurar presupuesto"
+msgstr "Organizar presupuesto"
 
 #: src/mmex.cpp:2677
 msgid "&Repeating Transactions"
@@ -3340,7 +3340,7 @@ msgstr "Expandir cuentas a plazo en la vista en árbol cuando se refresque"
 
 #: src/optionsdialog.cpp:659
 msgid "Home Page Options: Expand Section"
-msgstr "Página de Inicio: Expandir sección"
+msgstr "Página de inicio: Expandir sección"
 
 #: src/optionsdialog.cpp:671
 msgid "Expand Bank Accounts on home page when page is refreshed"
@@ -3836,7 +3836,7 @@ msgstr ":"
 #: src/relocatecategorydialog.cpp:173
 #: src/relocatepayeedialog.cpp:164
 msgid "Please Confirm:"
-msgstr "Por favor, comfirme:"
+msgstr "Por favor, confirme:"
 
 #: src/relocatecategorydialog.cpp:174
 msgid "Changing all categories of: "
@@ -3888,7 +3888,7 @@ msgstr "%"
 
 #: src/reportbudgetsetup.cpp:24
 msgid "Budget setup for Year : "
-msgstr "Configurar presupuesto para año : "
+msgstr "Organización de presupuesto para año : "
 
 #: src/reportbudgetsetup.cpp:24
 msgid " (Estimated Vs Actual)"
@@ -3947,7 +3947,7 @@ msgstr "Suma total: "
 #: src/reportcategovertimeperf.cpp:238
 #, c-format
 msgid "Category Income/Expenses Over Last %d Months "
-msgstr "Ingresos/Gastos de la categoría en los últimos %d meses "
+msgstr "Ingresos/Gastos por categoría en los últimos %d meses "
 
 #: src/reportincexpensesfinancialperiod.cpp:60
 msgid "Income vs Expenses for Financial Year: "
@@ -4718,7 +4718,7 @@ msgstr "Editor de presupuesto anual"
 
 #: src/budgetyearentrydialog.h:23
 msgid "Budget Year Entry"
-msgstr "Introducción de presupuesto anual"
+msgstr "Introducción de presupuesto"
 
 #: src/currencydialog.h:23
 msgid "Currency Manager"
