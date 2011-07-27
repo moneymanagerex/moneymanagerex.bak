@@ -102,6 +102,7 @@ Italian - Maurizio Ballo [Mau13]
 French  - catacotox
 Russian - Nikolay
 Polish  - Damian_pl
+Spanish - jorgeb
 
 Sponsors
 ==========================================
