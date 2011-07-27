@@ -1,0 +1,544 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+
+
+	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=windows-1252"><title></title>
+	
+	<meta name="GENERATOR" content="OpenOffice.org 3.3  (Win32)">
+	<meta name="AUTHOR" content="Stefano Giorgio">
+	<meta name="CREATED" content="20110710;15312700">
+	<meta name="CHANGEDBY" content="Stefano Giorgio">
+	<meta name="CHANGED" content="20110716;8055567">
+	<meta name="CHANGEDBY" content="Stefano Giorgio"></head><body dir="ltr" lang="en-US">
+<h1><a name="custom_sql_top"></a><br><br>
+</h1>
+<table style="page-break-inside: avoid;" border="0" cellpadding="4" cellspacing="0" width="100%">
+	<col width="213*">
+	<col width="43*">
+	<tbody><tr valign="top">
+		<td width="83%">
+			<h1><font face="Verdana"><font size="6">&#1055;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1077;&#1083;&#1100;&#1089;&#1082;&#1080;&#1077; SQL &#1054;&#1090;&#1095;&#1105;&#1090;&#1099;<br>
+</font></font></h1>
+		</td>
+		<td width="17%">
+			<p><a href="../index_english.html"><font face="Verdana"><font size="4"><b>Home</b></font></font></a></p>
+		</td>
+	</tr>
+</tbody></table>
+<ul>
+	<li><p><a href="#intro"><font face="Verdana">&#1042;&#1074;&#1077;&#1076;&#1077;&#1085;&#1080;&#1077;</font></a></p>
+	</li><li><p><a href="#running_reports"><font face="Verdana">&#1047;&#1072;&#1087;&#1091;&#1089;&#1082; &#1086;&#1090;&#1095;&#1105;&#1090;&#1086;&#1074; &#1080;&#1079; &#1076;&#1077;&#1088;&#1077;&#1074;&#1072; &#1085;&#1072;&#1074;&#1080;&#1075;&#1072;&#1094;&#1080;&#1080;</font></a></p>
+	</li><li><p><a href="#database_structure"><font face="Verdana">&#1057;&#1090;&#1088;&#1091;&#1082;&#1090;&#1091;&#1088;&#1072; &#1073;&#1072;&#1079;&#1099; &#1076;&#1072;&#1085;&#1085;&#1099;&#1093;</font></a></p>
+	</li><li><p><a href="#sql_scripting_intro"><font face="Verdana">SQL &#1047;&#1072;&#1087;&#1088;&#1086;&#1089;&#1099; (&#1042;&#1074;&#1077;&#1076;&#1077;&#1085;&#1080;&#1077;)</font></a></p>
+</li></ul>
+<p><br><br>
+</p>
+<hr>
+<h1><a name="intro"></a><font face="Verdana"><font size="3"><br></font>&#1042;&#1074;&#1077;&#1076;&#1077;&#1085;&#1080;&#1077;</font></h1>
+<p><font face="Verdana"><font size="3">&#1055;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1077;&#1083;&#1100;&#1089;&#1082;&#1080;&#1077; SQL &#1086;&#1090;&#1095;&#1105;&#1090;&#1099;
+&#1087;&#1086;&#1079;&#1074;&#1086;&#1083;&#1103;&#1102;&#1090; &#1089;&#1086;&#1079;&#1076;&#1072;&#1074;&#1072;&#1090;&#1100; &#1091;&#1085;&#1080;&#1082;&#1072;&#1083;&#1100;&#1085;&#1099;&#1077; &#1086;&#1090;&#1095;&#1105;&#1090;&#1099; &#1087;&#1086;&#1076; &#1085;&#1091;&#1078;&#1076;&#1099; &#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1077;&#1083;&#1103;. &#1069;&#1090;&#1086;
+&#1076;&#1086;&#1089;&#1090;&#1080;&#1075;&#1072;&#1077;&#1090;&#1089;&#1103; &#1089; &#1087;&#1086;&#1084;&#1086;&#1097;&#1100;&#1102; &#1084;&#1077;&#1085;&#1077;&#1076;&#1078;&#1077;&#1088;&#1072; SQL &#1079;&#1072;&#1087;&#1088;&#1086;&#1089;&#1086;&#1074;, &#1082;&#1086;&#1090;&#1086;&#1088;&#1099;&#1081; &#1084;&#1086;&#1078;&#1077;&#1090; &#1086;&#1073;&#1088;&#1072;&#1097;&#1072;&#1090;&#1100;&#1089;&#1103;
+&#1085;&#1077;&#1087;&#1086;&#1089;&#1088;&#1077;&#1076;&#1089;&#1090;&#1074;&#1077;&#1085;&#1085;&#1086; &#1082; &#1073;&#1072;&#1079;&#1077; &#1076;&#1072;&#1085;&#1085;&#1099;&#1093;. &#1042;&#1089;&#1077; &#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1077;&#1083;&#1100;&#1089;&#1082;&#1080;&#1077; &#1086;&#1090;&#1095;&#1105;&#1090;&#1099; &#1076;&#1086;&#1073;&#1072;&#1074;&#1083;&#1103;&#1102;&#1090;&#1089;&#1103;
+&#1074; &#1076;&#1077;&#1088;&#1077;&#1074;&#1077; &#1085;&#1072;&#1074;&#1080;&#1075;&#1072;&#1094;&#1080;&#1080; MMEX.<br>
+<br>
+</font></font></p>
+<p><font face="Verdana"><font size="3"><span style="font-weight: bold;">&#1052;&#1077;&#1085;&#1077;&#1076;&#1078;&#1077;&#1088; &#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1077;&#1083;&#1100;&#1089;&#1082;&#1080;&#1093; &#1086;&#1090;&#1095;&#1105;&#1090;&#1086;&#1074;</span><b> SQL &#1080;&#1084;&#1077;&#1077;&#1090; &#1089;&#1083;&#1077;&#1076;&#1091;&#1102;&#1097;&#1080;&#1077; &#1086;&#1087;&#1094;&#1080;&#1080;:</b></font></font></p>
+<table border="1" cellpadding="4" cellspacing="3" width="100%">
+	<col width="46*">
+	<col width="210*">
+	<tbody><tr valign="top">
+		<td width="18%">
+			<p><font face="Verdana"><font size="3"><b>Report Title</b> Text
+			field</font></font></p>
+		</td>
+		<td width="82%">
+			<p><font face="Verdana"><font size="3">This is used to give the
+			script a Title. This is used to access the script in the
+			navigation tree.</font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="18%">
+			<p><font face="Verdana"><font size="3"><b>Heading</b> Check Box</font></font></p>
+		</td>
+		<td width="82%">
+			<p style="font-weight: normal;"><font face="Verdana"><font size="3">A
+			Heading can be added without an associated script. A Menu item has
+			an associated script.</font></font></p>
+			<p><font face="Verdana"><font size="3"><b>When Checked:</b> Allows a
+			title to be used as a Heading in the navigation tree. </font></font>
+			</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="18%">
+			<p><font face="Verdana"><font size="3"><b>Sub-Menu</b> Check Box </font></font>
+			</p>
+		</td>
+		<td width="82%">
+			<p><font face="Verdana"><font size="3"><b>When Checked:</b> The
+			navigation tree will set the title as a sub-menu under the
+			previous menu item. The menu item is not necessarily a heading.</font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="18%">
+			<p><font face="Verdana"><font size="3"><b>SQL Source Script</b><br>Text
+			Field</font></font></p>
+		</td>
+		<td width="82%">
+			<p><font face="Verdana"><font size="3">This is where the script
+			details can be written.</font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="18%">
+			<p><font face="Verdana"><font size="3"><b>Load</b> Button</font></font></p>
+		</td>
+		<td width="82%">
+			<p><font face="Verdana"><font size="3">Load an existing script from
+			a file.</font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="18%">
+			<p><font face="Verdana"><font size="3"><b>Save</b> Button</font></font></p>
+		</td>
+		<td width="82%">
+			<p><font face="Verdana"><font size="3">Save any changes made to a
+			script. </font></font>
+			</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="18%">
+			<p><font face="Verdana"><font size="3"><b>Run</b> Button</font></font></p>
+		</td>
+		<td width="82%">
+			<p><font face="Verdana"><font size="3">Allows the script to be
+			executed without the dialog closing.<br><b>Warning</b>: Script
+			errors may result in loosing any changes made if not saved first. </font></font>
+			</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="18%">
+			<p><font face="Verdana"><font size="3"><b>Clear</b> Button</font></font></p>
+		</td>
+		<td width="82%">
+			<p><font face="Verdana"><font size="3">Clears the SQL Source Script
+			area only.</font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="18%">
+			<p><font face="Verdana"><font size="3"><b>Close</b> Button</font></font></p>
+		</td>
+		<td width="82%">
+			<p><font face="Verdana"><font size="3">Closes the dialog without
+			saving. A way of canceling out of the dialog. </font></font>
+			</p>
+		</td>
+	</tr>
+</tbody></table>
+<p><font face="Verdana"><font size="3">&#1055;&#1086;&#1089;&#1083;&#1077; &#1090;&#1086;&#1075;&#1086; &#1082;&#1072;&#1082; &#1079;&#1072;&#1087;&#1088;&#1086;&#1089; SQL &#1089;&#1086;&#1079;&#1076;&#1072;&#1085; &#1080; &#1079;&#1072;&#1087;&#1080;&#1089;&#1072;&#1085;, &#1086;&#1085; &#1084;&#1086;&#1078;&#1077;&#1090; &#1083;&#1077;&#1075;&#1082;&#1086; &#1073;&#1099;&#1090;&#1100; &#1079;&#1072;&#1087;&#1091;&#1097;&#1077;&#1085; &#1095;&#1077;&#1088;&#1077;&#1079; &#1080;&#1079; &#1076;&#1077;&#1088;&#1077;&#1074;&#1072; &#1085;&#1072;&#1074;&#1080;&#1075;&#1072;&#1094;&#1080;&#1080;.</font></font></p>
+<p><font face="Verdana"><font size="3">&#1057;&#1086;&#1079;&#1076;&#1072;&#1090;&#1100; &#1085;&#1086;&#1074;&#1099;&#1081; &#1086;&#1090;&#1095;&#1105;&#1090; SQL &#1084;&#1086;&#1078;&#1085;&#1086; &#1095;&#1077;&#1088;&#1077;&#1079;:</font></font></p>
+<ul>
+	<li><p><font face="Verdana"><font size="3">&#1052;&#1077;&#1085;&#1102;: &#1048;&#1085;&#1089;&#1090;&#1088;&#1091;&#1084;&#1077;&#1085;&#1090;&#1099; –&gt; SQL &#1054;&#1090;&#1095;&#1105;&#1090;&#1099; -&gt; &#1053;&#1086;&#1074;&#1099;&#1081; <br>
+</font></font></p>
+	</li><li><p><font face="Verdana"><font size="3">&#1048;&#1082;&#1086;&#1085;&#1082;&#1072; &#1074; &#1087;&#1072;&#1085;&#1077;&#1083;&#1080; &#1080;&#1085;&#1090;&#1089;&#1088;&#1091;&#1084;&#1077;&#1085;&#1090;&#1086;&#1074;.</font></font></p>
+</li></ul>
+<p><font face="Verdana"><font size="3">&#1069;&#1090;&#1086; &#1076;&#1077;&#1081;&#1089;&#1090;&#1074;&#1080;&#1077; &#1086;&#1090;&#1082;&#1088;&#1086;&#1077;&#1090; &#1076;&#1080;&#1072;&#1083;&#1086;&#1075;
+&#1084;&#1077;&#1085;&#1077;&#1076;&#1078;&#1077;&#1088;&#1072; &#1086;&#1090;&#1095;&#1077;&#1090;&#1086;&#1074; SQL, &#1072; &#1090;&#1072;&#1082;&#1078;&#1077; &#1087;&#1086;&#1079;&#1074;&#1086;&#1083;&#1103;&#1077;&#1090; &#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1077;&#1083;&#1102; &#1085;&#1072;&#1087;&#1088;&#1103;&#1084;&#1091;&#1102; &#1085;&#1072;&#1087;&#1080;&#1089;&#1072;&#1090;&#1100;
+&#1089;&#1094;&#1077;&#1085;&#1072;&#1088;&#1080;&#1081; &#1080; &#1089;&#1086;&#1093;&#1088;&#1072;&#1085;&#1080;&#1090;&#1100; &#1077;&#1075;&#1086; &#1074; &#1074;&#1080;&#1076;&#1077; &#1092;&#1072;&#1081;&#1083;&#1072;.</font></font></p>
+<p><font face="Verdana"><font size="3">Useful Custom SQL Scripts are
+also available from the MMEX Forum on the Internet, which can be
+accessed as follows:</font></font></p>
+<ul>
+	<li><p><font face="Verdana"><font size="3">Use the menu option: </font></font><font face="Verdana"><font size="3"><b>Help
+	–&gt; Report Issues or Feedback</b></font></font></p>
+	</li><li><p><font face="Verdana"><font size="3">Search the forum heading:
+	</font></font><font face="Verdana"><font size="3"><b>Custom SQL Report
+	Scripts</b></font></font></p>
+</li></ul>
+<p><font face="Verdana"><font size="4"><b>&#1056;&#1077;&#1082;&#1086;&#1084;&#1077;&#1085;&#1076;&#1072;&#1094;&#1080;&#1080;</b>:</font></font></p>
+<ul>
+	<li><p>&#1044;&#1083;&#1103; &#1085;&#1086;&#1074;&#1099;&#1093; &#1079;&#1072;&#1087;&#1088;&#1086;&#1089;&#1086;&#1074; &#1080;&#1089;&#1087;&#1086;&#1083;&#1100;&#1079;&#1091;&#1081;&#1090;&#1077; &#1080;&#1085;&#1092;&#1086;&#1088;&#1084;&#1072;&#1090;&#1080;&#1074;&#1085;&#1086;&#1077; &#1085;&#1072;&#1079;&#1074;&#1072;&#1085;&#1080;&#1077; &#1074; &#1079;&#1072;&#1075;&#1086;&#1083;&#1086;&#1074;&#1082;&#1077;.</p>
+	</li><li><p>&#1057;&#1086;&#1093;&#1088;&#1072;&#1085;&#1103;&#1081;&#1090;&#1077; &#1079;&#1072;&#1087;&#1088;&#1086;&#1089; &#1087;&#1077;&#1088;&#1077;&#1076; &#1079;&#1072;&#1087;&#1091;&#1089;&#1082;&#1086;&#1084;. <br><b>Note:</b> &#1054;&#1096;&#1080;&#1073;&#1082;&#1072; &#1074; &#1079;&#1072;&#1087;&#1088;&#1086;&#1089;&#1077; &#1084;&#1086;&#1078;&#1077;&#1090; &#1087;&#1088;&#1080;&#1074;&#1077;&#1089;&#1090;&#1080; &#1082; &#1079;&#1072;&#1082;&#1088;&#1099;&#1090;&#1080;&#1102; &#1086;&#1082;&#1085;&#1072; &#1088;&#1077;&#1076;&#1072;&#1082;&#1090;&#1086;&#1088;&#1072;, &#1080;, &#1082;&#1072;&#1082; &#1089;&#1083;&#1077;&#1076;&#1089;&#1090;&#1074;&#1080;&#1077;, &#1087;&#1086;&#1090;&#1077;&#1088;&#1102; &#1089;&#1072;&#1084;&#1086;&#1075;&#1086; &#1079;&#1072;&#1087;&#1088;&#1086;&#1089;&#1072;.</p>
+	</li><li><p>&#1055;&#1086;&#1083;&#1100;&#1079;&#1091;&#1081;&#1090;&#1077;&#1089;&#1100; &#1074;&#1099;&#1087;&#1072;&#1076;&#1072;&#1102;&#1097;&#1080;&#1084; &#1084;&#1077;&#1085;&#1102; &#1087;&#1086; &#1087;&#1088;&#1072;&#1074;&#1086;&#1081; &#1082;&#1085;&#1086;&#1087;&#1082;&#1077; &#1084;&#1099;&#1096;&#1080; &#1074; &#1087;&#1072;&#1085;&#1077;&#1083;&#1080; &#1085;&#1072;&#1074;&#1080;&#1075;&#1072;&#1094;&#1080;&#1080; &#1076;&#1083;&#1103; &#1088;&#1077;&#1076;&#1072;&#1082;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1080;&#1103; &#1080;&#1084;&#1077;&#1102;&#1097;&#1080;&#1093;&#1089;&#1103; &#1086;&#1090;&#1095;&#1105;&#1090;&#1086;&#1074;. <br>
+</p>
+</li></ul>
+<p><font size="4"><span style="font-weight: bold;">&#1047;&#1072;&#1084;&#1077;&#1090;&#1082;&#1080;</span>:</font></p>
+<ul>
+	<li><p>All script titles are saved in an index file called:
+	<b>CustomSQLReportIndex.txt</b></p>
+	</li><li><p style="font-weight: normal;">Custom SQL Reports can be remove
+	by deleting the index file.</p>
+	</li><li><p style="font-weight: normal;">Reports can be reorganized by
+	directly modifying the index file if necessary.</p>
+</li></ul>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<col width="213*">
+	<col width="43*">
+	<tbody><tr valign="top">
+		<td width="83%">
+			<p><a href="#custom_sql_top"><font face="Verdana"><b>Back to Top</b></font></a></p>
+		</td>
+		<td width="17%">
+			<p><a href="../index_english.html"><font face="Verdana"><b>Home</b></font></a></p>
+		</td>
+	</tr>
+</tbody></table>
+<p><br><br>
+</p>
+<hr>
+<h1><a name="running_reports"></a><font face="Verdana"><font size="3"><br></font>&#1047;&#1072;&#1087;&#1091;&#1089;&#1082; &#1086;&#1090;&#1095;&#1105;&#1090;&#1086;&#1074; &#1080;&#1079; &#1076;&#1077;&#1088;&#1077;&#1074;&#1072; &#1085;&#1072;&#1074;&#1080;&#1075;&#1072;&#1094;&#1080;&#1080;</font></h1>
+<p><font face="Verdana">Reports created by the Custom Reports
+Manager, will be permanently recorded in the Navigation Tree. The
+report is given a name when the report is saved. By using the report
+title, the user can:</font></p>
+<ul>
+	<li><p><font face="Verdana">Run the report</font></p>
+	</li><li><p><font face="Verdana">Edit the report</font></p>
+	</li><li><p><font face="Verdana">Delete the report.</font></p>
+</li></ul>
+<p><font face="Verdana">A report title can be saved without an SQL
+script file attached. This is used as a title for grouping scripts
+together. The navigation tree then behaves similar to the standard
+reports. Reports can only be nested one level deep.</font></p>
+<p><br><br>
+</p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<col width="213*">
+	<col width="43*">
+	<tbody><tr valign="top">
+		<td width="83%">
+			<p><a href="#custom_sql_top"><font face="Verdana"><b>Back to Top</b></font></a></p>
+		</td>
+		<td width="17%">
+			<p><a href="../index_english.html"><font face="Verdana"><b>Home</b></font></a></p>
+		</td>
+	</tr>
+</tbody></table>
+<p><br><br>
+</p>
+<hr>
+<h1><a name="database_structure"></a><font face="Verdana"><font size="3"><br></font>&#1057;&#1090;&#1088;&#1091;&#1082;&#1090;&#1091;&#1088;&#1072; &#1073;&#1072;&#1079;&#1099; &#1076;&#1072;&#1085;&#1085;&#1099;&#1093;</font></h1>
+<p><font face="Verdana"><font size="3">In order to create script files,
+we need to understand the underlying structure of the database. This
+structure is displayed as follows:<br></font></font><br><br>
+</p>
+<table border="1" cellpadding="4" cellspacing="3" width="100%">
+	<col width="256*">
+	<tbody><tr>
+		<td bgcolor="#e6e6e6" valign="top" width="100%">
+			<p style="background: rgb(230, 230, 230) none repeat scroll 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><font face="Verdana"><b>Basic
+			Structure of MMEX</b></font></p>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" width="100%">
+			<p><img style="border: 0px solid ; width: 910px; height: 636px;" alt="mmex db structure" src="../mmex_db_structure.png" name="graphics1" align="left"><br clear="left"><br>
+			</p>
+		</td>
+	</tr>
+</tbody></table>
+<p><font face="Verdana"><font size="3"><br></font></font><br><br>
+</p>
+<p><font face="Verdana"><font size="4"><b>Table Information</b></font></font></p>
+<p><font face="Verdana"><font size="3">This picture shows the table
+names with their associated fields, and the links that connect the
+tables via the table's primary index field.</font></font></p>
+<table border="1" cellpadding="4" cellspacing="3" width="100%">
+	<col width="77*">
+	<col width="179*">
+	<tbody><tr valign="top">
+		<td bgcolor="#e6e6e6" width="30%">
+			<p><font face="Verdana"><font size="4"><b>Table Names</b></font></font></p>
+		</td>
+		<td bgcolor="#e6e6e6" width="70%">
+			<p><font face="Verdana"><font size="4"><b>Table Description</b></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="30%">
+			<p>InfoTable_V1</p>
+		</td>
+		<td width="70%">
+			<p>This contains settings specific to the database.</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="30%">
+			<p>CurrencyFormats_V1</p>
+		</td>
+		<td width="70%">
+			<p>Contains the Currency values for the database</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="30%">
+			<p>AccountList_V1</p>
+		</td>
+		<td width="70%">
+			<p>Contains all the account names, and data specific to an
+			account.</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="30%">
+			<p>Payee_V1</p>
+		</td>
+		<td width="70%">
+			<p>Contains all payees, and the last category this payee used.</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="30%">
+			<p>Category_V1</p>
+		</td>
+		<td width="70%">
+			<p>This is a list of all the categories in the system</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="30%">
+			<p>SubCategory_V1</p>
+		</td>
+		<td width="70%">
+			<p>This is a list of all the sub-categories in the system</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="30%">
+			<p>CheckingAccount_V1</p>
+		</td>
+		<td width="70%">
+			<p>This is the main table where all the transactions are
+			maintained.</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="30%">
+			<p>SplitTransactions_V1</p>
+		</td>
+		<td width="70%">
+			<p>Contains the data associated with Split Transactions</p>
+		</td>
+	</tr>
+</tbody></table>
+<p><br><br>
+</p>
+<table border="1" cellpadding="4" cellspacing="3" width="100%">
+	<col width="77*">
+	<col width="179*">
+	<tbody><tr valign="top">
+		<td bgcolor="#e6e6e6" width="30%">
+			<p><font face="Verdana"><font size="4"><b>Tables Not Shown<br>in
+			Diagram</b></font></font></p>
+		</td>
+		<td bgcolor="#e6e6e6" width="70%">
+			<p><br>
+			</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="30%">
+			<p>Stock_V1</p>
+		</td>
+		<td width="70%">
+			<p>Used for Stocks, and is linked to table: AccountList_V1 using
+			the HeldAt field</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="30%">
+			<p>Assets_V1</p>
+		</td>
+		<td width="70%">
+			<p>Contains all asset details</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="30%">
+			<p>BudgetYear_V1</p>
+		</td>
+		<td width="70%">
+			<p>The specific year for a budget</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="30%">
+			<p>BudgetTable_V1</p>
+		</td>
+		<td width="70%">
+			<p>Budget details</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="30%">
+			<p>BudgetSplitTransactions_V1</p>
+		</td>
+		<td width="70%">
+			<p>Split Transactions for budgets</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="30%">
+			<p>BillDeposit_V1</p>
+		</td>
+		<td width="70%">
+			<p>This contains all the details for Repeating Transactions.
+			Similar to table: CheckingAccountV1</p>
+		</td>
+	</tr>
+</tbody></table>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<col width="213*">
+	<col width="43*">
+	<tbody><tr valign="top">
+		<td width="83%">
+			<p><a href="#custom_sql_top"><font face="Verdana"><b>Back to Top</b></font></a></p>
+		</td>
+		<td width="17%">
+			<p><a href="../index_english.html"><font face="Verdana"><b>Home</b></font></a></p>
+		</td>
+	</tr>
+</tbody></table>
+<p><br><br>
+</p>
+<hr>
+<p><a name="sql_scripting_intro"></a><font face="Verdana"><font size="3"><br></font></font><font face="Verdana"><font size="6"><b>SQL &#1047;&#1072;&#1087;&#1088;&#1086;&#1089;&#1099; (&#1042;&#1074;&#1077;&#1076;&#1077;&#1085;&#1080;&#1077;)</b></font></font></p>
+<p><font face="Verdana"><font size="3">Attempting to teach SQL
+programming is beyond the scope of this help file, but the following
+is a quick guide into understanding scripts, and possibly creating
+your own scripts if required.</font></font></p>
+<p><font size="6"><font face="Verdana"><font size="3">In creating
+scripts, the main command we would tend to use is the </font></font><font face="Verdana"><font size="3"><b>SELECT</b></font></font>
+<font face="Verdana"><font size="3">statement.</font></font></font></p>
+<p><font face="Verdana"><font size="3">The basic format is:</font></font></p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<col width="72*">
+	<col width="184*">
+	<tbody><tr valign="top">
+		<td bgcolor="#ffffcc" width="28%">
+			<p><font face="Verdana"><font size="6"><font size="3"><b>SELECT</b></font>
+			<font size="3">&lt;name&gt; </font></font></font>
+			</p>
+		</td>
+		<td bgcolor="#ffffcc" width="72%">
+			<p><font face="Verdana"><font size="3">&lt;name&gt; represents the
+			field names of the table, or * for all names. </font></font>
+			</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td bgcolor="#ffffcc" width="28%">
+			<p><font face="Verdana"><font size="6"><font size="3"><b>FROM</b></font>
+			<font size="3">&lt;table&gt; </font></font></font>
+			</p>
+		</td>
+		<td bgcolor="#ffffcc" width="72%">
+			<p><font face="Verdana"><font size="3">&lt;table&gt; represents the
+			table or tables the command is aimed at.</font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td bgcolor="#ffffcc" width="28%">
+			<p><font face="Verdana"><font size="6"><font size="3"><b>WHERE</b></font>
+			<font size="3">&lt;condition is met&gt;</font></font></font></p>
+		</td>
+		<td bgcolor="#ffffcc" width="72%">
+			<p><font face="Verdana"><font size="3">[optional] here we test for
+			some condition.</font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td bgcolor="#ffffcc" width="28%">
+			<p><font face="Verdana"><font size="3"><b>ORDER BY</b> &lt;parameter&gt;</font></font></p>
+		</td>
+		<td bgcolor="#ffffcc" width="72%">
+			<p><font face="Verdana"><font size="3">[optional] sorts the output
+			by this parameter</font></font></p>
+		</td>
+	</tr>
+</tbody></table>
+<p><font face="Verdana"><font size="3"><br>Examples:</font></font></p>
+<p><font face="Verdana"><font size="3"><b>SELECT * FROM
+AccountList_V1;</b><br>* This would display all fields for the table:
+AccountList_V1</font></font></p>
+<p><font face="Verdana"><font size="3"><b>SELECT AccountName, Status
+FROM AccountList_V1 where AccountType = “Term”;</b></font></font><font face="Verdana"><font size="3"><br>*
+This would display the Term Account names and the account status from
+table: AccountList_V1</font></font></p>
+<hr>
+<p><font face="Verdana"><font size="4"><b>Here we describe a more
+complex script:<br></b></font></font><br><br>
+</p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<col width="256*">
+	<tbody><tr>
+		<td bgcolor="#e6e6e6" valign="top" width="100%">
+			<p><font face="Verdana"><font size="3"><b>Although this script is
+			useless, it demonstrates some basic principles.</b></font></font></p>
+		</td>
+	</tr>
+	<tr>
+		<td bgcolor="#ffffcc" valign="top" width="100%">
+			<p style="background: rgb(255, 255, 204) none repeat scroll 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><font face="Verdana"><font size="3"><b>select</b>
+			pT.PayeeName payee,<br>&nbsp;&nbsp;&nbsp;&nbsp;cT.CategName,<br>&nbsp;&nbsp;&nbsp;&nbsp;scT.SubCategName
+			<br><b>from</b> payee_v1 pT,<br>&nbsp;&nbsp;&nbsp;&nbsp;category_v1
+			cT,<br>&nbsp;&nbsp;&nbsp;&nbsp;subcategory_v1 scT
+			<br><b>where</b><br>&nbsp;&nbsp;&nbsp;&nbsp;pT.categID =
+			cT.categID and pT.subCategID = scT.subCategID<br><b>order
+			by</b><br>&nbsp;&nbsp;&nbsp;&nbsp;payee</font></font></p>
+		</td>
+	</tr>
+</tbody></table>
+<p><font face="Verdana"><font size="3"><br>In this example we see the
+table name is: payee_V1 and the field name is PayeeName</font></font></p>
+<p style="margin-bottom: 0in;"><font face="Verdana"><font size="3">In
+the <b>FROM</b> clause we see the table name: payee_V1 <b>pT<br></b>*
+Here the <b>pT</b> at the end, acts as an alias for the table name.</font></font></p>
+<p><font face="Verdana"><font size="3">Now in the <b>SELECT</b> we see:
+<b>pT.</b>PayeeName <b>payee</b> <br>* The <b>pT.</b> is used to
+state the table that owns the field PayeeName<br>* The <b>payee</b>
+at the end, is an alias for the table.fieldname combination<br><br>We
+can separate table names and field names with commas, as we see more
+tables and fields in this example.</font></font></p>
+<p><font face="Verdana"><font size="3">In the <b>WHERE</b> clause, we
+see: pT.categID = cT.categID<br>* Here we test to make sure the two
+fields are the same in both tables.</font></font></p>
+<p><font face="Verdana"><font size="3">Now in the <b>ORDER BY</b>
+clause, we can now use the simplified name of <b>payee</b> we defined
+in the <b>SELECT</b> clause.</font></font></p>
+<p><font face="Verdana"><font size="3">I hope this short introduction
+takes the mystery out of the script files as seen in the MMEX Forum
+in the Custom SQL Report Scripts section.<br></font></font><br><br>
+</p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<col width="213*">
+	<col width="43*">
+	<tbody><tr valign="top">
+		<td width="83%">
+			<p><a href="#custom_sql_top"><font face="Verdana"><b>Back to Top</b></font></a></p>
+		</td>
+		<td width="17%">
+			<p><a href="../index_english.html"><font face="Verdana"><b>Home</b></font></a></p>
+		</td>
+	</tr>
+</tbody></table>
+<p><br><br>
+</p>
+<hr>
+<p><br><br>
+</p>
+</body></html>
