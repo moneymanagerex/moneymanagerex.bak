@@ -799,10 +799,11 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
     {
         long id = -1;
         number.ToLong(&id);
-        frame_->setGotoAccountID(id);
+//      frame_->setGotoAccountID(id);
+//      wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
+//      frame_->GetEventHandler()->AddPendingEvent(evt);
+        frame_->setAccountSelectionFromHomePage();
         frame_->setAccountNavTreeSection(core_->accountList_.getAccountName(id));
-//        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
-//        frame_->GetEventHandler()->AddPendingEvent(evt);
     }
     //else if (isStock)
     //{
@@ -814,6 +815,7 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
     //}
     else if (href == wxT("Assets"))
     {
+        frame_->setAccountSelectionFromHomePage();
         frame_->setNavTreeSection(wxT("Assets"));
 
     //  wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
