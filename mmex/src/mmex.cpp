@@ -592,6 +592,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     activeTermAccounts_(false),
     autoRepeatTransactionsTimer_(this, AUTO_REPEAT_TRANSACTIONS_TIMER_ID),
     activeHomePage_(false),
+    homePageAccountSelect_(false),
     expandedReportNavTree_(true),
     expandedCustomSqlReportNavTree_(false)
 {
@@ -1551,6 +1552,14 @@ void mmGUIFrame::OnTreeItemCollapsed(wxTreeEvent& event)
 
 void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 {
+    /* Setting the account from home page, generates 2 change events.
+       This ensures that only one event activates the account*/
+    if (homePageAccountSelect_)
+    {
+        homePageAccountSelect_ = false;
+        return;
+    }
+
     menuPrintingEnable(false);
     wxTreeItemId id = event.GetItem();
     if (!id)

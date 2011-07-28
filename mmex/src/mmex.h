@@ -86,7 +86,8 @@ public:
 
     void OnWizardCancel(wxWizardEvent& event);
 
-    void setGotoAccountID(int account_id) { gotoAccountID_ = account_id; }
+//    void setGotoAccountID(int account_id) { gotoAccountID_ = account_id; }
+    void setAccountSelectionFromHomePage() {homePageAccountSelect_ = true;} 
     void setHomePageActive(bool active = true);
     bool expandedBankAccounts();
     bool expandedTermAccounts();
@@ -111,6 +112,7 @@ private:
     wxString password_;
 
     int gotoAccountID_;
+    bool homePageAccountSelect_;
 
     /* Cannot process home page recursively */
     bool refreshRequested_;
