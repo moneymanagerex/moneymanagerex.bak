@@ -131,8 +131,8 @@
 
 const wxString NAVTREECTRL_REPORTS = wxT("Reports");
 const wxString NAVTREECTRL_CUSTOM_REPORTS = wxT("Custom_Reports");
-const wxString NAVTREECTRL_BANK_ACCOUNTS = wxT("Bank Accounts");
-const wxString NAVTREECTRL_TERM_ACCOUNTS = wxT("Term Accounts");
+//const wxString NAVTREECTRL_BANK_ACCOUNTS = wxT("Bank Accounts");
+//const wxString NAVTREECTRL_TERM_ACCOUNTS = wxT("Term Accounts");
 
 namespace
 {
@@ -747,9 +747,9 @@ bool mmGUIFrame::setNavTreeSection( wxString sectionName)
 
 void mmGUIFrame::setAccountNavTreeSection(wxString accountName)
 {
-    if ( setAccountInSection(NAVTREECTRL_BANK_ACCOUNTS, accountName) )
+    if ( setAccountInSection(_("Bank Accounts"), accountName) )
     {
-        setAccountInSection(NAVTREECTRL_TERM_ACCOUNTS, accountName); 
+        setAccountInSection(_("Term Accounts"), accountName); 
     }
 }
 

@@ -816,7 +816,7 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
     else if (href == wxT("Assets"))
     {
         frame_->setAccountSelectionFromHomePage();
-        frame_->setNavTreeSection(wxT("Assets"));
+        frame_->setNavTreeSection(_("Assets"));
 
     //  wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
     //  frame_->GetEventHandler()->AddPendingEvent(evt);
