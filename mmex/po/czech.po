@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-21 11:54+1000\n"
-"PO-Revision-Date: 2011-07-27 12:16+0300\n"
+"PO-Revision-Date: 2011-07-29 14:43+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: Geralt <geraltcz@centrum.cz>\n"
 "MIME-Version: 1.0\n"
@@ -1660,7 +1660,7 @@ msgstr "Tip pro splácení dluhů: Vytvořte si reálný prozpočet Vašich výd
 
 #: src/mmcheckingpanel.cpp:950
 msgid "Tip to get out of debt: Spend less than you earn."
-msgstr "Utracejte méně než vyděláváte."
+msgstr "Tip pro splácení dluhů: Utrácejte méně než vyděláváte."
 
 #: src/mmcheckingpanel.cpp:951
 msgid "Tip to get out of debt: Pay more than the minimum."
@@ -2959,8 +2959,8 @@ msgid ""
 "Investment accounts are specialized accounts that only\n"
 "have stock/mutual fund investments associated with them."
 msgstr ""
-"Investiční účty jsou zvláštní typy účtů, kde můžete obchodovat pouze\n"
-"s akciemi a otevřenými podílovými fondy, které jsou účtu přiřazeny."
+"Investiční účty jsou zvláštní typy účtů, kde můžete obchodovat \n"
+"pouze s akciemi a otevřenými podílovými fondy, které jsou účtu přiřazeny."
 
 #: src/mmex.cpp:4285
 msgid ""
