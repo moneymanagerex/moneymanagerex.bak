@@ -791,7 +791,14 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
     bool isAcct = href.StartsWith(wxT("ACCT:"), &number);
     if (href == wxT("billsdeposits"))
     {
+        frame_->setNavTreeSection(_("Repeating Transactions"));
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BILLSDEPOSITS);
+        frame_->GetEventHandler()->AddPendingEvent(evt);
+    }
+    else if (href == wxT("Assets"))
+    {
+        frame_->setNavTreeSection(_("Assets"));
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
         frame_->GetEventHandler()->AddPendingEvent(evt);
     }
     else if (isAcct)
@@ -801,12 +808,6 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
         frame_->setGotoAccountID(id);
         frame_->setAccountNavTreeSection(core_->accountList_.getAccountName(id));
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
-        frame_->GetEventHandler()->AddPendingEvent(evt);
-    }
-    else if (href == wxT("Assets"))
-    {
-        frame_->setNavTreeSection(_("Assets"));
-        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
         frame_->GetEventHandler()->AddPendingEvent(evt);
     }
 }
