@@ -698,6 +698,16 @@ void mmGUIFrame::cleanup()
     }
 }
 //----------------------------------------------------------------------------
+// process all events waiting in the event queue if any.
+void mmGUIFrame::processPendingEvents()
+{
+    while (wxGetApp().Pending())
+    {
+        wxGetApp().Dispatch();
+    }
+}
+
+//----------------------------------------------------------------------------
 // returns a wxTreeItemID for the accountName in the navtree section.
 wxTreeItemId mmGUIFrame::getTreeItemfor(wxTreeItemId itemID, wxString accountName)
 {
@@ -715,7 +725,7 @@ wxTreeItemId mmGUIFrame::getTreeItemfor(wxTreeItemId itemID, wxString accountNam
     return navTreeID;
 }
 
-//
+//----------------------------------------------------------------------------
 bool mmGUIFrame::setAccountInSection(wxString sectionName, wxString accountName)
 {
     bool accountNotFound = true;
@@ -726,25 +736,35 @@ bool mmGUIFrame::setAccountInSection(wxString sectionName, wxString accountName)
         wxTreeItemId accountItem = getTreeItemfor(rootItem, accountName);
         if (accountItem.IsOk())
         {
+            // Set the NavTreeCtrl and prevent any event code being executed for now.
+            homePageAccountSelect_ = true;
             navTreeCtrl_->SelectItem(accountItem);
+            processPendingEvents();
+            homePageAccountSelect_ = false;
             accountNotFound = false;
         }
     }
     return accountNotFound;
 }
 
+//----------------------------------------------------------------------------
 bool mmGUIFrame::setNavTreeSection( wxString sectionName)
 {
     bool accountNotFound = true;
     wxTreeItemId rootItem = getTreeItemfor(navTreeCtrl_->GetRootItem(), sectionName );
     if (rootItem.IsOk())
     {
+        // Set the NavTreeCtrl and prevent any event code being executed for now.
+        homePageAccountSelect_ = true;
         navTreeCtrl_->SelectItem(rootItem);
+        processPendingEvents();
+        homePageAccountSelect_ = false;
         accountNotFound = false;
     }
     return accountNotFound;
 }
 
+//----------------------------------------------------------------------------
 void mmGUIFrame::setAccountNavTreeSection(wxString accountName)
 {
     if ( setAccountInSection(_("Bank Accounts"), accountName) )
@@ -753,6 +773,7 @@ void mmGUIFrame::setAccountNavTreeSection(wxString accountName)
     }
 }
 
+//----------------------------------------------------------------------------
 void mmGUIFrame::setHomePageActive(bool active)
 {
     if (active)
@@ -760,8 +781,8 @@ void mmGUIFrame::setHomePageActive(bool active)
     else
         activeHomePage_ = false;
 }
-//----------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------
 void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 {
     bool autoExecuteManual; // Used when decoding: REPEATS
@@ -1552,11 +1573,11 @@ void mmGUIFrame::OnTreeItemCollapsed(wxTreeEvent& event)
 
 void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 {
-    /* Setting the account from home page, generates 2 change events.
-       This ensures that only one event activates the account*/
+    /* Because Windows generates 2 events when selecting the navTree, and Linux
+       does not, we need to be able to control when the event is actually executed.
+       This ensures that only one event activates the account for all systems. */
     if (homePageAccountSelect_)
     {
-        homePageAccountSelect_ = false;
         return;
     }
 

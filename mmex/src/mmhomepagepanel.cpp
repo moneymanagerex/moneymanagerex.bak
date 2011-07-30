@@ -789,7 +789,6 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
     wxString href = link.GetHref();
     wxString number;
     bool isAcct = href.StartsWith(wxT("ACCT:"), &number);
-    //bool isStock = href.StartsWith(wxT("STOCK:"), &number);
     if (href == wxT("billsdeposits"))
     {
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BILLSDEPOSITS);
@@ -799,35 +798,17 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
     {
         long id = -1;
         number.ToLong(&id);
-//      frame_->setGotoAccountID(id);
-//      wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
-//      frame_->GetEventHandler()->AddPendingEvent(evt);
-        frame_->setAccountSelectionFromHomePage();
+        frame_->setGotoAccountID(id);
         frame_->setAccountNavTreeSection(core_->accountList_.getAccountName(id));
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
+        frame_->GetEventHandler()->AddPendingEvent(evt);
     }
-    //else if (isStock)
-    //{
-    //    wxString msgStr =
-    //        wxString()  << _("Please use the stock link on the Navigation Tree") 
-    //                    << _("\n\n") 
-    //                    << _("Waiting Correct Implementation");
-    //    wxMessageBox(msgStr,_("Stock Investment Page Selection"));
-    //}
     else if (href == wxT("Assets"))
     {
-        frame_->setAccountSelectionFromHomePage();
         frame_->setNavTreeSection(_("Assets"));
-
-    //  wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
-    //  frame_->GetEventHandler()->AddPendingEvent(evt);
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
+        frame_->GetEventHandler()->AddPendingEvent(evt);
     }
-    //else if (href == wxT("Stocks"))
-    //{
-    //    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
-    //    frame_->GetEventHandler()->AddPendingEvent(evt);
-    //}
-    // Deselect any selections in the tree ctrl, so tree works
-//    frame_->unselectNavTree();
 }
 
 //----------------------------------------------------------------------------
