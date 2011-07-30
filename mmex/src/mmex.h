@@ -86,8 +86,7 @@ public:
 
     void OnWizardCancel(wxWizardEvent& event);
 
-//    void setGotoAccountID(int account_id) { gotoAccountID_ = account_id; }
-    void setAccountSelectionFromHomePage() {homePageAccountSelect_ = true;} 
+    void setGotoAccountID(int account_id) { gotoAccountID_ = account_id; }
     void setHomePageActive(bool active = true);
     bool expandedBankAccounts();
     bool expandedTermAccounts();
@@ -258,6 +257,7 @@ private:
 
     bool financialYearIsDifferent();
     bool IsUpdateAvailable(wxString page);
+    void processPendingEvents();
 
     // any class wishing to process wxWindows events must use this macro
     DECLARE_EVENT_TABLE()
