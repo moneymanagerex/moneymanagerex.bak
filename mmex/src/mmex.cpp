@@ -3394,6 +3394,9 @@ void mmGUIFrame::OnNewAccount(wxCommandEvent& /*event*/)
 void mmGUIFrame::OnAccountList(wxCommandEvent& /*event*/)
 {
     createHomePage();
+    homePageAccountSelect_ = true;
+    navTreeCtrl_->SelectItem(navTreeCtrl_->GetRootItem());
+    homePageAccountSelect_ = false;
 }
 //----------------------------------------------------------------------------
 
