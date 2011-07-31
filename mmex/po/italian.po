@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Money Manager Ex\n"
+"Project-Id-Version: Money Manager Ex Italian Translation\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-21 11:52+1000\n"
-"PO-Revision-Date: 2011-07-11 18:26+0100\n"
+"PO-Revision-Date: 2011-07-26 17:58+0100\n"
 "Last-Translator: Maurizio.13 <xmaurizio.13@hotmail.com>\n"
-"Language-Team: TheZeal Software\n"
+"Language-Team: Maurizio.13 <xmaurizio.13@hotmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
-"X-Poedit-Language: English\n"
-"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: src\n"
@@ -298,7 +298,7 @@ msgstr "&Elimina"
 
 #: src/assetspanel.cpp:233
 msgid "Delete Asset"
-msgstr "Cancella il Bene"
+msgstr "Elimina Bene"
 
 #: src/assetspanel.cpp:267
 #, c-format
@@ -2047,11 +2047,11 @@ msgstr "Flusso di Cassa"
 
 #: src/mmex.cpp:1324
 msgid "Cash Flow - With Term Accounts"
-msgstr "Fusso di Cassa - Con Conti a Termine"
+msgstr "Flusso di Cassa - Con Conti a Termine"
 
 #: src/mmex.cpp:1328
 msgid "Cash Flow - Specific Accounts"
-msgstr "Fusso di Cassa - Conti Specifici"
+msgstr "Flusso di Cassa - Conti Specifici"
 
 #: src/mmex.cpp:1332
 msgid "Transaction Statistics"
@@ -2299,11 +2299,11 @@ msgstr "Mostra/Nasconde la Barra degli Strumenti."
 
 #: src/mmex.cpp:2589
 msgid "&Navigation"
-msgstr "&Riquadro Navigazione"
+msgstr "Pannello di Navigazione"
 
 #: src/mmex.cpp:2589
 msgid "Show/Hide the Navigation tree control"
-msgstr "Mostra/Nasconde il riquadro di Navigazione"
+msgstr "Mostra/Nasconde il pannello di Navigazione"
 
 #: src/mmex.cpp:2592
 msgid "&Bank Accounts"
@@ -2323,11 +2323,11 @@ msgstr "Visualizza/Nascondi i Conti a Termine nella schermata del Saldo"
 
 #: src/mmex.cpp:2596
 msgid "&Stock Accounts"
-msgstr "&Dossier Titoli"
+msgstr "&Titoli"
 
 #: src/mmex.cpp:2596
 msgid "Show/Hide Stock Accounts on Summary page"
-msgstr "Visualizza/Nascondi Beni nella schermata del Saldo"
+msgstr "Visualizza/Nascondi Titoli nella schermata del Saldo"
 
 #: src/mmex.cpp:2611
 #: src/mmex.cpp:2818
@@ -2360,7 +2360,7 @@ msgstr "Gestione &Categorie..."
 #: src/mmex.cpp:2639
 #: src/mmex.cpp:2822
 msgid "Organize Categories"
-msgstr "Organizza Categorie"
+msgstr "Gestione Categorie"
 
 #: src/mmex.cpp:2644
 msgid "Organize &Payees..."
@@ -2369,7 +2369,7 @@ msgstr "Gestione &Beneficiari..."
 #: src/mmex.cpp:2644
 #: src/mmex.cpp:2823
 msgid "Organize Payees"
-msgstr "Organizza Beneficiari"
+msgstr "Gestione Beneficiari"
 
 #: src/mmex.cpp:2649
 msgid "Or&ganize Currency..."
@@ -2378,7 +2378,7 @@ msgstr "&Gestione Valuta..."
 #: src/mmex.cpp:2649
 #: src/mmex.cpp:2824
 msgid "Organize Currency"
-msgstr "Organizza Valuta"
+msgstr "Gestione Valute"
 
 #: src/mmex.cpp:2655
 msgid "&Categories..."
@@ -2410,7 +2410,7 @@ msgstr "Gestione &Budget"
 
 #: src/mmex.cpp:2669
 msgid "Budget Setup"
-msgstr "Organizza Budget"
+msgstr "Gestione Budget"
 
 #: src/mmex.cpp:2677
 msgid "&Repeating Transactions"
@@ -3046,7 +3046,7 @@ msgstr "Differenza: "
 
 #: src/mmhomepagepanel.cpp:565
 msgid "Upcoming Transactions"
-msgstr "Operazioni future"
+msgstr "Operazioni Imminenti"
 
 #: src/mmhomepagepanel.cpp:644
 msgid "Top Transactions Last 30 Days"
@@ -3323,15 +3323,15 @@ msgstr "Indicare la grandezza del carattere da utilizzare nei rendiconto"
 
 #: src/optionsdialog.cpp:635
 msgid "Tree View Options: Expand Section"
-msgstr "Opzioni Riquadro di Navigazione: Espandi Sezioni"
+msgstr "Opzioni Pannello di Navigazione: Espandi Sezioni"
 
 #: src/optionsdialog.cpp:647
 msgid "Expand Bank Accounts in Trew View when tree is refreshed"
-msgstr "Espandi Conti Bancari nel Riquadro di Navigazione all'aggiornamento dei dati"
+msgstr "Espandi Conti Bancari nel Pannello di Navigazione all'aggiornamento dei dati"
 
 #: src/optionsdialog.cpp:656
 msgid "Expand Term Accounts in Trew View when tree is refreshed"
-msgstr "Espandi Conti a Termine nel Riquadro di Navigazione all'aggiornamento dei dati"
+msgstr "Espandi Conti a Termine nel Pannello di Navigazione all'aggiornamento dei dati"
 
 #: src/optionsdialog.cpp:659
 msgid "Home Page Options: Expand Section"
@@ -3351,7 +3351,7 @@ msgstr "Dossier Titoli"
 
 #: src/optionsdialog.cpp:689
 msgid "Expand Stock Accounts on home page when page is refreshed"
-msgstr "Espandi Beni nella Pagina Principale all'aggiornamento dei dati"
+msgstr "Espandi Titoli nella Pagina Principale all'aggiornamento dei dati"
 
 #: src/optionsdialog.cpp:697
 msgid "Restore Defaults"
@@ -3363,11 +3363,11 @@ msgstr "Ripristina Colori Predefiniti"
 
 #: src/optionsdialog.cpp:706
 msgid "Nav Tree"
-msgstr "Riquadro Navigazione"
+msgstr "Pannello Navigazione"
 
 #: src/optionsdialog.cpp:708
 msgid "Specify the color for the nav tree"
-msgstr "Definire il colore del Riquadro di Navigazione"
+msgstr "Definire il colore del Pannello di Navigazione"
 
 #: src/optionsdialog.cpp:712
 msgid "List Background"
@@ -3411,11 +3411,11 @@ msgstr "Definire il colore per i dettagli dell'elenco"
 
 #: src/optionsdialog.cpp:742
 msgid "Future Transactions"
-msgstr "Operazioni future"
+msgstr "Operazioni Imminenti"
 
 #: src/optionsdialog.cpp:744
 msgid "Specify the color for future transactions"
-msgstr "Definire il colore delle operazioni future"
+msgstr "Definire il colore delle operazioni imminenti"
 
 #: src/optionsdialog.cpp:755
 msgid "Financial Year Settings"
@@ -4020,11 +4020,11 @@ msgstr "Commissioni"
 
 #: src/reportsummarystocks.cpp:54
 msgid "Gain Loss"
-msgstr "Perdita di guadagno"
+msgstr "Guadagno"
 
 #: src/reportsummarystocks.cpp:125
 msgid "Total Stock Investments: "
-msgstr "Totale Titoli: "
+msgstr "Totale Investimenti in Titoli: "
 
 #: src/reporttransactions.cpp:48
 msgid "Transaction List "
@@ -4073,7 +4073,7 @@ msgstr "Inserire il nome dell'istituto finanziario che gestisce l'investimento"
 
 #: src/stockdialog.cpp:157
 msgid "Specify the purchase date of the stock investment"
-msgstr "Indicare la data di acquisto dell'investimento in titoli"
+msgstr "Indicare la data di acquisto del titolo"
 
 #: src/stockdialog.cpp:159
 msgid "Stock Name"
@@ -4081,11 +4081,11 @@ msgstr "Nome del Titolo"
 
 #: src/stockdialog.cpp:164
 msgid "Enter the stock company name"
-msgstr "Inserire il nome della società del Titolo"
+msgstr "Inserire il nome della società emittente il Titolo"
 
 #: src/stockdialog.cpp:171
 msgid "Enter the stock symbol. (Optional) Include exchange. eg: IBM.BE"
-msgstr "Inserire il simbolo del Titolo (facoltativo) Includere cambio. es: IBM.BE"
+msgstr "Inserire il simbolo del Titolo, incluso (facoltativo) il suffisso di cambio. es: IBM.MI"
 
 #: src/stockdialog.cpp:173
 msgid "Number of Shares"
@@ -4117,7 +4117,7 @@ msgstr "Visualizza Sito Quotazioni Azionarie"
 
 #: src/stockdialog.cpp:226
 msgid "Will display the web page for the specified Stock symbol"
-msgstr "Visualizzerà la pagina web per il simbolo azionario specificato"
+msgstr "Visualizzerà la pagina web per il titolo del simbolo specificato"
 
 #: src/stockdialog.cpp:255
 msgid "Choose Investment Account"
@@ -4158,7 +4158,7 @@ msgstr "Quotazione Attuale"
 
 #: src/stockspanel.cpp:300
 msgid "New Stock Investment"
-msgstr "Inserire un nuovo Investimento in Titoli"
+msgstr "Nuovo Investimento in Titoli"
 
 #: src/stockspanel.cpp:305
 msgid "Edit Stock Investment"
@@ -4233,7 +4233,7 @@ msgid ""
 "Automatic stock quote refresh idle - Out of Hours. \n"
 "Last update: %s"
 msgstr ""
-"Aggiornamento automatico Titoli nullo. - Fuori orario. \n"
+"Aggiornamento automatico Titoli fallito. - Fuori orario. \n"
 "Ultimo aggiornamento: %s"
 
 #: src/stockspanel.cpp:529
@@ -4256,7 +4256,7 @@ msgid ""
 "Last successful update: %s"
 msgstr ""
 "Aggiornamento automatico quotazioni Titoli fallito. \n"
-"Ultimo aggiornamento effettuato: %s"
+"Ultimo aggiornamento riuscito: %s"
 
 #: src/stockspanel.cpp:548
 #, c-format
@@ -4294,7 +4294,7 @@ msgstr "Tasso/Anno:"
 
 #: src/stockspanel.cpp:1002
 msgid "Do you really want to delete the stock investment?"
-msgstr "Vuoi davvero cancellare l'investimento?"
+msgstr "Vuoi davvero cancellare questo dossier titoli?"
 
 #: src/stockspanel.cpp:1003
 msgid "Confirm Stock Investment Deletion"
@@ -4646,7 +4646,7 @@ msgstr " categoria mancante. Operazione ignorata!"
 
 #: src/util.cpp:1350
 msgid " One of the following fields: date, payee, transaction type, amount, category strings is empty, skipping"
-msgstr " Uno dei seguenti campi: data, beneficiario, tipo di transazione, importo o categoria sono vuoti. Operazione ignorata!"
+msgstr " Uno dei campi data, beneficiario, tipo di transazione, importo o categoria è vuoto. Operazione ignorata!"
 
 #: src/util.cpp:1359
 msgid " invalid date, skipping."
@@ -4658,7 +4658,7 @@ msgstr "Server Yahoo"
 
 #: src/yahoosettingsdialog.cpp:64
 msgid "finance.au.yahoo.com"
-msgstr "finance.au.yahoo.com"
+msgstr "it.finance.yahoo.com"
 
 #: src/yahoosettingsdialog.cpp:65
 msgid "Do not enter anything except the server name (or IP address, if you're feeling lucky)"
@@ -4674,7 +4674,7 @@ msgid ""
 "If your stocks are in multiple markets, leave this blank and add  the suffix to each symbol in your portfolio."
 msgstr ""
 "Inserire il suffisso usato da Yahoo per il mercato dei vostri Titoli. \n"
-"Se le vostre Azioni sono nei mercati multipli, lasciare questo campo vuoto ed aggiungere il suffisso ad ogni simbolo nel proprio portafoglio."
+"Se le vostre Azioni sono su più piazze, lasciare questo campo vuoto per poi aggiungere il suffisso ad ogni simbolo nel proprio portafoglio."
 
 #: src/yahoosettingsdialog.cpp:81
 msgid "Market open from"
@@ -4685,7 +4685,7 @@ msgstr "Mercato aperto dalle "
 #: src/yahoosettingsdialog.cpp:118
 #: src/yahoosettingsdialog.cpp:129
 msgid "Allow for any delay in quotes"
-msgstr "Consenti qualsiasi ritardo fra virgolette"
+msgstr "Consenti eventuale ritardo fra virgolette"
 
 #: src/yahoosettingsdialog.cpp:109
 msgid "to"
@@ -4697,7 +4697,7 @@ msgstr "&Aggiorna i prezzi ogni "
 
 #: src/yahoosettingsdialog.cpp:162
 msgid "minutes while market is open"
-msgstr " minuti mentre il mercato è aperto."
+msgstr " minuti durante l'orario d'apertura."
 
 #: src/billsdepositsdialog.h:23
 msgid "New/Edit Repeating Transaction"
@@ -4709,7 +4709,7 @@ msgstr "Gestione Budget"
 
 #: src/budgetyeardialog.h:23
 msgid "Budget Year Editor"
-msgstr "Gestione Budget annuale"
+msgstr "Gestiore Budget annuale"
 
 #: src/budgetyearentrydialog.h:23
 msgid "Budget Year Entry"
@@ -4745,11 +4745,11 @@ msgstr "Sostituzione Beneficiari"
 
 #: src/splitdetailsdialog.h:39
 msgid "Split Detail Dialog"
-msgstr "Dettaglio Categoria Suddivisa"
+msgstr "Gestione Dettagli Suddivisi"
 
 #: src/splittransactionsdialog.h:50
 msgid "Split Transaction Dialog"
-msgstr "Gestione Categoria Suddivisa"
+msgstr "Gestione Operazione Suddivisa"
 
 #: src/stockdialog.h:23
 msgid "New/Edit Stock Investment"
@@ -4761,7 +4761,7 @@ msgstr "Nuova/Modifica Operazione"
 
 #: src/univcsvdialog.h:29
 msgid "Universal CSV Importer Dialog"
-msgstr "Importa CSV generici"
+msgstr "Importazione CSV generico"
 
 #: src/yahoosettingsdialog.h:108
 msgid "Options"

@@ -1,8 +1,8 @@
 Active Developers
 ==========================================
-Stefano         [stef145g]
-Nikolay         [Nikolay]
-Pat             [omalleypat]
+Stefano .......... [stef145g]
+Nikolay .......... [Nikolay]
+Pat .............. [omalleypat]
 
 Code Builds/Fixes/Patches
 ==========================================
@@ -14,18 +14,18 @@ hykwok
 Igor
 jblough
 Jeancf
-Mike            [u4ear]
-Nikolay         [Nikolay]
-Pat             [omalleypat]
+Mike ............. [u4ear]
+Nikolay .......... [Nikolay]
+Pat .............. [omalleypat]
 Paulo Lopes
 Pieter
 Priyank Bolia
 Rohit Kumar
-Stefano         [stef145g]
+Stefano .......... [stef145g]
 Stuart
 Vadim
 Vat
-Wesley Ellis
+Wesley Ellis ..... [elliswr]
 
 Silk Icons
 ==========================================
@@ -59,14 +59,16 @@ Hebrew
 -- Ykpui
 Hungarian
 -- Csaba, Zoltan Levardy [zlevardy]
-Indonesian Translation
+Indonesian
 -- Dindin
 Italian
--- Claudio, Maurizio Ballo [Mau13]
+-- Maurizio [Mau13]
+-- Claudio
 Norwegian
 -- Fredrik Strand, Torbjorn Kvande
 Polish
--- Andrzej, Damian_pl
+-- Damian_pl
+-- Andrzej 
 Portuguese (Portugal)
 -- Fatela
 Romanian
@@ -78,7 +80,8 @@ Simple Chinese
 Slovak
 -- Abadyba, Misko B
 Spanish
--- Javier, Roberto, User [jorgeb]
+-- jorgeb
+-- Javier, Roberto
 Swedish
 -- Tomplast
 Tr. Chinese
@@ -95,14 +98,14 @@ Vietnamese
 
 User Manual
 ==========================================
-Stefano [stef145g]
-Tina P
-Terry Wick
-Italian - Maurizio Ballo [Mau13]
-French  - catacotox
-Russian - Nikolay
-Polish  - Damian_pl
-Spanish - jorgeb
+English
+-- Stefano ... [stef145g]
+-- Tina P, Terry Wick
+Italian ... Maurizio [Mau13]
+French .... catacotox
+Russian ... Nikolay
+Polish .... Damian_pl
+Spanish ... jorgeb
 
 Sponsors
 ==========================================
