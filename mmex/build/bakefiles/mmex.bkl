@@ -53,7 +53,7 @@
         <data-files>
 	    <install-to>$(DATADIR)/mmex/po</install-to>
 	    <srcdir>$(SRCDIR)/po</srcdir>
-	    <files>*.po *.mo</files>
+	    <files>*.mo</files>
 	</data-files>
 
         <data-files>
@@ -66,12 +66,37 @@
         <data-files>
 	    <install-to>$(DATADIR)/doc/mmex/help</install-to>
 	    <srcdir>$(SRCDIR)/doc/help</srcdir>
-            <files>*.html *.jpg *.png</files>
+            <files>*.html *.png</files>
 	</data-files>
 
         <data-files>
-	    <install-to>$(DATADIR)/doc/mmex/help/index_fichiers</install-to>
-	    <srcdir>$(SRCDIR)/doc/help/index_fichiers</srcdir>
+	    <install-to>$(DATADIR)/doc/mmex/help/english</install-to>
+	    <srcdir>$(SRCDIR)/doc/help/english</srcdir>
+	    <files>*</files>
+	</data-files>
+        <data-files>
+	    <install-to>$(DATADIR)/doc/mmex/help/french</install-to>
+	    <srcdir>$(SRCDIR)/doc/help/french</srcdir>
+	    <files>*</files>
+	</data-files>
+        <data-files>
+	    <install-to>$(DATADIR)/doc/mmex/help/italian</install-to>
+	    <srcdir>$(SRCDIR)/doc/help/italian</srcdir>
+	    <files>*</files>
+	</data-files>
+        <data-files>
+	    <install-to>$(DATADIR)/doc/mmex/help/polish</install-to>
+	    <srcdir>$(SRCDIR)/doc/help/polish</srcdir>
+	    <files>*</files>
+	</data-files>
+        <data-files>
+	    <install-to>$(DATADIR)/doc/mmex/help/russian</install-to>
+	    <srcdir>$(SRCDIR)/doc/help/russian</srcdir>
+	    <files>*</files>
+	</data-files>
+        <data-files>
+	    <install-to>$(DATADIR)/doc/mmex/help/spanish</install-to>
+	    <srcdir>$(SRCDIR)/doc/help/spanish</srcdir>
 	    <files>*</files>
 	</data-files>
 
