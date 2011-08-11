@@ -324,7 +324,7 @@ void mmStocksPanel::CreateControls()
     
     //Infobar-mini 
     wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, ID_PANEL_STOCKS_STATIC_DETAILS_MINI, wxT(""), 
-    wxPoint(-1,-1), wxSize(450, -1), wxNO_BORDER|wxST_NO_AUTORESIZE);
+    wxPoint(-1,-1), wxSize(550, -1), wxNO_BORDER|wxTE_DONTWRAP);
     itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxALL, 12);
     //Infobar 
     wxStaticText* itemStaticText33 = new wxStaticText( itemPanel12, 
@@ -384,20 +384,29 @@ void mmStocksPanel::initVirtualListControl()
     header->SetLabel(lbl);
 
     char sql[] =
-    "select STOCKID, HELDAT,  STOCKNAME, SYMBOL, "
-    "total (NUMSHARES) as NUMSHARES, "
-    "avg (PURCHASEPRICE) as PURCHASEPRICE, "
-    "avg (CURRENTPRICE) as CURRENTPRICE, "
-    "total (VALUE) as VALUE, total (COMMISSION) as COMMISSION, "
-    " strftime(INFOVALUE, min (PURCHASEDATE)) as PURCHDATE, "
-    "min (PURCHASEDATE) as PURCHASEDATE, "
-    "avg (julianday('now', 'localtime')-julianday (PURCHASEDATE, 'localtime')) as DAYSOWN, "
-    "NOTES "
+    "select S.STOCKID, S.HELDAT,  S.STOCKNAME, UPPER(S.SYMBOL) SYMBOL, "
+    "total (S.NUMSHARES) as NUMSHARES, t.TOTAL_NUMSHARES, "
+    "avg (S.PURCHASEPRICE) as PURCHASEPRICE, "
+    "avg (S.CURRENTPRICE) as CURRENTPRICE, "
+    "total (S.VALUE) as VALUE, total (S.COMMISSION) as COMMISSION, "
+    " strftime(INFOVALUE, min (S.PURCHASEDATE)) as PURCHDATE, "
+    "min (S.PURCHASEDATE) as PURCHASEDATE, "
+    "avg (julianday('now', 'localtime')-julianday (S.PURCHASEDATE, 'localtime')) as DAYSOWN, "
+    "S.NOTES "
+    "from STOCK_V1 S "
+    "left join infotable_v1 i on i.INFONAME='DATEFORMAT' "
+    "left join ( "
+    "select "
+    "HELDAT, UPPER (SYMBOL) as SYMBOL, "
+    "total (NUMSHARES) as TOTAL_NUMSHARES "
     "from STOCK_V1 "
     "left join infotable_v1 i on i.INFONAME='DATEFORMAT' "
-    "where HELDAT = ? "
-    "group by HELDAT, SYMBOL, STOCKID "
-    "order by julianday(min (PURCHASEDATE),'localtime'), SYMBOL, STOCKNAME ";
+    "group by HELDAT, SYMBOL "
+    "order by julianday(min (PURCHASEDATE),'localtime'), SYMBOL, STOCKNAME "
+    ") T on UPPER (T.SYMBOL)=UPPER (S.SYMBOL) and T.HELDAT=S.HELDAT "
+    "where S.HELDAT = ? "
+    "group by S.HELDAT, S.SYMBOL, S.STOCKID "
+    "order by julianday(min (S.PURCHASEDATE),'localtime'), S.SYMBOL, S.STOCKNAME ";
     
         wxSQLite3Statement st = db_->PrepareStatement(sql);
         st.Bind(1, accountID_);
@@ -423,6 +432,7 @@ void mmStocksPanel::initVirtualListControl()
         th.shareNotes_        = q1.GetString(wxT("NOTES"));
         th.numSharesStr_      = wxT("");
         th.numShares_         = q1.GetDouble(wxT("NUMSHARES"));
+        th.totalnumShares_         = q1.GetDouble(wxT("TOTAL_NUMSHARES"));
 
         th.currentPrice_      = q1.GetDouble(wxT("CURRENTPRICE"));
         th.purchasePrice_     = q1.GetDouble(wxT("PURCHASEPRICE"));
@@ -438,10 +448,15 @@ void mmStocksPanel::initVirtualListControl()
         mmex::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
         //I wish see integer if it integer else double
         if ((th.numShares_ - static_cast<long>(th.numShares_)) != 0.0 )
-        mmex::formatDoubleToCurrencyEdit(th.numShares_, th.numSharesStr_);
+        {
+			mmex::formatDoubleToCurrencyEdit(th.numShares_, th.numSharesStr_);
+			mmex::formatDoubleToCurrencyEdit(th.totalnumShares_, th.totalnumSharesStr_);
+		}
         else 
-        th.numSharesStr_ <<  static_cast<long>(th.numShares_);
-        
+        {
+			th.numSharesStr_ <<  static_cast<long>(th.numShares_);
+			th.totalnumSharesStr_ <<  static_cast<long>(th.totalnumShares_);
+        }
 
         //sqlite does not support %y date mask therefore null value should be replaces
         if (th.stockPDate_ == wxT(""))
@@ -921,7 +936,10 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
 
         wxString miniInfo = wxT("");
         if (trans_[selectedIndex_].stockSymbol_ != wxT(""))
-        miniInfo << wxT("\t") << _("Symbol: ") << trans_[selectedIndex_].stockSymbol_; 
+        miniInfo << wxT("\t") << _("Symbol: ") << trans_[selectedIndex_].stockSymbol_ << wxT ("\t\t"); 
+        miniInfo << _ ("Total:") << wxT (" (") << trans_[selectedIndex_].totalnumSharesStr_ << wxT (") ");
+        //If some share has been bot for a short period we don't need that info
+        if (stockDaysOwn > 182.5)
         miniInfo << wxT ("\t\t") << _("Percent/Year: ") << trans_[selectedIndex_].stockPercentagePerYearStr_;
         stm->SetLabel(miniInfo);
         wxString additionInfo =wxT("");

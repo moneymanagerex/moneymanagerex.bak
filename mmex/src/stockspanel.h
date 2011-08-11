@@ -85,6 +85,7 @@ public:
     wxString stockPercentagePerYearStr_;
     wxString shareNotes_;
     wxString numSharesStr_;
+    wxString totalnumSharesStr_;
     wxString gainLossStr_;
     wxString valueStr_;
     wxString cPriceStr_;
@@ -96,6 +97,7 @@ public:
     double value_;
     double gainLoss_;
     double numShares_;
+    double totalnumShares_;
     double stockDays_;
 };
 
