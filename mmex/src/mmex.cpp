@@ -101,6 +101,7 @@
 #include "../resources/edit_account.xpm"
 #include "../resources/delete_account.xpm"
 #include "../resources/filter.xpm"
+#include "../resources/facebook.xpm"
 //----------------------------------------------------------------------------
 
 // Icons from Silk Collection
@@ -356,7 +357,8 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_CHECKUPDATE,  mmGUIFrame::OnCheckUpdate)
     EVT_MENU(MENU_REPORTISSUES,  mmGUIFrame::OnReportIssues)
     EVT_MENU(MENU_ANNOUNCEMENTMAILING,  mmGUIFrame::OnBeNotified)
-    EVT_MENU(wxID_ABOUT, mmGUIFrame::OnAbout)
+    EVT_MENU(MENU_FACEBOOK,  mmGUIFrame::OnFacebook)
+	EVT_MENU(wxID_ABOUT, mmGUIFrame::OnAbout)
     EVT_MENU(MENU_PRINT_PAGE_SETUP, mmGUIFrame::OnPrintPageSetup)
     EVT_MENU(MENU_PRINT_REPORT, mmGUIFrame::OnPrintPageReport)
     EVT_MENU(MENU_PRINT_PREVIEW_REPORT, mmGUIFrame::OnPrintPagePreview)
@@ -2864,6 +2866,11 @@ void mmGUIFrame::createMenu()
        menuHelp->Append(menuItemNotify); 
     }
         
+	wxMenuItem* menuItemFacebook = new wxMenuItem(menuTools, MENU_FACEBOOK, 
+												_("Visit us on Facebook"), _("Visit us on Facebook"));
+	menuItemFacebook->SetBitmap(wxBitmap(facebook_xpm));
+	menuHelp->Append(menuItemFacebook); 
+	
     wxMenuItem* menuItemAbout = new wxMenuItem(menuTools, wxID_ABOUT, 
        _("&About..."), _("Show about dialog"));
     menuItemAbout->SetBitmap(wxBitmap(about_xpm));
@@ -3807,6 +3814,14 @@ void mmGUIFrame::OnBeNotified(wxCommandEvent& /*event*/)
     wxString url = wxT("http://groups.google.com/group/mmlist");
     wxLaunchDefaultBrowser(url);
 }
+//----------------------------------------------------------------------------
+
+void mmGUIFrame::OnFacebook(wxCommandEvent& /*event*/)
+{
+    wxString url = wxT("http://www.facebook.com/pages/Money-Manager-Ex/242286559144586");
+    wxLaunchDefaultBrowser(url);
+}
+
 //----------------------------------------------------------------------------
     
 void mmGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
