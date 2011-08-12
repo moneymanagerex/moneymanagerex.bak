@@ -226,6 +226,7 @@ private:
     void OnCheckUpdate(wxCommandEvent& event);
     void OnReportIssues(wxCommandEvent& event);
     void OnBeNotified(wxCommandEvent& event);
+	void OnFacebook(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
 
     void OnItemRightClick(wxTreeEvent& event);
