@@ -121,13 +121,27 @@ void mmBudgetEntryDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    wxFlexGridSizer* itemGridSizer2 = new wxFlexGridSizer(2, 2, 0, 0);
+    wxFlexGridSizer* itemGridSizer2 = new wxFlexGridSizer(4, 2, 0, 0);
     itemBoxSizer2->Add(itemGridSizer2, 0, wxALL);
     
+    wxStaticText* itemTextCatTag = new wxStaticText( itemDialog1, wxID_STATIC, 
+        _("Category: "), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemTextCatName = new wxStaticText( itemDialog1, wxID_STATIC, 
+        mmDBWrapper::getCategoryName(db_,categID_), wxDefaultPosition, wxDefaultSize, 0 );
+
+    wxStaticText* itemTextSubCatTag = new wxStaticText( itemDialog1, wxID_STATIC, 
+        _("Sub Category: "), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemTextSubCatName = new wxStaticText( itemDialog1, wxID_STATIC, 
+        mmDBWrapper::getSubCategoryName(db_,categID_, subcategID_), wxDefaultPosition, wxDefaultSize, 0 );
+
+    itemGridSizer2->Add(itemTextCatTag,    0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemGridSizer2->Add(itemTextCatName,   0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemGridSizer2->Add(itemTextSubCatTag, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemGridSizer2->Add(itemTextSubCatName,0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
     wxStaticText* itemStaticText101 = new wxStaticText( itemDialog1, wxID_STATIC, 
         _("Type:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemStaticText101, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemGridSizer2->Add(itemStaticText101, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     wxString itemTypeStrings[] =  
     {
@@ -142,8 +156,7 @@ void mmBudgetEntryDialog::CreateControls()
 
     wxStaticText* itemStaticText51 = new wxStaticText( itemDialog1, wxID_STATIC, 
         _("Frequency:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemStaticText51, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemGridSizer2->Add(itemStaticText51, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     wxString itemFrequencyTypeStrings[] =  
     {
