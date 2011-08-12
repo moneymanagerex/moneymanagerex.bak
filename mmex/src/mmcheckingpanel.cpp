@@ -36,9 +36,9 @@
 #include "../resources/downarrow.xpm"
 #include "../resources/rightarrow.xpm"
 #include "../resources/duplicate.xpm"
-#include "../resources/trans_withdrawal.xpm"
-#include "../resources/trans_deposit.xpm"
-#include "../resources/trans_transfer.xpm"
+#include "../resources/trans_from.xpm"
+#include "../resources/trans_into.xpm"
+//#include "../resources/trans_transfer.xpm"
 //----------------------------------------------------------------------------
 
 namespace
@@ -687,9 +687,9 @@ void mmCheckingPanel::CreateControls()
     m_imageList->Add(wxBitmap(uparrow_xpm));
     m_imageList->Add(wxBitmap(downarrow_xpm));
 	m_imageList->Add(wxBitmap(duplicate_xpm));
-	m_imageList->Add(wxBitmap(trans_withdrawal_xpm));
-	m_imageList->Add(wxBitmap(trans_deposit_xpm));
-	m_imageList->Add(wxBitmap(trans_transfer_xpm));
+	m_imageList->Add(wxBitmap(trans_from_xpm));
+	m_imageList->Add(wxBitmap(trans_into_xpm));
+	//m_imageList->Add(wxBitmap(trans_transfer_xpm));
 
     m_listCtrlAccount = new MyListCtrl( this, itemSplitterWindow10, 
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 

@@ -1,5 +1,5 @@
 /* XPM */
-static char * facebook_xpm[] = {
+static const char * facebook_xpm[] = {
 "16 16 245 2",
 "  	c None",
 ". 	c #475577",
