@@ -566,8 +566,8 @@ void mmExportCSV( mmCoreDB* core, wxSQLite3Database* db_ )
     wxString chooseExt;
     chooseExt << _("CSV Files") << wxT(" (*.csv)|*.csv;*.CSV");
     wxString fileName = wxFileSelector( _( "Choose CSV data file to Export" ),
-                        wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxSAVE | wxOVERWRITE_PROMPT );
-                        
+                        wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFD_SAVE | wxFD_OVERWRITE_PROMPT );
+
     if ( fileName.empty() )
         return;
     
@@ -733,7 +733,7 @@ void mmExportQIF( mmCoreDB* core, wxSQLite3Database* db_ )
     wxString chooseExt;
     chooseExt << _("QIF Files") << wxT(" (*.qif)|*.qif;*.QIF");
     wxString fileName = wxFileSelector( _( "Choose QIF data file to Export" ),
-                        wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxSAVE | wxOVERWRITE_PROMPT );
+                        wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
     if ( fileName.IsEmpty() ) {
         return;
@@ -835,7 +835,7 @@ void mmExportQIF( mmCoreDB* core, wxSQLite3Database* db_ )
         {
 	        text << wxT('$') << amount << endl;
         }
-
+                
         //if categ id is empty the transaction has been splited
         if ( categ.IsEmpty() && subcateg.IsEmpty() ) {
             static const char sql4splitedtrx[] =
@@ -937,7 +937,7 @@ int mmImportCSV( mmCoreDB* core )
         wxString chooseExt;
         chooseExt << _("CSV Files") << wxT(" (*.csv)|*.csv;*.CSV");
         wxString fileName = wxFileSelector( _( "Choose CSV data file to import" ),
-                                wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFILE_MUST_EXIST );
+                                wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFD_FILE_MUST_EXIST );
 
         if ( !fileName.empty() ) {
             wxFileInputStream input( fileName );
@@ -1244,7 +1244,7 @@ int mmImportCSVMMNET( mmCoreDB* core )
         wxString chooseExt;
         chooseExt << _("CSV Files") << wxT(" (*.csv)|*.csv;*.CSV");
         wxString fileName = wxFileSelector( _( "Choose MM.NET CSV data file to import" ),
-                                wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFILE_MUST_EXIST );
+                                wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFD_FILE_MUST_EXIST );
 
         if ( !fileName.IsEmpty() ) {
             wxFileInputStream input( fileName );

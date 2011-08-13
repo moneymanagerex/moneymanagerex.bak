@@ -185,7 +185,7 @@ bool formatCurrencyToDouble( const wxString& str, double& val );
 
 namespace boost
 {
-	inline std::size_t hash_value(const wxChar* string)
+ 	inline std::size_t hash_value(const wxChar* string)
 	{
 		long int_key = 0;
 
@@ -196,10 +196,12 @@ namespace boost
 		return int_key;
 	}
 
+   /* problems using wxWidgets 2.9.2
 	inline std::size_t hash_value(const wxString& value)
 	{
 		return boost::hash_value(value.c_str());
 	}
+    */
 
 } // namespace boost
 

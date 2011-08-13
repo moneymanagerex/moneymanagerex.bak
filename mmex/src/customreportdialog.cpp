@@ -172,7 +172,7 @@ void mmCustomSQLDialog::OnLoad(wxCommandEvent& /*event*/)
 {
     wxString sqlScriptFileName = wxFileSelector( _("Load Custom SQL file:"), 
                                                  mmex::getPathUser(mmex::DIRECTORY),
-                                                 wxT(""), wxT(""),  wxT("SQL File(*.sql)|*.sql"), wxFILE_MUST_EXIST);
+                                                 wxEmptyString, wxEmptyString,  wxT("SQL File(*.sql)|*.sql"), wxFD_FILE_MUST_EXIST);
     if ( !sqlScriptFileName.empty() )
     {
         wxFileName selectedFileName(sqlScriptFileName);
@@ -224,7 +224,7 @@ void mmCustomSQLDialog::OnSave(wxCommandEvent& /*event*/)
             // get the filename from the user
             wxFileDialog fileDialog(this, _("Save Custom SQL file:"),
                                           mmex::getPathUser(mmex::DIRECTORY),
-                                          wxT(""),wxT("SQL File(*.sql)|*.sql"),wxSAVE);
+                                          wxEmptyString,wxT("SQL File(*.sql)|*.sql"),wxFD_SAVE);
             if (fileDialog.ShowModal() == wxID_OK)
             {
                 reportfileName = fileDialog.GetFilename();

@@ -327,7 +327,7 @@ bool mmUnivCSVImportDialog::isIndexPresent(int index)
 void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
 {
    wxString fileName = wxFileSelector(_("Choose Universal CSV format file to load"), 
-      wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(),  wxT("CSV Template(*.mcv)|*.mcv"), wxFILE_MUST_EXIST);
+      wxEmptyString, wxEmptyString, wxEmptyString,  wxT("CSV Template(*.mcv)|*.mcv"), wxFD_FILE_MUST_EXIST);
    if ( !fileName.empty() )
    {
       wxTextFile tFile(fileName);
@@ -359,7 +359,7 @@ void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
 void mmUnivCSVImportDialog::OnSave(wxCommandEvent& /*event*/)
 {
     wxString fileName = wxFileSelector(_("Choose Universal CSV format file to save"), 
-                wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), wxT("CSV Template(*.mcv)|*.mcv"), wxSAVE);
+                wxEmptyString, wxEmptyString, wxEmptyString, wxT("CSV Template(*.mcv)|*.mcv"), wxFD_SAVE);
     if ( !fileName.empty() )
     {
         correctEmptyFileExt(wxT("mcv"),fileName);
@@ -436,7 +436,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
              
         wxString fileName = wxFileSelector(_("Choose MM.NET CSV data file to import"), 
-                wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), wxT("*.csv"), wxFILE_MUST_EXIST);
+                wxEmptyString, wxEmptyString, wxEmptyString, wxT("*.csv"), wxFD_FILE_MUST_EXIST);
         if ( !fileName.IsEmpty() )
         {
             wxFileInputStream input(fileName);

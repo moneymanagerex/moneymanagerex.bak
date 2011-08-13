@@ -3124,10 +3124,10 @@ void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
 {
     wxFileDialog dlg(this, 
                      _("Choose database file to create"), 
-                     wxGetEmptyString(), 
-                     wxGetEmptyString(), 
+                     wxEmptyString, 
+                     wxEmptyString, 
                      wxT("MMB Files(*.mmb)|*.mmb"), 
-                     wxSAVE | wxOVERWRITE_PROMPT
+                     wxFD_SAVE | wxFD_OVERWRITE_PROMPT
                     );
 
     if(dlg.ShowModal() != wxID_OK) {
@@ -3153,9 +3153,9 @@ void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
 void mmGUIFrame::OnOpen(wxCommandEvent& /*event*/)
 {
     wxString fileName = wxFileSelector(_("Choose database file to open"), 
-                                       0, 0, 0, 
+                                       wxEmptyString, wxEmptyString, wxEmptyString, 
                                        wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb"), 
-                                       wxFILE_MUST_EXIST,
+                                       wxFD_FILE_MUST_EXIST,
                                        this
                                       );
   
@@ -3175,9 +3175,9 @@ void mmGUIFrame::OnOpen(wxCommandEvent& /*event*/)
 void mmGUIFrame::OnConvertEncryptedDB(wxCommandEvent& /*event*/)
 {
     wxString encFileName = wxFileSelector(_("Choose Encrypted database file to open"), 
-                                          0, 0, 0, 
+                                          wxEmptyString, wxEmptyString, wxEmptyString, 
                                           wxT("Encrypted MMB files (*.emb)|*.emb"), 
-                                          wxFILE_MUST_EXIST, 
+                                          wxFD_FILE_MUST_EXIST, 
                                           this
                                          );
 
@@ -3190,10 +3190,10 @@ void mmGUIFrame::OnConvertEncryptedDB(wxCommandEvent& /*event*/)
         
     wxFileDialog dlg(this, 
                      _("Choose database file to Save As"), 
-                     wxGetEmptyString(), 
-                     wxGetEmptyString(), 
+                     wxEmptyString, 
+                     wxEmptyString, 
                      wxT("MMB Files(*.mmb)|*.mmb"), 
-                     wxSAVE | wxOVERWRITE_PROMPT
+                     wxFD_SAVE | wxFD_OVERWRITE_PROMPT
                     );
 
     if(dlg.ShowModal() != wxID_OK)
@@ -3226,10 +3226,10 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
 
     wxFileDialog dlg(this,
                      _("Save database file as"),
-                     wxGetEmptyString(),
-                     wxGetEmptyString(),
+                     wxEmptyString,
+                     wxEmptyString,
                      wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb"),
-                     wxSAVE | wxOVERWRITE_PROMPT
+                     wxFD_SAVE | wxFD_OVERWRITE_PROMPT
                     );
 
     if (dlg.ShowModal() != wxID_OK) {
@@ -3925,7 +3925,7 @@ void mmGUIFrame::OnExportToHtml(wxCommandEvent& WXUNUSED(event))
     if (rp)
     {
         wxString fileName = wxFileSelector(wxT("Choose HTML file to Export"), 
-            wxGetEmptyString(), wxGetEmptyString(), wxGetEmptyString(), wxT("*.html"), wxSAVE | wxOVERWRITE_PROMPT);
+            wxEmptyString, wxEmptyString, wxEmptyString, wxT("*.html"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
         if ( !fileName.empty() )
         {
             correctEmptyFileExt(wxT("html"),fileName);
