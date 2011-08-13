@@ -1085,7 +1085,7 @@ bool mmGUIFrame::hasActiveTermAccounts()
 
 bool mmGUIFrame::financialYearIsDifferent()
 {
-    return (mmOptions::financialYearStartDayString_ != wxT("1") || mmOptions::financialYearStartMonthString_ != wxT("Jan"));
+    return (mmOptions::financialYearStartDayString_ != wxT("1") || mmOptions::financialYearStartMonthString_ != wxT("1"));
 }
 
 void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
