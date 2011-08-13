@@ -728,8 +728,10 @@ void mmExportQIF( mmCoreDB* core, wxSQLite3Database* db_ )
         return;
     }
 
+    wxString chooseExt;
+    chooseExt << _("QIF Files") << wxT(" (*.qif)|*.qif;*.QIF");
     wxString fileName = wxFileSelector( _( "Choose QIF data file to Export" ),
-                        wxT( "" ), wxT( "" ), wxT( "" ), wxT( "*.qif" ), wxSAVE | wxOVERWRITE_PROMPT );
+                        wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxSAVE | wxOVERWRITE_PROMPT );
 
     if ( fileName.IsEmpty() ) {
         return;
@@ -954,7 +956,7 @@ int mmImportCSV( mmCoreDB* core )
             std::vector<int> CSV_transID;
 
     		wxProgressDialog progressDlg(_("Import from CSV"), _("Transactions imported from CSV: "), 101,
-                false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
+                NULL, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
     		mmDBWrapper::begin(db_);
 
             while ( !input.Eof() ) {
@@ -1258,7 +1260,7 @@ int mmImportCSVMMNET( mmCoreDB* core )
             std::vector<int> CSV_transID;
 
     		wxProgressDialog progressDlg(_("Importing CSV MM.NET"), _("Transactions imported from CSV: "), 101,
-                false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
+                NULL, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
     		mmDBWrapper::begin(db_);
 
             while ( !input.Eof() ) {
