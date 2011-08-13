@@ -779,7 +779,7 @@ void mmCheckingPanel::CreateControls()
 
     //Infobar-mini 
     wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, ID_PANEL_CHECKING_STATIC_MINI, wxT(""), 
-    wxPoint(-1,-1), wxSize(450, -1), wxNO_BORDER|wxST_NO_AUTORESIZE);
+    wxPoint(-1,-1), wxSize(650, -1), wxNO_BORDER|wxST_NO_AUTORESIZE);
     itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxALL, 12);
     //Infobar 
 
@@ -826,8 +826,11 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
 {
     char sql[] =
-    "select  c.transcode as TRANSCODE, "
+    "select  ta.accountname  as INTOACC, "
+    "a.accountname as FROMACC, c.transcode as TRANSCODE, "
     "c.TRANSAMOUNT as TRANSAMOUNT,  TOTRANSAMOUNT, "
+    "cf.pfx_symbol as PFX_SYMBOL, cf.sfx_symbol as SFX_SYMBOL, "
+    "tcf.pfx_symbol as TOPFX_SYMBOL, tcf.sfx_symbol as TOSFX_SYMBOL, "
     "cf.CURRENCYNAME as CURRENCYNAME,  tcf.CURRENCYNAME as TOCURRENCYNAME, "
     "cf.CURRENCYID as CURRENCYID,  tcf.CURRENCYID as TOCURRENCYID, "
     "cf.BASECONVRATE as BASECONVRATE, "
@@ -848,8 +851,15 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
 
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
 
+    wxString intoaccStr = q1.GetString(wxT("INTOACC"));
+    wxString fromaccStr = q1.GetString(wxT("FROMACC"));
     int basecurrencyid = q1.GetInt(wxT("BASECURRENCYID"));
     wxString transcodeStr = q1.GetString(wxT("TRANSCODE"));
+
+    wxString cursfxStr = q1.GetString(wxT("SFX_SYMBOL"));
+    wxString tocursfxStr = q1.GetString(wxT("TOSFX_SYMBOL"));
+    wxString curpfxStr = q1.GetString(wxT("PFX_SYMBOL"));
+    wxString tocurpfxStr = q1.GetString(wxT("TOPFX_SYMBOL"));
     wxString currencynameStr = q1.GetString(wxT("CURRENCYNAME"));
     wxString tocurrencynameStr = q1.GetString(wxT("TOCURRENCYNAME"));
     int currencyid = q1.GetInt(wxT("CURRENCYID"));
@@ -883,19 +893,22 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
     //if (currencyid == basecurrencyid)
     mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
 
-    infoStr << amountStr << wxT(" -> ") << toamountStr ;
+    infoStr << amountStr << wxT(" ");
+    if (amount!=toamount || tocurrencyid != currencyid)
+    infoStr << wxT("-> ")  << toamountStr << wxT(" ");
+    infoStr << _("From") << wxT(" ") << fromaccStr << wxT(" ") << _("to ") << intoaccStr; 
 
         if (tocurrencyid != currencyid)
         {
-        infoStr << wxT(" ( 1 "); 
+        infoStr << wxT(" ( "); 
         if (accountId == m_AccountID && convrate < toconvrate)
-        {infoStr  << tocurrencynameStr << wxT(" = ") << convertionStr << wxT(" ") << currencynameStr;}
+        {infoStr  << tocurpfxStr << wxT("1") << tocursfxStr << wxT(" = ") << curpfxStr << convertionStr << cursfxStr << wxT(" ");}
         else if (accountId == m_AccountID && convrate > toconvrate)
-        {infoStr << currencynameStr << wxT(" = ") << convertionStr << wxT(" ") << tocurrencynameStr;} 
+        {infoStr << curpfxStr << wxT("1") << cursfxStr << wxT(" = ") << tocurpfxStr << convertionStr << tocursfxStr << wxT(" ");} 
         else if (accountId != m_AccountID && convrate < toconvrate)
-        {infoStr << tocurrencynameStr << wxT(" = ") << convertionStr << wxT(" ") << currencynameStr;} 
+        {infoStr << tocurpfxStr << wxT("1") << tocursfxStr << wxT(" = ") << curpfxStr << convertionStr << cursfxStr << wxT(" ");} 
         else 
-        {infoStr << currencynameStr << wxT(" = ") << convertionStr << wxT(" ") << tocurrencynameStr;} 
+        {infoStr << curpfxStr << wxT("1") << cursfxStr << wxT(" = ") << tocurpfxStr << convertionStr << tocursfxStr << wxT(" ");} 
         infoStr << wxT(" )");
         }
     }
