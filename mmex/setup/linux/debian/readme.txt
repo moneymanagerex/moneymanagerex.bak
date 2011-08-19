@@ -24,13 +24,15 @@ sudo apt-get install automake
 #
 # Note: Build support for 32 bit and 64 bit.
 #
-# Difference in Control file: Line 5
+# Difference in Control file: Line 13 (In file: build.sh)
 #       32bit:= Architecture: i386
 #       64bit:= Architecture: amd64
 #
-# To build the amd64 (64 bit version), set varianle in build.sh file to x64
+# To build the amd64 (64 bit version), set variable in build.sh file to amd64
 #
-ARCHITECTURE="x86"
+
+# Specify system Architecture  ("i386" or "amd64")
+ARCHITECTURE="i386"
 
 # The corresponding version of mmex must be specified:
 MMEX_VERSION="0.9.8.0"
@@ -39,7 +41,7 @@ MMEX_VERSION="0.9.8.0"
 
 #Check ~/build/mmex-xXX.deb file
 lintian mmex-xXX.deb
-# check errorrs against other lintian deb 
+# check errors against other lintian deb 
 
 # install the package (Have you backed up your databases?)
 #dpkg -i mmex.deb

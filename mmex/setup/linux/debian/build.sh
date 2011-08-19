@@ -2,15 +2,17 @@
 #
 # Note: Build support for 32 bit and 64 bit.
 #
-# Difference in Control file: Line 5
+# Difference in Control file: Line 13
 #       32bit:= Architecture: i386
 #       64bit:= Architecture: amd64
 #
-# To build the amd64 (64 bit version), set varianle below to x64
+# To build the amd64 (64 bit version), set variable below to amd64
 #
+
+# Specify system Architecture  ("i386" or "amd64")
 ARCHITECTURE="i386"
 
-# The corresponding version of mmex must be specified below
+# Specify the build version of mmex
 MMEX_VERSION="0.9.8.0"
 
 cd ../../../
@@ -56,7 +58,7 @@ strip mmex-$MMEX_VERSION-$ARCHITECTURE/usr/bin/mmex
 fakeroot dpkg-deb -b mmex-$MMEX_VERSION-$ARCHITECTURE
 
 lintian mmex-$MMEX_VERSION-$ARCHITECTURE.deb
-# check errorrs against other lintian deb 
+# check errors against other lintian deb 
 
 # install the package (Have you backed up your databases?)
 
