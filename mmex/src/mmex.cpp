@@ -2784,7 +2784,7 @@ void mmGUIFrame::createMenu()
     menuTools->AppendSeparator();
 
     wxMenuItem* menuItemTransactions = new wxMenuItem(menuTools, MENU_TRANSACTIONREPORT, 
-		_("&Transaction Filter..."), _("Transaction Filter"));
+		_("&Transaction Report Filter..."), _("Transaction Report Filter"));
 	menuItemTransactions->SetBitmap(wxBitmap(filter_xpm));
     menuTools->Append(menuItemTransactions);
 
@@ -2919,7 +2919,7 @@ void mmGUIFrame::createToolBar()
     toolBar_->AddTool(MENU_ORGPAYEE, _("Organize Payees"), toolBarBitmaps[6], _("Show Organize Payees Dialog"));
     toolBar_->AddTool(MENU_CURRENCY, _("Organize Currency"), toolBarBitmaps[7], _("Show Organize Currency Dialog"));
 	toolBar_->AddSeparator();
-    toolBar_->AddTool(MENU_TRANSACTIONREPORT, _("Transaction Filter"), toolBarBitmaps[8], _("Transaction Filter"));
+    toolBar_->AddTool(MENU_TRANSACTIONREPORT, _("Transaction Report Filter"), toolBarBitmaps[8], _("Transaction Report Filter"));
 	toolBar_->AddSeparator();
     toolBar_->AddTool(MENU_CUSTOM_SQL_REPORT_NEW, _("Custom SQL Manager"), toolBarBitmaps[9], _("Create new Custom SQL Reports"));
     
