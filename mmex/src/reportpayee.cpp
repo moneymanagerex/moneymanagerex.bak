@@ -62,7 +62,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
 
         core_->currencyList_.loadBaseCurrencySettings();
         
-        
+        double total = 0.0;
         std::vector<ValuePair> valueList;
         for (int idx = 0; idx < numPayees; idx++)
         {
@@ -75,22 +75,25 @@ wxString mmReportPayeeExpenses::getHTMLText()
 
             if (amt != 0.0)
             {
+                total += amt;
                 ValuePair vp;
                 vp.label = core_->payeeList_.payees_[idx]->payeeName_;
                 vp.amount = amt;
                 valueList.push_back(vp);
 
-				hb.startTableRow();
-				hb.addTableCell(core_->payeeList_.payees_[idx]->payeeName_, false, true);
+                hb.startTableRow();
+                hb.addTableCell(core_->payeeList_.payees_[idx]->payeeName_, false, true);
 
-				if (amt < 0.0)
-					hb.addTableCell(balance, true, true, true, wxT("#ff0000"));
-				else
-					hb.addTableCell(balance, true, false, true);
-
-				hb.endTableRow();
-			}
+                hb.addTableCell(balance, true, true, true, (amt<0.0 ? wxT("RED") : wxT("BLACK")));
+                hb.endTableRow();
+	    }
         }
+        hb.addRowSeparator(2);
+        wxString payeetotalStr;
+        wxString colorStr = (total<0.0 ? wxT("RED") : wxT("BLACK"));
+        mmex::formatDoubleToCurrency(total, payeetotalStr);hb.startTableRow();
+        hb.addTableCell(_("Payees Total: "),false, true, true, wxT("BLACK"));
+        hb.addTableCell(payeetotalStr, true, false, true, colorStr);
 
         hb.endTable();
 	hb.endCenter();
