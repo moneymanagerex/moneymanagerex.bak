@@ -46,6 +46,7 @@ public:
         long style              = SYMBOL_CUSTOMSQLDIALOG_STYLE );
 
     wxString sqlQuery();
+    wxString sqlReportTitle();
 
 private:
     customSQLReportIndex* reportIndex_;

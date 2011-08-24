@@ -168,6 +168,11 @@ wxString mmCustomSQLDialog::sqlQuery()
     return sqlQuery_;
 }
 
+wxString mmCustomSQLDialog::sqlReportTitle()
+{
+    return reportTitleTxtCtrl_->GetValue();
+}
+
 void mmCustomSQLDialog::OnLoad(wxCommandEvent& /*event*/)
 {
     wxString sqlScriptFileName = wxFileSelector( _("Load Custom SQL file:"), 
