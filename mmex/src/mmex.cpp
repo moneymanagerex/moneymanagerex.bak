@@ -4178,7 +4178,7 @@ void mmGUIFrame::RunCustomSqlDialog(bool forEdit)
     {
         if (dlg->sqlQuery() != wxT(""))   
         {   
-            mmCustomSQLReport* csr = new mmCustomSQLReport(m_core.get(), custRepIndex_->currentReportTitle(), dlg->sqlQuery());
+            mmCustomSQLReport* csr = new mmCustomSQLReport(m_core.get(), dlg->sqlReportTitle(), dlg->sqlQuery());
             menuPrintingEnable(true);
             createReportsPage(csr);
         } 
