@@ -90,15 +90,18 @@ public:
     wxString valueStr_;
     wxString cPriceStr_;
     wxString pPriceStr_;
+    wxString avgpurchasePriceStr_;
     wxString symbol_;
 
     double currentPrice_;
     double purchasePrice_;
+    double avgpurchasePrice_;
     double value_;
     double gainLoss_;
     double numShares_;
     double totalnumShares_;
     double stockDays_;
+    int purchasedTime_ ;
 };
 
 class mmStocksPanel : public mmPanelBase
