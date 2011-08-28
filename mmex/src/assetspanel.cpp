@@ -272,7 +272,9 @@ void mmAssetsPanel::initVirtualListControl()
            "a.ASSETNAME as ASSETNAME, "
            "a.ASSETTYPE as ASSETTYPE, "
            "a.STARTDATE as STARTDATE, "
-           "strftime(INFOVALUE, a.STARTDATE) as BEGINDATE, "
+           "ifnull (strftime(INFOVALUE, a.STARTDATE), "
+           "(strftime(replace (i.infovalue, '%y', SubStr (strftime('%Y', a.STARTDATE),3,2)),a.STARTDATE))) "
+           "as FORMATEDDATE, "
            "a.NOTES as NOTES, "
            "VALUECHANGE as VALUECHANGE, "
            "VALUECHANGERATE as VALUECHANGERATE "
@@ -290,7 +292,7 @@ void mmAssetsPanel::initVirtualListControl()
         th.assetID_ = q1.GetInt(wxT("ASSETID"));
         th.value_ = mmDBWrapper::getAssetValue(m_db, th.assetID_);
         th.assetName_ = q1.GetString(wxT("ASSETNAME"));
-        th.assetDate_ = q1.GetString(wxT("BEGINDATE"));
+        th.assetDate_ = q1.GetString(wxT("FORMATEDDATE"));
         //sqlite does not support %y date mask therefore null value should be replaces
         if (th.assetDate_ == wxT(""))
             {
