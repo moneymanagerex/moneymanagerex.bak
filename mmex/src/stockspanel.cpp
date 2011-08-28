@@ -385,37 +385,33 @@ void mmStocksPanel::initVirtualListControl()
 
     char sql[] =
     "select S.STOCKID, S.HELDAT,  S.STOCKNAME, UPPER(S.SYMBOL) SYMBOL, "
-    "total (S.NUMSHARES) as NUMSHARES, t.TOTAL_NUMSHARES, "
-    "avg (S.PURCHASEPRICE) as PURCHASEPRICE, "
-    "avg (S.CURRENTPRICE) as CURRENTPRICE, "
-    "total (S.VALUE) as VALUE, total (S.COMMISSION) as COMMISSION, "
-    " strftime(INFOVALUE, min (S.PURCHASEDATE)) as PURCHDATE, "
-    "min (S.PURCHASEDATE) as PURCHASEDATE, "
-    "avg (julianday('now', 'localtime')-julianday (S.PURCHASEDATE, 'localtime')) as DAYSOWN, "
+    "S.NUMSHARES as NUMSHARES, t.TOTAL_NUMSHARES, T.PURCHASEDTIME, "
+    "T.AVG_PURCHASEPRICE as AVG_PURCHASEPRICE, "
+    "S.PURCHASEPRICE as PURCHASEPRICE, "
+    "S.CURRENTPRICE as CURRENTPRICE, "
+    "S.VALUE as VALUE, S.COMMISSION as COMMISSION, "
+    "ifnull (strftime(INFOVALUE, S.PURCHASEDATE),strftime(replace (i.infovalue, '%y', SubStr (strftime('%Y', S.PURCHASEDATE),3,2)),S.PURCHASEDATE)) as PURCHDATE, "
+    "S.PURCHASEDATE as PURCHASEDATE, "
+    "julianday('now', 'localtime')-julianday (S.PURCHASEDATE, 'localtime') as DAYSOWN, "
     "S.NOTES "
     "from STOCK_V1 S "
     "left join infotable_v1 i on i.INFONAME='DATEFORMAT' "
     "left join ( "
-    "select "
+    "select count (UPPER (SYMBOL)) as PURCHASEDTIME, "
     "HELDAT, UPPER (SYMBOL) as SYMBOL, "
-    "total (NUMSHARES) as TOTAL_NUMSHARES "
+    "total (NUMSHARES) as TOTAL_NUMSHARES, "
+    "total(PURCHASEPRICE*NUMSHARES)/total(NUMSHARES) as AVG_PURCHASEPRICE "
     "from STOCK_V1 "
     "left join infotable_v1 i on i.INFONAME='DATEFORMAT' "
-    "group by HELDAT, SYMBOL "
+    "group by HELDAT, UPPER (SYMBOL) "
     "order by julianday(min (PURCHASEDATE),'localtime'), SYMBOL, STOCKNAME "
     ") T on UPPER (T.SYMBOL)=UPPER (S.SYMBOL) and T.HELDAT=S.HELDAT "
     "where S.HELDAT = ? "
-    "group by S.HELDAT, S.SYMBOL, S.STOCKID "
-    "order by julianday(min (S.PURCHASEDATE),'localtime'), S.SYMBOL, S.STOCKNAME ";
+    "order by julianday((S.PURCHASEDATE),'localtime'), S.SYMBOL, S.STOCKNAME ";
     
-        wxSQLite3Statement st = db_->PrepareStatement(sql);
-        st.Bind(1, accountID_);
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    st.Bind(1, accountID_);
 
-        //TODO: All records with the same Symbol may be groupped
-        // This may be necessary in case the records are many.
-        // Addition user parameter and button or view option should be provided
-		//st.Bind(2, wxT ("STOCKID")); //<--It's does not work
- 
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
     int cnt = 0;
 
@@ -432,10 +428,12 @@ void mmStocksPanel::initVirtualListControl()
         th.shareNotes_        = q1.GetString(wxT("NOTES"));
         th.numSharesStr_      = wxT("");
         th.numShares_         = q1.GetDouble(wxT("NUMSHARES"));
-        th.totalnumShares_         = q1.GetDouble(wxT("TOTAL_NUMSHARES"));
+        th.totalnumShares_    = q1.GetDouble(wxT("TOTAL_NUMSHARES"));
+        th.purchasedTime_     = q1.GetInt (wxT ("PURCHASEDTIME")) ;
 
         th.currentPrice_      = q1.GetDouble(wxT("CURRENTPRICE"));
         th.purchasePrice_     = q1.GetDouble(wxT("PURCHASEPRICE"));
+        th.avgpurchasePrice_   = q1.GetDouble (wxT ("AVG_PURCHASEPRICE")) ;
         th.value_             = q1.GetDouble(wxT("VALUE"));
         double commission     = q1.GetDouble(wxT("COMMISSION"));
         th.stockDays_         = q1.GetDouble (wxT ("DAYSOWN"));
@@ -446,18 +444,25 @@ void mmStocksPanel::initVirtualListControl()
         mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
         mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
         mmex::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
+        mmex::formatDoubleToCurrencyEdit(th.avgpurchasePrice_, th.avgpurchasePriceStr_);
+
         //I wish see integer if it integer else double
         if ((th.numShares_ - static_cast<long>(th.numShares_)) != 0.0 )
         {
 			mmex::formatDoubleToCurrencyEdit(th.numShares_, th.numSharesStr_);
-			mmex::formatDoubleToCurrencyEdit(th.totalnumShares_, th.totalnumSharesStr_);
 		}
         else 
         {
 			th.numSharesStr_ <<  static_cast<long>(th.numShares_);
+	    }
+        if ((th.totalnumShares_ - static_cast<long>(th.totalnumShares_)) != 0.0 )
+        {
+			mmex::formatDoubleToCurrencyEdit(th.totalnumShares_, th.totalnumSharesStr_);
+		}
+		else
+		{
 			th.totalnumSharesStr_ <<  static_cast<long>(th.totalnumShares_);
-        }
-
+		}
         //sqlite does not support %y date mask therefore null value should be replaces
         if (th.stockPDate_ == wxT(""))
         {
@@ -917,38 +922,68 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
         wxString stockPurchasePriceStr;
         wxString stockCurrentPriceStr;
         wxString stockDifferenceStr;
+        wxString stocktotalDifferenceStr;
         wxString stockPercentageStr;
+        wxString stocktotalPercentageStr;
         wxString stockPercentagePerYearStr;
+        wxString stockavgPurchasePriceStr;
+        wxString stocknumSharesStr = trans_[selectedIndex_].numSharesStr_;
+        wxString stocktotalnumSharesStr = trans_[selectedIndex_].totalnumSharesStr_;
+        wxString stockgainlossStr = trans_[selectedIndex_].gainLossStr_;
+        wxString stocktotalgainlossStr;
+        
         double stockPurchasePrice = trans_[selectedIndex_].purchasePrice_;
         double stockCurrentPrice = trans_[selectedIndex_].currentPrice_;
         double stockDifference = stockCurrentPrice - stockPurchasePrice;
+        
+        double stockavgPurchasePrice = trans_[selectedIndex_].avgpurchasePrice_;
+        double stocktotalDifference = stockCurrentPrice - stockavgPurchasePrice;
         double stockDaysOwn = trans_[selectedIndex_].stockDays_;
         //Commision don't calculates here
         double stockPercentage = (stockCurrentPrice/stockPurchasePrice-1.0)*100.0;
         double stockPercentagePerYear = stockPercentage * 365.0 / stockDaysOwn;
+        double stocktotalPercentage = (stockCurrentPrice/stockavgPurchasePrice-1.0)*100.0;
+        double stocknumShares = trans_[selectedIndex_].numShares_;
+        double stocktotalnumShares = trans_[selectedIndex_].totalnumShares_;
+        double stocktotalgainloss = stocktotalDifference * stocktotalnumShares;
 
         mmex::formatDoubleToCurrencyEdit(stockPurchasePrice, stockPurchasePriceStr);
+        mmex::formatDoubleToCurrencyEdit(stockavgPurchasePrice, stockavgPurchasePriceStr);
         mmex::formatDoubleToCurrencyEdit(stockCurrentPrice, stockCurrentPriceStr);
-        mmex::formatDoubleToCurrency(stockDifference , stockDifferenceStr);
+        mmex::formatDoubleToCurrencyEdit(stockDifference , stockDifferenceStr);
+        mmex::formatDoubleToCurrencyEdit(stocktotalDifference , stocktotalDifferenceStr);
         mmex::formatDoubleToCurrencyEdit(stockPercentage, stockPercentageStr);
         mmex::formatDoubleToCurrencyEdit(stockPercentagePerYear, stockPercentagePerYearStr);
+        mmex::formatDoubleToCurrencyEdit(stocktotalPercentage, stocktotalPercentageStr);
+        mmex::formatDoubleToCurrencyEdit(stocktotalgainloss, stocktotalgainlossStr);
+        //mmex::formatDoubleToCurrencyEdit(stocknumShares, stocknumSharesStr);
         
 
         wxString miniInfo = wxT("");
         if (trans_[selectedIndex_].stockSymbol_ != wxT(""))
         miniInfo << wxT("\t") << _("Symbol: ") << trans_[selectedIndex_].stockSymbol_ << wxT ("\t\t"); 
         miniInfo << _ ("Total:") << wxT (" (") << trans_[selectedIndex_].totalnumSharesStr_ << wxT (") ");
-        //If some share has been bot for a short period we don't need that info
-        if (stockDaysOwn > 182.5)
-        miniInfo << wxT ("\t\t") << _("Percent/Year: ") << trans_[selectedIndex_].stockPercentagePerYearStr_;
+        //If some share has been bot for a short period we don't need that info because the forecast may be too optimistic
+        //if (stockDaysOwn > 182.5)
+        //miniInfo << wxT ("\t\t") << _("Percent/Year: ") << trans_[selectedIndex_].stockPercentagePerYearStr_;
         stm->SetLabel(miniInfo);
+        
         wxString additionInfo =wxT("");
-        if (trans_[selectedIndex_].stockSymbol_ != wxT(""))
-        additionInfo << trans_[selectedIndex_].stockSymbol_<< wxT(" : ");
-        additionInfo << wxT("|") << stockPurchasePriceStr << wxT(" - ") << stockCurrentPriceStr << wxT("|") << wxT(" = ") << stockDifferenceStr 
-        << wxT (" ( ") << stockPercentageStr << wxT ('%')
-        << wxT (" | ")<< stockPercentagePerYearStr << wxT("% ") << _("Yearly") << wxT (" )")
-        << wxT ("\n") << getItem(selectedIndex_, COL_NOTES);
+        //Selected share info
+        additionInfo 
+        << wxT("|") << stockCurrentPriceStr << wxT(" - ") << stockPurchasePriceStr << wxT("|") << wxT(" = ") << stockDifferenceStr 
+        << wxT (" * ") << stocknumSharesStr << wxT (" = ") << stockgainlossStr << wxT (" ( ") << stockPercentageStr << wxT ('%')
+        //<< wxT (" | ")<< stockPercentagePerYearStr << wxT("% ")  << _("Yearly") 
+        << wxT (" )") << wxT ("\n");
+        //Summary for account for selected symbol
+        if (trans_[selectedIndex_].purchasedTime_ > 1)
+        {
+	        additionInfo << wxT("|") << stockCurrentPriceStr << wxT(" - ") << stockavgPurchasePriceStr << wxT("|") << wxT(" = ") << stocktotalDifferenceStr 
+	        << wxT (" * ") << stocktotalnumSharesStr << wxT (" = ") << stocktotalgainlossStr << wxT (" ( ") << stocktotalPercentageStr << wxT ('%')
+	        //<< wxT (" | ")<< stockPercentagePerYearStr << wxT("% ") << _("Yearly") 
+	        << wxT (" )") //<< wxT ("\n")
+	        << wxT ("\n") << getItem(selectedIndex_, COL_NOTES);
+		}
         st->SetLabel(additionInfo);
         }
         else
