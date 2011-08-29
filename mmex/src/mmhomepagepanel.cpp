@@ -272,7 +272,7 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance, double&
         "union all "
         "select  0, 0, "
         "st.heldat as ACCOUNTID,  "
-        "total((st.CURRENTPRICE)*st.NUMSHARES-st.COMMISSION) as BALANCE "
+        "total((st.CURRENTPRICE)*st.NUMSHARES/*-st.COMMISSION*/) as BALANCE "
         "from  stock_v1 st "
         "where st.purchasedate<=date ('now','localtime') "
         "group by st.heldat "
@@ -322,8 +322,8 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance, double&
         {
             hb.startTableRow();
             //////
-            hb.addTableCell(stocknameStr, false,true);
-            //hb.addTableCellLink(wxT("STOCK:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
+            //hb.addTableCell(stocknameStr, false,true);
+            hb.addTableCellLink(wxT("STOCK:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
             hb.addTableCell(tBalanceStr, true);
             hb.endTableRow();
         }
@@ -457,7 +457,9 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
     gg.init(tincome, texpenses);
     gg.Generate(wxT(""));
 
-	hb.addTableHeaderRow(_("Income vs Expenses: Current Month"), 2);
+	wxString headerMsg;
+	headerMsg << _("Income vs Expenses: ") << _ ("Current Month");
+	hb.addTableHeaderRow(headerMsg, 2);
 	hb.startTableRow();
 	hb.addTableCell(_("Income:"), false, true);
 	hb.addTableCell(incStr, true);
@@ -610,16 +612,20 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
     mmDBWrapper::loadBaseCurrencySettings(db_);
     
     char sql3[] = 
-        "select ACCOUNTNAME, "
-        "CATEG|| (Case SUBCATEG when '' then '' else ':' end )||  SUBCATEG as SUBCATEGORY "
+        "select ACCOUNTNAME, ACCOUNTID, "
+        "CATEG|| (Case SUBCATEG when '' then '' else ':'||  SUBCATEG end ) as SUBCATEGORY "
         ", AMOUNT "
         "from ( "
         "select coalesce(CAT.CATEGNAME, SCAT.CATEGNAME) as CATEG, "
+        "CANS.ACCOUNTID as ACCOUNTID, "
         "coalesce(SUBCAT.SUBCATEGNAME, SSCAT.SUBCATEGNAME,'') as SUBCATEG, "
         "ACC.ACCOUNTNAME as ACCOUNTNAME, "
         "(ROUND((case CANS.TRANSCODE when 'Withdrawal' then -1 else 1 end) "
         "* (case CANS.CATEGID when -1 then ST.SPLITTRANSAMOUNT else CANS.TRANSAMOUNT end),2) "
         "* CF.BASECONVRATE "
+        ") as BASEAMOUNT, "
+        "(ROUND((case CANS.TRANSCODE when 'Withdrawal' then -1 else 1 end) "
+        "* (case CANS.CATEGID when -1 then ST.SPLITTRANSAMOUNT else CANS.TRANSAMOUNT end),2) "
         ") as AMOUNT "
         "from  CHECKINGACCOUNT_V1 CANS "
         "left join CATEGORY_V1 CAT on CAT.CATEGID = CANS.CATEGID "
@@ -629,9 +635,11 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
         "left join CATEGORY_V1 SCAT on SCAT.CATEGID = ST.CATEGID and CANS.TRANSID=ST.TRANSID "
         "left join SUBCATEGORY_V1 SSCAT on SSCAT.SUBCATEGID = ST.SUBCATEGID and SSCAT.CATEGID = ST.CATEGID and CANS.TRANSID=ST.TRANSID "
         "left join CURRENCYFORMATS_V1 CF on CF.CURRENCYID = ACC.CURRENCYID "
-        "where  CANS.TRANSCODE<>'Transfer' and CANS.TRANSDATE > date('now','localtime', '-1 month') and CANS.TRANSDATE <= date('now','localtime') "
+        "where  CANS.TRANSCODE='Withdrawal' "
+        "and CANS.TRANSDATE > date('now','localtime', '-1 month') and CANS.TRANSDATE <= date('now','localtime') "
+        "and CANS.STATUS <> 'V' "
         //"group by CATEG, SUBCATEG "
-        "order by ABS (AMOUNT) DESC, ACCOUNTNAME, CATEG, SUBCATEG, AMOUNT "
+        "order by ABS (BASEAMOUNT) DESC, ACCOUNTNAME, CATEG, SUBCATEG, AMOUNT "
         "limit 10 "
         ") where AMOUNT <> 0" ;
 
@@ -641,12 +649,22 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
     std::vector<CategInfo> categList;
 
     hb.startTable(wxT("95%"));
-    hb.addTableHeaderRow(_("Top Transactions Last 30 Days"), 3);
+    wxString headerMsg;
+    headerMsg << _("Top Withdrawals: ") << _("Last 30 Days");
+    hb.addTableHeaderRow(headerMsg, 3);
     while(q1.NextRow())
     {
+        int accountid = q1.GetInt (wxT ("ACCOUNTID")) ;
         double catAmount = q1.GetDouble(wxT("AMOUNT"));
         wxString subcategString = q1.GetString(wxT("SUBCATEGORY"));
         wxString accountString = q1.GetString(wxT("ACCOUNTNAME"));
+
+        // Load the currency for this BD
+        boost::weak_ptr<mmCurrency> wpCurrency = core_->accountList_.getCurrencyWeakPtr(accountid);
+        boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
+        wxASSERT(pCurrency);
+        if (pCurrency)
+            pCurrency->loadCurrencySettings();
 
         mmex::formatDoubleToCurrency(catAmount, catAmountStr);
 
@@ -789,6 +807,7 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
     wxString href = link.GetHref();
     wxString number;
     bool isAcct = href.StartsWith(wxT("ACCT:"), &number);
+    bool isStock = href.StartsWith(wxT("STOCK:"), &number);
     if (href == wxT("billsdeposits"))
     {
         frame_->setNavTreeSection(_("Repeating Transactions"));
@@ -809,6 +828,15 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
         frame_->setAccountNavTreeSection(core_->accountList_.getAccountName(id));
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
         frame_->GetEventHandler()->AddPendingEvent(evt);
+    }
+    else if (isStock)
+    {
+       /* long id = -1;
+        number.ToLong(&id);
+        frame_->setGotoAccountID(id);
+        frame_->setAccountNavTreeSection(core_->accountList_.getAccountName(id));
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
+        frame_->GetEventHandler()->AddPendingEvent(evt); */
     }
 }
 
