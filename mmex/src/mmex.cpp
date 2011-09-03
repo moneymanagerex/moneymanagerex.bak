@@ -119,6 +119,10 @@
 // 
 #include "../resources/customsql.xpm"
 #include "../resources/termaccount.xpm"
+#include "../resources/savings_acc_closed.xpm"
+#include "../resources/savings_acc_favorite.xpm"
+#include "../resources/term_acc_closed.xpm"
+#include "../resources/term_acc_favorite.xpm"
 
 //----------------------------------------------------------------------------
 #include <wx/debugrpt.h>
@@ -1037,7 +1041,7 @@ void mmGUIFrame::createControls()
     wxSize imageSize(16, 16);
     wxImageList* imageList_ = new wxImageList( imageSize.GetWidth(), imageSize.GetHeight() );
     imageList_->Add(wxBitmap(house_xpm));
-    imageList_->Add(wxBitmap(moneyaccount_xpm));
+    imageList_->Add(wxBitmap(moneyaccount_xpm));  // used for: savings_account
     imageList_->Add(wxBitmap(clock_xpm));
     imageList_->Add(wxBitmap(calendar_xpm));
     imageList_->Add(wxBitmap(chartpiereport_xpm));
@@ -1045,7 +1049,11 @@ void mmGUIFrame::createControls()
     imageList_->Add(wxBitmap(stock_curve_xpm));
     imageList_->Add(wxBitmap(car_xpm));
     imageList_->Add(wxBitmap(customsql_xpm));
-    imageList_->Add(wxBitmap(termaccount_xpm));
+    imageList_->Add(wxBitmap(termaccount_xpm));   // used for: term_account
+    imageList_->Add(wxBitmap(savings_acc_favorite_xpm));
+    imageList_->Add(wxBitmap(savings_acc_closed_xpm));
+    imageList_->Add(wxBitmap(term_acc_favorite_xpm));
+    imageList_->Add(wxBitmap(term_acc_closed_xpm));
 
     navTreeCtrl_->AssignImageList(imageList_);
 
@@ -1438,7 +1446,13 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
                 (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
                 (vAccts == wxT("ALL")))
             {
-                wxTreeItemId tacct = navTreeCtrl_->AppendItem(accounts, pCA->accountName_, 1, 1);
+                int selectedImage = 1;
+                if (pCA->status_ == mmAccount::MMEX_Closed)
+                    selectedImage = 11; 
+                else if (pCA->favoriteAcct_)
+                    selectedImage = 10; 
+                
+                wxTreeItemId tacct = navTreeCtrl_->AppendItem(accounts, pCA->accountName_, selectedImage, selectedImage);
                 navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pCA->accountID_, false));
             }
         }
@@ -1451,7 +1465,13 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
                 (vAccts == wxT("Favorites") && pTA->favoriteAcct_) ||
                 (vAccts == wxT("ALL")))
             {
-                wxTreeItemId tacct = navTreeCtrl_->AppendItem(termAccount, pTA->accountName_, 9, 9);
+                int selectedImage = 9;
+                if (pTA->status_ == mmAccount::MMEX_Closed)
+                    selectedImage = 13; 
+                else if (pTA->favoriteAcct_)
+                    selectedImage = 12; 
+
+                wxTreeItemId tacct = navTreeCtrl_->AppendItem(termAccount, pTA->accountName_, selectedImage, selectedImage);
                 navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pTA->accountID_, false));
             }
         }
