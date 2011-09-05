@@ -392,6 +392,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
 	EVT_UPDATE_UI(MENU_VIEW_LINKS, mmGUIFrame::OnViewLinksUpdateUI)
     EVT_MENU(MENU_TREEPOPUP_EDIT, mmGUIFrame::OnPopupEditAccount)
     EVT_MENU(MENU_TREEPOPUP_DELETE, mmGUIFrame::OnPopupDeleteAccount)
+    EVT_MENU(MENU_TREEPOPUP_IMPORT_QIF, mmGUIFrame::OnPopupImportQIFile)
 
     EVT_TREE_ITEM_RIGHT_CLICK(ID_NAVTREECTRL, mmGUIFrame::OnItemRightClick)
     EVT_TREE_SEL_CHANGED(ID_NAVTREECTRL, mmGUIFrame::OnSelChanged)
@@ -2295,6 +2296,34 @@ void mmGUIFrame::OnLaunchAccountWebsite(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
+void mmGUIFrame::OnPopupImportQIFile(wxCommandEvent& /*event*/)
+{
+    if (selectedItemData_)
+    {
+        int data = selectedItemData_->getData();
+        boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(data); 
+        if (pAccount)
+        {
+           wxString acctType = pAccount->acctType_;
+           if (acctType == wxT("Checking") || acctType == wxT("Term"))
+           {
+                int accountID = mmImportQIF(m_core.get(), pAccount->accountName_);
+                if (accountID != -1)
+                {
+                    setAccountNavTreeSection(m_core.get()->accountList_.getAccountName(accountID));
+                    createCheckingAccountPage(accountID);
+                }
+           }
+        }
+        else
+        {
+            /* cannot find accountid */
+            wxASSERT(true);
+        }
+    }
+}
+//----------------------------------------------------------------------------
+
 void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& /*event*/)
 {
     if (selectedItemData_)
@@ -2386,6 +2415,12 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
 //                  menu.Append(MENU_TREEPOPUP_GOTO, _("&Go To.."));
                     menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
                     menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
+                    // Don't allow QIF importing to Investment type accounts
+                    if (acctType == wxT("Checking") || acctType == wxT("Term") )
+                    {
+                        menu.AppendSeparator();
+                        menu.Append(MENU_TREEPOPUP_IMPORT_QIF, _("Import &QIF File"));
+                    }
                     menu.AppendSeparator();
                     menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
                     PopupMenu(&menu, pt);
@@ -3333,7 +3368,10 @@ void mmGUIFrame::OnImportCSV(wxCommandEvent& /*event*/)
 {
     int accountID = mmImportCSV(m_core.get());
     if (accountID != -1)
+    {
+        setAccountNavTreeSection(m_core.get()->accountList_.getAccountName(accountID));
         createCheckingAccountPage(accountID);
+    }
 }
 //----------------------------------------------------------------------------
 
@@ -3341,7 +3379,10 @@ void mmGUIFrame::OnImportQIF(wxCommandEvent& /*event*/)
 {
     int accountID = mmImportQIF(m_core.get());
     if (accountID != -1)
+    {
+        setAccountNavTreeSection(m_core.get()->accountList_.getAccountName(accountID));
         createCheckingAccountPage(accountID);
+    }
 }
 //----------------------------------------------------------------------------
 
@@ -3361,7 +3402,10 @@ void mmGUIFrame::OnImportCSVMMNET(wxCommandEvent& /*event*/)
 {
     int accountID = mmImportCSVMMNET(m_core.get());
     if (accountID != -1)
+    {
+        setAccountNavTreeSection(m_core.get()->accountList_.getAccountName(accountID));
         createCheckingAccountPage(accountID);
+    }
 }
 //----------------------------------------------------------------------------
 

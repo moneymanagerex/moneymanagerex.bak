@@ -54,7 +54,7 @@ wxString adjustedExportAmount(wxString amtSeparator, wxString strValue);
 
 int mmImportCSV( mmCoreDB* core );
 int mmImportCSVMMNET( mmCoreDB* core );
-int mmImportQIF( mmCoreDB* core );
+int mmImportQIF( mmCoreDB* core, wxString destinationAccountName = wxEmptyString );
 
 void correctEmptyFileExt(wxString ext, wxString & fileName );
 
