@@ -233,6 +233,7 @@ private:
     void OnSelChanged(wxTreeEvent& event);
     void OnPopupDeleteAccount(wxCommandEvent& event);
     void OnPopupEditAccount(wxCommandEvent& event);
+    void OnPopupImportQIFile(wxCommandEvent& event);
 
     void OnViewAllAccounts(wxCommandEvent& event);
     void OnViewFavoriteAccounts(wxCommandEvent& event);

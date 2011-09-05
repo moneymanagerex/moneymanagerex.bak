@@ -1,6 +1,9 @@
 /*
 Quicken Interchange Format (QIF) files
 
+Ref: http://en.wikipedia.org/wiki/Quicken_Interchange_Format
+     http://www.respmech.com/mym2qifw/qif_new.htm
+
 The Quicken interchange format (QIF) is a specially formatted text (ASCII) file that 
 enables Quicken transactions to be moved from one Quicken account register into 
 another Quicken account register, or to or from other programs that support the QIF format.
@@ -15,17 +18,18 @@ transaction must display on a separate line. When Quicken exports an account reg
 it adds a line to the top of the file that identifies the type of account or list. Listed below 
 are the header lines Quicken adds to the exported files:
 
-Header 	Type of data
-!Type:Bank 	Bank account transactions
-!Type:Cash 	Cash account transactions
-!Type:CCard 	Credit card account transactions
-!Type:Invst 	Investment account transactions
-!Type:Oth A 	Asset account transactions
-!Type:Oth L 	Liability account transactions
-!Account 	Account list or which account follows
-!Type:Cat 	Category list
-!Type:Class 	Class list
-!Type:Memorized 	Memorized transaction list
+Header              Type of data
+!Type:Bank 	        Bank account transactions
+!Type:Cash 	        Cash account transactions
+!Type:CCard         Credit card account transactions
+!Type:Invst         Investment account transactions
+!Type:Oth A         Asset account transactions
+!Type:Oth L         Liability account transactions
+
+!Account            Account list or which account follows
+!Type:Cat           Category list
+!Type:Class         Class list
+!Type:Memorized     Memorized transaction list
 
 Quicken can be configured to import all transfers, regardless of whether Ignore Transfers 
 is selected when the file is imported. To do this, add a line to the file being imported 
@@ -39,44 +43,44 @@ Items for Non-Investment Accounts
 Each item in a bank, cash, credit card, other liability, or other asset account must 
 begin with a letter that indicates the field in the Quicken
 register. The non-split items can be in any sequence:
-Field 	Indicator Explanations
-D 	Date
-T 	Amount
-C 	Cleared status
-N 	Num (check or reference number)
-P 	Payee
-M 	Memo
-A 	Address (up to five lines; the sixth line is an optional message)
-L 	Category (Category/Subcategory/Transfer/Class)
-S 	Category in split (Category/Transfer/Class)
-E 	Memo in split
-$ 	Dollar amount of split
-^ 	End of entry
+Field  Indicator Explanations
+D      Date
+T      Amount
+C      Cleared status
+N      Num (check or reference number)
+P      Payee
+M      Memo
+A      Address (up to five lines; the sixth line is an optional message)
+L      Category (Category/Subcategory/Transfer/Class)
+S      Category in split (Category/Transfer/Class)
+E      Memo in split
+$      Dollar amount of split
+^      End of entry
 
 Note: Repeat the S, E, and $ lines as many times as needed for additional items in a split. 
 If an item is omitted from the transaction in the QIF file, Quicken treats it as a blank item.
 
 Items for Investment Accounts
-Field 	Indicator Explanation
-D 	Date
-N 	Action
-Y 	Security
-I 	Price
-Q 	Quantity (number of shares or split ratio)
-T 	Transaction amount
-C 	Cleared status
-P 	Text in the first line for transfers and reminders
-M 	Memo
-O 	Commission
-L 	Account for the transfer
-$ 	Amount transferred
-^ 	End of entry
+Field  Indicator Explanation
+D      Date
+N      Action
+Y      Security name
+I      Price
+Q      Quantity (number of shares or split ratio)
+T      Transaction amount
+C      Cleared status
+P      Text in the first line for transfers and reminders
+M      Memo
+O      Commission
+L      Account for the transfer
+$      Amount transferred
+^      End of entry
 
 Items for Account Information
 
 The account header !Account is used in two places, at the start of an account list and the 
 start of a list of transactions to specify to which account they belong.
-Field 	Indicator Explanation
+Field  Indicator Explanation
 N 	Name
 T 	Type of account
 D 	Description
@@ -357,7 +361,7 @@ wxString getLineData(const wxString& line)
     return dataString;
 }
 
-int mmImportQIF(mmCoreDB* core)
+int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
 {
     wxSQLite3Database* db_ = core->db_.get();
 
@@ -375,21 +379,27 @@ int mmImportQIF(mmCoreDB* core)
         return -1;
     }
     
-    wxArrayString as;
     int fromAccountID = -1;
-
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
-    while (q1.NextRow())
+    wxString acctName;
+    if (destinationAccountName == wxEmptyString)
     {
-        as.Add(q1.GetString(wxT("ACCOUNTNAME")));
+        wxArrayString as;
+        wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
+        while (q1.NextRow())
+        {
+            as.Add(q1.GetString(wxT("ACCOUNTNAME")));
+        }
+        q1.Finalize();
+
+        wxSingleChoiceDialog scd(0, _("Choose Account to import to:"), _("QIF Import"), as);
+        if (scd.ShowModal() != wxID_OK)
+            return -1;
+
+        acctName = scd.GetStringSelection();
     }
-    q1.Finalize();
+    else
+        acctName = destinationAccountName;
 
-    wxSingleChoiceDialog scd(0, _("Choose Account to import to:"), _("QIF Import"), as);
-    if (scd.ShowModal() != wxID_OK)
-        return -1;
-
-    wxString acctName = scd.GetStringSelection();
     fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
 
     boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
@@ -399,7 +409,6 @@ int mmImportQIF(mmCoreDB* core)
     chooseExt << _("QIF Files ") << wxT("(*.qif)|*.qif;*.QIF|")
               << _("All Files ") << wxT("(*.*)|*.*");
     wxString fileName = wxFileSelector(_("Choose QIF data file to import"), 
-//      wxEmptyString, wxEmptyString, wxEmptyString, wxT("*.qif;*.QIF"), wxFD_CHANGE_DIR|wxFD_FILE_MUST_EXIST);
         wxEmptyString, wxEmptyString, wxEmptyString, chooseExt, wxFD_OPEN|wxFD_CHANGE_DIR|wxFD_FILE_MUST_EXIST);
     wxFileName logFile = mmex::GetLogDir(true);
     logFile.SetFullName(fileName);
@@ -451,6 +460,8 @@ int mmImportQIF(mmCoreDB* core)
 			}
 
             readLine = text.ReadLine();
+            readLine.Trim(); // remove any trailing spaces
+
             numLines++;
             if (readLine.Length() == 0)
                 continue;
@@ -458,8 +469,7 @@ int mmImportQIF(mmCoreDB* core)
             bool isOK = isLineOK(readLine);  
             if (!isOK)
             {
-                log << _("Line : " ) << numLines 
-                    << _(" incorrect QIF line type") << endl;                    
+                log << _("Line: ") << numLines << wxT("  ") << _(" Unknown QIF line: ") << readLine << endl;                    
                 continue;
             }
 
@@ -470,7 +480,7 @@ int mmImportQIF(mmCoreDB* core)
                     (!accountType.CmpNoCase(wxT("Type:Cash"))) ||
                     (!accountType.CmpNoCase(wxT("Type:CCard"))))
                 {
-                    log << _("Importing account type : ") << accountType << endl;      
+                    log << _("Importing account type: ") << accountType << endl;      
                     continue;
                 }
 
@@ -493,7 +503,7 @@ int mmImportQIF(mmCoreDB* core)
 						numLines++;
                         if (accountInfoType(readLine) == Name)
                         {
-                            log << _("Line : " ) << numLines << _(" : ")
+                            log << _("Line: " ) << numLines << _(" : ")
                                 << getLineData(readLine) << _(" account name ") << endl;    
                             continue;
                         }
@@ -530,11 +540,47 @@ int mmImportQIF(mmCoreDB* core)
                     }
                     continue;
                 }
+                
+                // ignore these type of lines
+                if ( accountType == wxT("Option:AutoSwitch") ) 
+                {
+                    while((readLine = text.ReadLine()) != wxT("^"))
+                    {
+                    	numLines++;
+                    }
+                    continue;
+                }
+
+                if ( accountType == wxT("Type:Security") || accountType == wxT("Clear:AutoSwitch"))
+                {
+                    continue;
+                }
+
+                if ( accountType == wxT("Type:Cat") ) 
+                {
+                    bool reading = true;
+                    while( reading )
+                    {
+                        readLine = text.ReadLine();
+                        readLine.Trim();
+                        numLines++;
+                        if (readLine == wxT("!Type:Bank"))
+                            reading = false;
+                    }
+                    continue;
+                }
 
                 // we do not know how to process this type yet
-                log << _(" cannot process Account Types yet ") << endl;    
-                wxMessageBox(_("Cannot process these QIF Account Types yet"), _("QIF Import"), wxICON_ERROR);
-                return -1;
+                wxString errMsgStr = _("Cannot process these QIF Account Types yet.");
+                wxString errLineMsgStr = wxString() << _("Line: ") << numLines << wxT("  ") << readLine;
+                
+                log << errLineMsgStr << endl;
+                log << errMsgStr << endl;
+                wxMessageBox( errLineMsgStr + wxT("\n\n") + errMsgStr, _("QIF Import"), wxICON_ERROR);
+                
+                // exit: while(!input.Eof()) loop and allow to exit routine and allow user to save or abort
+                break;
+                // return -1;
             }
 
             if (lineType(readLine) == Payee)
@@ -562,9 +608,7 @@ int mmImportQIF(mmCoreDB* core)
               
                 if (!mmex::formatCurrencyToDouble(amount, val))
                 {
-                    log << _("Line : " ) << numLines 
-                        << _(" invalid amount, skipping.") << endl;
-
+                    log << _("Line: " ) << numLines << _(" invalid amount, skipping.") << endl;
                     continue;
                 }
 
