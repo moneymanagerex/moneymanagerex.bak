@@ -361,6 +361,15 @@ wxString getLineData(const wxString& line)
     return dataString;
 }
 
+wxString getFileLine(wxTextInputStream& textFile, int& lineNumber)
+{
+    wxString textLine = textFile.ReadLine();
+    lineNumber ++;
+    textLine.Trim(); // remove any trailing spaces
+
+    return textLine;
+}
+
 int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
 {
     wxSQLite3Database* db_ = core->db_.get();
@@ -459,10 +468,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
 				break; // abort processing
 			}
 
-            readLine = text.ReadLine();
-            readLine.Trim(); // remove any trailing spaces
-
-            numLines++;
+            readLine = getFileLine(text, numLines);
             if (readLine.Length() == 0)
                 continue;
 
@@ -488,7 +494,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 {
                     // account information
                     // Need to read till we get to end of account information
-                    while((readLine = text.ReadLine()) != wxT("^"))
+                    while( (readLine = getFileLine(text, numLines) ) != wxT("^"))
                     {
                         payee = wxT("");
                         type = wxT("");
@@ -544,9 +550,9 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 // ignore these type of lines
                 if ( accountType == wxT("Option:AutoSwitch") ) 
                 {
-                    while((readLine = text.ReadLine()) != wxT("^"))
+                    while((readLine = getFileLine(text, numLines)) != wxT("^"))
                     {
-                    	numLines++;
+                        // ignore all lines
                     }
                     continue;
                 }
@@ -561,9 +567,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                     bool reading = true;
                     while( reading )
                     {
-                        readLine = text.ReadLine();
-                        readLine.Trim();
-                        numLines++;
+                        readLine = getFileLine(text, numLines);
                         if (readLine == wxT("!Type:Bank"))
                             reading = false;
                     }
