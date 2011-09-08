@@ -324,7 +324,7 @@ void mmStocksPanel::CreateControls()
     
     //Infobar-mini 
     wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, ID_PANEL_STOCKS_STATIC_DETAILS_MINI, wxT(""), 
-    wxPoint(-1,-1), wxSize(550, -1), wxNO_BORDER|wxTE_DONTWRAP);
+    wxPoint(-1,-1), wxSize(550, -1), wxNO_BORDER|wxST_NO_AUTORESIZE);
     itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxALL, 12);
     //Infobar 
     wxStaticText* itemStaticText33 = new wxStaticText( itemPanel12, 
