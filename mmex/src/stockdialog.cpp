@@ -97,9 +97,15 @@ void mmStockDialog::dataToControls()
         wxString dt = mmGetDateForDisplay(db_, dtdt);
         dpc_->SetValue(dtdt);
 
-		wxString numShares;
-		mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("NUMSHARES")), numShares);
-		numShares_->SetValue(numShares);
+		double numShares = q1.GetDouble(wxT("NUMSHARES"));
+		wxString numSharesString;
+		//I wish see integer if it integer else double
+        if ((numShares - static_cast<long>(numShares)) != 0.0 )
+			numSharesString=wxString::Format(wxT("%0.4f"),numShares);
+        else 
+			numSharesString <<  static_cast<long>(numShares);
+		
+		numShares_->SetValue(numSharesString);
 
         wxString dispAmount;
         mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUE")), dispAmount);
@@ -317,7 +323,7 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
     }
     
      double numShares = 0;
-	 if (!mmex::formatCurrencyToDouble(numSharesStr, numShares) || (numShares < 0.0))
+	 if (!numSharesStr.ToDouble(&numShares) || (numShares < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid number of shares entered "), _("Error"));
         return;

@@ -449,7 +449,7 @@ void mmStocksPanel::initVirtualListControl()
         //I wish see integer if it integer else double
         if ((th.numShares_ - static_cast<long>(th.numShares_)) != 0.0 )
         {
-			mmex::formatDoubleToCurrencyEdit(th.numShares_, th.numSharesStr_);
+			th.numSharesStr_=wxString::Format(wxT("%.4f"),th.numShares_);
 		}
         else 
         {
