@@ -178,7 +178,7 @@ wxString mmReportTransactions::getHTMLText()
     if (unknownnReferenceAccount && transferTransactionFound)
     {
         hb.addHorizontalLine();
-        hb.addHeader(7, _("<b>Note:</b> Transactions contain <b>'transfers'</B> may either be added or subtracted to the <b>'Total Amount'</b> depending on last selected account."));
+        hb.addHeader(7, _("<b>Note:</b> Transactions contain <b>'transfers'</b> may either be added or subtracted to the <b>'Total Amount'</b> depending on last selected account."));
     }
 
     // TODO: Extract the parameters from the transaction dialog and add them to the report.
@@ -186,28 +186,44 @@ wxString mmReportTransactions::getHTMLText()
     wxString filterDetails;
 
     if ( !transDialog_->refAccountStr_.IsEmpty())
-        filterDetails << wxT("<b>Account: </b>") << transDialog_->refAccountStr_ << wxT("<br>");
+        filterDetails << wxT("<b>") << _("Account: ") << wxT("</b>") << transDialog_->refAccountStr_ << wxT("<br>");
+    //Date range
+    if ( !transDialog_->userDateRangeStr().IsEmpty())
+		filterDetails << wxT("<b>") << _("Date Range: ") << wxT("</b>") << transDialog_->userDateRangeStr() << wxT("<br>");
 
+    //Payees
     if ( !transDialog_->userPayeeStr().IsEmpty())
-        filterDetails << wxT("<b>Payee: </b>") <<transDialog_->userPayeeStr() << wxT("<br>");
+        filterDetails << wxT("<b>") << _("Payee: ") << wxT("</b>") <<transDialog_->userPayeeStr() << wxT("<br>");
 
+    //Category
     if ( !transDialog_->userCategoryStr().IsEmpty())
-        filterDetails << wxT("<b>Category: </b>") <<transDialog_->userCategoryStr() << wxT("<br>");
-
+        filterDetails << wxT("<b>") << _("Category: ") << wxT("</b>") <<transDialog_->userCategoryStr() << wxT("<br>");
+	
+	//Status
+    if ( !transDialog_->userStatusStr().IsEmpty())
+        filterDetails << wxT("<b>") << _("Status: ") << wxT("</b>") <<transDialog_->userStatusStr() << wxT("<br>");
+	//Type
+    if ( !transDialog_->userTypeStr().IsEmpty())
+        filterDetails << wxT("<b>") << wxT("Type: ") << wxT("</b>") <<transDialog_->userTypeStr() << wxT("<br>");
+	//Amount Range
+    if ( !transDialog_->userAmountRangeStr().IsEmpty())
+        filterDetails << wxT("<b>") << wxT("Amount Range: ") << wxT("</b>") <<transDialog_->userAmountRangeStr() << wxT("<br>");
+	//Number
+    if ( !transDialog_->userTransNumberStr().IsEmpty())
+        filterDetails << wxT("<b>") << wxT("Number: ") << wxT("</b>") <<transDialog_->userTransNumberStr() << wxT("<br>");
+	//Notes
+    if ( !transDialog_->userNotesStr().IsEmpty())
+        filterDetails << wxT("<b>") << wxT("Notes: ") << wxT("</b>") <<transDialog_->userNotesStr() << wxT("<br>");
+	
     if ( ! filterDetails.IsEmpty())
     {
+        wxString filterDetailsStr;
         hb.addHorizontalLine();
-        hb.addHeader(7, _("<b>Filtering Details:</b><br>" + filterDetails ));
+        filterDetailsStr << wxT("<b>") << _("Filtering Details: ") << wxT ("</b><br>") << filterDetails;
+        hb.addHeader(7, filterDetailsStr );
     }
 
     hb.end();
     
-//TODO: We want to know what parameters have been selected
-    //dt = _("Filter: ");
-
-    //hb.addLineBreak();
-    //hb.addLineBreak();
-    //hb.addHeader(7, dt);
-
     return hb.getHTMLText();
 }
