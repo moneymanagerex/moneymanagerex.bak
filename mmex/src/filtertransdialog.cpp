@@ -649,3 +649,19 @@ void mmFilterTransactionsDialog::OnPayee(wxCommandEvent& /*event*/)
         btnPayee->SetLabel(mmReadyDisplayString(payeeName));
     }
 }
+
+wxString mmFilterTransactionsDialog::userPayeeStr()
+{
+    wxString payeeStr;
+    if (payeeCheckBox->IsChecked())
+        payeeStr = btnCategory->GetLabelText();
+    return payeeStr;
+}
+
+wxString mmFilterTransactionsDialog::userCategoryStr()
+{
+    wxString catstr;
+    if (categoryCheckBox->IsChecked())
+        catstr = btnCategory->GetLabelText();
+    return catstr;
+}

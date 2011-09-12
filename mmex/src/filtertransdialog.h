@@ -112,7 +112,7 @@ public:
        const wxPoint& pos = SYMBOL_MMFILTERTRANSACTIONSDIALOG_POSITION, 
        const wxSize& size = SYMBOL_MMFILTERTRANSACTIONSDIALOG_SIZE, 
        long style = SYMBOL_MMFILTERTRANSACTIONSDIALOG_STYLE );
-
+    
     /// Creates the controls and sizers
     void CreateControls();
 
@@ -188,7 +188,13 @@ public:
     int payeeID_;
     int refAccountID_;
     wxString refAccountStr_;
-////@end mmFilterTransactionsDialog member variables
+
+    ////@end mmFilterTransactionsDialog member variables
+
+    //TODO - Adding the other methods to allow the data to be extracted.
+    wxString userPayeeStr();
+    wxString userCategoryStr();
+
 };
 
 #endif
