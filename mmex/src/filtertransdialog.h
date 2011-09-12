@@ -194,7 +194,12 @@ public:
     //TODO - Adding the other methods to allow the data to be extracted.
     wxString userPayeeStr();
     wxString userCategoryStr();
-
+    wxString userDateRangeStr();
+    wxString userStatusStr();
+    wxString userTypeStr();
+    wxString userAmountRangeStr();
+	wxString userTransNumberStr();
+	wxString userNotesStr();
 };
 
 #endif
