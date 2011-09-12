@@ -30,8 +30,8 @@
 #include <algorithm>
 
 mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBankTransaction> >* trans, 
-    mmCoreDB* core, int refAccountID, wxString refAccountStr)
-:trans_(trans), core_(core), refAccountID_(refAccountID), refAccountStr_(refAccountStr)
+    mmCoreDB* core, int refAccountID, wxString refAccountStr, mmFilterTransactionsDialog* transDialog)
+:trans_(trans), core_(core), refAccountID_(refAccountID), refAccountStr_(refAccountStr), transDialog_(transDialog)
 {
 }
 
@@ -180,9 +180,28 @@ wxString mmReportTransactions::getHTMLText()
         hb.addHorizontalLine();
         hb.addHeader(7, _("<b>Note:</b> Transactions contain <b>'transfers'</B> may either be added or subtracted to the <b>'Total Amount'</b> depending on last selected account."));
     }
+
+    // TODO: Extract the parameters from the transaction dialog and add them to the report.
+    // added Account and category and Payee to show example of how it is done.
+    wxString filterDetails;
+
+    if ( !transDialog_->refAccountStr_.IsEmpty())
+        filterDetails << wxT("<b>Account: </b>") << transDialog_->refAccountStr_ << wxT("<br>");
+
+    if ( !transDialog_->userPayeeStr().IsEmpty())
+        filterDetails << wxT("<b>Payee: </b>") <<transDialog_->userPayeeStr() << wxT("<br>");
+
+    if ( !transDialog_->userCategoryStr().IsEmpty())
+        filterDetails << wxT("<b>Category: </b>") <<transDialog_->userCategoryStr() << wxT("<br>");
+
+    if ( ! filterDetails.IsEmpty())
+    {
+        hb.addHorizontalLine();
+        hb.addHeader(7, _("<b>Filtering Details:</b><br>" + filterDetails ));
+    }
+
     hb.end();
-
-
+    
 //TODO: We want to know what parameters have been selected
     //dt = _("Filter: ");
 

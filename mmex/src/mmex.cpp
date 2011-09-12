@@ -3504,10 +3504,10 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
     std::vector< boost::shared_ptr<mmBankTransaction> >* trans 
         = new std::vector< boost::shared_ptr<mmBankTransaction> >;
 
-    mmFilterTransactionsDialog dlg(trans, m_core.get(), this);
-    if (dlg.ShowModal() == wxID_OK)
+    mmFilterTransactionsDialog* dlg= new mmFilterTransactionsDialog(trans, m_core.get(), this);
+    if (dlg->ShowModal() == wxID_OK)
     {
-        mmPrintableBase* rs = new mmReportTransactions(trans, m_core.get(), dlg.refAccountID_, dlg.refAccountStr_);
+        mmReportTransactions* rs = new mmReportTransactions(trans, m_core.get(), dlg->refAccountID_, dlg->refAccountStr_, dlg);
         menuPrintingEnable(true);
         createReportsPage(rs);
     }
@@ -3515,6 +3515,8 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
     {
         delete trans;
     }
+
+    dlg->Destroy();
 }
 //----------------------------------------------------------------------------
 

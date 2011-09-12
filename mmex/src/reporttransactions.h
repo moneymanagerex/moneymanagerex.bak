@@ -24,6 +24,7 @@
 
 #include <vector>
 #include <boost/shared_ptr.hpp>
+#include "filtertransdialog.h"
 
 class mmBankTransaction;
 class mmCoreDB;
@@ -32,7 +33,7 @@ class mmReportTransactions : public mmPrintableBase
 {
 public:
     mmReportTransactions(std::vector< boost::shared_ptr<mmBankTransaction> >* trans, 
-        mmCoreDB* core, int refAccountID, wxString refAccountStr);
+        mmCoreDB* core, int refAccountID, wxString refAccountStr, mmFilterTransactionsDialog* transDialog);
    ~mmReportTransactions();
 
     wxString getHTMLText();
@@ -45,6 +46,7 @@ private:
     bool ignoreDate_;
     int refAccountID_;
     wxString refAccountStr_;
+    mmFilterTransactionsDialog* transDialog_;
 };
 
 #endif // _MM_EX_REPORTTRANSACT_H_
