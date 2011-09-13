@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-09-12 22:43+0300\n"
-"PO-Revision-Date: 2011-09-12 23:12+0300\n"
+"PO-Revision-Date: 2011-09-13 21:29+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "Language: \n"
@@ -110,11 +110,11 @@ msgstr "Внимание"
 #: src/mmhomepagepanel.cpp:121
 #: src/mmhomepagepanel.cpp:411
 msgid "Summary"
-msgstr "Сумма"
+msgstr "Сводка"
 
 #: src/mmhomepagepanel.cpp:147
 msgid "Bank Account"
-msgstr "Банковкий счёт"
+msgstr "Банковский счёт"
 
 #: src/mmhomepagepanel.cpp:192
 msgid "Bank Accounts Total:"
@@ -130,7 +130,7 @@ msgstr "Итого по вкладам:"
 
 #: src/mmhomepagepanel.cpp:262
 msgid "Stocks"
-msgstr "Инвестиции"
+msgstr "Акции"
 
 #: src/mmhomepagepanel.cpp:333
 msgid "Stocks Total:"
@@ -371,7 +371,7 @@ msgstr "Получатель:"
 #: src/billsdepositsdialog.cpp:821
 #: src/billsdepositsdialog.cpp:837
 msgid "Select Payee"
-msgstr "Выберите плательщика"
+msgstr "Выберите получателя"
 
 #: src/filtertransdialog.cpp:249
 #: src/reporttransactions.cpp:200
@@ -513,11 +513,11 @@ msgstr "Максимум: "
 
 #: src/payeedialog.cpp:70
 msgid "Organize Payees"
-msgstr "Список плательщиков"
+msgstr "Редактор получателей"
 
 #: src/payeedialog.cpp:94
 msgid "Find Payee: "
-msgstr "Плательщик"
+msgstr "Найти получателя: "
 
 #: src/payeedialog.cpp:103
 msgid "Filter Payees: "
@@ -538,7 +538,7 @@ msgstr "Изменение названия существующего плат�
 
 #: src/payeedialog.cpp:126
 msgid "Delete the selected payee. The payee cannot be used by an existing transaction."
-msgstr "Удаление выбранного плательщика. Плательщику не должены принадлежать проводки."
+msgstr "Удаление выбранного плательщика. Плательщику не должны принадлежать проводки."
 
 #: src/payeedialog.cpp:134
 msgid "Select the currently selected payee as the selected payee for the transaction"
@@ -2396,7 +2396,7 @@ msgstr "Введите пароль базы данных"
 
 #: src/mmex.cpp:3009
 msgid "Opening MMEX Database - Error"
-msgstr "Открытие базы данных - Ошика"
+msgstr "Открытие базы данных - Ошибка"
 
 #: src/mmex.cpp:3037
 msgid "An incorrect password given for an encrypted file"
@@ -2504,7 +2504,7 @@ msgid ""
 "Tools -> Options\n"
 "View Options"
 msgstr ""
-"Для изменения опций просморта, можно изменить в настройках:\n"
+"Для изменения опций просмотра, можно изменить в настройках:\n"
 "\n"
 "Инструменты -> Настройки программы\n"
 "Вид"
@@ -2650,7 +2650,7 @@ msgstr " записей обновлено в базе данных."
 #: src/mmex.cpp:4219
 #: src/mmex.cpp:4233
 msgid "MMEX must be shutdown and restarted for all the changes to be seen."
-msgstr "MMEX должен быть перезапущен, чтобы отобразились изменения."
+msgstr "Сделайте перезапуск программы, чтобы отобразились изменения."
 
 #: src/mmex.cpp:4220
 msgid "Category Relocation Result"
@@ -2666,11 +2666,11 @@ msgstr "Итог замены получателя"
 
 #: src/mmex.cpp:4272
 msgid " to Edit:"
-msgstr "к редактированию:"
+msgstr " к редактированию:"
 
 #: src/mmex.cpp:4293
 msgid " to Delete:"
-msgstr "к удалению:"
+msgstr " к удалению:"
 
 #: src/mmex.cpp:4308
 msgid "Delete the Custom Report Title:"
@@ -2708,7 +2708,7 @@ msgstr "Имя пользователя"
 
 #: src/mmex.cpp:4393
 msgid "(Optional) Specify a title or your name."
-msgstr "(Опционально) Введите заголовок или ваше имя."
+msgstr "(Не обязательно) Введите заголовок или ваше имя."
 
 #: src/mmex.cpp:4394
 msgid "Used as a database title for displayed and printed reports."
@@ -2837,7 +2837,7 @@ msgstr "Укажите формат отображения даты"
 
 #: src/optionsdialog.cpp:443
 msgid "Set"
-msgstr "Показ"
+msgstr "Установить"
 
 #: src/optionsdialog.cpp:447
 msgid "Sample Date"
@@ -3062,7 +3062,7 @@ msgstr "Получатель по умолчанию:"
 
 #: src/optionsdialog.cpp:800
 msgid "Last Used"
-msgstr "Использованная ранее"
+msgstr "Последний использованный"
 
 #: src/optionsdialog.cpp:808
 msgid "Default Category:"
@@ -3070,7 +3070,7 @@ msgstr "Категория по умолчанию:"
 
 #: src/optionsdialog.cpp:813
 msgid "Last used for payee"
-msgstr "Последний использованный получателем"
+msgstr "Последняя использованная получателем"
 
 #: src/optionsdialog.cpp:821
 msgid "Default Status:"
@@ -3413,11 +3413,11 @@ msgstr "Заметка: Файл базы данных .mmb не зашифро�
 
 #: src/mmcheckingpanel.cpp:948
 msgid "Tip: To mark a transaction as reconciled, just select the transaction and hit the 'r' or 'R' key. To mark a transaction as unreconciled, just select the transaction and hit the 'u' or 'U' key."
-msgstr "Подсказка: Чтобы отметить проводку как проверенную, просто выделеть её и нажать клавишу 'R'. Снять пометку можно нажатием клавиши 'U'."
+msgstr "Подсказка: Чтобы отметить проводку как проверенную, просто выделить её и нажать клавишу 'R'. Снять пометку можно нажатием клавиши 'U'."
 
 #: src/mmcheckingpanel.cpp:949
 msgid "Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f' or 'F' key."
-msgstr "Подсказка: Чтобы отметить проводку требующую проработки, просто выделеть её и нажать клавишу 'F'."
+msgstr "Подсказка: Чтобы отметить проводку требующую проработки, просто выделить её и нажать клавишу 'F'."
 
 #: src/mmcheckingpanel.cpp:950
 msgid "Tip: MMEX supports printing of all reports that can be viewed. The print options are available under the menu, File->Print."
