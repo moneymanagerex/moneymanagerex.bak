@@ -405,7 +405,7 @@ void mmOptionsDialog::CreateControls()
     wxStaticText* itemStaticText41 = new wxStaticText( itemPanelGeneral, 
         wxID_STATIC, _("Date Format"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticBoxSizer9->Add(itemStaticText41, 0, 
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxGROW, 5);
 
     wxString itemChoice7Strings[TOTAL_DATEFORMAT] = 
     {
@@ -480,7 +480,7 @@ void mmOptionsDialog::CreateControls()
 
     wxString userName = mmDBWrapper::getInfoSettingValue(db_, wxT("USERNAME"), wxT(""));
     wxTextCtrl* textUN = new wxTextCtrl( itemPanelGeneral, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME, 
-        userName, wxDefaultPosition, wxSize(130,-1), 0 );
+        userName, wxDefaultPosition, wxSize(500,-1), 0 );
     textUN->SetToolTip(_("Specify the User Name"));
     itemStaticBoxSizerUN->Add(textUN, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
@@ -526,7 +526,7 @@ void mmOptionsDialog::CreateControls()
     
     choiceVisible_ = new wxChoice( itemPanelViews, 
         ID_DIALOG_OPTIONS_VIEW_ACCOUNTS, wxDefaultPosition, 
-        wxSize(100, -1), 3, itemChoiceViewAccountStrings, 0 );
+        wxDefaultSize, 3, itemChoiceViewAccountStrings, 0 );
     itemStaticBoxSizer10->Add(choiceVisible_, 0, 
         wxALIGN_CENTER_VERTICAL|wxALL, 5);
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, 
@@ -566,7 +566,7 @@ void mmOptionsDialog::CreateControls()
     };  
     
     choiceTransVisible_ = new wxChoice( itemPanelViews, ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, 
-        wxSize(165, -1), sizeof(itemChoiceViewTransStrings)/sizeof(*itemChoiceViewTransStrings), itemChoiceViewTransStrings, 0 );
+        wxDefaultSize, sizeof(itemChoiceViewTransStrings)/sizeof(*itemChoiceViewTransStrings), itemChoiceViewTransStrings, 0 );
     itemStaticBoxSizerTransView->Add(choiceTransVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxString vTrans = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), wxT("View All Transactions"));
@@ -792,7 +792,7 @@ void mmOptionsDialog::CreateControls()
     itemBoxSizerMisc->Add(itemStaticBoxSizerNewTransactionSettings, 0, wxGROW|wxALL, 5);
 
 	//	Default Payee
-	wxStaticText* payeeStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Payee:"),wxDefaultPosition, wxSize(100, -1));
+	wxStaticText* payeeStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Payee:"),wxDefaultPosition, wxDefaultSize);
 
     wxString itemChoiceDefaultTransPayeeStrings[] = 
     {
@@ -805,7 +805,7 @@ void mmOptionsDialog::CreateControls()
 	itemChoiceDefaultTransPayee->SetSelection(mmIniOptions::transPayeeSelectionNone_);
 	
 	//	Default Category
-	wxStaticText* categoryStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Category:"),wxDefaultPosition, wxSize(140, -1));
+	wxStaticText* categoryStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Category:"),wxDefaultPosition, wxDefaultSize);
 
     wxString itemChoiceDefaultTransCategoryStrings[] = 
     {
@@ -818,7 +818,7 @@ void mmOptionsDialog::CreateControls()
 	itemChoiceDefaultTransCategory->SetSelection(mmIniOptions::transCategorySelectionNone_);
 
 	//	Default Status
-	wxStaticText* statusStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Status:"), wxDefaultPosition, wxSize(100, -1));
+	wxStaticText* statusStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Status:"), wxDefaultPosition, wxDefaultSize);
 
     wxString itemChoiceDefaultTransStatusStrings[] = 
     {
