@@ -193,10 +193,6 @@ void mmFilterTransactionsDialog::CreateControls()
     itemPanel->SetSizer(itemPanelSizer);
 
     //--Start of Row --------------------------------------------------------
-    itemPanelSizer->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemPanelSizer->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    //--End of Row --------------------------------------------------------
-
     accountCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXACCOUNT, _("Account: "), 
                                       wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     accountCheckBox->SetValue(FALSE);
@@ -666,7 +662,7 @@ wxString mmFilterTransactionsDialog::userDateRangeStr()
     {
 		wxString dtBegin = mmGetDateForDisplay(db_, fromDateCtrl->GetValue());
 		wxString dtEnd = mmGetDateForDisplay(db_, toDateControl->GetValue());
-        dateStr << _("From ")<< dtBegin << _(" to ") << dtEnd;
+        dateStr << _("From ") << dtBegin << _(" to ") << dtEnd;
 	}
     return dateStr;
 }
@@ -675,7 +671,7 @@ wxString mmFilterTransactionsDialog::userPayeeStr()
 {
     wxString payeeStr;
     if (payeeCheckBox->IsChecked())
-        payeeStr = btnCategory->GetLabelText();
+        payeeStr = btnPayee->GetLabelText();
     return payeeStr;
 }
 
@@ -691,28 +687,7 @@ wxString mmFilterTransactionsDialog::userStatusStr()
 {
     wxString statusStr;
     if (statusCheckBox->IsChecked())
-    {
-                if (choiceStatus->GetSelection()      == DEF_STATUS_NONE)
-                {
-                    statusStr = _("None") ;
-                }
-                else if (choiceStatus->GetSelection() == DEF_STATUS_RECONCILED)
-                {
-                    statusStr = _("Reconciled");
-                }
-                else if (choiceStatus->GetSelection() == DEF_STATUS_VOID)
-                {
-                    statusStr = _("Void");
-                }
-                else if (choiceStatus->GetSelection() == DEF_STATUS_FOLLOWUP)
-                {
-                    statusStr = _("Follow up");
-                }
-                else if (choiceStatus->GetSelection() == DEF_STATUS_DUPLICATE)
-                {
-                    statusStr = _("Duplicate");
-                }
-	}
+        statusStr = choiceStatus->GetLabelText();
     return statusStr;
 }
 
@@ -720,17 +695,7 @@ wxString mmFilterTransactionsDialog::userTypeStr()
 {
     wxString transCode;
     if (categoryCheckBox->IsChecked())
-        if (typeCheckBox->GetValue())
-            {
-                int tCode = choiceType->GetSelection();
-                if (tCode == DEF_WITHDRAWAL)
-                    transCode = wxT("Withdrawal");
-                else if (tCode == DEF_DEPOSIT)
-                    transCode = wxT("Deposit");
-                else if (tCode == DEF_TRANSFER)
-                    transCode = wxT("Transfer");
-            }
-
+        transCode = choiceType->GetLabelText();
     return transCode;
 }
 
@@ -741,11 +706,10 @@ wxString mmFilterTransactionsDialog::userAmountRangeStr()
     {
         wxString minamt = amountMinEdit->GetValue();
         wxString maxamt = amountMaxEdit->GetValue();
-        amountRangeStr << _("Min: ")<< minamt << _(" max: ") << maxamt;
+        amountRangeStr << _("Min: ") << minamt << _(" Max: ") << maxamt;
     }
     return amountRangeStr;
 }
-
 
 wxString mmFilterTransactionsDialog::userTransNumberStr()
 {
