@@ -141,7 +141,6 @@ wxString mmReportSummary::getHTMLText()
     double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);
     wxString stockBalanceStr;
     mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
-    wxString dispStr =  + stockBalanceStr; 
 
 	hb.startTableRow();
 	hb.addTableCell(_("Stock Investments"));

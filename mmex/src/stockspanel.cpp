@@ -943,7 +943,7 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
         double stockPercentage = (stockCurrentPrice/stockPurchasePrice-1.0)*100.0;
         double stockPercentagePerYear = stockPercentage * 365.0 / stockDaysOwn;
         double stocktotalPercentage = (stockCurrentPrice/stockavgPurchasePrice-1.0)*100.0;
-        double stocknumShares = trans_[selectedIndex_].numShares_;
+//        double stocknumShares = trans_[selectedIndex_].numShares_;
         double stocktotalnumShares = trans_[selectedIndex_].totalnumShares_;
         double stocktotalgainloss = stocktotalDifference * stocktotalnumShares;
 
