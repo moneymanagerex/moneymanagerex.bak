@@ -480,9 +480,9 @@ void mmOptionsDialog::CreateControls()
 
     wxString userName = mmDBWrapper::getInfoSettingValue(db_, wxT("USERNAME"), wxT(""));
     wxTextCtrl* textUN = new wxTextCtrl( itemPanelGeneral, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME, 
-        userName, wxDefaultPosition, wxSize(500,-1), 0 );
-    textUN->SetToolTip(_("Specify the User Name"));
-    itemStaticBoxSizerUN->Add(textUN, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+        userName, wxDefaultPosition, wxSize(275,-1), 0 );
+    textUN->SetToolTip(_("Specify the User Name, or a title for the database"));
+    itemStaticBoxSizerUN->Add(textUN, 0, wxALIGN_RIGHT|wxLEFT,15);
 
 	  // ------------------------------------------    
     wxStaticBox* itemStaticBoxSizer1881Static = new wxStaticBox(itemPanelGeneral, wxID_ANY, 
