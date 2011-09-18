@@ -669,7 +669,7 @@ void mmCheckingPanel::CreateControls()
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader, 0, wxALL, 1);
 
     wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, 
-            ID_PANEL_CHECKING_STATIC_BALHEADER, wxT(""), wxDefaultPosition, wxSize(500, 20), 0 );
+            ID_PANEL_CHECKING_STATIC_BALHEADER, wxT(""), wxDefaultPosition, wxSize(650, 20), 0 );
     itemBoxSizerHHeader->Add(itemStaticText10, 0, wxALL | wxEXPAND , 5);
     
     /* ---------------------- */
@@ -981,11 +981,15 @@ void mmCheckingPanel::setAccountSummary()
     
     wxString recbalance;
     mmex::formatDoubleToCurrency(reconciledBal + acctInitBalance, recbalance);
+	
+	wxString diffbal;
+	mmex::formatDoubleToCurrency(total - (reconciledBal + acctInitBalance), diffbal);
+	
 
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
 
-    wxString lbl  = wxString::Format(_("Account Balance : %s      Reconciled Balance : %s"), 
-        balance.c_str(), recbalance.c_str());
+    wxString lbl  = wxString::Format(_("Account Balance : %s      Reconciled Balance : %s      Difference : %s"), 
+        balance.c_str(), recbalance.c_str(), diffbal.c_str());
     header->SetLabel(lbl);
 }
 //----------------------------------------------------------------------------
