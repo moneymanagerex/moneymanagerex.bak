@@ -203,6 +203,12 @@ void mmHTMLBuilder::addTableHeaderRow(const wxString& value, int cols) {
 	bgswitch = true;
 }
 
+void mmHTMLBuilder::addTableHeaderCell(const wxString& value, bool numeric) {
+	html += (numeric ? wxT("<th nowrap align=\"right\" ") : wxT("<th align=\"left\" "));
+	html += wxT(" valign=\"center\" bgcolor=\"#d5d6de\">");
+	html += wxT ("<font size=") + fontSize + wxT(">") + wxT("<b>&nbsp;") + value + wxT("</b></font></th>\n");
+	bgswitch = false;
+}
 void mmHTMLBuilder::addTableHeaderCell(const wxString& value) {
 	html += wxT("<th nowrap align=\"left\" valign=\"center\" bgcolor=\"#d5d6de\">");
 	html += wxT ("<font size=") + fontSize + wxT(">") + wxT("<b>&nbsp;") + value + wxT("</b></font></th>\n");
@@ -231,7 +237,7 @@ void mmHTMLBuilder::addTableCellLink(const wxString& href, const wxString& value
 }
 
 void mmHTMLBuilder::addTableHeaderCellLink(const wxString& href, const wxString& value) {
-	addTableHeaderCell(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"));
+	addTableHeaderCell(wxT("<a href=\"") + href + wxT("\">") + value + wxT("</a>\n"), false);
 }
 
 void mmHTMLBuilder::addTableHeaderRowLink(const wxString& href, const wxString& value, int cols) {

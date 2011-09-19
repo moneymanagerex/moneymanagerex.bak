@@ -117,8 +117,17 @@ bool sortTransactionsByRemainingDaysHP( mmBDTransactionHolder elem1,
 void mmHomePagePanel::displaySummaryHeader(mmHTMLBuilder& hb, wxString summaryTitle)
 {
     hb.startTableRow();
-	hb.addTableHeaderCell(summaryTitle);
-	hb.addTableHeaderCell(_("Summary"));
+	hb.addTableHeaderCell(summaryTitle, false);
+	hb.addTableHeaderCell(_("Balance"), true);
+	hb.addTableHeaderCell(_("Reconciled"), true);
+    hb.endTableRow();
+}
+void mmHomePagePanel::displayStocksHeader(mmHTMLBuilder& hb, wxString summaryTitle)
+{
+    hb.startTableRow();
+	hb.addTableHeaderCell(summaryTitle, false);
+	hb.addTableHeaderCell(_("Gain/Loss"), true);
+	hb.addTableHeaderCell(_("Total"), true);
     hb.endTableRow();
 }
 
@@ -131,11 +140,11 @@ void mmHomePagePanel::displaySectionTotal(mmHTMLBuilder& hb, wxString totalsTitl
 
     // Show account totals with top and bottom separators
     if (showSeparator)
-        hb.addRowSeparator(2);
+        hb.addRowSeparator(3);
     hb.startTableRow();
-    hb.addTotalRow(totalsTitle, 2, tBalanceStr);
+    hb.addTotalRow(totalsTitle, 3, tBalanceStr);
     hb.endTableRow();
-    hb.addRowSeparator(2);
+    hb.addRowSeparator(3);
 }
 
 /* Checking Accounts */
@@ -159,6 +168,7 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
             double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_);
+            double reconciledBal = pCA->initialBalance_ + core_->bTransactionList_.getReconciledBalance(pCA->accountID_);
             double rate = pCurrencyPtr->baseConv_;
             tBalance += bal * rate; // actual amount in that account in the original rate
             
@@ -170,8 +180,10 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
                 core_->bTransactionList_.getExpensesIncome(pCA->accountID_, expenses, income, false,dtBegin, dtEnd);
 
                 // show the actual amount in that account
-                wxString balance;
-                mmex::formatDoubleToCurrency(bal, balance);
+                wxString balanceStr;
+                wxString reconciledBalanceStr;
+                mmex::formatDoubleToCurrency(bal, balanceStr);
+                mmex::formatDoubleToCurrency(reconciledBal, reconciledBalanceStr);
 
                 if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
                     (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
@@ -179,7 +191,8 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
                 {
                     hb.startTableRow();
                     hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->accountID_), pCA->accountName_, false, true);
-                    hb.addTableCell(balance, true);
+                    hb.addTableCell(balanceStr, true);
+                    hb.addTableCell(reconciledBalanceStr, true);
                     hb.endTableRow();
                 }
 
@@ -215,6 +228,7 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
             double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_);
+            double reconciledBal = pTA->initialBalance_ + core_->bTransactionList_.getReconciledBalance(pTA->accountID_);
             double rate = pCurrencyPtr->baseConv_;
             tTermBalance += bal * rate; // actual amount in that account in the original rate
 
@@ -226,8 +240,10 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
                 core_->bTransactionList_.getExpensesIncome(pTA->accountID_, expenses, income, false,dtBegin, dtEnd);
 
                 // show the actual amount in that account
-                wxString balance;
-                mmex::formatDoubleToCurrency(bal, balance);
+                wxString balanceStr;
+                wxString reconciledBalStr;
+                mmex::formatDoubleToCurrency(bal, balanceStr);
+                mmex::formatDoubleToCurrency(reconciledBal, reconciledBalStr);
 
                 if ((vAccts == wxT("Open") && pTA->status_ == mmAccount::MMEX_Open) ||
                     (vAccts == wxT("Favorites") && pTA->favoriteAcct_) ||
@@ -235,7 +251,8 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
                 {
                     hb.startTableRow();
                     hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pTA->accountID_), pTA->accountName_, false, true);
-                    hb.addTableCell(balance, true);
+                    hb.addTableCell(balanceStr, true);
+                    hb.addTableCell(reconciledBalStr, true);
                     hb.endTableRow();
                 }
 
@@ -257,45 +274,24 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance, double&
 {
     double stTotalBalance = 0.0;
     wxString tBalanceStr;
+    wxString tGainStr;
 
     if (frame_->expandedStockAccounts())
-        displaySummaryHeader(hb,_("Stocks"));
+        displayStocksHeader(hb,_("Stocks"));
 
     char sql[] = 
-        "select INCOME, EXPENCES, t.accountid as ACCOUNTID, a.accountname as ACCOUNTNAME, "
-        "sum (t.BALANCE) as BALANCE, c.BASECONVRATE as BASECONVRATE "
-        "from (  "
-        "select 0 as INCOME,0 as EXPENCES, acc.accountid as ACCOUNTID, acc.INITIALBAL as BALANCE "
-        "from ACCOUNTLIST_V1 ACC "
-        "where ACC.ACCOUNTTYPE = 'Investment' and ACC.STATUS='Open' "
-        "group by acc.accountid  "
-        "union all "
-        "select  0, 0, "
-        "st.heldat as ACCOUNTID,  "
-        "total((st.CURRENTPRICE)*st.NUMSHARES/*-st.COMMISSION*/) as BALANCE "
-        "from  stock_v1 st "
-        "where st.purchasedate<=date ('now','localtime') "
-        "group by st.heldat "
-        "union all "
-        "select 0, 0, ca.toaccountid,  total(ca.totransamount)  "
-        "from checkingaccount_v1 ca "
-        "inner join  accountlist_v1 acc on acc.accountid=ca.toaccountid "
-        "where ca.transcode ='Transfer' and ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
-        "and acc.accounttype='Investment' "
-        "group by ca.toaccountid "
-        "union all "
-        "select total(case ca.transcode when 'Deposit' then ca.transamount else 0 end), "
-        "total(case ca.transcode when 'Withdrawal' then ca.transamount else 0 end) , "
-        "ca.accountid,  total(case ca.transcode when 'Deposit' then ca.transamount else -ca.transamount end)  "
-        "from checkingaccount_v1 ca "
-        "inner join  accountlist_v1 acc on acc.accountid=ca.accountid "
-        "where ca.STATUS<>'V' and ca.transdate<=date ('now','localtime') "
-        "and acc.accounttype='Investment' "
-        "group by ca.accountid) t "
-        "left join accountlist_v1 a on a.accountid=t.accountid "
-        "left join currencyformats_v1 c on c.currencyid=a.currencyid "
-        "where a.status='Open' "
-        "group by t.accountid ";
+    "select "
+	"c.BASECONVRATE, "
+    "st.heldat as ACCOUNTID, a.accountname as ACCOUNTNAME, "
+	"a.initialbal + "
+    "total((st.CURRENTPRICE)*st.NUMSHARES) as BALANCE, "
+	"total ((st.CURRENTPRICE-st.PURCHASEPRICE)*st.NUMSHARES-st.COMMISSION) as GAIN "
+    "from  stock_v1 st "
+	"left join accountlist_v1 a on a.accountid=st.heldat "
+	"left join currencyformats_v1 c on c.currencyid=a.currencyid "
+    "    where st.purchasedate<=date ('now','localtime') "
+	"and a.status='Open' "
+    "group by st.heldat "; 
 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     while(q1.NextRow())
@@ -303,19 +299,21 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance, double&
         int stockaccountId = q1.GetInt(wxT("ACCOUNTID"));
         double stockBalance = q1.GetDouble(wxT("BALANCE"));
         wxString stocknameStr = q1.GetString(wxT("ACCOUNTNAME"));
-        double income = q1.GetDouble(wxT("INCOME"));
-        double expenses = q1.GetDouble(wxT("EXPENCES"));
+        //double income = q1.GetDouble(wxT("INCOME"));
+        //double expenses = q1.GetDouble(wxT("EXPENCES"));
         double baseconvrate = q1.GetDouble(wxT("BASECONVRATE"));
+        double stockGain = q1.GetDouble(wxT("GAIN"));
 
         boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(stockaccountId).lock();
         wxASSERT(pCurrencyPtr);
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
         mmex::formatDoubleToCurrency(stockBalance, tBalanceStr);
+        mmex::formatDoubleToCurrency(stockGain, tGainStr);
         
         // if Stock accounts being displayed, include income/expense totals on home page.
-        tIncome += income * baseconvrate;
-        tExpenses += expenses * baseconvrate;
+        //tIncome += income * baseconvrate;
+        //tExpenses += expenses * baseconvrate;
         stTotalBalance += stockBalance * baseconvrate; 
         //We can hide or show Stocks on Home Page
         if (frame_->expandedStockAccounts())
@@ -324,6 +322,7 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance, double&
             //////
             //hb.addTableCell(stocknameStr, false,true);
             hb.addTableCellLink(wxT("STOCK:") + wxString::Format(wxT("%d"), stockaccountId), stocknameStr, false, true);
+            hb.addTableCell(tGainStr, true);
             hb.addTableCell(tBalanceStr, true);
             hb.endTableRow();
         }
@@ -348,9 +347,10 @@ void mmHomePagePanel::displayAssets(mmHTMLBuilder& hb, double& tBalance)
     {
 		hb.startTableRow();
 		hb.addTableCellLink(wxT("Assets"), _("Assets"), false, true);
+		hb.addTableCell(wxT (""), true);
 		hb.addTableCell(assetBalanceStr, true);
 		hb.endTableRow();
-		hb.addRowSeparator(2);
+		hb.addRowSeparator(3);
     }
 
     tBalance += assetBalance;
@@ -406,9 +406,9 @@ void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb)
         // display the currency header
         hb.startTable(wxT("95%"));
         hb.startTableRow();
-        hb.addTableHeaderCell(_("Currency"));
-        hb.addTableHeaderCell(_("Base Rate"));
-        hb.addTableHeaderCell(_("Summary"));
+        hb.addTableHeaderCell(_("Currency"), false);
+        hb.addTableHeaderCell(_("Base Rate"), true);
+        hb.addTableHeaderCell(_("Summary"), true);
         hb.endTableRow();
 
         // display the totals for each currency value
