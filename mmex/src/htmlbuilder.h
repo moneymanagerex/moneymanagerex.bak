@@ -78,6 +78,7 @@ public:
     void addTotalRow(const wxString& caption, int cols, std::vector<wxString>& data);
 
 	/** Add a Table header cell */
+    void addTableHeaderCell(const wxString& value, bool numeric);
     void addTableHeaderCell(const wxString& value);
 	
 	/** Add a Table header cell link */

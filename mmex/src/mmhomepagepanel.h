@@ -87,6 +87,7 @@ private:
     wxString topCategories_;
 
     void displaySummaryHeader(mmHTMLBuilder& hb, wxString summaryTitle );
+    void displayStocksHeader(mmHTMLBuilder& hb, wxString summaryTitle );
     void displaySectionTotal(mmHTMLBuilder& hb, wxString totalsTitle, double& tBalance, bool showSeparator = true );
 
     void displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, wxDateTime& dtBegin, wxDateTime& dtEnd);
