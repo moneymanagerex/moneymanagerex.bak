@@ -63,6 +63,8 @@ wxString mmReportPayeeExpenses::getHTMLText()
         core_->currencyList_.loadBaseCurrencySettings();
         
         double total = 0.0;
+        double positiveTotal = 0.0;
+        double negativeTotal = 0.0;
         std::vector<ValuePair> valueList;
         for (int idx = 0; idx < numPayees; idx++)
         {
@@ -76,6 +78,10 @@ wxString mmReportPayeeExpenses::getHTMLText()
             if (amt != 0.0)
             {
                 total += amt;
+                if (amt>0.0)
+                positiveTotal += amt;
+                if (amt<0.0)
+                negativeTotal += amt;
                 ValuePair vp;
                 vp.label = core_->payeeList_.payees_[idx]->payeeName_;
                 vp.amount = amt;
@@ -86,17 +92,34 @@ wxString mmReportPayeeExpenses::getHTMLText()
 
                 hb.addTableCell(balance, true, true, true, (amt<0.0 ? wxT("RED") : wxT("BLACK")));
                 hb.endTableRow();
-	    }
+			}
         }
-        hb.addRowSeparator(2);
+
         wxString payeetotalStr;
+        wxString positiveTotalStr;
+        wxString negativeTotalStr;
         wxString colorStr = (total<0.0 ? wxT("RED") : wxT("BLACK"));
-        mmex::formatDoubleToCurrency(total, payeetotalStr);hb.startTableRow();
+        mmex::formatDoubleToCurrency(total, payeetotalStr);
+        mmex::formatDoubleToCurrency(positiveTotal, positiveTotalStr);
+        mmex::formatDoubleToCurrency(negativeTotal, negativeTotalStr);
+
+        hb.addRowSeparator(2);
+        hb.startTableRow();
+        hb.addTableCell(_("Income:"),false, true, true, wxT("BLACK"));
+        hb.addTableCell(positiveTotalStr, true, false, true, wxT("BLACK"));
+		hb.endTableRow();
+        hb.startTableRow();
+        hb.addTableCell(_("Expenses:"),false, true, true, wxT("BLACK"));
+        hb.addTableCell(negativeTotalStr, true, false, true, wxT("RED"));
+		hb.endTableRow();
+        hb.addRowSeparator(2);
+        hb.startTableRow();
         hb.addTableCell(_("Payees Total: "),false, true, true, wxT("BLACK"));
         hb.addTableCell(payeetotalStr, true, false, true, colorStr);
+		hb.endTableRow();
 
         hb.endTable();
-	hb.endCenter();
+		hb.endCenter();
 
         hb.end();
 
