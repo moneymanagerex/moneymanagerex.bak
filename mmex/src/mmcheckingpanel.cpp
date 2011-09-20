@@ -1787,6 +1787,11 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
     if (m_selectedIndex == -1) //check if a transaction is selected
         return;
 
+    // Exit if list has been reduced and selected index no longer exists.
+    int currentListSize = m_cp->m_trans.size();
+    if (currentListSize == m_selectedIndex)
+        return;
+
     //find the topmost visible item - this will be used to set
     // where to display the list again after refresh
     long topItemIndex = GetTopItem();
