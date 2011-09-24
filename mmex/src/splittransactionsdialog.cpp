@@ -119,10 +119,10 @@ void SplitTransactionDialog::CreateControls()
     itemDialog1->SetSizer(itemBoxSizer2);
 
     wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, _("Transaction Details"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(itemStaticText3, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer2->Add(itemStaticText3, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer4, 0, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(itemBoxSizer4, 1, wxGROW|wxALL, 5);
 
     lcSplit_ = new wxListCtrl( itemDialog1, ID_LISTCTRL3, wxDefaultPosition, wxSize(100, 100), wxLC_REPORT|wxLC_SINGLE_SEL );
     itemBoxSizer4->Add(lcSplit_, 1, wxGROW|wxALL, 5);
