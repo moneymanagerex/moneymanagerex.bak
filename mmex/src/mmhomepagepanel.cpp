@@ -270,7 +270,7 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
 }
 
 //* Stocks *//
-void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses)
+void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance /*, double& tIncome, double& tExpenses */)
 {
     double stTotalBalance = 0.0;
     wxString tBalanceStr;
@@ -761,7 +761,7 @@ void mmHomePagePanel::updateAccounts()
     if ( frame_->hasActiveTermAccounts() )
         displayTermAccounts(hb,tBalance,tIncome,tExpenses, dtBegin, dtEnd);
 
-    displayStocks(hb,tBalance,tIncome,tExpenses);
+    displayStocks(hb,tBalance /*,tIncome,tExpenses */);
 
     displayAssets(hb, tBalance);
     hb.endTable(); 
