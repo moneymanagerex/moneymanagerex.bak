@@ -2238,13 +2238,15 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         else if (iData->getString() == wxT("Cash Flow - Specific Accounts"))
         {
             OnCashFlowSpecificAccounts();
-            navTreeCtrl_->Unselect(); // Deselect item in navTreeCtrl_, to enable re-selection
+            refreshRequested_ = true;    // Prevent home page being recreated when deselecting
+            navTreeCtrl_->UnselectAll(); // item in navTreeCtrl_ to enable re-selection.
         }
         else if (iData->getString() == wxT("Transaction Report"))
         {
-           wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TRANSACTIONREPORT);
-           AddPendingEvent(evt);
-           navTreeCtrl_->Unselect(); // Deselect item in navTreeCtrl_, to enable re-selection
+            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TRANSACTIONREPORT);
+            AddPendingEvent(evt);
+            refreshRequested_ = true;    // Prevent home page being recreated when deselecting
+            navTreeCtrl_->UnselectAll(); // item in navTreeCtrl_ to enable re-selection.
         }
 //      Moved to act when using right mouse button instead.
 //      else if (iData->getString() == wxT("Budgeting"))
