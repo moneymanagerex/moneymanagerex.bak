@@ -694,7 +694,7 @@ wxString mmFilterTransactionsDialog::userStatusStr()
 wxString mmFilterTransactionsDialog::userTypeStr()
 {
     wxString transCode;
-    if (categoryCheckBox->IsChecked())
+    if (typeCheckBox->IsChecked())
         transCode = choiceType->GetLabelText();
     return transCode;
 }
@@ -702,7 +702,7 @@ wxString mmFilterTransactionsDialog::userTypeStr()
 wxString mmFilterTransactionsDialog::userAmountRangeStr()
 {
     wxString amountRangeStr;
-    if (transNumberCheckBox->IsChecked())
+    if (amountRangeCheckBox->IsChecked())
     {
         wxString minamt = amountMinEdit->GetValue();
         wxString maxamt = amountMaxEdit->GetValue();
