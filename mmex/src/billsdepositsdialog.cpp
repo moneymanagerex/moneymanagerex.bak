@@ -295,20 +295,26 @@ void mmBDDialog::CreateControls()
 {    
     mmBDDialog* itemDialog1 = this;
 
-    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxVERTICAL);
+    //--//wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
+    wxBoxSizer* itemBoxSizer3L = new wxBoxSizer(wxVERTICAL);
+    itemBoxSizer3->Add(itemBoxSizer3L, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxBoxSizer* itemBoxSizer3R = new wxBoxSizer(wxVERTICAL);
+    itemBoxSizer3->Add(itemBoxSizer3R, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
     /* Bills & Deposits Details */
-    wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(itemDialog1, wxID_ANY, 
-         _("Repeating Transaction Details"));
-    wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, 
-        wxHORIZONTAL);
-    itemBoxSizer3->Add(itemStaticBoxSizer4, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(itemDialog1, wxID_ANY, _("Repeating Transaction Details"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, wxHORIZONTAL);
+    itemBoxSizer3L->Add(itemStaticBoxSizer4, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxFlexGridSizer* itemFlexGridSizer5 = new wxFlexGridSizer(2, 4, 0, 0);
+    //--//wxFlexGridSizer* itemFlexGridSizer5 = new wxFlexGridSizer(4, 2, 0, 0);
     itemStaticBoxSizer4->Add(itemFlexGridSizer5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, 
@@ -371,20 +377,20 @@ void mmBDDialog::CreateControls()
     itemCheckBoxAutoExeUserAck_ = new wxCheckBox( itemDialog1, 
         ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_USERACK, _("Set to 'Auto Execute' on the 'Next Occurrence' date."),
         wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    itemBoxSizer3->Add(itemCheckBoxAutoExeUserAck_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer3L->Add(itemCheckBoxAutoExeUserAck_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     itemCheckBoxAutoExeSilent_ = new wxCheckBox( itemDialog1, 
         ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_SILENT, _("Set 'Auto Execute' without user acknowlegement."),
         wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemCheckBoxAutoExeSilent_->Enable(false);
-    itemBoxSizer3->Add(itemCheckBoxAutoExeSilent_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer3L->Add(itemCheckBoxAutoExeSilent_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     /* Transaction Details */
     wxStaticBox* itemStaticBoxSizer14Static = new wxStaticBox(itemDialog1, 
-        wxID_ANY, _("Transaction Details"));
+        wxID_ANY, _("Transaction Details"), wxDefaultPosition, wxDefaultSize, 0 );
     wxStaticBoxSizer* itemStaticBoxSizer14 = new wxStaticBoxSizer(itemStaticBoxSizer14Static, 
         wxVERTICAL);
-    itemBoxSizer3->Add(itemStaticBoxSizer14, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemBoxSizer3R->Add(itemStaticBoxSizer14, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxHORIZONTAL);
     itemStaticBoxSizer14->Add(itemBoxSizer4, 0, wxALIGN_LEFT|wxALL, 5);
@@ -422,6 +428,7 @@ void mmBDDialog::CreateControls()
     itemStaticBoxSizer14->Add(itemPanel7, 1, wxGROW|wxALL, 5);
 
     wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(4, 4, 0, 0);
+    //--//wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(8, 2, 0, 0);
     itemPanel7->SetSizer(itemFlexGridSizer8);
 
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel7, ID_DIALOG_TRANS_STATIC_PAYEE, 
@@ -532,7 +539,7 @@ void mmBDDialog::CreateControls()
 
     wxPanel* itemPanel25 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, 
         wxDefaultSize, wxTAB_TRAVERSAL );
-    itemBoxSizer3->Add(itemPanel25, 0, wxALIGN_RIGHT|wxALL, 5);
+    itemBoxSizer2->Add(itemPanel25, 0, wxALIGN_RIGHT|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer26 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel25->SetSizer(itemBoxSizer26);
