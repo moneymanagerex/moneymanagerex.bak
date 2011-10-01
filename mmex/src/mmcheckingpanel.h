@@ -30,6 +30,7 @@
 class mmCoreDB;
 class mmBankTransaction;
 class MyListCtrl;
+class TransFilterDialog;
 //----------------------------------------------------------------------------
 
 /* 
@@ -99,6 +100,9 @@ private:
     mmCoreDB* m_core;
     wxSQLite3Database* m_inidb;
     wxString m_currentView;
+    wxStaticText* statTextTransFilter_;
+    TransFilterDialog* transFilterDlg_;
+    bool transFilterActive_;
 
     MyListCtrl *m_listCtrlAccount;
     const int m_AccountID;
@@ -127,6 +131,7 @@ private:
     void OnMoveTransaction(wxCommandEvent& event);
     void OnMouseLeftDown( wxMouseEvent& event );
     void OnViewPopupSelected(wxCommandEvent& event);
+    void OnFilterTransactions(wxCommandEvent& event);
 
     void DeleteViewedTransactions();
     void DeleteFlaggedTransactions();
@@ -143,6 +148,10 @@ private:
     wxString getMiniInfoStr(int selIndex);
 
     int accountID() const { return m_AccountID; }
+
+    double getBalance(boost::shared_ptr<mmBankTransaction> pBankTransaction, double currentBalance );
+    void setBalance(boost::shared_ptr<mmBankTransaction> pBankTransaction, double currentBalance );
+
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_CHECKINGPANEL_H_

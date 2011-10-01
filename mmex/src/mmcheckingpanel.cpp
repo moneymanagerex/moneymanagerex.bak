@@ -20,6 +20,7 @@
 #include "transdialog.h"
 #include "util.h"
 #include "dbwrapper.h"
+#include "transactionfilterdialog.h"
 //----------------------------------------------------------------------------
 #include <algorithm>
 #include <vector>
@@ -458,6 +459,8 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_MENU(MENU_VIEW_CURRENTMONTH, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_LASTMONTH, mmCheckingPanel::OnViewPopupSelected)
 
+    EVT_MENU(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, mmCheckingPanel::OnFilterTransactions)
+
 END_EVENT_TABLE()
 //----------------------------------------------------------------------------
 
@@ -551,6 +554,11 @@ bool mmCheckingPanel::Create(
         GetSizer()->Fit(this);
         GetSizer()->SetSizeHints(this);
 
+        /* Set up the transaction filter.  The transFilter dialog will be destroyed
+           when the checking panel is destroyed. */
+        transFilterActive_ = false;
+        transFilterDlg_    = new TransFilterDialog(m_core, this); 
+
 		//show progress bar only when panel created 
 		wxProgressDialog dlg(_("Please Wait"), _("Accessing Database"), 100, this, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
         initVirtualListControl(&dlg);
@@ -623,6 +631,13 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
 
             break;
         }
+    case ID_PANEL_CHECKING_STATIC_BITMAP_FILTER : 
+        {
+            wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, ID_PANEL_CHECKING_STATIC_BITMAP_FILTER);
+            GetEventHandler()->AddPendingEvent(ev); 
+
+            break;
+        }
     }
     event.Skip();
 } 
@@ -647,22 +662,29 @@ void mmCheckingPanel::CreateControls()
     itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 5);
 
-     wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader2, 0, wxALL, 1);
 
     wxBitmap itemStaticBitmap3Bitmap(rightarrow_xpm);
-    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( headerPanel, 
-        ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, 
+    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, 
         itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(16, 16), 0 );
     itemBoxSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemStaticBitmap3->SetEventHandler( this ); 
 
-     wxStaticText* itemStaticText18 = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW, 
-            _("Viewing All Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText18 = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW, 
+        _("Viewing All Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerHHeader2->Add(itemStaticText18, 0, wxALL, 1);
 
-    m_currentView = mmDBWrapper::getINISettingValue(m_inidb, 
-       wxT("VIEWTRANSACTIONS"), wxT("View All Transactions"));
+    wxStaticBitmap* itemStaticBitmap31 = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, 
+        itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(16, 16), 0 );
+    itemBoxSizerHHeader2->Add(itemStaticBitmap31, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 120);
+    itemStaticBitmap31->SetEventHandler( this ); 
+
+    statTextTransFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW, 
+        _("Transaction Filter"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizerHHeader2->Add(statTextTransFilter_, 0, wxALL, 1);
+
+    m_currentView = mmDBWrapper::getINISettingValue(m_inidb, wxT("VIEWTRANSACTIONS"), wxT("View All Transactions"));
     
 	initViewTransactionsHeader();
     wxBoxSizer* itemBoxSizerHHeader = new wxBoxSizer(wxHORIZONTAL);
@@ -1075,6 +1097,10 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
 
     setAccountSummary();
 
+    /**********************************************************************************
+     Stage 1
+     Get all entries from the database to be displayed for our account.
+    /**********************************************************************************/
     int numTransactions = 0;
 	double unseenBalance = 0.0;
     for (size_t i = 0; i < m_core->bTransactionList_.transactions_.size(); ++i)
@@ -1105,6 +1131,10 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
 			}
 		}
 
+        /******************************************************************************
+         Because we get transactions for last and current months, we need to remove all
+         transactions for current month. This fixes balances by making them in order.
+        /******************************************************************************/
         if ( m_currentView == wxT("View Last Month") )
         {
             if (toAdd)
@@ -1117,40 +1147,49 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
             }
         }
 
+        /******************************************************************************
+         Because we remove all unwanted transactions, we end up removing transactions 
+         that contain the amounts for our other transactions. This makes the running 
+         balances incorrect, as they are out of order.
+
+         TODO: Work out a way to correct the balances once we have them.
+               This will correct the balance for all transactions for the account. 
+               Also also means working out the transaction mapping routines where the
+               other filtering occurs as well. Yuck!!! (Stef)
+               
+        /******************************************************************************/
+        if (transFilterActive_)
+        {
+            toAdd  = false;  // remove transaction from list and add if wanted.
+            getBal = false;  // do not add these to the unseenBalance
+
+            if ( transFilterDlg_->byDateRange(pBankTransaction->date_) ||
+                 transFilterDlg_->byPayee(pBankTransaction->payeeStr_) ||
+                 transFilterDlg_->byCategory(pBankTransaction->catStr_, pBankTransaction->subCatStr_) ||
+                 transFilterDlg_->byStatus(pBankTransaction->status_)  ||
+                 transFilterDlg_->byType(pBankTransaction->transType_) ||
+                 transFilterDlg_->byTransNumber(pBankTransaction->transNum_) )
+            {
+                toAdd  = true;
+            }
+        }
+
         if (toAdd)
         {
-           m_trans.push_back(pBankTransaction.get());
-           ++numTransactions;
-		}
-		else
-		{
-		   if (getBal)
-		   {
-			   if (pBankTransaction->status_ != wxT("V"))
-			   {
-				   if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT)
-				   {
-					   unseenBalance += pBankTransaction->amt_;
-				   }
-				   else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL)
-				   {
-					   unseenBalance -= pBankTransaction->amt_;
-				   }
-				   else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER)
-				   {
-					   if (pBankTransaction->accountID_ == m_AccountID)
-					   {
-						   unseenBalance -= pBankTransaction->amt_;
-					   }
-					   else if (pBankTransaction->toAccountID_== m_AccountID)
-					   {
-						   unseenBalance += pBankTransaction->toAmt_;
-					   }
-				   }
-			   }
-		   }
+            m_trans.push_back(pBankTransaction.get());
+            ++numTransactions;
         }
+        else
+        {
+		    if (getBal)
+		    {
+               unseenBalance = getBalance(pBankTransaction,unseenBalance);
+            } 
+        }  
     }
+    /****************************************************************************
+     End Stage 1
+    /****************************************************************************/
 
     if (pgd)
     pgd->Update(40);
@@ -1167,6 +1206,11 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
     if (pgd)
     pgd->Update(60);
 
+    /**********************************************************************************
+     Stage 3
+     From the entries being displayed, determine the balance for each transaction.
+     Note: If there are missing transactions, the individual balances become incorrect.
+    /**********************************************************************************/
     for (size_t i = 0; i < m_trans.size(); ++i)
     {
         bool ok = m_trans[i] != 0;
@@ -1206,6 +1250,9 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
         mmex::formatDoubleToCurrencyEdit(initBalance, balanceStr);
         tr.balanceStr_ = balanceStr;
     }
+    /****************************************************************************
+     End Stage 3
+    /****************************************************************************/
 
     if (pgd)
     pgd->Update(80);
@@ -1238,6 +1285,42 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
 	}
 }
 //----------------------------------------------------------------------------
+
+double mmCheckingPanel::getBalance(boost::shared_ptr<mmBankTransaction> pBankTransaction, double currentBalance)
+{
+    if (pBankTransaction->status_ != wxT("V"))
+    {
+        if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT)
+        {
+            currentBalance += pBankTransaction->amt_;
+        }
+        else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL)
+        {
+            currentBalance -= pBankTransaction->amt_;
+        }
+        else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER)
+        {
+            if (pBankTransaction->accountID_ == m_AccountID)
+            {
+                currentBalance -= pBankTransaction->amt_;
+            }
+            else if (pBankTransaction->toAccountID_== m_AccountID)
+            {
+                currentBalance += pBankTransaction->toAmt_;
+            }
+        }
+    }
+    return currentBalance;
+}
+//----------------------------------------------------------------------------
+
+void mmCheckingPanel::setBalance(boost::shared_ptr<mmBankTransaction> pBankTransaction, double currentBalance )
+{
+    pBankTransaction->balance_ = currentBalance;
+    wxString balanceStr;
+    mmex::formatDoubleToCurrencyEdit(currentBalance, balanceStr);
+    pBankTransaction->balanceStr_ = balanceStr;
+}
 
 void mmCheckingPanel::OnDeleteTransaction(wxCommandEvent& event)
 {
@@ -1420,6 +1503,22 @@ void mmCheckingPanel::DeleteFlaggedTransactions()
         }
         mmDBWrapper::commit(m_core->db_.get());
     }
+}
+
+void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
+{
+    int dlgResult = transFilterDlg_->ShowModal();
+    if ( dlgResult == wxID_OK )
+    {
+        transFilterActive_ = true; 
+        statTextTransFilter_->SetLabel( _("Active Transaction Filter"));
+    }
+    else if ( dlgResult == wxID_CANCEL )
+    {
+        transFilterActive_ = false;
+        statTextTransFilter_->SetLabel( _("Transaction Filter"));
+    }
+    initVirtualListControl(NULL);
 }
 
 //----------------------------------------------------------------------------
