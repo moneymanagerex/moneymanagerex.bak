@@ -1707,6 +1707,7 @@
     <ClCompile Include="..\..\src\optionsdialog.cpp" />
     <ClCompile Include="..\..\src\paths.cpp" />
     <ClCompile Include="..\..\src\payeedialog.cpp" />
+    <ClCompile Include="..\..\src\transactionfilterdialog.cpp" />
     <ClCompile Include="..\..\src\win\platfdep.cpp" />
     <ClCompile Include="..\..\src\qifimport.cpp" />
     <ClCompile Include="..\..\src\relocatecategorydialog.cpp" />
@@ -1804,6 +1805,7 @@
     <ClInclude Include="..\..\src\splittransactionsdialog.h" />
     <ClInclude Include="..\..\src\stockdialog.h" />
     <ClInclude Include="..\..\src\stockspanel.h" />
+    <ClInclude Include="..\..\src\transactionfilterdialog.h" />
     <ClInclude Include="..\..\src\transdialog.h" />
     <ClInclude Include="..\..\src\univcsvdialog.h" />
     <ClInclude Include="..\..\src\util.h" />
