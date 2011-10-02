@@ -52,6 +52,7 @@ public:
     bool byStatus( wxString status );
     bool byType(wxString type);
     bool byTransNumber(wxString trNum);
+    bool byNotes(wxString notes); 
 
 private:
     // Define our variables
@@ -65,6 +66,7 @@ private:
     wxCheckBox* cbStatus_;
     wxCheckBox* cbType_;
     wxCheckBox* cbTransNumber_;
+    wxCheckBox* cbNotes_;
 
     wxDatePickerCtrl* dpDateStart_;
     wxDatePickerCtrl* dpDateEnd_;
@@ -73,6 +75,7 @@ private:
     wxChoice*   choiceStatus_;
     wxChoice*   choiceType_;
     wxTextCtrl* txtTransNumber_;
+    wxTextCtrl* txtNotes_;
 
     // Initialize our variables
     void Init();
@@ -94,6 +97,7 @@ private:
     void OnCBStatus( wxCommandEvent& event );
     void OnCBType( wxCommandEvent& event );
     void OnCBTransNum( wxCommandEvent& event );
+    void OnCBNotes( wxCommandEvent& event );
 
     void OnPayeeSelect(wxCommandEvent& event);
     void OnCategorySelect(wxCommandEvent& event);

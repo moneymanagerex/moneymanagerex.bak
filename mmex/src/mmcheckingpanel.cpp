@@ -1168,7 +1168,8 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
                  transFilterDlg_->byCategory(pBankTransaction->catStr_, pBankTransaction->subCatStr_) &&
                  transFilterDlg_->byStatus(pBankTransaction->status_)  &&
                  transFilterDlg_->byType(pBankTransaction->transType_) &&
-                 transFilterDlg_->byTransNumber(pBankTransaction->transNum_) )
+                 transFilterDlg_->byTransNumber(pBankTransaction->transNum_) &&
+                 transFilterDlg_->byNotes(pBankTransaction->notes_))
             {
                 toAdd  = true;
             }
