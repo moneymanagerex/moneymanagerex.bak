@@ -1163,11 +1163,11 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
             toAdd  = false;  // remove transaction from list and add if wanted.
             getBal = false;  // do not add these to the unseenBalance
 
-            if ( transFilterDlg_->byDateRange(pBankTransaction->date_) ||
-                 transFilterDlg_->byPayee(pBankTransaction->payeeStr_) ||
-                 transFilterDlg_->byCategory(pBankTransaction->catStr_, pBankTransaction->subCatStr_) ||
-                 transFilterDlg_->byStatus(pBankTransaction->status_)  ||
-                 transFilterDlg_->byType(pBankTransaction->transType_) ||
+            if ( transFilterDlg_->byDateRange(pBankTransaction->date_) &&
+                 transFilterDlg_->byPayee(pBankTransaction->payeeStr_) &&
+                 transFilterDlg_->byCategory(pBankTransaction->catStr_, pBankTransaction->subCatStr_) &&
+                 transFilterDlg_->byStatus(pBankTransaction->status_)  &&
+                 transFilterDlg_->byType(pBankTransaction->transType_) &&
                  transFilterDlg_->byTransNumber(pBankTransaction->transNum_) )
             {
                 toAdd  = true;
@@ -1511,14 +1511,17 @@ void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
     if ( dlgResult == wxID_OK )
     {
         transFilterActive_ = true; 
-        statTextTransFilter_->SetLabel( _("Active Transaction Filter"));
+        statTextTransFilter_->SetLabel( _("Transaction Filter (Active)"));
     }
     else if ( dlgResult == wxID_CANCEL )
     {
         transFilterActive_ = false;
         statTextTransFilter_->SetLabel( _("Transaction Filter"));
     }
+
+    m_listCtrlAccount->DeleteAllItems();
     initVirtualListControl(NULL);
+    m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
 }
 
 //----------------------------------------------------------------------------
