@@ -378,10 +378,10 @@ bool TransFilterDialog::byStatus( wxString status )
         else if (stat ==  DEF_STATUS_VOID )
             statusStr = wxT("V");
         
-        else if (statusStr ==  DEF_STATUS_FOLLOWUP )
+        else if (stat ==  DEF_STATUS_FOLLOWUP )
             statusStr = wxT("F");
 
-        else if (statusStr ==  DEF_STATUS_DUPLICATE )
+        else if (stat ==  DEF_STATUS_DUPLICATE )
             statusStr = wxT("D");
 
         if (status == statusStr )
