@@ -37,6 +37,10 @@ BEGIN_EVENT_TABLE( TransFilterDialog, wxDialog )
     EVT_BUTTON( ID_DIALOG_TRANSFILTER_BUTTON_CANCEL,   TransFilterDialog::OnButtonCancel )
 END_EVENT_TABLE()
 
+// Defines for Transaction Status and Type
+enum {DEF_STATUS_NONE , DEF_STATUS_RECONCILED , DEF_STATUS_VOID , DEF_STATUS_FOLLOWUP , DEF_STATUS_DUPLICATE };
+//enum {DEF_WITHDRAWAL , DEF_DEPOSIT , DEF_TRANSFER};
+
 // default constructor
 TransFilterDialog::TransFilterDialog()
 {
@@ -214,15 +218,15 @@ void TransFilterDialog::CreateControls()
 
 void TransFilterDialog::OnButtonOK( wxCommandEvent& /*event*/ )
 {
-    if (!cbDateRange_->GetValue() && !cbPayee_->GetValue()  &&
-        !cbCategory_->GetValue()  && !cbStatus_->GetValue() &&
-        !cbType_->GetValue()      && !cbTransNumber_->GetValue() )
+    if (cbDateRange_->GetValue() || cbPayee_->GetValue()  ||
+        cbCategory_->GetValue()  || cbStatus_->GetValue() ||
+        cbType_->GetValue()      || cbTransNumber_->GetValue() )
     {
-        EndModal(wxID_CANCEL);
+        EndModal(wxID_OK);
     } 
     else
     {
-        EndModal(wxID_OK);
+        EndModal(wxID_CANCEL);
     }
 }
 
@@ -310,7 +314,9 @@ bool TransFilterDialog::byDateRange(wxDateTime transDate)
             result = true;
         else if (transDate.IsBetween(dtBegin, dtEnd))
             result = true;
-    }
+    } 
+    else
+        result = true;
 
     return result;
 }
@@ -324,7 +330,9 @@ bool TransFilterDialog::byPayee(wxString payee)
         {
             result = true;
         }
-    }
+    } 
+    else
+        result = true;
 
     return result;
 }
@@ -346,7 +354,9 @@ bool TransFilterDialog::byCategory(wxString category, wxString subCategory)
             } else
                 result = true;
         }
-    }
+    } 
+    else
+        result = true;
 
     return result; 
 }
@@ -356,27 +366,31 @@ bool TransFilterDialog::byStatus( wxString status )
     bool result = false;
     if ( cbStatus_->GetValue() )
     {
-        wxString statusStr = choiceStatus_->GetLabelText();
-        if (statusStr ==  _("None") )
-            statusStr = wxT(" ");
+        wxString statusStr;
+        int stat = choiceStatus_->GetSelection();
         
-        else if(statusStr ==  _("Reconciled") )
+        if (stat ==  DEF_STATUS_NONE )
+            statusStr = wxT("");
+        
+        else if(stat ==  DEF_STATUS_RECONCILED )
             statusStr = wxT("R");
         
-        else if (statusStr ==  _("Void") )
+        else if (stat ==  DEF_STATUS_VOID )
             statusStr = wxT("V");
         
-        else if (statusStr ==  _("Follow up") )
+        else if (statusStr ==  DEF_STATUS_FOLLOWUP )
             statusStr = wxT("F");
 
-        else if (statusStr ==  _("Duplicate") )
+        else if (statusStr ==  DEF_STATUS_DUPLICATE )
             statusStr = wxT("D");
 
         if (status == statusStr )
         {
             result = true;
         }
-    }
+    } 
+    else
+        result = true;
 
     return result; 
 }
@@ -390,7 +404,9 @@ bool TransFilterDialog::byType(wxString type)
         {
             result = true;
         }
-    }
+    } 
+    else
+        result = true;
 
     return result; 
 }
@@ -400,11 +416,14 @@ bool TransFilterDialog::byTransNumber(wxString trNum)
     bool result = false;
     if ( cbTransNumber_->GetValue() )
     {
-        if (trNum == txtTransNumber_->GetLabelText() )
+        wxString trNumFilter = txtTransNumber_->GetValue().Trim().Lower();
+        if (trNum.Trim().Lower() == trNumFilter )
         {
             result = true;
         }
-    }
+    } 
+    else
+        result = true;
 
     return result; 
 }
