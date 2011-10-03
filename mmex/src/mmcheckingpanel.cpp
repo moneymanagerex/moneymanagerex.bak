@@ -39,7 +39,7 @@
 #include "../resources/duplicate.xpm"
 #include "../resources/trans_from.xpm"
 #include "../resources/trans_into.xpm"
-//#include "../resources/trans_transfer.xpm"
+#include "../resources/tipicon.xpm"
 //----------------------------------------------------------------------------
 
 namespace
@@ -1508,17 +1508,22 @@ void mmCheckingPanel::DeleteFlaggedTransactions()
 
 void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
 {
+    wxBitmap activeBitmapFilterIcon(tipicon_xpm); 
+    wxBitmap bitmapFilterIcon(rightarrow_xpm);
+
     int dlgResult = transFilterDlg_->ShowModal();
     if ( dlgResult == wxID_OK )
     {
         transFilterActive_ = true; 
-        statTextTransFilter_->SetLabel( _("Transaction Filter (Active)"));
+        bitmapFilterIcon = activeBitmapFilterIcon;
     }
     else if ( dlgResult == wxID_CANCEL )
     {
         transFilterActive_ = false;
-        statTextTransFilter_->SetLabel( _("Transaction Filter"));
     }
+
+    wxStaticBitmap* staticBitmap = (wxStaticBitmap*)FindWindow(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER);
+    staticBitmap->SetBitmap(bitmapFilterIcon);
 
     m_listCtrlAccount->DeleteAllItems();
     initVirtualListControl(NULL);
