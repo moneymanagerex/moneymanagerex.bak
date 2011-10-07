@@ -28,6 +28,8 @@
 #include "guiid.h"
 #include "defs.h"
 #include "mmcoredb.h"
+#include<wx/spinbutt.h>
+#include<wx/spinctrl.h>
 
 class mmData;
 class wxDatePickerCtrl;
@@ -69,14 +71,13 @@ public:
     void OnTo(wxCommandEvent& event);
     void OnAutoTransNum(wxCommandEvent& event);
     void OnTransTypeChanged(wxCommandEvent& event);
-    void OnDateChanged(wxDateEvent& event);
-    void fillControls();
+    void OnSpinUp(wxSpinEvent&);
+    void OnSpinDown(wxSpinEvent&);
     void dataToControls();
     void updateControlsForTransType();
     void displayControlsToolTips(int transType, bool enableAdvanced = false);
     bool getPayeeID(wxString payee, int& payeeID, int& categID, int& subcategID );
     void addPayee(wxString payee, int categID, int subcategID );
-    void OnAdvanced(wxCommandEvent& event);
     void OnSplitChecked(wxCommandEvent& event);
 
 private:
@@ -88,16 +89,15 @@ private:
     int referenceAccountID_;    // used for transfer transactions 
     wxTextCtrl *textNumber_;
     wxTextCtrl *textAmount_;
+    wxTextCtrl *toTextAmount_;
     wxTextCtrl *textNotes_;
     wxTextCtrl* textCategory_;
     wxButton* bCategory_;
     wxButton* bPayee_;
     wxButton* bTo_;
-    mmAdvancedPopup* m_simplePopup_;
-    wxButton* bAdvanced_;
     wxCheckBox* cSplit_;
+    wxCheckBox* cAdvanced_;
     wxButton* bAuto_;
-    wxStaticText* staticTextAdvancedActive_;
     bool payeeUnknown_;
     bool categUpdated_;
 
@@ -120,10 +120,23 @@ private:
     // store the original currency rate for transaction editing
     double  edit_currency_rate;
 
+    wxString payeeDepositTip_;
+    wxString payeeWithdrawalTip_;
+    wxString amountNormalTip_;
+    wxString amountTransferTip_;
+
     wxString getMostFrequentlyUsedPayee(wxString& categString);
     wxString resetPayeeString(bool normal = true);
     wxString getMostFrequentlyUsedCategory();
     wxString resetCategoryString();
+    void OnAdvanceChecked(wxCommandEvent& event);
+    void SetTransferControls(bool transfers = false);
+    void SetAdvancedTransferControls(bool advanced = false);
+    
+protected:
+
+    wxSpinButton *spinCtrl_;
+    
 };
 
 #endif
