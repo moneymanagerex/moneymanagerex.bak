@@ -34,6 +34,8 @@ enum { DEF_WITHDRAWAL, DEF_DEPOSIT, DEF_TRANSFER };
 // Defines for Transaction Status
 enum { DEF_STATUS_NONE, DEF_STATUS_RECONCILED, DEF_STATUS_VOID, DEF_STATUS_FOLLOWUP, DEF_STATUS_DUPLICATE };
 
+enum { ID_DIALOG_TRANS_SPINNER };
+         
 IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
@@ -43,8 +45,12 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONPAYEE, mmTransDialog::OnPayee)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTO, mmTransDialog::OnTo)
     EVT_CHOICE(ID_DIALOG_TRANS_TYPE, mmTransDialog::OnTransTypeChanged)  
-    EVT_DATE_CHANGED(ID_DIALOG_TRANS_BUTTONDATE, mmTransDialog::OnDateChanged) 
-    EVT_BUTTON(ID_DIALOG_TRANS_BUTTONADVANCED, mmTransDialog::OnAdvanced)
+    EVT_SPIN_UP(ID_DIALOG_TRANS_SPINNER,mmTransDialog::OnSpinUp)
+    EVT_SPIN_DOWN(ID_DIALOG_TRANS_SPINNER,mmTransDialog::OnSpinDown)
+    // Superficial future change to clarify name. (was changed from button to checkbox)
+    // from ID_DIALOG_TRANS_BUTTONADVANCED
+    // to   ID_DIALOG_TRANS_ADVANCED_CHECKBOX
+    EVT_CHECKBOX(ID_DIALOG_TRANS_BUTTONADVANCED, mmTransDialog::OnAdvanceChecked) 
     EVT_CHECKBOX(ID_DIALOG_TRANS_SPLITCHECKBOX, mmTransDialog::OnSplitChecked)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTRANSNUM, mmTransDialog::OnAutoTransNum)
 END_EVENT_TABLE()
@@ -89,8 +95,6 @@ bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
     GetSizer()->SetSizeHints(this);
 
     SetIcon(mmex::getProgramIcon());
-    
-    fillControls();
 
     boost::shared_ptr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
     split_ = split;
@@ -100,12 +104,8 @@ bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
         dataToControls();
     }
     
-    if (advancedToTransAmountSet_)
-        staticTextAdvancedActive_->Show();
-    else
-        staticTextAdvancedActive_->Show(false);
-   
     Centre();
+    Fit();
     return TRUE;
 }
 
@@ -251,71 +251,112 @@ void mmTransDialog::dataToControls()
 
             // When editing an advanced transaction record, we do not reset the toTransAmount_
             if (edit_ && (toTransAmount_ != transAmount))
-                advancedToTransAmountSet_ = true;
+            {
+                cAdvanced_->SetValue(true);
+                SetAdvancedTransferControls(true);
+            }
         }
     }
     
     st.Finalize();
 }
 
-void mmTransDialog::fillControls()
-{
-	
-}
-
 void mmTransDialog::CreateControls()
 {    
     mmTransDialog* itemDialog1 = this;
 
-    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxVERTICAL);
-    itemBoxSizer2->Add(itemBoxSizer3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(itemDialog1, wxID_ANY, _("Transaction Details"));
+    wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, wxVERTICAL);
+    itemBoxSizer2->Add(itemStaticBoxSizer4, 0, wxALIGN_CENTER_HORIZONTAL|wxLEFT|wxTOP|wxRIGHT, 10);
 
-    wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer3->Add(itemBoxSizer4, 0, wxALIGN_LEFT|wxALL, 5);
+    /************************************************************************************************************
+    ItemPanel7 controlled by ItemFlexGridSizer8 - contained in the TransDetailsStaticSizer. (itemStaticBoxSizer4)
+    *************************************************************************************************************/
+    wxPanel* itemPanel7 = new wxPanel(itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    itemStaticBoxSizer4->Add(itemPanel7, 0, wxGROW|wxALL, 10);
+
+    wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(5, 2, 10, 10);
+    itemPanel7->SetSizer(itemFlexGridSizer8);
 
     wxSizerFlags flags;
-    flags.Border();
+    flags.Border(0);
 
-    wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC,
-        _("Transaction Type"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer4->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    // Date --------------------------------------------
+    wxStaticText* itemStaticText15 = new wxStaticText( itemPanel7, wxID_STATIC, _("Date"));
+    dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime, wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
+    dpc_->SetToolTip(_("Specify the date of the transaction"));
+    spinCtrl_ = new wxSpinButton(itemPanel7,ID_DIALOG_TRANS_SPINNER,wxDefaultPosition, wxSize(16,24),wxSP_VERTICAL|wxSP_ARROW_KEYS|wxSP_WRAP);
+	spinCtrl_ -> SetRange (-32768, 32768); 
+	spinCtrl_->SetToolTip(_("Specify the date of the transaction"));
 
+    itemFlexGridSizer8->Add(itemStaticText15, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
+	wxBoxSizer* itemBoxSizer118 = new wxBoxSizer(wxHORIZONTAL);
+	itemFlexGridSizer8->Add(itemBoxSizer118, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    itemBoxSizer118->Add(dpc_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+	itemBoxSizer118->Add(spinCtrl_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);   
+
+    // Status --------------------------------------------
+    wxStaticText* itemStaticText51 = new wxStaticText( itemPanel7, wxID_STATIC, _("Status"));
+    wxString itemChoice7Strings[] = 
+    {
+        _("None"),
+        _("Reconciled"),
+        _("Void"),
+        _("Follow up"),
+    	_("Duplicate"),
+    };  
+    choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, wxSize(110, -1), 5, itemChoice7Strings, 0 );
+    choiceStatus_->SetSelection(mmIniOptions::transStatusReconciled_);
+    choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
+
+    itemFlexGridSizer8->Add(itemStaticText51, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
+    itemFlexGridSizer8->Add(choiceStatus_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
+
+    // Type --------------------------------------------
+    wxStaticText* itemStaticText5 = new wxStaticText( itemPanel7, wxID_STATIC, _("Type"), wxDefaultPosition, wxDefaultSize, 0 );
     const wxString itemChoice6Strings[] = 
     {
         _("Withdrawal"),
         _("Deposit"),
         _("Transfer")
     };  
-    
-    choiceTrans_ = new wxChoice(itemDialog1,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxDefaultSize,3,itemChoice6Strings,0);
-    itemBoxSizer4->Add(choiceTrans_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    choiceTrans_ = new wxChoice(itemPanel7,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxSize(110, -1),3,itemChoice6Strings,0);
     choiceTrans_->SetSelection(0);
     choiceTrans_->SetToolTip(_("Specify the type of transactions to be created."));
+    cAdvanced_ = new wxCheckBox( itemPanel7, ID_DIALOG_TRANS_BUTTONADVANCED, _("Advanced"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cAdvanced_->SetValue(FALSE);
 
-    bAdvanced_ = new wxButton( itemDialog1, ID_DIALOG_TRANS_BUTTONADVANCED, _("Advanced"));
-    bAdvanced_->Enable(false);
-    wxFont fnt = itemDialog1->GetFont();
-    itemBoxSizer4->Add(bAdvanced_, flags);
-    bAdvanced_->SetToolTip(_("Specify the transfer amount in the To Account"));
+    wxBoxSizer* typeSizer = new wxBoxSizer(wxHORIZONTAL);
+    typeSizer->Add(choiceTrans_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    typeSizer->Add(cAdvanced_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxALL, 5);
+	
+    itemFlexGridSizer8->Add(itemStaticText5, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
+    itemFlexGridSizer8->Add(typeSizer, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
-    staticTextAdvancedActive_ = new wxStaticText(itemDialog1,wxID_STATIC, _(" is active!"),
-        wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer4->Add(staticTextAdvancedActive_, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
+    // Amount Fields --------------------------------------------
+    amountNormalTip_   = _("Specify the amount for this transaction");
+    amountTransferTip_ = _("Specify the amount to be transfered"); 
 
-    wxPanel* itemPanel7 = new wxPanel(itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    itemBoxSizer3->Add(itemPanel7, 1, wxGROW|wxALL, 5);
+    wxStaticText* amountStaticText = new wxStaticText( itemPanel7, wxID_STATIC, _("Amount"));
 
-    wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(4, 4, 0, 0);
-    itemPanel7->SetSizer(itemFlexGridSizer8);
+    textAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT );
+    textAmount_->SetToolTip(amountNormalTip_);
 
-    // Payee button ----------------------------------- begin
-    
-    wxStaticText* itemStaticText9 = new wxStaticText(itemPanel7, ID_DIALOG_TRANS_STATIC_PAYEE, _("Payee"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer8->Add(itemStaticText9, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    toTextAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT );
+    toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
+
+    wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
+    amountSizer->Add(textAmount_,   0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, 0);
+    amountSizer->Add(toTextAmount_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
+
+    itemFlexGridSizer8->Add(amountStaticText, 0, wxALIGN_LEFT|wxALL, 0);
+    itemFlexGridSizer8->Add(amountSizer, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
+
+    // Payee ---------------------------------------------
+    wxStaticText* itemStaticText9 = new wxStaticText(itemPanel7, ID_DIALOG_TRANS_STATIC_PAYEE, _("Payee"), wxDefaultPosition, wxDefaultSize, 0 );
 
     wxString payeeName = resetPayeeString();
     wxString categString;
@@ -340,120 +381,86 @@ void mmTransDialog::CreateControls()
         }
 	}
 
-    bPayee_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONPAYEE, payeeName, wxDefaultPosition, wxSize(200, -1), 0 );
-    itemFlexGridSizer8->Add(bPayee_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    bPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
+    bPayee_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONPAYEE, payeeName, wxDefaultPosition, wxSize(225, -1), 0 );
+    payeeWithdrawalTip_ = _("Specify where the transaction is going to");
+    payeeDepositTip_    = _("Specify where the transaction is coming from");
+    bPayee_->SetToolTip(payeeWithdrawalTip_);
 
-    // Payee button ----------------------------------- end
+    itemFlexGridSizer8->Add(itemStaticText9, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    itemFlexGridSizer8->Add(bPayee_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
-    //===========================================================
-    wxStaticText* itemStaticText11 = new wxStaticText( itemPanel7, wxID_STATIC, _("Number"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer8->Add(itemStaticText11, 0,
-        wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-
-    wxBoxSizer* itemBoxSizer550 = new wxBoxSizer(wxHORIZONTAL);
-    itemFlexGridSizer8->Add(itemBoxSizer550, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    // Payee Alternate ------------------------------------------------
+    wxStaticText* itemStaticText13 = new wxStaticText( itemPanel7, ID_DIALOG_TRANS_STATIC_FROM, wxT(" "), wxDefaultPosition, wxDefaultSize, 0 );
+    bTo_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONTO, _("Select To Acct"), wxDefaultPosition, wxSize(225, -1), 0 );
+    bTo_->SetToolTip(_("Specify which account the transfer is going to"));
     
-    textNumber_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTNUMBER, wxT(""), wxDefaultPosition, wxSize(50, -1), 0 );
-    itemBoxSizer550->Add(textNumber_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer8->Add(itemStaticText13, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxUP, 0);
+    itemFlexGridSizer8->Add(bTo_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxUP, 0);
+
+    // Split Category -------------------------------------------
+    cSplit_ = new wxCheckBox( itemPanel7, ID_DIALOG_TRANS_SPLITCHECKBOX, _("Split"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cSplit_->SetValue(FALSE);
+
+    itemFlexGridSizer8->AddSpacer(20);  // Fill empty space.
+    itemFlexGridSizer8->Add(cSplit_, 0, wxALIGN_BOTTOM|wxALIGN_LEFT|wxALL, 0);
+
+    // Category -------------------------------------------------
+    wxStaticText* itemStaticText17 = new wxStaticText( itemPanel7, wxID_STATIC, _("Category") );
+    bCategory_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONCATEGS, categString, wxDefaultPosition, wxSize(225, -1), 0 );
+    //bCategory_->SetToolTip(_("Specify the category for this transaction"));  
+    
+    itemFlexGridSizer8->Add(itemStaticText17, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
+    itemFlexGridSizer8->Add(bCategory_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    
+    // Number  ---------------------------------------------
+    wxStaticText* itemStaticText11 = new wxStaticText( itemPanel7, wxID_STATIC, _("Number"), wxDefaultPosition, wxDefaultSize, 0 );
+    textNumber_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTNUMBER, wxT(""), wxDefaultPosition, wxSize(185, -1), 0 );
     textNumber_->SetToolTip(_("Specify any associated check number or transaction number"));
 
-    bAuto_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONTRANSNUM, wxT(".."), wxDefaultPosition, wxSize(30, -1), 0 );
-    itemBoxSizer550->Add(bAuto_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    bAuto_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONTRANSNUM, wxT("..."), wxDefaultPosition, wxSize(40, -1), 0 );
     bAuto_->SetToolTip(_("Populate Transaction #"));
 
-    //===========================================================
-    
-    wxStaticText* itemStaticText13 = new wxStaticText( itemPanel7, ID_DIALOG_TRANS_STATIC_FROM, _("To") );
-    itemFlexGridSizer8->Add(itemStaticText13, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-    itemStaticText13->Show(false);
+    itemFlexGridSizer8->Add(itemStaticText11, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
+    wxBoxSizer* itemBoxSizer550 = new wxBoxSizer(wxHORIZONTAL);
+    itemFlexGridSizer8->Add(itemBoxSizer550, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    itemBoxSizer550->Add(textNumber_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    itemBoxSizer550->Add(bAuto_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
-    bTo_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONTO, _("Select To Acct"), 
-        wxDefaultPosition, wxSize(200, -1), 0 );
-    itemFlexGridSizer8->Add(bTo_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    bTo_->Show(false);
-    bTo_->SetToolTip(_("Specify which account the transfer is going to"));
-
-    wxStaticText* itemStaticText15 = new wxStaticText( itemPanel7, wxID_STATIC, _("Date"));
-    itemFlexGridSizer8->Add(itemStaticText15, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-
-    dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime, wxDefaultPosition, wxSize(100, -1), wxDP_DROPDOWN);
-    itemFlexGridSizer8->Add(dpc_, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    dpc_->SetToolTip(_("Specify the date of the transaction"));
-
-    // Category ******************************** begin //
-    wxStaticText* itemStaticText17 = new wxStaticText( itemPanel7, wxID_STATIC, _("Category") );
-    itemFlexGridSizer8->Add(itemStaticText17, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-
-    wxBoxSizer* itemBoxSizer18 = new wxBoxSizer(wxHORIZONTAL);
-    itemFlexGridSizer8->Add(itemBoxSizer18, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    
-    bCategory_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONCATEGS, categString, wxDefaultPosition, wxSize(200, -1), 0 );
-    itemBoxSizer18->Add(bCategory_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    bCategory_->SetToolTip(_("Specify the category for this transaction"));
-    // Category ******************************** end //
-
-    cSplit_ = new wxCheckBox( itemPanel7, 
-        ID_DIALOG_TRANS_SPLITCHECKBOX, _("Split"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    cSplit_->SetValue(FALSE);
-    itemBoxSizer18->Add(cSplit_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    ////////////////////////////////////////////
-
-    wxStaticText* itemStaticText51 = new wxStaticText( itemPanel7, wxID_STATIC, _("Status"));
-    itemFlexGridSizer8->Add(itemStaticText51, 0, 
-        wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-
-    wxString itemChoice7Strings[] = 
-    {
-        _("None"),
-        _("Reconciled"),
-        _("Void"),
-        _("Follow up"),
-    	_("Duplicate"),
-    };  
-
-
-    choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, wxSize(100, -1), 5, itemChoice7Strings, 0 );
-    itemFlexGridSizer8->Add(choiceStatus_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    choiceStatus_->SetSelection(mmIniOptions::transStatusReconciled_);
-    choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
-
-    wxStaticText* itemStaticText21 = new wxStaticText( itemPanel7,
-        wxID_STATIC, _("Notes"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer8->Add(itemStaticText21, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-
-    textNotes_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTNOTES, wxT(""), wxDefaultPosition, wxSize(200, 75), wxTE_MULTILINE );
-    itemFlexGridSizer8->Add(textNotes_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    // Notes  ---------------------------------------------
+    wxStaticText* itemStaticText21 = new wxStaticText( itemPanel7, wxID_STATIC, _("Notes"), wxDefaultPosition, wxDefaultSize, 0 );
+    textNotes_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTNOTES, wxT(""), wxDefaultPosition, wxSize(225,80), wxTE_MULTILINE );
     textNotes_->SetToolTip(_("Specify any text notes you want to add to this transaction."));
-    
-    wxStaticText* itemStaticText23 = new wxStaticText( itemPanel7, wxID_STATIC, _("Amount") );
-    itemFlexGridSizer8->Add(itemStaticText23, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-    
-    textAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT("") );
-    itemFlexGridSizer8->Add(textAmount_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    textAmount_->SetToolTip(_("Specify the amount for this transaction"));
-    textAmount_->SetFocus();
 
+    itemFlexGridSizer8->Add(itemStaticText21, 0, wxALIGN_LEFT|wxALIGN_TOP|wxALL|wxADJUST_MINSIZE, 0);
+    itemFlexGridSizer8->Add(textNotes_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxEAST, 0);
+
+    SetTransferControls();  // hide appropriate fields
+    /**********************************************************************************************
+     Button Panel with OK and Cancel Buttons
+    ***********************************************************************************************/
     wxPanel* itemPanel25 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    itemBoxSizer3->Add(itemPanel25, 0, wxALIGN_RIGHT|wxALL, 5);
+    itemBoxSizer2->Add(itemPanel25, 5, wxALIGN_RIGHT|wxALL, 10);
 
-    wxBoxSizer* itemBoxSizer26 = new wxBoxSizer(wxHORIZONTAL);
-    itemPanel25->SetSizer(itemBoxSizer26);
+    wxStdDialogButtonSizer*  itemStdDialogButtonSizer1 = new wxStdDialogButtonSizer;
+    itemPanel25->SetSizer(itemStdDialogButtonSizer1);
 
-    wxButton* itemButton27 = new wxButton( itemPanel25, ID_DIALOG_TRANS_BUTTON_OK, _("OK"));
+    wxFont fnt = itemDialog1->GetFont();
+
+    wxButton* itemButton27 = new wxButton( itemPanel25, ID_DIALOG_TRANS_BUTTON_OK, _("&OK"));
     fnt.SetWeight(wxFONTWEIGHT_NORMAL);
     fnt.SetPointSize(fnt.GetPointSize());
     itemButton27->SetFont(fnt);
     itemButton27->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
-    itemBoxSizer26->Add(itemButton27, flags);
+    itemStdDialogButtonSizer1->Add(itemButton27, flags);
 
-    wxButton* itemButton28 = new wxButton( itemPanel25, ID_DIALOG_TRANS_BUTTON_CANCEL, _("Cancel"));
+    wxButton* itemButton28 = new wxButton( itemPanel25, ID_DIALOG_TRANS_BUTTON_CANCEL, _("&Cancel"));
     fnt.SetWeight(wxFONTWEIGHT_NORMAL);
     fnt.SetPointSize(fnt.GetPointSize());
     itemButton28->SetFont(fnt);
     itemButton28->SetForegroundColour(wxColour(wxT("RED")));
-    itemBoxSizer26->Add(itemButton28, flags);
+    itemStdDialogButtonSizer1->Add(itemButton28, flags);
+
+	itemStdDialogButtonSizer1->Realize();
 
 }
 
@@ -572,36 +579,35 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
     }
 }
 
-void mmTransDialog::OnDateChanged(wxDateEvent& /*event*/)
+void mmTransDialog::OnSpinUp(wxSpinEvent& event)
 {
-	fillControls();
+	wxString dateStr = dpc_->GetValue().FormatISODate();
+	wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
+	date = date.Add(wxDateSpan::Days(1));
+	//dateStr = mmGetDateForDisplay(db_.get(), date);
+	dpc_->SetValue (date);
+	
+	event.Skip();
 }
 
-void mmTransDialog::OnAdvanced(wxCommandEvent& /*event*/)
+void mmTransDialog::OnSpinDown(wxSpinEvent& event)
 {
-    wxString dispString = textAmount_->GetValue();
-    if (toTransAmount_ >= 0.0)
-    {
-        mmex::formatDoubleToCurrencyEdit(toTransAmount_, dispString);
-    }
-    wxTextEntryDialog dlg(this, _("Amount to be recorded in To Account"), _("To Account Amount Entry"),  dispString);
-    if ( dlg.ShowModal() == wxID_OK )
-    {
-        wxString currText = dlg.GetValue().Trim();
-        if (!currText.IsEmpty())
-        {
-            double amount;
-            if (!mmex::formatCurrencyToDouble(currText, amount) || (amount < 0.0))
-            {
-                mmShowErrorMessage(this, _("Invalid To Amount Entered "), _("Error"));
-            }
-            else
-            {
-                toTransAmount_ = amount;
-                advancedToTransAmountSet_ = true;
-                staticTextAdvancedActive_->Show();
-            }
-        }
+	wxString dateStr = dpc_->GetValue().FormatISODate();
+	wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
+	date = date.Add(wxDateSpan::Days(-1));
+	//dateStr = mmGetDateForDisplay(db_.get(), date);
+	dpc_->SetValue (date);
+
+	event.Skip();
+}
+
+void mmTransDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
+{
+    if (cAdvanced_->IsChecked()) {
+        SetAdvancedTransferControls(true);
+    } else {
+        SetAdvancedTransferControls();
+        textAmount_->SetToolTip(amountTransferTip_);
     }
 }
 
@@ -689,28 +695,38 @@ void mmTransDialog::OnTransTypeChanged(wxCommandEvent& /*event*/)
 void mmTransDialog::updateControlsForTransType()
 {
     wxStaticText* stp = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_STATIC_PAYEE);
+    wxStaticText* itemStaticText13 = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_STATIC_FROM);
 
     if (choiceTrans_->GetSelection() == DEF_WITHDRAWAL) {
 
-        fillControls();
         displayControlsToolTips(DEF_WITHDRAWAL);
+        SetTransferControls();
         stp->SetLabel(_("Payee"));
+        bPayee_->SetToolTip(payeeWithdrawalTip_);
+        itemStaticText13->SetLabel(wxT(""));
         if (payeeUnknown_) 
             bPayee_->SetLabel(resetPayeeString());
 
     } else if (choiceTrans_->GetSelection() == DEF_DEPOSIT) {
 
-        fillControls();
         displayControlsToolTips(DEF_DEPOSIT);
+        SetTransferControls();
         stp->SetLabel(_("From"));
+        bPayee_->SetToolTip(payeeDepositTip_);
+        itemStaticText13->SetLabel(wxT(""));
         if (payeeUnknown_) 
             bPayee_->SetLabel(resetPayeeString());
 
     } else if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
 
         displayControlsToolTips(DEF_TRANSFER, true);
+        SetTransferControls(true);
+        if (cAdvanced_->IsChecked())
+            SetAdvancedTransferControls(true);
+
         stp->SetLabel(_("From"));
         bTo_->SetLabel(_("Select To Account"));
+        itemStaticText13->SetLabel(_("To"));
         toID_    = -1;
         payeeUnknown_ = true;
 
@@ -857,15 +873,14 @@ wxString mmTransDialog::getMostFrequentlyUsedPayee(wxString& categString)
 void mmTransDialog::displayControlsToolTips(int transType, bool enableAdvanced /* = false */)
 {
     wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_STATIC_FROM);
-    st->Show(enableAdvanced);
-    bTo_->Show(enableAdvanced);
-    bAdvanced_->Enable(enableAdvanced);
+    st->Enable(enableAdvanced);
+    bTo_->Enable(enableAdvanced);
     if (transType == DEF_TRANSFER) {
         bPayee_->SetToolTip(_("Specify which account the transfer is comming from"));
-        textAmount_->SetToolTip(_("Specify the transfer amount in the From and To Account"));
+        textAmount_->SetToolTip(amountTransferTip_);
     } else {
         bPayee_->SetToolTip(_("Specify to whom the transaction is going to or coming from "));
-        textAmount_->SetToolTip(_("Specify the amount for this transaction"));
+        textAmount_->SetToolTip(amountNormalTip_);
     }
 }
 
@@ -883,7 +898,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     if (payeeID_ == -1)
     {
         if (transCode != wxT("Transfer"))
-            mmShowErrorMessageInvalid(this, _("Payee "));
+            mmShowErrorMessageInvalid(this, _("Payee"));
         else
             mmShowErrorMessageInvalid(this, _("From Account "));
         return;
@@ -893,7 +908,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     {
         if (split_->numEntries() == 0)
         {
-            mmShowErrorMessageInvalid(this, _("Category "));
+            mmShowErrorMessageInvalid(this, _("Category"));
             return;
         }
     }
@@ -901,7 +916,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     {
         if (categID_ < 1)
         {
-            mmShowErrorMessageInvalid(this, _("Category "));
+            mmShowErrorMessageInvalid(this, _("Category"));
             return;
         }
     }
@@ -912,7 +927,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         amount = split_->getTotalSplits();
         if (amount < 0.0)
         {
-            mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
+            mmShowErrorMessageInvalid(this, _("Amount"));
             return;
         }
     }
@@ -921,10 +936,21 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         wxString amountStr = textAmount_->GetValue().Trim();
         if (!mmex::formatCurrencyToDouble(amountStr, amount) || (amount < 0.0))
         {
-            mmShowErrorMessage(this, _("Invalid Amount Entered "), _("Error"));
+            mmShowErrorMessageInvalid(this, _("Amount"));
             return;
         }
     }
+
+    if (advancedToTransAmountSet_)
+    {
+        wxString amountStr = toTextAmount_->GetValue().Trim();
+        if (!mmex::formatCurrencyToDouble(amountStr, toTransAmount_) || (toTransAmount_ < 0.0))
+        {
+            mmShowErrorMessageInvalid(this, _("Advanced Amount"));
+            return;
+        }
+    } else
+        toTransAmount_ = amount;
 
     int toAccountID = -1;
     int fromAccountID = accountID_;
@@ -975,13 +1001,13 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
                 toTransAmount_ = amount;
             }
         }
-        else
-        {
-            // Since to trans amount is not set,
-            // we use the original currency rate to calculate
-            // toTransAmount
-            toTransAmount_ = edit_currency_rate * amount;
-        }
+    //    else
+    //    {
+    //        // Since to trans amount is not set,
+    //        // we use the original currency rate to calculate
+    //        // toTransAmount
+    //        toTransAmount_ = edit_currency_rate * amount;
+    //    }
     }
 
     wxString transNum = textNumber_->GetValue();
@@ -1050,7 +1076,6 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         core_->bTransactionList_.updateTransaction(pTransaction);
     }
 
-
     EndModal(wxID_OK);
 }
 
@@ -1077,5 +1102,39 @@ void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
         wxString dispAmount;
         mmex::formatDoubleToCurrencyEdit(0.0, dispAmount);
         textAmount_->SetValue(dispAmount);
+    }
+}
+
+void mmTransDialog::SetTransferControls(bool transfers)
+{
+    if (transfers) {
+        cAdvanced_->Enable();
+        bTo_->Show();
+    } else {
+        bTo_->Hide();
+        cAdvanced_->Disable();
+        SetAdvancedTransferControls();
+    }
+}
+
+void mmTransDialog::SetAdvancedTransferControls(bool advanced)
+{
+    if (advanced) {
+        toTextAmount_->Enable();
+        advancedToTransAmountSet_ = true;
+        // Display the transfer amount in the toTextAmount control.
+        if (toTransAmount_ >= 0)
+        {
+            wxString dispAmount;
+            mmex::formatDoubleToCurrencyEdit(toTransAmount_, dispAmount);
+            toTextAmount_->SetValue(dispAmount);
+        } else
+            toTextAmount_->SetValue(textAmount_->GetValue());
+
+        textAmount_->SetToolTip(_("Specify the transfer amount in the From Account"));
+
+    } else {
+        toTextAmount_->Disable();
+        advancedToTransAmountSet_ = false;
     }
 }
