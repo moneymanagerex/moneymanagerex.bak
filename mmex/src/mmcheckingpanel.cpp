@@ -1071,7 +1071,7 @@ const TransactionMatchMap& initTransactionMatchMap()
 	map[wxT("View 30 days")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<30> >()), true);
 	map[wxT("View 90 days")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<90> >()), true);
 	map[wxT("View Current Month")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::CurrentMonth<> >()), true);
-	map[wxT("View Last Month")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<1, 0> >()), true);
+	map[wxT("View Last Month")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<1, 1> >()), true);
 	map[wxT("View Last 3 Months")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<2> >()), true);
 
 	return map;
@@ -1087,7 +1087,6 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
     pgd->Update(20);
    
 	boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(m_AccountID);
-    double acctInitBalance = pAccount->initialBalance_;
     boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
     wxASSERT(pCurrency);
     pCurrency->loadCurrencySettings();
@@ -1099,10 +1098,12 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
 
     /**********************************************************************************
      Stage 1
-     Get all entries from the database to be displayed for our account.
+     For the account being viewed, we need to get:
+     1. All entries for the account to determine account balances. [ v_transPtr ]
+     2. All entries for the account to be displayed.               [ m_trans    ]
     /**********************************************************************************/
     int numTransactions = 0;
-	double unseenBalance = 0.0;
+    std::vector<mmBankTransaction*> v_transPtr;
     for (size_t i = 0; i < m_core->bTransactionList_.transactions_.size(); ++i)
     {
         boost::shared_ptr<mmBankTransaction> pBankTransaction = m_core->bTransactionList_.transactions_[i];
@@ -1111,9 +1112,12 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
 
         pBankTransaction->updateAllData(m_core, m_AccountID, pCurrency);
 
+        // Store all account transactions to determine the balances.
+        v_transPtr.push_back(pBankTransaction.get());
+
         bool toAdd = true;
-		bool getBal = false;
-		if (s_transactionMatchers_Map.count(m_currentView) > 0)
+//		bool getBal = false;
+        if (s_transactionMatchers_Map.count(m_currentView) > 0)
 		{
 			// boost::shared_ptr<TransactionPtr_Matcher> pMatcher;
 			TransactionMatchMap::const_iterator it = s_transactionMatchers_Map.find(m_currentView);
@@ -1127,42 +1131,13 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
 				wxASSERT(matcher);
 
 				toAdd = matcher->Match(pBankTransaction);
-				getBal = data.second;
+//              getBal = data.second;
 			}
 		}
 
-        /******************************************************************************
-         Because we get transactions for last and current months, we need to remove all
-         transactions for current month. This fixes balances by making them in order.
-        /******************************************************************************/
-        if ( m_currentView == wxT("View Last Month") )
-        {
-            if (toAdd)
-            {
-                if ( pBankTransaction->date_.GetMonth() == wxDateTime::Now().GetMonth() )
-                {
-                    toAdd  = false;  // remove the current months transaction from the list.
-                    getBal = false;  // do not add these to the unseenBalance
-                }
-            }
-        }
-
-        /******************************************************************************
-         Because we remove all unwanted transactions, we end up removing transactions 
-         that contain the amounts for our other transactions. This makes the running 
-         balances incorrect, as they are out of order.
-
-         TODO: Work out a way to correct the balances once we have them.
-               This will correct the balance for all transactions for the account. 
-               Also also means working out the transaction mapping routines where the
-               other filtering occurs as well. Yuck!!! (Stef)
-               
-        /******************************************************************************/
         if (transFilterActive_)
         {
             toAdd  = false;  // remove transaction from list and add if wanted.
-            getBal = false;  // do not add these to the unseenBalance
-
             if ( transFilterDlg_->byDateRange(pBankTransaction->date_) &&
                  transFilterDlg_->byPayee(pBankTransaction->payeeStr_) &&
                  transFilterDlg_->byCategory(pBankTransaction->catStr_, pBankTransaction->subCatStr_) &&
@@ -1180,89 +1155,49 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
             m_trans.push_back(pBankTransaction.get());
             ++numTransactions;
         }
-        else
-        {
-		    if (getBal)
-		    {
-               unseenBalance = getBalance(pBankTransaction,unseenBalance);
-            } 
-        }  
     }
-    /****************************************************************************
-     End Stage 1
-    /****************************************************************************/
 
+    /**********************************************************************************
+     Stage 2
+     Sort all account transactions by date to, determine balances.
+    /**********************************************************************************/
     if (pgd)
     pgd->Update(40);
 
-    // sort m_trans by date
-    double initBalance = acctInitBalance + unseenBalance;
-    if (m_currentView == wxT("View UnReconciled"))
-    {
-        initBalance = m_core->bTransactionList_.getReconciledBalance(m_AccountID);
-    }
-
-    std::sort(m_trans.begin(), m_trans.end(), sortTransByDateAsc);
-
-    if (pgd)
-    pgd->Update(60);
+    std::sort(v_transPtr.begin(), v_transPtr.end(), sortTransByDateAsc);
 
     /**********************************************************************************
      Stage 3
-     From the entries being displayed, determine the balance for each transaction.
-     Note: If there are missing transactions, the individual balances become incorrect.
+     Add the account balances to all the transactions in this account.
     /**********************************************************************************/
-    for (size_t i = 0; i < m_trans.size(); ++i)
+    if (pgd)
+    pgd->Update(60);
+
+    double initBalance = pAccount->initialBalance_;
+    for (size_t i = 0; i < v_transPtr.size(); ++i)
     {
-        bool ok = m_trans[i] != 0;
+        bool ok = v_transPtr[i] != 0;
         wxASSERT(ok);
 
         if (!ok) {
             continue;
         }
 
-        mmBankTransaction &tr = *m_trans[i];
-
-        if (tr.status_ != wxT("V"))
-        {
-            if (tr.transType_ == TRANS_TYPE_DEPOSIT)
-            {
-                initBalance += tr.amt_;
-            }
-            else if (tr.transType_ == TRANS_TYPE_WITHDRAWAL)
-            {
-                initBalance -= tr.amt_;
-            }
-            else if (tr.transType_ == TRANS_TYPE_TRANSFER)
-            {
-                if (tr.accountID_ == m_AccountID)
-                {
-                    initBalance -= tr.amt_;
-                }
-                else if (tr.toAccountID_== m_AccountID)
-                {
-                    initBalance += tr.toAmt_;
-                }
-            }
-        }
-        
-        tr.balance_ = initBalance;
-        wxString balanceStr;
-        mmex::formatDoubleToCurrencyEdit(initBalance, balanceStr);
-        tr.balanceStr_ = balanceStr;
+        mmBankTransaction* transPtr = v_transPtr[i];
+        initBalance = getBalance( transPtr, initBalance);
+        setBalance( transPtr, initBalance);
     }
-    /****************************************************************************
-     End Stage 3
-    /****************************************************************************/
 
+    /**********************************************************************************
+     Stage 4
+     Sort the list of visible transactions dependant on user preferences.
+    /**********************************************************************************/
     if (pgd)
     pgd->Update(80);
 
-    /* Setup the Sorting */
-     // decide whether top or down icon needs to be shown
+    // decide whether top or down icon needs to be shown
     m_listCtrlAccount->setColumnImage(g_sortcol, g_asc ? ICON_ASC : ICON_DESC);
     
-    // sort the table
     sortTable(); 
 
 	m_listCtrlAccount->SetItemCount(numTransactions);
@@ -1287,27 +1222,27 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
 }
 //----------------------------------------------------------------------------
 
-double mmCheckingPanel::getBalance(boost::shared_ptr<mmBankTransaction> pBankTransaction, double currentBalance)
+double mmCheckingPanel::getBalance(mmBankTransaction* transPtr, double currentBalance)
 {
-    if (pBankTransaction->status_ != wxT("V"))
+    if (transPtr->status_ != wxT("V"))
     {
-        if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT)
+        if (transPtr->transType_ == TRANS_TYPE_DEPOSIT)
         {
-            currentBalance += pBankTransaction->amt_;
+            currentBalance += transPtr->amt_;
         }
-        else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL)
+        else if (transPtr->transType_ == TRANS_TYPE_WITHDRAWAL)
         {
-            currentBalance -= pBankTransaction->amt_;
+            currentBalance -= transPtr->amt_;
         }
-        else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER)
+        else if (transPtr->transType_ == TRANS_TYPE_TRANSFER)
         {
-            if (pBankTransaction->accountID_ == m_AccountID)
+            if (transPtr->accountID_ == m_AccountID)
             {
-                currentBalance -= pBankTransaction->amt_;
+                currentBalance -= transPtr->amt_;
             }
-            else if (pBankTransaction->toAccountID_== m_AccountID)
+            else if (transPtr->toAccountID_== m_AccountID)
             {
-                currentBalance += pBankTransaction->toAmt_;
+                currentBalance += transPtr->toAmt_;
             }
         }
     }
@@ -1315,12 +1250,12 @@ double mmCheckingPanel::getBalance(boost::shared_ptr<mmBankTransaction> pBankTra
 }
 //----------------------------------------------------------------------------
 
-void mmCheckingPanel::setBalance(boost::shared_ptr<mmBankTransaction> pBankTransaction, double currentBalance )
+void mmCheckingPanel::setBalance(mmBankTransaction* transPtr, double currentBalance )
 {
-    pBankTransaction->balance_ = currentBalance;
+    transPtr->balance_ = currentBalance;
     wxString balanceStr;
     mmex::formatDoubleToCurrencyEdit(currentBalance, balanceStr);
-    pBankTransaction->balanceStr_ = balanceStr;
+    transPtr->balanceStr_ = balanceStr;
 }
 
 void mmCheckingPanel::OnDeleteTransaction(wxCommandEvent& event)
@@ -1394,7 +1329,15 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
 {
     int evt =  event.GetId();
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_PANELVIEW);
-    if (evt ==  MENU_VIEW_ALLTRANSACTIONS)
+
+    if ( (evt !=  MENU_VIEW_ALLTRANSACTIONS) && transFilterActive_)
+    {
+        wxString messageStr;
+        messageStr << _("Transaction Filter")<< _("  will interfere with this filtering.") << wxT("\n\n");
+        messageStr << _("Please deactivate: ") << _("Transaction Filter");
+        wxMessageBox(messageStr,_("Transaction Filter"),wxICON_WARNING);
+    } 
+    else if (evt ==  MENU_VIEW_ALLTRANSACTIONS)
     {
         header->SetLabel(_("Viewing all transactions"));
         m_currentView = wxT("View All Transactions");
@@ -1511,23 +1454,32 @@ void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
     wxBitmap activeBitmapFilterIcon(tipicon_xpm); 
     wxBitmap bitmapFilterIcon(rightarrow_xpm);
 
-    int dlgResult = transFilterDlg_->ShowModal();
-    if ( dlgResult == wxID_OK )
-    {
-        transFilterActive_ = true; 
-        bitmapFilterIcon = activeBitmapFilterIcon;
-    }
-    else if ( dlgResult == wxID_CANCEL )
-    {
-        transFilterActive_ = false;
-    }
+    wxString messageStr;
+    messageStr << _("Current filtering has been set to: ") << m_currentView << wxT("\n\n");
+    messageStr << _("Please set filtering to: ") << _("View All Transactions");
 
-    wxStaticBitmap* staticBitmap = (wxStaticBitmap*)FindWindow(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER);
-    staticBitmap->SetBitmap(bitmapFilterIcon);
+    if (m_currentView != wxT("View All Transactions")) {
+        wxMessageBox(messageStr,_("Transaction Filter"),wxICON_WARNING);
 
-    m_listCtrlAccount->DeleteAllItems();
-    initVirtualListControl(NULL);
-    m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
+    } else {
+        int dlgResult = transFilterDlg_->ShowModal();
+        if ( dlgResult == wxID_OK )
+        {
+            transFilterActive_ = true; 
+            bitmapFilterIcon = activeBitmapFilterIcon;
+        }
+        else if ( dlgResult == wxID_CANCEL )
+        {
+            transFilterActive_ = false;
+        }
+
+        wxStaticBitmap* staticBitmap = (wxStaticBitmap*)FindWindow(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER);
+        staticBitmap->SetBitmap(bitmapFilterIcon);
+
+        m_listCtrlAccount->DeleteAllItems();
+        initVirtualListControl(NULL);
+        m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
+    }
 }
 
 //----------------------------------------------------------------------------

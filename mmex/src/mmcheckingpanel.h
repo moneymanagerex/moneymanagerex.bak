@@ -149,8 +149,8 @@ private:
 
     int accountID() const { return m_AccountID; }
 
-    double getBalance(boost::shared_ptr<mmBankTransaction> pBankTransaction, double currentBalance );
-    void setBalance(boost::shared_ptr<mmBankTransaction> pBankTransaction, double currentBalance );
+    double getBalance(mmBankTransaction* transPtr, double currentBalance );
+    void setBalance(mmBankTransaction* transPtr, double currentBalance );
 
 };
 //----------------------------------------------------------------------------
