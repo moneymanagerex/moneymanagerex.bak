@@ -434,33 +434,30 @@ bool TransFilterDialog::byType(wxString type)
 	return result; 
 }
 
-bool TransFilterDialog::byTransNumber(wxString trNum)
+bool TransFilterDialog::searchResult( wxCheckBox* chkBox, wxTextCtrl* txtCtrl, wxString sourceStr)
 {
     bool result = false;
-    if ( cbTransNumber_->GetValue() )
-    {
-        wxString trNumFilter = txtTransNumber_->GetValue().Trim().Lower();
-        if (trNum.Trim().Lower() == trNumFilter )
-        {
+    if ( chkBox->GetValue() ) {
+        if (txtCtrl->GetValue().IsEmpty()) {
+            if (sourceStr.IsEmpty()) {
+                result = true;
+            }
+        } else if (sourceStr.Trim().Lower().Find(txtCtrl->GetValue().Trim().Lower()) != wxNOT_FOUND ) {
             result = true;
         }
-    } 
-    else
+    } else {
         result = true;
+    }
 
     return result; 
 }
 
+bool TransFilterDialog::byTransNumber(wxString trNum)
+{
+    return searchResult(cbTransNumber_,txtTransNumber_,trNum);
+}
+
 bool TransFilterDialog::byNotes(wxString notes)
 {
-    bool result = false;
-    if ( cbNotes_->GetValue() )
-	{
-        if (notes.Lower().Find(txtNotes_->GetValue().Lower()) != wxNOT_FOUND )
-            result = true;
-    } 
-    else
-        result = true;
-
-    return result; 
+    return searchResult(cbNotes_,txtNotes_,notes);
 }
