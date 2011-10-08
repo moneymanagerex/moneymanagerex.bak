@@ -104,7 +104,7 @@ private:
 
     void OnButtonOK( wxCommandEvent& event );
     void OnButtonCancel( wxCommandEvent& event );
-    
+    bool searchResult( wxCheckBox* chkBox, wxTextCtrl* txtCtrl, wxString sourceStr);
 };
 
 
