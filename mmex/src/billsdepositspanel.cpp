@@ -404,7 +404,7 @@ void mmBillsDepositsPanel::initVirtualListControl()
         int cid = 0, sid = 0;
         th.payeeStr_ = mmDBWrapper::getPayee(db_, th.payeeID_, cid, sid);
 
-        if (th.transType_ == wxT("Transfer"))
+        if (th.transType_ == TRANS_TYPE_TRANSFER_STR)
         {
             wxString fromAccount = mmDBWrapper::getAccountName(db_,  th.accountID_);
             wxString toAccount = mmDBWrapper::getAccountName(db_,  th.toAccountID_ );
@@ -475,11 +475,11 @@ wxString mmBillsDepositsPanel::getItem(long item, long column)
 
     if (column == 2)
     {
-        if (trans_[item].transType_ == wxT("Withdrawal"))
+        if (trans_[item].transType_ == TRANS_TYPE_WITHDRAWAL_STR)
             return _("Withdrawal");
-        else if (trans_[item].transType_ == wxT("Deposit"))
+        else if (trans_[item].transType_ == TRANS_TYPE_DEPOSIT_STR)
             return _("Deposit");
-        else if (trans_[item].transType_ == wxT("Transfer"))
+        else if (trans_[item].transType_ == TRANS_TYPE_TRANSFER_STR)
             return _("Transfer");
     }
 

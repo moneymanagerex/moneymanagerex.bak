@@ -45,16 +45,7 @@ BEGIN_EVENT_TABLE( mmBDDialog, wxDialog )
     EVT_CHECKBOX(ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_SILENT, mmBDDialog::OnAutoExecutionSilentChecked)
 END_EVENT_TABLE()
 
-// Defines for Transaction Type
-#define DEF_WITHDRAWAL 0
-#define DEF_DEPOSIT    1
-#define DEF_TRANSFER   2
-
-// Defines for Transaction Status
-#define DEF_STATUS_NONE       0
-#define DEF_STATUS_RECONCILED 1
-#define DEF_STATUS_VOID       2
-#define DEF_STATUS_FOLLOWUP   3
+// Defines for Transaction Status and Type now located in dbWrapper.h
 
 const wxString REPEAT_TRANSACTIONS_MSGBOX_HEADING = _("Repeat Transaction - Auto Execution Checking");
 
@@ -197,11 +188,11 @@ void mmBDDialog::dataToControls()
         if (repeatSel == 0) // if none
             textNumRepeats_->SetValue(wxT(""));
         
-        if (transTypeString == wxT("Withdrawal"))
+        if (transTypeString == TRANS_TYPE_WITHDRAWAL_STR)
             choiceTrans_->SetSelection(DEF_WITHDRAWAL);
-        else if (transTypeString == wxT("Deposit"))
+        else if (transTypeString == TRANS_TYPE_DEPOSIT_STR)
             choiceTrans_->SetSelection(DEF_DEPOSIT);
-        else if (transTypeString == wxT("Transfer"))
+        else if (transTypeString == TRANS_TYPE_TRANSFER_STR)
             choiceTrans_->SetSelection(DEF_TRANSFER);
         updateControlsForTransType();
 
@@ -266,7 +257,7 @@ void mmBDDialog::dataToControls()
 
         bPayee_->SetLabel(payeeString);
         
-        if (transTypeString == wxT("Transfer"))
+        if (transTypeString == TRANS_TYPE_TRANSFER_STR)
         {
             wxString fromAccount = mmDBWrapper::getAccountName(db_, accountID_);
             wxString toAccount = mmDBWrapper::getAccountName(db_, toID_);
@@ -902,15 +893,15 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
         
     int tCode = choiceTrans_->GetSelection();
     if (tCode == DEF_WITHDRAWAL)
-        transCode = wxT("Withdrawal");
+        transCode = TRANS_TYPE_WITHDRAWAL_STR;
     else if (tCode == DEF_DEPOSIT)
-        transCode = wxT("Deposit");
+        transCode = TRANS_TYPE_DEPOSIT_STR;
     else if (tCode == DEF_TRANSFER)
-        transCode = wxT("Transfer");
+        transCode = TRANS_TYPE_TRANSFER_STR;
 
     if (payeeID_ == -1)
     {
-        if (transCode != wxT("Transfer"))
+        if (transCode != TRANS_TYPE_TRANSFER_STR)
             mmShowErrorMessageInvalid(this, _("Payee "));
         else
             mmShowErrorMessageInvalid(this, _("From Account "));
@@ -955,7 +946,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
         }
     }
 
-    if ((transCode != wxT("Transfer")) && (accountID_ == -1))
+    if ((transCode != TRANS_TYPE_TRANSFER_STR) && (accountID_ == -1))
     {
         mmShowErrorMessageInvalid(this, _("Account"));
         return;
@@ -963,7 +954,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
 
     int toAccountID = -1;
     int fromAccountID = accountID_;
-    if (transCode == wxT("Transfer"))
+    if (transCode == TRANS_TYPE_TRANSFER_STR)
     {
         if (toID_ == -1)
         {

@@ -39,9 +39,7 @@ BEGIN_EVENT_TABLE( TransFilterDialog, wxDialog )
     EVT_BUTTON( ID_DIALOG_TRANSFILTER_BUTTON_CANCEL,   TransFilterDialog::OnButtonCancel )
 END_EVENT_TABLE()
 
-// Defines for Transaction Status and Type
-enum {DEF_STATUS_NONE , DEF_STATUS_RECONCILED , DEF_STATUS_VOID , DEF_STATUS_FOLLOWUP , DEF_STATUS_DUPLICATE };
-enum {DEF_WITHDRAWAL , DEF_DEPOSIT , DEF_TRANSFER};
+// Defines for Transaction Status and Type now located in dbWrapper.h
 
 // default constructor
 TransFilterDialog::TransFilterDialog()
@@ -419,11 +417,11 @@ bool TransFilterDialog::byType(wxString type)
         int tCode = choiceType_->GetSelection();
 
         if (tCode == DEF_WITHDRAWAL)
-            transCodeStr = wxT("Withdrawal");
+            transCodeStr = TRANS_TYPE_WITHDRAWAL_STR;
         else if (tCode == DEF_DEPOSIT)
-            transCodeStr = wxT("Deposit");
+            transCodeStr = TRANS_TYPE_DEPOSIT_STR;
         else if (tCode == DEF_TRANSFER)
-            transCodeStr = wxT("Transfer");
+            transCodeStr = TRANS_TYPE_TRANSFER_STR;
 
         if (type == transCodeStr )
             result = true;

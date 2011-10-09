@@ -762,9 +762,9 @@ void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
             }
 
             if (val_ <= 0.0)
-                type_ = wxT("Withdrawal");
+                type_ = TRANS_TYPE_WITHDRAWAL_STR;
             else
-                type_ = wxT("Deposit");
+                type_ = TRANS_TYPE_DEPOSIT_STR;
 
             val_ = fabs(val_);
             amount_ = token;
@@ -844,7 +844,7 @@ void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
             if (val_ <= 0.0)
                 return;
 
-            type_ = wxT("Deposit");
+            type_ = TRANS_TYPE_DEPOSIT_STR;
              amount_ = token;
             break;
         }
@@ -862,7 +862,7 @@ void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
             if (val_ <= 0.0)
                 return;
 
-            type_ = wxT("Withdrawal");
+            type_ = TRANS_TYPE_WITHDRAWAL_STR;
             amount_ = token;
             break;
         }

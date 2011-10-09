@@ -25,7 +25,14 @@
 #include <boost/shared_ptr.hpp>
 //----------------------------------------------------------------------------
 
-const int BD_REPEATS_MULTIPLEX_BASE = 100;
+const int BD_REPEATS_MULTIPLEX_BASE  = 100;
+
+const wxString TRANS_TYPE_WITHDRAWAL_STR = wxT("Withdrawal");
+const wxString TRANS_TYPE_DEPOSIT_STR    = wxT("Deposit");
+const wxString TRANS_TYPE_TRANSFER_STR   = wxT("Transfer");
+
+enum {DEF_STATUS_NONE , DEF_STATUS_RECONCILED , DEF_STATUS_VOID , DEF_STATUS_FOLLOWUP , DEF_STATUS_DUPLICATE };
+enum {DEF_WITHDRAWAL , DEF_DEPOSIT , DEF_TRANSFER};
 
 namespace mmDBWrapper
 {

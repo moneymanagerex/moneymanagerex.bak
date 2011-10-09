@@ -45,11 +45,6 @@
 namespace
 {
 
-const wxString TRANS_TYPE_WITHDRAWAL = wxT("Withdrawal");
-const wxString TRANS_TYPE_DEPOSIT = wxT("Deposit");
-const wxString TRANS_TYPE_TRANSFER = wxT("Transfer");
-
-
 enum EColumn
 { 
     COL_DATE_OR_TRANSACTION_ID, 
@@ -893,7 +888,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
     int toaccountId = q1.GetInt(wxT("TOACCOUNTID"));
 
     wxString infoStr = wxT("");
-    if (transcodeStr == wxT("Transfer"))
+    if (transcodeStr == TRANS_TYPE_TRANSFER_STR)
     {
     int tocurrencyid = q1.GetInt(wxT("TOCURRENCYID"));
     double toamount = q1.GetDouble(wxT("TOTRANSAMOUNT"));
@@ -1226,15 +1221,15 @@ double mmCheckingPanel::getBalance(mmBankTransaction* transPtr, double currentBa
 {
     if (transPtr->status_ != wxT("V"))
     {
-        if (transPtr->transType_ == TRANS_TYPE_DEPOSIT)
+        if (transPtr->transType_ == TRANS_TYPE_DEPOSIT_STR)
         {
             currentBalance += transPtr->amt_;
         }
-        else if (transPtr->transType_ == TRANS_TYPE_WITHDRAWAL)
+        else if (transPtr->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
         {
             currentBalance -= transPtr->amt_;
         }
-        else if (transPtr->transType_ == TRANS_TYPE_TRANSFER)
+        else if (transPtr->transType_ == TRANS_TYPE_TRANSFER_STR)
         {
             if (transPtr->accountID_ == m_AccountID)
             {
@@ -1753,7 +1748,7 @@ int MyListCtrl::OnGetItemColumnImage(long item, long column) const
         bool ok = m_cp && index < m_cp->m_trans.size();
         mmBankTransaction *tr = ok ? m_cp->m_trans[index] : 0;
         
-        if (tr->transType_ == TRANS_TYPE_TRANSFER) {
+        if (tr->transType_ == TRANS_TYPE_TRANSFER_STR) {
             if ( tr->accountID_ == m_cp->accountID() )
                 res = ICON_TRANS_WITHDRAWAL;
             else
@@ -2067,7 +2062,7 @@ void MyListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex != -1)
 	{
-        if ( m_cp->m_trans[m_selectedIndex]->transType_ == TRANS_TYPE_TRANSFER )
+        if ( m_cp->m_trans[m_selectedIndex]->transType_ == TRANS_TYPE_TRANSFER_STR )
         {
             mmTransDialog dlg(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 
                               m_cp->m_trans[m_selectedIndex]->transactionID(), true, 

@@ -531,7 +531,7 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
 
         mmex::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
         //for Withdrawal amount should be negative
-		if (th.transType_== wxT("Withdrawal"))
+		if (th.transType_== TRANS_TYPE_WITHDRAWAL_STR)
 		{
 			th.transAmtString_= wxT ("-") + th.transAmtString_;
 			th.amt_ = -th.amt_;
@@ -542,7 +542,7 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
         int cid = 0, sid = 0;
         th.payeeStr_ = mmDBWrapper::getPayee(db_, th.payeeID_, cid, sid);
 
-        if (th.transType_ == wxT("Transfer"))
+        if (th.transType_ == TRANS_TYPE_TRANSFER_STR)
         {
             wxString fromAccount = mmDBWrapper::getAccountName(db_,  th.accountID_);
             wxString toAccount = mmDBWrapper::getAccountName(db_,  th.toAccountID_ );

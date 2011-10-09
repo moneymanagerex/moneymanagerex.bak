@@ -617,9 +617,9 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 }
 
                 if (val <= 0.0)
-                    type = wxT("Withdrawal");
+                    type = TRANS_TYPE_WITHDRAWAL_STR;
                 else
-                    type = wxT("Deposit");
+                    type = TRANS_TYPE_DEPOSIT_STR;
                 val = fabs(val);
                 continue;
             }
