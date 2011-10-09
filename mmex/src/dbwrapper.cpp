@@ -1049,11 +1049,11 @@ double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountI
                 continue; //skip future dated transactions
         }
 
-        if (transTypeString == wxT("Deposit"))
+        if (transTypeString == TRANS_TYPE_DEPOSIT_STR)
             balance += transAmount;
-        else if (transTypeString == wxT("Withdrawal"))
+        else if (transTypeString == TRANS_TYPE_WITHDRAWAL_STR)
             balance -= transAmount;
-        else if (transTypeString == wxT("Transfer"))
+        else if (transTypeString == TRANS_TYPE_TRANSFER_STR)
         {
             if (transactionFromID == accountID)
             {
@@ -1127,11 +1127,11 @@ bool mmDBWrapper::getExpensesIncome(wxSQLite3Database* db,
                 continue; //skip
         }
         
-        if (transTypeString == wxT("Deposit"))
+        if (transTypeString == TRANS_TYPE_DEPOSIT_STR)
             income += transAmount;
-        else if (transTypeString == wxT("Withdrawal"))
+        else if (transTypeString == TRANS_TYPE_WITHDRAWAL_STR)
             expenses += transAmount;
-        else if (transTypeString == wxT("Transfer"))
+        else if (transTypeString == TRANS_TYPE_TRANSFER_STR)
         {
             // transfers are not considered in income/expenses calculations
         }
@@ -1879,12 +1879,12 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
                 continue; //skip
         }
 
-        if (code == wxT("Transfer"))
+        if (code == TRANS_TYPE_TRANSFER_STR)
             continue;
 
-        if (code == wxT("Withdrawal"))
+        if (code == TRANS_TYPE_WITHDRAWAL_STR)
             amt = amt - transAmount;
-        else if (code == wxT("Deposit"))
+        else if (code == TRANS_TYPE_DEPOSIT_STR)
             amt = amt + transAmount;
     }
     
@@ -1930,16 +1930,16 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
                  continue; //skip
          }
 
-         if (code == wxT("Transfer"))
+         if (code == TRANS_TYPE_TRANSFER_STR)
              continue;
 
          // This is a valid transaction get amount for
          // this transaction
          double val = getSplitTransactionValueForCategory(db, transID, categID, subcategID);
          val = val * dbRate;
-         if (code == wxT("Withdrawal"))
+         if (code == TRANS_TYPE_WITHDRAWAL_STR)
              amt = amt - val;
-         else if (code == wxT("Deposit"))
+         else if (code == TRANS_TYPE_DEPOSIT_STR)
              amt = amt + val;
     }
 
@@ -2015,12 +2015,12 @@ double mmDBWrapper::getAmountForPayee(wxSQLite3Database* db, int payeeID,
                 continue; //skip
         }
 
-        if (code == wxT("Transfer"))
+        if (code == TRANS_TYPE_TRANSFER_STR)
             continue;
 
-        if (code == wxT("Withdrawal"))
+        if (code == TRANS_TYPE_WITHDRAWAL_STR)
             amt = amt - transAmount;
-        else if (code == wxT("Deposit"))
+        else if (code == TRANS_TYPE_DEPOSIT_STR)
             amt = amt + transAmount;
     }
     st.Finalize();

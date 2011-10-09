@@ -83,7 +83,7 @@ wxString mmReportTransactions::getHTMLText()
         std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = *trans_;
 
         // For transfer transactions, we need to fix the data reference point first.
-        if ( refAccountID_ > -1 && refTrans[index]->transType_ == wxT("Transfer") && 
+        if ( refAccountID_ > -1 && refTrans[index]->transType_ == TRANS_TYPE_TRANSFER_STR && 
              (refAccountID_ == refTrans[index]->accountID_ || refAccountID_ == refTrans[index]->toAccountID_) )
         {
             boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(refAccountID_);
@@ -102,16 +102,16 @@ wxString mmReportTransactions::getHTMLText()
         hb.addTableCell(refTrans[index]->transNum_);
         hb.addTableCell(refTrans[index]->fromAccountStr_, false, true);
         hb.addTableCell(refTrans[index]->payeeStr_, false, true);
-        if (refTrans[index]->transType_ == wxT("Deposit"))
+        if (refTrans[index]->transType_ == TRANS_TYPE_DEPOSIT_STR)
         {
             hb.addTableCell(_("Deposit"));
         }
-        else if (refTrans[index]->transType_ == wxT("Withdrawal"))
+        else if (refTrans[index]->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
         {
             hb.addTableCell(_("Withdrawal"));
             negativeTransAmount = true;
         }
-        else if (refTrans[index]->transType_ == wxT("Transfer"))
+        else if (refTrans[index]->transType_ == TRANS_TYPE_TRANSFER_STR)
         {
             hb.addTableCell(_("Transfer"));
             if (refAccountID_ >= 0 )
@@ -145,15 +145,15 @@ wxString mmReportTransactions::getHTMLText()
         if (refTrans[index]->reportCategAmountStr_ != wxT(""))
             transAmount = refTrans[index]->reportCategAmount_ * dbRate;
 
-        if (refTrans[index]->transType_ == wxT("Deposit"))
+        if (refTrans[index]->transType_ == TRANS_TYPE_DEPOSIT_STR)
         {
             total += transAmount;
         }
-        else if (refTrans[index]->transType_ == wxT("Withdrawal"))
+        else if (refTrans[index]->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
         {
             total -= transAmount;
         }
-        else if (refTrans[index]->transType_ == wxT("Transfer"))
+        else if (refTrans[index]->transType_ == TRANS_TYPE_TRANSFER_STR)
         {
             transferTransactionFound = true;
             if (negativeTransAmount)

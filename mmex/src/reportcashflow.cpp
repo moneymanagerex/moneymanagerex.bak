@@ -197,7 +197,7 @@ wxString mmReportCashFlow::getHTMLText()
         if (nextOccurDate > yearFromNow)
             continue;
 
-        if (transType == wxT("Transfer"))
+        if (transType == TRANS_TYPE_TRANSFER_STR)
             continue;
 
         int accountID     = q1.GetInt(wxT("ACCOUNTID"));
@@ -231,7 +231,7 @@ wxString mmReportCashFlow::getHTMLText()
             mmRepeatForecast rf;
             rf.date = nextOccurDate;
 
-            if (transType == wxT("Withdrawal"))
+            if (transType == TRANS_TYPE_WITHDRAWAL_STR)
                 rf.amount = -amt * convRate;
             else
                 rf.amount = +amt * convRate;

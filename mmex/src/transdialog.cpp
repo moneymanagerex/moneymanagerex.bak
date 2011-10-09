@@ -28,11 +28,7 @@
 
 #include <sstream>
 
-// Defines for Transaction Type
-enum { DEF_WITHDRAWAL, DEF_DEPOSIT, DEF_TRANSFER };
-
-// Defines for Transaction Status
-enum { DEF_STATUS_NONE, DEF_STATUS_RECONCILED, DEF_STATUS_VOID, DEF_STATUS_FOLLOWUP, DEF_STATUS_DUPLICATE };
+// Defines for Transaction: (Status and Type) now located in dbWrapper.h
 
 enum { ID_DIALOG_TRANS_SPINNER };
          
@@ -196,11 +192,11 @@ void mmTransDialog::dataToControls()
              choiceStatus_->SetSelection(DEF_STATUS_DUPLICATE);
         }
 
-        if (transTypeString == wxT("Withdrawal"))
+        if (transTypeString == TRANS_TYPE_WITHDRAWAL_STR)
             choiceTrans_->SetSelection(DEF_WITHDRAWAL);
-        else if (transTypeString == wxT("Deposit"))
+        else if (transTypeString == TRANS_TYPE_DEPOSIT_STR)
             choiceTrans_->SetSelection(DEF_DEPOSIT);
-        else if (transTypeString == wxT("Transfer"))
+        else if (transTypeString == TRANS_TYPE_TRANSFER_STR)
             choiceTrans_->SetSelection(DEF_TRANSFER);
         updateControlsForTransType();
 
@@ -243,7 +239,7 @@ void mmTransDialog::dataToControls()
 
         bPayee_->SetLabel(q1.GetString(wxT("PAYEENAME")));
 
-        if (transTypeString == wxT("Transfer"))
+        if (transTypeString == TRANS_TYPE_TRANSFER_STR)
         {
             bPayee_->SetLabel(q1.GetString(wxT("ACCOUNTNAME")));
             bTo_->SetLabel(q1.GetString(wxT("TOACCOUNTNAME")));
@@ -889,15 +885,15 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     wxString transCode = wxT("");
     int tCode = choiceTrans_->GetSelection();
     if (tCode == DEF_WITHDRAWAL)
-        transCode = wxT("Withdrawal");
+        transCode = TRANS_TYPE_WITHDRAWAL_STR;
     else if (tCode == DEF_DEPOSIT)
-        transCode = wxT("Deposit");
+        transCode = TRANS_TYPE_DEPOSIT_STR;
     else if (tCode == DEF_TRANSFER)
-        transCode = wxT("Transfer");
+        transCode = TRANS_TYPE_TRANSFER_STR;
 
     if (payeeID_ == -1)
     {
-        if (transCode != wxT("Transfer"))
+        if (transCode != TRANS_TYPE_TRANSFER_STR)
             mmShowErrorMessageInvalid(this, _("Payee"));
         else
             mmShowErrorMessageInvalid(this, _("From Account "));
@@ -954,7 +950,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 
     int toAccountID = -1;
     int fromAccountID = accountID_;
-    if (transCode == wxT("Transfer"))
+    if (transCode == TRANS_TYPE_TRANSFER_STR)
     {
         if (toID_ == -1)
         {

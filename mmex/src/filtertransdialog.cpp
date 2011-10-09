@@ -44,18 +44,7 @@
 ////@begin XPM images
 ////@end XPM images
 
-// Defines for Transaction Type
-#define DEF_WITHDRAWAL 0
-#define DEF_DEPOSIT    1
-#define DEF_TRANSFER   2
-
-// Defines for Transaction Status
-#define DEF_STATUS_NONE       0
-#define DEF_STATUS_RECONCILED 1
-#define DEF_STATUS_VOID       2
-#define DEF_STATUS_FOLLOWUP   3
-#define DEF_STATUS_DUPLICATE  4
-
+// Defines for Transaction Status and Type now located in dbWrapper.h
 
 bool sortTransactionsByDate1( boost::shared_ptr<mmBankTransaction> elem1, 
                              boost::shared_ptr<mmBankTransaction> elem2 )
@@ -512,11 +501,11 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
                 wxString transCode;
                 int tCode = choiceType->GetSelection();
                 if (tCode == DEF_WITHDRAWAL)
-                    transCode = wxT("Withdrawal");
+                    transCode = TRANS_TYPE_WITHDRAWAL_STR;
                 else if (tCode == DEF_DEPOSIT)
-                    transCode = wxT("Deposit");
+                    transCode = TRANS_TYPE_DEPOSIT_STR;
                 else if (tCode == DEF_TRANSFER)
-                    transCode = wxT("Transfer");
+                    transCode = TRANS_TYPE_TRANSFER_STR;
 
                 if (transCode != pBankTransaction->transType_)
                     continue; // skip
