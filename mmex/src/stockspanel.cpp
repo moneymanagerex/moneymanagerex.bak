@@ -689,7 +689,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     wxString YSymbols;
     wxSortedArrayString symbolarray;
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select SYMBOL from STOCK_V1");
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select UPPER (SYMBOL) as SYMBOL from STOCK_V1");
     while (q1.NextRow())
     {
         wxString strSymbol = q1.GetString(wxT("SYMBOL"));
@@ -707,7 +707,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     {
         YSymbols = YSymbols+wxT("+")+symbolarray.Item(i)+yahoo_->Suffix_;
     }
-
+	//http://finance.yahoo.com/d/quotes.csv?s=SBER03.ME&f=sl1n&e=.csv
     wxString site = wxT("http://")+
                    yahoo_->Server_+ 
                    wxT("/d/quotes.csv?s=")+
@@ -743,6 +743,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
 
     wxString StockSymbolWithSuffix;
     double dPrice = 0;
+    wxString dName;
     while ( tkz.HasMoreTokens() )
     {
         wxString csvline = tkz.GetNextToken();
@@ -755,6 +756,11 @@ void mmStocksPanel::OrderQuoteRefresh(void)
             if (csvsimple.HasMoreTokens())
             {
                 csvsimple.GetNextToken().ToDouble(&dPrice);
+                if (csvsimple.HasMoreTokens())
+					dName = csvsimple.GetNextToken();
+				else 
+					yahoo_->StocksRefreshStatus_ = mmYahoo::DS_FAILED;
+                
             }
             else
             {
@@ -794,15 +800,16 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         static const char sql[] = 
         "select STOCKID, "
                "CURRENTPRICE, "
-               "NUMSHARES "
+               "NUMSHARES, "
+               "STOCKNAME "
         "from STOCK_V1 "
-        "where lower(SYMBOL) = ?";
+        "where UPPER(SYMBOL) = ?";
 
         typedef std::vector<mmStockTransactionHolder> vec_t;
         vec_t stockVec;
 
         wxSQLite3Statement st = db_->PrepareStatement(sql);
-        st.Bind(1, StockSymbolNoSuffix.Lower());
+        st.Bind(1, StockSymbolNoSuffix.Upper());
 
         wxSQLite3ResultSet q1 = st.ExecuteQuery();
 
@@ -811,14 +818,18 @@ void mmStocksPanel::OrderQuoteRefresh(void)
             mmStockTransactionHolder sh;
 
             sh.stockID_ = q1.GetInt(wxT("STOCKID"));
+            sh.numShares_ = q1.GetDouble(wxT("NUMSHARES"));
             // If the stock's symbol is not found, Yahoo CSV will return 0 for the current price.
             // Therefore, we assume the current price of all existing stock's symbols are greater
             // than zero and we will not update any stock if its curreny price is zero.
-            if(dPrice == 0) {
+            if(dPrice == 0 || sh.numShares_<0.0 ) {
                 dPrice = q1.GetDouble(wxT("CURRENTPRICE"));
             }
+            sh.shareName_ = q1.GetString (wxT ("STOCKNAME"));
+            if (sh.shareName_.IsEmpty () )
+            sh.shareName_ = dName;
+            
             sh.currentPrice_ = dPrice;
-            sh.numShares_ = q1.GetDouble(wxT("NUMSHARES"));
             sh.value_ = sh.numShares_ * dPrice;
             stockVec.push_back(sh);
         }
@@ -828,7 +839,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
 
         static const char sql_upd[] = 
         "update STOCK_V1 "
-        "SET CURRENTPRICE = ?, VALUE = ? "
+        "SET CURRENTPRICE = ?, VALUE = ?, STOCKNAME = ? "
         "WHERE STOCKID = ?";
 
         st = db_->PrepareStatement(sql_upd);
@@ -837,7 +848,8 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         {
             st.Bind(1, i->currentPrice_);
             st.Bind(2, i->value_);
-            st.Bind(3, i->stockID_);
+            st.Bind(3, i->shareName_);
+            st.Bind(4, i->stockID_);
             
             st.ExecuteUpdate();
             st.Reset();
