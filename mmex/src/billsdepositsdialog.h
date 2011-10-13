@@ -106,6 +106,7 @@ private:
 
     wxDatePickerCtrl* dpc_;
     wxDatePickerCtrl* dpcbd_;
+    wxCalendarCtrl* CalendarCtrl_;
     wxChoice* itemRepeats_;
     wxCheckBox* itemCheckBoxAutoExeUserAck_;
     wxCheckBox* itemCheckBoxAutoExeSilent_;
