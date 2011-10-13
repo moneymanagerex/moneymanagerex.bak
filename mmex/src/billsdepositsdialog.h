@@ -77,6 +77,7 @@ public:
     void OnSplitChecked(wxCommandEvent& event);
     void OnAutoExecutionUserAckChecked(wxCommandEvent& event);
     void OnAutoExecutionSilentChecked(wxCommandEvent& event);
+    void OnCalendarSelChanged(wxCalendarEvent& event);
 
 private:
     wxSQLite3Database* db_;

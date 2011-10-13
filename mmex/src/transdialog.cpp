@@ -31,6 +31,7 @@
 // Defines for Transaction: (Status and Type) now located in dbWrapper.h
 
 enum { ID_DIALOG_TRANS_SPINNER };
+enum{ NOTES_MENU_NUMBER = 20 };
          
 IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
 
@@ -49,6 +50,8 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_CHECKBOX(ID_DIALOG_TRANS_BUTTONADVANCED, mmTransDialog::OnAdvanceChecked) 
     EVT_CHECKBOX(ID_DIALOG_TRANS_SPLITCHECKBOX, mmTransDialog::OnSplitChecked)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTRANSNUM, mmTransDialog::OnAutoTransNum)
+    EVT_BUTTON(ID_DIALOG_TRANS_BUTTON_FREQENTNOTES, mmTransDialog::OnFrequentUsedNotes)
+    EVT_MENU (wxID_ANY, mmTransDialog::onNoteSelected)
 END_EVENT_TABLE()
 
 mmTransDialog::mmTransDialog(
@@ -282,7 +285,10 @@ void mmTransDialog::CreateControls()
 
     // Date --------------------------------------------
     wxStaticText* itemStaticText15 = new wxStaticText( itemPanel7, wxID_STATIC, _("Date"));
-    dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime, wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
+    if (true)
+    dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime, wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY|wxCAL_MONDAY_FIRST);
+    else
+    dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime, wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY|wxCAL_SUNDAY_FIRST);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
     spinCtrl_ = new wxSpinButton(itemPanel7,ID_DIALOG_TRANS_SPINNER,wxDefaultPosition, wxSize(16,24),wxSP_VERTICAL|wxSP_ARROW_KEYS|wxSP_WRAP);
 	spinCtrl_ -> SetRange (-32768, 32768); 
@@ -423,11 +429,19 @@ void mmTransDialog::CreateControls()
     itemBoxSizer550->Add(bAuto_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
     // Notes  ---------------------------------------------
-    wxStaticText* itemStaticText21 = new wxStaticText( itemPanel7, wxID_STATIC, _("Notes"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* notesStaticText = new wxStaticText( itemPanel7, wxID_STATIC, _("Notes"), wxDefaultPosition, wxDefaultSize, 0 );
+
     textNotes_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTNOTES, wxT(""), wxDefaultPosition, wxSize(225,80), wxTE_MULTILINE );
     textNotes_->SetToolTip(_("Specify any text notes you want to add to this transaction."));
 
-    itemFlexGridSizer8->Add(itemStaticText21, 0, wxALIGN_LEFT|wxALIGN_TOP|wxALL|wxADJUST_MINSIZE, 0);
+    bFrequentUsedNotes_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTON_FREQENTNOTES, wxT(">>"), wxDefaultPosition, wxSize(40, -1), 0 );
+    bFrequentUsedNotes_->SetToolTip(_("Select one of the frequently used notes"));
+
+    wxBoxSizer* itemBoxSizer56 = new wxBoxSizer(wxVERTICAL);
+
+	itemFlexGridSizer8->Add(itemBoxSizer56, 0, wxGROW|wxALIGN_RIGHT|wxALIGN_TOP|wxALL, 0);
+    itemBoxSizer56->Add(notesStaticText, 0, wxALIGN_LEFT|wxALIGN_TOP|wxALL|wxADJUST_MINSIZE, 0);
+    itemBoxSizer56->Add(bFrequentUsedNotes_, 0, wxALIGN_RIGHT|wxALIGN_TOP|wxALL|wxADJUST_MINSIZE, 10);
     itemFlexGridSizer8->Add(textNotes_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxEAST, 0);
 
     SetTransferControls();  // hide appropriate fields
@@ -435,7 +449,7 @@ void mmTransDialog::CreateControls()
      Button Panel with OK and Cancel Buttons
     ***********************************************************************************************/
     wxPanel* itemPanel25 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    itemBoxSizer2->Add(itemPanel25, 5, wxALIGN_RIGHT|wxALL, 10);
+    itemBoxSizer2->Add(itemPanel25, 5, wxALIGN_RIGHT|wxTOP|wxDOWN, 10);
 
     wxStdDialogButtonSizer*  itemStdDialogButtonSizer1 = new wxStdDialogButtonSizer;
     itemPanel25->SetSizer(itemStdDialogButtonSizer1);
@@ -454,7 +468,7 @@ void mmTransDialog::CreateControls()
     fnt.SetPointSize(fnt.GetPointSize());
     itemButton28->SetFont(fnt);
     itemButton28->SetForegroundColour(wxColour(wxT("RED")));
-    itemStdDialogButtonSizer1->Add(itemButton28, flags);
+    itemStdDialogButtonSizer1->Add(itemButton28,  0, wxALIGN_RIGHT|wxLEFT|wxRIGHT, 10);
 
 	itemStdDialogButtonSizer1->Realize();
 
@@ -1133,4 +1147,57 @@ void mmTransDialog::SetAdvancedTransferControls(bool advanced)
         toTextAmount_->Disable();
         advancedToTransAmountSet_ = false;
     }
+}
+
+//----------------------------------------------------------------------------
+
+void mmTransDialog::OnFrequentUsedNotes(wxCommandEvent& event)
+{
+		wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, ID_DIALOG_TRANS_BUTTON_FREQENTNOTES) ;
+		ev.SetEventObject( this );
+
+	wxString notes = textNotes_->GetValue();
+	if (notes.IsEmpty ())
+	{
+		
+	wxMenu menu;
+		
+	char sql[] =
+	"select max (TRANSDATE) as TRANSDATE , count (notes) COUNT, "
+	"(case when accountid = ? then '1' else '2' end) as ACC "
+	",replace (substr (notes, 1, 20), x'0A', ' ')||(case when length(notes)>20 then '...' else '' end) as NOTE, "
+	"notes as NOTES "
+	"from checkingaccount_v1 ca "
+	"where notes is not '' "
+	"and TRANSDATE< date ('now', '1 day', 'localtime') "
+	"group by rtrim (notes) "
+	"order by ACC, TRANSDATE desc, COUNT desc "
+	"limit ? "; 
+	
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    st.Bind(1, accountID_);
+    st.Bind(2, NOTES_MENU_NUMBER);
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    int menu_id=1;
+    while (q1.NextRow())
+    {
+		freqnotes.Add(q1.GetString(wxT("NOTES")));
+		wxString noteSTR = q1.GetString(wxT("NOTE"));
+		menu.Append(menu_id++, noteSTR);
+    }
+    q1.Finalize();
+	
+	if (menu_id>1)
+	PopupMenu(&menu, 60, 30+((NOTES_MENU_NUMBER-menu_id-1)*23));
+
+	}
+}
+
+//----------------------------------------------------------------------------
+
+void mmTransDialog::onNoteSelected(wxCommandEvent& event)
+{
+	int i =  event.GetId();
+	if (i>0)
+	textNotes_->SetValue (freqnotes.Item (i-1)) ;
 }

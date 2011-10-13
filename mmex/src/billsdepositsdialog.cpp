@@ -43,6 +43,7 @@ BEGIN_EVENT_TABLE( mmBDDialog, wxDialog )
     EVT_CHECKBOX(ID_DIALOG_TRANS_SPLITCHECKBOX, mmBDDialog::OnSplitChecked)
     EVT_CHECKBOX(ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_USERACK, mmBDDialog::OnAutoExecutionUserAckChecked)
     EVT_CHECKBOX(ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_SILENT, mmBDDialog::OnAutoExecutionSilentChecked)
+    EVT_CALENDAR_SEL_CHANGED(ID_DIALOG_BD_CALENDAR, mmBDDialog::OnCalendarSelChanged)
 END_EVENT_TABLE()
 
 // Defines for Transaction Status and Type now located in dbWrapper.h
@@ -289,7 +290,6 @@ void mmBDDialog::CreateControls()
     wxBoxSizer* itemBoxSizer20 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer20);
 
-    //--//wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer20->Add(itemBoxSizer3, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -304,10 +304,11 @@ void mmBDDialog::CreateControls()
     wxStaticBoxSizer* itemStaticBoxSizer44 = new wxStaticBoxSizer(itemStaticBoxSizerCalendar, wxHORIZONTAL);
     itemBoxSizer3L->Add(itemStaticBoxSizer44, 10, wxALIGN_CENTER|wxALL, 15);
 	
-	wxCalendarCtrl* itemCalendarCtrl44 = new wxCalendarCtrl( itemDialog1, wxID_ANY, wxDateTime(), wxDefaultPosition, wxDefaultSize, 
-	wxCAL_MONDAY_FIRST
-	//wxCAL_SUNDAY_FIRST
-	|wxSUNKEN_BORDER );
+	wxCalendarCtrl* itemCalendarCtrl44 = new wxCalendarCtrl( itemDialog1, ID_DIALOG_BD_CALENDAR, wxDateTime(), wxDefaultPosition, wxDefaultSize, 
+	//TODO: Some users wish to have monday first in calendar!
+	//wxCAL_MONDAY_FIRST
+	wxCAL_SUNDAY_FIRST
+	|wxSUNKEN_BORDER|wxCAL_SHOW_HOLIDAYS|wxCAL_SEQUENTIAL_MONTH_SELECTION );
     itemStaticBoxSizer44->Add(itemCalendarCtrl44, 10, wxALIGN_CENTER_HORIZONTAL|wxALL, 15);
 	
     /* Bills & Deposits Details */
@@ -315,7 +316,6 @@ void mmBDDialog::CreateControls()
     wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, wxHORIZONTAL);
     itemBoxSizer3L->Add(itemStaticBoxSizer4, 0, wxALIGN_CENTER|wxALL, 5);
 
-    //--//wxFlexGridSizer* itemFlexGridSizer5 = new wxFlexGridSizer(2, 4, 0, 0);
     wxFlexGridSizer* itemFlexGridSizer5 = new wxFlexGridSizer(4, 2, 10, 10);
     itemStaticBoxSizer4->Add(itemFlexGridSizer5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -401,7 +401,6 @@ void mmBDDialog::CreateControls()
         wxDefaultSize, wxTAB_TRAVERSAL );
     itemStaticBoxSizer14->Add(itemPanel7, 1, wxGROW|wxALL, 5);
 
-    //--//wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(4, 4, 0, 0);
     wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(8, 2, 10, 10);
     itemPanel7->SetSizer(itemFlexGridSizer8);
 
@@ -438,7 +437,6 @@ void mmBDDialog::CreateControls()
 	////Type
     wxStaticText* itemStaticText5 = new wxStaticText( itemPanel7, wxID_STATIC, 
         _("Type"), wxDefaultPosition, wxDefaultSize, 0 );
-    //itemBoxSizer4->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
     itemFlexGridSizer8->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
     wxString itemChoice6Strings[] = 
@@ -517,8 +515,6 @@ void mmBDDialog::CreateControls()
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
      // ******************************** //
-    //wxBoxSizer* itemBoxSizer18 = new wxBoxSizer(wxHORIZONTAL);
-    //itemFlexGridSizer8->Add(itemBoxSizer18, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     
     bCategory_ = new wxButton( itemPanel7, 
         ID_DIALOG_TRANS_BUTTONCATEGS, _("Select Category"), 
@@ -1259,4 +1255,11 @@ void mmBDDialog::OnAutoExecutionSilentChecked(wxCommandEvent& /*event*/)
     }
     if (msg != wxT(""))
     wxMessageBox(msg ,REPEAT_TRANSACTIONS_MSGBOX_HEADING);
+}
+
+void mmBDDialog::OnCalendarSelChanged(wxCalendarEvent& event)
+{
+	wxDateTime date = event.GetDate();
+	dpcbd_->SetValue(date) ;
+	//mmShowErrorMessage(this, _("Invalid Value "), _("Error"));
 }

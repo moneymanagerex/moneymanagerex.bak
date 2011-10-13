@@ -70,6 +70,7 @@ public:
     void OnPayee(wxCommandEvent& event);
     void OnTo(wxCommandEvent& event);
     void OnAutoTransNum(wxCommandEvent& event);
+    void OnFrequentUsedNotes(wxCommandEvent& event);  
     void OnTransTypeChanged(wxCommandEvent& event);
     void OnSpinUp(wxSpinEvent&);
     void OnSpinDown(wxSpinEvent&);
@@ -79,6 +80,7 @@ public:
     bool getPayeeID(wxString payee, int& payeeID, int& categID, int& subcategID );
     void addPayee(wxString payee, int categID, int subcategID );
     void OnSplitChecked(wxCommandEvent& event);
+    void onNoteSelected(wxCommandEvent& event);
 
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
@@ -98,6 +100,7 @@ private:
     wxCheckBox* cSplit_;
     wxCheckBox* cAdvanced_;
     wxButton* bAuto_;
+    wxButton* bFrequentUsedNotes_;
     bool payeeUnknown_;
     bool categUpdated_;
 
@@ -132,7 +135,9 @@ private:
     void OnAdvanceChecked(wxCommandEvent& event);
     void SetTransferControls(bool transfers = false);
     void SetAdvancedTransferControls(bool advanced = false);
-    
+    wxArrayString freqnotes;
+
+      
 protected:
 
     wxSpinButton *spinCtrl_;
