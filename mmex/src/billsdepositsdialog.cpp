@@ -37,13 +37,14 @@ BEGIN_EVENT_TABLE( mmBDDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONPAYEE, mmBDDialog::OnPayee)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTO, mmBDDialog::OnTo)
     EVT_CHOICE(ID_DIALOG_TRANS_TYPE, mmBDDialog::OnTransTypeChanged)  
-    EVT_DATE_CHANGED(ID_DIALOG_TRANS_BUTTONDATE, mmBDDialog::OnDateChanged) 
+    //EVT_DATE_CHANGED(ID_DIALOG_TRANS_BUTTONDATE, mmBDDialog::OnDateChanged) 
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONADVANCED, mmBDDialog::OnAdvanced)
     EVT_BUTTON(ID_DIALOG_BD_COMBOBOX_ACCOUNTNAME, mmBDDialog::OnAccountName)
     EVT_CHECKBOX(ID_DIALOG_TRANS_SPLITCHECKBOX, mmBDDialog::OnSplitChecked)
     EVT_CHECKBOX(ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_USERACK, mmBDDialog::OnAutoExecutionUserAckChecked)
     EVT_CHECKBOX(ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_SILENT, mmBDDialog::OnAutoExecutionSilentChecked)
     EVT_CALENDAR_SEL_CHANGED(ID_DIALOG_BD_CALENDAR, mmBDDialog::OnCalendarSelChanged)
+    EVT_DATE_CHANGED(ID_DIALOG_BD_BUTTON_NEXTOCCUR, mmBDDialog::OnDateChanged)
 END_EVENT_TABLE()
 
 // Defines for Transaction Status and Type now located in dbWrapper.h
@@ -167,7 +168,8 @@ void mmBDDialog::dataToControls()
         wxString dtnostr = mmGetDateForDisplay(db_, dtno);
         dpcbd_->SetValue(dtno);
         dpc_->SetValue(dtno);
-
+		CalendarCtrl_->SetDate (dtno);
+		
         int repeatSel = q1.GetInt(wxT("REPEATS"));
         // Have used repeatSel to multiplex auto repeat fields.
         if (repeatSel >= BD_REPEATS_MULTIPLEX_BASE)
@@ -304,12 +306,12 @@ void mmBDDialog::CreateControls()
     wxStaticBoxSizer* itemStaticBoxSizer44 = new wxStaticBoxSizer(itemStaticBoxSizerCalendar, wxHORIZONTAL);
     itemBoxSizer3L->Add(itemStaticBoxSizer44, 10, wxALIGN_CENTER|wxALL, 15);
 	
-	wxCalendarCtrl* itemCalendarCtrl44 = new wxCalendarCtrl( itemDialog1, ID_DIALOG_BD_CALENDAR, wxDateTime(), wxDefaultPosition, wxDefaultSize, 
+	CalendarCtrl_ = new wxCalendarCtrl( itemDialog1, ID_DIALOG_BD_CALENDAR, wxDateTime(), wxDefaultPosition, wxDefaultSize, 
 	//TODO: Some users wish to have monday first in calendar!
 	//wxCAL_MONDAY_FIRST
 	wxCAL_SUNDAY_FIRST
 	|wxSUNKEN_BORDER|wxCAL_SHOW_HOLIDAYS|wxCAL_SEQUENTIAL_MONTH_SELECTION );
-    itemStaticBoxSizer44->Add(itemCalendarCtrl44, 10, wxALIGN_CENTER_HORIZONTAL|wxALL, 15);
+    itemStaticBoxSizer44->Add(CalendarCtrl_, 10, wxALIGN_CENTER_HORIZONTAL|wxALL, 15);
 	
     /* Bills & Deposits Details */
     wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(itemDialog1, wxID_ANY, _("Repeating Transaction Details"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -711,11 +713,6 @@ void mmBDDialog::OnTo(wxCommandEvent& /*event*/)
         toID_ = mmDBWrapper::getAccountID(db_, acctName);
         bTo_->SetLabel(acctName);
     }
-}
-
-void mmBDDialog::OnDateChanged(wxDateEvent& /*event*/)
-{
-    
 }
 
 void mmBDDialog::OnAdvanced(wxCommandEvent& /*event*/)
@@ -1261,5 +1258,10 @@ void mmBDDialog::OnCalendarSelChanged(wxCalendarEvent& event)
 {
 	wxDateTime date = event.GetDate();
 	dpcbd_->SetValue(date) ;
-	//mmShowErrorMessage(this, _("Invalid Value "), _("Error"));
+}
+
+void mmBDDialog::OnDateChanged(wxDateEvent& event)
+{
+	wxDateTime date = event.GetDate();
+	CalendarCtrl_->SetDate(date) ;
 }
