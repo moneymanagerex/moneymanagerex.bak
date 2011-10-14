@@ -85,6 +85,7 @@ private:
     
     wxTextCtrl *textNumber_;
     wxTextCtrl *textAmount_;
+    wxTextCtrl *toTextAmount_;
     wxTextCtrl *textNotes_;
     wxTextCtrl* textCategory_;
     wxTextCtrl* textNumRepeats_;
@@ -94,7 +95,8 @@ private:
     mmAdvancedPopup* m_simplePopup_;
     wxButton* bAdvanced_;
     wxCheckBox* cSplit_;
-    wxStaticText* staticTextAdvancedActive_;
+    wxCheckBox* cAdvanced_;
+    //wxStaticText* staticTextAdvancedActive_;
     bool payeeUnknown_;
 
     wxChoice* choiceStatus_;
