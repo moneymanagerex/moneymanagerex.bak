@@ -331,6 +331,7 @@ void mmTransDialog::CreateControls()
     choiceTrans_->SetToolTip(_("Specify the type of transactions to be created."));
     cAdvanced_ = new wxCheckBox( itemPanel7, ID_DIALOG_TRANS_BUTTONADVANCED, _("Advanced"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cAdvanced_->SetValue(FALSE);
+    cAdvanced_->SetToolTip(_("Allows the setting of different amounts in the FROM and TO accounts."));
 
     wxBoxSizer* typeSizer = new wxBoxSizer(wxHORIZONTAL);
     typeSizer->Add(choiceTrans_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
@@ -403,6 +404,7 @@ void mmTransDialog::CreateControls()
     // Split Category -------------------------------------------
     cSplit_ = new wxCheckBox( itemPanel7, ID_DIALOG_TRANS_SPLITCHECKBOX, _("Split"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cSplit_->SetValue(FALSE);
+    cSplit_->SetToolTip(_("Use split Categories"));
 
     itemFlexGridSizer8->AddSpacer(20);  // Fill empty space.
     itemFlexGridSizer8->Add(cSplit_, 0, wxALIGN_BOTTOM|wxALIGN_LEFT|wxALL, 0);
