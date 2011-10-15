@@ -264,7 +264,6 @@ void mmFilterTransactionsDialog::CreateControls()
     typeCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXTYPE, _("Type: "), 
                                    wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     typeCheckBox->SetValue(FALSE);
-    itemPanelSizer->Add(typeCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     
     wxString choiceTypeStrings[] = 
     {
@@ -273,9 +272,26 @@ void mmFilterTransactionsDialog::CreateControls()
         _("Transfer")
     };  
     choiceType = new wxChoice( itemPanel, ID_CHOICE8, wxDefaultPosition, wxDefaultSize, 3, choiceTypeStrings, 0 );
-    itemPanelSizer->Add(choiceType, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
     choiceType->SetSelection(0);
+    choiceType->Show(false);
     choiceType->SetToolTip(_("Specify the type of transaction."));
+
+    wxBoxSizer* typeSizer = new wxBoxSizer(wxVERTICAL);
+    cbTypeWithdrawal_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE_WITHDRAWAL, _("Withdrawal"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cbTypeWithdrawal_->Enable(false);
+    cbTypeDeposit_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE_DEPOSIT, _("Deposit"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cbTypeDeposit_->Enable(false);
+    cbTypeTransfer_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_TYPE_TRANSFER, _("Transfer"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cbTypeTransfer_->Enable(false);
+
+    itemPanelSizer->Add(typeCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemPanelSizer->Add(typeSizer, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    typeSizer ->Add(choiceType, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    typeSizer ->Add(cbTypeWithdrawal_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 2);
+    typeSizer ->Add(cbTypeDeposit_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 2);
+    typeSizer ->Add(cbTypeTransfer_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 2);
+    
     //--End of Row --------------------------------------------------------
 
     amountRangeCheckBox = new wxCheckBox( itemPanel, ID_CHECKBOXAMOUNTRANGE, _("Amount Range: "), 
@@ -283,8 +299,8 @@ void mmFilterTransactionsDialog::CreateControls()
     amountRangeCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(amountRangeCheckBox, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    amountMinEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL13, _T(""), wxDefaultPosition, wxDefaultSize, 0 );
-    amountMaxEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL14, _T(""), wxDefaultPosition, wxDefaultSize, 0 );
+    amountMinEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL13, _T(""), wxDefaultPosition, wxSize(fieldWidth/2-5,-1), 0 );
+    amountMaxEdit = new wxTextCtrl( itemPanel, ID_TEXTCTRL14, _T(""), wxDefaultPosition, wxSize(fieldWidth/2-5,-1), 0 );
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
     amountSizer->Add(amountMinEdit, 0, wxALIGN_LEFT|wxALL, 5);
@@ -297,7 +313,7 @@ void mmFilterTransactionsDialog::CreateControls()
     transNumberCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(transNumberCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    transNumberEdit = new wxTextCtrl( itemPanel, ID_TEXTTRANSNUM, _T(""), wxDefaultPosition, wxDefaultSize, 0 );
+    transNumberEdit = new wxTextCtrl( itemPanel, ID_TEXTTRANSNUM, _T(""), wxDefaultPosition, wxSize(fieldWidth,-1), 0 );
     itemPanelSizer->Add(transNumberEdit, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     //--End of Row --------------------------------------------------------
 
@@ -382,6 +398,10 @@ void mmFilterTransactionsDialog::OnCheckboxstatusClick( wxCommandEvent& /*event*
 void mmFilterTransactionsDialog::OnCheckboxtypeClick( wxCommandEvent& /*event*/ )
 {
     choiceType->Enable(typeCheckBox->GetValue());
+    cbTypeWithdrawal_->Enable(typeCheckBox->GetValue());
+    cbTypeDeposit_->Enable(typeCheckBox->GetValue());
+    cbTypeTransfer_->Enable(typeCheckBox->GetValue());
+
 }
 
 void mmFilterTransactionsDialog::OnCheckboxamountrangeClick( wxCommandEvent& /*event*/ )
@@ -490,7 +510,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
                 else if (choiceStatus->GetSelection() == DEF_STATUS_DUPLICATE)
                 {
                     status = wxT("D"); 
-                }
+                } 
 
                 if (status != pBankTransaction->status_)
                     continue; //skip
@@ -498,17 +518,19 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
 
             if (typeCheckBox->GetValue())
             {
-                wxString transCode;
-                int tCode = choiceType->GetSelection();
-                if (tCode == DEF_WITHDRAWAL)
-                    transCode = TRANS_TYPE_WITHDRAWAL_STR;
-                else if (tCode == DEF_DEPOSIT)
-                    transCode = TRANS_TYPE_DEPOSIT_STR;
-                else if (tCode == DEF_TRANSFER)
-                    transCode = TRANS_TYPE_TRANSFER_STR;
+                wxString transCode = pBankTransaction->transType_;
+				wxString transCodeSelectedWithdraval=wxT("-");
+				wxString transCodeSelectedDeposit=wxT("-");
+				wxString transCodeSelectedTransfer=wxT("-");
+                if (cbTypeWithdrawal_->GetValue())
+					transCodeSelectedWithdraval = TRANS_TYPE_WITHDRAWAL_STR;
+				if (cbTypeDeposit_->GetValue())
+					transCodeSelectedDeposit = TRANS_TYPE_DEPOSIT_STR;
+				if (cbTypeTransfer_->GetValue())
+					transCodeSelectedTransfer = TRANS_TYPE_TRANSFER_STR;
 
-                if (transCode != pBankTransaction->transType_)
-                    continue; // skip
+                if (transCodeSelectedWithdraval != transCode && transCodeSelectedDeposit != transCode && transCodeSelectedTransfer != transCode)
+					continue; // skip
             }
 
             if (amountRangeCheckBox->GetValue())
@@ -684,7 +706,14 @@ wxString mmFilterTransactionsDialog::userTypeStr()
 {
     wxString transCode;
     if (typeCheckBox->IsChecked())
-        transCode = choiceType->GetLabelText();
+        if (cbTypeWithdrawal_->GetValue())
+			transCode = TRANS_TYPE_WITHDRAWAL_STR;
+		if (cbTypeDeposit_->GetValue())
+			transCode << wxT(", ") << TRANS_TYPE_DEPOSIT_STR;
+		if (cbTypeTransfer_->GetValue())
+			transCode << wxT(", ") << TRANS_TYPE_TRANSFER_STR;
+        
+        //transCode = choiceType->GetLabelText();
     return transCode;
 }
 

@@ -171,6 +171,9 @@ public:
     wxCheckBox* statusCheckBox;
     wxChoice* choiceStatus;
     wxCheckBox* typeCheckBox;
+    wxCheckBox* cbTypeWithdrawal_;
+    wxCheckBox* cbTypeDeposit_;
+    wxCheckBox* cbTypeTransfer_;
     wxChoice* choiceType;
     wxCheckBox* amountRangeCheckBox;
     wxTextCtrl* amountMinEdit;
