@@ -1,5 +1,6 @@
 /*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
+ Copyright (C) 2011 Nikolay & Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -978,9 +979,9 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
             return;
         }
 
-       fromAccountID = payeeID_;
-       toAccountID = toID_;
-       payeeID_ = -1;
+        fromAccountID = payeeID_;
+        toAccountID = toID_;
+        payeeID_ = -1;
     }
     else
     {
@@ -1151,53 +1152,52 @@ void mmTransDialog::SetAdvancedTransferControls(bool advanced)
 
 //----------------------------------------------------------------------------
 
-void mmTransDialog::OnFrequentUsedNotes(wxCommandEvent& event)
+void mmTransDialog::OnFrequentUsedNotes(wxCommandEvent& /*event*/)
 {
-		wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, ID_DIALOG_TRANS_BUTTON_FREQENTNOTES) ;
-		ev.SetEventObject( this );
+    wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, ID_DIALOG_TRANS_BUTTON_FREQENTNOTES) ;
+    ev.SetEventObject( this );
 
 	wxString notes = textNotes_->GetValue();
 	if (notes.IsEmpty ())
-	{
-		
-	wxMenu menu;
-		
-	char sql[] =
-	"select max (TRANSDATE) as TRANSDATE , count (notes) COUNT, "
-	"(case when accountid = ? then '1' else '2' end) as ACC "
-	",replace (substr (notes, 1, 20), x'0A', ' ')||(case when length(notes)>20 then '...' else '' end) as NOTE, "
-	"notes as NOTES "
-	"from checkingaccount_v1 ca "
-	"where notes is not '' "
-	"and TRANSDATE< date ('now', '1 day', 'localtime') "
-	"group by rtrim (notes) "
-	"order by ACC, TRANSDATE desc, COUNT desc "
-	"limit ? "; 
-	
-    wxSQLite3Statement st = db_->PrepareStatement(sql);
-    st.Bind(1, accountID_);
-    st.Bind(2, NOTES_MENU_NUMBER);
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    int menu_id=1;
-    while (q1.NextRow())
     {
-		freqnotes.Add(q1.GetString(wxT("NOTES")));
-		wxString noteSTR = q1.GetString(wxT("NOTE"));
-		menu.Append(menu_id++, noteSTR);
-    }
-    q1.Finalize();
-	
-	if (menu_id>1)
-	PopupMenu(&menu, 60, 30+((NOTES_MENU_NUMBER-menu_id-1)*23));
+        wxMenu menu;
 
-	}
+    	char sql[] =
+        "select max (TRANSDATE) as TRANSDATE , count (notes) COUNT, "
+        "(case when accountid = ? then '1' else '2' end) as ACC "
+        ",replace (substr (notes, 1, 20), x'0A', ' ')||(case when length(notes)>20 then '...' else '' end) as NOTE, "
+        "notes as NOTES "
+        "from checkingaccount_v1 ca "
+        "where notes is not '' "
+        "and TRANSDATE< date ('now', '1 day', 'localtime') "
+        "group by rtrim (notes) "
+        "order by ACC, TRANSDATE desc, COUNT desc "
+        "limit ? ";
+
+        wxSQLite3Statement st = db_->PrepareStatement(sql);
+        st.Bind(1, accountID_);
+        st.Bind(2, NOTES_MENU_NUMBER);
+        wxSQLite3ResultSet q1 = st.ExecuteQuery();
+        int menu_id=1;
+        while (q1.NextRow())
+        {
+		    freqnotes.Add(q1.GetString(wxT("NOTES")));
+		    wxString noteSTR = q1.GetString(wxT("NOTE"));
+		    menu.Append(menu_id++, noteSTR);
+        }
+        q1.Finalize();
+	
+	    if (menu_id>1)
+            PopupMenu(&menu, 60, 30+((NOTES_MENU_NUMBER-menu_id-1)*23));
+
+    }
 }
 
 //----------------------------------------------------------------------------
 
 void mmTransDialog::onNoteSelected(wxCommandEvent& event)
 {
-	int i =  event.GetId();
-	if (i>0)
-	textNotes_->SetValue (freqnotes.Item (i-1)) ;
+    int i =  event.GetId();
+    if (i>0)
+    textNotes_->SetValue (freqnotes.Item (i-1)) ;
 }

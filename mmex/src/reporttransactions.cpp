@@ -79,7 +79,7 @@ wxString mmReportTransactions::getHTMLText()
     double total = 0;
     for (unsigned int index = 0; index < trans_->size(); index++)
     {
-        std::vector<wxString> data;
+        // std::vector<wxString> data;
         std::vector<boost::shared_ptr<mmBankTransaction> >& refTrans = *trans_;
 
         // For transfer transactions, we need to fix the data reference point first.
