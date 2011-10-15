@@ -1074,72 +1074,74 @@ double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountI
     return balance;
 }
 
-bool mmDBWrapper::getExpensesIncome(wxSQLite3Database* db, 
-                                    int accountID, 
-                                    double& expenses, 
-                                    double& income,  
-                                    bool ignoreDate, 
-                                    wxDateTime dtBegin, 
-                                    wxDateTime dtEnd)
-{
-    static const std::string sql_base =
-    "select ca.TRANSCODE, "
-           "ca.TRANSAMOUNT, "
-           "ca.STATUS, "
-           "ca.TRANSDATE, "
-           "cf.BASECONVRATE "
-    "from CHECKINGACCOUNT_V1 ca " + joinCURRENCYFORMATS("cf", "ca.ACCOUNTID");
-
-    wxSQLite3Statement st;
-
-    if (accountID != -1)
-    {
-        std::string sql(sql_base);
-        sql += " where ca.ACCOUNTID = ? OR ca.TOACCOUNTID = ?";
-
-        st = db->PrepareStatement(sql.c_str());
-        st.Bind(1, accountID);
-        st.Bind(2, accountID);
-    }
-    else
-    {
-        st = db->PrepareStatement(sql_base.c_str());
-    }
-    
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    while (q1.NextRow())
-    {
-        wxString transTypeString = q1.GetString(wxT("TRANSCODE"));
-        double transAmount = q1.GetDouble(wxT("TRANSAMOUNT"));
-        wxString transStatus = q1.GetString(wxT("STATUS"));
-        wxString dateString = q1.GetString(wxT("TRANSDATE"));
-        wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
-
-        double dbRate = q1.GetDouble(wxT("BASECONVRATE"), g_defBASECONVRATE);
-        transAmount = transAmount * dbRate;
-
-        if (transStatus == wxT("V"))
-           continue; // skip
-
-        if (!ignoreDate)
-        {
-            if (!dtdt.IsBetween(dtBegin, dtEnd))
-                continue; //skip
-        }
-        
-        if (transTypeString == TRANS_TYPE_DEPOSIT_STR)
-            income += transAmount;
-        else if (transTypeString == TRANS_TYPE_WITHDRAWAL_STR)
-            expenses += transAmount;
-        else if (transTypeString == TRANS_TYPE_TRANSFER_STR)
-        {
-            // transfers are not considered in income/expenses calculations
-        }
-    }
-    st.Finalize();
-
-    return true;
-}
+// Obsolete Code
+// Found as a method of class: mmBankTransactionList - file: mmtransaction.h
+//bool mmDBWrapper::getExpensesIncome(wxSQLite3Database* db, 
+//                                    int accountID, 
+//                                    double& expenses, 
+//                                    double& income,  
+//                                    bool ignoreDate, 
+//                                    wxDateTime dtBegin, 
+//                                    wxDateTime dtEnd)
+//{
+//    static const std::string sql_base =
+//    "select ca.TRANSCODE, "
+//           "ca.TRANSAMOUNT, "
+//           "ca.STATUS, "
+//           "ca.TRANSDATE, "
+//           "cf.BASECONVRATE "
+//    "from CHECKINGACCOUNT_V1 ca " + joinCURRENCYFORMATS("cf", "ca.ACCOUNTID");
+//
+//    wxSQLite3Statement st;
+//
+//    if (accountID != -1)
+//    {
+//        std::string sql(sql_base);
+//        sql += " where ca.ACCOUNTID = ? OR ca.TOACCOUNTID = ?";
+//
+//        st = db->PrepareStatement(sql.c_str());
+//        st.Bind(1, accountID);
+//        st.Bind(2, accountID);
+//    }
+//    else
+//    {
+//        st = db->PrepareStatement(sql_base.c_str());
+//    }
+//    
+//    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+//    while (q1.NextRow())
+//    {
+//        wxString transTypeString = q1.GetString(wxT("TRANSCODE"));
+//        double transAmount = q1.GetDouble(wxT("TRANSAMOUNT"));
+//        wxString transStatus = q1.GetString(wxT("STATUS"));
+//        wxString dateString = q1.GetString(wxT("TRANSDATE"));
+//        wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
+//
+//        double dbRate = q1.GetDouble(wxT("BASECONVRATE"), g_defBASECONVRATE);
+//        transAmount = transAmount * dbRate;
+//
+//        if (transStatus == wxT("V"))
+//           continue; // skip
+//
+//        if (!ignoreDate)
+//        {
+//            if (!dtdt.IsBetween(dtBegin, dtEnd))
+//                continue; //skip
+//        }
+//        
+//        if (transTypeString == TRANS_TYPE_DEPOSIT_STR)
+//            income += transAmount;
+//        else if (transTypeString == TRANS_TYPE_WITHDRAWAL_STR)
+//            expenses += transAmount;
+//        else if (transTypeString == TRANS_TYPE_TRANSFER_STR)
+//        {
+//            // transfers are not considered in income/expenses calculations
+//        }
+//    }
+//    st.Finalize();
+//
+//    return true;
+//}
 
 
 void mmDBWrapper::addPayee(wxSQLite3Database* db, const wxString &payee, int categID, int subcategID)
@@ -1886,7 +1888,7 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
             amt = amt - transAmount;
         else if (code == TRANS_TYPE_DEPOSIT_STR)
             amt = amt + transAmount;
-    }
+        }
     
     st.Finalize();
 
@@ -1941,7 +1943,7 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
              amt = amt - val;
          else if (code == TRANS_TYPE_DEPOSIT_STR)
              amt = amt + val;
-    }
+        }
 
     st.Finalize();
 
@@ -1976,57 +1978,59 @@ double mmDBWrapper::getSplitTransactionValueForCategory(wxSQLite3Database* db, i
     return amt;
 }
 
-double mmDBWrapper::getAmountForPayee(wxSQLite3Database* db, int payeeID,
-        bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd)
-{
-    static const std::string sql = 
-    "select ca.TRANSCODE, "
-           "ca.TRANSAMOUNT, " 
-           "ca.STATUS, "
-           "ca.TRANSDATE, "
-           "cf.BASECONVRATE "
-    "from CHECKINGACCOUNT_V1 ca " + joinCURRENCYFORMATS("cf", "ca.ACCOUNTID") +
-   " where ca.PAYEEID = ?";
-
-    double amt = 0.0;
-
-    wxSQLite3Statement st = db->PrepareStatement(sql.c_str());
-    st.Bind(1, payeeID);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-
-    while (q1.NextRow())
-    {
-        wxString code = q1.GetString(wxT("TRANSCODE"));
-        double transAmount = q1.GetDouble(wxT("TRANSAMOUNT"));
-        wxString transStatus = q1.GetString(wxT("STATUS"));
-        wxString dateString = q1.GetString(wxT("TRANSDATE"));
-        wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
-
-        double dbRate = q1.GetDouble(wxT("BASECONVRATE"), g_defBASECONVRATE);
-        transAmount = transAmount * dbRate;
-
-        if (transStatus == wxT("V"))
-           continue; // skip
-
-        if (!ignoreDate)
-        {
-            if (!dtdt.IsBetween(dtBegin, dtEnd))
-                continue; //skip
-        }
-
-        if (code == TRANS_TYPE_TRANSFER_STR)
-            continue;
-
-        if (code == TRANS_TYPE_WITHDRAWAL_STR)
-            amt = amt - transAmount;
-        else if (code == TRANS_TYPE_DEPOSIT_STR)
-            amt = amt + transAmount;
-    }
-    st.Finalize();
-
-    return amt;
-}
+// Obsolete Code
+// Found as a method of class: mmBankTransactionList - file: mmtransaction.h
+//double mmDBWrapper::getAmountForPayee(wxSQLite3Database* db, int payeeID,
+//        bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd)
+//{
+//    static const std::string sql = 
+//    "select ca.TRANSCODE, "
+//           "ca.TRANSAMOUNT, " 
+//           "ca.STATUS, "
+//           "ca.TRANSDATE, "
+//           "cf.BASECONVRATE "
+//    "from CHECKINGACCOUNT_V1 ca " + joinCURRENCYFORMATS("cf", "ca.ACCOUNTID") +
+//   " where ca.PAYEEID = ?";
+//
+//    double amt = 0.0;
+//
+//    wxSQLite3Statement st = db->PrepareStatement(sql.c_str());
+//    st.Bind(1, payeeID);
+//
+//    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+//
+//    while (q1.NextRow())
+//    {
+//        wxString code = q1.GetString(wxT("TRANSCODE"));
+//        double transAmount = q1.GetDouble(wxT("TRANSAMOUNT"));
+//        wxString transStatus = q1.GetString(wxT("STATUS"));
+//        wxString dateString = q1.GetString(wxT("TRANSDATE"));
+//        wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
+//
+//        double dbRate = q1.GetDouble(wxT("BASECONVRATE"), g_defBASECONVRATE);
+//        transAmount = transAmount * dbRate;
+//
+//        if (transStatus == wxT("V"))
+//           continue; // skip
+//
+//        if (!ignoreDate)
+//        {
+//            if (!dtdt.IsBetween(dtBegin, dtEnd))
+//                continue; //skip
+//        }
+//
+//        if (code == TRANS_TYPE_TRANSFER_STR)
+//            continue;
+//
+//        if (code == TRANS_TYPE_WITHDRAWAL_STR)
+//            amt = amt - transAmount;
+//        else if (code == TRANS_TYPE_DEPOSIT_STR)
+//            amt = amt + transAmount;
+//    }
+//    st.Finalize();
+//
+//    return amt;
+//}
 
 wxArrayString mmDBWrapper::filterPayees(wxSQLite3Database* db, const wxString& patt)
 {

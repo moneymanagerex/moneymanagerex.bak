@@ -890,43 +890,45 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
     wxString infoStr = wxT("");
     if (transcodeStr == TRANS_TYPE_TRANSFER_STR)
     {
-    int tocurrencyid = q1.GetInt(wxT("TOCURRENCYID"));
-    double toamount = q1.GetDouble(wxT("TOTRANSAMOUNT"));
-    wxString toamountStr;
-    double convertion;
-    convertion = ( convrate < toconvrate ? amount/toamount : toamount/amount);
-    wxString convertionStr;
+        int tocurrencyid = q1.GetInt(wxT("TOCURRENCYID"));
+        double toamount = q1.GetDouble(wxT("TOTRANSAMOUNT"));
+        wxString toamountStr;
+        double convertion;
+        convertion = ( convrate < toconvrate ? amount/toamount : toamount/amount);
+        wxString convertionStr;
 
-    boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core->accountList_.getCurrencyWeakPtr(toaccountId).lock();
-    wxASSERT(pCurrencyPtr);
-    mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-    mmex::formatDoubleToCurrency(toamount, toamountStr);
-    mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core->accountList_.getCurrencyWeakPtr(toaccountId).lock();
+        wxASSERT(pCurrencyPtr);
+        mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+        mmex::formatDoubleToCurrency(toamount, toamountStr);
+        mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
 
-    pCurrencyPtr = m_core->accountList_.getCurrencyWeakPtr(accountId).lock();
-    wxASSERT(pCurrencyPtr);
-    mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-    mmex::formatDoubleToCurrency(amount, amountStr);
-    //if (currencyid == basecurrencyid)
-    mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
+        pCurrencyPtr = m_core->accountList_.getCurrencyWeakPtr(accountId).lock();
+        wxASSERT(pCurrencyPtr);
+        mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+        mmex::formatDoubleToCurrency(amount, amountStr);
+        //if (currencyid == basecurrencyid)
+        mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
 
-    infoStr << amountStr << wxT(" ");
-    if (amount!=toamount || tocurrencyid != currencyid)
-    infoStr << wxT("-> ")  << toamountStr << wxT(" ");
-    infoStr << _("From") << wxT(" ") << fromaccStr << wxT(" ") << _("to ") << intoaccStr; 
+        infoStr << amountStr << wxT(" ");
+        if (amount!=toamount || tocurrencyid != currencyid)
+            infoStr << wxT("-> ")  << toamountStr << wxT(" ");
+        infoStr << _("From") << wxT(" ") << fromaccStr << wxT(" ") << _("to ") << intoaccStr;
 
         if (tocurrencyid != currencyid)
         {
-        infoStr << wxT(" ( "); 
-        if (accountId == m_AccountID && convrate < toconvrate)
-        {infoStr  << tocurpfxStr << wxT("1") << tocursfxStr << wxT(" = ") << curpfxStr << convertionStr << cursfxStr << wxT(" ");}
-        else if (accountId == m_AccountID && convrate > toconvrate)
-        {infoStr << curpfxStr << wxT("1") << cursfxStr << wxT(" = ") << tocurpfxStr << convertionStr << tocursfxStr << wxT(" ");} 
-        else if (accountId != m_AccountID && convrate < toconvrate)
-        {infoStr << tocurpfxStr << wxT("1") << tocursfxStr << wxT(" = ") << curpfxStr << convertionStr << cursfxStr << wxT(" ");} 
-        else 
-        {infoStr << curpfxStr << wxT("1") << cursfxStr << wxT(" = ") << tocurpfxStr << convertionStr << tocursfxStr << wxT(" ");} 
-        infoStr << wxT(" )");
+            infoStr << wxT(" ( "); 
+            if (accountId == m_AccountID && convrate < toconvrate)
+            {
+                infoStr  << tocurpfxStr << wxT("1") << tocursfxStr << wxT(" = ") << curpfxStr << convertionStr << cursfxStr << wxT(" ");
+            } else if (accountId == m_AccountID && convrate > toconvrate) {
+                infoStr << curpfxStr << wxT("1") << cursfxStr << wxT(" = ") << tocurpfxStr << convertionStr << tocursfxStr << wxT(" ");
+            } else if (accountId != m_AccountID && convrate < toconvrate) {
+                infoStr << tocurpfxStr << wxT("1") << tocursfxStr << wxT(" = ") << curpfxStr << convertionStr << cursfxStr << wxT(" ");
+            } else {
+                infoStr << curpfxStr << wxT("1") << cursfxStr << wxT(" = ") << tocurpfxStr << convertionStr << tocursfxStr << wxT(" ");
+            } 
+            infoStr << wxT(" )");
         }
     }
     else //For deposits and withdrawals calculates amount in base currency

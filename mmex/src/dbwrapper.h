@@ -27,9 +27,9 @@
 
 const int BD_REPEATS_MULTIPLEX_BASE  = 100;
 
-const wxString TRANS_TYPE_WITHDRAWAL_STR = wxT("Withdrawal");
-const wxString TRANS_TYPE_DEPOSIT_STR    = wxT("Deposit");
-const wxString TRANS_TYPE_TRANSFER_STR   = wxT("Transfer");
+const wxString TRANS_TYPE_WITHDRAWAL_STR   = wxT("Withdrawal");   
+const wxString TRANS_TYPE_DEPOSIT_STR      = wxT("Deposit");
+const wxString TRANS_TYPE_TRANSFER_STR     = wxT("Transfer");
 
 enum {DEF_STATUS_NONE , DEF_STATUS_RECONCILED , DEF_STATUS_VOID , DEF_STATUS_FOLLOWUP , DEF_STATUS_DUPLICATE };
 enum {DEF_WITHDRAWAL , DEF_DEPOSIT , DEF_TRANSFER};
@@ -84,7 +84,9 @@ int getAccountID(wxSQLite3Database* db, const wxString& accountName);
 double getTotalBalanceOnAccount(wxSQLite3Database* db, int accountID, bool ignoreFuture=false);
 double getInitBalanceOnAccount(wxSQLite3Database* db, int accountID);
 //double getReconciledBalanceOnAccount(wxSQLite3Database* db, int accountID);
-bool getExpensesIncome(wxSQLite3Database* db, int accountID, double& expenses, double& income, bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
+
+// Obsolete Code
+//bool getExpensesIncome(wxSQLite3Database* db, int accountID, double& expenses, double& income, bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
 void removeSplitsForAccount(wxSQLite3Database* db, int accountID);
 
 /* Payee Table API */
@@ -93,7 +95,9 @@ wxString getPayee(wxSQLite3Database* db, int payeeID, int& categID, int& subcate
 bool getPayeeID(wxSQLite3Database* db, const wxString &payee, int& payeeID, int& categID, int& subcategID );
 bool updatePayee(wxSQLite3Database* db, const wxString& payeeName, int payeeID, int categID, int subcategID);
 bool deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID);
-double getAmountForPayee(wxSQLite3Database* db, int payeeID, bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
+
+// Obsolete Code
+//double getAmountForPayee(wxSQLite3Database* db, int payeeID, bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
 wxArrayString filterPayees(wxSQLite3Database* db, const wxString& patt);
 	
 /* Category Table API */
