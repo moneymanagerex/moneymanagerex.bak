@@ -1165,7 +1165,7 @@ void mmTransDialog::OnFrequentUsedNotes(wxCommandEvent& /*event*/)
     	char sql[] =
         "select max (TRANSDATE) as TRANSDATE , count (notes) COUNT, "
         "(case when accountid = ? then '1' else '2' end) as ACC "
-        ",replace (substr (notes, 1, 20), x'0A', ' ')||(case when length(notes)>20 then '...' else '' end) as NOTE, "
+		",replace(replace (substr (notes, 1, 20), x'0A', ' '), '&', '&&')||(case when length(notes)>20 then '...' else '' end) as NOTE, "
         "notes as NOTES "
         "from checkingaccount_v1 ca "
         "where notes is not '' "
