@@ -3849,11 +3849,21 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     }
 
     // update currency rates
-
-    for (int idx = 0; idx < (int)m_core->currencyList_.currencies_.size(); idx++) {
+    
+	wxString msg = _("Currency rate updated");
+	msg << wxT("\n\n");
+    for (int idx = 0; idx < (int)m_core->currencyList_.currencies_.size(); idx++) 
+    {
         wxString currencySymbol  = m_core->currencyList_.currencies_[idx]->currencySymbol_;
-        for(i=0; i<(int)currency_name.GetCount(); i++) {
-            if(currency_name[i] == currencySymbol) {
+        
+        for(i=0; i<(int)currency_name.GetCount(); i++) 
+        {
+            if(currency_name[i] == currencySymbol) 
+            {
+                double rate = m_core->currencyList_.currencies_[idx]->baseConv_ ;
+                if (rate != rate_ptr[i])
+                msg << currencySymbol << wxT(" : ") << rate << wxT(" -> ") << rate_ptr[i] << wxT("\n");
+
                 m_core->currencyList_.currencies_[idx]->baseConv_ = rate_ptr[i];
                 m_core->currencyList_.updateCurrency(m_core->currencyList_.currencies_[idx]);
             }
@@ -3862,7 +3872,9 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 
     delete[] rate_ptr;
 
-    wxMessageDialog msgDlg(this, _("Currency rate updated"), _("Update Currency Rate"));
+    wxMessageDialog msgDlg(this, msg, _("Currency rate updated"));
+    
+    //fileviewer(wxT(""), this).ShowModal();
     msgDlg.ShowModal();
 
     createHomePage();
