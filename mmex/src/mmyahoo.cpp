@@ -58,7 +58,7 @@ void mmYahoo::ReadSettings()
 
     //TODO:Store CSVColumns_ in config / INI item
     // CSVColumns_ = wxT("snghl1c1vd1t1");
-    CSVColumns_ = wxT("sl1");  /// Extreme basic version - only symbol & current price
+    CSVColumns_ = wxT("sl1n");  /// Extreme basic version - only symbol & current price & name
     CSVTemporaryFile_.Clear();
 
     // Proxy
