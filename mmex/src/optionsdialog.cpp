@@ -101,10 +101,10 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     
 END_EVENT_TABLE()
 
-#include "../resources/htmbook.xpm"
-#include "../resources/pgmctrl.xpm"
-#include "../resources/exefile.xpm"
-#include "../resources/misc.xpm"
+#include "../resources/main-setup.xpm"
+#include "../resources/preferences-color.xpm"
+#include "../resources/view.xpm"
+#include "../resources/preferences-other.xpm"
 
 mmOptionsDialog::mmOptionsDialog( )
 {
@@ -344,13 +344,13 @@ void mmOptionsDialog::OnFYSMonthChange(wxCommandEvent& /*event*/)
 
 void mmOptionsDialog::CreateControls()
 {    
-    wxSize imageSize(16, 16);
+    wxSize imageSize(64, 64);
     m_imageList = new wxImageList( imageSize.GetWidth(), 
         imageSize.GetHeight() );
-    m_imageList->Add(wxBitmap(htmbook_xpm));
-    m_imageList->Add(wxBitmap(pgmctrl_xpm));
-    m_imageList->Add(wxBitmap(exefile_xpm));
-    m_imageList->Add(wxBitmap(misc_xpm));
+    m_imageList->Add(wxBitmap(view_xpm));
+    m_imageList->Add(wxBitmap(preferences_color_xpm));
+    m_imageList->Add(wxBitmap(main_setup_xpm));
+    m_imageList->Add(wxBitmap(preferences_other_xpm));
  
     mmOptionsDialog* itemDialog1 = this;
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
