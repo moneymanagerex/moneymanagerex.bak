@@ -1,3 +1,8 @@
+# Russian translation for mmex
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# This file is distributed under the same license as the mmex package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
 #  <eurolidays@papa>, 2010.
 # Christophe Gonnet <tipoussin.openworld@gmail.com>, 2010.
 msgid ""
@@ -18,6 +23,8 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SearchPath-0: src\n"
+"X-Launchpad-Export-Date: 2011-10-25 16:24+0000\n"
+"X-Generator: Launchpad (build 14185)\n"
 
 #: src/aboutdialog.cpp:72
 msgid "About "
