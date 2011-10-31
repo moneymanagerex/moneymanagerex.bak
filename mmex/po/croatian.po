@@ -16,6 +16,8 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Bookmarks: -1,-1,526,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-SearchPath-0: src\n"
+"X-Launchpad-Export-Date: 2011-10-25 16:24+0000\n"
+"X-Generator: Launchpad (build 14185)\n"
 
 #: src/aboutdialog.cpp:72
 msgid "About "
