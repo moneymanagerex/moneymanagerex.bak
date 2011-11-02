@@ -44,7 +44,16 @@ wxString mmCustomSQLReport::getHTMLText()
     hb.init();
     displayReportHeader(hb, wxString() << _("Custom SQL Report: ") << reportTitle_ );
 
-    wxSQLite3ResultSet sqlQueryResult = core_->db_->ExecuteQuery(sqlQuery_);
+	wxSQLite3ResultSet sqlQueryResult;
+	try
+	{
+		sqlQueryResult = core_->db_->ExecuteQuery(sqlQuery_);
+	}
+	catch(wxSQLite3Exception e)
+	{
+		wxSafeShowMessage(wxT("Error"),e.GetMessage().c_str());
+		return wxString::Format(_("Error: %s"), e.GetMessage().c_str());
+	}
 
     // Use column info to determine if data is to be right justified.    
     int columnCount = sqlQueryResult.GetColumnCount();
