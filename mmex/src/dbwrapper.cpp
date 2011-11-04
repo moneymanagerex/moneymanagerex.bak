@@ -646,7 +646,7 @@ void mmDBWrapper::createAllDataView(wxSQLite3Database* db)
 	"create  view alldata as "
     "select \n"
     "       CANS.TransID as ID, CANS.TransCode as TransactionType, \n"
-    "       CANS.TransDate as Date, \n"
+    "       date(CANS.TransDate, 'localtime') as Date, \n"
     "       d.userdate as UserDate \n"
     "       ,coalesce(CAT.CategName, SCAT.CategName) as Category, \n"
     "       coalesce(SUBCAT.SUBCategName, SSCAT.SUBCategName, '') as Subcategory, \n"
@@ -679,14 +679,14 @@ void mmDBWrapper::createAllDataView(wxSQLite3Database* db)
     "            left join CATEGORY_V1 SCAT on SCAT.CATEGID = st.CATEGID and CANS.TransId=st.transid \n"
     "            left join SUBCATEGORY_V1 SSCAT on SSCAT.SUBCATEGID = st.SUBCATEGID and SSCAT.CATEGID = st.CATEGID and CANS.TransId=st.transid \n"
     "            left join currencyformats_v1 cf on cf.currencyid=FROMACC .currencyid \n"
-    "           left join ( select transid as id , transdate \n"
-    ",round (strftime('%d', transdate))  as day \n"
-    ",round (strftime('%m', transdate))  as month \n"
-    ",round (strftime('%Y', transdate))  as year \n" 
-    ",round(strftime('%Y', transdate ,'start of month', ((case when fd.infovalue<=round(strftime('%d', transdate )) then 1  else 0 end)-fm.infovalue)||' month')) as finyear \n"
-    ",ifnull (ifnull (strftime(df.infovalue, TransDate), \n"
-    "       (strftime(replace (df.infovalue, '%y', SubStr (strftime('%Y',TransDate),3,2)),TransDate)) \n"
-    "       ), TransDate) as UserDate \n"
+    "           left join ( select transid as id , date(transdate, 'localtime') as transdate \n"
+    ",round (strftime('%d', transdate, 'localtime'))  as day \n"
+    ",round (strftime('%m', transdate, 'localtime'))  as month \n"
+    ",round (strftime('%Y', transdate, 'localtime'))  as year \n" 
+    ",round(strftime('%Y', transdate, 'localtime' ,'start of month', ((case when fd.infovalue<=round(strftime('%d', transdate , 'localtime')) then 1  else 0 end)-fm.infovalue)||' month')) as finyear \n"
+    ",ifnull (ifnull (strftime(df.infovalue, TransDate, 'localtime'), \n"
+    "       (strftime(replace (df.infovalue, '%y', SubStr (strftime('%Y',TransDate, 'localtime'),3,2)),TransDate, 'localtime')) \n"
+    "       ), TransDate, 'localtime') as UserDate \n"
     "from  CHECKINGACCOUNT_V1 \n"
     "left join infotable_v1 df on df.infoname='DATEFORMAT' \n"
     "left join infotable_v1 fm on fm.infoname='FINANCIAL_YEAR_START_MONTH' \n"
@@ -1020,7 +1020,7 @@ double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountI
            "TOACCOUNTID, "
            "TRANSAMOUNT, "
            "TOTRANSAMOUNT, "
-           "TRANSDATE "
+           "date(TRANSDATE, 'localtime') as TRANSDATE "
     "from CHECKINGACCOUNT_V1 "
     "where ACCOUNTID = ? OR TOACCOUNTID = ?";
 
@@ -1708,24 +1708,49 @@ double mmDBWrapper::getCurrencyBaseConvRate(wxSQLite3Database* db, int accountID
 
 void mmDBWrapper::verifyINIDB(wxSQLite3Database* inidb)
 {
-        wxASSERT(inidb);
+    wxASSERT(inidb);
+    bool ok=false;
+        try 
+        {
+			ok = inidb->TableExists(wxT("SETTING_V1"));
+		} 
+		catch (wxSQLite3Exception e) 
+		{ 
+			wxLogDebug(wxT("Database::TableExists: Exception"), e.GetMessage().c_str());
+			wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+		}
 
-        bool ok = inidb->TableExists(wxT("SETTING_V1"));
         if (ok)
                 return;
-        
+
         static const char sql[] =
         "create table SETTING_V1"
-        "( "
-          "SETTINGID integer not null primary key, "
+        "(SETTINGID integer not null primary key, "
           "SETTINGNAME TEXT NOT NULL, "
-          "SETTINGVALUE TEXT "
-       " )";
+          "SETTINGVALUE TEXT)";
 
-        inidb->ExecuteUpdate(sql);
+        try 
+        {
+            inidb->ExecuteUpdate(sql);
+        }
+		catch (wxSQLite3Exception e) 
+		{ 
+            wxLogDebug(wxT("Database::ExecuteUpdate: Exception: %s"), e.GetMessage().c_str());
+            wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+		}
         
-        ok = inidb->TableExists(wxT("SETTING_V1"));
-        wxASSERT(ok);
+        try 
+        {
+            ok = inidb->TableExists(wxT("SETTING_V1"));
+        }
+		catch (wxSQLite3Exception e) 
+		{ 
+            wxLogDebug(wxT("Database::TableExists: Exception: %s"), e.GetMessage().c_str());
+            wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+		}
+
+        wxFAIL;
+        wxASSERT(!ok);
 }
 
 wxString mmDBWrapper::getINISettingValue(wxSQLite3Database* db, const wxString& settingName, 
@@ -1841,7 +1866,7 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
     "select ca.TRANSCODE, "
            "ca.TRANSAMOUNT, "
            "ca.STATUS, "
-           "ca.TRANSDATE, "
+           "date(ca.TRANSDATE, 'localtime') as TRANSDATE, "
            "cf.BASECONVRATE "
     "from CHECKINGACCOUNT_V1 ca " + joinCURRENCYFORMATS("cf", "ca.ACCOUNTID") +
    " where ca.CATEGID = ? AND "
@@ -1898,7 +1923,7 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
     "select ca.TRANSID, "
            "ca.TRANSCODE, "
            "ca.STATUS, "
-           "ca.TRANSDATE, "
+           "date(ca.TRANSDATE, 'localtime') as TRANSDATE, "
            "cf.BASECONVRATE "
     "from CHECKINGACCOUNT_V1 ca " + joinCURRENCYFORMATS("cf", "ca.ACCOUNTID") +
    " where ca.TRANSID in( select TRANSID "
@@ -2084,7 +2109,7 @@ wxArrayString mmDBWrapper::filterPayees(wxSQLite3Database* db, const wxString& p
 	static const char sql[] = 
 	"select max(cast(TRANSACTIONNUMBER as integer)) as MaxTransID "
 	"from CHECKINGACCOUNT_V1 "
-	"where TRANSDATE = ? and "
+	"where date(TRANSDATE, 'localtime') = ? and "
 	      "ACCOUNTID = ?";
 
 	int transID = 1;
@@ -2310,7 +2335,7 @@ bool mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearNa
  {
 	static const char sql[] = 
 	"select NUMOCCURRENCES, "
-		   "NEXTOCCURRENCEDATE, "
+		   "date(NEXTOCCURRENCEDATE, 'localtime') as NEXTOCCURRENCEDATE, "
 		   "REPEATS "
 	"from BILLSDEPOSITS_V1 "
 	"WHERE BDID = ?";
@@ -2515,7 +2540,7 @@ double mmDBWrapper::getAssetValue(wxSQLite3Database* db, int assetID)
 	"select VALUECHANGE, "
 		   "VALUE, "
 		   "VALUECHANGERATE, "
-		   "STARTDATE "
+		   "date(STARTDATE, 'localtime') as STARTDATE "
 	"from ASSETS_V1 "
 	"where ASSETID = ?";
 
@@ -2718,25 +2743,93 @@ int mmDBWrapper::isReadOnly(wxSQLite3Database &db)
 boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, const wxString &key)
 {
     boost::shared_ptr<wxSQLite3Database> db(new wxSQLite3Database);
-    db->Open(dbpath, key);
 
-	int err = isReadOnly(*db);
-	if (err == SQLITE_OK) {
-		return db;
-	}	
-	
-	db->Close();
+    int err = SQLITE_OK;
+    wxString errMessage=wxT("");
+    try 
+    {
+        db->Open(dbpath, key);
+	} 
+	catch (wxSQLite3Exception e)
+	{
+		//wxLogError(wxT("Database::open: Exception: %s"), e.GetMessage().c_str());
+		//wxLogDebug(wxT("Database::open: Exception: %s"), e.GetMessage().c_str());
+		err = e.GetErrorCode(); 
+		errMessage << e.GetMessage();
+	}
 
-    /*  SQLite returns a code: SQLITE_NOTADB (File opened that is not a database file) 
-        when the password for an encrypted file is incorrect. */
-	if (err == SQLITE_NOTADB) { 
-        db.reset();
-        return db;      // return a NULL database pointer 
-	}	
+	if (err==SQLITE_OK)
+	{
+        err = isReadOnly(*db);
+	    if (err == SQLITE_OK) 
+            return db;
+    }
 
-    wxString s = wxString::Format(_("\n%s\nNot a writeable database\nYou must have write permission to that file"), 
-        			         dbpath.c_str());
+    db->Close();
+    db.reset();
+    
+    wxString s = _("When database file opening:");
+    s << wxT("\n") << wxString::Format(wxT("\n%s\n\n"), dbpath.c_str());
+	if (err == SQLITE_READONLY) 
+	{
+        s <<_("Not a writeable database") <<wxT("\n") << _("You must have write permission to that file")<< wxT("\n");
+	}
+	else if (err == SQLITE_CANTOPEN)
+	{
+        s << _("Can't open file") <<wxT("\n") << _("You must specify path to another database file") << wxT("\n");
+	}
+	else if (err == SQLITE_NOTADB)
+	{
+        s << _("An incorrect password given for an encrypted file")
+        << wxT("\n\n") << _("or") << wxT("\n\n")
+        << _("Attempt to open a File that is not a database file") << wxT("\n");
+	}
+	else
+	{
+        s << wxT("\n") << _("Error") << err << wxT("\n");
+	}
 
-    throw wxSQLite3Exception(err, s);
+	wxSafeShowMessage(_("Database::open: Exception"), s); 
+
+	s << errMessage << wxT("\n\n") << _("Continue ?");
+
+   	wxMessageDialog msgDlg(NULL, s, _("Error"), wxYES_NO|wxICON_ERROR);
+    if (msgDlg.ShowModal() == wxID_NO)
+	    exit(err);
+    
+    return db; // return a NULL database pointer 
+
 }
+
+// #define SQLITE_OK           0   /* Successful result */
+/* beginning-of-error-codes */
+//  SQLITE_ERROR        1   /* SQL error or missing database */
+//  SQLITE_INTERNAL     2   /* Internal logic error in SQLite */
+//  SQLITE_PERM         3   /* Access permission denied */
+//  SQLITE_ABORT        4   /* Callback routine requested an abort */
+//  SQLITE_BUSY         5   /* The database file is locked */
+//  SQLITE_LOCKED       6   /* A table in the database is locked */
+//  SQLITE_NOMEM        7   /* A malloc() failed */
+//  SQLITE_READONLY     8   /* Attempt to write a readonly database */
+//  SQLITE_INTERRUPT    9   /* Operation terminated by sqlite3_interrupt()*/
+//  SQLITE_IOERR       10   /* Some kind of disk I/O error occurred */
+//  SQLITE_CORRUPT     11   /* The database disk image is malformed */
+//  SQLITE_NOTFOUND    12   /* Unknown opcode in sqlite3_file_control() */
+//  SQLITE_FULL        13   /* Insertion failed because database is full */
+//  SQLITE_CANTOPEN    14   /* Unable to open the database file */
+//  SQLITE_PROTOCOL    15   /* Database lock protocol error */
+//  SQLITE_EMPTY       16   /* Database is empty */
+//  SQLITE_SCHEMA      17   /* The database schema changed */
+//  SQLITE_TOOBIG      18   /* String or BLOB exceeds size limit */
+//  SQLITE_CONSTRAINT  19   /* Abort due to constraint violation */
+//  SQLITE_MISMATCH    20   /* Data type mismatch */
+//  SQLITE_MISUSE      21   /* Library used incorrectly */
+//  SQLITE_NOLFS       22   /* Uses OS features not supported on host */
+//  SQLITE_AUTH        23   /* Authorization denied */
+//  SQLITE_FORMAT      24   /* Auxiliary database format error */
+//  SQLITE_RANGE       25   /* 2nd parameter to sqlite3_bind out of range */
+//  SQLITE_NOTADB      26   /* File opened that is not a database file */
+//  SQLITE_ROW         100  /* sqlite3_step() has another row ready */
+//  SQLITE_DONE        101  /* sqlite3_step() has finished executing */
+
 //----------------------------------------------------------------------------
