@@ -686,7 +686,7 @@ void mmDBWrapper::createAllDataView(wxSQLite3Database* db)
     ",round(strftime('%Y', transdate, 'localtime' ,'start of month', ((case when fd.infovalue<=round(strftime('%d', transdate , 'localtime')) then 1  else 0 end)-fm.infovalue)||' month')) as finyear \n"
     ",ifnull (ifnull (strftime(df.infovalue, TransDate, 'localtime'), \n"
     "       (strftime(replace (df.infovalue, '%y', SubStr (strftime('%Y',TransDate, 'localtime'),3,2)),TransDate, 'localtime')) \n"
-    "       ), TransDate, 'localtime') as UserDate \n"
+    "       ), date(TransDate, 'localtime')) as UserDate \n"
     "from  CHECKINGACCOUNT_V1 \n"
     "left join infotable_v1 df on df.infoname='DATEFORMAT' \n"
     "left join infotable_v1 fm on fm.infoname='FINANCIAL_YEAR_START_MONTH' \n"
