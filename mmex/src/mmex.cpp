@@ -255,8 +255,9 @@ bool OnInitImpl(mmGUIApp &app)
 
     /* Get INI DB for loading settings */
     wxSQLite3Database inidb;
-    inidb.Open(mmex::getPathUser(mmex::SETTINGS));
 
+    inidb.Open(mmex::getPathUser(mmex::SETTINGS));
+    
     mmDBWrapper::verifyINIDB(&inidb);
 
     /* Load Colors from Database */
@@ -3036,10 +3037,10 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
         // if the database pointer has been reset, the password is possibly incorrect
         if (!m_db)
         {
-            wxString msgStr = wxString() << _("An incorrect password given for an encrypted file")
-                                         << wxT("\n\n") << _("or") << wxT("\n\n")
-                                         << _("Attempt to open a File that is not a database file");
-            wxMessageBox(msgStr,dialogErrorMessageHeading ,wxICON_EXCLAMATION); 
+//            wxString msgStr = wxString() << _("An incorrect password given for an encrypted file")
+//                                         << wxT("\n\n") << _("or") << wxT("\n\n")
+//                                         << _("Attempt to open a File that is not a database file");
+//            wxMessageBox(msgStr,dialogErrorMessageHeading ,wxICON_EXCLAMATION); 
             return ;
         }
 
