@@ -1,5 +1,6 @@
 /*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
+ Copyright (C) 2011 Nikolay & Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -28,6 +29,7 @@
 #include "guiid.h"
 #include "defs.h"
 #include "mmcoredb.h"
+#include <wx/spinbutt.h>
 
 class mmData;
 class wxDatePickerCtrl;
@@ -67,12 +69,10 @@ public:
     void OnTransTypeChanged(wxCommandEvent& event);
     
     void OnDateChanged(wxDateEvent& event);
-    void fillControls();
     void dataToControls();
     void updateControlsForTransType();
     bool getPayeeID(wxString payee, int& payeeID, int& categID, int& subcategID );
     void addPayee(wxString payee, int categID, int subcategID );
-    void OnAdvanced(wxCommandEvent& event);
     void OnAccountName(wxCommandEvent& event);
     void OnSplitChecked(wxCommandEvent& event);
     void OnAutoExecutionUserAckChecked(wxCommandEvent& event);
@@ -93,10 +93,8 @@ private:
     wxButton* bPayee_;
     wxButton* bTo_;
     mmAdvancedPopup* m_simplePopup_;
-    wxButton* bAdvanced_;
     wxCheckBox* cSplit_;
     wxCheckBox* cAdvanced_;
-    //wxStaticText* staticTextAdvancedActive_;
     bool payeeUnknown_;
 
     wxChoice* choiceStatus_;
@@ -108,7 +106,7 @@ private:
 
     wxDatePickerCtrl* dpc_;
     wxDatePickerCtrl* dpcbd_;
-    wxCalendarCtrl* CalendarCtrl_;
+    wxCalendarCtrl* calendarCtrl_;
     wxChoice* itemRepeats_;
     wxCheckBox* itemCheckBoxAutoExeUserAck_;
     wxCheckBox* itemCheckBoxAutoExeSilent_;
@@ -124,6 +122,24 @@ private:
     double toTransAmount_;
     bool advancedToTransAmountSet_;
     boost::shared_ptr<mmSplitTransactionEntries> split_;
+
+    wxString payeeDepositTip_;
+    wxString payeeWithdrawalTip_;
+    wxString amountNormalTip_;
+    wxString amountTransferTip_;
+    wxSpinButton *spinNextOccDate_;
+    wxSpinButton *spinTransDate_;
+
+    void displayControlsForType( int transType, bool enableAdvanced = false);
+    void resetPayeeString(bool normal = true);
+    void OnAdvanceChecked(wxCommandEvent& event);
+    void SetTransferControls(bool transfers = false);
+    void SetAdvancedTransferControls(bool advanced = false);
+    void OnTransDateForward(wxSpinEvent& event);
+    void OnTransDateBack(wxSpinEvent& event);
+    void OnNextOccurDateForward(wxSpinEvent& event);
+    void OnNextOccurDateBack(wxSpinEvent& event);
+    void SetNewDate(wxDatePickerCtrl* dpc, bool forward = true);
 };
 
 #endif
