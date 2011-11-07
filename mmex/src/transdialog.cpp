@@ -45,10 +45,7 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_CHOICE(ID_DIALOG_TRANS_TYPE, mmTransDialog::OnTransTypeChanged)  
     EVT_SPIN_UP(ID_DIALOG_TRANS_SPINNER,mmTransDialog::OnSpinUp)
     EVT_SPIN_DOWN(ID_DIALOG_TRANS_SPINNER,mmTransDialog::OnSpinDown)
-    // Superficial future change to clarify name. (was changed from button to checkbox)
-    // from ID_DIALOG_TRANS_BUTTONADVANCED
-    // to   ID_DIALOG_TRANS_ADVANCED_CHECKBOX
-    EVT_CHECKBOX(ID_DIALOG_TRANS_BUTTONADVANCED, mmTransDialog::OnAdvanceChecked) 
+    EVT_CHECKBOX(ID_DIALOG_TRANS_ADVANCED_CHECKBOX, mmTransDialog::OnAdvanceChecked) 
     EVT_CHECKBOX(ID_DIALOG_TRANS_SPLITCHECKBOX, mmTransDialog::OnSplitChecked)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTRANSNUM, mmTransDialog::OnAutoTransNum)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTON_FREQENTNOTES, mmTransDialog::OnFrequentUsedNotes)
@@ -289,15 +286,15 @@ void mmTransDialog::CreateControls()
     dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime,
                                  wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
-    spinCtrl_ = new wxSpinButton(itemPanel7,ID_DIALOG_TRANS_SPINNER,wxDefaultPosition, wxSize(16,24),wxSP_VERTICAL|wxSP_ARROW_KEYS|wxSP_WRAP);
+    spinCtrl_ = new wxSpinButton(itemPanel7,ID_DIALOG_TRANS_SPINNER,wxDefaultPosition, wxSize(40,14),wxSP_HORIZONTAL|wxSP_ARROW_KEYS|wxSP_WRAP);
 	spinCtrl_ -> SetRange (-32768, 32768); 
-	spinCtrl_->SetToolTip(_("Specify the date of the transaction"));
+	spinCtrl_->SetToolTip(_("Retard or advance the date of the transaction"));
 
     itemFlexGridSizer8->Add(itemStaticText15, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 	wxBoxSizer* itemBoxSizer118 = new wxBoxSizer(wxHORIZONTAL);
 	itemFlexGridSizer8->Add(itemBoxSizer118, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     itemBoxSizer118->Add(dpc_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
-	itemBoxSizer118->Add(spinCtrl_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);   
+	itemBoxSizer118->Add(spinCtrl_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, 4);   
 
     // Status --------------------------------------------
     wxStaticText* itemStaticText51 = new wxStaticText( itemPanel7, wxID_STATIC, _("Status"));
@@ -327,7 +324,7 @@ void mmTransDialog::CreateControls()
     choiceTrans_ = new wxChoice(itemPanel7,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxSize(110, -1),3,itemChoice6Strings,0);
     choiceTrans_->SetSelection(0);
     choiceTrans_->SetToolTip(_("Specify the type of transactions to be created."));
-    cAdvanced_ = new wxCheckBox( itemPanel7, ID_DIALOG_TRANS_BUTTONADVANCED, _("Advanced"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cAdvanced_ = new wxCheckBox( itemPanel7, ID_DIALOG_TRANS_ADVANCED_CHECKBOX, _("Advanced"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cAdvanced_->SetValue(FALSE);
     cAdvanced_->SetToolTip(_("Allows the setting of different amounts in the FROM and TO accounts."));
 

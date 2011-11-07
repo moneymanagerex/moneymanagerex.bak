@@ -1,5 +1,6 @@
 /*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
+ Copyright (C) 2011 Nikolay & Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -29,7 +30,6 @@
 #include "defs.h"
 #include "mmcoredb.h"
 #include<wx/spinbutt.h>
-#include<wx/spinctrl.h>
 
 class mmData;
 class wxDatePickerCtrl;
@@ -112,6 +112,7 @@ private:
     bool edit_;
 
     wxDatePickerCtrl* dpc_;
+    wxSpinButton *spinCtrl_;
     int categID_;
     int subcategID_;
     int payeeID_;
@@ -137,11 +138,6 @@ private:
     void SetAdvancedTransferControls(bool advanced = false);
     wxArrayString freqnotes;
 
-      
-protected:
-
-    wxSpinButton *spinCtrl_;
-    
 };
 
 #endif
