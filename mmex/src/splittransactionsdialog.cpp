@@ -106,6 +106,7 @@ void SplitTransactionDialog::DataToControls()
 
         lcSplit_->SetItem((long)idx, 1, dispAmount);
     }
+	UpdateSplitTotal();
 }
 
 void SplitTransactionDialog::CreateControls()
@@ -136,6 +137,9 @@ void SplitTransactionDialog::CreateControls()
     itemCol1.SetText(_("Amount"));
     lcSplit_->InsertColumn(1, itemCol1);
     lcSplit_->SetColumnWidth( 1, 100 );
+	
+	transAmount_ = new wxStaticText( itemDialog1, wxID_STATIC, _("Total: 0.00"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer2->Add(transAmount_, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
@@ -181,8 +185,9 @@ void SplitTransactionDialog::OnButtonAddClick( wxCommandEvent& event )
                                                                                 subcategID);
         wxASSERT(pSplitEntry->category_.lock());
         split_->addSplit(pSplitEntry);
-    }
-
+		
+		UpdateSplitTotal();
+	}
     event.Skip();
 }
 
@@ -202,6 +207,7 @@ void SplitTransactionDialog::OnButtonRemoveClick( wxCommandEvent& event )
 
         break;
     }
+	UpdateSplitTotal();
 
     event.Skip();
 }
@@ -225,4 +231,19 @@ wxBitmap SplitTransactionDialog::GetBitmapResource( const wxString& /*name*/ )
 wxIcon SplitTransactionDialog::GetIconResource( const wxString& /*name*/ )
 {
     return wxNullIcon;
+}
+
+void SplitTransactionDialog::UpdateSplitTotal()
+{
+	// Update the total amount of all splits
+	wxString splitTotal;
+	if (split_->numEntries() > 0)
+	{
+		mmex::formatDoubleToCurrencyEdit(split_->getTotalSplits(), splitTotal);
+	}
+	else
+	{
+		splitTotal = wxT("0.00");
+	}
+	transAmount_->SetLabel(splitTotal);
 }

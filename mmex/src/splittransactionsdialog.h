@@ -114,6 +114,7 @@ public:
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTONCLOSE
     void OnButtonCloseClick( wxCommandEvent& event );
 
+	void UpdateSplitTotal();
 ////@end SplitTransactionDialog event handler declarations
 
 ////@begin SplitTransactionDialog member function declarations
@@ -129,6 +130,7 @@ public:
 
 ////@begin SplitTransactionDialog member variables
     wxListCtrl* lcSplit_;
+	wxStaticText* transAmount_;
 ////@end SplitTransactionDialog member variables
 
 private:
