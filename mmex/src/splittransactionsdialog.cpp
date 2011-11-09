@@ -138,8 +138,12 @@ void SplitTransactionDialog::CreateControls()
     lcSplit_->InsertColumn(1, itemCol1);
     lcSplit_->SetColumnWidth( 1, 100 );
 	
-	transAmount_ = new wxStaticText( itemDialog1, wxID_STATIC, _("Total: 0.00"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(transAmount_, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	wxBoxSizer* itemBoxSizerTotAmount = new wxBoxSizer(wxHORIZONTAL);
+	itemBoxSizer2->Add(itemBoxSizerTotAmount, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+	wxStaticText* transAmountText_ = new wxStaticText( itemDialog1, wxID_STATIC, _("Total:"), wxDefaultPosition, wxDefaultSize, 0 );
+	itemBoxSizerTotAmount->Add(transAmountText_, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	transAmount_ = new wxStaticText( itemDialog1, wxID_STATIC, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	itemBoxSizerTotAmount->Add(transAmount_, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
@@ -243,7 +247,7 @@ void SplitTransactionDialog::UpdateSplitTotal()
 	}
 	else
 	{
-		splitTotal = wxT("0.00");
+		mmex::formatDoubleToCurrencyEdit(0.0, splitTotal);
 	}
 	transAmount_->SetLabel(splitTotal);
 }
