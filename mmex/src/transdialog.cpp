@@ -286,7 +286,17 @@ void mmTransDialog::CreateControls()
     dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime,
                                  wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
-    spinCtrl_ = new wxSpinButton(itemPanel7,ID_DIALOG_TRANS_SPINNER,wxDefaultPosition, wxSize(40,14),wxSP_HORIZONTAL|wxSP_ARROW_KEYS|wxSP_WRAP);
+
+// change properties depending on system parameters
+    wxSize spinCtrlSize = wxSize(16,-1);
+    int spinCtrlDirection = wxSP_VERTICAL;
+    int interval = 0;
+#ifdef __WXMSW__
+    spinCtrlSize = wxSize(40,14);
+    spinCtrlDirection = wxSP_HORIZONTAL;
+    interval = 4;
+#endif
+    spinCtrl_ = new wxSpinButton(itemPanel7,ID_DIALOG_TRANS_SPINNER,wxDefaultPosition,spinCtrlSize,spinCtrlDirection|wxSP_ARROW_KEYS|wxSP_WRAP);
 	spinCtrl_ -> SetRange (-32768, 32768); 
 	spinCtrl_->SetToolTip(_("Retard or advance the date of the transaction"));
 
@@ -294,7 +304,7 @@ void mmTransDialog::CreateControls()
 	wxBoxSizer* itemBoxSizer118 = new wxBoxSizer(wxHORIZONTAL);
 	itemFlexGridSizer8->Add(itemBoxSizer118, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     itemBoxSizer118->Add(dpc_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
-	itemBoxSizer118->Add(spinCtrl_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, 4);   
+	itemBoxSizer118->Add(spinCtrl_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, interval);   
 
     // Status --------------------------------------------
     wxStaticText* itemStaticText51 = new wxStaticText( itemPanel7, wxID_STATIC, _("Status"));

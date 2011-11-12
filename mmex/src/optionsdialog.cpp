@@ -356,7 +356,7 @@ void mmOptionsDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    wxPanel* itemPanel3 = new wxPanel( itemDialog1, 10064, wxDefaultPosition, 
+    wxPanel* itemPanel3 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, 
         wxDefaultSize, wxTAB_TRAVERSAL );
     itemBoxSizer2->Add(itemPanel3, 1, wxGROW|wxALL, 5);
 
@@ -375,7 +375,7 @@ void mmOptionsDialog::CreateControls()
     itemPanelGeneral->SetSizer(itemBoxSizer20);
 
     wxStaticBox* itemStaticBoxSizer8Static = new wxStaticBox(itemPanelGeneral, 
-        wxID_ANY, _("General Settings"));
+        wxID_ANY, _("Currency Settings"));
     wxStaticBoxSizer* itemStaticBoxSizer8 = new wxStaticBoxSizer(itemStaticBoxSizer8Static, 
         wxHORIZONTAL);
     itemBoxSizer20->Add(itemStaticBoxSizer8, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
@@ -394,18 +394,19 @@ void mmOptionsDialog::CreateControls()
 
     wxButton* itemButton81 = new wxButton( itemPanelGeneral, 
         ID_DIALOG_OPTIONS_BUTTON_CURRENCY, currName, wxDefaultPosition, wxDefaultSize, 0 );
+    itemButton81->SetToolTip(_("Sets the default currency for the database."));
     itemStaticBoxSizer8->Add(itemButton81, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxStaticBox* itemStaticBoxSizer9Static = new wxStaticBox(itemPanelGeneral, 
         wxID_ANY, _("View Settings"));
     wxStaticBoxSizer* itemStaticBoxSizer9 = new wxStaticBoxSizer(itemStaticBoxSizer9Static, wxVERTICAL);
     wxFlexGridSizer* itemFlexBoxSizer99 = new wxFlexGridSizer(2,2,5,5);
-    itemBoxSizer20->Add(itemStaticBoxSizer9, 0, wxALIGN_LEFT|wxGROW|wxALL, 0);
+    itemBoxSizer20->Add(itemStaticBoxSizer9, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
 	itemStaticBoxSizer9->Add(itemFlexBoxSizer99);
 	
     wxStaticText* itemStaticText41 = new wxStaticText( itemPanelGeneral, 
         wxID_STATIC, _("Date Format"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexBoxSizer99->Add(itemStaticText41, 0, wxALIGN_CENTER|wxALL, 0);
+    itemFlexBoxSizer99->Add(itemStaticText41, 0, wxALIGN_CENTER|wxALL, 5);
 
     wxString itemChoice7Strings[TOTAL_DATEFORMAT] = 
     {
@@ -440,7 +441,7 @@ void mmOptionsDialog::CreateControls()
 
     wxStaticText* itemStaticText411 = new wxStaticText( itemPanelGeneral, 
         ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE, _("Sample Date"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexBoxSizer99->Add(itemStaticText411, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
+    itemFlexBoxSizer99->Add(itemStaticText411, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
     itemStaticText411->SetLabel(mmGetDateForDisplay(db_, wxDateTime::Now()));
 
     wxButton* itemButtonDF = new wxButton( itemPanelGeneral, 
@@ -478,7 +479,7 @@ void mmOptionsDialog::CreateControls()
     
     wxTextCtrl* textUN = new wxTextCtrl( itemPanelGeneral, ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME, 
         userName, wxDefaultPosition, wxDefaultSize, 0 );
-    textUN->SetToolTip(_("Specify the User Name"));
+    textUN->SetToolTip(_("The User Name is used as a title for the database."));
     itemStaticBoxSizerUN->Add(textUN, 1, wxALIGN_LEFT|wxGROW|wxALL, 5);
 
 	  // ------------------------------------------    
