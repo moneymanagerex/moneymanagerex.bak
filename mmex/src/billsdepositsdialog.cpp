@@ -333,6 +333,16 @@ void mmBDDialog::CreateControls()
     itemFlexGridSizer5->Add(itemAccountName_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     itemAccountName_->SetToolTip(_("Specify the Account that will own the repeating transaction"));
 
+// change properties depending on system parameters
+    wxSize spinCtrlSize = wxSize(16,-1);
+    int spinCtrlDirection = wxSP_VERTICAL;
+    int interval = 0;
+#ifdef __WXMSW__
+    spinCtrlSize = wxSize(40,14);
+    spinCtrlDirection = wxSP_HORIZONTAL;
+    interval = 4;
+#endif
+
     // Next Occur Date --------------------------------------------
     wxStaticText* staticTextNextOccur = new wxStaticText( itemDialog1, wxID_STATIC, _("Next Occurrence") );
     dpcbd_ = new wxDatePickerCtrl( itemDialog1, ID_DIALOG_BD_BUTTON_NEXTOCCUR, wxDefaultDateTime,
@@ -340,12 +350,12 @@ void mmBDDialog::CreateControls()
     dpcbd_->SetToolTip(_("Specify the date of the next bill or deposit"));
 
     spinNextOccDate_ = new wxSpinButton( itemDialog1, ID_DIALOG_BD_REPEAT_DATE_SPINNER,
-                                         wxDefaultPosition, wxSize(40,14),wxSP_HORIZONTAL|wxSP_ARROW_KEYS|wxSP_WRAP);
+                                         wxDefaultPosition, spinCtrlSize,spinCtrlDirection|wxSP_ARROW_KEYS|wxSP_WRAP);
 	spinNextOccDate_->SetToolTip(_("Retard or advance the date of the 'next occurrence"));
 
 	wxBoxSizer* nextOccurDateBoxSizer = new wxBoxSizer(wxHORIZONTAL);
     nextOccurDateBoxSizer->Add(dpcbd_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
-	nextOccurDateBoxSizer->Add(spinNextOccDate_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, 4);   
+	nextOccurDateBoxSizer->Add(spinNextOccDate_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, interval);
 
     itemFlexGridSizer5->Add(staticTextNextOccur, 0,
                             wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
@@ -411,12 +421,12 @@ void mmBDDialog::CreateControls()
                                  wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
     spinTransDate_ = new wxSpinButton( transactionPanel,ID_DIALOG_TRANS_DATE_SPINNER,
-                                       wxDefaultPosition, wxSize(40,14),wxSP_HORIZONTAL|wxSP_ARROW_KEYS|wxSP_WRAP);
+                                       wxDefaultPosition, spinCtrlSize,spinCtrlDirection|wxSP_ARROW_KEYS|wxSP_WRAP);
 	spinTransDate_->SetToolTip(_("Retard or advance the date of the transaction"));
 
 	wxBoxSizer* transDateBoxSizer = new wxBoxSizer(wxHORIZONTAL);
     transDateBoxSizer->Add(dpc_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
-	transDateBoxSizer->Add(spinTransDate_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, 4);   
+	transDateBoxSizer->Add(spinTransDate_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, interval);
 
     transPanelSizer->Add(staticTextDate, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
     transPanelSizer->Add(transDateBoxSizer, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
