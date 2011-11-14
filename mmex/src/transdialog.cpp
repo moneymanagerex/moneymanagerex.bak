@@ -297,14 +297,14 @@ void mmTransDialog::CreateControls()
     interval = 4;
 #endif
     spinCtrl_ = new wxSpinButton(itemPanel7,ID_DIALOG_TRANS_SPINNER,wxDefaultPosition,spinCtrlSize,spinCtrlDirection|wxSP_ARROW_KEYS|wxSP_WRAP);
-	spinCtrl_ -> SetRange (-32768, 32768); 
-	spinCtrl_->SetToolTip(_("Retard or advance the date of the transaction"));
+    spinCtrl_ -> SetRange (-32768, 32768); 
+    spinCtrl_->SetToolTip(_("Retard or advance the date of the transaction"));
 
     itemFlexGridSizer8->Add(itemStaticText15, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
-	wxBoxSizer* itemBoxSizer118 = new wxBoxSizer(wxHORIZONTAL);
-	itemFlexGridSizer8->Add(itemBoxSizer118, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    wxBoxSizer* itemBoxSizer118 = new wxBoxSizer(wxHORIZONTAL);
+    itemFlexGridSizer8->Add(itemBoxSizer118, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     itemBoxSizer118->Add(dpc_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
-	itemBoxSizer118->Add(spinCtrl_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, interval);   
+    itemBoxSizer118->Add(spinCtrl_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, interval);   
 
     // Status --------------------------------------------
     wxStaticText* itemStaticText51 = new wxStaticText( itemPanel7, wxID_STATIC, _("Status"));
@@ -314,7 +314,7 @@ void mmTransDialog::CreateControls()
         _("Reconciled"),
         _("Void"),
         _("Follow up"),
-    	_("Duplicate"),
+        _("Duplicate"),
     };  
     choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, wxSize(110, -1), 5, itemChoice7Strings, 0 );
     choiceStatus_->SetSelection(mmIniOptions::transStatusReconciled_);
@@ -341,7 +341,7 @@ void mmTransDialog::CreateControls()
     wxBoxSizer* typeSizer = new wxBoxSizer(wxHORIZONTAL);
     typeSizer->Add(choiceTrans_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     typeSizer->Add(cAdvanced_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxALL, 5);
-	
+    
     itemFlexGridSizer8->Add(itemStaticText5, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
     itemFlexGridSizer8->Add(typeSizer, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
@@ -349,12 +349,21 @@ void mmTransDialog::CreateControls()
     amountNormalTip_   = _("Specify the amount for this transaction");
     amountTransferTip_ = _("Specify the amount to be transfered"); 
 
+    //Validator
+    wxTextValidator doubleValidator(wxFILTER_INCLUDE_CHAR_LIST); 
+    wxArrayString list; 
+    wxString valid_chars(wxT(" 0123456789.,")); 
+    size_t len = valid_chars.Length(); 
+    for (size_t i=0; i<len; i++) 
+    list.Add(wxString(valid_chars.GetChar(i))); 
+    doubleValidator.SetIncludes(list);
+
     wxStaticText* amountStaticText = new wxStaticText( itemPanel7, wxID_STATIC, _("Amount"));
 
-    textAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT );
+    textAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT, doubleValidator );
     textAmount_->SetToolTip(amountNormalTip_);
 
-    toTextAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT );
+    toTextAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT, doubleValidator );
     toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -388,7 +397,7 @@ void mmTransDialog::CreateControls()
         {
             categString = resetCategoryString();
         }
-	}
+    }
 
     bPayee_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONPAYEE, payeeName, wxDefaultPosition, wxSize(225, -1), 0 );
     payeeWithdrawalTip_ = _("Specify where the transaction is going to");
@@ -447,7 +456,7 @@ void mmTransDialog::CreateControls()
 
     wxBoxSizer* itemBoxSizer56 = new wxBoxSizer(wxVERTICAL);
 
-	itemFlexGridSizer8->Add(itemBoxSizer56, 0, wxGROW|wxALIGN_RIGHT|wxALIGN_TOP|wxALL, 0);
+    itemFlexGridSizer8->Add(itemBoxSizer56, 0, wxGROW|wxALIGN_RIGHT|wxALIGN_TOP|wxALL, 0);
     itemBoxSizer56->Add(notesStaticText, 0, wxALIGN_LEFT|wxALIGN_TOP|wxALL|wxADJUST_MINSIZE, 0);
     itemBoxSizer56->Add(bFrequentUsedNotes_, 0, wxALIGN_RIGHT|wxALIGN_TOP|wxALL|wxADJUST_MINSIZE, 10);
     itemFlexGridSizer8->Add(textNotes_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxEAST, 0);
@@ -478,7 +487,7 @@ void mmTransDialog::CreateControls()
     itemButton28->SetForegroundColour(wxColour(wxT("RED")));
     itemStdDialogButtonSizer1->Add(itemButton28,  0, wxALIGN_RIGHT|wxLEFT|wxRIGHT, 10);
 
-	itemStdDialogButtonSizer1->Realize();
+    itemStdDialogButtonSizer1->Realize();
 
 }
 
@@ -490,25 +499,25 @@ void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
 void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 {
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
-	{
-	    static const char sql[] =
-    	"select ACCOUNTNAME "
-    	"from ACCOUNTLIST_V1 "
-    	"where ACCOUNTTYPE IN ('Checking', 'Term') and STATUS <> 'Closed' "
-    	"order by ACCOUNTNAME";
+    {
+        static const char sql[] =
+        "select ACCOUNTNAME "
+        "from ACCOUNTLIST_V1 "
+        "where ACCOUNTTYPE IN ('Checking', 'Term') and STATUS <> 'Closed' "
+        "order by ACCOUNTNAME";
 
-    	wxArrayString as;
+        wxArrayString as;
 
-    	wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-    	while (q1.NextRow())
-    	{
-    	    as.Add(q1.GetString(wxT("ACCOUNTNAME")));
-    	}
-    	q1.Finalize();
+        wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+        while (q1.NextRow())
+        {
+            as.Add(q1.GetString(wxT("ACCOUNTNAME")));
+        }
+        q1.Finalize();
 
-    	wxSingleChoiceDialog scd(0, _("Account name"), _("Select Account"), as);
+        wxSingleChoiceDialog scd(0, _("Account name"), _("Select Account"), as);
         if (scd.ShowModal() == wxID_OK)
-    	{
+        {
             wxString acctName = scd.GetStringSelection();
             payeeID_ = mmDBWrapper::getAccountID(db_.get(), acctName);
             bPayee_->SetLabel(acctName);
@@ -523,12 +532,12 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
             payeeID_ = dlg.getPayeeId();
             if (payeeID_ == -1)
             {
-	            bPayee_->SetLabel(resetPayeeString());
+                bPayee_->SetLabel(resetPayeeString());
                 payeeUnknown_ = true;
-	            return;
+                return;
             }
 
-           	int tempCategID = -1;
+            int tempCategID = -1;
             int tempSubCategID = -1;
             wxString payeeName = mmDBWrapper::getPayee(db_.get(), payeeID_, tempCategID, tempSubCategID);
             bPayee_->SetLabel(mmReadyDisplayString(payeeName));
@@ -560,7 +569,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
                 }
             }
         }
-	}
+    }
 }
 void mmTransDialog::OnAutoTransNum(wxCommandEvent& /*event*/)
 {
@@ -576,7 +585,7 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
     static const char sql[] =
         "select ACCOUNTNAME "
         "from ACCOUNTLIST_V1 "
-    	"where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS <> 'Closed' "
+        "where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS <> 'Closed' "
         "order by ACCOUNTNAME";
 
     wxArrayString as;
@@ -599,24 +608,24 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
 
 void mmTransDialog::OnSpinUp(wxSpinEvent& event)
 {
-	wxString dateStr = dpc_->GetValue().FormatISODate();
-	wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
-	date = date.Add(wxDateSpan::Days(1));
-	//dateStr = mmGetDateForDisplay(db_.get(), date);
-	dpc_->SetValue (date);
-	
-	event.Skip();
+    wxString dateStr = dpc_->GetValue().FormatISODate();
+    wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
+    date = date.Add(wxDateSpan::Days(1));
+    //dateStr = mmGetDateForDisplay(db_.get(), date);
+    dpc_->SetValue (date);
+    
+    event.Skip();
 }
 
 void mmTransDialog::OnSpinDown(wxSpinEvent& event)
 {
-	wxString dateStr = dpc_->GetValue().FormatISODate();
-	wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
-	date = date.Add(wxDateSpan::Days(-1));
-	//dateStr = mmGetDateForDisplay(db_.get(), date);
-	dpc_->SetValue (date);
+    wxString dateStr = dpc_->GetValue().FormatISODate();
+    wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
+    date = date.Add(wxDateSpan::Days(-1));
+    //dateStr = mmGetDateForDisplay(db_.get(), date);
+    dpc_->SetValue (date);
 
-	event.Skip();
+    event.Skip();
 }
 
 void mmTransDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
@@ -954,20 +963,27 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         wxString amountStr = textAmount_->GetValue().Trim();
         if (!mmex::formatCurrencyToDouble(amountStr, amount) || (amount < 0.0))
         {
+            textAmount_->SetBackgroundColour(wxT("RED"));
             mmShowErrorMessageInvalid(this, _("Amount"));
+            textAmount_->SetBackgroundColour(wxNullColour);
             return;
         }
     }
 
-    if (advancedToTransAmountSet_)
+    //if (advancedToTransAmountSet_)
     {
         wxString amountStr = toTextAmount_->GetValue().Trim();
-        if (!mmex::formatCurrencyToDouble(amountStr, toTransAmount_) || (toTransAmount_ < 0.0))
+        if ((!mmex::formatCurrencyToDouble(amountStr, toTransAmount_) || (toTransAmount_ < 0.0)) && !amountStr.IsEmpty())
         {
+            toTextAmount_->Enable(!advancedToTransAmountSet_);
+            toTextAmount_->SetBackgroundColour(wxT("RED"));
             mmShowErrorMessageInvalid(this, _("Advanced Amount"));
+            toTextAmount_->SetBackgroundColour(wxNullColour);
+            toTextAmount_->Enable(advancedToTransAmountSet_);
             return;
         }
-    } else
+    } //else
+    if (!advancedToTransAmountSet_)
         toTransAmount_ = amount;
 
     int toAccountID = -1;
@@ -1048,7 +1064,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     {
         status = wxT("F");
     }
-	else if (choiceStatus_->GetSelection() == DEF_STATUS_DUPLICATE)
+    else if (choiceStatus_->GetSelection() == DEF_STATUS_DUPLICATE)
     {
         status = wxT("D");
     }
@@ -1164,15 +1180,15 @@ void mmTransDialog::OnFrequentUsedNotes(wxCommandEvent& /*event*/)
     wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, ID_DIALOG_TRANS_BUTTON_FREQENTNOTES) ;
     ev.SetEventObject( this );
 
-	wxString notes = textNotes_->GetValue();
-	if (notes.IsEmpty ())
+    wxString notes = textNotes_->GetValue();
+    if (notes.IsEmpty ())
     {
         wxMenu menu;
 
-    	char sql[] =
+        char sql[] =
         "select max (TRANSDATE) as TRANSDATE , count (notes) COUNT, "
         "(case when accountid = ? then '1' else '2' end) as ACC "
-		",replace(replace (substr (notes, 1, 20), x'0A', ' '), '&', '&&')||(case when length(notes)>20 then '...' else '' end) as NOTE, "
+        ",replace(replace (substr (notes, 1, 20), x'0A', ' '), '&', '&&')||(case when length(notes)>20 then '...' else '' end) as NOTE, "
         "notes as NOTES "
         "from checkingaccount_v1 ca "
         "where notes is not '' "
@@ -1188,13 +1204,13 @@ void mmTransDialog::OnFrequentUsedNotes(wxCommandEvent& /*event*/)
         int menu_id=1;
         while (q1.NextRow())
         {
-		    freqnotes.Add(q1.GetString(wxT("NOTES")));
-		    wxString noteSTR = q1.GetString(wxT("NOTE"));
-		    menu.Append(menu_id++, noteSTR);
+            freqnotes.Add(q1.GetString(wxT("NOTES")));
+            wxString noteSTR = q1.GetString(wxT("NOTE"));
+            menu.Append(menu_id++, noteSTR);
         }
         q1.Finalize();
-	
-	    if (menu_id>1)
+    
+        if (menu_id>1)
             PopupMenu(&menu, 60, 30+((NOTES_MENU_NUMBER-menu_id-1)*23));
 
     }
