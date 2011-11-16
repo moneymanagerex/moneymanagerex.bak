@@ -686,7 +686,7 @@ void mmCheckingPanel::CreateControls()
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader, 0, wxALL, 1);
 
     wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, 
-            ID_PANEL_CHECKING_STATIC_BALHEADER, wxT(""), wxDefaultPosition, wxSize(650, 20), 0 );
+            ID_PANEL_CHECKING_STATIC_BALHEADER, wxT(""), wxDefaultPosition, wxSize(-1,20), 0 );
     itemBoxSizerHHeader->Add(itemStaticText10, 0, wxALL | wxEXPAND , 5);
     
     /* ---------------------- */
@@ -796,7 +796,7 @@ void mmCheckingPanel::CreateControls()
 
     //Infobar-mini 
     wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, ID_PANEL_CHECKING_STATIC_MINI, wxT(""), 
-    wxPoint(-1,-1), wxSize(650, -1), wxNO_BORDER|wxST_NO_AUTORESIZE);
+    wxPoint(-1,-1), wxDefaultSize, wxNO_BORDER|wxST_NO_AUTORESIZE);
     itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxALL, 12);
     //Infobar 
 
