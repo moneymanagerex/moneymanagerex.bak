@@ -135,8 +135,10 @@ mmOptionsDialog::~mmOptionsDialog( )
 
     wxTextCtrl* fysDay = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY);
     wxString fysDayVal = fysDay->GetValue();
+    if (wxAtoi(fysDayVal)<31){
     mmDBWrapper::setInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_DAY"), fysDayVal); 
     mmOptions::financialYearStartDayString_ = fysDayVal;
+    }
 }
 
 mmOptionsDialog::mmOptionsDialog( mmCoreDB* core, wxSQLite3Database* inidb,
@@ -434,7 +436,7 @@ void mmOptionsDialog::CreateControls()
     wxString selection = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
     choiceDateFormat_ = new wxComboBox( itemPanelGeneral, 
         ID_DIALOG_OPTIONS_DATE_FORMAT, wxT(""), wxDefaultPosition, 
-        wxSize(120, -1), TOTAL_DATEFORMAT, itemChoice7Strings, 0 );
+        wxSize(140, -1), TOTAL_DATEFORMAT, itemChoice7Strings, 0 );
     itemFlexBoxSizer99->Add(choiceDateFormat_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     choiceDateFormat_->SetToolTip(_("Specify the date format for display"));
     choiceDateFormat_->SetValue(FormatDate2DisplayDate(selection));
@@ -760,12 +762,21 @@ void mmOptionsDialog::CreateControls()
     itemBoxSizerMisc->Add(itemStaticBoxSizerFinancialYear, 0, wxGROW|wxALL, 5);
 	itemStaticBoxSizerFinancialYear->Add(transflexGridSizerMisc);
 	
+	//Validator
+    wxTextValidator intValidator(wxFILTER_INCLUDE_CHAR_LIST); 
+    wxArrayString list; 
+    wxString valid_chars(wxT("0123456789")); 
+    size_t len = valid_chars.Length(); 
+    for (size_t i=0; i<len; i++) 
+    list.Add(wxString(valid_chars.GetChar(i))); 
+    intValidator.SetIncludes(list);
+	
     wxStaticText* itemStaticTextFYSDay = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Start Day"), wxDefaultPosition, wxDefaultSize, 0 );
     transflexGridSizerMisc->Add(itemStaticTextFYSDay, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     wxString financialPeriodStartDay = mmDBWrapper::getInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_DAY"), wxT("1"));
     wxTextCtrl* textFPSDay = new wxTextCtrl( itemPanelMisc, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY, 
-                                             financialPeriodStartDay, wxDefaultPosition, wxDefaultSize, 0 );
+                                             financialPeriodStartDay, wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT, intValidator );
     textFPSDay->SetToolTip(_("Specify Day for start of financial year"));
     transflexGridSizerMisc->Add(textFPSDay, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
@@ -909,9 +920,11 @@ void mmOptionsDialog::CreateControls()
     }
     itemBoxSizerMisc->Add(itemCheckBoxOnlineCurrencyUpd, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemCheckBoxOnlineCurrencyUpd->SetToolTip(_("Enable or disable get data from European Central Bank to update currency rate"));
+    
+    //a bit more space needed for proper alignment
+    itemBoxSizerMisc->AddSpacer(40);
 
-   //----------------------------------------------
- 
+    //----------------------------------------------
     newBook->SetImageList(m_imageList);
 
     newBook->InsertPage(0, itemPanelGeneral, _("General"), true, 2);
@@ -924,6 +937,20 @@ void mmOptionsDialog::CreateControls()
 
     // resize dialog window
     Fit();
+
+   /**********************************************************************************************
+     Button Panel with OK Button
+    ***********************************************************************************************/
+    wxPanel* itemPanel25 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    itemBoxSizer2->Add(itemPanel25, 0, wxALIGN_RIGHT|wxBOTTOM, 5);
+
+    wxStdDialogButtonSizer*  itemStdDialogButtonSizer1 = new wxStdDialogButtonSizer;
+    itemPanel25->SetSizer(itemStdDialogButtonSizer1);
+    wxButton* itemButton27 = new wxButton( itemPanel25, wxID_OK, _("&OK"));
+    itemStdDialogButtonSizer1->Add(itemButton27);
+
+    itemStdDialogButtonSizer1->Realize();
+        
 }
 
 void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
