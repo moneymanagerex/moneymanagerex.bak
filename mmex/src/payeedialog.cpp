@@ -133,6 +133,11 @@ void mmPayeeDialog::CreateControls()
     itemBoxSizer9->Add(selectButton, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     selectButton->SetToolTip(_("Select the currently selected payee as the selected payee for the transaction"));
     selectButton->Disable();
+    
+    //Some interfaces has no any close buttons, it may confuse user. Cancel button added
+    wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL, _("&Close"));
+    itemBoxSizer9->Add(itemCancelButton,  0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+
 }
 
 void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
