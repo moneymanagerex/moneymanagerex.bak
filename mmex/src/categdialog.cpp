@@ -72,11 +72,11 @@ bool mmCategDialog::Create( wxWindow* parent, wxWindowID id,
     return TRUE;
 }
 
-void mmCategDialog::setFields(int categID, int subcategID) 
-{
-    categID_      = categID;
-    subcategID_   =  subcategID;
-}
+//void mmCategDialog::setFields(int categID, int subcategID) 
+//{
+//    categID_      = categID;
+//    subcategID_   =  subcategID;
+//}
 
 void mmCategDialog::fillControls()
 {
