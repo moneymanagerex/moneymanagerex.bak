@@ -37,7 +37,7 @@ enum {DEF_WITHDRAWAL , DEF_DEPOSIT , DEF_TRANSFER};
 namespace mmDBWrapper
 {
 
-int isReadOnly(wxSQLite3Database &db);
+//int isReadOnly(wxSQLite3Database &db);
 boost::shared_ptr<wxSQLite3Database> Open(const wxString &dbpath, const wxString &key = wxGetEmptyString());
 
 bool ViewExists(wxSQLite3Database* db, const char *viewName);
