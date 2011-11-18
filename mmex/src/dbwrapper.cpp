@@ -643,7 +643,7 @@ void mmDBWrapper::createAllDataView(wxSQLite3Database* db)
     static const char view_name[] = "ALLDATA";
 
     static const char sql[] = 
-	"create  view alldata as "
+    "create  view alldata as "
     "select \n"
     "       CANS.TransID as ID, CANS.TransCode as TransactionType, \n"
     "       date(CANS.TransDate, 'localtime') as Date, \n"
@@ -741,68 +741,114 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd)
 {
     /* Create INFOTABLE_V1 Tables */
     mmDBWrapper::begin(db);
+    //if (verbose)
+    wxSafeShowMessage(wxT("createInfoV1Table"), wxT("OK"));
     createInfoV1Table(db);
     if (pgd)
         pgd->Update(10);
 
     /* Create Currency Settings */
+    wxSafeShowMessage(wxT("createCurrencyV1Table"), wxT("OK"));
     createCurrencyV1Table(db);
     if (pgd)
         pgd->Update(20);
 
     /* Create ACCOUNTLIST_V1 Tables */
+    wxSafeShowMessage(wxT("createAccountListV1Table"), wxT("OK"));
     createAccountListV1Table(db);
     if (pgd)
         pgd->Update(30);
 
     /* Create CHECKINGACCOUNT_V1 Tables */
+    wxSafeShowMessage(wxT("createCheckingAccountV1Table"), wxT("OK"));
     createCheckingAccountV1Table(db);
     if (pgd)
         pgd->Update(40);
 
     /* Create PAYEE_V1 Tables */
+    wxSafeShowMessage(wxT("createPayeeV1Table"), wxT("OK"));
     createPayeeV1Table(db);
     if (pgd)
         pgd->Update(50);
   
     /* Create CATEGORY_V1 Tables */
+    wxSafeShowMessage(wxT("createCategoryV1Table"), wxT("OK"));
     createCategoryV1Table(db);
     if (pgd)
         pgd->Update(60);
 
     /* Create Budgeting_V1 Tables */
+    wxSafeShowMessage(wxT("createBudgetingV1Table"), wxT("OK"));
     createBudgetingV1Table(db);
     if (pgd)
         pgd->Update(75);
 
     /* Create Bills & Deposits V1 Table */
+    wxSafeShowMessage(wxT("createBillsDepositsV1Table"), wxT("OK"));
     createBillsDepositsV1Table(db);
     if (pgd)
         pgd->Update(80);
 
     /* Create Stock V1 Table */
+    wxSafeShowMessage(wxT("createStockV1Table"), wxT("OK"));
     createStockV1Table(db);
     if (pgd)
         pgd->Update(85);
 
-	/* Create Asset V1 Table */
-	createAssetsV1Table(db);
+    /* Create Asset V1 Table */
+    wxSafeShowMessage(wxT("createAssetsV1Table"), wxT("OK"));
+    createAssetsV1Table(db);
     if (pgd)
-    	pgd->Update(90);
+        pgd->Update(90);
 
-	/* Create SplitTransactions V1 Table */
-	createSplitTransactionsV1Table(db);
+    /* Create SplitTransactions V1 Table */
+    wxSafeShowMessage(wxT("createSplitTransactionsV1Table"), wxT("OK"));
+    createSplitTransactionsV1Table(db);
     if (pgd)
-    	pgd->Update(95);
+        pgd->Update(95);
 
-	/* Create AllData view */
+    /* Create AllData view */
+    wxSafeShowMessage(wxT("createAllDataView"), wxT("OK"));
    createAllDataView(db);
    if (pgd)
        pgd->Update(99);
 
     /* Remove Any cruft */
-    removeCruft(db);
-    mmDBWrapper::commit(db);
+    //removeCruft(db);
+    //mmDBWrapper::commit(db);
+    wxSafeShowMessage(wxT("removeCruft"), wxT("OK"));
+}
+
+bool mmDBWrapper::checkDBIntegrity(wxSQLite3Database* db, wxProgressDialog* pgd)
+{
+    bool exists=true;
+    wxSafeShowMessage(wxT("Info"), wxT("Checking if tables available"));
+    const wxString tables[] = {
+    wxT("INFOTABLE_V1"),
+    wxT("CURRENCYFORMATS_V1"),
+    wxT("BUDGETYEAR_V1"),
+    wxT("STOCK_V1"),
+    wxT("ASSETS_V1"),
+    wxT("BILLSDEPOSITS_V1"),
+    wxT("ACCOUNTLIST_V1"),
+    wxT("CHECKINGACCOUNT_V1"),
+    wxT("SPLITTRANSACTIONS_V1"),
+    wxT("BUDGETSPLITTRANSACTIONS_V1"),
+    wxT("PAYEE_V1"),
+    wxT("CATEGORY_V1"),
+    wxT("SUBCATEGORY_V1")};
+
+    for (int n=0; n<13; n++)
+    {
+        if (!db->TableExists(tables[n]))
+            exists = false;
+        //if (verbose)
+        wxSafeShowMessage(tables[n], (exists ? wxT("OK") : wxT("NO")));
+        if (pgd)
+            pgd->Update(n*7);
+    }
+
+    return (exists);
 }
 
 int mmDBWrapper::getNumAccounts(wxSQLite3Database* db)
@@ -978,7 +1024,7 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
             grpChar = grp.GetChar(0);
         }
 
-	mmex::CurrencyFormatter::instance().loadSettings(pfxSymbol, sfxSymbol, decChar, grpChar, unit, cent, scaleDl);
+    mmex::CurrencyFormatter::instance().loadSettings(pfxSymbol, sfxSymbol, decChar, grpChar, unit, cent, scaleDl);
 
     } else {
         wxASSERT(true);
@@ -989,7 +1035,7 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
 
 double mmDBWrapper::getInitBalanceOnAccount(wxSQLite3Database* db, int accountID)
 {
-	static const char sql[] =
+    static const char sql[] =
     "select INITIALBAL "
     "from ACCOUNTLIST_V1 "
     "where ACCOUNTID = ?";
@@ -1712,13 +1758,13 @@ void mmDBWrapper::verifyINIDB(wxSQLite3Database* inidb)
     bool ok=false;
         try 
         {
-			ok = inidb->TableExists(wxT("SETTING_V1"));
-		} 
-		catch (wxSQLite3Exception e) 
-		{ 
-			wxLogDebug(wxT("Database::TableExists: Exception"), e.GetMessage().c_str());
-			wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-		}
+            ok = inidb->TableExists(wxT("SETTING_V1"));
+        } 
+        catch (wxSQLite3Exception e) 
+        { 
+            wxLogDebug(wxT("Database::TableExists: Exception"), e.GetMessage().c_str());
+            wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+        }
 
         if (ok)
                 return;
@@ -1733,21 +1779,21 @@ void mmDBWrapper::verifyINIDB(wxSQLite3Database* inidb)
         {
             inidb->ExecuteUpdate(sql);
         }
-		catch (wxSQLite3Exception e) 
-		{ 
+        catch (wxSQLite3Exception e) 
+        { 
             wxLogDebug(wxT("Database::ExecuteUpdate: Exception: %s"), e.GetMessage().c_str());
             wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-		}
+        }
         
         try 
         {
             ok = inidb->TableExists(wxT("SETTING_V1"));
         }
-		catch (wxSQLite3Exception e) 
-		{ 
+        catch (wxSQLite3Exception e) 
+        { 
             wxLogDebug(wxT("Database::TableExists: Exception: %s"), e.GetMessage().c_str());
             wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-		}
+        }
 
         wxFAIL;
         wxASSERT(!ok);
@@ -2061,40 +2107,40 @@ wxArrayString mmDBWrapper::filterPayees(wxSQLite3Database* db, const wxString& p
 {
     wxSQLite3Statement st = db->PrepareStatement("select PAYEENAME from PAYEE_V1 where PAYEENAME LIKE ? ORDER BY PAYEENAME");
     st.Bind(1, patt + wxT("%"));
-	wxSQLite3ResultSet q1 = st.ExecuteQuery();
-	
-	wxArrayString flist;
-	
-	while (q1.NextRow())
-	{
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    
+    wxArrayString flist;
+    
+    while (q1.NextRow())
+    {
         flist.Add(q1.GetString(wxT("PAYEENAME")));
-	}
-	st.Finalize();
-	q1.Finalize();
-	return flist;
+    }
+    st.Finalize();
+    q1.Finalize();
+    return flist;
 }
 
 
  void mmDBWrapper::addBudgetYear(wxSQLite3Database* db, const wxString &year)
  {
-	wxSQLite3Statement st = db->PrepareStatement("insert into BUDGETYEAR_V1 (BUDGETYEARNAME) values (?)");
-	st.Bind(1, year);
+    wxSQLite3Statement st = db->PrepareStatement("insert into BUDGETYEAR_V1 (BUDGETYEARNAME) values (?)");
+    st.Bind(1, year);
     st.ExecuteUpdate();
-	st.Finalize();
+    st.Finalize();
  }
 
  int mmDBWrapper::getBudgetYearID(wxSQLite3Database* db, const wxString &year)
  {
     int budgetYearID = -1;
     
-	wxSQLite3Statement st = db->PrepareStatement("select BUDGETYEARID "
+    wxSQLite3Statement st = db->PrepareStatement("select BUDGETYEARID "
                                                  "from BUDGETYEAR_V1 "
                                                  "where BUDGETYEARNAME = ?"
                                                 );
 
     st.Bind(1, year);
     
-	wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
     if (q1.NextRow())
     {
         budgetYearID = q1.GetInt(wxT("BUDGETYEARID"));
@@ -2106,33 +2152,34 @@ wxArrayString mmDBWrapper::filterPayees(wxSQLite3Database* db, const wxString& p
 
  int mmDBWrapper::getTransIDByDate(wxSQLite3Database* db, const wxString &byDate, int accountID)
  {
-	static const char sql[] = 
-	"select max(cast(TRANSACTIONNUMBER as integer)) as MaxTransID "
-	"from CHECKINGACCOUNT_V1 "
-	"where date(TRANSDATE, 'localtime') = ? and "
-	      "ACCOUNTID = ?";
+    static const char sql[] = 
+    "select ifnull(max(cast(TRANSACTIONNUMBER as integer)),0)+1 as MaxTransID "
+    "from CHECKINGACCOUNT_V1 "
+    "where ACCOUNTID = ? "
+    "--and date(TRANSDATE, 'localtime') = ? ";
 
-	int transID = 1;
+    int transID = 1;
     
-	wxSQLite3Statement st = db->PrepareStatement(sql);
-	st.Bind(1, byDate);
-	st.Bind(2, accountID);
+    wxSQLite3Statement st = db->PrepareStatement(sql);
+    st.Bind(1, accountID);
+    //Make a numbered consecutively
+    //st.Bind(2, byDate);
 
-	wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
     if (q1.NextRow())
     {
-		transID = q1.GetInt(wxT("MaxTransID")) + 1;
+        transID = q1.GetInt(wxT("MaxTransID"));
     }
     st.Finalize();
     
-	return transID;
+    return transID;
  }
 
  wxString mmDBWrapper::getBudgetYearForID(wxSQLite3Database* db, int yearid)
  {
      wxString budgetYear;
 
-	 wxSQLite3Statement st = db->PrepareStatement("select BUDGETYEARNAME "
+     wxSQLite3Statement st = db->PrepareStatement("select BUDGETYEARNAME "
                                                   "from BUDGETYEAR_V1 "
                                                   "where BUDGETYEARID = ?"
                                                  );
@@ -2152,21 +2199,21 @@ wxArrayString mmDBWrapper::filterPayees(wxSQLite3Database* db, const wxString& p
 void mmDBWrapper::updateYearForID(wxSQLite3Database* db, 
      const wxString& yearName, int yearid)
  {
-	 wxSQLite3Statement st = db->PrepareStatement("update BUDGETYEAR_V1 "
-		                                          "SET BUDGETYEARNAME = ? "
-												  "WHERE BUDGETYEARID = ?"
-												 );
+     wxSQLite3Statement st = db->PrepareStatement("update BUDGETYEAR_V1 "
+                                                  "SET BUDGETYEARNAME = ? "
+                                                  "WHERE BUDGETYEARID = ?"
+                                                 );
 
-	 st.Bind(1, yearName);	
-	 st.Bind(2, yearid);	
+     st.Bind(1, yearName);  
+     st.Bind(2, yearid);    
 
      st.ExecuteUpdate();
-	 st.Finalize();
+     st.Finalize();
 }
 
 bool mmDBWrapper::copyBudgetYear(wxSQLite3Database* db, int newYear, int baseYear)
 {
-	static const char sql[] = 
+    static const char sql[] = 
     "insert into BUDGETTABLE_V1 ( "
       "BUDGETYEARID, "
       "CATEGID, "
@@ -2176,18 +2223,18 @@ bool mmDBWrapper::copyBudgetYear(wxSQLite3Database* db, int newYear, int baseYea
     ") "
     "select ?, " 
            "CATEGID, "
-	       "SUBCATEGID, "
-		   "PERIOD, "
-		   "AMOUNT "
-	"from BUDGETTABLE_V1 "
-	"WHERE BUDGETYEARID = ?";
-	 
+           "SUBCATEGID, "
+           "PERIOD, "
+           "AMOUNT "
+    "from BUDGETTABLE_V1 "
+    "WHERE BUDGETYEARID = ?";
+     
      if (newYear == baseYear)
          return false;
     
-	 wxSQLite3Statement st = db->PrepareStatement(sql);
+     wxSQLite3Statement st = db->PrepareStatement(sql);
      st.Bind(1, newYear);
-	 st.Bind(2, baseYear);
+     st.Bind(2, baseYear);
 
      st.ExecuteUpdate();
      st.Finalize();
@@ -2222,30 +2269,30 @@ bool mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearNa
  void mmDBWrapper::addBudgetEntry(wxSQLite3Database* db, int budgetYearID, 
      int categID, int subCategID, const wxString& period, double amount)
  {
-	 static const char sql[] = 
-	"insert into BUDGETTABLE_V1 ( "
-	  "BUDGETYEARID, "
-	  "CATEGID, "
+     static const char sql[] = 
+    "insert into BUDGETTABLE_V1 ( "
+      "BUDGETYEARID, "
+      "CATEGID, "
       "SUBCATEGID, "
-	  "PERIOD, "
-	  "AMOUNT "
-	") values ( "
-	  "?, ?, ?, ?, ? "
-	")";
-	 
-	 wxSQLite3Statement st = db->PrepareStatement(sql);
-	
-	int i = 0;
-	st.Bind(++i, budgetYearID);
-	st.Bind(++i, categID);
-	st.Bind(++i, subCategID);
-	st.Bind(++i, period);
-	st.Bind(++i, amount);
+      "PERIOD, "
+      "AMOUNT "
+    ") values ( "
+      "?, ?, ?, ?, ? "
+    ")";
+     
+     wxSQLite3Statement st = db->PrepareStatement(sql);
+    
+    int i = 0;
+    st.Bind(++i, budgetYearID);
+    st.Bind(++i, categID);
+    st.Bind(++i, subCategID);
+    st.Bind(++i, period);
+    st.Bind(++i, amount);
 
     wxASSERT(st.GetParamCount() == i);
 
     st.ExecuteUpdate();
-	st.Finalize();
+    st.Finalize();
  }
 
  void mmDBWrapper::deleteBudgetEntry(wxSQLite3Database* db, int budgetEntryID)
@@ -2254,26 +2301,26 @@ bool mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearNa
     st.Bind(1, budgetEntryID);
     
     st.ExecuteUpdate();
-	st.Finalize();
+    st.Finalize();
  }
  
  void mmDBWrapper::updateBudgetEntry(wxSQLite3Database* db, 
         int budgetYearID, int categID, int subCategID,
                                 const wxString& period, double amount)
 {
-	 static const char sql[] = 
-	 "delete from BUDGETTABLE_V1 "
+     static const char sql[] = 
+     "delete from BUDGETTABLE_V1 "
      "where BUDGETENTRYID in( select BUDGETENTRYID "
-	                         "from BUDGETTABLE_V1 "
-	                         "WHERE BUDGETYEARID = ? AND "
-	                               "CATEGID = ? AND "
-		                           "SUBCATEGID = ? "
+                             "from BUDGETTABLE_V1 "
+                             "WHERE BUDGETYEARID = ? AND "
+                                   "CATEGID = ? AND "
+                                   "SUBCATEGID = ? "
                            ")";
-	
-	 wxSQLite3Statement st = db->PrepareStatement(sql);
-	 st.Bind(1, budgetYearID);
-	 st.Bind(2, categID);
-	 st.Bind(3, subCategID);
+    
+     wxSQLite3Statement st = db->PrepareStatement(sql);
+     st.Bind(1, budgetYearID);
+     st.Bind(2, categID);
+     st.Bind(3, subCategID);
 
      st.ExecuteUpdate();
      st.Finalize();
@@ -2284,20 +2331,20 @@ bool mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearNa
  bool mmDBWrapper::getBudgetEntry(wxSQLite3Database* db, int budgetYearID, 
                                 int categID, int subCategID, wxString& period, double& amount)
  {
-	static const char sql[] = 
-	"select PERIOD, "
-	       "AMOUNT "
-	"from BUDGETTABLE_V1 "
-	"WHERE BUDGETYEARID = ? AND "
-	      "CATEGID = ? AND "
-	      "SUBCATEGID = ?";
-	 
-	 bool found = false;
+    static const char sql[] = 
+    "select PERIOD, "
+           "AMOUNT "
+    "from BUDGETTABLE_V1 "
+    "WHERE BUDGETYEARID = ? AND "
+          "CATEGID = ? AND "
+          "SUBCATEGID = ?";
+     
+     bool found = false;
 
-	 wxSQLite3Statement st = db->PrepareStatement(sql);
-	 st.Bind(1, budgetYearID);
-	 st.Bind(2, categID);
-	 st.Bind(3, subCategID);
+     wxSQLite3Statement st = db->PrepareStatement(sql);
+     st.Bind(1, budgetYearID);
+     st.Bind(2, categID);
+     st.Bind(3, subCategID);
 
      wxSQLite3ResultSet q1 = st.ExecuteQuery();
     
@@ -2308,9 +2355,9 @@ bool mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearNa
         amount = q1.GetDouble(wxT("AMOUNT"));
      }
 
-	 st.Finalize();
+     st.Finalize();
 
-	 return found;
+     return found;
  }
 
  void mmDBWrapper::deleteBDSeries(wxSQLite3Database* db, int bdID)
@@ -2333,20 +2380,20 @@ bool mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearNa
 
  void mmDBWrapper::completeBDInSeries(wxSQLite3Database* db, int bdID)
  {
-	static const char sql[] = 
-	"select NUMOCCURRENCES, "
-		   "date(NEXTOCCURRENCEDATE, 'localtime') as NEXTOCCURRENCEDATE, "
-		   "REPEATS "
-	"from BILLSDEPOSITS_V1 "
-	"WHERE BDID = ?";
-	 
+    static const char sql[] = 
+    "select NUMOCCURRENCES, "
+           "date(NEXTOCCURRENCEDATE, 'localtime') as NEXTOCCURRENCEDATE, "
+           "REPEATS "
+    "from BILLSDEPOSITS_V1 "
+    "WHERE BDID = ?";
+     
      wxDateTime updateOccur = wxDateTime::Now();
      int numRepeats  = -1;
 
-	 wxSQLite3Statement st = db->PrepareStatement(sql);
-	 st.Bind(1, bdID);
+     wxSQLite3Statement st = db->PrepareStatement(sql);
+     st.Bind(1, bdID);
 
-	 wxSQLite3ResultSet q1 = st.ExecuteQuery();
+     wxSQLite3ResultSet q1 = st.ExecuteQuery();
 
      if (q1.NextRow())
      {
@@ -2414,34 +2461,34 @@ bool mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearNa
         }
      }
 
-	 st.Finalize();
+     st.Finalize();
      
-	{
-		static const char sql[] = 
-		"update BILLSDEPOSITS_V1 "
-		"set NEXTOCCURRENCEDATE = ?, "
-		    "NUMOCCURRENCES = ? "
-		"where BDID = ?";
+    {
+        static const char sql[] = 
+        "update BILLSDEPOSITS_V1 "
+        "set NEXTOCCURRENCEDATE = ?, "
+            "NUMOCCURRENCES = ? "
+        "where BDID = ?";
 
-		wxSQLite3Statement st = db->PrepareStatement(sql);
+        wxSQLite3Statement st = db->PrepareStatement(sql);
 
-		st.Bind(1, updateOccur.FormatISODate());
-		st.Bind(2, numRepeats);
-		st.Bind(3, bdID);
+        st.Bind(1, updateOccur.FormatISODate());
+        st.Bind(2, numRepeats);
+        st.Bind(3, bdID);
 
-		st.ExecuteUpdate();
-		st.Finalize();
-	 }
+        st.ExecuteUpdate();
+        st.Finalize();
+     }
 
-	db->ExecuteUpdate("delete from BILLSDEPOSITS_V1 where NUMOCCURRENCES = 0");
+    db->ExecuteUpdate("delete from BILLSDEPOSITS_V1 where NUMOCCURRENCES = 0");
  }
 
 void mmDBWrapper::deleteStockInvestment(wxSQLite3Database* db, int stockID)
 {
-	wxSQLite3Statement st = db->PrepareStatement("delete from STOCK_V1 where STOCKID = ?");
+    wxSQLite3Statement st = db->PrepareStatement("delete from STOCK_V1 where STOCKID = ?");
     st.Bind(1, stockID);
     st.ExecuteUpdate();
-	st.Finalize();
+    st.Finalize();
 }
 
 double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, double& invested)
@@ -2475,13 +2522,13 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int account
    double balance = 0.0; 
    originalVal = 0.0;
 
-	static const char sql[] = 
-	"select VALUE, "
-		   "NUMSHARES, "
-		   "PURCHASEPRICE, "
-		   "COMMISSION "
-	"from STOCK_V1 "
-	"where HELDAT = ?";
+    static const char sql[] = 
+    "select VALUE, "
+           "NUMSHARES, "
+           "PURCHASEPRICE, "
+           "COMMISSION "
+    "from STOCK_V1 "
+    "where HELDAT = ?";
 
    wxSQLite3Statement st = db->PrepareStatement(sql);
    st.Bind(1, accountID);
@@ -2512,22 +2559,22 @@ double mmDBWrapper::getStockInvestmentBalance(wxSQLite3Database* db, int account
 
 void mmDBWrapper::deleteAsset(wxSQLite3Database* db, int assetID)
 {
-	wxSQLite3Statement st = db->PrepareStatement("delete from ASSETS_V1 where ASSETID = ?");
-	st.Bind(1, assetID);
-	st.ExecuteUpdate();
-	st.Finalize();
+    wxSQLite3Statement st = db->PrepareStatement("delete from ASSETS_V1 where ASSETID = ?");
+    st.Bind(1, assetID);
+    st.ExecuteUpdate();
+    st.Finalize();
 }
 
 double mmDBWrapper::getAssetBalance(wxSQLite3Database* db)
 {
-	double balance = 0.0;
+    double balance = 0.0;
 
     wxSQLite3ResultSet q1 = db->ExecuteQuery("select ASSETID from ASSETS_V1");
 
     while (q1.NextRow())
     {
         int assetID = q1.GetInt(wxT("ASSETID"));
-		balance += getAssetValue(db, assetID);
+        balance += getAssetValue(db, assetID);
     }
     q1.Finalize();
 
@@ -2536,37 +2583,37 @@ double mmDBWrapper::getAssetBalance(wxSQLite3Database* db)
 
 double mmDBWrapper::getAssetValue(wxSQLite3Database* db, int assetID)
 {
-	static const char sql[] = 
-	"select VALUECHANGE, "
-		   "VALUE, "
-		   "VALUECHANGERATE, "
-		   "date(STARTDATE, 'localtime') as STARTDATE "
-	"from ASSETS_V1 "
-	"where ASSETID = ?";
+    static const char sql[] = 
+    "select VALUECHANGE, "
+           "VALUE, "
+           "VALUECHANGERATE, "
+           "date(STARTDATE, 'localtime') as STARTDATE "
+    "from ASSETS_V1 "
+    "where ASSETID = ?";
 
-	double assetValue = 0.0;
-	
-	wxSQLite3Statement st = db->PrepareStatement(sql);
+    double assetValue = 0.0;
+    
+    wxSQLite3Statement st = db->PrepareStatement(sql);
     st.Bind(1, assetID);
     
-	wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
     
-	if (q1.NextRow())
+    if (q1.NextRow())
     {
-		wxString valChange = q1.GetString(wxT("VALUECHANGE"));
-		double value = q1.GetDouble(wxT("VALUE"));
-		double valueChangeRate = q1.GetDouble(wxT("VALUECHANGERATE"));
+        wxString valChange = q1.GetString(wxT("VALUECHANGE"));
+        double value = q1.GetDouble(wxT("VALUE"));
+        double valueChangeRate = q1.GetDouble(wxT("VALUECHANGERATE"));
         wxString startDateStr = q1.GetString(wxT("STARTDATE"));
         wxDateTime startDate = mmGetStorageStringAsDate(startDateStr);
-		wxDateTime todayDate = wxDateTime::Now();
+        wxDateTime todayDate = wxDateTime::Now();
 
-		if (valChange == wxT("None"))
-			assetValue = value;
-		else if (valChange == wxT("Appreciates"))
-		{
-			if (todayDate > startDate)
-			{
-				int numYears = todayDate.GetYear() - startDate.GetYear();
+        if (valChange == wxT("None"))
+            assetValue = value;
+        else if (valChange == wxT("Appreciates"))
+        {
+            if (todayDate > startDate)
+            {
+                int numYears = todayDate.GetYear() - startDate.GetYear();
 
 //              improve the accuracy of number of years calculation
                 int numMonths = todayDate.GetMonth() - startDate.GetMonth();
@@ -2574,82 +2621,82 @@ double mmDBWrapper::getAssetValue(wxSQLite3Database* db, int assetID)
                 if ( (numMonths >= 0 ) && (numDays < 0) )   numMonths --;
                 if ( (numYears > 0 )   && (numMonths < 0 )) numYears -- ;
 
-				if (numYears > 0)
-				{
-//					double appreciation = numYears * valueChangeRate * value / 100;
-//					assetValue = value + appreciation;
+                if (numYears > 0)
+                {
+//                  double appreciation = numYears * valueChangeRate * value / 100;
+//                  assetValue = value + appreciation;
 
 //                  Calculation changed to compound interest. 
                     while (numYears > 0)
                     {
                         double appreciation = valueChangeRate * value / 100;
-        				assetValue = value + appreciation;
+                        assetValue = value + appreciation;
                         value = assetValue;
                         numYears --;
                     }
                 }
                 else
                      assetValue = value;
-			}
-			else
-				assetValue = value;
-		}
-		else if (valChange == wxT("Depreciates"))
-		{
-			if (todayDate > startDate)
-			{
-				int numYears = todayDate.GetYear() - startDate.GetYear();
-				if (numYears > 0)
-				{
-//					double depreciation = numYears * valueChangeRate * value / 100;
-//					assetValue = value - depreciation;
+            }
+            else
+                assetValue = value;
+        }
+        else if (valChange == wxT("Depreciates"))
+        {
+            if (todayDate > startDate)
+            {
+                int numYears = todayDate.GetYear() - startDate.GetYear();
+                if (numYears > 0)
+                {
+//                  double depreciation = numYears * valueChangeRate * value / 100;
+//                  assetValue = value - depreciation;
 
 //                  Calculation changed to compound interest. 
                     while (numYears > 0)
                     {
                         double depreciation = valueChangeRate * value / 100;
-        				assetValue = value - depreciation;
+                        assetValue = value - depreciation;
                         value = assetValue;
                         numYears --;
                     }
                 }
                 else
                     assetValue = value;
-			}
-			else
-				assetValue = value;
-		}
-		else
-		{
-			wxASSERT(false);
-		}
+            }
+            else
+                assetValue = value;
+        }
+        else
+        {
+            wxASSERT(false);
+        }
     }
     
-	st.Finalize();
+    st.Finalize();
     
-	return assetValue;
+    return assetValue;
 }
 
 wxString mmDBWrapper::getAccountType(wxSQLite3Database* db_, int accountID)
 {
-	wxString acctType;
+    wxString acctType;
 
-	wxSQLite3Statement st = db_->PrepareStatement("select ACCOUNTTYPE "
+    wxSQLite3Statement st = db_->PrepareStatement("select ACCOUNTTYPE "
                                                   "from ACCOUNTLIST_V1 "
                                                   "where ACCOUNTID = ?"
                                                  );
-	
+    
     st.Bind(1, accountID);
-	
-	wxSQLite3ResultSet rs = st.ExecuteQuery();
-	if (rs.NextRow())
-	{
-		acctType = rs.GetString(wxT("ACCOUNTTYPE"));
-	}
+    
+    wxSQLite3ResultSet rs = st.ExecuteQuery();
+    if (rs.NextRow())
+    {
+        acctType = rs.GetString(wxT("ACCOUNTTYPE"));
+    }
 
-	st.Finalize();
+    st.Finalize();
 
-	return acctType;
+    return acctType;
 }
 
 void mmDBWrapper::removeSplitsForAccount(wxSQLite3Database* db, int accountID)
@@ -2661,12 +2708,12 @@ void mmDBWrapper::removeSplitsForAccount(wxSQLite3Database* db, int accountID)
                       "where ACCOUNTID = ? OR TOACCOUNTID = ? "
                     ")";
 
-	wxSQLite3Statement st = db->PrepareStatement(sql);
-	st.Bind(1, accountID);
-	st.Bind(2, accountID);
+    wxSQLite3Statement st = db->PrepareStatement(sql);
+    st.Bind(1, accountID);
+    st.Bind(2, accountID);
 
     st.ExecuteUpdate();
-	st.Finalize();
+    st.Finalize();
 
     // --
 
@@ -2677,36 +2724,36 @@ void mmDBWrapper::removeSplitsForAccount(wxSQLite3Database* db, int accountID)
                       "where ACCOUNTID = ? OR TOACCOUNTID = ? "
                     ")";
 
-	st = db->PrepareStatement(sql2);
+    st = db->PrepareStatement(sql2);
     st.Bind(1, accountID);
     st.Bind(2, accountID);
 
     st.ExecuteUpdate();
-	st.Finalize();
+    st.Finalize();
 }
 //----------------------------------------------------------------------------
 
 wxString mmDBWrapper::getLastDbPath(wxSQLite3Database *db, const wxString &defaultVal)
 {
-	wxString path = getINISettingValue(db, wxT("LASTFILENAME"), defaultVal);
-	
-	if (!mmex::isPortableMode()) {
-		return path;
-	}
+    wxString path = getINISettingValue(db, wxT("LASTFILENAME"), defaultVal);
+    
+    if (!mmex::isPortableMode()) {
+        return path;
+    }
 
-	wxString vol = wxFileName(wxStandardPaths::Get().GetExecutablePath()).GetVolume();
-	
-	if (!vol.IsEmpty()) {
+    wxString vol = wxFileName(wxStandardPaths::Get().GetExecutablePath()).GetVolume();
+    
+    if (!vol.IsEmpty()) {
 
-		wxFileName fname(path);
-		fname.SetVolume(vol); // database should be on portable device
+        wxFileName fname(path);
+        fname.SetVolume(vol); // database should be on portable device
 
-		if (fname.FileExists()) {
-			path = fname.GetFullPath();
-		}
-	}	
+        if (fname.FileExists()) {
+            path = fname.GetFullPath();
+        }
+    }   
 
-	return path;
+    return path;
 }
 //----------------------------------------------------------------------------
 
@@ -2715,30 +2762,30 @@ int mmDBWrapper::isReadOnly(wxSQLite3Database &db)
         int err = SQLITE_OK;
 
         if (!db.IsOpen()) {
-        	return err;
+            return err;
         }
 
-	try {
-		db.Begin(WXSQLITE_TRANSACTION_IMMEDIATE);
-		db.Commit();
+    try {
+        db.Begin(WXSQLITE_TRANSACTION_IMMEDIATE);
+        db.Commit();
 
-	} catch (wxSQLite3Exception &e) {
-	
-		err = e.GetExtendedErrorCode();
-		if (err != SQLITE_CANTOPEN && err != SQLITE_READONLY && err != SQLITE_NOTADB) {
-			throw;
-		}
-	}
+    } catch (wxSQLite3Exception &e) {
+    
+        err = e.GetExtendedErrorCode();
+        if (err != SQLITE_CANTOPEN && err != SQLITE_READONLY && err != SQLITE_NOTADB) {
+            throw;
+        }
+    }
 
-	return err;
+    return err;
 }
 //----------------------------------------------------------------------------
 
 /*
-	SQLITE_OPEN_READWRITE
-	The database is opened for reading and writing if possible, or reading
-	only if the file is write protected by the operating system.  In either
-	case the database must already exist, otherwise an error is returned.
+    SQLITE_OPEN_READWRITE
+    The database is opened for reading and writing if possible, or reading
+    only if the file is write protected by the operating system.  In either
+    case the database must already exist, otherwise an error is returned.
 */
 boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, const wxString &key)
 {
@@ -2749,19 +2796,20 @@ boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, c
     try 
     {
         db->Open(dbpath, key);
-	} 
-	catch (wxSQLite3Exception e)
-	{
-		//wxLogError(wxT("Database::open: Exception: %s"), e.GetMessage().c_str());
-		//wxLogDebug(wxT("Database::open: Exception: %s"), e.GetMessage().c_str());
-		err = e.GetErrorCode(); 
-		errMessage << e.GetMessage();
-	}
+    } 
+    catch (wxSQLite3Exception e)
+    {
+        //wxLogError(wxT("Database::open: Exception: %s"), e.GetMessage().c_str());
+        //wxLogDebug(wxT("Database::open: Exception: %s"), e.GetMessage().c_str());
+        err = e.GetErrorCode(); 
+        errMessage << e.GetMessage();
+    }
 
-	if (err==SQLITE_OK)
-	{
-        err = isReadOnly(*db);
-	    if (err == SQLITE_OK) 
+    if (err==SQLITE_OK)
+    {
+        //err = isReadOnly(*db);
+        err = SQLITE_OK; //isReadOnly(*db);
+        if (err == SQLITE_OK) 
             return db;
     }
 
@@ -2770,32 +2818,32 @@ boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, c
     
     wxString s = _("When database file opening:");
     s << wxT("\n") << wxString::Format(wxT("\n%s\n\n"), dbpath.c_str());
-	if (err == SQLITE_READONLY) 
-	{
+    if (err == SQLITE_READONLY) 
+    {
         s <<_("Not a writeable database") <<wxT("\n") << _("You must have write permission to that file")<< wxT("\n");
-	}
-	else if (err == SQLITE_CANTOPEN)
-	{
+    }
+    else if (err == SQLITE_CANTOPEN)
+    {
         s << _("Can't open file") <<wxT("\n") << _("You must specify path to another database file") << wxT("\n");
-	}
-	else if (err == SQLITE_NOTADB)
-	{
+    }
+    else if (err == SQLITE_NOTADB)
+    {
         s << _("An incorrect password given for an encrypted file")
         << wxT("\n\n") << _("or") << wxT("\n\n")
         << _("Attempt to open a File that is not a database file") << wxT("\n");
-	}
-	else
-	{
+    }
+    else
+    {
         s << wxT("\n") << _("Error") << err << wxT("\n");
-	}
+    }
 
-	wxSafeShowMessage(_("Database::open: Exception"), s); 
+    wxSafeShowMessage(_("Database::open: Exception"), s); 
 
-	s << errMessage << wxT("\n\n") << _("Continue ?");
+    s << errMessage << wxT("\n\n") << _("Continue ?");
 
-   	wxMessageDialog msgDlg(NULL, s, _("Error"), wxYES_NO|wxICON_ERROR);
+    wxMessageDialog msgDlg(NULL, s, _("Error"), wxYES_NO|wxICON_ERROR);
     if (msgDlg.ShowModal() == wxID_NO)
-	    exit(err);
+        exit(err);
     
     return db; // return a NULL database pointer 
 
