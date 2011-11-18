@@ -144,12 +144,16 @@ void mmMainCurrencyDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 4);
 
     wxButton* itemButtonSelect = new wxButton( this, ID_MAINCURRENCYBUTTON_SELECT, _("&Select"));
-    itemBoxSizer9->Add(itemButtonSelect,  1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+    itemBoxSizer9->Add(itemButtonSelect,  4, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     //itemButtonSelect->SetToolTip(_("Select the currently selected currency as the selected currency for the account"));
 
     if(bEnableSelect_ == false) {
         itemButtonSelect->Disable();
     }
+
+    //Some interfaces has no any close buttons, it may confuse user. Cancel button added
+    wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL, _("&Close"));
+    itemBoxSizer9->Add(itemCancelButton,  0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
 ////@end MyDialog content construction
 }

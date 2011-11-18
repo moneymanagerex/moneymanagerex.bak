@@ -35,8 +35,8 @@ END_EVENT_TABLE()
 
 mmCategDialog::mmCategDialog( )
 {
-    categID_ = -1;
-    subcategID_ = -1;
+    //categID_ = 1;
+    //subcategID_ = 1;
     selectedItemId_ = 0;
 }
 
@@ -46,8 +46,8 @@ mmCategDialog::mmCategDialog(mmCoreDB* core,
                              const wxPoint& pos, const wxSize& size, long style )
 {
     core_ = core;
-    categID_ = -1;
-    subcategID_ = -1;
+    categID_ ;
+    subcategID_ ;
     selectedItemId_ = 0;
     bEnableSelect_ = bEnableSelect;
     Create(parent, id, caption, pos, size, style);
@@ -72,6 +72,12 @@ bool mmCategDialog::Create( wxWindow* parent, wxWindowID id,
     return TRUE;
 }
 
+void mmCategDialog::setFields(int categID, int subcategID) 
+{
+    categID_      = categID;
+    subcategID_   =  subcategID;
+}
+
 void mmCategDialog::fillControls()
 {
     root_ = treeCtrl_->AddRoot(_("Categories"));
@@ -94,6 +100,9 @@ void mmCategDialog::fillControls()
                 core_->categoryList_.categories_[idx]->children_[cidx]->categName_);
             treeCtrl_->SetItemData(subcat, new mmTreeItemCateg(core_->categoryList_.categories_[idx]->categID_, 
                 core_->categoryList_.categories_[idx]->children_[cidx]->categID_)); 
+
+                if (categID_ == core_->categoryList_.categories_[idx]->categID_ && subcategID_ == core_->categoryList_.categories_[idx]->children_[cidx]->categID_)
+                selectedItemId_ = subcat;
         }
 
         treeCtrl_->SortChildren(maincat);
@@ -111,9 +120,9 @@ void mmCategDialog::fillControls()
     wxButton* selectButton = (wxButton*)FindWindow(ID_DIALOG_CATEG_BUTTON_SELECT);
     wxButton* deleteButton = (wxButton*)FindWindow(ID_DIALOG_CATEG_BUTTON_DELETE);
 
-    treeCtrl_->SelectItem(root_);
-    selectedItemId_ = root_;
-    textCtrl->SetValue(wxT(""));
+    treeCtrl_->SelectItem(selectedItemId_);
+    
+    textCtrl->SetValue(wxT (""));
     selectButton->Disable();
     deleteButton->Disable();
     editButton->Disable();
@@ -171,6 +180,10 @@ void mmCategDialog::CreateControls()
         _("&Select"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer9->Add(itemButton11, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton11->SetToolTip(_("Select the currently selected category as the selected category for the transaction"));
+    
+    //Some interfaces has no any close buttons, it may confuse user. Cancel button added
+    wxButton* itemCancelButton = new wxButton( itemDialog1, wxID_CANCEL, _("&Close"));
+    itemBoxSizer9->Add(itemCancelButton);
 }
 
 void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
