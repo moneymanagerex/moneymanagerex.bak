@@ -120,7 +120,7 @@ bool commit(wxSQLite3Database* db);
 bool begin(wxSQLite3Database* db);
 bool rollback(wxSQLite3Database* db);
 
-bool deleteFlaggedTransactions(wxSQLite3Database* db, int accountID);
+//bool deleteFlaggedTransactions(wxSQLite3Database* db, int accountID);
 
 /* Bills & Deposits API */
 void deleteBDSeries(wxSQLite3Database* db, int bdID);

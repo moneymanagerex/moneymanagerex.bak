@@ -1584,7 +1584,6 @@ bool mmDBWrapper::deleteTransaction(wxSQLite3Database* db, int transID)
         0
     };
 
-    mmDBWrapper::begin(db);
     for (int i = 0; sql[i]; ++i)
     {
         wxSQLite3Statement st = db->PrepareStatement(sql[i]);
@@ -1592,7 +1591,6 @@ bool mmDBWrapper::deleteTransaction(wxSQLite3Database* db, int transID)
         st.ExecuteUpdate();
         st.Finalize();
     }
-    mmDBWrapper::commit(db);
     return true;
     }catch(wxSQLite3Exception e) 
 	{ 
@@ -1626,7 +1624,7 @@ bool mmDBWrapper::rollback(wxSQLite3Database* db)
         return true;
 }
 
-bool mmDBWrapper::deleteFlaggedTransactions(wxSQLite3Database* db, int accountID)
+/*bool mmDBWrapper::deleteFlaggedTransactions(wxSQLite3Database* db, int accountID)
 {
     try{
     static const char* sql[] = 
@@ -1636,7 +1634,7 @@ bool mmDBWrapper::deleteFlaggedTransactions(wxSQLite3Database* db, int accountID
         0
     };
 
-    mmDBWrapper::begin(db);
+    //mmDBWrapper::begin(db);
     for (int i = 0; sql[i]; ++i)
     {
         wxSQLite3Statement st = db->PrepareStatement(sql[i]);
@@ -1645,7 +1643,7 @@ bool mmDBWrapper::deleteFlaggedTransactions(wxSQLite3Database* db, int accountID
         st.ExecuteUpdate();
         st.Finalize();
     }
-    mmDBWrapper::commit(db);
+    //mmDBWrapper::commit(db);
     return true;
     }catch(wxSQLite3Exception e) 
 	{ 
@@ -1654,7 +1652,7 @@ bool mmDBWrapper::deleteFlaggedTransactions(wxSQLite3Database* db, int accountID
 		return false;
 	}
 }
-
+*/
 bool mmDBWrapper::updatePayee(wxSQLite3Database* db, const wxString& payeeName, 
                               int payeeID, int categID, int subcategID)
 {
