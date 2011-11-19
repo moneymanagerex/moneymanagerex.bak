@@ -1403,81 +1403,77 @@ bool mmDBWrapper::deleteSubCategoryWithConstraints(wxSQLite3Database* db, int ca
 bool mmDBWrapper::updateCategory(wxSQLite3Database* db, int categID, 
                                  int subcategID, const wxString &newName)
 {
-    try{
-	if (subcategID == -1)
-    {
-        wxSQLite3Statement st = db->PrepareStatement("update CATEGORY_V1 "
-                                                     "SET CATEGNAME = ? "
-                                                     "WHERE CATEGID = ?"
-                                                    );
+    try {
+    	if (subcategID == -1)
+        {
+            wxSQLite3Statement st = db->PrepareStatement("update CATEGORY_V1 "
+                                                         "SET CATEGNAME = ? "
+                                                         "WHERE CATEGID = ?"
+                                                        );
         
-        st.Bind(1, newName);
-        st.Bind(2, categID);
+            st.Bind(1, newName);
+            st.Bind(2, categID);
 
-        st.ExecuteUpdate();
-        st.Finalize();
-    }
-    else
-    {
-        wxSQLite3Statement st = db->PrepareStatement("update SUBCATEGORY_V1 "
-                                                     "SET SUBCATEGNAME = ? "
-                                                     "WHERE SUBCATEGID = ?"
-                                                    );
+            st.ExecuteUpdate();
+            st.Finalize();
+        }
+        else
+        {
+            wxSQLite3Statement st = db->PrepareStatement("update SUBCATEGORY_V1 "
+                                                         "SET SUBCATEGNAME = ? "
+                                                         "WHERE SUBCATEGID = ?"
+                                                        );
 
-        st.Bind(1, newName);
-        st.Bind(2, subcategID);
+            st.Bind(1, newName);
+            st.Bind(2, subcategID);
 
-        st.ExecuteUpdate();
-        st.Finalize();
-    }
+            st.ExecuteUpdate();
+            st.Finalize();
+        }
 
-    return true;
-    }catch(wxSQLite3Exception e) 
+    } catch(wxSQLite3Exception e) 
 	{ 
 		wxLogDebug(wxT("Database::deleteAsset: Exception"), e.GetMessage().c_str());
 		wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
 	}
+    return true;
 }
 
 bool mmDBWrapper::addCategory(wxSQLite3Database* db, const wxString &newName)
 {
-    try{
     int rows_affected = 0;
-    
-    wxSQLite3Statement st = db->PrepareStatement("insert into CATEGORY_V1 (CATEGNAME) values (?)");
-    st.Bind(1, newName);
-    rows_affected = st.ExecuteUpdate();
-    st.Finalize();
+    try {
+        wxSQLite3Statement st = db->PrepareStatement("insert into CATEGORY_V1 (CATEGNAME) values (?)");
+        st.Bind(1, newName);
+        rows_affected = st.ExecuteUpdate();
+        st.Finalize();
 
-    return rows_affected == 1;
-    }catch(wxSQLite3Exception e) 
-	{ 
-		wxLogDebug(wxT("Database::addCategory: Exception"), e.GetMessage().c_str());
-		wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+    } catch(wxSQLite3Exception e) { 
+        wxLogDebug(wxT("Database::addCategory: Exception"), e.GetMessage().c_str());
+        wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
 	}
+    return rows_affected == 1;
 }
 
 bool mmDBWrapper::addSubCategory(wxSQLite3Database* db, int categID, const wxString &newName)
 {
-    try{
-	static const char sql[] = 
-    "insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values (?, ?)";
-
     int rows_affected = 0;
+    try {
+	    static const char sql[] = 
+        "insert into SUBCATEGORY_V1 (SUBCATEGNAME, CATEGID) values (?, ?)";
 
-    wxSQLite3Statement st = db->PrepareStatement(sql);
-    st.Bind(1, newName);
-    st.Bind(2, categID);
+        wxSQLite3Statement st = db->PrepareStatement(sql);
+        st.Bind(1, newName);
+        st.Bind(2, categID);
 
-    rows_affected = st.ExecuteUpdate();
-    st.Finalize();
+        rows_affected = st.ExecuteUpdate();
+        st.Finalize();
 
-    return rows_affected == 1;
-    }catch(wxSQLite3Exception e) 
-	{ 
-		wxLogDebug(wxT("Database::addSubCategory: Exception"), e.GetMessage().c_str());
-		wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+    } catch(wxSQLite3Exception e) {
+        wxLogDebug(wxT("Database::addSubCategory: Exception"), e.GetMessage().c_str());
+        wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
 	}
+    return rows_affected == 1;
 }
 
 int mmDBWrapper::getCategoryID(wxSQLite3Database* db, const wxString &name)
@@ -2264,6 +2260,7 @@ wxArrayString mmDBWrapper::filterPayees(wxSQLite3Database* db, const wxString& p
 	wxSQLite3Statement st = db->PrepareStatement(sql);
 	st.Bind(1, accountID);
 	//st.Bind(2, byDate);
+    byDate.IsEmpty();   // byDate NLR - provided to remove compiler warning.
 
 	wxSQLite3ResultSet q1 = st.ExecuteQuery();
     if (q1.NextRow())
