@@ -74,16 +74,12 @@ void mmHTMLBuilder::end()
 
 void mmHTMLBuilder::addHeader(int level, const wxString& header)
 {
-    html += wxT("<h") + wxString::Format(wxT("%d"), level) + wxT(">");
-    html += header;
-    html += wxT("</h") + wxString::Format(wxT("%d"), level) + wxT(">\n");
+    html += wxString::Format(wxT("<h%d>%s</h%d>\n"), level, header.c_str(), level);
 }
 
 void mmHTMLBuilder::addParaText(const wxString& text)
 {
-    html += wxT("<p><font size=") + fontSize + wxT(">");
-    html += text;
-    html += wxT("</font></p>\n");
+    html += wxString::Format(wxT("<p><font size=%s>%s</font></p>\n"), fontSize.c_str(), text.c_str());
 }
 
 void mmHTMLBuilder::addLineBreak()
@@ -95,7 +91,7 @@ void mmHTMLBuilder::addHorizontalLine(int size)
 {
 	html += wxT("<hr");
 	if(size > 0)
-	html += wxT(" size=\"") + wxString::Format(wxT("%d"), size) + wxT("\"");
+	html += wxString::Format(wxT(" size=\"%d\""), size);
     html += wxT(">\n");
 }
 
@@ -121,9 +117,9 @@ void mmHTMLBuilder::startTable(const wxString& width, const wxString& valign)
 	//Comment line above then uncomment line below for debug homepage 
 	//html += wxT("<table border=\"2\" cellspacing=\"1\"");
 	if(!width.empty())
-	html += wxT(" width=\"") + width + wxT("\"");
+	html += wxString::Format(wxT(" width=\"%s\""),width.c_str());
 	if(!valign.empty()) 
-	html += wxT(" valign=\"") + valign + wxT("\"");
+	html += wxString::Format(wxT(" valign=\"%s\""), valign.c_str());
 	html += wxT(">\n");
 	bgswitch = true;
 }
@@ -137,7 +133,7 @@ void mmHTMLBuilder::startTableCell(const wxString& width)
 {
 	html += wxT("<td");
 	if(!width.empty())
-	html += wxT(" width=\"") + width + wxT("\"");
+	html += wxString::Format(wxT(" width=\"%s\""),width.c_str());
 	html += wxT(">");
 }
 
@@ -145,10 +141,7 @@ void mmHTMLBuilder::addRowSeparator(int cols) {
 
 	html += wxT("<tr bgcolor=\"#000000\" height=\"1\"><td height=\"1");
 	if(cols > 1)
-	{
-		html += wxT("\" colspan=\"");
-		html += wxString::Format(wxT("%d"), cols);
-	}
+		html += wxString::Format(wxT("\" colspan=\"%d"), cols);
     html += wxT("\"></td></tr>\n");
 	bgswitch = true;
 }
@@ -156,26 +149,15 @@ void mmHTMLBuilder::addRowSeparator(int cols) {
 void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, const wxString& value) {
 	html += wxT("<tr bgcolor=\"#ffffff\"><td");
 	if(cols - 1 > 1) 
-	{
-		html += wxT(" colspan=\"");
-		html += wxString::Format(wxT("%d"), cols - 1);
-		html += wxT("\"");
-	}
-	html += wxT("><font size=") + fontSize + wxT("><b><i>&nbsp;&nbsp;");
-	html += caption;
-	html += wxT("</i></b></font></td><td nowrap align=\"right\"><font size=") + fontSize + wxT("><b><i>");
-	html += value;
-	html += wxT("</i></b></font></td></tr>\n");
+		html += wxString::Format(wxT(" colspan=\"%d\""), cols - 1);
+	html += wxString::Format(wxT("><font size=%s><b><i>&nbsp;&nbsp;%s"), fontSize.c_str(), caption.c_str());
+	html += wxString::Format(wxT("</i></b></font></td><td nowrap align=\"right\"><font size=%s><b><i>%s</i></b></font></td></tr>\n"), fontSize.c_str(), value.c_str());
 }
 
 void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, std::vector<wxString>& data) {
 	html += wxT("<tr bgcolor=\"#ffffff\"><td");
 	if(cols - data.size() > 1) 
-	{
-		html += wxT(" colspan=\"");
-		html += wxString::Format(wxT("%d"), cols - data.size());
-		html += wxT("\"");
-	}
+		html += wxString::Format(wxT(" colspan=\"%d\""), cols - data.size());
 	html += wxT("><font size=") + fontSize + wxT("><b><i>&nbsp;&nbsp;");
 	html += caption;
 	html += wxT("</i></b></font>");
@@ -206,7 +188,7 @@ void mmHTMLBuilder::addTableHeaderRow(const wxString& value, int cols) {
 void mmHTMLBuilder::addTableHeaderCell(const wxString& value, bool numeric) {
 	html += (numeric ? wxT("<th nowrap align=\"right\" ") : wxT("<th align=\"left\" "));
 	html += wxT(" valign=\"center\" bgcolor=\"#d5d6de\">");
-	html += wxT ("<font size=") + fontSize + wxT(">") + wxT("<b>&nbsp;") + value + wxT("</b></font></th>\n");
+	html += wxString::Format(wxT ("<font size=%s><b>&nbsp;%s</b></font></th>\n"), fontSize.c_str(), value.c_str());
 	bgswitch = false;
 }
 void mmHTMLBuilder::addTableHeaderCell(const wxString& value) {
