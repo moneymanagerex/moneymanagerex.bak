@@ -608,6 +608,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
 	m_mgr.SetManagedWindow(this);
 
     SetIcon(mmex::getProgramIcon());
+    SetMinSize(wxSize(480,275));
 
     /* Setup Printer */
     printer_.reset(new wxHtmlEasyPrinting(mmex::getProgramName(), this));
@@ -3519,7 +3520,8 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
         delete trans;
     }
 
-    dlg->Destroy();
+//  The transaction filter dialog will be destroyed by the report object when completed.
+//  dlg->Destroy();
 }
 //----------------------------------------------------------------------------
 

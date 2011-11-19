@@ -38,6 +38,9 @@ mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBan
 mmReportTransactions::~mmReportTransactions()
 {
     delete trans_;
+    // incase the user wants to print a report, we maintain the transaction dialog
+	// until we are finished with the report.
+    transDialog_->Destroy();
 }
 
 wxString mmReportTransactions::getHTMLText()
@@ -181,8 +184,7 @@ wxString mmReportTransactions::getHTMLText()
         hb.addHeader(7, _("<b>Note:</b> Transactions contain <b>'transfers'</b> may either be added or subtracted to the <b>'Total Amount'</b> depending on last selected account."));
     }
 
-    // TODO: Extract the parameters from the transaction dialog and add them to the report.
-    // added Account and category and Payee to show example of how it is done.
+    // Extract the parameters from the transaction dialog and add them to the report.
     wxString filterDetails;
 
     if ( !transDialog_->refAccountStr_.IsEmpty())
