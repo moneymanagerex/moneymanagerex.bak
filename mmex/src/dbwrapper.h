@@ -64,7 +64,7 @@ bool checkDBVersion(wxSQLite3Database* db);
 void addBudgetYear(wxSQLite3Database* db, const wxString &year);
 bool copyBudgetYear(wxSQLite3Database* db, int newYear, int baseYear);
 int getBudgetYearID(wxSQLite3Database* db, const wxString &year);
-int getTransIDByDate(wxSQLite3Database* db, const wxString &byDate, int accountID);
+int getTransactionNumber(wxSQLite3Database* db, int accountID);
 wxString getBudgetYearForID(wxSQLite3Database* db, int yearid);
 void updateYearForID(wxSQLite3Database* db, const wxString& yearName, int yearid);
 bool deleteBudgetYear(wxSQLite3Database* db, const wxString& yearName);
@@ -93,7 +93,7 @@ void removeSplitsForAccount(wxSQLite3Database* db, int accountID);
 void addPayee(wxSQLite3Database* db, const wxString &payee, int categID, int subcategID);
 wxString getPayee(wxSQLite3Database* db, int payeeID, int& categID, int& subcategID );
 bool getPayeeID(wxSQLite3Database* db, const wxString &payee, int& payeeID, int& categID, int& subcategID );
-bool updatePayee(wxSQLite3Database* db, const wxString& payeeName, int payeeID, int categID, int subcategID);
+//bool updatePayee(wxSQLite3Database* db, const wxString& payeeName, int payeeID, int categID, int subcategID);
 bool deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID);
 
 // Obsolete Code
@@ -113,7 +113,7 @@ wxString getSubCategoryName(wxSQLite3Database* db, int categID, int subcategID);
 double getAmountForCategory(wxSQLite3Database* db, int categID, int subcategID, bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
 
 /* Transactions API */
-void updateTransactionWithStatus(wxSQLite3Database &db, int transID, 
+bool updateTransactionWithStatus(wxSQLite3Database &db, int transID, 
 	const wxString& status);
 bool deleteTransaction(wxSQLite3Database* db, int transID);
 bool commit(wxSQLite3Database* db);

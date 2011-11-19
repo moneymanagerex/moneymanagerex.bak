@@ -83,7 +83,7 @@ void mmSplitTransactionEntries::updateToDB(boost::shared_ptr<wxSQLite3Database>&
 }
 
 void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core,
-										    int bdID)
+                                            int bdID)
 {
    entries_.clear();
    total_ = 0.0;
@@ -152,9 +152,9 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
      wxASSERT(pCurrencyPtr);
 
      splitEntries_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
- 	  getSplitTransactions(core, splitEntries_.get());
+      getSplitTransactions(core, splitEntries_.get());
 
-	  updateAllData(core, accountID_, pCurrencyPtr);
+      updateAllData(core, accountID_, pCurrencyPtr);
  }
 
 void mmBankTransaction::updateAllData(mmCoreDB* core, 
@@ -197,7 +197,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
          }
          payeeID_  = -1;
          payeeStr_ = wxT("Payee Error");
-		 status_ = wxT("V");
+         status_ = wxT("V");
       }
       else
       {
@@ -413,7 +413,7 @@ mmBankTransactionList::mmBankTransactionList(boost::shared_ptr<wxSQLite3Database
 int mmBankTransactionList::addTransaction(mmCoreDB* core, boost::shared_ptr<mmBankTransaction> pBankTransaction)
 {
    if (checkForExistingTransaction(pBankTransaction)){
-	   pBankTransaction->status_ = wxT("D");
+       pBankTransaction->status_ = wxT("D");
    }
 
    if(core->payeeList_.payeeExists(pBankTransaction->payeeID_) == false) {
@@ -497,8 +497,8 @@ bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBank
    wxSQLite3ResultSet q1 = st.ExecuteQuery();
    found = q1.NextRow(); // TODO: Need to check split entries
    st.Finalize();
-	
-	return found;
+    
+    return found;
 }
 
 boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int transactionID, bool useOriginalDate)
@@ -1027,30 +1027,23 @@ bool mmBankTransactionList::removeTransaction(int accountID, int transactionID)
 }
 
 /** removes the transaction from memory and the database */
-void mmBankTransactionList::deleteTransaction(int accountID, int transactionID)
+bool mmBankTransactionList::deleteTransaction(int accountID, int transactionID)
 {
-    if ( removeTransaction( accountID, transactionID) )
-        mmDBWrapper::deleteTransaction(db_.get(), transactionID);
-
-    //std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
-    //for (i = transactions_.begin(); i!= transactions_.end(); ++i)
-    //{
-    //    boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
-    //    if (pBankTransaction)
-    //    {
-    //        if ((pBankTransaction->accountID_ == accountID) || (pBankTransaction->toAccountID_ == accountID))
-    //        {
-    //            if (pBankTransaction->transactionID() == transactionID)
-    //            {
-    //                i = transactions_.erase(i);
-    //                mmDBWrapper::deleteTransaction(db_.get(), transactionID);
-    //                return;
-    //            }
-    //        }
-    //    }
-    //}
-    //// didn't find the transaction
-    //wxASSERT(false);
+    //begin sql transaction
+    mmDBWrapper::begin(db_.get());
+    //in case if can't delete transaction from db then do not delete it from memory
+    if (mmDBWrapper::deleteTransaction(db_.get(), transactionID))
+    {
+        //in case if can't delete transaction from memory then rollback
+        if (!removeTransaction( accountID, transactionID) )
+            mmDBWrapper::rollback(db_.get());
+        else  
+            mmDBWrapper::commit(db_.get());
+        return true;
+    }
+    else
+        mmDBWrapper::rollback(db_.get());
+    return false;
 }
 
 void mmBankTransactionList::deleteTransactions(int accountID)
