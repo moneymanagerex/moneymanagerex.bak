@@ -152,7 +152,7 @@ public:
     boost::shared_ptr<mmBankTransaction> copyTransaction(int transactionID, bool useOriginalDate);
     void updateTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     bool removeTransaction(int accountID, int transactionID);
-    void deleteTransaction(int accountID, int transactionID);
+    bool deleteTransaction(int accountID, int transactionID);
     void deleteTransactions(int accountID);
 
     /* Query Functions */

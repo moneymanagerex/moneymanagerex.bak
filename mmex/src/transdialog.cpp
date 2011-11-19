@@ -573,7 +573,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
 }
 void mmTransDialog::OnAutoTransNum(wxCommandEvent& /*event*/)
 {
-    int mID = mmDBWrapper::getTransIDByDate(db_.get(), dpc_->GetValue().FormatISODate(), accountID_);
+    int mID = mmDBWrapper::getTransactionNumber(db_.get(), accountID_);
     wxString wxIDstr = wxString::Format(wxT( "%d" ), (int) mID);
     textNumber_->SetValue( wxIDstr );
 }
@@ -1010,7 +1010,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     {
         int catID, subcatID;
         wxString payeeName = mmDBWrapper::getPayee(db_.get(), payeeID_, catID, subcatID );
-        mmDBWrapper::updatePayee(db_.get(), payeeName, payeeID_, categID_, subcategID_);
+        //mmDBWrapper::updatePayee(db_.get(), payeeName, payeeID_, categID_, subcategID_);
 
         if (referenceAccountID_ != accountID_) // Transfer transaction has defected to other side.
         {
