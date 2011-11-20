@@ -616,6 +616,8 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     printer_-> SetHeader( printHeaderBase + wxT("(@PAGENUM@/@PAGESCNT@)<hr>"), wxPAGE_ALL);
 
     loadConfigFile(); // load from Settings DB
+    restorePrinterValues();
+
     custRepIndex_ = new customSQLReportIndex();
 
     /* Create the Controls for the frame */
@@ -3913,10 +3915,74 @@ void mmGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 }
 //----------------------------------------------------------------------------
 
+void mmGUIFrame::restorePrinterValues()
+{
+    // Startup Default Settings
+    wxString paperID_String     = wxString() << wxPAPER_A4;
+    wxString pageOrientationStr = wxString() << wxPORTRAIT;
+
+    long leftMargin;
+    long rightMargin;
+    long topMargin;
+    long bottomMargin;
+    long paperID;
+    long pageOrientation;
+
+    mmDBWrapper::getINISettingValue( m_inidb.get(), wxT("PRINTER_LEFT_MARGIN"), wxT("20") ).ToLong(&leftMargin);
+    mmDBWrapper::getINISettingValue( m_inidb.get(), wxT("PRINTER_RIGHT_MARGIN"), wxT("20")).ToLong(&rightMargin);
+    mmDBWrapper::getINISettingValue( m_inidb.get(), wxT("PRINTER_TOP_MARGIN"), wxT("20")).ToLong(&topMargin);
+    mmDBWrapper::getINISettingValue( m_inidb.get(), wxT("PRINTER_BORTTOM_MARGIN"), wxT("20")).ToLong(&bottomMargin);
+    mmDBWrapper::getINISettingValue( m_inidb.get(), wxT("PRINTER_PAGE_ORIENTATION"), pageOrientationStr).ToLong(&pageOrientation);
+    mmDBWrapper::getINISettingValue( m_inidb.get(), wxT("PRINTER_PAGE_ID"), paperID_String).ToLong(&paperID);
+
+    wxPoint topLeft(leftMargin, topMargin);
+    wxPoint bottomRight(rightMargin, bottomMargin);
+
+    wxPageSetupDialogData* pinterData = printer_->GetPageSetupData();  
+    pinterData->SetMarginTopLeft(topLeft);
+    pinterData->SetMarginBottomRight(bottomRight);
+
+    wxPrintData* printerData = printer_->GetPrintData();
+    printerData->SetOrientation(pageOrientation);
+    printerData->SetPaperId( (wxPaperSize)paperID );
+}
+
 void mmGUIFrame::OnPrintPageSetup(wxCommandEvent& WXUNUSED(event))
 {
     if (printer_)
+    {
         printer_->PageSetup();
+
+        wxPageSetupDialogData* printerDialogData = printer_->GetPageSetupData();  
+        wxPoint topLeft = printerDialogData->GetMarginTopLeft();
+        wxPoint bottomRight = printerDialogData->GetMarginBottomRight();
+        
+        wxPrintData* printerData = printer_->GetPrintData();
+        int pageOrientation = printerData->GetOrientation();
+        wxPaperSize paperID = printerData->GetPaperId();
+
+        m_inidb.get()->Begin();
+
+        wxString leftMargin = wxString() << topLeft.x ;
+        mmDBWrapper::setINISettingValue( m_inidb.get(), wxT("PRINTER_LEFT_MARGIN"), leftMargin);
+
+        wxString rightMargin = wxString() << bottomRight.x;
+        mmDBWrapper::setINISettingValue( m_inidb.get(), wxT("PRINTER_RIGHT_MARGIN"), rightMargin);
+
+        wxString topMargin = wxString() << topLeft.y ;
+        mmDBWrapper::setINISettingValue( m_inidb.get(), wxT("PRINTER_TOP_MARGIN"), topMargin);
+
+        wxString bottomMargin = wxString() << bottomRight.y ;
+        mmDBWrapper::setINISettingValue( m_inidb.get(), wxT("PRINTER_BORTTOM_MARGIN"), bottomMargin);
+
+        wxString orientation = wxString() << pageOrientation; 
+        mmDBWrapper::setINISettingValue( m_inidb.get(), wxT("PRINTER_PAGE_ORIENTATION"), orientation);
+
+        wxString pageID = wxString() << paperID; 
+        mmDBWrapper::setINISettingValue( m_inidb.get(), wxT("PRINTER_PAGE_ID"), pageID);
+
+        m_inidb.get()->Commit();
+    }
 }
 //----------------------------------------------------------------------------
 
