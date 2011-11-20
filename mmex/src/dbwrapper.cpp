@@ -1014,12 +1014,12 @@ void mmDBWrapper::setBaseCurrencySettings(wxSQLite3Database* db, int currencyID)
             rows_affected = st.ExecuteUpdate();
             st.Finalize();
         }
+        wxASSERT(rows_affected == 1);
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Database::setBaseCurrencySettings: Exception"), e.GetMessage().c_str());
         wxLogError(wxString::Format(_("Set Base Currency Settings. Error: %s"), e.GetMessage().c_str()));
     }
-    wxASSERT(rows_affected == 1);
 }
 
 void mmDBWrapper::loadBaseCurrencySettings(wxSQLite3Database* db)
@@ -1937,12 +1937,12 @@ void mmDBWrapper::setINISettingValue(wxSQLite3Database* db, const wxString& sett
             rows_affected = st.ExecuteUpdate();
             st.Finalize();
         }
+        wxASSERT(rows_affected == 1);
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Database::setINISettingValue: Exception"), e.GetMessage().c_str());
         wxLogError(wxString::Format(_("Set INI Setting Value. Error: %s"), e.GetMessage().c_str()));
     }
-    wxASSERT(rows_affected == 1);
 }
 
 bool mmDBWrapper::updateTransactionWithStatus(wxSQLite3Database &db, int transID, 
@@ -2002,13 +2002,12 @@ void mmDBWrapper::setInfoSettingValue(wxSQLite3Database* db, const wxString& set
             rows_affected = st.ExecuteUpdate();
             st.Finalize();
         }
+        wxASSERT(rows_affected == 1);
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Database::setInfoSettingValue: Exception"), e.GetMessage().c_str());
         wxLogError(wxString::Format(_("Set Info Setting Value. Error: %s"), e.GetMessage().c_str()));
     }
-    
-    wxASSERT(rows_affected == 1);
 }
 
 double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db, 
