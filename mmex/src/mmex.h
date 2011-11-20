@@ -141,6 +141,7 @@ private:
 
     /* printing */
     boost::scoped_ptr<wxHtmlEasyPrinting> printer_;
+    void restorePrinterValues();
 
     /* wxAUI */
     wxAuiManager m_mgr;
