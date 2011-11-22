@@ -42,16 +42,16 @@ enum {
 
 wxString get_libs_info()
 {
-	wxString s;
+    wxString s;
 
-	s << wxVERSION_STRING
-	  << wxT(",  Boost C++ ") << (BOOST_VERSION/100000) << wxT('.') 
-				  << (BOOST_VERSION / 100 % 1000) << wxT('.') 
-				  << (BOOST_VERSION % 100)
-	  << wxT(",  SQLite3 ") << wxSQLite3Database::GetVersion()
-	  << wxT(",  wxSQLite by Ulrich Telle");
+    s << wxVERSION_STRING
+      << wxT(",  Boost C++ ") << (BOOST_VERSION/100000) << wxT('.') 
+                  << (BOOST_VERSION / 100 % 1000) << wxT('.') 
+                  << (BOOST_VERSION % 100)
+      << wxT(",  SQLite3 ") << wxSQLite3Database::GetVersion()
+      << wxT(",  wxSQLite by Ulrich Telle");
 
-	return s;
+    return s;
 }
 
 } // namespace
@@ -98,14 +98,14 @@ bool mmAboutDialog::Create(wxWindow* parent,
 
 void mmAboutDialog::OnVersionHistory(wxCommandEvent& /*event*/)
 {
-	wxString filePath = mmex::getPathDoc(mmex::F_VERSION);
-	fileviewer(filePath, this).ShowModal();
+    wxString filePath = mmex::getPathDoc(mmex::F_VERSION);
+    fileviewer(filePath, this).ShowModal();
 }
 
 void mmAboutDialog::OnContributerList(wxCommandEvent& /*event*/)
 {
-	wxString filePath = mmex::getPathDoc(mmex::F_CONTRIB);
-	fileviewer(filePath, this).ShowModal();
+    wxString filePath = mmex::getPathDoc(mmex::F_CONTRIB);
+    fileviewer(filePath, this).ShowModal();
 }
 
 void mmAboutDialog::CreateControls()
@@ -136,7 +136,7 @@ void mmAboutDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer4, 1, wxGROW|wxALL, 5);
 
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, 
-        wxString(_("Version: ")) + mmex::getProgramVersion(), wxDefaultPosition, wxDefaultSize, 0 );
+        wxString(_("Version: ")) + wxPlatformInfo::Get().GetOperatingSystemIdName() + wxT (": ") + mmex::getProgramVersion(), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer4->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
     if (!mmIniOptions::enableCustomAboutDialog_)
@@ -182,6 +182,12 @@ void mmAboutDialog::CreateControls()
        wxStaticText* itemStaticText15 = new wxStaticText( itemDialog1, 
           wxID_STATIC, _("Using Language : ") + langStr, wxDefaultPosition, wxDefaultSize, 0 );
        itemBoxSizer4->Add(itemStaticText15, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+
+       wxButton* itemButton19 = new wxButton( itemDialog1, wxID_OK, _("Close"), wxDefaultPosition, wxDefaultSize, 0 );
+       itemButton19->SetDefault();
+       itemButton19->SetFocus();
+       itemBoxSizer4->Add(itemButton19, 0, wxALIGN_RIGHT|wxALL, 5);
+
     }
     else
     {
