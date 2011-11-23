@@ -31,7 +31,6 @@
 IMPLEMENT_DYNAMIC_CLASS( mmCurrencyDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmCurrencyDialog, wxDialog )
-    EVT_BUTTON(ID_DIALOG_CURRENCY_BUTTON_CANCEL, mmCurrencyDialog::OnCancel)
     EVT_BUTTON(ID_DIALOG_CURRENCY_BUTTON_UPDATE, mmCurrencyDialog::OnUpdate)
     EVT_CHOICE(ID_DIALOG_CURRENCY_CHOICE, mmCurrencyDialog::OnCurrencyTypeChanged)  
 END_EVENT_TABLE()
@@ -317,16 +316,15 @@ void mmCurrencyDialog::CreateControls()
     itemBoxSizer22->Add(itemButton24, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
     itemButton24->SetToolTip(_("Save any changes made"));
 
-    wxButton* itemButton25 = new wxButton( itemDialog1, ID_DIALOG_CURRENCY_BUTTON_CANCEL, _("&Close"),
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton25 = new wxButton( this, wxID_CANCEL, _("&Close"));
     itemBoxSizer22->Add(itemButton25, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
     itemButton25->SetToolTip(_("Any changes will be lost without update"));
 }
 
-void mmCurrencyDialog::OnCancel(wxCommandEvent& /*event*/)
-{
-   EndModal(wxID_OK);   
-}
+//void mmCurrencyDialog::OnCancel(wxCommandEvent& /*event*/)
+//{
+//   EndModal(wxID_OK);   
+//}
 
 void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
 {
