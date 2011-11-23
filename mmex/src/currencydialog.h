@@ -62,7 +62,6 @@ public:
     void CreateControls();
     
     // utility functions
-    void OnCancel(wxCommandEvent& event);
     void OnUpdate(wxCommandEvent& event);
     void OnCurrencyTypeChanged(wxCommandEvent& event);
 
