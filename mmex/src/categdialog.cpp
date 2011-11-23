@@ -30,7 +30,7 @@ BEGIN_EVENT_TABLE( mmCategDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_CATEG_BUTTON_SELECT, mmCategDialog::OnBSelect)
     EVT_BUTTON(ID_DIALOG_CATEG_BUTTON_EDIT, mmCategDialog::OnEdit)
     EVT_TREE_SEL_CHANGED(ID_DIALOG_CATEG_TREECTRL_CATS, mmCategDialog::OnSelChanged)
-    EVT_TREE_ITEM_ACTIVATED(ID_DIALOG_CATEG_TREECTRL_CATS,  mmCategDialog::OnDoubleClicked)
+    //EVT_TREE_ITEM_ACTIVATED(ID_DIALOG_CATEG_TREECTRL_CATS,  mmCategDialog::OnDoubleClicked)
 END_EVENT_TABLE()
 
 mmCategDialog::mmCategDialog( )
@@ -322,7 +322,7 @@ void mmCategDialog::OnBSelect(wxCommandEvent& /*event*/)
 
 void mmCategDialog::OnDoubleClicked(wxTreeEvent& /*event*/)
 {
-    if (selectedItemId_ == root_)
+    if (selectedItemId_ == root_ || selectedItemId_ == -1)
     {
         return;
     }
