@@ -810,6 +810,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
         "b.TOTRANSAMOUNT, "
         "c.categname, sc.subcategname, "
         "b.REPEATS, "
+        "b.NUMOCCURRENCES, "
         "b.NEXTOCCURRENCEDATE "
     "from BILLSDEPOSITS_V1 b "
         "left join category_v1 c on c.categid = b.categid "
@@ -840,6 +841,8 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 
         // DeMultiplex the Auto Executable fields from the db entry: REPEATS
         int repeats        = q1.GetInt(wxT("REPEATS"));
+        int numRepeats     = q1.GetInt(wxT("NUMOCCURRENCES"));
+
         autoExecuteManual = false;
         autoExecuteSilent = false;
         if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
@@ -898,31 +901,34 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 
         if (autoExecuteSilent && requireExecution)
         {
-            boost::shared_ptr<mmBankTransaction> pTransaction;
-            boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(m_core.get()->db_));
-            pTransaction = pTemp;
+            if ( (repeats < 11) || (numRepeats > 0) )
+            {
+                boost::shared_ptr<mmBankTransaction> pTransaction;
+                boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(m_core.get()->db_));
+                pTransaction = pTemp;
 
-            boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencyWeakPtr(th.accountID_).lock();
-            wxASSERT(pCurrencyPtr);
+                boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencyWeakPtr(th.accountID_).lock();
+                wxASSERT(pCurrencyPtr);
 
-            pTransaction->accountID_ = th.accountID_;
-            pTransaction->toAccountID_ = th.toAccountID_;
-            pTransaction->payee_ = m_core.get()->payeeList_.getPayeeSharedPtr(th.payeeID_);
-            pTransaction->transType_ = th.transType_;
-            pTransaction->amt_ = th.amt_;
-            pTransaction->status_ = q1.GetString(wxT("STATUS"));
-            pTransaction->transNum_ = q1.GetString(wxT("TRANSACTIONNUMBER"));
-            pTransaction->notes_ = th.notesStr_;
-            pTransaction->category_ = m_core.get()->categoryList_.getCategorySharedPtr(th.categID_, th.subcategID_);
-            pTransaction->date_ = th.nextOccurDate_;
-            pTransaction->toAmt_ = th.toAmt_;
+                pTransaction->accountID_ = th.accountID_;
+                pTransaction->toAccountID_ = th.toAccountID_;
+                pTransaction->payee_ = m_core.get()->payeeList_.getPayeeSharedPtr(th.payeeID_);
+                pTransaction->transType_ = th.transType_;
+                pTransaction->amt_ = th.amt_;
+                pTransaction->status_ = q1.GetString(wxT("STATUS"));
+                pTransaction->transNum_ = q1.GetString(wxT("TRANSACTIONNUMBER"));
+                pTransaction->notes_ = th.notesStr_;
+                pTransaction->category_ = m_core.get()->categoryList_.getCategorySharedPtr(th.categID_, th.subcategID_);
+                pTransaction->date_ = th.nextOccurDate_;
+                pTransaction->toAmt_ = th.toAmt_;
 
-            boost::shared_ptr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
-            split->loadFromBDDB(m_core.get(),th.bdID_);
-		    *pTransaction->splitEntries_.get() = *split.get();
+                boost::shared_ptr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
+                split->loadFromBDDB(m_core.get(),th.bdID_);
+		        *pTransaction->splitEntries_.get() = *split.get();
 
-            pTransaction->updateAllData(m_core.get(), th.accountID_, pCurrencyPtr);
-            m_core.get()->bTransactionList_.addTransaction(m_core.get(), pTransaction);
+                pTransaction->updateAllData(m_core.get(), th.accountID_, pCurrencyPtr);
+                m_core.get()->bTransactionList_.addTransaction(m_core.get(), pTransaction);
+            }
             mmDBWrapper::completeBDInSeries(m_db.get(), th.bdID_);
 
             if (activeHomePage_)

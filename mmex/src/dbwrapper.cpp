@@ -2530,110 +2530,131 @@ void mmDBWrapper::deleteBDSeries(wxSQLite3Database* db, int bdID)
     }
 }
 
- void mmDBWrapper::completeBDInSeries(wxSQLite3Database* db, int bdID)
- {
+void mmDBWrapper::completeBDInSeries(wxSQLite3Database* db, int bdID)
+{
     try {
-    static const char sql[] = 
-    "select NUMOCCURRENCES, "
-           "date(NEXTOCCURRENCEDATE, 'localtime') as NEXTOCCURRENCEDATE, "
-           "REPEATS "
-    "from BILLSDEPOSITS_V1 "
-    "WHERE BDID = ?";
-     
-     wxDateTime updateOccur = wxDateTime::Now();
-     int numRepeats  = -1;
-
-     wxSQLite3Statement st = db->PrepareStatement(sql);
-     st.Bind(1, bdID);
-
-     wxSQLite3ResultSet q1 = st.ExecuteQuery();
-
-     if (q1.NextRow())
-     {
-        numRepeats = q1.GetInt(wxT("NUMOCCURRENCES"));
-        if (numRepeats != -1)
-        {
-            --numRepeats;
-        }
-
-        wxString nextOccurrString = q1.GetString(wxT("NEXTOCCURRENCEDATE"));
-        wxDateTime dtno = mmGetStorageStringAsDate(nextOccurrString);
-
-        int repeats = q1.GetInt(wxT("REPEATS"));
-        updateOccur = dtno;
-
-        // DeMultiplex the Auto Executable fields.
-        if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
-            repeats -= BD_REPEATS_MULTIPLEX_BASE;
-        if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute Silent mode
-            repeats -= BD_REPEATS_MULTIPLEX_BASE;
-        
-        if (repeats == 0)
-        {
-            numRepeats = 0;
-        }
-        else if (repeats == 1)
-        {
-            updateOccur = dtno.Add(wxTimeSpan::Week());
-        }
-        else if (repeats == 2)
-        {
-            updateOccur = dtno.Add(wxTimeSpan::Weeks(2));
-        }
-        else if (repeats == 3)
-        {
-            updateOccur = dtno.Add(wxDateSpan::Month());
-        }
-        else if (repeats == 4)
-        {
-            updateOccur = dtno.Add(wxDateSpan::Months(2));
-        }
-        else if (repeats == 5)
-        {
-            updateOccur = dtno.Add(wxDateSpan::Months(3));
-        }
-        else if (repeats == 6)
-        {
-            updateOccur = dtno.Add(wxDateSpan::Months(6));
-        }
-        else if (repeats == 7)
-        {
-            updateOccur = dtno.Add(wxDateSpan::Year());
-        }
-        else if (repeats == 8)
-        {
-            updateOccur = dtno.Add(wxDateSpan::Months(4));
-        }
-        else if (repeats == 9)
-        {
-            updateOccur = dtno.Add(wxDateSpan::Weeks(4));
-        }
-        else if (repeats == 10)
-        {
-            updateOccur = dtno.Add(wxDateSpan::Days(1));
-        }
-     }
-
-     st.Finalize();
-     
-    {
         static const char sql[] = 
-        "update BILLSDEPOSITS_V1 "
-        "set NEXTOCCURRENCEDATE = ?, "
-            "NUMOCCURRENCES = ? "
-        "where BDID = ?";
+        "select NUMOCCURRENCES, "
+            "date(NEXTOCCURRENCEDATE, 'localtime') as NEXTOCCURRENCEDATE, "
+            "REPEATS "
+        "from BILLSDEPOSITS_V1 "
+        "WHERE BDID = ?";
+     
+        wxDateTime updateOccur = wxDateTime::Now();
+        int numRepeats  = -1;
 
         wxSQLite3Statement st = db->PrepareStatement(sql);
+        st.Bind(1, bdID);
 
-        st.Bind(1, updateOccur.FormatISODate());
-        st.Bind(2, numRepeats);
-        st.Bind(3, bdID);
+        wxSQLite3ResultSet q1 = st.ExecuteQuery();
 
-        st.ExecuteUpdate();
+        if (q1.NextRow())
+        {
+            int repeats = q1.GetInt(wxT("REPEATS"));
+            // DeMultiplex the Auto Executable fields.
+            if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
+                repeats -= BD_REPEATS_MULTIPLEX_BASE;
+            if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute Silent mode
+                repeats -= BD_REPEATS_MULTIPLEX_BASE;
+
+            numRepeats = q1.GetInt(wxT("NUMOCCURRENCES"));
+            if ( (repeats < 11) && (numRepeats != -1))
+            {
+                --numRepeats;
+            }
+
+            wxString nextOccurrString = q1.GetString(wxT("NEXTOCCURRENCEDATE"));
+            wxDateTime dtno = mmGetStorageStringAsDate(nextOccurrString);
+
+            updateOccur = dtno;
+
+            if (repeats == 0)
+            {
+                numRepeats = 0;
+            }
+            else if (repeats == 1)
+            {
+                updateOccur = dtno.Add(wxTimeSpan::Week());
+            }
+            else if (repeats == 2)
+            {
+                updateOccur = dtno.Add(wxTimeSpan::Weeks(2));
+            }
+            else if (repeats == 3)
+            {
+                updateOccur = dtno.Add(wxDateSpan::Month());
+            }
+            else if (repeats == 4)
+            {
+                updateOccur = dtno.Add(wxDateSpan::Months(2));
+            }
+            else if (repeats == 5)
+            {
+                updateOccur = dtno.Add(wxDateSpan::Months(3));
+            }
+            else if (repeats == 6)
+            {
+                updateOccur = dtno.Add(wxDateSpan::Months(6));
+            }
+            else if (repeats == 7)
+            {
+                updateOccur = dtno.Add(wxDateSpan::Year());
+            }
+            else if (repeats == 8)
+            {
+                updateOccur = dtno.Add(wxDateSpan::Months(4));
+            }
+            else if (repeats == 9)
+            {
+                updateOccur = dtno.Add(wxDateSpan::Weeks(4));
+            }
+            else if (repeats == 10)
+            {
+                updateOccur = dtno.Add(wxDateSpan::Days(1));
+            }
+            else if ( (repeats == 11) || (repeats == 12) )
+            {
+                if ( numRepeats != -1 )
+                {
+                    numRepeats = -1;
+                }
+            }
+            else if (repeats == 13)
+            {
+                if ( numRepeats != -1 )
+                {
+                    updateOccur = dtno.Add(wxDateSpan::Days(numRepeats));
+                }
+            }
+            else if (repeats == 14)
+            {
+                if ( numRepeats != -1 )
+                {
+                    updateOccur = dtno.Add(wxDateSpan::Months(numRepeats));
+                }
+            }
+        }
+
         st.Finalize();
-     }
 
-    db->ExecuteUpdate("delete from BILLSDEPOSITS_V1 where NUMOCCURRENCES = 0");
+        {
+            static const char sql[] = 
+            "update BILLSDEPOSITS_V1 "
+            "set NEXTOCCURRENCEDATE = ?, "
+                "NUMOCCURRENCES = ? "
+            "where BDID = ?";
+
+            wxSQLite3Statement st = db->PrepareStatement(sql);
+
+            st.Bind(1, updateOccur.FormatISODate());
+            st.Bind(2, numRepeats);
+            st.Bind(3, bdID);
+
+            st.ExecuteUpdate();
+            st.Finalize();
+        }
+
+        db->ExecuteUpdate("delete from BILLSDEPOSITS_V1 where NUMOCCURRENCES = 0");
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Function::completeBDInSeries: Exception"), e.GetMessage().c_str());

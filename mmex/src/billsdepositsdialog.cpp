@@ -37,7 +37,7 @@ BEGIN_EVENT_TABLE( mmBDDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONCATEGS, mmBDDialog::OnCategs)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONPAYEE, mmBDDialog::OnPayee)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTO, mmBDDialog::OnTo)
-    EVT_CHOICE(ID_DIALOG_TRANS_TYPE, mmBDDialog::OnTransTypeChanged)  
+    EVT_CHOICE(ID_DIALOG_TRANS_TYPE, mmBDDialog::OnTransTypeChanged)
     EVT_SPIN_UP(ID_DIALOG_TRANS_DATE_SPINNER,mmBDDialog::OnTransDateForward)
     EVT_SPIN_DOWN(ID_DIALOG_TRANS_DATE_SPINNER,mmBDDialog::OnTransDateBack)
     EVT_SPIN_UP(ID_DIALOG_BD_REPEAT_DATE_SPINNER,mmBDDialog::OnNextOccurDateForward)
@@ -50,6 +50,8 @@ BEGIN_EVENT_TABLE( mmBDDialog, wxDialog )
     EVT_CALENDAR_SEL_CHANGED(ID_DIALOG_BD_CALENDAR, mmBDDialog::OnCalendarSelChanged)
     EVT_DATE_CHANGED(ID_DIALOG_TRANS_BUTTONDATE, mmBDDialog::OnDateChanged) 
     EVT_DATE_CHANGED(ID_DIALOG_BD_BUTTON_NEXTOCCUR, mmBDDialog::OnDateChanged)
+    EVT_CHOICE(ID_DIALOG_BD_COMBOBOX_REPEATS, mmBDDialog::OnRepeatTypeChanged)  
+    EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTRANSNUM, mmBDDialog::OnsetNextRepeatDate)
 END_EVENT_TABLE()
 
 // Defines for Transaction Status and Type now located in dbWrapper.h
@@ -191,6 +193,7 @@ void mmBDDialog::dataToControls()
         }
 
         itemRepeats_->SetSelection(repeatSel);
+        setRepeatDetails();
         if (repeatSel == 0) // if none
             textNumRepeats_->SetValue(wxT(""));
         
@@ -305,15 +308,20 @@ void mmBDDialog::CreateControls()
     wxStaticBoxSizer* calendarStaticBoxSizer = new wxStaticBoxSizer(calendarStaticBox, wxHORIZONTAL);
     repeatTransBoxSizer->Add(calendarStaticBoxSizer, 10, wxALIGN_CENTER|wxLEFT|wxBOTTOM|wxRIGHT, 15);
 
-	//TODO: Some users wish to have monday first in calendar!
+	//TODO: Set these up as user selectable. Some users wish to have monday first in calendar!
     bool startSunday = true;
+    bool showSuroundingWeeks = true;
 
     int style = wxSUNKEN_BORDER| wxCAL_SHOW_HOLIDAYS| wxCAL_SEQUENTIAL_MONTH_SELECTION;
     if (startSunday)
         style = wxCAL_SUNDAY_FIRST| style;
     else
         style = wxCAL_MONDAY_FIRST| style;
-	calendarCtrl_ = new wxCalendarCtrl( itemDialog1, ID_DIALOG_BD_CALENDAR, wxDateTime(), 
+
+    if (showSuroundingWeeks)
+        style = wxCAL_SHOW_SURROUNDING_WEEKS| style;
+    
+    calendarCtrl_ = new wxCalendarCtrl( itemDialog1, ID_DIALOG_BD_CALENDAR, wxDateTime(), 
                                         wxDefaultPosition, wxDefaultSize, style);
     calendarStaticBoxSizer->Add(calendarCtrl_, 10, wxALIGN_CENTER_HORIZONTAL|wxALL, 15);
 	
@@ -362,8 +370,8 @@ void mmBDDialog::CreateControls()
     itemFlexGridSizer5->Add(nextOccurDateBoxSizer, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
     // Repeats --------------------------------------------
-    wxStaticText* staticTextRepeats = new wxStaticText( itemDialog1, wxID_STATIC, _("Repeats") );
-    itemFlexGridSizer5->Add(staticTextRepeats, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
+    staticTextRepeats_ = new wxStaticText( itemDialog1, wxID_STATIC, _("Repeats") );
+    itemFlexGridSizer5->Add(staticTextRepeats_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
     
     wxString repeatsStrChoiceArray[] = 
     {
@@ -378,20 +386,32 @@ void mmBDDialog::CreateControls()
         _("Four Months"),
         _("Four Weeks"),
         _("Daily"),
+        _("In (x) Days"),
+        _("In (x) Months"),
+        _("Every (x) Days"),
+        _("Every (x) Months"),
     };  
     itemRepeats_ = new wxChoice( itemDialog1, ID_DIALOG_BD_COMBOBOX_REPEATS, wxDefaultPosition, 
-                                 wxSize(110, -1), 11, repeatsStrChoiceArray, 0);
-    itemFlexGridSizer5->Add(itemRepeats_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+                                 wxSize(110, -1), 15, repeatsStrChoiceArray, 0);
+
+    wxBoxSizer* repeatBoxSizer = new wxBoxSizer(wxHORIZONTAL);
+    bSetNextOccurDate_ = new wxButton( itemDialog1, ID_DIALOG_TRANS_BUTTONTRANSNUM, _("Next"),
+                                       wxDefaultPosition, wxSize(40, -1));
+    bSetNextOccurDate_->SetToolTip(_("Advance the Next Occurance Date with the specified values"));
+    repeatBoxSizer->Add(itemRepeats_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    repeatBoxSizer->Add(bSetNextOccurDate_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, 4);
+
+    itemFlexGridSizer5->Add(repeatBoxSizer, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     itemRepeats_->SetSelection(0);
 
-    // Repeats --------------------------------------------
-    wxStaticText* itemStaticText231 = new wxStaticText( itemDialog1, wxID_STATIC, _("Times Repeated") );
-    itemFlexGridSizer5->Add(itemStaticText231, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
+    // Repeat Times --------------------------------------------
+    staticTimesRepeat_ = new wxStaticText( itemDialog1, wxID_STATIC, _("Times Repeated") );
+    itemFlexGridSizer5->Add(staticTimesRepeat_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
     textNumRepeats_ = new wxTextCtrl( itemDialog1, ID_DIALOG_BD_TEXTCTRL_NUM_TIMES, wxT(""),
                                       wxDefaultPosition, wxSize(110, -1), 0 );
     itemFlexGridSizer5->Add(textNumRepeats_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
-    textNumRepeats_->SetToolTip(_("Specify the number of times this series repeats.\nLeave blank if this series continues forever."));
+    setRepeatDetails();
 
     /* Auto Execution Status */
     itemCheckBoxAutoExeUserAck_ = new wxCheckBox( itemDialog1, ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_USERACK, 
@@ -1187,30 +1207,32 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
     }
     else if (enterOccur_)
     {
-        boost::shared_ptr<mmBankTransaction> pTransaction;
-        boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(core_->db_));
-        pTransaction = pTemp;
+        if ( (repeats < 11) || (numRepeats > 0) )
+        {
+            boost::shared_ptr<mmBankTransaction> pTransaction;
+            boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(core_->db_));
+            pTransaction = pTemp;
 
-        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
-        wxASSERT(pCurrencyPtr);
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
+            wxASSERT(pCurrencyPtr);
 
-        pTransaction->accountID_ = fromAccountID;
-        pTransaction->toAccountID_ = toAccountID;
-        pTransaction->payee_ = core_->payeeList_.getPayeeSharedPtr(payeeID_);
-        pTransaction->transType_ = transCode;
-        pTransaction->amt_ = amount;
-        pTransaction->status_ = status;
-        pTransaction->transNum_ = transNum;
-        pTransaction->notes_ = notes.c_str();
-        pTransaction->category_ = core_->categoryList_.getCategorySharedPtr(categID_, subcategID_);
-        pTransaction->date_ = dpc_->GetValue();
-        pTransaction->toAmt_ = toTransAmount_;
+            pTransaction->accountID_ = fromAccountID;
+            pTransaction->toAccountID_ = toAccountID;
+            pTransaction->payee_ = core_->payeeList_.getPayeeSharedPtr(payeeID_);
+            pTransaction->transType_ = transCode;
+            pTransaction->amt_ = amount;
+            pTransaction->status_ = status;
+            pTransaction->transNum_ = transNum;
+            pTransaction->notes_ = notes.c_str();
+            pTransaction->category_ = core_->categoryList_.getCategorySharedPtr(categID_, subcategID_);
+            pTransaction->date_ = dpc_->GetValue();
+            pTransaction->toAmt_ = toTransAmount_;
 
-		*pTransaction->splitEntries_.get() = *split_.get();
-        pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr);
-        core_->bTransactionList_.addTransaction(core_, pTransaction);
+    		*pTransaction->splitEntries_.get() = *split_.get();
+            pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr);
+            core_->bTransactionList_.addTransaction(core_, pTransaction);
+        }
         mmDBWrapper::completeBDInSeries(db_, bdID_);
-
     }
 
     EndModal(wxID_OK);
@@ -1351,4 +1373,70 @@ void mmBDDialog::OnTransDateForward(wxSpinEvent& /*event*/)
 void mmBDDialog::OnTransDateBack(wxSpinEvent& /*event*/)
 {
     SetNewDate(dpc_, false);
+}
+
+void mmBDDialog::setRepeatDetails()
+{
+    wxString repeatLabelRepeats  = _("Repeats"); 
+    wxString repeatLabelActivate = _("Activates"); 
+
+    wxString timeLabelDays   = _("Period: Days"); 
+    wxString timeLabelMonths = _("Period: Months"); 
+
+    bSetNextOccurDate_->Disable();
+    int repeats = itemRepeats_->GetSelection();
+    if ( (repeats == 11) ) {
+        staticTextRepeats_->SetLabel( repeatLabelActivate );
+        staticTimesRepeat_->SetLabel( timeLabelDays);
+        textNumRepeats_->SetToolTip(_("Specify period in Days to activate.\nBecomes blank when not active."));
+        bSetNextOccurDate_->Enable();
+    } else if ( (repeats == 12) ) {
+        staticTextRepeats_->SetLabel( repeatLabelActivate );
+        staticTimesRepeat_->SetLabel( timeLabelMonths);
+        textNumRepeats_->SetToolTip(_("Specify period in Months to activate.\nBecomes blank when not active."));
+        bSetNextOccurDate_->Enable();
+    } else if ( (repeats == 13) ) {
+        staticTextRepeats_->SetLabel( repeatLabelRepeats );
+        staticTimesRepeat_->SetLabel( timeLabelDays);
+        textNumRepeats_->SetToolTip(_("Specify period in Days to activate.\nLeave blank when not active."));
+    } else if ( (repeats == 14) ) {
+        staticTextRepeats_->SetLabel( repeatLabelRepeats );
+        staticTimesRepeat_->SetLabel( timeLabelMonths);
+        textNumRepeats_->SetToolTip(_("Specify period in Months to activate.\nLeave blank when not active."));
+    } else {
+        staticTextRepeats_->SetLabel( _("Repeats") );
+        staticTimesRepeat_->SetLabel( _("Times Repeated") );
+        textNumRepeats_->SetToolTip(_("Specify the number of times this series repeats.\nLeave blank if this series continues forever."));
+    }
+}
+
+void mmBDDialog::OnRepeatTypeChanged(wxCommandEvent& /*event*/)
+{
+    setRepeatDetails();
+}
+
+void mmBDDialog::OnsetNextRepeatDate(wxCommandEvent& /*event*/)
+{
+    wxString valueStr = textNumRepeats_->GetValue();
+    if (valueStr.IsNumber())
+    {
+        long value;
+        valueStr.ToLong(&value);
+
+        wxString dateStr = dpc_->GetValue().FormatISODate();
+	    wxDateTime  date = mmGetStorageStringAsDate(dateStr);
+
+        int repeats = itemRepeats_->GetSelection();
+        if ( (repeats == 11) || (repeats == 12))
+        {
+             if ( (repeats == 11))
+                date = date.Add(wxDateSpan::Days(value));
+             else
+                 date = date.Add(wxDateSpan::Months(value));
+
+        	dpc_->SetValue( date );
+	        dpcbd_->SetValue( date );
+            calendarCtrl_->SetDate(date);
+        }
+    }
 }
