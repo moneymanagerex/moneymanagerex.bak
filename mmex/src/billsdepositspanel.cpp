@@ -271,6 +271,7 @@ void mmBillsDepositsPanel::initVirtualListControl()
        "select c.categname, "
        "sc.subcategname, "
        "b.BDID, "
+       "b.NUMOCCURRENCES, "
        "b.NEXTOCCURRENCEDATE, "
        "b.REPEATS, "
        "b.PAYEEID, "
@@ -317,6 +318,8 @@ void mmBillsDepositsPanel::initVirtualListControl()
 		th.categoryStr_	   = q1.GetString(wxT("CATEGNAME"));
 		th.subcategID_	   = q1.GetInt(wxT("SUBCATEGID"));
 		th.subcategoryStr_ = q1.GetString(wxT("SUBCATEGNAME"));
+
+        int numRepeats     = q1.GetInt(wxT("NUMOCCURRENCES"));
 
         th.bd_repeat_user_ = false;
         th.bd_repeat_auto_ = false;
@@ -377,6 +380,22 @@ void mmBillsDepositsPanel::initVirtualListControl()
         else if (repeats == 10)
         {
            th.repeatsStr_ = _("Daily");
+        }
+        else if ( (repeats == 11) && (numRepeats >= 0 ) )
+        {
+           th.repeatsStr_ = wxString() << _("In ") <<  numRepeats << _(" Days");
+        }
+        else if ( (repeats == 12) && (numRepeats >= 0 ) )
+        {
+           th.repeatsStr_ = wxString() << _("In ") <<  numRepeats << _(" Months");
+        }
+        else if ( (repeats == 13) && (numRepeats >= 0 ) )
+        {
+           th.repeatsStr_ = wxString() << _("Every ") <<  numRepeats << _(" Days");
+        }
+        else if ( (repeats == 14) && (numRepeats >= 0 ) )
+        {
+           th.repeatsStr_ = wxString() << _("Every ") <<  numRepeats << _(" Months");
         }
 
         wxDateTime today = wxDateTime::Now();

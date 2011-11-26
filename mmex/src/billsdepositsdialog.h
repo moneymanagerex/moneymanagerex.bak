@@ -140,6 +140,14 @@ private:
     void OnNextOccurDateForward(wxSpinEvent& event);
     void OnNextOccurDateBack(wxSpinEvent& event);
     void SetNewDate(wxDatePickerCtrl* dpc, bool forward = true);
+
+    wxStaticText* staticTimesRepeat_;
+    wxStaticText* staticTextRepeats_;
+    wxButton* bSetNextOccurDate_;
+    void OnRepeatTypeChanged(wxCommandEvent& event);
+    void OnsetNextRepeatDate(wxCommandEvent& event);
+    void setRepeatDetails();
+
 };
 
 #endif
