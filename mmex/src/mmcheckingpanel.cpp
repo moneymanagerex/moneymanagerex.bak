@@ -457,6 +457,7 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
 
     EVT_MENU(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, mmCheckingPanel::OnFilterTransactions)
     EVT_SEARCHCTRL_SEARCH_BTN(wxID_FIND, mmCheckingPanel::OnSearchTxtEntered)
+    EVT_TEXT_ENTER(wxID_FIND, mmCheckingPanel::OnSearchTxtEntered)
 
 END_EVENT_TABLE()
 //----------------------------------------------------------------------------
@@ -783,18 +784,18 @@ void mmCheckingPanel::CreateControls()
     itemButton9->Enable(false);
     
     wxSearchCtrl* searchCtrl = new wxSearchCtrl(itemPanel12, 
-        wxID_FIND, wxEmptyString, wxDefaultPosition, wxSize(100,-1));
+        wxID_FIND, wxEmptyString, wxDefaultPosition, wxSize(100,-1), wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB);
     itemBoxSizer5->Add(searchCtrl);
     searchCtrl->SetToolTip(_("Enter any string to find it in the nearest transaction notes"));
 
     //Infobar-mini 
     wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, ID_PANEL_CHECKING_STATIC_MINI, wxT(""), 
     wxPoint(-1,-1), wxDefaultSize, 0);
-    itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxALL, 12);
+    itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxTOP|wxLEFT, 5);
 
     //Infobar 
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12, 
-    ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxPoint(-1,-1), wxSize(150, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
+    ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxSize(150, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
     itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
     //Show tips when no transaction selected 
     Tips();
@@ -821,6 +822,7 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
     if (selIndex!=-1) { 
         enableEditDeleteButtons(true);
         st->SetLabel(getItem(selIndex, COL_NOTES));
+        //st->SetLabel(m_trans[selIndex]->notes_);
         wxString miniStr;
         miniStr = getMiniInfoStr(selIndex);
         stm->SetLabel(miniStr);
@@ -2020,6 +2022,7 @@ void MyListCtrl::refreshVisualList()
     SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
     SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
     EnsureVisible(m_selectedIndex);
+    m_cp->updateExtraTransactionData(m_selectedIndex);
 }
 
 //  Called only when moving a deposit/withdraw transaction to a new account.
