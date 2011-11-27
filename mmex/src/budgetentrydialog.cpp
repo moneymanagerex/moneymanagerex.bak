@@ -28,7 +28,8 @@ enum { DEF_FREQ_NONE, DEF_FREQ_WEEKLY, DEF_FREQ_BIWEEKLY, DEF_FREQ_MONTHLY, DEF_
 IMPLEMENT_DYNAMIC_CLASS( mmBudgetEntryDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmBudgetEntryDialog, wxDialog )
-    EVT_BUTTON(ID_DIALOG_BUDGETENTRY_BUTTON_OK, mmBudgetEntryDialog::OnOk)
+    EVT_BUTTON(wxID_OK, mmBudgetEntryDialog::OnOk)
+    EVT_TEXT_ENTER(ID_DIALOG_BUDGETENTRY_TEXTCTRL_AMOUNT, mmBudgetEntryDialog::OnOk)
 END_EVENT_TABLE()
 
 mmBudgetEntryDialog::mmBudgetEntryDialog( )
@@ -181,20 +182,21 @@ void mmBudgetEntryDialog::CreateControls()
         wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     textAmount_ = new wxTextCtrl( itemDialog1, 
-        ID_DIALOG_BUDGETENTRY_TEXTCTRL_AMOUNT, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+        ID_DIALOG_BUDGETENTRY_TEXTCTRL_AMOUNT, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
     itemGridSizer2->Add(textAmount_, 0, 
         wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL, 5);
     textAmount_->SetToolTip(_("Enter the amount budgeted for this category."));
-
+    textAmount_->SetFocus();
+    
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
    
     wxButton* itemButton7 = new wxButton( itemDialog1, 
-        ID_DIALOG_BUDGETENTRY_BUTTON_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+        wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer9->Add(itemButton7, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxButton* itemButton8 = new wxButton( itemDialog1, wxID_CANCEL, 
-        _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+        _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer9->Add(itemButton8, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 }
 
