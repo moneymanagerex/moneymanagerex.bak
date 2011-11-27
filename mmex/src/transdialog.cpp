@@ -37,8 +37,8 @@ enum{ NOTES_MENU_NUMBER = 20 };
 IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
-    EVT_BUTTON(ID_DIALOG_TRANS_BUTTON_OK, mmTransDialog::OnOk)
-    EVT_BUTTON(ID_DIALOG_TRANS_BUTTON_CANCEL, mmTransDialog::OnCancel)
+    EVT_BUTTON(wxID_OK, mmTransDialog::OnOk)
+    EVT_BUTTON(wxID_CANCEL, mmTransDialog::OnCancel)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONCATEGS, mmTransDialog::OnCategs)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONPAYEE, mmTransDialog::OnPayee)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTO, mmTransDialog::OnTo)
@@ -50,6 +50,7 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTRANSNUM, mmTransDialog::OnAutoTransNum)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTON_FREQENTNOTES, mmTransDialog::OnFrequentUsedNotes)
     EVT_MENU (wxID_ANY, mmTransDialog::onNoteSelected)
+    EVT_CHILD_FOCUS(mmTransDialog::changeFocus)
 END_EVENT_TABLE()
 
 mmTransDialog::mmTransDialog(
@@ -471,29 +472,16 @@ void mmTransDialog::CreateControls()
     wxStdDialogButtonSizer*  itemStdDialogButtonSizer1 = new wxStdDialogButtonSizer;
     itemPanel25->SetSizer(itemStdDialogButtonSizer1);
 
-    wxFont fnt = itemDialog1->GetFont();
-
-    wxButton* itemButton27 = new wxButton( itemPanel25, ID_DIALOG_TRANS_BUTTON_OK, _("&OK"));
-    fnt.SetWeight(wxFONTWEIGHT_NORMAL);
-    fnt.SetPointSize(fnt.GetPointSize());
-    itemButton27->SetFont(fnt);
-    itemButton27->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
+    wxButton* itemButton27 = new wxButton( itemPanel25, wxID_OK, _("&OK"));
     itemStdDialogButtonSizer1->Add(itemButton27, flags);
 
-    wxButton* itemButton28 = new wxButton( itemPanel25, ID_DIALOG_TRANS_BUTTON_CANCEL, _("&Cancel"));
-    fnt.SetWeight(wxFONTWEIGHT_NORMAL);
-    fnt.SetPointSize(fnt.GetPointSize());
-    itemButton28->SetFont(fnt);
-    itemButton28->SetForegroundColour(wxColour(wxT("RED")));
+    wxButton* itemButton28 = new wxButton( itemPanel25, wxID_CANCEL, _("&Cancel"));
     itemStdDialogButtonSizer1->Add(itemButton28,  0, wxALIGN_RIGHT|wxLEFT|wxRIGHT, 10);
+    if (edit_)
+        itemButton28->SetFocus();
 
     itemStdDialogButtonSizer1->Realize();
 
-}
-
-void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
-{
-    Close(TRUE);
 }
 
 void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
@@ -1223,4 +1211,23 @@ void mmTransDialog::onNoteSelected(wxCommandEvent& event)
     int i =  event.GetId();
     if (i>0)
     textNotes_->SetValue (freqnotes.Item (i-1)) ;
+}
+
+void mmTransDialog::changeFocus(wxChildFocusEvent& event)
+{
+	wxWindow *w = event.GetWindow();
+	if ( w ) 
+	{
+		richText = (w->GetId() == ID_DIALOG_TRANS_TEXTNOTES ? true : false);	
+	}
+	
+}
+
+void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
+{
+    if (richText){
+		return;
+	} else {
+		EndModal(wxID_CANCEL);
+    }
 }

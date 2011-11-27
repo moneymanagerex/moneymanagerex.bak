@@ -25,6 +25,7 @@
 #include <algorithm>
 #include <vector>
 #include <boost/unordered_map.hpp>
+#include <wx/srchctrl.h>
 
 //----------------------------------------------------------------------------
 /* Include XPM Support */
@@ -455,6 +456,7 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_MENU(MENU_VIEW_LASTMONTH, mmCheckingPanel::OnViewPopupSelected)
 
     EVT_MENU(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, mmCheckingPanel::OnFilterTransactions)
+    EVT_SEARCHCTRL_SEARCH_BTN(wxID_FIND, mmCheckingPanel::OnSearchTxtEntered)
 
 END_EVENT_TABLE()
 //----------------------------------------------------------------------------
@@ -761,51 +763,41 @@ void mmCheckingPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxSizerFlags flags;
-    flags.Border();
-
     wxButton* itemButton6 = new wxButton(itemPanel12, ID_BUTTON_NEW_TRANS, _("&New"));
     itemButton6->SetToolTip(_("New Transaction"));
-    wxFont fnt = itemButton6->GetFont();
-    fnt.SetWeight(wxFONTWEIGHT_NORMAL);
-    fnt.SetPointSize(fnt.GetPointSize());
-    itemButton6->SetFont(fnt);
-    itemButton6->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
-    itemBoxSizer5->Add(itemButton6, flags);
+    itemBoxSizer5->Add(itemButton6, 0, wxRIGHT, 5);
 
     wxButton* itemButton7 = new wxButton(itemPanel12, ID_BUTTON_EDIT_TRANS, _("&Edit"));
     itemButton7->SetToolTip(_("Edit selected transaction"));
-    itemButton7->SetFont(fnt);
-    itemButton7->SetForegroundColour(wxColour(wxT("ORANGE")));
-    itemBoxSizer5->Add(itemButton7, flags);
+    itemBoxSizer5->Add(itemButton7, 0, wxRIGHT, 5);
     itemButton7->Enable(false);
 
     wxButton* itemButton8 = new wxButton(itemPanel12, ID_BUTTON_DELETE_TRANS, _("&Delete"));
     itemButton8->SetToolTip(_("Delete selected transaction"));
-    itemButton8->SetFont(fnt);
-    itemButton8->SetForegroundColour(wxColour(wxT("RED"))); 
-    itemBoxSizer5->Add(itemButton8, flags);
+    itemBoxSizer5->Add(itemButton8, 0, wxRIGHT, 5);
     itemButton8->Enable(false);
 
     wxButton* itemButton9 = new wxButton(itemPanel12, ID_BUTTON_MOVE_TRANS, _("&Move"));
     itemButton9->SetToolTip(_("Move selected transaction to another account"));
-    itemButton9->SetFont(fnt);
-    itemButton9->SetForegroundColour(wxColour(wxT("BLUE")));
-    itemBoxSizer5->Add(itemButton9, flags);
+    itemBoxSizer5->Add(itemButton9, 0, wxRIGHT, 5);
     itemButton9->Enable(false);
+    
+    wxSearchCtrl* searchCtrl = new wxSearchCtrl(itemPanel12, 
+        wxID_FIND, wxEmptyString, wxDefaultPosition, wxSize(100,-1));
+    itemBoxSizer5->Add(searchCtrl);
+    searchCtrl->SetToolTip(_("Enter any string to find it in the nearest transaction notes"));
 
     //Infobar-mini 
     wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, ID_PANEL_CHECKING_STATIC_MINI, wxT(""), 
-    wxPoint(-1,-1), wxDefaultSize, wxNO_BORDER|wxST_NO_AUTORESIZE);
+    wxPoint(-1,-1), wxDefaultSize, 0);
     itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxALL, 12);
-    //Infobar 
 
+    //Infobar 
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12, 
     ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxPoint(-1,-1), wxSize(150, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
     itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
     //Show tips when no transaction selected 
     Tips();
-
 }
 //----------------------------------------------------------------------------
 
@@ -1434,7 +1426,6 @@ void mmCheckingPanel::DeleteFlaggedTransactions()
                                 _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES)
     {
-        mmDBWrapper::begin(m_core->db_.get());
         for (size_t i = 0; i < m_trans.size(); ++i)
         {
             if (m_trans[i]->status_ == wxT("F"))
@@ -1442,7 +1433,6 @@ void mmCheckingPanel::DeleteFlaggedTransactions()
                 m_core->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
             }
         }
-        mmDBWrapper::commit(m_core->db_.get());
     }
 }
 
@@ -2155,4 +2145,36 @@ boost::shared_ptr<wxSQLite3Database> mmCheckingPanel::getDb() const
     wxASSERT(m_core);
     return m_core->db_; 
 }
+
 //----------------------------------------------------------------------------
+void mmCheckingPanel::OnSearchTxtEntered(wxCommandEvent& /*event*/)
+{
+    //event.GetString() does not working. It seems wxWidgets issue
+    //wxString searchString = event.GetString().c_str();
+
+    wxSearchCtrl* st = (wxSearchCtrl*)FindWindow(wxID_FIND);
+    wxString searchString = st->GetValue().Lower();
+
+    if (!searchString.IsEmpty())
+    {
+    //        wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_MINI);
+        long totalItems = m_listCtrlAccount->GetItemCount()-1;
+        wxString t;
+
+        for (int i = totalItems; i >= 0; --i)
+        {
+            t=getItem(i, COL_NOTES);
+            if (t.Lower().Find(searchString)!=wxNOT_FOUND)
+            {
+               //First of all any items should be unselected
+               int cursel = m_listCtrlAccount->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+               if (cursel != wxNOT_FOUND)
+                  m_listCtrlAccount->SetItemState(cursel, !wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+               //Then finded item will be selected
+               m_listCtrlAccount->SetItemState(i, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+               m_listCtrlAccount->EnsureVisible(i);
+               break;
+            }
+        }
+    }
+}
