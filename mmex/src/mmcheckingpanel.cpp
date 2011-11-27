@@ -1413,12 +1413,10 @@ void mmCheckingPanel::DeleteViewedTransactions()
                                 _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES)
     {
-        mmDBWrapper::begin(m_core->db_.get());
         for (size_t i = 0; i < m_trans.size(); ++i)
         {
             m_core->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
         }
-        mmDBWrapper::commit(m_core->db_.get());
     }
 }
 
