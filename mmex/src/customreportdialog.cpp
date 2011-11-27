@@ -19,6 +19,8 @@
 #include "customreportdialog.h"
 #include "paths.h"
 #include "util.h"
+#include <wx/cshelp.h>
+#include <wx/html/helpctrl.h>
 
 const int titleTextWidth   = 350; // Determines width of Headings Textbox.
 const int sourceTextHeight = 200; // Determines height of Source Textbox.
@@ -26,11 +28,12 @@ const int sourceTextHeight = 200; // Determines height of Source Textbox.
 IMPLEMENT_DYNAMIC_CLASS( mmCustomSQLDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmCustomSQLDialog, wxDialog )
-    EVT_BUTTON(DIALOG_CUSTOM_SQL_BTN_LOAD,  mmCustomSQLDialog::OnLoad)
-    EVT_BUTTON(DIALOG_CUSTOM_SQL_BTN_SAVE,  mmCustomSQLDialog::OnSave)
+    EVT_BUTTON(wxID_HELP, mmCustomSQLDialog::OnDialogContextHelp)
+    EVT_BUTTON(wxID_OPEN,  mmCustomSQLDialog::OnLoad)
+    EVT_BUTTON(wxID_SAVE,  mmCustomSQLDialog::OnSave)
     EVT_BUTTON(DIALOG_CUSTOM_SQL_BTN_QUERY, mmCustomSQLDialog::OnRun)
-    EVT_BUTTON(DIALOG_CUSTOM_SQL_BTN_CLEAR, mmCustomSQLDialog::OnClear)
-    EVT_BUTTON(DIALOG_CUSTOM_SQL_BTN_CLOSE, mmCustomSQLDialog::OnClose)
+    EVT_BUTTON(wxID_CLEAR, mmCustomSQLDialog::OnClear)
+    EVT_BUTTON(wxID_CLOSE, mmCustomSQLDialog::OnClose)
     EVT_CHECKBOX(DIALOG_CUSTOM_SQL_CHKBOX_HEADING_ONLY, mmCustomSQLDialog::OnCheckedHeading)
     EVT_CHECKBOX(DIALOG_CUSTOM_SQL_CHKBOX_SUB_REPORT,   mmCustomSQLDialog::OnCheckedSubReport)
     EVT_TEXT( DIALOG_CUSTOM_SQL_TXTCTRL_REPORT_TITLE, mmCustomSQLDialog::OnTextChangeHeading)
@@ -116,11 +119,11 @@ void mmCustomSQLDialog::CreateControls()
     wxBoxSizer* buttonPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonPanel->SetSizer(buttonPanelSizer);
 
-    button_Load_ = new wxButton( buttonPanel, DIALOG_CUSTOM_SQL_BTN_LOAD, _("&Load"), wxDefaultPosition, wxDefaultSize, 0 );
+    button_Load_ = new wxButton( buttonPanel, wxID_OPEN, _("&Open"), wxDefaultPosition, wxDefaultSize, 0 );
     buttonPanelSizer->Add(button_Load_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     button_Load_->SetToolTip(_("Locate and load an SQL script file."));
 
-    button_Save_ = new wxButton( buttonPanel, DIALOG_CUSTOM_SQL_BTN_SAVE, _("&Save"), wxDefaultPosition, wxDefaultSize, 0 );
+    button_Save_ = new wxButton( buttonPanel, wxID_SAVE, _("&Save"), wxDefaultPosition, wxDefaultSize, 0 );
     buttonPanelSizer->Add(button_Save_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     button_Save_->SetToolTip(_("Save Heading details to the Index File, and SQL script file as required."));
 
@@ -128,14 +131,18 @@ void mmCustomSQLDialog::CreateControls()
     buttonPanelSizer->Add(button_Run_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     button_Run_->SetToolTip(_("Test script. Save before running. SQL errors will result in loss of script details."));
 
-    wxButton* button_Clear = new wxButton( buttonPanel, DIALOG_CUSTOM_SQL_BTN_CLEAR, _("C&lear"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* button_Clear = new wxButton( buttonPanel, wxID_CLEAR, _("&Clear"), wxDefaultPosition, wxDefaultSize, 0 );
     buttonPanelSizer->Add(button_Clear, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     button_Clear->SetToolTip(_("Clear the SQL Source script area"));
 
-    wxButton* button_Close = new wxButton( buttonPanel, DIALOG_CUSTOM_SQL_BTN_CLOSE, _("&Close"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* button_Close = new wxButton( buttonPanel, wxID_CLOSE, _("&Close"), wxDefaultPosition, wxDefaultSize, 0 );
     buttonPanelSizer->Add(button_Close, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     button_Close->SetToolTip(_("Save changes before closing. Changes without Saving will be lost."));
 
+    //TODO: Help page
+    //wxButton* button_Help = new wxButton( buttonPanel, wxID_HELP, _("&Help"), wxDefaultPosition, wxDefaultSize, 0 );
+    //buttonPanelSizer->Add(button_Help, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    
     button_Save_->Disable(); // Will be activated if text changes in either text field.
 
     if (edit_)
@@ -350,7 +357,14 @@ void mmCustomSQLDialog::OnTextChangeSubReport(wxCommandEvent& /*event*/)
     }
 }
 
+void mmCustomSQLDialog::OnDialogContextHelp(wxCommandEvent & event)
+{
+//    dlg(this);
+//    dlg.ShowModal();
+}
+
 //mmCustomSQLDialog::~mmCustomSQLDialog()
 //{
 //    wxMessageBox(wxT("Testing that the dialog is being destroyed.\nGoodby.."),wxT("Custom SQL Dialog destructor..."));
 //}
+
