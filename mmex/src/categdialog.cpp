@@ -24,13 +24,13 @@
 IMPLEMENT_DYNAMIC_CLASS( mmCategDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmCategDialog, wxDialog )
-    EVT_BUTTON(ID_DIALOG_CATEG_BUTTON_OK, mmCategDialog::OnOk)
-    EVT_BUTTON(ID_DIALOG_CATEG_BUTTON_ADD, mmCategDialog::OnAdd)
-    EVT_BUTTON(ID_DIALOG_CATEG_BUTTON_DELETE, mmCategDialog::OnDelete)
-    EVT_BUTTON(ID_DIALOG_CATEG_BUTTON_SELECT, mmCategDialog::OnBSelect)
-    EVT_BUTTON(ID_DIALOG_CATEG_BUTTON_EDIT, mmCategDialog::OnEdit)
+    EVT_BUTTON(wxID_OK, mmCategDialog::OnBSelect)
+    EVT_BUTTON(wxID_CANCEL, mmCategDialog::OnCancel)
+    EVT_BUTTON(wxID_ADD, mmCategDialog::OnAdd)
+    EVT_BUTTON(wxID_DELETE, mmCategDialog::OnDelete)
+    EVT_BUTTON(wxID_SELECTALL, mmCategDialog::OnBSelect)
+    EVT_BUTTON(wxID_EDIT, mmCategDialog::OnEdit)
     EVT_TREE_SEL_CHANGED(ID_DIALOG_CATEG_TREECTRL_CATS, mmCategDialog::OnSelChanged)
-    //EVT_TREE_ITEM_ACTIVATED(ID_DIALOG_CATEG_TREECTRL_CATS,  mmCategDialog::OnDoubleClicked)
 END_EVENT_TABLE()
 
 mmCategDialog::mmCategDialog( )
@@ -115,10 +115,10 @@ void mmCategDialog::fillControls()
     treeCtrl_->SortChildren(root_);
 
     wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_CATEG_TEXTCTRL_CATNAME);
-    wxButton* addButton = (wxButton*)FindWindow(ID_DIALOG_CATEG_BUTTON_ADD);
-    wxButton* editButton = (wxButton*)FindWindow(ID_DIALOG_CATEG_BUTTON_EDIT);
-    wxButton* selectButton = (wxButton*)FindWindow(ID_DIALOG_CATEG_BUTTON_SELECT);
-    wxButton* deleteButton = (wxButton*)FindWindow(ID_DIALOG_CATEG_BUTTON_DELETE);
+    wxButton* addButton = (wxButton*)FindWindow(wxID_ADD);
+    wxButton* editButton = (wxButton*)FindWindow(wxID_EDIT);
+    wxButton* selectButton = (wxButton*)FindWindow(wxID_SELECTALL);
+    wxButton* deleteButton = (wxButton*)FindWindow(wxID_DELETE);
 
     treeCtrl_->SelectItem(selectedItemId_);
     
@@ -158,17 +158,17 @@ void mmCategDialog::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
 
-    wxButton* itemButton7 = new wxButton( itemDialog1, ID_DIALOG_CATEG_BUTTON_ADD, 
+    wxButton* itemButton7 = new wxButton( itemDialog1, wxID_ADD, 
         _("&Add"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
      itemButton7->SetToolTip(_("Add a new category"));
 
-    wxButton* itemButton71 = new wxButton( itemDialog1, ID_DIALOG_CATEG_BUTTON_EDIT, 
+    wxButton* itemButton71 = new wxButton( itemDialog1, wxID_EDIT, 
         _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton71, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton71->SetToolTip(_("Edit the name of an existing category"));
     
-    wxButton* itemButton8 = new wxButton( itemDialog1, ID_DIALOG_CATEG_BUTTON_DELETE, 
+    wxButton* itemButton8 = new wxButton( itemDialog1, wxID_DELETE, 
         _("&Delete"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton8->SetToolTip(_("Delete an existing category. The category cannot be used by existing transactions."));
@@ -176,13 +176,13 @@ void mmCategDialog::CreateControls()
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 5);
 
-    wxButton* itemButton11 = new wxButton( itemDialog1, ID_DIALOG_CATEG_BUTTON_SELECT, 
+    wxButton* itemButton11 = new wxButton( itemDialog1, wxID_SELECTALL, 
         _("&Select"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer9->Add(itemButton11, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton11->SetToolTip(_("Select the currently selected category as the selected category for the transaction"));
     
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
-    wxButton* itemCancelButton = new wxButton( itemDialog1, wxID_CANCEL, _("&Close"));
+    wxButton* itemCancelButton = new wxButton( itemDialog1, wxID_CANCEL, _("&Cancel"));
     itemBoxSizer9->Add(itemCancelButton);
 }
 
@@ -336,7 +336,12 @@ void mmCategDialog::OnDoubleClicked(wxTreeEvent& /*event*/)
 
 void mmCategDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    Close(TRUE);
+    EndModal(wxID_OK);
+}
+
+void mmCategDialog::OnCancel(wxCommandEvent& /*event*/)
+{
+    EndModal(wxID_CANCEL);
 }
 
 void mmCategDialog::OnSelChanged(wxTreeEvent& event)
@@ -358,10 +363,10 @@ void mmCategDialog::OnSelChanged(wxTreeEvent& event)
         subcategID = iData->getSubCategID();
     }
 
-    wxButton* addButton = (wxButton*)FindWindow(ID_DIALOG_CATEG_BUTTON_ADD);
-    wxButton* editButton = (wxButton*)FindWindow(ID_DIALOG_CATEG_BUTTON_EDIT);
-    wxButton* selectButton = (wxButton*)FindWindow(ID_DIALOG_CATEG_BUTTON_SELECT);
-    wxButton* deleteButton = (wxButton*)FindWindow(ID_DIALOG_CATEG_BUTTON_DELETE);
+    wxButton* addButton = (wxButton*)FindWindow(wxID_ADD);
+    wxButton* editButton = (wxButton*)FindWindow(wxID_EDIT);
+    wxButton* selectButton = (wxButton*)FindWindow(wxID_SELECTALL);
+    wxButton* deleteButton = (wxButton*)FindWindow(wxID_DELETE);
     if (selectedItemId_ == root_)
     {
         textCtrl->SetValue(wxT(""));
@@ -454,3 +459,4 @@ void mmCategDialog::setTreeSelection(wxString catName, wxString subCatName)
         }
     }
 }
+

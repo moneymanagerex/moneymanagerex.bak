@@ -66,9 +66,10 @@ public:
         long style = SYMBOL_CATEGDIALOG_STYLE );
 
     void CreateControls();
-    
+ 
     // utility functions
     void OnOk(wxCommandEvent& event);
+    void OnCancel(wxCommandEvent& event);
     void OnAdd(wxCommandEvent& event);
     void OnDelete(wxCommandEvent& event);
     void OnBSelect(wxCommandEvent& event);
@@ -92,7 +93,7 @@ private:
 public:
     int categID_;
     int subcategID_;
-
+    void setFields(int categID, int subcategID) ; 
 };
 
 #endif
