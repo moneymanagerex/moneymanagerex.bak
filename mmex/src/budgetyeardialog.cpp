@@ -114,6 +114,22 @@ void mmBudgetYearDialog::CreateControls()
         _("&Delete Budget Year"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton8->SetToolTip(_("Delete existing budget year"));
+    
+    wxPanel* itemPanel25 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    itemBoxSizer2->Add(itemPanel25, 1, wxALIGN_RIGHT|wxTOP|wxDOWN, 5);
+
+    wxStdDialogButtonSizer*  itemStdDialogButtonSizer1 = new wxStdDialogButtonSizer;
+    itemPanel25->SetSizer(itemStdDialogButtonSizer1);
+
+    wxButton* itemButton27 = new wxButton( itemPanel25, wxID_OK, _("&OK"));
+    itemStdDialogButtonSizer1->Add(itemButton27);
+
+    wxButton* itemButton28 = new wxButton( itemPanel25, wxID_CANCEL, _("&Cancel"));
+    itemStdDialogButtonSizer1->Add(itemButton28,  0, wxALIGN_RIGHT|wxLEFT, 10);
+	itemButton28->SetFocus();
+	
+    itemStdDialogButtonSizer1->Realize();
+
 }
 
 void mmBudgetYearDialog::OnAdd(wxCommandEvent& /*event*/)
