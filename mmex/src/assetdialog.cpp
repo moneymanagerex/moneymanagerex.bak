@@ -31,8 +31,7 @@ enum { DEF_ASSET_PROPERTY, DEF_ASSET_AUTO, DEF_ASSET_HOUSE, DEF_ASSET_ART, DEF_A
 
 enum { 
   IDC_COMBO_TYPE = wxID_HIGHEST + 1,
-  IDC_BUTTON_OK,
-  IDC_BUTTON_CANCEL
+  IDC_NOTES,
 };
 
 } // namespace
@@ -41,9 +40,10 @@ enum {
 IMPLEMENT_DYNAMIC_CLASS( mmAssetDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmAssetDialog, wxDialog )
-    EVT_BUTTON(IDC_BUTTON_OK, mmAssetDialog::OnOk)
-    EVT_BUTTON(IDC_BUTTON_CANCEL, mmAssetDialog::OnCancel)
+    EVT_BUTTON(wxID_OK, mmAssetDialog::OnOk)
+    EVT_BUTTON(wxID_CANCEL, mmAssetDialog::OnCancel)
     EVT_CHOICE(IDC_COMBO_TYPE, mmAssetDialog::OnChangeAppreciationType)
+    EVT_CHILD_FOCUS(mmAssetDialog::changeFocus)
 END_EVENT_TABLE()
 
 
@@ -272,7 +272,7 @@ void mmAssetDialog::CreateControls()
     wxStaticText* itemStaticText19 = new wxStaticText( itemPanel5, wxID_STATIC, _("Notes"));
     itemFlexGridSizer6->Add(itemStaticText19, 0,wxALIGN_LEFT|wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
 
-    m_notes = new wxTextCtrl( itemPanel5, wxID_ANY, wxGetEmptyString(), wxDefaultPosition, wxSize(220, 170), wxTE_MULTILINE );
+    m_notes = new wxTextCtrl( itemPanel5, IDC_NOTES, wxGetEmptyString(), wxDefaultPosition, wxSize(220, 170), wxTE_MULTILINE );
     m_notes->SetToolTip(_("Enter notes associated with this asset"));
     itemFlexGridSizer6->Add(m_notes, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -282,20 +282,39 @@ void mmAssetDialog::CreateControls()
     wxBoxSizer* itemBoxSizer28 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel27->SetSizer(itemBoxSizer28);
 
-    wxButton* itemButton29 = new wxButton( itemPanel27, IDC_BUTTON_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemButton29->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
+    wxButton* itemButton29 = new wxButton( itemPanel27, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    //itemButton29->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
     itemBoxSizer28->Add(itemButton29, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
-    wxButton* itemButton30 = new wxButton( itemPanel27, IDC_BUTTON_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemButton30->SetForegroundColour(wxColour(wxT("RED")));
+    wxButton* itemButton30 = new wxButton( itemPanel27, wxID_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+    //itemButton30->SetForegroundColour(wxColour(wxT("RED")));
     itemBoxSizer28->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton30->SetFocus();
 
 }
 
-void mmAssetDialog::OnCancel(wxCommandEvent& /*event*/)
+void mmAssetDialog::OnChangeAppreciationType(wxCommandEvent& /*event*/)
 {
-    Close(true);
+	int selection = m_valueChange->GetSelection();
+	// Disable for "None", Enable for "Appreciates" or "Depreciates"
+	enableDisableRate(selection != DEF_CHANGE_NONE);
+}
+
+void mmAssetDialog::enableDisableRate(bool en)
+{
+	if (en)
+	{
+		m_valueChangeRate->SetEditable(true);
+		m_valueChangeRate->Enable(true);
+		m_valueChangeRateLabel->Enable(true);
+	}
+	else 
+	{
+		//m_valueChangeRate->SetValue(wxT("0"));
+		m_valueChangeRate->SetEditable(false);
+		m_valueChangeRate->Enable(false);
+		m_valueChangeRateLabel->Enable(false);
+	}
 }
 
 void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
@@ -419,26 +438,20 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     EndModal(wxID_OK);
 }
 
-void mmAssetDialog::OnChangeAppreciationType(wxCommandEvent& /*event*/)
+void mmAssetDialog::OnCancel(wxCommandEvent& /*event*/)
 {
-	int selection = m_valueChange->GetSelection();
-	// Disable for "None", Enable for "Appreciates" or "Depreciates"
-	enableDisableRate(selection != DEF_CHANGE_NONE);
+    if (assetRichText){
+		return;
+	} else {
+		EndModal(wxID_CANCEL);
+    }
 }
 
-void mmAssetDialog::enableDisableRate(bool en)
+void mmAssetDialog::changeFocus(wxChildFocusEvent& event)
 {
-	if (en)
+	wxWindow *w = event.GetWindow();
+	if ( w ) 
 	{
-		m_valueChangeRate->SetEditable(true);
-		m_valueChangeRate->Enable(true);
-		m_valueChangeRateLabel->Enable(true);
-	}
-	else 
-	{
-		//m_valueChangeRate->SetValue(wxT("0"));
-		m_valueChangeRate->SetEditable(false);
-		m_valueChangeRate->Enable(false);
-		m_valueChangeRateLabel->Enable(false);
+		assetRichText = (w->GetId() == IDC_NOTES ? true : false);	
 	}
 }
