@@ -33,11 +33,13 @@ class mmAssetDialog : public wxDialog
 public:
     mmAssetDialog() : m_db(), m_assetID(-1), m_edit() {}
     mmAssetDialog(wxWindow *parent, wxSQLite3Database* db, int assetID, bool edit);
+    void changeFocus(wxChildFocusEvent& event);
 
 private:
     wxSQLite3Database* m_db;
     int m_assetID;
     bool m_edit;
+    bool assetRichText;
 
     wxTextCtrl* m_assetName;
     wxDatePickerCtrl* m_dpc;
