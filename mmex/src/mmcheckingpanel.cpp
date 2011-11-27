@@ -2157,23 +2157,26 @@ void mmCheckingPanel::OnSearchTxtEntered(wxCommandEvent& /*event*/)
 
     if (!searchString.IsEmpty())
     {
-    //        wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_MINI);
-        long totalItems = m_listCtrlAccount->GetItemCount()-1;
+        int selectedItem = m_listCtrlAccount->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED)-1;
+        if (selectedItem < 0)
+        selectedItem = m_listCtrlAccount->GetItemCount()-1;
+        
         wxString t;
 
-        for (int i = totalItems; i >= 0; --i)
+        for (int i = selectedItem; i >= 0; --i)
         {
             t=getItem(i, COL_NOTES);
             if (t.Lower().Find(searchString)!=wxNOT_FOUND)
             {
-               //First of all any items should be unselected
-               int cursel = m_listCtrlAccount->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-               if (cursel != wxNOT_FOUND)
-                  m_listCtrlAccount->SetItemState(cursel, !wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-               //Then finded item will be selected
-               m_listCtrlAccount->SetItemState(i, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-               m_listCtrlAccount->EnsureVisible(i);
-               break;
+                
+                //First of all any items should be unselected
+                int cursel = m_listCtrlAccount->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+                if (cursel != wxNOT_FOUND)
+                    m_listCtrlAccount->SetItemState(cursel, !wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                //Then finded item will be selected
+                m_listCtrlAccount->SetItemState(i, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+                m_listCtrlAccount->EnsureVisible(i);
+                break;
             }
         }
     }
