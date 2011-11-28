@@ -29,12 +29,10 @@ namespace
 {
 
 enum { 
-  IDC_BUTTON_NEW_ASSET = wxID_HIGHEST + 1,
-  IDC_BUTTON_EDIT_ASSET,
-  IDC_BUTTON_DELETE_ASSET,
-  IDC_PANEL_STOCKS_LISTCTRL,
+  IDC_PANEL_STOCKS_LISTCTRL = wxID_HIGHEST + 1,
   IDC_PANEL_ASSETS_LISTCTRL,
   IDC_PANEL_CHECKING_STATIC_BALHEADER,
+  IDC_PANEL_CHECKING_STATIC_BAL,
   MENU_TREEPOPUP_NEW,
   MENU_TREEPOPUP_EDIT,
   MENU_TREEPOPUP_DELETE,
@@ -55,9 +53,9 @@ enum EColumn
 
 /*******************************************************/
 BEGIN_EVENT_TABLE(mmAssetsPanel, wxPanel)
-    EVT_BUTTON(IDC_BUTTON_NEW_ASSET, mmAssetsPanel::OnNewAsset)
-    EVT_BUTTON(IDC_BUTTON_EDIT_ASSET, mmAssetsPanel::OnEditAsset)
-    EVT_BUTTON(IDC_BUTTON_DELETE_ASSET, mmAssetsPanel::OnDeleteAsset)
+    EVT_BUTTON(wxID_NEW, mmAssetsPanel::OnNewAsset)
+    EVT_BUTTON(wxID_EDIT, mmAssetsPanel::OnEditAsset)
+    EVT_BUTTON(wxID_DELETE, mmAssetsPanel::OnDeleteAsset)
 END_EVENT_TABLE()
 /*******************************************************/
 BEGIN_EVENT_TABLE(assetsListCtrl, wxListCtrl)
@@ -124,13 +122,13 @@ void mmAssetsPanel::destroy()
 
 void mmAssetsPanel::CreateControls()
 {    
-    mmAssetsPanel* itemPanel8 = this;
+    mmAssetsPanel* itemPanelAssets = this;
 
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
-    itemPanel8->SetSizer(itemBoxSizer9);
+    itemPanelAssets->SetSizer(itemBoxSizer9);
 
     /* ---------------------- */
-    wxPanel* headerPanel = new wxPanel( itemPanel8, wxID_ANY, wxDefaultPosition, 
+    wxPanel* headerPanel = new wxPanel( itemPanelAssets, wxID_ANY, wxDefaultPosition, 
         wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
     itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -141,14 +139,14 @@ void mmAssetsPanel::CreateControls()
     itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, 
         wxGetEmptyString()));
 
-	wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, IDC_PANEL_CHECKING_STATIC_BALHEADER, _("Total:"), wxDefaultPosition, wxSize(500, 20), 0 );
+	wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, IDC_PANEL_CHECKING_STATIC_BALHEADER, _("Total:"), wxDefaultPosition, wxDefaultSize, 0 );
 
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
 	itemBoxSizerVHeader->Add(itemStaticText10, 0, wxALL, 1);
 
     /* ---------------------- */
 
-    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( itemPanel8, wxID_ANY, wxDefaultPosition, wxSize(100, 100), 
+    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( itemPanelAssets, IDC_PANEL_CHECKING_STATIC_BAL, wxDefaultPosition, wxSize(100, 100), 
         wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
     wxSize imageSize(16, 16);
@@ -212,43 +210,31 @@ void mmAssetsPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 3);
 
-    wxSizerFlags flags;
-    flags.Border();
-
-    wxButton* itemButton6 = new wxButton( itemPanel12, IDC_BUTTON_NEW_ASSET, _("&New"));
+    wxButton* itemButton6 = new wxButton( itemPanel12, wxID_NEW, _("&New"));
     itemButton6->SetToolTip(_("New Asset"));
-    wxFont fnt = itemButton6->GetFont();
-    itemButton6->SetFont(fnt);
-    itemButton6->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
-    itemBoxSizer5->Add(itemButton6, flags);
+    itemBoxSizer5->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton81 = new wxButton( itemPanel12, IDC_BUTTON_EDIT_ASSET, _("&Edit"));
+    wxButton* itemButton81 = new wxButton( itemPanel12, wxID_EDIT, _("&Edit"));
     itemButton81->SetToolTip(_("Edit Asset"));
-    itemButton81->SetFont(fnt);
-    itemButton81->SetForegroundColour(wxColour(wxT("ORANGE")));
-    itemBoxSizer5->Add(itemButton81, flags);
+    itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemButton81->Enable(false);
 	
-    wxButton* itemButton7 = new wxButton( itemPanel12, IDC_BUTTON_DELETE_ASSET, _("&Delete"));
+    wxButton* itemButton7 = new wxButton( itemPanel12, wxID_DELETE, _("&Delete"));
     itemButton7->SetToolTip(_("Delete Asset"));
-    itemButton7->SetFont(fnt);
-    itemButton7->SetForegroundColour(wxColour(wxT("RED"))); // FIREBRICK
-    itemBoxSizer5->Add(itemButton7, flags);
+    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemButton7->Enable(false);
-
 
     //Infobar-mini 
     wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, IDC_PANEL_ASSET_STATIC_DETAILS_MINI, wxT(""), 
-    wxPoint(-1,-1), wxSize(450, -1), wxNO_BORDER|wxST_NO_AUTORESIZE);
-    itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxALL, 10);
+        wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxTOP, 12);
 
     //Infobar 
     wxStaticText* itemStaticText33 = new wxStaticText( itemPanel12, 
-    IDC_PANEL_ASSET_STATIC_DETAILS, wxT(""), 
-    wxPoint(-1,-1), wxSize(350, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
-    itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxALL, 0);
+    IDC_PANEL_ASSET_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
+    itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxALL, 5);
             
-            updateExtraAssetData(-1);
+    updateExtraAssetData(-1);
 
 }
 
@@ -397,7 +383,10 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
         wxString miniInfo;
         wxString infoStr;
         infoStr = getItem(selIndex, COL_NOTES);
-        miniInfo << wxT("\t") << _("Change in Value") << wxT(": ") << m_trans[selIndex].assetValueChange_ << wxT(" = ") << m_trans[selIndex].valueChange_ << wxT("%");
+        double valueChange = m_trans[selIndex].valueChange_;
+        miniInfo << wxT("\t") << _("Change in Value") << wxT(": ") << m_trans[selIndex].assetValueChange_ ;
+        if (m_trans[selIndex].assetValueChange_ != _("None"))
+        miniInfo<< wxT(" = ") << m_trans[selIndex].valueChange_ << wxT("%");
         st->SetLabel(infoStr);
         stm->SetLabel(miniInfo);
         }
@@ -411,11 +400,11 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
 
 void mmAssetsPanel::enableEditDeleteButtons(bool enable)
 {
-	wxButton* btn = static_cast<wxButton*>(FindWindow(IDC_BUTTON_EDIT_ASSET));
+	wxButton* btn = static_cast<wxButton*>(FindWindow(wxID_EDIT));
 	wxASSERT(btn);
 	btn->Enable(enable);
 
-	btn = static_cast<wxButton*>(FindWindow(IDC_BUTTON_DELETE_ASSET));
+	btn = static_cast<wxButton*>(FindWindow(wxID_DELETE));
 	wxASSERT(btn);
 	btn->Enable(enable);
 }
