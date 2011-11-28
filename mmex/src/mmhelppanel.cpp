@@ -29,8 +29,8 @@
 #include <algorithm>
 
 BEGIN_EVENT_TABLE(mmHelpPanel, wxPanel)
-    EVT_BUTTON(ID_PANEL_REPORTS_HELP_BUTTON_BACK, mmHelpPanel::OnHelpPageBack)
-    EVT_BUTTON(ID_PANEL_REPORTS_HELP_BUTTON_FORWARD, mmHelpPanel::OnHelpPageForward)
+    EVT_BUTTON(wxID_BACKWARD, mmHelpPanel::OnHelpPageBack)
+    EVT_BUTTON(wxID_FORWARD, mmHelpPanel::OnHelpPageForward)
 END_EVENT_TABLE()
 
 mmHelpPanel::mmHelpPanel( mmGUIFrame* frame, wxSQLite3Database* db, wxWindow *parent,
@@ -80,17 +80,17 @@ void mmHelpPanel::CreateControls()
     wxBoxSizer* itemBoxSizerHeader = new wxBoxSizer(wxHORIZONTAL);
     itemPanel3->SetSizer(itemBoxSizerHeader);
 
-    wxButton* buttonBack     = new wxButton(itemPanel3, ID_PANEL_REPORTS_HELP_BUTTON_BACK,    wxT("<"));
-    wxButton* buttonFordward = new wxButton(itemPanel3, ID_PANEL_REPORTS_HELP_BUTTON_FORWARD, wxT(">"));
+    wxButton* buttonBack     = new wxButton(itemPanel3, wxID_BACKWARD, _("&Back"));
+    wxButton* buttonFordward = new wxButton(itemPanel3, wxID_FORWARD, _("&Forward") );
 
     wxString helpHeader = mmex::getProgramName() + _(" Help");
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, ID_PANEL_REPORTS_STATIC_HEADER, 
         helpHeader, wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
 
-    itemBoxSizerHeader->Add(buttonBack, 0, wxALL, 1);
-    itemBoxSizerHeader->Add(buttonFordward, 0, wxRIGHT, 31);
-    itemBoxSizerHeader->Add(itemStaticText9, 0, wxALL, 1);
+    itemBoxSizerHeader->Add(buttonBack, 0, wxLEFT, 5);
+    itemBoxSizerHeader->Add(buttonFordward, 0, wxLEFT|wxRIGHT, 5);
+    itemBoxSizerHeader->Add(itemStaticText9, 0, wxLEFT|wxTOP, 5);
 
     htmlWindow_ = new wxHtmlWindow( itemDialog1, ID_PANEL_REPORTS_HTMLWINDOW, 
         wxDefaultPosition, wxDefaultSize, 
