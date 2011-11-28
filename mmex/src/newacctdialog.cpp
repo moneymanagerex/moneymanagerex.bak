@@ -30,8 +30,8 @@ enum { ACCT_STATUS_OPEN, ACCT_STATUS_CLOSED };
 IMPLEMENT_DYNAMIC_CLASS( mmNewAcctDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmNewAcctDialog, wxDialog )
-    EVT_BUTTON(ID_DIALOG_NEWACCT_BUTTON_OK, mmNewAcctDialog::OnOk)
-    EVT_BUTTON(ID_DIALOG_NEWACCT_BUTTON_CANCEL, mmNewAcctDialog::OnCancel)
+    EVT_BUTTON(wxID_OK, mmNewAcctDialog::OnOk)
+    EVT_BUTTON(wxID_CANCEL, mmNewAcctDialog::OnCancel)
     EVT_BUTTON(ID_DIALOG_NEWACCT_BUTTON_CURRENCY, mmNewAcctDialog::OnCurrency)
 END_EVENT_TABLE()
 
@@ -243,6 +243,7 @@ void mmNewAcctDialog::CreateControls()
     itemGridSizer2->Add(itemStaticText18, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
+    //TODO: validator
     wxTextCtrl* itemTextCtrl19 = new wxTextCtrl( itemDialog1, 
         ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE, 
         wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
@@ -290,12 +291,13 @@ void mmNewAcctDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
    
     wxButton* itemButton7 = new wxButton( itemDialog1, 
-        ID_DIALOG_NEWACCT_BUTTON_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+        wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer9->Add(itemButton7, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton8 = new wxButton( itemDialog1, 
-        ID_DIALOG_NEWACCT_BUTTON_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer9->Add(itemButton8, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxButton* itemButtonCancel = new wxButton( itemDialog1, 
+        wxID_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer9->Add(itemButtonCancel, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButtonCancel->SetFocus();
 }
 
 void mmNewAcctDialog::OnCancel(wxCommandEvent& /*event*/)

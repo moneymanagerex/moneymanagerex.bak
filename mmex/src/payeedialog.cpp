@@ -29,12 +29,8 @@ namespace
 {
 
 enum {
-    IDD_BUTTON_SELECT = wxID_OK,
     IDD_TEXTCTRL_PAYEENAME = wxID_HIGHEST + 1,
     IDD_LISTBOX_PAYEES,
-    IDD_BUTTON_ADD,
-    IDD_BUTTON_DELETE,
-    IDD_BUTTON_EDIT
 };
 
 } // namespace
@@ -43,10 +39,10 @@ enum {
 IMPLEMENT_DYNAMIC_CLASS( mmPayeeDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmPayeeDialog, wxDialog )
-    EVT_BUTTON(IDD_BUTTON_ADD, mmPayeeDialog::OnAdd)
-    EVT_BUTTON(IDD_BUTTON_DELETE, mmPayeeDialog::OnDelete)
-    EVT_BUTTON(IDD_BUTTON_SELECT, mmPayeeDialog::OnBSelect)
-    EVT_BUTTON(IDD_BUTTON_EDIT, mmPayeeDialog::OnEdit)
+    EVT_BUTTON(wxID_ADD, mmPayeeDialog::OnAdd)
+    EVT_BUTTON(wxID_DELETE, mmPayeeDialog::OnDelete)
+    EVT_BUTTON(wxID_OK, mmPayeeDialog::OnBSelect)
+    EVT_BUTTON(wxID_EDIT, mmPayeeDialog::OnEdit)
     EVT_LISTBOX(IDD_LISTBOX_PAYEES, mmPayeeDialog::OnSelChanged)
     EVT_LISTBOX_DCLICK(IDD_LISTBOX_PAYEES, mmPayeeDialog::OnDoubleClicked)
     EVT_TEXT(IDD_TEXTCTRL_PAYEENAME, mmPayeeDialog::OnTextCtrlChanged)
@@ -111,17 +107,17 @@ void mmPayeeDialog::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
 
-    addButton = new wxButton( this, IDD_BUTTON_ADD, _("&Add"), wxDefaultPosition, wxDefaultSize, 0 );
+    addButton = new wxButton( this, wxID_ADD, _("&Add"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(addButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     addButton->SetToolTip(_("Add a new payee name"));
 	addButton->Disable();
 
-    editButton = new wxButton( this, IDD_BUTTON_EDIT, _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
+    editButton = new wxButton( this, wxID_EDIT, _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(editButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     editButton->SetToolTip(_("Change the name of an existing payee"));
     editButton->Disable();
 	
-    deleteButton = new wxButton( this, IDD_BUTTON_DELETE, _("&Delete"));
+    deleteButton = new wxButton( this, wxID_DELETE, _("&Delete"));
     itemBoxSizer5->Add(deleteButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     deleteButton->SetToolTip(_("Delete the selected payee. The payee cannot be used by an existing transaction."));
 	deleteButton->Disable();
@@ -129,13 +125,13 @@ void mmPayeeDialog::CreateControls()
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 5);
 
-    selectButton = new wxButton( this, IDD_BUTTON_SELECT, _("&Select"));
+    selectButton = new wxButton( this, wxID_OK, _("&Select"));
     itemBoxSizer9->Add(selectButton, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     selectButton->SetToolTip(_("Select the currently selected payee as the selected payee for the transaction"));
     selectButton->Disable();
     
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
-    wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL, _("&Close"));
+    wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL, _("&Cancel"));
     itemBoxSizer9->Add(itemCancelButton,  0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
 }

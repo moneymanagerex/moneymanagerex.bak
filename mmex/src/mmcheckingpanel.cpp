@@ -430,10 +430,10 @@ private:
 
 BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
 
-    EVT_BUTTON(ID_BUTTON_NEW_TRANS,         mmCheckingPanel::OnNewTransaction)
-    EVT_BUTTON(ID_BUTTON_EDIT_TRANS,        mmCheckingPanel::OnEditTransaction)
-    EVT_BUTTON(ID_BUTTON_DELETE_TRANS,      mmCheckingPanel::OnDeleteTransaction)
-    EVT_BUTTON(ID_BUTTON_MOVE_TRANS,        mmCheckingPanel::OnMoveTransaction)
+    EVT_BUTTON(wxID_NEW,         mmCheckingPanel::OnNewTransaction)
+    EVT_BUTTON(wxID_EDIT,        mmCheckingPanel::OnEditTransaction)
+    EVT_BUTTON(wxID_DELETE,      mmCheckingPanel::OnDeleteTransaction)
+    EVT_BUTTON(wxID_MOVE_FRAME,        mmCheckingPanel::OnMoveTransaction)
     EVT_LEFT_DOWN( mmCheckingPanel::OnMouseLeftDown ) 
 
     EVT_MENU(MENU_VIEW_ALLTRANSACTIONS, mmCheckingPanel::OnViewPopupSelected)
@@ -764,21 +764,21 @@ void mmCheckingPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxButton* itemButton6 = new wxButton(itemPanel12, ID_BUTTON_NEW_TRANS, _("&New"));
+    wxButton* itemButton6 = new wxButton(itemPanel12, wxID_NEW, _("&New"));
     itemButton6->SetToolTip(_("New Transaction"));
     itemBoxSizer5->Add(itemButton6, 0, wxRIGHT, 5);
 
-    wxButton* itemButton7 = new wxButton(itemPanel12, ID_BUTTON_EDIT_TRANS, _("&Edit"));
+    wxButton* itemButton7 = new wxButton(itemPanel12, wxID_EDIT, _("&Edit"));
     itemButton7->SetToolTip(_("Edit selected transaction"));
     itemBoxSizer5->Add(itemButton7, 0, wxRIGHT, 5);
     itemButton7->Enable(false);
 
-    wxButton* itemButton8 = new wxButton(itemPanel12, ID_BUTTON_DELETE_TRANS, _("&Delete"));
+    wxButton* itemButton8 = new wxButton(itemPanel12, wxID_DELETE, _("&Delete"));
     itemButton8->SetToolTip(_("Delete selected transaction"));
     itemBoxSizer5->Add(itemButton8, 0, wxRIGHT, 5);
     itemButton8->Enable(false);
 
-    wxButton* itemButton9 = new wxButton(itemPanel12, ID_BUTTON_MOVE_TRANS, _("&Move"));
+    wxButton* itemButton9 = new wxButton(itemPanel12, wxID_MOVE_FRAME, _("&Move"));
     itemButton9->SetToolTip(_("Move selected transaction to another account"));
     itemBoxSizer5->Add(itemButton9, 0, wxRIGHT, 5);
     itemButton9->Enable(false);
@@ -804,9 +804,9 @@ void mmCheckingPanel::CreateControls()
 
 void mmCheckingPanel::enableEditDeleteButtons(bool en)
 {
-    wxButton* bE = (wxButton*)FindWindow(ID_BUTTON_EDIT_TRANS);
-    wxButton* bD = (wxButton*)FindWindow(ID_BUTTON_DELETE_TRANS);
-    wxButton* bM = (wxButton*)FindWindow(ID_BUTTON_MOVE_TRANS);
+    wxButton* bE = (wxButton*)FindWindow(wxID_EDIT);
+    wxButton* bD = (wxButton*)FindWindow(wxID_DELETE);
+    wxButton* bM = (wxButton*)FindWindow(wxID_MOVE_FRAME);
 
     bE->Enable(en);
     bD->Enable(en);
