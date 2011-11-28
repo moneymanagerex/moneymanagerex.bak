@@ -35,8 +35,8 @@ BEGIN_EVENT_TABLE( TransFilterDialog, wxDialog )
 
     EVT_BUTTON( ID_DIALOG_TRANSFILTER_BTN_PAYEE,       TransFilterDialog::OnPayeeSelect)
     EVT_BUTTON( ID_DIALOG_TRANSFILTER_BTN_CATEGORY,    TransFilterDialog::OnCategorySelect)
-    EVT_BUTTON( ID_DIALOG_TRANSFILTER_BUTTON_OK,       TransFilterDialog::OnButtonOK )
-    EVT_BUTTON( ID_DIALOG_TRANSFILTER_BUTTON_CANCEL,   TransFilterDialog::OnButtonCancel )
+    EVT_BUTTON( wxID_OK,       TransFilterDialog::OnButtonOK )
+    EVT_BUTTON( wxID_CANCEL,   TransFilterDialog::OnButtonCancel )
 END_EVENT_TABLE()
 
 // Defines for Transaction Status and Type now located in dbWrapper.h
@@ -212,15 +212,14 @@ void TransFilterDialog::CreateControls()
     wxBoxSizer* buttonPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonPanel->SetSizer(buttonPanelSizer);
 
-    wxButton* btnOK = new wxButton( buttonPanel, ID_DIALOG_TRANSFILTER_BUTTON_OK, _("OK"));
-    btnOK->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
+    wxButton* btnOK = new wxButton( buttonPanel, wxID_OK, _("&OK"));
     btnOK->SetToolTip(_("Activates the filter: Will add selected items to display"));
     buttonPanelSizer->Add(btnOK, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* btnCancel = new wxButton( buttonPanel, ID_DIALOG_TRANSFILTER_BUTTON_CANCEL, _("Cancel"));
-    btnCancel->SetForegroundColour(wxColour(wxT("RED")));
+    wxButton* btnCancel = new wxButton( buttonPanel, wxID_CANCEL, _("&Cancel"));
     btnCancel->SetToolTip(_("Deactivates the filter"));
     buttonPanelSizer->Add(btnCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    btnCancel->SetFocus();
 }
 
 void TransFilterDialog::OnButtonOK( wxCommandEvent& /*event*/ )

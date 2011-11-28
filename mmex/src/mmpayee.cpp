@@ -150,7 +150,7 @@ void mmPayeeList::updatePayee(int payeeID, const wxString& payeeName)
                     categID = category->categID_;        
                 }
             }
-            //mmDBWrapper::updatePayee(db_.get(), payeeName, payeeID, categID, subcategID);
+            mmDBWrapper::updatePayee(db_.get(), payeeName, payeeID, categID, subcategID);
             payees_[idx]->payeeName_ = payeeName;
             break;
         }

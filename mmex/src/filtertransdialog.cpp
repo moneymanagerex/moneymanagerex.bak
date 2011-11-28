@@ -73,8 +73,8 @@ BEGIN_EVENT_TABLE( mmFilterTransactionsDialog, wxDialog )
     EVT_CHECKBOX( ID_CHECKBOXTYPE,      mmFilterTransactionsDialog::OnCheckboxtypeClick )
     EVT_CHECKBOX( ID_CHECKBOXAMOUNTRANGE, mmFilterTransactionsDialog::OnCheckboxamountrangeClick )
     EVT_CHECKBOX( ID_CHECKBOXNOTES,     mmFilterTransactionsDialog::OnCheckboxnotesClick )
-    EVT_BUTTON( ID_BUTTONOK,            mmFilterTransactionsDialog::OnButtonokClick )
-    EVT_BUTTON( ID_BUTTONCANCEL,        mmFilterTransactionsDialog::OnButtoncancelClick )
+    EVT_BUTTON( wxID_OK,            mmFilterTransactionsDialog::OnButtonokClick )
+    EVT_BUTTON( wxID_CANCEL,        mmFilterTransactionsDialog::OnButtoncancelClick )
     EVT_BUTTON(ID_BUTTONPAYEE,          mmFilterTransactionsDialog::OnPayee)
     EVT_BUTTON(ID_BUTTONCATEGORY,       mmFilterTransactionsDialog::OnCategs)
     EVT_CHECKBOX( ID_CHECKBOXTRANSNUM,  mmFilterTransactionsDialog::OnCheckboxTransNumberClick )
@@ -335,14 +335,13 @@ void mmFilterTransactionsDialog::CreateControls()
     wxBoxSizer* buttonPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonPanel->SetSizer(buttonPanelSizer);
 
-    wxButton* itemButton30 = new wxButton( buttonPanel, ID_BUTTONOK, _("&OK"));
-    itemButton30->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
+    wxButton* itemButton30 = new wxButton( buttonPanel, wxID_OK, _("&OK"));
     buttonPanelSizer->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton31 = new wxButton( buttonPanel, ID_BUTTONCANCEL, _("&Cancel"));
-    itemButton31->SetForegroundColour(wxColour(wxT("RED")));
-    buttonPanelSizer->Add(itemButton31, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
+    wxButton* itemButtonCancel = new wxButton( buttonPanel, wxID_CANCEL, _("&Cancel"));
+    buttonPanelSizer->Add(itemButtonCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButtonCancel->SetFocus();
+    
 ////@end mmFilterTransactionsDialog content construction
 
     // disable all controls at startup
@@ -591,7 +590,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
 
 void mmFilterTransactionsDialog::OnButtoncancelClick( wxCommandEvent& /*event*/ )
 {
-    Close(TRUE);
+    EndModal(wxID_CANCEL);
 }
 
 void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)

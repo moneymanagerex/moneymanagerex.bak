@@ -168,7 +168,7 @@ public:
     /* Update Transactions */
     void updateAllTransactions();
     void updateAllTransactionsForCategory(mmCoreDB* core, int categID, int subCategID);
-    void updateAllTransactionsForPayee(mmCoreDB* core, int payeeID);
+    int updateAllTransactionsForPayee(mmCoreDB* core, int payeeID);
 
     /* Data */
     std::vector< boost::shared_ptr<mmBankTransaction> > transactions_;

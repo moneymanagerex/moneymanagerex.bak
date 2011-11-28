@@ -694,7 +694,7 @@ void mmBankTransactionList::updateAllTransactionsForCategory(mmCoreDB* core,
     }
 }
 
-void mmBankTransactionList::updateAllTransactionsForPayee(mmCoreDB* core, 
+int mmBankTransactionList::updateAllTransactionsForPayee(mmCoreDB* core, 
                                                           int payeeID)
 {
     // We need to update all transactions incase of errors when loading
@@ -714,6 +714,7 @@ void mmBankTransactionList::updateAllTransactionsForPayee(mmCoreDB* core,
             }
         }
     }
+    return 0;
 }
 
 void mmBankTransactionList::getExpensesIncome(int accountID, double& expenses, double& income,  

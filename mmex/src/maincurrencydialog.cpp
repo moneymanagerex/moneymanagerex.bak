@@ -25,10 +25,10 @@
 IMPLEMENT_DYNAMIC_CLASS( mmMainCurrencyDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmMainCurrencyDialog, wxDialog )
-    EVT_BUTTON(ID_MAINCURRENCYBUTTON_ADD, mmMainCurrencyDialog::OnBtnAdd)
-    EVT_BUTTON(ID_MAINCURRENCYBUTTON_EDIT, mmMainCurrencyDialog::OnBtnEdit)
-    EVT_BUTTON(ID_MAINCURRENCYBUTTON_SELECT, mmMainCurrencyDialog::OnBtnSelect)
-    EVT_BUTTON(ID_MAINCURRENCYBUTTON_DELETE, mmMainCurrencyDialog::OnBtnDelete)
+    EVT_BUTTON(wxID_ADD, mmMainCurrencyDialog::OnBtnAdd)
+    EVT_BUTTON(wxID_EDIT, mmMainCurrencyDialog::OnBtnEdit)
+    EVT_BUTTON(wxID_SELECTALL, mmMainCurrencyDialog::OnBtnSelect)
+    EVT_BUTTON(wxID_DELETE, mmMainCurrencyDialog::OnBtnDelete)
     EVT_LISTBOX(ID_LISTBOX, mmMainCurrencyDialog::OnlistBoxSelection)
     EVT_LISTBOX_DCLICK(ID_LISTBOX, mmMainCurrencyDialog::OnlistBoxDoubleClicked)
 END_EVENT_TABLE()
@@ -126,16 +126,16 @@ void mmMainCurrencyDialog::CreateControls()
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel5->SetSizer(itemBoxSizer6);
 
-    wxButton* itemButton7 = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_ADD, _("&Add"), 
+    wxButton* itemButton7 = new wxButton( itemPanel5, wxID_ADD, _("&Add"), 
         wxDefaultPosition, wxDefaultSize, 4 );
     itemBoxSizer6->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
-    itemButtonEdit_ = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_EDIT, _("&Edit"), 
+    itemButtonEdit_ = new wxButton( itemPanel5, wxID_EDIT, _("&Edit"), 
         wxDefaultPosition, wxDefaultSize, 4 );
     itemBoxSizer6->Add(itemButtonEdit_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     itemButtonEdit_->Disable();
 
-    itemButtonDelete_ = new wxButton( itemPanel5, ID_MAINCURRENCYBUTTON_DELETE, _("&Delete"), 
+    itemButtonDelete_ = new wxButton( itemPanel5, wxID_DELETE, _("&Delete"), 
         wxDefaultPosition, wxDefaultSize, 4 );
     itemBoxSizer6->Add(itemButtonDelete_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     itemButtonDelete_->Disable();
@@ -143,7 +143,7 @@ void mmMainCurrencyDialog::CreateControls()
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 4);
 
-    wxButton* itemButtonSelect = new wxButton( this, ID_MAINCURRENCYBUTTON_SELECT, _("&Select"));
+    wxButton* itemButtonSelect = new wxButton( this, wxID_SELECTALL, _("&Select"));
     itemBoxSizer9->Add(itemButtonSelect,  4, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     //itemButtonSelect->SetToolTip(_("Select the currently selected currency as the selected currency for the account"));
 
@@ -152,8 +152,9 @@ void mmMainCurrencyDialog::CreateControls()
     }
 
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
-    wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL, _("&Close"));
+    wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL, _("&Cancel"));
     itemBoxSizer9->Add(itemCancelButton,  0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
+    itemCancelButton->SetFocus();
 
 ////@end MyDialog content construction
 }
