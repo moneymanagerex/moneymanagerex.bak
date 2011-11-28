@@ -28,7 +28,7 @@ const int sourceTextHeight = 200; // Determines height of Source Textbox.
 IMPLEMENT_DYNAMIC_CLASS( mmCustomSQLDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmCustomSQLDialog, wxDialog )
-    EVT_BUTTON(wxID_HELP, mmCustomSQLDialog::OnDialogContextHelp)
+    //EVT_BUTTON(wxID_HELP, mmCustomSQLDialog::OnDialogContextHelp)
     EVT_BUTTON(wxID_OPEN,  mmCustomSQLDialog::OnLoad)
     EVT_BUTTON(wxID_SAVE,  mmCustomSQLDialog::OnSave)
     EVT_BUTTON(DIALOG_CUSTOM_SQL_BTN_QUERY, mmCustomSQLDialog::OnRun)
@@ -357,11 +357,11 @@ void mmCustomSQLDialog::OnTextChangeSubReport(wxCommandEvent& /*event*/)
     }
 }
 
-void mmCustomSQLDialog::OnDialogContextHelp(wxCommandEvent & event)
-{
+//void mmCustomSQLDialog::OnDialogContextHelp(wxCommandEvent & event)
+//{
 //    dlg(this);
 //    dlg.ShowModal();
-}
+//}
 
 //mmCustomSQLDialog::~mmCustomSQLDialog()
 //{
