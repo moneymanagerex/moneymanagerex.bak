@@ -27,8 +27,8 @@
 IMPLEMENT_DYNAMIC_CLASS( mmStockDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmStockDialog, wxDialog )
-    EVT_BUTTON(ID_BUTTON_STOCK_OK, mmStockDialog::OnOk)
-    EVT_BUTTON(ID_BUTTON_STOCK_CANCEL, mmStockDialog::OnCancel)
+    EVT_BUTTON(wxID_OK, mmStockDialog::OnOk)
+    EVT_BUTTON(wxID_CANCEL, mmStockDialog::OnCancel)
     EVT_BUTTON(ID_BUTTON_STOCKS_HELDAT, mmStockDialog::OnAccountButton)
 	EVT_BUTTON(ID_BUTTON_STOCK_WEBPRICE, mmStockDialog::OnStockPriceButton)
 END_EVENT_TABLE()
@@ -235,13 +235,11 @@ void mmStockDialog::CreateControls()
     itemBoxSizer28->Add(itemButton31, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton31->SetToolTip(_("Will display the web page for the specified Stock symbol"));
 
-    wxButton* itemButton29 = new wxButton( itemPanel27, ID_BUTTON_STOCK_OK, _("OK"));
+    wxButton* itemButton29 = new wxButton( itemPanel27, wxID_OK, _("&OK"));
     itemBoxSizer28->Add(itemButton29, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    itemButton29->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
 
-    wxButton* itemButton30 = new wxButton( itemPanel27, ID_BUTTON_STOCK_CANCEL, _("Cancel"));
+    wxButton* itemButton30 = new wxButton( itemPanel27, wxID_CANCEL, _("&Cancel"));
     itemBoxSizer28->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    itemButton30->SetForegroundColour(wxColour(wxT("RED")));
     itemButton30->SetFocus();
 }
 
@@ -273,7 +271,7 @@ void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
 
 void mmStockDialog::OnCancel(wxCommandEvent& /*event*/)
 {
-    Close(TRUE);
+    EndModal(wxID_CANCEL);
 }
 
 void mmStockDialog::OnStockPriceButton(wxCommandEvent& /*event*/)
@@ -327,17 +325,17 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
     }
     
      double numShares = 0;
-	 if (!numSharesStr.ToDouble(&numShares) || (numShares < 0.0))
+	 if (!numSharesStr.ToDouble(&numShares) /*|| (numShares = 0.0)*/)
     {
         mmShowErrorMessage(this, _("Invalid number of shares entered "), _("Error"));
         return;
     }
 
-    if (numShares <= 0)
+    /*if (numShares <= 0)
     {
         mmShowErrorMessageInvalid(this, _("Num Shares"));
         return;
-    }
+    }*/
 
     wxString pPriceStr    = purchasePrice_->GetValue().Trim();
     double pPrice;

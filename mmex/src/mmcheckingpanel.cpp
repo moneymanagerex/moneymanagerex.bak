@@ -790,12 +790,12 @@ void mmCheckingPanel::CreateControls()
 
     //Infobar-mini 
     wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, ID_PANEL_CHECKING_STATIC_MINI, wxT(""), 
-    wxPoint(-1,-1), wxDefaultSize, 0);
+        wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxTOP|wxLEFT, 5);
 
     //Infobar 
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel12, 
-    ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxSize(150, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
+        ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
     itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
     //Show tips when no transaction selected 
     Tips();

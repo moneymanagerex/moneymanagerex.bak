@@ -52,11 +52,11 @@ enum EColumn
 };
 }
 BEGIN_EVENT_TABLE(mmStocksPanel, wxPanel)
-    EVT_BUTTON(ID_BUTTON_NEW_STOCK,         mmStocksPanel::OnNewStocks)
-    EVT_BUTTON(ID_BUTTON_EDIT_STOCK,        mmStocksPanel::OnEditStocks)
-    EVT_BUTTON(ID_BUTTON_DELETE_STOCK,      mmStocksPanel::OnDeleteStocks)
-    EVT_BUTTON(ID_BUTTON_REFRESH_STOCK,     mmStocksPanel::OnRefreshQuotes)
-    EVT_BUTTON(ID_BUTTON_HTTP_SETTINGS,     mmStocksPanel::OnHTTPSettings)
+    EVT_BUTTON(wxID_NEW,         mmStocksPanel::OnNewStocks)
+    EVT_BUTTON(wxID_EDIT,        mmStocksPanel::OnEditStocks)
+    EVT_BUTTON(wxID_DELETE,      mmStocksPanel::OnDeleteStocks)
+    EVT_BUTTON(wxID_REFRESH,     mmStocksPanel::OnRefreshQuotes)
+    EVT_BUTTON(wxID_SETUP,     mmStocksPanel::OnHTTPSettings)
     EVT_TIMER(ID_TIMER_REFRESH_STOCK,       mmStocksPanel::OnRefreshTimer)
     EVT_TIMER(ID_TIMER_SCHEDULE_STOCK,      mmStocksPanel::OnScheduleTimer)
 END_EVENT_TABLE()
@@ -194,7 +194,7 @@ void mmStocksPanel::CreateControls()
 
     wxStaticText* itemStaticText10 = new wxStaticText( headerPanel,
                                      ID_PANEL_CHECKING_STATIC_BALHEADER,
-                                     _("Total:"), wxDefaultPosition, wxSize(800, 20), 0 );
+                                     _("Total:"), wxDefaultPosition, wxDefaultSize, 0 );
 
     m_LED = new awxLed( headerPanel, ID_PANEL_STOCK_UPDATE_LED, wxDefaultPosition, wxDefaultSize, awxLED_GREEN, 1, 5 );
     //m_LED = new awxLed( headerPanel, ID_PANEL_STOCK_UPDATE_LED, wxDefaultPosition, wxDefaultSize, awxLED_GREEN);
@@ -295,41 +295,38 @@ void mmStocksPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_NEW_STOCK, _("&New"));
-    itemButton6->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
+    wxButton* itemButton6 = new wxButton( itemPanel12, wxID_NEW, _("&New"));
     itemButton6->SetToolTip(_("New Stock Investment"));
     itemBoxSizer5->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
-    wxButton* itemButton81 = new wxButton( itemPanel12, ID_BUTTON_EDIT_STOCK, _("&Edit"));
-    itemButton81->SetForegroundColour(wxColour(wxT("ORANGE")));
+    wxButton* itemButton81 = new wxButton( itemPanel12, wxID_EDIT, _("&Edit"));
     itemButton81->SetToolTip(_("Edit Stock Investment"));
     itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 	itemButton81->Enable(false);
 
-    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_DELETE_STOCK, _("&Delete"));
-    itemButton7->SetForegroundColour(wxColour(wxT("RED")));
+    wxButton* itemButton7 = new wxButton( itemPanel12, wxID_DELETE, _("&Delete"));
     itemButton7->SetToolTip(_("Delete Stock Investment"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 	itemButton7->Enable(false);
 	
-    wxButton* itemButton8 = new wxButton( itemPanel12, ID_BUTTON_REFRESH_STOCK, _("&Refresh"),
+    wxButton* itemButton8 = new wxButton( itemPanel12, wxID_REFRESH, _("&Refresh"),
                                           wxDefaultPosition, wxDefaultSize, 0 );
     itemButton8->SetToolTip(_("Refresh Stock Prices from Yahoo"));
     itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
-    wxButton* itemButton9 = new wxButton( itemPanel12, ID_BUTTON_HTTP_SETTINGS, _("&Settings"),
+    wxButton* itemButton9 = new wxButton( itemPanel12, wxID_SETUP, _("&Settings"),
                                           wxDefaultPosition, wxDefaultSize, 0 );
     itemButton9->SetToolTip(_("Change settings for automatic refresh"));
     itemBoxSizer5->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     
     //Infobar-mini 
     wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, ID_PANEL_STOCKS_STATIC_DETAILS_MINI, wxT(""), 
-    wxPoint(-1,-1), wxSize(550, -1), wxNO_BORDER|wxST_NO_AUTORESIZE);
+        wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxALL, 12);
     //Infobar 
     wxStaticText* itemStaticText33 = new wxStaticText( itemPanel12, 
     ID_PANEL_STOCKS_STATIC_DETAILS, _("Using MMEX it is possible to track stocks/mutual funds investments."), 
-    wxPoint(-1,-1), wxSize(350, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
+        wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
     itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxALL, 1);
     
     //updateExtraStocksData(-1);
@@ -1007,8 +1004,8 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
 
 void mmStocksPanel::enableEditDeleteButtons(bool en)
 {
-	wxButton* bE = (wxButton*)FindWindow(ID_BUTTON_EDIT_STOCK);
-	wxButton* bD = (wxButton*)FindWindow(ID_BUTTON_DELETE_STOCK);
+	wxButton* bE = (wxButton*)FindWindow(wxID_EDIT);
+	wxButton* bD = (wxButton*)FindWindow(wxID_DELETE);
 	bE->Enable(en);
 	bD->Enable(en);
 }
