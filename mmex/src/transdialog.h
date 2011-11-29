@@ -74,6 +74,7 @@ public:
     void OnTransTypeChanged(wxCommandEvent& event);
     void OnSpinUp(wxSpinEvent&);
     void OnSpinDown(wxSpinEvent&);
+    void OnDateChanged(wxDateEvent& event);
     void dataToControls();
     void updateControlsForTransType();
     void displayControlsToolTips(int transType, bool enableAdvanced = false);
@@ -81,6 +82,7 @@ public:
     void addPayee(wxString payee, int categID, int subcategID );
     void OnSplitChecked(wxCommandEvent& event);
     void onNoteSelected(wxCommandEvent& event);
+    void changeFocus(wxChildFocusEvent& event);
 
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
@@ -113,6 +115,7 @@ private:
 
     wxDatePickerCtrl* dpc_;
     wxSpinButton *spinCtrl_;
+    wxStaticText* itemStaticTextWeek;
     int categID_;
     int subcategID_;
     int payeeID_;
@@ -137,6 +140,7 @@ private:
     void SetTransferControls(bool transfers = false);
     void SetAdvancedTransferControls(bool advanced = false);
     wxArrayString freqnotes;
+    bool richText;
 
 };
 
