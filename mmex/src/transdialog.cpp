@@ -19,6 +19,7 @@
 
 #include "transdialog.h"
 #include "wx/datectrl.h"
+#include "wx/dateevt.h"
 #include "categdialog.h"
 #include "payeedialog.h"
 #include "util.h"
@@ -31,8 +32,9 @@
 
 // Defines for Transaction: (Status and Type) now located in dbWrapper.h
 
-enum { ID_DIALOG_TRANS_SPINNER };
-enum{ NOTES_MENU_NUMBER = 20 };
+enum { ID_DIALOG_TRANS_SPINNER = wxID_HIGHEST + 1,
+       ID_DIALOG_TRANS_WEEK, 
+       NOTES_MENU_NUMBER = 20 };
          
 IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
 
@@ -43,14 +45,15 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONPAYEE, mmTransDialog::OnPayee)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTO, mmTransDialog::OnTo)
     EVT_CHOICE(ID_DIALOG_TRANS_TYPE, mmTransDialog::OnTransTypeChanged)  
-    EVT_SPIN_UP(ID_DIALOG_TRANS_SPINNER,mmTransDialog::OnSpinUp)
-    EVT_SPIN_DOWN(ID_DIALOG_TRANS_SPINNER,mmTransDialog::OnSpinDown)
     EVT_CHECKBOX(ID_DIALOG_TRANS_ADVANCED_CHECKBOX, mmTransDialog::OnAdvanceChecked) 
     EVT_CHECKBOX(ID_DIALOG_TRANS_SPLITCHECKBOX, mmTransDialog::OnSplitChecked)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTRANSNUM, mmTransDialog::OnAutoTransNum)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTON_FREQENTNOTES, mmTransDialog::OnFrequentUsedNotes)
     EVT_MENU (wxID_ANY, mmTransDialog::onNoteSelected)
     EVT_CHILD_FOCUS(mmTransDialog::changeFocus)
+    EVT_SPIN_UP(ID_DIALOG_TRANS_SPINNER,mmTransDialog::OnSpinUp)
+    EVT_SPIN_DOWN(ID_DIALOG_TRANS_SPINNER,mmTransDialog::OnSpinDown)
+    EVT_DATE_CHANGED(ID_DIALOG_TRANS_BUTTONDATE, mmTransDialog::OnDateChanged)
 END_EVENT_TABLE()
 
 mmTransDialog::mmTransDialog(
@@ -160,6 +163,9 @@ void mmTransDialog::dataToControls()
         wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
         wxString dt = mmGetDateForDisplay(db_.get(), dtdt);
         dpc_->SetValue(dtdt);
+        //process date change event for set weekday name
+        wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), dtdt, wxEVT_DATE_CHANGED);
+        GetEventHandler()->ProcessEvent(dateEvent);
 
         wxString transNumString = q1.GetString(wxT("TRANSACTIONNUMBER"));
         wxString statusString  = q1.GetString(wxT("STATUS"));
@@ -284,6 +290,8 @@ void mmTransDialog::CreateControls()
 
     // Date --------------------------------------------
     wxStaticText* itemStaticText15 = new wxStaticText( itemPanel7, wxID_STATIC, _("Date"));
+    //Text field for day of the week
+    itemStaticTextWeek = new wxStaticText( itemPanel7, ID_DIALOG_TRANS_WEEK, wxT(""));
     dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime,
                                  wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
@@ -306,6 +314,7 @@ void mmTransDialog::CreateControls()
     itemFlexGridSizer8->Add(itemBoxSizer118, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     itemBoxSizer118->Add(dpc_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     itemBoxSizer118->Add(spinCtrl_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, interval);   
+    itemBoxSizer118->Add(itemStaticTextWeek, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxTOP|wxLEFT, 5);   
 
     // Status --------------------------------------------
     wxStaticText* itemStaticText51 = new wxStaticText( itemPanel7, wxID_STATIC, _("Status"));
@@ -599,9 +608,12 @@ void mmTransDialog::OnSpinUp(wxSpinEvent& event)
     wxString dateStr = dpc_->GetValue().FormatISODate();
     wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
     date = date.Add(wxDateSpan::Days(1));
-    //dateStr = mmGetDateForDisplay(db_.get(), date);
     dpc_->SetValue (date);
     
+    //process date change event for set weekday name
+    wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), date, wxEVT_DATE_CHANGED);
+    GetEventHandler()->ProcessEvent(dateEvent);
+
     event.Skip();
 }
 
@@ -610,10 +622,21 @@ void mmTransDialog::OnSpinDown(wxSpinEvent& event)
     wxString dateStr = dpc_->GetValue().FormatISODate();
     wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
     date = date.Add(wxDateSpan::Days(-1));
-    //dateStr = mmGetDateForDisplay(db_.get(), date);
     dpc_->SetValue (date);
 
+    wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), date, wxEVT_DATE_CHANGED);
+    GetEventHandler()->ProcessEvent(dateEvent);
+
     event.Skip();
+}
+
+void mmTransDialog::OnDateChanged(wxDateEvent& event)
+{
+	//get weekday name 
+	wxString dateStr = mmGetNiceDateString(event.GetDate());
+	dateStr = dateStr.substr(0,dateStr.Find(wxT(",")));
+	itemStaticTextWeek->SetLabel(dateStr);
+	event.Skip();
 }
 
 void mmTransDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
