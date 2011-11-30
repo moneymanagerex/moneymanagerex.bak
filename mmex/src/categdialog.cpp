@@ -322,7 +322,7 @@ void mmCategDialog::OnBSelect(wxCommandEvent& /*event*/)
 
 void mmCategDialog::OnDoubleClicked(wxTreeEvent& /*event*/)
 {
-    if (selectedItemId_ == root_ || selectedItemId_ == -1)
+    if (selectedItemId_ == root_)
     {
         return;
     }
