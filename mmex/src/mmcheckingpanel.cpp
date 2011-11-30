@@ -493,13 +493,14 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
     EVT_MENU(MENU_ON_PASTE_TRANSACTION, MyListCtrl::OnPaste) 
     EVT_MENU(MENU_ON_NEW_TRANSACTION, MyListCtrl::OnNewTransaction) 
 
-   //EVT_KEY_UP(MyListCtrl::OnChar)
+    //EVT_KEY_UP(MyListCtrl::OnChar)
     // If we use EVT_KEY_DOWN instead of EVT_CHAR, capital versions
     // of all characters are always returned.  EVT_CHAR also performs
     // other necessary keyboard-dependent translations.
     EVT_CHAR(MyListCtrl::OnChar)
 
-END_EVENT_TABLE()
+END_EVENT_TABLE();
+
 //----------------------------------------------------------------------------
 
 mmCheckingPanel::mmCheckingPanel
@@ -784,8 +785,8 @@ void mmCheckingPanel::CreateControls()
     itemButton9->Enable(false);
     
     wxSearchCtrl* searchCtrl = new wxSearchCtrl(itemPanel12, 
-        wxID_FIND, wxEmptyString, wxDefaultPosition, wxSize(100,-1), wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB);
-    itemBoxSizer5->Add(searchCtrl);
+        wxID_FIND, wxEmptyString, wxDefaultPosition, wxSize(100,-1), wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB, wxDefaultValidator, _("Search"));
+    itemBoxSizer5->Add(searchCtrl, 0, wxTOP, 1);
     searchCtrl->SetToolTip(_("Enter any string to find it in the nearest transaction notes"));
 
     //Infobar-mini 
@@ -1779,7 +1780,8 @@ wxListItemAttr* MyListCtrl::OnGetItemAttr(long item) const
 //----------------------------------------------------------------------------
 
 void MyListCtrl::OnChar(wxKeyEvent& event)
-{   if (wxGetKeyState(WXK_ALT) || 
+{   
+	if (wxGetKeyState(WXK_ALT) || 
         wxGetKeyState(WXK_COMMAND) ||
         wxGetKeyState(WXK_UP) || 
         wxGetKeyState(WXK_DOWN) || 
@@ -1798,10 +1800,17 @@ void MyListCtrl::OnChar(wxKeyEvent& event)
         wxGetKeyState(WXK_NUMPAD_HOME) ||
         wxGetKeyState(WXK_NUMPAD_END) ||
         wxGetKeyState(WXK_DELETE) ||
-        wxGetKeyState(WXK_NUMPAD_DELETE)
+        wxGetKeyState(WXK_NUMPAD_DELETE) ||
+        wxGetKeyState(WXK_TAB)||
+        wxGetKeyState(WXK_RETURN)||
+        wxGetKeyState(WXK_NUMPAD_ENTER)||
+        wxGetKeyState(WXK_SPACE)||
+        wxGetKeyState(WXK_NUMPAD_SPACE)
         )
-    {event.Skip();}
-  }
+    {
+		event.Skip();
+    }
+}
 //----------------------------------------------------------------------------
 
 void MyListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
