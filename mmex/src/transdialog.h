@@ -83,6 +83,7 @@ public:
     void OnSplitChecked(wxCommandEvent& event);
     void onNoteSelected(wxCommandEvent& event);
     void changeFocus(wxChildFocusEvent& event);
+    void onTextEntered(wxCommandEvent& event);
 
 private:
     boost::shared_ptr<wxSQLite3Database> db_;

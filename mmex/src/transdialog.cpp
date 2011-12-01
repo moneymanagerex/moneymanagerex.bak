@@ -54,6 +54,7 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_SPIN_UP(ID_DIALOG_TRANS_SPINNER,mmTransDialog::OnSpinUp)
     EVT_SPIN_DOWN(ID_DIALOG_TRANS_SPINNER,mmTransDialog::OnSpinDown)
     EVT_DATE_CHANGED(ID_DIALOG_TRANS_BUTTONDATE, mmTransDialog::OnDateChanged)
+    EVT_TEXT_ENTER(ID_DIALOG_TRANS_TEXTAMOUNT, mmTransDialog::onTextEntered)
 END_EVENT_TABLE()
 
 mmTransDialog::mmTransDialog(
@@ -370,7 +371,9 @@ void mmTransDialog::CreateControls()
 
     wxStaticText* amountStaticText = new wxStaticText( itemPanel7, wxID_STATIC, _("Amount"));
 
-    textAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT, doubleValidator );
+    textAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), 
+        //use wxTE_PROCESS_ENTER flag when creating the control to generate EVT_TEXT_ENTER events
+        wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator );
     textAmount_->SetToolTip(amountNormalTip_);
 
     toTextAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT, doubleValidator );
@@ -1253,4 +1256,14 @@ void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
 	} else {
 		EndModal(wxID_CANCEL);
     }
+}
+
+void mmTransDialog::onTextEntered(wxCommandEvent& event)
+{
+    //In case if ENTER pressed when amount entered set focus to OK button
+    wxButton* btnOk = static_cast<wxButton*>(FindWindow(wxID_OK));
+    wxASSERT(btnOk);
+	btnOk->SetFocus();
+
+    event.Skip();
 }
