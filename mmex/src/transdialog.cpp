@@ -293,9 +293,12 @@ void mmTransDialog::CreateControls()
     wxStaticText* itemStaticText15 = new wxStaticText( itemPanel7, wxID_STATIC, _("Date"));
     //Text field for day of the week
     itemStaticTextWeek = new wxStaticText( itemPanel7, ID_DIALOG_TRANS_WEEK, wxT(""));
+    
     dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime,
                                  wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
+        wxDateEvent dateEvent(dpc_, wxDefaultDateTime, wxEVT_DATE_CHANGED);
+    GetEventHandler()->ProcessEvent(dateEvent);
 
 // change properties depending on system parameters
     wxSize spinCtrlSize = wxSize(16,-1);
