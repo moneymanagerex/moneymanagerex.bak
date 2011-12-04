@@ -1423,7 +1423,7 @@ void mmBDDialog::OnsetNextRepeatDate(wxCommandEvent& /*event*/)
         long value;
         valueStr.ToLong(&value);
 
-        wxString dateStr = dpc_->GetValue().FormatISODate();
+        wxString dateStr = dpcbd_->GetValue().FormatISODate();
 	    wxDateTime  date = mmGetStorageStringAsDate(dateStr);
 
         int repeats = itemRepeats_->GetSelection();

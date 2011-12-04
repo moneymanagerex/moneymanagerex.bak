@@ -401,20 +401,24 @@ void mmBillsDepositsPanel::initVirtualListControl()
         wxDateTime today = wxDateTime::Now();
         wxTimeSpan ts = th.nextOccurDate_.Subtract(today);
         th.daysRemaining_ = ts.GetDays();
-        int hoursRemaining_ = ts.GetHours();
+        int minutesRemaining = ts.GetMinutes();
 
-       if (hoursRemaining_ > 0)
+        if (minutesRemaining > 0)
             th.daysRemaining_ += 1;
 
-        if (th.daysRemaining_ >= 0)
+        th.daysRemainingStr_ = wxString::Format(wxT("%d"), th.daysRemaining_) + _(" days remaining");
+        
+        if (th.daysRemaining_ == 0)
         {
-            th.daysRemainingStr_ = wxString::Format(wxT("%d"), th.daysRemaining_) + 
-            _(" days remaining");
+            if ((repeats > 10) && (numRepeats < 0) )
+                th.daysRemainingStr_ = _("Inactive");
         }
-        else
+        
+        if (th.daysRemaining_ < 0)
         {
-            th.daysRemainingStr_ = wxString::Format(wxT("%d"), abs(th.daysRemaining_)) + 
-            _(" days overdue!");
+            th.daysRemainingStr_ = wxString::Format(wxT("%d"), abs(th.daysRemaining_)) + _(" days overdue!");
+            if ((repeats > 10) && (numRepeats < 0) )
+                th.daysRemainingStr_ = _("Inactive");
         }
 
         mmex::formatDoubleToCurrencyEdit(th.amt_, th.transAmtString_);
@@ -540,6 +544,8 @@ void billsDepositsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 int billsDepositsListCtrl::OnGetItemImage(long item) const
 {
     /* Returns the icon to be shown for each entry */
+    if (cp_->trans_[item].daysRemainingStr_ == _("Inactive"))
+        return -1;
     if (cp_->trans_[item].daysRemaining_ < 0)
         return 0;
     if (cp_->trans_[item].bd_repeat_auto_)
@@ -672,22 +678,22 @@ void billsDepositsListCtrl::OnListItemActivated(wxListEvent& event)
 
 void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
 {
-        enableEditDeleteButtons(selIndex >= 0);
-        wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_BD_STATIC_DETAILS);
-        wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_BD_STATIC_MINI);
+    enableEditDeleteButtons(selIndex >= 0);
+    wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_BD_STATIC_DETAILS);
+    wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_BD_STATIC_MINI);
         
-        if (selIndex !=-1) 
-        {
+    if (selIndex !=-1) 
+    {
         wxString addInfo;
         addInfo << trans_[selIndex].categoryStr_ << (trans_[selIndex].subcategoryStr_ == wxT ("") ? wxT ("") : wxT (":") + trans_[selIndex].subcategoryStr_);
         stm->SetLabel(addInfo);
         st ->SetLabel (trans_[selIndex].notesStr_ ); 
-        }
-        else 
-        {
+    }
+    else 
+    {
         st-> SetLabel(wxT(""));
         stm-> SetLabel(wxT(""));
-        }
+    }
 }
 
 void mmBillsDepositsPanel::enableEditDeleteButtons(bool en)
