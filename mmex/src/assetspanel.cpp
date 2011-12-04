@@ -135,19 +135,20 @@ void mmAssetsPanel::CreateControls()
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
 
-    wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, wxID_ANY, _("Assets"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, 
-        wxGetEmptyString()));
+    wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, wxID_ANY, _("Assets"),
+        wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxGetEmptyString()));
 
-	wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, IDC_PANEL_CHECKING_STATIC_BALHEADER, _("Total:"), wxDefaultPosition, wxDefaultSize, 0 );
+	wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, IDC_PANEL_CHECKING_STATIC_BALHEADER, _("Total:"),
+        wxDefaultPosition, wxDefaultSize, 0 );
 
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
 	itemBoxSizerVHeader->Add(itemStaticText10, 0, wxALL, 1);
 
     /* ---------------------- */
 
-    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( itemPanelAssets, IDC_PANEL_CHECKING_STATIC_BAL, wxDefaultPosition, wxSize(100, 100), 
-        wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
+    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( itemPanelAssets, IDC_PANEL_CHECKING_STATIC_BAL,
+        wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
     wxSize imageSize(16, 16);
     m_imageList.reset(new wxImageList(imageSize.GetWidth(), imageSize.GetHeight()));
@@ -196,7 +197,8 @@ void mmAssetsPanel::CreateControls()
     m_listCtrlAssets->SetColumnWidth(COL_DATE, col3);
     m_listCtrlAssets->SetColumnWidth(COL_NOTES, col4);
     
-    wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
+    wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, wxID_ANY,
+        wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
 
     itemSplitterWindow10->SplitHorizontally(m_listCtrlAssets, itemPanel12);
     itemSplitterWindow10->SetMinimumPaneSize(100);
@@ -281,11 +283,11 @@ void mmAssetsPanel::initVirtualListControl()
         th.assetDate_ = q1.GetString(wxT("FORMATEDDATE"));
         //sqlite does not support %y date mask therefore null value should be replaces
         if (th.assetDate_ == wxT(""))
-            {
+        {
             wxString dateString = q1.GetString(wxT("STARTDATE"));
             wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
             th.assetDate_ = mmGetDateForDisplay(m_db, dtdt);
-            }
+        }
      
         wxString assetStr = q1.GetString(wxT("ASSETTYPE"));
         th.assetType_ =  wxGetTranslation(assetStr); // string should be marked for translation
@@ -313,7 +315,7 @@ void mmAssetsPanel::OnDeleteAsset(wxCommandEvent& event)
 
 void mmAssetsPanel::OnNewAsset(wxCommandEvent& event)
 {
-  m_listCtrlAssets->OnNewAsset(event);
+    m_listCtrlAssets->OnNewAsset(event);
 }
 
 void mmAssetsPanel::OnEditAsset(wxCommandEvent& event)
@@ -362,40 +364,39 @@ wxString assetsListCtrl::OnGetItemText(long item, long column) const
 
 void assetsListCtrl::OnListItemSelected(wxListEvent& event)
 {
-	m_selectedIndex = event.GetIndex();
-        m_cp->updateExtraAssetData(m_selectedIndex);
-
+    m_selectedIndex = event.GetIndex();
+    m_cp->updateExtraAssetData(m_selectedIndex);
 }
 
 void assetsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 {
-	m_selectedIndex = -1;
-        m_cp->updateExtraAssetData(m_selectedIndex);
+    m_selectedIndex = -1;
+    m_cp->updateExtraAssetData(m_selectedIndex);
 }
 //----------------------------------------------------------------------------
 
 void mmAssetsPanel::updateExtraAssetData(int selIndex)
 {
-	wxStaticText* st = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS);	
-        wxStaticText* stm = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS_MINI);
-	if (selIndex!=-1) { 
+    wxStaticText* st = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS);
+    wxStaticText* stm = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS_MINI);
+	if (selIndex!=-1)
+    {
         enableEditDeleteButtons(true);
         wxString miniInfo;
         wxString infoStr;
         infoStr = getItem(selIndex, COL_NOTES);
-        double valueChange = m_trans[selIndex].valueChange_;
         miniInfo << wxT("\t") << _("Change in Value") << wxT(": ") << m_trans[selIndex].assetValueChange_ ;
         if (m_trans[selIndex].assetValueChange_ != _("None"))
-        miniInfo<< wxT(" = ") << m_trans[selIndex].valueChange_ << wxT("%");
+            miniInfo<< wxT(" = ") << m_trans[selIndex].valueChange_ << wxT("%");
         st->SetLabel(infoStr);
         stm->SetLabel(miniInfo);
-        }
-        else
-        {
+    }
+    else
+    {
         stm -> SetLabel(wxT(""));
         st->SetLabel(_("MMEX allows you to track fixed assets like cars, houses, land and others. Each asset can have its value appreciate by a certain rate per year, depreciate by a certain rate per year, or not change in value. The total assets are added to your total financial worth."));
         enableEditDeleteButtons(false);
-        }
+    }
 }
 
 void mmAssetsPanel::enableEditDeleteButtons(bool enable)
@@ -411,7 +412,7 @@ void mmAssetsPanel::enableEditDeleteButtons(bool enable)
 
 int assetsListCtrl::OnGetItemImage(long /*item*/) const
 {
-   return 0; // Returns the icon to be shown for each entry
+    return 0; // Returns the icon to be shown for each entry
 }
 
 wxListItemAttr* assetsListCtrl::OnGetItemAttr(long item) const
@@ -423,10 +424,10 @@ wxListItemAttr* assetsListCtrl::OnGetItemAttr(long item) const
 void assetsListCtrl::OnListKeyDown(wxListEvent& event)
 {
 	if (event.GetKeyCode() == WXK_DELETE) {
-		wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
-                OnDeleteAsset(evt);
-	} else {
-        	event.Skip();
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
+        OnDeleteAsset(evt);
+    } else {
+       	event.Skip();
 	}
 }
 
