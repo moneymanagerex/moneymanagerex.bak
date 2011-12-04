@@ -35,8 +35,9 @@ END_EVENT_TABLE()
 
 mmCategDialog::mmCategDialog( )
 {
-    //categID_ = 1;
-    //subcategID_ = 1;
+    // Initialize fields in constructor
+    categID_ = -1;
+    subcategID_ = -1;
     selectedItemId_ = 0;
 }
 
@@ -45,9 +46,10 @@ mmCategDialog::mmCategDialog(mmCoreDB* core,
                              wxWindowID id, const wxString& caption, 
                              const wxPoint& pos, const wxSize& size, long style )
 {
+    // Initialize fields in constructor
     core_ = core;
-    categID_ ;
-    subcategID_ ;
+    categID_ = -1;         
+    subcategID_ = -1;
     selectedItemId_ = 0;
     bEnableSelect_ = bEnableSelect;
     Create(parent, id, caption, pos, size, style);
@@ -72,12 +74,6 @@ bool mmCategDialog::Create( wxWindow* parent, wxWindowID id,
     return TRUE;
 }
 
-//void mmCategDialog::setFields(int categID, int subcategID) 
-//{
-//    categID_      = categID;
-//    subcategID_   =  subcategID;
-//}
-
 void mmCategDialog::fillControls()
 {
     root_ = treeCtrl_->AddRoot(_("Categories"));
@@ -90,10 +86,10 @@ void mmCategDialog::fillControls()
     int numCategs = (int)core_->categoryList_.categories_.size();
     for (int idx = 0; idx < numCategs; idx++)
     {
-       wxTreeItemId maincat = treeCtrl_->AppendItem(root_, core_->categoryList_.categories_[idx]->categName_);
-       treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(core_->categoryList_.categories_[idx]->categID_, -1));  
+        wxTreeItemId maincat = treeCtrl_->AppendItem(root_, core_->categoryList_.categories_[idx]->categName_);
+        treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(core_->categoryList_.categories_[idx]->categID_, -1));  
 
-       int numSubCategs = (int)core_->categoryList_.categories_[idx]->children_.size();
+        int numSubCategs = (int)core_->categoryList_.categories_[idx]->children_.size();
         for (int cidx = 0; cidx < numSubCategs; cidx++)
         {
             wxTreeItemId subcat = treeCtrl_->AppendItem(maincat, 
@@ -101,7 +97,7 @@ void mmCategDialog::fillControls()
             treeCtrl_->SetItemData(subcat, new mmTreeItemCateg(core_->categoryList_.categories_[idx]->categID_, 
                 core_->categoryList_.categories_[idx]->children_[cidx]->categID_)); 
 
-                if (categID_ == core_->categoryList_.categories_[idx]->categID_ && subcategID_ == core_->categoryList_.categories_[idx]->children_[cidx]->categID_)
+            if (categID_ == core_->categoryList_.categories_[idx]->categID_ && subcategID_ == core_->categoryList_.categories_[idx]->children_[cidx]->categID_)
                 selectedItemId_ = subcat;
         }
 
@@ -273,10 +269,10 @@ void mmCategDialog::showCategDialogDeleteError(wxString deleteCategoryErrMsg, bo
  
 void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
 {
-   if (mmIniOptions::disableCategoryModify_)
+    if (mmIniOptions::disableCategoryModify_)
         return;
 
-    if (selectedItemId_ == root_ || selectedItemId_ == wxNOT_FOUND)
+    if (selectedItemId_ == root_ || !selectedItemId_ )
     {
         return;
     }
@@ -308,7 +304,7 @@ void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
 
 void mmCategDialog::OnBSelect(wxCommandEvent& /*event*/)
 {
-    if (selectedItemId_ == root_ || selectedItemId_ == wxNOT_FOUND)
+    if (selectedItemId_ == root_ || !selectedItemId_ )
     {
         return;
     }
@@ -322,7 +318,7 @@ void mmCategDialog::OnBSelect(wxCommandEvent& /*event*/)
 
 void mmCategDialog::OnDoubleClicked(wxTreeEvent& /*event*/)
 {
-    if (selectedItemId_ != root_ && selectedItemId_ != wxNOT_FOUND && bEnableSelect_)
+    if (selectedItemId_ != root_ && selectedItemId_ && bEnableSelect_)
     {
         mmTreeItemCateg* iData = dynamic_cast<mmTreeItemCateg*>
             (treeCtrl_->GetItemData(selectedItemId_));
@@ -362,7 +358,7 @@ void mmCategDialog::OnSelChanged(wxTreeEvent& event)
     wxButton* editButton = (wxButton*)FindWindow(wxID_EDIT);
     wxButton* selectButton = (wxButton*)FindWindow(wxID_OK);
     wxButton* deleteButton = (wxButton*)FindWindow(wxID_DELETE);
-    if (selectedItemId_ == root_ || selectedItemId_ == wxNOT_FOUND)
+    if (selectedItemId_ == root_ || !selectedItemId_)
     {
         textCtrl->SetValue(wxT(""));
         selectButton->Disable();
@@ -395,7 +391,7 @@ void mmCategDialog::OnEdit(wxCommandEvent& /*event*/)
     wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_CATEG_TEXTCTRL_CATNAME);
     wxString text = textCtrl->GetValue();
 
-    if (selectedItemId_ == root_ || selectedItemId_ == wxNOT_FOUND )
+    if (selectedItemId_ == root_ || !selectedItemId_ )
     {
         return;
     }
