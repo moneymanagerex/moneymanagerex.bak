@@ -491,7 +491,7 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
 void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
 {
     std::vector<mmBDTransactionHolder> trans_;
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select BDID, NEXTOCCURRENCEDATE, PAYEEID, TRANSCODE, ACCOUNTID, TOACCOUNTID, TRANSAMOUNT, TOTRANSAMOUNT from BILLSDEPOSITS_V1");
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select BDID, NEXTOCCURRENCEDATE, NUMOCCURRENCES, REPEATS, PAYEEID, TRANSCODE, ACCOUNTID, TOACCOUNTID, TRANSAMOUNT, TOTRANSAMOUNT from BILLSDEPOSITS_V1");
 
     bool visibleEntries = false;
     while (q1.NextRow())
@@ -501,24 +501,37 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
         th.bdID_           = q1.GetInt(wxT("BDID"));
         th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
         th.nextOccurStr_   = mmGetDateForDisplay(db_, th.nextOccurDate_);
+        int numRepeats     = q1.GetInt(wxT("NUMOCCURRENCES"));
+
+        int repeats        = q1.GetInt(wxT("REPEATS"));
+        // DeMultiplex the Auto Executable fields.
+        if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
+            repeats -= BD_REPEATS_MULTIPLEX_BASE;
+
+        if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute Silent mode
+            repeats -= BD_REPEATS_MULTIPLEX_BASE;
 
         wxDateTime today = wxDateTime::Now();
         wxTimeSpan ts = th.nextOccurDate_.Subtract(today);
         th.daysRemaining_ = ts.GetDays();
-        int hoursRemaining_ = ts.GetHours();
+        int minutesRemaining_ = ts.GetHours();
 
-        if (hoursRemaining_ > 0)
+        if (minutesRemaining_ > 0)
             th.daysRemaining_ += 1;
 
-        if (th.daysRemaining_ >= 0)
+        th.daysRemainingStr_ = wxString::Format(wxT("%d"), th.daysRemaining_) + _(" days remaining");
+
+        if (th.daysRemaining_ == 0)
         {
-            th.daysRemainingStr_ = wxString::Format(wxT("%d"), th.daysRemaining_) + 
-            _(" days remaining");
+            if ((repeats > 10) && (numRepeats < 0) )
+                th.daysRemainingStr_ = _("Inactive");
         }
-        else
+
+        if (th.daysRemaining_ < 0)
         {
-            th.daysRemainingStr_ = wxString::Format(wxT("%d"), abs(th.daysRemaining_)) + 
-            _(" days overdue!");
+            th.daysRemainingStr_ = wxString::Format(wxT("%d"), abs(th.daysRemaining_)) + _(" days overdue!");
+            if ((repeats > 10) && (numRepeats < 0) )
+                th.daysRemainingStr_ = _("Inactive");
         }
 
         th.payeeID_        = q1.GetInt(wxT("PAYEEID"));
@@ -576,12 +589,12 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
 
             if (trans_[bdidx].daysRemaining_ <= 14)
             {
-                wxString daysRemainingStr_;
+                wxString daysRemainingStr;
                 colorStr = wxT("#9999FF");
 
-                daysRemainingStr_ = trans_[bdidx].daysRemainingStr_;
+                daysRemainingStr = trans_[bdidx].daysRemainingStr_;
                 if (trans_[bdidx].daysRemaining_ < 0)
-                colorStr = wxT("#FF6600");
+                    colorStr = wxT("#FF6600");
 
                 // Load the currency for this BD
                 boost::weak_ptr<mmCurrency> wpCurrency = core_->accountList_.getCurrencyWeakPtr(trans_[bdidx].accountID_);
@@ -597,7 +610,7 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
 			    hb.addTableCell(trans_[bdidx].payeeStr_, false, true);
 			    hb.addTableCell(displayBDAmtString, true);
 			    //Draw it as numeric that mean align right
-			    hb.addTableCell(daysRemainingStr_, true, false, false, colorStr);
+			    hb.addTableCell(daysRemainingStr, true, false, false, colorStr);
 			    hb.endTableRow();
             }
         }

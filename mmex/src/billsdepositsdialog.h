@@ -104,8 +104,8 @@ private:
     bool edit_;
     bool enterOccur_;
 
-    wxDatePickerCtrl* dpc_;
-    wxDatePickerCtrl* dpcbd_;
+    wxDatePickerCtrl* dpc_;         // dpcTransDate_
+    wxDatePickerCtrl* dpcbd_;       // dpcNextOccDate_
     wxCalendarCtrl* calendarCtrl_;
     wxChoice* itemRepeats_;
     wxCheckBox* itemCheckBoxAutoExeUserAck_;

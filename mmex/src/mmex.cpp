@@ -888,13 +888,16 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 
         if (autoExecuteManual && requireExecution )
         {
-            mmBDDialog repeatTransactionsDlg(m_db.get(), m_core.get(), th.bdID_ ,false ,true , this, SYMBOL_BDDIALOG_IDNAME , _(" Auto Repeat Transactions"));
-            if ( repeatTransactionsDlg.ShowModal() == wxID_OK )
+            if ( (repeats < 11) || (numRepeats > 0) )
             {
-                if (activeHomePage_)
+                mmBDDialog repeatTransactionsDlg(m_db.get(), m_core.get(), th.bdID_ ,false ,true , this, SYMBOL_BDDIALOG_IDNAME , _(" Auto Repeat Transactions"));
+                if ( repeatTransactionsDlg.ShowModal() == wxID_OK )
                 {
-                    refreshRequested_ = true;
-                    createHomePage(); // Update home page details only if it is being displayed
+                    if (activeHomePage_)
+                    {
+                        refreshRequested_ = true;
+                        createHomePage(); // Update home page details only if it is being displayed
+                    }
                 }
             }
         }
