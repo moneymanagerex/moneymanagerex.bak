@@ -297,8 +297,11 @@ void mmTransDialog::CreateControls()
     dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime,
                                  wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
-        wxDateEvent dateEvent(dpc_, wxDefaultDateTime, wxEVT_DATE_CHANGED);
-    GetEventHandler()->ProcessEvent(dateEvent);
+
+    // Display the day of the week
+    wxString dateStr = mmGetNiceDateString(dpc_->GetValue());
+    dateStr = dateStr.substr(0,dateStr.Find(wxT(",")));
+  	itemStaticTextWeek->SetLabel(dateStr);
 
 // change properties depending on system parameters
     wxSize spinCtrlSize = wxSize(16,-1);
@@ -1239,7 +1242,7 @@ void mmTransDialog::onNoteSelected(wxCommandEvent& event)
 {
     int i =  event.GetId();
     if (i>0)
-    textNotes_->SetValue (freqnotes.Item (i-1)) ;
+        textNotes_->SetValue (freqnotes.Item (i-1)) ;
 }
 
 void mmTransDialog::changeFocus(wxChildFocusEvent& event)
