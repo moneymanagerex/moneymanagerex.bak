@@ -1414,10 +1414,12 @@ void mmCheckingPanel::DeleteViewedTransactions()
                                 _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES)
     {
+        m_core->db_.get()->Begin();
         for (size_t i = 0; i < m_trans.size(); ++i)
         {
             m_core->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
         }
+        m_core->db_.get()->Commit();
     }
 }
 
@@ -1427,6 +1429,7 @@ void mmCheckingPanel::DeleteFlaggedTransactions()
                                 _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES)
     {
+        m_core->db_.get()->Begin();
         for (size_t i = 0; i < m_trans.size(); ++i)
         {
             if (m_trans[i]->status_ == wxT("F"))
@@ -1434,6 +1437,7 @@ void mmCheckingPanel::DeleteFlaggedTransactions()
                 m_core->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
             }
         }
+        m_core->db_.get()->Commit();
     }
 }
 

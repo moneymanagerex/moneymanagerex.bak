@@ -33,7 +33,7 @@
 IMPLEMENT_DYNAMIC_CLASS( mmBDDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmBDDialog, wxDialog )
-    EVT_BUTTON(ID_DIALOG_TRANS_BUTTON_OK, mmBDDialog::OnOk)
+    EVT_BUTTON(wxID_OK, mmBDDialog::OnOk)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONCATEGS, mmBDDialog::OnCategs)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONPAYEE, mmBDDialog::OnPayee)
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTO, mmBDDialog::OnTo)
@@ -396,7 +396,7 @@ void mmBDDialog::CreateControls()
 
     wxBoxSizer* repeatBoxSizer = new wxBoxSizer(wxHORIZONTAL);
     bSetNextOccurDate_ = new wxButton( itemDialog1, ID_DIALOG_TRANS_BUTTONTRANSNUM, _("Next"),
-                                       wxDefaultPosition, wxSize(40, -1));
+                                       wxDefaultPosition, wxSize(60, -1));
     bSetNextOccurDate_->SetToolTip(_("Advance the Next Occurance Date with the specified values"));
     repeatBoxSizer->Add(itemRepeats_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     repeatBoxSizer->Add(bSetNextOccurDate_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, 4);
@@ -578,13 +578,12 @@ void mmBDDialog::CreateControls()
     wxBoxSizer* buttonsPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonsPanel->SetSizer(buttonsPanelSizer);
 
-    wxButton* okButton = new wxButton( buttonsPanel, ID_DIALOG_TRANS_BUTTON_OK, _("OK"));
-    okButton->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
+    wxButton* okButton = new wxButton( buttonsPanel, wxID_OK, _("OK"));
     buttonsPanelSizer->Add(okButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxButton* cancelButton = new wxButton( buttonsPanel, wxID_CANCEL, _("Cancel"));
-    cancelButton->SetForegroundColour(wxColour(wxT("RED")));
     buttonsPanelSizer->Add(cancelButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    cancelButton->SetFocus();
 
     /**********************************************************************************************
      Determining where the controls go
@@ -610,7 +609,7 @@ void mmBDDialog::CreateControls()
 
 void mmBDDialog::OnCancel(wxCommandEvent& /*event*/)
 {
-    Close(TRUE);
+    EndModal(wxID_CANCEL);
 }
 
 void mmBDDialog::OnAccountName(wxCommandEvent& /*event*/)
