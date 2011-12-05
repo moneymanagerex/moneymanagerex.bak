@@ -958,7 +958,7 @@ int mmImportCSV( mmCoreDB* core )
             bool canceledbyuser = false;
             std::vector<int> CSV_transID;
 
-    		wxProgressDialog progressDlg(_("Import from CSV"), _("Transactions imported from CSV: "), 101,
+    		wxProgressDialog progressDlg(_("Import from CSV"), _("Transactions imported from CSV: "), 100,
                 NULL, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
     		mmDBWrapper::begin(db_);
 
@@ -966,7 +966,7 @@ int mmImportCSV( mmCoreDB* core )
 
                 wxString progressMsg;
                 progressMsg << _("Transactions imported from CSV") << wxT("\n") << _("to account ") << acctName << wxT(": ") << countImported;
-                progressDlg.Update(static_cast<int>((static_cast<double>(countImported)/100.0 - countNumTotal/100) *100), progressMsg);
+                progressDlg.Update(static_cast<int>((static_cast<double>(countImported)/100.0 - countNumTotal/100) *99), progressMsg);
 
                 if (!progressDlg.Update(-1)) // if cancel clicked
                 {
@@ -1151,7 +1151,7 @@ int mmImportCSV( mmCoreDB* core )
                 log << _( "Line : " ) << countNumTotal << _( " imported OK." ) << endl;
             } // while EOF
 
-            progressDlg.Update(101);       
+            progressDlg.Update(100);       
 
             //wxString msg = wxString::Format( _( "Total Lines : %d.\nTotal Imported : %d\nLog file written to : %s.\n\nImported transactions have been flagged so you can review them." ),countNumTotal, countImported, logFile.GetFullPath().c_str() );
 			wxString msg = wxString::Format(_("Total Lines : %d"),countNumTotal); 
@@ -1265,7 +1265,7 @@ int mmImportCSVMMNET( mmCoreDB* core )
             bool canceledbyuser = false;
             std::vector<int> CSV_transID;
 
-    		wxProgressDialog progressDlg(_("Importing CSV MM.NET"), _("Transactions imported from CSV: "), 101,
+    		wxProgressDialog progressDlg(_("Importing CSV MM.NET"), _("Transactions imported from CSV: "), 100,
                 NULL, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
     		mmDBWrapper::begin(db_);
 
@@ -1273,7 +1273,7 @@ int mmImportCSVMMNET( mmCoreDB* core )
 
                 wxString progressMsg;
                 progressMsg << _("Transactions imported from CSV\nto account ") << acctName << wxT(": ") << countImported;
-                progressDlg.Update(static_cast<int>((static_cast<double>(countImported)/100.0 - countNumTotal/100) *100), progressMsg);
+                progressDlg.Update(static_cast<int>((static_cast<double>(countImported)/100.0 - countNumTotal/100) *99), progressMsg);
 
                 if (!progressDlg.Update(-1)) // if cancel clicked
                 {
@@ -1429,7 +1429,7 @@ int mmImportCSVMMNET( mmCoreDB* core )
                 log << _( "Line : " ) << countNumTotal << _( " imported OK." ) << endl;
             } // while EOF
 
-            progressDlg.Update(101);       
+            progressDlg.Update(100);       
             //wxString msg = wxString::Format( _( "Total Lines : %d \nTotal Imported : %d\n\nLog file written to : %s.\n\nImported transactions have been flagged so you can review them. " ), countNumTotal, countImported, logFile.GetFullPath().c_str() );
 			wxString msg = wxString::Format(_("Total Lines : %d"),countNumTotal); 
 			msg << wxT("\n");

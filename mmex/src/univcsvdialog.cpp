@@ -456,15 +456,15 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
             bool canceledbyuser = false;
             std::vector<int> CSV_transID;
 
-    		wxProgressDialog progressDlg(_("Universal CSV Import"), _("Transactions imported from CSV: "), 101,
-                false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
+    		wxProgressDialog progressDlg(_("Universal CSV Import"), _("Transactions imported from CSV: "), 100,
+                NULL, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
     		mmDBWrapper::begin(db_);
 
             while ( !input.Eof() )
             {
                 wxString progressMsg;
                 progressMsg << _("Transactions imported from CSV\nto account ") << acctName << wxT(": ") << countImported;
-                progressDlg.Update(static_cast<int>((static_cast<double>(countImported)/100.0 - countNumTotal/100) *100), progressMsg);
+                progressDlg.Update(static_cast<int>((static_cast<double>(countImported)/100.0 - countNumTotal/100) *99), progressMsg);
 
                 if (!progressDlg.Update(-1)) // if cancel clicked
                 {
@@ -577,7 +577,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
                log << _("Line : " ) << countNumTotal << _(" imported OK.") << endl;
             }
 
-            progressDlg.Update(101);       
+            progressDlg.Update(100);       
 
             //wxString msg = wxString::Format(_("Total Lines : %d \nTotal Imported : %d\n\nLog file written to : %s.\n\nImported transactions have been flagged so you can review them. "), countNumTotal, countImported, logFile.GetFullPath().c_str());
             wxString msg = wxString::Format(_("Total Lines : %d"),countNumTotal); 

@@ -31,11 +31,11 @@
 
 /*******************************************************/
 BEGIN_EVENT_TABLE(mmBillsDepositsPanel, wxPanel)
-    EVT_BUTTON(ID_BUTTON_BD_NEW,         mmBillsDepositsPanel::OnNewBDSeries)
-    EVT_BUTTON(ID_BUTTON_BD_EDIT,        mmBillsDepositsPanel::OnEditBDSeries)
-    EVT_BUTTON(ID_BUTTON_BD_DELETE,      mmBillsDepositsPanel::OnDeleteBDSeries)
-    EVT_BUTTON(ID_BUTTON_BD_ENTER_OCCUR, mmBillsDepositsPanel::OnEnterBDTransaction)
-    EVT_BUTTON(ID_BUTTON_BD_SKIP_OCCUR,  mmBillsDepositsPanel::OnSkipBDTransaction)
+    EVT_BUTTON(wxID_NEW,         mmBillsDepositsPanel::OnNewBDSeries)
+    EVT_BUTTON(wxID_EDIT,        mmBillsDepositsPanel::OnEditBDSeries)
+    EVT_BUTTON(wxID_DELETE,      mmBillsDepositsPanel::OnDeleteBDSeries)
+    EVT_BUTTON(wxID_PASTE, mmBillsDepositsPanel::OnEnterBDTransaction)
+    EVT_BUTTON(wxID_IGNORE,  mmBillsDepositsPanel::OnSkipBDTransaction)
 END_EVENT_TABLE()
 /*******************************************************/
 BEGIN_EVENT_TABLE(billsDepositsListCtrl, wxListCtrl)
@@ -156,7 +156,7 @@ void mmBillsDepositsPanel::CreateControls()
 
     /* ---------------------- */
 
-    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( itemPanel8, 
+    wxSplitterWindow* itemSplitterWindowBillsDeposit = new wxSplitterWindow( itemPanel8, 
         ID_SPLITTERWINDOW, wxDefaultPosition, wxSize(100, 100), 
         wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
@@ -166,7 +166,7 @@ void mmBillsDepositsPanel::CreateControls()
     m_imageList->Add(wxBitmap(rt_exec_auto_xpm));
     m_imageList->Add(wxBitmap(rt_exec_user_xpm));
 
-    listCtrlAccount_ = new billsDepositsListCtrl( this, itemSplitterWindow10, 
+    listCtrlAccount_ = new billsDepositsListCtrl( this, itemSplitterWindowBillsDeposit, 
         ID_PANEL_BD_LISTCTRL, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
@@ -205,13 +205,13 @@ void mmBillsDepositsPanel::CreateControls()
 	listCtrlAccount_->SetColumnWidth(6, col6);
 	listCtrlAccount_->SetColumnWidth(7, col7);
     
-    wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, ID_PANEL1, 
+    wxPanel* itemPanel12 = new wxPanel( itemSplitterWindowBillsDeposit, ID_PANEL1, 
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
 
-    itemSplitterWindow10->SplitHorizontally(listCtrlAccount_, itemPanel12);
-    itemSplitterWindow10->SetMinimumPaneSize(100);
-    itemSplitterWindow10->SetSashGravity(1.0);
-    itemBoxSizer9->Add(itemSplitterWindow10, 1, wxGROW|wxALL, 1);
+    itemSplitterWindowBillsDeposit->SplitHorizontally(listCtrlAccount_, itemPanel12);
+    itemSplitterWindowBillsDeposit->SetMinimumPaneSize(100);
+    itemSplitterWindowBillsDeposit->SetSashGravity(1.0);
+    itemBoxSizer9->Add(itemSplitterWindowBillsDeposit, 1, wxGROW|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemPanel12->SetSizer(itemBoxSizer4);
@@ -223,30 +223,27 @@ void mmBillsDepositsPanel::CreateControls()
     wxSizerFlags flags;
     flags.Border();
 
-    wxButton* itemButton6 = new wxButton( itemPanel12, ID_BUTTON_BD_NEW, _("&New"));
-    itemButton6->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
+    wxButton* itemButton6 = new wxButton( itemPanel12, wxID_NEW, _("&New"));
     itemButton6->SetToolTip(_("New Bills && Deposit Series"));
     itemBoxSizer5->Add(itemButton6, flags);
 
-    wxButton* itemButton81 = new wxButton( itemPanel12, ID_BUTTON_BD_EDIT, _("&Edit"));
-    itemButton81->SetForegroundColour(wxColour(wxT("ORANGE")));
+    wxButton* itemButton81 = new wxButton( itemPanel12, wxID_EDIT, _("&Edit"));
     itemButton81->SetToolTip(_("Edit Bills && Deposit Series"));
     itemBoxSizer5->Add(itemButton81, flags);
 	itemButton81->Enable(false);
 	
-    wxButton* itemButton7 = new wxButton( itemPanel12, ID_BUTTON_BD_DELETE, _("&Delete"));
-    itemButton7->SetForegroundColour(wxColour(wxT("RED")));
+    wxButton* itemButton7 = new wxButton( itemPanel12, wxID_DELETE, _("&Delete"));
     itemButton7->SetToolTip(_("Delete Bills && Deposit Series"));
     itemBoxSizer5->Add(itemButton7, flags);
 	itemButton7->Enable(false);
 	
-    wxButton* itemButton8 = new wxButton( itemPanel12, ID_BUTTON_BD_ENTER_OCCUR, _("En&ter"), 
+    wxButton* itemButton8 = new wxButton( itemPanel12, wxID_PASTE, _("En&ter"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton8->SetToolTip(_("Enter Next Bills && Deposit Occurrence"));
     itemBoxSizer5->Add(itemButton8, flags);
 	itemButton8->Enable(false);
 
-    wxButton* buttonSkipTrans = new wxButton( itemPanel12, ID_BUTTON_BD_SKIP_OCCUR, _("&Skip"));
+    wxButton* buttonSkipTrans = new wxButton( itemPanel12, wxID_IGNORE, _("&Skip"));
     buttonSkipTrans->SetForegroundColour(wxColour(wxT("BLUE")));
     buttonSkipTrans->SetToolTip(_("Skip Next Bills && Deposit Occurrence"));
     itemBoxSizer5->Add(buttonSkipTrans, flags);
@@ -698,10 +695,10 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
 
 void mmBillsDepositsPanel::enableEditDeleteButtons(bool en)
 {
-	wxButton* bE = (wxButton*)FindWindow(ID_BUTTON_BD_EDIT);
-	wxButton* bD = (wxButton*)FindWindow(ID_BUTTON_BD_DELETE);
-	wxButton* bN = (wxButton*)FindWindow(ID_BUTTON_BD_ENTER_OCCUR);
-	wxButton* bS = (wxButton*)FindWindow(ID_BUTTON_BD_SKIP_OCCUR);
+	wxButton* bE = (wxButton*)FindWindow(wxID_EDIT);
+	wxButton* bD = (wxButton*)FindWindow(wxID_DELETE);
+	wxButton* bN = (wxButton*)FindWindow(wxID_PASTE);
+	wxButton* bS = (wxButton*)FindWindow(wxID_IGNORE);
 	bE->Enable(en);
 	bD->Enable(en);
 	bN->Enable(en);

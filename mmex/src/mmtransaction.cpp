@@ -1030,20 +1030,11 @@ bool mmBankTransactionList::removeTransaction(int accountID, int transactionID)
 /** removes the transaction from memory and the database */
 bool mmBankTransactionList::deleteTransaction(int accountID, int transactionID)
 {
-    //begin sql transaction
-    mmDBWrapper::begin(db_.get());
-    //in case if can't delete transaction from db then do not delete it from memory
-    if (mmDBWrapper::deleteTransaction(db_.get(), transactionID))
-    {
-        //in case if can't delete transaction from memory then rollback
-        if (!removeTransaction( accountID, transactionID) )
-            mmDBWrapper::rollback(db_.get());
-        else  
-            mmDBWrapper::commit(db_.get());
+    if (mmDBWrapper::deleteTransaction(db_.get(), transactionID)) {
+        removeTransaction(accountID, transactionID);
         return true;
     }
     else
-        mmDBWrapper::rollback(db_.get());
     return false;
 }
 

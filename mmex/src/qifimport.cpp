@@ -453,14 +453,14 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
         std::vector<int> QIF_transID;
 		mmDBWrapper::begin(core->db_.get());
 
-		wxProgressDialog dlg(_("QIF Import"), _("Transactions imported from QIF: "), 101, 
-            false, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
+		wxProgressDialog dlg(_("QIF Import"), _("Transactions imported from QIF: "), 100, 
+            NULL, wxPD_AUTO_HIDE |  wxPD_CAN_ABORT);
         while(!input.Eof())
         {   
 			wxString progressMsg;
 			progressMsg << _("Transactions imported from QIF") << wxT("\n") 
                         << _("to account ") << acctName << wxT(": ") << numImported;
-            dlg.Update(static_cast<int>((static_cast<double>(numImported)/100.0 - numImported/100) *100), progressMsg);
+            dlg.Update(static_cast<int>((static_cast<double>(numImported)/100.0 - numImported/100) *99), progressMsg);
 
 			if (!dlg.Update(-1)) // if cancel clicked
 			{
@@ -771,7 +771,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
 			}
         }
 
-        dlg.Update(101);
+        dlg.Update(100);
 
         log << _("Transactions imported from QIF: ") << numImported << endl;
         wxString confirmMsg; 
