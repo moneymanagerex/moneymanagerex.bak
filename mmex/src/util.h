@@ -268,7 +268,23 @@ struct LastMonths
 template <typename CurrentData = Today>
 struct CurrentMonth: public LastMonths<0, 0, CurrentData> { };
 
-} // namespace DateTimeProviders
+}; // namespace DateTimeProviders
+
+// Validators -----------------------------------------------------
+
+class doubleValidator : public wxTextValidator {
+public:
+    doubleValidator() : wxTextValidator(wxFILTER_INCLUDE_CHAR_LIST)
+    {
+        wxArrayString list;
+        wxString valid_chars(wxT(" 0123456789.,"));
+        size_t len = valid_chars.Length(); 
+        for (size_t i=0; i<len; i++) {
+            list.Add(wxString(valid_chars.GetChar(i)));
+        } 
+        SetIncludes(list);
+    }
+};
 
 #endif // _MM_EX_UTIL_H_
 //----------------------------------------------------------------------------

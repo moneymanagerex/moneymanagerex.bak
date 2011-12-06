@@ -366,23 +366,15 @@ void mmTransDialog::CreateControls()
     amountNormalTip_   = _("Specify the amount for this transaction");
     amountTransferTip_ = _("Specify the amount to be transfered"); 
 
-    //Validator
-    wxTextValidator doubleValidator(wxFILTER_INCLUDE_CHAR_LIST); 
-    wxArrayString list; 
-    wxString valid_chars(wxT(" 0123456789.,")); 
-    size_t len = valid_chars.Length(); 
-    for (size_t i=0; i<len; i++) 
-    list.Add(wxString(valid_chars.GetChar(i))); 
-    doubleValidator.SetIncludes(list);
-
     wxStaticText* amountStaticText = new wxStaticText( itemPanel7, wxID_STATIC, _("Amount"));
 
     textAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), 
         //use wxTE_PROCESS_ENTER flag when creating the control to generate EVT_TEXT_ENTER events
-        wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator );
+        wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
     textAmount_->SetToolTip(amountNormalTip_);
 
-    toTextAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT, doubleValidator );
+    toTextAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), 
+        wxALIGN_RIGHT, doubleValidator() );
     toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
