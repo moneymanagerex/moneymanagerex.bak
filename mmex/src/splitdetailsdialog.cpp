@@ -29,18 +29,14 @@ IMPLEMENT_DYNAMIC_CLASS( SplitDetailDialog, wxDialog )
  * SplitDetailDialog event table definition
  */
 
-BEGIN_EVENT_TABLE( SplitDetailDialog, wxDialog )
-
 ////@begin SplitDetailDialog event table entries
+BEGIN_EVENT_TABLE( SplitDetailDialog, wxDialog )
     EVT_BUTTON( ID_BUTTONCATEGORY, SplitDetailDialog::OnButtonCategoryClick )
-
-    EVT_BUTTON( ID_BUTTONOK, SplitDetailDialog::OnButtonOKClick )
-
-    EVT_BUTTON( ID_BUTTONCANCEL, SplitDetailDialog::OnButtonCancelClick )
-
-////@end SplitDetailDialog event table entries
-
+    EVT_BUTTON( wxID_OK, SplitDetailDialog::OnButtonOKClick )
+    EVT_BUTTON( wxID_CANCEL, SplitDetailDialog::OnButtonCancelClick )
+    EVT_TEXT_ENTER(ID_TEXTCTRLAMOUNT, SplitDetailDialog::OnButtonOKClick)
 END_EVENT_TABLE()
+////@end SplitDetailDialog event table entries
 
 /*!
  * SplitDetailDialog constructors
@@ -126,21 +122,21 @@ void SplitDetailDialog::CreateControls()
     itemBoxSizer3->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     textAmount_ = new wxTextCtrl( itemDialog1, ID_TEXTCTRLAMOUNT, _T(""), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+        wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator());
     itemBoxSizer3->Add(textAmount_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer7 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer7, 0, wxALIGN_RIGHT|wxALL, 5);
 
-    wxButton* itemButton8 = new wxButton( itemDialog1, ID_BUTTONOK, _("OK"), 
+    wxButton* itemButton8 = new wxButton( itemDialog1, wxID_OK, _("OK"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton8->SetDefault();
     itemBoxSizer7->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton9 = new wxButton( itemDialog1, ID_BUTTONCANCEL, _("Cancel"), 
+    wxButton* itemButtonCancel = new wxButton( itemDialog1, wxID_CANCEL, _("Cancel"), 
         wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer7->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
+    itemBoxSizer7->Add(itemButtonCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButtonCancel->SetFocus();
 ////@end SplitDetailDialog content construction
 }
 

@@ -52,9 +52,9 @@ class wxListCtrl;
 #define SYMBOL_SPLITTRANSACTIONDIALOG_SIZE wxSize(400, 300)
 #define SYMBOL_SPLITTRANSACTIONDIALOG_POSITION wxDefaultPosition
 #define ID_LISTCTRL3 10118
-#define ID_BUTTONADD 10119
-#define ID_BUTTONREMOVE 10120
-#define ID_BUTTONCLOSE 10121
+//#define ID_BUTTONADD 10119
+//#define ID_BUTTONREMOVE 10120
+//#define ID_BUTTONCLOSE 10121
 ////@end control identifiers
 
 /*!
@@ -105,13 +105,16 @@ public:
     void DataToControls();
 
 ////@begin SplitTransactionDialog event handler declarations
-    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTONADD
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for wxID_NEW
     void OnButtonAddClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTONREMOVE
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for wxID_DELETE
     void OnButtonRemoveClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTONCLOSE
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for wxID_EDIT
+    void OnButtonEditClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for wxID_CANCEL
     void OnButtonCloseClick( wxCommandEvent& event );
 
 	void UpdateSplitTotal();
