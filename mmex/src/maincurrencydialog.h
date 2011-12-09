@@ -102,8 +102,9 @@ public:
     wxIcon GetIconResource( const wxString& name );
     static bool ShowToolTips();
 
-     int currencyID_;
-
+    int currencyID_;
+    static bool Execute(mmCoreDB* core, wxWindow* parent, int& currencyID);
+    
 private:
     wxSQLite3Database* db_;
     mmCoreDB* core_;
@@ -114,7 +115,6 @@ private:
     wxButton* itemButtonDelete_;
 
     void displayCurrencyDialogErrorMessage(wxString msg);
-
 };
 
 #endif // _MM_EX_MAINCURRENCY_DIALOG_H_

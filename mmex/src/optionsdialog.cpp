@@ -66,7 +66,7 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
 
     EVT_CHOICE(ID_DIALOG_OPTIONS_VIEW_ACCOUNTS, mmOptionsDialog::OnViewAccountsChanged)  
     EVT_CHOICE(ID_DIALOG_OPTIONS_VIEW_TRANS, mmOptionsDialog::OnViewTransChanged)  
-  	EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)
+    EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE, mmOptionsDialog::OnNavTreeColorChanged)
 
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0, mmOptionsDialog::OnAlt0Changed)
@@ -95,7 +95,7 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_CHOICE(ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_MONTH, mmOptionsDialog::OnFYSMonthChange)
 
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_USE_SOUND, mmOptionsDialog::OnUseSoundChecked)
-	EVT_CHOICE(ID_DIALOG_OPTIONS_FONT_SIZE, mmOptionsDialog::OnFontSizeChanged)  
+    EVT_CHOICE(ID_DIALOG_OPTIONS_FONT_SIZE, mmOptionsDialog::OnFontSizeChanged)  
 
     EVT_CHECKBOX(ID_DIALOG_OPTIONS_UPD_CURRENCY, mmOptionsDialog::OnUpdCurrencyChecked)
     
@@ -170,10 +170,10 @@ wxString mmOptionsDialog::DisplayDate2FormatDate(wxString strDate)
         wxT("%d/%m/%Y"),
         wxT("%d-%m-%y"),
         wxT("%d-%m-%Y"),
-		wxT("%d.%m.%y"),
+        wxT("%d.%m.%y"),
         wxT("%d.%m.%Y"),
-		wxT("%d,%m,%y"),
-		wxT("%d/%m %Y"),
+        wxT("%d,%m,%y"),
+        wxT("%d/%m %Y"),
         wxT("%m/%d/%y"),
         wxT("%m/%d/%Y"),
         wxT("%m-%d-%y"),
@@ -185,7 +185,7 @@ wxString mmOptionsDialog::DisplayDate2FormatDate(wxString strDate)
         wxT("%Y-%m-%d"),
         wxT("%Y.%m.%d"),
         wxT("%Y%m%d"),
-	};
+    };
 
     wxString itemChoice7Strings[TOTAL_DATEFORMAT] = 
     {
@@ -195,8 +195,8 @@ wxString mmOptionsDialog::DisplayDate2FormatDate(wxString strDate)
         wxT("DD-MM-YYYY"),
         wxT("DD.MM.YY"),
         wxT("DD.MM.YYYY"),
-		wxT("DD,MM,YY"),
-		wxT("DD/MM YYYY"),
+        wxT("DD,MM,YY"),
+        wxT("DD/MM YYYY"),
         wxT("MM/DD/YY"),
         wxT("MM/DD/YYYY"),
         wxT("MM-DD-YY"),
@@ -227,9 +227,9 @@ wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
         wxT("%d/%m/%Y"),
         wxT("%d-%m-%y"),
         wxT("%d-%m-%Y"),
-		wxT("%d.%m.%y"),
+        wxT("%d.%m.%y"),
         wxT("%d.%m.%Y"),
-		wxT("%d,%m,%y"),
+        wxT("%d,%m,%y"),
         wxT("%d/%m %Y"),
         wxT("%m/%d/%y"),
         wxT("%m/%d/%Y"),
@@ -239,7 +239,7 @@ wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
         wxT("%y/%m/%d"),
         wxT("%y-%m-%d"),
         wxT("%Y/%m/%d"),
-		wxT("%Y-%m-%d"),
+        wxT("%Y-%m-%d"),
         wxT("%Y.%m.%d"),
         wxT("%Y%m%d"),
     };
@@ -250,10 +250,10 @@ wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
         wxT("DD/MM/YYYY"),
         wxT("DD-MM-YY"),
         wxT("DD-MM-YYYY"),
-		wxT("DD.MM.YY"),
+        wxT("DD.MM.YY"),
         wxT("DD.MM.YYYY"),
-		wxT("DD,MM,YY"),
-		wxT("DD/MM YYYY"),
+        wxT("DD,MM,YY"),
+        wxT("DD/MM YYYY"),
         wxT("MM/DD/YY"),
         wxT("MM/DD/YYYY"),
         wxT("MM-DD-YY"),
@@ -262,7 +262,7 @@ wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
         wxT("YY/MM/DD"),
         wxT("YY-MM-DD"),
         wxT("YYYY/MM/DD"),
-	    wxT("YYYY-MM-DD"),
+        wxT("YYYY-MM-DD"),
         wxT("YYYY.MM.DD"),
         wxT("YYYYMMDD"),
     };
@@ -404,8 +404,8 @@ void mmOptionsDialog::CreateControls()
     wxStaticBoxSizer* itemStaticBoxSizer9 = new wxStaticBoxSizer(itemStaticBoxSizer9Static, wxVERTICAL);
     wxFlexGridSizer* itemFlexBoxSizer99 = new wxFlexGridSizer(2,2,5,5);
     itemBoxSizer20->Add(itemStaticBoxSizer9, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
-	itemStaticBoxSizer9->Add(itemFlexBoxSizer99);
-	
+    itemStaticBoxSizer9->Add(itemFlexBoxSizer99);
+    
     wxStaticText* itemStaticText41 = new wxStaticText( itemPanelGeneral, 
         wxID_STATIC, _("Date Format"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexBoxSizer99->Add(itemStaticText41, 0, wxALIGN_CENTER|wxALL, 5);
@@ -416,10 +416,10 @@ void mmOptionsDialog::CreateControls()
         wxT("DD/MM/YYYY"),
         wxT("DD-MM-YY"),
         wxT("DD-MM-YYYY"),
-		wxT("DD.MM.YY"),
+        wxT("DD.MM.YY"),
         wxT("DD.MM.YYYY"),
-		wxT("DD,MM,YY"),
-		wxT("DD/MM YYYY"),
+        wxT("DD,MM,YY"),
+        wxT("DD/MM YYYY"),
         wxT("MM/DD/YY"),
         wxT("MM/DD/YYYY"),
         wxT("MM-DD-YY"),
@@ -484,7 +484,7 @@ void mmOptionsDialog::CreateControls()
     textUN->SetToolTip(_("The User Name is used as a title for the database."));
     itemStaticBoxSizerUN->Add(textUN, 1, wxALIGN_LEFT|wxGROW|wxALL, 5);
 
-	  // ------------------------------------------    
+      // ------------------------------------------    
     wxStaticBox* itemStaticBoxSizer1881Static = new wxStaticBox(itemPanelGeneral, wxID_ANY, 
         _("Language"));
     wxStaticBoxSizer* itemStaticBoxSizerLang = new wxStaticBoxSizer(itemStaticBoxSizer1881Static, 
@@ -576,7 +576,7 @@ void mmOptionsDialog::CreateControls()
     else if (vTrans == wxT("View UnReconciled"))
         choiceTransVisible_->SetSelection(VIEW_TRANS_UNREC);
     else if (vTrans == wxT("View Today"))
-	    choiceTransVisible_->SetSelection(VIEW_TRANS_TODAY);
+        choiceTransVisible_->SetSelection(VIEW_TRANS_TODAY);
     else if (vTrans == wxT("View 30 days"))
         choiceTransVisible_->SetSelection(VIEW_TRANS_30);
     else if (vTrans == wxT("View 90 days"))
@@ -597,15 +597,15 @@ void mmOptionsDialog::CreateControls()
     itemStaticBoxSizerFontSize->Add(itemStaticTextHTMLFontSizeText, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-	const wxString itemChoiceHTMLFontSize[HTML_FONT_MAX] = 
+    const wxString itemChoiceHTMLFontSize[HTML_FONT_MAX] = 
     {
         wxT("XSmall"),
-		wxT("Small"),
-		wxT("Normal"),
-		wxT("Large"),
-		wxT("XLarge"),
-		wxT("XXLarge"),
-		wxT("Huge")
+        wxT("Small"),
+        wxT("Normal"),
+        wxT("Large"),
+        wxT("XLarge"),
+        wxT("XXLarge"),
+        wxT("Huge")
     };  
     
     choiceFontSize_ = new wxChoice( itemPanelViews, 
@@ -632,8 +632,8 @@ void mmOptionsDialog::CreateControls()
          choiceFontSize_->SetSelection(HTML_FONT_HUGE);
     
     choiceFontSize_->SetToolTip(_("Specify which font size is used on the report tables"));
-    	
-	itemStaticBoxSizerFontSize->Add(choiceFontSize_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        
+    itemStaticBoxSizerFontSize->Add(choiceFontSize_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 //  Tree View Options
     wxStaticBox* itemStaticBoxSizerTreeViewOption = new wxStaticBox(itemPanelViews, wxID_ANY, _("Tree View Options: Expand Section"));
@@ -760,9 +760,9 @@ void mmOptionsDialog::CreateControls()
     wxStaticBoxSizer* itemStaticBoxSizerFinancialYear = new wxStaticBoxSizer(itemStaticBoxFinancialYearSetting, wxVERTICAL);
     wxFlexGridSizer* transflexGridSizerMisc = new wxFlexGridSizer(3,2,0,0);
     itemBoxSizerMisc->Add(itemStaticBoxSizerFinancialYear, 0, wxGROW|wxALL, 5);
-	itemStaticBoxSizerFinancialYear->Add(transflexGridSizerMisc);
-	
-	//Validator
+    itemStaticBoxSizerFinancialYear->Add(transflexGridSizerMisc);
+    
+    //Validator
     wxTextValidator intValidator(wxFILTER_INCLUDE_CHAR_LIST); 
     wxArrayString list; 
     wxString valid_chars(wxT("0123456789")); 
@@ -770,7 +770,7 @@ void mmOptionsDialog::CreateControls()
     for (size_t i=0; i<len; i++) 
     list.Add(wxString(valid_chars.GetChar(i))); 
     intValidator.SetIncludes(list);
-	
+    
     wxStaticText* itemStaticTextFYSDay = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Start Day"), wxDefaultPosition, wxDefaultSize, 0 );
     transflexGridSizerMisc->Add(itemStaticTextFYSDay, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -796,39 +796,39 @@ void mmOptionsDialog::CreateControls()
 
     //----------------------------------------------
     
-	// New transaction dialog settings
-	wxStaticBox* itemStaticBoxNewTransactionSettings = new wxStaticBox(itemPanelMisc, wxID_ANY, _("New Transaction Dialog Settings"));
+    // New transaction dialog settings
+    wxStaticBox* itemStaticBoxNewTransactionSettings = new wxStaticBox(itemPanelMisc, wxID_ANY, _("New Transaction Dialog Settings"));
     wxStaticBoxSizer* itemStaticBoxSizerNewTransactionSettings = new wxStaticBoxSizer(itemStaticBoxNewTransactionSettings, wxVERTICAL);
     itemBoxSizerMisc->Add(itemStaticBoxSizerNewTransactionSettings, 0, wxGROW|wxALL, 5);
 
-	//	Default Payee
-	wxStaticText* payeeStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Payee:"),wxDefaultPosition, wxDefaultSize);
+    //  Default Payee
+    wxStaticText* payeeStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Payee:"),wxDefaultPosition, wxDefaultSize);
 
     wxString itemChoiceDefaultTransPayeeStrings[] = 
     {
         _("None"),
         _("Last Used"),
     };
-	
+    
     wxChoice* itemChoiceDefaultTransPayee = new wxChoice( itemPanelMisc, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE,
-                                                          wxDefaultPosition, wxDefaultSize, 2, itemChoiceDefaultTransPayeeStrings, 0 );	
-	itemChoiceDefaultTransPayee->SetSelection(mmIniOptions::transPayeeSelectionNone_);
-	
-	//	Default Category
-	wxStaticText* categoryStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Category:"),wxDefaultPosition, wxDefaultSize);
+                                                          wxDefaultPosition, wxDefaultSize, 2, itemChoiceDefaultTransPayeeStrings, 0 ); 
+    itemChoiceDefaultTransPayee->SetSelection(mmIniOptions::transPayeeSelectionNone_);
+    
+    //  Default Category
+    wxStaticText* categoryStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Category:"),wxDefaultPosition, wxDefaultSize);
 
     wxString itemChoiceDefaultTransCategoryStrings[] = 
     {
         _("None"),
         _("Last used for payee"),
     };
-	
+    
     wxChoice* itemChoiceDefaultTransCategory = new wxChoice( itemPanelMisc, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY,
-                                                             wxDefaultPosition, wxDefaultSize, 2, itemChoiceDefaultTransCategoryStrings);	
-	itemChoiceDefaultTransCategory->SetSelection(mmIniOptions::transCategorySelectionNone_);
+                                                             wxDefaultPosition, wxDefaultSize, 2, itemChoiceDefaultTransCategoryStrings);   
+    itemChoiceDefaultTransCategory->SetSelection(mmIniOptions::transCategorySelectionNone_);
 
-	//	Default Status
-	wxStaticText* statusStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Status:"), wxDefaultPosition, wxDefaultSize);
+    //  Default Status
+    wxStaticText* statusStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Status:"), wxDefaultPosition, wxDefaultSize);
 
     wxString itemChoiceDefaultTransStatusStrings[] = 
     {
@@ -836,9 +836,9 @@ void mmOptionsDialog::CreateControls()
         _("Reconciled"),
         _("Void"),
         _("Follow up"),
-    	_("Duplicate"),
+        _("Duplicate"),
     };
-	
+    
     wxChoice* itemChoiceDefaultTransStatus = new wxChoice( itemPanelMisc, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS,
                                                            wxDefaultPosition, wxDefaultSize, 5, itemChoiceDefaultTransStatusStrings );
     itemChoiceDefaultTransStatus->SetSelection(mmIniOptions::transStatusReconciled_);
@@ -957,20 +957,15 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
 {
     int currencyID = mmDBWrapper::getBaseCurrencySettings(db_);
      
-    mmMainCurrencyDialog dlg(core_, this);
-    if ( dlg.ShowModal() == wxID_OK )
+    if (mmMainCurrencyDialog::Execute(core_, this, currencyID) && currencyID != -1)
     {
-        currencyID = dlg.currencyID_;
-        if (currencyID != -1)
-        {
-            wxString currName = mmDBWrapper::getCurrencyName(db_, currencyID);
-            wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_CURRENCY);
-            bn->SetLabel(currName);
-            mmDBWrapper::setBaseCurrencySettings(db_, currencyID);
+        wxString currName = mmDBWrapper::getCurrencyName(db_, currencyID);
+        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_CURRENCY);
+        bn->SetLabel(currName);
+        mmDBWrapper::setBaseCurrencySettings(db_, currencyID);
 
-            wxMessageDialog msgDlg(this, _("Remember to update currency rate"), _("Important note"));
-            msgDlg.ShowModal();            
-        }
+        wxMessageDialog msgDlg(this, _("Remember to update currency rate"), _("Important note"));
+        msgDlg.ShowModal();            
     }
 }
 
@@ -1221,7 +1216,7 @@ void mmOptionsDialog::OnTransactionCategoryChanged(wxCommandEvent& /*event*/)
 {
     wxChoice* itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY);
     mmIniOptions::transCategorySelectionNone_ = itemChoice->GetSelection();
-	mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_CATEGORY_NONE"), wxString::Format(wxT("%d"), (int)mmIniOptions::transCategorySelectionNone_)); 
+    mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_CATEGORY_NONE"), wxString::Format(wxT("%d"), (int)mmIniOptions::transCategorySelectionNone_)); 
 }
 
 void mmOptionsDialog::OnDefaultTransactionStatusChanged(wxCommandEvent& /*event*/)
