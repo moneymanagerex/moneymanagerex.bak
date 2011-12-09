@@ -56,7 +56,7 @@ void fileviewer::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    wxTextCtrl* itemTextCtrl3 = new wxTextCtrl( itemDialog1, 
+    wxTextCtrl *itemTextCtrl3 = new wxTextCtrl( itemDialog1, 
         ID_TEXTCTRL_FILEVIEWER, wxT(""), 
         SYMBOL_FILEVIEWER_POSITION, SYMBOL_FILEVIEWER_SIZE, 
         wxTE_MULTILINE|wxTE_READONLY );
@@ -65,29 +65,28 @@ void fileviewer::CreateControls()
         wxALIGN_CENTER_HORIZONTAL|wxALL|wxGROW, 10);
 
     /* Load the Text from the file */
-    wxString fileContents = wxT("Empty Contents");
     if ( !fileName_.empty() )
     {
          wxFileInputStream input( fileName_ );
          wxTextInputStream text( input );
-          fileContents = wxT("");  
           while (!input.Eof() )
           {
                 wxString line = text.ReadLine();
                 if (!line.IsEmpty())
                 {
-                    fileContents += line;
-                    fileContents += wxT("\n");
+                    *itemTextCtrl3 << line << wxT("\n");
                 }
                 else
                 {
-                    fileContents += wxT("\n");
+                    *itemTextCtrl3 << wxT("\n");
                 }
           }
-          itemTextCtrl3->SetValue(fileContents);  
+          
     }
+    //Scroll to the top of file
+    itemTextCtrl3->SetInsertionPoint(0);
     
-    wxButton* itemButton1 = new wxButton( itemDialog1, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(itemButton1, 0, wxALIGN_RIGHT|wxALL, 4);
-    //itemButton1->SetToolTip(_("OK"));
+    wxButton* itemButtonOK = new wxButton( itemDialog1, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer2->Add(itemButtonOK, 0, wxALIGN_RIGHT|wxALL, 4);
+    itemButtonOK->SetFocus();
 }
