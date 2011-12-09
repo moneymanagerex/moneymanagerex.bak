@@ -820,13 +820,17 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS); 
     wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_MINI);
-    if (selIndex!=-1) { 
+    if (selIndex != -1) { 
         enableEditDeleteButtons(true);
         st->SetLabel(getItem(selIndex, COL_NOTES));
         //st->SetLabel(m_trans[selIndex]->notes_);
         wxString miniStr;
         miniStr = getMiniInfoStr(selIndex);
-        stm->SetLabel(miniStr);
+        
+        //Show only first line but full string set as tooltip
+        stm->SetLabel(miniStr.substr(0,miniStr.Find(wxT("\n"))));
+        stm->SetToolTip(miniStr);
+
     } else {
         //st->SetLabel(wxT (""));
         stm->SetLabel(wxT (""));
@@ -928,6 +932,33 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
     }
     else //For deposits and withdrawals calculates amount in base currency
     {
+        //if (split_)
+        {
+			char sql[]=
+			"select c.categname || case when sc.subcategname not null then ' : '||sc.subcategname else ''end as CATEG "
+            ", st.splittransamount as SPLITTRANSAMOUNT "
+            "from splittransactions_v1 st "
+            "left join category_v1 c on st.categid=c.categid "
+            "left join subcategory_v1 sc on st.subcategid=sc.subcategid "
+            "where st.transid = ?  "
+            "group by st.categid "
+            "order by c.categname, sc.subcategname";
+            
+            wxSQLite3Statement st = m_core->db_.get()->PrepareStatement(sql);
+            st.Bind(1, m_trans[selIndex]->transactionID());
+
+            wxSQLite3ResultSet q1 = st.ExecuteQuery();
+            while (q1.NextRow())
+            {
+				infoStr << q1.GetString(wxT("CATEG"));
+				infoStr << wxT(" = ");
+				amount = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
+				mmex::formatDoubleToCurrencyEdit(amount, amountStr);
+				infoStr << amountStr << wxT("\n");
+			}
+            
+		}
+        
         if (currencyid != basecurrencyid) //Show nothing if account currency is base
         {
             //load settings for base currency
@@ -947,8 +978,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
             infoStr << amountStr << wxT(" = ") << basecuramountStr;
         }
     }
-
-return infoStr;
+    return infoStr;
 }
 //---------------------------
 void mmCheckingPanel::Tips()

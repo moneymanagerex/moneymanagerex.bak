@@ -34,13 +34,10 @@ IMPLEMENT_DYNAMIC_CLASS( SplitTransactionDialog, wxDialog )
  */
 
 BEGIN_EVENT_TABLE( SplitTransactionDialog, wxDialog )
-
-    EVT_BUTTON( ID_BUTTONADD, SplitTransactionDialog::OnButtonAddClick )
-
-    EVT_BUTTON( ID_BUTTONREMOVE, SplitTransactionDialog::OnButtonRemoveClick )
-
-    EVT_BUTTON( ID_BUTTONCLOSE, SplitTransactionDialog::OnButtonCloseClick )
-
+    EVT_BUTTON( wxID_NEW, SplitTransactionDialog::OnButtonAddClick )
+    EVT_BUTTON( wxID_DELETE, SplitTransactionDialog::OnButtonRemoveClick )
+    EVT_BUTTON( wxID_EDIT, SplitTransactionDialog::OnButtonEditClick )
+    EVT_BUTTON( wxID_CANCEL, SplitTransactionDialog::OnButtonCloseClick )
 END_EVENT_TABLE()
 
 SplitTransactionDialog::SplitTransactionDialog( )
@@ -145,18 +142,28 @@ void SplitTransactionDialog::CreateControls()
 	transAmount_ = new wxStaticText( itemDialog1, wxID_STATIC, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	itemBoxSizerTotAmount->Add(transAmount_, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
+    wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxVERTICAL);
+    itemBoxSizer2->Add(itemBoxSizer1, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemBoxSizer1->Add(itemBoxSizer6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 0);
+    wxBoxSizer* itemBoxSizer66 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer1->Add(itemBoxSizer66, 0, wxALIGN_RIGHT|wxALL, 0);
 
-    wxButton* itemButton7 = new wxButton( itemDialog1, ID_BUTTONADD, _("&Add"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer6->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxButton* itemButtonNew = new wxButton( itemDialog1, wxID_NEW, _("&New"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer6->Add(itemButtonNew, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton8 = new wxButton( itemDialog1, ID_BUTTONREMOVE, _("&Remove"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer6->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxButton* itemButtonDelete = new wxButton( itemDialog1, wxID_DELETE, _("&Delete"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer6->Add(itemButtonDelete, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton9 = new wxButton( itemDialog1, ID_BUTTONCLOSE, _("&Close"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemButton9->SetDefault();
-    itemBoxSizer6->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxButton* itemButtonEdit = new wxButton( itemDialog1, wxID_EDIT, _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer6->Add(itemButtonEdit, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxButton* itemButtonOK = new wxButton( itemDialog1, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer66->Add(itemButtonOK, 0, wxALIGN_RIGHT|wxALL, 5);
+
+    wxButton* itemButtonCancel = new wxButton( itemDialog1, wxID_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemButtonCancel->SetFocus();
+    itemBoxSizer66->Add(itemButtonCancel, 0, wxALIGN_RIGHT|wxALL, 5);
 
 ////@end SplitTransactionDialog content construction
 }
@@ -195,6 +202,76 @@ void SplitTransactionDialog::OnButtonAddClick( wxCommandEvent& event )
     event.Skip();
 }
 
+void SplitTransactionDialog::OnButtonEditClick( wxCommandEvent& event )
+{
+    long item = -1;
+    for ( ;; )
+    {
+        item = lcSplit_->GetNextItem(item,
+            wxLIST_NEXT_ALL,
+            wxLIST_STATE_SELECTED);
+        if ( item == -1 )
+            break;
+        //lcSplit_->DeleteItem(item);
+        //split_->removeSplitByIndex(item);
+
+        break;
+    }
+	if (item == -1)
+	    return;
+
+    int categID = -1;
+    int subcategID = -1;
+    double amount  = 0.0;
+
+        wxString fullCatStr;
+        wxString CatStr=wxT("");
+        wxString subCatStr=wxT("");
+        fullCatStr << lcSplit_->GetItemText(item);
+        CatStr = fullCatStr.substr(0,fullCatStr.Find(wxT(":")));
+        categID = core_->categoryList_.getCategoryID(CatStr);
+        
+        if (fullCatStr.Find(wxT(":"))){
+            subCatStr = fullCatStr.substr(fullCatStr.Find(wxT(":"))+1);
+        subcategID = core_->categoryList_.getSubCategoryID(categID, subCatStr);  
+	    }     
+ 
+        amount = lcSplit_->GetItemData(item);	
+//wxLogMessage(wxString::Format(wxT("Item-%ld is selected."), item)); 
+//wxLogMessage(wxString::Format(wxT("Categ-%s."), CatStr.c_str())); 
+//wxLogMessage(wxString::Format(wxT("Subcateg-%s."), subCatStr.c_str())); 
+//wxLogMessage(wxString::Format(wxT("CategID-%d."), categID)); 
+//wxLogMessage(wxString::Format(wxT("SubCategID-%d."), subcategID)); 
+    
+    SplitDetailDialog sdd(core_, fullCatStr, &categID, &subcategID, &amount, this);
+    if (sdd.ShowModal() == wxID_OK)
+    {
+        lcSplit_->DeleteItem(item);
+        split_->removeSplitByIndex(item);
+        
+        lcSplit_->SetItem(item, 0, fullCatStr);
+       
+        wxString dispAmount;
+        mmex::formatDoubleToCurrencyEdit(amount, dispAmount);
+        
+        lcSplit_->SetItem(item, 1, dispAmount);
+
+        boost::shared_ptr<mmSplitTransactionEntry> pSplitEntry(new mmSplitTransactionEntry);
+        pSplitEntry->splitAmount_  = *sdd.m_amount_;
+        pSplitEntry->categID_      = categID;
+        pSplitEntry->subCategID_   = subcategID;
+        pSplitEntry->category_      = core_->categoryList_.getCategorySharedPtr(categID, 
+                                                                                subcategID);
+        wxASSERT(pSplitEntry->category_.lock());
+        split_->addSplit(pSplitEntry);
+		
+		UpdateSplitTotal();
+	}
+	    DataToControls();
+
+    event.Skip();
+}
+
 void SplitTransactionDialog::OnButtonRemoveClick( wxCommandEvent& event )
 {
     long item = -1;
@@ -205,7 +282,7 @@ void SplitTransactionDialog::OnButtonRemoveClick( wxCommandEvent& event )
             wxLIST_STATE_SELECTED);
         if ( item == -1 )
             break;
-
+wxLogMessage(wxString::Format(wxT("Item %ld is selected."), item));    
         lcSplit_->DeleteItem(item);
         split_->removeSplitByIndex(item);
 
@@ -219,7 +296,7 @@ void SplitTransactionDialog::OnButtonRemoveClick( wxCommandEvent& event )
 
 void SplitTransactionDialog::OnButtonCloseClick( wxCommandEvent& /*event*/ )
 {
-    EndModal(wxID_OK);
+    EndModal(wxID_CANCEL);
 }
 
 bool SplitTransactionDialog::ShowToolTips()

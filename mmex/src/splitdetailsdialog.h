@@ -42,8 +42,8 @@
 #define SYMBOL_SPLITDETAILDIALOG_POSITION wxDefaultPosition
 #define ID_BUTTONCATEGORY 10123
 #define ID_TEXTCTRLAMOUNT 10124
-#define ID_BUTTONOK 10125
-#define ID_BUTTONCANCEL 10126
+//#define ID_BUTTONOK 10125
+//#define ID_BUTTONCANCEL 10126
 ////@end control identifiers
 
 /*!
