@@ -1037,8 +1037,9 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
     wxString transNum = textNumber_->GetValue();
     wxString notes = textNotes_->GetValue();
     wxString status = wxT(""); // nothing yet
-    int repeats = itemRepeats_->GetSelection();
+
     // Multiplex Auto executable onto the repeat field of the database. 
+    int repeats = itemRepeats_->GetSelection();
     if (autoExecuteUserAck_)
         repeats += BD_REPEATS_MULTIPLEX_BASE;
     if (autoExecuteSilent_)
@@ -1206,7 +1207,8 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
     }
     else if (enterOccur_)
     {
-        if ( (repeats < 11) || (numRepeats > 0) )
+        // repeats now hold extra info. Need to get repeats from dialog selection
+        if ( (itemRepeats_->GetSelection() < 11) || (numRepeats > 0) )
         {
             boost::shared_ptr<mmBankTransaction> pTransaction;
             boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(core_->db_));
