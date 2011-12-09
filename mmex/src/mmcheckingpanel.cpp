@@ -828,8 +828,13 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
         miniStr = getMiniInfoStr(selIndex);
         
         //Show only first line but full string set as tooltip
-        stm->SetLabel(miniStr.substr(0,miniStr.Find(wxT("\n"))));
+        if (miniStr.Find(wxT("\n"))>1 && !miniStr.IsEmpty()) {
+        stm->SetLabel(miniStr.substr(0,miniStr.Find(wxT("\n"))) + wxT(" ..."));
         stm->SetToolTip(miniStr);
+	    } else {
+			stm->SetLabel(miniStr);
+			stm->SetToolTip(miniStr);
+		}
 
     } else {
         //st->SetLabel(wxT (""));
@@ -956,7 +961,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
 				mmex::formatDoubleToCurrencyEdit(amount, amountStr);
 				infoStr << amountStr << wxT("\n");
 			}
-            
+            infoStr.RemoveLast(1);
 		}
         
         if (currencyid != basecurrencyid) //Show nothing if account currency is base

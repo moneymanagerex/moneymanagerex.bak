@@ -282,7 +282,7 @@ void SplitTransactionDialog::OnButtonRemoveClick( wxCommandEvent& event )
             wxLIST_STATE_SELECTED);
         if ( item == -1 )
             break;
-wxLogMessage(wxString::Format(wxT("Item %ld is selected."), item));    
+  
         lcSplit_->DeleteItem(item);
         split_->removeSplitByIndex(item);
 
