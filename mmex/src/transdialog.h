@@ -128,8 +128,8 @@ private:
     // store the original currency rate for transaction editing
     double  edit_currency_rate;
 
-    wxString payeeDepositTip_;
     wxString payeeWithdrawalTip_;
+    wxString payeeDepositTip_;
     wxString amountNormalTip_;
     wxString amountTransferTip_;
 
