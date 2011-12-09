@@ -482,15 +482,23 @@ void mmTransDialog::CreateControls()
     wxStdDialogButtonSizer*  itemStdDialogButtonSizer1 = new wxStdDialogButtonSizer;
     itemPanel25->SetSizer(itemStdDialogButtonSizer1);
 
-    wxButton* itemButton27 = new wxButton( itemPanel25, wxID_OK, _("&OK"));
-    itemStdDialogButtonSizer1->Add(itemButton27, flags);
+    wxButton* itemButtonOK = new wxButton( itemPanel25, wxID_OK, _("&OK"));
+    itemStdDialogButtonSizer1->Add(itemButtonOK, flags);
 
-    wxButton* itemButton28 = new wxButton( itemPanel25, wxID_CANCEL, _("&Cancel"));
-    itemStdDialogButtonSizer1->Add(itemButton28,  0, wxALIGN_RIGHT|wxLEFT|wxRIGHT, 10);
+    wxButton* itemButtonCancel = new wxButton( itemPanel25, wxID_CANCEL, _("&Cancel"));
+    itemStdDialogButtonSizer1->Add(itemButtonCancel,  0, wxALIGN_RIGHT|wxLEFT|wxRIGHT, 10);
+
+    //In linux by default nothing in focus therefore keystrokes does not working
+    //I like amount in the focus becouse other fields already have amounts 
+#ifdef __WXGTK__
+    textAmount_ -> SetFocus();
+#endif
     if (edit_)
-        itemButton28->SetFocus();
+        itemButtonCancel->SetFocus();
 
     itemStdDialogButtonSizer1->Realize();
+    //If nothing in focus Alt+C should close the window
+    richText = false;
 
 }
 

@@ -822,8 +822,8 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
     wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_MINI);
     if (selIndex != -1) { 
         enableEditDeleteButtons(true);
-        st->SetLabel(getItem(selIndex, COL_NOTES));
-        //st->SetLabel(m_trans[selIndex]->notes_);
+        //st->SetLabel(getItem(selIndex, COL_NOTES));
+        st->SetLabel(m_trans[selIndex]->notes_);
         wxString miniStr;
         miniStr = getMiniInfoStr(selIndex);
         
@@ -2150,6 +2150,8 @@ void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
                 SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
                 SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
                 EnsureVisible(m_selectedIndex);
+                //Notes and other info should be updated 
+                m_cp->updateExtraTransactionData(m_selectedIndex);
             }
         }
     }
