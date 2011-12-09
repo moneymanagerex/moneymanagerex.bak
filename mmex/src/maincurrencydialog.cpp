@@ -287,3 +287,18 @@ void mmMainCurrencyDialog::displayCurrencyDialogErrorMessage(wxString msg)
 {
     wxMessageBox(msg,_("Currency Dialog"),wxICON_ERROR);
 }
+
+bool mmMainCurrencyDialog::Execute(mmCoreDB* core, wxWindow* parent, int& currencyID)
+{
+    bool result = false;
+
+    mmMainCurrencyDialog* dlg = new mmMainCurrencyDialog(core, parent);
+    if (dlg->ShowModal() == wxID_OK)
+    {
+        currencyID = dlg->currencyID_;
+	result = true;
+    }
+    dlg->Destroy();
+
+    return result;
+}

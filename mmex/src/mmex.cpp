@@ -4332,6 +4332,7 @@ void mmGUIFrame::RunCustomSqlDialog(bool forEdit)
     //Use Shared pointer to ensure object gets destroyed if SQL Script errors hijack the object. 
     boost::shared_ptr<mmCustomSQLDialog> dlg( new mmCustomSQLDialog(custRepIndex_, this, forEdit ));   
     int dialogStatus = dlg->ShowModal();
+    wxBeginBusyCursor(wxHOURGLASS_CURSOR);
     while (dialogStatus == wxID_MORE)
     {
         if (dlg->sqlQuery() != wxT(""))   
@@ -4342,6 +4343,7 @@ void mmGUIFrame::RunCustomSqlDialog(bool forEdit)
         } 
         dialogStatus = dlg->ShowModal();
     }
+	wxEndBusyCursor();
 
     if (dialogStatus == wxID_OK)
         updateNavTreeControl();
@@ -4425,18 +4427,12 @@ void wxNewDatabaseWizardPage1::OnCurrency(wxCommandEvent& /*event*/)
 {
     currencyID_ = parent_->m_core->currencyList_.getBaseCurrencySettings();
 
-
-    mmMainCurrencyDialog dlg(parent_->m_core, this);
-    if ( dlg.ShowModal() == wxID_OK )
+    if (mmMainCurrencyDialog::Execute(parent_->m_core, this, currencyID_) && currencyID_ != -1)
     {
-        currencyID_ = dlg.currencyID_;
-        if (currencyID_ != -1)
-        {
-            wxString currName = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
-            wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_CURRENCY);
-            bn->SetLabel(currName);
-            parent_->m_core->currencyList_.setBaseCurrencySettings(currencyID_);
-        }
+        wxString currName = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
+        wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_CURRENCY);
+        bn->SetLabel(currName);
+        parent_->m_core->currencyList_.setBaseCurrencySettings(currencyID_);
     }
 }
 //----------------------------------------------------------------------------
