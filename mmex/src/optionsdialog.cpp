@@ -23,6 +23,8 @@
 #include <wx/colordlg.h>
 #include <wx/combobox.h>
 #include "mmgraphgenerator.h"
+#include <wx/spinctrl.h>
+#include <limits>
 
 enum ViewEnum
 {
@@ -139,12 +141,13 @@ mmOptionsDialog::~mmOptionsDialog( )
         db_->ExecuteUpdate("delete from INFOTABLE_V1 where INFONAME = \"STOCKURL\";");
     }
 
-    wxTextCtrl* fysDay = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY);
-    wxString fysDayVal = fysDay->GetValue();
-    if (wxAtoi(fysDayVal)<31){
+    //Find Financial Year Start Day field
+    wxSpinCtrl* fysDay = (wxSpinCtrl*)FindWindow(ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY);
+    //Get integer value then convert it to string value
+    wxString fysDayVal = wxString::Format(wxT("%d"),fysDay->GetValue());
+    //Put it ot DB
     mmDBWrapper::setInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_DAY"), fysDayVal); 
     mmOptions::financialYearStartDayString_ = fysDayVal;
-    }
 }
 
 mmOptionsDialog::mmOptionsDialog( mmCoreDB* core, wxSQLite3Database* inidb,
@@ -795,23 +798,21 @@ void mmOptionsDialog::CreateControls()
     wxFlexGridSizer* transflexGridSizerMisc = new wxFlexGridSizer(3,2,0,0);
     itemBoxSizerMisc->Add(itemStaticBoxSizerFinancialYear, 0, wxGROW|wxALL, 5);
     itemStaticBoxSizerFinancialYear->Add(transflexGridSizerMisc);
-    
-    //Validator
-    wxTextValidator intValidator(wxFILTER_INCLUDE_CHAR_LIST); 
-    wxArrayString list; 
-    wxString valid_chars(wxT("0123456789")); 
-    size_t len = valid_chars.Length(); 
-    for (size_t i=0; i<len; i++) 
-    list.Add(wxString(valid_chars.GetChar(i))); 
-    intValidator.SetIncludes(list);
-    
+        
     wxStaticText* itemStaticTextFYSDay = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Start Day"), wxDefaultPosition, wxDefaultSize, 0 );
     transflexGridSizerMisc->Add(itemStaticTextFYSDay, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     wxString financialPeriodStartDay = mmDBWrapper::getInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_DAY"), wxT("1"));
-    wxTextCtrl* textFPSDay = new wxTextCtrl( itemPanelMisc, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY, 
-                                             financialPeriodStartDay, wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT, intValidator );
-    textFPSDay->SetToolTip(_("Specify Day for start of financial year"));
+    int d = wxAtoi(financialPeriodStartDay); 
+    //wxTextCtrl* textFPSDay = new wxTextCtrl( itemPanelMisc, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY, 
+    //                                         financialPeriodStartDay, wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT, intValidator() );
+    //textFPSDay->SetToolTip(_("Specify Day for start of financial year"));
+    //textFPSDay->SetMaxLength(2);
+    wxSpinCtrl *textFPSDay = new wxSpinCtrl( itemPanelMisc, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 31, d);
+	textFPSDay->SetToolTip(_("Specify Day for start of financial year"));
+    
+    
+    
     transflexGridSizerMisc->Add(textFPSDay, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxStaticText* itemStaticTextSmonth = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Start Month"), wxDefaultPosition, wxDefaultSize, 0 );
