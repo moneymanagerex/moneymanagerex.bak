@@ -514,7 +514,7 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
         wxDateTime today = wxDateTime::Now();
         wxTimeSpan ts = th.nextOccurDate_.Subtract(today);
         th.daysRemaining_ = ts.GetDays();
-        int minutesRemaining_ = ts.GetHours();
+        int minutesRemaining_ = ts.GetMinutes();
 
         if (minutesRemaining_ > 0)
             th.daysRemaining_ += 1;

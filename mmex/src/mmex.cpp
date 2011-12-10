@@ -861,10 +861,10 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
         wxDateTime today = wxDateTime::Now();
         wxTimeSpan ts = th.nextOccurDate_.Subtract(today);
         th.daysRemaining_ = ts.GetDays();
-        int hoursRemaining_ = ts.GetHours();
+        int minutesRemaining_ = ts.GetMinutes();
 
         requireExecution = false;
-        if (hoursRemaining_ > 0)
+        if (minutesRemaining_ > 0)
             th.daysRemaining_ += 1;
 
         if (th.daysRemaining_ < 1)
