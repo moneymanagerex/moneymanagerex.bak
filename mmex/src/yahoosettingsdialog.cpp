@@ -52,9 +52,9 @@ m_yahoopointer(myp)
 
 	wxFlexGridSizer* fgSizer_main;
 	fgSizer_main = new wxFlexGridSizer( 4, 2, 0, 0 );
-	fgSizer_main->AddGrowableCol( 2 );
-	fgSizer_main->SetFlexibleDirection( wxHORIZONTAL );
-	fgSizer_main->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	//fgSizer_main->AddGrowableCol( 2 );
+	//fgSizer_main->SetFlexibleDirection( wxHORIZONTAL );
+	//fgSizer_main->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
 	m_staticText34 = new wxStaticText( this, wxID_ANY, 
         _("Yahoo Server"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -144,7 +144,7 @@ m_yahoopointer(myp)
 	bSizer29 = new wxBoxSizer( wxHORIZONTAL );
 
 	wxBoxSizer* bSizer30;
-	bSizer30 = new wxBoxSizer( wxVERTICAL );
+	bSizer30 = new wxBoxSizer( wxHORIZONTAL );
 
 	m_RefreshInterval = new wxSpinCtrl( this, 
         idRefreshInterval, wxEmptyString, wxDefaultPosition, 
@@ -152,7 +152,6 @@ m_yahoopointer(myp)
 	m_RefreshInterval->SetValue(m_yahoopointer->UpdateIntervalMinutes_);
 
 	bSizer30->Add( m_RefreshInterval, 0, wxALL, 5 );
-
 	bSizer29->Add( bSizer30, 1, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizer31;
@@ -160,9 +159,7 @@ m_yahoopointer(myp)
 
 	m_staticText6 = new wxStaticText( this, wxID_ANY, 
         _("minutes while market is open"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer31->Add( m_staticText6, 0, wxALL, 5 );
-
-	bSizer29->Add( bSizer31, 1, wxEXPAND, 5 );
+	bSizer30->Add( m_staticText6, 0, wxALL, 5 );
 
 	fgSizer_main->Add( bSizer29, 2, wxEXPAND, 5 );
 
@@ -171,20 +168,9 @@ m_yahoopointer(myp)
 
 	m_sdbSettings = new wxStdDialogButtonSizer();
 	
-	//m_sdbSettings->AddButton( new wxButton( this, wxID_OK , _ ("OK")) );
-	
-	//m_sdbSettings-> AddButton( new wxButton( this, wxID_CANCEL , _("Cancel")) ); 
-	
-
-	wxButton* itemButton7 = new wxButton( this, wxID_OK , _("OK"), wxDefaultPosition, wxDefaultSize, 0);
-	itemButton7->SetForegroundColour(wxColour(wxT("FOREST GREEN")));
+	wxButton* itemButton7 = new wxButton( this, wxID_OK , _("&OK"), wxDefaultPosition, wxDefaultSize, 0);
 	itemButton7->SetFocus();
 
-	//TODO: How to make the buttons placed aligned ritht?
-	//wxButton* itemButton8 = new wxButton( this, wxID_CANCEL , _("Cancel"), wxDefaultPosition, wxDefaultSize, 0);
-	//itemButton8->SetForegroundColour(wxColour(wxT("RED")));
-	//itemButton8->SetFocus();
-	//bSizer1100->Add(itemButton8, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 1);
 	bSizer1100->Add(itemButton7, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 1);
 	
 
