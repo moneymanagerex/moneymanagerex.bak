@@ -88,7 +88,11 @@ public:
     void OnExpandTermTree(wxCommandEvent& event);
 
     void OnFYSMonthChange(wxCommandEvent& event); // FinancialYearStartMonth
-
+    void OnDelimiterSelectedU(wxCommandEvent& event);
+    void OnDelimiterSelectedC(wxCommandEvent& event);
+    void OnDelimiterSelectedS(wxCommandEvent& event);
+    void OnDelimiterSelectedT(wxCommandEvent& event);
+    
     wxString DisplayDate2FormatDate(wxString strDate);
     wxString FormatDate2DisplayDate(wxString strDate);
 
