@@ -40,7 +40,7 @@ IMPLEMENT_DYNAMIC_CLASS( mmPayeeDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmPayeeDialog, wxDialog )
     EVT_BUTTON(wxID_ADD, mmPayeeDialog::OnAdd)
-    EVT_BUTTON(wxID_DELETE, mmPayeeDialog::OnDelete)
+    EVT_BUTTON(wxID_REMOVE, mmPayeeDialog::OnDelete)
     EVT_BUTTON(wxID_OK, mmPayeeDialog::OnBSelect)
     EVT_BUTTON(wxID_EDIT, mmPayeeDialog::OnEdit)
     EVT_LISTBOX(IDD_LISTBOX_PAYEES, mmPayeeDialog::OnSelChanged)
@@ -107,7 +107,7 @@ void mmPayeeDialog::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
 
-    addButton = new wxButton( this, wxID_ADD, _("&Add"), wxDefaultPosition, wxDefaultSize, 0 );
+    addButton = new wxButton( this, wxID_ADD, _("Add"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(addButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     addButton->SetToolTip(_("Add a new payee name"));
 	addButton->Disable();
@@ -117,7 +117,7 @@ void mmPayeeDialog::CreateControls()
     editButton->SetToolTip(_("Change the name of an existing payee"));
     editButton->Disable();
 	
-    deleteButton = new wxButton( this, wxID_DELETE, _("&Delete"));
+    deleteButton = new wxButton( this, wxID_REMOVE, _("Remove"));
     itemBoxSizer5->Add(deleteButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     deleteButton->SetToolTip(_("Delete the selected payee. The payee cannot be used by an existing transaction."));
 	deleteButton->Disable();

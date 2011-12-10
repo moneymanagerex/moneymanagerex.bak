@@ -28,7 +28,7 @@ BEGIN_EVENT_TABLE( mmMainCurrencyDialog, wxDialog )
     EVT_BUTTON(wxID_ADD, mmMainCurrencyDialog::OnBtnAdd)
     EVT_BUTTON(wxID_EDIT, mmMainCurrencyDialog::OnBtnEdit)
     EVT_BUTTON(wxID_SELECTALL, mmMainCurrencyDialog::OnBtnSelect)
-    EVT_BUTTON(wxID_DELETE, mmMainCurrencyDialog::OnBtnDelete)
+    EVT_BUTTON(wxID_REMOVE, mmMainCurrencyDialog::OnBtnDelete)
     EVT_LISTBOX(ID_LISTBOX, mmMainCurrencyDialog::OnlistBoxSelection)
     EVT_LISTBOX_DCLICK(ID_LISTBOX, mmMainCurrencyDialog::OnlistBoxDoubleClicked)
 END_EVENT_TABLE()
@@ -126,7 +126,7 @@ void mmMainCurrencyDialog::CreateControls()
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel5->SetSizer(itemBoxSizer6);
 
-    wxButton* itemButton7 = new wxButton( itemPanel5, wxID_ADD, _("&Add"), 
+    wxButton* itemButton7 = new wxButton( itemPanel5, wxID_ADD, _("Add"), 
         wxDefaultPosition, wxDefaultSize, 4 );
     itemBoxSizer6->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
@@ -135,7 +135,7 @@ void mmMainCurrencyDialog::CreateControls()
     itemBoxSizer6->Add(itemButtonEdit_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     itemButtonEdit_->Disable();
 
-    itemButtonDelete_ = new wxButton( itemPanel5, wxID_DELETE, _("&Delete"), 
+    itemButtonDelete_ = new wxButton( itemPanel5, wxID_REMOVE, _("Remove"), 
         wxDefaultPosition, wxDefaultSize, 4 );
     itemBoxSizer6->Add(itemButtonDelete_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     itemButtonDelete_->Disable();
