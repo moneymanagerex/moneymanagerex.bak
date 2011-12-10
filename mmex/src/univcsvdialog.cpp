@@ -27,13 +27,13 @@ IMPLEMENT_DYNAMIC_CLASS( mmUnivCSVImportDialog, wxDialog )
 
 
 BEGIN_EVENT_TABLE( mmUnivCSVImportDialog, wxDialog )
-    EVT_BUTTON(ID_UNIVCSVBUTTON_ADD, mmUnivCSVImportDialog::OnAdd)
+    EVT_BUTTON(wxID_ADD, mmUnivCSVImportDialog::OnAdd)
     EVT_BUTTON(ID_UNIVCSVBUTTON_IMPORT, mmUnivCSVImportDialog::OnImport)
-    EVT_BUTTON(ID_UNIVCSVBUTTON_REMOVE, mmUnivCSVImportDialog::OnRemove)
-    EVT_BUTTON(ID_UNIVCSVBUTTON_LOAD, mmUnivCSVImportDialog::OnLoad)
-    EVT_BUTTON(ID_UNIVCSVBUTTON_SAVE, mmUnivCSVImportDialog::OnSave)
-	EVT_BUTTON(ID_UNIVCSVBUTTON_MOVEUP, mmUnivCSVImportDialog::OnMoveUp)
-	EVT_BUTTON(ID_UNIVCSVBUTTON_MOVEDOWN, mmUnivCSVImportDialog::OnMoveDown)
+    EVT_BUTTON(wxID_REMOVE, mmUnivCSVImportDialog::OnRemove)
+    EVT_BUTTON(wxID_OPEN, mmUnivCSVImportDialog::OnLoad)
+    EVT_BUTTON(wxID_SAVEAS, mmUnivCSVImportDialog::OnSave)
+	EVT_BUTTON(wxID_UP, mmUnivCSVImportDialog::OnMoveUp)
+	EVT_BUTTON(wxID_DOWN, mmUnivCSVImportDialog::OnMoveDown)
 END_EVENT_TABLE()
 
 //----------------------------------------------------------------------------
@@ -141,15 +141,17 @@ void mmUnivCSVImportDialog::CreateControls()
     itemPanel_Arranger->SetSizer(itemBoxSizer_Arranger);
 
 	//Move Up button
-    wxButton* itemButton_MoveUp = new wxButton( itemPanel_Arranger, ID_UNIVCSVBUTTON_MOVEUP, _("Move &Up"), 
+    wxButton* itemButton_MoveUp = new wxButton( itemPanel_Arranger, wxID_UP, _("&Up"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer_Arranger->Add(itemButton_MoveUp, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButton_MoveUp -> SetToolTip (_("Move Up"));
 
 	//Move down button
-    wxButton* itemButton_MoveDown = new wxButton( itemPanel_Arranger, ID_UNIVCSVBUTTON_MOVEDOWN, _("Move &Down"), 
+    wxButton* itemButton_MoveDown = new wxButton( itemPanel_Arranger, wxID_DOWN, _("&Down"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer_Arranger->Add(itemButton_MoveDown, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
+    itemButton_MoveDown -> SetToolTip (_("Move &Down"));
+    
 	//ListBox of attribute order
     wxString* itemListBox4Strings = NULL;
     csvListBox_ = new wxListBox( itemDialog1, ID_LISTBOX, 
@@ -165,12 +167,12 @@ void mmUnivCSVImportDialog::CreateControls()
     itemPanel_AddRemove->SetSizer(itemBoxSizer_AddRemove);
 
 	//Add button
-    wxButton* itemButton_Add = new wxButton( itemPanel_AddRemove, ID_UNIVCSVBUTTON_ADD, _("&Add"), 
+    wxButton* itemButton_Add = new wxButton( itemPanel_AddRemove, wxID_ADD, _("Add"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer_AddRemove->Add(itemButton_Add, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	//Remove button
-    wxButton* itemButton_Remove = new wxButton( itemPanel_AddRemove, ID_UNIVCSVBUTTON_REMOVE, _("&Remove"), 
+    wxButton* itemButton_Remove = new wxButton( itemPanel_AddRemove, wxID_REMOVE, _("Remove"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer_AddRemove->Add(itemButton_Remove, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -182,26 +184,37 @@ void mmUnivCSVImportDialog::CreateControls()
     itemPanel5->SetSizer(itemBoxSizer6);
 
 	//Load Template button
-    wxButton* itemButton1_Load = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_LOAD, _("&Load Template"), 
+    wxButton* itemButton_Load = new wxButton( itemPanel5, wxID_OPEN, _("&Open"), 
         wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer6->Add(itemButton1_Load, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer6->Add(itemButton_Load, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButton_Load -> SetToolTip (_("Load Template"));
 
 	//Save As Template button
-    wxButton* itemButton_Save = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_SAVE, _("Save &As Template"), 
+    wxButton* itemButton_Save = new wxButton( itemPanel5, wxID_SAVEAS, _("Save &As..."), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton_Save, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButton_Save -> SetToolTip (_("Save Template"));
 
 	//Import File button
-    wxButton* itemButton_Import = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_IMPORT, _("&Import File"), 
+    wxButton* itemButton_Import = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_IMPORT, _("&Import"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButton_Import, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButton_Import -> SetToolTip (_("Import File"));
+
+    wxBoxSizer* itemBoxSizer66 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer6->Add(itemBoxSizer66, 1, wxGROW|wxALL, 5);
+    
+    wxButton* itemCancelButton = new wxButton( itemPanel5, wxID_CANCEL, _("&Cancel"));
+    itemBoxSizer66->Add(itemCancelButton);
+    itemCancelButton->SetFocus();
+
 
 ////@end MyDialog content construction
 }
 
 /*!
  * Should we show tooltips?
- */
+ */	
 
 bool mmUnivCSVImportDialog::ShowToolTips()
 {

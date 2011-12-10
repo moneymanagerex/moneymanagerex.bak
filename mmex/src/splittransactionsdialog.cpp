@@ -34,8 +34,8 @@ IMPLEMENT_DYNAMIC_CLASS( SplitTransactionDialog, wxDialog )
  */
 
 BEGIN_EVENT_TABLE( SplitTransactionDialog, wxDialog )
-    EVT_BUTTON( wxID_NEW, SplitTransactionDialog::OnButtonAddClick )
-    EVT_BUTTON( wxID_DELETE, SplitTransactionDialog::OnButtonRemoveClick )
+    EVT_BUTTON( wxID_ADD, SplitTransactionDialog::OnButtonAddClick )
+    EVT_BUTTON( wxID_REMOVE, SplitTransactionDialog::OnButtonRemoveClick )
     EVT_BUTTON( wxID_EDIT, SplitTransactionDialog::OnButtonEditClick )
     EVT_BUTTON( wxID_CANCEL, SplitTransactionDialog::OnButtonCloseClick )
 END_EVENT_TABLE()
@@ -149,10 +149,10 @@ void SplitTransactionDialog::CreateControls()
     wxBoxSizer* itemBoxSizer66 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer1->Add(itemBoxSizer66, 0, wxALIGN_RIGHT|wxALL, 0);
 
-    wxButton* itemButtonNew = new wxButton( itemDialog1, wxID_NEW, _("&New"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButtonNew = new wxButton( itemDialog1, wxID_ADD, _("Add"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButtonNew, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButtonDelete = new wxButton( itemDialog1, wxID_DELETE, _("&Delete"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButtonDelete = new wxButton( itemDialog1, wxID_REMOVE, _("Remove"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer6->Add(itemButtonDelete, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxButton* itemButtonEdit = new wxButton( itemDialog1, wxID_EDIT, _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
