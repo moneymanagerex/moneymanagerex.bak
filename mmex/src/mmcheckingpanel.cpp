@@ -1818,40 +1818,6 @@ wxListItemAttr* MyListCtrl::OnGetItemAttr(long item) const
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::OnChar(wxKeyEvent& event)
-{   
-	if (wxGetKeyState(WXK_ALT) || 
-        wxGetKeyState(WXK_COMMAND) ||
-        wxGetKeyState(WXK_UP) || 
-        wxGetKeyState(WXK_DOWN) || 
-        wxGetKeyState(WXK_LEFT) || 
-        wxGetKeyState(WXK_RIGHT) || 
-        wxGetKeyState(WXK_HOME) || 
-        wxGetKeyState(WXK_END) ||
-        wxGetKeyState(WXK_PAGEUP) || 
-        wxGetKeyState(WXK_PAGEDOWN) || 
-        wxGetKeyState(WXK_NUMPAD_UP) ||
-        wxGetKeyState(WXK_NUMPAD_DOWN) ||
-        wxGetKeyState(WXK_NUMPAD_LEFT) ||
-        wxGetKeyState(WXK_NUMPAD_RIGHT) ||
-        wxGetKeyState(WXK_NUMPAD_PAGEDOWN) ||
-        wxGetKeyState(WXK_NUMPAD_PAGEUP) ||
-        wxGetKeyState(WXK_NUMPAD_HOME) ||
-        wxGetKeyState(WXK_NUMPAD_END) ||
-        wxGetKeyState(WXK_DELETE) ||
-        wxGetKeyState(WXK_NUMPAD_DELETE) ||
-        wxGetKeyState(WXK_TAB)||
-        wxGetKeyState(WXK_RETURN)||
-        wxGetKeyState(WXK_NUMPAD_ENTER)||
-        wxGetKeyState(WXK_SPACE)||
-        wxGetKeyState(WXK_NUMPAD_SPACE)
-        )
-    {
-		event.Skip();
-    }
-}
-//----------------------------------------------------------------------------
-
 void MyListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
 {
     if (m_selectedIndex != -1) {
@@ -1877,6 +1843,13 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 }
 //----------------------------------------------------------------------------
 
+void MyListCtrl::OnChar(wxKeyEvent& event)
+{   
+    if (!wxGetKeyState(wxKeyCode('V'))&& !wxGetKeyState(wxKeyCode('R')) && !wxGetKeyState(wxKeyCode('U')) && !wxGetKeyState(wxKeyCode('F')) && !wxGetKeyState(wxKeyCode('D')))
+        event.Skip(); 
+}
+//----------------------------------------------------------------------------
+
 void MyListCtrl::OnListKeyDown(wxListEvent& event)
 {
     if (m_selectedIndex == -1) //check if a transaction is selected
@@ -1896,76 +1869,33 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
 
     if (!wxGetKeyState(WXK_COMMAND) && !wxGetKeyState(WXK_ALT) && !wxGetKeyState(WXK_CONTROL))
     {
-        // new style
-        int keycode = event.GetKeyCode();
-        char key = '\0';
-        if (keycode < 256)
-        {
-        // TODO: Unicode in non-Unicode mode ??
-            key = (char)keycode;
-        }
-
-        switch ( key )
-        {
-        case 'v':
-        case 'V':
-            {
-                if (status != wxT("V")) 
-                { //Do not update status if it's already the same
-                    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKVOID);
-                    OnMarkTransaction(evt);  
-                }
-            }
-            break;
-
-        case 'r':
-        case 'R':
-            {
-                if (status != wxT("R")) 
-                {
-                    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKRECONCILED);
-                    OnMarkTransaction(evt); 
-                }
-            }
-            break;
-
-        case 'u':
-        case 'U':
-            {
-                if (status != wxT("")) 
-                {
-                    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKUNRECONCILED);
-                    OnMarkTransaction(evt); 
-                } 
-            }
-            break;
-
-        case 'f':
-        case 'F':
-            {
-                if (status != wxT("F")) 
-                {
-                    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP);
-                    OnMarkTransaction(evt); 
-                }
-            }
-            break;
-
-        case 'd':
-        case 'D':
-            {
-                if (status != wxT("D")) 
-                {
-                    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKDUPLICATE);
-                    OnMarkTransaction(evt); 
-                }
-            }
-            break;
-
-        } // end switch
+		if (wxGetKeyState(wxKeyCode('V')) && status != wxT("V")) 
+		{
+			wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKVOID);
+			OnMarkTransaction(evt);  
+		}
+		else if (wxGetKeyState(wxKeyCode('R')) && status != wxT("R")) 
+		{
+			wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKRECONCILED);
+			OnMarkTransaction(evt); 
+		}
+		else if (wxGetKeyState(wxKeyCode('U')) && status != wxT("")) 
+		{
+			wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKUNRECONCILED);
+			OnMarkTransaction(evt); 
+		} 
+		else if (wxGetKeyState(wxKeyCode('F')) && status != wxT("F")) 
+		{
+			wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP);
+			OnMarkTransaction(evt); 
+		}
+		else if (wxGetKeyState(wxKeyCode('D')) && status != wxT("D")) 
+		{
+			wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKDUPLICATE);
+			OnMarkTransaction(evt); 
+		}
         
-//      default:
-        if (key == WXK_DELETE || key == WXK_NUMPAD_DELETE)
+        else if (wxGetKeyState(WXK_DELETE) || wxGetKeyState(WXK_NUMPAD_DELETE))
         {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
             OnDeleteTransaction(evt);
