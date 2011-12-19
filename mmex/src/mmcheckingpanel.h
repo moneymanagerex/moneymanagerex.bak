@@ -103,6 +103,7 @@ private:
     wxStaticText* statTextTransFilter_;
     TransFilterDialog* transFilterDlg_;
     bool transFilterActive_;
+    double filteredBalance_;
 
     MyListCtrl *m_listCtrlAccount;
     const int m_AccountID;
