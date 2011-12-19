@@ -515,7 +515,8 @@ mmCheckingPanel::mmCheckingPanel
     m_core(core),
     m_inidb(inidb),
     m_listCtrlAccount(),
-    m_AccountID(accountID)
+    m_AccountID(accountID),
+    filteredBalance_(0.0)
 {
     wxASSERT(m_core);
     wxASSERT(m_inidb);
@@ -1033,12 +1034,13 @@ void mmCheckingPanel::setAccountSummary()
     
     wxString diffbal;
     mmex::formatDoubleToCurrency(total - (reconciledBal + acctInitBalance), diffbal);
-    
+
+    wxString filteredBalanceStr;
+    mmex::formatDoubleToCurrency(filteredBalance_, filteredBalanceStr);
 
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
-
-    wxString lbl  = wxString::Format(_("Account Balance : %s      Reconciled Balance : %s      Difference : %s"), 
-        balance.c_str(), recbalance.c_str(), diffbal.c_str());
+    wxString lbl  = wxString::Format(_("Account Bal: %s      Reconciled Bal: %s      Diff: %s      Displayed Bal: %s"),
+                    balance.c_str(), recbalance.c_str(), diffbal.c_str(), filteredBalanceStr.c_str());
     header->SetLabel(lbl);
 }
 //----------------------------------------------------------------------------
@@ -1121,7 +1123,7 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_HEADER);
     header->SetLabel(_("Account View : ") + pAccount->accountName_);
 
-    setAccountSummary();
+    filteredBalance_ = 0.0;
 
     /**********************************************************************************
      Stage 1
@@ -1181,6 +1183,10 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
         {
             m_trans.push_back(pBankTransaction.get());
             ++numTransactions;
+    
+            double transBal = 0.0;
+            transBal = getBalance( pBankTransaction.get(), transBal);
+            filteredBalance_ += transBal;
         }
     }
 
@@ -1240,6 +1246,8 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
             m_listCtrlAccount->EnsureVisible(0);
         }
     }
+
+    setAccountSummary();
 
     if (pgd)
     {
