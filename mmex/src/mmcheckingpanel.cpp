@@ -2070,6 +2070,7 @@ void MyListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
                               m_cp->m_inidb, this);
             if ( dlg.ShowModal() == wxID_OK )
             {
+                m_selectedIndex --;
                 refreshVisualList();
             }
         } 
@@ -2084,8 +2085,8 @@ void MyListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
                 
                 pTransaction->accountID_ = toAccountID;
                 m_cp->m_core->bTransactionList_.updateTransaction(pTransaction);
+                m_selectedIndex --;
                 refreshVisualList();
-                
             }
         }
     }
