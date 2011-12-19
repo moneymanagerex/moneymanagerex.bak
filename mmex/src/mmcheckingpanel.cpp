@@ -1817,6 +1817,41 @@ wxListItemAttr* MyListCtrl::OnGetItemAttr(long item) const
 
 }
 //----------------------------------------------------------------------------
+// If any of these keys are encountered, the search for the event handler
+// should continue as these keys may be processed by the operating system.
+void MyListCtrl::OnChar(wxKeyEvent& event)
+{   
+	if (wxGetKeyState(WXK_ALT) || 
+        wxGetKeyState(WXK_COMMAND) ||
+        wxGetKeyState(WXK_UP) || 
+        wxGetKeyState(WXK_DOWN) || 
+        wxGetKeyState(WXK_LEFT) || 
+        wxGetKeyState(WXK_RIGHT) || 
+        wxGetKeyState(WXK_HOME) || 
+        wxGetKeyState(WXK_END) ||
+        wxGetKeyState(WXK_PAGEUP) || 
+        wxGetKeyState(WXK_PAGEDOWN) || 
+        wxGetKeyState(WXK_NUMPAD_UP) ||
+        wxGetKeyState(WXK_NUMPAD_DOWN) ||
+        wxGetKeyState(WXK_NUMPAD_LEFT) ||
+        wxGetKeyState(WXK_NUMPAD_RIGHT) ||
+        wxGetKeyState(WXK_NUMPAD_PAGEDOWN) ||
+        wxGetKeyState(WXK_NUMPAD_PAGEUP) ||
+        wxGetKeyState(WXK_NUMPAD_HOME) ||
+        wxGetKeyState(WXK_NUMPAD_END) ||
+        wxGetKeyState(WXK_DELETE) ||
+        wxGetKeyState(WXK_NUMPAD_DELETE) ||
+        wxGetKeyState(WXK_TAB)||
+        wxGetKeyState(WXK_RETURN)||
+        wxGetKeyState(WXK_NUMPAD_ENTER)||
+        wxGetKeyState(WXK_SPACE)||
+        wxGetKeyState(WXK_NUMPAD_SPACE)
+        )
+    {
+		event.Skip();
+    }
+}
+//----------------------------------------------------------------------------
 
 void MyListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
 {
@@ -1840,13 +1875,6 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
         m_cp->initVirtualListControl(NULL);
         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
     }
-}
-//----------------------------------------------------------------------------
-
-void MyListCtrl::OnChar(wxKeyEvent& event)
-{   
-    if (!wxGetKeyState(wxKeyCode('V'))&& !wxGetKeyState(wxKeyCode('R')) && !wxGetKeyState(wxKeyCode('U')) && !wxGetKeyState(wxKeyCode('F')) && !wxGetKeyState(wxKeyCode('D')))
-        event.Skip(); 
 }
 //----------------------------------------------------------------------------
 
