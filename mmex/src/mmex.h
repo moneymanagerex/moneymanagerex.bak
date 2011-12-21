@@ -39,6 +39,7 @@ class mmPrintableBase;
 class mmPanelBase;
 class mmTreeItemData;
 class customSQLReportIndex;
+class RecentDatabaseFiles;
 //----------------------------------------------------------------------------
 
 struct CategInfo
@@ -261,6 +262,19 @@ private:
     bool financialYearIsDifferent();
     bool IsUpdateAvailable(wxString page);
     void processPendingEvents();
+
+    /* Recent Files */
+    RecentDatabaseFiles* recentFiles_;
+    wxMenu *menuRecentFiles_;
+
+    void OnRecentFiles_1(wxCommandEvent& event);
+    void OnRecentFiles_2(wxCommandEvent& event);
+    void OnRecentFiles_3(wxCommandEvent& event);
+    void OnRecentFiles_4(wxCommandEvent& event);
+    void OnRecentFiles_5(wxCommandEvent& event);
+    void OnClearRecentFiles(wxCommandEvent& event);
+
+    void SetDatabaseFile(wxString dbFileName, bool newDatabase = false);
 
     // any class wishing to process wxWindows events must use this macro
     DECLARE_EVENT_TABLE()
