@@ -65,6 +65,7 @@
 #include "customreportdisplay.h"
 #include "customreportindex.h"
 #include "customreportdialog.h"
+#include "recentfiles.h"
 //----------------------------------------------------------------------------
 
 /* Include XPM Support */
@@ -426,6 +427,15 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     
     /*Automatic processing of repeat transactions*/
     EVT_TIMER(AUTO_REPEAT_TRANSACTIONS_TIMER_ID, mmGUIFrame::OnAutoRepeatTransactionsTimer)
+    
+    /* Recent Files */
+    EVT_MENU(MENU_RECENT_FILES_1, mmGUIFrame::OnRecentFiles_1)
+    EVT_MENU(MENU_RECENT_FILES_2, mmGUIFrame::OnRecentFiles_2)
+    EVT_MENU(MENU_RECENT_FILES_3, mmGUIFrame::OnRecentFiles_3)
+    EVT_MENU(MENU_RECENT_FILES_4, mmGUIFrame::OnRecentFiles_4)
+    EVT_MENU(MENU_RECENT_FILES_5, mmGUIFrame::OnRecentFiles_5)
+    EVT_MENU(MENU_RECENT_FILES_CLEAR, mmGUIFrame::OnClearRecentFiles)
+
 END_EVENT_TABLE()
 //----------------------------------------------------------------------------
 IMPLEMENT_APP(mmGUIApp)
@@ -624,7 +634,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     createMenu();
     createToolBar();
     createControls();
-
+    recentFiles_ = new RecentDatabaseFiles(m_inidb.get(), menuRecentFiles_);
 
 	// add the toolbars to the manager
 	m_mgr.AddPane(toolBar_, wxAuiPaneInfo().
@@ -689,6 +699,7 @@ mmGUIFrame::~mmGUIFrame()
 void mmGUIFrame::cleanup()
 {
     printer_.reset();
+    recentFiles_->~RecentDatabaseFiles();
     saveConfigFile();
 
     m_mgr.UnInit();
@@ -2670,56 +2681,59 @@ void mmGUIFrame::createHelpPage()
 
 void mmGUIFrame::createMenu()
 {
-   wxBitmap toolBarBitmaps[11];
-   toolBarBitmaps[0] = wxBitmap(new_xpm);
-   toolBarBitmaps[1] = wxBitmap(open_xpm);
-   toolBarBitmaps[2] = wxBitmap(save_xpm);
-   toolBarBitmaps[3] = wxBitmap(newacct_xpm);
-   toolBarBitmaps[4] = wxBitmap(house_xpm);
-   toolBarBitmaps[5] = wxBitmap(print_xpm);
-   toolBarBitmaps[6] = wxBitmap(printpreview_xpm);
-   toolBarBitmaps[7] = wxBitmap(printsetup_xpm);
-   toolBarBitmaps[8] = wxBitmap(edit_account_xpm);
-   toolBarBitmaps[9] = wxBitmap(delete_account_xpm);
+    wxBitmap toolBarBitmaps[11];
+    toolBarBitmaps[0] = wxBitmap(new_xpm);
+    toolBarBitmaps[1] = wxBitmap(open_xpm);
+    toolBarBitmaps[2] = wxBitmap(save_xpm);
+    toolBarBitmaps[3] = wxBitmap(newacct_xpm);
+    toolBarBitmaps[4] = wxBitmap(house_xpm);
+    toolBarBitmaps[5] = wxBitmap(print_xpm);
+    toolBarBitmaps[6] = wxBitmap(printpreview_xpm);
+    toolBarBitmaps[7] = wxBitmap(printsetup_xpm);
+    toolBarBitmaps[8] = wxBitmap(edit_account_xpm);
+    toolBarBitmaps[9] = wxBitmap(delete_account_xpm);
 
-   wxMenu *menu_file = new wxMenu;
+    wxMenu *menu_file = new wxMenu;
 
-   wxMenuItem* menuItemNew = new wxMenuItem(menu_file, MENU_NEW,_("&New Database\tCtrl-N"),_("New Database"));
-   menuItemNew->SetBitmap(toolBarBitmaps[0]);
+    wxMenuItem* menuItemNew = new wxMenuItem(menu_file, MENU_NEW,_("&New Database\tCtrl-N"),_("New Database"));
+    menuItemNew->SetBitmap(toolBarBitmaps[0]);
+    wxMenuItem* menuItemOpen = new wxMenuItem(menu_file, MENU_OPEN,_("&Open Database\tCtrl-O"),_("Open Database"));
+    menuItemOpen->SetBitmap(toolBarBitmaps[1]);
+    wxMenuItem* menuItemSaveAs = new wxMenuItem(menu_file, MENU_SAVE_AS,_("Save Database &As"),_("Save Database As"));
+    menuItemSaveAs->SetBitmap(wxBitmap(saveas_xpm));
+    menu_file->Append(menuItemNew);
+    menu_file->Append(menuItemOpen);
+    menu_file->Append(menuItemSaveAs);
+    menu_file->AppendSeparator();
 
-   wxMenuItem* menuItemOpen = new wxMenuItem(menu_file, MENU_OPEN,_("&Open Database\tCtrl-O"),_("Open Database"));
-   menuItemOpen->SetBitmap(toolBarBitmaps[1]);
+    menuRecentFiles_ = new wxMenu;
+    menu_file->Append(MENU_RECENT_FILES, _("&Recent Files..."), menuRecentFiles_);
+    // Note: menuRecentFiles_ will be constructed by the class: RecentDatabaseFiles::setMenuFileItems() 
+    wxMenuItem* menuClearRecentFiles = new wxMenuItem(menu_file, MENU_RECENT_FILES_CLEAR,_("&Clear Recent Files"));
+    menuClearRecentFiles->SetBitmap(toolBarBitmaps[9]);
+    menu_file->Append(menuClearRecentFiles);
+    menu_file->AppendSeparator();
 
-   menu_file->Append(menuItemNew);
-   menu_file->Append(menuItemOpen);
+    wxMenu* exportMenu = new wxMenu;
+    exportMenu->Append(MENU_EXPORT_CSV, _("&CSV Files"), _("Export to CSV"));
+    exportMenu->Append(MENU_EXPORT_QIF, _("&QIF Files"), _("Export to QIF"));
+    exportMenu->Append(MENU_EXPORT_HTML, _("&Report to HTML"), _("Export to HTML"));
+    menu_file->Append(MENU_EXPORT, _("&Export"), exportMenu);
 
-   wxMenuItem* menuItemSaveAs = new wxMenuItem(menu_file, MENU_SAVE_AS,_("Save Database &As"),_("Save Database As"));
-   menuItemSaveAs->SetBitmap(wxBitmap(saveas_xpm));
-   menu_file->Append(menuItemSaveAs);
+    wxMenu* importMenu = new wxMenu;
+    importMenu->Append(MENU_IMPORT_QIF, _("&QIF Files"), _("Import from QIF"));
+    importMenu->Append(MENU_IMPORT_UNIVCSV, _("&Universal CSV Files"), _("Import from any CSV file"));
+    if (mmIniOptions::enableImportMMCSV_)
+        importMenu->Append(MENU_IMPORT_CSV, _("&MMEX CSV Files"), _("Import from MMEX CSV"));
+    if (mmIniOptions::enableImportMMNETCSV_)
+        importMenu->Append(MENU_IMPORT_MMNETCSV, _("MM.&NET CSV Files"), _("Import from MM.NET CSV"));
+    menu_file->Append(MENU_IMPORT, _("&Import"), importMenu);
 
-	menu_file->AppendSeparator();
-
-   wxMenu* exportMenu = new wxMenu;
-   exportMenu->Append(MENU_EXPORT_CSV, _("&CSV Files"), _("Export to CSV"));
-   exportMenu->Append(MENU_EXPORT_QIF, _("&QIF Files"), _("Export to QIF"));
-   exportMenu->Append(MENU_EXPORT_HTML, _("&Report to HTML"), _("Export to HTML"));
-   menu_file->Append(MENU_EXPORT, _("&Export"), exportMenu);
-
-   wxMenu* importMenu = new wxMenu;
-   importMenu->Append(MENU_IMPORT_QIF, _("&QIF Files"), _("Import from QIF"));
-   importMenu->Append(MENU_IMPORT_UNIVCSV, _("&Universal CSV Files"), _("Import from any CSV file"));
-   if (mmIniOptions::enableImportMMCSV_)
-      importMenu->Append(MENU_IMPORT_CSV, _("&MMEX CSV Files"), _("Import from MMEX CSV"));
-   if (mmIniOptions::enableImportMMNETCSV_)
-      importMenu->Append(MENU_IMPORT_MMNETCSV, _("MM.&NET CSV Files"), _("Import from MM.NET CSV"));
-   menu_file->Append(MENU_IMPORT, _("&Import"), importMenu);
-
-   menu_file->AppendSeparator();
-
+    menu_file->AppendSeparator();
     
-	wxMenuItem* menuItemPrintSetup = new wxMenuItem(menu_file, MENU_PRINT_PAGE_SETUP, 
-	   _("Page Set&up..."), _("Setup page printing options"));
-	menuItemPrintSetup->SetBitmap(toolBarBitmaps[7]);
+    wxMenuItem* menuItemPrintSetup = new wxMenuItem(menu_file, MENU_PRINT_PAGE_SETUP, 
+        _("Page Set&up..."), _("Setup page printing options"));
+    menuItemPrintSetup->SetBitmap(toolBarBitmaps[7]);
     menu_file->Append(menuItemPrintSetup); 
      
     wxMenu* printPreviewMenu = new wxMenu;
@@ -2766,13 +2780,13 @@ void mmGUIFrame::createMenu()
 
 	wxMenu *menuAccounts = new wxMenu;
 
-   if (mmIniOptions::enableAddAccount_)
-   {
-      wxMenuItem* menuItemNewAcct = new wxMenuItem(menuAccounts, MENU_NEWACCT, 
-         _("New &Account"), _("New Account"));
-      menuItemNewAcct->SetBitmap(toolBarBitmaps[3]);
-      menuAccounts->Append(menuItemNewAcct); 
-   }
+    if (mmIniOptions::enableAddAccount_)
+    {
+        wxMenuItem* menuItemNewAcct = new wxMenuItem(menuAccounts, MENU_NEWACCT, 
+            _("New &Account"), _("New Account"));
+        menuItemNewAcct->SetBitmap(toolBarBitmaps[3]);
+        menuAccounts->Append(menuItemNewAcct); 
+    }
 
 	wxMenuItem* menuItemAcctList = new wxMenuItem(menuAccounts, MENU_ACCTLIST, 
 		_("Account &List"), _("Show Account List"));
@@ -2834,10 +2848,10 @@ void mmGUIFrame::createMenu()
 
     if (mmIniOptions::enableRepeatingTransactions_)
     {
-       wxMenuItem* menuItemBillsDeposits = new wxMenuItem(menuTools, MENU_BILLSDEPOSITS, 
-          _("&Repeating Transactions"), _("Bills && Deposits"));
-       menuItemBillsDeposits->SetBitmap(wxBitmap(clock_xpm));
-       menuTools->Append(menuItemBillsDeposits); 
+        wxMenuItem* menuItemBillsDeposits = new wxMenuItem(menuTools, MENU_BILLSDEPOSITS, 
+            _("&Repeating Transactions"), _("Bills && Deposits"));
+        menuItemBillsDeposits->SetBitmap(wxBitmap(clock_xpm));
+        menuTools->Append(menuItemBillsDeposits); 
     }
 
 //    wxMenuItem* menuItemStocks = new wxMenuItem(menuTools, MENU_STOCKS, _("&Stock Investments"), _("Stock Investments"));
@@ -3153,15 +3167,15 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
     if (m_db) {
         fileName_ = fileName;
     } else {
-      fileName_.Clear();
-      password_.Clear();
+        fileName_.Clear();
+        password_.Clear();
     }
 }
 //----------------------------------------------------------------------------
 
 wxPanel* mmGUIFrame::createMainFrame(wxPanel* /*parent*/)
 {
-       return 0;
+    return 0;
 }
 //----------------------------------------------------------------------------
 
@@ -3189,7 +3203,6 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew, const wxStr
         showBeginAppDialog();
 }
 //----------------------------------------------------------------------------
-
 void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
 {
     wxFileDialog dlg(this, 
@@ -3210,13 +3223,7 @@ void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
         fileName += wxT(".mmb");
     }
 
-    // Ensure database is in a steady state first
-    if (!activeHomePage_)
-    {
-        refreshRequested_ = true;
-        createHomePage();
-    }
-    openFile(fileName, true);
+    SetDatabaseFile(fileName, true);
 }
 //----------------------------------------------------------------------------
 
@@ -3231,13 +3238,7 @@ void mmGUIFrame::OnOpen(wxCommandEvent& /*event*/)
   
     if (!fileName.empty())
     {
-        // Ensure database is in a steady state first
-        if (!activeHomePage_)
-        {
-            refreshRequested_ = true;
-            createHomePage();
-        }
-        openFile(fileName, false);
+        SetDatabaseFile(fileName);
     }
 }
 //----------------------------------------------------------------------------
@@ -4688,3 +4689,66 @@ void mmGUIApp::OnFatalException()
     reportFatalException(wxDebugReport::Context_Exception);
 }
 //----------------------------------------------------------------------------
+
+void mmGUIFrame::SetDatabaseFile(wxString dbFileName, bool newDatabase)
+{
+    wxProgressDialog *progress = NULL;
+    if (! newDatabase)
+    {
+        progress = new wxProgressDialog( _("Setting new Database file"), _("Please wait while the new database is being loaded."));
+        progress->Update(20);
+    }
+
+    // Ensure database is in a steady state first
+    if (!activeHomePage_)
+    {
+        refreshRequested_ = true;
+        createHomePage();
+    }
+
+    if (progress)
+        progress->Update(40);
+
+    openFile(dbFileName, newDatabase);
+
+    if (progress)
+        progress->Update(95);
+
+    recentFiles_->updateRecentList(dbFileName);
+
+    if (progress)
+    {
+        progress->Update(100);
+        progress->Destroy();
+    }
+}
+
+void mmGUIFrame::OnRecentFiles_1(wxCommandEvent& /*event*/)
+{
+    SetDatabaseFile(recentFiles_->getRecentFile(1));
+}
+
+void mmGUIFrame::OnRecentFiles_2(wxCommandEvent& /*event*/)
+{
+    SetDatabaseFile(recentFiles_->getRecentFile(2));
+}
+
+void mmGUIFrame::OnRecentFiles_3(wxCommandEvent& /*event*/)
+{
+    SetDatabaseFile(recentFiles_->getRecentFile(3));
+}
+
+void mmGUIFrame::OnRecentFiles_4(wxCommandEvent& /*event*/)
+{
+    SetDatabaseFile(recentFiles_->getRecentFile(4));
+}
+
+void mmGUIFrame::OnRecentFiles_5(wxCommandEvent& /*event*/)
+{
+    SetDatabaseFile(recentFiles_->getRecentFile(5));
+}
+
+void mmGUIFrame::OnClearRecentFiles(wxCommandEvent& /*event*/)
+{
+    recentFiles_->clearRecentList();
+}
