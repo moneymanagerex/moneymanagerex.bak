@@ -143,6 +143,7 @@ private:
     wxArrayString freqnotes;
     bool richText;
 
+    void activateSplitTransactionsDlg();
 };
 
 #endif

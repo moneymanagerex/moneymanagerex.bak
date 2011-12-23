@@ -83,7 +83,8 @@ public:
     SplitTransactionDialog( 
         mmCoreDB* core,
         mmSplitTransactionEntries* split, 
-        wxWindow* parent, 
+        int transType,
+        wxWindow* parent,
         wxWindowID id = SYMBOL_SPLITTRANSACTIONDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_SPLITTRANSACTIONDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_SPLITTRANSACTIONDIALOG_POSITION, 
@@ -137,8 +138,13 @@ public:
 ////@end SplitTransactionDialog member variables
 
 private:
-     mmCoreDB* core_;
-     mmSplitTransactionEntries* split_;
+    mmCoreDB* core_;
+    mmSplitTransactionEntries* split_;
+    int transType_;
+
+    void OnListDblClick(wxListEvent& event);
+    void EditEntry();
+    long GetSelectedItem();
 };
 
 #endif

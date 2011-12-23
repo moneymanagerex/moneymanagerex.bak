@@ -57,7 +57,10 @@ public:
     bool deleteCategory(int categID);
     bool deleteSubCategory(int categID, int subCategID);
     bool updateCategory(int categID, int subCategID, const wxString& text);
-    
+    wxString GetCategoryString(int categID);
+    wxString GetSubCategoryString(int categID, int subCategID);
+    wxString GetFullCategoryString(int categID, int subCategID);
+
     /* Public Data */
     std::vector< boost::shared_ptr<mmCategory> > categories_;
     

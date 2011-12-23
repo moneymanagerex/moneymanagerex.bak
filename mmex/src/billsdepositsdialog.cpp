@@ -766,13 +766,7 @@ void mmBDDialog::OnCategs(wxCommandEvent& /*event*/)
 {
    if (cSplit_->GetValue())
    {
-      SplitTransactionDialog dlg(core_, split_.get(), this);
-      if (dlg.ShowModal() == wxID_OK)
-      {
-         wxString dispAmount;
-         mmex::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
-         textAmount_->SetValue(dispAmount);
-      }
+       activateSplitTransactionsDlg();
    }
    else
    {
@@ -1253,6 +1247,7 @@ void mmBDDialog::OnSplitChecked(wxCommandEvent& /*event*/)
         wxString dispAmount;
         mmex::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
         textAmount_->SetValue(dispAmount);
+        activateSplitTransactionsDlg();
     }
     else
     {
@@ -1440,4 +1435,15 @@ void mmBDDialog::OnsetNextRepeatDate(wxCommandEvent& /*event*/)
             calendarCtrl_->SetDate(date);
         }
     }
+}
+
+void mmBDDialog::activateSplitTransactionsDlg()
+{
+    SplitTransactionDialog dlg(core_, split_.get(),choiceTrans_->GetSelection(), this);
+    if (dlg.ShowModal() == wxID_OK)
+    {
+        wxString dispAmount;
+        mmex::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
+        textAmount_->SetValue(dispAmount);
+     }
 }
