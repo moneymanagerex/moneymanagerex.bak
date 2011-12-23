@@ -176,3 +176,27 @@ bool mmCategoryList::updateCategory(int categID, int subCategID, const wxString&
     return true;
 }
 
+wxString mmCategoryList::GetCategoryString(int categID)
+{
+    wxString catName = mmDBWrapper::getCategoryName(db_.get(), categID);
+    catName.Replace (wxT("&"), wxT("&&"));
+
+    return catName;
+}
+
+wxString mmCategoryList::GetSubCategoryString(int categID, int subCategID)
+{
+    wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(), categID, subCategID);
+    subcatName.Replace (wxT("&"), wxT("&&"));
+
+    return subcatName;
+}
+
+wxString mmCategoryList::GetFullCategoryString(int categID, int subCategID)
+{
+    wxString category    = GetCategoryString(categID);
+    wxString subCategory = GetSubCategoryString(categID, subCategID);
+    if (!subCategory.IsEmpty())
+        category<< wxT(":") << subCategory;
+    return category;
+}

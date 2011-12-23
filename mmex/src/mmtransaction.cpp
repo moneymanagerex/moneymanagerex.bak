@@ -24,6 +24,17 @@ void mmSplitTransactionEntries::addSplit(boost::shared_ptr<mmSplitTransactionEnt
     entries_.push_back(split);
 }
 
+double mmSplitTransactionEntries::getUpdatedTotalSplits()
+{
+    total_ = 0.0;
+    for (size_t i = 0; i < entries_.size(); ++i)
+    {
+        total_ += entries_[i]->splitAmount_;
+    }
+
+    return total_;
+}
+
 void mmSplitTransactionEntries::removeSplit(int splitID)
 {
     for (size_t i = 0; i < entries_.size(); ++i)

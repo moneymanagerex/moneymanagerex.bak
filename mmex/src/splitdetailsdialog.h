@@ -69,17 +69,24 @@ class SplitDetailDialog: public wxDialog
 public:
     /// Constructors
     SplitDetailDialog( );
-    SplitDetailDialog( mmCoreDB* core,
-                        const wxString& categString, 
-                                     int* categID,
-                                     int* subcategID,
-                                     double* amount,
-                                     wxWindow* parent, 
-                                     wxWindowID id = SYMBOL_SPLITDETAILDIALOG_IDNAME, 
-                                     const wxString& caption = SYMBOL_SPLITDETAILDIALOG_TITLE, 
-                                     const wxPoint& pos = SYMBOL_SPLITDETAILDIALOG_POSITION, 
-                                     const wxSize& size = SYMBOL_SPLITDETAILDIALOG_SIZE, long style = SYMBOL_SPLITDETAILDIALOG_STYLE );
+    SplitDetailDialog( mmCoreDB* core, 
+                       const wxString categString,
+                       int* categID,
+                       int* subcategID,
+                       double* amount,
+                       int transType,
+                       wxWindow* parent, 
+                       wxWindowID id = SYMBOL_SPLITDETAILDIALOG_IDNAME, 
+                       const wxString& caption = SYMBOL_SPLITDETAILDIALOG_TITLE, 
+                       const wxPoint& pos = SYMBOL_SPLITDETAILDIALOG_POSITION, 
+                       const wxSize& size = SYMBOL_SPLITDETAILDIALOG_SIZE, long style = SYMBOL_SPLITDETAILDIALOG_STYLE );
 
+    int* m_categID_;
+    int* m_subcategID_;
+    double* m_amount_;
+    wxString m_categString_;
+
+private:
     /// Creation
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_SPLITDETAILDIALOG_IDNAME, const wxString& caption = SYMBOL_SPLITDETAILDIALOG_TITLE, const wxPoint& pos = SYMBOL_SPLITDETAILDIALOG_POSITION, const wxSize& size = SYMBOL_SPLITDETAILDIALOG_SIZE, long style = SYMBOL_SPLITDETAILDIALOG_STYLE );
 
@@ -94,6 +101,8 @@ public:
 
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTONCANCEL
     void OnButtonCancelClick( wxCommandEvent& event );
+    
+    void OnChoiceTypeChar(wxKeyEvent& event);
 
 ////@end SplitDetailDialog event handler declarations
 
@@ -111,11 +120,10 @@ public:
 ////@begin SplitDetailDialog member variables
 ////@end SplitDetailDialog member variables
     mmCoreDB* core_;
-    wxString m_categString_;
-    int* m_categID_;
-    int* m_subcategID_;
-    double* m_amount_;
+    int transType_;
+    int localTransType_;
 
+    wxChoice* choiceType_;
     wxTextCtrl* textAmount_;
     wxButton* bCategory_;
 };

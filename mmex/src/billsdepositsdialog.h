@@ -148,6 +148,7 @@ private:
     void OnsetNextRepeatDate(wxCommandEvent& event);
     void setRepeatDetails();
 
+    void activateSplitTransactionsDlg();
 };
 
 #endif

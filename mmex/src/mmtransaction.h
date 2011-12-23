@@ -59,6 +59,7 @@ public:
 
    size_t numEntries() const { return entries_.size(); }
    double getTotalSplits() const { return total_; }
+   double getUpdatedTotalSplits();
 
    void addSplit(boost::shared_ptr<mmSplitTransactionEntry> split);
    void removeSplit(int splitID);
