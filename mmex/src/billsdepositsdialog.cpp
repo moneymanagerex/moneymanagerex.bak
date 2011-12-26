@@ -951,8 +951,12 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
         amount = split_->getTotalSplits();
         if (amount < 0.0)
         {
-            mmShowErrorMessageInvalid(this, _("Amount"));
-            return;
+            if (choiceTrans_->GetSelection() == DEF_TRANSFER)
+                amount = abs(amount);
+            else {
+                mmShowErrorMessageInvalid(this, _("Amount"));
+                return;
+            }
         }
     }
     else
@@ -1442,8 +1446,12 @@ void mmBDDialog::activateSplitTransactionsDlg()
     SplitTransactionDialog dlg(core_, split_.get(),choiceTrans_->GetSelection(), this);
     if (dlg.ShowModal() == wxID_OK)
     {
+        double amount = split_->getTotalSplits();
+        if (choiceTrans_->GetSelection() == DEF_TRANSFER)
+            amount = abs(amount);
+
         wxString dispAmount;
-        mmex::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
+        mmex::formatDoubleToCurrencyEdit(amount, dispAmount);
         textAmount_->SetValue(dispAmount);
      }
 }

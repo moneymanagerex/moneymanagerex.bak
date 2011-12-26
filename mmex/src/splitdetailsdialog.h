@@ -2,7 +2,8 @@
 // Name:        
 // Purpose:     
 // Author:      Madhan Kanagavel
-// Modified by: 
+// Modified by: Stefano Giorgio, Nikolay
+// Mod Date:    Dec 2011
 // Created:     04/24/07 21:15:09
 // RCS-ID:      
 // Copyright:   
@@ -22,12 +23,6 @@
 #include "mmcoredb.h"
 ////@end includes
 
-/*!
- * Forward declarations
- */
-
-////@begin forward declarations
-////@end forward declarations
 
 /*!
  * Control identifiers
@@ -112,13 +107,11 @@ private:
 
     /// Retrieves icon resources
     wxIcon GetIconResource( const wxString& name );
-////@end SplitDetailDialog member function declarations
 
     /// Should we show tooltips?
     static bool ShowToolTips();
 
 ////@begin SplitDetailDialog member variables
-////@end SplitDetailDialog member variables
     mmCoreDB* core_;
     int transType_;
     int localTransType_;
