@@ -144,8 +144,8 @@ void SplitTransactionDialog::CreateControls()
     dialogMainSizerV->Add(mainButtonSizer, 0, wxALIGN_RIGHT|wxALL, 10);
 
     wxButton* itemButtonNew = new wxButton( itemDialog1, wxID_ADD, _("Add"), wxDefaultPosition, wxDefaultSize, 0 );
-    wxButton* itemButtonDelete = new wxButton( itemDialog1, wxID_REMOVE, _("Remove"), wxDefaultPosition, wxDefaultSize, 0 );
     wxButton* itemButtonEdit = new wxButton( itemDialog1, wxID_EDIT, _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButtonDelete = new wxButton( itemDialog1, wxID_REMOVE, _("Remove"), wxDefaultPosition, wxDefaultSize, 0 );
     topRowButtonSizer->Add(itemButtonNew, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxRIGHT, 5);
     topRowButtonSizer->Add(itemButtonEdit, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxRIGHT, 5);
     topRowButtonSizer->Add(itemButtonDelete, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxRIGHT, 0);
