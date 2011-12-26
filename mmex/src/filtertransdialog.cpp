@@ -489,29 +489,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
 
             if (statusCheckBox->GetValue())
             {
-                wxString status;
-                if (choiceStatus->GetSelection()      == DEF_STATUS_NONE)
-                {
-                    status = wxT(""); // nothing yet
-                }
-                else if (choiceStatus->GetSelection() == DEF_STATUS_RECONCILED)
-                {
-                    status = wxT("R"); 
-                }
-                else if (choiceStatus->GetSelection() == DEF_STATUS_VOID)
-                {
-                    status = wxT("V"); 
-                }
-                else if (choiceStatus->GetSelection() == DEF_STATUS_FOLLOWUP)
-                {
-                    status = wxT("F"); 
-                }
-                else if (choiceStatus->GetSelection() == DEF_STATUS_DUPLICATE)
-                {
-                    status = wxT("D"); 
-                } 
-
-                if (status != pBankTransaction->status_)
+                if (getTransformedTrxStatus(choiceStatus->GetSelection()) != pBankTransaction->status_)
                     continue; //skip
             }
 

@@ -270,6 +270,10 @@ struct CurrentMonth: public LastMonths<0, 0, CurrentData> { };
 
 }; // namespace DateTimeProviders
 
+int getTransformedTrxStatus(wxString in);
+wxString getTransformedTrxStatus(int in);
+wxString Tips(wxString type);
+
 // Validators -----------------------------------------------------
 
 class doubleValidator : public wxTextValidator {

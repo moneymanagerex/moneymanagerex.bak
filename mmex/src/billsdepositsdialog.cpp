@@ -147,22 +147,7 @@ void mmBDDialog::dataToControls()
         double transAmount = q1.GetDouble(wxT("TRANSAMOUNT"));
         toTransAmount_ = q1.GetDouble(wxT("TOTRANSAMOUNT"));
         
-        if (statusString == wxT(""))
-        {
-            choiceStatus_->SetSelection(DEF_STATUS_NONE);
-        }
-        else if (statusString == wxT("R"))
-        {
-            choiceStatus_->SetSelection(DEF_STATUS_RECONCILED);
-        }
-        else if (statusString == wxT("V"))
-        {
-             choiceStatus_->SetSelection(DEF_STATUS_VOID);
-        }
-        else if (statusString == wxT("F"))
-        {
-             choiceStatus_->SetSelection(DEF_STATUS_FOLLOWUP);
-        }
+        choiceStatus_->SetSelection(getTransformedTrxStatus(statusString));
 
         wxString nextOccurrString = q1.GetString(wxT("NEXTOCCURRENCEDATE"));
         wxString numRepeatStr  = q1.GetString(wxT("NUMOCCURRENCES"));

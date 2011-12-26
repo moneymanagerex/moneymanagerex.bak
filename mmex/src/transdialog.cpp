@@ -180,26 +180,7 @@ void mmTransDialog::dataToControls()
             edit_currency_rate = toTransAmount_ / transAmount;
         }        
       
-        if (statusString == wxT(""))
-        {
-            choiceStatus_->SetSelection(DEF_STATUS_NONE);
-        }
-        else if (statusString == wxT("R"))
-        {
-            choiceStatus_->SetSelection(DEF_STATUS_RECONCILED);
-        }
-        else if (statusString == wxT("V"))
-        {
-             choiceStatus_->SetSelection(DEF_STATUS_VOID);
-        }
-        else if (statusString == wxT("F"))
-        {
-             choiceStatus_->SetSelection(DEF_STATUS_FOLLOWUP);
-        }
-        else if (statusString == wxT("D"))
-        {
-             choiceStatus_->SetSelection(DEF_STATUS_DUPLICATE);
-        }
+        choiceStatus_->SetSelection(getTransformedTrxStatus(statusString));
 
         if (transTypeString == TRANS_TYPE_WITHDRAWAL_STR)
             choiceTrans_->SetSelection(DEF_WITHDRAWAL);
@@ -1064,9 +1045,9 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 
     wxString transNum = textNumber_->GetValue();
     wxString notes = textNotes_->GetValue();
-    wxString status = wxT(""); // nothing yet
+    //wxString status = wxT(""); // nothing yet
 
-    if (choiceStatus_->GetSelection() == DEF_STATUS_NONE)
+    /*if (choiceStatus_->GetSelection() == DEF_STATUS_NONE)
     {
         status = wxT(""); // nothing yet
     }
@@ -1085,7 +1066,8 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     else if (choiceStatus_->GetSelection() == DEF_STATUS_DUPLICATE)
     {
         status = wxT("D");
-    }
+    }*/
+    wxString status = getTransformedTrxStatus(choiceStatus_->GetSelection());
 
     wxString date1 = dpc_->GetValue().FormatISODate();
 

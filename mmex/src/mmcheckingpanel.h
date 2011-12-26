@@ -140,7 +140,7 @@ private:
 
     /* updates the checking panel data */
     void initVirtualListControl(wxProgressDialog* pgd);
-    void Tips();
+    void showTips();
     void updateExtraTransactionData(int selIndex);
     void saveSettings();
 
