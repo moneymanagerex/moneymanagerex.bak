@@ -2,7 +2,8 @@
 // Name:        
 // Purpose:     
 // Author:      Madhan Kanagavel
-// Modified by: 
+// Modified by: Stefano Giorgio, Nikolay
+// Mod Date:    Dec 2011
 // Created:     04/24/07 21:52:26
 // RCS-ID:      
 // Copyright:   
@@ -258,15 +259,15 @@ wxIcon SplitDetailDialog::GetIconResource( const wxString& /*name*/ )
 }
 
 void SplitDetailDialog::OnChoiceTypeChar(wxKeyEvent& event)
-{   
-       wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_SPLTTRANS_TYPE);
-        int i = choice->GetSelection();
-        if (event.GetKeyCode()==WXK_DOWN) {
-           if (i < 1)
-               choice->SetSelection(++i);
-        } else if (event.GetKeyCode()==WXK_UP){
-           if (i > 0)
-               choice->SetSelection(--i);
-        }
-            event.Skip();
+{
+    wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_SPLTTRANS_TYPE);
+    int i = choice->GetSelection();
+    if (event.GetKeyCode()==WXK_DOWN) {
+        if (i < 1)
+            choice->SetSelection(++i);
+    } else if (event.GetKeyCode()==WXK_UP){
+        if (i > 0)
+            choice->SetSelection(--i);
+    }
+    event.Skip();
 }
