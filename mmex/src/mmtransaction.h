@@ -55,21 +55,22 @@ public:
 class mmSplitTransactionEntries
 {
 public:
-   mmSplitTransactionEntries() : total_() {}
+    mmSplitTransactionEntries() : total_() {}
 
-   size_t numEntries() const { return entries_.size(); }
-   double getTotalSplits() const { return total_; }
-   double getUpdatedTotalSplits();
+    size_t numEntries() const { return entries_.size(); }
+    double getTotalSplits() const { return total_; }
+    double getUpdatedTotalSplits();
 
-   void addSplit(boost::shared_ptr<mmSplitTransactionEntry> split);
-   void removeSplit(int splitID);
-   void removeSplitByIndex(int splitIndex);
+    void addSplit(boost::shared_ptr<mmSplitTransactionEntry> split);
+    void removeSplit(int splitID);
+    void removeSplitByIndex(int splitIndex);
 
-   void updateToDB(boost::shared_ptr<wxSQLite3Database>& db, int transID, bool edit);
-   void loadFromBDDB(mmCoreDB* core, int bdID);
+    void updateToDB(boost::shared_ptr<wxSQLite3Database>& db, int transID, bool edit);
+    void loadFromBDDB(mmCoreDB* core, int bdID);
 
-   std::vector<boost::shared_ptr<mmSplitTransactionEntry> > entries_;
-   double total_;
+    std::vector<boost::shared_ptr<mmSplitTransactionEntry> > entries_;
+    double total_;
+    wxString getSplitedTrxNotes(mmCoreDB* core, int trxID);
 };
 
 class mmBankTransaction : public mmTransaction
@@ -89,9 +90,7 @@ public:
         boost::shared_ptr<mmCurrency> currencyPtr,
         bool forceUpdate=false);
 
-    void getSplitTransactions(mmCoreDB* core, 
-        mmSplitTransactionEntries* splits);
-
+    void getSplitTransactions(mmCoreDB* core, mmSplitTransactionEntries* splits);
     boost::shared_ptr<wxSQLite3Database> db_;
 
     /* Core Data */

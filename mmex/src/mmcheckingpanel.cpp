@@ -493,10 +493,6 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
     EVT_MENU(MENU_ON_PASTE_TRANSACTION, MyListCtrl::OnPaste) 
     EVT_MENU(MENU_ON_NEW_TRANSACTION, MyListCtrl::OnNewTransaction) 
 
-    //EVT_KEY_UP(MyListCtrl::OnChar)
-    // If we use EVT_KEY_DOWN instead of EVT_CHAR, capital versions
-    // of all characters are always returned.  EVT_CHAR also performs
-    // other necessary keyboard-dependent translations.
     EVT_CHAR(MyListCtrl::OnChar)
 
 END_EVENT_TABLE();
@@ -800,7 +796,7 @@ void mmCheckingPanel::CreateControls()
         ID_PANEL_CHECKING_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
     itemBoxSizer4->Add(itemStaticText11, 1, wxGROW|wxALL, 5);
     //Show tips when no transaction selected 
-    Tips();
+    showTips();
 }
 //----------------------------------------------------------------------------
 
@@ -838,10 +834,9 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 		}
 
     } else {
-        //st->SetLabel(wxT (""));
-        stm->SetLabel(wxT (""));
+        stm->SetLabel(wxT(""));
         enableEditDeleteButtons(false);
-        Tips () ;
+        showTips() ;
     }
 }
 //----------------------------------------------------------------------------
@@ -987,37 +982,10 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
     return infoStr;
 }
 //---------------------------
-void mmCheckingPanel::Tips()
+void mmCheckingPanel::showTips()
 {
-    const wxString tips[] = {
-        _("Recommendation: Always backup your .mmb database file regularly."),
-        _("Recommendation: If upgrading to a new version of MMEX, make sure you backup your .mmb database file before doing so."),
-        _("Recommendation: Use copy (Ctrl+С) and paste (Ctrl+V) for frequently used transactions."),
-        _("Tip: Remember to make backups of your .mmb."),
-        _("Tip: The .mmb file is not encrypted. That means anyone else having the proper know how can actually open the file and read the contents. So make sure that if you are storing any sensitive financial information it is properly guarded."),
-        _("Tip: To mark a transaction as reconciled, just select the transaction and hit the 'r' or 'R' key. To mark a transaction as unreconciled, just select the transaction and hit the 'u' or 'U' key."), 
-        _("Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f' or 'F' key."),
-        _("Tip: MMEX supports printing of all reports that can be viewed. The print options are available under the menu, File->Print."),
-        _("Tip: You can modify some runtime behavior of MMEX by changing the options in the Options Dialog. "),
-        _("Tip: To print a statement with transactions from any arbitary set of criteria, use the transaction filter to select the transactions you want and then do a print from the menu."),
-        _("Tip: Set exchange rate for currencies in case if you have accounts with different currencies."),
-
-        _("Organize Categories Dialog Tip: Pressing the h key will cycle through all categories starting with the letter h"),
-        _("Organize Categories Dialog Tip: Pressing 2 key combination will cycle through all categories starting with that key combination. Example: Pressing ho will select Homeneeds, Home, House Tax, etc..."),
-        _("Organize Payees Dialog Tip: Using the % key as a wildcard when using the filter. Example: %c shows Chemist and Doctor, %c%m shows Chemist only."),
-           
-        _("Tip to get out of debt: Pay yourself 10% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses.") ,
-        _("Tip to get out of debt: Establish an emergency fund."), 
-        _("Tip to get out of debt: Stop acquiring new debt."), 
-        _("Tip to get out of debt: Create a realistic budget for your expenses.") ,
-        _("Tip to get out of debt: Spend less than you earn."),
-        _("Tip to get out of debt: Pay more than the minimum.")
-
-    };
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS); 
-    int pos = rand() % 20;
-    // Randomly prints one of the above tips
-    st->SetLabel(tips[pos]);
+    st->SetLabel(Tips(wxT("checkingpanel")));
 }
 //----------------------------------------------------------------------------
 void mmCheckingPanel::setAccountSummary()

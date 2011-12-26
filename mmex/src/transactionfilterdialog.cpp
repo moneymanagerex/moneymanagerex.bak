@@ -378,24 +378,7 @@ bool TransFilterDialog::byStatus( wxString status )
     bool result = false;
     if ( cbStatus_->GetValue() )
     {
-        wxString statusStr;
-        int stat = choiceStatus_->GetSelection();
-        
-        if ( stat ==  DEF_STATUS_NONE )
-            statusStr = wxT("");
-        
-        else if( stat ==  DEF_STATUS_RECONCILED )
-            statusStr = wxT("R");
-        
-        else if (stat ==  DEF_STATUS_VOID )
-            statusStr = wxT("V");
-        
-        else if (stat ==  DEF_STATUS_FOLLOWUP )
-            statusStr = wxT("F");
-
-        else if (stat ==  DEF_STATUS_DUPLICATE )
-            statusStr = wxT("D");
-
+        wxString statusStr = getTransformedTrxStatus(choiceStatus_->GetSelection());
         if (status == statusStr )
         {
             result = true;

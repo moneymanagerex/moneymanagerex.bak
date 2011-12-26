@@ -1733,3 +1733,92 @@ wxString adjustedExportAmount(wxString amtSeparator, wxString strValue)
 
     return strValue;
 }
+
+int getTransformedTrxStatus(wxString in)
+{
+	int out;
+	wxString statusStr = in;
+	if (statusStr == wxT("R"))
+	{
+		out=(DEF_STATUS_RECONCILED);
+	}
+	else if (statusStr == wxT("V"))
+	{
+		out=(DEF_STATUS_VOID);
+	}
+	else if (statusStr == wxT("F"))
+	{
+		out=(DEF_STATUS_FOLLOWUP);
+	}
+	else if (statusStr == wxT("D"))
+	{
+		out=(DEF_STATUS_DUPLICATE);
+	}
+    else {
+        out=(DEF_STATUS_NONE);
+    }
+    return out;
+}
+wxString getTransformedTrxStatus(int in)
+{
+	wxString statusStr = wxEmptyString;
+    if (in == DEF_STATUS_RECONCILED)
+    {
+        statusStr = wxT("R");
+    }
+    else if (in == DEF_STATUS_VOID)
+    {
+        statusStr = wxT("V");
+    }
+    else if (in == DEF_STATUS_FOLLOWUP)
+    {
+        statusStr = wxT("F");
+    }
+    else if (in == DEF_STATUS_DUPLICATE)
+    {
+        statusStr = wxT("D");
+    }
+    else {
+		statusStr = wxT("");
+	}
+    return statusStr;
+}
+wxString Tips(wxString type)
+{
+	    wxString tipsStr;
+	    if (type == wxT("checkingpanel")) {
+		    wxString tips[] = {
+			_("Recommendation: Always backup your .mmb database file regularly."),
+			_("Recommendation: If upgrading to a new version of MMEX, make sure you backup your .mmb database file before doing so."),
+			_("Recommendation: Use copy (Ctrl+С) and paste (Ctrl+V) for frequently used transactions."),
+			_("Tip: Remember to make backups of your .mmb."),
+			_("Tip: The .mmb file is not encrypted. That means anyone else having the proper know how can actually open the file and read the contents. So make sure that if you are storing any sensitive financial information it is properly guarded."),
+			_("Tip: To mark a transaction as reconciled, just select the transaction and hit the 'r' or 'R' key. To mark a transaction as unreconciled, just select the transaction and hit the 'u' or 'U' key."), 
+			_("Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f' or 'F' key."),
+			_("Tip: MMEX supports printing of all reports that can be viewed. The print options are available under the menu, File->Print."),
+			_("Tip: You can modify some runtime behavior of MMEX by changing the options in the Options Dialog. "),
+			_("Tip: To print a statement with transactions from any arbitary set of criteria, use the transaction filter to select the transactions you want and then do a print from the menu."),
+			_("Tip: Set exchange rate for currencies in case if you have accounts with different currencies."),
+		
+			_("Organize Categories Dialog Tip: Pressing the h key will cycle through all categories starting with the letter h"),
+			_("Organize Categories Dialog Tip: Pressing 2 key combination will cycle through all categories starting with that key combination. Example: Pressing ho will select Homeneeds, Home, House Tax, etc..."),
+			_("Organize Payees Dialog Tip: Using the % key as a wildcard when using the filter. Example: %c shows Chemist and Doctor, %c%m shows Chemist only."),
+			   
+			_("Tip to get out of debt: Pay yourself 10% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses.") ,
+			_("Tip to get out of debt: Establish an emergency fund."), 
+			_("Tip to get out of debt: Stop acquiring new debt."), 
+			_("Tip to get out of debt: Create a realistic budget for your expenses.") ,
+			_("Tip to get out of debt: Spend less than you earn."),
+			_("Tip to get out of debt: Pay more than the minimum.")
+			};
+			tipsStr = tips[rand() % 20];
+		}	
+        else if (type == wxT("assets")) {
+		   tipsStr = _("MMEX allows you to track fixed assets like cars, houses, land and others. Each asset can have its value appreciate by a certain rate per year, depreciate by a certain rate per year, or not change in value. The total assets are added to your total financial worth.");
+		}
+		else if (type == wxT("stocks")) {
+		   tipsStr = _("Using MMEX it is possible to track stocks/mutual funds investments.");
+		}
+
+    return tipsStr;
+}
