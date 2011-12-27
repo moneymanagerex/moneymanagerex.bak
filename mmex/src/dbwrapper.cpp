@@ -2874,6 +2874,39 @@ wxString mmDBWrapper::getAccountType(wxSQLite3Database* db_, int accountID)
     return acctType;
 }
 
+wxString mmDBWrapper::getSplitTrxNotes(wxSQLite3Database* db_, int trxID)
+{
+    int transid = trxID;
+    wxString infoStr =  wxEmptyString;
+    double amount;
+    wxString amountStr;
+
+    char sql[]=
+        "select c.categname || case when sc.subcategname not null then ' : '||sc.subcategname else ''end as CATEG "
+        ", -st.splittransamount as SPLITTRANSAMOUNT "
+        "from splittransactions_v1 st "
+        "left join category_v1 c on st.categid=c.categid "
+        "left join subcategory_v1 sc on st.subcategid=sc.subcategid "
+        "where st.transid = ?  "
+        "group by st.categid "
+        "order by c.categname, sc.subcategname";
+            
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    st.Bind(1, trxID);
+ 
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    while (q1.NextRow())
+    {
+        infoStr << q1.GetString(wxT("CATEG"));
+        infoStr << wxT(" = ");
+        amount = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
+        mmex::formatDoubleToCurrencyEdit(amount, amountStr);
+        infoStr << amountStr << wxT("\n");
+    }
+    st.Finalize();
+    return infoStr;
+}
+
 void mmDBWrapper::removeSplitsForAccount(wxSQLite3Database* db, int accountID)
 {
     try {
