@@ -70,7 +70,7 @@ public:
 
     std::vector<boost::shared_ptr<mmSplitTransactionEntry> > entries_;
     double total_;
-    wxString getSplitedTrxNotes(mmCoreDB* core, int trxID);
+	wxString getSplitTrxNotes(wxSQLite3Database* db_, int trxID);
 };
 
 class mmBankTransaction : public mmTransaction

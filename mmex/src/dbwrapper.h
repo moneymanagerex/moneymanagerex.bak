@@ -119,7 +119,7 @@ bool deleteTransaction(wxSQLite3Database* db, int transID);
 bool commit(wxSQLite3Database* db);
 bool begin(wxSQLite3Database* db);
 bool rollback(wxSQLite3Database* db);
-
+wxString getSplitTrxNotes(wxSQLite3Database* db_, int trxID);
 //bool deleteFlaggedTransactions(wxSQLite3Database* db, int accountID);
 
 /* Bills & Deposits API */

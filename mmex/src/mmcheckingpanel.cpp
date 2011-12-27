@@ -935,29 +935,8 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
     {
         //if (split_)
         {
-			char sql[]=
-			"select c.categname || case when sc.subcategname not null then ' : '||sc.subcategname else ''end as CATEG "
-            ", st.splittransamount as SPLITTRANSAMOUNT "
-            "from splittransactions_v1 st "
-            "left join category_v1 c on st.categid=c.categid "
-            "left join subcategory_v1 sc on st.subcategid=sc.subcategid "
-            "where st.transid = ?  "
-            "group by st.categid "
-            "order by c.categname, sc.subcategname";
-            
-            wxSQLite3Statement st = m_core->db_.get()->PrepareStatement(sql);
-            st.Bind(1, m_trans[selIndex]->transactionID());
-
-            wxSQLite3ResultSet q1 = st.ExecuteQuery();
-            while (q1.NextRow())
-            {
-				infoStr << q1.GetString(wxT("CATEG"));
-				infoStr << wxT(" = ");
-				amount = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
-				mmex::formatDoubleToCurrencyEdit(amount, amountStr);
-				infoStr << amountStr << wxT("\n");
-			}
-            infoStr.RemoveLast(1);
+            infoStr =  mmDBWrapper::getSplitTrxNotes(m_core->db_.get(), m_trans[selIndex]->transactionID());
+            //infoStr.RemoveLast(1);
 		}
         
         if (currencyid != basecurrencyid) //Show nothing if account currency is base
