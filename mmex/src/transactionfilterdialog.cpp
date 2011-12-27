@@ -151,15 +151,7 @@ void TransFilterDialog::CreateControls()
                                 wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbStatus_->SetValue(FALSE);
 
-    wxString choiceStatusStrings[] = 
-    {
-        _("None"),
-        _("Reconciled"),
-        _("Void"),
-        _("Follow up"),
-        _("Duplicate")
-    };  
-    choiceStatus_ = new wxChoice( itemPanel, wxID_ANY, wxDefaultPosition, wxSize(fieldWidth,-1), 5, choiceStatusStrings, 0 );
+    choiceStatus_ = new wxChoice( itemPanel, wxID_ANY, wxDefaultPosition, wxSize(fieldWidth,-1), 5, trxStatuses4Choice, 0 );
 	choiceStatus_->SetSelection(mmIniOptions::transStatusReconciled_);
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
 
@@ -171,13 +163,7 @@ void TransFilterDialog::CreateControls()
                               wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbType_->SetValue(FALSE);
     
-    wxString choiceTypeStrings[] = 
-    {
-        _("Withdrawal"),
-        _("Deposit"),
-        _("Transfer")
-    };  
-    choiceType_ = new wxChoice( itemPanel, wxID_ANY,wxDefaultPosition, wxSize(fieldWidth,-1), 3, choiceTypeStrings, 0 );
+    choiceType_ = new wxChoice( itemPanel, wxID_ANY,wxDefaultPosition, wxSize(fieldWidth,-1), 3, trxTypes4Choice, 0 );
     choiceType_->SetSelection(0);
     choiceType_->SetToolTip(_("Specify the type of transaction."));
 

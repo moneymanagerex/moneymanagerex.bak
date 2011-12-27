@@ -306,15 +306,7 @@ void mmTransDialog::CreateControls()
 
     // Status --------------------------------------------
     wxStaticText* itemStaticText51 = new wxStaticText( itemPanel7, wxID_STATIC, _("Status"));
-    wxString itemChoice7Strings[] = 
-    {
-        _("None"),
-        _("Reconciled"),
-        _("Void"),
-        _("Follow up"),
-        _("Duplicate"),
-    };  
-    choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, wxSize(110, -1), 5, itemChoice7Strings, 0 );
+    choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, wxSize(110, -1), 5, trxStatuses4Choice, 0 );
     choiceStatus_->SetSelection(mmIniOptions::transStatusReconciled_);
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
 
@@ -323,13 +315,7 @@ void mmTransDialog::CreateControls()
 
     // Type --------------------------------------------
     wxStaticText* itemStaticText5 = new wxStaticText( itemPanel7, wxID_STATIC, _("Type"), wxDefaultPosition, wxDefaultSize, 0 );
-    const wxString itemChoice6Strings[] = 
-    {
-        _("Withdrawal"),
-        _("Deposit"),
-        _("Transfer")
-    };  
-    choiceTrans_ = new wxChoice(itemPanel7,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxSize(110, -1),3,itemChoice6Strings,0);
+    choiceTrans_ = new wxChoice(itemPanel7,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxSize(110, -1), 3, trxTypes4Choice, 0);
     choiceTrans_->SetSelection(0);
     choiceTrans_->SetToolTip(_("Specify the type of transactions to be created."));
     cAdvanced_ = new wxCheckBox( itemPanel7, ID_DIALOG_TRANS_ADVANCED_CHECKBOX, _("Advanced"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
