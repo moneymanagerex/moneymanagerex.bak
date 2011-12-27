@@ -865,17 +865,9 @@ void mmOptionsDialog::CreateControls()
     //  Default Status
     wxStaticText* statusStaticText = new wxStaticText( itemPanelMisc, wxID_STATIC, _("Default Status:"), wxDefaultPosition, wxDefaultSize);
 
-    wxString itemChoiceDefaultTransStatusStrings[] = 
-    {
-        _("None"),
-        _("Reconciled"),
-        _("Void"),
-        _("Follow up"),
-        _("Duplicate"),
-    };
-    
+
     wxChoice* itemChoiceDefaultTransStatus = new wxChoice( itemPanelMisc, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS,
-                                                           wxDefaultPosition, wxDefaultSize, 5, itemChoiceDefaultTransStatusStrings );
+                                                           wxDefaultPosition, wxDefaultSize, 5, trxStatuses4Choice );
     itemChoiceDefaultTransStatus->SetSelection(mmIniOptions::transStatusReconciled_);
 
     wxFlexGridSizer* newTransflexGridSizer = new wxFlexGridSizer(3,2,0,0);

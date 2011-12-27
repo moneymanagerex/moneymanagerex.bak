@@ -455,14 +455,9 @@ void mmBDDialog::CreateControls()
 
     // Type --------------------------------------------
     wxStaticText* staticTextType = new wxStaticText( transactionPanel, wxID_STATIC, _("Type"));
-    wxString typeChoiceStrArray[] = 
-    {
-        _("Withdrawal"),
-        _("Deposit"),
-        _("Transfer")
-    };  
+ 
     choiceTrans_ = new wxChoice( transactionPanel, ID_DIALOG_TRANS_TYPE, 
-                                 wxDefaultPosition, wxSize(110, -1), 3, typeChoiceStrArray, 0 );
+                                 wxDefaultPosition, wxSize(110, -1), 3, trxTypes4Choice, 0 );
     choiceTrans_->SetSelection(DEF_WITHDRAWAL);
     choiceTrans_->SetToolTip(_("Specify the type of transactions to be created."));
     cAdvanced_ = new wxCheckBox( transactionPanel, ID_DIALOG_TRANS_ADVANCED_CHECKBOX, _("Advanced"),
