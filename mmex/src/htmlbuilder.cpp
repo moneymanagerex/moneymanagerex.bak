@@ -22,17 +22,8 @@
 
 mmHTMLBuilder::mmHTMLBuilder() {
 	// init colors from config
-	color0 = wxT("bgcolor=\"#");
-	color0 += wxString::Format(wxT("%x"), (int) mmColors::listAlternativeColor0.Red());
-	color0 += wxString::Format(wxT("%x"), (int) mmColors::listAlternativeColor0.Green());
-	color0 += wxString::Format(wxT("%x"), (int) mmColors::listAlternativeColor0.Blue());
-	color0 += wxT ("\"");
-
-	color1 = wxT("bgcolor=\"#");
-	color1 += wxString::Format(wxT("%x"), (int) mmColors::listAlternativeColor1.Red());
-	color1 += wxString::Format(wxT("%x"), (int) mmColors::listAlternativeColor1.Green());
-	color1 += wxString::Format(wxT("%x"), (int) mmColors::listAlternativeColor1.Blue());
-	color1 += wxT ("\"");
+	color0 = wxT("bgcolor=\"") + mmColors::listAlternativeColor0.GetAsString(wxC2S_HTML_SYNTAX) + wxT ("\"");
+	color1 = wxT("bgcolor=\"") + mmColors::listAlternativeColor1.GetAsString(wxC2S_HTML_SYNTAX) + wxT ("\"");
 	// init font size from config
 	fontSize = wxT ("\"") + mmIniOptions::fontSize_ + wxT ("\"");
 }
@@ -133,13 +124,13 @@ void mmHTMLBuilder::startTableCell(const wxString& width)
 {
 	html += wxT("<td");
 	if(!width.empty())
-	html += wxString::Format(wxT(" width=\"%s\""),width.c_str());
+	    html += wxString::Format(wxT(" width=\"%s\""),width.c_str());
 	html += wxT(">");
 }
 
 void mmHTMLBuilder::addRowSeparator(int cols) {
 
-	html += wxT("<tr bgcolor=\"#000000\" height=\"1\"><td height=\"1");
+	html += wxT("<tr bgcolor=\"") + mmColors::listBorderColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\" height=\"1\"><td height=\"1");
 	if(cols > 1)
 		html += wxString::Format(wxT("\" colspan=\"%d"), cols);
     html += wxT("\"></td></tr>\n");
