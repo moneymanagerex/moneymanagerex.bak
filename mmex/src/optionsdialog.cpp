@@ -740,48 +740,62 @@ void mmOptionsDialog::CreateControls()
     itemBoxSizer8->Add(itemButtonColorDefault, 0, wxALIGN_LEFT|wxALL, 5);
     itemButtonColorDefault->SetToolTip(_("Restore Default Colors"));
 
-    wxFlexGridSizer* itemGridSizer2 = new wxFlexGridSizer(2, 2, 0, 0);
+    wxFlexGridSizer* itemGridSizer2 = new wxFlexGridSizer(2, 2, 10, 10);
     itemBoxSizer8->Add(itemGridSizer2, 0, wxALL);
 
+    wxStaticText* itemButtonColorLabel = new wxStaticText( itemPanelColors, wxID_STATIC, _("Nav Tree"), wxDefaultPosition, wxDefaultSize, 0 );
     wxButton* itemButtonColorNavTreeCtrl = new wxButton( itemPanelColors, 
         ID_DIALOG_OPTIONS_BUTTON_COLOR_NAVTREE, _("Nav Tree"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemButtonColorNavTreeCtrl, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemGridSizer2->Add(itemButtonColorLabel, 0, wxALIGN_CENTER, 0);
+    itemGridSizer2->Add(itemButtonColorNavTreeCtrl, 0, wxALIGN_CENTER, 0);
     itemButtonColorNavTreeCtrl->SetToolTip(_("Specify the color for the nav tree"));
     itemButtonColorNavTreeCtrl->SetBackgroundColour(mmColors::navTreeBkColor);
 
+    wxStaticText* itemButtonColorListBackgroundLabel = new wxStaticText( itemPanelColors, wxID_STATIC, _("List Background"), wxDefaultPosition, wxDefaultSize, 0 );
     wxButton* itemButtonColorListBackground = new wxButton( itemPanelColors, 
         ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBACK, _("List Background"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemButtonColorListBackground, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemGridSizer2->Add(itemButtonColorListBackgroundLabel, 0, wxALIGN_CENTER, 0);
+    itemGridSizer2->Add(itemButtonColorListBackground, 0, wxALIGN_CENTER, 0);
     itemButtonColorListBackground->SetToolTip(_("Specify the color for the list background"));
     itemButtonColorListBackground->SetBackgroundColour(mmColors::listBackColor);
 
+    wxStaticText* itemButtonColorListAlt0Label = new wxStaticText( itemPanelColors, wxID_STATIC, _("List Row 0"), wxDefaultPosition, wxDefaultSize, 0 );
     wxButton* itemButtonColorListAlt0 = new wxButton( itemPanelColors, 
         ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT0, _("List Row 0"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemButtonColorListAlt0, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemGridSizer2->Add(itemButtonColorListAlt0Label, 0, wxALIGN_CENTER, 0);
+    itemGridSizer2->Add(itemButtonColorListAlt0, 0, wxALIGN_CENTER, 0);
     itemButtonColorListAlt0->SetToolTip(_("Specify the color for the list row 0"));
     itemButtonColorListAlt0->SetBackgroundColour(mmColors::listAlternativeColor0);
 
+    wxStaticText* itemButtonColorListAlt1Label = new wxStaticText( itemPanelColors, wxID_STATIC, _("List Row 1"), wxDefaultPosition, wxDefaultSize, 0 );
     wxButton* itemButtonColorListAlt1 = new wxButton( itemPanelColors, 
         ID_DIALOG_OPTIONS_BUTTON_COLOR_ALT1, _("List Row 1"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemButtonColorListAlt1, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemGridSizer2->Add(itemButtonColorListAlt1Label, 0, wxALIGN_CENTER, 0);
+    itemGridSizer2->Add(itemButtonColorListAlt1, 0, wxALIGN_CENTER, 0);
     itemButtonColorListAlt1->SetToolTip(_("Specify the color for the list row 1"));
     itemButtonColorListAlt1->SetBackgroundColour(mmColors::listAlternativeColor1);
 
-     wxButton* itemButtonColorListBorder = new wxButton( itemPanelColors, 
+    wxStaticText* itemButtonColorListBorderLabel = new wxStaticText( itemPanelColors, wxID_STATIC, _("List Border"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButtonColorListBorder = new wxButton( itemPanelColors, 
         ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTBORDER, _("List Border"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemButtonColorListBorder, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemGridSizer2->Add(itemButtonColorListBorderLabel, 0, wxALIGN_CENTER, 0);
+    itemGridSizer2->Add(itemButtonColorListBorder, 0, wxALIGN_CENTER, 0);
     itemButtonColorListBorder->SetToolTip(_("Specify the color for the list Border"));
     itemButtonColorListBorder->SetBackgroundColour(mmColors::listBorderColor);
 
+    wxStaticText* itemButtonColorListDetailsLabel = new wxStaticText( itemPanelColors, wxID_STATIC, _("List Details"), wxDefaultPosition, wxDefaultSize, 0 );
     wxButton* itemButtonColorListDetails = new wxButton( itemPanelColors, 
         ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS, _("List Details"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemButtonColorListDetails, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemGridSizer2->Add(itemButtonColorListDetailsLabel, 0, wxALIGN_CENTER_HORIZONTAL, 0);
+    itemGridSizer2->Add(itemButtonColorListDetails, 0, wxALIGN_CENTER, 0);
     itemButtonColorListDetails->SetToolTip(_("Specify the color for the list details"));
     itemButtonColorListDetails->SetBackgroundColour(mmColors::listDetailsPanelColor);
 
+    wxStaticText* itemButtonColorFutureDatesLabel = new wxStaticText( itemPanelColors, wxID_STATIC, _("Future Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
      wxButton* itemButtonColorFutureDates = new wxButton( itemPanelColors, 
         ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES, _("Future Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemButtonColorFutureDates, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemGridSizer2->Add(itemButtonColorFutureDatesLabel, 0, wxALIGN_CENTER, 0);
+    itemGridSizer2->Add(itemButtonColorFutureDates, 0, wxALIGN_CENTER, 0);
     itemButtonColorFutureDates->SetToolTip(_("Specify the color for future transactions"));
     itemButtonColorFutureDates->SetBackgroundColour(mmColors::listFutureDateColor);
    
