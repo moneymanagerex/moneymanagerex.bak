@@ -34,7 +34,8 @@ void mmHTMLBuilder::init()
     html += mmex::getProgramName();
     html += wxT(" - ");
 	html += _("Report");
-	html += wxT("</title>\n</head><body bgcolor=\"#ffffff\" text=\"#000000\" link=\"#0000cc\" vlink=\"#551a8b\" alink=\"#ff0000\">");
+	html += wxT("</title>\n</head><body bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\" text=\"#000000\" link=\"#0000cc\" vlink=\"#551a8b\" alink=\"#ff0000\">");
+//	html += wxT("<tr bgcolor=\"") + mmColors::listBorderColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\" height=\"1\"><td height=\"1");
 
     //if I need more space on the top of home page and reports I will delete user name from settings
     if (mmIniOptions::userNameString_ != wxT (""))
@@ -138,7 +139,7 @@ void mmHTMLBuilder::addRowSeparator(int cols) {
 }
 
 void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, const wxString& value) {
-	html += wxT("<tr bgcolor=\"#ffffff\"><td");
+	html += wxT("<tr bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\"><td");
 	if(cols - 1 > 1) 
 		html += wxString::Format(wxT(" colspan=\"%d\""), cols - 1);
 	html += wxString::Format(wxT("><font size=%s><b><i>&nbsp;&nbsp;%s"), fontSize.c_str(), caption.c_str());
@@ -146,7 +147,7 @@ void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, const wxStrin
 }
 
 void mmHTMLBuilder::addTotalRow(const wxString& caption, int cols, std::vector<wxString>& data) {
-	html += wxT("<tr bgcolor=\"#ffffff\"><td");
+	html += wxT("<tr bgcolor=\"") + mmColors::listBackColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\"><td");
 	if(cols - data.size() > 1) 
 		html += wxString::Format(wxT(" colspan=\"%d\""), cols - data.size());
 	html += wxT("><font size=") + fontSize + wxT("><b><i>&nbsp;&nbsp;");
