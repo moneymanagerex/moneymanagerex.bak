@@ -179,6 +179,7 @@ void mmStocksPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
     itemPanel8->SetSizer(itemBoxSizer9);
+    itemPanel8->SetBackgroundColour(mmColors::listBackColor);
 
     /* ---------------------- */
     wxPanel* headerPanel = new wxPanel( itemPanel8, wxID_ANY, wxDefaultPosition,
@@ -187,6 +188,7 @@ void mmStocksPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
+    headerPanel->SetBackgroundColour(mmColors::listBackColor);
 
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_BD_STATIC_HEADER,
                                     _("Stock Investments"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -224,7 +226,7 @@ void mmStocksPanel::CreateControls()
     listCtrlAccount_ = new stocksListCtrl( this, itemSplitterWindow10,
                                            ID_PANEL_STOCKS_LISTCTRL, wxDefaultPosition, wxDefaultSize,
                                            wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
+    listCtrlAccount_->SetBackgroundColour(mmColors::listDetailsPanelColor);
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     listCtrlAccount_->InsertColumn(COL_DATE, _("Purchase Date"));
     wxListItem itemCol;
@@ -290,7 +292,7 @@ void mmStocksPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemPanel12->SetSizer(itemBoxSizer4);
-    itemPanel12->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    itemPanel12->SetBackgroundColour(mmColors::listBackColor);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
