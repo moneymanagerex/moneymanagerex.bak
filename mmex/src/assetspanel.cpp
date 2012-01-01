@@ -126,6 +126,7 @@ void mmAssetsPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
     itemPanelAssets->SetSizer(itemBoxSizer9);
+    itemPanelAssets->SetBackgroundColour(mmColors::listBackColor);
 
     /* ---------------------- */
     wxPanel* headerPanel = new wxPanel( itemPanelAssets, wxID_ANY, wxDefaultPosition, 
@@ -134,6 +135,7 @@ void mmAssetsPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
+    headerPanel->SetBackgroundColour(mmColors::listBackColor);
 
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, wxID_ANY, _("Assets"),
         wxDefaultPosition, wxDefaultSize, 0 );
@@ -157,7 +159,7 @@ void mmAssetsPanel::CreateControls()
     m_listCtrlAssets = new assetsListCtrl( this, itemSplitterWindow10, 
         IDC_PANEL_STOCKS_LISTCTRL, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    m_listCtrlAssets->SetBackgroundColour(mmColors::listBackColor);
+    m_listCtrlAssets->SetBackgroundColour(mmColors::listDetailsPanelColor);
     m_listCtrlAssets->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
     m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"));
     wxListItem itemCol;
@@ -207,7 +209,7 @@ void mmAssetsPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemPanel12->SetSizer(itemBoxSizer4);
-    itemPanel12->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    itemPanel12->SetBackgroundColour(mmColors::listBackColor);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 3);
@@ -460,6 +462,12 @@ void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
         mmDBWrapper::deleteAsset(m_cp->getDb(), m_cp->getTrans()[m_selectedIndex].assetID_);
         DeleteItem(m_selectedIndex);
         m_cp->initVirtualListControl();
+        
+        wxMessageDialog* msgDlg = new wxMessageDialog(NULL,
+        _("Thank you! "), _("App"), wxOK);
+        msgDlg->ShowModal();
+        msgDlg->Destroy();
+  
         //if (m_cp->getTrans().empty()) //after delition of asset - index and extra panel should be erased
         {
             m_selectedIndex = -1;
