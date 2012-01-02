@@ -190,7 +190,7 @@ void mmBudgetEntryDialog::CreateControls()
     textAmount_ = new wxTextCtrl( itemPanel7, 
         ID_DIALOG_BUDGETENTRY_TEXTCTRL_AMOUNT, wxT(""), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxTE_PROCESS_ENTER, doubleValidator());
     itemGridSizer2->Add(textAmount_, 0, 
-        wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL, 0);
     textAmount_->SetToolTip(_("Enter the amount budgeted for this category."));
     textAmount_->SetFocus();
     

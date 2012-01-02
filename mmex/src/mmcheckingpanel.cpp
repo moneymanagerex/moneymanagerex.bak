@@ -1889,7 +1889,7 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
         event.Skip();
     }
 
-    if (m_cp->m_trans.size() == m_selectedIndex)
+    if ((long)m_cp->m_trans.size() == m_selectedIndex)
         m_selectedIndex--;
 
     m_cp->updateExtraTransactionData(m_selectedIndex);
@@ -1987,7 +1987,7 @@ void MyListCtrl::refreshVisualList()
 {
     m_cp->initVirtualListControl(NULL);
     RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
-    if ((m_selectedIndex + 1) != m_cp->m_trans.size() && m_selectedIndex > -1)
+    if ((m_selectedIndex + 1) != (long)m_cp->m_trans.size() && (m_selectedIndex > -1))
         m_selectedIndex--;
     EnsureVisible(m_selectedIndex);
     m_cp->updateExtraTransactionData(m_selectedIndex);
