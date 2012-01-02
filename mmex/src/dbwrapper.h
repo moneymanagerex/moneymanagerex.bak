@@ -80,6 +80,7 @@ bool getBudgetEntry(wxSQLite3Database* db, int budgetYearID, int categID, int su
 int getNumAccounts(wxSQLite3Database* db);
 wxString getAccountName(wxSQLite3Database* db, int accountID);
 wxString getAccountType(wxSQLite3Database* db, int accountID);
+wxArrayString getAccountsName(wxSQLite3Database* db);
 int getAccountID(wxSQLite3Database* db, const wxString& accountName);
 double getTotalBalanceOnAccount(wxSQLite3Database* db, int accountID, bool ignoreFuture=false);
 double getInitBalanceOnAccount(wxSQLite3Database* db, int accountID);

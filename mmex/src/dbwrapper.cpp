@@ -927,6 +927,26 @@ wxString mmDBWrapper::getAccountName(wxSQLite3Database* db, int accountID)
     return name;
 }
 
+wxArrayString mmDBWrapper::getAccountsName(wxSQLite3Database* db) {
+    char sql[] = 
+	"select ACCOUNTNAME "
+	"from ACCOUNTLIST_V1 "
+	"where ACCOUNTTYPE in( 'Checking', 'Term') "
+	"and STATUS != 'Closed' "
+	"order by ACCOUNTNAME";
+
+	wxArrayString accountsArray;
+	
+	wxSQLite3ResultSet q1 = db->ExecuteQuery(sql);
+	while (q1.NextRow())
+	{
+		accountsArray.Add(q1.GetString(wxT("ACCOUNTNAME")));
+	}
+	q1.Finalize();
+
+    return accountsArray;
+}
+
 int mmDBWrapper::getAccountID(wxSQLite3Database* db, const wxString& accountName)
 {
     int id = -1;
