@@ -1239,8 +1239,6 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
             c = 0;
         }
         
-    //wxSafeShowMessage(currentPayeeName, wxString::Format(wxT("%i"), payeeID_));       
-        
     } else {
         filtd = mmDBWrapper::getAccountsName(db_.get());
         for (int i = 0; i < filtd.GetCount(); ++i) {
@@ -1259,9 +1257,15 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
             currentPayeeName = filtd.Item(--c);
             bPayee_->SetLabel(currentPayeeName);
     }
+
     currentPayeeName = filtd.Item(c);
     bPayee_->SetLabel(currentPayeeName);
-    payeeID_ = core_->payeeList_.getPayeeID(currentPayeeName);
+
+    if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
+		payeeID_ = mmDBWrapper::getAccountID(db_.get(), currentPayeeName);
+    } else {
+	    payeeID_ = core_->payeeList_.getPayeeID(currentPayeeName);
+	}
 }
 
 void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
