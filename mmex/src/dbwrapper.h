@@ -83,10 +83,7 @@ wxString getAccountType(wxSQLite3Database* db, int accountID);
 int getAccountID(wxSQLite3Database* db, const wxString& accountName);
 double getTotalBalanceOnAccount(wxSQLite3Database* db, int accountID, bool ignoreFuture=false);
 double getInitBalanceOnAccount(wxSQLite3Database* db, int accountID);
-//double getReconciledBalanceOnAccount(wxSQLite3Database* db, int accountID);
 
-// Obsolete Code
-//bool getExpensesIncome(wxSQLite3Database* db, int accountID, double& expenses, double& income, bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
 void removeSplitsForAccount(wxSQLite3Database* db, int accountID);
 
 /* Payee Table API */
@@ -95,9 +92,6 @@ wxString getPayee(wxSQLite3Database* db, int payeeID, int& categID, int& subcate
 bool getPayeeID(wxSQLite3Database* db, const wxString &payee, int& payeeID, int& categID, int& subcategID );
 bool updatePayee(wxSQLite3Database* db, const wxString& payeeName, int payeeID, int categID, int subcategID);
 bool deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID);
-
-// Obsolete Code
-//double getAmountForPayee(wxSQLite3Database* db, int payeeID, bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
 wxArrayString filterPayees(wxSQLite3Database* db, const wxString& patt);
 	
 /* Category Table API */
@@ -120,7 +114,6 @@ bool commit(wxSQLite3Database* db);
 bool begin(wxSQLite3Database* db);
 bool rollback(wxSQLite3Database* db);
 wxString getSplitTrxNotes(wxSQLite3Database* db_, int trxID);
-//bool deleteFlaggedTransactions(wxSQLite3Database* db, int accountID);
 
 /* Bills & Deposits API */
 void deleteBDSeries(wxSQLite3Database* db, int bdID);
