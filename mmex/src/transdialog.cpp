@@ -1214,12 +1214,16 @@ void mmTransDialog::OnChoicePayeeChar(wxKeyEvent& event)
 {
     //it's for debuging
     //wxSafeShowMessage(wxT(":"), wxString::Format(wxT("%i"), event.GetUnicodeKey()));
-    if (event.GetKeyCode()==WXK_DOWN || event.GetKeyCode()==WXK_UP) {
-    wxArrayString filtd = mmDBWrapper::filterPayees(db_.get(), wxT(""));
-    wxString currentPayeeName = bPayee_->GetLabel();
+    if (event.GetKeyCode() != WXK_DOWN && event.GetKeyCode()!=WXK_UP) {
+        event.Skip();
+        return;
+    }
     int c = 0;
-    if (currentPayeeName != _("Select Payee")) {
-    
+    wxString currentPayeeName = bPayee_->GetLabel();
+    wxArrayString filtd;
+    if (choiceTrans_->GetSelection() != DEF_TRANSFER) {
+        filtd = mmDBWrapper::filterPayees(db_.get(), wxT(""));
+        if (currentPayeeName != _("Select Payee")) {
             for (int i = 0; i < filtd.GetCount(); ++i) {
                 if (filtd.Item(i) == currentPayeeName) {
                     c=i;
@@ -1229,13 +1233,20 @@ void mmTransDialog::OnChoicePayeeChar(wxKeyEvent& event)
         } else {
             bPayee_->SetLabel(filtd.Item(c));
         }
-        if (event.GetKeyCode()==WXK_DOWN) {
-            if (c < (filtd.GetCount()-1))
-                bPayee_->SetLabel(filtd.Item(++c));
-        } else if (event.GetKeyCode()==WXK_UP){
-            if (c > 0)
-                bPayee_->SetLabel(filtd.Item(--c));
+    } else {
+        filtd = mmDBWrapper::getAccountsName(db_.get());
+        for (int i = 0; i < filtd.GetCount(); ++i) {
+            if (filtd.Item(i) == currentPayeeName) {
+                c=i;
+                break;
+            }
         }
     }
-    event.Skip();
+    if (event.GetKeyCode()==WXK_DOWN) {
+        if (c < (filtd.GetCount()-1))
+            bPayee_->SetLabel(filtd.Item(++c));
+    } else if (event.GetKeyCode()==WXK_UP){
+        if (c > 0)
+            bPayee_->SetLabel(filtd.Item(--c));
+    }
 }
