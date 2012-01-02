@@ -1914,7 +1914,8 @@ void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
         {
             m_cp->updateExtraTransactionData(m_cp->m_trans.size()-1);
             EnsureVisible(m_cp->m_trans.size()-1);           
-            SetItemState(m_cp->m_trans.size()-1, wxLIST_STATE_SELECTED|wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED|wxLIST_STATE_SELECTED);           EnsureVisible(m_selectedIndex);
+            SetItemState(m_cp->m_trans.size()-1, wxLIST_STATE_SELECTED|wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED|wxLIST_STATE_SELECTED);
+            EnsureVisible(m_selectedIndex);
             m_cp->updateExtraTransactionData(m_cp->m_trans.size()-1);
         }
     }
@@ -1947,13 +1948,12 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
             //refresh the items showing from the point of the transaction delete down
             //the transactions above the deleted transaction won't change so they 
             // don't need to be refreshed
+            if (m_selectedIndex == (long)(m_cp->m_trans.size() - 1) && m_selectedIndex > 0)
+                m_selectedIndex--;
             RefreshItems(m_selectedIndex, static_cast<long>(m_cp->m_trans.size()) - 1);
 
-            //Update info panels
-            m_cp->updateExtraTransactionData(m_selectedIndex);
-    
             //set the deleted transaction index to the new selection and focus on it
-            SetItemState(m_selectedIndex-1, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, 
+            SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED, 
             wxLIST_STATE_FOCUSED | wxLIST_STATE_SELECTED);
     
             //make sure the topmost item before transaction deletion is visible, otherwise 
@@ -1965,6 +1965,8 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
             m_selectedIndex = -1;
             m_cp->updateExtraTransactionData(m_selectedIndex);
         }
+		//Update info panels
+		//m_cp->updateExtraTransactionData(m_selectedIndex);
     }
 }
 //----------------------------------------------------------------------------
