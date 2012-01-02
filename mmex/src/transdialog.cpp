@@ -1234,9 +1234,13 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
                     break;
                 }
             }
+            
         } else {
-            bPayee_->SetLabel(filtd.Item(c));
+            c = 0;
         }
+        
+    //wxSafeShowMessage(currentPayeeName, wxString::Format(wxT("%i"), payeeID_));       
+        
     } else {
         filtd = mmDBWrapper::getAccountsName(db_.get());
         for (int i = 0; i < filtd.GetCount(); ++i) {
@@ -1248,11 +1252,16 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
     }
     if (event.GetKeyCode()==WXK_DOWN) {
         if (c < (filtd.GetCount()-1))
-            bPayee_->SetLabel(filtd.Item(++c));
+            currentPayeeName = filtd.Item(++c);
+            bPayee_->SetLabel(currentPayeeName);
     } else if (event.GetKeyCode()==WXK_UP){
         if (c > 0)
-            bPayee_->SetLabel(filtd.Item(--c));
+            currentPayeeName = filtd.Item(--c);
+            bPayee_->SetLabel(currentPayeeName);
     }
+    currentPayeeName = filtd.Item(c);
+    bPayee_->SetLabel(currentPayeeName);
+    payeeID_ = core_->payeeList_.getPayeeID(currentPayeeName);
 }
 
 void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
@@ -1303,14 +1312,18 @@ void mmTransDialog::OnButtonToAccountChar(wxKeyEvent& event)
             }
         }
     } else {
-	    c=0;
-	}
+        c = 0;
+        toAccountName = filtd.Item(c);
+    }
     
     if (event.GetKeyCode()==WXK_DOWN) {
         if (c < (filtd.GetCount()-1))
-            bTo_->SetLabel(filtd.Item(++c));
+            toAccountName = filtd.Item(++c);
+            bTo_->SetLabel(toAccountName);
     } else if (event.GetKeyCode()==WXK_UP){
         if (c > 0)
-            bTo_->SetLabel(filtd.Item(--c));
+            toAccountName = filtd.Item(--c);
+            bTo_->SetLabel(toAccountName);
     }
+    toID_ = mmDBWrapper::getAccountID(db_.get(), toAccountName);
 }
