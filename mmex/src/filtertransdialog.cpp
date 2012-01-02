@@ -187,19 +187,7 @@ void mmFilterTransactionsDialog::CreateControls()
     accountCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(accountCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxArrayString as;
-    static const char sql[] = 
-    "select ACCOUNTNAME "
-    "from ACCOUNTLIST_V1 "
-   	"where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
-    "order by ACCOUNTNAME";
-
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-    while (q1.NextRow())
-    {
-        as.Add(q1.GetString(wxT("ACCOUNTNAME")));
-    }
-    q1.Finalize();
+    wxArrayString as = mmDBWrapper::getAccountsName(db_);
    
     accountDropDown = new wxChoice( itemPanel, ID_CHOICE4, wxDefaultPosition, wxSize(fieldWidth,-1), as, 0 );
     itemPanelSizer->Add(accountDropDown, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);

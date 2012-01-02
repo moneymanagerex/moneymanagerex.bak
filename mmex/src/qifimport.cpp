@@ -227,11 +227,7 @@ KC 	Check transaction
 
 namespace
 {
-const char g_AccountNameSQL[] = 
-    "select ACCOUNTNAME "
-    "from ACCOUNTLIST_V1 "
-    "where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
-    "order by ACCOUNTNAME";
+
 };
 enum qifAccountInfoType 
 {
@@ -392,13 +388,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
     wxString acctName;
     if (destinationAccountName == wxEmptyString)
     {
-        wxArrayString as;
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(g_AccountNameSQL);
-        while (q1.NextRow())
-        {
-            as.Add(q1.GetString(wxT("ACCOUNTNAME")));
-        }
-        q1.Finalize();
+        wxArrayString as = mmDBWrapper::getAccountsName(db_);
 
         wxSingleChoiceDialog scd(0, _("Choose Account to import to:"), _("QIF Import"), as);
         if (scd.ShowModal() != wxID_OK)

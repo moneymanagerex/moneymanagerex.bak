@@ -1997,19 +1997,7 @@ void MyListCtrl::refreshVisualList()
 //  Called only when moving a deposit/withdraw transaction to a new account.
 int MyListCtrl::destinationAccountID(wxString accName)
 {
-    static const char sql[] = 
-    "select ACCOUNTNAME "
-    "from ACCOUNTLIST_V1 "
-    "where ACCOUNTTYPE IN ('Checking', 'Term') and STATUS <> 'Closed' "
-    "order by ACCOUNTNAME";
-    wxSQLite3ResultSet q1 = m_cp->getDb()->ExecuteQuery(sql);
-
-    wxArrayString as;
-    while (q1.NextRow())
-    {
-        as.Add(q1.GetString(wxT("ACCOUNTNAME")));
-    }
-    q1.Finalize();
+    wxArrayString as = mmDBWrapper::getAccountsName(m_cp->getDb().get());
 
     wxString headerMsg = _("Moving Transaction from ") + accName + _(" to...");
     wxSingleChoiceDialog scd(0, _("Select the destination Account "), headerMsg , as);
