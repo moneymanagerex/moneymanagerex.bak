@@ -34,12 +34,6 @@
 namespace
 {
 
-const char g_AccountNameSQL[] =
-"select ACCOUNTNAME "
-"from ACCOUNTLIST_V1 "
-"where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
-"order by ACCOUNTNAME";
-
 //----------------------------------------------------------------------------
 const wxChar g_def_decimal_point = wxT('.');
 const int g_def_scale = 100;
@@ -541,16 +535,7 @@ void mmExportCSV( mmCoreDB* core, wxSQLite3Database* db_ )
         return;
     }
 
-    wxArrayString as;
-    {
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery( g_AccountNameSQL );
-
-        while ( q1.NextRow() ) {
-            as.Add( q1.GetString( wxT( "ACCOUNTNAME" ) ) );
-        }
-
-        q1.Finalize();
-    }
+    wxArrayString as = mmDBWrapper::getAccountsName(db_);
 
     wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
     wxString q =  wxT("\"");
@@ -705,19 +690,11 @@ void mmExportQIF( mmCoreDB* core, wxSQLite3Database* db_ )
         return;
     }
 
-    wxArrayString as;
-
-    wxSQLite3ResultSet q3 = db_->ExecuteQuery( g_AccountNameSQL );
-
-    while ( q3.NextRow() ) {
-        as.Add( q3.GetString( wxT( "ACCOUNTNAME" ) ) );
-    }
-
-    q3.Finalize();
 
     wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
     wxString q =  wxT("\"");
 
+    wxArrayString as = mmDBWrapper::getAccountsName(db_);
     wxSingleChoiceDialog scd( 0, _( "Choose Account to Export from:" ),_( "QIF Export" ), as );
 
     wxString acctName;
@@ -911,20 +888,12 @@ int mmImportCSV( mmCoreDB* core )
         return -1;
     }
 
-    wxArrayString as;
     int fromAccountID = -1;
-
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery( g_AccountNameSQL );
-
-    while ( q1.NextRow() ) {
-        as.Add( q1.GetString( wxT( "ACCOUNTNAME" ) ) );
-    }
-
-    q1.Finalize();
 
     wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
     wxString q =  wxT("\"");
-
+    
+    wxArrayString as = mmDBWrapper::getAccountsName(db_);
     wxSingleChoiceDialog scd( 0, _("Choose account to import to:"), _("Import from CSV"), as );
 
     if ( scd.ShowModal() == wxID_OK ) {
@@ -1217,20 +1186,12 @@ int mmImportCSVMMNET( mmCoreDB* core )
         return -1;
     }
 
-    wxArrayString as;
     int fromAccountID = -1;
-
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery( g_AccountNameSQL );
-
-    while ( q1.NextRow() ) {
-        as.Add( q1.GetString( wxT( "ACCOUNTNAME" ) ) );
-    }
-
-    q1.Finalize();
 
     wxString delimit = mmDBWrapper::getInfoSettingValue( db_, wxT( "DELIMITER" ), mmex::DEFDELIMTER );
     wxString q =  wxT("\"");
 
+    wxArrayString as = mmDBWrapper::getAccountsName(db_);
     wxSingleChoiceDialog scd( 0, _( "Choose Account to import to:" ),_("Importing CSV MM.NET"), as );
 
     if ( scd.ShowModal() == wxID_OK ) {

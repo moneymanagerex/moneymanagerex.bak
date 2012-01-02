@@ -594,20 +594,7 @@ void mmBDDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmBDDialog::OnAccountName(wxCommandEvent& /*event*/)
 {
-	    static const char sql[] = 
-    	"select ACCOUNTNAME "
-    	"from ACCOUNTLIST_V1 "
-       	"where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
-    	"order by ACCOUNTNAME";
-	
-    	wxArrayString as;
-    	
-    	wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-    	while (q1.NextRow())
-    	{
-    	    as.Add(q1.GetString(wxT("ACCOUNTNAME")));
-    	}
-    	q1.Finalize();
+    	wxArrayString as = mmDBWrapper::getAccountsName(db_);
     	
     	wxSingleChoiceDialog scd(this, _("Choose Bank Account or Term Account"), _("Select Account"), as);
     	if (scd.ShowModal() == wxID_OK)
@@ -622,20 +609,7 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 {
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
 	{
-	    static const char sql[] = 
-    	"select ACCOUNTNAME "
-    	"from ACCOUNTLIST_V1 "
-       	"where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
-    	"order by ACCOUNTNAME";
-	
-    	wxArrayString as;
-    	
-    	wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-    	while (q1.NextRow())
-    	{
-    	    as.Add(q1.GetString(wxT("ACCOUNTNAME")));
-    	}
-    	q1.Finalize();
+    	wxArrayString as = mmDBWrapper::getAccountsName(db_);
     	
     	wxString acctName = itemAccountName_->GetLabel();
     	bPayee_->SetLabel(acctName);
@@ -718,20 +692,7 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 void mmBDDialog::OnTo(wxCommandEvent& /*event*/)
 {	
     // This should only get called if we are in a transfer
-    static const char sql[] = 
-    "select ACCOUNTNAME "
-    "from ACCOUNTLIST_V1 "
-    "where (ACCOUNTTYPE = 'Checking' or ACCOUNTTYPE = 'Term') and STATUS != 'Closed' "
-    "order by ACCOUNTNAME";
-	
-    wxArrayString as;
-    	
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-    while (q1.NextRow())
-    {
-        as.Add(q1.GetString(wxT("ACCOUNTNAME")));
-    }
-    q1.Finalize();
+    wxArrayString as = mmDBWrapper::getAccountsName(db_);
     	
     wxSingleChoiceDialog scd(this, _("Choose Bank Account or Term Account"), _("Select Account"), as);
     if (scd.ShowModal() == wxID_OK)
