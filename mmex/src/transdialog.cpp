@@ -313,7 +313,8 @@ void mmTransDialog::CreateControls()
     choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, wxSize(110, -1), 5, trxStatuses4Choice, 0 );
     choiceStatus_->SetSelection(mmIniOptions::transStatusReconciled_);
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
-
+    choiceStatus_->Connect(ID_DIALOG_TRANS_STATUS, wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::onChoiceStatusChar), NULL, this);
+    
     itemFlexGridSizer8->Add(itemStaticText51, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
     itemFlexGridSizer8->Add(choiceStatus_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
@@ -322,6 +323,8 @@ void mmTransDialog::CreateControls()
     choiceTrans_ = new wxChoice(itemPanel7,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxSize(110, -1), 3, trxTypes4Choice, 0);
     choiceTrans_->SetSelection(0);
     choiceTrans_->SetToolTip(_("Specify the type of transactions to be created."));
+    choiceTrans_->Connect(ID_DIALOG_TRANS_TYPE, wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::onChoiceTransChar), NULL, this);
+
     cAdvanced_ = new wxCheckBox( itemPanel7, ID_DIALOG_TRANS_ADVANCED_CHECKBOX, _("Advanced"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cAdvanced_->SetValue(FALSE);
     cAdvanced_->SetToolTip(_("Allows the setting of different amounts in the FROM and TO accounts."));
@@ -387,7 +390,7 @@ void mmTransDialog::CreateControls()
     payeeWithdrawalTip_ = _("Specify where the transaction is going to");
     payeeDepositTip_    = _("Specify where the transaction is coming from");
     bPayee_->SetToolTip(payeeWithdrawalTip_);
-    bPayee_->Connect(wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::OnChoicePayeeChar), NULL, this);
+    bPayee_->Connect(wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::OnButtonPayeeChar), NULL, this);
 
     itemFlexGridSizer8->Add(itemStaticText9, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     itemFlexGridSizer8->Add(bPayee_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
@@ -396,6 +399,7 @@ void mmTransDialog::CreateControls()
     wxStaticText* itemStaticText13 = new wxStaticText( itemPanel7, ID_DIALOG_TRANS_STATIC_FROM, wxT(" "), wxDefaultPosition, wxDefaultSize, 0 );
     bTo_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONTO, _("Select To Acct"), wxDefaultPosition, wxSize(225, -1), 0 );
     bTo_->SetToolTip(_("Specify which account the transfer is going to"));
+    bTo_->Connect(wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::OnButtonToAccountChar), NULL, this);
     
     itemFlexGridSizer8->Add(itemStaticText13, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxUP, 0);
     itemFlexGridSizer8->Add(bTo_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxUP, 0);
@@ -1210,7 +1214,7 @@ void mmTransDialog::activateSplitTransactionsDlg()
         textAmount_->SetValue(dispAmount);
     }
 }
-void mmTransDialog::OnChoicePayeeChar(wxKeyEvent& event)
+void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
 {
     //it's for debuging
     //wxSafeShowMessage(wxT(":"), wxString::Format(wxT("%i"), event.GetUnicodeKey()));
@@ -1248,5 +1252,65 @@ void mmTransDialog::OnChoicePayeeChar(wxKeyEvent& event)
     } else if (event.GetKeyCode()==WXK_UP){
         if (c > 0)
             bPayee_->SetLabel(filtd.Item(--c));
+    }
+}
+
+void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
+{   
+    wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_TRANS_TYPE);
+    int i = choice->GetSelection();
+    if (event.GetKeyCode()==WXK_DOWN) {
+       if (i < DEF_TRANSFER)
+           choice->SetSelection(++i);
+    } else if (event.GetKeyCode()==WXK_UP){
+       if (i > DEF_WITHDRAWAL)
+           choice->SetSelection(--i);
+    }
+    updateControlsForTransType();
+    event.Skip();
+}
+void mmTransDialog::onChoiceStatusChar(wxKeyEvent& event)
+{   
+    wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_TRANS_STATUS);
+    int i = choice->GetSelection();
+    if (event.GetKeyCode()==WXK_DOWN) {
+        if (i < DEF_STATUS_DUPLICATE)
+           choice->SetSelection(++i);
+        } else if (event.GetKeyCode()==WXK_UP){
+            if (i > DEF_STATUS_NONE)
+               choice->SetSelection(--i);
+        }
+    event.Skip();
+}
+
+void mmTransDialog::OnButtonToAccountChar(wxKeyEvent& event) 
+{
+    if (event.GetKeyCode() != WXK_DOWN && event.GetKeyCode()!=WXK_UP) {
+        event.Skip();
+        return;
+    }
+    
+    int c = 0;
+    wxString toAccountName = bTo_->GetLabel();
+    wxArrayString filtd;
+
+    filtd = mmDBWrapper::getAccountsName(db_.get());
+    if (toAccountName != _("Select To Acct")) { 
+        for (int i = 0; i < filtd.GetCount(); ++i) {
+            if (filtd.Item(i) == toAccountName) {
+                c=i;
+                break;
+            }
+        }
+    } else {
+	    c=0;
+	}
+    
+    if (event.GetKeyCode()==WXK_DOWN) {
+        if (c < (filtd.GetCount()-1))
+            bTo_->SetLabel(filtd.Item(++c));
+    } else if (event.GetKeyCode()==WXK_UP){
+        if (c > 0)
+            bTo_->SetLabel(filtd.Item(--c));
     }
 }

@@ -84,6 +84,10 @@ public:
     void onNoteSelected(wxCommandEvent& event);
     void changeFocus(wxChildFocusEvent& event);
     void onTextEntered(wxCommandEvent& event);
+    void onChoiceTransChar(wxKeyEvent& event);
+    void onChoiceStatusChar(wxKeyEvent& event);
+    void OnButtonPayeeChar(wxKeyEvent& event);
+    void OnButtonToAccountChar(wxKeyEvent& event);
 
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
