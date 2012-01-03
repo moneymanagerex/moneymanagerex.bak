@@ -1200,6 +1200,7 @@ void mmTransDialog::onTextEntered(wxCommandEvent& event)
 
     event.Skip();
 }
+
 void mmTransDialog::activateSplitTransactionsDlg()
 {
     SplitTransactionDialog dlg(core_, split_.get(), choiceTrans_->GetSelection(), this);
@@ -1214,6 +1215,7 @@ void mmTransDialog::activateSplitTransactionsDlg()
         textAmount_->SetValue(dispAmount);
     }
 }
+
 void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
 {
     //it's for debuging
@@ -1276,26 +1278,27 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
 void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
 {   
     wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_TRANS_TYPE);
-    int i = (int)choice->GetSelection();
+    int i = choice->GetSelection();
     if (event.GetKeyCode()==WXK_DOWN) {
-       if (i < DEF_TRANSFER)
+       if (i < DEF_WITHDRAWAL)
            choice->SetSelection(++i);
     } else if (event.GetKeyCode()==WXK_UP){
-       if (i > DEF_WITHDRAWAL)
+       if (i > DEF_TRANSFER)
            choice->SetSelection(--i);
     }
     updateControlsForTransType();
     event.Skip();
 }
+
 void mmTransDialog::onChoiceStatusChar(wxKeyEvent& event)
 {   
     wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_TRANS_STATUS);
     int i = choice->GetSelection();
     if (event.GetKeyCode()==WXK_DOWN) {
-        if (i < DEF_STATUS_DUPLICATE)
+        if (i < DEF_STATUS_NONE)
            choice->SetSelection(++i);
         } else if (event.GetKeyCode()==WXK_UP){
-            if (i > DEF_STATUS_NONE)
+            if (i > DEF_STATUS_DUPLICATE)
                choice->SetSelection(--i);
         }
     event.Skip();
