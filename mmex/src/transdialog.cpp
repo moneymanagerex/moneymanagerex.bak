@@ -1280,11 +1280,11 @@ void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
     wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_TRANS_TYPE);
     int i = choice->GetSelection();
     if (event.GetKeyCode()==WXK_DOWN) {
-       if (i < DEF_WITHDRAWAL)
-           choice->SetSelection(++i);
+       if (i < DEF_TRANSFER)
+           choice->SetSelection(i++);
     } else if (event.GetKeyCode()==WXK_UP){
-       if (i > DEF_TRANSFER)
-           choice->SetSelection(--i);
+       if (i > DEF_WITHDRAWAL)
+           choice->SetSelection(i--);
     }
     updateControlsForTransType();
     event.Skip();
@@ -1295,11 +1295,11 @@ void mmTransDialog::onChoiceStatusChar(wxKeyEvent& event)
     wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_TRANS_STATUS);
     int i = choice->GetSelection();
     if (event.GetKeyCode()==WXK_DOWN) {
-        if (i < DEF_STATUS_NONE)
-           choice->SetSelection(++i);
+        if (i < DEF_STATUS_DUPLICATE)
+           choice->SetSelection(i++);
         } else if (event.GetKeyCode()==WXK_UP){
-            if (i > DEF_STATUS_DUPLICATE)
-               choice->SetSelection(--i);
+            if (i > DEF_STATUS_NONE)
+               choice->SetSelection(i--);
         }
     event.Skip();
 }
