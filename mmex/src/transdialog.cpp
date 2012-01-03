@@ -1222,40 +1222,45 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
         event.Skip();
         return;
     }
-    int c = 0;
+    size_t c = 0;
     wxString currentPayeeName = bPayee_->GetLabel();
     wxArrayString filtd;
     if (choiceTrans_->GetSelection() != DEF_TRANSFER) {
         filtd = mmDBWrapper::filterPayees(db_.get(), wxT(""));
-        if (currentPayeeName != _("Select Payee")) {
-            for (int i = 0; i < filtd.GetCount(); ++i) {
+        if (filtd.IsEmpty()) {
+            //No payee present. Should be added one as minimum
+            return;
+		}
+        if (currentPayeeName == _("Select Payee")) {
+            c = 0;            
+        } else {
+            for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) {
                 if (filtd.Item(i) == currentPayeeName) {
-                    c=i;
+                    c = i;
                     break;
                 }
             }
-            
-        } else {
-            c = 0;
         }
         
     } else {
         filtd = mmDBWrapper::getAccountsName(db_.get());
-        for (int i = 0; i < filtd.GetCount(); ++i) {
+        if (filtd.IsEmpty()) {
+            //No accounts present. Should be added one as minimum
+            return;
+		}
+        for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) {
             if (filtd.Item(i) == currentPayeeName) {
-                c=i;
+                c = i;
                 break;
             }
         }
     }
     if (event.GetKeyCode()==WXK_DOWN) {
-        if (c < (filtd.GetCount()-1))
+        if ((c + 1) < (size_t)filtd.GetCount())
             currentPayeeName = filtd.Item(++c);
-            bPayee_->SetLabel(currentPayeeName);
     } else if (event.GetKeyCode()==WXK_UP){
         if (c > 0)
             currentPayeeName = filtd.Item(--c);
-            bPayee_->SetLabel(currentPayeeName);
     }
 
     currentPayeeName = filtd.Item(c);
@@ -1271,7 +1276,7 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
 void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
 {   
     wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_TRANS_TYPE);
-    int i = choice->GetSelection();
+    int i = (int)choice->GetSelection();
     if (event.GetKeyCode()==WXK_DOWN) {
        if (i < DEF_TRANSFER)
            choice->SetSelection(++i);
@@ -1303,13 +1308,13 @@ void mmTransDialog::OnButtonToAccountChar(wxKeyEvent& event)
         return;
     }
     
-    int c = 0;
+    size_t c = 1;
     wxString toAccountName = bTo_->GetLabel();
     wxArrayString filtd;
 
     filtd = mmDBWrapper::getAccountsName(db_.get());
     if (toAccountName != _("Select To Acct")) { 
-        for (int i = 0; i < filtd.GetCount(); ++i) {
+        for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) {
             if (filtd.Item(i) == toAccountName) {
                 c=i;
                 break;
@@ -1321,7 +1326,7 @@ void mmTransDialog::OnButtonToAccountChar(wxKeyEvent& event)
     }
     
     if (event.GetKeyCode()==WXK_DOWN) {
-        if (c < (filtd.GetCount()-1))
+        if ((c+1) < (size_t)(filtd.GetCount()))
             toAccountName = filtd.Item(++c);
             bTo_->SetLabel(toAccountName);
     } else if (event.GetKeyCode()==WXK_UP){
