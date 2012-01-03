@@ -279,7 +279,7 @@ void mmTransDialog::CreateControls()
     itemStaticTextWeek = new wxStaticText( itemPanel7, ID_DIALOG_TRANS_WEEK, wxT(""));
     
     dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime,
-                                 wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY, doubleValidator());
+                                 wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
     dpc_->SetBackgroundColour(mmColors::listDetailsPanelColor);
 
