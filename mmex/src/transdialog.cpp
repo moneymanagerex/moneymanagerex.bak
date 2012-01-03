@@ -279,7 +279,7 @@ void mmTransDialog::CreateControls()
     itemStaticTextWeek = new wxStaticText( itemPanel7, ID_DIALOG_TRANS_WEEK, wxT(""));
     
     dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime,
-                                 wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
+                                 wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY, doubleValidator());
     dpc_->SetToolTip(_("Specify the date of the transaction"));
     dpc_->SetBackgroundColour(mmColors::listDetailsPanelColor);
 
@@ -297,6 +297,11 @@ void mmTransDialog::CreateControls()
     spinCtrlDirection = wxSP_HORIZONTAL;
     interval = 4;
 #endif
+    //In linux by default nothing in focus therefore keystrokes does not working
+#ifdef __WXGTK__
+    dpc_ -> SetFocus();
+#endif
+
     spinCtrl_ = new wxSpinButton(itemPanel7,ID_DIALOG_TRANS_SPINNER,wxDefaultPosition,spinCtrlSize,spinCtrlDirection|wxSP_ARROW_KEYS|wxSP_WRAP);
     spinCtrl_ -> SetRange (-32768, 32768); 
     spinCtrl_->SetToolTip(_("Retard or advance the date of the transaction"));
@@ -320,7 +325,18 @@ void mmTransDialog::CreateControls()
 
     // Type --------------------------------------------
     wxStaticText* itemStaticText5 = new wxStaticText( itemPanel7, wxID_STATIC, _("Type"), wxDefaultPosition, wxDefaultSize, 0 );
-    choiceTrans_ = new wxChoice(itemPanel7,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxSize(110, -1), 3, trxTypes4Choice, 0);
+    
+    //TODO:restrict choise if accounts number lessthan 2
+    if (mmDBWrapper::getNumAccounts(db_.get()) < 2) {
+        wxString c[] = {
+            _("Withdrawal"),
+            _("Deposit"),
+            _("Transfer"),
+        }; 
+        choiceTrans_ = new wxChoice(itemPanel7,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxSize(110, -1), 3, c, 0);
+    }else {
+        choiceTrans_ = new wxChoice(itemPanel7,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxSize(110, -1), 3, trxTypes4Choice, 0);
+    }
     choiceTrans_->SetSelection(0);
     choiceTrans_->SetToolTip(_("Specify the type of transactions to be created."));
     choiceTrans_->Connect(ID_DIALOG_TRANS_TYPE, wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::onChoiceTransChar), NULL, this);
@@ -391,6 +407,7 @@ void mmTransDialog::CreateControls()
     payeeDepositTip_    = _("Specify where the transaction is coming from");
     bPayee_->SetToolTip(payeeWithdrawalTip_);
     bPayee_->Connect(wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::OnButtonPayeeChar), NULL, this);
+    bPayee_->Connect(wxEVT_MOUSEWHEEL, wxMouseEventHandler(mmTransDialog::OnButtonPayeeMouse), NULL, this);
 
     itemFlexGridSizer8->Add(itemStaticText9, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     itemFlexGridSizer8->Add(bPayee_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
@@ -400,6 +417,7 @@ void mmTransDialog::CreateControls()
     bTo_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONTO, _("Select To Acct"), wxDefaultPosition, wxSize(225, -1), 0 );
     bTo_->SetToolTip(_("Specify which account the transfer is going to"));
     bTo_->Connect(wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::OnButtonToAccountChar), NULL, this);
+    bTo_->Connect(wxEVT_MOUSEWHEEL, wxMouseEventHandler(mmTransDialog::OnButtonToAccountMouse), NULL, this);
     
     itemFlexGridSizer8->Add(itemStaticText13, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxUP, 0);
     itemFlexGridSizer8->Add(bTo_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxUP, 0);
@@ -469,11 +487,6 @@ void mmTransDialog::CreateControls()
     wxButton* itemButtonCancel = new wxButton( itemPanel25, wxID_CANCEL, _("&Cancel"));
     itemStdDialogButtonSizer1->Add(itemButtonCancel,  0, wxALIGN_RIGHT|wxLEFT|wxRIGHT, 10);
 
-    //In linux by default nothing in focus therefore keystrokes does not working
-    //I like amount in the focus becouse other fields already have amounts 
-#ifdef __WXGTK__
-    textAmount_ -> SetFocus();
-#endif
     if (edit_)
         itemButtonCancel->SetFocus();
 
@@ -557,8 +570,10 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
 {
     // This should only get called if we are in a transfer
 
-    wxArrayString as = mmDBWrapper::getAccountsName(db_.get());
-
+    wxArrayString as = mmDBWrapper::getAccountsNameExceptOne(db_.get(), payeeID_);
+    if (as.IsEmpty()){
+		return;
+	}
     wxSingleChoiceDialog scd(0, _("Account name"), _("Select Account"), as);
     if (scd.ShowModal() == wxID_OK)
     {
@@ -703,6 +718,7 @@ void mmTransDialog::updateControlsForTransType()
         itemStaticText13->SetLabel(wxT(""));
         if (payeeUnknown_) 
             bPayee_->SetLabel(resetPayeeString());
+        bPayee_->Enable(true);
 
     } else if (choiceTrans_->GetSelection() == DEF_DEPOSIT) {
 
@@ -713,6 +729,7 @@ void mmTransDialog::updateControlsForTransType()
         itemStaticText13->SetLabel(wxT(""));
         if (payeeUnknown_) 
             bPayee_->SetLabel(resetPayeeString());
+            bPayee_->Enable(true);
 
     } else if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
 
@@ -730,6 +747,7 @@ void mmTransDialog::updateControlsForTransType()
         wxString acctName = mmDBWrapper::getAccountName(db_.get(), accountID_);
         bPayee_->SetLabel(acctName);
         payeeID_ = accountID_;
+        bPayee_->Enable(false);
 
         if (!edit_)
         {
@@ -1232,7 +1250,7 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
         if (filtd.IsEmpty()) {
             //No payee present. Should be added one as minimum
             return;
-		}
+        }
         if (currentPayeeName == _("Select Payee")) {
             c = 0;            
         } else {
@@ -1249,7 +1267,7 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
         if (filtd.IsEmpty()) {
             //No accounts present. Should be added one as minimum
             return;
-		}
+        }
         for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) {
             if (filtd.Item(i) == currentPayeeName) {
                 c = i;
@@ -1269,10 +1287,10 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
     bPayee_->SetLabel(currentPayeeName);
 
     if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
-		payeeID_ = mmDBWrapper::getAccountID(db_.get(), currentPayeeName);
+        payeeID_ = mmDBWrapper::getAccountID(db_.get(), currentPayeeName);
     } else {
-	    payeeID_ = core_->payeeList_.getPayeeID(currentPayeeName);
-	}
+        payeeID_ = core_->payeeList_.getPayeeID(currentPayeeName);
+    }
 }
 
 void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
@@ -1280,7 +1298,7 @@ void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
     wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_TRANS_TYPE);
     int i = choice->GetSelection();
     if (event.GetKeyCode()==WXK_DOWN) {
-        if (i < DEF_TRANSFER) {
+        if (i < (mmDBWrapper::getNumAccounts(db_.get()) > 1 ? DEF_TRANSFER : DEF_DEPOSIT)) {
             choice->SetSelection(++i);
         }
     } else if (event.GetKeyCode()==WXK_UP){
@@ -1300,10 +1318,10 @@ void mmTransDialog::onChoiceStatusChar(wxKeyEvent& event)
     if (event.GetKeyCode()==WXK_DOWN) {
         if (i < DEF_STATUS_DUPLICATE) {
             choice->SetSelection(++i);
-	    }
+        }
     } else if (event.GetKeyCode()==WXK_UP) {
         if (i > DEF_STATUS_NONE) {
-		    choice->SetSelection(--i);
+            choice->SetSelection(--i);
         }
     } else {
         event.Skip();
@@ -1321,7 +1339,10 @@ void mmTransDialog::OnButtonToAccountChar(wxKeyEvent& event)
     wxString toAccountName = bTo_->GetLabel();
     wxArrayString filtd;
 
-    filtd = mmDBWrapper::getAccountsName(db_.get());
+    filtd = mmDBWrapper::getAccountsNameExceptOne(db_.get(), payeeID_);
+    if (filtd.IsEmpty()){
+		return;
+	}
     if (toAccountName != _("Select To Acct")) { 
         for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) {
             if (filtd.Item(i) == toAccountName) {
@@ -1344,4 +1365,92 @@ void mmTransDialog::OnButtonToAccountChar(wxKeyEvent& event)
             bTo_->SetLabel(toAccountName);
     }
     toID_ = mmDBWrapper::getAccountID(db_.get(), toAccountName);
+}
+
+void mmTransDialog::OnButtonToAccountMouse(wxMouseEvent& event) 
+{
+    size_t c = 1;
+    int i = event.GetWheelRotation(); 
+    wxArrayString filtd = mmDBWrapper::getAccountsNameExceptOne(db_.get(), payeeID_);
+    if (filtd.IsEmpty()){
+		return;
+	}
+    wxString toAccountName = bTo_->GetLabel();
+    if (toAccountName != _("Select To Acct")) { 
+        for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) {
+            if (filtd.Item(i) == toAccountName) {
+                c=i;
+                break;
+            }
+        }
+    } else {
+        c = 0;
+        toAccountName = filtd.Item(c);
+    }
+    
+    if (i < 0) {
+        if ((c+1) < (size_t)(filtd.GetCount()))
+            toAccountName = filtd.Item(++c);
+            bTo_->SetLabel(toAccountName);
+    } else if (i > 0){
+        if (c > 0)
+            toAccountName = filtd.Item(--c);
+            bTo_->SetLabel(toAccountName);
+    }
+    toID_ = mmDBWrapper::getAccountID(db_.get(), toAccountName);
+}
+
+void mmTransDialog::OnButtonPayeeMouse(wxMouseEvent& event) 
+{
+    int i = event.GetWheelRotation();
+
+    size_t c = 0;
+    wxString currentPayeeName = bPayee_->GetLabel();
+    wxArrayString filtd;
+    if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
+        filtd = mmDBWrapper::getAccountsName(db_.get());
+        if (filtd.IsEmpty()) {
+            //No accounts present. Should be added one as minimum
+            return;
+        }
+        for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) {
+            if (filtd.Item(i) == currentPayeeName) {
+                c = i;
+                break;
+            }
+        }
+        
+    } else {
+        filtd = mmDBWrapper::filterPayees(db_.get(), wxT(""));
+        if (filtd.IsEmpty()) {
+            //No payee present. Should be added one as minimum
+            return;
+        }
+        if (currentPayeeName == _("Select Payee")) {
+            c = 0;            
+        } else {
+            for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) {
+                if (filtd.Item(i) == currentPayeeName) {
+                    c = i;
+                    break;
+                }
+            }
+        }
+    }
+    if (i < 0) {
+        if ((c + 1) < (size_t)filtd.GetCount())
+            currentPayeeName = filtd.Item(++c);
+    } else if (i > 0){
+        if (c > 0)
+            currentPayeeName = filtd.Item(--c);
+    }
+
+    currentPayeeName = filtd.Item(c);
+    bPayee_->SetLabel(currentPayeeName);
+
+    if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
+        payeeID_ = mmDBWrapper::getAccountID(db_.get(), currentPayeeName);
+    } else {
+        payeeID_ = core_->payeeList_.getPayeeID(currentPayeeName);
+    }
 }

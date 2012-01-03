@@ -88,6 +88,8 @@ public:
     void onChoiceStatusChar(wxKeyEvent& event);
     void OnButtonPayeeChar(wxKeyEvent& event);
     void OnButtonToAccountChar(wxKeyEvent& event);
+    void OnButtonPayeeMouse(wxMouseEvent& event); 
+    void OnButtonToAccountMouse(wxMouseEvent& event); 
 
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
