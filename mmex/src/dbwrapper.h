@@ -81,6 +81,7 @@ int getNumAccounts(wxSQLite3Database* db);
 wxString getAccountName(wxSQLite3Database* db, int accountID);
 wxString getAccountType(wxSQLite3Database* db, int accountID);
 wxArrayString getAccountsName(wxSQLite3Database* db);
+wxArrayString getAccountsNameExceptOne(wxSQLite3Database* db, int accountID);
 int getAccountID(wxSQLite3Database* db, const wxString& accountName);
 double getTotalBalanceOnAccount(wxSQLite3Database* db, int accountID, bool ignoreFuture=false);
 double getInitBalanceOnAccount(wxSQLite3Database* db, int accountID);
