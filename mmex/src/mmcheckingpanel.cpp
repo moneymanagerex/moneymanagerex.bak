@@ -804,13 +804,16 @@ void mmCheckingPanel::CreateControls()
 
 void mmCheckingPanel::enableEditDeleteButtons(bool en)
 {
-    wxButton* bE = (wxButton*)FindWindow(wxID_EDIT);
-    wxButton* bD = (wxButton*)FindWindow(wxID_DELETE);
-    wxButton* bM = (wxButton*)FindWindow(wxID_MOVE_FRAME);
+    wxButton* bEdit = (wxButton*)FindWindow(wxID_EDIT);
+    wxButton* bDelete = (wxButton*)FindWindow(wxID_DELETE);
+    wxButton* bMove = (wxButton*)FindWindow(wxID_MOVE_FRAME);
 
-    bE->Enable(en);
-    bD->Enable(en);
-    bM->Enable(en);
+    bEdit->Enable(en);
+    bDelete->Enable(en);
+    if (mmDBWrapper::getNumAccounts(getDb().get())>1)
+        bMove->Enable(en);
+    else
+        bMove->Enable(false);   
    
 }
 //----------------------------------------------------------------------------
@@ -1999,7 +2002,7 @@ void MyListCtrl::refreshVisualList()
 //  Called only when moving a deposit/withdraw transaction to a new account.
 int MyListCtrl::destinationAccountID(wxString accName)
 {
-    wxArrayString as = mmDBWrapper::getAccountsName(m_cp->getDb().get());
+    wxArrayString as = mmDBWrapper::getAccountsNameExceptOne(m_cp->getDb().get(), m_cp->accountID());
 
     wxString headerMsg = _("Moving Transaction from ") + accName + _(" to...");
     wxSingleChoiceDialog scd(0, _("Select the destination Account "), headerMsg , as);
