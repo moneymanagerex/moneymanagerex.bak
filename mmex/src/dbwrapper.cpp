@@ -929,43 +929,43 @@ wxString mmDBWrapper::getAccountName(wxSQLite3Database* db, int accountID)
 
 wxArrayString mmDBWrapper::getAccountsNameExceptOne(wxSQLite3Database* db, int accountID) {
     char sql[] = 
-	"select ACCOUNTNAME "
-	"from ACCOUNTLIST_V1 "
-	"where ACCOUNTTYPE in( 'Checking', 'Term') "
-	"and STATUS != 'Closed' "
-	"and ACCOUNTID <> ? "
-	"order by ACCOUNTNAME";
+    "select ACCOUNTNAME "
+    "from ACCOUNTLIST_V1 "
+    "where ACCOUNTTYPE in( 'Checking', 'Term') "
+    "and STATUS != 'Closed' "
+    "and ACCOUNTID <> ? "
+    "order by ACCOUNTNAME";
 
-	wxSQLite3Statement st = db->PrepareStatement(sql);
+    wxSQLite3Statement st = db->PrepareStatement(sql);
     st.Bind(1, accountID);
 
-	wxArrayString accountsArray;
-	
-	wxSQLite3ResultSet q1 = st.ExecuteQuery();
-	while (q1.NextRow())
-	{
-		accountsArray.Add(q1.GetString(wxT("ACCOUNTNAME")));
-	}
-	q1.Finalize();
+    wxArrayString accountsArray;
+    
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    while (q1.NextRow())
+    {
+        accountsArray.Add(q1.GetString(wxT("ACCOUNTNAME")));
+    }
+    q1.Finalize();
 
     return accountsArray;
 }
 wxArrayString mmDBWrapper::getAccountsName(wxSQLite3Database* db) {
     char sql[] = 
-	"select ACCOUNTNAME "
-	"from ACCOUNTLIST_V1 "
-	"where ACCOUNTTYPE in( 'Checking', 'Term') "
-	"and STATUS != 'Closed' "
-	"order by ACCOUNTNAME";
+    "select ACCOUNTNAME "
+    "from ACCOUNTLIST_V1 "
+    "where ACCOUNTTYPE in( 'Checking', 'Term') "
+    "and STATUS != 'Closed' "
+    "order by ACCOUNTNAME";
 
-	wxArrayString accountsArray;
-	
-	wxSQLite3ResultSet q1 = db->ExecuteQuery(sql);
-	while (q1.NextRow())
-	{
-		accountsArray.Add(q1.GetString(wxT("ACCOUNTNAME")));
-	}
-	q1.Finalize();
+    wxArrayString accountsArray;
+    
+    wxSQLite3ResultSet q1 = db->ExecuteQuery(sql);
+    while (q1.NextRow())
+    {
+        accountsArray.Add(q1.GetString(wxT("ACCOUNTNAME")));
+    }
+    q1.Finalize();
 
     return accountsArray;
 }
@@ -1212,7 +1212,7 @@ double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountI
     return balance;
 }
 
-void mmDBWrapper::addPayee(wxSQLite3Database* db, const wxString &payee, int categID, int subcategID)
+/*void mmDBWrapper::addPayee(wxSQLite3Database* db, const wxString &payee, int categID, int subcategID)
 {
     try{
         static const char sql[] = 
@@ -1230,7 +1230,7 @@ void mmDBWrapper::addPayee(wxSQLite3Database* db, const wxString &payee, int cat
         wxLogDebug(wxT("Database::addPayee: Exception"), e.GetMessage().c_str());
         wxLogError(wxString::Format(_("Add Payee. Error: %s"), e.GetMessage().c_str()));
     }
-}
+}*/
 
 bool mmDBWrapper::getPayeeID(wxSQLite3Database* db, const wxString &payee, int& payeeID, 
                              int& categID, int& subcategID )
@@ -1384,30 +1384,30 @@ bool mmDBWrapper::updateCategory(wxSQLite3Database* db, int categID,
     try {
         if (subcategID == -1)
         {
-	        wxSQLite3Statement st = db->PrepareStatement("update CATEGORY_V1 "
-	                                                     "SET CATEGNAME = ? "
-	                                                     "WHERE CATEGID = ?"
-	                                                    );
-	        
-	        st.Bind(1, newName);
-	        st.Bind(2, categID);
-	
-	        st.ExecuteUpdate();
-	        st.Finalize();
-	    }
-	    else
-	    {
-	        wxSQLite3Statement st = db->PrepareStatement("update SUBCATEGORY_V1 "
-	                                                     "SET SUBCATEGNAME = ? "
-	                                                     "WHERE SUBCATEGID = ?"
-	                                                    );
-	
-	        st.Bind(1, newName);
-	        st.Bind(2, subcategID);
-	
-	        st.ExecuteUpdate();
-	        st.Finalize();
-	    }
+            wxSQLite3Statement st = db->PrepareStatement("update CATEGORY_V1 "
+                                                         "SET CATEGNAME = ? "
+                                                         "WHERE CATEGID = ?"
+                                                        );
+            
+            st.Bind(1, newName);
+            st.Bind(2, categID);
+    
+            st.ExecuteUpdate();
+            st.Finalize();
+        }
+        else
+        {
+            wxSQLite3Statement st = db->PrepareStatement("update SUBCATEGORY_V1 "
+                                                         "SET SUBCATEGNAME = ? "
+                                                         "WHERE SUBCATEGID = ?"
+                                                        );
+    
+            st.Bind(1, newName);
+            st.Bind(2, subcategID);
+    
+            st.ExecuteUpdate();
+            st.Finalize();
+        }
 
     } catch(wxSQLite3Exception e) 
     { 
@@ -1635,34 +1635,29 @@ bool mmDBWrapper::updatePayee(wxSQLite3Database* db, const wxString& payeeName,
 bool mmDBWrapper::deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID)
 {
     try {
-    static const char sql[] = 
-    "select 1 "
-    "from CHECKINGACCOUNT_V1 "
-    "where transcode <> 'Transfer' " //for transfer transactions payee id should be null. if not null jast ignore it
-    "and PAYEEID = ? "
-    "limit 1";
-    wxSQLite3Statement st = db->PrepareStatement(sql);
-
-    st.Bind(1, payeeID);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    bool found = q1.NextRow();
-    st.Finalize();
-
-    if (found)
-    {
-        return false;
-    }
+        char sql[] = 
+        "select 1 "
+        "from CHECKINGACCOUNT_V1 "
+        "where transcode <> 'Transfer' " //for transfer transactions payee id should be null. if not null jast ignore it
+        "and PAYEEID = ? "
+        "limit 1";
+        wxSQLite3Statement st = db->PrepareStatement(sql);
+        st.Bind(1, payeeID);
+        wxSQLite3ResultSet q1 = st.ExecuteQuery();
+        
+        bool found = q1.NextRow();
+        st.Finalize();
     
-    // --
-
-    st = db->PrepareStatement("delete from PAYEE_V1 where PAYEEID = ?");
-    st.Bind(1, payeeID);
-    
-    st.ExecuteUpdate();
-    st.Finalize();
-    } catch(wxSQLite3Exception e) 
-    { 
+        if (found)
+            return false;
+        
+        // --
+        st = db->PrepareStatement("delete from PAYEE_V1 where PAYEEID = ?");
+        st.Bind(1, payeeID);
+        
+        st.ExecuteUpdate();
+        st.Finalize();
+    } catch(wxSQLite3Exception e) { 
         wxLogDebug(wxT("Database::deletePayeeWithConstraints: Exception"), e.GetMessage().c_str());
         wxLogError(wxString::Format(_("Delete Payee With Constraints. Error: %s"), e.GetMessage().c_str()));
         return false;
@@ -2430,11 +2425,11 @@ void mmDBWrapper::deleteBDSeries(wxSQLite3Database* db, int bdID)
 {
     try {
         static const char* sql[] = 
-		{
-        	"delete from BILLSDEPOSITS_V1 where BDID = ?",
-        	"delete from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = ?",
-        	0
-		};
+        {
+            "delete from BILLSDEPOSITS_V1 where BDID = ?",
+            "delete from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = ?",
+            0
+        };
      
         for (int i = 0; sql[i]; ++i)
         {
