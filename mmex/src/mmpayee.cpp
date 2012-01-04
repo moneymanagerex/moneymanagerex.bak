@@ -55,17 +55,24 @@ int mmPayeeList::addPayee(const wxString &payeeName)
 {
     int payeeID = -1;
 
-    static const char sql[] =
-    "insert into PAYEE_V1 (PAYEENAME, CATEGID, SUBCATEGID) values (?, ?, ?)";
+    try {
+	    char sql[] =
+	    "insert into PAYEE_V1 (PAYEENAME, CATEGID, SUBCATEGID) values (?, ?, ?)";
+	    wxSQLite3Statement st = db_->PrepareStatement(sql);
+	    st.Bind(1, payeeName);
+	    st.Bind(2, -1);
+	    st.Bind(3, -1);
+	
+	    st.ExecuteUpdate();
+	    payeeID = (int)db_->GetLastRowId().ToLong();
+	    st.Finalize();
 
-    wxSQLite3Statement st = db_->PrepareStatement(sql);
-    st.Bind(1, payeeName);
-    st.Bind(2, -1);
-    st.Bind(3, -1);
-
-    st.ExecuteUpdate();
-    payeeID = db_->GetLastRowId().ToLong();
-    st.Finalize();
+    } catch(wxSQLite3Exception e) 
+    { 
+        wxLogDebug(wxT("Database::addPayee: Exception"), e.GetMessage().c_str());
+        wxLogError(wxString::Format(_("Add Payee. Error: %s"), e.GetMessage().c_str()));
+        return payeeID;
+    }
 
     wxASSERT(payeeID > 0);
 
