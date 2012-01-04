@@ -77,6 +77,7 @@ bool mmCategDialog::Create( wxWindow* parent, wxWindowID id,
 void mmCategDialog::fillControls()
 {
     root_ = treeCtrl_->AddRoot(_("Categories"));
+    selectedItemId_ = root_;
     treeCtrl_->SetItemBold(root_, true);
     treeCtrl_->SetFocus ();
 
