@@ -89,7 +89,7 @@ double getInitBalanceOnAccount(wxSQLite3Database* db, int accountID);
 void removeSplitsForAccount(wxSQLite3Database* db, int accountID);
 
 /* Payee Table API */
-void addPayee(wxSQLite3Database* db, const wxString &payee, int categID, int subcategID);
+//void addPayee(wxSQLite3Database* db, const wxString &payee, int categID, int subcategID);
 wxString getPayee(wxSQLite3Database* db, int payeeID, int& categID, int& subcategID );
 bool getPayeeID(wxSQLite3Database* db, const wxString &payee, int& payeeID, int& categID, int& subcategID );
 bool updatePayee(wxSQLite3Database* db, const wxString& payeeName, int payeeID, int categID, int subcategID);
