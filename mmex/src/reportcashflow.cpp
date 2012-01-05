@@ -72,14 +72,14 @@ wxString mmReportCashFlow::getHTMLText()
     hb.addLineBreak();
     hb.addLineBreak();
 
-	hb.startCenter();
+    hb.startCenter();
 
     hb.startTable(wxT("65%"));
-	hb.startTableRow();
-	hb.addTableHeaderCell(_("Date"));
-	hb.addTableHeaderCell(_("Total"));
-	hb.addTableHeaderCell(_("Difference"));
-	hb.endTableRow();
+    hb.startTableRow();
+    hb.addTableHeaderCell(_("Date"));
+    hb.addTableHeaderCell(_("Total"));
+    hb.addTableHeaderCell(_("Difference"));
+    hb.endTableRow();
 
     double tBalance = 0.0;
           
@@ -93,16 +93,7 @@ wxString mmReportCashFlow::getHTMLText()
                 // Check if this account belongs in our list
                 if (accountArray_ != NULL)
                 {
-                    bool isFound = false;
-                    for (int arrIdx = 0; arrIdx < (int)accountArray_->size(); arrIdx++)
-                    {
-                        if (pCA->accountName_ == accountArray_->Item(arrIdx))
-                        {
-                            isFound = true;
-                            break;
-                        }
-                    }
-                    if (!isFound)
+                    if (wxNOT_FOUND == accountArray_->Index(pCA->accountName_)) //linear search
                         continue; // skip account
                 }
 
@@ -126,16 +117,7 @@ wxString mmReportCashFlow::getHTMLText()
                     // Check if this account belongs in our list
                     if (accountArray_ != NULL)
                     {
-                        bool isFound = false;
-                        for (int arrIdx = 0; arrIdx < (int)accountArray_->size(); arrIdx++)
-                        {
-                            if (pTA->accountName_ == accountArray_->Item(arrIdx))
-                            {
-                                isFound = true;
-                                break;
-                            }
-                        }
-                        if (!isFound)
+                        if (wxNOT_FOUND == accountArray_->Index(pCA->accountName_)) //linear search
                             continue; // skip account
                     }
 
@@ -160,6 +142,7 @@ wxString mmReportCashFlow::getHTMLText()
             "NUMOCCURRENCES, "
             "TRANSCODE, "
             "TRANSAMOUNT, "
+            "TOACCOUNTID, "
             "ACCOUNTID "
     "from BILLSDEPOSITS_V1";
 
@@ -197,25 +180,20 @@ wxString mmReportCashFlow::getHTMLText()
         if (nextOccurDate > yearFromNow)
             continue;
 
-        if (transType == TRANS_TYPE_TRANSFER_STR)
-            continue;
+        int accountID = q1.GetInt(wxT("ACCOUNTID"));
+        int toAccountID = q1.GetInt(wxT("TOACCOUNTID"));
 
-        int accountID     = q1.GetInt(wxT("ACCOUNTID"));
+        bool isAccountFound = true, isToAccountFound = true;
         if (accountArray_ != NULL)
         {
-            bool isFound = false;
-            for (int arrIdx = 0; arrIdx < (int)accountArray_->size(); arrIdx++)
-            {
-                if (accountID == core_->accountList_.getAccountID(accountArray_->Item(arrIdx)))
-                {
-                    isFound = true;
-                    break;
-                }
-            }
-            if (!isFound)
-                continue; // skip account
+            if (wxNOT_FOUND == accountArray_->Index(core_->accountList_.getAccountName(accountID))) //linear search
+                isAccountFound = false;
+
+            if (wxNOT_FOUND == accountArray_->Index(core_->accountList_.getAccountName(toAccountID))) //linear search
+                isToAccountFound = false;
         }
 
+        if (!isAccountFound && !isToAccountFound) continue; // skip account
 
         double convRate = mmDBWrapper::getCurrencyBaseConvRate(core_->db_.get(), accountID);
 
@@ -230,11 +208,23 @@ wxString mmReportCashFlow::getHTMLText()
 
             mmRepeatForecast rf;
             rf.date = nextOccurDate;
+            rf.amount = 0.0;
 
             if (transType == TRANS_TYPE_WITHDRAWAL_STR)
+            {
                 rf.amount = -amt * convRate;
-            else
+            }
+            else if (transType == TRANS_TYPE_DEPOSIT_STR)
+            {
                 rf.amount = +amt * convRate;
+            }
+            else //if (transType == TRANS_TYPE_TRANSFER_STR)
+            {
+                if (isAccountFound)
+                    rf.amount -= amt * convRate;
+                if (isToAccountFound)
+                    rf.amount += amt * convRate;
+            }
 
             fvec.push_back(rf);   
 
@@ -282,24 +272,22 @@ wxString mmReportCashFlow::getHTMLText()
                 nextOccurDate = nextOccurDate.Add(wxDateSpan::Days(1));
             }
         } // end while
-    }
+    } //end query
     q1.Finalize();
 
     // Now we have a vector of dates and amounts over next year
     // Need to use different month ranges to figure out cash flow
 
-    std::vector<double> forecastOver12Months;
-    forecastOver12Months.resize(12*years, 0.0);
-    for (int idx = 0; idx < 12*years; idx++)
+    std::vector<double> forecastOver12Months(12 * years, 0.0);
+    for (int idx = 0; idx < (int)forecastOver12Months.size(); idx++)
     {
         wxDateTime dtBegin = wxDateTime::Now();
         wxDateTime dtEnd   = wxDateTime::Now().Add(wxDateSpan::Months(idx+1));
 
         for (int fcIdx = 0; fcIdx < (int)fvec.size(); fcIdx++)
         {
-            if (!fvec[fcIdx].date.IsBetween(dtBegin, dtEnd))
-                continue;
-            forecastOver12Months[idx] += fvec[fcIdx].amount;
+            if (fvec[fcIdx].date.IsBetween(dtBegin, dtEnd))
+                forecastOver12Months[idx] += fvec[fcIdx].amount;
         }
     }
 
@@ -314,18 +302,18 @@ wxString mmReportCashFlow::getHTMLText()
         mmex::formatDoubleToCurrency(balance, balanceStr);
         wxString diffStr;
         double diff;
-        diff = (idx==0 ? 0 : forecastOver12Months[idx]-forecastOver12Months[idx-1]) ;
+        diff = (idx==0 ? 0 : forecastOver12Months[idx] - forecastOver12Months[idx-1]) ;
         mmex::formatDoubleToCurrency(diff, diffStr);
 
         wxString dtStr ; 
         //dtStr << mmGetNiceShortMonthName(dtEnd.GetMonth()) << wxT(" ") << dtEnd.GetYear();
         dtStr << mmGetDateForDisplay(core_->db_.get(), dtEnd); 
 
-		hb.startTableRow();
-		hb.addTableCell(dtStr, false, true);
-                hb.addTableCell(balanceStr, true, true, true, ((balance < 0) ? wxT("RED") : wxT("BLACK")));
-                hb.addTableCell((idx==0 ? wxT ("") : diffStr), true, true, true, (diff < 0 ? wxT("RED") : wxT("BLACK"))) ;
-		hb.endTableRow();
+        hb.startTableRow();
+        hb.addTableCell(dtStr, false, true);
+        hb.addTableCell(balanceStr, true, true, true, ((balance < 0) ? wxT("RED") : wxT("BLACK")));
+        hb.addTableCell((idx==0 ? wxT ("") : diffStr), true, true, true, (diff < 0 ? wxT("RED") : wxT("BLACK"))) ;
+        hb.endTableRow();
     }
 
     hb.endTable();
