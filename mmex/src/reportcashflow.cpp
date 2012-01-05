@@ -142,6 +142,7 @@ wxString mmReportCashFlow::getHTMLText()
             "NUMOCCURRENCES, "
             "TRANSCODE, "
             "TRANSAMOUNT, "
+            "TOTRANSAMOUNT, "
             "TOACCOUNTID, "
             "ACCOUNTID "
     "from BILLSDEPOSITS_V1";
@@ -160,6 +161,7 @@ wxString mmReportCashFlow::getHTMLText()
         int numRepeats          = q1.GetInt(wxT("NUMOCCURRENCES"));
         wxString transType      = q1.GetString(wxT("TRANSCODE"));
         double amt              = q1.GetDouble(wxT("TRANSAMOUNT"));
+        double toAmt            = q1.GetDouble(wxT("TOTRANSAMOUNT"));
 
         // DeMultiplex the Auto Executable fields from the db entry: REPEATS
         if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
@@ -196,6 +198,7 @@ wxString mmReportCashFlow::getHTMLText()
         if (!isAccountFound && !isToAccountFound) continue; // skip account
 
         double convRate = mmDBWrapper::getCurrencyBaseConvRate(core_->db_.get(), accountID);
+        double toConvRate = mmDBWrapper::getCurrencyBaseConvRate(core_->db_.get(), toAccountID);
 
         // Process all possible repeating transactions for this BD
         while(1)
@@ -223,7 +226,7 @@ wxString mmReportCashFlow::getHTMLText()
                 if (isAccountFound)
                     rf.amount -= amt * convRate;
                 if (isToAccountFound)
-                    rf.amount += amt * convRate;
+                    rf.amount += toAmt * toConvRate;
             }
 
             fvec.push_back(rf);   
