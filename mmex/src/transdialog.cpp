@@ -729,7 +729,7 @@ void mmTransDialog::updateControlsForTransType()
         itemStaticText13->SetLabel(wxT(""));
         if (payeeUnknown_) 
             bPayee_->SetLabel(resetPayeeString());
-            bPayee_->Enable(true);
+        bPayee_->Enable(true);
 
     } else if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
 
@@ -768,6 +768,13 @@ wxString mmTransDialog::resetPayeeString(bool normal) //normal is deposits or wi
 {
     wxString payeeStr = _("Select Payee");
     payeeID_ = -1;
+    wxArrayString filtd;
+        filtd = mmDBWrapper::filterPayees(db_.get(), wxT(""));
+        if (filtd.Count() == 1) {
+            //only one payee present. Choose it
+            payeeStr = filtd[0];
+            payeeID_ = core_->payeeList_.getPayeeID(payeeStr);
+        }
 
     if (normal)
         toID_    = -1;
