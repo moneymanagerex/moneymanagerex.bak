@@ -747,7 +747,8 @@ void mmTransDialog::updateControlsForTransType()
         wxString acctName = mmDBWrapper::getAccountName(db_.get(), accountID_);
         bPayee_->SetLabel(acctName);
         payeeID_ = accountID_;
-        bPayee_->Enable(false);
+        //from account button should be available for editing
+        bPayee_->Enable(edit_);
 
         if (!edit_)
         {
