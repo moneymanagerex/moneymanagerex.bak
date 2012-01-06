@@ -81,7 +81,8 @@ wxString mmReportCashFlow::getHTMLText()
     hb.addTableHeaderCell(_("Difference"));
     hb.endTableRow();
 
-    double tBalance = 0.0;
+    double tInitialBalance = 0.0;
+    std::map<wxDateTime, double> daily_balance;
           
     for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
     {
@@ -97,13 +98,13 @@ wxString mmReportCashFlow::getHTMLText()
                         continue; // skip account
                 }
 
-                double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_);
+                core_->bTransactionList_.getDailyBalance(pCA->accountID_, daily_balance);
+
                 boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
                 wxASSERT(pCurrencyPtr);
                 mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
                 double rate = pCurrencyPtr->baseConv_;
-
-                tBalance += bal * rate;
+                tInitialBalance += pCA->initialBalance_ * rate;
             }
         }
 
@@ -121,13 +122,13 @@ wxString mmReportCashFlow::getHTMLText()
                             continue; // skip account
                     }
 
-                    double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_);
+                    core_->bTransactionList_.getDailyBalance(pTA->accountID_, daily_balance);
+
                     boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pTA->accountID_).lock();
                     wxASSERT(pCurrencyPtr);
                     mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
                     double rate = pCurrencyPtr->baseConv_;
-
-                    tBalance += bal * rate;
+                    tInitialBalance += pTA->initialBalance_ * rate;
                 }
             }
         }
@@ -285,12 +286,20 @@ wxString mmReportCashFlow::getHTMLText()
     for (int idx = 0; idx < (int)forecastOver12Months.size(); idx++)
     {
         wxDateTime dtBegin = wxDateTime::Now();
-        wxDateTime dtEnd   = wxDateTime::Now().Add(wxDateSpan::Months(idx+1));
+        wxDateTime dtEnd   = wxDateTime::Now().Add(wxDateSpan::Months(idx));
 
         for (int fcIdx = 0; fcIdx < (int)fvec.size(); fcIdx++)
         {
             if (fvec[fcIdx].date.IsBetween(dtBegin, dtEnd))
                 forecastOver12Months[idx] += fvec[fcIdx].amount;
+        }
+
+        for (std::map<wxDateTime, double>::const_iterator it = daily_balance.begin(); 
+                it != daily_balance.end(); 
+                ++ it)
+        {
+            if (it->first.IsBetween(dtBegin, dtEnd))
+                forecastOver12Months[idx] += it->second;
         }
     }
 
@@ -298,10 +307,10 @@ wxString mmReportCashFlow::getHTMLText()
 
     for (int idx = 0; idx < (int)forecastOver12Months.size(); idx++)
     {
-        wxDateTime dtEnd   = wxDateTime::Now().Add(wxDateSpan::Months(idx+1));
+        wxDateTime dtEnd   = wxDateTime::Now().Add(wxDateSpan::Months(idx));
            
         wxString balanceStr;
-        double balance = forecastOver12Months[idx] + tBalance;
+        double balance = forecastOver12Months[idx] + tInitialBalance;
         mmex::formatDoubleToCurrency(balance, balanceStr);
         wxString diffStr;
         double diff;
