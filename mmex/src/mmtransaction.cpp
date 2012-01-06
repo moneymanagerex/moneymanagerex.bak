@@ -942,6 +942,7 @@ double mmBankTransactionList::getBalance(int accountID, bool ignoreFuture)
 bool mmBankTransactionList::getDailyBalance(int accountID, std::map<wxDateTime, double>& daily_balance, bool ignoreFuture)
 {
     wxDateTime now = wxDateTime::Now();
+    double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), accountID);
     std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
     for (i = transactions_.begin(); i != transactions_.end(); i++ )
     {
@@ -961,7 +962,6 @@ bool mmBankTransactionList::getDailyBalance(int accountID, std::map<wxDateTime, 
             }
 
             double &balance = daily_balance[pBankTransaction->date_];
-            double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), pBankTransaction->accountID_);
 
             if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
             {
@@ -1001,7 +1001,7 @@ double mmBankTransactionList::getReconciledBalance(int accountID)
         boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
-             if (pBankTransaction->accountID_ == accountID && pBankTransaction->toAccountID_ == accountID)
+            if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
                 continue; // skip
             
             if (pBankTransaction->status_ != wxT("R"))
