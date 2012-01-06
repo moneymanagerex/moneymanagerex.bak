@@ -22,6 +22,7 @@
 #include "mmcategory.h"
 #include "mmpayee.h"
 #include "mmcurrency.h"
+#include <map>
 
 class mmCoreDB;
 
@@ -162,6 +163,7 @@ public:
     void getTransactionStats(int accountID, int& number, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd) const;
 
     double getBalance(int accountID, bool ignoreFuture = false);
+    bool   getDailyBalance(int accountID, std::map<wxDateTime, double>& daily_balance, bool ignoreFuture = false);
     double getReconciledBalance(int accountID);
     int    countFollowupTransactions();
 
