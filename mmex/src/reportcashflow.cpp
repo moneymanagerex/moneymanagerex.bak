@@ -118,7 +118,7 @@ wxString mmReportCashFlow::getHTMLText()
                     // Check if this account belongs in our list
                     if (accountArray_ != NULL)
                     {
-                        if (wxNOT_FOUND == accountArray_->Index(pCA->accountName_)) //linear search
+                        if (wxNOT_FOUND == accountArray_->Index(pTA->accountName_)) //linear search
                             continue; // skip account
                     }
 
