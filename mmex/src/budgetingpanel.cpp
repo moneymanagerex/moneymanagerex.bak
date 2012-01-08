@@ -1,5 +1,6 @@
 /*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
+ Copyright (C) 2012 Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -21,7 +22,10 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include <algorithm>
+#include "mmex.h"
 #include <vector>
+#include "reportbudget.h"
+
 /*******************************************************/
 /* Include XPM Support */
 #include "../resources/exefile.xpm"
@@ -40,6 +44,7 @@ BEGIN_EVENT_TABLE(mmBudgetingPanel, wxPanel)
     EVT_MENU(MENU_VIEW_NONZEROBUDGETENTRIES, mmBudgetingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_INCOMEBUDGETENTRIES, mmBudgetingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_EXPENSEBUDGETENTRIES, mmBudgetingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_SUMMARYBUDGETENTRIES, mmBudgetingPanel::OnViewPopupSelected)
 END_EVENT_TABLE()
 /*******************************************************/
 BEGIN_EVENT_TABLE(budgetingListCtrl, wxListCtrl)
@@ -48,7 +53,7 @@ BEGIN_EVENT_TABLE(budgetingListCtrl, wxListCtrl)
 
 END_EVENT_TABLE()
 /*******************************************************/
-mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, wxSQLite3Database* inidb, int budgetYearID, wxWindow *parent,
+mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, wxSQLite3Database* inidb, mmGUIFrame* mainFrame, int budgetYearID, wxWindow *parent,
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
             const wxString& name 
            ) : 
@@ -56,6 +61,7 @@ mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, wxSQLite3Database* ini
     inidb_(inidb), 
     m_imageList(), 
     listCtrlAccount_(),
+    mainFrame_(mainFrame),
     budgetYearID_(budgetYearID)
 {
     Create(parent, winid, pos, size, style, name);
@@ -115,28 +121,22 @@ void mmBudgetingPanel::OnViewPopupSelected(wxCommandEvent& event)
 {
     int evt =  event.GetId();
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_PANELVIEW);
-    if (evt ==  MENU_VIEW_ALLBUDGETENTRIES)
-    {
+    if (evt ==  MENU_VIEW_ALLBUDGETENTRIES) {
         header->SetLabel(_("View All Budget Categories"));
         currentView_ = wxT("View All Budget Categories");
-    }
-    else if (evt == MENU_VIEW_NONZEROBUDGETENTRIES)
-    {
+    } else if (evt == MENU_VIEW_NONZEROBUDGETENTRIES) {
         header->SetLabel(_("View Non-Zero Budget Categories"));
         currentView_ = wxT("View Non-Zero Budget Categories");
-    }
-    else if (evt == MENU_VIEW_INCOMEBUDGETENTRIES)
-    {
+    } else if (evt == MENU_VIEW_INCOMEBUDGETENTRIES) {
         header->SetLabel(_("View Income Budget Categories"));
         currentView_ = wxT("View Income Budget Categories");
-    }
-    else if (evt == MENU_VIEW_EXPENSEBUDGETENTRIES)
-    {
+    } else if (evt == MENU_VIEW_EXPENSEBUDGETENTRIES) {
         header->SetLabel(_("View Expense Budget Categories"));
         currentView_ = wxT("View Expense Budget Categories");
-    }
-    else
-    {
+    } else if (evt == MENU_VIEW_SUMMARYBUDGETENTRIES) {
+        header->SetLabel(_("View Budget Category Summary"));
+        currentView_ = wxT("View Budget Category Summary");
+    } else {
         wxASSERT(false);
     }
 
@@ -145,19 +145,20 @@ void mmBudgetingPanel::OnViewPopupSelected(wxCommandEvent& event)
     listCtrlAccount_->RefreshItems(0, ((int)trans_.size()) - 1);
 }
 
-
 void mmBudgetingPanel::OnMouseLeftDown( wxMouseEvent& event )
 {
     // depending on the clicked control's window id.
-    switch( event.GetId() ) 
+    switch( event.GetId() )
     {
-    case ID_PANEL_BUDGETENTRY_STATIC_BITMAP_VIEW : 
+        case ID_PANEL_BUDGETENTRY_STATIC_BITMAP_VIEW : 
         {
             wxMenu menu;
             menu.Append(MENU_VIEW_ALLBUDGETENTRIES, _("View All Budget Categories"));
             menu.Append(MENU_VIEW_NONZEROBUDGETENTRIES, _("View Non-Zero Budget Categories"));
             menu.Append(MENU_VIEW_INCOMEBUDGETENTRIES, _("View Income Budget Categories"));
             menu.Append(MENU_VIEW_EXPENSEBUDGETENTRIES, _("View Expense Budget Categories"));
+            menu.AppendSeparator();
+            menu.Append(MENU_VIEW_SUMMARYBUDGETENTRIES, _("View Budget Category Summary"));
             PopupMenu(&menu, event.GetPosition());
             break;
         }
@@ -180,6 +181,17 @@ void mmBudgetingPanel::CreateControls()
     itemPanel3->SetSizer(itemBoxSizerVHeader);
 
     wxString yearStr = mmDBWrapper::getBudgetYearForID(db_, budgetYearID_);
+    if ((yearStr.length() < 5)) {
+        if ( mainFrame_->budgetFinancialYears() ) {
+            long year;
+            yearStr.ToLong(&year);
+            year++;
+            yearStr = wxString() << _("Financial Year: ") << yearStr << wxT(" - ") << year;
+        } else
+            yearStr = wxString() << _("Year: ") << yearStr;
+    } else {
+        yearStr = wxString() << _("Month: ") << yearStr;
+    }
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, ID_PANEL_REPORTS_STATIC_HEADER, 
         _("Budget Setup for ") + yearStr, wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, 
@@ -201,20 +213,53 @@ void mmBudgetingPanel::CreateControls()
             _("Viewing All Budget Categories"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerHHeader2->Add(itemStaticText18, 0, wxALL, 1);
 
-     wxStaticText* itemStaticText10 = new wxStaticText( itemPanel3, 
-         ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME, 
-         _("Estimated Income: Actual Income: "), wxDefaultPosition, wxSize(500, 20), 0 );
-    itemStaticText10->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, 
-        wxT("")));
-    itemBoxSizerVHeader->Add(itemStaticText10, 0, wxALL, 1);
+    wxSize distSize(170, 20);
 
-    wxStaticText* itemStaticText11 = new wxStaticText( itemPanel3, 
-        ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES, 
-        _("Estimated Expenses: Actual Expenses: "), wxDefaultPosition, wxSize(500, 20), 0 );
-    itemStaticText11->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, 
-        wxT("")));
-    itemBoxSizerVHeader->Add(itemStaticText11, 0, wxALL, 1);
+    wxStaticText* itemStaticText100 = new wxStaticText( itemPanel3, wxID_ANY, _("Income......."),
+        wxDefaultPosition, wxSize(75, 20), 0 );
+    itemStaticText100->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
 
+    wxStaticText* itemStaticText101 = new wxStaticText( itemPanel3,
+        ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_EST, _("Estimated: "), wxDefaultPosition, distSize, 0);
+    itemStaticText101->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+
+    wxStaticText* itemStaticText102 = new wxStaticText( itemPanel3, 
+        ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_ACT, _("Actual: "), wxDefaultPosition, distSize, 0);
+    itemStaticText102->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+
+    wxStaticText* itemStaticText103 = new wxStaticText( itemPanel3, 
+        ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_DIF, _("Diference: "), wxDefaultPosition, distSize, 0);
+    itemStaticText103->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+
+    wxBoxSizer* itemIncomeSizer = new wxBoxSizer(wxHORIZONTAL);
+    itemIncomeSizer->Add(itemStaticText100, 0, wxALL, 0);
+    itemIncomeSizer->Add(itemStaticText101, 0, wxALL, 0);
+    itemIncomeSizer->Add(itemStaticText102, 0, wxALL, 0);
+    itemIncomeSizer->Add(itemStaticText103, 0, wxALL, 0);
+    itemBoxSizerVHeader->Add(itemIncomeSizer, 0, wxALL, 1);
+
+    wxStaticText* itemStaticText200 = new wxStaticText( itemPanel3, wxID_ANY, _("Expenses..."),
+        wxDefaultPosition, wxSize(75, 20), 0 );
+    itemStaticText200->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+
+    wxStaticText* itemStaticText201 = new wxStaticText( itemPanel3, 
+        ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_EST, _("Estimated: "), wxDefaultPosition, distSize, 0);
+    itemStaticText201->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+
+    wxStaticText* itemStaticText202 = new wxStaticText( itemPanel3, 
+        ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_ACT, _("Actual: "), wxDefaultPosition, distSize, 0);
+    itemStaticText202->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+
+    wxStaticText* itemStaticText203 = new wxStaticText( itemPanel3, 
+        ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_DIF, _("Diference: "), wxDefaultPosition, distSize, 0);
+    itemStaticText203->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
+
+    wxBoxSizer* itemExpenseSizer = new wxBoxSizer(wxHORIZONTAL);
+    itemExpenseSizer->Add(itemStaticText200, 0, wxALL, 0);
+    itemExpenseSizer->Add(itemStaticText201, 0, wxALL, 0);
+    itemExpenseSizer->Add(itemStaticText202, 0, wxALL, 0);
+    itemExpenseSizer->Add(itemStaticText203, 0, wxALL, 0);
+    itemBoxSizerVHeader->Add(itemExpenseSizer, 0, wxALL, 1);
     /* ---------------------- */
 
     wxSize imageSize(16, 16);
@@ -270,19 +315,56 @@ void mmBudgetingPanel::CreateControls()
     itemBoxSizer2->Add(listCtrlAccount_, 1, wxGROW | wxALL, 1);
 }
 
+bool mmBudgetingPanel::displayEntryAllowed(mmBudgetEntryHolder& budgetEntry)
+{
+    bool result = false;
+
+    if (currentView_ == wxT("View Non-Zero Budget Categories")) {
+        if ((budgetEntry.estimated_ != 0.0) || (budgetEntry.actual_ != 0.0))
+            result = true;
+    } else if (currentView_ == wxT("View Income Budget Categories")) {
+        if ((budgetEntry.estimated_ > 0.0) || (budgetEntry.actual_ > 0.0))
+            result = true;
+    } else if (currentView_ == wxT("View Expense Budget Categories")) {
+        if ((budgetEntry.estimated_ < 0.0) || (budgetEntry.actual_ < 0.0))
+            result = true;
+    } else if (currentView_ == _("View Budget Category Summary")) {
+        if ((budgetEntry.budgetEntryID_ < 0.0))
+            result = true;
+    } else {
+        result = true;
+    }
+
+    return result;
+}
+
 void mmBudgetingPanel::initVirtualListControl()
 {
     trans_.clear();
-
     double estIncome = 0.0;
     double estExpenses = 0.0;
     double actIncome = 0.0;
     double actExpenses = 0.0;
+    mmCommonReportDetails  budgetDetails( mainFrame_);
 
+    wxString budgetYearStr = mmDBWrapper::getBudgetYearForID(db_, budgetYearID_);
     long year = 0;
-    mmDBWrapper::getBudgetYearForID(db_, budgetYearID_).ToLong(&year);;
+    budgetYearStr.ToLong(&year);
     wxDateTime dtBegin(1, wxDateTime::Jan, year);
     wxDateTime dtEnd(31, wxDateTime::Dec, year);
+
+    bool monthlyBudget = (budgetYearStr.length() > 5);
+  
+    if (monthlyBudget)
+    {
+        budgetDetails.SetBudgetMonth(budgetYearStr, dtBegin, dtEnd);
+    }
+    else
+    {
+        int day, month;
+        budgetDetails.AdjustYearValues(day, month, dtBegin);
+		budgetDetails.AdjustDateForEndFinancialYear(dtEnd);
+    }
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
 
@@ -305,93 +387,49 @@ void mmBudgetingPanel::initVirtualListControl()
     while (q1.NextRow())
     {
         mmBudgetEntryHolder th;
+        budgetDetails.initBudgetEntryFields(th);
         th.categID_ = q1.GetInt(wxT("CATEGID"));
         th.catStr_ = q1.GetString(wxT("CATEGNAME"));
-        th.subcategID_ = -1;
-        th.subCatStr_ = wxT("");
-        th.amt_ = 0.0;
-        th.period_ = wxT("None");
-        th.estimatedStr_ = wxT("0.0");
-        th.estimated_ = 0.0;
-        th.actualStr_ = wxT("0.0");
-        th.actual_ = 0.0;
-        mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, 
-            th.amt_);
 
-        if (th.period_ == wxT("Monthly"))
-        {
-            th.estimated_ = th.amt_ * 12;
-        }
-        else if (th.period_ == wxT("Yearly"))
-        {
-            th.estimated_ = th.amt_;
-        }
-        else if (th.period_ == wxT("Weekly"))
-        {
-            th.estimated_ = th.amt_ * 52;
-        }
-        else if (th.period_ == wxT("Bi-Weekly"))
-        {
-            th.estimated_ = th.amt_ * 26;
-        }
-        else if (th.period_ == wxT("Bi-Monthly"))
-        {
-            th.estimated_ = th.amt_ * 6;
-        }
-         else if (th.period_ == wxT("Quarterly"))
-        {
-            th.estimated_ = th.amt_ * 4;
-        }
-           else if (th.period_ == wxT("Half-Yearly"))
-        {
-            th.estimated_ = th.amt_ * 2;
-        }
-        else
-            wxASSERT(true);
+        mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
+
+        budgetDetails.setBudgetEstimate(th, monthlyBudget, dtBegin, dtEnd);
 
         if (th.estimated_ < 0)
             estExpenses += th.estimated_;
         else
             estIncome += th.estimated_;
 
-        mmex::formatDoubleToCurrencyEdit(th.estimated_, th.estimatedStr_);
-
-        th.actual_ = mmDBWrapper::getAmountForCategory(db_, th.categID_, th.subcategID_, 
-                    false,  dtBegin, dtEnd);
-        mmex::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
-
+        th.actual_ = mmDBWrapper::getAmountForCategory(db_, th.categID_, th.subcategID_, false, dtBegin, dtEnd);
         if (th.actual_ < 0)
             actExpenses += th.actual_;
         else
             actIncome += th.actual_;
 
-        wxString displayAmtString;
         mmex::formatDoubleToCurrencyEdit(th.amt_, th.amtString_);
+        mmex::formatDoubleToCurrencyEdit(th.estimated_, th.estimatedStr_);
+        mmex::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
 
-        if (currentView_ == wxT("View Non-Zero Budget Categories"))
-        {
-            if ((th.estimated_ == 0.0) && (th.actual_ == 0.0))
-            {
-            }
-            else
-                trans_.push_back(th);
-        }
-        else if (currentView_ == wxT("View Income Budget Categories"))
-        {
-            if ((th.estimated_ > 0.0) || (th.actual_ > 0.0))
-            {
-                trans_.push_back(th);
-            }
-        }
-        else if (currentView_ == wxT("View Expense Budget Categories"))
-        {
-            if ((th.estimated_ < 0.0) || (th.actual_ < 0.0))
-                trans_.push_back(th);
-        }
-        else
+        /*************************************************************************** 
+         Create a TOTALS entry for the category.
+         ***************************************************************************/
+        mmBudgetEntryHolder catTotals;
+        catTotals.budgetEntryID_ = -1;
+        catTotals.categID_ = -1;
+        catTotals.catStr_  = th.catStr_;
+        catTotals.subcategID_ = -1;
+        catTotals.subCatStr_ = wxEmptyString;
+        catTotals.period_    = wxEmptyString;
+        catTotals.amt_       = th.amt_;
+        catTotals.estimated_ = th.estimated_;
+        catTotals.actual_    = th.actual_;
+        mmex::formatDoubleToCurrencyEdit(catTotals.amt_, catTotals.amtString_);
+        mmex::formatDoubleToCurrencyEdit(catTotals.estimated_, catTotals.estimatedStr_);
+        mmex::formatDoubleToCurrencyEdit(catTotals.actual_, catTotals.actualStr_);
+
+        if (displayEntryAllowed(th)) {
             trans_.push_back(th);
-
-        // --
+        }
 
         st_sub.Bind(1, th.categID_);
         wxSQLite3ResultSet q2 = st_sub.ExecuteQuery(); 
@@ -399,93 +437,53 @@ void mmBudgetingPanel::initVirtualListControl()
         while(q2.NextRow())
         {
             mmBudgetEntryHolder thsub;
+            budgetDetails.initBudgetEntryFields(thsub);
             thsub.categID_ = th.categID_;
             thsub.catStr_ = th.catStr_;
             thsub.subcategID_ = q2.GetInt(wxT("SUBCATEGID"));
             thsub.subCatStr_   = q2.GetString(wxT("SUBCATEGNAME"));
-            thsub.amt_ = 0.0;
-            thsub.period_ = wxT("None");
-            thsub.estimatedStr_ = wxT("0.0");
-            thsub.estimated_ = 0.0;
-            thsub.actualStr_ = wxT("0.0");
-            thsub.actual_ = 0.0;
-            mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, 
-                thsub.amt_);
 
-            if (thsub.period_ == wxT("Monthly"))
-            {
-                thsub.estimated_ = thsub.amt_ * 12;
-            }
-            else if (thsub.period_ == wxT("Yearly"))
-            {
-                thsub.estimated_ = thsub.amt_;
-            }
-            else if (thsub.period_ == wxT("Weekly"))
-            {
-                thsub.estimated_ = thsub.amt_ * 52;
-            }
-            else if (thsub.period_ == wxT("Bi-Weekly"))
-            {
-                thsub.estimated_ = thsub.amt_ * 26;
-            }
-            else if (thsub.period_ == wxT("Bi-Monthly"))
-            {
-                thsub.estimated_ = thsub.amt_ * 6;
-            }
-            else if (thsub.period_ == wxT("Quarterly"))
-            {
-                thsub.estimated_ = thsub.amt_ * 4;
-            }
-            else if (thsub.period_ == wxT("Half-Yearly"))
-            {
-                thsub.estimated_ = thsub.amt_ * 2;
-            }
-            else
-                wxASSERT(true);
+            mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
 
-            mmex::formatDoubleToCurrencyEdit(thsub.estimated_, thsub.estimatedStr_);
+            budgetDetails.setBudgetEstimate(thsub, monthlyBudget, dtBegin, dtEnd);
+
             if (thsub.estimated_ < 0)
                 estExpenses += thsub.estimated_;
             else
                 estIncome += thsub.estimated_;
 
-            thsub.actual_ = mmDBWrapper::getAmountForCategory(db_, thsub.categID_, thsub.subcategID_, 
-                false,  dtBegin, dtEnd);
-            mmex::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
+            thsub.actual_ = mmDBWrapper::getAmountForCategory(db_, thsub.categID_, thsub.subcategID_, false, dtBegin, dtEnd);
             if (thsub.actual_ < 0)
                 actExpenses += thsub.actual_;
             else
                 actIncome += thsub.actual_;
 
-
             mmex::formatDoubleToCurrencyEdit(thsub.amt_, thsub.amtString_);
+            mmex::formatDoubleToCurrencyEdit(thsub.estimated_, thsub.estimatedStr_);
+            mmex::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
 
-            if (currentView_ == wxT("View Non-Zero Budget Categories"))
-            {
-                if ((thsub.estimated_ == 0.0) && (thsub.actual_ == 0.0))
-                {
-                }
-                else
-                    trans_.push_back(thsub);
-            }
-            else if (currentView_ == wxT("View Income Budget Categories"))
-            {
-                if ((thsub.estimated_ > 0.0) || (thsub.actual_ > 0.0))
-                {
-                    trans_.push_back(thsub);
-                }
-            }
-            else if (currentView_ == wxT("View Expense Budget Categories"))
-            {
-                if ((thsub.estimated_ < 0.0) || (thsub.actual_ < 0.0))
-                    trans_.push_back(thsub);
-            }
-            else
+            /*************************************************************************** 
+             Update the TOTALS entry for the subcategory.
+            ***************************************************************************/
+            catTotals.amt_          += thsub.amt_;
+            catTotals.estimated_    += thsub.estimated_;
+            catTotals.actual_       += thsub.actual_;
+            mmex::formatDoubleToCurrencyEdit(catTotals.amt_,       catTotals.amtString_);
+            mmex::formatDoubleToCurrencyEdit(catTotals.estimated_, catTotals.estimatedStr_);
+            mmex::formatDoubleToCurrencyEdit(catTotals.actual_,    catTotals.actualStr_);
+
+            if (displayEntryAllowed(thsub)) {
                 trans_.push_back(thsub);
-
+            }
         }
-    
         st_sub.Reset();
+
+        if (mainFrame_->budgetSetupWithSummary() && displayEntryAllowed(catTotals))
+        {
+            trans_.push_back(catTotals);
+            int transCatTotalIndex = (int)trans_.size()-1;
+            listCtrlAccount_->RefreshItem(transCatTotalIndex);
+        }
     }
 
     st_sub.Finalize();
@@ -504,15 +502,26 @@ void mmBudgetingPanel::initVirtualListControl()
     mmex::formatDoubleToCurrency(estExpenses, estExpensesStr);
     mmex::formatDoubleToCurrency(actExpenses, actExpensesStr);
 
-    wxStaticText* header = (wxStaticText*)FindWindow(ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME);
-    wxString incStr = wxString::Format(_("Estimated Income: %s Actual Income:  %s"), 
-        estIncomeStr.c_str(), actIncomeStr.c_str());
-    header->SetLabel(incStr);
+    wxString differenceStr;
+    wxStaticText* header = (wxStaticText*)FindWindow(ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_EST);
+    header->SetLabel( wxString() << _("Estimated: ") << estIncomeStr);
+    
+    header = (wxStaticText*)FindWindow(ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_ACT);
+    header->SetLabel( wxString() << _("Actual: ") << actIncomeStr);
 
-    header = (wxStaticText*)FindWindow(ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES);
-    wxString expStr = wxString::Format(_("Estimated Expenses: %s Actual Expenses:  %s"), 
-        estExpensesStr.c_str(), actExpensesStr.c_str());
-    header->SetLabel(expStr);
+    mmex::formatDoubleToCurrency(estIncome -actIncome, differenceStr);
+    header = (wxStaticText*)FindWindow(ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_DIF);
+    header->SetLabel( wxString() << _("Difference: ") << differenceStr);
+
+    header = (wxStaticText*)FindWindow(ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_EST);
+    header->SetLabel( wxString() <<_("Estimated: ") << estExpensesStr);
+    
+    header = (wxStaticText*)FindWindow(ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_ACT);
+    header->SetLabel( wxString() << _("Actual: ") << actExpensesStr);
+    
+    mmex::formatDoubleToCurrency(estExpenses -actExpenses, differenceStr);
+    header = (wxStaticText*)FindWindow(ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_DIF);
+    header->SetLabel( wxString() << _("Difference: ") << differenceStr);
 }
 
 /*******************************************************/
@@ -561,7 +570,6 @@ int budgetingListCtrl::OnGetItemImage(long item) const
    return 1;
 }
 
-
 wxString budgetingListCtrl::OnGetItemText(long item, long column) const
 {
     return cp_->getItem(item, column);
@@ -569,6 +577,12 @@ wxString budgetingListCtrl::OnGetItemText(long item, long column) const
 
 wxListItemAttr* budgetingListCtrl::OnGetItemAttr(long item) const
 {
+    if ((cp_->trans_[item].budgetEntryID_ < 0) && 
+        (cp_->currentView_ != wxT("View Budget Category Summary")) )
+    {
+        return (wxListItemAttr *)&attr3_;
+    }
+    
     /* Returns the alternating background pattern */
     return item % 2 ? (wxListItemAttr *)&attr2_ : (wxListItemAttr *)&attr1_;
 }
@@ -576,12 +590,21 @@ wxListItemAttr* budgetingListCtrl::OnGetItemAttr(long item) const
 void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
-
-    mmBudgetEntryDialog dlg(cp_->db_, cp_->budgetYearID_, 
-        cp_->trans_[selectedIndex_].categID_, cp_->trans_[selectedIndex_].subcategID_, this);
-    if ( dlg.ShowModal() == wxID_OK )
+    /*************************************************************************** 
+     A TOTALS entry does not contain a budget entry, therefore ignore the event.
+     ***************************************************************************/
+    if (cp_->trans_[selectedIndex_].budgetEntryID_ >= 0)
     {
-        cp_->initVirtualListControl();
-        RefreshItem(selectedIndex_);
+        mmBudgetEntryDialog dlg(
+            cp_->db_, cp_->budgetYearID_,
+            cp_->trans_[selectedIndex_].categID_,
+            cp_->trans_[selectedIndex_].subcategID_,
+            cp_->trans_[selectedIndex_].estimatedStr_,
+            cp_->trans_[selectedIndex_].actualStr_, this);
+        if ( dlg.ShowModal() == wxID_OK )
+        {
+            cp_->initVirtualListControl();
+            RefreshItem(selectedIndex_);
+        }
     }
 }

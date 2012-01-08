@@ -1,5 +1,5 @@
 /*************************************************************************
- Copyright (C) 2011 Stefano Giorgio      
+ Copyright (C) 2011,2012 Stefano Giorgio      
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -20,13 +20,19 @@
 
 #include "dbwrapper.h"
 
-//===============================================================
-// Class: RecentDatabaseFiles
-//        
-//===============================================================
+/******************************************************************************
+ Class: RecentDatabaseFiles
+
+ Note:  For generic use, the number saved is one less that the specified size.
+        The 0 element is not saved by this list.
+*******************************************************************************/
 class RecentDatabaseFiles
 {
 public:
+    // This constructor is for a more generic use of this class
+    RecentDatabaseFiles(wxSQLite3Database* ini_db, int listSize, wxString dbIndexName);
+    
+    // This constructor is for recent files list
     RecentDatabaseFiles(wxSQLite3Database* ini_db, wxMenu *menuRecentFiles);
     virtual ~RecentDatabaseFiles();
   
@@ -37,10 +43,16 @@ public:
     void clearRecentList();
     wxString getRecentFile(int fileNum);
 
+    // returns true if lastListedFileName is valid;
+    bool validLastListedFile(wxString& lastListedFileName);
+
 private:
     wxSQLite3Database* mmex_inidb_;
     wxMenu *menuRecentFiles_;
     wxArrayString recentFileList_;
+
+    int recentListSize_;
+    wxString dbIndexName_;
 };
 
 #endif

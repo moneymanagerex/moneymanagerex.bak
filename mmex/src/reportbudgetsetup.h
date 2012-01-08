@@ -1,23 +1,23 @@
-#ifndef _MM_EX_REPORTBUDGETINGSETUP_H_
-#define _MM_EX_REPORTBUDGETINGSETUP_H_
+#ifndef _MM_EX_REPORTBUDGETING_SETUP_H_
+#define _MM_EX_REPORTBUDGETING_SETUP_H_
 
-#include "reportbase.h"
+#include "reportbudget.h"
+#include "mmcoredb.h"
 
-class mmCoreDB;
-class wxSQLite3Database;
-
-
-class mmReportBudgetingSetup : public mmPrintableBase 
+class mmReportBudgetingSetup : public mmReportBudget 
 {
 public:
-    mmReportBudgetingSetup(mmCoreDB* core, int year);
+    mmReportBudgetingSetup(mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID);
 
     wxString getHTMLText();
 
 private:
     mmCoreDB* core_;
     wxSQLite3Database* db_;
-    int year_;
+    int budgetYearID_;
+
+    wxString ActualAmountColour( mmBudgetEntryHolder& budEntry, bool total = false);
+
 };
 
-#endif // _MM_EX_REPORTBUDGETINGSETUP_H_
+#endif // _MM_EX_REPORTBUDGETING_SETUP_H_

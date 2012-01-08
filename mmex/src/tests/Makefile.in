@@ -115,8 +115,10 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_paths.o \
 	mmex_tests_payeedialog.o \
 	mmex_tests_qifimport.o \
+	mmex_tests_recentfiles.o \
 	mmex_tests_relocatecategorydialog.o \
 	mmex_tests_relocatepayeedialog.o \
+	mmex_tests_reportbudget.o \
 	mmex_tests_reportbudgetingperf.o \
 	mmex_tests_reportbudgetsetup.o \
 	mmex_tests_reportcashflow.o \
@@ -135,6 +137,7 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_splittransactionsdialog.o \
 	mmex_tests_stockdialog.o \
 	mmex_tests_stockspanel.o \
+	mmex_tests_transactionfilterdialog.o \
 	mmex_tests_transdialog.o \
 	mmex_tests_univcsvdialog.o \
 	mmex_tests_util.o \
@@ -399,11 +402,17 @@ mmex_tests_payeedialog.o: $(srcdir)/../../src/payeedialog.cpp
 mmex_tests_qifimport.o: $(srcdir)/../../src/qifimport.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/qifimport.cpp
 
+mmex_tests_recentfiles.o: $(srcdir)/../../src/recentfiles.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/recentfiles.cpp
+
 mmex_tests_relocatecategorydialog.o: $(srcdir)/../../src/relocatecategorydialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/relocatecategorydialog.cpp
 
 mmex_tests_relocatepayeedialog.o: $(srcdir)/../../src/relocatepayeedialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/relocatepayeedialog.cpp
+
+mmex_tests_reportbudget.o: $(srcdir)/../../src/reportbudget.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportbudget.cpp
 
 mmex_tests_reportbudgetingperf.o: $(srcdir)/../../src/reportbudgetingperf.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportbudgetingperf.cpp
@@ -458,6 +467,9 @@ mmex_tests_stockdialog.o: $(srcdir)/../../src/stockdialog.cpp
 
 mmex_tests_stockspanel.o: $(srcdir)/../../src/stockspanel.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/stockspanel.cpp
+
+mmex_tests_transactionfilterdialog.o: $(srcdir)/../../src/transactionfilterdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/transactionfilterdialog.cpp
 
 mmex_tests_transdialog.o: $(srcdir)/../../src/transdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/transdialog.cpp

@@ -612,6 +612,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     activeHomePage_(false),
     homePageAccountSelect_(false),
     expandedReportNavTree_(true),
+    expandedBudgetingNavTree_(true),
     expandedCustomSqlReportNavTree_(false)
 {
 	// tell wxAuiManager to manage this frame
@@ -1116,6 +1117,21 @@ bool mmGUIFrame::hasActiveTermAccounts()
     return activeTermAccounts_;
 }
 
+bool mmGUIFrame::budgetFinancialYears()
+{
+    return menuBar_->IsChecked(MENU_VIEW_BUDGET_FINANCIAL_YEARS);
+}
+
+bool mmGUIFrame::budgetSetupWithSummary()
+{
+    return !menuBar_->IsChecked(MENU_VIEW_BUDGET_SETUP_SUMMARY);
+}
+
+bool mmGUIFrame::budgetCategoryTotal()
+{
+    return menuBar_->IsChecked(MENU_VIEW_BUDGET_CATEGORY_SUMMARY);
+}
+
 bool mmGUIFrame::financialYearIsDifferent()
 {
     return (mmOptions::financialYearStartDayString_ != wxT("1") || mmOptions::financialYearStartMonthString_ != wxT("1"));
@@ -1180,7 +1196,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId budgeting;
     if (mmIniOptions::enableBudget_)
     {
-        budgeting = navTreeCtrl_->AppendItem(root, _("Budgeting"), 3, 3);
+        budgeting = navTreeCtrl_->AppendItem(root, _("Budget Setup"), 3, 3);
         navTreeCtrl_->SetItemData(budgeting, new mmTreeItemData(wxT("Budgeting")));
         navTreeCtrl_->SetItemBold(budgeting, true);
     }
@@ -1403,26 +1419,31 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
                 budgetPerformance = navTreeCtrl_->AppendItem(reports, _("Budget Performance"), 4, 4);
                 navTreeCtrl_->SetItemData(budgetPerformance, new mmTreeItemData(wxT("Budget Performance")));
 
-                budgetSetupPerformance = navTreeCtrl_->AppendItem(reports, _("Budget Setup and Performance"), 4, 4);
+                budgetSetupPerformance = navTreeCtrl_->AppendItem(reports, _("Budget Category Summary"), 4, 4);
                 navTreeCtrl_->SetItemData(budgetSetupPerformance, new mmTreeItemData(wxT("Budget Setup Performance")));
             }
 
             int id = q1.GetInt(wxT("BUDGETYEARID"));
             const wxString name = q1.GetString(wxT("BUDGETYEARNAME"));
-            
+      
             wxTreeItemId bYear = navTreeCtrl_->AppendItem(budgeting, name, 3, 3);
             navTreeCtrl_->SetItemData(bYear, new mmTreeItemData(id, true));
             
-            wxTreeItemId bYearData = navTreeCtrl_->AppendItem(budgetPerformance, name, 4, 4);
-            navTreeCtrl_->SetItemData(bYearData, new mmTreeItemData(id, true));
-            
+            // Only add YEARS for Budget Performance 
+            if (name.length() < 5)
+            {
+                wxTreeItemId bYearData = navTreeCtrl_->AppendItem(budgetPerformance, name, 4, 4);
+                navTreeCtrl_->SetItemData(bYearData, new mmTreeItemData(id, true));
+            }    
             wxTreeItemId bYearSetupData = navTreeCtrl_->AppendItem(budgetSetupPerformance, name, 4, 4);
             navTreeCtrl_->SetItemData(bYearSetupData, new mmTreeItemData(id, true));
         }
 
         q1.Finalize();
-        
-        navTreeCtrl_->Expand(budgeting);
+  
+        //TODO: Set up as a permanent user option 
+        if (expandedBudgetingNavTree_)
+            navTreeCtrl_->Expand(budgeting);
     }
 		
 	///////////////////////////////////////////////////////////////////
@@ -1605,6 +1626,8 @@ void mmGUIFrame::OnTreeItemExpanded(wxTreeEvent& event)
         expandedReportNavTree_ = true;
     else if (iData->getString() == NAVTREECTRL_CUSTOM_REPORTS)
         expandedCustomSqlReportNavTree_ = true;
+    else if (iData->getString() == wxT("Budgeting"))
+        expandedBudgetingNavTree_ = true;
 }
 
 void mmGUIFrame::OnTreeItemCollapsed(wxTreeEvent& event)
@@ -1616,6 +1639,8 @@ void mmGUIFrame::OnTreeItemCollapsed(wxTreeEvent& event)
         expandedReportNavTree_ = false;
     else if (iData->getString() == NAVTREECTRL_CUSTOM_REPORTS)
         expandedCustomSqlReportNavTree_ = false;
+    else if (iData->getString() == wxT("Budgeting"))
+        expandedBudgetingNavTree_ = false;
 }
 
 void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
@@ -1643,25 +1668,31 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         int data = iData->getData();
         if (iData->isBudgetingNode())
         {
+            wxString reportWaitingMsg = _("Budget report being generated... Please wait.");
             Freeze();
-
             wxTreeItemId idparent = navTreeCtrl_->GetItemParent(id);
             mmTreeItemData* iParentData = dynamic_cast<mmTreeItemData*>(navTreeCtrl_->GetItemData(idparent));
-            if (iParentData->getString() == wxT("Budget Performance"))
-            {
-                mmPrintableBase* rs = new mmReportBudgetingPerformance(m_core.get(), data);
+            if (iParentData->getString() == wxT("Budget Performance")) {
+                wxProgressDialog proDlg(_("Budget Performance"), reportWaitingMsg, 100, this);
+                mmPrintableBase* rs = new mmReportBudgetingPerformance(m_core.get(), this, data);
+                proDlg.Update(70);
                 menuPrintingEnable(true);
                 createReportsPage(rs);
-            }
-            else if (iParentData->getString() == wxT("Budget Setup Performance"))
-            {
-                mmPrintableBase* rs = new mmReportBudgetingSetup(m_core.get(), data);
-                menuPrintingEnable(true);
-                createReportsPage(rs);
-            }
-            else
-                createBudgetingPage(data);
+                proDlg.Update(95);
 
+            } else if (iParentData->getString() == wxT("Budget Setup Performance")) {
+                wxProgressDialog proDlg(_("Budget Category Summary"), reportWaitingMsg, 100, this);
+                mmPrintableBase* rs = new mmReportBudgetingSetup(m_core.get(), this, data);
+                proDlg.Update(70);
+                menuPrintingEnable(true);
+                createReportsPage(rs);
+                proDlg.Update(95);
+
+            } else {
+                wxProgressDialog proDlg(_("Budget Setup"), reportWaitingMsg, 100, this);
+                createBudgetingPage(data);
+                proDlg.Update(95);
+            }
             Thaw();
         }
         else
@@ -2616,8 +2647,8 @@ void mmGUIFrame::createBudgetingPage(int budgetYearID)
 {
     wxSizer *sizer = cleanupHomePanel();
 
-    panelCurrent_ = new mmBudgetingPanel(m_db.get(), m_inidb.get(), budgetYearID, homePanel, ID_PANEL3, 
-        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    panelCurrent_ = new mmBudgetingPanel(m_db.get(), m_inidb.get(), this, budgetYearID, 
+        homePanel, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
@@ -2756,27 +2787,47 @@ void mmGUIFrame::createMenu()
 	menuItemQuit->SetBitmap(wxBitmap(exit_xpm));
     menu_file->Append(menuItemQuit);
    
-	wxMenu *menuView = new wxMenu;
-
+    // Create the required menu items
+    wxMenu *menuView = new wxMenu;
 	wxMenuItem* menuItemToolbar = new wxMenuItem(menuView, MENU_VIEW_TOOLBAR, 
 		_("&Toolbar"), _("Show/Hide the toolbar"), wxITEM_CHECK);
 	wxMenuItem* menuItemLinks = new wxMenuItem(menuView, MENU_VIEW_LINKS, 
 		_("&Navigation"), _("Show/Hide the Navigation tree control"), wxITEM_CHECK);
-
     wxMenuItem* menuItemBankAccount = new wxMenuItem(menuView, MENU_VIEW_BANKACCOUNTS, 
 		_("&Bank Accounts"), _("Show/Hide Bank Accounts on Summary page"), wxITEM_CHECK);
 	wxMenuItem* menuItemTermAccount = new wxMenuItem(menuView, MENU_VIEW_TERMACCOUNTS, 
 		_("Term &Accounts"), _("Show/Hide Term Accounts on Summary page"), wxITEM_CHECK);
     wxMenuItem* menuItemStockAccount = new wxMenuItem(menuView, MENU_VIEW_STOCKACCOUNTS, 
 		_("&Stock Accounts"), _("Show/Hide Stock Accounts on Summary page"), wxITEM_CHECK);
+    wxMenuItem* menuItemBudgetFinancialYears = new wxMenuItem(menuView, MENU_VIEW_BUDGET_FINANCIAL_YEARS, 
+		_("Budget &Year as Financial Years"), _("Display Budgets in Financial Year Format"), wxITEM_CHECK);
+    wxMenuItem* menuItemBudgetSetupWithoutSummary = new wxMenuItem(menuView, MENU_VIEW_BUDGET_SETUP_SUMMARY, 
+		_("Budget Setup - &without Summaries"), _("Display the Budget Setup without category summaries"), wxITEM_CHECK);
+    wxMenuItem* menuItemBudgetCategorySummary = new wxMenuItem(menuView, MENU_VIEW_BUDGET_CATEGORY_SUMMARY, 
+		_("Budget &Category Summary - with Categories"), _("Include the categories in the Budget Category Summary"), wxITEM_CHECK);
 
+    //Add the menu items to the menu bar
 	menuView->Append(menuItemToolbar);
 	menuView->Append(menuItemLinks);
-
     menuView->AppendSeparator();
     menuView->Append(menuItemBankAccount);
     menuView->Append(menuItemTermAccount);
     menuView->Append(menuItemStockAccount);
+    menuView->AppendSeparator();
+
+//    wxMenu* budgetingMenu = new wxMenu;
+//    budgetingMenu->Append(menuItemBudgetFinancialYears);
+//    budgetingMenu->AppendSeparator();
+//    budgetingMenu->Append(menuItemBudgetSetupWithoutSummary);
+//    budgetingMenu->Append(menuItemBudgetCategorySummary);
+//    menuView->AppendSubMenu(budgetingMenu,_("Budget..."));
+
+    menuView->Append(menuItemBudgetFinancialYears);
+    menuView->AppendSeparator();
+    menuView->Append(menuItemBudgetSetupWithoutSummary);
+    menuView->Append(menuItemBudgetCategorySummary);
+
+
 
 	wxMenu *menuAccounts = new wxMenu;
 
@@ -4695,7 +4746,7 @@ void mmGUIFrame::SetDatabaseFile(wxString dbFileName, bool newDatabase)
     wxProgressDialog *progress = NULL;
     if (! newDatabase)
     {
-        progress = new wxProgressDialog( _("Setting new Database file"), _("Please wait while the new database is being loaded."));
+        progress = new wxProgressDialog( _("Setting new Database file"), _("Please wait while the new database is being loaded."), 100, this);
         progress->Update(20);
     }
 

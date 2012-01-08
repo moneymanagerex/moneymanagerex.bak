@@ -20,7 +20,7 @@
 #define _MM_EX_BUDGETENTRYDIALOG_H_
 
 #define SYMBOL_BUDGETENTRYDIALOG_STYLE wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_BUDGETENTRYDIALOG_TITLE _("Budget Entry Dialog")
+#define SYMBOL_BUDGETENTRYDIALOG_TITLE _("Budget Entry Details")
 #define SYMBOL_BUDGETENTRYDIALOG_IDNAME ID_DIALOG_BUDGETENTRY
 #define SYMBOL_BUDGETENTRYDIALOG_SIZE wxSize(500, 300)
 #define SYMBOL_BUDGETENTRYDIALOG_POSITION wxDefaultPosition
@@ -37,7 +37,8 @@ class mmBudgetEntryDialog : public wxDialog
 public:
     mmBudgetEntryDialog();
     mmBudgetEntryDialog(wxSQLite3Database* db, 
-        int budgetYearID, int categID, int subcategID,
+        int budgetYearID, int categID, int subcategID, 
+        wxString categoryEstimate, wxString CategoryActual,
         wxWindow* parent, wxWindowID id = SYMBOL_BUDGETENTRYDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_BUDGETENTRYDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_BUDGETENTRYDIALOG_POSITION, 
@@ -62,7 +63,10 @@ private:
     wxChoice* itemChoice_;
     wxTextCtrl* textAmount_;
     wxChoice* type_;
-  
+
+    wxString catEstimateAmountStr_;
+    wxString catActualAmountStr_;
+
 public:
     int budgetYearID_;
     int categID_;

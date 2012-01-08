@@ -1,5 +1,6 @@
 /*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
+ Copyright (C) 2011,2012 Nikolay & Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -20,23 +21,27 @@
 #include "util.h"
 #include "defs.h"
 #include "paths.h"
+#include <wx/spinctrl.h>
+#include <wx/statline.h>
 
 IMPLEMENT_DYNAMIC_CLASS( mmBudgetYearEntryDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmBudgetYearEntryDialog, wxDialog )
-    EVT_BUTTON(ID_DIALOG_BUDGETYEARENTRY_BUTTON_OK, mmBudgetYearEntryDialog::OnOk)
+    EVT_BUTTON(wxID_OK, mmBudgetYearEntryDialog::OnOk)
 END_EVENT_TABLE()
 
 mmBudgetYearEntryDialog::mmBudgetYearEntryDialog() : db_()
 {
 }
 
-mmBudgetYearEntryDialog::mmBudgetYearEntryDialog( wxSQLite3Database* db, 
-                                       wxWindow* parent, 
-                                       wxWindowID id, const wxString& caption, 
+mmBudgetYearEntryDialog::mmBudgetYearEntryDialog( wxSQLite3Database* db, wxWindow* parent,
+                                       bool withMonth, wxWindowID id, const wxString& caption, 
                                        const wxPoint& pos, const wxSize& size, long style ) : db_(db)
 {
+    withMonth_ = withMonth;
     Create(parent, id, caption, pos, size, style);
+    if (withMonth_)
+        this->SetTitle(_("Budget Month Entry"));
 }
 
 bool mmBudgetYearEntryDialog::Create( wxWindow* parent, wxWindowID id, 
@@ -52,39 +57,46 @@ bool mmBudgetYearEntryDialog::Create( wxWindow* parent, wxWindowID id,
 
     SetIcon(mmex::getProgramIcon());
     
-    fillControls();
-
     Centre();
     return TRUE;
 }
 
-void mmBudgetYearEntryDialog::fillControls()
-{
-
-}
-
 void mmBudgetYearEntryDialog::CreateControls()
-{    
-   mmBudgetYearEntryDialog* itemDialog1 = this;
+{
+    mmBudgetYearEntryDialog* itemDialog1 = this;
 
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
     wxFlexGridSizer* itemGridSizer2 = new wxFlexGridSizer(2, 2, 0, 0);
-    itemBoxSizer2->Add(itemGridSizer2, 0, wxALL);
+    itemBoxSizer2->Add(itemGridSizer2, 0, wxALL, 5);
     
-    wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, 
-        wxID_STATIC, _("Budget Year:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer2->Add(itemStaticText3, 0, 
-        wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, _("Budget Year:"));
+    itemGridSizer2->Add(itemStaticText3, 0, wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    textYear_ = new wxTextCtrl( itemDialog1, ID_DIALOG_BUDGETYEARENTRY_TEXTCTRL_YEAR, wxT(""), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxDateTime today(wxDateTime::Now()); 
+    int year = today.GetYear();
+    textYear_ = new wxSpinCtrl( itemDialog1, ID_DIALOG_BUDGETYEARENTRY_TEXTCTRL_YEAR,
+        wxEmptyString, wxDefaultPosition, wxSize(100,-1), wxSP_ARROW_KEYS, 1900, 3000, year);
+    textYear_->SetToolTip(_("Specify the required year.\nUse Spin buttons to increase or decrease the year."));
     itemGridSizer2->Add(textYear_, 0, wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    textYear_->SetToolTip(_("Enter the year in YYYY format to specify year"));
 
-    wxStaticText* itemStaticText51 = new wxStaticText( itemDialog1, 
-        wxID_STATIC, _("Base Budget On:"), 
+    if (withMonth_)
+    {
+        wxStaticText* itemStaticTextMonth = new wxStaticText( itemDialog1, 
+            wxID_STATIC, _("Budget Month:"), wxDefaultPosition, wxDefaultSize, 0 );
+        itemGridSizer2->Add(itemStaticTextMonth, 0, 
+            wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+
+        int month = today.GetMonth() + 1; // we require months(1..12)
+        textMonth_ = new wxSpinCtrl( itemDialog1, ID_DIALOG_BUDGETYEARENTRY_TEXTCTRL_MONTH,
+            wxEmptyString, wxDefaultPosition, wxSize(textYear_->GetSize()), wxSP_ARROW_KEYS, 1, 12, month);
+        textMonth_->SetToolTip(_("Specify the required month.\nUse Spin buttons to increase or decrease the month."));
+ 
+        itemGridSizer2->Add(textMonth_, 0, wxALIGN_LEFT |wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    }
+
+    wxStaticText* itemStaticText51 = new wxStaticText( itemDialog1, wxID_STATIC, _("Base Budget On:"),
         wxDefaultPosition, wxDefaultSize, 0 );
     itemGridSizer2->Add(itemStaticText51, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
@@ -94,7 +106,7 @@ void mmBudgetYearEntryDialog::CreateControls()
         wxT("None"),
     };
     itemChoice_ = new wxChoice( itemDialog1, ID_DIALOG_BUDGETYEARENTRY_COMBO_YEARS, 
-        wxDefaultPosition, wxDefaultSize, 1, itemYearStrings, 0 );
+        wxDefaultPosition, wxSize(textYear_->GetSize()), 1, itemYearStrings, 0 );
     itemGridSizer2->Add(itemChoice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemChoice_->SetSelection(0);
     itemChoice_->SetToolTip(_("Specify year to base budget on."));
@@ -108,67 +120,55 @@ void mmBudgetYearEntryDialog::CreateControls()
     int index = 1;
     while (q1.NextRow())
     {
-        wxString payeeString = q1.GetString(wxT("BUDGETYEARNAME"));
-        itemChoice_->Insert(payeeString, index++);
+        wxString budgetYearString = q1.GetString(wxT("BUDGETYEARNAME"));
+        itemChoice_->Insert(budgetYearString, index++);
     }
     q1.Finalize();
     
+    wxStaticLine* line = new wxStaticLine ( this, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+    itemBoxSizer2->Add(line, 0, wxGROW|wxALL, 5);
+
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
-
    
-    wxButton* itemButton7 = new wxButton( itemDialog1, 
-        ID_DIALOG_BUDGETYEARENTRY_BUTTON_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer9->Add(itemButton7, 0, 
-        wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxButton* itemButtonOK = new wxButton( itemDialog1, wxID_OK, _("OK") );
+    itemBoxSizer9->Add(itemButtonOK, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton8 = new wxButton( itemDialog1, wxID_CANCEL,
-        _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer9->Add(itemButton8, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxButton* itemButtonCancel = new wxButton( itemDialog1, wxID_CANCEL, _("Cancel") );
+    itemBoxSizer9->Add(itemButtonCancel, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 }
 
 void mmBudgetYearEntryDialog::OnOk(wxCommandEvent& /*event*/)
 {
-    wxString currText = textYear_->GetValue().Trim();
+    wxString currYearText = wxString() << textYear_->GetValue();
     wxString baseYear = itemChoice_->GetStringSelection();
-    if (!currText.IsEmpty())
+
+    if (withMonth_)
     {
-        long newYear = -1;
-        if (!currText.ToLong(&newYear) || (newYear < 1900) || (newYear > 3000))
-        {
-            mmShowErrorMessage(this, _("Year is not valid"), _("Error"));
-            return;            
-        }
-        else
-        {
-            if (mmDBWrapper::getBudgetYearID(db_, currText) != -1)
-            {   
-                mmShowErrorMessage(this, _("Budget Year already exists"), _("Error"));
-                return;
-            }
-            else
-            {
-                mmDBWrapper::addBudgetYear(db_, currText);
+        wxString currMonthText = wxEmptyString;
+        currMonthText << textMonth_->GetValue();
+        if (currMonthText.length() != 2 )
+            currMonthText = wxString() << wxT("0") << currMonthText;
 
-                if (baseYear != wxT("None"))
-                {
+        currYearText << wxT("-") << currMonthText;
+    }
 
-                    int baseYearID = mmDBWrapper::getBudgetYearID(db_, baseYear);
-                    int newYearID    = mmDBWrapper::getBudgetYearID(db_, currText);
-
-                    mmDBWrapper::copyBudgetYear(db_, newYearID, baseYearID);
-
-
-                }
-                EndModal(wxID_OK);
-            }
-        }
+    if (mmDBWrapper::getBudgetYearID(db_, currYearText) != -1)
+    {   
+        wxMessageBox(_("Budget Year already exists"), SYMBOL_BUDGETYEARENTRYDIALOG_TITLE, wxICON_WARNING);
+        return;
     }
     else
     {
-       mmShowErrorMessage(this, _("Year is not valid"), _("Error"));
-       return;            
+        mmDBWrapper::addBudgetYear(db_, currYearText);
+        if (baseYear != wxT("None"))
+        {
+            int baseYearID = mmDBWrapper::getBudgetYearID(db_, baseYear);
+            int newYearID  = mmDBWrapper::getBudgetYearID(db_, currYearText);
+
+            mmDBWrapper::copyBudgetYear(db_, newYearID, baseYearID);
+        }
     }
+
     EndModal(wxID_OK);
 }
-

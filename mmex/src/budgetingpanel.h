@@ -28,6 +28,7 @@
 class wxListCtrl;
 class wxListEvent;
 class mmBudgetingPanel;
+class mmGUIFrame;
 
 /* Custom ListCtrl class that implements virtual LC style */
 class budgetingListCtrl: public wxListCtrl
@@ -42,6 +43,9 @@ public:
         : wxListCtrl(parent, id, pos, size, style),
         attr1_(mmColors::listBorderColor, mmColors::listAlternativeColor0, wxNullFont),
         attr2_(mmColors::listBorderColor, mmColors::listAlternativeColor1, wxNullFont),
+        attr3_(mmColors::listAlternativeColor1, mmColors::listFutureDateColor, wxNullFont),
+//      Forground,background,font
+//      attr3_(wxColour( 255, 0, 0 ), wxColour( 0, 255, 0 ), wxNullFont),
         cp_(cp),
         selectedIndex_(-1)
     {}
@@ -60,6 +64,7 @@ public:
 private:
     wxListItemAttr attr1_; // style1
     wxListItemAttr attr2_; // style2
+    wxListItemAttr attr3_; // style3
     mmBudgetingPanel* cp_;
     long selectedIndex_;
 };
@@ -103,9 +108,8 @@ class mmBudgetingPanel : public mmPanelBase
     DECLARE_EVENT_TABLE()
 
 public:
-    mmBudgetingPanel( wxSQLite3Database* db, 
-            wxSQLite3Database* inidb,
-            int budgetYearID, wxWindow *parent,
+    mmBudgetingPanel( wxSQLite3Database* db, wxSQLite3Database* inidb,
+            mmGUIFrame* mainFrame, int budgetYearID, wxWindow *parent,
             wxWindowID winid = wxID_ANY,
             const wxPoint& pos = wxDefaultPosition,
             const wxSize& size = wxDefaultSize,
@@ -143,6 +147,9 @@ public:
     budgetingListCtrl* listCtrlAccount_;
     wxString currentView_;
     int budgetYearID_;
+    mmGUIFrame* mainFrame_;
+
+    bool displayEntryAllowed(mmBudgetEntryHolder& budgetEntry);
 };
 
 #endif
