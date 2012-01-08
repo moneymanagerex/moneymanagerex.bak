@@ -1708,6 +1708,7 @@
     <ClCompile Include="..\..\src\paths.cpp" />
     <ClCompile Include="..\..\src\payeedialog.cpp" />
     <ClCompile Include="..\..\src\recentfiles.cpp" />
+    <ClCompile Include="..\..\src\reportbudget.cpp" />
     <ClCompile Include="..\..\src\transactionfilterdialog.cpp" />
     <ClCompile Include="..\..\src\win\platfdep.cpp" />
     <ClCompile Include="..\..\src\qifimport.cpp" />
@@ -1788,6 +1789,7 @@
     <ClInclude Include="..\..\src\relocatecategorydialog.h" />
     <ClInclude Include="..\..\src\relocatepayeedialog.h" />
     <ClInclude Include="..\..\src\reportbase.h" />
+    <ClInclude Include="..\..\src\reportbudget.h" />
     <ClInclude Include="..\..\src\reportbudgetingperf.h" />
     <ClInclude Include="..\..\src\reportbudgetsetup.h" />
     <ClInclude Include="..\..\src\reportcashflow.h" />

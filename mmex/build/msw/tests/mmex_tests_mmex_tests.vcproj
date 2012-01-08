@@ -2186,10 +2186,16 @@
 				RelativePath="..\..\..\src\qifimport.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\recentfiles.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\relocatecategorydialog.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\relocatepayeedialog.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\reportbudget.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\reportbudgetingperf.cpp">
@@ -2246,7 +2252,397 @@
 				RelativePath="..\..\..\src\stockspanel.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\transactionfilterdialog.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\transdialog.cpp">
+				<FileConfiguration
+					Name="Release Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-d\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-d\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-d\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-d\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-u\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-u\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-u\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-u\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Debug Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-ud\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Debug Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-ud\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Debug Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-ud\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Debug Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-ud\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Release Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Release Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Release Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Release Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Debug Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-d\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Debug Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-d\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Debug Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-d\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Debug Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-d\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Release Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-u\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Release Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-u\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Release Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-u\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Release Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-u\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Debug Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-ud\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Debug Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-ud\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Debug Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-ud\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Debug Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-ud\mmex_tests\src_transdialog.obj"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\win\transdialog.cpp">
+				<FileConfiguration
+					Name="Release Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-d\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-d\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-d\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-d\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-u\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-u\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-u\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-u\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Debug Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-ud\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Debug Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-ud\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Debug Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-ud\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Debug Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-static-ud\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Release Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Release Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Release Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Release Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Debug Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-d\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Debug Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-d\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Debug Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-d\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Debug Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-d\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Release Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-u\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Release Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-u\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Release Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-u\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Release Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-u\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Debug Multilib WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-ud\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Debug Multilib WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-ud\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Debug Monolithic WX_PYTHON_0|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-ud\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="DLL Unicode Debug Monolithic WX_PYTHON_1|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="vc-shared-ud\mmex_tests\win_transdialog.obj"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\univcsvdialog.cpp">
@@ -2410,6 +2806,9 @@
 				RelativePath="..\..\..\src\platfdep.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\recentfiles.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\relocatecategorydialog.h">
 			</File>
 			<File
@@ -2417,6 +2816,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\reportbase.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\reportbudget.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\reportbudgetingperf.h">
@@ -2477,6 +2879,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\stockspanel.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\transactionfilterdialog.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\transdialog.h">

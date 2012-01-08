@@ -1,5 +1,5 @@
 /*************************************************************************
- Copyright (C) 2011 Stefano Giorgio      
+ Copyright (C) 2011,2012 Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -19,15 +19,24 @@
 #include "recentfiles.h"
 #include "guiid.h"
 
+RecentDatabaseFiles::RecentDatabaseFiles(wxSQLite3Database* ini_db, int listSize, wxString dbIndexName)
+:mmex_inidb_(ini_db), menuRecentFiles_(NULL), recentListSize_(listSize), dbIndexName_(dbIndexName)
+{
+    for( int index = 0; index < recentListSize_; index++);
+        recentFileList_.Add(wxEmptyString);
+    loadRecentList();
+}
+
 RecentDatabaseFiles::RecentDatabaseFiles(wxSQLite3Database* ini_db, wxMenu *menuRecentFiles)
 : mmex_inidb_(ini_db), menuRecentFiles_(menuRecentFiles)
 {
+    recentListSize_ = 6;
+    dbIndexName_ = wxT("RECENT_DB_");
     recentFileList_.Add(mmDBWrapper::getLastDbPath(mmex_inidb_));
-    recentFileList_.Add(wxEmptyString);
-    recentFileList_.Add(wxEmptyString);
-    recentFileList_.Add(wxEmptyString);
-    recentFileList_.Add(wxEmptyString);
-    recentFileList_.Add(wxEmptyString);
+    for (int index = 1; index < recentListSize_; index ++ )
+    {
+        recentFileList_.Add(wxEmptyString);
+    }
     loadRecentList();
     setMenuFileItems();
 }
@@ -39,26 +48,30 @@ RecentDatabaseFiles::~RecentDatabaseFiles()
 
 void RecentDatabaseFiles::loadRecentList()
 {
-    recentFileList_[1] = mmDBWrapper::getINISettingValue(mmex_inidb_,wxT("RECENT_DB_1"),wxT(""));
-    recentFileList_[2] = mmDBWrapper::getINISettingValue(mmex_inidb_,wxT("RECENT_DB_2"),wxT(""));
-    recentFileList_[3] = mmDBWrapper::getINISettingValue(mmex_inidb_,wxT("RECENT_DB_3"),wxT(""));
-    recentFileList_[4] = mmDBWrapper::getINISettingValue(mmex_inidb_,wxT("RECENT_DB_4"),wxT(""));
-    recentFileList_[5] = mmDBWrapper::getINISettingValue(mmex_inidb_,wxT("RECENT_DB_5"),wxT(""));
+    for(int index = 1; index < recentListSize_; index ++)
+    {
+        wxString dbIndex = wxString() << dbIndexName_ << index;
+        recentFileList_[index] = mmDBWrapper::getINISettingValue(mmex_inidb_,dbIndex,wxT(""));
+    }
 }
 
 void RecentDatabaseFiles::saveRecentList()
 {
     mmex_inidb_->Begin();
-    mmDBWrapper::setINISettingValue( mmex_inidb_, wxT( "RECENT_DB_1" ), recentFileList_[1] );
-    mmDBWrapper::setINISettingValue( mmex_inidb_, wxT( "RECENT_DB_2" ), recentFileList_[2] );
-    mmDBWrapper::setINISettingValue( mmex_inidb_, wxT( "RECENT_DB_3" ), recentFileList_[3] );
-    mmDBWrapper::setINISettingValue( mmex_inidb_, wxT( "RECENT_DB_4" ), recentFileList_[4] );
-    mmDBWrapper::setINISettingValue( mmex_inidb_, wxT( "RECENT_DB_5" ), recentFileList_[5] );
+    for(int index = 1; index < recentListSize_; index ++)
+    {
+        wxString dbIndex = wxString() << dbIndexName_ << index;
+        mmDBWrapper::setINISettingValue( mmex_inidb_, dbIndex, recentFileList_[index] );
+    }
     mmex_inidb_->Commit();
 }
 
 void RecentDatabaseFiles::setMenuFileItems()
 {
+    // exit if no menu pointer provided. Generic Usage. 
+    if (!menuRecentFiles_)
+        return;
+
     if (menuRecentFiles_->FindItem(MENU_RECENT_FILES_0))
         menuRecentFiles_->Delete(MENU_RECENT_FILES_0);
 
@@ -106,7 +119,7 @@ void RecentDatabaseFiles::updateRecentList(wxString currentFileName)
      If we are using an existing current file, remove the same 
      filename from the current list by making it empty.
     ******************************************************************/
-    for (int index = 1; index < 6; index ++ )
+    for (int index = 1; index < recentListSize_; index ++ )
     {
         if (recentFileList_[index] == currentFileName )
         {
@@ -141,7 +154,7 @@ void RecentDatabaseFiles::updateRecentList(wxString currentFileName)
         for (int index = 4; index > -1; index--)
         {
             if (!recentFileList_[index].IsEmpty())
-                recentFileList_[index + 1] = recentFileList_[index]; 
+                recentFileList_[index + 1] = recentFileList_[index];
         }
     }
 
@@ -155,7 +168,7 @@ void RecentDatabaseFiles::updateRecentList(wxString currentFileName)
 
 void RecentDatabaseFiles::clearRecentList()
 {
-    for (int index = 0; index < 6; index ++ )
+    for (int index = 0; index < recentListSize_; index ++ )
     {
         recentFileList_[index].Empty();
     }
@@ -166,3 +179,20 @@ wxString RecentDatabaseFiles::getRecentFile(int fileNum)
 {
     return recentFileList_[fileNum];
 }
+
+bool RecentDatabaseFiles::validLastListedFile(wxString& lastListedFileName)
+{
+    bool validFileName = false;
+    for (int index = recentListSize_ - 1; index > -1; --index)
+    {
+        if ( !recentFileList_[index].IsEmpty())
+        {
+            lastListedFileName = recentFileList_[index];
+            validFileName = true;
+            break;
+        }
+    }
+
+    return validFileName;
+}
+

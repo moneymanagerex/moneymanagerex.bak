@@ -66,6 +66,7 @@ public:
     // utility functions
     void OnOk(wxCommandEvent& event);
     void OnAdd(wxCommandEvent& event);
+    void OnAddMonth(wxCommandEvent& /*event*/);
     void OnDelete(wxCommandEvent& event);
     void OnBSelect(wxCommandEvent& event);
     void OnEdit(wxCommandEvent& event);

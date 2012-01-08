@@ -100,8 +100,10 @@ MMEX_OBJECTS =  \
 	mmex_paths.o \
 	mmex_payeedialog.o \
 	mmex_qifimport.o \
+	mmex_recentfiles.o \
 	mmex_relocatecategorydialog.o \
 	mmex_relocatepayeedialog.o \
+	mmex_reportbudget.o \
 	mmex_reportbudgetingperf.o \
 	mmex_reportbudgetsetup.o \
 	mmex_reportcashflow.o \
@@ -120,6 +122,7 @@ MMEX_OBJECTS =  \
 	mmex_splittransactionsdialog.o \
 	mmex_stockdialog.o \
 	mmex_stockspanel.o \
+	mmex_transactionfilterdialog.o \
 	mmex_transdialog.o \
 	mmex_univcsvdialog.o \
 	mmex_util.o \
@@ -375,11 +378,17 @@ mmex_payeedialog.o: $(srcdir)/src/payeedialog.cpp
 mmex_qifimport.o: $(srcdir)/src/qifimport.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/qifimport.cpp
 
+mmex_recentfiles.o: $(srcdir)/src/recentfiles.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/recentfiles.cpp
+
 mmex_relocatecategorydialog.o: $(srcdir)/src/relocatecategorydialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/relocatecategorydialog.cpp
 
 mmex_relocatepayeedialog.o: $(srcdir)/src/relocatepayeedialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/relocatepayeedialog.cpp
+
+mmex_reportbudget.o: $(srcdir)/src/reportbudget.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reportbudget.cpp
 
 mmex_reportbudgetingperf.o: $(srcdir)/src/reportbudgetingperf.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reportbudgetingperf.cpp
@@ -434,6 +443,9 @@ mmex_stockdialog.o: $(srcdir)/src/stockdialog.cpp
 
 mmex_stockspanel.o: $(srcdir)/src/stockspanel.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/stockspanel.cpp
+
+mmex_transactionfilterdialog.o: $(srcdir)/src/transactionfilterdialog.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/transactionfilterdialog.cpp
 
 mmex_transdialog.o: $(srcdir)/src/transdialog.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/transdialog.cpp

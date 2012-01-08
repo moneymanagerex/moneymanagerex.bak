@@ -29,6 +29,8 @@
 #include "defs.h"
 #include "dbwrapper.h"
 
+class wxSpinCtrl;
+
 class mmBudgetYearEntryDialog : public wxDialog
 {    
     DECLARE_DYNAMIC_CLASS( mmBudgetYearDialog )
@@ -36,8 +38,9 @@ class mmBudgetYearEntryDialog : public wxDialog
 
 public:
     mmBudgetYearEntryDialog();
-    mmBudgetYearEntryDialog(wxSQLite3Database* db, 
-        wxWindow* parent, wxWindowID id = SYMBOL_BUDGETYEARENTRYDIALOG_IDNAME, 
+    mmBudgetYearEntryDialog(wxSQLite3Database* db, wxWindow* parent, 
+        bool withMonth = false,
+        wxWindowID id = SYMBOL_BUDGETYEARENTRYDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_BUDGETYEARENTRYDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_BUDGETYEARENTRYDIALOG_POSITION, 
         const wxSize& size = SYMBOL_BUDGETYEARENTRYDIALOG_SIZE, 
@@ -54,12 +57,12 @@ public:
     // utility functions
     void OnOk(wxCommandEvent& event);
     
-    void fillControls();
-
 private:
     wxSQLite3Database* db_;
     wxChoice* itemChoice_;
-    wxTextCtrl* textYear_;
+    wxSpinCtrl* textYear_;
+    bool withMonth_;
+    wxSpinCtrl* textMonth_;
   
 public:
     wxString budgetYear_;

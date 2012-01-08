@@ -21,13 +21,14 @@
 #include "util.h"
 #include "defs.h"
 #include "paths.h"
-
+#include <wx/statline.h>
 
 IMPLEMENT_DYNAMIC_CLASS( mmBudgetYearDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmBudgetYearDialog, wxDialog )
-    EVT_BUTTON(ID_DIALOG_BUDGETYEAR_BUTTON_OK, mmBudgetYearDialog::OnOk)
+    EVT_BUTTON(wxID_OK, mmBudgetYearDialog::OnOk)
     EVT_BUTTON(ID_DIALOG_BUDGETYEAR_BUTTON_ADD, mmBudgetYearDialog::OnAdd)
+    EVT_BUTTON(ID_DIALOG_BUDGETYEAR_BUTTON_ADD_MONTH, mmBudgetYearDialog::OnAddMonth)
     EVT_BUTTON(ID_DIALOG_BUDGETYEAR_BUTTON_DELETE, mmBudgetYearDialog::OnDelete)
 END_EVENT_TABLE()
 
@@ -105,31 +106,35 @@ void mmBudgetYearDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer5, 1, wxGROW|wxALL, 5);
 
     wxButton* itemButton7 = new wxButton( itemDialog1, ID_DIALOG_BUDGETYEAR_BUTTON_ADD, 
-        _("&Add Budget Year"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
+        _("&Add Year"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL);
     itemButton7->SetToolTip(_("Add a new budget year"));
 
-    wxButton* itemButton8 = new wxButton( itemDialog1, ID_DIALOG_BUDGETYEAR_BUTTON_DELETE, 
-        _("&Delete Budget Year"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    itemButton8->SetToolTip(_("Delete existing budget year"));
+    wxButton* itemBudgetMonth = new wxButton( itemDialog1, ID_DIALOG_BUDGETYEAR_BUTTON_ADD_MONTH, 
+        _("&Add Month"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer5->Add(itemBudgetMonth, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
+    itemBudgetMonth->SetToolTip(_("Add a new budget month"));
+
+    wxButton* itemButtonDelete = new wxButton( itemDialog1, ID_DIALOG_BUDGETYEAR_BUTTON_DELETE, 
+        _("&Delete"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer5->Add(itemButtonDelete, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
+    itemButtonDelete->SetToolTip(_("Delete existing budget"));
+
+    wxStaticLine* line = new wxStaticLine ( this, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+    itemBoxSizer2->Add(line, 0, wxGROW|wxALL, 5);
     
     wxPanel* itemPanel25 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    itemBoxSizer2->Add(itemPanel25, 1, wxALIGN_RIGHT|wxTOP|wxDOWN, 5);
+    itemBoxSizer2->Add(itemPanel25, 0, wxALIGN_RIGHT, 5);
 
-    wxStdDialogButtonSizer*  itemStdDialogButtonSizer1 = new wxStdDialogButtonSizer;
-    itemPanel25->SetSizer(itemStdDialogButtonSizer1);
+    wxBoxSizer* itemButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+    itemPanel25->SetSizer(itemButtonSizer);
 
-    wxButton* itemButton27 = new wxButton( itemPanel25, wxID_OK, _("&OK"));
-    itemStdDialogButtonSizer1->Add(itemButton27);
+    wxButton* itemButtonOK = new wxButton( itemPanel25, wxID_OK, _("&OK"));
+    itemButtonSizer->Add(itemButtonOK, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT|wxBOTTOM, 5);
 
-    wxButton* itemButton28 = new wxButton( itemPanel25, wxID_CANCEL, _("&Cancel"));
-    itemStdDialogButtonSizer1->Add(itemButton28,  0, wxALIGN_RIGHT|wxLEFT, 10);
-	itemButton28->SetFocus();
-	
-    itemStdDialogButtonSizer1->Realize();
-
+    wxButton* itemButtonCancel = new wxButton( itemPanel25, wxID_CANCEL, _("&Cancel"));
+    itemButtonSizer->Add(itemButtonCancel, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT|wxBOTTOM, 5);
+	itemButtonCancel->SetFocus();
 }
 
 void mmBudgetYearDialog::OnAdd(wxCommandEvent& /*event*/)
@@ -142,6 +147,16 @@ void mmBudgetYearDialog::OnAdd(wxCommandEvent& /*event*/)
     }
 }
  
+void mmBudgetYearDialog::OnAddMonth(wxCommandEvent& /*event*/)
+{
+    mmBudgetYearEntryDialog dlg(db_, this, true); 
+    if ( dlg.ShowModal() == wxID_OK )
+    {
+        listBox_->Clear();
+        fillControls();
+    }
+}
+
 void mmBudgetYearDialog::OnDelete(wxCommandEvent& /*event*/)
 {
     wxString budgetYearString = listBox_->GetStringSelection();

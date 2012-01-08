@@ -93,6 +93,10 @@ public:
     bool expandedTermAccounts();
     bool expandedStockAccounts();
     bool hasActiveTermAccounts();
+    bool financialYearIsDifferent();
+    bool budgetFinancialYears();
+    bool budgetSetupWithSummary();
+    bool budgetCategoryTotal();
 
     wxDateTime getUserDefinedFinancialYear(bool prevDayRequired = false);
 
@@ -249,6 +253,7 @@ private:
     void RunCustomSqlDialog(bool forEdit = false);
     bool expandedReportNavTree_;
     bool expandedCustomSqlReportNavTree_;
+    bool expandedBudgetingNavTree_;
 
     void OnTreeItemExpanded(wxTreeEvent& event);
     void OnTreeItemCollapsed(wxTreeEvent& event);
@@ -259,7 +264,6 @@ private:
     void OnDeleteCustomSqlReport(wxCommandEvent& event);
     void OnPopupDeleteCustomSqlReport(wxCommandEvent& event);
 
-    bool financialYearIsDifferent();
     bool IsUpdateAvailable(wxString page);
     void processPendingEvents();
 
