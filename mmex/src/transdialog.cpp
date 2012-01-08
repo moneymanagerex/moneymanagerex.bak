@@ -949,9 +949,10 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
         amount = split_->getTotalSplits();
         if (amount < 0.0)
         {
-            if (choiceTrans_->GetSelection() == DEF_TRANSFER)
-                amount = abs(amount);
-            else {
+            if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
+                if (amount < 0)
+                    amount = - amount;
+            } else {
                 mmShowErrorMessageInvalid(this, _("Amount"));
                 return;
             }
@@ -1232,9 +1233,10 @@ void mmTransDialog::activateSplitTransactionsDlg()
     if (dlg.ShowModal() == wxID_OK)
     {
         double amount = split_->getTotalSplits();
-        if (choiceTrans_->GetSelection() == DEF_TRANSFER)
-            amount = abs(amount);
-
+        if (choiceTrans_->GetSelection() == DEF_TRANSFER){
+            if (amount < 0)
+                amount = - amount;
+        }
         wxString dispAmount;
         mmex::formatDoubleToCurrencyEdit(amount, dispAmount);
         textAmount_->SetValue(dispAmount);
