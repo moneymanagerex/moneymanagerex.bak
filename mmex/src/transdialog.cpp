@@ -326,15 +326,14 @@ void mmTransDialog::CreateControls()
     // Type --------------------------------------------
     wxStaticText* itemStaticText5 = new wxStaticText( itemPanel7, wxID_STATIC, _("Type"), wxDefaultPosition, wxDefaultSize, 0 );
     
-    //TODO:restrict choise if accounts number lessthan 2
+    // Restrict choise if accounts number lessthan 2
     if (mmDBWrapper::getNumAccounts(db_.get()) < 2) {
         wxString c[] = {
             _("Withdrawal"),
-            _("Deposit"),
-            _("Transfer"),
+            _("Deposit")
         }; 
-        choiceTrans_ = new wxChoice(itemPanel7,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxSize(110, -1), 3, c, 0);
-    }else {
+        choiceTrans_ = new wxChoice(itemPanel7,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxSize(110, -1), 2, c, 0);
+    } else {
         choiceTrans_ = new wxChoice(itemPanel7,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxSize(110, -1), 3, trxTypes4Choice, 0);
     }
     choiceTrans_->SetSelection(0);
