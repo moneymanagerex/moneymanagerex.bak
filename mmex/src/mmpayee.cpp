@@ -83,7 +83,7 @@ int mmPayeeList::addPayee(const wxString &payeeName)
     return payeeID;
 }
 
-int mmPayeeList::getPayeeID(const wxString& payeeName)
+int mmPayeeList::getPayeeID(const wxString& payeeName) const
 {
 	for (size_t i = 0; i < payees_.size(); ++i) {
 		if (!payees_[i]->payeeName_.CmpNoCase(payeeName))

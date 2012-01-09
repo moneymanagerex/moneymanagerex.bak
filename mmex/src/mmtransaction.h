@@ -71,7 +71,7 @@ public:
 
     std::vector<boost::shared_ptr<mmSplitTransactionEntry> > entries_;
     double total_;
-	wxString getSplitTrxNotes(wxSQLite3Database* db_, int trxID);
+	wxString getSplitTrxNotes(wxSQLite3Database* db_, int trxID) const;
 };
 
 class mmBankTransaction : public mmTransaction
@@ -91,7 +91,7 @@ public:
         boost::shared_ptr<mmCurrency> currencyPtr,
         bool forceUpdate=false);
 
-    void getSplitTransactions(mmCoreDB* core, mmSplitTransactionEntries* splits);
+    void getSplitTransactions(mmCoreDB* core, mmSplitTransactionEntries* splits) const;
     boost::shared_ptr<wxSQLite3Database> db_;
 
     /* Core Data */
@@ -146,8 +146,8 @@ public:
     mmBankTransactionList(boost::shared_ptr<wxSQLite3Database> db);
     ~mmBankTransactionList() {}
 
-    boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int accountID, int transactionID);
-    boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int transactionID);
+    boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int accountID, int transactionID) const;
+    boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int transactionID) const;
     int addTransaction(mmCoreDB* core, boost::shared_ptr<mmBankTransaction> pTransaction);
 	bool checkForExistingTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     boost::shared_ptr<mmBankTransaction> copyTransaction(int transactionID, bool useOriginalDate);
@@ -162,10 +162,10 @@ public:
     double getAmountForPayee(int payeeID, bool ignoreDate, const wxDateTime &dtbegin, const wxDateTime &dtEnd) const;
     void getTransactionStats(int accountID, int& number, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd) const;
 
-    double getBalance(int accountID, bool ignoreFuture = false);
-    bool   getDailyBalance(int accountID, std::map<wxDateTime, double>& daily_balance, bool ignoreFuture = false);
-    double getReconciledBalance(int accountID);
-    int    countFollowupTransactions();
+    double getBalance(int accountID, bool ignoreFuture = false) const;
+    bool   getDailyBalance(int accountID, std::map<wxDateTime, double>& daily_balance, bool ignoreFuture = false) const;
+    double getReconciledBalance(int accountID) const;
+    int    countFollowupTransactions() const;
 
     /* Update Transactions */
     void updateAllTransactions();

@@ -111,19 +111,19 @@ public:
     ~mmAccountList() {}
 
     /* Account Functions */
-    boost::shared_ptr<mmAccount> getAccountSharedPtr(int accountID);
+    boost::shared_ptr<mmAccount> getAccountSharedPtr(int accountID) const;
     
     int addAccount(boost::shared_ptr<mmAccount> pAccount);
-    wxString getAccountType(int accountID);
-    int getAccountID(const wxString& accountName);
+    wxString getAccountType(int accountID) const;
+    int getAccountID(const wxString& accountName) const;
     bool deleteAccount(int accountID);
     void updateAccount(boost::shared_ptr<mmAccount> pAccount);
-    bool accountExists(const wxString& accountName);
-    boost::weak_ptr<mmCurrency> getCurrencyWeakPtr(int accountID);
-    double getAccountBaseCurrencyConvRate(int accountID);
-    wxString getAccountName(int accountID);
-    wxString getAccountCurrencyDecimalChar(int accountID);
-    wxString getAccountCurrencyGroupChar(int accountID);
+    bool accountExists(const wxString& accountName) const;
+    boost::weak_ptr<mmCurrency> getCurrencyWeakPtr(int accountID) const;
+    double getAccountBaseCurrencyConvRate(int accountID) const;
+    wxString getAccountName(int accountID) const;
+    wxString getAccountCurrencyDecimalChar(int accountID) const;
+    wxString getAccountCurrencyGroupChar(int accountID) const;
     account_v accounts_;
     
 private:

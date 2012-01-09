@@ -844,7 +844,7 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
     }
 }
 //----------------------------------------------------------------------------
-wxString mmCheckingPanel::getMiniInfoStr(int selIndex)
+wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
 {
     char sql[] =
     "select  ta.accountname  as INTOACC, "
@@ -1208,7 +1208,7 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
 }
 //----------------------------------------------------------------------------
 
-double mmCheckingPanel::getBalance(mmBankTransaction* transPtr, double currentBalance)
+double mmCheckingPanel::getBalance(mmBankTransaction* transPtr, double currentBalance) const
 {
     if (transPtr->status_ != wxT("V"))
     {
@@ -1642,7 +1642,7 @@ void MyListCtrl::setColumnImage(EColumn col, int image)
 }
 //----------------------------------------------------------------------------
 
-wxString mmCheckingPanel::getItem(long item, long column)
+wxString mmCheckingPanel::getItem(long item, long column) const
 {  
     wxString s;
 

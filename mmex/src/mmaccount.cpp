@@ -225,7 +225,7 @@ bool mmAccountList::deleteAccount(int accountID)
     return true;
 }
 
-double mmAccountList::getAccountBaseCurrencyConvRate(int accountID)
+double mmAccountList::getAccountBaseCurrencyConvRate(int accountID) const
 {
    boost::weak_ptr<mmCurrency> wpCurrency = getCurrencyWeakPtr(accountID);
    boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
@@ -283,7 +283,7 @@ void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)
    st.Finalize();
 }
 
-boost::shared_ptr<mmAccount> mmAccountList::getAccountSharedPtr(int accountID)
+boost::shared_ptr<mmAccount> mmAccountList::getAccountSharedPtr(int accountID) const
 {
     account_v::value_type res;
 
@@ -300,7 +300,7 @@ boost::shared_ptr<mmAccount> mmAccountList::getAccountSharedPtr(int accountID)
     return res;
 }
     
-bool mmAccountList::accountExists(const wxString& accountName)
+bool mmAccountList::accountExists(const wxString& accountName) const
 {
    int checkAcctID = mmDBWrapper::getAccountID(db_.get(), accountName);
    if (checkAcctID != -1)
@@ -309,17 +309,17 @@ bool mmAccountList::accountExists(const wxString& accountName)
     return false;
 }
 
-int mmAccountList::getAccountID(const wxString& accountName)
+int mmAccountList::getAccountID(const wxString& accountName) const
 {
     return mmDBWrapper::getAccountID(db_.get(), accountName);
 }
 
-wxString mmAccountList::getAccountName(int accountID)
+wxString mmAccountList::getAccountName(int accountID) const
 {
     return mmDBWrapper::getAccountName(db_.get(),accountID);
 }
 
-wxString mmAccountList::getAccountType(int accountID)
+wxString mmAccountList::getAccountType(int accountID) const
 {
     int len = (int)accounts_.size();
     for (int idx = 0; idx < len; idx++)
@@ -331,7 +331,7 @@ wxString mmAccountList::getAccountType(int accountID)
     return wxT("");
 }
 
-wxString mmAccountList::getAccountCurrencyDecimalChar(int accountID)
+wxString mmAccountList::getAccountCurrencyDecimalChar(int accountID) const
 {
     boost::weak_ptr<mmCurrency> wpCurrency = getCurrencyWeakPtr(accountID);
     boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
@@ -343,7 +343,7 @@ wxString mmAccountList::getAccountCurrencyDecimalChar(int accountID)
     return wxT(".");
 }
 
-wxString mmAccountList::getAccountCurrencyGroupChar(int accountID)
+wxString mmAccountList::getAccountCurrencyGroupChar(int accountID) const
 {
     boost::weak_ptr<mmCurrency> wpCurrency = getCurrencyWeakPtr(accountID);
     boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
@@ -355,7 +355,7 @@ wxString mmAccountList::getAccountCurrencyGroupChar(int accountID)
     return wxT(",");
 }
 
-boost::weak_ptr<mmCurrency> mmAccountList::getCurrencyWeakPtr(int accountID)
+boost::weak_ptr<mmCurrency> mmAccountList::getCurrencyWeakPtr(int accountID) const
 {
     int len = (int)accounts_.size();
     for (int idx = 0; idx < len; idx++)

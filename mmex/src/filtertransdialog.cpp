@@ -394,7 +394,7 @@ void mmFilterTransactionsDialog::OnCheckboxTransNumberClick( wxCommandEvent& /*e
 
 void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
 {
-    std::vector< boost::shared_ptr<mmBankTransaction> >::iterator i;
+    std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
     for (i = core_->bTransactionList_.transactions_.begin(); i != core_->bTransactionList_.transactions_.end(); i++ )
     {
         boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;

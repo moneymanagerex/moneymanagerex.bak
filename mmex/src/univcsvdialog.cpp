@@ -305,7 +305,7 @@ void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& /*event*/)
 		//check if the field is already selected unless it is "Don't Care"
 		//multiple fields of "Don't Care" may be necessary
 		//the code for "Don't Care" is 7
-        std::vector<int>::iterator loc = find(csvFieldOrder_.begin(), csvFieldOrder_.end(), i);
+        std::vector<int>::const_iterator loc = find(csvFieldOrder_.begin(), csvFieldOrder_.end(), i);
 		if( loc == csvFieldOrder_.end() || i == 7 ){
 			csvArray.Add((getCSVFieldName(i)));
 			csvArrayLocation.Add((i));

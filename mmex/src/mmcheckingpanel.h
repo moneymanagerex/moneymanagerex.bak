@@ -145,13 +145,13 @@ private:
     void saveSettings();
 
     /* Getter for Virtual List Control */
-    wxString getItem(long item, long column);
+    wxString getItem(long item, long column) const;
 
-    wxString getMiniInfoStr(int selIndex);
+    wxString getMiniInfoStr(int selIndex) const;
 
     int accountID() const { return m_AccountID; }
 
-    double getBalance(mmBankTransaction* transPtr, double currentBalance );
+    double getBalance(mmBankTransaction* transPtr, double currentBalance) const;
     void setBalance(mmBankTransaction* transPtr, double currentBalance );
 
 };

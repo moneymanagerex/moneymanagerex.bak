@@ -98,7 +98,7 @@ public:
     bool budgetSetupWithSummary();
     bool budgetCategoryTotal();
 
-    wxDateTime getUserDefinedFinancialYear(bool prevDayRequired = false);
+    wxDateTime getUserDefinedFinancialYear(bool prevDayRequired = false) const;
 
     void setAccountNavTreeSection(wxString accountName); 
     bool setNavTreeSection( wxString sectionName);
@@ -137,7 +137,7 @@ private:
     mmTreeItemData* selectedItemData_;
     wxMenuItem* menuItemOnlineUpdateCurRate_; // Menu Item for Disabling Item
 
-    wxTreeItemId getTreeItemfor(wxTreeItemId itemID, wxString accountName);
+    wxTreeItemId getTreeItemfor(wxTreeItemId itemID, const wxString& accountName) const;
     bool setAccountInSection(wxString sectionName, wxString accountName);
 
     /* Custom Reports */
@@ -155,7 +155,7 @@ private:
     /* Homepage panel logic */
     wxString m_topCategories;
     bool activeTermAccounts_;
-    wxArrayString getAccountsArray(bool withTermAccounts = false);
+    wxArrayString getAccountsArray(bool withTermAccounts = false) const;
 
     void cleanup();
     wxSizer* cleanupHomePanel(bool new_sizer = true);

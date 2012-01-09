@@ -298,8 +298,10 @@ wxString mmReportCashFlow::getHTMLText()
                 it != daily_balance.end(); 
                 ++ it)
         {
-			if (! it->first.IsLaterThan(dtEnd))
+            if (! it->first.IsLaterThan(dtEnd))
                 forecastOver12Months[idx] += it->second;
+            else
+                break;
         }
     }
 
