@@ -62,7 +62,7 @@ public:
     mmCSVListBoxItem(int listIndex) 
         : listIndex_(listIndex){}
           
-    int getListIndex() { return listIndex_; }
+    int getListIndex() const { return listIndex_; }
 
 private:
     int listIndex_;
@@ -96,7 +96,7 @@ public:
     void OnAdd(wxCommandEvent& event);
     void OnImport(wxCommandEvent& event);
     void OnRemove(wxCommandEvent& event);
-    bool isIndexPresent(int index);
+    bool isIndexPresent(int index) const;
     void parseToken(int index,wxString& token);
     void OnLoad(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
