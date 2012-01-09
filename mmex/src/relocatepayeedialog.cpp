@@ -121,14 +121,12 @@ void relocatePayeeDialog::OnSelectSource(wxCommandEvent& /*event*/)
     {
         sourcePayeeID_    = sourcePayee->getPayeeId();
 
-        int catID;
-        int subCatID;
-        wxString payeeName; 
+        wxString payee_name; 
         if (sourcePayeeID_ != -1 )
-            payeeName = mmDBWrapper::getPayee(db_, sourcePayeeID_, catID, subCatID);
+            payee_name = mmDBWrapper::getPayee(db_, sourcePayeeID_);
 
-        if (payeeName != wxT(""))
-            sourceBtn_->SetLabel(payeeName);
+        if (payee_name != wxT(""))
+            sourceBtn_->SetLabel(payee_name);
     }
 }
 
@@ -139,13 +137,11 @@ void relocatePayeeDialog::OnSelectDest(wxCommandEvent& /*event*/)
     {
         destPayeeID_    = destPayee->getPayeeId();
 
-        int catID;
-        int subCatID;
-        wxString payeeName; 
+        wxString payee_name; 
         if (destPayeeID_ != -1 )
-            payeeName = mmDBWrapper::getPayee(db_, destPayeeID_, catID, subCatID);
-        if (payeeName != wxT(""))
-            destBtn_->SetLabel(payeeName);
+            payee_name = mmDBWrapper::getPayee(db_, destPayeeID_);
+        if (payee_name != wxT(""))
+            destBtn_->SetLabel(payee_name);
     }
 }
 
@@ -167,12 +163,18 @@ void relocatePayeeDialog::OnOk(wxCommandEvent& /*event*/)
         int ans = wxMessageBox(msgStr,_("Payee Relocation Confirmation"),wxOK|wxCANCEL|wxICON_QUESTION);
         if (ans == wxOK)
         {
-            static const char sql[] = "update checkingaccount_v1 set payeeid= ? where payeeid= ? ";
+            static const char sql[] = "update checkingaccount_v1 set payeeid = ? where payeeid = ? ";
             wxSQLite3Statement st = db_->PrepareStatement(sql);
             st.Bind(1, destPayeeID_);
             st.Bind(2, sourcePayeeID_);
-            changedPayees_ = st.ExecuteUpdate();
-            st.Finalize();
+            try {
+                changedPayees_ = st.ExecuteUpdate();
+                st.Finalize();
+			} catch(wxSQLite3Exception e) 
+			{
+				wxLogDebug(wxT("update checkingaccount_v1 : Exception"), e.GetMessage().c_str());
+				wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+			}
 
             EndModal(wxID_OK);
         }
