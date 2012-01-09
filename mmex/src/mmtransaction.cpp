@@ -321,7 +321,7 @@ double mmBankTransaction::value(int accountID)
    }
    return balance;
 }
-void mmBankTransaction::getSplitTransactions(mmCoreDB* core, mmSplitTransactionEntries* splits)
+void mmBankTransaction::getSplitTransactions(mmCoreDB* core, mmSplitTransactionEntries* splits) const
 {
     splits->entries_.clear();
     splits->total_ = 0.0;
@@ -613,7 +613,7 @@ void mmBankTransactionList::updateTransaction(boost::shared_ptr<mmBankTransactio
 
 
 boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPtr
-(int accountID, int transactionID)
+(int accountID, int transactionID) const
 {
     std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
     for (i = transactions_.begin(); i!= transactions_.end(); ++ i)
@@ -635,7 +635,7 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPt
 }
 
 boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPtr
-(int transactionID)
+(int transactionID) const
 {
     std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
     for (i = transactions_.begin(); i!= transactions_.end(); ++ i)
@@ -892,7 +892,7 @@ double mmBankTransactionList::getAmountForCategory(
     return amt;
 }
 
-double mmBankTransactionList::getBalance(int accountID, bool ignoreFuture)
+double mmBankTransactionList::getBalance(int accountID, bool ignoreFuture) const
 {
     double balance = 0.0;
     wxDateTime now = wxDateTime::Now();
@@ -939,7 +939,7 @@ double mmBankTransactionList::getBalance(int accountID, bool ignoreFuture)
     return balance;
 }
 
-bool mmBankTransactionList::getDailyBalance(int accountID, std::map<wxDateTime, double>& daily_balance, bool ignoreFuture)
+bool mmBankTransactionList::getDailyBalance(int accountID, std::map<wxDateTime, double>& daily_balance, bool ignoreFuture) const
 {
     wxDateTime now = wxDateTime::Now();
     double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), accountID);
@@ -992,7 +992,7 @@ bool mmBankTransactionList::getDailyBalance(int accountID, std::map<wxDateTime, 
     return true;
 }
 
-double mmBankTransactionList::getReconciledBalance(int accountID)
+double mmBankTransactionList::getReconciledBalance(int accountID) const
 {
     double balance = 0.0;
     std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
@@ -1033,7 +1033,7 @@ double mmBankTransactionList::getReconciledBalance(int accountID)
     return balance;
 }
 
-int mmBankTransactionList::countFollowupTransactions()
+int mmBankTransactionList::countFollowupTransactions() const
 {
     int numFollowup = 0;
     std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;

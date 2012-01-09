@@ -47,10 +47,10 @@ public:
     ~mmCategoryList() {}
 
     /* Category Functions */
-    int getCategoryID(const wxString& categoryName);
-    bool categoryExists(const wxString& categoryName);
-    boost::shared_ptr<mmCategory> getCategorySharedPtr(int category, int subcategory);
-    int getSubCategoryID(int parentID, const wxString& subCategoryName);
+    int getCategoryID(const wxString& categoryName) const;
+    bool categoryExists(const wxString& categoryName) const;
+    boost::shared_ptr<mmCategory> getCategorySharedPtr(int category, int subcategory) const;
+    int getSubCategoryID(int parentID, const wxString& subCategoryName) const;
 
     int addCategory(const wxString& category);
     int addSubCategory(int parentID, const wxString& text);
@@ -58,9 +58,9 @@ public:
     bool deleteCategory(int categID);
     bool deleteSubCategory(int categID, int subCategID);
     bool updateCategory(int categID, int subCategID, const wxString& text);
-    wxString GetCategoryString(int categID);
-    wxString GetSubCategoryString(int categID, int subCategID);
-    wxString GetFullCategoryString(int categID, int subCategID);
+    wxString GetCategoryString(int categID) const;
+    wxString GetSubCategoryString(int categID, int subCategID) const;
+    wxString GetFullCategoryString(int categID, int subCategID) const;
 
     /* Public Data */
     std::vector< boost::shared_ptr<mmCategory> > categories_;

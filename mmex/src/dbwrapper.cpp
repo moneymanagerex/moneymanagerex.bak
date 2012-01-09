@@ -927,7 +927,8 @@ wxString mmDBWrapper::getAccountName(wxSQLite3Database* db, int accountID)
     return name;
 }
 
-wxArrayString mmDBWrapper::getAccountsNameExceptOne(wxSQLite3Database* db, int accountID) {
+wxArrayString mmDBWrapper::getAccountsNameExceptOne(wxSQLite3Database* db, int accountID)
+{
     char sql[] = 
     "select ACCOUNTNAME "
     "from ACCOUNTLIST_V1 "
@@ -950,7 +951,9 @@ wxArrayString mmDBWrapper::getAccountsNameExceptOne(wxSQLite3Database* db, int a
 
     return accountsArray;
 }
-wxArrayString mmDBWrapper::getAccountsName(wxSQLite3Database* db) {
+
+wxArrayString mmDBWrapper::getAccountsName(wxSQLite3Database* db) 
+{
     char sql[] = 
     "select ACCOUNTNAME "
     "from ACCOUNTLIST_V1 "
@@ -1232,8 +1235,7 @@ double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountI
     }
 }*/
 
-bool mmDBWrapper::getPayeeID(wxSQLite3Database* db, const wxString &payee, int& payeeID, 
-                             int& categID, int& subcategID )
+bool mmDBWrapper::getPayeeID(wxSQLite3Database* db, const wxString &payee, int& payeeID, int& categID, int& subcategID)
 {
     static const char sql[] = 
     "select PAYEEID, "
@@ -1666,7 +1668,7 @@ bool mmDBWrapper::deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID)
     return true;
 }
 
-wxString mmDBWrapper::getPayee(wxSQLite3Database* db, int payeeID, int& categID, int& subcategID )
+wxString mmDBWrapper::getPayee(wxSQLite3Database* db, int payeeID, int& categID, int& subcategID)
 {
     static const char sql[] = 
     "select PAYEENAME, "
@@ -2004,8 +2006,8 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
                                          int categID, 
                                          int subcategID,
                                          bool ignoreDate,
-                                         wxDateTime dtBegin,
-                                         wxDateTime dtEnd)
+                                         const wxDateTime& dtBegin,
+                                         const wxDateTime& dtEnd)
 {
     static const std::string sql = 
     "select ca.TRANSCODE, "

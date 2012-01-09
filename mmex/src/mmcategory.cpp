@@ -25,7 +25,7 @@ mmCategory::mmCategory(int id, const wxString& name)
 {
 }
 
-bool mmCategoryList::categoryExists(const wxString& categoryName)
+bool mmCategoryList::categoryExists(const wxString& categoryName) const
 {
     int numCategs = (int)categories_.size();
     for (int idx = 0; idx < numCategs; idx++)
@@ -36,7 +36,7 @@ bool mmCategoryList::categoryExists(const wxString& categoryName)
     return false;
 }
 
-int mmCategoryList::getCategoryID(const wxString& categoryName)
+int mmCategoryList::getCategoryID(const wxString& categoryName) const
 {
     int numCategs = (int)categories_.size();
     for (int idx = 0; idx < numCategs; idx++)
@@ -60,7 +60,7 @@ int mmCategoryList::addCategory(const wxString& category)
     return cID;
 }
 
-int mmCategoryList::getSubCategoryID(int parentID, const wxString& subCategoryName)
+int mmCategoryList::getSubCategoryID(int parentID, const wxString& subCategoryName) const
 {
     return mmDBWrapper::getSubCategoryID(db_.get(), parentID, subCategoryName);
 }
@@ -81,7 +81,7 @@ int mmCategoryList::addSubCategory(int parentID, const wxString& text)
     return cID;
 }
 
-boost::shared_ptr<mmCategory> mmCategoryList::getCategorySharedPtr(int category, int subcategory)
+boost::shared_ptr<mmCategory> mmCategoryList::getCategorySharedPtr(int category, int subcategory) const
 {
     if (category != -1)
     {
@@ -177,7 +177,7 @@ bool mmCategoryList::updateCategory(int categID, int subCategID, const wxString&
     return true;
 }
 
-wxString mmCategoryList::GetCategoryString(int categID)
+wxString mmCategoryList::GetCategoryString(int categID) const
 {
     wxString catName = mmDBWrapper::getCategoryName(db_.get(), categID);
     catName.Replace (wxT("&"), wxT("&&"));
@@ -185,7 +185,7 @@ wxString mmCategoryList::GetCategoryString(int categID)
     return catName;
 }
 
-wxString mmCategoryList::GetSubCategoryString(int categID, int subCategID)
+wxString mmCategoryList::GetSubCategoryString(int categID, int subCategID) const
 {
     wxString subcatName = mmDBWrapper::getSubCategoryName(db_.get(), categID, subCategID);
     subcatName.Replace (wxT("&"), wxT("&&"));
@@ -193,7 +193,7 @@ wxString mmCategoryList::GetSubCategoryString(int categID, int subCategID)
     return subcatName;
 }
 
-wxString mmCategoryList::GetFullCategoryString(int categID, int subCategID)
+wxString mmCategoryList::GetFullCategoryString(int categID, int subCategID) const
 {
     wxString category    = GetCategoryString(categID);
     wxString subCategory = GetSubCategoryString(categID, subCategID);

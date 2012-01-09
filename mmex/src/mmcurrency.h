@@ -63,12 +63,12 @@ public:
     bool currencyInUse(int currencyID);
     void updateCurrency(boost::shared_ptr<mmCurrency> pCurrency);
     //bool currencyExists(const wxString& currencyName);
-    int getCurrencyID(const wxString& currencyName);
-    boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID);
-    boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName);
+    int getCurrencyID(const wxString& currencyName) const;
+    boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID) const;
+    boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName) const;
 
     void loadBaseCurrencySettings();
-    int getBaseCurrencySettings();
+    int getBaseCurrencySettings() const;
     void setBaseCurrencySettings(int currencyID);
 
     std::vector< boost::shared_ptr<mmCurrency> > currencies_;

@@ -732,7 +732,7 @@ void mmGUIFrame::processPendingEvents()
 
 //----------------------------------------------------------------------------
 // returns a wxTreeItemID for the accountName in the navtree section.
-wxTreeItemId mmGUIFrame::getTreeItemfor(wxTreeItemId itemID, wxString accountName)
+wxTreeItemId mmGUIFrame::getTreeItemfor(wxTreeItemId itemID, const wxString& accountName) const
 {
     wxTreeItemIdValue treeDummyValue;
     wxTreeItemId navTreeID = navTreeCtrl_->GetFirstChild(itemID, treeDummyValue);
@@ -1551,7 +1551,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 }
 //----------------------------------------------------------------------------
 
-wxDateTime mmGUIFrame::getUserDefinedFinancialYear(bool prevDayRequired)
+wxDateTime mmGUIFrame::getUserDefinedFinancialYear(bool prevDayRequired) const
 {
     long monthNum;
     mmOptions::financialYearStartMonthString_.ToLong(&monthNum);
@@ -3588,7 +3588,7 @@ void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
-wxArrayString mmGUIFrame::getAccountsArray( bool withTermAccounts )
+wxArrayString mmGUIFrame::getAccountsArray( bool withTermAccounts) const
 {
     wxArrayString accountArray;
 

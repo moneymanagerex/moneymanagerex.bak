@@ -107,7 +107,7 @@ int getCategoryID(wxSQLite3Database* db, const wxString &name);
 int getSubCategoryID(wxSQLite3Database* db, int categID, const wxString &name);
 wxString getCategoryName(wxSQLite3Database* db, int categID);
 wxString getSubCategoryName(wxSQLite3Database* db, int categID, int subcategID);
-double getAmountForCategory(wxSQLite3Database* db, int categID, int subcategID, bool ignoreDate, wxDateTime dtbegin, wxDateTime dtEnd);
+double getAmountForCategory(wxSQLite3Database* db, int categID, int subcategID, bool ignoreDate, const wxDateTime& dtbegin, const wxDateTime& dtEnd);
 
 /* Transactions API */
 bool updateTransactionWithStatus(wxSQLite3Database &db, int transID, 
