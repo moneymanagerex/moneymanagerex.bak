@@ -97,16 +97,15 @@ public:
     void OnImport(wxCommandEvent& event);
     void OnRemove(wxCommandEvent& event);
     bool isIndexPresent(int index) const;
+    const wxString getCSVFieldName(int index) const;
     void parseToken(int index,wxString& token);
     void OnLoad(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
 	void OnMoveUp(wxCommandEvent& event);
 	void OnMoveDown(wxCommandEvent& event);
 
-
-    wxBitmap GetBitmapResource( const wxString& name );
-
-    wxIcon GetIconResource( const wxString& name );
+    wxBitmap GetBitmapResource(const wxString& name);
+    wxIcon GetIconResource(const wxString& name);
     static bool ShowToolTips();
 
 private:
@@ -114,6 +113,8 @@ private:
     wxSQLite3Database* db_;
     std::vector<int> csvFieldOrder_;
     wxListBox* csvListBox_;
+
+    std::map<int, wxString> CSVFieldName_;
 
     wxString dt_;
     wxString payee_;

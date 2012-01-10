@@ -85,6 +85,17 @@ mmUnivCSVImportDialog::mmUnivCSVImportDialog(
     core_(core),
     db_ (core->db_.get())
 {
+    CSVFieldName_[UNIV_CSV_DATE] = _("Date");
+    CSVFieldName_[UNIV_CSV_PAYEE] = _("Payee");
+    CSVFieldName_[UNIV_CSV_AMOUNT] = _("Amount(+/-)");
+    CSVFieldName_[UNIV_CSV_CATEGORY] = _("Category");
+    CSVFieldName_[UNIV_CSV_SUBCATEGORY] = _("SubCategory");
+    CSVFieldName_[UNIV_CSV_NOTES] = _("Notes");
+    CSVFieldName_[UNIV_CSV_TRANSNUM] = _("Transaction Number");
+    CSVFieldName_[UNIV_CSV_DONTCARE] = _("Don't Care");
+    CSVFieldName_[UNIV_CSV_WITHDRAWAL] = _("Withdrawal");
+    CSVFieldName_[UNIV_CSV_DEPOSIT] = _("Deposit");
+
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -92,7 +103,7 @@ mmUnivCSVImportDialog::mmUnivCSVImportDialog(
  * MyDialog creator
  */
 
-bool mmUnivCSVImportDialog::Create(  wxWindow* parent, wxWindowID id, 
+bool mmUnivCSVImportDialog::Create(wxWindow* parent, wxWindowID id, 
                       const wxString& caption, 
                       const wxPoint& pos, 
                       const wxSize& size, 
@@ -243,59 +254,6 @@ wxIcon mmUnivCSVImportDialog::GetIconResource( const wxString& /*name*/ )
     return wxNullIcon;
 }
 
-wxString getCSVFieldName(int index)
-{
-    wxString s;
-    
-    switch (index)
-    {
-        case UNIV_CSV_DATE:
-            s = _("Date");
-            break;
-        
-        case UNIV_CSV_PAYEE:
-            s = _("Payee");
-            break;
-        
-        case UNIV_CSV_AMOUNT:
-            s = _("Amount(+/-)");
-            break;
-        
-        case UNIV_CSV_CATEGORY:
-            s = _("Category");
-            break;
-        
-        case UNIV_CSV_SUBCATEGORY:
-            s = _("SubCategory");
-            break;
-        
-        case UNIV_CSV_NOTES:
-            s = _("Notes");
-            break;
-        
-        case UNIV_CSV_TRANSNUM:
-            s = _("Transaction Number");
-            break;
-        
-        case UNIV_CSV_DONTCARE:
-            s = _("Don't Care");
-            break;
-        
-        case UNIV_CSV_WITHDRAWAL:
-            s = _("Withdrawal");
-            break;
-        
-        case UNIV_CSV_DEPOSIT:
-            s = _("Deposit");
-            break;
-        
-        default:
-            s = _("Unknown");
-    };
-
-    return s;
-}
-
 //Selection dialog for fields to be added to listbox
 void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& /*event*/)
 {
@@ -332,6 +290,15 @@ bool mmUnivCSVImportDialog::isIndexPresent(int index) const
     }
 
     return false;
+}
+
+const wxString mmUnivCSVImportDialog::getCSVFieldName(int index) const
+{
+    std::map<int, wxString>::const_iterator it = CSVFieldName_.find(index);
+    if (it != CSVFieldName_.end())
+        return it->second;
+
+    return _("Unknown");
 }
 
 void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
@@ -399,13 +366,6 @@ void mmUnivCSVImportDialog::OnSave(wxCommandEvent& /*event*/)
 
 void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
 {
-    if (csvFieldOrder_.size() < 3)
-    {
-         wxMessageBox(_("Incorrect fields specified for CSV import! Requires at least Date, Amount and Payee."),
-                      _("Universal CSV Import"), wxICON_WARNING);
-         return;
-    }
-
     // date, amount, payee are required
     if (!isIndexPresent(UNIV_CSV_DATE) || 
         !isIndexPresent(UNIV_CSV_PAYEE) ||
@@ -619,6 +579,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
             fileviewer(logFile.GetFullPath(), this).ShowModal();
         }
     }
+
     Close();
 }
 
