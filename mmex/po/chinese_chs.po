@@ -1594,9 +1594,8 @@ msgstr "删除目前查看的所有交易"
 
 #: src/mmcheckingpanel.cpp:620
 #: src/mmcheckingpanel.cpp:1442
-#, fuzzy
 msgid "Delete all \"Follow Up\" transactions"
-msgstr "删除已标记的交易"
+msgstr "删除所有需要跟进的交易"
 
 #: src/mmcheckingpanel.cpp:661
 msgid "Viewing All Transactions"
@@ -1859,9 +1858,8 @@ msgid "as Duplicate"
 msgstr "重复"
 
 #: src/mmcheckingpanel.cpp:1460
-#, fuzzy
 msgid "Mark all being viewed"
-msgstr "标记所有"
+msgstr "全部标记为"
 
 #: src/mmcheckingpanel.cpp:1894
 #, fuzzy
