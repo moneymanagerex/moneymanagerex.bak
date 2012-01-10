@@ -42,7 +42,7 @@
 #include "reportcashflow.h"
 #include "reporttransstats.h"
 #include "reportcategovertimeperf.h"
-#include "reportbudgetsetup.h"
+#include "reportbudgetcategorysummary.h"
 #include "mmgraphtopcategories.h"
 #include "appstartdialog.h"
 #include "aboutdialog.h"
@@ -1682,7 +1682,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
             } else if (iParentData->getString() == wxT("Budget Setup Performance")) {
                 wxProgressDialog proDlg(_("Budget Category Summary"), reportWaitingMsg, 100, this);
-                mmPrintableBase* rs = new mmReportBudgetingSetup(m_core.get(), this, data);
+                mmPrintableBase* rs = new mmReportBudgetCategorySummary(m_core.get(), this, data);
                 proDlg.Update(70);
                 menuPrintingEnable(true);
                 createReportsPage(rs);
