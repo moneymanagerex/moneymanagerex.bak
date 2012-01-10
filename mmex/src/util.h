@@ -65,8 +65,6 @@ void mmSaveColorsToDatabase( wxSQLite3Database* db_ );
 
 void mmPlayTransactionSound( wxSQLite3Database* db_ );
 
-wxString mmArrayIntToString( wxArrayInt& arrayint, char& symbol );
-
 /*
    mmOptions caches the options for MMEX
    so that we don't hit the DB that often
