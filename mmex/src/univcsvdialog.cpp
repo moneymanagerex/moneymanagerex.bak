@@ -43,7 +43,7 @@ namespace
 
 enum EUnivCvs
 {
-    UNIV_CSV_DATE,
+    UNIV_CSV_DATE = 0,
     UNIV_CSV_PAYEE,
     UNIV_CSV_AMOUNT,
     UNIV_CSV_CATEGORY,
@@ -52,7 +52,8 @@ enum EUnivCvs
     UNIV_CSV_TRANSNUM,
     UNIV_CSV_DONTCARE,
     UNIV_CSV_WITHDRAWAL,
-    UNIV_CSV_DEPOSIT
+    UNIV_CSV_DEPOSIT,
+    UNIV_CSV_LAST
 };
 //----------------------------------------------------------------------------
 
@@ -300,23 +301,19 @@ void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& /*event*/)
 {
     wxArrayString csvArray;
     wxArrayInt csvArrayLocation;
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < UNIV_CSV_LAST; i++)
     {
         //check if the field is already selected unless it is "Don't Care"
         //multiple fields of "Don't Care" may be necessary
-        //the code for "Don't Care" is 7
         std::vector<int>::const_iterator loc = find(csvFieldOrder_.begin(), csvFieldOrder_.end(), i);
-        if(loc == csvFieldOrder_.end() || i == 7 )
+        if(loc == csvFieldOrder_.end() || i == UNIV_CSV_DONTCARE)
         {
             csvArray.Add((getCSVFieldName(i)));
             csvArrayLocation.Add((i));
         }
     }
 
-    int index = wxGetSingleChoiceIndex(
-                    _("Add CSV field"),
-                    _("CSV Field"),
-                    csvArray);
+    int index = wxGetSingleChoiceIndex(_("Add CSV field"), _("CSV Field"), csvArray);
 
     if (index != -1)
     {
