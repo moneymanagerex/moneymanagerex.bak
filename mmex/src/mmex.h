@@ -97,6 +97,7 @@ public:
     bool budgetFinancialYears();
     bool budgetSetupWithSummary();
     bool budgetCategoryTotal();
+    bool budgetTransferTotal();
 
     wxDateTime getUserDefinedFinancialYear(bool prevDayRequired = false) const;
 

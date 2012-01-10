@@ -7,6 +7,7 @@
 #include "dbwrapper.h"
 #include "mmcoredb.h"
 #include "budgetingpanel.h"
+#include "mmex.h"
 
 mmReportBudgetingPerformance::mmReportBudgetingPerformance(mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID)
     : mmReportBudget(mainFrame),
@@ -37,6 +38,11 @@ void mmReportBudgetingPerformance::DisplayEstimateMonths(mmHTMLBuilder& hb, mmBu
 
 void mmReportBudgetingPerformance::DisplayActualMonths(mmHTMLBuilder& hb, mmBudgetEntryHolder& budgetEntry, int startMonth, long startYear)
 {
+    bool evaluateTransfer = false;
+    if (mainFrame_->budgetTransferTotal())
+    {
+        evaluateTransfer = true;
+    }
     int month;
     for (int yidx = 0; yidx < 12; yidx++)
     {
@@ -54,7 +60,7 @@ void mmReportBudgetingPerformance::DisplayActualMonths(mmHTMLBuilder& hb, mmBudg
         {
             transferAsDeposit = false;
         }
-        double actualMonthVal = core_->bTransactionList_.getAmountForCategory(budgetEntry.categID_, budgetEntry.subcategID_, false, dtBegin, dtEnd, true, transferAsDeposit);
+        double actualMonthVal = core_->bTransactionList_.getAmountForCategory(budgetEntry.categID_, budgetEntry.subcategID_, false, dtBegin, dtEnd, evaluateTransfer, transferAsDeposit);
 
         wxString actualMonthValStr;
         mmex::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
@@ -87,6 +93,11 @@ wxString mmReportBudgetingPerformance::getHTMLText()
 
     AdjustDateForEndFinancialYear(yearEnd);
 
+    bool evaluateTransfer = false;
+    if (mainFrame_->budgetTransferTotal())
+    {
+        evaluateTransfer = true;
+    }
     mmHTMLBuilder hb;
     hb.init();
     hb.addHeader(3, _("Budget Performance for ") + headingStr );
@@ -160,7 +171,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
         {
             transferAsDeposit = false;
         }
-        th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_, false,  yearBegin, yearEnd, true, transferAsDeposit);
+        th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_, false,  yearBegin, yearEnd, evaluateTransfer, transferAsDeposit);
         mmex::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
 
         if (th.actual_ < 0)
@@ -249,7 +260,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             {
                 transferAsDeposit = false;
             }
-            thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, false,  yearBegin, yearEnd, true, transferAsDeposit);
+            thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, false,  yearBegin, yearEnd, evaluateTransfer, transferAsDeposit);
             mmex::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
             
             // set the overall actual abount for the year
