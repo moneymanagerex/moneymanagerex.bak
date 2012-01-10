@@ -1132,6 +1132,11 @@ bool mmGUIFrame::budgetCategoryTotal()
     return menuBar_->IsChecked(MENU_VIEW_BUDGET_CATEGORY_SUMMARY);
 }
 
+bool mmGUIFrame::budgetTransferTotal()
+{
+    return menuBar_->IsChecked(MENU_VIEW_BUDGET_TRANSFER_TOTAL);
+}
+
 bool mmGUIFrame::financialYearIsDifferent()
 {
     return (mmOptions::financialYearStartDayString_ != wxT("1") || mmOptions::financialYearStartMonthString_ != wxT("1"));
@@ -2805,6 +2810,8 @@ void mmGUIFrame::createMenu()
 		_("Budget Setup - &without Summaries"), _("Display the Budget Setup without category summaries"), wxITEM_CHECK);
     wxMenuItem* menuItemBudgetCategorySummary = new wxMenuItem(menuView, MENU_VIEW_BUDGET_CATEGORY_SUMMARY, 
 		_("Budget &Category Summary - with Categories"), _("Include the categories in the Budget Category Summary"), wxITEM_CHECK);
+    wxMenuItem* menuItemBudgetTransferTotal = new wxMenuItem(menuView, MENU_VIEW_BUDGET_TRANSFER_TOTAL,
+		_("Budget &Totals - with Transfers"), _("Include the transfer transactions in the Budget Totals"), wxITEM_CHECK);
 
     //Add the menu items to the menu bar
 	menuView->Append(menuItemToolbar);
@@ -2826,8 +2833,7 @@ void mmGUIFrame::createMenu()
     menuView->AppendSeparator();
     menuView->Append(menuItemBudgetSetupWithoutSummary);
     menuView->Append(menuItemBudgetCategorySummary);
-
-
+    menuView->Append(menuItemBudgetTransferTotal);
 
 	wxMenu *menuAccounts = new wxMenu;
 
