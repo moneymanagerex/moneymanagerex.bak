@@ -8,15 +8,14 @@
 #include "mmcoredb.h"
 #include "budgetingpanel.h"
 
-mmReportBudgetingPerformance::mmReportBudgetingPerformance(mmCoreDB* core,
-    mmGUIFrame* mainFrame, int budgetYearID) : mmReportBudget(mainFrame),
-                                               core_(core), db_(core_->db_.get()),
-                                               budgetYearID_(budgetYearID)
+mmReportBudgetingPerformance::mmReportBudgetingPerformance(mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID)
+    : mmReportBudget(mainFrame),
+      core_(core), db_(core_->db_.get()),
+      budgetYearID_(budgetYearID)
 {
 }
 
-void mmReportBudgetingPerformance::DisplayEstimateMonths( mmHTMLBuilder& hb,
-    mmBudgetEntryHolder& budgetEntry, int startMonth)
+void mmReportBudgetingPerformance::DisplayEstimateMonths(mmHTMLBuilder& hb, mmBudgetEntryHolder& budgetEntry, int startMonth)
 {
     int daysInMonth[] = {31,28,31,30,31,30,31,31,30,31,30,31};
 
@@ -24,7 +23,8 @@ void mmReportBudgetingPerformance::DisplayEstimateMonths( mmHTMLBuilder& hb,
     for (int yidx = 0; yidx < 12; yidx++)
     {
         month = yidx + startMonth;
-        if (month > 11) {
+        if (month > 11)
+        {
             month = month - 12;
         }
         // Set the estimate for each month
@@ -35,8 +35,7 @@ void mmReportBudgetingPerformance::DisplayEstimateMonths( mmHTMLBuilder& hb,
     }
 }
 
-void mmReportBudgetingPerformance::DisplayActualMonths( mmHTMLBuilder& hb,
-    mmBudgetEntryHolder& budgetEntry, int startMonth, long startYear)
+void mmReportBudgetingPerformance::DisplayActualMonths(mmHTMLBuilder& hb, mmBudgetEntryHolder& budgetEntry, int startMonth, long startYear)
 {
     int month;
     for (int yidx = 0; yidx < 12; yidx++)
@@ -50,20 +49,24 @@ void mmReportBudgetingPerformance::DisplayActualMonths( mmHTMLBuilder& hb,
 
         wxDateTime dtBegin(1, (wxDateTime::Month)month, startYear);
         wxDateTime dtEnd = dtBegin.GetLastMonthDay((wxDateTime::Month)month, startYear);
-        double actualMonthVal = core_->bTransactionList_.getAmountForCategory(
-            budgetEntry.categID_, budgetEntry.subcategID_, false,  dtBegin, dtEnd);
+        bool transferAsDeposit = true;
+        if (budgetEntry.amt_ < 0)
+        {
+            transferAsDeposit = false;
+        }
+        double actualMonthVal = core_->bTransactionList_.getAmountForCategory(budgetEntry.categID_, budgetEntry.subcategID_, false, dtBegin, dtEnd, true, transferAsDeposit);
 
         wxString actualMonthValStr;
         mmex::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
 
         if(actualMonthVal < budgetEntry.estimated_)
 		{
-			hb.addTableCell(actualMonthValStr, true, true, true, wxT("#ff0000"));
-		}
-		else
-		{
-			hb.addTableCell(actualMonthValStr, true);
-		}
+            hb.addTableCell(actualMonthValStr, true, true, true, wxT("#ff0000"));
+        }
+        else
+        {
+            hb.addTableCell(actualMonthValStr, true);
+        }
     }
 }
 
@@ -106,7 +109,9 @@ wxString mmReportBudgetingPerformance::getHTMLText()
     {
         month = i + startMonth;
         if (month > 11)
+        {
             month = month - 12;
+        }
         hb.addTableHeaderCell(mmGetNiceShortMonthName(month));
     }
 	hb.addTableHeaderCell(_("Overall"));
@@ -135,8 +140,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
         initBudgetEntryFields(th);
         th.categID_ = q1.GetInt(wxT("CATEGID"));
         th.catStr_  = q1.GetString(wxT("CATEGNAME"));
-        mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_,
-            th.period_, th.amt_);
+        mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
 
         // Set the estimated amount for the year
         setBudgetDailyEstimateAmount(th, startMonth);
@@ -226,8 +230,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             thsub.subcategID_ = q2.GetInt(wxT("SUBCATEGID"));
             thsub.subCatStr_  = q2.GetString(wxT("SUBCATEGNAME"));
 
-            mmDBWrapper::getBudgetEntry(db_, budgetYearID_,
-                thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
+            mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
  
             // Set the estimated amount for the year
             setBudgetDailyEstimateAmount(thsub, startMonth);
@@ -277,14 +280,14 @@ wxString mmReportBudgetingPerformance::getHTMLText()
                 DisplayActualMonths(hb, thsub, startMonth, startYear);
 
                 // year end
-				if(thsub.actual_ < totalEstimated_)
-				{
-					hb.addTableCell(thsub.actualStr_, true, true, true, wxT("#ff0000"));
-				}
-				else
-				{
-					hb.addTableCell(thsub.actualStr_, true, false, true);
-				}
+                if(thsub.actual_ < totalEstimated_)
+                {
+                    hb.addTableCell(thsub.actualStr_, true, true, true, wxT("#ff0000"));
+                }
+                else
+                {
+                    hb.addTableCell(thsub.actualStr_, true, false, true);
+                }
 
                 if (((totalEstimated_ < 0) && (thsub.actual_ < 0)) ||
                     ((totalEstimated_ > 0) && (thsub.actual_ > 0)))
@@ -297,12 +300,10 @@ wxString mmReportBudgetingPerformance::getHTMLText()
                     hb.addTableCell(wxT("-"));
                 }
 
-				hb.endTableRow();
-				hb.addRowSeparator(16);
+                hb.endTableRow();
+                hb.addRowSeparator(16);
             } 
-
         }
-
         st.Reset();
     }
 
