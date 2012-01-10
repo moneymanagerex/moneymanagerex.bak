@@ -46,15 +46,17 @@ void mmReportBudgetingPerformance::DisplayActualMonths(mmHTMLBuilder& hb, mmBudg
     int month;
     for (int yidx = 0; yidx < 12; yidx++)
     {
+        double currentStartYear = startYear;
+        double currentEndYear = startYear;
         month = yidx + startMonth;
         if (month > 11)
         {
             month = month - 12;
-            startYear ++;
+            currentStartYear ++;
+            currentEndYear++;
         }
-
-        wxDateTime dtBegin(1, (wxDateTime::Month)month, startYear);
-        wxDateTime dtEnd = dtBegin.GetLastMonthDay((wxDateTime::Month)month, startYear);
+        wxDateTime dtBegin(1, (wxDateTime::Month)month, currentStartYear);
+        wxDateTime dtEnd = dtBegin.GetLastMonthDay((wxDateTime::Month)month, currentEndYear);
         bool transferAsDeposit = true;
         if (budgetEntry.amt_ < 0)
         {
