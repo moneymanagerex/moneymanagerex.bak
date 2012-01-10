@@ -556,7 +556,7 @@ TEST(addPayee)
 
     // --
 
-    mmDBWrapper::addPayee(&db, g_PayeeName, cat_id, sc_id);
+//    mmDBWrapper::addPayee(&db, g_PayeeName, cat_id, sc_id);
 }
 //----------------------------------------------------------------------------
 
@@ -661,8 +661,8 @@ TEST(getAmountForPayee)
     // --
 
     const wxDateTime dt = wxDateTime::Now();
-    double amt = mmDBWrapper::getAmountForPayee(&db, id, true, dt, dt);
-    CHECK(amt == 0.0);
+//    double amt = mmDBWrapper::getAmountForPayee(&db, id, true, dt, dt);
+//    CHECK(amt == 0.0);
 }
 //----------------------------------------------------------------------------
 
