@@ -1617,9 +1617,8 @@ msgid "Delete selected transaction"
 msgstr "删除已标记的交易"
 
 #: src/mmcheckingpanel.cpp:773
-#, fuzzy
 msgid "&Move"
-msgstr "电影"
+msgstr "转移(&M)"
 
 #: src/mmcheckingpanel.cpp:774
 msgid "Move selected transaction to another account"
@@ -1808,9 +1807,8 @@ msgid "&Copy Transaction"
 msgstr "复制交易(&C)"
 
 #: src/mmcheckingpanel.cpp:1433
-#, fuzzy
 msgid "&Move Transaction"
-msgstr "新增交易(&N)"
+msgstr "转移交易(&M)"
 
 #: src/mmcheckingpanel.cpp:1435
 msgid "&Paste Transaction"
