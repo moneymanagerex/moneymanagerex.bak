@@ -104,6 +104,7 @@ MMEX_OBJECTS =  \
 	mmex_relocatecategorydialog.o \
 	mmex_relocatepayeedialog.o \
 	mmex_reportbudget.o \
+	mmex_reportbudgetcategorysummary.o \
 	mmex_reportbudgetingperf.o \
 	mmex_reportbudgetsetup.o \
 	mmex_reportcashflow.o \
@@ -389,6 +390,9 @@ mmex_relocatepayeedialog.o: $(srcdir)/src/relocatepayeedialog.cpp
 
 mmex_reportbudget.o: $(srcdir)/src/reportbudget.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reportbudget.cpp
+
+mmex_reportbudgetcategorysummary.o: $(srcdir)/src/reportbudgetcategorysummary.cpp
+	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reportbudgetcategorysummary.cpp
 
 mmex_reportbudgetingperf.o: $(srcdir)/src/reportbudgetingperf.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reportbudgetingperf.cpp

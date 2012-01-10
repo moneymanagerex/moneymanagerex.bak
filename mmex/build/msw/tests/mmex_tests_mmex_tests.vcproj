@@ -2198,6 +2198,9 @@
 				RelativePath="..\..\..\src\reportbudget.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\src\reportbudgetcategorysummary.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\reportbudgetingperf.cpp">
 			</File>
 			<File
@@ -2819,6 +2822,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\reportbudget.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\reportbudgetcategorysummary.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\reportbudgetingperf.h">
