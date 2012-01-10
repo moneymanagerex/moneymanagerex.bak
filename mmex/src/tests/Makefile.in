@@ -119,6 +119,7 @@ MMEX_TESTS_OBJECTS =  \
 	mmex_tests_relocatecategorydialog.o \
 	mmex_tests_relocatepayeedialog.o \
 	mmex_tests_reportbudget.o \
+	mmex_tests_reportbudgetcategorysummary.o \
 	mmex_tests_reportbudgetingperf.o \
 	mmex_tests_reportbudgetsetup.o \
 	mmex_tests_reportcashflow.o \
@@ -413,6 +414,9 @@ mmex_tests_relocatepayeedialog.o: $(srcdir)/../../src/relocatepayeedialog.cpp
 
 mmex_tests_reportbudget.o: $(srcdir)/../../src/reportbudget.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportbudget.cpp
+
+mmex_tests_reportbudgetcategorysummary.o: $(srcdir)/../../src/reportbudgetcategorysummary.cpp
+	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportbudgetcategorysummary.cpp
 
 mmex_tests_reportbudgetingperf.o: $(srcdir)/../../src/reportbudgetingperf.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/reportbudgetingperf.cpp
