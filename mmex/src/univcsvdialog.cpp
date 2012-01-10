@@ -697,7 +697,7 @@ void mmUnivCSVImportDialog::OnMoveDown(wxCommandEvent& /*event*/)
 
         //reselect the source
         csvListBox_->SetSelection(selIndex + 1, true);
-        std::swap(csvFieldOrder_[selIndex - 1], csvFieldOrder_[selIndex]);
+        std::swap(csvFieldOrder_[selIndex + 1], csvFieldOrder_[selIndex]);
     }
 }
 
