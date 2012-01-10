@@ -2007,7 +2007,9 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
                                          int subcategID,
                                          bool ignoreDate,
                                          const wxDateTime& dtBegin,
-                                         const wxDateTime& dtEnd)
+                                         const wxDateTime& dtEnd,
+                                         bool evaluateTransfer,
+                                         bool asDeposit)
 {
     static const std::string sql = 
     "select ca.TRANSCODE, "
@@ -2054,13 +2056,27 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
         }
 
         if (code == TRANS_TYPE_TRANSFER_STR)
-            continue;
+        {
+            if (evaluateTransfer)
+            {
+                if (asDeposit)
+                {
+                    amt = amt + transAmount;
+                }
+                else
+                {
+                    amt = amt - transAmount;
+                }
+            }
+            continue; //skip
+        }
 
-        if (code == TRANS_TYPE_WITHDRAWAL_STR)
+        if (code == TRANS_TYPE_WITHDRAWAL_STR) {
             amt = amt - transAmount;
-        else if (code == TRANS_TYPE_DEPOSIT_STR)
+        } else if (code == TRANS_TYPE_DEPOSIT_STR) {
             amt = amt + transAmount;
         }
+    }
     
     st.Finalize();
 

@@ -151,8 +151,12 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             estIncome += totalEstimated_;
 
         // set the actual amount for the year
-        th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_,
-            false,  yearBegin, yearEnd);
+        bool transferAsDeposit = true;
+        if (th.amt_ < 0)
+        {
+            transferAsDeposit = false;
+        }
+        th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_, false,  yearBegin, yearEnd, true, transferAsDeposit);
         mmex::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
 
         if (th.actual_ < 0)
@@ -237,8 +241,12 @@ wxString mmReportBudgetingPerformance::getHTMLText()
                 estIncome += totalEstimated_;
 
             // set the actual abount for the year
-            thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, 
-                false,  yearBegin, yearEnd);
+            transferAsDeposit = true;
+            if (thsub.amt_ < 0)
+            {
+                transferAsDeposit = false;
+            }
+            thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, false,  yearBegin, yearEnd, true, transferAsDeposit);
             mmex::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
             
             // set the overall actual abount for the year
@@ -252,19 +260,19 @@ wxString mmReportBudgetingPerformance::getHTMLText()
 
             if ((totalEstimated_ != 0.0) || (thsub.actual_ != 0.0))
             {
-				hb.startTableRow();
-				hb.addTableCell(thsub.catStr_+ wxT(": ") + thsub.subCatStr_, false, true);
-				hb.addTableCell(_("Estimated"));
+                hb.startTableRow();
+                hb.addTableCell(thsub.catStr_+ wxT(": ") + thsub.subCatStr_, false, true);
+                hb.addTableCell(_("Estimated"));
 			
                 DisplayEstimateMonths(hb, thsub, startMonth);
 
                 hb.addTableCell(totalEstimatedStr_, true, true, true);
                 hb.addTableCell(wxT("-"));
-				hb.endTableRow();
+                hb.endTableRow();
 
-				hb.startTableRow();
-				hb.addTableCell(thsub.catStr_+ wxT(": ") + thsub.subCatStr_, false, true);
-				hb.addTableCell(_("Actual"));
+                hb.startTableRow();
+                hb.addTableCell(thsub.catStr_+ wxT(": ") + thsub.subCatStr_, false, true);
+                hb.addTableCell(_("Actual"));
 
                 DisplayActualMonths(hb, thsub, startMonth, startYear);
 

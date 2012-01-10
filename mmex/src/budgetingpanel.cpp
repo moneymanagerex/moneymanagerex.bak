@@ -392,15 +392,18 @@ void mmBudgetingPanel::initVirtualListControl()
         th.catStr_ = q1.GetString(wxT("CATEGNAME"));
 
         mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
-
         budgetDetails.setBudgetEstimate(th, monthlyBudget, dtBegin, dtEnd);
-
         if (th.estimated_ < 0)
             estExpenses += th.estimated_;
         else
             estIncome += th.estimated_;
 
-        th.actual_ = mmDBWrapper::getAmountForCategory(db_, th.categID_, th.subcategID_, false, dtBegin, dtEnd);
+        bool transferAsDeposit = true;
+        if (th.amt_ < 0)
+        {
+            transferAsDeposit = false;
+        }
+        th.actual_ = mmDBWrapper::getAmountForCategory(db_, th.categID_, th.subcategID_, false, dtBegin, dtEnd, true, transferAsDeposit);
         if (th.actual_ < 0)
             actExpenses += th.actual_;
         else
@@ -444,15 +447,18 @@ void mmBudgetingPanel::initVirtualListControl()
             thsub.subCatStr_   = q2.GetString(wxT("SUBCATEGNAME"));
 
             mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
-
             budgetDetails.setBudgetEstimate(thsub, monthlyBudget, dtBegin, dtEnd);
-
-            if (thsub.estimated_ < 0)
+            if (thsub.estimated_ < 0) 
                 estExpenses += thsub.estimated_;
             else
                 estIncome += thsub.estimated_;
 
-            thsub.actual_ = mmDBWrapper::getAmountForCategory(db_, thsub.categID_, thsub.subcategID_, false, dtBegin, dtEnd);
+            transferAsDeposit = true;
+            if (thsub.amt_ < 0)
+            {
+                transferAsDeposit = false;
+            }
+            thsub.actual_ = mmDBWrapper::getAmountForCategory(db_, thsub.categID_, thsub.subcategID_, false, dtBegin, dtEnd, true, transferAsDeposit);
             if (thsub.actual_ < 0)
                 actExpenses += thsub.actual_;
             else

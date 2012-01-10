@@ -848,7 +848,9 @@ double mmBankTransactionList::getAmountForCategory(
     int subcategID,
     bool ignoreDate,
     const wxDateTime &dtBegin,
-    const wxDateTime &dtEnd
+    const wxDateTime &dtEnd,
+    bool evaluateTransfer,
+    bool asDeposit
 ) const
 {
     double amt = 0.0;
@@ -864,28 +866,41 @@ double mmBankTransactionList::getAmountForCategory(
         {
             continue;
         }
-
         if (pBankTransaction->status_ == wxT("V"))
-          continue; // skip
-
+        {
+            continue; // skip
+        }
         if (!ignoreDate)
         {
-          if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
-             continue; //skip
+            if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+            {
+                continue; //skip
+            }
         }
 
-        if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
-          continue;
-
         double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), pBankTransaction->accountID_);
-
-        if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR) 
+        if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
         {
-          amt -= pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
+            if (evaluateTransfer)
+            {
+                if (asDeposit)
+                {
+                    amt += pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
+                }
+                else
+                {
+                    amt -= pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
+                }
+            }
+            continue;  //skip
+        }
+        if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
+        {
+            amt -= pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
         } 
         else if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR) 
         {
-          amt += pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
+            amt += pBankTransaction->getAmountForSplit(categID, subcategID) * convRate;
         }
     }
     
