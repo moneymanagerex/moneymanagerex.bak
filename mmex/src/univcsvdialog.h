@@ -52,22 +52,6 @@
 #define wxFIXED_MINSIZE 0
 #endif
 
-/*!
- * MyDialog class declaration
- */
-
-class mmCSVListBoxItem: public wxClientData
-{
-public:
-    mmCSVListBoxItem(int listIndex) 
-        : listIndex_(listIndex){}
-          
-    int getListIndex() const { return listIndex_; }
-
-private:
-    int listIndex_;
-};
-
 class mmUnivCSVImportDialog: public wxDialog
 {    
     DECLARE_DYNAMIC_CLASS( mmUnivCSVImportDialog )

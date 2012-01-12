@@ -275,9 +275,7 @@ void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& /*event*/)
 
     if (index != -1)
     {
-        csvListBox_->Insert(getCSVFieldName(csvArrayLocation[index]), 
-           (int)csvFieldOrder_.size(), 
-           new mmCSVListBoxItem(csvArrayLocation[index]));
+        csvListBox_->Insert(getCSVFieldName(csvArrayLocation[index]), csvFieldOrder_.size());
         csvFieldOrder_.push_back(csvArrayLocation[index]);
     }
 }
@@ -322,7 +320,7 @@ void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
          long num = 0;
          if (str.ToLong(&num))
          {
-            csvListBox_->Insert(getCSVFieldName(num), (int)csvFieldOrder_.size(), new mmCSVListBoxItem(num));
+            csvListBox_->Insert(getCSVFieldName(num), csvFieldOrder_.size());
             csvFieldOrder_.push_back(num);
          }
       }
@@ -621,13 +619,11 @@ void mmUnivCSVImportDialog::OnMoveUp(wxCommandEvent& /*event*/)
         //destination = the place in the list to be replaced (moved down)
         //replace the source with destination
         csvListBox_->Delete(selIndex);
-        csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex - 1)), selIndex, 
-            new mmCSVListBoxItem(csvFieldOrder_.at(selIndex - 1)));
+        csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex - 1)), selIndex);
 
         //replace the destination with source
         csvListBox_->Delete(selIndex - 1);
-        csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex)), selIndex - 1, 
-            new mmCSVListBoxItem(csvFieldOrder_.at(selIndex)));
+        csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex)), selIndex - 1); 
 
         //reselect the source
         csvListBox_->SetSelection(selIndex - 1, true);
@@ -645,13 +641,11 @@ void mmUnivCSVImportDialog::OnMoveDown(wxCommandEvent& /*event*/)
         //destination = the place in the list to be replaced (moved down)
         //replace the source with destination
         csvListBox_->Delete(selIndex);
-        csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex + 1)), selIndex, 
-            new mmCSVListBoxItem(csvFieldOrder_.at(selIndex + 1)));
+        csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex + 1)), selIndex); 
 
         //replace the destination with source
         csvListBox_->Delete(selIndex + 1);
-        csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex)), selIndex + 1, 
-            new mmCSVListBoxItem(csvFieldOrder_.at(selIndex)));
+        csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex)), selIndex + 1); 
 
         //reselect the source
         csvListBox_->SetSelection(selIndex + 1, true);
