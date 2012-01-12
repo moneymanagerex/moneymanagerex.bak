@@ -165,9 +165,8 @@ void mmUnivCSVImportDialog::CreateControls()
     itemButton_MoveDown -> SetToolTip (_("Move &Down"));
     
     //ListBox of attribute order
-    wxString* itemListBox4Strings = NULL;
     csvListBox_ = new wxListBox(itemDialog1, ID_LISTBOX, 
-        wxDefaultPosition, wxDefaultSize, 0, itemListBox4Strings, wxLB_SINGLE);
+        wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE|wxLB_NEEDED_SB);
     itemBoxSizer3->Add(csvListBox_, 1, wxGROW|wxALL, 1);
 
     //Add Remove Area
