@@ -23,10 +23,10 @@
 #include "paths.h"
 #include "platfdep.h"
 
-IMPLEMENT_DYNAMIC_CLASS( mmUnivCSVImportDialog, wxDialog )
+IMPLEMENT_DYNAMIC_CLASS(mmUnivCSVImportDialog, wxDialog)
 
 
-BEGIN_EVENT_TABLE( mmUnivCSVImportDialog, wxDialog )
+BEGIN_EVENT_TABLE(mmUnivCSVImportDialog, wxDialog)
     EVT_BUTTON(wxID_ADD, mmUnivCSVImportDialog::OnAdd)
     EVT_BUTTON(ID_UNIVCSVBUTTON_IMPORT, mmUnivCSVImportDialog::OnImport)
     EVT_BUTTON(wxID_REMOVE, mmUnivCSVImportDialog::OnRemove)
@@ -107,10 +107,10 @@ bool mmUnivCSVImportDialog::Create(wxWindow* parent, wxWindowID id,
                       const wxString& caption, 
                       const wxPoint& pos, 
                       const wxSize& size, 
-                      long style )
+                      long style)
 {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
-    wxDialog::Create( parent, id, caption, pos, size, style );
+    wxDialog::Create(parent, id, caption, pos, size, style);
 
     CreateControls();
     GetSizer()->Fit(this);
@@ -137,86 +137,86 @@ void mmUnivCSVImportDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, 
-       _("Specify the order of fields in the CSV file"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText3 = new wxStaticText(itemDialog1, wxID_STATIC, 
+       _("Specify the order of fields in the CSV file"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer2->Add(itemStaticText3, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
     //Arranger Area
-    wxPanel* itemPanel_Arranger = new wxPanel( itemDialog1, ID_PANEL10, 
-        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* itemPanel_Arranger = new wxPanel(itemDialog1, ID_PANEL10, 
+        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer3->Add(itemPanel_Arranger, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer_Arranger = new wxBoxSizer(wxVERTICAL);
     itemPanel_Arranger->SetSizer(itemBoxSizer_Arranger);
 
     //Move Up button
-    wxButton* itemButton_MoveUp = new wxButton( itemPanel_Arranger, wxID_UP, _("&Up"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton_MoveUp = new wxButton(itemPanel_Arranger, wxID_UP, _("&Up"), 
+        wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer_Arranger->Add(itemButton_MoveUp, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemButton_MoveUp -> SetToolTip (_("Move Up"));
 
     //Move down button
-    wxButton* itemButton_MoveDown = new wxButton( itemPanel_Arranger, wxID_DOWN, _("&Down"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton_MoveDown = new wxButton(itemPanel_Arranger, wxID_DOWN, _("&Down"), 
+        wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer_Arranger->Add(itemButton_MoveDown, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemButton_MoveDown -> SetToolTip (_("Move &Down"));
     
     //ListBox of attribute order
     wxString* itemListBox4Strings = NULL;
-    csvListBox_ = new wxListBox( itemDialog1, ID_LISTBOX, 
-        wxDefaultPosition, wxDefaultSize, 0, itemListBox4Strings, wxLB_SINGLE );
+    csvListBox_ = new wxListBox(itemDialog1, ID_LISTBOX, 
+        wxDefaultPosition, wxDefaultSize, 0, itemListBox4Strings, wxLB_SINGLE);
     itemBoxSizer3->Add(csvListBox_, 1, wxGROW|wxALL, 1);
 
     //Add Remove Area
-    wxPanel* itemPanel_AddRemove = new wxPanel( itemDialog1, ID_PANEL10, 
-        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* itemPanel_AddRemove = new wxPanel(itemDialog1, ID_PANEL10, 
+        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer3->Add(itemPanel_AddRemove, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer_AddRemove = new wxBoxSizer(wxVERTICAL);
     itemPanel_AddRemove->SetSizer(itemBoxSizer_AddRemove);
 
     //Add button
-    wxButton* itemButton_Add = new wxButton( itemPanel_AddRemove, wxID_ADD, _("Add"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton_Add = new wxButton(itemPanel_AddRemove, wxID_ADD, _("Add"), 
+        wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer_AddRemove->Add(itemButton_Add, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     //Remove button
-    wxButton* itemButton_Remove = new wxButton( itemPanel_AddRemove, wxID_REMOVE, _("Remove"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton_Remove = new wxButton(itemPanel_AddRemove, wxID_REMOVE, _("Remove"), 
+        wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer_AddRemove->Add(itemButton_Remove, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxPanel* itemPanel5 = new wxPanel( itemDialog1, ID_PANEL10, 
-        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* itemPanel5 = new wxPanel(itemDialog1, ID_PANEL10, 
+        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer2->Add(itemPanel5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel5->SetSizer(itemBoxSizer6);
 
     //Load Template button
-    wxButton* itemButton_Load = new wxButton( itemPanel5, wxID_OPEN, _("&Open"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton_Load = new wxButton(itemPanel5, wxID_OPEN, _("&Open"), 
+        wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer6->Add(itemButton_Load, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemButton_Load -> SetToolTip (_("Load Template"));
 
     //Save As Template button
-    wxButton* itemButton_Save = new wxButton( itemPanel5, wxID_SAVEAS, _("Save &As..."), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton_Save = new wxButton(itemPanel5, wxID_SAVEAS, _("Save &As..."), 
+        wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer6->Add(itemButton_Save, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemButton_Save -> SetToolTip (_("Save Template"));
 
     //Import File button
-    wxButton* itemButton_Import = new wxButton( itemPanel5, ID_UNIVCSVBUTTON_IMPORT, _("&Import"), 
-        wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton_Import = new wxButton(itemPanel5, ID_UNIVCSVBUTTON_IMPORT, _("&Import"), 
+        wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer6->Add(itemButton_Import, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemButton_Import -> SetToolTip (_("Import File"));
 
     wxBoxSizer* itemBoxSizer66 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer6->Add(itemBoxSizer66, 1, wxGROW|wxALL, 5);
     
-    wxButton* itemCancelButton = new wxButton( itemPanel5, wxID_CANCEL, _("&Cancel"));
+    wxButton* itemCancelButton = new wxButton(itemPanel5, wxID_CANCEL, _("&Cancel"));
     itemBoxSizer66->Add(itemCancelButton);
     itemCancelButton->SetFocus();
 
@@ -237,7 +237,7 @@ bool mmUnivCSVImportDialog::ShowToolTips()
  * Get bitmap resources
  */
 
-wxBitmap mmUnivCSVImportDialog::GetBitmapResource( const wxString& /*name*/ )
+wxBitmap mmUnivCSVImportDialog::GetBitmapResource(const wxString& /*name*/)
 {
     // Bitmap retrieval
 ////@begin MyDialog bitmap retrieval
@@ -249,7 +249,7 @@ wxBitmap mmUnivCSVImportDialog::GetBitmapResource( const wxString& /*name*/ )
  * Get icon resources
  */
 
-wxIcon mmUnivCSVImportDialog::GetIconResource( const wxString& /*name*/ )
+wxIcon mmUnivCSVImportDialog::GetIconResource(const wxString& /*name*/)
 {
     return wxNullIcon;
 }
@@ -303,7 +303,7 @@ void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
 {
    wxString fileName = wxFileSelector(_("Choose Universal CSV format file to load"), 
       wxEmptyString, wxEmptyString, wxEmptyString,  wxT("CSV Template(*.mcv)|*.mcv"), wxFD_FILE_MUST_EXIST);
-   if ( !fileName.empty() )
+   if (!fileName.empty())
    {
       wxTextFile tFile(fileName);
       if (!tFile.Open())
@@ -315,7 +315,7 @@ void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
       csvListBox_->Clear();
 
       wxString str;
-      for ( str = tFile.GetFirstLine(); !tFile.Eof(); str = tFile.GetNextLine() )
+      for (str = tFile.GetFirstLine(); !tFile.Eof(); str = tFile.GetNextLine())
       {
          long num = 0;
          if (str.ToLong(&num))
@@ -335,14 +335,14 @@ void mmUnivCSVImportDialog::OnSave(wxCommandEvent& /*event*/)
 {
     wxString fileName = wxFileSelector(_("Choose Universal CSV format file to save"), 
                 wxEmptyString, wxEmptyString, wxEmptyString, wxT("CSV Template(*.mcv)|*.mcv"), wxFD_SAVE);
-    if ( !fileName.empty() )
+    if (!fileName.empty())
     {
         correctEmptyFileExt(wxT("mcv"),fileName);
 
         wxTextFile tFile(fileName);
         //if the file does not exist and cannot be created, throw an error
         //if the file does exist, then skip to else section
-        if ( !tFile.Exists() && !tFile.Create() )
+        if (!tFile.Exists() && !tFile.Create())
         {
             wxMessageBox(_("Unable to write to file."), _("Universal CSV Import"), wxICON_WARNING);
             return;
@@ -392,7 +392,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
              
         wxString fileName = wxFileSelector(_("Choose MM.NET CSV data file to import"), 
                 wxEmptyString, wxEmptyString, wxEmptyString, wxT("*.csv"), wxFD_FILE_MUST_EXIST);
-        if ( !fileName.IsEmpty() )
+        if (!fileName.IsEmpty())
         {
             wxFileInputStream input(fileName);
             wxTextInputStream text(input);
@@ -415,7 +415,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
                 NULL, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
             mmDBWrapper::begin(db_);
 
-            while ( !input.Eof() )
+            while (!input.Eof())
             {
                 wxString progressMsg;
                 progressMsg << _("Transactions imported from CSV\nto account ") << acctName << wxT(": ") << countImported;
@@ -450,13 +450,13 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
                 int numTokens = (int)tkz.CountTokens();
                 if (numTokens < (int)csvFieldOrder_.size())
                 {
-                    log << _("Line : " ) << countNumTotal 
+                    log << _("Line : ") << countNumTotal 
                         << _(" file contains insufficient number of tokens") << endl;
                     continue;
                 }
                 
                 std::vector<wxString> tokens;
-                while ( tkz.HasMoreTokens() )
+                while (tkz.HasMoreTokens())
                 {
                     wxString token = tkz.GetNextToken();
                     tokens.push_back(mmCleanQuotes(token.Trim()));
@@ -473,7 +473,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
                 if (dt_.Trim().IsEmpty() || payeeID_ == -1 ||
                     amount_.Trim().IsEmpty() ||  type_.Trim().IsEmpty())
                 {
-                    log << _("Line : " ) << countNumTotal 
+                    log << _("Line : ") << countNumTotal 
                         << _(" One of the following fields: Date, Payee, Amount, Type is missing, skipping") << endl;
                     continue;
                 }
@@ -529,7 +529,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
                CSV_transID.push_back(transID);
 
                countImported++;
-               log << _("Line : " ) << countNumTotal << _(" imported OK.") << endl;
+               log << _("Line : ") << countNumTotal << _(" imported OK.") << endl;
             }
 
             progressDlg.Update(100);       
@@ -595,7 +595,7 @@ void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& /*event*/)
         // check if the selected index is the last item
         if (csvFieldOrder_.size())
         {
-            if( selIndex > (int)csvFieldOrder_.size() - 1)
+            if(selIndex > (int)csvFieldOrder_.size() - 1)
             {
                 csvListBox_->SetSelection((int)csvFieldOrder_.size() - 1, true);
             }
@@ -676,7 +676,7 @@ void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
             break;
 
         case UNIV_CSV_AMOUNT:
-            token.Replace( wxT( " " ), wxEmptyString );
+            token.Replace(wxT(" "), wxEmptyString);
 
             if (!mmex::formatCurrencyToDouble(token, val_)) return;
 
