@@ -54,26 +54,26 @@
 
 class mmUnivCSVImportDialog: public wxDialog
 {    
-    DECLARE_DYNAMIC_CLASS( mmUnivCSVImportDialog )
+    DECLARE_DYNAMIC_CLASS(mmUnivCSVImportDialog)
     DECLARE_EVENT_TABLE()
 
 public:
     /// Constructors
-    mmUnivCSVImportDialog( );
-    mmUnivCSVImportDialog( mmCoreDB* core, wxWindow* parent, 
+    mmUnivCSVImportDialog();
+    mmUnivCSVImportDialog(mmCoreDB* core, wxWindow* parent, 
         wxWindowID id = SYMBOL_UNIVCSVDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_UNIVCSVDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_UNIVCSVDIALOG_POSITION, 
         const wxSize& size = SYMBOL_UNIVCSVDIALOG_SIZE, 
-        long style = SYMBOL_UNIVCSVDIALOG_STYLE );
+        long style = SYMBOL_UNIVCSVDIALOG_STYLE);
 
     /// Creation
-    bool Create( wxWindow* parent, 
+    bool Create(wxWindow* parent, 
         wxWindowID id = SYMBOL_UNIVCSVDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_UNIVCSVDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_UNIVCSVDIALOG_POSITION, 
         const wxSize& size = SYMBOL_UNIVCSVDIALOG_SIZE, 
-        long style = SYMBOL_UNIVCSVDIALOG_STYLE );
+        long style = SYMBOL_UNIVCSVDIALOG_STYLE);
 
     /// Creates the controls and sizers
     void CreateControls();
