@@ -36,6 +36,7 @@
 #include "../resources/uparrow.xpm"
 #include "../resources/downarrow.xpm"
 #include "../resources/rightarrow.xpm"
+#include "../resources/empty.xpm"
 /*******************************************************/
 BEGIN_EVENT_TABLE(mmBudgetingPanel, wxPanel)
     EVT_LEFT_DOWN( mmBudgetingPanel::OnMouseLeftDown ) 
@@ -268,6 +269,7 @@ void mmBudgetingPanel::CreateControls()
     m_imageList->Add(wxBitmap(reconciled_xpm));
     m_imageList->Add(wxBitmap(void_xpm));
     m_imageList->Add(wxBitmap(flag_xpm));
+    m_imageList->Add(wxBitmap(empty_xpm));
     
     listCtrlAccount_ = new budgetingListCtrl( this, itemDialog1, 
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 
@@ -567,7 +569,7 @@ wxString mmBudgetingPanel::getItem(long item, long column)
 int budgetingListCtrl::OnGetItemImage(long item) const
 {
     if ((cp_->trans_[item].estimated_ == 0.0) && (cp_->trans_[item].actual_ == 0.0))
-       return -1;
+       return 3;
 
     if ((cp_->trans_[item].estimated_ == 0.0) && (cp_->trans_[item].actual_ != 0.0))
        return 2;
