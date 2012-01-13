@@ -114,9 +114,8 @@ void mmMainCurrencyDialog::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
-    wxString* itemListBox4Strings = NULL;
     currencyListBox_ = new wxListBox( itemDialog1, ID_LISTBOX, 
-        wxDefaultPosition, wxDefaultSize, 0, itemListBox4Strings, wxLB_SINGLE );
+        wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE|wxLB_NEEDED_SB );
     itemBoxSizer3->Add(currencyListBox_, 1, wxGROW|wxALL, 1);
 
     wxPanel* itemPanel5 = new wxPanel( itemDialog1, ID_PANEL10, 
