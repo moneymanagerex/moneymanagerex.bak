@@ -374,7 +374,16 @@ void mmBudgetingPanel::initVirtualListControl()
     }
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
-
+//TODO: make it easier
+/*
+    static const char categ_list_sql[] =
+    "select c.categname as CATEGNAME, s.subcategname as SUBCATEGNAME, "
+    "c.categid as CATEGID, s.subcategid as SUBCATEGID "
+    "from subcategory_v1 s "
+    "left join  category_v1 c on c.categid=s.categid "
+    "union select categname, '', categid, -1  from category_v1 "
+	"order by CATEGNAME, SUBCATEGNAME ";
+*/
     static const char sql[] =
     "select CATEGID, CATEGNAME "
     "from CATEGORY_V1 "
