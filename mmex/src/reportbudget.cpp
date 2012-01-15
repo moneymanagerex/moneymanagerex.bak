@@ -90,16 +90,19 @@ void mmReportBudget::initBudgetEntryFields(mmBudgetEntryHolder& budEntry)
     budEntry.actualStr_ = wxT("0.0");
 }
 
-void mmReportBudget::DisplayDateHeading(mmHTMLBuilder& hb, wxDateTime startYear, wxDateTime endYear)
+void mmReportBudget::DisplayDateHeading(mmHTMLBuilder& hb, wxDateTime startYear, wxDateTime endYear, bool withDateRange)
 {
-    wxString dt = wxString() 
-        << _("Today's Date: ") << wxT("<b>") << mmGetNiceDateString(wxDateTime::Now())
-        << wxT("<br>")
+    wxString todaysDate = wxString() 
+        << _("Today's Date: ") << mmGetNiceDateString(wxDateTime::Now())
+        << wxT("<br>") << wxT("<br>");
+    if (withDateRange)
+    {   
+        todaysDate
         << _("From: ") << wxT("<b>") << mmGetNiceDateSimpleString(startYear) <<  wxT("</b> ") 
         << _("to: ") 
         << wxT ("<b>") << mmGetNiceDateSimpleString(endYear) << wxT ("</b>");
-
-    hb.addHeader(7, dt);
+    }
+    hb.addHeader(7, todaysDate);
     hb.addLineBreak();
     hb.addLineBreak();
 }
