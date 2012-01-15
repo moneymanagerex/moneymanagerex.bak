@@ -144,32 +144,7 @@ void mmUnivCSVImportDialog::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
-    //Arranger Area
-    wxPanel* itemPanel_Arranger = new wxPanel(itemDialog1, ID_PANEL10, 
-        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    itemBoxSizer3->Add(itemPanel_Arranger, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
-
-    wxBoxSizer* itemBoxSizer_Arranger = new wxBoxSizer(wxVERTICAL);
-    itemPanel_Arranger->SetSizer(itemBoxSizer_Arranger);
-
-    //Move Up button
-    wxButton* itemButton_MoveUp = new wxButton(itemPanel_Arranger, wxID_UP, _("&Up"), 
-        wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer_Arranger->Add(itemButton_MoveUp, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemButton_MoveUp -> SetToolTip (_("Move Up"));
-
-    //Move down button
-    wxButton* itemButton_MoveDown = new wxButton(itemPanel_Arranger, wxID_DOWN, _("&Down"), 
-        wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer_Arranger->Add(itemButton_MoveDown, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemButton_MoveDown -> SetToolTip (_("Move &Down"));
-    
-    //ListBox of attribute order
-    csvListBox_ = new wxListBox(itemDialog1, ID_LISTBOX, 
-        wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE|wxLB_NEEDED_SB);
-    itemBoxSizer3->Add(csvListBox_, 1, wxGROW|wxALL, 1);
-
-    //Add Remove Area
+     //Add Remove Area
     wxPanel* itemPanel_AddRemove = new wxPanel(itemDialog1, ID_PANEL10, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer3->Add(itemPanel_AddRemove, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
@@ -193,7 +168,32 @@ void mmUnivCSVImportDialog::CreateControls()
 
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel5->SetSizer(itemBoxSizer6);
+   
+    //ListBox of attribute order
+    csvListBox_ = new wxListBox(itemDialog1, ID_LISTBOX, 
+        wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE|wxLB_NEEDED_SB);
+    itemBoxSizer3->Add(csvListBox_, 1, wxGROW|wxALL, 1);
 
+   //Arranger Area
+    wxPanel* itemPanel_Arranger = new wxPanel(itemDialog1, ID_PANEL10, 
+        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    itemBoxSizer3->Add(itemPanel_Arranger, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
+
+    wxBoxSizer* itemBoxSizer_Arranger = new wxBoxSizer(wxVERTICAL);
+    itemPanel_Arranger->SetSizer(itemBoxSizer_Arranger);
+
+    //Move Up button
+    wxButton* itemButton_MoveUp = new wxButton(itemPanel_Arranger, wxID_UP, _("&Up"), 
+        wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer_Arranger->Add(itemButton_MoveUp, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButton_MoveUp -> SetToolTip (_("Move Up"));
+
+    //Move down button
+    wxButton* itemButton_MoveDown = new wxButton(itemPanel_Arranger, wxID_DOWN, _("&Down"), 
+        wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer_Arranger->Add(itemButton_MoveDown, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButton_MoveDown -> SetToolTip (_("Move &Down"));
+ 
     //Load Template button
     wxButton* itemButton_Load = new wxButton(itemPanel5, wxID_OPEN, _("&Open"), 
         wxDefaultPosition, wxDefaultSize, 0);
