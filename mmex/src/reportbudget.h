@@ -46,7 +46,7 @@ public:
     void setBudgetEstimate(mmBudgetEntryHolder& budEntry, bool monthBudget, wxDateTime beginDate, wxDateTime endDate);
     
     // Used in reports to display today's date
-    void DisplayDateHeading(mmHTMLBuilder& hb, wxDateTime startYear, wxDateTime endYear);
+    void DisplayDateHeading(mmHTMLBuilder& hb, wxDateTime startYear, wxDateTime endYear, bool withDateRange = true);
 
     // Returns correct values for day and month, adjusted to financial year if required.
 	void AdjustYearValues(int& day, int& month, wxDateTime& year);

@@ -1342,31 +1342,31 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     }
 	///////////////////////////////////////////////////////////
 
-    wxTreeItemId payeesOverTime = navTreeCtrl_->AppendItem(reports, _("To Whom the Money Goes"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTime, new mmTreeItemData(wxT("To Whom the Money Goes")));
+    wxTreeItemId payeesOverTime = navTreeCtrl_->AppendItem(reports, _("Payees"), 4, 4);
+    navTreeCtrl_->SetItemData(payeesOverTime, new mmTreeItemData(wxT("Payee Report")));
 
     wxTreeItemId payeesOverTimeCalMonth = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Calendar Month"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCalMonth, new mmTreeItemData(wxT("To Whom the Money Goes - Month")));
+    navTreeCtrl_->SetItemData(payeesOverTimeCalMonth, new mmTreeItemData(wxT("Payee Report - Month")));
 
     wxTreeItemId payeesOverTimeCurrentMonth = navTreeCtrl_->AppendItem(payeesOverTime, _("Current Month"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCurrentMonth, new mmTreeItemData(wxT("To Whom the Money Goes - Current Month")));
+    navTreeCtrl_->SetItemData(payeesOverTimeCurrentMonth, new mmTreeItemData(wxT("Payee Report - Current Month")));
 
     wxTreeItemId payeesOverTimeLast30 = navTreeCtrl_->AppendItem(payeesOverTime, _("Last 30 Days"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeLast30, new mmTreeItemData(wxT("To Whom the Money Goes - 30 Days")));
+    navTreeCtrl_->SetItemData(payeesOverTimeLast30, new mmTreeItemData(wxT("Payee Report - 30 Days")));
     
     wxTreeItemId payeesOverTimeLastYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Year"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeLastYear, new mmTreeItemData(wxT("To Whom the Money Goes - Last Year")));
+    navTreeCtrl_->SetItemData(payeesOverTimeLastYear, new mmTreeItemData(wxT("Payee Report - Last Year")));
 
     wxTreeItemId payeesOverTimeCurrentYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Current Year"), 4, 4);
-    navTreeCtrl_->SetItemData(payeesOverTimeCurrentYear, new mmTreeItemData(wxT("To Whom the Money Goes - Current Year")));
+    navTreeCtrl_->SetItemData(payeesOverTimeCurrentYear, new mmTreeItemData(wxT("Payee Report - Current Year")));
 
     if (financialYearIsDifferent())
     {
         wxTreeItemId payeesOverTimeLastFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(payeesOverTimeLastFinancialYear, new mmTreeItemData(wxT("To Whom the Money Goes - Last Financial Year")));
+        navTreeCtrl_->SetItemData(payeesOverTimeLastFinancialYear, new mmTreeItemData(wxT("Payee Report - Last Financial Year")));
 
         wxTreeItemId payeesOverTimeCurrentFinancialYear = navTreeCtrl_->AppendItem(payeesOverTime, _("Current Financial Year"), 4, 4);
-        navTreeCtrl_->SetItemData(payeesOverTimeCurrentFinancialYear, new mmTreeItemData(wxT("To Whom the Money Goes - Current Financial Year")));
+        navTreeCtrl_->SetItemData(payeesOverTimeCurrentFinancialYear, new mmTreeItemData(wxT("Payee Report - Current Financial Year")));
     }
     ///////////////////////////////////////////////////////////////////
 
@@ -2182,14 +2182,15 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (iData->getString() == wxT("To Whom the Money Goes"))
+        else if (iData->getString() == wxT("Payee Report"))
         {
+            wxString title = _("Payee Report");
             mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), true, wxDateTime::Now(),
-                wxDateTime::Now());
+                wxDateTime::Now(), title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (iData->getString() == wxT("To Whom the Money Goes - Month"))
+        else if (iData->getString() == wxT("Payee Report - Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime::Month cm = today.GetMonth();
@@ -2202,32 +2203,39 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
+            dtBegin.Add(wxDateSpan::Day());
 
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd);
+            wxString title = _("Payees - Last Calendar Month");
+            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (iData->getString() == wxT("To Whom the Money Goes - 30 Days"))
+        else if (iData->getString() == wxT("Payee Report - 30 Days"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today;
             wxDateTime dtEnd = today;
-            wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd);
+            wxDateTime dtBegin = today.Subtract(wxDateSpan::Days(30));
+    
+            wxString title = _("Payees - Last 30 Days");
+            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (iData->getString() == wxT("To Whom the Money Goes - Current Month"))
+        else if (iData->getString() == wxT("Payee Report - Current Month"))
         {
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd);
+            dtBegin.Add(wxDateSpan::Day());
+
+            wxString title = _("Payees - Current Month");
+            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (iData->getString() == wxT("To Whom the Money Goes - Last Year"))
+        else if (iData->getString() == wxT("Payee Report - Last Year"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear() - 1;
@@ -2237,11 +2245,14 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             prevYearEnd.SetDay(31);
             wxDateTime dtEnd = prevYearEnd;
             wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd);
+            dtBegin.Add(wxDateSpan::Day());
+
+            wxString title = _("Payees - Last Year");
+            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (iData->getString() == wxT("To Whom the Money Goes - Current Year"))
+        else if (iData->getString() == wxT("Payee Report - Current Year"))
         {
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear() - 1;
@@ -2251,28 +2262,33 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             yearBegin.SetDay(31);
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = yearBegin;
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd);
+            dtBegin.Add(wxDateSpan::Day());
+
+            wxString title = _("Payees - Current Year");
+            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (iData->getString() == wxT("To Whom the Money Goes - Last Financial Year"))
+        else if (iData->getString() == wxT("Payee Report - Last Financial Year"))
         {
             wxDateTime refDate = wxDateTime(getUserDefinedFinancialYear());
             refDate.Subtract(wxDateSpan::Day());
-
             wxDateTime dtEnd = refDate;
             wxDateTime dtBegin = refDate.Subtract(wxDateSpan::Year());
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd);
+            dtBegin.Add(wxDateSpan::Day());
+
+            wxString title = _("Payees - Last Financial Year");
+            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
-        else if (iData->getString() == wxT("To Whom the Money Goes - Current Financial Year"))
+        else if (iData->getString() == wxT("Payee Report - Current Financial Year"))
         {
             wxDateTime dtEnd   = wxDateTime::Now();
             wxDateTime dtBegin = wxDateTime(getUserDefinedFinancialYear());
-            dtBegin.Subtract(wxDateSpan::Day());
 
-            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd);
+            wxString title = _("Payees - Current Financial Year");
+            mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
