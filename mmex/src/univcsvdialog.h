@@ -87,6 +87,7 @@ public:
     void OnSave(wxCommandEvent& event);
 	void OnMoveUp(wxCommandEvent& event);
 	void OnMoveDown(wxCommandEvent& event);
+	void OnListBox(wxCommandEvent& event);
 
     wxBitmap GetBitmapResource(const wxString& name);
     wxIcon GetIconResource(const wxString& name);
