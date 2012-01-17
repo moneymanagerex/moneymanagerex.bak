@@ -864,8 +864,8 @@ double mmBankTransactionList::getAmountForCategory(
     bool ignoreDate,
     const wxDateTime &dtBegin,
     const wxDateTime &dtEnd,
-    bool evaluateTransfer,
-    bool asDeposit,
+    bool evaluateTransfer,      // activates the asDeposit parameter.
+    bool asDeposit,             // No effect when evaluateTransfer is false.
     bool ignoreFuture
 ) const
 {
