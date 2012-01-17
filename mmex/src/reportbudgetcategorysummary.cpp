@@ -155,7 +155,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
         {
             transferAsDeposit = false;
         }
-		th.actual_ = mmDBWrapper::getAmountForCategory(db_, th.categID_, th.subcategID_, false, yearBegin, yearEnd, evaluateTransfer, transferAsDeposit);
+		th.actual_ = mmDBWrapper::getAmountForCategory(db_, th.categID_, th.subcategID_, false, yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::ignoreFutureTransactions_);
 		mmex::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
 
 		if (th.actual_ < 0) {
@@ -217,7 +217,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
             {
                 transferAsDeposit = false;
             }
-            thsub.actual_ = mmDBWrapper::getAmountForCategory(db_, thsub.categID_, thsub.subcategID_, false, yearBegin, yearEnd, evaluateTransfer, transferAsDeposit);
+            thsub.actual_ = mmDBWrapper::getAmountForCategory(db_, thsub.categID_, thsub.subcategID_, false, yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::ignoreFutureTransactions_);
 			mmex::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
 			if (thsub.actual_ < 0) {
 				actExpenses += thsub.actual_;

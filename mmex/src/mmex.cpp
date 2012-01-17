@@ -388,6 +388,10 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
 	EVT_MENU(MENU_VIEW_STOCKACCOUNTS, mmGUIFrame::OnViewStockAccounts)
     EVT_MENU(MENU_CATEGORY_RELOCATION, mmGUIFrame::OnCategoryRelocation)
     EVT_MENU(MENU_PAYEE_RELOCATION, mmGUIFrame::OnPayeeRelocation)
+    
+    // Added for easier ability to test new feature.
+    // May be taken out in future after being added to Options Dialog.
+    EVT_MENU(MENU_IGNORE_FUTURE_TRANSACTIONS, mmGUIFrame::OnIgnoreFutureTransactions)
 
     EVT_MENU(MENU_ONLINE_UPD_CURRENCY_RATE, mmGUIFrame::OnOnlineUpdateCurRate)
 	EVT_UPDATE_UI(MENU_VIEW_TOOLBAR, mmGUIFrame::OnViewToolbarUpdateUI)
@@ -2828,6 +2832,8 @@ void mmGUIFrame::createMenu()
 		_("Budget &Category Summary - with Categories"), _("Include the categories in the Budget Category Summary"), wxITEM_CHECK);
     wxMenuItem* menuItemBudgetTransferTotal = new wxMenuItem(menuView, MENU_VIEW_BUDGET_TRANSFER_TOTAL,
 		_("Budget &Totals - with Transfers"), _("Include the transfer transactions in the Budget Totals"), wxITEM_CHECK);
+    wxMenuItem* menuItemIgnoreFutureTransactions = new wxMenuItem(menuView, MENU_IGNORE_FUTURE_TRANSACTIONS,
+		_("Ignore Future Transactions"), _("Ignore Future transactions"), wxITEM_CHECK);
 
     //Add the menu items to the menu bar
 	menuView->Append(menuItemToolbar);
@@ -2850,6 +2856,8 @@ void mmGUIFrame::createMenu()
     menuView->Append(menuItemBudgetSetupWithoutSummary);
     menuView->Append(menuItemBudgetCategorySummary);
     menuView->Append(menuItemBudgetTransferTotal);
+    menuView->AppendSeparator();
+    menuView->Append(menuItemIgnoreFutureTransactions);
 
 	wxMenu *menuAccounts = new wxMenu;
 
@@ -4359,6 +4367,7 @@ void mmGUIFrame::OnViewTermAccounts(wxCommandEvent &event)
     {
         refreshRequested_ = true;
         createHomePage();
+        updateNavTreeControl(menuBar_->IsChecked(MENU_VIEW_TERMACCOUNTS));
     }
 }
 //----------------------------------------------------------------------------
@@ -4371,6 +4380,18 @@ void mmGUIFrame::OnViewStockAccounts(wxCommandEvent &event)
     {
         refreshRequested_ = true;
         createHomePage();
+    }
+}
+
+void mmGUIFrame::OnIgnoreFutureTransactions(wxCommandEvent &event)
+{
+    m_mgr.GetPane(wxT("Ignore Future Transactions")).Show(event.IsChecked());
+    mmIniOptions::ignoreFutureTransactions_ = !mmIniOptions::ignoreFutureTransactions_;
+    if (!refreshRequested_)
+    {
+        refreshRequested_ = true;
+        createHomePage();
+        updateNavTreeControl(menuBar_->IsChecked(MENU_VIEW_TERMACCOUNTS));
     }
 }
 

@@ -28,181 +28,179 @@
 
 
 mmReportCategoryExpenses::mmReportCategoryExpenses(
-        mmCoreDB* core, 
-        bool ignoreDate, 
-        wxDateTime dtBegin, 
-        wxDateTime dtEnd,
-        const wxString& title,
-        int type
+    mmCoreDB* core, 
+    bool ignoreDate, 
+    wxDateTime dtBegin, 
+    wxDateTime dtEnd,
+    const wxString& title,
+    int type
 ) : 
-        core_(core),
-        db_(core_->db_.get()),
-        dtBegin_(dtBegin),
-        dtEnd_(dtEnd),
-        ignoreDate_(ignoreDate),
-        title_(title),
-        type_(type)
+    core_(core),
+    db_(core_->db_.get()),
+    dtBegin_(dtBegin),
+    dtEnd_(dtEnd),
+    ignoreDate_(ignoreDate),
+    title_(title),
+    type_(type)
 {
 }
 
 wxString mmReportCategoryExpenses::getHTMLText()
 {
-        mmHTMLBuilder hb;
-        hb.init();
-        hb.addHeader(3, title_);
+    mmHTMLBuilder hb;
+    hb.init();
+    hb.addHeader(3, title_);
 
-        wxDateTime now = wxDateTime::Now();
-        wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
-        hb.addHeader(7, dt);
-        hb.addLineBreak();
-        hb.addLineBreak();
+    wxDateTime now = wxDateTime::Now();
+    wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
+    hb.addHeader(7, dt);
+    hb.addLineBreak();
+    hb.addLineBreak();
 
-        wxDateTime tBegin = dtBegin_;
-        if (!ignoreDate_)
+    wxDateTime tBegin = dtBegin_;
+    if (!ignoreDate_)
+    {
+        wxString dtRange = _("From: ") 
+            + mmGetNiceDateSimpleString(tBegin.Add(wxDateSpan::Day())) 
+            + _(" To: ") 
+            + mmGetNiceDateSimpleString(dtEnd_);
+        hb.addHeader(7, dtRange);
+        hb.addLineBreak();
+    }
+
+    hb.startCenter();
+
+    // Add the graph
+    mmGraphPie gg;
+    hb.addImage(gg.getOutputFileName());
+
+    hb.startTable(wxT("50%"));
+    hb.startTableRow();
+    hb.addTableHeaderCell(_("Category"));
+    hb.addTableHeaderCell(_("Amount"));
+    hb.endTableRow();
+
+    core_->currencyList_.loadBaseCurrencySettings();
+
+    std::vector<ValuePair> valueList;
+        
+    static const char sql[] =
+    "select CATEGID, CATEGNAME "
+    "from CATEGORY_V1 "
+    "order by CATEGNAME";
+
+    static const char sql_sub[] = 
+    "select SUBCATEGID, SUBCATEGNAME "
+    "from SUBCATEGORY_V1 "
+    "where CATEGID = ?"
+    "order by SUBCATEGNAME";
+
+    wxSQLite3Statement st = db_->PrepareStatement(sql_sub);
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+
+    double grandtotal = 0.0;
+    bool grandtotalseparator = true;
+    while (q1.NextRow())
+    {
+        int categs = 0;
+        //grandtotalseparator = true;
+        double categtotal = 0.0;
+        int categID          = q1.GetInt(wxT("CATEGID"));
+        wxString categString = q1.GetString(wxT("CATEGNAME"));
+        wxString balance;
+        double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignoreDate_, dtBegin_, dtEnd_, mmIniOptions::ignoreFutureTransactions_);
+        mmex::formatDoubleToCurrency(amt, balance);
+
+        if ((type_ == 0) || ((type_ == 1 && amt > 0.0) ||
+            (type_ == 2 && amt < 0.0)))
         {
-            wxString dtRange = _("From: ") 
-                + mmGetNiceDateSimpleString(tBegin.Add(wxDateSpan::Day())) 
-                + _(" To: ") 
-                + mmGetNiceDateSimpleString(dtEnd_);
-            hb.addHeader(7, dtRange);
-            hb.addLineBreak();
+            if (amt != 0.0)
+            {
+                ValuePair vp;
+                vp.label = categString;
+                vp.amount = amt;
+                grandtotal += amt;
+                categtotal += amt;
+                categs++;
+                valueList.push_back(vp);
+
+                hb.startTableRow();
+                hb.addTableCell(categString, false, true);
+                hb.addTableCell(balance, true, false, true);
+                hb.endTableRow();
+            }
         }
 
-        hb.startCenter();
-
-        // Add the graph
-        mmGraphPie gg;
-        hb.addImage(gg.getOutputFileName());
-
-        hb.startTable(wxT("50%"));
-        hb.startTableRow();
-        hb.addTableHeaderCell(_("Category"));
-        hb.addTableHeaderCell(_("Amount"));
-        hb.endTableRow();
-
-        core_->currencyList_.loadBaseCurrencySettings();
-
-        std::vector<ValuePair> valueList;
-        
-        static const char sql[] =
-        "select CATEGID, CATEGNAME "
-        "from CATEGORY_V1 "
-        "order by CATEGNAME";
-
-        static const char sql_sub[] = 
-        "select SUBCATEGID, SUBCATEGNAME "
-        "from SUBCATEGORY_V1 "
-        "where CATEGID = ?"
-        "order by SUBCATEGNAME";
-
-        wxSQLite3Statement st = db_->PrepareStatement(sql_sub);
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-
-        double grandtotal = 0.0;
-        bool grandtotalseparator = true;
-        while (q1.NextRow())
+        st.Bind(1, categID);
+        wxSQLite3ResultSet q2 = st.ExecuteQuery(); 
+           
+        while(q2.NextRow())
         {
-            int categs = 0;
-            //grandtotalseparator = true;
-            double categtotal = 0.0;
-            int categID          = q1.GetInt(wxT("CATEGID"));
-            wxString categString = q1.GetString(wxT("CATEGNAME"));
-            wxString balance;
-            double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignoreDate_, dtBegin_, dtEnd_);
+            int subcategID = q2.GetInt(wxT("SUBCATEGID"));
+            wxString subcategString = q2.GetString(wxT("SUBCATEGNAME"));
+
+            amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, ignoreDate_,  dtBegin_, dtEnd_, mmIniOptions::ignoreFutureTransactions_);
             mmex::formatDoubleToCurrency(amt, balance);
 
-            if ((type_ == 0) || ((type_ == 1 && amt > 0.0) ||
-                (type_ == 2 && amt < 0.0)))
+            // if we want only income
+            if (type_ == 1 && amt < 0.0)
+                continue;
+
+            // if we want only expenses
+            if (type_ == 2 && amt > 0.0)
+                continue;
+
+            if (amt != 0.0)
             {
-                if (amt != 0.0)
-                {
-                    ValuePair vp;
-                    vp.label = categString;
-                    vp.amount = amt;
-                    grandtotal += amt;
-                    categtotal += amt;
-                    categs++;
-                    valueList.push_back(vp);
+                ValuePair vp;
+                vp.label = categString + wxT(" : ") + subcategString;
+                vp.amount = amt;
+                grandtotal += amt;
+                categtotal += amt;
+                categs++;
+                valueList.push_back(vp);
 
-                    hb.startTableRow();
-                    hb.addTableCell(categString, false, true);
-                    hb.addTableCell(balance, true, false, true);
-                    hb.endTableRow();
-                }
+                hb.startTableRow();
+                hb.addTableCell(categString + wxT(" : ") + subcategString, false, true);
+                hb.addTableCell(balance, true, false, true);
+                hb.endTableRow();
             }
-
-            st.Bind(1, categID);
-            wxSQLite3ResultSet q2 = st.ExecuteQuery(); 
-           
-            while(q2.NextRow())
-            {
-                int subcategID = q2.GetInt(wxT("SUBCATEGID"));
-                wxString subcategString = q2.GetString(wxT("SUBCATEGNAME"));
-
-                amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, 
-                    ignoreDate_,  dtBegin_, dtEnd_);
-                mmex::formatDoubleToCurrency(amt, balance);
-
-                // if we want only income
-                if (type_ == 1 && amt < 0.0)
-                    continue;
-
-                // if we want only expenses
-                if (type_ == 2 && amt > 0.0)
-                    continue;
-
-                if (amt != 0.0)
-                {
-                    ValuePair vp;
-                    vp.label = categString + wxT(" : ") + subcategString;
-                    vp.amount = amt;
-                    grandtotal += amt;
-                    categtotal += amt;
-                    categs++;
-                    valueList.push_back(vp);
-
-                    hb.startTableRow();
-                    hb.addTableCell(categString + wxT(" : ") + subcategString, false, true);
-                    hb.addTableCell(balance, true, false, true);
-                    hb.endTableRow();
-                }
-            }
-            if (categs>1)
-            {
-                wxString categtotalStr;
-                mmex::formatDoubleToCurrency(categtotal, categtotalStr);hb.startTableRow();
-                hb.addTableCell(_("Category Total: "),false, true, true, wxT("GRAY"));
-                hb.addTableCell(categtotalStr, true, false, true, wxT("GRAY"));
-            }
-            if (categs>0)
-            {
-            grandtotalseparator = false;
-            hb.addRowSeparator(2);
-            }
-
-            st.Reset();
         }
-        
-        q1.Finalize();
-        st.Finalize();
-
-        if (grandtotalseparator)
+        if (categs>1)
+        {
+            wxString categtotalStr;
+            mmex::formatDoubleToCurrency(categtotal, categtotalStr);hb.startTableRow();
+            hb.addTableCell(_("Category Total: "),false, true, true, wxT("GRAY"));
+            hb.addTableCell(categtotalStr, true, false, true, wxT("GRAY"));
+        }
+        if (categs>0)
+        {
+        grandtotalseparator = false;
         hb.addRowSeparator(2);
-        wxString grandtotalStr;
-        mmex::formatDoubleToCurrency(grandtotal, grandtotalStr);
-        hb.startTableRow();
-        hb.addTableCell(_("Grand Total: "),false, true, true);
-        hb.addTableCell(grandtotalStr, true, false, true);
-        hb.endTableRow();
+        }
+
+        st.Reset();
+    }
         
-        hb.endTable();
-        hb.endCenter();
+    q1.Finalize();
+    st.Finalize();
 
-        hb.end();
+    if (grandtotalseparator)
+    hb.addRowSeparator(2);
+    wxString grandtotalStr;
+    mmex::formatDoubleToCurrency(grandtotal, grandtotalStr);
+    hb.startTableRow();
+    hb.addTableCell(_("Grand Total: "),false, true, true);
+    hb.addTableCell(grandtotalStr, true, false, true);
+    hb.endTableRow();
+        
+    hb.endTable();
+    hb.endCenter();
 
-        gg.init(valueList);
-        gg.Generate(title_);
+    hb.end();
 
-        return hb.getHTMLText();
+    gg.init(valueList);
+    gg.Generate(title_);
 
+    return hb.getHTMLText();
 }

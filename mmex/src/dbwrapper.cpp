@@ -2009,7 +2009,8 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
                                          const wxDateTime& dtBegin,
                                          const wxDateTime& dtEnd,
                                          bool evaluateTransfer,
-                                         bool asDeposit)
+                                         bool asDeposit,
+                                         bool ignoreFuture)
 {
     static const std::string sql = 
     "select ca.TRANSCODE, "
@@ -2049,6 +2050,11 @@ double mmDBWrapper::getAmountForCategory(wxSQLite3Database* db,
         if (transStatus == wxT("V"))
            continue; // skip
 
+        if (ignoreFuture)
+        {
+            if (dtdt.IsLaterThan(wxDateTime::Now()))
+                continue; //skip future dated transactions
+        }
         if (!ignoreDate)
         {
             if (!dtdt.IsBetween(dtBegin, dtEnd))
