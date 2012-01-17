@@ -34,7 +34,6 @@
 class mmData;
 class wxDatePickerCtrl;
 class mmCategory;
-class mmAdvancedPopup;
 
 class mmBDDialog : public wxDialog
 {    
@@ -92,10 +91,12 @@ private:
     wxButton* bCategory_;
     wxButton* bPayee_;
     wxButton* bTo_;
-    mmAdvancedPopup* m_simplePopup_;
     wxCheckBox* cSplit_;
     wxCheckBox* cAdvanced_;
     bool payeeUnknown_;
+
+    wxString categoryName_;
+    wxString subCategoryName_;
 
     wxChoice* choiceStatus_;
     wxChoice* choiceTrans_;

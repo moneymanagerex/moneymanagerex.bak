@@ -34,7 +34,6 @@
 class mmData;
 class wxDatePickerCtrl;
 class mmCategory;
-class mmAdvancedPopup;
 
 class mmTransDialog : public wxDialog
 {    
