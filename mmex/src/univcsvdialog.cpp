@@ -134,6 +134,13 @@ void mmUnivCSVImportDialog::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
+    //CSV fields candicate
+    csvFiledCandicate_ = new wxListBox(itemDialog1, ID_LISTBOX_CANDICATE, 
+        wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE|wxLB_NEEDED_SB);
+    itemBoxSizer3->Add(csvFiledCandicate_, 1, wxGROW|wxALL, 1);
+    for(std::map<int, wxString>::const_iterator it = CSVFieldName_.begin(); it != CSVFieldName_.end(); it ++)
+        csvFiledCandicate_->Append(it->second, new mmListBoxItem(it->first, it->second));
+
      //Add Remove Area
     wxPanel* itemPanel_AddRemove = new wxPanel(itemDialog1, ID_PANEL10, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
@@ -143,14 +150,14 @@ void mmUnivCSVImportDialog::CreateControls()
     itemPanel_AddRemove->SetSizer(itemBoxSizer_AddRemove);
 
     //Add button
-    wxButton* itemButton_Add = new wxButton(itemPanel_AddRemove, wxID_ADD, _("Add"), 
+    m_button_add_= new wxButton(itemPanel_AddRemove, wxID_ADD, _("Add"), 
         wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer_AddRemove->Add(itemButton_Add, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer_AddRemove->Add(m_button_add_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     //Remove button
-    wxButton* itemButton_Remove = new wxButton(itemPanel_AddRemove, wxID_REMOVE, _("Remove"), 
+    m_button_remove_ = new wxButton(itemPanel_AddRemove, wxID_REMOVE, _("Remove"), 
         wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer_AddRemove->Add(itemButton_Remove, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer_AddRemove->Add(m_button_remove_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxPanel* itemPanel5 = new wxPanel(itemDialog1, ID_PANEL10, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
@@ -219,18 +226,10 @@ bool mmUnivCSVImportDialog::ShowToolTips()
     return TRUE;
 }
 
-/*!
- * Get bitmap resources
- */
-
 wxBitmap mmUnivCSVImportDialog::GetBitmapResource(const wxString& /*name*/)
 {
     return wxNullBitmap;
 }
-
-/*!
- * Get icon resources
- */
 
 wxIcon mmUnivCSVImportDialog::GetIconResource(const wxString& /*name*/)
 {
@@ -240,26 +239,22 @@ wxIcon mmUnivCSVImportDialog::GetIconResource(const wxString& /*name*/)
 //Selection dialog for fields to be added to listbox
 void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& /*event*/)
 {
-    wxArrayString csvArray;
-    wxArrayInt csvArrayLocation;
-    for(int i = 0; i < UNIV_CSV_LAST; i++)
+    int index = csvFiledCandicate_->GetSelection();
+    if (index != wxNOT_FOUND)
     {
-        //check if the field is already selected unless it is "Don't Care"
-        //multiple fields of "Don't Care" may be necessary
-        std::vector<int>::const_iterator loc = find(csvFieldOrder_.begin(), csvFieldOrder_.end(), i);
-        if(loc == csvFieldOrder_.end() || i == UNIV_CSV_DONTCARE)
+        mmListBoxItem* item = (mmListBoxItem*)csvFiledCandicate_->GetClientObject(index);
+
+        csvListBox_->Append(item->getName(), new mmListBoxItem(item->getIndex(), item->getName()));
+        csvFieldOrder_.push_back(item->getIndex());
+
+        if (item->getIndex() != UNIV_CSV_DONTCARE) 
         {
-            csvArray.Add((getCSVFieldName(i)));
-            csvArrayLocation.Add((i));
+            csvFiledCandicate_->Delete(index);
+            if (index < (int)csvFiledCandicate_->GetCount())
+                csvFiledCandicate_->SetSelection(index, true);
+            else
+                csvFiledCandicate_->SetSelection(csvFiledCandicate_->GetCount() - 1, true);
         }
-    }
-
-    int index = wxGetSingleChoiceIndex(_("Add CSV field"), _("CSV Field"), csvArray);
-
-    if (index != -1)
-    {
-        csvListBox_->Append(getCSVFieldName(csvArrayLocation[index]));
-        csvFieldOrder_.push_back(csvArrayLocation[index]);
     }
 }
 
@@ -303,9 +298,18 @@ void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
          long num = 0;
          if (str.ToLong(&num))
          {
-            csvListBox_->Append(getCSVFieldName(num));
-            csvFieldOrder_.push_back(num);
+             wxString item_name = getCSVFieldName(num);
+             csvListBox_->Append(item_name, new mmListBoxItem(num, item_name));
+             csvFieldOrder_.push_back(num);
          }
+      }
+      // update csvFiledCandicate_
+      csvFiledCandicate_->Clear();
+      for (std::map<int, wxString>::const_iterator it = CSVFieldName_.begin(); it != CSVFieldName_.end(); ++ it)
+      {
+          std::vector<int>::const_iterator loc = find(csvFieldOrder_.begin(), csvFieldOrder_.end(), it->first);
+          if (loc == csvFieldOrder_.end() || it->first == UNIV_CSV_DONTCARE)
+              csvFiledCandicate_->Append(it->second, new mmListBoxItem(it->first, it->second));
       }
 
       tFile.Write();
@@ -567,14 +571,30 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
 //Removes an item from the field list box
 void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& /*event*/)
 {
-    int selIndex = csvListBox_->GetSelection();
-    if (selIndex != wxNOT_FOUND)
+    int index = csvListBox_->GetSelection();
+    if (index != wxNOT_FOUND)
     {
-        csvListBox_->Delete(selIndex);
-        csvFieldOrder_.erase(csvFieldOrder_.begin() + selIndex);
+        mmListBoxItem *item = (mmListBoxItem*)csvListBox_->GetClientObject(index);
+        int item_index = item->getIndex();
+        wxString item_name = item->getName();
 
-        if (selIndex < (int)csvListBox_->GetCount())
-            csvListBox_->SetSelection(selIndex, true);
+        if (item_index != UNIV_CSV_DONTCARE)
+        {
+            int pos = 0;
+            for (pos = 0; pos < (int)csvFiledCandicate_->GetCount() - 1; pos ++)
+            {
+                mmListBoxItem *item = (mmListBoxItem*)csvFiledCandicate_->GetClientObject(pos);
+                if (item_index < item->getIndex())
+                    break;
+            }
+            csvFiledCandicate_->Insert(item_name, pos, new mmListBoxItem(item_index, item_name));
+        }
+
+        csvListBox_->Delete(index);
+        csvFieldOrder_.erase(csvFieldOrder_.begin() + index);
+
+        if (index < (int)csvListBox_->GetCount())
+            csvListBox_->SetSelection(index, true);
         else
             csvListBox_->SetSelection(csvListBox_->GetCount() - 1, true);
     }
@@ -582,39 +602,35 @@ void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& /*event*/)
 
 void mmUnivCSVImportDialog::OnMoveUp(wxCommandEvent& /*event*/)
 {
-    int selIndex = csvListBox_->GetSelection();
-    if (selIndex != wxNOT_FOUND && selIndex != 0)
+    int index = csvListBox_->GetSelection();
+    if (index != wxNOT_FOUND && index != 0)
     {
-        //replace the source with destination
-        csvListBox_->Delete(selIndex);
-        csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex - 1)), selIndex);
+        mmListBoxItem* item = (mmListBoxItem*)csvListBox_->GetClientObject(index);
+        int item_index = item->getIndex();
+        wxString item_name = item->getName();
 
-        //replace the destination with source
-        csvListBox_->Delete(selIndex - 1);
-        csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex)), selIndex - 1); 
+        csvListBox_->Delete(index);
+        csvListBox_->Insert(item_name, index - 1, new mmListBoxItem(item_index, item_name));
 
-        //reselect the source
-        csvListBox_->SetSelection(selIndex - 1, true);
-        std::swap(csvFieldOrder_[selIndex - 1], csvFieldOrder_[selIndex]);
+        csvListBox_->SetSelection(index - 1, true);
+        std::swap(csvFieldOrder_[index - 1], csvFieldOrder_[index]);
     }
 }
 
 void mmUnivCSVImportDialog::OnMoveDown(wxCommandEvent& /*event*/)
 {
-    int selIndex = csvListBox_->GetSelection();
-    if (selIndex != wxNOT_FOUND && selIndex != static_cast<int>(csvFieldOrder_.size()) - 1)
+    int index = csvListBox_->GetSelection();
+    if (index != wxNOT_FOUND && index != (int)csvListBox_->GetCount() - 1)
     {
-        //replace the source with destination
-        csvListBox_->Delete(selIndex);
-        csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex + 1)), selIndex); 
+        mmListBoxItem* item = (mmListBoxItem*)csvListBox_->GetClientObject(index);
+        int item_index = item->getIndex();
+        wxString item_name = item->getName();
 
-        //replace the destination with source
-        csvListBox_->Delete(selIndex + 1);
-        csvListBox_->Insert(getCSVFieldName(csvFieldOrder_.at(selIndex)), selIndex + 1); 
+        csvListBox_->Delete(index);
+        csvListBox_->Insert(item_name, index + 1, new mmListBoxItem(item_index, item_name)); 
 
-        //reselect the source
-        csvListBox_->SetSelection(selIndex + 1, true);
-        std::swap(csvFieldOrder_[selIndex + 1], csvFieldOrder_[selIndex]);
+        csvListBox_->SetSelection(index + 1, true);
+        std::swap(csvFieldOrder_[index + 1], csvFieldOrder_[index]);
     }
 }
 

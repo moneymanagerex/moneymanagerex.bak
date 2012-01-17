@@ -39,6 +39,7 @@
 //#define ID_UNIVCSVBUTTON_SAVE 10096
 //#define ID_UNIVCSVBUTTON_MOVEUP 10097
 //#define ID_UNIVCSVBUTTON_MOVEDOWN 10098
+#define ID_LISTBOX_CANDICATE 10099
 ////@end control identifiers
 
 /*!
@@ -51,6 +52,21 @@
 #ifndef wxFIXED_MINSIZE
 #define wxFIXED_MINSIZE 0
 #endif
+
+class mmListBoxItem: public wxClientData
+{
+public:
+    mmListBoxItem(int index, const wxString& name) 
+        : index_(index), name_(name)
+    {}
+    
+    int getIndex() const { return index_; }
+    wxString getName() const { return name_; }
+
+private:
+    int index_;
+    wxString name_;
+};
 
 class mmUnivCSVImportDialog: public wxDialog
 {    
@@ -97,7 +113,11 @@ private:
     mmCoreDB* core_;
     wxSQLite3Database* db_;
     std::vector<int> csvFieldOrder_;
+    wxListBox* csvFiledCandicate_;
     wxListBox* csvListBox_;
+
+    wxButton* m_button_add_;
+    wxButton* m_button_remove_;
 
     std::map<int, wxString> CSVFieldName_;
 
