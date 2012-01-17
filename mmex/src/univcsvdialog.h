@@ -40,6 +40,7 @@
 //#define ID_UNIVCSVBUTTON_MOVEUP 10097
 //#define ID_UNIVCSVBUTTON_MOVEDOWN 10098
 #define ID_LISTBOX_CANDICATE 10099
+#define wxID_SEARCH 10100
 ////@end control identifiers
 
 /*!
@@ -103,7 +104,10 @@ public:
     void OnSave(wxCommandEvent& event);
 	void OnMoveUp(wxCommandEvent& event);
 	void OnMoveDown(wxCommandEvent& event);
+    void OnSearch(wxCommandEvent& event);
 	void OnListBox(wxCommandEvent& event);
+
+    void update_preview();
 
     wxBitmap GetBitmapResource(const wxString& name);
     wxIcon GetIconResource(const wxString& name);
@@ -118,6 +122,8 @@ private:
 
     wxButton* m_button_add_;
     wxButton* m_button_remove_;
+    wxListCtrl* m_list_ctrl_; //preview
+    wxTextCtrl* m_text_ctrl_;
 
     std::map<int, wxString> CSVFieldName_;
 

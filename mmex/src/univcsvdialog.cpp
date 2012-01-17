@@ -22,6 +22,7 @@
 #include "defs.h"
 #include "paths.h"
 #include "platfdep.h"
+#include <wx/statline.h>
 
 IMPLEMENT_DYNAMIC_CLASS(mmUnivCSVImportDialog, wxDialog)
 
@@ -34,6 +35,7 @@ BEGIN_EVENT_TABLE(mmUnivCSVImportDialog, wxDialog)
     EVT_BUTTON(wxID_SAVEAS, mmUnivCSVImportDialog::OnSave)
     EVT_BUTTON(wxID_UP, mmUnivCSVImportDialog::OnMoveUp)
     EVT_BUTTON(wxID_DOWN, mmUnivCSVImportDialog::OnMoveDown)
+    EVT_BUTTON(wxID_SEARCH, mmUnivCSVImportDialog::OnSearch)
     EVT_LISTBOX(ID_LISTBOX, mmUnivCSVImportDialog::OnListBox)
 END_EVENT_TABLE()
 
@@ -215,6 +217,31 @@ void mmUnivCSVImportDialog::CreateControls()
     wxButton* itemCancelButton = new wxButton(itemPanel5, wxID_CANCEL, _("&Cancel"));
     itemBoxSizer66->Add(itemCancelButton);
     itemCancelButton->SetFocus();
+
+    wxStaticLine*  m_staticline1 = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+    itemBoxSizer2->Add(m_staticline1, 0, wxEXPAND | wxALL, 5 );
+    //file to import, file path and search button
+    wxPanel* itemPanel6 = new wxPanel(itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    itemBoxSizer2->Add(itemPanel6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
+
+    wxBoxSizer* itemBoxSizer7 = new wxBoxSizer(wxHORIZONTAL);
+    itemPanel6->SetSizer(itemBoxSizer7);
+
+    wxStaticText* itemStaticText5 = new wxStaticText(itemPanel6, wxID_ANY, _("File to import"), wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer7->Add(itemStaticText5);
+
+    m_text_ctrl_ = new wxTextCtrl(itemPanel6, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(150, -1), 0);
+    itemBoxSizer7->Add(m_text_ctrl_, 0, wxALL|wxEXPAND, 5);
+
+    wxButton* button_search = new wxButton(itemPanel6, wxID_SEARCH, _("&Search"));
+    itemBoxSizer7->Add(button_search);
+
+    // Preview 
+    wxStaticText* itemStaticText4 = new wxStaticText(itemDialog1, wxID_STATIC, _("Preview"), wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer2->Add(itemStaticText4, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
+
+    m_list_ctrl_ = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 100), wxLC_ICON|wxLC_REPORT);
+    itemBoxSizer2->Add(m_list_ctrl_, 0, wxALL|wxEXPAND, 5);
 }
 
 /*!
@@ -255,6 +282,42 @@ void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& /*event*/)
             else
                 csvFiledCandicate_->SetSelection(csvFiledCandicate_->GetCount() - 1, true);
         }
+
+        this->update_preview();
+    }
+}
+
+//Removes an item from the field list box
+void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& /*event*/)
+{
+    int index = csvListBox_->GetSelection();
+    if (index != wxNOT_FOUND)
+    {
+        mmListBoxItem *item = (mmListBoxItem*)csvListBox_->GetClientObject(index);
+        int item_index = item->getIndex();
+        wxString item_name = item->getName();
+
+        if (item_index != UNIV_CSV_DONTCARE)
+        {
+            int pos = 0;
+            for (pos = 0; pos < (int)csvFiledCandicate_->GetCount() - 1; pos ++)
+            {
+                mmListBoxItem *item = (mmListBoxItem*)csvFiledCandicate_->GetClientObject(pos);
+                if (item_index < item->getIndex())
+                    break;
+            }
+            csvFiledCandicate_->Insert(item_name, pos, new mmListBoxItem(item_index, item_name));
+        }
+
+        csvListBox_->Delete(index);
+        csvFieldOrder_.erase(csvFieldOrder_.begin() + index);
+
+        if (index < (int)csvListBox_->GetCount())
+            csvListBox_->SetSelection(index, true);
+        else
+            csvListBox_->SetSelection(csvListBox_->GetCount() - 1, true);
+
+        this->update_preview();
     }
 }
 
@@ -314,6 +377,8 @@ void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
 
       tFile.Write();
       tFile.Close();
+
+      this->update_preview();
    }
 }
 
@@ -377,8 +442,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
         wxASSERT(pCurrencyPtr);
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
              
-        wxString fileName = wxFileSelector(_("Choose MM.NET CSV data file to import"), 
-                wxEmptyString, wxEmptyString, wxEmptyString, wxT("*.csv"), wxFD_FILE_MUST_EXIST);
+        wxString fileName = m_text_ctrl_->GetValue();
         if (!fileName.IsEmpty())
         {
             wxFileInputStream input(fileName);
@@ -568,35 +632,52 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
     Close();
 }
 
-//Removes an item from the field list box
-void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& /*event*/)
+void mmUnivCSVImportDialog::update_preview()
 {
-    int index = csvListBox_->GetSelection();
-    if (index != wxNOT_FOUND)
+    this->m_list_ctrl_->ClearAll();
+    long index = 0;
+    for (std::vector<int>::const_iterator it = csvFieldOrder_.begin(); it != csvFieldOrder_.end(); ++ it)
     {
-        mmListBoxItem *item = (mmListBoxItem*)csvListBox_->GetClientObject(index);
-        int item_index = item->getIndex();
-        wxString item_name = item->getName();
+        this->m_list_ctrl_->InsertColumn(index, this->getCSVFieldName(*it));
+        ++ index;
+    }
 
-        if (item_index != UNIV_CSV_DONTCARE)
+    wxString fileName = m_text_ctrl_->GetValue();
+    if (!fileName.IsEmpty())
+    {
+        wxTextFile tFile(fileName);
+        if (!tFile.Open())
         {
-            int pos = 0;
-            for (pos = 0; pos < (int)csvFiledCandicate_->GetCount() - 1; pos ++)
-            {
-                mmListBoxItem *item = (mmListBoxItem*)csvFiledCandicate_->GetClientObject(pos);
-                if (item_index < item->getIndex())
-                    break;
-            }
-            csvFiledCandicate_->Insert(item_name, pos, new mmListBoxItem(item_index, item_name));
+             wxMessageBox(_("Unable to open file."), _("Universal CSV Import"), wxICON_WARNING);
+             return;
         }
 
-        csvListBox_->Delete(index);
-        csvFieldOrder_.erase(csvFieldOrder_.begin() + index);
+        wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
+        wxString line;
+        size_t count = 0;
+        int row = 0;
+        for (line = tFile.GetFirstLine(); !tFile.Eof(); line = tFile.GetNextLine())
+        {
+            wxStringTokenizer tkz(line, delimit, wxTOKEN_RET_EMPTY_ALL);
 
-        if (index < (int)csvListBox_->GetCount())
-            csvListBox_->SetSelection(index, true);
-        else
-            csvListBox_->SetSelection(csvListBox_->GetCount() - 1, true);
+            wxString buf;
+
+            long itemIndex = m_list_ctrl_->InsertItem(row, buf, 0);
+            int col = 0;
+            while (tkz.HasMoreTokens())
+            {
+                wxString token = tkz.GetNextToken();
+
+                if (col >= m_list_ctrl_->GetColumnCount())
+                    break;
+                else
+                    m_list_ctrl_->SetItem(itemIndex, col, token);
+                ++ col;
+            }
+
+            if (++ count >= 10) break;
+            ++ row;
+        }
     }
 }
 
@@ -614,6 +695,8 @@ void mmUnivCSVImportDialog::OnMoveUp(wxCommandEvent& /*event*/)
 
         csvListBox_->SetSelection(index - 1, true);
         std::swap(csvFieldOrder_[index - 1], csvFieldOrder_[index]);
+
+        this->update_preview();
     }
 }
 
@@ -631,6 +714,19 @@ void mmUnivCSVImportDialog::OnMoveDown(wxCommandEvent& /*event*/)
 
         csvListBox_->SetSelection(index + 1, true);
         std::swap(csvFieldOrder_[index + 1], csvFieldOrder_[index]);
+
+        this->update_preview();
+    }
+}
+
+void mmUnivCSVImportDialog::OnSearch(wxCommandEvent& /*event*/)
+{
+    wxString fileName = wxFileSelector(_("Choose CSV data file to import"), 
+            wxEmptyString, wxEmptyString, wxEmptyString, wxT("*.csv"), wxFD_FILE_MUST_EXIST);
+    if (!fileName.IsEmpty())
+    {
+        m_text_ctrl_->SetValue(fileName);
+        this->update_preview();
     }
 }
 
