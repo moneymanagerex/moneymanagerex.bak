@@ -573,7 +573,7 @@ void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& /*event*/)
         csvListBox_->Delete(selIndex);
         csvFieldOrder_.erase(csvFieldOrder_.begin() + selIndex);
 
-        if (selIndex < csvListBox_->GetCount())
+        if (selIndex < (int)csvListBox_->GetCount())
             csvListBox_->SetSelection(selIndex, true);
         else
             csvListBox_->SetSelection(csvListBox_->GetCount() - 1, true);
