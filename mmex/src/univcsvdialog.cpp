@@ -220,22 +220,40 @@ void mmUnivCSVImportDialog::CreateControls()
 
     wxStaticLine*  m_staticline1 = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
     itemBoxSizer2->Add(m_staticline1, 0, wxEXPAND | wxALL, 5 );
+
     //file to import, file path and search button
     wxPanel* itemPanel6 = new wxPanel(itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    itemBoxSizer2->Add(itemPanel6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
+    itemBoxSizer2->Add(itemPanel6, 0, wxEXPAND|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer7 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel6->SetSizer(itemBoxSizer7);
 
-    wxStaticText* itemStaticText5 = new wxStaticText(itemPanel6, wxID_ANY, _("File to import"), wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer7->Add(itemStaticText5);
+    wxStaticText* itemStaticText5 = new wxStaticText(itemPanel6, wxID_ANY, _("File to import:"), wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer7->Add(itemStaticText5, 0, wxALIGN_LEFT, 5);
 
-    m_text_ctrl_ = new wxTextCtrl(itemPanel6, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(150, -1), 0);
+    m_text_ctrl_ = new wxTextCtrl(itemPanel6, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(300, -1), 0);
     itemBoxSizer7->Add(m_text_ctrl_, 0, wxALL|wxEXPAND, 5);
 
     wxButton* button_search = new wxButton(itemPanel6, wxID_SEARCH, _("&Search"));
-    itemBoxSizer7->Add(button_search);
+    itemBoxSizer7->Add(button_search, 0, wxALIGN_RIGHT, 5);
 
+    // account to import
+    wxPanel* itemPanel7 = new wxPanel(itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    itemBoxSizer2->Add(itemPanel7, 0, wxEXPAND|wxALL, 1);
+
+    wxBoxSizer* itemBoxSizer8 = new wxBoxSizer(wxHORIZONTAL);
+    itemPanel7->SetSizer(itemBoxSizer8);
+
+    wxStaticText* itemStaticText6 = new wxStaticText(itemPanel7, wxID_ANY, _("Account to import:"), wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer8->Add(itemStaticText6, 0, wxALIGN_LEFT, 5);
+
+    wxArrayString as = mmDBWrapper::getAccountsName(db_);
+    m_choice_account_ = new wxChoice(itemPanel7, wxID_ANY, wxDefaultPosition, wxSize(100, -1), as);
+    m_choice_account_->SetSelection(0);
+    itemBoxSizer8->Add(m_choice_account_, 1, wxALL|wxEXPAND, 5);
+
+    wxStaticLine*  m_staticline2 = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+    itemBoxSizer2->Add(m_staticline2, 0, wxEXPAND | wxALL, 5 );
     // Preview 
     wxStaticText* itemStaticText4 = new wxStaticText(itemDialog1, wxID_STATIC, _("Preview"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer2->Add(itemStaticText4, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
@@ -427,23 +445,24 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
          return;
     }
 
-    wxArrayString as = mmDBWrapper::getAccountsName(db_);
-    int fromAccountID = -1;
 
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
-    
-    wxSingleChoiceDialog scd(0, _("Choose Account to import to:"), _("Universal CSV Import"), as);
-    if (scd.ShowModal() == wxID_OK)
-    {
-        wxString acctName = scd.GetStringSelection();
-        fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+    wxString acctName = m_choice_account_->GetStringSelection();
+    int fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
 
+    if (fromAccountID > 0)
+    {
+        
         boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
         wxASSERT(pCurrencyPtr);
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
              
         wxString fileName = m_text_ctrl_->GetValue();
-        if (!fileName.IsEmpty())
+        if (fileName.IsEmpty())
+        {
+            return;
+        }
+        else
         {
             wxFileInputStream input(fileName);
             wxTextInputStream text(input);
@@ -585,7 +604,6 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
 
             progressDlg.Update(100);       
 
-            //wxString msg = wxString::Format(_("Total Lines : %d \nTotal Imported : %d\n\nLog file written to : %s.\n\nImported transactions have been flagged so you can review them. "), countNumTotal, countImported, logFile.GetFullPath().c_str());
             wxString msg = wxString::Format(_("Total Lines : %d"), countNumTotal); 
             msg << wxT ("\n");
             msg << wxString::Format(_("Total Imported : %d"), countImported); 
@@ -594,7 +612,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
             msg << wxT ("\n\n");
 
             wxString confirmMsg = msg + _("Please confirm saving...");
-            if (!canceledbyuser && wxMessageBox(confirmMsg, _("Importing CSV MM.NET"), wxOK|wxCANCEL|wxICON_INFORMATION) == wxCANCEL)
+            if (!canceledbyuser && wxMessageBox(confirmMsg, _("Importing CSV"), wxOK|wxCANCEL|wxICON_INFORMATION) == wxCANCEL)
                 canceledbyuser = true;
 
             if (countImported > 0)
