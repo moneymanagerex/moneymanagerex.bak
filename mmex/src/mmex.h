@@ -217,6 +217,9 @@ private:
     void OnEditAccount(wxCommandEvent& event);
     void OnDeleteAccount(wxCommandEvent& event);
 
+    // new item - may be taken out in future
+    void OnIgnoreFutureTransactions(wxCommandEvent &event);
+
     void OnOrgCategories(wxCommandEvent& event);
     void OnOrgPayees(wxCommandEvent& event);
     void OnCategoryRelocation(wxCommandEvent& event);

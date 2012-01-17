@@ -419,7 +419,7 @@ void mmBudgetingPanel::initVirtualListControl()
         {
             transferAsDeposit = false;
         }
-        th.actual_ = mmDBWrapper::getAmountForCategory(db_, th.categID_, th.subcategID_, false, dtBegin, dtEnd, evaluateTransfer, transferAsDeposit);
+        th.actual_ = mmDBWrapper::getAmountForCategory(db_, th.categID_, th.subcategID_, false, dtBegin, dtEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::ignoreFutureTransactions_);
         if (th.actual_ < 0)
             actExpenses += th.actual_;
         else
@@ -474,7 +474,7 @@ void mmBudgetingPanel::initVirtualListControl()
             {
                 transferAsDeposit = false;
             }
-            thsub.actual_ = mmDBWrapper::getAmountForCategory(db_, thsub.categID_, thsub.subcategID_, false, dtBegin, dtEnd, evaluateTransfer, transferAsDeposit);
+            thsub.actual_ = mmDBWrapper::getAmountForCategory(db_, thsub.categID_, thsub.subcategID_, false, dtBegin, dtEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::ignoreFutureTransactions_);
             if (thsub.actual_ < 0)
                 actExpenses += thsub.actual_;
             else
