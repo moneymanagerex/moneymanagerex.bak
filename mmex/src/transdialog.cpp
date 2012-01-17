@@ -293,8 +293,8 @@ void mmTransDialog::CreateControls()
     int spinCtrlDirection = wxSP_VERTICAL;
     int interval = 0;
 #ifdef __WXMSW__
-    spinCtrlSize = wxSize(40,14);
-    spinCtrlDirection = wxSP_HORIZONTAL;
+    spinCtrlSize = wxSize(18,22);
+//    spinCtrlDirection = wxSP_HORIZONTAL;
     interval = 4;
 #endif
     //In linux by default nothing in focus therefore keystrokes does not working
@@ -768,16 +768,17 @@ wxString mmTransDialog::resetPayeeString(bool normal) //normal is deposits or wi
     wxString payeeStr = _("Select Payee");
     payeeID_ = -1;
     wxArrayString filtd;
-        filtd = mmDBWrapper::filterPayees(db_.get(), wxT(""));
-        if (filtd.Count() == 1) {
-            //only one payee present. Choose it
-            payeeStr = filtd[0];
-            payeeID_ = core_->payeeList_.getPayeeID(payeeStr);
-        }
-
+    filtd = mmDBWrapper::filterPayees(db_.get(), wxT(""));
+    if (filtd.Count() == 1)
+    {
+        //only one payee present. Choose it
+        payeeStr = filtd[0];
+        payeeID_ = core_->payeeList_.getPayeeID(payeeStr);
+    }
     if (normal)
-        toID_    = -1;
-
+    {
+        toID_ = -1;
+    }
     return payeeStr;
 }
 

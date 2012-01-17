@@ -212,12 +212,13 @@ void mmBDDialog::dataToControls()
         {
             wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
             wxString categString = catName;
+            categoryName_ = categString;
 
             if (subcategID_ != -1)
             {
-                wxString subcatName = mmDBWrapper::getSubCategoryName(db_, categID_, subcategID_);
+                subCategoryName_ = mmDBWrapper::getSubCategoryName(db_, categID_, subcategID_);
                 categString += wxT(" : ");
-                categString += subcatName;
+                categString += subCategoryName_;
             }
             bCategory_->SetLabel(categString);
         }
@@ -324,8 +325,8 @@ void mmBDDialog::CreateControls()
     int spinCtrlDirection = wxSP_VERTICAL;
     int interval = 0;
 #ifdef __WXMSW__
-    spinCtrlSize = wxSize(40,14);
-    spinCtrlDirection = wxSP_HORIZONTAL;
+    spinCtrlSize = wxSize(18,22);
+//    spinCtrlDirection = wxSP_HORIZONTAL;
     interval = 4;
 #endif
 
@@ -602,7 +603,7 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
     	wxString acctName = itemAccountName_->GetLabel();
     	bPayee_->SetLabel(acctName);
     	
-    	wxSingleChoiceDialog scd(this, _("Choose Bank Account or Term Account"), _("Select Account"), as);
+    	wxSingleChoiceDialog scd(this, _("Account name"), _("Select Account"), as);
     	if (scd.ShowModal() == wxID_OK) 
         {
             acctName = scd.GetStringSelection();
@@ -610,18 +611,16 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 		    bPayee_->SetLabel(acctName);
 		    itemAccountName_->SetLabel(acctName);
     	}
-
     } 
     else 
     {
         mmPayeeDialog dlg(this, core_);
-        
+
         if ( dlg.ShowModal() == wxID_OK )
 	    {
             payeeID_ = dlg.getPayeeId();
 	        if (payeeID_ == -1)
             {
-	            //bPayee_->SetLabel(_("Select Payee"));
 	            resetPayeeString();
                 payeeUnknown_ = true;
                 return;
@@ -664,7 +663,9 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 	            //payeeID_ = -1;
 	            categID_ = -1;
 	            subcategID_ = -1;
-	            bCategory_->SetLabel(_("Select Category"));
+                categoryName_ = wxEmptyString;
+                subCategoryName_ = wxEmptyString;
+                bCategory_->SetLabel(_("Select Category"));
 	            //bPayee_->SetLabel(_("Select Payee"));
 	            resetPayeeString();
                 payeeUnknown_ = true;
@@ -673,10 +674,9 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 	        {
 	            bPayee_->SetLabel(payeeName);
                 payeeUnknown_ = false;
-	        }
-	        
-	    }
-	}
+            }
+        }
+    }
 }
 
 void mmBDDialog::OnTo(wxCommandEvent& /*event*/)
@@ -684,7 +684,7 @@ void mmBDDialog::OnTo(wxCommandEvent& /*event*/)
     // This should only get called if we are in a transfer
     wxArrayString as = mmDBWrapper::getAccountsName(db_);
     	
-    wxSingleChoiceDialog scd(this, _("Choose Bank Account or Term Account"), _("Select Account"), as);
+    wxSingleChoiceDialog scd(this, _("Account name"), _("Select Account"), as);
     if (scd.ShowModal() == wxID_OK)
     {
 	    wxString acctName = scd.GetStringSelection();
@@ -702,6 +702,7 @@ void mmBDDialog::OnCategs(wxCommandEvent& /*event*/)
    else
    {
       mmCategDialog dlg(core_, this);
+      dlg.setTreeSelection(categoryName_, subCategoryName_);
       if ( dlg.ShowModal() == wxID_OK )
       {
          if (dlg.categID_ == -1)
@@ -835,15 +836,18 @@ void mmBDDialog::resetPayeeString(bool normal)
     wxString payeeStr = _("Select Payee");
     payeeID_ = -1;
     wxArrayString filtd;
-        filtd = mmDBWrapper::filterPayees(db_, wxT(""));
-        if (filtd.Count() == 1) {
-            //only one payee present. Choose it
-            payeeStr = filtd[0];
-            payeeID_ = core_->payeeList_.getPayeeID(payeeStr);
-        }
+    filtd = mmDBWrapper::filterPayees(db_, wxT(""));
+    if (filtd.Count() == 1)
+    {
+        //only one payee present. Choose it
+        payeeStr = filtd[0];
+        payeeID_ = core_->payeeList_.getPayeeID(payeeStr);
+    }
     bPayee_->SetLabel(payeeStr);
     if (normal)
-        toID_    = -1;
+    {
+        toID_ = -1;
+    }
 }
 
 void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
