@@ -243,6 +243,7 @@ bool mmIniOptions::expandTermHome_ = false;
 bool mmIniOptions::expandStocksHome_ = true;
 bool mmIniOptions::expandBankTree_ = true;
 bool mmIniOptions::expandTermTree_ = false;
+bool mmIniOptions::ignoreFutureTransactions_ = false;
 
 int mmIniOptions::transPayeeSelectionNone_     = 0;
 int mmIniOptions::transCategorySelectionNone_  = 0;
@@ -255,7 +256,7 @@ wxString mmOptions::financialYearStartDayString_;
 wxString mmOptions::financialYearStartMonthString_;
 //----------------------------------------------------------------------------
 
-void correctEmptyFileExt(wxString ext, wxString & fileName )
+void correctEmptyFileExt(wxString ext, wxString & fileName)
 {
     wxFileName tempFileName(fileName);
     if (tempFileName.GetExt().IsEmpty())
@@ -263,9 +264,9 @@ void correctEmptyFileExt(wxString ext, wxString & fileName )
 }
 //----------------------------------------------------------------------------
 
-void mmOptions::loadOptions( wxSQLite3Database* db )
+void mmOptions::loadOptions(wxSQLite3Database* db)
 {
-    dateFormat = mmDBWrapper::getInfoSettingValue( db, wxT( "DATEFORMAT" ), mmex::DEFDATEFORMAT );
+    dateFormat = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
 
     financialYearStartDayString_   = mmDBWrapper::getInfoSettingValue(db, wxT("FINANCIAL_YEAR_START_DAY"), wxT("1"));
     financialYearStartMonthString_ = mmDBWrapper::getInfoSettingValue(db, wxT("FINANCIAL_YEAR_START_MONTH"), wxT("7"));
@@ -273,48 +274,51 @@ void mmOptions::loadOptions( wxSQLite3Database* db )
 }
 //----------------------------------------------------------------------------
 
-void mmOptions::saveOptions( wxSQLite3Database* db )
+void mmOptions::saveOptions(wxSQLite3Database* db)
 {
-    mmDBWrapper::setInfoSettingValue( db, wxT( "DATEFORMAT" ), dateFormat );
+    mmDBWrapper::setInfoSettingValue(db, wxT("DATEFORMAT"), dateFormat);
 }
 // --------------------------------------------------------------------------
 
-void mmIniOptions::loadOptions( wxSQLite3Database* db )
+void mmIniOptions::loadOptions(wxSQLite3Database* db)
 {
-    if ( mmDBWrapper::getINISettingValue( db, wxT( "ENABLESTOCKS" ), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
+    if (mmDBWrapper::getINISettingValue(db, wxT("ENABLESTOCKS"), wxT("TRUE")) != wxT("TRUE"))
         expandStocksHome_ = false;
 
-    if ( mmDBWrapper::getINISettingValue( db, wxT( "ENABLEASSETS" ), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
+    if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEASSETS"), wxT("TRUE")) != wxT("TRUE"))
         enableAssets_ = false;
 
-    if ( mmDBWrapper::getINISettingValue( db, wxT( "ENABLEBUDGET" ), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
+    if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEBUDGET"), wxT("TRUE")) != wxT("TRUE"))
         enableBudget_ = false;
 
-    if ( mmDBWrapper::getINISettingValue( db, wxT( "ENABLEGRAPHS" ), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
+    if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEGRAPHS"), wxT("TRUE")) != wxT("TRUE"))
         enableGraphs_ = false;
 
-    mmIniOptions::fontSize_ = mmDBWrapper::getINISettingValue( db, wxT( "HTMLFONTSIZE" ), wxT( "3" ) );
+    mmIniOptions::fontSize_ = mmDBWrapper::getINISettingValue(db, wxT("HTMLFONTSIZE"), wxT("3"));
 
-    if ( mmDBWrapper::getINISettingValue( db, wxT("EXPAND_BANK_HOME"), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
+    if (mmDBWrapper::getINISettingValue(db, wxT("EXPAND_BANK_HOME"), wxT("TRUE")) != wxT("TRUE"))
         expandBankHome_ = false;
-    if ( mmDBWrapper::getINISettingValue( db, wxT("EXPAND_TERM_HOME"), wxT( "FALSE" ) ) != wxT( "FALSE" ) )
+    if (mmDBWrapper::getINISettingValue(db, wxT("EXPAND_TERM_HOME"), wxT("FALSE")) != wxT("FALSE"))
         expandTermHome_ = true;
-    if ( mmDBWrapper::getINISettingValue( db, wxT("EXPAND_BANK_TREE"), wxT( "TRUE" ) ) != wxT( "TRUE" ) )
+    if (mmDBWrapper::getINISettingValue(db, wxT("EXPAND_BANK_TREE"), wxT("TRUE")) != wxT("TRUE"))
         expandBankTree_ = false;
-    if ( mmDBWrapper::getINISettingValue( db, wxT("EXPAND_TERM_TREE"), wxT( "FALSE" ) ) != wxT( "FALSE" ) )
+    if (mmDBWrapper::getINISettingValue(db, wxT("EXPAND_TERM_TREE"), wxT("FALSE")) != wxT("FALSE"))
         expandTermTree_ = true;
 
+    if (mmDBWrapper::getINISettingValue(db, wxT("REPORT_FUTURE_TRANSACTIONS"), wxT("FALSE")) != wxT("FALSE"))
+        ignoreFutureTransactions_ = true;
+
     // Read the preference as a string and convert to int
-    transPayeeSelectionNone_ = wxAtoi(mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_PAYEE_NONE"), wxT("0") ));
+    transPayeeSelectionNone_ = wxAtoi(mmDBWrapper::getINISettingValue(db, wxT("TRANSACTION_PAYEE_NONE"), wxT("0")));
 	// For the category selection, default behavior should remain that the last category used for the payee is selected.
 	//  This is item 1 (0-indexed) in the list.
-	transCategorySelectionNone_ = wxAtoi(mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_CATEGORY_NONE"), wxT("1") ));
-	transStatusReconciled_ = wxAtoi(mmDBWrapper::getINISettingValue( db, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("0") ));
+	transCategorySelectionNone_ = wxAtoi(mmDBWrapper::getINISettingValue(db, wxT("TRANSACTION_CATEGORY_NONE"), wxT("1")));
+	transStatusReconciled_ = wxAtoi(mmDBWrapper::getINISettingValue(db, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("0")));
 }
 
-void mmIniOptions::loadInfoOptions( wxSQLite3Database* db )
+void mmIniOptions::loadInfoOptions(wxSQLite3Database* db)
 {
-    mmIniOptions::userNameString_ = mmDBWrapper::getInfoSettingValue( db, wxT( "USERNAME" ), wxT( "" ) );
+    mmIniOptions::userNameString_ = mmDBWrapper::getInfoSettingValue(db, wxT("USERNAME"), wxT(""));
 }
 
 void mmIniOptions::saveOptions( wxSQLite3Database* /*db*/ )
