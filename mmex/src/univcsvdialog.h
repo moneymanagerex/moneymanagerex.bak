@@ -23,6 +23,7 @@
 #include "defs.h"
 #include "dbwrapper.h"
 #include "mmcoredb.h"
+#include <wx/choice.h>
 
 #define ID_MYDIALOG8 10040
 #define SYMBOL_UNIVCSVDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
@@ -102,10 +103,10 @@ public:
     void parseToken(int index,wxString& token);
     void OnLoad(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
-	void OnMoveUp(wxCommandEvent& event);
-	void OnMoveDown(wxCommandEvent& event);
+    void OnMoveUp(wxCommandEvent& event);
+    void OnMoveDown(wxCommandEvent& event);
     void OnSearch(wxCommandEvent& event);
-	void OnListBox(wxCommandEvent& event);
+    void OnListBox(wxCommandEvent& event);
 
     void update_preview();
 
@@ -122,6 +123,7 @@ private:
 
     wxButton* m_button_add_;
     wxButton* m_button_remove_;
+    wxChoice* m_choice_account_;
     wxListCtrl* m_list_ctrl_; //preview
     wxTextCtrl* m_text_ctrl_;
 
