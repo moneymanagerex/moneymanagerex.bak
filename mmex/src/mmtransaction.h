@@ -157,14 +157,14 @@ public:
     void deleteTransactions(int accountID);
 
     /* Query Functions */
-    void getExpensesIncome(int accountID, double& expenses, double& income, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd) const;
-    double getAmountForCategory(int categID, int subcategID, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool evaluateTransfer = false, bool asDeposit = false) const;
-    double getAmountForPayee(int payeeID, bool ignoreDate, const wxDateTime &dtbegin, const wxDateTime &dtEnd) const;
-    void getTransactionStats(int accountID, int& number, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd) const;
+    void getExpensesIncome(int accountID, double& expenses, double& income, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
+    double getAmountForCategory(int categID, int subcategID, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool evaluateTransfer = false, bool asDeposit = false, bool ignoreFuture = false) const;
+    double getAmountForPayee(int payeeID, bool ignoreDate, const wxDateTime &dtbegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
+    void getTransactionStats(int accountID, int& number, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const;
 
     double getBalance(int accountID, bool ignoreFuture = false) const;
     bool   getDailyBalance(int accountID, std::map<wxDateTime, double>& daily_balance, bool ignoreFuture = false) const;
-    double getReconciledBalance(int accountID) const;
+    double getReconciledBalance(int accountID, bool ignoreFuture = false) const;
     int    countFollowupTransactions() const;
 
     /* Update Transactions */

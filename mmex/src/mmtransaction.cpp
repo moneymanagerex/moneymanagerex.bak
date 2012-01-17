@@ -703,8 +703,7 @@ void mmBankTransactionList::updateAllTransactionsForCategory(mmCoreDB* core,
     }
 }
 
-int mmBankTransactionList::updateAllTransactionsForPayee(mmCoreDB* core, 
-                                                          int payeeID)
+int mmBankTransactionList::updateAllTransactionsForPayee(mmCoreDB* core, int payeeID)
 {
     // We need to update all transactions incase of errors when loading
     std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
@@ -726,8 +725,8 @@ int mmBankTransactionList::updateAllTransactionsForPayee(mmCoreDB* core,
     return 0;
 }
 
-void mmBankTransactionList::getExpensesIncome(int accountID, double& expenses, double& income,  
-                           bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd) const
+void mmBankTransactionList::getExpensesIncome(int accountID, double& expenses, double& income,
+    bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture) const
 {
     std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
     for (i = transactions_.begin(); i != transactions_.end(); i++ )
@@ -740,10 +739,15 @@ void mmBankTransactionList::getExpensesIncome(int accountID, double& expenses, d
                 if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
                     continue; // skip
             }
-
             if (pBankTransaction->status_ == wxT("V"))
+            {
                 continue; // skip
-
+            }
+            if (ignoreFuture)
+            {
+                if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()))
+                    continue; //skip future dated transactions
+            }
             if (!ignoreDate)
             {
                 if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
@@ -761,15 +765,12 @@ void mmBankTransactionList::getExpensesIncome(int accountID, double& expenses, d
             {
                 // transfers are not considered in income/expenses calculations
             }
-
         }
-
     }
 }
 
-
 void mmBankTransactionList::getTransactionStats(int accountID, int& number,  
-                           bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd) const
+    bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture) const
 {
     std::vector<boost::shared_ptr<mmBankTransaction> >::const_iterator i;
 
@@ -784,10 +785,15 @@ void mmBankTransactionList::getTransactionStats(int accountID, int& number,
                 if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
                     continue; // skip
             }
-
             if (pBankTransaction->status_ == wxT("V"))
+            {
                 continue; // skip
-
+            }
+            if (ignoreFuture)
+            {
+                if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()))
+                    continue; //skip future dated transactions
+            }
             if (!ignoreDate)
             {
                 if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
@@ -802,13 +808,12 @@ void mmBankTransactionList::getTransactionStats(int accountID, int& number,
             {
                 ++number;
             }
-
         }
     }
 }
 
 double mmBankTransactionList::getAmountForPayee(int payeeID, bool ignoreDate, 
-                                 const wxDateTime &dtBegin, const wxDateTime &dtEnd) const
+    const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture) const
 {
     double amt = 0.0;
     std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
@@ -817,27 +822,37 @@ double mmBankTransactionList::getAmountForPayee(int payeeID, bool ignoreDate,
         boost::shared_ptr<const mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction)
         {
-           if (pBankTransaction->payeeID_ == payeeID)
-           {
-              if (pBankTransaction->status_ == wxT("V"))
-                 continue; // skip
+            if (pBankTransaction->payeeID_ == payeeID)
+            {
+                if (pBankTransaction->status_ == wxT("V"))
+                {
+                    continue; // skip
+                }
+                if (ignoreFuture)
+                {
+                    if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()))
+                        continue; //skip future dated transactions
+                }
+                if (!ignoreDate)
+                {
+                    if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
+                        continue; //skip
+                }
 
-              if (!ignoreDate)
-              {
-                 if (!pBankTransaction->date_.IsBetween(dtBegin, dtEnd))
-                    continue; //skip
-              }
+                if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
+                    continue;
 
-              if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
-                  continue;
+                double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), pBankTransaction->accountID_);
 
-              double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), pBankTransaction->accountID_);
-
-              if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
-                 amt -= pBankTransaction->amt_ * convRate;
-              else if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
-                 amt += pBankTransaction->amt_ * convRate;
-           }
+                if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
+                {
+                    amt -= pBankTransaction->amt_ * convRate;
+                }
+                else if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
+                {
+                    amt += pBankTransaction->amt_ * convRate;
+                }
+            }
         }
     }
     return amt;
@@ -850,7 +865,8 @@ double mmBankTransactionList::getAmountForCategory(
     const wxDateTime &dtBegin,
     const wxDateTime &dtEnd,
     bool evaluateTransfer,
-    bool asDeposit
+    bool asDeposit,
+    bool ignoreFuture
 ) const
 {
     double amt = 0.0;
@@ -869,6 +885,11 @@ double mmBankTransactionList::getAmountForCategory(
         if (pBankTransaction->status_ == wxT("V"))
         {
             continue; // skip
+        }
+        if (ignoreFuture)
+        {
+            if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()))
+                continue; //skip future dated transactions
         }
         if (!ignoreDate)
         {
@@ -1007,7 +1028,7 @@ bool mmBankTransactionList::getDailyBalance(int accountID, std::map<wxDateTime, 
     return true;
 }
 
-double mmBankTransactionList::getReconciledBalance(int accountID) const
+double mmBankTransactionList::getReconciledBalance(int accountID, bool ignoreFuture) const
 {
     double balance = 0.0;
     std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator i;
@@ -1018,6 +1039,12 @@ double mmBankTransactionList::getReconciledBalance(int accountID) const
         {
             if (pBankTransaction->accountID_ != accountID && pBankTransaction->toAccountID_ != accountID)
                 continue; // skip
+
+            if (ignoreFuture)
+            {
+                if (pBankTransaction->date_.IsLaterThan(wxDateTime::Now()))
+                    continue; //skip future dated transactions
+            }
             
             if (pBankTransaction->status_ != wxT("R"))
                 continue; // skip

@@ -73,65 +73,66 @@ void mmPlayTransactionSound( wxSQLite3Database* db_ );
 class mmOptions
 {
 public:
-        static void loadOptions( wxSQLite3Database* db );
-        static void saveOptions( wxSQLite3Database* db );
+    static void loadOptions( wxSQLite3Database* db );
+    static void saveOptions( wxSQLite3Database* db );
 
-        static wxString dateFormat;
-        static wxString language;
-        static wxString financialYearStartDayString_;
-        static wxString financialYearStartMonthString_;
+    static wxString dateFormat;
+    static wxString language;
+    static wxString financialYearStartDayString_;
+    static wxString financialYearStartMonthString_;
 };
 
 class mmIniOptions
 {
 public:
-        static void loadOptions( wxSQLite3Database* db );
-        static void loadInfoOptions( wxSQLite3Database* db );
-        static void saveOptions( wxSQLite3Database* db );
+    static void loadOptions( wxSQLite3Database* db );
+    static void loadInfoOptions( wxSQLite3Database* db );
+    static void saveOptions( wxSQLite3Database* db );
 
-        static bool enableAssets_;
-        static bool enableBudget_;
-        static bool enableGraphs_;
-        static bool enableAddAccount_;
-        static bool enableDeleteAccount_;
-        static bool enableRepeatingTransactions_;
-        static bool enableCustomLogo_;
-        static bool enableCheckForUpdates_;
-        static bool enableReportIssues_;
-        static bool enableBeNotifiedForNewReleases_;
-        static bool enableVisitWebsite_;
-        static wxString logoName_;
-        static wxString fontSize_;
-        static bool enableImportMMNETCSV_;
-        static bool enableImportMMCSV_;
-        static bool enableCustomAboutDialog_;
-        static wxString aboutCompanyName_;
-        static bool disableCategoryModify_;
-        static wxString userNameString_;
-        static bool enableCustomTemplateDB_;
-        static wxString customTemplateDB_;
+    static bool enableAssets_;
+    static bool enableBudget_;
+    static bool enableGraphs_;
+    static bool enableAddAccount_;
+    static bool enableDeleteAccount_;
+    static bool enableRepeatingTransactions_;
+    static bool enableCustomLogo_;
+    static bool enableCheckForUpdates_;
+    static bool enableReportIssues_;
+    static bool enableBeNotifiedForNewReleases_;
+    static bool enableVisitWebsite_;
+    static wxString logoName_;
+    static wxString fontSize_;
+    static bool enableImportMMNETCSV_;
+    static bool enableImportMMCSV_;
+    static bool enableCustomAboutDialog_;
+    static wxString aboutCompanyName_;
+    static bool disableCategoryModify_;
+    static wxString userNameString_;
+    static bool enableCustomTemplateDB_;
+    static wxString customTemplateDB_;
 
-        static bool expandBankHome_;
-        static bool expandTermHome_;
-        static bool expandStocksHome_;
-        static bool expandBankTree_;
-        static bool expandTermTree_;
+    static bool expandBankHome_;
+    static bool expandTermHome_;
+    static bool expandStocksHome_;
+    static bool expandBankTree_;
+    static bool expandTermTree_;
+    static bool ignoreFutureTransactions_;
 
-        static int transPayeeSelectionNone_;
-        static int transCategorySelectionNone_;
-        static int transStatusReconciled_;
+    static int transPayeeSelectionNone_;
+    static int transCategorySelectionNone_;
+    static int transStatusReconciled_;
 };
 
 class mmColors
 {
 public:
-        static wxColour listAlternativeColor0;
-        static wxColour listAlternativeColor1;
-        static wxColour listBorderColor;
-        static wxColour listBackColor;
-        static wxColour navTreeBkColor;
-        static wxColour listDetailsPanelColor;
-        static wxColour listFutureDateColor;
+    static wxColour listAlternativeColor0;
+    static wxColour listAlternativeColor1;
+    static wxColour listBorderColor;
+    static wxColour listBackColor;
+    static wxColour navTreeBkColor;
+    static wxColour listDetailsPanelColor;
+    static wxColour listFutureDateColor;
 };
 //----------------------------------------------------------------------------
 
@@ -143,33 +144,33 @@ class CurrencyFormatter
 public:
 	static CurrencyFormatter& instance();
 
-        void loadDefaultSettings();
-        void loadSettings(const mmCurrency &cur);
+    void loadDefaultSettings();
+    void loadSettings(const mmCurrency &cur);
 
-        void loadSettings(const wxString &pfx, const wxString &sfx, 
-        		  wxChar dec, wxChar grp, 
-        		  const wxString &unit, const wxString &cent, 
-        		  int scale 
-        		 );
+    void loadSettings(const wxString &pfx, const wxString &sfx, 
+        	    wxChar dec, wxChar grp, 
+        	    const wxString &unit, const wxString &cent, 
+        	    int scale 
+        	    );
 
-        wxString getPrefix() const { return m_pfx_symbol; }
-        wxString getSuffix() const { return m_sfx_symbol; }
+    wxString getPrefix() const { return m_pfx_symbol; }
+    wxString getSuffix() const { return m_sfx_symbol; }
 
-        wxChar getDecimalPoint() const { return m_decimal_point; }
-        wxChar getGroupSeparator() const { return m_group_separator; }
+    wxChar getDecimalPoint() const { return m_decimal_point; }
+    wxChar getGroupSeparator() const { return m_group_separator; }
 
 	int getScale() const { return m_scale; }
 
 private:
-        wxString m_pfx_symbol;   // Leading currency symbol
-        wxString m_sfx_symbol;   // Trailing currency symbol
-        wxChar m_decimal_point;  // Character for 100ths
-        wxChar m_group_separator;// Character for 1000nds
-        wxString m_unit_name;    // Name of monetary unit
-        wxString m_cent_name;    // Name of fraction unit
-        int m_scale;
+    wxString m_pfx_symbol;   // Leading currency symbol
+    wxString m_sfx_symbol;   // Trailing currency symbol
+    wxChar m_decimal_point;  // Character for 100ths
+    wxChar m_group_separator;// Character for 1000nds
+    wxString m_unit_name;    // Name of monetary unit
+    wxString m_cent_name;    // Name of fraction unit
+    int m_scale;
 
-        CurrencyFormatter();
+    CurrencyFormatter();
 };
 //----------------------------------------------------------------------------
 
