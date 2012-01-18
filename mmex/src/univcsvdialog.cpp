@@ -161,12 +161,7 @@ void mmUnivCSVImportDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer_AddRemove->Add(m_button_remove_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxPanel* itemPanel5 = new wxPanel(itemDialog1, ID_PANEL10, 
-        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    itemBoxSizer2->Add(itemPanel5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
 
-    wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
-    itemPanel5->SetSizer(itemBoxSizer6);
    
     //ListBox of attribute order
     csvListBox_ = new wxListBox(itemDialog1, ID_LISTBOX, 
@@ -194,29 +189,17 @@ void mmUnivCSVImportDialog::CreateControls()
     itemButton_MoveDown -> SetToolTip (_("Move &Down"));
  
     //Load Template button
-    wxButton* itemButton_Load = new wxButton(itemPanel5, wxID_OPEN, _("&Open"), 
+    wxButton* itemButton_Load = new wxButton(itemPanel_Arranger, wxID_OPEN, _("&Open"), 
         wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer6->Add(itemButton_Load, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer_Arranger->Add(itemButton_Load, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemButton_Load -> SetToolTip (_("Load Template"));
 
     //Save As Template button
-    wxButton* itemButton_Save = new wxButton(itemPanel5, wxID_SAVEAS, _("Save &As..."), 
+    wxButton* itemButton_Save = new wxButton(itemPanel_Arranger, wxID_SAVEAS, _("Save &As..."), 
         wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer6->Add(itemButton_Save, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer_Arranger->Add(itemButton_Save, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemButton_Save -> SetToolTip (_("Save Template"));
 
-    //Import File button
-    wxButton* itemButton_Import = new wxButton(itemPanel5, ID_UNIVCSVBUTTON_IMPORT, _("&Import"), 
-        wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer6->Add(itemButton_Import, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemButton_Import -> SetToolTip (_("Import File"));
-
-    wxBoxSizer* itemBoxSizer66 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer6->Add(itemBoxSizer66, 1, wxGROW|wxALL, 5);
-    
-    wxButton* itemCancelButton = new wxButton(itemPanel5, wxID_CANCEL, _("&Cancel"));
-    itemBoxSizer66->Add(itemCancelButton);
-    itemCancelButton->SetFocus();
 
     wxStaticLine*  m_staticline1 = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
     itemBoxSizer2->Add(m_staticline1, 0, wxEXPAND | wxALL, 5 );
@@ -260,6 +243,25 @@ void mmUnivCSVImportDialog::CreateControls()
 
     m_list_ctrl_ = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 100), wxLC_REPORT);
     itemBoxSizer2->Add(m_list_ctrl_, 0, wxALL|wxEXPAND, 5);
+
+    //Import File button
+    wxPanel* itemPanel5 = new wxPanel(itemDialog1, ID_PANEL10, 
+    wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    itemBoxSizer2->Add(itemPanel5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
+
+    wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
+    itemPanel5->SetSizer(itemBoxSizer6);
+    wxButton* itemButton_Import = new wxButton(itemPanel5, ID_UNIVCSVBUTTON_IMPORT, _("&Import"), 
+        wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer6->Add(itemButton_Import, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButton_Import -> SetToolTip (_("Import File"));
+
+    wxBoxSizer* itemBoxSizer66 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer6->Add(itemBoxSizer66, 1, wxGROW|wxALL, 5);
+    
+    wxButton* itemCancelButton = new wxButton(itemPanel5, wxID_CANCEL, _("&Cancel"));
+    itemBoxSizer66->Add(itemCancelButton);
+    itemCancelButton->SetFocus();
 }
 
 /*!
@@ -654,10 +656,11 @@ void mmUnivCSVImportDialog::update_preview()
 {
     this->m_list_ctrl_->ClearAll();
     long index = 0;
+    this->m_list_ctrl_->InsertColumn(index, wxT(""));
     for (std::vector<int>::const_iterator it = csvFieldOrder_.begin(); it != csvFieldOrder_.end(); ++ it)
     {
-        this->m_list_ctrl_->InsertColumn(index, this->getCSVFieldName(*it));
         ++ index;
+        this->m_list_ctrl_->InsertColumn(index, this->getCSVFieldName(*it));
     }
 
     wxString fileName = m_text_ctrl_->GetValue();
@@ -678,19 +681,21 @@ void mmUnivCSVImportDialog::update_preview()
         {
             wxStringTokenizer tkz(line, delimit, wxTOKEN_RET_EMPTY_ALL);
 
-            wxString buf;
-
-            long itemIndex = m_list_ctrl_->InsertItem(row, buf, 0);
             int col = 0;
+            wxString buf;
+            buf.Printf(_T("%d"), col);
+            long itemIndex = m_list_ctrl_->InsertItem(row, buf, 0);
+            buf.Printf(_T("%d"), row + 1);
+            m_list_ctrl_->SetItem(itemIndex, col, buf);
             while (tkz.HasMoreTokens())
             {
+                ++ col;
                 wxString token = tkz.GetNextToken();
 
                 if (col >= m_list_ctrl_->GetColumnCount())
                     break;
                 else
                     m_list_ctrl_->SetItem(itemIndex, col, token);
-                ++ col;
             }
 
             if (++ count >= 10) break;
