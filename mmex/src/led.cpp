@@ -161,3 +161,4 @@ unsigned int awxLed::GetTimerInterval()
 {
 	return m_timerInterval;
 }
+

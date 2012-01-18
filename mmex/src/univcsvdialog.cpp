@@ -37,6 +37,7 @@ BEGIN_EVENT_TABLE(mmUnivCSVImportDialog, wxDialog)
     EVT_BUTTON(wxID_DOWN, mmUnivCSVImportDialog::OnMoveDown)
     EVT_BUTTON(wxID_SEARCH, mmUnivCSVImportDialog::OnSearch)
     EVT_LISTBOX(ID_LISTBOX, mmUnivCSVImportDialog::OnListBox)
+    EVT_RADIOBOX(wxID_RADIO_BOX, mmUnivCSVImportDialog::OnCheckOrRadioBox)
 END_EVENT_TABLE()
 
 //----------------------------------------------------------------------------
@@ -86,6 +87,7 @@ mmUnivCSVImportDialog::mmUnivCSVImportDialog(
     long style
 ) : 
     core_(core),
+    delimit_(wxT(",")),
     db_ (core->db_.get())
 {
     CSVFieldName_[UNIV_CSV_DATE] = _("Date");
@@ -232,6 +234,13 @@ void mmUnivCSVImportDialog::CreateControls()
 
     wxStaticLine*  m_staticline2 = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
     itemBoxSizer2->Add(m_staticline2, 0, wxEXPAND | wxALL, 5 );
+
+    // CSV Delimiter
+    wxString choices[] = { _("Comma"), _("Semicolon"), _("TAB")};
+    int num = sizeof(choices) / sizeof(wxString);
+    m_radio_box_ = new wxRadioBox(this, wxID_RADIO_BOX, _("CSV Delimiter"), wxDefaultPosition, wxDefaultSize, num, choices, 3, wxRA_SPECIFY_COLS);
+    m_radio_box_->SetSelection(0);
+    itemBoxSizer2->Add(m_radio_box_, 0, wxALL|wxEXPAND, 5);
 
     // Preview 
     wxStaticBoxSizer* m_staticbox = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _T("&Preview")), wxVERTICAL);
@@ -666,7 +675,8 @@ void mmUnivCSVImportDialog::update_preview()
              return;
         }
 
-        wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
+        //wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
+        wxString delimit = this->delimit_;
         wxString line;
         size_t count = 0;
         int row = 0;
@@ -753,6 +763,27 @@ void mmUnivCSVImportDialog::OnListBox(wxCommandEvent& event)
     {
         //TODO  update relate widget status
     }
+}
+
+void mmUnivCSVImportDialog::OnCheckOrRadioBox(wxCommandEvent& event)
+{
+    //TODO match value to choices
+    switch(m_radio_box_->GetSelection())
+    {
+        case 0:
+            this->delimit_ = wxT(",");
+            break;
+        case 1:
+            this->delimit_ = wxT(";");
+            break;
+        case 2:
+            this->delimit_ = wxT("\t");
+            break;
+        default:
+            break;
+    }
+
+    this->update_preview();
 }
 
 void mmUnivCSVImportDialog::parseToken(int index, wxString& token)

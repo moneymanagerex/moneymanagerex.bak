@@ -42,6 +42,7 @@
 //#define ID_UNIVCSVBUTTON_MOVEDOWN 10098
 #define ID_LISTBOX_CANDICATE 10099
 #define wxID_SEARCH 10100
+#define wxID_RADIO_BOX 10101
 ////@end control identifiers
 
 /*!
@@ -107,6 +108,7 @@ public:
     void OnMoveDown(wxCommandEvent& event);
     void OnSearch(wxCommandEvent& event);
     void OnListBox(wxCommandEvent& event);
+    void OnCheckOrRadioBox(wxCommandEvent& event);
 
     void update_preview();
 
@@ -124,10 +126,12 @@ private:
     wxButton* m_button_add_;
     wxButton* m_button_remove_;
     wxChoice* m_choice_account_;
+    wxRadioBox* m_radio_box_;
     wxListCtrl* m_list_ctrl_; //preview
     wxTextCtrl* m_text_ctrl_;
 
     std::map<int, wxString> CSVFieldName_;
+    wxString delimit_;
 
     wxString dt_;
     wxString payee_;
