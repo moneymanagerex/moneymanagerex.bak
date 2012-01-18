@@ -52,8 +52,6 @@ void mmExportQIF( mmCoreDB* core, wxSQLite3Database* db_ );
 wxString mmReadyDisplayString( const wxString& orig );
 wxString adjustedExportAmount(wxString amtSeparator, wxString strValue);
 
-int mmImportCSV( mmCoreDB* core );
-int mmImportCSVMMNET( mmCoreDB* core );
 int mmImportQIF( mmCoreDB* core, wxString destinationAccountName = wxEmptyString );
 
 void correctEmptyFileExt(wxString ext, wxString & fileName );
@@ -102,8 +100,6 @@ public:
     static bool enableVisitWebsite_;
     static wxString logoName_;
     static wxString fontSize_;
-    static bool enableImportMMNETCSV_;
-    static bool enableImportMMCSV_;
     static bool enableCustomAboutDialog_;
     static wxString aboutCompanyName_;
     static bool disableCategoryModify_;

@@ -189,10 +189,8 @@ private:
     void OnExportToCSV(wxCommandEvent& event);
     void OnExportToQIF(wxCommandEvent& event);
     void OnExportToHtml(wxCommandEvent& event);
-    void OnImportCSV(wxCommandEvent& event);
     void OnImportQFX(wxCommandEvent& event);
     void OnImportUniversalCSV(wxCommandEvent& event);
-    void OnImportCSVMMNET(wxCommandEvent& event);
     void OnImportQIF(wxCommandEvent& event);
     void OnPrintPageSetup(wxCommandEvent& WXUNUSED(event));
     void OnPrintPageReport(wxCommandEvent& WXUNUSED(event));
