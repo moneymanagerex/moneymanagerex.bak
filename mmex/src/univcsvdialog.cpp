@@ -124,12 +124,10 @@ bool mmUnivCSVImportDialog::Create(wxWindow* parent, wxWindowID id,
 
 void mmUnivCSVImportDialog::CreateControls()
 {    
-    mmUnivCSVImportDialog* itemDialog1 = this;
-
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(itemBoxSizer2);
+    this->SetSizer(itemBoxSizer2);
 
-    wxStaticText* itemStaticText3 = new wxStaticText(itemDialog1, wxID_STATIC, 
+    wxStaticText* itemStaticText3 = new wxStaticText(this, wxID_STATIC, 
        _("Specify the order of fields in the CSV file"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer2->Add(itemStaticText3, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -137,14 +135,14 @@ void mmUnivCSVImportDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
     //CSV fields candicate
-    csvFiledCandicate_ = new wxListBox(itemDialog1, ID_LISTBOX_CANDICATE, 
+    csvFiledCandicate_ = new wxListBox(this, ID_LISTBOX_CANDICATE, 
         wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE|wxLB_NEEDED_SB);
     itemBoxSizer3->Add(csvFiledCandicate_, 1, wxGROW|wxALL, 1);
     for(std::map<int, wxString>::const_iterator it = CSVFieldName_.begin(); it != CSVFieldName_.end(); it ++)
         csvFiledCandicate_->Append(it->second, new mmListBoxItem(it->first, it->second));
 
      //Add Remove Area
-    wxPanel* itemPanel_AddRemove = new wxPanel(itemDialog1, ID_PANEL10, 
+    wxPanel* itemPanel_AddRemove = new wxPanel(this, ID_PANEL10, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer3->Add(itemPanel_AddRemove, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
 
@@ -162,12 +160,12 @@ void mmUnivCSVImportDialog::CreateControls()
     itemBoxSizer_AddRemove->Add(m_button_remove_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
    
     //ListBox of attribute order
-    csvListBox_ = new wxListBox(itemDialog1, ID_LISTBOX, 
+    csvListBox_ = new wxListBox(this, ID_LISTBOX, 
         wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE|wxLB_NEEDED_SB);
     itemBoxSizer3->Add(csvListBox_, 1, wxGROW|wxALL, 1);
 
    //Arranger Area
-    wxPanel* itemPanel_Arranger = new wxPanel(itemDialog1, ID_PANEL10, 
+    wxPanel* itemPanel_Arranger = new wxPanel(this, ID_PANEL10, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer3->Add(itemPanel_Arranger, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
 
@@ -202,7 +200,7 @@ void mmUnivCSVImportDialog::CreateControls()
     itemBoxSizer2->Add(m_staticline1, 0, wxEXPAND | wxALL, 5 );
 
     //file to import, file path and search button
-    wxPanel* itemPanel6 = new wxPanel(itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    wxPanel* itemPanel6 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer2->Add(itemPanel6, 0, wxEXPAND|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer7 = new wxBoxSizer(wxHORIZONTAL);
@@ -218,7 +216,7 @@ void mmUnivCSVImportDialog::CreateControls()
     itemBoxSizer7->Add(button_search, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     // account to import
-    wxPanel* itemPanel7 = new wxPanel(itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    wxPanel* itemPanel7 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer2->Add(itemPanel7, 0, wxEXPAND|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer8 = new wxBoxSizer(wxHORIZONTAL);
@@ -235,14 +233,14 @@ void mmUnivCSVImportDialog::CreateControls()
     wxStaticLine*  m_staticline2 = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
     itemBoxSizer2->Add(m_staticline2, 0, wxEXPAND | wxALL, 5 );
     // Preview 
-    wxStaticText* itemStaticText4 = new wxStaticText(itemDialog1, wxID_STATIC, _("Preview"), wxDefaultPosition, wxDefaultSize, 0);
+    wxStaticText* itemStaticText4 = new wxStaticText(this, wxID_STATIC, _("Preview"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer2->Add(itemStaticText4, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
 
     m_list_ctrl_ = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 100), wxLC_REPORT);
     itemBoxSizer2->Add(m_list_ctrl_, 0, wxALL|wxEXPAND, 5);
 
     //Import File button
-    wxPanel* itemPanel5 = new wxPanel(itemDialog1, ID_PANEL10, 
+    wxPanel* itemPanel5 = new wxPanel(this, ID_PANEL10, 
     wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer2->Add(itemPanel5, 0, wxALIGN_RIGHT|wxALL, 1);
 
