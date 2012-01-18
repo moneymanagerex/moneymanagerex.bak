@@ -229,13 +229,13 @@ void mmUnivCSVImportDialog::CreateControls()
     itemPanel6->SetSizer(itemBoxSizer7);
 
     wxStaticText* itemStaticText5 = new wxStaticText(itemPanel6, wxID_ANY, _("File to import:"), wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer7->Add(itemStaticText5, 0, wxALIGN_LEFT, 5);
+    itemBoxSizer7->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_text_ctrl_ = new wxTextCtrl(itemPanel6, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(300, -1), 0);
     itemBoxSizer7->Add(m_text_ctrl_, 0, wxALL|wxEXPAND, 5);
 
     wxButton* button_search = new wxButton(itemPanel6, wxID_SEARCH, _("&Search"));
-    itemBoxSizer7->Add(button_search, 0, wxALIGN_RIGHT, 5);
+    itemBoxSizer7->Add(button_search, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     // account to import
     wxPanel* itemPanel7 = new wxPanel(itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
@@ -245,7 +245,7 @@ void mmUnivCSVImportDialog::CreateControls()
     itemPanel7->SetSizer(itemBoxSizer8);
 
     wxStaticText* itemStaticText6 = new wxStaticText(itemPanel7, wxID_ANY, _("Account to import:"), wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer8->Add(itemStaticText6, 0, wxALIGN_LEFT, 5);
+    itemBoxSizer8->Add(itemStaticText6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString as = mmDBWrapper::getAccountsName(db_);
     m_choice_account_ = new wxChoice(itemPanel7, wxID_ANY, wxDefaultPosition, wxSize(100, -1), as);
