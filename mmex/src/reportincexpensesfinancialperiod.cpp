@@ -33,6 +33,7 @@
 #include "dbwrapper.h"
 #include "budgetingpanel.h"
 #include "mmcoredb.h"
+#include "reportbudget.h"
 
 mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmGUIFrame* frame, mmCoreDB* core, int year):
     frame_(frame),
@@ -60,13 +61,8 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
     hb.init();
     hb.addHeader(3, _("Income vs Expenses for Financial Year: ") + finYearStr );
 
-    wxDateTime now = wxDateTime::Now();
-    wxString dt = _("Today's Date: ");
-    dt << wxT("<b>") << mmGetNiceDateString(now) << wxT("</b> &nbsp &nbsp &nbsp &nbsp ") << _("Showing period: ") << wxT("<b>") << mmGetNiceDateSimpleString(yearBegin) <<  wxT("</b> ") << _("to: ") << wxT ("<b>") << mmGetNiceDateSimpleString(yearEnd) << wxT ("</b>");
-
-    hb.addHeader(7, dt);
-    hb.addLineBreak();
-    hb.addLineBreak();
+    mmCommonReportDetails dateDisplay(NULL);
+    dateDisplay.DisplayDateHeading(hb, yearBegin, yearEnd, true);
 
     hb.startCenter();
 

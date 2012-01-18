@@ -1903,7 +1903,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
-            wxString title = _("Where the Money Comes From");
+            wxString title = _("Where the Money Comes From - Last Calendar Month");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, 
                 title, 1);
             menuPrintingEnable(true);
@@ -1915,7 +1915,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today;
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            wxString title = _("Where the Money Comes From");
+            wxString title = _("Where the Money Comes From - Last 30 days");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd,
                 title, 1);
             menuPrintingEnable(true);
@@ -1927,7 +1927,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
-            wxString title = _("Where the Money Comes From");
+            wxString title = _("Where the Money Comes From - Current Month");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd,
                title, 1);
             menuPrintingEnable(true);
@@ -1943,7 +1943,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             prevYearEnd.SetDay(31);
             wxDateTime dtEnd = prevYearEnd;
             wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-            wxString title = _("Where the Money Comes From");
+            wxString title = _("Where the Money Comes From - Last year");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(),false,dtBegin,dtEnd,title,1);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1958,7 +1958,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             yearBegin.SetDay(31);
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = yearBegin;
-            wxString title = _("Where the Money Comes From");
+            wxString title = _("Where the Money Comes From - Current Year");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(),false,dtBegin,dtEnd,title,1);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1968,7 +1968,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime refDate = wxDateTime(getUserDefinedFinancialYear(true));
             wxDateTime dtEnd = refDate;
             wxDateTime dtBegin = refDate.Subtract(wxDateSpan::Year());
-            wxString title = _("Where the Money Comes From");
+            wxString title = _("Where the Money Comes From - Last Financial Year");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(),false,dtBegin,dtEnd,title,1);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1978,7 +1978,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime dtEnd   = wxDateTime::Now();
             wxDateTime dtBegin = wxDateTime(getUserDefinedFinancialYear(true));
 
-            wxString title = _("Where the Money Comes From");
+            wxString title = _("Where the Money Comes From - Current Financial Year");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(),false,dtBegin,dtEnd,title,1);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -2004,7 +2004,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
-            wxString title = _("Where the Money Goes");
+            wxString title = _("Where the Money Goes - Last Calendar Month");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(),false,dtBegin,dtEnd,title,2);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -2015,7 +2015,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today;
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            wxString title = _("Where the Money Goes");
+            wxString title = _("Where the Money Goes - Last 30 Days");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(),false,dtBegin,dtEnd,title, 2);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -2026,7 +2026,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
-            wxString title = _("Where the Money Goes");
+            wxString title = _("Where the Money Goes - Current Month");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(),false,dtBegin,dtEnd,title, 2);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -2041,7 +2041,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             prevYearEnd.SetDay(31);
             wxDateTime dtEnd = prevYearEnd;
             wxDateTime dtBegin = prevYearEnd.Subtract(wxDateSpan::Year());
-            wxString title = _("Where the Money Goes");
+            wxString title = _("Where the Money Goes - Last Year");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(),false,dtBegin,dtEnd,title,2);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -2056,7 +2056,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             yearBegin.SetDay(31);
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = yearBegin;
-            wxString title = _("Where the Money Goes");
+            wxString title = _("Where the Money Goes - Current Year");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(),false,dtBegin,dtEnd,title,2);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -2066,7 +2066,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime refDate = (getUserDefinedFinancialYear(true));
             wxDateTime dtEnd = refDate;
             wxDateTime dtBegin = refDate.Subtract(wxDateSpan::Year());
-            wxString title = _("Where the Money Goes");
+            wxString title = _("Where the Money Goes - Last Financial Year");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(),false,dtBegin,dtEnd,title,2);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -2075,7 +2075,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         {
             wxDateTime dtEnd   = wxDateTime::Now();
             wxDateTime dtBegin = wxDateTime(getUserDefinedFinancialYear(true));
-            wxString title = _("Where the Money Goes");
+            wxString title = _("Where the Money Goes - Current Financial Year");
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(),false,dtBegin,dtEnd,title,2);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -2108,8 +2108,8 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtEnd = prevMonthEnd;
             wxDateTime dtBegin = prevMonthEnd.Subtract(wxDateSpan::Days(numDays));
-
-            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get(), false, dtBegin, dtEnd);
+            wxString title = _("Income vs Expenses - Last Calendar Month");
+            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -2119,7 +2119,8 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today;
             wxDateTime dtEnd = today;
             wxDateTime dtBegin = today.Subtract(wxDateSpan::Month());
-            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get(), false, dtBegin, dtEnd);
+            wxString title = _("Income vs Expenses - Last 30 Days");
+            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -2129,7 +2130,8 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
             wxDateTime dtEnd = wxDateTime::Now();
-            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get(), false, dtBegin, dtEnd);
+            wxString title = _("Income vs Expenses - Current Month");
+            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -2177,8 +2179,8 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (iData->getString() == wxT("Income vs Expenses - All Time"))
         {
-            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get(), true, wxDateTime::Now(),
-                wxDateTime::Now());
+            wxString title = _("Income vs Expenses - All Time");
+            mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get(), true, wxDateTime::Now(), wxDateTime::Now(), title);
             menuPrintingEnable(true);
             createReportsPage(rs);
         }

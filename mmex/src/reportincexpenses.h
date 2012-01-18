@@ -9,7 +9,7 @@ class mmCoreDB;
 class mmReportIncomeExpenses : public mmPrintableBase 
 {
 public:
-    mmReportIncomeExpenses(mmCoreDB* core, bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd);
+    mmReportIncomeExpenses(mmCoreDB* core, bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd, wxString title);
 
     wxString getHTMLText();
 
@@ -18,7 +18,7 @@ private:
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;
     bool ignoreDate_;
-
+    wxString title_;
 
 };
 

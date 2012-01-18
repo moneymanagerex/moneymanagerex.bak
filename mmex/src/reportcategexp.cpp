@@ -25,7 +25,7 @@
 #include "dbwrapper.h"
 #include "mmgraphpie.h"
 #include "mmcoredb.h"
-
+#include "reportbudget.h"
 
 mmReportCategoryExpenses::mmReportCategoryExpenses(
     mmCoreDB* core, 
@@ -51,22 +51,26 @@ wxString mmReportCategoryExpenses::getHTMLText()
     hb.init();
     hb.addHeader(3, title_);
 
-    wxDateTime now = wxDateTime::Now();
-    wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
-    hb.addHeader(7, dt);
-    hb.addLineBreak();
-    hb.addLineBreak();
+    mmCommonReportDetails dateDisplay(NULL);
+    wxDateTime tBegin = dtBegin_;    // date needs to be adjusted
+    dateDisplay.DisplayDateHeading(hb, tBegin.Add(wxDateSpan::Day()), dtEnd_, !ignoreDate_);
 
-    wxDateTime tBegin = dtBegin_;
-    if (!ignoreDate_)
-    {
-        wxString dtRange = _("From: ") 
-            + mmGetNiceDateSimpleString(tBegin.Add(wxDateSpan::Day())) 
-            + _(" To: ") 
-            + mmGetNiceDateSimpleString(dtEnd_);
-        hb.addHeader(7, dtRange);
-        hb.addLineBreak();
-    }
+    //wxDateTime now = wxDateTime::Now();
+    //wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
+    //hb.addHeader(7, dt);
+    //hb.addLineBreak();
+    //hb.addLineBreak();
+
+    //wxDateTime tBegin = dtBegin_;
+    //if (!ignoreDate_)
+    //{
+    //    wxString dtRange = _("From: ") 
+    //        + mmGetNiceDateSimpleString(tBegin.Add(wxDateSpan::Day())) 
+    //        + _(" To: ") 
+    //        + mmGetNiceDateSimpleString(dtEnd_);
+    //    hb.addHeader(7, dtRange);
+    //    hb.addLineBreak();
+    //}
 
     hb.startCenter();
 
@@ -200,7 +204,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
     hb.end();
 
     gg.init(valueList);
-    gg.Generate(title_);
+    gg.Generate(wxEmptyString);
 
     return hb.getHTMLText();
 }
