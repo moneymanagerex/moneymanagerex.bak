@@ -160,8 +160,6 @@ void mmUnivCSVImportDialog::CreateControls()
     m_button_remove_ = new wxButton(itemPanel_AddRemove, wxID_REMOVE, _("Remove"), 
         wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer_AddRemove->Add(m_button_remove_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-
    
     //ListBox of attribute order
     csvListBox_ = new wxListBox(itemDialog1, ID_LISTBOX, 
@@ -199,7 +197,6 @@ void mmUnivCSVImportDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer_Arranger->Add(itemButton_Save, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemButton_Save -> SetToolTip (_("Save Template"));
-
 
     wxStaticLine*  m_staticline1 = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
     itemBoxSizer2->Add(m_staticline1, 0, wxEXPAND | wxALL, 5 );
@@ -247,20 +244,17 @@ void mmUnivCSVImportDialog::CreateControls()
     //Import File button
     wxPanel* itemPanel5 = new wxPanel(itemDialog1, ID_PANEL10, 
     wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    itemBoxSizer2->Add(itemPanel5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
+    itemBoxSizer2->Add(itemPanel5, 0, wxALIGN_RIGHT|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel5->SetSizer(itemBoxSizer6);
     wxButton* itemButton_Import = new wxButton(itemPanel5, ID_UNIVCSVBUTTON_IMPORT, _("&Import"), 
         wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer6->Add(itemButton_Import, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer6->Add(itemButton_Import, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
     itemButton_Import -> SetToolTip (_("Import File"));
 
-    wxBoxSizer* itemBoxSizer66 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer6->Add(itemBoxSizer66, 1, wxGROW|wxALL, 5);
-    
     wxButton* itemCancelButton = new wxButton(itemPanel5, wxID_CANCEL, _("&Cancel"));
-    itemBoxSizer66->Add(itemCancelButton);
+    itemBoxSizer6->Add(itemCancelButton, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
     itemCancelButton->SetFocus();
 }
 
