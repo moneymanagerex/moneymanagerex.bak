@@ -258,7 +258,7 @@ void mmUnivCSVImportDialog::CreateControls()
     wxStaticText* itemStaticText4 = new wxStaticText(itemDialog1, wxID_STATIC, _("Preview"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer2->Add(itemStaticText4, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
 
-    m_list_ctrl_ = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 100), wxLC_ICON|wxLC_REPORT);
+    m_list_ctrl_ = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 100), wxLC_REPORT);
     itemBoxSizer2->Add(m_list_ctrl_, 0, wxALL|wxEXPAND, 5);
 }
 
