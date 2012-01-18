@@ -648,7 +648,7 @@ void mmUnivCSVImportDialog::update_preview()
 {
     this->m_list_ctrl_->ClearAll();
     long index = 0;
-    this->m_list_ctrl_->InsertColumn(index, wxT(""));
+    this->m_list_ctrl_->InsertColumn(index, _("#"));
     for (std::vector<int>::const_iterator it = csvFieldOrder_.begin(); it != csvFieldOrder_.end(); ++ it)
     {
         ++ index;
