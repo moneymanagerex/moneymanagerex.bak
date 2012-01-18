@@ -226,18 +226,19 @@ void mmUnivCSVImportDialog::CreateControls()
     itemBoxSizer8->Add(itemStaticText6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString as = mmDBWrapper::getAccountsName(db_);
-    m_choice_account_ = new wxChoice(itemPanel7, wxID_ANY, wxDefaultPosition, wxSize(100, -1), as);
+    m_choice_account_ = new wxChoice(itemPanel7, wxID_ANY, wxDefaultPosition, wxSize(210, -1), as, 0);
     m_choice_account_->SetSelection(0);
-    itemBoxSizer8->Add(m_choice_account_, 1, wxALL|wxEXPAND, 5);
+    itemBoxSizer8->Add(m_choice_account_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticLine*  m_staticline2 = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
     itemBoxSizer2->Add(m_staticline2, 0, wxEXPAND | wxALL, 5 );
+
     // Preview 
-    wxStaticText* itemStaticText4 = new wxStaticText(this, wxID_STATIC, _("Preview"), wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer2->Add(itemStaticText4, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticBoxSizer* m_staticbox = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _T("&Preview")), wxVERTICAL);
 
     m_list_ctrl_ = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 100), wxLC_REPORT);
-    itemBoxSizer2->Add(m_list_ctrl_, 0, wxALL|wxEXPAND, 5);
+    m_staticbox->Add(m_list_ctrl_, 1, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(m_staticbox, 0, wxALL|wxEXPAND, 5);
 
     //Import File button
     wxPanel* itemPanel5 = new wxPanel(this, ID_PANEL10, 
