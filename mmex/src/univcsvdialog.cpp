@@ -209,13 +209,13 @@ void mmUnivCSVImportDialog::CreateControls()
     itemPanel6->SetSizer(itemBoxSizer7);
 
     wxStaticText* itemStaticText5 = new wxStaticText(itemPanel6, wxID_ANY, _("File Name:"), wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer7->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer7->Add(itemStaticText5, 0, wxALIGN_LEFT|wxALL, 5);
 
     m_text_ctrl_ = new wxTextCtrl(itemPanel6, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(300, -1), 0);
-    itemBoxSizer7->Add(m_text_ctrl_, 0, wxALL|wxEXPAND, 5);
+    itemBoxSizer7->Add(m_text_ctrl_, 1, wxALL|wxGROW, 5);
 
     wxButton* button_search = new wxButton(itemPanel6, wxID_SEARCH, _("&Search"));
-    itemBoxSizer7->Add(button_search, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer7->Add(button_search, 0, wxALIGN_RIGHT|wxALL, 5);
 
     // account to import
     wxPanel* itemPanel7 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
