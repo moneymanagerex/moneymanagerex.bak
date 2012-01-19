@@ -208,7 +208,7 @@ void mmUnivCSVImportDialog::CreateControls()
     wxBoxSizer* itemBoxSizer7 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel6->SetSizer(itemBoxSizer7);
 
-    wxStaticText* itemStaticText5 = new wxStaticText(itemPanel6, wxID_ANY, _("File to import:"), wxDefaultPosition, wxDefaultSize, 0);
+    wxStaticText* itemStaticText5 = new wxStaticText(itemPanel6, wxID_ANY, _("File Name:"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer7->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_text_ctrl_ = new wxTextCtrl(itemPanel6, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(300, -1), 0);
@@ -224,7 +224,7 @@ void mmUnivCSVImportDialog::CreateControls()
     wxBoxSizer* itemBoxSizer8 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel7->SetSizer(itemBoxSizer8);
 
-    wxStaticText* itemStaticText6 = new wxStaticText(itemPanel7, wxID_ANY, _("Account to import:"), wxDefaultPosition, wxDefaultSize, 0);
+    wxStaticText* itemStaticText6 = new wxStaticText(itemPanel7, wxID_ANY, _("Account  :"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer8->Add(itemStaticText6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString as = mmDBWrapper::getAccountsName(db_);
@@ -765,7 +765,7 @@ void mmUnivCSVImportDialog::OnListBox(wxCommandEvent& event)
     }
 }
 
-void mmUnivCSVImportDialog::OnCheckOrRadioBox(wxCommandEvent& event)
+void mmUnivCSVImportDialog::OnCheckOrRadioBox(wxCommandEvent& /*event*/)
 {
     //TODO match value to choices
     switch(m_radio_box_->GetSelection())
