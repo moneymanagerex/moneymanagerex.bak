@@ -3134,24 +3134,20 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
         // if the database pointer has been reset, the password is possibly incorrect
         if (!m_db)
         {
-//            wxString msgStr = wxString() << _("An incorrect password given for an encrypted file")
-//                                         << wxT("\n\n") << _("or") << wxT("\n\n")
-//                                         << _("Attempt to open a File that is not a database file");
-//            wxMessageBox(msgStr,dialogErrorMessageHeading ,wxICON_EXCLAMATION); 
             return ;
         }
 
         // we need to check the db whether it is the right version
         if (!mmDBWrapper::checkDBVersion(m_db.get()))
         {
-           wxString note = mmex::getProgramName() + _(" - No File opened ");
-           this->SetTitle(note);   
-           wxMessageBox(_("Sorry. The Database version is too old or Database password is incorrect"),
+            wxString note = mmex::getProgramName() + _(" - No File opened ");
+            this->SetTitle(note);   
+            wxMessageBox(_("Sorry. The Database version is too old or Database password is incorrect"),
                         dialogErrorMessageHeading, wxICON_EXCLAMATION);
 
-           m_db->Close();
-           m_db.reset();
-           return ;
+            m_db->Close();
+            m_db.reset();
+            return ;
         }
 
         password_ = password;
@@ -3252,7 +3248,6 @@ wxPanel* mmGUIFrame::createMainFrame(wxPanel* /*parent*/)
 
 void mmGUIFrame::openFile(const wxString& fileName, bool openingNew, const wxString &password)
 {
-    // Before deleting, go to home page first createHomePage()
     createDataStore(fileName, password, openingNew);
   
     if (m_db) {
@@ -3276,6 +3271,7 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew, const wxStr
 //----------------------------------------------------------------------------
 void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
 {
+    autoRepeatTransactionsTimer_.Stop();
     wxFileDialog dlg(this, 
                      _("Choose database file to create"), 
                      wxEmptyString, 
@@ -3300,6 +3296,7 @@ void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnOpen(wxCommandEvent& /*event*/)
 {
+    autoRepeatTransactionsTimer_.Stop();
     wxString fileName = wxFileSelector(_("Choose database file to open"), 
                                        wxEmptyString, wxEmptyString, wxEmptyString, 
                                        wxT("MMB Files(*.mmb)|*.mmb|Encrypted MMB files (*.emb)|*.emb"), 
@@ -3476,6 +3473,7 @@ void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 {
+    autoRepeatTransactionsTimer_.Stop();
     Close(TRUE);
 }
 //----------------------------------------------------------------------------
@@ -4119,7 +4117,7 @@ void mmGUIFrame::showBeginAppDialog()
     {
         wxFileName fname(mmDBWrapper::getLastDbPath(m_inidb.get()));
         if (fname.IsOk()) {
-                openFile(fname.GetFullPath(), false);
+            openFile(fname.GetFullPath(), false);
         }
     }
     else if (rc == -1)
@@ -4762,6 +4760,7 @@ void mmGUIApp::OnFatalException()
 
 void mmGUIFrame::SetDatabaseFile(wxString dbFileName, bool newDatabase)
 {
+    autoRepeatTransactionsTimer_.Stop();
     wxProgressDialog *progress = NULL;
     if (! newDatabase)
     {
@@ -4777,13 +4776,15 @@ void mmGUIFrame::SetDatabaseFile(wxString dbFileName, bool newDatabase)
     }
 
     if (progress)
+    {
         progress->Update(40);
-
+    }
     openFile(dbFileName, newDatabase);
 
     if (progress)
+    {
         progress->Update(95);
-
+    }
     recentFiles_->updateRecentList(dbFileName);
 
     if (progress)

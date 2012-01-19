@@ -280,6 +280,7 @@ private:
     void OnRecentFiles_5(wxCommandEvent& event);
     void OnClearRecentFiles(wxCommandEvent& event);
 
+    /** Sets the database to the new database selected by the user */
     void SetDatabaseFile(wxString dbFileName, bool newDatabase = false);
 
     // any class wishing to process wxWindows events must use this macro
