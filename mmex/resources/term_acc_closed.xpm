@@ -1,5 +1,5 @@
 /* XPM */
-static const char * term_acc_closed_xpm[] = {
+static char * term_acc_closed_xpm[] = {
 "16 16 107 2",
 "  	c None",
 ". 	c #FD0629",
@@ -72,7 +72,7 @@ static const char * term_acc_closed_xpm[] = {
 "D 	c #B0DDAB",
 "E 	c #7DB979",
 "F 	c #67AE63",
-"G 	c #1C2DAC",
+"G 	c #F6F904",
 "H 	c #84BD7F",
 "I 	c #9CCE97",
 "J 	c #B3DFAD",
