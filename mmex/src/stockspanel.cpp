@@ -201,6 +201,7 @@ void mmStocksPanel::CreateControls()
     m_LED = new awxLed( headerPanel, ID_PANEL_STOCK_UPDATE_LED, wxDefaultPosition, wxDefaultSize, awxLED_GREEN, 1, 5 );
     //m_LED = new awxLed( headerPanel, ID_PANEL_STOCK_UPDATE_LED, wxDefaultPosition, wxDefaultSize, awxLED_GREEN);
     m_LED->SetState( awxLED_OFF );
+    m_LED->SetBackgroundColour(mmColors::listBackColor);
     m_LED->SetToolTip( _("Idle") );
 
     wxBoxSizer* itemBoxSizerHHeader = new wxBoxSizer(wxHORIZONTAL);
