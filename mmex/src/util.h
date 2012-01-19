@@ -112,8 +112,13 @@ public:
     static bool expandStocksHome_;
     static bool expandBankTree_;
     static bool expandTermTree_;
-    static bool ignoreFutureTransactions_;
 
+    static bool budget_financial_years_;
+    static bool budget_include_transfers_;
+    static bool budget_setup_no_summaries_;
+    static bool budget_summary_no_categories_;
+    static bool ignore_future_transactions_;
+    
     static int transPayeeSelectionNone_;
     static int transCategorySelectionNone_;
     static int transStatusReconciled_;

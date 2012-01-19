@@ -2809,21 +2809,21 @@ void mmGUIFrame::createMenu()
 	wxMenuItem* menuItemLinks = new wxMenuItem(menuView, MENU_VIEW_LINKS, 
 		_("&Navigation"), _("Show/Hide the Navigation tree control"), wxITEM_CHECK);
     wxMenuItem* menuItemBankAccount = new wxMenuItem(menuView, MENU_VIEW_BANKACCOUNTS, 
-		_("&Bank Accounts"), _("Show/Hide Bank Accounts on Summary page"), wxITEM_CHECK);
+        _("&Bank Accounts"), _("Show/Hide Bank Accounts on Summary page"), wxITEM_CHECK);
 	wxMenuItem* menuItemTermAccount = new wxMenuItem(menuView, MENU_VIEW_TERMACCOUNTS, 
-		_("Term &Accounts"), _("Show/Hide Term Accounts on Summary page"), wxITEM_CHECK);
+        _("Term &Accounts"), _("Show/Hide Term Accounts on Summary page"), wxITEM_CHECK);
     wxMenuItem* menuItemStockAccount = new wxMenuItem(menuView, MENU_VIEW_STOCKACCOUNTS, 
-		_("&Stock Accounts"), _("Show/Hide Stock Accounts on Summary page"), wxITEM_CHECK);
-    wxMenuItem* menuItemBudgetFinancialYears = new wxMenuItem(menuView, MENU_VIEW_BUDGET_FINANCIAL_YEARS, 
-		_("Budget &Year as Financial Years"), _("Display Budgets in Financial Year Format"), wxITEM_CHECK);
-    wxMenuItem* menuItemBudgetSetupWithoutSummary = new wxMenuItem(menuView, MENU_VIEW_BUDGET_SETUP_SUMMARY, 
-		_("Budget Setup - &without Summaries"), _("Display the Budget Setup without category summaries"), wxITEM_CHECK);
-    wxMenuItem* menuItemBudgetCategorySummary = new wxMenuItem(menuView, MENU_VIEW_BUDGET_CATEGORY_SUMMARY, 
-		_("Budget &Category Summary - with Categories"), _("Include the categories in the Budget Category Summary"), wxITEM_CHECK);
+        _("&Stock Accounts"), _("Show/Hide Stock Accounts on Summary page"), wxITEM_CHECK);
+    wxMenuItem* menuItemBudgetFinancialYears = new wxMenuItem(menuView, MENU_VIEW_BUDGET_FINANCIAL_YEARS,
+        _("Budgets: As &Financial Years"), _("Display Budgets in Financial Year Format"), wxITEM_CHECK);
     wxMenuItem* menuItemBudgetTransferTotal = new wxMenuItem(menuView, MENU_VIEW_BUDGET_TRANSFER_TOTAL,
-		_("Budget &Totals - with Transfers"), _("Include the transfer transactions in the Budget Totals"), wxITEM_CHECK);
+        _("Budgets: &Include Transfers in Totals"), _("Include the transfer transactions in the Budget Totals"), wxITEM_CHECK);
+    wxMenuItem* menuItemBudgetSetupWithoutSummary = new wxMenuItem(menuView, MENU_VIEW_BUDGET_SETUP_SUMMARY, 
+        _("Budget Setup: &Without Summaries"), _("Display the Budget Setup without category summaries"), wxITEM_CHECK);
+    wxMenuItem* menuItemBudgetCategorySummary = new wxMenuItem(menuView, MENU_VIEW_BUDGET_CATEGORY_SUMMARY, 
+        _("Budget Summary: Include &Categories"), _("Include the categories in the Budget Category Summary"), wxITEM_CHECK);
     wxMenuItem* menuItemIgnoreFutureTransactions = new wxMenuItem(menuView, MENU_IGNORE_FUTURE_TRANSACTIONS,
-		_("Ignore Future Transactions"), _("Ignore Future transactions"), wxITEM_CHECK);
+        _("Ignore F&uture Transactions"), _("Ignore Future transactions"), wxITEM_CHECK);
 
     //Add the menu items to the menu bar
 	menuView->Append(menuItemToolbar);
@@ -2842,10 +2842,10 @@ void mmGUIFrame::createMenu()
 //    menuView->AppendSubMenu(budgetingMenu,_("Budget..."));
 
     menuView->Append(menuItemBudgetFinancialYears);
+    menuView->Append(menuItemBudgetTransferTotal);
     menuView->AppendSeparator();
     menuView->Append(menuItemBudgetSetupWithoutSummary);
     menuView->Append(menuItemBudgetCategorySummary);
-    menuView->Append(menuItemBudgetTransferTotal);
     menuView->AppendSeparator();
     menuView->Append(menuItemIgnoreFutureTransactions);
 
@@ -4360,7 +4360,7 @@ void mmGUIFrame::OnViewStockAccounts(wxCommandEvent &event)
 void mmGUIFrame::OnIgnoreFutureTransactions(wxCommandEvent &event)
 {
     m_mgr.GetPane(wxT("Ignore Future Transactions")).Show(event.IsChecked());
-    mmIniOptions::ignoreFutureTransactions_ = !mmIniOptions::ignoreFutureTransactions_;
+    mmIniOptions::ignore_future_transactions_ = !mmIniOptions::ignore_future_transactions_;
     if (!refreshRequested_)
     {
         refreshRequested_ = true;
