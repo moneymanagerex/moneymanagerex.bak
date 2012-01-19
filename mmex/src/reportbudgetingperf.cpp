@@ -62,8 +62,9 @@ void mmReportBudgetingPerformance::DisplayActualMonths(mmHTMLBuilder& hb, mmBudg
         {
             transferAsDeposit = false;
         }
-        double actualMonthVal = core_->bTransactionList_.getAmountForCategory(budgetEntry.categID_, budgetEntry.subcategID_, false, dtBegin, dtEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::ignoreFutureTransactions_);
-
+        double actualMonthVal = core_->bTransactionList_.getAmountForCategory(budgetEntry.categID_, budgetEntry.subcategID_,
+            false, dtBegin, dtEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::ignore_future_transactions_
+        );
         wxString actualMonthValStr;
         mmex::formatDoubleToCurrencyEdit(actualMonthVal, actualMonthValStr);
 
@@ -173,7 +174,9 @@ wxString mmReportBudgetingPerformance::getHTMLText()
         {
             transferAsDeposit = false;
         }
-        th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_, false,  yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::ignoreFutureTransactions_);
+        th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_, false,
+            yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::ignore_future_transactions_
+        );
         mmex::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
 
         if (th.actual_ < 0)
@@ -262,7 +265,9 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             {
                 transferAsDeposit = false;
             }
-            thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, false,  yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::ignoreFutureTransactions_);
+            thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, false,
+                yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::ignore_future_transactions_
+            );
             mmex::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
             
             // set the overall actual abount for the year

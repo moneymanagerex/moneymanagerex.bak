@@ -404,8 +404,8 @@ void mmOptionsDialog::CreateControls()
     generalPanel->SetSizer(generalPanelSizer);
 
     // ------------------------------------------
-    // HomePage Header Settings
-    wxStaticBox* headerStaticBox = new wxStaticBox(generalPanel, wxID_ANY, _("Home Page Header"));
+    // Display Header Settings
+    wxStaticBox* headerStaticBox = new wxStaticBox(generalPanel, wxID_ANY, _("Display Heading"));
 
     // Define the staticBox font and set it as wxFONTWEIGHT_BOLD
     wxFont staticBoxFontSetting = headerStaticBox->GetFont();
@@ -927,7 +927,7 @@ void mmOptionsDialog::CreateControls()
     wxStaticText* itemStaticText54 = new wxStaticText(itemPanelExpImp, wxID_STATIC, _("CSV Delimiter"), wxDefaultPosition, wxDefaultSize, 0);
     itemStaticBoxSizer184->Add(itemStaticText54, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
     
-    wxFlexGridSizer* itemFlexGridSizer184 = new wxFlexGridSizer(2, 3, 0, 0);
+    wxFlexGridSizer* itemFlexGridSizer184 = new wxFlexGridSizer(2, 3, 10, 10);
     itemStaticBoxSizer184->Add(itemFlexGridSizer184, 0, wxALL);
 
     wxString delimiter = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
