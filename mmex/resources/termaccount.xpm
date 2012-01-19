@@ -1,5 +1,5 @@
 /* XPM */
-static const char * termaccount_xpm[] = {
+static char * termaccount_xpm[] = {
 "16 16 110 2",
 "  	c None",
 ". 	c #8BC386",

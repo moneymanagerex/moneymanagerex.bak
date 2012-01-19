@@ -2771,8 +2771,8 @@ void mmGUIFrame::createMenu()
     menu_file->Append(MENU_EXPORT, _("&Export"), exportMenu);
 
     wxMenu* importMenu = new wxMenu;
-    importMenu->Append(MENU_IMPORT_QIF, _("&QIF Files"), _("Import from QIF"));
     importMenu->Append(MENU_IMPORT_UNIVCSV, _("&Universal CSV Files"), _("Import from any CSV file"));
+    importMenu->Append(MENU_IMPORT_QIF, _("&QIF Files"), _("Import from QIF"));
     menu_file->Append(MENU_IMPORT, _("&Import"), importMenu);
 
     menu_file->AppendSeparator();
@@ -3649,23 +3649,31 @@ void mmGUIFrame::OnCashFlowSpecificAccounts()
 void mmGUIFrame::OnOptions(wxCommandEvent& /*event*/)
 {
     if (!m_db.get() || !m_inidb)
+    {
         return;
+    }
 
-    mmOptionsDialog(m_core.get(), m_inidb.get(), this).ShowModal();
-    createHomePage();
-    updateNavTreeControl();
+    if (mmOptionsDialog(m_core.get(), m_inidb.get(), this).ShowModal() == wxID_OK)
+    {
+        createHomePage();
+        updateNavTreeControl();
 
-    // enable or disable online update currency rate
-    wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
-    if(enableCurrencyUpd == wxT("TRUE")) 
-    {
-        if (menuItemOnlineUpdateCurRate_)
-            menuItemOnlineUpdateCurRate_->Enable(true);
-    } 
-    else 
-    {
-        if (menuItemOnlineUpdateCurRate_)
-            menuItemOnlineUpdateCurRate_->Enable(false);
+        // enable or disable online update currency rate
+        wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
+        if(enableCurrencyUpd == wxT("TRUE")) 
+        {
+            if (menuItemOnlineUpdateCurRate_)
+            {
+                menuItemOnlineUpdateCurRate_->Enable(true);
+            }
+        } 
+        else 
+        {
+            if (menuItemOnlineUpdateCurRate_)
+            {
+                menuItemOnlineUpdateCurRate_->Enable(false);
+            }
+        }
     }
 }
 //----------------------------------------------------------------------------
