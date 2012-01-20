@@ -71,7 +71,7 @@ mmBillsDepositsPanel::mmBillsDepositsPanel(wxSQLite3Database* db, wxSQLite3Datab
             wxWindow *parent,
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
             const wxString& name )
-            : db_(db), core_(core), inidb_(inidb), m_imageList(), listCtrlAccount_()
+            : mmPanelBase(db, inidb), core_(core), m_imageList(), listCtrlAccount_()
 {
     
     Create(parent, winid, pos, size, style, name);

@@ -79,8 +79,6 @@ public:
     void updateAccounts();
     ~mmHomePagePanel();
 private:
-    wxSQLite3Database* db_;
-    wxSQLite3Database* inidb_;
     mmCoreDB* core_;
     mmGUIFrame* frame_;
     mmHtmlWindow* htmlWindow_;

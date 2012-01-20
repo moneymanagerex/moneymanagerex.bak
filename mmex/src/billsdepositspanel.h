@@ -157,9 +157,7 @@ public:
     void sortTable();
 
 public:
-    wxSQLite3Database* db_;
     mmCoreDB* core_;
-    wxSQLite3Database* inidb_;
     wxImageList* m_imageList;
     billsDepositsListCtrl* listCtrlAccount_;
 };

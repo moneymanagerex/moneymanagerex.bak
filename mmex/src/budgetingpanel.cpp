@@ -58,8 +58,7 @@ mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, wxSQLite3Database* ini
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
             const wxString& name 
            ) : 
-    db_(db), 
-    inidb_(inidb), 
+    mmPanelBase(db, inidb),
     m_imageList(), 
     listCtrlAccount_(),
     mainFrame_(mainFrame),

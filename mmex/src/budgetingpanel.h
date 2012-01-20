@@ -141,8 +141,6 @@ public:
     std::vector<mmBudgetEntryHolder> trans_;
 
 public:
-    wxSQLite3Database* db_;
-    wxSQLite3Database* inidb_;
     wxImageList* m_imageList;
     budgetingListCtrl* listCtrlAccount_;
     wxString currentView_;
