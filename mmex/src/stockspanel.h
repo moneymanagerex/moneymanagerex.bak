@@ -110,8 +110,8 @@ class mmStocksPanel : public mmPanelBase
 
 public:
     mmStocksPanel( wxSQLite3Database* db,
-		    wxSQLite3Database* inidb,
-			int accountID,
+            wxSQLite3Database* inidb,
+            int accountID,
             wxWindow *parent,
             wxWindowID winid = wxID_ANY,
             const wxPoint& pos = wxDefaultPosition,
@@ -140,7 +140,7 @@ public:
     void OnEditStocks(wxCommandEvent& event);
     void OnRefreshQuotes(wxCommandEvent& event);
     void OnHTTPSettings(wxCommandEvent& event);
-	void enableEditDeleteButtons(bool en);
+    void enableEditDeleteButtons(bool en);
     void updateExtraStocksData(int selIndex);
 
     void OnViewPopupSelected(wxCommandEvent& event);
@@ -155,8 +155,8 @@ public:
     stocksListCtrl* listCtrlAccount_;
     wxSQLite3Database* inidb_;
     wxImageList* m_imageList;
-	int accountID_;
-	/************************************************************/
+    int accountID_;
+    /************************************************************/
     // Greg Newton
 private:
     mmYahoo* yahoo_;
@@ -174,7 +174,6 @@ private:
     void OrderQuoteRefresh(void);
 
     wxToggleButton* TempProxyButton;
-
 };
 
 #endif
