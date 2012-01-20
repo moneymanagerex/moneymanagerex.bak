@@ -25,7 +25,6 @@
 #include <wx/string.h>
 
 
-class mmCoreDB;
 class wxSQLite3Database;
 
 
@@ -37,7 +36,6 @@ public:
     wxString getHTMLText();
 
 private:
-    mmCoreDB* core_;
     wxSQLite3Database* db_;
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;

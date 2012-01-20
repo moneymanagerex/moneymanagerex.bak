@@ -3,8 +3,6 @@
 
 #include "reportbase.h"
 
-class mmCoreDB;
-
 class mmReportIncExpensesOverTime : public mmPrintableBase 
 {
 public:
@@ -13,7 +11,6 @@ public:
     wxString getHTMLText();
 
 private:
-    mmCoreDB* core_;
     int year_;
 };
 

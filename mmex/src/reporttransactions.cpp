@@ -25,13 +25,12 @@
 #include "dbwrapper.h"
 #include "mmcheckingpanel.h"
 #include "mmtransaction.h"
-#include "mmcoredb.h"
 
 #include <algorithm>
 
 mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBankTransaction> >* trans, 
     mmCoreDB* core, int refAccountID, wxString refAccountStr, mmFilterTransactionsDialog* transDialog)
-:trans_(trans), core_(core), refAccountID_(refAccountID), refAccountStr_(refAccountStr), transDialog_(transDialog)
+:trans_(trans), mmPrintableBase(core), refAccountID_(refAccountID), refAccountStr_(refAccountStr), transDialog_(transDialog)
 {
 }
 

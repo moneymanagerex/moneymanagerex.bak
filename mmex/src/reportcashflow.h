@@ -25,8 +25,6 @@ private:
       double amount;
    };
 
-   mmCoreDB* core_;
-
    typedef std::vector<mmRepeatForecast> forecastVec;
    std::vector<forecastVec> bdForecastVec;
 

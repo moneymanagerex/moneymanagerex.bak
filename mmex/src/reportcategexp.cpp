@@ -24,7 +24,6 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "mmgraphpie.h"
-#include "mmcoredb.h"
 #include "reportbudget.h"
 
 mmReportCategoryExpenses::mmReportCategoryExpenses(
@@ -35,7 +34,7 @@ mmReportCategoryExpenses::mmReportCategoryExpenses(
     const wxString& title,
     int type
 ) : 
-    core_(core),
+    mmPrintableBase(core),
     db_(core_->db_.get()),
     dtBegin_(dtBegin),
     dtEnd_(dtEnd),

@@ -4,8 +4,6 @@
 #include "reportbase.h"
 #include <wx/datetime.h>
 
-class mmCoreDB;
-
 class mmReportIncomeExpenses : public mmPrintableBase 
 {
 public:
@@ -14,7 +12,6 @@ public:
     wxString getHTMLText();
 
 private:
-    mmCoreDB* core_;
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;
     bool ignoreDate_;

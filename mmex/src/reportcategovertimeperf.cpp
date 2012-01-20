@@ -19,7 +19,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //----------------------------------------------------------------------------
 #include "htmlbuilder.h"
 #include "util.h"
-#include "mmcoredb.h"
 #include "reportcategovertimeperf.h"
 //----------------------------------------------------------------------------
 #include <vector>
@@ -218,15 +217,15 @@ void printColumnsTotals
 //----------------------------------------------------------------------------
 
 mmReportCategoryOverTimePerformance::mmReportCategoryOverTimePerformance(mmCoreDB *core) : 
-    m_core(core)
+    mmPrintableBase(core)
 { 
-    wxASSERT(m_core);
+    wxASSERT(core_);
 }
 //----------------------------------------------------------------------------
 
 wxSQLite3Database& mmReportCategoryOverTimePerformance::getDb() const
 {
-    return *m_core->db_;
+    return *core_->db_;
 }
 //----------------------------------------------------------------------------
 
@@ -286,14 +285,14 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
         
         if (last_cat_id != cat_id) { // category changed
             last_cat_id = cat_id;
-            printRow(periodBegin, periodEnd, periods, q1, cat_id, g_NullSubCat, *m_core, hb, columns_totals);
+            printRow(periodBegin, periodEnd, periods, q1, cat_id, g_NullSubCat, *core_, hb, columns_totals);
         }
 
         int sc_idx = q1.FindColumnIndex(wxT("SUBCATEGID"));
         
         if (!q1.IsNull(sc_idx)) {
             int subcat_id = q1.GetInt(sc_idx);
-            printRow(periodBegin, periodEnd, periods, q1, cat_id, subcat_id, *m_core, hb, columns_totals);
+            printRow(periodBegin, periodEnd, periods, q1, cat_id, subcat_id, *core_, hb, columns_totals);
         }
     }
 

@@ -6,10 +6,9 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "budgetingpanel.h"
-#include "mmcoredb.h"
 
 mmReportIncExpensesOverTime::mmReportIncExpensesOverTime(mmCoreDB* core, int year) : 
-    core_(core),
+    mmPrintableBase(core),
     year_(year)
 {
 }

@@ -5,10 +5,9 @@
 #include "reportbase.h"
 #include "util.h"
 #include "dbwrapper.h"
-#include "mmcoredb.h"
 
 mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, const wxArrayString* accountArray) : 
-    core_(core), 
+    mmPrintableBase(core), 
     accountArray_(accountArray)
 {
     activeTermAccounts_  = false;
