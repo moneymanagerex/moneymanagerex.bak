@@ -23,11 +23,10 @@
 #include "reportbase.h"
 #include "util.h"
 #include "dbwrapper.h"
-#include "mmcoredb.h"
 
 
 mmReportSummary::mmReportSummary(mmCoreDB* core, mmGUIFrame* frame) : 
-	core_(core),
+	mmPrintableBase(core),
     frame_(frame),
 	db_(core_->db_.get()) 
 {

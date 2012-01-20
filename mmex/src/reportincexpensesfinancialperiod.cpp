@@ -32,12 +32,11 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "budgetingpanel.h"
-#include "mmcoredb.h"
 #include "reportbudget.h"
 
 mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmGUIFrame* frame, mmCoreDB* core, int year):
     frame_(frame),
-    core_(core),
+    mmPrintableBase(core),
     year_(year),
     printYear_(year)
 {

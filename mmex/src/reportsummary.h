@@ -22,7 +22,6 @@
 #include "reportbase.h"
 #include "mmex.h"
 
-class mmCoreDB;
 class wxSQLite3Database;
 
 class mmReportSummary : public mmPrintableBase 
@@ -32,7 +31,6 @@ public:
     wxString getHTMLText();
 
 private:
-    mmCoreDB* core_;
     mmGUIFrame* frame_;
     wxSQLite3Database* db_;
 };

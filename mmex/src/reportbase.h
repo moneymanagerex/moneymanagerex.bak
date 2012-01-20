@@ -20,6 +20,7 @@
 #ifndef _MM_EX_REPORTBASE_H_
 #define _MM_EX_REPORTBASE_H_
 //----------------------------------------------------------------------------
+#include "mmcoredb.h"
 class wxString;
 //----------------------------------------------------------------------------
 
@@ -28,6 +29,13 @@ class mmPrintableBase
 public:
     virtual ~mmPrintableBase() {}
     virtual wxString getHTMLText() = 0;
+
+public:
+    mmPrintableBase() {}
+    mmPrintableBase(mmCoreDB* core): core_(core) {}
+
+protected:
+    mmCoreDB* core_;
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_REPORTBASE_H_

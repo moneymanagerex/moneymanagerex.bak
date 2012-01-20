@@ -6,7 +6,6 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "mmgraphpie.h"
-#include "mmcoredb.h"
 #include "reportbudget.h"
 
 mmReportPayeeExpenses::mmReportPayeeExpenses(
@@ -15,7 +14,7 @@ mmReportPayeeExpenses::mmReportPayeeExpenses(
     wxDateTime dtBegin,
     wxDateTime dtEnd,
     const wxString& title
-) : core_(core), dtBegin_(dtBegin), dtEnd_(dtEnd), ignoreDate_(ignoreDate), title_(title)
+) : mmPrintableBase(core), dtBegin_(dtBegin), dtEnd_(dtEnd), ignoreDate_(ignoreDate), title_(title)
 {
 }
 

@@ -20,7 +20,6 @@
 
 #include "reportbase.h"
 #include "htmlbuilder.h"
-#include "mmcoredb.h"
 
 class mmCustomSQLReport : public mmPrintableBase
 {
@@ -31,7 +30,6 @@ public:
     void displayReportHeader(mmHTMLBuilder& hb, wxString reportTitle);
 
 private:
-    mmCoreDB* core_;
     wxString reportTitle_;
     wxString sqlQuery_;
 };

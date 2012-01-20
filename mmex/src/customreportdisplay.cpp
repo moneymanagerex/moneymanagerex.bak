@@ -20,7 +20,7 @@
 #include "util.h"
 
 mmCustomSQLReport::mmCustomSQLReport(mmCoreDB* core, const wxString& reportTitle, const wxString& sqlQuery):
-    core_(core), reportTitle_(reportTitle), sqlQuery_(sqlQuery)
+    mmPrintableBase(core), reportTitle_(reportTitle), sqlQuery_(sqlQuery)
 {
 }
 

@@ -30,8 +30,6 @@
 #include "reportbase.h"
 #include "mmex.h"
 
-class mmCoreDB;
-
 class mmReportIncExpensesOverFinancialPeriod : public mmPrintableBase 
 {
 public:
@@ -41,7 +39,6 @@ public:
 
 private:
     mmGUIFrame* frame_;
-    mmCoreDB* core_;
     int year_;
     int printYear_;
 };

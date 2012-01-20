@@ -27,7 +27,6 @@
 #include "filtertransdialog.h"
 
 class mmBankTransaction;
-class mmCoreDB;
 
 class mmReportTransactions : public mmPrintableBase 
 {
@@ -40,7 +39,6 @@ public:
 
 private:
     std::vector<boost::shared_ptr<mmBankTransaction> >* trans_;
-    mmCoreDB* core_;
     wxDateTime dtBegin_;
     wxDateTime dtEnd_;
     bool ignoreDate_;

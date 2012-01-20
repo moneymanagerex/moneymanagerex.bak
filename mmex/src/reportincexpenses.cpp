@@ -6,7 +6,6 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "mmgraphincexpensesmonth.h"
-#include "mmcoredb.h"
 #include "reportbudget.h"
 
 mmReportIncomeExpenses::mmReportIncomeExpenses(
@@ -15,7 +14,7 @@ mmReportIncomeExpenses::mmReportIncomeExpenses(
     wxDateTime dtBegin, 
     wxDateTime dtEnd,
     wxString title
-) : core_(core), dtBegin_(dtBegin), dtEnd_(dtEnd), ignoreDate_(ignoreDate), title_(title)
+) : mmPrintableBase(core), dtBegin_(dtBegin), dtEnd_(dtEnd), ignoreDate_(ignoreDate), title_(title)
 {
     wxASSERT(dtBegin_ == dtBegin);
 }
