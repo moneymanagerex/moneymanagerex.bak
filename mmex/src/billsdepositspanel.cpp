@@ -487,36 +487,21 @@ void billsDepositsListCtrl::OnItemRightClick(wxListEvent& event)
 
 wxString mmBillsDepositsPanel::getItem(long item, long column)
 {
-    if (column == 0)
-        return trans_[item].payeeStr_;
-
-	if (column == 1)
-		return trans_[item].accountStr_;
+    if (column == 0) return trans_[item].payeeStr_;
+	if (column == 1) return trans_[item].accountStr_;
 
     if (column == 2)
     {
-        if (trans_[item].transType_ == TRANS_TYPE_WITHDRAWAL_STR)
-            return _("Withdrawal");
-        else if (trans_[item].transType_ == TRANS_TYPE_DEPOSIT_STR)
-            return _("Deposit");
-        else if (trans_[item].transType_ == TRANS_TYPE_TRANSFER_STR)
-            return _("Transfer");
+        if (trans_[item].transType_ == TRANS_TYPE_WITHDRAWAL_STR) return _("Withdrawal");
+        else if (trans_[item].transType_ == TRANS_TYPE_DEPOSIT_STR) return _("Deposit");
+        else if (trans_[item].transType_ == TRANS_TYPE_TRANSFER_STR) return _("Transfer");
     }
 
-    if (column == 3)
-        return trans_[item].transAmtString_;
-
-    if (column == 4)
-        return trans_[item].nextOccurStr_;
-
-    if (column == 5)
-        return trans_[item].repeatsStr_;
-
-    if (column == 6)
-        return trans_[item].daysRemainingStr_;
-		
-	if (column == 7)
-		return trans_[item].notesStr_;
+    if (column == 3) return trans_[item].transAmtString_;
+    if (column == 4) return trans_[item].nextOccurStr_;
+    if (column == 5) return trans_[item].repeatsStr_;
+    if (column == 6) return trans_[item].daysRemainingStr_;
+	if (column == 7) return trans_[item].notesStr_;
 
     return wxT("");
 }
