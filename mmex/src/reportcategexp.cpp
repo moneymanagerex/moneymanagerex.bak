@@ -54,23 +54,6 @@ wxString mmReportCategoryExpenses::getHTMLText()
     wxDateTime tBegin = dtBegin_;    // date needs to be adjusted
     dateDisplay.DisplayDateHeading(hb, tBegin.Add(wxDateSpan::Day()), dtEnd_, !ignoreDate_);
 
-    //wxDateTime now = wxDateTime::Now();
-    //wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
-    //hb.addHeader(7, dt);
-    //hb.addLineBreak();
-    //hb.addLineBreak();
-
-    //wxDateTime tBegin = dtBegin_;
-    //if (!ignoreDate_)
-    //{
-    //    wxString dtRange = _("From: ") 
-    //        + mmGetNiceDateSimpleString(tBegin.Add(wxDateSpan::Day())) 
-    //        + _(" To: ") 
-    //        + mmGetNiceDateSimpleString(dtEnd_);
-    //    hb.addHeader(7, dtRange);
-    //    hb.addLineBreak();
-    //}
-
     hb.startCenter();
 
     // Add the graph
