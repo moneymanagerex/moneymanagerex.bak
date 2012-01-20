@@ -330,7 +330,7 @@ bool mmBudgetingPanel::displayEntryAllowed(mmBudgetEntryHolder& budgetEntry)
         if ((budgetEntry.estimated_ < 0.0) || (budgetEntry.actual_ < 0.0))
             result = true;
     } else if (currentView_ == _("View Budget Category Summary")) {
-        if ((budgetEntry.budgetEntryID_ < 0.0))
+        if ((budgetEntry.id_ < 0.0))
             result = true;
     } else {
         result = true;
@@ -434,7 +434,7 @@ void mmBudgetingPanel::initVirtualListControl()
          Create a TOTALS entry for the category.
          ***************************************************************************/
         mmBudgetEntryHolder catTotals;
-        catTotals.budgetEntryID_ = -1;
+        catTotals.id_ = -1;
         catTotals.categID_ = -1;
         catTotals.catStr_  = th.catStr_;
         catTotals.subcategID_ = -1;
@@ -602,7 +602,7 @@ wxString budgetingListCtrl::OnGetItemText(long item, long column) const
 
 wxListItemAttr* budgetingListCtrl::OnGetItemAttr(long item) const
 {
-    if ((cp_->trans_[item].budgetEntryID_ < 0) && 
+    if ((cp_->trans_[item].id_ < 0) && 
         (cp_->currentView_ != wxT("View Budget Category Summary")) )
     {
         return (wxListItemAttr *)&attr3_;
@@ -618,7 +618,7 @@ void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
     /*************************************************************************** 
      A TOTALS entry does not contain a budget entry, therefore ignore the event.
      ***************************************************************************/
-    if (cp_->trans_[selectedIndex_].budgetEntryID_ >= 0)
+    if (cp_->trans_[selectedIndex_].id_ >= 0)
     {
         mmBudgetEntryDialog dlg(
             cp_->db_, cp_->budgetYearID_,
