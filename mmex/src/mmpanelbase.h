@@ -24,6 +24,13 @@
 #include <wx/string.h>
 //----------------------------------------------------------------------------
 
+struct mmHolderBase
+{
+    int id_;
+    wxString valueStr_;
+    double value_;
+};
+
 class mmPanelBase : public wxPanel
 {
 public: 

@@ -76,11 +76,8 @@ private:
 };
 
 /* Holds a single transaction */
-class mmBDTransactionHolder
+struct mmBDTransactionHolder: public mmHolderBase
 {
-public:
-    int bdID_;
-
     wxDateTime nextOccurDate_;
     wxString nextOccurStr_;
     wxString repeatsStr_;

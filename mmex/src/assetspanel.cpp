@@ -279,8 +279,8 @@ void mmAssetsPanel::initVirtualListControl()
     {
         mmAssetHolder th;
 
-        th.assetID_ = q1.GetInt(wxT("ASSETID"));
-        th.value_ = mmDBWrapper::getAssetValue(m_db, th.assetID_);
+        th.id_ = q1.GetInt(wxT("ASSETID"));
+        th.value_ = mmDBWrapper::getAssetValue(m_db, th.id_);
         th.assetName_ = q1.GetString(wxT("ASSETNAME"));
         th.assetDate_ = q1.GetString(wxT("FORMATEDDATE"));
         //sqlite does not support %y date mask therefore null value should be replaces
@@ -459,7 +459,7 @@ void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
 
     wxMessageDialog msgDlg(this, _("Do you really want to delete the Asset?"), _("Confirm Asset Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES) {
-        mmDBWrapper::deleteAsset(m_cp->getDb(), m_cp->getTrans()[m_selectedIndex].assetID_);
+        mmDBWrapper::deleteAsset(m_cp->getDb(), m_cp->getTrans()[m_selectedIndex].id_);
         DeleteItem(m_selectedIndex);
         m_cp->initVirtualListControl();
         
@@ -482,7 +482,7 @@ void assetsListCtrl::OnEditAsset(wxCommandEvent& /*event*/)
 		return;
 	}
 
-	mmAssetDialog dlg(this, m_cp->getDb(), m_cp->getTrans()[m_selectedIndex].assetID_, true);
+	mmAssetDialog dlg(this, m_cp->getDb(), m_cp->getTrans()[m_selectedIndex].id_, true);
 
 	if (dlg.ShowModal() == wxID_OK) {
 		doRefreshItems();
@@ -493,7 +493,7 @@ void assetsListCtrl::OnListItemActivated(wxListEvent& event)
 {
 	m_selectedIndex = event.GetIndex();
 
-	mmAssetDialog dlg(this, m_cp->getDb(), m_cp->getTrans()[m_selectedIndex].assetID_, true);
+	mmAssetDialog dlg(this, m_cp->getDb(), m_cp->getTrans()[m_selectedIndex].id_, true);
 
 	if (dlg.ShowModal() == wxID_OK) {
 		doRefreshItems();

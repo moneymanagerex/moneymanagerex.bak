@@ -833,7 +833,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
     while (q1.NextRow())
     {
         mmBDTransactionHolder th;
-        th.bdID_           = q1.GetInt(wxT("BDID"));
+        th.id_           = q1.GetInt(wxT("BDID"));
         th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
         
         th.nextOccurStr_   = mmGetDateForDisplay(m_db.get(), th.nextOccurDate_);
@@ -902,7 +902,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
         {
             if ( (repeats < 11) || (numRepeats > 0) )
             {
-                mmBDDialog repeatTransactionsDlg(m_db.get(), m_core.get(), th.bdID_ ,false ,true , this, SYMBOL_BDDIALOG_IDNAME , _(" Auto Repeat Transactions"));
+                mmBDDialog repeatTransactionsDlg(m_db.get(), m_core.get(), th.id_ ,false ,true , this, SYMBOL_BDDIALOG_IDNAME , _(" Auto Repeat Transactions"));
                 if ( repeatTransactionsDlg.ShowModal() == wxID_OK )
                 {
                     if (activeHomePage_)
@@ -938,13 +938,13 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
                 pTransaction->toAmt_ = th.toAmt_;
 
                 boost::shared_ptr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
-                split->loadFromBDDB(m_core.get(),th.bdID_);
+                split->loadFromBDDB(m_core.get(),th.id_);
 		        *pTransaction->splitEntries_.get() = *split.get();
 
                 pTransaction->updateAllData(m_core.get(), th.accountID_, pCurrencyPtr);
                 m_core.get()->bTransactionList_.addTransaction(m_core.get(), pTransaction);
             }
-            mmDBWrapper::completeBDInSeries(m_db.get(), th.bdID_);
+            mmDBWrapper::completeBDInSeries(m_db.get(), th.id_);
 
             if (activeHomePage_)
             {

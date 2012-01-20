@@ -414,7 +414,7 @@ void mmStocksPanel::initVirtualListControl()
     {
         mmStockTransactionHolder th;
 
-        th.stockID_           = q1.GetInt(wxT("STOCKID"));
+        th.id_           = q1.GetInt(wxT("STOCKID"));
         th.stockPDate_        = q1.GetString(wxT("PURCHDATE"));
         int accountID         = q1.GetInt(wxT("HELDAT"));
         th.stockSymbol_       = q1.GetString (wxT ("SYMBOL"));
@@ -805,7 +805,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         {
             mmStockTransactionHolder sh;
 
-            sh.stockID_ = q1.GetInt(wxT("STOCKID"));
+            sh.id_ = q1.GetInt(wxT("STOCKID"));
             sh.numShares_ = q1.GetDouble(wxT("NUMSHARES"));
             // If the stock's symbol is not found, Yahoo CSV will return 0 for the current price.
             // Therefore, we assume the current price of all existing stock's symbols are greater
@@ -833,7 +833,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
             st.Bind(1, i->currentPrice_);
             st.Bind(2, i->value_);
             st.Bind(3, i->shareName_);
-            st.Bind(4, i->stockID_);
+            st.Bind(4, i->id_);
             
             st.ExecuteUpdate();
             st.Reset();
@@ -1033,7 +1033,7 @@ void stocksListCtrl::OnDeleteStocks(wxCommandEvent& /*event*/)
                            _("Confirm Stock Investment Deletion"),wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES)
     {
-        mmDBWrapper::deleteStockInvestment(cp_->db_, cp_->trans_[selectedIndex_].stockID_);
+        mmDBWrapper::deleteStockInvestment(cp_->db_, cp_->trans_[selectedIndex_].id_);
         DeleteItem(selectedIndex_);
         cp_->initVirtualListControl();
         if (cp_->trans_.size() == 0) selectedIndex_ = -1;
@@ -1044,7 +1044,7 @@ void stocksListCtrl::OnEditStocks(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ == -1) return;
 
-    mmStockDialog dlg(cp_->db_, cp_->trans_[selectedIndex_].stockID_, true, this);
+    mmStockDialog dlg(cp_->db_, cp_->trans_[selectedIndex_].id_, true, this);
     if (dlg.ShowModal() == wxID_OK)
     {
         cp_->initVirtualListControl();
@@ -1055,7 +1055,7 @@ void stocksListCtrl::OnEditStocks(wxCommandEvent& /*event*/)
 void stocksListCtrl::OnListItemActivated(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
-    mmStockDialog dlg(cp_->db_, cp_->trans_[selectedIndex_].stockID_, true, this);
+    mmStockDialog dlg(cp_->db_, cp_->trans_[selectedIndex_].id_, true, this);
     if (dlg.ShowModal() == wxID_OK)
     {
         cp_->initVirtualListControl();

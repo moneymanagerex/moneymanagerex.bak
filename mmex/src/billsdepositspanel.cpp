@@ -299,7 +299,7 @@ void mmBillsDepositsPanel::initVirtualListControl()
     {
         mmBDTransactionHolder th;
 
-        th.bdID_           = q1.GetInt(wxT("BDID"));
+        th.id_           = q1.GetInt(wxT("BDID"));
         th.nextOccurDate_  = mmGetStorageStringAsDate(q1.GetString(wxT("NEXTOCCURRENCEDATE")));
         th.nextOccurStr_   = mmGetDateForDisplay(db_, th.nextOccurDate_);
         int repeats        = q1.GetInt(wxT("REPEATS"));
@@ -594,7 +594,7 @@ void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& /*event*/)
     if (!cp_->db_)
         return;
 
-    mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].bdID_, true, false, this );
+    mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this );
     if ( dlg.ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
@@ -618,7 +618,7 @@ void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& /*event*/)
                                         wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES)
     {
-        mmDBWrapper::deleteBDSeries(cp_->db_, cp_->trans_[selectedIndex_].bdID_);
+        mmDBWrapper::deleteBDSeries(cp_->db_, cp_->trans_[selectedIndex_].id_);
         DeleteItem(selectedIndex_);
         cp_->initVirtualListControl();
         if (cp_->trans_.size() == 0)
@@ -637,7 +637,7 @@ void billsDepositsListCtrl::OnEnterBDTransaction(wxCommandEvent& /*event*/)
     if (!cp_->db_)
         return;
 
-    mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].bdID_, false, true, this );
+    mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, false, true, this );
     if ( dlg.ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
@@ -650,7 +650,7 @@ void billsDepositsListCtrl::OnSkipBDTransaction(wxCommandEvent& /*event*/)
     if (selectedIndex_ == -1 || !cp_->db_)
         return;
 
-    mmDBWrapper::completeBDInSeries(cp_->db_, cp_->trans_[selectedIndex_].bdID_);
+    mmDBWrapper::completeBDInSeries(cp_->db_, cp_->trans_[selectedIndex_].id_);
     cp_->initVirtualListControl();
     RefreshItems(0, ((int)cp_->trans_.size()) -1);
 }
@@ -665,7 +665,7 @@ void billsDepositsListCtrl::OnListItemActivated(wxListEvent& event)
     if (!cp_->db_)
         return;
 
-    mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].bdID_, true, false, this );
+    mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this );
     if ( dlg.ShowModal() == wxID_OK )
     {
         cp_->initVirtualListControl();
