@@ -56,21 +56,6 @@
 #define wxFIXED_MINSIZE 0
 #endif
 
-class mmListBoxItem: public wxClientData
-{
-public:
-    mmListBoxItem(int index, const wxString& name) 
-        : index_(index), name_(name)
-    {}
-    
-    int getIndex() const { return index_; }
-    wxString getName() const { return name_; }
-
-private:
-    int index_;
-    wxString name_;
-};
-
 class mmUnivCSVImportDialog: public wxDialog
 {    
     DECLARE_DYNAMIC_CLASS(mmUnivCSVImportDialog)

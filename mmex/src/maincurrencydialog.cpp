@@ -90,7 +90,7 @@ void mmMainCurrencyDialog::fillControls()
     {
         int currencyID         = core_->currencyList_.currencies_[idx]->currencyID_;
         wxString currencyName  = core_->currencyList_.currencies_[idx]->currencyName_;
-        currencyListBox_->Insert(currencyName, idx, new mmCurrencyListBoxItem(currencyID));
+        currencyListBox_->Insert(currencyName, idx, new mmListBoxItem(currencyID, currencyName));
     }
 }
 /*!
@@ -219,8 +219,8 @@ void mmMainCurrencyDialog::OnBtnEdit(wxCommandEvent& /*event*/)
    int selIndex = currencyListBox_->GetSelection();
     if (selIndex != wxNOT_FOUND)
     {
-        mmCurrencyListBoxItem* pItem = (mmCurrencyListBoxItem*) currencyListBox_->GetClientObject(selIndex);
-        currencyID_ = pItem->getListIndex();
+        mmListBoxItem* pItem = (mmListBoxItem*) currencyListBox_->GetClientObject(selIndex);
+        currencyID_ = pItem->getIndex();
         wxASSERT(currencyID_ != -1);
 
         mmCurrencyDialog(core_, currencyID_, this).ShowModal();
@@ -232,8 +232,8 @@ void mmMainCurrencyDialog::OnBtnSelect(wxCommandEvent& /*event*/)
     int selIndex = currencyListBox_->GetSelection();
     if (selIndex != wxNOT_FOUND)
     {
-        mmCurrencyListBoxItem* pItem = (mmCurrencyListBoxItem*) currencyListBox_->GetClientObject(selIndex);
-        currencyID_ = pItem->getListIndex();
+        mmListBoxItem* pItem = (mmListBoxItem*) currencyListBox_->GetClientObject(selIndex);
+        currencyID_ = pItem->getIndex();
         wxASSERT(currencyID_ != -1);
         EndModal(wxID_OK);
     }
@@ -259,8 +259,8 @@ void mmMainCurrencyDialog::OnBtnDelete(wxCommandEvent& /*event*/)
     int selIndex = currencyListBox_->GetSelection();
     if (selIndex != wxNOT_FOUND)
     {
-        mmCurrencyListBoxItem* pItem = (mmCurrencyListBoxItem*) currencyListBox_->GetClientObject(selIndex);
-        currencyID_ = pItem->getListIndex();
+        mmListBoxItem* pItem = (mmListBoxItem*) currencyListBox_->GetClientObject(selIndex);
+        currencyID_ = pItem->getIndex();
         wxASSERT(currencyID_ != -1);
 
         int baseCurrencyID = mmDBWrapper::getBaseCurrencySettings(db_);
