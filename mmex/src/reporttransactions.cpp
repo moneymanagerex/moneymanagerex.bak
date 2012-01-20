@@ -1,5 +1,6 @@
 /*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
+ Copyright (C) 2011, 2012 Nikolay & Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -25,8 +26,7 @@
 #include "dbwrapper.h"
 #include "mmcheckingpanel.h"
 #include "mmtransaction.h"
-
-#include <algorithm>
+#include "reportbudget.h"
 
 mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBankTransaction> >* trans, 
     mmCoreDB* core, int refAccountID, wxString refAccountStr, mmFilterTransactionsDialog* transDialog)
@@ -52,11 +52,15 @@ wxString mmReportTransactions::getHTMLText()
         transHeading += wxString() << _("for Account: ") << refAccountStr_;
     hb.addHeader(3, transHeading);
 
-    wxDateTime now = wxDateTime::Now();
-    wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
-    hb.addHeader(7, dt);
-    hb.addLineBreak();
-    hb.addLineBreak();
+    bool includeDateRange = false; 
+    wxDateTime startDate = wxDateTime(wxDateTime::Now());
+    wxDateTime endDate = wxDateTime(wxDateTime::Now());
+    if (transDialog_->getDateRange(startDate, endDate))
+    {
+        includeDateRange = true;
+    }
+    mmCommonReportDetails dateDisplay(NULL);
+    dateDisplay.DisplayDateHeading(hb, startDate, endDate, includeDateRange);
     
     hb.startCenter();
     hb.startTable();
@@ -145,23 +149,28 @@ wxString mmReportTransactions::getHTMLText()
         double dbRate = core_->accountList_.getAccountBaseCurrencyConvRate(refTrans[index]->accountID_);
         double transAmount = refTrans[index]->amt_ * dbRate;
         if (refTrans[index]->reportCategAmountStr_ != wxT(""))
+        {
             transAmount = refTrans[index]->reportCategAmount_ * dbRate;
+        }
 
-        if (refTrans[index]->transType_ == TRANS_TYPE_DEPOSIT_STR)
+        if (refTrans[index]->status_ != wxT("V"))
         {
-            total += transAmount;
-        }
-        else if (refTrans[index]->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
-        {
-            total -= transAmount;
-        }
-        else if (refTrans[index]->transType_ == TRANS_TYPE_TRANSFER_STR)
-        {
-            transferTransactionFound = true;
-            if (negativeTransAmount)
-                total -= transAmount;
-            else
+            if (refTrans[index]->transType_ == TRANS_TYPE_DEPOSIT_STR)
+            {
                 total += transAmount;
+            }
+            else if (refTrans[index]->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
+            {
+                total -= transAmount;
+            }
+            else if (refTrans[index]->transType_ == TRANS_TYPE_TRANSFER_STR)
+            {
+                transferTransactionFound = true;
+                if (negativeTransAmount)
+                    total -= transAmount;
+                else
+                    total += transAmount;
+            }
         }
     }
 
@@ -216,7 +225,7 @@ wxString mmReportTransactions::getHTMLText()
     if ( !transDialog_->userNotesStr().IsEmpty())
         filterDetails << wxT("<b>") << wxT("Notes: ") << wxT("</b>") <<transDialog_->userNotesStr() << wxT("<br>");
 	
-    if ( ! filterDetails.IsEmpty())
+    if ( !filterDetails.IsEmpty())
     {
         wxString filterDetailsStr;
         hb.addHorizontalLine();
