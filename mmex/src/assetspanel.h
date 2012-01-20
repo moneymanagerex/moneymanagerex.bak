@@ -22,7 +22,6 @@
 
 #include <boost/scoped_ptr.hpp>
 
-
 class wxListCtrl;
 class wxListEvent;
 class mmAssetsPanel;
@@ -96,7 +95,6 @@ public:
     const std::vector<mmAssetHolder>& getTrans() const { return m_trans; }
     void updateExtraAssetData(int selIndex);
 
-
 private:
     assetsListCtrl* m_listCtrlAssets;
     boost::scoped_ptr<wxImageList> m_imageList;
@@ -113,7 +111,6 @@ private:
     void OnViewPopupSelected(wxCommandEvent& event);
     void sortTable();
     void destroy();
-
 };
 
 #endif
