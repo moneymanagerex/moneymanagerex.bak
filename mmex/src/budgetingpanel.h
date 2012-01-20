@@ -69,21 +69,8 @@ private:
     long selectedIndex_;
 };
 
-class mmBudgetEntryHolder
+struct mmBudgetEntryHolder: public mmHolderBase
 {
-public:
-    mmBudgetEntryHolder() :
-        budgetEntryID_(),
-        categID_(),
-        subcategID_(),
-        amt_(),
-        estimated_(),
-        actual_()
-    {
-    }
-
-    int budgetEntryID_;
-
     int categID_;
     wxString catStr_;
 

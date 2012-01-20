@@ -36,10 +36,8 @@ class TransFilterDialog;
 /* 
     Holds a single transaction 
 */
-struct mmTransactionHolder
+struct mmTransactionHolder: public mmHolderBase
 {
-    int transID_;
-
     wxDateTime date_;
     wxString dateStr_;
 

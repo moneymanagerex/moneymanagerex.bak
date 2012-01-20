@@ -124,7 +124,7 @@ wxString mmReportBudgetingSetup::getHTMLText()
          Create a TOTALS entry for the category.
          ***************************************************************************/
         mmBudgetEntryHolder catTotals;
-        catTotals.budgetEntryID_ = -1;
+        catTotals.id_ = -1;
         catTotals.categID_ = -1;
         catTotals.catStr_  = th.catStr_;
         catTotals.subcategID_ = -1;
