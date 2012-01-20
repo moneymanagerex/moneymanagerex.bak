@@ -88,9 +88,7 @@ bool mmBudgetingPanel::Create( wxWindow *parent,
 
 mmBudgetingPanel::~mmBudgetingPanel()
 {
-    
-    if (m_imageList)
-        delete m_imageList;
+    if (m_imageList) delete m_imageList;
 
     long col0, col1, col2, col3, col4, col5;
     col0 = listCtrlAccount_->GetColumnWidth(0);
@@ -121,22 +119,33 @@ void mmBudgetingPanel::OnViewPopupSelected(wxCommandEvent& event)
 {
     int evt =  event.GetId();
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_PANELVIEW);
-    if (evt ==  MENU_VIEW_ALLBUDGETENTRIES) {
+    if (evt ==  MENU_VIEW_ALLBUDGETENTRIES) 
+    {
         header->SetLabel(_("View All Budget Categories"));
         currentView_ = wxT("View All Budget Categories");
-    } else if (evt == MENU_VIEW_NONZEROBUDGETENTRIES) {
+    } 
+    else if (evt == MENU_VIEW_NONZEROBUDGETENTRIES) 
+    {
         header->SetLabel(_("View Non-Zero Budget Categories"));
         currentView_ = wxT("View Non-Zero Budget Categories");
-    } else if (evt == MENU_VIEW_INCOMEBUDGETENTRIES) {
+    } 
+    else if (evt == MENU_VIEW_INCOMEBUDGETENTRIES) 
+    {
         header->SetLabel(_("View Income Budget Categories"));
         currentView_ = wxT("View Income Budget Categories");
-    } else if (evt == MENU_VIEW_EXPENSEBUDGETENTRIES) {
+    } 
+    else if (evt == MENU_VIEW_EXPENSEBUDGETENTRIES) 
+    {
         header->SetLabel(_("View Expense Budget Categories"));
         currentView_ = wxT("View Expense Budget Categories");
-    } else if (evt == MENU_VIEW_SUMMARYBUDGETENTRIES) {
+    } 
+    else if (evt == MENU_VIEW_SUMMARYBUDGETENTRIES) 
+    {
         header->SetLabel(_("View Budget Category Summary"));
         currentView_ = wxT("View Budget Category Summary");
-    } else {
+    } 
+    else 
+    {
         wxASSERT(false);
     }
 
@@ -181,24 +190,30 @@ void mmBudgetingPanel::CreateControls()
     itemPanel3->SetSizer(itemBoxSizerVHeader);
 
     wxString yearStr = mmDBWrapper::getBudgetYearForID(db_, budgetYearID_);
-    if ((yearStr.length() < 5)) {
-        if ( mainFrame_->budgetFinancialYears() ) {
+    if ((yearStr.length() < 5)) 
+    {
+        if ( mainFrame_->budgetFinancialYears() ) 
+        {
             long year;
             yearStr.ToLong(&year);
             year++;
             yearStr = wxString() << _("Financial Year: ") << yearStr << wxT(" - ") << year;
-        } else
+        } 
+        else
+        {
             yearStr = wxString() << _("Year: ") << yearStr;
-    } else {
+        }
+    } 
+    else 
+    {
         yearStr = wxString() << _("Month: ") << yearStr;
     }
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel3, ID_PANEL_REPORTS_STATIC_HEADER, 
         _("Budget Setup for ") + yearStr, wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, 
-        wxT("")));
+    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
 
-     wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader2, 0, wxALL, 1);
 
     wxBitmap itemStaticBitmap3Bitmap(rightarrow_xpm);
@@ -208,7 +223,7 @@ void mmBudgetingPanel::CreateControls()
     itemBoxSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemStaticBitmap3->SetEventHandler( this ); 
 
-     wxStaticText* itemStaticText18 = new wxStaticText( itemPanel3, 
+    wxStaticText* itemStaticText18 = new wxStaticText( itemPanel3, 
             ID_PANEL_CHECKING_STATIC_PANELVIEW, 
             _("Viewing All Budget Categories"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerHHeader2->Add(itemStaticText18, 0, wxALL, 1);
@@ -263,8 +278,7 @@ void mmBudgetingPanel::CreateControls()
     /* ---------------------- */
 
     wxSize imageSize(16, 16);
-    m_imageList = new wxImageList( imageSize.GetWidth(), 
-        imageSize.GetHeight() );
+    m_imageList = new wxImageList( imageSize.GetWidth(), imageSize.GetHeight() );
     m_imageList->Add(wxBitmap(reconciled_xpm));
     m_imageList->Add(wxBitmap(void_xpm));
     m_imageList->Add(wxBitmap(flag_xpm));
@@ -292,19 +306,13 @@ void mmBudgetingPanel::CreateControls()
     listCtrlAccount_->InsertColumn(5, itemCol);
 
     /* See if we can get data from inidb */
-     long col0, col1, col2, col3, col4, col5;
-     mmDBWrapper::getINISettingValue(inidb_, 
-        wxT("BUDGET_COL0_WIDTH"), wxT("80")).ToLong(&col0); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("BUDGET_COL1_WIDTH"), wxT("80")).ToLong(&col1); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("BUDGET_COL2_WIDTH"), wxT("80")).ToLong(&col2); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("BUDGET_COL3_WIDTH"), wxT("80")).ToLong(&col3); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("BUDGET_COL4_WIDTH"), wxT("80")).ToLong(&col4); 
-     mmDBWrapper::getINISettingValue(inidb_, 
-         wxT("BUDGET_COL5_WIDTH"), wxT("80")).ToLong(&col5); 
+    long col0, col1, col2, col3, col4, col5;
+    mmDBWrapper::getINISettingValue(inidb_, wxT("BUDGET_COL0_WIDTH"), wxT("80")).ToLong(&col0); 
+    mmDBWrapper::getINISettingValue(inidb_, wxT("BUDGET_COL1_WIDTH"), wxT("80")).ToLong(&col1); 
+    mmDBWrapper::getINISettingValue(inidb_, wxT("BUDGET_COL2_WIDTH"), wxT("80")).ToLong(&col2); 
+    mmDBWrapper::getINISettingValue(inidb_, wxT("BUDGET_COL3_WIDTH"), wxT("80")).ToLong(&col3); 
+    mmDBWrapper::getINISettingValue(inidb_, wxT("BUDGET_COL4_WIDTH"), wxT("80")).ToLong(&col4); 
+    mmDBWrapper::getINISettingValue(inidb_, wxT("BUDGET_COL5_WIDTH"), wxT("80")).ToLong(&col5); 
 
     listCtrlAccount_->SetColumnWidth(0, col0);
     listCtrlAccount_->SetColumnWidth(1, col1);
@@ -320,19 +328,24 @@ bool mmBudgetingPanel::displayEntryAllowed(mmBudgetEntryHolder& budgetEntry)
 {
     bool result = false;
 
-    if (currentView_ == wxT("View Non-Zero Budget Categories")) {
-        if ((budgetEntry.estimated_ != 0.0) || (budgetEntry.actual_ != 0.0))
-            result = true;
-    } else if (currentView_ == wxT("View Income Budget Categories")) {
-        if ((budgetEntry.estimated_ > 0.0) || (budgetEntry.actual_ > 0.0))
-            result = true;
-    } else if (currentView_ == wxT("View Expense Budget Categories")) {
-        if ((budgetEntry.estimated_ < 0.0) || (budgetEntry.actual_ < 0.0))
-            result = true;
-    } else if (currentView_ == _("View Budget Category Summary")) {
-        if ((budgetEntry.id_ < 0.0))
-            result = true;
-    } else {
+    if (currentView_ == wxT("View Non-Zero Budget Categories")) 
+    {
+        if ((budgetEntry.estimated_ != 0.0) || (budgetEntry.actual_ != 0.0)) result = true;
+    } 
+    else if (currentView_ == wxT("View Income Budget Categories")) 
+    {
+        if ((budgetEntry.estimated_ > 0.0) || (budgetEntry.actual_ > 0.0)) result = true;
+    } 
+    else if (currentView_ == wxT("View Expense Budget Categories")) 
+    {
+        if ((budgetEntry.estimated_ < 0.0) || (budgetEntry.actual_ < 0.0)) result = true;
+    } 
+    else if (currentView_ == _("View Budget Category Summary")) 
+    {
+        if ((budgetEntry.id_ < 0.0)) result = true;
+    } 
+    else 
+    {
         result = true;
     }
 
@@ -369,7 +382,7 @@ void mmBudgetingPanel::initVirtualListControl()
     {
         int day, month;
         budgetDetails.AdjustYearValues(day, month, dtBegin);
-		budgetDetails.AdjustDateForEndFinancialYear(dtEnd);
+        budgetDetails.AdjustDateForEndFinancialYear(dtEnd);
     }
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
@@ -381,7 +394,7 @@ void mmBudgetingPanel::initVirtualListControl()
     "from subcategory_v1 s "
     "left join  category_v1 c on c.categid=s.categid "
     "union select categname, '', categid, -1  from category_v1 "
-	"order by CATEGNAME, SUBCATEGNAME ";
+    "order by CATEGNAME, SUBCATEGNAME ";
 */
     static const char sql[] =
     "select CATEGID, CATEGNAME "
@@ -557,40 +570,22 @@ void budgetingListCtrl::OnListItemSelected(wxListEvent& event)
 
 wxString mmBudgetingPanel::getItem(long item, long column)
 {
-    if (column == 0)
-        return trans_[item].catStr_;
-
-    if (column == 1)
-        return trans_[item].subCatStr_;
-
-    if (column == 2)
-        return trans_[item].period_;
-
-    if (column == 3)
-        return trans_[item].amtString_;
-
-    if (column == 4)
-        return trans_[item].estimatedStr_;
-
-    if (column == 5)
-        return trans_[item].actualStr_;
+    if (column == 0) return trans_[item].catStr_;
+    if (column == 1) return trans_[item].subCatStr_;
+    if (column == 2) return trans_[item].period_;
+    if (column == 3) return trans_[item].amtString_;
+    if (column == 4) return trans_[item].estimatedStr_;
+    if (column == 5) return trans_[item].actualStr_;
 
     return wxT("");
 }
 
 int budgetingListCtrl::OnGetItemImage(long item) const
 {
-    if ((cp_->trans_[item].estimated_ == 0.0) && (cp_->trans_[item].actual_ == 0.0))
-       return 3;
-
-    if ((cp_->trans_[item].estimated_ == 0.0) && (cp_->trans_[item].actual_ != 0.0))
-       return 2;
-
-   if (cp_->trans_[item].estimated_ < cp_->trans_[item].actual_)
-       return 0;
-
-    if (fabs(cp_->trans_[item].estimated_ - cp_->trans_[item].actual_)  < 0.001)	
-        return 0;
+    if ((cp_->trans_[item].estimated_ == 0.0) && (cp_->trans_[item].actual_ == 0.0)) return 3;
+    if ((cp_->trans_[item].estimated_ == 0.0) && (cp_->trans_[item].actual_ != 0.0)) return 2;
+    if (cp_->trans_[item].estimated_ < cp_->trans_[item].actual_) return 0;
+    if (fabs(cp_->trans_[item].estimated_ - cp_->trans_[item].actual_)  < 0.001) return 0;
 
    return 1;
 }
