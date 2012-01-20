@@ -146,9 +146,7 @@ public:
 
 
 public:
-    wxSQLite3Database* db_;
     stocksListCtrl* listCtrlAccount_;
-    wxSQLite3Database* inidb_;
     wxImageList* m_imageList;
     int accountID_;
     /************************************************************/

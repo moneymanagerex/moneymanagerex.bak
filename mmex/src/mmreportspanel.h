@@ -52,7 +52,6 @@ public:
     wxString getReportText();
 
 private:
-    wxSQLite3Database* db_;
     wxHtmlWindow* htmlWindow_;
     mmGUIFrame* frame_;
     mmPrintableBase* rb_;

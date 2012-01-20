@@ -510,13 +510,13 @@ mmCheckingPanel::mmCheckingPanel
     const wxString& name
 ) : 
     m_core(core),
-    m_inidb(inidb),
+    mmPanelBase(NULL, inidb),
     m_listCtrlAccount(),
     m_AccountID(accountID),
     filteredBalance_(0.0)
 {
     wxASSERT(m_core);
-    wxASSERT(m_inidb);
+    wxASSERT(inidb_);
 
     Create(parent, winid, pos, size, style, name);
 }
@@ -573,23 +573,23 @@ void mmCheckingPanel::saveSettings()
 {
     int cols = m_listCtrlAccount->GetColumnCount();
 
-    mmDBWrapper::begin(m_inidb);
+    mmDBWrapper::begin(inidb_);
     {
         for (int i = 0; i < cols; ++i)
         {
             wxString name = wxString::Format(wxT("CHECK_COL%d_WIDTH"), i);
             int width = m_listCtrlAccount->GetColumnWidth(i);
 
-            mmDBWrapper::setINISettingValue(m_inidb, name, wxString() << width); 
+            mmDBWrapper::setINISettingValue(inidb_, name, wxString() << width); 
         }
 
         // sorting column index
-        mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_SORT_COL"), wxString() << g_sortcol); 
+        mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_SORT_COL"), wxString() << g_sortcol); 
 
         // asc\desc sorting flag
-        mmDBWrapper::setINISettingValue(m_inidb, wxT("CHECK_ASC"), wxString() << g_asc);
+        mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_ASC"), wxString() << g_asc);
     }
-    mmDBWrapper::commit(m_inidb);
+    mmDBWrapper::commit(inidb_);
 }
 //----------------------------------------------------------------------------
 
@@ -684,7 +684,7 @@ void mmCheckingPanel::CreateControls()
         _("Transaction Filter"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerHHeader2->Add(statTextTransFilter_, 0, wxALL, 1);
 
-    m_currentView = mmDBWrapper::getINISettingValue(m_inidb, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
+    m_currentView = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
     
     initViewTransactionsHeader();
     wxBoxSizer* itemBoxSizerHHeader = new wxBoxSizer(wxHORIZONTAL);
@@ -723,11 +723,11 @@ void mmCheckingPanel::CreateControls()
     m_listCtrlAccount->setSortColumn(g_sortcol);
     m_listCtrlAccount->SetFocus();
     
-    createColumns(m_inidb, *m_listCtrlAccount);
+    createColumns(inidb_, *m_listCtrlAccount);
 
     {   // load the global variables
         long val = COL_DEF_SORT;
-        wxString strVal = mmDBWrapper::getINISettingValue(m_inidb, wxT("CHECK_SORT_COL"), wxString() << val);
+        wxString strVal = mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_SORT_COL"), wxString() << val);
         
         if (strVal.ToLong(&val)) {
             g_sortcol = toEColumn(val);
@@ -736,7 +736,7 @@ void mmCheckingPanel::CreateControls()
         // --
 
         val = 1; // asc sorting default
-        strVal = mmDBWrapper::getINISettingValue(m_inidb, wxT("CHECK_ASC"), wxString() << val);
+        strVal = mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_ASC"), wxString() << val);
 
         if (strVal.ToLong(&val)) {
             g_asc = val != 0;
@@ -1786,7 +1786,7 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 {
     if (m_selectedForCopy != -1)
     {
-        wxString useOriginalDate =  mmDBWrapper::getINISettingValue(m_cp->m_inidb, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
+        wxString useOriginalDate =  mmDBWrapper::getINISettingValue(m_cp->inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
         bool useOriginal = false;
         if (useOriginalDate == wxT("TRUE"))
             useOriginal = true;
@@ -1870,7 +1870,7 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
 
 void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 {
-    mmTransDialog dlg(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 0, false, m_cp->m_inidb, this );
+    mmTransDialog dlg(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 0, false, m_cp->inidb_, this );
 
     if ( dlg.ShowModal() == wxID_OK )
     {
@@ -1942,7 +1942,7 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
     if (m_selectedIndex != -1)
     {
         mmTransDialog dlg(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 
-           m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->m_inidb, this);
+           m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
         if ( dlg.ShowModal() == wxID_OK )
         {
             refreshVisualList();
@@ -1988,7 +1988,7 @@ void MyListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
         {
             mmTransDialog dlg(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 
                               m_cp->m_trans[m_selectedIndex]->transactionID(), true, 
-                              m_cp->m_inidb, this);
+                              m_cp->inidb_, this);
             if ( dlg.ShowModal() == wxID_OK )
             {
                 //m_selectedIndex --;
@@ -2020,7 +2020,7 @@ void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
     {
         //m_selectedIndex = event.GetIndex();
         mmTransDialog dlg(m_cp->getDb(), m_cp->m_core,  m_cp->accountID(), 
-            m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->m_inidb, this);
+            m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
         if ( dlg.ShowModal() == wxID_OK )
         {
             m_cp->initVirtualListControl(NULL);

@@ -79,7 +79,7 @@ mmStocksPanel::mmStocksPanel(wxSQLite3Database* db, wxSQLite3Database* inidb,
                              wxWindow *parent,
                              wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
                              const wxString& name)
-        : db_(db), inidb_(inidb), m_imageList(0), accountID_(accountID)
+        : mmPanelBase(db, inidb), m_imageList(0), accountID_(accountID)
 {
 
     Create(parent, winid, pos, size, style, name);

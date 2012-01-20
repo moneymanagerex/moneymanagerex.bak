@@ -23,6 +23,7 @@
 #include <wx/panel.h>
 #include <wx/string.h>
 //----------------------------------------------------------------------------
+class wxSQLite3Database;
 
 struct mmHolderBase
 {
@@ -35,6 +36,12 @@ class mmPanelBase : public wxPanel
 {
 public: 
     virtual wxString getReportText() const { return wxGetEmptyString(); }
+    
+    mmPanelBase() {}
+    mmPanelBase(wxSQLite3Database* db, wxSQLite3Database* inidb): db_(db), inidb_(inidb) {}
+
+    wxSQLite3Database* db_;
+    wxSQLite3Database* inidb_;
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_PANELBASE_H_

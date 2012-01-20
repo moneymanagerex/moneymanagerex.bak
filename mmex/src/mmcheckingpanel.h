@@ -98,7 +98,6 @@ private:
     friend class MyListCtrl; // needs access to m_core, initdb_, ...
 
     mmCoreDB* m_core;
-    wxSQLite3Database* m_inidb;
     wxString m_currentView;
     wxStaticText* statTextTransFilter_;
     TransFilterDialog* transFilterDlg_;

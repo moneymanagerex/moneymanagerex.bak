@@ -73,8 +73,7 @@ END_EVENT_TABLE()
 /*******************************************************/
 
 mmAssetsPanel::mmAssetsPanel(wxWindow *parent, wxSQLite3Database* db, wxSQLite3Database* inidb)	: 
-	m_db(db), 
-	m_inidb(inidb)
+    mmPanelBase(db, inidb)
 {
 	Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, wxPanelNameStr);
 }
@@ -112,12 +111,12 @@ mmAssetsPanel::~mmAssetsPanel()
 
 void mmAssetsPanel::destroy()
 {
-    mmDBWrapper::begin(m_inidb);
+    mmDBWrapper::begin(inidb_);
     for (int i = 0; i < COL_MAX-1; ++i) {
         int width = m_listCtrlAssets->GetColumnWidth(i);
-        mmDBWrapper::setINISettingValue(m_inidb, wxString::Format(wxT("ASSETS_COL%d_WIDTH"), i), wxString() << width); 
+        mmDBWrapper::setINISettingValue(inidb_, wxString::Format(wxT("ASSETS_COL%d_WIDTH"), i), wxString() << width); 
     }
-    mmDBWrapper::commit(m_inidb);
+    mmDBWrapper::commit(inidb_);
 }
 
 void mmAssetsPanel::CreateControls()
@@ -182,16 +181,11 @@ void mmAssetsPanel::CreateControls()
 
     /* See if we can get data from inidb */
      long col0, col1, col2, col3, col4;
-     mmDBWrapper::getINISettingValue(m_inidb, 
-        wxT("ASSETS_COL0_WIDTH"), wxT("150")).ToLong(&col0); 
-     mmDBWrapper::getINISettingValue(m_inidb, 
-         wxT("ASSETS_COL1_WIDTH"), wxT("-2")).ToLong(&col1); 
-     mmDBWrapper::getINISettingValue(m_inidb, 
-         wxT("ASSETS_COL2_WIDTH"), wxT("-2")).ToLong(&col2); 
-     mmDBWrapper::getINISettingValue(m_inidb, 
-         wxT("ASSETS_COL3_WIDTH"), wxT("-2")).ToLong(&col3); 
-     mmDBWrapper::getINISettingValue(m_inidb, 
-         wxT("ASSETS_COL4_WIDTH"), wxT("450")).ToLong(&col4); 
+     mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL0_WIDTH"), wxT("150")).ToLong(&col0); 
+     mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL1_WIDTH"), wxT("-2")).ToLong(&col1); 
+     mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL2_WIDTH"), wxT("-2")).ToLong(&col2); 
+     mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL3_WIDTH"), wxT("-2")).ToLong(&col3); 
+     mmDBWrapper::getINISettingValue(inidb_, wxT("ASSETS_COL4_WIDTH"), wxT("450")).ToLong(&col4); 
      
     m_listCtrlAssets->SetColumnWidth(COL_NAME, col0);
     m_listCtrlAssets->SetColumnWidth(COL_TYPE, col1);
@@ -247,9 +241,9 @@ void mmAssetsPanel::initVirtualListControl()
     /* Clear all the records */
     m_trans.clear();
 
-    mmDBWrapper::loadBaseCurrencySettings(m_db);
+    mmDBWrapper::loadBaseCurrencySettings(db_);
 
-    double total = mmDBWrapper::getAssetBalance(m_db);
+    double total = mmDBWrapper::getAssetBalance(db_);
     wxString balance;
     mmex::formatDoubleToCurrency(total, balance);
     wxStaticText* header = (wxStaticText*)FindWindow(IDC_PANEL_CHECKING_STATIC_BALHEADER);
@@ -272,7 +266,7 @@ void mmAssetsPanel::initVirtualListControl()
     "left join infotable_v1 i on i.INFONAME='DATEFORMAT' "
     "order by a.STARTDATE " ;
 
-    wxSQLite3ResultSet q1 = m_db->ExecuteQuery(sql);
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
     long cnt = 0;
     
     for ( ; q1.NextRow(); ++cnt)
@@ -280,7 +274,7 @@ void mmAssetsPanel::initVirtualListControl()
         mmAssetHolder th;
 
         th.id_ = q1.GetInt(wxT("ASSETID"));
-        th.value_ = mmDBWrapper::getAssetValue(m_db, th.id_);
+        th.value_ = mmDBWrapper::getAssetValue(db_, th.id_);
         th.assetName_ = q1.GetString(wxT("ASSETNAME"));
         th.assetDate_ = q1.GetString(wxT("FORMATEDDATE"));
         //sqlite does not support %y date mask therefore null value should be replaces
@@ -288,7 +282,7 @@ void mmAssetsPanel::initVirtualListControl()
         {
             wxString dateString = q1.GetString(wxT("STARTDATE"));
             wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
-            th.assetDate_ = mmGetDateForDisplay(m_db, dtdt);
+            th.assetDate_ = mmGetDateForDisplay(db_, dtdt);
         }
      
         wxString assetStr = q1.GetString(wxT("ASSETTYPE"));

@@ -92,14 +92,12 @@ public:
     void initVirtualListControl();
 
     wxString getItem(long item, long column);
-    wxSQLite3Database* getDb() const { return m_db; }
+    wxSQLite3Database* getDb() const { return db_; }
     const std::vector<mmAssetHolder>& getTrans() const { return m_trans; }
     void updateExtraAssetData(int selIndex);
 
 
 private:
-    wxSQLite3Database* m_db;
-    wxSQLite3Database* m_inidb;
     assetsListCtrl* m_listCtrlAssets;
     boost::scoped_ptr<wxImageList> m_imageList;
     std::vector<mmAssetHolder> m_trans;
