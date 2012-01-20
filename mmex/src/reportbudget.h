@@ -36,38 +36,38 @@ class mmReportBudget : public mmPrintableBase
 public:
     mmReportBudget(mmGUIFrame* mainFrame);
 
-    // initialise secondary fields for a budget entry
+    /// Initialise secondary fields for a budget entry
     void initBudgetEntryFields(mmBudgetEntryHolder& budEntry);
   
-    // Set budget estimate for a day based on the required period
+    /// Set budget estimate for a day based on the required period
     void setBudgetDailyEstimateAmount(mmBudgetEntryHolder& budEntry, int month = 5 /*wxDateTime::Jun*/);
 
-    // Set budget estimate for the appropriate prriod
+    /// Set budget estimate for the appropriate prriod
     void setBudgetEstimate(mmBudgetEntryHolder& budEntry, bool monthBudget, wxDateTime beginDate, wxDateTime endDate);
     
-    // Used in reports to display today's date
+    /// Used in reports to display today's date
     void DisplayDateHeading(mmHTMLBuilder& hb, wxDateTime startYear, wxDateTime endYear, bool withDateRange = true);
 
-    // Returns correct values for day and month, adjusted to financial year if required.
+    /// Returns correct values for day and month, adjusted to financial year if required.
 	void AdjustYearValues(int& day, int& month, wxDateTime& year);
 
-    // Returns correct values for day and month, adjusted to financial year if required.
-	// Also returns a heading string for Month or Year reports.
+    /// Returns correct values for day and month, adjusted to financial year if required.
+	/// Also returns a heading string for Month or Year reports.
     wxString AdjustYearValues(int& day, int& month, long year, wxString yearStr);
 
-    // Sets date to end of financial year if required by user.
+    /// Sets date to end of financial year if required by user.
     void AdjustDateForEndFinancialYear(wxDateTime& date);
 
-    // Return day and month values to user defined financial year.
+    /// Return day and month values to user defined financial year.
     void GetFinancialYearValues(int& day, int& month);
 
-    // Advance the given date to the end of the current month.
+    /// Advance the given date to the end of the current month.
     void SetDateToEndOfMonth(int month, wxDateTime& date);
 
-    // Advance the given date by one year.
+    /// Advance the given date by one year.
     void SetDateToEndOfYear(int day, int month, wxDateTime& date, bool isEndDate = true);
 	
-	// sets the start and end dates for a budget month
+	/// sets the start and end dates for a budget month
     void SetBudgetMonth(wxString budgetYearStr, wxDateTime& startDate, wxDateTime& endDate);
 
 protected:
