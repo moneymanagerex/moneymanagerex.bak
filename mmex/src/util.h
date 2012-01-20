@@ -33,6 +33,21 @@ struct ValuePair {
         double   amount;
 };
 
+class mmListBoxItem: public wxClientData
+{
+public:
+    mmListBoxItem(int index, const wxString& name) 
+        : index_(index), name_(name)
+    {}
+    
+    int getIndex() const { return index_; }
+    wxString getName() const { return name_; }
+
+private:
+    int index_;
+    wxString name_;
+};
+
 const wxString VIEW_TRANS_ALL_STR            = wxT("View All Transactions");
 const wxString VIEW_TRANS_RECONCILED_STR     = wxT("View Reconciled");
 const wxString VIEW_TRANS_NOT_RECONCILED_STR = wxT("View Not-Reconciled");

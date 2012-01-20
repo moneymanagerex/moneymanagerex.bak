@@ -46,22 +46,6 @@
 #define wxFIXED_MINSIZE 0
 #endif
 
-/*!
- * MyDialog class declaration
- */
-
-class mmCurrencyListBoxItem: public wxClientData
-{
-public:
-    mmCurrencyListBoxItem(int listIndex) 
-        : listIndex_(listIndex){}
-          
-    int getListIndex() { return listIndex_; }
-
-private:
-    int listIndex_;
-};
-
 class mmMainCurrencyDialog: public wxDialog
 {    
     DECLARE_DYNAMIC_CLASS( mmMainCurrencyDialog )

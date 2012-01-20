@@ -29,18 +29,6 @@
 #include "defs.h"
 #include "dbwrapper.h"
 
-class mmBudgetYearListBoxItem: public wxClientData
-{
-public:
-    mmBudgetYearListBoxItem(int budgetyearID) 
-        : budgetYearID_(budgetyearID){}
-          
-    int getBudgetYearID() { return budgetYearID_; }
-
-private:
-    int budgetYearID_;
-};
-
 class mmBudgetYearDialog : public wxDialog
 {    
     DECLARE_DYNAMIC_CLASS( mmBudgetYearDialog )

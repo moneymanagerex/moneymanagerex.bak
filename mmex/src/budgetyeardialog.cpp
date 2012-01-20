@@ -83,7 +83,7 @@ void mmBudgetYearDialog::fillControls()
     {
         wxString payeeString = q1.GetString(wxT("BUDGETYEARNAME"));
         int budgetYearID = q1.GetInt(wxT("BUDGETYEARID"));
-        listBox_->Insert(payeeString, index++, new mmBudgetYearListBoxItem(budgetYearID));
+        listBox_->Insert(payeeString, index++, new mmListBoxItem(budgetYearID, payeeString));
     }
     q1.Finalize();
 }
