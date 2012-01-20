@@ -68,20 +68,15 @@ private:
 };
 
 /* Holds a single transaction */
-class mmAssetHolder
+struct mmAssetHolder: public mmHolderBase
 {
-public:
-    int assetID_;
-
     wxString assetName_;
     wxString assetType_;
-    wxString valueStr_;
     wxString valueChangeStr_;
     wxString assetDate_;
     wxString assetNotes_;
     wxString assetValueChange_;
 
-    double value_;
     double valueChange_;
 };
 

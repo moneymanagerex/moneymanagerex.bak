@@ -60,8 +60,8 @@ wxString mmReportSummaryAssets::getHTMLText()
         {
             mmAssetHolder th;
 
-            th.assetID_           = q1.GetInt(wxT("ASSETID"));
-            th.value_             = mmDBWrapper::getAssetValue(db_, th.assetID_);
+            th.id_           = q1.GetInt(wxT("ASSETID"));
+            th.value_             = mmDBWrapper::getAssetValue(db_, th.id_);
             th.assetName_         = q1.GetString(wxT("ASSETNAME"));
 
             wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));

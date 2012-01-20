@@ -73,11 +73,8 @@ private:
 };
 
 /* Holds a single transaction */
-class mmStockTransactionHolder
+struct mmStockTransactionHolder: public mmHolderBase
 {
-public:
-    int stockID_;
-
     wxString heldAt_;
     wxString stockPDate_;
     wxString shareName_;
@@ -87,7 +84,6 @@ public:
     wxString numSharesStr_;
     wxString totalnumSharesStr_;
     wxString gainLossStr_;
-    wxString valueStr_;
     wxString cPriceStr_;
     wxString pPriceStr_;
     wxString avgpurchasePriceStr_;
@@ -96,7 +92,6 @@ public:
     double currentPrice_;
     double purchasePrice_;
     double avgpurchasePrice_;
-    double value_;
     double gainLoss_;
     double numShares_;
     double totalnumShares_;

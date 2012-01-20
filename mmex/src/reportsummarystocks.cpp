@@ -60,7 +60,7 @@ wxString mmReportSummaryStocks::getHTMLText()
         {
             mmStockTransactionHolder th;
 
-            th.stockID_           = q1.GetInt(wxT("STOCKID"));
+            th.id_           = q1.GetInt(wxT("STOCKID"));
             int accountID         = q1.GetInt(wxT("HELDAT"));
             th.heldAt_            = mmDBWrapper::getAccountName(db_, accountID);
             th.shareName_         = q1.GetString(wxT("STOCKNAME"));
