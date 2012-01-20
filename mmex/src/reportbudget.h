@@ -23,7 +23,7 @@
 class mmCoreDB;
 class wxSQLite3Database;
 class mmGUIFrame;
-class mmBudgetEntryHolder;
+struct mmBudgetEntryHolder;
 class mmHTMLBuilder;
 class wxDateTime;
 
