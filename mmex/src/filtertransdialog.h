@@ -192,15 +192,25 @@ public:
 
     ////@end mmFilterTransactionsDialog member variables
 
-    //TODO - Adding the other methods to allow the data to be extracted.
+	/// Returns the payee string, when Payee is selected.
     wxString userPayeeStr();
+	/// Returns the Category/subcategory string, when Category is selected.
     wxString userCategoryStr();
+    /// Returns the date range string, when Date Range is selected.
     wxString userDateRangeStr();
+ 	/// Returns the Status string, when Status is selected.
     wxString userStatusStr();
+ 	/// Returns the Type string, when Type is selected.
     wxString userTypeStr();
+  	/// Returns the amount range string, when Amount Range is selected.
     wxString userAmountRangeStr();
+  	/// Returns the transaction Number string, when Number is selected.
 	wxString userTransNumberStr();
+  	/// Returns the user Note string, when Notes is selected.
 	wxString userNotesStr();
+
+    /// Returns true with valid dates, when the dialog date range is selected.
+    bool getDateRange(wxDateTime& startDate, wxDateTime& endDate); 
 };
 
 #endif

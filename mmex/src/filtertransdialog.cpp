@@ -616,6 +616,18 @@ void mmFilterTransactionsDialog::OnPayee(wxCommandEvent& /*event*/)
     }
 }
 
+bool mmFilterTransactionsDialog::getDateRange(wxDateTime& startDate, wxDateTime& endDate)
+{
+    bool validDates = false;
+    if (dateRangeCheckBox->IsChecked())
+    {
+        startDate = fromDateCtrl->GetValue();
+        endDate = toDateControl->GetValue();
+        validDates = true;
+    }
+    return validDates;
+}
+
 wxString mmFilterTransactionsDialog::userDateRangeStr()
 {
     wxString dateStr;
@@ -632,7 +644,9 @@ wxString mmFilterTransactionsDialog::userPayeeStr()
 {
     wxString payeeStr;
     if (payeeCheckBox->IsChecked())
+    {
         payeeStr = btnPayee->GetLabelText();
+    }
     return payeeStr;
 }
 
@@ -640,7 +654,9 @@ wxString mmFilterTransactionsDialog::userCategoryStr()
 {
     wxString catStr;
     if (categoryCheckBox->IsChecked())
+    {
         catStr = btnCategory->GetLabelText();
+    }
     return catStr;
 }
 
@@ -648,7 +664,9 @@ wxString mmFilterTransactionsDialog::userStatusStr()
 {
     wxString statusStr;
     if (statusCheckBox->IsChecked())
+    {
         statusStr = choiceStatus->GetLabelText();
+    }
     return statusStr;
 }
 
@@ -656,14 +674,14 @@ wxString mmFilterTransactionsDialog::userTypeStr()
 {
     wxString transCode;
     if (typeCheckBox->IsChecked())
+    {
         if (cbTypeWithdrawal_->GetValue())
-			transCode = TRANS_TYPE_WITHDRAWAL_STR;
-		if (cbTypeDeposit_->GetValue())
-			transCode << wxT(", ") << TRANS_TYPE_DEPOSIT_STR;
-		if (cbTypeTransfer_->GetValue())
-			transCode << wxT(", ") << TRANS_TYPE_TRANSFER_STR;
-        
-        //transCode = choiceType->GetLabelText();
+            transCode = TRANS_TYPE_WITHDRAWAL_STR;
+        if (cbTypeDeposit_->GetValue())
+            transCode << wxT(", ") << TRANS_TYPE_DEPOSIT_STR;
+        if (cbTypeTransfer_->GetValue())
+            transCode << wxT(", ") << TRANS_TYPE_TRANSFER_STR;
+    }
     return transCode;
 }
 
@@ -683,7 +701,9 @@ wxString mmFilterTransactionsDialog::userTransNumberStr()
 {
     wxString numberStr;
     if (transNumberCheckBox->IsChecked())
+    {
         numberStr = transNumberEdit->GetValue().Trim().Lower();
+    }
     return numberStr;
 }
 
@@ -691,6 +711,8 @@ wxString mmFilterTransactionsDialog::userNotesStr()
 {
     wxString notesStr;
     if (notesCheckBox->IsChecked())
+    {
         notesStr = notesEdit->GetValue().Trim().Lower();
+    }
     return notesStr;
 }
