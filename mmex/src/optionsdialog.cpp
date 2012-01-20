@@ -49,12 +49,14 @@ enum ViewTransEnum
 {
     VIEW_TRANS_ALL,
     VIEW_TRANS_REC,
+    VIEW_TRANS_NOT_REC,
     VIEW_TRANS_UNREC,
     VIEW_TRANS_TODAY,
+    VIEW_TRANS_CURRENTMONTH,
     VIEW_TRANS_30,
     VIEW_TRANS_90,
     VIEW_TRANS_LASTMONTH,
-    VIEW_TRANS_CURRENTMONTH,
+    VIEW_TRANS_LAST_3MONTHS,
     VIEW_TRANS_MAX // number of elements, must be last
 };
 
@@ -332,14 +334,9 @@ void mmOptionsDialog::OnViewAccountsChanged(wxCommandEvent& /*event*/)
     int selection = choiceVisible_->GetSelection();
 
     wxString viewAcct = wxT("ALL");
-    if (selection == VIEW_OPEN)
-    {
-        viewAcct = wxT("Open");
-    }
-    else if (selection == VIEW_FAVORITES)
-    {
-        viewAcct = wxT("Favorites");
-    }
+    if (selection == VIEW_OPEN)           viewAcct = wxT("Open");
+    else if (selection == VIEW_FAVORITES) viewAcct = wxT("Favorites");
+    
     mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWACCOUNTS"), viewAcct);
 }
 
@@ -347,22 +344,17 @@ void mmOptionsDialog::OnViewTransChanged(wxCommandEvent& /*event*/)
 {
     int selection = choiceTransVisible_->GetSelection();
 
-    wxString viewTrans = wxT("View All Transactions");
-    if (selection == VIEW_TRANS_REC)
-        viewTrans = wxT("View Reconciled");
-    else if (selection == VIEW_TRANS_UNREC)
-        viewTrans = wxT("View UnReconciled");
-    else if (selection == VIEW_TRANS_TODAY)
-        viewTrans = wxT("View Today");
-    else if (selection == VIEW_TRANS_30)
-        viewTrans = wxT("View 30 days");
-    else if (selection == VIEW_TRANS_90)
-        viewTrans = wxT("View 90 days");
-    else if (selection == VIEW_TRANS_LASTMONTH)
-        viewTrans = wxT("View Last Month");
-    else if (selection == VIEW_TRANS_CURRENTMONTH)
-        viewTrans = wxT("View Current Month");
-
+    wxString viewTrans = VIEW_TRANS_ALL_STR;
+    if (selection == VIEW_TRANS_REC)            viewTrans = VIEW_TRANS_RECONCILED_STR;
+    else if (selection == VIEW_TRANS_UNREC)     viewTrans = VIEW_TRANS_UNRECONCILED_STR;
+    else if (selection == VIEW_TRANS_UNREC)     viewTrans = VIEW_TRANS_NOT_RECONCILED_STR;
+    else if (selection == VIEW_TRANS_TODAY)     viewTrans = VIEW_TRANS_TODAY_STR;
+    else if (selection == VIEW_TRANS_CURRENTMONTH) viewTrans = VIEW_TRANS_CURRENT_MONTH_STR;
+    else if (selection == VIEW_TRANS_30)        viewTrans = VIEW_TRANS_LAST_30_DAYS_STR;
+    else if (selection == VIEW_TRANS_90)        viewTrans = VIEW_TRANS_LAST_90_DAYS_STR;
+    else if (selection == VIEW_TRANS_LASTMONTH) viewTrans = VIEW_TRANS_LAST_MONTH_STR;
+    else if (selection == VIEW_TRANS_LAST_3MONTHS) viewTrans = VIEW_TRANS_LAST_3MONTHS_STR;
+    
     mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), viewTrans);
 }
 
@@ -570,16 +562,17 @@ void mmOptionsDialog::CreateControls()
    /**********************************************************************************************
     Views Panel
     **********************************************************************************************/
-    wxPanel* itemPanelViews = new wxPanel(newBook, ID_BOOK_PANELVIEWS, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    wxBoxSizer* itemBoxSizer7 = new wxBoxSizer(wxVERTICAL);
-    itemPanelViews->SetSizer(itemBoxSizer7);
+    wxPanel* viewsPanel = new wxPanel(newBook, ID_BOOK_PANELVIEWS, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    wxBoxSizer* viewsPanelSizer = new wxBoxSizer(wxVERTICAL);
+    viewsPanel->SetSizer(viewsPanelSizer);
 
-    wxStaticBox* itemStaticBoxSizer10Static = new wxStaticBox(itemPanelViews, wxID_ANY, _("Account View Options"));
-    wxStaticBoxSizer* itemStaticBoxSizer10 = new wxStaticBoxSizer(itemStaticBoxSizer10Static, wxHORIZONTAL);
-    itemBoxSizer7->Add(itemStaticBoxSizer10, 0, wxGROW|wxALL, 5);
+    wxStaticBox* accountStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Account View Options"));
+    accountStaticBox->SetFont(staticBoxFontSetting);
+    wxStaticBoxSizer* accountStaticBoxSizer = new wxStaticBoxSizer(accountStaticBox, wxHORIZONTAL);
+    viewsPanelSizer->Add(accountStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
-    wxStaticText* itemStaticText45 = new wxStaticText( itemPanelViews, wxID_STATIC, _("Accounts Visible"), wxDefaultPosition, wxDefaultSize, 0);
-    itemStaticBoxSizer10->Add(itemStaticText45, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* accountStaticText = new wxStaticText( viewsPanel, wxID_STATIC, _("Accounts Visible"), wxDefaultPosition, wxDefaultSize, 0);
+    accountStaticBoxSizer->Add(accountStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     const wxString itemChoiceViewAccountStrings[VIEW_MAX] = 
     {
@@ -588,8 +581,8 @@ void mmOptionsDialog::CreateControls()
         _("Favorites")
     };  
     
-    choiceVisible_ = new wxChoice(itemPanelViews, ID_DIALOG_OPTIONS_VIEW_ACCOUNTS, wxDefaultPosition, wxDefaultSize, 3, itemChoiceViewAccountStrings, 0);
-    itemStaticBoxSizer10->Add(choiceVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    choiceVisible_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_VIEW_ACCOUNTS, wxDefaultPosition, wxDefaultSize, 3, itemChoiceViewAccountStrings, 0);
+    accountStaticBoxSizer->Add(choiceVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
     choiceVisible_->SetSelection(VIEW_ALL);
 
@@ -602,54 +595,53 @@ void mmOptionsDialog::CreateControls()
 
     // -----------------------------------------
 
-    wxStaticBox* itemStaticBoxSizerTransViewStatic = new wxStaticBox(itemPanelViews, wxID_ANY, _("Transaction View Options"));
-    wxStaticBoxSizer* itemStaticBoxSizerTransView = new wxStaticBoxSizer(itemStaticBoxSizerTransViewStatic, wxVERTICAL);
-    itemBoxSizer7->Add(itemStaticBoxSizerTransView, 0, wxGROW|wxALL, 5);
+    wxStaticBox* transOptionStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Transaction View Options"));
+    transOptionStaticBox->SetFont(staticBoxFontSetting);
+    wxStaticBoxSizer* transOptionStaticBoxSizer = new wxStaticBoxSizer(transOptionStaticBox, wxHORIZONTAL);
+    viewsPanelSizer->Add(transOptionStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
-    wxStaticText* itemStaticTextTransText = new wxStaticText(itemPanelViews, wxID_STATIC, _("Transactions Visible"), wxDefaultPosition, wxDefaultSize, 0);
-    itemStaticBoxSizerTransView->Add(itemStaticTextTransText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticTextTransText = new wxStaticText(viewsPanel, wxID_STATIC, _("Transactions Visible"), wxDefaultPosition, wxDefaultSize, 0);
+    transOptionStaticBoxSizer->Add(itemStaticTextTransText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     const wxString itemChoiceViewTransStrings[VIEW_TRANS_MAX] = 
     {
         _("View All Transactions"),
         _("View Reconciled"),
+        _("Vlew All - Except Reconciled"),
         _("View UnReconciled"),
         _("View Today"),
-        _("View 30 days"),
-        _("View 90 days"),
+        _("View Current Month"),
+        _("View Last 30 days"),
+        _("View Last 90 days"),
         _("View Last Month"),
-        _("View Current Month")
+        _("View Last 3 Months"),
     };  
     
-    choiceTransVisible_ = new wxChoice( itemPanelViews, ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, wxDefaultSize, sizeof(itemChoiceViewTransStrings)/sizeof(*itemChoiceViewTransStrings), itemChoiceViewTransStrings, 0);
-    itemStaticBoxSizerTransView->Add(choiceTransVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    choiceTransVisible_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, wxDefaultSize, sizeof(itemChoiceViewTransStrings)/sizeof(*itemChoiceViewTransStrings), itemChoiceViewTransStrings, 0);
+    transOptionStaticBoxSizer->Add(choiceTransVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxString vTrans = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), wxT("View All Transactions"));
+    wxString vTrans = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
     choiceTransVisible_->SetSelection(VIEW_TRANS_ALL);
 
-    if (vTrans == wxT("View Reconciled"))
-        choiceTransVisible_->SetSelection(VIEW_TRANS_REC);
-    else if (vTrans == wxT("View UnReconciled"))
-        choiceTransVisible_->SetSelection(VIEW_TRANS_UNREC);
-    else if (vTrans == wxT("View Today"))
-        choiceTransVisible_->SetSelection(VIEW_TRANS_TODAY);
-    else if (vTrans == wxT("View 30 days"))
-        choiceTransVisible_->SetSelection(VIEW_TRANS_30);
-    else if (vTrans == wxT("View 90 days"))
-        choiceTransVisible_->SetSelection(VIEW_TRANS_90);
-    else if (vTrans == wxT("View Last Month"))
-         choiceTransVisible_->SetSelection(VIEW_TRANS_LASTMONTH);
-    else if (vTrans == wxT("View Current Month"))
-         choiceTransVisible_->SetSelection(VIEW_TRANS_CURRENTMONTH);
+    if (vTrans == VIEW_TRANS_RECONCILED_STR)          choiceTransVisible_->SetSelection(VIEW_TRANS_REC);
+    else if (vTrans == VIEW_TRANS_NOT_RECONCILED_STR) choiceTransVisible_->SetSelection(VIEW_TRANS_NOT_REC);
+    else if (vTrans == VIEW_TRANS_UNRECONCILED_STR)   choiceTransVisible_->SetSelection(VIEW_TRANS_UNREC);
+    else if (vTrans == VIEW_TRANS_TODAY_STR)          choiceTransVisible_->SetSelection(VIEW_TRANS_TODAY);
+    else if (vTrans == VIEW_TRANS_CURRENT_MONTH_STR)  choiceTransVisible_->SetSelection(VIEW_TRANS_CURRENTMONTH);
+    else if (vTrans == VIEW_TRANS_LAST_30_DAYS_STR)   choiceTransVisible_->SetSelection(VIEW_TRANS_30);
+    else if (vTrans == VIEW_TRANS_LAST_90_DAYS_STR)   choiceTransVisible_->SetSelection(VIEW_TRANS_90);
+    else if (vTrans == VIEW_TRANS_LAST_MONTH_STR)     choiceTransVisible_->SetSelection(VIEW_TRANS_LASTMONTH);
+    else if (vTrans == VIEW_TRANS_LAST_3MONTHS_STR)   choiceTransVisible_->SetSelection(VIEW_TRANS_LAST_3MONTHS);
            
     choiceTransVisible_->SetToolTip(_("Specify which transactions are visible by default"));
 
-    wxStaticBox* itemStaticBoxSizerFontSizeStatic = new wxStaticBox(itemPanelViews, wxID_ANY, _("Font Size Options"));
-    wxStaticBoxSizer* itemStaticBoxSizerFontSize = new wxStaticBoxSizer(itemStaticBoxSizerFontSizeStatic, wxHORIZONTAL);
-    itemBoxSizer7->Add(itemStaticBoxSizerFontSize, 0, wxGROW|wxALL, 5);
+    wxStaticBox* fontSizeOptionStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Font Size Options"));
+    fontSizeOptionStaticBox->SetFont(staticBoxFontSetting);
+    wxStaticBoxSizer* fontSizeOptionStaticBoxSizer = new wxStaticBoxSizer(fontSizeOptionStaticBox, wxHORIZONTAL);
+    viewsPanelSizer->Add(fontSizeOptionStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
-    wxStaticText* itemStaticTextHTMLFontSizeText = new wxStaticText(itemPanelViews, wxID_STATIC, _("Report Font Size"), wxDefaultPosition, wxDefaultSize, 0);
-    itemStaticBoxSizerFontSize->Add(itemStaticTextHTMLFontSizeText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    wxStaticText* itemStaticTextHTMLFontSizeText = new wxStaticText(viewsPanel, wxID_STATIC, _("Report Font Size"), wxDefaultPosition, wxDefaultSize, 0);
+    fontSizeOptionStaticBoxSizer->Add(itemStaticTextHTMLFontSizeText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     const wxString itemChoiceHTMLFontSize[HTML_FONT_MAX] = 
     {
@@ -662,39 +654,32 @@ void mmOptionsDialog::CreateControls()
         wxT("Huge")
     };  
     
-    choiceFontSize_ = new wxChoice(itemPanelViews, ID_DIALOG_OPTIONS_FONT_SIZE, wxDefaultPosition, wxSize(85, -1), 7, itemChoiceHTMLFontSize, 0);
+    choiceFontSize_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_FONT_SIZE, wxDefaultPosition, wxSize(85, -1), 7, itemChoiceHTMLFontSize, 0);
 
     wxString vFontSize = mmDBWrapper::getINISettingValue(inidb_, wxT("HTMLFONTSIZE"), wxT("Font Size on the reports"));
-
     choiceFontSize_->SetSelection(HTML_FONT_NORMAL);
 
-    if (vFontSize == wxT("1"))
-        choiceFontSize_->SetSelection(HTML_FONT_XSMALL);
-    else if (vFontSize == wxT("2"))
-        choiceFontSize_->SetSelection(HTML_FONT_SMALL);
-    else if (vFontSize == wxT("3"))
-        choiceFontSize_->SetSelection(HTML_FONT_NORMAL);
-    else if (vFontSize == wxT("4"))
-        choiceFontSize_->SetSelection(HTML_FONT_LARGE);
-    else if (vFontSize == wxT("5"))
-         choiceFontSize_->SetSelection(HTML_FONT_XLARGE);
-    else if (vFontSize == wxT("6"))
-         choiceFontSize_->SetSelection(HTML_FONT_XXLARGE);
-    else if (vFontSize == wxT("7"))
-         choiceFontSize_->SetSelection(HTML_FONT_HUGE);
+    if (vFontSize == wxT("1"))      choiceFontSize_->SetSelection(HTML_FONT_XSMALL);
+    else if (vFontSize == wxT("2")) choiceFontSize_->SetSelection(HTML_FONT_SMALL);
+    else if (vFontSize == wxT("3")) choiceFontSize_->SetSelection(HTML_FONT_NORMAL);
+    else if (vFontSize == wxT("4")) choiceFontSize_->SetSelection(HTML_FONT_LARGE);
+    else if (vFontSize == wxT("5")) choiceFontSize_->SetSelection(HTML_FONT_XLARGE);
+    else if (vFontSize == wxT("6")) choiceFontSize_->SetSelection(HTML_FONT_XXLARGE);
+    else if (vFontSize == wxT("7")) choiceFontSize_->SetSelection(HTML_FONT_HUGE);
     
     choiceFontSize_->SetToolTip(_("Specify which font size is used on the report tables"));
         
-    itemStaticBoxSizerFontSize->Add(choiceFontSize_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    fontSizeOptionStaticBoxSizer->Add(choiceFontSize_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 //  Tree View Options
-    wxStaticBox* itemStaticBoxSizerTreeViewOption = new wxStaticBox(itemPanelViews, wxID_ANY, _("Tree View Options: Expand Section"));
-    wxStaticBoxSizer* itemStaticBoxSizerTreeView = new wxStaticBoxSizer(itemStaticBoxSizerTreeViewOption, wxHORIZONTAL);
-    itemBoxSizer7->Add(itemStaticBoxSizerTreeView, 0, wxGROW|wxALL, 5);
+    wxStaticBox* itemStaticBoxSizerTreeViewOption = new wxStaticBox(viewsPanel, wxID_ANY, _("Tree View Section Expansion"));
+    itemStaticBoxSizerTreeViewOption->SetFont(staticBoxFontSetting);
+    wxStaticBoxSizer* itemStaticBoxSizerTreeView = new wxStaticBoxSizer(itemStaticBoxSizerTreeViewOption, wxVERTICAL);
+    viewsPanelSizer->Add(itemStaticBoxSizerTreeView, 0, wxGROW|wxALL, 5);
 
 // Check boxes for Tree View Options
     wxString expandBankTree =  mmDBWrapper::getINISettingValue(inidb_, wxT("EXPAND_BANK_TREE"), wxT("TRUE"));
-    wxCheckBox* itemCheckBoxExpandBankTree = new wxCheckBox( itemPanelViews, ID_DIALOG_OPTIONS_EXPAND_BANK_TREE, _("Bank Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    wxCheckBox* itemCheckBoxExpandBankTree = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_BANK_TREE, _("Bank Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     itemCheckBoxExpandBankTree->SetValue(FALSE);
     if (expandBankTree == wxT("TRUE"))
     {
@@ -704,7 +689,7 @@ void mmOptionsDialog::CreateControls()
     itemCheckBoxExpandBankTree->SetToolTip(_("Expand Bank Accounts in Trew View when tree is refreshed"));
 
     wxString expandTermTree =  mmDBWrapper::getINISettingValue(inidb_, wxT("EXPAND_TERM_TREE"), wxT("FALSE"));
-    wxCheckBox* itemCheckBoxExpandTermTree = new wxCheckBox( itemPanelViews, ID_DIALOG_OPTIONS_EXPAND_TERM_TREE, _("Term Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    wxCheckBox* itemCheckBoxExpandTermTree = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_TERM_TREE, _("Term Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     itemCheckBoxExpandTermTree->SetValue(FALSE);
     if (expandTermTree == wxT("TRUE"))
     {
@@ -714,13 +699,14 @@ void mmOptionsDialog::CreateControls()
     itemCheckBoxExpandTermTree->SetToolTip(_("Expand Term Accounts in Trew View when tree is refreshed"));
     
 //  Home Page Options
-    wxStaticBox* itemStaticBoxSizerHomePageOption = new wxStaticBox(itemPanelViews, wxID_ANY, _("Home Page Options: Expand Section"));
+    wxStaticBox* itemStaticBoxSizerHomePageOption = new wxStaticBox(viewsPanel, wxID_ANY, _("Home Page Section Expansion"));
+    itemStaticBoxSizerHomePageOption->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* itemStaticBoxSizerHomePage = new wxStaticBoxSizer(itemStaticBoxSizerHomePageOption, wxVERTICAL);
-    itemBoxSizer7->Add(itemStaticBoxSizerHomePage, 0, wxGROW|wxALL, 5);
+    viewsPanelSizer->Add(itemStaticBoxSizerHomePage, 0, wxGROW|wxALL, 5);
 
 //  Check boxes for Home Page Options
     wxString expandBankHome =  mmDBWrapper::getINISettingValue(inidb_, wxT("EXPAND_BANK_HOME"), wxT("TRUE"));
-    wxCheckBox* itemCheckBoxExpandBankHome = new wxCheckBox( itemPanelViews, ID_DIALOG_OPTIONS_EXPAND_BANK_HOME, _("Bank Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    wxCheckBox* itemCheckBoxExpandBankHome = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_BANK_HOME, _("Bank Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     itemCheckBoxExpandBankHome->SetValue(FALSE);
     if (expandBankHome == wxT("TRUE"))
     {
@@ -730,7 +716,7 @@ void mmOptionsDialog::CreateControls()
     itemCheckBoxExpandBankHome->SetToolTip(_("Expand Bank Accounts on home page when page is refreshed"));
 
     wxString expandTermHome =  mmDBWrapper::getINISettingValue(inidb_, wxT("EXPAND_TERM_HOME"), wxT("FALSE"));
-    wxCheckBox* itemCheckBoxExpandTermHome = new wxCheckBox( itemPanelViews, ID_DIALOG_OPTIONS_EXPAND_TERM_HOME, _("Term Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    wxCheckBox* itemCheckBoxExpandTermHome = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_TERM_HOME, _("Term Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     itemCheckBoxExpandTermHome->SetValue(FALSE);
     if (expandTermHome == wxT("TRUE"))
     {
@@ -740,7 +726,7 @@ void mmOptionsDialog::CreateControls()
     itemCheckBoxExpandTermHome->SetToolTip(_("Expand Term Accounts on home page when page is refreshed"));
 
     wxString expandStockHome =  mmDBWrapper::getINISettingValue(inidb_, wxT("ENABLESTOCKS"), wxT("TRUE"));
-    wxCheckBox* itemCheckBoxExpandStockHome = new wxCheckBox(itemPanelViews, ID_DIALOG_OPTIONS_EXPAND_STOCK_HOME, _("Stock Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    wxCheckBox* itemCheckBoxExpandStockHome = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_STOCK_HOME, _("Stock Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     itemCheckBoxExpandStockHome->SetValue(FALSE);
     if (expandStockHome == wxT("TRUE"))
     {
@@ -971,7 +957,7 @@ void mmOptionsDialog::CreateControls()
     newBook->SetImageList(m_imageList);
 
     newBook->InsertPage(0, generalPanel, _("General"), true, 2);
-    newBook->InsertPage(1, itemPanelViews, _("View Options"), false, 0);
+    newBook->InsertPage(1, viewsPanel, _("View Options"), false, 0);
     newBook->InsertPage(2, itemPanelColors, _("Colors"), false, 1);
     newBook->InsertPage(3, itemPanelMisc, _("Others"), false, 3);
     newBook->InsertPage(4, itemPanelExpImp, _("Export/Import"), false, 4);

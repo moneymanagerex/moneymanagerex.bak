@@ -444,6 +444,7 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_MENU(MENU_VIEW_FLAGGED, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_TODAY, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_LAST30, mmCheckingPanel::OnViewPopupSelected)
+    EVT_MENU(MENU_VIEW_LAST90, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_LAST3MONTHS, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_DUPLICATE, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_DELETE_TRANS, mmCheckingPanel::OnViewPopupSelected)
@@ -603,7 +604,7 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
     // depending on the clicked control's window id.
     switch( event.GetId() ) 
     {
-    case ID_PANEL_CHECKING_STATIC_BITMAP_VIEW : 
+        case ID_PANEL_CHECKING_STATIC_BITMAP_VIEW :
         {
             wxMenu menu;
             menu.Append(MENU_VIEW_ALLTRANSACTIONS, _("View All Transactions"));
@@ -615,8 +616,9 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
             menu.Append(MENU_VIEW_DUPLICATE, _("View Duplicate Transactions"));
             menu.AppendSeparator();
             menu.Append(MENU_VIEW_TODAY, _("View Transactions for today"));
-            menu.Append(MENU_VIEW_LAST30, _("View Transactions for last 30 days"));
             menu.Append(MENU_VIEW_CURRENTMONTH, _("View Transactions for current month"));
+            menu.Append(MENU_VIEW_LAST30, _("View Transactions for last 30 days"));
+            menu.Append(MENU_VIEW_LAST90, _("View Transactions for last 90 days"));
             menu.Append(MENU_VIEW_LASTMONTH, _("View Transactions for last month"));
             menu.Append(MENU_VIEW_LAST3MONTHS, _("View Transactions for last 3 months"));
             menu.AppendSeparator();
@@ -627,7 +629,7 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
 
             break;
         }
-    case ID_PANEL_CHECKING_STATIC_BITMAP_FILTER : 
+        case ID_PANEL_CHECKING_STATIC_BITMAP_FILTER : 
         {
             wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, ID_PANEL_CHECKING_STATIC_BITMAP_FILTER);
             GetEventHandler()->AddPendingEvent(ev); 
@@ -682,7 +684,7 @@ void mmCheckingPanel::CreateControls()
         _("Transaction Filter"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizerHHeader2->Add(statTextTransFilter_, 0, wxALL, 1);
 
-    m_currentView = mmDBWrapper::getINISettingValue(m_inidb, wxT("VIEWTRANSACTIONS"), wxT("View All Transactions"));
+    m_currentView = mmDBWrapper::getINISettingValue(m_inidb, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
     
     initViewTransactionsHeader();
     wxBoxSizer* itemBoxSizerHHeader = new wxBoxSizer(wxHORIZONTAL);
@@ -1040,19 +1042,19 @@ const TransactionMatchMap& initTransactionMatchMap()
 {
     static TransactionMatchMap map;
 
-    map[wxT("View Reconciled")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("R"))), false);
+    map[VIEW_TRANS_RECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("R"))), false);
+    map[VIEW_TRANS_UNRECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT(""))), false);
+    map[VIEW_TRANS_NOT_RECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status< std::not_equal_to<wxString> >(wxT("R"))), false);
     map[wxT("View Void")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("V"))), false);
     map[wxT("View Flagged")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("F"))), false);
-    map[wxT("View UnReconciled")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT(""))), false);
-    map[wxT("View Not-Reconciled")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status< std::not_equal_to<wxString> >(wxT("R"))), false);
     map[wxT("View Duplicates")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("D"))), false);
 
-    map[wxT("View Today")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::Today>()), true);
-    map[wxT("View 30 days")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<30> >()), true);
-    map[wxT("View 90 days")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<90> >()), true);
-    map[wxT("View Current Month")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::CurrentMonth<> >()), true);
-    map[wxT("View Last Month")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<1, 1> >()), true);
-    map[wxT("View Last 3 Months")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<2> >()), true);
+    map[VIEW_TRANS_TODAY_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::Today>()), true);
+    map[VIEW_TRANS_LAST_30_DAYS_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<30> >()), true);
+    map[VIEW_TRANS_LAST_90_DAYS_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<90> >()), true);
+    map[VIEW_TRANS_LAST_MONTH_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<1, 1> >()), true);
+    map[VIEW_TRANS_CURRENT_MONTH_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::CurrentMonth<> >()), true);
+    map[VIEW_TRANS_LAST_3MONTHS_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastMonths<2> >()), true);
 
     return map;
 }
@@ -1272,42 +1274,16 @@ void mmCheckingPanel::OnMoveTransaction(wxCommandEvent& event)
 void mmCheckingPanel::initViewTransactionsHeader()
 {
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_PANELVIEW);
-    if (m_currentView == wxT("View All Transactions"))
-    {
-        header->SetLabel(_("Viewing all transactions"));
-    }
-    else if (m_currentView == wxT("View Reconciled"))
-    {
-        header->SetLabel(_("Viewing Reconciled transactions"));
-    }
-    else if (m_currentView == wxT("View UnReconciled"))
-    {
-        header->SetLabel(_("Viewing Un-Reconciled transactions"));
-    }
-    else if (m_currentView == wxT("View Today"))
-    {
-       header->SetLabel(_("Viewing transactions for today"));
-    }
-    else if (m_currentView == wxT("View 30 days"))
-    {
-        header->SetLabel(_("Viewing transactions for last 30 days"));
-    }
-    else if (m_currentView == wxT("View 90 days"))
-    {
-        header->SetLabel(_("Viewing transactions for last 3 months"));
-    }
-    else if (m_currentView == wxT("View Current Month"))
-    {
-        header->SetLabel(_("Viewing transactions for current month"));
-    }
-    else if (m_currentView == wxT("View Last Month"))
-    {
-        header->SetLabel(_("Viewing transactions for last month"));
-    }
-    else if (m_currentView == wxT("View Not-Reconciled"))
-    {
-        header->SetLabel(_("Viewing All Except Reconciled Transactions"));
-    }
+    if (m_currentView == VIEW_TRANS_ALL_STR)               header->SetLabel(_("Viewing all transactions"));
+    else if (m_currentView == VIEW_TRANS_RECONCILED_STR)   header->SetLabel(_("Viewing Reconciled transactions"));
+    else if (m_currentView == VIEW_TRANS_NOT_RECONCILED_STR) header->SetLabel(_("Viewing All Except Reconciled Transactions"));
+    else if (m_currentView == VIEW_TRANS_UNRECONCILED_STR) header->SetLabel(_("Viewing Un-Reconciled transactions"));
+    else if (m_currentView == VIEW_TRANS_TODAY_STR)        header->SetLabel(_("Viewing transactions for today"));
+    else if (m_currentView == VIEW_TRANS_CURRENT_MONTH_STR) header->SetLabel(_("Viewing transactions for current month"));
+    else if (m_currentView == VIEW_TRANS_LAST_30_DAYS_STR) header->SetLabel(_("Viewing transactions for last 30 days"));
+    else if (m_currentView == VIEW_TRANS_LAST_90_DAYS_STR) header->SetLabel(_("Viewing transactions for last 90 days"));
+    else if (m_currentView == VIEW_TRANS_LAST_MONTH_STR)   header->SetLabel(_("Viewing transactions for last month"));
+    else if (m_currentView == VIEW_TRANS_LAST_3MONTHS_STR) header->SetLabel(_("Viewing transactions for last 3 months"));
 }
 //----------------------------------------------------------------------------
 
@@ -1326,62 +1302,67 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     else if (evt ==  MENU_VIEW_ALLTRANSACTIONS)
     {
         header->SetLabel(_("Viewing all transactions"));
-        m_currentView = wxT("View All Transactions");
+        m_currentView = VIEW_TRANS_ALL_STR;
     }
     else if (evt == MENU_VIEW_RECONCILED)
     {
         header->SetLabel(_("Viewing Reconciled transactions"));
-        m_currentView = wxT("View Reconciled");
+        m_currentView = VIEW_TRANS_RECONCILED_STR;
+    }
+    else if (evt == MENU_VIEW_NOTRECONCILED)
+    {
+        header->SetLabel(_("Viewing All except Reconciled Transactions"));
+        m_currentView = VIEW_TRANS_NOT_RECONCILED_STR;
+    }
+    else if (evt == MENU_VIEW_UNRECONCILED)
+    {
+        header->SetLabel(_("Viewing Un-Reconciled transactions"));
+        m_currentView = VIEW_TRANS_UNRECONCILED_STR;
     }
     else if (evt == MENU_VIEW_VOID)
     {
         header->SetLabel(_("Viewing Void transactions"));
         m_currentView = wxT("View Void");
     }
-    else if (evt == MENU_VIEW_UNRECONCILED)
-    {
-        header->SetLabel(_("Viewing Un-Reconciled transactions"));
-        m_currentView = wxT("View UnReconciled");
-    }
     else if (evt == MENU_VIEW_FLAGGED)
     {
-        header->SetLabel(_("Viewing Flagged transactions"));
+        header->SetLabel(_("Viewing Follow-Up transactions"));
         m_currentView = wxT("View Flagged");
     }
     else if (evt == MENU_VIEW_TODAY)
     {
         header->SetLabel(_("Viewing transactions for today"));
-        m_currentView = wxT("View Today");
+        m_currentView = VIEW_TRANS_TODAY_STR;
     }
     else if (evt == MENU_VIEW_LAST30)
     {
         header->SetLabel(_("Viewing transactions for last 30 days"));
-        m_currentView = wxT("View 30 days");
+        m_currentView = VIEW_TRANS_LAST_30_DAYS_STR;
+    }
+    else if (evt == MENU_VIEW_LAST90)
+    {
+        header->SetLabel(_("Viewing transactions for last 90 days"));
+        m_currentView = VIEW_TRANS_LAST_90_DAYS_STR;
     }
     else if (evt == MENU_VIEW_LAST3MONTHS)
     {
         header->SetLabel(_("Viewing transactions for last 3 months"));
-        m_currentView = wxT("View 90 days");
+        m_currentView = VIEW_TRANS_LAST_3MONTHS_STR;
     }
     else if (evt == MENU_VIEW_CURRENTMONTH)
     {
         header->SetLabel(_("Viewing transactions for current month"));
-        m_currentView = wxT("View Current Month");
+        m_currentView = VIEW_TRANS_CURRENT_MONTH_STR;
     }
     else if (evt == MENU_VIEW_LASTMONTH)
     {
         header->SetLabel(_("Viewing transactions for last month"));
-        m_currentView = wxT("View Last Month");
+        m_currentView = VIEW_TRANS_LAST_MONTH_STR;
     }
     else if (evt == MENU_VIEW_DUPLICATE)
     {
         header->SetLabel(_("Viewing duplicate transactions"));
         m_currentView = wxT("View Duplicates");
-    }
-    else if (evt == MENU_VIEW_NOTRECONCILED)
-    {
-        header->SetLabel(_("Viewing All except Reconciled Transactions"));
-        m_currentView = wxT("View Not-Reconciled");
     }
     else if (evt == MENU_VIEW_DELETE_TRANS || evt == MENU_TREEPOPUP_DELETE_VIEWED)
     {
@@ -1444,7 +1425,7 @@ void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
     messageStr << _("Current filtering has been set to: ") << m_currentView << wxT("\n\n");
     messageStr << _("Please set filtering to: ") << _("View All Transactions");
 
-    if (m_currentView != wxT("View All Transactions")) {
+    if (m_currentView != VIEW_TRANS_ALL_STR) {
         wxMessageBox(messageStr,_("Transaction Filter"),wxICON_WARNING);
 
     } else {
@@ -1545,72 +1526,54 @@ void MyListCtrl::OnMarkTransactionDB(const wxString& status)
 
 void MyListCtrl::OnMarkTransaction(wxCommandEvent& event)
 {
-     int evt = event.GetId();
-     wxString status = wxT("");
-     if (evt ==  MENU_TREEPOPUP_MARKRECONCILED)
-        status = wxT("R");
-     else if (evt == MENU_TREEPOPUP_MARKUNRECONCILED)
-         status = wxT("");
-     else if (evt == MENU_TREEPOPUP_MARKVOID)
-         status = wxT("V");
-     else if (evt == MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP)
-         status = wxT("F");
-     else if (evt == MENU_TREEPOPUP_MARKDUPLICATE)
-         status = wxT("D");
-     else
-     {
-        wxASSERT(false);
-     }
+    int evt = event.GetId();
+    wxString status = wxT("");
+    if (evt ==  MENU_TREEPOPUP_MARKRECONCILED)         status = wxT("R");
+    else if (evt == MENU_TREEPOPUP_MARKUNRECONCILED)   status = wxT("");
+    else if (evt == MENU_TREEPOPUP_MARKVOID)           status = wxT("V");
+    else if (evt == MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP) status = wxT("F");
+    else if (evt == MENU_TREEPOPUP_MARKDUPLICATE)         status = wxT("D");
+    else wxASSERT(false);
       
     OnMarkTransactionDB(status);
     SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
     SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-
 }
 //----------------------------------------------------------------------------
 
 void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
 {
-     int evt =  event.GetId();
-     wxString status = wxT("");
-     if (evt ==  MENU_TREEPOPUP_MARKRECONCILED_ALL)
-        status = wxT("R");
-     else if (evt == MENU_TREEPOPUP_MARKUNRECONCILED_ALL)
-         status = wxT("");
-     else if (evt == MENU_TREEPOPUP_MARKVOID_ALL)
-         status = wxT("V");
-     else if (evt == MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL)
-         status = wxT("F");
-     else if (evt == MENU_TREEPOPUP_MARKDUPLICATE_ALL)
-         status = wxT("D");
-     else
-     {
-        wxASSERT(false);
-     }
+    int evt =  event.GetId();
+    wxString status = wxT("");
+    if (evt ==  MENU_TREEPOPUP_MARKRECONCILED_ALL)             status = wxT("R");
+    else if (evt == MENU_TREEPOPUP_MARKUNRECONCILED_ALL)       status = wxT("");
+    else if (evt == MENU_TREEPOPUP_MARKVOID_ALL)               status = wxT("V");
+    else if (evt == MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL) status = wxT("F");
+    else if (evt == MENU_TREEPOPUP_MARKDUPLICATE_ALL)          status = wxT("D");
+    else  wxASSERT(false);
 
-     mmDBWrapper::begin(m_cp->m_core->db_.get());
+    mmDBWrapper::begin(m_cp->m_core->db_.get());
 
-     for (size_t i = 0; i < m_cp->m_trans.size(); ++i)
-     {
+    for (size_t i = 0; i < m_cp->m_trans.size(); ++i)
+    {
         int transID = m_cp->m_trans[i]->transactionID();
         if (mmDBWrapper::updateTransactionWithStatus(*m_cp->getDb(), transID, status))
         m_cp->m_trans[i]->status_ = status;
-     }
+    }
 
-//     if (m_cp->m_currentView != wxT("View All Transactions"))
-     {
+//     if (m_cp->m_currentView != VIEW_TRANS_ALL_STR)
+    {
         DeleteAllItems();
 
         m_cp->initVirtualListControl(NULL);
         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
-     }
+    }
 
-     mmDBWrapper::commit(m_cp->m_core->db_.get());
+    mmDBWrapper::commit(m_cp->m_core->db_.get());
 
-     m_cp->setAccountSummary();
-     SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-     SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-
+    m_cp->setAccountSummary();
+    SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+    SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
 }
 //----------------------------------------------------------------------------
 
