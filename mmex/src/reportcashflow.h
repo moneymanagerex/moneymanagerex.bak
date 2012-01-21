@@ -6,7 +6,6 @@
 #include <wx/datetime.h>
 #include <vector>
 
-class mmCoreDB;
 class wxArrayString;
 
 class mmReportCashFlow : public mmPrintableBase 
@@ -15,12 +14,14 @@ public:
     mmReportCashFlow(mmCoreDB* core, const wxArrayString* accountArray = 0);
 
     wxString getHTMLText();
+	
     void activateTermAccounts(); 
-    void showTermAccountsHeading(); 
+	void activateBankAccounts();
 
 private:
    
-   struct mmRepeatForecast {
+   struct mmRepeatForecast 
+   {
       wxDateTime date;
       double amount;
    };
@@ -30,7 +31,7 @@ private:
 
    const wxArrayString* accountArray_;
    bool activeTermAccounts_;
-   bool termAccountsHeading_;
+   bool activeBankAccounts_;
 };
 
 #endif // _MM_EX_REPORTCASHFLOW_H_

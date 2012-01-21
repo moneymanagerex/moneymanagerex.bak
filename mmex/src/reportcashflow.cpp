@@ -8,10 +8,10 @@
 
 mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, const wxArrayString* accountArray) : 
     mmPrintableBase(core), 
+    activeTermAccounts_(false),
+    activeBankAccounts_(false),
     accountArray_(accountArray)
 {
-    activeTermAccounts_  = false;
-    termAccountsHeading_ = false;
 }
 
 void mmReportCashFlow::activateTermAccounts() 
@@ -19,9 +19,9 @@ void mmReportCashFlow::activateTermAccounts()
     activeTermAccounts_ = true;
 }
 
-void mmReportCashFlow::showTermAccountsHeading()
+void mmReportCashFlow::activateBankAccounts() 
 {
-    termAccountsHeading_ = true;
+    activeBankAccounts_ = true;
 }
 
 wxString mmReportCashFlow::getHTMLText()
@@ -37,13 +37,16 @@ wxString mmReportCashFlow::getHTMLText()
     headerMsg = _("Accounts: ");
     if (accountArray_ == NULL) 
     {
-        if ( !(termAccountsHeading_ == activeTermAccounts_ ) &&
-              (termAccountsHeading_ || activeTermAccounts_) )
-            headerMsg << _("All Bank Accounts");
-        else 
+        if (activeBankAccounts_ && activeTermAccounts_)
             headerMsg << _("All Accounts");
+        else if (activeBankAccounts_)
+            headerMsg << _("All Bank Accounts");
+        else if (activeTermAccounts_)
+            headerMsg << _("All Term Accounts");
 
-    } else {
+    } 
+    else 
+    {
         int arrIdx = 0;
  
         if ( (int)accountArray_->size() == 0 )
@@ -63,7 +66,8 @@ wxString mmReportCashFlow::getHTMLText()
         }
 
     }
-        hb.addHeader(6, headerMsg);
+
+    hb.addHeader(6, headerMsg);
 
     wxDateTime now = wxDateTime::Now();
     wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
@@ -85,27 +89,31 @@ wxString mmReportCashFlow::getHTMLText()
           
     for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
     {
-        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
-        if (pCA)
-        {
-            if (pCA->status_ != pCA->MMEX_Closed)
-            {
-                // Check if this account belongs in our list
-                if (accountArray_ != NULL)
-                {
-                    if (wxNOT_FOUND == accountArray_->Index(pCA->accountName_)) //linear search
-                        continue; // skip account
-                }
+		//XXX
+		if (activeBankAccounts_)
+		{
+			mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
+			if (pCA)
+			{
+				if (pCA->status_ != pCA->MMEX_Closed)
+				{
+					// Check if this account belongs in our list
+					if (accountArray_ != NULL)
+					{
+						if (wxNOT_FOUND == accountArray_->Index(pCA->accountName_)) //linear search
+							continue; // skip account
+					}
 
-                core_->bTransactionList_.getDailyBalance(pCA->accountID_, daily_balance);
+					core_->bTransactionList_.getDailyBalance(pCA->accountID_, daily_balance);
 
-                boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
-                wxASSERT(pCurrencyPtr);
-                mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-                double rate = pCurrencyPtr->baseConv_;
-                tInitialBalance += pCA->initialBalance_ * rate;
-            }
-        }
+					boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
+					wxASSERT(pCurrencyPtr);
+					mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+					double rate = pCurrencyPtr->baseConv_;
+					tInitialBalance += pCA->initialBalance_ * rate;
+				}
+			}
+		}
 
         if (activeTermAccounts_) // Add Term accounts to cashflows as well
         {
