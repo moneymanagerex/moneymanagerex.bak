@@ -98,8 +98,8 @@ struct mmBDTransactionHolder: public mmHolderBase
     int accountID_;
     int toAccountID_;
 
-	wxString accountStr_;
-	wxString notesStr_;
+	wxString accountName_;
+	wxString notes_;
 	int categID_;
 	wxString categoryStr_;
     int subcategID_;

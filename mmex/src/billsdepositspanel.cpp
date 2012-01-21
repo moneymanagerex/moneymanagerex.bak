@@ -307,10 +307,10 @@ void mmBillsDepositsPanel::initVirtualListControl()
         th.transType_      = q1.GetString(wxT("TRANSCODE"));
         th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
         th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
-		th.accountStr_     = mmDBWrapper::getAccountName(db_, th.accountID_);
+		th.accountName_    = mmDBWrapper::getAccountName(db_, th.accountID_);
         th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
         th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
-		th.notesStr_	   = q1.GetString(wxT("NOTES"));
+		th.notes_	       = q1.GetString(wxT("NOTES"));
 		th.categID_		   = q1.GetInt(wxT("CATEGID"));
 		th.categoryStr_	   = q1.GetString(wxT("CATEGNAME"));
 		th.subcategID_	   = q1.GetInt(wxT("SUBCATEGID"));
@@ -488,7 +488,7 @@ void billsDepositsListCtrl::OnItemRightClick(wxListEvent& event)
 wxString mmBillsDepositsPanel::getItem(long item, long column)
 {
     if (column == 0) return trans_[item].payeeStr_;
-	if (column == 1) return trans_[item].accountStr_;
+	if (column == 1) return trans_[item].accountName_;
 
     if (column == 2)
     {
@@ -501,7 +501,7 @@ wxString mmBillsDepositsPanel::getItem(long item, long column)
     if (column == 4) return trans_[item].nextOccurStr_;
     if (column == 5) return trans_[item].repeatsStr_;
     if (column == 6) return trans_[item].daysRemainingStr_;
-	if (column == 7) return trans_[item].notesStr_;
+	if (column == 7) return trans_[item].notes_;
 
     return wxT("");
 }
@@ -669,7 +669,7 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
         wxString addInfo;
         addInfo << trans_[selIndex].categoryStr_ << (trans_[selIndex].subcategoryStr_ == wxT ("") ? wxT ("") : wxT (":") + trans_[selIndex].subcategoryStr_);
         stm->SetLabel(addInfo);
-        st ->SetLabel (trans_[selIndex].notesStr_ ); 
+        st ->SetLabel (trans_[selIndex].notes_ ); 
     }
     else 
     {
