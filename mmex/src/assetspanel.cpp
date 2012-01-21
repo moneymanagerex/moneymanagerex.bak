@@ -192,43 +192,43 @@ void mmAssetsPanel::CreateControls()
     m_listCtrlAssets->SetColumnWidth(COL_DATE, col3);
     m_listCtrlAssets->SetColumnWidth(COL_NOTES, col4);
     
-    wxPanel* itemPanel12 = new wxPanel( itemSplitterWindow10, wxID_ANY,
+    wxPanel* assets_panel = new wxPanel( itemSplitterWindow10, wxID_ANY,
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
 
-    itemSplitterWindow10->SplitHorizontally(m_listCtrlAssets, itemPanel12);
+    itemSplitterWindow10->SplitHorizontally(m_listCtrlAssets, assets_panel);
     itemSplitterWindow10->SetMinimumPaneSize(100);
     itemSplitterWindow10->SetSashGravity(1.0);
     itemBoxSizer9->Add(itemSplitterWindow10, 1, wxGROW|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
-    itemPanel12->SetSizer(itemBoxSizer4);
-    itemPanel12->SetBackgroundColour(mmColors::listBackColor);
+    assets_panel->SetSizer(itemBoxSizer4);
+    assets_panel->SetBackgroundColour(mmColors::listBackColor);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 3);
 
-    wxButton* itemButton6 = new wxButton( itemPanel12, wxID_NEW, _("&New"));
+    wxButton* itemButton6 = new wxButton( assets_panel, wxID_NEW, _("&New"));
     itemButton6->SetToolTip(_("New Asset"));
     itemBoxSizer5->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton81 = new wxButton( itemPanel12, wxID_EDIT, _("&Edit"));
+    wxButton* itemButton81 = new wxButton( assets_panel, wxID_EDIT, _("&Edit"));
     itemButton81->SetToolTip(_("Edit Asset"));
     itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemButton81->Enable(false);
     
-    wxButton* itemButton7 = new wxButton( itemPanel12, wxID_DELETE, _("&Delete"));
+    wxButton* itemButton7 = new wxButton( assets_panel, wxID_DELETE, _("&Delete"));
     itemButton7->SetToolTip(_("Delete Asset"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemButton7->Enable(false);
 
     //Infobar-mini 
-    wxStaticText* itemStaticText44 = new wxStaticText( itemPanel12, IDC_PANEL_ASSET_STATIC_DETAILS_MINI, wxT(""), 
+    wxStaticText* itemStaticText44 = new wxStaticText( assets_panel, IDC_PANEL_ASSET_STATIC_DETAILS_MINI, wxT(""), 
         wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxTOP, 12);
 
     //Infobar 
-    wxStaticText* itemStaticText33 = new wxStaticText( itemPanel12, 
-    IDC_PANEL_ASSET_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
+    wxStaticText* itemStaticText33 = new wxStaticText( assets_panel, 
+        IDC_PANEL_ASSET_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
     itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxALL, 5);
             
     updateExtraAssetData(-1);
@@ -364,7 +364,7 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
 {
     wxStaticText* st = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS);
     wxStaticText* stm = (wxStaticText*)FindWindow(IDC_PANEL_ASSET_STATIC_DETAILS_MINI);
-    if (selIndex!=-1)
+    if (selIndex > -1)
     {
         enableEditDeleteButtons(true);
         wxString miniInfo;
@@ -379,7 +379,7 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
     else
     {
         stm -> SetLabel(wxT(""));
-        st->SetLabel(_("MMEX allows you to track fixed assets like cars, houses, land and others. Each asset can have its value appreciate by a certain rate per year, depreciate by a certain rate per year, or not change in value. The total assets are added to your total financial worth."));
+        st->SetLabel(Tips(wxT("assets")));
         enableEditDeleteButtons(false);
     }
 }
