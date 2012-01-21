@@ -842,10 +842,10 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
         th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
         th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
 
-        th.accountStr_     = mmDBWrapper::getAccountName(m_db.get(), th.accountID_);
+        th.accountName_     = mmDBWrapper::getAccountName(m_db.get(), th.accountID_);
         th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
         th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
-        th.notesStr_       = q1.GetString(wxT("NOTES"));
+        th.notes_       = q1.GetString(wxT("NOTES"));
         th.categID_           = q1.GetInt(wxT("CATEGID"));
         th.categoryStr_       = q1.GetString(wxT("CATEGNAME"));
         th.subcategID_       = q1.GetInt(wxT("SUBCATEGID"));
@@ -932,7 +932,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
                 pTransaction->amt_ = th.amt_;
                 pTransaction->status_ = q1.GetString(wxT("STATUS"));
                 pTransaction->transNum_ = q1.GetString(wxT("TRANSACTIONNUMBER"));
-                pTransaction->notes_ = th.notesStr_;
+                pTransaction->notes_ = th.notes_;
                 pTransaction->category_ = m_core.get()->categoryList_.getCategorySharedPtr(th.categID_, th.subcategID_);
                 pTransaction->date_ = th.nextOccurDate_;
                 pTransaction->toAmt_ = th.toAmt_;
