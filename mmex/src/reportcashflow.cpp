@@ -88,36 +88,39 @@ wxString mmReportCashFlow::getHTMLText()
     std::map<wxDateTime, double> daily_balance;
           
     for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
+    for (std::vector<boost::shared_ptr<mmAccount> >::const_iterator it = core_->accountList_.accounts_.begin();
+        it != core_->accountList_.accounts_.end();
+        ++ it)
     {
-		//XXX
-		if (activeBankAccounts_)
-		{
-			mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
-			if (pCA)
-			{
-				if (pCA->status_ != pCA->MMEX_Closed)
-				{
-					// Check if this account belongs in our list
-					if (accountArray_ != NULL)
-					{
-						if (wxNOT_FOUND == accountArray_->Index(pCA->accountName_)) //linear search
-							continue; // skip account
-					}
+        //XXX
+        if (activeBankAccounts_)
+        {
+            mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(it->get());
+            if (pCA)
+            {
+                if (pCA->status_ != pCA->MMEX_Closed)
+                {
+                    // Check if this account belongs in our list
+                    if (accountArray_ != NULL)
+                    {
+                        if (wxNOT_FOUND == accountArray_->Index(pCA->accountName_)) //linear search
+                            continue; // skip account
+                    }
 
-					core_->bTransactionList_.getDailyBalance(pCA->accountID_, daily_balance);
+                    core_->bTransactionList_.getDailyBalance(pCA->accountID_, daily_balance);
 
-					boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
-					wxASSERT(pCurrencyPtr);
-					mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
-					double rate = pCurrencyPtr->baseConv_;
-					tInitialBalance += pCA->initialBalance_ * rate;
-				}
-			}
-		}
+                    boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
+                    wxASSERT(pCurrencyPtr);
+                    mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+                    double rate = pCurrencyPtr->baseConv_;
+                    tInitialBalance += pCA->initialBalance_ * rate;
+                }
+            }
+        }
 
         if (activeTermAccounts_) // Add Term accounts to cashflows as well
         {
-            mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(core_->accountList_.accounts_[iAdx].get());
+            mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(it->get());
             if (pTA)
             {
                 if (pTA->status_ != pTA->MMEX_Closed)
