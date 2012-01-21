@@ -831,64 +831,53 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd)
 {
     /* Create INFOTABLE_V1 Tables */
     mmDBWrapper::begin(db);
+
     createInfoV1Table(db);
-    if (pgd)
-        pgd->Update(10);
+    if (pgd) pgd->Update(10);
 
     /* Create Currency Settings */
     createCurrencyV1Table(db);
-    if (pgd)
-        pgd->Update(20);
+    if (pgd) pgd->Update(20);
 
     /* Create ACCOUNTLIST_V1 Tables */
     createAccountListV1Table(db);
-    if (pgd)
-        pgd->Update(30);
+    if (pgd) pgd->Update(30);
 
     /* Create CHECKINGACCOUNT_V1 Tables */
     createCheckingAccountV1Table(db);
-    if (pgd)
-        pgd->Update(40);
+    if (pgd) pgd->Update(40);
 
     /* Create PAYEE_V1 Tables */
     createPayeeV1Table(db);
-    if (pgd)
-        pgd->Update(50);
+    if (pgd) pgd->Update(50);
   
     /* Create CATEGORY_V1 Tables */
     createCategoryV1Table(db);
-    if (pgd)
-        pgd->Update(60);
+    if (pgd) pgd->Update(60);
 
     /* Create Budgeting_V1 Tables */
     createBudgetingV1Table(db);
-    if (pgd)
-        pgd->Update(75);
+    if (pgd) pgd->Update(75);
 
     /* Create Bills & Deposits V1 Table */
     createBillsDepositsV1Table(db);
-    if (pgd)
-        pgd->Update(80);
+    if (pgd) pgd->Update(80);
 
     /* Create Stock V1 Table */
     createStockV1Table(db);
-    if (pgd)
-        pgd->Update(85);
+    if (pgd) pgd->Update(85);
 
     /* Create Asset V1 Table */
     createAssetsV1Table(db);
-    if (pgd)
-        pgd->Update(90);
+    if (pgd) pgd->Update(90);
 
     /* Create SplitTransactions V1 Table */
     createSplitTransactionsV1Table(db);
-    if (pgd)
-        pgd->Update(95);
+    if (pgd) pgd->Update(95);
 
     /* Create AllData view */
-   createAllDataView(db);
-   if (pgd)
-       pgd->Update(99);
+    createAllDataView(db);
+    if (pgd) pgd->Update(99);
 
     /* Remove Any cruft */
     removeCruft(db);
