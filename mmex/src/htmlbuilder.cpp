@@ -109,16 +109,16 @@ void mmHTMLBuilder::startTable(const wxString& width, const wxString& valign)
 	//Comment line above then uncomment line below for debug homepage 
 	//html += wxT("<table border=\"2\" cellspacing=\"1\"");
 	if(!width.empty())
-	html += wxString::Format(wxT(" width=\"%s\""),width.c_str());
+	    html += wxString::Format(wxT(" width=\"%s\""),width.c_str());
 	if(!valign.empty()) 
-	html += wxString::Format(wxT(" valign=\"%s\""), valign.c_str());
+	    html += wxString::Format(wxT(" valign=\"%s\""), valign.c_str());
 	html += wxT(">\n");
 	bgswitch = true;
 }
 
 void mmHTMLBuilder::startTableRow()
 {
-	html += wxT("<tr>");
+	html << wxT("<tr ") << (bgswitch ? color1 : color0) << wxT(">");
 }
 
 void mmHTMLBuilder::startTableCell(const wxString& width)
@@ -191,7 +191,7 @@ void mmHTMLBuilder::addTableHeaderCell(const wxString& value) {
 
 void mmHTMLBuilder::addTableCell(const wxString& value, bool numeric, bool italic, bool bold, const wxString& fontColor) {
 
-    html += (numeric ? wxT("<td nowrap align=\"right\" ") : wxT("<td align=\"left\" ")) + (bgswitch ? color1 : color0) + wxT("><font size=") + fontSize;
+    html << (numeric ? wxT("<td nowrap align=\"right\" ") : wxT("<td")) << wxT("><font size=") << fontSize;
 
     if(!fontColor.empty())
     html += wxT(" color=\"") + fontColor + wxT ("\"");
