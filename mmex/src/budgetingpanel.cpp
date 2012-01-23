@@ -415,7 +415,7 @@ void mmBudgetingPanel::initVirtualListControl()
     while (q1.NextRow())
     {
         mmBudgetEntryHolder th;
-        budgetDetails.initBudgetEntryFields(th);
+        budgetDetails.initBudgetEntryFields(th, budgetYearID_);
         th.categID_ = q1.GetInt(wxT("CATEGID"));
         th.catStr_ = q1.GetString(wxT("CATEGNAME"));
 
@@ -470,7 +470,7 @@ void mmBudgetingPanel::initVirtualListControl()
         while(q2.NextRow())
         {
             mmBudgetEntryHolder thsub;
-            budgetDetails.initBudgetEntryFields(thsub);
+            budgetDetails.initBudgetEntryFields(thsub, budgetYearID_);
             thsub.categID_ = th.categID_;
             thsub.catStr_ = th.catStr_;
             thsub.subcategID_ = q2.GetInt(wxT("SUBCATEGID"));

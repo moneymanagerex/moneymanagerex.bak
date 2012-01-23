@@ -78,8 +78,9 @@ void mmReportBudget::setBudgetEstimate(mmBudgetEntryHolder& budEntry, bool month
     }
 }
 
-void mmReportBudget::initBudgetEntryFields(mmBudgetEntryHolder& budEntry)
+void mmReportBudget::initBudgetEntryFields(mmBudgetEntryHolder& budEntry, int id)
 {
+    budEntry.id_ = id;
     budEntry.subcategID_ = -1;
     budEntry.subCatStr_  = wxT("");
     budEntry.amt_ = 0.0;

@@ -36,8 +36,8 @@ class mmReportBudget : public mmPrintableBase
 public:
     mmReportBudget(mmGUIFrame* mainFrame);
 
-    /// Initialise secondary fields for a budget entry
-    void initBudgetEntryFields(mmBudgetEntryHolder& budEntry);
+    /// Initialise index and secondary fields for a budget entry
+    void initBudgetEntryFields(mmBudgetEntryHolder& budEntry, int id = -1);
   
     /// Set budget estimate for a day based on the required period
     void setBudgetDailyEstimateAmount(mmBudgetEntryHolder& budEntry, int month = 5 /*wxDateTime::Jun*/);
