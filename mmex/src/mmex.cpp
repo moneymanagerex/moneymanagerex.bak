@@ -965,8 +965,6 @@ void mmGUIFrame::saveConfigFile()
     wxFileName fname(fileName_);
     mmDBWrapper::setLastDbPath(m_inidb.get(), fname.GetFullPath());
 
-    mmSaveColorsToDatabase(m_inidb.get());
-
     /* Aui Settings */
     m_perspective = m_mgr.SavePerspective();
     mmDBWrapper::setINISettingValue(m_inidb.get(), wxT("AUIPERSPECTIVE"), m_perspective);
@@ -3660,8 +3658,11 @@ void mmGUIFrame::OnOptions(wxCommandEvent& /*event*/)
         return;
     }
 
-    if (mmOptionsDialog(m_core.get(), m_inidb.get(), this).ShowModal() == wxID_OK)
+    mmOptionsDialog systemOptions(m_core.get(), m_inidb.get(), this);
+    if (systemOptions.ShowModal() == wxID_OK)
     {
+        systemOptions.SaveNewSystemSettings();
+
         createHomePage();
         updateNavTreeControl();
 

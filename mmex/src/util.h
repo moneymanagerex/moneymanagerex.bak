@@ -84,8 +84,7 @@ void correctEmptyFileExt(wxString ext, wxString & fileName );
 
 void mmLoadColorsFromDatabase( wxSQLite3Database* db_ );
 wxColour mmGetColourFromString( const wxString& str );
-void mmRestoreDefaultColors();
-void mmSaveColorsToDatabase( wxSQLite3Database* db_ );
+wxString mmGetStringFromColour( wxColour color );
 
 void mmPlayTransactionSound( wxSQLite3Database* db_ );
 
