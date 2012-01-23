@@ -151,7 +151,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
     while (q1.NextRow())
     {
         mmBudgetEntryHolder th;
-        initBudgetEntryFields(th);
+        initBudgetEntryFields(th, budgetYearID_);
         th.categID_ = q1.GetInt(wxT("CATEGID"));
         th.catStr_  = q1.GetString(wxT("CATEGNAME"));
         mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
@@ -240,7 +240,7 @@ wxString mmReportBudgetingPerformance::getHTMLText()
         while(q2.NextRow())
         {
             mmBudgetEntryHolder thsub;
-            initBudgetEntryFields(thsub);
+            initBudgetEntryFields(thsub, budgetYearID_);
             thsub.categID_ = th.categID_;
             thsub.catStr_  = th.catStr_;
             thsub.subcategID_ = q2.GetInt(wxT("SUBCATEGID"));
