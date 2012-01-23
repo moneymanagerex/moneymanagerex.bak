@@ -1,5 +1,6 @@
-/*******************************************************
+/*************************************************************************
  Copyright (C) 2006 Madhan Kanagavel
+ copyright (C) 2011, 2012 Nikolay & Stefano Giorgio.
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -14,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ********************************************************/
+ *************************************************************************/
 
 #ifndef _MM_EX_OPTIONSDIALOG_H_
 #define _MM_EX_OPTIONSDIALOG_H_
@@ -44,7 +45,37 @@ public:
         const wxSize& size = SYMBOL_MMOPTIONSDIALOG_SIZE, 
         long style = SYMBOL_MMOPTIONSDIALOG_STYLE );
     ~mmOptionsDialog( );
+    
+    /// Saves the updated System Options to the appropriate databases.
+    void SaveNewSystemSettings();
 
+private:
+    /// System database access variables
+    mmCoreDB* core_;
+    wxSQLite3Database* db_;
+    wxSQLite3Database* inidb_;
+
+    /// Dialog specific controls
+    wxImageList* m_imageList;
+    wxComboBox* choiceDateFormat_;
+    wxChoice* choiceVisible_;
+    wxChoice* choiceTransVisible_;
+	wxChoice* choiceFontSize_;
+    wxChoice* monthSelection_;
+
+    /// set colour variables.
+    wxColour navTreeBkColor_;
+    wxColour listAlternativeColor0_;
+    wxColour listAlternativeColor1_;
+    wxColour listBackColor_;
+    wxColour listBorderColor_;
+    wxColour listDetailsPanelColor_;
+    wxColour listFutureDateColor_;
+
+    int currencyId_;    // initialised in create();
+
+
+    /// Dialog Creation - Used by constructor
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_MMOPTIONSDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_MMOPTIONSDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_MMOPTIONSDIALOG_POSITION, 
@@ -55,57 +86,40 @@ public:
 
     void OnCurrency(wxCommandEvent& event);
     void OnDateFormatChanged(wxCommandEvent& event);
-    void OnViewAccountsChanged(wxCommandEvent& event);
-    void OnViewTransChanged(wxCommandEvent& event);
-	void OnLanguageChanged(wxCommandEvent& event);
+    void OnLanguageChanged(wxCommandEvent& event);
+    
+    /// Colour Changing events
     void OnNavTreeColorChanged(wxCommandEvent& event);
-
     void OnAlt0Changed(wxCommandEvent& event);
     void OnAlt1Changed(wxCommandEvent& event);
     void OnListBackgroundChanged(wxCommandEvent& event);
     void OnListBorderChanged(wxCommandEvent& event);
-    void OnRestoreDefaultColors(wxCommandEvent& event);
     void OnListDetailsColors(wxCommandEvent& event);
-    void OnBackupDBChecked(wxCommandEvent& event);
-    void OnBackupDBUpdateChecked(wxCommandEvent& event);
-    void OnOriginalDateChecked(wxCommandEvent& event);
-    void OnUseSoundChecked(wxCommandEvent& event);
     void OnListFutureDates(wxCommandEvent& event);
-	void OnFontSizeChanged(wxCommandEvent& event);
-    void OnUpdCurrencyChecked(wxCommandEvent& event);
+    void OnRestoreDefaultColors(wxCommandEvent& event);
+   
+    void OnBackupDBChecked(wxCommandEvent& event);
+ 
+	void SetIniDatabaseCheckboxValue(wxString dbField, bool dbState);
 
-    void SetIniDatabaseCheckboxValue(wxString dbField, bool dbState);
-
-    void OnDefaultTransactionPayeeChanged(wxCommandEvent& event);
-    void OnTransactionCategoryChanged(wxCommandEvent& event);
-    void OnDefaultTransactionStatusChanged(wxCommandEvent& event);
-
-    void OnExpandBankHome(wxCommandEvent& event);
-    void OnExpandTermHome(wxCommandEvent& event);
-    void OnExpandStockHome(wxCommandEvent& event);
-
-    void OnExpandBankTree(wxCommandEvent& event);
-    void OnExpandTermTree(wxCommandEvent& event);
-
-    void OnFYSMonthChange(wxCommandEvent& event); // FinancialYearStartMonth
     void OnDelimiterSelectedU(wxCommandEvent& event);
     void OnDelimiterSelectedC(wxCommandEvent& event);
     void OnDelimiterSelectedS(wxCommandEvent& event);
     void OnDelimiterSelectedT(wxCommandEvent& event);
-    
+
     wxString DisplayDate2FormatDate(wxString strDate);
     wxString FormatDate2DisplayDate(wxString strDate);
 
-private:
-    wxImageList* m_imageList;
-    wxComboBox* choiceDateFormat_;
-    wxChoice* choiceVisible_;
-    wxChoice* choiceTransVisible_;
-	wxChoice* choiceFontSize_;
-    wxChoice* monthSelection_;
-    mmCoreDB* core_;
-    wxSQLite3Database* db_;
-    wxSQLite3Database* inidb_;
+    void SaveViewAccountOptions();
+    void SaveViewTransactionOptions();
+    void SaveFinancialYearStart();
+    void SaveStocksUrl();
+	
+    void SaveGeneralPanelSettings();
+    void SaveViewPanelSettings();
+    void SaveColourPanelSettings();
+    void SaveOthersPanelSettings();
+    void SaveImportExportPanelSettings();
 };
 
 #endif
