@@ -135,11 +135,6 @@
 #include <string>
 //----------------------------------------------------------------------------
 
-const wxString NAVTREECTRL_REPORTS = wxT("Reports");
-const wxString NAVTREECTRL_CUSTOM_REPORTS = wxT("Custom_Reports");
-//const wxString NAVTREECTRL_BANK_ACCOUNTS = wxT("Bank Accounts");
-//const wxString NAVTREECTRL_TERM_ACCOUNTS = wxT("Term Accounts");
-
 namespace
 {
 
@@ -613,7 +608,8 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     homePageAccountSelect_(false),
     expandedReportNavTree_(true),
     expandedBudgetingNavTree_(true),
-    expandedCustomSqlReportNavTree_(false)
+    expandedCustomSqlReportNavTree_(false),
+    helpFileIndex_(mmex::HTML_INDEX)
 {
     // tell wxAuiManager to manage this frame
     m_mgr.SetManagedWindow(this);
@@ -1472,7 +1468,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
      ///////////////////////////////////////////////////////////////////
 
     wxTreeItemId help = navTreeCtrl_->AppendItem(root, _("Help"), 5, 5);
-    navTreeCtrl_->SetItemData(help, new mmTreeItemData(wxT("Help")));
+    navTreeCtrl_->SetItemData(help, new mmTreeItemData(NAVTREECTRL_HELP));
     navTreeCtrl_->SetItemBold(help, true);
 
      /* Start Populating the dynamic data */
@@ -1749,8 +1745,33 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             return;
         }
 
-        if (iData->getString() == wxT("Help"))
+        if (iData->getString() == NAVTREECTRL_HELP)
         {
+            helpFileIndex_ = mmex::HTML_INDEX;
+            menuPrintingEnable(true);
+            createHelpPage();
+            return;
+        }
+
+        if (iData->getString() == NAVTREECTRL_CUSTOM_REPORTS)
+        {
+            helpFileIndex_ = mmex::HTML_CUSTOM_SQL;
+            menuPrintingEnable(true);
+            createHelpPage();
+            return;
+        }
+
+        if (iData->getString() == NAVTREECTRL_INVESTMENT)
+        {
+            helpFileIndex_ = mmex::HTML_INVESTMENT;
+            menuPrintingEnable(true);
+            createHelpPage();
+            return;
+        }
+
+        if (iData->getString() == NAVTREECTRL_BUDGET)
+        {
+            helpFileIndex_ = mmex::HTML_BUDGET;
             menuPrintingEnable(true);
             createHelpPage();
             return;
@@ -3688,6 +3709,7 @@ void mmGUIFrame::OnOptions(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnHelp(wxCommandEvent& /*event*/)
 {
+    helpFileIndex_ = mmex::HTML_INDEX;
     menuPrintingEnable(true);
     createHelpPage();
 }
@@ -4074,7 +4096,7 @@ void mmGUIFrame::OnPrintPageReport(wxCommandEvent& WXUNUSED(event))
     }
      else if (hp)
     {
-        printer_ ->PrintFile(mmex::getPathDoc(mmex::HTML_INDEX));
+        printer_ ->PrintFile(mmex::getPathDoc((mmex::EDocFile)helpFileIndex_));
     }
 }
 //----------------------------------------------------------------------------
@@ -4092,7 +4114,7 @@ void mmGUIFrame::OnPrintPagePreview(wxCommandEvent& WXUNUSED(event))
     }
     else if (hp)
     {
-        printer_ ->PreviewFile(mmex::getPathDoc(mmex::HTML_INDEX));
+        printer_ ->PreviewFile(mmex::getPathDoc((mmex::EDocFile)helpFileIndex_));
     }
 }
 //----------------------------------------------------------------------------
