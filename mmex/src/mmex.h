@@ -98,6 +98,8 @@ public:
     bool budgetSetupWithSummary();
     bool budgetCategoryTotal();
     bool budgetTransferTotal();
+    /// return the index (mmex::EDocFile) to return the correct file. 
+    int getHelpFileIndex() const { return helpFileIndex_; } 
 
     wxDateTime getUserDefinedFinancialYear(bool prevDayRequired = false) const;
 
@@ -148,6 +150,7 @@ private:
     /* printing */
     boost::scoped_ptr<wxHtmlEasyPrinting> printer_;
     void restorePrinterValues();
+    int helpFileIndex_;
 
     /* wxAUI */
     wxAuiManager m_mgr;

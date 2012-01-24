@@ -1,5 +1,6 @@
-/*******************************************************
+/*************************************************************************
  Copyright (C) 2006 Madhan Kanagavel
+ Copyright (C) 2011, 2012 Nikolay & Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -14,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ********************************************************/
+ *************************************************************************/
 
 #include "mmhelppanel.h"
 #include "util.h"
@@ -23,6 +24,7 @@
 #include "reportbase.h"
 #include "paths.h"
 #include "constants.h"
+#include "mmex.h"
 
 #include <wx/app.h>
 #include <vector>
@@ -38,8 +40,8 @@ mmHelpPanel::mmHelpPanel( mmGUIFrame* frame, wxSQLite3Database* db, wxWindow *pa
             const wxString& name )
 {
     db_ = db;
-    Create(parent, winid, pos, size, style, name);
     frame_ = frame;
+    Create(parent, winid, pos, size, style, name);
 }
 
 wxString mmHelpPanel::getReportText()
@@ -98,20 +100,29 @@ void mmHelpPanel::CreateControls()
     itemBoxSizer2->Add(htmlWindow_, 1, wxGROW|wxALL, 1);
     
     /**************************************************************************
-    Allows language seting to set Help language files.
-    Default filename name: index.html
-            is changed to: index_language.html
-    The language specified help file will be used if found in help directory.
+    Allows help files for a specific language.
+
+    Main default help file name: ./help/index.html
+    Default filename names can be found in mmex::getPathDoc(fileIndex)
+    
+    Language files now reside in their own language subdirectory in ./help/
+    example: russian language - changed to: ./help/russian/index.html
+
+    Default help files will be used when the language help file are not found.
     **************************************************************************/
-    wxFileName helpIndexFile(mmex::getPathDoc(mmex::HTML_INDEX));
-    wxString foreignHelpFileName = helpIndexFile.GetPath(wxPATH_GET_VOLUME|wxPATH_GET_SEPARATOR) +
-                                   helpIndexFile.GetName() + wxT("_") + mmOptions::language + wxT(".") +
-                                   helpIndexFile.GetExt();
-    wxFileName foreignHelpFile(foreignHelpFileName);
-    if (foreignHelpFile.FileExists())
-        htmlWindow_ ->LoadPage(foreignHelpFileName);
-    else
-       htmlWindow_ ->LoadPage(mmex::getPathDoc(mmex::HTML_INDEX));
+    int helpFileIndex = frame_->getHelpFileIndex();
+ 
+    wxFileName helpIndexFile(mmex::getPathDoc((mmex::EDocFile)helpFileIndex));
+    if (mmOptions::language != wxT("english")) helpIndexFile.AppendDir(mmOptions::language);
+
+    if (helpIndexFile.FileExists()) // Load the help file for the given language 
+    {
+        htmlWindow_->LoadPage(helpIndexFile.GetPathWithSep() + helpIndexFile.GetFullName());
+    }
+    else // load the default help file
+    {
+        htmlWindow_ ->LoadPage(mmex::getPathDoc((mmex::EDocFile)helpFileIndex));
+    }
 }
 
 void mmHelpPanel::OnHelpPageBack(wxCommandEvent& /*event*/)

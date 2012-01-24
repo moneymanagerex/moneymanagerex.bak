@@ -48,6 +48,12 @@ private:
     wxString name_;
 };
 
+const wxString NAVTREECTRL_REPORTS = wxT("Reports");
+const wxString NAVTREECTRL_HELP = wxT("Help");
+const wxString NAVTREECTRL_CUSTOM_REPORTS = wxT("Custom_Reports");
+const wxString NAVTREECTRL_INVESTMENT = wxT("Stocks");
+const wxString NAVTREECTRL_BUDGET = wxT("Budgeting");
+
 const wxString VIEW_TRANS_ALL_STR            = wxT("View All Transactions");
 const wxString VIEW_TRANS_RECONCILED_STR     = wxT("View Reconciled");
 const wxString VIEW_TRANS_NOT_RECONCILED_STR = wxT("View Not-Reconciled");

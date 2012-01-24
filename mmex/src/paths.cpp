@@ -124,7 +124,10 @@ wxString mmex::getPathDoc(EDocFile f)
           wxT("contrib.txt"),
           wxT("license.txt"),
           wxT("version.txt"),
-          wxT("help/index.html")
+          wxT("help/index.html"),
+          wxT("help/custom_sql_reports.html"),
+          wxT("help/investment.html"),
+          wxT("help/budget.html"),
         };
 
         wxASSERT(f >= 0 && f < DOC_FILES_MAX);
