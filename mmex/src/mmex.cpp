@@ -3674,35 +3674,27 @@ void mmGUIFrame::OnCashFlowSpecificAccounts()
 
 void mmGUIFrame::OnOptions(wxCommandEvent& /*event*/)
 {
-    if (!m_db.get() || !m_inidb)
-    {
-        return;
-    }
+    if (!m_db.get() || !m_inidb) return;
 
     mmOptionsDialog systemOptions(m_core.get(), m_inidb.get(), this);
     if (systemOptions.ShowModal() == wxID_OK)
     {
         systemOptions.SaveNewSystemSettings();
+        // enable or disable online update currency rate
+        menuItemOnlineUpdateCurRate_->Enable(systemOptions.GetUpdateCurrencyRateSetting());
+
+        int messageIcon = wxICON_INFORMATION;
+        wxString sysMsg = wxString() << _("MMEX Options have been updated.") << wxT("\n\n");
+        if (systemOptions.RequiresRestart())
+        {
+            messageIcon = wxICON_WARNING;
+            sysMsg << _("Recommendation: Shut down and restart MMEX.") << wxT("\n")
+                   << _("This will allow all MMEX option updates to take effect.");
+        }
+        wxMessageBox(sysMsg, _("New MMEX Options"), messageIcon);
 
         createHomePage();
         updateNavTreeControl();
-
-        // enable or disable online update currency rate
-        wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
-        if(enableCurrencyUpd == wxT("TRUE")) 
-        {
-            if (menuItemOnlineUpdateCurRate_)
-            {
-                menuItemOnlineUpdateCurRate_->Enable(true);
-            }
-        } 
-        else 
-        {
-            if (menuItemOnlineUpdateCurRate_)
-            {
-                menuItemOnlineUpdateCurRate_->Enable(false);
-            }
-        }
     }
 }
 //----------------------------------------------------------------------------

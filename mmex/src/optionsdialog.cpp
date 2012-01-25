@@ -121,6 +121,7 @@ mmOptionsDialog::mmOptionsDialog( mmCoreDB* core, wxSQLite3Database* inidb,
                                  const wxPoint& pos, const wxSize& size, long style )
                                  : core_(core), inidb_(inidb), db_(core_->db_.get())
 {
+    restartRequired_ = false;
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -139,6 +140,9 @@ bool mmOptionsDialog::Create( wxWindow* parent, wxWindowID id,
     listBorderColor_       = mmColors::listBorderColor;
     listDetailsPanelColor_ = mmColors::listDetailsPanelColor;
     listFutureDateColor_   = mmColors::listFutureDateColor;
+
+    currencyId_ = mmDBWrapper::getBaseCurrencySettings(db_);
+    dateFormat_ = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
 
     CreateControls();
     Centre();
@@ -265,29 +269,6 @@ wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
     return wxT("");
 }
 
-void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& /*event*/)
-{
-    wxString format = choiceDateFormat_->GetValue();
-    if (format.Trim().IsEmpty())
-    {
-        return;
-    }
-    try
-    {
-        mmGetDateForDisplay(db_, wxDateTime::Now());
-    }
-    catch(...)
-    {
-        choiceDateFormat_->SetValue(FormatDate2DisplayDate(wxT("%m/%d/%y")));
-        return;
-    }
-
-    mmOptions::dateFormat = DisplayDate2FormatDate(format);
-    mmOptions::saveOptions(db_);
-    wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE);
-    st->SetLabel(mmGetDateForDisplay(db_, wxDateTime::Now()) + _(" : Requires MMEX Restart"));
-}
-
 void mmOptionsDialog::CreateControls()
 {
     wxSize imageSize(48, 48);
@@ -363,7 +344,6 @@ void mmOptionsDialog::CreateControls()
         _("Base Currency"), wxDefaultPosition, wxDefaultSize, 0);
     currencyStaticBoxSizer->Add(baseCurrencyText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    currencyId_ = mmDBWrapper::getBaseCurrencySettings(db_);
     wxString currName = _("Set Currency");
     if (currencyId_ != -1)
     {
@@ -405,25 +385,23 @@ void mmOptionsDialog::CreateControls()
         wxT("YYYYMMDD"),
     };
 
-    wxString selectDateFormat = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
     choiceDateFormat_ = new wxComboBox(generalPanel, ID_DIALOG_OPTIONS_DATE_FORMAT, wxT(""),
         wxDefaultPosition, wxSize(140, -1), TOTAL_DATEFORMAT, itemChoice7Strings, 0);
     dateFormatSettingStaticBoxSizerGrid->Add(choiceDateFormat_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     choiceDateFormat_->SetToolTip(_("Specify the date format for display"));
-    choiceDateFormat_->SetValue(FormatDate2DisplayDate(selectDateFormat));
+    choiceDateFormat_->SetValue(FormatDate2DisplayDate(dateFormat_));
 
     wxButton* setFormatButton = new wxButton(generalPanel, ID_DIALOG_OPTIONS_BUTTON_DATEFORMAT,
         _("Set"), wxDefaultPosition, wxDefaultSize, 0);
     dateFormatSettingStaticBoxSizerGrid->Add(setFormatButton, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxStaticText* sampleDateExampleText = new wxStaticText( generalPanel, wxID_ANY,
-        _("Sample Date:"), wxDefaultPosition, wxDefaultSize, 0);
+        _("New date format sample:"), wxDefaultPosition, wxDefaultSize, 0);
     wxStaticText* sampleDateText = new wxStaticText(generalPanel, ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE,
         wxT("redefined elsewhere"), wxDefaultPosition, wxDefaultSize, 0);
     dateFormatSettingStaticBoxSizerGrid->Add(sampleDateExampleText, 0, wxALIGN_LEFT|wxALL, 5);
     dateFormatSettingStaticBoxSizerGrid->Add(sampleDateText, 0, wxALIGN_LEFT|wxALL, 5);
-    
-    sampleDateText->SetLabel(mmGetDateForDisplay(db_, wxDateTime::Now()));
+    sampleDateText->SetLabel(wxDateTime::Now().Format(dateFormat_));
 
     // Financial Year Settings
     wxStaticBox* financialYearStaticBox = new wxStaticBox(generalPanel, wxID_ANY, _("Financial Year"));
@@ -634,14 +612,14 @@ void mmOptionsDialog::CreateControls()
     // Expand Bank Tree
     wxCheckBox* expandBankCheckBox = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_BANK_TREE,
         _("Bank Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    expandBankCheckBox->SetValue(mmIniOptions::expandBankTree_);
+    expandBankCheckBox->SetValue(GetIniDatabaseCheckboxValue(wxT("EXPAND_BANK_TREE"),true));
     expandBankCheckBox->SetToolTip(_("Expand Bank Accounts in Trew View when tree is refreshed"));
     navTreeOptionsStaticBoxSizer->Add(expandBankCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     // Expand Term Tree
     wxCheckBox* expandTermCheckBox = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_TERM_TREE,
         _("Term Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    expandTermCheckBox->SetValue(mmIniOptions::expandTermTree_);
+    expandTermCheckBox->SetValue(GetIniDatabaseCheckboxValue(wxT("EXPAND_TERM_TREE"),false));
     expandTermCheckBox->SetToolTip(_("Expand Term Accounts in Trew View when tree is refreshed"));
     navTreeOptionsStaticBoxSizer->Add(expandTermCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     
@@ -654,21 +632,21 @@ void mmOptionsDialog::CreateControls()
     // Expand Bank Home
     wxCheckBox* expandBankHomeCheckBox = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_BANK_HOME,
         _("Bank Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    expandBankHomeCheckBox->SetValue(mmIniOptions::expandBankHome_);
+    expandBankHomeCheckBox->SetValue(GetIniDatabaseCheckboxValue(wxT("EXPAND_BANK_HOME"),true));
     expandBankHomeCheckBox->SetToolTip(_("Expand Bank Accounts on home page when page is refreshed"));
     homePageStaticBoxSizer->Add(expandBankHomeCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     // Expand Term Home
     wxCheckBox* itemCheckBoxExpandTermHome = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_TERM_HOME,
         _("Term Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    itemCheckBoxExpandTermHome->SetValue(mmIniOptions::expandTermHome_);
+    itemCheckBoxExpandTermHome->SetValue(GetIniDatabaseCheckboxValue(wxT("EXPAND_TERM_HOME"),false));
     itemCheckBoxExpandTermHome->SetToolTip(_("Expand Term Accounts on home page when page is refreshed"));
     homePageStaticBoxSizer->Add(itemCheckBoxExpandTermHome, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     // Expand Stock Home
     wxCheckBox* itemCheckBoxExpandStockHome = new wxCheckBox(viewsPanel, ID_DIALOG_OPTIONS_EXPAND_STOCK_HOME,
         _("Stock Accounts"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    itemCheckBoxExpandStockHome->SetValue(mmIniOptions::expandStocksHome_);
+    itemCheckBoxExpandStockHome->SetValue(GetIniDatabaseCheckboxValue(wxT("ENABLESTOCKS"),true));
     itemCheckBoxExpandStockHome->SetToolTip(_("Expand Stock Accounts on home page when page is refreshed"));
     homePageStaticBoxSizer->Add(itemCheckBoxExpandStockHome, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -929,6 +907,16 @@ void mmOptionsDialog::CreateControls()
     itemButtonOK->SetFocus();
 }
 
+void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& /*event*/)
+{
+    wxString lang = mmSelectLanguage(this, inidb_, true);
+    if (lang.empty()) return;
+
+    wxButton *btn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
+    wxASSERT(btn);
+    btn->SetLabel(lang);
+}
+
 void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
 {
     int currencyID = mmDBWrapper::getBaseCurrencySettings(db_);
@@ -945,14 +933,29 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
     }
 }
 
-void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& /*event*/)
+void mmOptionsDialog::OnDateFormatChanged(wxCommandEvent& /*event*/)
 {
-    wxString lang = mmSelectLanguage(this, inidb_, true);
-    if (lang.empty()) return;
+    wxString newFormat = choiceDateFormat_->GetValue();
+    if (newFormat == DisplayDate2FormatDate(newFormat)) // Not a predefined format
+    {
+        choiceDateFormat_->SetValue(FormatDate2DisplayDate(mmex::DEFDATEFORMAT));
+        return;
+    }
 
-    wxButton *btn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
-    wxASSERT(btn);
-    btn->SetLabel(lang);
+    try // setting the date to the new format to ensure it works.
+    {
+        wxDateTime::Now().Format(DisplayDate2FormatDate(newFormat));
+    }
+    catch(...)
+    {
+        choiceDateFormat_->SetValue(FormatDate2DisplayDate(mmex::DEFDATEFORMAT));
+        return;
+    }
+
+    dateFormat_ = DisplayDate2FormatDate(newFormat);
+    wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_OPTIONS_STATIC_SAMPLE_DATE);
+    st->SetLabel(wxDateTime::Now().Format(dateFormat_) + _(" : Requires MMEX Restart"));
+    restartRequired_ = true;
 }
 
 void mmOptionsDialog::OnNavTreeColorChanged(wxCommandEvent& /*event*/)
@@ -1109,6 +1112,19 @@ void mmOptionsDialog::SetIniDatabaseCheckboxValue(wxString dbField, bool dbState
         mmDBWrapper::setINISettingValue(inidb_, dbField, wxT("FALSE"));
 }
 
+bool mmOptionsDialog::GetIniDatabaseCheckboxValue(wxString dbField, bool defaultState)
+{
+    wxString dbState = wxT("FALSE");
+    bool result = true;
+    if (defaultState)
+    {
+        dbState = wxT("TRUE");
+        result  = false;
+    }
+    if (mmDBWrapper::getINISettingValue(inidb_, dbField, dbState) != dbState) result = !result;
+
+    return result;
+}
 
 void mmOptionsDialog::OnBackupDBChecked(wxCommandEvent& /*event*/)
 {
@@ -1243,12 +1259,7 @@ void mmOptionsDialog::SaveGeneralPanelSettings()
     
     //--------------
     mmDBWrapper::setBaseCurrencySettings(db_, currencyId_);
-
-    //--------------
-    //TODO: DateFormat
-
-
-    //--------------
+    mmDBWrapper::setInfoSettingValue(db_, wxT("DATEFORMAT"), dateFormat_);
     SaveFinancialYearStart();
     
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_BACKUP);
@@ -1341,4 +1352,10 @@ void mmOptionsDialog::SaveImportExportPanelSettings()
     wxTextCtrl* st = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4);
     wxString delim = st->GetValue();
     if (!delim.IsEmpty()) mmDBWrapper::setInfoSettingValue(db_, wxT("DELIMITER"), delim); 
+}
+
+bool mmOptionsDialog::GetUpdateCurrencyRateSetting()
+{
+    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_UPD_CURRENCY);
+    return itemCheckBox->GetValue();
 }

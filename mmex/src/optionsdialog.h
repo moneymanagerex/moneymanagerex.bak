@@ -24,7 +24,7 @@
 #include "mmcoredb.h"
 
 #define SYMBOL_MMOPTIONSDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_MMOPTIONSDIALOG_TITLE _("Options Dialog")
+#define SYMBOL_MMOPTIONSDIALOG_TITLE _("New MMEX Options")
 #define SYMBOL_MMOPTIONSDIALOG_IDNAME ID_DIALOG_OPTIONS
 #define SYMBOL_MMOPTIONSDIALOG_SIZE wxSize(500, 400)
 #define SYMBOL_MMOPTIONSDIALOG_POSITION wxDefaultPosition
@@ -48,6 +48,11 @@ public:
     
     /// Saves the updated System Options to the appropriate databases.
     void SaveNewSystemSettings();
+    
+    /// Returns the value of the dialog setting;
+    bool GetUpdateCurrencyRateSetting();
+
+    bool RequiresRestart() { return restartRequired_; }
 
 private:
     /// System database access variables
@@ -72,8 +77,9 @@ private:
     wxColour listDetailsPanelColor_;
     wxColour listFutureDateColor_;
 
-    int currencyId_;    // initialised in create();
-
+    bool restartRequired_;
+    int currencyId_;
+    wxString dateFormat_;
 
     /// Dialog Creation - Used by constructor
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_MMOPTIONSDIALOG_IDNAME, 
@@ -101,6 +107,7 @@ private:
     void OnBackupDBChecked(wxCommandEvent& event);
  
 	void SetIniDatabaseCheckboxValue(wxString dbField, bool dbState);
+    bool GetIniDatabaseCheckboxValue(wxString dbField, bool defaultState);
 
     void OnDelimiterSelectedU(wxCommandEvent& event);
     void OnDelimiterSelectedC(wxCommandEvent& event);
