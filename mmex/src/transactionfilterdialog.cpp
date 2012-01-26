@@ -1,5 +1,5 @@
 /*************************************************************************
- Copyright (C) 2011 Stefano Giorgio
+ Copyright (C) 2011, 2012 Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -36,10 +36,7 @@ BEGIN_EVENT_TABLE( TransFilterDialog, wxDialog )
     EVT_BUTTON( ID_DIALOG_TRANSFILTER_BTN_PAYEE,       TransFilterDialog::OnPayeeSelect)
     EVT_BUTTON( ID_DIALOG_TRANSFILTER_BTN_CATEGORY,    TransFilterDialog::OnCategorySelect)
     EVT_BUTTON( wxID_OK,       TransFilterDialog::OnButtonOK )
-    EVT_BUTTON( wxID_CANCEL,   TransFilterDialog::OnButtonCancel )
 END_EVENT_TABLE()
-
-// Defines for Transaction Status and Type now located in dbWrapper.h
 
 // default constructor
 TransFilterDialog::TransFilterDialog()
@@ -55,10 +52,10 @@ TransFilterDialog::TransFilterDialog( mmCoreDB* core, wxWindow* parent, wxWindow
     Init();
 }
 
-TransFilterDialog::~TransFilterDialog( )
-{
-    // wxMessageBox(wxT("Testing that dialog being destroyed"), wxT("Transaction Filter Destructor"));
-}
+//TransFilterDialog::~TransFilterDialog( )
+//{
+//    // wxMessageBox(wxT("Testing that dialog being destroyed"), wxT("Transaction Filter Destructor"));
+//}
 
 // Initialize our variables
 void TransFilterDialog::Init()
@@ -134,6 +131,14 @@ void TransFilterDialog::CreateControls()
 
     itemPanelSizer->Add(cbPayee_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemPanelSizer->Add(btnPayee_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    //--End of Row --------------------------------------------------------
+
+    cbSplitCategory_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_CATEGORY, _("Split Category"), 
+                                  wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
+    cbSplitCategory_->SetValue(FALSE);
+    cbSplitCategory_->SetToolTip(_("Filter Split categories. Inclue the category for further filtering."));
+    itemPanelSizer->AddSpacer(20);
+    itemPanelSizer->Add(cbSplitCategory_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     //--End of Row --------------------------------------------------------
 
     cbCategory_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_CATEGORY, _("Category"), 
@@ -213,7 +218,8 @@ void TransFilterDialog::OnButtonOK( wxCommandEvent& /*event*/ )
     if (cbDateRange_->GetValue() || cbPayee_->GetValue()  ||
         cbCategory_->GetValue()  || cbStatus_->GetValue() ||
         cbType_->GetValue()      || cbTransNumber_->GetValue() ||
-        cbNotes_->GetValue()  )
+        cbNotes_->GetValue()     || cbSplitCategory_->GetValue() 
+       )
     {
         EndModal(wxID_OK);
     } 
@@ -221,11 +227,6 @@ void TransFilterDialog::OnButtonOK( wxCommandEvent& /*event*/ )
     {
         EndModal(wxID_CANCEL);
     }
-}
-
-void TransFilterDialog::OnButtonCancel( wxCommandEvent& /*event*/ )
-{
-    EndModal(wxID_CANCEL);
 }
 
 void TransFilterDialog::OnCBDateRange( wxCommandEvent& /*event*/ )
@@ -335,8 +336,45 @@ bool TransFilterDialog::byPayee(wxString payee)
     return result;
 }
 
+bool TransFilterDialog::bySplitCategory(mmBankTransaction* trans)
+{
+    bool result = false;
+    if (cbSplitCategory_->GetValue())
+    {
+        if (trans->categID_ < 0) // the transaction has a split category
+        {
+            result = true;
+            if (cbCategory_->GetValue())  // we are also searching Category/Subcategory
+            {
+                result = false;
+                mmSplitTransactionEntries* splits = trans->splitEntries_.get();
+                trans->getSplitTransactions(core_, splits);
+
+                for (int i = 0; i < (int)splits->entries_.size(); ++i)
+                {
+                    if (core_->categoryList_.GetFullCategoryString(splits->entries_[i]->categID_,
+                        splits->entries_[i]->subCategID_) == btnCategory_->GetLabelText()
+                       )
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    else
+    {
+        result = true;
+    }
+    return result;
+}
+
 bool TransFilterDialog::byCategory(wxString category, wxString subCategory)
 {
+    // ignore the category test when split category checkbox is active
+    if (cbSplitCategory_->GetValue()) return true;
+
     bool result = false;
     if ( cbCategory_->GetValue() )
     {
@@ -347,15 +385,18 @@ bool TransFilterDialog::byCategory(wxString category, wxString subCategory)
             if (tz.HasMoreTokens())
             {
                 token = tz.GetNextToken();
-                if (subCategory == token)
-                    result = true;
-            } else
+                if (subCategory == token) result = true;
+            }
+            else
+            {
                 result = true;
+            }
         }
     } 
     else
+    {
         result = true;
-
+    }
     return result; 
 }
 

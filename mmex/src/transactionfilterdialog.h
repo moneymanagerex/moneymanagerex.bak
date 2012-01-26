@@ -1,5 +1,5 @@
 /*************************************************************************
- Copyright (C) 2011 Stefano Giorgio
+ Copyright (C) 2011, 2012 Stefano Giorgio
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -43,13 +43,14 @@ public:
         const wxSize& size      = SYMBOL_TRANSACTIONFILTERDIALOG_SIZE,
                 long style      = SYMBOL_TRANSACTIONFILTERDIALOG_STYLE );
 
-    // Destructor - Currently used for testing only
-    ~TransFilterDialog( );
+//  Destructor - Currently used for testing only
+//  ~TransFilterDialog( );
 
     bool byDateRange(wxDateTime transDate);
     bool byPayee(wxString payee);
-    bool byCategory( wxString category, wxString subCategory );
-    bool byStatus( wxString status );
+    bool bySplitCategory(mmBankTransaction* trans);
+    bool byCategory(wxString category, wxString subCategory);
+    bool byStatus(wxString status );
     bool byType(wxString type);
     bool byTransNumber(wxString trNum);
     bool byNotes(wxString notes); 
@@ -62,6 +63,7 @@ private:
 
     wxCheckBox* cbDateRange_;
     wxCheckBox* cbPayee_;
+    wxCheckBox* cbSplitCategory_;
     wxCheckBox* cbCategory_;
     wxCheckBox* cbStatus_;
     wxCheckBox* cbType_;
@@ -103,7 +105,6 @@ private:
     void OnCategorySelect(wxCommandEvent& event);
 
     void OnButtonOK( wxCommandEvent& event );
-    void OnButtonCancel( wxCommandEvent& event );
     bool searchResult( wxCheckBox* chkBox, wxTextCtrl* txtCtrl, wxString sourceStr);
 };
 
