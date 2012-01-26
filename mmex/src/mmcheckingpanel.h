@@ -91,6 +91,9 @@ public:
 
     ~mmCheckingPanel();
 
+    /// Display the split categories for the selected transaction.
+    void DisplaySplitCategories(int transID); 
+
 private:
     DECLARE_EVENT_TABLE()
     friend class MyListCtrl; // needs access to m_core, initdb_, ...

@@ -94,9 +94,6 @@ private:
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTONOK
     void OnButtonOKClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTONCANCEL
-    void OnButtonCancelClick( wxCommandEvent& event );
-    
     void OnChoiceTypeChar(wxKeyEvent& event);
 
 ////@end SplitDetailDialog event handler declarations

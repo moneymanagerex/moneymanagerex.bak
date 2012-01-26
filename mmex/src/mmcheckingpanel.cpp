@@ -18,6 +18,7 @@
 //----------------------------------------------------------------------------
 #include "mmcheckingpanel.h"
 #include "transdialog.h"
+#include "splittransactionsdialog.h"
 #include "util.h"
 #include "dbwrapper.h"
 #include "transactionfilterdialog.h"
@@ -385,6 +386,8 @@ public:
     void OnDeleteTransaction(wxCommandEvent& event);
     void OnEditTransaction(wxCommandEvent& event);
     void OnMoveTransaction(wxCommandEvent& event);
+    /// Displays the split categories for the selected transaction
+    void OnViewSplitTransaction(wxCommandEvent& event);
 
 private:
     DECLARE_NO_COPY_CLASS(MyListCtrl)
@@ -493,6 +496,8 @@ BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
     EVT_MENU(MENU_ON_COPY_TRANSACTION, MyListCtrl::OnCopy) 
     EVT_MENU(MENU_ON_PASTE_TRANSACTION, MyListCtrl::OnPaste) 
     EVT_MENU(MENU_ON_NEW_TRANSACTION, MyListCtrl::OnNewTransaction) 
+
+    EVT_MENU(MENU_TREEPOPUP_VIEW_SPLIT_CATEGORIES, MyListCtrl::OnViewSplitTransaction)
 
     EVT_CHAR(MyListCtrl::OnChar)
 
@@ -1474,10 +1479,18 @@ void MyListCtrl::OnItemRightClick(wxListEvent& event)
     menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Transaction"));
     menu.Append(MENU_ON_COPY_TRANSACTION, _("&Copy Transaction"));
     menu.Append(MENU_TREEPOPUP_MOVE, _("&Move Transaction"));
-    if (m_selectedForCopy != -1)
-        menu.Append(MENU_ON_PASTE_TRANSACTION, _("&Paste Transaction"));
+    if (m_selectedForCopy != -1) menu.Append(MENU_ON_PASTE_TRANSACTION, _("&Paste Transaction"));
+
+    if (m_selectedIndex != -1)
+    {
+        if (m_cp->m_trans[m_selectedIndex]->categID_ < 0)
+        {
+            menu.AppendSeparator();
+            menu.Append(MENU_TREEPOPUP_VIEW_SPLIT_CATEGORIES, _("&View Split Categories"));
+        }
+    }
     menu.AppendSeparator();
-    
+
     wxMenu* subGlobalOpMenuDelete = new wxMenu;
     subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE, _("&Delete Transaction"));
     subGlobalOpMenuDelete->AppendSeparator();
@@ -2012,8 +2025,20 @@ void MyListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
         }
     }
 }
-//----------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------
+void MyListCtrl::OnViewSplitTransaction(wxCommandEvent& /*event*/)
+{
+    if (m_selectedIndex != -1)
+    {
+        if (m_cp->m_trans[m_selectedIndex]->categID_ < 0)
+        {
+            m_cp->DisplaySplitCategories(m_cp->m_trans[m_selectedIndex]->transactionID());
+        }
+    }
+}
+
+//----------------------------------------------------------------------------
 void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
 {
     if (m_selectedIndex != -1)
@@ -2111,4 +2136,21 @@ void mmCheckingPanel::OnSearchTxtEntered(wxCommandEvent& /*event*/)
             }
         }
     }
+}
+
+void mmCheckingPanel::DisplaySplitCategories(int transID)
+{
+    wxString transTypeStr = m_core->bTransactionList_.getBankTransactionPtr(transID)->transType_;
+    int transType = 0;
+    if (transTypeStr== TRANS_TYPE_DEPOSIT_STR)  transType = 1;
+    if (transTypeStr== TRANS_TYPE_TRANSFER_STR) transType = 2;
+
+    SplitTransactionDialog splitTransDialog(
+        m_core,
+        m_core->bTransactionList_.getBankTransactionPtr(transID)->splitEntries_.get(),
+        transType,
+        this
+    );
+    splitTransDialog.SetDisplaySplitCategories();
+    splitTransDialog.ShowModal();
 }
