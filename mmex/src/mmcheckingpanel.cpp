@@ -1127,11 +1127,13 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
             toAdd  = false;  // remove transaction from list and add if wanted.
             if ( transFilterDlg_->byDateRange(pBankTransaction->date_) &&
                  transFilterDlg_->byPayee(pBankTransaction->payeeStr_) &&
+                 transFilterDlg_->bySplitCategory(pBankTransaction.get()) &&
                  transFilterDlg_->byCategory(pBankTransaction->catStr_, pBankTransaction->subCatStr_) &&
                  transFilterDlg_->byStatus(pBankTransaction->status_)  &&
                  transFilterDlg_->byType(pBankTransaction->transType_) &&
                  transFilterDlg_->byTransNumber(pBankTransaction->transNum_) &&
-                 transFilterDlg_->byNotes(pBankTransaction->notes_))
+                 transFilterDlg_->byNotes(pBankTransaction->notes_)
+               )
             {
                 toAdd  = true;
             }
