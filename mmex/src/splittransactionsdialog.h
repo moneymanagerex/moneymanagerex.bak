@@ -105,7 +105,6 @@ public:
 
     void DataToControls();
 
-////@begin SplitTransactionDialog event handler declarations
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for wxID_NEW
     void OnButtonAddClick( wxCommandEvent& event );
 
@@ -115,32 +114,31 @@ public:
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for wxID_EDIT
     void OnButtonEditClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for wxID_CANCEL
-    void OnButtonCloseClick( wxCommandEvent& event );
-
 	void UpdateSplitTotal();
-////@end SplitTransactionDialog event handler declarations
 
-////@begin SplitTransactionDialog member function declarations
     /// Retrieves bitmap resources
     wxBitmap GetBitmapResource( const wxString& name );
 
     /// Retrieves icon resources
     wxIcon GetIconResource( const wxString& name );
-////@end SplitTransactionDialog member function declarations
 
     /// Should we show tooltips?
     static bool ShowToolTips();
 
-////@begin SplitTransactionDialog member variables
     wxListCtrl* lcSplit_;
 	wxStaticText* transAmount_;
-////@end SplitTransactionDialog member variables
+
+    void SetDisplaySplitCategories(); 
 
 private:
     mmCoreDB* core_;
     mmSplitTransactionEntries* split_;
     int transType_;
+
+    wxButton* itemButtonNew_;
+    wxButton* itemButtonEdit_;
+    wxButton* itemButtonDelete_;
+    wxButton* itemButtonOK_;
 
     void OnListDblClick(wxListEvent& event);
     void EditEntry();

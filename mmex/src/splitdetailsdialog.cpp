@@ -10,15 +10,9 @@
 // Licence:     
 /////////////////////////////////////////////////////////////////////////////
 
-////@begin includes
 #include "splitdetailsdialog.h"
 #include "categdialog.h"
 #include "util.h"
-////@end includes
-
-////@begin XPM images
-
-////@end XPM images
 
 /*!
  * SplitDetailDialog type definition
@@ -30,14 +24,11 @@ IMPLEMENT_DYNAMIC_CLASS( SplitDetailDialog, wxDialog )
  * SplitDetailDialog event table definition
  */
 
-////@begin SplitDetailDialog event table entries
 BEGIN_EVENT_TABLE( SplitDetailDialog, wxDialog )
     EVT_BUTTON( ID_BUTTONCATEGORY, SplitDetailDialog::OnButtonCategoryClick )
     EVT_BUTTON( wxID_OK, SplitDetailDialog::OnButtonOKClick )
-    EVT_BUTTON( wxID_CANCEL, SplitDetailDialog::OnButtonCancelClick )
     EVT_TEXT_ENTER(ID_TEXTCTRLAMOUNT, SplitDetailDialog::OnButtonOKClick)
 END_EVENT_TABLE()
-////@end SplitDetailDialog event table entries
 
 /*!
  * SplitDetailDialog constructors
@@ -222,11 +213,6 @@ void SplitDetailDialog::OnButtonOKClick( wxCommandEvent& /*event*/ )
     *m_amount_ = amount;
 
     EndModal(wxID_OK);
-}
-
-void SplitDetailDialog::OnButtonCancelClick( wxCommandEvent& /*event*/ )
-{
-    EndModal(wxID_CANCEL);
 }
 
 bool SplitDetailDialog::ShowToolTips()
