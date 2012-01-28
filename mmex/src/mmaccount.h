@@ -114,7 +114,10 @@ public:
     boost::shared_ptr<mmAccount> getAccountSharedPtr(int accountID) const;
     
     int addAccount(boost::shared_ptr<mmAccount> pAccount);
+    /// returns the ACCOUNT_TYPE_xxxx String
     wxString getAccountType(int accountID) const;
+    /// returns the status of the account (mmAccount::MMEX_Open or mmAccount::MMEX_closed) 
+    mmAccount::AccountStatus getAccountStatus(int accountID) const;
     int getAccountID(const wxString& accountName) const;
     bool deleteAccount(int accountID);
     void updateAccount(boost::shared_ptr<mmAccount> pAccount);
