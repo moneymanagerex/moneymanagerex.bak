@@ -331,6 +331,18 @@ wxString mmAccountList::getAccountType(int accountID) const
     return wxT("");
 }
 
+mmAccount::AccountStatus mmAccountList::getAccountStatus(int accountID) const
+{
+    int len = (int)accounts_.size();
+    for (int idx = 0; idx < len; idx++)
+    {
+        if (accounts_[idx]->accountID_ == accountID)
+            return accounts_[idx]->status_;
+    }
+    wxASSERT(false);
+    return mmAccount::MMEX_Open;
+}
+    
 wxString mmAccountList::getAccountCurrencyDecimalChar(int accountID) const
 {
     boost::weak_ptr<mmCurrency> wpCurrency = getCurrencyWeakPtr(accountID);
