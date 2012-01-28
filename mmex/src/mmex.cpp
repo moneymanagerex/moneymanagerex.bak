@@ -1704,7 +1704,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
            {
               wxString acctType = pAccount->acctType_;
 
-              if ((acctType == wxT("Checking")) || acctType == wxT("Term") )
+              if ((acctType == ACCOUNT_TYPE_BANK) || acctType == ACCOUNT_TYPE_TERM)
               {
                  gotoAccountID_ = data;
                  if (gotoAccountID_ != -1)    
@@ -2417,7 +2417,7 @@ void mmGUIFrame::OnPopupImportQIFile(wxCommandEvent& /*event*/)
         if (pAccount)
         {
            wxString acctType = pAccount->acctType_;
-           if (acctType == wxT("Checking") || acctType == wxT("Term"))
+           if (acctType == ACCOUNT_TYPE_BANK || acctType == ACCOUNT_TYPE_TERM)
            {
                 int accountID = mmImportQIF(m_core.get(), pAccount->accountName_);
                 if (accountID != -1)
@@ -2445,7 +2445,7 @@ void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& /*event*/)
         if (pAccount)
         {
            wxString acctType = pAccount->acctType_;
-           if (acctType == wxT("Checking") || acctType == wxT("Investment") || acctType == wxT("Term"))
+           if (acctType == ACCOUNT_TYPE_BANK || acctType == ACCOUNT_TYPE_STOCK || acctType == ACCOUNT_TYPE_TERM)
            {
               mmNewAcctDialog dlg(m_core.get(), false, data, this);
               if ( dlg.ShowModal() == wxID_OK )
@@ -2521,14 +2521,14 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
             if (pAccount)
             {
                 wxString acctType = pAccount->acctType_;
-                if (acctType == wxT("Checking") || acctType == wxT("Term") || acctType == wxT("Investment"))
+                if (acctType == ACCOUNT_TYPE_BANK || acctType == ACCOUNT_TYPE_TERM || acctType == ACCOUNT_TYPE_STOCK)
                 {
                     wxMenu menu;
 //                  menu.Append(MENU_TREEPOPUP_GOTO, _("&Go To.."));
                     menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Account"));
                     menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete Account"));
                     // Don't allow QIF importing to Investment type accounts
-                    if (acctType == wxT("Checking") || acctType == wxT("Term") )
+                    if (acctType == ACCOUNT_TYPE_BANK || acctType == ACCOUNT_TYPE_TERM )
                     {
                         menu.AppendSeparator();
                         menu.Append(MENU_TREEPOPUP_IMPORT_QIF, _("Import &QIF File"));
@@ -4632,9 +4632,9 @@ wxAddAccountPage2::wxAddAccountPage2(mmAddAccountWizard *parent) :
 {
     wxString itemAcctTypeStrings[] =  
     {
-        _("Checking/Savings"),
-        _("Investment"),
-        _("Term"),
+        _("Checking/Savings"),      // ACCOUNT_TYPE_BANK 
+        _("Investment"),            // ACCOUNT_TYPE_STOCK
+        _("Term"),                  // ACCOUNT_TYPE_TERM
     };
     itemChoiceType_ = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 3, itemAcctTypeStrings, 0 );
     itemChoiceType_->SetSelection(0); // Checking
@@ -4667,11 +4667,11 @@ wxAddAccountPage2::wxAddAccountPage2(mmAddAccountWizard *parent) :
 bool wxAddAccountPage2::TransferDataFromWindow()
 {
     int acctType = itemChoiceType_->GetSelection();
-    wxString acctTypeStr = wxT("Checking");
+    wxString acctTypeStr = ACCOUNT_TYPE_BANK;
     if (acctType == 1)
-        acctTypeStr = wxT("Investment");
+        acctTypeStr = ACCOUNT_TYPE_STOCK;
     if (acctType == 2)
-        acctTypeStr = wxT("Term");
+        acctTypeStr = ACCOUNT_TYPE_TERM;
 
     int currencyID = parent_->m_core->currencyList_.getBaseCurrencySettings();
     if (currencyID == -1)
@@ -4684,9 +4684,9 @@ bool wxAddAccountPage2::TransferDataFromWindow()
     }
 
     mmAccount* ptrBase;
-    if (acctTypeStr == wxT("Checking"))
+    if (acctTypeStr == ACCOUNT_TYPE_BANK)
         ptrBase = new mmCheckingAccount(parent_->m_core->db_);
-    else if (acctTypeStr == wxT("Term"))
+    else if (acctTypeStr == ACCOUNT_TYPE_TERM)
         ptrBase = new mmTermAccount(parent_->m_core->db_);
     else
         ptrBase = new mmInvestmentAccount(parent_->m_core->db_);

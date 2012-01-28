@@ -101,9 +101,9 @@ void mmNewAcctDialog::fillControlsWithData()
     textCtrl->SetValue(pAccount->notes_);
 
 	wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
-    if (pAccount->acctType_ == wxT("Checking"))
+    if (pAccount->acctType_ == ACCOUNT_TYPE_BANK)
        itemAcctType->SetSelection(ACCT_TYPE_CHECKING);
-    else if (pAccount->acctType_ == wxT("Term"))
+    else if (pAccount->acctType_ == ACCOUNT_TYPE_TERM)
        itemAcctType->SetSelection(ACCT_TYPE_TERM);
     else
        itemAcctType->SetSelection(ACCT_TYPE_INVESTMENT);
@@ -160,9 +160,9 @@ void mmNewAcctDialog::CreateControls()
 
     wxString itemAcctTypeStrings[] =  
     {
-       _("Checking"),
-       _("Investment"),
-       _("Term"),
+       _("Checking"),   // ACCOUNT_TYPE_BANK
+       _("Investment"), // ACCOUNT_TYPE_STOCK
+       _("Term"),       // ACCOUNT_TYPE_TERM
     };
     wxChoice* itemChoice61 = new wxChoice( itemDialog1, ID_DIALOG_NEWACCT_COMBO_ACCTTYPE, 
         wxDefaultPosition, wxDefaultSize, 3, itemAcctTypeStrings, 0 );
@@ -364,12 +364,12 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
        pAccount = core_->accountList_.getAccountSharedPtr(accountID_);
     }
 
-    pAccount->acctType_ = wxT("Checking");
+    pAccount->acctType_ = ACCOUNT_TYPE_BANK;
     if (acctType == ACCT_TYPE_INVESTMENT)
-        pAccount->acctType_ = wxT("Investment");
+        pAccount->acctType_ = ACCOUNT_TYPE_STOCK;
     if (acctType == ACCT_TYPE_TERM)
     {
-        pAccount->acctType_ = wxT("Term");
+        pAccount->acctType_ = ACCOUNT_TYPE_TERM;
         termAccount_ = true;
     }
 

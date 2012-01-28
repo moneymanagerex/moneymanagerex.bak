@@ -27,6 +27,10 @@
 
 const int BD_REPEATS_MULTIPLEX_BASE  = 100;
 
+const wxString ACCOUNT_TYPE_BANK  = wxT("Checking");
+const wxString ACCOUNT_TYPE_TERM  = wxT("Term");
+const wxString ACCOUNT_TYPE_STOCK = wxT("Investment");
+
 const wxString TRANS_TYPE_WITHDRAWAL_STR   = wxT("Withdrawal");   
 const wxString TRANS_TYPE_DEPOSIT_STR      = wxT("Deposit");
 const wxString TRANS_TYPE_TRANSFER_STR     = wxT("Transfer");
