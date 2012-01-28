@@ -165,7 +165,7 @@ mmAccountList::mmAccountList(boost::shared_ptr<wxSQLite3Database> db)
 bool mmAccountList::deleteAccount(int accountID)
 {
     wxString acctType = getAccountType(accountID);
-    if (acctType == wxT("Checking") || acctType == wxT("Term"))
+    if (acctType == ACCOUNT_TYPE_BANK || acctType == ACCOUNT_TYPE_TERM)
     {
         mmDBWrapper::removeSplitsForAccount(db_.get(), accountID);
 
@@ -193,7 +193,7 @@ bool mmAccountList::deleteAccount(int accountID)
         st.ExecuteUpdate();
         st.Finalize();
     }
-    else if (acctType == wxT("Investment"))
+    else if (acctType == ACCOUNT_TYPE_STOCK)
     {
         wxSQLite3Statement st = db_->PrepareStatement("delete from STOCK_V1 where HELDAT=?");
         st.Bind(1, accountID);
