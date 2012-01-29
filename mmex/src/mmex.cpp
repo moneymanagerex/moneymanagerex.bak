@@ -3688,6 +3688,16 @@ void mmGUIFrame::OnOptions(wxCommandEvent& /*event*/)
         // enable or disable online update currency rate
         menuItemOnlineUpdateCurRate_->Enable(systemOptions.GetUpdateCurrencyRateSetting());
 
+        //set the View Menu Option items the same as the options saved.
+        menuBar_->FindItem(MENU_VIEW_BANKACCOUNTS)->Check(mmIniOptions::expandBankHome_);
+        menuBar_->FindItem(MENU_VIEW_TERMACCOUNTS)->Check(mmIniOptions::expandTermHome_);
+        menuBar_->FindItem(MENU_VIEW_STOCKACCOUNTS)->Check(mmIniOptions::expandStocksHome_);
+        menuBar_->FindItem(MENU_VIEW_BUDGET_FINANCIAL_YEARS)->Check(mmIniOptions::budgetFinancialYears_);
+        menuBar_->FindItem(MENU_VIEW_BUDGET_TRANSFER_TOTAL)->Check(mmIniOptions::budgetIncludeTransfers_);
+        menuBar_->FindItem(MENU_VIEW_BUDGET_SETUP_SUMMARY)->Check(mmIniOptions::budgetSetupWithoutSummaries_);
+        menuBar_->FindItem(MENU_VIEW_BUDGET_CATEGORY_SUMMARY)->Check(mmIniOptions::budgetSummaryWithoutCategories_);
+        menuBar_->FindItem(MENU_IGNORE_FUTURE_TRANSACTIONS)->Check(mmIniOptions::ignoreFutureTransactions_);
+
         int messageIcon = wxICON_INFORMATION;
         wxString sysMsg = wxString() << _("MMEX Options have been updated.") << wxT("\n\n");
         if (systemOptions.RequiresRestart())
