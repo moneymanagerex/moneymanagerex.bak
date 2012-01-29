@@ -654,7 +654,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     m_mgr.Update();
 
     // enable or disable online update currency rate
-    wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
+    wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(m_inidb.get(), INIDB_UPDATE_CURRENCY_RATE, wxT("FALSE"));
     if(enableCurrencyUpd == wxT("TRUE")) 
     {
         if (menuItemOnlineUpdateCurRate_)
@@ -3072,9 +3072,14 @@ void mmGUIFrame::createMenu()
 
     SetMenuBar(menuBar_);
 
-    menuBar_->Check(MENU_VIEW_BANKACCOUNTS,mmIniOptions::expandBankHome_);
-    menuBar_->Check(MENU_VIEW_TERMACCOUNTS,mmIniOptions::expandTermHome_);
-    menuBar_->Check(MENU_VIEW_STOCKACCOUNTS,mmIniOptions::expandStocksHome_);
+    menuBar_->Check(MENU_VIEW_BANKACCOUNTS, mmIniOptions::expandBankHome_);
+    menuBar_->Check(MENU_VIEW_TERMACCOUNTS, mmIniOptions::expandTermHome_);
+    menuBar_->Check(MENU_VIEW_STOCKACCOUNTS, mmIniOptions::expandStocksHome_);
+    menuBar_->Check(MENU_VIEW_BUDGET_FINANCIAL_YEARS, mmIniOptions::budgetFinancialYears_);
+    menuBar_->Check(MENU_VIEW_BUDGET_TRANSFER_TOTAL, mmIniOptions::budgetIncludeTransfers_);
+    menuBar_->Check(MENU_VIEW_BUDGET_SETUP_SUMMARY, mmIniOptions::budgetSetupWithoutSummaries_);
+    menuBar_->Check(MENU_VIEW_BUDGET_CATEGORY_SUMMARY, mmIniOptions::budgetSummaryWithoutCategories_);
+    menuBar_->Check(MENU_IGNORE_FUTURE_TRANSACTIONS, mmIniOptions::ignoreFutureTransactions_);
 }
 //----------------------------------------------------------------------------
 
@@ -4384,7 +4389,7 @@ void mmGUIFrame::OnViewStockAccounts(wxCommandEvent &event)
 void mmGUIFrame::OnIgnoreFutureTransactions(wxCommandEvent &event)
 {
     m_mgr.GetPane(wxT("Ignore Future Transactions")).Show(event.IsChecked());
-    mmIniOptions::ignore_future_transactions_ = !mmIniOptions::ignore_future_transactions_;
+    mmIniOptions::ignoreFutureTransactions_ = !mmIniOptions::ignoreFutureTransactions_;
     if (!refreshRequested_)
     {
         refreshRequested_ = true;

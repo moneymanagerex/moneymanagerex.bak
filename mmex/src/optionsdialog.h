@@ -77,6 +77,16 @@ private:
     wxColour listDetailsPanelColor_;
     wxColour listFutureDateColor_;
 
+    wxCheckBox* cbUseOrgDateCopyPaste_;
+    wxCheckBox* cbUseSound_;
+    wxCheckBox* cbEnableCurrencyUpd_;
+
+    wxCheckBox* cbBudgetFinancialYears_;
+    wxCheckBox* cbBudgetIncludeTransfers_;
+    wxCheckBox* cbBudgetSetupWithoutSummary_;
+    wxCheckBox* cbBudgetSummaryWithoutCateg_;
+    wxCheckBox* cbIgnoreFutureTransactions_;
+
     bool restartRequired_;
     int currencyId_;
     wxString dateFormat_;

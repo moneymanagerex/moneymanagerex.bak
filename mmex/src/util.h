@@ -65,6 +65,16 @@ const wxString VIEW_TRANS_LAST_90_DAYS_STR   = wxT("View 90 days");
 const wxString VIEW_TRANS_LAST_MONTH_STR     = wxT("View Last Month");
 const wxString VIEW_TRANS_LAST_3MONTHS_STR   = wxT("View Last 3 Months");
 
+const wxString INIDB_UPDATE_CURRENCY_RATE   = wxT("UPDATECURRENCYRATE");
+const wxString INIDB_USE_TRANSACTION_SOUND  = wxT("USETRANSSOUND");
+const wxString INIDB_USE_ORG_DATE_COPYPASTE = wxT("USEORIGDATEONCOPYPASTE");
+
+const wxString INIDB_BUDGET_FINANCIAL_YEARS       = wxT("BUDGET_FINANCIAL_YEARS");
+const wxString INIDB_BUDGET_INCLUDE_TRANSFERS     = wxT("BUDGET_INCLUDE_TRANSFERS");
+const wxString INIDB_BUDGET_SETUP_WITHOUT_SUMMARY = wxT("BUDGET_SETUP_WITHOUT_SUMMARY");
+const wxString INIDB_BUDGET_SUMMARY_WITHOUT_CATEG = wxT("BUDGET_SUMMARY_WITHOUT_CATEGORIES");
+const wxString INIDB_IGNORE_FUTURE_TRANSACTIONS   = wxT("IGNORE_FUTURE_TRANSACTIONS");
+
 void mmShowErrorMessageInvalid( wxWindow *parent, const wxString &message );
 void mmShowErrorMessage( wxWindow *parent, const wxString &message, const wxString &messageheader );
 
@@ -144,11 +154,11 @@ public:
     static bool expandBankTree_;
     static bool expandTermTree_;
 
-    static bool budget_financial_years_;
-    static bool budget_include_transfers_;
-    static bool budget_setup_no_summaries_;
-    static bool budget_summary_no_categories_;
-    static bool ignore_future_transactions_;
+    static bool budgetFinancialYears_;
+    static bool budgetIncludeTransfers_;
+    static bool budgetSetupWithoutSummaries_;
+    static bool budgetSummaryWithoutCategories_;
+    static bool ignoreFutureTransactions_;
     
     static int transPayeeSelectionNone_;
     static int transCategorySelectionNone_;
