@@ -1801,7 +1801,7 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 {
     if (m_selectedForCopy != -1)
     {
-        wxString useOriginalDate =  mmDBWrapper::getINISettingValue(m_cp->inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
+        wxString useOriginalDate =  mmDBWrapper::getINISettingValue(m_cp->inidb_, INIDB_USE_ORG_DATE_COPYPASTE, wxT("FALSE"));
         bool useOriginal = false;
         if (useOriginalDate == wxT("TRUE"))
             useOriginal = true;

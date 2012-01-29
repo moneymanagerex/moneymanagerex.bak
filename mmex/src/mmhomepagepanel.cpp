@@ -167,8 +167,8 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
             wxASSERT(pCurrencyPtr);
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
-            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_, mmIniOptions::ignore_future_transactions_);
-            double reconciledBal = pCA->initialBalance_ + core_->bTransactionList_.getReconciledBalance(pCA->accountID_, mmIniOptions::ignore_future_transactions_);
+            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_, mmIniOptions::ignoreFutureTransactions_);
+            double reconciledBal = pCA->initialBalance_ + core_->bTransactionList_.getReconciledBalance(pCA->accountID_, mmIniOptions::ignoreFutureTransactions_);
             double rate = pCurrencyPtr->baseConv_;
             tBalance += bal * rate; // actual amount in that account in the original rate
             
@@ -177,7 +177,7 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
             {
                 double income = 0.0;
                 double expenses = 0.0;
-                core_->bTransactionList_.getExpensesIncome(pCA->accountID_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::ignore_future_transactions_);
+                core_->bTransactionList_.getExpensesIncome(pCA->accountID_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::ignoreFutureTransactions_);
 
                 // show the actual amount in that account
                 wxString balanceStr;
@@ -227,8 +227,8 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
             wxASSERT(pCurrencyPtr);
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
-            double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_, mmIniOptions::ignore_future_transactions_);
-            double reconciledBal = pTA->initialBalance_ + core_->bTransactionList_.getReconciledBalance(pTA->accountID_, mmIniOptions::ignore_future_transactions_);
+            double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_, mmIniOptions::ignoreFutureTransactions_);
+            double reconciledBal = pTA->initialBalance_ + core_->bTransactionList_.getReconciledBalance(pTA->accountID_, mmIniOptions::ignoreFutureTransactions_);
             double rate = pCurrencyPtr->baseConv_;
             tTermBalance += bal * rate; // actual amount in that account in the original rate
 
@@ -237,7 +237,7 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
             {
                 double income = 0;
                 double expenses = 0;
-                core_->bTransactionList_.getExpensesIncome(pTA->accountID_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::ignore_future_transactions_);
+                core_->bTransactionList_.getExpensesIncome(pTA->accountID_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::ignoreFutureTransactions_);
 
                 // show the actual amount in that account
                 wxString balanceStr;

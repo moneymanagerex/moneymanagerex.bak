@@ -446,28 +446,18 @@ void mmOptionsDialog::CreateControls()
     wxStaticBoxSizer* backupStaticBoxSizer = new wxStaticBoxSizer(backupStaticBox, wxVERTICAL);
     generalPanelSizer->Add(backupStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
-    wxString backupDBState =  mmDBWrapper::getINISettingValue(inidb_, wxT("BACKUPDB"), wxT("FALSE"));
-    wxCheckBox* itemCheckBoxBackup = new wxCheckBox(generalPanel, ID_DIALOG_OPTIONS_CHK_BACKUP,
+    wxCheckBox* backupCheckBox = new wxCheckBox(generalPanel, ID_DIALOG_OPTIONS_CHK_BACKUP,
         _("Backup before opening"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    itemCheckBoxBackup->SetValue(FALSE);
-    if (backupDBState == wxT("TRUE"))
-    {
-        itemCheckBoxBackup->SetValue(TRUE);
-    }
-    backupStaticBoxSizer->Add(itemCheckBoxBackup, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemCheckBoxBackup->SetToolTip(_("Select whether to create a _YYYY-MM-DD.bak file before opening the database"));
+    backupCheckBox->SetValue(GetIniDatabaseCheckboxValue(wxT("BACKUPDB"),false));
+    backupCheckBox->SetToolTip(_("Select whether to create a _YYYY-MM-DD.bak file before opening the database"));
+    backupStaticBoxSizer->Add(backupCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxString backupDBUpdate =  mmDBWrapper::getINISettingValue(inidb_, wxT("BACKUPDB_UPDATE"), wxT("FALSE"));
-    wxCheckBox* itemCheckBoxBackupUpdate = new wxCheckBox(generalPanel, ID_DIALOG_OPTIONS_CHK_BACKUP_UPDATE,
+    wxCheckBox* backupUpdateCheckBox = new wxCheckBox(generalPanel, ID_DIALOG_OPTIONS_CHK_BACKUP_UPDATE,
         _("Daily Update, before opening"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    itemCheckBoxBackupUpdate->SetValue(FALSE);
-    if (backupDBUpdate == wxT("TRUE"))
-    {
-        itemCheckBoxBackupUpdate->SetValue(TRUE);
-    }
-    itemCheckBoxBackupUpdate->Enable(itemCheckBoxBackup->GetValue());
-    backupStaticBoxSizer->Add(itemCheckBoxBackupUpdate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemCheckBoxBackupUpdate->SetToolTip(_("For same day, select to update the backup before opening the database."));
+    backupUpdateCheckBox->SetValue(GetIniDatabaseCheckboxValue(wxT("BACKUPDB_UPDATE"),false));
+    backupUpdateCheckBox->Enable(backupCheckBox->GetValue());
+    backupUpdateCheckBox->SetToolTip(_("For same day, select to update the backup before opening the database."));
+    backupStaticBoxSizer->Add(backupUpdateCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     /*********************************************************************************************
      Views Panel
@@ -476,6 +466,7 @@ void mmOptionsDialog::CreateControls()
     wxBoxSizer* viewsPanelSizer = new wxBoxSizer(wxVERTICAL);
     viewsPanel->SetSizer(viewsPanelSizer);
 
+    // Account View Options
     wxStaticBox* accountStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Account View Options"));
     accountStaticBox->SetFont(staticBoxFontSetting);
     wxStaticBoxSizer* accountStaticBoxSizer = new wxStaticBoxSizer(accountStaticBox, wxHORIZONTAL);
@@ -606,7 +597,7 @@ void mmOptionsDialog::CreateControls()
     // Navigation Tree Expansion Options
     wxStaticBox* navTreeOptionsStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Navigation Tree Expansion Options"));
     navTreeOptionsStaticBox->SetFont(staticBoxFontSetting);
-    wxStaticBoxSizer* navTreeOptionsStaticBoxSizer = new wxStaticBoxSizer(navTreeOptionsStaticBox, wxVERTICAL);
+    wxStaticBoxSizer* navTreeOptionsStaticBoxSizer = new wxStaticBoxSizer(navTreeOptionsStaticBox, wxVERTICAL); //wxHORIZONTAL);
     viewsPanelSizer->Add(navTreeOptionsStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
     // Expand Bank Tree
@@ -626,7 +617,7 @@ void mmOptionsDialog::CreateControls()
     // Home Page Expansion Options
     wxStaticBox* homePageStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Home Page Expansion Options"));
     homePageStaticBox->SetFont(staticBoxFontSetting);
-    wxStaticBoxSizer* homePageStaticBoxSizer = new wxStaticBoxSizer(homePageStaticBox, wxVERTICAL);
+    wxStaticBoxSizer* homePageStaticBoxSizer = new wxStaticBoxSizer(homePageStaticBox, wxHORIZONTAL);
     viewsPanelSizer->Add(homePageStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
     // Expand Bank Home
@@ -649,6 +640,27 @@ void mmOptionsDialog::CreateControls()
     itemCheckBoxExpandStockHome->SetValue(GetIniDatabaseCheckboxValue(wxT("ENABLESTOCKS"),true));
     itemCheckBoxExpandStockHome->SetToolTip(_("Expand Stock Accounts on home page when page is refreshed"));
     homePageStaticBoxSizer->Add(itemCheckBoxExpandStockHome, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+
+    cbBudgetFinancialYears_ = new wxCheckBox(viewsPanel, wxID_ANY, _("View Budgets as Financial Years"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbBudgetFinancialYears_->SetValue(GetIniDatabaseCheckboxValue(INIDB_BUDGET_FINANCIAL_YEARS, false));
+    viewsPanelSizer->Add(cbBudgetFinancialYears_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    cbBudgetIncludeTransfers_ = new wxCheckBox(viewsPanel, wxID_ANY, _("View Budgets with 'transfer' transactions"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbBudgetIncludeTransfers_->SetValue(GetIniDatabaseCheckboxValue(INIDB_BUDGET_INCLUDE_TRANSFERS, false));
+    viewsPanelSizer->Add(cbBudgetIncludeTransfers_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    cbBudgetSetupWithoutSummary_ = new wxCheckBox(viewsPanel, wxID_ANY, _("View Budgets Setup Without Budget Summaries"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbBudgetSetupWithoutSummary_->SetValue(GetIniDatabaseCheckboxValue(INIDB_BUDGET_SETUP_WITHOUT_SUMMARY, false));
+    viewsPanelSizer->Add(cbBudgetSetupWithoutSummary_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    cbBudgetSummaryWithoutCateg_ = new wxCheckBox(viewsPanel, wxID_ANY, _("View Budget Summary Report without Categories"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbBudgetSummaryWithoutCateg_->SetValue(GetIniDatabaseCheckboxValue(INIDB_BUDGET_SUMMARY_WITHOUT_CATEG, true));
+    viewsPanelSizer->Add(cbBudgetSummaryWithoutCateg_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    cbIgnoreFutureTransactions_ = new wxCheckBox(viewsPanel, wxID_ANY, _("View Reports without Future Transactions"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbIgnoreFutureTransactions_->SetValue(GetIniDatabaseCheckboxValue(INIDB_IGNORE_FUTURE_TRANSACTIONS, false));
+    viewsPanelSizer->Add(cbIgnoreFutureTransactions_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     /*********************************************************************************************
      Colours Panel
@@ -786,41 +798,38 @@ void mmOptionsDialog::CreateControls()
     newTransflexGridSizer->Add(defaultStatusChoice,0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     //----------------------------------------------
+    //a bit more space visual appearance
+    othersPanelSizer->AddSpacer(10);
   
     wxBoxSizer* itemBoxSizerStockURL = new wxBoxSizer(wxVERTICAL);
-    othersPanelSizer->Add(itemBoxSizerStockURL, 0, wxGROW|wxALIGN_LEFT|wxALL, 5);
+    othersPanelSizer->Add(itemBoxSizerStockURL, 0, wxGROW|wxALIGN_LEFT|wxALL, 0);
 
     wxStaticText* itemStaticTextURL = new wxStaticText(othersPanel, wxID_STATIC, _("Stock Quote Web Page"), wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizerStockURL->Add(itemStaticTextURL, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
+    itemStaticTextURL->SetFont(staticBoxFontSetting);
+    itemBoxSizerStockURL->Add(itemStaticTextURL, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), mmex::DEFSTOCKURL);
     wxTextCtrl* itemTextCtrURL = new wxTextCtrl(othersPanel, ID_DIALOG_OPTIONS_TEXTCTRL_STOCKURL, stockURL, wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizerStockURL->Add(itemTextCtrURL, 1, wxGROW|wxALIGN_LEFT|wxALL, 5);
     itemTextCtrURL->SetToolTip(_("Clear the field to Reset the value to system default."));
 
-    wxString useOriginalDate =  mmDBWrapper::getINISettingValue(inidb_, wxT("USEORIGDATEONCOPYPASTE"), wxT("FALSE"));
-    wxCheckBox* itemCheckBoxOrigDate = new wxCheckBox(othersPanel, ID_DIALOG_OPTIONS_CHK_ORIG_DATE, _("Use Original Date when Pasting Transactions"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    itemCheckBoxOrigDate->SetValue(FALSE);
-    if (useOriginalDate == wxT("TRUE")) itemCheckBoxOrigDate->SetValue(TRUE);
-    itemCheckBoxOrigDate->SetToolTip(_("Select whether to use the original transaction date or current date when copying/pasting transactions"));
-    othersPanelSizer->Add(itemCheckBoxOrigDate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    
-    wxString useSound =  mmDBWrapper::getINISettingValue(inidb_, wxT("USETRANSSOUND"), wxT("TRUE"));
-    wxCheckBox* itemCheckBoxUseSound = new wxCheckBox(othersPanel, ID_DIALOG_OPTIONS_CHK_USE_SOUND, _("Use Transaction Sound"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    itemCheckBoxUseSound->SetValue(FALSE);
-    if (useSound == wxT("TRUE")) itemCheckBoxUseSound->SetValue(TRUE);
-    itemCheckBoxUseSound->SetToolTip(_("Select whether to use sounds when entering transactions"));
-    othersPanelSizer->Add(itemCheckBoxUseSound, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    //a bit more space visual appearance
+    othersPanelSizer->AddSpacer(15);
 
-    wxString enableCurrencyUpd = mmDBWrapper::getINISettingValue(inidb_, wxT("UPDATECURRENCYRATE"), wxT("FALSE"));
-    wxCheckBox* enableCurrencyUpdCheckBox = new wxCheckBox(othersPanel, ID_DIALOG_OPTIONS_UPD_CURRENCY, _("Enable online currency update \n(Get data from European Central Bank)"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
-    enableCurrencyUpdCheckBox->SetValue(FALSE);
-    if(enableCurrencyUpd == wxT("TRUE")) enableCurrencyUpdCheckBox->SetValue(TRUE);
-    enableCurrencyUpdCheckBox->SetToolTip(_("Enable or disable get data from European Central Bank to update currency rate"));
-    othersPanelSizer->Add(enableCurrencyUpdCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    cbUseOrgDateCopyPaste_ = new wxCheckBox(othersPanel, wxID_ANY, _("Use Original Date when Pasting Transactions"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbUseOrgDateCopyPaste_->SetValue(GetIniDatabaseCheckboxValue(INIDB_USE_ORG_DATE_COPYPASTE, false));
+    cbUseOrgDateCopyPaste_->SetToolTip(_("Select whether to use the original transaction date or current date when copying/pasting transactions"));
+    othersPanelSizer->Add(cbUseOrgDateCopyPaste_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     
-    //a bit more space needed for proper alignment
-    othersPanelSizer->AddSpacer(40);
+    cbUseSound_ = new wxCheckBox(othersPanel, wxID_ANY, _("Use Transaction Sound"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbUseSound_->SetValue(GetIniDatabaseCheckboxValue(INIDB_USE_TRANSACTION_SOUND,true));
+    cbUseSound_->SetToolTip(_("Select whether to use sounds when entering transactions"));
+    othersPanelSizer->Add(cbUseSound_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    cbEnableCurrencyUpd_ = new wxCheckBox(othersPanel, wxID_ANY, _("Enable online currency update \n(Get data from European Central Bank)"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+    cbEnableCurrencyUpd_->SetValue(GetIniDatabaseCheckboxValue(INIDB_UPDATE_CURRENCY_RATE, false));
+    cbEnableCurrencyUpd_->SetToolTip(_("Enable or disable get data from European Central Bank to update currency rate"));
+    othersPanelSizer->Add(cbEnableCurrencyUpd_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     /*********************************************************************************************
      Import/Export Panel
@@ -836,15 +845,18 @@ void mmOptionsDialog::CreateControls()
     
     importExportPanelSizer->Add(importExportStaticBoxSizer, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
     
-    wxStaticText* itemStaticText54 = new wxStaticText(importExportPanel, wxID_STATIC, _("CSV Delimiter"), wxDefaultPosition, wxDefaultSize, 0);
-    importExportStaticBoxSizer->Add(itemStaticText54, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-    
-    wxFlexGridSizer* itemFlexGridSizer184 = new wxFlexGridSizer(2, 3, 10, 10);
-    importExportStaticBoxSizer->Add(itemFlexGridSizer184, 0, wxALL);
+    wxStaticText* csvDelimiterStaticText = new wxStaticText(importExportPanel, wxID_STATIC, _("CSV Delimiter"), wxDefaultPosition, wxDefaultSize, 0);
+    importExportStaticBoxSizer->Add(csvDelimiterStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxBoxSizer* radioButtonSizer = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer* userDefinedSizer = new wxBoxSizer(wxHORIZONTAL);
+    importExportStaticBoxSizer->Add(radioButtonSizer, 0, wxALL);
+    importExportStaticBoxSizer->Add(userDefinedSizer, 0, wxALL);
+    importExportStaticBoxSizer->AddSpacer(5);
 
     wxString delimiter = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     
-    wxRadioButton* delimiterRadioButtonU4 = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_USER4, _("User Defind"), wxDefaultPosition, wxDefaultSize, 0);
+    wxRadioButton* delimiterRadioButtonU4 = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_USER4, _("User Defined"), wxDefaultPosition, wxDefaultSize, 0);
     wxRadioButton* delimiterRadioButtonC4 = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_COMMA4, _("Comma"), wxDefaultPosition, wxDefaultSize, 0);
     if (delimiter == wxT(","))
     {
@@ -868,12 +880,12 @@ void mmOptionsDialog::CreateControls()
         textDelimiter4->Enable(false);
     }
 
-    itemFlexGridSizer184->Add(delimiterRadioButtonC4, 0, wxALIGN_LEFT|wxALL, 0);
-    itemFlexGridSizer184->Add(delimiterRadioButtonS4, 0, wxALIGN_LEFT|wxALL, 0);
-    itemFlexGridSizer184->Add(delimiterRadioButtonT4, 0, wxALIGN_LEFT|wxALL, 0);
+    radioButtonSizer->Add(delimiterRadioButtonC4, 0, wxALIGN_LEFT|wxALL, 5);
+    radioButtonSizer->Add(delimiterRadioButtonS4, 0, wxALIGN_LEFT|wxALL, 5);
+    radioButtonSizer->Add(delimiterRadioButtonT4, 0, wxALIGN_LEFT|wxALL, 5);
 
-    itemFlexGridSizer184->Add(delimiterRadioButtonU4, 0, wxALIGN_LEFT|wxALL, 0);
-    itemFlexGridSizer184->Add(textDelimiter4, 0, wxALIGN_LEFT|wxLEFT, 20);
+    userDefinedSizer->Add(delimiterRadioButtonU4, 0, wxALIGN_LEFT|wxALL, 5);
+    userDefinedSizer->Add(textDelimiter4, 0, wxALIGN_LEFT|wxLEFT, 5);
 
    /**********************************************************************************************
     Setting up the notebook with the 5 pages
@@ -1115,14 +1127,17 @@ void mmOptionsDialog::SetIniDatabaseCheckboxValue(wxString dbField, bool dbState
 bool mmOptionsDialog::GetIniDatabaseCheckboxValue(wxString dbField, bool defaultState)
 {
     wxString dbState = wxT("FALSE");
-    bool result = true;
+    bool result = false;
+    
     if (defaultState)
     {
         dbState = wxT("TRUE");
-        result  = false;
+        result = true;
     }
-    if (mmDBWrapper::getINISettingValue(inidb_, dbField, dbState) != dbState) result = !result;
-
+    if (mmDBWrapper::getINISettingValue(inidb_, dbField, dbState) != dbState)
+    {
+        result = !result;
+    }
     return result;
 }
 
@@ -1297,6 +1312,21 @@ void mmOptionsDialog::SaveViewPanelSettings()
     itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_STOCK_HOME);
     mmIniOptions::expandStocksHome_ = itemCheckBox->GetValue();
     SetIniDatabaseCheckboxValue(wxT("ENABLESTOCKS"),mmIniOptions::expandStocksHome_);
+
+    mmIniOptions::budgetFinancialYears_ = cbBudgetFinancialYears_->GetValue();
+    SetIniDatabaseCheckboxValue(INIDB_BUDGET_FINANCIAL_YEARS, mmIniOptions::budgetFinancialYears_);
+
+    mmIniOptions::budgetIncludeTransfers_ = cbBudgetIncludeTransfers_->GetValue();
+    SetIniDatabaseCheckboxValue(INIDB_BUDGET_INCLUDE_TRANSFERS, mmIniOptions::budgetIncludeTransfers_);
+
+    mmIniOptions::budgetSetupWithoutSummaries_ = cbBudgetSetupWithoutSummary_->GetValue();
+    SetIniDatabaseCheckboxValue(INIDB_BUDGET_SETUP_WITHOUT_SUMMARY, mmIniOptions::budgetSetupWithoutSummaries_);
+
+    mmIniOptions::budgetSummaryWithoutCategories_ = cbBudgetSummaryWithoutCateg_->GetValue();
+    SetIniDatabaseCheckboxValue(INIDB_BUDGET_SUMMARY_WITHOUT_CATEG, mmIniOptions::budgetSummaryWithoutCategories_);
+
+    mmIniOptions::ignoreFutureTransactions_ = cbIgnoreFutureTransactions_->GetValue();
+    SetIniDatabaseCheckboxValue(INIDB_IGNORE_FUTURE_TRANSACTIONS, mmIniOptions::ignoreFutureTransactions_);
 }
 
 void mmOptionsDialog::SaveColourPanelSettings()
@@ -1337,14 +1367,11 @@ void mmOptionsDialog::SaveOthersPanelSettings()
     
     SaveStocksUrl();
     
-    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_ORIG_DATE);
-    SetIniDatabaseCheckboxValue(wxT("USEORIGDATEONCOPYPASTE"), itemCheckBox->GetValue() );
+    SetIniDatabaseCheckboxValue(INIDB_USE_ORG_DATE_COPYPASTE, cbUseOrgDateCopyPaste_->GetValue());
     
-    itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_USE_SOUND);
-    SetIniDatabaseCheckboxValue(wxT("USETRANSSOUND"), itemCheckBox->GetValue() );
-    
-    itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_UPD_CURRENCY);
-    SetIniDatabaseCheckboxValue(wxT("UPDATECURRENCYRATE"), itemCheckBox->GetValue() );
+    SetIniDatabaseCheckboxValue(INIDB_USE_TRANSACTION_SOUND, cbUseSound_->GetValue());
+
+    SetIniDatabaseCheckboxValue(INIDB_UPDATE_CURRENCY_RATE, cbEnableCurrencyUpd_->GetValue());
 }
 
 void mmOptionsDialog::SaveImportExportPanelSettings()
@@ -1356,6 +1383,5 @@ void mmOptionsDialog::SaveImportExportPanelSettings()
 
 bool mmOptionsDialog::GetUpdateCurrencyRateSetting()
 {
-    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_UPD_CURRENCY);
-    return itemCheckBox->GetValue();
+    return cbEnableCurrencyUpd_->GetValue();
 }

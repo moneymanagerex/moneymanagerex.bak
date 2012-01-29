@@ -95,7 +95,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
         wxString categString = q1.GetString(wxT("CATEGNAME"));
         wxString balance;
         double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignoreDate_,
-            dtBegin_, dtEnd_, false, false, mmIniOptions::ignore_future_transactions_
+            dtBegin_, dtEnd_, false, false, mmIniOptions::ignoreFutureTransactions_
         );
         mmex::formatDoubleToCurrency(amt, balance);
 
@@ -128,7 +128,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
             wxString subcategString = q2.GetString(wxT("SUBCATEGNAME"));
 
             amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, ignoreDate_,
-                dtBegin_, dtEnd_, false, false, mmIniOptions::ignore_future_transactions_
+                dtBegin_, dtEnd_, false, false, mmIniOptions::ignoreFutureTransactions_
             );
             mmex::formatDoubleToCurrency(amt, balance);
 

@@ -61,7 +61,7 @@ wxString mmReportSummary::getHTMLText()
         mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pCA && pCA->status_== mmAccount::MMEX_Open)
         {
-            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_, mmIniOptions::ignore_future_transactions_);
+            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_, mmIniOptions::ignoreFutureTransactions_);
               
             boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
             wxASSERT(pCurrencyPtr);
@@ -100,7 +100,7 @@ wxString mmReportSummary::getHTMLText()
         mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pTA && pTA->status_== mmAccount::MMEX_Open)
         {
-            double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_, mmIniOptions::ignore_future_transactions_);
+            double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_, mmIniOptions::ignoreFutureTransactions_);
               
             boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pTA->accountID_).lock();
             wxASSERT(pCurrencyPtr);

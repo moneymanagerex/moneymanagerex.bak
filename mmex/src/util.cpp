@@ -244,11 +244,11 @@ bool mmIniOptions::expandStocksHome_ = true;
 bool mmIniOptions::expandBankTree_ = true;
 bool mmIniOptions::expandTermTree_ = false;
 
-bool mmIniOptions::budget_financial_years_ = false;
-bool mmIniOptions::budget_include_transfers_ = false;
-bool mmIniOptions::budget_setup_no_summaries_ = false;
-bool mmIniOptions::budget_summary_no_categories_ = true;
-bool mmIniOptions::ignore_future_transactions_ = false;
+bool mmIniOptions::budgetFinancialYears_ = false;
+bool mmIniOptions::budgetIncludeTransfers_ = false;
+bool mmIniOptions::budgetSetupWithoutSummaries_ = false;
+bool mmIniOptions::budgetSummaryWithoutCategories_ = true;
+bool mmIniOptions::ignoreFutureTransactions_ = false;
 
 int mmIniOptions::transPayeeSelectionNone_     = 0;
 int mmIniOptions::transCategorySelectionNone_  = 0;
@@ -299,11 +299,11 @@ void mmIniOptions::loadOptions(wxSQLite3Database* db)
     if (mmDBWrapper::getINISettingValue(db, wxT("EXPAND_BANK_TREE"), wxT("TRUE")) != wxT("TRUE"))   expandBankTree_ = false;
     if (mmDBWrapper::getINISettingValue(db, wxT("EXPAND_TERM_TREE"), wxT("FALSE")) != wxT("FALSE")) expandTermTree_ = true;
 
-    if (mmDBWrapper::getINISettingValue(db, wxT("BUDGET_FINANCIAL_YEARS"),     wxT("TRUE")) != wxT("TRUE")) budget_financial_years_ = false;
-    if (mmDBWrapper::getINISettingValue(db, wxT("BUDGET_INCLUDE_TRANSFERS"), wxT("TRUE")) != wxT("TRUE")) budget_include_transfers_ = false;
-    if (mmDBWrapper::getINISettingValue(db, wxT("BUDGET_SETUP_NO_SUMMARIES"),    wxT("TRUE")) != wxT("TRUE")) budget_setup_no_summaries_ = false;
-    if (mmDBWrapper::getINISettingValue(db, wxT("BUDGET_SUMMARY_NO_CATEGORIES"), wxT("FALSE")) != wxT("FALSE")) budget_summary_no_categories_ = true;
-    if (mmDBWrapper::getINISettingValue(db, wxT("REPORT_FUTURE_TRANSACTIONS"), wxT("FALSE")) != wxT("FALSE")) ignore_future_transactions_ = true;
+    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_FINANCIAL_YEARS, wxT("FALSE")) != wxT("FALSE")) budgetFinancialYears_ = true;
+    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_INCLUDE_TRANSFERS, wxT("FALSE")) != wxT("FALSE")) budgetIncludeTransfers_ = true;
+    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_SETUP_WITHOUT_SUMMARY, wxT("FALSE")) != wxT("FALSE")) budgetSetupWithoutSummaries_ = true;
+    if (mmDBWrapper::getINISettingValue(db, INIDB_BUDGET_SUMMARY_WITHOUT_CATEG, wxT("TRUE")) != wxT("TRUE")) budgetSummaryWithoutCategories_ = false;
+    if (mmDBWrapper::getINISettingValue(db, INIDB_IGNORE_FUTURE_TRANSACTIONS, wxT("FALSE")) != wxT("FALSE")) ignoreFutureTransactions_ = true;
 
     // Read the preference as a string and convert to int
     transPayeeSelectionNone_ = wxAtoi(mmDBWrapper::getINISettingValue(db, wxT("TRANSACTION_PAYEE_NONE"), wxT("0")));
@@ -325,7 +325,7 @@ void mmIniOptions::saveOptions(wxSQLite3Database* /*db*/)
 // ---------------------------------------------------------------------------
 void mmPlayTransactionSound(wxSQLite3Database* db_)
 {
-    wxString useSound = mmDBWrapper::getINISettingValue(db_, wxT("USETRANSSOUND"), wxT("TRUE"));
+    wxString useSound = mmDBWrapper::getINISettingValue(db_, INIDB_USE_TRANSACTION_SOUND, wxT("TRUE"));
 
     if (useSound == wxT("TRUE")) 
     {
