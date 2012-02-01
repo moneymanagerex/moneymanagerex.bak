@@ -133,7 +133,6 @@ void mmPayeeDialog::CreateControls()
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
     wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL, _("&Cancel"));
     itemBoxSizer9->Add(itemCancelButton,  0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
-
 }
 
 void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)

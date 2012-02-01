@@ -31,9 +31,7 @@
 #include "mmcoredb.h"
 #include <wx/spinbutt.h>
 
-class mmData;
 class wxDatePickerCtrl;
-class mmCategory;
 
 class mmBDDialog : public wxDialog
 {    

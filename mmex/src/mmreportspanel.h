@@ -56,7 +56,5 @@ private:
     mmGUIFrame* frame_;
     mmPrintableBase* rb_;
 };
-
 #endif
-
 

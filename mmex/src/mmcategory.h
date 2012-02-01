@@ -25,7 +25,6 @@
 #include <boost/weak_ptr.hpp>
 #include <vector>
 
-
 class mmCategory
 {
 public: 
@@ -68,6 +67,4 @@ public:
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
 };
-
-
 #endif

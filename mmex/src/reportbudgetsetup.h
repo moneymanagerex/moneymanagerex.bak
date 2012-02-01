@@ -12,12 +12,9 @@ public:
     wxString getHTMLText();
 
 private:
-    mmCoreDB* core_;
     wxSQLite3Database* db_;
     int budgetYearID_;
 
     wxString ActualAmountColour( mmBudgetEntryHolder& budEntry, bool total = false);
-
 };
-
 #endif // _MM_EX_REPORTBUDGETING_SETUP_H_

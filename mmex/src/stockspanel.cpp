@@ -81,7 +81,6 @@ mmStocksPanel::mmStocksPanel(wxSQLite3Database* db, wxSQLite3Database* inidb,
                              const wxString& name)
         : mmPanelBase(db, inidb), m_imageList(0), accountID_(accountID)
 {
-
     Create(parent, winid, pos, size, style, name);
 }
 
@@ -342,14 +341,12 @@ void mmStocksPanel::initVirtualListControl()
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
     double originalVal = 0.0;
-//    double value = 0.0;
     
     mmDBWrapper::loadSettings(accountID_, db_);
         
     //Get Init Value of the account
     double initVal = mmDBWrapper::getInitBalanceOnAccount(db_, accountID_);
     // + Transfered from other accounts - Transfered to other accounts
-    //double initVal = mmDBWrapper::getTotalBalanceOnAccount(db_, accountID_, true);
 
     //Get Stock Investment Account Balance as Init Amount + sum (Value) - sum (Purchase Price)
     double total = mmDBWrapper::getStockInvestmentBalance(db_, accountID_, false, originalVal);

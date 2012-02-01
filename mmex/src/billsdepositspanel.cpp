@@ -64,8 +64,6 @@ inline bool sortTransactionsByRemainingDays(const mmBDTransactionHolder &p1, con
 
 } // namespace
 
-
-
 mmBillsDepositsPanel::mmBillsDepositsPanel(wxSQLite3Database* db, wxSQLite3Database* inidb,
             mmCoreDB* core,
             wxWindow *parent,
@@ -73,7 +71,6 @@ mmBillsDepositsPanel::mmBillsDepositsPanel(wxSQLite3Database* db, wxSQLite3Datab
             const wxString& name )
             : mmPanelBase(db, inidb), core_(core), m_imageList(), listCtrlAccount_()
 {
-    
     Create(parent, winid, pos, size, style, name);
 }
 

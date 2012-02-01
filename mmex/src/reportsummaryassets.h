@@ -23,7 +23,6 @@
 
 class wxSQLite3Database;
 
-
 class mmReportSummaryAssets : public mmPrintableBase 
 {
 public:

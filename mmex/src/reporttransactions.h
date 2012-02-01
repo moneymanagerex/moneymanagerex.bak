@@ -39,8 +39,6 @@ public:
 
 private:
     std::vector<boost::shared_ptr<mmBankTransaction> >* trans_;
-    wxDateTime dtBegin_;
-    wxDateTime dtEnd_;
     bool ignoreDate_;
     int refAccountID_;
     wxString refAccountStr_;

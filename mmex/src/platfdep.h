@@ -27,16 +27,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 class wxFileName;
 class wxString;
 
-
 namespace mmex
 {
-
 wxFileName GetDocDir();
 wxFileName GetResourceDir();
 wxFileName GetSharedDir();
 wxFileName GetUserDir(bool create);
 wxFileName GetLogDir(bool create);
-
 
 /*
     wxStandardPaths uses wxApp::GetAppName(), so you should
@@ -45,7 +42,6 @@ wxFileName GetLogDir(bool create);
     Use mmex::getProgramName() for others purposes.
 */
 wxString GetAppName();
-
 } // namespace mmex
 
 //----------------------------------------------------------------------------

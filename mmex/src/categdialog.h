@@ -81,7 +81,6 @@ public:
     void setTreeSelection(wxString catName, wxString subCatName);
 
 private:
-//    wxSQLite3Database* db_;
     mmCoreDB* core_;
     wxTreeCtrl* treeCtrl_; 
     wxTreeItemId selectedItemId_;

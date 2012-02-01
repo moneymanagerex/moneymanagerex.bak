@@ -24,7 +24,6 @@
 class wxSQLite3Database;
 class wxSQLite3ResultSet;
 
-
 class mmCurrency
 {
 public: 
@@ -76,6 +75,4 @@ public:
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
 };
-
-
 #endif

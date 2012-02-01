@@ -20,8 +20,8 @@
 #include "budgetingpanel.h"
 #include "htmlbuilder.h"
 
-mmReportBudget::mmReportBudget(mmGUIFrame* mainFrame)
-    : mainFrame_(mainFrame)
+mmReportBudget::mmReportBudget(mmGUIFrame* mainFrame, mmCoreDB* core)
+    : mainFrame_(mainFrame), mmPrintableBase(core)
 {}
 
 /**************************************************************************************

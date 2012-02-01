@@ -177,7 +177,6 @@ bool mmAccountList::deleteAccount(int accountID)
         st.Finalize();
 
         // --
-
         st = db_->PrepareStatement("delete from BILLSDEPOSITS_V1 where ACCOUNTID=? OR TOACCOUNTID=?");
         st.Bind(1, accountID);
         st.Bind(2, accountID);
@@ -186,7 +185,6 @@ bool mmAccountList::deleteAccount(int accountID)
         st.Finalize();
 
         // --
-
         st = db_->PrepareStatement("delete from ACCOUNTLIST_V1 where ACCOUNTID=?");
         st.Bind(1, accountID);
 
@@ -233,7 +231,6 @@ double mmAccountList::getAccountBaseCurrencyConvRate(int accountID) const
 
    if (pCurrency)
       return pCurrency->baseConv_;
-
 
    return 0.0;
 }

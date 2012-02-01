@@ -60,7 +60,5 @@ private:
     void OnHelpPageBack(wxCommandEvent& event);
     void OnHelpPageForward(wxCommandEvent& event);
 };
-
 #endif
-
 

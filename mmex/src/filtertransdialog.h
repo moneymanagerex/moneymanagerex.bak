@@ -18,29 +18,11 @@
 #pragma interface "filtertransdialog.cpp"
 #endif
 
-/*!
- * Includes
- */
-
-////@begin includes
 #include "wx/datectrl.h"
 #include "guiid.h"
 #include "mmcheckingpanel.h"
 #include "mmcoredb.h"
-////@end includes
 
-/*!
- * Forward declarations
- */
-
-////@begin forward declarations
-////@end forward declarations
-
-/*!
- * Control identifiers
- */
-
-////@begin control identifiers
 #define ID_MYDIALOG9 10095
 #define SYMBOL_MMFILTERTRANSACTIONSDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
 #define SYMBOL_MMFILTERTRANSACTIONSDIALOG_TITLE _("Transaction Report Filter")
@@ -69,11 +51,6 @@
 #define ID_PANEL12 10000
 #define ID_CHECKBOXTRANSNUM 10301
 #define ID_TEXTTRANSNUM 10302
-////@end control identifiers
-
-/*!
- * Compatibility
- */
 
 #ifndef wxCLOSE_BOX
 #define wxCLOSE_BOX 0x1000
@@ -81,10 +58,6 @@
 #ifndef wxFIXED_MINSIZE
 #define wxFIXED_MINSIZE 0
 #endif
-
-/*!
- * mmFilterTransactionsDialog class declaration
- */
 
 class mmFilterTransactionsDialog: public wxDialog
 {    
@@ -113,8 +86,6 @@ public:
     
     /// Creates the controls and sizers
     void CreateControls();
-
-   ////@begin mmFilterTransactionsDialog event handler declarations
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOXACCOUNT
     void OnCheckboxaccountClick( wxCommandEvent& event );
@@ -152,11 +123,9 @@ public:
     void OnCategs(wxCommandEvent& event);
     void OnPayee(wxCommandEvent& event);
 
-
     /// Should we show tooltips?
     static bool ShowToolTips();
 
-////@begin mmFilterTransactionsDialog member variables
     wxCheckBox* accountCheckBox;
     wxChoice* accountDropDown;
     wxCheckBox* dateRangeCheckBox;
@@ -189,8 +158,6 @@ public:
     int payeeID_;
     int refAccountID_;
     wxString refAccountStr_;
-
-    ////@end mmFilterTransactionsDialog member variables
 
 	/// Returns the payee string, when Payee is selected.
     wxString userPayeeStr();

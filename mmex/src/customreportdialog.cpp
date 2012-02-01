@@ -40,7 +40,6 @@ BEGIN_EVENT_TABLE( mmCustomSQLDialog, wxDialog )
     EVT_TEXT( DIALOG_CUSTOM_SQL_TXTCTRL_SOURCE,       mmCustomSQLDialog::OnTextChangeSubReport)
 END_EVENT_TABLE()
 
-
 mmCustomSQLDialog::mmCustomSQLDialog(customSQLReportIndex* reportIndex, wxWindow* parent, bool edit,
                                      wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
 :reportIndex_(reportIndex), sqlSourceTxtCtrl_(), edit_(edit), navCtrlUpdateRequired_(false), newFileCreated_(true)

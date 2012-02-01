@@ -16,7 +16,5 @@ private:
     wxDateTime dtEnd_;
     bool ignoreDate_;
     wxString title_;
-
 };
-
 #endif // _MM_EX_REPORTINCEXP_H_

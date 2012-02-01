@@ -10,7 +10,7 @@
 #include "mmex.h"
 
 mmReportBudgetingSetup::mmReportBudgetingSetup(mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID)
-    : mmReportBudget(mainFrame), core_(core), db_(core_->db_.get()), budgetYearID_(budgetYearID)
+    : mmReportBudget(mainFrame, core), db_(core_->db_.get()), budgetYearID_(budgetYearID)
 {
 }
 

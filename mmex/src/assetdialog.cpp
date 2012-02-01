@@ -165,7 +165,6 @@ void mmAssetDialog::dataToControls()
 
 void mmAssetDialog::fillControls()
 {
-    
 }
 
 void mmAssetDialog::CreateControls()
@@ -346,7 +345,6 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         valueChangeTypeStr = wxT("Depreciates");
     else
         wxASSERT(false);
-
 
     wxString valueChangeRateStr = m_valueChangeRate->GetValue().Trim();
     if (valueChangeRateStr.IsEmpty() && valueChangeType != DEF_CHANGE_NONE)

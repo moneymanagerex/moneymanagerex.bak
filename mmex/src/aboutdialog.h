@@ -21,9 +21,7 @@
 
 #include <wx/dialog.h>
 
-
 class wxSQLite3Database;
-
 
 class mmAboutDialog : public wxDialog
 {    

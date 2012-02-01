@@ -19,11 +19,8 @@
 
 #include "defs.h"
 
-class mmData;
 class wxDatePickerCtrl;
 class mmCategory;
-class mmAdvancedPopup;
-
 
 class mmAssetDialog : public wxDialog
 {    
@@ -64,5 +61,4 @@ private:
     void dataToControls();
 
 };
-
 #endif

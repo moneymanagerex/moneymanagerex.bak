@@ -225,10 +225,6 @@ KC 	Check transaction
 #include "mmcoredb.h"
 #include "platfdep.h"
 
-namespace
-{
-
-};
 enum qifAccountInfoType 
 {
     Name        = 1, // N
