@@ -3,8 +3,6 @@
 
 #include "reportbase.h"
 
-class mmCoreDB;
-
 class mmReportTransactionStats : public mmPrintableBase
 {
 public:
@@ -12,7 +10,6 @@ public:
     wxString getHTMLText();
 
 private:
-    mmCoreDB* core_;
     int year_;
 };
 

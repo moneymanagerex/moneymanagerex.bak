@@ -24,9 +24,7 @@
 #include <wx/datetime.h>
 #include <wx/string.h>
 
-
 class wxSQLite3Database;
-
 
 class mmReportCategoryExpenses : public mmPrintableBase 
 {
@@ -43,5 +41,4 @@ private:
     wxString title_;
     int type_;
 };
-
 #endif // _MM_EX_REPORTCATEGEXP_H_

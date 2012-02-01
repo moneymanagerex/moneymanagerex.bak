@@ -109,7 +109,5 @@ class YahooSettingsDialog : public wxDialog
             wxPoint pos = wxDefaultPosition, 
             wxSize size = wxDefaultSize, 
             int style = wxDEFAULT_DIALOG_STYLE );
-
 };
-
 #endif //_YahooSettingsDialog_H_

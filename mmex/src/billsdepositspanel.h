@@ -161,6 +161,5 @@ public:
     wxImageList* m_imageList;
     billsDepositsListCtrl* listCtrlAccount_;
 };
-
 #endif
 

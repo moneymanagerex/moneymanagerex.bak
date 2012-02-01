@@ -118,5 +118,4 @@ private:
     wxButton* bCategory_;
 };
 
-
 #endif

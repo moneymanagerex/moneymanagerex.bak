@@ -24,7 +24,6 @@
 #include "util.h"
 #include "dbwrapper.h"
 
-
 mmReportSummary::mmReportSummary(mmCoreDB* core, mmGUIFrame* frame) : 
 	mmPrintableBase(core),
     frame_(frame),

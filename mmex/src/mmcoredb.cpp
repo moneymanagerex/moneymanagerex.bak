@@ -129,12 +129,6 @@ void loadAccounts(boost::shared_ptr<wxSQLite3Database> db_,
     "from ACCOUNTLIST_V1 "
     "order by ACCOUNTNAME";
 
-    //"select * "
-    //"from ACCOUNTLIST_V1 "
-    //"order by STATUS desc, "
-    //         "FAVORITEACCT desc, "
-    //         "ACCOUNTNAME";
-
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
 
     while (q1.NextRow())

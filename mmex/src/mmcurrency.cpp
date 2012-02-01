@@ -162,7 +162,6 @@ void mmCurrencyList::updateCurrency(boost::shared_ptr<mmCurrency> pCurrency)
     st.Finalize();
 }
 
-
 ///  Checks the database directly to determine if the currencyID is used in Accounts List
 bool mmCurrencyList::currencyInUse(int currencyID)
 {
@@ -204,12 +203,6 @@ void mmCurrencyList::deleteCurrency(int currencyID)
         }
     }
 }
-
-//bool mmCurrencyList::currencyExists(const wxString& currencyName)
-//{
-//
-//    return true;
-//}
 
 int mmCurrencyList::getCurrencyID(const wxString& currencyName) const
 {

@@ -19,12 +19,6 @@
 #ifndef _MM_EX_SPLITTRANSACTIONDIALOG_H_
 #define _MM_EX_SPLITTRANSACTIONDIALOG_H_
 
-
-/*!
- * Includes
- */
-
-////@begin includes
 #include "wx/listctrl.h"
 #include "guiid.h"
 #include "defs.h"

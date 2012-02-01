@@ -7,7 +7,7 @@
 #include "mmcoredb.h"
 
 mmReportTransactionStats::mmReportTransactionStats(mmCoreDB* core, int year)  : 
-        core_(core),
+        mmPrintableBase(core),
         year_(year+1)
 {
 }

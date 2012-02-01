@@ -24,9 +24,7 @@
 #include "defs.h"
 #include "mmcoredb.h"
 
-class wxListView;
 class mmGUIFrame;
-class wxListEvent;
 class mmHTMLBuilder;
 
 class mmHtmlWindow: public wxHtmlWindow
@@ -98,6 +96,5 @@ private:
     void displayTopTransactions(mmHTMLBuilder& hb);
     void displayGrandTotals(mmHTMLBuilder& hb, double& tBalance);
 };
-
 #endif
 

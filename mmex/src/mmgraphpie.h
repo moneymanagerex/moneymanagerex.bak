@@ -7,8 +7,6 @@
 #include <vector>
 
 struct ValuePair;
-
-
 class PieChart;
 
 class mmGraphPie : public mmGraphGenerator
@@ -23,6 +21,5 @@ public:
 private:
 	boost::scoped_ptr<PieChart> chart;
 };
-
 #endif // _MM_EX_GRAPHPIE_H_
 

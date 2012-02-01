@@ -131,7 +131,5 @@ private:
     int subCategID_;
     double val_;
     wxDateTime dtdt_;
-
 };
-
 #endif

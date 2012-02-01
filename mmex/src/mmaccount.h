@@ -27,8 +27,6 @@
 #include "mmcurrency.h"
 #include "mmtransaction.h"
 
-class mmCoreDB;
-
 class mmAccount
 {
 public: 

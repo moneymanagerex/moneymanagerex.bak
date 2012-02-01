@@ -1204,26 +1204,6 @@ double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountI
     return balance;
 }
 
-/*void mmDBWrapper::addPayee(wxSQLite3Database* db, const wxString &payee, int categID, int subcategID)
-{
-    try{
-        static const char sql[] = 
-        "insert into PAYEE_V1 (PAYEENAME, CATEGID, SUBCATEGID) values (?, ?, ?)";
-    
-        wxSQLite3Statement st = db->PrepareStatement(sql);
-        st.Bind(1, payee);
-        st.Bind(2, categID);
-        st.Bind(3, subcategID);
-    
-        st.ExecuteUpdate();
-        st.Finalize();
-    } catch(wxSQLite3Exception e) 
-    { 
-        wxLogDebug(wxT("Database::addPayee: Exception"), e.GetMessage().c_str());
-        wxLogError(wxString::Format(_("Add Payee. Error: %s"), e.GetMessage().c_str()));
-    }
-}*/
-
 bool mmDBWrapper::getPayeeID(wxSQLite3Database* db, const wxString &payee, int& payeeID, int& categID, int& subcategID)
 {
     static const char sql[] = 

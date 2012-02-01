@@ -67,8 +67,6 @@ void mmSplitTransactionEntries::updateToDB(boost::shared_ptr<wxSQLite3Database>&
         st.Finalize();
     }
 
-    // --
-
     static const char sql[] = 
     "insert into SPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) "
     "values (?, ?, ?, ?)";
@@ -610,7 +608,6 @@ void mmBankTransactionList::updateTransaction(boost::shared_ptr<mmBankTransactio
     r.splitEntries_->updateToDB(db_, r.transactionID(), true);
     st.Finalize();
 }
-
 
 boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPtr
 (int accountID, int transactionID) const

@@ -26,9 +26,6 @@
 #include "wx/wx.h"
 #endif
 
-////@begin includes
-////@end includes
-
 #include "filtertransdialog.h"
 
 #include "defs.h"
@@ -41,30 +38,16 @@
 #include <algorithm>
 #include <vector>
 
-////@begin XPM images
-////@end XPM images
-
-// Defines for Transaction Status and Type now located in dbWrapper.h
-
 bool sortTransactionsByDate1( boost::shared_ptr<mmBankTransaction> elem1, 
                              boost::shared_ptr<mmBankTransaction> elem2 )
 {
    return elem1->date_ < elem2->date_;
 }
 
-/*!
- * mmFilterTransactionsDialog type definition
- */
-
 IMPLEMENT_DYNAMIC_CLASS( mmFilterTransactionsDialog, wxDialog )
-
-/*!
- * mmFilterTransactionsDialog event table definition
- */
 
 BEGIN_EVENT_TABLE( mmFilterTransactionsDialog, wxDialog )
 
-////@begin mmFilterTransactionsDialog event table entries
     EVT_CHECKBOX( ID_CHECKBOXACCOUNT,   mmFilterTransactionsDialog::OnCheckboxaccountClick )
     EVT_CHECKBOX( ID_CHECKBOXDATERANGE, mmFilterTransactionsDialog::OnCheckboxDateRangeClick )
     EVT_CHECKBOX( ID_CHECKBOXPAYEE,     mmFilterTransactionsDialog::OnCheckboxpayeeClick )
@@ -79,13 +62,7 @@ BEGIN_EVENT_TABLE( mmFilterTransactionsDialog, wxDialog )
     EVT_BUTTON(ID_BUTTONCATEGORY,       mmFilterTransactionsDialog::OnCategs)
     EVT_CHECKBOX( ID_CHECKBOXTRANSNUM,  mmFilterTransactionsDialog::OnCheckboxTransNumberClick )
 
-////@end mmFilterTransactionsDialog event table entries
-
 END_EVENT_TABLE()
-
-/*!
- * mmFilterTransactionsDialog constructors
- */
 
 mmFilterTransactionsDialog::mmFilterTransactionsDialog( )
 {
@@ -108,15 +85,10 @@ mmFilterTransactionsDialog::mmFilterTransactionsDialog(std::vector< boost::share
     Create(parent, id, caption, pos, size, style);
 }
 
-/*!
- * mmFilterTransactionsDialog creator
- */
-
 bool mmFilterTransactionsDialog::Create( wxWindow* parent, wxWindowID id, 
                                         const wxString& caption, const wxPoint& pos, 
                                         const wxSize& size, long style )
 {
-////@begin mmFilterTransactionsDialog member initialisation
     accountCheckBox = NULL;
     accountDropDown = NULL;
     dateRangeCheckBox = NULL;
@@ -135,9 +107,7 @@ bool mmFilterTransactionsDialog::Create( wxWindow* parent, wxWindowID id,
     amountMaxEdit = NULL;
     notesCheckBox = NULL;
     notesEdit = NULL;
-////@end mmFilterTransactionsDialog member initialisation
 
-////@begin mmFilterTransactionsDialog creation
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
 
@@ -150,10 +120,6 @@ bool mmFilterTransactionsDialog::Create( wxWindow* parent, wxWindowID id,
     Centre();
     return true;
 }
-
-/*!
- * Control creation for mmFilterTransactionsDialog
- */
 
 void mmFilterTransactionsDialog::CreateControls()
 {    
@@ -315,8 +281,6 @@ void mmFilterTransactionsDialog::CreateControls()
     buttonPanelSizer->Add(itemButtonCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemButtonCancel->SetFocus();
     
-////@end mmFilterTransactionsDialog content construction
-
     // disable all controls at startup
     accountDropDown->Enable(false);
     fromDateCtrl->Enable(false);

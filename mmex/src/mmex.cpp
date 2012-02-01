@@ -245,7 +245,7 @@ bool OnInitImpl(mmGUIApp &app)
     app.getLocale().Init(wxLANGUAGE_ENGLISH);
 
     /* Initialize Image Handlers */
-    wxImage::AddHandler( new wxICOHandler ); 
+    wxImage::AddHandler(new wxICOHandler()); 
     wxImage::AddHandler(new wxJPEGHandler());
     wxImage::AddHandler(new wxPNGHandler());
 

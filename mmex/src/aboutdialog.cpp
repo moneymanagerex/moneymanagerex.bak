@@ -198,4 +198,3 @@ void mmAboutDialog::CreateControls()
     }
 }
 
-

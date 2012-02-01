@@ -88,5 +88,3 @@ void mmYahoo::WriteSettings()
     mmDBWrapper::setInfoSettingValue(db_,wxT("HTTP_YAHOO_SUFFIX"),Suffix_);
 }
 
-
-

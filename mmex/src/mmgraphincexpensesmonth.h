@@ -6,7 +6,6 @@
 
 class BarChart;
 
-
 class mmGraphIncExpensesMonth : public mmGraphGenerator
 {
 public:
@@ -19,5 +18,4 @@ public:
 private:
 	boost::scoped_ptr<BarChart> chart;
 };
-
 #endif // _MM_EX_GRAPHINCEXPENSESMONTH_H_

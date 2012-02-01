@@ -50,6 +50,5 @@ private:
     void OnButtonAppstartWebsiteClick( wxCommandEvent& event );
     void OnButtonAppstartLastDatabaseClick( wxCommandEvent& event );
 };
-
 #endif // _MM_EX_APPSTARTDIALOG_H_
 

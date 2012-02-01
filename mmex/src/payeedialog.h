@@ -23,7 +23,6 @@
 
 class mmCoreDB;
 
-
 class mmPayeeDialog : public wxDialog
 {    
     DECLARE_DYNAMIC_CLASS(mmPayeeDialog)
@@ -63,5 +62,4 @@ private:
     void OnFocus(wxFocusEvent& event);
     void OnSetFocus(wxFocusEvent& event);
 };
-
 #endif // _MM_EX_PAYEEDIALOG_H_

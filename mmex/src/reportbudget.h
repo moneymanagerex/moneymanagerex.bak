@@ -20,8 +20,6 @@
 
 #include "reportbase.h"
 
-class mmCoreDB;
-class wxSQLite3Database;
 class mmGUIFrame;
 struct mmBudgetEntryHolder;
 class mmHTMLBuilder;
@@ -34,7 +32,7 @@ class wxDateTime;
 class mmReportBudget : public mmPrintableBase 
 {
 public:
-    mmReportBudget(mmGUIFrame* mainFrame);
+    mmReportBudget(mmGUIFrame* mainFrame, mmCoreDB* core = NULL);
 
     /// Initialise index and secondary fields for a budget entry
     void initBudgetEntryFields(mmBudgetEntryHolder& budEntry, int id = -1);
@@ -72,7 +70,6 @@ public:
 
 protected:
     mmGUIFrame* mainFrame_;
-     
 };
 
 
@@ -86,7 +83,6 @@ public:
     mmCommonReportDetails(mmGUIFrame* mainFrame);
 
     wxString getHTMLText();
-
 };
 
 #endif // _MM_EX_REPORTBUDGETING_H_
