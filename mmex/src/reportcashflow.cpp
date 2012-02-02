@@ -290,7 +290,6 @@ wxString mmReportCashFlow::getHTMLText()
     q1.Finalize();
 
     // Now we have a vector of dates and amounts over next year
-    // Need to use different month ranges to figure out cash flow
 
     std::vector<double> forecastOver12Months(12 * years, 0.0);
     for (int idx = 0; idx < (int)forecastOver12Months.size(); idx++)
