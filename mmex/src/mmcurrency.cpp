@@ -81,7 +81,7 @@ void mmCurrency::loadCurrencySettings()
 }
 
 //-----------------------------------------------------------------------------//
-void mmCurrencyList::loadBaseCurrencySettings()
+void mmCurrencyList::loadBaseCurrencySettings() const
 {
    mmDBWrapper::loadBaseCurrencySettings(db_.get());
 }
