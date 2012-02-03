@@ -56,15 +56,15 @@
 #define wxFIXED_MINSIZE 0
 #endif
 
-class mmUnivCSVImportDialog: public wxDialog
+class mmUnivCSVDialog: public wxDialog
 {    
-    DECLARE_DYNAMIC_CLASS(mmUnivCSVImportDialog)
+    DECLARE_DYNAMIC_CLASS(mmUnivCSVDialog)
     DECLARE_EVENT_TABLE()
 
 public:
     /// Constructors
-    mmUnivCSVImportDialog();
-    mmUnivCSVImportDialog(mmCoreDB* core, wxWindow* parent, 
+    mmUnivCSVDialog();
+    mmUnivCSVDialog(mmCoreDB* core, wxWindow* parent, 
         wxWindowID id = SYMBOL_UNIVCSVDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_UNIVCSVDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_UNIVCSVDIALOG_POSITION, 

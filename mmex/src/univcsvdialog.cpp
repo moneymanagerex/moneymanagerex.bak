@@ -24,20 +24,20 @@
 #include "platfdep.h"
 #include <wx/statline.h>
 
-IMPLEMENT_DYNAMIC_CLASS(mmUnivCSVImportDialog, wxDialog)
+IMPLEMENT_DYNAMIC_CLASS(mmUnivCSVDialog, wxDialog)
 
 
-BEGIN_EVENT_TABLE(mmUnivCSVImportDialog, wxDialog)
-    EVT_BUTTON(wxID_ADD, mmUnivCSVImportDialog::OnAdd)
-    EVT_BUTTON(ID_UNIVCSVBUTTON_IMPORT, mmUnivCSVImportDialog::OnImport)
-    EVT_BUTTON(wxID_REMOVE, mmUnivCSVImportDialog::OnRemove)
-    EVT_BUTTON(wxID_OPEN, mmUnivCSVImportDialog::OnLoad)
-    EVT_BUTTON(wxID_SAVEAS, mmUnivCSVImportDialog::OnSave)
-    EVT_BUTTON(wxID_UP, mmUnivCSVImportDialog::OnMoveUp)
-    EVT_BUTTON(wxID_DOWN, mmUnivCSVImportDialog::OnMoveDown)
-    EVT_BUTTON(wxID_SEARCH, mmUnivCSVImportDialog::OnSearch)
-    EVT_LISTBOX(ID_LISTBOX, mmUnivCSVImportDialog::OnListBox)
-    EVT_RADIOBOX(wxID_RADIO_BOX, mmUnivCSVImportDialog::OnCheckOrRadioBox)
+BEGIN_EVENT_TABLE(mmUnivCSVDialog, wxDialog)
+    EVT_BUTTON(wxID_ADD, mmUnivCSVDialog::OnAdd)
+    EVT_BUTTON(ID_UNIVCSVBUTTON_IMPORT, mmUnivCSVDialog::OnImport)
+    EVT_BUTTON(wxID_REMOVE, mmUnivCSVDialog::OnRemove)
+    EVT_BUTTON(wxID_OPEN, mmUnivCSVDialog::OnLoad)
+    EVT_BUTTON(wxID_SAVEAS, mmUnivCSVDialog::OnSave)
+    EVT_BUTTON(wxID_UP, mmUnivCSVDialog::OnMoveUp)
+    EVT_BUTTON(wxID_DOWN, mmUnivCSVDialog::OnMoveDown)
+    EVT_BUTTON(wxID_SEARCH, mmUnivCSVDialog::OnSearch)
+    EVT_LISTBOX(ID_LISTBOX, mmUnivCSVDialog::OnListBox)
+    EVT_RADIOBOX(wxID_RADIO_BOX, mmUnivCSVDialog::OnCheckOrRadioBox)
 END_EVENT_TABLE()
 
 //----------------------------------------------------------------------------
@@ -74,11 +74,11 @@ wxString mmCleanQuotes(const wxString& orig)
 
 //----------------------------------------------------------------------------
 
-mmUnivCSVImportDialog::mmUnivCSVImportDialog()
+mmUnivCSVDialog::mmUnivCSVDialog()
 {
 }
 
-mmUnivCSVImportDialog::mmUnivCSVImportDialog(
+mmUnivCSVDialog::mmUnivCSVDialog(
     mmCoreDB* core, 
     wxWindow* parent, wxWindowID id, 
     const wxString& caption, 
@@ -104,7 +104,7 @@ mmUnivCSVImportDialog::mmUnivCSVImportDialog(
     Create(parent, id, caption, pos, size, style);
 }
 
-bool mmUnivCSVImportDialog::Create(wxWindow* parent, wxWindowID id, 
+bool mmUnivCSVDialog::Create(wxWindow* parent, wxWindowID id, 
                       const wxString& caption, 
                       const wxPoint& pos, 
                       const wxSize& size, 
@@ -124,7 +124,7 @@ bool mmUnivCSVImportDialog::Create(wxWindow* parent, wxWindowID id,
     return TRUE;
 }
 
-void mmUnivCSVImportDialog::CreateControls()
+void mmUnivCSVDialog::CreateControls()
 {    
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
@@ -270,23 +270,23 @@ void mmUnivCSVImportDialog::CreateControls()
  * Should we show tooltips?
  */    
 
-bool mmUnivCSVImportDialog::ShowToolTips()
+bool mmUnivCSVDialog::ShowToolTips()
 {
     return TRUE;
 }
 
-wxBitmap mmUnivCSVImportDialog::GetBitmapResource(const wxString& /*name*/)
+wxBitmap mmUnivCSVDialog::GetBitmapResource(const wxString& /*name*/)
 {
     return wxNullBitmap;
 }
 
-wxIcon mmUnivCSVImportDialog::GetIconResource(const wxString& /*name*/)
+wxIcon mmUnivCSVDialog::GetIconResource(const wxString& /*name*/)
 {
     return wxNullIcon;
 }
 
 //Selection dialog for fields to be added to listbox
-void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& /*event*/)
+void mmUnivCSVDialog::OnAdd(wxCommandEvent& /*event*/)
 {
     int index = csvFiledCandicate_->GetSelection();
     if (index != wxNOT_FOUND)
@@ -310,7 +310,7 @@ void mmUnivCSVImportDialog::OnAdd(wxCommandEvent& /*event*/)
 }
 
 //Removes an item from the field list box
-void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& /*event*/)
+void mmUnivCSVDialog::OnRemove(wxCommandEvent& /*event*/)
 {
     int index = csvListBox_->GetSelection();
     if (index != wxNOT_FOUND)
@@ -343,7 +343,7 @@ void mmUnivCSVImportDialog::OnRemove(wxCommandEvent& /*event*/)
     }
 }
 
-bool mmUnivCSVImportDialog::isIndexPresent(int index) const
+bool mmUnivCSVDialog::isIndexPresent(int index) const
 {
     for(std::vector<int>::const_iterator it = csvFieldOrder_.begin(); it != csvFieldOrder_.end(); ++ it)
     {
@@ -353,7 +353,7 @@ bool mmUnivCSVImportDialog::isIndexPresent(int index) const
     return false;
 }
 
-const wxString mmUnivCSVImportDialog::getCSVFieldName(int index) const
+const wxString mmUnivCSVDialog::getCSVFieldName(int index) const
 {
     std::map<int, wxString>::const_iterator it = CSVFieldName_.find(index);
     if (it != CSVFieldName_.end())
@@ -362,7 +362,7 @@ const wxString mmUnivCSVImportDialog::getCSVFieldName(int index) const
     return _("Unknown");
 }
 
-void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
+void mmUnivCSVDialog::OnLoad(wxCommandEvent& /*event*/)
 {
    wxString fileName = wxFileSelector(_("Choose Universal CSV format file to load"), 
       wxEmptyString, wxEmptyString, wxEmptyString,  wxT("CSV Template(*.mcv)|*.mcv"), wxFD_FILE_MUST_EXIST);
@@ -405,7 +405,7 @@ void mmUnivCSVImportDialog::OnLoad(wxCommandEvent& /*event*/)
 }
 
 //Saves the field order to a template file
-void mmUnivCSVImportDialog::OnSave(wxCommandEvent& /*event*/)
+void mmUnivCSVDialog::OnSave(wxCommandEvent& /*event*/)
 {
     wxString fileName = wxFileSelector(_("Choose Universal CSV format file to save"), 
                 wxEmptyString, wxEmptyString, wxEmptyString, wxT("CSV Template(*.mcv)|*.mcv"), wxFD_SAVE);
@@ -436,7 +436,7 @@ void mmUnivCSVImportDialog::OnSave(wxCommandEvent& /*event*/)
     }
 }
 
-void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
+void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
 {
     // date, amount, payee are required
     if (!isIndexPresent(UNIV_CSV_DATE) || 
@@ -654,7 +654,7 @@ void mmUnivCSVImportDialog::OnImport(wxCommandEvent& /*event*/)
     Close();
 }
 
-void mmUnivCSVImportDialog::update_preview()
+void mmUnivCSVDialog::update_preview()
 {
     this->m_list_ctrl_->ClearAll();
     long index = 0;
@@ -707,7 +707,7 @@ void mmUnivCSVImportDialog::update_preview()
     }
 }
 
-void mmUnivCSVImportDialog::OnMoveUp(wxCommandEvent& /*event*/)
+void mmUnivCSVDialog::OnMoveUp(wxCommandEvent& /*event*/)
 {
     int index = csvListBox_->GetSelection();
     if (index != wxNOT_FOUND && index != 0)
@@ -726,7 +726,7 @@ void mmUnivCSVImportDialog::OnMoveUp(wxCommandEvent& /*event*/)
     }
 }
 
-void mmUnivCSVImportDialog::OnMoveDown(wxCommandEvent& /*event*/)
+void mmUnivCSVDialog::OnMoveDown(wxCommandEvent& /*event*/)
 {
     int index = csvListBox_->GetSelection();
     if (index != wxNOT_FOUND && index != (int)csvListBox_->GetCount() - 1)
@@ -745,7 +745,7 @@ void mmUnivCSVImportDialog::OnMoveDown(wxCommandEvent& /*event*/)
     }
 }
 
-void mmUnivCSVImportDialog::OnSearch(wxCommandEvent& /*event*/)
+void mmUnivCSVDialog::OnSearch(wxCommandEvent& /*event*/)
 {
     wxString fileName = wxFileSelector(_("Choose CSV data file to import"), 
             wxEmptyString, wxEmptyString, wxEmptyString, wxT("*.csv"), wxFD_FILE_MUST_EXIST);
@@ -756,7 +756,7 @@ void mmUnivCSVImportDialog::OnSearch(wxCommandEvent& /*event*/)
     }
 }
 
-void mmUnivCSVImportDialog::OnListBox(wxCommandEvent& event)
+void mmUnivCSVDialog::OnListBox(wxCommandEvent& event)
 {
     int sel = event.GetInt();
     if (sel != wxNOT_FOUND)
@@ -765,7 +765,7 @@ void mmUnivCSVImportDialog::OnListBox(wxCommandEvent& event)
     }
 }
 
-void mmUnivCSVImportDialog::OnCheckOrRadioBox(wxCommandEvent& /*event*/)
+void mmUnivCSVDialog::OnCheckOrRadioBox(wxCommandEvent& /*event*/)
 {
     //TODO match value to choices
     switch(m_radio_box_->GetSelection())
@@ -786,7 +786,7 @@ void mmUnivCSVImportDialog::OnCheckOrRadioBox(wxCommandEvent& /*event*/)
     this->update_preview();
 }
 
-void mmUnivCSVImportDialog::parseToken(int index, wxString& token)
+void mmUnivCSVDialog::parseToken(int index, wxString& token)
 {
     if (token.Trim().IsEmpty()) return;
 
