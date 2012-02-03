@@ -49,7 +49,7 @@ namespace
 
 enum EColumn
 { 
-    COL_DATE_OR_TRANSACTION_ID, 
+    COL_DATE_OR_TRANSACTION_ID = 0, 
     COL_TRANSACTION_NUMBER, 
     COL_PAYEE_STR, 
     COL_STATUS, 
@@ -154,9 +154,6 @@ inline bool sort(const T &t1, const T &t2, bool asc)
 typedef bool (*sort_fun_t)(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc);
 //----------------------------------------------------------------------------
 
-/*
-    sort_fun_t.
-*/
 bool sortTransByDate(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
 {
     bool res = false;
@@ -171,26 +168,6 @@ bool sortTransByDate(const mmBankTransaction *t1, const mmBankTransaction *t2, b
 }
 //----------------------------------------------------------------------------
 
-/*
-    This function is not sort_fun_t.
-*/
-bool sortTransByDateAsc(const mmBankTransaction *t1, const mmBankTransaction *t2)
-{
-    bool res = false;
-
-    if (t1->date_ == t2->date_) {
-        res = t1->transactionID() < t2->transactionID();
-    } else {
-        res = t1->date_ < t2->date_;
-    }
-
-    return res;
-}
-//----------------------------------------------------------------------------
-
-/*
-    sort_fun_t.
-*/
 bool sortTransByNum(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
 {
     long v1 = 0;
@@ -211,9 +188,6 @@ bool sortTransByNum(const mmBankTransaction *t1, const mmBankTransaction *t2, bo
 }
 //----------------------------------------------------------------------------
 
-/*
-    sort_fun_t.
-*/
 bool sortTransByPayee(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
 {
 //  Primary sort by Payee, secondary sort by Date.
@@ -227,9 +201,6 @@ bool sortTransByPayee(const mmBankTransaction *t1, const mmBankTransaction *t2, 
 }
 //----------------------------------------------------------------------------
 
-/*
-    sort_fun_t.
-*/
 bool sortTransByStatus(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
 {
 //  Primary sort by Status, Secondary sort by Date.
@@ -243,9 +214,6 @@ bool sortTransByStatus(const mmBankTransaction *t1, const mmBankTransaction *t2,
 }
 //----------------------------------------------------------------------------
 
-/*
-    sort_fun_t.
-*/
 bool sortTransByCateg(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
 {
 //  Primary sort by Category, Secondary sort by Date.
@@ -282,36 +250,24 @@ bool sortAsCurrency(const wxString &s1, const wxString &s2, bool asc)
 }
 //----------------------------------------------------------------------------
 
-/*
-    sort_fun_t.
-*/
 bool sortTransByWithdrowal(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
 {
     return sortAsCurrency(t1->withdrawalStr_, t2->withdrawalStr_, asc);
 }
 //----------------------------------------------------------------------------
 
-/*
-    sort_fun_t.
-*/
 bool sortTransByDeposit(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
 {
     return sortAsCurrency(t1->depositStr_, t2->depositStr_, asc);
 }
 //----------------------------------------------------------------------------
 
-/*
-    sort_fun_t.
-*/
 bool sortTransByBalanse(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
 {
     return sort(t1->balance_, t2->balance_, asc);
 }
 //----------------------------------------------------------------------------
 
-/*
-    sort_fun_t.
-*/
 bool sortTransByNotes(const mmBankTransaction *t1, const mmBankTransaction *t2, bool asc)
 {
     return sort(t1->notes_, t2->notes_, asc);
@@ -362,13 +318,25 @@ private:
 };
 //----------------------------------------------------------------------------
 
+/*
+    This function is not sort_fun_t.
+*/
+bool sortTransByDateAsc(const mmBankTransaction *t1, const mmBankTransaction *t2)
+{
+    bool res = false;
+
+    if (t1->date_ == t2->date_) {
+        res = t1->transactionID() < t2->transactionID();
+    } else {
+        res = t1->date_ < t2->date_;
+    }
+
+    return res;
+}
+
 } // namespace
 
 //----------------------------------------------------------------------------
-
-/* 
-    Custom ListCtrl class that implements virtual LC style 
-*/
 class MyListCtrl : public wxListCtrl
 {
 public:
@@ -753,7 +721,6 @@ void mmCheckingPanel::CreateControls()
         m_listCtrlAccount->setSortOrder(g_asc);
         m_listCtrlAccount->setColumnImage(m_listCtrlAccount->getSortColumn(), m_listCtrlAccount->getSortOrder() ? ICON_ASC : ICON_DESC); // asc\desc sort mark (arrow)
         //m_listCtrlAccount->SetBackgroundColour(mmColors::listDetailsPanelColor);
-
     }
 
     wxPanel *itemPanel12 = new wxPanel(itemSplitterWindow10, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
