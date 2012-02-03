@@ -30,6 +30,7 @@ IMPLEMENT_DYNAMIC_CLASS(mmUnivCSVDialog, wxDialog)
 BEGIN_EVENT_TABLE(mmUnivCSVDialog, wxDialog)
     EVT_BUTTON(wxID_ADD, mmUnivCSVDialog::OnAdd)
     EVT_BUTTON(ID_UNIVCSVBUTTON_IMPORT, mmUnivCSVDialog::OnImport)
+    EVT_BUTTON(ID_UNIVCSVBUTTON_EXPORT, mmUnivCSVDialog::OnExport)
     EVT_BUTTON(wxID_REMOVE, mmUnivCSVDialog::OnRemove)
     EVT_BUTTON(wxID_OPEN, mmUnivCSVDialog::OnLoad)
     EVT_BUTTON(wxID_SAVEAS, mmUnivCSVDialog::OnSave)
@@ -652,6 +653,18 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
     }
 
     Close();
+}
+
+void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
+{
+    wxString delimit = this->delimit_;
+    wxString acctName = m_choice_account_->GetStringSelection();
+    int fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+
+    if (fromAccountID > 0)
+    {
+        //TODO
+    }
 }
 
 void mmUnivCSVDialog::update_preview()
