@@ -96,8 +96,8 @@ wxString mmReportTransactions::getHTMLText()
             boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
             wxASSERT(pCurrency);
             pCurrency->loadCurrencySettings();
-
-            refTrans[index]->updateAllData(core_,refAccountID_,pCurrency);
+//XXX check
+//            refTrans[index]->updateAllData(core_,refAccountID_,pCurrency);
         }
 
         bool negativeTransAmount = false;   // this can be either a transfer or withdrawl

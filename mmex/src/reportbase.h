@@ -35,7 +35,7 @@ public:
     mmPrintableBase(mmCoreDB* core): core_(core) {}
 
 protected:
-    mmCoreDB* core_;
+    const mmCoreDB* core_;
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_REPORTBASE_H_

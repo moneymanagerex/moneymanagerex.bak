@@ -116,7 +116,7 @@ void printRow
     wxSQLite3ResultSet &q1,
     int cat_id,
     int subcat_id,
-    mmCoreDB &core,
+    const mmCoreDB &core,
     mmHTMLBuilder &hb,
     columns_totals_t &columns_totals
 )
