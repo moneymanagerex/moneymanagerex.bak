@@ -3504,7 +3504,7 @@ void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& /*event*/)
         return;
     }
 
-    mmUnivCSVImportDialog(m_core.get(), this).ShowModal();
+    mmUnivCSVDialog(m_core.get(), this).ShowModal();
 }
 //----------------------------------------------------------------------------
 
