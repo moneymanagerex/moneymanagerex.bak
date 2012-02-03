@@ -36,7 +36,7 @@
 //#define ID_UNIVCSVBUTTON_ADD 10092
 //#define ID_UNIVCSVBUTTON_REMOVE 10093
 #define ID_UNIVCSVBUTTON_IMPORT 10094
-//#define ID_UNIVCSVBUTTON_LOAD 10095
+#define ID_UNIVCSVBUTTON_EXPORT 10095
 //#define ID_UNIVCSVBUTTON_SAVE 10096
 //#define ID_UNIVCSVBUTTON_MOVEUP 10097
 //#define ID_UNIVCSVBUTTON_MOVEDOWN 10098
@@ -83,6 +83,7 @@ public:
     void CreateControls();
     void OnAdd(wxCommandEvent& event);
     void OnImport(wxCommandEvent& event);
+    void OnExport(wxCommandEvent& event);
     void OnRemove(wxCommandEvent& event);
     bool isIndexPresent(int index) const;
     const wxString getCSVFieldName(int index) const;
