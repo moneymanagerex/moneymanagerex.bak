@@ -81,15 +81,14 @@ Manager Ex User Manual<BR><FONT SIZE=3>MMEX 0.9.8.0</FONT></FONT></H2>
 		</TD>
 		<TD WIDTH=50%>
 			<UL>
-				<LI><P><FONT FACE="Verdana"><B>Import From</B></FONT><FONT FACE="Verdana"><BR>*
-				<A HREF="#importCSV">CSV Files</A><BR>* <A HREF="#importQIF">QIF
-				Files</A><BR>* <A HREF="#importMMNET">Money Manager.NET CSV
-				Files</A><BR>* <A HREF="#importUnivCSV">Universal CSV Importer</A></FONT></P>
-				<LI><P><A HREF="#importcsvtips"><FONT FACE="Verdana"><B>Tips for
-				creating CSV Files</B></FONT></A></P>
-				<LI><P><FONT FACE="Verdana"><B>Export To</B></FONT><FONT FACE="Verdana"><BR>*
-				<A HREF="#exportcsv">CSV Files</A><BR>* <A HREF="#export_qif">QIF
-				Files</A></FONT></P>
+                <LI><P><FONT FACE="Verdana"><B>Import From</B></FONT><FONT FACE="Verdana">
+                    <BR>* <A HREF="#importQIF">QIF Files</A>
+                    <BR>* <A HREF="#importUnivCSV">Universal CSV Importer</A>
+                </FONT></P>
+				<LI><P><A HREF="#importcsvtips"><FONT FACE="Verdana"><B>Tips for creating CSV Files</B></FONT></A></P>
+                <LI><P><FONT FACE="Verdana"><B>Export To</B></FONT><FONT FACE="Verdana">
+                    <BR>* <A HREF="#exportcsv">CSV Files</A>
+                    <BR>* <A HREF="#export_qif">QIF Files</A></FONT></P>
 			</UL>
 		</TD>
 	</TR>
@@ -934,32 +933,6 @@ make the payee free so it can then be deleted.</FONT></P>
 </P>
 <H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Back to Top</FONT></A></H5>
 <HR>
-<H3 CLASS="western"><A NAME="importCSV"></A><FONT FACE="Verdana"><BR>Importing
-From CSV Files</FONT></H3>
-<P><FONT FACE="Verdana">MMEX can import from a wide variety of
-formats. One of them is a fixed format CSV file. This file format
-exactly matches the CSV format that MMEX can export. So it can be
-useful to move data from one .mmb database file to another .mmb
-database file. To easily see the format of the CSV file, you can try
-exporting an account to a CSV file and then analyzing the format
-created.<BR><BR>The general format is as follows:<BR><I><B>Date</B></I>
-- Date of the transaction (Displayed in the format specified in
-Options-&gt;DateFormat)<BR><I><B>Payee</B></I> - To whom the
-transaction was made. In the case of a transfer transaction, this
-indicates the name of the account from which the transfer was made or
-to the account the transfer was made.<BR><I><B>Transaction Type</B></I>
-- This can either be &quot;<I>Withdrawal</I>&quot; or
-&quot;<I>Deposit</I>&quot;<BR><I><B>Amount</B></I> - The transaction
-amount as a positive value<BR><I><B>Category</B></I> - The category
-of the transaction<BR><I><B>SubCategory</B></I> - The subcategory of
-the transaction if any (otherwise blank)<BR><I><B>Number</B></I> -
-Transaction Number<BR><I><B>Notes</B></I> - Transaction Notes<BR><BR>Note
-that the transactions from a CSV file can only be imported into a
-single MMEX account.</FONT></P>
-<H5 CLASS="western"><BR><A HREF="#top"><FONT FACE="Verdana">Back to
-Top</FONT></A> 
-</H5>
-<HR>
 <H3 CLASS="western"><A NAME="importQIF"></A><FONT FACE="Verdana"><BR>Importing
 From QIF Files</FONT></H3>
 <P><FONT FACE="Verdana">Quicken Interchange Format (QIF) is an open
@@ -988,30 +961,6 @@ Flag&quot; as it its status. You can mark all transactions with this
 flag using the bulk status setting commands using the right click
 menu in the account view. </FONT>
 </P>
-<H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Back to Top</FONT></A></H5>
-<HR>
-<H3 CLASS="western"><A NAME="importMMNET"></A><FONT FACE="Verdana"><BR>Importing
-From MM.NET CSV Files</FONT></H3>
-<P><FONT FACE="Verdana">MMEX can also import from CSV files that are
-exported from the Money Manager.NET program. This is to primarily
-help users of that program migrate to using MMEX. <BR><BR>The general
-format is as follows:<BR></FONT><FONT FACE="Verdana"><I><B>Date</B></I></FONT>
-<FONT FACE="Verdana">- Date of the transaction (Displayed in the
-format specified in Options-&gt;DateFormat)<BR></FONT><FONT FACE="Verdana"><I><B>Payee</B></I></FONT>
-<FONT FACE="Verdana">- To whom the transaction was made. In the case
-of a transfer transaction, this indicates the name of the account
-from which the transfer was made or to the account the transfer was
-made.<BR></FONT><STRONG><EM><FONT FACE="Verdana">Amount</FONT></EM></STRONG>
-<FONT FACE="Verdana">- The transaction amount. If it is positive, it
-is considered a deposit, if it is negative, it is a withdrawal.
-<BR></FONT><FONT FACE="Verdana"><I><B>Number</B></I></FONT> <FONT FACE="Verdana">-
-Transaction Number<BR></FONT><FONT FACE="Verdana"><I><B>Status</B></I></FONT>
-<FONT FACE="Verdana">- Transaction status<BR></FONT><FONT FACE="Verdana"><I><B>Category</B></I></FONT>
-<FONT FACE="Verdana">- The category of the transaction. This is
-actually a compound string of the type &quot;Category:SubCategory&quot;<BR></FONT><FONT FACE="Verdana"><I><B>Notes</B></I></FONT>
-<FONT FACE="Verdana">- Transaction Notes<BR><BR>Note that the
-transactions from a CSV file can only be imported into a single MMEX
-account.</FONT></P>
 <H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Back to Top</FONT></A></H5>
 <HR>
 <H3 CLASS="western"><A NAME="importUnivCSV"></A><FONT FACE="Verdana"><BR>Importing
