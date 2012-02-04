@@ -89,7 +89,7 @@ wxString mmGetNiceDateSimpleString( const wxDateTime &dt );
 wxString mmGetNiceMonthName( int month );
 wxString mmGetNiceShortMonthName( int month );
 
-void mmExportCSV( mmCoreDB* core, wxSQLite3Database* db_ );
+wxString inQuotes(wxString label);
 void mmExportQIF( mmCoreDB* core, wxSQLite3Database* db_ );
 wxString mmReadyDisplayString( const wxString& orig );
 wxString adjustedExportAmount(wxString amtSeparator, wxString strValue);

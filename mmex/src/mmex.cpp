@@ -3474,7 +3474,7 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnExportToCSV(wxCommandEvent& /*event*/)
 {
-   mmExportCSV(m_core.get(), m_db.get());
+    mmUnivCSVDialog(m_core.get(), this, false).ShowModal();
 }
 //----------------------------------------------------------------------------
 
