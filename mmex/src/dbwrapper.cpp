@@ -180,139 +180,41 @@ void createDefaultCategories(wxSQLite3Database* db)
           "values (:name, :id)"
         );
 
-        const wxChar* BillsCategories[] = {
-          _("Telephone"),
-          _("Electricity"),
-          _("Gas"),
-          _("Internet"),
-          _("Rent"),
-          _("Cable TV"),
-          _("Water"),
-          0
-        };
-
+        const wxChar* BillsCategories[] = {_("Telephone"), _("Electricity"), _("Gas"), _("Internet"), _("Rent"), _("Cable TV"), _("Water"), 0};
         insertCategoryTree(db, st_cat, st_subcat, _("Bills"), BillsCategories);
 
-        // --
-
-        const wxChar* FoodCategories[] = {
-          _("Groceries"),
-          _("Dining out"),
-          0
-        };
-
+        const wxChar* FoodCategories[] = {_("Groceries"), _("Dining out"), 0};
         insertCategoryTree(db, st_cat, st_subcat, _("Food"), FoodCategories);
 
-        // --
-
-        const wxChar* LeisureCategories[] = {
-          _("Movies"),
-          _("Video Rental"),
-          _("Magazines"),
-          0
-        };
-
+        const wxChar* LeisureCategories[] = {_("Movies"), _("Video Rental"), _("Magazines"), 0};
         insertCategoryTree(db, st_cat, st_subcat, _("Leisure"), LeisureCategories);
 
-        // --
-
-        const wxChar* AutomobileCategories[] = {
-          _("Maintenance"),
-          _("Gas"),
-          _("Parking"),
-          _("Registration"),
-          0
-        };
-
+        const wxChar* AutomobileCategories[] = {_("Maintenance"), _("Gas"), _("Parking"), _("Registration"), 0};
         insertCategoryTree(db, st_cat, st_subcat, _("Automobile"), AutomobileCategories);
 
-        // --
-
-        const wxChar* EducationCategories[] = {
-          _("Books"),
-          _("Tuition"),
-          _("Others"),
-          0
-        };
-
+        const wxChar* EducationCategories[] = {_("Books"), _("Tuition"), _("Others"), 0};
         insertCategoryTree(db, st_cat, st_subcat, _("Education"), EducationCategories);
 
-        // --
-
-        const wxChar* HomeneedsCategories[] = {
-          _("Clothing"),
-          _("Furnishing"),
-          _("Others"),
-          0
-        };
-
+        const wxChar* HomeneedsCategories[] = {_("Clothing"), _("Furnishing"), _("Others"), 0};
         insertCategoryTree(db, st_cat, st_subcat, _("Homeneeds"), HomeneedsCategories);
 
-        // --
-
-        const wxChar* HealthcareCategories[] = {
-          _("Health"),
-          _("Dental"),
-          _("Eyecare"),
-          _("Physician"),
-          _("Prescriptions"),
-          0
-        };
-
+        const wxChar* HealthcareCategories[] = {_("Health"), _("Dental"), _("Eyecare"), _("Physician"), _("Prescriptions"), 0};
         insertCategoryTree(db, st_cat, st_subcat, _("Healthcare"), HealthcareCategories);
 
-        // --
-
-        const wxChar* InsuranceCategories[] = {
-          _("Auto"),
-          _("Life"),
-          _("Home"),
-          _("Health"),
-          0
-        };
-
+        const wxChar* InsuranceCategories[] = {_("Auto"), _("Life"), _("Home"), _("Health"), 0};
         insertCategoryTree(db, st_cat, st_subcat, _("Insurance"), InsuranceCategories);
 
-        // --
-
-        const wxChar* VacationCategories[] = {
-          _("Travel"),
-          _("Lodging"),
-          _("Sightseeing"),
-          0
-        };
-
+        const wxChar* VacationCategories[] = {_("Travel"), _("Lodging"), _("Sightseeing"), 0};
         insertCategoryTree(db, st_cat, st_subcat, _("Vacation"), VacationCategories);
 
-        // --
-
-        const wxChar* TaxesCategories[] = {
-          _("Income Tax"),
-          _("House Tax"),
-          _("Water Tax"),
-          _("Others"),
-          0
-        };
-
+        const wxChar* TaxesCategories[] = {_("Income Tax"), _("House Tax"), _("Water Tax"), _("Others"), 0};
         insertCategoryTree(db, st_cat, st_subcat, _("Taxes"), TaxesCategories);
-
-        // --
 
         insertCategoryTree(db, st_cat, st_subcat, _("Miscellaneous"), 0);
         insertCategoryTree(db, st_cat, st_subcat, _("Gifts"), 0);
 
-        // --
-
-        const wxChar* IncomeCategories[] = {
-          _("Salary"),
-          _("Reimbursement/Refunds"),
-          _("Investment Income"),
-          0
-        };
-
+        const wxChar* IncomeCategories[] = {_("Salary"), _("Reimbursement/Refunds"),  _("Investment Income"), 0};
         insertCategoryTree(db, st_cat, st_subcat, _("Income"), IncomeCategories);
-
-        // --
 
         insertCategoryTree(db, st_cat, st_subcat, _("Other Income"), 0);
         insertCategoryTree(db, st_cat, st_subcat, _("Other Expenses"), 0);
