@@ -27,7 +27,7 @@
 
 #define ID_MYDIALOG8 10040
 #define SYMBOL_UNIVCSVDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_UNIVCSVDIALOG_TITLE _("Universal CSV Importer Dialog")
+#define SYMBOL_UNIVCSVDIALOG_TITLE _("Universal CSV Dialog")
 #define SYMBOL_UNIVCSVDIALOG_IDNAME ID_MYDIALOG8
 #define SYMBOL_UNIVCSVDIALOG_SIZE wxSize(400, 300)
 #define SYMBOL_UNIVCSVDIALOG_POSITION wxDefaultPosition
@@ -61,7 +61,7 @@ class mmUnivCSVDialog: public wxDialog
 public:
     /// Constructors
     mmUnivCSVDialog();
-    mmUnivCSVDialog(mmCoreDB* core, wxWindow* parent, 
+    mmUnivCSVDialog(mmCoreDB* core, wxWindow* parent, bool is_importer = true, 
         wxWindowID id = SYMBOL_UNIVCSVDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_UNIVCSVDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_UNIVCSVDIALOG_POSITION, 
@@ -101,6 +101,7 @@ public:
 
 private:
     mmCoreDB* core_;
+    bool is_importer_;
     wxSQLite3Database* db_;
     std::vector<int> csvFieldOrder_;
     wxListBox* csvFiledCandicate_;
