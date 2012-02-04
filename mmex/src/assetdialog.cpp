@@ -432,7 +432,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         st.ExecuteUpdate();
         st.Finalize();
     }
-
+    mmOptions::databaseUpdated_ = true;
     EndModal(wxID_OK);
 }
 

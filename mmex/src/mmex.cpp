@@ -712,6 +712,14 @@ void mmGUIFrame::cleanup()
         m_db->Close();
     }
 
+    /// Update the database according to user requirements
+    wxString currentDatabaseName = mmDBWrapper::getLastDbPath(m_inidb.get());
+    wxString backupUpdate =  mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB_UPDATE"), wxT("FALSE"));
+    if ((backupUpdate == wxT("TRUE")) && mmOptions::databaseUpdated_)
+    {
+        BackupDatabase(currentDatabaseName, true);
+    }
+
     if (m_inidb) {
         m_inidb->Close();
     }
@@ -3146,25 +3154,16 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
     wxString dialogErrorMessageHeading = _("Opening MMEX Database - Error");
 
     // Existing Database
-    if (!openingNew 
-        && !fileName.IsEmpty() 
+    if (!openingNew
+        && !fileName.IsEmpty()
         && wxFileName::FileExists(fileName)
         && passwordCheckPassed)
-    {    
+    {
         /* Do a backup before opening */
-        wxString backupDBState   =  mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB"), wxT("FALSE"));
-        wxString backupUpdate =  mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB_UPDATE"), wxT("FALSE"));
+        wxString backupDBState = mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB"), wxT("FALSE"));
         if (backupDBState == wxT("TRUE"))
         {
-            wxFileName fn(fileName);
-            wxString fileDate = wxT("_")+ wxDateTime().Today().FormatISODate();
-            wxString bkupName = fn.GetPath() + wxT("/") + fn.GetName() + wxT(".") + fn.GetExt() + fileDate + wxT(".bak");
-            if (backupUpdate == wxT("FALSE"))
-            {
-                if ( ! wxFileExists(bkupName) )
-                    wxCopyFile(fileName, bkupName, true);
-            } else
-                wxCopyFile(fileName, bkupName, true);
+            BackupDatabase(fileName);
         }
 
         m_db = mmDBWrapper::Open(fileName, password);
@@ -4418,6 +4417,7 @@ void mmGUIFrame::OnCategoryRelocation(wxCommandEvent& /*event*/)
                << dlg->updatedCategoriesCount() << _(" records have been updated in the database.") << wxT("\n\n")
                << _("MMEX must be shutdown and restarted for all the changes to be seen.");
         wxMessageBox(msgStr,_("Category Relocation Result"));
+        mmOptions::databaseUpdated_ = true;
     }
 }
 //----------------------------------------------------------------------------
@@ -4432,6 +4432,7 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
                << dlg->updatedPayeesCount() << _(" records have been updated in the database.") << wxT("\n\n")
                << _("MMEX must be shutdown and restarted for all the changes to be seen.");
         wxMessageBox(msgStr,_("Payee Relocation Result"));
+        mmOptions::databaseUpdated_ = true;
     }
 }
 
@@ -4861,4 +4862,79 @@ void mmGUIFrame::OnRecentFiles_5(wxCommandEvent& /*event*/)
 void mmGUIFrame::OnClearRecentFiles(wxCommandEvent& /*event*/)
 {
     recentFiles_->clearRecentList();
+}
+
+void mmGUIFrame::BackupDatabase(wxString filename, bool updateRequired)
+{
+    wxFileName fn(filename);
+    if (!fn.IsOk()) return;
+
+    wxString backupType = wxT("_start_");
+    if (updateRequired) backupType = wxT("_update_");
+
+    wxString backupName = filename + backupType + wxDateTime().Today().FormatISODate() + wxT(".") + fn.GetExt();
+    if (updateRequired) // Create or update the backup file.
+    {
+        wxCopyFile(filename, backupName, true);
+    }
+    else                // create the backup if it does not exist
+    {
+        wxFileName fnBak(backupName);
+        if (!fnBak.FileExists())
+        {
+            wxCopyFile(filename, backupName, true);
+        }
+    }
+
+    // Get the list of created backup files for the given filename.
+    wxArrayString backupFileArray;
+    wxString fileSearch = filename + backupType + wxT("*.") + fn.GetExt();
+    wxString backupFile = wxFindFirstFile(fileSearch);
+    while (!backupFile.empty())
+    {
+        backupFileArray.Add(backupFile);
+        backupFile = wxFindNextFile();
+    }
+
+    // limit the amount of backup files to 4
+    if (backupFileArray.Count() > 4)
+    {
+        backupFileArray.Sort(true);
+        // ensure file is not read only before deleting file.
+        wxFileName fnLastFile(backupFileArray.Last());
+        if (fnLastFile.IsFileWritable()) wxRemoveFile(backupFileArray.Last());
+    }
+
+#if 0
+//  Start debugging code
+    wxLogMessage(wxString() << wxT("Before - File List size:") << backupFileArray.Count());
+    if (backupFileArray.Count() > 0)
+    {
+        backupFileArray.Sort(true);
+        for (size_t debugIndex = 0; debugIndex < backupFileArray.Count(); debugIndex++)
+        {
+            wxLogMessage(wxString() << wxT("File ") <<debugIndex << wxT(": ") << backupFileArray[debugIndex]);
+        }
+    }
+
+    wxLogMessage(wxT(" "));
+    wxLogMessage(wxString() << wxT("After - File List size:") << backupFileArray.Count());
+    backupFileArray.Clear();
+    backupFile = wxFindFirstFile(fileSearch);
+    while (!backupFile.empty())
+    {
+        backupFileArray.Add(backupFile);
+        backupFile = wxFindNextFile();
+    }
+
+    if (backupFileArray.Count() > 0)
+    {
+        backupFileArray.Sort(true);
+        for (size_t debugIndex = 0; debugIndex < backupFileArray.Count(); debugIndex++)
+        {
+            wxLogMessage(wxString() << wxT("File ") <<debugIndex << wxT(": ") << backupFileArray[debugIndex]);
+        }
+    }
+//  End debugging code
+#endif
 }

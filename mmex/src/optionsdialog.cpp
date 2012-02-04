@@ -76,9 +76,7 @@ IMPLEMENT_DYNAMIC_CLASS( mmOptionsDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_CURRENCY, mmOptionsDialog::OnCurrency)
-
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_DATEFORMAT, mmOptionsDialog::OnDateFormatChanged)
-
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE, mmOptionsDialog::OnLanguageChanged)
     
     /// Colour Changing events
@@ -90,14 +88,11 @@ BEGIN_EVENT_TABLE( mmOptionsDialog, wxDialog )
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_LISTDETAILS, mmOptionsDialog::OnListDetailsColors)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_FUTUREDATES, mmOptionsDialog::OnListFutureDates)
     EVT_BUTTON(ID_DIALOG_OPTIONS_BUTTON_COLOR_RESTOREDEFAULT, mmOptionsDialog::OnRestoreDefaultColors)
-    
-    EVT_CHECKBOX(ID_DIALOG_OPTIONS_CHK_BACKUP, mmOptionsDialog::OnBackupDBChecked)
 
     EVT_RADIOBUTTON(ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_COMMA4, mmOptionsDialog::OnDelimiterSelectedC)
     EVT_RADIOBUTTON(ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_SEMICOLON4, mmOptionsDialog::OnDelimiterSelectedS)
     EVT_RADIOBUTTON(ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_TAB4, mmOptionsDialog::OnDelimiterSelectedT)
     EVT_RADIOBUTTON(ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_USER4, mmOptionsDialog::OnDelimiterSelectedU)
-
 END_EVENT_TABLE()
 
 #include "../resources/main-setup.xpm"
@@ -447,16 +442,15 @@ void mmOptionsDialog::CreateControls()
     generalPanelSizer->Add(backupStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
     wxCheckBox* backupCheckBox = new wxCheckBox(generalPanel, ID_DIALOG_OPTIONS_CHK_BACKUP,
-        _("Backup before opening"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+        _("Create a new backup when MMEX Start"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     backupCheckBox->SetValue(GetIniDatabaseCheckboxValue(wxT("BACKUPDB"),false));
-    backupCheckBox->SetToolTip(_("Select whether to create a _YYYY-MM-DD.bak file before opening the database"));
+    backupCheckBox->SetToolTip(_("When MMEX Starts,\ncreates the backup database: dbFile_start_YYYY-MM-DD.ext."));
     backupStaticBoxSizer->Add(backupCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxCheckBox* backupUpdateCheckBox = new wxCheckBox(generalPanel, ID_DIALOG_OPTIONS_CHK_BACKUP_UPDATE,
-        _("Daily Update, before opening"), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
+        _("Update database changes to database backup on exit."), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE);
     backupUpdateCheckBox->SetValue(GetIniDatabaseCheckboxValue(wxT("BACKUPDB_UPDATE"),false));
-    backupUpdateCheckBox->Enable(backupCheckBox->GetValue());
-    backupUpdateCheckBox->SetToolTip(_("For same day, select to update the backup before opening the database."));
+    backupUpdateCheckBox->SetToolTip(_("When MMEX shuts down and changes made to database,\ncreates or updates the backup database: dbFile_update_YYYY-MM-DD.ext."));
     backupStaticBoxSizer->Add(backupUpdateCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     /*********************************************************************************************
@@ -1139,13 +1133,6 @@ bool mmOptionsDialog::GetIniDatabaseCheckboxValue(wxString dbField, bool default
         result = !result;
     }
     return result;
-}
-
-void mmOptionsDialog::OnBackupDBChecked(wxCommandEvent& /*event*/)
-{
-    wxCheckBox* itemCheckBox   = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_BACKUP);
-    wxCheckBox* itemCheckBox_u = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_CHK_BACKUP_UPDATE);
-    itemCheckBox_u->Enable(itemCheckBox->GetValue());
 }
 
 void mmOptionsDialog::OnDelimiterSelectedU(wxCommandEvent& /*event*/)

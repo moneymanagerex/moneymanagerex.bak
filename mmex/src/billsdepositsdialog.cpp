@@ -1177,7 +1177,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
         }
         mmDBWrapper::completeBDInSeries(db_, bdID_);
     }
-
+    mmOptions::databaseUpdated_ = true;
     EndModal(wxID_OK);
 }
 

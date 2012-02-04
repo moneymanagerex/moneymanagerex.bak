@@ -259,6 +259,7 @@ wxString mmOptions::dateFormat = mmex::DEFDATEFORMAT;
 wxString mmOptions::language = wxT("english");
 wxString mmOptions::financialYearStartDayString_;
 wxString mmOptions::financialYearStartMonthString_;
+bool mmOptions::databaseUpdated_ = false;
 //----------------------------------------------------------------------------
 
 void correctEmptyFileExt(wxString ext, wxString & fileName)
