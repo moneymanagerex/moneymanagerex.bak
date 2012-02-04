@@ -114,8 +114,6 @@ private:
     void OnListFutureDates(wxCommandEvent& event);
     void OnRestoreDefaultColors(wxCommandEvent& event);
    
-    void OnBackupDBChecked(wxCommandEvent& event);
- 
 	void SetIniDatabaseCheckboxValue(wxString dbField, bool dbState);
     bool GetIniDatabaseCheckboxValue(wxString dbField, bool defaultState);
 

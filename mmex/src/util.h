@@ -119,6 +119,7 @@ public:
     static wxString language;
     static wxString financialYearStartDayString_;
     static wxString financialYearStartMonthString_;
+    static bool databaseUpdated_;
 };
 
 class mmIniOptions

@@ -1279,7 +1279,8 @@ bool mmDBWrapper::deleteCategoryWithConstraints(wxSQLite3Database* db, int categ
             st.ExecuteUpdate();
             st.Finalize();
         }
-    
+
+        mmOptions::databaseUpdated_ = true;
         return true;
     } catch(wxSQLite3Exception e) 
     { 
@@ -1340,6 +1341,7 @@ bool mmDBWrapper::deleteSubCategoryWithConstraints(wxSQLite3Database* db, int ca
             st.Finalize();
         }
 
+        mmOptions::databaseUpdated_ = true;
         return true;
     } catch(wxSQLite3Exception e) 
     { 
@@ -1380,6 +1382,7 @@ bool mmDBWrapper::updateCategory(wxSQLite3Database* db, int categID,
             st.Finalize();
         }
 
+        mmOptions::databaseUpdated_ = true;
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Database::updateCategory: Exception"), e.GetMessage().c_str());
@@ -1398,6 +1401,7 @@ bool mmDBWrapper::addCategory(wxSQLite3Database* db, const wxString &newName)
         st.Bind(1, newName);
         rows_affected = st.ExecuteUpdate();
         st.Finalize();
+        mmOptions::databaseUpdated_ = true;
 
     } catch(wxSQLite3Exception e) 
     { 
@@ -1427,6 +1431,7 @@ bool mmDBWrapper::addSubCategory(wxSQLite3Database* db, int categID, const wxStr
         wxLogDebug(wxT("Database::addSubCategory: Exception"), e.GetMessage().c_str());
         wxLogError(wxString::Format(_("Add SubCategory. Error: %s"), e.GetMessage().c_str()));
     }
+    mmOptions::databaseUpdated_ = true;
     return rows_affected == 1;
 }
 
@@ -1541,6 +1546,7 @@ bool mmDBWrapper::deleteTransaction(wxSQLite3Database* db, int transID)
             st.ExecuteUpdate();
             st.Finalize();
         }
+        mmOptions::databaseUpdated_ = true;
         return true;
     } catch(wxSQLite3Exception e) 
     { 
@@ -1593,6 +1599,8 @@ bool mmDBWrapper::updatePayee(wxSQLite3Database* db, const wxString& payeeName,
     
         st.ExecuteUpdate();
         st.Finalize();
+        mmOptions::databaseUpdated_ = true;
+
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Database::updatePayee: Exception"), e.GetMessage().c_str());
@@ -1628,6 +1636,8 @@ bool mmDBWrapper::deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID)
         
         st.ExecuteUpdate();
         st.Finalize();
+        mmOptions::databaseUpdated_ = true;
+
     } catch(wxSQLite3Exception e) { 
         wxLogDebug(wxT("Database::deletePayeeWithConstraints: Exception"), e.GetMessage().c_str());
         wxLogError(wxString::Format(_("Delete Payee With Constraints. Error: %s"), e.GetMessage().c_str()));
@@ -1916,6 +1926,8 @@ bool mmDBWrapper::updateTransactionWithStatus(wxSQLite3Database &db, int transID
 
     st.ExecuteUpdate();
     st.Finalize();
+    mmOptions::databaseUpdated_ = true;
+
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Database::updateTransactionWithStatus: Exception"), e.GetMessage().c_str());
@@ -2167,6 +2179,8 @@ void mmDBWrapper::addBudgetYear(wxSQLite3Database* db, const wxString &year)
         st.Bind(1, year);
         st.ExecuteUpdate();
         st.Finalize();
+        mmOptions::databaseUpdated_ = true;
+
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Function::addBudgetYear: Exception"), e.GetMessage().c_str());
@@ -2252,6 +2266,8 @@ void mmDBWrapper::updateYearForID(wxSQLite3Database* db,
 
         st.ExecuteUpdate();
         st.Finalize();
+        mmOptions::databaseUpdated_ = true;
+
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Function::updateYearForID: Exception"), e.GetMessage().c_str());
@@ -2287,6 +2303,8 @@ bool mmDBWrapper::copyBudgetYear(wxSQLite3Database* db, int newYear, int baseYea
     
          st.ExecuteUpdate();
          st.Finalize();
+         mmOptions::databaseUpdated_ = true;
+
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Function::copyBudgetYear: Exception"), e.GetMessage().c_str());
@@ -2316,6 +2334,8 @@ bool mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearNa
             st.ExecuteUpdate();
             st.Finalize();
         }
+        mmOptions::databaseUpdated_ = true;
+
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Function::deleteBudgetYear: Exception"), e.GetMessage().c_str());
@@ -2352,6 +2372,8 @@ void mmDBWrapper::addBudgetEntry(wxSQLite3Database* db, int budgetYearID,
 
         st.ExecuteUpdate();
         st.Finalize();
+        mmOptions::databaseUpdated_ = true;
+
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Function::addBudgetEntry: Exception"), e.GetMessage().c_str());
@@ -2367,6 +2389,8 @@ void mmDBWrapper::deleteBudgetEntry(wxSQLite3Database* db, int budgetEntryID)
     
         st.ExecuteUpdate();
         st.Finalize();
+        mmOptions::databaseUpdated_ = true;
+
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Function::deleteBudgetEntry: Exception"), e.GetMessage().c_str());
@@ -2453,6 +2477,8 @@ void mmDBWrapper::deleteBDSeries(wxSQLite3Database* db, int bdID)
             st.ExecuteUpdate();
             st.Finalize();
         }
+        mmOptions::databaseUpdated_ = true;
+
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Function::deleteBDSeries: Exception"), e.GetMessage().c_str());
@@ -2569,6 +2595,8 @@ void mmDBWrapper::completeBDInSeries(wxSQLite3Database* db, int bdID)
         }
 
         db->ExecuteUpdate("delete from BILLSDEPOSITS_V1 where NUMOCCURRENCES = 0");
+        mmOptions::databaseUpdated_ = true;
+
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Function::completeBDInSeries: Exception"), e.GetMessage().c_str());
@@ -2583,6 +2611,8 @@ void mmDBWrapper::deleteStockInvestment(wxSQLite3Database* db, int stockID)
         st.Bind(1, stockID);
         st.ExecuteUpdate();
         st.Finalize();
+        mmOptions::databaseUpdated_ = true;
+
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Function::deleteStockInvestment: Exception"), e.GetMessage().c_str());
@@ -2663,6 +2693,8 @@ void mmDBWrapper::deleteAsset(wxSQLite3Database* db, int assetID)
         st.Bind(1, assetID);
         st.ExecuteUpdate();
         st.Finalize();
+        mmOptions::databaseUpdated_ = true;
+
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Function::deleteAsset: Exception"), e.GetMessage().c_str());
@@ -2868,6 +2900,7 @@ void mmDBWrapper::removeSplitsForAccount(wxSQLite3Database* db, int accountID)
         st.ExecuteUpdate();
         st.Finalize();
         mmDBWrapper::commit(db);
+        mmOptions::databaseUpdated_ = true;
     } catch(wxSQLite3Exception e) 
     { 
         wxLogDebug(wxT("Function::removeSplitsForAccount: Exception"), e.GetMessage().c_str());
