@@ -13,7 +13,7 @@
 ARCHITECTURE="i386"
 
 # Specify the build version of mmex
-MMEX_VERSION="0.9.8.0"
+MMEX_VERSION="0.9.9.0"
 
 EMAIL="vomikan@mail.ru"
 
@@ -59,7 +59,7 @@ sed -e 's%<Copyright (C) YYYY Firstname Lastname>%Copyright (C) 2005-2009 Madhan
 mv debian/copyright.tmp debian/copyright 
 #Copyright (C) 2009-2010 VaDiM, Nikolay, Wesley Ellis
 sed -e 's%<likewise for another author>%Copyright (C) 2009-2010 VaDiM, Nikolay, Wesley Ellis\
-    Copyright (C) 2010-2011 Stefan, Nikolay%g' debian/copyright > debian/copyright.tmp
+    Copyright (C) 2010-2012 Stefano, Nikolay%g' debian/copyright > debian/copyright.tmp
 mv debian/copyright.tmp debian/copyright 
 
 

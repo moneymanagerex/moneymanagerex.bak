@@ -4,7 +4,7 @@
 #
 
 # The corresponding version of mmex must be specified below
-MMEX_VERSION="0.9.8.0"
+MMEX_VERSION="0.9.9.0"
 
 PET_UTILS=`pwd`
 cd ../../../

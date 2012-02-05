@@ -30,15 +30,17 @@
 #include <boost/version.hpp>
 #include <wx/version.h>
 #include <wx/wxsqlite3.h>
+#include <wx/statline.h>
 
 namespace
 {
+
+const wxString MMEX_INITIAL_AUTHOR_STR = wxT("(c) 2005-2012 Madhan Kanagavel");
 
 enum { 
   IDC_DIALOG_BUTTON_ABOUT_VERSION_HISTORY = wxID_HIGHEST + 1,
   IDC_DIALOG_BUTTON_ABOUT_CONTRIBUTERS
 };
-
 
 wxString get_libs_info()
 {
@@ -136,13 +138,17 @@ void mmAboutDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizer4, 1, wxGROW|wxALL, 5);
 
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, 
-        wxString(_("Version: ")) + wxPlatformInfo::Get().GetOperatingSystemIdName() + wxT (": ") + mmex::getProgramVersion(), wxDefaultPosition, wxDefaultSize, 0 );
+        wxString(_("Version: ")) + mmex::getProgramVersion(), wxDefaultPosition, wxDefaultSize, 0);
+    itemStaticText6->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxGetEmptyString()));
+    wxStaticText* itemStaticText61 = new wxStaticText( itemDialog1, wxID_STATIC, 
+        wxString(_("System: ")) + wxPlatformInfo::Get().GetOperatingSystemIdName(), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer4->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer4->Add(itemStaticText61, 0, wxALIGN_CENTER_HORIZONTAL|wxLEFT|wxBOTTOM|wxRIGHT, 5);
 
     if (!mmIniOptions::enableCustomAboutDialog_)
     {
        wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
-          wxID_STATIC, wxT("(c) 2005-2011 Madhan Kanagavel"), wxDefaultPosition, wxDefaultSize, 0 );
+          wxID_STATIC, MMEX_INITIAL_AUTHOR_STR, wxDefaultPosition, wxDefaultSize, 0 );
        itemStaticText8->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxGetEmptyString()));
        itemBoxSizer4->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -182,8 +188,11 @@ void mmAboutDialog::CreateControls()
        wxStaticText* itemStaticText15 = new wxStaticText( itemDialog1, 
           wxID_STATIC, _("Using Language : ") + langStr, wxDefaultPosition, wxDefaultSize, 0 );
        itemBoxSizer4->Add(itemStaticText15, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
+        
+       wxStaticLine* line = new wxStaticLine (this, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
+       itemBoxSizer4->Add(line, 0, wxGROW|wxALL, 5);
 
-       wxButton* itemButton19 = new wxButton( itemDialog1, wxID_OK, _("Close"), wxDefaultPosition, wxDefaultSize, 0 );
+       wxButton* itemButton19 = new wxButton( itemDialog1, wxID_OK, _("Close"), wxDefaultPosition, wxDefaultSize, 0);
        itemButton19->SetDefault();
        itemButton19->SetFocus();
        itemBoxSizer4->Add(itemButton19, 0, wxALIGN_RIGHT|wxALL, 5);
