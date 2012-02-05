@@ -864,21 +864,13 @@ void mmex::CurrencyFormatter::loadSettings(const mmCurrency &cur)
     wxChar dec = cur.dec_.empty() ? wxT('\0') : cur.dec_.GetChar(0);
     wxChar grp = cur.grp_.empty() ? wxT('\0') : cur.grp_.GetChar(0);
 
-    loadSettings(cur.pfxSymbol_,
-                 cur.sfxSymbol_,
-                 dec,
-                 grp,
-                 cur.unit_,
-                 cur.cent_,
-                     cur.scaleDl_
-                   );
+    loadSettings(cur.pfxSymbol_, cur.sfxSymbol_, dec, grp, cur.unit_, cur.cent_, cur.scaleDl_);
 }
 //----------------------------------------------------------------------------
 
 mmex::CurrencyFormatter& mmex::CurrencyFormatter::instance()
 {
-    static CurrencyFormatter me;
-    return me;
+    return mmex::Singleton<mmex::CurrencyFormatter>::instance();
 }
 //----------------------------------------------------------------------------
 
