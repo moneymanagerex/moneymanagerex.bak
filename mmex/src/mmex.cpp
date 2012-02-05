@@ -704,13 +704,8 @@ void mmGUIFrame::cleanup()
     /* Delete the GUI */
     cleanupHomePanel(false);
 
-    if (m_core) {
-        m_core.reset();
-    }
-
-    if (m_db) {
-        m_db->Close();
-    }
+    if (m_core)  m_core.reset();
+    if (m_db) m_db->Close();
 
     /// Update the database according to user requirements
     if (mmOptions::databaseUpdated_ && 
@@ -719,9 +714,7 @@ void mmGUIFrame::cleanup()
         BackupDatabase(fileName_, true);
     }
 
-    if (m_inidb) {
-        m_inidb->Close();
-    }
+    if (m_inidb) m_inidb->Close();
 }
 //----------------------------------------------------------------------------
 // process all events waiting in the event queue if any.
