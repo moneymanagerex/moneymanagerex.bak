@@ -28,6 +28,7 @@
 #include "defs.h"
 #include "paths.h"
 #include <wx/event.h>
+#include <wx/choice.h>
 
 #include <sstream>
 
@@ -315,7 +316,14 @@ void mmTransDialog::CreateControls()
 
     // Status --------------------------------------------
     wxStaticText* itemStaticText51 = new wxStaticText( itemPanel7, wxID_STATIC, _("Status"));
-    choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, wxSize(110, -1), 5, trxStatuses4Choice, 0 );
+    wxArrayString choiceStatusStrings;
+    choiceStatusStrings.Add(_("None"));
+    choiceStatusStrings.Add(_("Reconciled"));
+    choiceStatusStrings.Add(_("Void"));
+    choiceStatusStrings.Add(_("Follow up"));
+    choiceStatusStrings.Add(_("Duplicate"));
+
+    choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, wxSize(110, -1), choiceStatusStrings);
     choiceStatus_->SetSelection(mmIniOptions::transStatusReconciled_);
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
     choiceStatus_->Connect(ID_DIALOG_TRANS_STATUS, wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::onChoiceStatusChar), NULL, this);
@@ -326,16 +334,14 @@ void mmTransDialog::CreateControls()
     // Type --------------------------------------------
     wxStaticText* itemStaticText5 = new wxStaticText( itemPanel7, wxID_STATIC, _("Type"), wxDefaultPosition, wxDefaultSize, 0 );
     
-    // Restrict choise if accounts number lessthan 2
-    if (mmDBWrapper::getNumAccounts(db_.get()) < 2) {
-        wxString c[] = {
-            _("Withdrawal"),
-            _("Deposit")
-        }; 
-        choiceTrans_ = new wxChoice(itemPanel7,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxSize(110, -1), 2, c, 0);
-    } else {
-        choiceTrans_ = new wxChoice(itemPanel7,ID_DIALOG_TRANS_TYPE,wxDefaultPosition,wxSize(110, -1), 3, trxTypes4Choice, 0);
-    }
+    // Restrict choise if accounts number less than 2
+    wxArrayString choiceTypeStrings;
+    choiceTypeStrings.Add(_("Withdrawal"));
+    choiceTypeStrings.Add(_("Deposit"));
+    if (mmDBWrapper::getNumBankAccounts(db_.get())>1)
+        choiceTypeStrings.Add(_("Transfer"));
+    choiceTrans_ = new wxChoice(itemPanel7, ID_DIALOG_TRANS_TYPE, wxDefaultPosition, wxSize(110, -1),choiceTypeStrings);
+    
     choiceTrans_->SetSelection(0);
     choiceTrans_->SetToolTip(_("Specify the type of transactions to be created."));
     choiceTrans_->Connect(ID_DIALOG_TRANS_TYPE, wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::onChoiceTransChar), NULL, this);

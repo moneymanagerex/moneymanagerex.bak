@@ -310,7 +310,7 @@ void mmBDDialog::CreateControls()
     itemFlexGridSizer5->Add(staticTextAccName, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
     itemAccountName_ = new wxButton( itemDialog1, ID_DIALOG_BD_COMBOBOX_ACCOUNTNAME, _("Select Account"), 
                                      wxDefaultPosition, wxSize(180, -1), 0 );
-    if (mmDBWrapper::getNumAccounts(db_) == 1)
+    if (mmDBWrapper::getNumBankAccounts(db_) == 1)
     {
         wxArrayString accName = mmDBWrapper::getAccountsNameExceptOne(db_, -1);
         wxString accNameStr = accName[0];

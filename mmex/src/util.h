@@ -345,8 +345,9 @@ const wxString trxTypes4Choice[] =
     {
         _("Withdrawal"),
         _("Deposit"),
-        _("Transfer")
-    };  
+        _("Transfer"),
+    };
+
 // Validators -----------------------------------------------------
 
 class doubleValidator : public wxTextValidator {
