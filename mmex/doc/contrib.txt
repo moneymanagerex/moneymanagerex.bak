@@ -2,6 +2,7 @@ Active Developers
 ==========================================
 Stefano .......... [stef145g]
 Nikolay .......... [Nikolay]
+Lisheng .......... [guanlisheng]
 Pat .............. [omalleypat]
 
 Code Builds/Fixes/Patches
@@ -14,6 +15,7 @@ hykwok
 Igor
 jblough
 Jeancf
+Lisheng .......... [guanlisheng]
 Mike ............. [u4ear]
 Nikolay .......... [Nikolay]
 Pat .............. [omalleypat]

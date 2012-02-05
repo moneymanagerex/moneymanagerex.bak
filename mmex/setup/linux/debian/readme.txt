@@ -35,7 +35,7 @@ sudo apt-get install automake
 ARCHITECTURE="i386"
 
 # The corresponding version of mmex must be specified:
-MMEX_VERSION="0.9.8.0"
+MMEX_VERSION="0.9.9.0"
 
 #Then start ./build.sh file
 

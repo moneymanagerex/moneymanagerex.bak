@@ -13,7 +13,7 @@
 ARCHITECTURE="i386"
 
 # Specify the build version of mmex
-MMEX_VERSION="0.9.8.0"
+MMEX_VERSION="0.9.9.0"
 
 cd ../../../
 ./bootstrap

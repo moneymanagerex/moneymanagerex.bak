@@ -2,7 +2,7 @@
 # Copyright (C) 2009 VaDiM
 
 Name:           mmex
-Version:        0.9.6.0
+Version:        0.9.9.0
 Release:        1%{?dist}
 Source:         http://www.codelathe.com/mmex/%{name}-%{version}.tar.gz
 # Patch0:       mmex-x.x.x.x-bugfix1.patch

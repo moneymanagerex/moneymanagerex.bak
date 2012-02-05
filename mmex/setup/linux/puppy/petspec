@@ -21,11 +21,11 @@
 mkdir -p /var/local/petspec #100201
 
 DEF_nameonly="mmex"
-DEF_version="0.9.8.0"
+DEF_version="0.9.9.0"
 DEF_category="BuildingBlock"
 DEF_size_val="UNKNOWN"
 #DEF_path="pet_packages-4"
-DEF_fullfilename="mmex-0.9.8.0.pet"
+DEF_fullfilename="mmex-0.9.9.0.pet"
 DEF_dependencies="+libc6,+libwxgtk2.8-0"
 DEF_description="A simple to use personal money manager"
 DEF_compileddistro="Ubuntu"  #"$DISTRO_BINARY_COMPAT"

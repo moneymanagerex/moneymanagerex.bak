@@ -9,10 +9,10 @@
 
 ; Copyright (C) 2006 Madhan Kanagavel
 ; Copyright (C) 2009 VaDiM
-; Copyright (C) 2011 Stefano Giorgio
+; Copyright (C) 2011-2012 Stefano Giorgio
 
 #define MyAppName "MoneyManagerEX"
-#define MyAppVersion "0.9.8.0"
+#define MyAppVersion "0.9.9.0"
 #define MyAppPublisher "CodeLathe, LLC"
 #define MyAppURL "http://www.codelathe.com/mmex"
 #define MyAppExeName "mmex.exe"
@@ -20,9 +20,9 @@
 ;===============================================================================
 ; Local definitions specifically designed for my setup 
 #define mmex_svn_path "C:\Users\Stef\Documents\SVN\MoneyManagerEX\trunk\mmex"
-#define mmex_local_output_filename "mmex_0.9.8.0_win32_setup"
+#define mmex_local_output_filename "mmex_0.9.9.0_win32_setup"
 #define mmex_local_output_path "C:\Users\Stef\Documents\MMEX-RELEASES" 
-#define mmex_install_root "\mmex_0.9.8.0_win32_portable\MoneyManagerEx"
+#define mmex_install_root "\mmex_0.9.9.0_win32_portable\MoneyManagerEx"
 
 ;===============================================================================
 
