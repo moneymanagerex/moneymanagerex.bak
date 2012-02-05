@@ -202,6 +202,7 @@ private:
 class CurrencyFormatter
 {
 public:
+    CurrencyFormatter();
 	static CurrencyFormatter& instance();
 
     void loadDefaultSettings();
@@ -229,8 +230,6 @@ private:
     wxString m_unit_name;    // Name of monetary unit
     wxString m_cent_name;    // Name of fraction unit
     int m_scale;
-
-    CurrencyFormatter();
 };
 //----------------------------------------------------------------------------
 
