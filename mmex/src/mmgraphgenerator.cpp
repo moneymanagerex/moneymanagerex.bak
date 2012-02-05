@@ -18,6 +18,7 @@
  ********************************************************/
 
 #include "mmgraphgenerator.h"
+#include "util.h"
 //----------------------------------------------------------------------------
 #include <vector>
 #include <algorithm>
@@ -30,6 +31,7 @@ namespace
 class Eraser
 {
 public:
+        Eraser() : files(mmGraphGenerator::TYPE_MAX) {}
        ~Eraser();
 
         wxString getFilePath(mmGraphGenerator::EType type);
@@ -37,8 +39,6 @@ public:
 
 private:
         std::vector<wxString> files;
-
-        Eraser() : files(mmGraphGenerator::TYPE_MAX) {}
         void clear();
 };
 //----------------------------------------------------------------------------
@@ -79,8 +79,7 @@ wxString Eraser::getFilePath(mmGraphGenerator::EType type)
 
 Eraser& Eraser::instance()
 {
-        static Eraser e;
-        return e;
+        return mmex::Singleton<Eraser>::instance();
 }
 //----------------------------------------------------------------------------
 
