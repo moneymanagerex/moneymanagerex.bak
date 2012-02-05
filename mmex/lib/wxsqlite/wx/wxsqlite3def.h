@@ -55,6 +55,9 @@
 //              2011-02-09  - Upgrade to SQLite3 version 3.7.5
 //              2011-04-17  - Upgrade to SQLite3 version 3.7.6.1
 //              2011-06-30  - Upgrade to SQLite3 version 3.7.7.1
+//              2011-08-14  - Progress callback for Backup/Restore added
+//              2011-10-25  - Upgrade to SQLite3 version 3.7.8
+//              2012-01-17  - Upgrade to SQLite3 version 3.7.10
 //
 // Copyright:   (c) Ulrich Telle
 // Licence:     wxWindows licence
@@ -97,6 +100,36 @@
 
 <dl>
 
+<dt><b>3.0.0</b> - <i>January 2012</i></dt>
+<dd>
+Upgrade to SQLite version 3.7.10<br>
+Added method wxSQLite3Database::Vacuum<br>
+Added method wxSQLite3Database::GetDatabaseFilename<br>
+Added method wxSQLite3Database::ReleaseMemory<br>
+Added method wxSQLite3ResultSet::CursorMoved<br>
+Added method wxSQLite3Statement::IsBusy<br>
+Fixed a bug in method operator= of wxSQLite3StringCollection
+causing an endless recursion on assignment<br>
+Dropped the concept of SQLite3 pointer ownership in favor of reference
+counted pointers allowing much more flexible use of wxSQLite3 classes<br>
+Modified SQLite3 encryption extension (defining int64 datatype
+for SHA2 algorithm)<br>
+Dropped dbadmin sample from build files<br>
+Added Premake support for SQLite3 library with encryption support
+and for wxSQLite3 (experimental)<br>
+
+</dd>
+<dt><b>2.1.3</b> - <i>August 2011</i></dt>
+<dd>
+Corrected default behaviour for attached databases in case of
+an encrypted main database. (Now the attached database uses the same
+encryption key as the main database if no explicit key is given.
+Previously the attached database remained unencrypted.)<br>
+Added an optional progress callback for metheods Backup and Restore<br>
+Added method SetBackupRestorePageCount to set the number of pages
+to be copied in one cycle of the backup/restore process<br>
+
+</dd>
 <dt><b>2.1.2</b> - <i>July 2011</i></dt>
 <dd>
 Upgrade to SQLite version 3.7.7.1<br>
@@ -419,7 +452,7 @@ The following people have contributed to wxSQLite3:
   __declspec for the classes later declared with it. To hide this
   difference a separate macro for forward declarations is defined:
  */
-#if defined(__WINDOWS__) && defined(__GNUC__)
+#if defined(HAVE_VISIBILITY) || (defined(__WINDOWS__) && defined(__GNUC__))
   #define WXDLLIMPEXP_FWD_SQLITE3
 #else
   #define WXDLLIMPEXP_FWD_SQLITE3 WXDLLIMPEXP_SQLITE3
