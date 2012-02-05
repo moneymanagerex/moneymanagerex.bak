@@ -713,11 +713,10 @@ void mmGUIFrame::cleanup()
     }
 
     /// Update the database according to user requirements
-    wxString currentDatabaseName = mmDBWrapper::getLastDbPath(m_inidb.get());
-    wxString backupUpdate =  mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB_UPDATE"), wxT("FALSE"));
-    if ((backupUpdate == wxT("TRUE")) && mmOptions::databaseUpdated_)
+    if (mmOptions::databaseUpdated_ && 
+       (mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB_UPDATE"), wxT("FALSE")) == wxT("TRUE")))
     {
-        BackupDatabase(currentDatabaseName, true);
+        BackupDatabase(fileName_, true);
     }
 
     if (m_inidb) {
@@ -3139,6 +3138,14 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
     {
         m_db->Close();
         m_db.reset();
+
+        /// Update the database according to user requirements
+        if (mmOptions::databaseUpdated_ && 
+           (mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB_UPDATE"), wxT("FALSE")) == wxT("TRUE")))
+        {
+            BackupDatabase(fileName_, true);
+            mmOptions::databaseUpdated_ = false;
+        }
     }
 
     wxFileName checkExt(fileName);
@@ -3160,8 +3167,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
         && passwordCheckPassed)
     {
         /* Do a backup before opening */
-        wxString backupDBState = mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB"), wxT("FALSE"));
-        if (backupDBState == wxT("TRUE"))
+        if (mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB"), wxT("FALSE")) == wxT("TRUE"))
         {
             BackupDatabase(fileName);
         }
