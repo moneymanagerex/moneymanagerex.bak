@@ -38,7 +38,7 @@ Prepackaged Libraries
        make
        make check
        sudo make install
-       /usr/local/bin/mmex &
+       /usr/bin/mmex &
 
        UBUNTU SPECIFIC INSTRUCTIONS
 
