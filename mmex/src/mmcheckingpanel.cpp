@@ -784,7 +784,7 @@ void mmCheckingPanel::enableEditDeleteButtons(bool en)
 
     bEdit->Enable(en);
     bDelete->Enable(en);
-    if (mmDBWrapper::getNumAccounts(getDb().get())>1)
+    if (mmDBWrapper::getNumBankAccounts(getDb().get())>1)
         bMove->Enable(en);
     else
         bMove->Enable(false);   

@@ -792,6 +792,12 @@ int mmDBWrapper::getNumAccounts(wxSQLite3Database* db)
     return num;
 }
 
+int mmDBWrapper::getNumBankAccounts(wxSQLite3Database* db)
+{
+    int num = db->ExecuteScalar("select count(*) from ACCOUNTLIST_V1 where accounttype<>'Investment'");
+    return num;
+}
+
 wxString mmDBWrapper::getAccountName(wxSQLite3Database* db, int accountID)
 {
     wxString name;
