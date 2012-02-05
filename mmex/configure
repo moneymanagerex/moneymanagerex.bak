@@ -10406,21 +10406,10 @@ else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 fi
-
-
         ;;
-    esac
+esac
 
-
-
-
-
-
-
-
-
-    BAKEFILE_BAKEFILE_M4_VERSION="0.2.8"
-
+BAKEFILE_BAKEFILE_M4_VERSION="0.2.9"
 
 BAKEFILE_AUTOCONF_INC_M4_VERSION="0.2.9"
 
