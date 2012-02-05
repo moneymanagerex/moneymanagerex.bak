@@ -4,8 +4,8 @@ wxSQLite3 and sqlite3 sources from wxSQLite3
 (ensures wxSQLite3 and sqlite3 are in sync)
 --------------------------------------------
 
-Current versions: wxSQLite3 Version: 2.1.2
-                  SQLite Version: 3.7.7.1
+Current versions: wxSQLite3 Version: 3.0.0
+                  SQLite Version: 3.7.10.0
 ===============================================================================                
 Copy all files From: wxsqlite3\src
                to  : MoneyManagerEX\trunk\mmex\lib\wxsqlite
@@ -13,16 +13,13 @@ Copy all files From: wxsqlite3\src
 Copy all files From: wxsqlite3\include\wx
                to  : MoneyManagerEX\trunk\mmex\lib\wxsqlite\wx 
 
-Copy all files from: wxsqlite3\sqlite3\secure\src\codec-c
+Copy all files from: wxsqlite3\sqlite3\secure\src
                to  : MoneyManagerEX\trunk\mmex\lib\sqlite
 
-Copy file from: wxsqlite3\sqlite3\secure\sqlite3.def
-          to  : MoneyManagerEX\trunk\mmex\lib\sqlite\sqlite3.def
-                
 Copy file from: wxsqlite3\Readme.txt
           to  : MoneyManagerEX\trunk\mmex\lib\wxsqlite\Readme.txt 
 ===============================================================================                
-Source files for: wxSQLite3 Version 2.1.2
+Source files for: wxSQLite3 Version 3.0.0
   wxsqlite3.cpp
 
 Headers of for: wxSQLite3 - wx:
@@ -41,8 +38,9 @@ Source files for: wxSQLite3 - sqlite3 interface
   sha2.c
   sha2.h
   sqlite3secure.c
+  sqlite3.def
 
-Source files for: sqlite3 Version 3.7.7.1
+Source files for: sqlite3 Version 3.7.10.0
   sqlite3.c
   sqlite3.h
   sqlite3ext.h 

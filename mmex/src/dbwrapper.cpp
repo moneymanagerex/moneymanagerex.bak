@@ -2069,7 +2069,7 @@ wxArrayString mmDBWrapper::filterPayees(wxSQLite3Database* db, const wxString& p
         flist.Add(q1.GetString(wxT("PAYEENAME")));
     }
     st.Finalize();
-    q1.Finalize();
+
     return flist;
 }
 
