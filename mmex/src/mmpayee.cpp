@@ -33,7 +33,7 @@ bool mmPayeeList::payeeExists(const wxString& payeeName) const
 {
     for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = payees_.begin(); it != payees_.end(); ++ it)
     {
-        if ((*it)->payeeName_.CmpNoCase(payeeName)) return true;
+        if (! (*it)->payeeName_.CmpNoCase(payeeName)) return true;
     }
 
     return false;
@@ -86,7 +86,7 @@ int mmPayeeList::getPayeeID(const wxString& payeeName) const
 {
     for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = payees_.begin(); it != payees_.end(); ++ it)
     {
-        if ((*it)->payeeName_.CmpNoCase(payeeName)) return (*it)->payeeID_;
+        if (! (*it)->payeeName_.CmpNoCase(payeeName)) return (*it)->payeeID_;
     }
 
 	return -1;
