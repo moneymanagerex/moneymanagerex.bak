@@ -1311,15 +1311,14 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
 
 void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
 {
-    wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_TRANS_TYPE);
-    int i = choice->GetSelection();
+    int i = choiceTrans_->GetSelection();
     if (event.GetKeyCode()==WXK_DOWN) {
-        if (i < (mmDBWrapper::getNumAccounts(db_.get()) > 1 ? DEF_TRANSFER : DEF_DEPOSIT)) {
-            choice->SetSelection(++i);
+        if (i < (mmDBWrapper::getNumBankAccounts(db_.get()) > 1 ? DEF_TRANSFER : DEF_DEPOSIT)) {
+            choiceTrans_->SetSelection(++i);
         }
     } else if (event.GetKeyCode()==WXK_UP){
         if (i > DEF_WITHDRAWAL){
-            choice->SetSelection(--i);
+            choiceTrans_->SetSelection(--i);
         }
     } else {
         event.Skip();
