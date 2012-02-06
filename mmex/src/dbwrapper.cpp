@@ -1112,35 +1112,6 @@ double mmDBWrapper::getTotalBalanceOnAccount(wxSQLite3Database* db, int accountI
     return balance;
 }
 
-bool mmDBWrapper::getPayeeID(wxSQLite3Database* db, const wxString &payee, int& payeeID, int& categID, int& subcategID)
-{
-    static const char sql[] = 
-    "select PAYEEID, "
-           "CATEGID, "
-           "SUBCATEGID "
-    "from PAYEE_V1 "
-    "where PAYEENAME = ?";
-
-    bool found = false;
-
-    wxSQLite3Statement st = db->PrepareStatement(sql);
-    st.Bind(1, payee);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    found = q1.NextRow(); 
-
-    if (found)
-    {
-        payeeID = q1.GetInt(wxT("PAYEEID"));
-        categID = q1.GetInt(wxT("CATEGID"));
-        subcategID = q1.GetInt(wxT("SUBCATEGID"));
-    }
-    
-    st.Finalize();
-
-    return found;
-}
-
 bool mmDBWrapper::deleteCategoryWithConstraints(wxSQLite3Database* db, int categID)
 {
     try{
