@@ -433,8 +433,15 @@ void mmBDDialog::CreateControls()
 
     // Status --------------------------------------------
     wxStaticText* staticTextStatus = new wxStaticText( transactionPanel, wxID_STATIC, _("Status"));
+
+    wxArrayString choiceStatusStrings;
+    choiceStatusStrings.Add(_("None"));
+    choiceStatusStrings.Add(_("Reconciled"));
+    choiceStatusStrings.Add(_("Void"));
+    choiceStatusStrings.Add(_("Follow up"));
+    choiceStatusStrings.Add(_("Duplicate"));
     choiceStatus_ = new wxChoice( transactionPanel, ID_DIALOG_TRANS_STATUS,
-                                  wxDefaultPosition, wxSize(110, -1), 4, trxStatuses4Choice, 0 );
+                                  wxDefaultPosition, wxSize(110, -1), choiceStatusStrings);
 	choiceStatus_->SetSelection(mmIniOptions::transStatusReconciled_);
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
 
@@ -443,14 +450,19 @@ void mmBDDialog::CreateControls()
 
     // Type --------------------------------------------
     wxStaticText* staticTextType = new wxStaticText( transactionPanel, wxID_STATIC, _("Type"));
- 
+
+    wxArrayString choiceTypeStrings;
+    choiceTypeStrings.Add(_("Withdrawal"));
+    choiceTypeStrings.Add(_("Deposit"));
+    if (mmDBWrapper::getNumBankAccounts(db_)>1)
+        choiceTypeStrings.Add(_("Transfer"));
     choiceTrans_ = new wxChoice( transactionPanel, ID_DIALOG_TRANS_TYPE, 
-                                 wxDefaultPosition, wxSize(110, -1), 3, trxTypes4Choice, 0 );
+                                 wxDefaultPosition, wxSize(110, -1), choiceTypeStrings);
     choiceTrans_->SetSelection(DEF_WITHDRAWAL);
     choiceTrans_->SetToolTip(_("Specify the type of transactions to be created."));
     cAdvanced_ = new wxCheckBox( transactionPanel, ID_DIALOG_TRANS_ADVANCED_CHECKBOX, _("Advanced"),
                                  wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
-    cAdvanced_->SetValue(FALSE);
+    cAdvanced_->SetValue(false);
     cAdvanced_->SetToolTip(_("Allows the setting of different amounts in the FROM and TO accounts."));    
 
     wxBoxSizer* typeSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -467,11 +479,11 @@ void mmBDDialog::CreateControls()
     wxStaticText* staticTextAmount = new wxStaticText( transactionPanel, wxID_STATIC, _("Amount"));
 
     textAmount_ = new wxTextCtrl( transactionPanel, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""),
-                                  wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT );
+                                  wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
     textAmount_->SetToolTip(amountNormalTip_);
 
     toTextAmount_ = new wxTextCtrl( transactionPanel, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""),
-                                    wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT );
+                                    wxDefaultPosition, wxSize(110, -1), wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
     toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
