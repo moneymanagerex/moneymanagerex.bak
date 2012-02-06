@@ -778,10 +778,7 @@ void mmGUIFrame::setAccountNavTreeSection(wxString accountName)
 //----------------------------------------------------------------------------
 void mmGUIFrame::setHomePageActive(bool active)
 {
-    if (active)
-        activeHomePage_ = true;
-    else
-        activeHomePage_ = false;
+    activeHomePage_ = active;
 }
 
 //----------------------------------------------------------------------------
