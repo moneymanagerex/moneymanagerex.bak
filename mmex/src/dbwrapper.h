@@ -108,7 +108,6 @@ bool deleteSubCategoryWithConstraints(wxSQLite3Database* db, int categID, int su
 bool updateCategory(wxSQLite3Database* db, int categID, int subcategID, const wxString &newName);
 bool addCategory(wxSQLite3Database* db, const wxString &newName);
 bool addSubCategory(wxSQLite3Database* db, int categID, const wxString &newName);
-int getCategoryID(wxSQLite3Database* db, const wxString &name);
 int getSubCategoryID(wxSQLite3Database* db, int categID, const wxString &name);
 wxString getCategoryName(wxSQLite3Database* db, int categID);
 wxString getSubCategoryName(wxSQLite3Database* db, int categID, int subcategID);
