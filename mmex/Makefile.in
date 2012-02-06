@@ -106,7 +106,6 @@ MMEX_OBJECTS =  \
 	mmex_reportbudget.o \
 	mmex_reportbudgetcategorysummary.o \
 	mmex_reportbudgetingperf.o \
-	mmex_reportbudgetsetup.o \
 	mmex_reportcashflow.o \
 	mmex_reportcategexp.o \
 	mmex_reportcategovertimeperf.o \
@@ -396,9 +395,6 @@ mmex_reportbudgetcategorysummary.o: $(srcdir)/src/reportbudgetcategorysummary.cp
 
 mmex_reportbudgetingperf.o: $(srcdir)/src/reportbudgetingperf.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reportbudgetingperf.cpp
-
-mmex_reportbudgetsetup.o: $(srcdir)/src/reportbudgetsetup.cpp
-	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reportbudgetsetup.cpp
 
 mmex_reportcashflow.o: $(srcdir)/src/reportcashflow.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/reportcashflow.cpp
