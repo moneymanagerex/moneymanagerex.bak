@@ -2701,12 +2701,11 @@ wxString mmDBWrapper::getSplitTrxNotes(wxSQLite3Database* db_, int trxID)
 
     char sql[]=
         "select c.categname || case when sc.subcategname not null then ' : '||sc.subcategname else ''end as CATEG "
-        ", sum(-st.splittransamount) as SPLITTRANSAMOUNT "
+        ", -st.splittransamount as SPLITTRANSAMOUNT "
         "from splittransactions_v1 st "
         "left join category_v1 c on st.categid=c.categid "
         "left join subcategory_v1 sc on st.subcategid=sc.subcategid "
         "where st.transid = ?  "
-        "group by st.categid, st.subcategid "
         "order by c.categname, sc.subcategname";
             
     wxSQLite3Statement st = db_->PrepareStatement(sql);
