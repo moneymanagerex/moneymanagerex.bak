@@ -779,10 +779,7 @@ wxColour mmGetColourFromString(const wxString& str)
 
 wxString mmGetStringFromColour(wxColour color)
 {
-    wxString clr = wxString::Format(wxT("%d,%d,%d"), color.Red(),
-                                     color.Green(),
-                                     color.Blue());
-    return clr;
+    return wxString::Format(wxT("%d,%d,%d"), color.Red(), color.Green(), color.Blue());
 }
 
 void mmLoadColorsFromDatabase(wxSQLite3Database* db_)
