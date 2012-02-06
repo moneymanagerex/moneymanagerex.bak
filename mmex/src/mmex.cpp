@@ -454,8 +454,8 @@ mmGUIApp::SQLiteInit::~SQLiteInit()
 class mmTreeItemData : public wxTreeItemData
 {
 public:
-    mmTreeItemData(int id, bool isBudget);
-    mmTreeItemData(const wxString& string);
+    mmTreeItemData(int id, bool isBudget): id_(id), isString_(false), isBudgetingNode_(isBudget) {}
+    mmTreeItemData(const wxString& string): id_(), isString_(true), isBudgetingNode_(false), stringData_(string) {}
 
     int getData() const { return id_; }
     wxString getString() const { return stringData_; }
@@ -468,23 +468,6 @@ private:
     bool isBudgetingNode_;
     wxString stringData_;
 };
-//----------------------------------------------------------------------------
-
-mmTreeItemData::mmTreeItemData(int id, bool isBudget) :
-    id_(id), 
-    isString_(false), 
-    isBudgetingNode_(isBudget) 
-{
-}
-//----------------------------------------------------------------------------
-
-mmTreeItemData::mmTreeItemData(const wxString& string) :
-    id_(), 
-    isString_(true), 
-    isBudgetingNode_(false),
-    stringData_(string)
-{
-}
 //----------------------------------------------------------------------------
 
 mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, mmCoreDB* core) :
