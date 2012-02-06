@@ -68,7 +68,6 @@ public:
     void OnDateChanged(wxDateEvent& event);
     void dataToControls();
     void updateControlsForTransType();
-    bool getPayeeID(wxString payee, int& payeeID, int& categID, int& subcategID );
     void addPayee(wxString payee, int categID, int subcategID );
     void OnAccountName(wxCommandEvent& event);
     void OnSplitChecked(wxCommandEvent& event);
