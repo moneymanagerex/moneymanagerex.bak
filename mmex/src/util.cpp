@@ -691,34 +691,6 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
     mmShowErrorMessage(0, msg, _("Export to QIF"));
 }
 
-void mmSetCategory(mmCoreDB* core, wxString categ, wxString subcateg, int& categID, int& subCategID)
-{
-    bool isUnknown = false;
-
-    if (categ.Trim().IsEmpty()) 
-    {
-        categ = wxT("Unknown");
-        isUnknown = true;
-    }
-
-    // Create category (unknown or otherwise) if it doesn't already exist
-    categID = core->categoryList_.getCategoryID(categ);
-
-    if (categID == -1) 
-        categID =  core->categoryList_.addCategory(categ);
-
-    // Create sub category, provided it is not for the Unknown category
-    if (!isUnknown && !subcateg.Trim().IsEmpty()) 
-    {
-        subCategID = core->categoryList_.getSubCategoryID(categID, subcateg);
-
-        if (subCategID == -1) 
-        {
-            subCategID = core->categoryList_.addSubCategory(categID, subcateg);
-        }
-    }
-}
-
 wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, const wxDateTime &dt)
 {
     return dt.Format(mmOptions::dateFormat);
