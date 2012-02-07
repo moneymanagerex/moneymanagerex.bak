@@ -201,7 +201,7 @@ void mmPayeeDialog::OnSelChanged(wxCommandEvent& /*event*/)
 {
 	wxString payee = listBox_->GetStringSelection();
 
-	m_payee_id = payee.IsEmpty() ? -1 : m_core->payeeList_.getPayeeID(payee);
+	m_payee_id = payee.IsEmpty() ? -1 : m_core->getPayeeID(payee);
 	bool ok = m_payee_id != -1;
 
 	editButton->Enable(ok);
@@ -216,13 +216,13 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
         return;
     }
 
-    if (m_core->payeeList_.payeeExists(text))
+    if (m_core->payeeExists(text))
     {
         wxMessageBox(_("Payee with same name exists"), _("Organize Payees: Add Payee"),wxOK|wxICON_ERROR);
     }
     else
     {
-        m_core->payeeList_.addPayee(text);
+        m_core->addPayee(text);
         textCtrl->Clear();
         fillControls();
 
@@ -236,7 +236,7 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
  
 void mmPayeeDialog::OnDelete(wxCommandEvent& event)
 {
-    if (!m_core->payeeList_.deletePayee(m_payee_id))
+    if (!m_core->payeeList_.remove(m_payee_id))
     {
         wxString deletePayeeErrMsg = _("Payee in use.");
         deletePayeeErrMsg 
@@ -272,7 +272,7 @@ void mmPayeeDialog::OnEdit(wxCommandEvent& event)
 	wxString newName = wxGetTextFromUser(mesg, _("Edit Payee Name"), oldname);
     if (newName != wxGetEmptyString())
 	{
-		m_core->payeeList_.updatePayee(m_payee_id, newName);
+		m_core->payeeList_.update(m_payee_id, newName);
 		m_core->bTransactionList_.updateAllTransactionsForPayee(m_core, m_payee_id);
 		editButton->Disable();
 		fillControls();

@@ -152,7 +152,7 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
      transType_      = q1.GetString(wxT("TRANSCODE"));
      accountID_      = q1.GetInt(wxT("ACCOUNTID"));
      toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
-     payee_ = core->payeeList_.getPayeeSharedPtr(q1.GetInt(wxT("PAYEEID")));
+     payee_ = core->payeeList_.getSharedPtr(q1.GetInt(wxT("PAYEEID")));
      amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
      toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
      category_ = core->categoryList_.getCategorySharedPtr(q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
@@ -212,8 +212,8 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
       {
          boost::shared_ptr<mmPayee> pPayee = payee_.lock();
          wxASSERT(pPayee);
-         payeeStr_ = pPayee->payeeName_;
-         payeeID_ = pPayee->payeeID_;
+         payeeStr_ = pPayee->name_;
+         payeeID_ = pPayee->id_;
       }
    }
 
@@ -426,7 +426,7 @@ int mmBankTransactionList::addTransaction(mmCoreDB* core, boost::shared_ptr<mmBa
        pBankTransaction->status_ = wxT("D");
    }
 
-   if(core->payeeList_.payeeExists(pBankTransaction->payeeID_) == false) 
+   if(core->payeeExists(pBankTransaction->payeeID_) == false) 
    {
        pBankTransaction->payeeID_ = -1;
    }
@@ -711,13 +711,13 @@ int mmBankTransactionList::updateAllTransactionsForPayee(mmCoreDB* core, int pay
         boost::shared_ptr<mmBankTransaction> pBankTransaction = *i;
         if (pBankTransaction && (pBankTransaction->payeeID_ == payeeID))
         {
-            pBankTransaction->payee_ = core->payeeList_.getPayeeSharedPtr(payeeID);
+            pBankTransaction->payee_ = core->payeeList_.getSharedPtr(payeeID);
             if (pBankTransaction->transType_ != TRANS_TYPE_TRANSFER_STR)
             {
                 boost::shared_ptr<mmPayee> pPayee = pBankTransaction->payee_.lock();
                 wxASSERT(pPayee);
-                pBankTransaction->payeeStr_ = pPayee->payeeName_;
-                pBankTransaction->payeeID_ = pPayee->payeeID_;
+                pBankTransaction->payeeStr_ = pPayee->name_;
+                pBankTransaction->payeeID_ = pPayee->id_;
             }
         }
     }

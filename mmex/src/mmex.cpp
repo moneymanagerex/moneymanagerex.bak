@@ -903,7 +903,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 
                 pTransaction->accountID_ = th.accountID_;
                 pTransaction->toAccountID_ = th.toAccountID_;
-                pTransaction->payee_ = m_core.get()->payeeList_.getPayeeSharedPtr(th.payeeID_);
+                pTransaction->payee_ = m_core.get()->payeeList_.getSharedPtr(th.payeeID_);
                 pTransaction->transType_ = th.transType_;
                 pTransaction->amt_ = th.amt_;
                 pTransaction->status_ = q1.GetString(wxT("STATUS"));
