@@ -260,10 +260,9 @@ long SplitTransactionDialog::GetSelectedItem()
 
 void SplitTransactionDialog::EditEntry()
 {
-    // locate the selected item in the list
+    // locate the selected item in the list and exit if not found
     long item = this->GetSelectedItem();
-    if (item == wxNOT_FOUND)
-        return;
+    if (item == wxNOT_FOUND) return;
 
     int categID    = split_->entries_[item]->categID_;
     int subCategID = split_->entries_[item]->subCategID_;
@@ -279,17 +278,11 @@ void SplitTransactionDialog::EditEntry()
         DataToControls();
         UpdateSplitTotal();
     }
-
-    //category = core_->categoryList_.GetFullCategoryString(categID,subCategID);
-    //wxString d_msg = wxString()
-    //    << wxT("Selected Item: ") << item << wxT("\n\n")
-    //    << wxT("Category: ") << category << wxT("\n");
-    //wxLogMessage(d_msg); 
 }
 
 void SplitTransactionDialog::OnListDblClick(wxListEvent& /*event*/)
 {
-    EditEntry();
+    if (itemButtonEdit_->IsShown()) EditEntry();
 }
 
 void SplitTransactionDialog::SetDisplaySplitCategories()
