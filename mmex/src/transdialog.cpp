@@ -779,7 +779,7 @@ wxString mmTransDialog::resetPayeeString(bool normal) //normal is deposits or wi
     {
         //only one payee present. Choose it
         payeeStr = filtd[0];
-        payeeID_ = core_->payeeList_.getPayeeID(payeeStr);
+        payeeID_ = core_->getPayeeID(payeeStr);
     }
     if (normal)
     {
@@ -1066,7 +1066,7 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
 
     pTransaction->accountID_ = fromAccountID;
     pTransaction->toAccountID_ = toAccountID;
-    pTransaction->payee_ = core_->payeeList_.getPayeeSharedPtr(payeeID_);
+    pTransaction->payee_ = core_->payeeList_.getSharedPtr(payeeID_);
     pTransaction->transType_ = transCode;
     pTransaction->amt_ = amount;
     pTransaction->status_ = status;
@@ -1305,7 +1305,7 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
     if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
         payeeID_ = mmDBWrapper::getAccountID(db_.get(), currentPayeeName);
     } else {
-        payeeID_ = core_->payeeList_.getPayeeID(currentPayeeName);
+        payeeID_ = core_->getPayeeID(currentPayeeName);
     }
 }
 
@@ -1466,6 +1466,6 @@ void mmTransDialog::OnButtonPayeeMouse(wxMouseEvent& event)
     if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
         payeeID_ = mmDBWrapper::getAccountID(db_.get(), currentPayeeName);
     } else {
-        payeeID_ = core_->payeeList_.getPayeeID(currentPayeeName);
+        payeeID_ = core_->getPayeeID(currentPayeeName);
     }
 }

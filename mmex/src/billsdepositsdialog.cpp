@@ -853,7 +853,7 @@ void mmBDDialog::resetPayeeString(bool normal)
     {
         //only one payee present. Choose it
         payeeStr = filtd[0];
-        payeeID_ = core_->payeeList_.getPayeeID(payeeStr);
+        payeeID_ = core_->getPayeeID(payeeStr);
     }
     bPayee_->SetLabel(payeeStr);
     if (normal)
@@ -1173,7 +1173,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
 
             pTransaction->accountID_ = fromAccountID;
             pTransaction->toAccountID_ = toAccountID;
-            pTransaction->payee_ = core_->payeeList_.getPayeeSharedPtr(payeeID_);
+            pTransaction->payee_ = core_->payeeList_.getSharedPtr(payeeID_);
             pTransaction->transType_ = transCode;
             pTransaction->amt_ = amount;
             pTransaction->status_ = status;

@@ -24,12 +24,11 @@ class mmPayee
 {
 public: 
     mmPayee() {}
-    mmPayee(int payeeID, const wxString& payeeName, 
-        boost::shared_ptr<mmCategory> category);
+    mmPayee(int id, const wxString& name, boost::shared_ptr<mmCategory> category);
     ~mmPayee() {}
 
-    int payeeID_;
-    wxString payeeName_;
+    int id_;
+    wxString name_;
     boost::weak_ptr<mmCategory> category_;
 };
 
@@ -41,16 +40,16 @@ public:
     ~mmPayeeList() {}
 
     /* Payee Functions */
-    int addPayee(const wxString& payeeName);
-    bool deletePayee(int payeeID);
-    void updatePayee(int payeeID, const wxString& payeeName);
-    bool payeeExists(const wxString& payeeName) const;
-    bool payeeExists(const int payeeid) const;
-    int getPayeeID(const wxString& payeeName) const;
-    boost::shared_ptr<mmPayee> getPayeeSharedPtr(int payeeID);
+    int add(const wxString& payeeName);
+    bool remove(int payeeID);
+    void update(int payeeID, const wxString& payeeName);
+    bool exists(const wxString& payeeName) const;
+    bool exists(const int payeeid) const;
+    int getID(const wxString& payeeName) const;
+    boost::shared_ptr<mmPayee> getSharedPtr(int payeeID);
     void sortPayeeList(void);
 
-    std::vector< boost::shared_ptr<mmPayee> > payees_;
+    std::vector< boost::shared_ptr<mmPayee> > entities_;
 
 private:
     boost::shared_ptr<wxSQLite3Database> db_;

@@ -39,10 +39,14 @@ class wxSQLite3Database;
 class mmCoreDB
 {
 public:
-    int getPayeeID(const wxString& name) const { return payeeList_.getPayeeID(name); }
+    int getPayeeID(const wxString& name) const { return payeeList_.getID(name); }
     int getCategoryID(const wxString& name) const { return categoryList_.getCategoryID(name); }
     int getAccountID(const wxString& name) const { return accountList_.getAccountID(name); }
     int getCurrencyID(const wxString& name) const { return currencyList_.getCurrencyID(name); }
+
+    bool payeeExists(int id) const { return payeeList_.exists(id); }
+    bool payeeExists(const wxString& name) const { return payeeList_.exists(name); }
+    int addPayee(const wxString& name) { return payeeList_.add(name); }
 
 public: 
    mmCoreDB(boost::shared_ptr<wxSQLite3Database>);

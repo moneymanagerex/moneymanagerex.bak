@@ -581,13 +581,13 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                     payee = wxT("Unknown");
                 }
 
-                if (!core->payeeList_.payeeExists(payee))
+                if (!core->payeeExists(payee))
                 {
                     log << _("Payee Added: ") << payee << endl;   
-                    payeeID = core->payeeList_.addPayee(payee);
+                    payeeID = core->addPayee(payee);
                 }
                 else
-                    payeeID = core->payeeList_.getPayeeID(payee);
+                    payeeID = core->getPayeeID(payee);
                 
                 continue;
             }
@@ -694,14 +694,14 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                         payee = wxT("Unknown");
                     }
 
-                    if (!core->payeeList_.payeeExists(payee))
+                    if (!core->payeeExists(payee))
                     {
-                        payeeID = core->payeeList_.addPayee(payee);
+                        payeeID = core->addPayee(payee);
                         log << _("Payee Added: ") << payee << endl;    
                     }
                     else
                     {
-                        payeeID = core->payeeList_.getPayeeID(payee);
+                        payeeID = core->getPayeeID(payee);
                     }
                 }
                 
@@ -737,7 +737,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core->db_));
                 pTransaction->accountID_ = fromAccountID;
                 pTransaction->toAccountID_ = toAccountID;
-                pTransaction->payee_ = core->payeeList_.getPayeeSharedPtr(payeeID);
+                pTransaction->payee_ = core->payeeList_.getSharedPtr(payeeID);
                 pTransaction->transType_ = type;
                 pTransaction->amt_ = val;
                 pTransaction->status_ = status;

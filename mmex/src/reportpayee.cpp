@@ -31,7 +31,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
 
 	hb.startCenter();
 
-    int numPayees = (int)core_->payeeList_.payees_.size();
+    int numPayees = (int)core_->payeeList_.entities_.size();
     // Add the graph
     mmGraphPie gg;
     if (numPayees)
@@ -53,7 +53,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
     for (int idx = 0; idx < numPayees; idx++)
     {
         wxString balance;
-        double amt = core_->bTransactionList_.getAmountForPayee(core_->payeeList_.payees_[idx]->payeeID_,
+        double amt = core_->bTransactionList_.getAmountForPayee(core_->payeeList_.entities_[idx]->id_,
             ignoreDate_, dtBegin_, dtEnd_, mmIniOptions::ignoreFutureTransactions_
         );
         mmex::formatDoubleToCurrency(amt, balance);
@@ -70,12 +70,12 @@ wxString mmReportPayeeExpenses::getHTMLText()
                 negativeTotal += amt;
             }
             ValuePair vp;
-            vp.label = core_->payeeList_.payees_[idx]->payeeName_;
+            vp.label = core_->payeeList_.entities_[idx]->name_;
             vp.amount = amt;
             valueList.push_back(vp);
 
             hb.startTableRow();
-            hb.addTableCell(core_->payeeList_.payees_[idx]->payeeName_, false, true);
+            hb.addTableCell(core_->payeeList_.entities_[idx]->name_, false, true);
 
             hb.addTableCell(balance, true, true, true, (amt<0.0 ? wxT("RED") : wxT("BLACK")));
             hb.endTableRow();
