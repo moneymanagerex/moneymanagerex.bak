@@ -104,7 +104,11 @@ void SplitTransactionDialog::CreateControls()
     wxBoxSizer* dialogMainSizerV = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(dialogMainSizerV);
 
-    wxStaticText* headingText = new wxStaticText( itemDialog1, wxID_STATIC, _("Split Category Details"));
+    wxString headingMessage = _(" Split Category Details");
+    if (transType_ == DEF_WITHDRAWAL) headingMessage = wxString() << _("Withdrawal") << headingMessage;
+    if (transType_ == DEF_DEPOSIT)    headingMessage = wxString() << _("Deposit")    << headingMessage;
+
+    wxStaticText* headingText = new wxStaticText( itemDialog1, wxID_STATIC, headingMessage);
     dialogMainSizerV->Add(headingText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxTOP|wxRIGHT, 10);
 
     wxBoxSizer* listCtrlSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -126,10 +130,8 @@ void SplitTransactionDialog::CreateControls()
 	
 	wxBoxSizer* totalAmountSizer = new wxBoxSizer(wxHORIZONTAL);
     wxString totalMessage = _(" Total:");
-    if (transType_ == DEF_WITHDRAWAL)
-        totalMessage = wxString() << _("Withdrawal") << totalMessage;
-    else
-        totalMessage = wxString() << _("Deposit") << totalMessage;
+    if (transType_ == DEF_WITHDRAWAL) totalMessage = wxString() << _("Withdrawal") << totalMessage;
+    if (transType_ == DEF_DEPOSIT)    totalMessage = wxString() << _("Deposit")    << totalMessage;
 
     wxStaticText* transAmountText_ = new wxStaticText( itemDialog1, wxID_STATIC, totalMessage, wxDefaultPosition, wxDefaultSize, 0 );
 	transAmount_ = new wxStaticText( itemDialog1, wxID_STATIC, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
