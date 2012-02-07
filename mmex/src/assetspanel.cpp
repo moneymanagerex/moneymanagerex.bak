@@ -209,16 +209,16 @@ void mmAssetsPanel::CreateControls()
 
     wxButton* itemButton6 = new wxButton( assets_panel, wxID_NEW, _("&New"));
     itemButton6->SetToolTip(_("New Asset"));
-    itemBoxSizer5->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer5->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
     wxButton* itemButton81 = new wxButton( assets_panel, wxID_EDIT, _("&Edit"));
     itemButton81->SetToolTip(_("Edit Asset"));
-    itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     itemButton81->Enable(false);
     
     wxButton* itemButton7 = new wxButton( assets_panel, wxID_DELETE, _("&Delete"));
     itemButton7->SetToolTip(_("Delete Asset"));
-    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     itemButton7->Enable(false);
 
     //Infobar-mini 
@@ -229,7 +229,7 @@ void mmAssetsPanel::CreateControls()
     //Infobar 
     wxStaticText* itemStaticText33 = new wxStaticText( assets_panel, 
         IDC_PANEL_ASSET_STATIC_DETAILS, wxT(""), wxDefaultPosition, wxSize(200,-1), wxTE_MULTILINE|wxTE_WORDWRAP);
-    itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxALL, 5);
+    itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxLEFT|wxRIGHT, 14);
             
     updateExtraAssetData(-1);
 }

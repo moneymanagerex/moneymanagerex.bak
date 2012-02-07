@@ -320,14 +320,14 @@ void mmStocksPanel::CreateControls()
     //Infobar-mini 
     wxStaticText* itemStaticText44 = new wxStaticText(itemPanel12, ID_PANEL_STOCKS_STATIC_DETAILS_MINI, wxT(""), 
         wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxALL, 12);
+    itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxTOP, 12);
     //Infobar 
     wxStaticText* itemStaticText33 = new wxStaticText(itemPanel12, 
-    ID_PANEL_STOCKS_STATIC_DETAILS, _("Using MMEX it is possible to track stocks/mutual funds investments."), 
+    ID_PANEL_STOCKS_STATIC_DETAILS, wxT(""), 
         wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
-    itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxALL, 1);
+    itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxLEFT|wxRIGHT, 14);
     
-    //updateExtraStocksData(-1);
+    updateExtraStocksData(-1);
 }
 
 void mmStocksPanel::initVirtualListControl()
