@@ -1,4 +1,5 @@
 /*******************************************************
+/*******************************************************
  Copyright (C) 2006 Madhan Kanagavel
 
  This program is free software; you can redistribute it and/or modify
@@ -136,6 +137,7 @@ void mmBillsDepositsPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
     itemPanel8->SetSizer(itemBoxSizer9);
+    itemPanel8->SetBackgroundColour(mmColors::listBackColor);
 
     /* ---------------------- */
     wxPanel* headerPanel = new wxPanel( itemPanel8, wxID_ANY, wxDefaultPosition, 
@@ -144,11 +146,11 @@ void mmBillsDepositsPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
+    headerPanel->SetBackgroundColour(mmColors::listBackColor);
 
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_BD_STATIC_HEADER, 
         _("Repeating Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, 
-        wxT("")));
+    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
     itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 1);
 
     /* ---------------------- */
@@ -217,46 +219,42 @@ void mmBillsDepositsPanel::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);
     
-    wxSizerFlags flags;
-    flags.Border();
-
     wxButton* itemButton6 = new wxButton( itemPanel12, wxID_NEW, _("&New"));
-    itemButton6->SetToolTip(_("New Bills && Deposit Series"));
-    itemBoxSizer5->Add(itemButton6, flags);
+    itemButton6->SetToolTip(_("New Bills & Deposit Series"));
+    itemBoxSizer5->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
     wxButton* itemButton81 = new wxButton( itemPanel12, wxID_EDIT, _("&Edit"));
-    itemButton81->SetToolTip(_("Edit Bills && Deposit Series"));
-    itemBoxSizer5->Add(itemButton81, flags);
+    itemButton81->SetToolTip(_("Edit Bills & Deposit Series"));
+    itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 	itemButton81->Enable(false);
 	
     wxButton* itemButton7 = new wxButton( itemPanel12, wxID_DELETE, _("&Delete"));
-    itemButton7->SetToolTip(_("Delete Bills && Deposit Series"));
-    itemBoxSizer5->Add(itemButton7, flags);
+    itemButton7->SetToolTip(_("Delete Bills & Deposit Series"));
+    itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 	itemButton7->Enable(false);
 	
     wxButton* itemButton8 = new wxButton( itemPanel12, wxID_PASTE, _("En&ter"), 
         wxDefaultPosition, wxDefaultSize, 0 );
-    itemButton8->SetToolTip(_("Enter Next Bills && Deposit Occurrence"));
-    itemBoxSizer5->Add(itemButton8, flags);
+    itemButton8->SetToolTip(_("Enter Next Bills & Deposit Occurrence"));
+    itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
 	itemButton8->Enable(false);
 
     wxButton* buttonSkipTrans = new wxButton( itemPanel12, wxID_IGNORE, _("&Skip"));
-    buttonSkipTrans->SetForegroundColour(wxColour(wxT("BLUE")));
-    buttonSkipTrans->SetToolTip(_("Skip Next Bills && Deposit Occurrence"));
-    itemBoxSizer5->Add(buttonSkipTrans, flags);
+    buttonSkipTrans->SetToolTip(_("Skip Next Bills & Deposit Occurrence"));
+    itemBoxSizer5->Add(buttonSkipTrans, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     buttonSkipTrans->Enable(false);
 
     //Infobar-mini 
-    wxStaticText* itemStaticText444 = new wxStaticText( itemPanel12, ID_PANEL_BD_STATIC_MINI, wxT(""), 
-    wxPoint(-1,-1), wxSize(450, -1), wxNO_BORDER|wxST_NO_AUTORESIZE);
-    itemBoxSizer5->Add(itemStaticText444, 1, wxGROW|wxALL, 12);
-    //Infobar 
-    
-    wxStaticText* text = new wxStaticText( itemPanel12, ID_PANEL_BD_STATIC_DETAILS, 
-    _("MMEX allows regular payments to be set up as transactions. These transactions can also be regular deposits, or transfers that will occur at some future time. These transactions act a reminder that an event is about to occur, and appears on the Home Page 14 days before the transaction is due. "), 
-    wxPoint(-1,-1), wxSize(350, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
-    itemBoxSizer4->Add(text, 1, wxGROW|wxALL, 5);
+    wxStaticText* itemStaticText444 = new wxStaticText(itemPanel12, ID_PANEL_BD_STATIC_MINI, wxT(""), 
+                                                       wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer5->Add(itemStaticText444, 1, wxGROW|wxTOP, 12);
 
+    //Infobar 
+    wxStaticText* text = new wxStaticText( itemPanel12, ID_PANEL_BD_STATIC_DETAILS, wxT(""),
+    wxPoint(-1,-1), wxSize(200, -1), wxNO_BORDER|wxTE_MULTILINE|wxTE_WORDWRAP|wxST_NO_AUTORESIZE);
+    itemBoxSizer4->Add(text, 1, wxGROW|wxLEFT|wxRIGHT, 14);
+    
+    mmBillsDepositsPanel::updateBottomPanelData(-1);
 }
 
 void mmBillsDepositsPanel::initVirtualListControl()
@@ -670,7 +668,7 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
     }
     else 
     {
-        st-> SetLabel(wxT(""));
+        st-> SetLabel(Tips(wxT("billsdeposits")));
         stm-> SetLabel(wxT(""));
     }
 }
@@ -686,4 +684,3 @@ void mmBillsDepositsPanel::enableEditDeleteButtons(bool en)
 	bN->Enable(en);
 	bS->Enable(en);
 }
-

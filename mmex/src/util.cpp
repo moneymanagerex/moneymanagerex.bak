@@ -941,44 +941,51 @@ wxString getTransformedTrxStatus(int in)
 
 wxString Tips(wxString type)
 {
-        wxString tipsStr;
-        if (type == wxT("checkingpanel")) 
-        {
-            wxString tips[] = 
-            {
-            _("Recommendation: Always backup your .mmb database file regularly."),
-            _("Recommendation: If upgrading to a new version of MMEX, make sure you backup your .mmb database file before doing so."),
-            _("Recommendation: Use copy (Ctrl+С) and paste (Ctrl+V) for frequently used transactions."),
-            _("Tip: Remember to make backups of your .mmb."),
-            _("Tip: The .mmb file is not encrypted. That means anyone else having the proper know how can actually open the file and read the contents. So make sure that if you are storing any sensitive financial information it is properly guarded."),
-            _("Tip: To mark a transaction as reconciled, just select the transaction and hit the 'r' or 'R' key. To mark a transaction as unreconciled, just select the transaction and hit the 'u' or 'U' key."), 
-            _("Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f' or 'F' key."),
-            _("Tip: MMEX supports printing of all reports that can be viewed. The print options are available under the menu, File->Print."),
-            _("Tip: You can modify some runtime behavior of MMEX by changing the options in the Options Dialog. "),
-            _("Tip: To print a statement with transactions from any arbitary set of criteria, use the transaction filter to select the transactions you want and then do a print from the menu."),
-            _("Tip: Set exchange rate for currencies in case if you have accounts with different currencies."),
-        
-            _("Organize Categories Dialog Tip: Pressing the h key will cycle through all categories starting with the letter h"),
-            _("Organize Categories Dialog Tip: Pressing 2 key combination will cycle through all categories starting with that key combination. Example: Pressing ho will select Homeneeds, Home, House Tax, etc..."),
-            _("Organize Payees Dialog Tip: Using the % key as a wildcard when using the filter. Example: %c shows Chemist and Doctor, %c%m shows Chemist only."),
-               
-            _("Tip to get out of debt: Pay yourself 10% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses.") ,
-            _("Tip to get out of debt: Establish an emergency fund."), 
-            _("Tip to get out of debt: Stop acquiring new debt."), 
-            _("Tip to get out of debt: Create a realistic budget for your expenses.") ,
-            _("Tip to get out of debt: Spend less than you earn."),
-            _("Tip to get out of debt: Pay more than the minimum.")
-            };
-            tipsStr = tips[rand() % 20];
-        }    
-        else if (type == wxT("assets")) 
-        {
-           tipsStr = _("MMEX allows you to track fixed assets like cars, houses, land and others. Each asset can have its value appreciate by a certain rate per year, depreciate by a certain rate per year, or not change in value. The total assets are added to your total financial worth.");
-        }
-        else if (type == wxT("stocks")) 
-        {
-           tipsStr = _("Using MMEX it is possible to track stocks/mutual funds investments.");
-        }
+    wxString tipsStr = wxEmptyString;
+    if (type == wxT("checkingpanel")) 
+    {
+        wxArrayString tips; 
+        tips.Add(_("Recommendation: Always backup your .mmb database file regularly."));
+        tips.Add(_("Recommendation: If upgrading to a new version of MMEX, make sure you backup your .mmb database file before doing so."));
+        tips.Add(_("Recommendation: Use copy (Ctrl+С) and paste (Ctrl+V) for frequently used transactions."));
+        tips.Add(_("Tip: Remember to make backups of your .mmb."));
+        tips.Add(_("Tip: The .mmb file is not encrypted. That means anyone else having the proper know how can actually open the file and read the contents. So make sure that if you are storing any sensitive financial information it is properly guarded."));
+        tips.Add(_("Tip: To mark a transaction as reconciled, just select the transaction and hit the 'r' or 'R' key. To mark a transaction as unreconciled, just select the transaction and hit the 'u' or 'U' key."));
+        tips.Add(_("Tip: To mark a transaction as requiring followup, just select the transaction and hit the 'f' or 'F' key."));
+        tips.Add(_("Tip: MMEX supports printing of all reports that can be viewed. The print options are available under the menu, File->Print."));
+        tips.Add(_("Tip: You can modify some runtime behavior of MMEX by changing the options in the Options Dialog. "));
+        tips.Add(_("Tip: To print a statement with transactions from any arbitary set of criteria, use the transaction filter to select the transactions you want and then do a print from the menu."));
+        tips.Add(_("Tip: Set exchange rate for currencies in case if you have accounts with different currencies."));
+
+        tips.Add(_("Organize Categories Dialog Tip: Pressing the h key will cycle through all categories starting with the letter h"));
+        tips.Add(_("Organize Categories Dialog Tip: Pressing 2 key combination will cycle through all categories starting with that key combination. Example: Pressing ho will select Homeneeds, Home, House Tax, etc..."));
+        tips.Add(_("Organize Payees Dialog Tip: Using the % key as a wildcard when using the filter. Example: %c shows Chemist and Doctor, %c%m shows Chemist only."));
+
+        tips.Add(_("Tip to get out of debt: Pay yourself 10% first. Put this into an account that is hard to touch. Make sure it is a chore to get the money out (you have to drive to the bank), so you will only tap it consciously and for major expenses."));
+        tips.Add(_("Tip to get out of debt: Establish an emergency fund.")); 
+        tips.Add(_("Tip to get out of debt: Stop acquiring new debt."));
+        tips.Add(_("Tip to get out of debt: Create a realistic budget for your expenses."));
+        tips.Add(_("Tip to get out of debt: Spend less than you earn."));
+        tips.Add(_("Tip to get out of debt: Pay more than the minimum."));
+        tips.Add(_("Before going to a shop and buy something: take the time making a list of what you really need. In the shop buy what is in your list."));
+        tipsStr = tips[rand() % tips.GetCount()];
+    }    
+    else if (type == wxT("assets")) 
+    {
+        tipsStr = _("MMEX allows you to track fixed assets like cars, houses, land and others. Each asset can have its value appreciate by a certain rate per year, depreciate by a certain rate per year, or not change in value. The total assets are added to your total financial worth.");
+    }
+    else if (type == wxT("stocks")) 
+    {
+        tipsStr = _("Using MMEX it is possible to track stocks/mutual funds investments.");
+    }
+    else if (type == wxT("billsdeposits")) 
+    {
+        wxArrayString tips;
+        tips.Add(_("MMEX allows regular payments to be set up as transactions. These transactions can also be regular deposits, or transfers that will occur at some future time. These transactions act a reminder that an event is about to occur, and appears on the Home Page 14 days before the transaction is due. "));
+        tips.Add(_("Tip: These transactions can be set up to activate – allowing the user to adjust any values on the due date."));
+            
+        tipsStr = tips[rand() % tips.GetCount()];
+    }
 
     return tipsStr;
 }
