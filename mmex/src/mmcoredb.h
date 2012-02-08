@@ -41,7 +41,7 @@ class mmCoreDB
 public:
     int getPayeeID(const wxString& name) const { return payeeList_.getID(name); }
     int getCategoryID(const wxString& name) const { return categoryList_.getCategoryID(name); }
-    int getAccountID(const wxString& name) const { return accountList_.getAccountID(name); }
+    int getAccountID(const wxString& name) const { return accountList_.getID(name); }
     int getCurrencyID(const wxString& name) const { return currencyList_.getCurrencyID(name); }
 
     bool payeeExists(int id) const { return payeeList_.exists(id); }
@@ -52,6 +52,8 @@ public:
     boost::shared_ptr<mmPayee> getPayeeSharedPtr(int id) { return payeeList_.getSharedPtr(id); }
     int numPayee() const { return payeeList_.num(); }
     std::pair<mmPayeeList::const_iterator, mmPayeeList::const_iterator> rangePayee() const { return payeeList_.range(); }
+
+    wxString getAccountName(int accountID) const { return accountList_.getName(accountID); }
 
 public: 
    mmCoreDB(boost::shared_ptr<wxSQLite3Database>);

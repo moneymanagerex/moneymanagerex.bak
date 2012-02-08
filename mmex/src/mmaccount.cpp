@@ -30,8 +30,8 @@ mmAccount::mmAccount(boost::shared_ptr<wxSQLite3Database> db,
                      wxSQLite3ResultSet& q1)
     : db_(db)
 {
-    accountID_ = q1.GetInt(wxT("ACCOUNTID"));
-    accountName_ = q1.GetString(wxT("ACCOUNTNAME"));
+    id_ = q1.GetInt(wxT("ACCOUNTID"));
+    name_ = q1.GetString(wxT("ACCOUNTNAME"));
     accountNum_  = q1.GetString(wxT("ACCOUNTNUM"));
     heldAt_ = q1.GetString(wxT("HELDAT"));
     website_ = q1.GetString(wxT("WEBSITE"));
@@ -131,7 +131,7 @@ void mmCheckingAccount::deleteTransaction(int transactionID)
 
 double mmCheckingAccount::balance()
 {
-   return mmDBWrapper::getTotalBalanceOnAccount(db_.get(), this->accountID_);
+   return mmDBWrapper::getTotalBalanceOnAccount(db_.get(), this->id_);
 }
 
 //----------------------------------------------------------------------------------
@@ -146,7 +146,7 @@ mmTermAccount::mmTermAccount(
 
 double mmTermAccount::balance()
 {
-   return mmDBWrapper::getTotalBalanceOnAccount(db_.get(), this->accountID_);
+   return mmDBWrapper::getTotalBalanceOnAccount(db_.get(), this->id_);
 }
 
 //----------------------------------------------------------------------------------
@@ -212,7 +212,7 @@ bool mmAccountList::deleteAccount(int accountID)
     for (iter = accounts_.begin(); iter != accounts_.end(); )
     {
         boost::shared_ptr<mmAccount> pAccount = (*iter);
-        if (pAccount->accountID_ == accountID)
+        if (pAccount->id_ == accountID)
         {
             iter = accounts_.erase(iter);
             break;
@@ -261,7 +261,7 @@ void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)
    const mmAccount &r = *pAccount;
 
    int i = 0;
-   st.Bind(++i, r.accountName_);
+   st.Bind(++i, r.name_);
    st.Bind(++i, r.acctType_);
    st.Bind(++i, r.accountNum_);
    st.Bind(++i, statusStr);
@@ -273,7 +273,7 @@ void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)
    st.Bind(++i, r.initialBalance_);
    st.Bind(++i, favStr);
    st.Bind(++i, currencyID);
-   st.Bind(++i, r.accountID_);
+   st.Bind(++i, r.id_);
 
    wxASSERT(st.GetParamCount() == i);
 
@@ -289,7 +289,7 @@ boost::shared_ptr<mmAccount> mmAccountList::getAccountSharedPtr(int accountID) c
     for (account_v::const_iterator i = accounts_.begin(); i != accounts_.end(); ++i)
     {
         account_v::const_reference r = *i;
-        if (r->accountID_ == accountID)
+        if (r->id_ == accountID)
         {
             res = r;
             break;
@@ -308,12 +308,12 @@ bool mmAccountList::accountExists(const wxString& accountName) const
     return false;
 }
 
-int mmAccountList::getAccountID(const wxString& accountName) const
+int mmAccountList::getID(const wxString& accountName) const
 {
     return mmDBWrapper::getAccountID(db_.get(), accountName);
 }
 
-wxString mmAccountList::getAccountName(int accountID) const
+wxString mmAccountList::getName(int accountID) const
 {
     return mmDBWrapper::getAccountName(db_.get(),accountID);
 }
@@ -323,7 +323,7 @@ wxString mmAccountList::getAccountType(int accountID) const
     int len = (int)accounts_.size();
     for (int idx = 0; idx < len; idx++)
     {
-        if (accounts_[idx]->accountID_ == accountID)
+        if (accounts_[idx]->id_ == accountID)
             return accounts_[idx]->acctType_;
     }
     wxASSERT(false);
@@ -335,7 +335,7 @@ mmAccount::AccountStatus mmAccountList::getAccountStatus(int accountID) const
     int len = (int)accounts_.size();
     for (int idx = 0; idx < len; idx++)
     {
-        if (accounts_[idx]->accountID_ == accountID)
+        if (accounts_[idx]->id_ == accountID)
             return accounts_[idx]->status_;
     }
     wxASSERT(false);
@@ -371,7 +371,7 @@ boost::weak_ptr<mmCurrency> mmAccountList::getCurrencyWeakPtr(int accountID) con
     int len = (int)accounts_.size();
     for (int idx = 0; idx < len; idx++)
     {
-        if (accounts_[idx]->accountID_ == accountID)
+        if (accounts_[idx]->id_ == accountID)
             return accounts_[idx]->currency_;
     }
     wxASSERT(false);
@@ -403,7 +403,7 @@ int mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
     const mmAccount &r = *pAccount;
 
     int i = 0;
-    st.Bind(++i, r.accountName_);
+    st.Bind(++i, r.name_);
     st.Bind(++i, r.acctType_);
     st.Bind(++i, r.accountNum_);
     st.Bind(++i, statusStr);
@@ -419,11 +419,11 @@ int mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
     wxASSERT(st.GetParamCount() == i);
     st.ExecuteUpdate();
 
-    pAccount->accountID_ = db_->GetLastRowId().ToLong();
+    pAccount->id_ = db_->GetLastRowId().ToLong();
     accounts_.push_back(pAccount);
 
     st.Finalize();
     mmOptions::databaseUpdated_ = true;
 
-    return pAccount->accountID_;
+    return pAccount->id_;
 }

@@ -60,9 +60,9 @@ wxString mmReportSummary::getHTMLText()
         mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pCA && pCA->status_== mmAccount::MMEX_Open)
         {
-            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_, mmIniOptions::ignoreFutureTransactions_);
+            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->id_, mmIniOptions::ignoreFutureTransactions_);
               
-            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->id_).lock();
             wxASSERT(pCurrencyPtr);
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
             double rate = pCurrencyPtr->baseConv_;
@@ -73,7 +73,7 @@ wxString mmReportSummary::getHTMLText()
             mmex::formatDoubleToCurrency(bal, balance);
 
 		    hb.startTableRow();
-		    hb.addTableCell(pCA->accountName_, false, true);
+		    hb.addTableCell(pCA->name_, false, true);
 		    hb.addTableCell(balance, true);
 		    hb.endTableRow();
         }
@@ -99,9 +99,9 @@ wxString mmReportSummary::getHTMLText()
         mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pTA && pTA->status_== mmAccount::MMEX_Open)
         {
-            double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_, mmIniOptions::ignoreFutureTransactions_);
+            double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->id_, mmIniOptions::ignoreFutureTransactions_);
               
-            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pTA->accountID_).lock();
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pTA->id_).lock();
             wxASSERT(pCurrencyPtr);
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
             double rate = pCurrencyPtr->baseConv_;
@@ -112,7 +112,7 @@ wxString mmReportSummary::getHTMLText()
             mmex::formatDoubleToCurrency(bal, balance);
 
 		    hb.startTableRow();
-		    hb.addTableCell(pTA->accountName_, false, true);
+		    hb.addTableCell(pTA->name_, false, true);
 		    hb.addTableCell(balance, true);
 		    hb.endTableRow();
         }

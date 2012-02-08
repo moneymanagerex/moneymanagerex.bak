@@ -198,7 +198,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
          if (core->displayDatabaseError_)
          {
              wxString errMsg = _("Payee not found in database for Account: ");
-             errMsg << core->accountList_.getAccountName(accountID_)
+             errMsg << core->getAccountName(accountID_)
                     << wxT("\n\n")
                     << _("Subsequent errors not displayed.");
              wxMessageBox(errMsg,_("MMEX DATABASE ERROR"),wxICON_ERROR);
@@ -229,8 +229,8 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
    }
    else if (transType_ == TRANS_TYPE_TRANSFER_STR)
    {
-      wxString fromAccount = core->accountList_.getAccountSharedPtr(accountID_)->accountName_;
-      wxString toAccount = core->accountList_.getAccountSharedPtr(toAccountID_)->accountName_;
+      wxString fromAccount = core->accountList_.getAccountSharedPtr(accountID_)->name_;
+      wxString toAccount = core->accountList_.getAccountSharedPtr(toAccountID_)->name_;
 
       if (accountID_ == accountID)
       {
@@ -244,7 +244,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
       }
    }
 
-   fromAccountStr_ = core->accountList_.getAccountSharedPtr(accountID_)->accountName_;
+   fromAccountStr_ = core->accountList_.getAccountSharedPtr(accountID_)->name_;
 
    boost::shared_ptr<mmCategory> pCategory = category_.lock();
    if (!pCategory && !splitEntries_->numEntries())

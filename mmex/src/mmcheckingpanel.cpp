@@ -1046,7 +1046,7 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
     pCurrency->loadCurrencySettings();
 
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_HEADER);
-    header->SetLabel(_("Account View : ") + pAccount->accountName_);
+    header->SetLabel(_("Account View : ") + pAccount->name_);
 
     filteredBalance_ = 0.0;
 
