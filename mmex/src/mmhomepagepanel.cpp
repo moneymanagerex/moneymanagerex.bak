@@ -163,12 +163,12 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
         mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pCA && pCA->status_== mmAccount::MMEX_Open)
         {
-            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->id_).lock();
             wxASSERT(pCurrencyPtr);
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
-            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->accountID_, mmIniOptions::ignoreFutureTransactions_);
-            double reconciledBal = pCA->initialBalance_ + core_->bTransactionList_.getReconciledBalance(pCA->accountID_, mmIniOptions::ignoreFutureTransactions_);
+            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->id_, mmIniOptions::ignoreFutureTransactions_);
+            double reconciledBal = pCA->initialBalance_ + core_->bTransactionList_.getReconciledBalance(pCA->id_, mmIniOptions::ignoreFutureTransactions_);
             double rate = pCurrencyPtr->baseConv_;
             tBalance += bal * rate; // actual amount in that account in the original rate
             
@@ -177,7 +177,7 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
             {
                 double income = 0.0;
                 double expenses = 0.0;
-                core_->bTransactionList_.getExpensesIncome(pCA->accountID_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::ignoreFutureTransactions_);
+                core_->bTransactionList_.getExpensesIncome(pCA->id_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::ignoreFutureTransactions_);
 
                 // show the actual amount in that account
                 wxString balanceStr;
@@ -190,7 +190,7 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
                     (vAccts == wxT("ALL")))
                 {
                     hb.startTableRow();
-                    hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->accountID_), pCA->accountName_, false, true);
+                    hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->id_), pCA->name_, false, true);
                     hb.addTableCell(balanceStr, true);
                     hb.addTableCell(reconciledBalanceStr, true);
                     hb.endTableRow();
@@ -223,12 +223,12 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
         mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(core_->accountList_.accounts_[iAdx].get());
         if (pTA && pTA->status_== mmAccount::MMEX_Open)
         {
-            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pTA->accountID_).lock();
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pTA->id_).lock();
             wxASSERT(pCurrencyPtr);
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
 
-            double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->accountID_, mmIniOptions::ignoreFutureTransactions_);
-            double reconciledBal = pTA->initialBalance_ + core_->bTransactionList_.getReconciledBalance(pTA->accountID_, mmIniOptions::ignoreFutureTransactions_);
+            double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->id_, mmIniOptions::ignoreFutureTransactions_);
+            double reconciledBal = pTA->initialBalance_ + core_->bTransactionList_.getReconciledBalance(pTA->id_, mmIniOptions::ignoreFutureTransactions_);
             double rate = pCurrencyPtr->baseConv_;
             tTermBalance += bal * rate; // actual amount in that account in the original rate
 
@@ -237,7 +237,7 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
             {
                 double income = 0;
                 double expenses = 0;
-                core_->bTransactionList_.getExpensesIncome(pTA->accountID_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::ignoreFutureTransactions_);
+                core_->bTransactionList_.getExpensesIncome(pTA->id_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::ignoreFutureTransactions_);
 
                 // show the actual amount in that account
                 wxString balanceStr;
@@ -250,7 +250,7 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
                     (vAccts == wxT("ALL")))
                 {
                     hb.startTableRow();
-                    hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pTA->accountID_), pTA->accountName_, false, true);
+                    hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pTA->id_), pTA->name_, false, true);
                     hb.addTableCell(balanceStr, true);
                     hb.addTableCell(reconciledBalStr, true);
                     hb.endTableRow();
@@ -839,7 +839,7 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
         long id = -1;
         number.ToLong(&id);
         frame_->setGotoAccountID(id);
-        frame_->setAccountNavTreeSection(core_->accountList_.getAccountName(id));
+        frame_->setAccountNavTreeSection(core_->getAccountName(id));
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_GOTOACCOUNT);
         frame_->GetEventHandler()->AddPendingEvent(evt);
     }
@@ -848,7 +848,7 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
        /* long id = -1;
         number.ToLong(&id);
         frame_->setGotoAccountID(id);
-        frame_->setAccountNavTreeSection(core_->accountList_.getAccountName(id));
+        frame_->setAccountNavTreeSection(core_->getAccountName(id));
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
         frame_->GetEventHandler()->AddPendingEvent(evt); */
     }

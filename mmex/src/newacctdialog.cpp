@@ -79,7 +79,7 @@ void mmNewAcctDialog::fillControlsWithData()
     boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(accountID_);
     wxASSERT(pAccount);
 
-    textAccountName_->SetValue(pAccount->accountName_);
+    textAccountName_->SetValue(pAccount->name_);
 
     wxTextCtrl* textCtrl;
     textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_ACCTNUMBER);
@@ -332,7 +332,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
         return;
     }
     
-    int checkAcctID = core_->accountList_.getAccountID(acctName);
+    int checkAcctID = core_->getAccountID(acctName);
     if ((checkAcctID != -1) && (checkAcctID != accountID_))
     {
         mmShowErrorMessage(this, _("Account Name already exists"), _("Error"));
@@ -404,7 +404,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
         }
     }
 
-    pAccount->accountName_ = acctName;
+    pAccount->name_ = acctName;
     pAccount->accountNum_ = textCtrlAcctNumber->GetValue();
     pAccount->notes_ = textCtrlNotes->GetValue();
     pAccount->heldAt_ = textCtrlHeldAt->GetValue();

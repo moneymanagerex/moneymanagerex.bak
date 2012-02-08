@@ -1480,8 +1480,8 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
                 else if (pCA->favoriteAcct_)
                     selectedImage = 10; 
                 
-                wxTreeItemId tacct = navTreeCtrl_->AppendItem(accounts, pCA->accountName_, selectedImage, selectedImage);
-                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pCA->accountID_, false));
+                wxTreeItemId tacct = navTreeCtrl_->AppendItem(accounts, pCA->name_, selectedImage, selectedImage);
+                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pCA->id_, false));
             }
         }
 
@@ -1499,8 +1499,8 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
                 else if (pTA->favoriteAcct_)
                     selectedImage = 12; 
 
-                wxTreeItemId tacct = navTreeCtrl_->AppendItem(termAccount, pTA->accountName_, selectedImage, selectedImage);
-                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pTA->accountID_, false));
+                wxTreeItemId tacct = navTreeCtrl_->AppendItem(termAccount, pTA->name_, selectedImage, selectedImage);
+                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pTA->id_, false));
             }
         }
         
@@ -1512,8 +1512,8 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
                 (vAccts == wxT("Favorites") && pIA->favoriteAcct_) ||
                 (vAccts == wxT("ALL")))
             {
-                wxTreeItemId tacct = navTreeCtrl_->AppendItem(stocks, pIA->accountName_, 6, 6);
-                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pIA->accountID_, false));
+                wxTreeItemId tacct = navTreeCtrl_->AppendItem(stocks, pIA->name_, 6, 6);
+                navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pIA->id_, false));
             }
         }
 
@@ -2399,10 +2399,10 @@ void mmGUIFrame::OnPopupImportQIFile(wxCommandEvent& /*event*/)
            wxString acctType = pAccount->acctType_;
            if (acctType == ACCOUNT_TYPE_BANK || acctType == ACCOUNT_TYPE_TERM)
            {
-                int accountID = mmImportQIF(m_core.get(), pAccount->accountName_);
+                int accountID = mmImportQIF(m_core.get(), pAccount->name_);
                 if (accountID != -1)
                 {
-                    setAccountNavTreeSection(m_core.get()->accountList_.getAccountName(accountID));
+                    setAccountNavTreeSection(m_core.get()->getAccountName(accountID));
                     createCheckingAccountPage(accountID);
                 }
            }
@@ -2458,8 +2458,8 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
               wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
            if (msgDlg.ShowModal() == wxID_YES)
            {
-              m_core->accountList_.deleteAccount(pAccount->accountID_);
-              m_core->bTransactionList_.deleteTransactions(pAccount->accountID_);  
+              m_core->accountList_.deleteAccount(pAccount->id_);
+              m_core->bTransactionList_.deleteTransactions(pAccount->id_);  
               updateNavTreeControl();
               if (!refreshRequested_)
               {
@@ -3468,7 +3468,7 @@ void mmGUIFrame::OnImportQIF(wxCommandEvent& /*event*/)
     int accountID = mmImportQIF(m_core.get());
     if (accountID != -1)
     {
-        setAccountNavTreeSection(m_core.get()->accountList_.getAccountName(accountID));
+        setAccountNavTreeSection(m_core.get()->getAccountName(accountID));
         createCheckingAccountPage(accountID);
     }
 }
@@ -3609,7 +3609,7 @@ wxArrayString mmGUIFrame::getAccountsArray( bool withTermAccounts) const
         mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.accounts_[iAdx].get());
         if (pCA)
         {
-            accountArray.Add(pCA->accountName_);
+            accountArray.Add(pCA->name_);
         }
 
         if (withTermAccounts) // Add Term accounts to Cash Flows as well.
@@ -3617,7 +3617,7 @@ wxArrayString mmGUIFrame::getAccountsArray( bool withTermAccounts) const
             mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(m_core->accountList_.accounts_[iAdx].get());
             if (pTA)
             {
-                accountArray.Add(pTA->accountName_);
+                accountArray.Add(pTA->name_);
             }
         }
     }
@@ -4235,8 +4235,8 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& /*event*/)
     boost::scoped_array<int> arrAcctID(new int[num]);
     for (size_t idx = 0; idx < m_core->accountList_.accounts_.size(); ++idx)
     {
-        as.Add(m_core->accountList_.accounts_[idx]->accountName_);
-        arrAcctID[idx] = m_core->accountList_.accounts_[idx]->accountID_;
+        as.Add(m_core->accountList_.accounts_[idx]->name_);
+        arrAcctID[idx] = m_core->accountList_.accounts_[idx]->id_;
     }
   
     wxSingleChoiceDialog scd(this, _("Choose Account to Edit"), _("Accounts"), as);
@@ -4272,8 +4272,8 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
     int* arrAcctID = new int[num];
     for (int idx = 0; idx < (int)m_core->accountList_.accounts_.size(); idx++)
     {
-        as.Add(m_core->accountList_.accounts_[idx]->accountName_);
-        arrAcctID[idx] = m_core->accountList_.accounts_[idx]->accountID_;
+        as.Add(m_core->accountList_.accounts_[idx]->name_);
+        arrAcctID[idx] = m_core->accountList_.accounts_[idx]->id_;
     }
   
     wxSingleChoiceDialog scd (this, _("Choose Account to Delete"), _("Accounts"), as);
@@ -4283,7 +4283,7 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
         int acctID = arrAcctID[choice];
 
         wxString deletingAccountName = _("Are you sure you want to delete\n") + m_core->accountList_.accounts_[choice]->acctType_ +
-                                       _(" account: ") + m_core->accountList_.accounts_[choice]->accountName_ + wxT(" ?");
+                                       _(" account: ") + m_core->accountList_.accounts_[choice]->name_ + wxT(" ?");
         wxMessageDialog msgDlg(this, deletingAccountName, _("Confirm Account Deletion"),
             wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
         if (msgDlg.ShowModal() == wxID_YES)
@@ -4691,11 +4691,11 @@ bool wxAddAccountPage2::TransferDataFromWindow()
     pAccount->favoriteAcct_ = true;
     pAccount->status_ = mmAccount::MMEX_Open;
     pAccount->acctType_ = acctTypeStr;
-    pAccount->accountName_ = parent_->accountName_;
+    pAccount->name_ = parent_->accountName_;
     pAccount->initialBalance_ = 0;
     pAccount->currency_ = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID);
     // prevent same account being added multiple times in case of using 'Back' and 'Next' in wizard.
-    if ( ! parent_->m_core->accountList_.accountExists(pAccount->accountName_))
+    if ( ! parent_->m_core->accountList_.accountExists(pAccount->name_))
         parent_->acctID_ = parent_->m_core->accountList_.addAccount(pAccount);
 
     return true;

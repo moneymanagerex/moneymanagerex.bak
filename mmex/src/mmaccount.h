@@ -31,9 +31,7 @@ class mmAccount
 {
 public: 
    mmAccount(boost::shared_ptr<wxSQLite3Database> db); 
-
-   mmAccount(boost::shared_ptr<wxSQLite3Database> db, 
-       wxSQLite3ResultSet& q1);
+   mmAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1);
    virtual ~mmAccount() {}
 
     virtual double balance() = 0;
@@ -46,8 +44,8 @@ public:
    };
 
 public:
-   int      accountID_;
-   wxString accountName_;
+   int      id_;
+   wxString name_;
    AccountStatus status_;
    wxString accountNum_;
    wxString notes_;
@@ -72,7 +70,6 @@ public:
     
     virtual ~mmCheckingAccount() {}
 
-    
 public:
     double balance();
 };
@@ -80,9 +77,8 @@ public:
 class mmInvestmentAccount : public mmAccount
 {
 public: 
-   mmInvestmentAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1)
-       : mmAccount(db, q1) {}
-   mmInvestmentAccount(boost::shared_ptr<wxSQLite3Database> db)  : mmAccount(db) { }
+   mmInvestmentAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1) : mmAccount(db, q1) {}
+   mmInvestmentAccount(boost::shared_ptr<wxSQLite3Database> db) : mmAccount(db) { }
    virtual ~mmInvestmentAccount() {}
 
    double balance();
@@ -117,13 +113,13 @@ public:
     /// returns the status of the account (mmAccount::MMEX_Open or mmAccount::MMEX_Closed)\n
     /// to get a list of account names, use mmDBWrapper::getAccountsName(..)
     mmAccount::AccountStatus getAccountStatus(int accountID) const;
-    int getAccountID(const wxString& accountName) const;
+    int getID(const wxString& accountName) const;
     bool deleteAccount(int accountID);
     void updateAccount(boost::shared_ptr<mmAccount> pAccount);
     bool accountExists(const wxString& accountName) const;
     boost::weak_ptr<mmCurrency> getCurrencyWeakPtr(int accountID) const;
     double getAccountBaseCurrencyConvRate(int accountID) const;
-    wxString getAccountName(int accountID) const;
+    wxString getName(int accountID) const;
     wxString getAccountCurrencyDecimalChar(int accountID) const;
     wxString getAccountCurrencyGroupChar(int accountID) const;
     account_v accounts_;

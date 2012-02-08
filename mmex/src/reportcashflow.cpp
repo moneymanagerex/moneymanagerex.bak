@@ -103,13 +103,13 @@ wxString mmReportCashFlow::getHTMLText()
                     // Check if this account belongs in our list
                     if (accountArray_ != NULL)
                     {
-                        if (wxNOT_FOUND == accountArray_->Index(pCA->accountName_)) //linear search
+                        if (wxNOT_FOUND == accountArray_->Index(pCA->name_)) //linear search
                             continue; // skip account
                     }
 
-                    core_->bTransactionList_.getDailyBalance(pCA->accountID_, daily_balance);
+                    core_->bTransactionList_.getDailyBalance(pCA->id_, daily_balance);
 
-                    boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->accountID_).lock();
+                    boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->id_).lock();
                     wxASSERT(pCurrencyPtr);
                     mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
                     double rate = pCurrencyPtr->baseConv_;
@@ -128,13 +128,13 @@ wxString mmReportCashFlow::getHTMLText()
                     // Check if this account belongs in our list
                     if (accountArray_ != NULL)
                     {
-                        if (wxNOT_FOUND == accountArray_->Index(pTA->accountName_)) //linear search
+                        if (wxNOT_FOUND == accountArray_->Index(pTA->name_)) //linear search
                             continue; // skip account
                     }
 
-                    core_->bTransactionList_.getDailyBalance(pTA->accountID_, daily_balance);
+                    core_->bTransactionList_.getDailyBalance(pTA->id_, daily_balance);
 
-                    boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pTA->accountID_).lock();
+                    boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pTA->id_).lock();
                     wxASSERT(pCurrencyPtr);
                     mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
                     double rate = pCurrencyPtr->baseConv_;
@@ -199,10 +199,10 @@ wxString mmReportCashFlow::getHTMLText()
         bool isAccountFound = true, isToAccountFound = true;
         if (accountArray_ != NULL)
         {
-            if (wxNOT_FOUND == accountArray_->Index(core_->accountList_.getAccountName(accountID))) //linear search
+            if (wxNOT_FOUND == accountArray_->Index(core_->getAccountName(accountID))) //linear search
                 isAccountFound = false;
 
-            if (wxNOT_FOUND == accountArray_->Index(core_->accountList_.getAccountName(toAccountID))) //linear search
+            if (wxNOT_FOUND == accountArray_->Index(core_->getAccountName(toAccountID))) //linear search
                 isToAccountFound = false;
         }
 
