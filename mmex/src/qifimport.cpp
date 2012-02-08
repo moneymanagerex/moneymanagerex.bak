@@ -737,7 +737,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core->db_));
                 pTransaction->accountID_ = fromAccountID;
                 pTransaction->toAccountID_ = toAccountID;
-                pTransaction->payee_ = core->payeeList_.getSharedPtr(payeeID);
+                pTransaction->payee_ = core->getPayeeSharedPtr(payeeID);
                 pTransaction->transType_ = type;
                 pTransaction->amt_ = val;
                 pTransaction->status_ = status;

@@ -572,7 +572,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
 
                 if (categID_ == -1)
                 {
-                   boost::shared_ptr<mmPayee> pPayee =  core_->payeeList_.getSharedPtr(payeeID_);
+                   boost::shared_ptr<mmPayee> pPayee =  core_->getPayeeSharedPtr(payeeID_);
                    boost::shared_ptr<mmCategory> pCategory = pPayee->category_.lock();
                    if (!pCategory)
                    {
@@ -606,7 +606,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                boost::shared_ptr<mmBankTransaction> pTransaction(new mmBankTransaction(core_->db_));
                pTransaction->accountID_ = fromAccountID;
                pTransaction->toAccountID_ = toAccountID;
-               pTransaction->payee_ = core_->payeeList_.getSharedPtr(payeeID_);
+               pTransaction->payee_ = core_->getPayeeSharedPtr(payeeID_);
                pTransaction->transType_ = type_;
                pTransaction->amt_ = val_;
                pTransaction->status_ = status;
