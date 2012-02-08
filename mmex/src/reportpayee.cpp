@@ -31,10 +31,9 @@ wxString mmReportPayeeExpenses::getHTMLText()
 
 	hb.startCenter();
 
-    int numPayees = (int)core_->payeeList_.entities_.size();
     // Add the graph
     mmGraphPie gg;
-    if (numPayees)
+    if (core_->numPayee())
     {
         hb.addImage(gg.getOutputFileName());
     }
@@ -50,10 +49,11 @@ wxString mmReportPayeeExpenses::getHTMLText()
     double positiveTotal = 0.0;
     double negativeTotal = 0.0;
     std::vector<ValuePair> valueList;
-    for (int idx = 0; idx < numPayees; idx++)
+    std::pair<mmPayeeList::const_iterator, mmPayeeList::const_iterator> payee_range = core_->rangePayee();
+    for (mmPayeeList::const_iterator it = payee_range.first; it != payee_range.second; ++ it)
     {
         wxString balance;
-        double amt = core_->bTransactionList_.getAmountForPayee(core_->payeeList_.entities_[idx]->id_,
+        double amt = core_->bTransactionList_.getAmountForPayee((*it)->id_,
             ignoreDate_, dtBegin_, dtEnd_, mmIniOptions::ignoreFutureTransactions_
         );
         mmex::formatDoubleToCurrency(amt, balance);
@@ -70,12 +70,12 @@ wxString mmReportPayeeExpenses::getHTMLText()
                 negativeTotal += amt;
             }
             ValuePair vp;
-            vp.label = core_->payeeList_.entities_[idx]->name_;
+            vp.label = (*it)->name_;
             vp.amount = amt;
             valueList.push_back(vp);
 
             hb.startTableRow();
-            hb.addTableCell(core_->payeeList_.entities_[idx]->name_, false, true);
+            hb.addTableCell((*it)->name_, false, true);
 
             hb.addTableCell(balance, true, true, true, (amt<0.0 ? wxT("RED") : wxT("BLACK")));
             hb.endTableRow();

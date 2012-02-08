@@ -1173,7 +1173,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
 
             pTransaction->accountID_ = fromAccountID;
             pTransaction->toAccountID_ = toAccountID;
-            pTransaction->payee_ = core_->payeeList_.getSharedPtr(payeeID_);
+            pTransaction->payee_ = core_->getPayeeSharedPtr(payeeID_);
             pTransaction->transType_ = transCode;
             pTransaction->amt_ = amount;
             pTransaction->status_ = status;

@@ -236,7 +236,7 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
  
 void mmPayeeDialog::OnDelete(wxCommandEvent& event)
 {
-    if (!m_core->payeeList_.remove(m_payee_id))
+    if (!m_core->removePayee(m_payee_id))
     {
         wxString deletePayeeErrMsg = _("Payee in use.");
         deletePayeeErrMsg 
@@ -272,7 +272,7 @@ void mmPayeeDialog::OnEdit(wxCommandEvent& event)
 	wxString newName = wxGetTextFromUser(mesg, _("Edit Payee Name"), oldname);
     if (newName != wxGetEmptyString())
 	{
-		m_core->payeeList_.update(m_payee_id, newName);
+		m_core->updatePayee(m_payee_id, newName);
 		m_core->bTransactionList_.updateAllTransactionsForPayee(m_core, m_payee_id);
 		editButton->Disable();
 		fillControls();

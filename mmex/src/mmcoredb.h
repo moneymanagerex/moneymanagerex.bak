@@ -47,19 +47,27 @@ public:
     bool payeeExists(int id) const { return payeeList_.exists(id); }
     bool payeeExists(const wxString& name) const { return payeeList_.exists(name); }
     int addPayee(const wxString& name) { return payeeList_.add(name); }
+    bool removePayee(int id) { return payeeList_.remove(id); }
+    void updatePayee(int id, const wxString& name) { return payeeList_.update(id, name); }
+    boost::shared_ptr<mmPayee> getPayeeSharedPtr(int id) { return payeeList_.getSharedPtr(id); }
+    int numPayee() const { return payeeList_.num(); }
+    std::pair<mmPayeeList::const_iterator, mmPayeeList::const_iterator> rangePayee() const { return payeeList_.range(); }
 
 public: 
    mmCoreDB(boost::shared_ptr<wxSQLite3Database>);
 
    boost::shared_ptr<wxSQLite3Database> db_;
 
-   mmPayeeList payeeList_;
    mmCategoryList categoryList_;
    mmAccountList accountList_;
    mmCurrencyList currencyList_;
    mmBankTransactionList bTransactionList_;
 
    bool displayDatabaseError_;
+
+private:
+   mmPayeeList payeeList_;
+
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_COREDB_H_
