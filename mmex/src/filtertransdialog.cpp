@@ -200,7 +200,14 @@ void mmFilterTransactionsDialog::CreateControls()
     statusCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(statusCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    choiceStatus = new wxChoice( itemPanel, ID_CHOICE7, wxDefaultPosition, wxDefaultSize, 5, trxStatuses4Choice, 0 );
+    wxArrayString choiceStatusStrings;
+    choiceStatusStrings.Add(_("None"));
+    choiceStatusStrings.Add(_("Reconciled"));
+    choiceStatusStrings.Add(_("Void"));
+    choiceStatusStrings.Add(_("Follow up"));
+    choiceStatusStrings.Add(_("Duplicate"));
+
+    choiceStatus = new wxChoice( itemPanel, ID_CHOICE7, wxDefaultPosition, wxDefaultSize, choiceStatusStrings);
     itemPanelSizer->Add(choiceStatus, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	choiceStatus->SetSelection(mmIniOptions::transStatusReconciled_);
     choiceStatus->SetToolTip(_("Specify the status for the transaction"));
@@ -210,7 +217,11 @@ void mmFilterTransactionsDialog::CreateControls()
                                    wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     typeCheckBox->SetValue(FALSE);
     
-    choiceType = new wxChoice( itemPanel, ID_CHOICE8, wxDefaultPosition, wxDefaultSize, 3, trxTypes4Choice, 0 );
+    wxArrayString choiceTypeStrings;
+    choiceTypeStrings.Add(_("Withdrawal"));
+    choiceTypeStrings.Add(_("Deposit"));
+    choiceTypeStrings.Add(_("Transfer"));
+    choiceType = new wxChoice( itemPanel, ID_CHOICE8, wxDefaultPosition, wxDefaultSize, choiceTypeStrings);
 
     choiceType->SetSelection(0);
     choiceType->Show(false);

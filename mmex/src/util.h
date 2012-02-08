@@ -331,22 +331,6 @@ struct CurrentMonth: public LastMonths<0, 0, CurrentData> { };
 int getTransformedTrxStatus(wxString in);
 wxString getTransformedTrxStatus(int in);
 wxString Tips(wxString type);
-// 
-const wxString trxStatuses4Choice[] = 
-    {
-        _("None"),
-        _("Reconciled"),
-        _("Void"),
-        _("Follow up"),
-        _("Duplicate"),
-    }; 
-
-const wxString trxTypes4Choice[] = 
-    {
-        _("Withdrawal"),
-        _("Deposit"),
-        _("Transfer"),
-    };
 
 // Validators -----------------------------------------------------
 
