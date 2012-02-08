@@ -625,21 +625,18 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
     mmDBWrapper::loadBaseCurrencySettings(db_);
     
     char sql3[] = 
-        "select ACCOUNTNAME, ACCOUNTID, "
+        "select NUMBER, "
         "CATEG|| (Case SUBCATEG when '' then '' else ':'||  SUBCATEG end ) as SUBCATEGORY "
         ", AMOUNT "
         "from ( "
         "select coalesce(CAT.CATEGNAME, SCAT.CATEGNAME) as CATEG, "
         "CANS.ACCOUNTID as ACCOUNTID, "
         "coalesce(SUBCAT.SUBCATEGNAME, SSCAT.SUBCATEGNAME,'') as SUBCATEG, "
-        "ACC.ACCOUNTNAME as ACCOUNTNAME, "
-        "(ROUND((case CANS.TRANSCODE when 'Withdrawal' then -1 else 1 end) "
+        "count(*) as NUMBER, "
+        "total((ROUND((case CANS.TRANSCODE when 'Withdrawal' then -1 else 1 end) "
         "* (case CANS.CATEGID when -1 then ST.SPLITTRANSAMOUNT else CANS.TRANSAMOUNT end),2) "
         "* CF.BASECONVRATE "
-        ") as BASEAMOUNT, "
-        "(ROUND((case CANS.TRANSCODE when 'Withdrawal' then -1 else 1 end) "
-        "* (case CANS.CATEGID when -1 then ST.SPLITTRANSAMOUNT else CANS.TRANSAMOUNT end),2) "
-        ") as AMOUNT "
+        ")) as AMOUNT "
         "from  CHECKINGACCOUNT_V1 CANS "
         "left join CATEGORY_V1 CAT on CAT.CATEGID = CANS.CATEGID "
         "left join SUBCATEGORY_V1 SUBCAT on SUBCAT.SUBCATEGID = CANS.SUBCATEGID and SUBCAT.CATEGID = CANS.CATEGID "
@@ -648,13 +645,13 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
         "left join CATEGORY_V1 SCAT on SCAT.CATEGID = ST.CATEGID and CANS.TRANSID=ST.TRANSID "
         "left join SUBCATEGORY_V1 SSCAT on SSCAT.SUBCATEGID = ST.SUBCATEGID and SSCAT.CATEGID = ST.CATEGID and CANS.TRANSID=ST.TRANSID "
         "left join CURRENCYFORMATS_V1 CF on CF.CURRENCYID = ACC.CURRENCYID "
-        "where  CANS.TRANSCODE='Withdrawal' "
+        "where CANS.TRANSCODE <> 'Transfer' "
         "and CANS.TRANSDATE > date('now','localtime', '-1 month') and CANS.TRANSDATE <= date('now','localtime') "
         "and CANS.STATUS <> 'V' "
-        //"group by CATEG, SUBCATEG "
-        "order by ABS (BASEAMOUNT) DESC, ACCOUNTNAME, CATEG, SUBCATEG, AMOUNT "
+        "group by CATEG, SUBCATEG "
+        "order by ABS (AMOUNT) DESC, CATEG, SUBCATEG "
         "limit 10 "
-        ") where AMOUNT <> 0" ;
+        ") where AMOUNT < 0" ;
 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql3);
 
@@ -662,22 +659,26 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
     std::vector<CategInfo> categList;
 
     hb.startTable(wxT("95%"));
-    wxString headerMsg;
-    headerMsg << _("Top Withdrawals: ") << _("Last 30 Days");
-    hb.addTableHeaderRow(headerMsg, 3);
+    wxString headerMsg = wxString() << _("Top Withdrawals: ") << _("Last 30 Days");
+    hb.startTableRow();
+    hb.addTableCell(headerMsg, false, false, true);
+    hb.endTableRow();
+    hb.endTable();
+
+    hb.startTable(wxT("95%"));
+    hb.startTableRow();
+    hb.addTableHeaderCell(_("Number"), false);
+    hb.addTableHeaderCell(_("Category"), false);
+    hb.addTableHeaderCell(_("Summary"), true);
+    hb.endTableRow();
+
     while(q1.NextRow())
     {
-        int accountid = q1.GetInt (wxT ("ACCOUNTID")) ;
         double catAmount = q1.GetDouble(wxT("AMOUNT"));
         wxString subcategString = q1.GetString(wxT("SUBCATEGORY"));
-        wxString accountString = q1.GetString(wxT("ACCOUNTNAME"));
+        wxString accountString = q1.GetString(wxT("NUMBER"));
 
-        // Load the currency for this BD
-        boost::weak_ptr<mmCurrency> wpCurrency = core_->accountList_.getCurrencyWeakPtr(accountid);
-        boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
-        wxASSERT(pCurrency);
-        if (pCurrency)
-            pCurrency->loadCurrencySettings();
+        mmDBWrapper::loadBaseCurrencySettings(core_->db_.get());
 
         mmex::formatDoubleToCurrency(catAmount, catAmountStr);
 
