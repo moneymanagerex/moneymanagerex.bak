@@ -320,24 +320,22 @@ wxString mmAccountList::getName(int accountID) const
 
 wxString mmAccountList::getAccountType(int accountID) const
 {
-    int len = (int)accounts_.size();
-    for (int idx = 0; idx < len; idx++)
+    for (account_v::const_iterator it = accounts_.begin(); it != accounts_.end(); ++ it)
     {
-        if (accounts_[idx]->id_ == accountID)
-            return accounts_[idx]->acctType_;
+        if ((*it)->id_ == accountID) return (*it)->acctType_;
     }
+
     wxASSERT(false);
     return wxT("");
 }
 
 mmAccount::AccountStatus mmAccountList::getAccountStatus(int accountID) const
 {
-    int len = (int)accounts_.size();
-    for (int idx = 0; idx < len; idx++)
+    for (account_v::const_iterator it = accounts_.begin(); it != accounts_.end(); ++ it)
     {
-        if (accounts_[idx]->id_ == accountID)
-            return accounts_[idx]->status_;
+        if ((*it)->id_ == accountID) return (*it)->status_;
     }
+
     wxASSERT(false);
     return mmAccount::MMEX_Open;
 }
