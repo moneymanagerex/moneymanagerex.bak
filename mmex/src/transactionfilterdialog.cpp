@@ -156,7 +156,14 @@ void TransFilterDialog::CreateControls()
                                 wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbStatus_->SetValue(FALSE);
 
-    choiceStatus_ = new wxChoice( itemPanel, wxID_ANY, wxDefaultPosition, wxSize(fieldWidth,-1), 5, trxStatuses4Choice, 0 );
+    wxArrayString choiceStatusStrings;
+    choiceStatusStrings.Add(_("None"));
+    choiceStatusStrings.Add(_("Reconciled"));
+    choiceStatusStrings.Add(_("Void"));
+    choiceStatusStrings.Add(_("Follow up"));
+    choiceStatusStrings.Add(_("Duplicate"));
+
+    choiceStatus_ = new wxChoice( itemPanel, wxID_ANY, wxDefaultPosition, wxSize(fieldWidth,-1), choiceStatusStrings);
 	choiceStatus_->SetSelection(mmIniOptions::transStatusReconciled_);
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
 
@@ -168,7 +175,11 @@ void TransFilterDialog::CreateControls()
                               wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbType_->SetValue(FALSE);
     
-    choiceType_ = new wxChoice( itemPanel, wxID_ANY,wxDefaultPosition, wxSize(fieldWidth,-1), 3, trxTypes4Choice, 0 );
+    wxArrayString choiceTypeStrings;
+    choiceTypeStrings.Add(_("Withdrawal"));
+    choiceTypeStrings.Add(_("Deposit"));
+    choiceTypeStrings.Add(_("Transfer"));
+    choiceType_ = new wxChoice( itemPanel, wxID_ANY,wxDefaultPosition, wxSize(fieldWidth,-1), choiceTypeStrings);
     choiceType_->SetSelection(0);
     choiceType_->SetToolTip(_("Specify the type of transaction."));
 
