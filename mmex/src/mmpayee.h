@@ -24,7 +24,11 @@ class mmPayee
 {
 public: 
     mmPayee() {}
-    mmPayee(int id, const wxString& name, boost::shared_ptr<mmCategory> category);
+    mmPayee(int id, const wxString& name, boost::shared_ptr<mmCategory> category)
+        :id_(id)
+        , name_(name)
+        , category_(category)
+        {}
     ~mmPayee() {}
 
     int id_;
