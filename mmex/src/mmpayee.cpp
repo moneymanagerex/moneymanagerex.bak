@@ -20,13 +20,6 @@
 #include "util.h"
 #include "dbwrapper.h"
 
-mmPayee::mmPayee(int id, const wxString& name, boost::shared_ptr<mmCategory> category)
-    : id_(id)
-      , name_(name)
-      , category_(category)
-{
-}
-
 bool mmPayeeList::exists(const wxString& payeeName) const
 {
     for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = entities_.begin(); it != entities_.end(); ++ it)
