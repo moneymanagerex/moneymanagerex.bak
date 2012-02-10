@@ -53,10 +53,10 @@ public:
     boost::shared_ptr<mmPayee> getSharedPtr(int payeeID);
     void sortPayeeList(void);
 
-    std::vector< boost::shared_ptr<mmPayee> > entities_;
-    int num() const {return entities_.size(); }
+    std::vector< boost::shared_ptr<mmPayee> > entries_;
+    int num() const {return entries_.size(); }
     typedef std::vector< boost::shared_ptr<mmPayee> >::const_iterator const_iterator;
-    std::pair<const_iterator, const_iterator> range() const { return std::make_pair(entities_.begin(), entities_.end()); }
+    std::pair<const_iterator, const_iterator> range() const { return std::make_pair(entries_.begin(), entries_.end()); }
 
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
