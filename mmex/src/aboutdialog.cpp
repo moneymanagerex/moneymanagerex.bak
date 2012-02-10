@@ -124,7 +124,7 @@ void mmAboutDialog::CreateControls()
     itemStaticBitmap3Bitmap.LoadFile(mmex::getPathResource(mmex::SPLASH_ICON), wxBITMAP_TYPE_PNG); 
 
     wxStaticBitmap* itemStaticBitmap3 = 0;
-    if (!mmIniOptions::enableCustomLogo_)
+    if (!mmIniOptions::instance().enableCustomLogo_)
     {
         itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
             itemStaticBitmap3Bitmap, wxDefaultPosition);
@@ -145,7 +145,7 @@ void mmAboutDialog::CreateControls()
     itemBoxSizer4->Add(itemStaticText6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
     itemBoxSizer4->Add(itemStaticText61, 0, wxALIGN_CENTER_HORIZONTAL|wxLEFT|wxBOTTOM|wxRIGHT, 5);
 
-    if (!mmIniOptions::enableCustomAboutDialog_)
+    if (!mmIniOptions::instance().enableCustomAboutDialog_)
     {
        wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
           wxID_STATIC, MMEX_INITIAL_AUTHOR_STR, wxDefaultPosition, wxDefaultSize, 0 );
@@ -201,7 +201,7 @@ void mmAboutDialog::CreateControls()
     else
     {
        wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, 
-          wxID_STATIC, mmIniOptions::aboutCompanyName_ , wxDefaultPosition, wxDefaultSize, 0 );
+          wxID_STATIC, mmIniOptions::instance().aboutCompanyName_ , wxDefaultPosition, wxDefaultSize, 0 );
        itemStaticText8->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxGetEmptyString()));
        itemBoxSizer4->Add(itemStaticText8, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
     }

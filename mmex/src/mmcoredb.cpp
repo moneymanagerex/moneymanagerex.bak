@@ -188,7 +188,7 @@ mmCoreDB::mmCoreDB(boost::shared_ptr<wxSQLite3Database> db) :
 
     /* Load the DB into memory */
 
-    mmOptions::loadOptions(db_.get());
+    mmOptions::instance().loadOptions(db_.get());
     loadCurrencies(db_, currencyList_);
     loadCategories(db_, categoryList_);
     loadPayees(db_, categoryList_, payeeList_);

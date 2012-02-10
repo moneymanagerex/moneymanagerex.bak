@@ -324,7 +324,7 @@ void mmTransDialog::CreateControls()
     choiceStatusStrings.Add(_("Duplicate"));
 
     choiceStatus_ = new wxChoice( itemPanel7, ID_DIALOG_TRANS_STATUS, wxDefaultPosition, wxSize(110, -1), choiceStatusStrings);
-    choiceStatus_->SetSelection(mmIniOptions::transStatusReconciled_);
+    choiceStatus_->SetSelection(mmIniOptions::instance().transStatusReconciled_);
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
     choiceStatus_->Connect(ID_DIALOG_TRANS_STATUS, wxEVT_CHAR, wxKeyEventHandler(mmTransDialog::onChoiceStatusChar), NULL, this);
     
@@ -390,7 +390,7 @@ void mmTransDialog::CreateControls()
     if (!edit_)
     {
         //If user does not want payee to be auto filled for the new transaction
-        if ( mmIniOptions::transPayeeSelectionNone_ == 0)
+        if ( mmIniOptions::instance().transPayeeSelectionNone_ == 0)
         {
             payeeName = resetPayeeString();
             payeeUnknown_ = true;
@@ -401,7 +401,7 @@ void mmTransDialog::CreateControls()
             payeeUnknown_ = false;
         }
 
-        if ( mmIniOptions::transCategorySelectionNone_== 0 || categString.IsEmpty() )
+        if ( mmIniOptions::instance().transCategorySelectionNone_== 0 || categString.IsEmpty() )
         {
             categString = resetCategoryString();
         }
@@ -541,7 +541,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
                 return;
 
             // Only for new transactions: if user want to autofill last category used for payee.
-            if ( mmIniOptions::transCategorySelectionNone_ == 1 && ( !edit_ && !categUpdated_ ) )
+            if ( mmIniOptions::instance().transCategorySelectionNone_ == 1 && ( !edit_ && !categUpdated_ ) )
             {
                 // if payee has memory of last category used then display last category for payee
                 if (tempCategID != -1)
@@ -758,7 +758,7 @@ void mmTransDialog::updateControlsForTransType()
         if (!edit_)
         {
             wxString categString;
-            if (  mmIniOptions::transCategorySelectionNone_==0 ) // Default Category = "None"
+            if (mmIniOptions::instance().transCategorySelectionNone_ == 0) // Default Category = "None"
                 categString = resetCategoryString();
             else
                 categString = getMostFrequentlyUsedCategory();

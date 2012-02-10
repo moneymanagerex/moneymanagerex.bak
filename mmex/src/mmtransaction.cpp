@@ -460,7 +460,7 @@ int mmBankTransactionList::addTransaction(mmCoreDB* core, boost::shared_ptr<mmBa
 
    r.transactionID(db_->GetLastRowId().ToLong());
    st.Finalize();
-   mmOptions::databaseUpdated_ = true;
+   mmOptions::instance().databaseUpdated_ = true;
 
    r.splitEntries_->updateToDB(db_, r.transactionID(), false);
    transactions_.push_back(pBankTransaction);
@@ -608,7 +608,7 @@ void mmBankTransactionList::updateTransaction(boost::shared_ptr<mmBankTransactio
 
     r.splitEntries_->updateToDB(db_, r.transactionID(), true);
     st.Finalize();
-    mmOptions::databaseUpdated_ = true;
+    mmOptions::instance().databaseUpdated_ = true;
 }
 
 boost::shared_ptr<mmBankTransaction> mmBankTransactionList::getBankTransactionPtr

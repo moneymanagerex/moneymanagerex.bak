@@ -206,7 +206,7 @@ bool mmAccountList::remove(int accountID)
         st.ExecuteUpdate();
         st.Finalize();
     }
-    mmOptions::databaseUpdated_ = true;
+    mmOptions::instance().databaseUpdated_ = true;
 
     std::vector<boost::shared_ptr<mmAccount> >::iterator iter;
     for (iter = accounts_.begin(); iter != accounts_.end(); )
@@ -279,7 +279,7 @@ void mmAccountList::update(boost::shared_ptr<mmAccount> pAccount)
 
    st.ExecuteUpdate();
    st.Finalize();
-   mmOptions::databaseUpdated_ = true;
+   mmOptions::instance().databaseUpdated_ = true;
 }
 
 boost::shared_ptr<mmAccount> mmAccountList::getAccountSharedPtr(int accountID) const
@@ -421,7 +421,7 @@ int mmAccountList::add(boost::shared_ptr<mmAccount> pAccount)
     accounts_.push_back(pAccount);
 
     st.Finalize();
-    mmOptions::databaseUpdated_ = true;
+    mmOptions::instance().databaseUpdated_ = true;
 
     return pAccount->id_;
 }

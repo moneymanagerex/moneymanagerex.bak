@@ -185,7 +185,7 @@ void mmCategDialog::CreateControls()
 
 void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
 {
-    if (mmIniOptions::disableCategoryModify_)
+    if (mmIniOptions::instance().disableCategoryModify_)
         return;
 
     wxTextCtrl* textCtrl;  
@@ -270,7 +270,7 @@ void mmCategDialog::showCategDialogDeleteError(wxString deleteCategoryErrMsg, bo
  
 void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
 {
-    if (mmIniOptions::disableCategoryModify_)
+    if (mmIniOptions::instance().disableCategoryModify_)
         return;
 
     if (selectedItemId_ == root_ || !selectedItemId_ )
@@ -386,7 +386,7 @@ void mmCategDialog::OnSelChanged(wxTreeEvent& event)
 
 void mmCategDialog::OnEdit(wxCommandEvent& /*event*/)
 {
-    if (mmIniOptions::disableCategoryModify_)
+    if (mmIniOptions::instance().disableCategoryModify_)
         return;
 
     wxTextCtrl* textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_CATEG_TEXTCTRL_CATNAME);

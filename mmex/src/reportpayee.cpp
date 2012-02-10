@@ -54,7 +54,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
     {
         wxString balance;
         double amt = core_->bTransactionList_.getAmountForPayee((*it)->id_,
-            ignoreDate_, dtBegin_, dtEnd_, mmIniOptions::ignoreFutureTransactions_
+            ignoreDate_, dtBegin_, dtEnd_, mmIniOptions::instance().ignoreFutureTransactions_
         );
         mmex::formatDoubleToCurrency(amt, balance);
 

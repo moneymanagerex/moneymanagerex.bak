@@ -25,7 +25,7 @@ mmHTMLBuilder::mmHTMLBuilder() {
 	color0 = wxT("bgcolor=\"") + mmColors::listAlternativeColor0.GetAsString(wxC2S_HTML_SYNTAX) + wxT ("\"");
 	color1 = wxT("bgcolor=\"") + mmColors::listAlternativeColor1.GetAsString(wxC2S_HTML_SYNTAX) + wxT ("\"");
 	// init font size from config
-	fontSize = wxT ("\"") + mmIniOptions::fontSize_ + wxT ("\"");
+	fontSize = wxT ("\"") + mmIniOptions::instance().fontSize_ + wxT ("\"");
 }
 
 void mmHTMLBuilder::init()
@@ -38,20 +38,20 @@ void mmHTMLBuilder::init()
 //	html += wxT("<tr bgcolor=\"") + mmColors::listBorderColor.GetAsString(wxC2S_HTML_SYNTAX) + wxT("\" height=\"1\"><td height=\"1");
 
     //if I need more space on the top of home page and reports I will delete user name from settings
-    if (mmIniOptions::userNameString_ != wxT (""))
+    if (mmIniOptions::instance().userNameString_ != wxT (""))
     {
     int cols = 1;
     startTable(wxT("100%"));
     startTableRow();
-    if (mmIniOptions::enableCustomLogo_)
+    if (mmIniOptions::instance().enableCustomLogo_)
     {
         startTableCell();
-        addImage(mmIniOptions::logoName_);
+        addImage(mmIniOptions::instance().logoName_);
         endTableCell();
         cols++;
     }
     startTableCell();
-    addHeader(2, mmIniOptions::userNameString_);
+    addHeader(2, mmIniOptions::instance().userNameString_);
     endTableCell();
     endTableRow();
     endTable();
