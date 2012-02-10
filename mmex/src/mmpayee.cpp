@@ -55,7 +55,7 @@ int mmPayeeList::add(const wxString &payeeName)
 	    st.ExecuteUpdate();
 	    payeeID = (int)db_->GetLastRowId().ToLong();
 	    st.Finalize();
-        mmOptions::databaseUpdated_ = true;
+        mmOptions::instance().databaseUpdated_ = true;
 
     } catch(wxSQLite3Exception e) 
     { 

@@ -112,58 +112,62 @@ void mmPlayTransactionSound( wxSQLite3Database* db_ );
 class mmOptions
 {
 public:
-    static void loadOptions( wxSQLite3Database* db );
-    static void saveOptions( wxSQLite3Database* db );
+    mmOptions();
+    static mmOptions& instance();
+    void loadOptions( wxSQLite3Database* db );
+    void saveOptions( wxSQLite3Database* db );
 
-    static wxString dateFormat;
-    static wxString language;
-    static wxString financialYearStartDayString_;
-    static wxString financialYearStartMonthString_;
-    static bool databaseUpdated_;
+    wxString dateFormat;
+    wxString language;
+    wxString financialYearStartDayString_;
+    wxString financialYearStartMonthString_;
+    bool databaseUpdated_;
 };
 
 class mmIniOptions
 {
 public:
-    static void loadOptions( wxSQLite3Database* db );
-    static void loadInfoOptions( wxSQLite3Database* db );
-    static void saveOptions( wxSQLite3Database* db );
+    mmIniOptions();
+    static mmIniOptions& instance();
+    void loadOptions( wxSQLite3Database* db );
+    void loadInfoOptions( wxSQLite3Database* db );
+    void saveOptions( wxSQLite3Database* db );
 
-    static bool enableAssets_;
-    static bool enableBudget_;
-    static bool enableGraphs_;
-    static bool enableAddAccount_;
-    static bool enableDeleteAccount_;
-    static bool enableRepeatingTransactions_;
-    static bool enableCustomLogo_;
-    static bool enableCheckForUpdates_;
-    static bool enableReportIssues_;
-    static bool enableBeNotifiedForNewReleases_;
-    static bool enableVisitWebsite_;
-    static wxString logoName_;
-    static wxString fontSize_;
-    static bool enableCustomAboutDialog_;
-    static wxString aboutCompanyName_;
-    static bool disableCategoryModify_;
-    static wxString userNameString_;
-    static bool enableCustomTemplateDB_;
-    static wxString customTemplateDB_;
+    bool enableAssets_;
+    bool enableBudget_;
+    bool enableGraphs_;
+    bool enableAddAccount_;
+    bool enableDeleteAccount_;
+    bool enableRepeatingTransactions_;
+    bool enableCustomLogo_;
+    bool enableCheckForUpdates_;
+    bool enableReportIssues_;
+    bool enableBeNotifiedForNewReleases_;
+    bool enableVisitWebsite_;
+    wxString logoName_;
+    wxString fontSize_;
+    bool enableCustomAboutDialog_;
+    wxString aboutCompanyName_;
+    bool disableCategoryModify_;
+    wxString userNameString_;
+    bool enableCustomTemplateDB_;
+    wxString customTemplateDB_;
 
-    static bool expandBankHome_;
-    static bool expandTermHome_;
-    static bool expandStocksHome_;
-    static bool expandBankTree_;
-    static bool expandTermTree_;
+    bool expandBankHome_;
+    bool expandTermHome_;
+    bool expandStocksHome_;
+    bool expandBankTree_;
+    bool expandTermTree_;
 
-    static bool budgetFinancialYears_;
-    static bool budgetIncludeTransfers_;
-    static bool budgetSetupWithoutSummaries_;
-    static bool budgetSummaryWithoutCategories_;
-    static bool ignoreFutureTransactions_;
-    
-    static int transPayeeSelectionNone_;
-    static int transCategorySelectionNone_;
-    static int transStatusReconciled_;
+    bool budgetFinancialYears_;
+    bool budgetIncludeTransfers_;
+    bool budgetSetupWithoutSummaries_;
+    bool budgetSummaryWithoutCategories_;
+    bool ignoreFutureTransactions_;
+   
+    int transPayeeSelectionNone_;
+    int transCategorySelectionNone_;
+    int transStatusReconciled_;
 };
 
 class mmColors

@@ -53,7 +53,7 @@ wxString mmReportIncomeExpenses::getHTMLText()
 
     double expenses = 0.0;
     double income = 0.0;
-    core_->bTransactionList_.getExpensesIncome(-1,expenses, income,  ignoreDate_, dtBegin_,dtEnd_, mmIniOptions::ignoreFutureTransactions_);
+    core_->bTransactionList_.getExpensesIncome(-1,expenses, income,  ignoreDate_, dtBegin_,dtEnd_, mmIniOptions::instance().ignoreFutureTransactions_);
 
     mmGraphIncExpensesMonth gg;
     gg.init(income, expenses);

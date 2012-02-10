@@ -99,7 +99,7 @@ void mmAppStartDialog::CreateControls()
     itemStaticBitmap4Bitmap.LoadFile(mmex::getPathResource(mmex::SPLASH_ICON), wxBITMAP_TYPE_PNG); 
     
     wxStaticBitmap* itemStaticBitmap4 = 0;
-    if (!mmIniOptions::enableCustomLogo_)
+    if (!mmIniOptions::instance().enableCustomLogo_)
     {
         itemStaticBitmap4 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
             itemStaticBitmap4Bitmap, wxDefaultPosition, wxSize(400, 209), 0 );
@@ -146,7 +146,7 @@ void mmAppStartDialog::CreateControls()
     itemButton8->SetToolTip(_("Read the user manual"));
     itemBoxSizer5->Add(itemButton8, 0, wxGROW|wxALL, 5);
 
-    if (mmIniOptions::enableVisitWebsite_)
+    if (mmIniOptions::instance().enableVisitWebsite_)
     {
        wxButton* itemButton9 = new wxButton( itemDialog1, ID_BUTTON_APPSTART_WEBSITE, 
           _("Visit Website for more information"), wxDefaultPosition, wxDefaultSize, 0 );

@@ -209,7 +209,7 @@ void mmFilterTransactionsDialog::CreateControls()
 
     choiceStatus = new wxChoice( itemPanel, ID_CHOICE7, wxDefaultPosition, wxDefaultSize, choiceStatusStrings);
     itemPanelSizer->Add(choiceStatus, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	choiceStatus->SetSelection(mmIniOptions::transStatusReconciled_);
+	choiceStatus->SetSelection(mmIniOptions::instance().transStatusReconciled_);
     choiceStatus->SetToolTip(_("Specify the status for the transaction"));
     //--End of Row --------------------------------------------------------
 

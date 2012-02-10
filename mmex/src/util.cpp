@@ -218,48 +218,42 @@ void DoubleToCurrency(const mmex::CurrencyFormatter &fmt, double val, wxString& 
 } // namespace
 
 //----------------------------------------------------------------------------
-bool mmIniOptions::enableAssets_ = true;
-bool mmIniOptions::enableBudget_ = true;
-bool mmIniOptions::enableGraphs_ = true;
-bool mmIniOptions::enableCustomLogo_ = false;
-wxString mmIniOptions::logoName_;
-bool mmIniOptions::enableAddAccount_ = true;
-bool mmIniOptions::enableRepeatingTransactions_ = true;
-bool mmIniOptions::enableCheckForUpdates_ = true;
-bool mmIniOptions::enableReportIssues_  = true;
-bool mmIniOptions::enableBeNotifiedForNewReleases_ = true;
-bool mmIniOptions::enableVisitWebsite_ = true;
-bool mmIniOptions::enableCustomAboutDialog_ = false;
-wxString mmIniOptions::aboutCompanyName_;
-bool mmIniOptions::disableCategoryModify_ = false;
-bool mmIniOptions::enableDeleteAccount_ = true;
-wxString mmIniOptions::userNameString_;
-bool mmIniOptions::enableCustomTemplateDB_ = false;
-wxString mmIniOptions::customTemplateDB_;
-wxString mmIniOptions::fontSize_ = wxT("3");
+mmIniOptions::mmIniOptions()
+    : enableAssets_(true)
+    , enableBudget_(true)
+    , enableGraphs_(true)
+    , enableCustomLogo_(false)
+    , enableAddAccount_(true)
+    , enableRepeatingTransactions_(true)
+    , enableCheckForUpdates_(true)
+    , enableReportIssues_ (true)
+    , enableBeNotifiedForNewReleases_(true)
+    , enableVisitWebsite_(true)
+    , enableCustomAboutDialog_(false)
+    , disableCategoryModify_(false)
+    , enableDeleteAccount_(true)
+    , enableCustomTemplateDB_(false)
+    , fontSize_(wxT("3"))
+    , expandBankHome_(true)
+    , expandTermHome_(false)
+    , expandStocksHome_(true)
+    , expandBankTree_(true)
+    , expandTermTree_(false)
+    , budgetFinancialYears_(false)
+    , budgetIncludeTransfers_(false)
+    , budgetSetupWithoutSummaries_(false)
+    , budgetSummaryWithoutCategories_(true)
+    , ignoreFutureTransactions_(false)
+    , transPayeeSelectionNone_(0)
+    , transCategorySelectionNone_(0)
+    , transStatusReconciled_(0)
+    {}
 
-bool mmIniOptions::expandBankHome_ = true;
-bool mmIniOptions::expandTermHome_ = false;
-bool mmIniOptions::expandStocksHome_ = true;
-bool mmIniOptions::expandBankTree_ = true;
-bool mmIniOptions::expandTermTree_ = false;
-
-bool mmIniOptions::budgetFinancialYears_ = false;
-bool mmIniOptions::budgetIncludeTransfers_ = false;
-bool mmIniOptions::budgetSetupWithoutSummaries_ = false;
-bool mmIniOptions::budgetSummaryWithoutCategories_ = true;
-bool mmIniOptions::ignoreFutureTransactions_ = false;
-
-int mmIniOptions::transPayeeSelectionNone_     = 0;
-int mmIniOptions::transCategorySelectionNone_  = 0;
-int mmIniOptions::transStatusReconciled_       = 0;
-
-//----------------------------------------------------------------------------
-wxString mmOptions::dateFormat = mmex::DEFDATEFORMAT;
-wxString mmOptions::language = wxT("english");
-wxString mmOptions::financialYearStartDayString_;
-wxString mmOptions::financialYearStartMonthString_;
-bool mmOptions::databaseUpdated_ = false;
+mmIniOptions&
+mmIniOptions::instance()
+{
+    return mmex::Singleton<mmIniOptions>::instance();
+}
 //----------------------------------------------------------------------------
 
 void correctEmptyFileExt(wxString ext, wxString & fileName)
@@ -267,6 +261,18 @@ void correctEmptyFileExt(wxString ext, wxString & fileName)
     wxFileName tempFileName(fileName);
     if (tempFileName.GetExt().IsEmpty())
         fileName << wxT(".") << ext;
+}
+//----------------------------------------------------------------------------
+mmOptions::mmOptions()
+        : dateFormat(mmex::DEFDATEFORMAT)
+        , language(wxT("english"))
+        , databaseUpdated_(false)
+        {}
+//----------------------------------------------------------------------------
+mmOptions&
+mmOptions::instance()
+{
+    return mmex::Singleton<mmOptions>::instance();
 }
 //----------------------------------------------------------------------------
 
@@ -293,7 +299,7 @@ void mmIniOptions::loadOptions(wxSQLite3Database* db)
     if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEBUDGET"), wxT("TRUE")) != wxT("TRUE")) enableBudget_ = false;
     if (mmDBWrapper::getINISettingValue(db, wxT("ENABLEGRAPHS"), wxT("TRUE")) != wxT("TRUE")) enableGraphs_ = false;
 
-    mmIniOptions::fontSize_ = mmDBWrapper::getINISettingValue(db, wxT("HTMLFONTSIZE"), wxT("3"));
+    fontSize_ = mmDBWrapper::getINISettingValue(db, wxT("HTMLFONTSIZE"), wxT("3"));
 
     if (mmDBWrapper::getINISettingValue(db, wxT("EXPAND_BANK_HOME"), wxT("TRUE")) != wxT("TRUE"))   expandBankHome_ = false;
     if (mmDBWrapper::getINISettingValue(db, wxT("EXPAND_TERM_HOME"), wxT("FALSE")) != wxT("FALSE")) expandTermHome_ = true;
@@ -316,7 +322,7 @@ void mmIniOptions::loadOptions(wxSQLite3Database* db)
 
 void mmIniOptions::loadInfoOptions(wxSQLite3Database* db)
 {
-    mmIniOptions::userNameString_ = mmDBWrapper::getInfoSettingValue(db, wxT("USERNAME"), wxT(""));
+    mmIniOptions::instance().userNameString_ = mmDBWrapper::getInfoSettingValue(db, wxT("USERNAME"), wxT(""));
 }
 
 void mmIniOptions::saveOptions(wxSQLite3Database* /*db*/)
@@ -372,7 +378,7 @@ wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database* inidb, bool force
         lang = mmDBWrapper::getINISettingValue(inidb, param_lang);
         if (!lang.empty() && locale.AddCatalog(lang) && locale.IsLoaded(lang)) 
         {
-            mmOptions::language = lang;
+            mmOptions::instance().language = lang;
             return lang;
         }
    }
@@ -383,7 +389,7 @@ wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database* inidb, bool force
     {
         bool ok = locale.AddCatalog(lang) && locale.IsLoaded(lang);
         if (!ok)  lang.clear(); // bad .mo file
-        mmOptions::language = lang;
+        mmOptions::instance().language = lang;
         mmDBWrapper::setINISettingValue(inidb, param_lang, lang);
     }
 
@@ -439,7 +445,7 @@ wxString mmGetNiceDateString(const wxDateTime &dt)
     wxString dts(gDaysInWeek[dt.GetWeekDay()] + wxString(wxT(", ")));
 
 //  Discover the date format set by the user
-    wxString dateFmt = mmOptions::dateFormat.Mid(1, 1).MakeUpper();
+    wxString dateFmt = mmOptions::instance().dateFormat.Mid(1, 1).MakeUpper();
 
 //  Format date as: DDD, DD MMM YYYY
     if (dateFmt == wxT("D")) 
@@ -473,7 +479,7 @@ wxString mmGetNiceDateSimpleString(const wxDateTime &dt)
     wxString dts = mmGetNiceMonthName(dt.GetMonth()) + wxString(wxT(" "));
 
 //  Discover the date format set by the user
-    wxString dateFmt = mmOptions::dateFormat.Mid(1,1).MakeUpper();
+    wxString dateFmt = mmOptions::instance().dateFormat.Mid(1,1).MakeUpper();
 //  Format date as: DD MMM YYYY
     if (dateFmt == wxT("D")) 
     {
@@ -693,7 +699,7 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
 
 wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, const wxDateTime &dt)
 {
-    return dt.Format(mmOptions::dateFormat);
+    return dt.Format(mmOptions::instance().dateFormat);
 }
 
 wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* db, const wxString& dtstr)

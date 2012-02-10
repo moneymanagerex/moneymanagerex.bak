@@ -260,7 +260,7 @@ bool OnInitImpl(mmGUIApp &app)
     mmLoadColorsFromDatabase(&inidb);
 
     /* Load MMEX Custom Settings */
-    mmIniOptions::loadOptions(&inidb);
+    mmIniOptions::instance().loadOptions(&inidb);
 
     /* Was App Maximized? */
     wxString isMaxStrDef = wxT("FALSE");
@@ -691,7 +691,7 @@ void mmGUIFrame::cleanup()
     if (m_db) m_db->Close();
 
     /// Update the database according to user requirements
-    if (mmOptions::databaseUpdated_ && 
+    if (mmOptions::instance().databaseUpdated_ && 
        (mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB_UPDATE"), wxT("FALSE")) == wxT("TRUE")))
     {
         BackupDatabase(fileName_, true);
@@ -978,11 +978,11 @@ void mmGUIFrame::menuEnableItems(bool enable)
 {
     menuBar_->FindItem(MENU_SAVE_AS)->Enable(enable);
     menuBar_->FindItem(MENU_EXPORT)->Enable(enable);
-    if (mmIniOptions::enableAddAccount_)
+    if (mmIniOptions::instance().enableAddAccount_)
         menuBar_->FindItem(MENU_NEWACCT)->Enable(enable);
     menuBar_->FindItem(MENU_ACCTLIST)->Enable(enable);
     menuBar_->FindItem(MENU_ACCTEDIT)->Enable(enable);
-    if (mmIniOptions::enableDeleteAccount_)
+    if (mmIniOptions::instance().enableDeleteAccount_)
         menuBar_->FindItem(MENU_ACCTDELETE)->Enable(enable);
 
     menuBar_->FindItem(MENU_ORGCATEGS)->Enable(enable);
@@ -998,17 +998,17 @@ void mmGUIFrame::menuEnableItems(bool enable)
     menuBar_->FindItem(MENU_PRINT_PREVIEW)->Enable(enable);
     menuBar_->FindItem(MENU_PRINT)->Enable(enable);
     menuBar_->FindItem(wxID_PREFERENCES)->Enable(enable);
-    if (mmIniOptions::enableRepeatingTransactions_)
+    if (mmIniOptions::instance().enableRepeatingTransactions_)
         menuBar_->FindItem(MENU_BILLSDEPOSITS)->Enable(enable);
 //  menuBar_->FindItem(MENU_STOCKS)->Enable(enable);
     menuBar_->FindItem(MENU_CURRENCY)->Enable(enable);
-    if (mmIniOptions::enableAssets_)
+    if (mmIniOptions::instance().enableAssets_)
         menuBar_->FindItem(MENU_ASSETS)->Enable(enable);
-    if (mmIniOptions::enableBudget_)
+    if (mmIniOptions::instance().enableBudget_)
         menuBar_->FindItem(MENU_BUDGETSETUPDIALOG)->Enable(enable);
     menuBar_->FindItem(MENU_TRANSACTIONREPORT)->Enable(enable);
 
-    if (mmIniOptions::enableAddAccount_)
+    if (mmIniOptions::instance().enableAddAccount_)
         toolBar_->EnableTool(MENU_NEWACCT, enable);
     toolBar_->EnableTool(MENU_ACCTLIST, enable);
     toolBar_->EnableTool(MENU_ORGPAYEE, enable);
@@ -1113,7 +1113,7 @@ bool mmGUIFrame::budgetTransferTotal()
 
 bool mmGUIFrame::financialYearIsDifferent()
 {
-    return (mmOptions::financialYearStartDayString_ != wxT("1") || mmOptions::financialYearStartMonthString_ != wxT("1"));
+    return (mmOptions::instance().financialYearStartDayString_ != wxT("1") || mmOptions::instance().financialYearStartMonthString_ != wxT("1"));
 }
 
 void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
@@ -1158,14 +1158,14 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     navTreeCtrl_->SetItemData(stocks, new mmTreeItemData(wxT("Stocks")));
     navTreeCtrl_->SetItemBold(stocks, true);
 
-    if (mmIniOptions::enableAssets_)
+    if (mmIniOptions::instance().enableAssets_)
     {
         wxTreeItemId assets = navTreeCtrl_->AppendItem(root, _("Assets"), 7, 7);
         navTreeCtrl_->SetItemData(assets, new mmTreeItemData(wxT("Assets")));
         navTreeCtrl_->SetItemBold(assets, true);
     }
 
-    if (mmIniOptions::enableRepeatingTransactions_)
+    if (mmIniOptions::instance().enableRepeatingTransactions_)
     {
        wxTreeItemId bills = navTreeCtrl_->AppendItem(root, _("Repeating Transactions"), 2, 2);
        navTreeCtrl_->SetItemData(bills, new mmTreeItemData(wxT("Bills & Deposits")));
@@ -1173,7 +1173,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     }
 
     wxTreeItemId budgeting;
-    if (mmIniOptions::enableBudget_)
+    if (mmIniOptions::instance().enableBudget_)
     {
         budgeting = navTreeCtrl_->AppendItem(root, _("Budget Setup"), 3, 3);
         navTreeCtrl_->SetItemData(budgeting, new mmTreeItemData(wxT("Budgeting")));
@@ -1226,7 +1226,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId reportsStocks = navTreeCtrl_->AppendItem(reportsSummary, _("Stocks"), 4, 4);
     navTreeCtrl_->SetItemData(reportsStocks, new mmTreeItemData(wxT("Summary of Stocks")));
 
-    if (mmIniOptions::enableAssets_)
+    if (mmIniOptions::instance().enableAssets_)
     {
         wxTreeItemId reportsAssets = navTreeCtrl_->AppendItem(reportsSummary, _("Assets"), 4, 4);
         navTreeCtrl_->SetItemData(reportsAssets, new mmTreeItemData(wxT("Summary of Assets")));
@@ -1380,7 +1380,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 
     ///////////////////////////////////////////////////////////////////
     
-    if (m_db && mmIniOptions::enableBudget_)
+    if (m_db && mmIniOptions::instance().enableBudget_)
     {
         static const char sql[] =
         "select BUDGETYEARID, BUDGETYEARNAME "
@@ -1519,13 +1519,13 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 
     }
 
-    if (mmIniOptions::expandBankTree_)
+    if (mmIniOptions::instance().expandBankTree_)
         navTreeCtrl_->Expand(accounts);
 
     if ( hasActiveTermAccounts() )
     {
         menuBar_->FindItem(MENU_VIEW_TERMACCOUNTS)->Enable(true);
-        if (mmIniOptions::expandTermTree_ || expandTermAccounts)
+        if (mmIniOptions::instance().expandTermTree_ || expandTermAccounts)
             navTreeCtrl_->Expand(termAccount);
     } else 
         menuBar_->FindItem(MENU_VIEW_TERMACCOUNTS)->Enable(false);
@@ -1536,7 +1536,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 wxDateTime mmGUIFrame::getUserDefinedFinancialYear(bool prevDayRequired) const
 {
     long monthNum;
-    mmOptions::financialYearStartMonthString_.ToLong(&monthNum);
+    mmOptions::instance().financialYearStartMonthString_.ToLong(&monthNum);
 
     if (monthNum > 0) //Test required for compatability with previous version
         monthNum --;
@@ -1547,7 +1547,7 @@ wxDateTime mmGUIFrame::getUserDefinedFinancialYear(bool prevDayRequired) const
         year -- ;
 
     long dayNum; 
-    wxString dayNumStr = mmOptions::financialYearStartDayString_;
+    wxString dayNumStr = mmOptions::instance().financialYearStartDayString_;
     dayNumStr.ToLong(&dayNum);
     if ( (dayNum < 1) || (dayNum > 31 ) ) {
         dayNum = 1;
@@ -2863,7 +2863,7 @@ void mmGUIFrame::createMenu()
 
     wxMenu *menuAccounts = new wxMenu;
 
-    if (mmIniOptions::enableAddAccount_)
+    if (mmIniOptions::instance().enableAddAccount_)
     {
         wxMenuItem* menuItemNewAcct = new wxMenuItem(menuAccounts, MENU_NEWACCT, 
             _("New &Account"), _("New Account"));
@@ -2879,7 +2879,7 @@ void mmGUIFrame::createMenu()
         _("&Edit Account"), _("Edit Account"));
     menuItemAcctEdit->SetBitmap(toolBarBitmaps[8]);
 
-    if (mmIniOptions::enableDeleteAccount_)
+    if (mmIniOptions::instance().enableDeleteAccount_)
     {
         wxMenuItem* menuItemAcctDelete = new wxMenuItem(menuAccounts, MENU_ACCTDELETE, 
             _("&Delete Account"), _("Delete Account from database"));
@@ -2921,7 +2921,7 @@ void mmGUIFrame::createMenu()
 
     menuTools->AppendSeparator();
     
-    if (mmIniOptions::enableBudget_)
+    if (mmIniOptions::instance().enableBudget_)
     {
         wxMenuItem* menuItemBudgeting = new wxMenuItem(menuTools, MENU_BUDGETSETUPDIALOG, 
             _("&Budget Setup"), _("Budget Setup"));
@@ -2929,7 +2929,7 @@ void mmGUIFrame::createMenu()
         menuTools->Append(menuItemBudgeting); 
     }
 
-    if (mmIniOptions::enableRepeatingTransactions_)
+    if (mmIniOptions::instance().enableRepeatingTransactions_)
     {
         wxMenuItem* menuItemBillsDeposits = new wxMenuItem(menuTools, MENU_BILLSDEPOSITS, 
             _("&Repeating Transactions"), _("Bills && Deposits"));
@@ -2941,7 +2941,7 @@ void mmGUIFrame::createMenu()
 //    menuItemStocks->SetBitmap(wxBitmap(stock_curve_xpm));
 //    menuTools->Append(menuItemStocks);
 
-    if (mmIniOptions::enableAssets_)
+    if (mmIniOptions::instance().enableAssets_)
     {
         wxMenuItem* menuItemAssets = new wxMenuItem(menuTools, MENU_ASSETS, _("&Assets"), _("Assets"));
         menuItemAssets->SetBitmap(wxBitmap(car_xpm));
@@ -3009,7 +3009,7 @@ void mmGUIFrame::createMenu()
 
     menuHelp->AppendSeparator();
 
-    if (mmIniOptions::enableCheckForUpdates_)
+    if (mmIniOptions::instance().enableCheckForUpdates_)
     {
        wxMenuItem* menuItemCheck = new wxMenuItem(menuTools, MENU_CHECKUPDATE, 
           _("Check for &Updates"), _("Check For Updates"));
@@ -3017,7 +3017,7 @@ void mmGUIFrame::createMenu()
        menuHelp->Append(menuItemCheck);
     }
 
-    if (mmIniOptions::enableReportIssues_)
+    if (mmIniOptions::instance().enableReportIssues_)
     {
        wxMenuItem* menuItemReportIssues = new wxMenuItem(menuTools, MENU_REPORTISSUES, 
           _("&Report Issues or Feedback"), _("Send email through the mailing list to report issues with the software."));
@@ -3025,7 +3025,7 @@ void mmGUIFrame::createMenu()
        menuHelp->Append(menuItemReportIssues);
     }
 
-    if (mmIniOptions::enableBeNotifiedForNewReleases_)
+    if (mmIniOptions::instance().enableBeNotifiedForNewReleases_)
     {
        wxMenuItem* menuItemNotify = new wxMenuItem(menuTools, MENU_ANNOUNCEMENTMAILING, 
           _("Be &notified of new releases"), _("Sign up for the announcement mailing list"));
@@ -3052,14 +3052,14 @@ void mmGUIFrame::createMenu()
 
     SetMenuBar(menuBar_);
 
-    menuBar_->Check(MENU_VIEW_BANKACCOUNTS, mmIniOptions::expandBankHome_);
-    menuBar_->Check(MENU_VIEW_TERMACCOUNTS, mmIniOptions::expandTermHome_);
-    menuBar_->Check(MENU_VIEW_STOCKACCOUNTS, mmIniOptions::expandStocksHome_);
-    menuBar_->Check(MENU_VIEW_BUDGET_FINANCIAL_YEARS, mmIniOptions::budgetFinancialYears_);
-    menuBar_->Check(MENU_VIEW_BUDGET_TRANSFER_TOTAL, mmIniOptions::budgetIncludeTransfers_);
-    menuBar_->Check(MENU_VIEW_BUDGET_SETUP_SUMMARY, mmIniOptions::budgetSetupWithoutSummaries_);
-    menuBar_->Check(MENU_VIEW_BUDGET_CATEGORY_SUMMARY, mmIniOptions::budgetSummaryWithoutCategories_);
-    menuBar_->Check(MENU_IGNORE_FUTURE_TRANSACTIONS, mmIniOptions::ignoreFutureTransactions_);
+    menuBar_->Check(MENU_VIEW_BANKACCOUNTS, mmIniOptions::instance().expandBankHome_);
+    menuBar_->Check(MENU_VIEW_TERMACCOUNTS, mmIniOptions::instance().expandTermHome_);
+    menuBar_->Check(MENU_VIEW_STOCKACCOUNTS, mmIniOptions::instance().expandStocksHome_);
+    menuBar_->Check(MENU_VIEW_BUDGET_FINANCIAL_YEARS, mmIniOptions::instance().budgetFinancialYears_);
+    menuBar_->Check(MENU_VIEW_BUDGET_TRANSFER_TOTAL, mmIniOptions::instance().budgetIncludeTransfers_);
+    menuBar_->Check(MENU_VIEW_BUDGET_SETUP_SUMMARY, mmIniOptions::instance().budgetSetupWithoutSummaries_);
+    menuBar_->Check(MENU_VIEW_BUDGET_CATEGORY_SUMMARY, mmIniOptions::instance().budgetSummaryWithoutCategories_);
+    menuBar_->Check(MENU_IGNORE_FUTURE_TRANSACTIONS, mmIniOptions::instance().ignoreFutureTransactions_);
 }
 //----------------------------------------------------------------------------
 
@@ -3081,7 +3081,7 @@ void mmGUIFrame::createToolBar()
     toolBar_->AddTool(MENU_NEW, _("New"), toolBarBitmaps[0], _("New Database"));
     toolBar_->AddTool(MENU_OPEN, _("Open"), toolBarBitmaps[1], _("Open Database"));
     toolBar_->AddSeparator();
-    if (mmIniOptions::enableAddAccount_)
+    if (mmIniOptions::instance().enableAddAccount_)
     {
       toolBar_->AddTool(MENU_NEWACCT, _("New Account"), toolBarBitmaps[3], _("New Account"));
     }
@@ -3113,11 +3113,11 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
         m_db.reset();
 
         /// Update the database according to user requirements
-        if (mmOptions::databaseUpdated_ && 
+        if (mmOptions::instance().databaseUpdated_ && 
            (mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("BACKUPDB_UPDATE"), wxT("FALSE")) == wxT("TRUE")))
         {
             BackupDatabase(fileName_, true);
-            mmOptions::databaseUpdated_ = false;
+            mmOptions::instance().databaseUpdated_ = false;
         }
     }
 
@@ -3170,10 +3170,10 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
     }
     else if (openingNew) // New Database
     {
-       if (mmIniOptions::enableCustomTemplateDB_
-           && wxFileName::FileExists(mmIniOptions::customTemplateDB_))
+       if (mmIniOptions::instance().enableCustomTemplateDB_
+           && wxFileName::FileExists(mmIniOptions::instance().customTemplateDB_))
        {
-           wxCopyFile(mmIniOptions::customTemplateDB_, fileName, true);
+           wxCopyFile(mmIniOptions::instance().customTemplateDB_, fileName, true);
            m_db = mmDBWrapper::Open(fileName);
            password_ = password;
            m_core.reset(new mmCoreDB(m_db));
@@ -3193,7 +3193,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
            mmDBWrapper::loadBaseCurrencySettings(m_db.get());
 
            /* Load User Name and Other Settings */
-           mmIniOptions::loadInfoOptions(m_db.get());
+           mmIniOptions::instance().loadInfoOptions(m_db.get());
 
            /* Jump to new account creation screen */
            wxCommandEvent evt;
@@ -3244,7 +3244,7 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
     SetTitle(title);
 
     m_topCategories.Clear();
-    mmIniOptions::loadInfoOptions(m_db.get());
+    mmIniOptions::instance().loadInfoOptions(m_db.get());
 
     if (m_db) {
         fileName_ = fileName;
@@ -3667,14 +3667,14 @@ void mmGUIFrame::OnOptions(wxCommandEvent& /*event*/)
         menuItemOnlineUpdateCurRate_->Enable(systemOptions.GetUpdateCurrencyRateSetting());
 
         //set the View Menu Option items the same as the options saved.
-        menuBar_->FindItem(MENU_VIEW_BANKACCOUNTS)->Check(mmIniOptions::expandBankHome_);
-        menuBar_->FindItem(MENU_VIEW_TERMACCOUNTS)->Check(mmIniOptions::expandTermHome_);
-        menuBar_->FindItem(MENU_VIEW_STOCKACCOUNTS)->Check(mmIniOptions::expandStocksHome_);
-        menuBar_->FindItem(MENU_VIEW_BUDGET_FINANCIAL_YEARS)->Check(mmIniOptions::budgetFinancialYears_);
-        menuBar_->FindItem(MENU_VIEW_BUDGET_TRANSFER_TOTAL)->Check(mmIniOptions::budgetIncludeTransfers_);
-        menuBar_->FindItem(MENU_VIEW_BUDGET_SETUP_SUMMARY)->Check(mmIniOptions::budgetSetupWithoutSummaries_);
-        menuBar_->FindItem(MENU_VIEW_BUDGET_CATEGORY_SUMMARY)->Check(mmIniOptions::budgetSummaryWithoutCategories_);
-        menuBar_->FindItem(MENU_IGNORE_FUTURE_TRANSACTIONS)->Check(mmIniOptions::ignoreFutureTransactions_);
+        menuBar_->FindItem(MENU_VIEW_BANKACCOUNTS)->Check(mmIniOptions::instance().expandBankHome_);
+        menuBar_->FindItem(MENU_VIEW_TERMACCOUNTS)->Check(mmIniOptions::instance().expandTermHome_);
+        menuBar_->FindItem(MENU_VIEW_STOCKACCOUNTS)->Check(mmIniOptions::instance().expandStocksHome_);
+        menuBar_->FindItem(MENU_VIEW_BUDGET_FINANCIAL_YEARS)->Check(mmIniOptions::instance().budgetFinancialYears_);
+        menuBar_->FindItem(MENU_VIEW_BUDGET_TRANSFER_TOTAL)->Check(mmIniOptions::instance().budgetIncludeTransfers_);
+        menuBar_->FindItem(MENU_VIEW_BUDGET_SETUP_SUMMARY)->Check(mmIniOptions::instance().budgetSetupWithoutSummaries_);
+        menuBar_->FindItem(MENU_VIEW_BUDGET_CATEGORY_SUMMARY)->Check(mmIniOptions::instance().budgetSummaryWithoutCategories_);
+        menuBar_->FindItem(MENU_IGNORE_FUTURE_TRANSACTIONS)->Check(mmIniOptions::instance().ignoreFutureTransactions_);
 
         int messageIcon = wxICON_INFORMATION;
         wxString sysMsg = wxString() << _("MMEX Options have been updated.") << wxT("\n\n");
@@ -4377,7 +4377,7 @@ void mmGUIFrame::OnViewStockAccounts(wxCommandEvent &event)
 void mmGUIFrame::OnIgnoreFutureTransactions(wxCommandEvent &event)
 {
     m_mgr.GetPane(wxT("Ignore Future Transactions")).Show(event.IsChecked());
-    mmIniOptions::ignoreFutureTransactions_ = !mmIniOptions::ignoreFutureTransactions_;
+    mmIniOptions::instance().ignoreFutureTransactions_ = !mmIniOptions::instance().ignoreFutureTransactions_;
     if (!refreshRequested_)
     {
         refreshRequested_ = true;
@@ -4396,7 +4396,7 @@ void mmGUIFrame::OnCategoryRelocation(wxCommandEvent& /*event*/)
                << dlg->updatedCategoriesCount() << _(" records have been updated in the database.") << wxT("\n\n")
                << _("MMEX must be shutdown and restarted for all the changes to be seen.");
         wxMessageBox(msgStr,_("Category Relocation Result"));
-        mmOptions::databaseUpdated_ = true;
+        mmOptions::instance().databaseUpdated_ = true;
     }
 }
 //----------------------------------------------------------------------------
@@ -4411,7 +4411,7 @@ void mmGUIFrame::OnPayeeRelocation(wxCommandEvent& /*event*/)
                << dlg->updatedPayeesCount() << _(" records have been updated in the database.") << wxT("\n\n")
                << _("MMEX must be shutdown and restarted for all the changes to be seen.");
         wxMessageBox(msgStr,_("Payee Relocation Result"));
-        mmOptions::databaseUpdated_ = true;
+        mmOptions::instance().databaseUpdated_ = true;
     }
 }
 

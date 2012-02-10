@@ -122,7 +122,7 @@ void printRow
 )
 {
     double period_amount = core.bTransactionList_.getAmountForCategory(cat_id, subcat_id, false,
-        periodBegin, periodEnd, false, false, mmIniOptions::ignoreFutureTransactions_
+        periodBegin, periodEnd, false, false, mmIniOptions::instance().ignoreFutureTransactions_
     );
     if (period_amount == 0) {
         return;
@@ -149,7 +149,7 @@ void printRow
         // wxLogDebug(wxT("begin=%s, end=%s"), dtBegin.Format().c_str(), dtEnd.Format().c_str());
 
         double month_amount = core.bTransactionList_.getAmountForCategory(cat_id, subcat_id, false,
-            dtBegin, dtEnd, false, false, mmIniOptions::ignoreFutureTransactions_
+            dtBegin, dtEnd, false, false, mmIniOptions::instance().ignoreFutureTransactions_
         );
         wxString month_amount_str;
 

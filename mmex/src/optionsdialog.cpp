@@ -758,7 +758,7 @@ void mmOptionsDialog::CreateControls()
     
     wxChoice* defaultPayeeChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE,
         wxDefaultPosition, wxSize(140, -1), 2, itemChoiceDefaultTransPayeeStrings, 0); // sets size for associated choice
-    defaultPayeeChoice->SetSelection(mmIniOptions::transPayeeSelectionNone_);
+    defaultPayeeChoice->SetSelection(mmIniOptions::instance().transPayeeSelectionNone_);
     
     //  Default Category
     wxStaticText* categoryStaticText = new wxStaticText(othersPanel, wxID_STATIC,
@@ -772,7 +772,7 @@ void mmOptionsDialog::CreateControls()
     
     wxChoice* defaultCategoryChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY,
         wxDefaultPosition, defaultPayeeChoice->GetSize(), 2, itemChoiceDefaultTransCategoryStrings);
-    defaultCategoryChoice->SetSelection(mmIniOptions::transCategorySelectionNone_);
+    defaultCategoryChoice->SetSelection(mmIniOptions::instance().transCategorySelectionNone_);
 
     //  Default Status
     wxStaticText* statusStaticText = new wxStaticText(othersPanel, wxID_STATIC,
@@ -787,7 +787,7 @@ void mmOptionsDialog::CreateControls()
 
     wxChoice* defaultStatusChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS,
         wxDefaultPosition, defaultPayeeChoice->GetSize(), choiceStatusStrings);
-    defaultStatusChoice->SetSelection(mmIniOptions::transStatusReconciled_);
+    defaultStatusChoice->SetSelection(mmIniOptions::instance().transStatusReconciled_);
 
     wxFlexGridSizer* newTransflexGridSizer = new wxFlexGridSizer(3,2,0,0);
     transSettingsStaticBoxSizer->Add(newTransflexGridSizer);
@@ -1214,12 +1214,12 @@ void mmOptionsDialog::SaveFinancialYearStart()
     //Save Financial Year Start Day
     wxSpinCtrl* fysDay = (wxSpinCtrl*)FindWindow(ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY);
     wxString fysDayVal = wxString::Format(wxT("%d"),fysDay->GetValue());
-    mmOptions::financialYearStartDayString_ = fysDayVal;
+    mmOptions::instance().financialYearStartDayString_ = fysDayVal;
     mmDBWrapper::setInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_DAY"), fysDayVal); 
 
     //Save Financial Year Start Month
     wxString fysMonthVal = wxString() << monthSelection_->GetSelection() + 1;
-    mmOptions::financialYearStartMonthString_ = fysMonthVal;
+    mmOptions::instance().financialYearStartMonthString_ = fysMonthVal;
     mmDBWrapper::setInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_MONTH"), fysMonthVal); 
 }
 
@@ -1260,8 +1260,8 @@ void mmOptionsDialog::SaveNewSystemSettings()
 void mmOptionsDialog::SaveGeneralPanelSettings()
 {
     wxTextCtrl* stun = (wxTextCtrl*)FindWindow(ID_DIALOG_OPTIONS_TEXTCTRL_USERNAME);
-    mmIniOptions::userNameString_ = stun->GetValue();
-    mmDBWrapper::setInfoSettingValue(db_, wxT("USERNAME"), mmIniOptions::userNameString_); 
+    mmIniOptions::instance().userNameString_ = stun->GetValue();
+    mmDBWrapper::setInfoSettingValue(db_, wxT("USERNAME"), mmIniOptions::instance().userNameString_); 
 
     //--------------
     //TODO: Language
@@ -1284,43 +1284,43 @@ void mmOptionsDialog::SaveViewPanelSettings()
     SaveViewTransactionOptions();
 
     int size = choiceFontSize_->GetCurrentSelection() + 1;
-    mmIniOptions::fontSize_ = wxString::Format(wxT("%d"), size);
-    mmDBWrapper::setINISettingValue(inidb_, wxT("HTMLFONTSIZE"), mmIniOptions::fontSize_);
+    mmIniOptions::instance().fontSize_ = wxString::Format(wxT("%d"), size);
+    mmDBWrapper::setINISettingValue(inidb_, wxT("HTMLFONTSIZE"), mmIniOptions::instance().fontSize_);
 
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_BANK_TREE);
-    mmIniOptions::expandBankTree_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(wxT("EXPAND_BANK_TREE"),mmIniOptions::expandBankTree_);
+    mmIniOptions::instance().expandBankTree_ = itemCheckBox->GetValue();
+    SetIniDatabaseCheckboxValue(wxT("EXPAND_BANK_TREE"),mmIniOptions::instance().expandBankTree_);
 
     itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_TERM_TREE);
-    mmIniOptions::expandTermTree_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(wxT("EXPAND_TERM_TREE"),mmIniOptions::expandTermTree_);
+    mmIniOptions::instance().expandTermTree_ = itemCheckBox->GetValue();
+    SetIniDatabaseCheckboxValue(wxT("EXPAND_TERM_TREE"),mmIniOptions::instance().expandTermTree_);
 
     itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_BANK_HOME);
-    mmIniOptions::expandBankHome_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(wxT("EXPAND_BANK_HOME"),mmIniOptions::expandBankHome_);
+    mmIniOptions::instance().expandBankHome_ = itemCheckBox->GetValue();
+    SetIniDatabaseCheckboxValue(wxT("EXPAND_BANK_HOME"),mmIniOptions::instance().expandBankHome_);
 
     itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_TERM_HOME);
-    mmIniOptions::expandTermHome_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(wxT("EXPAND_TERM_HOME"),mmIniOptions::expandTermHome_);
+    mmIniOptions::instance().expandTermHome_ = itemCheckBox->GetValue();
+    SetIniDatabaseCheckboxValue(wxT("EXPAND_TERM_HOME"),mmIniOptions::instance().expandTermHome_);
 
     itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_OPTIONS_EXPAND_STOCK_HOME);
-    mmIniOptions::expandStocksHome_ = itemCheckBox->GetValue();
-    SetIniDatabaseCheckboxValue(wxT("ENABLESTOCKS"),mmIniOptions::expandStocksHome_);
+    mmIniOptions::instance().expandStocksHome_ = itemCheckBox->GetValue();
+    SetIniDatabaseCheckboxValue(wxT("ENABLESTOCKS"),mmIniOptions::instance().expandStocksHome_);
 
-    mmIniOptions::budgetFinancialYears_ = cbBudgetFinancialYears_->GetValue();
-    SetIniDatabaseCheckboxValue(INIDB_BUDGET_FINANCIAL_YEARS, mmIniOptions::budgetFinancialYears_);
+    mmIniOptions::instance().budgetFinancialYears_ = cbBudgetFinancialYears_->GetValue();
+    SetIniDatabaseCheckboxValue(INIDB_BUDGET_FINANCIAL_YEARS, mmIniOptions::instance().budgetFinancialYears_);
 
-    mmIniOptions::budgetIncludeTransfers_ = cbBudgetIncludeTransfers_->GetValue();
-    SetIniDatabaseCheckboxValue(INIDB_BUDGET_INCLUDE_TRANSFERS, mmIniOptions::budgetIncludeTransfers_);
+    mmIniOptions::instance().budgetIncludeTransfers_ = cbBudgetIncludeTransfers_->GetValue();
+    SetIniDatabaseCheckboxValue(INIDB_BUDGET_INCLUDE_TRANSFERS, mmIniOptions::instance().budgetIncludeTransfers_);
 
-    mmIniOptions::budgetSetupWithoutSummaries_ = cbBudgetSetupWithoutSummary_->GetValue();
-    SetIniDatabaseCheckboxValue(INIDB_BUDGET_SETUP_WITHOUT_SUMMARY, mmIniOptions::budgetSetupWithoutSummaries_);
+    mmIniOptions::instance().budgetSetupWithoutSummaries_ = cbBudgetSetupWithoutSummary_->GetValue();
+    SetIniDatabaseCheckboxValue(INIDB_BUDGET_SETUP_WITHOUT_SUMMARY, mmIniOptions::instance().budgetSetupWithoutSummaries_);
 
-    mmIniOptions::budgetSummaryWithoutCategories_ = cbBudgetSummaryWithoutCateg_->GetValue();
-    SetIniDatabaseCheckboxValue(INIDB_BUDGET_SUMMARY_WITHOUT_CATEG, mmIniOptions::budgetSummaryWithoutCategories_);
+    mmIniOptions::instance().budgetSummaryWithoutCategories_ = cbBudgetSummaryWithoutCateg_->GetValue();
+    SetIniDatabaseCheckboxValue(INIDB_BUDGET_SUMMARY_WITHOUT_CATEG, mmIniOptions::instance().budgetSummaryWithoutCategories_);
 
-    mmIniOptions::ignoreFutureTransactions_ = cbIgnoreFutureTransactions_->GetValue();
-    SetIniDatabaseCheckboxValue(INIDB_IGNORE_FUTURE_TRANSACTIONS, mmIniOptions::ignoreFutureTransactions_);
+    mmIniOptions::instance().ignoreFutureTransactions_ = cbIgnoreFutureTransactions_->GetValue();
+    SetIniDatabaseCheckboxValue(INIDB_IGNORE_FUTURE_TRANSACTIONS, mmIniOptions::instance().ignoreFutureTransactions_);
 }
 
 void mmOptionsDialog::SaveColourPanelSettings()
@@ -1345,19 +1345,19 @@ void mmOptionsDialog::SaveColourPanelSettings()
 void mmOptionsDialog::SaveOthersPanelSettings()
 {
     wxChoice* itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE);
-    mmIniOptions::transPayeeSelectionNone_ = itemChoice->GetSelection();
+    mmIniOptions::instance().transPayeeSelectionNone_ = itemChoice->GetSelection();
     mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_PAYEE_NONE"),
-        wxString::Format(wxT("%d"), (int)mmIniOptions::transPayeeSelectionNone_)); 
+        wxString::Format(wxT("%d"), (int)mmIniOptions::instance().transPayeeSelectionNone_)); 
     
     itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY);
-    mmIniOptions::transCategorySelectionNone_ = itemChoice->GetSelection();
+    mmIniOptions::instance().transCategorySelectionNone_ = itemChoice->GetSelection();
     mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_CATEGORY_NONE"),
-        wxString::Format(wxT("%d"), (int)mmIniOptions::transCategorySelectionNone_)); 
+        wxString::Format(wxT("%d"), (int)mmIniOptions::instance().transCategorySelectionNone_)); 
     
     itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_STATUS);
-    mmIniOptions::transStatusReconciled_ = itemChoice->GetSelection();
+    mmIniOptions::instance().transStatusReconciled_ = itemChoice->GetSelection();
     mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_STATUS_RECONCILED"),
-        wxString::Format(wxT("%d"), (int)mmIniOptions::transStatusReconciled_)); 
+        wxString::Format(wxT("%d"), (int)mmIniOptions::instance().transStatusReconciled_)); 
     
     SaveStocksUrl();
     

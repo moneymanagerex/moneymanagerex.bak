@@ -56,7 +56,7 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
         bool ignoreDate = false;
         income = 0.0;
         expenses = 0.0;
-        core_->bTransactionList_.getExpensesIncome(-1, expenses, income, ignoreDate, dtBegin, dtEnd, mmIniOptions::ignoreFutureTransactions_);
+        core_->bTransactionList_.getExpensesIncome(-1, expenses, income, ignoreDate, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
             
         wxString actualExpStr;
         mmex::formatDoubleToCurrencyEdit(expenses, actualExpStr);
@@ -97,7 +97,7 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
         
     expenses = 0.0;
     income = 0.0;
-    core_->bTransactionList_.getExpensesIncome(-1, expenses, income, false, dtBegin, dtEnd, mmIniOptions::ignoreFutureTransactions_);
+    core_->bTransactionList_.getExpensesIncome(-1, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
         
     wxString actualExpStr;
     mmex::formatDoubleToCurrencyEdit(expenses, actualExpStr);

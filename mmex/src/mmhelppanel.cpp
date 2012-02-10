@@ -113,7 +113,7 @@ void mmHelpPanel::CreateControls()
     int helpFileIndex = frame_->getHelpFileIndex();
  
     wxFileName helpIndexFile(mmex::getPathDoc((mmex::EDocFile)helpFileIndex));
-    if (mmOptions::language != wxT("english")) helpIndexFile.AppendDir(mmOptions::language);
+    if (mmOptions::instance().language != wxT("english")) helpIndexFile.AppendDir(mmOptions::instance().language);
 
     if (helpIndexFile.FileExists()) // Load the help file for the given language 
     {
