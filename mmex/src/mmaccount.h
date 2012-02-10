@@ -116,7 +116,7 @@ public:
     int getID(const wxString& accountName) const;
     bool deleteAccount(int accountID);
     void update(boost::shared_ptr<mmAccount> pAccount);
-    bool accountExists(const wxString& accountName) const;
+    bool exists(const wxString& accountName) const;
     boost::weak_ptr<mmCurrency> getCurrencyWeakPtr(int accountID) const;
     double getAccountBaseCurrencyConvRate(int accountID) const;
     wxString getName(int accountID) const;
