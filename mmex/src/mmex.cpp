@@ -4696,7 +4696,7 @@ bool wxAddAccountPage2::TransferDataFromWindow()
     pAccount->currency_ = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID);
     // prevent same account being added multiple times in case of using 'Back' and 'Next' in wizard.
     if ( ! parent_->m_core->accountList_.accountExists(pAccount->name_))
-        parent_->acctID_ = parent_->m_core->accountList_.addAccount(pAccount);
+        parent_->acctID_ = parent_->m_core->addAccount(pAccount);
 
     return true;
 }

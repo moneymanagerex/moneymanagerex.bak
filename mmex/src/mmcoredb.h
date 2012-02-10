@@ -54,6 +54,8 @@ public:
     std::pair<mmPayeeList::const_iterator, mmPayeeList::const_iterator> rangePayee() const { return payeeList_.range(); }
 
     wxString getAccountName(int accountID) const { return accountList_.getName(accountID); }
+    int addAccount(boost::shared_ptr<mmAccount> pAccount) { return accountList_.add(pAccount); };
+    void updateAccount(boost::shared_ptr<mmAccount> pAccount) { return accountList_.update(pAccount); };
 
 public: 
    mmCoreDB(boost::shared_ptr<wxSQLite3Database>);

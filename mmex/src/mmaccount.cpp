@@ -236,7 +236,7 @@ double mmAccountList::getAccountBaseCurrencyConvRate(int accountID) const
    return 0.0;
 }
 
-void mmAccountList::updateAccount(boost::shared_ptr<mmAccount> pAccount)
+void mmAccountList::update(boost::shared_ptr<mmAccount> pAccount)
 {
    wxString statusStr = wxT("Open");
    if (pAccount->status_ == mmAccount::MMEX_Closed)
@@ -376,7 +376,7 @@ boost::weak_ptr<mmCurrency> mmAccountList::getCurrencyWeakPtr(int accountID) con
     return boost::weak_ptr<mmCurrency>();
 }
 
-int mmAccountList::addAccount(boost::shared_ptr<mmAccount> pAccount)
+int mmAccountList::add(boost::shared_ptr<mmAccount> pAccount)
 {
       wxString statusStr = wxT("Open");
       if (pAccount->status_ == mmAccount::MMEX_Closed)

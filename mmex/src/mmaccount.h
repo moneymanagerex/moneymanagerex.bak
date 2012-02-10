@@ -107,7 +107,7 @@ public:
     /* Account Functions */
     boost::shared_ptr<mmAccount> getAccountSharedPtr(int accountID) const;
     
-    int addAccount(boost::shared_ptr<mmAccount> pAccount);
+    int add(boost::shared_ptr<mmAccount> pAccount);
     /// returns the ACCOUNT_TYPE_xxxx String
     wxString getAccountType(int accountID) const;
     /// returns the status of the account (mmAccount::MMEX_Open or mmAccount::MMEX_Closed)\n
@@ -115,7 +115,7 @@ public:
     mmAccount::AccountStatus getAccountStatus(int accountID) const;
     int getID(const wxString& accountName) const;
     bool deleteAccount(int accountID);
-    void updateAccount(boost::shared_ptr<mmAccount> pAccount);
+    void update(boost::shared_ptr<mmAccount> pAccount);
     bool accountExists(const wxString& accountName) const;
     boost::weak_ptr<mmCurrency> getCurrencyWeakPtr(int accountID) const;
     double getAccountBaseCurrencyConvRate(int accountID) const;
