@@ -299,7 +299,7 @@ boost::shared_ptr<mmAccount> mmAccountList::getAccountSharedPtr(int accountID) c
     return res;
 }
     
-bool mmAccountList::accountExists(const wxString& accountName) const
+bool mmAccountList::exists(const wxString& accountName) const
 {
    int checkAcctID = mmDBWrapper::getAccountID(db_.get(), accountName);
    if (checkAcctID != -1)
