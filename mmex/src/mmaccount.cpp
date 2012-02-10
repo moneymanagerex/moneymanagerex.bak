@@ -162,7 +162,7 @@ double mmInvestmentAccount::balance()
 mmAccountList::mmAccountList(boost::shared_ptr<wxSQLite3Database> db)
        :db_(db) {}
 
-bool mmAccountList::deleteAccount(int accountID)
+bool mmAccountList::remove(int accountID)
 {
     wxString acctType = getAccountType(accountID);
     if (acctType == ACCOUNT_TYPE_BANK || acctType == ACCOUNT_TYPE_TERM)
