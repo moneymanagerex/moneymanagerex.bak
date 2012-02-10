@@ -57,6 +57,7 @@ public:
     int addAccount(boost::shared_ptr<mmAccount> pAccount) { return accountList_.add(pAccount); };
     void updateAccount(boost::shared_ptr<mmAccount> pAccount) { return accountList_.update(pAccount); };
     bool accountExists(const wxString& name) const { return accountList_.exists(name); };
+    bool deleteAccount(int accountID) { return accountList_.remove(accountID); }
 
 public: 
    mmCoreDB(boost::shared_ptr<wxSQLite3Database>);

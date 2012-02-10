@@ -114,7 +114,7 @@ public:
     /// to get a list of account names, use mmDBWrapper::getAccountsName(..)
     mmAccount::AccountStatus getAccountStatus(int accountID) const;
     int getID(const wxString& accountName) const;
-    bool deleteAccount(int accountID);
+    bool remove(int accountID);
     void update(boost::shared_ptr<mmAccount> pAccount);
     bool exists(const wxString& accountName) const;
     boost::weak_ptr<mmCurrency> getCurrencyWeakPtr(int accountID) const;

@@ -2458,7 +2458,7 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
               wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
            if (msgDlg.ShowModal() == wxID_YES)
            {
-              m_core->accountList_.deleteAccount(pAccount->id_);
+              m_core->deleteAccount(pAccount->id_);
               m_core->bTransactionList_.deleteTransactions(pAccount->id_);  
               updateNavTreeControl();
               if (!refreshRequested_)
@@ -4288,7 +4288,7 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
             wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
         if (msgDlg.ShowModal() == wxID_YES)
         {
-            m_core->accountList_.deleteAccount(acctID);
+            m_core->deleteAccount(acctID);
             m_core->bTransactionList_.deleteTransactions(acctID);
 
             updateNavTreeControl();
