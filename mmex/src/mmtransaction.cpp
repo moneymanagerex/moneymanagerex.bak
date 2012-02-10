@@ -229,8 +229,8 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
    }
    else if (transType_ == TRANS_TYPE_TRANSFER_STR)
    {
-      wxString fromAccount = core->accountList_.getAccountSharedPtr(accountID_)->name_;
-      wxString toAccount = core->accountList_.getAccountSharedPtr(toAccountID_)->name_;
+      wxString fromAccount = core->getAccountName(accountID_);
+      wxString toAccount = core->getAccountName(toAccountID_);
 
       if (accountID_ == accountID)
       {
@@ -244,7 +244,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
       }
    }
 
-   fromAccountStr_ = core->accountList_.getAccountSharedPtr(accountID_)->name_;
+   fromAccountStr_ = core->getAccountName(accountID_);
 
    boost::shared_ptr<mmCategory> pCategory = category_.lock();
    if (!pCategory && !splitEntries_->numEntries())
