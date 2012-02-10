@@ -415,11 +415,11 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
 
     if (newAcct_)
     {
-        core_->accountList_.addAccount(pAccount);
+        core_->addAccount(pAccount);
     }
     else
     {
-        core_->accountList_.updateAccount(pAccount);
+        core_->updateAccount(pAccount);
     }
 
     EndModal(wxID_OK);
