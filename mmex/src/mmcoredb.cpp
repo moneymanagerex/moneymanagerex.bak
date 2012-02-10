@@ -111,7 +111,7 @@ void loadPayees(boost::shared_ptr<wxSQLite3Database> db_,
                                                      )
                                          );
 
-        payee_list.entities_.push_back(pPayee);
+        payee_list.entries_.push_back(pPayee);
     }
 
     q1.Finalize();

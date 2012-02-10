@@ -22,7 +22,7 @@
 
 bool mmPayeeList::exists(const wxString& payeeName) const
 {
-    for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = entities_.begin(); it != entities_.end(); ++ it)
+    for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
     {
         if (! (*it)->name_.CmpNoCase(payeeName)) return true;
     }
@@ -32,7 +32,7 @@ bool mmPayeeList::exists(const wxString& payeeName) const
 
 bool mmPayeeList::exists(const int payeeid) const
 {
-    for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = entities_.begin(); it != entities_.end(); ++ it)
+    for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
     {
         if ((*it)->id_ == payeeid) return true;
     }
@@ -68,14 +68,14 @@ int mmPayeeList::add(const wxString &payeeName)
 
     boost::shared_ptr<mmCategory> pNullCategory;
     boost::shared_ptr<mmPayee> pPayee(new mmPayee(payeeID, payeeName, pNullCategory));
-    entities_.push_back(pPayee);
+    entries_.push_back(pPayee);
 
     return payeeID;
 }
 
 int mmPayeeList::getID(const wxString& payeeName) const
 {
-    for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = entities_.begin(); it != entities_.end(); ++ it)
+    for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
     {
         if (! (*it)->name_.CmpNoCase(payeeName)) return (*it)->id_;
     }
@@ -88,11 +88,11 @@ bool mmPayeeList::remove(int payeeID)
     if (mmDBWrapper::deletePayeeWithConstraints(db_.get(), payeeID))
     {
         std::vector <boost::shared_ptr<mmPayee> >::iterator Iter;
-        for ( Iter = entities_.begin( ) ; Iter != entities_.end( ) ; Iter++ )
+        for ( Iter = entries_.begin( ) ; Iter != entries_.end( ) ; Iter++ )
         {
             if ((*Iter)->id_ == payeeID)
             {
-                entities_.erase(Iter);
+                entries_.erase(Iter);
                 return true;
             }
         }
@@ -108,17 +108,17 @@ bool sortPayees( boost::shared_ptr<mmPayee> elem1, boost::shared_ptr<mmPayee> el
 void mmPayeeList::sortPayeeList(void)
 {
     // sort the payee list alphabetically
-    std::sort(entities_.begin(), entities_.end(), sortPayees);
+    std::sort(entries_.begin(), entries_.end(), sortPayees);
 }
 
 boost::shared_ptr<mmPayee> mmPayeeList::getSharedPtr(int payeeID)
 {
-    int numPayees = (int)entities_.size();
+    int numPayees = (int)entries_.size();
     for (int idx = 0; idx < numPayees; idx++)
     {
-        if (entities_[idx]->id_ == payeeID)
+        if (entries_[idx]->id_ == payeeID)
         {
-           return entities_[idx];
+           return entries_[idx];
         }
     }
     return boost::shared_ptr<mmPayee>();
@@ -126,14 +126,14 @@ boost::shared_ptr<mmPayee> mmPayeeList::getSharedPtr(int payeeID)
 
 void mmPayeeList::update(int payeeID, const wxString& payeeName)
 {
-    int numPayees = (int)entities_.size();
+    int numPayees = (int)entries_.size();
     for (int idx = 0; idx < numPayees; idx++)
     {
-        if (entities_[idx]->id_ == payeeID)
+        if (entries_[idx]->id_ == payeeID)
         {
             int categID = -1;
             int subcategID = -1;
-            boost::shared_ptr<mmCategory> category = entities_[idx]->category_.lock(); 
+            boost::shared_ptr<mmCategory> category = entries_[idx]->category_.lock(); 
             if (category)  
             {
                 boost::shared_ptr<mmCategory> pCategory = category->parent_.lock();
@@ -148,7 +148,7 @@ void mmPayeeList::update(int payeeID, const wxString& payeeName)
                 }
             }
             mmDBWrapper::updatePayee(db_.get(), payeeName, payeeID, categID, subcategID);
-            entities_[idx]->name_ = payeeName;
+            entries_[idx]->name_ = payeeName;
             break;
         }
     }
