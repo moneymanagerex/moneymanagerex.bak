@@ -56,7 +56,7 @@ private:
     wxString loadedFileName_;
     bool edit_;
     bool navCtrlUpdateRequired_;
-    wxButton* button_Load_;
+    wxButton* button_Open_;
     wxButton* button_Save_;
     wxButton* button_Run_;
     wxTextCtrl* reportTitleTxtCtrl_;
@@ -72,11 +72,11 @@ private:
 
     /// Creates the controls and sizers
     void CreateControls();
-    void OnLoad(wxCommandEvent& event);
+    void OnOpen(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
-	void OnRun(wxCommandEvent& event);
-	void OnClear(wxCommandEvent& event);
-	void OnClose(wxCommandEvent& event);
+    void OnRun(wxCommandEvent& event);
+    void OnClear(wxCommandEvent& event);
+    void OnClose(wxCommandEvent& event);
     void OnCheckedHeading(wxCommandEvent& event);
     void OnCheckedSubReport(wxCommandEvent& event);
     void OnTextChangeHeading(wxCommandEvent& event);
