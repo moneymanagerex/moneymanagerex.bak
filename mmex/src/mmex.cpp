@@ -4127,8 +4127,8 @@ void mmGUIFrame::showBeginAppDialog()
     }
     else if (rc == 3)
     {
-        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_REPORTISSUES);
-        AddPendingEvent(evt);
+        wxString url = wxT("http://www.codelathe.com/mmex/index.php");
+        wxLaunchDefaultBrowser(url);
     }
     else if (rc == 4)
     {
