@@ -3820,10 +3820,11 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
         style = wxICON_INFORMATION|style;
     }
 
-    versionDetails << wxT("\n\n") << _("Proceed to website: http://www.codelathe.com/mmex");
+    wxString urlString = wxT("http://www.codelathe.com/mmex");
+    versionDetails << wxT("\n\n") << _("Proceed to website: ") << urlString;
     if (wxMessageBox(versionDetails, _("MMEX System Information Check"), style) == wxOK)
     {
-        wxLaunchDefaultBrowser(wxT("http://www.codelathe.com/mmex"));
+        wxLaunchDefaultBrowser(urlString);
     }
 }
 //----------------------------------------------------------------------------
