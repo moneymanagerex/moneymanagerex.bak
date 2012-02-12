@@ -66,6 +66,7 @@
 #include "customreportindex.h"
 #include "customreportdialog.h"
 #include "recentfiles.h"
+#include <boost/version.hpp>
 //----------------------------------------------------------------------------
 
 /* Include XPM Support */
@@ -3795,16 +3796,34 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
     
     page = mySysToken.GetNextToken();                       // the system
     page = mySysToken.GetNextToken().Trim(false).Trim();    // the version  
+    
+    // Set up system information
+    wxString versionDetails = wxString()
+        << wxT("MMEX: ")     << mmex::getProgramVersion()       << wxT("\n")
+        << _("System: ")     << wxPlatformInfo::Get().GetOperatingSystemIdName() << wxT("\n\n")
+        << wxVERSION_STRING  << wxT("\n")
+        << wxT("Boost C++ ") << (BOOST_VERSION/100000)          << wxT('.') 
+                             << (BOOST_VERSION / 100 % 1000)    << wxT('.') 
+                             << (BOOST_VERSION % 100)           << wxT("\n")
+        << wxT("SQLite3: ")  << wxSQLite3Database::GetVersion() << wxT("\n")
+        << wxT("wxSQLite3: 3.0.0 by Ulrich Telle")              << wxT("\n\n");
 
+    int style = wxOK|wxCANCEL;
     if (IsUpdateAvailable(page))
     {
-        mmShowErrorMessage(this, _("New update available!"), _("Check Update"));
-        wxString url = wxT("http://www.codelathe.com/mmex");
-        wxLaunchDefaultBrowser(url);
-    }
+        versionDetails << _("New update available!");
+        style = wxICON_EXCLAMATION|style;
+    } 
     else
     {
-        mmShowErrorMessage(this, _("You have the latest version installed!"), _("Check Update"));
+        versionDetails << _("You have the latest version installed!");
+        style = wxICON_INFORMATION|style;
+    }
+
+    versionDetails << wxT("\n\n") << _("Proceed to website: http://www.codelathe.com/mmex");
+    if (wxMessageBox(versionDetails, _("MMEX System Information Check"), style) == wxOK)
+    {
+        wxLaunchDefaultBrowser(wxT("http://www.codelathe.com/mmex"));
     }
 }
 //----------------------------------------------------------------------------
