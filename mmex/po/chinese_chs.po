@@ -2406,7 +2406,6 @@ msgid "Delete Account from database"
 msgstr "从数据库中删除账户(&D)"
 
 #: src/mmex.cpp:2639
-#, fuzzy
 msgid "Organize &Categories..."
 msgstr "分类管理(&C)"
 
@@ -2416,7 +2415,6 @@ msgid "Organize Categories"
 msgstr "分类管理"
 
 #: src/mmex.cpp:2644
-#, fuzzy
 msgid "Organize &Payees..."
 msgstr "收款人管理(&P)"
 
@@ -2426,8 +2424,7 @@ msgid "Organize Payees"
 msgstr "收款人管理"
 
 #: src/mmex.cpp:2649
-#, fuzzy
-msgid "Or&ganize Currency..."
+msgid "Organize Currency..."
 msgstr "货币管理"
 
 #: src/mmex.cpp:2649
