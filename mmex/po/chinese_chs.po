@@ -2030,18 +2030,16 @@ msgstr "本年"
 #: src/mmex.cpp:1206
 #: src/mmex.cpp:1234
 #: src/mmex.cpp:1262
-#, fuzzy
 msgid "Last Financial Year"
-msgstr "上年"
+msgstr "上财年"
 
 #: src/mmex.cpp:1153
 #: src/mmex.cpp:1181
 #: src/mmex.cpp:1209
 #: src/mmex.cpp:1237
 #: src/mmex.cpp:1265
-#, fuzzy
 msgid "Current Financial Year"
-msgstr "本年"
+msgstr "本财年"
 
 #: src/mmex.cpp:1158
 #: src/mmex.cpp:1722
