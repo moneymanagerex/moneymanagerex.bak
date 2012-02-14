@@ -2905,7 +2905,7 @@ void mmGUIFrame::createMenu()
     menuTools->Append(menuItemPayee); 
 
     wxMenuItem* menuItemCurrency = new wxMenuItem(menuTools, MENU_CURRENCY, 
-        _("Or&ganize Currency..."), _("Organize Currency"));
+        _("Organize Currency..."), _("Organize Currency"));
     menuItemCurrency->SetBitmap(wxBitmap(money_dollar_xpm));
     menuTools->Append(menuItemCurrency);
 
