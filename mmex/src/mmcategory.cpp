@@ -36,7 +36,7 @@ bool mmCategoryList::categoryExists(const wxString& categoryName) const
     return false;
 }
 
-int mmCategoryList::getCategoryID(const wxString& categoryName) const
+int mmCategoryList::getID(const wxString& categoryName) const
 {
     int numCategs = (int)categories_.size();
     for (int idx = 0; idx < numCategs; idx++)

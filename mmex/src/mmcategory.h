@@ -46,7 +46,7 @@ public:
     ~mmCategoryList() {}
 
     /* Category Functions */
-    int getCategoryID(const wxString& categoryName) const;
+    int getID(const wxString& categoryName) const;
     bool categoryExists(const wxString& categoryName) const;
     boost::shared_ptr<mmCategory> getCategorySharedPtr(int category, int subcategory) const;
     int getSubCategoryID(int parentID, const wxString& subCategoryName) const;

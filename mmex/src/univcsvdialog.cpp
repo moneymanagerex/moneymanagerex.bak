@@ -579,7 +579,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                        subCategID_ = -1;
                        wxString categ = wxT("Unknown");
 
-                       categID_ = core_->categoryList_.getCategoryID(categ);
+                       categID_ = core_->getCategoryID(categ);
                        if (categID_ == -1)
                        {
                            categID_ =  core_->categoryList_.addCategory(categ);
@@ -888,7 +888,7 @@ void mmUnivCSVDialog::parseToken(int index, wxString& token)
             break;
 
         case UNIV_CSV_CATEGORY:
-            categID_ = core_->categoryList_.getCategoryID(token);
+            categID_ = core_->getCategoryID(token);
             if (categID_ == -1)
                 categID_ =  core_->categoryList_.addCategory(token);
             break;

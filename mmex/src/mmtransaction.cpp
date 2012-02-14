@@ -250,7 +250,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
    if (!pCategory && !splitEntries_->numEntries())
    {
       // If category is missing, we mark is as unknown
-      int categID = core->categoryList_.getCategoryID(wxT("Unknown"));
+      int categID = core->getCategoryID(wxT("Unknown"));
       if (categID == -1)
       {
          categID =  core->categoryList_.addCategory(wxT("Unknown"));
