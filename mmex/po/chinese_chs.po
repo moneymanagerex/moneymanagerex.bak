@@ -2270,6 +2270,14 @@ msgstr "另存数据库(&A)"
 msgid "Save Database As"
 msgstr "保存数据库"
 
+#: src/mmex.cpp:2772
+msgid "&Recent Files..."
+msgstr "最近打开的文件"
+
+#: src/mmex.cpp:2774
+msgid "&Clear Recent Files"
+msgstr "清除最近打开文件纪录"
+
 #: src/mmex.cpp:2542
 msgid "Export to CSV"
 msgstr "导出CSV文件"
