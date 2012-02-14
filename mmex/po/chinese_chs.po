@@ -2076,18 +2076,21 @@ msgid "Budget Performance"
 msgstr "预算执行情况"
 
 #: src/mmex.cpp:1296
-msgid "Budget Setup and Performance"
-msgstr "预算计划及执行情况"
+msgid "Budget Category Summary"
+msgstr "预算分类摘要"
 
 #: src/mmex.cpp:1319
 #: src/mmex.cpp:3374
 msgid "Cash Flow"
 msgstr "现金流"
 
+#: src/mmex.cpp:1333
+msgid "Cash Flow - With Bank Accounts"
+msgstr "现金流 - 银行帐户"
+
 #: src/mmex.cpp:1324
-#, fuzzy
 msgid "Cash Flow - With Term Accounts"
-msgstr "现金流 - 特定帐户"
+msgstr "现金流 - Term Accounts"
 
 #: src/mmex.cpp:1328
 msgid "Cash Flow - Specific Accounts"
