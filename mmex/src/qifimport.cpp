@@ -649,7 +649,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 if (cattkz.HasMoreTokens())
                     subcat = cattkz.GetNextToken();
 
-                categID = core->categoryList_.getCategoryID(cat);
+                categID = core->getCategoryID(cat);
                 if (categID == -1)
                 {
                     categID =  core->categoryList_.addCategory(cat);
@@ -714,7 +714,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                     {
                         log << _("Category is empty, marking transaction as Unknown category") << endl;
 
-                        categID = core->categoryList_.getCategoryID(wxT("Unknown"));
+                        categID = core->getCategoryID(wxT("Unknown"));
                         if (categID == -1)
                         {
                             categID =  core->categoryList_.addCategory(wxT("Unknown"));
