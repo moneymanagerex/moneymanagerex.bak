@@ -1181,7 +1181,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
             pTransaction->status_ = status;
             pTransaction->transNum_ = transNum;
             pTransaction->notes_ = notes.c_str();
-            pTransaction->category_ = core_->categoryList_.getCategorySharedPtr(categID_, subcategID_);
+            pTransaction->category_ = core_->getCategorySharedPtr(categID_, subcategID_);
             pTransaction->date_ = dpc_->GetValue();
             pTransaction->toAmt_ = toTransAmount_;
 

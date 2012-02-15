@@ -28,14 +28,14 @@
 class mmCategory
 {
 public: 
-    mmCategory(int id, const wxString& name);
-   ~mmCategory() {}
+    mmCategory(int id, const wxString& name): categID_(id), categName_(name) {}
+    ~mmCategory() {}
 
-   /* Public Data */
-   int categID_;
-   wxString categName_;
-   boost::weak_ptr<mmCategory> parent_;
-   std::vector<boost::shared_ptr<mmCategory> > children_;
+    /* Public Data */
+    int categID_;
+    wxString categName_;
+    boost::weak_ptr<mmCategory> parent_;
+    std::vector<boost::shared_ptr<mmCategory> > children_;
 };
 
 class mmCategoryList
@@ -63,7 +63,9 @@ public:
 
     /* Public Data */
     std::vector< boost::shared_ptr<mmCategory> > categories_;
-    
+    typedef std::vector< boost::shared_ptr<mmCategory> >::const_iterator const_iterator;
+    std::pair<const_iterator, const_iterator> range() const { return std::make_pair(categories_.begin(), categories_.end()); }
+   
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
 };

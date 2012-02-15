@@ -582,7 +582,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                        categID_ = core_->getCategoryID(categ);
                        if (categID_ == -1)
                        {
-                           categID_ =  core_->categoryList_.addCategory(categ);
+                           categID_ =  core_->addCategory(categ);
                        }
                    }
                    else
@@ -612,7 +612,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                pTransaction->status_ = status;
                pTransaction->transNum_ = transNum_;
                pTransaction->notes_ = notes_;
-               pTransaction->category_ = core_->categoryList_.getCategorySharedPtr(categID_, subCategID_);
+               pTransaction->category_ = core_->getCategorySharedPtr(categID_, subCategID_);
                pTransaction->date_ = dtdt_;
                pTransaction->toAmt_ = 0.0;
                pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr);
@@ -890,7 +890,7 @@ void mmUnivCSVDialog::parseToken(int index, wxString& token)
         case UNIV_CSV_CATEGORY:
             categID_ = core_->getCategoryID(token);
             if (categID_ == -1)
-                categID_ =  core_->categoryList_.addCategory(token);
+                categID_ =  core_->addCategory(token);
             break;
 
         case UNIV_CSV_SUBCATEGORY:
@@ -899,7 +899,7 @@ void mmUnivCSVDialog::parseToken(int index, wxString& token)
     
             subCategID_ = core_->getSubCategoryID(categID_, token);
             if (subCategID_ == -1)
-                subCategID_ = core_->categoryList_.addSubCategory(categID_, token);
+                subCategID_ = core_->addSubCategory(categID_, token);
             break;
 
         case UNIV_CSV_NOTES:

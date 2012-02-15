@@ -363,7 +363,7 @@ bool TransFilterDialog::bySplitCategory(mmBankTransaction* trans)
 
                 for (int i = 0; i < (int)splits->entries_.size(); ++i)
                 {
-                    if (core_->categoryList_.GetFullCategoryString(splits->entries_[i]->categID_,
+                    if (core_->GetFullCategoryString(splits->entries_[i]->categID_,
                         splits->entries_[i]->subCategID_) == btnCategory_->GetLabelText()
                        )
                     {
