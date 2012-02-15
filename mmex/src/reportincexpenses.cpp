@@ -49,7 +49,7 @@ wxString mmReportIncomeExpenses::getHTMLText()
 
 	hb.startCenter();
 
-    core_->currencyList_.loadBaseCurrencySettings();
+    core_->loadBaseCurrencySettings();
 
     double expenses = 0.0;
     double income = 0.0;

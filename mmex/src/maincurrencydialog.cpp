@@ -82,11 +82,13 @@ void mmMainCurrencyDialog::fillControls()
 
     currencyListBox_->Clear();
 
-    for (int idx = 0; idx < (int)core_->currencyList_.currencies_.size(); idx++)
+    std::pair<mmCurrencyList::const_iterator, mmCurrencyList::const_iterator> range = core_->rangeCurrency(); 
+    int idx = 0;
+    for(mmCurrencyList::const_iterator it = range.first; it != range.second; ++ it)
     {
-        int currencyID         = core_->currencyList_.currencies_[idx]->currencyID_;
-        wxString currencyName  = core_->currencyList_.currencies_[idx]->currencyName_;
-        currencyListBox_->Insert(currencyName, idx, new mmListBoxItem(currencyID, currencyName));
+        int currencyID         = (*it)->currencyID_;
+        wxString currencyName  = (*it)->currencyName_;
+        currencyListBox_->Insert(currencyName, idx++, new mmListBoxItem(currencyID, currencyName));
     }
 }
 
@@ -175,9 +177,9 @@ void mmMainCurrencyDialog::OnBtnAdd(wxCommandEvent& /*event*/)
          {
             boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency());
             pCurrency->currencyName_ = currText;
-            core_->currencyList_.addCurrency(pCurrency);
+            core_->addCurrency(pCurrency);
             fillControls();
-            currencyID_ = core_->currencyList_.getCurrencyID(currText);
+            currencyID_ = core_->getCurrencyID(currText);
             mmCurrencyDialog(core_, currencyID_, this).ShowModal();
          }
          else
@@ -240,7 +242,7 @@ void mmMainCurrencyDialog::OnBtnDelete(wxCommandEvent& /*event*/)
         int baseCurrencyID = mmDBWrapper::getBaseCurrencySettings(db_);
         bool usedAsBase = currencyID_ == baseCurrencyID;
 
-        if (core_->currencyList_.currencyInUse(currencyID_) || usedAsBase)
+        if (core_->currencyInUse(currencyID_) || usedAsBase)
         {
             displayCurrencyDialogErrorMessage(_("Attempt to delete a currency being used by an account\n or as the base currency."));
         }
@@ -249,7 +251,7 @@ void mmMainCurrencyDialog::OnBtnDelete(wxCommandEvent& /*event*/)
             if (wxMessageBox(_("Please confirm deletion of a selected Currency"),
                              _("Currency Dialog"),wxICON_QUESTION|wxOK|wxCANCEL) == wxOK)
             {
-                core_->currencyList_.deleteCurrency(currencyID_);
+                core_->deleteCurrency(currencyID_);
                 fillControls();
             }
         }

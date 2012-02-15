@@ -15,7 +15,7 @@ mmReportIncExpensesOverTime::mmReportIncExpensesOverTime(mmCoreDB* core, int yea
 
 wxString mmReportIncExpensesOverTime::getHTMLText()
 {
-    core_->currencyList_.loadBaseCurrencySettings();
+    core_->loadBaseCurrencySettings();
 
     wxString yearStr = wxString::Format(wxT("%d"), year_);
 

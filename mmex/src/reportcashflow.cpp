@@ -26,7 +26,7 @@ void mmReportCashFlow::activateBankAccounts()
 
 wxString mmReportCashFlow::getHTMLText()
 {
-    core_->currencyList_.loadBaseCurrencySettings();
+    core_->loadBaseCurrencySettings();
 
     mmHTMLBuilder hb;
     hb.init();
@@ -314,7 +314,7 @@ wxString mmReportCashFlow::getHTMLText()
         }
     }
 
-    core_->currencyList_.loadBaseCurrencySettings();
+    core_->loadBaseCurrencySettings();
 
     for (int idx = 0; idx < (int)forecastOver12Months.size(); idx++)
     {

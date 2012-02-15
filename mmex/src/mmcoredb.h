@@ -72,13 +72,25 @@ public:
     wxString GetFullCategoryString(int categID, int subCategID) const { return categoryList_.GetFullCategoryString(categID, subCategID); }
     std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> rangeCategory() const { return categoryList_.range(); }
 
+    /* Currency Functions */
+    int addCurrency(boost::shared_ptr<mmCurrency> pCurrency) { return currencyList_.addCurrency(pCurrency); }
+    void deleteCurrency(int currencyID) { return currencyList_.deleteCurrency(currencyID); }
+    bool currencyInUse(int currencyID) { return currencyList_.currencyInUse(currencyID); }
+    void updateCurrency(boost::shared_ptr<mmCurrency> pCurrency) { return currencyList_.updateCurrency(pCurrency); }
+    boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID) const { return currencyList_.getCurrencySharedPtr(currencyID); }
+    boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName) const { return currencyList_.getCurrencySharedPtr(currencyName); }
+    void loadBaseCurrencySettings() const { return currencyList_.loadBaseCurrencySettings(); }
+    int getBaseCurrencySettings() const { return currencyList_.getBaseCurrencySettings(); }
+    void setBaseCurrencySettings(int currencyID) { return currencyList_.setBaseCurrencySettings(currencyID); }
+    std::pair<mmCurrencyList::const_iterator, mmCurrencyList::const_iterator> rangeCurrency() const { return currencyList_.range(); }
+
 public: 
    mmCoreDB(boost::shared_ptr<wxSQLite3Database>);
 
    boost::shared_ptr<wxSQLite3Database> db_;
 
-   mmAccountList accountList_;
    mmCurrencyList currencyList_;
+   mmAccountList accountList_;
    mmBankTransactionList bTransactionList_;
 
    bool displayDatabaseError_;

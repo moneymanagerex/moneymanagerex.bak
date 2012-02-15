@@ -43,7 +43,7 @@ namespace
 inline boost::shared_ptr<mmCurrency> getCurrency(mmCoreDB* core, int currencyID)
 {
     wxASSERT(core);
-    return core->currencyList_.getCurrencySharedPtr(currencyID);
+    return core->getCurrencySharedPtr(currencyID);
 }
 
 

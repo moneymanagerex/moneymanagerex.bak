@@ -43,7 +43,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
 	hb.addTableHeaderCell(_("Amount"));
 	hb.endTableRow();
 
-    core_->currencyList_.loadBaseCurrencySettings();
+    core_->loadBaseCurrencySettings();
         
     double total = 0.0;
     double positiveTotal = 0.0;

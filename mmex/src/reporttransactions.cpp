@@ -176,7 +176,7 @@ wxString mmReportTransactions::getHTMLText()
 
     // work out the total balance for all the data at base rate
     wxString balanceStr;
-    core_->currencyList_.loadBaseCurrencySettings();
+    core_->loadBaseCurrencySettings();
     mmex::formatDoubleToCurrency(total, balanceStr);
 
     // display the total balance.
