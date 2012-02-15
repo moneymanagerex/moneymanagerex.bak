@@ -22,23 +22,23 @@
 
 bool mmCategoryList::categoryExists(const wxString& categoryName) const
 {
-    int numCategs = (int)categories_.size();
-    for (int idx = 0; idx < numCategs; idx++)
+    for (const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
     {
-        if (!categories_[idx]->categName_.CmpNoCase(categoryName))
+        if (! (*it)->categName_.CmpNoCase(categoryName))
             return true;
     }
+
     return false;
 }
 
 int mmCategoryList::getID(const wxString& categoryName) const
 {
-    int numCategs = (int)categories_.size();
-    for (int idx = 0; idx < numCategs; idx++)
+    for (const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
     {
-        if (categories_[idx]->categName_ == categoryName)
-            return categories_[idx]->categID_;
+        if ((*it)->categName_ == categoryName)
+            return (*it)->categID_;
     }
+
     return -1;
 }
 
@@ -50,7 +50,7 @@ int mmCategoryList::addCategory(const wxString& category)
     cID = (db_->GetLastRowId()).ToLong();
 
     boost::shared_ptr<mmCategory> pCategory(new mmCategory(cID, category));
-    categories_.push_back(pCategory);
+    entries_.push_back(pCategory);
 
     return cID;
 }
@@ -80,20 +80,20 @@ boost::shared_ptr<mmCategory> mmCategoryList::getCategorySharedPtr(int category,
 {
     if (category != -1)
     {
-        int numCategory = (int)categories_.size();
+        int numCategory = (int)entries_.size();
         for (int idx = 0; idx < numCategory; idx++)
         {
-            if (categories_[idx]->categID_ == category)
+            if (entries_[idx]->categID_ == category)
             {
                 if (subcategory == -1)
-                    return categories_[idx];
+                    return entries_[idx];
 
-                size_t numSubCategory = categories_[idx]->children_.size();
+                size_t numSubCategory = entries_[idx]->children_.size();
                 for (size_t idxS = 0; idxS < numSubCategory; ++idxS)
                 {
-                    if (categories_[idx]->children_[idxS]->categID_ == subcategory)
+                    if (entries_[idx]->children_[idxS]->categID_ == subcategory)
                     {
-                        return categories_[idx]->children_[idxS];
+                        return entries_[idx]->children_[idxS];
                     }
                 }
             }
@@ -108,15 +108,16 @@ bool mmCategoryList::deleteCategory(int categID)
     if (mmDBWrapper::deleteCategoryWithConstraints(db_.get(), categID))
     {
         std::vector <boost::shared_ptr<mmCategory> >::iterator Iter;
-        for ( Iter = categories_.begin( ) ; Iter != categories_.end( ) ; Iter++ )
+        for ( Iter = entries_.begin( ) ; Iter != entries_.end( ) ; Iter++ )
         {
             if ((*Iter)->categID_ == categID)
             {
-                categories_.erase(Iter);
+                entries_.erase(Iter);
                 return true;
             }
         }
     }
+
     return false;
 }
 
@@ -138,6 +139,7 @@ bool mmCategoryList::deleteSubCategory(int categID, int subCategID)
             }
         }
     }
+
     return false;
 }
 
@@ -151,7 +153,6 @@ bool mmCategoryList::updateCategory(int categID, int subCategID, const wxString&
         // check if the name already exists
         if (!parent)
         {
-
             if (categoryExists(text))
                 return false;
         }
