@@ -174,6 +174,7 @@ public:
     int updateAllTransactionsForPayee(mmCoreDB* core, int payeeID);
 
     /* Data */
+    typedef std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator const_iterator;
     std::vector< boost::shared_ptr<mmBankTransaction> > transactions_;
 
 private:
