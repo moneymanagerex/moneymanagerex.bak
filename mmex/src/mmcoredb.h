@@ -41,6 +41,7 @@ class mmCoreDB
 public:
     int getPayeeID(const wxString& name) const { return payeeList_.getID(name); }
     int getCategoryID(const wxString& name) const { return categoryList_.getID(name); }
+    int getSubCategoryID(int parentID, const wxString& name) const { return categoryList_.getSubCategoryID(parentID, name); }
     int getAccountID(const wxString& name) const { return accountList_.getID(name); }
     int getCurrencyID(const wxString& name) const { return currencyList_.getCurrencyID(name); }
 
