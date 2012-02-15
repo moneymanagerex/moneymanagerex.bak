@@ -224,7 +224,7 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
     int subcategID = iData->getSubCategID();
     if (subcategID == -1) // not subcateg
     {
-        if (core_->categoryList_.getSubCategoryID(categID, text) != -1)
+        if (core_->getSubCategoryID(categID, text) != -1)
         {   
             wxMessageBox(_("Sub Category with same name exists"),
                 _("Organise Categories: Adding Error"),wxOK|wxICON_ERROR);

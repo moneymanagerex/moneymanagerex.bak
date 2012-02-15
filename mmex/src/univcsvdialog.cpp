@@ -897,7 +897,7 @@ void mmUnivCSVDialog::parseToken(int index, wxString& token)
             if (categID_ == -1)
                 return;
     
-            subCategID_ = core_->categoryList_.getSubCategoryID(categID_, token);
+            subCategID_ = core_->getSubCategoryID(categID_, token);
             if (subCategID_ == -1)
                 subCategID_ = core_->categoryList_.addSubCategory(categID_, token);
             break;

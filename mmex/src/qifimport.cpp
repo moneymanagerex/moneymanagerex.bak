@@ -658,7 +658,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
 
                 if (!subcat.IsEmpty())
                 {
-                    subCategID = core->categoryList_.getSubCategoryID(categID, subcat);
+                    subCategID = core->getSubCategoryID(categID, subcat);
                     if (subCategID == -1)
                     {
                         subCategID = core->categoryList_.addSubCategory(categID, subcat);
