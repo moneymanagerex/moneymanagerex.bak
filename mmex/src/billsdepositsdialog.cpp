@@ -52,6 +52,7 @@ BEGIN_EVENT_TABLE( mmBDDialog, wxDialog )
     EVT_DATE_CHANGED(ID_DIALOG_BD_BUTTON_NEXTOCCUR, mmBDDialog::OnDateChanged)
     EVT_CHOICE(ID_DIALOG_BD_COMBOBOX_REPEATS, mmBDDialog::OnRepeatTypeChanged)  
     EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTRANSNUM, mmBDDialog::OnsetNextRepeatDate)
+    EVT_TEXT(ID_DIALOG_BD_TEXTCTRL_NUM_TIMES,mmBDDialog::OnPeriodChange)
 END_EVENT_TABLE()
 
 // Defines for Transaction Status and Type now located in dbWrapper.h
@@ -117,6 +118,7 @@ bool mmBDDialog::Create( wxWindow* parent, wxWindowID id, const wxString& captio
             itemCheckBoxAutoExeSilent_->Disable();
             itemCheckBoxAutoExeUserAck_->Disable();
             textNumRepeats_->Disable();
+            bSetNextOccurDate_->Disable();
         } else
             dpc_->Disable();
     }
@@ -1347,13 +1349,11 @@ void mmBDDialog::setRepeatDetails()
         staticTimesRepeat_->SetLabel( timeLabelDays);
         toolTipsStr << _("Specify period in Days to activate.") << wxT("\n") << _("Becomes blank when not active.");
         textNumRepeats_->SetToolTip(toolTipsStr);
-        bSetNextOccurDate_->Enable();
     } else if ( (repeats == 12) ) {
         staticTextRepeats_->SetLabel(repeatLabelActivate );
         staticTimesRepeat_->SetLabel(timeLabelMonths);
         toolTipsStr << _("Specify period in Months to activate.") << wxT("\n") << _("Becomes blank when not active.");
         textNumRepeats_->SetToolTip(toolTipsStr);
-        bSetNextOccurDate_->Enable();
     } else if ( (repeats == 13) ) {
         staticTextRepeats_->SetLabel(repeatLabelRepeats);
         staticTimesRepeat_->SetLabel(timeLabelDays);
@@ -1382,9 +1382,7 @@ void mmBDDialog::OnsetNextRepeatDate(wxCommandEvent& /*event*/)
     wxString valueStr = textNumRepeats_->GetValue();
     if (valueStr.IsNumber())
     {
-        long value;
-        valueStr.ToLong(&value);
-
+        int value = wxAtoi(valueStr);
         wxString dateStr = dpcbd_->GetValue().FormatISODate();
 	    wxDateTime  date = mmGetStorageStringAsDate(dateStr);
 
@@ -1400,7 +1398,15 @@ void mmBDDialog::OnsetNextRepeatDate(wxCommandEvent& /*event*/)
 	        dpcbd_->SetValue( date );
             calendarCtrl_->SetDate(date);
         }
+        bSetNextOccurDate_->Disable();
     }
+}
+
+void mmBDDialog::OnPeriodChange(wxCommandEvent& /*event*/)
+{
+    // event is ignored when showing: Times Repeated
+    int repeats = itemRepeats_->GetSelection();
+    if ((repeats == 11) || (repeats == 12)) bSetNextOccurDate_->Enable();
 }
 
 void mmBDDialog::activateSplitTransactionsDlg()

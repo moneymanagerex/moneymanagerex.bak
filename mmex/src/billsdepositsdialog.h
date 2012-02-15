@@ -144,6 +144,7 @@ private:
     wxButton* bSetNextOccurDate_;
     void OnRepeatTypeChanged(wxCommandEvent& event);
     void OnsetNextRepeatDate(wxCommandEvent& event);
+    void OnPeriodChange(wxCommandEvent& event);
     void setRepeatDetails();
 
     void activateSplitTransactionsDlg();
