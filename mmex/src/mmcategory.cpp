@@ -20,11 +20,6 @@
 #include "mmcategory.h"
 #include "dbwrapper.h"
 
-mmCategory::mmCategory(int id, const wxString& name) 
-: categID_(id), categName_(name)
-{
-}
-
 bool mmCategoryList::categoryExists(const wxString& categoryName) const
 {
     int numCategs = (int)categories_.size();

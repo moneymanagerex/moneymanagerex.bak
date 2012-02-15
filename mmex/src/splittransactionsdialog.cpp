@@ -86,7 +86,7 @@ void SplitTransactionDialog::DataToControls()
         int catID    = split_->entries_[idx]->categID_;
         int subcatID = split_->entries_[idx]->subCategID_;
 
-        wxString fullCatStr = core_->categoryList_.GetFullCategoryString(catID, subcatID);
+        wxString fullCatStr = core_->GetFullCategoryString(catID, subcatID);
         lcSplit_->InsertItem((long)idx,fullCatStr, -1);
 
         wxString dispAmount;
@@ -188,7 +188,7 @@ void SplitTransactionDialog::OnButtonAddClick( wxCommandEvent& /*event*/ )
         pSplitEntry->splitAmount_  = *sdd.m_amount_;
         pSplitEntry->categID_      = categID;
         pSplitEntry->subCategID_   = subcategID;
-        pSplitEntry->category_      = core_->categoryList_.getCategorySharedPtr(categID, 
+        pSplitEntry->category_      = core_->getCategorySharedPtr(categID, 
                                                                                 subcategID);
         wxASSERT(pSplitEntry->category_.lock());
         split_->addSplit(pSplitEntry);
@@ -269,7 +269,7 @@ void SplitTransactionDialog::EditEntry()
     int categID    = split_->entries_[item]->categID_;
     int subCategID = split_->entries_[item]->subCategID_;
     double amount  = split_->entries_[item]->splitAmount_;
-    wxString category = core_->categoryList_.GetFullCategoryString(categID,subCategID);
+    wxString category = core_->GetFullCategoryString(categID,subCategID);
 
     SplitDetailDialog sdd(core_, category, &categID, &subCategID, &amount, transType_, this);
     if (sdd.ShowModal() == wxID_OK)

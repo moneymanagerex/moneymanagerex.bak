@@ -910,7 +910,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
                 pTransaction->status_ = q1.GetString(wxT("STATUS"));
                 pTransaction->transNum_ = q1.GetString(wxT("TRANSACTIONNUMBER"));
                 pTransaction->notes_ = th.notes_;
-                pTransaction->category_ = m_core.get()->categoryList_.getCategorySharedPtr(th.categID_, th.subcategID_);
+                pTransaction->category_ = m_core.get()->getCategorySharedPtr(th.categID_, th.subcategID_);
                 pTransaction->date_ = th.nextOccurDate_;
                 pTransaction->toAmt_ = th.toAmt_;
 

@@ -81,24 +81,24 @@ void mmCategDialog::fillControls()
     treeCtrl_->SetItemBold(root_, true);
     treeCtrl_->SetFocus ();
 
-    if (!core_)
-        return;
+    if (!core_) return;
 
-    int numCategs = (int)core_->categoryList_.categories_.size();
-    for (int idx = 0; idx < numCategs; idx++)
+    std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> range = core_->rangeCategory();
+    for (mmCategoryList::const_iterator it = range.first; it != range.second; ++ it)
     {
-        wxTreeItemId maincat = treeCtrl_->AppendItem(root_, core_->categoryList_.categories_[idx]->categName_);
-        treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(core_->categoryList_.categories_[idx]->categID_, -1));  
+        const boost::shared_ptr<mmCategory> category = *it;
+        wxTreeItemId maincat = treeCtrl_->AppendItem(root_, category->categName_);
+        treeCtrl_->SetItemData(maincat, new mmTreeItemCateg(category->categID_, -1));  
 
-        int numSubCategs = (int)core_->categoryList_.categories_[idx]->children_.size();
-        for (int cidx = 0; cidx < numSubCategs; cidx++)
+        for (std::vector<boost::shared_ptr<mmCategory> >::const_iterator cit =  category->children_.begin(); 
+                cit != category->children_.end();
+                ++ cit)
         {
-            wxTreeItemId subcat = treeCtrl_->AppendItem(maincat, 
-                core_->categoryList_.categories_[idx]->children_[cidx]->categName_);
-            treeCtrl_->SetItemData(subcat, new mmTreeItemCateg(core_->categoryList_.categories_[idx]->categID_, 
-                core_->categoryList_.categories_[idx]->children_[cidx]->categID_)); 
+            const boost::shared_ptr<mmCategory> sub_category = *cit;
+            wxTreeItemId subcat = treeCtrl_->AppendItem(maincat, sub_category->categName_);
+            treeCtrl_->SetItemData(subcat, new mmTreeItemCateg(category->categID_, sub_category->categID_)); 
 
-            if (categID_ == core_->categoryList_.categories_[idx]->categID_ && subcategID_ == core_->categoryList_.categories_[idx]->children_[cidx]->categID_)
+            if (categID_ == category->categID_ && subcategID_ == sub_category->categID_)
                 selectedItemId_ = subcat;
         }
 
@@ -202,7 +202,7 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
 
     if (selectedItemId_ == root_)
     {
-        if (core_->categoryList_.categoryExists(text))
+        if (core_->categoryExists(text))
         {
             wxString errMsg = _("Category with same name exists");
             errMsg << wxT("\n\n") << _("Tip: If category added now, check bottom of list.\nCategory will be in sorted order next time dialog appears");
@@ -210,7 +210,7 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
 //          mmShowErrorMessage(this, _("Category with same name exists"), _("Error"));
             return;
         }
-        int categID = core_->categoryList_.addCategory(text);
+        int categID = core_->addCategory(text);
 
         wxTreeItemId tid = treeCtrl_->AppendItem(selectedItemId_, text);
         treeCtrl_->SetItemData(tid, new mmTreeItemCateg( categID, -1));
@@ -231,7 +231,7 @@ void mmCategDialog::OnAdd(wxCommandEvent& /*event*/)
 //          mmShowErrorMessage(this, _("Sub Category with same name exists"), _("Error"));
             return;
         }
-        int subcategID = core_->categoryList_.addSubCategory(categID, text);
+        int subcategID = core_->addSubCategory(categID, text);
 
         wxTreeItemId tid = treeCtrl_->AppendItem(selectedItemId_, text);
         treeCtrl_->SetItemData(tid, new mmTreeItemCateg(categID, subcategID));
@@ -285,7 +285,7 @@ void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
 
     if (subcategID == -1)
     {
-        if (!core_->categoryList_.deleteCategory(categID))
+        if (!core_->deleteCategory(categID))
         {
             showCategDialogDeleteError(_("Category in use."));
             return;
@@ -293,7 +293,7 @@ void mmCategDialog::OnDelete(wxCommandEvent& /*event*/)
     }
     else
     {
-        if (!core_->categoryList_.deleteSubCategory(categID, subcategID))
+        if (!core_->deleteSubCategory(categID, subcategID))
         {
             showCategDialogDeleteError(_("Sub-Category in use."), false);
             return;
@@ -402,7 +402,7 @@ void mmCategDialog::OnEdit(wxCommandEvent& /*event*/)
     int categID = iData->getCategID();
     int subcategID = iData->getSubCategID();
     
-    if (!core_->categoryList_.updateCategory(categID, subcategID, text))
+    if (!core_->updateCategory(categID, subcategID, text))
     {
         wxString errMsg = _("Update Failed");
         errMsg << wxT("          ");  // added to adjust dialog size

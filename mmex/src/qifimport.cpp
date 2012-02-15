@@ -652,7 +652,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 categID = core->getCategoryID(cat);
                 if (categID == -1)
                 {
-                    categID =  core->categoryList_.addCategory(cat);
+                    categID =  core->addCategory(cat);
                 }
 
 
@@ -661,7 +661,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                     subCategID = core->getSubCategoryID(categID, subcat);
                     if (subCategID == -1)
                     {
-                        subCategID = core->categoryList_.addSubCategory(categID, subcat);
+                        subCategID = core->addSubCategory(categID, subcat);
                     }
                 }
                 else
@@ -717,7 +717,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                         categID = core->getCategoryID(wxT("Unknown"));
                         if (categID == -1)
                         {
-                            categID =  core->categoryList_.addCategory(wxT("Unknown"));
+                            categID =  core->addCategory(wxT("Unknown"));
                         }
                     }
                 }
@@ -743,7 +743,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 pTransaction->status_ = status;
                 pTransaction->transNum_ = transNum;
                 pTransaction->notes_ = notes;
-                pTransaction->category_ = core->categoryList_.getCategorySharedPtr(categID, subCategID);
+                pTransaction->category_ = core->getCategorySharedPtr(categID, subCategID);
                 pTransaction->date_ = dtdt;
                 pTransaction->toAmt_ = 0.0;
                 pTransaction->updateAllData(core, fromAccountID, pCurrencyPtr);

@@ -121,7 +121,7 @@ void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core,
       pSplitEntry->categID_ = catID;
       pSplitEntry->subCategID_ = subID;
 
-      pSplitEntry->category_ = core->categoryList_.getCategorySharedPtr(catID, subID);
+      pSplitEntry->category_ = core->getCategorySharedPtr(catID, subID);
       wxASSERT(pSplitEntry->category_.lock());
 
       addSplit(pSplitEntry);
@@ -155,7 +155,7 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
      payee_ = core->getPayeeSharedPtr(q1.GetInt(wxT("PAYEEID")));
      amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
      toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
-     category_ = core->categoryList_.getCategorySharedPtr(q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
+     category_ = core->getCategorySharedPtr(q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
    
      boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(accountID_).lock();
      wxASSERT(pCurrencyPtr);
@@ -253,10 +253,10 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
       int categID = core->getCategoryID(wxT("Unknown"));
       if (categID == -1)
       {
-         categID =  core->categoryList_.addCategory(wxT("Unknown"));
+         categID =  core->addCategory(wxT("Unknown"));
       }
 
-      category_ = core->categoryList_.getCategorySharedPtr(categID, -1);
+      category_ = core->getCategorySharedPtr(categID, -1);
       pCategory = category_.lock();
       wxASSERT(pCategory);
       updateRequired_ = true;
@@ -350,7 +350,7 @@ void mmBankTransaction::getSplitTransactions(mmCoreDB* core, mmSplitTransactionE
         pSplitEntry->categID_ = catID;
         pSplitEntry->subCategID_ = subID;
 
-        boost::shared_ptr<mmCategory> p_cat = core->categoryList_.getCategorySharedPtr(catID, subID);
+        boost::shared_ptr<mmCategory> p_cat = core->getCategorySharedPtr(catID, subID);
         wxASSERT(p_cat);
         pSplitEntry->category_ = p_cat;
 
@@ -680,7 +680,7 @@ void mmBankTransactionList::updateAllTransactionsForCategory(mmCoreDB* core,
         if (pBankTransaction && (pBankTransaction->categID_ == categID)
             && (pBankTransaction->subcategID_ == subCategID))
         {
-            pBankTransaction->category_ = core->categoryList_.getCategorySharedPtr(categID, subCategID);
+            pBankTransaction->category_ = core->getCategorySharedPtr(categID, subCategID);
             boost::shared_ptr<mmCategory> pCategory = pBankTransaction->category_.lock();
 
             boost::shared_ptr<mmCategory> parent = pCategory->parent_.lock();

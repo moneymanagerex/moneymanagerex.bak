@@ -175,14 +175,14 @@ void SplitDetailDialog::CreateControls()
 void SplitDetailDialog::OnButtonCategoryClick( wxCommandEvent& /*event*/ )
 {
     mmCategDialog dlg(core_, this);
-    dlg.setTreeSelection(core_->categoryList_.GetCategoryString(*m_categID_), 
-                         core_->categoryList_.GetSubCategoryString(*m_categID_, *m_subcategID_));
+    dlg.setTreeSelection(core_->GetCategoryString(*m_categID_), 
+                         core_->GetSubCategoryString(*m_categID_, *m_subcategID_));
     if ( dlg.ShowModal() == wxID_OK )
     {
         *m_categID_ = dlg.categID_;
         *m_subcategID_ = dlg.subcategID_;
 
-        m_categString_ = core_->categoryList_.GetFullCategoryString(*m_categID_, *m_subcategID_);
+        m_categString_ = core_->GetFullCategoryString(*m_categID_, *m_subcategID_);
         bCategory_->SetLabel(m_categString_);
     }
 }

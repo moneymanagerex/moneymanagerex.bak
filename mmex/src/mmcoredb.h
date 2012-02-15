@@ -60,12 +60,23 @@ public:
     bool accountExists(const wxString& name) const { return accountList_.exists(name); };
     bool deleteAccount(int accountID) { return accountList_.remove(accountID); }
 
+    bool categoryExists(const wxString& categoryName) const { return categoryList_.categoryExists(categoryName); }
+    boost::shared_ptr<mmCategory> getCategorySharedPtr(int category, int subcategory) const { return categoryList_.getCategorySharedPtr(category, subcategory); }
+    int addCategory(const wxString& category) { return categoryList_.addCategory(category); }
+    int addSubCategory(int parentID, const wxString& text) { return categoryList_.addSubCategory(parentID, text); }
+    bool deleteCategory(int categID) { return categoryList_.deleteCategory(categID); }
+    bool deleteSubCategory(int categID, int subCategID) { return categoryList_.deleteSubCategory(categID, subCategID); }
+    bool updateCategory(int categID, int subCategID, const wxString& text) { return categoryList_.updateCategory(categID, subCategID, text); }
+    wxString GetCategoryString(int categID) const { return categoryList_.GetCategoryString(categID); }
+    wxString GetSubCategoryString(int categID, int subCategID) const { return categoryList_.GetSubCategoryString(categID, subCategID); }
+    wxString GetFullCategoryString(int categID, int subCategID) const { return categoryList_.GetFullCategoryString(categID, subCategID); }
+    std::pair<mmCategoryList::const_iterator, mmCategoryList::const_iterator> rangeCategory() const { return categoryList_.range(); }
+
 public: 
    mmCoreDB(boost::shared_ptr<wxSQLite3Database>);
 
    boost::shared_ptr<wxSQLite3Database> db_;
 
-   mmCategoryList categoryList_;
    mmAccountList accountList_;
    mmCurrencyList currencyList_;
    mmBankTransactionList bTransactionList_;
@@ -74,6 +85,7 @@ public:
 
 private:
    mmPayeeList payeeList_;
+   mmCategoryList categoryList_;
 
 };
 //----------------------------------------------------------------------------
