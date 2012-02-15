@@ -32,9 +32,9 @@ class mmAccount
 public: 
    mmAccount(boost::shared_ptr<wxSQLite3Database> db); 
    mmAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1);
-   virtual ~mmAccount() {}
+   ~mmAccount() {}
 
-    virtual double balance() = 0;
+   double balance();
 
    /* Scoped Enums */
    enum AccountStatus
@@ -62,40 +62,6 @@ public:
    boost::shared_ptr<wxSQLite3Database> db_;
 };
 
-class mmCheckingAccount : public mmAccount
-{
-public: 
-    mmCheckingAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1);
-    mmCheckingAccount(boost::shared_ptr<wxSQLite3Database> db) : mmAccount(db) { }
-    
-    virtual ~mmCheckingAccount() {}
-
-public:
-    double balance();
-};
-
-class mmInvestmentAccount : public mmAccount
-{
-public: 
-   mmInvestmentAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1) : mmAccount(db, q1) {}
-   mmInvestmentAccount(boost::shared_ptr<wxSQLite3Database> db) : mmAccount(db) { }
-   virtual ~mmInvestmentAccount() {}
-
-   double balance();
-};
-
-class mmTermAccount : public mmAccount
-{
-public: 
-    mmTermAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1);
-    mmTermAccount(boost::shared_ptr<wxSQLite3Database> db) : mmAccount(db) { }
-    
-    virtual ~mmTermAccount() {}
-    
-public:
-    double balance();
-};
-
 class mmAccountList
 {
     typedef std::vector<boost::shared_ptr<mmAccount> > account_v;
@@ -117,12 +83,15 @@ public:
     bool remove(int accountID);
     void update(boost::shared_ptr<mmAccount> pAccount);
     bool exists(const wxString& accountName) const;
+    bool has_term_account() const;
     boost::weak_ptr<mmCurrency> getCurrencyWeakPtr(int accountID) const;
     double getAccountBaseCurrencyConvRate(int accountID) const;
     wxString getName(int accountID) const;
     wxString getAccountCurrencyDecimalChar(int accountID) const;
     wxString getAccountCurrencyGroupChar(int accountID) const;
     account_v accounts_;
+    typedef std::vector<boost::shared_ptr<mmAccount> >::const_iterator const_iterator;
+    std::pair<const_iterator, const_iterator> range() const; 
     
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
