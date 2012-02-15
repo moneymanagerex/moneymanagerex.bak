@@ -59,9 +59,7 @@ void loadCategories(boost::shared_ptr<wxSQLite3Database> db_, mmCategoryList &ca
         
         if (!pCat || pCat->categID_ != catID)
         {
-            if (pCat) {
-                cat_list.categories_.push_back(pCat);
-            }
+            if (pCat) cat_list.entries_.push_back(pCat);
 
             pCat.reset(new mmCategory(catID, q1.GetString(wxT("CATEGNAME"))));
         }
@@ -83,7 +81,7 @@ void loadCategories(boost::shared_ptr<wxSQLite3Database> db_, mmCategoryList &ca
 
     if (pCat)
     {
-        cat_list.categories_.push_back(pCat);
+        cat_list.entries_.push_back(pCat);
     }
 }
 //----------------------------------------------------------------------------

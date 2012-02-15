@@ -62,9 +62,9 @@ public:
     wxString GetFullCategoryString(int categID, int subCategID) const;
 
     /* Public Data */
-    std::vector< boost::shared_ptr<mmCategory> > categories_;
+    std::vector< boost::shared_ptr<mmCategory> > entries_;
     typedef std::vector< boost::shared_ptr<mmCategory> >::const_iterator const_iterator;
-    std::pair<const_iterator, const_iterator> range() const { return std::make_pair(categories_.begin(), categories_.end()); }
+    std::pair<const_iterator, const_iterator> range() const { return std::make_pair(entries_.begin(), entries_.end()); }
    
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
