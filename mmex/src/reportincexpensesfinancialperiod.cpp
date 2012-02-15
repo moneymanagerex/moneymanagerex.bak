@@ -44,7 +44,7 @@ mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(m
 
 wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
 {
-    core_->currencyList_.loadBaseCurrencySettings();
+    core_->loadBaseCurrencySettings();
 
     wxString yearStr = wxString::Format(wxT("%d"), year_);
     wxString finYearStr = yearStr + wxT(" - ") + wxString::Format(wxT("%d"), (year_ + 1));

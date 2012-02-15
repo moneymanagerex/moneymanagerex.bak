@@ -106,7 +106,7 @@ void mmCurrencyDialog::fillControls()
 void mmCurrencyDialog::updateControls()
 {
     wxString currencyName = currencyChoice_->GetStringSelection();
-    boost::shared_ptr<mmCurrency > pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyName);
+    boost::shared_ptr<mmCurrency > pCurrency = core_->getCurrencySharedPtr(currencyName);
 
     wxTextCtrl* pfxTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_PFX);
     wxTextCtrl* sfxTx = (wxTextCtrl*)FindWindow(ID_DIALOG_CURRENCY_TEXT_SFX);
@@ -356,7 +356,7 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
         return;
     }
 
-    boost::shared_ptr<mmCurrency> pCurrency = core_->currencyList_.getCurrencySharedPtr(currencyName);
+    boost::shared_ptr<mmCurrency> pCurrency = core_->getCurrencySharedPtr(currencyName);
     wxASSERT(pCurrency->currencyID_ == currencyID_);
     
     pCurrency->pfxSymbol_ = pfxTx->GetValue();
@@ -369,7 +369,7 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
     pCurrency->baseConv_ = convRate;
 	pCurrency->currencySymbol_ = currencySymbol->GetValue();
    
-    core_->currencyList_.updateCurrency(pCurrency);
+    core_->updateCurrency(pCurrency);
 
     fillControls();
 }

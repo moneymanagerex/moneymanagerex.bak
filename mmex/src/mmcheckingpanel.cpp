@@ -921,7 +921,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
         {
             //load settings for base currency
             wxString currencyName = mmDBWrapper::getCurrencyName(m_core->db_.get(), basecurrencyid);
-            boost::shared_ptr<mmCurrency> pCurrency = m_core->currencyList_.getCurrencySharedPtr(currencyName);
+            boost::shared_ptr<mmCurrency> pCurrency = m_core->getCurrencySharedPtr(currencyName);
             wxASSERT(pCurrency);
             wxString basecuramountStr;
             mmDBWrapper::loadSettings(m_core->db_.get(), pCurrency->currencyID_);

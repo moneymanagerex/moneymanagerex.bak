@@ -71,8 +71,11 @@ public:
     void setBaseCurrencySettings(int currencyID);
 
     std::vector< boost::shared_ptr<mmCurrency> > currencies_;
-    
+    typedef std::vector< boost::shared_ptr<mmCurrency> >::const_iterator const_iterator;
+    std::pair<const_iterator, const_iterator> range() const { return std::make_pair(currencies_.begin(), currencies_.end()); }
+   
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
 };
+
 #endif
