@@ -131,14 +131,7 @@ void loadAccounts(boost::shared_ptr<wxSQLite3Database> db_,
 
     while (q1.NextRow())
     {
-        mmAccount* ptrBase = 0;
-
-        if (q1.GetString(wxT("ACCOUNTTYPE")) == ACCOUNT_TYPE_BANK)
-            ptrBase = new mmCheckingAccount(db_, q1);
-        else if (q1.GetString(wxT("ACCOUNTTYPE")) == ACCOUNT_TYPE_TERM)
-            ptrBase = new mmTermAccount(db_, q1);
-        else
-            ptrBase = new mmInvestmentAccount(db_, q1);
+        mmAccount* ptrBase = new mmAccount(db_, q1);
 
         boost::weak_ptr<mmCurrency> pCurrency = cur_list.getCurrencySharedPtr(q1.GetInt(wxT("CURRENCYID")));
         ptrBase->currency_ = pCurrency;

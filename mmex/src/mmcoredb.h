@@ -84,6 +84,10 @@ public:
     void setBaseCurrencySettings(int currencyID) { return currencyList_.setBaseCurrencySettings(currencyID); }
     std::pair<mmCurrencyList::const_iterator, mmCurrencyList::const_iterator> rangeCurrency() const { return currencyList_.range(); }
 
+    /*Account Functions*/
+    bool has_term_account() const { return accountList_.has_term_account(); }
+    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> rangeAccount() const { return accountList_.range(); }
+
 public: 
    mmCoreDB(boost::shared_ptr<wxSQLite3Database>);
 

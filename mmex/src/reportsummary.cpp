@@ -55,10 +55,12 @@ wxString mmReportSummary::getHTMLText()
     hb.endTableRow();
 
     /* Checking */
-    for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
+    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->rangeAccount();
+    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
     {
-        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
-        if (pCA && pCA->status_== mmAccount::MMEX_Open)
+        const mmAccount* pCA = it->get();
+
+        if (pCA->acctType_ == ACCOUNT_TYPE_BANK && pCA->status_ == mmAccount::MMEX_Open)
         {
             double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
               
@@ -72,10 +74,10 @@ wxString mmReportSummary::getHTMLText()
             wxString balance;
             mmex::formatDoubleToCurrency(bal, balance);
 
-		    hb.startTableRow();
-		    hb.addTableCell(pCA->name_, false, true);
-		    hb.addTableCell(balance, true);
-		    hb.endTableRow();
+            hb.startTableRow();
+            hb.addTableCell(pCA->name_, false, true);
+            hb.addTableCell(balance, true);
+            hb.endTableRow();
         }
     }
 
@@ -94,10 +96,11 @@ wxString mmReportSummary::getHTMLText()
     /* Terms */
     double tTBalance = 0.0;
 
-    for (int iAdx = 0; iAdx < (int) core_->accountList_.accounts_.size(); iAdx++)
+    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
     {
-        mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(core_->accountList_.accounts_[iAdx].get());
-        if (pTA && pTA->status_== mmAccount::MMEX_Open)
+        const mmAccount* pTA = it->get();
+
+        if (pTA->status_== mmAccount::MMEX_Open && pTA->acctType_ == ACCOUNT_TYPE_TERM)
         {
             double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
               

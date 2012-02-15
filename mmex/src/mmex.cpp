@@ -1121,15 +1121,9 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 {
     activeTermAccounts_ = false;
     // if no database is present yet, ignore testing for Term Accounts
-    if (m_db)
+    if (m_db && m_core->has_term_account())
     {
-        int numAccounts = (int) m_core->accountList_.accounts_.size();
-        for (int iAdx = 0; iAdx < numAccounts; iAdx++)
-        {
-            mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(m_core->accountList_.accounts_[iAdx].get());
-            if (pTA)
-                activeTermAccounts_ = true;
-        }
+        activeTermAccounts_ = true;
     }
 
     navTreeCtrl_->DeleteAllItems();
@@ -1464,13 +1458,14 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 
     wxString vAccts = mmDBWrapper::getINISettingValue(m_inidb.get(), wxT("VIEWACCOUNTS"), wxT("ALL"));
 
-    int numAccounts = (int) m_core->accountList_.accounts_.size();
-    for (int iAdx = 0; iAdx < numAccounts; iAdx++)
+    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = m_core->rangeAccount();
+    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
     {
+        const mmAccount* account = it->get();
         // Checking/Bank Accounts
-        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.accounts_[iAdx].get());
-        if (pCA)
+        if (account->acctType_ == ACCOUNT_TYPE_BANK)
         {
+            const mmAccount* pCA = account;
             if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
                 (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
                 (vAccts == wxT("ALL")))
@@ -1485,11 +1480,10 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
                 navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pCA->id_, false));
             }
         }
-
         // Term Accounts
-        mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(m_core->accountList_.accounts_[iAdx].get());
-        if (pTA)
+        else if (account->acctType_ == ACCOUNT_TYPE_TERM)
         {
+           const mmAccount* pTA = account; 
             if ((vAccts == wxT("Open") && pTA->status_ == mmAccount::MMEX_Open) ||
                 (vAccts == wxT("Favorites") && pTA->favoriteAcct_) ||
                 (vAccts == wxT("ALL")))
@@ -1504,11 +1498,10 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
                 navTreeCtrl_->SetItemData(tacct, new mmTreeItemData(pTA->id_, false));
             }
         }
-        
         // Stock Accounts
-        mmInvestmentAccount* pIA = dynamic_cast<mmInvestmentAccount*>(m_core->accountList_.accounts_[iAdx].get());
-        if (pIA)
+        else //if (account->acctType_ == ACCOUNT_TYPE_STOCK)
         {
+            const mmAccount* pIA = account;
             if ((vAccts == wxT("Open") && pIA->status_ == mmAccount::MMEX_Open) ||
                 (vAccts == wxT("Favorites") && pIA->favoriteAcct_) ||
                 (vAccts == wxT("ALL")))
@@ -3604,23 +3597,13 @@ wxArrayString mmGUIFrame::getAccountsArray( bool withTermAccounts) const
 {
     wxArrayString accountArray;
 
-    for (int iAdx = 0; iAdx < (int) m_core->accountList_.accounts_.size(); iAdx++)
+    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = m_core->rangeAccount();
+    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
     {
-//      Add Check/Savings Accounts to Cash Flows
-        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(m_core->accountList_.accounts_[iAdx].get());
-        if (pCA)
-        {
-            accountArray.Add(pCA->name_);
-        }
+        const mmAccount* account = it->get();
 
-        if (withTermAccounts) // Add Term accounts to Cash Flows as well.
-        {
-            mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(m_core->accountList_.accounts_[iAdx].get());
-            if (pTA)
-            {
-                accountArray.Add(pTA->name_);
-            }
-        }
+        if (account->acctType_ == ACCOUNT_TYPE_BANK || (withTermAccounts && account->acctType_ == ACCOUNT_TYPE_TERM)) 
+            accountArray.Add(account->name_);
     }
 
     return accountArray;
@@ -4253,12 +4236,16 @@ void mmGUIFrame::OnEditAccount(wxCommandEvent& /*event*/)
     wxArrayString as;
     int num = (int)m_core->accountList_.accounts_.size();
     boost::scoped_array<int> arrAcctID(new int[num]);
-    for (size_t idx = 0; idx < m_core->accountList_.accounts_.size(); ++idx)
+
+    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = m_core->rangeAccount();
+    int idx = 0;
+    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
     {
-        as.Add(m_core->accountList_.accounts_[idx]->name_);
-        arrAcctID[idx] = m_core->accountList_.accounts_[idx]->id_;
+        const mmAccount* account = it->get();
+        as.Add(account->name_);
+        arrAcctID[idx ++] = account->id_;
     }
-  
+ 
     wxSingleChoiceDialog scd(this, _("Choose Account to Edit"), _("Accounts"), as);
     if (scd.ShowModal() == wxID_OK)
     {
@@ -4290,10 +4277,14 @@ void mmGUIFrame::OnDeleteAccount(wxCommandEvent& /*event*/)
     wxArrayString as;
     int num = (int)m_core->accountList_.accounts_.size();
     int* arrAcctID = new int[num];
-    for (int idx = 0; idx < (int)m_core->accountList_.accounts_.size(); idx++)
+
+    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = m_core->rangeAccount();
+    int idx = 0;
+    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
     {
-        as.Add(m_core->accountList_.accounts_[idx]->name_);
-        arrAcctID[idx] = m_core->accountList_.accounts_[idx]->id_;
+        const mmAccount* account = it->get();
+        as.Add(account->name_);
+        arrAcctID[idx ++] = account->id_;
     }
   
     wxSingleChoiceDialog scd (this, _("Choose Account to Delete"), _("Accounts"), as);
@@ -4698,13 +4689,7 @@ bool wxAddAccountPage2::TransferDataFromWindow()
         return false;
     }
 
-    mmAccount* ptrBase;
-    if (acctTypeStr == ACCOUNT_TYPE_BANK)
-        ptrBase = new mmCheckingAccount(parent_->m_core->db_);
-    else if (acctTypeStr == ACCOUNT_TYPE_TERM)
-        ptrBase = new mmTermAccount(parent_->m_core->db_);
-    else
-        ptrBase = new mmInvestmentAccount(parent_->m_core->db_);
+    mmAccount* ptrBase = new mmAccount(parent_->m_core->db_);
 
     boost::shared_ptr<mmAccount> pAccount(ptrBase);
 

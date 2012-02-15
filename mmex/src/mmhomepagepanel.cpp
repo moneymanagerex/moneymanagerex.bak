@@ -158,50 +158,51 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
 
     // Get account balances and display accounts if we want them displayed 
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
-    for (size_t iAdx = 0; iAdx < core_->accountList_.accounts_.size(); ++iAdx)
+    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->rangeAccount();
+    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
     {
-        mmCheckingAccount* pCA = dynamic_cast<mmCheckingAccount*>(core_->accountList_.accounts_[iAdx].get());
-        if (pCA && pCA->status_== mmAccount::MMEX_Open)
+        mmAccount* pCA = it->get();
+
+        if (pCA->acctType_ != ACCOUNT_TYPE_BANK || pCA->status_ == mmAccount::MMEX_Closed) continue;
+
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->id_).lock();
+        wxASSERT(pCurrencyPtr);
+        mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+
+        double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
+        double reconciledBal = pCA->initialBalance_ + core_->bTransactionList_.getReconciledBalance(pCA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
+        double rate = pCurrencyPtr->baseConv_;
+        tBalance += bal * rate; // actual amount in that account in the original rate
+        
+        // Display the individual Checking account links if we want to display them
+        if ( frame_->expandedBankAccounts() ) 
         {
-            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pCA->id_).lock();
-            wxASSERT(pCurrencyPtr);
-            mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
+            double income = 0.0;
+            double expenses = 0.0;
+            core_->bTransactionList_.getExpensesIncome(pCA->id_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
 
-            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
-            double reconciledBal = pCA->initialBalance_ + core_->bTransactionList_.getReconciledBalance(pCA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
-            double rate = pCurrencyPtr->baseConv_;
-            tBalance += bal * rate; // actual amount in that account in the original rate
-            
-            // Display the individual Checking account links if we want to display them
-            if ( frame_->expandedBankAccounts() ) 
+            // show the actual amount in that account
+            wxString balanceStr;
+            wxString reconciledBalanceStr;
+            mmex::formatDoubleToCurrency(bal, balanceStr);
+            mmex::formatDoubleToCurrency(reconciledBal, reconciledBalanceStr);
+
+            if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
+                (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
+                (vAccts == wxT("ALL")))
             {
-                double income = 0.0;
-                double expenses = 0.0;
-                core_->bTransactionList_.getExpensesIncome(pCA->id_, expenses, income, false, dtBegin, dtEnd, mmIniOptions::instance().ignoreFutureTransactions_);
-
-                // show the actual amount in that account
-                wxString balanceStr;
-                wxString reconciledBalanceStr;
-                mmex::formatDoubleToCurrency(bal, balanceStr);
-                mmex::formatDoubleToCurrency(reconciledBal, reconciledBalanceStr);
-
-                if ((vAccts == wxT("Open") && pCA->status_ == mmAccount::MMEX_Open) ||
-                    (vAccts == wxT("Favorites") && pCA->favoriteAcct_) ||
-                    (vAccts == wxT("ALL")))
-                {
-                    hb.startTableRow();
-                    hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->id_), pCA->name_, false, true);
-                    hb.addTableCell(balanceStr, true);
-                    hb.addTableCell(reconciledBalanceStr, true);
-                    hb.endTableRow();
-                }
-
-                // if bank accounts being displayed, include income/expense totals on home page.
-                tIncome += income;
-                tExpenses += expenses;
+                hb.startTableRow();
+                hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->id_), pCA->name_, false, true);
+                hb.addTableCell(balanceStr, true);
+                hb.addTableCell(reconciledBalanceStr, true);
+                hb.endTableRow();
             }
+
+            // if bank accounts being displayed, include income/expense totals on home page.
+            tIncome += income;
+            tExpenses += expenses;
         }
-	}
+    }
     displaySectionTotal(hb, _("Bank Accounts Total:"), tBalance);
 }
 
@@ -218,10 +219,11 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
 
     // Get account balances and add to totals, and display accounts if we want them displayed 
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
-    for (size_t iAdx = 0; iAdx < core_->accountList_.accounts_.size(); ++iAdx)
+    std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> range = core_->rangeAccount(); 
+    for (mmAccountList::const_iterator it = range.first; it != range.second; ++ it)
     {
-        mmTermAccount* pTA = dynamic_cast<mmTermAccount*>(core_->accountList_.accounts_[iAdx].get());
-        if (pTA && pTA->status_== mmAccount::MMEX_Open)
+        const mmAccount* pTA= it->get();
+        if (pTA && pTA->status_== mmAccount::MMEX_Open && pTA->acctType_ == ACCOUNT_TYPE_TERM)
         {
             boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pTA->id_).lock();
             wxASSERT(pCurrencyPtr);

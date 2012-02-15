@@ -351,12 +351,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     boost::shared_ptr<mmAccount> pAccount;
     if (newAcct_)
     {
-        mmAccount* ptrBase;
-       if (acctType == ACCT_TYPE_CHECKING)
-          ptrBase = new mmCheckingAccount(core_->db_);
-       else
-          ptrBase = new mmInvestmentAccount(core_->db_);
-       boost::shared_ptr<mmAccount> tAccount(ptrBase);
+       boost::shared_ptr<mmAccount> tAccount(new mmAccount(core_->db_));
        pAccount = tAccount;
     }
     else

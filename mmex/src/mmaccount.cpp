@@ -53,111 +53,13 @@ mmAccount::mmAccount(boost::shared_ptr<wxSQLite3Database> db,
     initialBalance_ = q1.GetDouble(wxT("INITIALBAL"));
 }
 
-#if 0
-boost::shared_ptr<mmTransaction> mmCheckingAccount::findTransaction(int transactionID)
+
+double mmAccount::balance()
 {
-    int len = (int)mmCheckingAccount::gTransactions_.size();
-    for (int i = 0; i < len; i++)
-    {
-        if (mmCheckingAccount::gTransactions_[i]->transactionID() == transactionID)
-            return mmCheckingAccount::gTransactions_[i];
-    }
-    boost::shared_ptr<mmTransaction> ptr;    
-    return ptr;
-}
-#endif
-
-mmCheckingAccount::mmCheckingAccount(
-                 boost::shared_ptr<wxSQLite3Database> db, 
-                 wxSQLite3ResultSet& q1) 
-                 : mmAccount(db, q1) 
-{
-    
-}
-
-
-#if 0
-void mmCheckingAccount::deleteTransactions(int accountID)
-{
-    std::vector<boost::weak_ptr<mmTransaction> >::iterator iter;
-
-    for (iter = transactions_.begin(); iter != transactions_.end(); )
-    {
-         boost::shared_ptr<mmTransaction> sptr = (*iter).lock();
-         if (!sptr)
-         {
-            // transaction has gone away, delete it
-             iter = transactions_.erase(iter);
-         }
-         else
-         {
-             mmBankTransaction* pBankTransaction = dynamic_cast<mmBankTransaction*>(sptr.get());
-             if (pBankTransaction)
-             {
-                 if ((pBankTransaction->accountID_ == accountID) ||
-                     (pBankTransaction->toAccountID_))
-                 {
-                     wxASSERT(false); // we should never have to be here
-                 }
-             }
-             ++iter;
-         }
-    }
-}
-
-void mmCheckingAccount::deleteTransaction(int transactionID)
-{
-   std::vector< boost::weak_ptr<mmTransaction> >::iterator i;
-   for (i = transactions_.begin(); i!= transactions_.end(); )
-   {
-      boost::shared_ptr<mmTransaction> sptr = (*i).lock();
-      wxASSERT(sptr);
-      mmBankTransaction* pBankTransaction = dynamic_cast<mmBankTransaction*>(sptr.get());
-      if (pBankTransaction)
-      {
-         if (pBankTransaction->transactionID() == transactionID)
-         {
-            i = transactions_.erase(i);
-            break;
-         }
-         else
-            ++i;
-      }
-   }
-   mmCheckingAccount::deleteGlobalTransaction(this->accountID_, transactionID);
-   mmDBWrapper::deleteTransaction(core_->db_.get(), transactionID);
-}
-#endif
-
-double mmCheckingAccount::balance()
-{
+    if (acctType_ == ACCOUNT_TYPE_STOCK) return 0.0;
    return mmDBWrapper::getTotalBalanceOnAccount(db_.get(), this->id_);
 }
 
-//----------------------------------------------------------------------------------
-
-mmTermAccount::mmTermAccount(
-               boost::shared_ptr<wxSQLite3Database> db, 
-               wxSQLite3ResultSet& q1) 
-             : mmAccount(db, q1) 
-{
-    
-}
-
-double mmTermAccount::balance()
-{
-   return mmDBWrapper::getTotalBalanceOnAccount(db_.get(), this->id_);
-}
-
-//----------------------------------------------------------------------------------
-
-/* mmInvestmentAccount */
-double mmInvestmentAccount::balance()
-{
-    return 0.0;
-}
-
-// --------------------------------------------------------
 
 mmAccountList::mmAccountList(boost::shared_ptr<wxSQLite3Database> db)
        :db_(db) {}
@@ -308,6 +210,16 @@ bool mmAccountList::exists(const wxString& accountName) const
     return false;
 }
 
+bool mmAccountList::has_term_account() const
+{
+    for (const_iterator it = accounts_.begin(); it != accounts_.end(); ++ it)
+    {
+        if ((*it)->acctType_ == ACCOUNT_TYPE_TERM) return true;
+    }
+
+    return false;
+}
+
 int mmAccountList::getID(const wxString& accountName) const
 {
     return mmDBWrapper::getAccountID(db_.get(), accountName);
@@ -424,4 +336,10 @@ int mmAccountList::add(boost::shared_ptr<mmAccount> pAccount)
     mmOptions::instance().databaseUpdated_ = true;
 
     return pAccount->id_;
+}
+
+std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> 
+mmAccountList::range() const
+{
+    return std::make_pair(accounts_.begin(), accounts_.end());
 }
