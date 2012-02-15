@@ -2363,17 +2363,11 @@ void mmDBWrapper::completeBDInSeries(wxSQLite3Database* db, int bdID)
 
         if (q1.NextRow())
         {
-            numRepeats = q1.GetInt(wxT("NUMOCCURRENCES"));
-            if (numRepeats != -1)
-            {
-                --numRepeats;
-            }
-
             wxString nextOccurrString = q1.GetString(wxT("NEXTOCCURRENCEDATE"));
             wxDateTime dtno = mmGetStorageStringAsDate(nextOccurrString);
+            updateOccur = dtno;
 
             int repeats = q1.GetInt(wxT("REPEATS"));
-            updateOccur = dtno;
 
             // DeMultiplex the Auto Executable fields.
             if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute User Acknowlegement required
@@ -2381,6 +2375,12 @@ void mmDBWrapper::completeBDInSeries(wxSQLite3Database* db, int bdID)
             if (repeats >= BD_REPEATS_MULTIPLEX_BASE)    // Auto Execute Silent mode
                 repeats -= BD_REPEATS_MULTIPLEX_BASE;
             
+            numRepeats = q1.GetInt(wxT("NUMOCCURRENCES"));
+            if (numRepeats != -1)
+            {
+                if (repeats < 11) --numRepeats;
+            }
+
             if (repeats == 0)
             {
                 numRepeats = 0;
@@ -2425,10 +2425,17 @@ void mmDBWrapper::completeBDInSeries(wxSQLite3Database* db, int bdID)
             {
                 updateOccur = dtno.Add(wxDateSpan::Days(1));
             }
-            else if ((repeats > 10) )
+            else if ((repeats == 11) || (repeats == 12))
             {
-                if (numRepeats == 0)
-                    numRepeats --;
+                if (numRepeats != -1) numRepeats = -1;
+            }
+            else if (repeats == 13)
+            {
+                if (numRepeats > 0) updateOccur = dtno.Add(wxDateSpan::Days(numRepeats));
+            }
+            else if (repeats == 14)
+            {
+                if (numRepeats > 0) updateOccur = dtno.Add(wxDateSpan::Months(numRepeats));
             }
         }
 
