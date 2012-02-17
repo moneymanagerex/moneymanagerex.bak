@@ -25,7 +25,7 @@ ASSETID integer primary key
 , NOTES TEXT
 , VALUECHANGERATE numeric
 , ASSETTYPE TEXT
-)
+);
 
 
 -- Describe BILLSDEPOSITS_V1
@@ -47,7 +47,7 @@ BDID integer primary key
 , REPEATS numeric
 , NEXTOCCURRENCEDATE TEXT
 , NUMOCCURRENCES numeric
-)
+);
 
 -- Describe BUDGETSPLITTRANSACTIONS_V1
 CREATE TABLE BUDGETSPLITTRANSACTIONS_V1(
@@ -56,7 +56,7 @@ SPLITTRANSID integer primary key
 , CATEGID integer
 , SUBCATEGID integer
 , SPLITTRANSAMOUNT numeric
-)
+);
 
 -- Describe BUDGETTABLE_V1
 CREATE TABLE BUDGETTABLE_V1(
@@ -66,18 +66,19 @@ BUDGETENTRYID integer primary key
 , SUBCATEGID integer
 , PERIOD TEXT NOT NULL
 , AMOUNT numeric NOT NULL
-)
+);
 
 -- Describe BUDGETYEAR_V1
 CREATE TABLE BUDGETYEAR_V1(
 BUDGETYEARID integer primary key
 , BUDGETYEARNAME TEXT NOT NULL
-)
+);
 
 -- Describe CATEGORY_V1
 CREATE TABLE CATEGORY_V1(
 CATEGID integer primary key
-, CATEGNAME TEXT NOT NULL)
+, CATEGNAME TEXT NOT NULL
+);
 
 
 -- Describe CHECKINGACCOUNT_V1
@@ -96,7 +97,7 @@ TRANSID integer primary key
 , TRANSDATE TEXT
 , FOLLOWUPID integer
 , TOTRANSAMOUNT numeric
-)
+);
 
 
 -- Describe CURRENCYFORMATS_V1
@@ -112,7 +113,7 @@ CURRENCYID integer primary key
 , SCALE numeric
 , BASECONVRATE numeric
 , CURRENCY_SYMBOL TEXT
-)
+);
 
 
 -- Describe INFOTABLE_V1
