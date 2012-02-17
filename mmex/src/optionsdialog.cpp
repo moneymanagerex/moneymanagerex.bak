@@ -591,7 +591,7 @@ void mmOptionsDialog::CreateControls()
     // Navigation Tree Expansion Options
     wxStaticBox* navTreeOptionsStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Navigation Tree Expansion Options"));
     navTreeOptionsStaticBox->SetFont(staticBoxFontSetting);
-    wxStaticBoxSizer* navTreeOptionsStaticBoxSizer = new wxStaticBoxSizer(navTreeOptionsStaticBox, wxVERTICAL); //wxHORIZONTAL);
+    wxStaticBoxSizer* navTreeOptionsStaticBoxSizer = new wxStaticBoxSizer(navTreeOptionsStaticBox, wxHORIZONTAL); //wxHORIZONTAL);
     viewsPanelSizer->Add(navTreeOptionsStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
     // Expand Bank Tree
@@ -611,7 +611,7 @@ void mmOptionsDialog::CreateControls()
     // Home Page Expansion Options
     wxStaticBox* homePageStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Home Page Expansion Options"));
     homePageStaticBox->SetFont(staticBoxFontSetting);
-    wxStaticBoxSizer* homePageStaticBoxSizer = new wxStaticBoxSizer(homePageStaticBox, wxHORIZONTAL);
+    wxStaticBoxSizer* homePageStaticBoxSizer = new wxStaticBoxSizer(homePageStaticBox, wxVERTICAL);
     viewsPanelSizer->Add(homePageStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
     // Expand Bank Home
