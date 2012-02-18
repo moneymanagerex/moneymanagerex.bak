@@ -157,7 +157,6 @@ public:
     void sortTable();
 
 public:
-    mmCoreDB* core_;
     wxImageList* m_imageList;
     billsDepositsListCtrl* listCtrlAccount_;
 };

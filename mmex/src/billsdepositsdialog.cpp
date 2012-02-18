@@ -66,24 +66,12 @@ mmBDDialog::mmBDDialog( )
 mmBDDialog::mmBDDialog(wxSQLite3Database* db, mmCoreDB* core, int bdID, bool edit, bool enterOccur,
                        wxWindow* parent, wxWindowID id, const wxString& caption, 
                        const wxPoint& pos, const wxSize& size, long style )
+: db_(db), core_(core), bdID_(bdID), edit_(edit)
+    , categID_(-1), subcategID_(-1), payeeID_(-1), accountID_(-1), toID_(-1)
+    , toTransAmount_(-1), enterOccur_(enterOccur)
+    , advancedToTransAmountSet_(false), payeeUnknown_(true)
+    , autoExecuteUserAck_(false), autoExecuteSilent_(false)
 {
-    db_ = db;
-    core_ = core;
-    bdID_ = bdID;
-    edit_ = edit;
-    categID_ = -1;
-    subcategID_ = -1;
-    payeeID_ = -1;
-    accountID_ = -1;
-    toID_ = -1;
-    toTransAmount_ = -1;
-    enterOccur_ = enterOccur;
-    advancedToTransAmountSet_ = false;
-    payeeUnknown_ = true;
-
-    autoExecuteUserAck_ = false;
-    autoExecuteSilent_  = false;
-
     Create(parent, id, caption, pos, size, style);
 }
 

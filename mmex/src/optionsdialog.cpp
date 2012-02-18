@@ -114,9 +114,8 @@ mmOptionsDialog::mmOptionsDialog( mmCoreDB* core, wxSQLite3Database* inidb,
                                  wxWindow* parent, wxWindowID id, 
                                  const wxString& caption, 
                                  const wxPoint& pos, const wxSize& size, long style )
-                                 : core_(core), inidb_(inidb), db_(core_->db_.get())
+                                 : core_(core), inidb_(inidb), db_(core_->db_.get()), restartRequired_(false)
 {
-    restartRequired_ = false;
     Create(parent, id, caption, pos, size, style);
 }
 
