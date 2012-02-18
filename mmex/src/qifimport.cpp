@@ -384,7 +384,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
     wxString acctName;
     if (destinationAccountName == wxEmptyString)
     {
-        wxArrayString as = mmDBWrapper::getAccountsName(db_);
+        wxArrayString as = core->getAccountsName();
 
         wxSingleChoiceDialog scd(0, _("Choose Account to import to:"), _("QIF Import"), as);
         if (scd.ShowModal() != wxID_OK)

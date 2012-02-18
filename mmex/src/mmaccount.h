@@ -77,7 +77,6 @@ public:
     /// returns the ACCOUNT_TYPE_xxxx String
     wxString getAccountType(int accountID) const;
     /// returns the status of the account (mmAccount::MMEX_Open or mmAccount::MMEX_Closed)\n
-    /// to get a list of account names, use mmDBWrapper::getAccountsName(..)
     mmAccount::AccountStatus getAccountStatus(int accountID) const;
     int getNumAccounts() const { return accounts_.size(); }
     int getID(const wxString& accountName) const;
@@ -88,6 +87,7 @@ public:
     boost::weak_ptr<mmCurrency> getCurrencyWeakPtr(int accountID) const;
     double getAccountBaseCurrencyConvRate(int accountID) const;
     wxString getName(int accountID) const;
+    wxArrayString getAccountsName(int except_id = -1) const;
     wxString getAccountCurrencyDecimalChar(int accountID) const;
     wxString getAccountCurrencyGroupChar(int accountID) const;
     account_v accounts_;

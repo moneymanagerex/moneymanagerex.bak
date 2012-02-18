@@ -506,7 +506,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
     {
 
-        wxArrayString as = mmDBWrapper::getAccountsName(db_.get());
+        wxArrayString as = core_->getAccountsName();
 
         wxSingleChoiceDialog scd(0, _("Account name"), _("Select Account"), as);
         if (scd.ShowModal() == wxID_OK)
@@ -575,7 +575,7 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
 {
     // This should only get called if we are in a transfer
 
-    wxArrayString as = mmDBWrapper::getAccountsNameExceptOne(db_.get(), payeeID_);
+    wxArrayString as = core_->getAccountsName(payeeID_);
     if (as.IsEmpty()){
 		return;
 	}
@@ -1279,7 +1279,7 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
         }
         
     } else {
-        filtd = mmDBWrapper::getAccountsName(db_.get());
+        filtd = core_->getAccountsName();
         if (filtd.IsEmpty()) {
             //No accounts present. Should be added one as minimum
             return;
@@ -1354,7 +1354,7 @@ void mmTransDialog::OnButtonToAccountChar(wxKeyEvent& event)
     wxString toAccountName = bTo_->GetLabel();
     wxArrayString filtd;
 
-    filtd = mmDBWrapper::getAccountsNameExceptOne(db_.get(), payeeID_);
+    filtd = core_->getAccountsName(payeeID_);
     if (filtd.IsEmpty()){
 		return;
 	}
@@ -1386,7 +1386,7 @@ void mmTransDialog::OnButtonToAccountMouse(wxMouseEvent& event)
 {
     size_t c = 1;
     int i = event.GetWheelRotation(); 
-    wxArrayString filtd = mmDBWrapper::getAccountsNameExceptOne(db_.get(), payeeID_);
+    wxArrayString filtd = core_->getAccountsName(payeeID_);
     if (filtd.IsEmpty()){
 		return;
 	}
@@ -1423,7 +1423,7 @@ void mmTransDialog::OnButtonPayeeMouse(wxMouseEvent& event)
     wxString currentPayeeName = bPayee_->GetLabel();
     wxArrayString filtd;
     if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
-        filtd = mmDBWrapper::getAccountsName(db_.get());
+        filtd = core_->getAccountsName();
         if (filtd.IsEmpty()) {
             //No accounts present. Should be added one as minimum
             return;

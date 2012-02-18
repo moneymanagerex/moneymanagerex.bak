@@ -540,7 +540,7 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
     wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     wxString q =  wxT("\"");
 
-    wxArrayString as = mmDBWrapper::getAccountsName(db_);
+    wxArrayString as = core->getAccountsName();
     wxSingleChoiceDialog scd(0, _("Choose Account to Export from:"),_("QIF Export"), as);
 
     wxString acctName;

@@ -227,7 +227,16 @@ int mmAccountList::getID(const wxString& accountName) const
 
 wxString mmAccountList::getName(int accountID) const
 {
-    return mmDBWrapper::getAccountName(db_.get(),accountID);
+    //XXX use accounts_
+    return mmDBWrapper::getAccountName(db_.get(), accountID);
+}
+
+wxArrayString mmAccountList::getAccountsName(int except_id) const
+{
+    //XXX use accounts_
+    if (except_id < 0) return mmDBWrapper::getAccountsName(db_.get());
+
+    return mmDBWrapper::getAccountsNameExceptOne(db_.get(), except_id);
 }
 
 wxString mmAccountList::getAccountType(int accountID) const
