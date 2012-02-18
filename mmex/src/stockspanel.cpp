@@ -154,7 +154,7 @@ mmStocksPanel::~mmStocksPanel()
     wxString col5Str = wxString::Format(wxT("%d"), col5);
     wxString col6Str = wxString::Format(wxT("%d"), col6);
 
-    mmDBWrapper::begin(inidb_);
+    inidb_->Begin();
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL0_WIDTH"), col0Str);
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL1_WIDTH"), col1Str);
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL2_WIDTH"), col2Str);
@@ -162,7 +162,7 @@ mmStocksPanel::~mmStocksPanel()
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL4_WIDTH"), col4Str);
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL5_WIDTH"), col5Str);
     mmDBWrapper::setINISettingValue(inidb_, wxT("STOCKS_COL6_WIDTH"), col6Str);
-    mmDBWrapper::commit(inidb_);
+    inidb_->Commit();
 }
 
 void mmStocksPanel::CreateControls()

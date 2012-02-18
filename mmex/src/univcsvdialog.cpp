@@ -505,7 +505,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
 
             wxProgressDialog progressDlg(_("Universal CSV Import"), _("Transactions imported from CSV: "), 100,
                 NULL, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
-            mmDBWrapper::begin(db_);
+            db_->Begin();
 
             while (!input.Eof())
             {
@@ -644,7 +644,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
             if (!canceledbyuser)
             {
                 // we need to save them to the database. 
-                mmDBWrapper::commit(db_);
+                db_->Commit();
                 msg << _("Transactions saved to database in account: ") << acctName;
             }
             else 
@@ -657,7 +657,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                     core_->bTransactionList_.removeTransaction(fromAccountID,transID);
                 }
                 // and discard the database changes.
-                mmDBWrapper::rollback(db_);
+                db_->Rollback();
                 msg  << _("Imported transactions discarded by user!");
             }
 

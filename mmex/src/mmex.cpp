@@ -959,13 +959,13 @@ void mmGUIFrame::saveConfigFile()
     wxString valws = wxString::Format(wxT("%d"), valw);
     wxString valhs = wxString::Format(wxT("%d"), valh);
 
-    mmDBWrapper::begin(m_inidb.get());
+    m_inidb.get()->Begin();
     mmDBWrapper::setINISettingValue(m_inidb.get(), wxT("ORIGINX"), valxs); 
     mmDBWrapper::setINISettingValue(m_inidb.get(), wxT("ORIGINY"), valys);
     mmDBWrapper::setINISettingValue(m_inidb.get(), wxT("SIZEW"), valws);
     mmDBWrapper::setINISettingValue(m_inidb.get(), wxT("SIZEH"), valhs);
     mmDBWrapper::setINISettingValue(m_inidb.get(), wxT("ISMAXIMIZED"), this->IsMaximized() ? wxT("TRUE") : wxT("FALSE"));
-    mmDBWrapper::commit(m_inidb.get());
+    m_inidb.get()->Commit();
 }
 //----------------------------------------------------------------------------
 
