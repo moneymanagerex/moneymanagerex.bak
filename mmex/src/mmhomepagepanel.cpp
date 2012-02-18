@@ -16,8 +16,6 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ********************************************************/
 
-#include <map>
-
 #include "mmhomepagepanel.h"
 #include "mmex.h"
 #include "util.h"
@@ -35,23 +33,6 @@ END_EVENT_TABLE()
 
 BEGIN_EVENT_TABLE(mmHtmlWindow, wxHtmlWindow)
 END_EVENT_TABLE()
-
-
-namespace
-{
-/*
-    Returns true if _Left precedes and is not equal to _Right in the sort order.
-*/
-struct CurrencyCompare : public std::binary_function<boost::shared_ptr<mmCurrency>, 
-                                                     boost::shared_ptr<mmCurrency>, bool> 
-{
-    bool operator() (const boost::shared_ptr<mmCurrency> &_Left, const boost::shared_ptr<mmCurrency> &_Right) const
-    {
-        return _Left->currencyName_ < _Right->currencyName_; // order by currency name
-    }
-};
-
-} // namespace
 
 
 mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame, 
@@ -139,9 +120,7 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
 {
     // Only Show the account titles if we want to display Bank accounts.
     if ( frame_->expandedBankAccounts() ) 
-    {
         displaySummaryHeader(hb, _("Bank Account"));
-    }
 
     // Get account balances and display accounts if we want them displayed 
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
@@ -200,9 +179,7 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
 
     // Only Show the account titles if Term accounts are active and we want them displayed.
     if ( frame_->expandedTermAccounts() )
-    {
         displaySummaryHeader(hb, _("Term Account"));
-    }
 
     // Get account balances and add to totals, and display accounts if we want them displayed 
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
@@ -386,9 +363,7 @@ void mmHomePagePanel::displayCurrencies(mmHTMLBuilder& hb)
     //Determine how many currencies used
     int curnumber = 0;
     while(q1.NextRow())
-    {
         curnumber+=1;   
-    }
 
     if (curnumber > 1 )
     {
