@@ -42,6 +42,16 @@ int mmCategoryList::getID(const wxString& categoryName) const
     return -1;
 }
 
+wxString mmCategoryList::getCategoryName(int id) const
+{
+    for (const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
+    {
+        if ((*it)->categID_ == id) return (*it)->categName_;
+    }
+
+    return wxEmptyString;
+}
+
 int mmCategoryList::addCategory(const wxString& category)
 {
     int cID = -1;
@@ -175,7 +185,7 @@ bool mmCategoryList::updateCategory(int categID, int subCategID, const wxString&
 
 wxString mmCategoryList::GetCategoryString(int categID) const
 {
-    wxString catName = mmDBWrapper::getCategoryName(db_.get(), categID);
+    wxString catName = this->getCategoryName(categID);
     catName.Replace (wxT("&"), wxT("&&"));
 
     return catName;

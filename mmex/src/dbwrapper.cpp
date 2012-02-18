@@ -1232,29 +1232,6 @@ int mmDBWrapper::getSubCategoryID(wxSQLite3Database* db, int categID, const wxSt
     return subcategID;
 }
 
-wxString mmDBWrapper::getCategoryName(wxSQLite3Database* db, int categID)
-{
-    static const char sql[] = 
-    "select CATEGNAME "
-    "from CATEGORY_V1 "
-    "where CATEGID = ?";
-
-    wxString name;
-
-    wxSQLite3Statement st = db->PrepareStatement(sql);
-    st.Bind(1, categID);
-    
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow())
-    {
-        name = q1.GetString(wxT("CATEGNAME"));
-    }
-    
-    st.Finalize();
-
-    return name;
-}
-
 wxString mmDBWrapper::getSubCategoryName(wxSQLite3Database* db, int categID, int subcategID)
 {
     static const char sql[] = 

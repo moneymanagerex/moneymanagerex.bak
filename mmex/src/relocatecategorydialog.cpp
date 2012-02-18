@@ -132,7 +132,7 @@ void relocateCategoryDialog::OnSelectSource(wxCommandEvent& /*event*/)
         
         wxString catName; 
         if (sourceCatID_ != -1 )
-            catName = mmDBWrapper::getCategoryName(db_ , sourceCatID_);
+            catName = core_->getCategoryName(sourceCatID_);
         if (sourceSubCatID_ != -1 )
             catName << _(":") << mmDBWrapper::getSubCategoryName(db_, sourceCatID_ , sourceSubCatID_ );
         if (catName != wxT(""))
@@ -150,7 +150,7 @@ void relocateCategoryDialog::OnSelectDest(wxCommandEvent& /*event*/)
 
         wxString catName; 
         if (destCatID_ != -1 )
-            catName = mmDBWrapper::getCategoryName(db_ , destCatID_);
+            catName = core_->getCategoryName(destCatID_);
         if (destSubCatID_ != -1 )
             catName << _(":") << mmDBWrapper::getSubCategoryName(db_, destCatID_ , destSubCatID_ );
         if (catName != wxT(""))

@@ -527,7 +527,7 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
     if (dlg.categID_ == -1)
     {
         // check if categ and subcateg are now invalid
-        wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
+        wxString catName = core_->getCategoryName(categID_);
         if (catName.IsEmpty())
         {
             // cannot find category
@@ -559,7 +559,7 @@ void mmFilterTransactionsDialog::OnCategs(wxCommandEvent& /*event*/)
     categID_ = dlg.categID_;
     subcategID_ = dlg.subcategID_;
 
-    wxString catName = mmDBWrapper::getCategoryName(db_, dlg.categID_);
+    wxString catName = core_->getCategoryName(dlg.categID_);
     catName.Replace(wxT("&"), wxT("&&"));
     wxString categString = catName;
 

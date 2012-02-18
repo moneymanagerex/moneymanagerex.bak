@@ -28,6 +28,7 @@
 #include "guiid.h"
 #include "defs.h"
 #include "dbwrapper.h"
+#include "mmcoredb.h"
 
 class mmBudgetEntryDialog : public wxDialog
 {    
@@ -36,7 +37,7 @@ class mmBudgetEntryDialog : public wxDialog
 
 public:
     mmBudgetEntryDialog();
-    mmBudgetEntryDialog(wxSQLite3Database* db, 
+    mmBudgetEntryDialog(wxSQLite3Database* db, mmCoreDB* core, 
         int budgetYearID, int categID, int subcategID, 
         wxString categoryEstimate, wxString CategoryActual,
         wxWindow* parent, wxWindowID id = SYMBOL_BUDGETENTRYDIALOG_IDNAME, 
@@ -60,6 +61,7 @@ public:
 
 private:
     wxSQLite3Database* db_;
+    mmCoreDB* core_;
     wxChoice* itemChoice_;
     wxTextCtrl* textAmount_;
     wxChoice* type_;

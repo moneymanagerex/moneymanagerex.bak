@@ -2672,7 +2672,7 @@ void mmGUIFrame::createBudgetingPage(int budgetYearID)
 {
     wxSizer *sizer = cleanupHomePanel();
 
-    panelCurrent_ = new mmBudgetingPanel(m_db.get(), m_inidb.get(), this, budgetYearID, 
+    panelCurrent_ = new mmBudgetingPanel(m_db.get(), m_inidb.get(), m_core.get(), this, budgetYearID, 
         homePanel, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);

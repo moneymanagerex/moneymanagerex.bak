@@ -54,11 +54,11 @@ BEGIN_EVENT_TABLE(budgetingListCtrl, wxListCtrl)
 
 END_EVENT_TABLE()
 /*******************************************************/
-mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, wxSQLite3Database* inidb, mmGUIFrame* mainFrame, int budgetYearID, wxWindow *parent,
+mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core, mmGUIFrame* mainFrame, int budgetYearID, wxWindow *parent,
             wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
             const wxString& name 
            ) : 
-    mmPanelBase(db, inidb),
+    mmPanelBase(db, inidb, core),
     m_imageList(), 
     listCtrlAccount_(),
     mainFrame_(mainFrame),
@@ -616,7 +616,7 @@ void budgetingListCtrl::OnListItemActivated(wxListEvent& event)
     if (cp_->trans_[selectedIndex_].id_ >= 0)
     {
         mmBudgetEntryDialog dlg(
-            cp_->db_, cp_->budgetYearID_,
+            cp_->db_, cp_->core_, cp_->budgetYearID_,
             cp_->trans_[selectedIndex_].categID_,
             cp_->trans_[selectedIndex_].subcategID_,
             cp_->trans_[selectedIndex_].estimatedStr_,

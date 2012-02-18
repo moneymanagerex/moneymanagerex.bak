@@ -40,7 +40,7 @@ mmBudgetEntryDialog::mmBudgetEntryDialog( )
     subcategID_ = -1;
 }
 
-mmBudgetEntryDialog::mmBudgetEntryDialog( wxSQLite3Database* db,
+mmBudgetEntryDialog::mmBudgetEntryDialog( wxSQLite3Database* db, mmCoreDB* core,
                                          int budgetYearID, int categID, int subcategID,
                                          wxString categoryEstimate, wxString CategoryActual,
                                          wxWindow* parent, 
@@ -48,6 +48,7 @@ mmBudgetEntryDialog::mmBudgetEntryDialog( wxSQLite3Database* db,
                                          const wxPoint& pos, const wxSize& size, long style )
 {
     db_ = db;
+    core_ = core;
     budgetYearID_ = budgetYearID;
     categID_ = categID;
     subcategID_ = subcategID;
@@ -139,7 +140,7 @@ void mmBudgetEntryDialog::CreateControls()
     
     wxStaticText* itemTextCatTag = new wxStaticText( itemPanel7, wxID_STATIC, _("Category: "));
     wxStaticText* itemTextCatName = new wxStaticText( itemPanel7, wxID_STATIC, 
-        mmDBWrapper::getCategoryName(db_,categID_), wxDefaultPosition, wxDefaultSize, 0 );
+        core_->getCategoryName(categID_), wxDefaultPosition, wxDefaultSize, 0 );
 
     wxStaticText* itemTextEstCatTag = new wxStaticText( itemPanel7, wxID_STATIC, _("Estimated:"));
     wxStaticText* itemTextEstCatAmt = new wxStaticText( itemPanel7, wxID_STATIC, catEstimateAmountStr_);

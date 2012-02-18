@@ -296,7 +296,7 @@ void TransFilterDialog::OnCategorySelect(wxCommandEvent& /*event*/)
     dlg.ShowModal();
     if (dlg.categID_ != -1)
     {
-        catName_ = mmReadyDisplayString(mmDBWrapper::getCategoryName(core_->db_.get(), dlg.categID_));
+        catName_ = mmReadyDisplayString(core_->getCategoryName(dlg.categID_));
         wxString categoryLabelName = catName_;
         if (dlg.subcategID_ != -1)
         {
