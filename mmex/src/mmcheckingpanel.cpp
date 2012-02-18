@@ -946,18 +946,16 @@ void mmCheckingPanel::showTips()
 //----------------------------------------------------------------------------
 void mmCheckingPanel::setAccountSummary()
 {
-    double total = core_->accountList_.getAccountSharedPtr(m_AccountID)->balance();
-    wxString balance;
-    mmex::formatDoubleToCurrency(total, balance);
-
+    double checking_bal = core_->bTransactionList_.getBalance(m_AccountID);
     double reconciledBal = core_->bTransactionList_.getReconciledBalance(m_AccountID);
     double acctInitBalance = core_->accountList_.getAccountSharedPtr(m_AccountID)->initialBalance_;
     
-    wxString recbalance;
+    wxString balance, recbalance;
+    mmex::formatDoubleToCurrency(checking_bal + acctInitBalance, balance);
     mmex::formatDoubleToCurrency(reconciledBal + acctInitBalance, recbalance);
     
     wxString diffbal;
-    mmex::formatDoubleToCurrency(total - (reconciledBal + acctInitBalance), diffbal);
+    mmex::formatDoubleToCurrency(checking_bal - reconciledBal, diffbal);
 
     wxString filteredBalanceStr;
     mmex::formatDoubleToCurrency(filteredBalance_, filteredBalanceStr);

@@ -351,7 +351,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     boost::shared_ptr<mmAccount> pAccount;
     if (newAcct_)
     {
-       boost::shared_ptr<mmAccount> tAccount(new mmAccount(core_->db_));
+       boost::shared_ptr<mmAccount> tAccount(new mmAccount());
        pAccount = tAccount;
     }
     else

@@ -30,11 +30,9 @@
 class mmAccount
 {
 public: 
-   mmAccount(boost::shared_ptr<wxSQLite3Database> db); 
-   mmAccount(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1);
-   ~mmAccount() {}
-
-   double balance();
+    mmAccount() {}
+    mmAccount(wxSQLite3ResultSet& q1);
+    ~mmAccount() {}
 
    /* Scoped Enums */
    enum AccountStatus
@@ -57,9 +55,6 @@ public:
    bool favoriteAcct_;
    double initialBalance_;
    boost::weak_ptr<mmCurrency> currency_;
-
-   /* pointer to core */
-   boost::shared_ptr<wxSQLite3Database> db_;
 };
 
 class mmAccountList
