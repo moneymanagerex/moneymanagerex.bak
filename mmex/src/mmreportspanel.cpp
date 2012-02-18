@@ -31,11 +31,9 @@ mmReportsPanel::mmReportsPanel( mmGUIFrame* frame, wxSQLite3Database* db,
                                wxWindowID winid, const wxPoint& pos, 
                                const wxSize& size, long style,
                                const wxString& name )
+: mmPanelBase(db, NULL, NULL), rb_(rb), frame_(frame)
 {
-    db_ = db;
-    rb_ = rb;
     Create(parent, winid, pos, size, style, name);
-    frame_ = frame;
 }
 
 mmReportsPanel::~mmReportsPanel()
