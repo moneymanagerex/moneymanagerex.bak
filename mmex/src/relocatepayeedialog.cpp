@@ -123,7 +123,7 @@ void relocatePayeeDialog::OnSelectSource(wxCommandEvent& /*event*/)
 
         wxString payee_name; 
         if (sourcePayeeID_ != -1 )
-            payee_name = mmDBWrapper::getPayee(db_, sourcePayeeID_);
+            payee_name = core_->getPayeeName(sourcePayeeID_);
 
         if (payee_name != wxT(""))
             sourceBtn_->SetLabel(payee_name);
@@ -139,7 +139,7 @@ void relocatePayeeDialog::OnSelectDest(wxCommandEvent& /*event*/)
 
         wxString payee_name; 
         if (destPayeeID_ != -1 )
-            payee_name = mmDBWrapper::getPayee(db_, destPayeeID_);
+            payee_name = core_->getPayeeName(destPayeeID_);
         if (payee_name != wxT(""))
             destBtn_->SetLabel(payee_name);
     }

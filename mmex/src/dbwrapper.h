@@ -91,7 +91,6 @@ void removeSplitsForAccount(wxSQLite3Database* db, int accountID);
 
 /* Payee Table API */
 wxString getPayee(wxSQLite3Database* db, int payeeID, int& categID, int& subcategID);
-wxString getPayee(wxSQLite3Database* db, int payeeID);
 bool updatePayee(wxSQLite3Database* db, const wxString& payeeName, int payeeID, int categID, int subcategID);
 bool deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID);
 wxArrayString filterPayees(wxSQLite3Database* db, const wxString& patt);

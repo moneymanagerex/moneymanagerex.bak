@@ -83,6 +83,16 @@ int mmPayeeList::getID(const wxString& payeeName) const
 	return -1;
 }
 
+wxString mmPayeeList::getName(int id) const
+{
+    for (std::vector< boost::shared_ptr<mmPayee> >::const_iterator it = entries_.begin(); it != entries_.end(); ++ it)
+    {
+        if ((*it)->id_ == id) return (*it)->name_;
+    }
+
+    return wxEmptyString;
+}
+
 bool mmPayeeList::remove(int payeeID)
 {
     if (mmDBWrapper::deletePayeeWithConstraints(db_.get(), payeeID))
