@@ -77,7 +77,6 @@ public:
     void updateAccounts();
     ~mmHomePagePanel();
 private:
-    mmCoreDB* core_;
     mmGUIFrame* frame_;
     mmHtmlWindow* htmlWindow_;
     wxString topCategories_;
@@ -96,5 +95,6 @@ private:
     void displayTopTransactions(mmHTMLBuilder& hb);
     void displayGrandTotals(mmHTMLBuilder& hb, double& tBalance);
 };
+
 #endif
 
