@@ -37,12 +37,13 @@ mmStockDialog::mmStockDialog( )
 {
 }
 
-mmStockDialog::mmStockDialog(wxSQLite3Database* db, int stockID, bool edit,
+mmStockDialog::mmStockDialog(wxSQLite3Database* db, mmCoreDB* core, int stockID, bool edit,
                              wxWindow* parent, wxWindowID id, 
                              const wxString& caption, const wxPoint& pos, 
                              const wxSize& size, long style )
 {
     db_ = db;
+    core_ = core;
     stockID_ = stockID;
     edit_ = edit;
     accountID_ = -1;
@@ -86,7 +87,7 @@ void mmStockDialog::dataToControls()
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
     if (q1.NextRow())
     {
-        heldAt_->SetLabel(mmDBWrapper::getAccountName(db_, q1.GetInt(wxT("HELDAT"))));
+        heldAt_->SetLabel(core_->getAccountName(q1.GetInt(wxT("HELDAT"))));
         accountID_ = q1.GetInt(wxT("HELDAT"));
         stockName_->SetValue(q1.GetString(wxT("STOCKNAME")));
         stockSymbol_->SetValue(q1.GetString(wxT("SYMBOL")));
@@ -264,7 +265,7 @@ void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
     if (scd.ShowModal() == wxID_OK)
     {
         wxString acctName = scd.GetStringSelection();
-        accountID_ = mmDBWrapper::getAccountID(db_, acctName);
+        accountID_ = core_->getAccountID(acctName);
         heldAt_->SetLabel(acctName);
     }
 }
@@ -311,7 +312,7 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
         mmShowErrorMessageInvalid(this, _("Held At"));
         return;
     }
-    wxString heldAt =  mmDBWrapper::getAccountName(db_,accountID_);
+    wxString heldAt =  core_->getAccountName(accountID_);
         
     wxString stockName = stockName_->GetValue();
     wxString stockSymbol = stockSymbol_->GetValue();

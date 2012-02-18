@@ -74,12 +74,12 @@ BEGIN_EVENT_TABLE(stocksListCtrl, wxListCtrl)
     EVT_LIST_KEY_DOWN(ID_PANEL_STOCKS_LISTCTRL,   stocksListCtrl::OnListKeyDown)
 END_EVENT_TABLE()
 /*******************************************************/
-mmStocksPanel::mmStocksPanel(wxSQLite3Database* db, wxSQLite3Database* inidb,
+mmStocksPanel::mmStocksPanel(wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core,
                              int accountID,
                              wxWindow *parent,
                              wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
                              const wxString& name)
-        : mmPanelBase(db, inidb), m_imageList(0), accountID_(accountID)
+        : mmPanelBase(db, inidb, core), m_imageList(0), accountID_(accountID)
 {
     Create(parent, winid, pos, size, style, name);
 }
@@ -336,7 +336,7 @@ void mmStocksPanel::initVirtualListControl()
     trans_.clear();
 
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_BD_STATIC_HEADER);
-    wxString str = mmDBWrapper::getAccountName(db_, accountID_);
+    wxString str = core_->getAccountName(accountID_);
     header->SetLabel(_("Stock Investments: ") + str);
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
@@ -415,7 +415,7 @@ void mmStocksPanel::initVirtualListControl()
         th.stockPDate_        = q1.GetString(wxT("PURCHDATE"));
         int accountID         = q1.GetInt(wxT("HELDAT"));
         th.stockSymbol_       = q1.GetString (wxT ("SYMBOL"));
-        th.heldAt_            = mmDBWrapper::getAccountName(db_, accountID);
+        th.heldAt_            = core_->getAccountName(accountID);
         th.shareName_         = q1.GetString(wxT("STOCKNAME"));
         th.shareNotes_        = q1.GetString(wxT("NOTES"));
         th.numSharesStr_      = wxT("");
@@ -1012,7 +1012,7 @@ void stocksListCtrl::OnListKeyDown(wxListEvent& event)
 
 void stocksListCtrl::OnNewStocks(wxCommandEvent& /*event*/)
 {
-    mmStockDialog dlg(cp_->db_, 0, false, this);
+    mmStockDialog dlg(cp_->db_, cp_->core_, 0, false, this);
     if (dlg.ShowModal() == wxID_OK)
     {
         cp_->initVirtualListControl();
@@ -1041,7 +1041,7 @@ void stocksListCtrl::OnEditStocks(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ == -1) return;
 
-    mmStockDialog dlg(cp_->db_, cp_->trans_[selectedIndex_].id_, true, this);
+    mmStockDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, this);
     if (dlg.ShowModal() == wxID_OK)
     {
         cp_->initVirtualListControl();
@@ -1052,7 +1052,7 @@ void stocksListCtrl::OnEditStocks(wxCommandEvent& /*event*/)
 void stocksListCtrl::OnListItemActivated(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
-    mmStockDialog dlg(cp_->db_, cp_->trans_[selectedIndex_].id_, true, this);
+    mmStockDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, this);
     if (dlg.ShowModal() == wxID_OK)
     {
         cp_->initVirtualListControl();

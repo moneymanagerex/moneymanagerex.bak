@@ -1693,7 +1693,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
                  Freeze();
                  wxSizer *sizer = cleanupHomePanel();
 
-                 panelCurrent_ = new mmStocksPanel(m_db.get(), m_inidb.get(), data, homePanel, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+                 panelCurrent_ = new mmStocksPanel(m_db.get(), m_inidb.get(), m_core.get(), data, homePanel, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
                  sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
                  homePanel->Layout();
@@ -4192,7 +4192,7 @@ void mmGUIFrame::OnStocks(wxCommandEvent& /*event*/)
     
     if (m_db->ExecuteScalar(sql)) {
         wxSizer *sizer = cleanupHomePanel();
-        panelCurrent_ = new mmStocksPanel(m_db.get(), m_inidb.get(), -1, homePanel, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+        panelCurrent_ = new mmStocksPanel(m_db.get(), m_inidb.get(), m_core.get(), -1, homePanel, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
         sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
         homePanel->Layout();        
     } else {

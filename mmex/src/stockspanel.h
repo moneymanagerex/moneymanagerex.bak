@@ -106,6 +106,7 @@ class mmStocksPanel : public mmPanelBase
 public:
     mmStocksPanel( wxSQLite3Database* db,
             wxSQLite3Database* inidb,
+            mmCoreDB* core,
             int accountID,
             wxWindow *parent,
             wxWindowID winid = wxID_ANY,

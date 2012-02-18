@@ -29,6 +29,7 @@
 #include "defs.h"
 
 class wxDatePickerCtrl;
+class mmCoreDB;
 
 class mmStockDialog : public wxDialog
 {    
@@ -37,7 +38,7 @@ class mmStockDialog : public wxDialog
 
 public:
     mmStockDialog();
-    mmStockDialog(wxSQLite3Database* db, 
+    mmStockDialog(wxSQLite3Database* db, mmCoreDB* core,
         int stockID, bool edit, wxWindow* parent, 
         wxWindowID id = SYMBOL_STOCKDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_STOCKDIALOG_TITLE, 
@@ -62,7 +63,8 @@ public:
     void dataToControls();
 
 private:
-    wxSQLite3Database* db_;
+    wxSQLite3Database* db_; //XXX remove
+    mmCoreDB* core_;
     int stockID_;
 
     wxButton*  heldAt_;
