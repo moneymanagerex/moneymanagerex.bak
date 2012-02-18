@@ -98,7 +98,6 @@ private:
     DECLARE_EVENT_TABLE()
     friend class MyListCtrl; // needs access to m_core, initdb_, ...
 
-    mmCoreDB* m_core;
     wxString m_currentView;
     wxStaticText* statTextTransFilter_;
     TransFilterDialog* transFilterDlg_;

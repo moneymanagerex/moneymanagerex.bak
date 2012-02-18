@@ -221,6 +221,17 @@ bool mmAccountList::has_term_account() const
     return false;
 }
 
+int mmAccountList::getNumBankAccounts() const
+{
+    int num = 0;
+    for (const_iterator it = accounts_.begin(); it != accounts_.end(); ++ it)
+    {
+        if ((*it)->acctType_ != ACCOUNT_TYPE_STOCK) ++ num; 
+    }
+
+    return num;
+}
+
 int mmAccountList::getID(const wxString& accountName) const
 {
     for (const_iterator it = accounts_.begin(); it != accounts_.end(); ++ it)
