@@ -57,6 +57,7 @@ public:
 
     wxString getAccountName(int accountID) const { return accountList_.getName(accountID); }
     wxArrayString getAccountsName(int except_id = -1) const { return accountList_.getAccountsName(except_id); }
+    boost::shared_ptr<mmAccount> getAccountSharedPtr(int accountID) const { return accountList_.getAccountSharedPtr(accountID); }
     int getNumAccounts() const { return accountList_.getNumAccounts(); }
     int getNumBankAccounts() const { return accountList_.getNumBankAccounts(); }
     int addAccount(boost::shared_ptr<mmAccount> pAccount) { return accountList_.add(pAccount); };

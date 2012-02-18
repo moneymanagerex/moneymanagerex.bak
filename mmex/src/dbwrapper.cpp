@@ -919,27 +919,6 @@ void mmDBWrapper::loadSettings(wxSQLite3Database* db, int currencyID)
     st.Finalize();
 }
 
-double mmDBWrapper::getInitBalanceOnAccount(wxSQLite3Database* db, int accountID)
-{
-    static const char sql[] =
-    "select INITIALBAL "
-    "from ACCOUNTLIST_V1 "
-    "where ACCOUNTID = ?";
-        
-    double balance = 0.0; 
-
-    wxSQLite3Statement st = db->PrepareStatement(sql);
-    st.Bind(1, accountID);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow()) 
-    {
-        balance = q1.GetDouble(wxT("INITIALBAL"));
-    }
-    st.Finalize();
-    return balance;
-}
-
 bool mmDBWrapper::deleteCategoryWithConstraints(wxSQLite3Database* db, int categID)
 {
     try{
