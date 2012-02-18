@@ -110,7 +110,7 @@ bool mmPayeeList::remove(int payeeID)
     return false;
 }
 
-bool sortPayees( boost::shared_ptr<mmPayee> elem1, boost::shared_ptr<mmPayee> elem2 )
+bool sortPayees(const boost::shared_ptr<mmPayee>& elem1, const boost::shared_ptr<mmPayee>& elem2 )
 {
     return elem1->name_ < elem2->name_;
 }
