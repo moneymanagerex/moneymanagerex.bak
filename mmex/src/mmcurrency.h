@@ -63,6 +63,7 @@ public:
     void updateCurrency(boost::shared_ptr<mmCurrency> pCurrency);
     //bool currencyExists(const wxString& currencyName);
     int getCurrencyID(const wxString& currencyName) const;
+    wxString getCurrencyName(int currencyID) const;
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID) const;
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName) const;
 

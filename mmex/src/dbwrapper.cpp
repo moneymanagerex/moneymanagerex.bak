@@ -1552,28 +1552,6 @@ wxString mmDBWrapper::getPayee(wxSQLite3Database* db, int payeeID)
     return payeeName;
 }
 
-wxString mmDBWrapper::getCurrencyName(wxSQLite3Database* db, int currencyID)
-{
-    wxString name;
-    
-    wxSQLite3Statement st = db->PrepareStatement("select CURRENCYNAME "
-                                                 "from CURRENCYFORMATS_V1 "
-                                                 "where CURRENCYID = ?"
-                                                );
-
-    st.Bind(1, currencyID);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow())
-    {
-        name = q1.GetString(wxT("CURRENCYNAME"));
-    }
-
-    st.Finalize();
-
-    return name;
-}
-
 wxString mmDBWrapper::getCurrencySymbol(wxSQLite3Database* db, int currencyID)
 {
     wxString symbol;

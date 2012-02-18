@@ -220,6 +220,16 @@ int mmCurrencyList::getCurrencyID(const wxString& currencyName) const
    return currencyID;
 }
 
+wxString mmCurrencyList::getCurrencyName(int currencyID) const
+{
+    for(const_iterator it = currencies_.begin(); it != currencies_.end(); ++ it)
+    {
+        if ((*it)->currencyID_ == currencyID) return (*it)->currencyName_;
+    }
+
+    return wxEmptyString;
+}
+
 boost::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(int currencyID) const
 {
 	for (size_t i = 0; i < currencies_.size(); ++i) {
