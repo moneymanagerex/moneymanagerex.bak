@@ -819,7 +819,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
         th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
         th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
 
-        th.accountName_     = mmDBWrapper::getAccountName(m_db.get(), th.accountID_);
+        th.accountName_     = m_core.get()->getAccountName(th.accountID_);
         th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
         th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
         th.notes_       = q1.GetString(wxT("NOTES"));
@@ -869,8 +869,8 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 
         if (th.transType_ == TRANS_TYPE_TRANSFER_STR)
         {
-            wxString fromAccount = mmDBWrapper::getAccountName(m_db.get(),  th.accountID_);
-            wxString toAccount = mmDBWrapper::getAccountName(m_db.get(),  th.toAccountID_ );
+            wxString fromAccount = m_core.get()->getAccountName(th.accountID_);
+            wxString toAccount = m_core.get()->getAccountName(th.toAccountID_ );
 
             th.payeeStr_ = toAccount;
         }

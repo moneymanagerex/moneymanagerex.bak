@@ -625,8 +625,8 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
             int tAccountID = q1.GetInt(wxT("TOACCOUNTID"));
             int fAccountID = q1.GetInt(wxT("ACCOUNTID"));
 
-            wxString fromAccount = mmDBWrapper::getAccountName(db_,  fAccountID);
-            wxString toAccount = mmDBWrapper::getAccountName(db_,  tAccountID);
+            wxString fromAccount = core->getAccountName(fAccountID);
+            wxString toAccount = core->getAccountName(tAccountID);
 
             if (tAccountID == fromAccountID) {
                 payee = fromAccount;
