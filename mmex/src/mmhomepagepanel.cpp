@@ -95,8 +95,8 @@ bool mmHomePagePanel::Create( wxWindow *parent,
     return TRUE;
 }
 
-bool sortTransactionsByRemainingDaysHP( mmBDTransactionHolder elem1, 
-                                       mmBDTransactionHolder elem2 )
+bool sortTransactionsByRemainingDaysHP(const mmBDTransactionHolder& elem1, 
+                                       const mmBDTransactionHolder& elem2)
 {
     return elem1.daysRemaining_ < elem2.daysRemaining_;
 }
