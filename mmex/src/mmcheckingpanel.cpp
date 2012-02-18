@@ -482,13 +482,12 @@ mmCheckingPanel::mmCheckingPanel
     wxWindowID winid, const wxPoint& pos, const wxSize& size, long style,
     const wxString& name
 ) : 
-    m_core(core),
-    mmPanelBase(NULL, inidb),
+    mmPanelBase(NULL, inidb, core),
     m_listCtrlAccount(),
     m_AccountID(accountID),
     filteredBalance_(0.0)
 {
-    wxASSERT(m_core);
+    wxASSERT(core_);
     wxASSERT(inidb_);
 
     Create(parent, winid, pos, size, style, name);
@@ -527,7 +526,7 @@ bool mmCheckingPanel::Create(
         /* Set up the transaction filter.  The transFilter dialog will be destroyed
            when the checking panel is destroyed. */
         transFilterActive_ = false;
-        transFilterDlg_    = new TransFilterDialog(m_core, this); 
+        transFilterDlg_    = new TransFilterDialog(core_, this); 
 
         //show progress bar only when panel created 
         wxProgressDialog dlg(_("Please Wait"), _("Accessing Database"), 100, this, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
@@ -784,7 +783,7 @@ void mmCheckingPanel::enableEditDeleteButtons(bool en)
 
     bEdit->Enable(en);
     bDelete->Enable(en);
-    if (mmDBWrapper::getNumBankAccounts(getDb().get())>1)
+    if (core_->getNumBankAccounts() > 1)
         bMove->Enable(en);
     else
         bMove->Enable(false);   
@@ -841,7 +840,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
     "left join infotable_v1 i on i.infoname='BASECURRENCYID' "
     "where c.transid = ? ";
     
-    wxSQLite3Statement st = m_core->db_.get()->PrepareStatement(sql);
+    wxSQLite3Statement st = core_->db_.get()->PrepareStatement(sql);
     st.Bind(1, m_trans[selIndex]->transactionID());
 
     wxSQLite3ResultSet q1 = st.ExecuteQuery();
@@ -875,13 +874,13 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
         convertion = ( convrate < toconvrate ? amount/toamount : toamount/amount);
         wxString convertionStr;
 
-        boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core->accountList_.getCurrencyWeakPtr(toaccountId).lock();
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(toaccountId).lock();
         wxASSERT(pCurrencyPtr);
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
         mmex::formatDoubleToCurrency(toamount, toamountStr);
         mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
 
-        pCurrencyPtr = m_core->accountList_.getCurrencyWeakPtr(accountId).lock();
+        pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
         wxASSERT(pCurrencyPtr);
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
         mmex::formatDoubleToCurrency(amount, amountStr);
@@ -913,21 +912,21 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
     {
         //if (split_)
         {
-            infoStr =  mmDBWrapper::getSplitTrxNotes(m_core->db_.get(), m_trans[selIndex]->transactionID());
+            infoStr =  mmDBWrapper::getSplitTrxNotes(core_->db_.get(), m_trans[selIndex]->transactionID());
             //infoStr.RemoveLast(1);
 		}
         
         if (currencyid != basecurrencyid) //Show nothing if account currency is base
         {
             //load settings for base currency
-            wxString currencyName = m_core->getCurrencyName(basecurrencyid);
-            boost::shared_ptr<mmCurrency> pCurrency = m_core->getCurrencySharedPtr(currencyName);
+            wxString currencyName = core_->getCurrencyName(basecurrencyid);
+            boost::shared_ptr<mmCurrency> pCurrency = core_->getCurrencySharedPtr(currencyName);
             wxASSERT(pCurrency);
             wxString basecuramountStr;
-            mmDBWrapper::loadSettings(m_core->db_.get(), pCurrency->currencyID_);
+            mmDBWrapper::loadSettings(core_->db_.get(), pCurrency->currencyID_);
             mmex::formatDoubleToCurrency(amount*convrate, basecuramountStr);
 
-            pCurrency = m_core->accountList_.getCurrencyWeakPtr(accountId).lock();
+            pCurrency = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
             wxASSERT(pCurrency);
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrency);
             mmex::formatDoubleToCurrency(amount, amountStr);
@@ -947,12 +946,12 @@ void mmCheckingPanel::showTips()
 //----------------------------------------------------------------------------
 void mmCheckingPanel::setAccountSummary()
 {
-    double total = m_core->accountList_.getAccountSharedPtr(m_AccountID)->balance();
+    double total = core_->accountList_.getAccountSharedPtr(m_AccountID)->balance();
     wxString balance;
     mmex::formatDoubleToCurrency(total, balance);
 
-    double reconciledBal = m_core->bTransactionList_.getReconciledBalance(m_AccountID);
-    double acctInitBalance = m_core->accountList_.getAccountSharedPtr(m_AccountID)->initialBalance_;
+    double reconciledBal = core_->bTransactionList_.getReconciledBalance(m_AccountID);
+    double acctInitBalance = core_->accountList_.getAccountSharedPtr(m_AccountID)->initialBalance_;
     
     wxString recbalance;
     mmex::formatDoubleToCurrency(reconciledBal + acctInitBalance, recbalance);
@@ -1040,7 +1039,7 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
     if (pgd)
     pgd->Update(20);
    
-    boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(m_AccountID);
+    boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(m_AccountID);
     boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
     wxASSERT(pCurrency);
     pCurrency->loadCurrencySettings();
@@ -1058,13 +1057,13 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
     /**********************************************************************************/
     int numTransactions = 0;
     std::vector<mmBankTransaction*> v_transPtr;
-    for (size_t i = 0; i < m_core->bTransactionList_.transactions_.size(); ++i)
+    for (size_t i = 0; i < core_->bTransactionList_.transactions_.size(); ++i)
     {
-        boost::shared_ptr<mmBankTransaction> pBankTransaction = m_core->bTransactionList_.transactions_[i];
+        boost::shared_ptr<mmBankTransaction> pBankTransaction = core_->bTransactionList_.transactions_[i];
         if ((pBankTransaction->accountID_ != m_AccountID) && (pBankTransaction->toAccountID_ != m_AccountID))
            continue;
 
-        pBankTransaction->updateAllData(m_core, m_AccountID, pCurrency);
+        pBankTransaction->updateAllData(core_, m_AccountID, pCurrency);
 
         // Store all account transactions to determine the balances.
         v_transPtr.push_back(pBankTransaction.get());
@@ -1363,12 +1362,12 @@ void mmCheckingPanel::DeleteViewedTransactions()
                                 _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES)
     {
-        m_core->db_.get()->Begin();
+        core_->db_.get()->Begin();
         for (size_t i = 0; i < m_trans.size(); ++i)
         {
-            m_core->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
+            core_->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
         }
-        m_core->db_.get()->Commit();
+        core_->db_.get()->Commit();
     }
 }
 
@@ -1378,15 +1377,15 @@ void mmCheckingPanel::DeleteFlaggedTransactions()
                                 _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES)
     {
-        m_core->db_.get()->Begin();
+        core_->db_.get()->Begin();
         for (size_t i = 0; i < m_trans.size(); ++i)
         {
             if (m_trans[i]->status_ == wxT("F"))
             {
-                m_core->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
+                core_->bTransactionList_.deleteTransaction(m_AccountID, m_trans[i]->transactionID());
             }
         }
-        m_core->db_.get()->Commit();
+        core_->db_.get()->Commit();
     }
 }
 
@@ -1534,7 +1533,7 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
     else if (evt == MENU_TREEPOPUP_MARKDUPLICATE_ALL)          status = wxT("D");
     else  wxASSERT(false);
 
-    mmDBWrapper::begin(m_cp->m_core->db_.get());
+    mmDBWrapper::begin(m_cp->core_->db_.get());
 
     for (size_t i = 0; i < m_cp->m_trans.size(); ++i)
     {
@@ -1551,7 +1550,7 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
     }
 
-    mmDBWrapper::commit(m_cp->m_core->db_.get());
+    mmDBWrapper::commit(m_cp->core_->db_.get());
 
     m_cp->setAccountSummary();
     SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
@@ -1772,9 +1771,9 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
         bool useOriginal = false;
         if (useOriginalDate == wxT("TRUE"))
             useOriginal = true;
-        boost::shared_ptr<mmBankTransaction> pCopiedTrans = m_cp->m_core->bTransactionList_.copyTransaction(m_selectedForCopy, useOriginal);
-        boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->m_core->accountList_.getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
-        pCopiedTrans->updateAllData(m_cp->m_core, pCopiedTrans->accountID_, pCurrencyPtr, true);
+        boost::shared_ptr<mmBankTransaction> pCopiedTrans = m_cp->core_->bTransactionList_.copyTransaction(m_selectedForCopy, useOriginal);
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
+        pCopiedTrans->updateAllData(m_cp->core_, pCopiedTrans->accountID_, pCurrencyPtr, true);
         m_cp->initVirtualListControl(NULL);
         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
     }
@@ -1852,7 +1851,7 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
 
 void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 {
-    mmTransDialog dlg(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 0, false, m_cp->inidb_, this );
+    mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 0, false, m_cp->inidb_, this );
 
     if ( dlg.ShowModal() == wxID_OK )
     {
@@ -1887,7 +1886,7 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 
     //remove the transaction
     //TODO: if deletingfromdb was false do not delete trx in that case from list 
-    m_cp->m_core->bTransactionList_.deleteTransaction(m_cp->accountID(), m_cp->m_trans[m_selectedIndex]->transactionID());
+    m_cp->core_->bTransactionList_.deleteTransaction(m_cp->accountID(), m_cp->m_trans[m_selectedIndex]->transactionID());
     {
         //initialize the transaction list to redo balances and images
         m_cp->initVirtualListControl(NULL);
@@ -1923,7 +1922,7 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex != -1)
     {
-        mmTransDialog dlg(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 
+        mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 
            m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
         if ( dlg.ShowModal() == wxID_OK )
         {
@@ -1947,7 +1946,7 @@ void MyListCtrl::refreshVisualList()
 //  Called only when moving a deposit/withdraw transaction to a new account.
 int MyListCtrl::destinationAccountID(wxString accName)
 {
-    wxArrayString as = m_cp->m_core->getAccountsName(m_cp->accountID());
+    wxArrayString as = m_cp->core_->getAccountsName(m_cp->accountID());
 
     wxString headerMsg = _("Moving Transaction from ") + accName + _(" to...");
     wxSingleChoiceDialog scd(0, _("Select the destination Account "), headerMsg , as);
@@ -1956,7 +1955,7 @@ int MyListCtrl::destinationAccountID(wxString accName)
     if (scd.ShowModal() == wxID_OK)
     {
         wxString acctName = scd.GetStringSelection();
-        accountID = m_cp->m_core->getAccountID(acctName);
+        accountID = m_cp->core_->getAccountID(acctName);
     }
 
     return accountID;
@@ -1968,7 +1967,7 @@ void MyListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
     {
         if ( m_cp->m_trans[m_selectedIndex]->transType_ == TRANS_TYPE_TRANSFER_STR )
         {
-            mmTransDialog dlg(m_cp->getDb(), m_cp->m_core, m_cp->accountID(), 
+            mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 
                               m_cp->m_trans[m_selectedIndex]->transactionID(), true, 
                               m_cp->inidb_, this);
             if ( dlg.ShowModal() == wxID_OK )
@@ -1983,11 +1982,11 @@ void MyListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
             if ( toAccountID != -1 )
             {
                 boost::shared_ptr<mmBankTransaction> pTransaction;
-                pTransaction = m_cp->m_core->bTransactionList_.getBankTransactionPtr(m_cp->accountID(),
+                pTransaction = m_cp->core_->bTransactionList_.getBankTransactionPtr(m_cp->accountID(),
                                       m_cp->m_trans[m_selectedIndex]->transactionID() );
                 
                 pTransaction->accountID_ = toAccountID;
-                m_cp->m_core->bTransactionList_.updateTransaction(pTransaction);
+                m_cp->core_->bTransactionList_.updateTransaction(pTransaction);
                 //m_selectedIndex --;
                 refreshVisualList();
             }
@@ -2013,7 +2012,7 @@ void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
     if (m_selectedIndex != -1)
     {
         //m_selectedIndex = event.GetIndex();
-        mmTransDialog dlg(m_cp->getDb(), m_cp->m_core,  m_cp->accountID(), 
+        mmTransDialog dlg(m_cp->getDb(), m_cp->core_,  m_cp->accountID(), 
             m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
         if ( dlg.ShowModal() == wxID_OK )
         {
@@ -2067,8 +2066,8 @@ MyListCtrl::MyListCtrl(
 
 boost::shared_ptr<wxSQLite3Database> mmCheckingPanel::getDb() const 
 { 
-    wxASSERT(m_core);
-    return m_core->db_; 
+    wxASSERT(core_);
+    return core_->db_; 
 }
 
 //----------------------------------------------------------------------------
@@ -2109,14 +2108,14 @@ void mmCheckingPanel::OnSearchTxtEntered(wxCommandEvent& /*event*/)
 
 void mmCheckingPanel::DisplaySplitCategories(int transID)
 {
-    wxString transTypeStr = m_core->bTransactionList_.getBankTransactionPtr(transID)->transType_;
+    wxString transTypeStr = core_->bTransactionList_.getBankTransactionPtr(transID)->transType_;
     int transType = 0;
     if (transTypeStr== TRANS_TYPE_DEPOSIT_STR)  transType = 1;
     if (transTypeStr== TRANS_TYPE_TRANSFER_STR) transType = 2;
 
     SplitTransactionDialog splitTransDialog(
-        m_core,
-        m_core->bTransactionList_.getBankTransactionPtr(transID)->splitEntries_.get(),
+        core_,
+        core_->bTransactionList_.getBankTransactionPtr(transID)->splitEntries_.get(),
         transType,
         this
     );

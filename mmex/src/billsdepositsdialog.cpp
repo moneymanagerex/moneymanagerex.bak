@@ -312,7 +312,7 @@ void mmBDDialog::CreateControls()
     itemFlexGridSizer5->Add(staticTextAccName, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
     itemAccountName_ = new wxButton( itemDialog1, ID_DIALOG_BD_COMBOBOX_ACCOUNTNAME, _("Select Account"), 
                                      wxDefaultPosition, wxSize(180, -1), 0 );
-    if (mmDBWrapper::getNumBankAccounts(db_) == 1)
+    if (core_->getNumBankAccounts() == 1)
     {
         wxArrayString accName = core_->getAccountsName();
         wxString accNameStr = accName[0];
@@ -456,7 +456,7 @@ void mmBDDialog::CreateControls()
     wxArrayString choiceTypeStrings;
     choiceTypeStrings.Add(_("Withdrawal"));
     choiceTypeStrings.Add(_("Deposit"));
-    if (mmDBWrapper::getNumBankAccounts(db_)>1)
+    if (core_->getNumBankAccounts() > 1)
         choiceTypeStrings.Add(_("Transfer"));
     choiceTrans_ = new wxChoice( transactionPanel, ID_DIALOG_TRANS_TYPE, 
                                  wxDefaultPosition, wxSize(110, -1), choiceTypeStrings);

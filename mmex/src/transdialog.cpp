@@ -338,8 +338,7 @@ void mmTransDialog::CreateControls()
     wxArrayString choiceTypeStrings;
     choiceTypeStrings.Add(_("Withdrawal"));
     choiceTypeStrings.Add(_("Deposit"));
-    if (mmDBWrapper::getNumBankAccounts(db_.get())>1)
-        choiceTypeStrings.Add(_("Transfer"));
+    if (core_->getNumBankAccounts() > 1) choiceTypeStrings.Add(_("Transfer"));
     choiceTrans_ = new wxChoice(itemPanel7, ID_DIALOG_TRANS_TYPE, wxDefaultPosition, wxSize(110, -1),choiceTypeStrings);
     
     choiceTrans_->SetSelection(0);
@@ -1313,7 +1312,7 @@ void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
 {
     int i = choiceTrans_->GetSelection();
     if (event.GetKeyCode()==WXK_DOWN) {
-        if (i < (mmDBWrapper::getNumBankAccounts(db_.get()) > 1 ? DEF_TRANSFER : DEF_DEPOSIT)) {
+        if (i < (core_->getNumBankAccounts() > 1 ? DEF_TRANSFER : DEF_DEPOSIT)) {
             choiceTrans_->SetSelection(++i);
         }
     } else if (event.GetKeyCode()==WXK_UP){
