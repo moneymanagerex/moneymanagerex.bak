@@ -27,8 +27,6 @@
 #include "mmex.h"
 
 #include <wx/app.h>
-#include <vector>
-#include <algorithm>
 
 BEGIN_EVENT_TABLE(mmHelpPanel, wxPanel)
     EVT_BUTTON(wxID_BACKWARD, mmHelpPanel::OnHelpPageBack)

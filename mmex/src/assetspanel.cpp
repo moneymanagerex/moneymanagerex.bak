@@ -19,9 +19,6 @@
 #include "dbwrapper.h"
 #include "assetdialog.h"
 
-#include <algorithm>
-#include <vector>
-
 /* Include XPM Support */
 #include "../resources/assets.xpm"
 

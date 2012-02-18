@@ -22,9 +22,6 @@
 #include "dbwrapper.h"
 #include "billsdepositsdialog.h"
 
-#include <algorithm>
-#include <vector>
-
 /* Include XPM Support */
 #include "../resources/error.xpm"
 #include "../resources/rt_exec_auto.xpm"
