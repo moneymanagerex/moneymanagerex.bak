@@ -559,7 +559,7 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
 
     wxFileOutputStream output(fileName);
     wxTextOutputStream text(output);
-    int fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+    int fromAccountID = core->getAccountID(acctName);
     wxString amtSeparator =  core->accountList_.getAccountCurrencyDecimalChar(fromAccountID);
 
     static const char sql[] =

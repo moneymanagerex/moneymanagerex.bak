@@ -379,7 +379,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
             if (accountCheckBox->GetValue())
             {
                 wxString acctName = accountDropDown->GetStringSelection();
-                int fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+                int fromAccountID = core_->getAccountID(acctName);
                 refAccountID_ = fromAccountID;
                 refAccountStr_ = acctName;
 

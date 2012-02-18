@@ -1956,7 +1956,7 @@ int MyListCtrl::destinationAccountID(wxString accName)
     if (scd.ShowModal() == wxID_OK)
     {
         wxString acctName = scd.GetStringSelection();
-        accountID = mmDBWrapper::getAccountID( m_cp->getDb().get(), acctName);
+        accountID = m_cp->m_core->getAccountID(acctName);
     }
 
     return accountID;

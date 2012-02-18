@@ -203,6 +203,7 @@ boost::shared_ptr<mmAccount> mmAccountList::getAccountSharedPtr(int accountID) c
     
 bool mmAccountList::exists(const wxString& accountName) const
 {
+    //XXX use accounts_
    int checkAcctID = mmDBWrapper::getAccountID(db_.get(), accountName);
    if (checkAcctID != -1)
       return true;
@@ -222,6 +223,7 @@ bool mmAccountList::has_term_account() const
 
 int mmAccountList::getID(const wxString& accountName) const
 {
+    //XXX use accounts_
     return mmDBWrapper::getAccountID(db_.get(), accountName);
 }
 

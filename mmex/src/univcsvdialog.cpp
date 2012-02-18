@@ -470,7 +470,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
 //    wxString delimit = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
     wxString delimit = this->delimit_;
     wxString acctName = m_choice_account_->GetStringSelection();
-    int fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+    int fromAccountID = core_->getAccountID(acctName);
 
     if (fromAccountID > 0)
     {
@@ -676,7 +676,7 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
 {
     wxString delimit = this->delimit_;
     wxString acctName = m_choice_account_->GetStringSelection();
-    int fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+    int fromAccountID = core_->getAccountID(acctName);
 
     if (fromAccountID > 0)
     {

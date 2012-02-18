@@ -395,7 +395,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
     else
         acctName = destinationAccountName;
 
-    fromAccountID = mmDBWrapper::getAccountID(db_, acctName);
+    fromAccountID = core->getAccountID(acctName);
 
     boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
     wxASSERT(pCurrencyPtr);

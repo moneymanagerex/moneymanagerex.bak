@@ -317,7 +317,7 @@ void mmBDDialog::CreateControls()
         wxArrayString accName = core_->getAccountsName();
         wxString accNameStr = accName[0];
         itemAccountName_->SetLabel(accNameStr);
-        accountID_= mmDBWrapper::getAccountID(db_, accNameStr);
+        accountID_= core_->getAccountID(accNameStr);
 	};
     itemFlexGridSizer5->Add(itemAccountName_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     itemAccountName_->SetToolTip(_("Specify the Account that will own the repeating transaction"));
@@ -603,7 +603,7 @@ void mmBDDialog::OnAccountName(wxCommandEvent& /*event*/)
     	if (scd.ShowModal() == wxID_OK)
         {
             wxString acctName = scd.GetStringSelection();
-            accountID_ = mmDBWrapper::getAccountID(db_, acctName);
+            accountID_ = core_->getAccountID(acctName);
             itemAccountName_->SetLabel(acctName);
     	}
 }
@@ -621,7 +621,7 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
     	if (scd.ShowModal() == wxID_OK) 
         {
             acctName = scd.GetStringSelection();
-		    payeeID_ = mmDBWrapper::getAccountID(db_, acctName);
+		    payeeID_ = core_->getAccountID(acctName);
 		    bPayee_->SetLabel(acctName);
 		    itemAccountName_->SetLabel(acctName);
     	}
@@ -702,7 +702,7 @@ void mmBDDialog::OnTo(wxCommandEvent& /*event*/)
     if (scd.ShowModal() == wxID_OK)
     {
 	    wxString acctName = scd.GetStringSelection();
-        toID_ = mmDBWrapper::getAccountID(db_, acctName);
+        toID_ = core_->getAccountID(acctName);
         bTo_->SetLabel(acctName);
     }
 }

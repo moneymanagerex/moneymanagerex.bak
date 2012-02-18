@@ -512,7 +512,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
         if (scd.ShowModal() == wxID_OK)
         {
             wxString acctName = scd.GetStringSelection();
-            payeeID_ = mmDBWrapper::getAccountID(db_.get(), acctName);
+            payeeID_ = core_->getAccountID(acctName);
             bPayee_->SetLabel(acctName);
         }
     }
@@ -583,7 +583,7 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
     if (scd.ShowModal() == wxID_OK)
     {
         wxString acctName = scd.GetStringSelection();
-        toID_ = mmDBWrapper::getAccountID(db_.get(), acctName);
+        toID_ = core_->getAccountID(acctName);
         bTo_->SetLabel(acctName);
     }
 }
@@ -1303,7 +1303,7 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
     bPayee_->SetLabel(currentPayeeName);
 
     if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
-        payeeID_ = mmDBWrapper::getAccountID(db_.get(), currentPayeeName);
+        payeeID_ = core_->getAccountID(currentPayeeName);
     } else {
         payeeID_ = core_->getPayeeID(currentPayeeName);
     }
@@ -1379,7 +1379,7 @@ void mmTransDialog::OnButtonToAccountChar(wxKeyEvent& event)
             toAccountName = filtd.Item(--c);
             bTo_->SetLabel(toAccountName);
     }
-    toID_ = mmDBWrapper::getAccountID(db_.get(), toAccountName);
+    toID_ = core_->getAccountID(toAccountName);
 }
 
 void mmTransDialog::OnButtonToAccountMouse(wxMouseEvent& event) 
@@ -1412,7 +1412,7 @@ void mmTransDialog::OnButtonToAccountMouse(wxMouseEvent& event)
             toAccountName = filtd.Item(--c);
             bTo_->SetLabel(toAccountName);
     }
-    toID_ = mmDBWrapper::getAccountID(db_.get(), toAccountName);
+    toID_ = core_->getAccountID(toAccountName);
 }
 
 void mmTransDialog::OnButtonPayeeMouse(wxMouseEvent& event) 
@@ -1464,7 +1464,7 @@ void mmTransDialog::OnButtonPayeeMouse(wxMouseEvent& event)
     bPayee_->SetLabel(currentPayeeName);
 
     if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
-        payeeID_ = mmDBWrapper::getAccountID(db_.get(), currentPayeeName);
+        payeeID_ = core_->getAccountID(currentPayeeName);
     } else {
         payeeID_ = core_->getPayeeID(currentPayeeName);
     }
