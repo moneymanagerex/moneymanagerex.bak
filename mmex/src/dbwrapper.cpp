@@ -2676,28 +2676,6 @@ double mmDBWrapper::getAssetValue(wxSQLite3Database* db, int assetID)
     return assetValue;
 }
 
-wxString mmDBWrapper::getAccountType(wxSQLite3Database* db_, int accountID)
-{
-    wxString acctType;
-
-    wxSQLite3Statement st = db_->PrepareStatement("select ACCOUNTTYPE "
-                                                  "from ACCOUNTLIST_V1 "
-                                                  "where ACCOUNTID = ?"
-                                                 );
-    
-    st.Bind(1, accountID);
-    
-    wxSQLite3ResultSet rs = st.ExecuteQuery();
-    if (rs.NextRow())
-    {
-        acctType = rs.GetString(wxT("ACCOUNTTYPE"));
-    }
-
-    st.Finalize();
-
-    return acctType;
-}
-
 wxString mmDBWrapper::getSplitTrxNotes(wxSQLite3Database* db_, int trxID)
 {
     wxString infoStr =  wxEmptyString;
