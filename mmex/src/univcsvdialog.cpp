@@ -234,7 +234,7 @@ void mmUnivCSVDialog::CreateControls()
     wxStaticText* itemStaticText6 = new wxStaticText(itemPanel7, wxID_ANY, _("Account  :"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer8->Add(itemStaticText6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxArrayString as = mmDBWrapper::getAccountsName(db_);
+    wxArrayString as = core_->getAccountsName();
     m_choice_account_ = new wxChoice(itemPanel7, wxID_ANY, wxDefaultPosition, wxSize(210, -1), as, 0);
     m_choice_account_->SetSelection(0);
     itemBoxSizer8->Add(m_choice_account_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);

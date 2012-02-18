@@ -314,7 +314,7 @@ void mmBDDialog::CreateControls()
                                      wxDefaultPosition, wxSize(180, -1), 0 );
     if (mmDBWrapper::getNumBankAccounts(db_) == 1)
     {
-        wxArrayString accName = mmDBWrapper::getAccountsNameExceptOne(db_, -1);
+        wxArrayString accName = core_->getAccountsName();
         wxString accNameStr = accName[0];
         itemAccountName_->SetLabel(accNameStr);
         accountID_= mmDBWrapper::getAccountID(db_, accNameStr);
@@ -597,7 +597,7 @@ void mmBDDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmBDDialog::OnAccountName(wxCommandEvent& /*event*/)
 {
-    	wxArrayString as = mmDBWrapper::getAccountsName(db_);
+    	wxArrayString as = core_->getAccountsName();
     	
     	wxSingleChoiceDialog scd(this, _("Choose Bank Account or Term Account"), _("Select Account"), as);
     	if (scd.ShowModal() == wxID_OK)
@@ -612,7 +612,7 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 {
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
 	{
-    	wxArrayString as = mmDBWrapper::getAccountsName(db_);
+    	wxArrayString as = core_->getAccountsName();
     	
     	wxString acctName = itemAccountName_->GetLabel();
     	bPayee_->SetLabel(acctName);
@@ -696,7 +696,7 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 void mmBDDialog::OnTo(wxCommandEvent& /*event*/)
 {	
     // This should only get called if we are in a transfer
-    wxArrayString as = mmDBWrapper::getAccountsName(db_);
+    wxArrayString as = core_->getAccountsName();
     	
     wxSingleChoiceDialog scd(this, _("Account name"), _("Select Account"), as);
     if (scd.ShowModal() == wxID_OK)

@@ -153,7 +153,7 @@ void mmFilterTransactionsDialog::CreateControls()
     accountCheckBox->SetValue(FALSE);
     itemPanelSizer->Add(accountCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxArrayString as = mmDBWrapper::getAccountsName(db_);
+    wxArrayString as = core_->getAccountsName();
    
     accountDropDown = new wxChoice( itemPanel, ID_CHOICE4, wxDefaultPosition, wxSize(fieldWidth,-1), as, 0 );
     itemPanelSizer->Add(accountDropDown, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
