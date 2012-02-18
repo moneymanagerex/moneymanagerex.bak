@@ -255,20 +255,13 @@ void mmStocksPanel::CreateControls()
 
     /* See if we can get data from inidb */
     long col0, col1, col2, col3, col4, col5, col6;
-    mmDBWrapper::getINISettingValue(inidb_,
-                                    wxT("STOCKS_COL0_WIDTH"), wxT("150")).ToLong(&col0);
-    mmDBWrapper::getINISettingValue(inidb_,
-                                    wxT("STOCKS_COL1_WIDTH"), wxT("-2")).ToLong(&col1);
-    mmDBWrapper::getINISettingValue(inidb_,
-                                    wxT("STOCKS_COL2_WIDTH"), wxT("-2")).ToLong(&col2);
-    mmDBWrapper::getINISettingValue(inidb_,
-                                    wxT("STOCKS_COL3_WIDTH"), wxT("-2")).ToLong(&col3);
-    mmDBWrapper::getINISettingValue(inidb_,
-                                    wxT("STOCKS_COL4_WIDTH"), wxT("-2")).ToLong(&col4);
-    mmDBWrapper::getINISettingValue(inidb_,
-                                    wxT("STOCKS_COL5_WIDTH"), wxT("-2")).ToLong(&col5);
-    mmDBWrapper::getINISettingValue(inidb_,
-                                    wxT("STOCKS_COL6_WIDTH"), wxT("-2")).ToLong(&col6);
+    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_COL0_WIDTH"), wxT("150")).ToLong(&col0);
+    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_COL1_WIDTH"), wxT("-2")).ToLong(&col1);
+    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_COL2_WIDTH"), wxT("-2")).ToLong(&col2);
+    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_COL3_WIDTH"), wxT("-2")).ToLong(&col3);
+    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_COL4_WIDTH"), wxT("-2")).ToLong(&col4);
+    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_COL5_WIDTH"), wxT("-2")).ToLong(&col5);
+    mmDBWrapper::getINISettingValue(inidb_, wxT("STOCKS_COL6_WIDTH"), wxT("-2")).ToLong(&col6);
 
     listCtrlAccount_->SetColumnWidth(COL_DATE, col0);
     listCtrlAccount_->SetColumnWidth(COL_NAME, col1);
