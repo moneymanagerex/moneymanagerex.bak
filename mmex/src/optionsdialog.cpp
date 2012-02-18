@@ -342,7 +342,7 @@ void mmOptionsDialog::CreateControls()
     wxString currName = _("Set Currency");
     if (currencyId_ != -1)
     {
-        currName = mmDBWrapper::getCurrencyName(db_, currencyId_);
+        currName = core_->getCurrencyName(currencyId_);
     }
     wxButton* baseCurrencyButton = new wxButton(generalPanel, ID_DIALOG_OPTIONS_BUTTON_CURRENCY,
         currName, wxDefaultPosition, wxSize(150, -1), 0);
@@ -939,7 +939,7 @@ void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
      
     if (mmMainCurrencyDialog::Execute(core_, this, currencyID) && currencyID != -1)
     {
-        wxString currName = mmDBWrapper::getCurrencyName(db_, currencyID);
+        wxString currName = core_->getCurrencyName(currencyID);
         wxButton* bn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_CURRENCY);
         bn->SetLabel(currName);
         currencyId_ = currencyID;

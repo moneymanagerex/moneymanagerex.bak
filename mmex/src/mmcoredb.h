@@ -77,6 +77,7 @@ public:
     void deleteCurrency(int currencyID) { return currencyList_.deleteCurrency(currencyID); }
     bool currencyInUse(int currencyID) { return currencyList_.currencyInUse(currencyID); }
     void updateCurrency(boost::shared_ptr<mmCurrency> pCurrency) { return currencyList_.updateCurrency(pCurrency); }
+    wxString getCurrencyName(int currencyID) const { return currencyList_.getCurrencyName(currencyID); }
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(int currencyID) const { return currencyList_.getCurrencySharedPtr(currencyID); }
     boost::shared_ptr<mmCurrency> getCurrencySharedPtr(const wxString& currencyName) const { return currencyList_.getCurrencySharedPtr(currencyName); }
     void loadBaseCurrencySettings() const { return currencyList_.loadBaseCurrencySettings(); }

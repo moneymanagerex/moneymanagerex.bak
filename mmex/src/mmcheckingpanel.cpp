@@ -920,7 +920,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
         if (currencyid != basecurrencyid) //Show nothing if account currency is base
         {
             //load settings for base currency
-            wxString currencyName = mmDBWrapper::getCurrencyName(m_core->db_.get(), basecurrencyid);
+            wxString currencyName = m_core->getCurrencyName(basecurrencyid);
             boost::shared_ptr<mmCurrency> pCurrency = m_core->getCurrencySharedPtr(currencyName);
             wxASSERT(pCurrency);
             wxString basecuramountStr;

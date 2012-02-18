@@ -132,7 +132,6 @@ void setBaseCurrencySettings(wxSQLite3Database* db, int currencyID);
 void loadSettings(wxSQLite3Database* db, int currencyID);
 void loadSettings(int accountID, wxSQLite3Database* db);
 void loadBaseCurrencySettings(wxSQLite3Database* db);
-wxString getCurrencyName(wxSQLite3Database* db, int currencyID);
 double getCurrencyBaseConvRate(wxSQLite3Database* db, int accountID);
 double getCurrencyBaseConvRateForId(wxSQLite3Database* db, int currencyID);
 

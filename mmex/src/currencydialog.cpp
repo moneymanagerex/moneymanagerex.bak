@@ -90,7 +90,7 @@ void mmCurrencyDialog::fillControls()
     
     if (currencyID_ != -1)
     {
-        wxString name = mmDBWrapper::getCurrencyName(core_->db_.get(), currencyID_);
+        wxString name = core_->getCurrencyName(currencyID_);
         currencyChoice_->Append(name, (void*)(INT_PTR)currencyID_);
         currencyChoice_->SetStringSelection(name);
     }
