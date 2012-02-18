@@ -20,7 +20,6 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "htmlbuilder.h"
-#include <algorithm>
 #include "reportbase.h"
 
 BEGIN_EVENT_TABLE(mmReportsPanel, wxPanel)

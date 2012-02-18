@@ -21,9 +21,7 @@
 #include "budgetentrydialog.h"
 #include "util.h"
 #include "dbwrapper.h"
-#include <algorithm>
 #include "mmex.h"
-#include <vector>
 #include "reportbudget.h"
 
 /*******************************************************/

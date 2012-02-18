@@ -23,9 +23,6 @@
 #include "mmyahoo.h"
 #include "yahoosettingsdialog.h"
 
-#include <algorithm>
-#include <vector>
-
 /* Include XPM Support */
 #include "../resources/uparrow.xpm"
 #include "../resources/downarrow_red.xpm"
