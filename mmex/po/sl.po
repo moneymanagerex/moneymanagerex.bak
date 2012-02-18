@@ -1,1 +1,1 @@
-Slovenian.po
+slovenian.po
