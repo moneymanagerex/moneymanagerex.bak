@@ -39,14 +39,6 @@ END_EVENT_TABLE()
 
 namespace
 {
-
-inline boost::shared_ptr<mmCurrency> getCurrency(mmCoreDB* core, int currencyID)
-{
-    wxASSERT(core);
-    return core->getCurrencySharedPtr(currencyID);
-}
-
-
 /*
     Returns true if _Left precedes and is not equal to _Right in the sort order.
 */
@@ -58,7 +50,6 @@ struct CurrencyCompare : public std::binary_function<boost::shared_ptr<mmCurrenc
         return _Left->currencyName_ < _Right->currencyName_; // order by currency name
     }
 };
-
 
 } // namespace
 
