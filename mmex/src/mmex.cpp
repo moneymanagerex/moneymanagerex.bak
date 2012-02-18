@@ -3470,7 +3470,7 @@ void mmGUIFrame::OnImportQIF(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& /*event*/)
 {
-    if (mmDBWrapper::getNumAccounts(m_db.get()) == 0)
+    if (m_core.get()->getNumAccounts() == 0)
     {
         wxMessageBox(_("No account available to import"),_("Universal CSV Import"), wxICON_WARNING );
         return;
@@ -3567,11 +3567,9 @@ void mmGUIFrame::OnBudgetSetupDialog(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnTransactionReport(wxCommandEvent& /*event*/)
 {
-    if (!m_db)
-        return;
+    if (!m_db) return;
 
-    if (mmDBWrapper::getNumAccounts(m_db.get()) == 0)
-        return;
+    if (m_core.get()->getNumAccounts() == 0) return;
 
     std::vector< boost::shared_ptr<mmBankTransaction> >* trans 
         = new std::vector< boost::shared_ptr<mmBankTransaction> >;
@@ -3612,7 +3610,7 @@ wxArrayString mmGUIFrame::getAccountsArray( bool withTermAccounts) const
 void mmGUIFrame::OnCashFlowSpecificAccounts()
 {
     if (!m_db.get()) return;
-    if (mmDBWrapper::getNumAccounts(m_db.get()) == 0) return;
+    if (m_core.get()->getNumAccounts() == 0) return;
 
     wxArrayString accountArray = getAccountsArray(true);
 

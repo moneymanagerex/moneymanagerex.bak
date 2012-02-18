@@ -786,12 +786,6 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd)
     mmDBWrapper::commit(db);
 }
 
-int mmDBWrapper::getNumAccounts(wxSQLite3Database* db)
-{
-    int num = db->ExecuteScalar("select count(*) from ACCOUNTLIST_V1");
-    return num;
-}
-
 int mmDBWrapper::getNumBankAccounts(wxSQLite3Database* db)
 {
     int num = db->ExecuteScalar("select count(*) from ACCOUNTLIST_V1 where accounttype<>'Investment'");

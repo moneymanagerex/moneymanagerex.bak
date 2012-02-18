@@ -55,6 +55,7 @@ public:
     std::pair<mmPayeeList::const_iterator, mmPayeeList::const_iterator> rangePayee() const { return payeeList_.range(); }
 
     wxString getAccountName(int accountID) const { return accountList_.getName(accountID); }
+    int getNumAccounts() const { return accountList_.getNumAccounts(); }
     int addAccount(boost::shared_ptr<mmAccount> pAccount) { return accountList_.add(pAccount); };
     void updateAccount(boost::shared_ptr<mmAccount> pAccount) { return accountList_.update(pAccount); };
     bool accountExists(const wxString& name) const { return accountList_.exists(name); };
