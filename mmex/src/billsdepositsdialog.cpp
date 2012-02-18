@@ -968,7 +968,6 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
     {
         int catID, subcatID;
         wxString payeeName = mmDBWrapper::getPayee(db_, payeeID_, catID, subcatID );
-        //mmDBWrapper::updatePayee(db_, payeeName, payeeID_, categID_, subcategID_);
     }
 
     if (!advancedToTransAmountSet_ || toTransAmount_ < 0)
