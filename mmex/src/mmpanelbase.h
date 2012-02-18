@@ -22,6 +22,7 @@
 //----------------------------------------------------------------------------
 #include <wx/panel.h>
 #include <wx/string.h>
+#include "mmcoredb.h"
 //----------------------------------------------------------------------------
 class wxSQLite3Database;
 
@@ -38,10 +39,11 @@ public:
     virtual wxString getReportText() const { return wxGetEmptyString(); }
     
     mmPanelBase() {}
-    mmPanelBase(wxSQLite3Database* db, wxSQLite3Database* inidb): db_(db), inidb_(inidb) {}
+    mmPanelBase(wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core = 0): db_(db), inidb_(inidb), core_(core) {}
 
-    wxSQLite3Database* db_;
+    wxSQLite3Database* db_; //TODO remove
     wxSQLite3Database* inidb_;
+    mmCoreDB* core_;
 };
 //----------------------------------------------------------------------------
 #endif // _MM_EX_PANELBASE_H_

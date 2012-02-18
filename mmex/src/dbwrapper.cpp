@@ -792,54 +792,6 @@ int mmDBWrapper::getNumBankAccounts(wxSQLite3Database* db)
     return num;
 }
 
-wxString mmDBWrapper::getAccountName(wxSQLite3Database* db, int accountID)
-{
-    wxString name;
-
-    wxSQLite3Statement st = db->PrepareStatement("select ACCOUNTNAME "
-                                                 "from ACCOUNTLIST_V1 "
-                                                 "where ACCOUNTID = ?"
-                                                );
-    
-    st.Bind(1, accountID);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow())
-    {
-        name = q1.GetString(wxT("ACCOUNTNAME"));
-    }
-    else
-    {
-        wxASSERT(true);
-    }
-
-    st.Finalize();
-
-    return name;
-}
-
-int mmDBWrapper::getAccountID(wxSQLite3Database* db, const wxString& accountName)
-{
-    int id = -1;
-
-    wxSQLite3Statement st = db->PrepareStatement("select ACCOUNTID "
-                                                 "from ACCOUNTLIST_V1 "
-                                                 "where ACCOUNTNAME = ?"
-                                                );
-
-    st.Bind(1, accountName);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow())
-    {
-        id = q1.GetInt(wxT("ACCOUNTID"));
-    }
-
-    st.Finalize();
-
-    return id;
-}
-
 void mmDBWrapper::loadSettings(int accountID, wxSQLite3Database* db)
 {
     wxSQLite3Statement st = db->PrepareStatement("select CURRENCYID "
