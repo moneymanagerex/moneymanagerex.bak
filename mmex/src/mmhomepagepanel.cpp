@@ -65,12 +65,8 @@ mmHomePagePanel::mmHomePagePanel(mmGUIFrame* frame,
             const wxSize& size,
             long style,
             const wxString& name )
+: mmPanelBase(db, inidb, core), frame_(frame), topCategories_(topCategories)
 {
-    db_ = db;
-    inidb_ = inidb;
-    core_ = core;
-    frame_ = frame;
-    topCategories_ = topCategories;
     frame_->setHomePageActive();
     Create(parent, winid, pos, size, style, name);
 }

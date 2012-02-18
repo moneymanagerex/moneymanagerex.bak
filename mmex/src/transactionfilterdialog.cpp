@@ -46,8 +46,8 @@ TransFilterDialog::TransFilterDialog()
 
 TransFilterDialog::TransFilterDialog( mmCoreDB* core, wxWindow* parent, wxWindowID id,
     const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+: core_(core)
 {
-    core_ = core;
     Create(parent, id, caption, pos, size, style);
     Init();
 }

@@ -74,14 +74,9 @@ mmFilterTransactionsDialog::mmFilterTransactionsDialog(std::vector< boost::share
                                                        const wxString& caption, 
                                                        const wxPoint& pos, const wxSize& size, 
                                                        long style )
+: trans_(trans), core_(core), db_(core_->db_.get())
+, categID_(-1), subcategID_(-1), payeeID_(-1), refAccountID_(-1)
 {
-    trans_ = trans;
-    core_ = core;
-    db_ = core_->db_.get();
-    categID_ = -1;
-    subcategID_ = -1;
-    payeeID_ = -1;
-    refAccountID_ = -1;
     Create(parent, id, caption, pos, size, style);
 }
 
