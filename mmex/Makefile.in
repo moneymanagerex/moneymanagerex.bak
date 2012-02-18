@@ -52,7 +52,7 @@ SQLITE_CFLAGS = -DSQLITE_CORE -DSQLITE_HAS_CODEC \
 	-DSQLITE_ENABLE_COLUMN_METADATA $(PIC_FLAG) $(CPPFLAGS) $(CFLAGS)
 SQLITE_OBJECTS =  \
 	sqlite_sqlite3secure.o
-MMEX_CXXFLAGS = -I$(srcdir)/lib/sqlite -I$(srcdir)/lib/wxsqlite -I$(srcdir)/lib/lua/src -DNOPCH \
+MMEX_CXXFLAGS = -I$(srcdir)/lib/sqlite -I$(srcdir)/lib/wxsqlite -DNOPCH \
 	$(WX_CXXFLAGS) $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
 	mmex_aboutdialog.o \
