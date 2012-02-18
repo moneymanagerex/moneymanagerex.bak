@@ -47,6 +47,7 @@ public:
 
     bool payeeExists(int id) const { return payeeList_.exists(id); }
     bool payeeExists(const wxString& name) const { return payeeList_.exists(name); }
+    wxString getPayeeName(int id) const {return payeeList_.getName(id); }
     int addPayee(const wxString& name) { return payeeList_.add(name); }
     bool removePayee(int id) { return payeeList_.remove(id); }
     void updatePayee(int id, const wxString& name) { return payeeList_.update(id, name); }

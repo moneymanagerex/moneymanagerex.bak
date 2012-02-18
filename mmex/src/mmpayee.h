@@ -50,6 +50,7 @@ public:
     bool exists(const wxString& payeeName) const;
     bool exists(const int payeeid) const;
     int getID(const wxString& payeeName) const;
+    wxString getName(int id) const;
     boost::shared_ptr<mmPayee> getSharedPtr(int payeeID);
     void sortPayeeList(void);
 

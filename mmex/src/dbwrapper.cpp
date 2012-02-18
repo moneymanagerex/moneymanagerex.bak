@@ -1430,28 +1430,6 @@ wxString mmDBWrapper::getPayee(wxSQLite3Database* db, int payeeID, int& categID,
     return payeeName;
 }
 
-wxString mmDBWrapper::getPayee(wxSQLite3Database* db, int payeeID)
-{
-    static const char payeeNameSql[] = 
-    "select PAYEENAME "
-    "from PAYEE_V1 "
-    "where PAYEEID = ?";
-    
-    wxString payeeName = wxEmptyString;
-
-    wxSQLite3Statement st = db->PrepareStatement(payeeNameSql);
-    st.Bind(1, payeeID);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow())
-    {
-        payeeName  = q1.GetString(wxT("PAYEENAME"));
-    }
-    st.Finalize();
-
-    return payeeName;
-}
-
 wxString mmDBWrapper::getCurrencySymbol(wxSQLite3Database* db, int currencyID)
 {
     wxString symbol;

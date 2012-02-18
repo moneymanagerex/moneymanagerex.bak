@@ -237,7 +237,7 @@ void mmBDDialog::dataToControls()
         mmex::formatDoubleToCurrencyEdit(transAmount, dispAmount);
         textAmount_->SetValue(dispAmount);
 
-        wxString payeeString = mmDBWrapper::getPayee(db_, payeeID_);
+        wxString payeeString = core_->getPayeeName(payeeID_);
         bPayee_->SetLabel(payeeString);
         
         if (transTypeString == TRANS_TYPE_TRANSFER_STR)
