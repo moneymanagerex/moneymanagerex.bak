@@ -183,7 +183,7 @@ void mmAboutDialog::CreateControls()
           wxDefaultPosition, wxDefaultSize, 0 );
        itemBoxSizer4->Add(itemButton18, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-       wxString langStr = mmDBWrapper::getINISettingValue(inidb_, wxT("LANGUAGE")); 
+       wxString langStr = mmDBWrapper::getINISettingValue(inidb_, LANGUAGE_PARAMETER);
 
        wxStaticText* itemStaticText15 = new wxStaticText( itemDialog1, 
           wxID_STATIC, _("Using Language : ") + langStr, wxDefaultPosition, wxDefaultSize, 0 );

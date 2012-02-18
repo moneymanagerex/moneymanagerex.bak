@@ -346,7 +346,7 @@ void mmPlayTransactionSound(wxSQLite3Database* db_)
     locale.AddCatalog(lang) calls wxLogWarning and returns true for corrupted .mo file,
     so I should use locale.IsLoaded(lang) also.
 */
-wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database* inidb, bool forced_show_dlg)
+wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database* inidb, bool forced_show_dlg, bool save_setting)
 {
     wxString lang;
 
@@ -371,26 +371,24 @@ wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database* inidb, bool force
         return lang;
     }
 
-    const wxString param_lang(wxT("LANGUAGE"));
-
     if (!forced_show_dlg) 
     {
-        lang = mmDBWrapper::getINISettingValue(inidb, param_lang);
+        lang = mmDBWrapper::getINISettingValue(inidb, LANGUAGE_PARAMETER);
         if (!lang.empty() && locale.AddCatalog(lang) && locale.IsLoaded(lang)) 
         {
             mmOptions::instance().language = lang;
             return lang;
         }
-   }
+    }
 
     lang = selectLanguageDlg(parent, langPath, verbose);
 
-    if (!lang.empty()) 
+    if (save_setting && !lang.empty()) 
     {
         bool ok = locale.AddCatalog(lang) && locale.IsLoaded(lang);
         if (!ok)  lang.clear(); // bad .mo file
         mmOptions::instance().language = lang;
-        mmDBWrapper::setINISettingValue(inidb, param_lang, lang);
+        mmDBWrapper::setINISettingValue(inidb, LANGUAGE_PARAMETER, lang);
     }
 
     return lang;

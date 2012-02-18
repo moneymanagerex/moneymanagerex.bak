@@ -25,6 +25,8 @@
 #include <boost/shared_ptr.hpp>
 //----------------------------------------------------------------------------
 
+const wxString LANGUAGE_PARAMETER = wxT("LANGUAGE");
+
 const int BD_REPEATS_MULTIPLEX_BASE  = 100;
 
 const wxString ACCOUNT_TYPE_BANK  = wxT("Checking");
