@@ -530,7 +530,7 @@ wxString withoutQuotes(wxString label)
 
 void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
 {
-    if (mmDBWrapper::getNumAccounts(db_) == 0) 
+    if (core->getNumAccounts() == 0) 
     {
         wxMessageBox(_("No Account available for export"), _("QIF Export"), wxICON_WARNING);
         return;

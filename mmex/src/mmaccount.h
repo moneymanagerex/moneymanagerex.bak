@@ -79,6 +79,7 @@ public:
     /// returns the status of the account (mmAccount::MMEX_Open or mmAccount::MMEX_Closed)\n
     /// to get a list of account names, use mmDBWrapper::getAccountsName(..)
     mmAccount::AccountStatus getAccountStatus(int accountID) const;
+    int getNumAccounts() const { return accounts_.size(); }
     int getID(const wxString& accountName) const;
     bool remove(int accountID);
     void update(boost::shared_ptr<mmAccount> pAccount);

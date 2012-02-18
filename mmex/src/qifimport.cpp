@@ -366,7 +366,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
 {
     wxSQLite3Database* db_ = core->db_.get();
 
-    if ( mmDBWrapper::getNumAccounts( db_ ) == 0 ) {
+    if ( core->getNumAccounts() == 0 ) {
         wxMessageBox(_( "No account available for import"), _("QIF Import"), wxICON_WARNING );
         return -1;
     }
