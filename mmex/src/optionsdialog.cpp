@@ -322,9 +322,9 @@ void mmOptionsDialog::CreateControls()
     wxStaticBoxSizer* languageStaticBoxSizer = new wxStaticBoxSizer(languageStaticBox, wxHORIZONTAL);
     generalPanelSizer->Add(languageStaticBoxSizer, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
     
-    wxString lang = mmDBWrapper::getINISettingValue(inidb_, wxT("LANGUAGE"));
+    currentLanguage_ = mmDBWrapper::getINISettingValue(inidb_, LANGUAGE_PARAMETER);
     wxButton* languageButton = new wxButton(generalPanel, ID_DIALOG_OPTIONS_BUTTON_LANGUAGE,
-        lang, wxDefaultPosition, wxSize(150, -1), 0);
+        currentLanguage_, wxDefaultPosition, wxSize(150, -1), 0);
     languageButton->SetToolTip(_("Specify the language to use"));
     languageStaticBoxSizer->Add(languageButton, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
@@ -896,8 +896,8 @@ void mmOptionsDialog::CreateControls()
     newBook->InsertPage(0, generalPanel, _("General"), true, 2);
     newBook->InsertPage(1, viewsPanel, _("View Options"), false, 0);
     newBook->InsertPage(2, colourPanel, _("Colors"), false, 1);
-    newBook->InsertPage(3, othersPanel, _("Others"), false, 3);
-    newBook->InsertPage(4, importExportPanel, _("Import/Export"), false, 4);
+    newBook->InsertPage(3, importExportPanel, _("Import/Export"), false, 4);
+    newBook->InsertPage(4, othersPanel, _("Others"), false, 3);
 
     mainDialogPanelSizer->Add(newBook, 1, wxGROW|wxALL, 5);
     mainDialogPanelSizer->Layout();
@@ -922,8 +922,11 @@ void mmOptionsDialog::CreateControls()
 
 void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& /*event*/)
 {
-    wxString lang = mmSelectLanguage(this, inidb_, true);
+    wxString lang = mmSelectLanguage(this, inidb_, true, false);
     if (lang.empty()) return;
+
+    // Advisable to restart GUI when user acknowledges the change.
+    restartRequired_ = true;
 
     wxButton *btn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
     wxASSERT(btn);
@@ -1263,10 +1266,10 @@ void mmOptionsDialog::SaveGeneralPanelSettings()
     mmIniOptions::instance().userNameString_ = stun->GetValue();
     mmDBWrapper::setInfoSettingValue(db_, wxT("USERNAME"), mmIniOptions::instance().userNameString_); 
 
-    //--------------
-    //TODO: Language
-    
-    //--------------
+    wxButton *languageButton = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
+    mmDBWrapper::setINISettingValue(inidb_, LANGUAGE_PARAMETER, languageButton->GetLabel());
+    mmSelectLanguage(0, inidb_, false);
+
     mmDBWrapper::setBaseCurrencySettings(db_, currencyId_);
     mmDBWrapper::setInfoSettingValue(db_, wxT("DATEFORMAT"), dateFormat_);
     SaveFinancialYearStart();

@@ -1675,7 +1675,7 @@ double mmDBWrapper::getCurrencyBaseConvRate(wxSQLite3Database* db, int accountID
 void mmDBWrapper::verifyINIDB(wxSQLite3Database* inidb)
 {
     wxASSERT(inidb);
-    bool ok=false;
+    bool ok = false;
     try 
     {
         ok = inidb->TableExists(wxT("SETTING_V1"));
@@ -1686,15 +1686,14 @@ void mmDBWrapper::verifyINIDB(wxSQLite3Database* inidb)
         wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
     }
 
-    if (ok)
-        return;
+    if (ok) return;
 
+    // mmexini.db3 database not set correctly so recreate it.
     static const char sql[] =
         "create table SETTING_V1"
         "(SETTINGID integer not null primary key, "
           "SETTINGNAME TEXT NOT NULL, "
           "SETTINGVALUE TEXT)";
-
     try 
     {
         inidb->ExecuteUpdate(sql);
@@ -1715,7 +1714,6 @@ void mmDBWrapper::verifyINIDB(wxSQLite3Database* inidb)
         wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
     }
 
-    wxFAIL;
     wxASSERT(!ok);
 }
 

@@ -90,6 +90,7 @@ private:
     bool restartRequired_;
     int currencyId_;
     wxString dateFormat_;
+    wxString currentLanguage_;
 
     /// Dialog Creation - Used by constructor
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_MMOPTIONSDIALOG_IDNAME, 

@@ -78,7 +78,7 @@ const wxString INIDB_IGNORE_FUTURE_TRANSACTIONS   = wxT("IGNORE_FUTURE_TRANSACTI
 void mmShowErrorMessageInvalid( wxWindow *parent, const wxString &message );
 void mmShowErrorMessage( wxWindow *parent, const wxString &message, const wxString &messageheader );
 
-wxString mmSelectLanguage( wxWindow *parent, wxSQLite3Database *inidb, bool forced_show_dlg );
+wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database *inidb, bool forced_show_dlg, bool save_setting = true);
 
 wxString mmGetDateForStorage( const wxDateTime &dt );
 wxDateTime mmGetStorageStringAsDate( const wxString& str );
