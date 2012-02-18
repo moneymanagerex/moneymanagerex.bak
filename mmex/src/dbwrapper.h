@@ -83,8 +83,6 @@ bool getBudgetEntry(wxSQLite3Database* db, int budgetYearID, int categID, int su
     
 
 /* Account API */
-double getInitBalanceOnAccount(wxSQLite3Database* db, int accountID);
-
 void removeSplitsForAccount(wxSQLite3Database* db, int accountID);
 
 /* Payee Table API */

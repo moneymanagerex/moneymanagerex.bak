@@ -345,7 +345,7 @@ void mmStocksPanel::initVirtualListControl()
     mmDBWrapper::loadSettings(accountID_, db_);
         
     //Get Init Value of the account
-    double initVal = mmDBWrapper::getInitBalanceOnAccount(db_, accountID_);
+    double initVal = core_->getAccountSharedPtr(accountID_)->initialBalance_;
     // + Transfered from other accounts - Transfered to other accounts
 
     //Get Stock Investment Account Balance as Init Amount + sum (Value) - sum (Purchase Price)
