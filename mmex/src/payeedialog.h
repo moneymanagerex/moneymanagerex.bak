@@ -35,7 +35,7 @@ public:
 
 private:
     int m_payee_id;
-    mmCoreDB *m_core;
+    mmCoreDB *core_;
     bool showSelectButton_;
     wxListBox* listBox_;
     wxButton* addButton;

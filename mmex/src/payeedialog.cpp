@@ -52,7 +52,7 @@ END_EVENT_TABLE()
 
 mmPayeeDialog::mmPayeeDialog(wxWindow *parent, mmCoreDB *core, bool showSelectButton) : 
 	m_payee_id(-1),
-	m_core(core),
+	core_(core),
 	showSelectButton_(showSelectButton)
 {
 	do_create(parent);
@@ -173,7 +173,7 @@ void mmPayeeDialog::OnListKeyDown(wxKeyEvent &event)
 
 void mmPayeeDialog::fillControls()
 {
-	wxArrayString filtd = mmDBWrapper::filterPayees(m_core->db_.get(), textCtrl->GetValue());
+	wxArrayString filtd = mmDBWrapper::filterPayees(core_->db_.get(), textCtrl->GetValue());
 
 	listBox_->Clear();
 
@@ -201,7 +201,7 @@ void mmPayeeDialog::OnSelChanged(wxCommandEvent& /*event*/)
 {
 	wxString payee = listBox_->GetStringSelection();
 
-	m_payee_id = payee.IsEmpty() ? -1 : m_core->getPayeeID(payee);
+	m_payee_id = payee.IsEmpty() ? -1 : core_->getPayeeID(payee);
 	bool ok = m_payee_id != -1;
 
 	editButton->Enable(ok);
@@ -216,13 +216,13 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
         return;
     }
 
-    if (m_core->payeeExists(text))
+    if (core_->payeeExists(text))
     {
         wxMessageBox(_("Payee with same name exists"), _("Organize Payees: Add Payee"),wxOK|wxICON_ERROR);
     }
     else
     {
-        m_core->addPayee(text);
+        core_->addPayee(text);
         textCtrl->Clear();
         fillControls();
 
@@ -236,7 +236,7 @@ void mmPayeeDialog::OnAdd(wxCommandEvent& event)
  
 void mmPayeeDialog::OnDelete(wxCommandEvent& event)
 {
-    if (!m_core->removePayee(m_payee_id))
+    if (!core_->removePayee(m_payee_id))
     {
         wxString deletePayeeErrMsg = _("Payee in use.");
         deletePayeeErrMsg 
@@ -272,8 +272,8 @@ void mmPayeeDialog::OnEdit(wxCommandEvent& event)
 	wxString newName = wxGetTextFromUser(mesg, _("Edit Payee Name"), oldname);
     if (newName != wxGetEmptyString())
 	{
-		m_core->updatePayee(m_payee_id, newName);
-		m_core->bTransactionList_.updateAllTransactionsForPayee(m_core, m_payee_id);
+		core_->updatePayee(m_payee_id, newName);
+		core_->bTransactionList_.updateAllTransactionsForPayee(core_, m_payee_id);
 		editButton->Disable();
 		fillControls();
 		
