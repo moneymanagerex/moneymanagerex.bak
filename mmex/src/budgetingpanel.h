@@ -95,7 +95,7 @@ class mmBudgetingPanel : public mmPanelBase
     DECLARE_EVENT_TABLE()
 
 public:
-    mmBudgetingPanel( wxSQLite3Database* db, wxSQLite3Database* inidb,
+    mmBudgetingPanel( wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core,
             mmGUIFrame* mainFrame, int budgetYearID, wxWindow *parent,
             wxWindowID winid = wxID_ANY,
             const wxPoint& pos = wxDefaultPosition,

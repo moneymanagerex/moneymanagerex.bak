@@ -71,6 +71,7 @@ public:
     bool deleteCategory(int categID) { return categoryList_.deleteCategory(categID); }
     bool deleteSubCategory(int categID, int subCategID) { return categoryList_.deleteSubCategory(categID, subCategID); }
     bool updateCategory(int categID, int subCategID, const wxString& text) { return categoryList_.updateCategory(categID, subCategID, text); }
+    wxString getCategoryName(int id) const { return categoryList_.getCategoryName(id); }
     wxString GetCategoryString(int categID) const { return categoryList_.GetCategoryString(categID); }
     wxString GetSubCategoryString(int categID, int subCategID) const { return categoryList_.GetSubCategoryString(categID, subCategID); }
     wxString GetFullCategoryString(int categID, int subCategID) const { return categoryList_.GetFullCategoryString(categID, subCategID); }

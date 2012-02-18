@@ -610,7 +610,7 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
                 
                 
         wxString transNum = q1.GetString(wxT("TRANSACTIONNUMBER"));
-        wxString categ = mmDBWrapper::getCategoryName(db_, q1.GetInt(wxT("CATEGID")));
+        wxString categ = core->getCategoryName(q1.GetInt(wxT("CATEGID")));
         wxString subcateg = mmDBWrapper::getSubCategoryName(db_,
                             q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
         wxString notes = mmUnCleanString(q1.GetString(wxT("NOTES")));
@@ -673,7 +673,7 @@ void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)
                 value = 0.0;
                 mmex::formatCurrencyToDouble(splitamount, value);
                 mmex::formatDoubleToCurrencyEdit(value, splitamount);
-                wxString splitcateg = mmDBWrapper::getCategoryName(db_, q2.GetInt(wxT("CATEGID")));
+                wxString splitcateg = core->getCategoryName(q2.GetInt(wxT("CATEGID")));
                 wxString splitsubcateg = mmDBWrapper::getSubCategoryName(db_,
                                             q2.GetInt(wxT("CATEGID")), q2.GetInt(wxT("SUBCATEGID")));
                 text << wxT('S') << splitcateg << (splitsubcateg != wxT("") ? wxT(":") : wxT("")) << splitsubcateg << endl

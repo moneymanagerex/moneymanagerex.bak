@@ -545,7 +545,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
                 // if payee has memory of last category used then display last category for payee
                 if (tempCategID != -1)
                 {
-                    wxString categString = mmDBWrapper::getCategoryName(db_.get(), tempCategID);
+                    wxString categString = core_->getCategoryName(tempCategID);
                     categoryName_ = categString;
                     if (tempSubCategID != -1)
                     {
@@ -648,7 +648,7 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
             if (dlg.categID_ == -1)
             {
                 // check if categ and subcateg are now invalid
-                wxString catName = mmDBWrapper::getCategoryName(db_.get(), categID_);
+                wxString catName = core_->getCategoryName(categID_);
                 if ( catName.IsEmpty())
                 {
                     // cannot find category
@@ -682,7 +682,7 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
             subcategID_ = dlg.subcategID_;
             categUpdated_ = true;
 
-            wxString catName = mmDBWrapper::getCategoryName(db_.get(), dlg.categID_);
+            wxString catName = core_->getCategoryName(dlg.categID_);
             categoryName_ = catName;
             catName.Replace (wxT("&"), wxT("&&"));
             wxString categString = catName;

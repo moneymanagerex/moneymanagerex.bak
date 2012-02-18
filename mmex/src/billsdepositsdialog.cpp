@@ -212,7 +212,7 @@ void mmBDDialog::dataToControls()
         }
         else
         {
-            wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
+            wxString catName = core_->getCategoryName(categID_);
             wxString categString = catName;
             categoryName_ = categString;
 
@@ -655,7 +655,7 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
                 return;
             }
 	
-            wxString catName = mmDBWrapper::getCategoryName(db_, tempCategID);
+            wxString catName = core_->getCategoryName(tempCategID);
             wxString categString = catName;
 	
             if (tempSubCategID != -1)
@@ -722,7 +722,7 @@ void mmBDDialog::OnCategs(wxCommandEvent& /*event*/)
          if (dlg.categID_ == -1)
          {
             // check if categ and subcateg are now invalid
-            wxString catName = mmDBWrapper::getCategoryName(db_, categID_);
+            wxString catName = core_->getCategoryName(categID_);
             if (catName.IsEmpty())
             {
                // cannot find category
@@ -754,7 +754,7 @@ void mmBDDialog::OnCategs(wxCommandEvent& /*event*/)
          categID_ = dlg.categID_;
          subcategID_ = dlg.subcategID_;
 
-         wxString catName = mmDBWrapper::getCategoryName(db_, dlg.categID_);
+         wxString catName = core_->getCategoryName(dlg.categID_);
          catName.Replace(wxT("&"), wxT("&&"));
          wxString categString = catName;
 

@@ -101,7 +101,6 @@ bool updateCategory(wxSQLite3Database* db, int categID, int subcategID, const wx
 bool addCategory(wxSQLite3Database* db, const wxString &newName);
 bool addSubCategory(wxSQLite3Database* db, int categID, const wxString &newName);
 int getSubCategoryID(wxSQLite3Database* db, int categID, const wxString &name);
-wxString getCategoryName(wxSQLite3Database* db, int categID);
 wxString getSubCategoryName(wxSQLite3Database* db, int categID, int subcategID);
 double getAmountForCategory(wxSQLite3Database* db, int categID, int subcategID, bool ignoreDate, const wxDateTime& dtbegin, const wxDateTime& dtEnd, bool evaluateTransfer = false, bool asDeposit = false, bool ignoreFuture = false);
 
