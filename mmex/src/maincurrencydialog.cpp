@@ -172,7 +172,7 @@ void mmMainCurrencyDialog::OnBtnAdd(wxCommandEvent& /*event*/)
       wxString currText = dlg.GetValue().Trim();
       if (!currText.IsEmpty())
       {
-         int currID = mmDBWrapper::getCurrencyID(core_->db_.get(), currText);
+         int currID = core_->getCurrencyID(currText);
          if (currID == -1)
          {
             boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency());
