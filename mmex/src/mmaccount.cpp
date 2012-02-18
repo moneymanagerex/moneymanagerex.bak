@@ -233,10 +233,18 @@ wxString mmAccountList::getName(int accountID) const
 
 wxArrayString mmAccountList::getAccountsName(int except_id) const
 {
-    //XXX use accounts_
-    if (except_id < 0) return mmDBWrapper::getAccountsName(db_.get());
+    wxArrayString as;
+    for (const_iterator it = accounts_.begin(); it != accounts_.end(); ++ it)
+    {
+        const mmAccount* account = it->get();
+        if ((account->acctType_ == ACCOUNT_TYPE_TERM || account->acctType_ == ACCOUNT_TYPE_BANK) 
+            && account->status_ != mmAccount::MMEX_Closed && account->id_ != except_id)
+        {
+            as.Add(account->name_);
+        }
+    }
 
-    return mmDBWrapper::getAccountsNameExceptOne(db_.get(), except_id);
+    return as;
 }
 
 wxString mmAccountList::getAccountType(int accountID) const

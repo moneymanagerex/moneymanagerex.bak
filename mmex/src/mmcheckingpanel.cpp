@@ -1947,7 +1947,7 @@ void MyListCtrl::refreshVisualList()
 //  Called only when moving a deposit/withdraw transaction to a new account.
 int MyListCtrl::destinationAccountID(wxString accName)
 {
-    wxArrayString as = mmDBWrapper::getAccountsNameExceptOne(m_cp->getDb().get(), m_cp->accountID());
+    wxArrayString as = m_cp->m_core->getAccountsName(m_cp->accountID());
 
     wxString headerMsg = _("Moving Transaction from ") + accName + _(" to...");
     wxSingleChoiceDialog scd(0, _("Select the destination Account "), headerMsg , as);
