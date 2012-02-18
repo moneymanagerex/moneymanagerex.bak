@@ -4687,7 +4687,7 @@ bool wxAddAccountPage2::TransferDataFromWindow()
         return false;
     }
 
-    mmAccount* ptrBase = new mmAccount(parent_->m_core->db_);
+    mmAccount* ptrBase = new mmAccount();
 
     boost::shared_ptr<mmAccount> pAccount(ptrBase);
 

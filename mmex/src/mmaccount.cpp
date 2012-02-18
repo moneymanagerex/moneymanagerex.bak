@@ -20,15 +20,7 @@
 #include "mmcoredb.h"
 #include "util.h"
 
-mmAccount::mmAccount(boost::shared_ptr<wxSQLite3Database> db)
-:db_(db)
-{
-
-}
-
-mmAccount::mmAccount(boost::shared_ptr<wxSQLite3Database> db, 
-                     wxSQLite3ResultSet& q1)
-    : db_(db)
+mmAccount::mmAccount(wxSQLite3ResultSet& q1)
 {
     id_ = q1.GetInt(wxT("ACCOUNTID"));
     name_ = q1.GetString(wxT("ACCOUNTNAME"));
@@ -52,14 +44,6 @@ mmAccount::mmAccount(boost::shared_ptr<wxSQLite3Database> db,
 
     initialBalance_ = q1.GetDouble(wxT("INITIALBAL"));
 }
-
-
-double mmAccount::balance()
-{
-    if (acctType_ == ACCOUNT_TYPE_STOCK) return 0.0;
-   return mmDBWrapper::getTotalBalanceOnAccount(db_.get(), this->id_);
-}
-
 
 mmAccountList::mmAccountList(boost::shared_ptr<wxSQLite3Database> db)
        :db_(db) {}
