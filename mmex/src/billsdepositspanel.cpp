@@ -302,7 +302,7 @@ void mmBillsDepositsPanel::initVirtualListControl()
         th.transType_      = q1.GetString(wxT("TRANSCODE"));
         th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
         th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
-		th.accountName_    = mmDBWrapper::getAccountName(db_, th.accountID_);
+		th.accountName_    = core_->getAccountName(th.accountID_);
         th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
         th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
 		th.notes_	       = q1.GetString(wxT("NOTES"));
@@ -421,8 +421,8 @@ void mmBillsDepositsPanel::initVirtualListControl()
 
         if (th.transType_ == TRANS_TYPE_TRANSFER_STR)
         {
-            wxString fromAccount = mmDBWrapper::getAccountName(db_,  th.accountID_);
-            wxString toAccount = mmDBWrapper::getAccountName(db_,  th.toAccountID_ );
+            wxString fromAccount = core_->getAccountName(th.accountID_);
+            wxString toAccount = core_->getAccountName(th.toAccountID_ );
 
             th.payeeStr_ = toAccount;
         }

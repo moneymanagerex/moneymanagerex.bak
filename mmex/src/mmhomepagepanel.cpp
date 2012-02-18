@@ -559,8 +559,8 @@ void mmHomePagePanel::displayBillsAndDeposits(mmHTMLBuilder& hb)
 
         if (th.transType_ == TRANS_TYPE_TRANSFER_STR)
         {
-            wxString fromAccount = mmDBWrapper::getAccountName(db_,  th.accountID_);
-            wxString toAccount = mmDBWrapper::getAccountName(db_,  th.toAccountID_ );
+            wxString fromAccount = core_->getAccountName(th.accountID_);
+            wxString toAccount = core_->getAccountName(th.toAccountID_ );
 
             th.payeeStr_ = toAccount;
         }

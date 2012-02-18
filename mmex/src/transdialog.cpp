@@ -749,7 +749,7 @@ void mmTransDialog::updateControlsForTransType()
         toID_    = -1;
         payeeUnknown_ = true;
 
-        wxString acctName = mmDBWrapper::getAccountName(db_.get(), accountID_);
+        wxString acctName = core_->getAccountName(accountID_);
         bPayee_->SetLabel(acctName);
         payeeID_ = accountID_;
         //from account button should be available for editing

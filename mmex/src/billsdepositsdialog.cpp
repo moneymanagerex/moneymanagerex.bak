@@ -200,7 +200,7 @@ void mmBDDialog::dataToControls()
         payeeID_ = q1.GetInt(wxT("PAYEEID"));
         toID_ = q1.GetInt(wxT("TOACCOUNTID"));
         accountID_ = q1.GetInt(wxT("ACCOUNTID"));
-        wxString accountName = mmDBWrapper::getAccountName(db_, accountID_);
+        wxString accountName = core_->getAccountName(accountID_);
         itemAccountName_->SetLabel(accountName);
 
 		split_->loadFromBDDB(core_, bdID_);
@@ -242,8 +242,8 @@ void mmBDDialog::dataToControls()
         
         if (transTypeString == TRANS_TYPE_TRANSFER_STR)
         {
-            wxString fromAccount = mmDBWrapper::getAccountName(db_, accountID_);
-            wxString toAccount = mmDBWrapper::getAccountName(db_, toID_);
+            wxString fromAccount = core_->getAccountName(accountID_);
+            wxString toAccount = core_->getAccountName(toID_);
 
             bPayee_->SetLabel(fromAccount);
             bTo_->SetLabel(toAccount);
