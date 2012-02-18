@@ -545,7 +545,7 @@ void mmCheckingPanel::saveSettings()
 {
     int cols = m_listCtrlAccount->GetColumnCount();
 
-    mmDBWrapper::begin(inidb_);
+    inidb_->Begin();
     {
         for (int i = 0; i < cols; ++i)
         {
@@ -561,7 +561,7 @@ void mmCheckingPanel::saveSettings()
         // asc\desc sorting flag
         mmDBWrapper::setINISettingValue(inidb_, wxT("CHECK_ASC"), wxString() << g_asc);
     }
-    mmDBWrapper::commit(inidb_);
+    inidb_->Commit();
 }
 //----------------------------------------------------------------------------
 
@@ -1531,7 +1531,7 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
     else if (evt == MENU_TREEPOPUP_MARKDUPLICATE_ALL)          status = wxT("D");
     else  wxASSERT(false);
 
-    mmDBWrapper::begin(m_cp->core_->db_.get());
+    m_cp->core_->db_.get()->Begin();
 
     for (size_t i = 0; i < m_cp->m_trans.size(); ++i)
     {
@@ -1548,7 +1548,7 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1); // refresh everything
     }
 
-    mmDBWrapper::commit(m_cp->core_->db_.get());
+    m_cp->core_->db_.get()->Commit();
 
     m_cp->setAccountSummary();
     SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);

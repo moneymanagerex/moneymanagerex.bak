@@ -437,7 +437,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
         double val = 0.0;
 
         std::vector<int> QIF_transID;
-		mmDBWrapper::begin(core->db_.get());
+		core->db_.get()->Begin();
 
 		wxProgressDialog dlg(_("QIF Import"), _("Transactions imported from QIF: "), 100, 
             NULL, wxPD_AUTO_HIDE |  wxPD_CAN_ABORT);
@@ -771,7 +771,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
         if (!canceledbyuser)
         {
             // we need to save them to the database. 
-            mmDBWrapper::commit(core->db_.get());
+            core->db_.get()->Commit();
             log << endl << _("Transactions saved to database in account: ") << acctName << endl;
 		}
 		else 
@@ -784,7 +784,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 core->bTransactionList_.removeTransaction(fromAccountID,transID);
             }
             // and discard the database changes.
-            mmDBWrapper::rollback(core->db_.get());
+            core->db_.get()->Rollback();
 			log  << endl << _("Imported transactions discarded by user!") << endl;
         }
 		        

@@ -732,7 +732,7 @@ void removeCruft(wxSQLite3Database* db)
 void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd)
 {
     /* Create INFOTABLE_V1 Tables */
-    mmDBWrapper::begin(db);
+    db->Begin();
 
     createInfoV1Table(db);
     if (pgd) pgd->Update(10);
@@ -783,7 +783,7 @@ void mmDBWrapper::initDB(wxSQLite3Database* db, wxProgressDialog* pgd)
 
     /* Remove Any cruft */
     removeCruft(db);
-    mmDBWrapper::commit(db);
+    db->Commit();
 }
 
 void mmDBWrapper::loadSettings(int accountID, wxSQLite3Database* db)
@@ -1195,30 +1195,6 @@ bool mmDBWrapper::deleteTransaction(wxSQLite3Database* db, int transID)
         wxLogError(wxT("Delete Transaction. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
         return false;
     }
-}
-
-bool mmDBWrapper::begin(wxSQLite3Database* db)
-{
-    wxSQLite3Statement st = db->PrepareStatement("BEGIN");
-    st.ExecuteUpdate();
-    st.Finalize();
-    return true;
-}
-
-bool mmDBWrapper::commit(wxSQLite3Database* db)
-{
-    wxSQLite3Statement st = db->PrepareStatement("COMMIT");
-    st.ExecuteUpdate();
-    st.Finalize();
-    return true;
-}
-
-bool mmDBWrapper::rollback(wxSQLite3Database* db)
-{
-    wxSQLite3Statement st = db->PrepareStatement("ROLLBACK");
-    st.ExecuteUpdate();
-    st.Finalize();
-    return true;
 }
 
 bool mmDBWrapper::updatePayee(wxSQLite3Database* db, const wxString& payeeName, 
@@ -2446,7 +2422,7 @@ void mmDBWrapper::removeSplitsForAccount(wxSQLite3Database* db, int accountID)
         st.Bind(1, accountID);
         st.Bind(2, accountID);
     
-        mmDBWrapper::begin(db);
+        db->Begin();
         st.ExecuteUpdate();
         st.Finalize();
 
@@ -2456,7 +2432,7 @@ void mmDBWrapper::removeSplitsForAccount(wxSQLite3Database* db, int accountID)
 
         st.ExecuteUpdate();
         st.Finalize();
-        mmDBWrapper::commit(db);
+        db->Commit();
         mmOptions::instance().databaseUpdated_ = true;
     } catch(wxSQLite3Exception e) 
     { 
