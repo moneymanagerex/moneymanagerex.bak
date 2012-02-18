@@ -86,10 +86,8 @@ bool getBudgetEntry(wxSQLite3Database* db, int budgetYearID, int categID, int su
 int getNumAccounts(wxSQLite3Database* db);
 int getNumBankAccounts(wxSQLite3Database* db);
 wxString getAccountName(wxSQLite3Database* db, int accountID);
-wxString getAccountType(wxSQLite3Database* db, int accountID);
 /// returns a sorted list of open bank and term account names.
 wxArrayString getAccountsName(wxSQLite3Database* db);
-/// similar to mmDBWrapper::getAccountsName(..) excluding the name for the accountId.
 wxArrayString getAccountsNameExceptOne(wxSQLite3Database* db, int accountID);
 int getAccountID(wxSQLite3Database* db, const wxString& accountName);
 double getTotalBalanceOnAccount(wxSQLite3Database* db, int accountID, bool ignoreFuture=false);
