@@ -65,7 +65,7 @@ void mmReportBudget::setBudgetDailyEstimateAmount(mmBudgetEntryHolder& budEntry,
     budEntry.estimated_ = budEntry.amt_ /numDays;
 }
 
-void mmReportBudget::setBudgetEstimate(mmBudgetEntryHolder& budEntry, bool monthBudget, wxDateTime beginDate, wxDateTime endDate)
+void mmReportBudget::setBudgetEstimate(mmBudgetEntryHolder& budEntry, bool monthBudget, const wxDateTime& beginDate, const wxDateTime& endDate)
 {
     if (monthBudget) {
         setBudgetDailyEstimateAmount(budEntry, beginDate.GetMonth());
@@ -91,7 +91,7 @@ void mmReportBudget::initBudgetEntryFields(mmBudgetEntryHolder& budEntry, int id
     budEntry.actualStr_ = wxT("0.0");
 }
 
-void mmReportBudget::DisplayDateHeading(mmHTMLBuilder& hb, wxDateTime startYear, wxDateTime endYear, bool withDateRange)
+void mmReportBudget::DisplayDateHeading(mmHTMLBuilder& hb, const wxDateTime& startYear, const wxDateTime& endYear, bool withDateRange)
 {
     wxString todaysDate = wxString() 
         << _("Today's Date: ") << mmGetNiceDateString(wxDateTime::Now())

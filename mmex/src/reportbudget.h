@@ -41,10 +41,10 @@ public:
     void setBudgetDailyEstimateAmount(mmBudgetEntryHolder& budEntry, int month = 5 /*wxDateTime::Jun*/);
 
     /// Set budget estimate for the appropriate prriod
-    void setBudgetEstimate(mmBudgetEntryHolder& budEntry, bool monthBudget, wxDateTime beginDate, wxDateTime endDate);
+    void setBudgetEstimate(mmBudgetEntryHolder& budEntry, bool monthBudget, const wxDateTime& beginDate, const wxDateTime& endDate);
     
     /// Used in reports to display today's date
-    void DisplayDateHeading(mmHTMLBuilder& hb, wxDateTime startYear, wxDateTime endYear, bool withDateRange = true);
+    void DisplayDateHeading(mmHTMLBuilder& hb, const wxDateTime& startYear, const wxDateTime& endYear, bool withDateRange = true);
 
     /// Returns correct values for day and month, adjusted to financial year if required.
 	void AdjustYearValues(int& day, int& month, wxDateTime& year);
