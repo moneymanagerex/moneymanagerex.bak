@@ -6,7 +6,7 @@
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.3  (Win32)">
 	<META NAME="CREATED" CONTENT="0;0">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
-	<META NAME="CHANGED" CONTENT="20120212;17581310">
+	<META NAME="CHANGED" CONTENT="20120219;14555515">
 	<META NAME="CHANGEDBY" CONTENT="Stefano Giorgio">
 	<STYLE TYPE="text/css">
 	<!--
@@ -38,7 +38,7 @@ Manager Ex User Manual<BR><FONT SIZE=3>MMEX 0.9.9.0</FONT></FONT></H2>
 			</UL>
 		</TD>
 		<TD WIDTH=19%>
-			<P><A HREF="">English Version</A></P>
+			<P><A HREF="../help">English Version</A></P>
 		</TD>
 	</TR>
 </TABLE>
@@ -52,7 +52,8 @@ Manager Ex User Manual<BR><FONT SIZE=3>MMEX 0.9.9.0</FONT></FONT></H2>
 			<UL>
 				<LI><P><FONT FACE="Verdana"><B>Database Management</B></FONT><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal"><BR>*
 				<A HREF="#create_database">Creating a New Database</A><BR>*
-				<A HREF="#encrypting_database">Encrypting a Database</A></SPAN></FONT></P>
+				<A HREF="#encrypting_database">Encrypting a Database</A><BR>*
+				<A HREF="#switching_databases">Switching Databases</A></SPAN></FONT></P>
 			</UL>
 		</TD>
 		<TD WIDTH=50%>
@@ -147,15 +148,19 @@ Manager Ex User Manual<BR><FONT SIZE=3>MMEX 0.9.9.0</FONT></FONT></H2>
 </P>
 <HR>
 <H3 CLASS="western"><A NAME="introduction"></A><FONT FACE="Verdana"><BR>Introduction</FONT></H3>
-<P><FONT FACE="Verdana"><B>M</B>oney <B>M</B>anager <B>Ex</B> (<B>MMEX</B>)
-is a System that models the real financial world, to help us (the
-user) maintain our personal finances. The Money Manager EX Software,
-is Open Source, and free to use.</FONT></P>
-<P><FONT FACE="Verdana">The primary goal of MMEX is to simplify the
-process of tracking financial information, in an easy to use program
-that can be used as regular as necessary, to help us keep track of
-where our money comes from and more importantly, where our money
-goes, in order to make better financial decisions for our future.</FONT></P>
+<P><B>Money Manager Ex (MMEX) </B>is a personal money management
+system, for any one starting out in keeping track of their money, and
+their spending habits. Based on simple principles, thus allowing
+anyone with little, to no knowledge of finance and general book
+keeping, to successfully manage their money. <SPAN STYLE="font-weight: normal">MMEX
+does this by attempting to models the real financial world, to help
+us (the user) maintain our personal finances.</SPAN> The Money
+Manager EX Software, is Open Source, and free to use.</P>
+<P>The primary goal of MMEX is to simplify the process of tracking
+financial information, in an easy to use program that can be used as
+regular as necessary, to help us keep track of where our money comes
+from and more importantly, where our money goes, in order to make
+better financial decisions for our future.</P>
 <P><FONT FACE="Verdana">Think of Money Manager Ex as a computer
 checkbook which enables you to balance your accounts, organize,
 manage and generate reports for your finances. </FONT>
@@ -262,8 +267,10 @@ forget your password</B>.</FONT></P>
 <P><FONT FACE="Verdana">As with any computer system, the data we
 produce is important to us, and therefore need to safeguard against
 system malfunction. MMEX has a backup system where it can produce a
-dated copy when the database is opened, and can update the daily copy
-if the database is opened more than once every day, if necessary.</FONT></P>
+dated copy when the database is opened, and/or produce a dated copy
+of the database when changes have been detected. Up to 4 backups are
+maintained for each database when the system is initialized and/or
+when system changes have been detected, and the system shuts down.</FONT></P>
 <UL>
 	<LI><P><FONT FACE="Verdana">Always backup your .mmb or .emb database
 	file regularly.</FONT></P>
@@ -272,6 +279,8 @@ if the database is opened more than once every day, if necessary.</FONT></P>
 	<LI><P><FONT FACE="Verdana">When upgrading to a new version of MMEX,
 	make sure you backup your .mmb or .emb database file before doing
 	so.</FONT></P>
+	<LI><P><FONT FACE="Verdana">Use the Menu Tools--&gt;Options... to
+	set up the level of backup required.</FONT></P>
 </UL>
 <H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Back to Top</FONT></A></H5>
 <HR>
@@ -338,6 +347,26 @@ Database As</B></FONT></P>
 	<LI><P><FONT FACE="Verdana">For encrypted database files: <B>Remember
 	your password</B>.</FONT></P>
 </OL>
+<H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Back to Top</FONT></A></H5>
+<HR>
+<H3 CLASS="western"><A NAME="switching_databases"></A><BR><FONT FACE="Verdana, sans-serif">Switching
+Databases</FONT></H3>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="font-weight: normal"><FONT FACE="Verdana">For users having
+multiple databases, the user can easily switch between the databases
+by using the Menu item: <B>File-&gt;Recent Files...</B></FONT></P>
+<P STYLE="font-weight: normal"><FONT FACE="Verdana">This will save
+the last five recently used files. The list will show 6 entries as
+the first entry on the list is the file currently being used.</FONT></P>
+<P><FONT FACE="Verdana"><B>Clearing the list.</B></FONT></P>
+<P><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">When the
+list is cleared, all the items in the list are cleared. When MMEX
+shuts down, the currently opened database will be saved as the last
+opened file. This will appear in the recent file list as the first
+entry when MMEX is restarted.</SPAN></FONT></P>
+<P><BR><BR>
+</P>
 <H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Back to Top</FONT></A></H5>
 <HR>
 <H3 CLASS="western"><A NAME="create_account"></A><FONT FACE="Verdana"><BR>Creating
@@ -414,8 +443,10 @@ Tree</A><BR><BR></FONT><FONT FACE="Verdana"><B>Currency:</B></FONT>
 initially set to the database Base Currency setting which was
 initially set when creating the database. Y</SPAN></FONT><FONT FACE="Verdana">ou
 can set the currency that is associated with this account and can be
-different to the base currency. The exchange rate for the currency
-can be changed using the menu: </FONT><FONT FACE="Verdana"><B>Tools
+different to the base currency. </FONT>
+</P>
+<P><FONT FACE="Verdana">The exchange rate for the currency can be
+changed using the menu: </FONT><FONT FACE="Verdana"><B>Tools
 -&gt;Organize Currency</B></FONT></P>
 <P STYLE="font-weight: normal"><FONT FACE="Verdana">Example: You live
 in the USA using US Dollars, and have an Italian bank account using
@@ -604,32 +635,65 @@ dialog where the required fields can be changed.</FONT></P>
 	<LI><P><FONT FACE="Verdana">Use the &quot;OK&quot; button to save
 	the account information.</FONT></P>
 </UL>
+<P><BR><BR>
+</P>
 <H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Back to Top</FONT></A></H5>
 <HR>
 <H3 CLASS="western"><A NAME="creating_new_transaction"></A><FONT FACE="Verdana"><BR>Creating
 New Transactions</FONT></H3>
-<P><FONT FACE="Verdana">Once you have created a new account, select
-the required account from the navigation tree. This account is then
-displayed in the main window where a new transaction can be created
-by: one can start entering transactions.</FONT></P>
+<P><FONT FACE="Verdana">Once you have created a new account, and
+selected the required account from the navigation tree, or the home
+page, the displayed account can have new transactions added as
+follows:</FONT></P>
 <UL>
 	<LI><P><FONT FACE="Verdana">Using the New button at the bottom of
-	the screen,</FONT></P>
-	<LI><P><FONT FACE="Verdana">From the Navigation Tree, Select the
-	required account.</FONT></P>
-	<LI><P><FONT FACE="Verdana">account you want to enter transactions
-	into. This opens the register of transactions associated with this
-	account. To create a new transaction, click the &quot;New&quot;
-	button to open up the New/Edit Transaction dialog. Enter the details
-	associated with this transaction. Start by selecting the type of
-	transaction from &quot;Withdrawal&quot;, &quot;Deposit&quot; or
-	&quot;Transfer&quot;. Then select the Payee, Category, the
-	transaction date, number, any notes and then the transaction amount.
-	Press &quot;OK&quot; button to save the transaction.<BR><BR>Here are
-	some notes on the fields associated with the transaction dialog.</FONT></P>
+	the Account View screen,</FONT></P>
+	<LI><P><FONT FACE="Verdana">By selecting an existing transaction and
+	using the mouse Right-Click, and select the appropriate action on
+	the pop-up menu screen.</FONT></P>
 </UL>
-<P><A NAME="trans_types"></A><FONT FACE="Verdana"><BR><I><B>Transaction
-Types:</B></I> </FONT>
+<P><FONT FACE="Verdana"><B>New/Edit Transaction Dialog</B></FONT></P>
+<P><FONT FACE="Verdana">This dialog box will appear for new
+transactions. Use this dialog to enter the following details:</FONT></P>
+<UL>
+	<LI><P><B>Date</B> - This is generally the date of the transaction.
+	Defaults to current day and can be changed.</P>
+	<LI><P><B>Status</B> - The default is None, but can be changed to
+	Reconciled by the options settings.</P>
+	<LI><P><B>Type</B> - Refer to Transaction Types below.</P>
+	<LI><P><B>Amount</B> &ndash; Enter the amount fro the transaction.
+	The 2<SUP>nd</SUP> amount field is associated with the Advanced
+	Check-box and will be activated only for Transfer transactions.</P>
+	<LI><P><B>Advanced</B> &ndash; For a transfer transaction, when the
+	amount in the &ldquo;From&rdquo; Account is different to the &rdquo;To&rdquo;
+	Account, the difference is recorded in the separate fields. This can
+	for currency rate changes.</P>
+</UL>
+<P><FONT FACE="Verdana"><I><B>Transaction Status:</B></I></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in; font-weight: normal"><FONT FACE="Verdana"><I><B>Unreconciled</B></I><I>:
+	When you enter a transaction, it initially is in the state of
+	&quot;Unreconciled&quot;. Which means the transaction has not been
+	reconciled with your bank/credit card company's balance.</I></FONT></P>
+	<LI><P STYLE="margin-bottom: 0in; font-weight: normal"><FONT FACE="Verdana"><I><B>Reconciled:</B></I>
+	<I>Once the transaction is checked and verified with a credit card
+	company's balance information, it can be marked as reconciled.</I></FONT></P>
+	<LI><P STYLE="margin-bottom: 0in; font-weight: normal"><FONT FACE="Verdana"><I><B>Void:</B></I>
+	<I>If you entered a transaction that later became invalid or you
+	canceled the transaction, instead of deleting the transaction you
+	can also mark it as void so you have a record of the transaction.</I></FONT></P>
+	<LI><P STYLE="margin-bottom: 0in; font-weight: normal"><FONT FACE="Verdana"><I><B>Flag
+	For Followup:</B></I> <I>This status marks transactions as needing
+	more action. For example, you receive a balance statement from the
+	financial institution and you notice that the transaction amount is
+	different between what you recorded and what is in the statement.
+	You can mark it as flag for follow up so that you can followup with
+	the financial institution.</I></FONT></P>
+	<LI><P STYLE="margin-bottom: 0in; font-weight: normal"><FONT FACE="Verdana"><I><B>Duplicate:</B></I>
+	<I>The status will be automatically be changed to duplicate if it is
+	recognized as such.</I></FONT></P>
+</UL>
+<P><FONT FACE="Verdana"><I><B>Transaction Types:</B></I> </FONT>
 </P>
 <UL>
 	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="Verdana"><I><B>Withdrawal:
@@ -637,17 +701,10 @@ Types:</B></I> </FONT>
 	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="Verdana"><I><B>Deposit:</B></I>
 	is one where money is received and is an income. </FONT>
 	</P>
-	<LI><P><A NAME="transfer"></A><FONT FACE="Verdana"><I><B>Transfer:</B></I>
-	is one where a withdrawal is made from one account and is deposited
-	into another account.<BR>This type of transaction is not included in
-	Income/Expense calculations.<BR><BR><B>Transfer</B> transactions
-	activates the <B>Advanced</B> button. Used for advanced situations
-	when we require the amount withdrawn from the &ldquo;From&rdquo;
-	account, to be different to the amount as a deposit in the &ldquo;To&rdquo;
-	account, or vice-versa.<BR>(That is why it is advanced.) When the
-	Advanced (To account) is different to the amount (From Account) a
-	note &ldquo;is active!&rdquo; is displayed next to the &ldquo;Advanced&rdquo;
-	button.</FONT></P>
+	<LI><P><A NAME="transfer"></A><FONT FACE="Verdana"><I><B>Transfer:</B></I></FONT>
+	<FONT FACE="Verdana">is one where a withdrawal is made from one
+	account and is deposited into another account.<BR>This type of
+	transaction is not included in Income/Expense calculations.</FONT></P>
 </UL>
 <P><A HREF="#payees"><FONT FACE="Verdana"><I><B>Payee:</B></I></FONT></A>
 <FONT FACE="Verdana">This is a person or an organization to whom the
@@ -656,8 +713,7 @@ money goes or comes from. </FONT>
 <UL>
 	<LI><P><FONT FACE="Verdana">Clicking the payee button opens up the
 	payee dialog. You can select the payee from that dialog or create a
-	new payee. </FONT>
-	</P>
+	new payee for immediate use.</FONT></P>
 </UL>
 <P><A HREF="#categories"><FONT FACE="Verdana"><I><B>Category:</B></I></FONT></A>
 <FONT FACE="Verdana">Category selects the kind of expense/income for
@@ -666,39 +722,33 @@ the transaction. </FONT>
 <UL>
 	<LI><P><FONT FACE="Verdana">Clicking the category button opens up
 	the category dialog. You can select the category from the dialog or
-	create a new category. </FONT>
-	</P>
+	create a new category for immediate use.</FONT></P>
 </UL>
-<P><FONT FACE="Verdana"><I><B>Transaction Number:</B></I> is a field
-to enter any kind of number associated with the transaction like
-check number. <BR><I><B>Transaction Status:</B></I> Select from
-&quot;Unreconciled&quot;, &quot;Reconciled&quot;, &quot;Void&quot;,
-&quot;Flag for Followup&quot; status options. This marks the
-transaction into various states. </FONT>
-</P>
+<P><FONT FACE="Verdana"><B>Split:</B></FONT> <FONT FACE="Verdana">This
+check-box will activate the Split Transactions Dialog</FONT></P>
 <UL>
-	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="Verdana"><I><B>Unreconciled:</B></I>
-	When you enter a transaction, it initially is in the state of
-	&quot;Unreconciled&quot;. Which means the transaction has not been
-	reconciled with your bank/credit card company's balance. </FONT>
-	</P>
-	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="Verdana"><I><B>Reconciled:</B></I>
-	Once the transaction is checked and verified with a credit card
-	company's balance information, it can be marked as reconciled. </FONT>
-	</P>
-	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="Verdana"><I><B>Void:</B></I>
-	If you entered a transaction that later became invalid or you
-	canceled the transaction, instead of deleting the transaction you
-	can also mark it as void so you have a record of the transaction. </FONT>
-	</P>
-	<LI><P><FONT FACE="Verdana"><I><B>Flag For Followup:</B></I> This
-	status marks transactions as needing more action. For example, you
-	receive a balance statement from the financial institution and you
-	notice that the transaction amount is different between what you
-	recorded and what is in the statement. You can mark it as flag for
-	follow up so that you can followup with the financial institution. </FONT>
-	</P>
+	<LI><P>Split Transactions allows multiple categories to be recorded
+	for a single transaction.</P>
+	<LI><P>Can allow a transaction to have Income and Expense categories
+	recorded as deposit and withdrawals, provided the overall
+	transaction type is observed and remains positive, for Deposit and
+	Withdrawal transactions.</P>
 </UL>
+<P><FONT FACE="Verdana"><B>Note: <FONT COLOR="#ff0000">Do not use the
+same category for Deposit and Withdrawal transactions</FONT>, as this
+will upset overall balance figures.</B></FONT></P>
+<UL>
+	<LI><P><FONT FACE="Verdana"><I><B>Transaction Number:</B></I> is a
+	field to enter any kind of number associated with the transaction
+	like check number. </FONT>
+	</P>
+	<LI><P><FONT FACE="Verdana"><B>Notes</B></FONT><FONT FACE="Verdana">:
+	This field can be used to record any special notes with regards to
+	the transaction. The button under Notes can be used to select
+	commonly used field notes.</FONT></P>
+</UL>
+<P><BR><BR>
+</P>
 <P><BR><BR>
 </P>
 <H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Back to Top</FONT></A></H5>
@@ -717,48 +767,57 @@ in a number of ways:</FONT></P>
 <P><FONT FACE="Verdana">Any of these actions will open the
 transaction dialog box containing the details of the selected
 transaction. Make the changes and click OK to save the changes.</FONT></P>
-<P><FONT FACE="Verdana"><B>The &ldquo;Advanced&rdquo; button</B></FONT></P>
-<UL>
-	<LI><P><FONT FACE="Verdana">Activates when a </FONT><FONT FACE="Verdana"><B>transfer</B></FONT>
-	<FONT FACE="Verdana">transaction is used.</FONT></P>
-	<LI><P><FONT FACE="Verdana">A note &ldquo;</FONT><FONT FACE="Verdana"><B>is
-	active!</B></FONT>&rdquo; <FONT FACE="Verdana">is displayed </FONT><FONT FACE="Verdana"><B>to
-	indicate Advanced activity.</B></FONT></P>
-	<LI><P STYLE="font-weight: normal"><FONT FACE="Verdana">This is
-	displayed next to the Advanced button when the Advanced &ldquo;To
-	account&rdquo; is different to the amount field, (From Account)</FONT></P>
-</UL>
+<P><FONT FACE="Verdana"><B>Transaction Filtering</B></FONT></P>
+<P><FONT FACE="Verdana">Transactions can be filtered by either fixed
+filters or, by using the Transaction Filter in the Account View. This
+will allow the user to limit the visible transactions to those
+defined by the appropriate filter. These filtered transactions can
+then be easily selected and individually modified.</FONT></P>
+<P><FONT FACE="Verdana">These visible transactions can also be
+deleted in bulk if so desired.</FONT></P>
+<P><FONT FACE="Verdana">Note: <FONT COLOR="#ff0000">Caution is
+advised when deleting transactions.</FONT></FONT></P>
+<P><BR><BR>
+</P>
 <P><BR><BR>
 </P>
 <H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Back to Top</FONT></A></H5>
 <HR>
 <H3 CLASS="western"><A NAME="rectrans"></A><FONT FACE="Verdana"><BR>Reconciling
 and Balancing Transactions</FONT></H3>
-<P><FONT FACE="Verdana">Transactions that are entered into MMEX are
-considered unreconciled. This means that they have not been verified
-with the statement from the financial institution. Once the statement
-comes or by viewing an online bank statement a transaction can be
-considered reconciled if the details of the transaction match that
-from the financial institution. Then the transaction can be marked as
-reconciled. By marking these transactions you can keep track whether
-the transactions you are entering match the actual transactions. In
-MMEX, reconciled and unreconciled transactions are shown by different
-icons. </FONT>
-</P>
-<P><FONT FACE="Verdana"><I>Tip:</I>To mark a transaction as
-reconciled, just select the transaction and hit the 'r' or 'R' key.
-To mark a transaction as unreconciled, just select the transaction
-and hit the 'u' or 'U' key. </FONT>
-</P>
+<P><FONT FACE="Verdana"><B>Unreconciled Transactions:</B></FONT></P>
+<UL>
+	<LI><P><FONT FACE="Verdana">This means that they have not been
+	verified with the statement from the financial institution.</FONT></P>
+</UL>
+<P><FONT FACE="Verdana"><B>Reconciled Transactions:</B></FONT></P>
+<UL>
+	<LI><P><FONT FACE="Verdana">A transaction can be considered
+	reconciled when the details of the transaction match that from the
+	financial institution.</FONT></P>
+</UL>
+<P><FONT FACE="Verdana">In MMEX, reconciled and unreconciled
+transactions are shown by different icons. When bank details are not
+checked against a bank statement, the user can select to set the
+default as Reconciled when creating transactions in the Options
+settings.</FONT></P>
+<P STYLE="font-style: normal"><FONT FACE="Verdana"><B>Tip:</B></FONT></P>
+<UL>
+	<LI><P><FONT FACE="Verdana">To mark a transaction as reconciled,
+	just select the transaction and hit the 'r' or 'R' key. To mark a
+	transaction as unreconciled, just select the transaction and hit the
+	'u' or 'U' key. </FONT>
+	</P>
+</UL>
 <H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Back to Top</FONT></A></H5>
 <HR>
 <H3 CLASS="western"><A NAME="followup"></A><FONT FACE="Verdana"><BR>Flagging
 transactions for followup</FONT></H3>
 <P><FONT FACE="Verdana">Some transactions might have some issues that
 you want to follow up on. Mark these as with status of flag for
-followup. This is indicated in MMEX with a different icon. </FONT>
-</P>
-<P><FONT FACE="Verdana"><I><U><B>Tip:</B></U></I></FONT></P>
+followup. This is indicated in MMEX with a different icon.</FONT></P>
+<P STYLE="font-style: normal; font-weight: normal; text-decoration: none">
+<FONT FACE="Verdana"><B>Tip</B>:</FONT></P>
 <UL>
 	<LI><P><FONT FACE="Verdana">To mark a transaction as requiring
 	followup, just select the transaction and hit the 'f or 'F' key. </FONT>
@@ -1100,41 +1159,58 @@ be reloaded into a single account, they will not function correctly.</FONT></P>
 <HR>
 <H3 CLASS="western"><A NAME="repeating_transactions"></A><FONT FACE="Verdana"><BR>Repeating
 Transactions</FONT></H3>
-<P><FONT FACE="Verdana">When we have transactions that occur at
-regular intervals, such as paying our bills, MMEX allows us to set
-these future transactions as Repeating Transactions. These
-transactions:</FONT></P>
+<P><FONT FACE="Verdana">These are special transactions that we set up
+in order to have the transaction entered into the data base at some
+future date. These transactions generally occur at regular intervals,
+such as the payment of a bill.</FONT></P>
+<P><FONT FACE="Verdana">These transactions:</FONT></P>
 <UL>
-	<LI><P><FONT FACE="Verdana">Will be displayed as reminders on the
-	Home Page 14 Days before a transaction is due.</FONT></P>
+	<LI><P><FONT FACE="Verdana">Are displayed as reminders on the Home
+	Page within 15 Days of the due date.</FONT></P>
 	<LI><P><FONT FACE="Verdana">Can be set up to activate automatically
 	on the due date.</FONT></P>
 	<LI><P><FONT FACE="Verdana">Can be set up to activate &ndash;
 	allowing the user to adjust any values on the due date.</FONT></P>
 </UL>
-<P><FONT FACE="Verdana">Access is by selecting </FONT><FONT FACE="Verdana"><B>Repeating
-Transactions</B></FONT> <FONT FACE="Verdana">from the navigation
-tree.</FONT></P>
+<P><FONT FACE="Verdana"><B>Repeating Transactions</B></FONT> <FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">can
+be accessed</SPAN></FONT> <FONT FACE="Verdana">from the navigation
+tree or from the menu item Tools-&gt;Repeating Transactions. This
+will display the Repeating Transactions page.</FONT></P>
+<P><FONT FACE="Verdana">To create a new transaction, use the </FONT><FONT FACE="Verdana"><B>New
+</B></FONT><FONT FACE="Verdana">button:</FONT></P>
 <UL>
-	<LI><P><FONT FACE="Verdana">To create new transactions, use the </FONT><FONT FACE="Verdana"><B>New
-	</B></FONT><FONT FACE="Verdana">button.</FONT></P>
-	<LI><P><FONT FACE="Verdana">Specify the starting account.</FONT></P>
-	<LI><P><FONT FACE="Verdana">Similar to <A HREF="#create_account">creating
-	new accounts</A> except that we need to associate the transactions
-	with an account. This is because this transaction needs to know the
-	target account.</FONT></P>
-	<LI><P><FONT FACE="Verdana">set the </FONT><FONT FACE="Verdana"><B>Next
-	Occurrence</B></FONT> <FONT FACE="Verdana">date to some future date</FONT></P>
-	<LI><P><FONT FACE="Verdana">select the Repeats as &ldquo;daily&rdquo;,
+	<LI><P><FONT FACE="Verdana">Set up the Repeating Transactions
+	Details, defining which account the transaction will go to when the
+	transaction is entered.</FONT></P>
+	<LI><P><FONT FACE="Verdana">Set the date of the </FONT><FONT FACE="Verdana"><B>Next
+	Occurrence</B></FONT><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">,<BR>except
+	for Repeats: </SPAN></FONT><FONT FACE="Verdana"><B>In x Days</B></FONT><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">/Months.</SPAN></FONT></P>
+	<LI><P><FONT FACE="Verdana">Select the Repeats as &ldquo;daily&rdquo;,
 	&ldquo;weekly&rdquo; etc.</FONT></P>
 	<LI><P><FONT FACE="Verdana"><B>Times Repeated:<BR></B></FONT><FONT FACE="Verdana">-
-	enter a number for the number of times this will occur.<BR></FONT><FONT FACE="Verdana"><B>-
-	</B></FONT><FONT FACE="Verdana">No number means indefinitely.</FONT></P>
+	Enter the number of times this will occur.<BR></FONT><FONT FACE="Verdana"><B>-
+	</B></FONT><FONT FACE="Verdana">No number means: Repeat
+	indefinitely.</FONT></P>
+	<LI><P STYLE="font-weight: normal"><FONT FACE="Verdana">For Repeats:
+	</FONT><FONT FACE="Verdana"><B>In x Days</B></FONT><FONT FACE="Verdana">/Months<BR>-
+	Set the Start date of the activity.<BR>- Set the period in Days or
+	months depending on the selection.<BR>- Use the </FONT><FONT FACE="Verdana"><B>Next</B></FONT>
+	<FONT FACE="Verdana">button to advance the date to the occurrence
+	Date.<BR>- Changes to the period will reactivate the </FONT><FONT FACE="Verdana"><B>Next</B></FONT>
+	<FONT FACE="Verdana">button. Once the transaction has been entered,
+	the activity becomes inactive.</FONT></P>
+	<LI><P STYLE="font-weight: normal"><FONT FACE="Verdana">Repeats:
+	</FONT><FONT FACE="Verdana"><B>Every x Days</B></FONT><FONT FACE="Verdana">/Months<BR>Similar
+	to regular repeats with the exception that the period is stated in
+	Days or Months</FONT></P>
+	<LI><P><FONT FACE="Verdana">Set up the Transaction Details section,
+	similar to <A HREF="#creating_new_transaction">creating new
+	transactions</A>.</FONT></P>
 </UL>
 <P><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">These
 transaction will be displayed as:</SPAN></FONT> <FONT FACE="Verdana"><B>Upcoming
 Transactions</B></FONT> <FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">on
-the home page within 15 days of the due.</SPAN></FONT></P>
+the home page within 15 days of the due date.</SPAN></FONT></P>
 <P><FONT FACE="Verdana"><B>Note:</B></FONT></P>
 <OL>
 	<LI><P><FONT FACE="Verdana">When we enter the transaction, we can
@@ -1159,7 +1235,7 @@ total financial worth. </FONT>
 <H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Back to Top</FONT></A></H5>
 <HR>
 <H3 CLASS="western"><A NAME="transfilter"></A><FONT FACE="Verdana"><BR>Transaction
-Filter</FONT></H3>
+Report Filter</FONT></H3>
 <P><FONT FACE="Verdana">MMEX allows you to search for transactions
 that meet certain criteria. This can be done using the transaction
 filter option. The resulting list of transactions can be printed or
@@ -1177,38 +1253,53 @@ input, some do not. Once you view a report, you can print the report
 using the print options in the menu.</FONT></P>
 <P><A NAME="financialYearReport"></A><FONT FACE="Verdana"><BR><B>Financial
 Year Reports:</B> (Required by various countries)</FONT></P>
-<P><FONT FACE="Verdana">These are reports that generally do not start
-at the beginning of the calendar year, and appear as other branches
-of the main reports. These reports cover:</FONT></P>
+<P><FONT FACE="Verdana">These reports generally do not start at the
+beginning of the calendar year, and appear as branches of the main
+report titles. These reports cover:</FONT></P>
 <OL>
-	<LI><P><FONT FACE="Verdana">Previous Financial Year</FONT></P>
-	<LI><P><FONT FACE="Verdana">Current Financial Year periods.</FONT></P>
-	<LI><P><FONT FACE="Verdana">By default the start date of a financial
-	year is 1</FONT><SUP><FONT FACE="Verdana">st</FONT></SUP> <FONT FACE="Verdana">July
-	of the year.</FONT></P>
+	<LI><P><FONT FACE="Verdana">Previous Financial Year.</FONT></P>
+	<LI><P><FONT FACE="Verdana">Current Financial Year.</FONT></P>
 </OL>
+<P><FONT FACE="Verdana">By default the start date of a financial year
+is 1</FONT><SUP><FONT FACE="Verdana">st</FONT></SUP> <FONT FACE="Verdana">July
+of the year.</FONT></P>
 <P><FONT FACE="Verdana">The start date can be changed by the user to
 start on any day of any month, within a 12 month period by using the
 menu </FONT><FONT FACE="Verdana"><B>Tools -&gt;Options</B></FONT>
-<FONT FACE="Verdana">then selecting the </FONT><FONT FACE="Verdana"><B>Others</B></FONT>
+<FONT FACE="Verdana">then selecting the </FONT><FONT FACE="Verdana"><B>General</B></FONT>
 <FONT FACE="Verdana">panel.</FONT></P>
 <P><A NAME="transaction_report"></A><FONT FACE="Verdana"><B><BR>Transaction
-Report:</B> </FONT>
+Reports:</B> </FONT>
 </P>
 <OL>
 	<LI><P><FONT FACE="Verdana">This allows the user to generate
-	specific reports with specific selection criteria information.</FONT></P>
-	<LI><P><FONT FACE="Verdana">Also known as a <A HREF="#transfilter">Transaction
-	Filter</A>.</FONT></P>
+	specific reports based on selected user requirements.</FONT></P>
+	<LI><P><FONT FACE="Verdana">Also known as the <A HREF="#transfilter">Transaction
+	Report Filter</A>.</FONT></P>
 </OL>
-<P><A NAME="cashFlowReport"></A><FONT FACE="Verdana"><BR><B>Cash flow
-Reports</B></FONT></P>
-<P><FONT FACE="Verdana">To work properly the <A HREF="#repeating_transactions">Repeating
-Transactions</A> need to be set up for the various accounts. The
-report will then use the Repeating Transactions for the various
-accounts, to reflect forward 10 years on a monthly basis and predict
-the amount of money that may be available each future month based on
-future commitments.</FONT></P>
+<P><A NAME="cashFlowReport"></A><FONT FACE="Verdana">A Transaction
+Report is generally used to locate specific transactions made within
+Bank or Term type accounts. This report can also be used to display
+specific details for a particular account.</FONT></P>
+<P><FONT FACE="Verdana"><B>Transfer transactions may upset the
+balance totals.</B> Since a transfer transaction is a withdrawal from
+one account and a deposit to another account, a transaction report
+done on multiple accounts looses the reference point for determining
+weather the transaction is a deposit or withdrawal.</FONT></P>
+<P><FONT FACE="Verdana">When a transaction report is used for a
+specific account, it will generate a report that will match the
+account details. The reference point for transfers in known for this
+report, which will reflect in the report having correct balances
+displayed.</FONT></P>
+<P><FONT FACE="Verdana"><BR><BR><BR><B>Cash flow Reports</B></FONT></P>
+<P><FONT FACE="Verdana">This report projects the amount of funds
+available, based on future commitments.</FONT></P>
+<P><FONT FACE="Verdana">Future commitments are determined from the
+<A HREF="#repeating_transactions">Repeating Transactions</A> that are
+set up for the various accounts. The report will then use the
+Repeating Transactions for the various accounts, and reflect forward
+10 years on a monthly basis. This becomes a prediction of the amount
+of money that may be available each month based on current payments.</FONT></P>
 <P><BR><BR>
 </P>
 <H5 CLASS="western"><A HREF="#top"><FONT FACE="Verdana">Back to Top</FONT></A></H5>
