@@ -619,7 +619,6 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql3);
 
-    wxString catAmountStr;
     std::vector<CategInfo> categList;
 
     hb.startTable(wxT("95%"));
@@ -631,25 +630,22 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
 
     hb.startTable(wxT("95%"));
     hb.startTableRow();
-    hb.addTableHeaderCell(_("Number"), false);
     hb.addTableHeaderCell(_("Category"), false);
+    hb.addTableHeaderCell(_("Quantity"), true);
     hb.addTableHeaderCell(_("Summary"), true);
     hb.endTableRow();
 
     while(q1.NextRow())
     {
-        double catAmount = q1.GetDouble(wxT("AMOUNT"));
-        wxString subcategString = q1.GetString(wxT("SUBCATEGORY"));
-        wxString accountString = q1.GetString(wxT("NUMBER"));
-
+        double category_total = q1.GetDouble(wxT("AMOUNT"));
+        wxString category_total_str = wxEmptyString;
         mmDBWrapper::loadBaseCurrencySettings(core_->db_.get());
-
-        mmex::formatDoubleToCurrency(catAmount, catAmountStr);
+        mmex::formatDoubleToCurrency(category_total, category_total_str);
 
 		hb.startTableRow();
-		hb.addTableCell(accountString, false, true);
-		hb.addTableCell(subcategString, false, true);
-		hb.addTableCell(catAmountStr, true);
+		hb.addTableCell(q1.GetString(wxT("SUBCATEGORY")), false, true);
+		hb.addTableCell(q1.GetString(wxT("NUMBER")), true, true);
+		hb.addTableCell(category_total_str, true);
 		hb.endTableRow();
     }
     q1.Finalize();
