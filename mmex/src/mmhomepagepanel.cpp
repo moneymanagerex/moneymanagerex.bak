@@ -86,8 +86,8 @@ void mmHomePagePanel::displaySummaryHeader(mmHTMLBuilder& hb, wxString summaryTi
 {
     hb.startTableRow();
 	hb.addTableHeaderCell(summaryTitle, false);
-	hb.addTableHeaderCell(_("Balance"), true);
 	hb.addTableHeaderCell(_("Reconciled"), true);
+	hb.addTableHeaderCell(_("Balance"), true);
     hb.endTableRow();
 }
 void mmHomePagePanel::displayStocksHeader(mmHTMLBuilder& hb, wxString summaryTitle)
@@ -159,8 +159,8 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
             {
                 hb.startTableRow();
                 hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pCA->id_), pCA->name_, false, true);
-                hb.addTableCell(balanceStr, true);
                 hb.addTableCell(reconciledBalanceStr, true);
+                hb.addTableCell(balanceStr, true);
                 hb.endTableRow();
             }
 
@@ -217,8 +217,8 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
                 {
                     hb.startTableRow();
                     hb.addTableCellLink(wxT("ACCT:") + wxString::Format(wxT("%d"), pTA->id_), pTA->name_, false, true);
-                    hb.addTableCell(balanceStr, true);
                     hb.addTableCell(reconciledBalStr, true);
+                    hb.addTableCell(balanceStr, true);
                     hb.endTableRow();
                 }
 
