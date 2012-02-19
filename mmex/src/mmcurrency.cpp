@@ -18,8 +18,7 @@
 #include "util.h"
 #include "dbwrapper.h"
 
-mmCurrency::mmCurrency(boost::shared_ptr<wxSQLite3Database> db, wxSQLite3ResultSet& q1)
-: db_ (db)
+mmCurrency::mmCurrency(wxSQLite3ResultSet& q1)
 {
    currencyID_       = q1.GetInt(wxT("CURRENCYID"));
    currencyName_     = q1.GetString(wxT("CURRENCYNAME"));
