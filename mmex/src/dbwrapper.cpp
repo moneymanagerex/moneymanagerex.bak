@@ -1532,34 +1532,6 @@ void mmDBWrapper::setInfoSettingValue(wxSQLite3Database* db, const wxString& set
     }
 }
 
-double mmDBWrapper::getSplitTransactionValueForCategory(wxSQLite3Database* db, int transID, 
-                                                      int categID, int subcategID)
-{
-    static const char sql[] = 
-    "select SPLITTRANSAMOUNT "
-    "from SPLITTRANSACTIONS_V1 "
-    "where CATEGID = ? and "
-          "SUBCATEGID = ? and "
-          "TRANSID = ?";
-
-    double amt = 0.0;
-
-    wxSQLite3Statement st = db->PrepareStatement(sql);
-    st.Bind(1, categID);
-    st.Bind(2, subcategID);
-    st.Bind(3, transID);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow())
-    {
-        amt = q1.GetDouble(wxT("SPLITTRANSAMOUNT"));
-    }
-
-    st.Finalize();
-
-    return amt;
-}
-
 
 wxArrayString mmDBWrapper::filterPayees(wxSQLite3Database* db, const wxString& patt)
 {

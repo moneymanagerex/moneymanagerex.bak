@@ -141,8 +141,6 @@ void deleteAsset(wxSQLite3Database* db, int assetID);
 double getAssetBalance(wxSQLite3Database* db);
 double getAssetValue(wxSQLite3Database* db, int assetID);
 
-/* Split Transaction API */
-double getSplitTransactionValueForCategory(wxSQLite3Database* db, int transID, int categID, int subcategID);
 
 //----------------------------------------------------------------------------
     
