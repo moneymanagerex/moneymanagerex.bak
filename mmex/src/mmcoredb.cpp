@@ -32,7 +32,7 @@ void loadCurrencies(boost::shared_ptr<wxSQLite3Database> db_, mmCurrencyList &cu
 
     while (q1.NextRow())
     {
-        boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency(db_, q1));
+        boost::shared_ptr<mmCurrency> pCurrency(new mmCurrency(q1));
         cur_list.currencies_.push_back(pCurrency);
     }
 
