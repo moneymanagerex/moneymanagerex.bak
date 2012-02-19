@@ -155,7 +155,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
         {
             transferAsDeposit = false;
         }
-		th.actual_ = mmDBWrapper::getAmountForCategory(db_, th.categID_, th.subcategID_, false,
+		th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_, false,
             yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
         );
 		mmex::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
@@ -219,7 +219,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
             {
                 transferAsDeposit = false;
             }
-            thsub.actual_ = mmDBWrapper::getAmountForCategory(db_, thsub.categID_, thsub.subcategID_, false,
+            thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, false,
                 yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
             );
 			mmex::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
