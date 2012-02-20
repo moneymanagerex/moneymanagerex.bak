@@ -2,7 +2,6 @@
 #include "defs.h"
 #include "htmlbuilder.h"
 #include "util.h"
-#include "dbwrapper.h"
 #include "budgetingpanel.h"
 #include "mmcoredb.h"
 

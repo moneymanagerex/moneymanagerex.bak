@@ -23,7 +23,6 @@
 #include "htmlbuilder.h"
 #include "reportbase.h"
 #include "util.h"
-#include "dbwrapper.h"
 #include "mmcheckingpanel.h"
 #include "mmtransaction.h"
 #include "reportbudget.h"
