@@ -31,8 +31,8 @@ fileviewer::fileviewer( )
 fileviewer::fileviewer(const wxString& fileName, wxWindow* parent, 
                        wxWindowID id,const wxString& caption, 
                        const wxPoint& pos, const wxSize& size, long style )
+: fileName_(fileName)
 {
-    fileName_ = fileName;
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -51,18 +51,15 @@ bool fileviewer::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 
 void fileviewer::CreateControls()
 {    
-    fileviewer* itemDialog1 = this;
-
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(itemBoxSizer2);
+    this->SetSizer(itemBoxSizer2);
 
-    wxTextCtrl *itemTextCtrl3 = new wxTextCtrl( itemDialog1, 
+    wxTextCtrl *itemTextCtrl3 = new wxTextCtrl( this, 
         ID_TEXTCTRL_FILEVIEWER, wxT(""), 
         SYMBOL_FILEVIEWER_POSITION, SYMBOL_FILEVIEWER_SIZE, 
         wxTE_MULTILINE|wxTE_READONLY );
      
-    itemBoxSizer2->Add(itemTextCtrl3, 1, 
-        wxALIGN_CENTER_HORIZONTAL|wxALL|wxGROW, 10);
+    itemBoxSizer2->Add(itemTextCtrl3, 1, wxALIGN_CENTER_HORIZONTAL|wxALL|wxGROW, 10);
 
     /* Load the Text from the file */
     if ( !fileName_.empty() )
@@ -86,7 +83,7 @@ void fileviewer::CreateControls()
     //Scroll to the top of file
     itemTextCtrl3->SetInsertionPoint(0);
     
-    wxButton* itemButtonOK = new wxButton( itemDialog1, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButtonOK = new wxButton( this, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemButtonOK, 0, wxALIGN_RIGHT|wxALL, 4);
     itemButtonOK->SetFocus();
 }
