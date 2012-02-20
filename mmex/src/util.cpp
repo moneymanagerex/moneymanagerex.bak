@@ -890,23 +890,22 @@ wxString adjustedExportAmount(wxString amtSeparator, wxString strValue)
     return strValue;
 }
 
-int getTransformedTrxStatus(wxString in)
+int getTransformedTrxStatus(const wxString& in)
 {
     int out;
-    wxString statusStr = in;
-    if (statusStr == wxT("R"))
+    if (in == wxT("R"))
     {
         out = (DEF_STATUS_RECONCILED);
     }
-    else if (statusStr == wxT("V"))
+    else if (in == wxT("V"))
     {
         out = (DEF_STATUS_VOID);
     }
-    else if (statusStr == wxT("F"))
+    else if (in == wxT("F"))
     {
         out = (DEF_STATUS_FOLLOWUP);
     }
-    else if (statusStr == wxT("D"))
+    else if (in == wxT("D"))
     {
         out = (DEF_STATUS_DUPLICATE);
     }
