@@ -18,7 +18,6 @@
 
 #include "mmreportspanel.h"
 #include "util.h"
-#include "dbwrapper.h"
 #include "htmlbuilder.h"
 #include "reportbase.h"
 
