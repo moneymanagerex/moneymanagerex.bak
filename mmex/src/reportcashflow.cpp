@@ -4,7 +4,6 @@
 #include "htmlbuilder.h"
 #include "reportbase.h"
 #include "util.h"
-#include "dbwrapper.h"
 
 mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, const wxArrayString* accountArray) : 
     mmPrintableBase(core), 
