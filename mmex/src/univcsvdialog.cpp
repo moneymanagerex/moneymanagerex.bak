@@ -38,6 +38,7 @@ BEGIN_EVENT_TABLE(mmUnivCSVDialog, wxDialog)
     EVT_BUTTON(wxID_DOWN, mmUnivCSVDialog::OnMoveDown)
     EVT_BUTTON(wxID_STANDARD, mmUnivCSVDialog::OnStandard)
     EVT_BUTTON(wxID_SEARCH, mmUnivCSVDialog::OnSearch)
+    EVT_CHOICE(wxID_ACCOUNT, mmUnivCSVDialog::OnAccountChange)
     EVT_LISTBOX(ID_LISTBOX, mmUnivCSVDialog::OnListBox)
     EVT_RADIOBOX(wxID_RADIO_BOX, mmUnivCSVDialog::OnCheckOrRadioBox)
 END_EVENT_TABLE()
@@ -134,86 +135,86 @@ void mmUnivCSVDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
+    wxStaticText* itemStaticText3 = new wxStaticText(this, wxID_STATIC, 
+       _("Specify the order of fields in the CSV file"), wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer2->Add(itemStaticText3, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
+
+    wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
+
+    //CSV fields candicate
+    csvFieldCandicate_ = new wxListBox(this, ID_LISTBOX_CANDICATE, 
+        wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE|wxLB_NEEDED_SB);
+    itemBoxSizer3->Add(csvFieldCandicate_, 1, wxGROW|wxALL, 1);
+    for(std::map<int, wxString>::const_iterator it = CSVFieldName_.begin(); it != CSVFieldName_.end(); it ++)
+        csvFieldCandicate_->Append(it->second, new mmListBoxItem(it->first, it->second));
+
+     //Add Remove Area
+    wxPanel* itemPanel_AddRemove = new wxPanel(this, ID_PANEL10, 
+        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    itemBoxSizer3->Add(itemPanel_AddRemove, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
+
+    wxBoxSizer* itemBoxSizer_AddRemove = new wxBoxSizer(wxVERTICAL);
+    itemPanel_AddRemove->SetSizer(itemBoxSizer_AddRemove);
+
+    //Add button
+    m_button_add_= new wxButton(itemPanel_AddRemove, wxID_ADD, _("Add"), 
+        wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer_AddRemove->Add(m_button_add_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    //Remove button
+    m_button_remove_ = new wxButton(itemPanel_AddRemove, wxID_REMOVE, _("Remove"), 
+        wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer_AddRemove->Add(m_button_remove_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+   
+    //ListBox of attribute order
+    csvListBox_ = new wxListBox(this, ID_LISTBOX, 
+        wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE|wxLB_NEEDED_SB);
+    itemBoxSizer3->Add(csvListBox_, 1, wxGROW|wxALL, 1);
+
+   //Arranger Area
+    wxPanel* itemPanel_Arranger = new wxPanel(this, ID_PANEL10, 
+        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    itemBoxSizer3->Add(itemPanel_Arranger, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
+
+    wxBoxSizer* itemBoxSizer_Arranger = new wxBoxSizer(wxVERTICAL);
+    itemPanel_Arranger->SetSizer(itemBoxSizer_Arranger);
+
+    //Move Up button
+    wxButton* itemButton_MoveUp = new wxButton(itemPanel_Arranger, wxID_UP, _("&Up"), 
+        wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer_Arranger->Add(itemButton_MoveUp, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButton_MoveUp -> SetToolTip (_("Move Up"));
+
+    //Move down button
+    wxButton* itemButton_MoveDown = new wxButton(itemPanel_Arranger, wxID_DOWN, _("&Down"), 
+        wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer_Arranger->Add(itemButton_MoveDown, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButton_MoveDown -> SetToolTip (_("Move &Down"));
+
+    //Standard MMEX CSV
+    wxButton* itemButton_standard = new wxButton(itemPanel_Arranger, wxID_STANDARD, _("&MMEX format"),
+        wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer_Arranger->Add(itemButton_standard, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButton_standard->SetToolTip(_("MMEX standard format"));
+ 
+    //Load Template button
+    wxButton* itemButton_Load = new wxButton(itemPanel_Arranger, wxID_OPEN, _("&Open"), 
+        wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer_Arranger->Add(itemButton_Load, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButton_Load -> SetToolTip (_("Load Template"));
+
+    //Save As Template button
+    wxButton* itemButton_Save = new wxButton(itemPanel_Arranger, wxID_SAVEAS, _("Save As..."), 
+        wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer_Arranger->Add(itemButton_Save, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemButton_Save -> SetToolTip (_("Save Template"));
+
+    wxStaticLine*  m_staticline1 = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+    itemBoxSizer2->Add(m_staticline1, 0, wxEXPAND | wxALL, 5 );
+
     if (this->is_importer_)
     {
-        wxStaticText* itemStaticText3 = new wxStaticText(this, wxID_STATIC, 
-           _("Specify the order of fields in the CSV file"), wxDefaultPosition, wxDefaultSize, 0);
-        itemBoxSizer2->Add(itemStaticText3, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
-
-        wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
-        itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
-
-        //CSV fields candicate
-        csvFieldCandicate_ = new wxListBox(this, ID_LISTBOX_CANDICATE, 
-            wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE|wxLB_NEEDED_SB);
-        itemBoxSizer3->Add(csvFieldCandicate_, 1, wxGROW|wxALL, 1);
-        for(std::map<int, wxString>::const_iterator it = CSVFieldName_.begin(); it != CSVFieldName_.end(); it ++)
-            csvFieldCandicate_->Append(it->second, new mmListBoxItem(it->first, it->second));
-
-         //Add Remove Area
-        wxPanel* itemPanel_AddRemove = new wxPanel(this, ID_PANEL10, 
-            wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-        itemBoxSizer3->Add(itemPanel_AddRemove, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
-
-        wxBoxSizer* itemBoxSizer_AddRemove = new wxBoxSizer(wxVERTICAL);
-        itemPanel_AddRemove->SetSizer(itemBoxSizer_AddRemove);
-
-        //Add button
-        m_button_add_= new wxButton(itemPanel_AddRemove, wxID_ADD, _("Add"), 
-            wxDefaultPosition, wxDefaultSize, 0);
-        itemBoxSizer_AddRemove->Add(m_button_add_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-        //Remove button
-        m_button_remove_ = new wxButton(itemPanel_AddRemove, wxID_REMOVE, _("Remove"), 
-            wxDefaultPosition, wxDefaultSize, 0);
-        itemBoxSizer_AddRemove->Add(m_button_remove_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-       
-        //ListBox of attribute order
-        csvListBox_ = new wxListBox(this, ID_LISTBOX, 
-            wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE|wxLB_NEEDED_SB);
-        itemBoxSizer3->Add(csvListBox_, 1, wxGROW|wxALL, 1);
-
-       //Arranger Area
-        wxPanel* itemPanel_Arranger = new wxPanel(this, ID_PANEL10, 
-            wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-        itemBoxSizer3->Add(itemPanel_Arranger, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
-
-        wxBoxSizer* itemBoxSizer_Arranger = new wxBoxSizer(wxVERTICAL);
-        itemPanel_Arranger->SetSizer(itemBoxSizer_Arranger);
-
-        //Move Up button
-        wxButton* itemButton_MoveUp = new wxButton(itemPanel_Arranger, wxID_UP, _("&Up"), 
-            wxDefaultPosition, wxDefaultSize, 0);
-        itemBoxSizer_Arranger->Add(itemButton_MoveUp, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-        itemButton_MoveUp -> SetToolTip (_("Move Up"));
-
-        //Move down button
-        wxButton* itemButton_MoveDown = new wxButton(itemPanel_Arranger, wxID_DOWN, _("&Down"), 
-            wxDefaultPosition, wxDefaultSize, 0);
-        itemBoxSizer_Arranger->Add(itemButton_MoveDown, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-        itemButton_MoveDown -> SetToolTip (_("Move &Down"));
-
-        //Standard MMEX CSV
-        wxButton* itemButton_standard = new wxButton(itemPanel_Arranger, wxID_STANDARD, _("&MMEX format"),
-            wxDefaultPosition, wxDefaultSize, 0);
-        itemBoxSizer_Arranger->Add(itemButton_standard, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-        itemButton_standard->SetToolTip(_("MMEX standard format"));
-     
-        //Load Template button
-        wxButton* itemButton_Load = new wxButton(itemPanel_Arranger, wxID_OPEN, _("&Open"), 
-            wxDefaultPosition, wxDefaultSize, 0);
-        itemBoxSizer_Arranger->Add(itemButton_Load, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-        itemButton_Load -> SetToolTip (_("Load Template"));
-
-        //Save As Template button
-        wxButton* itemButton_Save = new wxButton(itemPanel_Arranger, wxID_SAVEAS, _("Save &As..."), 
-            wxDefaultPosition, wxDefaultSize, 0);
-        itemBoxSizer_Arranger->Add(itemButton_Save, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-        itemButton_Save -> SetToolTip (_("Save Template"));
-
-        wxStaticLine*  m_staticline1 = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-        itemBoxSizer2->Add(m_staticline1, 0, wxEXPAND | wxALL, 5 );
-
         //file to import, file path and search button
         wxPanel* itemPanel6 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
         itemBoxSizer2->Add(itemPanel6, 0, wxEXPAND|wxALL, 1);
@@ -231,7 +232,7 @@ void mmUnivCSVDialog::CreateControls()
         itemBoxSizer7->Add(button_search, 0, wxALIGN_RIGHT|wxALL, 5);
     }
 
-    // account to import
+    // account to import or export
     wxPanel* itemPanel7 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     itemBoxSizer2->Add(itemPanel7, 0, wxEXPAND|wxALL, 1);
 
@@ -242,7 +243,7 @@ void mmUnivCSVDialog::CreateControls()
     itemBoxSizer8->Add(itemStaticText6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString as = core_->getAccountsName();
-    m_choice_account_ = new wxChoice(itemPanel7, wxID_ANY, wxDefaultPosition, wxSize(210, -1), as, 0);
+    m_choice_account_ = new wxChoice(itemPanel7, wxID_ACCOUNT, wxDefaultPosition, wxSize(210, -1), as, 0);
     m_choice_account_->SetSelection(0);
     itemBoxSizer8->Add(m_choice_account_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -256,15 +257,12 @@ void mmUnivCSVDialog::CreateControls()
     m_radio_box_->SetSelection(0);
     itemBoxSizer2->Add(m_radio_box_, 0, wxALL|wxEXPAND, 5);
 
-    if (this->is_importer_)
-    {
-        // Preview 
-        wxStaticBoxSizer* m_staticbox = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _T("&Preview")), wxVERTICAL);
+    // Preview 
+    wxStaticBoxSizer* m_staticbox = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _T("&Preview")), wxVERTICAL);
 
-        m_list_ctrl_ = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 100), wxLC_REPORT);
-        m_staticbox->Add(m_list_ctrl_, 1, wxGROW|wxALL, 5);
-        itemBoxSizer2->Add(m_staticbox, 0, wxALL|wxEXPAND, 5);
-    }
+    m_list_ctrl_ = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 100), wxLC_REPORT);
+    m_staticbox->Add(m_list_ctrl_, 1, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(m_staticbox, 0, wxALL|wxEXPAND, 5);
 
     //Import File button
     wxPanel* itemPanel5 = new wxPanel(this, ID_PANEL10, 
@@ -646,7 +644,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
 
             if (countImported > 0)
                 msg << _ ("Imported transactions have been flagged so you can review them.");
-
+ 
             // Since all database transactions are only in memory,
             if (!canceledbyuser)
             {
@@ -704,18 +702,52 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
                 it != core_->bTransactionList_.transactions_.end();
                 ++ it)
         {
-            boost::shared_ptr<const mmBankTransaction> pBankTransaction = *it;
+            const mmBankTransaction* pBankTransaction = it->get();
             if (pBankTransaction && pBankTransaction->accountID_ == fromAccountID)
             {
                 if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR) continue; //TODO
+                double amount = pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR ? pBankTransaction->amt_ : - pBankTransaction->amt_;
+                
+                for (std::vector<int>::const_iterator sit = csvFieldOrder_.begin(); sit != csvFieldOrder_.end(); ++ sit)
+                {
+                    switch (*sit)
+                    {
+                        case UNIV_CSV_DATE:
+                            text << pBankTransaction->dateStr_;
+                            break;
+                        case UNIV_CSV_PAYEE:
+                            text << inQuotes(pBankTransaction->payeeStr_);
+                            break;
+                        case UNIV_CSV_AMOUNT:
+                            text << amount;
+                            break;
+                        case UNIV_CSV_CATEGORY:
+                            text << inQuotes(pBankTransaction->catStr_);
+                            break;
+                        case UNIV_CSV_SUBCATEGORY:
+                            text << inQuotes(pBankTransaction->subCatStr_);
+                            break;
+                        case UNIV_CSV_TRANSNUM:
+                            text << pBankTransaction->transNum_;
+                            break;
+                        case UNIV_CSV_NOTES:
+                            text << inQuotes(pBankTransaction->notes_);
+                            break;
+                        case UNIV_CSV_WITHDRAWAL:
+                            text << (amount > 0 ? 0.0 : amount);
+                            break;
+                        case UNIV_CSV_DEPOSIT:
+                            text << (amount > 0 ? amount : 0);
+                            break;
+                        case UNIV_CSV_DONTCARE:
+                        default:
+                            break;
+                    }
+                    
+                    text << delimit;
+                }
 
-                text << pBankTransaction->dateStr_ << delimit
-                    << inQuotes(pBankTransaction->payeeStr_) << delimit
-                    << (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR ? pBankTransaction->amt_ : - pBankTransaction->amt_) << delimit
-                    << inQuotes(pBankTransaction->catStr_) << delimit
-                    << inQuotes(pBankTransaction->subCatStr_) << delimit
-                    << pBankTransaction->transNum_ << delimit
-                    << inQuotes(pBankTransaction->notes_) << endl;
+                text << endl;
 
                 ++ numRecords;
             }
@@ -728,7 +760,6 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
 
 void mmUnivCSVDialog::update_preview()
 {
-    if (! this->is_importer_) return;
     this->m_list_ctrl_->ClearAll();
     long index = 0;
     this->m_list_ctrl_->InsertColumn(index, _("#"));
@@ -738,43 +769,122 @@ void mmUnivCSVDialog::update_preview()
         this->m_list_ctrl_->InsertColumn(index, this->getCSVFieldName(*it));
     }
     
-    wxString fileName = m_text_ctrl_->GetValue();
-    if (!fileName.IsEmpty())
+    //TODO re use code in OnImport & OnExport
+    if (this->is_importer_)
     {
-        wxTextFile tFile(fileName);
-        if (!tFile.Open())
+        wxString fileName = m_text_ctrl_->GetValue();
+        if (!fileName.IsEmpty())
         {
-             wxMessageBox(_("Unable to open file."), _("Universal CSV Import"), wxICON_WARNING);
-             return;
-        }
-
-        wxString delimit = this->delimit_;
-        wxString line;
-        size_t count = 0;
-        int row = 0;
-        for (line = tFile.GetFirstLine(); !tFile.Eof(); line = tFile.GetNextLine())
-        {
-            wxStringTokenizer tkz(line, delimit, wxTOKEN_RET_EMPTY_ALL);
-
-            int col = 0;
-            wxString buf;
-            buf.Printf(_T("%d"), col);
-            long itemIndex = m_list_ctrl_->InsertItem(row, buf, 0);
-            buf.Printf(_T("%d"), row + 1);
-            m_list_ctrl_->SetItem(itemIndex, col, buf);
-            while (tkz.HasMoreTokens())
+            wxTextFile tFile(fileName);
+            if (!tFile.Open())
             {
-                ++ col;
-                wxString token = tkz.GetNextToken();
-
-                if (col >= m_list_ctrl_->GetColumnCount())
-                    break;
-                else
-                    m_list_ctrl_->SetItem(itemIndex, col, token);
+                 wxMessageBox(_("Unable to open file."), _("Universal CSV Import"), wxICON_WARNING);
+                 return;
             }
 
-            if (++ count >= 10) break;
-            ++ row;
+            wxString delimit = this->delimit_;
+            wxString line;
+            size_t count = 0;
+            int row = 0;
+            for (line = tFile.GetFirstLine(); !tFile.Eof(); line = tFile.GetNextLine())
+            {
+                wxStringTokenizer tkz(line, delimit, wxTOKEN_RET_EMPTY_ALL);
+
+                int col = 0;
+                wxString buf;
+                buf.Printf(_T("%d"), col);
+                long itemIndex = m_list_ctrl_->InsertItem(row, buf, 0);
+                buf.Printf(_T("%d"), row + 1);
+                m_list_ctrl_->SetItem(itemIndex, col, buf);
+                while (tkz.HasMoreTokens())
+                {
+                    ++ col;
+                    wxString token = tkz.GetNextToken();
+
+                    if (col >= m_list_ctrl_->GetColumnCount())
+                        break;
+                    else
+                        m_list_ctrl_->SetItem(itemIndex, col, token);
+                }
+
+                if (++ count >= 10) break;
+                ++ row;
+            }
+        }
+    }
+    else // exporter preview
+    {
+        wxString acctName = m_choice_account_->GetStringSelection();
+        int fromAccountID = core_->getAccountID(acctName);
+
+        if (fromAccountID > 0)
+        {
+            size_t count = 0;
+            int row = 0;
+            for(std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator it = core_->bTransactionList_.transactions_.begin();
+                it != core_->bTransactionList_.transactions_.end();
+                ++ it)
+            {
+                const mmBankTransaction* pBankTransaction = it->get();
+                if (pBankTransaction && pBankTransaction->accountID_ == fromAccountID)
+                {
+                    if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR) continue; //TODO
+                    double amount = pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR ? pBankTransaction->amt_ : - pBankTransaction->amt_;
+
+                    int col = 0;
+                    wxString buf;
+                    buf.Printf(_T("%d"), col);
+                    long itemIndex = m_list_ctrl_->InsertItem(row, buf, 0);
+                    buf.Printf(_T("%d"), row + 1);
+                    m_list_ctrl_->SetItem(itemIndex, col, buf);
+                    
+                    for (std::vector<int>::const_iterator sit = csvFieldOrder_.begin(); sit != csvFieldOrder_.end(); ++ sit)
+                    {
+                        ++ col;
+                        wxString text;
+                        switch (*sit)
+                        {
+                            case UNIV_CSV_DATE:
+                                text << pBankTransaction->dateStr_;
+                                break;
+                            case UNIV_CSV_PAYEE:
+                                text << inQuotes(pBankTransaction->payeeStr_);
+                                break;
+                            case UNIV_CSV_AMOUNT:
+                                text << amount;
+                                break;
+                            case UNIV_CSV_CATEGORY:
+                                text << inQuotes(pBankTransaction->catStr_);
+                                break;
+                            case UNIV_CSV_SUBCATEGORY:
+                                text << inQuotes(pBankTransaction->subCatStr_);
+                                break;
+                            case UNIV_CSV_TRANSNUM:
+                                text << pBankTransaction->transNum_;
+                                break;
+                            case UNIV_CSV_NOTES:
+                                text << inQuotes(pBankTransaction->notes_);
+                                break;
+                            case UNIV_CSV_WITHDRAWAL:
+                                text << (amount > 0 ? 0.0 : amount);
+                                break;
+                            case UNIV_CSV_DEPOSIT:
+                                text << (amount > 0 ? amount : 0);
+                                break;
+                            case UNIV_CSV_DONTCARE:
+                            default:
+                                break;
+                       }
+                       if (col >= m_list_ctrl_->GetColumnCount())
+                            break;
+                       else
+                            m_list_ctrl_->SetItem(itemIndex, col, text);
+                        
+                    }
+                    if (++ count >= 10) break;
+                    ++ row;
+                }
+            }
         }
     }
 }
@@ -824,15 +934,15 @@ void mmUnivCSVDialog::OnStandard(wxCommandEvent& /*event*/)
     int standard[] = {UNIV_CSV_DATE, UNIV_CSV_PAYEE, UNIV_CSV_AMOUNT, UNIV_CSV_CATEGORY, UNIV_CSV_SUBCATEGORY, UNIV_CSV_TRANSNUM, UNIV_CSV_NOTES};
     for (int i = 0; i < sizeof(standard)/sizeof(UNIV_CSV_DATE); ++ i)
     {
-        csvListBox_->Append(CSVFieldName_[i], new mmListBoxItem(i, CSVFieldName_[i]));
-        csvFieldOrder_.push_back(i);
+        csvListBox_->Append(CSVFieldName_[standard[i]], new mmListBoxItem(standard[i], CSVFieldName_[standard[i]]));
+        csvFieldOrder_.push_back(standard[i]);
     }
 
     csvFieldCandicate_->Clear();
     int rest[] = {UNIV_CSV_DONTCARE, UNIV_CSV_WITHDRAWAL, UNIV_CSV_DEPOSIT};
     for (int i = 0; i < sizeof(rest)/sizeof(UNIV_CSV_DATE); ++ i)
     {
-        csvFieldCandicate_->Append(CSVFieldName_[i], new mmListBoxItem(i, CSVFieldName_[i]));
+        csvFieldCandicate_->Append(CSVFieldName_[rest[i]], new mmListBoxItem(rest[i], CSVFieldName_[rest[i]]));
     }
     
     update_preview();
@@ -846,6 +956,15 @@ void mmUnivCSVDialog::OnSearch(wxCommandEvent& /*event*/)
     {
         m_text_ctrl_->SetValue(fileName);
         this->update_preview();
+    }
+}
+
+void mmUnivCSVDialog::OnAccountChange(wxCommandEvent& event)
+{
+    int sel = event.GetInt();
+    if (sel != wxNOT_FOUND)
+    {
+        update_preview();
     }
 }
 

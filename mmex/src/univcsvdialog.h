@@ -41,6 +41,7 @@
 #define wxID_SEARCH 10100
 #define wxID_RADIO_BOX 10101
 #define wxID_STANDARD 10102
+#define wxID_ACCOUNT 10103
 ////@end control identifiers
 
 /*!
@@ -92,6 +93,7 @@ public:
     void OnMoveDown(wxCommandEvent& event);
     void OnStandard(wxCommandEvent& event);
     void OnSearch(wxCommandEvent& event);
+    void OnAccountChange(wxCommandEvent& event);
     void OnListBox(wxCommandEvent& event);
     void OnCheckOrRadioBox(wxCommandEvent& event);
 
