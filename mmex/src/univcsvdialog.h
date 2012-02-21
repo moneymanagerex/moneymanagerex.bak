@@ -40,6 +40,7 @@
 #define ID_LISTBOX_CANDICATE 10099
 #define wxID_SEARCH 10100
 #define wxID_RADIO_BOX 10101
+#define wxID_STANDARD 10102
 ////@end control identifiers
 
 /*!
@@ -89,6 +90,7 @@ public:
     void OnSave(wxCommandEvent& event);
     void OnMoveUp(wxCommandEvent& event);
     void OnMoveDown(wxCommandEvent& event);
+    void OnStandard(wxCommandEvent& event);
     void OnSearch(wxCommandEvent& event);
     void OnListBox(wxCommandEvent& event);
     void OnCheckOrRadioBox(wxCommandEvent& event);
@@ -104,7 +106,7 @@ private:
     bool is_importer_;
     wxSQLite3Database* db_;
     std::vector<int> csvFieldOrder_;
-    wxListBox* csvFiledCandicate_;
+    wxListBox* csvFieldCandicate_;
     wxListBox* csvListBox_;
 
     wxButton* m_button_add_;
