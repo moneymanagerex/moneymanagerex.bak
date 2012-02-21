@@ -36,6 +36,7 @@ BEGIN_EVENT_TABLE(mmUnivCSVDialog, wxDialog)
     EVT_BUTTON(wxID_SAVEAS, mmUnivCSVDialog::OnSave)
     EVT_BUTTON(wxID_UP, mmUnivCSVDialog::OnMoveUp)
     EVT_BUTTON(wxID_DOWN, mmUnivCSVDialog::OnMoveDown)
+    EVT_BUTTON(wxID_STANDARD, mmUnivCSVDialog::OnStandard)
     EVT_BUTTON(wxID_SEARCH, mmUnivCSVDialog::OnSearch)
     EVT_LISTBOX(ID_LISTBOX, mmUnivCSVDialog::OnListBox)
     EVT_RADIOBOX(wxID_RADIO_BOX, mmUnivCSVDialog::OnCheckOrRadioBox)
@@ -143,11 +144,11 @@ void mmUnivCSVDialog::CreateControls()
         itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
         //CSV fields candicate
-        csvFiledCandicate_ = new wxListBox(this, ID_LISTBOX_CANDICATE, 
+        csvFieldCandicate_ = new wxListBox(this, ID_LISTBOX_CANDICATE, 
             wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE|wxLB_NEEDED_SB);
-        itemBoxSizer3->Add(csvFiledCandicate_, 1, wxGROW|wxALL, 1);
+        itemBoxSizer3->Add(csvFieldCandicate_, 1, wxGROW|wxALL, 1);
         for(std::map<int, wxString>::const_iterator it = CSVFieldName_.begin(); it != CSVFieldName_.end(); it ++)
-            csvFiledCandicate_->Append(it->second, new mmListBoxItem(it->first, it->second));
+            csvFieldCandicate_->Append(it->second, new mmListBoxItem(it->first, it->second));
 
          //Add Remove Area
         wxPanel* itemPanel_AddRemove = new wxPanel(this, ID_PANEL10, 
@@ -191,6 +192,12 @@ void mmUnivCSVDialog::CreateControls()
             wxDefaultPosition, wxDefaultSize, 0);
         itemBoxSizer_Arranger->Add(itemButton_MoveDown, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
         itemButton_MoveDown -> SetToolTip (_("Move &Down"));
+
+        //Standard MMEX CSV
+        wxButton* itemButton_standard = new wxButton(itemPanel_Arranger, wxID_STANDARD, _("&MMEX format"),
+            wxDefaultPosition, wxDefaultSize, 0);
+        itemBoxSizer_Arranger->Add(itemButton_standard, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        itemButton_standard->SetToolTip(_("MMEX standard format"));
      
         //Load Template button
         wxButton* itemButton_Load = new wxButton(itemPanel_Arranger, wxID_OPEN, _("&Open"), 
@@ -305,21 +312,21 @@ wxIcon mmUnivCSVDialog::GetIconResource(const wxString& /*name*/)
 //Selection dialog for fields to be added to listbox
 void mmUnivCSVDialog::OnAdd(wxCommandEvent& /*event*/)
 {
-    int index = csvFiledCandicate_->GetSelection();
+    int index = csvFieldCandicate_->GetSelection();
     if (index != wxNOT_FOUND)
     {
-        mmListBoxItem* item = (mmListBoxItem*)csvFiledCandicate_->GetClientObject(index);
+        mmListBoxItem* item = (mmListBoxItem*)csvFieldCandicate_->GetClientObject(index);
 
         csvListBox_->Append(item->getName(), new mmListBoxItem(item->getIndex(), item->getName()));
         csvFieldOrder_.push_back(item->getIndex());
 
         if (item->getIndex() != UNIV_CSV_DONTCARE) 
         {
-            csvFiledCandicate_->Delete(index);
-            if (index < (int)csvFiledCandicate_->GetCount())
-                csvFiledCandicate_->SetSelection(index, true);
+            csvFieldCandicate_->Delete(index);
+            if (index < (int)csvFieldCandicate_->GetCount())
+                csvFieldCandicate_->SetSelection(index, true);
             else
-                csvFiledCandicate_->SetSelection(csvFiledCandicate_->GetCount() - 1, true);
+                csvFieldCandicate_->SetSelection(csvFieldCandicate_->GetCount() - 1, true);
         }
 
         this->update_preview();
@@ -339,13 +346,13 @@ void mmUnivCSVDialog::OnRemove(wxCommandEvent& /*event*/)
         if (item_index != UNIV_CSV_DONTCARE)
         {
             int pos = 0;
-            for (pos = 0; pos < (int)csvFiledCandicate_->GetCount() - 1; pos ++)
+            for (pos = 0; pos < (int)csvFieldCandicate_->GetCount() - 1; pos ++)
             {
-                mmListBoxItem *item = (mmListBoxItem*)csvFiledCandicate_->GetClientObject(pos);
+                mmListBoxItem *item = (mmListBoxItem*)csvFieldCandicate_->GetClientObject(pos);
                 if (item_index < item->getIndex())
                     break;
             }
-            csvFiledCandicate_->Insert(item_name, pos, new mmListBoxItem(item_index, item_name));
+            csvFieldCandicate_->Insert(item_name, pos, new mmListBoxItem(item_index, item_name));
         }
 
         csvListBox_->Delete(index);
@@ -405,13 +412,13 @@ void mmUnivCSVDialog::OnLoad(wxCommandEvent& /*event*/)
              csvFieldOrder_.push_back(num);
          }
       }
-      // update csvFiledCandicate_
-      csvFiledCandicate_->Clear();
+      // update csvFieldCandicate_
+      csvFieldCandicate_->Clear();
       for (std::map<int, wxString>::const_iterator it = CSVFieldName_.begin(); it != CSVFieldName_.end(); ++ it)
       {
           std::vector<int>::const_iterator loc = find(csvFieldOrder_.begin(), csvFieldOrder_.end(), it->first);
           if (loc == csvFieldOrder_.end() || it->first == UNIV_CSV_DONTCARE)
-              csvFiledCandicate_->Append(it->second, new mmListBoxItem(it->first, it->second));
+              csvFieldCandicate_->Append(it->second, new mmListBoxItem(it->first, it->second));
       }
 
       tFile.Write();
@@ -808,6 +815,34 @@ void mmUnivCSVDialog::OnMoveDown(wxCommandEvent& /*event*/)
 
         this->update_preview();
     }
+}
+
+void mmUnivCSVDialog::OnStandard(wxCommandEvent& /*event*/)
+{
+   csvListBox_->Clear(); 
+   csvListBox_->Append(CSVFieldName_[UNIV_CSV_DATE], new mmListBoxItem(UNIV_CSV_DATE, CSVFieldName_[UNIV_CSV_DATE]));
+   csvListBox_->Append(CSVFieldName_[UNIV_CSV_PAYEE], new mmListBoxItem(UNIV_CSV_PAYEE, CSVFieldName_[UNIV_CSV_PAYEE]));
+   csvListBox_->Append(CSVFieldName_[UNIV_CSV_AMOUNT], new mmListBoxItem(UNIV_CSV_AMOUNT, CSVFieldName_[UNIV_CSV_AMOUNT]));
+   csvListBox_->Append(CSVFieldName_[UNIV_CSV_CATEGORY], new mmListBoxItem(UNIV_CSV_CATEGORY, CSVFieldName_[UNIV_CSV_CATEGORY]));
+   csvListBox_->Append(CSVFieldName_[UNIV_CSV_SUBCATEGORY], new mmListBoxItem(UNIV_CSV_SUBCATEGORY, CSVFieldName_[UNIV_CSV_SUBCATEGORY]));
+   csvListBox_->Append(CSVFieldName_[UNIV_CSV_TRANSNUM], new mmListBoxItem(UNIV_CSV_TRANSNUM, CSVFieldName_[UNIV_CSV_TRANSNUM]));
+   csvListBox_->Append(CSVFieldName_[UNIV_CSV_NOTES], new mmListBoxItem(UNIV_CSV_NOTES, CSVFieldName_[UNIV_CSV_NOTES]));
+
+   csvFieldOrder_.clear();
+   csvFieldOrder_.push_back(UNIV_CSV_DATE);
+   csvFieldOrder_.push_back(UNIV_CSV_PAYEE);
+   csvFieldOrder_.push_back(UNIV_CSV_AMOUNT);
+   csvFieldOrder_.push_back(UNIV_CSV_CATEGORY);
+   csvFieldOrder_.push_back(UNIV_CSV_SUBCATEGORY);
+   csvFieldOrder_.push_back(UNIV_CSV_TRANSNUM);
+   csvFieldOrder_.push_back(UNIV_CSV_NOTES);
+
+   csvFieldCandicate_->Clear();
+   csvFieldCandicate_->Append(CSVFieldName_[UNIV_CSV_DONTCARE], new mmListBoxItem(UNIV_CSV_DONTCARE, CSVFieldName_[UNIV_CSV_DONTCARE]));
+   csvFieldCandicate_->Append(CSVFieldName_[UNIV_CSV_WITHDRAWAL], new mmListBoxItem(UNIV_CSV_WITHDRAWAL, CSVFieldName_[UNIV_CSV_DEPOSIT]));
+   csvFieldCandicate_->Append(CSVFieldName_[UNIV_CSV_DEPOSIT], new mmListBoxItem(UNIV_CSV_DEPOSIT, CSVFieldName_[UNIV_CSV_DEPOSIT]));
+
+   update_preview();
 }
 
 void mmUnivCSVDialog::OnSearch(wxCommandEvent& /*event*/)
