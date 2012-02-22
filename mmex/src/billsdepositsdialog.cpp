@@ -122,8 +122,10 @@ void mmBDDialog::dataToControls()
     
         "select BDID, ACCOUNTID, TOACCOUNTID, PAYEEID, TRANSCODE, TRANSAMOUNT, STATUS, TRANSACTIONNUMBER, NOTES, CATEGID, "
         "SUBCATEGID, FOLLOWUPID, TOTRANSAMOUNT, REPEATS, NUMOCCURRENCES, "
-        "date(NEXTOCCURRENCEDATE, 'localtime') as NEXTOCCURRENCEDATE, date(TRANSDATE, 'localtime') as TRANSDATE "
+        "NEXTOCCURRENCEDATE, date(TRANSDATE, 'localtime') as TRANSDATE "
         "from BILLSDEPOSITS_V1 where BDID = ? ";
+		// Removed "date(NEXTOCCURRENCEDATE, 'localtime') as NEXTOCCURRENCEDATE, "
+		// because causing problems with some systems and in different time zones
     
     wxSQLite3Statement st = db_->PrepareStatement(billsdepositsSql);
     st.Bind(1, bdID_);
