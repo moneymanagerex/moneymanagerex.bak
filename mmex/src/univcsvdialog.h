@@ -21,9 +21,7 @@
 
 #include "guiid.h"
 #include "defs.h"
-#include "dbwrapper.h"
 #include "mmcoredb.h"
-#include <wx/choice.h>
 
 #define ID_MYDIALOG8 10040
 #define SYMBOL_UNIVCSVDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
