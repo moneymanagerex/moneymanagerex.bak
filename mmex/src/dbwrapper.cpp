@@ -1870,11 +1870,13 @@ void mmDBWrapper::completeBDInSeries(wxSQLite3Database* db, int bdID)
     try {
         static const char sql[] = 
         "select NUMOCCURRENCES, "
-               "date(NEXTOCCURRENCEDATE, 'localtime') as NEXTOCCURRENCEDATE, "
+               "NEXTOCCURRENCEDATE, "
                "REPEATS "
         "from BILLSDEPOSITS_V1 "
         "WHERE BDID = ?";
-     
+		// Removed "date(NEXTOCCURRENCEDATE, 'localtime') as NEXTOCCURRENCEDATE, "
+		// because causing problems with some systems and in different time zones
+
         wxDateTime updateOccur = wxDateTime::Now();
         int numRepeats  = -1;
 
