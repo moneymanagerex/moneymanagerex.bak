@@ -19,10 +19,8 @@
 #include "univcsvdialog.h"
 #include "util.h"
 #include "fileviewerdialog.h"
-#include "defs.h"
 #include "paths.h"
 #include "platfdep.h"
-#include <wx/statline.h>
 
 IMPLEMENT_DYNAMIC_CLASS(mmUnivCSVDialog, wxDialog)
 

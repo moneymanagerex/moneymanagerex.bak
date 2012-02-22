@@ -63,6 +63,8 @@
 #include <wx/dir.h>
 #include <wx/stdpaths.h>
 #include <wx/app.h>
+#include <wx/choice.h>
+#include <wx/statline.h>
 
 #endif // _MM_EX_DEFS_H_
 
