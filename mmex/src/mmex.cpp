@@ -884,7 +884,6 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
                 {
                     if (activeHomePage_)
                     {
-                        refreshRequested_ = true;
                         createHomePage(); // Update home page details only if it is being displayed
                     }
                 }
@@ -925,7 +924,6 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
 
             if (activeHomePage_)
             {
-                refreshRequested_ = true;
                 createHomePage(); // Update home page details only if it is being displayed
             }
         }
@@ -1711,11 +1709,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
     {
         if (iData->getString() == wxT("Home Page"))
         {
-            if (!refreshRequested_)
-            {
-                refreshRequested_ = true;
-                createHomePage();
-            }
+            createHomePage();
             return;
         }
 
@@ -2321,23 +2315,16 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (iData->getString() == wxT("Cash Flow - Specific Accounts"))
         {
+            navTreeCtrl_->UnselectAll();    // item in navTreeCtrl_ to enable re-selection.
+            processPendingEvents();         // Clear event buffer before activating report.
             OnCashFlowSpecificAccounts();
-            refreshRequested_ = true;    // Prevent home page being recreated when deselecting
-            navTreeCtrl_->UnselectAll(); // item in navTreeCtrl_ to enable re-selection.
         }
         else if (iData->getString() == wxT("Transaction Report"))
         {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TRANSACTIONREPORT);
-            AddPendingEvent(evt);
-            refreshRequested_ = true;    // Prevent home page being recreated when deselecting
-            navTreeCtrl_->UnselectAll(); // item in navTreeCtrl_ to enable re-selection.
+            AddPendingEvent(evt);           // Events will be processed in due course.
+            navTreeCtrl_->UnselectAll();    // item in navTreeCtrl_ to enable re-selection.
         }
-//      Moved to act when using right mouse button instead.
-//      else if (iData->getString() == wxT("Budgeting"))
-//      {
-//          wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BUDGETSETUPDIALOG);
-//          AddPendingEvent(evt);
-//      }
         else if (iData->getString() == wxT("Bills & Deposits"))
         {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BILLSDEPOSITS);
@@ -3387,8 +3374,7 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
     // Ensure database is in a steady state first
     if (!activeHomePage_)
     {
-        refreshRequested_ = true;
-        createHomePage();
+        createHomePage();   // Display Home page when not being displayed.
     }
 
     bool encrypt = dlg.GetFilterIndex() != 0; // emb -> Encrypted mMB
