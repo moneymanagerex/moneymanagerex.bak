@@ -31,7 +31,6 @@ public:
     virtual wxString getHTMLText() = 0;
 
 public:
-    mmPrintableBase() {}
     mmPrintableBase(mmCoreDB* core): core_(core) {}
 
 protected:
