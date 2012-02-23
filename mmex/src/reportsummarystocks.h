@@ -26,7 +26,7 @@ class wxSQLite3Database;
 class mmReportSummaryStocks : public mmPrintableBase 
 {
 public:
-    mmReportSummaryStocks(wxSQLite3Database* db) : db_(db) {}
+    mmReportSummaryStocks(mmCoreDB* core, wxSQLite3Database* db) : mmPrintableBase(core), db_(db) {}
     wxString getHTMLText();
 
 private:

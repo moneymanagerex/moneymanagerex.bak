@@ -1760,7 +1760,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (iData->getString() == wxT("Summary of Stocks"))
         {
-            mmPrintableBase* rs = new mmReportSummaryStocks(m_db.get());
+            mmPrintableBase* rs = new mmReportSummaryStocks(m_core.get(), m_db.get());
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
@@ -1770,7 +1770,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (iData->getString() == wxT("Summary of Assets"))
         {
-            mmPrintableBase* rs = new mmReportSummaryAssets(m_db.get());
+            mmPrintableBase* rs = new mmReportSummaryAssets(m_core.get(), m_db.get());
             menuPrintingEnable(true);
             createReportsPage(rs);
         }
