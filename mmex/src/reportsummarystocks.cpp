@@ -39,63 +39,65 @@ wxString mmReportSummaryStocks::getHTMLText()
 
         hb.startCenter();
 
-        mmDBWrapper::loadBaseCurrencySettings(db_);
-
         hb.startTable();
 		hb.startTableRow();
 		hb.addTableHeaderCell(_("Company"));
+		hb.addTableHeaderCell(_("Name"));
 		hb.addTableHeaderCell(_("Symbol"));
-		hb.addTableHeaderCell(_("Number Shares"));
 		hb.addTableHeaderCell(_("Purchase Date"));
+		hb.addTableHeaderCell(_("Quntity"));
 		hb.addTableHeaderCell(_("Purchase Price"));
 		hb.addTableHeaderCell(_("Current Price"));
 		hb.addTableHeaderCell(_("Commission"));
-		hb.addTableHeaderCell(_("Value"));
-		hb.addTableHeaderCell(_("Gain Loss"));
+		hb.addTableHeaderCell(_("Gain/Loss"));
+		hb.addTableHeaderCell(_("Value"), true);
 		hb.endTableRow();
 
+        double gain_loss_sum = 0;
+        mmDBWrapper::loadBaseCurrencySettings(db_);
+        
         wxSQLite3ResultSet q1 = db_->ExecuteQuery("select * from STOCK_V1");
 
         while (q1.NextRow())
         {
             mmStockTransactionHolder th;
 
-            th.id_           = q1.GetInt(wxT("STOCKID"));
-            int accountID         = q1.GetInt(wxT("HELDAT"));
-            th.heldAt_            = core_->getAccountName(accountID);
-            th.shareName_         = q1.GetString(wxT("STOCKNAME"));
-            th.numSharesStr_      = q1.GetString(wxT("NUMSHARES"));
-            th.numShares_         = q1.GetDouble(wxT("NUMSHARES"));
-            th.symbol_            = q1.GetString(wxT("SYMBOL"));
+            th.id_              = q1.GetInt(wxT("STOCKID"));
+            int accountID       = q1.GetInt(wxT("HELDAT"));
+            th.heldAt_          = core_->getAccountName(accountID);
+            th.shareName_       = q1.GetString(wxT("STOCKNAME"));
+            th.numSharesStr_    = q1.GetString(wxT("NUMSHARES"));
+            th.numShares_       = q1.GetDouble(wxT("NUMSHARES"));
+            th.symbol_          = q1.GetString(wxT("SYMBOL"));
 
-            th.currentPrice_      = q1.GetDouble(wxT("CURRENTPRICE"));
-            th.purchasePrice_      = q1.GetDouble(wxT("PURCHASEPRICE"));
-            th.valueStr_          = q1.GetString(wxT("VALUE"));
-            th.value_             = q1.GetDouble(wxT("VALUE"));
-            double commission     = q1.GetDouble(wxT("COMMISSION"));
-            wxString dateString   = q1.GetString(wxT("PURCHASEDATE"));
-            wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
-            wxString dt = mmGetDateForDisplay(db_, dtdt);
-            
+            th.currentPrice_    = q1.GetDouble(wxT("CURRENTPRICE"));
+            th.purchasePrice_   = q1.GetDouble(wxT("PURCHASEPRICE"));
+            th.value_           = q1.GetDouble(wxT("VALUE"));
+            double commission   = q1.GetDouble(wxT("COMMISSION"));
+            wxString dateString = q1.GetString(wxT("PURCHASEDATE"));
+            wxDateTime dtdt     = mmGetStorageStringAsDate(dateString);
+            wxString dt         = mmGetDateForDisplay(db_, dtdt);
 
             th.gainLoss_        = th.value_ - ((th.numShares_ * th.purchasePrice_) + commission);
-
-            mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
-            mmex::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
-            mmex::formatDoubleToCurrencyEdit(th.purchasePrice_, th.pPriceStr_);
+            double base_conv_rate = mmDBWrapper::getCurrencyBaseConvRate(db_, accountID);
+            gain_loss_sum += th.gainLoss_ * base_conv_rate;
 
             wxString commString;
             mmex::formatDoubleToCurrencyEdit(commission, commString);
+            mmex::formatDoubleToCurrencyEdit(th.gainLoss_, th.gainLossStr_);
+            mmex::formatDoubleToCurrencyEdit(th.currentPrice_, th.cPriceStr_);
+            mmex::formatDoubleToCurrencyEdit(th.purchasePrice_, th.pPriceStr_);
+            mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
 
 			hb.startTableRow();
+			hb.addTableCell(th.heldAt_, false, true);
 			hb.addTableCell(th.shareName_, false, true);
 			hb.addTableCell(th.symbol_);
-            hb.addTableCell(th.numSharesStr_, true);
             hb.addTableCell(dt);
+            hb.addTableCell(th.numSharesStr_, true);
             hb.addTableCell(th.pPriceStr_, true);
             hb.addTableCell(th.cPriceStr_, true);
             hb.addTableCell(commString, true);
-            hb.addTableCell(th.valueStr_, true);
 
 			if(th.gainLoss_ < 0)
 			{
@@ -110,6 +112,7 @@ wxString mmReportSummaryStocks::getHTMLText()
 				hb.addTableCell(th.gainLossStr_, true, true);
 			}
             
+            hb.addTableCell(th.valueStr_, true);
             hb.endTableRow();
         }
         q1.Finalize();
@@ -118,12 +121,15 @@ wxString mmReportSummaryStocks::getHTMLText()
         double invested = 0;
         double stockBalance = mmDBWrapper::getStockInvestmentBalance(db_, invested);
         wxString stockBalanceStr;
+        wxString gain_loss_sum_str;
         mmDBWrapper::loadBaseCurrencySettings(db_);
         mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
+        mmex::formatDoubleToCurrency(gain_loss_sum, gain_loss_sum_str);
 
-	hb.addRowSeparator(9);
-	hb.addTotalRow(_("Total Stock Investments: "), 9, stockBalanceStr);
-        hb.endTable();
+	hb.addRowSeparator(10);
+	hb.addTotalRow(_("Total Stock Investments: "), 9, gain_loss_sum_str);
+	hb.addTableCell(stockBalanceStr, true, true, true); //numeric, italic, bold
+    hb.endTable();
 
 	hb.endCenter();
 
