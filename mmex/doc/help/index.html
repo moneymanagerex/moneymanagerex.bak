@@ -20,8 +20,10 @@
 	</STYLE>
 </HEAD>
 <BODY LANG="en-US" DIR="LTR">
-<H2 CLASS="western" ALIGN=CENTER><A NAME="top"></A><FONT FACE="Verdana"><BR>Money
-Manager Ex User Manual<BR><FONT SIZE=3>MMEX 0.9.9.0</FONT></FONT></H2>
+    <H2 CLASS="western" ALIGN=CENTER><A NAME="top"></A><FONT FACE="Verdana">
+            <BR>Money Manager Ex User Manual<BR>
+            <FONT SIZE=3>MMEX 0.9.9.0</FONT>
+    </FONT></H2>
 <HR>
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
 	<COL WIDTH=208*>
@@ -29,17 +31,13 @@ Manager Ex User Manual<BR><FONT SIZE=3>MMEX 0.9.9.0</FONT></FONT></H2>
 	<TR VALIGN=TOP>
 		<TD WIDTH=81%>
 			<UL>
-				<LI><P STYLE="margin-bottom: 0in"><A HREF="#introduction"><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">Introduction</SPAN></FONT></A></P>
-				<LI><P STYLE="margin-bottom: 0in"><A HREF="#financial_health"><FONT FACE="Verdana">Working
-				towards better Financial Health</FONT></A></P>
-				<LI><P STYLE="margin-bottom: 0in"><A HREF="#concepts"><FONT FACE="Verdana">Money
-				Manager Ex Concepts</FONT></A></P>
+                <LI><P STYLE="margin-bottom: 0in"><A HREF="#introduction"><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">Introduction</SPAN></FONT></A></P>
+				<LI><P STYLE="margin-bottom: 0in"><A HREF="#financial_health"><FONT FACE="Verdana">Working towards better Financial Health</FONT></A></P>
+				<LI><P STYLE="margin-bottom: 0in"><A HREF="#concepts"><FONT FACE="Verdana">Money Manager Ex Concepts</FONT></A></P>
 				<LI><P><A HREF="#recommendation"><FONT FACE="Verdana">Recommendations</FONT></A></P>
 			</UL>
 		</TD>
-		<TD WIDTH=19%>
-			<P><A HREF="../help">English Version</A></P>
-		</TD>
+		<TD WIDTH=19%><P><A HREF="../help">English Version</A></P></TD>
 	</TR>
 </TABLE>
 <P STYLE="margin-bottom: 0in"><BR>
@@ -50,62 +48,66 @@ Manager Ex User Manual<BR><FONT SIZE=3>MMEX 0.9.9.0</FONT></FONT></H2>
 	<TR VALIGN=TOP>
 		<TD WIDTH=50%>
 			<UL>
-				<LI><P><FONT FACE="Verdana"><B>Database Management</B></FONT><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal"><BR>*
-				<A HREF="#create_database">Creating a New Database</A><BR>*
-				<A HREF="#encrypting_database">Encrypting a Database</A><BR>*
-				<A HREF="#switching_databases">Switching Databases</A></SPAN></FONT></P>
+                <LI><P><FONT FACE="Verdana"><B>Database Management</B></FONT><FONT FACE="Verdana"><SPAN STYLE="font-weight: normal">
+                        <BR>* <A HREF="#create_database">Creating a New Database</A>
+                        <BR>* <A HREF="#encrypting_database">Encrypting a Database</A>
+                        <BR>* <A HREF="#switching_databases">Switching Databases</A>
+                </SPAN></FONT></P>
 			</UL>
 		</TD>
 		<TD WIDTH=50%>
 			<UL>
-				<LI><P><FONT FACE="Verdana"><B>Working with</B></FONT><FONT FACE="Verdana">:<BR>*
-				<A HREF="#currencies">Currencies</A><BR>* <A HREF="#categories">Categories</A><BR>*
-				<A HREF="#payees">Payees</A></FONT></P>
-			</UL>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=50%>
-			<UL>
-				<LI><P><FONT FACE="Verdana"><B>Account Management</B></FONT><FONT FACE="Verdana"><BR>*
-				<A HREF="#create_account">Creating New Accounts</A><BR>* <A HREF="#editaccounts">Editing
-				Account Information</A><BR>* <A HREF="#creating_new_transaction">Creating
-				New Transactions</A><BR>* <A HREF="#edittrans">Editing and
-				Updating Transactions</A><BR>* <A HREF="#rectrans">Reconciling &amp;
-				Balancing Transactions</A><BR>* <A HREF="#followup">Flagging
-				Transactions for Followup</A></FONT></P>
-				<LI><P><A HREF="#account_setup"><FONT FACE="Verdana"><B>Account
-				Setup Example</B></FONT></A></P>
-			</UL>
-		</TD>
-		<TD WIDTH=50%>
-			<UL>
-				<LI><P><FONT FACE="Verdana"><B>Import From</B></FONT> <FONT FACE="Verdana"><BR>*
-				<A HREF="#importQIF">QIF Files</A> <BR>* <A HREF="#importUnivCSV">Universal
-				CSV Importer</A> </FONT>
-				</P>
-				<LI><P><A HREF="#importcsvtips"><FONT FACE="Verdana"><B>Tips for
-				creating CSV Files</B></FONT></A></P>
-				<LI><P><FONT FACE="Verdana"><B>Export To</B></FONT> <FONT FACE="Verdana"><BR>*
-				<A HREF="#exportcsv">CSV Files</A> <BR>* <A HREF="#export_qif">QIF
-				Files</A></FONT></P>
+                <LI><P><FONT FACE="Verdana"><B>Working with</B></FONT><FONT FACE="Verdana">
+                    <BR>* <A HREF="#currencies">Currencies</A>
+                    <BR>* <A HREF="#categories">Categories</A>
+                    <BR>* <A HREF="#payees">Payees</A>
+                </FONT></P>
 			</UL>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=50%>
 			<UL>
-				<LI><P><A HREF="#reports"><FONT FACE="Verdana"><B>Reports</B></FONT></A><FONT FACE="Verdana"><BR>*
-				<A HREF="#financialYearReport">Financial Year Reports</A><BR>*
-				<A HREF="#transaction_report">Transaction Reports</A><BR>* <A HREF="#cashFlowReport">Cash
-				Flow Reports</A><BR>* <A HREF="custom_sql_reports.html">Custom
-				SQL Reports</A></FONT></P>
+                <LI><P><FONT FACE="Verdana"><B>Account Management</B>
+                    </FONT><FONT FACE="Verdana">
+                        <BR>* <A HREF="#create_account">Creating New Accounts</A>
+                        <BR>* <A HREF="#editaccounts">Editing Account Information</A>
+                        <BR>* <A HREF="#creating_new_transaction">Creating New Transactions</A>
+                        <BR>* <A HREF="#edittrans">Editing and Updating Transactions</A>
+                        <BR>* <A HREF="#rectrans">Reconciling &amp; Balancing Transactions</A>
+                        <BR>* <A HREF="#followup">Flagging Transactions for Followup</A>
+                    </FONT></P>
+                <LI><P><A HREF="#account_setup"><FONT FACE="Verdana"><B>Account Setup Example</B> </FONT></A></P>
 			</UL>
 		</TD>
 		<TD WIDTH=50%>
 			<UL>
-				<LI><P><A HREF="investment.html"><FONT FACE="Verdana"><B>Stock
-				Investments</B></FONT></A></P>
+                <LI><P><FONT FACE="Verdana"><B>Import From</B></FONT> <FONT FACE="Verdana">
+                    <BR>* <A HREF="#importQIF">QIF Files</A>
+                    <BR>* <A HREF="#importUnivCSV">Universal CSV Importer</A>
+                </FONT></P>
+				<LI><P><A HREF="#importcsvtips"><FONT FACE="Verdana"><B>Tips for creating CSV Files</B></FONT></A></P>
+                <LI><P><FONT FACE="Verdana"><B>Export To</B></FONT> <FONT FACE="Verdana">
+                    <BR>* <A HREF="#exportcsv">CSV Files</A>
+                    <BR>* <A HREF="#export_qif">QIF Files</A>
+                </FONT></P>
+			</UL>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<UL>
+                <LI><P><A HREF="#reports"><FONT FACE="Verdana"><B>Reports</B></FONT></A><FONT FACE="Verdana">
+                    <BR>* <A HREF="#financialYearReport">Financial Year Reports</A>
+                    <BR>* <A HREF="#transaction_report">Transaction Reports</A>
+                    <BR>* <A HREF="#cashFlowReport">Cash Flow Reports</A>
+                    <BR>* <A HREF="custom_sql_reports.html">Custom SQL Reports</A>
+                </FONT></P>
+			</UL>
+		</TD>
+		<TD WIDTH=50%>
+			<UL>
+				<LI><P><A HREF="investment.html"><FONT FACE="Verdana"><B>Stock Investments</B></FONT></A></P>
 				<LI><P><A HREF="#assets"><FONT FACE="Verdana"><B>Assets</B></FONT></A></P>
 			</UL>
 		</TD>
@@ -113,10 +115,8 @@ Manager Ex User Manual<BR><FONT SIZE=3>MMEX 0.9.9.0</FONT></FONT></H2>
 	<TR VALIGN=TOP>
 		<TD WIDTH=50%>
 			<UL>
-				<LI><P><A HREF="#repeating_transactions"><FONT FACE="Verdana"><B>Repeating
-				Transactions</B></FONT></A></P>
-				<LI><P><A HREF="#transfilter"><FONT FACE="Verdana"><B>Transaction
-				Filter</B></FONT></A></P>
+				<LI><P><A HREF="#repeating_transactions"><FONT FACE="Verdana"><B>Repeating Transactions</B></FONT></A></P>
+				<LI><P><A HREF="#transfilter"><FONT FACE="Verdana"><B>Transaction Filter</B></FONT></A></P>
 			</UL>
 		</TD>
 		<TD WIDTH=50%>
@@ -141,8 +141,7 @@ Manager Ex User Manual<BR><FONT SIZE=3>MMEX 0.9.9.0</FONT></FONT></H2>
 <P STYLE="margin-bottom: 0in"><BR>
 </P>
 <UL>
-	<LI><P STYLE="margin-bottom: 0in"><A HREF="#faq"><FONT FACE="Verdana">Frequently
-	Asked Questions</FONT></A></P>
+	<LI><P STYLE="margin-bottom: 0in"><A HREF="#faq"><FONT FACE="Verdana">Frequently Asked Questions</FONT></A></P>
 </UL>
 <P STYLE="margin-bottom: 0in"><BR>
 </P>
