@@ -76,7 +76,7 @@ bool mmNewAcctDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmNewAcctDialog::fillControlsWithData()
 {
-    boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(accountID_);
+    boost::shared_ptr<mmAccount> pAccount = core_->getAccountSharedPtr(accountID_);
     wxASSERT(pAccount);
 
     textAccountName_->SetValue(pAccount->name_);
@@ -356,7 +356,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     }
     else
     {
-       pAccount = core_->accountList_.getAccountSharedPtr(accountID_);
+       pAccount = core_->getAccountSharedPtr(accountID_);
     }
 
     pAccount->acctType_ = ACCOUNT_TYPE_BANK;

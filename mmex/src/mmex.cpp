@@ -1671,7 +1671,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else
         {
-           boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(data); 
+           boost::shared_ptr<mmAccount> pAccount = m_core->getAccountSharedPtr(data); 
            if (pAccount)
            {
               wxString acctType = pAccount->acctType_;
@@ -2343,7 +2343,7 @@ void mmGUIFrame::OnLaunchAccountWebsite(wxCommandEvent& /*event*/)
    if (selectedItemData_)
    {
       int data = selectedItemData_->getData(); 
-      boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(data); 
+      boost::shared_ptr<mmAccount> pAccount = m_core->getAccountSharedPtr(data); 
       if (pAccount)
       {
          wxString website = pAccount->website_;
@@ -2367,7 +2367,7 @@ void mmGUIFrame::OnPopupImportQIFile(wxCommandEvent& /*event*/)
     if (selectedItemData_)
     {
         int data = selectedItemData_->getData();
-        boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(data); 
+        boost::shared_ptr<mmAccount> pAccount = m_core->getAccountSharedPtr(data); 
         if (pAccount)
         {
            wxString acctType = pAccount->acctType_;
@@ -2395,7 +2395,7 @@ void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& /*event*/)
     if (selectedItemData_)
     {
         int data = selectedItemData_->getData();
-        boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(data); 
+        boost::shared_ptr<mmAccount> pAccount = m_core->getAccountSharedPtr(data); 
         if (pAccount)
         {
            wxString acctType = pAccount->acctType_;
@@ -2423,7 +2423,7 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
     if (selectedItemData_)
     {
         int data = selectedItemData_->getData();
-        boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(data); 
+        boost::shared_ptr<mmAccount> pAccount = m_core->getAccountSharedPtr(data); 
         if (pAccount)
         {
            wxMessageDialog msgDlg(this, 
@@ -2471,7 +2471,7 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
         int data = iData->getData();
         if (!iData->isBudgetingNode())
         {
-            boost::shared_ptr<mmAccount> pAccount = m_core->accountList_.getAccountSharedPtr(data); 
+            boost::shared_ptr<mmAccount> pAccount = m_core->getAccountSharedPtr(data); 
             if (pAccount)
             {
                 wxString acctType = pAccount->acctType_;
