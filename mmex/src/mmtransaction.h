@@ -77,8 +77,7 @@ public:
 class mmBankTransaction : public mmTransaction
 {
 public:
-    mmBankTransaction(mmCoreDB* core,
-       wxSQLite3ResultSet& q1);
+    mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1);
     mmBankTransaction(boost::shared_ptr<wxSQLite3Database> db);
     virtual ~mmBankTransaction() {}
 
