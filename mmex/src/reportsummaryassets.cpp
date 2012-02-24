@@ -27,68 +27,68 @@
 
 wxString mmReportSummaryAssets::getHTMLText()
 {
-        mmHTMLBuilder hb;
-        hb.init();
-        hb.addHeader(3, _("Summary of Assets"));
-        
-        wxDateTime now = wxDateTime::Now();
-        wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
-        hb.addHeader(7, dt);
-        hb.addLineBreak();
-        hb.addLineBreak();
+    mmHTMLBuilder hb;
+    hb.init();
+    hb.addHeader(3, _("Summary of Assets"));
+    
+    wxDateTime now = wxDateTime::Now();
+    wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
+    hb.addHeader(7, dt);
+    hb.addLineBreak();
+    hb.addLineBreak();
 
-        hb.startCenter();
+    hb.startCenter();
 
-        hb.startTable(wxT("50%"));
+    hb.startTable(wxT("50%"));
+    hb.startTableRow();
+    hb.addTableHeaderCell(_("Name"));
+    hb.addTableHeaderCell(_("Type"));
+    hb.addTableHeaderCell(_("Value"));
+    hb.endTableRow();
+
+    mmDBWrapper::loadBaseCurrencySettings(db_);
+    
+    static const char sql[] =
+    "select ASSETID, "
+           "ASSETNAME, "
+           "ASSETTYPE " 
+    "from ASSETS_V1";
+
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+
+    while (q1.NextRow())
+    {
+        mmAssetHolder th;
+
+        th.id_           = q1.GetInt(wxT("ASSETID"));
+        th.value_             = mmDBWrapper::getAssetValue(db_, th.id_);
+        th.assetName_         = q1.GetString(wxT("ASSETNAME"));
+
+        wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
+        th.assetType_ = wxGetTranslation(assetTypeStr);
+
+        mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
+
         hb.startTableRow();
-        hb.addTableHeaderCell(_("Name"));
-        hb.addTableHeaderCell(_("Type"));
-        hb.addTableHeaderCell(_("Value"));
+        hb.addTableCell(th.assetName_, false, true);
+        hb.addTableCell(th.assetType_);
+        hb.addTableCell(th.valueStr_, true);
         hb.endTableRow();
+    }
+    q1.Finalize();
+    
+    /* Assets */
+    double assetBalance = mmDBWrapper::getAssetBalance(db_);
+    wxString assetBalanceStr;
+    mmDBWrapper::loadBaseCurrencySettings(db_);
+    mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
-        mmDBWrapper::loadBaseCurrencySettings(db_);
-        
-        static const char sql[] =
-        "select ASSETID, "
-               "ASSETNAME, "
-               "ASSETTYPE " 
-        "from ASSETS_V1";
+    hb.addRowSeparator(3);
+    hb.addTotalRow(_("Total Assets: "), 3, assetBalanceStr);
+    hb.endTable();
 
-        wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
+    hb.endCenter();
+    hb.end();
 
-        while (q1.NextRow())
-        {
-            mmAssetHolder th;
-
-            th.id_           = q1.GetInt(wxT("ASSETID"));
-            th.value_             = mmDBWrapper::getAssetValue(db_, th.id_);
-            th.assetName_         = q1.GetString(wxT("ASSETNAME"));
-
-            wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
-            th.assetType_ = wxGetTranslation(assetTypeStr);
-
-            mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
-
-			hb.startTableRow();
-			hb.addTableCell(th.assetName_, false, true);
-			hb.addTableCell(th.assetType_);
-			hb.addTableCell(th.valueStr_, true);
-			hb.endTableRow();
-        }
-        q1.Finalize();
-        
-        /* Assets */
-        double assetBalance = mmDBWrapper::getAssetBalance(db_);
-        wxString assetBalanceStr;
-        mmDBWrapper::loadBaseCurrencySettings(db_);
-        mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
-
-	hb.addRowSeparator(3);
-	hb.addTotalRow(_("Total Assets: "), 3, assetBalanceStr);
-        hb.endTable();
-
-	hb.endCenter();
-        hb.end();
-
-        return hb.getHTMLText();
+    return hb.getHTMLText();
 }
