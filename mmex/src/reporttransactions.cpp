@@ -91,7 +91,7 @@ wxString mmReportTransactions::getHTMLText()
         if ( refAccountID_ > -1 && refTrans[index]->transType_ == TRANS_TYPE_TRANSFER_STR && 
              (refAccountID_ == refTrans[index]->accountID_ || refAccountID_ == refTrans[index]->toAccountID_) )
         {
-            boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(refAccountID_);
+            boost::shared_ptr<mmAccount> pAccount = core_->getAccountSharedPtr(refAccountID_);
             boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
             wxASSERT(pCurrency);
             pCurrency->loadCurrencySettings();

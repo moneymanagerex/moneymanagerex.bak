@@ -948,7 +948,7 @@ void mmCheckingPanel::setAccountSummary()
 {
     double checking_bal = core_->bTransactionList_.getBalance(m_AccountID);
     double reconciledBal = core_->bTransactionList_.getReconciledBalance(m_AccountID);
-    double acctInitBalance = core_->accountList_.getAccountSharedPtr(m_AccountID)->initialBalance_;
+    double acctInitBalance = core_->getAccountSharedPtr(m_AccountID)->initialBalance_;
     
     wxString balance, recbalance;
     mmex::formatDoubleToCurrency(checking_bal + acctInitBalance, balance);
@@ -1037,7 +1037,7 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
     if (pgd)
     pgd->Update(20);
    
-    boost::shared_ptr<mmAccount> pAccount = core_->accountList_.getAccountSharedPtr(m_AccountID);
+    boost::shared_ptr<mmAccount> pAccount = core_->getAccountSharedPtr(m_AccountID);
     boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
     wxASSERT(pCurrency);
     pCurrency->loadCurrencySettings();
