@@ -1159,7 +1159,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
             boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(core_->db_));
             pTransaction = pTemp;
 
-            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
+            boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->getCurrencyWeakPtr(fromAccountID).lock();
             wxASSERT(pCurrencyPtr);
 
             pTransaction->accountID_ = fromAccountID;

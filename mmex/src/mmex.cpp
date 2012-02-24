@@ -898,7 +898,7 @@ void mmGUIFrame::OnAutoRepeatTransactionsTimer(wxTimerEvent& /*event*/)
                 boost::shared_ptr<mmBankTransaction> pTemp(new mmBankTransaction(m_core.get()->db_));
                 pTransaction = pTemp;
 
-                boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->accountList_.getCurrencyWeakPtr(th.accountID_).lock();
+                boost::shared_ptr<mmCurrency> pCurrencyPtr = m_core.get()->getCurrencyWeakPtr(th.accountID_).lock();
                 wxASSERT(pCurrencyPtr);
 
                 pTransaction->accountID_ = th.accountID_;

@@ -478,7 +478,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
     if (fromAccountID > 0)
     {
         
-        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(fromAccountID).lock();
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->getCurrencyWeakPtr(fromAccountID).lock();
         wxASSERT(pCurrencyPtr);
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
              

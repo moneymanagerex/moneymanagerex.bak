@@ -157,7 +157,7 @@ mmBankTransaction::mmBankTransaction(mmCoreDB* core, wxSQLite3ResultSet& q1)
     toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
     category_ = core->getCategorySharedPtr(q1.GetInt(wxT("CATEGID")), q1.GetInt(wxT("SUBCATEGID")));
 
-    boost::shared_ptr<mmCurrency> pCurrencyPtr = core->accountList_.getCurrencyWeakPtr(accountID_).lock();
+    boost::shared_ptr<mmCurrency> pCurrencyPtr = core->getCurrencyWeakPtr(accountID_).lock();
     wxASSERT(pCurrencyPtr);
 
     splitEntries_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());

@@ -105,7 +105,7 @@ wxString mmReportCashFlow::getHTMLText()
 
         core_->bTransactionList_.getDailyBalance(account->id_, daily_balance);
 
-        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(account->id_).lock();
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->getCurrencyWeakPtr(account->id_).lock();
         wxASSERT(pCurrencyPtr);
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
         double rate = pCurrencyPtr->baseConv_;

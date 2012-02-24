@@ -60,6 +60,7 @@ public:
     boost::shared_ptr<mmAccount> getAccountSharedPtr(int accountID) const { return accountList_.getAccountSharedPtr(accountID); }
     int getNumAccounts() const { return accountList_.getNumAccounts(); }
     int getNumBankAccounts() const { return accountList_.getNumBankAccounts(); }
+    boost::weak_ptr<mmCurrency> getCurrencyWeakPtr(int accountID) const { return accountList_.getCurrencyWeakPtr(accountID); }
     int addAccount(boost::shared_ptr<mmAccount> pAccount) { return accountList_.add(pAccount); };
     void updateAccount(boost::shared_ptr<mmAccount> pAccount) { return accountList_.update(pAccount); };
     bool accountExists(const wxString& name) const { return accountList_.exists(name); };
