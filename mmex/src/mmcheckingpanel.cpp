@@ -874,13 +874,13 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
         convertion = ( convrate < toconvrate ? amount/toamount : toamount/amount);
         wxString convertionStr;
 
-        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(toaccountId).lock();
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->getCurrencyWeakPtr(toaccountId).lock();
         wxASSERT(pCurrencyPtr);
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
         mmex::formatDoubleToCurrency(toamount, toamountStr);
         mmex::formatDoubleToCurrencyEdit(convertion, convertionStr);
 
-        pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
+        pCurrencyPtr = core_->getCurrencyWeakPtr(accountId).lock();
         wxASSERT(pCurrencyPtr);
         mmex::CurrencyFormatter::instance().loadSettings(*pCurrencyPtr);
         mmex::formatDoubleToCurrency(amount, amountStr);
@@ -926,7 +926,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
             mmDBWrapper::loadSettings(core_->db_.get(), pCurrency->currencyID_);
             mmex::formatDoubleToCurrency(amount*convrate, basecuramountStr);
 
-            pCurrency = core_->accountList_.getCurrencyWeakPtr(accountId).lock();
+            pCurrency = core_->getCurrencyWeakPtr(accountId).lock();
             wxASSERT(pCurrency);
             mmex::CurrencyFormatter::instance().loadSettings(*pCurrency);
             mmex::formatDoubleToCurrency(amount, amountStr);
@@ -1770,7 +1770,7 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
         if (useOriginalDate == wxT("TRUE"))
             useOriginal = true;
         boost::shared_ptr<mmBankTransaction> pCopiedTrans = m_cp->core_->bTransactionList_.copyTransaction(m_selectedForCopy, useOriginal);
-        boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->accountList_.getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
+        boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
         pCopiedTrans->updateAllData(m_cp->core_, pCopiedTrans->accountID_, pCurrencyPtr, true);
         m_cp->initVirtualListControl(NULL);
         RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);

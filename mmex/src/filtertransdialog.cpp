@@ -419,7 +419,7 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
                 {
                     pBankTransaction->reportCategAmount_ = fabs(pBankTransaction->getAmountForSplit(categID_, subcategID_));
 
-                    boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->accountList_.getCurrencyWeakPtr(pBankTransaction->accountID_).lock();
+                    boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->getCurrencyWeakPtr(pBankTransaction->accountID_).lock();
                     wxASSERT(pCurrencyPtr);
                     mmex::formatDoubleToCurrencyEdit(pBankTransaction->reportCategAmount_, pBankTransaction->reportCategAmountStr_);
                 }
