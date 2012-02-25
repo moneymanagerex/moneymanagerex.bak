@@ -36,8 +36,6 @@ public:
    int transactionID() const { return transactionID_; }
    void transactionID(int transactionID) { transactionID_ = transactionID; }
 
-   virtual double value(int accountCtx) = 0;
-
 protected:
    int transactionID_;
 };
@@ -84,7 +82,6 @@ public:
     bool containsCategory(int categID, int subcategID, bool ignoreSubCateg = false) const;
     double getAmountForSplit(int categID, int subcategID) const;
 
-    double value(int accountID);
     void updateAllData(mmCoreDB* core,
         int accountID,
         boost::shared_ptr<mmCurrency> currencyPtr,

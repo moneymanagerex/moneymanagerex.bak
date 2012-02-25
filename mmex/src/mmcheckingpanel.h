@@ -27,7 +27,6 @@
 #include <boost/shared_ptr.hpp>
 #include <vector>
 //----------------------------------------------------------------------------
-class mmCoreDB;
 class mmBankTransaction;
 class TransactionListCtrl;
 class TransFilterDialog;
