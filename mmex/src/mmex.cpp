@@ -366,11 +366,6 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_MENU(MENU_EXPORT_HTML, mmGUIFrame::OnExportToHtml)
     EVT_MENU(MENU_BILLSDEPOSITS, mmGUIFrame::OnBillsDeposits)
 
-//  Fix me: Stock Code Broken - Getting exceptions in Debug Mode. Causes assert error.
-//          temporarily removed to prevent code execution.
-//          Something is not correct. Code being called when no an accountID present.
-//          Unexpected behavior Possible missing code somewhere ???
-//  EVT_MENU(MENU_STOCKS, mmGUIFrame::OnStocks)
     EVT_MENU(MENU_ASSETS, mmGUIFrame::OnAssets)
     EVT_MENU(MENU_CURRENCY, mmGUIFrame::OnCurrency)
     EVT_MENU(MENU_TRANSACTIONREPORT, mmGUIFrame::OnTransactionReport)
@@ -400,6 +395,7 @@ BEGIN_EVENT_TABLE(mmGUIFrame, wxFrame)
     EVT_TREE_ITEM_COLLAPSED(ID_NAVTREECTRL,mmGUIFrame::OnTreeItemCollapsed)
 
     EVT_MENU(MENU_GOTOACCOUNT, mmGUIFrame::OnGotoAccount)
+    EVT_MENU(MENU_STOCKS, mmGUIFrame::OnGotoStocksAccount)
 
     /* Navigation Panel */
     EVT_MENU(MENU_TREEPOPUP_ACCOUNT_NEW, mmGUIFrame::OnNewAccount)
@@ -770,10 +766,9 @@ bool mmGUIFrame::setNavTreeSection( wxString sectionName)
 //----------------------------------------------------------------------------
 void mmGUIFrame::setAccountNavTreeSection(wxString accountName)
 {
-    if ( setAccountInSection(_("Bank Accounts"), accountName) )
-    {
-        setAccountInSection(_("Term Accounts"), accountName); 
-    }
+    if ( setAccountInSection(_("Bank Accounts"), accountName))
+        if (setAccountInSection(_("Term Accounts"), accountName))
+            setAccountInSection(_("Stocks"), accountName);
 }
 
 //----------------------------------------------------------------------------
@@ -2627,31 +2622,8 @@ void mmGUIFrame::OnViewOpenAccounts(wxCommandEvent&)
     mmDBWrapper::setINISettingValue(m_inidb.get(), wxT("VIEWACCOUNTS"), vAccts);
 
 }
+
 //----------------------------------------------------------------------------
-
-void mmGUIFrame::createCheckingAccountPage(int accountID)
-{
-    wxSizer *sizer = cleanupHomePanel();
-    
-    panelCurrent_ = new mmCheckingPanel(m_core.get(), m_inidb.get(),  
-                                        accountID, homePanel, ID_PANEL3, 
-                                        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL
-                                       );
-
-    sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
-    homePanel->Layout();
-}
-//----------------------------------------------------------------------------
-
-void mmGUIFrame::OnGotoAccount(wxCommandEvent& WXUNUSED(event))
-{
-    if (gotoAccountID_ != -1)    
-    {
-        createCheckingAccountPage(gotoAccountID_);
-    }
-}
-//----------------------------------------------------------------------------
-
 void mmGUIFrame::createBudgetingPage(int budgetYearID)
 {
     wxSizer *sizer = cleanupHomePanel();
@@ -4173,7 +4145,7 @@ void mmGUIFrame::OnStocks(wxCommandEvent& /*event*/)
     "where ACCOUNTTYPE = 'Investment' "
     "limit 1";
     
-    if (m_db->ExecuteScalar(sql)) {
+    if (m_db->ExecuteScalar(sql)>0) {
         wxSizer *sizer = cleanupHomePanel();
         panelCurrent_ = new mmStocksPanel(m_db.get(), m_inidb.get(), m_core.get(), -1, homePanel, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
         sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
@@ -4183,8 +4155,54 @@ void mmGUIFrame::OnStocks(wxCommandEvent& /*event*/)
                      _("Investment Accounts"));
     }
 }
-//----------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------
+void mmGUIFrame::createStocksAccountPage(int accountID)
+{
+    wxSizer *sizer = cleanupHomePanel();
+    
+    panelCurrent_ = new mmStocksPanel(m_db.get(), m_inidb.get(), m_core.get(),
+                                        accountID, homePanel, ID_PANEL3, 
+                                        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL
+                                       );
+
+    sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+    homePanel->Layout();
+}
+
+//----------------------------------------------------------------------------
+void mmGUIFrame::OnGotoStocksAccount(wxCommandEvent& WXUNUSED(event))
+{
+    if (gotoAccountID_ != -1)    
+    {
+        createStocksAccountPage(gotoAccountID_);
+    }
+}
+
+//----------------------------------------------------------------------------
+void mmGUIFrame::createCheckingAccountPage(int accountID)
+{
+    wxSizer *sizer = cleanupHomePanel();
+    
+    panelCurrent_ = new mmCheckingPanel(m_core.get(), m_inidb.get(),  
+                                        accountID, homePanel, ID_PANEL3, 
+                                        wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL
+                                       );
+
+    sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
+    homePanel->Layout();
+}
+
+//----------------------------------------------------------------------------
+void mmGUIFrame::OnGotoAccount(wxCommandEvent& WXUNUSED(event))
+{
+    if (gotoAccountID_ != -1)    
+    {
+        createCheckingAccountPage(gotoAccountID_);
+    }
+}
+
+//----------------------------------------------------------------------------
 void mmGUIFrame::OnAssets(wxCommandEvent& /*event*/)
 {
     wxSizer *sizer = cleanupHomePanel();
