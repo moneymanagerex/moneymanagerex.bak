@@ -36,10 +36,11 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
 
     hb.startTable(wxT("75%"));
 	hb.startTableRow();
+	hb.addTableHeaderCell(_("Year"));
 	hb.addTableHeaderCell(_("Month"));
-	hb.addTableHeaderCell(_("Income"));
-	hb.addTableHeaderCell(_("Expenses"));
-	hb.addTableHeaderCell(_("Difference"));
+	hb.addTableHeaderCell(_("Income"), true);
+	hb.addTableHeaderCell(_("Expenses"), true);
+	hb.addTableHeaderCell(_("Difference"), true);
 	hb.endTableRow();
 
     double income = 0.0;
@@ -48,7 +49,7 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
         
     for (int yidx = 0; yidx < 12; yidx++)
     {
-        wxString monName = mmGetNiceMonthName(yidx) + wxT(" ") + yearStr;
+        wxString monName = mmGetNiceMonthName(yidx);
 
         wxDateTime dtBegin(1, (wxDateTime::Month)yidx, year_);
         wxDateTime dtEnd = dtBegin.GetLastMonthDay((wxDateTime::Month)yidx, year_);
@@ -65,24 +66,17 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
         mmex::formatDoubleToCurrencyEdit(income, actualIncStr);
 
         hb.startTableRow();
+		hb.addTableCell(yearStr, false, true);
 		hb.addTableCell(monName, false, true);
 			
 		balance = income - expenses;
 		wxString actualBalStr;
 		mmex::formatDoubleToCurrencyEdit(balance, actualBalStr);
 
-		if (balance < 0.0)
-		{
-			hb.addTableCell(actualIncStr, true, true, true);
-			hb.addTableCell(actualExpStr, true, true, true, wxT("#ff0000"));
-			hb.addTableCell(actualBalStr, true, true, true, wxT("#ff0000"));
-		}
-		else
-		{
-			hb.addTableCell(actualIncStr, true, false, true);
-			hb.addTableCell(actualExpStr, true, false, true);
-			hb.addTableCell(actualBalStr, true, false, true);
-		}
+		hb.addTableCell(actualIncStr, true, true, true);
+		hb.addTableCell(actualExpStr, true, true, true);
+		hb.addTableCell(actualBalStr, true, true, true, (balance < 0.0 ? wxT("RED") : wxT("")));
+
         hb.endTableRow();
     }
 
@@ -114,13 +108,12 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
     data.push_back(actualExpStr);
 	data.push_back(actualBalStr);
 
-	hb.addRowSeparator(4);
-	hb.addTotalRow(_("Total"), 4, data);
+	hb.addRowSeparator(5);
+	hb.addTotalRow(_("Total:"), 5, data);
 
     hb.endTable();
-
     hb.endCenter();
-
     hb.end();
+
     return hb.getHTMLText();
 }

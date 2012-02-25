@@ -67,10 +67,11 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
 
     hb.startTable(wxT("75%"));
     hb.startTableRow();
+    hb.addTableHeaderCell(_("Year"));
     hb.addTableHeaderCell(_("Month"));
-    hb.addTableHeaderCell(_("Income"));
-    hb.addTableHeaderCell(_("Expenses"));
-    hb.addTableHeaderCell(_("Difference"));
+    hb.addTableHeaderCell(_("Income"), true);
+    hb.addTableHeaderCell(_("Expenses"), true);
+    hb.addTableHeaderCell(_("Difference"), true);
     hb.endTableRow();
 
     double income = 0.0;
@@ -93,7 +94,7 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
             yearStr = wxString::Format(wxT("%d"), year_);
         }
 
-        wxString monName = mmGetNiceMonthName(yidx) + wxT(" ") + yearStr;
+        wxString monName = mmGetNiceMonthName(yidx);
 
         if (yearIndex == 0)
             dayStart = startDay;
@@ -119,24 +120,17 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
         mmex::formatDoubleToCurrencyEdit(income, actualIncStr);
 
         hb.startTableRow();
+        hb.addTableCell(yearStr, false, true);
         hb.addTableCell(monName, false, true);
 
         balance = income - expenses;
         wxString actualBalStr;
         mmex::formatDoubleToCurrencyEdit(balance, actualBalStr);
 
-        if (balance < 0.0)
-        {
-            hb.addTableCell(actualIncStr, true, true, true);
-            hb.addTableCell(actualExpStr, true, true, true, wxT("#ff0000"));
-            hb.addTableCell(actualBalStr, true, true, true, wxT("#ff0000"));
-        }
-        else
-        {
-            hb.addTableCell(actualIncStr, true, false, true);
-            hb.addTableCell(actualExpStr, true, false, true);
-            hb.addTableCell(actualBalStr, true, false, true);
-        }
+		hb.addTableCell(actualIncStr, true, true, true);
+		hb.addTableCell(actualExpStr, true, true, true);
+		hb.addTableCell(actualBalStr, true, true, true, (balance < 0.0 ? wxT("RED") : wxT("")));
+
         hb.endTableRow();
     }
 
@@ -160,14 +154,13 @@ wxString mmReportIncExpensesOverFinancialPeriod::getHTMLText()
     data.push_back(actualExpStr);
     data.push_back(actualBalStr);
 
-    hb.addRowSeparator(4);
-    hb.addTotalRow(_("Total"), 4, data);
+    hb.addRowSeparator(5);
+    hb.addTotalRow(_("Total:"), 5, data);
 
     hb.endTable();
-
     hb.endCenter();
-
     hb.end();
+
     // restore year value for printing purposes.
     year_ = printYear_;
     return hb.getHTMLText();

@@ -418,7 +418,7 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
     gg.init(tincome, texpenses);
     gg.Generate(wxT(""));
 
-	hb.addTableHeaderRow(_("Income vs Expenses: "), 2);
+	hb.addTableHeaderRow(wxString()<<_("Income vs Expenses: ") << _("Current Month"), 2);
     
 	hb.startTableRow();
 	//hb.startTableCell(wxT("50%\" align=\"center"));
@@ -431,7 +431,11 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
     //start table in table
     hb.startTable();
 
-	hb.addTableHeaderRow(_ ("Current Month"), 2);
+	hb.startTableRow();
+	hb.addTableHeaderCell(_("Type"));
+	hb.addTableHeaderCell(_("Amount"));
+	hb.endTableRow();
+//	hb.addTableHeaderRow(_("Current Month"), 2);
 	hb.startTableRow();
 	hb.addTableCell(_("Income:"), false, true);
 	hb.addTableCell(incStr, true);
