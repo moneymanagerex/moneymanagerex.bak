@@ -805,12 +805,12 @@ void mmHtmlWindow::OnLinkClicked(const wxHtmlLinkInfo& link)
     }
     else if (isStock)
     {
-       /* long id = -1;
+        long id = -1;
         number.ToLong(&id);
         frame_->setGotoAccountID(id);
         frame_->setAccountNavTreeSection(core_->getAccountName(id));
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
-        frame_->GetEventHandler()->AddPendingEvent(evt); */
+        frame_->GetEventHandler()->AddPendingEvent(evt); 
     }
 }
 

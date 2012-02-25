@@ -173,6 +173,7 @@ private:
     wxPanel* createMainFrame(wxPanel* mainpanel);
 
     void createCheckingAccountPage(int accountID);
+    void createStocksAccountPage(int accountID);
     void createBudgetingPage(int budgetYearID);
     void createControls();
     void loadConfigFile();
@@ -203,6 +204,7 @@ private:
     void OnStocks(wxCommandEvent& event);
     void OnAssets(wxCommandEvent& event);
     void OnGotoAccount(wxCommandEvent& WXUNUSED(event));
+    void OnGotoStocksAccount(wxCommandEvent& WXUNUSED(event));
     void OnViewToolbar(wxCommandEvent &event);
     void OnViewStatusbar(wxCommandEvent &event);
     void OnViewLinks(wxCommandEvent &event);
