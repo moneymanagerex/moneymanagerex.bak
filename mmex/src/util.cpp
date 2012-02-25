@@ -945,7 +945,23 @@ wxString getTransformedTrxStatus(int in)
 wxString Tips(wxString type)
 {
     wxString tipsStr = wxEmptyString;
-    if (type == wxT("checkingpanel")) 
+    if (type == TIPS_ASSETS) 
+    {
+        tipsStr = _("MMEX allows you to track fixed assets like cars, houses, land and others. Each asset can have its value appreciate by a certain rate per year, depreciate by a certain rate per year, or not change in value. The total assets are added to your total financial worth.");
+    }
+    else if (type == TIPS_STOCK) 
+    {
+        tipsStr = _("Using MMEX it is possible to track stocks/mutual funds investments.");
+    }
+    else if (type == TIPS_BILLS) 
+    {
+        wxArrayString tips;
+        tips.Add(_("MMEX allows regular payments to be set up as transactions. These transactions can also be regular deposits, or transfers that will occur at some future time. These transactions act a reminder that an event is about to occur, and appears on the Home Page 14 days before the transaction is due. "));
+        tips.Add(_("Tip: These transactions can be set up to activate – allowing the user to adjust any values on the due date."));
+            
+        tipsStr = tips[rand() % tips.GetCount()];
+    }
+    else
     {
         wxArrayString tips; 
         tips.Add(_("Recommendation: Always backup your .mmb database file regularly."));
@@ -973,22 +989,6 @@ wxString Tips(wxString type)
         tips.Add(_("Before going to a shop and buy something: take the time making a list of what you really need. In the shop buy what is in your list."));
         tipsStr = tips[rand() % tips.GetCount()];
     }    
-    else if (type == wxT("assets")) 
-    {
-        tipsStr = _("MMEX allows you to track fixed assets like cars, houses, land and others. Each asset can have its value appreciate by a certain rate per year, depreciate by a certain rate per year, or not change in value. The total assets are added to your total financial worth.");
-    }
-    else if (type == wxT("stocks")) 
-    {
-        tipsStr = _("Using MMEX it is possible to track stocks/mutual funds investments.");
-    }
-    else if (type == wxT("billsdeposits")) 
-    {
-        wxArrayString tips;
-        tips.Add(_("MMEX allows regular payments to be set up as transactions. These transactions can also be regular deposits, or transfers that will occur at some future time. These transactions act a reminder that an event is about to occur, and appears on the Home Page 14 days before the transaction is due. "));
-        tips.Add(_("Tip: These transactions can be set up to activate – allowing the user to adjust any values on the due date."));
-            
-        tipsStr = tips[rand() % tips.GetCount()];
-    }
 
     return tipsStr;
 }

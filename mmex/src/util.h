@@ -75,6 +75,11 @@ const wxString INIDB_BUDGET_SETUP_WITHOUT_SUMMARY = wxT("BUDGET_SETUP_WITHOUT_SU
 const wxString INIDB_BUDGET_SUMMARY_WITHOUT_CATEG = wxT("BUDGET_SUMMARY_WITHOUT_CATEGORIES");
 const wxString INIDB_IGNORE_FUTURE_TRANSACTIONS   = wxT("IGNORE_FUTURE_TRANSACTIONS");
 
+const wxString TIPS_BANKS  = wxT("checkingpanel");
+const wxString TIPS_BILLS  = wxT("billsdeposits");
+const wxString TIPS_STOCK = wxT("investment");
+const wxString TIPS_ASSETS = wxT("assets");
+
 void mmShowErrorMessageInvalid( wxWindow *parent, const wxString &message );
 void mmShowErrorMessage( wxWindow *parent, const wxString &message, const wxString &messageheader );
 
