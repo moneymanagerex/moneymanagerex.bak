@@ -293,32 +293,6 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
    isInited_ = true;
 }
 
-double mmBankTransaction::value(int accountID)
-{
-   double balance = 0.0;
-   if (transType_ == TRANS_TYPE_DEPOSIT_STR)
-   {
-      balance = amt_;
-   }
-   else if (transType_== TRANS_TYPE_WITHDRAWAL_STR)
-   {
-      balance -= amt_;
-   }
-   else if (transType_ == TRANS_TYPE_TRANSFER_STR)
-   {
-
-      if (accountID_ == accountID)
-      {
-         balance -= amt_;
-      }
-      else
-      {
-         wxASSERT(toAccountID_ == accountID);
-         balance += toAmt_;
-      }
-   }
-   return balance;
-}
 void mmBankTransaction::getSplitTransactions(mmCoreDB* core, mmSplitTransactionEntries* splits) const
 {
     splits->entries_.clear();
