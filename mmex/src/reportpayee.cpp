@@ -39,7 +39,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
 	hb.startTable(wxT("50%"));
 	hb.startTableRow();
 	hb.addTableHeaderCell(_("Payee"));
-	hb.addTableHeaderCell(_("Amount"));
+	hb.addTableHeaderCell(_("Amount"), true);
 	hb.endTableRow();
 
     core_->loadBaseCurrencySettings();

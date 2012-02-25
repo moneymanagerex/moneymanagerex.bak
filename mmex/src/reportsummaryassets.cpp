@@ -39,11 +39,12 @@ wxString mmReportSummaryAssets::getHTMLText()
 
     hb.startCenter();
 
-    hb.startTable(wxT("50%"));
+    hb.startTable(wxT("95%"));
     hb.startTableRow();
     hb.addTableHeaderCell(_("Name"));
     hb.addTableHeaderCell(_("Type"));
-    hb.addTableHeaderCell(_("Value"));
+    hb.addTableHeaderCell(_("Value"), true);
+    hb.addTableHeaderCell(_("Notes"));
     hb.endTableRow();
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
@@ -51,7 +52,8 @@ wxString mmReportSummaryAssets::getHTMLText()
     static const char sql[] =
     "select ASSETID, "
            "ASSETNAME, "
-           "ASSETTYPE " 
+           "ASSETTYPE, " 
+           "NOTES " 
     "from ASSETS_V1";
 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
@@ -60,9 +62,10 @@ wxString mmReportSummaryAssets::getHTMLText()
     {
         mmAssetHolder th;
 
-        th.id_           = q1.GetInt(wxT("ASSETID"));
-        th.value_             = mmDBWrapper::getAssetValue(db_, th.id_);
-        th.assetName_         = q1.GetString(wxT("ASSETNAME"));
+        th.id_         = q1.GetInt(wxT("ASSETID"));
+        th.value_      = mmDBWrapper::getAssetValue(db_, th.id_);
+        th.assetName_  = q1.GetString(wxT("ASSETNAME"));
+        th.asset_notes_ = q1.GetString(wxT("NOTES"));
 
         wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
         th.assetType_ = wxGetTranslation(assetTypeStr);
@@ -73,6 +76,7 @@ wxString mmReportSummaryAssets::getHTMLText()
         hb.addTableCell(th.assetName_, false, true);
         hb.addTableCell(th.assetType_);
         hb.addTableCell(th.valueStr_, true);
+        hb.addTableCell(th.asset_notes_);
         hb.endTableRow();
     }
     q1.Finalize();
@@ -83,8 +87,10 @@ wxString mmReportSummaryAssets::getHTMLText()
     mmDBWrapper::loadBaseCurrencySettings(db_);
     mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
-    hb.addRowSeparator(3);
+    hb.addRowSeparator(4);
     hb.addTotalRow(_("Total Assets: "), 3, assetBalanceStr);
+    hb.addTableCell(wxT(""));
+    hb.endTableRow();
     hb.endTable();
 
     hb.endCenter();

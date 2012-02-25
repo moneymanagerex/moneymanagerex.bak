@@ -66,7 +66,7 @@ wxString mmReportTransactionStats::getHTMLText()
     }
     hb.addRowSeparator(yearsHist + 1);
     hb.startTableRow();
-    hb.addTableCell(_("Total"));
+    hb.addTableCell(_("Total"), true);
 
     //Grand Totals
     for (std::map<int, int>::const_iterator it = grand_total.begin(); it != grand_total.end(); ++ it)
