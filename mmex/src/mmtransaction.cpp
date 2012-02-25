@@ -293,7 +293,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
    isInited_ = true;
 }
 
-double mmBankTransaction::value(int accountID)
+double mmBankTransaction::value(int accountID) const
 {
    double balance = 0.0;
    if (transType_ == TRANS_TYPE_DEPOSIT_STR)
@@ -317,6 +317,7 @@ double mmBankTransaction::value(int accountID)
          balance += toAmt_;
       }
    }
+
    return balance;
 }
 void mmBankTransaction::getSplitTransactions(mmCoreDB* core, mmSplitTransactionEntries* splits) const
