@@ -29,7 +29,7 @@
 //----------------------------------------------------------------------------
 class mmCoreDB;
 class mmBankTransaction;
-class MyListCtrl;
+class TransactionListCtrl;
 class TransFilterDialog;
 //----------------------------------------------------------------------------
 
@@ -96,7 +96,7 @@ public:
 
 private:
     DECLARE_EVENT_TABLE()
-    friend class MyListCtrl; // needs access to m_core, initdb_, ...
+    friend class TransactionListCtrl; // needs access to m_core, initdb_, ...
 
     wxString m_currentView;
     wxStaticText* statTextTransFilter_;
@@ -104,7 +104,7 @@ private:
     bool transFilterActive_;
     double filteredBalance_;
 
-    MyListCtrl *m_listCtrlAccount;
+    TransactionListCtrl *m_listCtrlAccount;
     const int m_AccountID;
     boost::scoped_ptr<wxImageList> m_imageList;
     std::vector<mmBankTransaction*> m_trans;
