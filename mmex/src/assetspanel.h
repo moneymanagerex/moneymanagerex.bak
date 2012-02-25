@@ -84,7 +84,7 @@ class mmAssetsPanel : public mmPanelBase
     DECLARE_EVENT_TABLE()
 
 public:
-    mmAssetsPanel(wxWindow *parent, wxSQLite3Database* db, wxSQLite3Database* inidb);
+    mmAssetsPanel(wxWindow *parent, wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core);
    ~mmAssetsPanel();
 
     void enableEditDeleteButtons(bool enable);

@@ -4175,7 +4175,7 @@ void mmGUIFrame::OnGotoAccount(wxCommandEvent& WXUNUSED(event))
 void mmGUIFrame::OnAssets(wxCommandEvent& /*event*/)
 {
     wxSizer *sizer = cleanupHomePanel();
-    panelCurrent_ = new mmAssetsPanel(homePanel, m_db.get(), m_inidb.get());
+    panelCurrent_ = new mmAssetsPanel(homePanel, m_db.get(), m_inidb.get(), m_core.get());
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
     homePanel->Layout();
 }
