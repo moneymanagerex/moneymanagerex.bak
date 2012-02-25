@@ -1185,26 +1185,9 @@ double mmCheckingPanel::getBalance(mmBankTransaction* transPtr, double currentBa
 {
     if (transPtr->status_ != wxT("V"))
     {
-        if (transPtr->transType_ == TRANS_TYPE_DEPOSIT_STR)
-        {
-            currentBalance += transPtr->amt_;
-        }
-        else if (transPtr->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
-        {
-            currentBalance -= transPtr->amt_;
-        }
-        else if (transPtr->transType_ == TRANS_TYPE_TRANSFER_STR)
-        {
-            if (transPtr->accountID_ == m_AccountID)
-            {
-                currentBalance -= transPtr->amt_;
-            }
-            else if (transPtr->toAccountID_== m_AccountID)
-            {
-                currentBalance += transPtr->toAmt_;
-            }
-        }
+        currentBalance += transPtr->value(m_AccountID);
     }
+
     return currentBalance;
 }
 //----------------------------------------------------------------------------
