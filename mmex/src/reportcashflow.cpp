@@ -79,8 +79,8 @@ wxString mmReportCashFlow::getHTMLText()
     hb.startTable(wxT("65%"));
     hb.startTableRow();
     hb.addTableHeaderCell(_("Date"));
-    hb.addTableHeaderCell(_("Total"));
-    hb.addTableHeaderCell(_("Difference"));
+    hb.addTableHeaderCell(_("Total"), true);
+    hb.addTableHeaderCell(_("Difference"), true);
     hb.endTableRow();
 
     double tInitialBalance = 0.0;

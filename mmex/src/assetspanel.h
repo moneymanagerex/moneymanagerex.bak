@@ -75,6 +75,7 @@ struct mmAssetHolder: public mmHolderBase
     wxString assetDate_;
     wxString assetNotes_;
     wxString assetValueChange_;
+    wxString asset_notes_;
 
     double valueChange_;
 };

@@ -59,10 +59,10 @@ wxString mmReportCategoryExpenses::getHTMLText()
     mmGraphPie gg;
     hb.addImage(gg.getOutputFileName());
 
-    hb.startTable(wxT("50%"));
+    hb.startTable(wxT("60%"));
     hb.startTableRow();
     hb.addTableHeaderCell(_("Category"));
-    hb.addTableHeaderCell(_("Amount"));
+    hb.addTableHeaderCell(_("Amount"), true);
     hb.endTableRow();
 
     core_->loadBaseCurrencySettings();

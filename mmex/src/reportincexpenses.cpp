@@ -54,7 +54,7 @@ wxString mmReportIncomeExpenses::getHTMLText()
 	hb.startTable(wxT("95%"));
 	hb.startTableRow();
 	hb.addTableHeaderCell(_("Type"));
-	hb.addTableHeaderCell(_("Amount"));
+	hb.addTableHeaderCell(_("Amount"), true);
 	hb.endTableRow();
 
     wxString incString;
