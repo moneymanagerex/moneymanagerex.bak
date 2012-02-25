@@ -69,18 +69,7 @@ wxString mmReportSummaryStocks::getHTMLText()
         hb.addTotalRow(wxT(""), 9, wxT(""));
         hb.addTotalRow(heldAt_, 9, wxT(""));
 
-        hb.startTableRow();
-        hb.addTableHeaderCell(_("Name"));
-        hb.addTableHeaderCell(_("Symbol"));
-        hb.addTableHeaderCell(_("Purchase Date"));
-        hb.addTableHeaderCell(_("Quantity"), true);
-        hb.addTableHeaderCell(_("Purchase Price"), true);
-        hb.addTableHeaderCell(_("Current Price"), true);
-        hb.addTableHeaderCell(_("Commission"), true);
-        hb.addTableHeaderCell(_("Gain/Loss"), true);
-        hb.addTableHeaderCell(_("Value"), true);
-        hb.endTableRow();
-
+        display_header(hb);
         wxSQLite3Statement st = db_->PrepareStatement(sql2);
         st.Bind(1, accountID);
         wxSQLite3ResultSet q2 = st.ExecuteQuery();
@@ -148,7 +137,7 @@ wxString mmReportSummaryStocks::getHTMLText()
         mmex::formatDoubleToCurrency(gain_loss_sum, gain_loss_sum_str);
     
         hb.addRowSeparator(9);
-        hb.addTotalRow(_("Total Stock Investments: "), 8, gain_loss_sum_str);
+        hb.addTotalRow(_("Total:"), 8, gain_loss_sum_str);
         hb.addTableCell(stockBalanceStr, true, true, true); //numeric, italic, bold
 
     }
@@ -164,7 +153,7 @@ wxString mmReportSummaryStocks::getHTMLText()
     mmex::formatDoubleToCurrency(stockBalance, stockBalanceStr);
 
     hb.addRowSeparator(9);
-    hb.addTotalRow(_("Total Stock Investments: "), 8, gain_loss_sum_total_str);
+    hb.addTotalRow(_("Grand Total:"), 8, gain_loss_sum_total_str);
     hb.addTableCell(stockBalanceStr, true, true, true); //numeric, italic, bold
     hb.endTableRow();
     hb.endTable();
@@ -172,4 +161,18 @@ wxString mmReportSummaryStocks::getHTMLText()
     hb.endCenter();
     hb.end();
     return hb.getHTMLText();
+}
+
+void mmReportSummaryStocks::display_header(mmHTMLBuilder& hb) {
+	hb.startTableRow();
+	hb.addTableHeaderCell(_("Name"));
+	hb.addTableHeaderCell(_("Symbol"));
+	hb.addTableHeaderCell(_("Purchase Date"));
+	hb.addTableHeaderCell(_("Quantity"), true);
+	hb.addTableHeaderCell(_("Purchase Price"), true);
+	hb.addTableHeaderCell(_("Current Price"), true);
+	hb.addTableHeaderCell(_("Commission"), true);
+	hb.addTableHeaderCell(_("Gain/Loss"), true);
+	hb.addTableHeaderCell(_("Value"), true);
+	hb.endTableRow();
 }
