@@ -714,6 +714,7 @@ int mmBankTransactionList::updateAllTransactionsForPayee(mmCoreDB* core, int pay
             }
         }
     }
+
     return 0;
 }
 
@@ -789,14 +790,7 @@ void mmBankTransactionList::getTransactionStats(int accountID, int& number,
                     continue; //skip
             }
 
-            if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
-                ++number;
-            else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
-                ++number;
-            else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
-            {
-                ++number;
-            }
+            ++number;
         }
     }
 }
@@ -831,18 +825,12 @@ double mmBankTransactionList::getAmountForPayee(int payeeID, bool ignoreDate,
                     continue;
 
                 double convRate = mmDBWrapper::getCurrencyBaseConvRate(db_.get(), pBankTransaction->accountID_);
-
-                if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
-                {
-                    amt -= pBankTransaction->amt_ * convRate;
-                }
-                else if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
-                {
-                    amt += pBankTransaction->amt_ * convRate;
-                }
+                
+                amt += pBankTransaction->value(-1) * convRate;
             }
         }
     }
+
     return amt;
 }
 
