@@ -994,7 +994,6 @@ void mmGUIFrame::menuEnableItems(bool enable)
     menuBar_->FindItem(wxID_PREFERENCES)->Enable(enable);
     if (mmIniOptions::instance().enableRepeatingTransactions_)
         menuBar_->FindItem(MENU_BILLSDEPOSITS)->Enable(enable);
-//  menuBar_->FindItem(MENU_STOCKS)->Enable(enable);
     menuBar_->FindItem(MENU_CURRENCY)->Enable(enable);
     if (mmIniOptions::instance().enableAssets_)
         menuBar_->FindItem(MENU_ASSETS)->Enable(enable);
@@ -1135,7 +1134,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId termAccount;
     if ( hasActiveTermAccounts() )
     {
-    //  Positioning for new new type of accounts: Term Accounts        
+    //  Positioning for new type of accounts: Term Accounts        
         termAccount = navTreeCtrl_->AppendItem(root, _("Term Accounts"), 9, 9);
         navTreeCtrl_->SetItemData(termAccount, new mmTreeItemData(wxT("Term Accounts")));
         navTreeCtrl_->SetItemBold(termAccount, true);
@@ -2318,12 +2317,6 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_BILLSDEPOSITS);
             AddPendingEvent(evt);
         }
-        //It should be visible only selected account stocks
-        //else if (iData->getString() == wxT("Stocks"))
-        //{
-        //    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_STOCKS);
-        //    AddPendingEvent(evt);
-        //}
         else if (iData->getString() == wxT("Assets"))
         {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_ASSETS);
@@ -2886,10 +2879,6 @@ void mmGUIFrame::createMenu()
         menuItemBillsDeposits->SetBitmap(wxBitmap(clock_xpm));
         menuTools->Append(menuItemBillsDeposits); 
     }
-
-//    wxMenuItem* menuItemStocks = new wxMenuItem(menuTools, MENU_STOCKS, _("&Stock Investments"), _("Stock Investments"));
-//    menuItemStocks->SetBitmap(wxBitmap(stock_curve_xpm));
-//    menuTools->Append(menuItemStocks);
 
     if (mmIniOptions::instance().enableAssets_)
     {
@@ -4134,26 +4123,6 @@ void mmGUIFrame::OnBillsDeposits(wxCommandEvent& WXUNUSED(event))
     sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
 
     homePanel->Layout();
-}
-//----------------------------------------------------------------------------
-
-void mmGUIFrame::OnStocks(wxCommandEvent& /*event*/)
-{
-    static const char sql[] = 
-    "select count(*) "
-    "from ACCOUNTLIST_V1 "
-    "where ACCOUNTTYPE = 'Investment' "
-    "limit 1";
-    
-    if (m_db->ExecuteScalar(sql)>0) {
-        wxSizer *sizer = cleanupHomePanel();
-        panelCurrent_ = new mmStocksPanel(m_db.get(), m_inidb.get(), m_core.get(), -1, homePanel, ID_PANEL3, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-        sizer->Add(panelCurrent_, 1, wxGROW|wxALL, 1);
-        homePanel->Layout();        
-    } else {
-        wxMessageBox(_("No investment accounts found. You can create one using the Accounts menu."),
-                     _("Investment Accounts"));
-    }
 }
 
 //----------------------------------------------------------------------------
