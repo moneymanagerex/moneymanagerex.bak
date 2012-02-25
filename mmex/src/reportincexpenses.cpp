@@ -28,22 +28,6 @@ wxString mmReportIncomeExpenses::getHTMLText()
     wxDateTime tBegin = dtBegin_;    // date needs to be adjusted
     dateDisplay.DisplayDateHeading(hb, tBegin.Add(wxDateSpan::Day()), dtEnd_, !ignoreDate_);
 
-    //wxDateTime now = wxDateTime::Now();
-    //wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
-    //hb.addHeader(7, dt);
-    //hb.addLineBreak();
-    //hb.addLineBreak();
-
-    //wxDateTime tBegin = dtBegin_;
-    //if (!ignoreDate_)
-    //{
-    //    wxString dtRange = _("From: ") 
-    //        + mmGetNiceDateSimpleString(tBegin.Add(wxDateSpan::Day())) + _(" To: ") 
-    //        + mmGetNiceDateSimpleString(dtEnd_);
-    //    hb.addHeader(7, dtRange);
-    //    hb.addLineBreak();
-    //}
-
     hb.addLineBreak();
 
 	hb.startCenter();
@@ -54,12 +38,20 @@ wxString mmReportIncomeExpenses::getHTMLText()
     double income = 0.0;
     core_->bTransactionList_.getExpensesIncome(-1,expenses, income,  ignoreDate_, dtBegin_,dtEnd_, mmIniOptions::instance().ignoreFutureTransactions_);
 
+	hb.startTable(wxT("75%"));
+	hb.addTableHeaderRow(wxT(""), 2);
+	hb.startTableRow();
+	hb.startTableCell();
+
     mmGraphIncExpensesMonth gg;
     gg.init(income, expenses);
     gg.Generate(_("Income vs Expenses"));
     hb.addImage(gg.getOutputFileName());
 
-	hb.startTable(wxT("60%"));
+	hb.endTableCell();
+	hb.startTableCell();
+
+	hb.startTable(wxT("95%"));
 	hb.startTableRow();
 	hb.addTableHeaderCell(_("Type"));
 	hb.addTableHeaderCell(_("Amount"));
@@ -80,21 +72,19 @@ wxString mmReportIncomeExpenses::getHTMLText()
 
 	hb.startTableRow();
 	hb.addTableCell(_("Expenses:"), false, true);
-	if(expenses > income)
-	{
-		hb.addTableCell(expString, true, true, true, wxT("#ff0000"));
-	}
-	else
-	{
-		hb.addTableCell(expString, true, false, true);
-	}
-
+	hb.addTableCell(expString, true, true, true, (expenses > income ? wxT("RED") : wxT("")));
     hb.endTableRow();
 
     hb.addRowSeparator(2);
     hb.addTotalRow(_("Difference:"), 2, diffString);
 
     hb.endTable();
+
+	hb.endTableCell();
+	hb.endTableRow();
+	hb.addRowSeparator(2);
+    hb.endTable();
+
     hb.endCenter();
 
     hb.end();
