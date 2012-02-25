@@ -311,9 +311,8 @@ double mmBankTransaction::value(int accountID) const
       {
          balance -= amt_;
       }
-      else
+      else if (toAccountID_ == accountID)
       {
-         wxASSERT(toAccountID_ == accountID);
          balance += toAmt_;
       }
    }
@@ -935,25 +934,7 @@ double mmBankTransactionList::getBalance(int accountID, bool ignoreFuture) const
                     continue; //skip future dated transactions
             }
 
-            if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
-                balance += pBankTransaction->amt_;
-            else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
-                balance -= pBankTransaction->amt_;
-            else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
-            {
-                if (pBankTransaction->accountID_ == accountID)
-                {
-                    balance -= pBankTransaction->amt_;
-                }
-                else if (pBankTransaction->toAccountID_ == accountID)
-                {
-                    balance += pBankTransaction->toAmt_;
-                }
-            }
-            else
-            {
-                wxASSERT(false);
-            }
+            balance += pBankTransaction->value(accountID);
         }
     }
 
@@ -981,31 +962,7 @@ bool mmBankTransactionList::getDailyBalance(int accountID, std::map<wxDateTime, 
                     continue; //skip future dated transactions
             }
 
-            double &balance = daily_balance[pBankTransaction->date_];
-
-            if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
-            {
-                balance += pBankTransaction->amt_ * convRate;
-            }
-            else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
-            {
-                balance -= pBankTransaction->amt_ * convRate;
-            }
-            else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
-            {
-                if (pBankTransaction->accountID_ == accountID)
-                {
-                    balance -= pBankTransaction->amt_ * convRate;
-                }
-                else if (pBankTransaction->toAccountID_ == accountID)
-                {
-                    balance += pBankTransaction->toAmt_ * convRate;
-                }
-            }
-            else
-            {
-                wxASSERT(false);
-            }
+            daily_balance[pBankTransaction->date_] += pBankTransaction->value(accountID) * convRate;
         }
     }
 
@@ -1032,26 +989,7 @@ double mmBankTransactionList::getReconciledBalance(int accountID, bool ignoreFut
             if (pBankTransaction->status_ != wxT("R"))
                 continue; // skip
 
-            if (pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR)
-                balance += pBankTransaction->amt_;
-            else if (pBankTransaction->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
-                balance -= pBankTransaction->amt_;
-            else if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR)
-            {
-                if (pBankTransaction->accountID_ == accountID)
-                {
-                    balance -= pBankTransaction->amt_;
-                }
-                else if (pBankTransaction->toAccountID_ == accountID)
-                {
-                    balance += pBankTransaction->toAmt_;
-                }
-            }
-            else
-            {
-                wxASSERT(false);
-            }
-
+            balance += pBankTransaction->value(accountID);
         }
     }
 
