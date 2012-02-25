@@ -70,8 +70,8 @@ BEGIN_EVENT_TABLE(assetsListCtrl, wxListCtrl)
 END_EVENT_TABLE()
 /*******************************************************/
 
-mmAssetsPanel::mmAssetsPanel(wxWindow *parent, wxSQLite3Database* db, wxSQLite3Database* inidb)    : 
-    mmPanelBase(db, inidb)
+mmAssetsPanel::mmAssetsPanel(wxWindow *parent, wxSQLite3Database* db, wxSQLite3Database* inidb, mmCoreDB* core) : 
+    mmPanelBase(db, inidb, core)
 {
     Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, wxPanelNameStr);
 }
