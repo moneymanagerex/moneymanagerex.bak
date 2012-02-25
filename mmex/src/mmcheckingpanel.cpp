@@ -337,10 +337,10 @@ bool sortTransByDateAsc(const mmBankTransaction *t1, const mmBankTransaction *t2
 } // namespace
 
 //----------------------------------------------------------------------------
-class MyListCtrl : public wxListCtrl
+class TransactionListCtrl : public wxListCtrl
 {
 public:
-    MyListCtrl(mmCheckingPanel *cp, wxWindow *parent,const wxWindowID id, const wxPoint& pos,const wxSize& size, long style);
+    TransactionListCtrl(mmCheckingPanel *cp, wxWindow *parent,const wxWindowID id, const wxPoint& pos,const wxSize& size, long style);
 
     bool getSortOrder() const { return m_asc; }
     EColumn getSortColumn() const { return m_sortCol; }
@@ -358,7 +358,7 @@ public:
     void OnViewSplitTransaction(wxCommandEvent& event);
 
 private:
-    DECLARE_NO_COPY_CLASS(MyListCtrl)
+    DECLARE_NO_COPY_CLASS(TransactionListCtrl)
     DECLARE_EVENT_TABLE()
 
     mmCheckingPanel *m_cp;
@@ -434,40 +434,40 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
 END_EVENT_TABLE()
 //----------------------------------------------------------------------------
 
-BEGIN_EVENT_TABLE(MyListCtrl, wxListCtrl)
+BEGIN_EVENT_TABLE(TransactionListCtrl, wxListCtrl)
 
-    EVT_LIST_ITEM_SELECTED(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListItemSelected)
-    EVT_LIST_ITEM_DESELECTED(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListItemDeselected)
-    EVT_LIST_ITEM_ACTIVATED(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListItemActivated)
-    EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnItemRightClick)
+    EVT_LIST_ITEM_SELECTED(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnListItemSelected)
+    EVT_LIST_ITEM_DESELECTED(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnListItemDeselected)
+    EVT_LIST_ITEM_ACTIVATED(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnListItemActivated)
+    EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnItemRightClick)
 
-    EVT_MENU(MENU_TREEPOPUP_MARKRECONCILED,   MyListCtrl::OnMarkTransaction)
-    EVT_MENU(MENU_TREEPOPUP_MARKUNRECONCILED, MyListCtrl::OnMarkTransaction)
-    EVT_MENU(MENU_TREEPOPUP_MARKVOID,         MyListCtrl::OnMarkTransaction)
-    EVT_MENU(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP, MyListCtrl::OnMarkTransaction)
-    EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE,          MyListCtrl::OnMarkTransaction)
+    EVT_MENU(MENU_TREEPOPUP_MARKRECONCILED,   TransactionListCtrl::OnMarkTransaction)
+    EVT_MENU(MENU_TREEPOPUP_MARKUNRECONCILED, TransactionListCtrl::OnMarkTransaction)
+    EVT_MENU(MENU_TREEPOPUP_MARKVOID,         TransactionListCtrl::OnMarkTransaction)
+    EVT_MENU(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP, TransactionListCtrl::OnMarkTransaction)
+    EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE,          TransactionListCtrl::OnMarkTransaction)
 
-    EVT_MENU(MENU_TREEPOPUP_MARKRECONCILED_ALL,         MyListCtrl::OnMarkAllTransactions)
-    EVT_MENU(MENU_TREEPOPUP_MARKUNRECONCILED_ALL,       MyListCtrl::OnMarkAllTransactions)
-    EVT_MENU(MENU_TREEPOPUP_MARKVOID_ALL,               MyListCtrl::OnMarkAllTransactions)
-    EVT_MENU(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL, MyListCtrl::OnMarkAllTransactions)
-    EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE_ALL,          MyListCtrl::OnMarkAllTransactions)
+    EVT_MENU(MENU_TREEPOPUP_MARKRECONCILED_ALL,         TransactionListCtrl::OnMarkAllTransactions)
+    EVT_MENU(MENU_TREEPOPUP_MARKUNRECONCILED_ALL,       TransactionListCtrl::OnMarkAllTransactions)
+    EVT_MENU(MENU_TREEPOPUP_MARKVOID_ALL,               TransactionListCtrl::OnMarkAllTransactions)
+    EVT_MENU(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP_ALL, TransactionListCtrl::OnMarkAllTransactions)
+    EVT_MENU(MENU_TREEPOPUP_MARKDUPLICATE_ALL,          TransactionListCtrl::OnMarkAllTransactions)
 
-    EVT_MENU(MENU_TREEPOPUP_NEW,                MyListCtrl::OnNewTransaction)
-    EVT_MENU(MENU_TREEPOPUP_DELETE,             MyListCtrl::OnDeleteTransaction)
-    EVT_MENU(MENU_TREEPOPUP_EDIT,               MyListCtrl::OnEditTransaction)
-    EVT_MENU(MENU_TREEPOPUP_MOVE,               MyListCtrl::OnMoveTransaction)
+    EVT_MENU(MENU_TREEPOPUP_NEW,                TransactionListCtrl::OnNewTransaction)
+    EVT_MENU(MENU_TREEPOPUP_DELETE,             TransactionListCtrl::OnDeleteTransaction)
+    EVT_MENU(MENU_TREEPOPUP_EDIT,               TransactionListCtrl::OnEditTransaction)
+    EVT_MENU(MENU_TREEPOPUP_MOVE,               TransactionListCtrl::OnMoveTransaction)
 
-    EVT_LIST_COL_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnColClick)
-    EVT_LIST_KEY_DOWN(ID_PANEL_CHECKING_LISTCTRL_ACCT, MyListCtrl::OnListKeyDown)
+    EVT_LIST_COL_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnColClick)
+    EVT_LIST_KEY_DOWN(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnListKeyDown)
 
-    EVT_MENU(MENU_ON_COPY_TRANSACTION, MyListCtrl::OnCopy) 
-    EVT_MENU(MENU_ON_PASTE_TRANSACTION, MyListCtrl::OnPaste) 
-    EVT_MENU(MENU_ON_NEW_TRANSACTION, MyListCtrl::OnNewTransaction) 
+    EVT_MENU(MENU_ON_COPY_TRANSACTION, TransactionListCtrl::OnCopy) 
+    EVT_MENU(MENU_ON_PASTE_TRANSACTION, TransactionListCtrl::OnPaste) 
+    EVT_MENU(MENU_ON_NEW_TRANSACTION, TransactionListCtrl::OnNewTransaction) 
 
-    EVT_MENU(MENU_TREEPOPUP_VIEW_SPLIT_CATEGORIES, MyListCtrl::OnViewSplitTransaction)
+    EVT_MENU(MENU_TREEPOPUP_VIEW_SPLIT_CATEGORIES, TransactionListCtrl::OnViewSplitTransaction)
 
-    EVT_CHAR(MyListCtrl::OnChar)
+    EVT_CHAR(TransactionListCtrl::OnChar)
 
 END_EVENT_TABLE();
 
@@ -685,7 +685,7 @@ void mmCheckingPanel::CreateControls()
     m_imageList->Add(wxBitmap(trans_into_xpm));
     //m_imageList->Add(wxBitmap(trans_transfer_xpm));
 
-    m_listCtrlAccount = new MyListCtrl( this, itemSplitterWindow10, 
+    m_listCtrlAccount = new TransactionListCtrl( this, itemSplitterWindow10, 
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     
@@ -1422,20 +1422,20 @@ void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
 
 //----------------------------------------------------------------------------
 
-void MyListCtrl::OnListItemSelected(wxListEvent& event)
+void TransactionListCtrl::OnListItemSelected(wxListEvent& event)
 {
     m_selectedIndex = event.GetIndex();
     m_cp->updateExtraTransactionData(m_selectedIndex);
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
+void TransactionListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 {
     m_selectedIndex = -1;
     m_cp->updateExtraTransactionData(m_selectedIndex);
 }
 
-void MyListCtrl::OnItemRightClick(wxListEvent& event)
+void TransactionListCtrl::OnItemRightClick(wxListEvent& event)
 {
     m_selectedIndex = event.GetIndex();
 
@@ -1485,7 +1485,7 @@ void MyListCtrl::OnItemRightClick(wxListEvent& event)
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::OnMarkTransactionDB(const wxString& status)
+void TransactionListCtrl::OnMarkTransactionDB(const wxString& status)
 {
     if (m_selectedIndex == -1)
         return;
@@ -1503,7 +1503,7 @@ void MyListCtrl::OnMarkTransactionDB(const wxString& status)
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::OnMarkTransaction(wxCommandEvent& event)
+void TransactionListCtrl::OnMarkTransaction(wxCommandEvent& event)
 {
     int evt = event.GetId();
     wxString status = wxT("");
@@ -1520,7 +1520,7 @@ void MyListCtrl::OnMarkTransaction(wxCommandEvent& event)
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
+void TransactionListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
 {
     int evt =  event.GetId();
     wxString status = wxT("");
@@ -1556,7 +1556,7 @@ void MyListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::OnColClick(wxListEvent& event)
+void TransactionListCtrl::OnColClick(wxListEvent& event)
 {
     /* Clear previous column image */
     setColumnImage(m_sortCol, -1);
@@ -1574,7 +1574,7 @@ void MyListCtrl::OnColClick(wxListEvent& event)
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::setColumnImage(EColumn col, int image)
+void TransactionListCtrl::setColumnImage(EColumn col, int image)
 {
     wxListItem item;
     item.SetMask(wxLIST_MASK_IMAGE);
@@ -1644,7 +1644,7 @@ wxString mmCheckingPanel::getItem(long item, long column) const
 }
 //----------------------------------------------------------------------------
 
-wxString MyListCtrl::OnGetItemText(long item, long column) const
+wxString TransactionListCtrl::OnGetItemText(long item, long column) const
 {
     return m_cp->getItem(item, column);
 }
@@ -1653,7 +1653,7 @@ wxString MyListCtrl::OnGetItemText(long item, long column) const
 /* 
     Returns the icon to be shown for each transaction for the required column
 */
-int MyListCtrl::OnGetItemColumnImage(long item, long column) const
+int TransactionListCtrl::OnGetItemColumnImage(long item, long column) const
 {
     int res = -1;
     if(column == COL_DATE_OR_TRANSACTION_ID)
@@ -1695,7 +1695,7 @@ int MyListCtrl::OnGetItemColumnImage(long item, long column) const
     Failed wxASSERT will hang application if active modal dialog presents on screen.
     Assertion's message box will be hidden until you press tab to activate one.
 */
-wxListItemAttr* MyListCtrl::OnGetItemAttr(long item) const
+wxListItemAttr* TransactionListCtrl::OnGetItemAttr(long item) const
 {
     wxASSERT(m_cp);
     wxASSERT(item >= 0);
@@ -1706,7 +1706,7 @@ wxListItemAttr* MyListCtrl::OnGetItemAttr(long item) const
     mmBankTransaction *tr = ok ? m_cp->m_trans[idx] : 0;
     bool in_the_future = tr && tr->date_ > wxDateTime::Now();
 
-    MyListCtrl &self = *const_cast<MyListCtrl*>(this);
+    TransactionListCtrl &self = *const_cast<TransactionListCtrl*>(this);
 
     if (in_the_future) // apply alternating background pattern
     {
@@ -1719,7 +1719,7 @@ wxListItemAttr* MyListCtrl::OnGetItemAttr(long item) const
 //----------------------------------------------------------------------------
 // If any of these keys are encountered, the search for the event handler
 // should continue as these keys may be processed by the operating system.
-void MyListCtrl::OnChar(wxKeyEvent& event)
+void TransactionListCtrl::OnChar(wxKeyEvent& event)
 {   
 	if (wxGetKeyState(WXK_ALT) || 
         wxGetKeyState(WXK_COMMAND) ||
@@ -1753,7 +1753,7 @@ void MyListCtrl::OnChar(wxKeyEvent& event)
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
+void TransactionListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
 {
     if (m_selectedIndex != -1) {
         m_selectedForCopy = m_cp->m_trans[m_selectedIndex]->transactionID();
@@ -1761,7 +1761,7 @@ void MyListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
+void TransactionListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 {
     if (m_selectedForCopy != -1)
     {
@@ -1778,7 +1778,7 @@ void MyListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::OnListKeyDown(wxListEvent& event)
+void TransactionListCtrl::OnListKeyDown(wxListEvent& event)
 {
     if (m_selectedIndex == -1) //check if a transaction is selected
         return;
@@ -1847,7 +1847,7 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
+void TransactionListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 {
     mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 0, false, m_cp->inidb_, this );
 
@@ -1867,7 +1867,7 @@ void MyListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
+void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex == -1) //check if a transaction is selected
         return;
@@ -1916,7 +1916,7 @@ void MyListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
+void TransactionListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex != -1)
     {
@@ -1930,7 +1930,7 @@ void MyListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
-void MyListCtrl::refreshVisualList()
+void TransactionListCtrl::refreshVisualList()
 {
     m_cp->initVirtualListControl(NULL);
     RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
@@ -1942,7 +1942,7 @@ void MyListCtrl::refreshVisualList()
 }
 
 //  Called only when moving a deposit/withdraw transaction to a new account.
-int MyListCtrl::destinationAccountID(wxString accName)
+int TransactionListCtrl::destinationAccountID(wxString accName)
 {
     wxArrayString as = m_cp->core_->getAccountsName(m_cp->accountID());
 
@@ -1959,7 +1959,7 @@ int MyListCtrl::destinationAccountID(wxString accName)
     return accountID;
 }
 
-void MyListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
+void TransactionListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex != -1)
     {
@@ -1993,7 +1993,7 @@ void MyListCtrl::OnMoveTransaction(wxCommandEvent& /*event*/)
 }
 
 //----------------------------------------------------------------------------
-void MyListCtrl::OnViewSplitTransaction(wxCommandEvent& /*event*/)
+void TransactionListCtrl::OnViewSplitTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex != -1)
     {
@@ -2005,7 +2005,7 @@ void MyListCtrl::OnViewSplitTransaction(wxCommandEvent& /*event*/)
 }
 
 //----------------------------------------------------------------------------
-void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
+void TransactionListCtrl::OnListItemActivated(wxListEvent& /*event*/)
 {
     if (m_selectedIndex != -1)
     {
@@ -2029,7 +2029,7 @@ void MyListCtrl::OnListItemActivated(wxListEvent& /*event*/)
 }
 //----------------------------------------------------------------------------
 
-MyListCtrl::MyListCtrl(
+TransactionListCtrl::TransactionListCtrl(
     mmCheckingPanel *cp, 
     wxWindow *parent,
     const wxWindowID id, 
