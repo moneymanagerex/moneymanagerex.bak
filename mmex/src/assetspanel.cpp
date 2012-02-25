@@ -376,7 +376,7 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
     else
     {
         stm -> SetLabel(wxT(""));
-        st->SetLabel(Tips(wxT("assets")));
+        st->SetLabel(Tips(TIPS_ASSETS));
         enableEditDeleteButtons(false);
     }
 }

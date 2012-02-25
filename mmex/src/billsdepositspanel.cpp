@@ -665,7 +665,7 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
     }
     else 
     {
-        st-> SetLabel(Tips(wxT("billsdeposits")));
+        st-> SetLabel(Tips(TIPS_BILLS));
         stm-> SetLabel(wxT(""));
     }
 }

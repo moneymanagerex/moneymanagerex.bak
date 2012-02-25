@@ -888,7 +888,7 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
     wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS_MINI);
     if (selectedIndex_ == -1) 
     {
-        st->SetLabel(_("Using MMEX it is possible to track stocks/mutual funds investments."));
+        st->SetLabel(Tips(TIPS_STOCK));
         stm->SetLabel(wxT(""));
     }
     else
