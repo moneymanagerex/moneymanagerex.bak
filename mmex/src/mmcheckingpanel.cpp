@@ -941,7 +941,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
 void mmCheckingPanel::showTips()
 {
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS); 
-    st->SetLabel(Tips(wxT("checkingpanel")));
+    st->SetLabel(Tips(TIPS_BANKS));
 }
 //----------------------------------------------------------------------------
 void mmCheckingPanel::setAccountSummary()
