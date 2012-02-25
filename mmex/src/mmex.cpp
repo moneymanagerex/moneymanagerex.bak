@@ -2489,6 +2489,10 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
                     }
                     menu.AppendSeparator();
                     menu.Append(MENU_TREEPOPUP_LAUNCHWEBSITE, _("&Launch Account Website"));
+                    // Enable menu item only if a website exists for the account.
+                    bool webStatus = !pAccount->website_.IsEmpty();
+                    menu.Enable(MENU_TREEPOPUP_LAUNCHWEBSITE, webStatus);
+
                     PopupMenu(&menu, pt);
                 }
             }
