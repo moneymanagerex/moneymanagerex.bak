@@ -409,27 +409,35 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
 {
     hb.startTable(wxT("95%"));
 
-    wxString incStr, expStr, difStr, colorStr;
+    wxString incStr, expStr, difStr;
     mmex::formatDoubleToCurrency(tincome, incStr); // must use loadBaseCurrencySettings (called above)
     mmex::formatDoubleToCurrency(texpenses, expStr);
     mmex::formatDoubleToCurrency(tincome-texpenses, difStr);
-    if (tincome-texpenses<0)
-    {
-        colorStr = wxT("#FF6600");
-    }
+
     mmGraphIncExpensesMonth gg;
     gg.init(tincome, texpenses);
     gg.Generate(wxT(""));
 
-	wxString headerMsg;
-	headerMsg << _("Income vs Expenses: ") << _ ("Current Month");
-	hb.addTableHeaderRow(headerMsg, 2);
+	hb.addTableHeaderRow(_("Income vs Expenses: "), 2);
+    
+	hb.startTableRow();
+	//hb.startTableCell(wxT("50%\" align=\"center"));
+	hb.startTableCell();
+    hb.addImage(gg.getOutputFileName());
+    hb.endTableCell();
+
+	//hb.startTableCell(wxT("50%\" align=\"center"));
+	hb.startTableCell();
+    //start table in table
+    hb.startTable();
+
+	hb.addTableHeaderRow(_ ("Current Month"), 2);
 	hb.startTableRow();
 	hb.addTableCell(_("Income:"), false, true);
 	hb.addTableCell(incStr, true);
 	hb.endTableRow();
-    
-	hb.startTableRow();
+
+    hb.startTableRow();
 	hb.addTableCell(_("Expenses:"), false, true);
 	hb.addTableCell(expStr, true);
 	hb.endTableRow();
@@ -437,18 +445,19 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
 	hb.addRowSeparator(2);
 	hb.startTableRow();
 	hb.addTableCell(_("Difference:"), false, true, true);
-	hb.addTableCell(difStr, true, true, true, colorStr);
+	hb.addTableCell(difStr, true, true, true, (tincome-texpenses < 0.0 ? wxT("RED"):wxT("")));
+
 	hb.endTableRow();
+
+	hb.endTable();
+    hb.endTableCell();
+    //end table in table
+
+	hb.endTableRow();
+
+	hb.addRowSeparator(2);
 	hb.endTable();
 
-    // Add the graph
-    hb.startTable(wxT("50%"), wxT("top\" align=\"center"));
-	hb.startTableRow();
-	hb.startTableCell(wxT("50%\" align=\"center"));
-    hb.addImage(gg.getOutputFileName());
-    hb.endTableCell();
-	hb.endTableRow();
-    hb.endTable();
 }
 
 //* bills & deposits *//
@@ -614,25 +623,23 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
         "and CANS.STATUS <> 'V' "
         "group by CATEG, SUBCATEG "
         "order by ABS (AMOUNT) DESC, CATEG, SUBCATEG "
-        "limit 10 "
-        ") where AMOUNT < 0" ;
+        ") where AMOUNT < 0 " 
+        "limit 7 ";
 
     wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql3);
 
     std::vector<CategInfo> categList;
 
-    hb.startTable(wxT("95%"));
     wxString headerMsg = wxString() << _("Top Withdrawals: ") << _("Last 30 Days");
-    hb.startTableRow();
-    hb.addTableCell(headerMsg, false, false, true);
-    hb.endTableRow();
-    hb.endTable();
+    hb.addLineBreak();
+    hb.addLineBreak();
 
     hb.startTable(wxT("95%"));
+	hb.addTableHeaderRow(headerMsg, 3);
     hb.startTableRow();
-    hb.addTableHeaderCell(_("Category"), false);
-    hb.addTableHeaderCell(_("Quantity"), true);
-    hb.addTableHeaderCell(_("Summary"), true);
+    hb.addTableCell(_("Category"), false, false, true);
+    hb.addTableCell(_("Quantity"), true, false, true);
+    hb.addTableCell(_("Summary"), true, false, true);
     hb.endTableRow();
 
     while(q1.NextRow())
@@ -649,6 +656,7 @@ void mmHomePagePanel::displayTopTransactions(mmHTMLBuilder& hb)
 		hb.endTableRow();
     }
     q1.Finalize();
+	hb.addRowSeparator(3);
     hb.endTable();
 
     hb.getHTMLText();
