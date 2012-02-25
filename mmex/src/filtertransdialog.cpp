@@ -642,15 +642,15 @@ wxString mmFilterTransactionsDialog::userStatusStr()
 
 wxString mmFilterTransactionsDialog::userTypeStr()
 {
-    wxString transCode;
+    wxString transCode = wxEmptyString;
     if (typeCheckBox->IsChecked())
     {
         if (cbTypeWithdrawal_->GetValue())
             transCode = TRANS_TYPE_WITHDRAWAL_STR;
         if (cbTypeDeposit_->GetValue())
-            transCode << wxT(", ") << TRANS_TYPE_DEPOSIT_STR;
+            transCode << (transCode.IsEmpty() ? wxT("") : wxT(", ")) << TRANS_TYPE_DEPOSIT_STR;
         if (cbTypeTransfer_->GetValue())
-            transCode << wxT(", ") << TRANS_TYPE_TRANSFER_STR;
+            transCode << (transCode.IsEmpty() ? wxT("") : wxT(", ")) << TRANS_TYPE_TRANSFER_STR;
     }
     return transCode;
 }
