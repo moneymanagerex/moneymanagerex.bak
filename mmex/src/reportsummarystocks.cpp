@@ -49,7 +49,7 @@ wxString mmReportSummaryStocks::getHTMLText()
            "STOCKNAME, "
            "total(NUMSHARES) as NUMSHARES, "
            "SYMBOL, "
-           "avg(CURRENTPRICE) as CURRENTPRICE, "
+           "total(CURRENTPRICE*NUMSHARES)/total(NUMSHARES) as CURRENTPRICE, "
            "total(PURCHASEPRICE*NUMSHARES)/total(NUMSHARES) as PURCHASEPRICE, "
            "total(VALUE) as VALUE, "
            "total(COMMISSION) as COMMISSION, "
@@ -73,11 +73,11 @@ wxString mmReportSummaryStocks::getHTMLText()
         hb.addTableHeaderCell(_("Name"));
         hb.addTableHeaderCell(_("Symbol"));
         hb.addTableHeaderCell(_("Purchase Date"));
-        hb.addTableHeaderCell(_("Quntity"));
-        hb.addTableHeaderCell(_("Purchase Price"));
-        hb.addTableHeaderCell(_("Current Price"));
-        hb.addTableHeaderCell(_("Commission"));
-        hb.addTableHeaderCell(_("Gain/Loss"));
+        hb.addTableHeaderCell(_("Quantity"), true);
+        hb.addTableHeaderCell(_("Purchase Price"), true);
+        hb.addTableHeaderCell(_("Current Price"), true);
+        hb.addTableHeaderCell(_("Commission"), true);
+        hb.addTableHeaderCell(_("Gain/Loss"), true);
         hb.addTableHeaderCell(_("Value"), true);
         hb.endTableRow();
 
