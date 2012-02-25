@@ -201,7 +201,6 @@ private:
     void OnPrintPagePreview(wxCommandEvent& WXUNUSED(event));
     void OnQuit(wxCommandEvent& event);
     void OnBillsDeposits(wxCommandEvent& event);
-    void OnStocks(wxCommandEvent& event);
     void OnAssets(wxCommandEvent& event);
     void OnGotoAccount(wxCommandEvent& WXUNUSED(event));
     void OnGotoStocksAccount(wxCommandEvent& WXUNUSED(event));
