@@ -28,8 +28,8 @@
 mmReportCategoryExpenses::mmReportCategoryExpenses(
     mmCoreDB* core, 
     bool ignoreDate, 
-    wxDateTime dtBegin, 
-    wxDateTime dtEnd,
+    const wxDateTime& dtBegin, 
+    const wxDateTime& dtEnd,
     const wxString& title,
     int type
 ) : 
@@ -93,7 +93,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
         int categID          = q1.GetInt(wxT("CATEGID"));
         wxString categString = q1.GetString(wxT("CATEGNAME"));
         wxString balance;
-        double amt = core_->bTransactionList_.getAmountForCategory(categID, -1, ignoreDate_,
+        double amt = core_->getAmountForCategory(categID, -1, ignoreDate_,
             dtBegin_, dtEnd_, false, false, mmIniOptions::instance().ignoreFutureTransactions_
         );
         mmex::formatDoubleToCurrency(amt, balance);
@@ -126,7 +126,7 @@ wxString mmReportCategoryExpenses::getHTMLText()
             int subcategID = q2.GetInt(wxT("SUBCATEGID"));
             wxString subcategString = q2.GetString(wxT("SUBCATEGNAME"));
 
-            amt = core_->bTransactionList_.getAmountForCategory(categID, subcategID, ignoreDate_,
+            amt = core_->getAmountForCategory(categID, subcategID, ignoreDate_,
                 dtBegin_, dtEnd_, false, false, mmIniOptions::instance().ignoreFutureTransactions_
             );
             mmex::formatDoubleToCurrency(amt, balance);

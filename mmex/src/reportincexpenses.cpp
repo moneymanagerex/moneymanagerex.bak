@@ -10,9 +10,9 @@
 mmReportIncomeExpenses::mmReportIncomeExpenses(
     mmCoreDB* core, 
     bool ignoreDate, 
-    wxDateTime dtBegin, 
-    wxDateTime dtEnd,
-    wxString title
+    const wxDateTime& dtBegin, 
+    const wxDateTime& dtEnd,
+    const wxString& title
 ) : mmPrintableBase(core), dtBegin_(dtBegin), dtEnd_(dtEnd), ignoreDate_(ignoreDate), title_(title)
 {
     wxASSERT(dtBegin_ == dtBegin);
@@ -36,7 +36,7 @@ wxString mmReportIncomeExpenses::getHTMLText()
 
     double expenses = 0.0;
     double income = 0.0;
-    core_->bTransactionList_.getExpensesIncome(-1,expenses, income,  ignoreDate_, dtBegin_,dtEnd_, mmIniOptions::instance().ignoreFutureTransactions_);
+    core_->getExpensesIncome(-1,expenses, income,  ignoreDate_, dtBegin_,dtEnd_, mmIniOptions::instance().ignoreFutureTransactions_);
 
 	hb.startTable(wxT("75%"));
 	hb.addTableHeaderRow(wxT(""), 2);

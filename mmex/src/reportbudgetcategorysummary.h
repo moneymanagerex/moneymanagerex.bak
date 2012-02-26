@@ -38,6 +38,6 @@ private:
 
     void displayReportLine(mmHTMLBuilder& hb, mmBudgetEntryHolder budEntry);
     wxString actualAmountColour( mmBudgetEntryHolder& budEntry, bool total = false);
-
 };
+
 #endif // _MM_EX_REPORTBUDGET_CATEGORYSUMMARY_H_

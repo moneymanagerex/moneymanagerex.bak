@@ -103,7 +103,7 @@ wxString mmReportCashFlow::getHTMLText()
         }
 
 
-        core_->bTransactionList_.getDailyBalance(account->id_, daily_balance);
+        core_->getDailyBalance(account->id_, daily_balance);
 
         boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->getCurrencyWeakPtr(account->id_).lock();
         wxASSERT(pCurrencyPtr);

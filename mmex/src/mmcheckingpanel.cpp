@@ -946,8 +946,8 @@ void mmCheckingPanel::showTips()
 //----------------------------------------------------------------------------
 void mmCheckingPanel::setAccountSummary()
 {
-    double checking_bal = core_->bTransactionList_.getBalance(m_AccountID);
-    double reconciledBal = core_->bTransactionList_.getReconciledBalance(m_AccountID);
+    double checking_bal = core_->getBalance(m_AccountID);
+    double reconciledBal = core_->getReconciledBalance(m_AccountID);
     double acctInitBalance = core_->getAccountSharedPtr(m_AccountID)->initialBalance_;
     
     wxString balance, recbalance;

@@ -429,7 +429,7 @@ void mmBudgetingPanel::initVirtualListControl()
         {
             transferAsDeposit = false;
         }
-        th.actual_ = core_->bTransactionList_.getAmountForCategory(th.categID_, th.subcategID_, false,
+        th.actual_ = core_->getAmountForCategory(th.categID_, th.subcategID_, false,
             dtBegin, dtEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
         );
         if (th.actual_ < 0)
@@ -486,7 +486,7 @@ void mmBudgetingPanel::initVirtualListControl()
             {
                 transferAsDeposit = false;
             }
-            thsub.actual_ = core_->bTransactionList_.getAmountForCategory(thsub.categID_, thsub.subcategID_, false,
+            thsub.actual_ = core_->getAmountForCategory(thsub.categID_, thsub.subcategID_, false,
                 dtBegin, dtEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
             );
             if (thsub.actual_ < 0)

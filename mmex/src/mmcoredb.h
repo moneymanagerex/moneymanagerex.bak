@@ -96,6 +96,31 @@ public:
     bool has_term_account() const { return accountList_.has_term_account(); }
     std::pair<mmAccountList::const_iterator, mmAccountList::const_iterator> rangeAccount() const { return accountList_.range(); }
 
+    /*Transaction Functions*/
+    void getExpensesIncome(int accountID, double& expenses, double& income, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const
+    {
+        return bTransactionList_.getExpensesIncome(accountID, expenses, income, ignoreDate, dtBegin, dtEnd, ignoreFuture);
+    }
+    double getAmountForCategory(int categID, int subcategID, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool evaluateTransfer = false, bool asDeposit = false, bool ignoreFuture = false) const
+    {
+        return bTransactionList_.getAmountForCategory(categID, subcategID, ignoreDate, dtBegin, dtEnd, evaluateTransfer, asDeposit, ignoreFuture);
+    }
+    double getAmountForPayee(int payeeID, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const
+    {
+        return bTransactionList_.getAmountForPayee(payeeID, ignoreDate, dtBegin, dtEnd, ignoreFuture);
+    }
+    void getTransactionStats(int accountID, int& number, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const
+    {
+        return bTransactionList_.getTransactionStats(accountID, number, ignoreDate, dtBegin, dtEnd, ignoreDate);
+    }
+    double getBalance(int accountID, bool ignoreFuture = false) const { return bTransactionList_.getBalance(accountID, ignoreFuture); }
+    bool   getDailyBalance(int accountID, std::map<wxDateTime, double>& daily_balance, bool ignoreFuture = false) const 
+    { 
+        return bTransactionList_.getDailyBalance(accountID, daily_balance, ignoreFuture); 
+    }
+    double getReconciledBalance(int accountID, bool ignoreFuture = false) const { return bTransactionList_.getReconciledBalance(accountID, ignoreFuture); }
+    int    countFollowupTransactions() const { return bTransactionList_.countFollowupTransactions(); }
+
 public: 
    mmCoreDB(boost::shared_ptr<wxSQLite3Database>);
 
