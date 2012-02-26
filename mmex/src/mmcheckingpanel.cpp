@@ -1642,18 +1642,14 @@ int TransactionListCtrl::OnGetItemColumnImage(long item, long column) const
     {
         res = ICON_NONE;
         wxString status = m_cp->getItem(item, COL_STATUS);
-        if ( status == wxT("F"))       {
+        if ( status == wxT("F")) 
             res = ICON_FOLLOWUP;
-        
-        } else if (status == wxT("R")) {
+        else if (status == wxT("R"))
             res = ICON_RECONCILED;
-        
-        } else if (status == wxT("V")) {
+        else if (status == wxT("V"))
             res = ICON_VOID;
-        
-        } else if (status == wxT("D")) {
+        else if (status == wxT("D"))
             res = ICON_DUPLICATE;
-        }
     }
 
     if(column == COL_PAYEE_STR)
@@ -1669,6 +1665,7 @@ int TransactionListCtrl::OnGetItemColumnImage(long item, long column) const
                 res = ICON_TRANS_DEPOSIT;
         }
     }
+
     return res;
 }
 //----------------------------------------------------------------------------
