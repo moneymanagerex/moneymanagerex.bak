@@ -138,9 +138,7 @@ void createColumns(wxSQLite3Database *inidb_, wxListCtrl &lst)
         
         long width = -1;
         
-        if (val.ToLong(&width)) {
-            lst.SetColumnWidth(i, width);    
-        }
+        if (val.ToLong(&width)) lst.SetColumnWidth(i, width);    
     }
 }
 //----------------------------------------------------------------------------
@@ -517,7 +515,8 @@ bool mmCheckingPanel::Create(
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     bool ok = wxPanel::Create(parent, winid, pos, size, style, name);
 
-    if (ok) {
+    if (ok) 
+    {
         Freeze();
         CreateControls();
         GetSizer()->Fit(this);
