@@ -10,8 +10,8 @@
 mmReportPayeeExpenses::mmReportPayeeExpenses(
     mmCoreDB* core,
     bool ignoreDate,
-    wxDateTime dtBegin,
-    wxDateTime dtEnd,
+    const wxDateTime& dtBegin,
+    const wxDateTime& dtEnd,
     const wxString& title
 ) : mmPrintableBase(core), dtBegin_(dtBegin), dtEnd_(dtEnd), ignoreDate_(ignoreDate), title_(title)
 {
@@ -52,7 +52,7 @@ wxString mmReportPayeeExpenses::getHTMLText()
     for (mmPayeeList::const_iterator it = payee_range.first; it != payee_range.second; ++ it)
     {
         wxString balance;
-        double amt = core_->bTransactionList_.getAmountForPayee((*it)->id_,
+        double amt = core_->getAmountForPayee((*it)->id_,
             ignoreDate_, dtBegin_, dtEnd_, mmIniOptions::instance().ignoreFutureTransactions_
         );
         mmex::formatDoubleToCurrency(amt, balance);

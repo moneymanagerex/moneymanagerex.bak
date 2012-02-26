@@ -85,8 +85,8 @@ private:
     void displayStocksHeader(mmHTMLBuilder& hb, wxString summaryTitle );
     void displaySectionTotal(mmHTMLBuilder& hb, wxString totalsTitle, double& tBalance, bool showSeparator = true );
 
-    void displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, wxDateTime& dtBegin, wxDateTime& dtEnd);
-    void displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, wxDateTime& dtBegin, wxDateTime& dtEnd);
+    void displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd);
+    void displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd);
     void displayStocks(mmHTMLBuilder& hb, double& tBalance /*, double& tIncome, double& tExpenses */);
     void displayAssets(mmHTMLBuilder& hb, double& tBalance);
     void displayCurrencies(mmHTMLBuilder& hb);

@@ -62,7 +62,7 @@ wxString mmReportSummary::getHTMLText()
 
         if (pCA->acctType_ == ACCOUNT_TYPE_BANK && pCA->status_ == mmAccount::MMEX_Open)
         {
-            double bal = pCA->initialBalance_ + core_->bTransactionList_.getBalance(pCA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
+            double bal = pCA->initialBalance_ + core_->getBalance(pCA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
               
             boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->getCurrencyWeakPtr(pCA->id_).lock();
             wxASSERT(pCurrencyPtr);
@@ -102,7 +102,7 @@ wxString mmReportSummary::getHTMLText()
 
         if (pTA->status_== mmAccount::MMEX_Open && pTA->acctType_ == ACCOUNT_TYPE_TERM)
         {
-            double bal = pTA->initialBalance_ + core_->bTransactionList_.getBalance(pTA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
+            double bal = pTA->initialBalance_ + core_->getBalance(pTA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
               
             boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->getCurrencyWeakPtr(pTA->id_).lock();
             wxASSERT(pCurrencyPtr);

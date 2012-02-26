@@ -25,7 +25,7 @@
 class mmReportPayeeExpenses : public mmPrintableBase 
 {
 public:
-    mmReportPayeeExpenses(mmCoreDB* core, bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd, const wxString& title);
+    mmReportPayeeExpenses(mmCoreDB* core, bool ignoreDate, const wxDateTime& dtBegin, const wxDateTime& dtEnd, const wxString& title);
 
     wxString getHTMLText();
 

@@ -29,7 +29,7 @@ class wxSQLite3Database;
 class mmReportCategoryExpenses : public mmPrintableBase 
 {
 public:
-    mmReportCategoryExpenses(mmCoreDB* core, bool ignoreDate, wxDateTime dtBegin, wxDateTime dtEnd, const wxString& title, int type);
+    mmReportCategoryExpenses(mmCoreDB* core, bool ignoreDate, const wxDateTime& dtBegin, const wxDateTime& dtEnd, const wxString& title, int type);
 
     wxString getHTMLText();
 
