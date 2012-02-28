@@ -101,14 +101,12 @@ void mmBudgetYearEntryDialog::CreateControls()
     itemGridSizer2->Add(itemStaticText51, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxString itemYearStrings[] =  
-    {
-        wxT("None"),
-    };
+    wxArrayString itemYearStrings;
+    itemYearStrings.Add(wxT("None"));
+    
     itemChoice_ = new wxChoice( itemDialog1, ID_DIALOG_BUDGETYEARENTRY_COMBO_YEARS, 
-        wxDefaultPosition, wxSize(textYear_->GetSize()), 1, itemYearStrings, 0 );
+        wxDefaultPosition, wxSize(textYear_->GetSize()), itemYearStrings );
     itemGridSizer2->Add(itemChoice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    itemChoice_->SetSelection(0);
     itemChoice_->SetToolTip(_("Specify year to base budget on."));
     
     static const char sql[] =
