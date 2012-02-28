@@ -111,7 +111,7 @@ public:
     }
     void getTransactionStats(int accountID, int& number, bool ignoreDate, const wxDateTime &dtBegin, const wxDateTime &dtEnd, bool ignoreFuture = false) const
     {
-        return bTransactionList_.getTransactionStats(accountID, number, ignoreDate, dtBegin, dtEnd, ignoreDate);
+        return bTransactionList_.getTransactionStats(accountID, number, ignoreDate, dtBegin, dtEnd, ignoreFuture);
     }
     double getBalance(int accountID, bool ignoreFuture = false) const { return bTransactionList_.getBalance(accountID, ignoreFuture); }
     bool   getDailyBalance(int accountID, std::map<wxDateTime, double>& daily_balance, bool ignoreFuture = false) const 
