@@ -100,7 +100,7 @@ void mmNewAcctDialog::fillControlsWithData()
     textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_NOTES);
     textCtrl->SetValue(pAccount->notes_);
 
-	wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
+    wxChoice* itemAcctType = (wxChoice*)FindWindow(ID_DIALOG_NEWACCT_COMBO_ACCTTYPE);
     if (pAccount->acctType_ == ACCOUNT_TYPE_BANK)
        itemAcctType->SetSelection(ACCT_TYPE_CHECKING);
     else if (pAccount->acctType_ == ACCOUNT_TYPE_TERM)
@@ -117,7 +117,7 @@ void mmNewAcctDialog::fillControlsWithData()
     wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT);
     itemCheckBox->SetValue(pAccount->favoriteAcct_);
 
-	textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE);
+    textCtrl = (wxTextCtrl*)FindWindow(ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE);
     double initBal = pAccount->initialBalance_;
 
     boost::shared_ptr<mmCurrency> pCurrency = pAccount->currency_.lock();
@@ -158,14 +158,13 @@ void mmNewAcctDialog::CreateControls()
     itemGridSizer2->Add(itemStaticText51, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxString itemAcctTypeStrings[] =  
-    {
-       _("Checking"),   // ACCOUNT_TYPE_BANK
-       _("Investment"), // ACCOUNT_TYPE_STOCK
-       _("Term"),       // ACCOUNT_TYPE_TERM
-    };
+    wxArrayString itemAcctTypeStrings;
+       itemAcctTypeStrings.Add(_("Checking"));   // ACCOUNT_TYPE_BANK
+       itemAcctTypeStrings.Add(_("Investment")); // ACCOUNT_TYPE_STOCK
+       itemAcctTypeStrings.Add(_("Term"));       // ACCOUNT_TYPE_TERM
+
     wxChoice* itemChoice61 = new wxChoice( itemDialog1, ID_DIALOG_NEWACCT_COMBO_ACCTTYPE, 
-        wxDefaultPosition, wxDefaultSize, 3, itemAcctTypeStrings, 0 );
+        wxDefaultPosition, wxDefaultSize, itemAcctTypeStrings);
     itemGridSizer2->Add(itemChoice61, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
     itemChoice61->SetSelection(ACCT_TYPE_CHECKING);
     itemChoice61->SetToolTip(_("Specify the type of account to be created."));
@@ -226,27 +225,25 @@ void mmNewAcctDialog::CreateControls()
     itemGridSizer2->Add(itemStaticText15, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxString itemChoice6Strings[] =  
-    {
-        _("Open"),
-        _("Closed")
-    };
+    wxArrayString itemChoice6Strings;  
+    itemChoice6Strings.Add(_("Open"));
+    itemChoice6Strings.Add(_("Closed"));
+
     wxChoice* itemChoice6 = new wxChoice( itemDialog1, 
-        ID_DIALOG_NEWACCT_COMBO_ACCTSTATUS, wxDefaultPosition, wxDefaultSize, 2, itemChoice6Strings, 0 );
+        ID_DIALOG_NEWACCT_COMBO_ACCTSTATUS, wxDefaultPosition, wxDefaultSize, itemChoice6Strings);
     itemGridSizer2->Add(itemChoice6, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
     itemChoice6->SetSelection(ACCT_STATUS_OPEN);
     itemChoice6->SetToolTip(_("Specify if this account has been closed. Closed accounts are inactive in most calculations, reporting etc."));
     
     wxStaticText* itemStaticText18 = new wxStaticText( itemDialog1, 
-        wxID_STATIC, _("Initial Balance:"), wxDefaultPosition, wxDefaultSize, 0 );
+        wxID_STATIC, _("Initial Balance:"), wxDefaultPosition, wxDefaultSize, 0);
     itemGridSizer2->Add(itemStaticText18, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    //TODO: validator
     wxTextCtrl* itemTextCtrl19 = new wxTextCtrl( itemDialog1, 
         ID_DIALOG_NEWACCT_TEXTCTRL_INITBALANCE, 
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+        wxT(""), wxDefaultPosition, wxDefaultSize, 0 , doubleValidator());
     itemGridSizer2->Add(itemTextCtrl19, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
     itemTextCtrl19->SetToolTip(_("Enter the initial balance in this account."));
 
@@ -380,7 +377,7 @@ void mmNewAcctDialog::OnOk(wxCommandEvent& /*event*/)
     if (acctStatus == ACCT_STATUS_CLOSED)
         pAccount->status_ = mmAccount::MMEX_Closed;
 
-	wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT);
+    wxCheckBox* itemCheckBox = (wxCheckBox*)FindWindow(ID_DIALOG_NEWACCT_CHKBOX_FAVACCOUNT);
     if (itemCheckBox->IsChecked())
        pAccount->favoriteAcct_ = true;
     else
