@@ -344,26 +344,25 @@ void mmBDDialog::CreateControls()
     staticTextRepeats_ = new wxStaticText( itemDialog1, wxID_STATIC, _("Repeats") );
     itemFlexGridSizer5->Add(staticTextRepeats_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
     
-    wxString repeatsStrChoiceArray[] = 
-    {
-        _("None"),
-        _("Weekly"),
-        _("Bi-Weekly"),
-        _("Monthly"),
-        _("Bi-Monthly"),
-        _("Quarterly"),
-        _("Half-Yearly"),
-        _("Yearly"),
-        _("Four Months"),
-        _("Four Weeks"),
-        _("Daily"),
-        _("In (x) Days"),
-        _("In (x) Months"),
-        _("Every (x) Days"),
-        _("Every (x) Months"),
-    };  
+    wxArrayString repeatsStrChoiceArray; 
+    repeatsStrChoiceArray.Add(_("None"));
+    repeatsStrChoiceArray.Add(_("Weekly"));
+    repeatsStrChoiceArray.Add(_("Bi-Weekly"));
+    repeatsStrChoiceArray.Add(_("Monthly"));
+    repeatsStrChoiceArray.Add(_("Bi-Monthly"));
+    repeatsStrChoiceArray.Add(_("Quarterly"));
+    repeatsStrChoiceArray.Add(_("Half-Yearly"));
+    repeatsStrChoiceArray.Add(_("Yearly"));
+    repeatsStrChoiceArray.Add(_("Four Months"));
+    repeatsStrChoiceArray.Add(_("Four Weeks"));
+    repeatsStrChoiceArray.Add(_("Daily"));
+    repeatsStrChoiceArray.Add(_("In (x) Days"));
+    repeatsStrChoiceArray.Add(_("In (x) Months"));
+    repeatsStrChoiceArray.Add(_("Every (x) Days"));
+    repeatsStrChoiceArray.Add(_("Every (x) Months"));
+    
     itemRepeats_ = new wxChoice( itemDialog1, ID_DIALOG_BD_COMBOBOX_REPEATS, wxDefaultPosition, 
-                                 wxSize(110, -1), 15, repeatsStrChoiceArray, 0);
+                                 wxSize(110, -1), repeatsStrChoiceArray);
 
     wxBoxSizer* repeatBoxSizer = new wxBoxSizer(wxHORIZONTAL);
     bSetNextOccurDate_ = new wxButton( itemDialog1, ID_DIALOG_TRANS_BUTTONTRANSNUM, _("Next"),

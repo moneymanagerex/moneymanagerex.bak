@@ -168,13 +168,12 @@ void mmBudgetEntryDialog::CreateControls()
         _("Type:"), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridSizer2->Add(itemStaticText101, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
-    wxString itemTypeStrings[] =  
-    {
-        _("Expense"),
-        _("Income"),
-    };
+    wxArrayString itemTypeStrings;  
+    itemTypeStrings.Add(_("Expense"));
+    itemTypeStrings.Add(_("Income"));
+
     type_ = new wxChoice( itemPanel7, ID_DIALOG_BUDGETENTRY_COMBO_TYPE, 
-        wxDefaultPosition, wxDefaultSize, 2, itemTypeStrings, 0 );
+        wxDefaultPosition, wxDefaultSize, itemTypeStrings);
     itemGridSizer2->Add(type_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     type_->SetSelection(DEF_TYPE_EXPENSE);
     type_->SetToolTip(_("Specify whether this category is an income or an expense category"));
@@ -183,20 +182,19 @@ void mmBudgetEntryDialog::CreateControls()
         _("Frequency:"), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridSizer2->Add(itemStaticText51, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
-    wxString itemFrequencyTypeStrings[] =  
-    {
-        _("None"),
-        _("Weekly"),
-        _("Bi-Weekly"),
-        _("Monthly"),
-        _("Bi-Monthly"),
-        _("Quarterly"),
-        _("Half-Yearly"),
-        _("Yearly"),
-        _("Daily"),
-    };
+    wxArrayString itemFrequencyTypeStrings;  
+    itemFrequencyTypeStrings.Add(_("None"));
+    itemFrequencyTypeStrings.Add(_("Weekly"));
+    itemFrequencyTypeStrings.Add(_("Bi-Weekly"));
+    itemFrequencyTypeStrings.Add(_("Monthly"));
+    itemFrequencyTypeStrings.Add(_("Bi-Monthly"));
+    itemFrequencyTypeStrings.Add(_("Quarterly"));
+    itemFrequencyTypeStrings.Add(_("Half-Yearly"));
+    itemFrequencyTypeStrings.Add(_("Yearly"));
+    itemFrequencyTypeStrings.Add(_("Daily"));
+
     itemChoice_ = new wxChoice( itemPanel7, ID_DIALOG_BUDGETENTRY_COMBO_FREQTYPE, 
-        wxDefaultPosition, wxDefaultSize, 9, itemFrequencyTypeStrings, 0 );
+        wxDefaultPosition, wxDefaultSize, itemFrequencyTypeStrings);
     itemGridSizer2->Add(itemChoice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     itemChoice_->SetSelection(DEF_FREQ_MONTHLY);
     itemChoice_->SetToolTip(_("Specify the frequency of the expense or deposit"));
