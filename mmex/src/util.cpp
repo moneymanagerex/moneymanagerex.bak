@@ -863,16 +863,19 @@ void mmex::formatDoubleToCurrency(double val, wxString& rdata)
 
 bool mmex::formatCurrencyToDouble(const wxString& str, double& val)
 {
+    // Correct Empty String conversion test from wxChar to wxString.
+    wxString emptyCharStr = wxT('');
+
     val = 0;
     const CurrencyFormatter &fmt = CurrencyFormatter::instance();
     wxString s = str;
     // remove separators from the amount.
     wxString gs = fmt.getGroupSeparator();
-    s.Replace(gs, wxEmptyString);
+    if (gs != emptyCharStr) s.Replace(gs, wxEmptyString);
 
     // adjust decimal point char to a decimal point.
     wxString gdp = fmt.getDecimalPoint();
-    s.Replace(gdp, wxT("."));
+    if (gdp != emptyCharStr) s.Replace(gdp, wxT("."));
 
     return !s.empty() && s.ToDouble(&val);
 }
