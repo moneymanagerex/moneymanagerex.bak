@@ -12,7 +12,7 @@
 ; Copyright (C) 2011-2012 Stefano Giorgio
 
 #define MyAppName "MoneyManagerEX"
-#define MyAppVersion "0.9.9.0"
+#define MyAppVersion "0.9.9.0 DEV:SVN-1902"
 #define MyAppPublisher "CodeLathe, LLC"
 #define MyAppURL "http://www.codelathe.com/mmex"
 #define MyAppExeName "mmex.exe"
@@ -20,8 +20,8 @@
 ;===============================================================================
 ; Local definitions specifically designed for my setup 
 #define mmex_svn_path "C:\Users\Stef\Documents\SVN\MoneyManagerEX\trunk\mmex"
-#define mmex_local_output_filename "mmex_0.9.9.0_win32_setup"
-#define mmex_local_output_path "C:\Users\Stef\Documents\MMEX-RELEASES" 
+#define mmex_local_output_filename "mmex_0.9.9.0_svn1902-win32_setup"
+#define mmex_local_output_path "C:\Users\Stef\Documents\MMEX-RELEASE" 
 #define mmex_install_root "\mmex_0.9.9.0_win32_portable\MoneyManagerEx"
 
 ;===============================================================================
@@ -189,19 +189,9 @@ Source: {#mmex_svn_path}\po\ukrainian.*; DestDir: {app}\po; Flags: ignoreversion
 Source: {#mmex_svn_path}\po\vietnamese.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\vietnamese; 
 
 ; MMEX Help - Root Help files 
-Source: {#mmex_svn_path}\doc\help\index.html; DestDir: {app}\help; Flags: ignoreversion; Components: help; 
-Source: {#mmex_svn_path}\doc\help\index_english.html; DestDir: {app}\help; Flags: ignoreversion; Components: help;
-
-Source: {#mmex_svn_path}\doc\help\mmex_db_structure.png; DestDir: {app}\help; Flags: ignoreversion; Components: help; 
-Source: {#mmex_local_output_path}{#mmex_install_root}\help\english\*; DestDir: {app}\help\english; Flags: ignoreversion recursesubdirs createallsubdirs; Components: help; 
+Source: {#mmex_svn_path}\doc\help\*.html; DestDir: {app}\help; Flags: ignoreversion; Components: help;
+Source: {#mmex_svn_path}\doc\help\*.png; DestDir: {app}\help; Flags: ignoreversion; Components: help; 
  
-; MMEX Help - Root Help files - Language dependant
-Source: {#mmex_svn_path}\doc\help\index_french.html; DestDir: {app}\help; Flags: ignoreversion; Components: lang\french; 
-Source: {#mmex_svn_path}\doc\help\index_italian.html; DestDir: {app}\help; Flags: ignoreversion; Components: lang\italian; 
-Source: {#mmex_svn_path}\doc\help\index_polish.html; DestDir: {app}\help; Flags: ignoreversion; Components: lang\polish; 
-Source: {#mmex_svn_path}\doc\help\index_russian.html; DestDir: {app}\help; Flags: ignoreversion; Components: lang\russian; 
-Source: {#mmex_svn_path}\doc\help\index_spanish.html; DestDir: {app}\help; Flags: ignoreversion; Components: lang\spanish; 
-
 ; MMEX Help - Help Directories - Language dependant
 Source: {#mmex_local_output_path}{#mmex_install_root}\help\french\*; DestDir: {app}\help\french; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\french; 
 Source: {#mmex_local_output_path}{#mmex_install_root}\help\italian\*; DestDir: {app}\help\italian; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\italian; 
