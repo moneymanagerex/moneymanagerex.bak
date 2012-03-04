@@ -864,7 +864,7 @@ void mmex::formatDoubleToCurrency(double val, wxString& rdata)
 bool mmex::formatCurrencyToDouble(const wxString& str, double& val)
 {
     // Correct Empty String conversion test from wxChar to wxString.
-    wxString emptyCharStr = wxT('');
+    wxString emptyCharStr = wxEmptyString;
 
     val = 0;
     const CurrencyFormatter &fmt = CurrencyFormatter::instance();
