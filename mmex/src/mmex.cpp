@@ -2507,7 +2507,7 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
             //CSV Files //
             //QIF Files //
         //Import >       //
-            //Universal CSV Files //
+            //CSV Files //
             //QIF Files           //
         //Accounts Visible//
             //All      //
@@ -2527,12 +2527,12 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
             if ( (iData->getString() != wxT("Term Accounts")) && (iData->getString() != wxT("Stocks")) )
             {
                 wxMenu *exportTo = new wxMenu;
-                exportTo->Append(MENU_TREEPOPUP_ACCOUNT_EXPORT2CSV, _("&CSV Files"));
-                exportTo->Append(MENU_TREEPOPUP_ACCOUNT_EXPORT2QIF, _("&QIF Files"));
+                exportTo->Append(MENU_TREEPOPUP_ACCOUNT_EXPORT2CSV, _("&CSV Files..."));
+                exportTo->Append(MENU_TREEPOPUP_ACCOUNT_EXPORT2QIF, _("&QIF Files..."));
                 menu->AppendSubMenu(exportTo,  _("&Export"));
                 wxMenu *importFrom = new wxMenu;
-                importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTUNIVCSV, _("&Universal CSV Files"));
-                importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTQIF, _("&QIF Files"));
+                importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTUNIVCSV, _("&CSV Files..."));
+                importFrom->Append(MENU_TREEPOPUP_ACCOUNT_IMPORTQIF, _("&QIF Files..."));
                 menu->AppendSubMenu(importFrom,  _("&Import"));
                 menu->AppendSeparator();
             }
@@ -2720,14 +2720,14 @@ void mmGUIFrame::createMenu()
     menu_file->AppendSeparator();
 
     wxMenu* exportMenu = new wxMenu;
-    exportMenu->Append(MENU_EXPORT_CSV, _("&CSV Files"), _("Export to CSV"));
-    exportMenu->Append(MENU_EXPORT_QIF, _("&QIF Files"), _("Export to QIF"));
+    exportMenu->Append(MENU_EXPORT_CSV, _("&CSV Files..."), _("Export to CSV"));
+    exportMenu->Append(MENU_EXPORT_QIF, _("&QIF Files..."), _("Export to QIF"));
     exportMenu->Append(MENU_EXPORT_HTML, _("&Report to HTML"), _("Export to HTML"));
     menu_file->Append(MENU_EXPORT, _("&Export"), exportMenu);
 
     wxMenu* importMenu = new wxMenu;
-    importMenu->Append(MENU_IMPORT_UNIVCSV, _("&Universal CSV Files"), _("Import from any CSV file"));
-    importMenu->Append(MENU_IMPORT_QIF, _("&QIF Files"), _("Import from QIF"));
+    importMenu->Append(MENU_IMPORT_UNIVCSV, _("&CSV Files..."), _("Import from any CSV file"));
+    importMenu->Append(MENU_IMPORT_QIF, _("&QIF Files..."), _("Import from QIF"));
     menu_file->Append(MENU_IMPORT, _("&Import"), importMenu);
 
     menu_file->AppendSeparator();
@@ -2958,8 +2958,8 @@ void mmGUIFrame::createMenu()
 
     if (mmIniOptions::instance().enableReportIssues_)
     {
-       wxMenuItem* menuItemReportIssues = new wxMenuItem(menuTools, MENU_REPORTISSUES, 
-          _("&Report Issues or Feedback"), _("Send email through the mailing list to report issues with the software."));
+       wxMenuItem* menuItemReportIssues = new wxMenuItem(menuTools, MENU_REPORTISSUES,
+          _("Visit MMEX Forum or &Report New Issues."), _("Visit the MMEX forum. See existing user comments, or report new issues with the software."));
        menuItemReportIssues->SetBitmap(wxBitmap(issues_xpm));
        menuHelp->Append(menuItemReportIssues);
     }
@@ -2967,7 +2967,7 @@ void mmGUIFrame::createMenu()
     if (mmIniOptions::instance().enableBeNotifiedForNewReleases_)
     {
        wxMenuItem* menuItemNotify = new wxMenuItem(menuTools, MENU_ANNOUNCEMENTMAILING, 
-          _("Be &notified of new releases"), _("Sign up for the announcement mailing list"));
+          _("Register/View Release &Notifications."), _("Sign up to Notification Mailing List or View existing announcements."));
        menuItemNotify->SetBitmap(wxBitmap(notify_xpm));
        menuHelp->Append(menuItemNotify); 
     }
