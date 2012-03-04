@@ -19,6 +19,13 @@
 #if !defined(MM_SCRIPTABLE_OBJECTS_H)
 #define MM_SCRIPTABLE_OBJECTS_H
 
+extern "C" 
+{
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+};
+
 template <typename T>
 class mm_Lua_Object
 {
@@ -38,7 +45,7 @@ public:
         // store method table in globals so that
         // scripts can add functions written in Lua.
         lua_pushvalue(L, methods);
-        set(L, LUA_GLOBALSINDEX, T::className);
+        set(L, LUA_REGISTRYINDEX, T::className);
 
         // hide metatable from Lua getmetatable()
         lua_pushvalue(L, methods);

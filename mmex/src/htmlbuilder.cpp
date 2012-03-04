@@ -234,3 +234,12 @@ void mmHTMLBuilder::endTableCell()
 	html += wxT("</td>\n");
 }
 
+
+int Scriptable_HTML_Builder::addLineBreak(lua_State *L)
+{
+    if (! this->hb_) return 0;
+
+    this->hb_->addLineBreak();
+    
+    return 1;
+}
