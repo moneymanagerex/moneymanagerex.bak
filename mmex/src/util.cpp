@@ -897,50 +897,32 @@ int getTransformedTrxStatus(const wxString& in)
 {
     int out;
     if (in == wxT("R"))
-    {
         out = (DEF_STATUS_RECONCILED);
-    }
     else if (in == wxT("V"))
-    {
         out = (DEF_STATUS_VOID);
-    }
     else if (in == wxT("F"))
-    {
         out = (DEF_STATUS_FOLLOWUP);
-    }
     else if (in == wxT("D"))
-    {
         out = (DEF_STATUS_DUPLICATE);
-    }
     else 
-    {
         out = (DEF_STATUS_NONE);
-    }
+
     return out;
 }
+
 wxString getTransformedTrxStatus(int in)
 {
     wxString statusStr = wxEmptyString;
     if (in == DEF_STATUS_RECONCILED)
-    {
         statusStr = wxT("R");
-    }
     else if (in == DEF_STATUS_VOID)
-    {
         statusStr = wxT("V");
-    }
     else if (in == DEF_STATUS_FOLLOWUP)
-    {
         statusStr = wxT("F");
-    }
     else if (in == DEF_STATUS_DUPLICATE)
-    {
         statusStr = wxT("D");
-    }
     else 
-    {
         statusStr = wxT("");
-    }
 
     return statusStr;
 }
