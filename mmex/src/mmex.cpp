@@ -3710,7 +3710,8 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     // we will get latest currency rate data from European Central Bank
     wxString site = wxT("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
 
-    if (!m_core) {
+    if (!m_core) 
+    {
        wxMessageBox(_("No database!"), _("Update Currency Rate"), wxICON_WARNING);
        return;
     }
@@ -3719,58 +3720,73 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 
     wxInputStream* in_stream = url.GetInputStream();
 
-    if (!in_stream) {
+    if (!in_stream) 
+    {
         wxMessageBox(_("Unable to connect!"), _("Update Currency Rate"), wxICON_WARNING);
         return;
     }
     
     wxXmlDocument doc;
 
-    if(!doc.Load(*in_stream)) {
+    if(!doc.Load(*in_stream)) 
+    {
         wxMessageBox(_("Cannot get data from WWW!"), _("Update Currency Rate"), wxICON_WARNING);
         return;
     }
 
     // decode received XML data
-    if(doc.GetRoot()->GetName() != wxT("gesmes:Envelope")) {
+    if(doc.GetRoot()->GetName() != wxT("gesmes:Envelope")) 
+    {
         wxMessageBox(_("Incorrect XML data (#1)!"), _("Update Currency Rate"), wxICON_WARNING);
         return;
     }
 
     wxXmlNode *root_child = doc.GetRoot()->GetChildren();
 
-    while(root_child) {
-        if(root_child->GetName() == wxT("gesmes:subject")) {
-            if(root_child->GetNodeContent() != wxT("Reference rates")) {
+    while(root_child) 
+    {
+        if(root_child->GetName() == wxT("gesmes:subject")) 
+        {
+            if(root_child->GetNodeContent() != wxT("Reference rates")) 
+            {
                 wxMessageBox(_("Incorrect XML data (#2)!"), _("Update Currency Rate"), wxICON_WARNING);
                 return;
             }
-        } else if (root_child->GetName() == wxT("gesmes:Sender")) {
+        } 
+        else if (root_child->GetName() == wxT("gesmes:Sender")) 
+        {
             wxXmlNode *sender_child = root_child->GetChildren();
 
-            if(!sender_child) {
+            if(!sender_child) 
+            {
                 wxMessageBox(_("Incorrect XML data (#3)!"), _("Update Currency Rate"), wxICON_WARNING);
                 return;
             }
 
-            if(sender_child->GetName() != wxT("gesmes:name")) {
+            if(sender_child->GetName() != wxT("gesmes:name")) 
+            {
                 wxMessageBox(_("Incorrect XML data (#4)!"), _("Update Currency Rate"), wxICON_WARNING);
                 return;
             }
 
-            if(sender_child->GetNodeContent() != wxT("European Central Bank")) {
+            if(sender_child->GetNodeContent() != wxT("European Central Bank")) 
+            {
                 wxMessageBox(_("Incorrect XML data (#5)!"), _("Update Currency Rate"), wxICON_WARNING);
                 return;
             }            
-        } else if (root_child->GetName() == wxT("Cube")) {
+        } 
+        else if (root_child->GetName() == wxT("Cube")) 
+        {
             wxXmlNode *cube_lv1_child = root_child->GetChildren();
 
-            if(!cube_lv1_child) {
+            if(!cube_lv1_child) 
+            {
                 wxMessageBox(_("Incorrect XML data (#6)!"), _("Update Currency Rate"), wxICON_WARNING);
                 return;
             }
 
-            if(cube_lv1_child->GetName() != wxT("Cube")) {
+            if(cube_lv1_child->GetName() != wxT("Cube")) 
+            {
                 wxMessageBox(_("Incorrect XML data (#7)!"), _("Update Currency Rate"), wxICON_WARNING);
                 return;
             }
@@ -3781,7 +3797,8 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
             currency_name.Add(wxT("EUR"));
             currency_rate.Add(wxT("1.0"));
 
-            while(cube_lv2_child) {
+            while(cube_lv2_child) 
+            {
                 wxString name = cube_lv2_child->GetPropVal(wxT("currency"), wxGetEmptyString());
                 wxString rate = cube_lv2_child->GetPropVal(wxT("rate"), wxT("1"));
 
@@ -3801,19 +3818,21 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     wxString base_symbol = mmDBWrapper::getCurrencySymbol(m_core->db_.get(), currencyID);
     base_rate = 0;
 
-    for(i=0; i<(int)currency_rate.GetCount(); i++) {
-        if(currency_rate[i].ToDouble(&rate_value) == false) {
+    for(i=0; i<(int)currency_rate.GetCount(); i++) 
+    {
+        if(currency_rate[i].ToDouble(&rate_value) == false) 
+        {
             rate_ptr[i] = 1.0;
-        } else {
+        } else 
+        {
             rate_ptr[i] = rate_value;
-
-            if(currency_name[i] == base_symbol) {
+            if(currency_name[i] == base_symbol)
                 base_rate = rate_value;
-            }
         }
     }
 
-    if(base_rate == 0) {
+    if(base_rate == 0) 
+    {
         wxMessageBox(_("Could not find base currency symbol!"), _("Update Currency Rate"), wxICON_WARNING);
         return;
     }
@@ -3823,9 +3842,8 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     // currency Z / currency Y = Z / Y
     // Therefore, if currency X is EUR and currency Y is the base currency, 
     // currency Y : currency Z = base_rate / rate of Z : 1
-    for(i=0; i<(int)currency_rate.GetCount(); i++) {
+    for(i=0; i<(int)currency_rate.GetCount(); i++) 
         rate_ptr[i] = base_rate / rate_ptr[i];
-    }
 
     // update currency rates
     
@@ -3962,37 +3980,27 @@ void mmGUIFrame::OnPrintPageSetup(wxCommandEvent& WXUNUSED(event))
 
 void mmGUIFrame::OnPrintPageReport(wxCommandEvent& WXUNUSED(event))
 {
-    if (!printer_)
-        return;
+    if (!printer_) return;
 
     mmReportsPanel* rp = dynamic_cast<mmReportsPanel*>(panelCurrent_);
     mmHelpPanel* hp = dynamic_cast<mmHelpPanel*>(panelCurrent_);
     if (rp)
-    {
         printer_ ->PrintText(rp->getReportText());
-    }
-     else if (hp)
-    {
+    else if (hp)
         printer_ ->PrintFile(mmex::getPathDoc((mmex::EDocFile)helpFileIndex_));
-    }
 }
 //----------------------------------------------------------------------------
 
 void mmGUIFrame::OnPrintPagePreview(wxCommandEvent& WXUNUSED(event))
 { 
-    if (!printer_)
-        return;
+    if (!printer_) return;
 
     mmReportsPanel* rp = dynamic_cast<mmReportsPanel*>(panelCurrent_);
     mmHelpPanel* hp = dynamic_cast<mmHelpPanel*>(panelCurrent_);
     if (rp)
-    {
         printer_ ->PreviewText(rp->getReportText());
-    }
     else if (hp)
-    {
         printer_ ->PreviewFile(mmex::getPathDoc((mmex::EDocFile)helpFileIndex_));
-    }
 }
 //----------------------------------------------------------------------------
 
@@ -4025,9 +4033,7 @@ void mmGUIFrame::showBeginAppDialog()
     else if (rc == 4)
     {
         wxFileName fname(mmDBWrapper::getLastDbPath(m_inidb.get()));
-        if (fname.IsOk()) {
-            openFile(fname.GetFullPath(), false);
-        }
+        if (fname.IsOk()) openFile(fname.GetFullPath(), false);
     }
     else if (rc == -1)
     {
@@ -4090,9 +4096,7 @@ void mmGUIFrame::createStocksAccountPage(int accountID)
 void mmGUIFrame::OnGotoStocksAccount(wxCommandEvent& WXUNUSED(event))
 {
     if (gotoAccountID_ != -1)    
-    {
         createStocksAccountPage(gotoAccountID_);
-    }
 }
 
 //----------------------------------------------------------------------------
@@ -4113,9 +4117,7 @@ void mmGUIFrame::createCheckingAccountPage(int accountID)
 void mmGUIFrame::OnGotoAccount(wxCommandEvent& WXUNUSED(event))
 {
     if (gotoAccountID_ != -1)    
-    {
         createCheckingAccountPage(gotoAccountID_);
-    }
 }
 
 //----------------------------------------------------------------------------
@@ -4246,7 +4248,7 @@ void mmGUIFrame::OnViewLinks(wxCommandEvent &event)
 
 void mmGUIFrame::OnViewToolbarUpdateUI(wxUpdateUIEvent &event)
 {
-    if(    m_mgr.GetPane(wxT("toolbar")).IsShown())
+    if(m_mgr.GetPane(wxT("toolbar")).IsShown())
         event.Check(true);
     else
         event.Check(false);
@@ -4255,7 +4257,7 @@ void mmGUIFrame::OnViewToolbarUpdateUI(wxUpdateUIEvent &event)
 
 void mmGUIFrame::OnViewLinksUpdateUI(wxUpdateUIEvent &event)
 {
-    if(    m_mgr.GetPane(wxT("Navigation")).IsShown())
+    if(m_mgr.GetPane(wxT("Navigation")).IsShown())
         event.Check(true);
     else
         event.Check(false);
@@ -4359,8 +4361,7 @@ void mmGUIFrame::RunCustomSqlDialog(bool forEdit)
     }
     wxEndBusyCursor();
 
-    if (dialogStatus == wxID_OK)
-        updateNavTreeControl();
+    if (dialogStatus == wxID_OK) updateNavTreeControl();
 
     dlg->Destroy();  
 }
@@ -4459,9 +4460,7 @@ wxNewDatabaseWizardPage1::wxNewDatabaseWizardPage1(mmNewDatabaseWizard* parent) 
     currencyID_ = parent_->m_core->currencyList_.getBaseCurrencySettings();
     wxString currName = _("Set Currency");
     if (currencyID_ != -1)
-    {
         currName = parent_->m_core->currencyList_.getCurrencySharedPtr(currencyID_)->currencyName_;
-    }
 
     itemButtonCurrency_ = new wxButton( this, ID_DIALOG_OPTIONS_BUTTON_CURRENCY, currName, wxDefaultPosition, wxSize(130,-1), 0 );
 
