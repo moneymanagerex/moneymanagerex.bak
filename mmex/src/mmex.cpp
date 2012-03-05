@@ -17,7 +17,6 @@
  ********************************************************/
 
 #include "mmex.h"
-#include "guiid.h"
 #include "mmcheckingpanel.h"
 #include "budgetingpanel.h"
 #include "billsdepositspanel.h"
@@ -57,7 +56,6 @@
 #include "maincurrencydialog.h"
 #include "filtertransdialog.h"
 #include "billsdepositsdialog.h"
-#include "util.h"
 #include "dbwrapper.h"
 #include "paths.h"
 #include "constants.h"
@@ -1062,51 +1060,6 @@ void mmGUIFrame::createControls()
         CenterPane().PaneBorder(false));
 }
 //----------------------------------------------------------------------------
-
-bool mmGUIFrame::expandedBankAccounts()
-{
-    return menuBar_->IsChecked(MENU_VIEW_BANKACCOUNTS);
-}
-
-bool mmGUIFrame::expandedTermAccounts()
-{
-    return menuBar_->IsChecked(MENU_VIEW_TERMACCOUNTS);
-}
-
-bool mmGUIFrame::expandedStockAccounts()
-{
-    return menuBar_->IsChecked(MENU_VIEW_STOCKACCOUNTS);
-}
-
-bool mmGUIFrame::hasActiveTermAccounts()
-{
-    return activeTermAccounts_;
-}
-
-bool mmGUIFrame::budgetFinancialYears()
-{
-    return menuBar_->IsChecked(MENU_VIEW_BUDGET_FINANCIAL_YEARS);
-}
-
-bool mmGUIFrame::budgetSetupWithSummary()
-{
-    return !menuBar_->IsChecked(MENU_VIEW_BUDGET_SETUP_SUMMARY);
-}
-
-bool mmGUIFrame::budgetCategoryTotal()
-{
-    return menuBar_->IsChecked(MENU_VIEW_BUDGET_CATEGORY_SUMMARY);
-}
-
-bool mmGUIFrame::budgetTransferTotal()
-{
-    return menuBar_->IsChecked(MENU_VIEW_BUDGET_TRANSFER_TOTAL);
-}
-
-bool mmGUIFrame::financialYearIsDifferent()
-{
-    return (mmOptions::instance().financialYearStartDayString_ != wxT("1") || mmOptions::instance().financialYearStartMonthString_ != wxT("1"));
-}
 
 void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
 {

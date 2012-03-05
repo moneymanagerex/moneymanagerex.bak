@@ -27,6 +27,8 @@
 #include <boost/shared_ptr.hpp>
 
 #include "recentfiles.h"
+#include "guiid.h"
+#include "util.h"
 //----------------------------------------------------------------------------
 class wxWizardEvent;
 class wxSQLite3Database;
@@ -90,15 +92,15 @@ public:
 
     void setGotoAccountID(int account_id) { gotoAccountID_ = account_id; }
     void setHomePageActive(bool active = true);
-    bool expandedBankAccounts();
-    bool expandedTermAccounts();
-    bool expandedStockAccounts();
-    bool hasActiveTermAccounts();
-    bool financialYearIsDifferent();
-    bool budgetFinancialYears();
-    bool budgetSetupWithSummary();
-    bool budgetCategoryTotal();
-    bool budgetTransferTotal();
+    bool expandedBankAccounts() { return menuBar_->IsChecked(MENU_VIEW_BANKACCOUNTS); }
+    bool expandedTermAccounts() { return menuBar_->IsChecked(MENU_VIEW_TERMACCOUNTS); }
+    bool expandedStockAccounts() { return menuBar_->IsChecked(MENU_VIEW_STOCKACCOUNTS); }
+    bool hasActiveTermAccounts() const { return activeTermAccounts_; }
+    bool financialYearIsDifferent() { return (mmOptions::instance().financialYearStartDayString_ != wxT("1") || mmOptions::instance().financialYearStartMonthString_ != wxT("1")); }
+    bool budgetFinancialYears() { return menuBar_->IsChecked(MENU_VIEW_BUDGET_FINANCIAL_YEARS); }
+    bool budgetSetupWithSummary() { return !menuBar_->IsChecked(MENU_VIEW_BUDGET_SETUP_SUMMARY); }
+    bool budgetCategoryTotal() { return menuBar_->IsChecked(MENU_VIEW_BUDGET_CATEGORY_SUMMARY); }
+    bool budgetTransferTotal() { return menuBar_->IsChecked(MENU_VIEW_BUDGET_TRANSFER_TOTAL); }
     /// return the index (mmex::EDocFile) to return the correct file. 
     int getHelpFileIndex() const { return helpFileIndex_; } 
 
