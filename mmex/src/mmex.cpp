@@ -1706,32 +1706,28 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             createHomePage();
             return;
         }
-
-        if (iData->getString() == NAVTREECTRL_HELP)
+        else if (iData->getString() == NAVTREECTRL_HELP)
         {
             helpFileIndex_ = mmex::HTML_INDEX;
             menuPrintingEnable(true);
             createHelpPage();
             return;
         }
-
-        if (iData->getString() == NAVTREECTRL_CUSTOM_REPORTS)
+        else if (iData->getString() == NAVTREECTRL_CUSTOM_REPORTS)
         {
             helpFileIndex_ = mmex::HTML_CUSTOM_SQL;
             menuPrintingEnable(true);
             createHelpPage();
             return;
         }
-
-        if (iData->getString() == NAVTREECTRL_INVESTMENT)
+        else if (iData->getString() == NAVTREECTRL_INVESTMENT)
         {
             helpFileIndex_ = mmex::HTML_INVESTMENT;
             menuPrintingEnable(true);
             createHelpPage();
             return;
         }
-
-        if (iData->getString() == NAVTREECTRL_BUDGET)
+        else if (iData->getString() == NAVTREECTRL_BUDGET)
         {
             helpFileIndex_ = mmex::HTML_BUDGET;
             menuPrintingEnable(true);
