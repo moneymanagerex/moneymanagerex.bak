@@ -2526,7 +2526,6 @@ void mmGUIFrame::OnViewAllAccounts(wxCommandEvent&)
 
     //Restore settings
     mmDBWrapper::setINISettingValue(m_inidb.get(), wxT("VIEWACCOUNTS"), vAccts);
-
 }
 //----------------------------------------------------------------------------
 
@@ -2543,7 +2542,6 @@ void mmGUIFrame::OnViewFavoriteAccounts(wxCommandEvent&)
 
     //Restore settings
     mmDBWrapper::setINISettingValue(m_inidb.get(), wxT("VIEWACCOUNTS"), vAccts);
-
 }
 //----------------------------------------------------------------------------
 
@@ -2560,7 +2558,6 @@ void mmGUIFrame::OnViewOpenAccounts(wxCommandEvent&)
 
     //Restore settings
     mmDBWrapper::setINISettingValue(m_inidb.get(), wxT("VIEWACCOUNTS"), vAccts);
-
 }
 
 //----------------------------------------------------------------------------
@@ -2988,10 +2985,7 @@ void mmGUIFrame::createToolBar()
 
 void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, bool openingNew)
 {
-    if (m_core)
-    {
-        m_core.reset();
-    }
+    if (m_core) m_core.reset();
 
     if (m_db)
     {
@@ -3132,9 +3126,12 @@ void mmGUIFrame::openDataBase(const wxString& fileName)
     m_topCategories.Clear();
     mmIniOptions::instance().loadInfoOptions(m_db.get());
 
-    if (m_db) {
+    if (m_db) 
+    {
         fileName_ = fileName;
-    } else {
+    } 
+    else 
+    {
         fileName_.Clear();
         password_.Clear();
     }
@@ -3151,7 +3148,8 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew, const wxStr
 {
     createDataStore(fileName, password, openingNew);
   
-    if (m_db) {
+    if (m_db) 
+    {
         menuEnableItems(true);
         menuPrintingEnable(false);
         autoRepeatTransactionsTimer_.Start(REPEAT_TRANS_DELAY_TIME, wxTIMER_ONE_SHOT); 
@@ -3159,7 +3157,8 @@ void mmGUIFrame::openFile(const wxString& fileName, bool openingNew, const wxStr
     
     updateNavTreeControl();
 
-    if (!refreshRequested_) {
+    if (!refreshRequested_) 
+    {
         refreshRequested_ = true;
         /* Currency Options might have changed so refresh */
         wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
@@ -3181,15 +3180,13 @@ void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
                      wxFD_SAVE | wxFD_OVERWRITE_PROMPT
                     );
 
-    if(dlg.ShowModal() != wxID_OK) {
-      return;
-    }
+    if(dlg.ShowModal() != wxID_OK) 
+        return;
 
     wxString fileName = dlg.GetPath();
     
-    if (!fileName.EndsWith(wxT(".mmb"))) {
+    if (!fileName.EndsWith(wxT(".mmb"))) 
         fileName += wxT(".mmb");
-    }
 
     SetDatabaseFile(fileName, true);
 }
@@ -3259,7 +3256,8 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
 {
     wxASSERT(m_db);
 
-    if (fileName_.empty()) {
+    if (fileName_.empty()) 
+    {
         wxASSERT(false);
         return;
     }
@@ -3272,15 +3270,10 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
                      wxFD_SAVE | wxFD_OVERWRITE_PROMPT
                     );
 
-    if (dlg.ShowModal() != wxID_OK) {
-        return;
-    }
+    if (dlg.ShowModal() != wxID_OK) return;
 
     // Ensure database is in a steady state first
-    if (!activeHomePage_)
-    {
-        createHomePage();   // Display Home page when not being displayed.
-    }
+    if (!activeHomePage_) createHomePage();   // Display Home page when not being displayed.
 
     bool encrypt = dlg.GetFilterIndex() != 0; // emb -> Encrypted mMB
     wxFileName newFileName(dlg.GetPath());
@@ -3288,25 +3281,27 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
 
     wxFileName oldFileName(fileName_); // opened db's file
 
-    if (newFileName == oldFileName) { // on case-sensitive FS uses case-sensitive comparison
+    if (newFileName == oldFileName) // on case-sensitive FS uses case-sensitive comparison
+    {
         wxMessageDialog dlg(this, _("Can't copy file to itself"), _("Save database file as"), wxICON_WARNING);
         dlg.ShowModal();
         return;
     }
 
     // prepare to copy
-
     wxString new_password;
     bool rekey = encrypt ^ m_db->IsEncrypted();
 
     if (encrypt)
     {
-        if (rekey) {
+        if (rekey) 
+        {
             new_password = wxGetPasswordFromUser(_("Enter password for new database"));
-            if (new_password.empty()) {
+            if (new_password.empty()) 
                 return;
-            }
-        } else {
+        } 
+        else 
+        {
             new_password = password_;
         }
     }
@@ -3319,9 +3314,8 @@ void mmGUIFrame::OnSaveAs(wxCommandEvent& /*event*/)
       m_db.reset();
     }
 
-    if (!wxCopyFile(oldFileName.GetFullPath(), newFileName.GetFullPath(), true)) { // true -> overwrite if file exists
+    if (!wxCopyFile(oldFileName.GetFullPath(), newFileName.GetFullPath(), true))  // true -> overwrite if file exists
         return;
-    }
     
     if (rekey) // encrypt or reset encryption
     {
@@ -3344,7 +3338,7 @@ void mmGUIFrame::OnExportToCSV(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnExportToQIF(wxCommandEvent& /*event*/)
 {
-   mmExportQIF(m_core.get(), m_db.get());
+    mmExportQIF(m_core.get(), m_db.get());
 }
 //----------------------------------------------------------------------------
 
@@ -3448,7 +3442,8 @@ void mmGUIFrame::OnOrgPayees(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnBudgetSetupDialog(wxCommandEvent& /*event*/)
 {
-    if (m_db) {
+    if (m_db) 
+    {
         mmBudgetYearDialog(m_db.get(), this).ShowModal();
         createHomePage();
         updateNavTreeControl();    
