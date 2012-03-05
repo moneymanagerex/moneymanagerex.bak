@@ -3705,7 +3705,6 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
 {
     wxArrayString   currency_name, currency_rate;
     double          *rate_ptr, rate_value, base_rate;
-    int             i;
     
     // we will get latest currency rate data from European Central Bank
     wxString site = wxT("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml");
@@ -3818,7 +3817,7 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     wxString base_symbol = mmDBWrapper::getCurrencySymbol(m_core->db_.get(), currencyID);
     base_rate = 0;
 
-    for(i=0; i<(int)currency_rate.GetCount(); i++) 
+    for(int i=0; i<(int)currency_rate.GetCount(); i++) 
     {
         if(currency_rate[i].ToDouble(&rate_value) == false) 
         {
@@ -3842,7 +3841,7 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     // currency Z / currency Y = Z / Y
     // Therefore, if currency X is EUR and currency Y is the base currency, 
     // currency Y : currency Z = base_rate / rate of Z : 1
-    for(i=0; i<(int)currency_rate.GetCount(); i++) 
+    for(int i=0; i<(int)currency_rate.GetCount(); i++) 
         rate_ptr[i] = base_rate / rate_ptr[i];
 
     // update currency rates
@@ -3853,7 +3852,7 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     {
         wxString currencySymbol  = m_core->currencyList_.currencies_[idx]->currencySymbol_;
         
-        for(i=0; i<(int)currency_name.GetCount(); i++) 
+        for(int i=0; i<(int)currency_name.GetCount(); i++) 
         {
             if(currency_name[i] == currencySymbol) 
             {
