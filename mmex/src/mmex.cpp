@@ -65,7 +65,6 @@
 #include "customreportdisplay.h"
 #include "customreportindex.h"
 #include "customreportdialog.h"
-#include "recentfiles.h"
 #include <boost/version.hpp>
 //----------------------------------------------------------------------------
 
@@ -4778,36 +4777,6 @@ void mmGUIFrame::SetDatabaseFile(wxString dbFileName, bool newDatabase)
         progress->Update(100);
         progress->Destroy();
     }
-}
-
-void mmGUIFrame::OnRecentFiles_1(wxCommandEvent& /*event*/)
-{
-    SetDatabaseFile(recentFiles_->getRecentFile(1));
-}
-
-void mmGUIFrame::OnRecentFiles_2(wxCommandEvent& /*event*/)
-{
-    SetDatabaseFile(recentFiles_->getRecentFile(2));
-}
-
-void mmGUIFrame::OnRecentFiles_3(wxCommandEvent& /*event*/)
-{
-    SetDatabaseFile(recentFiles_->getRecentFile(3));
-}
-
-void mmGUIFrame::OnRecentFiles_4(wxCommandEvent& /*event*/)
-{
-    SetDatabaseFile(recentFiles_->getRecentFile(4));
-}
-
-void mmGUIFrame::OnRecentFiles_5(wxCommandEvent& /*event*/)
-{
-    SetDatabaseFile(recentFiles_->getRecentFile(5));
-}
-
-void mmGUIFrame::OnClearRecentFiles(wxCommandEvent& /*event*/)
-{
-    recentFiles_->clearRecentList();
 }
 
 void mmGUIFrame::BackupDatabase(wxString filename, bool updateRequired)

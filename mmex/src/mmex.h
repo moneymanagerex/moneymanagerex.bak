@@ -25,6 +25,8 @@
 //----------------------------------------------------------------------------
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
+
+#include "recentfiles.h"
 //----------------------------------------------------------------------------
 class wxWizardEvent;
 class wxSQLite3Database;
@@ -39,7 +41,6 @@ class mmPrintableBase;
 class mmPanelBase;
 class mmTreeItemData;
 class customSQLReportIndex;
-class RecentDatabaseFiles;
 //----------------------------------------------------------------------------
 
 struct CategInfo
@@ -277,12 +278,12 @@ private:
     RecentDatabaseFiles* recentFiles_;
     wxMenu *menuRecentFiles_;
 
-    void OnRecentFiles_1(wxCommandEvent& event);
-    void OnRecentFiles_2(wxCommandEvent& event);
-    void OnRecentFiles_3(wxCommandEvent& event);
-    void OnRecentFiles_4(wxCommandEvent& event);
-    void OnRecentFiles_5(wxCommandEvent& event);
-    void OnClearRecentFiles(wxCommandEvent& event);
+    void OnRecentFiles_1(wxCommandEvent& event) { SetDatabaseFile(recentFiles_->getRecentFile(1)); }
+    void OnRecentFiles_2(wxCommandEvent& event) { SetDatabaseFile(recentFiles_->getRecentFile(2)); }
+    void OnRecentFiles_3(wxCommandEvent& event) { SetDatabaseFile(recentFiles_->getRecentFile(3)); }
+    void OnRecentFiles_4(wxCommandEvent& event) { SetDatabaseFile(recentFiles_->getRecentFile(4)); }
+    void OnRecentFiles_5(wxCommandEvent& event) { SetDatabaseFile(recentFiles_->getRecentFile(5)); }
+    void OnClearRecentFiles(wxCommandEvent& event) { recentFiles_->clearRecentList(); }
 
     /** Sets the database to the new database selected by the user */
     void SetDatabaseFile(wxString dbFileName, bool newDatabase = false);
