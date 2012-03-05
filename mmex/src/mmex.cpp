@@ -1568,20 +1568,16 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
     /* Because Windows generates 2 events when selecting the navTree, and Linux
        does not, we need to be able to control when the event is actually executed.
        This ensures that only one event activates the account for all systems. */
-    if (homePageAccountSelect_)
-    {
-        return;
-    }
+    if (homePageAccountSelect_) return;
 
     menuPrintingEnable(false);
     wxTreeItemId id = event.GetItem();
-    if (!id)
-        return;
+    if (!id) return;
+
     mmTreeItemData* iData = dynamic_cast<mmTreeItemData*>(navTreeCtrl_->GetItemData(id));
     selectedItemData_ = iData;
     
-    if (!iData)
-        return;
+    if (!iData) return;
 
     if (!iData->isStringData())
     {
@@ -1592,23 +1588,26 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             Freeze();
             wxTreeItemId idparent = navTreeCtrl_->GetItemParent(id);
             mmTreeItemData* iParentData = dynamic_cast<mmTreeItemData*>(navTreeCtrl_->GetItemData(idparent));
-            if (iParentData->getString() == wxT("Budget Performance")) {
+            if (iParentData->getString() == wxT("Budget Performance")) 
+            {
                 wxProgressDialog proDlg(_("Budget Performance"), reportWaitingMsg, 100, this);
                 mmPrintableBase* rs = new mmReportBudgetingPerformance(m_core.get(), this, data);
                 proDlg.Update(70);
                 menuPrintingEnable(true);
                 createReportsPage(rs);
                 proDlg.Update(95);
-
-            } else if (iParentData->getString() == wxT("Budget Setup Performance")) {
+            } 
+            else if (iParentData->getString() == wxT("Budget Setup Performance")) 
+            {
                 wxProgressDialog proDlg(_("Budget Category Summary"), reportWaitingMsg, 100, this);
                 mmPrintableBase* rs = new mmReportBudgetCategorySummary(m_core.get(), this, data);
                 proDlg.Update(70);
                 menuPrintingEnable(true);
                 createReportsPage(rs);
                 proDlg.Update(95);
-
-            } else {
+            } 
+            else 
+            {
                 wxProgressDialog proDlg(_("Budget Setup"), reportWaitingMsg, 100, this);
                 createBudgetingPage(data);
                 proDlg.Update(95);
