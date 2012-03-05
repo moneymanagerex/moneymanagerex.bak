@@ -4712,16 +4712,10 @@ void mmGUIFrame::SetDatabaseFile(wxString dbFileName, bool newDatabase)
         createHomePage();
     }
 
-    if (progress)
-    {
-        progress->Update(40);
-    }
+    if (progress) progress->Update(40);
     openFile(dbFileName, newDatabase);
 
-    if (progress)
-    {
-        progress->Update(95);
-    }
+    if (progress) progress->Update(95);
     recentFiles_->updateRecentList(dbFileName);
 
     if (progress)
