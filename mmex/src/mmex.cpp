@@ -1481,8 +1481,7 @@ wxDateTime mmGUIFrame::getUserDefinedFinancialYear(bool prevDayRequired) const
 
     wxDateTime today = wxDateTime::Now();
     int year = today.GetYear();
-    if (today.GetMonth() < monthNum) 
-        year -- ;
+    if (today.GetMonth() < monthNum) year -- ;
 
     long dayNum; 
     wxString dayNumStr = mmOptions::instance().financialYearStartDayString_;
@@ -2078,9 +2077,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
 
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear()-1;
-            if (today.GetMonth() < dtBegin.GetMonth() ) {
-                year -- ;
-            }
+            if (today.GetMonth() < dtBegin.GetMonth()) year -- ;
             mmPrintableBase* rs = new mmReportIncExpensesOverFinancialPeriod(this, m_core.get(), year);
             menuPrintingEnable(true);
             createReportsPage(rs);
