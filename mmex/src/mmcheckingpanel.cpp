@@ -156,11 +156,10 @@ bool sortTransByDate(const mmBankTransaction *t1, const mmBankTransaction *t2, b
 {
     bool res = false;
 
-    if (t1->date_ == t2->date_) {
+    if (t1->date_ == t2->date_) 
         res = sort(t1->transactionID(), t2->transactionID(), asc);
-    } else {
+    else 
         res = sort(t1->date_, t2->date_, asc);
-    }
 
     return res;
 }
@@ -176,11 +175,10 @@ bool sortTransByNum(const mmBankTransaction *t1, const mmBankTransaction *t2, bo
 
     bool res = false;
 
-    if (ok1 && ok2) {
+    if (ok1 && ok2) 
         res = sort(v1, v2, asc);
-    } else {
+    else 
         res = sort(t1->transNum_, t2->transNum_, asc);
-    }
 
     return res;
 }
@@ -238,11 +236,10 @@ bool sortAsCurrency(const wxString &s1, const wxString &s2, bool asc)
 
     bool res = false;
 
-    if (ok1 && ok2) {
+    if (ok1 && ok2)
         res = sort(v1, v2, asc);
-    } else {
+    else
         res = sort(s1, s2, asc);
-    }
 
     return res;
 }
@@ -323,11 +320,10 @@ bool sortTransByDateAsc(const mmBankTransaction *t1, const mmBankTransaction *t2
 {
     bool res = false;
 
-    if (t1->date_ == t2->date_) {
+    if (t1->date_ == t2->date_)
         res = t1->transactionID() < t2->transactionID();
-    } else {
+    else
         res = t1->date_ < t2->date_;
-    }
 
     return res;
 }
@@ -699,22 +695,13 @@ void mmCheckingPanel::CreateControls()
     {   // load the global variables
         long val = COL_DEF_SORT;
         wxString strVal = mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_SORT_COL"), wxString() << val);
-        
-        if (strVal.ToLong(&val)) {
-            g_sortcol = toEColumn(val);
-        }
-
+        if (strVal.ToLong(&val)) g_sortcol = toEColumn(val);
         // --
-
         val = 1; // asc sorting default
         strVal = mmDBWrapper::getINISettingValue(inidb_, wxT("CHECK_ASC"), wxString() << val);
-
-        if (strVal.ToLong(&val)) {
-            g_asc = val != 0;
-        }
+        if (strVal.ToLong(&val)) g_asc = val != 0;
 
         // --
-
         m_listCtrlAccount->setSortColumn(g_sortcol);
         m_listCtrlAccount->setSortOrder(g_asc);
         m_listCtrlAccount->setColumnImage(m_listCtrlAccount->getSortColumn(), m_listCtrlAccount->getSortOrder() ? ICON_ASC : ICON_DESC); // asc\desc sort mark (arrow)
@@ -794,7 +781,8 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 {
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_DETAILS); 
     wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_MINI);
-    if (selIndex > -1) { 
+    if (selIndex > -1) 
+    { 
         enableEditDeleteButtons(true);
         st->SetLabel(m_trans[selIndex]->notes_);
         wxString miniStr;
@@ -809,7 +797,9 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
 			stm->SetToolTip(miniStr);
 		}
 
-    } else {
+    } 
+    else 
+    {
         stm->SetLabel(wxT(""));
         enableEditDeleteButtons(false);
         showTips() ;
@@ -1183,9 +1173,7 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
 double mmCheckingPanel::getBalance(mmBankTransaction* transPtr, double currentBalance) const
 {
     if (transPtr->status_ != wxT("V"))
-    {
         currentBalance += transPtr->value(m_AccountID);
-    }
 
     return currentBalance;
 }
@@ -1378,10 +1366,12 @@ void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
     messageStr << _("Current filtering has been set to: ") << m_currentView << wxT("\n\n");
     messageStr << _("Please set filtering to: ") << _("View All Transactions");
 
-    if (m_currentView != VIEW_TRANS_ALL_STR) {
+    if (m_currentView != VIEW_TRANS_ALL_STR) 
+    {
         wxMessageBox(messageStr,_("Transaction Filter"),wxICON_WARNING);
-
-    } else {
+    } 
+    else 
+    {
         int dlgResult = transFilterDlg_->ShowModal();
         if ( dlgResult == wxID_OK )
         {
@@ -1469,8 +1459,8 @@ void TransactionListCtrl::OnItemRightClick(wxListEvent& event)
 
 void TransactionListCtrl::OnMarkTransactionDB(const wxString& status)
 {
-    if (m_selectedIndex == -1)
-        return;
+    if (m_selectedIndex == -1) return;
+
     int transID = m_cp->m_trans[m_selectedIndex]->transactionID();
     if (mmDBWrapper::updateTransactionWithStatus(*m_cp->getDb(), transID, status))
     m_cp->m_trans[m_selectedIndex]->status_ = status;
@@ -1734,9 +1724,8 @@ void TransactionListCtrl::OnChar(wxKeyEvent& event)
 
 void TransactionListCtrl::OnCopy(wxCommandEvent& WXUNUSED(event))
 {
-    if (m_selectedIndex != -1) {
+    if (m_selectedIndex != -1)
         m_selectedForCopy = m_cp->m_trans[m_selectedIndex]->transactionID();
-    }
 }
 //----------------------------------------------------------------------------
 
@@ -1868,7 +1857,8 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
         //initialize the transaction list to redo balances and images
         m_cp->initVirtualListControl(NULL);
     
-        if (!m_cp->m_trans.empty()) {
+        if (!m_cp->m_trans.empty()) 
+        {
             //refresh the items showing from the point of the transaction delete down
             //the transactions above the deleted transaction won't change so they 
             // don't need to be refreshed
@@ -1883,7 +1873,9 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
             //make sure the topmost item before transaction deletion is visible, otherwise 
             // the control will go back to the very top or bottom when refreshed
             EnsureVisible(topItemIndex);
-        } else {
+        } 
+        else 
+        {
             SetItemCount(0);
             DeleteAllItems();
             m_selectedIndex = -1;
@@ -1977,9 +1969,7 @@ void TransactionListCtrl::OnViewSplitTransaction(wxCommandEvent& /*event*/)
     if (m_selectedIndex != -1)
     {
         if (m_cp->m_trans[m_selectedIndex]->categID_ < 0)
-        {
             m_cp->DisplaySplitCategories(m_cp->m_trans[m_selectedIndex]->transactionID());
-        }
     }
 }
 
