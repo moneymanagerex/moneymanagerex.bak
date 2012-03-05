@@ -1624,12 +1624,8 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
               if ((acctType == ACCOUNT_TYPE_BANK) || acctType == ACCOUNT_TYPE_TERM)
               {
                  gotoAccountID_ = data;
-                 if (gotoAccountID_ != -1)    
-                 {
-                    createCheckingAccountPage(gotoAccountID_);
-                 }
+                 if (gotoAccountID_ != -1) createCheckingAccountPage(gotoAccountID_);
                  navTreeCtrl_->SetFocus();
-
               }
               else
               {
@@ -2095,9 +2091,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             
             wxDateTime today = wxDateTime::Now();
             int year = today.GetYear();
-            if (today.GetMonth() < dtBegin.GetMonth() ) {
-                year -- ;
-            }
+            if (today.GetMonth() < dtBegin.GetMonth()) year --;
             mmPrintableBase* rs = new mmReportIncExpensesOverFinancialPeriod(this, m_core.get(), year);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -2282,16 +2276,8 @@ void mmGUIFrame::OnLaunchAccountWebsite(wxCommandEvent& /*event*/)
       if (pAccount)
       {
          wxString website = pAccount->website_;
-         if (!website.IsEmpty())
-         {
-            wxLaunchDefaultBrowser(website);  
-         }
+         if (!website.IsEmpty()) wxLaunchDefaultBrowser(website);  
          return;
-      }
-      else
-      {
-         /* cannot find accountid */
-         wxASSERT(true);
       }
    }
 }
@@ -2316,11 +2302,6 @@ void mmGUIFrame::OnPopupImportQIFile(wxCommandEvent& /*event*/)
                 }
            }
         }
-        else
-        {
-            /* cannot find accountid */
-            wxASSERT(true);
-        }
     }
 }
 //----------------------------------------------------------------------------
@@ -2343,11 +2324,6 @@ void mmGUIFrame::OnPopupEditAccount(wxCommandEvent& /*event*/)
                  updateNavTreeControl();      
               }
            }
-        }
-        else
-        {
-            /* cannot find accountid */
-            wxASSERT(true);
         }
     }
 }
@@ -2377,11 +2353,6 @@ void mmGUIFrame::OnPopupDeleteAccount(wxCommandEvent& /*event*/)
                   GetEventHandler()->AddPendingEvent(ev); 
               }
            } 
-        }
-        else
-        {
-            /* cannot find accountid */
-            wxASSERT(true);
         }
     }
 }
@@ -2430,11 +2401,6 @@ void mmGUIFrame::showTreePopupMenu(wxTreeItemId id, const wxPoint& pt)
 
                     PopupMenu(&menu, pt);
                 }
-            }
-            else
-            {
-                /* cannot find accountid */
-                wxASSERT(true);
             }
         }
     }
@@ -2965,9 +2931,7 @@ void mmGUIFrame::createToolBar()
     toolBar_->AddTool(MENU_OPEN, _("Open"), toolBarBitmaps[1], _("Open Database"));
     toolBar_->AddSeparator();
     if (mmIniOptions::instance().enableAddAccount_)
-    {
-      toolBar_->AddTool(MENU_NEWACCT, _("New Account"), toolBarBitmaps[3], _("New Account"));
-    }
+        toolBar_->AddTool(MENU_NEWACCT, _("New Account"), toolBarBitmaps[3], _("New Account"));
     toolBar_->AddTool(MENU_ACCTLIST, _("Account List"), toolBarBitmaps[4], _("Show Account List"));
     toolBar_->AddSeparator();
     toolBar_->AddTool(MENU_ORGCATEGS, _("Organize Categories"), toolBarBitmaps[5], _("Show Organize Categories Dialog"));
@@ -3027,10 +2991,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
 
         m_db = mmDBWrapper::Open(fileName, password);
         // if the database pointer has been reset, the password is possibly incorrect
-        if (!m_db)
-        {
-            return ;
-        }
+        if (!m_db) return;
 
         // we need to check the db whether it is the right version
         if (!mmDBWrapper::checkDBVersion(m_db.get()))
@@ -3203,9 +3164,7 @@ void mmGUIFrame::OnOpen(wxCommandEvent& /*event*/)
                                       );
   
     if (!fileName.empty())
-    {
         SetDatabaseFile(fileName);
-    }
 }
 //----------------------------------------------------------------------------
 
@@ -3405,8 +3364,11 @@ void mmGUIFrame::OnNewAccount(wxCommandEvent& /*event*/)
                        << _("This message will not be displayed in future.");
                 wxMessageBox(msgStr, _("Initial Term Account Activation"),wxICON_INFORMATION);
             }
-        } else
+        } 
+        else
+        {
             updateNavTreeControl(); 
+        }
      }
     
     if (!refreshRequested_)
@@ -3653,13 +3615,12 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
     wxString mySys =  wxPlatformInfo::Get().GetOperatingSystemFamilyName();
 
     wxStringTokenizer mySysToken;
-    if (mySys == wxT("Windows")) {
+    if (mySys == wxT("Windows")) 
         mySysToken.SetString(winSys,wxT(":"));
-    } else if (mySys == wxT("Unix")) {
+    else if (mySys == wxT("Unix"))
         mySysToken.SetString(unixSys,wxT(":"));
-    } else if (mySys == wxT("Macintosh")) {
+    else if (mySys == wxT("Macintosh"))
         mySysToken.SetString(macSys,wxT(":"));
-    }
     
     page = mySysToken.GetNextToken();                       // the system
     page = mySysToken.GetNextToken().Trim(false).Trim();    // the version  
@@ -3690,9 +3651,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
     wxString urlString = wxT("http://www.codelathe.com/mmex");
     versionDetails << wxT("\n\n") << _("Proceed to website: ") << urlString;
     if (wxMessageBox(versionDetails, _("MMEX System Information Check"), style) == wxOK)
-    {
         wxLaunchDefaultBrowser(urlString);
-    }
 }
 //----------------------------------------------------------------------------
 
@@ -4582,7 +4541,7 @@ bool wxAddAccountPage2::TransferDataFromWindow()
     wxString acctTypeStr = ACCOUNT_TYPE_BANK;
     if (acctType == 1)
         acctTypeStr = ACCOUNT_TYPE_STOCK;
-    if (acctType == 2)
+    else if (acctType == 2)
         acctTypeStr = ACCOUNT_TYPE_TERM;
 
     int currencyID = parent_->m_core->currencyList_.getBaseCurrencySettings();
