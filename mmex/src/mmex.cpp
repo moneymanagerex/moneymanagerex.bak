@@ -432,13 +432,13 @@ IMPLEMENT_APP(mmGUIApp)
 
 mmGUIApp::SQLiteInit::SQLiteInit()
 {
-        wxSQLite3Database::InitializeSQLite();
+    wxSQLite3Database::InitializeSQLite();
 }
 //----------------------------------------------------------------------------
 
 mmGUIApp::SQLiteInit::~SQLiteInit()
 {
-        wxSQLite3Database::ShutdownSQLite();
+    wxSQLite3Database::ShutdownSQLite();
 }
 //----------------------------------------------------------------------------
 
