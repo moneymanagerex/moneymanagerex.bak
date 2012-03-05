@@ -98,6 +98,7 @@ wxString inQuotes(wxString label);
 void mmExportQIF( mmCoreDB* core, wxSQLite3Database* db_ );
 wxString mmReadyDisplayString( const wxString& orig );
 wxString adjustedExportAmount(wxString amtSeparator, wxString strValue);
+void fixFileExt(wxFileName &f, const wxString &ext);
 
 int mmImportQIF( mmCoreDB* core, wxString destinationAccountName = wxEmptyString );
 

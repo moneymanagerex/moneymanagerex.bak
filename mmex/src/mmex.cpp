@@ -306,18 +306,6 @@ wxSystemOptions::SetOption(wxMAC_ALWAYS_USE_GENERIC_LISTCTRL,1);
     return ok;
 }
 //----------------------------------------------------------------------------
-
-/*
-    Extention expected in lower case.
-*/
-void fixFileExt(wxFileName &f, const wxString &ext)
-{
-    if (f.GetExt().Lower() != ext) {
-        f.SetExt(ext);
-    }
-}
-//----------------------------------------------------------------------------
-
 } // namespace
 
 //----------------------------------------------------------------------------
