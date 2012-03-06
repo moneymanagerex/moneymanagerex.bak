@@ -610,14 +610,12 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
 
 void mmCheckingPanel::CreateControls()
 {    
-    mmCheckingPanel* itemPanel8 = this;
-
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
-    itemPanel8->SetSizer(itemBoxSizer9);
-    itemPanel8->SetBackgroundColour(mmColors::listBackColor);
+    this->SetSizer(itemBoxSizer9);
+    this->SetBackgroundColour(mmColors::listBackColor);
 
     /* ---------------------- */
-    wxPanel* headerPanel = new wxPanel( itemPanel8, wxID_ANY, wxDefaultPosition, 
+    wxPanel* headerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, 
         wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
     itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -663,7 +661,7 @@ void mmCheckingPanel::CreateControls()
     
     /* ---------------------- */
 
-    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( itemPanel8, 
+    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( this, 
         ID_SPLITTERWINDOW, wxDefaultPosition, wxSize(100, 100), 
         wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
