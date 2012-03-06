@@ -99,22 +99,20 @@ void SplitTransactionDialog::DataToControls()
 
 void SplitTransactionDialog::CreateControls()
 {
-    SplitTransactionDialog* itemDialog1 = this;
-
     wxBoxSizer* dialogMainSizerV = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(dialogMainSizerV);
+    this->SetSizer(dialogMainSizerV);
 
     wxString headingMessage = _(" Split Category Details");
     if (transType_ == DEF_WITHDRAWAL) headingMessage = wxString() << _("Withdrawal") << headingMessage;
     if (transType_ == DEF_DEPOSIT)    headingMessage = wxString() << _("Deposit")    << headingMessage;
 
-    wxStaticText* headingText = new wxStaticText( itemDialog1, wxID_STATIC, headingMessage);
+    wxStaticText* headingText = new wxStaticText( this, wxID_STATIC, headingMessage);
     dialogMainSizerV->Add(headingText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxTOP|wxRIGHT, 10);
 
     wxBoxSizer* listCtrlSizer = new wxBoxSizer(wxHORIZONTAL);
     dialogMainSizerV->Add(listCtrlSizer, 1, wxGROW|wxALL, 5);
 
-    lcSplit_ = new wxListCtrl( itemDialog1, ID_LISTCTRL3, wxDefaultPosition, wxSize(265, 120), wxLC_REPORT|wxLC_SINGLE_SEL );
+    lcSplit_ = new wxListCtrl( this, ID_LISTCTRL3, wxDefaultPosition, wxSize(265, 120), wxLC_REPORT|wxLC_SINGLE_SEL );
     listCtrlSizer->Add(lcSplit_, 1, wxGROW|wxALL, 5);
 
     wxListItem itemCol;
@@ -133,8 +131,8 @@ void SplitTransactionDialog::CreateControls()
     if (transType_ == DEF_WITHDRAWAL) totalMessage = wxString() << _("Withdrawal") << totalMessage;
     if (transType_ == DEF_DEPOSIT)    totalMessage = wxString() << _("Deposit")    << totalMessage;
 
-    wxStaticText* transAmountText_ = new wxStaticText( itemDialog1, wxID_STATIC, totalMessage, wxDefaultPosition, wxDefaultSize, 0 );
-	transAmount_ = new wxStaticText( itemDialog1, wxID_STATIC, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* transAmountText_ = new wxStaticText( this, wxID_STATIC, totalMessage, wxDefaultPosition, wxDefaultSize, 0 );
+	transAmount_ = new wxStaticText( this, wxID_STATIC, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
     totalAmountSizer->Add(transAmountText_, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	totalAmountSizer->Add(transAmount_, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
 	dialogMainSizerV->Add(totalAmountSizer, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
@@ -149,15 +147,15 @@ void SplitTransactionDialog::CreateControls()
     mainButtonSizer->Add(bottomRowButtonSizer, 0, wxALIGN_RIGHT|wxALL, 0);
     dialogMainSizerV->Add(mainButtonSizer, 0, wxALIGN_RIGHT|wxALL, 10);
 
-    itemButtonNew_ = new wxButton( itemDialog1, wxID_ADD, _("Add"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemButtonEdit_ = new wxButton( itemDialog1, wxID_EDIT, _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemButtonDelete_ = new wxButton( itemDialog1, wxID_REMOVE, _("Remove"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemButtonNew_ = new wxButton( this, wxID_ADD, _("Add"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemButtonEdit_ = new wxButton( this, wxID_EDIT, _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemButtonDelete_ = new wxButton( this, wxID_REMOVE, _("Remove"), wxDefaultPosition, wxDefaultSize, 0 );
     topRowButtonSizer->Add(itemButtonNew_, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxRIGHT, 5);
     topRowButtonSizer->Add(itemButtonEdit_, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxRIGHT, 5);
     topRowButtonSizer->Add(itemButtonDelete_, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxRIGHT, 0);
 
-    itemButtonOK_ = new wxButton( itemDialog1, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
-    wxButton* itemButtonCancel = new wxButton( itemDialog1, wxID_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemButtonOK_ = new wxButton( this, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButtonCancel = new wxButton( this, wxID_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
     itemButtonCancel->SetFocus();
 
     bottomRowButtonSizer->Add(itemButtonOK_, 0, wxALIGN_RIGHT|wxTOP|wxRIGHT, 5);
