@@ -91,8 +91,7 @@ void mmSplitTransactionEntries::updateToDB(boost::shared_ptr<wxSQLite3Database>&
     st.Finalize();
 }
 
-void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core,
-                                            int bdID)
+void mmSplitTransactionEntries::loadFromBDDB(mmCoreDB* core, int bdID)
 {
    entries_.clear();
    total_ = 0.0;
@@ -172,15 +171,12 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
                                       bool forceUpdate
                                       )
 {
-   if ((isInited_) && (transType_ != TRANS_TYPE_TRANSFER_STR) && !forceUpdate)
-   {
-      return;
-   }
+   if ((isInited_) && (transType_ != TRANS_TYPE_TRANSFER_STR) && !forceUpdate) return;
 
    /* Load the Account Currency Settings for Formatting Strings */
    currencyPtr->loadCurrencySettings();
 
-   dateStr_            = mmGetDateForDisplay(db_.get(), date_);
+   dateStr_ = mmGetDateForDisplay(db_.get(), date_);
 
    wxString displayTransAmtString;
    mmex::formatDoubleToCurrencyEdit(amt_, displayTransAmtString);
@@ -251,10 +247,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
    {
       // If category is missing, we mark is as unknown
       int categID = core->getCategoryID(wxT("Unknown"));
-      if (categID == -1)
-      {
-         categID =  core->addCategory(wxT("Unknown"));
-      }
+      if (categID == -1) categID = core->addCategory(wxT("Unknown"));
 
       category_ = core->getCategorySharedPtr(categID, -1);
       pCategory = category_.lock();
@@ -290,6 +283,7 @@ void mmBankTransaction::updateAllData(mmCoreDB* core,
       catStr_= wxT("");
       subCatStr_ = wxT("");
    }
+
    isInited_ = true;
 }
 
@@ -375,15 +369,10 @@ bool mmBankTransaction::containsCategory(int categID, int subcategID, bool ignor
     }
     else if (categID_ == categID)
     {
-        if (ignoreSubCateg)
-            return true;
-       
-        if (subcategID_ == subcategID)
-        {
-            return true;
-        }
-
+        if (ignoreSubCateg) return true;
+        if (subcategID_ == subcategID) return true;
     }
+
     return false;
 }
 
@@ -408,6 +397,7 @@ double mmBankTransaction::getAmountForSplit(int categID, int subcategID) const
     {
         return amt_;
     }
+
     return splitAmount;
 }
 
