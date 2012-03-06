@@ -430,28 +430,6 @@ mmGUIApp::SQLiteInit::~SQLiteInit()
 }
 //----------------------------------------------------------------------------
 
-/*
-    Class used to store item specific information in a tree node
-*/
-class mmTreeItemData : public wxTreeItemData
-{
-public:
-    mmTreeItemData(int id, bool isBudget): id_(id), isString_(false), isBudgetingNode_(isBudget) {}
-    mmTreeItemData(const wxString& string): id_(), isString_(true), isBudgetingNode_(false), stringData_(string) {}
-
-    int getData() const { return id_; }
-    wxString getString() const { return stringData_; }
-    bool isStringData() const { return isString_; }
-    bool isBudgetingNode() const { return isBudgetingNode_; }
-
-private:
-    int id_;
-    bool isString_;
-    bool isBudgetingNode_;
-    wxString stringData_;
-};
-//----------------------------------------------------------------------------
-
 mmAddAccountWizard::mmAddAccountWizard(wxFrame *frame, mmCoreDB* core) :
     wxWizard(frame,wxID_ANY,_("Add Account Wizard"),
     wxBitmap(addacctwiz_xpm),wxDefaultPosition,
