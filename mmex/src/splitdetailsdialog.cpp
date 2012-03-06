@@ -85,16 +85,14 @@ bool SplitDetailDialog::Create( wxWindow* parent, wxWindowID id,
 
 void SplitDetailDialog::CreateControls()
 {    
-    SplitDetailDialog* itemDialog1 = this;
-    
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(itemBoxSizer2);
+    this->SetSizer(itemBoxSizer2);
 
-    wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(itemDialog1, wxID_ANY, _("Split Transaction Details"));
+    wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(this, wxID_ANY, _("Split Transaction Details"));
     wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, wxVERTICAL);
     itemBoxSizer2->Add(itemStaticBoxSizer4, 0, wxALIGN_CENTER_HORIZONTAL|wxLEFT|wxTOP|wxRIGHT, 10);
 
-    wxPanel* itemPanel7 = new wxPanel(itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* itemPanel7 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemStaticBoxSizer4->Add(itemPanel7, 0, wxGROW|wxALL, 10);
 
     wxFlexGridSizer* controlSizer = new wxFlexGridSizer(5, 2, 10, 10);
@@ -134,10 +132,10 @@ void SplitDetailDialog::CreateControls()
     wxBoxSizer* buttonSizer = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(buttonSizer, 0, wxALIGN_RIGHT|wxALL, 5);
 
-    wxButton* itemButtonOK = new wxButton( itemDialog1, wxID_OK, _("OK"));
+    wxButton* itemButtonOK = new wxButton( this, wxID_OK, _("OK"));
     buttonSizer->Add(itemButtonOK, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButtonCancel = new wxButton( itemDialog1, wxID_CANCEL, _("Cancel"));
+    wxButton* itemButtonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"));
     buttonSizer->Add(itemButtonCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 }
 
