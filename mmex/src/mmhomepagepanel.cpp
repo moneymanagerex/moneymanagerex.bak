@@ -771,12 +771,10 @@ void mmHomePagePanel::updateAccounts()
 
 void mmHomePagePanel::CreateControls()
 {    
-    mmHomePagePanel* itemDialog1 = this;
-
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(itemBoxSizer2);
+    this->SetSizer(itemBoxSizer2);
 
-    htmlWindow_ = new mmHtmlWindow( itemDialog1, frame_, core_, 
+    htmlWindow_ = new mmHtmlWindow( this, frame_, core_, 
         ID_PANEL_HOMEPAGE_HTMLWINDOW, 
         wxDefaultPosition, wxDefaultSize, 
         wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );

@@ -175,12 +175,10 @@ void mmBudgetingPanel::OnMouseLeftDown( wxMouseEvent& event )
 
 void mmBudgetingPanel::CreateControls()
 {    
-    mmBudgetingPanel* itemDialog1 = this;
-
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(itemBoxSizer2);
+    this->SetSizer(itemBoxSizer2);
 
-    wxPanel* itemPanel3 = new wxPanel( itemDialog1, ID_PANEL_REPORTS_HEADER_PANEL, 
+    wxPanel* itemPanel3 = new wxPanel( this, ID_PANEL_REPORTS_HEADER_PANEL, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemBoxSizer2->Add(itemPanel3, 0, wxGROW|wxALL, 5);
 
@@ -282,7 +280,7 @@ void mmBudgetingPanel::CreateControls()
     m_imageList->Add(wxBitmap(flag_xpm));
     m_imageList->Add(wxBitmap(empty_xpm));
     
-    listCtrlAccount_ = new budgetingListCtrl( this, itemDialog1, 
+    listCtrlAccount_ = new budgetingListCtrl( this, this, 
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
