@@ -67,12 +67,10 @@ bool mmHelpPanel::Create( wxWindow *parent, wxWindowID winid,
 
 void mmHelpPanel::CreateControls()
 {    
-    mmHelpPanel* itemDialog1 = this;
-
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(itemBoxSizer2);
+    this->SetSizer(itemBoxSizer2);
 
-    wxPanel* itemPanel3 = new wxPanel( itemDialog1, ID_PANEL_REPORTS_HEADER_PANEL, 
+    wxPanel* itemPanel3 = new wxPanel( this, ID_PANEL_REPORTS_HEADER_PANEL, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemBoxSizer2->Add(itemPanel3, 0, wxGROW|wxALL, 5);
 
@@ -91,7 +89,7 @@ void mmHelpPanel::CreateControls()
     itemBoxSizerHeader->Add(buttonFordward, 0, wxLEFT|wxRIGHT, 5);
     itemBoxSizerHeader->Add(itemStaticText9, 0, wxLEFT|wxTOP, 5);
 
-    htmlWindow_ = new wxHtmlWindow( itemDialog1, ID_PANEL_REPORTS_HTMLWINDOW, 
+    htmlWindow_ = new wxHtmlWindow( this, ID_PANEL_REPORTS_HTMLWINDOW, 
         wxDefaultPosition, wxDefaultSize, 
         wxHW_SCROLLBAR_AUTO|wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     itemBoxSizer2->Add(htmlWindow_, 1, wxGROW|wxALL, 1);

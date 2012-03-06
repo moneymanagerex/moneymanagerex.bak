@@ -128,26 +128,24 @@ void mmCategDialog::fillControls()
 
 void mmCategDialog::CreateControls()
 {    
-    mmCategDialog* itemDialog1 = this;
-
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(itemBoxSizer2);
+    this->SetSizer(itemBoxSizer2);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
 #if defined (__WXGTK__) || defined (__WXMAC__)
-    treeCtrl_ = new wxTreeCtrl( itemDialog1, ID_DIALOG_CATEG_TREECTRL_CATS, 
+    treeCtrl_ = new wxTreeCtrl( this, ID_DIALOG_CATEG_TREECTRL_CATS, 
         wxDefaultPosition, wxSize(200, 380));
 #else
-    treeCtrl_ = new wxTreeCtrl( itemDialog1, ID_DIALOG_CATEG_TREECTRL_CATS, 
+    treeCtrl_ = new wxTreeCtrl( this, ID_DIALOG_CATEG_TREECTRL_CATS, 
         wxDefaultPosition, wxSize(200, 380), wxTR_SINGLE 
         | wxTR_HAS_BUTTONS 
         | wxTR_ROW_LINES );
 #endif
     itemBoxSizer3->Add(treeCtrl_, 1, wxGROW|wxALL, 1);
 
-    wxTextCtrl* itemTextCtrl6 = new wxTextCtrl( itemDialog1, 
+    wxTextCtrl* itemTextCtrl6 = new wxTextCtrl( this, 
         ID_DIALOG_CATEG_TEXTCTRL_CATNAME, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemTextCtrl6, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemTextCtrl6->SetToolTip(_("Enter the name of the category to add or edit here"));
@@ -155,17 +153,17 @@ void mmCategDialog::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, 0, wxGROW|wxALL, 5);
 
-    wxButton* itemButton7 = new wxButton( itemDialog1, wxID_ADD, 
+    wxButton* itemButton7 = new wxButton( this, wxID_ADD, 
         _("Add"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
      itemButton7->SetToolTip(_("Add a new category"));
 
-    wxButton* itemButton71 = new wxButton( itemDialog1, wxID_EDIT, 
+    wxButton* itemButton71 = new wxButton( this, wxID_EDIT, 
         _("&Edit"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton71, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton71->SetToolTip(_("Edit the name of an existing category"));
     
-    wxButton* itemButton8 = new wxButton( itemDialog1, wxID_REMOVE, 
+    wxButton* itemButton8 = new wxButton( this, wxID_REMOVE, 
         _("Remove"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton8->SetToolTip(_("Delete an existing category. The category cannot be used by existing transactions."));
@@ -173,13 +171,13 @@ void mmCategDialog::CreateControls()
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer9, 0, wxGROW|wxALL, 5);
 
-    wxButton* itemButton11 = new wxButton( itemDialog1, wxID_OK, 
+    wxButton* itemButton11 = new wxButton( this, wxID_OK, 
         _("&Select"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer9->Add(itemButton11, 1, wxALIGN_CENTER_VERTICAL|wxALL, 1);
     itemButton11->SetToolTip(_("Select the currently selected category as the selected category for the transaction"));
     
     //Some interfaces has no any close buttons, it may confuse user. Cancel button added
-    wxButton* itemCancelButton = new wxButton( itemDialog1, wxID_CANCEL, _("&Cancel"));
+    wxButton* itemCancelButton = new wxButton( this, wxID_CANCEL, _("&Cancel"));
     itemBoxSizer9->Add(itemCancelButton);
 }
 

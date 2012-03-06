@@ -119,24 +119,23 @@ bool mmFilterTransactionsDialog::Create( wxWindow* parent, wxWindowID id,
 void mmFilterTransactionsDialog::CreateControls()
 {    
     int fieldWidth = 210;
-    mmFilterTransactionsDialog* mainDialog = this;
 
 	wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
-    mainDialog->SetSizer(itemBoxSizer2);
+    this->SetSizer(itemBoxSizer2);
     
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer2->Add(itemBoxSizer3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(mainDialog, wxID_ANY, _(" Specify "));
+    wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(this, wxID_ANY, _(" Specify "));
     wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, wxVERTICAL);
     itemBoxSizer3->Add(itemStaticBoxSizer4, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
     
-    mainDialog->SetSizer(itemBoxSizer2);
+    this->SetSizer(itemBoxSizer2);
 
     /******************************************************************************
      Items Panel
     *******************************************************************************/
-    wxPanel* itemPanel = new wxPanel( mainDialog, ID_PANEL11, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* itemPanel = new wxPanel( this, ID_PANEL11, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemStaticBoxSizer4->Add(itemPanel, 1, wxGROW|wxALL, 5);
 
     wxFlexGridSizer* itemPanelSizer = new wxFlexGridSizer(2, 2, 0, 0);
@@ -274,7 +273,7 @@ void mmFilterTransactionsDialog::CreateControls()
     /******************************************************************************
      Button Panel with OK/Cancel buttons   
     *******************************************************************************/
-    wxPanel* buttonPanel = new wxPanel( mainDialog, ID_PANEL12, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* buttonPanel = new wxPanel( this, ID_PANEL12, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemBoxSizer3->Add(buttonPanel, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxBoxSizer* buttonPanelSizer = new wxBoxSizer(wxHORIZONTAL);

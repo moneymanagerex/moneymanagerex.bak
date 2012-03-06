@@ -90,32 +90,30 @@ void mmBudgetYearDialog::fillControls()
 
 void mmBudgetYearDialog::CreateControls()
 {    
-    mmBudgetYearDialog* itemDialog1 = this;
-
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(itemBoxSizer2);
+    this->SetSizer(itemBoxSizer2);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 0, wxGROW|wxALL, 5);
 
-    listBox_ = new wxListBox( itemDialog1, ID_DIALOG_BUDGETYEAR_LISTBOX_BUDGETYEARS , 
+    listBox_ = new wxListBox( this, ID_DIALOG_BUDGETYEAR_LISTBOX_BUDGETYEARS , 
         wxDefaultPosition, wxSize(100, 200));
     itemBoxSizer3->Add(listBox_, 1, wxGROW|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer5, 1, wxGROW|wxALL, 5);
 
-    wxButton* itemButton7 = new wxButton( itemDialog1, ID_DIALOG_BUDGETYEAR_BUTTON_ADD, 
+    wxButton* itemButton7 = new wxButton( this, ID_DIALOG_BUDGETYEAR_BUTTON_ADD, 
         _("&Add Year"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL);
     itemButton7->SetToolTip(_("Add a new budget year"));
 
-    wxButton* itemBudgetMonth = new wxButton( itemDialog1, ID_DIALOG_BUDGETYEAR_BUTTON_ADD_MONTH, 
+    wxButton* itemBudgetMonth = new wxButton( this, ID_DIALOG_BUDGETYEAR_BUTTON_ADD_MONTH, 
         _("&Add Month"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemBudgetMonth, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
     itemBudgetMonth->SetToolTip(_("Add a new budget month"));
 
-    wxButton* itemButtonDelete = new wxButton( itemDialog1, ID_DIALOG_BUDGETYEAR_BUTTON_DELETE, 
+    wxButton* itemButtonDelete = new wxButton( this, ID_DIALOG_BUDGETYEAR_BUTTON_DELETE, 
         _("&Delete"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButtonDelete, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
     itemButtonDelete->SetToolTip(_("Delete existing budget"));
@@ -123,7 +121,7 @@ void mmBudgetYearDialog::CreateControls()
     wxStaticLine* line = new wxStaticLine ( this, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
     itemBoxSizer2->Add(line, 0, wxGROW|wxALL, 5);
     
-    wxPanel* itemPanel25 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* itemPanel25 = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemBoxSizer2->Add(itemPanel25, 0, wxALIGN_RIGHT, 5);
 
     wxBoxSizer* itemButtonSizer = new wxBoxSizer(wxHORIZONTAL);

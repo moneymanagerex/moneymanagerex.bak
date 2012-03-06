@@ -273,11 +273,10 @@ void mmOptionsDialog::CreateControls()
     m_imageList->Add(wxBitmap(preferences_other_xpm));
     m_imageList->Add(wxBitmap(export_import_xpm));
  
-    mmOptionsDialog* mainDialog = this;
     wxBoxSizer* mainDialogSizer = new wxBoxSizer(wxVERTICAL);
-    mainDialog->SetSizer(mainDialogSizer);
+    this->SetSizer(mainDialogSizer);
 
-    wxPanel* mainDialogPanel = new wxPanel(mainDialog, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    wxPanel* mainDialogPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     mainDialogSizer->Add(mainDialogPanel, 1, wxGROW|wxALL, 5);
 
     wxBoxSizer* mainDialogPanelSizer = new wxBoxSizer(wxVERTICAL);
@@ -904,10 +903,10 @@ void mmOptionsDialog::CreateControls()
    /**********************************************************************************************
     Button Panel with OK and Cancel Buttons
     **********************************************************************************************/
-    wxStaticLine* panelSeparatorLine = new wxStaticLine(mainDialog, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    wxStaticLine* panelSeparatorLine = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     mainDialogSizer->Add(panelSeparatorLine,0,wxGROW|wxLEFT|wxRIGHT, 10);
     
-    wxPanel* buttonPanel = new wxPanel(mainDialog, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    wxPanel* buttonPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     wxBoxSizer* buttonPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonPanel->SetSizer(buttonPanelSizer);
     mainDialogSizer->Add(buttonPanel, 0, wxALIGN_RIGHT|wxALL, 5);
