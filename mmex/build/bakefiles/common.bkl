@@ -162,7 +162,6 @@ PATH. Accepted values: AMD64, IA64.
     
     <include file="wxsqlite.bkl"/>
     <include file="sqlite.bkl"/>
-    <include file="lua.bkl"/>
 
 
     <!-- Prepend valid lib-path if TARGET_CPU option set.
@@ -206,14 +205,12 @@ PATH. Accepted values: AMD64, IA64.
         <include cond="isdefined('BOOST_DIR')">$(BOOST_DIR)</include>
         <include>$(SRCDIR)/lib/sqlite</include>
         <include>$(SRCDIR)/lib/wxsqlite</include>
-        <include>$(SRCDIR)/lib/lua/src</include>
 
         <!-- disable precompiled headers for wxWidgets -->
         <define>NOPCH</define>
 
         <library>wxsqlite</library>
         <library>sqlite</library>
-        <library>lua</library>
 
     	<!-- relative to trunk/mmex -->
 

@@ -112,21 +112,4 @@ private:
 	wxString fontSize;
 };
 
-#include "mm_Scriptable_Objects.h"
-struct Scriptable_HTML_Builder
-{
-    Scriptable_HTML_Builder(lua_State *L) {}
-    ~Scriptable_HTML_Builder() {}
-
-    typedef mm_Lua_Object<Scriptable_HTML_Builder>::Registration_Record Registration_Record;
-    static const char className[];
-    static Registration_Record methods[];
-
-    int addLineBreak(lua_State *L);
-
-private:
-    mmHTMLBuilder *hb_;
-
-};
-
 #endif

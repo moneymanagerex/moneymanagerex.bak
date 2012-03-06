@@ -52,9 +52,8 @@ SQLITE_CFLAGS = -DSQLITE_CORE -DSQLITE_HAS_CODEC \
 	-DSQLITE_ENABLE_COLUMN_METADATA $(PIC_FLAG) $(CPPFLAGS) $(CFLAGS)
 SQLITE_OBJECTS =  \
 	sqlite_sqlite3secure.o
-MMEX_CXXFLAGS = -I$(srcdir)/lib/sqlite -I$(srcdir)/lib/wxsqlite \
-	-I$(srcdir)/lib/lua/src -DNOPCH $(WX_CXXFLAGS) $(PIC_FLAG) $(CPPFLAGS) \
-	$(CXXFLAGS)
+MMEX_CXXFLAGS = -I$(srcdir)/lib/sqlite -I$(srcdir)/lib/wxsqlite -DNOPCH \
+	$(WX_CXXFLAGS) $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
 MMEX_OBJECTS =  \
 	mmex_aboutdialog.o \
 	mmex_appstartdialog.o \
@@ -147,7 +146,7 @@ COND_PLATFORM_OS2_1___mmex___os2_emxbindcmd = $(NM) mmex$(EXEEXT) | if grep -q \
 
 ### Targets: ###
 
-all: $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) $(LIBPREFIX)lua$(LIBEXT) mmex$(EXEEXT) po
+all: $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) mmex$(EXEEXT) po
 
 install: install_mmex
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/mmex/res
@@ -200,7 +199,6 @@ clean:
 	rm -f ./*.o
 	rm -f $(LIBPREFIX)wxsqlite$(LIBEXT)
 	rm -f $(LIBPREFIX)sqlite$(LIBEXT)
-	rm -f $(LIBPREFIX)lua$(LIBEXT)
 	rm -f mmex$(EXEEXT)
 	-(cd $(srcdir)/po && $(MAKE) clean)
 	-(cd ./src/tests && $(MAKE) clean)
@@ -220,13 +218,8 @@ $(LIBPREFIX)sqlite$(LIBEXT): $(SQLITE_OBJECTS)
 	$(AR) $(AROPTIONS) $@ $(SQLITE_OBJECTS)
 	$(RANLIB) $@
 
-$(LIBPREFIX)lua$(LIBEXT): 
-	rm -f $@
-	$(AR) $(AROPTIONS) $@
-	$(RANLIB) $@
-
-mmex$(EXEEXT): $(MMEX_OBJECTS) $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) $(LIBPREFIX)lua$(LIBEXT) $(__mmex___win32rc)
-	$(CXX) -o $@ $(MMEX_OBJECTS) -L. -L. -L.   $(WX_LIBS) $(LDFLAGS_GUI) $(LDFLAGS)  -lwxsqlite -lsqlite -llua $(LIBS)
+mmex$(EXEEXT): $(MMEX_OBJECTS) $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) $(__mmex___win32rc)
+	$(CXX) -o $@ $(MMEX_OBJECTS) -L. -L.   $(WX_LIBS) $(LDFLAGS_GUI) $(LDFLAGS)  -lwxsqlite -lsqlite $(LIBS)
 	
 	$(__mmex___mac_setfilecmd)
 	$(__mmex___os2_emxbindcmd)
@@ -470,7 +463,7 @@ mmex_platfdep.o: $(srcdir)/src/unix/platfdep.cpp
 	$(CXXC) -c -o $@ $(MMEX_CXXFLAGS) $(srcdir)/src/unix/platfdep.cpp
 
 mmex_resources_mmex_rc.o: $(srcdir)/resources/mmex.rc
-	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/lib/sqlite --include-dir $(srcdir)/lib/wxsqlite --include-dir $(srcdir)/lib/lua/src --define NOPCH
+	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/lib/sqlite --include-dir $(srcdir)/lib/wxsqlite --define NOPCH
 
 
 # Include dependency info, if present:
