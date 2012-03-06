@@ -95,10 +95,12 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
     }
     mmHTMLBuilder hb;
     hb.init();
-    wxString headerStartupMsg = _("Budget Category Summary for ");
+    wxString headerStartupMsg;
     if (mainFrame_->budgetCategoryTotal())
         headerStartupMsg = _("Budget Categories for ");
-    hb.addHeader(3, headerStartupMsg + headingStr + _("<br>( Estimated Vs Actual )"));
+    else
+        headerStartupMsg = _("Budget Category Summary for ");
+    hb.addHeader(3, headerStartupMsg + headingStr + wxT("<br>") + _("( Estimated Vs Actual )"));
     DisplayDateHeading(hb, yearBegin, yearEnd);
 
     double estIncome = 0.0;
