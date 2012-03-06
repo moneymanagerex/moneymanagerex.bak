@@ -112,6 +112,7 @@ wxString mmGetNiceDateString( const wxDateTime &dt );
 wxString mmGetNiceDateSimpleString( const wxDateTime &dt );
 wxString mmGetNiceMonthName( int month );
 wxString mmGetNiceShortMonthName( int month );
+wxString mmGetNiceWeekDayName( int week_day );
 
 wxString inQuotes(wxString label);
 void mmExportQIF( mmCoreDB* core, wxSQLite3Database* db_ );

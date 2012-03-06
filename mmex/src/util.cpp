@@ -70,13 +70,13 @@ wxString selectLanguageDlg(wxWindow *parent, const wxString &langPath, bool verb
     for (size_t i = 0; i < cnt; ++i) 
     {
         wxFileName fname(lang_files[i]);
-        lang_files[i] = fname.GetName();
+        lang_files[i] = fname.GetName().Left(1).Upper() + fname.GetName().SubString(1,99) ;
     }
 
     lang_files.Sort(CaseInsensitiveCmp);
     lang = wxGetSingleChoice(wxT("Please choose language"), wxT("Languages"), lang_files, parent);
 
-    return lang;
+    return lang.Lower();
 }
 //----------------------------------------------------------------------------
 
@@ -437,42 +437,32 @@ wxString mmGetNiceShortMonthName(int month)
     return mon[month];
 }
 
-wxString mmGetNiceDateString(const wxDateTime &dt)
+wxString mmGetNiceWeekDayName(int week_day)
 {
     static const wxString gDaysInWeek[7] = 
     {
         _("Sunday"), _("Monday"), _("Tuesday"), _("Wednesday"),
         _("Thursday"), _("Friday"), _("Saturday")
     };
+    wxASSERT(week_day >= 0 && week_day < 7);
+    return gDaysInWeek[week_day];
+}
 
-    wxString dts(gDaysInWeek[dt.GetWeekDay()] + wxString(wxT(", ")));
+wxString mmGetNiceDateString(const wxDateTime &dt)
+{
+    wxString dts = wxString() << mmGetNiceWeekDayName(dt.GetWeekDay()) << wxT(", ");
 
-//  Discover the date format set by the user
-    wxString dateFmt = mmOptions::instance().dateFormat.Mid(1, 1).MakeUpper();
-
-//  Format date as: DDD, DD MMM YYYY
-    if (dateFmt == wxT("D")) 
-    {
-        dts += wxString::Format(wxT("%d"), dt.GetDay()) + wxString(wxT(" "));
-        dts += mmGetNiceMonthName(dt.GetMonth()) + wxT(" ");
-        dts += wxString::Format(wxT("%d"), dt.GetYear());
-
-//  Format date as: DDD, YYYY MMM DD
-    } 
-    else if (dateFmt == wxT("Y")) 
-    {
-        dts += wxString::Format(wxT("%d"), dt.GetYear()) + wxString(wxT(" "));
-        dts += mmGetNiceMonthName(dt.GetMonth()) + wxT(" ");
-        dts += wxString::Format(wxT("%d"), dt.GetDay());
-
-//  Format date as: DDD, MMM DD, YYYY
-    } 
-    else 
-    {
-        dts += mmGetNiceMonthName(dt.GetMonth()) + wxString(wxT(" "));
-        dts += wxString::Format(wxT("%d"), dt.GetDay()) + wxT(", ")
-            + wxString::Format(wxT("%d"), dt.GetYear());
-    }
+    wxString dateFmt = mmOptions::instance().dateFormat;
+    dateFmt.Replace(wxT("%Y%m%d"), wxT("%Y %m %d"));
+    dateFmt.Replace(wxT("%d"), wxString::Format(wxT("%d"), dt.GetDay()));
+    dateFmt.Replace(wxT("%Y"), wxString::Format(wxT("%d"), dt.GetYear()));
+    dateFmt.Replace(wxT("%y"), wxString::Format(wxT("%d"), dt.GetYear()).Mid(2,2));
+    dateFmt.Replace(wxT("%m"), mmGetNiceMonthName(dt.GetMonth()));
+    dateFmt.Replace(wxT("."), wxT(" "));
+    dateFmt.Replace(wxT(","), wxT(" "));
+    dateFmt.Replace(wxT("/"), wxT(" "));
+    dateFmt.Replace(wxT("-"), wxT(" "));
+    dts += dateFmt;
 
     return dts;
 }
