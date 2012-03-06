@@ -29,12 +29,13 @@
 #include <limits>
 
 enum 
-{   ID_BOOK_PANEL_EXP_IMP = wxID_HIGHEST + 1,
-	ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_USER4,
-	ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_COMMA4,
-	ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_SEMICOLON4, 
-	ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_TAB4,
-	ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4,
+{   
+    ID_BOOK_PANEL_EXP_IMP = wxID_HIGHEST + 1,
+    ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_USER4,
+    ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_COMMA4,
+    ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_SEMICOLON4, 
+    ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_TAB4,
+    ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4,
 };
 
 enum ViewEnum
@@ -196,9 +197,7 @@ wxString mmOptionsDialog::DisplayDate2FormatDate(wxString strDate)
     for(int i=0; i<TOTAL_DATEFORMAT; i++)
     {
         if(strDate == itemChoice7Strings[i])
-        {
             return DateFormat[i];
-        }
     }
 
     return strDate;
@@ -255,9 +254,7 @@ wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
     for(int i=0; i<TOTAL_DATEFORMAT; i++)
     {
         if(strDate == DateFormat[i])
-        {
             return itemChoice7Strings[i];
-        }
     }
 
     return wxT("");
@@ -339,9 +336,7 @@ void mmOptionsDialog::CreateControls()
 
     wxString currName = _("Set Currency");
     if (currencyId_ != -1)
-    {
         currName = core_->getCurrencyName(currencyId_);
-    }
     wxButton* baseCurrencyButton = new wxButton(generalPanel, ID_DIALOG_OPTIONS_BUTTON_CURRENCY,
         currName, wxDefaultPosition, wxSize(150, -1), 0);
     baseCurrencyButton->SetToolTip(_("Sets the default currency for the database."));
@@ -413,7 +408,7 @@ void mmOptionsDialog::CreateControls()
     int day = wxAtoi(financialPeriodStartDay); 
     wxSpinCtrl *textFPSDay = new wxSpinCtrl(generalPanel, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_DAY,
         wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 31, day);
-	textFPSDay->SetToolTip(_("Specify Day for start of financial year"));
+    textFPSDay->SetToolTip(_("Specify Day for start of financial year"));
     
     financialYearStaticBoxSizerGrid->Add(textFPSDay, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
@@ -857,27 +852,19 @@ void mmOptionsDialog::CreateControls()
     
     wxRadioButton* delimiterRadioButtonU4 = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_USER4, _("User Defined"), wxDefaultPosition, wxDefaultSize, 0);
     wxRadioButton* delimiterRadioButtonC4 = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_COMMA4, _("Comma"), wxDefaultPosition, wxDefaultSize, 0);
-    if (delimiter == wxT(","))
-    {
-        delimiterRadioButtonC4 ->SetValue(true);
-    }
+    if (delimiter == wxT(",")) delimiterRadioButtonC4 ->SetValue(true);
+
     wxRadioButton* delimiterRadioButtonS4 = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_SEMICOLON4, _("Semicolon"), wxDefaultPosition, wxDefaultSize, 0);
-    if (delimiter == wxT(";"))
-    {
-        delimiterRadioButtonS4 ->SetValue(true);
-    }
+    if (delimiter == wxT(";")) delimiterRadioButtonS4 ->SetValue(true);
+
     wxRadioButton* delimiterRadioButtonT4 = new wxRadioButton(importExportPanel, ID_DIALOG_OPTIONS_RADIOBUTTON_DELIMITER_TAB4, _("TAB"), wxDefaultPosition, wxDefaultSize, 0);
-    if (delimiter == wxT("\t"))
-    {
-        delimiterRadioButtonT4 ->SetValue(true);
-    }
+    if (delimiter == wxT("\t")) delimiterRadioButtonT4 ->SetValue(true);
+
     wxTextCtrl* textDelimiter4 = new wxTextCtrl( importExportPanel, ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4, delimiter, wxDefaultPosition, wxDefaultSize, 0);
     textDelimiter4->SetToolTip(_("Specify the delimiter to use when importing/exporting CSV files"));
     textDelimiter4->SetMaxLength(2);
     if (delimiter == wxT("\t") || delimiter == wxT(",") || delimiter == wxT(";"))
-    {
         textDelimiter4->Enable(false);
-    }
 
     radioButtonSizer->Add(delimiterRadioButtonC4, 0, wxALIGN_LEFT|wxALL, 5);
     radioButtonSizer->Add(delimiterRadioButtonS4, 0, wxALIGN_LEFT|wxALL, 5);
