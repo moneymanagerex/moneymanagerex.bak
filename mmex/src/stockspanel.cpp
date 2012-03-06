@@ -1042,6 +1042,5 @@ void stocksListCtrl::OnListItemActivated(wxListEvent& event)
         cp_->initVirtualListControl();
         RefreshItems(0, ((int)cp_->trans_.size()) - 1);
         cp_->updateExtraStocksData(selectedIndex_);
-
     }
 }
