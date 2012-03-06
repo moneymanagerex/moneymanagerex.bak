@@ -84,10 +84,7 @@ bool g_asc = true; // asc\desc sorting
 EColumn toEColumn(long col)
 {
     EColumn res = COL_DEF_SORT;
-
-    if (col >= 0 && col < COL_MAX) {
-        res = static_cast<EColumn>(col);
-    }
+    if (col >= 0 && col < COL_MAX) res = static_cast<EColumn>(col);
 
     return res;
 }
@@ -787,13 +784,16 @@ void mmCheckingPanel::updateExtraTransactionData(int selIndex)
         miniStr = getMiniInfoStr(selIndex);
         
         //Show only first line but full string set as tooltip
-        if (miniStr.Find(wxT("\n")) > 1 && !miniStr.IsEmpty()) {
-        stm->SetLabel(miniStr.substr(0,miniStr.Find(wxT("\n"))) + wxT(" ..."));
-        stm->SetToolTip(miniStr);
-	    } else {
-			stm->SetLabel(miniStr);
-			stm->SetToolTip(miniStr);
-		}
+        if (miniStr.Find(wxT("\n")) > 1 && !miniStr.IsEmpty()) 
+        {
+            stm->SetLabel(miniStr.substr(0,miniStr.Find(wxT("\n"))) + wxT(" ..."));
+            stm->SetToolTip(miniStr);
+        } 
+        else 
+        {
+            stm->SetLabel(miniStr);
+            stm->SetToolTip(miniStr);
+        }
 
     } 
     else 
@@ -885,11 +885,17 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
             if (accountId == m_AccountID && convrate < toconvrate)
             {
                 infoStr  << tocurpfxStr << wxT("1") << tocursfxStr << wxT(" = ") << curpfxStr << convertionStr << cursfxStr << wxT(" ");
-            } else if (accountId == m_AccountID && convrate > toconvrate) {
+            } 
+            else if (accountId == m_AccountID && convrate > toconvrate) 
+            {
                 infoStr << curpfxStr << wxT("1") << cursfxStr << wxT(" = ") << tocurpfxStr << convertionStr << tocursfxStr << wxT(" ");
-            } else if (accountId != m_AccountID && convrate < toconvrate) {
+            } 
+            else if (accountId != m_AccountID && convrate < toconvrate)
+            {
                 infoStr << tocurpfxStr << wxT("1") << tocursfxStr << wxT(" = ") << curpfxStr << convertionStr << cursfxStr << wxT(" ");
-            } else {
+            } 
+            else 
+            {
                 infoStr << curpfxStr << wxT("1") << cursfxStr << wxT(" = ") << tocurpfxStr << convertionStr << tocursfxStr << wxT(" ");
             } 
             infoStr << wxT(" )");
@@ -901,7 +907,7 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
         {
             infoStr =  mmDBWrapper::getSplitTrxNotes(core_->db_.get(), m_trans[selIndex]->transactionID());
             //infoStr.RemoveLast(1);
-		}
+        }
         
         if (currencyid != basecurrencyid) //Show nothing if account currency is base
         {
@@ -1123,9 +1129,7 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
         bool ok = v_transPtr[i] != 0;
         wxASSERT(ok);
 
-        if (!ok) {
-            continue;
-        }
+        if (!ok) continue;
 
         mmBankTransaction* transPtr = v_transPtr[i];
         initBalance = getBalance( transPtr, initBalance);
@@ -1646,7 +1650,8 @@ int TransactionListCtrl::OnGetItemColumnImage(long item, long column) const
         bool ok = m_cp && index < m_cp->m_trans.size();
         mmBankTransaction *tr = ok ? m_cp->m_trans[index] : 0;
         
-        if (tr->transType_ == TRANS_TYPE_TRANSFER_STR) {
+        if (tr->transType_ == TRANS_TYPE_TRANSFER_STR) 
+        {
             if ( tr->accountID_ == m_cp->accountID() )
                 res = ICON_TRANS_WITHDRAWAL;
             else
@@ -1688,7 +1693,7 @@ wxListItemAttr* TransactionListCtrl::OnGetItemAttr(long item) const
 // should continue as these keys may be processed by the operating system.
 void TransactionListCtrl::OnChar(wxKeyEvent& event)
 {   
-	if (wxGetKeyState(WXK_ALT) || 
+    if (wxGetKeyState(WXK_ALT) || 
         wxGetKeyState(WXK_COMMAND) ||
         wxGetKeyState(WXK_UP) || 
         wxGetKeyState(WXK_DOWN) || 
@@ -1715,7 +1720,7 @@ void TransactionListCtrl::OnChar(wxKeyEvent& event)
         wxGetKeyState(WXK_NUMPAD_SPACE)
         )
     {
-		event.Skip();
+        event.Skip();
     }
 }
 //----------------------------------------------------------------------------
@@ -1763,31 +1768,31 @@ void TransactionListCtrl::OnListKeyDown(wxListEvent& event)
 
     if (!wxGetKeyState(WXK_COMMAND) && !wxGetKeyState(WXK_ALT) && !wxGetKeyState(WXK_CONTROL))
     {
-		if (wxGetKeyState(wxKeyCode('V')) && status != wxT("V")) 
-		{
-			wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKVOID);
-			OnMarkTransaction(evt);  
-		}
-		else if (wxGetKeyState(wxKeyCode('R')) && status != wxT("R")) 
-		{
-			wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKRECONCILED);
-			OnMarkTransaction(evt); 
-		}
-		else if (wxGetKeyState(wxKeyCode('U')) && status != wxT("")) 
-		{
-			wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKUNRECONCILED);
-			OnMarkTransaction(evt); 
-		} 
-		else if (wxGetKeyState(wxKeyCode('F')) && status != wxT("F")) 
-		{
-			wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP);
-			OnMarkTransaction(evt); 
-		}
-		else if (wxGetKeyState(wxKeyCode('D')) && status != wxT("D")) 
-		{
-			wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKDUPLICATE);
-			OnMarkTransaction(evt); 
-		}
+        if (wxGetKeyState(wxKeyCode('V')) && status != wxT("V")) 
+        {
+            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKVOID);
+            OnMarkTransaction(evt);  
+        }
+        else if (wxGetKeyState(wxKeyCode('R')) && status != wxT("R")) 
+        {
+            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKRECONCILED);
+            OnMarkTransaction(evt); 
+        }
+        else if (wxGetKeyState(wxKeyCode('U')) && status != wxT("")) 
+        {
+            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKUNRECONCILED);
+            OnMarkTransaction(evt); 
+        } 
+        else if (wxGetKeyState(wxKeyCode('F')) && status != wxT("F")) 
+        {
+            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP);
+            OnMarkTransaction(evt); 
+        }
+        else if (wxGetKeyState(wxKeyCode('D')) && status != wxT("D")) 
+        {
+            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKDUPLICATE);
+            OnMarkTransaction(evt); 
+        }
         
         else if (wxGetKeyState(WXK_DELETE) || wxGetKeyState(WXK_NUMPAD_DELETE))
         {
@@ -1879,8 +1884,8 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
             m_selectedIndex = -1;
             m_cp->updateExtraTransactionData(m_selectedIndex);
         }
-		//Update info panels
-		//m_cp->updateExtraTransactionData(m_selectedIndex);
+        //Update info panels
+        //m_cp->updateExtraTransactionData(m_selectedIndex);
     }
 }
 //----------------------------------------------------------------------------
