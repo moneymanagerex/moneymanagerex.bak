@@ -65,14 +65,13 @@ bool mmCustomSQLDialog::Create( wxWindow* parent, wxWindowID id,
 
 void mmCustomSQLDialog::CreateControls()
 {    
-    mmCustomSQLDialog* customSQLDialog = this;
     wxBoxSizer* mainBoxSizer = new wxBoxSizer(wxVERTICAL);
-    customSQLDialog->SetSizer(mainBoxSizer);
+    this->SetSizer(mainBoxSizer);
 
     /****************************************
      Heading Panel 
      ***************************************/
-    wxPanel* headingPanel = new wxPanel( customSQLDialog, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* headingPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     mainBoxSizer->Add(headingPanel, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxBoxSizer* headingPanelSizerH = new wxBoxSizer(wxHORIZONTAL);
@@ -94,26 +93,26 @@ void mmCustomSQLDialog::CreateControls()
     /****************************************
      Center Area
      ***************************************/
-    wxStaticText* sourceTitleText = new wxStaticText( customSQLDialog, wxID_STATIC, _("SQL Source Script:"));
+    wxStaticText* sourceTitleText = new wxStaticText( this, wxID_STATIC, _("SQL Source Script:"));
     mainBoxSizer->Add(sourceTitleText, 0,  wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxTOP|wxADJUST_MINSIZE, 9);
 
     wxBoxSizer* centerHorizontalBoxSizer = new wxBoxSizer(wxHORIZONTAL);
     mainBoxSizer->Add(centerHorizontalBoxSizer, 1, wxGROW|wxALL, 5);
 
-	wxPanel* centerPanel = new wxPanel( customSQLDialog, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxPanel* centerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     centerHorizontalBoxSizer->Add(centerPanel, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
 
     wxBoxSizer* centerVerticalBoxSizer = new wxBoxSizer(wxVERTICAL);
     centerPanel->SetSizer(centerVerticalBoxSizer);
 
 	// ListBox for source code
-    sqlSourceTxtCtrl_ = new wxTextCtrl( customSQLDialog, DIALOG_CUSTOM_SQL_TXTCTRL_SOURCE, _T(""), wxDefaultPosition, wxSize(-1, sourceTextHeight), wxTE_MULTILINE );
+    sqlSourceTxtCtrl_ = new wxTextCtrl( this, DIALOG_CUSTOM_SQL_TXTCTRL_SOURCE, _T(""), wxDefaultPosition, wxSize(-1, sourceTextHeight), wxTE_MULTILINE );
     centerHorizontalBoxSizer->Add(sqlSourceTxtCtrl_, 1, wxGROW|wxALL, 1);
 
     /****************************************
      Bottom Panel
      ***************************************/
-    wxPanel* buttonPanel = new wxPanel( customSQLDialog, wxID_ANY,  wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* buttonPanel = new wxPanel( this, wxID_ANY,  wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     mainBoxSizer->Add(buttonPanel, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 0);
 
     wxBoxSizer* buttonPanelSizer = new wxBoxSizer(wxHORIZONTAL);

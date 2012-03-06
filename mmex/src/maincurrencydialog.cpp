@@ -94,23 +94,21 @@ void mmMainCurrencyDialog::fillControls()
 
 void mmMainCurrencyDialog::CreateControls()
 {    
-    mmMainCurrencyDialog* itemDialog1 = this;
-
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(itemBoxSizer2);
+    this->SetSizer(itemBoxSizer2);
 
-    wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, 
+    wxStaticText* itemStaticText3 = new wxStaticText( this, wxID_STATIC, 
        _("Currency List"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemStaticText3, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
-    currencyListBox_ = new wxListBox( itemDialog1, ID_LISTBOX, 
+    currencyListBox_ = new wxListBox( this, ID_LISTBOX, 
         wxDefaultPosition, wxDefaultSize, 0, NULL, wxLB_SINGLE|wxLB_NEEDED_SB );
     itemBoxSizer3->Add(currencyListBox_, 1, wxGROW|wxALL, 1);
 
-    wxPanel* itemPanel5 = new wxPanel( itemDialog1, ID_PANEL10, 
+    wxPanel* itemPanel5 = new wxPanel( this, ID_PANEL10, 
         wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemBoxSizer2->Add(itemPanel5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
 
