@@ -87,19 +87,18 @@ bool TransFilterDialog::Create( wxWindow* parent, wxWindowID id,
 void TransFilterDialog::CreateControls()
 {
     int fieldWidth = 202;
-    TransFilterDialog* mainDialog = this;
 
-    wxBoxSizer* mainDialogSizer = new wxBoxSizer(wxVERTICAL);
-    mainDialog->SetSizer(mainDialogSizer);
+    wxBoxSizer* thisSizer = new wxBoxSizer(wxVERTICAL);
+    this->SetSizer(thisSizer);
 
-    wxStaticBox* itemStaticBox = new wxStaticBox(mainDialog, wxID_ANY, _(" Filter Settings "));
+    wxStaticBox* itemStaticBox = new wxStaticBox(this, wxID_ANY, _(" Filter Settings "));
     wxStaticBoxSizer* itemStaticBoxSizer = new wxStaticBoxSizer(itemStaticBox, wxVERTICAL);
-    mainDialogSizer->Add(itemStaticBoxSizer, 0, wxGROW|wxLEFT|wxTOP|wxRIGHT, 10);
+    thisSizer->Add(itemStaticBoxSizer, 0, wxGROW|wxLEFT|wxTOP|wxRIGHT, 10);
 
     /******************************************************************************
      Items Panel
     *******************************************************************************/
-    wxPanel* itemPanel = new wxPanel( mainDialog, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* itemPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemStaticBoxSizer->Add(itemPanel, 1, wxGROW|wxALL, 5);
 
     wxFlexGridSizer* itemPanelSizer = new wxFlexGridSizer(2, 2, 0, 0);
@@ -208,8 +207,8 @@ void TransFilterDialog::CreateControls()
     /******************************************************************************
      Button Panel with OK/Cancel buttons   
     *******************************************************************************/
-    wxPanel* buttonPanel = new wxPanel( mainDialog, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    mainDialogSizer->Add(buttonPanel, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxPanel* buttonPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    thisSizer->Add(buttonPanel, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxBoxSizer* buttonPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonPanel->SetSizer(buttonPanelSizer);
