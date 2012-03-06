@@ -87,10 +87,8 @@ mmAppStartDialog::~mmAppStartDialog()
 
 void mmAppStartDialog::CreateControls()
 {    
-    mmAppStartDialog* itemDialog1 = this;
-
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(itemBoxSizer2);
+    this->SetSizer(itemBoxSizer2);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
@@ -101,7 +99,7 @@ void mmAppStartDialog::CreateControls()
     wxStaticBitmap* itemStaticBitmap4 = 0;
     if (!mmIniOptions::instance().enableCustomLogo_)
     {
-        itemStaticBitmap4 = new wxStaticBitmap( itemDialog1, wxID_STATIC, 
+        itemStaticBitmap4 = new wxStaticBitmap( this, wxID_STATIC, 
             itemStaticBitmap4Bitmap, wxDefaultPosition, wxSize(400, 209), 0 );
     }
     
@@ -112,7 +110,7 @@ void mmAppStartDialog::CreateControls()
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer3->Add(itemBoxSizer5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton61 = new wxButton( itemDialog1, ID_BUTTON_APPSTART_LAST_DATABASE, 
+    wxButton* itemButton61 = new wxButton( this, ID_BUTTON_APPSTART_LAST_DATABASE, 
         _("Open Last Opened Database"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton61, 0, wxGROW|wxALL, 5);
 
@@ -131,24 +129,24 @@ void mmAppStartDialog::CreateControls()
     else
         itemButton61->Disable();
 
-    wxButton* itemButton6 = new wxButton( itemDialog1, ID_BUTTON_APPSTART_NEW_DATABASE, 
+    wxButton* itemButton6 = new wxButton( this, ID_BUTTON_APPSTART_NEW_DATABASE, 
         _("Create a New Database"), wxDefaultPosition, wxDefaultSize, 0 );
     itemButton6->SetToolTip(_("Create a new database file to get started"));
     itemBoxSizer5->Add(itemButton6, 0, wxGROW|wxALL, 5);
 
-    wxButton* itemButton7 = new wxButton( itemDialog1, ID_BUTTON_APPSTART_OPEN_DATABASE, 
+    wxButton* itemButton7 = new wxButton( this, ID_BUTTON_APPSTART_OPEN_DATABASE, 
         _("Open Existing Database"), wxDefaultPosition, wxDefaultSize, 0 );
     itemButton7->SetToolTip(_("Open an already created database file with extension (*.mmb)"));
     itemBoxSizer5->Add(itemButton7, 0, wxGROW|wxALL, 5);
 
-    wxButton* itemButton8 = new wxButton( itemDialog1, ID_BUTTON_APPSTART_HELP, 
+    wxButton* itemButton8 = new wxButton( this, ID_BUTTON_APPSTART_HELP, 
         _("Read Documentation"), wxDefaultPosition, wxDefaultSize, 0 );
     itemButton8->SetToolTip(_("Read the user manual"));
     itemBoxSizer5->Add(itemButton8, 0, wxGROW|wxALL, 5);
 
     if (mmIniOptions::instance().enableVisitWebsite_)
     {
-       wxButton* itemButton9 = new wxButton( itemDialog1, ID_BUTTON_APPSTART_WEBSITE, 
+       wxButton* itemButton9 = new wxButton( this, ID_BUTTON_APPSTART_WEBSITE, 
           _("Visit Website for more information"), wxDefaultPosition, wxDefaultSize, 0 );
 
        wxString s = _("Open the ");
@@ -166,7 +164,7 @@ void mmAppStartDialog::CreateControls()
     showAppStartString += mmex::getProgramName();
     showAppStartString += _(" starts");
 
-    itemCheckBox = new wxCheckBox( itemDialog1, ID_CHECKBOX_APPSTART_SHOWAPPSTART, 
+    itemCheckBox = new wxCheckBox( this, ID_CHECKBOX_APPSTART_SHOWAPPSTART, 
         showAppStartString, wxDefaultPosition, 
         wxDefaultSize, wxCHK_2STATE );
     wxString showBeginApp = mmDBWrapper::getINISettingValue(inidb_, 

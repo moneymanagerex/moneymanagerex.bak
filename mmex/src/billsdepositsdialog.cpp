@@ -254,8 +254,6 @@ void mmBDDialog::dataToControls()
 
 void mmBDDialog::CreateControls()
 {    
-    mmBDDialog* itemDialog1 = this;
-
     wxBoxSizer* mainBoxSizerOuter = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer* mainBoxSizerInner = new wxBoxSizer(wxHORIZONTAL);
 
@@ -263,13 +261,13 @@ void mmBDDialog::CreateControls()
     wxBoxSizer* repeatTransBoxSizer = new wxBoxSizer(wxVERTICAL);
  
     /* Transaction Details */
-    wxStaticBox* transDetailsStaticBox = new wxStaticBox(itemDialog1, wxID_ANY, _("Transaction Details") );
+    wxStaticBox* transDetailsStaticBox = new wxStaticBox(this, wxID_ANY, _("Transaction Details") );
     wxStaticBoxSizer* transDetailsStaticBoxSizer = new wxStaticBoxSizer(transDetailsStaticBox, wxVERTICAL);
 
-    itemDialog1->SetSizer(mainBoxSizerOuter);
+    this->SetSizer(mainBoxSizerOuter);
 
     /* Calendar */
-    wxStaticBox* calendarStaticBox = new wxStaticBox(itemDialog1, wxID_ANY, _("Calendar") );
+    wxStaticBox* calendarStaticBox = new wxStaticBox(this, wxID_ANY, _("Calendar") );
     wxStaticBoxSizer* calendarStaticBoxSizer = new wxStaticBoxSizer(calendarStaticBox, wxHORIZONTAL);
     repeatTransBoxSizer->Add(calendarStaticBoxSizer, 10, wxALIGN_CENTER|wxLEFT|wxBOTTOM|wxRIGHT, 15);
 
@@ -286,21 +284,21 @@ void mmBDDialog::CreateControls()
     if (showSuroundingWeeks)
         style = wxCAL_SHOW_SURROUNDING_WEEKS| style;
     
-    calendarCtrl_ = new wxCalendarCtrl( itemDialog1, ID_DIALOG_BD_CALENDAR, wxDateTime(), 
+    calendarCtrl_ = new wxCalendarCtrl( this, ID_DIALOG_BD_CALENDAR, wxDateTime(), 
                                         wxDefaultPosition, wxDefaultSize, style);
     calendarStaticBoxSizer->Add(calendarCtrl_, 10, wxALIGN_CENTER_HORIZONTAL|wxALL, 15);
 	
     /* Bills & Deposits Details */
-    wxStaticBox* repeatDetailsStaticBox = new wxStaticBox(itemDialog1, wxID_ANY, _("Repeating Transaction Details") );
+    wxStaticBox* repeatDetailsStaticBox = new wxStaticBox(this, wxID_ANY, _("Repeating Transaction Details") );
     wxStaticBoxSizer* repeatDetailsStaticBoxSizer = new wxStaticBoxSizer(repeatDetailsStaticBox, wxHORIZONTAL);
     repeatTransBoxSizer->Add(repeatDetailsStaticBoxSizer, 0, wxALIGN_CENTER|wxALL, 5);
 
     wxFlexGridSizer* itemFlexGridSizer5 = new wxFlexGridSizer(4, 2, 10, 10);
     repeatDetailsStaticBoxSizer->Add(itemFlexGridSizer5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* staticTextAccName = new wxStaticText( itemDialog1, wxID_STATIC, _("Account Name") );
+    wxStaticText* staticTextAccName = new wxStaticText( this, wxID_STATIC, _("Account Name") );
     itemFlexGridSizer5->Add(staticTextAccName, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
-    itemAccountName_ = new wxButton( itemDialog1, ID_DIALOG_BD_COMBOBOX_ACCOUNTNAME, _("Select Account"), 
+    itemAccountName_ = new wxButton( this, ID_DIALOG_BD_COMBOBOX_ACCOUNTNAME, _("Select Account"), 
                                      wxDefaultPosition, wxSize(180, -1), 0 );
     if (core_->getNumBankAccounts() == 1)
     {
@@ -323,12 +321,12 @@ void mmBDDialog::CreateControls()
 #endif
 
     // Next Occur Date --------------------------------------------
-    wxStaticText* staticTextNextOccur = new wxStaticText( itemDialog1, wxID_STATIC, _("Next Occurrence") );
-    dpcbd_ = new wxDatePickerCtrl( itemDialog1, ID_DIALOG_BD_BUTTON_NEXTOCCUR, wxDefaultDateTime,
+    wxStaticText* staticTextNextOccur = new wxStaticText( this, wxID_STATIC, _("Next Occurrence") );
+    dpcbd_ = new wxDatePickerCtrl( this, ID_DIALOG_BD_BUTTON_NEXTOCCUR, wxDefaultDateTime,
                                    wxDefaultPosition, wxSize(110,-1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
     dpcbd_->SetToolTip(_("Specify the date of the next bill or deposit"));
 
-    spinNextOccDate_ = new wxSpinButton( itemDialog1, ID_DIALOG_BD_REPEAT_DATE_SPINNER,
+    spinNextOccDate_ = new wxSpinButton( this, ID_DIALOG_BD_REPEAT_DATE_SPINNER,
                                          wxDefaultPosition, spinCtrlSize,spinCtrlDirection|wxSP_ARROW_KEYS|wxSP_WRAP);
 	spinNextOccDate_->SetToolTip(_("Retard or advance the date of the 'next occurrence"));
 
@@ -341,7 +339,7 @@ void mmBDDialog::CreateControls()
     itemFlexGridSizer5->Add(nextOccurDateBoxSizer, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
     // Repeats --------------------------------------------
-    staticTextRepeats_ = new wxStaticText( itemDialog1, wxID_STATIC, _("Repeats") );
+    staticTextRepeats_ = new wxStaticText( this, wxID_STATIC, _("Repeats") );
     itemFlexGridSizer5->Add(staticTextRepeats_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
     
     wxArrayString repeatsStrChoiceArray; 
@@ -361,11 +359,11 @@ void mmBDDialog::CreateControls()
     repeatsStrChoiceArray.Add(_("Every (x) Days"));
     repeatsStrChoiceArray.Add(_("Every (x) Months"));
     
-    itemRepeats_ = new wxChoice( itemDialog1, ID_DIALOG_BD_COMBOBOX_REPEATS, wxDefaultPosition, 
+    itemRepeats_ = new wxChoice( this, ID_DIALOG_BD_COMBOBOX_REPEATS, wxDefaultPosition, 
                                  wxSize(110, -1), repeatsStrChoiceArray);
 
     wxBoxSizer* repeatBoxSizer = new wxBoxSizer(wxHORIZONTAL);
-    bSetNextOccurDate_ = new wxButton( itemDialog1, ID_DIALOG_TRANS_BUTTONTRANSNUM, _("Next"),
+    bSetNextOccurDate_ = new wxButton( this, ID_DIALOG_TRANS_BUTTONTRANSNUM, _("Next"),
                                        wxDefaultPosition, wxSize(60, -1));
     bSetNextOccurDate_->SetToolTip(_("Advance the Next Occurance Date with the specified values"));
     repeatBoxSizer->Add(itemRepeats_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
@@ -375,21 +373,21 @@ void mmBDDialog::CreateControls()
     itemRepeats_->SetSelection(0);
 
     // Repeat Times --------------------------------------------
-    staticTimesRepeat_ = new wxStaticText( itemDialog1, wxID_STATIC, _("Times Repeated") );
+    staticTimesRepeat_ = new wxStaticText( this, wxID_STATIC, _("Times Repeated") );
     itemFlexGridSizer5->Add(staticTimesRepeat_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
 
-    textNumRepeats_ = new wxTextCtrl( itemDialog1, ID_DIALOG_BD_TEXTCTRL_NUM_TIMES, wxT(""),
+    textNumRepeats_ = new wxTextCtrl( this, ID_DIALOG_BD_TEXTCTRL_NUM_TIMES, wxT(""),
                                       wxDefaultPosition, wxSize(110, -1), 0, doubleValidator() );
     itemFlexGridSizer5->Add(textNumRepeats_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     textNumRepeats_->SetMaxLength(12);
     setRepeatDetails();
 
     /* Auto Execution Status */
-    itemCheckBoxAutoExeUserAck_ = new wxCheckBox( itemDialog1, ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_USERACK, 
+    itemCheckBoxAutoExeUserAck_ = new wxCheckBox( this, ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_USERACK, 
         _("Set to 'Auto Execute' on the 'Next Occurrence' date."), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemCheckBoxAutoExeUserAck_->SetToolTip(_("Automatic Execution will require user acknowledgement."));
 
-    itemCheckBoxAutoExeSilent_ = new wxCheckBox( itemDialog1, ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_SILENT, 
+    itemCheckBoxAutoExeSilent_ = new wxCheckBox( this, ID_DIALOG_BD_CHECKBOX_AUTO_EXECUTE_SILENT, 
         _("Set 'Auto Execute' without user acknowlegement."), wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     itemCheckBoxAutoExeSilent_->Disable();
     itemCheckBoxAutoExeSilent_->SetToolTip(_("Automatic Execution will occur without user interaction"));
@@ -400,7 +398,7 @@ void mmBDDialog::CreateControls()
     /************************************************************************************************************
     transactionPanel controlled by transPanelSizer - is contained in the transDetailsStaticBoxSizer.
     *************************************************************************************************************/
-    wxPanel* transactionPanel = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* transactionPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     transDetailsStaticBoxSizer->Add(transactionPanel, 0, wxGROW|wxALL, 10);
 
     wxFlexGridSizer* transPanelSizer = new wxFlexGridSizer(5, 2, 10, 10);
@@ -546,7 +544,7 @@ void mmBDDialog::CreateControls()
     /**********************************************************************************************
      Button Panel with OK and Cancel Buttons
     ***********************************************************************************************/
-    wxPanel* buttonsPanel = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* buttonsPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     wxBoxSizer* buttonsPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonsPanel->SetSizer(buttonsPanelSizer);
 
