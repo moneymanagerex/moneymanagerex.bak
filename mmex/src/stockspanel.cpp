@@ -133,9 +133,7 @@ mmStocksPanel::~mmStocksPanel()
     }
 
     if (yahoo_) delete yahoo_;
-
-    if (m_LED)
-        delete m_LED;
+    if (m_LED) delete m_LED;
 
     long col0, col1, col2, col3, col4, col5, col6;
     col0 = listCtrlAccount_->GetColumnWidth(COL_DATE);
@@ -203,14 +201,12 @@ void mmStocksPanel::CreateControls()
     itemBoxSizerVHeader->Add(itemStaticText10, 0, wxALL, 1);
 
     /* ---------------------- */
-
     wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow(this,
             ID_SPLITTERWINDOW, wxDefaultPosition, wxSize(100, 100),
             wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER);
 
     wxSize imageSize(16, 16);
-    m_imageList = new wxImageList(imageSize.GetWidth(),
-                                   imageSize.GetHeight());
+    m_imageList = new wxImageList(imageSize.GetWidth(), imageSize.GetHeight());
     m_imageList->Add(wxBitmap(uparrow_xpm));
     m_imageList->Add(wxBitmap(downarrow_xpm));
 
