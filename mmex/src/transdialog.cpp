@@ -34,9 +34,12 @@
 
 // Defines for Transaction: (Status and Type) now located in dbWrapper.h
 
-enum { ID_DIALOG_TRANS_SPINNER = wxID_HIGHEST + 1,
-       ID_DIALOG_TRANS_WEEK, 
-       NOTES_MENU_NUMBER = 20 };
+enum 
+{ 
+    ID_DIALOG_TRANS_SPINNER = wxID_HIGHEST + 1,
+    ID_DIALOG_TRANS_WEEK, 
+    NOTES_MENU_NUMBER = 20 
+};
          
 IMPLEMENT_DYNAMIC_CLASS( mmTransDialog, wxDialog )
 
@@ -103,13 +106,11 @@ bool mmTransDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
     boost::shared_ptr<mmSplitTransactionEntries> split(new mmSplitTransactionEntries());
     split_ = split;
 
-    if (edit_)
-    {
-        dataToControls();
-    }
+    if (edit_) dataToControls();
     
     Centre();
     Fit();
+
     return TRUE;
 }
 
@@ -561,6 +562,7 @@ void mmTransDialog::OnPayee(wxCommandEvent& /*event*/)
         }
     }
 }
+
 void mmTransDialog::OnAutoTransNum(wxCommandEvent& /*event*/)
 {
     int mID = mmDBWrapper::getTransactionNumber(db_.get(), accountID_);
@@ -692,7 +694,9 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
                 subcatName.Replace (wxT("&"), wxT("&&"));
                 categString += wxT(" : ");
                 categString += subcatName;
-            } else {
+            } 
+            else 
+            {
                 subCategoryName_.Empty(); 
             }
 
@@ -711,8 +715,8 @@ void mmTransDialog::updateControlsForTransType()
     wxStaticText* stp = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_STATIC_PAYEE);
     wxStaticText* itemStaticText13 = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_STATIC_FROM);
 
-    if (choiceTrans_->GetSelection() == DEF_WITHDRAWAL) {
-
+    if (choiceTrans_->GetSelection() == DEF_WITHDRAWAL) 
+    {
         displayControlsToolTips(DEF_WITHDRAWAL);
         SetTransferControls();
         stp->SetLabel(_("Payee"));
@@ -722,8 +726,9 @@ void mmTransDialog::updateControlsForTransType()
             bPayee_->SetLabel(resetPayeeString());
         bPayee_->Enable(true);
 
-    } else if (choiceTrans_->GetSelection() == DEF_DEPOSIT) {
-
+    } 
+    else if (choiceTrans_->GetSelection() == DEF_DEPOSIT) 
+    {
         displayControlsToolTips(DEF_DEPOSIT);
         SetTransferControls();
         stp->SetLabel(_("From"));
@@ -733,8 +738,9 @@ void mmTransDialog::updateControlsForTransType()
             bPayee_->SetLabel(resetPayeeString());
         bPayee_->Enable(true);
 
-    } else if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
-
+    } 
+    else if (choiceTrans_->GetSelection() == DEF_TRANSFER) 
+    {
         displayControlsToolTips(DEF_TRANSFER, true);
         SetTransferControls(true);
         if (cAdvanced_->IsChecked())
@@ -778,10 +784,9 @@ wxString mmTransDialog::resetPayeeString(bool normal) //normal is deposits or wi
         payeeStr = filtd[0];
         payeeID_ = core_->getPayeeID(payeeStr);
     }
-    if (normal)
-    {
-        toID_ = -1;
-    }
+
+    if (normal) toID_ = -1;
+
     return payeeStr;
 }
 
@@ -790,6 +795,7 @@ wxString mmTransDialog::resetCategoryString()
     wxString catStr = _("Select Category");
     categID_ = -1;
     subcategID_ = -1;
+
     return catStr; 
 }
 
@@ -1117,10 +1123,13 @@ void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
 
 void mmTransDialog::SetTransferControls(bool transfers)
 {
-    if (transfers) {
+    if (transfers) 
+    {
         cAdvanced_->Enable();
         bTo_->Show();
-    } else {
+    } 
+    else 
+    {
         bTo_->Hide();
         cAdvanced_->Disable();
         SetAdvancedTransferControls();
@@ -1129,7 +1138,8 @@ void mmTransDialog::SetTransferControls(bool transfers)
 
 void mmTransDialog::SetAdvancedTransferControls(bool advanced)
 {
-    if (advanced) {
+    if (advanced) 
+    {
         toTextAmount_->Enable();
         advancedToTransAmountSet_ = true;
         // Display the transfer amount in the toTextAmount control.
@@ -1138,12 +1148,17 @@ void mmTransDialog::SetAdvancedTransferControls(bool advanced)
             wxString dispAmount;
             mmex::formatDoubleToCurrencyEdit(toTransAmount_, dispAmount);
             toTextAmount_->SetValue(dispAmount);
-        } else
+        } 
+        else
+        {
             toTextAmount_->SetValue(textAmount_->GetValue());
+        }
 
         textAmount_->SetToolTip(_("Specify the transfer amount in the From Account"));
 
-    } else {
+    } 
+    else 
+    {
         toTextAmount_->Disable();
         advancedToTransAmountSet_ = false;
     }
@@ -1205,19 +1220,15 @@ void mmTransDialog::changeFocus(wxChildFocusEvent& event)
 {
     wxWindow *w = event.GetWindow();
     if ( w ) 
-    {
         richText = (w->GetId() == ID_DIALOG_TRANS_TEXTNOTES ? true : false);    
-    }
-    
 }
 
 void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
 {
-    if (richText){
+    if (richText)
         return;
-    } else {
+    else
         EndModal(wxID_CANCEL);
-    }
 }
 
 void mmTransDialog::onTextEntered(wxCommandEvent& event)
@@ -1236,10 +1247,8 @@ void mmTransDialog::activateSplitTransactionsDlg()
     if (dlg.ShowModal() == wxID_OK)
     {
         double amount = split_->getTotalSplits();
-        if (choiceTrans_->GetSelection() == DEF_TRANSFER){
-            if (amount < 0)
-                amount = - amount;
-        }
+        if (choiceTrans_->GetSelection() == DEF_TRANSFER && amount < 0)
+            amount = - amount;
         wxString dispAmount;
         mmex::formatDoubleToCurrencyEdit(amount, dispAmount);
         textAmount_->SetValue(dispAmount);
@@ -1250,47 +1259,58 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
 {
     //it's for debuging
     //wxSafeShowMessage(wxT(":"), wxString::Format(wxT("%i"), event.GetUnicodeKey()));
-    if (event.GetKeyCode() != WXK_DOWN && event.GetKeyCode()!=WXK_UP) {
+    if (event.GetKeyCode() != WXK_DOWN && event.GetKeyCode()!=WXK_UP) 
+    {
         event.Skip();
         return;
     }
     size_t c = 0;
     wxString currentPayeeName = bPayee_->GetLabel();
     wxArrayString filtd;
-    if (choiceTrans_->GetSelection() != DEF_TRANSFER) {
+    if (choiceTrans_->GetSelection() != DEF_TRANSFER) 
+    {
         filtd = mmDBWrapper::filterPayees(db_.get(), wxT(""));
-        if (filtd.IsEmpty()) {
+        if (filtd.IsEmpty()) 
             //No payee present. Should be added one as minimum
             return;
-        }
-        if (currentPayeeName == _("Select Payee")) {
+        if (currentPayeeName == _("Select Payee")) 
+        {
             c = 0;            
-        } else {
-            for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) {
-                if (filtd.Item(i) == currentPayeeName) {
+        } 
+        else 
+        {
+            for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) 
+            {
+                if (filtd.Item(i) == currentPayeeName) 
+                {
                     c = i;
                     break;
                 }
             }
         }
         
-    } else {
+    } else 
+    {
         filtd = core_->getAccountsName();
-        if (filtd.IsEmpty()) {
+        if (filtd.IsEmpty()) 
             //No accounts present. Should be added one as minimum
             return;
-        }
-        for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) {
-            if (filtd.Item(i) == currentPayeeName) {
+        for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) 
+        {
+            if (filtd.Item(i) == currentPayeeName) 
+            {
                 c = i;
                 break;
             }
         }
     }
-    if (event.GetKeyCode()==WXK_DOWN) {
+    if (event.GetKeyCode()==WXK_DOWN) 
+    {
         if ((c + 1) < (size_t)filtd.GetCount())
             currentPayeeName = filtd.Item(++c);
-    } else if (event.GetKeyCode()==WXK_UP){
+    } 
+    else if (event.GetKeyCode()==WXK_UP)
+    {
         if (c > 0)
             currentPayeeName = filtd.Item(--c);
     }
@@ -1298,25 +1318,31 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
     currentPayeeName = filtd.Item(c);
     bPayee_->SetLabel(currentPayeeName);
 
-    if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
+    if (choiceTrans_->GetSelection() == DEF_TRANSFER)
         payeeID_ = core_->getAccountID(currentPayeeName);
-    } else {
+    else
         payeeID_ = core_->getPayeeID(currentPayeeName);
-    }
 }
 
 void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
 {
     int i = choiceTrans_->GetSelection();
-    if (event.GetKeyCode()==WXK_DOWN) {
-        if (i < (core_->getNumBankAccounts() > 1 ? DEF_TRANSFER : DEF_DEPOSIT)) {
+    if (event.GetKeyCode()==WXK_DOWN) 
+    {
+        if (i < (core_->getNumBankAccounts() > 1 ? DEF_TRANSFER : DEF_DEPOSIT)) 
+        {
             choiceTrans_->SetSelection(++i);
         }
-    } else if (event.GetKeyCode()==WXK_UP){
-        if (i > DEF_WITHDRAWAL){
+    } 
+    else if (event.GetKeyCode()==WXK_UP)
+    {
+        if (i > DEF_WITHDRAWAL)
+        {
             choiceTrans_->SetSelection(--i);
         }
-    } else {
+    } 
+    else 
+    {
         event.Skip();
     }
     updateControlsForTransType();
@@ -1326,22 +1352,30 @@ void mmTransDialog::onChoiceStatusChar(wxKeyEvent& event)
 {
     wxChoice* choice = (wxChoice*)FindWindow(ID_DIALOG_TRANS_STATUS);
     int i = choice->GetSelection();
-    if (event.GetKeyCode()==WXK_DOWN) {
-        if (i < DEF_STATUS_DUPLICATE) {
+    if (event.GetKeyCode()==WXK_DOWN) 
+    {
+        if (i < DEF_STATUS_DUPLICATE) 
+        {
             choice->SetSelection(++i);
         }
-    } else if (event.GetKeyCode()==WXK_UP) {
-        if (i > DEF_STATUS_NONE) {
+    } 
+    else if (event.GetKeyCode()==WXK_UP) 
+    {
+        if (i > DEF_STATUS_NONE) 
+        {
             choice->SetSelection(--i);
         }
-    } else {
+    } 
+    else 
+    {
         event.Skip();
     }
 }
 
 void mmTransDialog::OnButtonToAccountChar(wxKeyEvent& event) 
 {
-    if (event.GetKeyCode() != WXK_DOWN && event.GetKeyCode()!=WXK_UP) {
+    if (event.GetKeyCode() != WXK_DOWN && event.GetKeyCode()!=WXK_UP) 
+    {
         event.Skip();
         return;
     }
@@ -1351,30 +1385,36 @@ void mmTransDialog::OnButtonToAccountChar(wxKeyEvent& event)
     wxArrayString filtd;
 
     filtd = core_->getAccountsName(payeeID_);
-    if (filtd.IsEmpty()){
+    if (filtd.IsEmpty())
 		return;
-	}
-    if (toAccountName != _("Select To Acct")) { 
-        for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) {
-            if (filtd.Item(i) == toAccountName) {
+    if (toAccountName != _("Select To Acct")) 
+    { 
+        for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) 
+        {
+            if (filtd.Item(i) == toAccountName) 
+            {
                 c=i;
                 break;
             }
         }
-    } else {
+    } 
+    else 
+    {
         c = 0;
         toAccountName = filtd.Item(c);
     }
     
-    if (event.GetKeyCode()==WXK_DOWN) {
-        if ((c+1) < (size_t)(filtd.GetCount()))
-            toAccountName = filtd.Item(++c);
-            bTo_->SetLabel(toAccountName);
-    } else if (event.GetKeyCode()==WXK_UP){
-        if (c > 0)
-            toAccountName = filtd.Item(--c);
-            bTo_->SetLabel(toAccountName);
+    if (event.GetKeyCode()==WXK_DOWN) 
+    {
+        if ((c+1) < (size_t)(filtd.GetCount())) toAccountName = filtd.Item(++c);
+        bTo_->SetLabel(toAccountName);
+    } 
+    else if (event.GetKeyCode()==WXK_UP)
+    {
+        if (c > 0) toAccountName = filtd.Item(--c);
+        bTo_->SetLabel(toAccountName);
     }
+
     toID_ = core_->getAccountID(toAccountName);
 }
 
@@ -1383,31 +1423,37 @@ void mmTransDialog::OnButtonToAccountMouse(wxMouseEvent& event)
     size_t c = 1;
     int i = event.GetWheelRotation(); 
     wxArrayString filtd = core_->getAccountsName(payeeID_);
-    if (filtd.IsEmpty()){
+    if (filtd.IsEmpty())
 		return;
-	}
     wxString toAccountName = bTo_->GetLabel();
-    if (toAccountName != _("Select To Acct")) { 
-        for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) {
-            if (filtd.Item(i) == toAccountName) {
+    if (toAccountName != _("Select To Acct")) 
+    { 
+        for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) 
+        {
+            if (filtd.Item(i) == toAccountName) 
+            {
                 c=i;
                 break;
             }
         }
-    } else {
+    } 
+    else 
+    {
         c = 0;
         toAccountName = filtd.Item(c);
     }
     
-    if (i < 0) {
-        if ((c+1) < (size_t)(filtd.GetCount()))
-            toAccountName = filtd.Item(++c);
-            bTo_->SetLabel(toAccountName);
-    } else if (i > 0){
-        if (c > 0)
-            toAccountName = filtd.Item(--c);
-            bTo_->SetLabel(toAccountName);
+    if (i < 0) 
+    {
+        if ((c+1) < (size_t)(filtd.GetCount())) toAccountName = filtd.Item(++c);
+        bTo_->SetLabel(toAccountName);
+    } 
+    else if (i > 0)
+    {
+        if (c > 0) toAccountName = filtd.Item(--c);
+        bTo_->SetLabel(toAccountName);
     }
+
     toID_ = core_->getAccountID(toAccountName);
 }
 
@@ -1418,50 +1464,58 @@ void mmTransDialog::OnButtonPayeeMouse(wxMouseEvent& event)
     size_t c = 0;
     wxString currentPayeeName = bPayee_->GetLabel();
     wxArrayString filtd;
-    if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
+    if (choiceTrans_->GetSelection() == DEF_TRANSFER) 
+    {
         filtd = core_->getAccountsName();
-        if (filtd.IsEmpty()) {
+        if (filtd.IsEmpty()) 
             //No accounts present. Should be added one as minimum
             return;
-        }
-        for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) {
-            if (filtd.Item(i) == currentPayeeName) {
+        for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) 
+        {
+            if (filtd.Item(i) == currentPayeeName) 
+            {
                 c = i;
                 break;
             }
         }
         
-    } else {
+    } 
+    else 
+    {
         filtd = mmDBWrapper::filterPayees(db_.get(), wxT(""));
-        if (filtd.IsEmpty()) {
+        if (filtd.IsEmpty()) 
             //No payee present. Should be added one as minimum
             return;
-        }
-        if (currentPayeeName == _("Select Payee")) {
+        if (currentPayeeName == _("Select Payee")) 
+        {
             c = 0;            
-        } else {
-            for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) {
-                if (filtd.Item(i) == currentPayeeName) {
+        } 
+        else 
+        {
+            for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) 
+            {
+                if (filtd.Item(i) == currentPayeeName) 
+                {
                     c = i;
                     break;
                 }
             }
         }
     }
-    if (i < 0) {
-        if ((c + 1) < (size_t)filtd.GetCount())
-            currentPayeeName = filtd.Item(++c);
-    } else if (i > 0){
-        if (c > 0)
-            currentPayeeName = filtd.Item(--c);
+    if (i < 0) 
+    {
+        if ((c + 1) < (size_t)filtd.GetCount()) currentPayeeName = filtd.Item(++c);
+    } 
+    else if (i > 0)
+    {
+        if (c > 0) currentPayeeName = filtd.Item(--c);
     }
 
     currentPayeeName = filtd.Item(c);
     bPayee_->SetLabel(currentPayeeName);
 
-    if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
+    if (choiceTrans_->GetSelection() == DEF_TRANSFER)
         payeeID_ = core_->getAccountID(currentPayeeName);
-    } else {
+    else 
         payeeID_ = core_->getPayeeID(currentPayeeName);
-    }
 }
