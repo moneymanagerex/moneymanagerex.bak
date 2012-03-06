@@ -251,20 +251,18 @@ void mmTransDialog::dataToControls()
 
 void mmTransDialog::CreateControls()
 {    
-    mmTransDialog* itemDialog1 = this;
-
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(itemBoxSizer2);
-    itemDialog1->SetBackgroundColour(mmColors::listBackColor);
+    this->SetSizer(itemBoxSizer2);
+    this->SetBackgroundColour(mmColors::listBackColor);
     
-    wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(itemDialog1, wxID_ANY, _("Transaction Details"));
+    wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(this, wxID_ANY, _("Transaction Details"));
     wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, wxVERTICAL);
     itemBoxSizer2->Add(itemStaticBoxSizer4, 0, wxALIGN_CENTER_HORIZONTAL|wxLEFT|wxTOP|wxRIGHT, 10);
 
     /************************************************************************************************************
     ItemPanel7 controlled by ItemFlexGridSizer8 - contained in the TransDetailsStaticSizer. (itemStaticBoxSizer4)
     *************************************************************************************************************/
-    wxPanel* itemPanel7 = new wxPanel(itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* itemPanel7 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemStaticBoxSizer4->Add(itemPanel7, 0, wxGROW|wxALL, 10);
 
     wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(5, 2, 10, 10);
@@ -478,7 +476,7 @@ void mmTransDialog::CreateControls()
     /**********************************************************************************************
      Button Panel with OK and Cancel Buttons
     ***********************************************************************************************/
-    wxPanel* itemPanel25 = new wxPanel( itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* itemPanel25 = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     itemBoxSizer2->Add(itemPanel25, 5, wxALIGN_RIGHT|wxTOP|wxDOWN, 10);
 
     wxStdDialogButtonSizer*  itemStdDialogButtonSizer1 = new wxStdDialogButtonSizer;
