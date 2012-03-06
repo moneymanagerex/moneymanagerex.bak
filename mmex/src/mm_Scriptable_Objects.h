@@ -19,13 +19,6 @@
 #if !defined(MM_SCRIPTABLE_OBJECTS_H)
 #define MM_SCRIPTABLE_OBJECTS_H
 
-extern "C" 
-{
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-};
-
 template <typename T>
 class mm_Lua_Object
 {

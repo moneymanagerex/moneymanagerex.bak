@@ -138,20 +138,6 @@ private:
 
 };
 
-#include "mm_Scriptable_Objects.h"
-struct Scriptable_CoreDB
-{
-    Scriptable_CoreDB() {}
-    ~Scriptable_CoreDB() {}
-
-    typedef mm_Lua_Object<Scriptable_CoreDB>::Registration_Record Registration_Record;
-    static const char className[];
-    static Registration_Record methods[];
-
-private:
-    mmCoreDB* core_;
-
-};
 //----------------------------------------------------------------------------
 #endif // _MM_EX_COREDB_H_
 //----------------------------------------------------------------------------
