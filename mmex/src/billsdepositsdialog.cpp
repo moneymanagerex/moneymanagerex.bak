@@ -96,7 +96,11 @@ bool mmBDDialog::Create( wxWindow* parent, wxWindowID id, const wxString& captio
     if (edit_ || enterOccur_)
     {
         dataToControls();
-        if (enterOccur_)
+        if (! enterOccur_)
+        {
+            dpc_->Disable();
+        }
+        else
         {
             choiceTrans_->Disable();
             dpcbd_->Disable();
@@ -107,12 +111,12 @@ bool mmBDDialog::Create( wxWindow* parent, wxWindowID id, const wxString& captio
             itemCheckBoxAutoExeUserAck_->Disable();
             textNumRepeats_->Disable();
             bSetNextOccurDate_->Disable();
-        } else
-            dpc_->Disable();
+        }
     }
 
     Centre();
     Fit();
+
     return TRUE;
 }
 
@@ -124,8 +128,8 @@ void mmBDDialog::dataToControls()
         "SUBCATEGID, FOLLOWUPID, TOTRANSAMOUNT, REPEATS, NUMOCCURRENCES, "
         "NEXTOCCURRENCEDATE, date(TRANSDATE, 'localtime') as TRANSDATE "
         "from BILLSDEPOSITS_V1 where BDID = ? ";
-		// Removed "date(NEXTOCCURRENCEDATE, 'localtime') as NEXTOCCURRENCEDATE, "
-		// because causing problems with some systems and in different time zones
+        // Removed "date(NEXTOCCURRENCEDATE, 'localtime') as NEXTOCCURRENCEDATE, "
+        // because causing problems with some systems and in different time zones
     
     wxSQLite3Statement st = db_->PrepareStatement(billsdepositsSql);
     st.Bind(1, bdID_);
@@ -155,8 +159,8 @@ void mmBDDialog::dataToControls()
         wxString dtnostr = mmGetDateForDisplay(db_, dtno);
         dpcbd_->SetValue(dtno);
         dpc_->SetValue(dtno);
-		calendarCtrl_->SetDate (dtno);
-		
+        calendarCtrl_->SetDate (dtno);
+        
         int repeatSel = q1.GetInt(wxT("REPEATS"));
         // Have used repeatSel to multiplex auto repeat fields.
         if (repeatSel >= BD_REPEATS_MULTIPLEX_BASE)
@@ -193,7 +197,7 @@ void mmBDDialog::dataToControls()
         wxString accountName = core_->getAccountName(accountID_);
         itemAccountName_->SetLabel(accountName);
 
-		split_->loadFromBDDB(core_, bdID_);
+        split_->loadFromBDDB(core_, bdID_);
 
         if (split_->numEntries() > 0)
         {
@@ -271,7 +275,7 @@ void mmBDDialog::CreateControls()
     wxStaticBoxSizer* calendarStaticBoxSizer = new wxStaticBoxSizer(calendarStaticBox, wxHORIZONTAL);
     repeatTransBoxSizer->Add(calendarStaticBoxSizer, 10, wxALIGN_CENTER|wxLEFT|wxBOTTOM|wxRIGHT, 15);
 
-	//TODO: Set these up as user selectable. Some users wish to have monday first in calendar!
+    //TODO: Set these up as user selectable. Some users wish to have monday first in calendar!
     bool startSunday = true;
     bool showSuroundingWeeks = true;
 
@@ -287,7 +291,7 @@ void mmBDDialog::CreateControls()
     calendarCtrl_ = new wxCalendarCtrl( this, ID_DIALOG_BD_CALENDAR, wxDateTime(), 
                                         wxDefaultPosition, wxDefaultSize, style);
     calendarStaticBoxSizer->Add(calendarCtrl_, 10, wxALIGN_CENTER_HORIZONTAL|wxALL, 15);
-	
+    
     /* Bills & Deposits Details */
     wxStaticBox* repeatDetailsStaticBox = new wxStaticBox(this, wxID_ANY, _("Repeating Transaction Details") );
     wxStaticBoxSizer* repeatDetailsStaticBoxSizer = new wxStaticBoxSizer(repeatDetailsStaticBox, wxHORIZONTAL);
@@ -306,7 +310,7 @@ void mmBDDialog::CreateControls()
         wxString accNameStr = accName[0];
         itemAccountName_->SetLabel(accNameStr);
         accountID_= core_->getAccountID(accNameStr);
-	};
+    };
     itemFlexGridSizer5->Add(itemAccountName_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     itemAccountName_->SetToolTip(_("Specify the Account that will own the repeating transaction"));
 
@@ -328,11 +332,11 @@ void mmBDDialog::CreateControls()
 
     spinNextOccDate_ = new wxSpinButton( this, ID_DIALOG_BD_REPEAT_DATE_SPINNER,
                                          wxDefaultPosition, spinCtrlSize,spinCtrlDirection|wxSP_ARROW_KEYS|wxSP_WRAP);
-	spinNextOccDate_->SetToolTip(_("Retard or advance the date of the 'next occurrence"));
+    spinNextOccDate_->SetToolTip(_("Retard or advance the date of the 'next occurrence"));
 
-	wxBoxSizer* nextOccurDateBoxSizer = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* nextOccurDateBoxSizer = new wxBoxSizer(wxHORIZONTAL);
     nextOccurDateBoxSizer->Add(dpcbd_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
-	nextOccurDateBoxSizer->Add(spinNextOccDate_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, interval);
+    nextOccurDateBoxSizer->Add(spinNextOccDate_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, interval);
 
     itemFlexGridSizer5->Add(staticTextNextOccur, 0,
                             wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
@@ -411,11 +415,11 @@ void mmBDDialog::CreateControls()
     dpc_->SetToolTip(_("Specify the date of the transaction"));
     spinTransDate_ = new wxSpinButton( transactionPanel,ID_DIALOG_TRANS_DATE_SPINNER,
                                        wxDefaultPosition, spinCtrlSize,spinCtrlDirection|wxSP_ARROW_KEYS|wxSP_WRAP);
-	spinTransDate_->SetToolTip(_("Retard or advance the date of the transaction"));
+    spinTransDate_->SetToolTip(_("Retard or advance the date of the transaction"));
 
-	wxBoxSizer* transDateBoxSizer = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* transDateBoxSizer = new wxBoxSizer(wxHORIZONTAL);
     transDateBoxSizer->Add(dpc_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
-	transDateBoxSizer->Add(spinTransDate_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, interval);
+    transDateBoxSizer->Add(spinTransDate_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, interval);
 
     transPanelSizer->Add(staticTextDate, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
     transPanelSizer->Add(transDateBoxSizer, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
@@ -431,7 +435,7 @@ void mmBDDialog::CreateControls()
     choiceStatusStrings.Add(_("Duplicate"));
     choiceStatus_ = new wxChoice( transactionPanel, ID_DIALOG_TRANS_STATUS,
                                   wxDefaultPosition, wxSize(110, -1), choiceStatusStrings);
-	choiceStatus_->SetSelection(mmIniOptions::instance().transStatusReconciled_);
+    choiceStatus_->SetSelection(mmIniOptions::instance().transStatusReconciled_);
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
 
     transPanelSizer->Add(staticTextStatus, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
@@ -461,7 +465,7 @@ void mmBDDialog::CreateControls()
     transPanelSizer->Add(staticTextType, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
     transPanelSizer->Add(typeSizer, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
-	// Amount Fields --------------------------------------------
+    // Amount Fields --------------------------------------------
     amountNormalTip_   = _("Specify the amount for this transaction");
     amountTransferTip_ = _("Specify the amount to be transfered"); 
 
@@ -569,9 +573,12 @@ void mmBDDialog::CreateControls()
     /**********************************************************************************************
      Adjust controls according to function settings
     ***********************************************************************************************/
-    if (enterOccur_) {
+    if (enterOccur_) 
+    {
         spinNextOccDate_->Disable();
-    } else {
+    } 
+    else 
+    {
         dpc_->Disable();
         spinTransDate_->Disable();
     }
@@ -584,96 +591,96 @@ void mmBDDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmBDDialog::OnAccountName(wxCommandEvent& /*event*/)
 {
-    	wxArrayString as = core_->getAccountsName();
-    	
-    	wxSingleChoiceDialog scd(this, _("Choose Bank Account or Term Account"), _("Select Account"), as);
-    	if (scd.ShowModal() == wxID_OK)
-        {
-            wxString acctName = scd.GetStringSelection();
-            accountID_ = core_->getAccountID(acctName);
-            itemAccountName_->SetLabel(acctName);
-    	}
+    wxArrayString as = core_->getAccountsName();
+    
+    wxSingleChoiceDialog scd(this, _("Choose Bank Account or Term Account"), _("Select Account"), as);
+    if (scd.ShowModal() == wxID_OK)
+    {
+        wxString acctName = scd.GetStringSelection();
+        accountID_ = core_->getAccountID(acctName);
+        itemAccountName_->SetLabel(acctName);
+    }
 }
 
 void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 {
     if (choiceTrans_->GetSelection() == DEF_TRANSFER)
-	{
-    	wxArrayString as = core_->getAccountsName();
-    	
-    	wxString acctName = itemAccountName_->GetLabel();
-    	bPayee_->SetLabel(acctName);
-    	
-    	wxSingleChoiceDialog scd(this, _("Account name"), _("Select Account"), as);
-    	if (scd.ShowModal() == wxID_OK) 
+    {
+        wxArrayString as = core_->getAccountsName();
+        
+        wxString acctName = itemAccountName_->GetLabel();
+        bPayee_->SetLabel(acctName);
+        
+        wxSingleChoiceDialog scd(this, _("Account name"), _("Select Account"), as);
+        if (scd.ShowModal() == wxID_OK) 
         {
             acctName = scd.GetStringSelection();
-		    payeeID_ = core_->getAccountID(acctName);
-		    bPayee_->SetLabel(acctName);
-		    itemAccountName_->SetLabel(acctName);
-    	}
+            payeeID_ = core_->getAccountID(acctName);
+            bPayee_->SetLabel(acctName);
+            itemAccountName_->SetLabel(acctName);
+        }
     } 
     else 
     {
         mmPayeeDialog dlg(this, core_);
 
         if ( dlg.ShowModal() == wxID_OK )
-	    {
+        {
             payeeID_ = dlg.getPayeeId();
-	        if (payeeID_ == -1)
+            if (payeeID_ == -1)
             {
-	            resetPayeeString();
+                resetPayeeString();
                 payeeUnknown_ = true;
                 return;
             }
-	            
+                
             // ... If this is a Split Transaction, ignore the Payee change
             if (split_->numEntries())
                 return;
-	
+    
             int tempCategID = -1;
             int tempSubCategID = -1;
-            wxString payeeName = mmDBWrapper::getPayee(db_,	payeeID_, tempCategID, tempSubCategID);
+            wxString payeeName = mmDBWrapper::getPayee(db_,    payeeID_, tempCategID, tempSubCategID);
             bPayee_->SetLabel(mmReadyDisplayString(payeeName));
             payeeUnknown_ = false;
 
-    	    if (tempCategID == -1)
-	        {
+            if (tempCategID == -1)
+            {
                 return;
             }
-	
+    
             wxString catName = core_->getCategoryName(tempCategID);
             wxString categString = catName;
-	
+    
             if (tempSubCategID != -1)
             {
                 wxString subcatName = mmDBWrapper::getSubCategoryName(db_, tempCategID, tempSubCategID);
                 categString += wxT(" : ");
                 categString += subcatName;
             }
-	
+    
             categID_ = tempCategID;
             subcategID_ = tempSubCategID;
             bCategory_->SetLabel(categString);
         }
-	    else
-	    {
+        else
+        {
             wxString payeeName = mmDBWrapper::getPayee(db_, payeeID_, categID_, subcategID_);
             if (payeeName.IsEmpty())
-	        {
-	            //payeeID_ = -1;
-	            categID_ = -1;
-	            subcategID_ = -1;
+            {
+                //payeeID_ = -1;
+                categID_ = -1;
+                subcategID_ = -1;
                 categoryName_ = wxEmptyString;
                 subCategoryName_ = wxEmptyString;
                 bCategory_->SetLabel(_("Select Category"));
-	            //bPayee_->SetLabel(_("Select Payee"));
-	            resetPayeeString();
+                //bPayee_->SetLabel(_("Select Payee"));
+                resetPayeeString();
                 payeeUnknown_ = true;
-	        }
-	        else
-	        {
-	            bPayee_->SetLabel(payeeName);
+            }
+            else
+            {
+                bPayee_->SetLabel(payeeName);
                 payeeUnknown_ = false;
             }
         }
@@ -681,14 +688,14 @@ void mmBDDialog::OnPayee(wxCommandEvent& /*event*/)
 }
 
 void mmBDDialog::OnTo(wxCommandEvent& /*event*/)
-{	
+{    
     // This should only get called if we are in a transfer
     wxArrayString as = core_->getAccountsName();
-    	
+        
     wxSingleChoiceDialog scd(this, _("Account name"), _("Select Account"), as);
     if (scd.ShowModal() == wxID_OK)
     {
-	    wxString acctName = scd.GetStringSelection();
+        wxString acctName = scd.GetStringSelection();
         toID_ = core_->getAccountID(acctName);
         bTo_->SetLabel(acctName);
     }
@@ -821,8 +828,7 @@ void mmBDDialog::updateControlsForTransType()
         }
 
         SetTransferControls(true);
-        if (cAdvanced_->IsChecked())
-            SetAdvancedTransferControls(true);
+        if (cAdvanced_->IsChecked()) SetAdvancedTransferControls(true);
 
         stp->SetLabel(_("From"));   
         st->SetLabel(_("To"));   
@@ -1052,7 +1058,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
         wxASSERT(st.GetParamCount() == i);
 
         st.ExecuteUpdate();
-		int transID = db_->GetLastRowId().ToLong();
+        int transID = db_->GetLastRowId().ToLong();
         st.Finalize();
         
         // --
@@ -1064,7 +1070,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
         st = db_->PrepareStatement(sql_ins);
 
         for (size_t i = 0; i < split_->numEntries(); ++i)
-		{
+        {
             mmSplitTransactionEntry &r = *split_->entries_[i];
 
             st.Bind(1, transID);
@@ -1073,10 +1079,10 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
             st.Bind(4, r.splitAmount_);
 
             st.ExecuteUpdate();
-			r.splitEntryID_ = db_->GetLastRowId().ToLong();
+            r.splitEntryID_ = db_->GetLastRowId().ToLong();
             
             st.Reset();
-		}
+        }
 
         st.Finalize();
     }
@@ -1117,33 +1123,33 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
 
         // --
 
-		st = db_->PrepareStatement("delete from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = ?");	
+        st = db_->PrepareStatement("delete from BUDGETSPLITTRANSACTIONS_V1 where TRANSID = ?");    
         st.Bind(1, bdID_);
         st.ExecuteUpdate();
         st.Finalize();
 
         // --
 
-		static const char sql_ins[] = 
+        static const char sql_ins[] = 
         "insert into BUDGETSPLITTRANSACTIONS_V1 (TRANSID, CATEGID, SUBCATEGID, SPLITTRANSAMOUNT) "
         "values (?, ?, ?, ?)";
 
         st = db_->PrepareStatement(sql_ins);
         
         for (size_t i = 0; i < split_->numEntries(); ++i)
-		{
+        {
             mmSplitTransactionEntry &r = *split_->entries_[i];
 
             st.Bind(1, bdID_);
             st.Bind(2, r.categID_);
             st.Bind(3, r.subCategID_);
             st.Bind(4, r.splitAmount_);
-			
+            
             st.ExecuteUpdate();
-			r.splitEntryID_ = db_->GetLastRowId().ToLong();
+            r.splitEntryID_ = db_->GetLastRowId().ToLong();
             
             st.Reset();
-		}
+        }
 
         st.Finalize();
     }
@@ -1171,7 +1177,7 @@ void mmBDDialog::OnOk(wxCommandEvent& /*event*/)
             pTransaction->date_ = dpc_->GetValue();
             pTransaction->toAmt_ = toTransAmount_;
 
-    		*pTransaction->splitEntries_.get() = *split_.get();
+            *pTransaction->splitEntries_.get() = *split_.get();
             pTransaction->updateAllData(core_, fromAccountID, pCurrencyPtr);
             core_->bTransactionList_.addTransaction(core_, pTransaction);
         }
@@ -1210,9 +1216,12 @@ void mmBDDialog::OnSplitChecked(wxCommandEvent& /*event*/)
 void mmBDDialog::OnAutoExecutionUserAckChecked(wxCommandEvent& /*event*/)
 {
     autoExecuteUserAck_ = ! autoExecuteUserAck_;
-    if (autoExecuteUserAck_) {
+    if (autoExecuteUserAck_) 
+    {
         itemCheckBoxAutoExeSilent_->Enable(true);
-    } else {
+    } 
+    else 
+    {
         itemCheckBoxAutoExeSilent_->SetValue(false);
         itemCheckBoxAutoExeSilent_->Enable(false);
         autoExecuteSilent_ = false;
@@ -1236,15 +1245,18 @@ void mmBDDialog::OnCalendarSelChanged(wxCalendarEvent& event)
 
 void mmBDDialog::OnDateChanged(wxDateEvent& event)
 {
-	wxDateTime date = event.GetDate();
-	calendarCtrl_->SetDate(date) ;
+    wxDateTime date = event.GetDate();
+    calendarCtrl_->SetDate(date) ;
 }
 
 void mmBDDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
 {
-    if (cAdvanced_->IsChecked()) {
+    if (cAdvanced_->IsChecked()) 
+    {
         SetAdvancedTransferControls(true);
-    } else {
+    } 
+    else 
+    {
         SetAdvancedTransferControls();
         textAmount_->SetToolTip(amountTransferTip_);
     }
@@ -1252,10 +1264,13 @@ void mmBDDialog::OnAdvanceChecked(wxCommandEvent& /*event*/)
 
 void mmBDDialog::SetTransferControls(bool transfers)
 {
-    if (transfers) {
+    if (transfers) 
+    {
         cAdvanced_->Enable();
         bTo_->Show();
-    } else {
+    } 
+    else 
+    {
         bTo_->Hide();
         cAdvanced_->Disable();
         SetAdvancedTransferControls();
@@ -1264,7 +1279,8 @@ void mmBDDialog::SetTransferControls(bool transfers)
 
 void mmBDDialog::SetAdvancedTransferControls(bool advanced)
 {
-    if (advanced) {
+    if (advanced) 
+    {
         toTextAmount_->Enable();
         advancedToTransAmountSet_ = true;
         // Display the transfer amount in the toTextAmount control.
@@ -1273,12 +1289,17 @@ void mmBDDialog::SetAdvancedTransferControls(bool advanced)
             wxString dispAmount;
             mmex::formatDoubleToCurrencyEdit(toTransAmount_, dispAmount);
             toTextAmount_->SetValue(dispAmount);
-        } else
+        } 
+        else
+        {
             toTextAmount_->SetValue(textAmount_->GetValue());
+        }
 
         textAmount_->SetToolTip(_("Specify the transfer amount in the From Account"));
 
-    } else {
+    } 
+    else 
+    {
         toTextAmount_->Disable();
         advancedToTransAmountSet_ = false;
     }
@@ -1287,15 +1308,14 @@ void mmBDDialog::SetAdvancedTransferControls(bool advanced)
 void mmBDDialog::SetNewDate(wxDatePickerCtrl* dpc, bool forward)
 {
     int day = -1;
-    if (forward)
-        day = 1;
+    if (forward) day = 1;
 
     wxString dateStr = dpc->GetValue().FormatISODate();
-	wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
-	date = date.Add(wxDateSpan::Days(day));
+    wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
+    date = date.Add(wxDateSpan::Days(day));
 
-	dpc_->SetValue( date );
-	dpcbd_->SetValue( date );
+    dpc_->SetValue( date );
+    dpcbd_->SetValue( date );
     calendarCtrl_->SetDate(date);
 }
 
@@ -1330,27 +1350,36 @@ void mmBDDialog::setRepeatDetails()
 
     bSetNextOccurDate_->Disable();
     int repeats = itemRepeats_->GetSelection();
-    if ( (repeats == 11) ) {
+    if (repeats == 11) 
+    {
         staticTextRepeats_->SetLabel( repeatLabelActivate );
         staticTimesRepeat_->SetLabel( timeLabelDays);
         toolTipsStr << _("Specify period in Days to activate.") << wxT("\n") << _("Becomes blank when not active.");
         textNumRepeats_->SetToolTip(toolTipsStr);
-    } else if ( (repeats == 12) ) {
+    } 
+    else if (repeats == 12) 
+    {
         staticTextRepeats_->SetLabel(repeatLabelActivate );
         staticTimesRepeat_->SetLabel(timeLabelMonths);
         toolTipsStr << _("Specify period in Months to activate.") << wxT("\n") << _("Becomes blank when not active.");
         textNumRepeats_->SetToolTip(toolTipsStr);
-    } else if ( (repeats == 13) ) {
+    } 
+    else if (repeats == 13)
+    {
         staticTextRepeats_->SetLabel(repeatLabelRepeats);
         staticTimesRepeat_->SetLabel(timeLabelDays);
         toolTipsStr << _("Specify period in Days to activate.") << wxT("\n") << _("Leave blank when not active.");
         textNumRepeats_->SetToolTip(toolTipsStr);
-    } else if ( (repeats == 14) ) {
+    } 
+    else if (repeats == 14)
+    {
         staticTextRepeats_->SetLabel(repeatLabelRepeats);
         staticTimesRepeat_->SetLabel(timeLabelMonths);
         toolTipsStr << _("Specify period in Months to activate.") << wxT("\n") << _("Leave blank when not active.");
         textNumRepeats_->SetToolTip(toolTipsStr);
-    } else {
+    } 
+    else 
+    {
         staticTextRepeats_->SetLabel(repeatLabelRepeats);
         staticTimesRepeat_->SetLabel( _("Times Repeated") );
         toolTipsStr << _("Specify the number of times this series repeats.") << wxT("\n") << _("Leave blank if this series continues forever.");
@@ -1370,7 +1399,7 @@ void mmBDDialog::OnsetNextRepeatDate(wxCommandEvent& /*event*/)
     {
         int value = wxAtoi(valueStr);
         wxString dateStr = dpcbd_->GetValue().FormatISODate();
-	    wxDateTime  date = mmGetStorageStringAsDate(dateStr);
+        wxDateTime  date = mmGetStorageStringAsDate(dateStr);
 
         int repeats = itemRepeats_->GetSelection();
         if ( (repeats == 11) || (repeats == 12))
@@ -1378,10 +1407,10 @@ void mmBDDialog::OnsetNextRepeatDate(wxCommandEvent& /*event*/)
              if ( (repeats == 11))
                 date = date.Add(wxDateSpan::Days(value));
              else
-                 date = date.Add(wxDateSpan::Months(value));
+                date = date.Add(wxDateSpan::Months(value));
 
-        	dpc_->SetValue( date );
-	        dpcbd_->SetValue( date );
+            dpc_->SetValue( date );
+            dpcbd_->SetValue( date );
             calendarCtrl_->SetDate(date);
         }
         bSetNextOccurDate_->Disable();
@@ -1401,10 +1430,7 @@ void mmBDDialog::activateSplitTransactionsDlg()
     if (dlg.ShowModal() == wxID_OK)
     {
         double amount = split_->getTotalSplits();
-        if (choiceTrans_->GetSelection() == DEF_TRANSFER) {
-            if (amount < 0)
-                amount = - amount;
-        }
+        if (choiceTrans_->GetSelection() == DEF_TRANSFER && amount < 0) amount = - amount;
         wxString dispAmount;
         mmex::formatDoubleToCurrencyEdit(amount, dispAmount);
         textAmount_->SetValue(dispAmount);
