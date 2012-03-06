@@ -117,14 +117,12 @@ void mmAssetsPanel::destroy()
 
 void mmAssetsPanel::CreateControls()
 {    
-    mmAssetsPanel* itemPanelAssets = this;
-
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
-    itemPanelAssets->SetSizer(itemBoxSizer9);
-    itemPanelAssets->SetBackgroundColour(mmColors::listBackColor);
+    this->SetSizer(itemBoxSizer9);
+    this->SetBackgroundColour(mmColors::listBackColor);
 
     /* ---------------------- */
-    wxPanel* headerPanel = new wxPanel( itemPanelAssets, wxID_ANY, wxDefaultPosition, 
+    wxPanel* headerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, 
         wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
     itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -144,7 +142,7 @@ void mmAssetsPanel::CreateControls()
 
     /* ---------------------- */
 
-    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( itemPanelAssets, IDC_PANEL_CHECKING_STATIC_BAL,
+    wxSplitterWindow* itemSplitterWindow10 = new wxSplitterWindow( this, IDC_PANEL_CHECKING_STATIC_BAL,
         wxDefaultPosition, wxSize(100, 100), wxSP_3DBORDER|wxSP_3DSASH|wxNO_BORDER );
 
     wxSize imageSize(16, 16);
