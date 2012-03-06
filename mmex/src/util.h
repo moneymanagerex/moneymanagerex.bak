@@ -28,9 +28,10 @@
 
 class mmCoreDB;
 
-struct ValuePair {
-        wxString label;
-        double   amount;
+struct ValuePair 
+{
+    wxString label;
+    double   amount;
 };
 
 class mmListBoxItem: public wxClientData
@@ -46,6 +47,24 @@ public:
 private:
     int index_;
     wxString name_;
+};
+
+class mmTreeItemData : public wxTreeItemData
+{
+public:
+    mmTreeItemData(int id, bool isBudget): id_(id), isString_(false), isBudgetingNode_(isBudget) {}
+    mmTreeItemData(const wxString& string): id_(), isString_(true), isBudgetingNode_(false), stringData_(string) {}
+
+    int getData() const { return id_; }
+    wxString getString() const { return stringData_; }
+    bool isStringData() const { return isString_; }
+    bool isBudgetingNode() const { return isBudgetingNode_; }
+
+private:
+    int id_; 
+    bool isString_;
+    bool isBudgetingNode_;
+    wxString stringData_;
 };
 
 const wxString NAVTREECTRL_REPORTS = wxT("Reports");
