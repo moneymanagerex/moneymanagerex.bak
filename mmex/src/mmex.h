@@ -280,12 +280,12 @@ private:
     RecentDatabaseFiles* recentFiles_;
     wxMenu *menuRecentFiles_;
 
-    void OnRecentFiles_1(wxCommandEvent& event) { SetDatabaseFile(recentFiles_->getRecentFile(1)); }
-    void OnRecentFiles_2(wxCommandEvent& event) { SetDatabaseFile(recentFiles_->getRecentFile(2)); }
-    void OnRecentFiles_3(wxCommandEvent& event) { SetDatabaseFile(recentFiles_->getRecentFile(3)); }
-    void OnRecentFiles_4(wxCommandEvent& event) { SetDatabaseFile(recentFiles_->getRecentFile(4)); }
-    void OnRecentFiles_5(wxCommandEvent& event) { SetDatabaseFile(recentFiles_->getRecentFile(5)); }
-    void OnClearRecentFiles(wxCommandEvent& event) { recentFiles_->clearRecentList(); }
+    void OnRecentFiles_1(wxCommandEvent& /*event*/) { SetDatabaseFile(recentFiles_->getRecentFile(1)); }
+    void OnRecentFiles_2(wxCommandEvent& /*event*/) { SetDatabaseFile(recentFiles_->getRecentFile(2)); }
+    void OnRecentFiles_3(wxCommandEvent& /*event*/) { SetDatabaseFile(recentFiles_->getRecentFile(3)); }
+    void OnRecentFiles_4(wxCommandEvent& /*event*/) { SetDatabaseFile(recentFiles_->getRecentFile(4)); }
+    void OnRecentFiles_5(wxCommandEvent& /*event*/) { SetDatabaseFile(recentFiles_->getRecentFile(5)); }
+    void OnClearRecentFiles(wxCommandEvent& /*event*/) { recentFiles_->clearRecentList(); }
 
     /** Sets the database to the new database selected by the user */
     void SetDatabaseFile(wxString dbFileName, bool newDatabase = false);
