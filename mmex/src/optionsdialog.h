@@ -29,8 +29,6 @@
 #define SYMBOL_MMOPTIONSDIALOG_SIZE wxSize(500, 400)
 #define SYMBOL_MMOPTIONSDIALOG_POSITION wxDefaultPosition
 
-#define TOTAL_DATEFORMAT    19
-
 class mmOptionsDialog: public wxDialog
 {    
     DECLARE_DYNAMIC_CLASS( mmOptionsDialog )
@@ -91,6 +89,8 @@ private:
     int currencyId_;
     wxString dateFormat_;
     wxString currentLanguage_;
+    wxArrayString itemChoiceStrings();
+    wxArrayString DateFormats();
 
     /// Dialog Creation - Used by constructor
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_MMOPTIONSDIALOG_IDNAME, 
