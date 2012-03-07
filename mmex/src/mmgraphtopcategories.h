@@ -32,11 +32,11 @@ struct CategInfo;
 class mmGraphTopCategories : public mmGraphGenerator
 {
 public:
-	mmGraphTopCategories();
-       ~mmGraphTopCategories();
+    mmGraphTopCategories();
+    ~mmGraphTopCategories();
 
-	void init(const std::vector<CategInfo> &categList);
-	bool Generate(const wxString& chartTitle);
+    void init(const std::vector<CategInfo> &categList);
+    bool Generate(const wxString& chartTitle);
 
 private:
     boost::scoped_ptr<BarChart> m_chart;
