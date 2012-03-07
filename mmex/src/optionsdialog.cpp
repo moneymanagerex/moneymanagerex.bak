@@ -58,7 +58,6 @@ enum ViewTransEnum
     VIEW_TRANS_90,
     VIEW_TRANS_LASTMONTH,
     VIEW_TRANS_LAST_3MONTHS,
-    VIEW_TRANS_MAX // number of elements, must be last
 };
 
 enum HtmlFontEnum
@@ -443,22 +442,21 @@ void mmOptionsDialog::CreateControls()
     transOptionStaticBoxSizer->Add(transVisibleStaticText, 0,
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    const wxString itemChoiceViewTransStrings[VIEW_TRANS_MAX] = 
-    {
-        _("View All Transactions"),
-        _("View Reconciled"),
-        _("Vlew All - Except Reconciled"),
-        _("View UnReconciled"),
-        _("View Today"),
-        _("View Current Month"),
-        _("View Last 30 days"),
-        _("View Last 90 days"),
-        _("View Last Month"),
-        _("View Last 3 Months"),
-    };  
+    wxArrayString itemChoiceViewTransStrings; 
+    
+	itemChoiceViewTransStrings.Add(_("View All Transactions"));
+	itemChoiceViewTransStrings.Add(_("View Reconciled"));
+	itemChoiceViewTransStrings.Add(_("Vlew All - Except Reconciled"));
+	itemChoiceViewTransStrings.Add(_("View UnReconciled"));
+	itemChoiceViewTransStrings.Add(_("View Today"));
+	itemChoiceViewTransStrings.Add(_("View Current Month"));
+	itemChoiceViewTransStrings.Add(_("View Last 30 days"));
+	itemChoiceViewTransStrings.Add(_("View Last 90 days"));
+	itemChoiceViewTransStrings.Add(_("View Last Month"));
+	itemChoiceViewTransStrings.Add(_("View Last 3 Months"));
     
     choiceTransVisible_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, wxDefaultSize,
-        sizeof(itemChoiceViewTransStrings)/sizeof(*itemChoiceViewTransStrings), itemChoiceViewTransStrings, 0);
+        itemChoiceViewTransStrings);
     transOptionStaticBoxSizer->Add(choiceTransVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxString vTrans = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
@@ -692,28 +690,25 @@ void mmOptionsDialog::CreateControls()
     wxStaticText* payeeStaticText = new wxStaticText(othersPanel, wxID_STATIC,
         _("Default Payee:"), wxDefaultPosition, wxSize(90, -1)); // sets size for associated text
 
-    wxString itemChoiceDefaultTransPayeeStrings[] = 
-    {
-        _("None"),
-        _("Last Used"),
-    };
+    wxArrayString itemChoiceDefaultTransPayeeStrings;
+	itemChoiceDefaultTransPayeeStrings.Add(_("None"));
+	itemChoiceDefaultTransPayeeStrings.Add(_("Last Used"));
     
     wxChoice* defaultPayeeChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE,
-        wxDefaultPosition, wxSize(140, -1), 2, itemChoiceDefaultTransPayeeStrings, 0); // sets size for associated choice
+        wxDefaultPosition, wxSize(140, -1), itemChoiceDefaultTransPayeeStrings);
     defaultPayeeChoice->SetSelection(mmIniOptions::instance().transPayeeSelectionNone_);
     
     //  Default Category
     wxStaticText* categoryStaticText = new wxStaticText(othersPanel, wxID_STATIC,
         _("Default Category:"), wxDefaultPosition, payeeStaticText->GetSize());
 
-    wxString itemChoiceDefaultTransCategoryStrings[] =
-    {
-        _("None"),
-        _("Last used for payee"),
-    };
+    wxArrayString itemChoiceDefaultTransCategoryStrings;
+    
+	itemChoiceDefaultTransCategoryStrings.Add(_("None"));
+	itemChoiceDefaultTransCategoryStrings.Add(_("Last used for payee"));
     
     wxChoice* defaultCategoryChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY,
-        wxDefaultPosition, defaultPayeeChoice->GetSize(), 2, itemChoiceDefaultTransCategoryStrings);
+        wxDefaultPosition, defaultPayeeChoice->GetSize(), itemChoiceDefaultTransCategoryStrings);
     defaultCategoryChoice->SetSelection(mmIniOptions::instance().transCategorySelectionNone_);
 
     //  Default Status
