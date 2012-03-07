@@ -364,10 +364,12 @@ void mmOptionsDialog::CreateControls()
     financialYearStaticBoxSizerGrid->Add(itemStaticTextSmonth, 0,
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    const wxString financialMonthsSelection[12] = {  _("Jan"), _("Feb"), _("Mar"), _("Apr"), _("May"), _("Jun"),
-                                                     _("Jul"), _("Aug"), _("Sep"), _("Oct"), _("Nov"), _("Dec") };
+    wxArrayString financialMonthsSelection;
+    for(int i=0; i<12; i++) {
+		financialMonthsSelection.Add(mmGetNiceShortMonthName(i));
+	};
     monthSelection_ = new wxChoice(generalPanel, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_MONTH,
-        wxDefaultPosition, wxSize(100, -1), 12, financialMonthsSelection, 0);
+        wxDefaultPosition, wxSize(100, -1), financialMonthsSelection);
     financialYearStaticBoxSizerGrid->Add(monthSelection_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     wxString financialPeriodStartMonth = mmDBWrapper::getInfoSettingValue(db_, wxT("FINANCIAL_YEAR_START_MONTH"), wxT("7"));
  
