@@ -42,7 +42,7 @@ public:
     void SetData( const std::vector<ChartData> &aData, bool simpleValue = true );
     void SetData( const std::vector<ChartData> &aData, const std::vector<wxString> &aSerieLabel );
 
-    virtual bool Render( const wxString& title ) = 0;
+    bool Render( const wxString& title );
 
 protected:
 
