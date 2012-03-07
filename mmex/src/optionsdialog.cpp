@@ -148,116 +148,84 @@ bool mmOptionsDialog::Create( wxWindow* parent, wxWindowID id,
 
 wxString mmOptionsDialog::DisplayDate2FormatDate(wxString strDate)
 {
-    wxString DateFormat[TOTAL_DATEFORMAT] = 
-    {
-        wxT("%d/%m/%y"),
-        wxT("%d/%m/%Y"),
-        wxT("%d-%m-%y"),
-        wxT("%d-%m-%Y"),
-        wxT("%d.%m.%y"),
-        wxT("%d.%m.%Y"),
-        wxT("%d,%m,%y"),
-        wxT("%d/%m %Y"),
-        wxT("%m/%d/%y"),
-        wxT("%m/%d/%Y"),
-        wxT("%m-%d-%y"),
-        wxT("%m-%d-%Y"),
-        wxT("%m/%d'%Y"),
-        wxT("%y/%m/%d"),
-        wxT("%y-%m-%d"),
-        wxT("%Y/%m/%d"),
-        wxT("%Y-%m-%d"),
-        wxT("%Y.%m.%d"),
-        wxT("%Y%m%d"),
-    };
+    wxArrayString DateFormat = DateFormats();
+    wxArrayString itemChoice7Strings = itemChoiceStrings();
 
-    wxString itemChoice7Strings[TOTAL_DATEFORMAT] = 
-    {
-        wxT("DD/MM/YY"),
-        wxT("DD/MM/YYYY"),
-        wxT("DD-MM-YY"),
-        wxT("DD-MM-YYYY"),
-        wxT("DD.MM.YY"),
-        wxT("DD.MM.YYYY"),
-        wxT("DD,MM,YY"),
-        wxT("DD/MM YYYY"),
-        wxT("MM/DD/YY"),
-        wxT("MM/DD/YYYY"),
-        wxT("MM-DD-YY"),
-        wxT("MM-DD-YYYY"),
-        wxT("MM/DD'YYYY"),
-        wxT("YY/MM/DD"),
-        wxT("YY-MM-DD"),
-        wxT("YYYY/MM/DD"),
-        wxT("YYYY-MM-DD"),
-        wxT("YYYY.MM.DD"),
-        wxT("YYYYMMDD"),
-    };
-
-    for(int i=0; i<TOTAL_DATEFORMAT; i++)
+    for(int i=0; i<DateFormat.Count(); i++)
     {
         if(strDate == itemChoice7Strings[i])
             return DateFormat[i];
     }
 
-    return strDate;
+    return DateFormat[0];
 }
 
 wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
 {
-    wxString DateFormat[TOTAL_DATEFORMAT] = 
-    {
-        wxT("%d/%m/%y"),
-        wxT("%d/%m/%Y"),
-        wxT("%d-%m-%y"),
-        wxT("%d-%m-%Y"),
-        wxT("%d.%m.%y"),
-        wxT("%d.%m.%Y"),
-        wxT("%d,%m,%y"),
-        wxT("%d/%m %Y"),
-        wxT("%m/%d/%y"),
-        wxT("%m/%d/%Y"),
-        wxT("%m-%d-%y"),
-        wxT("%m-%d-%Y"),
-        wxT("%m/%d'%Y"),
-        wxT("%y/%m/%d"),
-        wxT("%y-%m-%d"),
-        wxT("%Y/%m/%d"),
-        wxT("%Y-%m-%d"),
-        wxT("%Y.%m.%d"),
-        wxT("%Y%m%d"),
-    };
+    wxArrayString DateFormat = DateFormats();
+    wxArrayString itemChoice7Strings = itemChoiceStrings();
 
-    wxString itemChoice7Strings[TOTAL_DATEFORMAT] = 
-    {
-        wxT("DD/MM/YY"),
-        wxT("DD/MM/YYYY"),
-        wxT("DD-MM-YY"),
-        wxT("DD-MM-YYYY"),
-        wxT("DD.MM.YY"),
-        wxT("DD.MM.YYYY"),
-        wxT("DD,MM,YY"),
-        wxT("DD/MM YYYY"),
-        wxT("MM/DD/YY"),
-        wxT("MM/DD/YYYY"),
-        wxT("MM-DD-YY"),
-        wxT("MM-DD-YYYY"),
-        wxT("MM/DD'YYYY"),
-        wxT("YY/MM/DD"),
-        wxT("YY-MM-DD"),
-        wxT("YYYY/MM/DD"),
-        wxT("YYYY-MM-DD"),
-        wxT("YYYY.MM.DD"),
-        wxT("YYYYMMDD"),
-    };
-
-    for(int i=0; i<TOTAL_DATEFORMAT; i++)
+    for(int i=0; i<DateFormat.Count(); i++)
     {
         if(strDate == DateFormat[i])
             return itemChoice7Strings[i];
     }
 
-    return wxT("");
+    return itemChoice7Strings[0];
+}
+
+wxArrayString mmOptionsDialog::DateFormats() {
+
+    wxArrayString DateFormat;
+    
+    DateFormat.Add(wxT("%d/%m/%y"));
+    DateFormat.Add(wxT("%d/%m/%Y"));
+    DateFormat.Add(wxT("%d-%m-%y"));
+    DateFormat.Add(wxT("%d-%m-%Y"));
+    DateFormat.Add(wxT("%d.%m.%y"));
+    DateFormat.Add(wxT("%d.%m.%Y"));
+    DateFormat.Add(wxT("%d,%m,%y"));
+    DateFormat.Add(wxT("%d/%m %Y"));
+    DateFormat.Add(wxT("%m/%d/%y"));
+    DateFormat.Add(wxT("%m/%d/%Y"));
+    DateFormat.Add(wxT("%m-%d-%y"));
+    DateFormat.Add(wxT("%m-%d-%Y"));
+    DateFormat.Add(wxT("%m/%d'%Y"));
+    DateFormat.Add(wxT("%y/%m/%d"));
+    DateFormat.Add(wxT("%y-%m-%d"));
+    DateFormat.Add(wxT("%Y/%m/%d"));
+    DateFormat.Add(wxT("%Y-%m-%d"));
+    DateFormat.Add(wxT("%Y.%m.%d"));
+    DateFormat.Add(wxT("%Y%m%d"));
+
+    return DateFormat;
+}
+
+wxArrayString mmOptionsDialog::itemChoiceStrings() {
+
+	wxArrayString itemChoice7Strings;
+	
+	itemChoice7Strings.Add(wxT("DD/MM/YY"));
+	itemChoice7Strings.Add(wxT("DD/MM/YYYY"));
+	itemChoice7Strings.Add(wxT("DD-MM-YY"));
+	itemChoice7Strings.Add(wxT("DD-MM-YYYY"));
+	itemChoice7Strings.Add(wxT("DD.MM.YY"));
+	itemChoice7Strings.Add(wxT("DD.MM.YYYY"));
+	itemChoice7Strings.Add(wxT("DD,MM,YY"));
+	itemChoice7Strings.Add(wxT("DD/MM YYYY"));
+	itemChoice7Strings.Add(wxT("MM/DD/YY"));
+	itemChoice7Strings.Add(wxT("MM/DD/YYYY"));
+	itemChoice7Strings.Add(wxT("MM-DD-YY"));
+	itemChoice7Strings.Add(wxT("MM-DD-YYYY"));
+	itemChoice7Strings.Add(wxT("MM/DD'YYYY"));
+	itemChoice7Strings.Add(wxT("YY/MM/DD"));
+	itemChoice7Strings.Add(wxT("YY-MM-DD"));
+	itemChoice7Strings.Add(wxT("YYYY/MM/DD"));
+	itemChoice7Strings.Add(wxT("YYYY-MM-DD"));
+	itemChoice7Strings.Add(wxT("YYYY.MM.DD"));
+	itemChoice7Strings.Add(wxT("YYYYMMDD"));
+    
+    return itemChoice7Strings;
 }
 
 void mmOptionsDialog::CreateControls()
@@ -350,31 +318,10 @@ void mmOptionsDialog::CreateControls()
     generalPanelSizer->Add(dateFormatStaticBoxSizer, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
     dateFormatStaticBoxSizer->Add(dateFormatSettingStaticBoxSizerGrid);
     
-    wxString itemChoice7Strings[TOTAL_DATEFORMAT] = 
-    {
-        wxT("DD/MM/YY"),
-        wxT("DD/MM/YYYY"),
-        wxT("DD-MM-YY"),
-        wxT("DD-MM-YYYY"),
-        wxT("DD.MM.YY"),
-        wxT("DD.MM.YYYY"),
-        wxT("DD,MM,YY"),
-        wxT("DD/MM YYYY"),
-        wxT("MM/DD/YY"),
-        wxT("MM/DD/YYYY"),
-        wxT("MM-DD-YY"),
-        wxT("MM-DD-YYYY"),
-        wxT("MM/DD'YYYY"),
-        wxT("YY/MM/DD"),
-        wxT("YY-MM-DD"),
-        wxT("YYYY/MM/DD"),
-        wxT("YYYY-MM-DD"),
-        wxT("YYYY.MM.DD"),
-        wxT("YYYYMMDD"),
-    };
-
+    wxArrayString itemChoice7Strings = itemChoiceStrings(); 
+    
     choiceDateFormat_ = new wxComboBox(generalPanel, ID_DIALOG_OPTIONS_DATE_FORMAT, wxT(""),
-        wxDefaultPosition, wxSize(140, -1), TOTAL_DATEFORMAT, itemChoice7Strings, 0);
+        wxDefaultPosition, wxSize(140, -1), itemChoice7Strings);
     dateFormatSettingStaticBoxSizerGrid->Add(choiceDateFormat_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     choiceDateFormat_->SetToolTip(_("Specify the date format for display"));
     choiceDateFormat_->SetValue(FormatDate2DisplayDate(dateFormat_));
@@ -584,7 +531,7 @@ void mmOptionsDialog::CreateControls()
     // Navigation Tree Expansion Options
     wxStaticBox* navTreeOptionsStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Navigation Tree Expansion Options"));
     navTreeOptionsStaticBox->SetFont(staticBoxFontSetting);
-    wxStaticBoxSizer* navTreeOptionsStaticBoxSizer = new wxStaticBoxSizer(navTreeOptionsStaticBox, wxHORIZONTAL); //wxHORIZONTAL);
+    wxStaticBoxSizer* navTreeOptionsStaticBoxSizer = new wxStaticBoxSizer(navTreeOptionsStaticBox, wxHORIZONTAL);
     viewsPanelSizer->Add(navTreeOptionsStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
     // Expand Bank Tree
