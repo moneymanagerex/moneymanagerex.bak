@@ -37,7 +37,7 @@ public:
     bool Generate(const wxString& chartTitle);
 
 private:
-	boost::scoped_ptr<PieChart> chart;
+    boost::scoped_ptr<PieChart> chart;
 };
 
 #endif // _MM_EX_GRAPHPIE_H_
