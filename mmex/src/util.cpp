@@ -450,53 +450,25 @@ wxString mmGetNiceWeekDayName(int week_day)
 
 wxString mmGetNiceDateString(const wxDateTime &dt)
 {
-    wxString dts = wxString() << mmGetNiceWeekDayName(dt.GetWeekDay()) << wxT(", ");
-
-    wxString dateFmt = mmOptions::instance().dateFormat;
-    dateFmt.Replace(wxT("%Y%m%d"), wxT("%Y %m %d"));
-    dateFmt.Replace(wxT("%d"), wxString::Format(wxT("%d"), dt.GetDay()));
-    dateFmt.Replace(wxT("%Y"), wxString::Format(wxT("%d"), dt.GetYear()));
-    dateFmt.Replace(wxT("%y"), wxString::Format(wxT("%d"), dt.GetYear()).Mid(2,2));
-    dateFmt.Replace(wxT("%m"), mmGetNiceMonthName(dt.GetMonth()));
-    dateFmt.Replace(wxT("."), wxT(" "));
-    dateFmt.Replace(wxT(","), wxT(" "));
-    dateFmt.Replace(wxT("/"), wxT(" "));
-    dateFmt.Replace(wxT("-"), wxT(" "));
-    dts += dateFmt;
-
+    wxString dts = wxString() << mmGetNiceWeekDayName(dt.GetWeekDay()) 
+                              << wxT(", ") << mmGetNiceDateSimpleString(dt);
     return dts;
 }
 
 wxString mmGetNiceDateSimpleString(const wxDateTime &dt)
 {
-    wxString dts = mmGetNiceMonthName(dt.GetMonth()) + wxString(wxT(" "));
+    wxString dateFmt = mmOptions::instance().dateFormat;
+    dateFmt.Replace(wxT("%Y%m%d"), wxT("%Y %m %d"));
+    dateFmt.Replace(wxT("."), wxT(" "));
+    dateFmt.Replace(wxT(","), wxT(" "));
+    dateFmt.Replace(wxT("/"), wxT(" "));
+    dateFmt.Replace(wxT("-"), wxT(" "));
+    dateFmt.Replace(wxT("%d"), wxString::Format(wxT("%d"), dt.GetDay()));
+    dateFmt.Replace(wxT("%Y"), wxString::Format(wxT("%d"), dt.GetYear()));
+    dateFmt.Replace(wxT("%y"), wxString::Format(wxT("%d"), dt.GetYear()).Mid(2,2));
+    dateFmt.Replace(wxT("%m"), mmGetNiceMonthName(dt.GetMonth()));
 
-//  Discover the date format set by the user
-    wxString dateFmt = mmOptions::instance().dateFormat.Mid(1,1).MakeUpper();
-//  Format date as: DD MMM YYYY
-    if (dateFmt == wxT("D")) 
-    {
-        dts = wxString::Format(wxT("%d"), dt.GetDay()) + wxString(wxT(" "))
-            + dts
-            + wxString::Format(wxT("%d"), dt.GetYear());
-
-//  Format date as: YYYY MMM DD
-    } 
-    else if (dateFmt == wxT("Y")) 
-    {
-        dts = wxString::Format(wxT("%d"), dt.GetYear()) + wxString(wxT(" "))
-            + dts
-            + wxString::Format(wxT("%d"), dt.GetDay());
-
-//  Format date as: MMM DD, YYYY
-    } 
-    else 
-    {
-        dts += wxString::Format(wxT("%d"), dt.GetDay()) + wxT(", ")
-            + wxString::Format(wxT("%d"), dt.GetYear());
-    }
-
-    return dts;
+    return dateFmt;
 }
 
 void mmShowErrorMessage(wxWindow *parent, const wxString &message, const wxString &messageheader)
