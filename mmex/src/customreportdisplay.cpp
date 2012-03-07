@@ -28,9 +28,7 @@ void mmCustomSQLReport::displayReportHeader(mmHTMLBuilder& hb, wxString reportTi
 {
     hb.addHeader(3, reportTitle);
 
-    wxDateTime now = wxDateTime::Now();
-    wxString dt = wxT("Today's Date: ") + mmGetNiceDateString(now);
-    hb.addHeader(7, dt);
+    hb.addHeader(7, wxT("Today's Date: ") + mmGetNiceDateString(wxDateTime::Now()));
     hb.addLineBreak();
     hb.addLineBreak();
 
@@ -63,7 +61,8 @@ wxString mmCustomSQLReport::getHTMLText()
     for (int index = 0; index < columnCount; index ++)
     {
     	hb.addTableHeaderCell(sqlQueryResult.GetColumnName(index));
-    	alignRight[index] = (sqlQueryResult.GetColumnType(index)==WXSQLITE_INTEGER || sqlQueryResult.GetColumnType(index)==WXSQLITE_FLOAT);
+    	alignRight[index] = (sqlQueryResult.GetColumnType(index) == WXSQLITE_INTEGER 
+    	                  || sqlQueryResult.GetColumnType(index) == WXSQLITE_FLOAT);
     }
     hb.endTableRow();
 
