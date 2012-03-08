@@ -136,6 +136,9 @@ private:
     wxString amountNormalTip_;
     wxString amountTransferTip_;
 
+    wxArrayString freqnotes_;
+    bool richText_;
+
     wxString getMostFrequentlyUsedPayee(wxString& categString);
     wxString resetPayeeString(bool normal = true);
     wxString getMostFrequentlyUsedCategory();
@@ -143,8 +146,6 @@ private:
     void OnAdvanceChecked(wxCommandEvent& event);
     void SetTransferControls(bool transfers = false);
     void SetAdvancedTransferControls(bool advanced = false);
-    wxArrayString freqnotes;
-    bool richText;
 
     void activateSplitTransactionsDlg();
 };
