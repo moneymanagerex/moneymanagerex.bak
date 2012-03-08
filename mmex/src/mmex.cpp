@@ -537,7 +537,10 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
                       ) : 
     wxFrame(0, -1, title, pos, size), 
     gotoAccountID_(-1), 
+    homePageAccountSelect_(false),
     refreshRequested_(),
+    autoRepeatTransactionsTimer_(this, AUTO_REPEAT_TRANSACTIONS_TIMER_ID),
+    activeHomePage_(false),
     panelCurrent_(),
     homePanel(),
     navTreeCtrl_(),
@@ -545,14 +548,11 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
     toolBar_(),
     selectedItemData_(),
     menuItemOnlineUpdateCurRate_(),
+    helpFileIndex_(mmex::HTML_INDEX),
     activeTermAccounts_(false),
-    autoRepeatTransactionsTimer_(this, AUTO_REPEAT_TRANSACTIONS_TIMER_ID),
-    activeHomePage_(false),
-    homePageAccountSelect_(false),
     expandedReportNavTree_(true),
-    expandedBudgetingNavTree_(true),
     expandedCustomSqlReportNavTree_(false),
-    helpFileIndex_(mmex::HTML_INDEX)
+    expandedBudgetingNavTree_(true)
 {
     // tell wxAuiManager to manage this frame
     m_mgr.SetManagedWindow(this);
