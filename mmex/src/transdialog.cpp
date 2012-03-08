@@ -76,6 +76,9 @@ mmTransDialog::mmTransDialog(
     core_(core),
     transID_(transID),
     accountID_(accountID),
+    referenceAccountID_(accountID),
+    payeeUnknown_(true),
+    categUpdated_(false),
     edit_(edit),
     categID_(-1),
     subcategID_(-1),
@@ -83,11 +86,8 @@ mmTransDialog::mmTransDialog(
     toID_(-1),
     toTransAmount_(-1),
     advancedToTransAmountSet_(false),
-    payeeUnknown_(true),
-    categUpdated_(false),
     edit_currency_rate(1.0)
 {
-    referenceAccountID_ = accountID_;   // remember where dialog initiated from.
     Create(parent, id, caption, pos, size, style);
 }
 
