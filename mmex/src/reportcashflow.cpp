@@ -6,10 +6,10 @@
 #include "util.h"
 
 mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, const wxArrayString* accountArray) : 
-    mmPrintableBase(core), 
-    activeTermAccounts_(false),
-    activeBankAccounts_(false),
-    accountArray_(accountArray)
+    mmPrintableBase(core)
+    , accountArray_(accountArray)
+    , activeTermAccounts_(false)
+    , activeBankAccounts_(false)
 {
 }
 
