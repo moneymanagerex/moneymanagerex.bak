@@ -29,6 +29,7 @@ class AbstractChart
 {
 public:
     AbstractChart( int aWidth, int aHeight );
+    virtual ~AbstractChart() {}
 
     void SetBackground( const wxColour& colour );
     void SetFillColour( const wxColour& colour, int style = wxSOLID );
@@ -42,7 +43,7 @@ public:
     void SetData( const std::vector<ChartData> &aData, bool simpleValue = true );
     void SetData( const std::vector<ChartData> &aData, const std::vector<wxString> &aSerieLabel );
 
-    bool Render( const wxString& title );
+    virtual bool Render( const wxString& title ) = 0;
 
 protected:
 
