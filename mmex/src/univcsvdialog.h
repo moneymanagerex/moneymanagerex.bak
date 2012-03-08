@@ -104,6 +104,7 @@ public:
 private:
     mmCoreDB* core_;
     bool is_importer_;
+    wxString delimit_;
     wxSQLite3Database* db_;
     std::vector<int> csvFieldOrder_;
     wxListBox* csvFieldCandicate_;
@@ -117,7 +118,6 @@ private:
     wxTextCtrl* m_text_ctrl_;
 
     std::map<int, wxString> CSVFieldName_;
-    wxString delimit_;
 
     wxString dt_;
     wxString payee_;

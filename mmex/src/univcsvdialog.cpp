@@ -930,7 +930,7 @@ void mmUnivCSVDialog::OnStandard(wxCommandEvent& /*event*/)
     csvListBox_->Clear(); 
     csvFieldOrder_.clear();
     int standard[] = {UNIV_CSV_DATE, UNIV_CSV_PAYEE, UNIV_CSV_AMOUNT, UNIV_CSV_CATEGORY, UNIV_CSV_SUBCATEGORY, UNIV_CSV_TRANSNUM, UNIV_CSV_NOTES};
-    for (int i = 0; i < sizeof(standard)/sizeof(UNIV_CSV_DATE); ++ i)
+    for (size_t i = 0; i < sizeof(standard)/sizeof(UNIV_CSV_DATE); ++ i)
     {
         csvListBox_->Append(CSVFieldName_[standard[i]], new mmListBoxItem(standard[i], CSVFieldName_[standard[i]]));
         csvFieldOrder_.push_back(standard[i]);
@@ -938,7 +938,7 @@ void mmUnivCSVDialog::OnStandard(wxCommandEvent& /*event*/)
 
     csvFieldCandicate_->Clear();
     int rest[] = {UNIV_CSV_DONTCARE, UNIV_CSV_WITHDRAWAL, UNIV_CSV_DEPOSIT};
-    for (int i = 0; i < sizeof(rest)/sizeof(UNIV_CSV_DATE); ++ i)
+    for (size_t i = 0; i < sizeof(rest)/sizeof(UNIV_CSV_DATE); ++ i)
     {
         csvFieldCandicate_->Append(CSVFieldName_[rest[i]], new mmListBoxItem(rest[i], CSVFieldName_[rest[i]]));
     }
