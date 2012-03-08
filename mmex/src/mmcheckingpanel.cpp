@@ -963,6 +963,7 @@ void mmCheckingPanel::setAccountSummary()
 typedef boost::shared_ptr<mmBankTransaction> TransactionPtr;
 struct TransactionPtr_Matcher
 {
+    virtual ~TransactionPtr_Matcher() {}
     virtual bool Match(const TransactionPtr&) = 0;  
 };
 typedef boost::shared_ptr<TransactionPtr_Matcher> TransactionPtr_MatcherPtr;
@@ -986,7 +987,7 @@ template <typename DateTimeProvider>
 class MatchTransaction_DateTime: public TransactionPtr_Matcher
 {
 public:
-    virtual bool Match(const TransactionPtr& pTrans)
+    bool Match(const TransactionPtr& pTrans)
     {
         wxASSERT(pTrans);
         wxDateTime startRange = DateTimeProvider::StartRange();
@@ -1045,7 +1046,7 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
      For the account being viewed, we need to get:
      1. All entries for the account to determine account balances. [ v_transPtr ]
      2. All entries for the account to be displayed.               [ m_trans    ]
-    /**********************************************************************************/
+    **********************************************************************************/
     int numTransactions = 0;
     std::vector<mmBankTransaction*> v_transPtr;
     for (size_t i = 0; i < core_->bTransactionList_.transactions_.size(); ++i)
@@ -1110,7 +1111,7 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
     /**********************************************************************************
      Stage 2
      Sort all account transactions by date to, determine balances.
-    /**********************************************************************************/
+    **********************************************************************************/
     if (pgd)
     pgd->Update(40);
 
@@ -1119,7 +1120,7 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
     /**********************************************************************************
      Stage 3
      Add the account balances to all the transactions in this account.
-    /**********************************************************************************/
+    **********************************************************************************/
     if (pgd)
     pgd->Update(60);
 
@@ -1139,7 +1140,7 @@ void mmCheckingPanel::initVirtualListControl(wxProgressDialog* pgd)
     /**********************************************************************************
      Stage 4
      Sort the list of visible transactions dependant on user preferences.
-    /**********************************************************************************/
+    **********************************************************************************/
     if (pgd)
     pgd->Update(80);
 
