@@ -29,7 +29,7 @@
 
 mmReportTransactions::mmReportTransactions( std::vector< boost::shared_ptr<mmBankTransaction> >* trans, 
     mmCoreDB* core, int refAccountID, wxString refAccountStr, mmFilterTransactionsDialog* transDialog)
-:trans_(trans), mmPrintableBase(core), refAccountID_(refAccountID), refAccountStr_(refAccountStr), transDialog_(transDialog)
+:mmPrintableBase(core), trans_(trans), refAccountID_(refAccountID), refAccountStr_(refAccountStr), transDialog_(transDialog)
 {
 }
 
