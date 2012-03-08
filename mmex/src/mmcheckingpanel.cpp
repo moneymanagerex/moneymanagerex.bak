@@ -474,9 +474,9 @@ mmCheckingPanel::mmCheckingPanel
     const wxString& name
 ) : 
     mmPanelBase(NULL, inidb, core),
+    filteredBalance_(0.0),
     m_listCtrlAccount(),
-    m_AccountID(accountID),
-    filteredBalance_(0.0)
+    m_AccountID(accountID)
 {
     wxASSERT(core_);
     wxASSERT(inidb_);
