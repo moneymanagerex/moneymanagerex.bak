@@ -495,7 +495,7 @@ void mmTransDialog::CreateControls()
 
     itemStdDialogButtonSizer1->Realize();
     //If nothing in focus Alt+C should close the window
-    richText = false;
+    richText_ = false;
 
 }
 
@@ -1195,7 +1195,7 @@ void mmTransDialog::OnFrequentUsedNotes(wxCommandEvent& /*event*/)
         int menu_id=1;
         while (q1.NextRow())
         {
-            freqnotes.Add(q1.GetString(wxT("NOTES")));
+            freqnotes_.Add(q1.GetString(wxT("NOTES")));
             wxString noteSTR = q1.GetString(wxT("NOTE"));
             menu.Append(menu_id++, noteSTR);
         }
@@ -1213,19 +1213,19 @@ void mmTransDialog::onNoteSelected(wxCommandEvent& event)
 {
     int i =  event.GetId();
     if (i>0)
-        textNotes_->SetValue (freqnotes.Item (i-1)) ;
+        textNotes_->SetValue (freqnotes_.Item (i-1)) ;
 }
 
 void mmTransDialog::changeFocus(wxChildFocusEvent& event)
 {
     wxWindow *w = event.GetWindow();
     if ( w ) 
-        richText = (w->GetId() == ID_DIALOG_TRANS_TEXTNOTES ? true : false);    
+        richText_ = (w->GetId() == ID_DIALOG_TRANS_TEXTNOTES ? true : false);    
 }
 
 void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
 {
-    if (richText)
+    if (richText_)
         return;
     else
         EndModal(wxID_CANCEL);
