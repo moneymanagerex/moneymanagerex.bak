@@ -36,27 +36,6 @@ const double g_defBASECONVRATE = 1.0;
 const char g_BaseCurrencyIdName[] = "BASECURRENCYID";
 
 //----------------------------------------------------------------------------
-
-/*
-    Appends "ACCOUNTLIST acl" & "CURRENCYFORMATS <table_alias>" tables to query.
-*/
-std::string joinCURRENCYFORMATS(const char *table_alias, const char *col_accountid)
-{
-    wxASSERT(col_accountid);
-
-    std::string sql = " join ACCOUNTLIST_V1 acl "
-                       "on acl.ACCOUNTID = ";
-
-    sql += col_accountid;
-
-    sql += " join CURRENCYFORMATS_V1 ";
-    sql += table_alias;
-    sql +=  " on cf.CURRENCYID = acl.CURRENCYID ";
-
-    return sql;
-}
-//----------------------------------------------------------------------------
-
 void loadCurrencies(wxSQLite3Database* db)
 {
     try{
@@ -2381,7 +2360,6 @@ boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, c
         exit(err);
     
     return db; // return a NULL database pointer 
-
 }
 
 // #define SQLITE_OK           0   /* Successful result */
