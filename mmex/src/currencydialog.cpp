@@ -131,14 +131,17 @@ void mmCurrencyDialog::updateControls()
 	currencySymbol->SetValue(pCurrency->currencySymbol_);
 
     wxString dispAmount;
-    double amount = 123456.78;
+    double amount;
+    
+    amount = 1000 * pCurrency->baseConv_;
+    mmDBWrapper::loadBaseCurrencySettings(core_->db_.get());
+    mmex::formatDoubleToCurrency(amount, dispAmount);
+    baseRateSample->SetLabel(dispAmount);
+
+    amount = 123456.78;
     mmDBWrapper::loadSettings(core_->db_.get(), pCurrency->currencyID_);
     mmex::formatDoubleToCurrency(amount, dispAmount);
     sample->SetLabel(dispAmount);
-
-    amount = 1000 * pCurrency->baseConv_;  
-    mmex::formatDoubleToCurrency(amount, dispAmount);
-    baseRateSample->SetLabel(dispAmount);
 
     // resize the dialog window
     Fit();    
@@ -175,6 +178,8 @@ void mmCurrencyDialog::CreateControls()
     itemFlexGridSizer3->Add(itemStaticText26, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     wxArrayString currency_symbols;
+    currency_symbols.Add(wxT("USD"));
+    currency_symbols.Add(wxT("EUR"));
     currency_symbols.Add(wxT("AUD"));
     currency_symbols.Add(wxT("BGN"));
     currency_symbols.Add(wxT("BRL"));
@@ -184,7 +189,6 @@ void mmCurrencyDialog::CreateControls()
     currency_symbols.Add(wxT("CZK"));
     currency_symbols.Add(wxT("DKK"));
     currency_symbols.Add(wxT("EEK"));
-    currency_symbols.Add(wxT("EUR"));
     currency_symbols.Add(wxT("GBP"));
     currency_symbols.Add(wxT("HKD"));
     currency_symbols.Add(wxT("HRK"));
@@ -209,7 +213,6 @@ void mmCurrencyDialog::CreateControls()
     currency_symbols.Add(wxT("THB"));
     currency_symbols.Add(wxT("TRY"));
     currency_symbols.Add(wxT("UAH"));
-    currency_symbols.Add(wxT("USD"));
     currency_symbols.Add(wxT("ZAR"));
 
     wxComboBox* itemComboBox27 = new wxComboBox( this, ID_DIALOG_CURRENCY_TEXT_SYMBOL, wxT(""),
@@ -285,11 +288,12 @@ void mmCurrencyDialog::CreateControls()
     wxStaticBoxSizer* itemStaticBoxSizer_02 = new wxStaticBoxSizer(itemStaticBox_02, wxHORIZONTAL);
     itemBoxSizer2->Add(itemStaticBoxSizer_02, 0, wxGROW|wxALL, 5);
 
-    wxStaticText* itemStaticText220 = new wxStaticText( this, wxID_STATIC, _("1000   Converted to:"),
+    wxStaticText* itemStaticText220 = new wxStaticText( this, wxID_STATIC,
+        _("1000  Converted to:"),
         wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticBoxSizer_02->Add(itemStaticText220, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxStaticText*  sampleText2_ = new wxStaticText( this, ID_DIALOG_CURRENCY_STATIC_CONVERSION, _("1000"),
+    wxStaticText*  sampleText2_ = new wxStaticText( this, ID_DIALOG_CURRENCY_STATIC_CONVERSION, wxT(""),
         wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticBoxSizer_02->Add(sampleText2_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -342,10 +346,10 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
         return;
     }
 
-    double convRate = 1;
+    double convRate = 1.0;
     baseConvRate->GetValue().ToDouble(&convRate);
-    if (convRate <= 0) {
-        wxMessageDialog dlg(this, _("Base Conversion Rate should be greater than zero"), _("Error"), wxICON_ERROR);
+    if (convRate < 0.0) {
+        wxMessageDialog dlg(this, _("Base Conversion Rate should be positive"), _("Error"), wxICON_ERROR);
         dlg.ShowModal();
         return;
     }
