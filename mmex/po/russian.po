@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mmex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-09 23:41+0300\n"
-"PO-Revision-Date: 2012-03-10 00:01+0300\n"
+"PO-Revision-Date: 2012-03-10 01:42+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -220,7 +220,7 @@ msgstr "Заголовок отчёта:"
 
 #: ../src/customreportdialog.cpp:84
 msgid "Report Title is used as the file name of the SQL script."
-msgstr ""
+msgstr "Заголовок отчёта используется как имя файла SQL скрипта."
 
 #: ../src/customreportdialog.cpp:87
 msgid "Heading"
@@ -248,7 +248,7 @@ msgstr "&Сохранить"
 
 #: ../src/customreportdialog.cpp:127
 msgid "Save SQL script to file name set by the Report Title."
-msgstr ""
+msgstr "Сохранить SQL скрипт с именем заданным в заголовке."
 
 #: ../src/customreportdialog.cpp:129
 msgid "&Run"
@@ -284,7 +284,7 @@ msgstr "Невозможно открыть файл."
 
 #: ../src/customreportdialog.cpp:220
 msgid "Please supply the Report Title before saving"
-msgstr ""
+msgstr "Пожалуйста задайте название отчёта перед сохранением"
 
 #: ../src/customreportdialog.cpp:242
 msgid ""
@@ -557,7 +557,7 @@ msgstr "Перевод"
 #: ../src/dbwrapper.cpp:1510
 #, c-format
 msgid "Set Info Setting Value %s = %s. Error: %s"
-msgstr ""
+msgstr "Установка значения настроек %s = %s. Ошибка: %s"
 
 #: ../src/dbwrapper.cpp:2329
 #, c-format
@@ -1468,7 +1468,7 @@ msgstr "Введите текстовые примечания к этой пр�
 
 #: ../src/transdialog.cpp:467
 msgid "Select one of the frequently used notes"
-msgstr ""
+msgstr "Часто используемые заметки"
 
 #: ../src/transdialog.cpp:509
 #: ../src/transdialog.cpp:581
@@ -1685,7 +1685,7 @@ msgstr "Укажите тип проводки."
 
 #: ../src/transactionfilterdialog.cpp:202
 msgid "Will search for the given text in the Notes field"
-msgstr ""
+msgstr "Поиск по заметкам в текущем счёте"
 
 #: ../src/transactionfilterdialog.cpp:217
 msgid "Activates the filter: Will add selected items to display"
@@ -2043,7 +2043,7 @@ msgstr "Добавление нового бюджета на месяц"
 
 #: ../src/budgetyeardialog.cpp:119
 msgid "Delete existing budget"
-msgstr "Удалить бюджет на указанный год"
+msgstr "Удалить бюджет"
 
 #: ../src/reportsummaryassets.cpp:32
 msgid "Summary of Assets"
@@ -2284,35 +2284,32 @@ msgid "Activates"
 msgstr "Удорожание"
 
 #: ../src/billsdepositsdialog.cpp:1347
-#, fuzzy
 msgid "Period: Days"
-msgstr " дней просрочено!"
+msgstr "Период: дней"
 
 #: ../src/billsdepositsdialog.cpp:1348
-#, fuzzy
 msgid "Period: Months"
-msgstr "Четыре месяца"
+msgstr "Период: месяцев"
 
 #: ../src/billsdepositsdialog.cpp:1357
 #: ../src/billsdepositsdialog.cpp:1371
 msgid "Specify period in Days to activate."
-msgstr ""
+msgstr "Укажите период в днях до исполнения."
 
 #: ../src/billsdepositsdialog.cpp:1357
 #: ../src/billsdepositsdialog.cpp:1364
 msgid "Becomes blank when not active."
-msgstr ""
+msgstr "Не заполняйте без необходимости."
 
 #: ../src/billsdepositsdialog.cpp:1364
 #: ../src/billsdepositsdialog.cpp:1378
-#, fuzzy
 msgid "Specify period in Months to activate."
-msgstr "Укажите тип создаваемого счёта"
+msgstr "Укажите период в месяцах до активации."
 
 #: ../src/billsdepositsdialog.cpp:1371
 #: ../src/billsdepositsdialog.cpp:1378
 msgid "Leave blank when not active."
-msgstr ""
+msgstr "Не заполняйте без необходимости."
 
 #: ../src/billsdepositsdialog.cpp:1385
 #, fuzzy
@@ -2518,9 +2515,8 @@ msgid "Thank you! "
 msgstr "Спасибо! "
 
 #: ../src/assetspanel.cpp:444
-#, fuzzy
 msgid "App"
-msgstr "Стартовый диалог"
+msgstr "MMEX"
 
 #: ../src/reportincexpensesfinancialperiod.cpp:61
 msgid "Income vs Expenses for Financial Year: "
@@ -2584,9 +2580,8 @@ msgid "View Transactions for last 30 days"
 msgstr "Показать проводки за последние 30 дней"
 
 #: ../src/mmcheckingpanel.cpp:585
-#, fuzzy
 msgid "View Transactions for last 90 days"
-msgstr "Показать проводки за последние 30 дней"
+msgstr "Показать проводки за последние 90 дней"
 
 #: ../src/mmcheckingpanel.cpp:586
 msgid "View Transactions for last month"
@@ -2644,7 +2639,7 @@ msgstr "Поиск"
 
 #: ../src/mmcheckingpanel.cpp:743
 msgid "Enter any string to find it in the nearest transaction notes"
-msgstr ""
+msgstr "Введите любой текст для поиска по заметкам"
 
 #: ../src/mmcheckingpanel.cpp:881
 msgid "to "
@@ -2753,7 +2748,7 @@ msgstr ""
 
 #: ../src/mmcheckingpanel.cpp:1371
 msgid "Please set filtering to: "
-msgstr ""
+msgstr "Пожалуйста, установите фильтр в: "
 
 #: ../src/mmcheckingpanel.cpp:1419
 msgid "&New Transaction"
@@ -2776,9 +2771,8 @@ msgid "&Paste Transaction"
 msgstr "Встав&ить"
 
 #: ../src/mmcheckingpanel.cpp:1431
-#, fuzzy
 msgid "&View Split Categories"
-msgstr "Категории - Текущий месяц"
+msgstr "Показать разделённые категории"
 
 #: ../src/mmcheckingpanel.cpp:1437
 msgid "&Delete Transaction"
@@ -3042,9 +3036,8 @@ msgstr "Представление бюджета "
 
 #: ../src/mmex.cpp:1306
 #: ../src/mmex.cpp:1567
-#, fuzzy
 msgid "Budget Category Summary"
-msgstr " отсутствует категория, пропущено."
+msgstr "Сумма по бюджетной категории"
 
 #: ../src/mmex.cpp:1334
 #: ../src/mmex.cpp:3428
@@ -3052,9 +3045,8 @@ msgid "Cash Flow"
 msgstr "Движение средств"
 
 #: ../src/mmex.cpp:1337
-#, fuzzy
 msgid "Cash Flow - With Bank Accounts"
-msgstr "Движение средств - Включая вклады"
+msgstr "Движение средств - Основные счета"
 
 #: ../src/mmex.cpp:1342
 msgid "Cash Flow - With Term Accounts"
@@ -3070,7 +3062,7 @@ msgstr "Помощь"
 
 #: ../src/mmex.cpp:1552
 msgid "Budget report being generated... Please wait."
-msgstr ""
+msgstr "Отчёт по бюджету формируется, пожалуйста подождите."
 
 #: ../src/mmex.cpp:1698
 msgid "Categories - Last Calendar Month"
@@ -3101,89 +3093,72 @@ msgid "Categories - Current Financial Year"
 msgstr "Категории - Текущий финансовый год"
 
 #: ../src/mmex.cpp:1795
-#, fuzzy
 msgid "Where the Money Comes From - Last Calendar Month"
-msgstr "Доходы"
+msgstr "Доходы - прошлый месяц"
 
 #: ../src/mmex.cpp:1806
-#, fuzzy
 msgid "Where the Money Comes From - Last 30 days"
-msgstr "Доходы"
+msgstr "Доходы - последние 30 дней"
 
 #: ../src/mmex.cpp:1817
-#, fuzzy
 msgid "Where the Money Comes From - Current Month"
-msgstr "Доходы"
+msgstr "Доходы - текущий месяц"
 
 #: ../src/mmex.cpp:1832
-#, fuzzy
 msgid "Where the Money Comes From - Last year"
-msgstr "Доходы"
+msgstr "Доходы - прошлый год"
 
 #: ../src/mmex.cpp:1847
-#, fuzzy
 msgid "Where the Money Comes From - Current Year"
-msgstr "Доходы"
+msgstr "Доходы - текущий год"
 
 #: ../src/mmex.cpp:1857
-#, fuzzy
 msgid "Where the Money Comes From - Last Financial Year"
-msgstr "Доходы"
+msgstr "Доходы - Прошлый финансовый год"
 
 #: ../src/mmex.cpp:1867
-#, fuzzy
 msgid "Where the Money Comes From - Current Financial Year"
-msgstr "Категории - Текущий финансовый год"
+msgstr "Доходы - Текущий финансовый год"
 
 #: ../src/mmex.cpp:1893
-#, fuzzy
 msgid "Where the Money Goes - Last Calendar Month"
-msgstr "Категории  - Прошлый месяц"
+msgstr "Расходы  - Прошлый месяц"
 
 #: ../src/mmex.cpp:1904
-#, fuzzy
 msgid "Where the Money Goes - Last 30 Days"
-msgstr "Расходы"
+msgstr "Расходы - последние 30 дней"
 
 #: ../src/mmex.cpp:1915
-#, fuzzy
 msgid "Where the Money Goes - Current Month"
-msgstr "Расходы"
+msgstr "Расходы - текущий месяц"
 
 #: ../src/mmex.cpp:1930
-#, fuzzy
 msgid "Where the Money Goes - Last Year"
-msgstr "Расходы"
+msgstr "Расходы - прошлый год"
 
 #: ../src/mmex.cpp:1945
-#, fuzzy
 msgid "Where the Money Goes - Current Year"
-msgstr "Расходы"
+msgstr "Расходы - текущий год"
 
 #: ../src/mmex.cpp:1955
-#, fuzzy
 msgid "Where the Money Goes - Last Financial Year"
-msgstr "Категории - Прошлый финансовый год"
+msgstr "Расходы - Прошлый финансовый год"
 
 #: ../src/mmex.cpp:1964
-#, fuzzy
 msgid "Where the Money Goes - Current Financial Year"
-msgstr "Категории - Текущий финансовый год"
+msgstr "Расходы - Текущий финансовый год"
 
 #: ../src/mmex.cpp:1997
-#, fuzzy
 msgid "Income vs Expenses - Last Calendar Month"
-msgstr "Доход/Расход: Текущий месяц"
+msgstr "Доход/Расход - прошлый месяц"
 
 #: ../src/mmex.cpp:2008
-#, fuzzy
 msgid "Income vs Expenses - Last 30 Days"
-msgstr "Доходы/Расходы: "
+msgstr "Доходы/Расходы - последние 30 дней"
 
 #: ../src/mmex.cpp:2019
-#, fuzzy
 msgid "Income vs Expenses - Current Month"
-msgstr "За всё время"
+msgstr "Доходы/Расходы - текущий месяц"
 
 #: ../src/mmex.cpp:2071
 msgid "Payee Report"
@@ -3334,9 +3309,8 @@ msgid "&Recent Files..."
 msgstr "&Недавние файлы..."
 
 #: ../src/mmex.cpp:2590
-#, fuzzy
 msgid "&Clear Recent Files"
-msgstr "MMEX CSV &файлы"
+msgstr "Очистить список"
 
 #: ../src/mmex.cpp:2597
 #: ../src/util.cpp:662
@@ -3473,14 +3447,12 @@ msgid "Include the categories in the Budget Category Summary"
 msgstr ""
 
 #: ../src/mmex.cpp:2654
-#, fuzzy
 msgid "Ignore F&uture Transactions"
-msgstr "Автоматические проводки"
+msgstr "Игнорировать предстоящие проводки"
 
 #: ../src/mmex.cpp:2654
-#, fuzzy
 msgid "Ignore Future transactions"
-msgstr "Выберите цвет для будущих проводок"
+msgstr "Игнорировать предстоящий транзакции"
 
 #: ../src/mmex.cpp:2685
 #: ../src/mmex.cpp:2897
@@ -3520,9 +3492,8 @@ msgid "Organize &Payees..."
 msgstr "Получа&тели..."
 
 #: ../src/mmex.cpp:2723
-#, fuzzy
 msgid "Organize Currency..."
-msgstr "&Валюта"
+msgstr "Редактор валют..."
 
 #: ../src/mmex.cpp:2723
 #: ../src/mmex.cpp:2902
@@ -3677,7 +3648,7 @@ msgstr ""
 
 #: ../src/mmex.cpp:2849
 msgid "Visit us on Facebook"
-msgstr ""
+msgstr "Посетите нас на Facebook"
 
 #: ../src/mmex.cpp:2854
 msgid "&About..."
@@ -3846,9 +3817,8 @@ msgid "Choose Accounts"
 msgstr "Выберите счёта"
 
 #: ../src/mmex.cpp:3473
-#, fuzzy
 msgid "MMEX Options have been updated."
-msgstr " записей обновлено в базе данных."
+msgstr "Настройки MMEX были обновлены."
 
 #: ../src/mmex.cpp:3477
 msgid "Recommendation: Shut down and restart MMEX."
@@ -3859,9 +3829,8 @@ msgid "This will allow all MMEX option updates to take effect."
 msgstr ""
 
 #: ../src/mmex.cpp:3480
-#, fuzzy
 msgid "New MMEX Options"
-msgstr "Параметры отображения счетов"
+msgstr "Обновление MMEX настроек"
 
 #: ../src/mmex.cpp:3557
 msgid "Check Update"
@@ -3881,9 +3850,8 @@ msgid "You have the latest version installed!"
 msgstr "У вас установлена последняя версия!"
 
 #: ../src/mmex.cpp:3615
-#, fuzzy
 msgid "Proceed to website: "
-msgstr "&Перейти на Web-сайт счёта"
+msgstr "Перейти на Web-сайт счёта"
 
 #: ../src/mmex.cpp:3616
 msgid "MMEX System Information Check"
@@ -4138,9 +4106,8 @@ msgid "Set that first using Tools->Options menu and then add a new account."
 msgstr "Установите её через меню Инструменты -> Настройки затем добавьте счёт "
 
 #: ../src/mmex.cpp:4619
-#, fuzzy
 msgid "Setting new Database file"
-msgstr "Сохранить базу данных как"
+msgstr "Настройки новой базы данных"
 
 #: ../src/mmex.cpp:4619
 msgid "Please wait while the new database is being loaded."
@@ -4309,9 +4276,8 @@ msgid "Category Relocation Confirmation"
 msgstr "Подтвердите замену категории"
 
 #: ../src/reportbudgetingperf.cpp:106
-#, fuzzy
 msgid "Budget Performance for "
-msgstr "Представление годового бюджета на : "
+msgstr "Представление бюджета на "
 
 #: ../src/reportbudgetingperf.cpp:131
 msgid "Overall"
@@ -4616,9 +4582,9 @@ msgid "Before going to a shop and buy something: take the time making a list of 
 msgstr ""
 
 #: ../src/mmpayee.cpp:63
-#, fuzzy, c-format
+#, c-format
 msgid "Add Payee. Error: %s"
-msgstr "Добавление новой категории. Ошибка: %s"
+msgstr "Добавление получателя. Ошибка: %s"
 
 #: ../src/appstartdialog.cpp:56
 msgid " Start Page"
@@ -4813,9 +4779,8 @@ msgid ""
 msgstr ""
 
 #: ../src/budgetyearentrydialog.cpp:85
-#, fuzzy
 msgid "Budget Month:"
-msgstr "Текущий месяц"
+msgstr "бюджетный месяц:"
 
 #: ../src/budgetyearentrydialog.cpp:92
 msgid ""
@@ -4825,7 +4790,7 @@ msgstr ""
 
 #: ../src/budgetyearentrydialog.cpp:97
 msgid "Base Budget On:"
-msgstr "Взять за основу бюджет на:"
+msgstr "Взять за основу бюджет:"
 
 #: ../src/budgetyearentrydialog.cpp:108
 msgid "Specify year to base budget on."
@@ -4850,38 +4815,32 @@ msgid "Budget Category Summary for "
 msgstr "Представление годового бюджета на : "
 
 #: ../src/reportbudgetcategorysummary.cpp:103
-#, fuzzy
 msgid "( Estimated Vs Actual )"
 msgstr " (Оценочно/Фактически)"
 
 #: ../src/reportbudgetcategorysummary.cpp:308
-#, fuzzy
 msgid "Estimated Income: "
-msgstr "Ожидаемый доход: %s Фактический доход: %s"
+msgstr "Ожидаемый доход: "
 
 #: ../src/reportbudgetcategorysummary.cpp:309
-#, fuzzy
 msgid "Actual Income: "
-msgstr "Ожидаемый доход: %s Фактический доход: %s"
+msgstr "Ожидаемый доход: "
 
 #: ../src/reportbudgetcategorysummary.cpp:310
-#, fuzzy
 msgid "Diference Income: "
-msgstr "Подоходный налог"
+msgstr "Разница по доходу: "
 
 #: ../src/reportbudgetcategorysummary.cpp:312
-#, fuzzy
 msgid "Estimated Expenses: "
-msgstr "Ожидаемый расход: %s Фактический расходы: %s"
+msgstr "Ожидаемый расход: "
 
 #: ../src/reportbudgetcategorysummary.cpp:313
 msgid "Actual Expenses: "
 msgstr "Ожидаемый расход: "
 
 #: ../src/reportbudgetcategorysummary.cpp:314
-#, fuzzy
 msgid "Diference Expenses: "
-msgstr "Прочие расходы"
+msgstr "Разница по расходам:"
 
 #: ../src/budgetentrydialog.cpp:143
 msgid "Estimated:"
@@ -4928,9 +4887,8 @@ msgid "Display Heading"
 msgstr ""
 
 #: ../src/optionsdialog.cpp:278
-#, fuzzy
 msgid "The User Name is used as a title for the database."
-msgstr " записей обновлено в базе данных."
+msgstr "Имя пользователя для заголовков."
 
 #: ../src/optionsdialog.cpp:282
 msgid "Language"
@@ -4945,9 +4903,8 @@ msgid "Base Currency"
 msgstr "Основная валюта"
 
 #: ../src/optionsdialog.cpp:309
-#, fuzzy
 msgid "Sets the default currency for the database."
-msgstr "Укажите валюту, которая будет использоваться для"
+msgstr "Установите базовую валюту."
 
 #: ../src/optionsdialog.cpp:313
 msgid "Date Format"
@@ -4962,9 +4919,8 @@ msgid "Set"
 msgstr "Установить"
 
 #: ../src/optionsdialog.cpp:333
-#, fuzzy
 msgid "New date format sample:"
-msgstr "Укажите формат отображения даты"
+msgstr "Пример даты:"
 
 #: ../src/optionsdialog.cpp:341
 msgid "Financial Year"
@@ -4987,14 +4943,12 @@ msgid "Specify month for start of financial year"
 msgstr "Задайте первый месяц финансового года"
 
 #: ../src/optionsdialog.cpp:380
-#, fuzzy
 msgid "Database Backup"
 msgstr "Параметры резервного копирования"
 
 #: ../src/optionsdialog.cpp:386
-#, fuzzy
 msgid "Create a new backup when MMEX Start"
-msgstr "Создание нового файла базы данных"
+msgstr "Создание резервного файла базы данных при старте"
 
 #: ../src/optionsdialog.cpp:388
 msgid ""
@@ -5053,7 +5007,6 @@ msgid "View Last 30 days"
 msgstr "Показать проводки за последние 30 дней"
 
 #: ../src/optionsdialog.cpp:454
-#, fuzzy
 msgid "View Last 90 days"
 msgstr "Показать проводки за последние 90 дней"
 
@@ -5082,9 +5035,8 @@ msgid "Specify which font size is used on the report tables"
 msgstr "Определите, какой размер шрифта использовать для таблиц отчётов"
 
 #: ../src/optionsdialog.cpp:532
-#, fuzzy
 msgid "Navigation Tree Expansion Options"
-msgstr "Вид в навигаторе: Разворачивать секцию"
+msgstr "Свойства навигатора"
 
 #: ../src/optionsdialog.cpp:541
 msgid "Expand Bank Accounts in Trew View when tree is refreshed"
@@ -5095,9 +5047,8 @@ msgid "Expand Term Accounts in Trew View when tree is refreshed"
 msgstr "Отображать счета вкладов в панели навигации"
 
 #: ../src/optionsdialog.cpp:552
-#, fuzzy
 msgid "Home Page Expansion Options"
-msgstr "Параметры начальной страницы: Разворачивать секцию"
+msgstr "Параметры начальной страницы"
 
 #: ../src/optionsdialog.cpp:561
 msgid "Expand Bank Accounts on home page when page is refreshed"
@@ -5140,9 +5091,8 @@ msgid "View Reports without Future Transactions"
 msgstr "Показать выверенные проводки"
 
 #: ../src/optionsdialog.cpp:606
-#, fuzzy
 msgid "Colour Settings"
-msgstr "Общие настройки"
+msgstr "Цветовые настройки"
 
 #: ../src/optionsdialog.cpp:614
 #: ../src/optionsdialog.cpp:616
@@ -5264,11 +5214,12 @@ msgid "Select whether to use sounds when entering transactions"
 msgstr "Отметьте, использовать ли звуки при вводе проводок"
 
 #: ../src/optionsdialog.cpp:767
-#, fuzzy
 msgid ""
 "Enable online currency update \n"
 "(Get data from European Central Bank)"
-msgstr "Включить онлайн обновление курсов валют (Получать данные из Европейского Центрального Банка)"
+msgstr ""
+"Включить онлайн обновление курсов валют \n"
+"(Получать данные из Европейского Центрального Банка)"
 
 #: ../src/optionsdialog.cpp:769
 msgid "Enable or disable get data from European Central Bank to update currency rate"
@@ -5279,9 +5230,8 @@ msgid "Import/Export Settings"
 msgstr "Параметры импорта/экспорта"
 
 #: ../src/optionsdialog.cpp:797
-#, fuzzy
 msgid "User Defined"
-msgstr "Имя пользователя"
+msgstr "Определено пользователем"
 
 #: ../src/optionsdialog.cpp:808
 msgid "Specify the delimiter to use when importing/exporting CSV files"
@@ -5300,9 +5250,8 @@ msgid "Colors"
 msgstr "Цвета"
 
 #: ../src/optionsdialog.cpp:828
-#, fuzzy
 msgid "Import/Export"
-msgstr "Параметры импорта/экспорта"
+msgstr "Импорта/Экспорт"
 
 #: ../src/optionsdialog.cpp:876
 msgid "Remember to update currency rate"
@@ -5313,16 +5262,14 @@ msgid "Important note"
 msgstr "Важное замечание"
 
 #: ../src/optionsdialog.cpp:902
-#, fuzzy
 msgid " : Requires MMEX Restart"
-msgstr "MMEX CSV &файлы"
+msgstr " : Необходим перезапуск MMEX"
 
 #: ../src/yahoosettingsdialog.h:108
 msgid "Options"
 msgstr "Настройки"
 
 #: ../src/univcsvdialog.h:28
-#, fuzzy
 msgid "Universal CSV Dialog"
 msgstr "Импорт Universal CSV"
 
@@ -5373,7 +5320,7 @@ msgstr "Менеджер SQL отчётов"
 #: ../src/transactionfilterdialog.h:26
 #, fuzzy
 msgid "MMEX Account View: Transaction Filter"
-msgstr "Фильтр проводок"
+msgstr "MMEX Account View: Фильтр проводок"
 
 #: ../src/budgetentrydialog.h:23
 msgid "Budget Entry Details"
