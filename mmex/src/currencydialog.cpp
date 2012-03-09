@@ -174,46 +174,47 @@ void mmCurrencyDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer3->Add(itemStaticText26, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
+    wxArrayString currency_symbols;
+    currency_symbols.Add(wxT("AUD"));
+    currency_symbols.Add(wxT("BGN"));
+    currency_symbols.Add(wxT("BRL"));
+    currency_symbols.Add(wxT("CAD"));
+    currency_symbols.Add(wxT("CHF"));
+    currency_symbols.Add(wxT("CNY"));
+    currency_symbols.Add(wxT("CZK"));
+    currency_symbols.Add(wxT("DKK"));
+    currency_symbols.Add(wxT("EEK"));
+    currency_symbols.Add(wxT("EUR"));
+    currency_symbols.Add(wxT("GBP"));
+    currency_symbols.Add(wxT("HKD"));
+    currency_symbols.Add(wxT("HRK"));
+    currency_symbols.Add(wxT("HUF"));
+    currency_symbols.Add(wxT("IDR"));
+    currency_symbols.Add(wxT("ISK"));
+    currency_symbols.Add(wxT("JPY"));
+    currency_symbols.Add(wxT("KRW"));
+    currency_symbols.Add(wxT("LTL"));
+    currency_symbols.Add(wxT("LVL"));
+    currency_symbols.Add(wxT("MXN"));
+    currency_symbols.Add(wxT("MYR"));
+    currency_symbols.Add(wxT("NOK"));
+    currency_symbols.Add(wxT("NZD"));
+    currency_symbols.Add(wxT("PHP"));
+    currency_symbols.Add(wxT("PLN"));
+    currency_symbols.Add(wxT("RON"));
+    currency_symbols.Add(wxT("RUB"));
+    currency_symbols.Add(wxT("SEK"));
+    currency_symbols.Add(wxT("SGD"));
+    currency_symbols.Add(wxT("SKK"));
+    currency_symbols.Add(wxT("THB"));
+    currency_symbols.Add(wxT("TRY"));
+    currency_symbols.Add(wxT("UAH"));
+    currency_symbols.Add(wxT("USD"));
+    currency_symbols.Add(wxT("ZAR"));
+
     wxComboBox* itemComboBox27 = new wxComboBox( this, ID_DIALOG_CURRENCY_TEXT_SYMBOL, wxT(""),
-        wxDefaultPosition, wxDefaultSize, 0, NULL, 0);
+        wxDefaultPosition, wxDefaultSize, currency_symbols);
     itemFlexGridSizer3->Add(itemComboBox27, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
-    // add existing currency symbols
-    itemComboBox27->Append(wxT("EUR"));
-    itemComboBox27->Append(wxT("USD"));
-    itemComboBox27->Append(wxT("JPY"));
-    itemComboBox27->Append(wxT("BGN"));
-    itemComboBox27->Append(wxT("CZK"));
-    itemComboBox27->Append(wxT("DKK"));
-    itemComboBox27->Append(wxT("EEK"));
-    itemComboBox27->Append(wxT("GBP"));
-    itemComboBox27->Append(wxT("HUF"));
-    itemComboBox27->Append(wxT("LTL"));
-    itemComboBox27->Append(wxT("LVL"));
-    itemComboBox27->Append(wxT("PLN"));
-    itemComboBox27->Append(wxT("RON"));
-    itemComboBox27->Append(wxT("SEK"));
-    itemComboBox27->Append(wxT("SKK"));
-    itemComboBox27->Append(wxT("CHF"));
-    itemComboBox27->Append(wxT("ISK"));
-    itemComboBox27->Append(wxT("NOK"));
-    itemComboBox27->Append(wxT("HRK"));
-    itemComboBox27->Append(wxT("RUB"));
-    itemComboBox27->Append(wxT("UAH"));
-    itemComboBox27->Append(wxT("TRY"));
-    itemComboBox27->Append(wxT("AUD"));
-    itemComboBox27->Append(wxT("BRL"));
-    itemComboBox27->Append(wxT("CAD"));
-    itemComboBox27->Append(wxT("CNY"));
-    itemComboBox27->Append(wxT("HKD"));
-    itemComboBox27->Append(wxT("IDR"));
-    itemComboBox27->Append(wxT("KRW"));
-    itemComboBox27->Append(wxT("MXN"));
-    itemComboBox27->Append(wxT("MYR"));
-    itemComboBox27->Append(wxT("NZD"));
-    itemComboBox27->Append(wxT("PHP"));
-    itemComboBox27->Append(wxT("SGD"));
-    itemComboBox27->Append(wxT("THB"));
-    itemComboBox27->Append(wxT("ZAR"));
 
     wxStaticText* itemStaticText14 = new wxStaticText( this, wxID_STATIC, _("Unit Name"),
         wxDefaultPosition, wxDefaultSize, 0 );
@@ -318,11 +319,6 @@ void mmCurrencyDialog::CreateControls()
     itemBoxSizer22->Add(itemButton25, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
     itemButton25->SetToolTip(_("Any changes will be lost without update"));
 }
-
-//void mmCurrencyDialog::OnCancel(wxCommandEvent& /*event*/)
-//{
-//   EndModal(wxID_OK);   
-//}
 
 void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
 {
