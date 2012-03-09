@@ -27,7 +27,6 @@
 #define INT_PTR intptr_t
 #endif
 
-
 IMPLEMENT_DYNAMIC_CLASS( mmCurrencyDialog, wxDialog )
 
 BEGIN_EVENT_TABLE( mmCurrencyDialog, wxDialog )
@@ -131,16 +130,24 @@ void mmCurrencyDialog::updateControls()
 	currencySymbol->SetValue(pCurrency->currencySymbol_);
 
     wxString dispAmount;
-    double amount;
+    wxString dispAmount2;
+    double amount = 1000;
     
-    amount = 1000 * pCurrency->baseConv_;
     mmDBWrapper::loadBaseCurrencySettings(core_->db_.get());
     mmex::formatDoubleToCurrency(amount, dispAmount);
-    baseRateSample->SetLabel(dispAmount);
+    dispAmount2 = wxString() << dispAmount << wxT(" ") << _("Converted to:") << wxT(" ");
+        
+    mmDBWrapper::loadSettings(core_->db_.get(), pCurrency->currencyID_);
+    if (pCurrency->baseConv_ != 0.0 )
+        amount = amount / pCurrency->baseConv_;
+    else
+        amount = 0.0;
+    mmex::formatDoubleToCurrency(amount, dispAmount);
+    baseRateSample->SetLabel(dispAmount2 + dispAmount);
 
     amount = 123456.78;
-    mmDBWrapper::loadSettings(core_->db_.get(), pCurrency->currencyID_);
     mmex::formatDoubleToCurrency(amount, dispAmount);
+    dispAmount = wxString() << wxT("123456.78 ") << _("Shown As: ") << dispAmount;
     sample->SetLabel(dispAmount);
 
     // resize the dialog window
@@ -288,11 +295,6 @@ void mmCurrencyDialog::CreateControls()
     wxStaticBoxSizer* itemStaticBoxSizer_02 = new wxStaticBoxSizer(itemStaticBox_02, wxHORIZONTAL);
     itemBoxSizer2->Add(itemStaticBoxSizer_02, 0, wxGROW|wxALL, 5);
 
-    wxStaticText* itemStaticText220 = new wxStaticText( this, wxID_STATIC,
-        _("1000  Converted to:"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticBoxSizer_02->Add(itemStaticText220, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-
     wxStaticText*  sampleText2_ = new wxStaticText( this, ID_DIALOG_CURRENCY_STATIC_CONVERSION, wxT(""),
         wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticBoxSizer_02->Add(sampleText2_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
@@ -302,11 +304,7 @@ void mmCurrencyDialog::CreateControls()
     wxStaticBoxSizer* itemStaticBoxSizer_01 = new wxStaticBoxSizer(itemStaticBox_01, wxHORIZONTAL);
     itemBoxSizer2->Add(itemStaticBoxSizer_01, 0, wxGROW|wxALL, 5);
 
-    wxStaticText* itemStaticText20 = new wxStaticText( this, wxID_STATIC, _("123456.78   Shown As:"),
-        wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticBoxSizer_01->Add(itemStaticText20, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
-
-    wxStaticText*  sampleText_ = new wxStaticText( this, ID_DIALOG_CURRENCY_STATIC_SAMPLE, _("123456.78"),
+    wxStaticText*  sampleText_ = new wxStaticText( this, ID_DIALOG_CURRENCY_STATIC_SAMPLE, wxT(""),
         wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticBoxSizer_01->Add(sampleText_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
  

@@ -857,8 +857,9 @@ wxString mmCheckingPanel::getMiniInfoStr(int selIndex) const
         int tocurrencyid = q1.GetInt(wxT("TOCURRENCYID"));
         double toamount = q1.GetDouble(wxT("TOTRANSAMOUNT"));
         wxString toamountStr;
-        double convertion;
-        convertion = ( convrate < toconvrate ? amount/toamount : toamount/amount);
+        double convertion = 0.0;
+        if (toamount != 0.0 && amount != 0.0)
+            convertion = ( convrate < toconvrate ? amount/toamount : toamount/amount);
         wxString convertionStr;
 
         boost::shared_ptr<mmCurrency> pCurrencyPtr = core_->getCurrencyWeakPtr(toaccountId).lock();
