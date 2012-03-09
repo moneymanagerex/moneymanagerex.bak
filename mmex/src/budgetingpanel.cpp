@@ -239,7 +239,7 @@ void mmBudgetingPanel::CreateControls()
     itemStaticText102->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
 
     wxStaticText* itemStaticText103 = new wxStaticText( itemPanel3, 
-        ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_DIF, _("Diference: "), wxDefaultPosition, distSize, 0);
+        ID_DIALOG_BUDGETENTRY_SUMMARY_INCOME_DIF, _("Difference: "), wxDefaultPosition, distSize, 0);
     itemStaticText103->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
 
     wxBoxSizer* itemIncomeSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -262,7 +262,7 @@ void mmBudgetingPanel::CreateControls()
     itemStaticText202->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
 
     wxStaticText* itemStaticText203 = new wxStaticText( itemPanel3, 
-        ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_DIF, _("Diference: "), wxDefaultPosition, distSize, 0);
+        ID_DIALOG_BUDGETENTRY_SUMMARY_EXPENSES_DIF, _("Difference: "), wxDefaultPosition, distSize, 0);
     itemStaticText203->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxNORMAL, FALSE, wxT("")));
 
     wxBoxSizer* itemExpenseSizer = new wxBoxSizer(wxHORIZONTAL);
