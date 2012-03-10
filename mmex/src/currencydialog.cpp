@@ -127,7 +127,7 @@ void mmCurrencyDialog::updateControls()
     centTx->SetValue(pCurrency->cent_);
     scaleTx->SetValue(wxString() << pCurrency->scaleDl_);
     baseConvRate->SetValue(wxString() << pCurrency->baseConv_);
-	currencySymbol->SetValue(pCurrency->currencySymbol_);
+    currencySymbol->SetValue(pCurrency->currencySymbol_);
 
     wxString dispAmount;
     wxString dispAmount2;
@@ -179,8 +179,8 @@ void mmCurrencyDialog::CreateControls()
         wxDefaultPosition, wxDefaultSize, 0, itemChoice5Strings, 0 );
     itemFlexGridSizer3->Add(currencyChoice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     currencyChoice_->Enable(false);
-	
- 	wxStaticText* itemStaticText26 = new wxStaticText( this, wxID_STATIC, _("Currency Symbol"),
+    
+     wxStaticText* itemStaticText26 = new wxStaticText( this, wxID_STATIC, _("Currency Symbol"),
         wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer3->Add(itemStaticText26, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
@@ -338,7 +338,8 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
 
     long scal = 0;
     scaleTx->GetValue().ToLong(&scal);
-    if (scal <= 0) {
+    if (scal <= 0) 
+    {
         wxMessageDialog dlg(this, _("Scale should be greater than zero"), _("Error"), wxICON_ERROR);
         dlg.ShowModal();
         return;
@@ -346,7 +347,8 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
 
     double convRate = 1.0;
     baseConvRate->GetValue().ToDouble(&convRate);
-    if (convRate < 0.0) {
+    if (convRate < 0.0) 
+    {
         wxMessageDialog dlg(this, _("Base Conversion Rate should be positive"), _("Error"), wxICON_ERROR);
         dlg.ShowModal();
         return;
@@ -363,7 +365,7 @@ void mmCurrencyDialog::OnUpdate(wxCommandEvent& /*event*/)
     pCurrency->cent_ = centTx->GetValue();
     pCurrency->scaleDl_ = static_cast<int>(scal);
     pCurrency->baseConv_ = convRate;
-	pCurrency->currencySymbol_ = currencySymbol->GetValue();
+    pCurrency->currencySymbol_ = currencySymbol->GetValue();
    
     core_->updateCurrency(pCurrency);
 
