@@ -37,7 +37,8 @@ namespace
 
 const wxString MMEX_INITIAL_AUTHOR_STR = wxT("(c) 2005-2012 Madhan Kanagavel");
 
-enum { 
+enum 
+{ 
   IDC_DIALOG_BUTTON_ABOUT_VERSION_HISTORY = wxID_HIGHEST + 1,
   IDC_DIALOG_BUTTON_ABOUT_CONTRIBUTERS
 };
@@ -87,7 +88,8 @@ bool mmAboutDialog::Create(wxWindow* parent,
 
     bool ok = wxDialog::Create(parent, id, caption, pos, size, style);
 
-    if (ok) {
+    if (ok) 
+    {
         CreateControls();
         GetSizer()->Fit(this);
         GetSizer()->SetSizeHints(this);
