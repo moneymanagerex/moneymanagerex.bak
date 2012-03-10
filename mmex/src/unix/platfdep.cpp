@@ -27,18 +27,18 @@ namespace
 
 void SetInstallPrefix()
 {
-        wxStandardPathsBase &p = wxStandardPaths::Get();
+    wxStandardPathsBase &p = wxStandardPaths::Get();
 
-        wxFileName fname(p.GetExecutablePath());
-	fname.SetFullName(wxGetEmptyString());
-        
-        const wxArrayString &dirs = fname.GetDirs();
+    wxFileName fname(p.GetExecutablePath());
+    fname.SetFullName(wxGetEmptyString());
+    
+    const wxArrayString &dirs = fname.GetDirs();
 
-        if (dirs.Last().Upper() == wxT("BIN")) // something like a /usr/bin or /usr/local/bin
-                fname.RemoveLastDir();
-        
-        if (wxStandardPaths *pp = dynamic_cast<wxStandardPaths*>(&p))
-		pp->SetInstallPrefix(fname.GetFullPath());
+    if (dirs.Last().Upper() == wxT("BIN")) // something like a /usr/bin or /usr/local/bin
+        fname.RemoveLastDir();
+    
+    if (wxStandardPaths *pp = dynamic_cast<wxStandardPaths*>(&p))
+    pp->SetInstallPrefix(fname.GetFullPath());
 }
 
 } // namespace 
@@ -46,63 +46,65 @@ void SetInstallPrefix()
 //----------------------------------------------------------------------------
 
 /*
-        $(prefix)/share/mmex.
-        Default install prefix is /usr (often /usr/local).
+    $(prefix)/share/mmex.
+    Default install prefix is /usr (often /usr/local).
 */
 wxFileName mmex::GetSharedDir()
 {
-        static wxFileName fname;
+    static wxFileName fname;
 
-        if (!fname.IsOk()) {
-                SetInstallPrefix();
-		fname = wxFileName::DirName(wxStandardPaths::Get().GetDataDir());
-	}
+    if (!fname.IsOk()) 
+    {
+        SetInstallPrefix();
+        fname = wxFileName::DirName(wxStandardPaths::Get().GetDataDir());
+    }
 
-        return fname;
+    return fname;
 }
 //----------------------------------------------------------------------------
 
 /*
-        $(prefix)/share/doc/mmex
+    $(prefix)/share/doc/mmex
 */
 wxFileName mmex::GetDocDir()
 {
-        static wxFileName fname;
+    static wxFileName fname;
 
-        if (!fname.IsOk()) {
+    if (!fname.IsOk()) 
+    {
+        fname = GetSharedDir();
 
-                fname = GetSharedDir();
+        const wxArrayString &dirs = fname.GetDirs();
+        if (dirs.Last().Lower() == GetAppName())
+            fname.RemoveLastDir(); // mmex folder
 
-                const wxArrayString &dirs = fname.GetDirs();
-                if (dirs.Last().Lower() == GetAppName())
-                        fname.RemoveLastDir(); // mmex folder
+        fname.AppendDir(wxT("doc"));
+        fname.AppendDir(GetAppName());
+    }
 
-                fname.AppendDir(wxT("doc"));
-                fname.AppendDir(GetAppName());
-        }
-
-        return fname;
+    return fname;
 }
 //----------------------------------------------------------------------------
 
 /*
-        $(prefix)/share/mmex/res
+    $(prefix)/share/mmex/res
 */
 wxFileName mmex::GetResourceDir()
 {
-        static wxFileName fname;
+    static wxFileName fname;
 
-        if (!fname.IsOk()) {
-                fname = GetSharedDir();
-                fname.AppendDir(wxT("res"));
-        }
+    if (!fname.IsOk()) 
+    {
+        fname = GetSharedDir();
+        fname.AppendDir(wxT("res"));
+    }
 
-        return fname;
+    return fname;
 }
 //----------------------------------------------------------------------------
 
 wxString mmex::GetAppName()
 {
-        return wxString(wxT("mmex"));
+    return wxString(wxT("mmex"));
 }
 //----------------------------------------------------------------------------

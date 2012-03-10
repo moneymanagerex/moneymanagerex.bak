@@ -24,33 +24,34 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 wxFileName mmex::GetSharedDir()
 {
-        static wxFileName fname(wxFileName::DirName(wxStandardPaths::Get().GetDataDir()));
-        return fname;
+    static wxFileName fname(wxFileName::DirName(wxStandardPaths::Get().GetDataDir()));
+    return fname;
 }
 //----------------------------------------------------------------------------
 
 wxFileName mmex::GetDocDir()
 {
-        static wxFileName fname;
+    static wxFileName fname;
 
-        if (!fname.IsOk()) {
-                fname = GetSharedDir();
-                fname.AppendDir(wxT("doc"));
-        }
+    if (!fname.IsOk()) 
+    {
+        fname = GetSharedDir();
+        fname.AppendDir(wxT("doc"));
+    }
 
-        return fname;
+    return fname;
 }
 //----------------------------------------------------------------------------
 
 wxFileName mmex::GetResourceDir()
 {
-        static wxFileName fname(wxFileName::DirName(wxStandardPaths::Get().GetResourcesDir()));
-        return fname;
+    static wxFileName fname(wxFileName::DirName(wxStandardPaths::Get().GetResourcesDir()));
+    return fname;
 }
 //----------------------------------------------------------------------------
 
 wxString mmex::GetAppName()
 {
-        return wxString(wxT("MoneyManagerEx"));
+    return wxString(wxT("MoneyManagerEx"));
 }
 //----------------------------------------------------------------------------

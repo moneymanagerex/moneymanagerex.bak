@@ -26,19 +26,19 @@ namespace
 {
 
 /*
-        The root directory of the installation of MMEX.
+    The root directory of the installation of MMEX.
 */
 wxFileName GetInstallDir()
 {
-        const wxStandardPathsBase &p = wxStandardPaths::Get();
-        wxFileName fname(p.GetExecutablePath());
-        
-        const wxArrayString &dirs = fname.GetDirs();
+    const wxStandardPathsBase &p = wxStandardPaths::Get();
+    wxFileName fname(p.GetExecutablePath());
+    
+    const wxArrayString &dirs = fname.GetDirs();
 
-        if (dirs.Last().Upper() == wxT("BIN")) // bin\mmex.exe
-                fname.RemoveLastDir();
-        
-        return fname;
+    if (dirs.Last().Upper() == wxT("BIN")) // bin\mmex.exe
+        fname.RemoveLastDir();
+    
+    return fname;
 }
 
 } // namespace 
@@ -47,32 +47,33 @@ wxFileName GetInstallDir()
 
 wxFileName mmex::GetSharedDir()
 {
-        static wxFileName fname(GetInstallDir());
-        return fname;
+    static wxFileName fname(GetInstallDir());
+    return fname;
 }
 //----------------------------------------------------------------------------
 
 wxFileName mmex::GetDocDir()
 {
-        return GetSharedDir();
+    return GetSharedDir();
 }
 //----------------------------------------------------------------------------
 
 wxFileName mmex::GetResourceDir()
 {
-        static wxFileName fname;
+    static wxFileName fname;
 
-        if (!fname.IsOk()) {
-                fname = GetSharedDir();
-                fname.AppendDir(wxT("res"));
-        }
+    if (!fname.IsOk()) 
+    {
+        fname = GetSharedDir();
+        fname.AppendDir(wxT("res"));
+    }
 
-        return fname;
+    return fname;
 }
 //----------------------------------------------------------------------------
 
 wxString mmex::GetAppName()
 {
-        return wxString(wxT("MoneyManagerEx"));
+    return wxString(wxT("MoneyManagerEx"));
 }
 //----------------------------------------------------------------------------
