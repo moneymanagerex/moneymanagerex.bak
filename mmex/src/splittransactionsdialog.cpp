@@ -94,7 +94,7 @@ void SplitTransactionDialog::DataToControls()
 
         lcSplit_->SetItem((long)idx, 1, dispAmount);
     }
-	UpdateSplitTotal();
+    UpdateSplitTotal();
 }
 
 void SplitTransactionDialog::CreateControls()
@@ -125,17 +125,17 @@ void SplitTransactionDialog::CreateControls()
     itemCol1.SetAlign(wxLIST_FORMAT_RIGHT);
     lcSplit_->InsertColumn(1, itemCol1);
     lcSplit_->SetColumnWidth( 1, 80 );
-	
-	wxBoxSizer* totalAmountSizer = new wxBoxSizer(wxHORIZONTAL);
+    
+    wxBoxSizer* totalAmountSizer = new wxBoxSizer(wxHORIZONTAL);
     wxString totalMessage = _(" Total:");
     if (transType_ == DEF_WITHDRAWAL) totalMessage = wxString() << _("Withdrawal") << totalMessage;
     if (transType_ == DEF_DEPOSIT)    totalMessage = wxString() << _("Deposit")    << totalMessage;
 
     wxStaticText* transAmountText_ = new wxStaticText( this, wxID_STATIC, totalMessage, wxDefaultPosition, wxDefaultSize, 0 );
-	transAmount_ = new wxStaticText( this, wxID_STATIC, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+    transAmount_ = new wxStaticText( this, wxID_STATIC, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
     totalAmountSizer->Add(transAmountText_, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
-	totalAmountSizer->Add(transAmount_, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
-	dialogMainSizerV->Add(totalAmountSizer, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    totalAmountSizer->Add(transAmount_, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
+    dialogMainSizerV->Add(totalAmountSizer, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxStaticLine* line = new wxStaticLine (this, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
     dialogMainSizerV->Add(line, 0, wxGROW|wxLEFT|wxTOP|wxRIGHT, 10);
@@ -190,9 +190,9 @@ void SplitTransactionDialog::OnButtonAddClick( wxCommandEvent& /*event*/ )
                                                                                 subcategID);
         wxASSERT(pSplitEntry->category_.lock());
         split_->addSplit(pSplitEntry);
-		
-		UpdateSplitTotal();
-	}
+        
+        UpdateSplitTotal();
+    }
 }
 
 void SplitTransactionDialog::OnButtonEditClick( wxCommandEvent& /*event*/ )
@@ -207,7 +207,7 @@ void SplitTransactionDialog::OnButtonRemoveClick( wxCommandEvent& /*event*/ )
     {
         lcSplit_->DeleteItem(item);
         split_->removeSplitByIndex(item);
-    	UpdateSplitTotal();
+        UpdateSplitTotal();
     }
 }
 
@@ -228,17 +228,17 @@ wxIcon SplitTransactionDialog::GetIconResource( const wxString& /*name*/ )
 
 void SplitTransactionDialog::UpdateSplitTotal()
 {
-	// Update the total amount of all splits
-	wxString splitTotal;
-	if (split_->numEntries() > 0)
-	{
-		mmex::formatDoubleToCurrencyEdit(split_->getUpdatedTotalSplits(), splitTotal);
-	}
-	else
-	{
-		mmex::formatDoubleToCurrencyEdit(0.0, splitTotal);
-	}
-	transAmount_->SetLabel(splitTotal);
+    // Update the total amount of all splits
+    wxString splitTotal;
+    if (split_->numEntries() > 0)
+    {
+        mmex::formatDoubleToCurrencyEdit(split_->getUpdatedTotalSplits(), splitTotal);
+    }
+    else
+    {
+        mmex::formatDoubleToCurrencyEdit(0.0, splitTotal);
+    }
+    transAmount_->SetLabel(splitTotal);
 }
 
 long SplitTransactionDialog::GetSelectedItem()

@@ -262,8 +262,8 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
     hb.startCenter();
     hb.startTable();
 
-	hb.startTableRow();
-	hb.addTableHeaderCell(_("Category"));
+    hb.startTableRow();
+    hb.addTableHeaderCell(_("Category"));
 
     periods_t periods(MONTHS_IN_PERIOD);
     prepareAndPrintPeriods(periodBegin, periodEnd, hb, periods);
@@ -271,7 +271,7 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
     columns_totals_t columns_totals(periods.size());
 
     hb.addTableHeaderCell(_("Overall"));
-	hb.endTableRow();
+    hb.endTableRow();
 
     // begin of table
 
@@ -303,7 +303,7 @@ wxString mmReportCategoryOverTimePerformance::getHTMLText()
     printColumnsTotals(columns_totals, OVERALL, hb);
 
     hb.endTable();
-	hb.endCenter();
+    hb.endCenter();
 
     hb.end();
     return hb.getHTMLText();

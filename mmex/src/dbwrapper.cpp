@@ -1853,8 +1853,8 @@ void mmDBWrapper::completeBDInSeries(wxSQLite3Database* db, int bdID)
                "REPEATS "
         "from BILLSDEPOSITS_V1 "
         "WHERE BDID = ?";
-		// Removed "date(NEXTOCCURRENCEDATE, 'localtime') as NEXTOCCURRENCEDATE, "
-		// because causing problems with some systems and in different time zones
+        // Removed "date(NEXTOCCURRENCEDATE, 'localtime') as NEXTOCCURRENCEDATE, "
+        // because causing problems with some systems and in different time zones
 
         wxDateTime updateOccur = wxDateTime::Now();
         int numRepeats  = -1;

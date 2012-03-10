@@ -32,20 +32,20 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
     wxDateTime yearBegin(1, wxDateTime::Jan, year_);
     wxDateTime yearEnd(31, wxDateTime::Dec, year_);
 
-	hb.startCenter();
+    hb.startCenter();
 
     hb.startTable(wxT("75%"));
-	hb.startTableRow();
-	hb.addTableHeaderCell(_("Year"));
-	hb.addTableHeaderCell(_("Month"));
-	hb.addTableHeaderCell(_("Income"), true);
-	hb.addTableHeaderCell(_("Expenses"), true);
-	hb.addTableHeaderCell(_("Difference"), true);
-	hb.endTableRow();
+    hb.startTableRow();
+    hb.addTableHeaderCell(_("Year"));
+    hb.addTableHeaderCell(_("Month"));
+    hb.addTableHeaderCell(_("Income"), true);
+    hb.addTableHeaderCell(_("Expenses"), true);
+    hb.addTableHeaderCell(_("Difference"), true);
+    hb.endTableRow();
 
     double income = 0.0;
     double expenses = 0.0;
-	double balance = 0.0;
+    double balance = 0.0;
         
     for (int yidx = 0; yidx < 12; yidx++)
     {
@@ -66,16 +66,16 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
         mmex::formatDoubleToCurrencyEdit(income, actualIncStr);
 
         hb.startTableRow();
-		hb.addTableCell(yearStr, false, true);
-		hb.addTableCell(monName, false, true);
-			
-		balance = income - expenses;
-		wxString actualBalStr;
-		mmex::formatDoubleToCurrencyEdit(balance, actualBalStr);
+        hb.addTableCell(yearStr, false, true);
+        hb.addTableCell(monName, false, true);
+            
+        balance = income - expenses;
+        wxString actualBalStr;
+        mmex::formatDoubleToCurrencyEdit(balance, actualBalStr);
 
-		hb.addTableCell(actualIncStr, true, true, true);
-		hb.addTableCell(actualExpStr, true, true, true);
-		hb.addTableCell(actualBalStr, true, true, true, (balance < 0.0 ? wxT("RED") : wxT("")));
+        hb.addTableCell(actualIncStr, true, true, true);
+        hb.addTableCell(actualExpStr, true, true, true);
+        hb.addTableCell(actualBalStr, true, true, true, (balance < 0.0 ? wxT("RED") : wxT("")));
 
         hb.endTableRow();
     }
@@ -99,17 +99,17 @@ wxString mmReportIncExpensesOverTime::getHTMLText()
     wxString actualIncStr;
     mmex::formatDoubleToCurrencyEdit(income, actualIncStr);
 
-	balance = income - expenses;
+    balance = income - expenses;
     wxString actualBalStr;
     mmex::formatDoubleToCurrencyEdit(balance, actualBalStr);
 
     std::vector<wxString> data;
     data.push_back(actualIncStr);
     data.push_back(actualExpStr);
-	data.push_back(actualBalStr);
+    data.push_back(actualBalStr);
 
-	hb.addRowSeparator(5);
-	hb.addTotalRow(_("Total:"), 5, data);
+    hb.addRowSeparator(5);
+    hb.addTotalRow(_("Total:"), 5, data);
 
     hb.endTable();
     hb.endCenter();

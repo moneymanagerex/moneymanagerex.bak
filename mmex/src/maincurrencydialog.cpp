@@ -269,7 +269,7 @@ bool mmMainCurrencyDialog::Execute(mmCoreDB* core, wxWindow* parent, int& curren
     if (dlg->ShowModal() == wxID_OK)
     {
         currencyID = dlg->currencyID_;
-	result = true;
+    result = true;
     }
     dlg->Destroy();
 
