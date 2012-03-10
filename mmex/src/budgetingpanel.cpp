@@ -59,8 +59,8 @@ mmBudgetingPanel::mmBudgetingPanel(wxSQLite3Database* db, wxSQLite3Database* ini
     mmPanelBase(db, inidb, core),
     m_imageList(), 
     listCtrlAccount_(),
-    mainFrame_(mainFrame),
-    budgetYearID_(budgetYearID)
+    budgetYearID_(budgetYearID),
+    mainFrame_(mainFrame)
 {
     Create(parent, winid, pos, size, style, name);
     currentView_ = wxT("View All Budget Categories");
