@@ -120,7 +120,7 @@ void mmFilterTransactionsDialog::CreateControls()
 {    
     int fieldWidth = 210;
 
-	wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
     this->SetSizer(itemBoxSizer2);
     
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxVERTICAL);
@@ -203,7 +203,7 @@ void mmFilterTransactionsDialog::CreateControls()
 
     choiceStatus = new wxChoice( itemPanel, ID_CHOICE7, wxDefaultPosition, wxDefaultSize, choiceStatusStrings);
     itemPanelSizer->Add(choiceStatus, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-	choiceStatus->SetSelection(mmIniOptions::instance().transStatusReconciled_);
+    choiceStatus->SetSelection(mmIniOptions::instance().transStatusReconciled_);
     choiceStatus->SetToolTip(_("Specify the status for the transaction"));
     //--End of Row --------------------------------------------------------
 
@@ -438,18 +438,18 @@ void mmFilterTransactionsDialog::OnButtonokClick( wxCommandEvent& /*event*/ )
             if (typeCheckBox->GetValue())
             {
                 wxString transCode = pBankTransaction->transType_;
-				wxString transCodeSelectedWithdraval=wxT("-");
-				wxString transCodeSelectedDeposit=wxT("-");
-				wxString transCodeSelectedTransfer=wxT("-");
+                wxString transCodeSelectedWithdraval=wxT("-");
+                wxString transCodeSelectedDeposit=wxT("-");
+                wxString transCodeSelectedTransfer=wxT("-");
                 if (cbTypeWithdrawal_->GetValue())
-					transCodeSelectedWithdraval = TRANS_TYPE_WITHDRAWAL_STR;
-				if (cbTypeDeposit_->GetValue())
-					transCodeSelectedDeposit = TRANS_TYPE_DEPOSIT_STR;
-				if (cbTypeTransfer_->GetValue())
-					transCodeSelectedTransfer = TRANS_TYPE_TRANSFER_STR;
+                    transCodeSelectedWithdraval = TRANS_TYPE_WITHDRAWAL_STR;
+                if (cbTypeDeposit_->GetValue())
+                    transCodeSelectedDeposit = TRANS_TYPE_DEPOSIT_STR;
+                if (cbTypeTransfer_->GetValue())
+                    transCodeSelectedTransfer = TRANS_TYPE_TRANSFER_STR;
 
                 if (transCodeSelectedWithdraval != transCode && transCodeSelectedDeposit != transCode && transCodeSelectedTransfer != transCode)
-					continue; // skip
+                    continue; // skip
             }
 
             if (amountRangeCheckBox->GetValue())
@@ -602,10 +602,10 @@ wxString mmFilterTransactionsDialog::userDateRangeStr()
     wxString dateStr;
     if (dateRangeCheckBox->IsChecked())
     {
-		wxString dtBegin = mmGetDateForDisplay(db_, fromDateCtrl->GetValue());
-		wxString dtEnd = mmGetDateForDisplay(db_, toDateControl->GetValue());
+        wxString dtBegin = mmGetDateForDisplay(db_, fromDateCtrl->GetValue());
+        wxString dtEnd = mmGetDateForDisplay(db_, toDateControl->GetValue());
         dateStr << _("From ") << dtBegin << _(" to ") << dtEnd;
-	}
+    }
     return dateStr;
 }
 

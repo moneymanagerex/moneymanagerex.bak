@@ -30,7 +30,7 @@ BEGIN_EVENT_TABLE( mmStockDialog, wxDialog )
     EVT_BUTTON(wxID_OK, mmStockDialog::OnOk)
     EVT_BUTTON(wxID_CANCEL, mmStockDialog::OnCancel)
     EVT_BUTTON(ID_BUTTON_STOCKS_HELDAT, mmStockDialog::OnAccountButton)
-	EVT_BUTTON(ID_BUTTON_STOCK_WEBPRICE, mmStockDialog::OnStockPriceButton)
+    EVT_BUTTON(ID_BUTTON_STOCK_WEBPRICE, mmStockDialog::OnStockPriceButton)
 END_EVENT_TABLE()
 
 mmStockDialog::mmStockDialog( )
@@ -98,15 +98,15 @@ void mmStockDialog::dataToControls()
         wxString dt = mmGetDateForDisplay(db_, dtdt);
         dpc_->SetValue(dtdt);
 
-		double numShares = q1.GetDouble(wxT("NUMSHARES"));
-		wxString numSharesString;
-		//I wish see integer if it integer else double
+        double numShares = q1.GetDouble(wxT("NUMSHARES"));
+        wxString numSharesString;
+        //I wish see integer if it integer else double
         if ((numShares - static_cast<long>(numShares)) != 0.0 )
-			numSharesString=wxString::Format(wxT("%0.4f"),numShares);
+            numSharesString=wxString::Format(wxT("%0.4f"),numShares);
         else 
-			numSharesString <<  static_cast<long>(numShares);
-		
-		numShares_->SetValue(numSharesString);
+            numSharesString <<  static_cast<long>(numShares);
+        
+        numShares_->SetValue(numSharesString);
 
         wxString dispAmount;
         mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUE")), dispAmount);
@@ -168,7 +168,7 @@ void mmStockDialog::CreateControls()
     dpc_ = new wxDatePickerCtrl( itemPanel5, ID_DPC_STOCK_PDATE, wxDefaultDateTime, wxDefaultPosition, wxSize(120, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
     itemFlexGridSizer6->Add(dpc_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     dpc_->SetToolTip(_("Specify the purchase date of the stock investment"));
-	//
+    //
 
     //Symbol
     wxStaticText* itemStaticText13 = new wxStaticText( itemPanel5, wxID_STATIC, _("Symbol"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -177,8 +177,8 @@ void mmStockDialog::CreateControls()
     stockSymbol_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCK_SYMBOL, wxT(""), wxDefaultPosition, wxSize(150, -1), 0 );
     itemFlexGridSizer6->Add(stockSymbol_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     stockSymbol_->SetToolTip(_("Enter the stock symbol. (Optional) Include exchange. eg: IBM.BE"));
-	//
-	
+    //
+    
     wxStaticText* itemStaticText15 = new wxStaticText( itemPanel5, wxID_STATIC, _("Number of Shares"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText15, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
@@ -275,14 +275,14 @@ void mmStockDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmStockDialog::OnStockPriceButton(wxCommandEvent& /*event*/)
 {
-	wxString stockSymbol = stockSymbol_->GetValue().Trim();
+    wxString stockSymbol = stockSymbol_->GetValue().Trim();
 
-	if (!stockSymbol.IsEmpty())
-	{
-		// Use Google for stock quotes
+    if (!stockSymbol.IsEmpty())
+    {
+        // Use Google for stock quotes
         wxString stockURL = mmDBWrapper::getInfoSettingValue(db_, wxT("STOCKURL"), mmex::DEFSTOCKURL);
         //wxString paddedURL = wxT("\"") + stockURL + wxT("\"");
-		//wxString httpString = wxString::Format(paddedURL, stockSymbol);
+        //wxString httpString = wxString::Format(paddedURL, stockSymbol);
         //wxExecute(_T("explorer ") + httpString, wxEXEC_ASYNC, NULL ); 
     
         int yahooSite = stockURL.Find(wxT("yahoo"));
@@ -297,8 +297,8 @@ void mmStockDialog::OnStockPriceButton(wxCommandEvent& /*event*/)
             }
         }
         wxString httpString = wxString::Format(stockURL.c_str(), stockSymbol.c_str());
-		wxLaunchDefaultBrowser(httpString);
-	}
+        wxLaunchDefaultBrowser(httpString);
+    }
 }
 
 void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
@@ -324,7 +324,7 @@ void mmStockDialog::OnOk(wxCommandEvent& /*event*/)
     }
     
      double numShares = 0;
-	 if (!numSharesStr.ToDouble(&numShares) /*|| (numShares = 0.0)*/)
+     if (!numSharesStr.ToDouble(&numShares) /*|| (numShares = 0.0)*/)
     {
         mmShowErrorMessage(this, _("Invalid number of shares entered "), _("Error"));
         return;

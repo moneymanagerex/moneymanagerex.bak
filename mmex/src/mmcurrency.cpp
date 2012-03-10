@@ -68,15 +68,15 @@ mmCurrency::mmCurrency() :
 
 void mmCurrency::loadCurrencySettings()
 {
-	mmex::CurrencyFormatter::instance().loadSettings(
-		pfxSymbol_, 
-		sfxSymbol_, 
-		decChar_, 
-		grpChar_, 
-		unit_, 
-		cent_, 
-		scaleDl_
-	);
+    mmex::CurrencyFormatter::instance().loadSettings(
+        pfxSymbol_, 
+        sfxSymbol_, 
+        decChar_, 
+        grpChar_, 
+        unit_, 
+        cent_, 
+        scaleDl_
+    );
 }
 
 //-----------------------------------------------------------------------------//
@@ -231,23 +231,23 @@ wxString mmCurrencyList::getCurrencyName(int currencyID) const
 
 boost::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(int currencyID) const
 {
-	for (size_t i = 0; i < currencies_.size(); ++i) {
-		if (currencies_[i]->currencyID_ == currencyID)
-			return currencies_[i];
-	}
+    for (size_t i = 0; i < currencies_.size(); ++i) {
+        if (currencies_[i]->currencyID_ == currencyID)
+            return currencies_[i];
+    }
 
-	wxASSERT(false);
-	return boost::shared_ptr<mmCurrency>();
+    wxASSERT(false);
+    return boost::shared_ptr<mmCurrency>();
 }
 
 boost::shared_ptr<mmCurrency> mmCurrencyList::getCurrencySharedPtr(const wxString& currencyName) const
 {
-	for (size_t i = 0; i < currencies_.size(); ++i) {
-		if (currencies_[i]->currencyName_ == currencyName)
-			return currencies_[i];
-	}
+    for (size_t i = 0; i < currencies_.size(); ++i) {
+        if (currencies_[i]->currencyName_ == currencyName)
+            return currencies_[i];
+    }
 
-	wxASSERT(false);
-	return boost::shared_ptr<mmCurrency>();
+    wxASSERT(false);
+    return boost::shared_ptr<mmCurrency>();
 }
   
