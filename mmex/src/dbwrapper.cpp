@@ -1387,7 +1387,7 @@ void mmDBWrapper::verifyINIDB(wxSQLite3Database* inidb)
         wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
     }
 
-    wxASSERT(!ok);
+    wxASSERT(ok);
 }
 
 wxString mmDBWrapper::getINISettingValue(wxSQLite3Database* db, const wxString& settingName, 
