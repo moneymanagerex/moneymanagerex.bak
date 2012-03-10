@@ -2180,7 +2180,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (iData->getString() == wxT("Cash Flow"))
         {
-            mmReportCashFlow* report = new mmReportCashFlow(m_core.get());
+            mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this);
 
             report->activateBankAccounts();
             if (hasActiveTermAccounts())  report->activateTermAccounts();
@@ -2190,7 +2190,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (iData->getString() == wxT("Cash Flow - With Bank Accounts"))
         {
-            mmReportCashFlow* report = new mmReportCashFlow(m_core.get());
+            mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this);
 
             report->activateBankAccounts();
 
@@ -2200,7 +2200,7 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
  
         else if (iData->getString() == wxT("Cash Flow - With Term Accounts"))
         {
-            mmReportCashFlow* report = new mmReportCashFlow(m_core.get());
+            mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this);
 
             report->activateTermAccounts();
 
@@ -3440,7 +3440,7 @@ void mmGUIFrame::OnCashFlowSpecificAccounts()
         }
         
         // mmReportCashFlow is a mmPrintableBase
-        mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), selections);
+        mmReportCashFlow* report = new mmReportCashFlow(m_core.get(), this, selections);
 
         report->activateBankAccounts();
         if (this->hasActiveTermAccounts()) report->activateTermAccounts();
