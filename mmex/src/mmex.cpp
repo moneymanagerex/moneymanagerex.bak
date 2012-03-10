@@ -3547,6 +3547,18 @@ bool mmGUIFrame::IsUpdateAvailable(wxString page)
 
 void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
 {
+    // Set up system information
+    wxString versionDetails = wxString()
+        << wxT("MMEX: ")     << mmex::getProgramVersion()       << wxT("\n")
+        << _("System: ")     << wxPlatformInfo::Get().GetOperatingSystemIdName() << wxT("\n\n")
+        << wxVERSION_STRING  << wxT("\n")
+        << wxT("Boost C++ ") << (BOOST_VERSION/100000)          << wxT('.') 
+                             << (BOOST_VERSION / 100 % 1000)    << wxT('.') 
+                             << (BOOST_VERSION % 100)           << wxT("\n")
+        << wxT("SQLite3: ")  << wxSQLite3Database::GetVersion() << wxT("\n")
+        << wxT("wxSQLite3: 3.0.0 by Ulrich Telle")              << wxT("\n\n");
+
+    // Access current version details page
     wxString site = wxT("http://www.codelathe.com/mmex/version.html");
     wxURL url(site);
 
@@ -3554,7 +3566,8 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
     boost::scoped_ptr<wxInputStream> in_stream(url.GetInputStream());
     if (!in_stream)
     {
-        mmShowErrorMessage(this, _("Unable to connect!"), _("Check Update"));
+        versionDetails << _("Unable to connect!");
+        wxMessageBox(versionDetails, _("MMEX System Information Check"));
         return;
     }
     in_stream->Read(buf, 1024);
@@ -3588,17 +3601,7 @@ void mmGUIFrame::OnCheckUpdate(wxCommandEvent& /*event*/)
     page = mySysToken.GetNextToken();                       // the system
     page = mySysToken.GetNextToken().Trim(false).Trim();    // the version  
     
-    // Set up system information
-    wxString versionDetails = wxString()
-        << wxT("MMEX: ")     << mmex::getProgramVersion()       << wxT("\n")
-        << _("System: ")     << wxPlatformInfo::Get().GetOperatingSystemIdName() << wxT("\n\n")
-        << wxVERSION_STRING  << wxT("\n")
-        << wxT("Boost C++ ") << (BOOST_VERSION/100000)          << wxT('.') 
-                             << (BOOST_VERSION / 100 % 1000)    << wxT('.') 
-                             << (BOOST_VERSION % 100)           << wxT("\n")
-        << wxT("SQLite3: ")  << wxSQLite3Database::GetVersion() << wxT("\n")
-        << wxT("wxSQLite3: 3.0.0 by Ulrich Telle")              << wxT("\n\n");
-
+    // set up display information.
     int style = wxOK|wxCANCEL;
     if (IsUpdateAvailable(page))
     {
@@ -3804,7 +3807,10 @@ void mmGUIFrame::OnReportIssues(wxCommandEvent& /*event*/)
 
 void mmGUIFrame::OnBeNotified(wxCommandEvent& /*event*/)
 {
-    wxString url = wxT("http://groups.google.com/group/mmlist");
+    // New site location
+    //  wxString url = wxT("http://groups.google.com/group/mmlist");
+    wxString url = wxT("https://groups.google.com/forum/?fromgroups#!forum/mmlist");
+
     wxLaunchDefaultBrowser(url);
 }
 //----------------------------------------------------------------------------
