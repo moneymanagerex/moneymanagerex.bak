@@ -40,7 +40,7 @@ BEGIN_EVENT_TABLE(billsDepositsListCtrl, wxListCtrl)
     EVT_LIST_ITEM_ACTIVATED(ID_PANEL_BD_LISTCTRL,   billsDepositsListCtrl::OnListItemActivated)
     EVT_LIST_ITEM_RIGHT_CLICK(ID_PANEL_BD_LISTCTRL, billsDepositsListCtrl::OnItemRightClick)
     EVT_LIST_ITEM_SELECTED(ID_PANEL_BD_LISTCTRL,    billsDepositsListCtrl::OnListItemSelected)
-	EVT_LIST_ITEM_DESELECTED(ID_PANEL_BD_LISTCTRL,    billsDepositsListCtrl::OnListItemDeselected)
+    EVT_LIST_ITEM_DESELECTED(ID_PANEL_BD_LISTCTRL,    billsDepositsListCtrl::OnListItemDeselected)
         
     EVT_MENU(MENU_TREEPOPUP_NEW,              billsDepositsListCtrl::OnNewBDSeries)
     EVT_MENU(MENU_TREEPOPUP_EDIT,             billsDepositsListCtrl::OnEditBDSeries)
@@ -104,8 +104,8 @@ mmBillsDepositsPanel::~mmBillsDepositsPanel()
     col3 = listCtrlAccount_->GetColumnWidth(3);
     col4 = listCtrlAccount_->GetColumnWidth(4);
     col5 = listCtrlAccount_->GetColumnWidth(5);
-	col6 = listCtrlAccount_->GetColumnWidth(6);
-	col7 = listCtrlAccount_->GetColumnWidth(7);
+    col6 = listCtrlAccount_->GetColumnWidth(6);
+    col7 = listCtrlAccount_->GetColumnWidth(7);
 
     wxString col0Str = wxString::Format(wxT("%d"), col0);
     wxString col1Str = wxString::Format(wxT("%d"), col1);
@@ -113,8 +113,8 @@ mmBillsDepositsPanel::~mmBillsDepositsPanel()
     wxString col3Str = wxString::Format(wxT("%d"), col3);
     wxString col4Str = wxString::Format(wxT("%d"), col4);
     wxString col5Str = wxString::Format(wxT("%d"), col5);
-	wxString col6Str = wxString::Format(wxT("%d"), col6);
-	wxString col7Str = wxString::Format(wxT("%d"), col7);
+    wxString col6Str = wxString::Format(wxT("%d"), col6);
+    wxString col7Str = wxString::Format(wxT("%d"), col7);
 
     inidb_->Begin();
     mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL0_WIDTH"), col0Str); 
@@ -123,8 +123,8 @@ mmBillsDepositsPanel::~mmBillsDepositsPanel()
     mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL3_WIDTH"), col3Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL4_WIDTH"), col4Str); 
     mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL5_WIDTH"), col5Str); 
-	mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL6_WIDTH"), col6Str);
-	mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL7_WIDTH"), col7Str);
+    mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL6_WIDTH"), col6Str);
+    mmDBWrapper::setINISettingValue(inidb_, wxT("BD_COL7_WIDTH"), col7Str);
     inidb_->Commit();
 }
 
@@ -165,7 +165,7 @@ void mmBillsDepositsPanel::CreateControls()
     listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     listCtrlAccount_->InsertColumn(0, _("Payee"));
-	listCtrlAccount_->InsertColumn(1, _("Account"));
+    listCtrlAccount_->InsertColumn(1, _("Account"));
     listCtrlAccount_->InsertColumn(2, _("Type"));
     wxListItem itemCol;
     itemCol.SetImage(-1);
@@ -175,7 +175,7 @@ void mmBillsDepositsPanel::CreateControls()
     listCtrlAccount_->InsertColumn(4, _("Next Due Date"));
     listCtrlAccount_->InsertColumn(5, _("Frequency"));
     listCtrlAccount_->InsertColumn(6, _("Remaining Days"));
-	listCtrlAccount_->InsertColumn(7, _("Notes"));
+    listCtrlAccount_->InsertColumn(7, _("Notes"));
     
     /* See if we can get data from inidb */
     long col0, col1, col2, col3, col4, col5, col6, col7;
@@ -185,7 +185,7 @@ void mmBillsDepositsPanel::CreateControls()
     mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL3_WIDTH"), wxT("-2")).ToLong(&col3); 
     mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL4_WIDTH"), wxT("-2")).ToLong(&col4); 
     mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL5_WIDTH"), wxT("-2")).ToLong(&col5); 
-	mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL6_WIDTH"), wxT("-2")).ToLong(&col6); 
+    mmDBWrapper::getINISettingValue(inidb_, wxT("BD_COL6_WIDTH"), wxT("-2")).ToLong(&col6); 
     mmDBWrapper::getINISettingValue(inidb_,  wxT("BD_COL7_WIDTH"), wxT("-2")).ToLong(&col7);
      
      
@@ -195,8 +195,8 @@ void mmBillsDepositsPanel::CreateControls()
     listCtrlAccount_->SetColumnWidth(3, col3);
     listCtrlAccount_->SetColumnWidth(4, col4);
     listCtrlAccount_->SetColumnWidth(5, col5);
-	listCtrlAccount_->SetColumnWidth(6, col6);
-	listCtrlAccount_->SetColumnWidth(7, col7);
+    listCtrlAccount_->SetColumnWidth(6, col6);
+    listCtrlAccount_->SetColumnWidth(7, col7);
     
     wxPanel* itemPanel12 = new wxPanel( itemSplitterWindowBillsDeposit, ID_PANEL1, 
         wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
@@ -220,18 +220,18 @@ void mmBillsDepositsPanel::CreateControls()
     wxButton* itemButton81 = new wxButton( itemPanel12, wxID_EDIT, _("&Edit"));
     itemButton81->SetToolTip(_("Edit Bills & Deposit Series"));
     itemBoxSizer5->Add(itemButton81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
-	itemButton81->Enable(false);
-	
+    itemButton81->Enable(false);
+    
     wxButton* itemButton7 = new wxButton( itemPanel12, wxID_DELETE, _("&Delete"));
     itemButton7->SetToolTip(_("Delete Bills & Deposit Series"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
-	itemButton7->Enable(false);
-	
+    itemButton7->Enable(false);
+    
     wxButton* itemButton8 = new wxButton( itemPanel12, wxID_PASTE, _("En&ter"), 
         wxDefaultPosition, wxDefaultSize, 0 );
     itemButton8->SetToolTip(_("Enter Next Bills & Deposit Occurrence"));
     itemBoxSizer5->Add(itemButton8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
-	itemButton8->Enable(false);
+    itemButton8->Enable(false);
 
     wxButton* buttonSkipTrans = new wxButton( itemPanel12, wxID_IGNORE, _("&Skip"));
     buttonSkipTrans->SetToolTip(_("Skip Next Bills & Deposit Occurrence"));
@@ -296,14 +296,14 @@ void mmBillsDepositsPanel::initVirtualListControl()
         th.transType_      = q1.GetString(wxT("TRANSCODE"));
         th.accountID_      = q1.GetInt(wxT("ACCOUNTID"));
         th.toAccountID_    = q1.GetInt(wxT("TOACCOUNTID"));
-		th.accountName_    = core_->getAccountName(th.accountID_);
+        th.accountName_    = core_->getAccountName(th.accountID_);
         th.amt_            = q1.GetDouble(wxT("TRANSAMOUNT"));
         th.toAmt_          = q1.GetDouble(wxT("TOTRANSAMOUNT"));
-		th.notes_	       = q1.GetString(wxT("NOTES"));
-		th.categID_		   = q1.GetInt(wxT("CATEGID"));
-		th.categoryStr_	   = q1.GetString(wxT("CATEGNAME"));
-		th.subcategID_	   = q1.GetInt(wxT("SUBCATEGID"));
-		th.subcategoryStr_ = q1.GetString(wxT("SUBCATEGNAME"));
+        th.notes_           = q1.GetString(wxT("NOTES"));
+        th.categID_           = q1.GetInt(wxT("CATEGID"));
+        th.categoryStr_       = q1.GetString(wxT("CATEGNAME"));
+        th.subcategID_       = q1.GetInt(wxT("SUBCATEGID"));
+        th.subcategoryStr_ = q1.GetString(wxT("SUBCATEGNAME"));
 
         int numRepeats     = q1.GetInt(wxT("NUMOCCURRENCES"));
 
@@ -477,7 +477,7 @@ void billsDepositsListCtrl::OnItemRightClick(wxListEvent& event)
 wxString mmBillsDepositsPanel::getItem(long item, long column)
 {
     if (column == 0) return trans_[item].payeeStr_;
-	if (column == 1) return trans_[item].accountName_;
+    if (column == 1) return trans_[item].accountName_;
 
     if (column == 2)
     {
@@ -490,7 +490,7 @@ wxString mmBillsDepositsPanel::getItem(long item, long column)
     if (column == 4) return trans_[item].nextOccurStr_;
     if (column == 5) return trans_[item].repeatsStr_;
     if (column == 6) return trans_[item].daysRemainingStr_;
-	if (column == 7) return trans_[item].notes_;
+    if (column == 7) return trans_[item].notes_;
 
     return wxT("");
 }
@@ -503,7 +503,7 @@ wxString billsDepositsListCtrl::OnGetItemText(long item, long column) const
 void billsDepositsListCtrl::OnListItemSelected(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
-	cp_->updateBottomPanelData(selectedIndex_);
+    cp_->updateBottomPanelData(selectedIndex_);
 }
 
 void billsDepositsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
@@ -515,14 +515,10 @@ void billsDepositsListCtrl::OnListItemDeselected(wxListEvent& /*event*/)
 int billsDepositsListCtrl::OnGetItemImage(long item) const
 {
     /* Returns the icon to be shown for each entry */
-    if (cp_->trans_[item].daysRemainingStr_ == _("Inactive"))
-        return -1;
-    if (cp_->trans_[item].daysRemaining_ < 0)
-        return 0;
-    if (cp_->trans_[item].bd_repeat_auto_)
-        return 1;
-    if (cp_->trans_[item].bd_repeat_user_)
-        return 2;
+    if (cp_->trans_[item].daysRemainingStr_ == _("Inactive")) return -1;
+    if (cp_->trans_[item].daysRemaining_ < 0) return 0;
+    if (cp_->trans_[item].bd_repeat_auto_) return 1;
+    if (cp_->trans_[item].bd_repeat_user_) return 2;
 
     return -1;
 }
@@ -562,11 +558,8 @@ void billsDepositsListCtrl::OnNewBDSeries(wxCommandEvent& /*event*/)
 
 void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& /*event*/)
 {
-    if (selectedIndex_ == -1)
-        return;
-
-    if (!cp_->db_)
-        return;
+    if (selectedIndex_ == -1) return;
+    if (!cp_->db_) return;
 
     mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this );
     if ( dlg.ShowModal() == wxID_OK )
@@ -578,14 +571,9 @@ void billsDepositsListCtrl::OnEditBDSeries(wxCommandEvent& /*event*/)
 
 void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& /*event*/)
 {
-    if (selectedIndex_ == -1)
-        return;
-
-    if (!cp_->db_)
-        return;
-
-    if (cp_->trans_.size() == 0)
-        return;
+    if (selectedIndex_ == -1) return;
+    if (!cp_->db_) return;
+    if (cp_->trans_.size() == 0) return;
 
     wxMessageDialog msgDlg(this, _("Do you really want to delete the series?"),
                                         _("Confirm Series Deletion"),
@@ -605,11 +593,8 @@ void billsDepositsListCtrl::OnDeleteBDSeries(wxCommandEvent& /*event*/)
 
 void billsDepositsListCtrl::OnEnterBDTransaction(wxCommandEvent& /*event*/)
 {
-    if (selectedIndex_ == -1)
-        return;
-
-    if (!cp_->db_)
-        return;
+    if (selectedIndex_ == -1) return;
+    if (!cp_->db_) return;
 
     mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, false, true, this );
     if ( dlg.ShowModal() == wxID_OK )
@@ -621,8 +606,7 @@ void billsDepositsListCtrl::OnEnterBDTransaction(wxCommandEvent& /*event*/)
 
 void billsDepositsListCtrl::OnSkipBDTransaction(wxCommandEvent& /*event*/)
 {
-    if (selectedIndex_ == -1 || !cp_->db_)
-        return;
+    if (selectedIndex_ == -1 || !cp_->db_) return;
 
     mmDBWrapper::completeBDInSeries(cp_->db_, cp_->trans_[selectedIndex_].id_);
     cp_->initVirtualListControl();
@@ -633,11 +617,8 @@ void billsDepositsListCtrl::OnListItemActivated(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
 
-    if (selectedIndex_ == -1)
-        return;
-
-    if (!cp_->db_)
-        return;
+    if (selectedIndex_ == -1) return;
+    if (!cp_->db_) return;
 
     mmBDDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, false, this );
     if ( dlg.ShowModal() == wxID_OK )
@@ -669,12 +650,12 @@ void mmBillsDepositsPanel::updateBottomPanelData(int selIndex)
 
 void mmBillsDepositsPanel::enableEditDeleteButtons(bool en)
 {
-	wxButton* bE = (wxButton*)FindWindow(wxID_EDIT);
-	wxButton* bD = (wxButton*)FindWindow(wxID_DELETE);
-	wxButton* bN = (wxButton*)FindWindow(wxID_PASTE);
-	wxButton* bS = (wxButton*)FindWindow(wxID_IGNORE);
-	bE->Enable(en);
-	bD->Enable(en);
-	bN->Enable(en);
-	bS->Enable(en);
+    wxButton* bE = (wxButton*)FindWindow(wxID_EDIT);
+    wxButton* bD = (wxButton*)FindWindow(wxID_DELETE);
+    wxButton* bN = (wxButton*)FindWindow(wxID_PASTE);
+    wxButton* bS = (wxButton*)FindWindow(wxID_IGNORE);
+    bE->Enable(en);
+    bD->Enable(en);
+    bN->Enable(en);
+    bS->Enable(en);
 }
