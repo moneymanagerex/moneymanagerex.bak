@@ -324,9 +324,9 @@ void mmCategDialog::OnDoubleClicked(wxTreeEvent& /*event*/)
         categID_ = iData->getCategID();
         subcategID_ = iData->getSubCategID();
         EndModal(wxID_OK);
-	}
-	else 
-	    return;
+    }
+    else 
+        return;
 }
 
 void mmCategDialog::OnCancel(wxCommandEvent& /*event*/)
