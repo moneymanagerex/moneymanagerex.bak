@@ -99,13 +99,13 @@ void mmCustomSQLDialog::CreateControls()
     wxBoxSizer* centerHorizontalBoxSizer = new wxBoxSizer(wxHORIZONTAL);
     mainBoxSizer->Add(centerHorizontalBoxSizer, 1, wxGROW|wxALL, 5);
 
-	wxPanel* centerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxPanel* centerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     centerHorizontalBoxSizer->Add(centerPanel, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 1);
 
     wxBoxSizer* centerVerticalBoxSizer = new wxBoxSizer(wxVERTICAL);
     centerPanel->SetSizer(centerVerticalBoxSizer);
 
-	// ListBox for source code
+    // ListBox for source code
     sqlSourceTxtCtrl_ = new wxTextCtrl( this, DIALOG_CUSTOM_SQL_TXTCTRL_SOURCE, _T(""), wxDefaultPosition, wxSize(-1, sourceTextHeight), wxTE_MULTILINE );
     centerHorizontalBoxSizer->Add(sqlSourceTxtCtrl_, 1, wxGROW|wxALL, 1);
 
@@ -290,9 +290,9 @@ void mmCustomSQLDialog::OnRun(wxCommandEvent& /*event*/)
    wxString lower = sqlSourceTxtCtrl_->GetValue().Lower();
    if ((lower.Find(wxT("update")) != wxNOT_FOUND) || (lower.Find(wxT("delete")) != wxNOT_FOUND) || (lower.Find(wxT("insert")) != wxNOT_FOUND))
    {
-		wxMessageDialog msgDlg(this, _("SQL Query will modify your Data. Proceed??"), _("Warning"), wxYES_NO);
+        wxMessageDialog msgDlg(this, _("SQL Query will modify your Data. Proceed??"), _("Warning"), wxYES_NO);
         if (msgDlg.ShowModal() == wxID_YES)
-		{
+        {
             sqlQuery_ = sqlSourceTxtCtrl_->GetValue();
             EndModal(wxID_MORE);
         }
