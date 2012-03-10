@@ -260,8 +260,8 @@ void mmBudgetEntryDialog::OnOk(wxCommandEvent& /*event*/)
 
     if (period == wxT("None"))
         amt = 0.0;
-	
-	if (amt == 0.0)
+    
+    if (amt == 0.0)
         period = wxT("None");
 
     if (typeSelection == DEF_TYPE_EXPENSE)
