@@ -21,7 +21,7 @@
 #include "htmlbuilder.h"
 
 mmReportBudget::mmReportBudget(mmGUIFrame* mainFrame, mmCoreDB* core)
-    : mainFrame_(mainFrame), mmPrintableBase(core)
+    : mmPrintableBase(core), mainFrame_(mainFrame)
 {}
 
 /**************************************************************************************
@@ -171,14 +171,14 @@ void mmReportBudget::AdjustYearValues(int& day, int& month, wxDateTime& year)
     if ( mainFrame_->budgetFinancialYears() ) {
         GetFinancialYearValues(day, month);
         SetDateToEndOfYear(day, month, year, false);
-	}
+    }
 }
 
 void mmReportBudget::AdjustDateForEndFinancialYear(wxDateTime& date)
 {
     if ( mainFrame_->budgetFinancialYears() ) 
     {
-		int day, month;
+        int day, month;
         GetFinancialYearValues(day, month);
         SetDateToEndOfYear(day, month, date);
     }
