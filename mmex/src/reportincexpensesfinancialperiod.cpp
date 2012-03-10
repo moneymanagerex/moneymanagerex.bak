@@ -35,8 +35,8 @@
 #include "reportbudget.h"
 
 mmReportIncExpensesOverFinancialPeriod::mmReportIncExpensesOverFinancialPeriod(mmGUIFrame* frame, mmCoreDB* core, int year):
-    frame_(frame),
     mmPrintableBase(core),
+    frame_(frame),
     year_(year),
     printYear_(year)
 {
