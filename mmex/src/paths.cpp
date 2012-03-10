@@ -30,28 +30,28 @@ namespace
 
 inline const wxChar* getSettingsFileName()
 {
-        return wxT("mmexini.db3");
+    return wxT("mmexini.db3");
 }
 //----------------------------------------------------------------------------
 
 inline const wxChar* getCustomReportIndexFilename()
 {
-        return wxT("CustomSQLReportIndex.txt");
+    return wxT("CustomSQLReportIndex.txt");
 }
 //----------------------------------------------------------------------------
 
 inline const wxChar* getDirectory()
 {
-        return wxT("");
+    return wxT("");
 }
 //----------------------------------------------------------------------------
 
 wxFileName getSettingsPathPortable()
 {
-        wxFileName f = mmex::GetSharedDir();
-        f.SetFullName(getSettingsFileName());
+    wxFileName f = mmex::GetSharedDir();
+    f.SetFullName(getSettingsFileName());
 
-        return f;
+    return f;
 }
 
 } // namespace 
@@ -71,132 +71,134 @@ wxFileName getSettingsPathPortable()
 */
 wxFileName mmex::GetUserDir(bool create)
 {
-        static wxFileName fname;
+    static wxFileName fname;
 
-        if (!fname.IsOk()) {
-                
-                fname = getSettingsPathPortable();
+    if (!fname.IsOk()) 
+    {
+        fname = getSettingsPathPortable();
 
-                bool ok_portable = fname.IsFileWritable() && fname.IsFileReadable();
+        bool ok_portable = fname.IsFileWritable() && fname.IsFileReadable();
 
-                if (!ok_portable) {
-                
-                        fname.AssignDir(wxStandardPaths::Get().GetUserDataDir());
+        if (!ok_portable) 
+        {
+            fname.AssignDir(wxStandardPaths::Get().GetUserDataDir());
 
-                        if (create && !fname.DirExists()) {
-                                bool ok = fname.Mkdir(0700, wxPATH_MKDIR_FULL); // 0700 - octal, "111 000 000"
-                                wxASSERT(ok);
-                        }
-                }
-
-                fname.SetFullName(wxGetEmptyString());
+            if (create && !fname.DirExists()) 
+            {
+                bool ok = fname.Mkdir(0700, wxPATH_MKDIR_FULL); // 0700 - octal, "111 000 000"
+                wxASSERT(ok);
+            }
         }
 
-        return fname;
+        fname.SetFullName(wxGetEmptyString());
+    }
+
+    return fname;
 }
 //----------------------------------------------------------------------------
 
 wxFileName mmex::GetLogDir(bool create)
 {
-        static wxFileName fname;
+    static wxFileName fname;
 
-        if (!fname.IsOk()) {
-                fname = GetUserDir(create);
-                //FIXME: file not found ERROR
-                //fname.AppendDir(wxT("logs"));
-        }
-        
-        return fname;
+    if (!fname.IsOk()) 
+    {
+        fname = GetUserDir(create);
+        //FIXME: file not found ERROR
+        //fname.AppendDir(wxT("logs"));
+    }
+    
+    return fname;
 }
 //----------------------------------------------------------------------------
 
 bool mmex::isPortableMode()
 {
-        wxFileName f = getSettingsPathPortable();
-        return f.GetFullPath() == getPathUser(SETTINGS);
+    wxFileName f = getSettingsPathPortable();
+    return f.GetFullPath() == getPathUser(SETTINGS);
 }
 //----------------------------------------------------------------------------
 
 wxString mmex::getPathDoc(EDocFile f)
 {
-        static const wxChar* files[DOC_FILES_MAX] = { 
-          wxT("README.TXT"),
-          wxT("contrib.txt"),
-          wxT("license.txt"),
-          wxT("version.txt"),
-          wxT("help/index.html"),
-          wxT("help/custom_sql_reports.html"),
-          wxT("help/investment.html"),
-          wxT("help/budget.html"),
-        };
+    static const wxChar* files[DOC_FILES_MAX] = { 
+      wxT("README.TXT"),
+      wxT("contrib.txt"),
+      wxT("license.txt"),
+      wxT("version.txt"),
+      wxT("help/index.html"),
+      wxT("help/custom_sql_reports.html"),
+      wxT("help/investment.html"),
+      wxT("help/budget.html"),
+    };
 
-        wxASSERT(f >= 0 && f < DOC_FILES_MAX);
-        wxASSERT(files[f]);
+    wxASSERT(f >= 0 && f < DOC_FILES_MAX);
+    wxASSERT(files[f]);
 
-        wxString path = GetDocDir().GetPath();
-        path += wxFileName::GetPathSeparator();
-        path += files[f];
+    wxString path = GetDocDir().GetPath();
+    path += wxFileName::GetPathSeparator();
+    path += files[f];
 
-        return path;
+    return path;
 }
 //----------------------------------------------------------------------------
 
 wxString mmex::getPathResource(EResFile f)
 {
-        static const wxChar* files[RES_FILES_MAX] = { 
-          wxT("mmex.ico"),
-          wxT("splash.png"),
-          wxT("kaching.wav"),
-          wxT("currency_seed.db3")
-        };
+    static const wxChar* files[RES_FILES_MAX] = { 
+      wxT("mmex.ico"),
+      wxT("splash.png"),
+      wxT("kaching.wav"),
+      wxT("currency_seed.db3")
+    };
 
-        wxASSERT(f >= 0 && f < RES_FILES_MAX);
-        wxASSERT(files[f]);
+    wxASSERT(f >= 0 && f < RES_FILES_MAX);
+    wxASSERT(files[f]);
 
-        wxFileName fname = GetResourceDir();
-        fname.SetFullName(files[f]);
+    wxFileName fname = GetResourceDir();
+    fname.SetFullName(files[f]);
 
-        return fname.GetFullPath();
+    return fname.GetFullPath();
 }
 //----------------------------------------------------------------------------
 
 wxString mmex::getPathShared(ESharedFile f)
 {
-        static const wxChar* files[SHARED_FILES_MAX] = { 
-          wxT("po")
-        };
+    static const wxChar* files[SHARED_FILES_MAX] = { 
+      wxT("po")
+    };
 
-        wxASSERT(f >= 0 && f < SHARED_FILES_MAX);
-        wxASSERT(files[f]);
+    wxASSERT(f >= 0 && f < SHARED_FILES_MAX);
+    wxASSERT(files[f]);
 
-        wxFileName fname = GetSharedDir();
-        fname.SetFullName(files[f]);
+    wxFileName fname = GetSharedDir();
+    fname.SetFullName(files[f]);
 
-        return fname.GetFullPath();
+    return fname.GetFullPath();
 }
 //----------------------------------------------------------------------------
 
 wxString mmex::getPathUser(EUserFile f)
 {
-        static const wxChar* files[USER_FILES_MAX] = { 
-          getSettingsFileName(),
-          getCustomReportIndexFilename(),
-          getDirectory()
-        };
+    static const wxChar* files[USER_FILES_MAX] = { 
+      getSettingsFileName(),
+      getCustomReportIndexFilename(),
+      getDirectory()
+    };
 
-        wxASSERT(f >= 0 && f < USER_FILES_MAX);
-        wxASSERT(files[f]);
+    wxASSERT(f >= 0 && f < USER_FILES_MAX);
+    wxASSERT(files[f]);
 
-        wxFileName fname = GetUserDir(true);
-        fname.SetFullName(files[f]);
+    wxFileName fname = GetUserDir(true);
+    fname.SetFullName(files[f]);
 
-        return fname.GetFullPath();
+    return fname.GetFullPath();
 }
 //----------------------------------------------------------------------------
 
 const wxIcon& mmex::getProgramIcon()
 {
-        static wxIcon icon(getPathResource(PROGRAM_ICON), wxBITMAP_TYPE_ICO, 32, 32);
-        return icon;
+    static wxIcon icon(getPathResource(PROGRAM_ICON), wxBITMAP_TYPE_ICO, 32, 32);
+    return icon;
 }
 //----------------------------------------------------------------------------
