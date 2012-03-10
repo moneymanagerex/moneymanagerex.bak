@@ -1678,9 +1678,12 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
         }
         else if (iData->getString() == wxT("Categories - Over Time"))
         {
+            wxProgressDialog proDlg(_("Category Report"), _("Category Report being generated... Please wait."), 100, this);
             mmPrintableBase* rs = new mmReportCategoryOverTimePerformance(m_core.get());
+            proDlg.Update(70);
             menuPrintingEnable(true);
             createReportsPage(rs);
+            proDlg.Update(95);
         }
         else if (iData->getString() == wxT("Categories - Month"))
         {
