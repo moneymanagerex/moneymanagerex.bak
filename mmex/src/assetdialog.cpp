@@ -29,7 +29,8 @@ namespace
 enum { DEF_CHANGE_NONE, DEF_CHANGE_APPRECIATE, DEF_CHANGE_DEPRECIATE };
 enum { DEF_ASSET_PROPERTY, DEF_ASSET_AUTO, DEF_ASSET_HOUSE, DEF_ASSET_ART, DEF_ASSET_JEWELLERY, DEF_ASSET_CASH, DEF_ASSET_OTHER };
 
-enum { 
+enum 
+{ 
   IDC_COMBO_TYPE = wxID_HIGHEST + 1,
   IDC_NOTES,
 };
@@ -48,24 +49,22 @@ END_EVENT_TABLE()
 
 
 mmAssetDialog::mmAssetDialog(wxWindow* parent, wxSQLite3Database* db, int assetID, bool edit) :
-	m_db(db),
-	m_assetID(assetID),
-	m_edit(edit)
+    m_db(db),
+    m_assetID(assetID),
+    m_edit(edit)
 {
-	long style = wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX;
+    long style = wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX;
 
-	if (Create(parent, wxID_ANY, _("New/Edit Asset"), wxDefaultPosition, wxSize(400, 300), style)) {
-		mmDBWrapper::loadBaseCurrencySettings(m_db);
-	}
+    if (Create(parent, wxID_ANY, _("New/Edit Asset"), wxDefaultPosition, wxSize(400, 300), style))
+        mmDBWrapper::loadBaseCurrencySettings(m_db);
 }
 
 bool mmAssetDialog::Create(wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style)
 {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
 
-    if (!wxDialog::Create(parent, id, caption, pos, size, style)) {
-    	return false;
-    }
+    if (!wxDialog::Create(parent, id, caption, pos, size, style)) 
+        return false;
 
     CreateControls();
     GetSizer()->Fit(this);
@@ -75,12 +74,10 @@ bool mmAssetDialog::Create(wxWindow* parent, wxWindowID id, const wxString& capt
     
     fillControls();
 
-    if (m_edit) {
+    if (m_edit)
         dataToControls();
-    } else {   
-	enableDisableRate(false);
-    }
-
+    else   
+        enableDisableRate(false);
 
     Centre();
     return true;
@@ -113,9 +110,9 @@ void mmAssetDialog::dataToControls()
         wxString dt = mmGetDateForDisplay(m_db, dtdt);
         m_dpc->SetValue(dtdt);
 
-		wxString value;
-		mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUE")), value);
-		m_value->SetValue(value);
+        wxString value;
+        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUE")), value);
+        m_value->SetValue(value);
 
         wxString valueChangeRate;
         valueChangeRate.Printf(wxT("%.3f"), q1.GetDouble(wxT("VALUECHANGERATE")));
@@ -123,26 +120,26 @@ void mmAssetDialog::dataToControls()
     
         wxString valueChangeTypeStr = q1.GetString(wxT("VALUECHANGE"));
         if (valueChangeTypeStr == wxT("None"))
-		{
+        {
             m_valueChange->SetSelection(DEF_CHANGE_NONE);
-			enableDisableRate(false);
-		}
+            enableDisableRate(false);
+        }
         else if (valueChangeTypeStr == wxT("Appreciates"))
-		{
-			m_valueChange->SetSelection(DEF_CHANGE_APPRECIATE);
-			enableDisableRate(true);
-		}
+        {
+            m_valueChange->SetSelection(DEF_CHANGE_APPRECIATE);
+            enableDisableRate(true);
+        }
         else if (valueChangeTypeStr == wxT("Depreciates"))
 
-		{
+        {
             m_valueChange->SetSelection(DEF_CHANGE_DEPRECIATE);
-			enableDisableRate(true);
-		}
+            enableDisableRate(true);
+        }
         else
-		{
+        {
             wxASSERT(false);
-		}
-		
+        }
+        
          wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
          if (assetTypeStr == wxT("Property"))
             m_assetType->SetSelection(DEF_ASSET_PROPERTY);
@@ -152,10 +149,10 @@ void mmAssetDialog::dataToControls()
             m_assetType->SetSelection(DEF_ASSET_HOUSE);
          else if (assetTypeStr == wxT("Art"))
             m_assetType->SetSelection(DEF_ASSET_ART);
-		 else if (assetTypeStr == wxT("Jewellery"))
-			 m_assetType->SetSelection(DEF_ASSET_JEWELLERY);
-		 else if (assetTypeStr == wxT("Cash"))
-			 m_assetType->SetSelection(DEF_ASSET_CASH);
+         else if (assetTypeStr == wxT("Jewellery"))
+             m_assetType->SetSelection(DEF_ASSET_JEWELLERY);
+         else if (assetTypeStr == wxT("Cash"))
+             m_assetType->SetSelection(DEF_ASSET_CASH);
          else if (assetTypeStr == wxT("Other"))
             m_assetType->SetSelection(DEF_ASSET_OTHER);
 
@@ -218,7 +215,7 @@ void mmAssetDialog::CreateControls()
         _("Household Object"),
         _("Art"),
         _("Jewellery"),
-		_("Cash"),
+        _("Cash"),
         _("Other"),
     };
     m_assetType = new wxChoice( itemPanel5, wxID_ANY, wxDefaultPosition, wxSize(150,-1), 7, itemAssetTypeStrings, 0 );
@@ -285,26 +282,26 @@ void mmAssetDialog::CreateControls()
 
 void mmAssetDialog::OnChangeAppreciationType(wxCommandEvent& /*event*/)
 {
-	int selection = m_valueChange->GetSelection();
-	// Disable for "None", Enable for "Appreciates" or "Depreciates"
-	enableDisableRate(selection != DEF_CHANGE_NONE);
+    int selection = m_valueChange->GetSelection();
+    // Disable for "None", Enable for "Appreciates" or "Depreciates"
+    enableDisableRate(selection != DEF_CHANGE_NONE);
 }
 
 void mmAssetDialog::enableDisableRate(bool en)
 {
-	if (en)
-	{
-		m_valueChangeRate->SetEditable(true);
-		m_valueChangeRate->Enable(true);
-		m_valueChangeRateLabel->Enable(true);
-	}
-	else 
-	{
-		//m_valueChangeRate->SetValue(wxT("0"));
-		m_valueChangeRate->SetEditable(false);
-		m_valueChangeRate->Enable(false);
-		m_valueChangeRateLabel->Enable(false);
-	}
+    if (en)
+    {
+        m_valueChangeRate->SetEditable(true);
+        m_valueChangeRate->Enable(true);
+        m_valueChangeRateLabel->Enable(true);
+    }
+    else 
+    {
+        //m_valueChangeRate->SetValue(wxT("0"));
+        m_valueChangeRate->SetEditable(false);
+        m_valueChangeRate->Enable(false);
+        m_valueChangeRateLabel->Enable(false);
+    }
 }
 
 void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
@@ -320,7 +317,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         return;
     }
     double value = 0;
-	if (!mmex::formatCurrencyToDouble(valueStr, value) || (value < 0.0))
+    if (!mmex::formatCurrencyToDouble(valueStr, value) || (value < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid Value "), _("Error"));
         return;
@@ -347,8 +344,8 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     if(valueChangeRateStr.ToDouble(&valueChangeRate) == false) {
         valueChangeRate = -1.0;
     }
-	//This should be unnecessary with hidden controls
-	if ((valueChangeType != DEF_CHANGE_NONE) && (valueChangeRate < 0.0))
+    //This should be unnecessary with hidden controls
+    if ((valueChangeType != DEF_CHANGE_NONE) && (valueChangeRate < 0.0))
     {
         mmShowErrorMessage(this, _("Invalid Value "), _("Error"));
         return;
@@ -364,10 +361,10 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         assetTypeStr = wxT("Household Object");
     else if (assetType == DEF_ASSET_ART)
         assetTypeStr = wxT("Art");
-	else if (assetType == DEF_ASSET_JEWELLERY)
-		assetTypeStr = wxT("Jewellery");
-	else if (assetType == DEF_ASSET_CASH)
-		assetTypeStr = wxT("Cash");
+    else if (assetType == DEF_ASSET_JEWELLERY)
+        assetTypeStr = wxT("Jewellery");
+    else if (assetType == DEF_ASSET_CASH)
+        assetTypeStr = wxT("Cash");
     else if (assetType == DEF_ASSET_OTHER)
         assetTypeStr = wxT("Other");
     else
@@ -429,18 +426,15 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
 
 void mmAssetDialog::OnCancel(wxCommandEvent& /*event*/)
 {
-    if (assetRichText){
-		return;
-	} else {
-		EndModal(wxID_CANCEL);
-    }
+    if (assetRichText)
+        return;
+    else 
+        EndModal(wxID_CANCEL);
 }
 
 void mmAssetDialog::changeFocus(wxChildFocusEvent& event)
 {
-	wxWindow *w = event.GetWindow();
-	if ( w ) 
-	{
-		assetRichText = (w->GetId() == IDC_NOTES ? true : false);	
-	}
+    wxWindow *w = event.GetWindow();
+    if ( w ) 
+        assetRichText = (w->GetId() == IDC_NOTES ? true : false);    
 }
