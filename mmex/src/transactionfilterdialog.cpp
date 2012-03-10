@@ -163,7 +163,7 @@ void TransFilterDialog::CreateControls()
     choiceStatusStrings.Add(_("Duplicate"));
 
     choiceStatus_ = new wxChoice( itemPanel, wxID_ANY, wxDefaultPosition, wxSize(fieldWidth,-1), choiceStatusStrings);
-	choiceStatus_->SetSelection(mmIniOptions::instance().transStatusReconciled_);
+    choiceStatus_->SetSelection(mmIniOptions::instance().transStatusReconciled_);
     choiceStatus_->SetToolTip(_("Specify the status for the transaction"));
 
     itemPanelSizer->Add(cbStatus_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -444,11 +444,11 @@ bool TransFilterDialog::byType(wxString type)
 
         if (type == transCodeStr )
             result = true;
-	}
+    }
     else
         result = true;
 
-	return result; 
+    return result; 
 }
 
 bool TransFilterDialog::searchResult( wxCheckBox* chkBox, wxTextCtrl* txtCtrl, wxString sourceStr)
