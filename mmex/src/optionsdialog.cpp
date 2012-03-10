@@ -286,7 +286,8 @@ void mmOptionsDialog::CreateControls()
     
     currentLanguage_ = mmDBWrapper::getINISettingValue(inidb_, LANGUAGE_PARAMETER);
     wxButton* languageButton = new wxButton(generalPanel, ID_DIALOG_OPTIONS_BUTTON_LANGUAGE,
-        currentLanguage_, wxDefaultPosition, wxSize(150, -1), 0);
+        currentLanguage_.Left(1).Upper() + currentLanguage_.SubString(1,currentLanguage_.Len()),
+        wxDefaultPosition, wxSize(150, -1), 0);
     languageButton->SetToolTip(_("Specify the language to use"));
     languageStaticBoxSizer->Add(languageButton, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
@@ -859,7 +860,7 @@ void mmOptionsDialog::OnLanguageChanged(wxCommandEvent& /*event*/)
 
     wxButton *btn = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
     wxASSERT(btn);
-    btn->SetLabel(lang);
+    btn->SetLabel(lang.Left(1).Upper() + lang.SubString(1,lang.Len()));
 }
 
 void mmOptionsDialog::OnCurrency(wxCommandEvent& /*event*/)
@@ -1196,7 +1197,7 @@ void mmOptionsDialog::SaveGeneralPanelSettings()
     mmDBWrapper::setInfoSettingValue(db_, wxT("USERNAME"), mmIniOptions::instance().userNameString_); 
 
     wxButton *languageButton = (wxButton*)FindWindow(ID_DIALOG_OPTIONS_BUTTON_LANGUAGE);
-    mmDBWrapper::setINISettingValue(inidb_, LANGUAGE_PARAMETER, languageButton->GetLabel());
+    mmDBWrapper::setINISettingValue(inidb_, LANGUAGE_PARAMETER, languageButton->GetLabel().Lower());
     mmSelectLanguage(0, inidb_, false);
 
     mmDBWrapper::setBaseCurrencySettings(db_, currencyId_);
