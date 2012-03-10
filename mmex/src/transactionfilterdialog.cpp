@@ -135,7 +135,7 @@ void TransFilterDialog::CreateControls()
     cbSplitCategory_ = new wxCheckBox( itemPanel, ID_DIALOG_TRANSFILTER_CB_CATEGORY, _("Split Category"), 
                                   wxDefaultPosition, wxDefaultSize, wxCHK_2STATE );
     cbSplitCategory_->SetValue(FALSE);
-    cbSplitCategory_->SetToolTip(_("Filter Split categories. Inclue the category for further filtering."));
+    cbSplitCategory_->SetToolTip(_("Filter Split categories. Include the category for further filtering."));
     itemPanelSizer->AddSpacer(20);
     itemPanelSizer->Add(cbSplitCategory_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     //--End of Row --------------------------------------------------------
