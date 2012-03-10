@@ -150,7 +150,7 @@ wxString mmOptionsDialog::DisplayDate2FormatDate(wxString strDate)
     wxArrayString DateFormat = DateFormats();
     wxArrayString itemChoice7Strings = itemChoiceStrings();
 
-    for(int i=0; i<DateFormat.Count(); i++)
+    for(size_t i=0; i<DateFormat.Count(); i++)
     {
         if(strDate == itemChoice7Strings[i])
             return DateFormat[i];
@@ -164,7 +164,7 @@ wxString mmOptionsDialog::FormatDate2DisplayDate(wxString strDate)
     wxArrayString DateFormat = DateFormats();
     wxArrayString itemChoice7Strings = itemChoiceStrings();
 
-    for(int i=0; i<DateFormat.Count(); i++)
+    for(size_t i=0; i<DateFormat.Count(); i++)
     {
         if(strDate == DateFormat[i])
             return itemChoice7Strings[i];
