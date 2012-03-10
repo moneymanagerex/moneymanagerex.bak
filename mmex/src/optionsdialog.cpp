@@ -202,27 +202,27 @@ wxArrayString mmOptionsDialog::DateFormats() {
 
 wxArrayString mmOptionsDialog::itemChoiceStrings() {
 
-	wxArrayString itemChoice7Strings;
-	
-	itemChoice7Strings.Add(wxT("DD/MM/YY"));
-	itemChoice7Strings.Add(wxT("DD/MM/YYYY"));
-	itemChoice7Strings.Add(wxT("DD-MM-YY"));
-	itemChoice7Strings.Add(wxT("DD-MM-YYYY"));
-	itemChoice7Strings.Add(wxT("DD.MM.YY"));
-	itemChoice7Strings.Add(wxT("DD.MM.YYYY"));
-	itemChoice7Strings.Add(wxT("DD,MM,YY"));
-	itemChoice7Strings.Add(wxT("DD/MM YYYY"));
-	itemChoice7Strings.Add(wxT("MM/DD/YY"));
-	itemChoice7Strings.Add(wxT("MM/DD/YYYY"));
-	itemChoice7Strings.Add(wxT("MM-DD-YY"));
-	itemChoice7Strings.Add(wxT("MM-DD-YYYY"));
-	itemChoice7Strings.Add(wxT("MM/DD'YYYY"));
-	itemChoice7Strings.Add(wxT("YY/MM/DD"));
-	itemChoice7Strings.Add(wxT("YY-MM-DD"));
-	itemChoice7Strings.Add(wxT("YYYY/MM/DD"));
-	itemChoice7Strings.Add(wxT("YYYY-MM-DD"));
-	itemChoice7Strings.Add(wxT("YYYY.MM.DD"));
-	itemChoice7Strings.Add(wxT("YYYYMMDD"));
+    wxArrayString itemChoice7Strings;
+    
+    itemChoice7Strings.Add(wxT("DD/MM/YY"));
+    itemChoice7Strings.Add(wxT("DD/MM/YYYY"));
+    itemChoice7Strings.Add(wxT("DD-MM-YY"));
+    itemChoice7Strings.Add(wxT("DD-MM-YYYY"));
+    itemChoice7Strings.Add(wxT("DD.MM.YY"));
+    itemChoice7Strings.Add(wxT("DD.MM.YYYY"));
+    itemChoice7Strings.Add(wxT("DD,MM,YY"));
+    itemChoice7Strings.Add(wxT("DD/MM YYYY"));
+    itemChoice7Strings.Add(wxT("MM/DD/YY"));
+    itemChoice7Strings.Add(wxT("MM/DD/YYYY"));
+    itemChoice7Strings.Add(wxT("MM-DD-YY"));
+    itemChoice7Strings.Add(wxT("MM-DD-YYYY"));
+    itemChoice7Strings.Add(wxT("MM/DD'YYYY"));
+    itemChoice7Strings.Add(wxT("YY/MM/DD"));
+    itemChoice7Strings.Add(wxT("YY-MM-DD"));
+    itemChoice7Strings.Add(wxT("YYYY/MM/DD"));
+    itemChoice7Strings.Add(wxT("YYYY-MM-DD"));
+    itemChoice7Strings.Add(wxT("YYYY.MM.DD"));
+    itemChoice7Strings.Add(wxT("YYYYMMDD"));
     
     return itemChoice7Strings;
 }
@@ -366,8 +366,8 @@ void mmOptionsDialog::CreateControls()
 
     wxArrayString financialMonthsSelection;
     for(int i=0; i<12; i++) {
-		financialMonthsSelection.Add(mmGetNiceShortMonthName(i));
-	};
+        financialMonthsSelection.Add(mmGetNiceShortMonthName(i));
+    };
     monthSelection_ = new wxChoice(generalPanel, ID_DIALOG_OPTIONS_FINANCIAL_YEAR_START_MONTH,
         wxDefaultPosition, wxSize(100, -1), financialMonthsSelection);
     financialYearStaticBoxSizerGrid->Add(monthSelection_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -445,16 +445,16 @@ void mmOptionsDialog::CreateControls()
 
     wxArrayString itemChoiceViewTransStrings; 
     
-	itemChoiceViewTransStrings.Add(_("View All Transactions"));
-	itemChoiceViewTransStrings.Add(_("View Reconciled"));
-	itemChoiceViewTransStrings.Add(_("Vlew All - Except Reconciled"));
-	itemChoiceViewTransStrings.Add(_("View UnReconciled"));
-	itemChoiceViewTransStrings.Add(_("View Today"));
-	itemChoiceViewTransStrings.Add(_("View Current Month"));
-	itemChoiceViewTransStrings.Add(_("View Last 30 days"));
-	itemChoiceViewTransStrings.Add(_("View Last 90 days"));
-	itemChoiceViewTransStrings.Add(_("View Last Month"));
-	itemChoiceViewTransStrings.Add(_("View Last 3 Months"));
+    itemChoiceViewTransStrings.Add(_("View All Transactions"));
+    itemChoiceViewTransStrings.Add(_("View Reconciled"));
+    itemChoiceViewTransStrings.Add(_("Vlew All - Except Reconciled"));
+    itemChoiceViewTransStrings.Add(_("View UnReconciled"));
+    itemChoiceViewTransStrings.Add(_("View Today"));
+    itemChoiceViewTransStrings.Add(_("View Current Month"));
+    itemChoiceViewTransStrings.Add(_("View Last 30 days"));
+    itemChoiceViewTransStrings.Add(_("View Last 90 days"));
+    itemChoiceViewTransStrings.Add(_("View Last Month"));
+    itemChoiceViewTransStrings.Add(_("View Last 3 Months"));
     
     choiceTransVisible_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, wxDefaultSize,
         itemChoiceViewTransStrings);
@@ -692,8 +692,8 @@ void mmOptionsDialog::CreateControls()
         _("Default Payee:"), wxDefaultPosition, wxSize(90, -1)); // sets size for associated text
 
     wxArrayString itemChoiceDefaultTransPayeeStrings;
-	itemChoiceDefaultTransPayeeStrings.Add(_("None"));
-	itemChoiceDefaultTransPayeeStrings.Add(_("Last Used"));
+    itemChoiceDefaultTransPayeeStrings.Add(_("None"));
+    itemChoiceDefaultTransPayeeStrings.Add(_("Last Used"));
     
     wxChoice* defaultPayeeChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE,
         wxDefaultPosition, wxSize(140, -1), itemChoiceDefaultTransPayeeStrings);
@@ -705,8 +705,8 @@ void mmOptionsDialog::CreateControls()
 
     wxArrayString itemChoiceDefaultTransCategoryStrings;
     
-	itemChoiceDefaultTransCategoryStrings.Add(_("None"));
-	itemChoiceDefaultTransCategoryStrings.Add(_("Last used for payee"));
+    itemChoiceDefaultTransCategoryStrings.Add(_("None"));
+    itemChoiceDefaultTransCategoryStrings.Add(_("Last used for payee"));
     
     wxChoice* defaultCategoryChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY,
         wxDefaultPosition, defaultPayeeChoice->GetSize(), itemChoiceDefaultTransCategoryStrings);

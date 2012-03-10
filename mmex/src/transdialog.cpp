@@ -576,8 +576,8 @@ void mmTransDialog::OnTo(wxCommandEvent& /*event*/)
 
     wxArrayString as = core_->getAccountsName(payeeID_);
     if (as.IsEmpty()){
-		return;
-	}
+        return;
+    }
     wxSingleChoiceDialog scd(0, _("Account name"), _("Select Account"), as);
     if (scd.ShowModal() == wxID_OK)
     {
@@ -1386,7 +1386,7 @@ void mmTransDialog::OnButtonToAccountChar(wxKeyEvent& event)
 
     filtd = core_->getAccountsName(payeeID_);
     if (filtd.IsEmpty())
-		return;
+        return;
     if (toAccountName != _("Select To Acct")) 
     { 
         for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) 
@@ -1424,7 +1424,7 @@ void mmTransDialog::OnButtonToAccountMouse(wxMouseEvent& event)
     int i = event.GetWheelRotation(); 
     wxArrayString filtd = core_->getAccountsName(payeeID_);
     if (filtd.IsEmpty())
-		return;
+        return;
     wxString toAccountName = bTo_->GetLabel();
     if (toAccountName != _("Select To Acct")) 
     { 
