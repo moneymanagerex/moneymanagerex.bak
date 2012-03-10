@@ -70,7 +70,7 @@ wxString selectLanguageDlg(wxWindow *parent, const wxString &langPath, bool verb
     for (size_t i = 0; i < cnt; ++i) 
     {
         wxFileName fname(lang_files[i]);
-        lang_files[i] = fname.GetName().Left(1).Upper() + fname.GetName().SubString(1,99) ;
+        lang_files[i] = fname.GetName().Left(1).Upper() + fname.GetName().SubString(1,fname.GetName().Len());
     }
 
     lang_files.Sort(CaseInsensitiveCmp);
