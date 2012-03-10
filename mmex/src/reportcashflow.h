@@ -2,6 +2,7 @@
 #define _MM_EX_REPORTCASHFLOW_H_
 
 #include "reportbase.h"
+#include "mmex.h"
 
 #include <wx/datetime.h>
 #include <vector>
@@ -11,7 +12,7 @@ class wxArrayString;
 class mmReportCashFlow : public mmPrintableBase 
 {
 public:
-    mmReportCashFlow(mmCoreDB* core, const wxArrayString* accountArray = 0);
+    mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, const wxArrayString* accountArray = 0);
 
     wxString getHTMLText();
 	
@@ -29,6 +30,7 @@ private:
    typedef std::vector<mmRepeatForecast> forecastVec;
    std::vector<forecastVec> bdForecastVec;
 
+   mmGUIFrame* frame_;
    const wxArrayString* accountArray_;
    bool activeTermAccounts_;
    bool activeBankAccounts_;

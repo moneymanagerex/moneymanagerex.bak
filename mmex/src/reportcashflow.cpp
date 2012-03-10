@@ -5,8 +5,9 @@
 #include "reportbase.h"
 #include "util.h"
 
-mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, const wxArrayString* accountArray) : 
+mmReportCashFlow::mmReportCashFlow(mmCoreDB* core, mmGUIFrame* frame, const wxArrayString* accountArray) : 
     mmPrintableBase(core)
+    , frame_(frame)
     , accountArray_(accountArray)
     , activeTermAccounts_(false)
     , activeBankAccounts_(false)
@@ -284,6 +285,9 @@ wxString mmReportCashFlow::getHTMLText()
 
     core_->loadBaseCurrencySettings();
 
+    bool initialMonths = true;
+    int displayYear    = wxDateTime::Now().GetYear();
+
     for (int idx = 0; idx < (int)forecastOver12Months.size(); idx++)
     {
         wxDateTime dtEnd   = wxDateTime::Now().Add(wxDateSpan::Months(idx));
@@ -296,6 +300,29 @@ wxString mmReportCashFlow::getHTMLText()
         diff = (idx==0 ? 0 : forecastOver12Months[idx] - forecastOver12Months[idx-1]) ;
         mmex::formatDoubleToCurrency(diff, diffStr);
 
+        bool addSeparator = false;
+
+        if (frame_->budgetFinancialYears())
+        {
+            if (initialMonths && (dtEnd.GetMonth() == frame_->getUserDefinedFinancialYear().GetMonth()))
+            {
+                addSeparator  = true;
+                initialMonths = false;
+            }
+            else if ((dtEnd.GetMonth() == frame_->getUserDefinedFinancialYear().GetMonth()) && (displayYear != dtEnd.GetYear()))
+            {
+                addSeparator = true;
+                displayYear  = dtEnd.GetYear();
+            }
+        }
+        else if (displayYear != dtEnd.GetYear())
+        {
+            addSeparator = true;
+            displayYear  = dtEnd.GetYear();
+        }
+
+        if (addSeparator) hb.addRowSeparator(3);
+
         wxString dtStr ; 
         //dtStr << mmGetNiceShortMonthName(dtEnd.GetMonth()) << wxT(" ") << dtEnd.GetYear();
         dtStr << mmGetDateForDisplay(core_->db_.get(), dtEnd); 
@@ -307,6 +334,7 @@ wxString mmReportCashFlow::getHTMLText()
         hb.endTableRow();
     }
 
+   	hb.addRowSeparator(3);
     hb.endTable();
     hb.endCenter();
     hb.end();
