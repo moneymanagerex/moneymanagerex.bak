@@ -63,19 +63,19 @@ wxString mmReportTransactions::getHTMLText()
     
     hb.startCenter();
     hb.startTable();
-    hb.startTable(wxT("92%"));
+    hb.startTable(wxT("95%"));
 
     // Display the data Headings
     hb.startTableRow();
     hb.addTableHeaderCell(_("Date"));
-    hb.addTableHeaderCell(_("Number"));
     hb.addTableHeaderCell(_("Account"));
     hb.addTableHeaderCell(_("Payee"));
-    hb.addTableHeaderCell(_("Type"));
-    hb.addTableHeaderCell(_("Category"));
-    hb.addTableHeaderCell(_("Notes"));
     hb.addTableHeaderCell(_("Status"));
-    hb.addTableHeaderCell(_("Amount"));
+    hb.addTableHeaderCell(_("Category"));
+	hb.addTableHeaderCell(_("Type"));
+    hb.addTableHeaderCell(_("Amount"), true);
+    hb.addTableHeaderCell(_("Number"));
+    hb.addTableHeaderCell(_("Notes"));
     hb.endTableRow();
 
     // Display the data for each row
@@ -103,14 +103,14 @@ wxString mmReportTransactions::getHTMLText()
 
         // Display the data for the selected row
         hb.startTableRow();
-        hb.addTableCell(refTrans[index]->dateStr_);
-        hb.addTableCell(refTrans[index]->transNum_);
+        hb.addTableCell(refTrans[index]->dateStr_, true);
         hb.addTableCell(refTrans[index]->fromAccountStr_, false, true);
         hb.addTableCell(refTrans[index]->payeeStr_, false, true);
+        hb.addTableCell(refTrans[index]->status_);
+        hb.addTableCell(refTrans[index]->fullCatStr_, false, true);
+
         if (refTrans[index]->transType_ == TRANS_TYPE_DEPOSIT_STR)
-        {
             hb.addTableCell(_("Deposit"));
-        }
         else if (refTrans[index]->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
         {
             hb.addTableCell(_("Withdrawal"));
@@ -126,22 +126,17 @@ wxString mmReportTransactions::getHTMLText()
                     negativeTransAmount   = true;  // transfer is a withdrawl from account
             }
             else if (refTrans[index]->fromAccountStr_ == refTrans[index]->payeeStr_)
-            {
                 negativeTransAmount = true;
-            }
         }
 
-        wxString amtColour = wxT("#000000"); // black
-        if (negativeTransAmount)
-            amtColour = wxT("#ff0000");      //  red
+        wxString amtColour = negativeTransAmount ? wxT("RED") : wxT("BLACK");
 
-        hb.addTableCell(refTrans[index]->fullCatStr_, false, true);
-        hb.addTableCell(refTrans[index]->notes_, false, true);
-        hb.addTableCell(refTrans[index]->status_);
         if (refTrans[index]->reportCategAmountStr_ == wxT(""))
             hb.addTableCell(refTrans[index]->transAmtString_, true, false,false, amtColour);
         else
             hb.addTableCell(refTrans[index]->reportCategAmountStr_, true, false,false, amtColour);
+        hb.addTableCell(refTrans[index]->transNum_);
+        hb.addTableCell(refTrans[index]->notes_, false, true);
         hb.endTableRow();
 
         // Get the exchange rate for the selected account
@@ -155,13 +150,9 @@ wxString mmReportTransactions::getHTMLText()
         if (refTrans[index]->status_ != wxT("V"))
         {
             if (refTrans[index]->transType_ == TRANS_TYPE_DEPOSIT_STR)
-            {
                 total += transAmount;
-            }
             else if (refTrans[index]->transType_ == TRANS_TYPE_WITHDRAWAL_STR)
-            {
                 total -= transAmount;
-            }
             else if (refTrans[index]->transType_ == TRANS_TYPE_TRANSFER_STR)
             {
                 transferTransactionFound = true;
@@ -180,7 +171,7 @@ wxString mmReportTransactions::getHTMLText()
 
     // display the total balance.
 	hb.addRowSeparator(9);
-	hb.addTotalRow(_("Total Amount: "), 9, balanceStr);
+	hb.addTotalRow(_("Total Amount: "), 7, balanceStr);
 
     hb.endTable();
 	hb.endCenter();
