@@ -4,23 +4,26 @@ Version History of Money Manager Ex
 - Externals updated to wxSQLite3 V: 3.0.0 (sqlite3 V: 3.7.10.0)
 - New dialog designs, updated keyboard and user interface features.
 - Budget Section Upgrade
-  - Able to view as Calendar years and Financial Years
-  - Allow budget category summaries showing total of subcategories.
+  - View as Calendar Years or Financial Years
+  - Budget Category summaries showing subcategory totals.
   - Daily estimate calculations for better accuracy.
-  - Added Monthly Budgets
-  - Allows transfer totals to be included in budget totals.
+  - Added Monthly Budgets.
+  - Allow transfer totals to be included in budget totals.
   - Improved Help for Budget setup
 - Improved Split Categories
-  - Allows deposits and withdrawals in same transaction
+  - Allows deposits and withdrawals in same transaction.
   - Allows split categories to be edited.
 - Improved Transaction Filtering - allowing edits to transactions.
-- Improved Account type identification on Navigation tree.
-- Improved QIF importing facility
+- Improved Navigation tree and Account type identification.
+- Improved CSV Inport/Export facility using a Universal Dialog.
+- Improved QIF Importing facility.
 - Recent files list added.
-- Backup feature updated
-- Options Dialog upgraded to allow cancelling changes if necessary.
-- Updated CSV Universal Inport/Export feature
-- and bugfixes.
+- Backup feature updated. Li4 backups at start or end when and 
+- Updated Options Dialog. Allow user to cancel changes.
+- Improved Cash Flow Report.
+- Improved Custom SQL Report File Saving features.
+- Updated Help Files with improved Language support
+- Miscellaneous code improvements and bugfixes.
 
 0.9.8.0 (August 1, 2011)
 - Externals updated to wxSQLite3 V: 2.1.2 (sqlite3 V: 3.7.7.1)
