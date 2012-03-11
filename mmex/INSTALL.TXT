@@ -32,11 +32,26 @@ Prepackaged Libraries
        sudo make install
 
     2. cd trunk/mmex
-       mkdir release
-       cd release
-       ../configure
-       make
-       make check
+	mkdir release
+	cd release
+	../configure
+	make
+	make check
+
+	mkdir share
+	mkdir share/doc/
+	mkdir share/doc/mmex
+	mkdir share/mmex
+	mkdir share/mmex/res
+	ln -s ../../../../doc/help share/doc/mmex/
+	ln -s ../../../../doc/version.txt share/doc/mmex/
+	ln -s ../../../../doc/contrib.txt share/doc/mmex/
+	ln -s ../../../../doc/license.txt share/doc/mmex/
+
+	ln -s ../../../po share/mmex/
+	ln -s ../../../../resources/mmex.ico share/mmex/res/
+	ln -s ../../../../resources/splash.png share/mmex/res/
+
        sudo make install
        /usr/bin/mmex &
 
