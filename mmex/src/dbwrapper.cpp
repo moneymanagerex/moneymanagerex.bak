@@ -1439,8 +1439,12 @@ void mmDBWrapper::setINISettingValue(wxSQLite3Database* db, const wxString& sett
         wxASSERT(rows_affected == 1);
     } catch(wxSQLite3Exception e) 
     { 
+        wxString error_str;
         wxLogDebug(wxT("Database::setINISettingValue: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("Set INI Setting Value. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+        error_str << wxT("Set INI Setting Value. "); 
+        error_str << wxString::Format(wxT("%s = %s \t"), settingName.c_str(), settingValue.c_str());
+        error_str << wxString::Format(_("Error: %s"), e.GetMessage().c_str());
+        wxLogError(error_str);
     }
 }
 
