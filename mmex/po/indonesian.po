@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-18 19:52+0300\n"
-"PO-Revision-Date: 2012-02-18 19:52+0300\n"
+"PO-Revision-Date: 2012-03-13 15:25+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: TheZeal Software\n"
 "Language: \n"
@@ -65,9 +65,9 @@ msgstr "Laporan SQL Query"
 #: src/dbwrapper.cpp:2199
 #: src/dbwrapper.cpp:2281
 #: src/dbwrapper.cpp:2464
-#, fuzzy, c-format
+#, c-format
 msgid "Error: %s"
-msgstr "Error / Terjadi Kesalahan"
+msgstr ""
 
 #: src/reportincexpesestime.cpp:24
 msgid "Income vs Expenses for Year: "
@@ -203,9 +203,9 @@ msgid "Organize Payees: Delete Error"
 msgstr "Pengelolaan Penerima/Penyetor"
 
 #: src/payeedialog.cpp:271
-#, fuzzy, c-format
+#, c-format
 msgid "Enter a new name for %s"
-msgstr "Isi dengan nama aset"
+msgstr "Isi dengan nama aset %s"
 
 #: src/payeedialog.cpp:272
 #, fuzzy
@@ -1262,7 +1262,7 @@ msgstr ""
 #: src/stockspanel.cpp:505
 #, c-format
 msgid "%s on %s"
-msgstr "%s on %s"
+msgstr ""
 
 #: src/stockspanel.cpp:508
 msgid "never!"
@@ -2102,14 +2102,8 @@ msgid "Importing CSV"
 msgstr "Impor dari CSV"
 
 #: src/univcsvdialog.cpp:641
-#, fuzzy
 msgid "Imported transactions have been flagged so you can review them."
 msgstr ""
-"Total Baris : %d.\n"
-"Total Di-impor : %d\n"
-"Nama log file  : %s.\n"
-"\n"
-"Transaksi yang di-impor diberi tanda khusus agar memudahkan dalam pemeriksaan."
 
 #: src/univcsvdialog.cpp:648
 msgid "Transactions saved to database in account: "
@@ -2800,9 +2794,9 @@ msgid "to "
 msgstr " Sampai dengan : "
 
 #: src/mmcheckingpanel.cpp:964
-#, fuzzy, c-format
+#, c-format
 msgid "Account Bal: %s      Reconciled Bal: %s      Diff: %s      Displayed Bal: %s"
-msgstr "Saldo Rekening : %s      Saldo Rekonsiliasi : %s"
+msgstr ""
 
 #: src/mmcheckingpanel.cpp:1046
 msgid "Account View : "
@@ -4407,9 +4401,8 @@ msgid "Category Total: "
 msgstr "Kategori"
 
 #: src/reportcategexp.cpp:183
-#, fuzzy
 msgid "Grand Total: "
-msgstr "Total: %s"
+msgstr ""
 
 #: src/qifimport.cpp:370
 #, fuzzy
@@ -4893,9 +4886,9 @@ msgid "Tip: These transactions can be set up to activate – allowing the user t
 msgstr ""
 
 #: src/mmpayee.cpp:63
-#, fuzzy, c-format
+#, c-format
 msgid "Add Payee. Error: %s"
-msgstr "Manambahkan penerima/penyetor"
+msgstr ""
 
 #: src/appstartdialog.cpp:56
 msgid " Start Page"

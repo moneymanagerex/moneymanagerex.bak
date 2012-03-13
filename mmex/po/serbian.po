@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-18 19:56+0300\n"
-"PO-Revision-Date: 2012-02-18 19:56+0300\n"
+"PO-Revision-Date: 2012-03-13 15:29+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: Ozzii <ozzii.translate@gmail.com>\n"
 "Language: \n"
@@ -64,9 +64,9 @@ msgstr ""
 #: src/dbwrapper.cpp:2199
 #: src/dbwrapper.cpp:2281
 #: src/dbwrapper.cpp:2464
-#, fuzzy, c-format
+#, c-format
 msgid "Error: %s"
-msgstr "Грешка"
+msgstr "Грешка: %s"
 
 #: src/reportincexpesestime.cpp:24
 msgid "Income vs Expenses for Year: "
