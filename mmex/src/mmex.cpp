@@ -1143,7 +1143,10 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId categsOverTimeCalMonth = navTreeCtrl_->AppendItem(categsOverTime, _("Last Calendar Month"), 4, 4);
     navTreeCtrl_->SetItemData(categsOverTimeCalMonth, new mmTreeItemData(wxT("Where the Money Goes - Month")));
 
-    wxTreeItemId categsOverTimeCurrentMonth = navTreeCtrl_->AppendItem(categsOverTime, _("Current Month"), 4, 4);
+    wxString currentMonthMsg = _("Current Month");
+    if (mmIniOptions::instance().ignoreFutureTransactions_) currentMonthMsg = _("Current Month to Date");
+
+    wxTreeItemId categsOverTimeCurrentMonth = navTreeCtrl_->AppendItem(categsOverTime, currentMonthMsg, 4, 4);
     navTreeCtrl_->SetItemData(categsOverTimeCurrentMonth, new mmTreeItemData(wxT("Where the Money Goes - Current Month")));
 
     wxTreeItemId categsOverTimeLast30 = navTreeCtrl_->AppendItem(categsOverTime, _("Last 30 Days"), 4, 4);
@@ -1171,7 +1174,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId posCategsCalMonth = navTreeCtrl_->AppendItem(posCategs, _("Last Calendar Month"), 4, 4);
     navTreeCtrl_->SetItemData(posCategsCalMonth, new mmTreeItemData(wxT("Where the Money Comes From - Month")));
 
-    wxTreeItemId posCategsCurrentMonth = navTreeCtrl_->AppendItem(posCategs, _("Current Month"), 4, 4);
+    wxTreeItemId posCategsCurrentMonth = navTreeCtrl_->AppendItem(posCategs, currentMonthMsg, 4, 4);
     navTreeCtrl_->SetItemData(posCategsCurrentMonth, new mmTreeItemData(wxT("Where the Money Comes From - Current Month")));
 
     wxTreeItemId posCategsTimeLast30 = navTreeCtrl_->AppendItem(posCategs, _("Last 30 Days"), 4, 4);
@@ -1199,7 +1202,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId categsCalMonth = navTreeCtrl_->AppendItem(categs, _("Last Calendar Month"), 4, 4);
     navTreeCtrl_->SetItemData(categsCalMonth, new mmTreeItemData(wxT("Categories - Month")));
 
-    wxTreeItemId categsCurrentMonth = navTreeCtrl_->AppendItem(categs, _("Current Month"), 4, 4);
+    wxTreeItemId categsCurrentMonth = navTreeCtrl_->AppendItem(categs, currentMonthMsg, 4, 4);
     navTreeCtrl_->SetItemData(categsCurrentMonth, new mmTreeItemData(wxT("Categories - Current Month")));
 
     wxTreeItemId categsTimeLast30 = navTreeCtrl_->AppendItem(categs, _("Last 30 Days"), 4, 4);
@@ -1227,7 +1230,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId payeesOverTimeCalMonth = navTreeCtrl_->AppendItem(payeesOverTime, _("Last Calendar Month"), 4, 4);
     navTreeCtrl_->SetItemData(payeesOverTimeCalMonth, new mmTreeItemData(wxT("Payee Report - Month")));
 
-    wxTreeItemId payeesOverTimeCurrentMonth = navTreeCtrl_->AppendItem(payeesOverTime, _("Current Month"), 4, 4);
+    wxTreeItemId payeesOverTimeCurrentMonth = navTreeCtrl_->AppendItem(payeesOverTime, currentMonthMsg, 4, 4);
     navTreeCtrl_->SetItemData(payeesOverTimeCurrentMonth, new mmTreeItemData(wxT("Payee Report - Current Month")));
 
     wxTreeItemId payeesOverTimeLast30 = navTreeCtrl_->AppendItem(payeesOverTime, _("Last 30 Days"), 4, 4);
@@ -1255,7 +1258,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     wxTreeItemId incexpOverTimeCalMonth = navTreeCtrl_->AppendItem(incexpOverTime, _("Last Calendar Month"), 4, 4);
     navTreeCtrl_->SetItemData(incexpOverTimeCalMonth, new mmTreeItemData(wxT("Income vs Expenses - Month")));
 
-    wxTreeItemId incexpOverTimeCurrentMonth = navTreeCtrl_->AppendItem(incexpOverTime, _("Current Month"), 4, 4);
+    wxTreeItemId incexpOverTimeCurrentMonth = navTreeCtrl_->AppendItem(incexpOverTime, currentMonthMsg, 4, 4);
     navTreeCtrl_->SetItemData(incexpOverTimeCurrentMonth, new mmTreeItemData(wxT("Income vs Expenses - Current Month")));
 
     wxTreeItemId incexpOverTimeLast30 = navTreeCtrl_->AppendItem(incexpOverTime, _("Last 30 Days"), 4, 4);
@@ -1719,8 +1722,13 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
-            wxDateTime dtEnd = wxDateTime::Now();
+            wxDateTime dtEnd = wxDateTime::Now().GetLastMonthDay();
             wxString title = _("Categories - Current Month");
+            if (mmIniOptions::instance().ignoreFutureTransactions_)
+            {
+                title = _("Categories - Current Month to Date");
+                dtEnd = wxDateTime::Now();
+            }
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 0);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1816,8 +1824,13 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
-            wxDateTime dtEnd = wxDateTime::Now();
+            wxDateTime dtEnd = wxDateTime::Now().GetLastMonthDay();
             wxString title = _("Where the Money Comes From - Current Month");
+            if (mmIniOptions::instance().ignoreFutureTransactions_)
+            {
+                title = _("Where the Money Comes From - Current Month to Date");
+                dtEnd  = wxDateTime::Now();
+            }
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 1);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -1914,8 +1927,13 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
-            wxDateTime dtEnd = wxDateTime::Now();
+            wxDateTime dtEnd = wxDateTime::Now().GetLastMonthDay();
             wxString title = _("Where the Money Goes - Current Month");
+            if (mmIniOptions::instance().ignoreFutureTransactions_)
+            {
+                title = _("Where the Money Goes - Current Month to Date");
+                dtEnd  = wxDateTime::Now();
+            }
             mmPrintableBase* rs = new mmReportCategoryExpenses(m_core.get(), false, dtBegin, dtEnd, title, 2);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -2018,8 +2036,13 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
-            wxDateTime dtEnd = wxDateTime::Now();
+            wxDateTime dtEnd = wxDateTime::Now().GetLastMonthDay();
             wxString title = _("Income vs Expenses - Current Month");
+            if (mmIniOptions::instance().ignoreFutureTransactions_)
+            {
+                title = _("Income vs Expenses - Current Month to Date");
+                dtEnd  = wxDateTime::Now();
+            }
             mmPrintableBase* rs = new mmReportIncomeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
             menuPrintingEnable(true);
             createReportsPage(rs);
@@ -2113,10 +2136,15 @@ void mmGUIFrame::OnSelChanged(wxTreeEvent& event)
             wxDateTime today = wxDateTime::Now();
             wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
             wxDateTime dtBegin = prevMonthEnd;
-            wxDateTime dtEnd = wxDateTime::Now();
+            wxDateTime dtEnd = wxDateTime::Now().GetLastMonthDay();
             dtBegin.Add(wxDateSpan::Day());
 
             wxString title = _("Payees - Current Month");
+            if (mmIniOptions::instance().ignoreFutureTransactions_)
+            {
+                title = _("Payees - Current Month to Date");
+                dtEnd  = wxDateTime::Now();
+            }
             mmPrintableBase* rs = new mmReportPayeeExpenses(m_core.get(), false, dtBegin, dtEnd, title);
             menuPrintingEnable(true);
             createReportsPage(rs);
