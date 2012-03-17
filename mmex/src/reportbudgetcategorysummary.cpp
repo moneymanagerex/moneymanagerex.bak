@@ -59,8 +59,8 @@ void mmReportBudgetCategorySummary::displayReportLine(mmHTMLBuilder& hb, mmBudge
     hb.startTableRow();
     hb.addTableCell(budEntry.catStr_, false, true);
     hb.addTableCell(budEntry.subCatStr_, false, true);
-    hb.addTableCell(budEntry.period_, false, true); 
     hb.addTableCell(budEntry.amtString_, true);
+    hb.addTableCell(budEntry.period_, false, true); 
     hb.addTableCell(budEntry.estimatedStr_, true);
     hb.addTableCell(budEntry.actualStr_, true, false, false, actualAmountColour(budEntry));
     hb.endTableRow();
@@ -114,8 +114,8 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
     hb.startTableRow();
     hb.addTableHeaderCell(_("Category"));
     hb.addTableHeaderCell(_("Sub Category"));
-    hb.addTableHeaderCell(_("Frequency"));
     hb.addTableHeaderCell(_("Amount"), true);
+    hb.addTableHeaderCell(_("Frequency"));
     hb.addTableHeaderCell(_("Estimated"), true);
     hb.addTableHeaderCell(_("Actual"), true);
     hb.endTableRow();
@@ -261,8 +261,9 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
         hb.startTableRow();
         hb.addTableCell(catTotals.catStr_, false, true, true, wxT("blue"));
         hb.addTableCell(wxT(""), false, true, true, wxT("blue"));
+        hb.addTableCell(wxEmptyString, true, false,true, wxT("blue"));
+//        hb.addTableCell(catTotals.amtString_, true, false,true, wxT("blue"));
         hb.addTableCell(catTotals.period_, false, true, true, wxT("blue")); 
-        hb.addTableCell(catTotals.amtString_, true, false,true, wxT("blue"));
         hb.addTableCell(catTotals.estimatedStr_, true, false, true, wxT("blue"));
         hb.addTableCell(catTotals.actualStr_, true, false, true, actualAmountColour(catTotals,true));
         hb.endTableRow();
@@ -307,11 +308,11 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
 
     wxString incEstStr = wxString() << _("Estimated Income: ") << estIncomeStr;
     wxString incActStr = wxString() << _("Actual Income: ")    << actIncomeStr;
-    wxString incDifStr = wxString() << _("Diference Income: ") << difIncomeStr;
+    wxString incDifStr = wxString() << _("Difference Income: ") << difIncomeStr;
     
     wxString expEstStr = wxString() << _("Estimated Expenses: ") << estExpensesStr;
     wxString expActStr = wxString() << _("Actual Expenses: ")    << actExpensesStr;
-    wxString expDifStr = wxString() << _("Diference Expenses: ") << difExpenseStr;
+    wxString expDifStr = wxString() << _("Difference Expenses: ") << difExpenseStr;
 
     //Summary of Estimated Vs Actual totals
     hb.addLineBreak();
