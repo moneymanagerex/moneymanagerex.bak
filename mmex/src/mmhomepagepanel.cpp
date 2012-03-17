@@ -99,18 +99,27 @@ void mmHomePagePanel::displayStocksHeader(mmHTMLBuilder& hb, wxString summaryTit
     hb.endTableRow();
 }
 
-void mmHomePagePanel::displaySectionTotal(mmHTMLBuilder& hb, wxString totalsTitle, double& tBalance, bool showSeparator)
+void mmHomePagePanel::displaySectionTotal(mmHTMLBuilder& hb, wxString totalsTitle, double tRecBalance, double& tBalance, bool showSeparator)
 {
     // format the totals for display
     mmDBWrapper::loadBaseCurrencySettings(db_);
+    wxString tRecBalanceStr;
+    mmex::formatDoubleToCurrency(tRecBalance, tRecBalanceStr);
     wxString tBalanceStr;
     mmex::formatDoubleToCurrency(tBalance, tBalanceStr);
+
+    // stocks don't have reconciled balances
+    if (totalsTitle == _("Stocks Total:")) tRecBalanceStr = wxEmptyString;
+
+    std::vector<wxString> data;
+    data.push_back(tRecBalanceStr);
+    data.push_back(tBalanceStr);
 
     // Show account totals with top and bottom separators
     if (showSeparator)
         hb.addRowSeparator(3);
     hb.startTableRow();
-    hb.addTotalRow(totalsTitle, 3, tBalanceStr);
+    hb.addTotalRow(totalsTitle, 3, data);
     hb.endTableRow();
     hb.addRowSeparator(3);
 }
@@ -121,6 +130,8 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
     // Only Show the account titles if we want to display Bank accounts.
     if ( frame_->expandedBankAccounts() ) 
         displaySummaryHeader(hb, _("Bank Account"));
+
+    double tRecBalance = 0.0;
 
     // Get account balances and display accounts if we want them displayed 
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
@@ -139,7 +150,8 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
         double reconciledBal = pCA->initialBalance_ + core_->getReconciledBalance(pCA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
         double rate = pCurrencyPtr->baseConv_;
         tBalance += bal * rate; // actual amount in that account in the original rate
-        
+        tRecBalance += reconciledBal * rate;
+
         // Display the individual Checking account links if we want to display them
         if ( frame_->expandedBankAccounts() ) 
         {
@@ -169,13 +181,14 @@ void mmHomePagePanel::displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalanc
             tExpenses += expenses;
         }
     }
-    displaySectionTotal(hb, _("Bank Accounts Total:"), tBalance);
+    displaySectionTotal(hb, _("Bank Accounts Total:"), tRecBalance, tBalance);
 }
 
 /* Term Accounts */
 void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd)
 {
     double tTermBalance = 0.0;
+    double tRecBalance  = 0.0;
 
     // Only Show the account titles if Term accounts are active and we want them displayed.
     if ( frame_->expandedTermAccounts() )
@@ -197,6 +210,7 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
             double reconciledBal = pTA->initialBalance_ + core_->getReconciledBalance(pTA->id_, mmIniOptions::instance().ignoreFutureTransactions_);
             double rate = pCurrencyPtr->baseConv_;
             tTermBalance += bal * rate; // actual amount in that account in the original rate
+            tRecBalance  += reconciledBal * rate;
 
             // Display the individual Term account links if we want to display them
             if ( frame_->expandedTermAccounts() )
@@ -229,7 +243,7 @@ void mmHomePagePanel::displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, d
         }
     }
 
-    displaySectionTotal(hb, _("Term Accounts Total:"), tTermBalance, frame_->expandedTermAccounts());
+    displaySectionTotal(hb, _("Term Accounts Total:"), tRecBalance, tTermBalance, frame_->expandedTermAccounts());
 
     // Add Term balance to Grand Total balance
     tBalance += tTermBalance;
@@ -295,7 +309,7 @@ void mmHomePagePanel::displayStocks(mmHTMLBuilder& hb, double& tBalance /*, doub
     }
     q1.Finalize();
 
-    displaySectionTotal(hb, _("Stocks Total:"), stTotalBalance, frame_->expandedStockAccounts());
+    displaySectionTotal(hb, _("Stocks Total:"), 0.0, stTotalBalance, frame_->expandedStockAccounts());
 
     // Add Stock balance to Grand Total balance
     tBalance += stTotalBalance;

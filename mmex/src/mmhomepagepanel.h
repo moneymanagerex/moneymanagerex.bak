@@ -83,7 +83,7 @@ private:
 
     void displaySummaryHeader(mmHTMLBuilder& hb, wxString summaryTitle );
     void displayStocksHeader(mmHTMLBuilder& hb, wxString summaryTitle );
-    void displaySectionTotal(mmHTMLBuilder& hb, wxString totalsTitle, double& tBalance, bool showSeparator = true );
+    void displaySectionTotal(mmHTMLBuilder& hb, wxString totalsTitle, double tRecBalance, double& tBalance, bool showSeparator = true );
 
     void displayCheckingAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd);
     void displayTermAccounts(mmHTMLBuilder& hb, double& tBalance, double& tIncome, double& tExpenses, const wxDateTime& dtBegin, const wxDateTime& dtEnd);
