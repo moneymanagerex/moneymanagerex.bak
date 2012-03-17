@@ -121,17 +121,14 @@ void mmAboutDialog::CreateControls()
     itemBoxSizer2->Add(itemBoxSizerN, 0, wxGROW|wxALL, 5);
 
     wxBitmap itemStaticBitmap3Bitmap;
-    itemStaticBitmap3Bitmap.LoadFile(mmex::getPathResource(mmex::SPLASH_ICON), wxBITMAP_TYPE_PNG); 
 
-    wxStaticBitmap* itemStaticBitmap3 = 0;
-    if (!mmIniOptions::instance().enableCustomLogo_)
+    if (wxFileName::FileExists(mmex::getPathResource(mmex::SPLASH_ICON)) &&
+       (itemStaticBitmap3Bitmap.LoadFile(mmex::getPathResource(mmex::SPLASH_ICON), wxBITMAP_TYPE_PNG)))
     {
+        wxStaticBitmap* itemStaticBitmap3 = 0;
         itemStaticBitmap3 = new wxStaticBitmap( this, wxID_STATIC, 
             itemStaticBitmap3Bitmap, wxDefaultPosition);
-    }
-    
-    if (itemStaticBitmap3) {
-        itemBoxSizerN->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        itemBoxSizerN->Add(itemStaticBitmap3, 0, wxALIGN_CENTER|wxALL, 5);
     }
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
