@@ -35,27 +35,25 @@
 namespace
 {
 
-const wxString MMEX_INITIAL_AUTHOR_STR = wxT("(c) 2005-2012 Madhan Kanagavel");
+	const wxString MMEX_INITIAL_AUTHOR_STR = wxT("(c) 2005-2012 Madhan Kanagavel");
+	
+	enum 
+	{ 
+	    IDC_DIALOG_BUTTON_ABOUT_VERSION_HISTORY = wxID_HIGHEST + 1,
+	    IDC_DIALOG_BUTTON_ABOUT_CONTRIBUTERS
+	};
+	
+	wxString get_libs_info()
+	{
+	    wxString versionDetails = wxString() << wxVERSION_STRING
+	        << wxT(",  Boost C++ ") << (BOOST_VERSION/100000) << wxT('.') 
+	        << (BOOST_VERSION / 100 % 1000) << wxT('.') 
+	        << (BOOST_VERSION % 100) << wxT(",\n")
+	        << wxT("SQLite3 ") << wxSQLite3Database::GetVersion()
+	        << wxT(",  wxSQLite by Ulrich Telle");
 
-enum 
-{ 
-  IDC_DIALOG_BUTTON_ABOUT_VERSION_HISTORY = wxID_HIGHEST + 1,
-  IDC_DIALOG_BUTTON_ABOUT_CONTRIBUTERS
-};
-
-wxString get_libs_info()
-{
-    wxString s;
-
-    s << wxVERSION_STRING
-      << wxT(",  Boost C++ ") << (BOOST_VERSION/100000) << wxT('.') 
-                  << (BOOST_VERSION / 100 % 1000) << wxT('.') 
-                  << (BOOST_VERSION % 100)
-      << wxT(",  SQLite3 ") << wxSQLite3Database::GetVersion()
-      << wxT(",  wxSQLite by Ulrich Telle");
-
-    return s;
-}
+	    return versionDetails;
+	}
 
 } // namespace
 
