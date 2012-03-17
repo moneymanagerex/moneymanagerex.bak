@@ -432,7 +432,10 @@ void mmHomePagePanel::displayIncomeVsExpenses(mmHTMLBuilder& hb, double& tincome
     gg.init(tincome, texpenses);
     gg.Generate(wxT(""));
 
-    hb.addTableHeaderRow(wxString()<<_("Income vs Expenses: ") << _("Current Month"), 2);
+    wxString monthHeading = _("Current Month");
+    if (mmIniOptions::instance().ignoreFutureTransactions_) monthHeading = _("Current Month to Date");
+
+    hb.addTableHeaderRow(wxString() << _("Income vs Expenses: ") << monthHeading, 2);
     
     hb.startTableRow();
     //hb.startTableCell(wxT("50%\" align=\"center"));
@@ -738,7 +741,7 @@ void mmHomePagePanel::updateAccounts()
     wxDateTime today = wxDateTime::Now();
     wxDateTime prevMonthEnd = today.Subtract(wxDateSpan::Days(today.GetDay()));
     wxDateTime dtBegin = prevMonthEnd;
-    wxDateTime dtEnd = wxDateTime::Now();
+    wxDateTime dtEnd = wxDateTime::Now().GetLastMonthDay();
 
     wxDateTime now = wxDateTime::Now();
     wxString dt = _("Today's Date: ") + mmGetNiceDateString(now);
