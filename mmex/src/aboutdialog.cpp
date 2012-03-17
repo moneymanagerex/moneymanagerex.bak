@@ -114,11 +114,11 @@ void mmAboutDialog::OnContributerList(wxCommandEvent& /*event*/)
 
 void mmAboutDialog::CreateControls()
 {    
-    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
     wxBoxSizer* itemBoxSizerN = new wxBoxSizer(wxVERTICAL);
-    itemBoxSizer2->Add(itemBoxSizerN, 1, wxGROW|wxALL, 5);
+    itemBoxSizer2->Add(itemBoxSizerN, 0, wxGROW|wxALL, 5);
 
     wxBitmap itemStaticBitmap3Bitmap;
     itemStaticBitmap3Bitmap.LoadFile(mmex::getPathResource(mmex::SPLASH_ICON), wxBITMAP_TYPE_PNG); 
