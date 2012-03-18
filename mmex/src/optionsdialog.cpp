@@ -38,14 +38,6 @@ enum
     ID_DIALOG_OPTIONS_TEXTCTRL_DELIMITER4,
 };
 
-enum ViewEnum
-{
-    VIEW_ALL,
-    VIEW_OPEN,
-    VIEW_FAVORITES,
-    VIEW_MAX // number of elements, must be last
-};
-
 enum ViewTransEnum
 {
     VIEW_TRANS_ALL,
@@ -58,18 +50,6 @@ enum ViewTransEnum
     VIEW_TRANS_90,
     VIEW_TRANS_LASTMONTH,
     VIEW_TRANS_LAST_3MONTHS,
-};
-
-enum HtmlFontEnum
-{
-    HTML_FONT_XSMALL,
-    HTML_FONT_SMALL,
-    HTML_FONT_NORMAL,
-    HTML_FONT_LARGE,
-    HTML_FONT_XLARGE,
-    HTML_FONT_XXLARGE,
-    HTML_FONT_HUGE,
-    HTML_FONT_MAX // number of elements, must be last
 };
 
 IMPLEMENT_DYNAMIC_CLASS( mmOptionsDialog, wxDialog )
@@ -225,6 +205,37 @@ wxArrayString mmOptionsDialog::itemChoiceStrings() {
     itemChoice7Strings.Add(wxT("YYYYMMDD"));
     
     return itemChoice7Strings;
+}
+
+wxArrayString mmOptionsDialog::viewAccountStrings(bool translated, wxString get_string_id) {
+
+    wxArrayString itemChoiceViewAccountStrings;
+    if (translated) {
+        itemChoiceViewAccountStrings.Add(_("All"));
+        itemChoiceViewAccountStrings.Add(_("Open"));
+        itemChoiceViewAccountStrings.Add(_("Favorites"));
+    } else {
+        itemChoiceViewAccountStrings.Add(wxT("All"));
+        itemChoiceViewAccountStrings.Add(wxT("Open"));
+        itemChoiceViewAccountStrings.Add(wxT("Favorites"));
+    }
+
+    if (get_string_id.IsEmpty())
+        return itemChoiceViewAccountStrings;
+    
+    wxArrayString onerawArrayString;
+    for(size_t i=0; i<itemChoiceViewAccountStrings.Count(); i++)
+    {
+        if(get_string_id == itemChoiceViewAccountStrings[i]) {
+            onerawArrayString.Add(wxString::Format(wxT("%i"), i));
+            break;
+        }
+    };
+
+    if (onerawArrayString.IsEmpty())
+        onerawArrayString.Add(wxT("0"));
+    return onerawArrayString;
+
 }
 
 void mmOptionsDialog::CreateControls()
@@ -413,24 +424,16 @@ void mmOptionsDialog::CreateControls()
         _("Accounts Visible"), wxDefaultPosition, wxDefaultSize, 0);
     accountStaticBoxSizer->Add(accountStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    const wxString itemChoiceViewAccountStrings[VIEW_MAX] = 
-    {
-        _("All"),
-        _("Open"),
-        _("Favorites")
-    };  
+    wxArrayString itemChoiceViewAccountTranslatedStrings = viewAccountStrings(true, wxEmptyString);
     
     choiceVisible_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_VIEW_ACCOUNTS,
-        wxDefaultPosition, wxDefaultSize, 3, itemChoiceViewAccountStrings, 0);
+        wxDefaultPosition, wxDefaultSize, itemChoiceViewAccountTranslatedStrings);
     accountStaticBoxSizer->Add(choiceVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
-    choiceVisible_->SetSelection(VIEW_ALL);
-
-    if (vAccts == wxT("Open"))
-        choiceVisible_->SetSelection(VIEW_OPEN);
-    else if (vAccts == wxT("Favorites"))
-        choiceVisible_->SetSelection(VIEW_FAVORITES);
-           
+    wxArrayString itemChoiceViewAccountStrings = viewAccountStrings(false, vAccts);
+    choiceVisible_->SetSelection(wxAtoi(itemChoiceViewAccountStrings[0]));
+         
     choiceVisible_->SetToolTip(_("Specify which accounts are visible"));
 
     // Transaction View options
@@ -495,38 +498,22 @@ void mmOptionsDialog::CreateControls()
     fontSizeOptionStaticBoxSizer->Add(reportFontSizeStaticText, 0,
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    const wxString itemChoiceHTMLFontSize[HTML_FONT_MAX] = 
-    {
-        wxT("XSmall"),
-        wxT("Small"),
-        wxT("Normal"),
-        wxT("Large"),
-        wxT("XLarge"),
-        wxT("XXLarge"),
-        wxT("Huge")
-    };  
+    wxArrayString itemChoiceHTMLFontSize; 
+
+    itemChoiceHTMLFontSize.Add(wxT("XSmall"));
+    itemChoiceHTMLFontSize.Add(wxT("Small"));
+    itemChoiceHTMLFontSize.Add(wxT("Normal"));
+    itemChoiceHTMLFontSize.Add(wxT("Large"));
+    itemChoiceHTMLFontSize.Add(wxT("XLarge"));
+    itemChoiceHTMLFontSize.Add(wxT("XXLarge"));
+    itemChoiceHTMLFontSize.Add(wxT("Huge"));
     
     choiceFontSize_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_FONT_SIZE,
-        wxDefaultPosition, wxSize(85, -1), 7, itemChoiceHTMLFontSize, 0);
+        wxDefaultPosition, wxSize(85, -1), itemChoiceHTMLFontSize);
 
-    wxString vFontSize = mmDBWrapper::getINISettingValue(inidb_, wxT("HTMLFONTSIZE"), wxT("Font Size on the reports"));
-    choiceFontSize_->SetSelection(HTML_FONT_NORMAL);
+    int vFontSize = -1 + wxAtoi(mmDBWrapper::getINISettingValue(inidb_, wxT("HTMLFONTSIZE"), wxT("Font Size on the reports")));
+    choiceFontSize_->SetSelection(vFontSize);
 
-    if (vFontSize == wxT("1"))
-        choiceFontSize_->SetSelection(HTML_FONT_XSMALL);
-    else if (vFontSize == wxT("2"))
-        choiceFontSize_->SetSelection(HTML_FONT_SMALL);
-    else if (vFontSize == wxT("3"))
-        choiceFontSize_->SetSelection(HTML_FONT_NORMAL);
-    else if (vFontSize == wxT("4"))
-        choiceFontSize_->SetSelection(HTML_FONT_LARGE);
-    else if (vFontSize == wxT("5"))
-        choiceFontSize_->SetSelection(HTML_FONT_XLARGE);
-    else if (vFontSize == wxT("6"))
-        choiceFontSize_->SetSelection(HTML_FONT_XXLARGE);
-    else if (vFontSize == wxT("7"))
-        choiceFontSize_->SetSelection(HTML_FONT_HUGE);
-    
     choiceFontSize_->SetToolTip(_("Specify which font size is used on the report tables"));
     fontSizeOptionStaticBoxSizer->Add(choiceFontSize_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -1106,14 +1093,8 @@ void mmOptionsDialog::OnDelimiterSelectedT(wxCommandEvent& /*event*/)
 void mmOptionsDialog::SaveViewAccountOptions()
 {
     int selection = choiceVisible_->GetSelection();
-
-    wxString viewAcct = wxT("ALL");
-    if (selection == VIEW_OPEN)
-        viewAcct = wxT("Open");
-    else if (selection == VIEW_FAVORITES)
-        viewAcct = wxT("Favorites");
-    
-    mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWACCOUNTS"), viewAcct);
+    wxArrayString viewAcct = viewAccountStrings(false, wxEmptyString);
+    mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWACCOUNTS"), viewAcct[selection]);
 }
 
 void mmOptionsDialog::SaveViewTransactionOptions()
