@@ -92,6 +92,7 @@ private:
     wxArrayString itemChoiceStrings();
     wxArrayString DateFormats();
     wxArrayString viewAccountStrings(bool translated, wxString get_string_id);
+    wxArrayString viewTransactionsStrings(bool translated, wxString get_string_id);
 
     /// Dialog Creation - Used by constructor
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_MMOPTIONSDIALOG_IDNAME, 
