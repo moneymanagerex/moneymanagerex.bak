@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <wx/stdpaths.h>
 #include <wx/icon.h>
 //----------------------------------------------------------------------------
+#include "../resources/mmexico.xpm"
 
 namespace 
 {
@@ -198,7 +199,7 @@ wxString mmex::getPathUser(EUserFile f)
 
 const wxIcon& mmex::getProgramIcon()
 {
-    static wxIcon icon(getPathResource(PROGRAM_ICON), wxBITMAP_TYPE_ICO, 32, 32);
+    static wxIcon icon(mmexico_xpm);
     return icon;
 }
 //----------------------------------------------------------------------------
