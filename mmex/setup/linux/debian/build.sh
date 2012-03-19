@@ -16,8 +16,8 @@ ARCHITECTURE="i386"
 MMEX_VERSION="0.9.9.0"
 
 cd ../../../
-./bootstrap
 ./configure --prefix=$HOME/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr
+./bootstrap
 make install
 
 mkdir ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/DEBIAN
