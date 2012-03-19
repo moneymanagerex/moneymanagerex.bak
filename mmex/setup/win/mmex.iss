@@ -220,15 +220,15 @@ Source: "{#help_src}\*.png"; DestDir: {#help_dir}; Components: help; Flags: igno
 
 ; Add the main index file for the appropriate language to help root directory
 Source: "{#help_src}\index.html";         Languages: en; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "{#help_src}\index_english.html"; Languages: en; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "{#help_src}\index_french.html";  Languages: fr; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "{#help_src}\index_italian.html"; Languages: it; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "{#help_src}\index_polish.html";  Languages: pl; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "{#help_src}\index_russian.html"; Languages: ru; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
-Source: "{#help_src}\index_spanish.html"; Languages: es; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "{#help_src}\german\index.html";  Languages: de; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "{#help_src}\french\index.html";  Languages: fr; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "{#help_src}\italian\index.html"; Languages: it; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "{#help_src}\polish\index.html";  Languages: pl; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "{#help_src}\russian\index.html"; Languages: ru; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
+Source: "{#help_src}\spanish\index.html"; Languages: es; DestDir: {#help_dir}; Components: help; Flags: ignoreversion
 
 ; Add the directory containing the files for the specific language
-Source: "{#help_src}\english\*"; Languages: en; DestDir: "{#help_dir}\english"; Components: help; Flags: ignoreversion
+Source: "{#help_src}\english\*"; Languages: de; DestDir: "{#help_dir}\german"; Components: help; Flags: ignoreversion
 Source: "{#help_src}\french\*";  Languages: fr; DestDir: "{#help_dir}\french";  Components: help; Flags: ignoreversion
 Source: "{#help_src}\italian\*"; Languages: it; DestDir: "{#help_dir}\italian"; Components: help; Flags: ignoreversion
 Source: "{#help_src}\polish\*";  Languages: pl; DestDir: "{#help_dir}\polish";  Components: help; Flags: ignoreversion

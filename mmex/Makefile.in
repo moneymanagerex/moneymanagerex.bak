@@ -157,8 +157,8 @@ install: install_mmex
 	(cd $(srcdir)/doc ; $(INSTALL_DATA)  *.txt $(DESTDIR)$(datadir)/doc/mmex)
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/doc/mmex/help
 	(cd $(srcdir)/doc/help ; $(INSTALL_DATA)  *.html *.png $(DESTDIR)$(datadir)/doc/mmex/help)
-	$(INSTALL_DIR) $(DESTDIR)$(datadir)/doc/mmex/help/english
-	(cd $(srcdir)/doc/help/english ; $(INSTALL_DATA)  * $(DESTDIR)$(datadir)/doc/mmex/help/english)
+	$(INSTALL_DIR) $(DESTDIR)$(datadir)/doc/mmex/help/german
+	(cd $(srcdir)/doc/help/german ; $(INSTALL_DATA)  * $(DESTDIR)$(datadir)/doc/mmex/help/german)
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/doc/mmex/help/french
 	(cd $(srcdir)/doc/help/french ; $(INSTALL_DATA)  * $(DESTDIR)$(datadir)/doc/mmex/help/french)
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/doc/mmex/help/italian
@@ -181,7 +181,7 @@ uninstall: uninstall_mmex
 	(cd $(DESTDIR)$(datadir)/mmex/po ; rm -f *.mo)
 	(cd $(DESTDIR)$(datadir)/doc/mmex ; rm -f *.txt)
 	(cd $(DESTDIR)$(datadir)/doc/mmex/help ; rm -f *.html *.png)
-	(cd $(DESTDIR)$(datadir)/doc/mmex/help/english ; rm -f *)
+	(cd $(DESTDIR)$(datadir)/doc/mmex/help/german ; rm -f *)
 	(cd $(DESTDIR)$(datadir)/doc/mmex/help/french ; rm -f *)
 	(cd $(DESTDIR)$(datadir)/doc/mmex/help/italian ; rm -f *)
 	(cd $(DESTDIR)$(datadir)/doc/mmex/help/polish ; rm -f *)
