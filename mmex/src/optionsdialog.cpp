@@ -193,7 +193,7 @@ wxArrayString mmOptionsDialog::itemChoiceStrings() {
     return itemChoice7Strings;
 }
 
-wxArrayString mmOptionsDialog::viewAccountStrings(bool translated, wxString get_string_id) {
+wxArrayString mmOptionsDialog::viewAccountStrings(bool translated, wxString input_string, int& row_id_) {
 
     wxArrayString itemChoiceViewAccountStrings;
     if (translated) {
@@ -201,27 +201,22 @@ wxArrayString mmOptionsDialog::viewAccountStrings(bool translated, wxString get_
         itemChoiceViewAccountStrings.Add(_("Open"));
         itemChoiceViewAccountStrings.Add(_("Favorites"));
     } else {
-        itemChoiceViewAccountStrings.Add(wxT("All"));
-        itemChoiceViewAccountStrings.Add(wxT("Open"));
-        itemChoiceViewAccountStrings.Add(wxT("Favorites"));
+        itemChoiceViewAccountStrings.Add(VIEW_ACCOUNTS_ALL_STR);
+        itemChoiceViewAccountStrings.Add(VIEW_ACCOUNTS_OPEN_STR);
+        itemChoiceViewAccountStrings.Add(VIEW_ACCOUNTS_FAVORITES_STR);
     }
-
-    if (get_string_id.IsEmpty())
-        return itemChoiceViewAccountStrings;
-    
-    wxArrayString onerowArrayString;
-    for(size_t i=0; i<itemChoiceViewAccountStrings.Count(); i++)
+    if (!input_string.IsEmpty()) 
     {
-        if(get_string_id == itemChoiceViewAccountStrings[i]) {
-            onerowArrayString.Add(wxString::Format(wxT("%i"), i));
-            break;
-        }
-    };
-
-    if (onerowArrayString.IsEmpty())
-        onerowArrayString.Add(wxT("0"));
-    return onerowArrayString;
-
+	    for(size_t i = 0; i < itemChoiceViewAccountStrings.Count(); i++)
+	    {
+	        if(input_string == itemChoiceViewAccountStrings[i]) {
+	            row_id_ = i;
+	            break;
+	        }
+	    }
+    }
+    
+    return itemChoiceViewAccountStrings;
 }
 
 wxArrayString mmOptionsDialog::viewTransactionsStrings(bool translated, wxString input_string, int& row_id_) {
@@ -251,22 +246,18 @@ wxArrayString mmOptionsDialog::viewTransactionsStrings(bool translated, wxString
         itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_MONTH_STR);
         itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_3MONTHS_STR);
 
-    if (input_string.IsEmpty())
-        return (translated ? itemChoiceTranslatedViewTransStrings : itemChoiceViewTransStrings);
-    
-    wxArrayString onerowArrayString;
-    for(size_t i=0; i<itemChoiceViewTransStrings.Count(); i++)
+    if (!input_string.IsEmpty()) 
     {
-        if(input_string == (translated ? itemChoiceTranslatedViewTransStrings[i] : itemChoiceViewTransStrings[i])) {
-            onerowArrayString.Add((translated ? itemChoiceTranslatedViewTransStrings[i] : itemChoiceViewTransStrings[i]));
-            row_id_ = i;
-            break;
-        }
-    };
-
-    if (onerowArrayString.IsEmpty())
-        onerowArrayString.Add((translated ? itemChoiceTranslatedViewTransStrings[0] : itemChoiceViewTransStrings[0]));
-    return onerowArrayString;
+	    for(size_t i=0; i<itemChoiceViewTransStrings.Count(); i++)
+	    {
+	        if(input_string == (translated ? itemChoiceTranslatedViewTransStrings[i] : itemChoiceViewTransStrings[i])) {
+	            row_id_ = i;
+	            break;
+	        }
+	    }
+	}
+    
+    return (translated ? itemChoiceTranslatedViewTransStrings : itemChoiceViewTransStrings);
 }
 
 void mmOptionsDialog::CreateControls()
@@ -455,15 +446,16 @@ void mmOptionsDialog::CreateControls()
         _("Accounts Visible"), wxDefaultPosition, wxDefaultSize, 0);
     accountStaticBoxSizer->Add(accountStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxArrayString itemChoiceViewAccountTranslatedStrings = viewAccountStrings(true, wxEmptyString);
+    int row_id_ = 0;
+    wxArrayString itemChoiceViewAccountTranslatedStrings = viewAccountStrings(true, wxEmptyString, row_id_);
     
     choiceVisible_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_VIEW_ACCOUNTS,
         wxDefaultPosition, wxDefaultSize, itemChoiceViewAccountTranslatedStrings);
     accountStaticBoxSizer->Add(choiceVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     
-    wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), wxT("ALL"));
-    wxArrayString itemChoiceViewAccountStrings = viewAccountStrings(false, vAccts);
-    choiceVisible_->SetSelection(wxAtoi(itemChoiceViewAccountStrings[0]));
+    wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), VIEW_ACCOUNTS_ALL_STR);
+    wxArrayString itemChoiceViewAccountStrings = viewAccountStrings(false, vAccts, row_id_);
+    choiceVisible_->SetSelection(row_id_);
          
     choiceVisible_->SetToolTip(_("Specify which accounts are visible"));
 
@@ -478,7 +470,6 @@ void mmOptionsDialog::CreateControls()
     transOptionStaticBoxSizer->Add(transVisibleStaticText, 0,
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    int row_id_;
     wxArrayString itemChoiceViewTransStrings = viewTransactionsStrings(true, wxEmptyString, row_id_); 
 
     choiceTransVisible_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, wxSize(220,-1),
@@ -1095,14 +1086,15 @@ void mmOptionsDialog::OnDelimiterSelectedT(wxCommandEvent& /*event*/)
 void mmOptionsDialog::SaveViewAccountOptions()
 {
     int selection = choiceVisible_->GetSelection();
-    wxArrayString viewAcct = viewAccountStrings(false, wxEmptyString);
+    int row_id_ = 0;
+    wxArrayString viewAcct = viewAccountStrings(false, wxEmptyString, row_id_);
     mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWACCOUNTS"), viewAcct[selection]);
 }
 
 void mmOptionsDialog::SaveViewTransactionOptions()
 {
     int selection = choiceTransVisible_->GetSelection();
-    int row_id_;
+    int row_id_ =0;
     wxArrayString ViewTransaction = viewTransactionsStrings(false, wxEmptyString, row_id_);
     mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), ViewTransaction[selection]);
     wxSafeShowMessage(wxT("write"), ViewTransaction[selection]);
