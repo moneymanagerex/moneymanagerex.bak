@@ -87,13 +87,12 @@ private:
 
     bool restartRequired_;
     int currencyId_;
-    int row_id_;
     wxString dateFormat_;
     wxString currentLanguage_;
     wxArrayString itemChoiceStrings();
     wxArrayString DateFormats();
     wxArrayString viewAccountStrings(bool translated, wxString get_string_id);
-    wxArrayString viewTransactionsStrings(bool translated, wxString input_string);
+    wxArrayString viewTransactionsStrings(bool translated, wxString input_string, int& row_id);
 
     /// Dialog Creation - Used by constructor
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_MMOPTIONSDIALOG_IDNAME, 

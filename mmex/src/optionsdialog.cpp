@@ -224,13 +224,13 @@ wxArrayString mmOptionsDialog::viewAccountStrings(bool translated, wxString get_
 
 }
 
-wxArrayString mmOptionsDialog::viewTransactionsStrings(bool translated, wxString input_string) {
+wxArrayString mmOptionsDialog::viewTransactionsStrings(bool translated, wxString input_string, int& row_id_) {
 
     wxArrayString itemChoiceTranslatedViewTransStrings;
     
         itemChoiceTranslatedViewTransStrings.Add(_("View All Transactions"));
         itemChoiceTranslatedViewTransStrings.Add(_("View Reconciled"));
-        itemChoiceTranslatedViewTransStrings.Add(_("Vlew All - Except Reconciled"));
+        itemChoiceTranslatedViewTransStrings.Add(_("View Not-Reconciled"));
         itemChoiceTranslatedViewTransStrings.Add(_("View UnReconciled"));
         itemChoiceTranslatedViewTransStrings.Add(_("View Today"));
         itemChoiceTranslatedViewTransStrings.Add(_("View Current Month"));
@@ -240,16 +240,16 @@ wxArrayString mmOptionsDialog::viewTransactionsStrings(bool translated, wxString
         itemChoiceTranslatedViewTransStrings.Add(_("View Last 3 Months"));
     
     wxArrayString itemChoiceViewTransStrings;
-        itemChoiceViewTransStrings.Add(wxT("View All Transactions"));
-        itemChoiceViewTransStrings.Add(wxT("View Reconciled"));
-        itemChoiceViewTransStrings.Add(wxT("Vlew All - Except Reconciled"));
-        itemChoiceViewTransStrings.Add(wxT("View UnReconciled"));
-        itemChoiceViewTransStrings.Add(wxT("View Today"));
-        itemChoiceViewTransStrings.Add(wxT("View Current Month"));
-        itemChoiceViewTransStrings.Add(wxT("View Last 30 days"));
-        itemChoiceViewTransStrings.Add(wxT("View Last 90 days"));
-        itemChoiceViewTransStrings.Add(wxT("View Last Month"));
-        itemChoiceViewTransStrings.Add(wxT("View Last 3 Months"));
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_ALL_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_RECONCILED_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_NOT_RECONCILED_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_UNRECONCILED_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_TODAY_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_CURRENT_MONTH_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_30_DAYS_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_90_DAYS_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_MONTH_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_3MONTHS_STR);
 
     if (input_string.IsEmpty())
         return (translated ? itemChoiceTranslatedViewTransStrings : itemChoiceViewTransStrings);
@@ -478,14 +478,15 @@ void mmOptionsDialog::CreateControls()
     transOptionStaticBoxSizer->Add(transVisibleStaticText, 0,
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxArrayString itemChoiceViewTransStrings = viewTransactionsStrings(true, wxEmptyString); 
+    int row_id_;
+    wxArrayString itemChoiceViewTransStrings = viewTransactionsStrings(true, wxEmptyString, row_id_); 
 
     choiceTransVisible_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, wxSize(220,-1),
         itemChoiceViewTransStrings);
     transOptionStaticBoxSizer->Add(choiceTransVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxString vTrans = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
-    wxArrayString itemChoiceViewTransactionsString = viewTransactionsStrings(false, vTrans);
+    wxArrayString itemChoiceViewTransactionsString = viewTransactionsStrings(false, vTrans, row_id_);
     choiceTransVisible_->SetSelection(row_id_);
     choiceTransVisible_->SetToolTip(_("Specify which transactions are visible by default"));
 
@@ -1101,9 +1102,10 @@ void mmOptionsDialog::SaveViewAccountOptions()
 void mmOptionsDialog::SaveViewTransactionOptions()
 {
     int selection = choiceTransVisible_->GetSelection();
-    wxArrayString ViewTransaction = viewTransactionsStrings(false, wxEmptyString);
+    int row_id_;
+    wxArrayString ViewTransaction = viewTransactionsStrings(false, wxEmptyString, row_id_);
     mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), ViewTransaction[selection]);
-    //wxSafeShowMessage(wxT("write"), ViewTransaction[selection]);
+    wxSafeShowMessage(wxT("write"), ViewTransaction[selection]);
 }
 
 void mmOptionsDialog::SaveFinancialYearStart()
