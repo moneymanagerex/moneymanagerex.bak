@@ -84,6 +84,10 @@ const wxString VIEW_TRANS_LAST_90_DAYS_STR   = wxT("View 90 days");
 const wxString VIEW_TRANS_LAST_MONTH_STR     = wxT("View Last Month");
 const wxString VIEW_TRANS_LAST_3MONTHS_STR   = wxT("View Last 3 Months");
 
+const wxString  VIEW_ACCOUNTS_ALL_STR       = wxT("ALL");
+const wxString  VIEW_ACCOUNTS_OPEN_STR      = wxT("Open");
+const wxString  VIEW_ACCOUNTS_FAVORITES_STR = wxT("Favorites");
+
 const wxString INIDB_UPDATE_CURRENCY_RATE   = wxT("UPDATECURRENCYRATE");
 const wxString INIDB_USE_TRANSACTION_SOUND  = wxT("USETRANSSOUND");
 const wxString INIDB_USE_ORG_DATE_COPYPASTE = wxT("USEORIGDATEONCOPYPASTE");
@@ -96,7 +100,7 @@ const wxString INIDB_IGNORE_FUTURE_TRANSACTIONS   = wxT("IGNORE_FUTURE_TRANSACTI
 
 const wxString TIPS_BANKS  = wxT("checkingpanel");
 const wxString TIPS_BILLS  = wxT("billsdeposits");
-const wxString TIPS_STOCK = wxT("investment");
+const wxString TIPS_STOCK  = wxT("investment");
 const wxString TIPS_ASSETS = wxT("assets");
 
 void mmShowErrorMessageInvalid( wxWindow *parent, const wxString &message );
