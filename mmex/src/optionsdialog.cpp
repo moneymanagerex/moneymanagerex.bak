@@ -196,6 +196,8 @@ wxArrayString mmOptionsDialog::itemChoiceStrings() {
 wxArrayString mmOptionsDialog::viewAccountStrings(bool translated, wxString input_string, int& row_id_) {
 
     wxArrayString itemChoiceViewAccountStrings;
+    row_id_ = 0;
+    
     if (translated) {
         itemChoiceViewAccountStrings.Add(_("All"));
         itemChoiceViewAccountStrings.Add(_("Open"));
@@ -221,6 +223,7 @@ wxArrayString mmOptionsDialog::viewAccountStrings(bool translated, wxString inpu
 
 wxArrayString mmOptionsDialog::viewTransactionsStrings(bool translated, wxString input_string, int& row_id_) {
 
+    row_id_ = 0;
     wxArrayString itemChoiceTranslatedViewTransStrings;
     
         itemChoiceTranslatedViewTransStrings.Add(_("View All Transactions"));
@@ -462,19 +465,25 @@ void mmOptionsDialog::CreateControls()
     // Transaction View options
     wxStaticBox* transOptionStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Transaction View Options"));
     transOptionStaticBox->SetFont(staticBoxFontSetting);
+
+
     wxBoxSizer* transOptionStaticBoxSizer = new wxStaticBoxSizer(transOptionStaticBox, wxHORIZONTAL);
     viewsPanelSizer->Add(transOptionStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
+    wxFlexGridSizer* dateFormatSettingStaticBoxSizerGrid2 = new wxFlexGridSizer(1,2,0,5);
+    transOptionStaticBoxSizer->Add(dateFormatSettingStaticBoxSizerGrid2);
+
+
     wxStaticText* transVisibleStaticText = new wxStaticText(viewsPanel, wxID_STATIC,
         _("Transactions Visible"), wxDefaultPosition, wxDefaultSize, 0);
-    transOptionStaticBoxSizer->Add(transVisibleStaticText, 0,
+    dateFormatSettingStaticBoxSizerGrid2->Add(transVisibleStaticText, 0,
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
     wxArrayString itemChoiceViewTransStrings = viewTransactionsStrings(true, wxEmptyString, row_id_); 
 
     choiceTransVisible_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, wxSize(220,-1),
         itemChoiceViewTransStrings);
-    transOptionStaticBoxSizer->Add(choiceTransVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    dateFormatSettingStaticBoxSizerGrid2->Add(choiceTransVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxString vTrans = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
     wxArrayString itemChoiceViewTransactionsString = viewTransactionsStrings(false, vTrans, row_id_);
@@ -1097,7 +1106,7 @@ void mmOptionsDialog::SaveViewTransactionOptions()
     int row_id_ =0;
     wxArrayString ViewTransaction = viewTransactionsStrings(false, wxEmptyString, row_id_);
     mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), ViewTransaction[selection]);
-    wxSafeShowMessage(wxT("write"), ViewTransaction[selection]);
+    //wxSafeShowMessage(wxT("write"), ViewTransaction[selection]);
 }
 
 void mmOptionsDialog::SaveFinancialYearStart()
