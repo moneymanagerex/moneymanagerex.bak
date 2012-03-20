@@ -955,8 +955,13 @@ void mmCheckingPanel::setAccountSummary()
     mmex::formatDoubleToCurrency(filteredBalance_, filteredBalanceStr);
 
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
-    wxString lbl  = wxString::Format(_("Account Bal: %s      Reconciled Bal: %s      Diff: %s      Displayed Bal: %s"),
-                    balance.c_str(), recbalance.c_str(), diffbal.c_str(), filteredBalanceStr.c_str());
+    wxString lbl  = wxString::Format(_("Account Bal: %s      Reconciled Bal: %s      Diff: %s"),
+                    balance.c_str(), recbalance.c_str(), diffbal.c_str());
+    if (transFilterActive_ || (m_currentView != VIEW_TRANS_ALL_STR))
+    {
+        wxString displayedBal = wxString::Format(_("      Displayed Bal: %s"), filteredBalanceStr.c_str());
+        lbl << displayedBal;
+    }
     header->SetLabel(lbl);
 }
 //----------------------------------------------------------------------------
