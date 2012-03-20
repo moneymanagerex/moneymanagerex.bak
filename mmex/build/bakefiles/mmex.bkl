@@ -70,8 +70,8 @@
 	</data-files>
 
         <data-files>
-	    <install-to>$(DATADIR)/doc/mmex/help/english</install-to>
-	    <srcdir>$(SRCDIR)/doc/help/english</srcdir>
+	    <install-to>$(DATADIR)/doc/mmex/help/german</install-to>
+	    <srcdir>$(SRCDIR)/doc/help/german</srcdir>
 	    <files>*</files>
 	</data-files>
         <data-files>
@@ -167,25 +167,7 @@
 	    <files>*.png</files>
 	</data-files>
 
-	<data-files>
-	    <install-to>$(PREFIX)/mmex/help</install-to>
-	    <srcdir>$(SRCDIR)/doc/help</srcdir>
-	    <files>*.jpg</files>
-	</data-files>
-
-	<data-files>
-	    <install-to>$(PREFIX)/mmex/help/index_fichiers</install-to>
-	    <srcdir>$(SRCDIR)/doc/help/index_fichiers</srcdir>
-	    <files>*.png</files>
-	</data-files>
-
 	<!-- po/* -> mmex/po -->
-
-	<data-files>
-	    <install-to>$(PREFIX)/mmex/po</install-to>
-	    <srcdir>$(SRCDIR)/po</srcdir>
-	    <files>*.po</files>
-	</data-files>
 
 	<data-files>
 	    <install-to>$(PREFIX)/mmex/po</install-to>
@@ -194,7 +176,6 @@
 	</data-files>
 
     </if>
-
     
     <!-- generation of translation files -->
 
