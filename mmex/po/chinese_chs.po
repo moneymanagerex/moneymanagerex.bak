@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Money Manager Ex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-13 15:06+0300\n"
-"PO-Revision-Date: 2012-03-13 15:07+0300\n"
+"POT-Creation-Date: 2012-03-20 11:58+0300\n"
+"PO-Revision-Date: 2012-03-20 11:58+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: TheZeal Software <Kyosuketam>\n"
 "Language: \n"
@@ -128,7 +128,7 @@ msgid "( Estimated Vs Actual )"
 msgstr "（预计对比实际）"
 
 #: src/reportbudgetcategorysummary.cpp:115
-#: src/mmhomepagepanel.cpp:644
+#: src/mmhomepagepanel.cpp:661
 #: src/categdialog.cpp:249
 #: src/reporttransactions.cpp:74
 #: src/reportbudgetingperf.cpp:118
@@ -140,14 +140,14 @@ msgid "Sub Category"
 msgstr "子分类"
 
 #: src/reportbudgetcategorysummary.cpp:117
-msgid "Frequency"
-msgstr "重复"
-
-#: src/reportbudgetcategorysummary.cpp:118
-#: src/mmhomepagepanel.cpp:436
+#: src/mmhomepagepanel.cpp:453
 #: src/reporttransactions.cpp:76
 msgid "Amount"
 msgstr "总额"
+
+#: src/reportbudgetcategorysummary.cpp:118
+msgid "Frequency"
+msgstr "重复"
 
 #: src/reportbudgetcategorysummary.cpp:119
 #: src/reportbudgetingperf.cpp:196
@@ -161,34 +161,34 @@ msgstr "估计"
 msgid "Actual"
 msgstr "实际"
 
-#: src/reportbudgetcategorysummary.cpp:308
+#: src/reportbudgetcategorysummary.cpp:309
 #, fuzzy
 msgid "Estimated Income: "
 msgstr "估计收入：实际收入："
 
-#: src/reportbudgetcategorysummary.cpp:309
+#: src/reportbudgetcategorysummary.cpp:310
 #, fuzzy
 msgid "Actual Income: "
 msgstr "收入："
 
-#: src/reportbudgetcategorysummary.cpp:310
+#: src/reportbudgetcategorysummary.cpp:311
 #, fuzzy
-msgid "Diference Income: "
+msgid "Difference Income: "
 msgstr "差额："
 
-#: src/reportbudgetcategorysummary.cpp:312
+#: src/reportbudgetcategorysummary.cpp:313
 #, fuzzy
 msgid "Estimated Expenses: "
 msgstr "估计支出：实际支出："
 
-#: src/reportbudgetcategorysummary.cpp:313
+#: src/reportbudgetcategorysummary.cpp:314
 #, fuzzy
 msgid "Actual Expenses: "
 msgstr "支出："
 
-#: src/reportbudgetcategorysummary.cpp:314
+#: src/reportbudgetcategorysummary.cpp:315
 #, fuzzy
-msgid "Diference Expenses: "
+msgid "Difference Expenses: "
 msgstr "其它支出"
 
 #: src/mmhomepagepanel.cpp:89
@@ -208,126 +208,132 @@ msgstr "盈亏"
 msgid "Total"
 msgstr "总计："
 
-#: src/mmhomepagepanel.cpp:123
+#: src/mmhomepagepanel.cpp:112
+#: src/mmhomepagepanel.cpp:312
+msgid "Stocks Total:"
+msgstr "总计："
+
+#: src/mmhomepagepanel.cpp:132
 msgid "Bank Account"
 msgstr "银行账户"
 
-#: src/mmhomepagepanel.cpp:172
+#: src/mmhomepagepanel.cpp:184
 #, fuzzy
 msgid "Bank Accounts Total:"
 msgstr "银行账户总计"
 
-#: src/mmhomepagepanel.cpp:182
+#: src/mmhomepagepanel.cpp:195
 msgid "Term Account"
 msgstr "条款账户"
 
-#: src/mmhomepagepanel.cpp:232
+#: src/mmhomepagepanel.cpp:246
 #, fuzzy
 msgid "Term Accounts Total:"
 msgstr "条款账户总计"
 
-#: src/mmhomepagepanel.cpp:246
+#: src/mmhomepagepanel.cpp:260
 msgid "Stocks"
 msgstr "股票"
 
-#: src/mmhomepagepanel.cpp:298
-msgid "Stocks Total:"
-msgstr "总计："
-
-#: src/mmhomepagepanel.cpp:315
-#: src/mmhomepagepanel.cpp:798
+#: src/mmhomepagepanel.cpp:329
+#: src/mmhomepagepanel.cpp:815
 msgid "Assets"
 msgstr "资产"
 
-#: src/mmhomepagepanel.cpp:373
+#: src/mmhomepagepanel.cpp:387
 msgid "Currency"
 msgstr "货币"
 
-#: src/mmhomepagepanel.cpp:374
+#: src/mmhomepagepanel.cpp:388
 msgid "Base Rate"
 msgstr "汇率"
 
-#: src/mmhomepagepanel.cpp:375
-#: src/mmhomepagepanel.cpp:646
+#: src/mmhomepagepanel.cpp:389
+#: src/mmhomepagepanel.cpp:663
 msgid "Summary"
 msgstr "摘要"
 
-#: src/mmhomepagepanel.cpp:421
-msgid "Income vs Expenses: "
-msgstr "收支情况"
-
-#: src/mmhomepagepanel.cpp:421
+#: src/mmhomepagepanel.cpp:435
 msgid "Current Month"
 msgstr "本月"
 
-#: src/mmhomepagepanel.cpp:435
+#: src/mmhomepagepanel.cpp:436
+#, fuzzy
+msgid "Current Month to Date"
+msgstr "本月"
+
+#: src/mmhomepagepanel.cpp:438
+msgid "Income vs Expenses: "
+msgstr "收支情况"
+
+#: src/mmhomepagepanel.cpp:452
 #: src/reporttransactions.cpp:75
 #: src/reportbudgetingperf.cpp:119
 msgid "Type"
 msgstr "分类"
 
-#: src/mmhomepagepanel.cpp:440
+#: src/mmhomepagepanel.cpp:457
 msgid "Income:"
 msgstr "收入："
 
-#: src/mmhomepagepanel.cpp:445
+#: src/mmhomepagepanel.cpp:462
 msgid "Expenses:"
 msgstr "支出："
 
-#: src/mmhomepagepanel.cpp:451
+#: src/mmhomepagepanel.cpp:468
 msgid "Difference:"
 msgstr "差额："
 
-#: src/mmhomepagepanel.cpp:499
+#: src/mmhomepagepanel.cpp:516
 msgid " days remaining"
 msgstr "日 - 到期"
 
-#: src/mmhomepagepanel.cpp:504
-#: src/mmhomepagepanel.cpp:511
+#: src/mmhomepagepanel.cpp:521
+#: src/mmhomepagepanel.cpp:528
 msgid "Inactive"
 msgstr "非活跃"
 
-#: src/mmhomepagepanel.cpp:509
+#: src/mmhomepagepanel.cpp:526
 msgid " days overdue!"
 msgstr "日 - 过期"
 
-#: src/mmhomepagepanel.cpp:559
+#: src/mmhomepagepanel.cpp:576
 msgid "Upcoming Transactions"
 msgstr "将进行的交易"
 
-#: src/mmhomepagepanel.cpp:639
+#: src/mmhomepagepanel.cpp:656
 msgid "Top Withdrawals: "
 msgstr "支出"
 
-#: src/mmhomepagepanel.cpp:639
+#: src/mmhomepagepanel.cpp:656
 msgid "Last 30 Days"
 msgstr "最近30天"
 
-#: src/mmhomepagepanel.cpp:645
+#: src/mmhomepagepanel.cpp:662
 msgid "Quantity"
 msgstr ""
 
-#: src/mmhomepagepanel.cpp:684
+#: src/mmhomepagepanel.cpp:701
 msgid "Transaction Statistics"
 msgstr "交易明细"
 
-#: src/mmhomepagepanel.cpp:689
+#: src/mmhomepagepanel.cpp:706
 msgid "Follow Up On Transactions: "
 msgstr "需跟进的交易"
 
-#: src/mmhomepagepanel.cpp:695
+#: src/mmhomepagepanel.cpp:712
 msgid "Total Transactions: "
 msgstr "交易笔数"
 
-#: src/mmhomepagepanel.cpp:710
+#: src/mmhomepagepanel.cpp:727
 msgid "Grand Total:"
 msgstr "总计："
 
-#: src/mmhomepagepanel.cpp:730
+#: src/mmhomepagepanel.cpp:747
 msgid "Today's Date: "
 msgstr "今天的日期："
 
-#: src/mmhomepagepanel.cpp:792
+#: src/mmhomepagepanel.cpp:809
 msgid "Repeating Transactions"
 msgstr "定期交易"
 
@@ -1629,7 +1635,7 @@ msgid "App"
 msgstr ""
 
 #: src/reportincexpenses.cpp:48
-#: src/mmex.cpp:1252
+#: src/mmex.cpp:1255
 msgid "Income vs Expenses"
 msgstr "收支情况"
 
@@ -1768,15 +1774,15 @@ msgstr ""
 
 #: src/mmex.cpp:732
 #: src/mmex.cpp:1048
-#: src/optionsdialog.cpp:541
-#: src/optionsdialog.cpp:561
+#: src/optionsdialog.cpp:530
+#: src/optionsdialog.cpp:550
 msgid "Bank Accounts"
 msgstr "银行账户"
 
 #: src/mmex.cpp:733
 #: src/mmex.cpp:1056
-#: src/optionsdialog.cpp:548
-#: src/optionsdialog.cpp:568
+#: src/optionsdialog.cpp:537
+#: src/optionsdialog.cpp:557
 msgid "Term Accounts"
 msgstr "条款账户"
 
@@ -1793,8 +1799,8 @@ msgid "Home Page"
 msgstr "主页"
 
 #: src/mmex.cpp:1083
-#: src/mmex.cpp:1576
-#: src/mmex.cpp:2746
+#: src/mmex.cpp:1579
+#: src/mmex.cpp:2774
 msgid "Budget Setup"
 msgstr "预算管理"
 
@@ -1811,887 +1817,912 @@ msgid "Summary of Accounts"
 msgstr "所有账户汇总"
 
 #: src/mmex.cpp:1140
-#: src/mmex.cpp:1879
+#: src/mmex.cpp:1892
 msgid "Where the Money Goes"
 msgstr "按类别查看资金走向"
 
 #: src/mmex.cpp:1143
-#: src/mmex.cpp:1171
-#: src/mmex.cpp:1199
-#: src/mmex.cpp:1227
-#: src/mmex.cpp:1255
+#: src/mmex.cpp:1174
+#: src/mmex.cpp:1202
+#: src/mmex.cpp:1230
+#: src/mmex.cpp:1258
 msgid "Last Calendar Month"
 msgstr "上月"
-
-#: src/mmex.cpp:1152
-#: src/mmex.cpp:1180
-#: src/mmex.cpp:1208
-#: src/mmex.cpp:1236
-#: src/mmex.cpp:1264
-msgid "Last Year"
-msgstr "上年"
 
 #: src/mmex.cpp:1155
 #: src/mmex.cpp:1183
 #: src/mmex.cpp:1211
 #: src/mmex.cpp:1239
 #: src/mmex.cpp:1267
+msgid "Last Year"
+msgstr "上年"
+
+#: src/mmex.cpp:1158
+#: src/mmex.cpp:1186
+#: src/mmex.cpp:1214
+#: src/mmex.cpp:1242
+#: src/mmex.cpp:1270
 msgid "Current Year"
 msgstr "本年"
-
-#: src/mmex.cpp:1160
-#: src/mmex.cpp:1188
-#: src/mmex.cpp:1216
-#: src/mmex.cpp:1244
-#: src/mmex.cpp:1272
-msgid "Last Financial Year"
-msgstr "上财年"
 
 #: src/mmex.cpp:1163
 #: src/mmex.cpp:1191
 #: src/mmex.cpp:1219
 #: src/mmex.cpp:1247
 #: src/mmex.cpp:1275
+msgid "Last Financial Year"
+msgstr "上财年"
+
+#: src/mmex.cpp:1166
+#: src/mmex.cpp:1194
+#: src/mmex.cpp:1222
+#: src/mmex.cpp:1250
+#: src/mmex.cpp:1278
 msgid "Current Financial Year"
 msgstr "本财年"
 
-#: src/mmex.cpp:1168
-#: src/mmex.cpp:1781
+#: src/mmex.cpp:1171
+#: src/mmex.cpp:1789
 msgid "Where the Money Comes From"
 msgstr "资金走向"
 
-#: src/mmex.cpp:1224
+#: src/mmex.cpp:1227
 #, fuzzy
 msgid "Payees"
 msgstr "收款人"
 
-#: src/mmex.cpp:1279
-#: src/mmex.cpp:2067
+#: src/mmex.cpp:1282
+#: src/mmex.cpp:2090
 msgid "Income vs Expenses - All Time"
 msgstr "收支 - 全部"
 
-#: src/mmex.cpp:1283
+#: src/mmex.cpp:1286
 msgid "Transaction Report"
 msgstr "交易报表"
 
-#: src/mmex.cpp:1303
-#: src/mmex.cpp:1558
+#: src/mmex.cpp:1306
+#: src/mmex.cpp:1561
 msgid "Budget Performance"
 msgstr "预算执行情况"
 
-#: src/mmex.cpp:1306
-#: src/mmex.cpp:1567
+#: src/mmex.cpp:1309
+#: src/mmex.cpp:1570
 msgid "Budget Category Summary"
 msgstr "预算分类摘要"
 
-#: src/mmex.cpp:1334
-#: src/mmex.cpp:3431
+#: src/mmex.cpp:1337
+#: src/mmex.cpp:3459
 msgid "Cash Flow"
 msgstr "现金流"
 
-#: src/mmex.cpp:1337
+#: src/mmex.cpp:1340
 msgid "Cash Flow - With Bank Accounts"
 msgstr "现金流 - 银行帐户"
 
-#: src/mmex.cpp:1342
+#: src/mmex.cpp:1345
 msgid "Cash Flow - With Term Accounts"
 msgstr "现金流 - Term Accounts"
 
-#: src/mmex.cpp:1346
+#: src/mmex.cpp:1349
 msgid "Cash Flow - Specific Accounts"
 msgstr "现金流 - 特定帐户"
 
-#: src/mmex.cpp:1355
+#: src/mmex.cpp:1358
 msgid "Help"
 msgstr "帮助"
 
-#: src/mmex.cpp:1552
+#: src/mmex.cpp:1555
 msgid "Budget report being generated... Please wait."
 msgstr ""
 
-#: src/mmex.cpp:1681
+#: src/mmex.cpp:1684
 #, fuzzy
 msgid "Category Report"
 msgstr "分类"
 
-#: src/mmex.cpp:1681
+#: src/mmex.cpp:1684
 msgid "Category Report being generated... Please wait."
 msgstr ""
 
-#: src/mmex.cpp:1701
+#: src/mmex.cpp:1704
 msgid "Categories - Last Calendar Month"
 msgstr "上个财月"
 
-#: src/mmex.cpp:1712
+#: src/mmex.cpp:1715
 msgid "Categories - Last 30 Days"
 msgstr "最近30天"
 
-#: src/mmex.cpp:1723
+#: src/mmex.cpp:1726
 msgid "Categories - Current Month"
 msgstr "本月"
 
-#: src/mmex.cpp:1738
+#: src/mmex.cpp:1729
+#, fuzzy
+msgid "Categories - Current Month to Date"
+msgstr "本月"
+
+#: src/mmex.cpp:1746
 msgid "Categories - Last Year"
 msgstr "上一年"
 
-#: src/mmex.cpp:1753
+#: src/mmex.cpp:1761
 msgid "Categories - Current Year"
 msgstr "本年"
 
-#: src/mmex.cpp:1763
+#: src/mmex.cpp:1771
 msgid "Categories - Last Financial Year"
 msgstr "上一财年"
 
-#: src/mmex.cpp:1772
+#: src/mmex.cpp:1780
 msgid "Categories - Current Financial Year"
 msgstr "本财年"
 
-#: src/mmex.cpp:1798
+#: src/mmex.cpp:1806
 msgid "Where the Money Comes From - Last Calendar Month"
 msgstr "上个财月"
 
-#: src/mmex.cpp:1809
+#: src/mmex.cpp:1817
 msgid "Where the Money Comes From - Last 30 days"
 msgstr "最近30天"
 
-#: src/mmex.cpp:1820
+#: src/mmex.cpp:1828
 msgid "Where the Money Comes From - Current Month"
 msgstr "本月"
 
-#: src/mmex.cpp:1835
+#: src/mmex.cpp:1831
+#, fuzzy
+msgid "Where the Money Comes From - Current Month to Date"
+msgstr "本月"
+
+#: src/mmex.cpp:1848
 msgid "Where the Money Comes From - Last year"
 msgstr "上一年"
 
-#: src/mmex.cpp:1850
+#: src/mmex.cpp:1863
 msgid "Where the Money Comes From - Current Year"
 msgstr "本年"
 
-#: src/mmex.cpp:1860
+#: src/mmex.cpp:1873
 msgid "Where the Money Comes From - Last Financial Year"
 msgstr "上一财年"
 
-#: src/mmex.cpp:1870
+#: src/mmex.cpp:1883
 msgid "Where the Money Comes From - Current Financial Year"
 msgstr "本财年"
 
-#: src/mmex.cpp:1896
+#: src/mmex.cpp:1909
 msgid "Where the Money Goes - Last Calendar Month"
 msgstr "上个财月"
 
-#: src/mmex.cpp:1907
+#: src/mmex.cpp:1920
 msgid "Where the Money Goes - Last 30 Days"
 msgstr "最近30天"
 
-#: src/mmex.cpp:1918
+#: src/mmex.cpp:1931
 msgid "Where the Money Goes - Current Month"
 msgstr "本月"
 
-#: src/mmex.cpp:1933
+#: src/mmex.cpp:1934
+#, fuzzy
+msgid "Where the Money Goes - Current Month to Date"
+msgstr "本月"
+
+#: src/mmex.cpp:1951
 msgid "Where the Money Goes - Last Year"
 msgstr "上一年"
 
-#: src/mmex.cpp:1948
+#: src/mmex.cpp:1966
 msgid "Where the Money Goes - Current Year"
 msgstr "本年"
 
-#: src/mmex.cpp:1958
+#: src/mmex.cpp:1976
 msgid "Where the Money Goes - Last Financial Year"
 msgstr "上一财年"
 
-#: src/mmex.cpp:1967
+#: src/mmex.cpp:1985
 msgid "Where the Money Goes - Current Financial Year"
 msgstr "本财年"
 
-#: src/mmex.cpp:2000
+#: src/mmex.cpp:2018
 msgid "Income vs Expenses - Last Calendar Month"
 msgstr "上个财月"
 
-#: src/mmex.cpp:2011
+#: src/mmex.cpp:2029
 msgid "Income vs Expenses - Last 30 Days"
 msgstr "最近30天"
 
-#: src/mmex.cpp:2022
+#: src/mmex.cpp:2040
 msgid "Income vs Expenses - Current Month"
 msgstr "本月"
 
-#: src/mmex.cpp:2074
+#: src/mmex.cpp:2043
+#, fuzzy
+msgid "Income vs Expenses - Current Month to Date"
+msgstr "本月"
+
+#: src/mmex.cpp:2097
 msgid "Payee Report"
 msgstr "收款人"
 
-#: src/mmex.cpp:2094
+#: src/mmex.cpp:2117
 msgid "Payees - Last Calendar Month"
 msgstr "上个财月"
 
-#: src/mmex.cpp:2106
+#: src/mmex.cpp:2129
 msgid "Payees - Last 30 Days"
 msgstr "最近30天"
 
-#: src/mmex.cpp:2119
+#: src/mmex.cpp:2142
 msgid "Payees - Current Month"
 msgstr "本月"
 
-#: src/mmex.cpp:2136
+#: src/mmex.cpp:2145
+#, fuzzy
+msgid "Payees - Current Month to Date"
+msgstr "本月"
+
+#: src/mmex.cpp:2164
 msgid "Payees - Last Year"
 msgstr "上一年"
 
-#: src/mmex.cpp:2153
+#: src/mmex.cpp:2181
 msgid "Payees - Current Year"
 msgstr "本年"
 
-#: src/mmex.cpp:2166
+#: src/mmex.cpp:2194
 msgid "Payees - Last Financial Year"
 msgstr "上一财年"
 
-#: src/mmex.cpp:2176
+#: src/mmex.cpp:2204
 msgid "Payees - Current Financial Year"
 msgstr "本财年"
 
-#: src/mmex.cpp:2307
+#: src/mmex.cpp:2335
 msgid "Do you really want to delete the account?"
 msgstr "您是否确认删除该账户?"
 
-#: src/mmex.cpp:2308
-#: src/mmex.cpp:4140
+#: src/mmex.cpp:2336
+#: src/mmex.cpp:4168
 msgid "Confirm Account Deletion"
 msgstr "确认删除账户"
 
-#: src/mmex.cpp:2332
+#: src/mmex.cpp:2360
 msgid "MMEX has been opened without an active database."
 msgstr ""
 
-#: src/mmex.cpp:2332
+#: src/mmex.cpp:2360
 msgid "MMEX: Menu Popup Error"
 msgstr ""
 
-#: src/mmex.cpp:2354
-#: src/mmex.cpp:2399
-#: src/mmex.cpp:2698
+#: src/mmex.cpp:2382
+#: src/mmex.cpp:2427
+#: src/mmex.cpp:2726
 msgid "&Edit Account"
 msgstr "编辑账户(&E)"
 
-#: src/mmex.cpp:2355
-#: src/mmex.cpp:2398
-#: src/mmex.cpp:2704
+#: src/mmex.cpp:2383
+#: src/mmex.cpp:2426
+#: src/mmex.cpp:2732
 msgid "&Delete Account"
 msgstr "删除账户(&D)"
 
-#: src/mmex.cpp:2360
+#: src/mmex.cpp:2388
 msgid "Import &QIF File"
 msgstr "导入QIF文件(&I)"
 
-#: src/mmex.cpp:2363
+#: src/mmex.cpp:2391
 msgid "&Launch Account Website"
 msgstr "打开账户网页(&L)"
 
-#: src/mmex.cpp:2397
-#: src/mmex.cpp:2688
+#: src/mmex.cpp:2425
+#: src/mmex.cpp:2716
 msgid "New &Account"
 msgstr "新增账户(&A)"
 
-#: src/mmex.cpp:2400
+#: src/mmex.cpp:2428
 msgid "Account &List (Home)"
 msgstr "帐户表(&L)"
 
-#: src/mmex.cpp:2409
-#: src/mmex.cpp:2413
-#: src/mmex.cpp:2599
-#: src/mmex.cpp:2605
+#: src/mmex.cpp:2437
+#: src/mmex.cpp:2441
+#: src/mmex.cpp:2627
+#: src/mmex.cpp:2633
 #, fuzzy
 msgid "&CSV Files..."
 msgstr "&CSV文件"
 
-#: src/mmex.cpp:2410
-#: src/mmex.cpp:2414
-#: src/mmex.cpp:2600
-#: src/mmex.cpp:2606
+#: src/mmex.cpp:2438
+#: src/mmex.cpp:2442
+#: src/mmex.cpp:2628
+#: src/mmex.cpp:2634
 #, fuzzy
 msgid "&QIF Files..."
 msgstr "QIF文件"
 
-#: src/mmex.cpp:2411
-#: src/mmex.cpp:2602
+#: src/mmex.cpp:2439
+#: src/mmex.cpp:2630
 msgid "&Export"
 msgstr "导出(&E)"
 
-#: src/mmex.cpp:2415
-#: src/mmex.cpp:2607
+#: src/mmex.cpp:2443
+#: src/mmex.cpp:2635
 msgid "&Import"
 msgstr "导入(&I)"
 
-#: src/mmex.cpp:2420
-#: src/optionsdialog.cpp:418
+#: src/mmex.cpp:2448
+#: src/optionsdialog.cpp:202
 msgid "All"
 msgstr "全部"
 
-#: src/mmex.cpp:2421
-#: src/mmex.cpp:2897
-#: src/optionsdialog.cpp:419
+#: src/mmex.cpp:2449
+#: src/mmex.cpp:2925
+#: src/optionsdialog.cpp:203
 msgid "Open"
 msgstr "打开"
 
-#: src/mmex.cpp:2422
-#: src/optionsdialog.cpp:420
+#: src/mmex.cpp:2450
+#: src/optionsdialog.cpp:204
 msgid "Favorites"
 msgstr "常用的"
 
-#: src/mmex.cpp:2423
-#: src/optionsdialog.cpp:413
+#: src/mmex.cpp:2451
+#: src/optionsdialog.cpp:449
 msgid "Accounts Visible"
 msgstr "账户可见"
 
-#: src/mmex.cpp:2434
+#: src/mmex.cpp:2462
 msgid "Edit Custom Report"
 msgstr "编辑自定义SQL报表"
 
-#: src/mmex.cpp:2435
+#: src/mmex.cpp:2463
 msgid "Delete Custom Report"
 msgstr "删除自定义SQL报表"
 
-#: src/mmex.cpp:2579
+#: src/mmex.cpp:2607
 msgid "&New Database\tCtrl-N"
 msgstr "新建数据库(&N)\tCtrl-N"
 
-#: src/mmex.cpp:2579
-#: src/mmex.cpp:2896
-#: src/mmex.cpp:4432
+#: src/mmex.cpp:2607
+#: src/mmex.cpp:2924
+#: src/mmex.cpp:4460
 msgid "New Database"
 msgstr "新建数据库"
 
-#: src/mmex.cpp:2581
+#: src/mmex.cpp:2609
 msgid "&Open Database\tCtrl-O"
 msgstr "打开数据库(&O)\tCtrl-O"
 
-#: src/mmex.cpp:2581
-#: src/mmex.cpp:2897
+#: src/mmex.cpp:2609
+#: src/mmex.cpp:2925
 msgid "Open Database"
 msgstr "打开数据库"
 
-#: src/mmex.cpp:2583
+#: src/mmex.cpp:2611
 msgid "Save Database &As"
 msgstr "另存数据库(&A)"
 
-#: src/mmex.cpp:2583
+#: src/mmex.cpp:2611
 msgid "Save Database As"
 msgstr "保存数据库"
 
-#: src/mmex.cpp:2591
+#: src/mmex.cpp:2619
 msgid "&Recent Files..."
 msgstr "最近打开的文件"
 
-#: src/mmex.cpp:2593
+#: src/mmex.cpp:2621
 msgid "&Clear Recent Files"
 msgstr "清除最近打开文件纪录"
 
-#: src/mmex.cpp:2599
+#: src/mmex.cpp:2627
 msgid "Export to CSV"
 msgstr "导出CSV文件"
 
-#: src/mmex.cpp:2601
+#: src/mmex.cpp:2629
 msgid "&Report to HTML"
 msgstr "HTML报表(&R)"
 
-#: src/mmex.cpp:2601
+#: src/mmex.cpp:2629
 msgid "Export to HTML"
 msgstr "导出HTML文件"
 
-#: src/mmex.cpp:2605
+#: src/mmex.cpp:2633
 msgid "Import from any CSV file"
 msgstr "导入CSV文件"
 
-#: src/mmex.cpp:2606
+#: src/mmex.cpp:2634
 msgid "Import from QIF"
 msgstr "导入QIF文件"
 
-#: src/mmex.cpp:2612
+#: src/mmex.cpp:2640
 msgid "Page Set&up..."
 msgstr "页面设置...(&u)"
 
-#: src/mmex.cpp:2612
+#: src/mmex.cpp:2640
 msgid "Setup page printing options"
 msgstr "设置打印选项"
 
-#: src/mmex.cpp:2618
-#: src/mmex.cpp:2624
+#: src/mmex.cpp:2646
+#: src/mmex.cpp:2652
 msgid "Current &View"
 msgstr "当前显示(&V)"
 
-#: src/mmex.cpp:2618
+#: src/mmex.cpp:2646
 msgid "Preview current report"
 msgstr "预览当前报告"
 
-#: src/mmex.cpp:2620
+#: src/mmex.cpp:2648
 msgid "Print Pre&view..."
 msgstr "打印预览...(&v)"
 
-#: src/mmex.cpp:2624
+#: src/mmex.cpp:2652
 msgid "Print current report"
 msgstr "打印当前报告"
 
-#: src/mmex.cpp:2627
+#: src/mmex.cpp:2655
 msgid "&Print..."
 msgstr "打印...(&P)"
 
-#: src/mmex.cpp:2632
+#: src/mmex.cpp:2660
 msgid "E&xit\tAlt-X"
 msgstr "退出(&x)\tAlt-X"
 
-#: src/mmex.cpp:2632
+#: src/mmex.cpp:2660
 msgid "Quit this program"
 msgstr "退出"
 
-#: src/mmex.cpp:2639
+#: src/mmex.cpp:2667
 msgid "&Toolbar"
 msgstr "工具(&T)"
 
-#: src/mmex.cpp:2639
+#: src/mmex.cpp:2667
 msgid "Show/Hide the toolbar"
 msgstr "显示/隐藏工具条"
 
-#: src/mmex.cpp:2641
+#: src/mmex.cpp:2669
 msgid "&Navigation"
 msgstr "导航条(&N)"
 
-#: src/mmex.cpp:2641
+#: src/mmex.cpp:2669
 msgid "Show/Hide the Navigation tree control"
 msgstr "显示/隐藏导航树控件"
 
-#: src/mmex.cpp:2643
+#: src/mmex.cpp:2671
 msgid "&Bank Accounts"
 msgstr "银行账户"
 
-#: src/mmex.cpp:2643
+#: src/mmex.cpp:2671
 msgid "Show/Hide Bank Accounts on Summary page"
 msgstr ""
 
-#: src/mmex.cpp:2645
+#: src/mmex.cpp:2673
 msgid "Term &Accounts"
 msgstr "条款账户"
 
-#: src/mmex.cpp:2645
+#: src/mmex.cpp:2673
 msgid "Show/Hide Term Accounts on Summary page"
 msgstr ""
 
-#: src/mmex.cpp:2647
+#: src/mmex.cpp:2675
 msgid "&Stock Accounts"
 msgstr "股票账户"
 
-#: src/mmex.cpp:2647
+#: src/mmex.cpp:2675
 msgid "Show/Hide Stock Accounts on Summary page"
 msgstr ""
 
-#: src/mmex.cpp:2649
+#: src/mmex.cpp:2677
 msgid "Budgets: As &Financial Years"
 msgstr "本财年"
 
-#: src/mmex.cpp:2649
+#: src/mmex.cpp:2677
 msgid "Display Budgets in Financial Year Format"
 msgstr ""
 
-#: src/mmex.cpp:2651
+#: src/mmex.cpp:2679
 msgid "Budgets: &Include Transfers in Totals"
 msgstr ""
 
-#: src/mmex.cpp:2651
+#: src/mmex.cpp:2679
 msgid "Include the transfer transactions in the Budget Totals"
 msgstr "转移交易未导入。"
 
-#: src/mmex.cpp:2653
+#: src/mmex.cpp:2681
 msgid "Budget Setup: &Without Summaries"
 msgstr "预算设置"
 
-#: src/mmex.cpp:2653
+#: src/mmex.cpp:2681
 msgid "Display the Budget Setup without category summaries"
 msgstr ""
 
-#: src/mmex.cpp:2655
+#: src/mmex.cpp:2683
 msgid "Budget Summary: Include &Categories"
 msgstr ""
 
-#: src/mmex.cpp:2655
+#: src/mmex.cpp:2683
 msgid "Include the categories in the Budget Category Summary"
 msgstr "预算分类摘要"
 
-#: src/mmex.cpp:2657
+#: src/mmex.cpp:2685
 msgid "Ignore F&uture Transactions"
 msgstr "跳过将来的交易"
 
-#: src/mmex.cpp:2657
+#: src/mmex.cpp:2685
 msgid "Ignore Future transactions"
 msgstr "跳过将来的交易"
 
-#: src/mmex.cpp:2688
-#: src/mmex.cpp:2900
-#: src/mmex.cpp:4466
-#: src/mmex.cpp:4525
+#: src/mmex.cpp:2716
+#: src/mmex.cpp:2928
+#: src/mmex.cpp:4494
+#: src/mmex.cpp:4553
 msgid "New Account"
 msgstr "新建账户"
 
-#: src/mmex.cpp:2694
+#: src/mmex.cpp:2722
 msgid "Account &List"
 msgstr "帐户表(&L)"
 
-#: src/mmex.cpp:2694
-#: src/mmex.cpp:2901
+#: src/mmex.cpp:2722
+#: src/mmex.cpp:2929
 msgid "Show Account List"
 msgstr "显示帐户表"
 
-#: src/mmex.cpp:2698
+#: src/mmex.cpp:2726
 msgid "Edit Account"
 msgstr "编辑账户(&E)"
 
-#: src/mmex.cpp:2704
+#: src/mmex.cpp:2732
 msgid "Delete Account from database"
 msgstr "从数据库中删除账户(&D)"
 
-#: src/mmex.cpp:2716
+#: src/mmex.cpp:2744
 msgid "Organize &Categories..."
 msgstr "分类管理(&C)"
 
-#: src/mmex.cpp:2716
-#: src/mmex.cpp:2903
+#: src/mmex.cpp:2744
+#: src/mmex.cpp:2931
 msgid "Organize Categories"
 msgstr "分类管理"
 
-#: src/mmex.cpp:2721
+#: src/mmex.cpp:2749
 msgid "Organize &Payees..."
 msgstr "收款人管理(&P)"
 
-#: src/mmex.cpp:2726
+#: src/mmex.cpp:2754
 msgid "Organize Currency..."
 msgstr "货币管理"
 
-#: src/mmex.cpp:2726
-#: src/mmex.cpp:2905
+#: src/mmex.cpp:2754
+#: src/mmex.cpp:2933
 msgid "Organize Currency"
 msgstr "货币管理"
 
-#: src/mmex.cpp:2732
+#: src/mmex.cpp:2760
 #, fuzzy
 msgid "&Categories..."
 msgstr "分类"
 
-#: src/mmex.cpp:2732
+#: src/mmex.cpp:2760
 msgid "Reassign all categories to another category"
 msgstr ""
 
-#: src/mmex.cpp:2735
+#: src/mmex.cpp:2763
 #, fuzzy
 msgid "&Payees..."
 msgstr "收款人"
 
-#: src/mmex.cpp:2735
+#: src/mmex.cpp:2763
 msgid "Reassign all payees to another payee"
 msgstr ""
 
-#: src/mmex.cpp:2739
+#: src/mmex.cpp:2767
 msgid "Relocation of..."
 msgstr ""
 
-#: src/mmex.cpp:2739
+#: src/mmex.cpp:2767
 #, fuzzy
 msgid "Relocate Categories && Payees"
 msgstr "最近 30 天的热门分类"
 
-#: src/mmex.cpp:2746
+#: src/mmex.cpp:2774
 msgid "&Budget Setup"
 msgstr "预算设置(&B)"
 
-#: src/mmex.cpp:2754
+#: src/mmex.cpp:2782
 msgid "&Repeating Transactions"
 msgstr "重复交易(&R)"
 
-#: src/mmex.cpp:2754
+#: src/mmex.cpp:2782
 msgid "Bills && Deposits"
 msgstr "账单和存款"
 
-#: src/mmex.cpp:2761
+#: src/mmex.cpp:2789
 msgid "&Assets"
 msgstr "资产(&A)"
 
-#: src/mmex.cpp:2769
+#: src/mmex.cpp:2797
 #, fuzzy
 msgid "&Transaction Report Filter..."
 msgstr "交易过滤(&T)"
 
-#: src/mmex.cpp:2769
-#: src/mmex.cpp:2907
+#: src/mmex.cpp:2797
+#: src/mmex.cpp:2935
 #, fuzzy
 msgid "Transaction Report Filter"
 msgstr "交易报表"
 
-#: src/mmex.cpp:2779
+#: src/mmex.cpp:2807
 msgid "New..."
 msgstr ""
 
-#: src/mmex.cpp:2779
+#: src/mmex.cpp:2807
 #, fuzzy
 msgid "Create a new SQL report"
 msgstr "自定义SQL报表"
 
-#: src/mmex.cpp:2781
+#: src/mmex.cpp:2809
 #, fuzzy
 msgid "Edit..."
 msgstr "编辑(&E)"
 
-#: src/mmex.cpp:2781
+#: src/mmex.cpp:2809
 #, fuzzy
 msgid "Edit an existing SQL report"
 msgstr "编辑已存在的分类的名称"
 
-#: src/mmex.cpp:2783
+#: src/mmex.cpp:2811
 #, fuzzy
 msgid "Delete..."
 msgstr "删除(&D)"
 
-#: src/mmex.cpp:2783
+#: src/mmex.cpp:2811
 msgid "Remove a file from the Custom SQL Reports menu"
 msgstr ""
 
-#: src/mmex.cpp:2789
+#: src/mmex.cpp:2817
 #, fuzzy
 msgid "Custom SQL Reports..."
 msgstr "自定义SQL报表"
 
-#: src/mmex.cpp:2789
+#: src/mmex.cpp:2817
 msgid "Create or modify SQL reports for the Reports section"
 msgstr ""
 
-#: src/mmex.cpp:2794
+#: src/mmex.cpp:2822
 #, fuzzy
 msgid "&Options..."
 msgstr "选项(&O)"
 
-#: src/mmex.cpp:2794
+#: src/mmex.cpp:2822
 msgid "Show the Options Dialog"
 msgstr "显示选项对话框"
 
-#: src/mmex.cpp:2801
+#: src/mmex.cpp:2829
 msgid "Convert Encrypted &DB"
 msgstr "加密数据库(&D)"
 
-#: src/mmex.cpp:2802
+#: src/mmex.cpp:2830
 msgid "Convert Encrypted DB to Non-Encrypted DB"
 msgstr "解密数据库(&D)"
 
-#: src/mmex.cpp:2808
+#: src/mmex.cpp:2836
 msgid "Online &Update Currency Rate"
 msgstr "在线更新现金汇率(&U)"
 
-#: src/mmex.cpp:2809
+#: src/mmex.cpp:2837
 msgid "Online update currency rate"
 msgstr "在线更新现金汇率"
 
-#: src/mmex.cpp:2816
+#: src/mmex.cpp:2844
 msgid "&Help\tCtrl-F1"
 msgstr "帮助(&H)\tCtrl-F1"
 
-#: src/mmex.cpp:2816
+#: src/mmex.cpp:2844
 msgid "Show the Help file"
 msgstr "显示帮助文件"
 
-#: src/mmex.cpp:2821
+#: src/mmex.cpp:2849
 msgid "&Show App Start Dialog"
 msgstr "显示欢迎界面(&S)"
 
-#: src/mmex.cpp:2821
+#: src/mmex.cpp:2849
 msgid "App Start Dialog"
 msgstr "欢迎界面"
 
-#: src/mmex.cpp:2830
+#: src/mmex.cpp:2858
 msgid "Check for &Updates"
 msgstr "检查更新(&U)"
 
-#: src/mmex.cpp:2830
+#: src/mmex.cpp:2858
 msgid "Check For Updates"
 msgstr "检查更新"
 
-#: src/mmex.cpp:2838
+#: src/mmex.cpp:2866
 msgid "Visit MMEX Forum or &Report New Issues."
 msgstr ""
 
-#: src/mmex.cpp:2838
+#: src/mmex.cpp:2866
 #, fuzzy
 msgid "Visit the MMEX forum. See existing user comments, or report new issues with the software."
 msgstr "向邮件列表发送邮件来报告软件的问题"
 
-#: src/mmex.cpp:2846
+#: src/mmex.cpp:2874
 msgid "Register/View Release &Notifications."
 msgstr ""
 
-#: src/mmex.cpp:2846
+#: src/mmex.cpp:2874
 msgid "Sign up to Notification Mailing List or View existing announcements."
 msgstr ""
 
-#: src/mmex.cpp:2852
+#: src/mmex.cpp:2880
 msgid "Visit us on Facebook"
 msgstr ""
 
-#: src/mmex.cpp:2857
+#: src/mmex.cpp:2885
 msgid "&About..."
 msgstr "关于(&A)..."
 
-#: src/mmex.cpp:2857
+#: src/mmex.cpp:2885
 msgid "Show about dialog"
 msgstr "显示”关于”"
 
-#: src/mmex.cpp:2862
+#: src/mmex.cpp:2890
 msgid "&File"
 msgstr "文件(&F)"
 
-#: src/mmex.cpp:2863
+#: src/mmex.cpp:2891
 msgid "&Accounts"
 msgstr "账户(&A)"
 
-#: src/mmex.cpp:2864
+#: src/mmex.cpp:2892
 msgid "&Tools"
 msgstr "工具(&T)"
 
-#: src/mmex.cpp:2865
+#: src/mmex.cpp:2893
 msgid "&View"
 msgstr "查看"
 
-#: src/mmex.cpp:2866
+#: src/mmex.cpp:2894
 msgid "&Help"
 msgstr "帮助(&H)"
 
-#: src/mmex.cpp:2896
+#: src/mmex.cpp:2924
 msgid "New"
 msgstr "新增"
 
-#: src/mmex.cpp:2901
+#: src/mmex.cpp:2929
 msgid "Account List"
 msgstr "账户表"
 
-#: src/mmex.cpp:2903
+#: src/mmex.cpp:2931
 msgid "Show Organize Categories Dialog"
 msgstr "显示分类管理对话框"
 
-#: src/mmex.cpp:2904
+#: src/mmex.cpp:2932
 msgid "Show Organize Payees Dialog"
 msgstr "显示收款人管理对话框"
 
-#: src/mmex.cpp:2905
+#: src/mmex.cpp:2933
 msgid "Show Organize Currency Dialog"
 msgstr "显示货币管理对话框"
 
-#: src/mmex.cpp:2909
+#: src/mmex.cpp:2937
 #, fuzzy
 msgid "Custom SQL Manager"
 msgstr "自定义SQL查询"
 
-#: src/mmex.cpp:2909
+#: src/mmex.cpp:2937
 #, fuzzy
 msgid "Create new Custom SQL Reports"
 msgstr "自定义SQL报表"
 
-#: src/mmex.cpp:2939
+#: src/mmex.cpp:2967
 msgid "Enter database's password"
 msgstr ""
 
-#: src/mmex.cpp:2944
+#: src/mmex.cpp:2972
 #, fuzzy
 msgid "Opening MMEX Database - Error"
 msgstr "打开上次打开的数据库"
 
-#: src/mmex.cpp:2965
-#: src/mmex.cpp:3013
+#: src/mmex.cpp:2993
+#: src/mmex.cpp:3041
 msgid " - No File opened "
 msgstr " - 没有文件被打开"
 
-#: src/mmex.cpp:2967
+#: src/mmex.cpp:2995
 msgid "Sorry. The Database version is too old or Database password is incorrect"
 msgstr "抱歉，数据库版本太旧或密码错误！"
 
-#: src/mmex.cpp:3016
+#: src/mmex.cpp:3044
 #, fuzzy
 msgid "Cannot locate previously opened database.\n"
 msgstr "打开先前打开的数据库"
 
-#: src/mmex.cpp:3018
+#: src/mmex.cpp:3046
 msgid "Password not entered for encrypted Database.\n"
 msgstr ""
 
-#: src/mmex.cpp:3020
+#: src/mmex.cpp:3048
 #, fuzzy
 msgid "Do you want to browse to locate another file?"
 msgstr ""
 "不能定位到先前打开的数据库。\n"
 "您想通过浏览来定位文件吗？"
 
-#: src/mmex.cpp:3038
+#: src/mmex.cpp:3066
 #: src/mmcheckingpanel.cpp:524
 msgid "Please Wait"
 msgstr "请稍候"
 
-#: src/mmex.cpp:3039
+#: src/mmex.cpp:3067
 msgid "Opening Database File && Verifying Integrity"
 msgstr "打开数据库并检查完整性"
 
-#: src/mmex.cpp:3049
+#: src/mmex.cpp:3077
 msgid "portable mode"
 msgstr ""
 
-#: src/mmex.cpp:3103
+#: src/mmex.cpp:3131
 #, fuzzy
 msgid "Choose database file to create"
 msgstr "打开加密的数据库文件"
 
-#: src/mmex.cpp:3125
+#: src/mmex.cpp:3153
 #, fuzzy
 msgid "Choose database file to open"
 msgstr "打开加密的数据库文件"
 
-#: src/mmex.cpp:3139
+#: src/mmex.cpp:3167
 msgid "Choose Encrypted database file to open"
 msgstr "打开加密的数据库文件"
 
-#: src/mmex.cpp:3149
+#: src/mmex.cpp:3177
 #, fuzzy
 msgid "Enter password for database"
 msgstr "Money Manager Ex：请输入数据库密码"
 
-#: src/mmex.cpp:3154
+#: src/mmex.cpp:3182
 #, fuzzy
 msgid "Choose database file to Save As"
 msgstr "打开加密的数据库文件"
 
-#: src/mmex.cpp:3176
+#: src/mmex.cpp:3204
 msgid "Converted DB!"
 msgstr "转换DB！"
 
-#: src/mmex.cpp:3176
+#: src/mmex.cpp:3204
 msgid "MMEX message"
 msgstr "MMEX 信息"
 
-#: src/mmex.cpp:3191
-#: src/mmex.cpp:3211
+#: src/mmex.cpp:3219
+#: src/mmex.cpp:3239
 #, fuzzy
 msgid "Save database file as"
 msgstr "保存数据库"
 
-#: src/mmex.cpp:3211
+#: src/mmex.cpp:3239
 msgid "Can't copy file to itself"
 msgstr ""
 
-#: src/mmex.cpp:3224
+#: src/mmex.cpp:3252
 #, fuzzy
 msgid "Enter password for new database"
 msgstr "Money Manager Ex：请输入数据库密码"
 
-#: src/mmex.cpp:3285
+#: src/mmex.cpp:3313
 #, fuzzy
 msgid "No account available to import"
 msgstr "没有可用的账户！不能导出！"
 
-#: src/mmex.cpp:3285
+#: src/mmex.cpp:3313
 msgid "Universal CSV Import"
 msgstr "普通CSV文件导入对话框"
 
-#: src/mmex.cpp:3327
+#: src/mmex.cpp:3355
 msgid "Term Account views have been temporarly turned on."
 msgstr ""
 
-#: src/mmex.cpp:3328
+#: src/mmex.cpp:3356
 msgid ""
 "To maintain this view, change the defaults by using:\n"
 "\n"
@@ -2699,213 +2730,213 @@ msgid ""
 "View Options"
 msgstr ""
 
-#: src/mmex.cpp:3330
+#: src/mmex.cpp:3358
 msgid "This message will not be displayed in future."
 msgstr ""
 
-#: src/mmex.cpp:3331
+#: src/mmex.cpp:3359
 #, fuzzy
 msgid "Initial Term Account Activation"
 msgstr "确认删除账户"
 
-#: src/mmex.cpp:3431
+#: src/mmex.cpp:3459
 msgid "Choose Accounts"
 msgstr "选择账户"
 
-#: src/mmex.cpp:3476
+#: src/mmex.cpp:3504
 msgid "MMEX Options have been updated."
 msgstr ""
 
-#: src/mmex.cpp:3480
+#: src/mmex.cpp:3508
 msgid "Recommendation: Shut down and restart MMEX."
 msgstr ""
 
-#: src/mmex.cpp:3481
+#: src/mmex.cpp:3509
 msgid "This will allow all MMEX option updates to take effect."
 msgstr ""
 
-#: src/mmex.cpp:3483
+#: src/mmex.cpp:3511
 #, fuzzy
 msgid "New MMEX Options"
 msgstr "显示设置"
 
-#: src/mmex.cpp:3556
+#: src/mmex.cpp:3584
 msgid "System: "
 msgstr ""
 
-#: src/mmex.cpp:3572
-#: src/mmex.cpp:3647
+#: src/mmex.cpp:3600
+#: src/mmex.cpp:3675
 msgid "Unable to connect!"
 msgstr "无法连接！"
 
-#: src/mmex.cpp:3573
-#: src/mmex.cpp:3622
+#: src/mmex.cpp:3601
+#: src/mmex.cpp:3650
 msgid "MMEX System Information Check"
 msgstr ""
 
-#: src/mmex.cpp:3611
+#: src/mmex.cpp:3639
 msgid "New update available!"
 msgstr "有新的更新可用！"
 
-#: src/mmex.cpp:3616
+#: src/mmex.cpp:3644
 msgid "You have the latest version installed!"
 msgstr "您已经安装最新版本！"
 
-#: src/mmex.cpp:3621
+#: src/mmex.cpp:3649
 msgid "Proceed to website: "
 msgstr ""
 
-#: src/mmex.cpp:3637
+#: src/mmex.cpp:3665
 msgid "No database!"
 msgstr "没有数据库！"
 
-#: src/mmex.cpp:3637
-#: src/mmex.cpp:3647
-#: src/mmex.cpp:3655
-#: src/mmex.cpp:3662
-#: src/mmex.cpp:3674
-#: src/mmex.cpp:3684
+#: src/mmex.cpp:3665
+#: src/mmex.cpp:3675
+#: src/mmex.cpp:3683
 #: src/mmex.cpp:3690
-#: src/mmex.cpp:3696
-#: src/mmex.cpp:3706
+#: src/mmex.cpp:3702
 #: src/mmex.cpp:3712
-#: src/mmex.cpp:3758
+#: src/mmex.cpp:3718
+#: src/mmex.cpp:3724
+#: src/mmex.cpp:3734
+#: src/mmex.cpp:3740
+#: src/mmex.cpp:3786
 msgid "Update Currency Rate"
 msgstr "更新货币汇率"
 
-#: src/mmex.cpp:3655
+#: src/mmex.cpp:3683
 msgid "Cannot get data from WWW!"
 msgstr "无法从互联网获取数据！"
 
-#: src/mmex.cpp:3662
+#: src/mmex.cpp:3690
 msgid "Incorrect XML data (#1)!"
 msgstr "错误的 XML 数据(#1)！"
 
-#: src/mmex.cpp:3674
+#: src/mmex.cpp:3702
 msgid "Incorrect XML data (#2)!"
 msgstr "错误的 XML 数据(#2)！"
 
-#: src/mmex.cpp:3684
+#: src/mmex.cpp:3712
 msgid "Incorrect XML data (#3)!"
 msgstr "错误的 XML 数据(#3)！"
 
-#: src/mmex.cpp:3690
+#: src/mmex.cpp:3718
 msgid "Incorrect XML data (#4)!"
 msgstr "错误的 XML 数据(#4)！"
 
-#: src/mmex.cpp:3696
+#: src/mmex.cpp:3724
 msgid "Incorrect XML data (#5)!"
 msgstr "错误的 XML 数据(#5)！"
 
-#: src/mmex.cpp:3706
+#: src/mmex.cpp:3734
 msgid "Incorrect XML data (#6)!"
 msgstr "错误的 XML 数据(#6)！"
 
-#: src/mmex.cpp:3712
+#: src/mmex.cpp:3740
 msgid "Incorrect XML data (#7)!"
 msgstr "错误的 XML 数据(#7)！"
 
-#: src/mmex.cpp:3758
+#: src/mmex.cpp:3786
 msgid "Could not find base currency symbol!"
 msgstr "无法找到基础的货币符号！"
 
-#: src/mmex.cpp:3772
-#: src/mmex.cpp:3794
+#: src/mmex.cpp:3800
+#: src/mmex.cpp:3822
 msgid "Currency rate updated"
 msgstr "货币汇率更新完成"
 
-#: src/mmex.cpp:4074
+#: src/mmex.cpp:4102
 #, fuzzy
 msgid "No account available to edit!"
 msgstr "没有可用的账户"
 
-#: src/mmex.cpp:4074
-#: src/mmex.cpp:4091
-#: src/mmex.cpp:4115
-#: src/mmex.cpp:4132
+#: src/mmex.cpp:4102
+#: src/mmex.cpp:4119
+#: src/mmex.cpp:4143
+#: src/mmex.cpp:4160
 msgid "Accounts"
 msgstr "账户"
 
-#: src/mmex.cpp:4091
+#: src/mmex.cpp:4119
 msgid "Choose Account to Edit"
 msgstr "选择要编辑的账户"
 
-#: src/mmex.cpp:4115
+#: src/mmex.cpp:4143
 #, fuzzy
 msgid "No account available to delete!"
 msgstr "没有可用的账户"
 
-#: src/mmex.cpp:4132
+#: src/mmex.cpp:4160
 msgid "Choose Account to Delete"
 msgstr "选择要删除的账户"
 
-#: src/mmex.cpp:4138
+#: src/mmex.cpp:4166
 #, fuzzy
 msgid "Are you sure you want to delete\n"
 msgstr "您确认删除该资产吗？"
 
-#: src/mmex.cpp:4139
+#: src/mmex.cpp:4167
 #, fuzzy
 msgid " account: "
 msgstr "总额"
 
-#: src/mmex.cpp:4248
+#: src/mmex.cpp:4276
 #, fuzzy
 msgid "Category Relocation Completed."
 msgstr "分类不能为空"
 
-#: src/mmex.cpp:4249
-#: src/mmex.cpp:4264
+#: src/mmex.cpp:4277
+#: src/mmex.cpp:4292
 msgid " records have been updated in the database."
 msgstr ""
 
-#: src/mmex.cpp:4250
-#: src/mmex.cpp:4265
+#: src/mmex.cpp:4278
+#: src/mmex.cpp:4293
 msgid "MMEX must be shutdown and restarted for all the changes to be seen."
 msgstr ""
 
-#: src/mmex.cpp:4251
+#: src/mmex.cpp:4279
 #, fuzzy
 msgid "Category Relocation Result"
 msgstr "分类不能为空"
 
-#: src/mmex.cpp:4263
+#: src/mmex.cpp:4291
 #, fuzzy
 msgid "Payee Relocation Completed."
 msgstr "分类不能为空"
 
-#: src/mmex.cpp:4266
+#: src/mmex.cpp:4294
 msgid "Payee Relocation Result"
 msgstr ""
 
-#: src/mmex.cpp:4306
+#: src/mmex.cpp:4334
 msgid " to Edit:"
 msgstr ""
 
-#: src/mmex.cpp:4327
+#: src/mmex.cpp:4355
 #, fuzzy
 msgid " to Delete:"
 msgstr "删除(&D)"
 
-#: src/mmex.cpp:4342
+#: src/mmex.cpp:4370
 msgid "Delete the Custom Report Title:"
 msgstr ""
 
-#: src/mmex.cpp:4351
+#: src/mmex.cpp:4379
 #, fuzzy
 msgid "Do you want to delete the SQL file as well?"
 msgstr "确认要删除这些项目吗？"
 
-#: src/mmex.cpp:4386
-#: src/optionsdialog.cpp:306
+#: src/mmex.cpp:4414
+#: src/optionsdialog.cpp:342
 msgid "Set Currency"
 msgstr "货币设置"
 
-#: src/mmex.cpp:4394
+#: src/mmex.cpp:4422
 msgid "Base Currency for account"
 msgstr "账户的基本货币"
 
-#: src/mmex.cpp:4404
+#: src/mmex.cpp:4432
 #, fuzzy
 msgid ""
 "Specify the base (or default) currency to be used for the\n"
@@ -2917,33 +2948,33 @@ msgstr ""
 "指定数据库使用的基本货币（或使用默认）。 \n"
 "在需要时也可随时更改。 \n"
 
-#: src/mmex.cpp:4412
-#: src/optionsdialog.cpp:273
+#: src/mmex.cpp:4440
+#: src/optionsdialog.cpp:309
 msgid "User Name"
 msgstr "用户名称"
 
-#: src/mmex.cpp:4419
+#: src/mmex.cpp:4447
 msgid "(Optional) Specify a title or your name."
 msgstr ""
 
-#: src/mmex.cpp:4420
+#: src/mmex.cpp:4448
 msgid "Used as a database title for displayed and printed reports."
 msgstr ""
 
-#: src/mmex.cpp:4432
+#: src/mmex.cpp:4460
 msgid "Base Currency Not Set"
 msgstr "基本货币没有设置"
 
-#: src/mmex.cpp:4449
+#: src/mmex.cpp:4477
 msgid "Name of the Account"
 msgstr "账户名称"
 
-#: src/mmex.cpp:4453
+#: src/mmex.cpp:4481
 #, fuzzy
 msgid "Specify a descriptive name for the account."
 msgstr "指定交易状态"
 
-#: src/mmex.cpp:4454
+#: src/mmex.cpp:4482
 #, fuzzy
 msgid ""
 "This is generally the name of a financial institution\n"
@@ -2953,36 +2984,36 @@ msgstr ""
 "指定该账目的名称. 通常使用对应的银行名称 \n"
 "例如：“招商银行”"
 
-#: src/mmex.cpp:4466
+#: src/mmex.cpp:4494
 msgid "Account Name Invalid"
 msgstr "错误的账户名"
 
-#: src/mmex.cpp:4479
+#: src/mmex.cpp:4507
 msgid "Checking/Savings"
 msgstr "支票/存款/交易"
 
-#: src/mmex.cpp:4480
+#: src/mmex.cpp:4508
 msgid "Investment"
 msgstr "投资"
 
-#: src/mmex.cpp:4481
+#: src/mmex.cpp:4509
 msgid "Term"
 msgstr ""
 
-#: src/mmex.cpp:4484
+#: src/mmex.cpp:4512
 msgid "Specify the type of account to be created."
 msgstr "指定要创建的账户的类型。"
 
-#: src/mmex.cpp:4488
+#: src/mmex.cpp:4516
 msgid "Type of Account"
 msgstr "账户分类"
 
-#: src/mmex.cpp:4493
+#: src/mmex.cpp:4521
 #, fuzzy
 msgid "Select the type of account you want to create:"
 msgstr "指定要创建的账户的类型。"
 
-#: src/mmex.cpp:4494
+#: src/mmex.cpp:4522
 #, fuzzy
 msgid ""
 "General bank accounts cover a wide variety of account\n"
@@ -2994,7 +3025,7 @@ msgstr ""
 "通常的帐薄包含很多不用的分类\n"
 "例如支付卡，储蓄卡和信用卡."
 
-#: src/mmex.cpp:4498
+#: src/mmex.cpp:4526
 #, fuzzy
 msgid ""
 "Investment accounts are specialized accounts that only\n"
@@ -3003,7 +3034,7 @@ msgstr ""
 "\n"
 "投资账户是用于证券或基金投资的专用账户。\n"
 
-#: src/mmex.cpp:4502
+#: src/mmex.cpp:4530
 msgid ""
 "Term accounts are specialized bank accounts. Intended for asset\n"
 "type accounts such as Term Deposits and Bonds. These accounts\n"
@@ -3011,24 +3042,24 @@ msgid ""
 "general income stream."
 msgstr ""
 
-#: src/mmex.cpp:4523
+#: src/mmex.cpp:4551
 #, fuzzy
 msgid "Base Account Currency Not set."
 msgstr "基本货币没有设置"
 
-#: src/mmex.cpp:4524
+#: src/mmex.cpp:4552
 #, fuzzy
 msgid "Set that first using Tools->Options menu and then add a new account."
 msgstr ""
 "基本账户货币没有设置。\n"
 "首先通过”工具“->”选项“菜单设置，然后再新建账户"
 
-#: src/mmex.cpp:4628
+#: src/mmex.cpp:4656
 #, fuzzy
 msgid "Setting new Database file"
 msgstr "保存数据库"
 
-#: src/mmex.cpp:4628
+#: src/mmex.cpp:4656
 msgid "Please wait while the new database is being loaded."
 msgstr ""
 
@@ -3042,432 +3073,432 @@ msgstr "收入"
 msgid "Expenses"
 msgstr "支出"
 
-#: src/optionsdialog.cpp:261
-#, fuzzy
-msgid "Display Heading"
-msgstr "显示"
-
-#: src/optionsdialog.cpp:279
-msgid "The User Name is used as a title for the database."
-msgstr ""
-
-#: src/optionsdialog.cpp:283
-msgid "Language"
-msgstr "语言"
-
-#: src/optionsdialog.cpp:292
-msgid "Specify the language to use"
-msgstr "指定使用语言"
-
-#: src/optionsdialog.cpp:303
-msgid "Base Currency"
-msgstr "基本货币"
-
-#: src/optionsdialog.cpp:311
-#, fuzzy
-msgid "Sets the default currency for the database."
-msgstr "设定账目使用的货币。"
-
-#: src/optionsdialog.cpp:315
-msgid "Date Format"
-msgstr "日期格式"
-
-#: src/optionsdialog.cpp:327
-msgid "Specify the date format for display"
-msgstr "指定显示的时间格式"
-
-#: src/optionsdialog.cpp:331
-msgid "Set"
-msgstr "设置"
-
-#: src/optionsdialog.cpp:335
-msgid "New date format sample:"
-msgstr ""
-
-#: src/optionsdialog.cpp:343
-#, fuzzy
-msgid "Financial Year"
-msgstr "上财年"
-
-#: src/optionsdialog.cpp:350
-#, fuzzy
-msgid "Start Day"
-msgstr "开始页面"
-
-#: src/optionsdialog.cpp:359
-msgid "Specify Day for start of financial year"
-msgstr ""
-
-#: src/optionsdialog.cpp:363
-#, fuzzy
-msgid "Start Month"
-msgstr "本月"
-
-#: src/optionsdialog.cpp:379
-#, fuzzy
-msgid "Specify month for start of financial year"
-msgstr "指定交易的金额"
-
-#: src/optionsdialog.cpp:382
-#, fuzzy
-msgid "Database Backup"
-msgstr "没有数据库被打开"
-
-#: src/optionsdialog.cpp:388
-#, fuzzy
-msgid "Create a new backup when MMEX Start"
-msgstr "创建一个新的数据库并打开"
-
-#: src/optionsdialog.cpp:390
-msgid ""
-"When MMEX Starts,\n"
-"creates the backup database: dbFile_start_YYYY-MM-DD.ext."
-msgstr ""
-
-#: src/optionsdialog.cpp:394
-msgid "Update database changes to database backup on exit."
-msgstr ""
-
-#: src/optionsdialog.cpp:396
-msgid ""
-"When MMEX shuts down and changes made to database,\n"
-"creates or updates the backup database: dbFile_update_YYYY-MM-DD.ext."
-msgstr ""
-
-#: src/optionsdialog.cpp:407
-msgid "Account View Options"
-msgstr "账户显示选项"
-
-#: src/optionsdialog.cpp:434
-msgid "Specify which accounts are visible"
-msgstr "选定该项当账户可见时"
-
-#: src/optionsdialog.cpp:437
-msgid "Transaction View Options"
-msgstr "交易查看选项"
-
-#: src/optionsdialog.cpp:443
-msgid "Transactions Visible"
-msgstr "交易可见"
-
-#: src/optionsdialog.cpp:449
+#: src/optionsdialog.cpp:229
 #: src/mmcheckingpanel.cpp:574
 #: src/mmcheckingpanel.cpp:1371
 msgid "View All Transactions"
 msgstr "查看所有交易"
 
-#: src/optionsdialog.cpp:450
+#: src/optionsdialog.cpp:230
 msgid "View Reconciled"
 msgstr "查看已核实"
 
-#: src/optionsdialog.cpp:451
+#: src/optionsdialog.cpp:231
 #, fuzzy
-msgid "Vlew All - Except Reconciled"
-msgstr "查看全部交易，除了已核实的"
+msgid "View Not-Reconciled"
+msgstr "查看已核实"
 
-#: src/optionsdialog.cpp:452
+#: src/optionsdialog.cpp:232
 msgid "View UnReconciled"
 msgstr "查看未核实"
 
-#: src/optionsdialog.cpp:453
+#: src/optionsdialog.cpp:233
 msgid "View Today"
 msgstr "查看今天"
 
-#: src/optionsdialog.cpp:454
+#: src/optionsdialog.cpp:234
 msgid "View Current Month"
 msgstr "查看本月"
 
-#: src/optionsdialog.cpp:455
+#: src/optionsdialog.cpp:235
 #, fuzzy
 msgid "View Last 30 days"
 msgstr "查看 30 天"
 
-#: src/optionsdialog.cpp:456
+#: src/optionsdialog.cpp:236
 #, fuzzy
 msgid "View Last 90 days"
 msgstr "查看 90 天"
 
-#: src/optionsdialog.cpp:457
+#: src/optionsdialog.cpp:237
 msgid "View Last Month"
 msgstr "查看最后一月"
 
-#: src/optionsdialog.cpp:458
+#: src/optionsdialog.cpp:238
 #, fuzzy
 msgid "View Last 3 Months"
 msgstr "查看最后一月"
 
-#: src/optionsdialog.cpp:486
+#: src/optionsdialog.cpp:297
+#, fuzzy
+msgid "Display Heading"
+msgstr "显示"
+
+#: src/optionsdialog.cpp:315
+msgid "The User Name is used as a title for the database."
+msgstr ""
+
+#: src/optionsdialog.cpp:319
+msgid "Language"
+msgstr "语言"
+
+#: src/optionsdialog.cpp:328
+msgid "Specify the language to use"
+msgstr "指定使用语言"
+
+#: src/optionsdialog.cpp:339
+msgid "Base Currency"
+msgstr "基本货币"
+
+#: src/optionsdialog.cpp:347
+#, fuzzy
+msgid "Sets the default currency for the database."
+msgstr "设定账目使用的货币。"
+
+#: src/optionsdialog.cpp:351
+msgid "Date Format"
+msgstr "日期格式"
+
+#: src/optionsdialog.cpp:363
+msgid "Specify the date format for display"
+msgstr "指定显示的时间格式"
+
+#: src/optionsdialog.cpp:367
+msgid "Set"
+msgstr "设置"
+
+#: src/optionsdialog.cpp:371
+msgid "New date format sample:"
+msgstr ""
+
+#: src/optionsdialog.cpp:379
+#, fuzzy
+msgid "Financial Year"
+msgstr "上财年"
+
+#: src/optionsdialog.cpp:386
+#, fuzzy
+msgid "Start Day"
+msgstr "开始页面"
+
+#: src/optionsdialog.cpp:395
+msgid "Specify Day for start of financial year"
+msgstr ""
+
+#: src/optionsdialog.cpp:399
+#, fuzzy
+msgid "Start Month"
+msgstr "本月"
+
+#: src/optionsdialog.cpp:415
+#, fuzzy
+msgid "Specify month for start of financial year"
+msgstr "指定交易的金额"
+
+#: src/optionsdialog.cpp:418
+#, fuzzy
+msgid "Database Backup"
+msgstr "没有数据库被打开"
+
+#: src/optionsdialog.cpp:424
+#, fuzzy
+msgid "Create a new backup when MMEX Start"
+msgstr "创建一个新的数据库并打开"
+
+#: src/optionsdialog.cpp:426
+msgid ""
+"When MMEX Starts,\n"
+"creates the backup database: dbFile_start_YYYY-MM-DD.ext."
+msgstr ""
+
+#: src/optionsdialog.cpp:430
+msgid "Update database changes to database backup on exit."
+msgstr ""
+
+#: src/optionsdialog.cpp:432
+msgid ""
+"When MMEX shuts down and changes made to database,\n"
+"creates or updates the backup database: dbFile_update_YYYY-MM-DD.ext."
+msgstr ""
+
+#: src/optionsdialog.cpp:443
+msgid "Account View Options"
+msgstr "账户显示选项"
+
+#: src/optionsdialog.cpp:463
+msgid "Specify which accounts are visible"
+msgstr "选定该项当账户可见时"
+
+#: src/optionsdialog.cpp:466
+msgid "Transaction View Options"
+msgstr "交易查看选项"
+
+#: src/optionsdialog.cpp:478
+msgid "Transactions Visible"
+msgstr "交易可见"
+
+#: src/optionsdialog.cpp:491
 msgid "Specify which transactions are visible by default"
 msgstr "指定交易默认可见"
 
-#: src/optionsdialog.cpp:488
+#: src/optionsdialog.cpp:493
 msgid "Font Size Options"
 msgstr "字体大小选项"
 
-#: src/optionsdialog.cpp:494
+#: src/optionsdialog.cpp:499
 msgid "Report Font Size"
 msgstr "报表字体大小"
 
-#: src/optionsdialog.cpp:530
+#: src/optionsdialog.cpp:519
 msgid "Specify which font size is used on the report tables"
 msgstr "指定报表使用的字体大小"
 
-#: src/optionsdialog.cpp:534
+#: src/optionsdialog.cpp:523
 msgid "Navigation Tree Expansion Options"
 msgstr ""
 
-#: src/optionsdialog.cpp:543
+#: src/optionsdialog.cpp:532
 msgid "Expand Bank Accounts in Trew View when tree is refreshed"
 msgstr ""
 
-#: src/optionsdialog.cpp:550
+#: src/optionsdialog.cpp:539
 msgid "Expand Term Accounts in Trew View when tree is refreshed"
 msgstr ""
 
-#: src/optionsdialog.cpp:554
+#: src/optionsdialog.cpp:543
 #, fuzzy
 msgid "Home Page Expansion Options"
 msgstr "主页"
 
-#: src/optionsdialog.cpp:563
+#: src/optionsdialog.cpp:552
 msgid "Expand Bank Accounts on home page when page is refreshed"
 msgstr ""
 
-#: src/optionsdialog.cpp:570
+#: src/optionsdialog.cpp:559
 msgid "Expand Term Accounts on home page when page is refreshed"
 msgstr ""
 
-#: src/optionsdialog.cpp:575
+#: src/optionsdialog.cpp:564
 #, fuzzy
 msgid "Stock Accounts"
 msgstr "银行账户"
 
-#: src/optionsdialog.cpp:577
+#: src/optionsdialog.cpp:566
 msgid "Expand Stock Accounts on home page when page is refreshed"
 msgstr ""
 
-#: src/optionsdialog.cpp:581
+#: src/optionsdialog.cpp:570
 #, fuzzy
 msgid "View Budgets as Financial Years"
 msgstr "最近 30 天的热门分类"
 
-#: src/optionsdialog.cpp:585
+#: src/optionsdialog.cpp:574
 #, fuzzy
 msgid "View Budgets with 'transfer' transactions"
 msgstr "查看重复的交易"
 
-#: src/optionsdialog.cpp:589
+#: src/optionsdialog.cpp:578
 msgid "View Budgets Setup Without Budget Summaries"
 msgstr ""
 
-#: src/optionsdialog.cpp:593
+#: src/optionsdialog.cpp:582
 #, fuzzy
 msgid "View Budget Summary Report without Categories"
 msgstr "查看所有预算分类"
 
-#: src/optionsdialog.cpp:597
+#: src/optionsdialog.cpp:586
 #, fuzzy
 msgid "View Reports without Future Transactions"
 msgstr "查看已核实交易"
 
-#: src/optionsdialog.cpp:608
+#: src/optionsdialog.cpp:597
 #, fuzzy
 msgid "Colour Settings"
 msgstr "设置(&S)"
 
-#: src/optionsdialog.cpp:616
-#: src/optionsdialog.cpp:618
+#: src/optionsdialog.cpp:605
+#: src/optionsdialog.cpp:607
 msgid "Nav Tree"
 msgstr "导航树"
 
-#: src/optionsdialog.cpp:619
+#: src/optionsdialog.cpp:608
 msgid "Specify the color for the nav tree"
 msgstr "指定导航树的颜色"
 
-#: src/optionsdialog.cpp:624
-#: src/optionsdialog.cpp:626
+#: src/optionsdialog.cpp:613
+#: src/optionsdialog.cpp:615
 msgid "List Background"
 msgstr "表格背景色"
 
-#: src/optionsdialog.cpp:627
+#: src/optionsdialog.cpp:616
 msgid "Specify the color for the list background"
 msgstr "指定列表背景颜色"
 
-#: src/optionsdialog.cpp:632
-#: src/optionsdialog.cpp:634
+#: src/optionsdialog.cpp:621
+#: src/optionsdialog.cpp:623
 msgid "List Row 0"
 msgstr "首行"
 
-#: src/optionsdialog.cpp:635
+#: src/optionsdialog.cpp:624
 msgid "Specify the color for the list row 0"
 msgstr "输入列表首行的颜色"
 
-#: src/optionsdialog.cpp:640
-#: src/optionsdialog.cpp:642
+#: src/optionsdialog.cpp:629
+#: src/optionsdialog.cpp:631
 msgid "List Row 1"
 msgstr "数据行"
 
-#: src/optionsdialog.cpp:643
+#: src/optionsdialog.cpp:632
 msgid "Specify the color for the list row 1"
 msgstr "指定数据行的颜色"
 
-#: src/optionsdialog.cpp:648
-#: src/optionsdialog.cpp:650
+#: src/optionsdialog.cpp:637
+#: src/optionsdialog.cpp:639
 msgid "List Border"
 msgstr "列表边界"
 
-#: src/optionsdialog.cpp:651
+#: src/optionsdialog.cpp:640
 msgid "Specify the color for the list Border"
 msgstr "指定列表边界的颜色"
 
-#: src/optionsdialog.cpp:656
-#: src/optionsdialog.cpp:658
+#: src/optionsdialog.cpp:645
+#: src/optionsdialog.cpp:647
 msgid "List Details"
 msgstr "列表内容"
 
-#: src/optionsdialog.cpp:659
+#: src/optionsdialog.cpp:648
 msgid "Specify the color for the list details"
 msgstr "指定列表内容的颜色"
 
-#: src/optionsdialog.cpp:664
-#: src/optionsdialog.cpp:666
+#: src/optionsdialog.cpp:653
+#: src/optionsdialog.cpp:655
 msgid "Future Transactions"
 msgstr "将来的交易"
 
-#: src/optionsdialog.cpp:667
+#: src/optionsdialog.cpp:656
 msgid "Specify the color for future transactions"
 msgstr "为今后的交易指定颜色"
 
-#: src/optionsdialog.cpp:673
+#: src/optionsdialog.cpp:662
 msgid "Restore Defaults"
 msgstr "恢复默认"
 
-#: src/optionsdialog.cpp:674
+#: src/optionsdialog.cpp:663
 msgid "Restore Default Colors"
 msgstr "恢复默认颜色"
 
-#: src/optionsdialog.cpp:685
+#: src/optionsdialog.cpp:674
 #, fuzzy
 msgid "New Transaction Dialog Settings"
 msgstr "多选交易对话框"
 
-#: src/optionsdialog.cpp:693
+#: src/optionsdialog.cpp:682
 #, fuzzy
 msgid "Default Payee:"
 msgstr "选择收款人"
 
-#: src/optionsdialog.cpp:697
+#: src/optionsdialog.cpp:686
 #, fuzzy
 msgid "Last Used"
 msgstr "上年"
 
-#: src/optionsdialog.cpp:705
+#: src/optionsdialog.cpp:694
 #, fuzzy
 msgid "Default Category:"
 msgstr "选择分类"
 
-#: src/optionsdialog.cpp:710
+#: src/optionsdialog.cpp:699
 msgid "Last used for payee"
 msgstr ""
 
-#: src/optionsdialog.cpp:718
+#: src/optionsdialog.cpp:707
 #, fuzzy
 msgid "Default Status:"
 msgstr "账户状态："
 
-#: src/optionsdialog.cpp:747
+#: src/optionsdialog.cpp:736
 msgid "Stock Quote Web Page"
 msgstr "股票报价网页"
 
-#: src/optionsdialog.cpp:754
+#: src/optionsdialog.cpp:743
 msgid "Clear the field to Reset the value to system default."
 msgstr ""
 
-#: src/optionsdialog.cpp:759
+#: src/optionsdialog.cpp:748
 msgid "Use Original Date when Pasting Transactions"
 msgstr "粘贴交易时使用源的日期"
 
-#: src/optionsdialog.cpp:761
+#: src/optionsdialog.cpp:750
 msgid "Select whether to use the original transaction date or current date when copying/pasting transactions"
 msgstr "选择当复制/粘贴交易时使用原来的交易日期或当前日期"
 
-#: src/optionsdialog.cpp:764
+#: src/optionsdialog.cpp:753
 msgid "Use Transaction Sound"
 msgstr "使用交易声"
 
-#: src/optionsdialog.cpp:766
+#: src/optionsdialog.cpp:755
 msgid "Select whether to use sounds when entering transactions"
 msgstr "选择当登记交易时是否使用声音提示"
 
-#: src/optionsdialog.cpp:769
+#: src/optionsdialog.cpp:758
 #, fuzzy
 msgid ""
 "Enable online currency update \n"
 "(Get data from European Central Bank)"
 msgstr "启用在线货币更新（获取欧洲中央银行的数据）"
 
-#: src/optionsdialog.cpp:771
+#: src/optionsdialog.cpp:760
 msgid "Enable or disable get data from European Central Bank to update currency rate"
 msgstr "启用或禁用从欧洲中央银行获取货币汇率更新数据"
 
-#: src/optionsdialog.cpp:782
+#: src/optionsdialog.cpp:771
 msgid "Import/Export Settings"
 msgstr "导入∕导出设定"
 
-#: src/optionsdialog.cpp:788
+#: src/optionsdialog.cpp:777
 msgid "CSV Delimiter"
 msgstr "CSV分隔符"
 
-#: src/optionsdialog.cpp:799
+#: src/optionsdialog.cpp:788
 msgid "User Defined"
 msgstr ""
 
-#: src/optionsdialog.cpp:800
+#: src/optionsdialog.cpp:789
 msgid "Comma"
 msgstr "逗号"
 
-#: src/optionsdialog.cpp:803
+#: src/optionsdialog.cpp:792
 msgid "Semicolon"
 msgstr "分号"
 
-#: src/optionsdialog.cpp:806
+#: src/optionsdialog.cpp:795
 msgid "TAB"
 msgstr ""
 
-#: src/optionsdialog.cpp:810
+#: src/optionsdialog.cpp:799
 msgid "Specify the delimiter to use when importing/exporting CSV files"
 msgstr "指定当导入/导出CSV文件时的分隔符"
 
-#: src/optionsdialog.cpp:827
+#: src/optionsdialog.cpp:816
 msgid "General"
 msgstr "一般"
 
-#: src/optionsdialog.cpp:828
+#: src/optionsdialog.cpp:817
 msgid "View Options"
 msgstr "显示设置"
 
-#: src/optionsdialog.cpp:829
+#: src/optionsdialog.cpp:818
 msgid "Colors"
 msgstr "色彩"
 
-#: src/optionsdialog.cpp:830
+#: src/optionsdialog.cpp:819
 #, fuzzy
 msgid "Import/Export"
 msgstr "导入∕导出设定"
 
-#: src/optionsdialog.cpp:831
+#: src/optionsdialog.cpp:820
 msgid "Others"
 msgstr "其他"
 
-#: src/optionsdialog.cpp:878
+#: src/optionsdialog.cpp:867
 msgid "Remember to update currency rate"
 msgstr "记住更新货币汇率"
 
-#: src/optionsdialog.cpp:878
+#: src/optionsdialog.cpp:867
 msgid "Important note"
 msgstr "重要记录"
 
-#: src/optionsdialog.cpp:904
+#: src/optionsdialog.cpp:893
 msgid " : Requires MMEX Restart"
 msgstr ""
 
@@ -4255,20 +4286,20 @@ msgstr ""
 #: src/dbwrapper.cpp:1359
 #: src/dbwrapper.cpp:1377
 #: src/dbwrapper.cpp:1387
-#: src/dbwrapper.cpp:1443
-#: src/dbwrapper.cpp:1462
-#: src/dbwrapper.cpp:1545
-#: src/dbwrapper.cpp:1632
-#: src/dbwrapper.cpp:1669
-#: src/dbwrapper.cpp:1700
-#: src/dbwrapper.cpp:1738
-#: src/dbwrapper.cpp:1755
-#: src/dbwrapper.cpp:1785
-#: src/dbwrapper.cpp:1843
-#: src/dbwrapper.cpp:1970
-#: src/dbwrapper.cpp:1986
-#: src/dbwrapper.cpp:2068
-#: src/dbwrapper.cpp:2251
+#: src/dbwrapper.cpp:1446
+#: src/dbwrapper.cpp:1466
+#: src/dbwrapper.cpp:1549
+#: src/dbwrapper.cpp:1636
+#: src/dbwrapper.cpp:1673
+#: src/dbwrapper.cpp:1704
+#: src/dbwrapper.cpp:1742
+#: src/dbwrapper.cpp:1759
+#: src/dbwrapper.cpp:1789
+#: src/dbwrapper.cpp:1847
+#: src/dbwrapper.cpp:1974
+#: src/dbwrapper.cpp:1990
+#: src/dbwrapper.cpp:2072
+#: src/dbwrapper.cpp:2255
 #, fuzzy, c-format
 msgid "Error: %s"
 msgstr "错误"
@@ -4285,37 +4316,37 @@ msgstr "交易明细"
 msgid "Invalid Category Entered "
 msgstr "输入的分类无效"
 
-#: src/aboutdialog.cpp:75
+#: src/aboutdialog.cpp:73
 msgid "About "
 msgstr "关于"
 
-#: src/aboutdialog.cpp:141
+#: src/aboutdialog.cpp:135
 msgid "Version: "
 msgstr "版本："
 
-#: src/aboutdialog.cpp:156
+#: src/aboutdialog.cpp:150
 #, fuzzy
 msgid "  and contributors from around the world"
 msgstr "和来自全世界的贡献者"
 
-#: src/aboutdialog.cpp:161
+#: src/aboutdialog.cpp:155
 msgid "Released under the GNU GPL License"
 msgstr "遵循GNU GPL 协议"
 
-#: src/aboutdialog.cpp:177
+#: src/aboutdialog.cpp:171
 msgid "Version History"
 msgstr "版本历史"
 
-#: src/aboutdialog.cpp:182
+#: src/aboutdialog.cpp:176
 #, fuzzy
 msgid "Contributors"
 msgstr "贡献者"
 
-#: src/aboutdialog.cpp:190
+#: src/aboutdialog.cpp:184
 msgid "Using Language : "
 msgstr "使用语言："
 
-#: src/aboutdialog.cpp:196
+#: src/aboutdialog.cpp:190
 #, fuzzy
 msgid "Close"
 msgstr "关闭(&C)"
@@ -4589,45 +4620,45 @@ msgstr "其它收入"
 msgid "Other Expenses"
 msgstr "其它支出"
 
-#: src/dbwrapper.cpp:1510
+#: src/dbwrapper.cpp:1514
 #, c-format
 msgid "Set Info Setting Value %s = %s. Error: %s"
 msgstr ""
 
-#: src/dbwrapper.cpp:2329
+#: src/dbwrapper.cpp:2333
 #, c-format
 msgid "Write error: %s"
 msgstr ""
 
-#: src/dbwrapper.cpp:2337
+#: src/dbwrapper.cpp:2341
 msgid "When database file opening:"
 msgstr "打开加密的数据库文件"
 
-#: src/dbwrapper.cpp:2341
+#: src/dbwrapper.cpp:2345
 msgid "Can't open file"
 msgstr "无法打开文件"
 
-#: src/dbwrapper.cpp:2341
+#: src/dbwrapper.cpp:2345
 msgid "You must specify path to another database file"
 msgstr "必须重新指定一个数据库文件"
 
-#: src/dbwrapper.cpp:2345
+#: src/dbwrapper.cpp:2349
 msgid "An incorrect password given for an encrypted file"
 msgstr "密码错误"
 
-#: src/dbwrapper.cpp:2346
+#: src/dbwrapper.cpp:2350
 msgid "or"
 msgstr "或者"
 
-#: src/dbwrapper.cpp:2347
+#: src/dbwrapper.cpp:2351
 msgid "Attempt to open a File that is not a database file"
 msgstr "试图打开一个其他格式文件"
 
-#: src/dbwrapper.cpp:2354
+#: src/dbwrapper.cpp:2358
 msgid "Database::open: Exception"
 msgstr "没有数据库被打开"
 
-#: src/dbwrapper.cpp:2356
+#: src/dbwrapper.cpp:2360
 msgid "Continue ?"
 msgstr "继续？"
 
@@ -5389,6 +5420,10 @@ msgstr "编辑预算"
 #: src/splittransactionsdialog.h:44
 msgid "Split Transaction Dialog"
 msgstr "多选交易对话框"
+
+#, fuzzy
+#~ msgid "Vlew All - Except Reconciled"
+#~ msgstr "查看全部交易，除了已核实的"
 
 #~ msgid "123456.78"
 #~ msgstr "1234567.89"
