@@ -16,8 +16,8 @@ ARCHITECTURE="i386"
 MMEX_VERSION="0.9.9.0"
 
 cd ../../../
-./configure --prefix=$HOME/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr
 ./bootstrap
+./configure --prefix=$HOME/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr
 make install
 
 mkdir ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/DEBIAN
@@ -43,14 +43,6 @@ cp setup/linux/debian/debian-binary  ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/DE
 
 mkdir -p ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/applications
 cp resources/mmex.desktop ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/applications/
-
-mkdir -p ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/icons/hicolor/scalable/apps
-cp graphics/mmex.svg ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/icons/hicolor/scalable/apps/
-
-mkdir -p ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/man/man1
-cp doc/mmex.1.gz ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/man/man1/
-
-rm ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/mmex/po/*.po
 
 cd ~/build
 
