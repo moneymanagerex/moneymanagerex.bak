@@ -99,6 +99,7 @@ private:
 
     wxString m_currentView;
     wxStaticText* statTextTransFilter_;
+    wxStaticText* itemStaticTextMainFilter_;
     wxStaticBitmap* itemStaticBitmap31_;
     TransFilterDialog* transFilterDlg_;
     bool transFilterActive_;
