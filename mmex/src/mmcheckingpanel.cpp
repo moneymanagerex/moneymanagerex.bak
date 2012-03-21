@@ -646,18 +646,15 @@ void mmCheckingPanel::CreateControls()
     itemStaticBitmap31_ = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, 
         itemStaticBitmap, wxDefaultPosition, wxSize(16, 16), 0 );
     itemFlexGridSizerHHeader2->Add(itemStaticBitmap31_);
-    itemStaticBitmap31_->Enable(false);
     itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
     itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_RIGHT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
     
     statTextTransFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_FILTER, 
         _("Transaction Filter"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizerHHeader2->Add(statTextTransFilter_, 0, wxALIGN_LEFT, 0);
-    statTextTransFilter_->Enable(false);
 
     m_currentView = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
     
-    initViewTransactionsHeader();
     wxBoxSizer* itemBoxSizerHHeader = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader, 0, wxALL, 1);
 
@@ -1232,8 +1229,12 @@ void mmCheckingPanel::OnMoveTransaction(wxCommandEvent& event)
 
 void mmCheckingPanel::initViewTransactionsHeader()
 {
-    if (m_currentView == VIEW_TRANS_ALL_STR)               itemStaticTextMainFilter_->SetLabel(_("Viewing all transactions"));
-    else if (m_currentView == VIEW_TRANS_RECONCILED_STR)   itemStaticTextMainFilter_->SetLabel(_("Viewing Reconciled transactions"));
+    if (m_currentView == VIEW_TRANS_ALL_STR) {
+        itemStaticTextMainFilter_->SetLabel(_("Viewing all transactions"));
+        itemStaticBitmap31_->Enable(true);
+        statTextTransFilter_->Enable(true);
+	} else {
+    if (m_currentView == VIEW_TRANS_RECONCILED_STR)   itemStaticTextMainFilter_->SetLabel(_("Viewing Reconciled transactions"));
     else if (m_currentView == VIEW_TRANS_NOT_RECONCILED_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing All Except Reconciled Transactions"));
     else if (m_currentView == VIEW_TRANS_UNRECONCILED_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing Un-Reconciled transactions"));
     else if (m_currentView == VIEW_TRANS_TODAY_STR)        itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for today"));
@@ -1242,6 +1243,9 @@ void mmCheckingPanel::initViewTransactionsHeader()
     else if (m_currentView == VIEW_TRANS_LAST_90_DAYS_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 90 days"));
     else if (m_currentView == VIEW_TRANS_LAST_MONTH_STR)   itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last month"));
     else if (m_currentView == VIEW_TRANS_LAST_3MONTHS_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 3 months"));
+	itemStaticBitmap31_->Enable(false);
+	statTextTransFilter_->Enable(false);
+    }
 }
 //----------------------------------------------------------------------------
 
