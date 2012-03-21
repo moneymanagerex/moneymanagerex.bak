@@ -1371,8 +1371,11 @@ void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
     wxBitmap activeBitmapFilterIcon(tipicon_xpm); 
     wxBitmap bitmapFilterIcon(rightarrow_xpm);
 
-    wxString messageStr;
-    messageStr << _("Current filtering has been set to: ") << m_currentView << wxT("\n\n");
+    int row_id;
+    wxArrayString currentViewStr = viewTransactionsStrings(false, m_currentView, row_id);
+    currentViewStr = viewTransactionsStrings(true, wxEmptyString, row_id);
+
+    wxString messageStr = wxString() << _("Current filtering has been set to: ")<< wxT("\n") << currentViewStr[row_id] << wxT("\n\n");
     messageStr << _("Please set filtering to: ") << _("View All Transactions");
 
     if (m_currentView != VIEW_TRANS_ALL_STR) 

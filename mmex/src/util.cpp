@@ -944,3 +944,44 @@ wxString Tips(wxString type)
 
     return tipsStr;
 }
+
+wxArrayString viewTransactionsStrings(bool translated, wxString input_string, int& row_id_) {
+
+    wxArrayString itemChoiceTranslatedViewTransStrings;
+    
+        itemChoiceTranslatedViewTransStrings.Add(_("View All Transactions"));
+        itemChoiceTranslatedViewTransStrings.Add(_("View Reconciled"));
+        itemChoiceTranslatedViewTransStrings.Add(_("View Not-Reconciled"));
+        itemChoiceTranslatedViewTransStrings.Add(_("View UnReconciled"));
+        itemChoiceTranslatedViewTransStrings.Add(_("View Today"));
+        itemChoiceTranslatedViewTransStrings.Add(_("View Current Month"));
+        itemChoiceTranslatedViewTransStrings.Add(_("View Last 30 days"));
+        itemChoiceTranslatedViewTransStrings.Add(_("View Last 90 days"));
+        itemChoiceTranslatedViewTransStrings.Add(_("View Last Month"));
+        itemChoiceTranslatedViewTransStrings.Add(_("View Last 3 Months"));
+    
+    wxArrayString itemChoiceViewTransStrings;
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_ALL_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_RECONCILED_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_NOT_RECONCILED_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_UNRECONCILED_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_TODAY_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_CURRENT_MONTH_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_30_DAYS_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_90_DAYS_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_MONTH_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_3MONTHS_STR);
+
+    if (!input_string.IsEmpty()) 
+    {
+	    for(size_t i=0; i<itemChoiceViewTransStrings.Count(); i++)
+	    {
+	        if(input_string == (translated ? itemChoiceTranslatedViewTransStrings[i] : itemChoiceViewTransStrings[i])) {
+	            row_id_ = i;
+	            break;
+	        }
+	    }
+	}
+    
+    return (translated ? itemChoiceTranslatedViewTransStrings : itemChoiceViewTransStrings);
+}

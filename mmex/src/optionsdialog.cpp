@@ -196,7 +196,6 @@ wxArrayString mmOptionsDialog::itemChoiceStrings() {
 wxArrayString mmOptionsDialog::viewAccountStrings(bool translated, wxString input_string, int& row_id_) {
 
     wxArrayString itemChoiceViewAccountStrings;
-    row_id_ = 0;
     
     if (translated) {
         itemChoiceViewAccountStrings.Add(_("All"));
@@ -219,48 +218,6 @@ wxArrayString mmOptionsDialog::viewAccountStrings(bool translated, wxString inpu
     }
     
     return itemChoiceViewAccountStrings;
-}
-
-wxArrayString mmOptionsDialog::viewTransactionsStrings(bool translated, wxString input_string, int& row_id_) {
-
-    row_id_ = 0;
-    wxArrayString itemChoiceTranslatedViewTransStrings;
-    
-        itemChoiceTranslatedViewTransStrings.Add(_("View All Transactions"));
-        itemChoiceTranslatedViewTransStrings.Add(_("View Reconciled"));
-        itemChoiceTranslatedViewTransStrings.Add(_("View Not-Reconciled"));
-        itemChoiceTranslatedViewTransStrings.Add(_("View UnReconciled"));
-        itemChoiceTranslatedViewTransStrings.Add(_("View Today"));
-        itemChoiceTranslatedViewTransStrings.Add(_("View Current Month"));
-        itemChoiceTranslatedViewTransStrings.Add(_("View Last 30 days"));
-        itemChoiceTranslatedViewTransStrings.Add(_("View Last 90 days"));
-        itemChoiceTranslatedViewTransStrings.Add(_("View Last Month"));
-        itemChoiceTranslatedViewTransStrings.Add(_("View Last 3 Months"));
-    
-    wxArrayString itemChoiceViewTransStrings;
-        itemChoiceViewTransStrings.Add(VIEW_TRANS_ALL_STR);
-        itemChoiceViewTransStrings.Add(VIEW_TRANS_RECONCILED_STR);
-        itemChoiceViewTransStrings.Add(VIEW_TRANS_NOT_RECONCILED_STR);
-        itemChoiceViewTransStrings.Add(VIEW_TRANS_UNRECONCILED_STR);
-        itemChoiceViewTransStrings.Add(VIEW_TRANS_TODAY_STR);
-        itemChoiceViewTransStrings.Add(VIEW_TRANS_CURRENT_MONTH_STR);
-        itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_30_DAYS_STR);
-        itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_90_DAYS_STR);
-        itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_MONTH_STR);
-        itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_3MONTHS_STR);
-
-    if (!input_string.IsEmpty()) 
-    {
-	    for(size_t i=0; i<itemChoiceViewTransStrings.Count(); i++)
-	    {
-	        if(input_string == (translated ? itemChoiceTranslatedViewTransStrings[i] : itemChoiceViewTransStrings[i])) {
-	            row_id_ = i;
-	            break;
-	        }
-	    }
-	}
-    
-    return (translated ? itemChoiceTranslatedViewTransStrings : itemChoiceViewTransStrings);
 }
 
 void mmOptionsDialog::CreateControls()
@@ -457,6 +414,7 @@ void mmOptionsDialog::CreateControls()
     accountStaticBoxSizer->Add(choiceVisible_, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     
     wxString vAccts = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWACCOUNTS"), VIEW_ACCOUNTS_ALL_STR);
+    row_id_ = 0;
     wxArrayString itemChoiceViewAccountStrings = viewAccountStrings(false, vAccts, row_id_);
     choiceVisible_->SetSelection(row_id_);
          
@@ -1103,10 +1061,10 @@ void mmOptionsDialog::SaveViewAccountOptions()
 void mmOptionsDialog::SaveViewTransactionOptions()
 {
     int selection = choiceTransVisible_->GetSelection();
-    int row_id_ =0;
+    int row_id_ = 0;
     wxArrayString ViewTransaction = viewTransactionsStrings(false, wxEmptyString, row_id_);
     mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), ViewTransaction[selection]);
-    //wxSafeShowMessage(wxT("write"), ViewTransaction[selection]);
+    wxSafeShowMessage(wxT("write"), ViewTransaction[selection]);
 }
 
 void mmOptionsDialog::SaveFinancialYearStart()
