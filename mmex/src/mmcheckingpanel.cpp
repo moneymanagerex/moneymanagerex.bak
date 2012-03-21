@@ -512,6 +512,7 @@ bool mmCheckingPanel::Create(
     {
         Freeze();
         CreateControls();
+        initViewTransactionsHeader();
         GetSizer()->Fit(this);
         GetSizer()->SetSizeHints(this);
 
@@ -625,26 +626,26 @@ void mmCheckingPanel::CreateControls()
 
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_HEADER, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText9->SetFont(wxFont(14, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
-    itemBoxSizerVHeader2->Add(itemStaticText9, 0, wxALL, 0);
+    itemBoxSizerVHeader2->Add(itemStaticText9, 0, wxALIGN_CENTER, 0);
 
     wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
-    wxFlexGridSizer* itemFlexGridSizerHHeader2 = new wxFlexGridSizer(2,2,0,0);
+    wxFlexGridSizer* itemFlexGridSizerHHeader2 = new wxFlexGridSizer(2,2,1,1);
     itemBoxSizerVHeader2->Add(itemBoxSizerHHeader2);
     itemBoxSizerHHeader2->Add(itemFlexGridSizerHHeader2);
 
     wxBitmap itemStaticBitmap(rightarrow_xpm);
     wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, 
         itemStaticBitmap, wxDefaultPosition, wxSize(16, 16), 0 );
-    itemFlexGridSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_LEFT|wxALL, 0);
+    itemFlexGridSizerHHeader2->Add(itemStaticBitmap3);
     itemStaticBitmap3->SetEventHandler( this );
 
     itemStaticTextMainFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW, 
         wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizerHHeader2->Add(itemStaticTextMainFilter_, 0, wxALIGN_LEFT, 0);
+    itemFlexGridSizerHHeader2->Add(itemStaticTextMainFilter_);
 
     itemStaticBitmap31_ = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, 
         itemStaticBitmap, wxDefaultPosition, wxSize(16, 16), 0 );
-    itemFlexGridSizerHHeader2->Add(itemStaticBitmap31_, 0, wxALIGN_LEFT,0);
+    itemFlexGridSizerHHeader2->Add(itemStaticBitmap31_);
     itemStaticBitmap31_->Enable(false);
     itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
     itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_RIGHT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
@@ -662,7 +663,7 @@ void mmCheckingPanel::CreateControls()
 
     wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, 
             ID_PANEL_CHECKING_STATIC_BALHEADER, wxT(""), wxDefaultPosition, wxSize(600,20), 0 );
-    itemBoxSizerHHeader->Add(itemStaticText10, 0, wxALL | wxEXPAND , 5);
+    itemBoxSizerHHeader->Add(itemStaticText10, 0, wxALL | wxEXPAND , 1);
     
     /* ---------------------- */
 
