@@ -638,20 +638,20 @@ void mmCheckingPanel::CreateControls()
     itemFlexGridSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_LEFT|wxALL, 0);
     itemStaticBitmap3->SetEventHandler( this );
 
-    wxStaticText* itemStaticText18 = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW, 
-        _("Viewing All Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizerHHeader2->Add(itemStaticText18, 0, wxALIGN_LEFT, 0);
+    itemStaticTextMainFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW, 
+        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizerHHeader2->Add(itemStaticTextMainFilter_, 0, wxALIGN_LEFT, 0);
 
     itemStaticBitmap31_ = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, 
         itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(16, 16), 0 );
     itemFlexGridSizerHHeader2->Add(itemStaticBitmap31_, 0, wxALIGN_LEFT,0);
     itemStaticBitmap31_->SetEventHandler( this );
-    itemStaticBitmap31_->Enable(true);
+    itemStaticBitmap31_->Enable(false);
 
-    statTextTransFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW, 
+    statTextTransFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_FILTER, 
         _("Transaction Filter"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizerHHeader2->Add(statTextTransFilter_, 0, wxALIGN_LEFT, 0);
-    statTextTransFilter_->Enable(true);
+    statTextTransFilter_->Enable(false);
 
     m_currentView = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
     
@@ -1230,24 +1230,22 @@ void mmCheckingPanel::OnMoveTransaction(wxCommandEvent& event)
 
 void mmCheckingPanel::initViewTransactionsHeader()
 {
-    wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_PANELVIEW);
-    if (m_currentView == VIEW_TRANS_ALL_STR)               header->SetLabel(_("Viewing all transactions"));
-    else if (m_currentView == VIEW_TRANS_RECONCILED_STR)   header->SetLabel(_("Viewing Reconciled transactions"));
-    else if (m_currentView == VIEW_TRANS_NOT_RECONCILED_STR) header->SetLabel(_("Viewing All Except Reconciled Transactions"));
-    else if (m_currentView == VIEW_TRANS_UNRECONCILED_STR) header->SetLabel(_("Viewing Un-Reconciled transactions"));
-    else if (m_currentView == VIEW_TRANS_TODAY_STR)        header->SetLabel(_("Viewing transactions for today"));
-    else if (m_currentView == VIEW_TRANS_CURRENT_MONTH_STR) header->SetLabel(_("Viewing transactions for current month"));
-    else if (m_currentView == VIEW_TRANS_LAST_30_DAYS_STR) header->SetLabel(_("Viewing transactions for last 30 days"));
-    else if (m_currentView == VIEW_TRANS_LAST_90_DAYS_STR) header->SetLabel(_("Viewing transactions for last 90 days"));
-    else if (m_currentView == VIEW_TRANS_LAST_MONTH_STR)   header->SetLabel(_("Viewing transactions for last month"));
-    else if (m_currentView == VIEW_TRANS_LAST_3MONTHS_STR) header->SetLabel(_("Viewing transactions for last 3 months"));
+    if (m_currentView == VIEW_TRANS_ALL_STR)               itemStaticTextMainFilter_->SetLabel(_("Viewing all transactions"));
+    else if (m_currentView == VIEW_TRANS_RECONCILED_STR)   itemStaticTextMainFilter_->SetLabel(_("Viewing Reconciled transactions"));
+    else if (m_currentView == VIEW_TRANS_NOT_RECONCILED_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing All Except Reconciled Transactions"));
+    else if (m_currentView == VIEW_TRANS_UNRECONCILED_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing Un-Reconciled transactions"));
+    else if (m_currentView == VIEW_TRANS_TODAY_STR)        itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for today"));
+    else if (m_currentView == VIEW_TRANS_CURRENT_MONTH_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for current month"));
+    else if (m_currentView == VIEW_TRANS_LAST_30_DAYS_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 30 days"));
+    else if (m_currentView == VIEW_TRANS_LAST_90_DAYS_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 90 days"));
+    else if (m_currentView == VIEW_TRANS_LAST_MONTH_STR)   itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last month"));
+    else if (m_currentView == VIEW_TRANS_LAST_3MONTHS_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 3 months"));
 }
 //----------------------------------------------------------------------------
 
 void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
 {
     int evt =  event.GetId();
-    wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_PANELVIEW);
 
     if ( (evt !=  MENU_VIEW_ALLTRANSACTIONS) && transFilterActive_)
     {
@@ -1255,70 +1253,66 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         messageStr << _("Transaction Filter")<< _("  will interfere with this filtering.") << wxT("\n\n");
         messageStr << _("Please deactivate: ") << _("Transaction Filter");
         wxMessageBox(messageStr,_("Transaction Filter"),wxICON_WARNING);
+        return;
     } 
-    else if (evt ==  MENU_VIEW_ALLTRANSACTIONS)
-    {
-        header->SetLabel(_("Viewing all transactions"));
-        m_currentView = VIEW_TRANS_ALL_STR;
-    }
     else if (evt == MENU_VIEW_RECONCILED)
     {
-        header->SetLabel(_("Viewing Reconciled transactions"));
+        itemStaticTextMainFilter_->SetLabel(_("Viewing Reconciled transactions"));
         m_currentView = VIEW_TRANS_RECONCILED_STR;
     }
     else if (evt == MENU_VIEW_NOTRECONCILED)
     {
-        header->SetLabel(_("Viewing All except Reconciled Transactions"));
+        itemStaticTextMainFilter_->SetLabel(_("Viewing All except Reconciled Transactions"));
         m_currentView = VIEW_TRANS_NOT_RECONCILED_STR;
     }
     else if (evt == MENU_VIEW_UNRECONCILED)
     {
-        header->SetLabel(_("Viewing Un-Reconciled transactions"));
+        itemStaticTextMainFilter_->SetLabel(_("Viewing Un-Reconciled transactions"));
         m_currentView = VIEW_TRANS_UNRECONCILED_STR;
     }
     else if (evt == MENU_VIEW_VOID)
     {
-        header->SetLabel(_("Viewing Void transactions"));
+        itemStaticTextMainFilter_->SetLabel(_("Viewing Void transactions"));
         m_currentView = VIEW_TRANS_VOID;
     }
     else if (evt == MENU_VIEW_FLAGGED)
     {
-        header->SetLabel(_("Viewing Follow-Up transactions"));
+        itemStaticTextMainFilter_->SetLabel(_("Viewing Follow-Up transactions"));
         m_currentView = VIEW_TRANS_FLAGGED;
     }
     else if (evt == MENU_VIEW_TODAY)
     {
-        header->SetLabel(_("Viewing transactions for today"));
+        itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for today"));
         m_currentView = VIEW_TRANS_TODAY_STR;
     }
     else if (evt == MENU_VIEW_LAST30)
     {
-        header->SetLabel(_("Viewing transactions for last 30 days"));
+        itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 30 days"));
         m_currentView = VIEW_TRANS_LAST_30_DAYS_STR;
     }
     else if (evt == MENU_VIEW_LAST90)
     {
-        header->SetLabel(_("Viewing transactions for last 90 days"));
+        itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 90 days"));
         m_currentView = VIEW_TRANS_LAST_90_DAYS_STR;
     }
     else if (evt == MENU_VIEW_LAST3MONTHS)
     {
-        header->SetLabel(_("Viewing transactions for last 3 months"));
+        itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 3 months"));
         m_currentView = VIEW_TRANS_LAST_3MONTHS_STR;
     }
     else if (evt == MENU_VIEW_CURRENTMONTH)
     {
-        header->SetLabel(_("Viewing transactions for current month"));
+        itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for current month"));
         m_currentView = VIEW_TRANS_CURRENT_MONTH_STR;
     }
     else if (evt == MENU_VIEW_LASTMONTH)
     {
-        header->SetLabel(_("Viewing transactions for last month"));
+        itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last month"));
         m_currentView = VIEW_TRANS_LAST_MONTH_STR;
     }
     else if (evt == MENU_VIEW_DUPLICATE)
     {
-        header->SetLabel(_("Viewing duplicate transactions"));
+        itemStaticTextMainFilter_->SetLabel(_("Viewing duplicate transactions"));
         m_currentView = VIEW_TRANS_DUPLICATES;
     }
     else if (evt == MENU_VIEW_DELETE_TRANS || evt == MENU_TREEPOPUP_DELETE_VIEWED)
@@ -1333,7 +1327,17 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     {
         wxASSERT(false);
     }
+    
+    itemStaticBitmap31_->Enable(false);
+    statTextTransFilter_->Enable(false);
 
+    if (evt ==  MENU_VIEW_ALLTRANSACTIONS)
+    {
+        itemStaticTextMainFilter_->SetLabel(_("Viewing all transactions"));
+        m_currentView = VIEW_TRANS_ALL_STR;
+        itemStaticBitmap31_->Enable(true);
+        statTextTransFilter_->Enable(true);
+    }
     m_listCtrlAccount->DeleteAllItems();
 
     initVirtualListControl(NULL);
@@ -1375,6 +1379,12 @@ void mmCheckingPanel::DeleteFlaggedTransactions()
 
 void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
 {
+    if (m_currentView != VIEW_TRANS_ALL_STR) 
+    {
+        //wxMessageBox(messageStr,_("Transaction Filter"),wxICON_WARNING);
+        return;
+    } 
+
     wxBitmap activeBitmapFilterIcon(tipicon_xpm); 
     wxBitmap bitmapFilterIcon(rightarrow_xpm);
 
@@ -1385,34 +1395,29 @@ void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
     if (row_id > -1) {
         currentViewStr = viewTransactionsStrings(true, wxEmptyString, row_id);
         messageStr << _("Current filtering has been set to: ")<< wxT("\n") 
-                                     << currentViewStr[row_id] << wxT("\n\n");
+                   << currentViewStr[row_id] << wxT("\n\n");
     }
     messageStr << _("Please set filtering to: ") << _("View All Transactions");
 
-    if (m_currentView != VIEW_TRANS_ALL_STR) 
+    int dlgResult = transFilterDlg_->ShowModal();
+    if ( dlgResult == wxID_OK )
     {
-        wxMessageBox(messageStr,_("Transaction Filter"),wxICON_WARNING);
-    } 
-    else 
-    {
-        int dlgResult = transFilterDlg_->ShowModal();
-        if ( dlgResult == wxID_OK )
-        {
-            transFilterActive_ = true; 
-            bitmapFilterIcon = activeBitmapFilterIcon;
-        }
-        else if ( dlgResult == wxID_CANCEL )
-        {
-            transFilterActive_ = false;
-        }
-
-        itemStaticBitmap31_->SetBitmap(bitmapFilterIcon);
-        itemStaticBitmap31_->Enable(true);
-
-        m_listCtrlAccount->DeleteAllItems();
-        initVirtualListControl(NULL);
-        m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
+        transFilterActive_ = true; 
+        bitmapFilterIcon = activeBitmapFilterIcon;
     }
+    else if ( dlgResult == wxID_CANCEL )
+    {
+        transFilterActive_ = false;
+    }
+
+    itemStaticBitmap31_->SetBitmap(bitmapFilterIcon);
+    itemStaticBitmap31_->Enable(true);
+    statTextTransFilter_->Enable(true);
+
+    m_listCtrlAccount->DeleteAllItems();
+    initVirtualListControl(NULL);
+    m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
+
 }
 
 //----------------------------------------------------------------------------
