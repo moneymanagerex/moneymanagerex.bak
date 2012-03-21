@@ -1382,14 +1382,10 @@ void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
     int row_id = -1;
     wxArrayString currentViewStr = viewTransactionsStrings(false, m_currentView, row_id);
     
-    wxSafeShowMessage(wxString::Format(wxT("%i"), row_id), m_currentView);
-    
     if (row_id > -1) {
         currentViewStr = viewTransactionsStrings(true, wxEmptyString, row_id);
         messageStr << _("Current filtering has been set to: ")<< wxT("\n") 
                                      << currentViewStr[row_id] << wxT("\n\n");
-    }
-    else {
     }
     messageStr << _("Please set filtering to: ") << _("View All Transactions");
 
