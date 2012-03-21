@@ -92,7 +92,6 @@ private:
     wxArrayString itemChoiceStrings();
     wxArrayString DateFormats();
     wxArrayString viewAccountStrings(bool translated, wxString get_string_id);
-    wxArrayString viewTransactionsStrings(bool translated, wxString input_string, int& row_id);
     wxArrayString viewAccountStrings(bool translated, wxString input_string, int& row_id);
 
     /// Dialog Creation - Used by constructor

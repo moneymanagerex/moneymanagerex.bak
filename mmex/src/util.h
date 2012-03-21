@@ -79,8 +79,8 @@ const wxString VIEW_TRANS_NOT_RECONCILED_STR = wxT("View Not-Reconciled");
 const wxString VIEW_TRANS_UNRECONCILED_STR   = wxT("View UnReconciled");
 const wxString VIEW_TRANS_TODAY_STR          = wxT("View Today"); 
 const wxString VIEW_TRANS_CURRENT_MONTH_STR  = wxT("View Current Month");
-const wxString VIEW_TRANS_LAST_30_DAYS_STR   = wxT("View 30 days");
-const wxString VIEW_TRANS_LAST_90_DAYS_STR   = wxT("View 90 days");
+const wxString VIEW_TRANS_LAST_30_DAYS_STR   = wxT("View Last 30 days");
+const wxString VIEW_TRANS_LAST_90_DAYS_STR   = wxT("View Last 90 days");
 const wxString VIEW_TRANS_LAST_MONTH_STR     = wxT("View Last Month");
 const wxString VIEW_TRANS_LAST_3MONTHS_STR   = wxT("View Last 3 Months");
 
@@ -365,6 +365,7 @@ struct CurrentMonth: public LastMonths<0, 0, CurrentData> { };
 int getTransformedTrxStatus(const wxString& in);
 wxString getTransformedTrxStatus(int in);
 wxString Tips(wxString type);
+wxArrayString viewTransactionsStrings(bool translated, wxString input_string, int& row_id);
 
 // Validators -----------------------------------------------------
 
