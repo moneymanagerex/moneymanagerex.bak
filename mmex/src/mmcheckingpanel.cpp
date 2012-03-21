@@ -620,31 +620,38 @@ void mmCheckingPanel::CreateControls()
     headerPanel->SetSizer(itemBoxSizerVHeader);
     headerPanel->SetBackgroundColour(mmColors::listBackColor);
 
+    wxGridSizer* itemBoxSizerVHeader2 = new wxGridSizer(2,20,20);
+    itemBoxSizerVHeader->Add(itemBoxSizerVHeader2);
+
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_HEADER, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
-    itemBoxSizerVHeader->Add(itemStaticText9, 0, wxALL, 5);
+    itemStaticText9->SetFont(wxFont(14, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+    itemBoxSizerVHeader2->Add(itemStaticText9, 0, wxALL, 0);
 
     wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizerVHeader->Add(itemBoxSizerHHeader2, 0, wxALL, 1);
+    wxFlexGridSizer* itemFlexGridSizerHHeader2 = new wxFlexGridSizer(2,2,0,0);
+    itemBoxSizerVHeader2->Add(itemBoxSizerHHeader2);
+    itemBoxSizerHHeader2->Add(itemFlexGridSizerHHeader2);
 
     wxBitmap itemStaticBitmap3Bitmap(rightarrow_xpm);
     wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, 
         itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(16, 16), 0 );
-    itemBoxSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    itemStaticBitmap3->SetEventHandler( this ); 
+    itemFlexGridSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_LEFT|wxALL, 0);
+    itemStaticBitmap3->SetEventHandler( this );
 
     wxStaticText* itemStaticText18 = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW, 
         _("Viewing All Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizerHHeader2->Add(itemStaticText18, 0, wxALL, 1);
+    itemFlexGridSizerHHeader2->Add(itemStaticText18, 0, wxALIGN_LEFT, 0);
 
-    wxStaticBitmap* itemStaticBitmap31 = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, 
+    itemStaticBitmap31_ = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, 
         itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(16, 16), 0 );
-    itemBoxSizerHHeader2->Add(itemStaticBitmap31, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 120);
-    itemStaticBitmap31->SetEventHandler( this ); 
+    itemFlexGridSizerHHeader2->Add(itemStaticBitmap31_, 0, wxALIGN_LEFT,0);
+    itemStaticBitmap31_->SetEventHandler( this );
+    itemStaticBitmap31_->Enable(true);
 
     statTextTransFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW, 
         _("Transaction Filter"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizerHHeader2->Add(statTextTransFilter_, 0, wxALL, 1);
+    itemFlexGridSizerHHeader2->Add(statTextTransFilter_, 0, wxALIGN_LEFT, 0);
+    statTextTransFilter_->Enable(true);
 
     m_currentView = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
     
@@ -1371,11 +1378,19 @@ void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
     wxBitmap activeBitmapFilterIcon(tipicon_xpm); 
     wxBitmap bitmapFilterIcon(rightarrow_xpm);
 
-    int row_id;
+    wxString messageStr;
+    int row_id = -1;
     wxArrayString currentViewStr = viewTransactionsStrings(false, m_currentView, row_id);
-    currentViewStr = viewTransactionsStrings(true, wxEmptyString, row_id);
-
-    wxString messageStr = wxString() << _("Current filtering has been set to: ")<< wxT("\n") << currentViewStr[row_id] << wxT("\n\n");
+    
+    wxSafeShowMessage(wxString::Format(wxT("%i"), row_id), m_currentView);
+    
+    if (row_id > -1) {
+        currentViewStr = viewTransactionsStrings(true, wxEmptyString, row_id);
+        messageStr << _("Current filtering has been set to: ")<< wxT("\n") 
+                                     << currentViewStr[row_id] << wxT("\n\n");
+    }
+    else {
+    }
     messageStr << _("Please set filtering to: ") << _("View All Transactions");
 
     if (m_currentView != VIEW_TRANS_ALL_STR) 
@@ -1395,8 +1410,8 @@ void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
             transFilterActive_ = false;
         }
 
-        wxStaticBitmap* staticBitmap = (wxStaticBitmap*)FindWindow(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER);
-        staticBitmap->SetBitmap(bitmapFilterIcon);
+        itemStaticBitmap31_->SetBitmap(bitmapFilterIcon);
+        itemStaticBitmap31_->Enable(true);
 
         m_listCtrlAccount->DeleteAllItems();
         initVirtualListControl(NULL);
