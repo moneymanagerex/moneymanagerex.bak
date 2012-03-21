@@ -418,7 +418,7 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_MENU(MENU_VIEW_CURRENTMONTH, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_LASTMONTH, mmCheckingPanel::OnViewPopupSelected)
 
-    EVT_MENU(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, mmCheckingPanel::OnFilterTransactions)
+    //EVT_MENU(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, mmCheckingPanel::OnFilterTransactions)
     EVT_SEARCHCTRL_SEARCH_BTN(wxID_FIND, mmCheckingPanel::OnSearchTxtEntered)
     EVT_TEXT_ENTER(wxID_FIND, mmCheckingPanel::OnSearchTxtEntered)
 
@@ -632,9 +632,9 @@ void mmCheckingPanel::CreateControls()
     itemBoxSizerVHeader2->Add(itemBoxSizerHHeader2);
     itemBoxSizerHHeader2->Add(itemFlexGridSizerHHeader2);
 
-    wxBitmap itemStaticBitmap3Bitmap(rightarrow_xpm);
+    wxBitmap itemStaticBitmap(rightarrow_xpm);
     wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, 
-        itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(16, 16), 0 );
+        itemStaticBitmap, wxDefaultPosition, wxSize(16, 16), 0 );
     itemFlexGridSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_LEFT|wxALL, 0);
     itemStaticBitmap3->SetEventHandler( this );
 
@@ -643,11 +643,12 @@ void mmCheckingPanel::CreateControls()
     itemFlexGridSizerHHeader2->Add(itemStaticTextMainFilter_, 0, wxALIGN_LEFT, 0);
 
     itemStaticBitmap31_ = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, 
-        itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(16, 16), 0 );
+        itemStaticBitmap, wxDefaultPosition, wxSize(16, 16), 0 );
     itemFlexGridSizerHHeader2->Add(itemStaticBitmap31_, 0, wxALIGN_LEFT,0);
-    itemStaticBitmap31_->SetEventHandler( this );
     itemStaticBitmap31_->Enable(false);
-
+    itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
+    itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_RIGHT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
+    
     statTextTransFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_FILTER, 
         _("Transaction Filter"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizerHHeader2->Add(statTextTransFilter_, 0, wxALIGN_LEFT, 0);
@@ -1377,13 +1378,14 @@ void mmCheckingPanel::DeleteFlaggedTransactions()
     }
 }
 
-void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
+void mmCheckingPanel::OnFilterTransactions(wxMouseEvent& event)
 {
     if (m_currentView != VIEW_TRANS_ALL_STR) 
     {
-        //wxMessageBox(messageStr,_("Transaction Filter"),wxICON_WARNING);
         return;
     } 
+    
+    int e = event.GetEventType();
 
     wxBitmap activeBitmapFilterIcon(tipicon_xpm); 
     wxBitmap bitmapFilterIcon(rightarrow_xpm);
@@ -1399,24 +1401,29 @@ void mmCheckingPanel::OnFilterTransactions(wxCommandEvent& /*event*/)
     }
     messageStr << _("Please set filtering to: ") << _("View All Transactions");
 
-    int dlgResult = transFilterDlg_->ShowModal();
-    if ( dlgResult == wxID_OK )
-    {
-        transFilterActive_ = true; 
-        bitmapFilterIcon = activeBitmapFilterIcon;
-    }
-    else if ( dlgResult == wxID_CANCEL )
-    {
+    if (e == wxEVT_LEFT_DOWN) {
+        int dlgResult = transFilterDlg_->ShowModal();
+        if ( dlgResult == wxID_OK )
+        {
+            transFilterActive_ = true; 
+            bitmapFilterIcon = activeBitmapFilterIcon;
+        }
+        else if ( dlgResult == wxID_CANCEL )
+        {
+            transFilterActive_ = false;
+        }
+    } else {
         transFilterActive_ = false;
     }
-
-    itemStaticBitmap31_->SetBitmap(bitmapFilterIcon);
+    
+    wxImage pic = bitmapFilterIcon.ConvertToImage();
+    itemStaticBitmap31_->SetBitmap(pic);
     itemStaticBitmap31_->Enable(true);
     statTextTransFilter_->Enable(true);
 
     m_listCtrlAccount->DeleteAllItems();
     initVirtualListControl(NULL);
-    m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1);
+    m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1); 
 
 }
 
