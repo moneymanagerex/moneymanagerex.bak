@@ -1021,9 +1021,9 @@ const TransactionMatchMap& initTransactionMatchMap()
     map[VIEW_TRANS_RECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("R"))), false);
     map[VIEW_TRANS_UNRECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT(""))), false);
     map[VIEW_TRANS_NOT_RECONCILED_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status< std::not_equal_to<wxString> >(wxT("R"))), false);
-    map[wxT("View Void")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("V"))), false);
-    map[wxT("View Flagged")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("F"))), false);
-    map[wxT("View Duplicates")] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("D"))), false);
+    map[VIEW_TRANS_VOID] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("V"))), false);
+    map[VIEW_TRANS_FLAGGED] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("F"))), false);
+    map[VIEW_TRANS_DUPLICATES] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_Status<>(wxT("D"))), false);
 
     map[VIEW_TRANS_TODAY_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::Today>()), true);
     map[VIEW_TRANS_LAST_30_DAYS_STR] = TransactionMatchData(TransactionPtr_MatcherPtr(new MatchTransaction_DateTime<DateTimeProviders::LastDays<30> >()), true);
@@ -1279,12 +1279,12 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     else if (evt == MENU_VIEW_VOID)
     {
         header->SetLabel(_("Viewing Void transactions"));
-        m_currentView = wxT("View Void");
+        m_currentView = VIEW_TRANS_VOID;
     }
     else if (evt == MENU_VIEW_FLAGGED)
     {
         header->SetLabel(_("Viewing Follow-Up transactions"));
-        m_currentView = wxT("View Flagged");
+        m_currentView = VIEW_TRANS_FLAGGED;
     }
     else if (evt == MENU_VIEW_TODAY)
     {
@@ -1319,7 +1319,7 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     else if (evt == MENU_VIEW_DUPLICATE)
     {
         header->SetLabel(_("Viewing duplicate transactions"));
-        m_currentView = wxT("View Duplicates");
+        m_currentView = VIEW_TRANS_DUPLICATES;
     }
     else if (evt == MENU_VIEW_DELETE_TRANS || evt == MENU_TREEPOPUP_DELETE_VIEWED)
     {
