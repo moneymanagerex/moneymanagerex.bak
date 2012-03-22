@@ -950,27 +950,27 @@ wxArrayString viewTransactionsStrings(bool translated, wxString input_string, in
     wxArrayString itemChoiceTranslatedViewTransStrings;
     
         itemChoiceTranslatedViewTransStrings.Add(_("View All Transactions"));
-        itemChoiceTranslatedViewTransStrings.Add(_("View Reconciled"));
-        itemChoiceTranslatedViewTransStrings.Add(_("View Not-Reconciled"));
-        itemChoiceTranslatedViewTransStrings.Add(_("View UnReconciled"));
         itemChoiceTranslatedViewTransStrings.Add(_("View Today"));
         itemChoiceTranslatedViewTransStrings.Add(_("View Current Month"));
         itemChoiceTranslatedViewTransStrings.Add(_("View Last 30 days"));
         itemChoiceTranslatedViewTransStrings.Add(_("View Last 90 days"));
         itemChoiceTranslatedViewTransStrings.Add(_("View Last Month"));
         itemChoiceTranslatedViewTransStrings.Add(_("View Last 3 Months"));
+        itemChoiceTranslatedViewTransStrings.Add(_("View Reconciled"));
+        itemChoiceTranslatedViewTransStrings.Add(_("View Not-Reconciled"));
+        itemChoiceTranslatedViewTransStrings.Add(_("View UnReconciled"));
     
     wxArrayString itemChoiceViewTransStrings;
         itemChoiceViewTransStrings.Add(VIEW_TRANS_ALL_STR);
-        itemChoiceViewTransStrings.Add(VIEW_TRANS_RECONCILED_STR);
-        itemChoiceViewTransStrings.Add(VIEW_TRANS_NOT_RECONCILED_STR);
-        itemChoiceViewTransStrings.Add(VIEW_TRANS_UNRECONCILED_STR);
         itemChoiceViewTransStrings.Add(VIEW_TRANS_TODAY_STR);
         itemChoiceViewTransStrings.Add(VIEW_TRANS_CURRENT_MONTH_STR);
         itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_30_DAYS_STR);
         itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_90_DAYS_STR);
         itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_MONTH_STR);
         itemChoiceViewTransStrings.Add(VIEW_TRANS_LAST_3MONTHS_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_RECONCILED_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_NOT_RECONCILED_STR);
+        itemChoiceViewTransStrings.Add(VIEW_TRANS_UNRECONCILED_STR);
 
     if (!input_string.IsEmpty()) 
     {
