@@ -134,6 +134,7 @@ private:
     void OnViewPopupSelected(wxCommandEvent& event);
     void OnFilterTransactions(wxMouseEvent& event);
     void OnSearchTxtEntered(wxCommandEvent& event);
+    void OnFilterResetToViewAll(wxMouseEvent& event);
 
     void DeleteViewedTransactions();
     void DeleteFlaggedTransactions();
