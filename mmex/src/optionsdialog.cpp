@@ -424,20 +424,25 @@ void mmOptionsDialog::CreateControls()
     wxStaticBox* transOptionStaticBox = new wxStaticBox(viewsPanel, wxID_ANY, _("Transaction View Options"));
     transOptionStaticBox->SetFont(staticBoxFontSetting);
 
-
     wxBoxSizer* transOptionStaticBoxSizer = new wxStaticBoxSizer(transOptionStaticBox, wxHORIZONTAL);
     viewsPanelSizer->Add(transOptionStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
     wxFlexGridSizer* dateFormatSettingStaticBoxSizerGrid2 = new wxFlexGridSizer(1,2,0,5);
     transOptionStaticBoxSizer->Add(dateFormatSettingStaticBoxSizerGrid2);
 
-
     wxStaticText* transVisibleStaticText = new wxStaticText(viewsPanel, wxID_STATIC,
         _("Transactions Visible"), wxDefaultPosition, wxDefaultSize, 0);
     dateFormatSettingStaticBoxSizerGrid2->Add(transVisibleStaticText, 0,
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    wxArrayString itemChoiceViewTransStrings = viewTransactionsStrings(true, wxEmptyString, row_id_); 
+    wxArrayString itemChoiceViewTransStrings; 
+    itemChoiceViewTransStrings.Add(_("View All Transactions"));
+    itemChoiceViewTransStrings.Add(_("View Today"));
+    itemChoiceViewTransStrings.Add(_("View Current Month"));
+    itemChoiceViewTransStrings.Add(_("View Last 30 days"));
+    itemChoiceViewTransStrings.Add(_("View Last 90 days"));
+    itemChoiceViewTransStrings.Add(_("View Last Month"));
+    itemChoiceViewTransStrings.Add(_("View Last 3 Months"));
 
     choiceTransVisible_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_VIEW_TRANS, wxDefaultPosition, wxSize(220,-1),
         itemChoiceViewTransStrings);
