@@ -641,7 +641,7 @@ void mmCheckingPanel::CreateControls()
     itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnMouseLeftDown), NULL, this);
 
     itemStaticTextMainFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW, 
-        wxT("-------------------------------------"), wxDefaultPosition, wxDefaultSize, 0 );
+        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizerHHeader2->Add(itemStaticTextMainFilter_);
 
     itemFlexGridSizerHHeader2->AddSpacer(20);
