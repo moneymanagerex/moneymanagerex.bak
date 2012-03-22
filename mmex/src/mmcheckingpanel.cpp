@@ -1250,6 +1250,8 @@ void mmCheckingPanel::initViewTransactionsHeader()
         else if (m_currentView == VIEW_TRANS_LAST_90_DAYS_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 90 days"));
         else if (m_currentView == VIEW_TRANS_LAST_MONTH_STR)   itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last month"));
         else if (m_currentView == VIEW_TRANS_LAST_3MONTHS_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 3 months"));
+        itemStaticBitmap31_->Enable(false);
+        statTextTransFilter_->Enable(false);
     }
 }
 //----------------------------------------------------------------------------
@@ -1257,8 +1259,12 @@ void mmCheckingPanel::initViewTransactionsHeader()
 void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
 {
     int evt =  event.GetId();
-
-    if ( (evt !=  MENU_VIEW_ALLTRANSACTIONS) && transFilterActive_)
+    
+    if (  (evt != MENU_VIEW_ALLTRANSACTIONS 
+        && evt != MENU_VIEW_DELETE_TRANS 
+        && evt != MENU_VIEW_DELETE_FLAGGED 
+        && evt != MENU_TREEPOPUP_DELETE_VIEWED 
+        && evt != MENU_TREEPOPUP_DELETE_FLAGGED) && transFilterActive_)
     {
         wxString messageStr;
         messageStr << _("Transaction Filter")<< _("  will interfere with this filtering.") << wxT("\n\n");
@@ -1267,10 +1273,14 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         return;
     } 
 
+    bool show_filter_ = false;
+
     if (evt ==  MENU_VIEW_ALLTRANSACTIONS)
     {
         itemStaticTextMainFilter_->SetLabel(_("Viewing all transactions"));
         m_currentView = VIEW_TRANS_ALL_STR;
+        transFilterActive_ = false;
+        show_filter_ = true;
     }
     else if (evt == MENU_VIEW_RECONCILED)
     {
@@ -1335,30 +1345,19 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     else if (evt == MENU_VIEW_DELETE_TRANS || evt == MENU_TREEPOPUP_DELETE_VIEWED)
     {
         DeleteViewedTransactions();
+        show_filter_ = true;
     }
     else if (evt == MENU_VIEW_DELETE_FLAGGED || evt == MENU_TREEPOPUP_DELETE_FLAGGED)
     {
         DeleteFlaggedTransactions();
-    }
+        show_filter_ = true;    }
     else
     {
         wxASSERT(false);
     }
 
-    if (   evt == MENU_VIEW_ALLTRANSACTIONS 
-        || evt == MENU_VIEW_DELETE_TRANS 
-        || evt == MENU_TREEPOPUP_DELETE_VIEWED 
-        || evt == MENU_VIEW_DELETE_FLAGGED 
-        || evt == MENU_TREEPOPUP_DELETE_FLAGGED) 
-    {
-        itemStaticBitmap31_->Enable(true);
-        statTextTransFilter_->Enable(true);
-    } 
-    else 
-    {
-        itemStaticBitmap31_->Enable(false);
-        statTextTransFilter_->Enable(false);
-    } 
+    itemStaticBitmap31_->Enable(show_filter_);
+    statTextTransFilter_->Enable(show_filter_);
     
     m_listCtrlAccount->DeleteAllItems();
 
