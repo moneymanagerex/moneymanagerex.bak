@@ -666,7 +666,7 @@ void mmCheckingPanel::CreateControls()
 
     wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, 
             ID_PANEL_CHECKING_STATIC_BALHEADER, wxT(""), wxDefaultPosition, wxSize(600,20), 0 );
-    itemBoxSizerHHeader->Add(itemStaticText10, 0, wxALL | wxEXPAND , 5);
+    itemBoxSizerHHeader->Add(itemStaticText10, 0, wxRIGHT|wxEXPAND , 50);
     
     /* ---------------------- */
 
@@ -967,13 +967,14 @@ void mmCheckingPanel::setAccountSummary()
     mmex::formatDoubleToCurrency(filteredBalance_, filteredBalanceStr);
 
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
-    wxString lbl  = wxString::Format(_("Account Bal: %s      Reconciled Bal: %s      Diff: %s"),
-                    balance.c_str(), recbalance.c_str(), diffbal.c_str());
-    if (transFilterActive_ || (m_currentView != VIEW_TRANS_ALL_STR))
-    {
-        wxString displayedBal = wxString::Format(_("      Displayed Bal: %s"), filteredBalanceStr.c_str());
-        lbl << displayedBal;
-    }
+    bool show_displayed_balance_ = (transFilterActive_ || (m_currentView != VIEW_TRANS_ALL_STR));
+
+    wxString lbl  = wxString() << _("Account Bal: ") << balance.c_str() << wxT("      ") 
+                               << _("Reconciled Bal: ") << recbalance.c_str() << wxT("      ")
+                               << _("Diff: ") << diffbal.c_str() << wxT("      ")
+                               << (show_displayed_balance_ ? _("Displayed Bal: ") : wxT(""))
+                               << (show_displayed_balance_ ? filteredBalanceStr : wxT(""));
+    
     header->SetLabel(lbl);
 }
 //----------------------------------------------------------------------------
