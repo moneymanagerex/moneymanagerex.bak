@@ -1266,6 +1266,17 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         wxMessageBox(messageStr,_("Transaction Filter"),wxICON_WARNING);
         return;
     } 
+
+    itemStaticBitmap31_->Enable(false);
+    statTextTransFilter_->Enable(false);
+
+    if (evt ==  MENU_VIEW_ALLTRANSACTIONS)
+    {
+        itemStaticTextMainFilter_->SetLabel(_("Viewing all transactions"));
+        m_currentView = VIEW_TRANS_ALL_STR;
+        itemStaticBitmap31_->Enable(true);
+        statTextTransFilter_->Enable(true);
+    }
     else if (evt == MENU_VIEW_RECONCILED)
     {
         itemStaticTextMainFilter_->SetLabel(_("Viewing Reconciled transactions"));
@@ -1281,20 +1292,30 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         itemStaticTextMainFilter_->SetLabel(_("Viewing Un-Reconciled transactions"));
         m_currentView = VIEW_TRANS_UNRECONCILED_STR;
     }
-    else if (evt == MENU_VIEW_VOID)
-    {
-        itemStaticTextMainFilter_->SetLabel(_("Viewing Void transactions"));
-        m_currentView = VIEW_TRANS_VOID;
-    }
     else if (evt == MENU_VIEW_FLAGGED)
     {
         itemStaticTextMainFilter_->SetLabel(_("Viewing Follow-Up transactions"));
         m_currentView = VIEW_TRANS_FLAGGED;
     }
+    else if (evt == MENU_VIEW_DUPLICATE)
+    {
+        itemStaticTextMainFilter_->SetLabel(_("Viewing duplicate transactions"));
+        m_currentView = VIEW_TRANS_DUPLICATES;
+    }
+    else if (evt == MENU_VIEW_VOID)
+    {
+        itemStaticTextMainFilter_->SetLabel(_("Viewing Void transactions"));
+        m_currentView = VIEW_TRANS_VOID;
+    }
     else if (evt == MENU_VIEW_TODAY)
     {
         itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for today"));
         m_currentView = VIEW_TRANS_TODAY_STR;
+    }
+    else if (evt == MENU_VIEW_CURRENTMONTH)
+    {
+        itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for current month"));
+        m_currentView = VIEW_TRANS_CURRENT_MONTH_STR;
     }
     else if (evt == MENU_VIEW_LAST30)
     {
@@ -1311,20 +1332,10 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 3 months"));
         m_currentView = VIEW_TRANS_LAST_3MONTHS_STR;
     }
-    else if (evt == MENU_VIEW_CURRENTMONTH)
-    {
-        itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for current month"));
-        m_currentView = VIEW_TRANS_CURRENT_MONTH_STR;
-    }
     else if (evt == MENU_VIEW_LASTMONTH)
     {
         itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last month"));
         m_currentView = VIEW_TRANS_LAST_MONTH_STR;
-    }
-    else if (evt == MENU_VIEW_DUPLICATE)
-    {
-        itemStaticTextMainFilter_->SetLabel(_("Viewing duplicate transactions"));
-        m_currentView = VIEW_TRANS_DUPLICATES;
     }
     else if (evt == MENU_VIEW_DELETE_TRANS || evt == MENU_TREEPOPUP_DELETE_VIEWED)
     {
@@ -1339,16 +1350,6 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         wxASSERT(false);
     }
     
-    itemStaticBitmap31_->Enable(false);
-    statTextTransFilter_->Enable(false);
-
-    if (evt ==  MENU_VIEW_ALLTRANSACTIONS)
-    {
-        itemStaticTextMainFilter_->SetLabel(_("Viewing all transactions"));
-        m_currentView = VIEW_TRANS_ALL_STR;
-        itemStaticBitmap31_->Enable(true);
-        statTextTransFilter_->Enable(true);
-    }
     m_listCtrlAccount->DeleteAllItems();
 
     initVirtualListControl(NULL);
