@@ -1267,15 +1267,10 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
         return;
     } 
 
-    itemStaticBitmap31_->Enable(false);
-    statTextTransFilter_->Enable(false);
-
     if (evt ==  MENU_VIEW_ALLTRANSACTIONS)
     {
         itemStaticTextMainFilter_->SetLabel(_("Viewing all transactions"));
         m_currentView = VIEW_TRANS_ALL_STR;
-        itemStaticBitmap31_->Enable(true);
-        statTextTransFilter_->Enable(true);
     }
     else if (evt == MENU_VIEW_RECONCILED)
     {
@@ -1349,6 +1344,21 @@ void mmCheckingPanel::OnViewPopupSelected(wxCommandEvent& event)
     {
         wxASSERT(false);
     }
+
+    if (   evt == MENU_VIEW_ALLTRANSACTIONS 
+        || evt == MENU_VIEW_DELETE_TRANS 
+        || evt == MENU_TREEPOPUP_DELETE_VIEWED 
+        || evt == MENU_VIEW_DELETE_FLAGGED 
+        || evt == MENU_TREEPOPUP_DELETE_FLAGGED) 
+    {
+        itemStaticBitmap31_->Enable(true);
+        statTextTransFilter_->Enable(true);
+    } 
+    else 
+    {
+        itemStaticBitmap31_->Enable(false);
+        statTextTransFilter_->Enable(false);
+    } 
     
     m_listCtrlAccount->DeleteAllItems();
 
