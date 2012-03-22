@@ -23,6 +23,7 @@
 #include "dbwrapper.h"
 #include "transactionfilterdialog.h"
 //----------------------------------------------------------------------------
+#include <wx/event.h>
 #include <algorithm>
 #include <vector>
 #include <boost/unordered_map.hpp>
@@ -396,7 +397,6 @@ BEGIN_EVENT_TABLE(mmCheckingPanel, wxPanel)
     EVT_BUTTON(wxID_EDIT,        mmCheckingPanel::OnEditTransaction)
     EVT_BUTTON(wxID_DELETE,      mmCheckingPanel::OnDeleteTransaction)
     EVT_BUTTON(wxID_MOVE_FRAME,        mmCheckingPanel::OnMoveTransaction)
-    EVT_LEFT_DOWN( mmCheckingPanel::OnMouseLeftDown ) 
 
     EVT_MENU(MENU_VIEW_ALLTRANSACTIONS, mmCheckingPanel::OnViewPopupSelected)
     EVT_MENU(MENU_VIEW_RECONCILED, mmCheckingPanel::OnViewPopupSelected)
@@ -615,21 +615,21 @@ void mmCheckingPanel::CreateControls()
     /* ---------------------- */
     wxPanel* headerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, 
         wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL );
-    itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer9->Add(headerPanel, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 2);
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
     headerPanel->SetBackgroundColour(mmColors::listBackColor);
 
-    wxGridSizer* itemBoxSizerVHeader2 = new wxGridSizer(2,20,20);
+    wxGridSizer* itemBoxSizerVHeader2 = new wxGridSizer(2,1,5,20);
     itemBoxSizerVHeader->Add(itemBoxSizerVHeader2);
 
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_HEADER, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText9->SetFont(wxFont(14, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
-    itemBoxSizerVHeader2->Add(itemStaticText9, 0, wxALIGN_CENTER, 0);
+    itemStaticText9->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, FALSE, wxT("")));
+    itemBoxSizerVHeader2->Add(itemStaticText9, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 0);
 
     wxBoxSizer* itemBoxSizerHHeader2 = new wxBoxSizer(wxHORIZONTAL);
-    wxFlexGridSizer* itemFlexGridSizerHHeader2 = new wxFlexGridSizer(2,2,1,1);
+    wxFlexGridSizer* itemFlexGridSizerHHeader2 = new wxFlexGridSizer(5,1,1);
     itemBoxSizerVHeader2->Add(itemBoxSizerHHeader2);
     itemBoxSizerHHeader2->Add(itemFlexGridSizerHHeader2);
 
@@ -637,30 +637,36 @@ void mmCheckingPanel::CreateControls()
     wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, 
         itemStaticBitmap, wxDefaultPosition, wxSize(16, 16), 0 );
     itemFlexGridSizerHHeader2->Add(itemStaticBitmap3);
-    itemStaticBitmap3->SetEventHandler( this );
+    itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_RIGHT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterResetToViewAll), NULL, this);
+    itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnMouseLeftDown), NULL, this);
 
     itemStaticTextMainFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW, 
-        wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+        wxT("-------------------------------------"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizerHHeader2->Add(itemStaticTextMainFilter_);
 
+    itemFlexGridSizerHHeader2->AddSpacer(20);
+    
     itemStaticBitmap31_ = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, 
         itemStaticBitmap, wxDefaultPosition, wxSize(16, 16), 0 );
-    itemFlexGridSizerHHeader2->Add(itemStaticBitmap31_);
+    itemFlexGridSizerHHeader2->Add(itemStaticBitmap31_, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 150);
+    itemStaticBitmap31_->Enable(false);
     itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
     itemStaticBitmap31_->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_FILTER, wxEVT_RIGHT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterTransactions), NULL, this);
     
     statTextTransFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_FILTER, 
         _("Transaction Filter"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizerHHeader2->Add(statTextTransFilter_, 0, wxALIGN_LEFT, 0);
+    itemFlexGridSizerHHeader2->Add(statTextTransFilter_);
+    statTextTransFilter_->Enable(false);
 
     m_currentView = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
     
+    initViewTransactionsHeader();
     wxBoxSizer* itemBoxSizerHHeader = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizerVHeader->Add(itemBoxSizerHHeader, 0, wxALL, 1);
 
     wxStaticText* itemStaticText10 = new wxStaticText( headerPanel, 
             ID_PANEL_CHECKING_STATIC_BALHEADER, wxT(""), wxDefaultPosition, wxSize(600,20), 0 );
-    itemBoxSizerHHeader->Add(itemStaticText10, 0, wxALL | wxEXPAND , 1);
+    itemBoxSizerHHeader->Add(itemStaticText10, 0, wxALL | wxEXPAND , 5);
     
     /* ---------------------- */
 
@@ -1233,18 +1239,16 @@ void mmCheckingPanel::initViewTransactionsHeader()
         itemStaticTextMainFilter_->SetLabel(_("Viewing all transactions"));
         itemStaticBitmap31_->Enable(true);
         statTextTransFilter_->Enable(true);
-	} else {
-    if (m_currentView == VIEW_TRANS_RECONCILED_STR)   itemStaticTextMainFilter_->SetLabel(_("Viewing Reconciled transactions"));
-    else if (m_currentView == VIEW_TRANS_NOT_RECONCILED_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing All Except Reconciled Transactions"));
-    else if (m_currentView == VIEW_TRANS_UNRECONCILED_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing Un-Reconciled transactions"));
-    else if (m_currentView == VIEW_TRANS_TODAY_STR)        itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for today"));
-    else if (m_currentView == VIEW_TRANS_CURRENT_MONTH_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for current month"));
-    else if (m_currentView == VIEW_TRANS_LAST_30_DAYS_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 30 days"));
-    else if (m_currentView == VIEW_TRANS_LAST_90_DAYS_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 90 days"));
-    else if (m_currentView == VIEW_TRANS_LAST_MONTH_STR)   itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last month"));
-    else if (m_currentView == VIEW_TRANS_LAST_3MONTHS_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 3 months"));
-	itemStaticBitmap31_->Enable(false);
-	statTextTransFilter_->Enable(false);
+    } else {
+        if (m_currentView == VIEW_TRANS_RECONCILED_STR)   itemStaticTextMainFilter_->SetLabel(_("Viewing Reconciled transactions"));
+        else if (m_currentView == VIEW_TRANS_NOT_RECONCILED_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing All Except Reconciled Transactions"));
+        else if (m_currentView == VIEW_TRANS_UNRECONCILED_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing Un-Reconciled transactions"));
+        else if (m_currentView == VIEW_TRANS_TODAY_STR)        itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for today"));
+        else if (m_currentView == VIEW_TRANS_CURRENT_MONTH_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for current month"));
+        else if (m_currentView == VIEW_TRANS_LAST_30_DAYS_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 30 days"));
+        else if (m_currentView == VIEW_TRANS_LAST_90_DAYS_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 90 days"));
+        else if (m_currentView == VIEW_TRANS_LAST_MONTH_STR)   itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last month"));
+        else if (m_currentView == VIEW_TRANS_LAST_3MONTHS_STR) itemStaticTextMainFilter_->SetLabel(_("Viewing transactions for last 3 months"));
     }
 }
 //----------------------------------------------------------------------------
@@ -1387,30 +1391,20 @@ void mmCheckingPanel::OnFilterTransactions(wxMouseEvent& event)
 {
     if (m_currentView != VIEW_TRANS_ALL_STR) 
     {
+        event.Skip();
         return;
-    } 
+    }
     
     int e = event.GetEventType();
 
-    wxBitmap activeBitmapFilterIcon(tipicon_xpm); 
     wxBitmap bitmapFilterIcon(rightarrow_xpm);
-
-    wxString messageStr;
-    int row_id = -1;
-    wxArrayString currentViewStr = viewTransactionsStrings(false, m_currentView, row_id);
-    
-    if (row_id > -1) {
-        currentViewStr = viewTransactionsStrings(true, wxEmptyString, row_id);
-        messageStr << _("Current filtering has been set to: ")<< wxT("\n") 
-                   << currentViewStr[row_id] << wxT("\n\n");
-    }
-    messageStr << _("Please set filtering to: ") << _("View All Transactions");
 
     if (e == wxEVT_LEFT_DOWN) {
         int dlgResult = transFilterDlg_->ShowModal();
         if ( dlgResult == wxID_OK )
         {
             transFilterActive_ = true; 
+            wxBitmap activeBitmapFilterIcon(tipicon_xpm); 
             bitmapFilterIcon = activeBitmapFilterIcon;
         }
         else if ( dlgResult == wxID_CANCEL )
@@ -1418,6 +1412,7 @@ void mmCheckingPanel::OnFilterTransactions(wxMouseEvent& event)
             transFilterActive_ = false;
         }
     } else {
+        if (transFilterActive_ == false) return;
         transFilterActive_ = false;
     }
     
@@ -1430,6 +1425,25 @@ void mmCheckingPanel::OnFilterTransactions(wxMouseEvent& event)
     initVirtualListControl(NULL);
     m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1); 
 
+}
+
+void mmCheckingPanel::OnFilterResetToViewAll(wxMouseEvent& event) {
+
+    if (m_currentView == VIEW_TRANS_ALL_STR) 
+    {
+        event.Skip();
+        return;
+    }
+    
+    itemStaticTextMainFilter_->SetLabel(_("Viewing all transactions"));
+    m_currentView = VIEW_TRANS_ALL_STR;
+    itemStaticBitmap31_->Enable(true);
+    statTextTransFilter_->Enable(true);
+    
+    m_listCtrlAccount->DeleteAllItems();
+    initVirtualListControl(NULL);
+    m_listCtrlAccount->RefreshItems(0, static_cast<long>(m_trans.size()) - 1); 
+    
 }
 
 //----------------------------------------------------------------------------
