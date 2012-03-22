@@ -1069,7 +1069,6 @@ void mmOptionsDialog::SaveViewTransactionOptions()
     int row_id_ = 0;
     wxArrayString ViewTransaction = viewTransactionsStrings(false, wxEmptyString, row_id_);
     mmDBWrapper::setINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), ViewTransaction[selection]);
-    wxSafeShowMessage(wxT("write"), ViewTransaction[selection]);
 }
 
 void mmOptionsDialog::SaveFinancialYearStart()
