@@ -208,17 +208,16 @@ void mmAssetDialog::CreateControls()
     itemFlexGridSizer6->Add(itemStaticText15, 0, 
         wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    const wxString itemAssetTypeStrings[] =  
-    {
-        _("Property"),
-        _("Automobile"),
-        _("Household Object"),
-        _("Art"),
-        _("Jewellery"),
-        _("Cash"),
-        _("Other"),
-    };
-    m_assetType = new wxChoice( itemPanel5, wxID_ANY, wxDefaultPosition, wxSize(150,-1), 7, itemAssetTypeStrings, 0 );
+    wxArrayString itemAssetTypeStrings;  
+    itemAssetTypeStrings.Add(_("Property"));
+    itemAssetTypeStrings.Add(_("Automobile"));
+    itemAssetTypeStrings.Add(_("Household Object"));
+    itemAssetTypeStrings.Add(_("Art"));
+    itemAssetTypeStrings.Add(_("Jewellery"));
+    itemAssetTypeStrings.Add(_("Cash"));
+    itemAssetTypeStrings.Add(_("Other"));
+
+    m_assetType = new wxChoice( itemPanel5, wxID_ANY, wxDefaultPosition, wxSize(150,-1), itemAssetTypeStrings);
     m_assetType->SetToolTip(_("Select type of asset"));
     m_assetType->SetSelection(DEF_ASSET_PROPERTY);
     itemFlexGridSizer6->Add(m_assetType, 0, 
@@ -237,14 +236,13 @@ void mmAssetDialog::CreateControls()
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel5, wxID_STATIC, _("Change in Value"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText11, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
 
-    const wxString itemTypeStrings[] =  
-    {
-        _("None"),
-        _("Appreciates"),
-        _("Depreciates"),
-    };
+    wxArrayString itemTypeStrings; 
 
-    m_valueChange = new wxChoice( itemPanel5, IDC_COMBO_TYPE, wxDefaultPosition, wxSize(150,-1), 3, itemTypeStrings, 0 );
+        itemTypeStrings.Add(_("None"));
+        itemTypeStrings.Add(_("Appreciates"));
+        itemTypeStrings.Add(_("Depreciates"));
+
+    m_valueChange = new wxChoice( itemPanel5, IDC_COMBO_TYPE, wxDefaultPosition, wxSize(150,-1), itemTypeStrings);
     m_valueChange->SetToolTip(_("Specify if the value of the asset changes over time"));
     m_valueChange->SetSelection(DEF_CHANGE_NONE);
     itemFlexGridSizer6->Add(m_valueChange, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
