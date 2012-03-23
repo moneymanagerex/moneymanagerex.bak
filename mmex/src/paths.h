@@ -34,7 +34,7 @@ namespace mmex
 enum EDocFile { F_README, F_CONTRIB, F_LICENSE, F_VERSION, HTML_INDEX, HTML_CUSTOM_SQL, HTML_INVESTMENT, HTML_BUDGET, DOC_FILES_MAX };
 wxString getPathDoc(EDocFile f);
 
-enum EResFile { PROGRAM_ICON, SPLASH_ICON, TRANS_SOUND, CURRENCY_DB_SEED, RES_FILES_MAX };
+enum EResFile { PROGRAM_ICON, TRANS_SOUND, CURRENCY_DB_SEED, RES_FILES_MAX };
 wxString getPathResource(EResFile f);
 
 // use instead of getPathResource(PROGRAM_ICON)

@@ -148,7 +148,6 @@ wxString mmex::getPathResource(EResFile f)
 {
     static const wxChar* files[RES_FILES_MAX] = { 
       wxT("mmex.ico"),
-      wxT("splash.png"),
       wxT("kaching.wav"),
       wxT("currency_seed.db3")
     };
