@@ -588,7 +588,7 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
             menu.Append(MENU_VIEW_LAST3MONTHS, _("View Transactions for last 3 months"));
             menu.AppendSeparator();
             menu.Append(MENU_VIEW_DELETE_TRANS, _("Delete all transactions in current view"));
-            menu.Append(MENU_VIEW_DELETE_FLAGGED, _("Delete all \"Follow Up\" transactions"));
+            menu.Append(MENU_VIEW_DELETE_FLAGGED, _("Delete Viewed \“Follow Up\” Trans."));
 
             PopupMenu(&menu, event.GetPosition());
 
@@ -1378,7 +1378,7 @@ void mmCheckingPanel::DeleteViewedTransactions()
 
 void mmCheckingPanel::DeleteFlaggedTransactions()
 {
-    wxMessageDialog msgDlg(this,_("Do you really want to delete all the \"Follow Up\" transactions?"),
+    wxMessageDialog msgDlg(this,_("Do you really want to delete all the \"Follow Up\" transactions shown?"),
                                 _("Confirm Transaction Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES)
     {
@@ -1494,7 +1494,7 @@ void TransactionListCtrl::OnItemRightClick(wxListEvent& event)
     subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE, _("&Delete Transaction"));
     subGlobalOpMenuDelete->AppendSeparator();
     subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_VIEWED, _("Delete all transactions in current view"));
-    subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_FLAGGED, _("Delete all \"Follow Up\" transactions"));
+    subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_FLAGGED, _("Delete Viewed \“Follow Up\” Trans."));
     menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete"), subGlobalOpMenuDelete);
     
     menu.AppendSeparator();
