@@ -636,13 +636,13 @@ void mmCheckingPanel::CreateControls()
     wxBitmap itemStaticBitmap(rightarrow_xpm);
     wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( headerPanel, ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, 
         itemStaticBitmap, wxDefaultPosition, wxSize(16, 16), 0 );
-    itemFlexGridSizerHHeader2->Add(itemStaticBitmap3);
+    itemFlexGridSizerHHeader2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL, 0);
     itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_RIGHT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnFilterResetToViewAll), NULL, this);
     itemStaticBitmap3->Connect(ID_PANEL_CHECKING_STATIC_BITMAP_VIEW, wxEVT_LEFT_DOWN, wxMouseEventHandler(mmCheckingPanel::OnMouseLeftDown), NULL, this);
 
     itemStaticTextMainFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_PANELVIEW, 
         wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizerHHeader2->Add(itemStaticTextMainFilter_);
+    itemFlexGridSizerHHeader2->Add(itemStaticTextMainFilter_, 0, wxALIGN_CENTER_VERTICAL, 0);
 
     itemFlexGridSizerHHeader2->AddSpacer(20);
     
@@ -655,7 +655,7 @@ void mmCheckingPanel::CreateControls()
     
     statTextTransFilter_ = new wxStaticText( headerPanel, ID_PANEL_CHECKING_STATIC_FILTER, 
         _("Transaction Filter"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizerHHeader2->Add(statTextTransFilter_);
+    itemFlexGridSizerHHeader2->Add(statTextTransFilter_, 0, wxALIGN_CENTER_VERTICAL, 0);
     statTextTransFilter_->Enable(false);
 
     m_currentView = mmDBWrapper::getINISettingValue(inidb_, wxT("VIEWTRANSACTIONS"), VIEW_TRANS_ALL_STR);
@@ -956,22 +956,18 @@ void mmCheckingPanel::setAccountSummary()
     double reconciledBal = core_->getReconciledBalance(m_AccountID);
     double acctInitBalance = core_->getAccountSharedPtr(m_AccountID)->initialBalance_;
     
-    wxString balance, recbalance;
+    wxString balance, recbalance, diffbal, filteredBalanceStr;
     mmex::formatDoubleToCurrency(checking_bal + acctInitBalance, balance);
     mmex::formatDoubleToCurrency(reconciledBal + acctInitBalance, recbalance);
-    
-    wxString diffbal;
     mmex::formatDoubleToCurrency(checking_bal - reconciledBal, diffbal);
-
-    wxString filteredBalanceStr;
     mmex::formatDoubleToCurrency(filteredBalance_, filteredBalanceStr);
 
     wxStaticText* header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
     bool show_displayed_balance_ = (transFilterActive_ || (m_currentView != VIEW_TRANS_ALL_STR));
 
-    wxString lbl  = wxString() << _("Account Bal: ") << balance.c_str() << wxT("      ") 
-                               << _("Reconciled Bal: ") << recbalance.c_str() << wxT("      ")
-                               << _("Diff: ") << diffbal.c_str() << wxT("      ")
+    wxString lbl  = wxString() << _("Account Bal: ") << balance << wxT("      ") 
+                               << _("Reconciled Bal: ") << recbalance << wxT("      ")
+                               << _("Diff: ") << diffbal << wxT("      ")
                                << (show_displayed_balance_ ? _("Displayed Bal: ") : wxT(""))
                                << (show_displayed_balance_ ? filteredBalanceStr : wxT(""));
     
