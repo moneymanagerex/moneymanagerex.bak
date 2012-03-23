@@ -150,7 +150,7 @@ all: $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) mmex$(EXEEXT) po
 
 install: install_mmex
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/mmex/res
-	(cd $(srcdir)/resources ; $(INSTALL_DATA)  kaching.wav mmex.ico splash.png currency_seed.db3 $(DESTDIR)$(datadir)/mmex/res)
+	(cd $(srcdir)/resources ; $(INSTALL_DATA)  kaching.wav mmex.ico currency_seed.db3 $(DESTDIR)$(datadir)/mmex/res)
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/mmex/po
 	(cd $(srcdir)/po ; $(INSTALL_DATA)  *.mo $(DESTDIR)$(datadir)/mmex/po)
 	$(INSTALL_DIR) $(DESTDIR)$(datadir)/doc/mmex
