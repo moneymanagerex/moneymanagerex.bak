@@ -196,6 +196,7 @@ void mmBudgetEntryDialog::CreateControls()
     itemGridSizer2->Add(itemChoice_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 0);
     itemChoice_->SetSelection(DEF_FREQ_MONTHLY);
     itemChoice_->SetToolTip(_("Specify the frequency of the expense or deposit"));
+    itemChoice_->Connect(ID_DIALOG_BUDGETENTRY_COMBO_FREQTYPE, wxEVT_CHAR, wxKeyEventHandler(mmBudgetEntryDialog::onChoiceChar), NULL, this);
 
     wxStaticText* itemStaticText3 = new wxStaticText( itemPanel7, wxID_STATIC, 
         _("Amount:"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -222,7 +223,7 @@ void mmBudgetEntryDialog::CreateControls()
 }
 
 
-void mmBudgetEntryDialog::OnOk(wxCommandEvent& /*event*/)
+void mmBudgetEntryDialog::OnOk(wxCommandEvent& event)
 {
     int typeSelection = type_->GetSelection();
 
@@ -258,8 +259,12 @@ void mmBudgetEntryDialog::OnOk(wxCommandEvent& /*event*/)
         return;
     }
 
-    if (period == wxT("None"))
-        amt = 0.0;
+    if (period == wxT("None") && amt > 0) {
+        itemChoice_->SetFocus();
+        itemChoice_->SetSelection(DEF_FREQ_MONTHLY);
+        event.Skip();
+        return;
+    }
     
     if (amt == 0.0)
         period = wxT("None");
@@ -272,3 +277,20 @@ void mmBudgetEntryDialog::OnOk(wxCommandEvent& /*event*/)
     EndModal(wxID_OK);
 }
 
+void mmBudgetEntryDialog::onChoiceChar(wxKeyEvent& event) {
+
+    int i = itemChoice_->GetSelection();
+    if (event.GetKeyCode()==WXK_DOWN) 
+    {
+        if (i < DEF_FREQ_DAILY ) 
+            itemChoice_->SetSelection(++i);
+    } 
+    else if (event.GetKeyCode()==WXK_UP)
+    {
+        if (i > DEF_FREQ_NONE)
+            itemChoice_->SetSelection(--i);
+    } 
+    else 
+        event.Skip();
+
+}
