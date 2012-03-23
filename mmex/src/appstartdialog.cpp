@@ -90,44 +90,25 @@ void mmAppStartDialog::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
 
-    wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer2->Add(itemBoxSizer3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxBitmap itemStaticBitmap4Bitmap;
-    itemStaticBitmap4Bitmap.LoadFile(mmex::getPathResource(mmex::SPLASH_ICON), wxBITMAP_TYPE_PNG); 
+    wxBitmap itemStaticBitmap4Bitmap(money_xpm);
     
     wxStaticBitmap* itemStaticBitmap4 = 0;
-    if (!mmIniOptions::instance().enableCustomLogo_)
-    {
-        itemStaticBitmap4 = new wxStaticBitmap( this, wxID_STATIC, 
-            itemStaticBitmap4Bitmap, wxDefaultPosition, wxSize(400, 209), 0 );
-    }
+    itemStaticBitmap4 = new wxStaticBitmap( this, wxID_STATIC, 
+    itemStaticBitmap4Bitmap, wxDefaultPosition, wxSize(400, 209), 0 );
     
     if (itemStaticBitmap4) {
         itemBoxSizer3->Add(itemStaticBitmap4, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     }
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxVERTICAL);
-    itemBoxSizer3->Add(itemBoxSizer5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer3->Add(itemBoxSizer5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxButton* itemButton61 = new wxButton( this, ID_BUTTON_APPSTART_LAST_DATABASE, 
         _("Open Last Opened Database"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer5->Add(itemButton61, 0, wxGROW|wxALL, 5);
-
-    if (inidb_)
-    {
-        wxString val = mmDBWrapper::getLastDbPath(inidb_);
-        if (val.IsEmpty())
-        {
-            itemButton61->Disable();
-        }
-        else
-        {
-          itemButton61->SetToolTip(_("Open the previously opened database : ") + val);
-        }
-    }
-    else
-        itemButton61->Disable();
 
     wxButton* itemButton6 = new wxButton( this, ID_BUTTON_APPSTART_NEW_DATABASE, 
         _("Create a New Database"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -174,6 +155,33 @@ void mmAppStartDialog::CreateControls()
     else
         itemCheckBox->SetValue(false);
     itemBoxSizer10->Add(itemCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxStaticLine* line = new wxStaticLine (this, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
+    itemBoxSizer2->Add(line, 0, wxGROW|wxALL, 5);
+
+    wxButton* itemButtonClose = new wxButton( this, wxID_OK, _("Close"), wxDefaultPosition, wxDefaultSize, 0);
+    itemButtonClose->SetDefault();
+    itemButtonClose->SetFocus();
+    itemBoxSizer2->Add(itemButtonClose, 0, wxALIGN_RIGHT|wxALL, 5);
+
+    if (inidb_)
+    {
+        wxString val = mmDBWrapper::getLastDbPath(inidb_);
+        if (val.IsEmpty())
+        {
+            itemButton61->Disable();
+            itemButtonClose->Disable();
+        }
+        else
+        {
+          itemButton61->SetToolTip(_("Open the previously opened database : ") + val);
+        }
+    }
+    else
+    {
+        itemButton61->Disable();
+        itemButtonClose->Disable();
+    }
 }
 
 void mmAppStartDialog::OnButtonAppstartNewDatabaseClick( wxCommandEvent& /*event*/ )
@@ -197,7 +205,8 @@ void mmAppStartDialog::OnButtonAppstartHelpClick( wxCommandEvent& /*event*/ )
 void mmAppStartDialog::OnButtonAppstartWebsiteClick( wxCommandEvent& /*event*/ )
 {
    retCode_ = 3;
-   Close(TRUE);   
+   wxString url = wxT("http://www.codelathe.com/mmex/index.php");
+   wxLaunchDefaultBrowser(url);
 }
     
 void mmAppStartDialog::OnButtonAppstartLastDatabaseClick( wxCommandEvent& /*event*/ )

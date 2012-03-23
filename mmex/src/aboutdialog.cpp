@@ -120,9 +120,6 @@ void mmAboutDialog::CreateControls()
 
     wxBitmap itemStaticBitmap3Bitmap(money_xpm);
 
-    if (wxFileName::FileExists(mmex::getPathResource(mmex::SPLASH_ICON))) {
-       itemStaticBitmap3Bitmap.LoadFile(mmex::getPathResource(mmex::SPLASH_ICON), wxBITMAP_TYPE_PNG);
-    }
 	wxStaticBitmap* itemStaticBitmap3 = 0;
 	itemStaticBitmap3 = new wxStaticBitmap( this, wxID_STATIC, 
 		itemStaticBitmap3Bitmap, wxDefaultPosition);
