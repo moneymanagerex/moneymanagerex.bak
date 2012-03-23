@@ -53,7 +53,7 @@ public:
         long style = SYMBOL_BUDGETENTRYDIALOG_STYLE );
 
     void CreateControls();
-    
+    void onChoiceChar(wxKeyEvent& event);
     // utility functions
     void OnOk(wxCommandEvent& event);
     
