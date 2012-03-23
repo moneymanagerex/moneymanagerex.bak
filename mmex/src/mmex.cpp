@@ -3983,8 +3983,8 @@ void mmGUIFrame::showBeginAppDialog()
     }
     else if (rc == 3)
     {
-        wxString url = wxT("http://www.codelathe.com/mmex/index.php");
-        wxLaunchDefaultBrowser(url);
+        //wxString url = wxT("http://www.codelathe.com/mmex/index.php");
+        //wxLaunchDefaultBrowser(url);
     }
     else if (rc == 4)
     {
