@@ -902,6 +902,9 @@ void mmGUIFrame::saveConfigFile()
     m_perspective = m_mgr.SavePerspective();
     mmDBWrapper::setINISettingValue(m_inidb.get(), wxT("AUIPERSPECTIVE"), m_perspective);
 
+    // prevent values being saved while window is in an iconised state.
+    if (this->IsIconized()) this->Restore();
+
     int valx = 0;
     int valy = 0;
     int valw = 0;
