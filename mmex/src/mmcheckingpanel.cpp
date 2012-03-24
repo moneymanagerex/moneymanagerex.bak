@@ -588,7 +588,7 @@ void mmCheckingPanel::OnMouseLeftDown( wxMouseEvent& event )
             menu.Append(MENU_VIEW_LAST3MONTHS, _("View Transactions for last 3 months"));
             menu.AppendSeparator();
             menu.Append(MENU_VIEW_DELETE_TRANS, _("Delete all transactions in current view"));
-            menu.Append(MENU_VIEW_DELETE_FLAGGED, _("Delete Viewed \“Follow Up\” Trans."));
+            menu.Append(MENU_VIEW_DELETE_FLAGGED, _("Delete Viewed \"Follow Up\" Trans."));
 
             PopupMenu(&menu, event.GetPosition());
 
@@ -1494,7 +1494,7 @@ void TransactionListCtrl::OnItemRightClick(wxListEvent& event)
     subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE, _("&Delete Transaction"));
     subGlobalOpMenuDelete->AppendSeparator();
     subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_VIEWED, _("Delete all transactions in current view"));
-    subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_FLAGGED, _("Delete Viewed \“Follow Up\” Trans."));
+    subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_FLAGGED, _("Delete Viewed \"Follow Up\" Trans."));
     menu.Append(MENU_TREEPOPUP_DELETE, _("&Delete"), subGlobalOpMenuDelete);
     
     menu.AppendSeparator();
