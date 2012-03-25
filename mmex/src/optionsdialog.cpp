@@ -476,7 +476,7 @@ void mmOptionsDialog::CreateControls()
     choiceFontSize_ = new wxChoice(viewsPanel, ID_DIALOG_OPTIONS_FONT_SIZE,
         wxDefaultPosition, wxSize(85, -1), itemChoiceHTMLFontSize);
 
-    int vFontSize = -1 + wxAtoi(mmDBWrapper::getINISettingValue(inidb_, wxT("HTMLFONTSIZE"), wxT("Font Size on the reports")));
+    int vFontSize = -1 + wxAtoi(mmDBWrapper::getINISettingValue(inidb_, wxT("HTMLFONTSIZE"), wxT("3")));
     choiceFontSize_->SetSelection(vFontSize);
 
     choiceFontSize_->SetToolTip(_("Specify which font size is used on the report tables"));
