@@ -80,6 +80,7 @@ public:
     void update(boost::shared_ptr<mmAccount> pAccount);
     bool exists(const wxString& accountName) const;
     bool has_term_account() const;
+    bool has_stock_account() const;
     boost::weak_ptr<mmCurrency> getCurrencyWeakPtr(int accountID) const;
     double getAccountBaseCurrencyConvRate(int accountID) const;
     wxString getName(int accountID) const;

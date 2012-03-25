@@ -205,6 +205,16 @@ bool mmAccountList::has_term_account() const
     return false;
 }
 
+bool mmAccountList::has_stock_account() const
+{
+    for (const_iterator it = accounts_.begin(); it != accounts_.end(); ++ it)
+    {
+        if ((*it)->acctType_ == ACCOUNT_TYPE_STOCK) return true;
+    }
+
+    return false;
+}
+
 int mmAccountList::getNumBankAccounts() const
 {
     int num = 0;
