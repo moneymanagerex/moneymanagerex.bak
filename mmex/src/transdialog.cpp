@@ -289,17 +289,16 @@ void mmTransDialog::CreateControls()
     itemStaticTextWeek->SetLabel(dateStr);
 
 // change properties depending on system parameters
-    wxSize spinCtrlSize = wxSize(16,-1);
+    wxSize spinCtrlSize = wxSize(18,22);
     int spinCtrlDirection = wxSP_VERTICAL;
-    int interval = 0;
-#ifdef __WXMSW__
-    spinCtrlSize = wxSize(18,22);
-//    spinCtrlDirection = wxSP_HORIZONTAL;
-    interval = 4;
-#endif
-    //In linux by default nothing in focus therefore keystrokes does not working
+    int interval = 4;
 #ifdef __WXGTK__
+    spinCtrlSize = wxSize(16,-1);
+    interval = 0;
+    //In linux by default nothing in focus therefore keystrokes does not working
     dpc_ -> SetFocus();
+    //Another events does not working
+    dpc_->Connect(ID_DIALOG_TRANS_BUTTONDATE, wxEVT_KEY_UP, wxKeyEventHandler(mmTransDialog::OnButtonDateChar), NULL, this);
 #endif
 
     spinCtrl_ = new wxSpinButton(itemPanel7,ID_DIALOG_TRANS_SPINNER,wxDefaultPosition,spinCtrlSize,spinCtrlDirection|wxSP_ARROW_KEYS|wxSP_WRAP);
@@ -1322,6 +1321,29 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
         payeeID_ = core_->getAccountID(currentPayeeName);
     else
         payeeID_ = core_->getPayeeID(currentPayeeName);
+}
+
+void mmTransDialog::OnButtonDateChar(wxKeyEvent& event)
+{
+    if (!wxGetKeyState(WXK_COMMAND) && !wxGetKeyState(WXK_ALT)) {
+        int i;
+        if (event.GetKeyCode()==WXK_DOWN) i=-1;
+        else if (event.GetKeyCode()==WXK_UP) i=1;
+        else return;
+        wxString dateStr = dpc_->GetValue().FormatISODate();
+        wxDateTime date = mmGetStorageStringAsDate (dateStr) ;
+        if (!wxGetKeyState(WXK_CONTROL))
+            date = date.Add(wxDateSpan::Days(i));
+        else
+            date = date.Add(wxDateSpan::Months(i));
+        
+        dpc_->SetValue (date);
+        //process date change event for set weekday name
+        wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), date, wxEVT_DATE_CHANGED);
+        GetEventHandler()->ProcessEvent(dateEvent);
+    
+        event.Skip();
+    }
 }
 
 void mmTransDialog::onChoiceTransChar(wxKeyEvent& event)
