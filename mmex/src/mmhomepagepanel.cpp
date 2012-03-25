@@ -762,7 +762,7 @@ void mmHomePagePanel::updateAccounts()
     displayCheckingAccounts(hb,tBalance,tIncome,tExpenses, dtBegin, dtEnd);
     if ( frame_->hasActiveTermAccounts() )
         displayTermAccounts(hb,tBalance,tIncome,tExpenses, dtBegin, dtEnd);
-    displayStocks(hb,tBalance /*,tIncome,tExpenses */);
+    if (core_->accountList_.has_stock_account()) displayStocks(hb,tBalance /*,tIncome,tExpenses */);
     displayAssets(hb, tBalance);
     hb.endTable(); 
  
