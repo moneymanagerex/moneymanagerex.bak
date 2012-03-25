@@ -619,7 +619,7 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
         menuEnableItems(false);
         createHomePage();
         updateNavTreeControl();
-        showBeginAppDialog();
+        showBeginAppDialog(dbpath.GetFullName().IsEmpty());
     } else {
         openFile(dbpath.GetFullPath(), false);
     }
@@ -640,7 +640,7 @@ void mmGUIFrame::cleanup()
 {
     printer_.reset();
     recentFiles_->~RecentDatabaseFiles();
-    saveConfigFile();
+    if (!fileName_.IsEmpty())   saveConfigFile();
 
     m_mgr.UnInit();
 
@@ -3160,8 +3160,10 @@ void mmGUIFrame::OnOpen(wxCommandEvent& /*event*/)
                                        this
                                       );
   
-    if (!fileName.empty())
+    if (!fileName.empty()) {
         SetDatabaseFile(fileName);
+        mmGUIFrame::saveConfigFile();
+    }
 }
 //----------------------------------------------------------------------------
 
@@ -3960,33 +3962,37 @@ void mmGUIFrame::OnPrintPagePreview(wxCommandEvent& WXUNUSED(event))
 }
 //----------------------------------------------------------------------------
 
-void mmGUIFrame::showBeginAppDialog()
+void mmGUIFrame::showBeginAppDialog(bool fromScratch)
 {
     mmAppStartDialog dlg(m_inidb.get(), this);
-    dlg.ShowModal();
+    if (fromScratch) dlg.SetCloseButtonToExit();
+    if (dlg.ShowModal() == wxID_OK)
+    {
+        if (fromScratch) this->Close();
+    }
+
     int rc = dlg.getReturnCode();
 
-    if (rc == 0)
+    if (rc == appStartDialog(APP_START_NEW_DB))
     {
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_NEW);
         AddPendingEvent(evt);
     }
-    else if (rc == 1)
+    else if (rc == appStartDialog(APP_START_OPEN))
     {
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_OPEN);
         AddPendingEvent(evt);
     }
-    else if (rc == 2)
+    else if (rc == appStartDialog(APP_START_HELP))
     {
-       wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, wxID_HELP);
-       AddPendingEvent(evt);
+            /* Do Nothing in this case */
     }
-    else if (rc == 3)
+    else if (rc == appStartDialog(APP_START_WEB))
     {
         //wxString url = wxT("http://www.codelathe.com/mmex/index.php");
         //wxLaunchDefaultBrowser(url);
     }
-    else if (rc == 4)
+    else if (rc == appStartDialog(APP_START_LAST_DB))
     {
         wxFileName fname(mmDBWrapper::getLastDbPath(m_inidb.get()));
         if (fname.IsOk()) openFile(fname.GetFullPath(), false);
