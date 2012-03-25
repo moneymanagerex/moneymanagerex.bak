@@ -164,11 +164,11 @@ void mmTransDialog::dataToControls()
         accountID_ = q1.GetInt(wxT("ACCOUNTID"));
        
         wxString dateString = q1.GetString(wxT("TRANSDATE"));
-        wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
-        wxString dt = mmGetDateForDisplay(db_.get(), dtdt);
-        dpc_->SetValue(dtdt);
+        wxDateTime trx_date_ = mmGetStorageStringAsDate(dateString);
+        wxString dt = mmGetDateForDisplay(db_.get(), trx_date_);
+        dpc_->SetValue(trx_date_);
         //process date change event for set weekday name
-        wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), dtdt, wxEVT_DATE_CHANGED);
+        wxDateEvent dateEvent(FindWindow(ID_DIALOG_TRANS_BUTTONDATE), trx_date_, wxEVT_DATE_CHANGED);
         GetEventHandler()->ProcessEvent(dateEvent);
 
         wxString transNumString = q1.GetString(wxT("TRANSACTIONNUMBER"));
@@ -278,7 +278,8 @@ void mmTransDialog::CreateControls()
     //Text field for day of the week
     itemStaticTextWeek = new wxStaticText( itemPanel7, ID_DIALOG_TRANS_WEEK, wxT(""));
     
-    dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, wxDefaultDateTime,
+    wxDateTime trx_date_ = mmGetStorageStringAsDate(getLastTrxDate());
+    dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, trx_date_,
                                  wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
     dpc_->SetBackgroundColour(mmColors::listDetailsPanelColor);
@@ -901,6 +902,39 @@ wxString mmTransDialog::getMostFrequentlyUsedPayee(wxString& categString)
     return payeeName;
 }
 
+wxString mmTransDialog::getLastTrxDate()
+{
+    // Determine date for last transaction for current account
+    wxString last_trx_date_;
+    try {
+    static const char sql[] = 
+        "select max(ca.transdate) as LASTDATE "
+        "from CHECKINGACCOUNT_V1 ca "
+        "where ca.transdate <= date ('now','localtime') "
+        "and ca.accountid = ? "
+        "group by ca.transdate "
+        "order by ca.transdate desc "
+        "limit 1";
+
+    wxSQLite3Statement st = db_->PrepareStatement(sql);
+    st.Bind(1, accountID_);
+    wxSQLite3ResultSet q1 = st.ExecuteQuery();
+    last_trx_date_ = q1.GetString(wxT("LASTDATE"));
+
+    st.Finalize();
+    } catch(wxSQLite3Exception e) {
+        wxASSERT(false);
+        wxLogDebug(wxT("Database::select some data from CHECKINGACCOUNT_V1: Exception"), e.GetMessage().c_str());
+        wxLogError(wxT("Select some data from CHECKINGACCOUNT_V1 Exception ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
+    }
+
+    //if some values is missing or options parameter seted to zero - set defaults
+    if (last_trx_date_.IsEmpty() || mmIniOptions::instance().transDateDefault_==0)
+        last_trx_date_ = wxDateTime::Now().FormatISODate();
+
+    return last_trx_date_;
+}
+
 void mmTransDialog::displayControlsToolTips(int transType, bool enableAdvanced /* = false */)
 {
     wxStaticText* st = (wxStaticText*)FindWindow(ID_DIALOG_TRANS_STATIC_FROM);
@@ -1269,13 +1303,10 @@ void mmTransDialog:: OnButtonPayeeChar(wxKeyEvent& event)
     if (choiceTrans_->GetSelection() != DEF_TRANSFER) 
     {
         filtd = mmDBWrapper::filterPayees(db_.get(), wxT(""));
-        if (filtd.IsEmpty()) 
-            //No payee present. Should be added one as minimum
+        if (filtd.IsEmpty()) //No payee present. Should be added one as minimum
             return;
         if (currentPayeeName == _("Select Payee")) 
-        {
             c = 0;            
-        } 
         else 
         {
             for (size_t i = 0; i < (size_t)filtd.GetCount(); ++i) 

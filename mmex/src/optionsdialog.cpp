@@ -640,29 +640,35 @@ void mmOptionsDialog::CreateControls()
     wxStaticBoxSizer* transSettingsStaticBoxSizer = new wxStaticBoxSizer(transSettingsStaticBox, wxVERTICAL);
     othersPanelSizer->Add(transSettingsStaticBoxSizer, 0, wxGROW|wxALL, 5);
 
+    //  Default Date
+    wxStaticText* dateStaticText = new wxStaticText(othersPanel, wxID_STATIC,
+        _("Default Date:"), wxDefaultPosition, wxDefaultSize);
+
+    wxArrayString defaultValues_;
+    defaultValues_.Add(_("None"));
+    defaultValues_.Add(_("Last Used"));
+    
+    wxChoice* defaultDateChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_DATE,
+        wxDefaultPosition, wxSize(140, -1), defaultValues_);
+    defaultDateChoice->SetSelection(mmIniOptions::instance().transDateDefault_);
+
     //  Default Payee
     wxStaticText* payeeStaticText = new wxStaticText(othersPanel, wxID_STATIC,
         _("Default Payee:"), wxDefaultPosition, wxDefaultSize);
 
-    wxArrayString defaultTransPayee_;
-    defaultTransPayee_.Add(_("None"));
-    defaultTransPayee_.Add(_("Last Used"));
-    
     wxChoice* defaultPayeeChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_PAYEE,
-        wxDefaultPosition, wxSize(140, -1), defaultTransPayee_);
+        wxDefaultPosition, wxSize(140, -1), defaultValues_);
     defaultPayeeChoice->SetSelection(mmIniOptions::instance().transPayeeSelectionNone_);
     
     //  Default Category
     wxStaticText* categoryStaticText = new wxStaticText(othersPanel, wxID_STATIC,
         _("Default Category:"), wxDefaultPosition, wxDefaultSize);
 
-    wxArrayString defaultTransCategory_;
-    
-    defaultTransCategory_.Add(_("None"));
-    defaultTransCategory_.Add(_("Last used for payee"));
+
+    defaultValues_[1]=(_("Last used for payee"));
     
     wxChoice* defaultCategoryChoice = new wxChoice(othersPanel, ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_CATEGORY,
-        wxDefaultPosition, defaultPayeeChoice->GetSize(), defaultTransCategory_);
+        wxDefaultPosition, defaultPayeeChoice->GetSize(), defaultValues_);
     defaultCategoryChoice->SetSelection(mmIniOptions::instance().transCategorySelectionNone_);
 
     //  Default Status
@@ -682,12 +688,14 @@ void mmOptionsDialog::CreateControls()
 
     wxFlexGridSizer* newTransflexGridSizer = new wxFlexGridSizer(3,2,0,0);
     transSettingsStaticBoxSizer->Add(newTransflexGridSizer);
-    newTransflexGridSizer->Add(payeeStaticText,0, wxALIGN_CENTER_VERTICAL|wxTOP|wxLEFT|wxRIGHT, 5);
-    newTransflexGridSizer->Add(defaultPayeeChoice,0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    newTransflexGridSizer->Add(categoryStaticText,0, wxALIGN_CENTER_VERTICAL|wxTOP|wxLEFT|wxRIGHT, 5);
+    newTransflexGridSizer->Add(dateStaticText,       0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(defaultDateChoice,    0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(payeeStaticText,      0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(defaultPayeeChoice,   0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(categoryStaticText,   0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     newTransflexGridSizer->Add(defaultCategoryChoice,0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    newTransflexGridSizer->Add(statusStaticText,0, wxALIGN_CENTER_VERTICAL|wxTOP|wxLEFT|wxRIGHT, 5);
-    newTransflexGridSizer->Add(defaultStatusChoice,0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(statusStaticText,     0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    newTransflexGridSizer->Add(defaultStatusChoice,  0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     //----------------------------------------------
     //a bit more space visual appearance
@@ -1220,6 +1228,11 @@ void mmOptionsDialog::SaveOthersPanelSettings()
     mmIniOptions::instance().transStatusReconciled_ = itemChoice->GetSelection();
     mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_STATUS_RECONCILED"),
         wxString::Format(wxT("%d"), (int)mmIniOptions::instance().transStatusReconciled_)); 
+
+    itemChoice = (wxChoice*)FindWindow(ID_DIALOG_OPTIONS_DEFAULT_TRANSACTION_DATE);
+    mmIniOptions::instance().transDateDefault_ = itemChoice->GetSelection();
+    mmDBWrapper::setINISettingValue(inidb_, wxT("TRANSACTION_DATE_DEFAULT"),
+        wxString::Format(wxT("%d"), (int)mmIniOptions::instance().transDateDefault_)); 
     
     SaveStocksUrl();
     

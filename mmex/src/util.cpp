@@ -247,6 +247,7 @@ mmIniOptions::mmIniOptions()
     , transPayeeSelectionNone_(0)
     , transCategorySelectionNone_(0)
     , transStatusReconciled_(0)
+    , transDateDefault_(0)
     {}
 
 mmIniOptions&
@@ -318,6 +319,7 @@ void mmIniOptions::loadOptions(wxSQLite3Database* db)
     //  This is item 1 (0-indexed) in the list.
     transCategorySelectionNone_ = wxAtoi(mmDBWrapper::getINISettingValue(db, wxT("TRANSACTION_CATEGORY_NONE"), wxT("1")));
     transStatusReconciled_ = wxAtoi(mmDBWrapper::getINISettingValue(db, wxT("TRANSACTION_STATUS_RECONCILED"), wxT("0")));
+    transDateDefault_ = wxAtoi(mmDBWrapper::getINISettingValue(db, wxT("TRANSACTION_DATE_DEFAULT"), wxT("0")));
 }
 
 void mmIniOptions::loadInfoOptions(wxSQLite3Database* db)
