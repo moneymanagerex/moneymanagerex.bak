@@ -143,6 +143,7 @@ private:
     wxString getMostFrequentlyUsedPayee(wxString& categString);
     wxString resetPayeeString(bool normal = true);
     wxString getMostFrequentlyUsedCategory();
+    wxString getLastTrxDate();
     wxString resetCategoryString();
     void OnAdvanceChecked(wxCommandEvent& event);
     void SetTransferControls(bool transfers = false);

@@ -201,6 +201,7 @@ public:
     int transPayeeSelectionNone_;
     int transCategorySelectionNone_;
     int transStatusReconciled_;
+    int transDateDefault_;
 };
 
 class mmColors
