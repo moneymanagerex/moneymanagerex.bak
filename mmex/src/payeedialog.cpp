@@ -93,7 +93,9 @@ void mmPayeeDialog::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
 
-    listBox_ = new wxListBox( this, IDD_LISTBOX_PAYEES, wxDefaultPosition, wxSize(100, 200), wxArrayString(), wxLB_SINGLE);
+    wxArrayString filtd = mmDBWrapper::filterPayees(core_->db_.get(), wxT(""));
+    int vertical_size_ = (filtd.GetCount()>10 ? 320 : 240);
+    listBox_ = new wxListBox( this, IDD_LISTBOX_PAYEES, wxDefaultPosition, wxSize(100, vertical_size_), wxArrayString(), wxLB_SINGLE);
     itemBoxSizer3->Add(listBox_, 1, wxGROW|wxALL, 1);
 
     wxStaticText* itemStaticTextName2 = new wxStaticText( this, wxID_STATIC, _("Filter Payees: "), wxDefaultPosition, wxDefaultSize, 0 );
