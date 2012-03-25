@@ -36,10 +36,12 @@ public:
    ~mmAppStartDialog();
 
     int getReturnCode() const { return retCode_; }
+    void SetCloseButtonToExit();
 
 private:
     wxSQLite3Database* inidb_;
     wxCheckBox* itemCheckBox;
+    wxButton* itemButtonClose_;
     int retCode_;
 
     bool Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style);

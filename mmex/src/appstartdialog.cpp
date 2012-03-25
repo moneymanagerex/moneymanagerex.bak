@@ -159,10 +159,10 @@ void mmAppStartDialog::CreateControls()
     wxStaticLine* line = new wxStaticLine (this, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
     itemBoxSizer2->Add(line, 0, wxGROW|wxALL, 5);
 
-    wxButton* itemButtonClose = new wxButton( this, wxID_OK, _("Close"), wxDefaultPosition, wxDefaultSize, 0);
-    itemButtonClose->SetDefault();
-    itemButtonClose->SetFocus();
-    itemBoxSizer2->Add(itemButtonClose, 0, wxALIGN_RIGHT|wxALL, 5);
+    itemButtonClose_ = new wxButton( this, wxID_OK, _("Close"), wxDefaultPosition, wxDefaultSize, 0);
+    itemButtonClose_->SetDefault();
+    itemButtonClose_->SetFocus();
+    itemBoxSizer2->Add(itemButtonClose_, 0, wxALIGN_RIGHT|wxALL, 10);
 
     if (inidb_)
     {
@@ -170,7 +170,6 @@ void mmAppStartDialog::CreateControls()
         if (val.IsEmpty())
         {
             itemButton61->Disable();
-            itemButtonClose->Disable();
         }
         else
         {
@@ -180,38 +179,56 @@ void mmAppStartDialog::CreateControls()
     else
     {
         itemButton61->Disable();
-        itemButtonClose->Disable();
     }
+}
+
+void mmAppStartDialog::SetCloseButtonToExit()
+{
+    itemButtonClose_->SetLabel(_("Exit"));
 }
 
 void mmAppStartDialog::OnButtonAppstartNewDatabaseClick( wxCommandEvent& /*event*/ )
 {
-    retCode_ = 0;
+    retCode_ = appStartDialog(APP_START_NEW_DB);
     Close(TRUE);   
 }
 
 void mmAppStartDialog::OnButtonAppstartOpenDatabaseClick( wxCommandEvent& /*event*/ )
 {
-    retCode_ = 1;
+    retCode_ = appStartDialog(APP_START_OPEN);
     Close(TRUE);   
 }
 
 void mmAppStartDialog::OnButtonAppstartHelpClick( wxCommandEvent& /*event*/ )
 {
-   retCode_ = 2;
-   Close(TRUE);   
+    retCode_ = appStartDialog(APP_START_HELP);
+    int helpFileIndex_ = mmex::HTML_INDEX;
+    wxFileName helpIndexFile(mmex::getPathDoc((mmex::EDocFile)helpFileIndex_));
+    wxString url = wxT("file://");
+    
+    if (mmOptions::instance().language != wxT("english")) helpIndexFile.AppendDir(mmOptions::instance().language);
+    
+    if (helpIndexFile.FileExists()) // Load the help file for the given language 
+    {
+        url << (helpIndexFile.GetPathWithSep() + helpIndexFile.GetFullName());
+    }
+    else // load the default help file
+    {
+        url << (mmex::getPathDoc((mmex::EDocFile)helpFileIndex_));
+    }
+    wxLaunchDefaultBrowser(url);
 }
 
 void mmAppStartDialog::OnButtonAppstartWebsiteClick( wxCommandEvent& /*event*/ )
 {
-   retCode_ = 3;
+   retCode_ = appStartDialog(APP_START_WEB);
    wxString url = wxT("http://www.codelathe.com/mmex/index.php");
    wxLaunchDefaultBrowser(url);
 }
     
 void mmAppStartDialog::OnButtonAppstartLastDatabaseClick( wxCommandEvent& /*event*/ )
 {
-    retCode_ = 4;
+    retCode_ = appStartDialog(APP_START_LAST_DB);
     Close(TRUE);   
 }
 
