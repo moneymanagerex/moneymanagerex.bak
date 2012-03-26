@@ -345,6 +345,7 @@ public:
     void OnNewTransaction(wxCommandEvent& event);
     void OnDeleteTransaction(wxCommandEvent& event);
     void OnEditTransaction(wxCommandEvent& event);
+    void OnDuplicateTransaction(wxCommandEvent& event);
     void OnMoveTransaction(wxCommandEvent& event);
     /// Displays the split categories for the selected transaction
     void OnViewSplitTransaction(wxCommandEvent& event);
@@ -450,11 +451,12 @@ BEGIN_EVENT_TABLE(TransactionListCtrl, wxListCtrl)
     EVT_MENU(MENU_TREEPOPUP_MOVE,               TransactionListCtrl::OnMoveTransaction)
 
     EVT_LIST_COL_CLICK(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnColClick)
-    EVT_LIST_KEY_DOWN(ID_PANEL_CHECKING_LISTCTRL_ACCT, TransactionListCtrl::OnListKeyDown)
+    EVT_LIST_KEY_DOWN(ID_PANEL_CHECKING_LISTCTRL_ACCT,  TransactionListCtrl::OnListKeyDown)
 
-    EVT_MENU(MENU_ON_COPY_TRANSACTION, TransactionListCtrl::OnCopy) 
-    EVT_MENU(MENU_ON_PASTE_TRANSACTION, TransactionListCtrl::OnPaste) 
-    EVT_MENU(MENU_ON_NEW_TRANSACTION, TransactionListCtrl::OnNewTransaction) 
+    EVT_MENU(MENU_ON_COPY_TRANSACTION,      TransactionListCtrl::OnCopy) 
+    EVT_MENU(MENU_ON_PASTE_TRANSACTION,     TransactionListCtrl::OnPaste) 
+    EVT_MENU(MENU_ON_NEW_TRANSACTION,       TransactionListCtrl::OnNewTransaction) 
+    EVT_MENU(MENU_ON_DUPLICATE_TRANSACTION, TransactionListCtrl::OnDuplicateTransaction) 
 
     EVT_MENU(MENU_TREEPOPUP_VIEW_SPLIT_CATEGORIES, TransactionListCtrl::OnViewSplitTransaction)
 
@@ -1223,11 +1225,16 @@ void mmCheckingPanel::OnEditTransaction(wxCommandEvent& event)
 }
 //----------------------------------------------------------------------------
 
+void mmCheckingPanel::OnDuplicateTransaction(wxCommandEvent& event)
+{
+    m_listCtrlAccount->OnDuplicateTransaction(event);
+}
+//----------------------------------------------------------------------------
+
 void mmCheckingPanel::OnMoveTransaction(wxCommandEvent& event)
 {
     m_listCtrlAccount->OnMoveTransaction(event);
 }
-
 //----------------------------------------------------------------------------
 
 void mmCheckingPanel::initViewTransactionsHeader()
@@ -1476,22 +1483,27 @@ void TransactionListCtrl::OnItemRightClick(wxListEvent& event)
     menu.Append(MENU_TREEPOPUP_NEW, _("&New Transaction"));
     menu.AppendSeparator();
     menu.Append(MENU_TREEPOPUP_EDIT, _("&Edit Transaction"));
+    if (m_selectedIndex < 0) menu.Enable(MENU_TREEPOPUP_EDIT, false);
     menu.Append(MENU_ON_COPY_TRANSACTION, _("&Copy Transaction"));
+    if (m_selectedIndex <0) menu.Enable(MENU_ON_COPY_TRANSACTION, false);
+    menu.Append(MENU_ON_DUPLICATE_TRANSACTION, _("&Duplicate Transaction"));
+    if (m_selectedIndex <0) menu.Enable(MENU_ON_DUPLICATE_TRANSACTION, false);
     menu.Append(MENU_TREEPOPUP_MOVE, _("&Move Transaction"));
-    if (m_selectedForCopy != -1) menu.Append(MENU_ON_PASTE_TRANSACTION, _("&Paste Transaction"));
+    if (m_selectedIndex <0 || (m_cp->core_->getNumBankAccounts() < 2)) menu.Enable(MENU_TREEPOPUP_MOVE, false);
+    menu.Append(MENU_ON_PASTE_TRANSACTION, _("&Paste Transaction"));
+    if (m_selectedForCopy <0) menu.Enable(MENU_ON_PASTE_TRANSACTION, false);
 
-    if (m_selectedIndex != -1)
-    {
-        if (m_cp->m_trans[m_selectedIndex]->categID_ < 0)
-        {
-            menu.AppendSeparator();
-            menu.Append(MENU_TREEPOPUP_VIEW_SPLIT_CATEGORIES, _("&View Split Categories"));
-        }
-    }
+    menu.AppendSeparator();
+
+    menu.Append(MENU_TREEPOPUP_VIEW_SPLIT_CATEGORIES, _("&View Split Categories"));
+    if (m_selectedIndex <0 || (m_cp->m_trans[m_selectedIndex]->categID_ > -1)) 
+        menu.Enable(MENU_TREEPOPUP_VIEW_SPLIT_CATEGORIES, false);
+
     menu.AppendSeparator();
 
     wxMenu* subGlobalOpMenuDelete = new wxMenu;
     subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE, _("&Delete Transaction"));
+    if (m_selectedIndex <0) subGlobalOpMenuDelete->Enable(MENU_TREEPOPUP_DELETE, false);
     subGlobalOpMenuDelete->AppendSeparator();
     subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_VIEWED, _("Delete all transactions in current view"));
     subGlobalOpMenuDelete->Append(MENU_TREEPOPUP_DELETE_FLAGGED, _("Delete Viewed \"Follow Up\" Trans."));
@@ -1500,10 +1512,15 @@ void TransactionListCtrl::OnItemRightClick(wxListEvent& event)
     menu.AppendSeparator();
     
     menu.Append(MENU_TREEPOPUP_MARKRECONCILED, _("Mark As &Reconciled"));
+    if (m_selectedIndex <0) menu.Enable(MENU_TREEPOPUP_MARKRECONCILED, false);
     menu.Append(MENU_TREEPOPUP_MARKUNRECONCILED, _("Mark As &Unreconciled"));
+    if (m_selectedIndex <0) menu.Enable(MENU_TREEPOPUP_MARKUNRECONCILED, false);
     menu.Append(MENU_TREEPOPUP_MARKVOID, _("Mark As &Void"));
+    if (m_selectedIndex <0) menu.Enable(MENU_TREEPOPUP_MARKVOID, false);
     menu.Append(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP, _("Mark For &Followup"));
+    if (m_selectedIndex <0) menu.Enable(MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP, false);
     menu.Append(MENU_TREEPOPUP_MARKDUPLICATE, _("Mark As &Duplicate"));
+    if (m_selectedIndex <0) menu.Enable(MENU_TREEPOPUP_MARKDUPLICATE, false);
     menu.AppendSeparator();
 
     wxMenu* subGlobalOpMenu = new wxMenu;
@@ -1584,8 +1601,11 @@ void TransactionListCtrl::OnMarkAllTransactions(wxCommandEvent& event)
     m_cp->core_->db_.get()->Commit();
 
     m_cp->setAccountSummary();
-    SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
-    SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+    if (m_selectedIndex > -1) {
+        SetItemState(m_selectedIndex, wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+        SetItemState(m_selectedIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+    }
+
 }
 //----------------------------------------------------------------------------
 
@@ -1810,58 +1830,52 @@ void TransactionListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
 
 void TransactionListCtrl::OnListKeyDown(wxListEvent& event)
 {
-    if (m_selectedIndex == -1) //check if a transaction is selected
+    if (wxGetKeyState(WXK_COMMAND) || wxGetKeyState(WXK_ALT) || wxGetKeyState(WXK_CONTROL)
+        || m_selectedIndex == -1) {
+        event.Skip();
         return;
-
-    // Exit if list has been reduced and selected index no longer exists.
-    //int currentListSize = m_cp->m_trans.size();
-    //if (currentListSize == m_selectedIndex)
-    //    return;
+    }
 
     //find the topmost visible item - this will be used to set
     // where to display the list again after refresh
     long topItemIndex = GetTopItem();
 
-    //Read status of the selected transaction first
+    //Read status of the selected transaction
     wxString status = m_cp->m_trans[m_selectedIndex]->status_;
 
-    if (!wxGetKeyState(WXK_COMMAND) && !wxGetKeyState(WXK_ALT) && !wxGetKeyState(WXK_CONTROL))
-    {
-        if (wxGetKeyState(wxKeyCode('V')) && status != wxT("V")) 
-        {
-            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKVOID);
-            OnMarkTransaction(evt);  
-        }
-        else if (wxGetKeyState(wxKeyCode('R')) && status != wxT("R")) 
-        {
+    if (wxGetKeyState(wxKeyCode('R')) && status != wxT("R")) {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKRECONCILED);
             OnMarkTransaction(evt); 
-        }
-        else if (wxGetKeyState(wxKeyCode('U')) && status != wxT("")) 
-        {
+    }
+    else if (wxGetKeyState(wxKeyCode('U')) && status != wxT("")) {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKUNRECONCILED);
-            OnMarkTransaction(evt); 
-        } 
-        else if (wxGetKeyState(wxKeyCode('F')) && status != wxT("F")) 
-        {
+            OnMarkTransaction(evt);
+    }
+    else if (wxGetKeyState(wxKeyCode('F')) && status != wxT("F")) {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARK_ADD_FLAG_FOLLOWUP);
-            OnMarkTransaction(evt); 
-        }
-        else if (wxGetKeyState(wxKeyCode('D')) && status != wxT("D")) 
-        {
+            OnMarkTransaction(evt);
+    }
+    else if (wxGetKeyState(wxKeyCode('D')) && status != wxT("D")) {
             wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKDUPLICATE);
-            OnMarkTransaction(evt); 
-        }
-        
-        else if (wxGetKeyState(WXK_DELETE) || wxGetKeyState(WXK_NUMPAD_DELETE))
-        {
-            wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
-            OnDeleteTransaction(evt);
-        }
-    } 
-    else 
+            OnMarkTransaction(evt);
+    }
+    else if (wxGetKeyState(wxKeyCode('V')) && status != wxT("V")) {
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKVOID);
+        OnMarkTransaction(evt);
+    }
+    else if ((wxGetKeyState(WXK_DELETE) || wxGetKeyState(WXK_NUMPAD_DELETE)) && status != wxT("V"))
     {
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_MARKVOID);
+        OnMarkTransaction(evt);
+    }
+    else if (wxGetKeyState(WXK_DELETE)|| wxGetKeyState(WXK_NUMPAD_DELETE))
+    {
+        wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, MENU_TREEPOPUP_DELETE);
+        OnDeleteTransaction(evt);
+    }
+    else {
         event.Skip();
+        return;
     }
 
     if ((long)m_cp->m_trans.size() == m_selectedIndex)
@@ -1874,26 +1888,6 @@ void TransactionListCtrl::OnListKeyDown(wxListEvent& event)
     //make sure the topmost item before transaction deletion is visible, otherwise
     // the control will go back to the very top or bottom when refreshed
     EnsureVisible(topItemIndex);
-}
-//----------------------------------------------------------------------------
-
-void TransactionListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
-{
-    mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 0, false, m_cp->inidb_, this );
-
-    if ( dlg.ShowModal() == wxID_OK )
-    {
-        m_cp->initVirtualListControl(NULL);
-        RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
-        if (m_selectedIndex > -1)
-        {
-            m_cp->updateExtraTransactionData(m_cp->m_trans.size()-1);
-            EnsureVisible(m_cp->m_trans.size()-1);           
-            SetItemState(m_cp->m_trans.size()-1, wxLIST_STATE_SELECTED|wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED|wxLIST_STATE_SELECTED);
-            EnsureVisible(m_selectedIndex);
-            m_cp->updateExtraTransactionData(m_cp->m_trans.size()-1);
-        }
-    }
 }
 //----------------------------------------------------------------------------
 
@@ -1958,6 +1952,51 @@ void TransactionListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
         if ( dlg.ShowModal() == wxID_OK )
         {
             refreshVisualList();
+        }
+    }
+}
+//----------------------------------------------------------------------------
+
+void TransactionListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
+{
+    mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 0, false, m_cp->inidb_, this );
+
+    if ( dlg.ShowModal() == wxID_OK )
+    {
+        m_cp->initVirtualListControl(NULL);
+        RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
+        if (m_selectedIndex > -1)
+        {
+            m_cp->updateExtraTransactionData(m_cp->m_trans.size()-1);
+            EnsureVisible(m_cp->m_trans.size()-1);           
+            SetItemState(m_cp->m_trans.size()-1, wxLIST_STATE_SELECTED|wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED|wxLIST_STATE_SELECTED);
+            EnsureVisible(m_selectedIndex);
+            m_cp->updateExtraTransactionData(m_cp->m_trans.size()-1);
+        }
+    }
+}
+//----------------------------------------------------------------------------
+
+void TransactionListCtrl::OnDuplicateTransaction(wxCommandEvent& /*event*/)
+{
+    if (m_selectedIndex != -1)
+    {
+        mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 
+               m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
+        
+        dlg.SetDialogToDuplicateTransaction();
+        if ( dlg.ShowModal() == wxID_OK )
+        {
+            m_cp->initVirtualListControl(NULL);
+            RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
+            if (m_selectedIndex > -1)
+            {
+                m_cp->updateExtraTransactionData(m_cp->m_trans.size()-1);
+                EnsureVisible(m_cp->m_trans.size()-1);           
+                SetItemState(m_cp->m_trans.size()-1, wxLIST_STATE_SELECTED|wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED|wxLIST_STATE_SELECTED);
+                EnsureVisible(m_selectedIndex);
+                m_cp->updateExtraTransactionData(m_cp->m_trans.size()-1);
+            }
         }
     }
 }
@@ -2085,7 +2124,8 @@ TransactionListCtrl::TransactionListCtrl(
     {
         wxAcceleratorEntry(wxACCEL_CTRL, 'C', MENU_ON_COPY_TRANSACTION),
         wxAcceleratorEntry(wxACCEL_CTRL, 'V', MENU_ON_PASTE_TRANSACTION),
-        wxAcceleratorEntry(wxACCEL_ALT,  'N', MENU_ON_NEW_TRANSACTION)
+        wxAcceleratorEntry(wxACCEL_ALT,  'N', MENU_ON_NEW_TRANSACTION),
+        wxAcceleratorEntry(wxACCEL_CTRL, 'D', MENU_ON_DUPLICATE_TRANSACTION)
     };
 
     wxAcceleratorTable tab(sizeof(entries)/sizeof(*entries), entries);

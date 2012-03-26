@@ -89,6 +89,8 @@ public:
     void OnButtonToAccountMouse(wxMouseEvent& event); 
     void OnButtonDateChar(wxKeyEvent& event);
 
+    void SetDialogToDuplicateTransaction();
+
 private:
     boost::shared_ptr<wxSQLite3Database> db_;
     wxSQLite3Database* inidb_;
