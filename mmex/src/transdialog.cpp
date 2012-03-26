@@ -59,7 +59,6 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_SPIN_UP(ID_DIALOG_TRANS_SPINNER,mmTransDialog::OnSpinUp)
     EVT_SPIN_DOWN(ID_DIALOG_TRANS_SPINNER,mmTransDialog::OnSpinDown)
     EVT_DATE_CHANGED(ID_DIALOG_TRANS_BUTTONDATE, mmTransDialog::OnDateChanged)
-    EVT_TEXT_ENTER(ID_DIALOG_TRANS_TEXTAMOUNT, mmTransDialog::onTextEntered)
 END_EVENT_TABLE()
 
 mmTransDialog::mmTransDialog(
@@ -366,11 +365,13 @@ void mmTransDialog::CreateControls()
         wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
     textAmount_->SetToolTip(amountNormalTip_);
     textAmount_->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    textAmount_->Connect(ID_DIALOG_TRANS_TEXTAMOUNT, wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
-    toTextAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), 
-        wxALIGN_RIGHT, doubleValidator() );
+    toTextAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TOTEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), 
+        wxALIGN_RIGHT|wxTE_PROCESS_ENTER, doubleValidator() );
     toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
     toTextAmount_->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    toTextAmount_->Connect(ID_DIALOG_TRANS_TOTEXTAMOUNT, wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
     amountSizer->Add(textAmount_,   0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, 0);
@@ -443,9 +444,10 @@ void mmTransDialog::CreateControls()
     
     // Number  ---------------------------------------------
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel7, wxID_STATIC, _("Number"), wxDefaultPosition, wxDefaultSize, 0 );
-    textNumber_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTNUMBER, wxT(""), wxDefaultPosition, wxSize(185, -1), 0 );
+    textNumber_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTNUMBER, wxT(""), wxDefaultPosition, wxSize(185, -1), wxTE_PROCESS_ENTER );
     textNumber_->SetToolTip(_("Specify any associated check number or transaction number"));
     textNumber_->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    textNumber_->Connect(ID_DIALOG_TRANS_TEXTNUMBER, wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
     bAuto_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONTRANSNUM, wxT("..."), wxDefaultPosition, wxSize(40, -1), 0 );
     bAuto_->SetToolTip(_("Populate Transaction #"));
@@ -1204,40 +1206,36 @@ void mmTransDialog::OnFrequentUsedNotes(wxCommandEvent& /*event*/)
     wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, ID_DIALOG_TRANS_BUTTON_FREQENTNOTES) ;
     ev.SetEventObject( this );
 
-    wxString notes = textNotes_->GetValue();
-    if (notes.IsEmpty ())
-    {
-        wxMenu menu;
+	wxMenu menu;
 
-        char sql[] =
-        "select max (TRANSDATE) as TRANSDATE , count (notes) COUNT, "
-        "(case when accountid = ? then '1' else '2' end) as ACC "
-        ",replace(replace (substr (notes, 1, 20), x'0A', ' '), '&', '&&')||(case when length(notes)>20 then '...' else '' end) as NOTE, "
-        "notes as NOTES "
-        "from checkingaccount_v1 ca "
-        "where notes is not '' "
-        "and TRANSDATE< date ('now', '1 day', 'localtime') "
-        "group by rtrim (notes) "
-        "order by ACC, TRANSDATE desc, COUNT desc "
-        "limit ? ";
+	char sql[] =
+	"select max (TRANSDATE) as TRANSDATE , count (notes) COUNT, "
+	"(case when accountid = ? then '1' else '2' end) as ACC "
+	",replace(replace (substr (notes, 1, 20), x'0A', ' '), '&', '&&')||(case when length(notes)>20 then '...' else '' end) as NOTE, "
+	"notes as NOTES "
+	"from checkingaccount_v1 ca "
+	"where notes is not '' "
+	"and TRANSDATE< date ('now', '1 day', 'localtime') "
+	"group by rtrim (notes) "
+	"order by ACC, TRANSDATE desc, COUNT desc "
+	"limit ? ";
 
-        wxSQLite3Statement st = db_->PrepareStatement(sql);
-        st.Bind(1, accountID_);
-        st.Bind(2, NOTES_MENU_NUMBER);
-        wxSQLite3ResultSet q1 = st.ExecuteQuery();
-        int menu_id=1;
-        while (q1.NextRow())
-        {
-            freqnotes_.Add(q1.GetString(wxT("NOTES")));
-            wxString noteSTR = q1.GetString(wxT("NOTE"));
-            menu.Append(menu_id++, noteSTR);
-        }
-        q1.Finalize();
-    
-        if (menu_id>1)
-            PopupMenu(&menu, 60, 30+((NOTES_MENU_NUMBER-menu_id-1)*23));
+	wxSQLite3Statement st = db_->PrepareStatement(sql);
+	st.Bind(1, accountID_);
+	st.Bind(2, NOTES_MENU_NUMBER);
+	wxSQLite3ResultSet q1 = st.ExecuteQuery();
+	int menu_id=1;
+	while (q1.NextRow())
+	{
+		freqnotes_.Add(q1.GetString(wxT("NOTES")));
+		wxString noteSTR = q1.GetString(wxT("NOTE"));
+		menu.Append(menu_id++, noteSTR);
+	}
+	q1.Finalize();
 
-    }
+	if (menu_id>1)
+		PopupMenu(&menu, 60, 30+((NOTES_MENU_NUMBER-menu_id-1)*23));
+
 }
 
 //----------------------------------------------------------------------------
@@ -1246,14 +1244,17 @@ void mmTransDialog::onNoteSelected(wxCommandEvent& event)
 {
     int i =  event.GetId();
     if (i>0)
-        textNotes_->SetValue (freqnotes_.Item (i-1)) ;
+        *textNotes_ << freqnotes_.Item(i-1);
 }
 
 void mmTransDialog::changeFocus(wxChildFocusEvent& event)
 {
     wxWindow *w = event.GetWindow();
-    if ( w ) 
-        richText_ = (w->GetId() == ID_DIALOG_TRANS_TEXTNOTES ? true : false);    
+    if ( w ) {
+        object_id = w->GetId();
+        richText_ = (object_id == ID_DIALOG_TRANS_TEXTNOTES ? true : false);
+    }
+      
 }
 
 void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
@@ -1266,11 +1267,27 @@ void mmTransDialog::OnCancel(wxCommandEvent& /*event*/)
 
 void mmTransDialog::onTextEntered(wxCommandEvent& event)
 {
-    //In case if ENTER pressed when amount entered set focus to OK button
-    wxButton* btnOk = static_cast<wxButton*>(FindWindow(wxID_OK));
-    wxASSERT(btnOk);
-    btnOk->SetFocus();
-
+    double amount;
+    wxString amountStr;
+    if (object_id == ID_DIALOG_TRANS_TEXTAMOUNT) {
+        amountStr = textAmount_->GetValue().Trim();
+        if (mmex::formatCurrencyToDouble(amountStr, amount)) {
+            mmex::formatDoubleToCurrencyEdit(amount,amountStr);
+            textAmount_->SetValue(amountStr);
+        }
+    }
+    else if (object_id == ID_DIALOG_TRANS_TOTEXTAMOUNT) {
+        amountStr = toTextAmount_->GetValue().Trim();
+        if (mmex::formatCurrencyToDouble(amountStr, amount)) {
+            mmex::formatDoubleToCurrencyEdit(amount,amountStr);
+            toTextAmount_->SetValue(amountStr);
+        }
+    }
+    else if (object_id == ID_DIALOG_TRANS_TEXTNUMBER) {
+		textNotes_->SetFocus();
+	}
+    wxSafeShowMessage(wxString::Format(wxT("%i"),object_id),wxT(""));
+   
     event.Skip();
 }
 

@@ -139,6 +139,7 @@ private:
 
     wxArrayString freqnotes_;
     bool richText_;
+    int object_id;
 
     wxString getMostFrequentlyUsedPayee(wxString& categString);
     wxString resetPayeeString(bool normal = true);
