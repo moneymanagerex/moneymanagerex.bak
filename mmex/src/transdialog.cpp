@@ -1589,3 +1589,10 @@ void mmTransDialog::OnButtonPayeeMouse(wxMouseEvent& event)
     else 
         payeeID_ = core_->getPayeeID(currentPayeeName);
 }
+
+void mmTransDialog::SetDialogToDuplicateTransaction()
+{
+    // we want the dialog to treat the transaction as a new transaction.
+    edit_ = false;
+    this->SetTitle(_("Duplicate Transaction"));
+}
