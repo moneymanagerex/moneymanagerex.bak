@@ -1286,7 +1286,6 @@ void mmTransDialog::onTextEntered(wxCommandEvent& event)
     else if (object_id == ID_DIALOG_TRANS_TEXTNUMBER) {
 		textNotes_->SetFocus();
 	}
-    wxSafeShowMessage(wxString::Format(wxT("%i"),object_id),wxT(""));
    
     event.Skip();
 }
