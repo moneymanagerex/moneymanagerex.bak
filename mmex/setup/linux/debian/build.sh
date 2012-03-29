@@ -10,15 +10,29 @@
 #
 
 # Specify system Architecture  ("i386" or "amd64")
-ARCHITECTURE="i386"
+ARCHITECTURE="amd64"
 
 # Specify the build version of mmex
 MMEX_VERSION="0.9.9.0"
 
 cd ../../../
 ./bootstrap
+if [ $? -gt 0 ]; then
+    echo "ERROR!"
+    exit 1
+fi
+
 ./configure --prefix=$HOME/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr
+
+if [ $? -gt 0 ]; then
+    echo "ERROR!"
+    exit 1
+fi
 make install
+if [ $? -gt 0 ]; then
+    echo "ERROR!"
+    exit 1
+fi
 
 mkdir ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/DEBIAN
 echo "Package: mmex
@@ -41,9 +55,6 @@ Description: Simple to use financial management software
 
 cp setup/linux/debian/debian-binary  ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/DEBIAN/
 
-mkdir -p ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/applications
-cp resources/mmex.desktop ~/build/mmex-$MMEX_VERSION-$ARCHITECTURE/usr/share/applications/
-
 cd ~/build
 
 strip mmex-$MMEX_VERSION-$ARCHITECTURE/usr/bin/mmex
@@ -56,3 +67,4 @@ lintian mmex-$MMEX_VERSION-$ARCHITECTURE.deb
 
 #sudo dpkg -i mmex.deb
 #mmex&
+
