@@ -52,8 +52,6 @@ BEGIN_EVENT_TABLE( mmTransDialog, wxDialog )
     EVT_CHOICE(ID_DIALOG_TRANS_TYPE, mmTransDialog::OnTransTypeChanged)  
     EVT_CHECKBOX(ID_DIALOG_TRANS_ADVANCED_CHECKBOX, mmTransDialog::OnAdvanceChecked) 
     EVT_CHECKBOX(ID_DIALOG_TRANS_SPLITCHECKBOX, mmTransDialog::OnSplitChecked)
-    EVT_BUTTON(ID_DIALOG_TRANS_BUTTONTRANSNUM, mmTransDialog::OnAutoTransNum)
-    EVT_BUTTON(ID_DIALOG_TRANS_BUTTON_FREQENTNOTES, mmTransDialog::OnFrequentUsedNotes)
     EVT_MENU (wxID_ANY, mmTransDialog::onNoteSelected)
     EVT_CHILD_FOCUS(mmTransDialog::changeFocus)
     EVT_SPIN_UP(ID_DIALOG_TRANS_SPINNER,mmTransDialog::OnSpinUp)
@@ -451,6 +449,7 @@ void mmTransDialog::CreateControls()
 
     bAuto_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONTRANSNUM, wxT("..."), wxDefaultPosition, wxSize(40, -1), 0 );
     bAuto_->SetToolTip(_("Populate Transaction #"));
+    bAuto_ -> Connect(ID_DIALOG_TRANS_BUTTONTRANSNUM, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmTransDialog::OnAutoTransNum), NULL, this);
 
     itemFlexGridSizer8->Add(itemStaticText11, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 0);
     wxBoxSizer* itemBoxSizer550 = new wxBoxSizer(wxHORIZONTAL);
@@ -467,6 +466,7 @@ void mmTransDialog::CreateControls()
 
     bFrequentUsedNotes_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTON_FREQENTNOTES, wxT(">>"), wxDefaultPosition, wxSize(40, -1), 0 );
     bFrequentUsedNotes_->SetToolTip(_("Select one of the frequently used notes"));
+    bFrequentUsedNotes_ -> Connect(ID_DIALOG_TRANS_BUTTON_FREQENTNOTES, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmTransDialog::OnFrequentUsedNotes), NULL, this);
 
     wxBoxSizer* itemBoxSizer56 = new wxBoxSizer(wxVERTICAL);
 
@@ -1211,7 +1211,7 @@ void mmTransDialog::OnFrequentUsedNotes(wxCommandEvent& /*event*/)
 	char sql[] =
 	"select max (TRANSDATE) as TRANSDATE , count (notes) COUNT, "
 	"(case when accountid = ? then '1' else '2' end) as ACC "
-	",replace(replace (substr (notes, 1, 20), x'0A', ' '), '&', '&&')||(case when length(notes)>20 then '...' else '' end) as NOTE, "
+	",replace(replace (substr (notes, 1, 30), x'0A', ' '), '&', '&&')||(case when length(notes)>30 then '...' else '' end) as NOTE, "
 	"notes as NOTES "
 	"from checkingaccount_v1 ca "
 	"where notes is not '' "
