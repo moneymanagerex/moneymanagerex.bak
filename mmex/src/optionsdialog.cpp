@@ -779,6 +779,10 @@ void mmOptionsDialog::CreateControls()
     userDefinedSizer->Add(delimiterRadioButtonU4, 0, wxALIGN_LEFT|wxALL, 5);
     userDefinedSizer->Add(textDelimiter4, 0, wxALIGN_LEFT|wxLEFT, 5);
 
+// temporarily hide from interface because the user defined CSV delimiter as this is not supported by the universal CSV dialog.
+    delimiterRadioButtonU4->Hide();
+    textDelimiter4->Hide();
+
    /**********************************************************************************************
     Setting up the notebook with the 5 pages
     **********************************************************************************************/
