@@ -253,6 +253,10 @@ void mmUnivCSVDialog::CreateControls()
     int num = sizeof(choices) / sizeof(wxString);
     m_radio_box_ = new wxRadioBox(this, wxID_RADIO_BOX, _("CSV Delimiter"), wxDefaultPosition, wxDefaultSize, num, choices, 3, wxRA_SPECIFY_COLS);
     m_radio_box_->SetSelection(0);
+
+    wxString delimiter = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
+    if (delimiter == wxT(";")) m_radio_box_->SetSelection(1);
+    if (delimiter == wxT("\t")) m_radio_box_->SetSelection(2);
     itemBoxSizer2->Add(m_radio_box_, 0, wxALL|wxEXPAND, 5);
 
     // Preview 
