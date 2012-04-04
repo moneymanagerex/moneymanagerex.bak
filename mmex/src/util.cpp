@@ -485,16 +485,17 @@ void mmShowErrorMessageInvalid(wxWindow *parent, const wxString &message)
     mmShowErrorMessage(parent, msg, _("Invalid Entry"));
 }
 
-wxString inQuotes(wxString label)
+wxString inQuotes(wxString label, wxString& delimiter)
 {
-    return wxString() << wxT("\"") << label << wxT("\"");
-}
+    if (label.Contains(delimiter) || label.Contains(wxT("\"")))
+    {
+        label.Replace(wxT("\""),wxT("\"\""), true);
+        label = wxString() << wxT("\"") << label << wxT("\"");
+    }
 
-wxString withoutQuotes(wxString label)
-{
-    wxString result = label;
-    result.Replace(wxT("\""), wxT(""));
-    return result;
+    label.Replace(wxT("\t"),wxT("    "), true);
+    label.Replace(wxT("\n"),wxT(" "), true);
+    return label;
 }
 
 void mmExportQIF(mmCoreDB* core, wxSQLite3Database* db_)

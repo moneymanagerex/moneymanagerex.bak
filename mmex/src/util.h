@@ -123,7 +123,7 @@ wxString mmGetNiceMonthName( int month );
 wxString mmGetNiceShortMonthName( int month );
 wxString mmGetNiceWeekDayName( int week_day );
 
-wxString inQuotes(wxString label);
+wxString inQuotes(wxString label, wxString& delimiter);
 void mmExportQIF( mmCoreDB* core, wxSQLite3Database* db_ );
 wxString mmReadyDisplayString( const wxString& orig );
 wxString adjustedExportAmount(wxString amtSeparator, wxString strValue);

@@ -717,31 +717,31 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
                     switch (*sit)
                     {
                         case UNIV_CSV_DATE:
-                            buffer << pBankTransaction->dateStr_;
+                            buffer << inQuotes(pBankTransaction->dateStr_, delimit);
                             break;
                         case UNIV_CSV_PAYEE:
-                            buffer << inQuotes(pBankTransaction->payeeStr_);
+                            buffer << inQuotes(pBankTransaction->payeeStr_, delimit);
                             break;
                         case UNIV_CSV_AMOUNT:
-                            buffer << amount;
+                            buffer << inQuotes(wxString::Format(wxT("%.2f"), amount), delimit);
                             break;
                         case UNIV_CSV_CATEGORY:
-                            buffer << inQuotes(pBankTransaction->catStr_);
+                            buffer << inQuotes(pBankTransaction->catStr_, delimit);
                             break;
                         case UNIV_CSV_SUBCATEGORY:
-                            buffer << inQuotes(pBankTransaction->subCatStr_);
+                            buffer << inQuotes(pBankTransaction->subCatStr_, delimit);
                             break;
                         case UNIV_CSV_TRANSNUM:
-                            buffer << pBankTransaction->transNum_;
+                            buffer << inQuotes(pBankTransaction->transNum_, delimit);
                             break;
                         case UNIV_CSV_NOTES:
-                            buffer << inQuotes(pBankTransaction->notes_);
+                            buffer << inQuotes(wxString(pBankTransaction->notes_).Trim(), delimit);
                             break;
                         case UNIV_CSV_WITHDRAWAL:
-                            buffer << (amount > 0 ? 0.0 : amount);
+                            buffer << inQuotes(wxString::Format(wxT("%.2f"), (amount > 0 ? 0.0 : amount)), delimit);
                             break;
                         case UNIV_CSV_DEPOSIT:
-                            buffer << (amount > 0 ? amount : 0);
+                            buffer << inQuotes(wxString::Format(wxT("%.2f"), (amount > 0 ? amount : 0.0)), delimit);
                             break;
                         case UNIV_CSV_DONTCARE:
                         default:
@@ -768,10 +768,14 @@ void mmUnivCSVDialog::update_preview()
     this->m_list_ctrl_->ClearAll();
     long index = 0;
     this->m_list_ctrl_->InsertColumn(index, _("#"));
+    this->m_list_ctrl_->SetColumnWidth(index, 30);
     for (std::vector<int>::const_iterator it = csvFieldOrder_.begin(); it != csvFieldOrder_.end(); ++ it)
     {
         ++ index;
-        this->m_list_ctrl_->InsertColumn(index, this->getCSVFieldName(*it));
+        wxString item_name = this->getCSVFieldName(*it);
+        this->m_list_ctrl_->InsertColumn(index, item_name);
+        if (item_name == _("Notes"))
+            this->m_list_ctrl_->SetColumnWidth(index, 300);
     }
     
     //TODO re use code in OnImport & OnExport
@@ -826,6 +830,8 @@ void mmUnivCSVDialog::update_preview()
         {
             size_t count = 0;
             int row = 0;
+            wxString delimit = this->delimit_;
+
             for(std::vector< boost::shared_ptr<mmBankTransaction> >::const_iterator it = core_->bTransactionList_.transactions_.begin();
                 it != core_->bTransactionList_.transactions_.end();
                 ++ it)
@@ -850,31 +856,31 @@ void mmUnivCSVDialog::update_preview()
                         switch (*sit)
                         {
                             case UNIV_CSV_DATE:
-                                text << pBankTransaction->dateStr_;
+                                text << inQuotes(pBankTransaction->dateStr_, delimit);
                                 break;
                             case UNIV_CSV_PAYEE:
-                                text << inQuotes(pBankTransaction->payeeStr_);
+                                text << inQuotes(pBankTransaction->payeeStr_, delimit);
                                 break;
                             case UNIV_CSV_AMOUNT:
-                                text << amount;
+                                text << inQuotes(wxString::Format(wxT("%.2f"), amount), delimit);
                                 break;
                             case UNIV_CSV_CATEGORY:
-                                text << inQuotes(pBankTransaction->catStr_);
+                                text << inQuotes(pBankTransaction->catStr_, delimit);
                                 break;
                             case UNIV_CSV_SUBCATEGORY:
-                                text << inQuotes(pBankTransaction->subCatStr_);
+                                text << inQuotes(pBankTransaction->subCatStr_, delimit);
                                 break;
                             case UNIV_CSV_TRANSNUM:
-                                text << pBankTransaction->transNum_;
+                                text << inQuotes(pBankTransaction->transNum_, delimit);
                                 break;
                             case UNIV_CSV_NOTES:
-                                text << inQuotes(pBankTransaction->notes_);
+                                text << inQuotes(wxString(pBankTransaction->notes_).Trim(), delimit);
                                 break;
                             case UNIV_CSV_WITHDRAWAL:
-                                text << (amount > 0 ? 0.0 : amount);
+                                text << inQuotes(wxString::Format(wxT("%.2f"), (amount > 0 ? 0.0 : amount)), delimit);
                                 break;
                             case UNIV_CSV_DEPOSIT:
-                                text << (amount > 0 ? amount : 0);
+                                text << inQuotes(wxString::Format(wxT("%.2f"), (amount > 0 ? amount : 0.0)), delimit);
                                 break;
                             case UNIV_CSV_DONTCARE:
                             default:
