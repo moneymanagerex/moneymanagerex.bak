@@ -150,6 +150,7 @@ wxArrayString mmOptionsDialog::DateFormats() {
     DateFormat.Add(wxT("%d.%m.%y"));
     DateFormat.Add(wxT("%d.%m.%Y"));
     DateFormat.Add(wxT("%d,%m,%y"));
+    DateFormat.Add(wxT("%d/%m'%Y"));
     DateFormat.Add(wxT("%d/%m %Y"));
     DateFormat.Add(wxT("%m/%d/%y"));
     DateFormat.Add(wxT("%m/%d/%Y"));
@@ -177,6 +178,7 @@ wxArrayString mmOptionsDialog::itemChoiceStrings() {
     itemChoice7Strings.Add(wxT("DD.MM.YY"));
     itemChoice7Strings.Add(wxT("DD.MM.YYYY"));
     itemChoice7Strings.Add(wxT("DD,MM,YY"));
+    itemChoice7Strings.Add(wxT("DD/MM'YYYY"));
     itemChoice7Strings.Add(wxT("DD/MM YYYY"));
     itemChoice7Strings.Add(wxT("MM/DD/YY"));
     itemChoice7Strings.Add(wxT("MM/DD/YYYY"));
