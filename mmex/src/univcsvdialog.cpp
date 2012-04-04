@@ -697,6 +697,7 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
 
         wxFileOutputStream output(fileName);
         wxTextOutputStream text(output);
+        wxString buffer;
 
         int numRecords = 0;
 
@@ -710,46 +711,48 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
                 if (pBankTransaction->transType_ == TRANS_TYPE_TRANSFER_STR) continue; //TODO
                 double amount = pBankTransaction->transType_ == TRANS_TYPE_DEPOSIT_STR ? pBankTransaction->amt_ : - pBankTransaction->amt_;
                 
+                buffer = wxT("");
                 for (std::vector<int>::const_iterator sit = csvFieldOrder_.begin(); sit != csvFieldOrder_.end(); ++ sit)
                 {
                     switch (*sit)
                     {
                         case UNIV_CSV_DATE:
-                            text << pBankTransaction->dateStr_;
+                            buffer << pBankTransaction->dateStr_;
                             break;
                         case UNIV_CSV_PAYEE:
-                            text << inQuotes(pBankTransaction->payeeStr_);
+                            buffer << inQuotes(pBankTransaction->payeeStr_);
                             break;
                         case UNIV_CSV_AMOUNT:
-                            text << amount;
+                            buffer << amount;
                             break;
                         case UNIV_CSV_CATEGORY:
-                            text << inQuotes(pBankTransaction->catStr_);
+                            buffer << inQuotes(pBankTransaction->catStr_);
                             break;
                         case UNIV_CSV_SUBCATEGORY:
-                            text << inQuotes(pBankTransaction->subCatStr_);
+                            buffer << inQuotes(pBankTransaction->subCatStr_);
                             break;
                         case UNIV_CSV_TRANSNUM:
-                            text << pBankTransaction->transNum_;
+                            buffer << pBankTransaction->transNum_;
                             break;
                         case UNIV_CSV_NOTES:
-                            text << inQuotes(pBankTransaction->notes_);
+                            buffer << inQuotes(pBankTransaction->notes_);
                             break;
                         case UNIV_CSV_WITHDRAWAL:
-                            text << (amount > 0 ? 0.0 : amount);
+                            buffer << (amount > 0 ? 0.0 : amount);
                             break;
                         case UNIV_CSV_DEPOSIT:
-                            text << (amount > 0 ? amount : 0);
+                            buffer << (amount > 0 ? amount : 0);
                             break;
                         case UNIV_CSV_DONTCARE:
                         default:
                             break;
                     }
                     
-                    text << delimit;
+                    buffer << delimit;
                 }
 
-                text << endl;
+                buffer.RemoveLast(1);
+                text << buffer << endl;
 
                 ++ numRecords;
             }
