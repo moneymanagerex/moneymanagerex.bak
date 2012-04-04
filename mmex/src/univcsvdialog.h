@@ -5,12 +5,12 @@
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -54,26 +54,26 @@
 #endif
 
 class mmUnivCSVDialog: public wxDialog
-{    
+{
     DECLARE_DYNAMIC_CLASS(mmUnivCSVDialog)
     DECLARE_EVENT_TABLE()
 
 public:
     /// Constructors
     mmUnivCSVDialog();
-    mmUnivCSVDialog(mmCoreDB* core, wxWindow* parent, bool is_importer = true, 
-        wxWindowID id = SYMBOL_UNIVCSVDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_UNIVCSVDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_UNIVCSVDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_UNIVCSVDIALOG_SIZE, 
+    mmUnivCSVDialog(mmCoreDB* core, wxWindow* parent, bool is_importer = true,
+        wxWindowID id = SYMBOL_UNIVCSVDIALOG_IDNAME,
+        const wxString& caption = SYMBOL_UNIVCSVDIALOG_TITLE,
+        const wxPoint& pos = SYMBOL_UNIVCSVDIALOG_POSITION,
+        const wxSize& size = SYMBOL_UNIVCSVDIALOG_SIZE,
         long style = SYMBOL_UNIVCSVDIALOG_STYLE);
 
     /// Creation
-    bool Create(wxWindow* parent, 
-        wxWindowID id = SYMBOL_UNIVCSVDIALOG_IDNAME, 
-        const wxString& caption = SYMBOL_UNIVCSVDIALOG_TITLE, 
-        const wxPoint& pos = SYMBOL_UNIVCSVDIALOG_POSITION, 
-        const wxSize& size = SYMBOL_UNIVCSVDIALOG_SIZE, 
+    bool Create(wxWindow* parent,
+        wxWindowID id = SYMBOL_UNIVCSVDIALOG_IDNAME,
+        const wxString& caption = SYMBOL_UNIVCSVDIALOG_TITLE,
+        const wxPoint& pos = SYMBOL_UNIVCSVDIALOG_POSITION,
+        const wxSize& size = SYMBOL_UNIVCSVDIALOG_SIZE,
         long style = SYMBOL_UNIVCSVDIALOG_STYLE);
 
     /// Creates the controls and sizers
@@ -128,7 +128,7 @@ private:
     wxString transNum_;
     wxString notes_;
     int payeeID_;
-    int categID_; 
+    int categID_;
     int subCategID_;
     double val_;
     wxDateTime dtdt_;
