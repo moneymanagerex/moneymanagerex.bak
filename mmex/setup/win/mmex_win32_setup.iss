@@ -17,6 +17,10 @@
 #define MyAppURL "http://www.codelathe.com/mmex"
 #define MyAppExeName "mmex.exe"
 
+; Set this value to a nul string for release version
+#define MyAppDevelopVersion ""
+
+
 ;===============================================================================
 ; Local definitions specifically designed for my setup 
 #define mmex_svn_path "C:\Users\Stef\Documents\SVN\MoneyManagerEX\trunk\mmex"
@@ -30,29 +34,28 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
+
 ; Development ID
 ;AppId={{37153D93-6D91-4763-82BB-0DF646211ED0}
+
 ; Release ID
 AppId={{2C48DC11-E113-4912-8AFC-366D1918101E}
 
-AppName={#MyAppName}
-AppVersion={#MyAppVersion}
-;AppVerName={#MyAppName} {#MyAppVersion}
+AppName={#MyAppName}{#MyAppDevelopVersion}
+AppVersion={#MyAppVersion}{#MyAppDevelopVersion}
+AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\{#MyAppName}
-DefaultGroupName={#MyAppName}
-
+DefaultDirName={pf}\{#MyAppName}{#MyAppDevelopVersion}
+DefaultGroupName={#MyAppName}{#MyAppDevelopVersion}
 LicenseFile={#mmex_svn_path}\doc\license.txt
 InfoBeforeFile={#mmex_svn_path}\README.TXT
 InfoAfterFile={#mmex_svn_path}\doc\version.txt
-
 OutputDir={#mmex_local_output_path}
 OutputBaseFilename={#mmex_local_output_filename}
 SetupIconFile={#mmex_svn_path}\resources\mmex.ico
-
 Compression=lzma/Max
 SolidCompression=true
 ShowUndisplayableLanguages=true
@@ -88,9 +91,10 @@ Name: custom;  Description: "Custom Installation"; Flags: IsCustom;
 
 [Components]
 Name: program; Description: "Program Files"; Types: full minimal custom; Flags: fixed; 
-Name: help; Description: "Help files"; Types: full minimal; 
+Name: local; Description: "Make portable: Include mmexini.db3 file in MMEX directory"; Flags: checkablealone;
 
 ; Add language component here then add language file in files section
+Name: help; Description: "Help files"; Types: full minimal; 
 Name: lang; Description: Languages; Types: full; 
 Name: lang\english; Description: English; Types: full; 
 Name: lang\arabic; Description: Arabic; Types: full; 
@@ -146,11 +150,13 @@ Source: {#mmex_svn_path}\doc\contrib.txt; DestDir: {app}; Flags: ignoreversion; 
 Source: {#mmex_svn_path}\doc\license.txt; DestDir: {app}; Flags: ignoreversion; Components: program; 
 Source: {#mmex_svn_path}\doc\version.txt; DestDir: {app}; Flags: ignoreversion; Components: program; 
 
+; Include in directory if user requires a local setup
+Source: {#mmex_local_output_path}{#mmex_install_root}\mmexini.db3; DestDir: {app}; Flags: ignoreversion; Components: local;
+
 ; MMEX Resource files
 Source: {#mmex_svn_path}\resources\currency_seed.db3; DestDir: {app}\res; Flags: ignoreversion; 
 Source: {#mmex_svn_path}\resources\kaching.wav; DestDir: {app}\res; Flags: ignoreversion; 
 Source: {#mmex_svn_path}\resources\mmex.ico; DestDir: {app}\res; Flags: ignoreversion; 
-Source: {#mmex_svn_path}\resources\splash.png; DestDir: {app}\res; Flags: ignoreversion; 
 
 ; MMEX Root files - language dependant
 Source: {#mmex_svn_path}\README.TXT; DestDir: {app}; Flags: ignoreversion; Components: program; Languages: english; 
@@ -198,6 +204,7 @@ Source: {#mmex_svn_path}\doc\help\*.png; DestDir: {app}\help; Flags: ignoreversi
  
 ; MMEX Help - Help Directories - Language dependant
 Source: {#mmex_local_output_path}{#mmex_install_root}\help\french\*; DestDir: {app}\help\french; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\french; 
+Source: {#mmex_local_output_path}{#mmex_install_root}\help\german\*; DestDir: {app}\help\german; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\german; 
 Source: {#mmex_local_output_path}{#mmex_install_root}\help\italian\*; DestDir: {app}\help\italian; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\italian; 
 Source: {#mmex_local_output_path}{#mmex_install_root}\help\polish\*; DestDir: {app}\help\polish; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\polish; 
 Source: {#mmex_local_output_path}{#mmex_install_root}\help\russian\*; DestDir: {app}\help\russian; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\russian; 
@@ -205,16 +212,21 @@ Source: {#mmex_local_output_path}{#mmex_install_root}\help\spanish\*; DestDir: {
 
 
 [Icons]
-Name: {group}\{#MyAppName}; Filename: {app}\bin\{#MyAppExeName}; WorkingDir: {app}; 
-Name: {group}\{cm:UninstallProgram,{#MyAppName}}; Filename: {uninstallexe}; 
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\bin\{#MyAppExeName}"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: {app}\bin\{#MyAppExeName}; 
+Name: {group}\{#MyAppName}{#MyAppDevelopVersion}; Filename: {app}\bin\{#MyAppExeName}; WorkingDir: {app}; 
+Name: {group}\{cm:UninstallProgram,{#MyAppName}{#MyAppDevelopVersion}}; Filename: {uninstallexe}; 
+Name: "{commondesktop}\{#MyAppName}{#MyAppDevelopVersion}"; Filename: "{app}\bin\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}{#MyAppDevelopVersion}"; Filename: {app}\bin\{#MyAppExeName}; 
 
 [Run]
 Filename: {app}\bin\{#MyAppExeName}; Description: {cm:LaunchProgram,{#MyAppName}}; Flags: nowait postinstall skipifsilent; WorkingDir: {app}; 
 
+
+; For the Development Version,
+; Do not delete setup files in the Systems User Application Directory
 [UninstallDelete]
 Type: files; Name: "{userappdata}\{#MyAppName}\mmexini.db3"
+Type: files; Name: "{userappdata}\{#MyAppName}\Stocks\*.*"
+Type: dirifempty; Name: "{userappdata}\{#MyAppName}\Stocks"
 Type: dirifempty; Name: "{userappdata}\{#MyAppName}"
 
 [Messages]
