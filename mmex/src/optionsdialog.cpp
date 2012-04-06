@@ -772,8 +772,13 @@ void mmOptionsDialog::CreateControls()
     textDelimiter4->SetToolTip(_("Specify the delimiter to use when importing/exporting CSV files"));
     textDelimiter4->SetMaxLength(2);
     if (delimiter == wxT("\t") || delimiter == wxT(",") || delimiter == wxT(";"))
+    {
         textDelimiter4->Enable(false);
-
+    }
+    else
+    {
+        delimiterRadioButtonU4->SetValue(true);
+    }
     radioButtonSizer->Add(delimiterRadioButtonC4, 0, wxALIGN_LEFT|wxALL, 5);
     radioButtonSizer->Add(delimiterRadioButtonS4, 0, wxALIGN_LEFT|wxALL, 5);
     radioButtonSizer->Add(delimiterRadioButtonT4, 0, wxALIGN_LEFT|wxALL, 5);
@@ -782,8 +787,8 @@ void mmOptionsDialog::CreateControls()
     userDefinedSizer->Add(textDelimiter4, 0, wxALIGN_LEFT|wxLEFT, 5);
 
 // temporarily hide from interface because the user defined CSV delimiter as this is not supported by the universal CSV dialog.
-    delimiterRadioButtonU4->Hide();
-    textDelimiter4->Hide();
+//    delimiterRadioButtonU4->Hide();
+//    textDelimiter4->Hide();
 
    /**********************************************************************************************
     Setting up the notebook with the 5 pages

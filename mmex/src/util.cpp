@@ -672,12 +672,16 @@ wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, const wxDateTime &dt)
 
 wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* db, const wxString& dtstr)
 {
-    wxString selection = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    wxString date_format = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    wxString date = dtstr;
+     //fix for date format %m/%d'%Y 
+    date_format.Replace(wxT("`"), wxT("/"));
+    date_format.Replace(wxT("'"), wxT("/"));
+    date.Replace(wxT("`"), wxT("/"));
+    date.Replace(wxT("'"), wxT("/"));
     wxDateTime dt;
-    const wxChar* char1 = dt.ParseFormat(dtstr.GetData(), selection.GetData());
-
-    if (char1 == NULL)
-        return wxDateTime::Now();
+    
+    dt.ParseFormat(date, date_format, wxDateTime::Now());
 
     return dt;
 }
@@ -987,4 +991,46 @@ wxArrayString viewTransactionsStrings(bool translated, wxString input_string, in
 	}
     
     return (translated ? itemChoiceTranslatedViewTransStrings : itemChoiceViewTransStrings);
+}
+
+wxString csv2tab_separated_values(wxString line, wxString& delimit) 
+{
+	//csv line example:
+    //12.02.2010,Payee,-1105.08,Category,Subcategory,,"Fuel ""95"", 42.31 l (24.20) 212366"
+	int i=0;
+    //Single quotes will be used instead double quotes
+    //Replace all single quotes first
+    line.Replace(wxT("'"), wxT("<~sq~>"));
+    //Replace double quotes that used twice to replacer
+	line.Replace(wxT("\"\"\"")+delimit+wxT("\"\"\""), wxT("<~dq~>\"")+delimit+wxT("\"<~dq~>"));
+	line.Replace(wxT("\"\"\"")+delimit, wxT("<~dq~>\"")+delimit);
+	line.Replace(delimit+wxT("\"\"\""), delimit+wxT("\"<~dq~>")); 
+	line.Replace(wxT("\"\"")+delimit, wxT("<~dq~>")+delimit);
+	line.Replace(delimit+wxT("\"\""), delimit+wxT("<~dq~>"));
+    
+    //replace delimiter to TAB and double quotes to single quotes
+	line.Replace(wxT("\"")+delimit+wxT("\""), wxT("'\t'"));
+	line.Replace(wxT("\"")+delimit, wxT("'\t"));
+	line.Replace(delimit+wxT("\""), wxT("\t'"));
+	line.Replace(wxT("\"\""), wxT("<~dq~>"));
+	line.Replace(wxT("\""), wxT("'"));
+			
+	wxString temp_line = wxEmptyString;
+	wxString token;
+	wxStringTokenizer tkz1(line, wxT("'"));
+
+	while (tkz1.HasMoreTokens())
+	{
+		token = tkz1.GetNextToken();
+		if (0 == fmod((double)i,2)) 
+			token.Replace(delimit,wxT("\t"));   
+		temp_line << token;
+		i++;
+	};
+    //Replace back all replacers to the original value
+	temp_line.Replace(wxT("<~dq~>"), wxT("\""));
+	temp_line.Replace(wxT("<~sq~>"), wxT("'"));
+	line = temp_line;
+
+	return line;
 }

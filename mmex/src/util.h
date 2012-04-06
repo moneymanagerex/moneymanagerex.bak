@@ -124,6 +124,7 @@ wxString mmGetNiceShortMonthName( int month );
 wxString mmGetNiceWeekDayName( int week_day );
 
 wxString inQuotes(wxString label, wxString& delimiter);
+wxString csv2tab_separated_values(wxString line, wxString& delimit);
 void mmExportQIF( mmCoreDB* core, wxSQLite3Database* db_ );
 wxString mmReadyDisplayString( const wxString& orig );
 wxString adjustedExportAmount(wxString amtSeparator, wxString strValue);
