@@ -3319,7 +3319,13 @@ void mmGUIFrame::OnImportUniversalCSV(wxCommandEvent& /*event*/)
         return;
     }
 
-    mmUnivCSVDialog(m_core.get(), this).ShowModal();
+    mmUnivCSVDialog univCSVDialog(m_core.get(), this);
+    univCSVDialog.ShowModal();
+    if (univCSVDialog.InportCompletedSuccessfully())
+    {
+        setAccountNavTreeSection(m_core.get()->getAccountName(univCSVDialog.ImportedAccountID()));
+        createCheckingAccountPage(univCSVDialog.ImportedAccountID());
+    }
 }
 //----------------------------------------------------------------------------
 

@@ -68,6 +68,44 @@ public:
         const wxSize& size = SYMBOL_UNIVCSVDIALOG_SIZE,
         long style = SYMBOL_UNIVCSVDIALOG_STYLE);
 
+    bool InportCompletedSuccessfully()  { return importSuccessful_; }
+    int ImportedAccountID()             { return fromAccountID_;    }
+
+private:
+    mmCoreDB* core_;
+    bool is_importer_;
+    wxString delimit_;
+    wxSQLite3Database* db_;
+    std::vector<int> csvFieldOrder_;
+    wxListBox* csvFieldCandicate_;
+    wxListBox* csvListBox_;
+
+    wxButton* m_button_add_;
+    wxButton* m_button_remove_;
+    wxChoice* m_choice_account_;
+    wxRadioBox* m_radio_box_;
+    wxListCtrl* m_list_ctrl_; //preview
+    wxTextCtrl* m_text_ctrl_;
+
+    std::map<int, wxString> CSVFieldName_;
+
+    wxString dt_;
+    wxString payee_;
+    wxString type_;
+    wxString amount_;
+    wxString categ_;
+    wxString subcateg_;
+    wxString transNum_;
+    wxString notes_;
+    int payeeID_;
+    int categID_;
+    int subCategID_;
+    double val_;
+    wxDateTime dtdt_;
+
+    int fromAccountID_;
+    bool importSuccessful_;
+
     /// Creation
     bool Create(wxWindow* parent,
         wxWindowID id = SYMBOL_UNIVCSVDIALOG_IDNAME,
@@ -101,36 +139,5 @@ public:
     wxIcon GetIconResource(const wxString& name);
     static bool ShowToolTips();
 
-private:
-    mmCoreDB* core_;
-    bool is_importer_;
-    wxString delimit_;
-    wxSQLite3Database* db_;
-    std::vector<int> csvFieldOrder_;
-    wxListBox* csvFieldCandicate_;
-    wxListBox* csvListBox_;
-
-    wxButton* m_button_add_;
-    wxButton* m_button_remove_;
-    wxChoice* m_choice_account_;
-    wxRadioBox* m_radio_box_;
-    wxListCtrl* m_list_ctrl_; //preview
-    wxTextCtrl* m_text_ctrl_;
-
-    std::map<int, wxString> CSVFieldName_;
-
-    wxString dt_;
-    wxString payee_;
-    wxString type_;
-    wxString amount_;
-    wxString categ_;
-    wxString subcateg_;
-    wxString transNum_;
-    wxString notes_;
-    int payeeID_;
-    int categID_;
-    int subCategID_;
-    double val_;
-    wxDateTime dtdt_;
 };
 #endif
