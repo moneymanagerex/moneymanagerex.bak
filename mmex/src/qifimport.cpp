@@ -362,6 +362,17 @@ wxString getFileLine(wxTextInputStream& textFile, int& lineNumber)
     return textLine;
 }
 
+bool warning_message()
+{
+    wxString msgStr;
+    msgStr << _("To import QIF files correctly, the date format in the QIF file must match the date option set in MMEX.") << wxT("\n\n")
+           << _("Are you are sure you want to proceed with the import?");
+    wxMessageDialog msgDlg(NULL, msgStr, _("QIF Import"), wxYES_NO|wxICON_QUESTION);
+    if (msgDlg.ShowModal() != wxID_YES)
+        return false;
+    return true;
+}
+
 int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
 {
     wxSQLite3Database* db_ = core->db_.get();
@@ -371,16 +382,8 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
         return -1;
     }
 
-    wxString msgStr;
-    msgStr << _("To import QIF files correctly, the date format in the QIF file must match the date option set in MMEX.") << wxT("\n\n")
-           << _("Are you are sure you want to proceed with the import?");
-    wxMessageDialog msgDlg(NULL, msgStr, _("QIF Import"), wxYES_NO|wxICON_QUESTION);
-    if (msgDlg.ShowModal() != wxID_YES)
-    {
-        return -1;
-    }
+    if (!warning_message()) return -1;
     
-    int fromAccountID = -1;
     wxString acctName;
     if (destinationAccountName == wxEmptyString)
     {
@@ -395,7 +398,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
     else
         acctName = destinationAccountName;
 
-    fromAccountID = core->getAccountID(acctName);
+    int fromAccountID = core->getAccountID(acctName);
 
     boost::shared_ptr<mmCurrency> pCurrencyPtr = core->getCurrencyWeakPtr(fromAccountID).lock();
     wxASSERT(pCurrencyPtr);
@@ -423,14 +426,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
         int numImported = 0;
 
         wxString dt = wxDateTime::Now().FormatISODate();
-        wxString payee;
-        wxString type;
-        wxString amount;
-        wxString categ;
-        wxString subcateg;
-        wxString transNum;
-        wxString notes;
-        wxString convDate;
+        wxString payee, type, amount, categ, subcateg, transNum, notes, convDate;
         wxDateTime dtdt = wxDateTime::Now();
         int payeeID = -1, categID = -1, subCategID = -1;
         subCategID = -1;
@@ -482,51 +478,16 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                     // Need to read till we get to end of account information
                     while( (readLine = getFileLine(text, numLines) ) != wxT("^"))
                     {
-                        payee = wxT("");
-                        type = wxT("");
-                        amount = wxT("");
-                        categ = wxT("");
-                        notes = wxT("");
-                        subCategID = -1;
-                        transNum = wxT("");
-                        categID = -1;
-                        val = 0.0;
-                        convDate = wxDateTime::Now().FormatISODate();                        
 						numLines++;
-                        if (accountInfoType(readLine) == Name)
+                        int i = accountInfoType(readLine);
+                        if (i == Name)
                         {
                             log << _("Line: " ) << numLines << _(" : ")
                                 << getLineData(readLine) << _(" account name ") << endl;    
                             continue;
                         }
-
-                        if (accountInfoType(readLine) == AccountType)
+                        else if (i == AccountType || i == Description || i == CreditLimit || i  == BalanceDate || i == Balance)
                         {
-                            //accountInfo.type = getLineData(readLine);
-                            continue;
-                        }
-
-                        if (accountInfoType(readLine) == Description)
-                        {
-                            //accountInfo.description = getLineData(readLine);
-                            continue;
-                        }
-
-                        if (accountInfoType(readLine) == CreditLimit)
-                        {
-                            //accountInfo.creditLimit = getLineData(readLine);
-                            continue;
-                        }
-
-                        if (accountInfoType(readLine) == BalanceDate)
-                        {
-                            //accountInfo.balanceDate = Convert.ToDateTime(getLineData(readLine));
-                            continue;
-                        }
-
-                        if (accountInfoType(readLine) == Balance)
-                        {
-                            //accountInfo.balance = Convert.ToSingle(getLineData(readLine));
                             continue;
                         }
                     }
@@ -542,13 +503,11 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                     }
                     continue;
                 }
-
-                if ( accountType == wxT("Type:Security") || accountType == wxT("Clear:AutoSwitch"))
+                else if ( accountType == wxT("Type:Security") || accountType == wxT("Clear:AutoSwitch"))
                 {
                     continue;
                 }
-
-                if ( accountType == wxT("Type:Cat") ) 
+                else if ( accountType == wxT("Type:Cat") ) 
                 {
                     bool reading = true;
                     while( reading )
@@ -573,6 +532,8 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 // return -1;
             }
 
+            wxString cat, subcat;
+
             if (lineType(readLine) == Payee)
             {
                 payee = getLineData(readLine);
@@ -591,8 +552,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 
                 continue;
             }
-
-            if (lineType(readLine) == Amount)
+            else if (lineType(readLine) == Amount)
             {
                 amount = getLineData(readLine);
               
@@ -609,13 +569,11 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 val = fabs(val);
                 continue;
             }
-
-            if (lineType(readLine) == Address)
+            else if (lineType(readLine) == Address)
             {
                 continue;
             }
-
-            if (lineType(readLine) == Date)
+            else if (lineType(readLine) == Date)
             {
                 dt = getLineData(readLine);
 
@@ -623,27 +581,22 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 convDate = dtdt.FormatISODate();
                 continue;
             }
-
-            if (lineType(readLine) == TransNumber)
+            else if (lineType(readLine) == TransNumber)
             {
                 transNum = getLineData(readLine);
                 continue;
             }
-
-            if (lineType(readLine) == Memo || lineType(readLine) == MemoSplit )
+            else if (lineType(readLine) == Memo || lineType(readLine) == MemoSplit )
             {
-                notes << getLineData(readLine) << wxT("\n"); //FIXME: \n not needed for every line 
+                notes << getLineData(readLine) << wxT("\n");
                 continue;
             }
-
-            wxString cat, subcat;
-            if (lineType(readLine) == Category)
+            else if (lineType(readLine) == Category)
             {
                 categ = getLineData(readLine);
 
                 wxStringTokenizer cattkz(categ, wxT(":"));
                 
-                subcat = wxT("");
                 if (cattkz.HasMoreTokens())
                     cat = cattkz.GetNextToken();
                 if (cattkz.HasMoreTokens())
@@ -654,7 +607,6 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 {
                     categID =  core->addCategory(cat);
                 }
-
 
                 if (!subcat.IsEmpty())
                 {
@@ -669,8 +621,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
 
                 continue;
             }
-
-            if (lineType(readLine) == EOTLT)
+            else if (lineType(readLine) == EOTLT)
             {
                 wxString status = wxT("F");
 
@@ -742,7 +693,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 pTransaction->amt_ = val;
                 pTransaction->status_ = status;
                 pTransaction->transNum_ = transNum;
-                pTransaction->notes_ = notes;
+                pTransaction->notes_ = (wxString(notes.Last()) == wxT("\n") ? notes.RemoveLast() : notes);
                 pTransaction->category_ = core->getCategorySharedPtr(categID, subCategID);
                 pTransaction->date_ = dtdt;
                 pTransaction->toAmt_ = 0.0;
@@ -752,7 +703,16 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
                 QIF_transID.push_back(transID);
 
                 numImported++;
-                notes = wxT("");
+                payee.clear();
+                type.clear();
+                amount.clear();
+                categ.clear();
+                notes.clear();
+                subCategID = -1;
+                transNum.clear();
+                categID = -1;
+                val = 0.0;
+                convDate = wxDateTime::Now().FormatISODate();                        
 				continue;
 			}
         }
