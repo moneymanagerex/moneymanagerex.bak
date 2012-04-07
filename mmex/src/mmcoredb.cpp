@@ -131,12 +131,11 @@ void loadAccounts(boost::shared_ptr<wxSQLite3Database> db_,
 
     while (q1.NextRow())
     {
-        mmAccount* ptrBase = new mmAccount(q1);
+        boost::shared_ptr<mmAccount> pAccount(new mmAccount(q1));
 
         boost::weak_ptr<mmCurrency> pCurrency = cur_list.getCurrencySharedPtr(q1.GetInt(wxT("CURRENCYID")));
-        ptrBase->currency_ = pCurrency;
+        pAccount->currency_ = pCurrency;
 
-        boost::shared_ptr<mmAccount> pAccount(ptrBase);
         acc_list.accounts_.push_back(pAccount);
     }
 
