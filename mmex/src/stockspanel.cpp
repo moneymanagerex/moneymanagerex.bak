@@ -184,7 +184,7 @@ void mmStocksPanel::CreateControls()
 
     wxStaticText* itemStaticText10 = new wxStaticText(headerPanel,
                                      ID_PANEL_CHECKING_STATIC_BALHEADER,
-                                     _("Total:"), wxDefaultPosition, wxDefaultSize, 0);
+                                     _("Total:"), wxDefaultPosition, wxSize(800, 20), 0);
 
     m_LED = new awxLed(headerPanel, ID_PANEL_STOCK_UPDATE_LED, wxDefaultPosition, wxDefaultSize, awxLED_GREEN, 1, 5);
     //m_LED = new awxLed(headerPanel, ID_PANEL_STOCK_UPDATE_LED, wxDefaultPosition, wxDefaultSize, awxLED_GREEN);
@@ -343,19 +343,22 @@ void mmStocksPanel::initVirtualListControl()
     //
     wxString diffStr;
     mmex::formatDoubleToCurrency((total > originalVal ? total - originalVal : originalVal - total), diffStr);
-    //Percent
-    wxString diffStrPercents;
-    double diffPercents = (total > originalVal ? total/originalVal*100.0-100.0 : -(total/originalVal*100.0-100.0));
-    mmex::formatDoubleToCurrencyEdit(diffPercents, diffStrPercents);
     
     header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
     wxString lbl;
     lbl << _("Total: ") << balance << wxT ("     ") << _("Invested: ") << original;
-    if (total > originalVal)
-        lbl << wxT ("     ") << _("Gain: "); 
-    else
-        lbl << wxT ("     ") << _("Loss: ");
-    lbl << diffStr << wxT("  ( ") << diffStrPercents << wxT(" %)");
+
+    //Percent
+    wxString diffStrPercents;
+    if (originalVal!= 0.0) {
+        if (total > originalVal)
+            lbl << wxT ("     ") << _("Gain: "); 
+        else
+            lbl << wxT ("     ") << _("Loss: ");
+        double diffPercents = (total > originalVal ? total/originalVal*100.0-100.0 : -(total/originalVal*100.0-100.0));
+        mmex::formatDoubleToCurrencyEdit(diffPercents, diffStrPercents);
+        lbl << diffStr << wxT("  ( ") << diffStrPercents << wxT(" %)");
+    }
 
     header->SetLabel(lbl);
 
