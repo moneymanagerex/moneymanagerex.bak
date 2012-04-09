@@ -670,19 +670,26 @@ wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, const wxDateTime &dt)
     return dt.Format(mmOptions::instance().dateFormat);
 }
 
-wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* db, const wxString& dtstr)
+wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* /*db*/, const wxString& dtstr)
 {
-    wxString date_format = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    //wxString date_format = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    wxString date_format = mmOptions::instance().dateFormat;
     wxString date = dtstr;
-     //fix for date format %m/%d'%Y 
+
+    //For correct date parsing, adjust separator format to: %m/%d/%Y
     date_format.Replace(wxT("`"), wxT("/"));
     date_format.Replace(wxT("'"), wxT("/"));
+    date_format.Replace(wxT("-"), wxT("/"));
+    date_format.Replace(wxT("."), wxT("/"));
+    date_format.Replace(wxT(","), wxT("/"));
     date.Replace(wxT("`"), wxT("/"));
     date.Replace(wxT("'"), wxT("/"));
-    wxDateTime dt;
-    
-    dt.ParseFormat(date, date_format, wxDateTime::Now());
+    date.Replace(wxT("-"), wxT("/"));
+    date.Replace(wxT("."), wxT("/"));
+    date.Replace(wxT(","), wxT("/"));
 
+    wxDateTime dt;
+    dt.ParseFormat(date, date_format, wxDateTime::Now());
     return dt;
 }
 
