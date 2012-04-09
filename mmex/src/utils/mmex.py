@@ -90,9 +90,9 @@ struct DB_View_%s : public DB_View
         s += '''
         }
 
-        Data(wxSQLite3ResultSet& q)
+        Data(wxSQLite3ResultSet& q, Self* view = 0)
         {
-            view_ = 0;
+            view_ = view;
         '''
         for field in self._fields:
             func = base_data_types_function[field['type']]
@@ -170,14 +170,15 @@ struct DB_View_%s : public DB_View
             
         
         s +='''
-            stmt.Bind(%d, entity->%s);
+            if (entity->id() > 0)
+                stmt.Bind(%d, entity->%s);
 
             stmt.ExecuteUpdate();
             stmt.Finalize();
         }
         catch(wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("%s: Exception"), e.GetMessage().c_str());
+            wxLogError(wxT("%s: Exception %%s"), e.GetMessage().c_str());
             return false;
         }
 
@@ -187,23 +188,34 @@ struct DB_View_%s : public DB_View
 ''' % (len(self._fields), primay_key, self._table)
         s +='''
 
-    bool remove(Self::Data* entity, wxSQLite3Database* db)
+    bool remove(int id, wxSQLite3Database* db)
     {
         try
         {
             wxString sql = wxT("DELETE FROM %s WHERE %s = ?");
             wxSQLite3Statement stmt = db->PrepareStatement(sql);
-            stmt.Bind(1, entity->id());
+            stmt.Bind(1, id);
             stmt.ExecuteUpdate();
             stmt.Finalize();
         }
         catch(wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("%s: Exception"), e.GetMessage().c_str());
+            wxLogError(wxT("%s: Exception %%s"), e.GetMessage().c_str());
             return false;
         }
-        entity->id(-1);
+
         return true;
+    }
+
+    bool remove(Self::Data* entity, wxSQLite3Database* db)
+    {
+        if (remove(entity->id(), db))
+        {
+            entity->id(-1);
+            return true;
+        }
+
+        return false;
     }
 ''' % (self._table, primay_key, self._table)
         
@@ -220,11 +232,11 @@ struct DB_View_%s : public DB_View
 
            wxSQLite3ResultSet q = stmt.ExecuteQuery();
            if(q.NextRow())
-                entity = new Self::Data(q);
+                entity = new Self::Data(q, this);
         }
         catch(wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("%s: Exception"), e.GetMessage().c_str());
+            wxLogError(wxT("%s: Exception %%s"), e.GetMessage().c_str());
         }
  
         return entity;
@@ -232,24 +244,24 @@ struct DB_View_%s : public DB_View
 ''' % (primay_key, self._table)
 
         s +='''
-    std::map<int, Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString) const
+    std::vector<Self::Data> all(wxSQLite3Database* db, const wxString& filter = wxEmptyString)
     {
-        std::map<int, Self::Data> result;
+        std::vector<Self::Data> result;
         try
         {
             wxSQLite3ResultSet q = db->ExecuteQuery(this->query() + filter);
 
             while(q.NextRow())
             {
-                Self::Data entity(q);
-                result.insert(std::make_pair(entity.id(), entity));
+                Self::Data entity(q, this);
+                result.push_back(entity);
             }
 
             q.Finalize();
         }
         catch(wxSQLite3Exception &e) 
         { 
-            wxLogError(wxT("%s: Exception"), e.GetMessage().c_str());
+            wxLogError(wxT("%s: Exception %%s"), e.GetMessage().c_str());
         }
 
         return result;
@@ -288,6 +300,9 @@ if __name__ == '__main__':
  *          DO NOT EDIT!
  */
 //=============================================================================
+
+#ifndef _MM_EX_DB_VIEW_H_
+#define _MM_EX_DB_VIEW_H_
 '''% (sys.argv[0], str(datetime.datetime.now()))
     
     code +='''
@@ -313,6 +328,10 @@ struct DB_View
         fields = _table_info(cur, table)
         view = DB_View(table, fields)
         code += view.to_string()
+
+    code +='''
+#endif // 
+'''
 
     print code
 
