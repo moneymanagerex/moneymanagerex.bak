@@ -480,6 +480,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
          return;
     }
 
+    bool canceledbyuser = false;
     wxString acctName = m_choice_account_->GetStringSelection();
     fromAccountID_ = core_->getAccountID(acctName);
 
@@ -511,7 +512,6 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
             int countNumTotal = 0;
             int countImported = 0;
 
-            bool canceledbyuser = false;
             std::vector<int> CSV_transID;
 
             wxProgressDialog progressDlg(_("Universal CSV Import"), _("Transactions imported from CSV: "), 100,
@@ -683,7 +683,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
         }
     }
 
-    Close();
+    if (!canceledbyuser) Close();
 }
 
 void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
