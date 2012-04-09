@@ -121,7 +121,7 @@ CREATE TABLE INFOTABLE_V1(
 INFOID integer not null primary key
 , INFONAME TEXT NOT NULL
 , INFOVALUE TEXT NOT NULL
-)
+);
 
 
 -- Describe PAYEE_V1
@@ -130,7 +130,7 @@ PAYEEID integer primary key
 , PAYEENAME TEXT NOT NULL
 , CATEGID integer
 , SUBCATEGID integer
-)
+);
 
 
 -- Describe SPLITTRANSACTIONS_V1
@@ -140,7 +140,7 @@ SPLITTRANSID integer primary key
 , CATEGID integer
 , SUBCATEGID integer
 , SPLITTRANSAMOUNT numeric
-)
+);
 
 
 -- Describe STOCK_V1
@@ -156,7 +156,7 @@ STOCKID integer primary key
 , CURRENTPRICE numeric NOT NULL
 , VALUE numeric
 , COMMISSION numeric
-)
+);
 
 
 -- Describe SUBCATEGORY_V1
@@ -164,5 +164,5 @@ CREATE TABLE SUBCATEGORY_V1(
 SUBCATEGID integer primary key
 , SUBCATEGNAME TEXT NOT NULL
 , CATEGID integer NOT NULL
-)
+);
 
