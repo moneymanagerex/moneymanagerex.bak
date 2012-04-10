@@ -121,12 +121,21 @@ bool mmUnivCSVDialog::Create(wxWindow* parent, wxWindowID id,
 
 void mmUnivCSVDialog::CreateControls()
 {    
+    // Define the staticBox font and set it as wxFONTWEIGHT_BOLD
+    wxFont staticBoxFontSetting = this->GetFont();
+    staticBoxFontSetting.SetWeight(wxFONTWEIGHT_BOLD);
+    
+    wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
+    this->SetSizer(itemBoxSizer1);
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    this->SetSizer(itemBoxSizer2);
+    itemBoxSizer1->Add(itemBoxSizer2, 8, wxGROW|wxALL, 5);
+    wxBoxSizer* itemBoxSizer11 = new wxBoxSizer(wxVERTICAL);
+    itemBoxSizer1->Add(itemBoxSizer11, 5, wxGROW|wxALL, 5);
 
     wxStaticText* itemStaticText3 = new wxStaticText(this, wxID_STATIC, 
        _("Specify the order of fields in the CSV file"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer2->Add(itemStaticText3, 0, wxGROW|wxALL|wxADJUST_MINSIZE, 5);
+    itemStaticText3->SetFont(staticBoxFontSetting);
 
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 1, wxGROW|wxALL, 5);
@@ -212,10 +221,13 @@ void mmUnivCSVDialog::CreateControls()
         itemPanel6->SetSizer(itemBoxSizer7);
 
         wxStaticText* itemStaticText5 = new wxStaticText(itemPanel6, wxID_ANY, _("File Name:"), wxDefaultPosition, wxDefaultSize, 0);
-        itemBoxSizer7->Add(itemStaticText5, 0, wxALIGN_LEFT|wxALL, 5);
+        itemBoxSizer7->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        itemStaticText5->SetFont(staticBoxFontSetting);
 
-        m_text_ctrl_ = new wxTextCtrl(itemPanel6, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(300, -1), 0);
+        m_text_ctrl_ = new wxTextCtrl(itemPanel6, ID_FILE_NAME, wxEmptyString, wxDefaultPosition, wxSize(300, -1), wxTE_PROCESS_ENTER );
         itemBoxSizer7->Add(m_text_ctrl_, 1, wxALL|wxGROW, 5);
+        m_text_ctrl_->Connect(ID_FILE_NAME, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(mmUnivCSVDialog::OnFileNameChanged), NULL, this);
+        m_text_ctrl_->Connect(ID_FILE_NAME, wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmUnivCSVDialog::OnFileNameEntered), NULL, this);
 
         wxButton* button_search = new wxButton(itemPanel6, wxID_SEARCH, _("&Search"));
         itemBoxSizer7->Add(button_search, 0, wxALIGN_RIGHT|wxALL, 5);
@@ -230,6 +242,7 @@ void mmUnivCSVDialog::CreateControls()
 
     wxStaticText* itemStaticText6 = new wxStaticText(itemPanel7, wxID_ANY, _("Account  :"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer8->Add(itemStaticText6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemStaticText6->SetFont(staticBoxFontSetting);
 
     wxArrayString as = core_->getAccountsName();
     m_choice_account_ = new wxChoice(itemPanel7, wxID_ACCOUNT, wxDefaultPosition, wxSize(210, -1), as, 0);
@@ -240,35 +253,41 @@ void mmUnivCSVDialog::CreateControls()
     itemBoxSizer2->Add(m_staticline2, 0, wxEXPAND | wxALL, 5 );
 
     // CSV Delimiter
-    wxString choices[] = { _("Comma"), _("Semicolon"), _("TAB")};
+    wxString choices[] = { _("Comma"), _("Semicolon"), _("TAB"), _("User Defined")};
     int num = sizeof(choices) / sizeof(wxString);
-    m_radio_box_ = new wxRadioBox(this, wxID_RADIO_BOX, _("CSV Delimiter"), wxDefaultPosition, wxDefaultSize, num, choices, 3, wxRA_SPECIFY_COLS);
+    m_radio_box_ = new wxRadioBox(this, wxID_RADIO_BOX, wxT(""), wxDefaultPosition, wxDefaultSize, num, choices, 4, wxRA_SPECIFY_COLS);
  
     delimit_ = mmDBWrapper::getInfoSettingValue(db_, wxT("DELIMITER"), mmex::DEFDELIMTER);
-    bool delimitUserDefined = true;
+    
+    textDelimiter4 = new wxTextCtrl( this, ID_UD_DELIMIT, delimit_, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+    textDelimiter4->SetToolTip(_("Specify the delimiter to use when importing/exporting CSV files"));
+    textDelimiter4->SetMaxLength(1);
+    textDelimiter4->Disable();
+    textDelimiter4->Connect(ID_UD_DELIMIT, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(mmUnivCSVDialog::OnCheckOrRadioBox), NULL, this);
+
     if (delimit_ == wxT(","))
-    {
         m_radio_box_->SetSelection(0);
-        delimitUserDefined = false;
-    }
     else if (delimit_ == wxT(";"))
-    {
         m_radio_box_->SetSelection(1);
-        delimitUserDefined = false;
-    }
     else if (delimit_ == wxT("\t"))
-    {
         m_radio_box_->SetSelection(2);
-        delimitUserDefined = false;
-    }
+    else {
+        m_radio_box_->SetSelection(3);
+        textDelimiter4->Enable();
+     }
 
-    if (delimitUserDefined) m_radio_box_->Disable();
-
-    itemBoxSizer2->Add(m_radio_box_, 0, wxALL|wxEXPAND, 5);
+    wxStaticBox* importExportStaticBox = new wxStaticBox(this, wxID_ANY, _("CSV Delimiter"));
+    importExportStaticBox->SetFont(staticBoxFontSetting);
+    wxStaticBoxSizer* importExportStaticBoxSizer = new wxStaticBoxSizer(importExportStaticBox, wxHORIZONTAL);
+    
+    itemBoxSizer2->Add(importExportStaticBoxSizer, 0, wxALL|wxEXPAND, 5);
+    
+    importExportStaticBoxSizer->Add(m_radio_box_, 0, wxALL|wxEXPAND, 3);
+    importExportStaticBoxSizer->Add(textDelimiter4, 0, wxALIGN_BOTTOM|wxALL, 8);
 
     // Preview 
     wxStaticBoxSizer* m_staticbox = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _T("&Preview")), wxVERTICAL);
-
+    
     m_list_ctrl_ = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 100), wxLC_REPORT);
     m_staticbox->Add(m_list_ctrl_, 1, wxGROW|wxALL, 5);
     itemBoxSizer2->Add(m_staticbox, 0, wxALL|wxEXPAND, 5);
@@ -299,6 +318,19 @@ void mmUnivCSVDialog::CreateControls()
     wxButton* itemCancelButton = new wxButton(itemPanel5, wxID_CANCEL, _("&Cancel"));
     itemBoxSizer6->Add(itemCancelButton, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
     itemCancelButton->SetFocus();
+    
+    //Log viewer 
+    wxBoxSizer* itemBoxSizer22 = new wxBoxSizer(wxVERTICAL);
+    
+    itemBoxSizer11->Add(itemBoxSizer22, 1, wxGROW|wxALL, 0);
+    
+    log_field_ = new wxTextCtrl( this, wxID_STATIC, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxHSCROLL );
+    itemBoxSizer22->Add(log_field_, 1, wxGROW|wxALL, 5);
+    
+    wxButton* itemClearButton = new wxButton(this, wxID_CLEAR, _("&Clear"));
+    itemBoxSizer22->Add(itemClearButton, 0, wxALIGN_LEFT|wxALL, 5);
+    itemClearButton->Connect(wxID_CLEAR, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(mmUnivCSVDialog::OnButtonClear), NULL, this);
+    
 }
 
 bool mmUnivCSVDialog::ShowToolTips()
@@ -556,6 +588,8 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                 {
                     log << _("Line : ") << countNumTotal 
                         << _(" file contains insufficient number of tokens") << endl;
+                    *log_field_ << _("Line : ") << countNumTotal 
+                        << _(" file contains insufficient number of tokens") << wxT("\n");
                     continue;
                 }
                 
@@ -579,6 +613,8 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                 {
                     log << _("Line : ") << countNumTotal 
                         << _(" One of the following fields: Date, Payee, Amount, Type is missing, skipping") << endl;
+                    *log_field_ << _("Line : ") << countNumTotal 
+                        << _(" One of the following fields: Date, Payee, Amount, Type is missing, skipping") << wxT("\n");
                     continue;
                 }
 
@@ -634,6 +670,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
 
                countImported++;
                log << _("Line : ") << countNumTotal << _(" imported OK.") << endl;
+               *log_field_ << _("Line : ") << countNumTotal << _(" imported OK.") << wxT("\n");
             }
 
             progressDlg.Update(100);       
@@ -646,7 +683,7 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
             msg << wxT ("\n\n");
 
             // Display results to the user so user can decide weather to save or abort the loading
-            fileviewer(logFile.GetFullPath(), this).ShowModal();
+            //fileviewer(logFile.GetFullPath(), this).ShowModal();
 
             wxString confirmMsg = msg + _("Please confirm saving...");
             if (!canceledbyuser && wxMessageBox(confirmMsg, _("Importing CSV"), wxOK|wxCANCEL|wxICON_INFORMATION) == wxCANCEL)
@@ -676,6 +713,8 @@ void mmUnivCSVDialog::OnImport(wxCommandEvent& /*event*/)
                 db_->Rollback();
                 msg  << _("Imported transactions discarded by user!");
             }
+
+            *log_field_ << msg;
 
             outputLog.Close();
             //clear the vector to avoid memory leak - done at same level created.
@@ -760,6 +799,7 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
 
                 buffer.RemoveLast(1);
                 text << buffer << endl;
+                *log_field_ << buffer << wxT("\n");
 
                 ++ numRecords;
             }
@@ -969,11 +1009,30 @@ void mmUnivCSVDialog::OnStandard(wxCommandEvent& /*event*/)
 
 void mmUnivCSVDialog::OnSearch(wxCommandEvent& /*event*/)
 {
-    wxString fileName = wxFileSelector(_("Choose CSV data file to import"), 
-            wxEmptyString, wxEmptyString, wxEmptyString, wxT("*.csv"), wxFD_FILE_MUST_EXIST);
+    wxString fileName = m_text_ctrl_->GetValue();
+
+    fileName = wxFileSelector(_("Choose CSV data file to import"), 
+            wxEmptyString, fileName, wxEmptyString, wxT("*.csv"), wxFD_FILE_MUST_EXIST);
+
     if (!fileName.IsEmpty())
     {
         m_text_ctrl_->SetValue(fileName);
+        
+        wxTextFile tFile(fileName);
+        if (!tFile.Open())
+        {
+             *log_field_ << _("Unable to open file.") << wxT("\n");
+             return;
+        }
+
+        wxString line;
+        size_t count = 0;
+        for (line = tFile.GetFirstLine(); !tFile.Eof(); line = tFile.GetNextLine())
+        {
+            *log_field_ << line << wxT("\n");
+            if (++ count >= 10) break;
+        }
+        *log_field_ << wxT("\n");
         this->update_preview();
     }
 }
@@ -985,6 +1044,9 @@ void mmUnivCSVDialog::OnAccountChange(wxCommandEvent& event)
     {
         update_preview();
     }
+    wxString acctName = m_choice_account_->GetStringSelection();
+    int account_id = core_->getAccountID(acctName);
+    *log_field_ << _("Currency:") << wxT(" ") << core_->accountList_.getAccountCurrencyName(account_id) << wxT("\n");
 }
 
 void mmUnivCSVDialog::OnListBox(wxCommandEvent& event)
@@ -996,23 +1058,39 @@ void mmUnivCSVDialog::OnListBox(wxCommandEvent& event)
     }
 }
 
-void mmUnivCSVDialog::OnCheckOrRadioBox(wxCommandEvent& /*event*/)
+void mmUnivCSVDialog::OnCheckOrRadioBox(wxCommandEvent& event)
 {
-    //TODO match value to choices
+    wxString ud_delimit = textDelimiter4->GetValue();
+    if (ud_delimit.IsEmpty()) {
+        event.Skip();
+        return;
+    }
     switch(m_radio_box_->GetSelection())
     {
         case 0:
-            this->delimit_ = wxT(",");
+            delimit_ = wxT(",");
+            textDelimiter4->Disable();
             break;
         case 1:
-            this->delimit_ = wxT(";");
+            delimit_ = wxT(";");
+            textDelimiter4->Disable();
             break;
         case 2:
-            this->delimit_ = wxT("\t");
+            delimit_ = wxT("\t");
+            textDelimiter4->Disable();
+            break;
+        case 3:
+            delimit_ = ud_delimit;
+            textDelimiter4->Enable();
             break;
         default:
             break;
     }
+
+    textDelimiter4->SetEvtHandlerEnabled(false);
+    textDelimiter4->SetValue(delimit_);    
+    textDelimiter4->SetEvtHandlerEnabled(true);
+    event.Skip();
 
     this->update_preview();
 }
@@ -1100,4 +1178,40 @@ void mmUnivCSVDialog::parseToken(int index, wxString& token)
             wxASSERT(true);
             break;
     }
+}
+
+void mmUnivCSVDialog::OnButtonClear(wxCommandEvent& /*event*/)
+{
+    log_field_->Clear();
+}
+
+void mmUnivCSVDialog::OnFileNameChanged(wxCommandEvent& event)
+{
+    wxString file_name = m_text_ctrl_->GetValue();
+    if (file_name.Contains(wxT("\n")) || file_name.Contains(wxT("file://"))) 
+    {
+
+        file_name.Replace(wxT("\n"), wxT(""));
+#ifdef __WXGTK__
+        file_name.Replace(wxT("file://"), wxT(""));
+        file_name.Trim();
+#endif
+        m_text_ctrl_->SetEvtHandlerEnabled(false);
+        m_text_ctrl_->SetValue(file_name);    
+        m_text_ctrl_->SetEvtHandlerEnabled(true);
+    }
+    event.Skip();
+    
+    wxFileName csv_file(file_name);
+    if (csv_file.FileExists())
+        this->update_preview();
+}
+void mmUnivCSVDialog::OnFileNameEntered(wxCommandEvent& event)
+{
+    wxString file_name = m_text_ctrl_->GetValue();
+    file_name.Trim();
+
+    event.Skip();
+    wxCommandEvent evt(wxEVT_COMMAND_BUTTON_CLICKED, wxID_SEARCH);
+    this->GetEventHandler()->AddPendingEvent(evt);
 }

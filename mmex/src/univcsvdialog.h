@@ -31,8 +31,7 @@
 #define SYMBOL_UNIVCSVDIALOG_POSITION wxDefaultPosition
 #define ID_LISTBOX 10090
 #define ID_PANEL10 10091
-//#define ID_UNIVCSVBUTTON_ADD 10092
-//#define ID_UNIVCSVBUTTON_REMOVE 10093
+#define ID_PANEL_LOGS 10092
 #define ID_UNIVCSVBUTTON_IMPORT 10094
 #define ID_UNIVCSVBUTTON_EXPORT 10095
 #define ID_LISTBOX_CANDICATE 10099
@@ -40,6 +39,8 @@
 #define wxID_RADIO_BOX 10101
 #define wxID_STANDARD 10102
 #define wxID_ACCOUNT 10103
+#define ID_UD_DELIMIT 10104
+#define ID_FILE_NAME 10105
 ////@end control identifiers
 
 /*!
@@ -86,6 +87,8 @@ private:
     wxRadioBox* m_radio_box_;
     wxListCtrl* m_list_ctrl_; //preview
     wxTextCtrl* m_text_ctrl_;
+    wxTextCtrl* log_field_;
+    wxTextCtrl* textDelimiter4;
 
     std::map<int, wxString> CSVFieldName_;
 
@@ -132,6 +135,9 @@ private:
     void OnAccountChange(wxCommandEvent& event);
     void OnListBox(wxCommandEvent& event);
     void OnCheckOrRadioBox(wxCommandEvent& event);
+    void OnButtonClear(wxCommandEvent& event);
+    void OnFileNameEntered(wxCommandEvent& event);
+    void OnFileNameChanged(wxCommandEvent& event);
 
     void update_preview();
 

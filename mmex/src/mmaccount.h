@@ -87,6 +87,7 @@ public:
     wxArrayString getAccountsName(int except_id = -1) const;
     wxString getAccountCurrencyDecimalChar(int accountID) const;
     wxString getAccountCurrencyGroupChar(int accountID) const;
+    wxString getAccountCurrencyName(int accountID) const;
     account_v accounts_;
     typedef std::vector<boost::shared_ptr<mmAccount> >::const_iterator const_iterator;
     std::pair<const_iterator, const_iterator> range() const; 

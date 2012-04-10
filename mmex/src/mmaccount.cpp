@@ -308,6 +308,19 @@ wxString mmAccountList::getAccountCurrencyGroupChar(int accountID) const
     return wxT(",");
 }
 
+wxString mmAccountList::getAccountCurrencyName(int accountID) const
+{
+    boost::weak_ptr<mmCurrency> wpCurrency = getCurrencyWeakPtr(accountID);
+    boost::shared_ptr<mmCurrency> pCurrency = wpCurrency.lock();
+    wxASSERT(pCurrency);
+
+    if (pCurrency)
+        return pCurrency->currencyName_;
+
+    return wxT("");
+}
+
+
 boost::weak_ptr<mmCurrency> mmAccountList::getCurrencyWeakPtr(int accountID) const
 {
     int len = (int)accounts_.size();
