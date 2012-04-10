@@ -829,7 +829,9 @@ void mmUnivCSVDialog::update_preview()
     if (this->is_importer_)
     {
         wxString fileName = m_text_ctrl_->GetValue();
-        if (!fileName.IsEmpty())
+        wxFileName csv_file(fileName);
+
+        if (!fileName.IsEmpty() && csv_file.FileExists())
         {
             wxTextFile tFile(fileName);
             if (!tFile.Open())
@@ -1061,10 +1063,7 @@ void mmUnivCSVDialog::OnListBox(wxCommandEvent& event)
 void mmUnivCSVDialog::OnCheckOrRadioBox(wxCommandEvent& event)
 {
     wxString ud_delimit = textDelimiter4->GetValue();
-    if (ud_delimit.IsEmpty()) {
-        event.Skip();
-        return;
-    }
+
     switch(m_radio_box_->GetSelection())
     {
         case 0:
@@ -1092,7 +1091,7 @@ void mmUnivCSVDialog::OnCheckOrRadioBox(wxCommandEvent& event)
     textDelimiter4->SetEvtHandlerEnabled(true);
     event.Skip();
 
-    this->update_preview();
+    if (!delimit_.IsEmpty()) this->update_preview();
 }
 
 void mmUnivCSVDialog::parseToken(int index, wxString& token)
