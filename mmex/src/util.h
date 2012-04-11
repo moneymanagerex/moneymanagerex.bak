@@ -116,12 +116,16 @@ wxString mmSelectLanguage(wxWindow *parent, wxSQLite3Database *inidb, bool force
 wxString mmGetDateForStorage( const wxDateTime &dt );
 wxDateTime mmGetStorageStringAsDate( const wxString& str );
 wxString mmGetDateForDisplay( wxSQLite3Database* db, const wxDateTime &dt );
-wxDateTime mmParseDisplayStringToDate( wxSQLite3Database* db, const wxString& dt );
+wxDateTime mmParseDisplayStringToDate( wxSQLite3Database* db, const wxString& dt, const wxString& date_format );
 wxString mmGetNiceDateString( const wxDateTime &dt );
 wxString mmGetNiceDateSimpleString( const wxDateTime &dt );
 wxString mmGetNiceMonthName( int month );
 wxString mmGetNiceShortMonthName( int month );
 wxString mmGetNiceWeekDayName( int week_day );
+wxString DisplayDate2FormatDate(wxString strDate);
+wxString FormatDate2DisplayDate(wxString strDate);
+wxArrayString DateFormats();
+wxArrayString itemChoiceStrings();
 
 wxString inQuotes(wxString label, wxString& delimiter);
 wxString csv2tab_separated_values(wxString line, wxString& delimit);

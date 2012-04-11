@@ -670,26 +670,33 @@ wxString mmGetDateForDisplay(wxSQLite3Database* /*db*/, const wxDateTime &dt)
     return dt.Format(mmOptions::instance().dateFormat);
 }
 
-wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* /*db*/, const wxString& dtstr)
+wxDateTime mmParseDisplayStringToDate(wxSQLite3Database* /*db*/, const wxString& dtstr, const wxString& date_format)
 {
     //wxString date_format = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
-    wxString date_format = mmOptions::instance().dateFormat;
+    wxString date_mask = date_format;
+    if (date_format.IsEmpty())
+        wxString date_mask = mmOptions::instance().dateFormat;
     wxString date = dtstr;
 
-    //For correct date parsing, adjust separator format to: %m/%d/%Y
-    date_format.Replace(wxT("`"), wxT("/"));
-    date_format.Replace(wxT("'"), wxT("/"));
-    date_format.Replace(wxT("-"), wxT("/"));
-    date_format.Replace(wxT("."), wxT("/"));
-    date_format.Replace(wxT(","), wxT("/"));
+    //For correct date parsing, adjust separator format to: %x/%x/%x
+    date_mask.Replace(wxT("`"), wxT("/"));
+    date_mask.Replace(wxT("'"), wxT("/"));
+    date_mask.Replace(wxT("-"), wxT("/"));
+    date_mask.Replace(wxT("."), wxT("/"));
+    date_mask.Replace(wxT(","), wxT("/"));
     date.Replace(wxT("`"), wxT("/"));
     date.Replace(wxT("'"), wxT("/"));
     date.Replace(wxT("-"), wxT("/"));
     date.Replace(wxT("."), wxT("/"));
     date.Replace(wxT(","), wxT("/"));
 
+    if (date.Len()<9)
+        date_mask.Replace(wxT("%Y"), wxT("%y"));
+    else
+        date_mask.Replace(wxT("%y"), wxT("%Y"));
+    
     wxDateTime dt;
-    dt.ParseFormat(date, date_format, wxDateTime::Now());
+    dt.ParseFormat(date, date_mask, wxDateTime::Now());
     return dt;
 }
 
@@ -1040,4 +1047,88 @@ wxString csv2tab_separated_values(wxString line, wxString& delimit)
 	line = temp_line;
 
 	return line;
+}
+
+wxString DisplayDate2FormatDate(wxString strDate)
+{
+    wxArrayString DateFormat = DateFormats();
+    wxArrayString itemChoice7Strings = itemChoiceStrings();
+
+    for(size_t i=0; i<DateFormat.Count(); i++)
+    {
+        if(strDate == itemChoice7Strings[i])
+            return DateFormat[i];
+    }
+
+    return DateFormat[0];
+}
+
+wxString FormatDate2DisplayDate(wxString strDate)
+{
+    wxArrayString DateFormat = DateFormats();
+    wxArrayString itemChoice7Strings = itemChoiceStrings();
+
+    for(size_t i=0; i<DateFormat.Count(); i++)
+    {
+        if(strDate == DateFormat[i])
+            return itemChoice7Strings[i];
+    }
+
+    return itemChoice7Strings[0];
+}
+
+wxArrayString DateFormats() {
+
+    wxArrayString DateFormat;
+    
+    DateFormat.Add(wxT("%d/%m/%y"));
+    DateFormat.Add(wxT("%d/%m/%Y"));
+    DateFormat.Add(wxT("%d-%m-%y"));
+    DateFormat.Add(wxT("%d-%m-%Y"));
+    DateFormat.Add(wxT("%d.%m.%y"));
+    DateFormat.Add(wxT("%d.%m.%Y"));
+    DateFormat.Add(wxT("%d,%m,%y"));
+    DateFormat.Add(wxT("%d/%m'%Y"));
+    DateFormat.Add(wxT("%d/%m %Y"));
+    DateFormat.Add(wxT("%m/%d/%y"));
+    DateFormat.Add(wxT("%m/%d/%Y"));
+    DateFormat.Add(wxT("%m-%d-%y"));
+    DateFormat.Add(wxT("%m-%d-%Y"));
+    DateFormat.Add(wxT("%m/%d'%Y"));
+    DateFormat.Add(wxT("%y/%m/%d"));
+    DateFormat.Add(wxT("%y-%m-%d"));
+    DateFormat.Add(wxT("%Y/%m/%d"));
+    DateFormat.Add(wxT("%Y-%m-%d"));
+    DateFormat.Add(wxT("%Y.%m.%d"));
+    DateFormat.Add(wxT("%Y%m%d"));
+
+    return DateFormat;
+}
+
+wxArrayString itemChoiceStrings() {
+
+    wxArrayString itemChoice7Strings;
+    
+    itemChoice7Strings.Add(wxT("DD/MM/YY"));
+    itemChoice7Strings.Add(wxT("DD/MM/YYYY"));
+    itemChoice7Strings.Add(wxT("DD-MM-YY"));
+    itemChoice7Strings.Add(wxT("DD-MM-YYYY"));
+    itemChoice7Strings.Add(wxT("DD.MM.YY"));
+    itemChoice7Strings.Add(wxT("DD.MM.YYYY"));
+    itemChoice7Strings.Add(wxT("DD,MM,YY"));
+    itemChoice7Strings.Add(wxT("DD/MM'YYYY"));
+    itemChoice7Strings.Add(wxT("DD/MM YYYY"));
+    itemChoice7Strings.Add(wxT("MM/DD/YY"));
+    itemChoice7Strings.Add(wxT("MM/DD/YYYY"));
+    itemChoice7Strings.Add(wxT("MM-DD-YY"));
+    itemChoice7Strings.Add(wxT("MM-DD-YYYY"));
+    itemChoice7Strings.Add(wxT("MM/DD'YYYY"));
+    itemChoice7Strings.Add(wxT("YY/MM/DD"));
+    itemChoice7Strings.Add(wxT("YY-MM-DD"));
+    itemChoice7Strings.Add(wxT("YYYY/MM/DD"));
+    itemChoice7Strings.Add(wxT("YYYY-MM-DD"));
+    itemChoice7Strings.Add(wxT("YYYY.MM.DD"));
+    itemChoice7Strings.Add(wxT("YYYYMMDD"));
+    
+    return itemChoice7Strings;
 }

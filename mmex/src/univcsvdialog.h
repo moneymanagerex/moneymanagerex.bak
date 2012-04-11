@@ -105,6 +105,7 @@ private:
     int subCategID_;
     double val_;
     wxDateTime dtdt_;
+    wxChoice* choiceDateFormat_;
 
     int fromAccountID_;
     bool importSuccessful_;
@@ -138,6 +139,7 @@ private:
     void OnButtonClear(wxCommandEvent& event);
     void OnFileNameEntered(wxCommandEvent& event);
     void OnFileNameChanged(wxCommandEvent& event);
+    void OnDateFormatChanged(wxCommandEvent& event);
 
     void update_preview();
 

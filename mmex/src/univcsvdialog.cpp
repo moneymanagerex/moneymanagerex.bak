@@ -39,6 +39,7 @@ BEGIN_EVENT_TABLE(mmUnivCSVDialog, wxDialog)
     EVT_CHOICE(wxID_ACCOUNT, mmUnivCSVDialog::OnAccountChange)
     EVT_LISTBOX(ID_LISTBOX, mmUnivCSVDialog::OnListBox)
     EVT_RADIOBOX(wxID_RADIO_BOX, mmUnivCSVDialog::OnCheckOrRadioBox)
+    EVT_CHOICE(ID_DIALOG_OPTIONS_DATE_FORMAT, mmUnivCSVDialog::OnDateFormatChanged)
 END_EVENT_TABLE()
 
 //----------------------------------------------------------------------------
@@ -240,6 +241,7 @@ void mmUnivCSVDialog::CreateControls()
     wxBoxSizer* itemBoxSizer8 = new wxBoxSizer(wxHORIZONTAL);
     itemPanel7->SetSizer(itemBoxSizer8);
 
+    //TODO replace to _("Account: ")
     wxStaticText* itemStaticText6 = new wxStaticText(itemPanel7, wxID_ANY, _("Account  :"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer8->Add(itemStaticText6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     itemStaticText6->SetFont(staticBoxFontSetting);
@@ -251,6 +253,26 @@ void mmUnivCSVDialog::CreateControls()
 
     wxStaticLine*  m_staticline2 = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
     itemBoxSizer2->Add(m_staticline2, 0, wxEXPAND | wxALL, 5 );
+
+    wxStaticText* itemStaticText66 = new wxStaticText(itemPanel7, wxID_ANY, wxString() << wxT("    ") << _("Date Format") << wxT(": "), wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer8->Add(itemStaticText66, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemStaticText66->SetFont(staticBoxFontSetting);
+    //itemStaticText66->Enable(!this->is_importer_);
+    
+    wxArrayString itemChoice7Strings = itemChoiceStrings();
+    wxArrayString DateFormat = DateFormats();
+    wxString default_date_format = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+    size_t i=0;
+    for(i; i<DateFormat.Count(); i++)
+    {
+        if(default_date_format == DateFormat[i])
+            break;
+    }
+
+    choiceDateFormat_ = new wxChoice(itemPanel7, ID_DIALOG_OPTIONS_DATE_FORMAT, wxDefaultPosition, wxSize(140, -1), itemChoice7Strings, 0);
+    choiceDateFormat_->SetSelection(i);
+    //choiceDateFormat_->Enable(!this->is_importer_);
+    itemBoxSizer8->Add(choiceDateFormat_, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     // CSV Delimiter
     wxString choices[] = { _("Comma"), _("Semicolon"), _("TAB"), _("User Defined")};
@@ -730,6 +752,8 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
     wxString delimit = this->delimit_;
     wxString acctName = m_choice_account_->GetStringSelection();
     int fromAccountID = core_->getAccountID(acctName);
+    wxString date_format = DisplayDate2FormatDate(choiceDateFormat_->GetStringSelection());
+    *log_field_ << date_format << wxT("\n");
 
     if (fromAccountID > 0)
     {
@@ -744,6 +768,7 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
         wxFileOutputStream output(fileName);
         wxTextOutputStream text(output);
         wxString buffer;
+        wxDateTime trx_date;
 
         int numRecords = 0;
 
@@ -763,7 +788,8 @@ void mmUnivCSVDialog::OnExport(wxCommandEvent& /*event*/)
                     switch (*sit)
                     {
                         case UNIV_CSV_DATE:
-                            buffer << inQuotes(pBankTransaction->dateStr_, delimit);
+                            trx_date = pBankTransaction->date_;
+                            buffer << inQuotes(trx_date.Format(date_format), delimit);
                             break;
                         case UNIV_CSV_PAYEE:
                             buffer << inQuotes(pBankTransaction->payeeStr_, delimit);
@@ -816,6 +842,8 @@ void mmUnivCSVDialog::update_preview()
     long index = 0;
     this->m_list_ctrl_->InsertColumn(index, _("#"));
     this->m_list_ctrl_->SetColumnWidth(index, 30);
+    int date_position = 0;
+
     for (std::vector<int>::const_iterator it = csvFieldOrder_.begin(); it != csvFieldOrder_.end(); ++ it)
     {
         ++ index;
@@ -823,11 +851,17 @@ void mmUnivCSVDialog::update_preview()
         this->m_list_ctrl_->InsertColumn(index, item_name);
         if (item_name == _("Notes"))
             this->m_list_ctrl_->SetColumnWidth(index, 300);
+        else if (item_name == _("Date")) {
+            date_position = index;
+        }
+            
     }
     
     //TODO re use code in OnImport & OnExport
     if (this->is_importer_)
     {
+        wxString date_format = DisplayDate2FormatDate(choiceDateFormat_->GetStringSelection());
+        wxString date_format_ = mmOptions::instance().dateFormat;
         wxString fileName = m_text_ctrl_->GetValue();
         wxFileName csv_file(fileName);
 
@@ -862,8 +896,12 @@ void mmUnivCSVDialog::update_preview()
 
                     if (col >= m_list_ctrl_->GetColumnCount())
                         break;
-                    else
+                    else 
+                    {
+                        if (col == date_position) token = mmParseDisplayStringToDate(db_, token, date_format).Format(date_format_);
                         m_list_ctrl_->SetItem(itemIndex, col, token);
+                        
+                    }
                 }
 
                 if (++ count >= 10) break;
@@ -873,6 +911,7 @@ void mmUnivCSVDialog::update_preview()
     }
     else // exporter preview
     {
+        wxString date_format = mmDBWrapper::getInfoSettingValue(db_, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
         wxString acctName = m_choice_account_->GetStringSelection();
         int fromAccountID = core_->getAccountID(acctName);
 
@@ -938,8 +977,11 @@ void mmUnivCSVDialog::update_preview()
                        }
                        if (col >= m_list_ctrl_->GetColumnCount())
                             break;
-                       else
-                            m_list_ctrl_->SetItem(itemIndex, col, text);
+                       else 
+                       {
+                           if (col == date_position) text = mmParseDisplayStringToDate(db_, text, date_format).Format(date_format);
+                           m_list_ctrl_->SetItem(itemIndex, col, text);
+                       }
                         
                     }
                     if (++ count >= 10) break;
@@ -1096,12 +1138,13 @@ void mmUnivCSVDialog::OnCheckOrRadioBox(wxCommandEvent& event)
 
 void mmUnivCSVDialog::parseToken(int index, wxString& token)
 {
-    if (token.Trim().IsEmpty()) return;
+    if (token.Trim().IsEmpty()) return;  
+    wxString date_format = DisplayDate2FormatDate(choiceDateFormat_->GetStringSelection());
 
     switch (index)
     {
         case UNIV_CSV_DATE:
-            dtdt_ = mmParseDisplayStringToDate(db_, token);
+            dtdt_ = mmParseDisplayStringToDate(db_, token, date_format);
             dt_ = dtdt_.FormatISODate();
             break;
 
@@ -1213,4 +1256,9 @@ void mmUnivCSVDialog::OnFileNameEntered(wxCommandEvent& event)
     event.Skip();
     wxCommandEvent evt(wxEVT_COMMAND_BUTTON_CLICKED, wxID_SEARCH);
     this->GetEventHandler()->AddPendingEvent(evt);
+}
+
+void mmUnivCSVDialog::OnDateFormatChanged(wxCommandEvent& /*event*/)
+{
+    this->update_preview();
 }

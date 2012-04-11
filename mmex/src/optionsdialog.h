@@ -89,8 +89,7 @@ private:
     int currencyId_;
     wxString dateFormat_;
     wxString currentLanguage_;
-    wxArrayString itemChoiceStrings();
-    wxArrayString DateFormats();
+
     wxArrayString viewAccountStrings(bool translated, wxString get_string_id);
     wxArrayString viewAccountStrings(bool translated, wxString input_string, int& row_id);
 
@@ -124,9 +123,6 @@ private:
     void OnDelimiterSelectedC(wxCommandEvent& event);
     void OnDelimiterSelectedS(wxCommandEvent& event);
     void OnDelimiterSelectedT(wxCommandEvent& event);
-
-    wxString DisplayDate2FormatDate(wxString strDate);
-    wxString FormatDate2DisplayDate(wxString strDate);
 
     void SaveViewAccountOptions();
     void SaveViewTransactionOptions();
