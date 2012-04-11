@@ -315,7 +315,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
         return;
     }
     double value = 0;
-    if (!mmex::formatCurrencyToDouble(valueStr, value) || (value < 0.0))
+    if (!mmex::formatCurrencyToDouble(valueStr, value))
     {
         mmShowErrorMessage(this, _("Invalid Value "), _("Error"));
         return;
