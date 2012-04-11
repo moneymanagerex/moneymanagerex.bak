@@ -426,6 +426,8 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
         int numImported = 0;
 
         wxString dt = wxDateTime::Now().FormatISODate();
+        //wxString date_format = mmDBWrapper::getInfoSettingValue(db, wxT("DATEFORMAT"), mmex::DEFDATEFORMAT);
+        wxString date_format = mmOptions::instance().dateFormat;
         wxString payee, type, amount, categ, subcateg, transNum, notes, convDate;
         wxDateTime dtdt = wxDateTime::Now();
         int payeeID = -1, categID = -1, subCategID = -1;
@@ -577,7 +579,7 @@ int mmImportQIF(mmCoreDB* core, wxString destinationAccountName )
             {
                 dt = getLineData(readLine);
 
-			    dtdt = mmParseDisplayStringToDate(db_, dt);
+			    dtdt = mmParseDisplayStringToDate(db_, dt, date_format);
                 convDate = dtdt.FormatISODate();
                 continue;
             }
