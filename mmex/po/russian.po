@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mmex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-04-14 21:54+0300\n"
-"PO-Revision-Date: 2012-04-14 23:48+0300\n"
+"PO-Revision-Date: 2012-04-14 23:58+0300\n"
 "Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -600,7 +600,7 @@ msgstr "Фильтр плательщиков:"
 
 #: src/payeedialog.cpp:106
 msgid "Enter a search string.  You can use % as a wildcard to match zero or more characters or _ to match a single character."
-msgstr "Введите строку поиска. Вы можете использовать % как маску, 0 или более символов или _ как маску одного символа."
+msgstr "Введите строку поиска. Вы можете использовать %, как маску 0 или более символов или _, как маску одного символа."
 
 #: src/payeedialog.cpp:114
 msgid "Add a new payee name"
