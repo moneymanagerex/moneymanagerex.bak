@@ -146,7 +146,7 @@ SPLITTRANSID integer primary key
 -- Describe STOCK_V1
 CREATE TABLE STOCK_V1(
 STOCKID integer primary key
-, HELDAT numeric
+, HELDAT integer 
 , PURCHASEDATE TEXT NOT NULL
 , STOCKNAME TEXT
 , SYMBOL TEXT
@@ -166,3 +166,9 @@ SUBCATEGID integer primary key
 , CATEGID integer NOT NULL
 );
 
+
+create table SETTING_V1(
+SETTINGID integer not null primary key
+, SETTINGNAME TEXT NOT NULL
+, SETTINGVALUE TEXT
+);
