@@ -1822,8 +1822,8 @@ void TransactionListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
         boost::shared_ptr<mmBankTransaction> pCopiedTrans = m_cp->core_->bTransactionList_.copyTransaction(m_selectedForCopy, useOriginal);
         boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
         pCopiedTrans->updateAllData(m_cp->core_, pCopiedTrans->accountID_, pCurrencyPtr, true);
-        m_cp->initVirtualListControl(NULL);
-        RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
+        m_selectedIndex ++;
+        refreshVisualList();
     }
 }
 //----------------------------------------------------------------------------
@@ -1906,6 +1906,11 @@ void TransactionListCtrl::OnDeleteTransaction(wxCommandEvent& /*event*/)
     // where to display the list again after refresh
     long topItemIndex = GetTopItem();
 
+    if ((m_selectedForCopy > -1) && (m_selectedForCopy == m_cp->m_trans[m_selectedIndex]->transactionID()))
+    {
+        m_selectedForCopy = -1;
+    }
+
     //remove the transaction
     //TODO: if deletingfromdb was false do not delete trx in that case from list 
     m_cp->core_->bTransactionList_.deleteTransaction(m_cp->accountID(), m_cp->m_trans[m_selectedIndex]->transactionID());
@@ -1959,20 +1964,12 @@ void TransactionListCtrl::OnEditTransaction(wxCommandEvent& /*event*/)
 
 void TransactionListCtrl::OnNewTransaction(wxCommandEvent& /*event*/)
 {
-    mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 0, false, m_cp->inidb_, this );
+    mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 0, false, m_cp->inidb_, this);
 
     if ( dlg.ShowModal() == wxID_OK )
     {
-        m_cp->initVirtualListControl(NULL);
-        RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
-        if (m_selectedIndex > -1)
-        {
-            m_cp->updateExtraTransactionData(m_cp->m_trans.size()-1);
-            EnsureVisible(m_cp->m_trans.size()-1);           
-            SetItemState(m_cp->m_trans.size()-1, wxLIST_STATE_SELECTED|wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED|wxLIST_STATE_SELECTED);
-            EnsureVisible(m_selectedIndex);
-            m_cp->updateExtraTransactionData(m_cp->m_trans.size()-1);
-        }
+        m_selectedIndex  ++;
+        refreshVisualList();
     }
 }
 //----------------------------------------------------------------------------
@@ -1981,22 +1978,15 @@ void TransactionListCtrl::OnDuplicateTransaction(wxCommandEvent& /*event*/)
 {
     if (m_selectedIndex != -1)
     {
-        mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(), 
-               m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
+        wxDateTime transTime = m_cp->m_trans[m_selectedIndex]->date_;
+        mmTransDialog dlg(m_cp->getDb(), m_cp->core_, m_cp->accountID(),
+            m_cp->m_trans[m_selectedIndex]->transactionID(), true, m_cp->inidb_, this);
         
         dlg.SetDialogToDuplicateTransaction();
         if ( dlg.ShowModal() == wxID_OK )
         {
-            m_cp->initVirtualListControl(NULL);
-            RefreshItems(0, static_cast<long>(m_cp->m_trans.size()) - 1);
-            if (m_selectedIndex > -1)
-            {
-                m_cp->updateExtraTransactionData(m_cp->m_trans.size()-1);
-                EnsureVisible(m_cp->m_trans.size()-1);           
-                SetItemState(m_cp->m_trans.size()-1, wxLIST_STATE_SELECTED|wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED|wxLIST_STATE_SELECTED);
-                EnsureVisible(m_selectedIndex);
-                m_cp->updateExtraTransactionData(m_cp->m_trans.size()-1);
-            }
+            m_selectedIndex ++;
+            refreshVisualList();
         }
     }
 }
