@@ -80,6 +80,10 @@ struct DB_View_%s : public DB_View
     }
 ''' % (sql.replace('\n', ''), self._table)
 
+        for field in self._fields:
+            s += '''
+    struct %s {};''' % field['name']
+
         s += '''
     enum COLUMN
     {
