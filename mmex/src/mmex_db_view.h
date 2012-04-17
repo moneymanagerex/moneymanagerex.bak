@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-04-16 18:09:35.240310.
+ *          AUTO GENERATED at 2012-04-17 21:25:55.061464.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -60,6 +60,19 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
         return true;
     }
 
+    struct ACCOUNTID {};
+    struct ACCOUNTNAME {};
+    struct ACCOUNTTYPE {};
+    struct ACCOUNTNUM {};
+    struct STATUS {};
+    struct NOTES {};
+    struct HELDAT {};
+    struct WEBSITE {};
+    struct CONTACTINFO {};
+    struct ACCESSINFO {};
+    struct INITIALBAL {};
+    struct FAVORITEACCT {};
+    struct CURRENCYID {};
     enum COLUMN
     {
         COL_ACCOUNTID = 0
@@ -432,6 +445,14 @@ struct DB_View_ASSETS_V1 : public DB_View
         return true;
     }
 
+    struct ASSETID {};
+    struct STARTDATE {};
+    struct ASSETNAME {};
+    struct VALUE {};
+    struct VALUECHANGE {};
+    struct NOTES {};
+    struct VALUECHANGERATE {};
+    struct ASSETTYPE {};
     enum COLUMN
     {
         COL_ASSETID = 0
@@ -759,6 +780,23 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
         return true;
     }
 
+    struct BDID {};
+    struct ACCOUNTID {};
+    struct TOACCOUNTID {};
+    struct PAYEEID {};
+    struct TRANSCODE {};
+    struct TRANSAMOUNT {};
+    struct STATUS {};
+    struct TRANSACTIONNUMBER {};
+    struct NOTES {};
+    struct CATEGID {};
+    struct SUBCATEGID {};
+    struct TRANSDATE {};
+    struct FOLLOWUPID {};
+    struct TOTRANSAMOUNT {};
+    struct REPEATS {};
+    struct NEXTOCCURRENCEDATE {};
+    struct NUMOCCURRENCES {};
     enum COLUMN
     {
         COL_BDID = 0
@@ -1175,6 +1213,11 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
         return true;
     }
 
+    struct SPLITTRANSID {};
+    struct TRANSID {};
+    struct CATEGID {};
+    struct SUBCATEGID {};
+    struct SPLITTRANSAMOUNT {};
     enum COLUMN
     {
         COL_SPLITTRANSID = 0
@@ -1477,6 +1520,12 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
         return true;
     }
 
+    struct BUDGETENTRYID {};
+    struct BUDGETYEARID {};
+    struct CATEGID {};
+    struct SUBCATEGID {};
+    struct PERIOD {};
+    struct AMOUNT {};
     enum COLUMN
     {
         COL_BUDGETENTRYID = 0
@@ -1788,6 +1837,8 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
         return true;
     }
 
+    struct BUDGETYEARID {};
+    struct BUDGETYEARNAME {};
     enum COLUMN
     {
         COL_BUDGETYEARID = 0
@@ -2059,6 +2110,8 @@ struct DB_View_CATEGORY_V1 : public DB_View
         return true;
     }
 
+    struct CATEGID {};
+    struct CATEGNAME {};
     enum COLUMN
     {
         COL_CATEGID = 0
@@ -2330,6 +2383,20 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
         return true;
     }
 
+    struct TRANSID {};
+    struct ACCOUNTID {};
+    struct TOACCOUNTID {};
+    struct PAYEEID {};
+    struct TRANSCODE {};
+    struct TRANSAMOUNT {};
+    struct STATUS {};
+    struct TRANSACTIONNUMBER {};
+    struct NOTES {};
+    struct CATEGID {};
+    struct SUBCATEGID {};
+    struct TRANSDATE {};
+    struct FOLLOWUPID {};
+    struct TOTRANSAMOUNT {};
     enum COLUMN
     {
         COL_TRANSID = 0
@@ -2717,6 +2784,17 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
         return true;
     }
 
+    struct CURRENCYID {};
+    struct CURRENCYNAME {};
+    struct PFX_SYMBOL {};
+    struct SFX_SYMBOL {};
+    struct DECIMAL_POINT {};
+    struct GROUP_SEPARATOR {};
+    struct UNIT_NAME {};
+    struct CENT_NAME {};
+    struct SCALE {};
+    struct BASECONVRATE {};
+    struct CURRENCY_SYMBOL {};
     enum COLUMN
     {
         COL_CURRENCYID = 0
@@ -3071,6 +3149,9 @@ struct DB_View_INFOTABLE_V1 : public DB_View
         return true;
     }
 
+    struct INFOID {};
+    struct INFONAME {};
+    struct INFOVALUE {};
     enum COLUMN
     {
         COL_INFOID = 0
@@ -3351,6 +3432,10 @@ struct DB_View_PAYEE_V1 : public DB_View
         return true;
     }
 
+    struct PAYEEID {};
+    struct PAYEENAME {};
+    struct CATEGID {};
+    struct SUBCATEGID {};
     enum COLUMN
     {
         COL_PAYEEID = 0
@@ -3642,6 +3727,9 @@ struct DB_View_SETTING_V1 : public DB_View
         return true;
     }
 
+    struct SETTINGID {};
+    struct SETTINGNAME {};
+    struct SETTINGVALUE {};
     enum COLUMN
     {
         COL_SETTINGID = 0
@@ -3922,6 +4010,11 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
         return true;
     }
 
+    struct SPLITTRANSID {};
+    struct TRANSID {};
+    struct CATEGID {};
+    struct SUBCATEGID {};
+    struct SPLITTRANSAMOUNT {};
     enum COLUMN
     {
         COL_SPLITTRANSID = 0
@@ -4224,6 +4317,17 @@ struct DB_View_STOCK_V1 : public DB_View
         return true;
     }
 
+    struct STOCKID {};
+    struct HELDAT {};
+    struct PURCHASEDATE {};
+    struct STOCKNAME {};
+    struct SYMBOL {};
+    struct NUMSHARES {};
+    struct PURCHASEPRICE {};
+    struct NOTES {};
+    struct CURRENTPRICE {};
+    struct VALUE {};
+    struct COMMISSION {};
     enum COLUMN
     {
         COL_STOCKID = 0
@@ -4582,6 +4686,9 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
         return true;
     }
 
+    struct SUBCATEGID {};
+    struct SUBCATEGNAME {};
+    struct CATEGID {};
     enum COLUMN
     {
         COL_SUBCATEGID = 0
