@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-04-19 07:54:52.284537.
+ *          AUTO GENERATED at 2012-04-19 07:56:34.275130.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -18,7 +18,7 @@
 #ifndef _MM_EX_DB_VIEW_H_
 #define _MM_EX_DB_VIEW_H_
 
-include <vector>
+#include <vector>
 
 class wxString;
 class wxSQLite3Statement;
