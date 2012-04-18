@@ -10,13 +10,15 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-04-17 21:25:55.061464.
+ *          AUTO GENERATED at 2012-04-19 07:54:52.284537.
  *          DO NOT EDIT!
  */
 //=============================================================================
 
 #ifndef _MM_EX_DB_VIEW_H_
 #define _MM_EX_DB_VIEW_H_
+
+include <vector>
 
 class wxString;
 class wxSQLite3Statement;
