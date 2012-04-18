@@ -170,7 +170,7 @@ void relocatePayeeDialog::OnOk(wxCommandEvent& /*event*/)
             try {
                 changedPayees_ = st.ExecuteUpdate();
                 st.Finalize();
-			} catch(wxSQLite3Exception e) 
+			} catch(const wxSQLite3Exception& e) 
 			{
 				wxLogDebug(wxT("update checkingaccount_v1 : Exception"), e.GetMessage().c_str());
 				wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));

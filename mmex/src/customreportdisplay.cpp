@@ -47,7 +47,7 @@ wxString mmCustomSQLReport::getHTMLText()
 	{
 		sqlQueryResult = core_->db_->ExecuteQuery(sqlQuery_);
 	}
-	catch(wxSQLite3Exception e)
+	catch(const wxSQLite3Exception& e)
 	{
 		wxSafeShowMessage(wxT("Error"),e.GetMessage().c_str());
 		return wxString::Format(_("Error: %s"), e.GetMessage().c_str());

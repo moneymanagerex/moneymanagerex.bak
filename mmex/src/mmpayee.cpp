@@ -57,7 +57,7 @@ int mmPayeeList::add(const wxString &payeeName)
 	    st.Finalize();
         mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::addPayee: Exception"), e.GetMessage().c_str());
         wxLogError(wxString::Format(_("Add Payee. Error: %s"), e.GetMessage().c_str()));

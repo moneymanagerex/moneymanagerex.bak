@@ -924,7 +924,7 @@ wxString mmTransDialog::getLastTrxDate()
     last_trx_date_ = q1.GetString(wxT("LASTDATE"));
 
     st.Finalize();
-    } catch(wxSQLite3Exception e) {
+    } catch(const wxSQLite3Exception& e) {
         wxASSERT(false);
         wxLogDebug(wxT("Database::select some data from CHECKINGACCOUNT_V1: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Select some data from CHECKINGACCOUNT_V1 Exception ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
