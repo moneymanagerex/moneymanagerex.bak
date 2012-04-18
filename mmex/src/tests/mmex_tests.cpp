@@ -22,16 +22,16 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //----------------------------------------------------------------------------
 
 /*
-        I must create an instance of application because some 
-        classes require one (for example, wxStandardPaths).
+    I must create an instance of application because some 
+    classes require one (for example, wxStandardPaths).
 */
 int main(int /*argc*/, char const* /*argv*/[])
 {
-        wxAppInitializerFunction f = wxAppConsole::GetInitializerFunction();
-        f(); // creates instance of application
+    wxAppInitializerFunction f = wxAppConsole::GetInitializerFunction();
+    f(); // creates instance of application
 
 	wxApp::GetInstance()->SetAppName(mmex::GetAppName());
 
-        return UnitTest::RunAllTests();
+    return UnitTest::RunAllTests();
 }
 //----------------------------------------------------------------------------
