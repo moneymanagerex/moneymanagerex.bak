@@ -4622,7 +4622,7 @@ void mmGUIApp::HandleEvent(wxEvtHandler *handler, wxEventFunction func, wxEvent&
     {
         wxApp::HandleEvent(handler, func, event);
     }
-    catch (wxSQLite3Exception &e)
+    catch (const wxSQLite3Exception &e)
     {
         wxLogError(e.GetMessage());
     }
@@ -4642,7 +4642,7 @@ bool mmGUIApp::OnInit()
     {
         ok = wxApp::OnInit() && OnInitImpl(*this);
     }
-    catch (wxSQLite3Exception &e)
+    catch (const wxSQLite3Exception &e)
     {
         wxLogError(e.GetMessage());
     }
