@@ -95,7 +95,7 @@ void loadCurrencies(wxSQLite3Database* db)
         rs.Finalize();
 
         currencies.Close();
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::loadCurrencies: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("insert into CURRENCYFORMATS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -202,7 +202,7 @@ void createDefaultCategories(wxSQLite3Database* db)
         // cleanup
         st_subcat.Finalize();
         st_cat.Finalize();
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::createDefaultCategories: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("insert into [SUB]CATEGORY_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -274,7 +274,7 @@ void mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
             }
             st.Finalize();
         }
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::createInfoV1Table: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("create table INFOTABLE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -319,7 +319,7 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
             db->ExecuteUpdate(sql);
             loadCurrencies(db);
         }
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::createCurrencyV1Table: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("create CURRENCYFORMATS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -348,7 +348,7 @@ void mmDBWrapper::createBudgetingV1Table(wxSQLite3Database* db)
             valid = db->TableExists(wxT("BUDGETTABLE_V1"));
             wxASSERT(valid);
         }
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::createBudgetingV1Table: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("create table BUDGETTABLE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -368,7 +368,7 @@ void mmDBWrapper::createStockV1Table(wxSQLite3Database* db)
             valid = db->TableExists(wxT("STOCK_V1"));
             wxASSERT(valid);
         }
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::createStockV1Table: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("create table STOCK_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -389,7 +389,7 @@ void mmDBWrapper::createAssetsV1Table(wxSQLite3Database* db)
             valid = db->TableExists(wxT("ASSETS_V1"));
             wxASSERT(valid);
         }
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::createAssetsV1Table: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("create table ASSETS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -410,7 +410,7 @@ void mmDBWrapper::createBillsDepositsV1Table(wxSQLite3Database* db)
             valid = db->TableExists(wxT("BILLSDEPOSITS_V1"));
             wxASSERT(valid);
         }
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::createBillsDepositsV1Table: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("create table BILLSDEPOSITS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -461,7 +461,7 @@ void mmDBWrapper::createAccountListV1Table(wxSQLite3Database* db)
             int ret = db->ExecuteUpdate(wxT("alter table ACCOUNTLIST_V1 ADD INFOID TEXT;"));
 #endif
         }
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::createAccountListV1Table: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("create table ACCOUNTLIST_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -481,7 +481,7 @@ void mmDBWrapper::createCheckingAccountV1Table(wxSQLite3Database* db)
             exists = db->TableExists(wxT("CHECKINGACCOUNT_V1"));
             wxASSERT(exists);
         }
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::createCheckingAccountV1Table: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("create table CHECKINGACCOUNT_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -508,7 +508,7 @@ void mmDBWrapper::createSplitTransactionsV1Table(wxSQLite3Database* db)
             exists = db->TableExists(wxT("BUDGETSPLITTRANSACTIONS_V1"));
             wxASSERT(exists);
         }
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::createSplitTransactionsV1Table: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("create table BUDGETSPLITTRANSACTIONS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -526,7 +526,7 @@ void mmDBWrapper::createPayeeV1Table(wxSQLite3Database* db)
         exists = db->TableExists(wxT("PAYEE_V1"));
         wxASSERT(exists);
     }
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::createPayeeV1Table: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("create table PAYEE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -564,7 +564,7 @@ void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
         {
             createDefaultCategories(db);
         }
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::createCategoryV1Table: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("create table CATEGORY_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -660,7 +660,7 @@ void mmDBWrapper::createAllDataView(wxSQLite3Database* db)
         exists = ViewExists(db, view_name);
         wxASSERT(exists);   
     }
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::createAllDataView: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("create AllData view. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -697,7 +697,7 @@ void removeCruft(wxSQLite3Database* db)
             db->ExecuteUpdate(bufSQL3);
         }
 #endif
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::removeCruft: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Remove Cruft. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -831,7 +831,7 @@ void mmDBWrapper::setBaseCurrencySettings(wxSQLite3Database* db, int currencyID)
             st.Finalize();
         }
         wxASSERT(rows_affected == 1);
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::setBaseCurrencySettings: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("insert or update INFOTABLE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -947,7 +947,7 @@ bool mmDBWrapper::deleteCategoryWithConstraints(wxSQLite3Database* db, int categ
 
         mmOptions::instance().databaseUpdated_ = true;
         return true;
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::deleteCategoryWithConstraints: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Delete Category with Constraints. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1008,7 +1008,7 @@ bool mmDBWrapper::deleteSubCategoryWithConstraints(wxSQLite3Database* db, int ca
 
         mmOptions::instance().databaseUpdated_ = true;
         return true;
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::deleteSubCategoryWithConstraints: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Delete SubCategory with Constraints. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1048,7 +1048,7 @@ bool mmDBWrapper::updateCategory(wxSQLite3Database* db, int categID,
         }
 
         mmOptions::instance().databaseUpdated_ = true;
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::updateCategory: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("update [SUB]CATEGORY_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1068,7 +1068,7 @@ bool mmDBWrapper::addCategory(wxSQLite3Database* db, const wxString &newName)
         st.Finalize();
         mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::addCategory: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("insert into CATEGORY_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1091,7 +1091,7 @@ bool mmDBWrapper::addSubCategory(wxSQLite3Database* db, int categID, const wxStr
     rows_affected = st.ExecuteUpdate();
     st.Finalize();
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::addSubCategory: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("insert into SUBCATEGORY_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1168,7 +1168,7 @@ bool mmDBWrapper::deleteTransaction(wxSQLite3Database* db, int transID)
         }
         mmOptions::instance().databaseUpdated_ = true;
         return true;
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::deleteTransaction: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Delete Transaction. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1197,7 +1197,7 @@ bool mmDBWrapper::updatePayee(wxSQLite3Database* db, const wxString& payeeName,
         st.Finalize();
         mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::updatePayee: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("update PAYEE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1234,7 +1234,7 @@ bool mmDBWrapper::deletePayeeWithConstraints(wxSQLite3Database* db, int payeeID)
         st.Finalize();
         mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) { 
+    } catch(const wxSQLite3Exception& e) { 
         wxLogDebug(wxT("Database::deletePayeeWithConstraints: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("delete from PAYEE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
         return false;
@@ -1353,7 +1353,7 @@ void mmDBWrapper::verifyINIDB(wxSQLite3Database* inidb)
     {
         ok = inidb->TableExists(wxT("SETTING_V1"));
     } 
-    catch (wxSQLite3Exception e) 
+    catch (const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::TableExists: Exception"), e.GetMessage().c_str());
         wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1371,7 +1371,7 @@ void mmDBWrapper::verifyINIDB(wxSQLite3Database* inidb)
     {
         inidb->ExecuteUpdate(sql);
     }
-    catch (wxSQLite3Exception e) 
+    catch (const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::Create table SETTING_V1: Exception: %s"), e.GetMessage().c_str());
         wxLogError(wxT("create table SETTING_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1381,7 +1381,7 @@ void mmDBWrapper::verifyINIDB(wxSQLite3Database* inidb)
     {
         ok = inidb->TableExists(wxT("SETTING_V1"));
     }
-    catch (wxSQLite3Exception e) 
+    catch (const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::TableExists: Exception: %s"), e.GetMessage().c_str());
         wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1437,7 +1437,7 @@ void mmDBWrapper::setINISettingValue(wxSQLite3Database* db, const wxString& sett
             st.Finalize();
         }
         wxASSERT(rows_affected == 1);
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxString error_str;
         wxLogDebug(wxT("Database::setINISettingValue: Exception"), e.GetMessage().c_str());
@@ -1460,7 +1460,7 @@ bool mmDBWrapper::updateTransactionWithStatus(wxSQLite3Database &db, int transID
     st.Finalize();
     mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Database::updateTransactionWithStatus: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Update Transaction With Status. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1508,7 +1508,7 @@ void mmDBWrapper::setInfoSettingValue(wxSQLite3Database* db, const wxString& set
             st.Finalize();
         }
         wxASSERT(rows_affected == 1);
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Function::setInfoSettingValue: Exception"), e.GetMessage().c_str());
         wxLogError(wxString::Format(_("Set Info Setting Value %s = %s. Error: %s"), settingName.c_str(), settingValue.c_str(), e.GetMessage().c_str()));
@@ -1543,7 +1543,7 @@ void mmDBWrapper::addBudgetYear(wxSQLite3Database* db, const wxString &year)
         st.Finalize();
         mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Function::addBudgetYear: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Add Budget Year. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1630,7 +1630,7 @@ void mmDBWrapper::updateYearForID(wxSQLite3Database* db,
         st.Finalize();
         mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Function::updateYearForID: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Update Year For ID. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1667,7 +1667,7 @@ bool mmDBWrapper::copyBudgetYear(wxSQLite3Database* db, int newYear, int baseYea
          st.Finalize();
          mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Function::copyBudgetYear: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Copy Budget Year. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1698,7 +1698,7 @@ bool mmDBWrapper::deleteBudgetYear(wxSQLite3Database* db, const wxString& yearNa
         }
         mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Function::deleteBudgetYear: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Delete Budget Year. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1736,7 +1736,7 @@ void mmDBWrapper::addBudgetEntry(wxSQLite3Database* db, int budgetYearID,
         st.Finalize();
         mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Function::addBudgetEntry: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Add Budget Entry. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1753,7 +1753,7 @@ void mmDBWrapper::deleteBudgetEntry(wxSQLite3Database* db, int budgetEntryID)
         st.Finalize();
         mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Function::deleteBudgetEntry: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("delete from BUDGETTABLE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1783,7 +1783,7 @@ void mmDBWrapper::updateBudgetEntry(wxSQLite3Database* db,
         st.Finalize();
 
         addBudgetEntry(db, budgetYearID, categID, subCategID, period, amount);
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Function::updateBudgetEntry: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("delete from BUDGETTABLE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1841,7 +1841,7 @@ void mmDBWrapper::deleteBDSeries(wxSQLite3Database* db, int bdID)
         }
         mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Function::deleteBDSeries: Exception"), e.GetMessage().c_str());
         wxLogError(wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1968,7 +1968,7 @@ void mmDBWrapper::completeBDInSeries(wxSQLite3Database* db, int bdID)
         db->ExecuteUpdate("delete from BILLSDEPOSITS_V1 where NUMOCCURRENCES = 0");
         mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Function::completeBDInSeries: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Complete BD In Series. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -1984,7 +1984,7 @@ void mmDBWrapper::deleteStockInvestment(wxSQLite3Database* db, int stockID)
         st.Finalize();
         mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Function::deleteStockInvestment: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Delete Stock Investment. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -2066,7 +2066,7 @@ void mmDBWrapper::deleteAsset(wxSQLite3Database* db, int assetID)
         st.Finalize();
         mmOptions::instance().databaseUpdated_ = true;
 
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Function::deleteAsset: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("delete from ASSETS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -2249,7 +2249,7 @@ void mmDBWrapper::removeSplitsForAccount(wxSQLite3Database* db, int accountID)
         st.Finalize();
         db->Commit();
         mmOptions::instance().databaseUpdated_ = true;
-    } catch(wxSQLite3Exception e) 
+    } catch(const wxSQLite3Exception& e) 
     { 
         wxLogDebug(wxT("Function::removeSplitsForAccount: Exception"), e.GetMessage().c_str());
         wxLogError(wxT("Remove Splits For Account. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
@@ -2296,7 +2296,7 @@ boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, c
     try 
     {
         db->Open(dbpath, key);
-    } catch (wxSQLite3Exception e)
+    } catch (const wxSQLite3Exception& e)
     {
         //wxLogError(wxT("Database::open: Exception: %s"), e.GetMessage().c_str());
         //wxLogDebug(wxT("Database::open: Exception: %s"), e.GetMessage().c_str());
@@ -2308,7 +2308,7 @@ boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, c
         //Try if db selectable
         try {
             db->ExecuteScalar("select count(*) from  sqlite_master where type='table'");
-        } catch (wxSQLite3Exception &e) 
+        } catch (const wxSQLite3Exception &e) 
         {
             err = e.GetExtendedErrorCode();
             errStr = e.GetMessage();
@@ -2323,7 +2323,7 @@ boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, c
                 db->Commit();
 
                 //if got any error that mean we can use it but in read only mode
-            } catch (wxSQLite3Exception &e) {
+            } catch (const wxSQLite3Exception &e) {
                 err = e.GetExtendedErrorCode();
                 errStr = e.GetMessage();
             }
