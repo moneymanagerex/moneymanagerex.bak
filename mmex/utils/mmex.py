@@ -445,7 +445,7 @@ if __name__ == '__main__':
 '''% (sys.argv[0], str(datetime.datetime.now()))
     
     code +='''
-include <vector>
+#include <vector>
 
 class wxString;
 class wxSQLite3Statement;
