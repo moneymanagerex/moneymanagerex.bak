@@ -38,10 +38,13 @@ public:
     void initBudgetEntryFields(mmBudgetEntryHolder& budEntry, int id = -1);
   
     /// Set budget estimate for a day based on the required period
-    void setBudgetDailyEstimateAmount(mmBudgetEntryHolder& budEntry, int month = 5 /*wxDateTime::Jun*/);
+    void setBudgetMonthlyEstimate(mmBudgetEntryHolder& budEntry);
 
-    /// Set budget estimate for the appropriate prriod
-    void setBudgetEstimate(mmBudgetEntryHolder& budEntry, bool monthBudget, const wxDateTime& beginDate, const wxDateTime& endDate);
+    /// Set budget estimate for a yearly period
+    void setBudgetYearlyEstimate(mmBudgetEntryHolder& budEntry);
+
+    /// Set budget estimate for the appropriate period
+    void setBudgetEstimate(mmBudgetEntryHolder& budEntry, bool monthBudget);
     
     /// Used in reports to display today's date
     void DisplayDateHeading(mmHTMLBuilder& hb, const wxDateTime& startYear, const wxDateTime& endYear, bool withDateRange = true);
