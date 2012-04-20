@@ -18,8 +18,6 @@ mmReportBudgetingPerformance::mmReportBudgetingPerformance(mmCoreDB* core, mmGUI
 
 void mmReportBudgetingPerformance::DisplayEstimateMonths(mmHTMLBuilder& hb, mmBudgetEntryHolder& budgetEntry, int startMonth)
 {
-    int daysInMonth[] = {31,28,31,30,31,30,31,31,30,31,30,31};
-
     int month;
     for (int yidx = 0; yidx < 12; yidx++)
     {
@@ -30,8 +28,7 @@ void mmReportBudgetingPerformance::DisplayEstimateMonths(mmHTMLBuilder& hb, mmBu
         }
         // Set the estimate for each month
         wxString monthEstimateStr;
-        long monthEstimate = budgetEntry.estimated_ * daysInMonth[month];
-        mmex::formatDoubleToCurrencyEdit(monthEstimate, monthEstimateStr);
+        mmex::formatDoubleToCurrencyEdit(budgetEntry.estimated_ / 12, monthEstimateStr);
 		hb.addTableCell(monthEstimateStr, true, true);
     }
 }
@@ -106,11 +103,6 @@ wxString mmReportBudgetingPerformance::getHTMLText()
     hb.addHeader(3, _("Budget Performance for ") + headingStr );
     DisplayDateHeading(hb, yearBegin, yearEnd);
 
-    double estIncome = 0.0;
-    double estExpenses = 0.0;
-    double actIncome = 0.0;
-    double actExpenses = 0.0;
-
     hb.startCenter();
 
     hb.startTable();
@@ -157,16 +149,10 @@ wxString mmReportBudgetingPerformance::getHTMLText()
         mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
 
         // Set the estimated amount for the year
-        setBudgetDailyEstimateAmount(th, startMonth);
-        double totalEstimated_ = th.estimated_ * 365;
+        setBudgetYearlyEstimate(th);
+        double totalEstimated_ = th.estimated_;
         wxString totalEstimatedStr_;
         mmex::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
-
-        // Set the overall estimated values
-        if (totalEstimated_ < 0)
-            estExpenses += totalEstimated_;
-        else
-            estIncome += totalEstimated_;
 
         // set the actual amount for the year
         bool transferAsDeposit = true;
@@ -178,11 +164,6 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             yearBegin, yearEnd, evaluateTransfer, transferAsDeposit, mmIniOptions::instance().ignoreFutureTransactions_
         );
         mmex::formatDoubleToCurrencyEdit(th.actual_, th.actualStr_);
-
-        if (th.actual_ < 0)
-            actExpenses += th.actual_;
-        else
-            actIncome += th.actual_;
 
         wxString displayAmtString;
         mmex::formatDoubleToCurrencyEdit(th.amt_, displayAmtString);
@@ -249,15 +230,9 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
  
             // Set the estimated amount for the year
-            setBudgetDailyEstimateAmount(thsub, startMonth);
-            totalEstimated_ = thsub.estimated_ * 365;
+            setBudgetYearlyEstimate(thsub);
+            totalEstimated_ = thsub.estimated_;
             mmex::formatDoubleToCurrencyEdit(totalEstimated_, totalEstimatedStr_);
-
-            // Set the overall estimated amount for the year
-            if (totalEstimated_ < 0)
-                estExpenses += totalEstimated_;
-            else
-                estIncome += totalEstimated_;
 
             // set the actual abount for the year
             transferAsDeposit = true;
@@ -270,12 +245,6 @@ wxString mmReportBudgetingPerformance::getHTMLText()
             );
             mmex::formatDoubleToCurrencyEdit(thsub.actual_, thsub.actualStr_);
             
-            // set the overall actual abount for the year
-            if (thsub.actual_ < 0)
-                actExpenses += thsub.actual_;
-            else
-                actIncome += thsub.actual_;
-
             mmex::formatDoubleToCurrencyEdit(thsub.amt_, displayAmtString);
             thsub.amtString_ = displayAmtString;
 

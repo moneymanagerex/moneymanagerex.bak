@@ -25,57 +25,78 @@ mmReportBudget::mmReportBudget(mmGUIFrame* mainFrame, mmCoreDB* core)
 {}
 
 /**************************************************************************************
- This will set the budget estimate for a single day.
- This can then be used for the month or year as necessary.
+ This will set the budget estimate for a month in a year.
  ***************************************************************************************/
-void mmReportBudget::setBudgetDailyEstimateAmount(mmBudgetEntryHolder& budEntry, int month)
+void mmReportBudget::setBudgetMonthlyEstimate(mmBudgetEntryHolder& budEntry)
 {
-    int daysInMonth[] = {31,28,31,30,31,30,31,31,30,31,30,31};
-
-    int numDays = 365;
+    int ndays = 365;
 
     if (budEntry.period_ == wxT("Monthly")) {
-        numDays = daysInMonth[month];
+        budEntry.estimated_ = budEntry.amt_;
 
     } else if (budEntry.period_ == wxT("Yearly")) {
-        numDays = 365;
+        budEntry.estimated_ = budEntry.amt_ / 12;
 
     } else if (budEntry.period_ == wxT("Weekly")) {
-        numDays = 7;
+        budEntry.estimated_ = ((budEntry.amt_ / 7) * ndays) / 12;
 
     } else if (budEntry.period_ == wxT("Bi-Weekly")) {
-        numDays = 14;
+        budEntry.estimated_ = ((budEntry.amt_ / 14) * ndays) / 12;
 
     } else if (budEntry.period_ == wxT("Bi-Monthly")) {
-        numDays = 61;
+        budEntry.estimated_ = budEntry.amt_ / 2;
 
     } else if (budEntry.period_ == wxT("Quarterly")) {
-        numDays = 92;
+        budEntry.estimated_ = budEntry.amt_ / 3;
 
     } else if (budEntry.period_ == wxT("Half-Yearly")) {
-        numDays = 183;
+        budEntry.estimated_ = (budEntry.amt_ / 6);
 
     } else if (budEntry.period_ == wxT("Daily")) {
-        numDays = 1;
+        budEntry.estimated_ = (budEntry.amt_ * ndays) / 12;
 
     } else {
         wxASSERT(true);
     }
-
-    budEntry.estimated_ = budEntry.amt_ /numDays;
 }
 
-void mmReportBudget::setBudgetEstimate(mmBudgetEntryHolder& budEntry, bool monthBudget, const wxDateTime& beginDate, const wxDateTime& endDate)
+void mmReportBudget::setBudgetYearlyEstimate(mmBudgetEntryHolder& budEntry)
 {
-    if (monthBudget) {
-        setBudgetDailyEstimateAmount(budEntry, beginDate.GetMonth());
-        int days = endDate.GetDay();
-        budEntry.estimated_ = budEntry.estimated_*days;
+    if (budEntry.period_ == wxT("Monthly")) {
+        budEntry.estimated_ = budEntry.amt_ * 12;
+
+    } else if (budEntry.period_ == wxT("Yearly")) {
+        budEntry.estimated_ = budEntry.amt_;
+
+    } else if (budEntry.period_ == wxT("Weekly")) {
+        budEntry.estimated_ = budEntry.amt_ * 52;
+
+    } else if (budEntry.period_ == wxT("Bi-Weekly")) {
+        budEntry.estimated_ = budEntry.amt_ * 26;
+
+    } else if (budEntry.period_ == wxT("Bi-Monthly")) {
+        budEntry.estimated_ = budEntry.amt_ * 6;
+
+    } else if (budEntry.period_ == wxT("Quarterly")) {
+        budEntry.estimated_ = budEntry.amt_ * 3;
+
+    } else if (budEntry.period_ == wxT("Half-Yearly")) {
+        budEntry.estimated_ = budEntry.amt_ * 2;
+
+    } else if (budEntry.period_ == wxT("Daily")) {
+        budEntry.estimated_ = budEntry.amt_ * 365;
 
     } else {
-        setBudgetDailyEstimateAmount(budEntry);
-        budEntry.estimated_ = budEntry.estimated_* 365;
+        wxASSERT(true);
     }
+}
+
+void mmReportBudget::setBudgetEstimate(mmBudgetEntryHolder& budEntry, bool monthBudget)
+{
+    if (monthBudget)
+        setBudgetMonthlyEstimate(budEntry);
+    else
+        setBudgetYearlyEstimate(budEntry);
 }
 
 void mmReportBudget::initBudgetEntryFields(mmBudgetEntryHolder& budEntry, int id)

@@ -144,7 +144,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
         th.catStr_ = q1.GetString(wxT("CATEGNAME"));
         mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
 
-        setBudgetEstimate(th,monthlyBudget,yearBegin,yearEnd);
+        setBudgetEstimate(th,monthlyBudget);
         if (th.estimated_ < 0) {
             estExpenses += th.estimated_;
         } else {
@@ -208,7 +208,7 @@ wxString mmReportBudgetCategorySummary::getHTMLText()
             thsub.subCatStr_   = q2.GetString(wxT("SUBCATEGNAME"));
             mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
 
-            setBudgetEstimate(thsub,monthlyBudget,yearBegin,yearEnd);
+            setBudgetEstimate(thsub,monthlyBudget);
             mmex::formatDoubleToCurrencyEdit(thsub.estimated_, thsub.estimatedStr_);
             if (thsub.estimated_ < 0) {
                 estExpenses += thsub.estimated_;

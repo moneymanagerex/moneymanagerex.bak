@@ -416,7 +416,7 @@ void mmBudgetingPanel::initVirtualListControl()
         th.catStr_ = q1.GetString(wxT("CATEGNAME"));
 
         mmDBWrapper::getBudgetEntry(db_, budgetYearID_, th.categID_, th.subcategID_, th.period_, th.amt_);
-        budgetDetails.setBudgetEstimate(th, monthlyBudget, dtBegin, dtEnd);
+        budgetDetails.setBudgetEstimate(th, monthlyBudget);
         if (th.estimated_ < 0)
             estExpenses += th.estimated_;
         else
@@ -473,7 +473,7 @@ void mmBudgetingPanel::initVirtualListControl()
             thsub.subCatStr_   = q2.GetString(wxT("SUBCATEGNAME"));
 
             mmDBWrapper::getBudgetEntry(db_, budgetYearID_, thsub.categID_, thsub.subcategID_, thsub.period_, thsub.amt_);
-            budgetDetails.setBudgetEstimate(thsub, monthlyBudget, dtBegin, dtEnd);
+            budgetDetails.setBudgetEstimate(thsub, monthlyBudget);
             if (thsub.estimated_ < 0) 
                 estExpenses += thsub.estimated_;
             else
@@ -499,10 +499,11 @@ void mmBudgetingPanel::initVirtualListControl()
             /*************************************************************************** 
              Update the TOTALS entry for the subcategory.
             ***************************************************************************/
-            catTotals.amt_          += thsub.amt_;
+            //catTotals.amt_          += thsub.amt_;
             catTotals.estimated_    += thsub.estimated_;
             catTotals.actual_       += thsub.actual_;
-            mmex::formatDoubleToCurrencyEdit(catTotals.amt_,       catTotals.amtString_);
+            //mmex::formatDoubleToCurrencyEdit(catTotals.amt_,       catTotals.amtString_);
+            catTotals.amtString_ = wxEmptyString;
             mmex::formatDoubleToCurrencyEdit(catTotals.estimated_, catTotals.estimatedStr_);
             mmex::formatDoubleToCurrencyEdit(catTotals.actual_,    catTotals.actualStr_);
 
