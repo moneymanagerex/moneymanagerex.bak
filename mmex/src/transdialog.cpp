@@ -200,6 +200,7 @@ void mmTransDialog::dataToControls()
         {
             bCategory_->SetLabel(_("Split Category"));
             cSplit_->SetValue(true);
+            cSplit_->Disable();
         }
         else
         {
@@ -640,6 +641,7 @@ void mmTransDialog::OnCategs(wxCommandEvent& /*event*/)
     if (cSplit_->GetValue())
     {
         activateSplitTransactionsDlg();
+        SetSplitState();
     }
     else
     {
@@ -1129,6 +1131,18 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     EndModal(wxID_OK);
 }
 
+void mmTransDialog::SetSplitState()
+{
+    if (split_->getTotalSplits() > 0)
+        cSplit_->Disable();
+    else
+    {
+        cSplit_->Enable();
+        cSplit_->SetValue(false);
+        bCategory_->SetLabel(_("Select Category"));
+    }
+}
+
 void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
 {
     /* Reset Category */
@@ -1136,8 +1150,7 @@ void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
     subcategID_ = -1;
     split_ = boost::shared_ptr<mmSplitTransactionEntries>(new mmSplitTransactionEntries());
 
-    bool state = cSplit_->GetValue();
-    if (state)
+    if (cSplit_->GetValue())
     {
         bCategory_->SetLabel(_("Split Category"));
         textAmount_->Enable(false);
@@ -1145,6 +1158,7 @@ void mmTransDialog::OnSplitChecked(wxCommandEvent& /*event*/)
         mmex::formatDoubleToCurrencyEdit(split_->getTotalSplits(), dispAmount);
         textAmount_->SetValue(dispAmount);
         activateSplitTransactionsDlg();
+        SetSplitState();
     }
     else
     {
@@ -1594,4 +1608,9 @@ void mmTransDialog::SetDialogToDuplicateTransaction()
     // we want the dialog to treat the transaction as a new transaction.
     edit_ = false;
     this->SetTitle(_("Duplicate Transaction"));
+
+   // we need to create a new pointer for Split transactions.
+   boost::shared_ptr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
+   core_->bTransactionList_.getBankTransactionPtr(accountID_, transID_)->getSplitTransactions(core_, splitTransEntries.get());
+   split_.get()->entries_ = splitTransEntries->entries_;
 }

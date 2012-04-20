@@ -149,7 +149,7 @@ public:
     boost::shared_ptr<mmBankTransaction> getBankTransactionPtr(int transactionID) const;
     int addTransaction(mmCoreDB* core, boost::shared_ptr<mmBankTransaction> pTransaction);
 	bool checkForExistingTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
-    boost::shared_ptr<mmBankTransaction> copyTransaction(int transactionID, bool useOriginalDate);
+    boost::shared_ptr<mmBankTransaction> copyTransaction(mmCoreDB* pCore, int transactionID, bool useOriginalDate);
     void updateTransaction(boost::shared_ptr<mmBankTransaction> pTransaction);
     bool removeTransaction(int accountID, int transactionID);
     bool deleteTransaction(int accountID, int transactionID);

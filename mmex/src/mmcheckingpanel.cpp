@@ -1819,7 +1819,7 @@ void TransactionListCtrl::OnPaste(wxCommandEvent& WXUNUSED(event))
         bool useOriginal = false;
         if (useOriginalDate == wxT("TRUE"))
             useOriginal = true;
-        boost::shared_ptr<mmBankTransaction> pCopiedTrans = m_cp->core_->bTransactionList_.copyTransaction(m_selectedForCopy, useOriginal);
+        boost::shared_ptr<mmBankTransaction> pCopiedTrans = m_cp->core_->bTransactionList_.copyTransaction(m_cp->core_, m_selectedForCopy, useOriginal);
         boost::shared_ptr<mmCurrency> pCurrencyPtr = m_cp->core_->getCurrencyWeakPtr(pCopiedTrans->accountID_).lock();
         pCopiedTrans->updateAllData(m_cp->core_, pCopiedTrans->accountID_, pCurrencyPtr, true);
         m_selectedIndex ++;

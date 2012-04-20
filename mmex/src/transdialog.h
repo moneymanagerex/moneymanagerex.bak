@@ -153,6 +153,7 @@ private:
     void SetAdvancedTransferControls(bool advanced = false);
 
     void activateSplitTransactionsDlg();
+    void SetSplitState();
 };
 
 #endif
