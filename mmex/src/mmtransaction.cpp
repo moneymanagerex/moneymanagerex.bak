@@ -503,7 +503,7 @@ bool mmBankTransactionList::checkForExistingTransaction(boost::shared_ptr<mmBank
     return found;
 }
 
-boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int transactionID, bool useOriginalDate)
+boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(mmCoreDB* pCore, int transactionID, bool useOriginalDate)
 {
    boost::shared_ptr<mmBankTransaction> pBankTransaction = getBankTransactionPtr(transactionID);
    if (!pBankTransaction)
@@ -525,7 +525,11 @@ boost::shared_ptr<mmBankTransaction> mmBankTransactionList::copyTransaction(int 
    pCopyTransaction->date_=    (useOriginalDate ? pBankTransaction->date_ : wxDateTime::Now()); 
    pCopyTransaction->toAmt_=   pBankTransaction->toAmt_;
    pCopyTransaction->category_ = pBankTransaction->category_;
-   *pCopyTransaction->splitEntries_.get() = *pBankTransaction->splitEntries_.get();
+
+   // we need to create a new pointer for Split transactions.
+   boost::shared_ptr<mmSplitTransactionEntries> splitTransEntries(new mmSplitTransactionEntries());
+   pBankTransaction->getSplitTransactions(pCore, splitTransEntries.get());
+   pCopyTransaction->splitEntries_.get()->entries_ = splitTransEntries->entries_;
 
    static const char sql[] = 
    "insert into CHECKINGACCOUNT_V1 ( "
