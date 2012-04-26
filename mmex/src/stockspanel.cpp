@@ -36,11 +36,11 @@ enum
     ID_PANEL_STOCKS_STATIC_DETAILS_MINI
 };
 enum EColumn
-{ 
+{
     //COL_HELDAT,
     COL_DATE,
-    COL_NAME, 
-    COL_NUMBER, 
+    COL_NAME,
+    COL_NUMBER,
     COL_VALUE,
     COL_GAIN_LOSS,
     COL_CURRENT,
@@ -290,7 +290,7 @@ void mmStocksPanel::CreateControls()
     itemButton7->SetToolTip(_("Delete Stock Investment"));
     itemBoxSizer5->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
     itemButton7->Enable(false);
-    
+
     wxButton* itemButton8 = new wxButton(itemPanel12, wxID_REFRESH, _("&Refresh"),
                                           wxDefaultPosition, wxDefaultSize, 0);
     itemButton8->SetToolTip(_("Refresh Stock Prices from Yahoo"));
@@ -300,17 +300,17 @@ void mmStocksPanel::CreateControls()
                                           wxDefaultPosition, wxDefaultSize, 0);
     itemButton9->SetToolTip(_("Change settings for automatic refresh"));
     itemBoxSizer5->Add(itemButton9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 4);
-    
-    //Infobar-mini 
-    wxStaticText* itemStaticText44 = new wxStaticText(itemPanel12, ID_PANEL_STOCKS_STATIC_DETAILS_MINI, wxT(""), 
+
+    //Infobar-mini
+    wxStaticText* itemStaticText44 = new wxStaticText(itemPanel12, ID_PANEL_STOCKS_STATIC_DETAILS_MINI, wxT(""),
         wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer5->Add(itemStaticText44, 1, wxGROW|wxTOP, 12);
-    //Infobar 
-    wxStaticText* itemStaticText33 = new wxStaticText(itemPanel12, 
-    ID_PANEL_STOCKS_STATIC_DETAILS, wxT(""), 
+    //Infobar
+    wxStaticText* itemStaticText33 = new wxStaticText(itemPanel12,
+    ID_PANEL_STOCKS_STATIC_DETAILS, wxT(""),
         wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
     itemBoxSizer4->Add(itemStaticText33, 1, wxGROW|wxLEFT|wxRIGHT, 14);
-    
+
     updateExtraStocksData(-1);
 }
 
@@ -325,9 +325,9 @@ void mmStocksPanel::initVirtualListControl()
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
     double originalVal = 0.0;
-    
+
     mmDBWrapper::loadSettings(accountID_, db_);
-        
+
     //Get Init Value of the account
     double initVal = core_->getAccountSharedPtr(accountID_)->initialBalance_;
     // + Transfered from other accounts - Transfered to other accounts
@@ -336,14 +336,14 @@ void mmStocksPanel::initVirtualListControl()
     double total = mmDBWrapper::getStockInvestmentBalance(db_, accountID_, false, originalVal);
     wxString balance;
     mmex::formatDoubleToCurrency(total+initVal, balance);
-    
+
     wxString original;
     mmex::formatDoubleToCurrency(originalVal, original);
 
     //
     wxString diffStr;
     mmex::formatDoubleToCurrency((total > originalVal ? total - originalVal : originalVal - total), diffStr);
-    
+
     header = (wxStaticText*)FindWindow(ID_PANEL_CHECKING_STATIC_BALHEADER);
     wxString lbl;
     lbl << _("Total: ") << balance << wxT ("     ") << _("Invested: ") << original;
@@ -352,7 +352,7 @@ void mmStocksPanel::initVirtualListControl()
     wxString diffStrPercents;
     if (originalVal!= 0.0) {
         if (total > originalVal)
-            lbl << wxT ("     ") << _("Gain: "); 
+            lbl << wxT ("     ") << _("Gain: ");
         else
             lbl << wxT ("     ") << _("Loss: ");
         double diffPercents = (total > originalVal ? total/originalVal*100.0-100.0 : -(total/originalVal*100.0-100.0));
@@ -387,7 +387,7 @@ void mmStocksPanel::initVirtualListControl()
     ") T on UPPER (T.SYMBOL)=UPPER (S.SYMBOL) and T.HELDAT=S.HELDAT "
     "where S.HELDAT = ? "
     "order by julianday((S.PURCHASEDATE),'localtime'), S.SYMBOL, S.STOCKNAME ";
-    
+
     wxSQLite3Statement st = db_->PrepareStatement(sql);
     st.Bind(1, accountID_);
 
@@ -428,7 +428,7 @@ void mmStocksPanel::initVirtualListControl()
         //I wish see integer if it integer else double
         if ((th.numShares_ - static_cast<long>(th.numShares_)) != 0.0)
             th.numSharesStr_=wxString::Format(wxT("%.4f"),th.numShares_);
-        else 
+        else
             th.numSharesStr_ <<  static_cast<long>(th.numShares_);
 
         if ((th.totalnumShares_ - static_cast<long>(th.totalnumShares_)) != 0.0)
@@ -657,19 +657,15 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     wxString YSymbols;
     wxSortedArrayString symbolarray;
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select UPPER (SYMBOL) as SYMBOL from STOCK_V1");
+    wxSQLite3ResultSet q1 = db_->ExecuteQuery("select distinct UPPER (SYMBOL) as SYMBOL from STOCK_V1");
     while (q1.NextRow())
     {
-        wxString strSymbol = q1.GetString(wxT("SYMBOL"));
-        if (wxNOT_FOUND == symbolarray.Index(strSymbol.GetData()))
-            symbolarray.Add(strSymbol);
+        symbolarray.Add( q1.GetString(wxT("SYMBOL")));
     }
     q1.Finalize();
 
-    if(symbolarray.GetCount() < 1) 
-    {
+    if(symbolarray.GetCount() < 1)
         return;
-    }
 
     YSymbols = symbolarray.Item(0)+yahoo_->Suffix_;
     for (size_t i = 1; i < symbolarray.GetCount(); i++)
@@ -677,17 +673,12 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         YSymbols = YSymbols+wxT("+")+symbolarray.Item(i)+yahoo_->Suffix_;
     }
     //http://finance.yahoo.com/d/quotes.csv?s=SBER03.ME&f=sl1n&e=.csv
-    wxString site = wxT("http://")+
-                   yahoo_->Server_+ 
-                   wxT("/d/quotes.csv?s=")+
-                   YSymbols+
-                   wxT("&f=")+
-                   yahoo_->CSVColumns_+
-                   wxT("&e=.csv");
-    
+    wxString site = wxString::Format(wxT("http://%s/d/quotes.csv?s=%s&f=%s&e=.csv"),
+                                     yahoo_->Server_.c_str(), YSymbols.c_str(), yahoo_->CSVColumns_.c_str());
+
     wxURL url(site);
-    if (url.GetError()!=wxURL_NOERR) 
-    { 
+    if (url.GetError()!=wxURL_NOERR)
+    {
         mmShowErrorMessage(this, _("Unable to connect!"), _("Stock Download"));
         return;
     }
@@ -704,19 +695,19 @@ void mmStocksPanel::OrderQuoteRefresh(void)
     delete in_stream;
     buf[bytes_read] = '\0';
     wxString quotes = wxString::FromAscii((const char *)buf);
-    
+
     yahoo_->StocksRefreshStatus_ = mmYahoo::DS_INPROGRESS;
 
     // Break it up into lines
     wxStringTokenizer tkz(quotes, wxT("\r\n"));
 
-    wxString StockSymbolWithSuffix;
+    wxString StockSymbolWithSuffix, dName;
     double dPrice = 0;
-    wxString dName;
+    db_->Begin();
     while (tkz.HasMoreTokens())
     {
         wxString csvline = tkz.GetNextToken();
-    
+
         /*** Grab the relevant bits (for now only the symbol and the current price) */
         wxStringTokenizer csvsimple(csvline,wxT("\","),wxTOKEN_STRTOK);
         if (csvsimple.HasMoreTokens())
@@ -727,19 +718,14 @@ void mmStocksPanel::OrderQuoteRefresh(void)
                 csvsimple.GetNextToken().ToDouble(&dPrice);
                 if (csvsimple.HasMoreTokens())
                     dName = csvsimple.GetNextToken();
-                else 
+                else
                     yahoo_->StocksRefreshStatus_ = mmYahoo::DS_FAILED;
-                
             }
             else
-            {
                 yahoo_->StocksRefreshStatus_ = mmYahoo::DS_FAILED;
-            }
         }
         else
-        {
             yahoo_->StocksRefreshStatus_ = mmYahoo::DS_FAILED;
-        }
 
         /****** Update all that match this symbol ******/
         // wxString Suffix_ = mmDBWrapper::getINISettingValue(inidb_,wxT("HTTP_YAHOO_SUFFIX"), wxT(".AX"));
@@ -757,7 +743,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         }
 
         //**** HACK HACK HACK
-        // Note:        
+        // Note:
         // 1. If the share is a UK share (e.g. HSBA.L), its downloaded value in pence
         // 2. If the share is not a UK share (e.g. 0005.HK) while we are using UK Yahoo finance, we do not need
         //    to modify the price
@@ -765,11 +751,11 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         //// UK finance apparently downloads values in pence
         //if (!yahoo_->Server_.CmpNoCase(wxT("uk.finance.yahoo.com")))
         //    dPrice = dPrice / 100;
-        //// ------------------        
-        if(StockSymbolNoSuffix.Find(wxT(".L")) != wxNOT_FOUND) 
+        //// ------------------
+        if(StockSymbolNoSuffix.Find(wxT(".L")) != wxNOT_FOUND)
             dPrice = dPrice / 100;
 
-        static const char sql[] = 
+        static const char sql[] =
         "select STOCKID, "
                "CURRENTPRICE, "
                "NUMSHARES, "
@@ -797,7 +783,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
             if(dPrice == 0 || sh.numShares_<0.0) dPrice = q1.GetDouble(wxT("CURRENTPRICE"));
             sh.shareName_ = q1.GetString (wxT ("STOCKNAME"));
             if (sh.shareName_.IsEmpty()) sh.shareName_ = dName;
-            
+
             sh.currentPrice_ = dPrice;
             sh.value_ = sh.numShares_ * dPrice;
             stockVec.push_back(sh);
@@ -805,7 +791,7 @@ void mmStocksPanel::OrderQuoteRefresh(void)
         st.Finalize();
 
         // --
-        static const char sql_upd[] = 
+        static const char sql_upd[] =
         "update STOCK_V1 "
         "SET CURRENTPRICE = ?, VALUE = ?, STOCKNAME = ? "
         "WHERE STOCKID = ?";
@@ -818,13 +804,14 @@ void mmStocksPanel::OrderQuoteRefresh(void)
             st.Bind(2, i->value_);
             st.Bind(3, i->shareName_);
             st.Bind(4, i->id_);
-            
+
             st.ExecuteUpdate();
             st.Reset();
         }
-        
+
         st.Finalize();
     }
+    db_->Commit();
 
     // Now refresh the display
     initVirtualListControl();
@@ -856,7 +843,7 @@ wxString mmStocksPanel::getItem(long item, long column)
     if (column == COL_VALUE)        return trans_[item].valueStr_;
     if (column == COL_CURRENT)      return trans_[item].cPriceStr_;
     if (column == COL_NOTES)        return trans_[item].shareNotes_;
-        
+
     return wxT("");
 }
 
@@ -883,13 +870,13 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
 {
     wxStaticText* st = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS);
     wxStaticText* stm = (wxStaticText*)FindWindow(ID_PANEL_STOCKS_STATIC_DETAILS_MINI);
-    if (selectedIndex_ == -1) 
+    if (selectedIndex_ == -1)
     {
         st->SetLabel(Tips(TIPS_STOCK));
         stm->SetLabel(wxT(""));
     }
     else
-    {  
+    {
         wxString stockPurchasePriceStr;
         wxString stockCurrentPriceStr;
         wxString stockDifferenceStr;
@@ -902,11 +889,11 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
         wxString stocktotalnumSharesStr = trans_[selectedIndex_].totalnumSharesStr_;
         wxString stockgainlossStr = trans_[selectedIndex_].gainLossStr_;
         wxString stocktotalgainlossStr;
-        
+
         double stockPurchasePrice = trans_[selectedIndex_].purchasePrice_;
         double stockCurrentPrice = trans_[selectedIndex_].currentPrice_;
         double stockDifference = stockCurrentPrice - stockPurchasePrice;
-        
+
         double stockavgPurchasePrice = trans_[selectedIndex_].avgpurchasePrice_;
         double stocktotalDifference = stockCurrentPrice - stockavgPurchasePrice;
         double stockDaysOwn = trans_[selectedIndex_].stockDays_;
@@ -931,26 +918,26 @@ void mmStocksPanel::updateExtraStocksData(int selectedIndex_)
 
         wxString miniInfo = wxT("");
         if (trans_[selectedIndex_].stockSymbol_ != wxT(""))
-        miniInfo << wxT("\t") << _("Symbol: ") << trans_[selectedIndex_].stockSymbol_ << wxT ("\t\t"); 
+        miniInfo << wxT("\t") << _("Symbol: ") << trans_[selectedIndex_].stockSymbol_ << wxT ("\t\t");
         miniInfo << _ ("Total:") << wxT (" (") << trans_[selectedIndex_].totalnumSharesStr_ << wxT (") ");
         //If some share has been bot for a short period we don't need that info because the forecast may be too optimistic
         //if (stockDaysOwn > 182.5)
         //miniInfo << wxT ("\t\t") << _("Percent/Year: ") << trans_[selectedIndex_].stockPercentagePerYearStr_;
         stm->SetLabel(miniInfo);
-        
+
         wxString additionInfo =wxT("");
         //Selected share info
-        additionInfo 
-        << wxT("|") << stockCurrentPriceStr << wxT(" - ") << stockPurchasePriceStr << wxT("|") << wxT(" = ") << stockDifferenceStr 
+        additionInfo
+        << wxT("|") << stockCurrentPriceStr << wxT(" - ") << stockPurchasePriceStr << wxT("|") << wxT(" = ") << stockDifferenceStr
         << wxT (" * ") << stocknumSharesStr << wxT (" = ") << stockgainlossStr << wxT (" ( ") << stockPercentageStr << wxT ('%')
-        //<< wxT (" | ")<< stockPercentagePerYearStr << wxT("% ")  << _("Yearly") 
+        //<< wxT (" | ")<< stockPercentagePerYearStr << wxT("% ")  << _("Yearly")
         << wxT (" )") << wxT ("\n");
         //Summary for account for selected symbol
         if (trans_[selectedIndex_].purchasedTime_ > 1)
         {
-            additionInfo << wxT("|") << stockCurrentPriceStr << wxT(" - ") << stockavgPurchasePriceStr << wxT("|") << wxT(" = ") << stocktotalDifferenceStr 
+            additionInfo << wxT("|") << stockCurrentPriceStr << wxT(" - ") << stockavgPurchasePriceStr << wxT("|") << wxT(" = ") << stocktotalDifferenceStr
             << wxT (" * ") << stocktotalnumSharesStr << wxT (" = ") << stocktotalgainlossStr << wxT (" ( ") << stocktotalPercentageStr << wxT ('%')
-            //<< wxT (" | ")<< stockPercentagePerYearStr << wxT("% ") << _("Yearly") 
+            //<< wxT (" | ")<< stockPercentagePerYearStr << wxT("% ") << _("Yearly")
             << wxT (" )") //<< wxT ("\n")
             << wxT ("\n") << getItem(selectedIndex_, COL_NOTES);
         }
