@@ -166,8 +166,8 @@ private:
 
     void cleanup();
     wxSizer* cleanupHomePanel(bool new_sizer = true);
-    void openFile(const wxString& fileName, bool openingNew, const wxString &password = wxGetEmptyString());
-    void createDataStore(const wxString& fileName, const wxString &passwd, bool openingNew);
+    bool openFile(const wxString& fileName, bool openingNew, const wxString &password = wxGetEmptyString());
+    bool createDataStore(const wxString& fileName, const wxString &passwd, bool openingNew);
     void createMenu();
     void createToolBar();
     void createHomePage();
