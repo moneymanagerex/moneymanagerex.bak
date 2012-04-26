@@ -1057,6 +1057,8 @@ void mmTransDialog::OnOk(wxCommandEvent& /*event*/)
     {
         int catID, subcatID;
         wxString payeeName = mmDBWrapper::getPayee(db_.get(), payeeID_, catID, subcatID );
+        // save the category used for this payee to allow automatic category fill at user request.
+        mmDBWrapper::updatePayee(db_.get(), payeeName, payeeID_, categID_, subcategID_);
 
         if (referenceAccountID_ != accountID_) // Transfer transaction has defected to other side.
         {
