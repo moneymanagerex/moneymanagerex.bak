@@ -283,7 +283,7 @@ void mmBudgetingPanel::CreateControls()
     listCtrlAccount_ = new budgetingListCtrl( this, this, 
         ID_PANEL_CHECKING_LISTCTRL_ACCT, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
+    //listCtrlAccount_->SetBackgroundColour(mmColors::listBackColor);
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     listCtrlAccount_->InsertColumn(0, _("Category  "));
     listCtrlAccount_->InsertColumn(1, _("Sub Category"));

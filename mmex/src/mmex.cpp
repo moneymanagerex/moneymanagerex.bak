@@ -996,7 +996,7 @@ void mmGUIFrame::createControls()
         wxDefaultPosition, wxSize(100, 100), wxTR_SINGLE | wxTR_HAS_BUTTONS | wxTR_ROW_LINES );
 #endif
 
-    navTreeCtrl_->SetBackgroundColour(mmColors::navTreeBkColor);
+    //navTreeCtrl_->SetBackgroundColour(mmColors::navTreeBkColor);
 
     wxSize imageSize(16, 16);
     wxImageList* imageList_ = new wxImageList( imageSize.GetWidth(), imageSize.GetHeight() );
@@ -1041,7 +1041,7 @@ void mmGUIFrame::updateNavTreeControl(bool expandTermAccounts)
     }
 
     navTreeCtrl_->DeleteAllItems();
-    navTreeCtrl_->SetBackgroundColour(mmColors::navTreeBkColor);
+    //navTreeCtrl_->SetBackgroundColour(mmColors::navTreeBkColor);
 
     wxTreeItemId root = navTreeCtrl_->AddRoot(_("Home Page"), 0, 0);
     navTreeCtrl_->SetItemData(root, new mmTreeItemData(wxT("Home Page")));

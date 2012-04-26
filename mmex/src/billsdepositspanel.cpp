@@ -132,7 +132,7 @@ void mmBillsDepositsPanel::CreateControls()
 {
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer9);
-    this->SetBackgroundColour(mmColors::listBackColor);
+    //this->SetBackgroundColour(mmColors::listBackColor);
 
     /* ---------------------- */
     wxPanel* headerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition,
@@ -141,7 +141,7 @@ void mmBillsDepositsPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
-    headerPanel->SetBackgroundColour(mmColors::listBackColor);
+    //headerPanel->SetBackgroundColour(mmColors::listBackColor);
 
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, ID_PANEL_BD_STATIC_HEADER,
         _("Repeating Transactions"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -162,7 +162,7 @@ void mmBillsDepositsPanel::CreateControls()
     listCtrlAccount_ = new billsDepositsListCtrl( this, itemSplitterWindowBillsDeposit,
         ID_PANEL_BD_LISTCTRL, wxDefaultPosition, wxDefaultSize,
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    listCtrlAccount_->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    //listCtrlAccount_->SetBackgroundColour(mmColors::listDetailsPanelColor);
     listCtrlAccount_->SetImageList(m_imageList, wxIMAGE_LIST_SMALL);
     listCtrlAccount_->InsertColumn(0, _("Payee"));
     listCtrlAccount_->InsertColumn(1, _("Account"));
@@ -208,7 +208,7 @@ void mmBillsDepositsPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     itemPanel12->SetSizer(itemBoxSizer4);
-    itemPanel12->SetBackgroundColour(mmColors::listBackColor);
+    //itemPanel12->SetBackgroundColour(mmColors::listBackColor);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 5);

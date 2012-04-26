@@ -119,7 +119,7 @@ void mmAssetsPanel::CreateControls()
 {    
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer9);
-    this->SetBackgroundColour(mmColors::listBackColor);
+    //this->SetBackgroundColour(mmColors::listBackColor);
 
     /* ---------------------- */
     wxPanel* headerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, 
@@ -128,7 +128,7 @@ void mmAssetsPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
-    headerPanel->SetBackgroundColour(mmColors::listBackColor);
+    //headerPanel->SetBackgroundColour(mmColors::listBackColor);
 
     wxStaticText* itemStaticText9 = new wxStaticText( headerPanel, wxID_ANY, _("Assets"),
         wxDefaultPosition, wxDefaultSize, 0 );
@@ -152,7 +152,7 @@ void mmAssetsPanel::CreateControls()
     m_listCtrlAssets = new assetsListCtrl( this, itemSplitterWindow10, 
         IDC_PANEL_STOCKS_LISTCTRL, wxDefaultPosition, wxDefaultSize, 
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
-    m_listCtrlAssets->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    //m_listCtrlAssets->SetBackgroundColour(mmColors::listDetailsPanelColor);
     m_listCtrlAssets->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
     m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"));
     wxListItem itemCol;
@@ -197,7 +197,7 @@ void mmAssetsPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxVERTICAL);
     assets_panel->SetSizer(itemBoxSizer4);
-    assets_panel->SetBackgroundColour(mmColors::listBackColor);
+    //assets_panel->SetBackgroundColour(mmColors::listBackColor);
 
     wxBoxSizer* itemBoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer4->Add(itemBoxSizer5, 0, wxALIGN_LEFT|wxALL, 3);
