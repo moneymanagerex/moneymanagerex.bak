@@ -612,7 +612,7 @@ void mmCheckingPanel::CreateControls()
 {    
     wxBoxSizer* itemBoxSizer9 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer9);
-    this->SetBackgroundColour(mmColors::listBackColor);
+    //this->SetBackgroundColour(mmColors::listBackColor);
 
     /* ---------------------- */
     wxPanel* headerPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, 
@@ -621,7 +621,7 @@ void mmCheckingPanel::CreateControls()
 
     wxBoxSizer* itemBoxSizerVHeader = new wxBoxSizer(wxVERTICAL);
     headerPanel->SetSizer(itemBoxSizerVHeader);
-    headerPanel->SetBackgroundColour(mmColors::listBackColor);
+    //headerPanel->SetBackgroundColour(mmColors::listBackColor);
 
     wxGridSizer* itemBoxSizerVHeader2 = new wxGridSizer(2,1,5,20);
     itemBoxSizerVHeader->Add(itemBoxSizerVHeader2);
@@ -694,7 +694,7 @@ void mmCheckingPanel::CreateControls()
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     
     m_listCtrlAccount->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
-    m_listCtrlAccount->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    //m_listCtrlAccount->SetBackgroundColour(mmColors::listDetailsPanelColor);
     m_listCtrlAccount->setSortOrder(g_asc);
     m_listCtrlAccount->setSortColumn(g_sortcol);
     m_listCtrlAccount->SetFocus();
@@ -719,7 +719,7 @@ void mmCheckingPanel::CreateControls()
 
     wxPanel *itemPanel12 = new wxPanel(itemSplitterWindow10, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxTAB_TRAVERSAL);
 
-    itemPanel12->SetBackgroundColour(mmColors::listBackColor);
+    //itemPanel12->SetBackgroundColour(mmColors::listBackColor);
     itemSplitterWindow10->SplitHorizontally(m_listCtrlAccount, itemPanel12);
     itemSplitterWindow10->SetMinimumPaneSize(100);
     itemSplitterWindow10->SetSashGravity(1.0);

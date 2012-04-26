@@ -252,7 +252,7 @@ void mmTransDialog::CreateControls()
 {    
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(itemBoxSizer2);
-    this->SetBackgroundColour(mmColors::listBackColor);
+    //this->SetBackgroundColour(mmColors::listBackColor);
     
     wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(this, wxID_ANY, _("Transaction Details"));
     wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, wxVERTICAL);
@@ -266,7 +266,7 @@ void mmTransDialog::CreateControls()
 
     wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(5, 2, 10, 10);
     itemPanel7->SetSizer(itemFlexGridSizer8);
-    itemPanel7->SetBackgroundColour(mmColors::listBackColor);
+    //itemPanel7->SetBackgroundColour(mmColors::listBackColor);
 
     wxSizerFlags flags;
     flags.Border(0);
@@ -280,7 +280,7 @@ void mmTransDialog::CreateControls()
     dpc_ = new wxDatePickerCtrl( itemPanel7, ID_DIALOG_TRANS_BUTTONDATE, trx_date_,
                                  wxDefaultPosition, wxSize(110, -1), wxDP_DROPDOWN | wxDP_SHOWCENTURY);
     dpc_->SetToolTip(_("Specify the date of the transaction"));
-    dpc_->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    //dpc_->SetBackgroundColour(mmColors::listDetailsPanelColor);
 
     // Display the day of the week
     wxString dateStr = mmGetNiceDateString(dpc_->GetValue());
@@ -363,13 +363,13 @@ void mmTransDialog::CreateControls()
         //use wxTE_PROCESS_ENTER flag when creating the control to generate EVT_TEXT_ENTER events
         wxALIGN_RIGHT|wxTE_PROCESS_ENTER , doubleValidator() );
     textAmount_->SetToolTip(amountNormalTip_);
-    textAmount_->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    //textAmount_->SetBackgroundColour(mmColors::listDetailsPanelColor);
     textAmount_->Connect(ID_DIALOG_TRANS_TEXTAMOUNT, wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
     toTextAmount_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TOTEXTAMOUNT, wxT(""), wxDefaultPosition, wxSize(110, -1), 
         wxALIGN_RIGHT|wxTE_PROCESS_ENTER, doubleValidator() );
     toTextAmount_->SetToolTip(_("Specify the transfer amount in the To Account"));
-    toTextAmount_->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    //toTextAmount_->SetBackgroundColour(mmColors::listDetailsPanelColor);
     toTextAmount_->Connect(ID_DIALOG_TRANS_TOTEXTAMOUNT, wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
     wxBoxSizer* amountSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -445,7 +445,7 @@ void mmTransDialog::CreateControls()
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel7, wxID_STATIC, _("Number"), wxDefaultPosition, wxDefaultSize, 0 );
     textNumber_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTNUMBER, wxT(""), wxDefaultPosition, wxSize(185, -1), wxTE_PROCESS_ENTER );
     textNumber_->SetToolTip(_("Specify any associated check number or transaction number"));
-    textNumber_->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    //textNumber_->SetBackgroundColour(mmColors::listDetailsPanelColor);
     textNumber_->Connect(ID_DIALOG_TRANS_TEXTNUMBER, wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(mmTransDialog::onTextEntered), NULL, this);
 
     bAuto_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTONTRANSNUM, wxT("..."), wxDefaultPosition, wxSize(40, -1), 0 );
@@ -463,7 +463,7 @@ void mmTransDialog::CreateControls()
 
     textNotes_ = new wxTextCtrl( itemPanel7, ID_DIALOG_TRANS_TEXTNOTES, wxT(""), wxDefaultPosition, wxSize(225,80), wxTE_MULTILINE );
     textNotes_->SetToolTip(_("Specify any text notes you want to add to this transaction."));
-    textNotes_->SetBackgroundColour(mmColors::listDetailsPanelColor);
+    //textNotes_->SetBackgroundColour(mmColors::listDetailsPanelColor);
 
     bFrequentUsedNotes_ = new wxButton( itemPanel7, ID_DIALOG_TRANS_BUTTON_FREQENTNOTES, wxT(">>"), wxDefaultPosition, wxSize(40, -1), 0 );
     bFrequentUsedNotes_->SetToolTip(_("Select one of the frequently used notes"));
@@ -485,7 +485,7 @@ void mmTransDialog::CreateControls()
 
     wxStdDialogButtonSizer*  itemStdDialogButtonSizer1 = new wxStdDialogButtonSizer;
     itemPanel25->SetSizer(itemStdDialogButtonSizer1);
-    itemPanel25->SetBackgroundColour(mmColors::listBackColor);
+    //itemPanel25->SetBackgroundColour(mmColors::listBackColor);
 
     wxButton* itemButtonOK = new wxButton( itemPanel25, wxID_OK, _("&OK"));
     itemStdDialogButtonSizer1->Add(itemButtonOK, flags);
