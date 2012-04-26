@@ -218,13 +218,7 @@ void mmDBWrapper::createInfoV1Table(wxSQLite3Database* db)
 {
     try{
         /* We always create new INFOTABLE_V1 */
-        bool exists = db->TableExists(wxT("INFOTABLE_V1"));
-        if (exists)
-        {
-            setInfoSettingValue(db, wxT("MODIFIEDDATE"), wxDateTime::Now().FormatISODate());
-            setInfoSettingValue(db, wxT("DATAVERSION"), mmex::DATAVERSION);
-        }
-        else
+        if (!db->TableExists(wxT("INFOTABLE_V1")))
         {
             static const char sql[] =
             "create table INFOTABLE_V1 "
@@ -673,14 +667,16 @@ void removeCruft(wxSQLite3Database* db)
         {
             if (db->TableExists(wxT("SPLITTRANSACTIONS_V1")))
             {
-                db->ExecuteUpdate("DELETE FROM SPLITTRANSACTIONS_V1 WHERE SPLITTRANSACTIONS_V1.TRANSID NOT IN (SELECT TRANSID FROM CHECKINGACCOUNT_V1)");
+                if (db->ExecuteScalar("SELECT COUNT(*) FROM SPLITTRANSACTIONS_V1 WHERE SPLITTRANSACTIONS_V1.TRANSID NOT IN (SELECT TRANSID FROM CHECKINGACCOUNT_V1)") > 0)
+                    db->ExecuteUpdate("DELETE FROM SPLITTRANSACTIONS_V1 WHERE SPLITTRANSACTIONS_V1.TRANSID NOT IN (SELECT TRANSID FROM CHECKINGACCOUNT_V1)");
             }
         }
 
         {
             if (db->TableExists(wxT("BUDGETSPLITTRANSACTIONS_V1")))
             {
-                db->ExecuteUpdate("DELETE FROM BUDGETSPLITTRANSACTIONS_V1 WHERE BUDGETSPLITTRANSACTIONS_V1.TRANSID NOT IN (SELECT BDID FROM BILLSDEPOSITS_V1)");
+                if (db->ExecuteScalar("SELECT COUNT(*) FROM BUDGETSPLITTRANSACTIONS_V1 WHERE BUDGETSPLITTRANSACTIONS_V1.TRANSID NOT IN (SELECT BDID FROM BILLSDEPOSITS_V1)") > 0)
+                    db->ExecuteUpdate("DELETE FROM BUDGETSPLITTRANSACTIONS_V1 WHERE BUDGETSPLITTRANSACTIONS_V1.TRANSID NOT IN (SELECT BDID FROM BILLSDEPOSITS_V1)");
             }
         }
 
@@ -2316,24 +2312,16 @@ boost::shared_ptr<wxSQLite3Database> mmDBWrapper::Open(const wxString &dbpath, c
 
         if (err==SQLITE_OK)
         {
-            //attempt to commit empty transaction. timeout 2 sec
-            try {
-                db->SetBusyTimeout(2000);
-                db->Begin(WXSQLITE_TRANSACTION_IMMEDIATE);
-                db->Commit();
+            //timeout 2 sec
+            db->SetBusyTimeout(2000);
 
-                //if got any error that mean we can use it but in read only mode
-            } catch (const wxSQLite3Exception &e) {
-                err = e.GetExtendedErrorCode();
-                errStr = e.GetMessage();
-            }
+            //TODO oblolete code
             if (err!=SQLITE_OK)
             {
-                wxLogDebug(wxT("Database::write attemption: Exception"), errStr);
                 wxLogError(wxString::Format(_("Write error: %s"), errStr.c_str()));
             }
-        }
         return (db);
+        }
     }
     db->Close();
     db.reset();
