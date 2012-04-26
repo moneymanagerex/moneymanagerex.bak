@@ -621,7 +621,8 @@ mmGUIFrame::mmGUIFrame(const wxString& title,
         updateNavTreeControl();
         showBeginAppDialog(dbpath.GetFullName().IsEmpty());
     } else {
-        openFile(dbpath.GetFullPath(), false);
+        if (!openFile(dbpath.GetFullPath(), false))
+            showBeginAppDialog(true);
     }
 }
 //----------------------------------------------------------------------------
@@ -2944,7 +2945,7 @@ void mmGUIFrame::createToolBar()
 }
 //----------------------------------------------------------------------------
 
-void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, bool openingNew)
+bool mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, bool openingNew)
 {
     if (m_core) m_core.reset();
 
@@ -2988,7 +2989,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
 
         m_db = mmDBWrapper::Open(fileName, password);
         // if the database pointer has been reset, the password is possibly incorrect
-        if (!m_db) return;
+        if (!m_db) return false;
 
         // we need to check the db whether it is the right version
         if (!mmDBWrapper::checkDBVersion(m_db.get()))
@@ -3000,7 +3001,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
 
             m_db->Close();
             m_db.reset();
-            return ;
+            return false;
         }
 
         password_ = password;
@@ -3036,7 +3037,7 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
            /* Jump to new account creation screen */
            wxCommandEvent evt;
            OnNewAccount(evt);
-           return;
+           return true;
        }
     }
     else // open of existing database failed
@@ -3048,19 +3049,15 @@ void mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
         if (!passwordCheckPassed)
             msgStr = _("Password not entered for encrypted Database.\n");
 
-        wxMessageDialog msgDlg(this, msgStr + _("Do you want to browse to locate another file?"),
-                                dialogErrorMessageHeading, wxYES_NO | wxYES_DEFAULT);
-        if (msgDlg.ShowModal() == wxID_YES)
-        {
-            wxCommandEvent evt;
-            OnOpen(evt);
-            return;
-        }
+        msgStr << fileName;
+        wxMessageBox(msgStr, dialogErrorMessageHeading, wxICON_ERROR);
         menuEnableItems(false);
-        return ;
+        return false;
     }
 
     openDataBase(fileName);
+
+    return true;
 }
 //----------------------------------------------------------------------------
 
@@ -3102,29 +3099,30 @@ wxPanel* mmGUIFrame::createMainFrame(wxPanel* /*parent*/)
 }
 //----------------------------------------------------------------------------
 
-void mmGUIFrame::openFile(const wxString& fileName, bool openingNew, const wxString &password)
+bool mmGUIFrame::openFile(const wxString& fileName, bool openingNew, const wxString &password)
 {
-    createDataStore(fileName, password, openingNew);
-
-    if (m_db)
+    if (createDataStore(fileName, password, openingNew))
     {
         menuEnableItems(true);
         menuPrintingEnable(false);
         autoRepeatTransactionsTimer_.Start(REPEAT_TRANS_DELAY_TIME, wxTIMER_ONE_SHOT);
+
+        updateNavTreeControl();
+
+        if (!refreshRequested_)
+        {
+            refreshRequested_ = true;
+            /* Currency Options might have changed so refresh */
+            wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
+            GetEventHandler()->AddPendingEvent(ev);
+        }
     }
-
-    updateNavTreeControl();
-
-    if (!refreshRequested_)
+    else
     {
-        refreshRequested_ = true;
-        /* Currency Options might have changed so refresh */
-        wxCommandEvent ev(wxEVT_COMMAND_MENU_SELECTED, MENU_ACCTLIST);
-        GetEventHandler()->AddPendingEvent(ev);
+        return false;
     }
 
-    if (!m_db)
-        showBeginAppDialog();
+    return true;
 }
 //----------------------------------------------------------------------------
 void mmGUIFrame::OnNew(wxCommandEvent& /*event*/)
@@ -4001,7 +3999,7 @@ void mmGUIFrame::showBeginAppDialog(bool fromScratch)
     else if (rc == appStartDialog(APP_START_LAST_DB))
     {
         wxFileName fname(mmDBWrapper::getLastDbPath(m_inidb.get()));
-        if (fname.IsOk()) openFile(fname.GetFullPath(), false);
+        if (fname.IsOk()) SetDatabaseFile(fname.GetFullPath());
     }
     else if (rc == -1)
     {
@@ -4680,15 +4678,24 @@ void mmGUIFrame::SetDatabaseFile(wxString dbFileName, bool newDatabase)
     }
 
     if (progress) progress->Update(40);
-    openFile(dbFileName, newDatabase);
-
-    if (progress) progress->Update(95);
-    recentFiles_->updateRecentList(dbFileName);
+    bool opened_ok = openFile(dbFileName, newDatabase);
+    if (opened_ok)
+    {
+        if (progress) progress->Update(95);
+        recentFiles_->updateRecentList(dbFileName);
+    }
 
     if (progress)
     {
         progress->Update(100);
         progress->Destroy();
+    }
+
+    if (!opened_ok)
+    {
+        createHomePage();
+        updateNavTreeControl();
+        showBeginAppDialog(true);
     }
 }
 

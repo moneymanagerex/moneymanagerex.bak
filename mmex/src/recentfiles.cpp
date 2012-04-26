@@ -113,6 +113,10 @@ void RecentDatabaseFiles::setMenuFileItems()
 
 void RecentDatabaseFiles::updateRecentList(wxString currentFileName)
 {
+    // if the file given is actually the root file, then ignore the update.
+    if (recentFileList_[0] == currentFileName)
+        return;
+
     bool sameFileDetected = false;
     int emptyPosition = 0;
     /*****************************************************************
