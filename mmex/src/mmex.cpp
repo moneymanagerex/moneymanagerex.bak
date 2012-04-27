@@ -3801,18 +3801,20 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
     // currency Z / currency Y = Z / Y
     // Therefore, if currency X is EUR and currency Y is the base currency,
     // currency Y : currency Z = base_rate / rate of Z : 1
-    for(int i=0; i<(int)currency_rate.GetCount(); i++)
+    for(int i = 0; i<(int)currency_rate.GetCount(); i++)
         rate_ptr[i] = base_rate / rate_ptr[i];
 
     // update currency rates
 
     wxString msg = _("Currency rate updated");
     msg << wxT("\n\n");
+
+    m_db->Begin();
     for (int idx = 0; idx < (int)m_core->currencyList_.currencies_.size(); idx++)
     {
         wxString currencySymbol  = m_core->currencyList_.currencies_[idx]->currencySymbol_;
 
-        for(int i=0; i<(int)currency_name.GetCount(); i++)
+        for(int i = 0; i<(int)currency_name.GetCount(); i++)
         {
             if(currency_name[i] == currencySymbol)
             {
@@ -3825,6 +3827,7 @@ void mmGUIFrame::OnOnlineUpdateCurRate(wxCommandEvent& /*event*/)
             }
         } // for i loop
     }
+    m_db->Commit();
 
     delete[] rate_ptr;
 
