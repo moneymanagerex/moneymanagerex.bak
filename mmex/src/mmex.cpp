@@ -3063,13 +3063,15 @@ bool mmGUIFrame::createDataStore(const wxString& fileName, const wxString& pwd, 
 
 void mmGUIFrame::openDataBase(const wxString& fileName)
 {
-    wxProgressDialog dlg(_("Please Wait"),
-        _("Opening Database File && Verifying Integrity"), 100, this,
-        wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
+    //wxProgressDialog dlg(_("Please Wait"),
+    //    _("Opening Database File && Verifying Integrity"), 100, this,
+    //    wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_SMOOTH );
 
-    mmDBWrapper::initDB(m_db.get(), &dlg);
-    dlg.Update(100);
-    dlg.Destroy();
+    //mmDBWrapper::initDB(m_db.get(), &dlg);
+    //dlg.Update(100);
+    //dlg.Destroy();
+
+    mmDBWrapper::initDB(m_db.get(), 0);
 
     wxString title = mmex::getProgramName() + wxT(" : ") + fileName;
 
