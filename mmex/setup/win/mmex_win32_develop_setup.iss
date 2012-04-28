@@ -12,21 +12,21 @@
 ; Copyright (C) 2011-2012 Stefano Giorgio
 
 #define MyAppName "MoneyManagerEX"
-#define MyAppVersion "0.9.9.0 DEV:SVN-2101"
+#define MyAppExeName "mmex.exe"
+#define MyAppVersion "0.9.9.0 DEV:SVN-2177"
 #define MyAppPublisher "CodeLathe, LLC"
 #define MyAppURL "http://www.codelathe.com/mmex"
-#define MyAppExeName "mmex.exe"
 
 ; Set this value to a nul string for release version
-#define MyAppDevelopVersion "_SVN-2101"
+#define MyAppDevelopVersion "_SVN-2177"
 
 
 ;===============================================================================
 ; Local definitions specifically designed for my setup 
-#define mmex_svn_path "C:\Users\Stef\Documents\SVN\MoneyManagerEX\trunk\mmex"
-#define mmex_local_output_filename "mmex_0.9.9.0_svn2101_win32_setup"
-#define mmex_local_output_path "C:\Users\Stef\Documents\MMEX-RELEASE" 
-#define mmex_install_root "\mmex_0.9.9.0_win32_portable\MoneyManagerEx"
+#define my_svn_path "Z:\trunk\mmex"
+#define my_output_root "X:" 
+#define my_output_path "\mmex_0.9.9.0_win32_portable\MoneyManagerEx"
+#define my_output_filename "mmex_0.9.9.0_svn2177_win32_setup"
 
 ;===============================================================================
 
@@ -50,19 +50,19 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}{#MyAppDevelopVersion}
 DefaultGroupName={#MyAppName}{#MyAppDevelopVersion}
-LicenseFile={#mmex_svn_path}\doc\license.txt
-InfoBeforeFile={#mmex_svn_path}\README.TXT
-InfoAfterFile={#mmex_svn_path}\doc\version.txt
-OutputDir={#mmex_local_output_path}
-OutputBaseFilename={#mmex_local_output_filename}
-SetupIconFile={#mmex_svn_path}\resources\mmex.ico
+LicenseFile={#my_svn_path}\doc\license.txt
+InfoBeforeFile={#my_svn_path}\README.TXT
+InfoAfterFile={#my_svn_path}\doc\version.txt
+OutputDir={#my_output_root}
+OutputBaseFilename={#my_output_filename}
+SetupIconFile={#my_svn_path}\resources\mmex.ico
 Compression=lzma/Max
 SolidCompression=true
 ShowUndisplayableLanguages=true
 
 [Languages]
 Name: english; MessagesFile: compiler:Default.isl; 
-Name: russian; MessagesFile: compiler:Languages\Russian.isl; InfoBeforeFile: {#mmex_svn_path}\README.RU; 
+Name: russian; MessagesFile: compiler:Languages\Russian.isl; InfoBeforeFile: {#my_svn_path}\README.RU; 
 Name: basque; MessagesFile: compiler:Languages\Basque.isl; 
 Name: brazilianportuguese; MessagesFile: compiler:Languages\BrazilianPortuguese.isl; 
 Name: catalan; MessagesFile: compiler:Languages\Catalan.isl; 
@@ -141,74 +141,74 @@ Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 ; MMEX Executable files 
-Source: {#mmex_local_output_path}{#mmex_install_root}\bin\mmex.exe; DestDir: {app}\bin; Flags: ignoreversion; Components: program; 
-Source: {#mmex_local_output_path}{#mmex_install_root}\bin\msvcp100.dll; DestDir: {app}\bin; Flags: ignoreversion; Components: program; 
-Source: {#mmex_local_output_path}{#mmex_install_root}\bin\msvcr100.dll; DestDir: {app}\bin; Flags: ignoreversion; Components: program; 
+Source: {#my_output_root}{#my_output_path}\bin\mmex.exe; DestDir: {app}\bin; Flags: ignoreversion; Components: program; 
+Source: {#my_output_root}{#my_output_path}\bin\msvcp100.dll; DestDir: {app}\bin; Flags: ignoreversion; Components: program; 
+Source: {#my_output_root}{#my_output_path}\bin\msvcr100.dll; DestDir: {app}\bin; Flags: ignoreversion; Components: program; 
 
 ; MMEX Root files
-Source: {#mmex_svn_path}\doc\contrib.txt; DestDir: {app}; Flags: ignoreversion; Components: program; 
-Source: {#mmex_svn_path}\doc\license.txt; DestDir: {app}; Flags: ignoreversion; Components: program; 
-Source: {#mmex_svn_path}\doc\version.txt; DestDir: {app}; Flags: ignoreversion; Components: program; 
+Source: {#my_svn_path}\doc\contrib.txt; DestDir: {app}; Flags: ignoreversion; Components: program; 
+Source: {#my_svn_path}\doc\license.txt; DestDir: {app}; Flags: ignoreversion; Components: program; 
+Source: {#my_svn_path}\doc\version.txt; DestDir: {app}; Flags: ignoreversion; Components: program; 
 
 ; Include in directory if user requires a local setup
-Source: {#mmex_local_output_path}{#mmex_install_root}\mmexini.db3; DestDir: {app}; Flags: ignoreversion; Components: local;
+Source: {#my_output_root}{#my_output_path}\mmexini.db3; DestDir: {app}; Flags: ignoreversion; Components: local;
 
 ; MMEX Resource files
-Source: {#mmex_svn_path}\resources\currency_seed.db3; DestDir: {app}\res; Flags: ignoreversion; 
-Source: {#mmex_svn_path}\resources\kaching.wav; DestDir: {app}\res; Flags: ignoreversion; 
-Source: {#mmex_svn_path}\resources\mmex.ico; DestDir: {app}\res; Flags: ignoreversion; 
+Source: {#my_svn_path}\resources\currency_seed.db3; DestDir: {app}\res; Flags: ignoreversion; 
+Source: {#my_svn_path}\resources\kaching.wav; DestDir: {app}\res; Flags: ignoreversion; 
+Source: {#my_svn_path}\resources\mmex.ico; DestDir: {app}\res; Flags: ignoreversion; 
 
 ; MMEX Root files - language dependant
-Source: {#mmex_svn_path}\README.TXT; DestDir: {app}; Flags: ignoreversion; Components: program; Languages: english; 
-Source: {#mmex_svn_path}\README.RU; DestDir: {app}; Flags: ignoreversion; Languages: russian; DestName: README.TXT; 
+Source: {#my_svn_path}\README.TXT; DestDir: {app}; Flags: ignoreversion; Components: program; Languages: english; 
+Source: {#my_svn_path}\README.RU; DestDir: {app}; Flags: ignoreversion; Languages: russian; DestName: README.TXT; 
 
 ; MMEX Language Files - Determined by Component
-Source: {#mmex_svn_path}\po\arabic.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\arabic; 
-Source: {#mmex_svn_path}\po\bulgarian.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\bulgarian; 
-Source: {#mmex_svn_path}\po\chinese_chs.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\chinese_chs; 
-Source: {#mmex_svn_path}\po\chinese_zh.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\chinese_zh; 
-Source: {#mmex_svn_path}\po\croatian.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\croatian; 
-Source: {#mmex_svn_path}\po\czech.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\czech; 
-Source: {#mmex_svn_path}\po\dutch.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\ducth; 
-Source: {#mmex_svn_path}\po\dutch_be.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\dutch_be; 
-Source: {#mmex_svn_path}\po\english.*; DestDir: {app}\po; Flags: ignoreversion; Components: help; Languages: english; 
-Source: {#mmex_svn_path}\po\english-uk.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\english_uk; 
-Source: {#mmex_svn_path}\po\french.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\french; 
-Source: {#mmex_svn_path}\po\german.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\german; 
-Source: {#mmex_svn_path}\po\greek.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\greek; 
-Source: {#mmex_svn_path}\po\hebrew.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\hebrew; 
-Source: {#mmex_svn_path}\po\hungarian.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\hungarian; 
-Source: {#mmex_svn_path}\po\indonesian.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\indonesian; 
-Source: {#mmex_svn_path}\po\italian.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\italian; 
-Source: {#mmex_svn_path}\po\latvian.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\latvian; 
-Source: {#mmex_svn_path}\po\norwegian.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\norwegian; 
-Source: {#mmex_svn_path}\po\polish.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\polish; 
-Source: {#mmex_svn_path}\po\portuguese.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\portuguese; 
-Source: {#mmex_svn_path}\po\portuguese_portugal.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\portuguese_portugal; 
-Source: {#mmex_svn_path}\po\romanian.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\romanian; 
-Source: {#mmex_svn_path}\po\russian.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\russian; 
-Source: {#mmex_svn_path}\po\serbian.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\serbian; 
-Source: {#mmex_svn_path}\po\serbo-croatian.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\serbo_croatian; 
-Source: {#mmex_svn_path}\po\slovak.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\slovak; 
-Source: {#mmex_svn_path}\po\slovenian.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\slovenian; 
-Source: {#mmex_svn_path}\po\spanish.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\spanish; 
-Source: {#mmex_svn_path}\po\swedish.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\swedish; 
-Source: {#mmex_svn_path}\po\tamil.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\tamil; 
-Source: {#mmex_svn_path}\po\turkish.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\turkish; 
-Source: {#mmex_svn_path}\po\ukrainian.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\ukrainian; 
-Source: {#mmex_svn_path}\po\vietnamese.*; DestDir: {app}\po; Flags: ignoreversion; Components: lang\vietnamese; 
+Source: {#my_svn_path}\po\arabic.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\arabic; 
+Source: {#my_svn_path}\po\bulgarian.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\bulgarian; 
+Source: {#my_svn_path}\po\chinese_chs.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\chinese_chs; 
+Source: {#my_svn_path}\po\chinese_zh.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\chinese_zh; 
+Source: {#my_svn_path}\po\croatian.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\croatian; 
+Source: {#my_svn_path}\po\czech.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\czech; 
+Source: {#my_svn_path}\po\dutch.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\ducth; 
+Source: {#my_svn_path}\po\dutch_be.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\dutch_be; 
+Source: {#my_svn_path}\po\english.mo; DestDir: {app}\po; Flags: ignoreversion; Components: help; Languages: english; 
+Source: {#my_svn_path}\po\english-uk.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\english_uk; 
+Source: {#my_svn_path}\po\french.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\french; 
+Source: {#my_svn_path}\po\german.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\german; 
+Source: {#my_svn_path}\po\greek.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\greek; 
+Source: {#my_svn_path}\po\hebrew.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\hebrew; 
+Source: {#my_svn_path}\po\hungarian.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\hungarian; 
+Source: {#my_svn_path}\po\indonesian.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\indonesian; 
+Source: {#my_svn_path}\po\italian.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\italian; 
+Source: {#my_svn_path}\po\latvian.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\latvian; 
+Source: {#my_svn_path}\po\norwegian.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\norwegian; 
+Source: {#my_svn_path}\po\polish.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\polish; 
+Source: {#my_svn_path}\po\portuguese.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\portuguese; 
+Source: {#my_svn_path}\po\portuguese_portugal.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\portuguese_portugal; 
+Source: {#my_svn_path}\po\romanian.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\romanian; 
+Source: {#my_svn_path}\po\russian.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\russian; 
+Source: {#my_svn_path}\po\serbian.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\serbian; 
+Source: {#my_svn_path}\po\serbo-croatian.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\serbo_croatian; 
+Source: {#my_svn_path}\po\slovak.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\slovak; 
+Source: {#my_svn_path}\po\slovenian.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\slovenian; 
+Source: {#my_svn_path}\po\spanish.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\spanish; 
+Source: {#my_svn_path}\po\swedish.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\swedish; 
+Source: {#my_svn_path}\po\tamil.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\tamil; 
+Source: {#my_svn_path}\po\turkish.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\turkish; 
+Source: {#my_svn_path}\po\ukrainian.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\ukrainian; 
+Source: {#my_svn_path}\po\vietnamese.mo; DestDir: {app}\po; Flags: ignoreversion; Components: lang\vietnamese; 
 
 ; MMEX Help - Root Help files 
-Source: {#mmex_svn_path}\doc\help\*.html; DestDir: {app}\help; Flags: ignoreversion; Components: help;
-Source: {#mmex_svn_path}\doc\help\*.png; DestDir: {app}\help; Flags: ignoreversion; Components: help; 
+Source: {#my_svn_path}\doc\help\*.html; DestDir: {app}\help; Flags: ignoreversion; Components: help;
+Source: {#my_svn_path}\doc\help\*.png; DestDir: {app}\help; Flags: ignoreversion; Components: help; 
  
 ; MMEX Help - Help Directories - Language dependant
-Source: {#mmex_local_output_path}{#mmex_install_root}\help\french\*; DestDir: {app}\help\french; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\french; 
-Source: {#mmex_local_output_path}{#mmex_install_root}\help\german\*; DestDir: {app}\help\german; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\german; 
-Source: {#mmex_local_output_path}{#mmex_install_root}\help\italian\*; DestDir: {app}\help\italian; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\italian; 
-Source: {#mmex_local_output_path}{#mmex_install_root}\help\polish\*; DestDir: {app}\help\polish; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\polish; 
-Source: {#mmex_local_output_path}{#mmex_install_root}\help\russian\*; DestDir: {app}\help\russian; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\russian; 
-Source: {#mmex_local_output_path}{#mmex_install_root}\help\spanish\*; DestDir: {app}\help\spanish; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\spanish; 
+Source: {#my_svn_path}\doc\help\french\*; DestDir: {app}\help\french; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\french; 
+Source: {#my_svn_path}\doc\help\german\*; DestDir: {app}\help\german; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\german; 
+Source: {#my_svn_path}\doc\help\italian\*; DestDir: {app}\help\italian; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\italian; 
+Source: {#my_svn_path}\doc\help\polish\*; DestDir: {app}\help\polish; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\polish; 
+Source: {#my_svn_path}\doc\help\russian\*; DestDir: {app}\help\russian; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\russian; 
+Source: {#my_svn_path}\doc\help\spanish\*; DestDir: {app}\help\spanish; Flags: ignoreversion recursesubdirs createallsubdirs; Components: lang\spanish; 
 
 
 [Icons]
