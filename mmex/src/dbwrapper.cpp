@@ -22,6 +22,7 @@
 #include "guiid.h"
 #include "paths.h"
 #include "constants.h"
+#include "mmex_db_view.h"
 //----------------------------------------------------------------------------
 #include <boost/scoped_ptr.hpp>
 #include <string>
@@ -323,92 +324,23 @@ void mmDBWrapper::createCurrencyV1Table(wxSQLite3Database* db)
 
 void mmDBWrapper::createBudgetingV1Table(wxSQLite3Database* db)
 {
-    try{
-        bool valid = db->TableExists(wxT("BUDGETYEAR_V1"));
-        if (!valid)
-        {
-            db->ExecuteUpdate(wxT("create table BUDGETYEAR_V1(BUDGETYEARID integer primary key, \
-                                 BUDGETYEARNAME TEXT NOT NULL);"));
-            valid = db->TableExists(wxT("BUDGETYEAR_V1"));
-            wxASSERT(valid);
-        }
-
-        valid = db->TableExists(wxT("BUDGETTABLE_V1"));
-        if (!valid)
-        {
-            db->ExecuteUpdate(wxT("create table BUDGETTABLE_V1(BUDGETENTRYID integer primary key, \
-                                 BUDGETYEARID integer, CATEGID integer, SUBCATEGID integer,     \
-                                 PERIOD TEXT NOT NULL, AMOUNT numeric NOT NULL);"));
-            valid = db->TableExists(wxT("BUDGETTABLE_V1"));
-            wxASSERT(valid);
-        }
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createBudgetingV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table BUDGETTABLE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
+    BUDGETYEAR_V1.ensure(db);
+    BUDGETTABLE_V1.ensure(db);
 }
 
 void mmDBWrapper::createStockV1Table(wxSQLite3Database* db)
 {
-    try{
-        bool valid = db->TableExists(wxT("STOCK_V1"));
-        if (!valid)
-        {
-            db->ExecuteUpdate(wxT("create table STOCK_V1(STOCKID integer primary key, \
-                                 HELDAT numeric, PURCHASEDATE TEXT NOT NULL, STOCKNAME TEXT, SYMBOL TEXT, \
-                                 NUMSHARES numeric, PURCHASEPRICE numeric NOT NULL, NOTES TEXT, CURRENTPRICE numeric NOT NULL,\
-                                 VALUE numeric, COMMISSION numeric);"));
-            valid = db->TableExists(wxT("STOCK_V1"));
-            wxASSERT(valid);
-        }
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createStockV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table STOCK_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
+    STOCK_V1.ensure(db);
 }
-
 
 void mmDBWrapper::createAssetsV1Table(wxSQLite3Database* db)
 {
-    try{
-        bool valid = db->TableExists(wxT("ASSETS_V1"));
-        if (!valid)
-        {
-            db->ExecuteUpdate(wxT("create table ASSETS_V1(ASSETID integer primary key, \
-                                 STARTDATE TEXT NOT NULL, ASSETNAME TEXT, \
-                                 VALUE numeric, VALUECHANGE TEXT, NOTES TEXT, VALUECHANGERATE numeric,\
-                                 ASSETTYPE TEXT);"));
-            valid = db->TableExists(wxT("ASSETS_V1"));
-            wxASSERT(valid);
-        }
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createAssetsV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table ASSETS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
+    ASSETS_V1.ensure(db);
 }
 
 void mmDBWrapper::createBillsDepositsV1Table(wxSQLite3Database* db)
 {
-    try{
-        bool valid = db->TableExists(wxT("BILLSDEPOSITS_V1"));
-        if (!valid)
-        {
-            db->ExecuteUpdate(wxT("create table BILLSDEPOSITS_V1(BDID integer primary key, \
-                   ACCOUNTID integer NOT NULL, TOACCOUNTID integer, PAYEEID integer NOT NULL, TRANSCODE TEXT NOT NULL, \
-                   TRANSAMOUNT numeric NOT NULL, STATUS TEXT, TRANSACTIONNUMBER TEXT, NOTES TEXT,       \
-                   CATEGID integer, SUBCATEGID integer, TRANSDATE TEXT, FOLLOWUPID integer, TOTRANSAMOUNT numeric, \
-                   REPEATS numeric, NEXTOCCURRENCEDATE TEXT, NUMOCCURRENCES numeric);"));
-            valid = db->TableExists(wxT("BILLSDEPOSITS_V1"));
-            wxASSERT(valid);
-        }
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createBillsDepositsV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table BILLSDEPOSITS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
+    BILLSDEPOSITS_V1.ensure(db);
 }
 
 bool mmDBWrapper::checkDBVersion(wxSQLite3Database* db)
