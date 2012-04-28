@@ -34,7 +34,7 @@ CC = @CC@
 CXX = @CXX@
 CFLAGS = @CFLAGS@
 CXXFLAGS = @CXXFLAGS@
-CPPFLAGS = @CPPFLAGS@
+CPPFLAGS = @CPPFLAGS@ @BOOST_CPPFLAGS@
 LDFLAGS = @LDFLAGS@
 WX_CXXFLAGS = @WX_CXXFLAGS@
 WX_LIBS = @WX_LIBS@
@@ -177,7 +177,7 @@ install: install_mmex
 	(cd $(srcdir)/doc ; $(INSTALL_DATA)  mmex.1.gz $(DESTDIR)$(datadir)/man/man1)
 
 uninstall: uninstall_mmex
-	(cd $(DESTDIR)$(datadir)/mmex/res ; rm -f kaching.wav mmex.ico splash.png currency_seed.db3)
+	(cd $(DESTDIR)$(datadir)/mmex/res ; rm -f kaching.wav mmex.ico currency_seed.db3)
 	(cd $(DESTDIR)$(datadir)/mmex/po ; rm -f *.mo)
 	(cd $(DESTDIR)$(datadir)/doc/mmex ; rm -f *.txt)
 	(cd $(DESTDIR)$(datadir)/doc/mmex/help ; rm -f *.html *.png)
