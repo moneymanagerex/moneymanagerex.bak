@@ -19,6 +19,7 @@ AC_CANONICAL_SYSTEM
 
 ##########################################################################
 AX_BOOST_BASE([1.48.0])
+AC_SUBST(BOOST_CPPFLAGS)
 # Checks for programs
 
 AC_PROG_CXX
