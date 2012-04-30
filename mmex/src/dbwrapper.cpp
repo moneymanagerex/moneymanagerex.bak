@@ -367,134 +367,29 @@ bool mmDBWrapper::checkDBVersion(wxSQLite3Database* db)
 
 void mmDBWrapper::createAccountListV1Table(wxSQLite3Database* db)
 {
-    try{
-        bool exists = db->TableExists(wxT("ACCOUNTLIST_V1"));
-        if (!exists)
-        {
-            db->ExecuteUpdate(wxT("create table ACCOUNTLIST_V1(ACCOUNTID integer primary key, \
-                                  ACCOUNTNAME TEXT NOT NULL, ACCOUNTTYPE TEXT NOT NULL, ACCOUNTNUM TEXT, \
-                                  STATUS TEXT NOT NULL, \
-                                  NOTES TEXT, HELDAT TEXT, WEBSITE TEXT, CONTACTINFO TEXT,       \
-                                  ACCESSINFO TEXT, INITIALBAL numeric, FAVORITEACCT TEXT NOT NULL, \
-                                  CURRENCYID integer NOT NULL);"));
-            exists = db->TableExists(wxT("ACCOUNTLIST_V1"));
-            wxASSERT(exists);
-        }
-        else
-        {
-#if 0
-            // if we add new fields, we need to alter table as follows
-            int ret = db->ExecuteUpdate(wxT("alter table ACCOUNTLIST_V1 ADD INFOID TEXT;"));
-#endif
-        }
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createAccountListV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table ACCOUNTLIST_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
+    ACCOUNTLIST_V1.ensure(db);
 }
 
 void mmDBWrapper::createCheckingAccountV1Table(wxSQLite3Database* db)
 {
-    try{
-        bool exists = db->TableExists(wxT("CHECKINGACCOUNT_V1"));
-        if (!exists)
-        {
-            db->ExecuteUpdate(wxT("create table CHECKINGACCOUNT_V1(TRANSID integer primary key, \
-                                  ACCOUNTID integer NOT NULL, TOACCOUNTID integer, PAYEEID integer NOT NULL, TRANSCODE TEXT NOT NULL, \
-                                  TRANSAMOUNT numeric NOT NULL, STATUS TEXT, TRANSACTIONNUMBER TEXT, NOTES TEXT,       \
-                                  CATEGID integer, SUBCATEGID integer, TRANSDATE TEXT, FOLLOWUPID integer, TOTRANSAMOUNT numeric);"));
-            exists = db->TableExists(wxT("CHECKINGACCOUNT_V1"));
-            wxASSERT(exists);
-        }
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createCheckingAccountV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table CHECKINGACCOUNT_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
+    CHECKINGACCOUNT_V1.ensure(db);
 }
 
 void mmDBWrapper::createSplitTransactionsV1Table(wxSQLite3Database* db)
 {
-    try{
-        bool exists = db->TableExists(wxT("SPLITTRANSACTIONS_V1"));
-        if (!exists)
-        {
-            db->ExecuteUpdate(wxT("create table SPLITTRANSACTIONS_V1(SPLITTRANSID integer primary key, \
-                                  TRANSID numeric NOT NULL, CATEGID integer, SUBCATEGID integer, SPLITTRANSAMOUNT numeric);"));
-            exists = db->TableExists(wxT("SPLITTRANSACTIONS_V1"));
-            wxASSERT(exists);
-        }
-
-        exists = db->TableExists(wxT("BUDGETSPLITTRANSACTIONS_V1"));
-        if (!exists)
-        {
-            db->ExecuteUpdate(wxT("create table BUDGETSPLITTRANSACTIONS_V1(SPLITTRANSID integer primary key, \
-                                  TRANSID integer NOT NULL, CATEGID integer, SUBCATEGID integer, SPLITTRANSAMOUNT numeric);"));
-            exists = db->TableExists(wxT("BUDGETSPLITTRANSACTIONS_V1"));
-            wxASSERT(exists);
-        }
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createSplitTransactionsV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table BUDGETSPLITTRANSACTIONS_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
+    SPLITTRANSACTIONS_V1.ensure(db);
+    BUDGETSPLITTRANSACTIONS_V1.ensure(db);
 }
 
 void mmDBWrapper::createPayeeV1Table(wxSQLite3Database* db)
 {
-    try{
-    bool exists = db->TableExists(wxT("PAYEE_V1"));
-    if (!exists)
-    {
-        db->ExecuteUpdate(wxT("create table PAYEE_V1(PAYEEID integer primary key, \
-                             PAYEENAME TEXT NOT NULL, CATEGID integer, SUBCATEGID integer);"));
-        exists = db->TableExists(wxT("PAYEE_V1"));
-        wxASSERT(exists);
-    }
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createPayeeV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table PAYEE_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
+    PAYEE_V1.ensure(db);
 }
 
 void mmDBWrapper::createCategoryV1Table(wxSQLite3Database* db)
 {
-    try{
-        bool existsCat = db->TableExists(wxT("CATEGORY_V1"));
-        if (!existsCat)
-        {
-            /* Create CATEGORY_V1 Tables */
-            db->ExecuteUpdate(wxT("create table CATEGORY_V1(CATEGID integer primary key, \
-                                 CATEGNAME TEXT NOT NULL);"));
-
-            {
-                bool ok = db->TableExists(wxT("CATEGORY_V1"));
-                wxASSERT(ok);
-                ok = ok; // removes compiler's warning
-            }
-        }
-
-        bool existsSubCat = db->TableExists(wxT("SUBCATEGORY_V1"));
-        if (!existsSubCat)
-        {
-            /* Create SUBCATEGORY_V1 Tables */
-            db->ExecuteUpdate(wxT("create table SUBCATEGORY_V1(SUBCATEGID integer primary key, \
-                                 SUBCATEGNAME TEXT NOT NULL, CATEGID integer NOT NULL);"));
-            existsSubCat = db->TableExists(wxT("SUBCATEGORY_V1"));
-            wxASSERT(existsSubCat);
-        }
-
-        if (!existsCat)
-        {
-            createDefaultCategories(db);
-        }
-    } catch(const wxSQLite3Exception& e)
-    {
-        wxLogDebug(wxT("Database::createCategoryV1Table: Exception"), e.GetMessage().c_str());
-        wxLogError(wxT("create table CATEGORY_V1. ") + wxString::Format(_("Error: %s"), e.GetMessage().c_str()));
-    }
+    CATEGORY_V1.ensure(db);
+    SUBCATEGORY_V1.ensure(db);
 }
 
 /*
