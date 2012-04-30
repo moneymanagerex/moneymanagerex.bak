@@ -24,6 +24,8 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "assetspanel.h"
+#include "mmex_db_view.h"
+#include <boost/foreach.hpp>
 
 wxString mmReportSummaryAssets::getHTMLText()
 {
@@ -48,43 +50,27 @@ wxString mmReportSummaryAssets::getHTMLText()
     hb.endTableRow();
 
     mmDBWrapper::loadBaseCurrencySettings(db_);
-    
-    static const char sql[] =
-    "select ASSETID, "
-           "ASSETNAME, "
-           "ASSETTYPE, " 
-           "NOTES " 
-    "from ASSETS_V1";
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-
-    while (q1.NextRow())
+    double assetBalance = 0.0;
+    wxString assetBalanceStr;
+    std::vector<DB_View_ASSETS_V1::Data> all_assets = ASSETS_V1.all(db_);
+    BOOST_FOREACH(const DB_View_ASSETS_V1::Data &asset, all_assets)
     {
-        mmAssetHolder th;
-
-        th.id_         = q1.GetInt(wxT("ASSETID"));
-        th.value_      = mmDBWrapper::getAssetValue(db_, th.id_);
-        th.assetName_  = q1.GetString(wxT("ASSETNAME"));
-        th.asset_notes_ = q1.GetString(wxT("NOTES"));
-
-        wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
-        th.assetType_ = wxGetTranslation(assetTypeStr);
-
-        mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
-
+        double value = mmDBWrapper::getAssetValue(db_, asset.ASSETID);
+        assetBalance += value;
+        wxString asset_type = wxGetTranslation(asset.ASSETTYPE);
+        wxString value_str;
+        mmex::formatDoubleToCurrencyEdit(value, value_str);
+        
         hb.startTableRow();
-        hb.addTableCell(th.assetName_, false, true);
-        hb.addTableCell(th.assetType_);
-        hb.addTableCell(th.valueStr_, true);
-        hb.addTableCell(th.asset_notes_);
+        hb.addTableCell(asset.ASSETNAME, false, true);
+        hb.addTableCell(asset_type);
+        hb.addTableCell(value_str, true);
+        hb.addTableCell(asset.NOTES);
         hb.endTableRow();
     }
-    q1.Finalize();
     
     /* Assets */
-    double assetBalance = mmDBWrapper::getAssetBalance(db_);
-    wxString assetBalanceStr;
-    mmDBWrapper::loadBaseCurrencySettings(db_);
     mmex::formatDoubleToCurrency(assetBalance, assetBalanceStr);
 
     hb.addRowSeparator(4);
