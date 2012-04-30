@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex 0.9.8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-27 17:47+0300\n"
-"PO-Revision-Date: 2012-03-27 17:47+0300\n"
-"Last-Translator: Nikolay Akimov <vomikan@mail.ru>\n"
+"PO-Revision-Date: 2012-04-29 18:31+0100\n"
+"Last-Translator: Jorge\n"
 "Language-Team: jorgeb\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "Título del informe:"
 
 #: src/customreportdialog.cpp:84
 msgid "Report Title is used as the file name of the SQL script."
-msgstr ""
+msgstr "El título del informe es utilizado como nombre de fichero del script SQL."
 
 #: src/customreportdialog.cpp:87
 msgid "Heading"
@@ -39,12 +39,10 @@ msgid "SQL Source Script:"
 msgstr "Código del script SQL:"
 
 #: src/customreportdialog.cpp:121
-#, fuzzy
 msgid "&Open"
-msgstr "Abierta"
+msgstr "Abrir"
 
 #: src/customreportdialog.cpp:123
-#, fuzzy
 msgid "Locate and load an SQL script file into the script area."
 msgstr "Seleccionar y cargar un fichero de script SQL."
 
@@ -54,19 +52,17 @@ msgstr "Guardar"
 
 #: src/customreportdialog.cpp:127
 msgid "Save SQL script to file name set by the Report Title."
-msgstr ""
+msgstr "Guardar script SQL con el nombre indicado en el título del informe."
 
 #: src/customreportdialog.cpp:129
 msgid "&Run"
 msgstr "Ejecutar"
 
 #: src/customreportdialog.cpp:131
-#, fuzzy
 msgid "Test script. Save before running. SQL errors will result in loss of script."
 msgstr "Probar script. Guardar antes de ejecutar. Los errores SQL darán lugar a la pérdida del script."
 
 #: src/customreportdialog.cpp:133
-#, fuzzy
 msgid "&Clear"
 msgstr "Limpiar"
 
@@ -80,7 +76,6 @@ msgid "&Close"
 msgstr "&Cerrar"
 
 #: src/customreportdialog.cpp:139
-#, fuzzy
 msgid "Save changes before closing. Changes without Save will be lost."
 msgstr "Guarde los cambios antes de cerrar. Los cambios sin guardar se perderán."
 
@@ -94,10 +89,9 @@ msgstr "No es posible abrir el fichero."
 
 #: src/customreportdialog.cpp:220
 msgid "Please supply the Report Title before saving"
-msgstr ""
+msgstr "Por favor, proporcione el título del informe antes de guardar"
 
 #: src/customreportdialog.cpp:242
-#, fuzzy
 msgid ""
 " entry location:\n"
 "\n"
@@ -121,19 +115,16 @@ msgid "Warning"
 msgstr "Advertencia"
 
 #: src/reportbudgetcategorysummary.cpp:100
-#, fuzzy
 msgid "Budget Categories for "
-msgstr "Ver todas las categorías del presupuesto"
+msgstr "Categorías del presupuesto para "
 
 #: src/reportbudgetcategorysummary.cpp:102
-#, fuzzy
 msgid "Budget Category Summary for "
-msgstr "Organización de presupuesto para "
+msgstr "Resumen de categoría de presupuesto para "
 
 #: src/reportbudgetcategorysummary.cpp:103
-#, fuzzy
 msgid "( Estimated Vs Actual )"
-msgstr " (Estimado vs Real)"
+msgstr " ( Estimado vs Real )"
 
 #: src/reportbudgetcategorysummary.cpp:115
 #: src/mmhomepagepanel.cpp:661
@@ -170,39 +161,33 @@ msgid "Actual"
 msgstr "Real"
 
 #: src/reportbudgetcategorysummary.cpp:309
-#, fuzzy
 msgid "Estimated Income: "
-msgstr "Ingresos estimados: Ingresos reales: "
+msgstr "Ingresos estimados: "
 
 #: src/reportbudgetcategorysummary.cpp:310
-#, fuzzy
 msgid "Actual Income: "
-msgstr "Ingresos:"
+msgstr "Ingresos reales: "
 
 #: src/reportbudgetcategorysummary.cpp:311
-#, fuzzy
 msgid "Difference Income: "
-msgstr "Diferencia:"
+msgstr "Diferencia en ingresos: "
 
 #: src/reportbudgetcategorysummary.cpp:313
-#, fuzzy
 msgid "Estimated Expenses: "
-msgstr "Gastos estimados: Gastos reales: "
+msgstr "Gastos estimados: "
 
 #: src/reportbudgetcategorysummary.cpp:314
-#, fuzzy
 msgid "Actual Expenses: "
-msgstr "Gastos:"
+msgstr "Gastos reales: "
 
 #: src/reportbudgetcategorysummary.cpp:315
-#, fuzzy
 msgid "Difference Expenses: "
-msgstr "Otros gastos"
+msgstr "Diferencia en gastos: "
 
 #: src/mmhomepagepanel.cpp:89
 #: src/filtertransdialog.cpp:199
 msgid "Reconciled"
-msgstr "Reconciliada"
+msgstr "Reconciliado"
 
 #: src/mmhomepagepanel.cpp:90
 msgid "Balance"
@@ -264,14 +249,12 @@ msgid "Current Month"
 msgstr "Mes actual"
 
 #: src/mmhomepagepanel.cpp:436
-#, fuzzy
 msgid "Current Month to Date"
-msgstr "Mes actual"
+msgstr "Mes actual a fecha"
 
 #: src/mmhomepagepanel.cpp:438
-#, fuzzy
 msgid "Income vs Expenses: "
-msgstr "Ingresos vs Gastos"
+msgstr "Ingresos vs Gastos: "
 
 #: src/mmhomepagepanel.cpp:452
 #: src/reporttransactions.cpp:75
@@ -297,9 +280,8 @@ msgstr " días restantes"
 
 #: src/mmhomepagepanel.cpp:521
 #: src/mmhomepagepanel.cpp:528
-#, fuzzy
 msgid "Inactive"
-msgstr " ¡activo!"
+msgstr "Inactivo"
 
 #: src/mmhomepagepanel.cpp:526
 msgid " days overdue!"
@@ -310,9 +292,8 @@ msgid "Upcoming Transactions"
 msgstr "Próximas transacciones"
 
 #: src/mmhomepagepanel.cpp:656
-#, fuzzy
 msgid "Top Withdrawals: "
-msgstr "Cargo"
+msgstr "Gastos principales: "
 
 #: src/mmhomepagepanel.cpp:656
 msgid "Last 30 Days"
@@ -320,7 +301,7 @@ msgstr "Últimos 30 días"
 
 #: src/mmhomepagepanel.cpp:662
 msgid "Quantity"
-msgstr ""
+msgstr "Cantidad"
 
 #: src/mmhomepagepanel.cpp:701
 msgid "Transaction Statistics"
@@ -356,9 +337,8 @@ msgstr "Introduzca aquí el nombre de la categoría a añadir o editar"
 
 #: src/categdialog.cpp:157
 #: src/payeedialog.cpp:112
-#, fuzzy
 msgid "Add"
-msgstr "&Añadir"
+msgstr "Añadir"
 
 #: src/categdialog.cpp:159
 msgid "Add a new category"
@@ -375,7 +355,6 @@ msgstr "Editar el nombre de una categoría existente"
 
 #: src/categdialog.cpp:167
 #: src/payeedialog.cpp:122
-#, fuzzy
 msgid "Remove"
 msgstr "Eliminar"
 
@@ -395,9 +374,8 @@ msgstr "Utilizar la categoría seleccionada actualmente para la transacción"
 #: src/categdialog.cpp:180
 #: src/filtertransdialog.cpp:285
 #: src/payeedialog.cpp:136
-#, fuzzy
 msgid "&Cancel"
-msgstr "Cancelar"
+msgstr "&Cancelar"
 
 #: src/categdialog.cpp:194
 msgid "Category cannot be empty"
@@ -475,27 +453,23 @@ msgid "Organise Categories"
 msgstr "Organizar categorías"
 
 #: src/filtertransdialog.cpp:129
-#, fuzzy
 msgid " Specify "
-msgstr "Especificar tipo"
+msgstr " Especificar "
 
 #: src/filtertransdialog.cpp:145
 #: src/reporttransactions.cpp:189
-#, fuzzy
 msgid "Account: "
-msgstr "Cuentas: "
+msgstr "Cuenta: "
 
 #: src/filtertransdialog.cpp:156
 #: src/reporttransactions.cpp:192
-#, fuzzy
 msgid "Date Range: "
-msgstr "Especificar rango de fechas"
+msgstr "Rango de fechas: "
 
 #: src/filtertransdialog.cpp:172
 #: src/reporttransactions.cpp:196
-#, fuzzy
 msgid "Payee: "
-msgstr "Beneficiario"
+msgstr "Beneficiario: "
 
 #: src/filtertransdialog.cpp:177
 msgid "Select Payee"
@@ -503,9 +477,8 @@ msgstr "Seleccionar beneficiario"
 
 #: src/filtertransdialog.cpp:182
 #: src/reporttransactions.cpp:200
-#, fuzzy
 msgid "Category: "
-msgstr "Categoría"
+msgstr "Categoría: "
 
 #: src/filtertransdialog.cpp:187
 #: src/filtertransdialog.cpp:530
@@ -514,9 +487,8 @@ msgstr "Seleccionar categoría"
 
 #: src/filtertransdialog.cpp:192
 #: src/reporttransactions.cpp:204
-#, fuzzy
 msgid "Status: "
-msgstr "Estado"
+msgstr "Estado: "
 
 #: src/filtertransdialog.cpp:198
 msgid "None"
@@ -539,9 +511,8 @@ msgid "Specify the status for the transaction"
 msgstr "Especifique el estado de la transacción"
 
 #: src/filtertransdialog.cpp:210
-#, fuzzy
 msgid "Type: "
-msgstr "Tipo:"
+msgstr "Tipo: "
 
 #: src/filtertransdialog.cpp:215
 #: src/filtertransdialog.cpp:225
@@ -566,22 +537,18 @@ msgid "Specify the type of transaction."
 msgstr "Especifique el tipo de transacción."
 
 #: src/filtertransdialog.cpp:241
-#, fuzzy
 msgid "Amount Range: "
-msgstr "Especificar el rango de cantidades"
+msgstr "Rango de cantidades: "
 
 #: src/filtertransdialog.cpp:255
-#, fuzzy
 msgid "Number: "
-msgstr "Número"
+msgstr "Número: "
 
 #: src/filtertransdialog.cpp:264
-#, fuzzy
 msgid "Notes: "
-msgstr "Notas:"
+msgstr "Notas: "
 
 #: src/filtertransdialog.cpp:282
-#, fuzzy
 msgid "&OK"
 msgstr "Aceptar"
 
@@ -598,23 +565,20 @@ msgid "Error"
 msgstr "Error"
 
 #: src/filtertransdialog.cpp:607
-#, fuzzy
 msgid "From "
-msgstr "From: "
+msgstr "De "
 
 #: src/filtertransdialog.cpp:607
-#, fuzzy
 msgid " to "
-msgstr " para editar:"
+msgstr " para "
 
 #: src/filtertransdialog.cpp:664
-#, fuzzy
 msgid "Min: "
-msgstr "Ganancia: "
+msgstr "Mín: "
 
 #: src/filtertransdialog.cpp:664
 msgid " Max: "
-msgstr ""
+msgstr " Máx: "
 
 #: src/payeedialog.cpp:66
 msgid "Organize Payees"
@@ -728,24 +692,20 @@ msgid "Total Amount: "
 msgstr "Cantidad Total: "
 
 #: src/reporttransactions.cpp:182
-#, fuzzy
 msgid "<b>Note:</b> Transactions contain <b>'transfers'</b> may either be added or subtracted to the <b>'Total Amount'</b> depending on last selected account."
 msgstr "<b>Nota:</b> Las transacciones que contienen <b>'transferencias'</B> se pueden sumar o restar a la <b>'Cantidad total'</b> dependiendo de la última cuenta seleccionada."
 
 #: src/reporttransactions.cpp:222
-#, fuzzy
 msgid "Filtering Details: "
-msgstr "Filtrar beneficiarios:"
+msgstr "Detalles de filtrado: "
 
 #: src/currencydialog.cpp:138
-#, fuzzy
 msgid "Converted to:"
-msgstr "1000 Convertido en:"
+msgstr "Convertido a:"
 
 #: src/currencydialog.cpp:150
-#, fuzzy
 msgid "Shown As: "
-msgstr "Mostrando periodo: "
+msgstr "Mostrado como: "
 
 #: src/currencydialog.cpp:173
 msgid "Currency Name"
@@ -816,9 +776,8 @@ msgid "Scale should be greater than zero"
 msgstr "La escala debe ser mayor que cero"
 
 #: src/currencydialog.cpp:352
-#, fuzzy
 msgid "Base Conversion Rate should be positive"
-msgstr "La conversión a tasa base debe ser mayor que cero"
+msgstr "La conversión a tasa base debe ser positiva"
 
 #: src/util.cpp:422
 msgid "January"
@@ -970,9 +929,8 @@ msgid "Choose Account to Export from:"
 msgstr "Seleccionar cuenta de la que exportar:"
 
 #: src/util.cpp:516
-#, fuzzy
 msgid "QIF Files"
-msgstr "Ficheros &QIF"
+msgstr "Ficheros QIF"
 
 #: src/util.cpp:517
 msgid "Choose QIF data file to Export"
@@ -996,7 +954,7 @@ msgstr "MMEX permite configurar pagos habituales como transacciones. Estas trans
 
 #: src/util.cpp:909
 msgid "Tip: These transactions can be set up to activate – allowing the user to adjust any values on the due date."
-msgstr ""
+msgstr "Consejo: Estas transacciones se pueden configurar para activarse - permitiendo al usuario ajustar cualquier valor en la fecha de vencimiento."
 
 #: src/util.cpp:916
 msgid "Recommendation: Always backup your .mmb database file regularly."
@@ -1081,7 +1039,7 @@ msgstr "Consejo para salir del endeudamiento: Pague más que el mínimo."
 
 #: src/util.cpp:938
 msgid "Before going to a shop and buy something: take the time making a list of what you really need. In the shop buy what is in your list."
-msgstr ""
+msgstr "Antes de ir a una tienda y comprar algo: tómese algo de tiempo para hacer una lista de lo que realmente necesite. En la tienda compre lo que haya en la lista."
 
 #: src/util.cpp:949
 msgid "View All Transactions"
@@ -1096,32 +1054,28 @@ msgid "View Current Month"
 msgstr "Ver mes actual"
 
 #: src/util.cpp:952
-#, fuzzy
 msgid "View Last 30 days"
-msgstr "Ver 30 días"
+msgstr "Ver últimos 30 días"
 
 #: src/util.cpp:953
-#, fuzzy
 msgid "View Last 90 days"
-msgstr "Ver 90 días"
+msgstr "Ver últimos 90 días"
 
 #: src/util.cpp:954
 msgid "View Last Month"
 msgstr "Ver mes anterior"
 
 #: src/util.cpp:955
-#, fuzzy
 msgid "View Last 3 Months"
-msgstr "Ver mes anterior"
+msgstr "Ver últimos 3 meses"
 
 #: src/util.cpp:956
 msgid "View Reconciled"
 msgstr "Ver reconciliadas"
 
 #: src/util.cpp:957
-#, fuzzy
 msgid "View Not-Reconciled"
-msgstr "Ver reconciliadas"
+msgstr "Ver no reconciliadas"
 
 #: src/util.cpp:958
 msgid "View UnReconciled"
@@ -1129,15 +1083,15 @@ msgstr "Ver no reconciliadas"
 
 #: src/recentfiles.cpp:94
 msgid "Empty"
-msgstr ""
+msgstr "Vacío"
 
 #: src/mmhelppanel.cpp:80
 msgid "&Back"
-msgstr ""
+msgstr "Atrás"
 
 #: src/mmhelppanel.cpp:81
 msgid "&Forward"
-msgstr ""
+msgstr "Adelante"
 
 #: src/mmhelppanel.cpp:83
 msgid " Help"
@@ -1196,9 +1150,8 @@ msgid " starts"
 msgstr " se inicie"
 
 #: src/appstartdialog.cpp:162
-#, fuzzy
 msgid "Close"
-msgstr "&Cerrar"
+msgstr "Cerrar"
 
 #: src/appstartdialog.cpp:176
 msgid "Open the previously opened database : "
@@ -1206,12 +1159,11 @@ msgstr "Abre la base de datos utilizada previamente : "
 
 #: src/appstartdialog.cpp:187
 msgid "Exit"
-msgstr ""
+msgstr "Salir"
 
 #: src/reportbudgetingperf.cpp:106
-#, fuzzy
 msgid "Budget Performance for "
-msgstr "Cumplimiento del presupuesto"
+msgstr "Cumplimiento del presupuesto para "
 
 #: src/reportbudgetingperf.cpp:131
 msgid "Overall"
@@ -1236,12 +1188,10 @@ msgid "&New"
 msgstr "&Nuevo"
 
 #: src/billsdepositspanel.cpp:217
-#, fuzzy
 msgid "New Bills & Deposit Series"
 msgstr "Nueva serie de facturas y abonos"
 
 #: src/billsdepositspanel.cpp:221
-#, fuzzy
 msgid "Edit Bills & Deposit Series"
 msgstr "Editar serie de facturas y abonos"
 
@@ -1253,7 +1203,6 @@ msgid "&Delete"
 msgstr "Borrar"
 
 #: src/billsdepositspanel.cpp:226
-#, fuzzy
 msgid "Delete Bills & Deposit Series"
 msgstr "Borrar serie de facturas y abonos"
 
@@ -1262,7 +1211,6 @@ msgid "En&ter"
 msgstr "Efectuar"
 
 #: src/billsdepositspanel.cpp:232
-#, fuzzy
 msgid "Enter Next Bills & Deposit Occurrence"
 msgstr "Efectuar el próximo evento de facturas y abonos"
 
@@ -1271,7 +1219,6 @@ msgid "&Skip"
 msgstr "Omitir"
 
 #: src/billsdepositspanel.cpp:237
-#, fuzzy
 msgid "Skip Next Bills & Deposit Occurrence"
 msgstr "Omitir ocurrencia de facturas y abonos"
 
@@ -1328,23 +1275,22 @@ msgstr "Diariamente"
 #: src/billsdepositspanel.cpp:372
 #: src/billsdepositspanel.cpp:376
 msgid "In "
-msgstr ""
+msgstr "En "
 
 #: src/billsdepositspanel.cpp:372
 #: src/billsdepositspanel.cpp:380
 msgid " Days"
-msgstr ""
+msgstr " días"
 
 #: src/billsdepositspanel.cpp:376
 #: src/billsdepositspanel.cpp:384
-#, fuzzy
 msgid " Months"
-msgstr "Mes"
+msgstr " Meses"
 
 #: src/billsdepositspanel.cpp:380
 #: src/billsdepositspanel.cpp:384
 msgid "Every "
-msgstr ""
+msgstr "Cada "
 
 #: src/billsdepositspanel.cpp:466
 msgid "Enter next Occurrence..."
@@ -1389,7 +1335,7 @@ msgstr "Detalles de la transacción"
 
 #: src/billsdepositsdialog.cpp:274
 msgid "Calendar"
-msgstr ""
+msgstr "Calendario"
 
 #: src/billsdepositsdialog.cpp:296
 msgid "Repeating Transaction Details"
@@ -1420,7 +1366,7 @@ msgstr "Especifique la fecha de la próxima factura o abono"
 
 #: src/billsdepositsdialog.cpp:335
 msgid "Retard or advance the date of the 'next occurrence"
-msgstr ""
+msgstr "Avanzar o retrasar la fecha de la siguiente ocurrencia"
 
 #: src/billsdepositsdialog.cpp:346
 #: src/billsdepositsdialog.cpp:1344
@@ -1429,27 +1375,27 @@ msgstr "Se repite"
 
 #: src/billsdepositsdialog.cpp:361
 msgid "In (x) Days"
-msgstr ""
+msgstr "En (x) días"
 
 #: src/billsdepositsdialog.cpp:362
 msgid "In (x) Months"
-msgstr ""
+msgstr "En (x) meses"
 
 #: src/billsdepositsdialog.cpp:363
 msgid "Every (x) Days"
-msgstr ""
+msgstr "Cada (x) días"
 
 #: src/billsdepositsdialog.cpp:364
 msgid "Every (x) Months"
-msgstr ""
+msgstr "Cada (x) meses"
 
 #: src/billsdepositsdialog.cpp:370
 msgid "Next"
-msgstr ""
+msgstr "Siguiente"
 
 #: src/billsdepositsdialog.cpp:372
 msgid "Advance the Next Occurance Date with the specified values"
-msgstr ""
+msgstr "Avanzar la fecha de la siguiente ocurrencia con los valores especificados"
 
 #: src/billsdepositsdialog.cpp:380
 #: src/billsdepositsdialog.cpp:1384
@@ -1461,27 +1407,24 @@ msgid "Set to 'Auto Execute' on the 'Next Occurrence' date."
 msgstr "Auto ejecutar en la fecha de \"siguiente ocurrencia\"."
 
 #: src/billsdepositsdialog.cpp:392
-#, fuzzy
 msgid "Automatic Execution will require user acknowledgement."
-msgstr "Ejecución automática con confirmación del usuario."
+msgstr "La ejecución automática requerirá confirmación del usuario."
 
 #: src/billsdepositsdialog.cpp:395
 msgid "Set 'Auto Execute' without user acknowlegement."
 msgstr "Auto ejecutar sin confirmación del usuario."
 
 #: src/billsdepositsdialog.cpp:397
-#, fuzzy
 msgid "Automatic Execution will occur without user interaction"
-msgstr "La ejecución se realizará sin intervención del usuario"
+msgstr "La ejecución automática se realizará sin intervención del usuario"
 
 #: src/billsdepositsdialog.cpp:415
 msgid "Specify the date of the transaction"
 msgstr "Especifique la fecha de la transacción"
 
 #: src/billsdepositsdialog.cpp:418
-#, fuzzy
 msgid "Retard or advance the date of the transaction"
-msgstr "Especifique la fecha de la transacción"
+msgstr "Avanzar o retrasar la fecha de la transacción"
 
 #: src/billsdepositsdialog.cpp:455
 msgid "Specify the type of transactions to be created."
@@ -1492,9 +1435,8 @@ msgid "Advanced"
 msgstr "Avanzado"
 
 #: src/billsdepositsdialog.cpp:459
-#, fuzzy
 msgid "Allows the setting of different amounts in the FROM and TO accounts."
-msgstr "Especifique el importe de la transferencia en la cuenta origen y destino"
+msgstr "Permite la introducción de cantidades diferentes en las cuentas de CARGO y ABONO."
 
 #: src/billsdepositsdialog.cpp:469
 #: src/billsdepositsdialog.cpp:775
@@ -1502,7 +1444,6 @@ msgid "Specify the amount for this transaction"
 msgstr "Especifique el importe de esta transacción"
 
 #: src/billsdepositsdialog.cpp:470
-#, fuzzy
 msgid "Specify the amount to be transfered"
 msgstr "Especifique el importe de esta transacción"
 
@@ -1511,14 +1452,12 @@ msgid "Specify the transfer amount in the To Account"
 msgstr "Especifique la cantidad en la cuenta destino"
 
 #: src/billsdepositsdialog.cpp:494
-#, fuzzy
 msgid "Specify where the transaction is going to"
-msgstr "Especifique a donde va o de donde viene la transacción"
+msgstr "Especifique a donde va la transacción"
 
 #: src/billsdepositsdialog.cpp:495
-#, fuzzy
 msgid "Specify where the transaction is coming from"
-msgstr "Especifique a donde va o de donde viene la transacción"
+msgstr "Especifique de donde viene la transacción"
 
 #: src/billsdepositsdialog.cpp:504
 msgid "Select To Acct"
@@ -1533,9 +1472,8 @@ msgid "Split"
 msgstr "Dividir"
 
 #: src/billsdepositsdialog.cpp:515
-#, fuzzy
 msgid "Use split Categories"
-msgstr "Dividir categoría"
+msgstr "Utilizar categorías divididas"
 
 #: src/billsdepositsdialog.cpp:533
 msgid "Specify any associated check number or transaction number"
@@ -1581,9 +1519,8 @@ msgid "From"
 msgstr "De"
 
 #: src/billsdepositsdialog.cpp:821
-#, fuzzy
 msgid "Select From Account"
-msgstr "Seleccionar cuenta de abono"
+msgstr "Seleccionar cuenta de cargo"
 
 #: src/billsdepositsdialog.cpp:834
 msgid "To"
@@ -1607,9 +1544,8 @@ msgid "Category "
 msgstr "Categoría"
 
 #: src/billsdepositsdialog.cpp:928
-#, fuzzy
 msgid "Advanced Amount"
-msgstr "Avanzado"
+msgstr "Importe avanzado"
 
 #: src/billsdepositsdialog.cpp:946
 msgid "To Account "
@@ -1620,54 +1556,48 @@ msgid "From and To Account cannot be the same."
 msgstr "La cuentas de cargo y de abono no pueden ser la misma."
 
 #: src/billsdepositsdialog.cpp:1298
-#, fuzzy
 msgid "Specify the transfer amount in the From Account"
-msgstr "Especifique la cantidad en la cuenta destino"
+msgstr "Especifique la cantidad en la cuenta origen"
 
 #: src/billsdepositsdialog.cpp:1345
-#, fuzzy
 msgid "Activates"
-msgstr "Apreciación"
+msgstr "Activa"
 
 #: src/billsdepositsdialog.cpp:1347
 msgid "Period: Days"
-msgstr ""
+msgstr "Plazo: Días"
 
 #: src/billsdepositsdialog.cpp:1348
-#, fuzzy
 msgid "Period: Months"
-msgstr "Cuatro Meses"
+msgstr "Plazo: Meses"
 
 #: src/billsdepositsdialog.cpp:1357
 #: src/billsdepositsdialog.cpp:1371
 msgid "Specify period in Days to activate."
-msgstr ""
+msgstr "Especifique el plazo en días para activar."
 
 #: src/billsdepositsdialog.cpp:1357
 #: src/billsdepositsdialog.cpp:1364
 msgid "Becomes blank when not active."
-msgstr ""
+msgstr "Se deja en blanco cuando no está activo."
 
 #: src/billsdepositsdialog.cpp:1364
 #: src/billsdepositsdialog.cpp:1378
-#, fuzzy
 msgid "Specify period in Months to activate."
-msgstr "Especifique el tipo de cuenta a crear."
+msgstr "Especifique el plazo en meses para activar."
 
 #: src/billsdepositsdialog.cpp:1371
 #: src/billsdepositsdialog.cpp:1378
 msgid "Leave blank when not active."
-msgstr ""
+msgstr "Dejar en blanco cuando no esté activo."
 
 #: src/billsdepositsdialog.cpp:1385
-#, fuzzy
 msgid "Specify the number of times this series repeats."
-msgstr "Especifique el número de veces que se repite esta serie. Déjelo en blanco si la serie continúa para siempre."
+msgstr "Especifique el número de veces que se repite esta serie."
 
 #: src/billsdepositsdialog.cpp:1385
-#, fuzzy
 msgid "Leave blank if this series continues forever."
-msgstr "Especifique el número de veces que se repite esta serie. Déjelo en blanco si la serie continúa para siempre."
+msgstr "Déjelo en blanco si la serie continúa indefinidamente."
 
 #: src/assetspanel.cpp:137
 #: src/reportincexpesestime.cpp:112
@@ -1729,12 +1659,11 @@ msgstr "Corfirmar borrar activo"
 
 #: src/assetspanel.cpp:444
 msgid "Thank you! "
-msgstr ""
+msgstr "¡Gracias!"
 
 #: src/assetspanel.cpp:444
-#, fuzzy
 msgid "App"
-msgstr "Abr"
+msgstr "App"
 
 #: src/reportincexpenses.cpp:48
 #: src/mmex.cpp:1258
@@ -1764,24 +1693,20 @@ msgstr "Ver las categorías de gasto del presupuesto"
 #: src/budgetingpanel.cpp:142
 #: src/budgetingpanel.cpp:168
 #: src/budgetingpanel.cpp:339
-#, fuzzy
 msgid "View Budget Category Summary"
-msgstr "Ver todas las categorías del presupuesto"
+msgstr "Ver resumen de categorías del presupuesto"
 
 #: src/budgetingpanel.cpp:196
-#, fuzzy
 msgid "Financial Year: "
-msgstr "Año fiscal anterior"
+msgstr "Año fiscal: "
 
 #: src/budgetingpanel.cpp:200
-#, fuzzy
 msgid "Year: "
-msgstr "Anualmente"
+msgstr "Año: "
 
 #: src/budgetingpanel.cpp:205
-#, fuzzy
 msgid "Month: "
-msgstr "Mes"
+msgstr "Mes: "
 
 #: src/budgetingpanel.cpp:208
 msgid "Budget Setup for "
@@ -1792,38 +1717,33 @@ msgid "Viewing All Budget Categories"
 msgstr "Viendo todas las categorías del presupuesto"
 
 #: src/budgetingpanel.cpp:229
-#, fuzzy
 msgid "Income......."
-msgstr "Ingresos"
+msgstr "Ingresos....."
 
 #: src/budgetingpanel.cpp:234
 #: src/budgetingpanel.cpp:257
 #: src/budgetingpanel.cpp:541
 #: src/budgetingpanel.cpp:551
-#, fuzzy
 msgid "Estimated: "
-msgstr "Estimado"
+msgstr "Estimado: "
 
 #: src/budgetingpanel.cpp:238
 #: src/budgetingpanel.cpp:261
 #: src/budgetingpanel.cpp:544
 #: src/budgetingpanel.cpp:554
-#, fuzzy
 msgid "Actual: "
-msgstr "Real"
+msgstr "Real: "
 
 #: src/budgetingpanel.cpp:242
 #: src/budgetingpanel.cpp:265
 #: src/budgetingpanel.cpp:548
 #: src/budgetingpanel.cpp:558
-#, fuzzy
 msgid "Difference: "
-msgstr "Diferencia:"
+msgstr "Diferencia: "
 
 #: src/budgetingpanel.cpp:252
-#, fuzzy
 msgid "Expenses..."
-msgstr "Gastos"
+msgstr "Gastos......."
 
 #: src/budgetingpanel.cpp:288
 msgid "Category  "
@@ -1993,9 +1913,8 @@ msgid "Where the Money Comes From"
 msgstr "De dónde viene el dinero"
 
 #: src/mmex.cpp:1230
-#, fuzzy
 msgid "Payees"
-msgstr "Beneficiario"
+msgstr "Beneficiarios"
 
 #: src/mmex.cpp:1285
 #: src/mmex.cpp:2093
@@ -2013,9 +1932,8 @@ msgstr "Cumplimiento del presupuesto"
 
 #: src/mmex.cpp:1312
 #: src/mmex.cpp:1573
-#, fuzzy
 msgid "Budget Category Summary"
-msgstr "Introducción de presupuesto"
+msgstr "Resumen de catergorías del presupuesto"
 
 #: src/mmex.cpp:1340
 #: src/mmex.cpp:3464
@@ -2023,9 +1941,8 @@ msgid "Cash Flow"
 msgstr "Flujo de caja"
 
 #: src/mmex.cpp:1343
-#, fuzzy
 msgid "Cash Flow - With Bank Accounts"
-msgstr "Flujo de caja - Con cuentas a plazo"
+msgstr "Flujo de caja - Con cuentas bancarias"
 
 #: src/mmex.cpp:1348
 msgid "Cash Flow - With Term Accounts"
@@ -2041,16 +1958,15 @@ msgstr "Ayuda"
 
 #: src/mmex.cpp:1558
 msgid "Budget report being generated... Please wait."
-msgstr ""
+msgstr "Se está generando el presupuesto... Por favor, espere."
 
 #: src/mmex.cpp:1687
-#, fuzzy
 msgid "Category Report"
-msgstr "Categoría"
+msgstr "Informe de categorías"
 
 #: src/mmex.cpp:1687
 msgid "Category Report being generated... Please wait."
-msgstr ""
+msgstr "Se está generando el informe de categorías... Por favor, espere."
 
 #: src/mmex.cpp:1707
 msgid "Categories - Last Calendar Month"
@@ -2065,9 +1981,8 @@ msgid "Categories - Current Month"
 msgstr "Categorías - Mes actual"
 
 #: src/mmex.cpp:1732
-#, fuzzy
 msgid "Categories - Current Month to Date"
-msgstr "Categorías - Mes actual"
+msgstr "Categorías - Mes actual a fecha"
 
 #: src/mmex.cpp:1749
 msgid "Categories - Last Year"
@@ -2086,149 +2001,120 @@ msgid "Categories - Current Financial Year"
 msgstr "Categorías - Año fiscal actual"
 
 #: src/mmex.cpp:1809
-#, fuzzy
 msgid "Where the Money Comes From - Last Calendar Month"
-msgstr "De dónde viene el dinero"
+msgstr "De dónde viene el dinero - Mes anterior"
 
 #: src/mmex.cpp:1820
-#, fuzzy
 msgid "Where the Money Comes From - Last 30 days"
-msgstr "De dónde viene el dinero"
+msgstr "De dónde viene el dinero - Últimos 30 días"
 
 #: src/mmex.cpp:1831
-#, fuzzy
 msgid "Where the Money Comes From - Current Month"
-msgstr "De dónde viene el dinero"
+msgstr "De dónde viene el dinero - Mes actual"
 
 #: src/mmex.cpp:1834
-#, fuzzy
 msgid "Where the Money Comes From - Current Month to Date"
-msgstr "De dónde viene el dinero"
+msgstr "De dónde viene el dinero - Mes actual a fecha"
 
 #: src/mmex.cpp:1851
-#, fuzzy
 msgid "Where the Money Comes From - Last year"
-msgstr "De dónde viene el dinero"
+msgstr "De dónde viene el dinero - Año anterior"
 
 #: src/mmex.cpp:1866
-#, fuzzy
 msgid "Where the Money Comes From - Current Year"
-msgstr "De dónde viene el dinero"
+msgstr "De dónde viene el dinero - Año actual"
 
 #: src/mmex.cpp:1876
-#, fuzzy
 msgid "Where the Money Comes From - Last Financial Year"
-msgstr "De dónde viene el dinero"
+msgstr "De dónde viene el dinero - Año fiscal anterior"
 
 #: src/mmex.cpp:1886
-#, fuzzy
 msgid "Where the Money Comes From - Current Financial Year"
-msgstr "Categorías - Año fiscal actual"
+msgstr "Categorías - Año fiscal actual - Año fiscal actual"
 
 #: src/mmex.cpp:1912
-#, fuzzy
 msgid "Where the Money Goes - Last Calendar Month"
-msgstr "Categorías - Mes anterior"
+msgstr "Dónde va el dinero - Mes anterior"
 
 #: src/mmex.cpp:1923
-#, fuzzy
 msgid "Where the Money Goes - Last 30 Days"
-msgstr "Dónde va el dinero"
+msgstr "Dónde va el dinero - Últimos 30 días"
 
 #: src/mmex.cpp:1934
-#, fuzzy
 msgid "Where the Money Goes - Current Month"
-msgstr "Dónde va el dinero"
+msgstr "Dónde va el dinero - Mes actual"
 
 #: src/mmex.cpp:1937
-#, fuzzy
 msgid "Where the Money Goes - Current Month to Date"
-msgstr "Dónde va el dinero"
+msgstr "Dónde va el dinero - Mes actual a fecha"
 
 #: src/mmex.cpp:1954
-#, fuzzy
 msgid "Where the Money Goes - Last Year"
-msgstr "Dónde va el dinero"
+msgstr "Dónde va el dinero - Año anterior"
 
 #: src/mmex.cpp:1969
-#, fuzzy
 msgid "Where the Money Goes - Current Year"
-msgstr "Dónde va el dinero"
+msgstr "Dónde va el dinero - Año actual"
 
 #: src/mmex.cpp:1979
-#, fuzzy
 msgid "Where the Money Goes - Last Financial Year"
-msgstr "Categorías - Año fiscal anterior"
+msgstr "Dónde va el dinero - Año fiscal anterior"
 
 #: src/mmex.cpp:1988
-#, fuzzy
 msgid "Where the Money Goes - Current Financial Year"
-msgstr "Categorías - Año fiscal actual"
+msgstr "Dónde va el dinero - Año fiscal actual"
 
 #: src/mmex.cpp:2021
-#, fuzzy
 msgid "Income vs Expenses - Last Calendar Month"
-msgstr "Ingresos vs Gastos: Mes actual"
+msgstr "Ingresos vs Gastos - Mes anterior"
 
 #: src/mmex.cpp:2032
-#, fuzzy
 msgid "Income vs Expenses - Last 30 Days"
-msgstr "Ingresos vs Gastos - Todo el tiempo"
+msgstr "Ingresos vs Gastos - Últimos 30 días"
 
 #: src/mmex.cpp:2043
-#, fuzzy
 msgid "Income vs Expenses - Current Month"
-msgstr "Ingresos vs Gastos: Mes actual"
+msgstr "Ingresos vs Gastos - Mes actual"
 
 #: src/mmex.cpp:2046
-#, fuzzy
 msgid "Income vs Expenses - Current Month to Date"
-msgstr "Ingresos vs Gastos: Mes actual"
+msgstr "Ingresos vs Gastos - Mes actual a fecha"
 
 #: src/mmex.cpp:2100
-#, fuzzy
 msgid "Payee Report"
-msgstr "Beneficiario"
+msgstr "Informe de beneficiarios"
 
 #: src/mmex.cpp:2120
-#, fuzzy
 msgid "Payees - Last Calendar Month"
-msgstr "Categorías - Mes anterior"
+msgstr "Beneficiarios - Mes anterior"
 
 #: src/mmex.cpp:2132
-#, fuzzy
 msgid "Payees - Last 30 Days"
-msgstr "Categorías - Últimos 30 días"
+msgstr "Beneficiarios - Últimos 30 días"
 
 #: src/mmex.cpp:2145
-#, fuzzy
 msgid "Payees - Current Month"
-msgstr "Categorías - Mes actual"
+msgstr "Beneficiarios - Mes actual"
 
 #: src/mmex.cpp:2148
-#, fuzzy
 msgid "Payees - Current Month to Date"
-msgstr "Categorías - Mes actual"
+msgstr "Beneficiarios - Mes actual a fecha"
 
 #: src/mmex.cpp:2167
-#, fuzzy
 msgid "Payees - Last Year"
-msgstr "Categorías - Año anterior"
+msgstr "Beneficiarios - Año anterior"
 
 #: src/mmex.cpp:2184
-#, fuzzy
 msgid "Payees - Current Year"
-msgstr "Categorías - Año actual"
+msgstr "Beneficiarios - Año actual"
 
 #: src/mmex.cpp:2197
-#, fuzzy
 msgid "Payees - Last Financial Year"
-msgstr "Categorías - Año fiscal anterior"
+msgstr "Beneficiarios - Año fiscal anterior"
 
 #: src/mmex.cpp:2207
-#, fuzzy
 msgid "Payees - Current Financial Year"
-msgstr "Categorías - Año fiscal actual"
+msgstr "Beneficiarios - Año fiscal actual"
 
 #: src/mmex.cpp:2338
 msgid "Do you really want to delete the account?"
@@ -2260,9 +2146,8 @@ msgid "&Delete Account"
 msgstr "&Borrar cuenta"
 
 #: src/mmex.cpp:2391
-#, fuzzy
 msgid "Import &QIF File"
-msgstr "&Importar fichero"
+msgstr "Importar fichero &QIF"
 
 #: src/mmex.cpp:2394
 msgid "&Launch Account Website"
@@ -2281,17 +2166,15 @@ msgstr "&Listado de cuentas (Inicio)"
 #: src/mmex.cpp:2444
 #: src/mmex.cpp:2630
 #: src/mmex.cpp:2636
-#, fuzzy
 msgid "&CSV Files..."
-msgstr "Ficheros &CSV"
+msgstr "Ficheros &CSV..."
 
 #: src/mmex.cpp:2441
 #: src/mmex.cpp:2445
 #: src/mmex.cpp:2631
 #: src/mmex.cpp:2637
-#, fuzzy
 msgid "&QIF Files..."
-msgstr "Ficheros &QIF"
+msgstr "Ficheros &QIF..."
 
 #: src/mmex.cpp:2442
 #: src/mmex.cpp:2633
@@ -2361,11 +2244,11 @@ msgstr "Guardar base de datos como"
 
 #: src/mmex.cpp:2622
 msgid "&Recent Files..."
-msgstr ""
+msgstr "Ficheros &recientes..."
 
 #: src/mmex.cpp:2624
 msgid "&Clear Recent Files"
-msgstr ""
+msgstr "Limpiar ficheros recientes"
 
 #: src/mmex.cpp:2630
 msgid "Export to CSV"
@@ -2465,49 +2348,44 @@ msgid "Show/Hide Stock Accounts on Summary page"
 msgstr "Mostrar/Ocultar cuentas de inversión en Página resumen"
 
 #: src/mmex.cpp:2680
-#, fuzzy
 msgid "Budgets: As &Financial Years"
-msgstr "Año fiscal actual"
+msgstr "Presupuestos: Como años &fiscales"
 
 #: src/mmex.cpp:2680
 msgid "Display Budgets in Financial Year Format"
-msgstr ""
+msgstr "Mostrar presupuestos en formato de año fiscal"
 
 #: src/mmex.cpp:2682
 msgid "Budgets: &Include Transfers in Totals"
-msgstr ""
+msgstr "Presupuestos: &Incluir transferencias en total"
 
 #: src/mmex.cpp:2682
-#, fuzzy
 msgid "Include the transfer transactions in the Budget Totals"
-msgstr " transacción de transferencia no importada."
+msgstr "Incluir las transferencias en el total del presupuesto"
 
 #: src/mmex.cpp:2684
-#, fuzzy
 msgid "Budget Setup: &Without Summaries"
-msgstr "Organización de presupuesto para "
+msgstr "Organización de presupuesto: Sin resúmenes"
 
 #: src/mmex.cpp:2684
 msgid "Display the Budget Setup without category summaries"
-msgstr ""
+msgstr "Mostrar organización de presupuesto sin resumen de categorías"
 
 #: src/mmex.cpp:2686
 msgid "Budget Summary: Include &Categories"
-msgstr ""
+msgstr "Resumen de presupuesto: Incluir &categorías"
 
 #: src/mmex.cpp:2686
 msgid "Include the categories in the Budget Category Summary"
-msgstr ""
+msgstr "Incluir la categorías en el resumen de categorías del presupuesto"
 
 #: src/mmex.cpp:2688
-#, fuzzy
 msgid "Ignore F&uture Transactions"
-msgstr "Transacciones futuras"
+msgstr "Ignorar transacciones &futuras"
 
 #: src/mmex.cpp:2688
-#, fuzzy
 msgid "Ignore Future transactions"
-msgstr "Transacciones futuras"
+msgstr "Ignorar transacciones futuras"
 
 #: src/mmex.cpp:2719
 #: src/mmex.cpp:2931
@@ -2547,9 +2425,8 @@ msgid "Organize &Payees..."
 msgstr "Organizar &beneficiarios..."
 
 #: src/mmex.cpp:2757
-#, fuzzy
 msgid "Organize Currency..."
-msgstr "Or&ganizar divisas..."
+msgstr "Organizar divisas..."
 
 #: src/mmex.cpp:2757
 #: src/mmex.cpp:2936
@@ -2597,15 +2474,13 @@ msgid "&Assets"
 msgstr "&Activos"
 
 #: src/mmex.cpp:2800
-#, fuzzy
 msgid "&Transaction Report Filter..."
-msgstr "Filtro de &transacciones..."
+msgstr "Filtro de informe de &transacciones..."
 
 #: src/mmex.cpp:2800
 #: src/mmex.cpp:2938
-#, fuzzy
 msgid "Transaction Report Filter"
-msgstr "Informe de transacciones"
+msgstr "Filtro de informe de transacciones"
 
 #: src/mmex.cpp:2810
 msgid "New..."
@@ -2689,24 +2564,23 @@ msgstr "Comprobar actualizaciones"
 
 #: src/mmex.cpp:2869
 msgid "Visit MMEX Forum or &Report New Issues."
-msgstr ""
+msgstr "Visitar el foro de MMEX o informar de problemas."
 
 #: src/mmex.cpp:2869
-#, fuzzy
 msgid "Visit the MMEX forum. See existing user comments, or report new issues with the software."
-msgstr "Envíe un correo a través de la lista para informar de problemas con este programa."
+msgstr "Visite el foro de MMEX. Vea comentarios de los usuarios, o informe de nuevos problemas con el programa."
 
 #: src/mmex.cpp:2877
 msgid "Register/View Release &Notifications."
-msgstr ""
+msgstr "Registrarse/Ver &notificaciones de lanzamientos."
 
 #: src/mmex.cpp:2877
 msgid "Sign up to Notification Mailing List or View existing announcements."
-msgstr ""
+msgstr "Resgistrarse en la lista de notificación o ver los anuncios existentes."
 
 #: src/mmex.cpp:2883
 msgid "Visit us on Facebook"
-msgstr ""
+msgstr "Visítenos en Facebook"
 
 #: src/mmex.cpp:2888
 msgid "&About..."
@@ -2885,24 +2759,23 @@ msgstr "Seleccionar cuentas"
 
 #: src/mmex.cpp:3509
 msgid "MMEX Options have been updated."
-msgstr ""
+msgstr "Las opciones de MMEX se han actualizado."
 
 #: src/mmex.cpp:3513
 msgid "Recommendation: Shut down and restart MMEX."
-msgstr ""
+msgstr "Recomendación: Cierre y vuelva a abrir MMEX."
 
 #: src/mmex.cpp:3514
 msgid "This will allow all MMEX option updates to take effect."
-msgstr ""
+msgstr "Esto permitirá que todos los cambios en las opciones tengan efecto."
 
 #: src/mmex.cpp:3516
-#, fuzzy
 msgid "New MMEX Options"
-msgstr "Opciones de vista"
+msgstr "Opciones de MMEX"
 
 #: src/mmex.cpp:3589
 msgid "System: "
-msgstr ""
+msgstr "Sistema: "
 
 #: src/mmex.cpp:3605
 #: src/mmex.cpp:3680
@@ -2912,7 +2785,7 @@ msgstr "¡No se puede conectar!"
 #: src/mmex.cpp:3606
 #: src/mmex.cpp:3655
 msgid "MMEX System Information Check"
-msgstr ""
+msgstr "Comprobación de información del sistema de MMEX"
 
 #: src/mmex.cpp:3644
 msgid "New update available!"
@@ -2924,7 +2797,7 @@ msgstr "¡Tiene la última versión instalada!"
 
 #: src/mmex.cpp:3654
 msgid "Proceed to website: "
-msgstr ""
+msgstr "Ir a la web: "
 
 #: src/mmex.cpp:3670
 msgid "No database!"
@@ -3177,13 +3050,12 @@ msgid "Set that first using Tools->Options menu and then add a new account."
 msgstr "Selecciónela primero mediante Herramientas->Opciones y luego añada una nueva cuenta."
 
 #: src/mmex.cpp:4665
-#, fuzzy
 msgid "Setting new Database file"
-msgstr "Guardar base de datos como"
+msgstr "Configurar nuevo fichero de base de datos"
 
 #: src/mmex.cpp:4665
 msgid "Please wait while the new database is being loaded."
-msgstr ""
+msgstr "Por favor, espero mientras la nueva base de datos está cargando."
 
 #: src/mmgraphincexpensesmonth.cpp:19
 #: src/reportincexpesestime.cpp:41
@@ -3196,14 +3068,12 @@ msgid "Expenses"
 msgstr "Gastos"
 
 #: src/optionsdialog.cpp:254
-#, fuzzy
 msgid "Display Heading"
 msgstr "Encabezado"
 
 #: src/optionsdialog.cpp:272
-#, fuzzy
 msgid "The User Name is used as a title for the database."
-msgstr " registros actualizados en la base de datos."
+msgstr "El nombre de usuario se utiliza como título para la base de datos."
 
 #: src/optionsdialog.cpp:276
 msgid "Language"
@@ -3219,7 +3089,7 @@ msgstr "Moneda base"
 
 #: src/optionsdialog.cpp:304
 msgid "Sets the default currency for the database."
-msgstr ""
+msgstr "Seleccionar la moneda por defecto para la base de datos."
 
 #: src/optionsdialog.cpp:308
 msgid "Date Format"
@@ -3235,12 +3105,11 @@ msgstr "Seleccionar"
 
 #: src/optionsdialog.cpp:328
 msgid "New date format sample:"
-msgstr ""
+msgstr "Ejemplo de nuevo formato de fecha:"
 
 #: src/optionsdialog.cpp:336
-#, fuzzy
 msgid "Financial Year"
-msgstr "Año fiscal anterior"
+msgstr "Año fiscal"
 
 #: src/optionsdialog.cpp:343
 msgid "Start Day"
@@ -3259,30 +3128,32 @@ msgid "Specify month for start of financial year"
 msgstr "Especifique el mes de inicio del año fiscal"
 
 #: src/optionsdialog.cpp:375
-#, fuzzy
 msgid "Database Backup"
-msgstr "Preferencias de copia de seguridad"
+msgstr "Copia de seguridad"
 
 #: src/optionsdialog.cpp:381
-#, fuzzy
 msgid "Create a new backup when MMEX Start"
-msgstr "Crea un nuevo fichero de base de datos con el que comenzar"
+msgstr "Crea una nueva copia de seguridad cuando de inicia MMEX"
 
 #: src/optionsdialog.cpp:383
 msgid ""
 "When MMEX Starts,\n"
 "creates the backup database: dbFile_start_YYYY-MM-DD.ext."
 msgstr ""
+"Cuando se inicia MMEX,\n"
+"crear la copia de seguridad: dbFile_start_YYYY-MM-DD.ext."
 
 #: src/optionsdialog.cpp:387
 msgid "Update database changes to database backup on exit."
-msgstr ""
+msgstr "Actualizar la copia de seguridad con los cambios al salir."
 
 #: src/optionsdialog.cpp:389
 msgid ""
 "When MMEX shuts down and changes made to database,\n"
 "creates or updates the backup database: dbFile_update_YYYY-MM-DD.ext."
 msgstr ""
+"Cuando se cierra MMEX y se han hecho cambios en la base de datos,\n"
+"crea o actualiza la copia de seguridad: dbFile_update_YYYY-MM-DD.ext."
 
 #: src/optionsdialog.cpp:400
 msgid "Account View Options"
@@ -3318,7 +3189,7 @@ msgstr "Especifique qué tamaño de fuente se utiliza en las tablas de informes"
 
 #: src/optionsdialog.cpp:486
 msgid "Navigation Tree Expansion Options"
-msgstr ""
+msgstr "Opciones de expansión del árbol de navegación"
 
 #: src/optionsdialog.cpp:495
 msgid "Expand Bank Accounts in Trew View when tree is refreshed"
@@ -3329,9 +3200,8 @@ msgid "Expand Term Accounts in Trew View when tree is refreshed"
 msgstr "Expandir cuentas a plazo en la vista en árbol cuando se refresque"
 
 #: src/optionsdialog.cpp:506
-#, fuzzy
 msgid "Home Page Expansion Options"
-msgstr "Página de inicio: Expandir sección"
+msgstr "Opciones de expasión de la Página de inicio"
 
 #: src/optionsdialog.cpp:515
 msgid "Expand Bank Accounts on home page when page is refreshed"
@@ -3350,33 +3220,28 @@ msgid "Expand Stock Accounts on home page when page is refreshed"
 msgstr "Expandir cuentas de inversión en la página de inicio cuando se refresque"
 
 #: src/optionsdialog.cpp:533
-#, fuzzy
 msgid "View Budgets as Financial Years"
-msgstr "Categorías - Año fiscal anterior"
+msgstr "Ver presupuestos como años fiscales"
 
 #: src/optionsdialog.cpp:537
-#, fuzzy
 msgid "View Budgets with 'transfer' transactions"
-msgstr "Viendo las transacciones duplicadas"
+msgstr "Ver presupuestos con transferencias"
 
 #: src/optionsdialog.cpp:541
 msgid "View Budgets Setup Without Budget Summaries"
-msgstr ""
+msgstr "Ver organización del presupuesto sin resúmenes de presupuesto"
 
 #: src/optionsdialog.cpp:545
-#, fuzzy
 msgid "View Budget Summary Report without Categories"
-msgstr "Ver todas las categorías del presupuesto"
+msgstr "Ver informe de resumen del presupuesto sin categorías"
 
 #: src/optionsdialog.cpp:549
-#, fuzzy
 msgid "View Reports without Future Transactions"
-msgstr "Ver las transacciones reconciliadas"
+msgstr "Ver informes sin transacciones futuras"
 
 #: src/optionsdialog.cpp:560
-#, fuzzy
 msgid "Colour Settings"
-msgstr "Preferencia&s"
+msgstr "Opciones de color"
 
 #: src/optionsdialog.cpp:568
 #: src/optionsdialog.cpp:570
@@ -3454,9 +3319,8 @@ msgid "New Transaction Dialog Settings"
 msgstr "Preferencias de la ventana de nueva transacción"
 
 #: src/optionsdialog.cpp:645
-#, fuzzy
 msgid "Default Date:"
-msgstr "Beneficiario por defecto:"
+msgstr "Fecha por defecto:"
 
 #: src/optionsdialog.cpp:649
 msgid "Last Used"
@@ -3503,11 +3367,12 @@ msgid "Select whether to use sounds when entering transactions"
 msgstr "Selecciónelo para usar sonidos al introducir transacciones"
 
 #: src/optionsdialog.cpp:729
-#, fuzzy
 msgid ""
 "Enable online currency update \n"
 "(Get data from European Central Bank)"
-msgstr "Habilitar la actualización de moneda online (obtiene los datos del Banco Central Europeo)"
+msgstr ""
+"Habilitar la actualización de moneda online \n"
+"(Obtiene los datos del Banco Central Europeo)"
 
 #: src/optionsdialog.cpp:731
 msgid "Enable or disable get data from European Central Bank to update currency rate"
@@ -3523,19 +3388,19 @@ msgstr "Delimitador CSV"
 
 #: src/optionsdialog.cpp:759
 msgid "User Defined"
-msgstr ""
+msgstr "Definido por el usuario"
 
 #: src/optionsdialog.cpp:760
 msgid "Comma"
-msgstr ""
+msgstr "Coma"
 
 #: src/optionsdialog.cpp:763
 msgid "Semicolon"
-msgstr ""
+msgstr "Punto y coma"
 
 #: src/optionsdialog.cpp:766
 msgid "TAB"
-msgstr ""
+msgstr "Tabulador"
 
 #: src/optionsdialog.cpp:770
 msgid "Specify the delimiter to use when importing/exporting CSV files"
@@ -3554,9 +3419,8 @@ msgid "Colors"
 msgstr "Colores"
 
 #: src/optionsdialog.cpp:790
-#, fuzzy
 msgid "Import/Export"
-msgstr "Preferencias de importar/exportar"
+msgstr "Importar/Exportar"
 
 #: src/optionsdialog.cpp:791
 msgid "Others"
@@ -3572,7 +3436,7 @@ msgstr "Nota importante"
 
 #: src/optionsdialog.cpp:864
 msgid " : Requires MMEX Restart"
-msgstr ""
+msgstr " : Requiere reiniciar MMEX"
 
 #: src/qifimport.cpp:370
 msgid "No account available for import"
@@ -3600,14 +3464,12 @@ msgid "Choose Account to import to:"
 msgstr "Seleccionar cuenta a la que importar:"
 
 #: src/qifimport.cpp:404
-#, fuzzy
 msgid "QIF Files "
-msgstr "Ficheros &QIF"
+msgstr "Ficheros QIF "
 
 #: src/qifimport.cpp:405
-#, fuzzy
 msgid "All Files "
-msgstr "Ficheros &CSV"
+msgstr "Todos los ficheros "
 
 #: src/qifimport.cpp:406
 msgid "Choose QIF data file to import"
@@ -3630,19 +3492,16 @@ msgstr "a la cuenta "
 #: src/qifimport.cpp:498
 #: src/qifimport.cpp:565
 #: src/qifimport.cpp:601
-#, fuzzy
 msgid "Line: "
-msgstr "Línea : "
+msgstr "Línea: "
 
 #: src/qifimport.cpp:464
-#, fuzzy
 msgid " Unknown QIF line: "
-msgstr " tipo de línea QIF incorrecta"
+msgstr " Línea QIF desconocida: "
 
 #: src/qifimport.cpp:475
-#, fuzzy
 msgid "Importing account type: "
-msgstr "Importando tipo de cuenta : "
+msgstr "Importando tipo de cuenta: "
 
 #: src/qifimport.cpp:498
 msgid " : "
@@ -3653,9 +3512,8 @@ msgid " account name "
 msgstr " nombre de cuenta "
 
 #: src/qifimport.cpp:564
-#, fuzzy
 msgid "Cannot process these QIF Account Types yet."
-msgstr "No se pueden procesar estos tipos de cuenta QIF todavía"
+msgstr "No se pueden procesar estos tipos de cuenta QIF todavía."
 
 #: src/qifimport.cpp:586
 #: src/qifimport.cpp:700
@@ -3741,9 +3599,8 @@ msgid "Income vs Expenses for Year: "
 msgstr "Ingresos vs Gastos para el año: "
 
 #: src/reportincexpesestime.cpp:39
-#, fuzzy
 msgid "Year"
-msgstr "Anualmente"
+msgstr "Año"
 
 #: src/reportincexpesestime.cpp:43
 msgid "Difference"
@@ -3794,9 +3651,8 @@ msgid "View Transactions for last 30 days"
 msgstr "Ver las transacciones de los últimos 30 días"
 
 #: src/mmcheckingpanel.cpp:588
-#, fuzzy
 msgid "View Transactions for last 90 days"
-msgstr "Ver las transacciones de los últimos 30 días"
+msgstr "Ver las transacciones de los últimos 90 días"
 
 #: src/mmcheckingpanel.cpp:589
 msgid "View Transactions for last month"
@@ -3813,9 +3669,8 @@ msgstr "Borrar todas las transacciones de la vista actual"
 
 #: src/mmcheckingpanel.cpp:593
 #: src/mmcheckingpanel.cpp:1509
-#, fuzzy
 msgid "Delete Viewed \"Follow Up\" Trans."
-msgstr "Ver transacciones de \"seguimiento\""
+msgstr "Borrar transacciones de \"seguimiento\" mostradas."
 
 #: src/mmcheckingpanel.cpp:659
 #: src/mmcheckingpanel.cpp:1273
@@ -3845,38 +3700,32 @@ msgid "Move selected transaction to another account"
 msgstr "Mover la transacción seleccionada a otra cuenta"
 
 #: src/mmcheckingpanel.cpp:755
-#, fuzzy
 msgid "Search"
-msgstr "Marzo"
+msgstr "Buscar"
 
 #: src/mmcheckingpanel.cpp:757
 msgid "Enter any string to find it in the nearest transaction notes"
-msgstr ""
+msgstr "Introduzca cualquier cadena para buscarla en las notas de transacciones"
 
 #: src/mmcheckingpanel.cpp:895
-#, fuzzy
 msgid "to "
-msgstr "a: "
+msgstr "a "
 
 #: src/mmcheckingpanel.cpp:970
-#, fuzzy
 msgid "Account Bal: "
-msgstr "Cuentas: "
+msgstr "Balance de cuenta: "
 
 #: src/mmcheckingpanel.cpp:971
-#, fuzzy
 msgid "Reconciled Bal: "
-msgstr "Reconciliada"
+msgstr "Balance reconciliado: "
 
 #: src/mmcheckingpanel.cpp:972
-#, fuzzy
 msgid "Diff: "
-msgstr "Diferencia:"
+msgstr "Diferencia: "
 
 #: src/mmcheckingpanel.cpp:973
-#, fuzzy
 msgid "Displayed Bal: "
-msgstr "Pantalla"
+msgstr "Balance mostrado: "
 
 #: src/mmcheckingpanel.cpp:1057
 msgid "Account View : "
@@ -3919,9 +3768,8 @@ msgstr "Viendo las transacciones de los últimos 30 días"
 
 #: src/mmcheckingpanel.cpp:1253
 #: src/mmcheckingpanel.cpp:1335
-#, fuzzy
 msgid "Viewing transactions for last 90 days"
-msgstr "Viendo las transacciones de los últimos 30 días"
+msgstr "Viendo las transacciones de los últimos 90 días"
 
 #: src/mmcheckingpanel.cpp:1254
 #: src/mmcheckingpanel.cpp:1345
@@ -3935,21 +3783,19 @@ msgstr "Viendo las transacciones de los últimos 3 meses"
 
 #: src/mmcheckingpanel.cpp:1273
 msgid "  will interfere with this filtering."
-msgstr ""
+msgstr " interferirá con este filtrado."
 
 #: src/mmcheckingpanel.cpp:1274
-#, fuzzy
 msgid "Please deactivate: "
-msgstr "Por favor, espere"
+msgstr "Por favor, desactive: "
 
 #: src/mmcheckingpanel.cpp:1295
 msgid "Viewing All except Reconciled Transactions"
 msgstr "Viendo todo excepto las transacciones reconciliadas"
 
 #: src/mmcheckingpanel.cpp:1305
-#, fuzzy
 msgid "Viewing Follow-Up transactions"
-msgstr "Viendo todas las transacciones"
+msgstr "Viendo transacciones de seguimiento"
 
 #: src/mmcheckingpanel.cpp:1310
 msgid "Viewing duplicate transactions"
@@ -3970,9 +3816,8 @@ msgid "Confirm Transaction Deletion"
 msgstr "Confirmar borrado de transacción"
 
 #: src/mmcheckingpanel.cpp:1388
-#, fuzzy
 msgid "Do you really want to delete all the \"Follow Up\" transactions shown?"
-msgstr "¿Realmente quiere borrar todas las transacciones marcadas?"
+msgstr "¿Realmente quiere borrar todas las transacciones de \"seguimiento\" mostradas?"
 
 #: src/mmcheckingpanel.cpp:1483
 msgid "&New Transaction"
@@ -3987,9 +3832,8 @@ msgid "&Copy Transaction"
 msgstr "&Copiar transacción"
 
 #: src/mmcheckingpanel.cpp:1489
-#, fuzzy
 msgid "&Duplicate Transaction"
-msgstr "Ver las transacciones duplicadas"
+msgstr "&Duplicar transacción"
 
 #: src/mmcheckingpanel.cpp:1491
 msgid "&Move Transaction"
@@ -4000,9 +3844,8 @@ msgid "&Paste Transaction"
 msgstr "&Pegar transacción"
 
 #: src/mmcheckingpanel.cpp:1498
-#, fuzzy
 msgid "&View Split Categories"
-msgstr "Ver todas las categorías del presupuesto"
+msgstr "&Ver categorías divididas"
 
 #: src/mmcheckingpanel.cpp:1505
 msgid "&Delete Transaction"
@@ -4283,28 +4126,24 @@ msgid "Income vs Expenses for Financial Year: "
 msgstr "Ingresos vs Gastos para el año fiscal: "
 
 #: src/budgetyeardialog.cpp:107
-#, fuzzy
 msgid "&Add Year"
-msgstr "&Añadir presupuesto anual"
+msgstr "&Añadir año"
 
 #: src/budgetyeardialog.cpp:109
 msgid "Add a new budget year"
 msgstr "Añadir nuevo presupuesto anual"
 
 #: src/budgetyeardialog.cpp:112
-#, fuzzy
 msgid "&Add Month"
-msgstr "Mes"
+msgstr "&Añadir mes"
 
 #: src/budgetyeardialog.cpp:114
-#, fuzzy
 msgid "Add a new budget month"
-msgstr "Añadir nuevo presupuesto anual"
+msgstr "Añadir nuevo mes de presupuesto"
 
 #: src/budgetyeardialog.cpp:119
-#, fuzzy
 msgid "Delete existing budget"
-msgstr "Borrar presupuesto anual existente"
+msgstr "Borrar presupuesto existente"
 
 #: src/relocatepayeedialog.cpp:77
 msgid "Relocate all source payees to the destination payee"
@@ -4384,19 +4223,17 @@ msgstr "Confirmación de reorganización de beneficiario"
 #: src/dbwrapper.cpp:1990
 #: src/dbwrapper.cpp:2072
 #: src/dbwrapper.cpp:2255
-#, fuzzy, c-format
+#, c-format
 msgid "Error: %s"
-msgstr "Error"
+msgstr "Error: %s"
 
 #: src/reportpayee.cpp:103
-#, fuzzy
 msgid "Payees Total: "
-msgstr "Total categoría: "
+msgstr "Total beneficiarios: "
 
 #: src/splitdetailsdialog.cpp:91
-#, fuzzy
 msgid "Split Transaction Details"
-msgstr "Detalles de la transacción"
+msgstr "Detalles de transacción dividida"
 
 #: src/splitdetailsdialog.cpp:165
 msgid "Invalid Category Entered "
@@ -4700,26 +4537,24 @@ msgstr "Otros gastos"
 #: src/dbwrapper.cpp:1514
 #, c-format
 msgid "Set Info Setting Value %s = %s. Error: %s"
-msgstr ""
+msgstr "Seleccionar valor Info %s = %s. Error: %s"
 
 #: src/dbwrapper.cpp:2333
 #, c-format
 msgid "Write error: %s"
-msgstr ""
+msgstr "Error de escritura: %s"
 
 #: src/dbwrapper.cpp:2341
-#, fuzzy
 msgid "When database file opening:"
-msgstr "Seleccionar base de datos para abrir"
+msgstr "Cuando la base de datos se esté abriendo:"
 
 #: src/dbwrapper.cpp:2345
-#, fuzzy
 msgid "Can't open file"
-msgstr "No es posible abrir el fichero."
+msgstr "No se puede abrir el fichero"
 
 #: src/dbwrapper.cpp:2345
 msgid "You must specify path to another database file"
-msgstr ""
+msgstr "Debe especifar la ruta a otra base de datos"
 
 #: src/dbwrapper.cpp:2349
 msgid "An incorrect password given for an encrypted file"
@@ -4735,37 +4570,39 @@ msgstr "Intento de abrir un fichero que no es una base de datos"
 
 #: src/dbwrapper.cpp:2358
 msgid "Database::open: Exception"
-msgstr ""
+msgstr "Base de datos::abrir: Excepción"
 
 #: src/dbwrapper.cpp:2360
 msgid "Continue ?"
-msgstr ""
+msgstr "¿Continuar?"
 
 #: src/budgetyearentrydialog.cpp:44
-#, fuzzy
 msgid "Budget Month Entry"
-msgstr "Introducción de presupuesto"
+msgstr "Introducción de mes"
 
 #: src/budgetyearentrydialog.cpp:72
 msgid "Budget Year:"
-msgstr "Presupuesto anual:"
+msgstr "Año del presupuesto:"
 
 #: src/budgetyearentrydialog.cpp:79
 msgid ""
 "Specify the required year.\n"
 "Use Spin buttons to increase or decrease the year."
 msgstr ""
+"Especifique el año.\n"
+"Utilice los botones para incrementar o disminuir el año."
 
 #: src/budgetyearentrydialog.cpp:85
-#, fuzzy
 msgid "Budget Month:"
-msgstr "Mes actual"
+msgstr "Mes del presupuesto:"
 
 #: src/budgetyearentrydialog.cpp:92
 msgid ""
 "Specify the required month.\n"
 "Use Spin buttons to increase or decrease the month."
 msgstr ""
+"Especifique el mes.\n"
+"Utilice los botones para incrementar o disminuir el mes."
 
 #: src/budgetyearentrydialog.cpp:97
 msgid "Base Budget On:"
@@ -4805,9 +4642,8 @@ msgid "All Bank Accounts"
 msgstr "todas las cuentas bancarias"
 
 #: src/reportcashflow.cpp:45
-#, fuzzy
 msgid "All Term Accounts"
-msgstr "Cuentas a plazo"
+msgstr "Todas las cuentas a plazo"
 
 #: src/maincurrencydialog.cpp:101
 msgid "Currency List"
@@ -4972,19 +4808,16 @@ msgid "Specify the order of fields in the CSV file"
 msgstr "Especifique el orden de los campos en el archivo CSV"
 
 #: src/univcsvdialog.cpp:173
-#, fuzzy
 msgid "&Up"
-msgstr "Actualizar"
+msgstr "Subir"
 
 #: src/univcsvdialog.cpp:176
-#, fuzzy
 msgid "Move Up"
 msgstr "Mover arriba"
 
 #: src/univcsvdialog.cpp:179
-#, fuzzy
 msgid "&Down"
-msgstr "Mover abajo"
+msgstr "Bajar"
 
 #: src/univcsvdialog.cpp:182
 msgid "Move &Down"
@@ -4992,51 +4825,43 @@ msgstr "Mover abajo"
 
 #: src/univcsvdialog.cpp:185
 msgid "&MMEX format"
-msgstr ""
+msgstr "Formato &MMEX"
 
 #: src/univcsvdialog.cpp:188
 msgid "MMEX standard format"
-msgstr ""
+msgstr "Formato estándar MMEX"
 
 #: src/univcsvdialog.cpp:194
-#, fuzzy
 msgid "Load Template"
-msgstr "Cargar p&lantilla"
+msgstr "Cargar plantilla"
 
 #: src/univcsvdialog.cpp:197
-#, fuzzy
 msgid "Save As..."
-msgstr "Beneficiarios..."
+msgstr "Guardar como..."
 
 #: src/univcsvdialog.cpp:200
-#, fuzzy
 msgid "Save Template"
-msgstr "Gu&ardar como plantilla"
+msgstr "Guardar plantilla"
 
 #: src/univcsvdialog.cpp:214
-#, fuzzy
 msgid "File Name:"
-msgstr "Nombre de la unidad"
+msgstr "Nombre de fichero:"
 
 #: src/univcsvdialog.cpp:220
-#, fuzzy
 msgid "&Search"
-msgstr "Marzo"
+msgstr "Buscar"
 
 #: src/univcsvdialog.cpp:231
-#, fuzzy
 msgid "Account  :"
-msgstr "Cuenta"
+msgstr "Cuenta :"
 
 #: src/univcsvdialog.cpp:269
-#, fuzzy
 msgid "Import File"
-msgstr "&Importar fichero"
+msgstr "Importar fichero"
 
 #: src/univcsvdialog.cpp:276
-#, fuzzy
 msgid "Export File"
-msgstr "&Importar fichero"
+msgstr "Exportar fichero"
 
 #: src/univcsvdialog.cpp:373
 msgid "Unknown"
@@ -5100,18 +4925,16 @@ msgid "Log file written to : %s"
 msgstr "Fichero de registro escrito en : %s"
 
 #: src/univcsvdialog.cpp:655
-#, fuzzy
 msgid "Importing CSV"
-msgstr "Importando de CSV"
+msgstr "Importando CSV"
 
 #: src/univcsvdialog.cpp:659
 msgid "Imported transactions have been flagged so you can review them."
 msgstr "Las transacciones importadas se han marcado para que pueda revisarlas."
 
 #: src/univcsvdialog.cpp:702
-#, fuzzy
 msgid "CSV Files"
-msgstr "Ficheros &CSV"
+msgstr "Ficheros CSV"
 
 #: src/univcsvdialog.cpp:703
 msgid "Choose CSV data file to Export"
@@ -5119,17 +4942,16 @@ msgstr "Seleccionar el fichero CSV a exportar"
 
 #: src/univcsvdialog.cpp:781
 msgid "#"
-msgstr ""
+msgstr "#"
 
 #: src/univcsvdialog.cpp:970
-#, fuzzy
 msgid "Choose CSV data file to import"
-msgstr "Seleccionar el fichero CSV a exportar"
+msgstr "Seleccionar el fichero CSV a importar"
 
 #: src/mmpayee.cpp:63
 #, c-format
 msgid "Add Payee. Error: %s"
-msgstr ""
+msgstr "Añadir beneficiario. Error: %s"
 
 #: src/transdialog.cpp:440
 msgid "Specify the category for this transaction"
@@ -5141,12 +4963,11 @@ msgstr "Rellenar # de transacción"
 
 #: src/transdialog.cpp:469
 msgid "Select one of the frequently used notes"
-msgstr ""
+msgstr "Seleccione una de las notas usadas con frecuencia"
 
 #: src/transdialog.cpp:1596
-#, fuzzy
 msgid "Duplicate Transaction"
-msgstr "Ver las transacciones duplicadas"
+msgstr "Duplicar transacción"
 
 #: src/mmtransaction.cpp:196
 msgid "Payee not found in database for Account: "
@@ -5353,40 +5174,35 @@ msgstr "Activos totales: "
 
 #: src/reportbudget.cpp:102
 msgid "From: "
-msgstr "From: "
+msgstr "De: "
 
 #: src/reportbudget.cpp:103
 msgid "to: "
 msgstr "a: "
 
 #: src/splittransactionsdialog.cpp:105
-#, fuzzy
 msgid " Split Category Details"
-msgstr "Dividir categoría"
+msgstr " Detalles de categoría dividida"
 
 #: src/splittransactionsdialog.cpp:130
-#, fuzzy
 msgid " Total:"
-msgstr "Total:"
+msgstr " Total:"
 
 #: src/splittransactionsdialog.cpp:174
 msgid "&Select Category"
 msgstr "&Seleccionar categoría"
 
 #: src/budgetentrydialog.cpp:143
-#, fuzzy
 msgid "Estimated:"
-msgstr "Estimado"
+msgstr "Estimado:"
 
 #: src/budgetentrydialog.cpp:145
-#, fuzzy
 msgid "Actual:"
-msgstr "Real"
+msgstr "Real:"
 
 #: src/budgetentrydialog.cpp:153
-#, fuzzy
 msgid "Sub Category: "
-msgstr "Subcategoría"
+msgstr "Subcategoría: "
 
 #: src/budgetentrydialog.cpp:166
 msgid "Type:"
@@ -5421,30 +5237,28 @@ msgid "Custom SQL Report: "
 msgstr "Informe SQL personalizado: "
 
 #: src/transactionfilterdialog.cpp:94
-#, fuzzy
 msgid " Filter Settings "
-msgstr "Preferencias de visualización"
+msgstr " Configuración del filtro "
 
 #: src/transactionfilterdialog.cpp:108
-#, fuzzy
 msgid "Date Range"
-msgstr "Especificar rango de fechas"
+msgstr "Rango de fechas"
 
 #: src/transactionfilterdialog.cpp:138
 msgid "Filter Split categories. Include the category for further filtering."
-msgstr ""
+msgstr "Filtrar categorías divididas. Incluya la categoría para mejorar el filtrado."
 
 #: src/transactionfilterdialog.cpp:202
 msgid "Will search for the given text in the Notes field"
-msgstr ""
+msgstr "Buscará el texto indicado en el campo notas"
 
 #: src/transactionfilterdialog.cpp:217
 msgid "Activates the filter: Will add selected items to display"
-msgstr ""
+msgstr "Activa el filtro: Se mostrarán los elementos seleccionados"
 
 #: src/transactionfilterdialog.cpp:221
 msgid "Deactivates the filter"
-msgstr ""
+msgstr "Desactiva el filtro"
 
 #: src/relocatepayeedialog.h:24
 msgid "Relocate Payee Dialog"
@@ -5455,9 +5269,8 @@ msgid "New/Edit Stock Investment"
 msgstr "Nuevo/Editar Inversión en acciones"
 
 #: src/univcsvdialog.h:28
-#, fuzzy
 msgid "Universal CSV Dialog"
-msgstr "Ventana importación Universal CSV"
+msgstr "Ventana Universal CSV"
 
 #: src/customreportdialog.h:26
 msgid "Custom SQL Reports Manager"
@@ -5472,9 +5285,8 @@ msgid "Currency Manager"
 msgstr "Gestor de divisas"
 
 #: src/transactionfilterdialog.h:26
-#, fuzzy
 msgid "MMEX Account View: Transaction Filter"
-msgstr "Filtro de transacciones"
+msgstr "MMEX Vista de cuenta: Filtro de transacciones"
 
 #: src/fileviewerdialog.h:26
 msgid "View File Contents"
@@ -5490,12 +5302,11 @@ msgstr "Nuevo/Editar Transacción periódica"
 
 #: src/budgetyearentrydialog.h:23
 msgid "Budget Year Entry"
-msgstr "Introducción de presupuesto"
+msgstr "Introducción de año"
 
 #: src/budgetyeardialog.h:23
-#, fuzzy
 msgid "Budget Editor"
-msgstr "Editor de presupuesto anual"
+msgstr "Editor de presupuesto"
 
 #: src/splitdetailsdialog.h:34
 msgid "Split Detail Dialog"
@@ -5506,9 +5317,8 @@ msgid "Options"
 msgstr "Opciones"
 
 #: src/budgetentrydialog.h:23
-#, fuzzy
 msgid "Budget Entry Details"
-msgstr "Ventana de presupuesto"
+msgstr "Detalles del presupuesto"
 
 #: src/splittransactionsdialog.h:44
 msgid "Split Transaction Dialog"
