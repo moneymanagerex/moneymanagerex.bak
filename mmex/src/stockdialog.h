@@ -39,7 +39,7 @@ class mmStockDialog : public wxDialog
 public:
     mmStockDialog();
     mmStockDialog(wxSQLite3Database* db, mmCoreDB* core,
-        int stockID, bool edit, wxWindow* parent, 
+        int stockID, bool edit, int accountID, wxWindow* parent, 
         wxWindowID id = SYMBOL_STOCKDIALOG_IDNAME, 
         const wxString& caption = SYMBOL_STOCKDIALOG_TITLE, 
         const wxPoint& pos = SYMBOL_STOCKDIALOG_POSITION, 
