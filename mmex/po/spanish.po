@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Money Manager Ex 0.9.8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-27 17:47+0300\n"
-"PO-Revision-Date: 2012-04-29 18:31+0100\n"
+"PO-Revision-Date: 2012-04-30 19:28+0100\n"
 "Last-Translator: Jorge\n"
 "Language-Team: jorgeb\n"
 "Language: \n"
@@ -1933,7 +1933,7 @@ msgstr "Cumplimiento del presupuesto"
 #: src/mmex.cpp:1312
 #: src/mmex.cpp:1573
 msgid "Budget Category Summary"
-msgstr "Resumen de catergorías del presupuesto"
+msgstr "Resumen de categorías del presupuesto"
 
 #: src/mmex.cpp:1340
 #: src/mmex.cpp:3464
@@ -2377,7 +2377,7 @@ msgstr "Resumen de presupuesto: Incluir &categorías"
 
 #: src/mmex.cpp:2686
 msgid "Include the categories in the Budget Category Summary"
-msgstr "Incluir la categorías en el resumen de categorías del presupuesto"
+msgstr "Incluir las categorías en el resumen de categorías del presupuesto"
 
 #: src/mmex.cpp:2688
 msgid "Ignore F&uture Transactions"
