@@ -20,12 +20,9 @@
 #include "currencydialog.h"
 #include "defs.h"
 #include "paths.h"
+#include "mmex_db_view.h"
 
 #include <wx/datectrl.h>
-
-namespace
-{
-
 enum { DEF_CHANGE_NONE, DEF_CHANGE_APPRECIATE, DEF_CHANGE_DEPRECIATE };
 enum { DEF_ASSET_PROPERTY, DEF_ASSET_AUTO, DEF_ASSET_HOUSE, DEF_ASSET_ART, DEF_ASSET_JEWELLERY, DEF_ASSET_CASH, DEF_ASSET_OTHER };
 
@@ -34,9 +31,6 @@ enum
   IDC_COMBO_TYPE = wxID_HIGHEST + 1,
   IDC_NOTES,
 };
-
-} // namespace
-
 
 IMPLEMENT_DYNAMIC_CLASS( mmAssetDialog, wxDialog )
 
@@ -85,52 +79,35 @@ bool mmAssetDialog::Create(wxWindow* parent, wxWindowID id, const wxString& capt
 
 void mmAssetDialog::dataToControls()
 {
-    static const char sql[] = 
-    "select ASSETNAME, "
-           "NOTES, "
-           "STARTDATE, "
-           "VALUE, "
-           "VALUECHANGERATE, "
-           "VALUECHANGE, "
-           "ASSETTYPE "
-    "from ASSETS_V1 "
-    "where ASSETID = ?";
-
-    wxSQLite3Statement st = m_db->PrepareStatement(sql);
-    st.Bind(1, m_assetID);
-
-    wxSQLite3ResultSet q1 = st.ExecuteQuery();
-    if (q1.NextRow())
+    const DB_View_ASSETS_V1::Data *asset = ASSETS_V1.find(m_assetID, m_db);
+    if (asset)
     {
-        m_assetName->SetValue(q1.GetString(wxT("ASSETNAME")));
-        m_notes->SetValue(q1.GetString(wxT("NOTES")));
+        m_assetName->SetValue(asset->ASSETNAME);
+        m_notes->SetValue(asset->NOTES);
 
-        wxString dateString = q1.GetString(wxT("STARTDATE"));
-        wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
+        wxDateTime dtdt = mmGetStorageStringAsDate(asset->STARTDATE);
         wxString dt = mmGetDateForDisplay(m_db, dtdt);
         m_dpc->SetValue(dtdt);
 
         wxString value;
-        mmex::formatDoubleToCurrencyEdit(q1.GetDouble(wxT("VALUE")), value);
+        mmex::formatDoubleToCurrencyEdit(asset->VALUE, value);
         m_value->SetValue(value);
 
         wxString valueChangeRate;
-        valueChangeRate.Printf(wxT("%.3f"), q1.GetDouble(wxT("VALUECHANGERATE")));
+        valueChangeRate.Printf(wxT("%.3f"), asset->VALUECHANGERATE);
         m_valueChangeRate->SetValue(valueChangeRate);
     
-        wxString valueChangeTypeStr = q1.GetString(wxT("VALUECHANGE"));
-        if (valueChangeTypeStr == wxT("None"))
+        if (asset->VALUECHANGE == wxT("None"))
         {
             m_valueChange->SetSelection(DEF_CHANGE_NONE);
             enableDisableRate(false);
         }
-        else if (valueChangeTypeStr == wxT("Appreciates"))
+        else if (asset->VALUECHANGE == wxT("Appreciates"))
         {
             m_valueChange->SetSelection(DEF_CHANGE_APPRECIATE);
             enableDisableRate(true);
         }
-        else if (valueChangeTypeStr == wxT("Depreciates"))
-
+        else if (asset->VALUECHANGE == wxT("Depreciates"))
         {
             m_valueChange->SetSelection(DEF_CHANGE_DEPRECIATE);
             enableDisableRate(true);
@@ -140,7 +117,7 @@ void mmAssetDialog::dataToControls()
             wxASSERT(false);
         }
         
-         wxString assetTypeStr = q1.GetString(wxT("ASSETTYPE"));
+         wxString assetTypeStr = asset->ASSETTYPE;
          if (assetTypeStr == wxT("Property"))
             m_assetType->SetSelection(DEF_ASSET_PROPERTY);
          else if (assetTypeStr == wxT("Automobile"))
@@ -155,9 +132,7 @@ void mmAssetDialog::dataToControls()
              m_assetType->SetSelection(DEF_ASSET_CASH);
          else if (assetTypeStr == wxT("Other"))
             m_assetType->SetSelection(DEF_ASSET_OTHER);
-
     }
-    st.Finalize();
 }
 
 void mmAssetDialog::fillControls()
@@ -238,9 +213,9 @@ void mmAssetDialog::CreateControls()
 
     wxArrayString itemTypeStrings; 
 
-        itemTypeStrings.Add(_("None"));
-        itemTypeStrings.Add(_("Appreciates"));
-        itemTypeStrings.Add(_("Depreciates"));
+    itemTypeStrings.Add(_("None"));
+    itemTypeStrings.Add(_("Appreciates"));
+    itemTypeStrings.Add(_("Depreciates"));
 
     m_valueChange = new wxChoice( itemPanel5, IDC_COMBO_TYPE, wxDefaultPosition, wxSize(150,-1), itemTypeStrings);
     m_valueChange->SetToolTip(_("Specify if the value of the asset changes over time"));
@@ -368,56 +343,20 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     else
         wxASSERT(false);
 
-    if (!m_edit)
-    {
-        static const char sql[] = 
-        "insert into ASSETS_V1 ("
-          "STARTDATE, ASSETNAME, VALUE, VALUECHANGE, NOTES, VALUECHANGERATE, ASSETTYPE "
-        ") values (?, ?, ?, ?, ?, ?, ?)";
+    DB_View_ASSETS_V1::Data* asset = ASSETS_V1.find(m_assetID, m_db);
+    if (! asset)
+        asset = ASSETS_V1.create();
 
-        wxSQLite3Statement st = m_db->PrepareStatement(sql);
-        
-        int i = 0;
-        st.Bind(++i, pdate);
-        st.Bind(++i, name);
-        st.Bind(++i, value);
-        st.Bind(++i, valueChangeTypeStr);
-        st.Bind(++i, notes);
-        st.Bind(++i, valueChangeRate);
-        st.Bind(++i, assetTypeStr);
+    asset->STARTDATE = pdate;
+    asset->ASSETNAME = name;
+    asset->VALUE = value;
+    asset->VALUECHANGE = valueChangeTypeStr;
+    asset->NOTES = notes;
+    asset->VALUECHANGERATE = valueChangeRate;
+    asset->ASSETTYPE = assetTypeStr;
 
-        wxASSERT(st.GetParamCount() == i);
+    asset->save(m_db);
 
-        st.ExecuteUpdate();
-        st.Finalize();
-    }
-    else 
-    {
-        static const char sql[] = 
-        "update ASSETS_V1 "
-        "SET STARTDATE = ?, ASSETNAME = ?, "
-            "VALUE = ?, VALUECHANGE = ?,"
-            "NOTES = ?, VALUECHANGERATE = ?, "
-            "ASSETTYPE = ? "
-        "where ASSETID = ?";
-
-        wxSQLite3Statement st = m_db->PrepareStatement(sql);
-
-        int i = 0;
-        st.Bind(++i, pdate);
-        st.Bind(++i, name);
-        st.Bind(++i, value);
-        st.Bind(++i, valueChangeTypeStr);
-        st.Bind(++i, notes);
-        st.Bind(++i, valueChangeRate);
-        st.Bind(++i, assetTypeStr);
-        st.Bind(++i, m_assetID);
-
-        wxASSERT(st.GetParamCount() == i);
-
-        st.ExecuteUpdate();
-        st.Finalize();
-    }
     mmOptions::instance().databaseUpdated_ = true;
     EndModal(wxID_OK);
 }

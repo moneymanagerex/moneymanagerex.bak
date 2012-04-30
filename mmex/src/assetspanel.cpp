@@ -18,13 +18,11 @@
 #include "util.h"
 #include "dbwrapper.h"
 #include "assetdialog.h"
+#include "mmex_db_view.h"
+#include <boost/foreach.hpp>
 
 /* Include XPM Support */
 #include "../resources/assets.xpm"
-
-namespace
-{
-
 enum 
 { 
   IDC_PANEL_STOCKS_LISTCTRL = wxID_HIGHEST + 1,
@@ -39,15 +37,13 @@ enum
 };
 enum EColumn
 { 
-    COL_NAME, 
+    COL_NAME = 0, 
     COL_DATE,
     COL_TYPE, 
     COL_VALUE,
     COL_NOTES,
     COL_MAX, // number of columns
 };
-
-} // namespace
 
 /*******************************************************/
 BEGIN_EVENT_TABLE(mmAssetsPanel, wxPanel)
@@ -154,24 +150,11 @@ void mmAssetsPanel::CreateControls()
         wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_VIRTUAL | wxLC_SINGLE_SEL  );
     //m_listCtrlAssets->SetBackgroundColour(mmColors::listDetailsPanelColor);
     m_listCtrlAssets->SetImageList(m_imageList.get(), wxIMAGE_LIST_SMALL);
-    m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"));
-    wxListItem itemCol;
-    itemCol.SetImage(-1);
-    itemCol.SetAlign(wxLIST_FORMAT_LEFT);
-    itemCol.SetText(_("Type"));
-    m_listCtrlAssets->InsertColumn(COL_TYPE, itemCol);
-    
-    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
-    itemCol.SetText(_("Value"));
-    m_listCtrlAssets->InsertColumn(COL_VALUE, itemCol);
-
-    itemCol.SetAlign(wxLIST_FORMAT_RIGHT);
-    itemCol.SetText(_("Date"));
-    m_listCtrlAssets->InsertColumn(COL_DATE, itemCol);
-
-    itemCol.SetAlign(wxLIST_FORMAT_LEFT);
-    itemCol.SetText(_("Notes"));
-    m_listCtrlAssets->InsertColumn(COL_NOTES, itemCol);
+    m_listCtrlAssets->InsertColumn(COL_NAME, _("Name"), wxLIST_FORMAT_RIGHT);
+    m_listCtrlAssets->InsertColumn(COL_TYPE, _("Type"), wxLIST_FORMAT_RIGHT);
+    m_listCtrlAssets->InsertColumn(COL_VALUE, _("Value"), wxLIST_FORMAT_RIGHT);
+    m_listCtrlAssets->InsertColumn(COL_DATE, _("Date"), wxLIST_FORMAT_RIGHT);
+    m_listCtrlAssets->InsertColumn(COL_NOTES, _("Notes"));
 
     /* See if we can get data from inidb */
     long col0, col1, col2, col3, col4;
@@ -244,57 +227,36 @@ void mmAssetsPanel::initVirtualListControl()
     wxString lbl  = wxString::Format(_("Total: %s"), balance.c_str());
     header->SetLabel(lbl);
 
-    static const char sql[] = 
-    "select a.ASSETID as ASSETID, "
-           "a.ASSETNAME as ASSETNAME, "
-           "a.ASSETTYPE as ASSETTYPE, "
-           "a.STARTDATE as STARTDATE, "
-           "ifnull (strftime(INFOVALUE, a.STARTDATE), "
-           "(strftime(replace (i.infovalue, '%y', SubStr (strftime('%Y', a.STARTDATE),3,2)),a.STARTDATE))) "
-           "as FORMATEDDATE, "
-           "a.NOTES as NOTES, "
-           "VALUECHANGE as VALUECHANGE, "
-           "VALUECHANGERATE as VALUECHANGERATE "
-    "from ASSETS_V1 a "
-    "left join infotable_v1 i on i.INFONAME='DATEFORMAT' "
-    "order by a.STARTDATE " ;
+    long count = 0;
 
-    wxSQLite3ResultSet q1 = db_->ExecuteQuery(sql);
-    long cnt = 0;
-    
-    for ( ; q1.NextRow(); ++cnt)
+    std::vector<DB_View_ASSETS_V1::Data> all_assets = ASSETS_V1.all(db_);
+    BOOST_FOREACH(const DB_View_ASSETS_V1::Data &asset, all_assets)
     {
         mmAssetHolder th;
 
-        th.id_ = q1.GetInt(wxT("ASSETID"));
-        th.value_ = mmDBWrapper::getAssetValue(db_, th.id_);
-        th.assetName_ = q1.GetString(wxT("ASSETNAME"));
-        th.assetDate_ = q1.GetString(wxT("FORMATEDDATE"));
-        //sqlite does not support %y date mask therefore null value should be replaces
-        if (th.assetDate_ == wxT(""))
-        {
-            wxString dateString = q1.GetString(wxT("STARTDATE"));
-            wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
-            th.assetDate_ = mmGetDateForDisplay(db_, dtdt);
-        }
+        th.id_= asset.ASSETID;
+        th.value_ = mmDBWrapper::getAssetValue(db_, asset.ASSETID);
+        th.assetName_ = asset.ASSETNAME;
+
+        wxString dateString = asset.STARTDATE;
+        wxDateTime dtdt = mmGetStorageStringAsDate(dateString);
+        th.assetDate_ = mmGetDateForDisplay(db_, dtdt);
      
-        wxString assetStr = q1.GetString(wxT("ASSETTYPE"));
-        th.assetType_ =  wxGetTranslation(assetStr); // string should be marked for translation
-        assetStr = q1.GetString(wxT("VALUECHANGE"));
-        th.assetValueChange_ =  wxGetTranslation(assetStr); 
+        th.assetType_ =  wxGetTranslation(asset.ASSETTYPE); // string should be marked for translation
+        th.assetValueChange_ =  wxGetTranslation(asset.VALUECHANGE); 
 
-        th.assetNotes_ = q1.GetString(wxT("NOTES"));
+        th.assetNotes_ = asset.NOTES;
 
-        th.valueChange_ = q1.GetDouble(wxT("VALUECHANGERATE"));
+        th.valueChange_ = asset.VALUECHANGERATE;
 
         mmex::formatDoubleToCurrencyEdit(th.value_, th.valueStr_);
         mmex::formatDoubleToCurrencyEdit(th.valueChange_, th.valueChangeStr_);
 
         m_trans.push_back(th);
+        ++ count;
     }
 
-    m_listCtrlAssets->SetItemCount(cnt);
-    q1.Finalize();
+    m_listCtrlAssets->SetItemCount(count);
 }
 
 void mmAssetsPanel::OnDeleteAsset(wxCommandEvent& event)
@@ -364,7 +326,7 @@ void mmAssetsPanel::updateExtraAssetData(int selIndex)
         enableEditDeleteButtons(true);
         wxString miniInfo;
         wxString infoStr;
-        infoStr = getItem(selIndex, COL_NOTES);
+        infoStr = m_trans[selIndex].assetNotes_;
         miniInfo << wxT("\t") << _("Change in Value") << wxT(": ") << m_trans[selIndex].assetValueChange_ ;
         if (m_trans[selIndex].assetValueChange_ != _("None"))
             miniInfo<< wxT(" = ") << m_trans[selIndex].valueChange_ << wxT("%");
@@ -436,15 +398,10 @@ void assetsListCtrl::OnDeleteAsset(wxCommandEvent& /*event*/)
     wxMessageDialog msgDlg(this, _("Do you really want to delete the Asset?"), _("Confirm Asset Deletion"), wxYES_NO | wxNO_DEFAULT | wxICON_EXCLAMATION);
     if (msgDlg.ShowModal() == wxID_YES) 
     {
-        mmDBWrapper::deleteAsset(m_cp->getDb(), m_cp->getTrans()[m_selectedIndex].id_);
+        ASSETS_V1.remove(m_cp->getTrans()[m_selectedIndex].id_, m_cp->getDb());
         DeleteItem(m_selectedIndex);
         m_cp->initVirtualListControl();
         
-        wxMessageDialog* msgDlg = new wxMessageDialog(NULL,
-        _("Thank you! "), _("App"), wxOK);
-        msgDlg->ShowModal();
-        msgDlg->Destroy();
-  
         //if (m_cp->getTrans().empty()) //after delition of asset - index and extra panel should be erased
         {
             m_selectedIndex = -1;
