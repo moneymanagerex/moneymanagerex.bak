@@ -986,7 +986,7 @@ void stocksListCtrl::OnListKeyDown(wxListEvent& event)
 
 void stocksListCtrl::OnNewStocks(wxCommandEvent& /*event*/)
 {
-    mmStockDialog dlg(cp_->db_, cp_->core_, 0, false, this);
+    mmStockDialog dlg(cp_->db_, cp_->core_, 0, false, cp_->accountID_, this);
     if (dlg.ShowModal() == wxID_OK)
     {
         cp_->initVirtualListControl();
@@ -1015,7 +1015,7 @@ void stocksListCtrl::OnEditStocks(wxCommandEvent& /*event*/)
 {
     if (selectedIndex_ == -1) return;
 
-    mmStockDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, this);
+    mmStockDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, -1, this);
     if (dlg.ShowModal() == wxID_OK)
     {
         cp_->initVirtualListControl();
@@ -1026,7 +1026,7 @@ void stocksListCtrl::OnEditStocks(wxCommandEvent& /*event*/)
 void stocksListCtrl::OnListItemActivated(wxListEvent& event)
 {
     selectedIndex_ = event.GetIndex();
-    mmStockDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, this);
+    mmStockDialog dlg(cp_->db_, cp_->core_, cp_->trans_[selectedIndex_].id_, true, -1, this);
     if (dlg.ShowModal() == wxID_OK)
     {
         cp_->initVirtualListControl();

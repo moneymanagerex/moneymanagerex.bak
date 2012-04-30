@@ -38,7 +38,7 @@ mmStockDialog::mmStockDialog( )
 }
 
 mmStockDialog::mmStockDialog(wxSQLite3Database* db, mmCoreDB* core, int stockID, bool edit,
-                             wxWindow* parent, wxWindowID id, 
+                             int accountID, wxWindow* parent, wxWindowID id, 
                              const wxString& caption, const wxPoint& pos, 
                              const wxSize& size, long style )
 {
@@ -46,7 +46,7 @@ mmStockDialog::mmStockDialog(wxSQLite3Database* db, mmCoreDB* core, int stockID,
     core_ = core;
     stockID_ = stockID;
     edit_ = edit;
-    accountID_ = -1;
+    accountID_ = accountID;
     Create(parent, id, caption, pos, size, style);
     mmDBWrapper::loadBaseCurrencySettings(db_);
 }
@@ -153,6 +153,8 @@ void mmStockDialog::CreateControls()
     stockName_ = new wxTextCtrl( itemPanel5, ID_TEXTCTRL_STOCKNAME, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(stockName_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     stockName_->SetToolTip(_("Enter the stock company name"));
+    if (!edit_)
+        stockName_->SetFocus();
 
     wxStaticText* itemStaticText7 = new wxStaticText( itemPanel5, wxID_STATIC, _("Held At"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText7, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
@@ -160,6 +162,8 @@ void mmStockDialog::CreateControls()
     heldAt_ = new wxButton( itemPanel5, ID_BUTTON_STOCKS_HELDAT, _("Select Account"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(heldAt_, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
     heldAt_->SetToolTip(_("Enter the name of the financial institution where the investment is held"));
+    if (accountID_ > -1)
+        heldAt_->SetLabel(core_->getAccountName(accountID_));
     
     //Date
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel5, wxID_STATIC, _("Date"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -239,7 +243,8 @@ void mmStockDialog::CreateControls()
 
     wxButton* itemButton30 = new wxButton( itemPanel27, wxID_CANCEL, _("&Cancel"));
     itemBoxSizer28->Add(itemButton30, 0, wxALIGN_CENTER_VERTICAL|wxALL, 1);
-    itemButton30->SetFocus();
+    if (edit_)
+        itemButton30->SetFocus();
 }
 
 void mmStockDialog::OnAccountButton(wxCommandEvent& /*event*/)
