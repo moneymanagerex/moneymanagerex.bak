@@ -36,12 +36,6 @@ const wxString g_CurrencyName = wxT("US DOLLAR");
 const wxString g_PayeeName = wxT("Payee #1");
 //----------------------------------------------------------------------------
 
-struct Cleanup
-{
-   ~Cleanup();
-};
-//----------------------------------------------------------------------------
-
 wxString getDbPath()
 {
     wxFileName fn(wxFileName::GetTempDir(), wxT("mmex_tests.db3"));
@@ -49,19 +43,8 @@ wxString getDbPath()
 }
 //----------------------------------------------------------------------------
 
-Cleanup::~Cleanup()
-{ 
-    try {
-        wxRemoveFile(getDbPath());
-    } catch (...) {
-        wxASSERT(false);
-    }        
-}
-//----------------------------------------------------------------------------
-
 wxSQLite3Database& getDb()
 {
-    static Cleanup dummy;
     static wxSQLite3Database db;
 
     if (!db.IsOpen())
