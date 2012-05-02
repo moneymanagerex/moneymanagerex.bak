@@ -18,7 +18,7 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_SYSTEM
 
 ##########################################################################
-AX_BOOST_BASE([1.48.0])
+AX_BOOST_BASE([1.46.1])
 AC_SUBST(BOOST_CPPFLAGS)
 # Checks for programs
 
