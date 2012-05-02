@@ -66,9 +66,9 @@ UNITTESTPP_OBJECTS =  \
 	UnitTestPP_SignalTranslator.o \
 	UnitTestPP_TimeHelpers.o
 MMEX_TESTS_CXXFLAGS = -I$(srcdir)/../../lib/sqlite \
-	-I$(srcdir)/../../lib/wxsqlite -I$(srcdir)/../../lib/lua/src -DNOPCH \
-	-I$(srcdir)/../../src -I$(srcdir)/../../lib/UnitTest++ \
-	-DIMPLEMENT_WXWIN_MAIN= $(WX_CXXFLAGS) $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
+	-I$(srcdir)/../../lib/wxsqlite -DNOPCH -I$(srcdir)/../../src \
+	-I$(srcdir)/../../lib/UnitTest++ -DIMPLEMENT_WXWIN_MAIN= $(WX_CXXFLAGS) \
+	$(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
 MMEX_TESTS_OBJECTS =  \
 	mmex_tests_aboutdialog.o \
 	mmex_tests_appstartdialog.o \
@@ -162,7 +162,7 @@ MMEX_TESTS_OBJECTS =  \
 
 ### Targets: ###
 
-all: $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) $(LIBPREFIX)lua$(LIBEXT) $(LIBPREFIX)UnitTestPP$(LIBEXT) mmex_tests$(EXEEXT)
+all: $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) $(LIBPREFIX)UnitTestPP$(LIBEXT) mmex_tests$(EXEEXT)
 
 install: 
 
@@ -175,7 +175,6 @@ clean:
 	rm -f ./*.o
 	rm -f $(LIBPREFIX)wxsqlite$(LIBEXT)
 	rm -f $(LIBPREFIX)sqlite$(LIBEXT)
-	rm -f $(LIBPREFIX)lua$(LIBEXT)
 	rm -f $(LIBPREFIX)UnitTestPP$(LIBEXT)
 	rm -f mmex_tests$(EXEEXT)
 	rm -f ./share/mmex/res/currency_seed.db3
@@ -193,18 +192,13 @@ $(LIBPREFIX)sqlite$(LIBEXT): $(SQLITE_OBJECTS)
 	$(AR) $(AROPTIONS) $@ $(SQLITE_OBJECTS)
 	$(RANLIB) $@
 
-$(LIBPREFIX)lua$(LIBEXT): 
-	rm -f $@
-	$(AR) $(AROPTIONS) $@
-	$(RANLIB) $@
-
 $(LIBPREFIX)UnitTestPP$(LIBEXT): $(UNITTESTPP_OBJECTS)
 	rm -f $@
 	$(AR) $(AROPTIONS) $@ $(UNITTESTPP_OBJECTS)
 	$(RANLIB) $@
 
-mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) $(LIBPREFIX)lua$(LIBEXT) $(LIBPREFIX)UnitTestPP$(LIBEXT) $(__mmex_tests___win32rc)
-	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS) -L. -L. -L. -L.   $(WX_LIBS)  $(LDFLAGS)  -lwxsqlite -lsqlite -llua -lUnitTestPP $(LIBS)
+mmex_tests$(EXEEXT): $(MMEX_TESTS_OBJECTS) $(LIBPREFIX)wxsqlite$(LIBEXT) $(LIBPREFIX)sqlite$(LIBEXT) $(LIBPREFIX)UnitTestPP$(LIBEXT) $(__mmex_tests___win32rc)
+	$(CXX) -o $@ $(MMEX_TESTS_OBJECTS) -L. -L. -L.   $(WX_LIBS)  $(LDFLAGS)  -lwxsqlite -lsqlite -lUnitTestPP $(LIBS)
 	
 	$(__mmex_tests___mac_setfilecmd)
 
@@ -505,7 +499,7 @@ mmex_tests_utils.o: $(srcdir)/../../src/tests/utils.cpp
 	$(CXXC) -c -o $@ $(MMEX_TESTS_CXXFLAGS) $(srcdir)/../../src/tests/utils.cpp
 
 mmex_tests_mmex_tests_rc.o: $(srcdir)/../../src/tests/mmex_tests.rc
-	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/../../lib/sqlite --include-dir $(srcdir)/../../lib/wxsqlite --include-dir $(srcdir)/../../lib/lua/src --define NOPCH --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../lib/UnitTest++ --define IMPLEMENT_WXWIN_MAIN=
+	$(WX_RESCOMP) -i$< -o$@  --include-dir $(srcdir)/../../lib/sqlite --include-dir $(srcdir)/../../lib/wxsqlite --define NOPCH --include-dir $(srcdir)/../../src --include-dir $(srcdir)/../../lib/UnitTest++ --define IMPLEMENT_WXWIN_MAIN=
 
 
 # Include dependency info, if present:
