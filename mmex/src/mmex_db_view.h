@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-04 23:39:31.550619.
+ *          AUTO GENERATED at 2012-05-04 23:44:12.163690.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -33,6 +33,11 @@ struct DB_View
     wxString query() const { return this->query_; }
     virtual size_t num_columns() const = 0;
     virtual wxString name() const = 0;
+
+    bool exists(wxSQLite3Database* db) const
+    {
+       return db->TableExists(this->name()); 
+    }
 };
 
 struct DB_View_ACCOUNTLIST_V1 : public DB_View
@@ -41,11 +46,6 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
     typedef DB_View_ACCOUNTLIST_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_ACCOUNTLIST_V1() {}
-
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -457,11 +457,6 @@ struct DB_View_ASSETS_V1 : public DB_View
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_ASSETS_V1() {}
 
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
-
     bool ensure(wxSQLite3Database* db) const
     {
         if (exists(db)) return true;
@@ -821,11 +816,6 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
     typedef DB_View_BILLSDEPOSITS_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_BILLSDEPOSITS_V1() {}
-
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -1285,11 +1275,6 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_BUDGETSPLITTRANSACTIONS_V1() {}
 
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
-
     bool ensure(wxSQLite3Database* db) const
     {
         if (exists(db)) return true;
@@ -1621,11 +1606,6 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
     typedef DB_View_BUDGETTABLE_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_BUDGETTABLE_V1() {}
-
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -1969,11 +1949,6 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_BUDGETYEAR_V1() {}
 
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
-
     bool ensure(wxSQLite3Database* db) const
     {
         if (exists(db)) return true;
@@ -2272,11 +2247,6 @@ struct DB_View_CATEGORY_V1 : public DB_View
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_CATEGORY_V1() {}
 
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
-
     bool ensure(wxSQLite3Database* db) const
     {
         if (exists(db)) return true;
@@ -2574,11 +2544,6 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
     typedef DB_View_CHECKINGACCOUNT_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_CHECKINGACCOUNT_V1() {}
-
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -3006,11 +2971,6 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_CURRENCYFORMATS_V1() {}
 
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
-
     bool ensure(wxSQLite3Database* db) const
     {
         if (exists(db)) return true;
@@ -3401,11 +3361,6 @@ struct DB_View_INFOTABLE_V1 : public DB_View
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_INFOTABLE_V1() {}
 
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
-
     bool ensure(wxSQLite3Database* db) const
     {
         if (exists(db)) return true;
@@ -3713,11 +3668,6 @@ struct DB_View_PAYEE_V1 : public DB_View
     typedef DB_View_PAYEE_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_PAYEE_V1() {}
-
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -4039,11 +3989,6 @@ struct DB_View_SETTING_V1 : public DB_View
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_SETTING_V1() {}
 
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
-
     bool ensure(wxSQLite3Database* db) const
     {
         if (exists(db)) return true;
@@ -4351,11 +4296,6 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
     typedef DB_View_SPLITTRANSACTIONS_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_SPLITTRANSACTIONS_V1() {}
-
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -4688,11 +4628,6 @@ struct DB_View_STOCK_V1 : public DB_View
     typedef DB_View_STOCK_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_STOCK_V1() {}
-
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
 
     bool ensure(wxSQLite3Database* db) const
     {
@@ -5087,11 +5022,6 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
     typedef DB_View_SUBCATEGORY_V1 Self;
     typedef std::vector<Self::Data> Data_Set;
     ~DB_View_SUBCATEGORY_V1() {}
-
-    bool exists(wxSQLite3Database* db) const
-    {
-       return db->TableExists(this->name()); 
-    }
 
     bool ensure(wxSQLite3Database* db) const
     {
