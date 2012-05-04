@@ -119,7 +119,13 @@ TEST(initDB)
     wxSQLite3Database &db = getDb();
 
     mmDBWrapper::initDB(&db, 0);
-    CHECK(true);
+    bool ok = false;
+
+    ok = db.TableExists(wxT("ASSETS_V1"));
+    CHECK(ok);
+
+    ok = db.TableExists(wxT("ACCOUNTLIST_V1"));
+    CHECK(ok);
 }
 //----------------------------------------------------------------------------
 
