@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //----------------------------------------------------------------------------
 #include "dbwrapper.h"
 #include "utils.h"
+#include "mmex_db_view.h"
 //----------------------------------------------------------------------------
 #include <wx/filename.h>
 //----------------------------------------------------------------------------
@@ -247,19 +248,19 @@ TEST(deleteBudgetYear)
 }
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
-/*
 TEST(addCategory)
 {
     wxSQLite3Database &db = getDb();
 
-    bool added = mmDBWrapper::addCategory(&db, g_CategName);
-    CHECK(added);
+    DB_View_CATEGORY_V1::Data* category = CATEGORY_V1.create();
+    CHECK(category);
 
-    int id = mmDBWrapper::getCategoryID(&db, g_CategName);
-    CHECK(id > 0);
+    category->save(&db);
+    CHECK(CATEGORY_V1.all(&db).size() > 0);
 }
 //----------------------------------------------------------------------------
 
+/*
 TEST(addSubCategory)
 {
     wxSQLite3Database &db = getDb();
