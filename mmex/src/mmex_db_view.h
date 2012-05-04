@@ -10,7 +10,7 @@
  *      @brief
  *
  *      Revision History:
- *          AUTO GENERATED at 2012-05-04 20:20:53.294847.
+ *          AUTO GENERATED at 2012-05-04 23:16:45.070756.
  *          DO NOT EDIT!
  */
 //=============================================================================
@@ -77,6 +77,7 @@ struct DB_View_ACCOUNTLIST_V1 : public DB_View
     struct INITIALBAL { wxString name() const { return wxT("INITIALBAL"); } };
     struct FAVORITEACCT { wxString name() const { return wxT("FAVORITEACCT"); } };
     struct CURRENCYID { wxString name() const { return wxT("CURRENCYID"); } };
+    typedef ACCOUNTID PRIMARY;
     enum COLUMN
     {
         COL_ACCOUNTID = 0
@@ -486,6 +487,7 @@ struct DB_View_ASSETS_V1 : public DB_View
     struct NOTES { wxString name() const { return wxT("NOTES"); } };
     struct VALUECHANGERATE { wxString name() const { return wxT("VALUECHANGERATE"); } };
     struct ASSETTYPE { wxString name() const { return wxT("ASSETTYPE"); } };
+    typedef ASSETID PRIMARY;
     enum COLUMN
     {
         COL_ASSETID = 0
@@ -859,6 +861,7 @@ struct DB_View_BILLSDEPOSITS_V1 : public DB_View
     struct REPEATS { wxString name() const { return wxT("REPEATS"); } };
     struct NEXTOCCURRENCEDATE { wxString name() const { return wxT("NEXTOCCURRENCEDATE"); } };
     struct NUMOCCURRENCES { wxString name() const { return wxT("NUMOCCURRENCES"); } };
+    typedef BDID PRIMARY;
     enum COLUMN
     {
         COL_BDID = 0
@@ -1309,6 +1312,7 @@ struct DB_View_BUDGETSPLITTRANSACTIONS_V1 : public DB_View
     struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
     struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
     struct SPLITTRANSAMOUNT { wxString name() const { return wxT("SPLITTRANSAMOUNT"); } };
+    typedef SPLITTRANSID PRIMARY;
     enum COLUMN
     {
         COL_SPLITTRANSID = 0
@@ -1646,6 +1650,7 @@ struct DB_View_BUDGETTABLE_V1 : public DB_View
     struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
     struct PERIOD { wxString name() const { return wxT("PERIOD"); } };
     struct AMOUNT { wxString name() const { return wxT("AMOUNT"); } };
+    typedef BUDGETENTRYID PRIMARY;
     enum COLUMN
     {
         COL_BUDGETENTRYID = 0
@@ -1988,6 +1993,7 @@ struct DB_View_BUDGETYEAR_V1 : public DB_View
 
     struct BUDGETYEARID { wxString name() const { return wxT("BUDGETYEARID"); } };
     struct BUDGETYEARNAME { wxString name() const { return wxT("BUDGETYEARNAME"); } };
+    typedef BUDGETYEARID PRIMARY;
     enum COLUMN
     {
         COL_BUDGETYEARID = 0
@@ -2290,6 +2296,7 @@ struct DB_View_CATEGORY_V1 : public DB_View
 
     struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
     struct CATEGNAME { wxString name() const { return wxT("CATEGNAME"); } };
+    typedef CATEGID PRIMARY;
     enum COLUMN
     {
         COL_CATEGID = 0
@@ -2604,6 +2611,7 @@ struct DB_View_CHECKINGACCOUNT_V1 : public DB_View
     struct TRANSDATE { wxString name() const { return wxT("TRANSDATE"); } };
     struct FOLLOWUPID { wxString name() const { return wxT("FOLLOWUPID"); } };
     struct TOTRANSAMOUNT { wxString name() const { return wxT("TOTRANSAMOUNT"); } };
+    typedef TRANSID PRIMARY;
     enum COLUMN
     {
         COL_TRANSID = 0
@@ -3031,6 +3039,7 @@ struct DB_View_CURRENCYFORMATS_V1 : public DB_View
     struct SCALE { wxString name() const { return wxT("SCALE"); } };
     struct BASECONVRATE { wxString name() const { return wxT("BASECONVRATE"); } };
     struct CURRENCY_SYMBOL { wxString name() const { return wxT("CURRENCY_SYMBOL"); } };
+    typedef CURRENCYID PRIMARY;
     enum COLUMN
     {
         COL_CURRENCYID = 0
@@ -3417,6 +3426,7 @@ struct DB_View_INFOTABLE_V1 : public DB_View
     struct INFOID { wxString name() const { return wxT("INFOID"); } };
     struct INFONAME { wxString name() const { return wxT("INFONAME"); } };
     struct INFOVALUE { wxString name() const { return wxT("INFOVALUE"); } };
+    typedef INFOID PRIMARY;
     enum COLUMN
     {
         COL_INFOID = 0
@@ -3730,6 +3740,7 @@ struct DB_View_PAYEE_V1 : public DB_View
     struct PAYEENAME { wxString name() const { return wxT("PAYEENAME"); } };
     struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
     struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
+    typedef PAYEEID PRIMARY;
     enum COLUMN
     {
         COL_PAYEEID = 0
@@ -4053,6 +4064,7 @@ struct DB_View_SETTING_V1 : public DB_View
     struct SETTINGID { wxString name() const { return wxT("SETTINGID"); } };
     struct SETTINGNAME { wxString name() const { return wxT("SETTINGNAME"); } };
     struct SETTINGVALUE { wxString name() const { return wxT("SETTINGVALUE"); } };
+    typedef SETTINGID PRIMARY;
     enum COLUMN
     {
         COL_SETTINGID = 0
@@ -4367,6 +4379,7 @@ struct DB_View_SPLITTRANSACTIONS_V1 : public DB_View
     struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
     struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
     struct SPLITTRANSAMOUNT { wxString name() const { return wxT("SPLITTRANSAMOUNT"); } };
+    typedef SPLITTRANSID PRIMARY;
     enum COLUMN
     {
         COL_SPLITTRANSID = 0
@@ -4709,6 +4722,7 @@ struct DB_View_STOCK_V1 : public DB_View
     struct CURRENTPRICE { wxString name() const { return wxT("CURRENTPRICE"); } };
     struct VALUE { wxString name() const { return wxT("VALUE"); } };
     struct COMMISSION { wxString name() const { return wxT("COMMISSION"); } };
+    typedef STOCKID PRIMARY;
     enum COLUMN
     {
         COL_STOCKID = 0
@@ -5099,6 +5113,7 @@ struct DB_View_SUBCATEGORY_V1 : public DB_View
     struct SUBCATEGID { wxString name() const { return wxT("SUBCATEGID"); } };
     struct SUBCATEGNAME { wxString name() const { return wxT("SUBCATEGNAME"); } };
     struct CATEGID { wxString name() const { return wxT("CATEGID"); } };
+    typedef SUBCATEGID PRIMARY;
     enum COLUMN
     {
         COL_SUBCATEGID = 0

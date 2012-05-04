@@ -87,6 +87,9 @@ struct DB_View_%s : public DB_View
     struct %s { wxString name() const { return wxT("%s"); } };''' % (field['name'], field['name'])
 
         s += '''
+    typedef %s PRIMARY;''' % self._primay_key
+
+        s += '''
     enum COLUMN
     {
         COL_%s = 0''' % self._primay_key.upper()
