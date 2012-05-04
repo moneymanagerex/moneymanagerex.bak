@@ -362,7 +362,7 @@ struct DB_View_%s : public DB_View
         
         s +='''
     
-    Self::Data* find(int id, wxSQLite3Database* db)
+    Self::Data* get(int id, wxSQLite3Database* db)
     {
         Self::Data* entity = 0;
         wxString where = wxString::Format(wxT(" WHERE %s = ?"));
