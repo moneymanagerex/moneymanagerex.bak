@@ -255,27 +255,32 @@ TEST(addCategory)
     DB_View_CATEGORY_V1::Data* category = CATEGORY_V1.create();
     CHECK(category);
 
+    category->CATEGNAME = g_CategName;
     category->save(&db);
     CHECK(CATEGORY_V1.all(&db).size() > 0);
 }
 //----------------------------------------------------------------------------
 
-/*
 TEST(addSubCategory)
 {
     wxSQLite3Database &db = getDb();
 
-    int cat_id = mmDBWrapper::getCategoryID(&db, g_CategName);
+    DB_View_CATEGORY_V1::CATEGNAME c;
+    std::vector<DB_View_CATEGORY_V1::Data> categories = CATEGORY_V1.find<DB_View_CATEGORY_V1::CATEGNAME, wxString>(&db, g_CategName);
+    CHECK(categories.size() > 0);
+
+    int cat_id = categories[0].CATEGID;
     CHECK(cat_id > 0);
 
-    bool added = mmDBWrapper::addSubCategory(&db, cat_id, g_SubCategName);
+    DB_View_SUBCATEGORY_V1::Data* sub_category = SUBCATEGORY_V1.create();
+    sub_category->CATEGID = cat_id;
+    sub_category->SUBCATEGNAME = g_SubCategName;
+    bool added = sub_category->save(&db);
     CHECK(added);
-
-    int id = mmDBWrapper::getSubCategoryID(&db, cat_id, g_SubCategName);
-    CHECK(id > 0);
 }
 //----------------------------------------------------------------------------
 
+/*
 TEST(getCategoryID)
 {
     wxSQLite3Database &db = getDb();
