@@ -79,7 +79,7 @@ bool mmAssetDialog::Create(wxWindow* parent, wxWindowID id, const wxString& capt
 
 void mmAssetDialog::dataToControls()
 {
-    const DB_View_ASSETS_V1::Data *asset = ASSETS_V1.find(m_assetID, m_db);
+    const DB_View_ASSETS_V1::Data *asset = ASSETS_V1.get(m_assetID, m_db);
     if (asset)
     {
         m_assetName->SetValue(asset->ASSETNAME);
@@ -343,7 +343,7 @@ void mmAssetDialog::OnOk(wxCommandEvent& /*event*/)
     else
         wxASSERT(false);
 
-    DB_View_ASSETS_V1::Data* asset = ASSETS_V1.find(m_assetID, m_db);
+    DB_View_ASSETS_V1::Data* asset = ASSETS_V1.get(m_assetID, m_db);
     if (! asset)
         asset = ASSETS_V1.create();
 
