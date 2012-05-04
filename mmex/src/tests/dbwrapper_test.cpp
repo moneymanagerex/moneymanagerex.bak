@@ -26,9 +26,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <wx/filename.h>
 //----------------------------------------------------------------------------
 
-namespace
-{
-
 const wxString g_BudgetYear = wxT("2009");
 const wxString g_CategName = wxT("new category");
 const wxString g_SubCategName= wxT("new subcategory");
@@ -58,10 +55,6 @@ wxSQLite3Database& getDb()
 
     return db;
 }
-//----------------------------------------------------------------------------
-
-} // namespace
-
 //----------------------------------------------------------------------------
 
 SUITE(dbwrapper)
